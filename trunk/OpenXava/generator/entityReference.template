@@ -1,0 +1,194 @@
+#declare import="org.openxava.util.Strings"#
+#declare import="org.openxava.util.XavaException"#
+#declare import="org.openxava.model.meta.*"#
+#declare import="org.openxava.generators.*"#
+#declare import="org.openxava.calculators.*"#
+#declare import="org.openxava.util.meta.MetaSet"#
+#declare import="org.openxava.mapping.*"#
+
+#declarations
+
+private MetaReference reference=null;
+public void setReference(MetaReference ref) {
+	this.reference = ref;
+}
+
+private boolean ejb;
+public void setEjb(boolean ejb) {
+	this.ejb = ejb;
+}
+
+public static void generate(XPathContext context, ProgramWriter out, MetaReference ref) throws XavaException {
+	EntityReferencePG pg = new EntityReferencePG();
+	pg.setReference(ref);
+	pg.setEjb(!ref.getMetaModel().isGenerateJDO());
+	pg.generate(context, out);
+}
+
+# 
+
+# 
+MetaModel metaModel = reference.getMetaModel();
+ModelMapping modelMapping = null;
+if (metaModel instanceof MetaAggregateBean) {
+	modelMapping = metaModel.getMetaComponent().getEntityMapping();
+}
+else {
+	modelMapping = metaModel.getMapping();
+}	
+String referenceName = Strings.firstUpper(reference.getName());
+IMetaEjb referencedModel = (IMetaEjb) reference.getMetaModelReferenced();
+ModelMapping referencedMapping = referencedModel.getMapping();
+String referencedModelClass = referencedModel.getRemote();
+String referencedJNDI = referencedModel.getJndi();
+String referencedKeyClass = referencedModel.getPrimaryKey();
+String homeClass = referencedModel.getHome();		
+String homeAttribute = Strings.firstLower(referenceName) + "Home";
+String getHome = "get" + Strings.firstUpper(homeAttribute);		
+String interfaceMethodSet = reference.isKey()?"":"@ejb:interface-method";
+String pkField = reference.isKey()?"@ejb:pk-field":"";
+# 
+
+	// #(referenceName)# : Entity reference/Referencia a entidad
+	
+	/**
+	 * @ejb:interface-method
+	 */
+	public #(referencedModelClass)# get#(referenceName)#() {
+		try {		
+			return #(getHome)#().findByPrimaryKey(get#(referenceName)#Key());
+		}
+		catch (ObjectNotFoundException ex) {
+			return null;
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			throw new EJBException(XavaResources.getString("get_reference_error", "#(referenceName)#", "#(metaModel.getName())#"));
+		}		
+	}	
+	/**
+	 * #(interfaceMethodSet)#
+	 */
+	public void set#(referenceName)#(#(referencedModelClass)# new#(referenceName)#) {
+		try {	
+			if (new#(referenceName)# == null) set#(referenceName)#Key(null);
+			else set#(referenceName)#Key((#(referencedKeyClass)#) new#(referenceName)#.getPrimaryKey());
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			throw new EJBException(XavaResources.getString("set_reference_error", "#(referenceName)#", "#(metaModel.getName())#"));
+		}
+	}
+	
+	/**
+	 * @ejb:interface-method
+	 */
+	public #(referencedKeyClass)# get#(referenceName)#Key() {				
+			#(referencedKeyClass)# key = new #(referencedKeyClass)#();
+			# 
+			String prefixGet = "get" + referenceName + "_";
+			Iterator itKeys = referencedModel.getAllKeyPropertiesNames().iterator();
+			while (itKeys.hasNext()) {
+				String key = Strings.change((String) itKeys.next(), ".", "_");
+				String keyAttribute=null;
+				if (referencedMapping.hasConverter(key)) {
+					keyAttribute = "_" + Strings.firstUpper(key);
+				}
+				else {
+					keyAttribute = key;
+				}				
+			# 
+			key.#(keyAttribute)# = #(prefixGet)##(key)#();			
+			# } #		
+			return key;
+	}	
+	
+	/**
+	 * #(interfaceMethodSet)#
+	 */
+	public void set#(referenceName)#Key(#(referencedKeyClass)# key) {
+		if (key == null) {
+			key = new #(referencedKeyClass)#();
+		}
+		# 
+		String prefixSet = "set" + referenceName + "_";
+		itKeys = referencedModel.getAllKeyPropertiesNames().iterator();		
+		while (itKeys.hasNext()) {
+			String key = Strings.change((String) itKeys.next(), ".", "_");
+			String keyAttribute=null;
+			if (referencedMapping.hasConverter(key)) {
+				keyAttribute = "_" + Strings.firstUpper(key);
+			}
+			else {
+				keyAttribute = key;
+			}
+		# 
+		#(prefixSet)##(key)#(key.#(keyAttribute)#);
+		# } #		
+		
+	}	
+	
+	# 
+	Iterator itEntityReferenceKeyProperties = referencedModel.getAllMetaPropertiesKey().iterator();	
+	while (itEntityReferenceKeyProperties.hasNext()) {		
+		MetaProperty originalProperty = (MetaProperty) itEntityReferenceKeyProperties.next();
+		originalProperty.setReadOnly(false);
+		PropertyMapping propertyMapping = originalProperty.getMapping();
+		MetaProperty property = originalProperty.cloneMetaProperty();
+		property.setName(reference.getName() + "_" + property.getName());
+		String propertyName = Strings.change(Strings.firstUpper(property.getName()), ".", "_");
+		if (GeneratorFactory.has(property)) {
+			IPropertyCodeGenerator generator = GeneratorFactory.create(property);		
+			String propertyCode = generator.generate();
+	#
+		#(propertyCode)#	
+	# 		
+			continue;
+		}
+		else if (modelMapping.isReferenceOverlappingWithSomeProperty(reference.getName(), originalProperty.getName())) { 
+			String type = property.getTypeName();
+			String overlapPropertyName = Strings.firstUpper(modelMapping.getOverlappingPropertyForReference(reference.getName(), originalProperty.getName()));
+	#
+	/**		
+	 * @ejb:interface-method
+	 *
+	 * @ejb.value-object match="persistentCalculatedAndAggregate"
+	 */
+	public #(type)# get#(propertyName)#() {
+		return get#(overlapPropertyName)#();
+	}
+	public void set#(propertyName)#(#(type)# #(propertyName)#) {
+	}
+	# 					
+			continue;
+		}		
+		String type = null;
+		if (propertyMapping.hasConverter()) {
+			type = propertyMapping.getCmpTypeName();
+		}
+		else {
+			type = property.getTypeName();
+		}	
+		String column = modelMapping.getReferenceMapping(reference.getName()).getColumnForReferencedModelProperty(originalProperty.getName());	
+	#
+	/**		
+	 * @ejb:interface-method
+	 * @ejb:persistent-field
+	 * #(pkField)#
+	 * @ejb.value-object match="persistentCalculatedAndAggregate"
+	 * @jboss:column-name "#(column)#"
+	 */
+	public abstract #(type)# get#(propertyName)#();
+	public abstract void set#(propertyName)#(#(type)# new#(propertyName)#);				
+
+	# } // while referenced entity key properties # 
+
+	private #(homeClass)# #(homeAttribute)#;	
+	private #(homeClass)# #(getHome)#() throws Exception{
+		if (#(homeAttribute)# == null) {
+			#(homeAttribute)# = (#(homeClass)#) PortableRemoteObject.narrow(
+			 		BeansContext.get().lookup("#(referencedJNDI)#"),
+			 		#(homeClass)#.class);			 		
+		}
+		return #(homeAttribute)#;
+	}	

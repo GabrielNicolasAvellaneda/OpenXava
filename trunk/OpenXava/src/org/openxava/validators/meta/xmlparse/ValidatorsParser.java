@@ -1,0 +1,101 @@
+package org.openxava.validators.meta.xmlparse;
+
+
+import org.openxava.util.*;
+import org.openxava.util.xmlparse.*;
+import org.openxava.validators.meta.*;
+import org.w3c.dom.*;
+
+
+/**
+ * @author: Javier Paniza
+ */
+public class ValidatorsParser extends ParserBase {
+	
+	private final String [] xvalidator_name = { "validator-name", "nombre-validador" };
+	private final String [] xvalidator_class = { "validator-class", "clase-validador" };
+	private final String [] xrequired_validator = { "required-validator", "validador-requerido" };
+
+	public ValidatorsParser(String urlArchivoXml, int language) {
+		super(urlArchivoXml, language);
+	}
+	
+	public static void configurarValidadores() throws XavaException {
+		ValidatorsParser enParser = new ValidatorsParser("validators.xml", ENGLISH);
+		enParser.parse();
+		ValidatorsParser esParser = new ValidatorsParser("validadores.xml", ESPAÑOL);
+		esParser.parse();		
+	}
+	
+	private MetaValidator createValidator(Node n) throws XavaException {
+		Element el = (Element) n;
+		MetaValidator result = new MetaValidator();
+		result.setName(el.getAttribute(xname[lang]));
+		result.setClassName(el.getAttribute(xclass[lang]));
+		return result;
+	}
+	
+	private void addRequiredValidators(Node n) throws XavaException {
+		Element el = (Element) n;
+				
+		String validatorName = null;
+		Element elValidatorName = getElement(el, xvalidator_name[lang]);
+		if (elValidatorName != null) {
+			validatorName = elValidatorName.getAttribute(xname[lang]);			
+		}
+
+		Element elValidatorClass = getElement(el, xvalidator_class[lang]);
+		String validatorClass = null;
+		if (elValidatorClass != null) {
+			validatorClass = elValidatorClass.getAttribute(xclass[lang]);
+		}
+		
+		NodeList l = el.getElementsByTagName(xfor_type[lang]);
+		int c = l.getLength();
+		for (int i = 0; i < c; i++) {
+			Element elForType = (Element) l.item(i);		
+			MetaValidatorRequired requiredValidator = new MetaValidatorRequired();
+			requiredValidator.setValidatorName(validatorName);
+			requiredValidator.setValidatorClass(validatorClass);
+			requiredValidator.setForType(elForType.getAttribute(xtype[lang]));		
+			MetaValidators._addMetaValidatorRequired(requiredValidator);
+		}				
+		
+		l = el.getElementsByTagName(xfor_stereotype[lang]);
+		c = l.getLength();
+		for (int i = 0; i < c; i++) {
+			Element elForStereotype = (Element) l.item(i);		
+			MetaValidatorRequired requiredValidator = new MetaValidatorRequired();
+			requiredValidator.setValidatorName(validatorName);
+			requiredValidator.setValidatorClass(validatorClass);
+			requiredValidator.setForStereotype(elForStereotype.getAttribute(xstereotype[lang]));		
+			MetaValidators._addMetaValidatorRequired(requiredValidator);
+		}				
+		
+	}
+	
+	
+	private void createValidators() throws XavaException {
+		NodeList l = getRoot().getElementsByTagName(xvalidator[lang]);
+		int c = l.getLength();
+		for (int i = 0; i < c; i++) {
+			MetaValidators._addMetaValidator(createValidator(l.item(i)));
+		}
+	}
+		
+	
+	private void createRequiredValidators() throws XavaException {
+		NodeList l = getRoot().getElementsByTagName(xrequired_validator[lang]);
+		int c = l.getLength();
+		for (int i = 0; i < c; i++) {
+			addRequiredValidators(l.item(i));
+		}
+	}
+	
+	
+	protected void createObjects() throws XavaException {
+		createValidators();
+		createRequiredValidators();
+	}
+		
+}
