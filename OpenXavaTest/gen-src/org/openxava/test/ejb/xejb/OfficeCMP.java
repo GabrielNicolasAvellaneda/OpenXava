@@ -19,8 +19,8 @@ public abstract class OfficeCMP
          dataHolder = new org.openxava.test.ejb.OfficeData();
 
          dataHolder.set_Name( get_Name() );
+         dataHolder.set_ZoneNumber( get_ZoneNumber() );
          dataHolder.setNumber( getNumber() );
-         dataHolder.setZoneNumber( getZoneNumber() );
          dataHolder.setOfficeManager_number( getOfficeManager_number() );
          dataHolder.setDefaultCarrier_number( getDefaultCarrier_number() );
          dataHolder.setMainWarehouse_number( getMainWarehouse_number() );
@@ -39,6 +39,7 @@ public abstract class OfficeCMP
       try
       {
          set_Name( dataHolder.get_Name() );
+         set_ZoneNumber( dataHolder.get_ZoneNumber() );
          setOfficeManager_number( dataHolder.getOfficeManager_number() );
          setDefaultCarrier_number( dataHolder.getDefaultCarrier_number() );
          setMainWarehouse_number( dataHolder.getMainWarehouse_number() );
@@ -95,8 +96,8 @@ public abstract class OfficeCMP
       try
          {
             OfficeValue.setName( getName() );
-            OfficeValue.setNumber( getNumber() );
             OfficeValue.setZoneNumber( getZoneNumber() );
+            OfficeValue.setNumber( getNumber() );
             OfficeValue.setOfficeManager_zoneNumber( getOfficeManager_zoneNumber() );
             OfficeValue.setOfficeManager_officeNumber( getOfficeManager_officeNumber() );
             OfficeValue.setOfficeManager_number( getOfficeManager_number() );
@@ -119,6 +120,7 @@ public abstract class OfficeCMP
 	  try
 	  {
 		 setName( valueHolder.getName() );
+		 setZoneNumber( valueHolder.getZoneNumber() );
 		 setOfficeManager_zoneNumber( valueHolder.getOfficeManager_zoneNumber() );
 		 setOfficeManager_officeNumber( valueHolder.getOfficeManager_officeNumber() );
 		 setOfficeManager_number( valueHolder.getOfficeManager_number() );
@@ -139,13 +141,13 @@ public abstract class OfficeCMP
 
    public abstract void set_Name( java.lang.String _Name ) ;
 
+   public abstract java.lang.Integer get_ZoneNumber() ;
+
+   public abstract void set_ZoneNumber( java.lang.Integer _ZoneNumber ) ;
+
    public abstract int getNumber() ;
 
    public abstract void setNumber( int number ) ;
-
-   public abstract int getZoneNumber() ;
-
-   public abstract void setZoneNumber( int zoneNumber ) ;
 
    public abstract int getOfficeManager_number() ;
 

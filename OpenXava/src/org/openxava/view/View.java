@@ -25,7 +25,7 @@ import org.openxava.web.*;
  * @author Javier Paniza
  */
 
-public class View {
+public class View implements java.io.Serializable {
 
 	private final static int [] EMPTY_SELECTED = new int[0];
 	
@@ -227,7 +227,7 @@ public class View {
 		return getValues(true);
 	}
 	
-		
+	
 	/**
 	 * Incluyo los de la vista
 	 */
@@ -244,7 +244,7 @@ public class View {
 			while (it.hasNext()) {
 				Map.Entry en = (Map.Entry) it.next();
 				View v = (View) en.getValue();				
-				if (v.isRepresentsCollection()) continue;						
+				if (v.isRepresentsCollection()) continue;
 				if (todos || v.isRepresentsAggregate()) {
 					values.put(en.getKey(), v.getValues(todos));
 				}
@@ -364,32 +364,32 @@ public class View {
 	/**
 	 * @param recalculatingValues If true reobtain values from views, groups and sections.
 	 */
-	private Object getValue(String name, boolean recalculatingValues) throws XavaException {
+	private Object getValue(String name, boolean recalculatingValues) throws XavaException {		
 		int idx = name.indexOf('.');		
-		if (idx < 0) { 
-			if (!getMemberNamesWithoutSeccions().contains(name) && (hidden == null || !hidden.contains(name)) && !getMetaModel().getKeyPropertiesNames().contains(name)) {
-				return getValorEnSecciones(name);
+		if (idx < 0) { 			
+			if (!getMemberNamesWithoutSeccions().contains(name) && (hidden == null || !hidden.contains(name)) && !getMetaModel().getKeyPropertiesNames().contains(name)) {				
+				return getValorEnSecciones(name, recalculatingValues);
 			}
-			else {
-				if (hasSubview(name)) { 
+			else {				
+				if (hasSubview(name)) { 					
 					View subvista = getSubview(name);
-					if (!subvista.isRepresentsCollection()) {
+					if (!subvista.isRepresentsCollection()) {						
 						return subvista.getValues();
 					}
-					else {
+					else {						
 						return subvista.getCollectionValues();
 					}
 				}
-				else { 
-					if (values == null) return null;
+				else {					
+					if (values == null) return null;					
 					return recalculatingValues?getValues().get(name):values.get(name);
 				}				 							 								
 			} 
 		} 
-		else {
+		else {			
 			String subvista = name.substring(0, idx);			
-			String miembro = name.substring(idx+1);			
-			return getSubview(subvista).getValue(miembro);		
+			String miembro = name.substring(idx+1);						
+			return getSubview(subvista).getValue(miembro, recalculatingValues);
 		}		
 	}
 	
@@ -692,11 +692,11 @@ public class View {
 		throw new ElementNotFoundException("section_not_found", nombreSeccion);
 	}
 		
-	private Object getValorEnSecciones(String nombre) throws XavaException {
+	private Object getValorEnSecciones(String nombre, boolean recalculatingValues) throws XavaException { 
 		if (!hasSections()) return null;
 		int cantidad = getSections().size();
 		for (int i = 0; i < cantidad; i++) {			
-			Object valor = getSectionView(i).getValue(nombre);
+			Object valor = getSectionView(i).getValue(nombre, recalculatingValues);
 			if (valor != null) return valor;
 		}
 		return null;
@@ -727,7 +727,7 @@ public class View {
 	}
 	
 	public Map getKeyValues() throws XavaException {
-		Map values = getValues();
+		Map values = getValues();				
 		Iterator it = values.keySet().iterator();
 		Map result = new HashMap();
 		while (it.hasNext()) {
@@ -737,20 +737,23 @@ public class View {
 			}			
 		}		
 
-		if (getParent() != null && !getParent().isRepresentsAggregate()) {
+		if (getParent() != null && !getParent().isRepresentsAggregate()) {			
 			// At momment reference to entity within aggregate can not be part of key
-			if (isRepresentsEntityReference() && !isRepresentsCollection()) {
+			if (isRepresentsEntityReference() && !isRepresentsCollection()) {				
 				ModelMapping mapeo =	getParent().getMetaModel().getMapping();
-				if (mapeo.isReferenceOverlappingWithSomeProperty(getMemberName())) {
+				if (mapeo.isReferenceOverlappingWithSomeProperty(getMemberName())) {					
 					Iterator itPropiedades = mapeo.getOverlappingPropertiesOfReference(getMemberName()).iterator();
+					
 					while (itPropiedades.hasNext()) {
-						String propiedad = (String) itPropiedades.next();
-						String propiedadSolapada = mapeo.getOverlappingPropertyForReference(getMemberName(), propiedad);
-						result.put(propiedad, getParent().getValue(propiedadSolapada, false));
+						String propiedad = (String) itPropiedades.next();						
+						String propiedadSolapada = mapeo.getOverlappingPropertyForReference(getMemberName(), propiedad);						
+						result.put(propiedad, getParent().getValue(propiedadSolapada, false));						
 					}
+					
 				}								
 			}		
 		}
+
 		return result;
 	}
 	

@@ -3,7 +3,6 @@ package org.openxava.test.tests;
 
 import org.openxava.test.ejb.*;
 import org.openxava.tests.*;
-import org.openxava.test.ejb.*;
 
 
 /**
@@ -25,7 +24,7 @@ public class OfficesTest extends ModuleTestBase {
 		deleteAllOffices();
 		// Create offices for test
 		execute("CRUD.new");
-		setValue("zoneNumber", "1");
+		setValue("zoneNumber", "1"); // not key for detecting a bug that arose when this is not key 
 		setValue("number", "1");
 		setValue("name", "OFFICE JUNIT 1");
 		execute("CRUD.save");
@@ -58,7 +57,7 @@ public class OfficesTest extends ModuleTestBase {
 		deleteOffice22();
 						
 		execute("CRUD.new");
-		assertExists("zoneNumber");
+		assertExists("zoneNumber"); // not key for detecting a bug that arose when this is not key
 		assertExists("number");
 		assertNotExists("mainWarehouse.zoneNumber");
 		assertExists("mainWarehouse.number");
@@ -120,7 +119,7 @@ public class OfficesTest extends ModuleTestBase {
 	public void testReadReferenceOverlappedAndNotOverlappedAndFilter() throws Exception {
 		// One overlapped
 		execute("CRUD.new");
-		setValue("zoneNumber", "1");
+		setValue("zoneNumber", "1"); // not key for detecting a bug that arose when this is not key
 		execute("Reference.search", "keyProperty=xava.Office.mainWarehouse.number");
 		assertWarehouseList("1");
 		setConditionValues(new String [] {"1", "2"} );
@@ -140,7 +139,6 @@ public class OfficesTest extends ModuleTestBase {
 	private void deleteOffice22() {
 		try {
 			OfficeKey key = new OfficeKey();
-			key.zoneNumber = 2;
 			key.number = 2;
 			OfficeUtil.getHome().remove(key);
 		}

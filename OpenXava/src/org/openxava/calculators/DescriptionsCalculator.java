@@ -30,7 +30,7 @@ public class DescriptionsCalculator implements IJDBCCalculator {
 	private String model;
 	private String componentName;
 	private String aggregateName;
-	private IMetaEjb metaModel;
+	private transient IMetaEjb metaModel;
 	private transient Map cache;
 	private String select;
 	private boolean orderByKey = false;

@@ -118,13 +118,13 @@
             <description><![CDATA[]]></description>
             <field-name>_Name</field-name>
          </cmp-field>
+         <cmp-field id="CmpAttribute_Office__ZoneNumber">
+            <description><![CDATA[]]></description>
+            <field-name>_ZoneNumber</field-name>
+         </cmp-field>
          <cmp-field id="CmpAttribute_Office_number">
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
-         </cmp-field>
-         <cmp-field id="CmpAttribute_Office_zoneNumber">
-            <description><![CDATA[]]></description>
-            <field-name>zoneNumber</field-name>
          </cmp-field>
          <cmp-field id="CmpAttribute_Office_officeManager_number">
             <description><![CDATA[]]></description>
@@ -161,7 +161,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.number = ?1 AND o.officeManager_number = ?2 AND o.zoneNumber = ?3]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.number = ?1 AND o.officeManager_number = ?2 AND o._ZoneNumber = ?3]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -182,7 +182,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.mainWarehouse_number = ?1 AND o.zoneNumber = ?2]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.mainWarehouse_number = ?1 AND o._ZoneNumber = ?2]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-OfficeBean.xml if you want to define extra finders. -->
 
