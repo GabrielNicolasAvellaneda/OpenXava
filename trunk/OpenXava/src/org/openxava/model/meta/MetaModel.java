@@ -29,7 +29,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	private Collection metaValidators;
 	private Collection metaValidatorsRemove;
 	private MetaComponent metaComponent;
-	private Map propertyDescriptors;
+	private transient Map propertyDescriptors;
 	private Map mapMetaProperties;
 	private Map mapMetaReferences;
 	private Map mapMetaColections;

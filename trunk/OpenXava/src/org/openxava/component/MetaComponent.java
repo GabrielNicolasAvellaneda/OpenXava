@@ -39,9 +39,6 @@ public class MetaComponent implements Serializable {
 	private String packageName;
 
 	
-	MetaComponent() {
-	}
-		
 	/**
 	 * 
 	 * @exception ElementNotFoundException  If component does not exist.
@@ -356,8 +353,6 @@ public class MetaComponent implements Serializable {
 		if (packageNameWithSlashWithoutModel == null) {
 			packageNameWithSlashWithoutModel = Strings.change(getPackageName(), ".", "/");
 			packageNameWithSlashWithoutModel = packageNameWithSlashWithoutModel.substring(0, packageNameWithSlashWithoutModel.lastIndexOf('/'));
-			System.out.println("[MetaComponent.getPackageNameWithSlashWithoutModel] packageNameWithSlashWithoutModel = " + packageNameWithSlashWithoutModel); //  tmp
-			
 		}
 		return packageNameWithSlashWithoutModel;
 	}

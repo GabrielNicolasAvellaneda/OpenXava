@@ -19,5 +19,11 @@ public class CustomersSomeMembersReadOnlyTest extends ModuleTestBase {
 		assertNoEditable("seller.number");
 		assertNoEditable("alternateSeller");
 	}
+	
+	public void test2LevelsReferenceInDescriptionsList() throws Exception {
+		execute("Mode.detailAndFirst");
+		assertValue("number", "1");
+		assertDescriptionValue("alternateSeller.number", "MANAGER JUANVI LLAVADOR");
+	}
 		
 }

@@ -1,26 +1,27 @@
 package org.openxava.calculators;
 
-import java.sql.*;
 import java.util.*;
 
+import javax.swing.table.*;
+
 import org.openxava.component.*;
-import org.openxava.converters.*;
 import org.openxava.filters.*;
 import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
+import org.openxava.tab.impl.*;
+import org.openxava.tab.meta.*;
 import org.openxava.util.*;
-
 
 /**
  * It obtain a description collection. <p>
  * 
+ * Use tab infrastructure for it, so you can make that this execute
+ * within a EJB server or nor configuring tab in xava.properties.
+ * 
  * @author Javier Paniza
  */
-public class DescriptionsCalculator implements IJDBCCalculator {
+public class DescriptionsCalculator implements ICalculator {
 	
-	private boolean removeSpacesInKey;
-	private String packageName;	
-	private IConnectionProvider provider;
 	private String keyProperty;
 	private String keyProperties;
 	private String descriptionProperty;
@@ -32,137 +33,78 @@ public class DescriptionsCalculator implements IJDBCCalculator {
 	private String aggregateName;
 	private transient IMetaEjb metaModel;
 	private transient Map cache;
-	private String select;
 	private boolean orderByKey = false;
 	private boolean useCache = true;
 	private boolean useConvertersInKeys = false;
-
-	private Collection keyPropertiesCollection;	
+	private Collection keyPropertiesCollection;
+	private MetaTab metaTab;	
 	
-
-	public void setConnectionProvider(IConnectionProvider provider) {		
-		this.provider = provider;
-	}
 	
 	/**
-	 * Pure execution, without cache, without call to server,... <p>
+	 * Pure execution, without cache... <p>
 	 * 
 	 * Better call to {@link #getDescriptions} if you wish to use
 	 * directly.<br>
 	 */
 	public Object calculate() throws Exception {		
-	 	checkPreconditions();			 	
-	 	if (!XavaPreferences.getInstance().isDescriptionsCalculatorAsEJB()) {
-	 		setConnectionProvider(DataSourceConnectionProvider.getByComponent(getComponentName()));
-	 	}
-		else if (XSystem.onClient()) {			
-			return Server.calculate(this, getPackageName());
-		}		
-		Connection con = provider.getConnection();		
+	 	checkPreconditions();			 			
 		if (keyProperty == null && keyProperties == null) {
 			throw new XavaException("descriptions_calculator_keyProperty_required", getClass().getName());
 		}
-		try {			
-			String select = getSelect();			
-			PreparedStatement ps = con.prepareStatement(select);			
-			if (hasParameters()) {
-				Iterator it = getParameters().iterator();
-				int i = 1;
-				while (it.hasNext()) {	
-					Object data = it.next();					
-					ps.setObject(i++, data);
-				}	
-				
-			}			
-			ResultSet rs = ps.executeQuery();
-			List result = new ArrayList();
-			if (isMultipleKey()) {
-				readWithMultipleKey(result, rs); 		
-			}
-			else {
-				readWithSimpleKey(result, rs);
-			}
-			rs.close();
-			ps.close();
-			Comparator comparador = isOrderByKey()?
-				KeyAndDescriptionComparator.getByKey():
-				KeyAndDescriptionComparator.getByDescription();						
-			Collections.sort(result, comparador);						
-			return result;
-		}
-		finally {
-			try {
-				con.close();
-			}
-			catch (Exception ex) {
-			}
-		}
-	}
-
-	private String getPackageName() throws XavaException {
-		if (packageName == null) {
-			packageName = MetaComponent.get(getComponentName()).getPackageName();
-		}
-		return packageName;
+		List result = read();
+		Comparator comparador = isOrderByKey()?
+			KeyAndDescriptionComparator.getByKey():
+			KeyAndDescriptionComparator.getByDescription();						
+		Collections.sort(result, comparador);						
+		return result;
 	}
 
 	private void checkPreconditions() throws XavaException {
 		if (Is.emptyString(getModel())) {
 			throw new XavaException("descriptions_calculator_model_required", getClass().getName());
 		}
-		if (Is.emptyString(getKeyProperty()) && Is.emptyString(getKeyProperties())) {
+		if (Is.emptyString(getKeyProperties())) {
 			throw new XavaException("descriptions_calculator_keyProperty_required", getClass().getName());
 		}
-		if (Is.emptyString(getDescriptionProperty()) && Is.emptyString(getDescriptionProperties())) {
+		if (Is.emptyString(getDescriptionProperties())) {
 			throw new XavaException("descriptions_calculator_descriptionProperty_required", getClass().getName());
 		}				
 	}
-
-	private void readWithSimpleKey(Collection result, ResultSet rs) throws Exception {
-		int columns = rs.getMetaData().getColumnCount();
-		while (rs.next()) {
-			KeyAndDescription el = new KeyAndDescription();
-			Object key = getObject(getKeyProperty(), rs, 1, false);
-			if (key instanceof String && isRemoveSpacesInKey()) key = ((String) key).trim();
-			el.setKey(key);
-			el.setDescription(obtainDescription(2, columns, rs));
-			result.add(el);
-		}		
-	}
-
-	private void readWithMultipleKey(Collection result, ResultSet rs) throws Exception {		
-		int columns = rs.getMetaData().getColumnCount();
-		while (rs.next()) {
-			KeyAndDescription el = new KeyAndDescription();
-			int idx=1;		
-			Iterator itKeyNames = getKeyPropertiesCollection().iterator();
-			Map key = new HashMap();
-			while (itKeyNames.hasNext()) {
-				String name = (String) itKeyNames.next();
-				key.put(name, getObject(name, rs, idx++, isUseConvertersInKeys()));
-			}		
-			if(isUseConvertersInKeys()) {			
-				el.setKey(getMetaModel().obtainPrimaryKeyFromKey(key));			
-			} else {
-				el.setKey(getMetaModel().obtainPrimaryKeyFromKeyWithoutConversors(key));			
-			}
-			el.setDescription(obtainDescription(idx, columns, rs));			
-			result.add(el);
-		}		
-	}
 	
-	private String obtainDescription(int idx, int columns, ResultSet rs) throws SQLException {
-		StringBuffer des = new StringBuffer();
-		while (idx <= columns) {			
-			des.append(rs.getObject(idx));				
-			idx++;
-			if (idx <= columns) {
-				des.append(" ");			
+	private List read() throws Exception {
+		List result = new ArrayList();
+		TableModel table = executeQuery();		 
+		for (int i=0; i<table.getRowCount(); i++) {
+			KeyAndDescription el = new KeyAndDescription();			
+			int iKey = 0;
+			if (isMultipleKey()) {
+				Iterator itKeyNames = getKeyPropertiesCollection().iterator();
+				Map key = new HashMap();
+				while (itKeyNames.hasNext()) {
+					String name = (String) itKeyNames.next();
+					key.put(name, table.getValueAt(i, iKey++));
+				}		
+				if(isUseConvertersInKeys()) {			
+					el.setKey(getMetaModel().obtainPrimaryKeyFromKey(key));			
+				} else {
+					el.setKey(getMetaModel().obtainPrimaryKeyFromKeyWithoutConversors(key));			
+				}				
 			}
+			else {
+				el.setKey(table.getValueAt(i, iKey++));
+			}
+			StringBuffer value = new StringBuffer();
+			for (int j=iKey; j<table.getColumnCount(); j++) {
+				value.append(table.getValueAt(i, j));
+				if (j < table.getColumnCount() - 1) value.append(' ');
+			}
+			el.setDescription(value.toString());
+			el.setShowCode(true);
+			if (el.getKey() != null) result.add(el);
 		}
-		return des.toString();				
-	}
-
+		return result;
+	}	
+	
 	private IMetaEjb getMetaModel() throws XavaException {
 		if (metaModel == null) {
 			if (isAggregate()) {
@@ -174,50 +116,11 @@ public class DescriptionsCalculator implements IJDBCCalculator {
 		}
 		return metaModel;
 	}
-
-	private int getKeyFieldsCount() {
-		return getKeyPropertiesCollection().size();
-	}
-
-	
-	private Object getObject(String propertyName, ResultSet rs, int i, boolean useConverter) throws Exception {
-		if (useConverter && getMapping().hasConverter(propertyName)) {
-			return getObjectWithConverter(propertyName, rs, i);
-		}
-		Class type = getCodeType(propertyName);
-		if (!type.isPrimitive()) return rs.getObject(i);
-		if (type.equals(Integer.TYPE)) {
-			return new Integer(rs.getInt(i));
-		}
-		else if (type.equals(Long.TYPE)) {
-			return new Long(rs.getLong(i));
-		}
-		else if (type.equals(Short.TYPE)) {
-			return new Short(rs.getShort(i));
-		}		
-		else if (type.equals(Double.TYPE)) {
-			return new Double(rs.getDouble(i));
-		}		
-		else if (type.equals(Float.TYPE)) {
-			return new Float(rs.getFloat(i));
-		}				
-		return rs.getObject(i);	
-	}
 	
 	private boolean isMultipleKey() {
 		return !Is.emptyString(keyProperties);
 	}
-		
-	private Class getCodeType(String propertyName) throws XavaException {
-		try {
-			return getMapping().getType(propertyName);
-		}
-		catch (Exception ex) {
-			ex.printStackTrace();
-			throw new XavaException("code_type_descriptions_calculator_error", ex.getLocalizedMessage());
-		}
-	}
-	
+			
 	/**
 	 * It uses caché depend on current parameter values. <p>
 	 * 
@@ -275,46 +178,40 @@ public class DescriptionsCalculator implements IJDBCCalculator {
 		
 	public void setKeyProperty(String keyProperty) {		
 		this.keyProperty = keyProperty;		
+		metaTab = null;
 	}
 
 	public void setDescriptionProperty(String descriptionProperty) {
 		this.descriptionProperty = descriptionProperty;
+		metaTab = null;
 	}
 	
-	private String getSelect() throws XavaException {
-		if (select == null) {			
-			ModelMapping mapping = getMapping();
-			StringBuffer sb = new StringBuffer("select ");
-			Iterator itKeyProperties = getKeyPropertiesCollection().iterator();
-			while (itKeyProperties.hasNext()) {
-				String keyProperty = (String) itKeyProperties.next();				
-				sb.append(mapping.getColumn(keyProperty));				
-				sb.append(", ");				
-			}
-			if (Is.emptyString(getDescriptionProperties())) {				
-				sb.append(mapping.getColumn(getDescriptionProperty()));				
-			}
-			else {
-				StringTokenizer st = new StringTokenizer(getDescriptionProperties(), ",");
-				while (st.hasMoreTokens()) {
-					String descriptionProperty = st.nextToken().trim();					
-					sb.append(mapping.getColumn(descriptionProperty));					
-					if (st.hasMoreTokens()) {
-						sb.append(", ");
-					}					
-				}
-			}			
-			sb.append(" from ");
-			sb.append(mapping.getTable());
-			if (hasCondition()) {
-				sb.append(" where ");
-				sb.append(getConditionSQL(mapping));
-			}
-			select = sb.toString();						
+	private MetaTab getMetaTab() throws XavaException {
+		if (metaTab == null) {
+			metaTab = getMetaModel().getMetaComponent().getMetaTab().cloneMetaTab();
+			metaTab.setPropertiesNames(getKeyProperties() + ", " +  getDescriptionProperties());				
+		}
+		return metaTab;
+	}
+	
+	private TableModel executeQuery() throws Exception {
+		IEntityTab tab = EntityTabFactory.createAllData(getMetaTab());		
+		String condition = "";
+		if (hasCondition()) {
+			condition = getConditionSQL(getMapping());
+		}
+		Object [] key = null;
+		if (hasParameters()) {
+			key = new Object[getParameters().size()];
+			Iterator it = getParameters().iterator();
+			for (int i=0; i<key.length; i++) {	
+				key[i] = it.next();
+			}				
 		}				
-		return select;
+		tab.search(condition, key);
+		return tab.getTable();
 	}
-	
+		
 	private boolean hasCondition() {
 		return !Is.emptyString(condition);
 	}
@@ -370,11 +267,6 @@ public class DescriptionsCalculator implements IJDBCCalculator {
 		this.parameters = parameters;				
 	}
 		
-	private Object getObjectWithConverter(String propertyName, ResultSet rs, int i) throws Exception {
-		IConverter converter = getMapping().getConverter(propertyName);
-		return converter.toJava(rs.getObject(i));
-	}
-	
 	/**
 	 * It's used when there are more than one property that
 	 * it's key, or with only one It's preferred use a wrapper
@@ -383,11 +275,12 @@ public class DescriptionsCalculator implements IJDBCCalculator {
 	 * It's exclusive with <tt>keyProperties</tt>. 
 	 */
 	public String getKeyProperties() {
-		return keyProperties;
+		return Is.emptyString(keyProperties)?getKeyProperty():keyProperties;
 	}
 
 	public void setKeyProperties(String keyProperties) {		
 		this.keyProperties = keyProperties;
+		metaTab = null;
 	}
 
 
@@ -428,19 +321,12 @@ public class DescriptionsCalculator implements IJDBCCalculator {
 	}
 
 	public String getDescriptionProperties() {
-		return descriptionProperties;
+		return Is.emptyString(descriptionProperties)?getDescriptionProperty():descriptionProperties;
 	}
 
 	public void setDescriptionProperties(String string) {
 		descriptionProperties = string;
-	}
-
-	public boolean isRemoveSpacesInKey() {
-		return removeSpacesInKey;
-	}
-
-	public void setRemoveSpacesInKey(boolean b) {
-		removeSpacesInKey = b;
+		metaTab = null;
 	}
 
 	public boolean isUseConvertersInKeys() {
