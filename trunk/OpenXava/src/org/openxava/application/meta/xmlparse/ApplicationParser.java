@@ -131,13 +131,14 @@ public class ApplicationParser extends ParserBase {
 	private void fillControllers(Element el, MetaModule container) throws XavaException {
 		NodeList l = el.getElementsByTagName(xcontroller[lang]);
 		int c = l.getLength();
-		if (MetaControllers.WEB.equals(MetaControllers.getContext()) && // in web 
-			!Is.emptyString(container.getModelName()) && // with model
-			Is.emptyString(container.getModeControllerName()) // and withoud mode controller
-		) {
-			container.addControllerName("Navigation");
-			container.addControllerName("List");
-		} 
+		if (MetaControllers.WEB.equals(MetaControllers.getContext())) { // in web
+			container.addControllerName("List");		
+			if (!Is.emptyString(container.getModelName()) && // with model
+				Is.emptyString(container.getModeControllerName()) // and without mode controller
+			) {
+				container.addControllerName("Navigation");				
+			}
+		}
 		for (int i = 0; i < c; i++) {
 			Element elController = (Element) l.item(i);
 			String s = elController.getAttribute(xname[lang]);

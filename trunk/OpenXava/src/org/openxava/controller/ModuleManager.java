@@ -157,14 +157,15 @@ public class ModuleManager {
 		try {									
 			if (errores.isEmpty()) { // solo se ejecuta la acción si no hay errores acumulados
 				// La siguiente condición es para evitar que se ejecuta una acción de otro
-				// módulo visualizado en la misma página web (p. ej. en un portal)
+				// módulo visualizado en la misma página web (p. ej. en un portal)				
 				if (actionOfThisModule(request)) {
-					String accionXava = request.getParameter("xava_action");										
+					String accionXava = request.getParameter("xava_action");					
 					if (isFormUpload()) {
 						accionXava = getDefaultActionQualifiedName(); // En los formulario upload ejecutamos la acción por defecto						
 					}																				
 					if (!Is.emptyString(accionXava)) {						
-						String valorAccion = request.getParameter("xava_action_argv");						
+						String valorAccion = request.getParameter("xava_action_argv");
+						if ("undefined".equals(valorAccion)) valorAccion = null;						
 						MetaAction a = MetaControllers.getMetaAction(accionXava);						
 						long ini = System.currentTimeMillis();
 						executeAction(a, errores, mensajes, valorAccion, request);
@@ -572,11 +573,11 @@ public class ModuleManager {
 			while (it.hasNext()) {
 				MetaAction a = (MetaAction) it.next();
 				if (a.getByDefault() > max) {
-					max = a.getByDefault();
-					defaultActionQualifiedName = a.getQualifiedName();
+					max = a.getByDefault();					
+					defaultActionQualifiedName = a.getQualifiedName();					
 				}
 			}			
-		}
+		}		
 		return defaultActionQualifiedName;
 	}
 	

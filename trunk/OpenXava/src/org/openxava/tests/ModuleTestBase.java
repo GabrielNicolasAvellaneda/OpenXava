@@ -226,6 +226,11 @@ public class ModuleTestBase extends TestCase {
 		return windows[1].getCurrentPage();		
 	}
 	
+	protected void assertNoPopup() throws Exception {
+		WebWindow [] windows = conversation.getOpenWindows();
+		assertTrue(XavaResources.getString("unexpected_popup"), windows.length < 2);
+	}
+	
 	/**
 	 * Código html actual. <p>
 	 * No es aconsejable usarlo mucho pues el test tendría dependencia
