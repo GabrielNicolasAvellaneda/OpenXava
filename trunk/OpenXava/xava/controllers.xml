@@ -49,6 +49,9 @@
 		</action>											</controller>
 	
 	<controller name="AddColumns">
+		<action name="sort" class="org.openxava.actions.SortColumnsAction" image="images/sort.gif">			
+			<use-object name="xava_tab"/>
+		</action>					
 		<action name="addColumns" class="org.openxava.actions.AddColumnsAction">
 			<use-object name="xava_tab"/>			
 		</action>	

@@ -307,28 +307,28 @@
 		<copy file="../${project.ejb}/${meta-inf.dir}/ejb-jar.xml" 
 			toFile="../${project.ejb}/${classes.dir}/META-INF/ejb-jar.xml" 
 			overwrite="yes">
-			<filterset>
-				<filter token="separator" value="${separator}"/>
+			<filterset>				
 				<filtersfile file="${configuration}.properties"/>
+				<filter token="separator" value="${separator}"/>
 			</filterset>
 		</copy>
 		<copy file="../${project.ejb}/${meta-inf.dir}/jboss.xml" 
 			toFile="../${project.ejb}/${classes.dir}/META-INF/jboss.xml" 
 			overwrite="yes">
 			<filterset>
+				<filtersfile file="${configuration}.properties"/>
 				<filter token="subcontext" value="${subcontext}"/>
 				<filter token="datasource" value="${datasource}"/>
-				<filter token="package" value="${domain}/${package}/${ejb.package}"/>
-				<filtersfile file="${configuration}.properties"/>
+				<filter token="package" value="${domain}/${package}/${ejb.package}"/>				
 			</filterset>
 		</copy>
 		<copy file="../${project.ejb}/${meta-inf.dir}/${jboss.mapping.xml}" 
 			toFile="../${project.ejb}/${classes.dir}/META-INF/${jboss.mapping.xml}" 
 			overwrite="yes">
 			<filterset>
+				<filtersfile file="${configuration}.properties"/>				
 				<filter token="datasource" value="${datasource}"/>
-				<filter token="separator" value="${separator}"/>
-				<filtersfile file="${configuration}.properties"/>
+				<filter token="separator" value="${separator}"/>				
 			</filterset>
 		</copy>
 	</target>

@@ -45,6 +45,29 @@ public class ProductsTest extends ModuleTestBase {
 	public ProductsTest(String testName, String module) {
 		super(testName, "OpenXavaTest", module);		
 	}
+	
+	public void testCustomizeList_sortProperties() throws Exception {
+		execute("List.customize");
+		execute("List.addColumns");
+		
+		assertCollectionRowCount("xavaPropertiesList", 4);
+		assertValueInCollection("xavaPropertiesList",  0, 1, "familyNumber");
+		assertValueInCollection("xavaPropertiesList",  1, 1, "subfamilyNumber");
+		assertValueInCollection("xavaPropertiesList",  2, 1, "warehouseKey");
+		assertValueInCollection("xavaPropertiesList",  3, 1, "remarks");
+		 
+		execute("AddColumns.sort");						
+		assertValueInCollection("xavaPropertiesList",  0, 1, "familyNumber");
+		assertValueInCollection("xavaPropertiesList",  1, 1, "remarks");
+		assertValueInCollection("xavaPropertiesList",  2, 1, "subfamilyNumber");
+		assertValueInCollection("xavaPropertiesList",  3, 1, "warehouseKey");
+		
+		execute("AddColumns.sort"); // A second time, unsort it
+		assertValueInCollection("xavaPropertiesList",  0, 1, "familyNumber");
+		assertValueInCollection("xavaPropertiesList",  1, 1, "subfamilyNumber");
+		assertValueInCollection("xavaPropertiesList",  2, 1, "warehouseKey");
+		assertValueInCollection("xavaPropertiesList",  3, 1, "remarks");		
+	}
 		
 	public void testFiltersInDescriptionsEditor() throws Exception {
 		execute("CRUD.new");
