@@ -57,7 +57,26 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		super();
 	}
 	
-	
+	/**
+	 * All models (Entities and Aggregates) with a mapping associated.
+	 * @return of type MetaModel
+	 * @throws XavaException
+	 */
+	public static Collection getAllPersistent() throws XavaException { 
+		Collection r = new HashSet();
+		for (Iterator it = MetaComponent.getAllLoaded().iterator(); it.hasNext();) {
+			MetaComponent comp = (MetaComponent) it.next();
+			r.add(comp.getMetaEntity());						
+			for (Iterator itAggregates = comp.getMetaAggregates().iterator(); itAggregates.hasNext();) {
+				MetaAggregate ag = (MetaAggregate) itAggregates.next();
+				if (ag instanceof MetaAggregateEjb) {
+					r.add(ag);
+				}
+			}
+		}		
+		return r;
+	}
+		
 	public void addMetaFinder(MetaFinder metaBuscador) {
 		if (metaFinders == null) metaFinders = new ArrayList();
 		metaFinders.add(metaBuscador);		

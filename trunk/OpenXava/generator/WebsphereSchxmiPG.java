@@ -9,7 +9,7 @@ import org.openxava.mapping.Mapping;
 
 /**
  * Program Generator created by TL2Java
- * @version Wed Mar 09 11:16:16 CET 2005
+ * @version Wed Mar 09 19:55:26 CET 2005
  */
 public class WebsphereSchxmiPG {
     Properties properties = new Properties();
@@ -32,12 +32,12 @@ public class WebsphereSchxmiPG {
     out.print("\">\n  <database href=\"META-INF/backends/OPENXAVA/DB.dbxmi#DB\"/>");
     
     for (Iterator it=Mapping.getTablesBySchema(schema).iterator(); it.hasNext();) {
-    	String idTable = Strings.change((String) it.next(), ".", "_");
+    	String tableId = Strings.change((String) it.next(), ".", "_");
     
     out.print(" \n  <tables xmi:type=\"RDBSchema:RDBTable\" href=\"META-INF/backends/OPENXAVA/");
-    out.print(idTable);
+    out.print(tableId);
     out.print(".tblxmi#");
-    out.print(idTable);
+    out.print(tableId);
     out.print("\"/>");
     
     }
@@ -77,7 +77,7 @@ public class WebsphereSchxmiPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Wed Mar 09 11:16:16 CET 2005", // date this file was generated
+        { "Wed Mar 09 19:55:26 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/websphereSchxmi.xml", // input file
              "/home/javi/workspace/OpenXava/generator/WebsphereSchxmiPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

@@ -19,7 +19,7 @@
 				<env-entry-type>java.lang.String</env-entry-type>
 				<env-entry-value>jdbc/DataSource</env-entry-value>
 			</env-entry>
-			<resource-ref>
+			<resource-ref id="Server_datasource">
 				<res-ref-name>jdbc/DataSource</res-ref-name>
 				<res-type>javax.sql.DataSource</res-type>
 				<res-auth>Container</res-auth>
@@ -37,7 +37,7 @@
 				<env-entry-type>java.lang.String</env-entry-type>
 				<env-entry-value>jdbc/DataSource</env-entry-value>
 			</env-entry>
-			<resource-ref>
+			<resource-ref id="EntityTab_datasource">
 				<res-ref-name>jdbc/DataSource</res-ref-name>
 				<res-type>javax.sql.DataSource</res-type>
 				<res-auth>Container</res-auth>
