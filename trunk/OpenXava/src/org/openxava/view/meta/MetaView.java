@@ -343,7 +343,7 @@ public class MetaView extends MetaElement implements Cloneable {
 	 */
 	public MetaDescriptionsList getMetaDescriptionList(MetaReference r) throws XavaException {
 		if (!tieneMetaVistaReferenciaPara(r)) return null;
-		MetaReferenceView metaVistaReferencia = getMetaViewReference(r);
+		MetaReferenceView metaVistaReferencia = getMetaReferenceView(r);
 		MetaDescriptionsList metaListaDescripciones = metaVistaReferencia.getMetaDescriptionsList();
 		if (metaListaDescripciones==null) return null;
 		if (Is.emptyString(metaListaDescripciones.getDescriptionPropertyName()) &&
@@ -379,7 +379,7 @@ public class MetaView extends MetaElement implements Cloneable {
 	public MetaView getMetaView(MetaReference r) throws XavaException {
 		MetaView result = null;		
 		if (tieneMetaVistaReferenciaPara(r)) {			
-			MetaReferenceView metaVistaReferencia = getMetaViewReference(r);
+			MetaReferenceView metaVistaReferencia = getMetaReferenceView(r);
 			String nombreVista = metaVistaReferencia.getViewName();
 			if (Is.emptyString(nombreVista)) {
 				result = r.getMetaModelReferenced().getMetaViewByDefault();				
@@ -428,7 +428,7 @@ public class MetaView extends MetaElement implements Cloneable {
 	/**
 	 * @return Nulo si no existe
 	 */
-	public MetaReferenceView getMetaViewReference(MetaReference r) {
+	public MetaReferenceView getMetaReferenceView(MetaReference r) {
 		if (metaViewsReferences == null) {
 			return null;
 		}
@@ -530,7 +530,7 @@ public class MetaView extends MetaElement implements Cloneable {
 	 * @param string
 	 * @return Nulo si no existe.
 	 */
-	public MetaCollectionView getMetaViewCollection(String nombreColeccion) {		
+	public MetaCollectionView getMetaCollectionView(String nombreColeccion) {		
 		if (metaViewsCollections == null) return null;
 		return (MetaCollectionView) metaViewsCollections.get(nombreColeccion);				
 	}

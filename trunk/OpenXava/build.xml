@@ -64,9 +64,26 @@
 		</copy>
 		    
 	</target>
+	
+	<target name="filterXavaFilesWithoutConfiguration" unless="configuration">
+		<!-- to replace within xava files -->
+		<copy todir="../${project.ejb}/${classes.dir}" overwrite="yes">		
+			<fileset dir="../${project.ejb}/xava"/>
+	    	<filterset>	    	
+				<filter token="separator" value="${separator}"/>
+			</filterset> 			         
+		</copy>			
+		<!-- to replace within xava components -->
+		<copy todir="../${project.ejb}/${classes.dir}" overwrite="yes">		
+			<fileset dir="../${project.ejb}/components"/>
+	    	<filterset>	    	
+				<filter token="separator" value="${separator}"/>
+			</filterset> 			         
+		</copy>				
+	</target>
     
     	
-	<target name="filterXavaFiles" depends="copyDTDs">
+	<target name="filterXavaFilesWithConfiguration" if="configuration">
 		<!-- to replace within xava files -->
 		<copy todir="../${project.ejb}/${classes.dir}" overwrite="yes">		
 			<fileset dir="../${project.ejb}/xava"/>
@@ -79,12 +96,17 @@
 		<copy todir="../${project.ejb}/${classes.dir}" overwrite="yes">		
 			<fileset dir="../${project.ejb}/components"/>
 	    	<filterset>	    	
-			<filtersfile file="${configuration}.properties"/>				
+				<filtersfile file="${configuration}.properties"/>				
 				<filter token="separator" value="${separator}"/>
 			</filterset> 			         
 		</copy>				
 	</target>
 	
+	<target name="filterXavaFiles" depends="copyDTDs">
+		<antcall target="filterXavaFilesWithConfiguration"/>
+		<antcall target="filterXavaFilesWithoutConfiguration"/>
+	</target>
+		
 	<target name="generateWebsphereMapping">
 		<echo>Generating xml template for Websphere Mapping</echo>
 		<java classname="Simple2XML" classpath="${tl.lib}">
@@ -401,6 +423,15 @@
 	<target name="updateDataSourceInfo">
 		<echo file="../${project.ejb}/${classes.dir}/datasource.properties">${domain}/${package}/${ejb.package}=${datasource}</echo>
 	</target>
+	
+	<target name="filterI18n" if="configuration">
+  		<copy todir="../${project}/web/WEB-INF/classes" overwrite="true">
+    		<fileset dir="../${project}/i18n"/>
+	    	<filterset>	    	
+				<filtersfile file="${configuration}.properties"/>				
+			</filterset> 			             		
+  		</copy>			
+	</target>
 				
 	<target name="createWar" depends="createDist, updateDataSourceInfo">
   		<copy todir="../${project}/web/xava">
@@ -412,12 +443,7 @@
 		<antcall target="filterXavaFiles">  		
 			<param name="classes.dir" value="web/WEB-INF/classes"/>
 		</antcall>
-  		<copy todir="../${project}/web/WEB-INF/classes" overwrite="true">
-    		<fileset dir="../${project}/i18n"/>
-	    	<filterset>	    	
-				<filtersfile file="${configuration}.properties"/>				
-			</filterset> 			             		
-  		</copy>	
+		<antcall target="filterI18n"/>  		
 		<copy file="../OpenXava/bin/Messages_${default.language}.properties" 
 			tofile="../OpenXava/bin/Messages.properties"/>
 		<copy file="../OpenXava/bin/Labels_${default.language}.properties" 

@@ -394,7 +394,7 @@ public class ModuleTestBase extends TestCase {
 	
 	
 	protected String getValueInCollection(String coleccion, int fila, String name) throws Exception {		
-		MetaCollectionView metaVistaColeccion = getMetaView().getMetaViewCollection(coleccion);
+		MetaCollectionView metaVistaColeccion = getMetaView().getMetaCollectionView(coleccion);
 		List propiedadesLista = metaVistaColeccion.getPropertiesListNames();
 		if (propiedadesLista.isEmpty()) propiedadesLista = getMetaModel().getPropertiesNames();
 		int columna = propiedadesLista.indexOf(name);

@@ -12,6 +12,7 @@ public class MetaReferenceView implements java.io.Serializable {
 	private boolean frame = true;
 	private boolean create;
 	private boolean search;
+	private boolean readOnly;
 	
 	
 	/**
@@ -97,5 +98,11 @@ public class MetaReferenceView implements java.io.Serializable {
 	}
 	public void setSearch(boolean search) {
 		this.search = search;
+	}
+	public boolean isReadOnly() {
+		return readOnly;
+	}
+	public void setReadOnly(boolean readOnly) {
+		this.readOnly = readOnly;
 	}
 }

@@ -57,6 +57,7 @@
 <!ATTLIST reference-view
   reference CDATA #REQUIRED
   view CDATA #IMPLIED
+	read-only (true|false) "false"
   frame (true|false) "true"
 	create (true|false) "true"
 	search (true|false) "true"
