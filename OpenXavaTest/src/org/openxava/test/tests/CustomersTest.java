@@ -233,7 +233,7 @@ public class CustomersTest extends ModuleTestBase {
 		execute("CRUD.delete");	
 		execute("ConfirmDelete.confirmDelete");											
 		assertNoErrors();
-		assertMessage("Object deleted successfully");
+		assertMessage("Customer deleted successfully");
 	}
 		
 	public void testSearchReferenceOnChangeCodeAndOnChangeActionInSubview() throws Exception {
@@ -343,7 +343,7 @@ public class CustomersTest extends ModuleTestBase {
 		execute("CRUD.delete");	
 		execute("ConfirmDelete.confirmDelete");											
 		assertNoErrors();
-		assertMessage("Object deleted successfully");
+		assertMessage("Customer deleted successfully");
 	}
 	
 	public void testIfKeyNotExistsInReferenceNotExecuteAction() throws Exception {
@@ -454,7 +454,7 @@ public class CustomersTest extends ModuleTestBase {
 		execute("CRUD.delete");	
 		execute("ConfirmDelete.confirmDelete");											
 		assertNoErrors();
-		assertMessage("Object deleted successfully");
+		assertMessage("Customer deleted successfully");
 	}
 
 	public void testSetEditableOfReferences() throws Exception {

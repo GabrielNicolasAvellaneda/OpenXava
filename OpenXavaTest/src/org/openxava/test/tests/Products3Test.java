@@ -38,7 +38,7 @@ public class Products3Test extends ModuleTestBase {
 		execute("CRUD.delete");
 		assertNoAction("Reference.search");
 		execute("ConfirmDelete.confirmDelete");
-		assertMessage("Object deleted successfully");
+		assertMessage("Product deleted successfully");
 	}
 						
 }

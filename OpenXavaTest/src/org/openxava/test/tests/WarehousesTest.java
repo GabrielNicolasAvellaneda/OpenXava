@@ -105,7 +105,7 @@ public class WarehousesTest extends ModuleTestBase {
 		assertNoAction("Warehouses.toLowerCase");
 		assertAction("Warehouses.changeZone");
 		
-		assertMessage("Object deleted successfully");
+		assertMessage("Warehouse deleted successfully");
 		// Verifying is deleted
 		execute("CRUD.new");
 		setValue("zoneNumber", "66");

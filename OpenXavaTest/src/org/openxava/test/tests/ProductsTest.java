@@ -161,7 +161,7 @@ public class ProductsTest extends ModuleTestBase {
 		assertValue("description", "TEST PRODUCT");		
 		execute("ConfirmDelete.confirmDelete");
 		assertActions(detailActions);
-		assertMessage("Object deleted successfully");		
+		assertMessage("Product deleted successfully");		
 	}
 	
 	public void testValueCalculatedDependent() throws Exception {

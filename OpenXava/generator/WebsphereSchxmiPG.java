@@ -9,7 +9,7 @@ import org.openxava.mapping.Mapping;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Mar 03 12:10:56 CET 2005
+ * @version Fri Mar 04 10:49:29 CET 2005
  */
 public class WebsphereSchxmiPG {
     Properties properties = new Properties();
@@ -77,7 +77,7 @@ public class WebsphereSchxmiPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Mar 03 12:10:56 CET 2005", // date this file was generated
+        { "Fri Mar 04 10:49:29 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/websphereSchxmi.xml", // input file
              "/home/javi/workspace/OpenXava/generator/WebsphereSchxmiPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
