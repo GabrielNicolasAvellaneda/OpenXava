@@ -21,9 +21,14 @@ Store oid of family and not the code
 		<reference-view reference="family">
 			<descriptions-list/>
 		</reference-view>
+
 		<property-view property="family.oid">
 			<on-change class="org.openxava.test.actions.OnChangeFamilyAction"/>
 		</property-view>		
+
+		<property-view property="description">
+			<on-change class="org.openxava.test.actions.OnChangeProduct3DescriptionAction"/>
+		</property-view>						
 	</view>
 		
 	<entity-mapping table="XAVATEST@separator@PRODUCT3">

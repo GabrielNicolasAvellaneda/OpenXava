@@ -12,6 +12,14 @@ public class Products3WithDescriptionsListTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Products3WithDescriptionsList");		
 	}
 	
+	public void testSetEditableOnChangeActionWhenSearch() throws Exception {
+		execute("CRUD.new");
+		setValue("number", "77");
+		execute("CRUD.search");
+		assertValue("description", "ANATHEMA");
+		assertNoEditable("description");
+	}
+	
 	public void testDescriptionsListWithHiddenKeyThrowsChanged() throws Exception {
 		execute("CRUD.new");
 		assertNoErrors();

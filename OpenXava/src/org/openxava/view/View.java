@@ -75,7 +75,7 @@ public class View {
 	private Set noEditablesMemberNames;
 	private HttpServletRequest request;
 	private Collection depends;
-	private boolean haveToSearchOnChangeIfSubview = true;
+	private boolean hasToSearchOnChangeIfSubview = true;
 	private View [] sectionsViews;
 	private int activeSection;
 	private String memberName;
@@ -328,35 +328,42 @@ public class View {
 	}
 	
 	public void setValuesNotifying(Map values) throws XavaException {		
-		setValues(values);		
-		Iterator it = values.keySet().iterator();
-		String key = null;
-		String qualifier = null;
-		if (isSubview()) {
-			qualifier = getMemberName() + ".";
-		}
-		while (it.hasNext()) {
-			String property = (String) it.next();
-			if (property.equals(getLastPropertyKeyName())) {
-				key = property;
+		setValues(values);
+		hasToSearchOnChangeIfSubview = false; 
+		try { 
+			Iterator it = values.keySet().iterator();
+			String key = null;
+			String qualifier = null;
+			if (isSubview()) {
+				qualifier = getMemberName() + ".";
 			}
-			else {
-				if (qualifier == null) {
-					propertyChanged(property);	
+			while (it.hasNext()) {
+				String property = (String) it.next();
+				if (property.equals(getLastPropertyKeyName())) {
+					key = property;
 				}
 				else {
-					getParent().propertyChanged(qualifier + property);
-				}				
-			}							
-		}
-		if (key != null) {				
-			if (qualifier == null) {
-				propertyChanged(key);	
+					if (qualifier == null) {
+						propertyChanged(property);	
+					}
+					else {
+						getParent().propertyChanged(qualifier + property);
+					}				
+				}							
 			}
-			else {
-				getParent().propertyChanged(qualifier + key);
-			}							
+			if (key != null) {				
+				if (qualifier == null) {
+					propertyChanged(key);	
+				}
+				else {
+					getParent().propertyChanged(qualifier + key);
+				}							
+			}		
+		} 
+		finally { 
+			hasToSearchOnChangeIfSubview = true;
 		}
+		
 				
 	}
 	
@@ -1014,11 +1021,11 @@ public class View {
 				while (itPuestos.hasNext()) {
 					String nombrePropiedad = (String) itPuestos.next();										
 					try {
-						haveToSearchOnChangeIfSubview = false;
+						hasToSearchOnChangeIfSubview = false;
 						propertyChanged(nombrePropiedad);
 					}
 					finally {
-						haveToSearchOnChangeIfSubview = true;						
+						hasToSearchOnChangeIfSubview = true;						
 					}
 				}
 			}
@@ -1497,7 +1504,7 @@ public class View {
 			}
 		}	
 		
-		if (haveToSearchOnChangeIfSubview && isSubview() && 
+		if (hasToSearchOnChangeIfSubview && isSubview() && 
 				( 
 				(getLastPropertyKeyName().equals(cambiada.getName()) && metaPropiedadesContiene(cambiada)) || // visible keys
 				(!hasKeyProperties() && cambiada.isKey() && cambiada.isHidden()) // hidden keys
