@@ -30,6 +30,8 @@ public abstract class DeliveryCMP
          dataHolder.setDate_year( getDate_year() );
          dataHolder.setNumber( getNumber() );
          dataHolder.setType_number( getType_number() );
+         dataHolder.setShipment_type( getShipment_type() );
+         dataHolder.setShipment_number( getShipment_number() );
          dataHolder.setCarrier_number( getCarrier_number() );
          dataHolder.setInvoice_year( getInvoice_year() );
          dataHolder.setInvoice_number( getInvoice_number() );
@@ -57,6 +59,8 @@ public abstract class DeliveryCMP
          setDate_day( dataHolder.getDate_day() );
          setDate_month( dataHolder.getDate_month() );
          setDate_year( dataHolder.getDate_year() );
+         setShipment_type( dataHolder.getShipment_type() );
+         setShipment_number( dataHolder.getShipment_number() );
          setCarrier_number( dataHolder.getCarrier_number() );
 
       }
@@ -122,6 +126,8 @@ public abstract class DeliveryCMP
             DeliveryValue.setDate( getDate() );
             DeliveryValue.setNumber( getNumber() );
             DeliveryValue.setType_number( getType_number() );
+            DeliveryValue.setShipment_type( getShipment_type() );
+            DeliveryValue.setShipment_number( getShipment_number() );
             DeliveryValue.setCarrier_number( getCarrier_number() );
             DeliveryValue.setInvoice_year( getInvoice_year() );
             DeliveryValue.setInvoice_number( getInvoice_number() );
@@ -150,6 +156,8 @@ public abstract class DeliveryCMP
 		 setVehicle( valueHolder.getVehicle() );
 		 setTransportMode( valueHolder.getTransportMode() );
 		 setDate( valueHolder.getDate() );
+		 setShipment_type( valueHolder.getShipment_type() );
+		 setShipment_number( valueHolder.getShipment_number() );
 		 setCarrier_number( valueHolder.getCarrier_number() );
 
 	  }
@@ -208,6 +216,14 @@ public abstract class DeliveryCMP
    public abstract int getType_number() ;
 
    public abstract void setType_number( int type_number ) ;
+
+   public abstract java.lang.Integer getShipment_type() ;
+
+   public abstract void setShipment_type( java.lang.Integer shipment_type ) ;
+
+   public abstract int getShipment_number() ;
+
+   public abstract void setShipment_number( int shipment_number ) ;
 
    public abstract java.lang.Integer getCarrier_number() ;
 

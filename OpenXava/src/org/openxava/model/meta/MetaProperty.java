@@ -86,6 +86,10 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		}
 	}
 	
+	public int getValidValueIndex(Object value) { 
+		return getValidValues().indexOf(value);
+	}
+	
 	public String getValidValueLabel(ServletRequest request, int i) { 	
 		return getValidValueLabel(XavaResources.getLocale(request), i);
 	}

@@ -35,6 +35,10 @@ public class DeliveryValue
    private boolean numberHasBeenSet = false;
    private int type_number;
    private boolean type_numberHasBeenSet = false;
+   private java.lang.Integer shipment_type;
+   private boolean shipment_typeHasBeenSet = false;
+   private int shipment_number;
+   private boolean shipment_numberHasBeenSet = false;
    private java.lang.Integer carrier_number;
    private boolean carrier_numberHasBeenSet = false;
    private int invoice_year;
@@ -73,6 +77,10 @@ public class DeliveryValue
 	  numberHasBeenSet = true;
 	  this.type_number = otherValue.type_number;
 	  type_numberHasBeenSet = true;
+	  this.shipment_type = otherValue.shipment_type;
+	  shipment_typeHasBeenSet = true;
+	  this.shipment_number = otherValue.shipment_number;
+	  shipment_numberHasBeenSet = true;
 	  this.carrier_number = otherValue.carrier_number;
 	  carrier_numberHasBeenSet = true;
 	  this.invoice_year = otherValue.invoice_year;
@@ -249,6 +257,34 @@ public class DeliveryValue
    public boolean type_numberHasBeenSet(){
 	  return type_numberHasBeenSet;
    }
+   public java.lang.Integer getShipment_type()
+   {
+	  return this.shipment_type;
+   }
+
+   public void setShipment_type( java.lang.Integer shipment_type )
+   {
+	  this.shipment_type = shipment_type;
+	  shipment_typeHasBeenSet = true;
+   }
+
+   public boolean shipment_typeHasBeenSet(){
+	  return shipment_typeHasBeenSet;
+   }
+   public int getShipment_number()
+   {
+	  return this.shipment_number;
+   }
+
+   public void setShipment_number( int shipment_number )
+   {
+	  this.shipment_number = shipment_number;
+	  shipment_numberHasBeenSet = true;
+   }
+
+   public boolean shipment_numberHasBeenSet(){
+	  return shipment_numberHasBeenSet;
+   }
    public java.lang.Integer getCarrier_number()
    {
 	  return this.carrier_number;
@@ -296,7 +332,7 @@ public class DeliveryValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("dateAsLabel=" + getDateAsLabel() + " " + "distance=" + getDistance() + " " + "incidents=" + getIncidents() + " " + "driverType=" + getDriverType() + " " + "remarks=" + getRemarks() + " " + "employee=" + getEmployee() + " " + "description=" + getDescription() + " " + "vehicle=" + getVehicle() + " " + "transportMode=" + getTransportMode() + " " + "date=" + getDate() + " " + "number=" + getNumber() + " " + "type_number=" + getType_number() + " " + "carrier_number=" + getCarrier_number() + " " + "invoice_year=" + getInvoice_year() + " " + "invoice_number=" + getInvoice_number());
+	  str.append("dateAsLabel=" + getDateAsLabel() + " " + "distance=" + getDistance() + " " + "incidents=" + getIncidents() + " " + "driverType=" + getDriverType() + " " + "remarks=" + getRemarks() + " " + "employee=" + getEmployee() + " " + "description=" + getDescription() + " " + "vehicle=" + getVehicle() + " " + "transportMode=" + getTransportMode() + " " + "date=" + getDate() + " " + "number=" + getNumber() + " " + "type_number=" + getType_number() + " " + "shipment_type=" + getShipment_type() + " " + "shipment_number=" + getShipment_number() + " " + "carrier_number=" + getCarrier_number() + " " + "invoice_year=" + getInvoice_year() + " " + "invoice_number=" + getInvoice_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -421,6 +457,15 @@ public class DeliveryValue
 		 {
 			lEquals = lEquals && this.date.equals( that.date );
 		 }
+		 if( this.shipment_type == null )
+		 {
+			lEquals = lEquals && ( that.shipment_type == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.shipment_type.equals( that.shipment_type );
+		 }
+		 lEquals = lEquals && this.shipment_number == that.shipment_number;
 		 if( this.carrier_number == null )
 		 {
 			lEquals = lEquals && ( that.carrier_number == null );
@@ -463,6 +508,10 @@ public class DeliveryValue
       result = 37*result + (int) number;
 
       result = 37*result + (int) type_number;
+
+      result = 37*result + ((this.shipment_type != null) ? this.shipment_type.hashCode() : 0);
+
+      result = 37*result + (int) shipment_number;
 
       result = 37*result + ((this.carrier_number != null) ? this.carrier_number.hashCode() : 0);
 

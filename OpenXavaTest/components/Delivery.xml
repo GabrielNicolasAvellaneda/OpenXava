@@ -39,6 +39,7 @@
 		<property name="driverType" type="String" size="20"/>
 		<reference name="carrier"/>
 		<property name="employee" type="String"/>
+		<reference name="shipment"/> 
 		<property name="remarks" stereotype="MEMO" size="500"/>
 		<property name="incidents" stereotype="MEMO" size="500"/>
 		
@@ -102,12 +103,17 @@
 		<reference-view reference="carrier">
 			<descriptions-list/>
 		</reference-view>
+		<reference-view reference="shipment">	
+			<descriptions-list/>
+		</reference-view>
+		
 		
 		<members>
 			invoice;			
 			type, number;			
 			date;
 			description;
+			shipment;
 			distance, vehicle, transportMode, driverType;
 			deliveredBy, carrier, employee;			
 			<section name="remarks">advice; remarks</section>
@@ -174,6 +180,15 @@
 			property="remarks" column="REMARKS"/>									
 		<property-mapping			
 			property="incidents" column="INCIDENTS"/>																	
+		<reference-mapping reference="shipment">
+			<reference-mapping-detail 
+				column="SHIPMENT_TYPE" 
+				referenced-model-property="type"/> 
+			<reference-mapping-detail 
+				column="SHIPMENT_NUMBER" 
+				referenced-model-property="number"/> 				
+		</reference-mapping>							
+			
 	</entity-mapping>
 	
 </component>

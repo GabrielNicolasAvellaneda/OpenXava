@@ -11,8 +11,8 @@
 	<entity>  
 		<property name="type" key="true" required="true">
 			<valid-values>
-				<valid-value value="Internal"/>
-				<valid-value value="External"/>
+				<valid-value value="internal"/>
+				<valid-value value="external"/>
 			</valid-values>
 		</property>
 		<property name="number" type="int" key="true" size="5" required="true"/>
