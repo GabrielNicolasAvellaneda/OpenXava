@@ -80,6 +80,11 @@
 			<set property="newView" value="Simple"/>
 			<use-object name="xava_view"/>
 		</action>
+		<action name="changeNameLabel" mode="detail" class="org.openxava.test.actions.ChangeLabelAction">				
+				<set property="property" value="name"/>
+				<set property="label" value="Malnom"/>
+				<use-object name="xava_view"/>
+		</action>				
 	</controller>
 	
 	<controller name="CustomersNewOnInit">
@@ -182,12 +187,6 @@
 	<controller name="Warehouses">
 		
 		<action name="changeZone" mode="detail" class="org.openxava.test.actions.ChangeZoneAction"/>				
-		
-		<action name="changeNameLabel" mode="detail" class="org.openxava.test.actions.ChangeLabelAction">				
-				<set property="property" value="name"/>
-				<set property="label" value="Malnom"/>
-				<use-object name="xava_view"/>
-		</action>
 		
 		<action name="toLowerCase" mode="list"
 			class="org.openxava.test.actions.ChangeToLowerCaseAction">
