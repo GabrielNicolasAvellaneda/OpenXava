@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+
+<project name="OpenXavaDoc" default="deploy" basedir=".">
+
+	<property name="xava.version" value="1.0"/>
+	<property name="xava.workspace" value="/home/javi/openxava-1.0/workspace"/>
+	<property file="../openxava.properties"/>
+	<property name="jetspeed.dir" value="${jboss.dir}/server/default/deployable/openxava.war"/>
+
+	<target name="apidoc">
+		<javadoc
+			destdir="${jetspeed.dir}/apidocs"
+			author="true"
+			version="true"
+			use="true"
+			windowtitle="OpenXava ${xava.version} API">
+
+		    <fileset dir="${xava.workspace}/OpenXava/src" defaultexcludes="yes"/>
+
+		    <doctitle><![CDATA[<h1>OpenXava ${xava.version} API</h1>]]></doctitle>
+		  </javadoc>
+	</target>
+
+	<target name="deploy">
+		<copy file="openxava.xreg" todir="${jetspeed.dir}/WEB-INF/conf" overwrite="true"/>
+  		<copy
+  			todir="${jetspeed.dir}/images"
+  			overwrite="true">
+    		<fileset dir="images"/>
+  		</copy>		
+  		<copy
+  			todir="${jetspeed.dir}/html"
+  			overwrite="true">
+    		<fileset dir="common"/>
+  		</copy>
+  		<copy
+  			todir="${jetspeed.dir}/html/en"
+  			overwrite="true">
+    		<fileset dir="en"/>
+  		</copy>
+  		<copy 
+  			todir="${jetspeed.dir}/html/es" 
+  			overwrite="true">
+    		<fileset dir="es"/>    		
+  		</copy>			
+		<touch file="${jetspeed.dir}/WEB-INF/web.xml"/>
+	</target>
+				
+</project>
