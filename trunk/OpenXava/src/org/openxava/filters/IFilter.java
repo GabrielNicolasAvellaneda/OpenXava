@@ -1,17 +1,18 @@
 package org.openxava.filters;
 
 /**
- * Para filtrar el valor de los parametros enviados a las consultas. <p> 
+ * To filter the parameters value sent to searchs. <p>
+ * 
+ * Used in tabs (list mode) and in descriptions list. 
  * 
  * @author Javier Paniza
  */
 public interface IFilter extends java.io.Serializable {
 	
 	/**	  
-	 * @param o Argumento a filtrar. Un objeto
-	 * @return Argumento filtrado. Puede ser un array de objetos.
-	 * @throws FilterException Cualquier otro error. Bien de sistema o de
-	 * 			programación.
+	 * @param o Argument to filter. A object.
+	 * @return Argument filtered. Can be a object array.
+	 * @throws FilterException Any problem.
 	 */
 	Object filter(Object o) throws FilterException;
 }

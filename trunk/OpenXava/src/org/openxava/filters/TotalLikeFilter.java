@@ -1,7 +1,7 @@
 package org.openxava.filters;
 
 /**
- * Pone % delante y detras.
+ * Put a % before and after.
  * 
  * @author Javier Paniza
  */

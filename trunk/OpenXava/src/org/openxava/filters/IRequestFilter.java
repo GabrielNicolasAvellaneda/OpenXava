@@ -5,10 +5,10 @@ import javax.servlet.http.*;
 
 
 /**
- * Filtro que recibe una request http antes de filtrar. <p>
+ * Filter that receive a HTTP request before filter.
  * 
- * Evidentemente estos filtros no funcionaran en una
- * versión swing, pero ofrecen una flexibilidad necesaria.<br>
+ * Evidently these filters did not work in a swing version, 
+ * but they offer a necessary flexibility.
  *  
  * @author Javier Paniza
  */
