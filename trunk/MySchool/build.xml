@@ -5,29 +5,29 @@
 	<property name="project" value="MySchool" />
 	<property name="package" value="school"/>
 	<property name="configuration" value="myschool" />	
-	<property file="../xavax-global.properties"/>
+	<property file="../openxava.properties"/>
 	<property file="${configuration}.properties"/>
 	<property name="datasource" value="MySchoolDS"/>
 	<property name="separator" value="_"/>
 		
 	<target name="generateEJB">
-		<ant antfile="../xavax/build.xml" target="generateEJB"/>		
+		<ant antfile="../OpenXava/build.xml" target="generateEJB"/>		
 	</target>
 	
 	<target name="regenerateEJB">
-		<ant antfile="../xavax/build.xml" target="regenerateEJB"/>		
+		<ant antfile="../OpenXava/build.xml" target="regenerateEJB"/>		
 	</target>
 		       
 	<target name="createEJBJar">
-        <ant antfile = "../xavax/build.xml" target="createEJBJar"/>      		
+        <ant antfile = "../OpenXava/build.xml" target="createEJBJar"/>      		
 	</target>
 		
 	<target name="deployEJB" depends ="createEJBJar">		
-		<ant antfile="../xavax/build.xml" target="deployEJB"/>
+		<ant antfile="../OpenXava/build.xml" target="deployEJB"/>
 	</target>
 		
 	<target name="deployWar">
-		<ant antfile="../xavax/build.xml" target="deployWar"/>
+		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
 	</target>
 						
 </project>

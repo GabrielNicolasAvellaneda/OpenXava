@@ -7,15 +7,15 @@
 
    <enterprise-beans>
 
-  <!-- xavax Sessions Beans -->
+  <!-- OpenXava Sessions Beans -->
 
         <session>
             <ejb-name>MapFacade</ejb-name>
-            <jndi-name>MySchool/ejb/org/xavax/school/model/MapFacade</jndi-name>
+            <jndi-name>MySchool/ejb/org/openxava/school/model/MapFacade</jndi-name>
         </session>
         <session>
             <ejb-name>Server</ejb-name>
-            <jndi-name>MySchool/ejb/org/xavax/school/model/Server</jndi-name>
+            <jndi-name>MySchool/ejb/org/openxava/school/model/Server</jndi-name>
             <resource-ref>
                 <res-ref-name>jdbc/DataSource</res-ref-name>
                 <resource-name>jdbc/DataSource</resource-name>
@@ -23,7 +23,7 @@
         </session>        
         <session>
             <ejb-name>EntityTab</ejb-name>
-            <jndi-name>MySchool/ejb/org/xavax/school/model/EntityTab</jndi-name>
+            <jndi-name>MySchool/ejb/org/openxava/school/model/EntityTab</jndi-name>
             <resource-ref>
                 <res-ref-name>jdbc/DataSource</res-ref-name>
                 <resource-name>jdbc/DataSource</resource-name>
@@ -32,7 +32,7 @@
 
       <entity>
          <ejb-name>Teacher</ejb-name>
-         <jndi-name>MySchool/ejb/org.xavax.school.model/Teacher</jndi-name>
+         <jndi-name>MySchool/ejb/org.openxava.school.model/Teacher</jndi-name>
          <resource-ref>
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <resource-name>jdbc/DataSource</resource-name>

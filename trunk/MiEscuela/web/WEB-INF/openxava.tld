@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+
+<taglib>
+   <tlibversion>1.0</tlibversion>
+   <jspversion>1.1</jspversion>
+   <shortname>OpenXava</shortname>
+   <uri></uri>
+   <info>OpenXava tag library</info>
+
+  <tag>
+    <name>link</name>
+    <tagclass>org.openxava.web.taglib.LinkTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>JavaScript link to execute xava action</info>
+    <attribute>
+       <name>action</name>
+       <required>true</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+       <name>argv</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>    
+  </tag>         
+  
+  <tag>
+    <name>button</name>
+    <tagclass>org.openxava.web.taglib.ButtonTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>JavaScript button to execute xava action</info>
+    <attribute>
+       <name>action</name>
+       <required>true</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>         
+  
+  <tag>
+    <name>image</name>
+    <tagclass>org.openxava.web.taglib.ImageTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>JavaScript image to execute xava action</info>
+    <attribute>
+       <name>action</name>
+       <required>true</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+       <name>argv</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>        
+  </tag>         
+  
+  <tag>
+    <name>action</name>
+    <tagclass>org.openxava.web.taglib.ActionTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>Link or Image with javascript to execute a xava action</info>
+    <attribute>
+       <name>action</name>
+       <required>true</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+       <name>argv</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>    
+  </tag>         
+      
+</taglib>
