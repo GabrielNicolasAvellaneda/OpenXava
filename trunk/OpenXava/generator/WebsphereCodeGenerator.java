@@ -3,6 +3,7 @@ import org.openxava.util.*;
 import org.openxava.mapping.*;
 import org.openxava.component.*;
 import org.openxava.model.meta.*;
+
 import java.io.*;
 import java.util.*;
 
@@ -10,6 +11,8 @@ import java.util.*;
  * @author Javier Paniza
  */
 public class WebsphereCodeGenerator extends CodeGenerator {
+	
+	private String backendPath;
 	
 	public static void main(String [] argv) {
 		if (argv.length != 4) {
@@ -32,7 +35,7 @@ public class WebsphereCodeGenerator extends CodeGenerator {
 	}
 		
 	public void generate(String componentsPath, String [] components) throws Exception {		
-		String backendPath = "../" + getProject() + "/build/ejb/META-INF/backends/OPENXAVA";			
+		backendPath = "../" + getProject() + "/build/ejb/META-INF/backends/OPENXAVA";			
 		File dirBackend = new File(backendPath);
 		dirBackend.mkdirs();
  
@@ -44,7 +47,7 @@ public class WebsphereCodeGenerator extends CodeGenerator {
 		WebsphereDbxmiPG.main(argv);
 		
 		// Generate schxmi
-		for (Iterator it=ModelMapping.getSchemas().iterator(); it.hasNext();) {
+		for (Iterator it=Mapping.getSchemas().iterator(); it.hasNext();) {
 			String schema = (String) it.next();
 			String [] argvSch = {				
 				"../OpenXava/xava/controllers.xml", // A XML file is required, but it's not used
@@ -54,10 +57,32 @@ public class WebsphereCodeGenerator extends CodeGenerator {
 		
 			WebsphereSchxmiPG.main(argvSch);
 		}
-		
+		super.generate(componentsPath, components);
 	}
 	
 	protected void generate(MetaComponent component, String componentsPath, String file) throws Exception {		
+		String tableId = Strings.change(component.getEntityMapping().getTable(), ".", "_");
+		String [] argv = {				
+			componentsPath  + "/" + file,				
+			backendPath + "/" + tableId + ".tblxmi",			
+			component.getName()								
+		};
+		WebsphereTblxmiPG.main(argv);
+		
+		Iterator itAggregatesBean = component.getMetaAggregatesBeanGenerated().iterator();
+		while (itAggregatesBean.hasNext()) {
+			MetaAggregateBean aggregate = (MetaAggregateBean) itAggregatesBean.next();
+			String aggregateName = aggregate.getName();
+			String aggregateTableId = Strings.change(aggregate.getMapping().getTable(), ".", "_");
+			String [] argvAg = {				
+				componentsPath  + "/" + file,
+				backendPath + "/" + aggregateTableId + ".tblxmi",				
+				component.getName(),
+				aggregateName				
+			};			
+			WebsphereTblxmiPG.main(argvAg);
+		}			
+		
 	}
 	
 }
