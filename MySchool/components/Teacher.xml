@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE xavax-component SYSTEM "dtds/xavax-component.dtd">
+
+<xavax-component name="Teacher">
+
+	<entity>
+		<property name="id" type="String" key="true"
+			size="5" required="true"/>
+		<property name="name" type="String" 
+			size="40" required="true"/>			  
+	</entity>
+						
+	<entity-mapping table="MYSCHOOL@separator@TEACHER">
+		<property-mapping property="id" column="ID"/>
+		<property-mapping property="name" column="NAME"/>
+	</entity-mapping> 
+				
+</xavax-component>

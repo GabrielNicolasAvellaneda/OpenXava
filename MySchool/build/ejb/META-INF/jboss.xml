@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE jboss PUBLIC "-//JBoss//DTD JBOSS 3.2//EN" "http://www.jboss.org/j2ee/dtd/jboss_3_2.dtd">
+
+<jboss>
+
+   <unauthenticated-principal>nobody</unauthenticated-principal>
+
+   <enterprise-beans>
+
+  <!-- xavax Sessions Beans -->
+
+        <session>
+            <ejb-name>MapFacade</ejb-name>
+            <jndi-name>@subcontext@/ejb/@package@/MapFacade</jndi-name>
+        </session>
+        <session>
+            <ejb-name>Server</ejb-name>
+            <jndi-name>@subcontext@/ejb/@package@/Server</jndi-name>
+            <resource-ref>
+                <res-ref-name>jdbc/DataSource</res-ref-name>
+                <resource-name>jdbc/DataSource</resource-name>
+            </resource-ref>
+        </session>        
+        <session>
+            <ejb-name>EntityTab</ejb-name>
+            <jndi-name>@subcontext@/ejb/@package@/EntityTab</jndi-name>
+            <resource-ref>
+                <res-ref-name>jdbc/DataSource</res-ref-name>
+                <resource-name>jdbc/DataSource</resource-name>
+            </resource-ref>
+        </session>
+
+      <entity>
+         <ejb-name>Teacher</ejb-name>
+         <jndi-name>@subcontext@/ejb/org.xavax.school.model/Teacher</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+
+   </enterprise-beans>
+
+      <resource-managers>
+        <resource-manager>
+            <res-name>jdbc/DataSource</res-name>
+            <res-jndi-name>java:/@datasource@</res-jndi-name>
+        </resource-manager>
+    </resource-managers>
+
+</jboss>

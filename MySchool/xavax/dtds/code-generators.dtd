@@ -1,0 +1,8 @@
+<!ELEMENT code-generators (for-stereotype)+>
+
+<!ELEMENT for-stereotype EMPTY>
+<!ATTLIST for-stereotype
+ name CDATA #REQUIRED
+ class CDATA #REQUIRED
+>
+

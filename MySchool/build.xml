@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<project name="MySchool" default="deployWar" basedir=".">
+
+	<property name="project" value="MySchool" />
+	<property name="package" value="school"/>
+	<property name="configuration" value="myschool" />	
+	<property file="../xavax-global.properties"/>
+	<property file="${configuration}.properties"/>
+	<property name="datasource" value="MySchoolDS"/>
+	<property name="separator" value="_"/>
+		
+	<target name="generateEJB">
+		<ant antfile="../xavax/build.xml" target="generateEJB"/>		
+	</target>
+	
+	<target name="regenerateEJB">
+		<ant antfile="../xavax/build.xml" target="regenerateEJB"/>		
+	</target>
+		       
+	<target name="createEJBJar">
+        <ant antfile = "../xavax/build.xml" target="createEJBJar"/>      		
+	</target>
+		
+	<target name="deployEJB" depends ="createEJBJar">		
+		<ant antfile="../xavax/build.xml" target="deployEJB"/>
+	</target>
+		
+	<target name="deployWar">
+		<ant antfile="../xavax/build.xml" target="deployWar"/>
+	</target>
+						
+</project>
