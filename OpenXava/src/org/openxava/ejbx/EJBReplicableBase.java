@@ -10,88 +10,80 @@ import org.openxava.validators.*;
 
 
 /**
- * Clase de implementación base para un <i>EntityBean</i> que puede ser replicado. <p>
+ * Implementation base class for a <i>EntityBean</i> that can be replicated. <p>
  *
- * Un ejemplo de <i>EntityBean</i> replicable:
+ * A example of a <i>EntityBean</i> replicable:
  * <pre>
- * public class PersonaBean extends EJBReplicableBase {
+ * public class PersonBean extends EJBReplicableBase {
  *
- *   public String nombre;
- *   public int edad;
+ *   public String name;
+ *   public int age;
  *
- *   public PersonaPK ejbCreate(Map propiedades) {
- *     ejecutarSets(propiedades);
+ *   public PersonaPK ejbCreate(Map properties) {
+ *     executeSets(properties);
  *     return null;
  *   }
  *
- *   public void ejbPostCreate(Map propiedades) {
+ *   public void ejbPostCreate(Map properties) {
  *   }
  *
- *   public String getNombre() {
- *     return nombre;
+ *   public String getName() {
+ *     return name;
  *   }
  *
- *   public void setNombre(String nombre) {
- *     this.nombre = nombre;
+ *   public void setName(String name) {
+ *     this.name = name;
  *   }
  *
- *   public String getNombre() {
- *     return nombre;
+ *   public String getName() {
+ *     return name;
  *   }
  *
- *   public void setNombre(String nombre) {
- *     this.nombre = nombre;
+ *   public void setName(String name) {
+ *     this.name = name;
  *   }
  *
  * }
  * </pre>
  *
- * @version 00.08.30
  * @author Javier Paniza
  */
 
 public class EJBReplicableBase extends EntityBase {
 
-  private PropertiesManager manejadorPropiedades = new PropertiesManager(this);
+  private PropertiesManager propertiesManager = new PropertiesManager(this);
 
 
-/**
-  * Implementa {@link EJBReplicable#ejecutarGets}. <p>
-  */
-public Map executeGets(String propiedadesAReplicar) {
-	try {
-		return manejadorPropiedades.executeGets(propiedadesAReplicar);
-	}
-	catch (PropertiesManagerException ex) {
-		throw new EJBException(ex.getMessage());
-	}
-	catch (InvocationTargetException ex) {
-		ex.getTargetException().printStackTrace();
-		throw new EJBException(XavaResources.getString("ejb_get_properties_error", ex.getTargetException().getMessage()));
-	}
-}    
-
-/**
- * Implementa {@link EJBReplicable#ejecutarSets}. <p>
- */
-public void executeSets(Map propiedadesAActualizar) throws ValidationException {
-	try {				
-		manejadorPropiedades.executeSets(propiedadesAActualizar);
-	}
-	catch (PropertiesManagerException ex) {
-		throw new EJBException(ex.getMessage());
-	}
-	catch (InvocationTargetException ex) {
-		Throwable causa = ex.getTargetException();
-		if (causa instanceof ValidationException) {
-			throw (ValidationException) causa;
+	public Map executeGets(String propertiesToReplicate) {
+		try {
+			return propertiesManager.executeGets(propertiesToReplicate);
 		}
-		else {
-			causa.printStackTrace();
-			throw new EJBException(XavaResources.getString("ejb_set_properties_error", ex.getTargetException().getMessage()));
+		catch (PropertiesManagerException ex) {
+			throw new EJBException(ex.getMessage());
 		}
-	}	  	
-}    
+		catch (InvocationTargetException ex) {
+			ex.getTargetException().printStackTrace();
+			throw new EJBException(XavaResources.getString("ejb_get_properties_error", ex.getTargetException().getMessage()));
+		}
+	}    
 
+	public void executeSets(Map propertiesToUpdate) throws ValidationException {
+		try {				
+			propertiesManager.executeSets(propertiesToUpdate);
+		}
+		catch (PropertiesManagerException ex) {
+			throw new EJBException(ex.getMessage());
+		}
+		catch (InvocationTargetException ex) {
+			Throwable cause = ex.getTargetException();
+			if (cause instanceof ValidationException) {
+				throw (ValidationException) cause;
+			}
+			else {
+				cause.printStackTrace();
+				throw new EJBException(XavaResources.getString("ejb_set_properties_error", ex.getTargetException().getMessage()));
+			}
+		}	  	
+	}    
 
 }

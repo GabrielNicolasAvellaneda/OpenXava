@@ -6,6 +6,9 @@ import org.openxava.util.*;
 
 
 /**
+ * In java a <tt>java.util.Date</tt> and in database 3 columns of 
+ * integer type. <p>
+ * 
  * @author Javier Paniza
  */
 public class Date3Converter implements IMultipleConverter {

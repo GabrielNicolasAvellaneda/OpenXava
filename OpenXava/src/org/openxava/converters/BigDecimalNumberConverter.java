@@ -2,33 +2,21 @@ package org.openxava.converters;
 
 import java.math.*;
 
-
-
 /**
- * En java un long y en la base de datos un Number del tipo que sea.
+ * In java long and in database Number of any type.
  * 
  * @author Javier Paniza
  */
 public class BigDecimalNumberConverter implements IConverter {
 	
-	private final static BigDecimal CERO = new BigDecimal("0");	
+	private final static BigDecimal ZERO = new BigDecimal("0");	
 
-	public BigDecimalNumberConverter() {
-		super();
-	}
-
-	/**
-	 * @see org.openxava.converters.IConversorTipo#toDB(Object)
-	 */
 	public Object toDB(Object o) throws ConversionException {
-		return o==null?CERO:o;
+		return o==null?ZERO:o;
 	}
 	
-	/**
-	 * @see org.openxava.converters.IConversorTipo#toJava(Object)
-	 */
 	public Object toJava(Object o) throws ConversionException {
-		if (o == null) return CERO;
+		if (o == null) return ZERO;
 		if (!(o instanceof Number)) {		
 			throw new ConversionException("conversion_java_number_expected");
 		}

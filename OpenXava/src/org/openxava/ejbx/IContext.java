@@ -4,24 +4,19 @@ import javax.naming.*;
 
 
 /**
- * Encuentra un recurso a partir de un nombre. <p>
- * Es de uso genérico, y más fácil de implementar que
- * el de JNDI.<br>
- * Usa una excepción remota por si se desea implementar por
- * un objeto remoto.<br>
+ * Look a resource from its name. <p>
+ * 
+ * It's of generic use, and more easy to implement than
+ * JNDI one.
  *
- * @version 00.02.09
  * @author  Javier Paniza
  */
 
 public interface IContext {
 
   /**
-   * Busca un recurso a partir de un nombre. <br>
-   * El objeto devuelto puede ser de cualquier tipo.<br>
-   *
-   * @exception NamingException  Si no es posible encontrar el recurso
-   *                             (incluido problemas de sistema).
+   * Look a resource from its name. <br>
+   * The returned object can be of any type. <br>
    */
   Object lookup(String nombre) throws NamingException;
   

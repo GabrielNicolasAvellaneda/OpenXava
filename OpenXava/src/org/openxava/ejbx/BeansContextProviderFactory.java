@@ -7,41 +7,40 @@ import org.openxava.util.*;
 import java.util.*;
 
 /**
- * Clase que se encarga de crear <code>IContextProvider</code>s para
- * acceder a EJBs. <p>
+ * Factory for <code>IContextProvider</code> in order to accede to EJBs. 
  *
- * Esta clase provee la implementación de {@link BeansContext}, de
- * esta forma es posible configurar su comportamiento declarativament.
- * Es necesario tener un archivo de propiedades llamado
- * <code>BeansContext.properties</code> situado en la ruta del
- * CLASSPATH. Este archivo ha de ser de la forma <code>nombre=clase</code>.
- * Como sigue:
+ * This class provide the implementation of {@link BeansContext}, thus
+ * it's possible to setup the its behaviour declaratorily.
+ * It's requiredt to have a properties file called  
+ * <code>BeansContext.properties</code> within CLASSPATH. This file
+ * must to have the form <code>name=class</code>.
+ * Like this:
  * <pre>
  * _defecto=javacomp
  * _subcontexto=
  * javacomp=puntocom.negocio.context.JavaCompBeansContextProvider
  * jndi=puntocom.negocio.context.JndiBeansContextProvider
  * </pre>
- * O en inglés:
+ * Or in English:
  * <pre>
  * _default=javacomp
  * _subcontext=
  * javacomp=puntocom.negocio.context.JavaCompBeansContextProvider
  * jndi=puntocom.negocio.context.JndiBeansContextProvider
  * </pre> 
- * La entrada <code>_default/_defecto</code> indica el objeto usado por defecto. El
- * objeto por defecto se crea llamando a {@link #create()} sin argumentos.
- * Las clases indicadas han de implementar {@link IContextProvider}.<br>
- * La entrada <code>_subcontext/_subcontexto</code> indica el subcontexto de busqueda usado,
- * puede dejarse en blanco o incluso no poner la entrada, entonces buscará
- * a partir del subcontexto raiz.<br>
+ * The entry <code>_default/_defecto</code> indicates the object used
+ * by default. The default object is created calling to  
+ * indica el objeto usado por defecto. El {@link #create()} without arguments.
+ * The classes used have to implement {@link IContextProvider}.<br>
+ * The entry <code>_subcontext/_subcontexto</code> indicates the lookup subcontext used,
+ * It can be left in blank or omit the entry, then it lookup from root subcontext.<br>
  *
  * @author  Javier Paniza
  */
 
 public class BeansContextProviderFactory {
 
-  // Si cambian las variables final cambiar doc de cabecera y de create()
+  // If final variable are changed change the doc of heading and create() too. 	
   private final static String PROPERTIES_FILE = "BeansContext.properties";
   private final static String SUBCONTEXT_PROPERTY_ES = "_subcontexto";
   private final static String SUBCONTEXT_PROPERTY_EN = "_subcontext";
@@ -49,59 +48,62 @@ public class BeansContextProviderFactory {
   private static boolean subcontextReaded = false;
   private static String subcontext;  
   
-  private static Factory impl = new Factory( // En todo el CLASSPATH
+  private static Factory impl = new Factory( // In all CLASSPATH
 	BeansContextProviderFactory.class.getClassLoader().getResource(PROPERTIES_FILE));
-//  private static Factory impl = new Factory( // Donde está la clase
-//    BeansContextProviderFactory.class.getResource(ARCHIVO_PROPIEDADES));
+//  private static Factory impl = new Factory( // Where is the class
+//    BeansContextProviderFactory.class.getResource(PROPERTIES_FILE));
 
 
   /**
-   * Crea un proveedor de contexto para buscar EJBs por defecto. <p>
+   * Create a context provider to lookup EJBs by default. <p>
    *
-   * <b>Postcondición:</b>
+   * <b>Postcondition:</b>
    * <ul>
    * <li> return != null
    * </ul>
-   * Lo hace según la entrada indicada en la entrada <code>_default/_defecto</code>
-   * de <code>BeansContext.properties</code>.<br>
-   * @exception InitException  Si hay algún problema el iniciar.
+   * It works as indicate in entry <code>_default/_defecto</code> of 
+   * <code>BeansContext.properties</code>.<br>
+   * @exception InitException  Some problem on init.
    */
   public static IContextProvider create() throws InitException {
-	return (IContextProvider) impl.create();
+  	return (IContextProvider) impl.create();
   }
+  
   /**
-   * Crea el proveedor de contexto para buscar EJBs indicado. <p>
+   * Create a context provider to lookup EJBs. <p>
    *
-   * <b>Postcondición:</b>
+   * <b>Postcondition:</b>
    * <ul>
    * <li> return != null
    * </ul>
-   * El argumento es el nombre identificativo del proveedor de contexto, el cual está
-   * registrado en el archivo <code>BeansContext.properties</code>.<br>
-   * @exception InitException  Si hay algún problema el iniciar el contexto.
+   * The argument is a identifier name of context provider, whose it's registered
+   * in <code>BeansContext.properties</code> file.<br>
+   * @exception InitException  Some problem on init.
    */
-  public static IContextProvider create(String nombre) throws InitException {
-	return (IContextProvider) impl.create(nombre);
+  public static IContextProvider create(String name) throws InitException {
+  	return (IContextProvider) impl.create(name);
   }
-/**
- * @return Puede ser nulo
- */
-static String getSubcontext() throws NamingException {
-	if (!subcontextReaded) { 
-		try {
-			Properties pro = new Properties();			
-			pro.load(BeansContextProviderFactory.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE));
-			subcontext = pro.getProperty(SUBCONTEXT_PROPERTY_EN);
-			if (Is.emptyString(subcontext)) subcontext = pro.getProperty(SUBCONTEXT_PROPERTY_ES);
-			if (Is.emptyString(subcontext)) subcontext = null;
-			subcontextReaded = true;
-			System.out.println("[BeansContextProviderFactory] subcontexto=" + subcontext);
+  
+	/**
+	 * @return Can be null.
+	 */
+	static String getSubcontext() throws NamingException {
+		if (!subcontextReaded) { 
+			try {
+				Properties pro = new Properties();			
+				pro.load(BeansContextProviderFactory.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE));
+				subcontext = pro.getProperty(SUBCONTEXT_PROPERTY_EN);
+				if (Is.emptyString(subcontext)) subcontext = pro.getProperty(SUBCONTEXT_PROPERTY_ES);
+				if (Is.emptyString(subcontext)) subcontext = null;
+				subcontextReaded = true;
+				System.out.println("[BeansContextProviderFactory] subcontext=" + subcontext);
+			}
+			catch (Exception ex) {
+				ex.printStackTrace();
+				throw new NamingException(XavaResources.getString("subcontext_error", ex.getLocalizedMessage()));
+			}
 		}
-		catch (Exception ex) {
-			ex.printStackTrace();
-			throw new NamingException(XavaResources.getString("subcontext_error", ex.getLocalizedMessage()));
-		}
+		return subcontext;
 	}
-	return subcontext;
-}
+	
 }

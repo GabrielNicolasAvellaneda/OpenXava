@@ -2,24 +2,22 @@ package org.openxava.converters;
 
 import java.sql.*;
 
+import org.openxava.util.*;
+
 
 
 
 /**
- * Un array de bytes (<tt>byte []</tt>) que en la db se guardará
- * como un objeto de tipo <tt>Blob</tt>. <p>
+ * A bytes array (<tt>byte []</tt>) that in db it's saved as <tt>Blob</tt>. <p>
  * 
- * Util para guardar fotos en as400 donde cualquier objeto que
- * dejemos en un campo BLOB se recupera como un <tt>java.sql.Blob</tt>.<br>
+ * Util for save photos in as400 where any object that we 
+ * store in a BLOD field is restore as <tt>java.sql.Blob</tt>.<br>
  * 
  * @author Javier Paniza
  */
 public class ArrayBytesBlobConverter implements IConverter {
 
 	
-	/**
-	 * @see org.openxava.converters.IConversorTipo#toDB(Object)
-	 */
 	public Object toDB(Object o) throws ConversionException {
 		if (o == null) return null;
 		if (!(o instanceof byte [])) {		
@@ -28,9 +26,6 @@ public class ArrayBytesBlobConverter implements IConverter {
 		return o;
 	}
 	
-	/**
-	 * @see org.openxava.converters.IConversorTipo#toJava(Object)
-	 */
 	public Object toJava(Object o) throws ConversionException {
 		if (o == null) return null;
 		if (!(o instanceof Blob)) {		
@@ -42,7 +37,7 @@ public class ArrayBytesBlobConverter implements IConverter {
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
-			System.err.println("¡ADVERTENCIA! Imposible convertir un Blob en un array de bytes. Asumimos nulo.");
+			System.err.println(XavaResources.getString("blob_to_array_warning"));
 			return null;
 		}
 	}

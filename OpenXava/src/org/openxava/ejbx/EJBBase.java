@@ -12,21 +12,18 @@ import org.openxava.util.*;
 
 
 /**
- * Clase base de cualquier EJB. <p>
+ * Base class for a EJB. <p>
+
+ * Of course, the use of this class is optional, but
+ * it provides a lot of advantages.<br>
+ * 
+ * Basically it have methods that wrap the access to
+ * <coce>IEJBContext</code>, creating it and wrap the
+ * exceptions in <code>EJBException</code> format.<br>  
  *
- * Por supuesto, el uso de esta clase es opcional, pero
- * proporciona una serie de ventajas importantes.<br>
- * Basicamente contiene métodos que encapsulan el
- * acceso al <code>IEJBContext</code>, creandolo y envolviendo
- * las excepciones en formato de <code>EJBException</code>, claro
- * esta, se puede optar por la creación directa de un
- * <code>IEJBContext</code>.<br>
- * <b>Importante:</b> Es necesario llamar a {@link #setEJBContext} con
- * un valor no nulo antes de poder usar cualquiera de los métodos
- * de esta clase.<br>
- *
- * @see org.openxava.ejbx.IEJBContext
- * @version 00.10.26
+ * <b>Important:</b> It's required call to {@link #setEJBContext}
+ * with a not null value before use any method of this class.<br> 
+ * 
  * @author  Javier Paniza
  */
 
@@ -36,171 +33,159 @@ public class EJBBase implements Serializable {
 	  XSystem._setOnServer();
   }
 
-
-  private final static String NO_CONTEXT =
-	"El contexto (IEJBContext) usado por el bean no ha sido creado correctamente";
-
-  private EJBContext ejbContext; // el de ejb
-  private IEJBContext portableContext; // el nuestro (portable)
-  private transient IContext context; // Para buscar otros EJBs
-	private Map variablesBooleanas;  
+  private EJBContext ejbContext; // Of EJB
+  private IEJBContext portableContext; // Of OpenXava (portable)
+  private transient IContext context; // For look up other EJBs
+	private Map booleanVars;  
 
   public EJBBase() {
-	// System.out.println("(c) Gestión cuatrocientos, S.L.: Bean de Negocio creado");
   }
+  
   /**
-   * Como <code>EJBContext.getCallerPrincipal</code> en EJB 1.1. <br>
-   *
-   * @exception EJBException  Si hay algún problema, normalmente no se puede
-   *                              crear el contexto portable.
+   * As <code>EJBContext.getCallerPrincipal</code> in EJB 1.1. <br>
    */
   public Principal getCallerPrincipal() {
-	return getPortableContext().getCallerPrincipal();
+  	return getPortableContext().getCallerPrincipal();
   }
+  
   /**
-   * Devuelve una conexión JDBC por defecto. <br>
-   *
-   * @exception EJBException  Si hay problemas al obtener la conexión.
+   * Default JDBC connection. <br>
    */
   public Connection getConnection() {
-	try {
-	  return getPortableContext().getConnection();
-	}
-	catch (SQLException ex) {
-	  throw new EJBException(ex.getLocalizedMessage());
-	}
+  	try {
+  		return getPortableContext().getConnection();
+  	}
+  	catch (SQLException ex) {
+  		throw new EJBException(ex.getLocalizedMessage());
+  	}
   }
+  
   /**
-   * Devuelve una conexión JDBC a partir de un nombre identificativo. <br>
+   * A JDBC connection from identifier name. <br>
    *
-   * @param nombreDataSource  Nombre de la fuente de datos de donde obtener la conexión.<br>
-   * @exception EJBException  Si hay problemas al obtener la conexión.
+   * @param dataSourceName  Name of data source from obtain the connection.
    */
-  public Connection getConnection(String nombreDataSource) {
-	try {
-	  return getPortableContext().getConnection(nombreDataSource);
-	}
-	catch (SQLException ex) {
-	  throw new EJBException(ex.getLocalizedMessage());
-	}
+  public Connection getConnection(String dataSourceName) {
+  	try {
+  		return getPortableContext().getConnection(dataSourceName);
+  	}
+  	catch (SQLException ex) {
+  		throw new EJBException(ex.getLocalizedMessage());
+  	}
   }
+  
   /**
-   * Devuelve un contexto, usado para buscar <i>homes</i> de EJBs. <p>
+   * Context used for look up <i>homes</i> of EJBs. <p>
    *
-   * La búsqueda se hace directamente sin especificar subcontextos estándars tales
-   * como <tt>java:comp/env/ejb</tt>. Por supuesto, se pueden usar subcontextos
-   * a modo clasificatorio.
-   *
-   * @exception javax.ejb.EJBException  Si encuentra algún problema al conseguir el contexto.
+   * The look up is direct without using standards subcontext like
+   * <tt>java:comp/env/ejb</tt>. Of course, you can use subcontext for
+   * qualifying way.<br>  
    */
   public IContext getContext() {
-	if (context == null) {
-	  try {
-		context = BeansContext.get();
-	  }
-	  catch (NamingException ex) {
-		ex.printStackTrace();
-		throw new EJBException(ex.getMessage());
-	  }
-	}
-	return context;
+  	if (context == null) {
+  		try {
+  			context = BeansContext.get();
+  		}
+  		catch (NamingException ex) {
+  			ex.printStackTrace();
+  			throw new EJBException(ex.getMessage());
+  		}
+  	}
+  	return context;
   }
+  
   /**
-   * El contexto usado para implementar todos los métodos. <br>
-   *
-   * @exception EJBException Si no es posible crear el contexto, algo
-   *                 que se toma como un problema de sistema.
+   * The context used for implementing the methods. <br>
    */
   protected IEJBContext getPortableContext() {
-	if (portableContext == null) {
-	  if (ejbContext == null)
-		throw new IllegalStateException(XavaResources.getString("ejbcontext_precondition"));
-	  try {
-		portableContext = EJBContextFactory.create(ejbContext);
-	  }
-	  catch (Exception ex) {
-		ex.printStackTrace();
-		throw new EJBException(XavaResources.getString("create_context_error"));
-	  }
-	}
-	return portableContext;
+  	if (portableContext == null) {
+  		if (ejbContext == null)
+  			throw new IllegalStateException(XavaResources.getString("ejbcontext_precondition"));
+  		try {
+  			portableContext = EJBContextFactory.create(ejbContext);
+  		}
+  		catch (Exception ex) {
+  			ex.printStackTrace();
+  			throw new EJBException(XavaResources.getString("create_context_error"));
+  		}
+  	}
+  	return portableContext;
   }
+  
   /**
-   * Valor de propiedad a partir del nombre. <br>
-   * Devuelve <code>null</code> si la propiedad no
-   * existe o no puede conseguirla por alguna cosa.<br>
-   * @exception EJBException  Si hay algún problema
+   * Property value from name. <br>
+   *
+   * Return <code>null</code> if the property does not
+   * exist or it can not obtain its value for another problem.<br>
    */
   public String getProperty(String nombre)  {
-	return getPortableContext().getProperty(nombre);
+  	return getPortableContext().getProperty(nombre);
   }
-/**
- * 
- * @return java.util.Map
- */
-private Map getVariablesBooleanas() {
-	if (variablesBooleanas == null) {
-		variablesBooleanas = new HashMap();
+  
+  
+	private Map getBooleanVars() {
+		if (booleanVars == null) {
+			booleanVars = new HashMap();
+		}
+		return booleanVars;
 	}
-	return variablesBooleanas;
-}
+	
   /**
-   * Como <code>EJBContext.isCallerInRole</code> en EJB 1.1. <br>
-   *
-   * @exception EJBException  Si hay algún problema, normalmente no se puede
-   *                              crear el contexto portable.
+   * As <code>EJBContext.isCallerInRole</code> in EJB 1.1. <br>
    */
   public boolean isCallerInRole(String roleName) {
-	return getPortableContext().isCallerInRole(roleName);
+  	return getPortableContext().isCallerInRole(roleName);
   }
-/**
- * Examina una variable de entorno que puede contener true o false 
- * (no importan mayúsculas o minúsculas).
- *
- * @param variable  Nombre de la variable de entorno a examinar.
- * @param bean  Nombre del bean actual, usado para mensajes de error.
- * @return boolean <tt>true</tt> o <tt>false</tt> según valga la variable.
- * @exception EJBException  Si la variable no está definida.
- */
-protected boolean isTrue(String variable, String bean) {
-	Boolean result = (Boolean) getVariablesBooleanas().get(variable);
-	if (result == null) {
-		String valor = getProperty(variable);
-		if (valor == null) {
-			throw new EJBException(XavaResources.getString("var_in_ejb_required", variable, bean));
+  
+	/**
+	 * Examine a environment variable that can contain true or false
+	 * (ignoring case). <p>
+	 *
+	 * @param variable  Name of environment variable to examine.
+	 * @param bean  Name of current bean, used in error messages.
+	 * @return boolean <tt>true</tt> o <tt>false</tt>.
+	 * @exception EJBException  If the variable is not defined.
+	 */
+	protected boolean isTrue(String variable, String bean) {
+		Boolean result = (Boolean) getBooleanVars().get(variable);
+		if (result == null) {
+			String value = getProperty(variable);
+			if (value == null) {
+				throw new EJBException(XavaResources.getString("var_in_ejb_required", variable, bean));
+			}
+			if (value.trim().equalsIgnoreCase("true")) {
+				result = new Boolean(true);
+			}
+			else if (value.trim().equalsIgnoreCase("false")) {
+				result = new Boolean(false);
+			}
+			else {
+				throw new EJBException(XavaResources.getString("var_in_ejb_invalid_boolean_value", value, variable, bean));			
+			}
+			getBooleanVars().put(variable, result);
 		}
-		if (valor.trim().equalsIgnoreCase("true")) {
-			result = new Boolean(true);
-		}
-		else if (valor.trim().equalsIgnoreCase("false")) {
-			result = new Boolean(false);
-		}
-		else {
-			throw new EJBException(XavaResources.getString("var_in_ejb_invalid_boolean_value", valor, variable, bean));			
-		}
-		getVariablesBooleanas().put(variable, result);
+		return result.booleanValue();
 	}
-	return result.booleanValue();
-}
+	
   /**
-   * Establece el nombre de la fuente de datos usada
-   * cuando se use {@link #getConnection()}. <br>
-   *
-   * @exception EJBException  Si hay algún problema
+   * Sets the name of datasource used when call to {@link #getConnection()}. <br> 
    */
   public void setDefaultDataSource(String nombreDataSource) {
-	getPortableContext().setDefaultDataSource(nombreDataSource);
+  	getPortableContext().setDefaultDataSource(nombreDataSource);
   }
+  
   /**
-   * Establece el contexto que será usado para implementar los métodos. <br>
-   * Es obligado llamar a este método enviando algo diferente de nulo
-   * antes de llamar a cualquier otro de esta clase.<br>
-   * Se puede enviar nulo, en cuyo caso se desactiva el contexto interno,
-   * es aconsable llamar <code>setEJBContext(null)</code> cuando el EJB Server
-   * llame a <code>unsetEntityContext()</code>. <br>
+   * Sets the subcontext used to implement the methods. <br>
+   *
+   * It'r required call to this method sending not null before
+   * use any other method of this class.<br>
+   * You can send null, in this case the context is disabled, it's 
+   * good call to <code>setEJBContext(null)</code> when the EJB Server
+   * call to <code>unsetEntityContext()</code>. <br>
    */
   protected void setEJBContext(EJBContext ejbContext) {
-	this.ejbContext = ejbContext;
-	if (ejbContext == null) portableContext = null;
+  	this.ejbContext = ejbContext;
+  	if (ejbContext == null) portableContext = null;
   }
+  
 }

@@ -1,9 +1,8 @@
 package org.openxava.converters;
 
 /**
- * Created on 20/10/2004 (10:43:16 AM)
- * @author Ana Andres
  * 
+ * @author Ana Andres 
  */
 public class NoConversionConverter implements IConverter{
 

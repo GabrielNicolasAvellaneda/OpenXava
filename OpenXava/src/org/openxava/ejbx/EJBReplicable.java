@@ -6,10 +6,11 @@ import org.openxava.util.*;
 
 
 /**
- * Interfaz remota de un <i>EntityBean</i> que puede ser replicado. <p>
+ * Remote interface of a <i>EntityBean</i> that can be replicate. <p> 
  *
- * Básicamente permite actualizar y obtener un cojunto de propiedades
- * de un solo golpe.<br>
+ * Basically
+ * Básicamente it allow update and read a group of property values
+ * in one hit.<br>
  * 
  * @author  Javier Paniza
  */

@@ -9,23 +9,13 @@ import javax.rmi.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
 
-
-
-
 /**
- * Clase de utilidad para crear EJB a partir del home. <p>
+ * Utility class for create EJBs from home. <p>
  *
- * Podemos crear con un argumento (típico para EntityBeans) y
- * sin argumento (típico de SessionBeans). <br>
+ * We can create with argument (typical in EntityBeans case) or
+ * without argument (typical in SessionBeans case).
  *
- * @version 00.09.28
  * @author  Javier Paniza
- */
-
- /*
- 00.02.18  Creación
- 00.08.30  Se añade create(EJBHome, Map)
- 00.09.28  Se añade narrow para que sea compatible IIOP
  */
 
 public class EJBFactory {
@@ -35,229 +25,229 @@ public class EJBFactory {
   private static Class [] detailsClass2 = { java.util.Map.class };
 
   /**
-   * Crea un EJB a partir de un <i>home</i>. <p>
+   * Create a EJB from a <i>home</i>. <p> 
    *
-   * El <i>home</i> enviado ha de tener un método <code>create()</code>.<br>
+   * The <i>home</i> must to have a <code>create()</code> method.<br>
    *
-   * @param home  El <i>home</i> sobre que se invoca el método de creación.
-   * @exception CreateException Se redireccion la del create original
-   * @exception RemoteException Se redireccion la del create original
-   * @exception NoSuchMethodException Si el <i>home</i> no tiene ningún método <code>create()</code>
+   * @param home  The <i>home</i> against call the create() method
+   * @exception CreateException The original from create() method
+   * @exception RemoteException The original from create() method
+   * @exception NoSuchMethodException If the <i>home</i> does not have <code>create()</code> method
    */
   public static Object create(EJBHome home) throws CreateException, RemoteException, NoSuchMethodException {
-	try {
-	  Class cl = home.getEJBMetaData().getHomeInterfaceClass();
-	  if (cl == null) {
-		  throw new RemoteException(XavaResources.getString("ejbhome_error"));
-	  }
-	  Method m = cl.getDeclaredMethod("create", detailsClass0);
-	  Object narrowHome = PortableRemoteObject.narrow(home, cl);
-	  return m.invoke(narrowHome, null);
-	}
-	catch (InvocationTargetException ex) {
-	  Throwable th = ex.getTargetException();
-	  try {
-		throw th;
-	  }
-	  catch (CreateException ex2) {
-		throw ex2;
-	  }
-	  catch (RemoteException ex2) {
-		throw ex2;
-	  }
-	  catch (Throwable ex2) {
-		throw new RemoteException(ex2.getLocalizedMessage(), ex2);
-	  }
-	}
-	catch (NoSuchMethodException ex) {
-	  throw ex;
-	}
-	catch (Exception ex) {
-	  throw new RemoteException(ex.getLocalizedMessage(), ex);
-	}
+  	try {
+  		Class cl = home.getEJBMetaData().getHomeInterfaceClass();
+  		if (cl == null) {
+  			throw new RemoteException(XavaResources.getString("ejbhome_error"));
+  		}
+  		Method m = cl.getDeclaredMethod("create", detailsClass0);
+  		Object narrowHome = PortableRemoteObject.narrow(home, cl);
+  		return m.invoke(narrowHome, null);
+  	}
+  	catch (InvocationTargetException ex) {
+  		Throwable th = ex.getTargetException();
+  		try {
+  			throw th;
+  		}
+  		catch (CreateException ex2) {
+  			throw ex2;
+  		}
+  		catch (RemoteException ex2) {
+  			throw ex2;
+  		}
+  		catch (Throwable ex2) {
+  			throw new RemoteException(ex2.getLocalizedMessage(), ex2);
+  		}
+  	}
+  	catch (NoSuchMethodException ex) {
+  		throw ex;
+  	}
+  	catch (Exception ex) {
+  		throw new RemoteException(ex.getLocalizedMessage(), ex);
+  	}
   }
   
   /**
-   * Crea un EJB a partir de un <i>home</i> y su clase. <p>
+   * Creates a EJB from a <i>home</i> and its class. <p> 
    *
-   * El <i>home</i> enviado ha de tener un método <code>create()</code>.<br>
+   * The <i>home</i> must to have a <code>create()</code> method.<br>
    *
-   * @param home  El <i>home</i> sobre que se invoca el método de creación.
-   * @param clase  Clse del <i>home</i> sobre que se invoca el método de creación.
-   * @exception CreateException Se redireccion la del create original
-   * @exception RemoteException Se redireccion la del create original
-   * @exception NoSuchMethodException Si el <i>home</i> no tiene ningún método <code>create()</code>
+   * @param home <i>home</i> on which the creation method is invoked.
+   * @param className <i>home</i> class on which the creation method is invoked.
+   * @exception CreateException From original create
+   * @exception RemoteException From original create
+   * @exception NoSuchMethodException If the <i>home</i> does not have a <code>create()</code> method
    */
-  public static Object create(Object home, Class clase) throws CreateException, RemoteException, NoSuchMethodException {
-	try {		
-	  Method m = clase.getDeclaredMethod("create", detailsClass0);	  
-	  Object narrowHome = PortableRemoteObject.narrow(home, clase);	  
-	  return m.invoke(narrowHome, null);
-	}
-	catch (InvocationTargetException ex) {
-	  Throwable th = ex.getTargetException();
-	  try {
-		throw th;
-	  }
-	  catch (CreateException ex2) {
-		throw ex2;
-	  }
-	  catch (RemoteException ex2) {
-		throw ex2;
-	  }
-	  catch (Throwable ex2) {
-		throw new RemoteException(ex2.getLocalizedMessage(), ex2);
-	  }
-	}
-	catch (NoSuchMethodException ex) {
-	  throw ex;
-	}
-	catch (Exception ex) {
-	  throw new RemoteException(ex.getLocalizedMessage(), ex);
-	}
+  public static Object create(Object home, Class className) throws CreateException, RemoteException, NoSuchMethodException {
+  	try {		
+  		Method m = className.getDeclaredMethod("create", detailsClass0);	  
+  		Object narrowHome = PortableRemoteObject.narrow(home, className);	  
+  		return m.invoke(narrowHome, null);
+  	}
+		catch (InvocationTargetException ex) {
+		  Throwable th = ex.getTargetException();
+		  try {
+			throw th;
+		  }
+		  catch (CreateException ex2) {
+			throw ex2;
+		  }
+		  catch (RemoteException ex2) {
+			throw ex2;
+		  }
+		  catch (Throwable ex2) {
+			throw new RemoteException(ex2.getLocalizedMessage(), ex2);
+		  }
+		}
+		catch (NoSuchMethodException ex) {
+		  throw ex;
+		}
+		catch (Exception ex) {
+		  throw new RemoteException(ex.getLocalizedMessage(), ex);
+		}
   }
   
   /**
-   * Crea un EJB a partir de un <i>home</i> y el argumento del create. <p>
+   * Create a EJB form <i>home</i> and the create arguments. <p>
    *
-   * El <i>home</i> enviado ha de tener un método <code>create(Object )</code>.<br>
+   * The <i>home</i> must to have a <code>create(Object )</code> method.<br> 
    *
-   * @param home  El <i>home</i> sobre que se invoca el método de creación.
-   * @param details  Argumento enviado al método <code>create</code>
-   * @exception ValidationException Se redireccion la del create original
-   * @exception CreateException Se redireccion la del create original
-   * @exception RemoteException Se redireccion la del create original
-   * @exception NoSuchMethodException Si el <i>home</i> no tiene ningún método <code>create(Object )</code>
+   * @param home  The <i>home</i> on which create method is invoked.
+   * @param details  Argument to send to <code>create</code> method
+   * @exception ValidationException From create method
+   * @exception CreateException From create method
+   * @exception RemoteException From create method
+   * @exception NoSuchMethodException If the <i>home</i> does not have a method <code>create(Object )</code>
    */
   public static Object create(EJBHome home, Object details) throws ValidationException, CreateException, RemoteException, NoSuchMethodException  {
-	try {
-	  Class cl = home.getEJBMetaData().getHomeInterfaceClass();
-	  if (cl == null) {
-	  	throw new RemoteException(XavaResources.getString("ejbhome_error"));
-	  }	  
-	  Method m = cl.getDeclaredMethod("create", detailsClass1);
-	  Object [] args = { details };
-	  return m.invoke(home, args);
-	}
-	catch (InvocationTargetException ex) {
-	  Throwable th = ex.getTargetException();
-	  try {
-		throw th;
-	  }
-	  catch (CreateException ex2) {
-		throw ex2;
-	  }
-	  catch (ValidationException ex2) {
-		throw ex2;
-	  }
-	  catch (RemoteException ex2) {
-		throw ex2;
-	  }
-	  catch (Throwable ex2) {
-		throw new RemoteException(ex2.getLocalizedMessage(), ex2);
-	  }
-	}
-	catch (NoSuchMethodException ex) {
-	  throw ex;
-	}
-	catch (Exception ex) {
-	  throw new RemoteException(ex.getLocalizedMessage(), ex);
-	}
+		try {
+		  Class cl = home.getEJBMetaData().getHomeInterfaceClass();
+		  if (cl == null) {
+		  	throw new RemoteException(XavaResources.getString("ejbhome_error"));
+		  }	  
+		  Method m = cl.getDeclaredMethod("create", detailsClass1);
+		  Object [] args = { details };
+		  return m.invoke(home, args);
+		}
+		catch (InvocationTargetException ex) {
+		  Throwable th = ex.getTargetException();
+		  try {
+		  	throw th;
+		  }
+		  catch (CreateException ex2) {
+		  	throw ex2;
+		  }
+		  catch (ValidationException ex2) {
+		  	throw ex2;
+		  }
+		  catch (RemoteException ex2) {
+		  	throw ex2;
+		  }
+		  catch (Throwable ex2) {
+		  	throw new RemoteException(ex2.getLocalizedMessage(), ex2);
+		  }
+		}
+		catch (NoSuchMethodException ex) {
+		  throw ex;
+		}
+		catch (Exception ex) {
+		  throw new RemoteException(ex.getLocalizedMessage(), ex);
+		}
   }
   
   /**
-   * Crea un EJB a partir de un <i>home</i> y el argumento del create. <p>
+   * Create a EJB from a <i>home</i> and the create argument. <p>
    *
-   * El <i>home</i> enviado ha de tener un método <code>create(Map )</code>.<br>
+   * The <i>home</i> must to have a <code>create(Map )</code> method.<br>
    *
-   * @param home  El <i>home</i> sobre que se invoca el método de creación.
-   * @param mapa  Argumento enviado al método <code>create</code>
-   * @exception ValidationException Se redireccion la del create original
-   * @exception CreateException Se redireccion la del create original
-   * @exception RemoteException Se redireccion la del create original
-   * @exception NoSuchMethodException Si el <i>home</i> no tiene ningún método <code>create(Object )</code>
+   * @param home  The <i>home</i> on which the create method is invoked.
+   * @param map  Argument sent to <code>create</code> method
+   * @exception ValidationException From create method
+   * @exception CreateException From create method
+   * @exception RemoteException From create method
+   * @exception NoSuchMethodException If the <i>home</i> does not have a <code>create(Object ) method</code>
    */
-  public static Object create(EJBHome home, Map mapa) throws ValidationException, CreateException, RemoteException, NoSuchMethodException  {
-	try {
-	  Class cl = home.getEJBMetaData().getHomeInterfaceClass();
-	  if (cl == null) {
-	  	throw new RemoteException(XavaResources.getString("ejbhome_error"));
-	  }	  
-	  Method m = cl.getDeclaredMethod("create", detailsClass2);
-	  Object [] args = { mapa };
-	  return m.invoke(home, args);
-	}
-	catch (InvocationTargetException ex) {
-	  Throwable th = ex.getTargetException();
-	  try {
-		throw th;
-	  }
-	  catch (CreateException ex2) {
-		throw ex2;
-	  }
-	  catch (ValidationException ex2) {
-		throw ex2;
-	  }
-	  catch (RemoteException ex2) {
-		throw ex2;
-	  }
-	  catch (Throwable ex2) {
-		throw new RemoteException(ex2.getLocalizedMessage(), ex2);
-	  }
-	}
-	catch (NoSuchMethodException ex) {
-	  throw ex;
-	}
-	catch (Exception ex) {
-	  throw new RemoteException(ex.getLocalizedMessage(), ex);
-	}
+  public static Object create(EJBHome home, Map map) throws ValidationException, CreateException, RemoteException, NoSuchMethodException  {
+		try {
+		  Class cl = home.getEJBMetaData().getHomeInterfaceClass();
+		  if (cl == null) {
+		  	throw new RemoteException(XavaResources.getString("ejbhome_error"));
+		  }	  
+		  Method m = cl.getDeclaredMethod("create", detailsClass2);
+		  Object [] args = { map };
+		  return m.invoke(home, args);
+		}
+		catch (InvocationTargetException ex) {
+		  Throwable th = ex.getTargetException();
+		  try {
+		  	throw th;
+		  }
+		  catch (CreateException ex2) {
+		  	throw ex2;
+		  }
+		  catch (ValidationException ex2) {
+		  	throw ex2;
+		  }
+		  catch (RemoteException ex2) {
+		  	throw ex2;
+		  }
+		  catch (Throwable ex2) {
+		  	throw new RemoteException(ex2.getLocalizedMessage(), ex2);
+		  }
+		}
+		catch (NoSuchMethodException ex) {
+		  throw ex;
+		}
+		catch (Exception ex) {
+		  throw new RemoteException(ex.getLocalizedMessage(), ex);
+		}
   }
   
   
   /**
-   * Crea un EJB a partir de un <i>home</i>, su clase y un <tt>java.util.Map</tt> como
-   * argumento del create. <p>
+   * Create a EJB from a <i>home</i>, its class and a <tt>java.util.Map</tt> as
+   * create argument. <p>
    * 
-   * El <i>home</i> enviado ha de tener un método <code>create(Map )</code>.<br>
+   * The <i>home</i> sent must to have a <code>create(Map )</code> method.<br>
    *
-   * @param home  El <i>home</i> sobre que se invoca el método de creación.
-   * @param claseHome clase del home
-   * @param mapa  Argumento enviado al método <code>create</code>.
-   * @exception CreateException Se redireccion la del create original
-   * @exception ValidationException Se redireccion la del create original
-   * @exception RemoteException Se redireccion la del create original
-   * @exception NoSuchMethodException Si el <i>home</i> no tiene ningún método <code>create(Map )</code>
+   * @param home  The <i>home</i> on which create method is invoked
+   * @param homeClass Class of the home
+   * @param map  Argument sent to <code>create</code> method
+   * @exception CreateException From create method
+   * @exception ValidationException From create method
+   * @exception RemoteException From create method
+   * @exception NoSuchMethodException If the <i>home</i> does not have a <code>create(Map )</code> method
    */
-  public static Object create(Object home, Class claseHome, Map mapa) throws CreateException, ValidationException, RemoteException, NoSuchMethodException  {
-	try {	  
-	  Method m = claseHome.getDeclaredMethod("create", detailsClass2);
-	  Object [] args = { mapa };
-	  return m.invoke(home, args);
-	}
-	catch (InvocationTargetException ex) {
-	  Throwable th = ex.getTargetException();
-	  try {
-		throw th;
-	  }
-	  catch (CreateException ex2) {
-		throw ex2;
-	  }
-	  catch (ValidationException ex2) {
-		throw ex2;
-	  }
-	  catch (RemoteException ex2) {
-		throw ex2;
-	  }
-	  catch (Throwable ex2) {
-		throw new RemoteException(ex2.getLocalizedMessage(), ex2);
-	  }
-	}
-	catch (NoSuchMethodException ex) {
-	  throw ex;
-	}
-	catch (Exception ex) {
-	  throw new RemoteException(ex.getLocalizedMessage(), ex);
-	}
+  public static Object create(Object home, Class homeClass, Map map) throws CreateException, ValidationException, RemoteException, NoSuchMethodException  {
+		try {	  
+		  Method m = homeClass.getDeclaredMethod("create", detailsClass2);
+		  Object [] args = { map };
+		  return m.invoke(home, args);
+		}
+		catch (InvocationTargetException ex) {
+		  Throwable th = ex.getTargetException();
+		  try {
+		  	throw th;
+		  }
+		  catch (CreateException ex2) {
+		  	throw ex2;
+		  }
+		  catch (ValidationException ex2) {
+		  	throw ex2;
+		  }
+		  catch (RemoteException ex2) {
+		  	throw ex2;
+		  }
+		  catch (Throwable ex2) {
+		  	throw new RemoteException(ex2.getLocalizedMessage(), ex2);
+		  }
+		}
+		catch (NoSuchMethodException ex) {
+		  throw ex;
+		}
+		catch (Exception ex) {
+		  throw new RemoteException(ex.getLocalizedMessage(), ex);
+		}
   }
   
 }

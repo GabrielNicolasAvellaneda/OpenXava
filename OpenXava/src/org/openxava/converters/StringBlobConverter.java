@@ -1,38 +1,35 @@
 package org.openxava.converters;
 
-import java.sql.Blob;
-
-
-
 /**
+ * In java a String a a Blog in database. <p>
+ * 
  * @author Javier Paniza
  */
 public class StringBlobConverter implements IConverter {
-    public class StringValue implements java.io.Serializable {
+	
+	public class StringValue implements java.io.Serializable {
     	
-    	public String datos;
+   	public String data;
     	
-    	StringValue(String datos) {
-    		this.datos = datos;
-    	}
+   	StringValue(String data) {
+   		this.data = data;
+   	}
     	
-    }
-	public Object toJava(Object o) throws ConversionException {
-	    System.out.println("[StringBlobConverter.toJava:] o.getClass():" + o.getClass());
-	    try{
-	    return o==null?"":((StringValue)o).datos;
-	    }catch (Exception ex){
-	        ex.printStackTrace();
-	        return "";
-	    }
-
+  }
+	
+	public Object toJava(Object o) throws ConversionException {	    
+		try{
+			return o==null?"":((StringValue)o).data;
+		}
+		catch (Exception ex){
+			ex.printStackTrace();
+			return "";
+		}
 	}
 
 	public Object toDB(Object o) throws ConversionException {
-	    StringValue valor = new StringValue(o==null?"":o.toString());
-	    return valor;
+	    StringValue value = new StringValue(o==null?"":o.toString());
+	    return value;
 	}
-
-	
-	
+		
 }

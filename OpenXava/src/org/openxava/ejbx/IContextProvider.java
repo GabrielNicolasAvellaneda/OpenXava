@@ -2,19 +2,17 @@ package org.openxava.ejbx;
 
 import javax.naming.*;
 
-import org.openxava.ejbx.*;
-
 /**
- * Provee un {@link IContext}. <p>
+ * Provides a {@link IContext}. <p>
  *
- * Según la implementación puede hacer o no caché del
- * contexto que provee.<br>
+ * Depend on implementation it can make or not caché
+ * of the context that it provides.
  *
- * @version 00.10.26
  * @author  Javier Paniza
  */
 
 public interface IContextProvider {
 
   IContext getContext() throws NamingException;
+  
 }

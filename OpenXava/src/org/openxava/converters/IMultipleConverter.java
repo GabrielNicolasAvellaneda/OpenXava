@@ -3,23 +3,24 @@ package org.openxava.converters;
 import java.io.*;
 
 /**
- * Estos conversores deben tener propiedades que se llenan
- * antes de llamar a toJava y después de llamar toDB. 
+ * This converters must to have properties for fill it before
+ * call to <tt>toJava</tt> or <tt>toDB</tt>. <p>
  * 
  * @author Javier Paniza
  */
 public interface IMultipleConverter extends Serializable {
 	
 	/**
-	 * Primero se estableceran las propiedades (con los datos en formato db), y
-	 * después se llamará a toJava para obtener un objeto Java construido a
-	 * partir de esas propiedades.
+	 * First it's required to set value for properties (with data in DB format),
+	 * and after call to <tt>toJava</tt> to obtain a Java object created from
+	 * this proprerties. <p> 
 	 */
 	Object toJava() throws ConversionException;
+	
 	/**
-	 * Primero se llamara a este método enviando el objeto java que se quiere
-	 * desglosar, y después se obtendra el objeto desglosado accediendo a
-	 * las propiedades.
+	 * First call to this method sending to it the java object that you
+	 * wish to split, and after you can obtain the splited object acceding
+	 * to properties. 
 	 */	
 	void toDB(Object objetoJava) throws ConversionException;
 

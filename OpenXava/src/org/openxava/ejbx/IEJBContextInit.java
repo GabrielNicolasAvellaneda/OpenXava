@@ -3,25 +3,24 @@ package org.openxava.ejbx;
 import javax.ejb.*;
 
 /**
- * Añade la posibilidad de inicializar a un {@link IEJBContext}. <p>
+ * Add the possibility of init to {@link IEJBContext}. <p> 
  *
- * Es un interfaz de conveniencia para la implementación, si se
- * hace una clase que queramos usar como <code>IEJBContext</code>
- * debe implementar esté interfaz, aunque el usuario final no
- * conozca le existencia del mismo.<br>
- * También es importante que la clase implementadorá tenga un
- * constructor por defecto, en el que no ha de hacerse nada.<br>
- *
- * @version 00.02.09
+ * It's a convenience interface for implementation, if you
+ * create a class that you want use as <code>IEJBContext</code>
+ * you must to implement this interface, although the final
+ * user does not know about it.<br>
+ * Also it's important that implementing class have a 
+ * default constructor, but without logic. <br>
+ * 
  * @author  Javier Paniza
  */
 
 public interface IEJBContextInit extends IEJBContext {
 
   /**
-   * Establece un <code>EJBContext</code> necesario para la implantación. <br>
-   * Será necesario llamar a este método para que el <code>IEJBContext</code> pueda
-   * utilizarse.<br>
+   * Sets a <code>EJBContext</code> needed for implementing. <br>
+   * It's required call to this method so <code>IEJBContext</code> can be used. 
    */
   void setEJBContext(EJBContext ejbContext);
+  
 }

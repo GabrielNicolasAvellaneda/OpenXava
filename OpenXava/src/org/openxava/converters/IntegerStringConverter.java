@@ -3,7 +3,7 @@ package org.openxava.converters;
 
 
 /**
- * In java a int and  basadate a String.
+ * In java a int and in database a String.
  * 
  * @author Javier Paniza
  */
