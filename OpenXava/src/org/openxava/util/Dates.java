@@ -182,170 +182,172 @@ public class Dates {
 	 * @return Devuelve un mapa con la diferencia ("anyos", "meses", "dias")
 	 */	
 	public static DateDistance subtract(java.util.Date f1, java.util.Date f2, boolean includeStartDate ) {
-		DateDistance df = new DateDistance();
-		if ( null == f1 || null == f2 ) return null;
-		Calendar fmax = Calendar.getInstance(), fmin = Calendar.getInstance();
-		int i;
-		f1 = Dates.removeTime(f1);
-		f2 = Dates.removeTime(f2);		
-		if (f1.after(f2)) {
-			fmax.setTime(f1);
-			fmin.setTime(f2);
-		}
-		else {
-			fmin.setTime(f1);
-			fmax.setTime(f2);
-		}
-		
-		if (includeStartDate) {
-			fmin.add(Calendar.DATE, -1);
-		}
-		
-		Calendar cal = Calendar.getInstance();
-		if (fmax.get(Calendar.MONTH) == 0) {
-			cal.setTime(Dates.create(fmax.get(Calendar.DATE), 11,fmax.get(Calendar.YEAR)));
-		}
-		else {
-			cal.setTime(Dates.create(fmax.get(Calendar.DATE), fmax.get(Calendar.MONTH) - 1,fmax.get(Calendar.YEAR)));	
-		}
-		
-		int tope = cal.getActualMaximum(Calendar.DATE);
-		int mesInicio = fmin.get(Calendar.MONTH);
-		int mesFin = fmax.get(Calendar.MONTH);
-		int anyoInicio = fmin.get(Calendar.YEAR);
-		int anyoFin = fmax.get(Calendar.YEAR);
-		int diaInicio = fmin.get(Calendar.DATE);
-		int diaFin = fmax.get(Calendar.DATE);
-		
-		if (diaInicio < diaFin || diaInicio == diaFin) {
-			while (fmin.get(Calendar.MONTH) != mesFin || fmin.get(Calendar.YEAR) != anyoFin) {
-				fmin.add(Calendar.MONTH, +1);
-				df.meses++;
-				if (df.meses == 12) {
-					df.meses = 0;
-					df.años++;
-				}
-			}
-			while (!fmin.equals(fmax)) {
-				fmin.add(Calendar.DATE, 1);				
-				df.dias++;
-			}			
-		}
-		else {
-			int FM;
-			int FA;			
-			if (mesFin == 0) {
-				FM = 11;
-				FA = anyoFin - 1;
-			}
-			else {
-				FM = mesFin -1;
-				FA = anyoFin;
-			}
-			while (fmin.get(Calendar.MONTH) != FM || fmin.get(Calendar.YEAR) != FA) {
-				fmin.add(Calendar.MONTH, +1);
-				df.meses++;
-				if (df.meses == 12) {
-					df.meses = 0;
-					df.años++;
-				}
-			}
-			while (!fmin.equals(fmax)) {
-				fmin.add(Calendar.DATE, 1);
-				df.dias++;
-				if (fmin.get(Calendar.DATE) == tope) {
-					df.meses++;
-					if (df.meses == 12) {
-						df.meses = 0;
-						df.años++;
-					}
-					df.dias = 0;					
-				}
-			}			
-		}
-		return df; 	
+	    DateDistance df = new DateDistance();
+        if (null == f1 || null == f2)
+            return null;
+        Calendar fmax = Calendar.getInstance(), fmin = Calendar.getInstance();
+
+        f1 = Dates.removeTime(f1);
+        f2 = Dates.removeTime(f2);
+
+        if (f1.after(f2)) {
+            fmax.setTime(f1);
+            fmin.setTime(f2);
+        } else {
+            fmin.setTime(f1);
+            fmax.setTime(f2);
+        }
+        
+        int diaInicio = fmin.get(Calendar.DATE);
+        int mesInicio = fmin.get(Calendar.MONTH);
+        int anyoInicio = fmin.get(Calendar.YEAR);
+        int diaFin = fmax.get(Calendar.DATE);
+        int mesFin = fmax.get(Calendar.MONTH);
+        int anyoFin = fmax.get(Calendar.YEAR);
+        int topeInicial = fmin.getActualMaximum(Calendar.DATE);
+        int topeFinal = fmax.getActualMaximum(Calendar.DATE);
+        int picoInicial = 0;
+        int picoFinal = 0;
+        
+
+        if (mesInicio == mesFin && anyoInicio == anyoFin) {
+            while (!fmin.getTime().equals(fmax.getTime())) {
+                fmin.add(Calendar.DATE, 1);
+                df.dias++;
+            }
+
+            if (includeStartDate) {
+                df.dias++;
+            }
+            if (df.dias >= topeFinal) {
+                df.meses++;
+                df.dias = 0;
+            }
+            return df;
+        }
+
+        
+        if (diaInicio != 1) {
+            while (fmin.get(Calendar.DATE) != 1) {
+                fmin.add(Calendar.DATE, 1);
+                picoInicial++;
+            }
+        }
+        
+        while (fmin.get(Calendar.MONTH) != mesFin
+                || fmin.get(Calendar.YEAR) != anyoFin) {
+            fmin.add(Calendar.MONTH, 1);
+            df.meses++;
+            if (df.meses == 12) {
+                df.años++;
+                df.meses = 0;
+            }
+        }
+        
+        while (!fmin.getTime().equals(fmax.getTime())) {
+            fmin.add(Calendar.DATE, 1);
+            picoFinal++;
+        }
+        
+        int pico = picoInicial + picoFinal;
+        if (includeStartDate) {
+            pico++;
+        }
+        
+        if (pico >= topeFinal) {
+            pico = pico - topeFinal;
+            df.meses++;
+            if (df.meses == 12) {
+                df.años++;
+                df.meses = 0;
+            }
+        }
+        df.dias = pico;
+        return df;
+
+        
 	}
 	
 	public static DateDistance subtract(java.util.Date f1, java.util.Date f2) {
-		DateDistance df = new DateDistance();
-		if ( null == f1 || null == f2 ) return null;
-		Calendar fmax = Calendar.getInstance(), fmin = Calendar.getInstance();
-		int i;
-		f1 = Dates.removeTime(f1);
-		f2 = Dates.removeTime(f2);		
-		if (f1.after(f2)) {
-			fmax.setTime(f1);
-			fmin.setTime(f2);
-		}
-		else {
-			fmin.setTime(f1);
-			fmax.setTime(f2);
-		}
-		
-		Calendar cal = Calendar.getInstance();
-		if (fmax.get(Calendar.MONTH) == 0) {
-			cal.setTime(Dates.create(fmax.get(Calendar.DATE), 11,fmax.get(Calendar.YEAR)));
-		}
-		else {
-			cal.setTime(Dates.create(fmax.get(Calendar.DATE), fmax.get(Calendar.MONTH) - 1,fmax.get(Calendar.YEAR)));	
-		}
-		
-		int tope = cal.getActualMaximum(Calendar.DATE);
-		int mesInicio = fmin.get(Calendar.MONTH);
-		int mesFin = fmax.get(Calendar.MONTH);
-		int anyoInicio = fmin.get(Calendar.YEAR);
-		int anyoFin = fmax.get(Calendar.YEAR);
-		int diaInicio = fmin.get(Calendar.DATE);
-		int diaFin = fmax.get(Calendar.DATE);
-		
-		if (diaInicio < diaFin || diaInicio == diaFin) {
-			while (fmin.get(Calendar.MONTH) != mesFin || fmin.get(Calendar.YEAR) != anyoFin) {
-				fmin.add(Calendar.MONTH, +1);
-				df.meses++;
-				if (df.meses == 12) {
-					df.meses = 0;
-					df.años++;
-				}
-			}
-			while (!fmin.equals(fmax)) {
-				fmin.add(Calendar.DATE, 1);				
-				df.dias++;
-			}			
-		}
-		else {
-			int FM;
-			int FA;			
-			if (mesFin == 0) {
-				FM = 11;
-				FA = anyoFin - 1;
-			}
-			else {
-				FM = mesFin -1;
-				FA = anyoFin;
-			}
-			while (fmin.get(Calendar.MONTH) != FM || fmin.get(Calendar.YEAR) != FA) {
-				fmin.add(Calendar.MONTH, +1);
-				df.meses++;
-				if (df.meses == 12) {
-					df.meses = 0;
-					df.años++;
-				}
-			}
-			while (!fmin.equals(fmax)) {
-				fmin.add(Calendar.DATE, 1);
-				df.dias++;
-				if (fmin.get(Calendar.DATE) == tope) {
-					df.meses++;
-					if (df.meses == 12) {
-						df.meses = 0;
-						df.años++;
-					}
-					df.dias = 0;					
-				}
-			}			
-		}
-		return df; 	
-	}
+        DateDistance df = new DateDistance();
+        if (null == f1 || null == f2)
+            return null;
+        Calendar fmax = Calendar.getInstance(), fmin = Calendar.getInstance();
+    
+        f1 = Dates.removeTime(f1);
+        f2 = Dates.removeTime(f2);
+    
+        if (f1.after(f2)) {
+            fmax.setTime(f1);
+            fmin.setTime(f2);
+        } else {
+            fmin.setTime(f1);
+            fmax.setTime(f2);
+        }
+        
+        int diaInicio = fmin.get(Calendar.DATE);
+        int mesInicio = fmin.get(Calendar.MONTH);
+        int anyoInicio = fmin.get(Calendar.YEAR);
+        int diaFin = fmax.get(Calendar.DATE);
+        int mesFin = fmax.get(Calendar.MONTH);
+        int anyoFin = fmax.get(Calendar.YEAR);
+        int topeInicial = fmin.getActualMaximum(Calendar.DATE);
+        int topeFinal = fmax.getActualMaximum(Calendar.DATE);
+        int picoInicial = 0;
+        int picoFinal = 0;
+        
+    
+        if (mesInicio == mesFin && anyoInicio == anyoFin) {
+            while (!fmin.getTime().equals(fmax.getTime())) {
+                fmin.add(Calendar.DATE, 1);
+                df.dias++;
+            }
+    
+            
+            if (df.dias >= topeFinal) {
+                df.meses++;
+                df.dias = 0;
+            }
+            return df;
+        }
+    
+        
+        if (diaInicio != 1) {
+            while (fmin.get(Calendar.DATE) != 1) {
+                fmin.add(Calendar.DATE, 1);
+                picoInicial++;
+            }
+        }
+        
+        while (fmin.get(Calendar.MONTH) != mesFin
+                || fmin.get(Calendar.YEAR) != anyoFin) {
+            fmin.add(Calendar.MONTH, 1);
+            df.meses++;
+            if (df.meses == 12) {
+                df.años++;
+                df.meses = 0;
+            }
+        }
+        
+        while (!fmin.getTime().equals(fmax.getTime())) {
+            fmin.add(Calendar.DATE, 1);
+            picoFinal++;
+        }
+        
+        int pico = picoInicial + picoFinal;
+        
+        
+        if (pico >= topeFinal) {
+            pico = pico - topeFinal;
+            df.meses++;
+            if (df.meses == 12) {
+                df.años++;
+                df.meses = 0;
+            }
+        }
+        df.dias = pico;
+        return df;
+    }
 		
 	/**
 	 * Reciba dos mapas con un número de días, meses y años y los suma. 
