@@ -137,8 +137,8 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 		MetaProperty property = originalProperty.cloneMetaProperty();
 		property.setName(reference.getName() + "_" + property.getName());
 		String propertyName = Strings.change(Strings.firstUpper(property.getName()), ".", "_");
-		if (GeneratorFactory.has(property)) {
-			IPropertyCodeGenerator generator = GeneratorFactory.create(property);		
+		if (GeneratorFactory.has(property, ejb)) {
+			IPropertyCodeGenerator generator = GeneratorFactory.create(property, ejb);		
 			String propertyCode = generator.generate();
 	#
 		#(propertyCode)#	

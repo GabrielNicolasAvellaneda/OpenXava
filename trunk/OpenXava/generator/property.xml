@@ -74,8 +74,8 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 </declarations> 
 
 <java>
-	if (GeneratorFactory.has(property)) {
-		IPropertyCodeGenerator generator = GeneratorFactory.create(property);
+	if (GeneratorFactory.has(property, ejb)) {
+		IPropertyCodeGenerator generator = GeneratorFactory.create(property, ejb);
 		String propertyCode = generator.generate();
 </java> 
 	<expr>propertyCode</expr>	
@@ -85,8 +85,8 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 	String propertyName = Strings.firstUpper(property.getName());	
 	String type = property.getTypeName();	
 	String get = type.equals("boolean")?"is":"get";	
-	String tagValueObject = isPublic?"@ejb.value-object match=\"persistentCalculatedAndAggregate\"":"";
-	String tagInterfaceMethod = isPublic?"@ejb:interface-method":"";
+	String tagValueObject = ejb &amp;&amp; isPublic?"@ejb.value-object match=\"persistentCalculatedAndAggregate\"":"";
+	String tagInterfaceMethod = ejb &amp;&amp; isPublic?"@ejb:interface-method":"";
 	if (property.isCalculated()) {
 		// Calculateds
 	</java> 	
@@ -170,7 +170,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 		PropertyMapping propertyMapping = modelMapping.getPropertyMapping(property.getName());
 		
 		String ejbPkField = "";
-		String ejbSetInterfaceMethod = isPublic?"@ejb:interface-method":"";
+		String ejbSetInterfaceMethod = ejb &amp;&amp; isPublic?"@ejb:interface-method":"";
 		if (property.isKey()) {
 			ejbPkField = "@ejb:pk-field";
 			ejbSetInterfaceMethod = "";			

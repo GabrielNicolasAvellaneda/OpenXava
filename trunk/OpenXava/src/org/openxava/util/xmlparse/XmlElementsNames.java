@@ -143,5 +143,5 @@ public class XmlElementsNames {
 	protected final static String [] xstyle = { "style", "estilo" };
 	protected final static String [] xrow_style = { "row-style", "estilo-fila" };
 	protected final static String [] xfrom_type = { "from-type", "del-tipo" };
-		
+	protected final static String [] xmodel_type = { "model-type", "tipo-modelo" };	
 }

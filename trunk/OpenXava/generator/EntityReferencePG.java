@@ -13,7 +13,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Mar 10 10:07:34 CET 2005
+ * @version Sat Mar 12 14:13:19 CET 2005
  */
 public class EntityReferencePG {
     Properties properties = new Properties();
@@ -167,8 +167,8 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     		MetaProperty property = originalProperty.cloneMetaProperty();
     		property.setName(reference.getName() + "_" + property.getName());
     		String propertyName = Strings.change(Strings.firstUpper(property.getName()), ".", "_");
-    		if (GeneratorFactory.has(property)) {
-    			IPropertyCodeGenerator generator = GeneratorFactory.create(property);		
+    		if (GeneratorFactory.has(property, ejb)) {
+    			IPropertyCodeGenerator generator = GeneratorFactory.create(property, ejb);		
     			String propertyCode = generator.generate();
     	
     out.print("\n\t\t");
@@ -276,9 +276,9 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Mar 10 10:07:34 CET 2005", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/entityReference.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/EntityReferencePG.java" }, // output file
+        { "Sat Mar 12 14:13:19 CET 2005", // date this file was generated
+             "/home/mcarmen/workspace/OpenXava/generator/entityReference.xml", // input file
+             "/home/mcarmen/workspace/OpenXava/generator/EntityReferencePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
