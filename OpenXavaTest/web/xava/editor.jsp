@@ -80,7 +80,7 @@ if ((editable && view.isRepresentsEntityReference() && view.isLastKeyProperty(p)
 	<% } %>
 <% } %>
 <%
-if (editable) {
+if (editable || p.isReadOnly()) {
 	java.util.Iterator itActions = view.getActionsNamesForProperty(p).iterator();
 	while (itActions.hasNext()) {
 		String action = (String) itActions.next();

@@ -61,6 +61,13 @@ public class CarriersTest extends ModuleTestBase {
 		}
 	}
 	
+	public void testActionOfCalculatedPropertyAlwaysPresent() throws Exception {
+		execute("CRUD.new");
+		assertAction("Carriers.translateName");
+		assertExists("calculated");
+		assertNoEditable("calculated");
+	}
+	
 	public void testFilterIgnoringCase() throws Exception {
 		assertListRowCount(5);
 		String [] condition = { "", "cinco" };

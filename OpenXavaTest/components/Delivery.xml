@@ -74,7 +74,7 @@
 		<property-view property="number">
 			<action action="Deliveries.generateNumber"/>		
 		</property-view>
-				
+		
 		<property-view property="deliveredBy">
 			<on-change class="org.openxava.test.actions.OnChangeDeliveryByAction"/>
 		</property-view>

@@ -52,6 +52,9 @@
 	</entity>
 	
 	<view>
+		<property-view property="calculated">
+			<action action="Carriers.translateName"/>		
+		</property-view>
 		<reference-view reference="drivingLicence">
 			<descriptions-list/>
 		</reference-view>
