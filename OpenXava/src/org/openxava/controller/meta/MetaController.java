@@ -24,65 +24,60 @@ public class MetaController extends MetaElement {
 	/**
 	 * Only for spanish/swing version
 	 */
-	public void setClassName(String clase) {
-		this.className = clase;
+	public void setClassName(String className) {
+		this.className = className;
 	}
 
-	public void addMetaAction(MetaAction accion) {
-		metaActions.add(accion);
-		accion.setMetaController(this);
-		mapMetaActions.put(accion.getName(), accion);
+	public void addMetaAction(MetaAction action) {
+		metaActions.add(action);
+		action.setMetaController(this);
+		mapMetaActions.put(action.getName(), action);
 	}
 	
-	public void addParentName(String nombrePadre) {
+	public void addParentName(String parentName) {
 		if (parentsNames == null) parentsNames = new ArrayList();
-		parentsNames.add(nombrePadre);  	
+		parentsNames.add(parentName);  	
 		parents = null;	
 	}
 	
-	
-	
-	
-	public MetaAction getMetaAction(String nombre) throws ElementNotFoundException {
-		MetaAction a = (MetaAction) mapMetaActions.get(nombre);
-		if (a == null) throw new ElementNotFoundException("action_not_found", nombre, getName());		
+	public MetaAction getMetaAction(String name) throws ElementNotFoundException {
+		MetaAction a = (MetaAction) mapMetaActions.get(name);
+		if (a == null) throw new ElementNotFoundException("action_not_found", name, getName());		
 		return a; 
 	}
 	
-		
-	
 	/**
-	 * @return Nunca nulo, de tipo <tt>Accion</tt> y de solo lectura.
+	 * @return Not null, of type <tt>MetaAction</tt> and read only.
 	 */
 	
 	public Collection getMetaActions() {
 		return Collections.unmodifiableCollection(metaActions);
 	}
 	
-	public boolean containsMetaAction(String nombreAccion) {
-		return metaActions.contains(new MetaAction(nombreAccion));
+	public boolean containsMetaAction(String actionName) {
+		return metaActions.contains(new MetaAction(actionName));
 	}
-	public Collection getMetaActionsForSection(String seccion) throws XavaException {
-		if (Is.emptyString(seccion)) return Collections.EMPTY_LIST;
+	public Collection getMetaActionsForMode(String mode) throws XavaException {
+		if (Is.emptyString(mode)) return Collections.EMPTY_LIST;
 		
 		List result = new ArrayList();
-		// añadimos los de los padres
-		Iterator itPadres = getParents().iterator();
-		while (itPadres.hasNext()) {
-			MetaController padre = (MetaController) itPadres.next();
-			result.addAll(padre.getMetaActionsForSection(seccion));
+		// Adding parents
+		Iterator itParents = getParents().iterator();
+		while (itParents.hasNext()) {
+			MetaController parent = (MetaController) itParents.next();
+			result.addAll(parent.getMetaActionsForMode(mode));
 		}
 				
-		// y ahora las nuestras
+		// and now ours 
 		Iterator it = metaActions.iterator();
 		while (it.hasNext()) {
-			MetaAction metaAccion = (MetaAction) it.next();			
-			if (seccion.equals(metaAccion.getMode()) || Is.emptyString(metaAccion.getMode())) {
-				int pos = result.indexOf(metaAccion);
-				if (pos < 0) result.add(metaAccion);
+			MetaAction metaAction = (MetaAction) it.next();			
+			if (mode.equals(metaAction.getMode()) || Is.emptyString(metaAction.getMode())) {
+				int pos = result.indexOf(metaAction);
+				if (pos < 0) result.add(metaAction);
 				else {
 					result.remove(pos);
-					result.add(pos, metaAccion);
+					result.add(pos, metaAction);
 				} 
 			}
 		}		
@@ -96,9 +91,9 @@ public class MetaController extends MetaElement {
 		Iterator it = metaActions.iterator();
 		Collection result = new ArrayList();
 		while (it.hasNext()) {
-			MetaAction metaAccion = (MetaAction) it.next();			
-			if (metaAccion.isOnInit()) {
-				result.add(metaAccion);
+			MetaAction metaAction = (MetaAction) it.next();			
+			if (metaAction.isOnInit()) {
+				result.add(metaAction);
 			}
 		}
 		return result;
@@ -108,7 +103,7 @@ public class MetaController extends MetaElement {
 	}		
 	
 	/**
-	 * @return de tipo MetaControlador
+	 * @return of type MetaController
 	 */
 	public Collection getParents() throws XavaException {
 		if (!hasParents()) return Collections.EMPTY_LIST;
@@ -116,8 +111,8 @@ public class MetaController extends MetaElement {
 			parents = new ArrayList();
 			Iterator it = parentsNames.iterator();
 			while (it.hasNext()) {
-				String nombre = (String) it.next();
-				parents.add(MetaControllers.getMetaController(nombre));
+				String name = (String) it.next();
+				parents.add(MetaControllers.getMetaController(name));
 			}
 		}
 		return parents;

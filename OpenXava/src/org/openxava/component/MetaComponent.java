@@ -9,24 +9,15 @@ import org.openxava.tab.meta.*;
 import org.openxava.util.*;
 import org.openxava.view.meta.*;
 
-
-
-
 /**
- * Aglutina toda la metainformación de un
- * concepto de negocio.<p>
  * 
- * Un componente de negocio son todos los artefactos
- * de software que tienen que ver con un concepto de
- * negocio. Por ejemplo, todas las vistas, tablas,
- * clases, modelos, etc. que tengan que ver con 
- * el concepto de Comercial sería el componente
- * de negocio <i>Comercial</i>.<p>
+ * All meta info about business concept.<p>
  * 
- * No lleva el prefijo Meta porque aquí no hay
- * que distinguir entre el elemento (por ejemplo
- * una entidad) y su descripción (que sería la
- * metaentidad).<p>
+ * A business component is all software artifacts
+ * that have relation with a business concept.
+ * For example, all view, tables, classes, models, etc.
+ * about concept of Seller is the <i>Seller</i> business
+ * component.<p>
  * 
  * @author Javier Paniza
  */
@@ -53,26 +44,26 @@ public class MetaComponent implements Serializable {
 		
 	/**
 	 * 
-	 * @exception ElementNotFoundException  Si no existe el componente.
-	 * @exception XavaException  Cualquier otro problema. 
+	 * @exception ElementNotFoundException  If component does not exist.
+	 * @exception XavaException  Any other problem. 
 	 */
-	public static MetaComponent get(String nombre) throws XavaException {		
-		MetaComponent r = (MetaComponent) components.get(nombre);		
+	public static MetaComponent get(String name) throws XavaException {		
+		MetaComponent r = (MetaComponent) components.get(name);		
 		if (r == null) {			
-			r = ComponentParser.parse(nombre);		
+			r = ComponentParser.parse(name);		
 			if (r == null) {				
-				throw new ElementNotFoundException("component_not_found", nombre);
+				throw new ElementNotFoundException("component_not_found", name);
 			}
 			r.validar();						
-			components.put(nombre, r);
+			components.put(name, r);
 		}		
 		return r;
 	}
 	
 
-	public static boolean exists(String nombre) throws XavaException {
+	public static boolean exists(String name) throws XavaException {
 		try {
-			get(nombre);
+			get(name);
 			return true;
 		}
 		catch (ElementNotFoundException ex) {
@@ -85,84 +76,82 @@ public class MetaComponent implements Serializable {
 	}
 		
 	/**
-	 * @return Ni nulo ni cadena vacía.
+	 * @return Not null and not empty string
 	 */
 	public String getName() {
 		return name;
 	}
-	void setName(String nombre) {
-		this.name = nombre;
+	void setName(String name) {
+		this.name = name;
 	}
 	
 	/**
-	 * Nunca nulo.
+	 * @return Not null.
 	 */
 	public MetaEntity getMetaEntity() {
 		return metaEntity;
 	}
 	
 	/**
-	 * @param metaEntidad No debería ser nulo.
+	 * @param metaEntity Not null
 	 */
-	void setMetaEntity(MetaEntity metaEntidad) throws XavaException {
+	void setMetaEntity(MetaEntity metaEntity) throws XavaException {
 		if (this.metaEntity != null) {
 			throw new XavaException("component_only_1_entity", getName());
 		}
-		this.metaEntity = metaEntidad;
+		this.metaEntity = metaEntity;
 		this.metaEntity.setMetaComponent(this);
 	}
 	
-
 	/**
-	 * @param metaVista No debería ser nulo.
+	 * @param metaView Not null.
 	 */	
-	void addMetaView(MetaView metaVista) throws XavaException {
-		if (Is.emptyString(metaVista.getModelName())) {
-			getMetaEntity().addMetaView(metaVista);
+	void addMetaView(MetaView metaView) throws XavaException {
+		if (Is.emptyString(metaView.getModelName())) {
+			getMetaEntity().addMetaView(metaView);
 		}
-		else if (getName().equals(metaVista.getModelName())) {
-			getMetaEntity().addMetaView(metaVista);
+		else if (getName().equals(metaView.getModelName())) {
+			getMetaEntity().addMetaView(metaView);
 		}
 		else {
-			getMetaAggregate(metaVista.getModelName()).addMetaView(metaVista);
+			getMetaAggregate(metaView.getModelName()).addMetaView(metaView);
 		}
 	}
 			
 	/**
 	 * 
-	 * @return Nunca nulo. 
-	 * @exception ElementNotFoundException Si no existe el meta agregado en este componente.
-	 * @exception XavaException Cualquier otro problema.
+	 * @return Not null. 
+	 * @exception ElementNotFoundException If the MetaAggregate does not exist in this component.
+	 * @exception XavaException Any other problem.
 	 */
-	public MetaAggregate getMetaAggregate(String nombre) throws  XavaException {
-		if (metaAggregates == null || !metaAggregates.containsKey(nombre)) {
-			throw new ElementNotFoundException("aggregate_not_found", nombre, getName());
+	public MetaAggregate getMetaAggregate(String name) throws  XavaException {
+		if (metaAggregates == null || !metaAggregates.containsKey(name)) {
+			throw new ElementNotFoundException("aggregate_not_found", name, getName());
 		}
-		return (MetaAggregate) metaAggregates.get(nombre);
+		return (MetaAggregate) metaAggregates.get(name);
 	}
 	
 	/**
 	 *
-	 * @return Nunca nulo.
-	 * @exception ElementNotFoundException Si no existe el mapeo agregado en
-	 * este componente.
-	 * @exception XavaException Cualquier otro problema.
+	 * @return Not null
+	 * @exception ElementNotFoundException If does not exist the aggregate mapping in this component.
+	 * @exception XavaException Any other problem.
 	 */
-	public AggregateMapping getAggregateMapping(String nombre) throws  XavaException {
-		if (aggregatesMapping == null || !aggregatesMapping.containsKey(nombre)) {
-			throw new ElementNotFoundException("aggregate_mapping_not_found", nombre, getName());
+	public AggregateMapping getAggregateMapping(String name) throws  XavaException {
+		if (aggregatesMapping == null || !aggregatesMapping.containsKey(name)) {
+			throw new ElementNotFoundException("aggregate_mapping_not_found", name, getName());
 		}
-		return (AggregateMapping) aggregatesMapping.get(nombre);
+		return (AggregateMapping) aggregatesMapping.get(name);
 	}
 	
-	public Collection getAggregateMappings() throws  XavaException {
+	public Collection getAggregateMappings() throws XavaException {
 		return aggregatesMapping == null?Collections.EMPTY_LIST:aggregatesMapping.values(); 
 	}	
 	
 	/**
 	 * 
-	 * @return Elementos <tt>instanceof MetaAgregado</tt>. Nunca nulo. 	 
-	 * @exception XavaException Cualquier otro problema.
+	 * @return Elementss <tt>instanceof MetaAggregate</tt>. Not null. 	 
+	 * @exception XavaException Any other problem.
 	 */
 	public Collection getMetaAggregates() throws  XavaException {
 		if (metaAggregates == null) return new ArrayList();
@@ -171,8 +160,8 @@ public class MetaComponent implements Serializable {
 	
 	/**
 	 * 
-	 * @return Elementos <tt>instanceof MetaAgregadoBean</tt> y <tt>generar == true</tt>. Nunca nulo. 	 
-	 * @exception XavaException Cualquier otro problema.
+	 * @return Elements <tt>instanceof MetaAggregateBean</tt> and <tt>generate == true</tt>. Not null. 	 
+	 * @exception XavaException Any other problem.
 	 */
 	public Collection getMetaAggregatesBeanGenerated() throws  XavaException {
 		Iterator it = getMetaAggregates().iterator();
@@ -180,9 +169,9 @@ public class MetaComponent implements Serializable {
 		while (it.hasNext()) {
 			Object element = it.next();			
 			if (!(element instanceof MetaAggregateBean)) continue;			
-			MetaAggregateBean agregado = (MetaAggregateBean) element;
-			if (agregado.isGenerate()) {				
-				result.add(agregado);
+			MetaAggregateBean aggregate = (MetaAggregateBean) element;
+			if (aggregate.isGenerate()) {				
+				result.add(aggregate);
 			}			
 		}		
 		return result;			
@@ -190,9 +179,9 @@ public class MetaComponent implements Serializable {
 	
 	/**
 	 *
-	 * @return Elementos <tt>instanceof MetaAgregadoEjb</tt> y 
-	 * 			<tt>generarXDocLet	 == true</tt>. Nunca nulo.
-	 * @exception XavaException Cualquier otro problema.
+	 * @return Elements <tt>instanceof MetaAggregateEjb</tt> and 
+	 * 			<tt>generateXDocLet	 == true</tt>. Not null.
+	 * @exception XavaException Any other problem.
 	 */
 	public Collection getMetaAggregatesEjbXDocLet() throws  XavaException {
 		Iterator it = getMetaAggregates().iterator();
@@ -200,33 +189,33 @@ public class MetaComponent implements Serializable {
 		while (it.hasNext()) {
 			Object element = it.next();
 			if (!(element instanceof MetaAggregateEjb)) continue;
-			MetaAggregateEjb agregado = (MetaAggregateEjb) element;
-			if (agregado.isGenerateXDocLet()) {
-				result.add(agregado);
+			MetaAggregateEjb aggregate = (MetaAggregateEjb) element;
+			if (aggregate.isGenerateXDocLet()) {
+				result.add(aggregate);
 			}
 		}
 		return result;
 	}	
 
 	/**
-	 * @param metaAgregado  No debería ser nulo.
+	 * @param metaAggregate  Not null.
 	 */
-	void addMetaAggregate(MetaAggregate metaAgregado) {
+	void addMetaAggregate(MetaAggregate metaAggregate) {
 		if (metaAggregates == null) metaAggregates = new HashMap();
-		metaAggregates.put(metaAgregado.getName(), metaAgregado);
-		metaAgregado.setMetaComponent(this);
+		metaAggregates.put(metaAggregate.getName(), metaAggregate);
+		metaAggregate.setMetaComponent(this);
 	}
 	
-	void addAggregateMapping(AggregateMapping mapeoAgregado) throws XavaException {
+	void addAggregateMapping(AggregateMapping aggregateMapping) throws XavaException {
 		if (aggregatesMapping == null) aggregatesMapping = new HashMap();
-		aggregatesMapping.put(mapeoAgregado.getModelName(), mapeoAgregado);
-		mapeoAgregado.setMetaComponent(this);	
+		aggregatesMapping.put(aggregateMapping.getModelName(), aggregateMapping);
+		aggregateMapping.setMetaComponent(this);	
 	}	
 	
 	/**
-	 * <tt>MetaTab</tt> por defecto.
+	 * <tt>MetaTab</tt> by default.
 	 * 
-	 * @return Nunca nulo.
+	 * @return Not null.
 	 */
 	public MetaTab getMetaTab() throws XavaException {
 		if (metaTab == null) {
@@ -236,28 +225,26 @@ public class MetaComponent implements Serializable {
 	}
 
 	/**
-	 * <tt>MetaTab</tt> a partir del nombre.
+	 * <tt>MetaTab</tt> from name.
 	 * 
-	 * @param nombre Enviar nulo o cadena vacía devuelve el tab por defecto, 
-	 * @return Nunca nulo
-	 * @exception XavaException
-	 * @exception ElementNotFoundException
+	 * @param name If null or empty string return default tab. 
+	 * @return Not null
 	 */	
-	public MetaTab getMetaTab(String nombre) throws XavaException, ElementNotFoundException {		
-		if (Is.emptyString(nombre)) return getMetaTab();
+	public MetaTab getMetaTab(String name) throws XavaException, ElementNotFoundException {		
+		if (Is.emptyString(name)) return getMetaTab();
 		if (metaTabs == null) {			
-			throw new ElementNotFoundException("tab_not_found", nombre, getName());
+			throw new ElementNotFoundException("tab_not_found", name, getName());
 		}
-		MetaTab result = (MetaTab) metaTabs.get(nombre);
+		MetaTab result = (MetaTab) metaTabs.get(name);
 		if (result == null) {
-			throw new ElementNotFoundException("tab_not_found", nombre, getName());
+			throw new ElementNotFoundException("tab_not_found", name, getName());
 		}
 		return result;
 	}
 	
 
 	/**
-	 * <tt>MetaTab</tt> por defecto.
+	 * <tt>MetaTab</tt> by default.
 	 */	
 	private void setMetaTab(MetaTab metaTab) throws XavaException {
 		if (this.metaTab != null) {			
@@ -269,23 +256,23 @@ public class MetaComponent implements Serializable {
 	void addMetaTab(MetaTab metaTab) throws XavaException {
 		metaTab.setMetaComponent(this);
 		metaTab.addDefaultMetaConsults();		
-		String nombre = metaTab.getName();
-		if (Is.emptyString(nombre)) { // por defecto
+		String name = metaTab.getName();
+		if (Is.emptyString(name)) { // by default
 			setMetaTab(metaTab);
 		}
-		else { // con nombre
+		else { // with name
 			if (metaTabs == null) {
 				metaTabs = new HashMap();			
 			}
-			metaTabs.put(nombre, metaTab);		
+			metaTabs.put(name, metaTab);		
 		}
 	}
 	
 	/**
 	 * 
-	 * @return Nunca nulo.
-	 * @exception XavaException Si hay algún problema, lo que incluye
-	 *            que no exista mapeo definido para este componente.
+	 * @return Not null.
+	 * @exception XavaException Any problem, including that mapping for
+	 * 		this component does not exist.
 	 */
 	public EntityMapping getEntityMapping() throws XavaException {
 		if (entityMapping == null) {
@@ -294,11 +281,11 @@ public class MetaComponent implements Serializable {
 		return entityMapping;
 	}
 	
-	void setEntityMapping(EntityMapping mapeo) throws XavaException {
-		if (mapeo != null) {
-			mapeo.setMetaComponent(this);
+	void setEntityMapping(EntityMapping mapping) throws XavaException {
+		if (mapping != null) {
+			mapping.setMetaComponent(this);
 		}
-		this.entityMapping = mapeo;
+		this.entityMapping = mapping;
 	}
 	
 	private void validar() throws XavaException {		
@@ -348,12 +335,8 @@ public class MetaComponent implements Serializable {
 		}
 	}
 	
-	/**
-	 * Sets the paquete.
-	 * @param paquete The paquete to set
-	 */
-	public void setPackageName(String paquete) {
-		this.packageName = paquete;
+	public void setPackageName(String packageName) {
+		this.packageName = packageName;
 	}
 
 	/**

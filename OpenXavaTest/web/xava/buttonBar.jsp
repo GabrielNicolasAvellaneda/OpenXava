@@ -50,10 +50,10 @@ while (itSections.hasNext()) {
 	-
 	<%
 	}
-	// 'sectionNameAction' only run well if the only sections
+	// 'modeNameAction' only run well if the only modes
 	// are list and detail, but at momment that is the case
-	String sectionNameAction = action.getName().equals("list")?"list":"detail"; 
-	if (sectionNameAction.equals(manager.getSectionName())) {
+	String modeNameAction = action.getName().equals("list")?"list":"detail"; 
+	if (modeNameAction.equals(manager.getModeName())) {
 	%>
 	<b><%=action.getLabel(request)%></b>
 	<%

@@ -22,7 +22,7 @@ public class ModuleManager {
 	private Collection metaActionsOnInit;
 	private boolean moduleInitiated;
 	private String form;
-	private static int siguienteOid = 0; 
+	private static int nextOid = 0; 
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;
 		
 	private int oid;	
@@ -38,18 +38,17 @@ public class ModuleManager {
 	private MetaController metaControllerSections;
 	private HttpSession session;
 	private String viewName = null;
-	private String sectionName;	
+	private String modeName;	
 	private String nextModule;
 	
 	private boolean formUpload = false;
 
 	public ModuleManager() {
-		oid = siguienteOid++;
+		oid = nextOid++;
 	}
 	
 	/**
-	 * Nombre del formulario html asociado a este controlador.
-	 * @return
+	 * Html form name associated to this controller. 
 	 */
 	public String getForm() {
 		if (form == null) {
@@ -65,12 +64,12 @@ public class ModuleManager {
 				metaActions = new ArrayList();
 				while (it.hasNext()) {
 					MetaController contr = (MetaController) it.next();										
-					metaActions.addAll(contr.getMetaActionsForSection(getSectionName()));									
+					metaActions.addAll(contr.getMetaActionsForMode(getModeName()));									
 				} 										
 			}
 			catch (Exception ex) {
 				ex.printStackTrace();
-				System.err.println("Imposible obtener acciones asociadas a los controladores");
+				System.err.println(XavaResources.getString("controller_actions_error"));
 				return new ArrayList();
 			}	
 		}
@@ -89,7 +88,7 @@ public class ModuleManager {
 			}
 			catch (Exception ex) {
 				ex.printStackTrace();
-				System.err.println("Imposible obtener acciones de inicio asociadas a los controladores");
+				System.err.println(XavaResources.getString("controller_init_action_error"));
 				return Collections.EMPTY_LIST;
 			}	
 		}
@@ -103,7 +102,7 @@ public class ModuleManager {
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			System.err.println("Imposible obtener acciones asociadas al controlador " + getModeControllerName());
+			System.err.println(XavaResources.getString("controllers_actions_error", getModeControllerName()));
 			return new ArrayList();
 		}			
 	}
@@ -120,188 +119,187 @@ public class ModuleManager {
 	private Collection getMetaControllers() throws XavaException {
 		if (metaControllers == null) {
 			metaControllers = new ArrayList();
-			String [] nombres = getControllersNames();
-			for (int i = 0; i < nombres.length; i++) {
-				metaControllers.add(MetaControllers.getMetaController(nombres[i]));				
+			String [] names = getControllersNames();
+			for (int i = 0; i < names.length; i++) {
+				metaControllers.add(MetaControllers.getMetaController(names[i]));				
 			}						
 		}
 		return metaControllers;
 	}
 
-	private void establecerControladoresModulo() throws XavaException {					
-		Collection controladores = getMetaModule().getControllersNames();		
-		String [] nombres = new String[controladores.size()];
-		controladores.toArray(nombres);		
-		setControllersNames(nombres);			
+	private void setupModuleControllers() throws XavaException {					
+		Collection controllers = getMetaModule().getControllersNames();		
+		String [] names = new String[controllers.size()];
+		controllers.toArray(names);		
+		setControllersNames(names);			
 	}
-	
-	
+		
 	private String getModeControllerName() {		
 		return modeControllerName;
 	}
 	
-	private void setModeControllerName(String nombreControlador) {
+	private void setModeControllerName(String controllerName) {
 		metaControllerSections = null;
-		this.modeControllerName = nombreControlador;
+		this.modeControllerName = controllerName;
 	}
 	
 	public boolean actionOfThisModule(HttpServletRequest request) {
-		return isFormUpload() || // Puede que así formularios upload no funcionen bien en multimodulo 
+		return isFormUpload() || // May be that in this way upload forms does not work well in multimodule 
 			( 
 				Is.equal(request.getParameter("xava_action_module"),getModuleName()) &&
 				Is.equal(request.getParameter("xava_action_application"),getApplicationName())
 			);				
 	}
 	
-	public void execute(HttpServletRequest request, Messages errores, Messages mensajes) {		
+	public void execute(HttpServletRequest request, Messages errors, Messages messages) {		
 		try {									
-			if (errores.isEmpty()) { // solo se ejecuta la acción si no hay errores acumulados
-				// La siguiente condición es para evitar que se ejecuta una acción de otro
-				// módulo visualizado en la misma página web (p. ej. en un portal)				
+			if (errors.isEmpty()) { // Only it's executed the action if there aren't errors
+				// The next condition is for avoid to execute a action of another module
+				// displayed in the same web page (for example inside a portal)
 				if (actionOfThisModule(request)) {
-					String accionXava = request.getParameter("xava_action");					
+					String xavaAction = request.getParameter("xava_action");					
 					if (isFormUpload()) {
-						accionXava = getDefaultActionQualifiedName(); // En los formulario upload ejecutamos la acción por defecto						
+						xavaAction = getDefaultActionQualifiedName(); // In uplado form we execute the default action						
 					}																				
-					if (!Is.emptyString(accionXava)) {						
-						String valorAccion = request.getParameter("xava_action_argv");
-						if ("undefined".equals(valorAccion)) valorAccion = null;						
-						MetaAction a = MetaControllers.getMetaAction(accionXava);						
+					if (!Is.emptyString(xavaAction)) {						
+						String actionValue = request.getParameter("xava_action_argv");
+						if ("undefined".equals(actionValue)) actionValue = null;						
+						MetaAction a = MetaControllers.getMetaAction(xavaAction);						
 						long ini = System.currentTimeMillis();
-						executeAction(a, errores, mensajes, valorAccion, request);
-						long cuesta = System.currentTimeMillis() - ini;
-						System.out.println("[ControladorWeb.ejecutar] " + accionXava + "=" + cuesta + " ms");						
+						executeAction(a, errors, messages, actionValue, request);
+						long time = System.currentTimeMillis() - ini;
+						System.out.println("[ModuleManager.execute] " + xavaAction + "=" + time + " ms");						
 					}
 				}									
 			}			
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			errores.add("no_execute_action");
+			errors.add("no_execute_action");
 		}
 	}
 	
-	private void executeAction(MetaAction metaAccion, Messages errores, Messages mensaje, HttpServletRequest request) {
-		executeAction(metaAccion, errores, mensaje, null, request);
+	private void executeAction(MetaAction metaAction, Messages errors, Messages message, HttpServletRequest request) {
+		executeAction(metaAction, errors, message, null, request);
 	}
 	
-	private void executeAction(MetaAction metaAccion, Messages errores, Messages mensajes, String valoresPropiedades, HttpServletRequest request) {		
+	private void executeAction(MetaAction metaAction, Messages errors, Messages message, String propertyValues, HttpServletRequest request) {		
 		try {
-			IAction accion = metaAccion.createAction();
-			executeAction(accion, metaAccion, errores, mensajes, valoresPropiedades, request);
+			IAction action = metaAction.createAction();
+			executeAction(action, metaAction, errors, message, propertyValues, request);
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			errores.add("no_execute_action", metaAccion.getId());			
+			errors.add("no_execute_action", metaAction.getId());			
 		}							
 	}
 	
-	public void executeAction(IAction accion, Messages errores, Messages mensajes, HttpServletRequest request) {
-		executeAction(accion, null, errores, mensajes, null, request);
+	public void executeAction(IAction action, Messages errors, Messages messages, HttpServletRequest request) {
+		executeAction(action, null, errors, messages, null, request);
 	}
 
-	private void executeAction(IAction accion, MetaAction metaAccion, Messages errores, Messages mensajes, String valoresPropiedades, HttpServletRequest request) {		
+	private void executeAction(IAction action, MetaAction metaAction, Messages errors, Messages messages, String propertyValues, HttpServletRequest request) {		
 		try {						
-			accion.setErrors(errores);
-			accion.setMessages(mensajes);
-			accion.setEnvironment(getEnvironment());
-			if (metaAccion != null) {
-				ponerObjetosEnAccion(accion, metaAccion);
+			action.setErrors(errors);
+			action.setMessages(messages);
+			action.setEnvironment(getEnvironment());
+			if (metaAction != null) {
+				setObjectsInAction(action, metaAction);
 			}
-			ponerValoresPropiedades(accion, valoresPropiedades);
-			if (accion instanceof IModuleContextAction) {
-				((IModuleContextAction) accion).setContext(getContext());
+			setPropertyValues(action, propertyValues);
+			if (action instanceof IModuleContextAction) {
+				((IModuleContextAction) action).setContext(getContext());
 			}						
-			if (accion instanceof IModelAction) {
-				((IModelAction) accion).setModel(getModelName());
+			if (action instanceof IModelAction) {
+				((IModelAction) action).setModel(getModelName());
 			}
-			if (accion instanceof IRequestAction) {
-				((IRequestAction) accion).setRequest(request);
+			if (action instanceof IRequestAction) {
+				((IRequestAction) action).setRequest(request);
 			}
 						
-			if (accion instanceof IRemoteAction) {
-				IRemoteAction remota = (IRemoteAction) accion;
-				remota.executeBefore();					
-				if (remota.isExecuteOnServer()) {
-					remota = Server.execute(remota, remota.getPackageName());
-					errores.removeAll();
-					mensajes.removeAll();
-					errores.add(remota.getErrors());
-					mensajes.add(remota.getMessages());
-					remota.setErrors(errores);
-					remota.setMessages(mensajes);	
+			if (action instanceof IRemoteAction) {
+				IRemoteAction remote = (IRemoteAction) action;
+				remote.executeBefore();					
+				if (remote.isExecuteOnServer()) {
+					remote = Server.execute(remote, remote.getPackageName());
+					errors.removeAll();
+					messages.removeAll();
+					errors.add(remote.getErrors());
+					messages.add(remote.getMessages());
+					remote.setErrors(errors);
+					remote.setMessages(messages);	
 				}								
-				remota.executeAfter();
-				accion = remota;
+				remote.executeAfter();
+				action = remote;
 			}
 			else {
-				accion.execute();				
+				action.execute();				
 			}
-			if (accion instanceof IChangeModeAction) {
-				IChangeModeAction cambioSeccion = (IChangeModeAction) accion;
-				String siguienteSeccion = cambioSeccion.getNextMode();				
-				if (!Is.emptyString(siguienteSeccion)) {					
-					if (!siguienteSeccion.equals(getSectionName())) {											
-						setSectionName(siguienteSeccion);
+			if (action instanceof IChangeModeAction) {
+				IChangeModeAction modeChange = (IChangeModeAction) action;
+				String nextMode = modeChange.getNextMode();				
+				if (!Is.emptyString(nextMode)) {					
+					if (!nextMode.equals(getModeName())) {											
+						setModeName(nextMode);
 					}
 				}																
 			}
 			setFormUpload(false);						
-			if (accion instanceof ICustomViewAction) {
-				ICustomViewAction customViewAction = (ICustomViewAction) accion;
+			if (action instanceof ICustomViewAction) {
+				ICustomViewAction customViewAction = (ICustomViewAction) action;
 				String newView = customViewAction.getCustomView();				
 				if (!Is.emptyString(newView)) {
 					setViewName(newView);
 				}
 			}
-			if (accion instanceof IChangeControllersAction) {
-				IChangeControllersAction changeControllersAction = (IChangeControllersAction) accion;
-				String [] siguientesControladores = changeControllersAction.getNextControllers();				
-				if (siguientesControladores != INavigationAction.SAME_CONTROLLERS) {
-					if (siguientesControladores.equals(INavigationAction.DEFAULT_CONTROLLERS)) {
-						establecerControladoresModulo();															
+			if (action instanceof IChangeControllersAction) {
+				IChangeControllersAction changeControllersAction = (IChangeControllersAction) action;
+				String [] nextControllers = changeControllersAction.getNextControllers();				
+				if (nextControllers != INavigationAction.SAME_CONTROLLERS) {
+					if (nextControllers.equals(INavigationAction.DEFAULT_CONTROLLERS)) {
+						setupModuleControllers();															
 					}
-					else if (siguientesControladores.equals(INavigationAction.PREVIOUS_CONTROLLERS)) {
-						establecerControladoresAnteriores();															
+					else if (nextControllers.equals(INavigationAction.PREVIOUS_CONTROLLERS)) {
+						restorePreviousControllers();															
 					}													
 					else {
-						memorizarControladores();										
-						setControllersNames(siguientesControladores);						
+						memorizeControllers();										
+						setControllersNames(nextControllers);						
 					}
 				}
 			}			
-			if (accion instanceof ILoadFileAction) {					
-				setFormUpload(((ILoadFileAction) accion).isLoadFile());
+			if (action instanceof ILoadFileAction) {					
+				setFormUpload(((ILoadFileAction) action).isLoadFile());
 			}			
-			if (metaAccion != null) {
-				cogerObjetosDeAccion(accion, metaAccion);
+			if (metaAction != null) {
+				getObjectFromAction(action, metaAction);
 			}
-			if (accion instanceof IForwardAction) {				
-				IForwardAction forward = (IForwardAction) accion;
+			if (action instanceof IForwardAction) {				
+				IForwardAction forward = (IForwardAction) action;
 				String uri = forward.getForwardURI();
 				if (!Is.emptyString(uri)) {
 					request.getSession().setAttribute("xava_forward", uri);
 					request.getSession().setAttribute("xava_forward_inNewWindow", String.valueOf(forward.inNewWindow()));
 				}
 			}
-			if (accion instanceof IChainAction) {
-				IChainAction encadenable = (IChainAction) accion;				
-				String siguienteAccion = encadenable.getNextAction();				
-				if (!Is.emptyString(siguienteAccion)) {
-					MetaAction siguienteMetaAccion = null;
-					if (siguienteAccion.indexOf('.') < 0 && metaAccion != null) {
-						siguienteMetaAccion = metaAccion.getMetaController().getMetaAction(siguienteAccion);
+			if (action instanceof IChainAction) {
+				IChainAction chainable = (IChainAction) action;				
+				String nextAction = chainable.getNextAction();				
+				if (!Is.emptyString(nextAction)) {
+					MetaAction nextMetaAction = null;
+					if (nextAction.indexOf('.') < 0 && metaAction != null) {
+						nextMetaAction = metaAction.getMetaController().getMetaAction(nextAction);
 					}
 					else {
-						siguienteMetaAccion = MetaControllers.getMetaAction(siguienteAccion);
+						nextMetaAction = MetaControllers.getMetaAction(nextAction);
 					}
-					executeAction(siguienteMetaAccion, accion.getErrors(), accion.getMessages(), request);
+					executeAction(nextMetaAction, action.getErrors(), action.getMessages(), request);
 				}
 			}
 			
 			nextModule = null;			
-			if (accion instanceof IChangeModuleAction) {				
-				IChangeModuleAction moduleChange = (IChangeModuleAction) accion;
+			if (action instanceof IChangeModuleAction) {				
+				IChangeModuleAction moduleChange = (IChangeModuleAction) action;
 				nextModule = moduleChange.getNextModule();				
 				if (!Is.emptyString(nextModule)) {					
 					if (moduleChange.hasReinitNextModule()) {						
@@ -312,11 +310,11 @@ public class ModuleManager {
 		}
 		catch (Exception ex) {			
 			ex.printStackTrace();
-			if (metaAccion != null) {
-				errores.add("no_execute_action", metaAccion.getId());
+			if (metaAction != null) {
+				errors.add("no_execute_action", metaAction.getId());
 			}
 			else {
-				errores.add("no_execute_action");
+				errors.add("no_execute_action");
 			}
 		}				
 		
@@ -326,99 +324,100 @@ public class ModuleManager {
 		return getMetaModule().getEnvironment();
 	}
 
-	private void setControllersNames(String [] nombres) {				
+	private void setControllersNames(String [] names) {				
 		metaControllers = null;
 		metaActions = null;
 		defaultActionQualifiedName = null;
-		this.controllersNames = nombres;
+		this.controllersNames = names;
 	}
 	
-	private void establecerControladoresAnteriores() throws XavaException {
-		Stack controladoresAnteriores = (Stack) getObjectFromContext("xava_previousControllers");
-		if (controladoresAnteriores.isEmpty()) {
-			establecerControladoresModulo();
+	private void restorePreviousControllers() throws XavaException {
+		Stack previousControllers = (Stack) getObjectFromContext("xava_previousControllers");
+		if (previousControllers.isEmpty()) {
+			setupModuleControllers();
 			return;						
 		}
 		
-		String [] controladores = (String []) controladoresAnteriores.pop();
-		setControllersNames(controladores);		
+		String [] controllers = (String []) previousControllers.pop();
+		setControllersNames(controllers);		
 	}
 	
-	private void memorizarControladores() throws XavaException {
-		Stack controladoresAnteriores = (Stack) getObjectFromContext("xava_previousControllers");
-		controladoresAnteriores.push(this.controllersNames);
+	private void memorizeControllers() throws XavaException {
+		Stack previousControllers = (Stack) getObjectFromContext("xava_previousControllers");
+		previousControllers.push(this.controllersNames);
 	}
 
-	private void ponerValoresPropiedades(IAction accion, String valoresPropiedades) throws Exception {
-		if (Is.emptyString(valoresPropiedades)) return;
-		StringTokenizer st = new StringTokenizer(valoresPropiedades, ",");
-		Map valores = new HashMap();		
+	private void setPropertyValues(IAction action, String propertyValues) throws Exception {
+		if (Is.emptyString(propertyValues)) return;
+		StringTokenizer st = new StringTokenizer(propertyValues, ",");
+		Map values = new HashMap();		
 		while (st.hasMoreTokens()) {
-			String valorPropiedad = st.nextToken();
-			StringTokenizer st2 = new StringTokenizer(valorPropiedad, "()=");
+			String propertyValue = st.nextToken();
+			StringTokenizer st2 = new StringTokenizer(propertyValue, "()=");
 			if (!st2.hasMoreTokens()) {
-				System.err.println("¡ADVERTENCIA! No es posible asignar valor a una propiedad de una acción: Se requiere formato nombre=valor,nombre=valor o nombre(valor),nombre(valor)");
+				System.err.println(XavaResources.getString("action_property_warning"));
 				break;
 			}
-			String nombre = st2.nextToken().trim();
+			String name = st2.nextToken().trim();
 			if (!st2.hasMoreTokens()) {
-				System.err.println("¡ADVERTENCIA! No es posible asignar valor a la propiedad "+nombre+" de una acción: Se requiere formato nombre=valor,nombre=valor o nombre(valor),nombre(valor)");
+				System.err.println(XavaResources.getString("action_property_warning"));
 				break;
 			}
-			String valor = st2.nextToken().trim();
-			valores.put(nombre, valor);			
+			String value = st2.nextToken().trim();
+			values.put(name, value);			
 		}		
-		PropertiesManager mp = new PropertiesManager(accion);
-		mp.executeSetsFromStrings(valores);				
+		PropertiesManager mp = new PropertiesManager(action);
+		mp.executeSetsFromStrings(values);				
 	}
 
-	private void cogerObjetosDeAccion(IAction accion, MetaAction metaAccion) throws XavaException {
-		if (!metaAccion.usesObjects()) return;
-		PropertiesManager mp = new PropertiesManager(accion);
-		Iterator it = metaAccion.getMetaUseObjects().iterator();
+	private void getObjectFromAction(IAction action, MetaAction metaAction) throws XavaException {
+		if (!metaAction.usesObjects()) return;
+		PropertiesManager mp = new PropertiesManager(action);
+		Iterator it = metaAction.getMetaUseObjects().iterator();
 		while (it.hasNext()) {
-			MetaUseObject metaUsarObjeto = (MetaUseObject) it.next();
-			String propiedad = metaUsarObjeto.getActionProperty();
-			Object valor = null;
+			MetaUseObject metaUseObject = (MetaUseObject) it.next();
+			String property = metaUseObject.getActionProperty();
+			Object value = null;
 			try {
-				valor = mp.executeGet(propiedad);
+				value = mp.executeGet(property);
 			}
 			catch (Exception ex) {
 				ex.printStackTrace();
-				throw new XavaException("get_property_action_value_error", propiedad, metaAccion.getName());
+				throw new XavaException("get_property_action_value_error", property, metaAction.getName());
 			}
-			if (valor != null) { 
-				// los nulos no los asignamos y así permitimos tener atributos trasients
-				// que pueden perderse al ir y volver del servidor sin peligro de alterar
-				// el valor de sesión 				
-				setObjetoEnContexto(metaUsarObjeto.getName(), valor);
+			if (value != null) {
+				// The nulls are not assigned 
+				// los nulos no los asignamos and thus we allow to have trasient attributes
+				// that it can lost on go and return from server without danger of alter
+				// the session value 				
+				setObjectInContext(metaUseObject.getName(), value);
 			}
 		}
 	}
 
-	private void ponerObjetosEnAccion(IAction accion, MetaAction metaAccion) throws XavaException {		
-		if (!metaAccion.usesObjects()) return;		
-		PropertiesManager mp = new PropertiesManager(accion);
-		Iterator it = metaAccion.getMetaUseObjects().iterator();
-		String nombreControlador = metaAccion.getControllerName();
+	private void setObjectsInAction(IAction action, MetaAction metaAction) throws XavaException {		
+		if (!metaAction.usesObjects()) return;		
+		PropertiesManager mp = new PropertiesManager(action);
+		Iterator it = metaAction.getMetaUseObjects().iterator();
+		String controllerName = metaAction.getControllerName();
 		while (it.hasNext()) {
-			MetaUseObject metaUsaObjeto = (MetaUseObject) it.next();
-			String nombreObjeto = metaUsaObjeto.getName();			 
-			String propiedad = metaUsaObjeto.getActionProperty();			
-			Object valor = getObjectFromContext(nombreObjeto);			
-			if (valor == null) {				
-				valor = crearObjeto(nombreObjeto);
-				setObjetoEnContexto(nombreObjeto, valor);
+			MetaUseObject metaUseObject = (MetaUseObject) it.next();
+			String objectName = metaUseObject.getName();			 
+			String property = metaUseObject.getActionProperty();			
+			Object value = getObjectFromContext(objectName);			
+			if (value == null) {				
+				value = createObject(objectName);
+				setObjectInContext(objectName, value);
 			}
 			
 			try {
-				mp.executeSet(propiedad, valor);
+				mp.executeSet(property, value);
 			}
 			catch (Exception ex) {
 				ex.printStackTrace();
-				throw new XavaException("set_property_action_value_error", propiedad, metaAccion.getName());
+				throw new XavaException("set_property_action_value_error", property, metaAction.getName());
 			}
-			getSession().setAttribute(nombreObjeto, valor);
+			getSession().setAttribute(objectName, value);
 		}		
 	}
 		
@@ -426,17 +425,17 @@ public class ModuleManager {
 		return getContext().get(getApplicationName(), getModuleName(), objectName);				
 	}
 	
-	private void setObjetoEnContexto(String nombreObjeto, Object valor) throws XavaException {
-		getContext().put(getApplicationName(), getModuleName(), nombreObjeto, valor);				
+	private void setObjectInContext(String objectName, Object value) throws XavaException {
+		getContext().put(getApplicationName(), getModuleName(), objectName, value);				
 	}
 	
 	private ModuleContext getContext() {
 		return (ModuleContext) getSession().getAttribute("context");		
 	}
 
-	private Object crearObjeto(String nombreObjeto) throws XavaException {		
-		MetaObject metaObjeto =	MetaControllers.getMetaObject(nombreObjeto);
-		return metaObjeto.createObject();		
+	private Object createObject(String objectName) throws XavaException {		
+		MetaObject metaObject =	MetaControllers.getMetaObject(objectName);
+		return metaObject.createObject();		
 	}
 
 	public HttpSession getSession() {
@@ -448,16 +447,16 @@ public class ModuleManager {
 	}
 
 	public String getViewURL() {
-		String nombreVista = getViewName();
+		String viewName = getViewName();
 		String r = null;
-		if (nombreVista.startsWith("xava/")) r = nombreVista.substring(5);
-		else r = "../" + nombreVista;
+		if (viewName.startsWith("xava/")) r = viewName.substring(5);
+		else r = "../" + viewName;
 		if (!r.endsWith(".jsp")) r = r + ".jsp";				
 		return r;	
 	}
 
 	private String getViewName() {
-		if (IChangeModeAction.LIST.equals(getSectionName()) && !getMetaActionsSections().isEmpty()) {
+		if (IChangeModeAction.LIST.equals(getModeName()) && !getMetaActionsSections().isEmpty()) {
 			return "xava/list";
 		}		
 		if (viewName == null) {			
@@ -479,10 +478,10 @@ public class ModuleManager {
 		return applicationName;
 	}
 
-	public void setApplicationName(String nuevo) throws XavaException {
-		if (Is.equal(applicationName, nuevo)) return;
+	public void setApplicationName(String newName) throws XavaException {
+		if (Is.equal(applicationName, newName)) return;
 		moduleInitiated = false;
-		applicationName = nuevo;
+		applicationName = newName;
 		moduleName = null;
 		metaControllers = null;
 		metaActions = null;
@@ -496,21 +495,21 @@ public class ModuleManager {
 	}
 
 	/**
-	 * @return <tt>true</tt> si es nuevo. 
+	 * @return <tt>true</tt> if is new. 
 	 */
-	public boolean setModuleName(String nuevo) throws XavaException {		
-		if (Is.equal(moduleName, nuevo)) return false; 
+	public boolean setModuleName(String newModule) throws XavaException {		
+		if (Is.equal(moduleName, newModule)) return false; 
 		moduleInitiated = false;
-		moduleName = nuevo;
+		moduleName = newModule;
 		metaControllers = null;
 		metaControllerSections = null;
 		metaActions = null;
 		defaultActionQualifiedName = null;
 		metaModule = null;		
-		establecerControladoresModulo();
+		setupModuleControllers();
 		if (!Is.emptyString(getMetaModule().getModeControllerName())) {
 			setModeControllerName(getMetaModule().getModeControllerName());
-			sectionName = null;						
+			modeName = null;						
 		}
 		if (!Is.emptyString(getMetaModule().getWebViewURL())) {
 			setViewName(getMetaModule().getWebViewURL());
@@ -552,16 +551,16 @@ public class ModuleManager {
 	} 
 
 	public boolean isListMode() {
-		return IChangeModeAction.LIST.equals(getSectionName());
+		return IChangeModeAction.LIST.equals(getModeName());
 	}
 	
-	public String getSectionName() {
-		return sectionName==null?DEFAULT_MODE:sectionName;
+	public String getModeName() {
+		return modeName==null?DEFAULT_MODE:modeName;
 	}
 
-	private void setSectionName(String nueva) {
-		if (Is.equal(sectionName, nueva)) return;
-		sectionName = nueva;
+	private void setModeName(String newModelName) {
+		if (Is.equal(modeName, newModelName)) return;
+		modeName = newModelName;
 		metaActions = null;
 		defaultActionQualifiedName = null;
 	}
@@ -582,8 +581,8 @@ public class ModuleManager {
 	}
 	
 	public boolean isXavaView() throws XavaException{
-		// para que en un formulario upload no borre los datos vista
-		// Es una solución muy a propósito. Esto habrá que refinarlo.
+		// For that a upload form does not delete the view data.
+		// It's a ad hoc solution. It can be improved 
 		if (isFormUpload()) return false; 
 											
 		return "xava/detail".equals(getViewName());
@@ -594,15 +593,15 @@ public class ModuleManager {
 	}
 	
 	public String toString() {		
-		return "ModuloManager:"+oid;
+		return "ModuleManager:" + oid;
 	}
 	
-	public void initModule(HttpServletRequest request, Messages errores, Messages mensajes) {
+	public void initModule(HttpServletRequest request, Messages errors, Messages messages) {
 		if (!moduleInitiated) {
 			Iterator it = getMetaActionsOnInit().iterator();
 			while (it.hasNext()) {
 				MetaAction a = (MetaAction) it.next();
-				executeAction(a, errores, mensajes, request); 
+				executeAction(a, errors, messages, request); 
 			}
 			moduleInitiated = true;
 		}		
@@ -623,7 +622,8 @@ public class ModuleManager {
 	public String getNextModule() {
 		return nextModule;
 	}
-	public void setNextModule(String siguienteModulo) {
-		this.nextModule = siguienteModulo;
+	public void setNextModule(String nextModule) {
+		this.nextModule = nextModule;
 	}
+	
 }

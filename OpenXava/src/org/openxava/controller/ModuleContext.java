@@ -7,8 +7,7 @@ import org.openxava.controller.meta.*;
 import org.openxava.util.*;
 
 /**
- * Permite un contexto con vida de sesión privado para 
- * cada módulo.
+ * Context with life of session and private for every module.
  * 
  * @author Javier Paniza
  */
@@ -23,7 +22,7 @@ public class ModuleContext {
 	private Map contexts = new HashMap();
 
 	/**
-	 * Return a object asociate to the specified modul
+	 * Return a object asociate to the specified module
 	 * in 'application' and 'module' of request.
 	 */
 	public Object get(HttpServletRequest request, String objectName) throws XavaException {
@@ -39,7 +38,7 @@ public class ModuleContext {
 	}
 	
 	/**
-	 * Return a object asociate to the specified modul
+	 * Return a object asociate to the specified module
 	 * in 'application' and 'module' of request.
 	 */
 	public Object get(HttpServletRequest request, String objectName, String className) throws XavaException {
@@ -67,18 +66,18 @@ public class ModuleContext {
 	
 	
 
-	private Object createObjectFromClass(String clase) throws XavaException {
+	private Object createObjectFromClass(String className) throws XavaException {
 		try {
-			return Class.forName(clase).newInstance();
+			return Class.forName(className).newInstance();
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			throw new XavaException("create_error", clase);
+			throw new XavaException("create_error", className);
 		}
 	}
 
 	/**
-	 * Si no existe lo crea, según está definido controladores.xml. <p>
+	 * If does not exist the it create one, as defined in controllers.xml. <p>
 	 */	
 	public Object get(String application, String module, String objectName) throws XavaException {
 		Map context = getContext(application, module); 

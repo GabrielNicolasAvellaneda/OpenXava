@@ -16,6 +16,12 @@ public class Products2Test extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Products2");		
 	}
 	
+	public void testFocusMoveToReferenceAsDescriptionsList() throws Exception {
+		execute("CRUD.new");
+		setValue("family.number", "1");
+		assertFocusOn("subfamily.number");
+	}
+	
 	public void testListToDetailAlwaysMainView() throws Exception {
 		execute("CRUD.new");		
 		assertExists("unitPrice");

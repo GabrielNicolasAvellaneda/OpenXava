@@ -31,8 +31,8 @@ public class MetaAction extends MetaElement {
 	public MetaAction() {
 	}
 	
-	public MetaAction(String nombre) {
-		setName(nombre);
+	public MetaAction(String name) {
+		setName(name);
 	}
 	
 	public String getQualifiedName() {
@@ -43,98 +43,57 @@ public class MetaAction extends MetaElement {
 		return qualifiedName;
 	}
 	
-	public void setName(String newNombre) {
+	public void setName(String newName) {
 		qualifiedName = null;
-		super.setName(newNombre);
+		super.setName(newName);
 	}
 
-		
-	/**
-	 * Gets the atajoDeTeclado
-	 * @return Returns a String
-	 */
 	public String getKeystroke() {
 		return keystroke;
 	}
-	/**
-	 * Sets the atajoDeTeclado
-	 * @param atajoDeTeclado The atajoDeTeclado to set
-	 */
-	public void setKeystroke(String atajoDeTeclado) {
-		this.keystroke = atajoDeTeclado;
+	public void setKeystroke(String keystroke) {
+		this.keystroke = keystroke;
 	}
 
-
-	
-
-
-	/**
-	 * Gets the imagen
-	 * @return Returns a String
-	 */
 	public String getImage() {
 		return image;
 	}
-	/**
-	 * Sets the imagen
-	 * @param imagen The imagen to set
-	 */
 	public void setImage(String imagen) {
 		this.image = imagen;
 	}
 
-
-	/**
-	 * Gets the metodo
-	 * @return Returns a String
-	 */
 	public String getMethod() {
 		if (Is.emptyString(method)) return getName();
 		return method;
 	}
-	/**
-	 * Sets the metodo
-	 * @param metodo The metodo to set
-	 */
-	public void setMethod(String metodo) {
-		this.method = metodo;
+	public void setMethod(String method) {
+		this.method = method;
 	}
-
 	
 	public String getLabel(Locale locale) {
 		return Labels.removeUnderlined(super.getLabel(locale));		
 	}
 
-	/**
-	 * Gets the mnemonic
-	 * @return Returns a char
-	 */
 	public char getMnemonic() {
-		String etiqueta = super.getLabel();
-		int idxSub = etiqueta.indexOf('_');
+		String label = super.getLabel();
+		int idxSub = label.indexOf('_');
 		if (idxSub >= 0) {
 			int idxMnemonic = idxSub + 1;
-			if (idxMnemonic < etiqueta.length()) {
-				return etiqueta.charAt(idxMnemonic);
+			if (idxMnemonic < label.length()) {
+				return label.charAt(idxMnemonic);
 			}			
 		}		
 		return 0;
 	}
 	
-	public boolean equals(Object accion) {
-		if (!(accion instanceof MetaAction)) return false; // descarta los nulos también
-		return getName().equals(((MetaAction) accion).getName());
+	public boolean equals(Object action) {
+		if (!(action instanceof MetaAction)) return false; // It also discards the nulls
+		return getName().equals(((MetaAction) action).getName());
 	}
-	/**
-	 * @return
-	 */
+	
 	public String getClassName() {
 		return className;
 	}
-
-	/**
-	 * @param string
-	 */
 	public void setClassName(String string) {
 		className = string;
 	}
@@ -148,17 +107,16 @@ public class MetaAction extends MetaElement {
 		return metaUseObjects;
 	}
 
-	public void addMetaUseObject(MetaUseObject objeto) {
+	public void addMetaUseObject(MetaUseObject object) {
 		if (metaUseObjects == null) metaUseObjects = new ArrayList();
-		metaUseObjects.add(objeto);		
+		metaUseObjects.add(object);		
 	}
 
 	public MetaController getMetaController() {
 		return metaController;
 	}
-
-	public void setMetaController(MetaController controlador) {
-		metaController = controlador;
+	public void setMetaController(MetaController controller) {
+		metaController = controller;
 		qualifiedName = null;
 	}
 	
@@ -170,11 +128,11 @@ public class MetaAction extends MetaElement {
 		return !Is.emptyString(this.image);
 	}
 
-	public void _addMetaSet(MetaSet metaPoner) {
+	public void _addMetaSet(MetaSet metaSet) {
 		if (metaSets == null) {
 			metaSets = new ArrayList();
 		}
-		metaSets.add(metaPoner);		
+		metaSets.add(metaSet);		
 	}
 	
 	public IAction createAction() throws XavaException {
@@ -183,11 +141,11 @@ public class MetaAction extends MetaElement {
 			if (!(o instanceof IAction)) {
 				throw new XavaException("implements_required", getClassName(), IAction.class.getName());
 			}
-			IAction calculador = (IAction) o;
+			IAction calculator = (IAction) o;
 			if (hasMetaSets()) {
-				asignarValoresPropiedades(calculador);
+				assignPropertyValues(calculator);
 			}						
-			return calculador;
+			return calculator;
 		}
 		catch (XavaException ex) {
 			throw ex;
@@ -202,12 +160,12 @@ public class MetaAction extends MetaElement {
 		return metaSets != null;
 	}
 
-	private void asignarValoresPropiedades(IAction accion) throws Exception {
-		PropertiesManager mp = new PropertiesManager(accion);
+	private void assignPropertyValues(IAction action) throws Exception {
+		PropertiesManager mp = new PropertiesManager(action);
 		Iterator it = getMetaSets().iterator();
 		while (it.hasNext()) {
-			MetaSet metaPoner = (MetaSet) it.next();
-			mp.executeSetFromString(metaPoner.getPropertyName(), metaPoner.getValue());			
+			MetaSet metaSet = (MetaSet) it.next();
+			mp.executeSetFromString(metaSet.getPropertyName(), metaSet.getValue());			
 		}		
 	}
 
@@ -218,7 +176,6 @@ public class MetaAction extends MetaElement {
 	public boolean isHidden() {
 		return hidden;
 	}
-
 	public void setHidden(boolean b) {
 		hidden = b;
 	}
@@ -226,7 +183,6 @@ public class MetaAction extends MetaElement {
 	public String getMode() {
 		return mode;
 	}
-
 	public void setMode(String string) {
 		mode = string;
 	}
@@ -234,7 +190,6 @@ public class MetaAction extends MetaElement {
 	public int getByDefault() {
 		return byDefault;
 	}
-
 	public void setByDefault(int i) {
 		byDefault = i;
 	}
@@ -243,15 +198,11 @@ public class MetaAction extends MetaElement {
 		return getQualifiedName();
 	}
 
-
 	public boolean isOnInit() {
 		return onInit;
 	}
-
 	public void setOnInit(boolean b) {
 		onInit = b;
 	}
 
 }
-
-

@@ -7,11 +7,10 @@ import org.openxava.controller.meta.xmlparse.*;
 import org.openxava.util.*;
 
 public class MetaControllers {
-	
-	
-	/** Para propiedad subcontexto */
+		
+	/** For context property */
 	public final static String SWING="swing";
-	/** Para propiedad subcontexto */
+	/** For context property */
 	public final static String WEB="web";
 	
 	private static Map environmentVariables;
@@ -19,81 +18,68 @@ public class MetaControllers {
 	private static Map mapMetaObjects;
 	private static String context = SWING;
 	
-	/**
-	 * 
-	 * @param nuevo Nunca nulo
-	 * @throws XavaException
-	 */
-	public static void _addMetaController(MetaController nuevo) throws XavaException {
+	public static void _addMetaController(MetaController newController) throws XavaException {
 		if (metaControllers == null) {
 			throw new XavaException("only_from_parse", "MetaControllers._addMetaController");
 		}
-		metaControllers.put(nuevo.getName(), nuevo);
+		metaControllers.put(newController.getName(), newController);
 	}
 	
-	/**
-	 */
 	private static void setup() throws XavaException {
 		metaControllers = new HashMap();
-		ControllersParser.configurarControladores(context);		
+		ControllersParser.configureControllers(context);		
 	}
 	
-	/**
-	 * 
-	 * @param nombre java.lang.String
-	 * @exception XavaException  Cualquier problema.
-	 * @exception ElementNotFoundException
-	 */
-	public static MetaController getMetaController(String nombre) throws ElementNotFoundException, XavaException {
+	public static MetaController getMetaController(String name) throws ElementNotFoundException, XavaException {
 		if (metaControllers == null) {
 			setup();
 		}
-		MetaController result = (MetaController) metaControllers.get(nombre);
+		MetaController result = (MetaController) metaControllers.get(name);
 		if (result == null) {
-			throw new ElementNotFoundException("controller_not_found", nombre);				
+			throw new ElementNotFoundException("controller_not_found", name);				
 		}
 		return result;
 	}
 	
-	public static boolean contains(String nombre) throws XavaException {
+	public static boolean contains(String name) throws XavaException {
 		if (metaControllers == null) {
 			setup();
 		}
-		return metaControllers.containsKey(nombre);
+		return metaControllers.containsKey(name);
 	}
 	
-	public static MetaAction getMetaAction(String nombreCalificado) throws ElementNotFoundException, XavaException {
+	public static MetaAction getMetaAction(String qualifiedName) throws ElementNotFoundException, XavaException {
 		if (metaControllers == null) {
 			setup();
 		}		
-		if (nombreCalificado == null) {
+		if (qualifiedName == null) {
 			throw new ElementNotFoundException("action_from_null_not_found");
 		}
-		if (nombreCalificado.trim().equals("")) {
+		if (qualifiedName.trim().equals("")) {
 			throw new ElementNotFoundException("action_from_empty_string_not_found");
 		}
-		if (nombreCalificado.indexOf('.') < 0) {
-			throw new XavaException("only_qualified_action", nombreCalificado);
+		if (qualifiedName.indexOf('.') < 0) {
+			throw new XavaException("only_qualified_action", qualifiedName);
 		}
-		StringTokenizer st = new StringTokenizer(nombreCalificado, ".");
-		String controlador = st.nextToken().trim();
-		String accion = st.nextToken().trim();
-		return getMetaController(controlador).getMetaAction(accion);
+		StringTokenizer st = new StringTokenizer(qualifiedName, ".");
+		String controller = st.nextToken().trim();
+		String action = st.nextToken().trim();
+		return getMetaController(controller).getMetaAction(action);
 	}
 	
-	public static void addMetaObject(MetaObject objeto) {
+	public static void addMetaObject(MetaObject object) {
 		if (mapMetaObjects == null) mapMetaObjects = new HashMap();		
-		mapMetaObjects.put(objeto.getName(), objeto);		
+		mapMetaObjects.put(object.getName(), object);		
 	}
 	
 	
-	public static MetaObject getMetaObject(String nombre) throws ElementNotFoundException, XavaException {
+	public static MetaObject getMetaObject(String name) throws ElementNotFoundException, XavaException {
 		if (metaControllers == null) {
 			setup();
 		}						
-		if (mapMetaObjects == null) throw new ElementNotFoundException("object_not_found", nombre);
-		MetaObject a = (MetaObject) mapMetaObjects.get(nombre);
-		if (a == null) throw new ElementNotFoundException("object_not_found", nombre);		
+		if (mapMetaObjects == null) throw new ElementNotFoundException("object_not_found", name);
+		MetaObject a = (MetaObject) mapMetaObjects.get(name);
+		if (a == null) throw new ElementNotFoundException("object_not_found", name);		
 		return a; 
 	}	
 	
@@ -105,20 +91,20 @@ public class MetaControllers {
 		context = string;
 	}
 	
-	public static void addEnvironmentVariable(String nombre, String valor) {
+	public static void addEnvironmentVariable(String name, String value) {
 		if (environmentVariables == null) environmentVariables = new HashMap();
-		environmentVariables.put(nombre, valor);
+		environmentVariables.put(name, value);
 	}
 	
 	/**	 	
-	 * @return Nulo si no existe.	 
+	 * @return Null if it does not exist.	 
 	 */
-	public static String getEnvironmentVariable(String nombre) throws XavaException {
+	public static String getEnvironmentVariable(String name) throws XavaException {
 		if (metaControllers == null) {
 			setup();
 		}
 		if (environmentVariables == null) return null;
-		return (String) environmentVariables.get(nombre);						
+		return (String) environmentVariables.get(name);						
 	}	
 	
 }
