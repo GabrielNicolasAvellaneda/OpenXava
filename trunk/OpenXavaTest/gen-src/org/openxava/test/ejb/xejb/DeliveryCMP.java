@@ -110,6 +110,7 @@ public abstract class DeliveryCMP
       DeliveryValue = new org.openxava.test.ejb.DeliveryValue();
       try
          {
+            DeliveryValue.setDateAsLabel( getDateAsLabel() );
             DeliveryValue.setDistance( getDistance() );
             DeliveryValue.setIncidents( getIncidents() );
             DeliveryValue.setDriverType( getDriverType() );
@@ -139,6 +140,7 @@ public abstract class DeliveryCMP
 
 	  try
 	  {
+		 setDateAsLabel( valueHolder.getDateAsLabel() );
 		 setDistance( valueHolder.getDistance() );
 		 setIncidents( valueHolder.getIncidents() );
 		 setDriverType( valueHolder.getDriverType() );

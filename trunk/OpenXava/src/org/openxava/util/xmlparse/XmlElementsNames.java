@@ -142,6 +142,6 @@ public class XmlElementsNames {
 	protected final static String [] XNO_LABEL = { "NO_LABEL", "SIN_ETIQUETA" };
 	protected final static String [] xstyle = { "style", "estilo" };
 	protected final static String [] xrow_style = { "row-style", "estilo-fila" };
-	
-	
+	protected final static String [] xfrom_type = { "from-type", "del-tipo" };
+		
 }

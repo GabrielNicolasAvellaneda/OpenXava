@@ -118,7 +118,7 @@
       <entity>
          <ejb-name>Delivery</ejb-name>
 
-         <table-name>XAVATEST_DELIVERY</table-name>
+         <table-name>XAVATEST@separator@DELIVERY</table-name>
 
          <cmp-field>
             <field-name>_Distance</field-name>
