@@ -5,7 +5,6 @@ import java.math.*;
 import org.openxava.test.ejb.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
-import org.openxava.test.ejb.*;
 
 /**
  * @author Javier Paniza

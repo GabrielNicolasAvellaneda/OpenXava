@@ -2369,8 +2369,8 @@ public class View {
 	}
 	
 	public String getLabelForProperty(MetaProperty p) throws XavaException {
-		if (labels != null) {
-			String idLabel = (String) labels.get(p.getName());
+		if (getLabels() != null) {
+			String idLabel = (String) getLabels().get(p.getName());
 			if (idLabel != null) {
 				try {
 					return Labels.get(idLabel, getRequest().getLocale());
@@ -2384,8 +2384,24 @@ public class View {
 	}
 	
 	public void setLabelId(String propertyName, String id) {
-		if (labels == null) labels = new HashMap();
+		if (getLabels() == null) setLabels(new HashMap());
 		labels.put(propertyName, id);
+	}
+	
+	private Map getLabels() {
+		View root = getRoot();
+		if (this == root) return labels;
+		return root.getLabels();
+	}
+	
+	private void setLabels(Map labels) {
+		View root = getRoot();
+		if (this == root) {
+			this.labels = labels;
+		}
+		else {
+			root.setLabels(labels);
+		}
 	}
 	
 }

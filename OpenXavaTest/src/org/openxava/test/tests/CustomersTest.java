@@ -36,11 +36,18 @@ public class CustomersTest extends ModuleTestBase {
 		this.section = section?"_section0":"";		
 	}
 	
+	public void testChangeLabelProgrammatic() throws Exception {
+		execute("CRUD.new");
+		assertLabel("name", "Name");
+		execute("Customers.changeNameLabel");
+		assertLabel("name", "Malnom");
+	}
+		
 	public void testFilterByMemberOfAggregate() throws Exception {
 		String [] totalCondition = { "", "", "", "V" };		
 		setConditionValues(totalCondition);		
 		execute("List.filter");
-		assertNoErrors(); // At mommento only testing if crash
+		assertNoErrors(); // At momment only testing if crash
 	}
 	
 	public void testChangeView() throws Exception {
