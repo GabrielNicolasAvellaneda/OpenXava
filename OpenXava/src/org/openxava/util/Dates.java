@@ -201,7 +201,15 @@ public class Dates {
 			fmin.add(Calendar.DATE, -1);
 		}
 		
-		int tope = fmax.getActualMaximum(Calendar.DATE);
+		Calendar cal = Calendar.getInstance();
+		if (fmax.get(Calendar.MONTH) == 0) {
+			cal.setTime(Dates.create(fmax.get(Calendar.DATE), 11,fmax.get(Calendar.YEAR)));
+		}
+		else {
+			cal.setTime(Dates.create(fmax.get(Calendar.DATE), fmax.get(Calendar.MONTH) - 1,fmax.get(Calendar.YEAR)));	
+		}
+		
+		int tope = cal.getActualMaximum(Calendar.DATE);
 		int mesInicio = fmin.get(Calendar.MONTH);
 		int mesFin = fmax.get(Calendar.MONTH);
 		int anyoInicio = fmin.get(Calendar.YEAR);
@@ -221,14 +229,6 @@ public class Dates {
 			while (!fmin.equals(fmax)) {
 				fmin.add(Calendar.DATE, 1);				
 				df.dias++;
-				if (df.dias == tope) {
-					df.meses++;
-					if (df.meses == 12) {
-						df.meses = 0;
-						df.años++;
-					}
-					df.dias = 0;
-				}
 			}			
 		}
 		else {
@@ -253,13 +253,13 @@ public class Dates {
 			while (!fmin.equals(fmax)) {
 				fmin.add(Calendar.DATE, 1);
 				df.dias++;
-				if (df.dias == tope) {
+				if (fmin.get(Calendar.DATE) == tope) {
 					df.meses++;
 					if (df.meses == 12) {
 						df.meses = 0;
 						df.años++;
 					}
-					df.dias = 0;
+					df.dias = 0;					
 				}
 			}			
 		}
@@ -282,7 +282,15 @@ public class Dates {
 			fmax.setTime(f2);
 		}
 		
-		int tope = fmax.getActualMaximum(Calendar.DATE);
+		Calendar cal = Calendar.getInstance();
+		if (fmax.get(Calendar.MONTH) == 0) {
+			cal.setTime(Dates.create(fmax.get(Calendar.DATE), 11,fmax.get(Calendar.YEAR)));
+		}
+		else {
+			cal.setTime(Dates.create(fmax.get(Calendar.DATE), fmax.get(Calendar.MONTH) - 1,fmax.get(Calendar.YEAR)));	
+		}
+		
+		int tope = cal.getActualMaximum(Calendar.DATE);
 		int mesInicio = fmin.get(Calendar.MONTH);
 		int mesFin = fmax.get(Calendar.MONTH);
 		int anyoInicio = fmin.get(Calendar.YEAR);
@@ -302,14 +310,6 @@ public class Dates {
 			while (!fmin.equals(fmax)) {
 				fmin.add(Calendar.DATE, 1);				
 				df.dias++;
-				if (df.dias == tope) {
-					df.meses++;
-					if (df.meses == 12) {
-						df.meses = 0;
-						df.años++;
-					}
-					df.dias = 0;
-				}
 			}			
 		}
 		else {
@@ -334,13 +334,13 @@ public class Dates {
 			while (!fmin.equals(fmax)) {
 				fmin.add(Calendar.DATE, 1);
 				df.dias++;
-				if (df.dias == tope) {
+				if (fmin.get(Calendar.DATE) == tope) {
 					df.meses++;
 					if (df.meses == 12) {
 						df.meses = 0;
 						df.años++;
 					}
-					df.dias = 0;
+					df.dias = 0;					
 				}
 			}			
 		}
