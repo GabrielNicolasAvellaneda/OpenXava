@@ -42,9 +42,10 @@ public class GenerateReportAction extends BaseAction implements IRequestAction, 
 		this.tab = tab;
 	}
 
-
 	public String getForwardURI() {		
-		return "/xava/list." + getType();
+		return "/xava/list." + getType() + 
+			"?application=" + request.getParameter("application") +
+			"&module=" + request.getParameter("module");
 	}
 
 	public String getType() {
