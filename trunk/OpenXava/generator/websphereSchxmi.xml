@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<tl>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;RDBSchema:RDBSchema xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:RDBSchema="RDBSchema.xmi" xmi:id="JAVI" name="JAVI"&gt;
+  &lt;database href="META-INF/backends/DB2UDBAS400_V5_1/EUROPA.dbxmi#EUROPA"/&gt;
+  &lt;tables xmi:type="RDBSchema:RDBTable" href="META-INF/backends/DB2UDBAS400_V5_1/EUROPA_JAVI_PERSONA.tblxmi#PERSONA"/&gt;
+&lt;/RDBSchema:RDBSchema&gt;
+</tl>

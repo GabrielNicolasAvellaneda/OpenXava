@@ -34,11 +34,11 @@
 			verbose="false">
             
 			<fileset dir="../${project}/${src.dir}">
-      	<include name="${domain}/${package}/${ejb.package}/xejb/*Bean.java" />
+				<include name="${domain}/${package}/${ejb.package}/xejb/*Bean.java" />
 			</fileset>
        
 			<fileset dir="../${project}/${src.dir.2}">
-      	<include name="${domain}/${package}/${ejb.package}/xejb/*Bean.java" />
+				<include name="${domain}/${package}/${ejb.package}/xejb/*Bean.java" />
 			</fileset>
        
 			<packageSubstitution packages="${ejb.package}.xejb" substituteWith="${ejb.package}"/>
@@ -52,11 +52,12 @@
 			<utilobject cacheHomes="true" kind="physical"/> 
             
 			<deploymentdescriptor 
+				useIds="true"
 				xmlencoding="ISO-8859-1"         
-        destdir="${meta-inf.dir}" 
-        validatexml="true" 
-        mergedir="${config.dir}/ejb"
-       />
+				destdir="${meta-inf.dir}" 
+				validatexml="true" 
+				mergedir="${config.dir}/ejb"
+			/>
         
 			<jboss
 				version="3.2"
@@ -68,6 +69,10 @@
 				validatexml="true"
 				mergeDir="${config.dir}/jboss"
 				preferredrelationmapping="relation-table"
+			/>
+			
+			<websphere 
+				destdir="${meta-inf.dir}"
 			/>
 
       </ejbdoclet>

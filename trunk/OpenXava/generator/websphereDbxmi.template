@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+#declare import="java.util.*"#
+#declare import="org.openxava.util.Strings"#
+#declare import="org.openxava.mapping.ModelMapping"#
+
+<RDBSchema:RDBDatabase xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:RDBSchema="RDBSchema.xmi" xmi:id="DB" name="DB">
+
+# 
+for (Iterator it= ModelMapping.getSchemas().iterator(); it.hasNext();) {
+	Object schema = it.next();
+# 
+  <schemata href="META-INF/backends/OPENXAVA/#(schema)#.schxmi###(schema)#"/>
+# 
+}
+# 
+# 
+for (Iterator it= ModelMapping.getTables().iterator(); it.hasNext();) {
+	String idTable = Strings.change((String) it.next(), ".", "_");
+# 
+  <tableGroup xmi:type="RDBSchema:RDBTable" href="META-INF/backends/OPENXAVA/#(idTable)#.tblxmi###(idTable)#"/>
+# 
+}
+#   
+  <domain href="DB2UDBAS400_V5_Domain.xmi##SQLVendor_1"/>
+</RDBSchema:RDBDatabase>
