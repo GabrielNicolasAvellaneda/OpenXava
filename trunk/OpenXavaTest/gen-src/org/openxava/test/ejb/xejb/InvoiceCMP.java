@@ -99,9 +99,10 @@ public abstract class InvoiceCMP
             InvoiceValue.setComment( getComment() );
             InvoiceValue.setDate( getDate() );
             InvoiceValue.setPaid( isPaid() );
-            InvoiceValue.setDetailsCount( getDetailsCount() );
             InvoiceValue.setYearDiscount( getYearDiscount() );
+            InvoiceValue.setDetailsCount( getDetailsCount() );
             InvoiceValue.setAmountsSum( getAmountsSum() );
+            InvoiceValue.setSellerDiscount( getSellerDiscount() );
             InvoiceValue.setImportance( getImportance() );
             InvoiceValue.setYear( getYear() );
             InvoiceValue.setCustomerDiscount( getCustomerDiscount() );
@@ -128,9 +129,10 @@ public abstract class InvoiceCMP
 		 setComment( valueHolder.getComment() );
 		 setDate( valueHolder.getDate() );
 		 setPaid( valueHolder.isPaid() );
-		 setDetailsCount( valueHolder.getDetailsCount() );
 		 setYearDiscount( valueHolder.getYearDiscount() );
+		 setDetailsCount( valueHolder.getDetailsCount() );
 		 setAmountsSum( valueHolder.getAmountsSum() );
+		 setSellerDiscount( valueHolder.getSellerDiscount() );
 		 setImportance( valueHolder.getImportance() );
 		 setCustomerDiscount( valueHolder.getCustomerDiscount() );
 		 setVatPercentage( valueHolder.getVatPercentage() );

@@ -176,7 +176,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 			Iterator it = getMetaProperties().iterator();
 			while (it.hasNext()) {
 				MetaProperty metaPropiedad = (MetaProperty) it.next();
-				if (metaPropiedad.isCalculated()) {
+				if (metaPropiedad.isCalculated()) {					
 					metaPropertiesCalculated.add(metaPropiedad);
 				}
 			}
@@ -310,20 +310,28 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		Set result = new HashSet();
 		Iterator itPropiedades = getMetaPropertiesCalculated().iterator();
 		while (itPropiedades.hasNext()) {
-			MetaProperty metaPropiedad = (MetaProperty) itPropiedades.next();
-			if (!metaPropiedad.hasCalculator())
+			MetaProperty metaProperty = (MetaProperty) itPropiedades.next();
+			if (!metaProperty.hasCalculator())
 				continue;
-			MetaSetsContainer metaCalculador = metaPropiedad
+			MetaSetsContainer metaCalculador = metaProperty
 					.getMetaCalculator();
 			if (!metaCalculador.containsMetaSets())
 				continue;
 			Iterator itPoners = metaCalculador.getMetaSets().iterator();
 			while (itPoners.hasNext()) {
 				MetaSet poner = (MetaSet) itPoners.next();
-				String nombrePropiedadDesde = poner.getPropertyNameFrom();
-				if (!Is.emptyString(nombrePropiedadDesde)
-						&& !getPropertiesNames().contains(nombrePropiedadDesde)) {
-					result.add(nombrePropiedadDesde);
+				String propertyNameFrom = poner.getPropertyNameFrom();
+				if (!Is.emptyString(propertyNameFrom)
+						&& !getPropertiesNames().contains(propertyNameFrom)) {
+					String qualifiedName = metaProperty.getQualifiedName();
+					int idx = qualifiedName.indexOf('.');
+					if (idx < 0) {
+						result.add(propertyNameFrom);
+					}
+					else {
+						String ref = qualifiedName.substring(0, idx + 1);
+						result.add(ref + propertyNameFrom);
+					}
 				}
 			}
 		}
@@ -426,7 +434,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		}
 		select.append(" from ");
 		select.append(getEntityMapping().getTable());
-		// para las referencias
+		// para las referencias		
 		if (hasReferences()) {
 			// las tablas
 
@@ -486,51 +494,41 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	public boolean hasReferences() throws XavaException {
 		return !getEntityReferencesMappings().isEmpty();
 	}
-
+	
 	private Collection getEntityReferencesMappings() throws XavaException {	
 		if (entityReferencesMappings == null) {
 			entityReferencesMappings = new LinkedHashSet();
-			Set entityReferencesMappings2 = null; // for second level references
-			Iterator it = getPropertiesNames().iterator();
-			while (it.hasNext()) {
-				String property = (String) it.next();
-				int idx = property.indexOf('.');				
-				if (idx >= 0) {
-					String referenceName = property.substring(0, idx);					
-					MetaReference ref = getMetaComponent().getMetaEntity().getMetaReference(referenceName);
-					String memberName = property.substring(idx + 1);
-					if (!ref.isAggregate()) {												
-						if (!ref.getMetaModelReferenced().isKey(memberName)) {
-							entityReferencesMappings.add(getEntityMapping()
-									.getReferenceMapping(referenceName));
-						}
-					} 
-					
-					// maybe better a recursive solution, for support of multiples level
-					int idx2 = memberName.indexOf('.'); // if has second level
-					if (idx2 >= 0) {						
-						if (entityReferencesMappings2 == null) entityReferencesMappings2 = new LinkedHashSet(); 
-						String referenceName2 = memberName.substring(0, idx2);
-						MetaComponent component2 = MetaComponent.get(ref.getReferencedModelName());						
-						MetaReference ref2 = component2.getMetaEntity().getMetaReference(referenceName2);
-						String memberName2 = memberName.substring(idx2 + 1);
-						if (!ref2.isAggregate()) {
-							if (!ref2.getMetaModelReferenced().isKey(memberName2)) {			
-								entityReferencesMappings2.add(component2.getEntityMapping()
-										.getReferenceMapping(referenceName2));
-							}
-						}						
-					}					
-				}
+			for (Iterator itProperties = getPropertiesNames().iterator(); itProperties.hasNext();) {
+				String property = (String) itProperties.next();
+				fillEntityReferencesMappings(entityReferencesMappings, property, getMetaComponent().getMetaEntity());
 			}
-			
-			if (entityReferencesMappings2 != null) {				
-				entityReferencesMappings.addAll(entityReferencesMappings2);				
-			}			
+			for (Iterator itProperties = getHiddenPropertiesNames().iterator(); itProperties.hasNext();) {
+				String property = (String) itProperties.next();
+				fillEntityReferencesMappings(entityReferencesMappings, property, getMetaComponent().getMetaEntity());
+			}						
 		}
 		return entityReferencesMappings;
 	}
-
+	
+	private void fillEntityReferencesMappings(Collection result, String property, MetaModel metaModel) throws XavaException {		
+		int idx = property.indexOf('.');				
+		if (idx >= 0) {
+			String referenceName = property.substring(0, idx);					
+			MetaReference ref = metaModel.getMetaReference(referenceName);
+			String memberName = property.substring(idx + 1);
+			boolean hasMoreLevels = memberName.indexOf('.') >= 0;
+			if (!ref.isAggregate()) {												
+				if (hasMoreLevels || !ref.getMetaModelReferenced().isKey(memberName)) {
+					result.add(metaModel.getMapping().getReferenceMapping(referenceName));
+				}
+			}			
+			 
+			if (hasMoreLevels) {
+				fillEntityReferencesMappings(result, memberName, MetaComponent.get(ref.getReferencedModelName()).getMetaEntity());
+			}
+		}		
+	}
+		
 	public void addDefaultMetaConsults() throws XavaException {
 		if (!isExcludeByKey())
 			añadirMetaConsultaClavePrimaria();

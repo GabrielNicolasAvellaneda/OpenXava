@@ -19,7 +19,7 @@ public class TabCalculator implements java.io.Serializable {
 	public TabCalculator(MetaProperty metaPropiedad, int indicePropiedad)
 		throws XavaException {
 		this.index = indicePropiedad;
-		this.propertyName = metaPropiedad.getName();
+		this.propertyName = metaPropiedad.getQualifiedName();
 		this.metaCalculator = metaPropiedad.getMetaCalculator();
 		this.calculator = metaCalculator.createCalculator();
 		this.propertiesManager = new PropertiesManager(calculator);

@@ -6,6 +6,7 @@ import javax.rmi.*;
 import org.openxava.test.ejb.*;
 import org.openxava.tests.*;
 import org.openxava.test.ejb.*;
+import org.openxava.util.*;
 
 
 /**
@@ -69,8 +70,28 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 		
 		assertNoEditable("details.serviceType");		
 		assertNoEditable("details.product.number");
-		assertNoEditable("details.product.description");
-						
+		assertNoEditable("details.product.description");						
+	}
+	
+	public void testLevel4ReferenceInList() throws Exception {
+		// Look for a invoice with seller level
+		int c = getListRowCount();
+		int row = -1;
+		for (int i=0; i<c; i++) {
+			String sellerLevel = getValueInList(i, "customer.seller.level.description");			
+			if (!Is.emptyString(sellerLevel)) {
+				row = i;
+				break;
+			}
+		}
+		assertTrue("It's required a invoice with seller level for run this test", row >= 0);
+		String year = getValueInList(row, "year");
+		String number = getValueInList(row, "number");
+		InvoiceKey key = new InvoiceKey();
+		key.setYear(Integer.parseInt(year));
+		key.setNumber(Integer.parseInt(number));
+		Invoice invoice = InvoiceUtil.getHome().findByPrimaryKey(key);		
+		assertValueInList(row, "customer.seller.level.description", invoice.getCustomer().getSeller().getLevel().getDescription());		
 	}
 
 	private InvoiceKey getInvoiceKey() throws Exception {
