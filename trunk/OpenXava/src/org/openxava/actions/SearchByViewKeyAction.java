@@ -5,7 +5,6 @@ import javax.ejb.*;
 
 import org.openxava.model.*;
 
-
 /**
  * @author Javier Paniza
  */
@@ -14,9 +13,9 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 	
 	public void execute() throws Exception {
 		try {						
-			Map nombresMiembros = getView().getMemberNamesWithHidden();
-			Map valores = MapFacade.getValues(getModelName(), getView().getKeyValues(), nombresMiembros);			
-			getView().setValues(valores);			
+			Map memberNames = getView().getMemberNamesWithHidden();
+			Map values = MapFacade.getValues(getModelName(), getView().getKeyValues(), memberNames);			
+			getView().setValues(values);			
 			getView().setEditable(true);	
 			getView().setKeyEditable(false);			
 		}

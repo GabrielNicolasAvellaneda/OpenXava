@@ -5,7 +5,6 @@ import javax.ejb.*;
 import org.openxava.model.*;
 import org.openxava.validators.*;
 
-
 /**
  * @author Javier Paniza
  */

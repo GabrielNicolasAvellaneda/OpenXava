@@ -7,105 +7,103 @@ import javax.servlet.http.*;
 import org.openxava.controller.*;
 import org.openxava.util.*;
 
-
-
 /**
  * @author Javier Paniza
  */
 
 abstract public class BaseAction implements IAction, IRequestAction, java.io.Serializable {
 	
-	private Messages errores;
-	private Messages mensajes;
-	private Environment entorno;
+	private Messages errors;
+	private Messages messages;
+	private Environment environment;
 	private transient HttpServletRequest request;
 	
 	public Messages getErrors() {
-		return errores;
+		return errors;
 	}
 
-	public void setErrors(Messages errores) {
-		this.errores = errores;
+	public void setErrors(Messages errors) {
+		this.errors = errors;
 	}
 	
 	public Messages getMessages() {
-		return mensajes;
+		return messages;
 	}
 
-	public void setMessages(Messages mensajes) {
-		this.mensajes = mensajes;
+	public void setMessages(Messages messages) {
+		this.messages = messages;
 	}
 		
-	protected void addErrors(Messages errores) {
-		this.errores.add(errores);
+	protected void addErrors(Messages errors) {
+		this.errors.add(errors);
 	}
 	
-	protected void addError(String idMensaje) {
-		errores.add(idMensaje);
+	protected void addError(String messageId) {
+		errors.add(messageId);
 	}
 	
-	protected void addError(String idMensaje, Object [] ids) {
-		errores.add(idMensaje, ids);
+	protected void addError(String messageId, Object [] ids) {
+		errors.add(messageId, ids);
 	}
 	
-	protected void addError(String idMensaje, Object id0) {
-		errores.add(idMensaje, new Object [] {id0});
+	protected void addError(String messageId, Object id0) {
+		errors.add(messageId, new Object [] {id0});
 	}
 	
-	protected void addError(String idMensaje, Object id0, Object id1) {
-		errores.add(idMensaje, new Object [] {id0, id1});
+	protected void addError(String messageId, Object id0, Object id1) {
+		errors.add(messageId, new Object [] {id0, id1});
 	}
 	
-	protected void addError(String idMensaje, Object id0, Object id1, Object id2) {
-		errores.add(idMensaje, new Object [] {id0, id1, id2});
+	protected void addError(String messageId, Object id0, Object id1, Object id2) {
+		errors.add(messageId, new Object [] {id0, id1, id2});
 	}
 	
-	protected void addError(String idMensaje, Object id0, Object id1, Object id2, Object id3) {
-		errores.add(idMensaje, new Object [] {id0, id1, id2, id3});
+	protected void addError(String messageId, Object id0, Object id1, Object id2, Object id3) {
+		errors.add(messageId, new Object [] {id0, id1, id2, id3});
 	}
 	
-	protected void addError(String idMensaje, Object id0, Object id1, Object id2, Object id3, Object id4) {
-		errores.add(idMensaje, new Object [] {id0, id1, id2, id3, id4});
+	protected void addError(String messageId, Object id0, Object id1, Object id2, Object id3, Object id4) {
+		errors.add(messageId, new Object [] {id0, id1, id2, id3, id4});
 	}
 	
-	protected void addError(String idMensaje, Object id0, Object id1, Object id2, Object id3, Object id4, Object id5) {
-		errores.add(idMensaje, new Object [] {id0, id1, id2, id3, id4, id5});
+	protected void addError(String messageId, Object id0, Object id1, Object id2, Object id3, Object id4, Object id5) {
+		errors.add(messageId, new Object [] {id0, id1, id2, id3, id4, id5});
 	}
 	
-	protected void addMessages(Messages mensajes) {
-		this.mensajes.add(mensajes);
+	protected void addMessages(Messages messages) {
+		this.messages.add(messages);
 	}
 	
-	protected void addMessage(String idMensaje) {
-		mensajes.add(idMensaje);
+	protected void addMessage(String messajeId) {
+		messages.add(messajeId);
 	}
 	
-	protected void addMessage(String idMensaje, Object [] ids) {
-		mensajes.add(idMensaje, ids);
+	protected void addMessage(String messageId, Object [] ids) {
+		messages.add(messageId, ids);
 	}
 	
-	protected void addMessage(String idMensaje, Object id0) {
-		mensajes.add(idMensaje, new Object [] {id0});
+	protected void addMessage(String messageId, Object id0) {
+		messages.add(messageId, new Object [] {id0});
 	}
 	
-	protected void addMessage(String idMensaje, Object id0, Object id1) {
-		mensajes.add(idMensaje, new Object [] {id0, id1});
+	protected void addMessage(String messageId, Object id0, Object id1) {
+		messages.add(messageId, new Object [] {id0, id1});
 	}
 	
-	protected void addMessage(String idMensaje, Object id0, Object id1, Object id2) {
-		mensajes.add(idMensaje, new Object [] {id0, id1, id2});
+	protected void addMessage(String messageId, Object id0, Object id1, Object id2) {
+		messages.add(messageId, new Object [] {id0, id1, id2});
 	}
 	
-	protected void addMessage(String idMensaje, Object id0, Object id1, Object id2, Object id3) {
-		mensajes.add(idMensaje, new Object [] {id0, id1, id2, id3});
+	protected void addMessage(String messageId, Object id0, Object id1, Object id2, Object id3) {
+		messages.add(messageId, new Object [] {id0, id1, id2, id3});
 	}
 	
-	protected void addMessage(String idMensaje, Object id0, Object id1, Object id2, Object id3, Object id4) {
-		mensajes.add(idMensaje, new Object [] {id0, id1, id2, id3, id4});
+	protected void addMessage(String messageId, Object id0, Object id1, Object id2, Object id3, Object id4) {
+		messages.add(messageId, new Object [] {id0, id1, id2, id3, id4});
 	}
 	
-	protected void addMessage(String idMensaje, Object id0, Object id1, Object id2, Object id3, Object id4, Object id5) {
-		mensajes.add(idMensaje, new Object [] {id0, id1, id2, id3, id4, id5});
+	protected void addMessage(String messageId, Object id0, Object id1, Object id2, Object id3, Object id4, Object id5) {
+		messages.add(messageId, new Object [] {id0, id1, id2, id3, id4, id5});
 	}
 	
 		
@@ -115,11 +113,11 @@ abstract public class BaseAction implements IAction, IRequestAction, java.io.Ser
 	public void executeAfter() throws Exception {	
 	}
 	
-	public void setEnvironment(Environment entorno) {
-		this.entorno = entorno;
+	public void setEnvironment(Environment environment) {
+		this.environment = environment;
 	}
 	public Environment getEnvironment() {
-		return entorno;
+		return environment;
 	}
 	/**
 	 * Reset de cache of all descriptions-list and 

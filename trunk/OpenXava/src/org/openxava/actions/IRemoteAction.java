@@ -13,7 +13,7 @@ public interface IRemoteAction extends IAction {
 	boolean isExecuteOnServer();
 	
 	/**
-	 * Paquete, normalmente el nombre del proyecto en minusculas. 
+	 * Package, usually the project name in lowercase. 
 	 */
 	String getPackageName();
 

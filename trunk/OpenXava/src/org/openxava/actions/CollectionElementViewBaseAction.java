@@ -7,7 +7,6 @@ import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.view.*;
 
-
 /**
  * @author Javier Paniza
  */
@@ -40,8 +39,8 @@ abstract public class CollectionElementViewBaseAction extends ViewBaseAction imp
 		return request;
 	}
 
-	public void setContext(ModuleContext modulo) {
-		context = modulo;
+	public void setContext(ModuleContext moduleContext) {
+		context = moduleContext;
 	}
 
 	public void setRequest(HttpServletRequest request) {
@@ -57,6 +56,4 @@ abstract public class CollectionElementViewBaseAction extends ViewBaseAction imp
 		viewObject = string;
 	}
 	
-	
-
 }

@@ -5,7 +5,6 @@ import java.util.*;
 import org.openxava.tab.*;
 import org.openxava.util.*;
 
-
 /**
  * @author Javier Paniza
  */
@@ -31,40 +30,40 @@ public class ViewDetailAction extends ViewBaseAction implements IChainAction, IM
 			addError("at_list_begin");			
 			return;
 		}		
-		int anterior = row;
+		int previous = row;
 		row = goFirst?0:row + increment;		
-		int [] seleccionados = tab.getSelected();
-		boolean nosPasamosDelUltimoSeleccinado = false;		
-		if (seleccionados != null && seleccionados.length > 0) {
+		int [] selectedOnes = tab.getSelected();
+		boolean lastSelectedPassed = false;		
+		if (selectedOnes != null && selectedOnes.length > 0) {
 			if (increment >= 0) {				
-				int ultimo = seleccionados[seleccionados.length - 1];				
-				if (row > ultimo) nosPasamosDelUltimoSeleccinado = true;
+				int last = selectedOnes[selectedOnes.length - 1];				
+				if (row > last) lastSelectedPassed = true;
 				else {					
-					while (Arrays.binarySearch(seleccionados, row) < 0 && row < ultimo) { // no esta
+					while (Arrays.binarySearch(selectedOnes, row) < 0 && row < last) { 
 						row++;
 					} 		
 				}	
 			}
 			else {
-				int primero = seleccionados[0];
-				if (row < primero) nosPasamosDelUltimoSeleccinado = true;
+				int first = selectedOnes[0];
+				if (row < first) lastSelectedPassed = true;
 				else {
-					while (Arrays.binarySearch(seleccionados, row) < 0 && row > primero) { // no esta
+					while (Arrays.binarySearch(selectedOnes, row) < 0 && row > first) { 
 						row--;
 					} 		
 				}					
 			}
 		}		
-		if (nosPasamosDelUltimoSeleccinado) {
+		if (lastSelectedPassed) {
 			key = null;
 		}
-		else {	
+		else {
 			key = (Map) tab.getTableModel().getObjectAt(row);			
 		}
 		if (key == null) {
 			setNoElementsInList(true);
-			addError("no_list_elements");			
-			row = anterior;
+			addError("no_list_elements");
+			row = previous;
 		}		
 		if (key != null) {		
 			getView().setValues(key);						
@@ -131,8 +130,8 @@ public class ViewDetailAction extends ViewBaseAction implements IChainAction, IM
 		atListBegin = b;
 	}
 
-	public void setModel(String nombreModelo) { 
-		this.model = nombreModelo;		
+	public void setModel(String modelName) { 
+		this.model = modelName;		
 	}
 
 }

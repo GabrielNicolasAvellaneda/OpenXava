@@ -6,8 +6,6 @@ import org.openxava.model.*;
 import org.openxava.tab.*;
 import org.openxava.validators.*;
 
-
-
 /**
  * @author Javier Paniza
  */
@@ -18,10 +16,10 @@ public class DeleteSelectedAction extends BaseAction implements IModelAction {
 	private String model;
 
 	public void execute() throws Exception {				
-		int [] seleccionados = tab.getSelected();
-		if (seleccionados != null) {						
-			for (int i = 0; i < seleccionados.length; i++) {				
-				Map clave = (Map) getTab().getTableModel().getObjectAt(seleccionados[i]);
+		int [] selectedOnes = tab.getSelected();
+		if (selectedOnes != null) {						
+			for (int i = 0; i < selectedOnes.length; i++) {				
+				Map clave = (Map) getTab().getTableModel().getObjectAt(selectedOnes[i]);
 				try {									
 					MapFacade.remove(model, clave);					
 				}
@@ -46,9 +44,8 @@ public class DeleteSelectedAction extends BaseAction implements IModelAction {
 		tab = web;
 	}
 
-	public void setModel(String nombreModelo) {
-		this.model = nombreModelo;
-		
+	public void setModel(String modelName) {
+		this.model = modelName;		
 	}
 
 }

@@ -6,7 +6,6 @@ import java.util.*;
 import javax.rmi.*;
 
 import org.openxava.test.ejb.*;
-import org.openxava.test.ejb.*;
 
 import junit.framework.*;
 

@@ -5,10 +5,10 @@ import javax.servlet.http.*;
 import org.openxava.tab.*;
 import org.openxava.util.*;
 
-
 /**
  * @author Javier Paniza
  */
+
 public class GenerateReportAction extends BaseAction implements IRequestAction, IForwardAction {
 	
 	private HttpServletRequest request;

@@ -3,18 +3,18 @@ package org.openxava.actions;
 import javax.servlet.http.*;
 
 /**
- * Acción que recibo un request de servlet. <p>
+ * Action that receive a servlet request. <p>
  * 
- * Con esta acción podemos acceder directamente a los
- * recursos de una aplicación web (mediante el request), pero
- * está ligada a la tecnología de implementación (servlets),
- * y por ende es mejor evitarla si tenemos otro tipo de
- * acción, y pensamos en la portabilidad a otras tecnologías.<p>
+ * With this action we can access directily to the
+ * web application resources (by means request), but
+ * its link to implementation tecnology (servlets),
+ * hence it's better to elude it if we have another
+ * way and we are thinking in migrate to another tecnology. <p>
  * 
- * Pero es necesaria para algunas cosas. A medida que se use
- * este tipo de acción para tareas especificas, se puede
- * refactorizar y crear acciones más específicar y abstractas
- * que no estén ligadas a servlets.<br>
+ * But it's needed form some issues. As this action type is
+ * used for specific task, it's possible refactoring and create
+ * more specific (in functional terms) and abstracts (in tecnologic terms)
+ * actions that it's not link to servlets tecnology.<br>
  *   
  * @author Javier Paniza
  */

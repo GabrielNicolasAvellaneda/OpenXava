@@ -3,6 +3,7 @@ package org.openxava.actions;
 /**
  * @author Javier Paniza
  */
+
 public class ChangeSectionAction extends BaseAction {
 	
 	private int activeSection;

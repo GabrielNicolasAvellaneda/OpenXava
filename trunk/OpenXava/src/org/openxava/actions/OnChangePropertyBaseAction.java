@@ -34,8 +34,8 @@ abstract public class OnChangePropertyBaseAction
 		changedProperty = string;
 	}
 
-	public void setView(View vista) {
-		this.view = vista;
+	public void setView(View view) {
+		this.view = view;
 	}
 
 }

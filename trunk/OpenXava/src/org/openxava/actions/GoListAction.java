@@ -33,8 +33,8 @@ public class GoListAction extends BaseAction implements IChangeModeAction, INavi
 		return view;
 	}
 
-	public void setView(View vista) {		
-		this.view = vista;
+	public void setView(View view) {		
+		this.view = view;
 	}
 
 	public Tab getTab() {

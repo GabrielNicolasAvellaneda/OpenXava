@@ -5,7 +5,6 @@ import java.util.*;
 import org.openxava.tab.*;
 import org.openxava.view.*;
 
-
 /**
  * @author Javier Paniza
  */
@@ -17,13 +16,13 @@ public class ChooseReferenceAction extends ViewBaseAction implements INavigation
 	private int row = -1;
 	
 	public void execute() throws Exception {						
-		int [] seleccionados = tab.getSelected();
+		int [] selectedOnes = tab.getSelected();
 		Map clave = null;
 		if (row >= 0) {
 			clave = (Map) getTab().getTableModel().getObjectAt(row);
 		}				
-		else if (seleccionados != null && seleccionados.length > 0) {			
-			clave = (Map) getTab().getTableModel().getObjectAt(seleccionados[0]);
+		else if (selectedOnes != null && selectedOnes.length > 0) {			
+			clave = (Map) getTab().getTableModel().getObjectAt(selectedOnes[0]);
 		}		
 		getReferenceSubview().setValuesNotifying(clave);
 		getTab().setModelName(getView().getModelName());

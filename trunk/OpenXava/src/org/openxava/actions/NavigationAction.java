@@ -3,6 +3,7 @@ package org.openxava.actions;
 /**
  * @author Javier Paniza
  */
+
 public class NavigationAction extends BaseAction implements INavigationAction, IChangeModeAction {
 	
 	private String nextController;
