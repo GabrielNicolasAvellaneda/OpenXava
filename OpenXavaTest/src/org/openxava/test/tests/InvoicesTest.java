@@ -428,7 +428,8 @@ public class InvoicesTest extends ModuleTestBase {
 		// First vat percentage for no validation error on save first detail
 		execute("Sections.change", "activeSection=2");
 		assertNotExists("customer.number");
-		assertExists("vatPercentage");						
+		assertExists("vatPercentage");
+		assertValue("amountsSum", "");
 		setValue("vatPercentage", "23");
 				
 		execute("Sections.change", "activeSection=1");
@@ -441,7 +442,7 @@ public class InvoicesTest extends ModuleTestBase {
 		setValue("details.serviceType", "0");
 		setValue("details.quantity", "20");
 		setValue("details.unitPrice", getProductUnitPrice());
-		assertValue("details.amount", getProductUnitPriceFor("20"));
+		assertValue("details.amount", getProductUnitPriceMultiplyBy("20"));
 		setValue("details.product.number", getProductNumber());
 		assertValue("details.product.description", getProductDescription());
 		setValue("details.deliveryDate", "18/03/2004"); // Testing multiple-mapping in aggregate
@@ -452,12 +453,19 @@ public class InvoicesTest extends ModuleTestBase {
 		assertCollectionRowCount("details", 1);
 		assertNoEditable("year"); // Testing header is saved
 		assertNoEditable("number");
+		
+		// Testing if recalculate dependent properties
+		execute("Sections.change", "activeSection=2");
+		assertValue("amountsSum", getProductUnitPriceMultiplyBy("20")); 
+		setValue("vatPercentage", "23");		
+		execute("Sections.change", "activeSection=1");
+		// end of recalculate testing
 				
 		execute("Collection.new", "viewObject=xava_view_section1_details");
 		setValue("details.serviceType", "1");
 		setValue("details.quantity", "200");
 		setValue("details.unitPrice", getProductUnitPrice());		
-		assertValue("details.amount", getProductUnitPriceFor("200"));
+		assertValue("details.amount", getProductUnitPriceMultiplyBy("200"));
 		setValue("details.product.number", getProductNumber());
 		assertValue("details.product.description", getProductDescription());
 		setValue("details.deliveryDate", "19/03/2004"); // Testing multiple-mapping in aggregate
@@ -469,7 +477,7 @@ public class InvoicesTest extends ModuleTestBase {
 		setValue("details.serviceType", "2");
 		setValue("details.quantity", "2");
 		setValue("details.unitPrice", getProductUnitPrice());
-		assertValue("details.amount", getProductUnitPriceFor("2"));
+		assertValue("details.amount", getProductUnitPriceMultiplyBy("2"));
 		setValue("details.product.number", getProductNumber());
 		assertValue("details.product.description", getProductDescription());
 		setValue("details.deliveryDate", "20/03/2004"); // Testing multiple-mapping in aggregate		
@@ -481,21 +489,21 @@ public class InvoicesTest extends ModuleTestBase {
 		assertValueInCollection("details", 0, 2, getProductUnitPriceInPesetas());
 		assertValueInCollection("details", 0, 3, "2");
 		assertValueInCollection("details", 0, 4, getProductUnitPrice());
-		assertValueInCollection("details", 0, 5, getProductUnitPriceFor("2"));
+		assertValueInCollection("details", 0, 5, getProductUnitPriceMultiplyBy("2"));
 
 		assertValueInCollection("details", 1, 0, "Special");
 		assertValueInCollection("details", 1, 1, getProductDescription());
 		assertValueInCollection("details", 1, 2, getProductUnitPriceInPesetas());
 		assertValueInCollection("details", 1, 3, "200");
 		assertValueInCollection("details", 1, 4, getProductUnitPrice());
-		assertValueInCollection("details", 1, 5, getProductUnitPriceFor("200"));
+		assertValueInCollection("details", 1, 5, getProductUnitPriceMultiplyBy("200"));
 
 		assertValueInCollection("details", 2, 0, "");
 		assertValueInCollection("details", 2, 1, getProductDescription());
 		assertValueInCollection("details", 2, 2, getProductUnitPriceInPesetas());
 		assertValueInCollection("details", 2, 3, "20");
 		assertValueInCollection("details", 2, 4, getProductUnitPrice());
-		assertValueInCollection("details", 2, 5, getProductUnitPriceFor("20"));
+		assertValueInCollection("details", 2, 5, getProductUnitPriceMultiplyBy("20"));
 										
 		execute("CRUD.save");
 		assertNoErrors();
@@ -525,21 +533,21 @@ public class InvoicesTest extends ModuleTestBase {
 		assertValueInCollection("details", 0, 2, getProductUnitPriceInPesetas());
 		assertValueInCollection("details", 0, 3, "2");
 		assertValueInCollection("details", 0, 4, getProductUnitPrice());
-		assertValueInCollection("details", 0, 5, getProductUnitPriceFor("2"));
+		assertValueInCollection("details", 0, 5, getProductUnitPriceMultiplyBy("2"));
 
 		assertValueInCollection("details", 1, 0, "Special");
 		assertValueInCollection("details", 1, 1, getProductDescription());
 		assertValueInCollection("details", 1, 2, getProductUnitPriceInPesetas());
 		assertValueInCollection("details", 1, 3, "200");
 		assertValueInCollection("details", 1, 4, getProductUnitPrice());
-		assertValueInCollection("details", 1, 5, getProductUnitPriceFor("200"));
+		assertValueInCollection("details", 1, 5, getProductUnitPriceMultiplyBy("200"));
 
 		assertValueInCollection("details", 2, 0, "");
 		assertValueInCollection("details", 2, 1, getProductDescription());
 		assertValueInCollection("details", 2, 2, getProductUnitPriceInPesetas());
 		assertValueInCollection("details", 2, 3, "20");
 		assertValueInCollection("details", 2, 4, getProductUnitPrice());
-		assertValueInCollection("details", 2, 5, getProductUnitPriceFor("20"));
+		assertValueInCollection("details", 2, 5, getProductUnitPriceMultiplyBy("20"));
 				
 		execute("Sections.change", "activeSection=2");		
 		assertValue("vatPercentage", "23");
@@ -579,7 +587,7 @@ public class InvoicesTest extends ModuleTestBase {
 		assertValueInCollection("details", 1, 2, getProductUnitPriceInPesetas());
 		assertValueInCollection("details", 1, 3, "234");
 		assertValueInCollection("details", 1, 4, getProductUnitPrice());
-		assertValueInCollection("details", 1, 5, getProductUnitPriceFor("234"));
+		assertValueInCollection("details", 1, 5, getProductUnitPriceMultiplyBy("234"));
 		assertNotExists("details.product.description");
 		assertNotExists("details.quantity");
 		assertNotExists("details.deliveryDate");
@@ -615,14 +623,14 @@ public class InvoicesTest extends ModuleTestBase {
 		assertValueInCollection("details", 0, 2, getProductUnitPriceInPesetas());
 		assertValueInCollection("details", 0, 3, "2");
 		assertValueInCollection("details", 0, 4, getProductUnitPrice());
-		assertValueInCollection("details", 0, 5, getProductUnitPriceFor("2"));
+		assertValueInCollection("details", 0, 5, getProductUnitPriceMultiplyBy("2"));
 
 		assertValueInCollection("details", 1, 0, "");
 		assertValueInCollection("details", 1, 1, getProductDescription());
 		assertValueInCollection("details", 1, 2, getProductUnitPriceInPesetas());
 		assertValueInCollection("details", 1, 3, "20");
 		assertValueInCollection("details", 1, 4, getProductUnitPrice());
-		assertValueInCollection("details", 1, 5, getProductUnitPriceFor("20"));
+		assertValueInCollection("details", 1, 5, getProductUnitPriceMultiplyBy("20"));
 		
 		
 		//ejecutar("CRUD.save"); // It is not necessary delete for record the deleted of a row 		
@@ -643,14 +651,14 @@ public class InvoicesTest extends ModuleTestBase {
 		assertValueInCollection("details", 0, 2, getProductUnitPriceInPesetas());
 		assertValueInCollection("details", 0, 3, "2");
 		assertValueInCollection("details", 0, 4, getProductUnitPrice());
-		assertValueInCollection("details", 0, 5, getProductUnitPriceFor("2"));
+		assertValueInCollection("details", 0, 5, getProductUnitPriceMultiplyBy("2"));
 
 		assertValueInCollection("details", 1, 0, "");
 		assertValueInCollection("details", 1, 1, getProductDescription());
 		assertValueInCollection("details", 1, 2, getProductUnitPriceInPesetas());
 		assertValueInCollection("details", 1, 3, "20");
 		assertValueInCollection("details", 1, 4, getProductUnitPrice());
-		assertValueInCollection("details", 1, 5, getProductUnitPriceFor("20"));
+		assertValueInCollection("details", 1, 5, getProductUnitPriceMultiplyBy("20"));
 		
 		assertValue("comment", "DETAIL DELETED"); // verifying postdelete-calculator in collection
 								
@@ -681,7 +689,7 @@ public class InvoicesTest extends ModuleTestBase {
 		setValue("details.serviceType", "0");
 		setValue("details.quantity", "20");
 		setValue("details.unitPrice", getProductUnitPrice());
-		assertValue("details.amount", getProductUnitPriceFor("20"));
+		assertValue("details.amount", getProductUnitPriceMultiplyBy("20"));
 		setValue("details.product.number", getProductNumber());
 		assertValue("details.product.description", getProductDescription());
 		setValue("details.deliveryDate", "18/03/2004");
@@ -1025,7 +1033,7 @@ public class InvoicesTest extends ModuleTestBase {
 		return productUnitPricePlus10;		
 	}
 	
-	private String getProductUnitPriceFor(String cantidad) throws Exception {
+	private String getProductUnitPriceMultiplyBy(String cantidad) throws Exception {
 		return DecimalFormat.getInstance().format(getProductUnitPriceDB().multiply(new BigDecimal(cantidad)));
 	}
 	

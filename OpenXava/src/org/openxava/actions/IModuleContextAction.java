@@ -2,7 +2,6 @@ package org.openxava.actions;
 
 import org.openxava.controller.*;
 
-
 /**
  * @author Javier Paniza
  */

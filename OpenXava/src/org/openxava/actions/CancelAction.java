@@ -4,8 +4,6 @@ import java.util.*;
 
 import org.openxava.view.*;
 
-
-
 /**
  * @author Javier Paniza
  */

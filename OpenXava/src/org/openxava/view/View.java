@@ -53,6 +53,7 @@ public class View {
 	private int oid;
 	private List metaProperties;
 	private Collection metaPropertiesQualified;
+	private Map calculatedPropertiesNames;
 	private Map mapStereotypesProperties;
 	private Map membersNames;
 	private MetaModel metaModel;
@@ -174,6 +175,7 @@ public class View {
 		this.membersNames = null;
 		this.collectionMemberNames = null;
 		this.metaProperties = null;
+		this.calculatedPropertiesNames = null;
 		this.metaPropertiesIncludingSections = null;
 		this.metaPropertiesQualified = null;
 		this.mapStereotypesProperties = null;
@@ -758,7 +760,44 @@ public class View {
 		}
 		return membersNames;		
 	}
-		
+	
+	public Map getCalculatedPropertiesNames() throws XavaException {
+		if (calculatedPropertiesNames == null) { 
+			calculatedPropertiesNames = createCalculatedPropertiesNames();
+		}
+		return calculatedPropertiesNames;
+	}
+	
+	private Map createCalculatedPropertiesNames() throws XavaException {
+		Map memberNames = new HashMap();
+		Iterator it = createMetaMembers(false).iterator();
+		while (it.hasNext()) {
+			MetaMember m = (MetaMember) it.next();								
+			if (m instanceof MetaProperty && !m.equals(PropertiesSeparator.INSTANCE)) {
+				if (((MetaProperty)m).isCalculated()) {
+					memberNames.put(m.getName(), null);
+				}
+			}
+			else if (m instanceof MetaReference) {
+				Map names = getSubview(m.getName()).createCalculatedPropertiesNames();
+				if (!names.isEmpty()) memberNames.put(m.getName(), names);				
+			}
+			else if (m instanceof MetaGroup) {
+				Map names = getGroupView(m.getName()).createCalculatedPropertiesNames();
+				if (!names.isEmpty()) memberNames.putAll(names);
+			}
+		}			
+		if (hasSections()) {
+			int quantity = getSections().size();
+			for (int i = 0; i < quantity; i++) {
+				Map names = getSectionView(i).createCalculatedPropertiesNames();
+				if (!names.isEmpty()) memberNames.putAll(names);
+			}
+		}			
+		return memberNames;	
+	}
+	
+			
 	private Map crearNombresMiembros(boolean incluirOcultos) throws XavaException {
 		Map nombresMiembros = new HashMap();
 		Iterator it = createMetaMembers(incluirOcultos).iterator();
@@ -1165,6 +1204,7 @@ public class View {
 		metaProperties = null;
 		metaPropertiesIncludingSections = null;
 		metaPropertiesQualified = null;
+		calculatedPropertiesNames = null;
 		lastPropertyKeyName = null;		
 		depends = null;
 		subviews = null;
@@ -2298,4 +2338,17 @@ public class View {
 			String editCollectionElementAction) {
 		this.editCollectionElementAction = editCollectionElementAction;
 	}
+
+	public void recalculateProperties() {
+		try {												
+			Map names = getCalculatedPropertiesNames();
+			if (!names.isEmpty()) {
+				addValues(MapFacade.getValues(getModelName(), getKeyValues(), names));
+			}
+		}
+		catch (Exception ex) {						
+			getErrors().add("recalculate_view_error", getModelName());	 								
+		}		
+	}
+	
 }

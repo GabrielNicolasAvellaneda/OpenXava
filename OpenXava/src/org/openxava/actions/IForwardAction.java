@@ -1,11 +1,12 @@
 package org.openxava.actions;
 
 /**
- * Permite hacer un <i>forward</i> a un jsp o servlet de la
- * misma aplicación.
+ * It allows to do a <i>forward</i> to a jsp or servlet in the
+ * same application.
  * 
  * @author Javier Paniza
  */
+
 public interface IForwardAction extends IAction {
 	
 	String getForwardURI();

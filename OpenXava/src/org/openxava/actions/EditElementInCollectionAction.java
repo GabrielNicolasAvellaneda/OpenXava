@@ -16,14 +16,14 @@ public class EditElementInCollectionAction extends CollectionElementViewBaseActi
 
 	public void execute() throws Exception {
 		getCollectionElementView().setCollectionDetailVisible(true);		
-		Collection agregados = getCollectionElementView().getCollectionValues(); 
-		if (agregados == null) return;
-		if (agregados instanceof List) {
-			Map valores = (Map) ((List) agregados).get(getRow());			
-			if (!valores.keySet().equals(getCollectionElementView().getValues().keySet())) {
-				valores = MapFacade.getValues(getCollectionElementView().getModelName(), valores, getCollectionElementView().getMembersNames());
+		Collection aggregates = getCollectionElementView().getCollectionValues(); 
+		if (aggregates == null) return;
+		if (aggregates instanceof List) {
+			Map values = (Map) ((List) aggregates).get(getRow());			
+			if (!values.keySet().equals(getCollectionElementView().getValues().keySet())) {
+				values = MapFacade.getValues(getCollectionElementView().getModelName(), values, getCollectionElementView().getMembersNames());
 			}								
-			getCollectionElementView().setValues(valores);			
+			getCollectionElementView().setValues(values);			
 			getCollectionElementView().setCollectionEditingRow(getRow());
 		}
 		else {

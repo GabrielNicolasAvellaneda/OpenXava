@@ -4,14 +4,12 @@ import java.util.*;
 
 import org.openxava.tab.*;
 
-
 /**
  * @author Javier Paniza
  */
 
 public class GoFirstAction extends BaseAction {
-		
-	
+			
 	private Map key;
 	private transient Tab tab;
 	
@@ -19,8 +17,7 @@ public class GoFirstAction extends BaseAction {
 		key = (Map) tab.getTableModel().getObjectAt(0);
 	}	
 
-	public void execute() throws Exception {
-		//buscarYEstablecer(clave);
+	public void execute() throws Exception {		
 	}
 
 	public Tab getTab() {

@@ -8,10 +8,10 @@ import javax.ejb.*;
 import org.openxava.model.*;
 import org.openxava.util.*;
 
-
 /**
  * @author Javier Paniza
  */
+
 abstract public class CollectionBaseAction extends CollectionElementViewBaseAction {
 
 	private List mapValues = null;
@@ -29,10 +29,10 @@ abstract public class CollectionBaseAction extends CollectionElementViewBaseActi
 	protected List getMapsSelectedValues() throws XavaException {
 		if (mapsSelectedValues == null) {
 			mapsSelectedValues = new ArrayList();
-			List valores = getCollectionElementView().getCollectionValues();
+			List values = getCollectionElementView().getCollectionValues();
 			int [] sel = getCollectionElementView().getListSelected();
 			for (int i=0; i<sel.length; i++) {
-				Map val = (Map) valores.get(sel[i]);
+				Map val = (Map) values.get(sel[i]);
 				mapsSelectedValues.add(val);
 			}		
 		}
@@ -54,10 +54,10 @@ abstract public class CollectionBaseAction extends CollectionElementViewBaseActi
 	protected List getSelectedObjects() throws RemoteException, FinderException, XavaException {
 		if (selectedObjects == null) {
 			selectedObjects = new ArrayList();
-			List valores = getCollectionElementView().getCollectionValues();
+			List values = getCollectionElementView().getCollectionValues();
 			int [] sel = getCollectionElementView().getListSelected();
 			for (int i=0; i<sel.length; i++) {
-				Map clave = (Map) valores.get(sel[i]);
+				Map clave = (Map) values.get(sel[i]);
 				selectedObjects.add(MapFacade.findEntity(getCollectionElementView().getModelName(), clave));
 			}					
 		}

@@ -1,9 +1,9 @@
 package org.openxava.actions;
 
-
 /**
  * @author Javier Paniza
  */
+
 public class ChangeModuleAction extends BaseAction implements IChangeModuleAction {
 	
 	private String nextModule;

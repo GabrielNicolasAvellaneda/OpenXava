@@ -8,7 +8,6 @@ import org.apache.commons.fileupload.*;
 import org.openxava.util.*;
 import org.openxava.view.*;
 
-
 /**
  * @author Javier Paniza
  */
@@ -57,8 +56,8 @@ public class LoadImageAction extends BaseAction implements INavigationAction, IR
 		return view;
 	}
 
-	public void setView(View vista) {
-		this.view = vista;
+	public void setView(View view) {
+		this.view = view;
 	}
 
 	public String getNewImageProperty() {

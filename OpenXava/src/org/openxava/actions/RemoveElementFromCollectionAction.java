@@ -16,6 +16,7 @@ public class RemoveElementFromCollectionAction extends CollectionElementViewBase
 			}
 			getCollectionElementView().setCollectionEditingRow(-1);
 			getCollectionElementView().clear();
+			getView().recalculateProperties();
 		}
 		catch (ValidationException ex) {			
 			addErrors(ex.getErrors());

@@ -5,7 +5,6 @@ import java.util.*;
 import org.openxava.model.*;
 import org.openxava.validators.*;
 
-
 /**
  * @author Javier Paniza
  */
@@ -34,17 +33,17 @@ public class ConfirmDeleteAction extends ViewDetailAction implements INavigation
 		getView().setKeyEditable(false);		
 		setNextControllers(PREVIOUS_CONTROLLERS);		
 		setCustomView(DEFAULT_VIEW);
-		boolean seleccionado = false;
+		boolean selected = false;
 		if (getTab().hasSelected()) {
-			quitarSeleccionado();
-			seleccionado = true;
+			removeSelected();
+			selected = true;
 		}
 		else getTab().reset();		 		
 		super.execute(); // viewDetail
 		if (isNoElementsInList()) {
 			if (
-				(!seleccionado && getTab().getTotalSize() > 0) ||
-				(seleccionado && getTab().getSelected().length > 0)
+				(!selected && getTab().getTotalSize() > 0) ||
+				(selected && getTab().getSelected().length > 0)
 			) {				
 				setIncrement(-1);
 				getErrors().remove("no_list_elements");								
@@ -57,23 +56,23 @@ public class ConfirmDeleteAction extends ViewDetailAction implements INavigation
 		}
 	}
 
-	private void quitarSeleccionado() {
-		int fila = getRow();		
-		int [] seleccionados = getTab().getSelected();
-		if (Arrays.binarySearch(seleccionados, fila) < 0) return;		
-		int [] nuevos = new int[seleccionados.length-1];
+	private void removeSelected() {
+		int row = getRow();		
+		int [] selectedOnes = getTab().getSelected();
+		if (Arrays.binarySearch(selectedOnes, row) < 0) return;		
+		int [] news = new int[selectedOnes.length-1];
 		int j = 0;		
-		for (int i = 0; i < nuevos.length; i++) {
-			int v = seleccionados[j];
-			if (v == fila) {
+		for (int i = 0; i < news.length; i++) {
+			int v = selectedOnes[j];
+			if (v == row) {
 				j++; i--;				
 			} 
 			else  {				
-				nuevos[i] = v;
+				news[i] = v;
 				j++;
 			}					
 		}
-		getTab().setAllSelected(nuevos);
+		getTab().setAllSelected(news);
 	}
 
 	public String [] getNextControllers() {

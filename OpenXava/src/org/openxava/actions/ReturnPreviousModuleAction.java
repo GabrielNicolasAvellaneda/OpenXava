@@ -1,9 +1,9 @@
 package org.openxava.actions;
 
-
 /**
  * @author Javier Paniza
  */
+
 public class ReturnPreviousModuleAction extends BaseAction implements IChangeModuleAction {
 
 	public void execute() throws Exception {

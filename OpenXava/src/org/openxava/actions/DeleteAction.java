@@ -1,8 +1,5 @@
 package org.openxava.actions;
 
-
-
-
 /**
  * @author Javier Paniza
  */
@@ -10,22 +7,22 @@ package org.openxava.actions;
 public class DeleteAction extends ViewBaseAction implements IChangeControllersAction {
 	
 	
-	private String[] siguientesControladores;
+	private String[] nextControllers;
 
 	public void execute() throws Exception {
-		siguientesControladores = null;
+		nextControllers = null;
 		if (getView().isKeyEditable()) {
 			addError("no_delete_not_exists");
 		}		
 		else {
 			getView().setEditable(false);
 			getView().setKeyEditable(false);		
-			siguientesControladores = new String [] { "ConfirmDelete" }; 
+			nextControllers = new String [] { "ConfirmDelete" }; 
 		}		
 	}
 	
 	public String [] getNextControllers() {
-		return siguientesControladores;
+		return nextControllers;
 	}
 	
 }

@@ -2,10 +2,10 @@ package org.openxava.actions;
 
 import org.openxava.tab.*;
 
-
 /**
  * @author Javier Paniza
  */
+
 public class MoveColumnToLeftAction extends BaseAction {
 	
 	private Tab tab;

@@ -9,10 +9,10 @@ import org.openxava.controller.meta.*;
 import org.openxava.util.*;
 import org.openxava.view.*;
 
-
 /**
  * @author Javier Paniza
  */
+
 public class CreateNewFromReferenceAction extends BaseAction implements INavigationAction, IRequestAction, IChainAction {
 		
 	private String model;
@@ -30,7 +30,7 @@ public class CreateNewFromReferenceAction extends BaseAction implements INavigat
 		getPreviousViews().push(getView());
 		setView(viewReference);
 		
-		// Lo siguiente es para inhabilitar el caché		
+		// Next line is for reset the cache		
 		request.getSession().removeAttribute(getKeyProperty() + ".descriptionsCalculator");				
 	}
 
@@ -46,8 +46,8 @@ public class CreateNewFromReferenceAction extends BaseAction implements INavigat
 		return view;
 	}
 
-	public void setView(View vista) {
-		this.view = vista;
+	public void setView(View view) {
+		this.view = view;
 	}
 
 	public String getModel() {

@@ -8,24 +8,22 @@ import org.openxava.tab.*;
 import org.openxava.util.*;
 import org.openxava.view.*;
 
-
-
 /**
  * @author Javier Paniza
  */
 
 public class ReferenceSearchAction extends ViewBaseAction implements INavigationAction {
 	
-	private class InfoVista {
+	private class ViewInfo {
 		
-		View vista;		
-		String nombreMiembro;
-		View padre;
+		View view;		
+		String memberName;
+		View parent;
 		
-		InfoVista(View vista, String nombreMiembro, View padre) {
-			this.vista = vista;
-			this.nombreMiembro = nombreMiembro;
-			this.padre = padre;
+		ViewInfo(View view, String memberName, View parent) {
+			this.view = view;
+			this.memberName = memberName;
+			this.parent = parent;
 		}
 		
 	}
@@ -36,62 +34,62 @@ public class ReferenceSearchAction extends ViewBaseAction implements INavigation
 	private String currentReferenceLabel; 
 	
 	public void execute() throws Exception {				
-		InfoVista infoVista = getSubvista(getView(), crearNombreMiembro());
-		View subvista = infoVista.vista;
-		MetaModel metaModeloRaiz = infoVista.padre.getMetaModel();		
-		getTab().setModelName(subvista.getModelName());
-		MetaReference ref = getMetaReferencia(metaModeloRaiz, infoVista.nombreMiembro);
+		ViewInfo viewInfo = getSubview(getView(), createMemberName());
+		View subview = viewInfo.view;
+		MetaModel metaRootModel = viewInfo.parent.getMetaModel();		
+		getTab().setModelName(subview.getModelName());
+		MetaReference ref = getMetaReference(metaRootModel, viewInfo.memberName);
 		
-		ModelMapping mapeoRaiz = metaModeloRaiz.getMapping();
-		if (mapeoRaiz.isReferenceOverlappingWithSomeProperty(ref.getName())) {			 
-			StringBuffer condicion = new StringBuffer();			
-			Iterator itPropiedadesSolapadas = mapeoRaiz.getOverlappingPropertiesOfReference(ref.getName()).iterator();			
-			while (itPropiedadesSolapadas.hasNext()) {
-				String propiedadReferencia = (String) itPropiedadesSolapadas.next();
-				String solapada = mapeoRaiz.getOverlappingPropertyForReference(ref.getName(), propiedadReferencia);
-				condicion.append("${");
-				condicion.append(propiedadReferencia);
-				condicion.append("} = ");				
-				condicion.append(getView().getValue(solapada));				
-				if (itPropiedadesSolapadas.hasNext()) {
-					condicion.append(" AND "); 
+		ModelMapping rootMapping = metaRootModel.getMapping();
+		if (rootMapping.isReferenceOverlappingWithSomeProperty(ref.getName())) {			 
+			StringBuffer condition = new StringBuffer();			
+			Iterator itOverlappingProperties = rootMapping.getOverlappingPropertiesOfReference(ref.getName()).iterator();			
+			while (itOverlappingProperties.hasNext()) {
+				String referenceProperty = (String) itOverlappingProperties.next();
+				String overlaped = rootMapping.getOverlappingPropertyForReference(ref.getName(), referenceProperty);
+				condition.append("${");
+				condition.append(referenceProperty);
+				condition.append("} = ");				
+				condition.append(getView().getValue(overlaped));				
+				if (itOverlappingProperties.hasNext()) {
+					condition.append(" AND "); 
 				}
 			}					
-			getTab().setBaseCondition(condicion.toString());
+			getTab().setBaseCondition(condition.toString());
 		}
 		else {
 			getTab().setBaseCondition(null);
 		}
 		
-		setReferenceSubview(subvista);			
+		setReferenceSubview(subview);			
 		setCurrentReferenceLabel(ref.getLabel());	 
 	}
 
-	private MetaReference getMetaReferencia(MetaModel metaModeloRaiz, String nombreReferencia) throws XavaException {
+	private MetaReference getMetaReference(MetaModel metaRootModel, String referenceName) throws XavaException {
 		try {
-			return metaModeloRaiz.getMetaReference(nombreReferencia);
+			return metaRootModel.getMetaReference(referenceName);
 		}
 		catch (ElementNotFoundException ex) {
-			return metaModeloRaiz.getMetaCollection(nombreReferencia).getMetaReference();
+			return metaRootModel.getMetaCollection(referenceName).getMetaReference();
 		}		
 	}
 	
-	private InfoVista getSubvista(View vista, String nombreMiembro) throws XavaException {
-		if (nombreMiembro.indexOf('.') < 0) {
-			return new InfoVista(vista.getSubview(nombreMiembro), nombreMiembro, vista); 
+	private ViewInfo getSubview(View view, String memberName) throws XavaException {
+		if (memberName.indexOf('.') < 0) {
+			return new ViewInfo(view.getSubview(memberName), memberName, view); 
 		}
-		StringTokenizer st = new StringTokenizer(nombreMiembro, ".");
-		String nombreSubvista = st.nextToken();
-		String siguienteMiembro = st.nextToken(); 
-		return getSubvista(vista.getSubview(nombreSubvista), siguienteMiembro);
+		StringTokenizer st = new StringTokenizer(memberName, ".");
+		String subviewName = st.nextToken();
+		String nextMember = st.nextToken(); 
+		return getSubview(view.getSubview(subviewName), nextMember);
 	}
 	
-	private String crearNombreMiembro() {		
-		String prefijo = "xava." + getModelName() + ".";		
-		String nombrePropiedad = keyProperty.substring(prefijo.length());				
-		int idx = nombrePropiedad.lastIndexOf(".");		
-		if (idx >= 0) return nombrePropiedad.substring(0, idx); 	
-		return nombrePropiedad;
+	private String createMemberName() {		
+		String prefix = "xava." + getModelName() + ".";		
+		String propertyName = keyProperty.substring(prefix.length());				
+		int idx = propertyName.lastIndexOf(".");		
+		if (idx >= 0) return propertyName.substring(0, idx); 	
+		return propertyName;
 	}
 
 	public String getKeyProperty() {
@@ -122,8 +120,8 @@ public class ReferenceSearchAction extends ViewBaseAction implements INavigation
 		return referenceSubview;
 	}
 
-	public void setReferenceSubview(View vista) {
-		referenceSubview = vista;
+	public void setReferenceSubview(View view) {
+		referenceSubview = view;
 	}
 
 	public String getCurrentReferenceLabel() {

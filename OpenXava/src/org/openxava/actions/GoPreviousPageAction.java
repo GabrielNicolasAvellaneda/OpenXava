@@ -2,7 +2,6 @@ package org.openxava.actions;
 
 import org.openxava.tab.*;
 
-
 /**
  * @author Javier Paniza
  */

@@ -6,7 +6,7 @@ import org.openxava.util.*;
 
 
 /**
- * Acción OpenXava.
+ * OpenXava action.
  * 
  * @author Javier Paniza
  */
@@ -15,13 +15,12 @@ public interface IAction {
 	
 	void execute() throws Exception;
 	
-	void setErrors(Messages errores);
+	void setErrors(Messages errors);
 	Messages getErrors();
 	
-	void setMessages(Messages mensajes);
+	void setMessages(Messages messages);
 	Messages getMessages();
 	
-	void setEnvironment(Environment entorno);
-	
-	
+	void setEnvironment(Environment environment);
+		
 }

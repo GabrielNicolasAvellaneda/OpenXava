@@ -3,6 +3,7 @@ package org.openxava.actions;
 /**
  * @author Javier Paniza
  */
+
 public class SearchAction extends BaseAction implements IChainAction {
 
 	public void execute() throws Exception {

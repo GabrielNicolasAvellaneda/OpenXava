@@ -8,10 +8,10 @@ import org.openxava.view.*;
 
 public interface IOnChangePropertyAction extends IAction {
 	
-	void setChangedProperty(String nombrePropiedad);
+	void setChangedProperty(String propertyName);
 	
-	void setNewValue(Object valor);
+	void setNewValue(Object value);
 	
-	void setView(View vista);
+	void setView(View view);
 
 }

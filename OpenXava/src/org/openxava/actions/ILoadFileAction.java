@@ -1,14 +1,13 @@
 package org.openxava.actions;
 
 /**
- * Permite navegar a una vista con posibilidad de carga de fichero. <p>
+ * It allows to navigate to a view with possibility of load a file. <p>  
  * 
- * Esto tiene sentido en aplicaciones web, en donde los formularios
- * para carga de ficheros son diferentes (ENCTYPE="multipart/form-data")
- * a los normales.<br>
- *  
- * Al no hacer referencia directa a http se puede usar en contextos no
- * web; simplemente hay que ignorar esta interfaz.<br>  
+ * This is for web application, where forms for load files are
+ * different (ENCTYPE="multipart/form-data") from the normal ones.
+ *
+ * Since it does not do direct reference to HTTP, it can be used
+ * in non web context; simply ignoring this interface.   
  * 
  * @author Javier Paniza
  */

@@ -8,7 +8,6 @@ import org.openxava.model.*;
 import org.openxava.validators.*;
 import org.openxava.view.*;
 
-
 /**
  * @author Javier Paniza
  */
@@ -23,7 +22,7 @@ public class SaveNewAction extends BaseAction implements INavigationAction {
 	public void execute() throws Exception {
 		nextView = SAME_VIEW;		
 		try {					
-			// Creamos								
+			// Create								
 			MapFacade.create(view.getModelName(), getView().getValues());
 			nextControllers = PREVIOUS_CONTROLLERS;
 			nextView = DEFAULT_VIEW;				
@@ -44,8 +43,8 @@ public class SaveNewAction extends BaseAction implements INavigationAction {
 		return view;
 	}
 
-	public void setView(View vista) {
-		this.view = vista;
+	public void setView(View view) {
+		this.view = view;
 	}
 
 	public String[] getNextControllers() {		

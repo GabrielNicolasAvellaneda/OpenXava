@@ -1,13 +1,11 @@
 package org.openxava.actions;
 
-
 import java.util.*;
 
 import org.openxava.model.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
 import org.openxava.view.*;
-
 
 /**
  * @author Javier Paniza
@@ -17,12 +15,13 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	
 	public void execute() throws Exception {		
 		try {								
-			Map claveContenedor = saveIfNotExists(getCollectionElementView().getParent());
-			if (isEntityReferencesCollection()) saveEntity(claveContenedor);
-			else saveAggregate(claveContenedor); 			
+			Map containerKey = saveIfNotExists(getCollectionElementView().getParent());
+			if (isEntityReferencesCollection()) saveEntity(containerKey);
+			else saveAggregate(containerKey); 			
 			getCollectionElementView().setCollectionEditingRow(-1);
 			getCollectionElementView().clear();
 			resetDescriptionsCache();
+			getView().recalculateProperties(); 			
 		}
 		catch (ValidationException ex) {			
 			addErrors(ex.getErrors());
@@ -30,17 +29,17 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	}
 
 	private void saveEntity(Map containerKey) throws Exception {				
-		Map clavePapa = new HashMap();
-		clavePapa.put(Strings.firstLower(getCollectionElementView().getParent().getModelName()), containerKey);
-		MapFacade.setValues(getCollectionElementView().getModelName(), getCollectionElementView().getKeyValues(), clavePapa);		
+		Map parentKey = new HashMap();
+		parentKey.put(Strings.firstLower(getCollectionElementView().getParent().getModelName()), containerKey);
+		MapFacade.setValues(getCollectionElementView().getModelName(), getCollectionElementView().getKeyValues(), parentKey);		
 	}
 
 	private void saveAggregate(Map containerKey) throws Exception{
 		if (getCollectionElementView().getKeyValuesWithValue().isEmpty()) {				
-			int fila = getCollectionElementView().getCollectionValues().size();			
+			int row = getCollectionElementView().getCollectionValues().size();			
 			MapFacade.createAggregate(
 				getCollectionElementView().getModelName(),						
-				containerKey, fila+1, // +1 for start in 1, because 0 is equals to no value					
+				containerKey, row+1, // +1 for start in 1, because 0 is equals to no value					
 				getCollectionElementView().getValues() );												 								
 		}
 		else {										
@@ -54,10 +53,10 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	private Map saveIfNotExists(View view) throws Exception {					
 		if (getView() == view) {
 			if (view.isKeyEditable()) {				
-				Map clave = MapFacade.createReturningKey(getModelName(), view.getValues());
-				view.addValues(clave);
+				Map key = MapFacade.createReturningKey(getModelName(), view.getValues());
+				view.addValues(key);
 				view.setKeyEditable(false);								
-				return clave;								
+				return key;								
 			}			
 			else {				
 				return view.getKeyValues();									
@@ -65,13 +64,13 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 		}			
 		else {
 			if (view.getKeyValuesWithValue().isEmpty()) {
-				Map clavePadre = saveIfNotExists(view.getParent());
-				Map clave = MapFacade.createAggregateReturningKey( 
+				Map parentKey = saveIfNotExists(view.getParent());
+				Map key = MapFacade.createAggregateReturningKey( 
 					view.getModelName(),
-					clavePadre, 0,					
+					parentKey, 0,					
 					view.getValues() );																				 								
-				view.addValues(clave);									
-				return clave;										
+				view.addValues(key);									
+				return key;										
 			}
 			else {				
 				return view.getKeyValues();

@@ -1,9 +1,9 @@
 package org.openxava.actions;
 
-
 /**
  * @author Javier Paniza
  */
+
 public class SetCustomViewAction extends BaseAction implements ICustomViewAction {
 	
 	private String customView;
@@ -16,8 +16,8 @@ public class SetCustomViewAction extends BaseAction implements ICustomViewAction
 		return customView;
 	}
 
-	public void setCustomView(String siguienteVista) {
-		this.customView = siguienteVista;
+	public void setCustomView(String customView) {
+		this.customView = customView;
 	}
 	
 }

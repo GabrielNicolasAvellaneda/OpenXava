@@ -14,8 +14,8 @@ abstract public class ViewBaseAction extends BaseAction  {
 		return view;
 	}
 
-	public void setView(View web) {
-		view = web;
+	public void setView(View view) {
+		this.view = view;
 	}
 			
 	protected String getModelName() {

@@ -1,6 +1,5 @@
 package org.openxava.actions;
 
-
 /**
  * @author Javier Paniza
  */
