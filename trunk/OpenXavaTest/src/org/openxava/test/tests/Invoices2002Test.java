@@ -26,6 +26,11 @@ public class Invoices2002Test extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Invoices2002");		
 	}
 	
+	public void testGeneratePdfWithFilter() throws Exception {
+		execute("Print.generatePdf");		
+		assertContentTypeForPopup("application/pdf");		
+	}
+	
 	public void testChangeTabTitle() throws Exception {
 		assertListTitle("Invoices report of year 2,002");
 		execute("Invoices2002.changeListTitle");
