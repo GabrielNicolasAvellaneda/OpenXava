@@ -60,6 +60,7 @@ public class Tab {
 	private String titleId = null;
 	private static SessionFactory sessionFactory;
 	private boolean notResetPageNextTime;
+	private boolean sortRemainingProperties;
 	
 	public Tab() {			
 	}
@@ -79,8 +80,15 @@ public class Tab {
 		return metaProperties;
 	}
 	
-	public Collection getRemainingPropertiesNames() throws XavaException {		
-		return getMetaTab().getRemainingPropertiesNames();
+	public Collection getRemainingPropertiesNames() throws XavaException {
+		if (isSortRemainingProperties()) {
+			List result = new ArrayList(getMetaTab().getRemainingPropertiesNames());
+			Collections.sort(result);
+			return result;
+		}
+		else {
+			return getMetaTab().getRemainingPropertiesNames();
+		}
 	}
 	
 	public List getMetaPropertiesNotCalculated() throws XavaException {
@@ -966,4 +974,10 @@ public class Tab {
 		}
 	}
 		
+	public boolean isSortRemainingProperties() {
+		return sortRemainingProperties;
+	}
+	public void setSortRemainingProperties(boolean sortRemainingProperties) {
+		this.sortRemainingProperties = sortRemainingProperties;
+	}
 }
