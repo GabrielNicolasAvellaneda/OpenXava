@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<project name="MiEscuela" default="desplegar" basedir=".">
+
+	<property name="project" value="MiEscuela" />
+	<property name="package" value="escuela"/>
+	<property name="configuration" value="miescuela" />	
+	<property file="../xavax-global.properties"/>
+	<property file="${configuration}.properties"/>
+	<property name="datasource" value="MySchoolDS"/>
+	<property name="separator" value="_"/>
+		
+	<target name="generarEJB">
+		<ant antfile="../xavax/build.xml" target="generateEJB"/>		
+	</target>
+	
+	<target name="regenerarEJB">
+		<ant antfile="../xavax/build.xml" target="regenerateEJB"/>		
+	</target>
+		       
+	<target name="crearJarEJB">
+        <ant antfile = "../xavax/build.xml" target="createEJBJar"/>      		
+	</target>
+		
+	<target name="desplegarEJB" depends ="crearJarEJB">		
+		<ant antfile="../xavax/build.xml" target="deployEJB"/>
+	</target>
+		
+	<target name="desplegarWar">
+		<ant antfile="../xavax/build.xml" target="deployWar"/>
+	</target>
+				
+	<target name="desplegar">
+		<ant antfile="../xavax/build.xml" target="deploy"/>
+	</target>
+	
+	<target name="redesplegar">
+		<ant antfile="../xavax/build.xml" target="redeploy"/>
+	</target>
+		
+</project>
