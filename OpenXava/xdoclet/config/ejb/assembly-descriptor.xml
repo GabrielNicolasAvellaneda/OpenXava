@@ -1,0 +1,10 @@
+
+		<container-transaction>
+			<method>
+				<ejb-name>Server</ejb-name>
+				<method-intf>Remote</method-intf>
+				<method-name>calculateWithoutTransaction</method-name>
+			</method>
+			<trans-attribute>NotSupported</trans-attribute>
+		</container-transaction>
+

@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<tl><declare import="org.openxava.util.Strings"/>
+<declare import="org.openxava.model.meta.*"/>
+<declare import="org.openxava.calculators.*"/>
+<declare import="org.openxava.util.meta.MetaSet"/>
+
+<declarations>
+
+private IMetaEjb metaModel=null;
+public void setMetaModel(IMetaEjb metaModel) {
+	this.metaModel = metaModel;
+}
+
+public static void generate(XPathContext context, ProgramWriter out, IMetaEjb metaModel) {
+	PostmodifyPG pg = new PostmodifyPG();
+	pg.setMetaModel(metaModel);
+	pg.generate(context, out);
+}
+
+</declarations> 
+
+	<java>
+	String name = metaModel.getName();
+	int count = metaModel.getMetaCalculatorsPostModifyCount();
+	if (count &gt; 0) {
+	</java> 
+		try {
+	<java>
+	} 
+	for (int i=0; i&lt;count; i++) {	 
+		MetaCalculator calculator = metaModel.getMetaCalculatorPostModify(i);
+		String calculatorClass = calculator.getClassName();				
+		</java> 		
+			<expr>calculatorClass</expr> calculator<expr>i</expr>= (<expr>calculatorClass</expr>)
+				getMetaModel().getMetaCalculatorPostModify(<expr>i</expr>).getCalculator();
+		<java>	
+		Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
+		while (itSets.hasNext()) {
+			MetaSet set = (MetaSet) itSets.next();
+			String propertyNameInCalculator = Strings.firstUpper(set.getPropertyName());
+			String propertyNameFrom = set.getPropertyNameFrom();
+			if (propertyNameFrom.indexOf('.') &gt;= 0) {
+				MetaProperty p = metaModel.getMetaProperty(propertyNameFrom);
+				if (p.isKey() || p.getMetaModel() instanceof MetaAggregate) {
+					propertyNameFrom = Strings.firstUpper(Strings.change(propertyNameFrom, ".", "_"));
+				}
+				else {
+					StringTokenizer st = new StringTokenizer(propertyNameFrom, ".");
+					String ref = st.nextToken();
+					String pro = st.nextToken();
+					propertyNameFrom = Strings.firstUpper(ref) + "().get" + Strings.firstUpper(pro);
+				}
+			}
+			else {
+				propertyNameFrom = Strings.firstUpper(propertyNameFrom);
+			}
+			String value = set.getValue();
+			if (set.hasValue()) {
+		</java> 
+			calculator<expr>i</expr>.set<expr>propertyNameInCalculator</expr>("<expr>value</expr>");
+		<java>
+		} else {
+		</java> 
+			calculator<expr>i</expr>.set<expr>propertyNameInCalculator</expr>(get<expr>propertyNameFrom</expr>());
+		<java>	}} // else/poners
+		if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) {
+		</java> 
+			calculator<expr>i</expr>.setEntity(this);
+		<java>}
+		if (IJDBCCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) {
+		</java> 
+			calculator<expr>i</expr>.setConnectionProvider(getPortableContext());
+		<java>
+		}
+		</java> 
+			calculator<expr>i</expr>.calculate();
+	<java>		
+	} // for
+	if (count &gt; 0) {	
+	</java> 
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			throw new EJBException(XavaResources.getString("entity_modify_error", "<expr>name</expr>", ex.getLocalizedMessage()));
+		}
+	<java>
+	}
+	</java> 
+</tl>

@@ -1,0 +1,67 @@
+package org.openxava.actions;
+
+import java.rmi.*;
+import java.util.*;
+
+import javax.ejb.*;
+
+import org.openxava.model.*;
+import org.openxava.util.*;
+
+
+/**
+ * @author Javier Paniza
+ */
+abstract public class CollectionBaseAction extends CollectionElementViewBaseAction {
+
+	private List mapValues = null;
+	private List mapsSelectedValues;
+	private List objects;
+	private List selectedObjects;
+
+	protected List getMapValues() throws XavaException {
+		if (mapValues == null) {
+			mapValues = getCollectionElementView().getCollectionValues();
+		}
+		return mapValues;
+	}
+	
+	protected List getMapsSelectedValues() throws XavaException {
+		if (mapsSelectedValues == null) {
+			mapsSelectedValues = new ArrayList();
+			List valores = getCollectionElementView().getCollectionValues();
+			int [] sel = getCollectionElementView().getListSelected();
+			for (int i=0; i<sel.length; i++) {
+				Map val = (Map) valores.get(sel[i]);
+				mapsSelectedValues.add(val);
+			}		
+		}
+		return mapsSelectedValues;
+	}
+	
+	protected List getObjects() throws RemoteException, FinderException, XavaException {
+		if (objects == null) {
+			objects = new ArrayList();
+			Iterator it = getMapsSelectedValues().iterator();
+			while (it.hasNext()) {
+				Map clave = (Map) it.next();
+				objects.add(MapFacade.findEntity(getCollectionElementView().getModelName(), clave));
+			}
+		}
+		return objects;
+	}
+	
+	protected List getSelectedObjects() throws RemoteException, FinderException, XavaException {
+		if (selectedObjects == null) {
+			selectedObjects = new ArrayList();
+			List valores = getCollectionElementView().getCollectionValues();
+			int [] sel = getCollectionElementView().getListSelected();
+			for (int i=0; i<sel.length; i++) {
+				Map clave = (Map) valores.get(sel[i]);
+				selectedObjects.add(MapFacade.findEntity(getCollectionElementView().getModelName(), clave));
+			}					
+		}
+		return selectedObjects;
+	}
+	
+}

@@ -1,0 +1,19 @@
+<?xml version = "1.0" encoding = "ISO-8859-1"?>
+
+<!DOCTYPE stereotype-type-default SYSTEM "dtds/stereotype-type-default.dtd">
+
+<stereotype-type-default>	<for stereotype="DINERO" type="java.math.BigDecimal"/>
+	<for stereotype="MONEY" type="java.math.BigDecimal"/>
+	<for stereotype="TEXTO_GRANDE" type="java.lang.String"/>
+	<for stereotype="TEXT_AREA" type="java.lang.String"/>
+	<for stereotype="MEMO" type="java.lang.String"/>
+	<for stereotype="FOTO" type="byte[]"/>		
+	<for stereotype="IMAGEN" type="byte[]"/>
+	<for stereotype="PHOTO" type="byte[]"/>		
+	<for stereotype="IMAGE" type="byte[]"/>	
+	<for stereotype="HORA" type="String"/>	
+	<for stereotype="TIME" type="String"/>		
+	<for stereotype="ETIQUETA" type="String"/>	
+	<for stereotype="LABEL" type="String"/>	
+
+</stereotype-type-default>

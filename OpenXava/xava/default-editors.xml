@@ -1,0 +1,43 @@
+<?xml version = "1.0" encoding = "ISO-8859-1"?>
+
+<!DOCTYPE editors SYSTEM "dtds/editors.dtd">
+
+<editors>
+
+  <editor url="textEditor.jsp"> 
+    <for-type type="java.lang.String"/>
+    <for-type type="java.math.BigDecimal"/>
+    <for-type type="int"/>
+    <for-type type="java.lang.Integer"/>    
+    <for-type type="long"/>
+    <for-type type="java.lang.Long"/>    
+  </editor>
+      <editor url="booleanEditor.jsp">
+		<formatter class="org.openxava.formatters.BooleanFormatter"/>      	    <for-type type="boolean"/>    <for-type type="java.lang.Boolean"/>  </editor>        <editor url="textEditor.jsp">
+	<formatter class="org.openxava.formatters.DateFormatter"/>    <for-type type="java.util.Date"/>  </editor>    
+
+  <editor url="moneyEditor.jsp">		
+    <for-stereotype stereotype="DINERO"/>
+		<for-stereotype stereotype="MONEY"/>
+  </editor>
+    
+  <editor url="imageEditor.jsp" format="false">
+    <formatter class="org.openxava.formatters.ImageFormatter"/>
+    <for-stereotype stereotype="FOTO"/>
+		<for-stereotype stereotype="PHOTO"/>		
+    <for-stereotype stereotype="IMAGEN"/>
+    <for-stereotype stereotype="IMAGE"/>		
+  </editor>
+  
+  <editor url="textAreaEditor.jsp" frame="true">
+    <for-stereotype stereotype="TEXTO_GRANDE"/>
+		<for-stereotype stereotype="MEMO"/>
+		<for-stereotype stereotype="TEXT_AREA"/>
+  </editor>
+  
+  <editor url="labelEditor.jsp">
+    <for-stereotype stereotype="ETIQUETA"/>
+    <for-stereotype stereotype="LABEL"/>
+  </editor>
+      
+</editors>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-description>
+	<comment></comment>
+	<nature id="com.ibm.etools.j2ee.EJBNature"/>
+	<nature id="org.eclipse.jdt.core.javanature"/>
+	<nature id="com.ibm.etools.beaninfo.BeaninfoNature"/>
+	<nature id="com.ibm.etools.ctc.javaprojectnature"/>
+	<reference project-name="Listados"/>
+	<reference project-name="Negocio"/>
+	<reference project-name="Puntocom Swing"/>
+	<builder name="org.eclipse.jdt.core.javabuilder">
+	</builder>
+	<builder name="com.ibm.etools.j2ee.validationbuilder">
+	</builder>
+	<builder name="com.ibm.etools.ctc.serviceprojectbuilder">
+	</builder>
+</project-description>

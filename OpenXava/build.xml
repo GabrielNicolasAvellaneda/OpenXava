@@ -1,0 +1,333 @@
+<?xml version="1.0"?>
+
+<!-- OpenXava -->
+
+<project name="OpenXava" default="deployWar">
+
+	<property name="datasource" value="DataSource"/>
+	<property name="dist.base.dir" value = ".."/>
+	<property name="dist.dir" value = "${dist.base.dir}/${project}.dist"/>
+	<property name="file.ear" value = "${project}.ear"/>	
+	<property name="xava.lib" value="../OpenXava/bin"/>	
+	<property name="j2ee.lib" location="../OpenXava/lib/j2ee.jar"/>
+	<property name="tl.lib" location="../OpenXava/lib/tl.jar"/>
+	<property name="components.dir" value="../${project}/components"/>
+	<property name="generator.dir" value="${workspace.dir}/OpenXava/generator"/>
+	<property name="subcontext" value="${project}"/>				
+	<property name="classes.dir" value="web/WEB-INF/classes"/>
+	<property name="name.war" value="${project}"/>	
+	<property name="jboss.mapping.xml" value="jaws.xml"/>
+	<property name="separator" value="."/>
+	<property name="meta-inf.dir" value="build/ejb/META-INF"/>
+	<property name="project.ejb" value = "${project}"/>
+	<property name="name.jar" value = "${project.ejb}"/>
+    <property name="server.properties.dir" value="../OpenXava/build/server-properties"/>
+    <property name="server.properties.tmp.dir" value="${user.home}/tmpServerProperties"/>        
+	<property name="model.package" value="model"/>
+	<property name="ejb.package" value="${model.package}"/>
+			
+   <!-- Set up java.class.path -->
+   <path id="project.class.path">
+   
+	  <pathelement path="${tl.dir}" />   
+   
+      <!-- LOG4J properties -->
+      <pathelement path="${basedir}" />
+
+      <!-- append the external classpath lastly -->
+      <pathelement path="${java.class.path}" />
+
+   </path>	
+	
+	<target name="init">
+		<tstamp/>
+		<available file="../${project.ejb}/OpenXava/aplicacion.xml" 
+			property="xava.presente"/>
+		<available file="../${project.ejb}/${meta-inf.dir}/jbosscmp-jdbc.xml" 
+			property="jboss.mapping.xml" value="jbosscmp-jdbc.xml"/>
+	</target>
+	
+	<target name="createDist">
+		<mkdir dir="${dist.dir}"/>
+		<mkdir dir="${dist.dir}/lib"/>
+	</target>
+		
+    <target name="copyDTDs">     
+    
+		<copy todir="../${project}/OpenXava/dtds" overwrite="true">
+			<fileset dir="../OpenXava/xava/dtds" excludes="componente.dtd,component.dtd"/>
+		</copy>
+		
+		<copy todir="../${project}/components/dtds" overwrite="true">
+			<fileset dir="../OpenXava/xava/dtds" includes="componente.dtd,component.dtd"/>
+		</copy>
+		    
+	</target>
+    
+    	
+	<target name="filterXavaFiles" depends="copyDTDs">
+		<!-- to replace within xava files -->
+		<copy todir="../${project.ejb}/${classes.dir}" overwrite="yes">		
+			<fileset dir="../${project.ejb}/xava"/>
+	    	<filterset>	    	
+				<filtersfile file="${configuration}.properties"/>				
+				<filter token="separator" value="${separator}"/>
+			</filterset> 			         
+		</copy>			
+		<!-- to replace within xava components -->
+		<copy todir="../${project.ejb}/${classes.dir}" overwrite="yes">		
+			<fileset dir="../${project.ejb}/components"/>
+	    	<filterset>	    	
+			<filtersfile file="${configuration}.properties"/>				
+				<filter token="separator" value="${separator}"/>
+			</filterset> 			         
+		</copy>				
+	</target>
+        
+	<target name="regenerateEJBGenerator">     
+		<echo>Generating xml template for EJB</echo>
+       <java classname="Simple2XML" classpath="${tl.lib}">
+         <arg value="${generator.dir}/postcreate.template"/> 
+         <arg value="${generator.dir}/postcreate.xml"/>         
+       </java>				
+       <java classname="Simple2XML" classpath="${tl.lib}">
+         <arg value="${generator.dir}/postmodify.template"/> 
+         <arg value="${generator.dir}/postmodify.xml"/>         
+       </java>		       
+       <java classname="Simple2XML" classpath="${tl.lib}">
+         <arg value="${generator.dir}/property.template"/> 
+         <arg value="${generator.dir}/property.xml"/>         
+       </java>		
+       <java classname="Simple2XML" classpath="${tl.lib}">
+         <arg value="${generator.dir}/entityReference.template"/> 
+         <arg value="${generator.dir}/entityReference.xml"/>         
+       </java>						
+       <java classname="Simple2XML" classpath="${tl.lib}">
+         <arg value="${generator.dir}/aggregateReference.template"/> 
+         <arg value="${generator.dir}/aggregateReference.xml"/>         
+       </java>	
+       <java classname="Simple2XML" classpath="${tl.lib}">
+         <arg value="${generator.dir}/ejbean.template"/> 
+         <arg value="${generator.dir}/ejbean.xml"/>         
+       </java>
+  		<echo>Generating xml template for JavaBean</echo>
+       <java classname="Simple2XML" classpath="${tl.lib}">
+         <arg value="${generator.dir}/bean.template"/> 
+         <arg value="${generator.dir}/bean.xml"/>         
+       </java>
+  		<echo>Generating xml template for interface</echo>
+       <java classname="Simple2XML" classpath="${tl.lib}">
+         <arg value="${generator.dir}/interface.template"/> 
+         <arg value="${generator.dir}/interface.xml"/>         
+       </java>       
+		
+       <echo>Generating EJB classes generator</echo>
+       <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
+         <arg value="${generator.dir}/postcreate.xml"/>
+         <arg value="${generator.dir}/PostcreatePG.java"/>
+       </java>
+       <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
+         <arg value="${generator.dir}/postmodify.xml"/>
+         <arg value="${generator.dir}/PostmodifyPG.java"/>
+       </java>
+       <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
+         <arg value="${generator.dir}/property.xml"/> 
+         <arg value="${generator.dir}/PropertyPG.java"/>         
+       </java>        
+	   <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
+	     <arg value="${generator.dir}/entityReference.xml"/> 
+	     <arg value="${generator.dir}/EntityReferencePG.java"/>         
+	   </java>  		
+       <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
+         <arg value="${generator.dir}/aggregateReference.xml"/> 
+         <arg value="${generator.dir}/AggregateReferencePG.java"/>         
+       </java>  
+       <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
+         <arg value="${generator.dir}/ejbean.xml"/> 
+         <arg value="${generator.dir}/EJBeanPG.java"/>         
+       </java>
+       <echo>Generating JavaBean classes generator</echo>
+       <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
+         <arg value="${generator.dir}/bean.xml"/> 
+         <arg value="${generator.dir}/BeanPG.java"/>         
+       </java>
+       <echo>Generating Interfaz classes generator</echo>
+       <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
+         <arg value="${generator.dir}/interface.xml"/> 
+         <arg value="${generator.dir}/InterfacePG.java"/>         
+       </java>
+              
+       <echo>Compiling classes generators</echo>
+	   <javac srcdir="${generator.dir}"
+	         destdir="${generator.dir}"
+	         classpath="${tl.lib};${xava.lib};${j2ee.lib}"
+    	/>	 	    		
+		
+		<delete file="../${project}/gen-src-xava/dnas.properties"/>
+    </target>        
+	
+    <target name="generateXDoclet">     
+    	
+	   <echo>Generating classes</echo>
+    	<touch file="../${project}/gen-src-xava/last.generation.time"/>
+       <java 
+       		classname="CodeGenerator" 
+       		classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};${components.dir};../${project}/${classes.dir};${xava.generator.path}" 
+       		fork="yes">
+			<arg value="${project}"/>        		
+	       	<arg value="${domain}"/>
+       		<arg value="${package}"/>
+	       	<arg value="${ejb.package}"/>       	
+		</java>
+    	
+    </target>
+	
+	<target name="runXDoclet" if="need.generate" >
+    	<ant antfile="../OpenXava/xdoclet/build.xml"/>    			
+	</target>
+	        
+    <target name="generateEJB" depends="generateXDoclet">         	
+    	<uptodate property="need.generate" 
+    		srcfile="../${project}/gen-src-xava/last.generation.time"
+    		targetfile="../${project}/gen-src-xava/dnas.properties"/>
+    	<antcall target="runXDoclet"/>
+    </target>
+	
+    <target name="regenerateEJB">      
+    	<delete file="../${project}/gen-src-xava/dnas.properties"/>
+		<antcall target="generateEJB"/>
+    </target>
+	
+	
+	<target name="filterWithoutConfiguration" unless="configuration" 
+		depends="init">
+		<copy file="../${project.ejb}/${meta-inf.dir}/ejb-jar.xml" 
+			toFile="../${project.ejb}/${classes.dir}/META-INF/ejb-jar.xml" 
+			overwrite="yes">
+			<filterset>
+				<filter token="separator" value="${separator}"/>
+			</filterset>
+		</copy>
+		<copy file="../${project.ejb}/${meta-inf.dir}/jboss.xml" 
+			toFile="../${project.ejb}/${classes.dir}/META-INF/jboss.xml" 
+			overwrite="yes">
+			<filterset>
+				<filter token="subcontext" value="${subcontext}"/>
+				<filter token="datasource" value="${datasource}"/>
+				<filter token="package" value="${domain}/${package}/${ejb.package}"/>
+			</filterset>
+		</copy>
+		<copy file="../${project.ejb}/${meta-inf.dir}/${jboss.mapping.xml}" 
+			toFile="../${project.ejb}/${classes.dir}/META-INF/${jboss.mapping.xml}" 
+			overwrite="yes">
+			<filterset>
+				<filter token="datasource" value="${datasource}"/>
+				<filter token="separator" value="${separator}"/>
+			</filterset>
+		</copy>
+	</target>
+	
+	<target name="filterWithConfiguration" if="configuration" 
+		depends="init">
+		<copy file="../${project.ejb}/${meta-inf.dir}/ejb-jar.xml" 
+			toFile="../${project.ejb}/${classes.dir}/META-INF/ejb-jar.xml" 
+			overwrite="yes">
+			<filterset>
+				<filter token="separator" value="${separator}"/>
+				<filtersfile file="${configuration}.properties"/>
+			</filterset>
+		</copy>
+		<copy file="../${project.ejb}/${meta-inf.dir}/jboss.xml" 
+			toFile="../${project.ejb}/${classes.dir}/META-INF/jboss.xml" 
+			overwrite="yes">
+			<filterset>
+				<filter token="subcontext" value="${subcontext}"/>
+				<filter token="datasource" value="${datasource}"/>
+				<filter token="package" value="${domain}/${package}/${ejb.package}"/>
+				<filtersfile file="${configuration}.properties"/>
+			</filterset>
+		</copy>
+		<copy file="../${project.ejb}/${meta-inf.dir}/${jboss.mapping.xml}" 
+			toFile="../${project.ejb}/${classes.dir}/META-INF/${jboss.mapping.xml}" 
+			overwrite="yes">
+			<filterset>
+				<filter token="datasource" value="${datasource}"/>
+				<filter token="separator" value="${separator}"/>
+				<filtersfile file="${configuration}.properties"/>
+			</filterset>
+		</copy>
+	</target>
+	
+	<target name="createEJBJar" 
+		depends="createDist, updateDataSourceInfo, filterWithoutConfiguration, filterWithConfiguration, filterXavaFiles">
+		<jar jarfile="${dist.dir}/${name.jar}.jar" 
+			basedir="../${project.ejb}/${classes.dir}" 
+			manifest="../${project.ejb}/${meta-inf.dir}/MANIFEST.MF"/>
+	</target>
+
+    <target name="createLibJars">        
+    	<!-- openxava.jar -->
+    	<jar jarfile="${dist.dir}/lib/openxava.jar" basedir="../OpenXava/bin"/>    
+    	<!-- server-properties.jar -->
+    	<mkdir dir="${server.properties.dir}"/>
+		<copy 	toDir="${server.properties.tmp.dir}" overwrite="yes">    
+			<fileset dir="${server.properties.dir}" />				
+	    	<filterset>
+				<filter token="subcontext" value="${subcontext}"/>
+			</filterset>  
+		</copy>      	
+        <jar jarfile="${dist.dir}/lib/server-properties.jar" basedir="${server.properties.tmp.dir}" />    	
+    </target>
+
+	<target name="copyEarConf">
+	  <copy file="../${project}/build/j2ee/META-INF/application.xml" tofile="${dist.dir}/META-INF/application.xml" overwrite="true"/>		
+	  <copy file="../OpenXava/build/jboss-app.xml" todir="${dist.dir}/META-INF" overwrite="true">
+    	<filterset>
+			<filter token="file.ear" value="${file.ear}"/>
+		</filterset>  		
+	  </copy>		
+	</target>        
+		
+    <target name="createEar" depends="createLibJars, copyEarConf">        
+        <jar jarfile="${dist.dir}/${file.ear}" basedir="${dist.dir}" excludes="*.ear"/>
+    </target>
+	
+    <target name="deployEJB"  depends="createEar">        
+        <copy file="${dist.dir}/${file.ear}" todir="${deploy.dir}"/>
+    </target>	
+	
+	<target name="updateDataSourceInfo">
+		<echo file="../${project.ejb}/${classes.dir}/datasource.properties">${domain}/${package}/${ejb.package}=${datasource}</echo>
+	</target>
+				
+	<target name="createWar" depends="createDist, updateDataSourceInfo">
+  		<copy todir="../${project}/web/xava">
+    		<fileset dir="../OpenXava/web" excludes="WEB-INF/**"/>
+  		</copy>		
+  		<copy todir="../${project}/web/WEB-INF">
+    		<fileset dir="../OpenXava/web/WEB-INF"/>
+  		</copy>		
+		<antcall target="filterXavaFiles">  		
+			<param name="classes.dir" value="web/WEB-INF/classes"/>
+		</antcall>
+  		<copy todir="../${project}/web/WEB-INF/classes" overwrite="true">
+    		<fileset dir="../${project}/i18n"/>
+	    	<filterset>	    	
+				<filtersfile file="${configuration}.properties"/>				
+			</filterset> 			             		
+  		</copy>		  		  				
+		<jar jarfile="../${project}/web/WEB-INF/lib/openxava.jar" basedir="../OpenXava/bin"/>
+		<copy file="${jboss.dir}/client/jboss-client.jar" todir="../${project}/web/WEB-INF/lib"/>
+		<jar jarfile="${dist.dir}/${name.war}.war" basedir="web"/>
+	</target>
+
+	<target name="deployWar" depends ="createWar">		
+		<copy file="${dist.dir}/${name.war}.war" todir="${deploy.dir}" overwrite="true"/>
+	</target>
+
+	<target name="redeploy">
+    	<delete file="../${project}/gen-src-xava/dnas.properties"/>
+		<antcall target="deploy"/>
+	</target>	
+		                    
+</project>

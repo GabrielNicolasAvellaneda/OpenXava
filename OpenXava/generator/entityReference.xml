@@ -1,0 +1,196 @@
+<?xml version="1.0"?>
+<tl><declare import="org.openxava.util.Strings"/>
+<declare import="org.openxava.util.XavaException"/>
+<declare import="org.openxava.model.meta.*"/>
+<declare import="org.openxava.generators.*"/>
+<declare import="org.openxava.calculators.*"/>
+<declare import="org.openxava.util.meta.MetaSet"/>
+<declare import="org.openxava.mapping.*"/>
+
+<declarations>
+
+private MetaReference reference=null;
+public void setReference(MetaReference ref) {
+	this.reference = ref;
+}
+
+private boolean ejb;
+public void setEjb(boolean ejb) {
+	this.ejb = ejb;
+}
+
+public static void generate(XPathContext context, ProgramWriter out, MetaReference ref) throws XavaException {
+	EntityReferencePG pg = new EntityReferencePG();
+	pg.setReference(ref);
+	pg.setEjb(!ref.getMetaModel().isGenerateJDO());
+	pg.generate(context, out);
+}
+
+</declarations> 
+
+<java>
+MetaModel metaModel = reference.getMetaModel();
+ModelMapping modelMapping = null;
+if (metaModel instanceof MetaAggregateBean) {
+	modelMapping = metaModel.getXavaxComponent().getEntityMapping();
+}
+else {
+	modelMapping = metaModel.getMapping();
+}	
+String referenceName = Strings.firstUpper(reference.getName());
+IMetaEjb referencedModel = (IMetaEjb) reference.getMetaModelReferenced();
+ModelMapping referencedMapping = referencedModel.getMapping();
+String referencedModelClass = referencedModel.getRemote();
+String referencedJNDI = referencedModel.getJndi();
+String referencedKeyClass = referencedModel.getPrimaryKey();
+String homeClass = referencedModel.getHome();		
+String homeAttribute = Strings.firstLower(referenceName) + "Home";
+String getHome = "get" + Strings.firstUpper(homeAttribute);		
+String interfaceMethodSet = reference.isKey()?"":"@ejb:interface-method";
+String pkField = reference.isKey()?"@ejb:pk-field":"";
+</java> 
+
+	// <expr>referenceName</expr> : Entity reference/Referencia a entidad
+	
+	/**
+	 * @ejb:interface-method
+	 */
+	public <expr>referencedModelClass</expr> get<expr>referenceName</expr>() {
+		try {		
+			return <expr>getHome</expr>().findByPrimaryKey(get<expr>referenceName</expr>Key());
+		}
+		catch (ObjectNotFoundException ex) {
+			return null;
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			throw new EJBException(XavaResources.getString("get_reference_error", "<expr>referenceName</expr>", "<expr>metaModel.getName()</expr>"));
+		}		
+	}	
+	/**
+	 * <expr>interfaceMethodSet</expr>
+	 */
+	public void set<expr>referenceName</expr>(<expr>referencedModelClass</expr> new<expr>referenceName</expr>) {
+		try {	
+			if (new<expr>referenceName</expr> == null) set<expr>referenceName</expr>Key(null);
+			else set<expr>referenceName</expr>Key((<expr>referencedKeyClass</expr>) new<expr>referenceName</expr>.getPrimaryKey());
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			throw new EJBException(XavaResources.getString("set_reference_error", "<expr>referenceName</expr>", "<expr>metaModel.getName()</expr>"));
+		}
+	}
+	
+	/**
+	 * @ejb:interface-method
+	 */
+	public <expr>referencedKeyClass</expr> get<expr>referenceName</expr>Key() {				
+			<expr>referencedKeyClass</expr> key = new <expr>referencedKeyClass</expr>();
+			<java>
+			String prefixGet = "get" + referenceName + "_";
+			Iterator itKeys = referencedModel.getAllKeyPropertiesNames().iterator();
+			while (itKeys.hasNext()) {
+				String key = Strings.change((String) itKeys.next(), ".", "_");
+				String keyAttribute=null;
+				if (referencedMapping.hasConverter(key)) {
+					keyAttribute = "_" + Strings.firstUpper(key);
+				}
+				else {
+					keyAttribute = key;
+				}				
+			</java> 
+			key.<expr>keyAttribute</expr> = <expr>prefixGet</expr><expr>key</expr>();			
+			<java>} </java>		
+			return key;
+	}	
+	
+	/**
+	 * <expr>interfaceMethodSet</expr>
+	 */
+	public void set<expr>referenceName</expr>Key(<expr>referencedKeyClass</expr> key) {
+		if (key == null) {
+			key = new <expr>referencedKeyClass</expr>();
+		}
+		<java>
+		String prefixSet = "set" + referenceName + "_";
+		itKeys = referencedModel.getAllKeyPropertiesNames().iterator();		
+		while (itKeys.hasNext()) {
+			String key = Strings.change((String) itKeys.next(), ".", "_");
+			String keyAttribute=null;
+			if (referencedMapping.hasConverter(key)) {
+				keyAttribute = "_" + Strings.firstUpper(key);
+			}
+			else {
+				keyAttribute = key;
+			}
+		</java> 
+		<expr>prefixSet</expr><expr>key</expr>(key.<expr>keyAttribute</expr>);
+		<java>} </java>		
+		
+	}	
+	
+	<java>
+	Iterator itEntityReferenceKeyProperties = referencedModel.getAllMetaPropertiesKey().iterator();	
+	while (itEntityReferenceKeyProperties.hasNext()) {		
+		MetaProperty originalProperty = (MetaProperty) itEntityReferenceKeyProperties.next();
+		originalProperty.setReadOnly(false);
+		PropertyMapping propertyMapping = originalProperty.getMapping();
+		MetaProperty property = originalProperty.cloneMetaProperty();
+		property.setName(reference.getName() + "_" + property.getName());
+		String propertyName = Strings.change(Strings.firstUpper(property.getName()), ".", "_");
+		if (GeneratorFactory.has(property)) {
+			IPropertyCodeGenerator generator = GeneratorFactory.create(property);		
+			String propertyCode = generator.generate();
+	</java>
+		<expr>propertyCode</expr>	
+	<java>		
+			continue;
+		}
+		else if (modelMapping.isReferenceOverlappingWithSomeProperty(reference.getName(), originalProperty.getName())) { 
+			String type = property.getTypeName();
+			String overlapPropertyName = Strings.firstUpper(modelMapping.getOverlappingPropertyForReference(reference.getName(), originalProperty.getName()));
+	</java>
+	/**		
+	 * @ejb:interface-method
+	 *
+	 * @ejb.value-object match="persistentCalculatedAndAggregate"
+	 */
+	public <expr>type</expr> get<expr>propertyName</expr>() {
+		return get<expr>overlapPropertyName</expr>();
+	}
+	public void set<expr>propertyName</expr>(<expr>type</expr> <expr>propertyName</expr>) {
+	}
+	<java>					
+			continue;
+		}		
+		String type = null;
+		if (propertyMapping.hasConverter()) {
+			type = propertyMapping.getCmpTypeName();
+		}
+		else {
+			type = property.getTypeName();
+		}	
+		String column = modelMapping.getReferenceMapping(reference.getName()).getColumnForReferencedModelProperty(originalProperty.getName());	
+	</java>
+	/**		
+	 * @ejb:interface-method
+	 * @ejb:persistent-field
+	 * <expr>pkField</expr>
+	 * @ejb.value-object match="persistentCalculatedAndAggregate"
+	 * @jboss:column-name "<expr>column</expr>"
+	 */
+	public abstract <expr>type</expr> get<expr>propertyName</expr>();
+	public abstract void set<expr>propertyName</expr>(<expr>type</expr> new<expr>propertyName</expr>);				
+
+	<java>} // while referenced entity key properties </java> 
+
+	private <expr>homeClass</expr> <expr>homeAttribute</expr>;	
+	private <expr>homeClass</expr> <expr>getHome</expr>() throws Exception{
+		if (<expr>homeAttribute</expr> == null) {
+			<expr>homeAttribute</expr> = (<expr>homeClass</expr>) PortableRemoteObject.narrow(
+			 		BeansContext.get().lookup("<expr>referencedJNDI</expr>"),
+			 		<expr>homeClass</expr>.class);			 		
+		}
+		return <expr>homeAttribute</expr>;
+	}	
+</tl>
