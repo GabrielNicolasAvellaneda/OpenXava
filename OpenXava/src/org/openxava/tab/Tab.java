@@ -680,6 +680,9 @@ public class Tab {
 	public void setRequest(HttpServletRequest request) {
 		this.request = request;
 	}
+	public HttpServletRequest getRequest() {
+		return request;
+	}
 	
 	public boolean isTitleVisible() {
 		return titleVisible;
