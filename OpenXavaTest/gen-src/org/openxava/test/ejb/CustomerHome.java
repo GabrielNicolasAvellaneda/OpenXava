@@ -33,7 +33,7 @@ public interface CustomerHome
    public java.util.Collection findByNameLike(java.lang.String name)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
-   public java.util.Collection findByNameLikeAndRelationWithSeller(java.lang.String name, java.lang.String relationWithSeller)
+   public java.util.Collection findByNameLikeAndrelationWithSeller(java.lang.String name, java.lang.String relationWithSeller)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
    public java.util.Collection findNormalOnes()

@@ -915,7 +915,7 @@
          </query>
          <query>
             <query-method>
-               <method-name>findByNameLikeAndRelationWithSeller</method-name>
+               <method-name>findByNameLikeAndrelationWithSeller</method-name>
                <method-params>
                   <method-param>java.lang.String</method-param>
                   <method-param>java.lang.String</method-param>

@@ -53,7 +53,7 @@
 			<order>${name} desc</order>
 		</finder>
 		
-		<finder name="byNameLikeAndRelationWithSeller" arguments="String name, String relationWithSeller" collection="true">
+		<finder name="byNameLikeAndrelationWithSeller" arguments="String name, String relationWithSeller" collection="true">
 			<condition>${name} like {0} and ${relationWithSeller} = {1}</condition>
 			<order>${name} desc</order>
 		</finder>
@@ -179,8 +179,7 @@
 		</members>
 				
 	</view>
-	
-	
+		
 	<view name="Simple" members="number; type; name; address"/>
 	
 	<view name="SomeMembersReadOnly" members="number; type; name; seller; alternateSeller">
@@ -210,6 +209,7 @@
 	<view model="Address">
 				
 		<property name="viewProperty" type="String"/>
+		
 		 <!-- By default is NORMAL, hence the next line is optional -->
 		<property-view property="street" label-format="NORMAL"/>
 		<property-view property="zipCode" label-format="SMALL"/>
