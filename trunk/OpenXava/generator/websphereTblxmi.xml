@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <tl>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 <declare import="org.openxava.component.MetaComponent"/>
-<declare import="org.openxava.util.Strings"/>
+<declare import="org.openxava.generators.Generators"/>
+<declare import="org.openxava.util.*"/>
 <declare import="org.openxava.model.meta.*"/>
 <declare import="org.openxava.mapping.*"/>
 
@@ -18,29 +19,40 @@ else {
 	mapping = component.getAggregateMapping(aggregateName);	
 }
 String tableId = Strings.change(mapping.getTable(), ".", "_");
-String table = mapping.getTable();
+String table = mapping.getUnqualifiedTable();
 String schema = mapping.getSchema();
+String pk = table + "PK";
+String pkMembers = mapping.getKeyColumnsAsString();
 </java> 
 
-&lt;RDBSchema:RDBTable xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:RDBSchema="RDBSchema.xmi" xmi:id="<expr>tableId</expr>" name="<expr>table</expr>" primaryKey="C4404645"&gt;
+&lt;RDBSchema:RDBTable xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:RDBSchema="RDBSchema.xmi" xmi:id="<expr>tableId</expr>" name="<expr>table</expr>" primaryKey="<expr>pk</expr>"&gt;
   &lt;database href="META-INF/backends/OPENXAVA/DB.dbxmi#DB"/&gt;
   &lt;schema href="META-INF/backends/OPENXAVA/<expr>schema</expr>.schxmi#<expr>schema</expr>"/&gt;
-  &lt;columns xmi:type="RDBSchema:RDBColumn" xmi:id="DNI" name="DNI"&gt;
-    &lt;type xmi:type="RDBSchema:DB2AS400CharacterStringType" xmi:id="DB2AS400CharacterStringType_1107953075972" characterSet="800" length="10"&gt;
-      &lt;originatingType xmi:type="RDBSchema:DB2AS400CharacterStringType" href="DB2UDBAS400_V5_Primitives.xmi#DB2AS400CharacterStringType_3"/&gt;
+<java>
+for (Iterator it=mapping.getPropertyMappings().iterator(); it.hasNext();) {
+	PropertyMapping pMapping = (PropertyMapping) it.next();	
+	Collection fields = new ArrayList();
+	if (pMapping.hasMultipleConverter()) {
+		fields.addAll(pMapping.getCmpFields());
+	}
+	else {
+		fields.add(pMapping.toCmpField());
+	}
+	for (Iterator itFields=fields.iterator(); itFields.hasNext();) {
+		CmpField field = (CmpField) itFields.next();
+		String type = Generators.getWebsphereSQLType(field.getCmpTypeName(), false);
+		String href = Generators.getWebsphereSQLType(field.getCmpTypeName(), true);
+</java> 
+  &lt;columns xmi:type="RDBSchema:RDBColumn" xmi:id="<expr>field.getColumn()</expr>" name="<expr>field.getColumn()</expr>"&gt;
+    &lt;type xmi:type="<expr>type</expr>" xmi:id="<expr>type</expr>_<expr>field</expr>"&gt;
+      &lt;originatingType xmi:type="<expr>type</expr>" href="<expr>href</expr>"/&gt;
     &lt;/type&gt;
   &lt;/columns&gt;
-  &lt;columns xmi:type="RDBSchema:RDBColumn" xmi:id="NOMBRE" name="NOMBRE" allowNull="true"&gt;
-    &lt;type xmi:type="RDBSchema:DB2AS400CharacterStringType" xmi:id="DB2AS400CharacterStringType_1107953075973" characterSet="800" length="20"&gt;
-      &lt;originatingType xmi:type="RDBSchema:DB2AS400CharacterStringType" href="DB2UDBAS400_V5_Primitives.xmi#DB2AS400CharacterStringType_3"/&gt;
-    &lt;/type&gt;
-  &lt;/columns&gt;
-  &lt;columns xmi:type="RDBSchema:RDBColumn" xmi:id="APELLIDOS" name="APELLIDOS" allowNull="true"&gt;
-    &lt;type xmi:type="RDBSchema:DB2AS400CharacterStringType" xmi:id="DB2AS400CharacterStringType_1107953075974" characterSet="800" length="50"&gt;
-      &lt;originatingType xmi:type="RDBSchema:DB2AS400CharacterStringType" href="DB2UDBAS400_V5_Primitives.xmi#DB2AS400CharacterStringType_3"/&gt;
-    &lt;/type&gt;
-  &lt;/columns&gt;
-  &lt;namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="C4404645" name="C4404645" members="DNI" constraint="SQLConstraint_1107953075972"/&gt;
-  &lt;constraints xmi:id="SQLConstraint_1107953075972" name="C4404645" type="PRIMARYKEY" primaryKey="C4404645"/&gt;
+<java>
+	}
+}
+</java> 
+  &lt;namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="<expr>pk</expr>" name="<expr>pk</expr>" members="<expr>pkMembers</expr>" constraint="SQLConstraint_<expr>pk</expr>"/&gt;
+  &lt;constraints xmi:id="SQLConstraint_<expr>pk</expr>" name="<expr>pk</expr>" type="PRIMARYKEY" primaryKey="<expr>pk</expr>"/&gt;
 &lt;/RDBSchema:RDBTable&gt;
 </tl>

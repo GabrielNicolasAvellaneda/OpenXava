@@ -3,7 +3,7 @@ package org.openxava.generators;
 import org.openxava.util.*;
 
 /**
- * Método de utilidad general para generar código.
+ * Utility methods used in code generation.
  * 
  * @author Javier Paniza
  */
@@ -114,6 +114,35 @@ public class Generators {
 		}
 	}
 	
-	
+	public static String getWebsphereSQLType(String javaTypeName, boolean href) throws XavaException {
+		if ("String".equals(javaTypeName) || "java.lang.String".equals(javaTypeName)) {
+			return href?"SQL92_Primitives.xmi#SQLCharacterStringType_2":"RDBSchema:SQLCharacterStringType";
+		}
+		if ("int".equals(javaTypeName) || "Integer".equals(javaTypeName) || "java.lang.Integer".equals(javaTypeName)) {
+			return href?"SQL92_Primitives.xmi#SQLExactNumeric_1":"RDBSchema:SQLExactNumeric";
+		}
+		if ("java.math.BigDecimal".equals(javaTypeName)) {
+			return href?"SQL92_Primitives.xmi#SQLNumeric_1":"RDBSchema:SQLNumeric";
+		}
+		if ("java.util.Date".equals(javaTypeName) || "java.sql.Date".equals(javaTypeName)) {
+			return href?"SQL92_Primitives.xmi#SQLDate_1":"RDBSchema:SQLDate";
+		}
+		if ("double".equals(javaTypeName) || "Double".equals(javaTypeName) || "java.math.Double".equals(javaTypeName)) {
+			return href?"SQL92_Primitives.xmi#SQLApproximateNumeric_2":"RDBSchema:SQLApproximateNumeric";
+		}
+		if ("float".equals(javaTypeName) || "Float".equals(javaTypeName) || "java.lang.Float".equals(javaTypeName)) {
+			return href?"SQL92_Primitives.xmi#SQLFloat_1":"RDBSchema:SQLFloat";
+		}
+		if ("short".equals(javaTypeName) || "Short".equals(javaTypeName) || "java.lang.Short".equals(javaTypeName)) {
+			return href?"SQL92_Primitives.xmi#SQLExactNumeric_2":"RDBSchema:SQLExactNumeric";
+		}
+		if ("java.sql.Time".equals(javaTypeName)) {
+			return href?"SQL92_Primitives.xmi#SQLTime_1":"RDBSchema:SQLTime";
+		}
+		if ("java.sql.Timestamp".equals(javaTypeName)) {
+			return href?"SQL92_Primitives.xmi#SQLTimestamp_1":"RDBSchema:SQLTimestamp";
+		}
+		throw new XavaException("websphere_type_not_supported", javaTypeName);
+	}
 	
 }

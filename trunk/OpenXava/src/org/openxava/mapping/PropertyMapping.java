@@ -3,14 +3,9 @@ package org.openxava.mapping;
 import java.util.*;
 
 import org.openxava.converters.*;
+import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
-
-
-
-
-
-
 
 public class PropertyMapping extends MetaSetsContainer {
 	
@@ -24,33 +19,22 @@ public class PropertyMapping extends MetaSetsContainer {
 	private boolean conversorCreado = false;
 	private boolean conversorMultipleCreado = false;
 	private String cmpTypeName;
+	private ModelMapping modelMapping;
 	
-	/**
-	 * Gets the columnaTabla
-	 * @return Returns a String
-	 */
+	public PropertyMapping(ModelMapping parent) {
+		this.modelMapping = parent;
+	}
+	
 	public String getColumn() {
 		return column;
 	}
-	/**
-	 * Sets the columnaTabla
-	 * @param columnaTabla The columnaTabla to set
-	 */
 	public void setColumn(String columnaTabla) {
 		this.column = columnaTabla;
 	}
 
-	/**
-	 * Gets the propiedadModelo
-	 * @return Returns a String
-	 */
 	public String getProperty() {
 		return property;
 	}
-	/**
-	 * Sets the propiedadModelo
-	 * @param propiedadModelo The propiedadModelo to set
-	 */
 	public void setProperty(String propiedadModelo) {
 		this.property = propiedadModelo;
 	}
@@ -95,10 +79,15 @@ public class PropertyMapping extends MetaSetsContainer {
 		return cmpFields;		
 	}
 	
-	public CmpField toCmpField() {
+	public CmpField toCmpField() throws XavaException {
 		CmpField f = new CmpField();
-		f.setCmpTypeName(getCmpTypeName());
-		f.setColumn(f.getColumn());		
+		if (Is.emptyString(getCmpTypeName())) {
+			f.setCmpTypeName(getMetaProperty().getTypeName());
+		}
+		else {
+			f.setCmpTypeName(getCmpTypeName());
+		}
+		f.setColumn(getColumn());		
 		return f;
 	}
 		
@@ -180,6 +169,10 @@ public class PropertyMapping extends MetaSetsContainer {
 
 	public void setMultipleConverterClassName(String string) {
 		multipleConverterClassName = string;
+	}
+	
+	private MetaProperty getMetaProperty() throws XavaException {
+		return modelMapping.getMetaModel().getMetaProperty(getProperty());
 	}
 
 }

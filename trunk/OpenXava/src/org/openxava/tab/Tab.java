@@ -595,8 +595,9 @@ public class Tab {
 	
 	public void setConditionValues(String [] valores) throws XavaException {		
 	  if (Arrays.equals(this.conditionValues, valores)) return;
-		if (getMetaPropertiesNotCalculated().size() != valores.length) return; // para evitar problemas al cambiar de módulo
+		if (getMetaPropertiesNotCalculated().size() != valores.length) return; // to avoid problems on changing module
 	  this.conditionValues = valores;
+	  goPage(1);
 	  condition = null;	  
 	}
 	
