@@ -1,0 +1,29 @@
+	public org.openxava.test.ejb.WarehouseKey getWarehouseKey() {
+		org.openxava.test.ejb.WarehouseKey key = new org.openxava.test.ejb.WarehouseKey();
+		key.number = getWarehouseNumber();
+		key.zoneNumber = getWarehouseZoneNumber();
+		return key;
+	}
+
+	public void setWarehouseKey(org.openxava.test.ejb.WarehouseKey warehouseKey) {
+		setWarehouseNumber(warehouseKey.number);
+		setWarehouseZoneNumber(warehouseKey.zoneNumber);
+	}
+
+	private int warehouseZoneNumber;	
+	public int getWarehouseZoneNumber() {
+		return warehouseZoneNumber;
+	}
+	public void setWarehouseZoneNumber(int newWarehouseZoneNumber) {
+		warehouseZoneNumber = newWarehouseZoneNumber;
+	}
+	
+	private int warehouseNumber;	
+	public int getWarehouseNumber() {
+		return warehouseNumber;
+	}
+	
+	public void setWarehouseNumber(int newWarehouseNumber) {
+		warehouseNumber = newWarehouseNumber;
+	}
+	
