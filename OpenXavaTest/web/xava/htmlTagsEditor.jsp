@@ -13,7 +13,7 @@ String postEditor=null;
 
 
 if (hasFrame) {
-	preLabel="<tr><td colspan=4><table class=frame width='100%'><tr class=frame><th align='left'>";
+	preLabel="<tr><td colspan=4><table class=frame width='100%'><tr class=frame><th align='left' id=" + labelKey + " >";
 	postLabel="&nbsp;";
 	preIcons="";
 	postIcons="";
@@ -21,7 +21,7 @@ if (hasFrame) {
 	postEditor="</td></tr></table>";
 }
 else if (first) {
-	preLabel="<th align='left' class=etiqueta>";
+	preLabel="<th align='left' class=etiqueta id=" + labelKey + " >";
 	postLabel="</th>";
 	preIcons="<td>";
 	postIcons="</td>";
@@ -29,7 +29,7 @@ else if (first) {
 	postEditor="</td>";
 }
 else {
-	preLabel="<th align='left' class=etiqueta>&nbsp;&nbsp;";
+	preLabel="<th align='left' class=etiqueta id=" + labelKey + " >&nbsp;&nbsp;";
 	postLabel="</th>";
 	preIcons="<td>";
 	postIcons="</td>";

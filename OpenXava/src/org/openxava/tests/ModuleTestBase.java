@@ -180,6 +180,11 @@ public class ModuleTestBase extends TestCase {
 		return getForm().getParameterValue(getPropertyPrefix() + name);
 	}
 	
+	protected String getLabel(String name) throws Exception {		
+		return response.getElementWithID(getPropertyPrefix() + name + "_LABEL_").getText().trim();
+	}
+	
+	
 	/**
 	 * Por si no trabajamos con la vista principal
 	 */
@@ -308,6 +313,10 @@ public class ModuleTestBase extends TestCase {
 		getForm().setParameter("xava." + modelo + "." + name, value);
 	}
 	
+	protected void assertLabel(String name, String expectedLabel) throws Exception {		
+		assertEquals(XavaResources.getString("unexpected_label", name), expectedLabel, getLabel(name));		
+	}
+	
 	
 	protected void assertValue(String name, String value) throws Exception {		
 		if ("false".equals(value) && !getForm().isTextParameter(getPropertyPrefix() + name)) { // possibly a checkbox
@@ -315,6 +324,7 @@ public class ModuleTestBase extends TestCase {
 		}
 		assertEquals(XavaResources.getString("unexpected_value", name), value, getValue(name));		
 	}
+		
 	
 	protected void assertValueIgnoringCase(String name, String value) throws Exception {		
 		assertTrue(XavaResources.getString("unexpected_value", name), value.equalsIgnoreCase(getValue(name)));		

@@ -90,7 +90,9 @@ public class View {
 
 	private Collection metaMembersIncludingHiddenKey;
 
-	private String propertyPrefix;	
+	private String propertyPrefix;
+
+	private Map labels;	
 		
 	public View() {
 		oid = siguienteOid++;
@@ -470,7 +472,6 @@ public class View {
 		newView.setSubview(true);
 		newView.setParent(this);
 		
-		newView.setRequest(this.request);
 		MetaReference ref = null;
 		if (miembro instanceof MetaReference) {
 			ref = (MetaReference) miembro;
@@ -1234,8 +1235,8 @@ public class View {
 		
 	public void assignValuesToWebView(String qualifier) {
 		try {												
-			focusForward = "true".equalsIgnoreCase(request.getParameter("focus_forward"));
-			setIdFocusProperty(request.getParameter("focus_property"));			
+			focusForward = "true".equalsIgnoreCase(getRequest().getParameter("focus_forward"));
+			setIdFocusProperty(getRequest().getParameter("focus_property"));			
 			Iterator it = isSubview()?getMetaMembersIncludingHiddenKey().iterator():getMetaMembers().iterator();			
 			if (isRepresentsCollection()) fillListSelected(qualifier);
 			
@@ -1261,7 +1262,6 @@ public class View {
 					String value = getRequest().getParameter(key);
 					if (value == null) {
 						View subview = getSubview(ref.getName());
-						subview.setRequest(getRequest());
 						subview.assignValuesToWebView(qualifier + "." + ref.getName());					 																				
 					}
 					else { // References as combo (descriptions-list) and composite key
@@ -1271,20 +1271,17 @@ public class View {
 				else if (m instanceof MetaCollection) {
 					MetaCollection collec = (MetaCollection) m;	
 					View subview = getSubview(collec.getName());
-					subview.setRequest(getRequest());
 					subview.assignValuesToWebView(qualifier + "." + collec.getName()); 
 				}
 				else if (m instanceof MetaGroup) {					
 					MetaGroup grupo = (MetaGroup) m;					
 					View subvista = getGroupView(grupo.getName());
-					subvista.setRequest(getRequest());
 					subvista.assignValuesToWebView(qualifier);					 																									
 				}
 			}
 						
 			if (hasSections()) {				
 				View seccion = getSectionView(getActiveSection());
-				seccion.setRequest(request);
 				seccion.assignValuesToWebView(qualifier);
 			}			
 						
@@ -1954,27 +1951,12 @@ public class View {
 	}
 
 	public HttpServletRequest getRequest() {
+		if (request == null) return getParent().getRequest();
 		return request;
 	}
 
 	public void setRequest(HttpServletRequest request) throws XavaException {		
-		this.request = request;				
-		Iterator it = getSubviews().values().iterator();
-		while (it.hasNext()) {				 
-			((View) it.next()).setRequest(request);
-		}
-		if (tieneGrupos()) {		
-			it = getGroupsViews().values().iterator();
-			while (it.hasNext()) {				 
-				((View) it.next()).setRequest(request);
-			}						
-		}						
-		if (hasSections()) {
-			int cantidad = getSections().size();
-			for (int i = 0; i < cantidad; i++) {				
-				getSectionView(i).setRequest(request);
-			}	
-		}			
+		this.request = request;								
 	}
 	
 	public boolean displayAsDescriptionsList(MetaReference ref) throws XavaException {
@@ -2385,4 +2367,25 @@ public class View {
 	private void setReadOnly(boolean onlyRead) {
 		this.readOnly = onlyRead;
 	}
+	
+	public String getLabelForProperty(MetaProperty p) throws XavaException {
+		if (labels != null) {
+			String idLabel = (String) labels.get(p.getName());
+			if (idLabel != null) {
+				try {
+					return Labels.get(idLabel, getRequest().getLocale());
+				}
+				catch (Exception ex) {
+					return idLabel;
+				}
+			}
+		}		
+		return p.getLabel(getRequest());
+	}
+	
+	public void setLabelId(String propertyName, String id) {
+		if (labels == null) labels = new HashMap();
+		labels.put(propertyName, id);
+	}
+	
 }

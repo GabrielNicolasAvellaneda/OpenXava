@@ -15,6 +15,7 @@ viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObjec
 org.openxava.view.View view = (org.openxava.view.View) context.get(request, viewObject);
 String referenceKey = request.getParameter("referenceKey");
 MetaReference ref = (MetaReference) request.getAttribute(referenceKey); 
+String labelKey = referenceKey + "_LABEL_";
 %>
 
 <%@ include file="htmlTagsEditor.jsp"%>
