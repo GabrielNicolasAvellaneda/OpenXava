@@ -36,7 +36,7 @@ public class MetaEjbImpl implements Serializable {
 	}
 	
 	private String getPackageName() throws XavaException {
-		return metaModel.getMetaComponent().getPackageName();
+		return metaModel.getMetaComponent().getEJBPackage();
 	}
 	
 	private String getModelName() {

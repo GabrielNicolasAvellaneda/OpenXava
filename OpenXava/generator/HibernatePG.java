@@ -10,7 +10,7 @@ import org.openxava.util.Strings;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Apr 05 09:23:25 CEST 2005
+ * @version Tue Apr 05 18:58:42 CEST 2005
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -134,7 +134,7 @@ public class HibernatePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Apr 05 09:23:25 CEST 2005", // date this file was generated
+        { "Tue Apr 05 18:58:42 CEST 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/hibernate.xml", // input file
              "/home/javi/workspace/OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

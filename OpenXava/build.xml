@@ -329,7 +329,7 @@
 			<filterset>
 				<filter token="subcontext" value="${subcontext}"/>
 				<filter token="datasource" value="${datasource}"/>
-				<filter token="package" value="${domain}/${package}/${ejb.package}"/>
+				<filter token="package" value="${domain}/${package}"/>
 			</filterset>
 		</copy>
 		<copy file="../${project.ejb}/${meta-inf.dir}/${jboss.mapping.xml}" 
@@ -346,7 +346,7 @@
 			<filterset>
 				<filter token="subcontext" value="${subcontext}"/>
 				<filter token="datasource" value="${datasource}"/>
-				<filter token="package" value="${domain}/${package}/${ejb.package}"/>
+				<filter token="package" value="${domain}/${package}"/>
 			</filterset>
 		</copy>
 	</target>
@@ -368,7 +368,7 @@
 				<filtersfile file="${configuration}.properties"/>
 				<filter token="subcontext" value="${subcontext}"/>
 				<filter token="datasource" value="${datasource}"/>
-				<filter token="package" value="${domain}/${package}/${ejb.package}"/>				
+				<filter token="package" value="${domain}/${package}"/>				
 			</filterset>
 		</copy>
 		<copy file="../${project.ejb}/${meta-inf.dir}/${jboss.mapping.xml}" 
@@ -387,7 +387,7 @@
 				<filtersfile file="${configuration}.properties"/>
 				<filter token="subcontext" value="${subcontext}"/>
 				<filter token="datasource" value="${datasource}"/>
-				<filter token="package" value="${domain}/${package}/${ejb.package}"/>				
+				<filter token="package" value="${domain}/${package}"/>				
 			</filterset>
 		</copy>		
 	</target>

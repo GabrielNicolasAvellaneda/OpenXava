@@ -531,7 +531,7 @@ public class EntityTab implements IEntityTabImpl {
 	
 	private static IEntityTabDataProvider getDataProvider(String componentName) throws RemoteException {		
 		try {
-			String paquete = MetaComponent.get(componentName).getPackageNameWithSlash();			
+			String paquete = MetaComponent.get(componentName).getPackageNameWithSlashWithoutModel();			
 			IEntityTabDataProvider dataProvider = (IEntityTabDataProvider) getDataProviders().get(paquete);
 			if (dataProvider == null) {
 				if (XavaPreferences.getInstance().isTabAsEJB()) { 
@@ -563,7 +563,7 @@ public class EntityTab implements IEntityTabImpl {
 	
 	private static void cancelDataProvider(String componentName) {
 		try {
-			String packageName = MetaComponent.get(componentName).getPackageNameWithSlash();
+			String packageName = MetaComponent.get(componentName).getPackageNameWithSlashWithoutModel();
 			getDataProviders().remove(packageName);			
 		}
 		catch (Exception ex) {

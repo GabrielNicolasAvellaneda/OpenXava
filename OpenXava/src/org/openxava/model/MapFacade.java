@@ -418,7 +418,7 @@ public class MapFacade {
 			if (idx >=0) {
 				nombreModelo = nombreModelo.substring(0, idx);				 				
 			}			
-			String paquete = MetaComponent.get(nombreModelo).getPackageNameWithSlash();			
+			String paquete = MetaComponent.get(nombreModelo).getPackageNameWithSlashWithoutModel();			
 			MapFacadeRemote remote = (MapFacadeRemote) getRemotes().get(paquete);
 			if (remote == null) {							
 				Object ohome = BeansContext.get().lookup("ejb/"+paquete+"/MapFacade");
@@ -464,7 +464,7 @@ public class MapFacade {
 			if (idx >=0) {
 				nombreModelo = nombreModelo.substring(0, idx);				 				
 			}			
-			String paquete = MetaComponent.get(nombreModelo).getPackageNameWithSlash();			
+			String paquete = MetaComponent.get(nombreModelo).getPackageNameWithSlashWithoutModel();			
 			getRemotes().remove(paquete);			
 		}
 		catch (Exception ex) {
