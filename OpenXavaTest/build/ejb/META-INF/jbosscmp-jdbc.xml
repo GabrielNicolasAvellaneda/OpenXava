@@ -186,6 +186,11 @@
 
         </cmp-field>
          <cmp-field>
+            <field-name>shipment_mode</field-name>
+            <column-name>SHIPMENT_MODE</column-name>
+
+        </cmp-field>
+         <cmp-field>
             <field-name>shipment_number</field-name>
             <column-name>SHIPMENT_NUMBER</column-name>
 
@@ -222,9 +227,10 @@
                <method-params>
                   <method-param>java.lang.Integer</method-param>
                   <method-param>int</method-param>
+                  <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o.shipment_type = ?1 AND o.shipment_number = ?2 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o.shipment_type = ?1 AND o.shipment_mode = ?2 AND o.shipment_number = ?3 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -1222,6 +1228,11 @@
          <cmp-field>
             <field-name>_Description</field-name>
             <column-name>DESCRIPTION</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>mode</field-name>
+            <column-name>MODE</column-name>
 
         </cmp-field>
          <cmp-field>

@@ -91,6 +91,9 @@ public interface Delivery
    public java.lang.Integer getShipment_type(  )
       throws java.rmi.RemoteException;
 
+   public int getShipment_mode(  )
+      throws java.rmi.RemoteException;
+
    public int getShipment_number(  )
       throws java.rmi.RemoteException;
 

@@ -15,6 +15,13 @@
 				<valid-value value="external"/>
 			</valid-values>
 		</property>
+		<property name="mode" key="true" required="true">
+			<valid-values>
+				<valid-value value="slow"/>
+				<valid-value value="medium"/>
+				<valid-value value="fast"/>
+			</valid-values>
+		</property>		
 		<property name="number" type="int" key="true" size="5" required="true"/>
 		<property name="description" type="String" size="50" required="true"/>
 	</entity>		
@@ -24,6 +31,8 @@
 			property="type" column="TYPE" cmp-type="Integer">
 			<converter class="org.openxava.converters.ValidValuesBase0Converter"/>
 		</property-mapping>
+		<property-mapping
+			property="mode" column="MODE"/>		
 		<property-mapping
 			property="number" column="NUMBER"/>
 		<property-mapping

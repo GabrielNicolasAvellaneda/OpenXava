@@ -12,21 +12,27 @@ public class ShipmentKey
 {
 
    public java.lang.Integer _Type;
+   public int mode;
    public int number;
 
    public ShipmentKey()
    {
    }
 
-   public ShipmentKey( java.lang.Integer _Type,int number )
+   public ShipmentKey( java.lang.Integer _Type,int mode,int number )
    {
       this._Type = _Type;
+      this.mode = mode;
       this.number = number;
    }
 
    public java.lang.Integer get_Type()
    {
       return _Type;
+   }
+   public int getMode()
+   {
+      return mode;
    }
    public int getNumber()
    {
@@ -37,6 +43,10 @@ public class ShipmentKey
    {
       this._Type = _Type;
    }
+   public void setMode(int mode)
+   {
+      this.mode = mode;
+   }
    public void setNumber(int number)
    {
       this.number = number;
@@ -46,6 +56,7 @@ public class ShipmentKey
    {
       int _hashCode = 0;
          if (this._Type != null) _hashCode += this._Type.hashCode();
+         _hashCode += (int)this.mode;
          _hashCode += (int)this.number;
 
       return _hashCode;
@@ -73,6 +84,7 @@ public class ShipmentKey
          {
             eq = eq && ( pk.get_Type() == null );
          }
+         eq = eq && this.mode == pk.mode;
          eq = eq && this.number == pk.number;
       }
 
@@ -84,6 +96,7 @@ public class ShipmentKey
    {
       StringBuffer toStringValue = new StringBuffer("[.");
          toStringValue.append(this._Type).append('.');
+         toStringValue.append(this.mode).append('.');
          toStringValue.append(this.number).append('.');
       toStringValue.append(']');
       return toStringValue.toString();

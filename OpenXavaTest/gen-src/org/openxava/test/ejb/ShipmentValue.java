@@ -15,6 +15,8 @@ public class ShipmentValue
    private boolean typeHasBeenSet = false;
    private java.lang.String description;
    private boolean descriptionHasBeenSet = false;
+   private int mode;
+   private boolean modeHasBeenSet = false;
    private int number;
    private boolean numberHasBeenSet = false;
 
@@ -29,6 +31,8 @@ public class ShipmentValue
 	  typeHasBeenSet = true;
 	  this.description = otherValue.description;
 	  descriptionHasBeenSet = true;
+	  this.mode = otherValue.mode;
+	  modeHasBeenSet = true;
 	  this.number = otherValue.number;
 	  numberHasBeenSet = true;
    }
@@ -61,6 +65,20 @@ public class ShipmentValue
    public boolean descriptionHasBeenSet(){
 	  return descriptionHasBeenSet;
    }
+   public int getMode()
+   {
+	  return this.mode;
+   }
+
+   public void setMode( int mode )
+   {
+	  this.mode = mode;
+	  modeHasBeenSet = true;
+   }
+
+   public boolean modeHasBeenSet(){
+	  return modeHasBeenSet;
+   }
    public int getNumber()
    {
 	  return this.number;
@@ -80,7 +98,7 @@ public class ShipmentValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("type=" + getType() + " " + "description=" + getDescription() + " " + "number=" + getNumber());
+	  str.append("type=" + getType() + " " + "description=" + getDescription() + " " + "mode=" + getMode() + " " + "number=" + getNumber());
 	  str.append('}');
 
 	  return(str.toString());
@@ -94,6 +112,7 @@ public class ShipmentValue
    protected boolean hasIdentity()
    {
 	  boolean ret = true;
+	  ret = ret && modeHasBeenSet;
 	  ret = ret && numberHasBeenSet;
 	  return ret;
    }
@@ -108,6 +127,7 @@ public class ShipmentValue
 		 ShipmentValue that = (ShipmentValue) other;
 		 if ( ! that.hasIdentity() ) return false;
 		 boolean lEquals = true;
+		 lEquals = lEquals && this.mode == that.mode;
 		 lEquals = lEquals && this.number == that.number;
 
 		 lEquals = lEquals && isIdentical(that);
@@ -149,6 +169,8 @@ public class ShipmentValue
       result = 37*result + (int) type;
 
       result = 37*result + ((this.description != null) ? this.description.hashCode() : 0);
+
+      result = 37*result + (int) mode;
 
       result = 37*result + (int) number;
 

@@ -20,6 +20,7 @@ public abstract class ShipmentCMP
 
          dataHolder.set_Type( get_Type() );
          dataHolder.set_Description( get_Description() );
+         dataHolder.setMode( getMode() );
          dataHolder.setNumber( getNumber() );
 
       }
@@ -90,6 +91,7 @@ public abstract class ShipmentCMP
          {
             ShipmentValue.setType( getType() );
             ShipmentValue.setDescription( getDescription() );
+            ShipmentValue.setMode( getMode() );
             ShipmentValue.setNumber( getNumber() );
 
          }
@@ -125,6 +127,10 @@ public abstract class ShipmentCMP
    public abstract java.lang.String get_Description() ;
 
    public abstract void set_Description( java.lang.String _Description ) ;
+
+   public abstract int getMode() ;
+
+   public abstract void setMode( int mode ) ;
 
    public abstract int getNumber() ;
 

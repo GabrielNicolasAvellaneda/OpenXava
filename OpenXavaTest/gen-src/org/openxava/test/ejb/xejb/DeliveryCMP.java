@@ -31,6 +31,7 @@ public abstract class DeliveryCMP
          dataHolder.setNumber( getNumber() );
          dataHolder.setType_number( getType_number() );
          dataHolder.setShipment_type( getShipment_type() );
+         dataHolder.setShipment_mode( getShipment_mode() );
          dataHolder.setShipment_number( getShipment_number() );
          dataHolder.setCarrier_number( getCarrier_number() );
          dataHolder.setInvoice_year( getInvoice_year() );
@@ -60,6 +61,7 @@ public abstract class DeliveryCMP
          setDate_month( dataHolder.getDate_month() );
          setDate_year( dataHolder.getDate_year() );
          setShipment_type( dataHolder.getShipment_type() );
+         setShipment_mode( dataHolder.getShipment_mode() );
          setShipment_number( dataHolder.getShipment_number() );
          setCarrier_number( dataHolder.getCarrier_number() );
 
@@ -127,6 +129,7 @@ public abstract class DeliveryCMP
             DeliveryValue.setNumber( getNumber() );
             DeliveryValue.setType_number( getType_number() );
             DeliveryValue.setShipment_type( getShipment_type() );
+            DeliveryValue.setShipment_mode( getShipment_mode() );
             DeliveryValue.setShipment_number( getShipment_number() );
             DeliveryValue.setCarrier_number( getCarrier_number() );
             DeliveryValue.setInvoice_year( getInvoice_year() );
@@ -157,6 +160,7 @@ public abstract class DeliveryCMP
 		 setTransportMode( valueHolder.getTransportMode() );
 		 setDate( valueHolder.getDate() );
 		 setShipment_type( valueHolder.getShipment_type() );
+		 setShipment_mode( valueHolder.getShipment_mode() );
 		 setShipment_number( valueHolder.getShipment_number() );
 		 setCarrier_number( valueHolder.getCarrier_number() );
 
@@ -220,6 +224,10 @@ public abstract class DeliveryCMP
    public abstract java.lang.Integer getShipment_type() ;
 
    public abstract void setShipment_type( java.lang.Integer shipment_type ) ;
+
+   public abstract int getShipment_mode() ;
+
+   public abstract void setShipment_mode( int shipment_mode ) ;
 
    public abstract int getShipment_number() ;
 

@@ -37,6 +37,8 @@ public class DeliveryValue
    private boolean type_numberHasBeenSet = false;
    private java.lang.Integer shipment_type;
    private boolean shipment_typeHasBeenSet = false;
+   private int shipment_mode;
+   private boolean shipment_modeHasBeenSet = false;
    private int shipment_number;
    private boolean shipment_numberHasBeenSet = false;
    private java.lang.Integer carrier_number;
@@ -79,6 +81,8 @@ public class DeliveryValue
 	  type_numberHasBeenSet = true;
 	  this.shipment_type = otherValue.shipment_type;
 	  shipment_typeHasBeenSet = true;
+	  this.shipment_mode = otherValue.shipment_mode;
+	  shipment_modeHasBeenSet = true;
 	  this.shipment_number = otherValue.shipment_number;
 	  shipment_numberHasBeenSet = true;
 	  this.carrier_number = otherValue.carrier_number;
@@ -271,6 +275,20 @@ public class DeliveryValue
    public boolean shipment_typeHasBeenSet(){
 	  return shipment_typeHasBeenSet;
    }
+   public int getShipment_mode()
+   {
+	  return this.shipment_mode;
+   }
+
+   public void setShipment_mode( int shipment_mode )
+   {
+	  this.shipment_mode = shipment_mode;
+	  shipment_modeHasBeenSet = true;
+   }
+
+   public boolean shipment_modeHasBeenSet(){
+	  return shipment_modeHasBeenSet;
+   }
    public int getShipment_number()
    {
 	  return this.shipment_number;
@@ -332,7 +350,7 @@ public class DeliveryValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("dateAsLabel=" + getDateAsLabel() + " " + "distance=" + getDistance() + " " + "incidents=" + getIncidents() + " " + "driverType=" + getDriverType() + " " + "remarks=" + getRemarks() + " " + "employee=" + getEmployee() + " " + "description=" + getDescription() + " " + "vehicle=" + getVehicle() + " " + "transportMode=" + getTransportMode() + " " + "date=" + getDate() + " " + "number=" + getNumber() + " " + "type_number=" + getType_number() + " " + "shipment_type=" + getShipment_type() + " " + "shipment_number=" + getShipment_number() + " " + "carrier_number=" + getCarrier_number() + " " + "invoice_year=" + getInvoice_year() + " " + "invoice_number=" + getInvoice_number());
+	  str.append("dateAsLabel=" + getDateAsLabel() + " " + "distance=" + getDistance() + " " + "incidents=" + getIncidents() + " " + "driverType=" + getDriverType() + " " + "remarks=" + getRemarks() + " " + "employee=" + getEmployee() + " " + "description=" + getDescription() + " " + "vehicle=" + getVehicle() + " " + "transportMode=" + getTransportMode() + " " + "date=" + getDate() + " " + "number=" + getNumber() + " " + "type_number=" + getType_number() + " " + "shipment_type=" + getShipment_type() + " " + "shipment_mode=" + getShipment_mode() + " " + "shipment_number=" + getShipment_number() + " " + "carrier_number=" + getCarrier_number() + " " + "invoice_year=" + getInvoice_year() + " " + "invoice_number=" + getInvoice_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -465,6 +483,7 @@ public class DeliveryValue
 		 {
 			lEquals = lEquals && this.shipment_type.equals( that.shipment_type );
 		 }
+		 lEquals = lEquals && this.shipment_mode == that.shipment_mode;
 		 lEquals = lEquals && this.shipment_number == that.shipment_number;
 		 if( this.carrier_number == null )
 		 {
@@ -510,6 +529,8 @@ public class DeliveryValue
       result = 37*result + (int) type_number;
 
       result = 37*result + ((this.shipment_type != null) ? this.shipment_type.hashCode() : 0);
+
+      result = 37*result + (int) shipment_mode;
 
       result = 37*result + (int) shipment_number;
 

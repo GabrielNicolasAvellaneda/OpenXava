@@ -29,8 +29,7 @@ public class MetaEjbImpl implements Serializable {
 	private EJBHome ejbHome;
 	private java.lang.String primaryKey;	
 	private IMetaModel metaModel;
-	
-	
+		
 	public MetaEjbImpl(IMetaModel metaModelo) {
 		this.metaModel = metaModelo;		
 	}
@@ -270,6 +269,12 @@ public class MetaEjbImpl implements Serializable {
 						else if (value instanceof java.util.Date) {
 							asignarDesdeUtilDate(key, f, (java.util.Date) value);
 						}
+						else if (value instanceof String) {
+							if (!assignFromValidValues(key, nombre, f, (String) value)) {
+								String valueType = value == null?"null":value.getClass().getName();
+								throw new IllegalArgumentException(XavaResources.getString("assign_type_mismatch", f.getName(), key.getClass(), f.getType(), valueType));																
+							}
+						}
 						else {
 							String valueType = value == null?"null":value.getClass().getName();
 							throw new IllegalArgumentException(XavaResources.getString("assign_type_mismatch", f.getName(), key.getClass(), f.getType(), valueType));
@@ -297,7 +302,6 @@ public class MetaEjbImpl implements Serializable {
 	}
 	
 	
-
 	private Map getAplanado(String prefijo, Map valoresClave) {
 		Map plano = new HashMap();
 		Iterator it = valoresClave.entrySet().iterator();
@@ -409,8 +413,9 @@ public class MetaEjbImpl implements Serializable {
 			if (pr.hasValidValues() && valor instanceof String) {
 				valor = new Integer(pr.getValidValueIndex(valor));
 			}
-			IConverter conversor = getMapeo().getConverter(nombrePropiedad);			
-			f.set(o, conversor.toDB(valor));
+			IConverter conversor = getMapeo().getConverter(nombrePropiedad);
+			valor = conversor.toDB(valor);
+			f.set(o, valor);
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
@@ -418,6 +423,16 @@ public class MetaEjbImpl implements Serializable {
 		}
 
 	}
+	
+	private boolean assignFromValidValues(Object key, String propertyName, Field f, String value) throws ElementNotFoundException, XavaException, IllegalArgumentException, IllegalAccessException {
+		MetaProperty pr = metaModel.getMetaProperty(propertyName);			
+		if (pr.hasValidValues()) {
+			f.set(key, new Integer(pr.getValidValueIndex(value)));
+			return true;
+		}
+		return false;
+	}
+	
 	
 	private ModelMapping getMapeo() throws XavaException {
 		return metaModel.getMapping();	
