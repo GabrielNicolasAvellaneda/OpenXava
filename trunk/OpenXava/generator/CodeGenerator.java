@@ -74,6 +74,10 @@ abstract public class CodeGenerator {
 		generate(component, componentsPath, file); 		
 	}
 	
+	protected String getPackagesFile() {
+		return "packages.properties";
+	}
+	
 	public String getProject() {
 		return project;
 	}
@@ -197,7 +201,7 @@ abstract public class CodeGenerator {
 	
 	private void savePackages() {		
 		try {
-			FileOutputStream os = new FileOutputStream("../" + getProject() + "/gen-src-xava/packages.properties");
+			FileOutputStream os = new FileOutputStream("../" + getProject() + "/gen-src-xava/" + getPackagesFile());
 			packages.put("package.domain." + getUnqualifiedPackage(), getDomain());
 			packages.put("package.model." + getUnqualifiedPackage(), getModelPackage());			
 			packages.store(os, "");			

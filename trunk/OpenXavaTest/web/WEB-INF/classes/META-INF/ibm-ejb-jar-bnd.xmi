@@ -7,14 +7,14 @@
 
         <ejbBindings
             xmi:id="MapFacade"
-            jndiName="OpenXavaTest/ejb/org/openxava/test/ejb/MapFacade"
+            jndiName="OpenXavaTest/ejb/org/openxava/test/MapFacade"
         >
             <enterpriseBean xmi:type="ejb:Session" href="META-INF/ejb-jar.xml#MapFacade"/>										
         </ejbBindings>
 
         <ejbBindings
             xmi:id="Server"
-            jndiName="OpenXavaTest/ejb/org/openxava/test/ejb/Server"
+            jndiName="OpenXavaTest/ejb/org/openxava/test/Server"
         >
             <enterpriseBean xmi:type="ejb:Session" href="META-INF/ejb-jar.xml#Server"/>
 				    <resRefBindings xmi:id="ResourceRefBinding_666" jndiName="jdbc/OpenXavaTestDS">
@@ -24,7 +24,7 @@
 
         <ejbBindings
             xmi:id="EntityTab"
-            jndiName="OpenXavaTest/ejb/org/openxava/test/ejb/EntityTab"
+            jndiName="OpenXavaTest/ejb/org/openxava/test/EntityTab"
         >
             <enterpriseBean xmi:type="ejb:Session" href="META-INF/ejb-jar.xml#EntityTab"/>
 				    <resRefBindings xmi:id="ResourceRefBinding_667" jndiName="jdbc/OpenXavaTestDS">

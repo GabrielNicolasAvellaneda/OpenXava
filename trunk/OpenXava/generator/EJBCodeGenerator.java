@@ -8,7 +8,12 @@ import java.util.*;
 /**
  * @author Javier Paniza
  */
-public class EJBCodeGenerator extends CodeGenerator{	
+public class EJBCodeGenerator extends CodeGenerator{
+	
+	protected String getPackagesFile() {
+		return "packages-ejb.properties";
+	}
+
 	
 	protected void generate(MetaComponent component, String componentsPath, String file) throws Exception {		
 		String dirPackage = toDirPackage(getPackageName());		

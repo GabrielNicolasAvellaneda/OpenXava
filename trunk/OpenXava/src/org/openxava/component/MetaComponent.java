@@ -26,8 +26,7 @@ public class MetaComponent implements Serializable {
 	
 	private static Map components = new HashMap();
 	private static Properties packages;
-	
-	private String packageNameWithSlash;
+		
 	private String packageNameWithSlashWithoutModel;
 	private String name;
 	private MetaEntity metaEntity;
@@ -37,6 +36,7 @@ public class MetaComponent implements Serializable {
 	private Map metaTabs;
 	private EntityMapping entityMapping;
 	private String packageName;
+	private String ejbPackage;
 
 	
 	/**
@@ -294,6 +294,9 @@ public class MetaComponent implements Serializable {
 		}
 	}
 				
+	/**
+	 * Java package where the model classes resides.
+	 */
 	public String getPackageName() throws XavaException {
 		if (packageName==null) {
 			try {
@@ -306,7 +309,30 @@ public class MetaComponent implements Serializable {
 		}
 		return packageName;
 	}
+	
+	public void setPackageName(String packageName) {
+		this.packageName = packageName;
+	}
 
+	/**
+	 * Java package where the EJB classes resides. <p>
+	 * 
+	 * Usually the same of {@link #getPackageName}, but if we wish to
+	 * use EJB model and POJO model in the same application it will be different.<br> 
+	 */
+	public String getEJBPackage() throws XavaException {
+		if (ejbPackage==null) {
+			try {
+				ejbPackage = getPackagesEJB().getProperty(getName());
+			}
+			catch (Exception ex) {
+				ex.printStackTrace();
+				throw new XavaException("component_package_error", getName());
+			}
+		}		
+		return ejbPackage;
+	}
+	
 	private static Properties getPackages() throws IOException {
 		if (packages == null) {
 			PropertiesReader reader = new PropertiesReader(MetaComponent.class, "packages.properties");
@@ -314,6 +340,15 @@ public class MetaComponent implements Serializable {
 		}
 		return packages;
 	}
+	
+	private static Properties getPackagesEJB() throws IOException {
+		if (packages == null) {
+			PropertiesReader reader = new PropertiesReader(MetaComponent.class, "packages-ejb.properties");
+			packages = reader.get();
+		}
+		return packages;
+	}
+	
 		
 	/** 
 	 * @param unqualifiedPackage For example, of org.openxava.test.model is test, 
@@ -332,22 +367,9 @@ public class MetaComponent implements Serializable {
 		}
 	}
 	
-	public void setPackageName(String packageName) {
-		this.packageName = packageName;
-	}
-
 	/**
-	 * Package using / instead of .	 
-	 */
-	public String getPackageNameWithSlash() throws XavaException {
-		if (packageNameWithSlash == null) {
-			packageNameWithSlash = Strings.change(getPackageName(), ".", "/");
-		}
-		return packageNameWithSlash;
-	}
-	
-	/**
-	 * Exclude the last package, usually the model package.
+	 * Package using / instead of .	and 
+	 * it does not includes the model or ejb package. 
 	 */
 	public String getPackageNameWithSlashWithoutModel() throws XavaException {
 		if (packageNameWithSlashWithoutModel == null) {
@@ -356,6 +378,6 @@ public class MetaComponent implements Serializable {
 		}
 		return packageNameWithSlashWithoutModel;
 	}
-	
+		
 }
 
