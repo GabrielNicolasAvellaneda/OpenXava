@@ -2,8 +2,8 @@ package org.openxava.converters;
 
 
 /**
- * En java un valores-posibles y en la base de datos un número
- * entero cuyo primer valor es 0
+ * In java valid-values and in database a integer number 
+ * whose first value is 0. <p>
  * 
  * @author Javier Paniza
  */
@@ -15,8 +15,8 @@ public class ValidValuesBase0Converter implements IConverter {
 			throw new ConversionException("conversion_db_integer_excepted");
 		}
 		
-		int valor = ((Integer) o).intValue();				
-		return new Integer(valor - 1);		
+		int value = ((Integer) o).intValue();				
+		return new Integer(value - 1);		
 	}
 	
 	public Object toJava(Object o) throws ConversionException {
@@ -25,8 +25,8 @@ public class ValidValuesBase0Converter implements IConverter {
 			throw new ConversionException("conversion_java_number_expected");
 		}
 		
-		int valor  = ((Number) o).intValue();		
-		return new Integer(valor + 1);
+		int value  = ((Number) o).intValue();		
+		return new Integer(value + 1);
 	}
 	
 }

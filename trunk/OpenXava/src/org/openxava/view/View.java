@@ -330,43 +330,35 @@ public class View {
 	}
 	
 	public void setValuesNotifying(Map values) throws XavaException {		
-		setValues(values);
-		hasToSearchOnChangeIfSubview = false; 
-		try { 
-			Iterator it = values.keySet().iterator();
-			String key = null;
-			String qualifier = null;
-			if (isSubview()) {
-				qualifier = getMemberName() + ".";
-			}
-			while (it.hasNext()) {
-				String property = (String) it.next();
-				if (property.equals(getLastPropertyKeyName())) {
-					key = property;
-				}
-				else {
-					if (qualifier == null) {
-						propertyChanged(property);	
-					}
-					else {
-						getParent().propertyChanged(qualifier + property);
-					}				
-				}							
-			}
-			if (key != null) {				
-				if (qualifier == null) {
-					propertyChanged(key);	
-				}
-				else {
-					getParent().propertyChanged(qualifier + key);
-				}							
-			}		
-		} 
-		finally { 
-			hasToSearchOnChangeIfSubview = true;
+		setValues(values); 
+		Iterator it = values.keySet().iterator();
+		String key = null;
+		String qualifier = null;
+		if (isSubview()) {
+			qualifier = getMemberName() + ".";
 		}
-		
-				
+		while (it.hasNext()) {
+			String property = (String) it.next();
+			if (property.equals(getLastPropertyKeyName())) {
+				key = property;
+			}
+			else {
+				if (qualifier == null) {
+					propertyChanged(property);	
+				}
+				else {
+					getParent().propertyChanged(qualifier + property);
+				}				
+			}							
+		}
+		if (key != null) {				
+			if (qualifier == null) {
+				propertyChanged(key);	
+			}
+			else {
+				getParent().propertyChanged(qualifier + key);
+			}							
+		}		
 	}
 	
 	/**

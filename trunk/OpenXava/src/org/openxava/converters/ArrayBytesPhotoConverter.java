@@ -4,20 +4,17 @@ import org.openxava.util.*;
 
 
 /**
- * Un array de bytes (<tt>byte []</tt>) que en la db se guardará
- * como un objeto de tipo <tt>org.openxava.util.Photo</tt>. <p>
- * 
- * Util para guardar fotos en hypersonic, que no admite <tt>byte</tt>,
- * ni <tt>Blob</tt>, pero sí <tt>Object</tt>.<br>
+ * A bytes array (<tt>byte []</tt>) that it's stored in DB as
+ * a object of type <tt>org.openxava.util.Photo</tt>. <p> 
+ *
+ * Util for save photos in hypersonic, that it allows neither <tt>byte</tt>,
+ * nor <tt>Blob</tt>, but <tt>Object</tt>.<br>
  * 
  * @author Javier Paniza
  */
 public class ArrayBytesPhotoConverter implements IConverter {
 
 
-	/**
-	 * @see org.openxava.converters.IConversorTipo#toDB(Object)
-	 */
 	public Object toDB(Object o) throws ConversionException {
 		if (o == null) return null;
 		if (!(o instanceof byte [])) {		
@@ -27,9 +24,6 @@ public class ArrayBytesPhotoConverter implements IConverter {
 		return new Photo(f);
 	}
 	
-	/**
-	 * @see org.openxava.converters.IConversorTipo#toJava(Object)
-	 */
 	public Object toJava(Object o) throws ConversionException {
 		if (o == null) return null;
 		if (!(o instanceof Photo)) {		

@@ -5,11 +5,10 @@ import javax.naming.*;
 import org.openxava.util.*;
 
 /**
- * Proporciona el contexto por defecto para buscar <i>Enterprise JavaBeans</i>. <p>
+ * It provides the default context to look up <i>Enterprise JavaBeans</i>. <p>
  *
- * Es necesario configurar <tt>BeansContext.properties</tt>, para ver cómo
- * ir a la documentación de {@link BeansContextProviderFactory}.<br>
- *
+ * It's required to configure <tt>BeansContext.properties</tt>. See the
+ * doc in {@link BeansContextProviderFactory}.<br>
  *
  * @author  Javier Paniza
  */
@@ -20,35 +19,31 @@ public class BeansContext {
   private static IContextProvider provider;
 
   /**
-   * Contexto para buscar EJBs. <p>
+   * Context to lookup EJBs. <p>
    *
-   * @return Nunca será nulo.
+   * @return Not null.
    */
   public static IContext get() throws NamingException {	  	
 		IContext ctx = getProvider().getContext();
-		if (getSubcontexto() == null) return ctx;
-		return new JndiContext((Context) ctx.lookup(getSubcontexto()));
+		if (getSubcontext() == null) return ctx;
+		return new JndiContext((Context) ctx.lookup(getSubcontext()));
   }
   
   private final static IContextProvider getProvider() throws NamingException {
-	if (provider == null) {
-	  try {
-		provider = BeansContextProviderFactory.create();
-	  }
-	  catch (InitException ex) {
-		ex.printStackTrace();
-		throw new NamingException(XavaResources.getString("create_error", IContextProvider.class.getName()));
-	  }
-	}
-	return provider;
+  	if (provider == null) {
+  		try {
+  			provider = BeansContextProviderFactory.create();
+  		}
+  		catch (InitException ex) {
+  			ex.printStackTrace();
+  			throw new NamingException(XavaResources.getString("create_error", IContextProvider.class.getName()));
+  		}
+  	}
+  	return provider;
   }
   
-/**
- * Inserte aquí la descripción del método.
- * Fecha de creación: (02/08/2001 13:57:43)
- * @return java.lang.String
- */
-private static String getSubcontexto() throws NamingException {
-	return BeansContextProviderFactory.getSubcontext();
-}
+  private static String getSubcontext() throws NamingException {
+  	return BeansContextProviderFactory.getSubcontext();
+  }
+  
 }

@@ -13,99 +13,93 @@ import org.openxava.util.*;
 
 
 /**
- * Implantación de un <code>IEJBContext</code> para un servidor EJB 1.1. <p>
+ * Implementation of <code>IEJBContext</code> for a EJB 1.1 server. <p>
  *
- * Dado que EJB 1.1 normaliza bastantes cosas solo es necesaria una versión,
- * y no hacen falta archivos de propiedades ni nada parecido.<br>
+ * Since EJB 1.1 standardizes enough things only it's needed one version,
+ * and it is not required additional properties files.<br>
+ * If you can use {@link #getConnection() } without argument, you need to define
+ * in the bean a property named DATA_SOURCE that indicate the default data source.<p>
  *
- * Si se quiere usar {@link #getConnection() } sin argumentos, hay que definir en el bean
- * una propiedad llamada DATA_SOURCE que indique la fuente de datos por defecto.<p>
- * En la propiedad DATA_SOURCE también se indicar usuario y clave por defecto, 
- * así <tt>datasource;usuario;clave</tt>.<br>  
- *
- * Se recomienda (aunque no es obligado) que las fuentes de datos (<i>DataSource</i>)
- * se incluyan dentro de <tt>jdbc</tt>, por ejemplo: <tt>jdbc/Contabilidad, jdbc/Personal</tt>.
- * La busqueda de un <i>DataSource</i> se hace a partir de <tt>java:comp/env/</tt>. <p>
+ * In the DATA_SOURCE property you can put also the username and password by default,
+ * thus  <tt>datasource;usuario;clave</tt>.<br>
  *
  * @author  Javier Paniza
  */
 
 public class EJB11Context implements IEJBContextInit, Serializable {
 
-	// Si se cambia cambiar doc de cabecera, de getConnection() y de IEJBContext
-	private final static String PROPIEDAD_DATA_SOURCE_DEFECTO = "DATA_SOURCE";
+	// If changed, change heading doc, getConnection() doc and IEJBContext doc 
+	private final static String DATASOURCE_DEFAULT_PROPERTY = "DATA_SOURCE";
 
 	private final static String PRE_DS = "java:comp/env/";
-	// si se cambia, cambiar doc de cabecera
 	private final static String PRE_PRO = "java:comp/env/";
-	// si se cambia, cambiar doc de cabecera
+
 	private EJBContext ejbContext;
 	private transient Context jndiContext;
-	private String dataSourceDefecto;
-	private String usuario;
-	private String clave;
+	private String defaultDataSource;
+	private String user;
+	private String password;
 
-	/** Constructor por defecto. */
-	public EJB11Context() {
-	}
 	private void assertEJBContext() throws IllegalStateException {
 		if (ejbContext == null) {
 			throw new IllegalStateException(XavaResources.getString("ejb11context_invariant"));
 		}
 	}
+	
 	/**
-	 * Establece dataSourceDefecto, y si el usuario no está establecido
-	 * lo establece. <p>
+	 * It sets defaultDataSource, and if the user is not settled it sets it. 
 	 *
-	 * Confía en un valor de propieda de esta forma: <tt>datasource;usuario;clave</tt>,
-	 * aunque el separador puede ser también coma y dos puntos.<br> 
+	 * It trusts in a property value in this form: <tt>datasource;username;password</tt>, 
+	 * although the separator can be a comma or colon.<br> 
 	 */
-	private void establecerDataSourceDefecto() {
-		dataSourceDefecto = getProperty(PROPIEDAD_DATA_SOURCE_DEFECTO);
-		if (usuario == null) {
-			StringTokenizer st = new StringTokenizer(dataSourceDefecto, ";,:");
+	private void setDefaultDataSource() {
+		defaultDataSource = getProperty(DATASOURCE_DEFAULT_PROPERTY);
+		if (user == null) {
+			StringTokenizer st = new StringTokenizer(defaultDataSource, ";,:");
 			if (st.hasMoreTokens())
-				dataSourceDefecto = st.nextToken();
+				defaultDataSource = st.nextToken();
 			if (st.hasMoreTokens())
-				usuario = st.nextToken();
+				user = st.nextToken();
 			if (st.hasMoreTokens())
-				clave = st.nextToken();
+				password = st.nextToken();
 		}
 	}
-	// Implementa IEJBContext
+
+	
 	public Principal getCallerPrincipal() {
 		assertEJBContext();
 		return ejbContext.getCallerPrincipal();
 	}
-	// Implementa IEJBContext
+	
 	/**
-	 * La conexión se obtiene del dataSource definido en la propidad DATA_SOURCE del bean. <br>
-	 * También se puede especificar mediante código la fuente de datos por defecto,
-	 * llamando a {#setDefaultDataSource}, esto está por delante de lo definido en DATA_SOURCE.
+	 * The connection is obtained from data source defined in DATA_SOURCE property of bean. <br>
+	 * 
+	 * Also you can specify with code the default data source calling
+	 * to {#setDefaultDataSource}, this have priority over the defined in DATA_SOURCE.
 	 */
 	public Connection getConnection() throws SQLException {
-		if (dataSourceDefecto == null) {
-			establecerDataSourceDefecto();
-			if (Is.emptyString(dataSourceDefecto)) {
+		if (defaultDataSource == null) {
+			setDefaultDataSource();
+			if (Is.emptyString(defaultDataSource)) {
 				throw new SQLException(XavaResources.getString("ejb_datasource_required"));
 			}
 		}
-		return getConnection(dataSourceDefecto);
+		return getConnection(defaultDataSource);
 	}
-	// Implementa IEJBContext
-	public Connection getConnection(String nombre) throws SQLException {
+
+	public Connection getConnection(String name) throws SQLException {
 		try {
-			DataSource ds = (DataSource) getJndiContext().lookup(PRE_DS + nombre);
-			if (usuario == null) {
+			DataSource ds = (DataSource) getJndiContext().lookup(PRE_DS + name);
+			if (user == null) {
 				return ds.getConnection();
 			} else {
-				return ds.getConnection(usuario, clave);
+				return ds.getConnection(user, password);
 			}
 		} catch (NamingException ex) {
-			throw new SQLException(XavaResources.getString("datasource_not_found", nombre));
+			throw new SQLException(XavaResources.getString("datasource_not_found", name));
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			throw new SQLException(XavaResources.getString("datasource_not_found", nombre));									
+			throw new SQLException(XavaResources.getString("datasource_not_found", name));									
 		}
 
 	}
@@ -119,43 +113,40 @@ public class EJB11Context implements IEJBContextInit, Serializable {
 		}
 		return jndiContext;
 	}
-	// Implementa IEJBContext
-	public String getProperty(String nombre) {
+ 
+	public String getProperty(String name) {
 		Object rs = null;
 		try {
-			rs = getJndiContext().lookup(PRE_PRO + nombre);
+			rs = getJndiContext().lookup(PRE_PRO + name);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			// se de vuelve null
+			// returning null
 		}
 		if (rs == null)
 			return null;
 		return rs.toString();
 	}
 	
-	// Implementa IEJBContext
+
 	public boolean isCallerInRole(String roleName) {
 		assertEJBContext();
 		return ejbContext.isCallerInRole(roleName);
 	}
-	/**
-	 * @see org.openxava.util.IConnectionProvider
-	 */
-	public void setPassword(java.lang.String clave) {
-		this.clave = clave;
+	
+	public void setPassword(java.lang.String password) {
+		this.password = password;
 	}
-	// Implementa IEJBContext
-	public void setDefaultDataSource(String nombreDataSource) {
-		dataSourceDefecto = nombreDataSource;
+
+	public void setDefaultDataSource(String dataSourceName) {
+		defaultDataSource = dataSourceName;
 	}
-	// Implementa IEJBContextInit
+
 	public void setEJBContext(EJBContext ejbContext) {
 		this.ejbContext = ejbContext;
 	}
-	/**
-	 * @see org.openxava.util.IConnectionProvider
-	 */
-	public void setUser(java.lang.String usuario) {
-		this.usuario = usuario;
+	
+	public void setUser(java.lang.String user) {
+		this.user = user;
 	}
+	
 }

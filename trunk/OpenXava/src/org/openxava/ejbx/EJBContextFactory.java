@@ -6,7 +6,7 @@ import org.openxava.util.*;
 
 
 /**
- * Crea <code>IEJBContext</code>s. <p>
+ * It create <code>IEJBContext</code>s. <p>
  *
  * @author  Javier Paniza
  */
@@ -17,18 +17,19 @@ public class EJBContextFactory {
 
 
   /**
-   * Crea un <code>IEJBContext</code> usando para su implentación el <code>EJBContext</code> enviado. <br>
-   * <b>Postcondición:</b>
+   * It create a <code>IEJBContext</code> used for implementing the <code>EJBContext</code> indicated. <br> 
+   *
+   * <b>Postcondition:</b>
    * <ul>
    * <li> return != null
    * </ul>
-   * Enviar <code>null</code> como argumento provocará que la invariante del objeto creado no
-   * se cumpla, con las consecuencias que ello implica (lanzamiento de excepciones al intentar usarlo).<br>
- * @throws InitException
+   * If you send <code>null</code> as argument you can cause the invariant of the created objects
+   * with its consequences (throw of exception on use it). <br>
    */
   public static IEJBContext create(EJBContext ejbContext) throws InitException  {
 		IEJBContextInit rs = new EJB11Context();
 		rs.setEJBContext(ejbContext);
 		return rs;
   }
+  
 }

@@ -17,7 +17,7 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 			Map values = MapFacade.getValues(getModelName(), getView().getKeyValues(), memberNames);									
 			getView().setEditable(true);	
 			getView().setKeyEditable(false);			
-			getView().setValuesNotifying(values);
+			getView().setValues(values);
 		}
 		catch (ObjectNotFoundException ex) {
 			getView().clear();

@@ -6,11 +6,10 @@ import org.openxava.util.*;
 
 
 /**
- * Adaptador de un contexto JNDI a un {@link IContext}. <b>
+ * Adapter from a JNDI context to a {@link IContext}. <b>
  * 
- * Si el nombre jndi empieza por @subcontext@ ignora esta palabra.
+ * If the JNDI name starts with @subcontext@ ignores this word.
  *
- * @version 00.03.22
  * @author  Javier Paniza
  */
 
@@ -19,8 +18,9 @@ public class JndiContext implements IContext {
   private Context ctx;
 
   /**
-   * Se crea a partir del contexto JNDI que se quiere envolver. <br>
-   * <b>Precondiciones:</b>
+   * It's created from JNDI context that it wants wrap.
+   *
+   * <b>Preconditions:</b>
    * <ul>
    * <li> ctx != null
    * </ul>
@@ -30,9 +30,9 @@ public class JndiContext implements IContext {
   	this.ctx = ctx;
   }
   
-  public Object lookup(String nombre) throws NamingException {
-  	if (nombre.startsWith("@subcontext@")) nombre = nombre.substring("@subcontext@/".length()); // sinc con  doc de cabecera  	
-		return ctx.lookup(nombre);
+  public Object lookup(String name) throws NamingException {
+  	if (name.startsWith("@subcontext@")) name = name.substring("@subcontext@/".length()); // sync with heading doc  	
+		return ctx.lookup(name);
   }
   
   public void close() throws NamingException {

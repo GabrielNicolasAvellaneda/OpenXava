@@ -6,27 +6,27 @@ import org.openxava.util.*;
 
 
 /**
- * 04:41:10 PM
+ * It store dates, but never save null, instead save a 1/1/1 date. <p>
+ * 
  * @author Ana Andrés
  */
 public class NotNullDateConverter implements IConverter{
-	private static final Date FECHA_NULA = Dates.create(1,1,1);
+	
+	private static final Date NULL_DATE = Dates.create(1,1,1);
 	
 	public Object toJava(Object o) throws ConversionException {
 		if(o == null) return null;
 		if (!(o instanceof Date)) {		
-			throw new ConversionException(
-				"Se esperaba un dato de tipo Date para hacer la conversión");
+			throw new ConversionException("conversion_java_utildate_expected");
 		}
-		Date fecha = (Date)o;
-		return (fecha.compareTo(FECHA_NULA) == 0) ? null : fecha;
+		Date date = (Date)o;
+		return (date.compareTo(NULL_DATE) == 0) ? null : date;
 	}
 
 	public Object toDB(Object o) throws ConversionException {
-		if (o == null) return FECHA_NULA;
+		if (o == null) return NULL_DATE;
 		if (!(o instanceof Date)) {		
-			throw new ConversionException(
-				"Se esperaba un dato de tipo Date para hacer la conversión");
+			throw new ConversionException("conversion_db_utildate_expected");
 		}
 		return o;
 	}

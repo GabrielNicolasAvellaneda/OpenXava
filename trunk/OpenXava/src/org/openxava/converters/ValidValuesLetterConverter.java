@@ -4,9 +4,8 @@ import org.openxava.util.*;
 
 
 /**
- * En java un valores-posibles y en la base de datos una letra
- * correspondiente a la posición de la cadena que hay
- * en la propiedad 'letters'.
+ * In java a valid-values and in database a letter corresponding
+ * to the position in the string that it's in property 'letters'. <p>
  * 
  * @author Javier Paniza
  */
@@ -19,13 +18,13 @@ public class ValidValuesLetterConverter implements IConverter {
 			throw new ConversionException("conversion_db_integer_excepted");
 		}
 		assertLetters();
-		int valor = ((Integer) o).intValue();
-		if (valor == 0) return "";
+		int value = ((Integer) o).intValue();
+		if (value == 0) return "";
 		try {
-			return String.valueOf(getLetters().charAt (valor - 1));		
+			return String.valueOf(getLetters().charAt (value - 1));		
 		}
 		catch (IndexOutOfBoundsException ex) {
-			throw new ConversionException("conversion_db_valid_values", new Integer(valor), getLetters());
+			throw new ConversionException("conversion_db_valid_values", new Integer(value), getLetters());
 		}
 	}
 	
@@ -35,11 +34,11 @@ public class ValidValuesLetterConverter implements IConverter {
 			throw new ConversionException("conversion_java_string_expected");
 		}
 		assertLetters();
-		String valor  = (String) o;
-		if (Is.emptyString(valor)) return new Integer(0);
-		int idx = getLetters().indexOf(valor);
+		String value  = (String) o;
+		if (Is.emptyString(value)) return new Integer(0);
+		int idx = getLetters().indexOf(value);
 		if (idx < 0) {
-			throw new ConversionException("conversion_java_valid_values", valor,  getLetters());
+			throw new ConversionException("conversion_java_valid_values", value,  getLetters());
 		}
 		return new Integer(idx + 1);
 	}

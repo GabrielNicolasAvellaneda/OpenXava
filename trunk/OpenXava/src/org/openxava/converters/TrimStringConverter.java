@@ -1,6 +1,5 @@
 package org.openxava.converters;
 
-
 /**
  * @author Javier Paniza
  */

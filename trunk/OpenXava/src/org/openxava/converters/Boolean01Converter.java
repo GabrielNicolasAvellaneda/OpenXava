@@ -3,23 +3,13 @@ package org.openxava.converters;
 
 
 /**
- * En java un boolean y en la base de datos una cadena
- * que puede ser 1 o 0.
+ * In java boolean and in database Number that
+ * it can be 1 or 0.
  * 
  * @author Javier Paniza
  */
 public class Boolean01Converter implements IConverter {
 
-	/**
-	 * Constructor for ConversorBooleanSN.
-	 */
-	public Boolean01Converter() {
-		super();
-	}
-
-	/**
-	 * @see org.openxava.converters.IConversorTipo#toDB(Object)
-	 */
 	public Object toDB(Object o) throws ConversionException {
 		if (!(o instanceof Boolean)) {		
 			throw new ConversionException("conversion_db_boolean_expected");
@@ -27,9 +17,6 @@ public class Boolean01Converter implements IConverter {
 		return new Integer(booleanToInt(((Boolean) o).booleanValue()));
 	}
 	
-	/**
-	 * @see org.openxava.converters.IConversorTipo#toJava(Object)
-	 */
 	public Object toJava(Object o) throws ConversionException {
 		if (o == null) return Boolean.FALSE;
 		if (!(o instanceof Number)) {		
