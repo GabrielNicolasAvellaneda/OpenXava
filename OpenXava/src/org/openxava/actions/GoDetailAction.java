@@ -12,8 +12,6 @@ public class GoDetailAction extends BaseAction implements IChangeModeAction, ICh
 	private String nextSection;
 	private String nextAction;
 	private Tab tab;
-	private int page;
-
 
 	public String getNextMode() {		
 		return nextSection;
@@ -28,7 +26,6 @@ public class GoDetailAction extends BaseAction implements IChangeModeAction, ICh
 		else {
 			nextSection = IChangeModeAction.DETAIL;
 		}
-		page = getTab().getPage(); 
 	}
 
 	public String getNextAction() throws XavaException {
@@ -52,10 +49,4 @@ public class GoDetailAction extends BaseAction implements IChangeModeAction, ICh
 		this.tab = tab;
 	}
 
-	public int getPage() {
-		return page;
-	}
-	public void setPage(int page) {
-		this.page = page;
-	}
 }

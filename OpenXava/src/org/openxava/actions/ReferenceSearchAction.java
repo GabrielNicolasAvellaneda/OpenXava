@@ -30,10 +30,11 @@ public class ReferenceSearchAction extends ViewBaseAction implements INavigation
 	
 	private String keyProperty;
 	private View referenceSubview;		
-	private Tab tab;
+	private Tab tab;	
 	private String currentReferenceLabel; 
 	
-	public void execute() throws Exception {				
+	public void execute() throws Exception {		
+		setTab(new Tab());
 		ViewInfo viewInfo = getSubview(getView(), createMemberName());
 		View subview = viewInfo.view;
 		MetaModel metaRootModel = viewInfo.parent.getMetaModel();		

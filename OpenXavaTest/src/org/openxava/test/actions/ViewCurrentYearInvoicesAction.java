@@ -13,6 +13,7 @@ public class ViewCurrentYearInvoicesAction extends BaseAction implements INaviga
 	private Tab tab;
 
 	public void execute() throws Exception {
+		setTab(new Tab());
 		getTab().setModelName("Invoice");
 		getTab().setTabName("Current");
 	}

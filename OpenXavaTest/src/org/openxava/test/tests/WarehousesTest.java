@@ -12,6 +12,16 @@ public class WarehousesTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Warehouses");		
 	}	
 	
+	public void testNotLoseFilterOnChangeMode() throws Exception {
+		assertListRowCount(10);
+		setConditionValues(new String [] {"1"} );
+		execute("List.filter");
+		assertListRowCount(3);
+		execute("Mode.detailAndFirst");
+		execute("Mode.list");
+		assertListRowCount(3);
+	}
+	
 	public void testFilterFromNoFirstPage() throws Exception {
 		execute("List.goPage", "page=2");
 		String [] condition = {
