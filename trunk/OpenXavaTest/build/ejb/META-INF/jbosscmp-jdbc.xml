@@ -181,6 +181,16 @@
 
         </cmp-field>
          <cmp-field>
+            <field-name>shipment_type</field-name>
+            <column-name>SHIPMENT_TYPE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>shipment_number</field-name>
+            <column-name>SHIPMENT_NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
             <field-name>carrier_number</field-name>
             <column-name>CARRIER</column-name>
 
@@ -204,6 +214,17 @@
                </method-params>
             </query-method>
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o.type_number = ?1 ]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByShipment</method-name>
+               <method-params>
+                  <method-param>java.lang.Integer</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o.shipment_type = ?1 AND o.shipment_number = ?2 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -1191,7 +1212,7 @@
       <entity>
          <ejb-name>Shipment</ejb-name>
 
-         <table-name>XAVATEST_SHIPMENT</table-name>
+         <table-name>XAVATEST@separator@SHIPMENT</table-name>
 
          <cmp-field>
             <field-name>_Type</field-name>

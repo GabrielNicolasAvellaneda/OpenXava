@@ -24,6 +24,9 @@ public interface DeliveryHome
    public java.util.Collection findByType(int number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
+   public java.util.Collection findByShipment(java.lang.Integer type, int number)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public java.util.Collection findByCarrier(java.lang.Integer number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

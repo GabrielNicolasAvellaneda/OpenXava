@@ -76,6 +76,24 @@ public interface Delivery
    public int getType_number(  )
       throws java.rmi.RemoteException;
 
+   public org.openxava.test.ejb.Shipment getShipment(  )
+      throws java.rmi.RemoteException;
+
+   public void setShipment( org.openxava.test.ejb.Shipment newShipment )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.ejb.ShipmentKey getShipmentKey(  )
+      throws java.rmi.RemoteException;
+
+   public void setShipmentKey( org.openxava.test.ejb.ShipmentKey key )
+      throws java.rmi.RemoteException;
+
+   public java.lang.Integer getShipment_type(  )
+      throws java.rmi.RemoteException;
+
+   public int getShipment_number(  )
+      throws java.rmi.RemoteException;
+
    public org.openxava.test.ejb.Carrier getCarrier(  )
       throws java.rmi.RemoteException;
 

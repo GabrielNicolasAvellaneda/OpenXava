@@ -59,6 +59,10 @@
       </columns>
       <columns xmi:id="Delivery_type_number" name="type_number">
       </columns>
+      <columns xmi:id="Delivery_shipment_type" name="shipment_type">
+      </columns>
+      <columns xmi:id="Delivery_shipment_number" name="shipment_number">
+      </columns>
       <columns xmi:id="Delivery_carrier_number" name="carrier_number">
       </columns>
       <columns xmi:id="Delivery_invoice_year" name="invoice_year">

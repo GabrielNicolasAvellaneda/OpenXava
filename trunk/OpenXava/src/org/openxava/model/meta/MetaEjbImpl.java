@@ -386,6 +386,10 @@ public class MetaEjbImpl implements Serializable {
 	
 	private void asignarUsandoConversor(Object o, String nombrePropiedad, Field f, Object valor) throws XavaException {		
 		try {			
+			MetaProperty pr = metaModel.getMetaProperty(nombrePropiedad);			
+			if (pr.hasValidValues() && valor instanceof String) {
+				valor = new Integer(pr.getValidValueIndex(valor));
+			}
 			IConverter conversor = getMapeo().getConverter(nombrePropiedad);			
 			f.set(o, conversor.toDB(valor));
 		}
