@@ -183,8 +183,12 @@
 	
 	<view name="Simple" members="number; type; name; address"/>
 	
-	<view name="OnlyReadName" members="number; type; name; address">
+	<view name="SomeMembersReadOnly" members="number; type; name; seller; alternateSeller">
 		<property-view property="name" read-only="true"/>
+		<reference-view reference="seller" read-only="true"/>
+		<reference-view reference="alternateSeller" read-only="true">
+			<descriptions-list/>
+		</reference-view>
 	</view>
 
 	<view name="SectionGroup">	

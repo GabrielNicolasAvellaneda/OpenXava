@@ -157,6 +157,7 @@ public class ViewParser extends XmlElementsNames {
 		MetaReferenceView a = new MetaReferenceView();		
 		a.setReferenceName(el.getAttribute(xreference[lang]));
 		a.setViewName(el.getAttribute(xview[lang]));
+		a.setReadOnly(ParserUtil.getAttributeBoolean(el, xread_only[lang]));
 		if (!Is.emptyString(el.getAttribute(xframe[lang]))) {
 			a.setFrame(ParserUtil.getAttributeBoolean(el, xframe[lang]));
 		}

@@ -84,6 +84,7 @@ public class View {
 	private Collection actionsNamesDetail;
 	private Collection actionsNamesList;
 	private int [] listSelected;
+	private boolean readOnly; // Always not editable, marked from xml
 
 	private Collection metaPropertiesIncludingSections;
 
@@ -458,69 +459,75 @@ public class View {
 
 	private void crearYAñadirSubvista(MetaMember miembro) throws XavaException {
 		if (!(miembro instanceof MetaReference || miembro instanceof MetaCollection || miembro instanceof MetaGroup)) return;				
-		View nueva = new View();
-		nueva.setSubview(true);
-		nueva.setParent(this);
+		View newView = new View();
+		newView.setSubview(true);
+		newView.setParent(this);
 		
-		nueva.setRequest(this.request);
+		newView.setRequest(this.request);
 		MetaReference ref = null;
 		if (miembro instanceof MetaReference) {
 			ref = (MetaReference) miembro;
 		}
 		else if (miembro instanceof MetaCollection) {
 			ref = ((MetaCollection) miembro).getMetaReference();
-			nueva.setRepresentsCollection(true);						
+			newView.setRepresentsCollection(true);						
 		}
-		else {// MetaGrupo			
-			nueva.setModelName(getModelName());			 
+		else {// MetaGroup			
+			newView.setModelName(getModelName());			 
 			MetaView metaVista = ((MetaGroup) miembro).getMetaView();
-			nueva.setMetaView(metaVista);						
-			getGroupsViews().put(miembro.getName(), nueva);						
+			newView.setMetaView(metaVista);						
+			getGroupsViews().put(miembro.getName(), newView);						
 			return;			
-		}
+		}		
 		if (ref.isAggregate()) {
-			nueva.setModelName(getModelName() + "." + ref.getReferencedModelName());
-			nueva.setRepresentsAggregate(true);
-			nueva.setEditable(isEditable());			
+			newView.setModelName(getModelName() + "." + ref.getReferencedModelName());
+			newView.setRepresentsAggregate(true);
+			newView.setEditable(isEditable()); 
 		}
 		else {
-			nueva.setModelName(ref.getReferencedModelName());
-			nueva.setRepresentsEntityReference(true);
-			nueva.setKeyEditable(isEditable());
-			nueva.setEditable(false);				
+			newView.setModelName(ref.getReferencedModelName());
+			newView.setRepresentsEntityReference(true);
+			newView.setKeyEditable(isEditable());
+			newView.setEditable(false);	
 		}
-		nueva.setMetaView(getMetaView().getMetaView(ref));
-		if (nueva.isRepresentsCollection()) {
-			MetaCollectionView metaVistaColeccion = getMetaView().getMetaViewCollection(miembro.getName());
+		newView.setMetaView(getMetaView().getMetaView(ref));
+		if (newView.isRepresentsCollection()) {
+			MetaCollectionView metaVistaColeccion = getMetaView().getMetaCollectionView(miembro.getName());
 			if (metaVistaColeccion != null) {
 				Collection nombresPropiedadesLista = metaVistaColeccion.getPropertiesListNames();
 				if (!nombresPropiedadesLista.isEmpty()) {
-					nueva.setMetaPropertiesList(nombresAMetaPropiedad(nueva, nombresPropiedadesLista));
+					newView.setMetaPropertiesList(nombresAMetaPropiedad(newView, nombresPropiedadesLista));
 				}
 				Collection nombresAccionesDetalle = metaVistaColeccion.getActionsDetailNames();
 				if (!nombresAccionesDetalle.isEmpty()) {
-					nueva.setActionsNamesDetail(nombresAccionesDetalle);
+					newView.setActionsNamesDetail(nombresAccionesDetalle);
 				}
 				Collection nombresAccionesLista = metaVistaColeccion.getActionsListNames();
 				if (!nombresAccionesLista.isEmpty()) {
-					nueva.setActionsNamesList(nombresAccionesLista);
+					newView.setActionsNamesList(nombresAccionesLista);
 				}
-				nueva.setEditCollectionElementAction(metaVistaColeccion.getEditActionName());
-				nueva.setKeyEditable(!metaVistaColeccion.isReadOnly());
-				nueva.setEditable(!metaVistaColeccion.isReadOnly());				
-				nueva.setCollectionEditable(!metaVistaColeccion.isReadOnly() && !metaVistaColeccion.isEditOnly());
-				nueva.setCollectionMembersEditables(metaVistaColeccion.isEditOnly());
+				newView.setEditCollectionElementAction(metaVistaColeccion.getEditActionName());
+				newView.setKeyEditable(!metaVistaColeccion.isReadOnly());
+				newView.setEditable(!metaVistaColeccion.isReadOnly());				
+				newView.setCollectionEditable(!metaVistaColeccion.isReadOnly() && !metaVistaColeccion.isEditOnly());
+				newView.setCollectionMembersEditables(metaVistaColeccion.isEditOnly());
 				
-				nueva.setViewName(metaVistaColeccion.getViewName()); 								
+				newView.setViewName(metaVistaColeccion.getViewName()); 								
 			}
 			else {
-				nueva.setEditable(true);
-				nueva.setCollectionEditable(true);
-				nueva.setCollectionMembersEditables(true);
+				newView.setEditable(true);
+				newView.setCollectionEditable(true);
+				newView.setCollectionMembersEditables(true);
 			}
 		}
-		nueva.setMemberName(miembro.getName());		
-		subviews.put(miembro.getName(), nueva);
+		else {
+			MetaReferenceView metaReferenceView = getMetaView().getMetaReferenceView(ref);
+			if (metaReferenceView != null) {
+				newView.setReadOnly(metaReferenceView.isReadOnly());
+			}
+		}
+		newView.setMemberName(miembro.getName());		
+		subviews.put(miembro.getName(), newView);
 	} 
 	 
 		
@@ -1058,7 +1065,7 @@ public class View {
 	}
 
 	public boolean isKeyEditable() {
-		return keyEditable;
+		return !isReadOnly() && keyEditable;
 	}
 
 	public void setKeyEditable(boolean b) throws XavaException {
@@ -1093,7 +1100,9 @@ public class View {
 	 * Si en estos momento se puede editar.
 	 */
 	public boolean isEditable(MetaReference metaReference) {
-		try {									
+		try {
+			MetaReferenceView metaReferenceView = getMetaView().getMetaReferenceView(metaReference);
+			if (metaReferenceView != null && metaReferenceView.isReadOnly()) return false;
 			if (metaReference.isKey()) return isKeyEditable();
 			if (!isEditable()) return false;			
 			return isMarkAsEditable(metaReference.getName());
@@ -1132,7 +1141,7 @@ public class View {
 	}
 
 	public boolean isEditable() {
-		return editable;
+		return !isReadOnly() && editable;
 	}
 
 	public void setEditable(boolean b) throws XavaException {		
@@ -2043,13 +2052,13 @@ public class View {
 	}
 
 	public boolean isCreateNewForReference(MetaReference ref) throws XavaException {
-		MetaReferenceView viewRef = getMetaView().getMetaViewReference(ref);		
+		MetaReferenceView viewRef = getMetaView().getMetaReferenceView(ref);		
 		if (viewRef == null) return true;
 		return viewRef.isCreate();
 	}
 	
 	public boolean isSearchForReference(MetaReference ref) throws XavaException {
-		MetaReferenceView viewRef = getMetaView().getMetaViewReference(ref);		
+		MetaReferenceView viewRef = getMetaView().getMetaReferenceView(ref);		
 		if (viewRef == null) return true;
 		return viewRef.isSearch();
 	}
@@ -2351,4 +2360,10 @@ public class View {
 		}		
 	}
 	
+	private boolean isReadOnly() {
+		return readOnly;
+	}
+	private void setReadOnly(boolean onlyRead) {
+		this.readOnly = onlyRead;
+	}
 }
