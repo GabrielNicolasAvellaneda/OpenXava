@@ -301,6 +301,9 @@ public class MetaComponent implements Serializable {
 		if (packageName==null) {
 			try {
 				packageName = getPackages().getProperty(getName());
+				if (packageName == null) {
+					packageName = getPackagesEJB().getProperty(getName());
+				}
 			}
 			catch (Exception ex) {
 				ex.printStackTrace();
