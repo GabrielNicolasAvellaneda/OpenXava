@@ -2279,7 +2279,7 @@ public class View {
 		else {			
 			String nombrePropiedadFoco = idFocusProperty.substring(prefijo.length());			
 			int idx = nombrePropiedadFoco.indexOf('.'); 
-			if (idx < 0) {
+			if (idx < 0) {			
 				String nombre = getNombreSiguientePropiedadFoco(nombrePropiedadFoco);
 				return nombre==null?getIdPrimeraPropiedadEditable(prefijo):prefijo + nombre;
 			}
@@ -2328,6 +2328,18 @@ public class View {
 				isEditable((MetaProperty) m)) {	
 				return m.getName();
 			}
+			if (m instanceof MetaReference &&				 
+				isEditable((MetaReference) m)) {
+				MetaReference ref = (MetaReference) m;
+				Collection keys = ref.getMetaModelReferenced().getKeyPropertiesNames();
+				if (keys.size() == 1) {
+					String key = (String) keys.iterator().next();
+					return m.getName() + "." + key;
+				}
+				else {
+					return m.getName();
+				}
+			}			
 		}
 		if (hasSections()) {
 			return getSectionView(getActiveSection()).getNombreSiguientePropiedadFoco(nombreMiembro);

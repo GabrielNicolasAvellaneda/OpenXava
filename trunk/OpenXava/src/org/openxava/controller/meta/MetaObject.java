@@ -5,14 +5,13 @@ import java.util.*;
 
 import org.openxava.util.*;
 
-
 /**
  * @author Javier Paniza
  */
 
 public class MetaObject {
 	
-	private final static Class [] TIPO_PARAMETROS = { java.lang.String.class }; 
+	private final static Class [] PARAMETER_TYPES = { java.lang.String.class }; 
 	
 	private String name;
 	private String className;
@@ -56,9 +55,9 @@ public class MetaObject {
 					return clase.newInstance();
 			}
 			else {			
-				Constructor constructor = clase.getConstructor(TIPO_PARAMETROS);
-				String [] valores = { value };
-				return constructor.newInstance(valores);  
+				Constructor constructor = clase.getConstructor(PARAMETER_TYPES);
+				String [] values = { value };
+				return constructor.newInstance(values);  
 			}
 		}
 		catch (NoSuchMethodException ex) {

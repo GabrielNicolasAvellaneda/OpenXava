@@ -6,8 +6,8 @@ import org.openxava.controller.meta.*;
 import org.openxava.util.*;
 
 /**
- * Lee primero las variables enviadas al crear (normalmente extraidas del módulo),
- * y después todas las definidas en los controladores.
+ * It read first the variables sent on create (it extracted from module),
+ * and then all variable defined in controllers. <p>
  * 
  * @author Javier Paniza
  */
@@ -16,24 +16,20 @@ public class Environment implements java.io.Serializable {
 	
 	private Map localVariables;
 	
-	/**
-	 * 
-	 * @param variablesLocales Puede ser nulo.
-	 */
-	public Environment(Map variablesLocales) {
-		this.localVariables = variablesLocales;
+	public Environment(Map localVariables) {
+		this.localVariables = localVariables;
 	}
 
 	/**
-	 * @return Nulo si no existe.
+	 * @return Null if does not exists.
 	 */
-	public String getValue(String nombre) throws XavaException {
-		String valor = null;
+	public String getValue(String name) throws XavaException {
+		String value = null;
 		if (localVariables != null) {
-			valor = (String) localVariables.get(nombre);
+			value = (String) localVariables.get(name);
 		}
-		if (valor != null) return valor;
-		return MetaControllers.getEnvironmentVariable(nombre);
+		if (value != null) return value;
+		return MetaControllers.getEnvironmentVariable(name);
 	}
 
 }

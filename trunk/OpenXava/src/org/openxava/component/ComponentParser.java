@@ -1,6 +1,5 @@
 package org.openxava.component;
 
-
 import org.openxava.mapping.xmlparse.*;
 import org.openxava.model.meta.xmlparse.*;
 import org.openxava.tab.meta.xmlparse.*;
@@ -8,8 +7,6 @@ import org.openxava.util.*;
 import org.openxava.util.xmlparse.*;
 import org.openxava.view.meta.xmlparse.*;
 import org.w3c.dom.*;
-
-
 
 /**
  * @author: Javier Paniza
@@ -27,9 +24,6 @@ class ComponentParser extends ParserBase {
 		parser.parse();		
 		return parser.getComponent();
 	}
-	
-
-
 	
 	private void createAggregate() throws XavaException {
 		NodeList l = getRoot().getElementsByTagName(xaggregate[lang]);

@@ -18,7 +18,7 @@ public class ControllersParser extends ParserBase {
 		super(xmlFileURL, language);
 	}
 	
-	public static void configurarControladores(String context) throws XavaException {
+	public static void configureControllers(String context) throws XavaException {
 		ControllersParser enParser = new ControllersParser("controllers.xml", ENGLISH);
 		enParser.setContext(context);
 		enParser.parse();		
@@ -35,7 +35,7 @@ public class ControllersParser extends ParserBase {
 		if (!isContextComun(context) && !context.equals(this.context)) return null;		
 		result.setLabel(el.getAttribute(xlabel[lang]));
 		result.setClassName(el.getAttribute(xclass[lang]));
-		llenarHeredas(el, result);		
+		fillExtends(el, result);		
 		fillActions(el, result);
 		return result;
 	}
@@ -99,8 +99,8 @@ public class ControllersParser extends ParserBase {
 		result.setHidden(getAttributeBoolean(el, xhidden[lang]));
 		result.setOnInit(getAttributeBoolean(el, xon_init[lang]));
 		result.setByDefault(toByDefault(el.getAttribute(xby_default[lang])));
-		llenarPoner(el, result);
-		llenarUsaObjetos(el, result);
+		fillSet(el, result);
+		fillUseObject(el, result);
 		return result;
 	}
 	
@@ -112,16 +112,16 @@ public class ControllersParser extends ParserBase {
 		return MetaAction.NEVER;
 	}
 
-	private void llenarPoner(Element el, MetaAction container)
+	private void fillSet(Element el, MetaAction container)
 		throws XavaException {
 		NodeList l = el.getElementsByTagName(xset[lang]);
 		int c = l.getLength();
 		for (int i = 0; i < c; i++) {
-			container._addMetaSet(crearPoner(l.item(i)));
+			container._addMetaSet(createSet(l.item(i)));
 		}
 	}
 	
-	private MetaSet crearPoner(Node n) throws XavaException {
+	private MetaSet createSet(Node n) throws XavaException {
 		Element el = (Element) n;
 		MetaSet a = new MetaSet();		
 		a.setPropertyName(el.getAttribute(xproperty[lang]));
@@ -149,7 +149,7 @@ public class ControllersParser extends ParserBase {
 		return result;
 	}
 
-	private void llenarHeredas(Element el, MetaController container)
+	private void fillExtends(Element el, MetaController container)
 		throws XavaException {
 		NodeList l = el.getElementsByTagName(xextends[lang]);
 		int c = l.getLength();
@@ -169,7 +169,7 @@ public class ControllersParser extends ParserBase {
 		}
 	}
 	
-	private void llenarUsaObjetos(Element el, MetaAction container)
+	private void fillUseObject(Element el, MetaAction container)
 		throws XavaException {
 		NodeList l = el.getElementsByTagName(xuse_object[lang]);
 		int c = l.getLength();
