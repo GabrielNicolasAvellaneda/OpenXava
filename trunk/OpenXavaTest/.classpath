@@ -10,5 +10,6 @@
 	<classpathentry kind="src" path="properties"/>
 	<classpathentry kind="src" path="/OpenXava"/>
 	<classpathentry kind="var" path="JBOSS_HOME/client/jbossall-client.jar"/>
+	<classpathentry kind="src" path="hibernate"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>

@@ -216,6 +216,35 @@
 		</action>			
 	</controller>
 	
+	<controller name="FamiliesHibernate"> 
+		<action name="search" image="images/search.gif" hidden="true"
+			class="org.openxava.test.actions.FamilyHibernateSearchAction">					
+			<use-object name="xava_view"/>			
+		</action>	
+				
+		<action name="save" mode="detail"
+			class="org.openxava.test.actions.FamilyHibernateSaveAction"
+			image="images/save.gif"
+			keystroke="F3">			
+			<use-object name="xava_view"/>
+		</action>
+		
+		<action name="delete" mode="detail"
+			class="org.openxava.test.actions.FamilyHibernateDeleteAction"
+			image="images/delete.gif"
+			keystroke="F4">
+			<use-object name="xava_view"/>
+		</action>
+		
+		<action name="new" 
+			class="org.openxava.actions.NewAction"
+			image="images/new.gif"
+			keystroke="F2">
+			<use-object name="xava_view"/>			
+		</action>
+			
+	</controller>
+		
 	<controller name="Remarks">
 		<action name="hideRemarks" 
 			class="org.openxava.test.actions.HideShowPropertyAction">					
