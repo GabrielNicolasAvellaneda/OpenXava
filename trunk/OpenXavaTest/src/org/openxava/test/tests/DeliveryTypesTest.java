@@ -59,9 +59,11 @@ public class DeliveryTypesTest extends ModuleTestBase {
 		execute("CRUD.delete");
 		execute("ConfirmDelete.confirmDelete");
 		assertError("Delivery type can not delete because it is used in deliveries");
+		assertEditable("description"); // because return to main view (and controllers)
 		
 		delivery.remove();
 		
+		execute("CRUD.delete");
 		execute("ConfirmDelete.confirmDelete");
 		assertNoErrors();
 		assertMessage("DeliveryType deleted successfully");				 		
