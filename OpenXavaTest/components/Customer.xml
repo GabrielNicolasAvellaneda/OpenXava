@@ -187,7 +187,7 @@
 		<property-view property="name" read-only="true"/>
 		<reference-view reference="seller" read-only="true"/>
 		<reference-view reference="alternateSeller" read-only="true">
-			<descriptions-list/>
+			<descriptions-list description-properties="level.description, name"/>
 		</reference-view>
 	</view>
 

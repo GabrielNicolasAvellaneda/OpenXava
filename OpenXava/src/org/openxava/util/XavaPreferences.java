@@ -51,10 +51,6 @@ public class XavaPreferences {
 		return "true".equalsIgnoreCase(getProperties().getProperty("tabAsEJB", "false"));
 	}
 	
-	public boolean isDescriptionsCalculatorAsEJB() {
-		return "true".equalsIgnoreCase(getProperties().getProperty("descriptionsCalculatorAsEJB", "false"));
-	}
-	
 	public boolean isShowCountInList() {
 		return "true".equalsIgnoreCase(getProperties().getProperty("showCountInList", "true"));
 	}

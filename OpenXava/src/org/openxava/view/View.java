@@ -73,7 +73,7 @@ public class View implements java.io.Serializable {
 	private Messages messages; 
 	private Messages errors;
 	private Set noEditablesMemberNames;
-	private HttpServletRequest request;
+	private transient HttpServletRequest request;
 	private Collection depends;
 	private boolean hasToSearchOnChangeIfSubview = true;
 	private View [] sectionsViews;

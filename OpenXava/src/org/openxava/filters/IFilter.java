@@ -5,7 +5,7 @@ package org.openxava.filters;
  * 
  * @author Javier Paniza
  */
-public interface IFilter {
+public interface IFilter extends java.io.Serializable {
 	
 	/**	  
 	 * @param o Argumento a filtrar. Un objeto
