@@ -21,7 +21,7 @@
 	</target>
 		
 	<target name="regenerateGenerator">
-		<ant antfile="../OpenXava/build.xml" target="regenerateEJBGenerator"/>
+		<ant antfile="../OpenXava/build.xml" target="regenerateGenerator"/>
 		<ant antfile="../OpenXava/build.xml" target="generateXDoclet"/>		
 	</target>
 			
@@ -30,6 +30,7 @@
 	</target>
 	
 	<target name="generateHibernate">
+		<ant antfile="../OpenXava/build.xml" target="regenerateGenerator"/>		
 		<ant antfile="../OpenXava/build.xml" target="generateHibernate"/>		
 	</target>
 	
