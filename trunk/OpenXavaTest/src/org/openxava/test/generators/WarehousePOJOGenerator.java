@@ -10,7 +10,7 @@ import org.openxava.util.*;
 /**
  * @author Javier Paniza
  */
-public class WarehouseGenerator implements IPropertyCodeGenerator {
+public class WarehousePOJOGenerator implements IPropertyCodeGenerator {
 		
 	private static String template;
 
@@ -23,7 +23,7 @@ public class WarehouseGenerator implements IPropertyCodeGenerator {
 	
 	private String getTemplate() throws IOException {
 		if (template == null) {
-			template = Resources.loadAsString(WarehouseGenerator.class, "org/openxava/test/generators/warehouse_property.template");  
+			template = Resources.loadAsString(WarehousePOJOGenerator.class, "org/openxava/test/generators/warehouse_pojo_property.template");  
 		}
 		return template;
 	}
