@@ -28,9 +28,10 @@ if (WebEditors.mustToFormat(p)) {
 }
 boolean editable = view.isEditable(p);
 String editableKey = propertyKey + "_EDITABLE_";
+String labelKey = propertyKey + "_LABEL_";
 
 int labelFormat = view.getLabelFormatForProperty(p);
-
+String label = view.getLabelForProperty(p);
 %>
 
 <%@ include file="htmlTagsEditor.jsp"%>
@@ -39,7 +40,7 @@ int labelFormat = view.getLabelFormatForProperty(p);
 
 <%=preLabel%>
 <% if (labelFormat == MetaPropertyView.NORMAL_LABEL) { %>
-<%=p.getLabel(request)%>
+<%=label%>
 <% } %>
 <%=postLabel%>
 <%=preIcons%>
@@ -53,9 +54,9 @@ int labelFormat = view.getLabelFormatForProperty(p);
 <%=postIcons%>
 <%=preEditor%>
 <% if (labelFormat == MetaPropertyView.SMALL_LABEL) { 
-	String label = labelFormat == MetaPropertyView.SMALL_LABEL?p.getLabel(request):"&nbsp;";
+	label = labelFormat == MetaPropertyView.SMALL_LABEL?label:"&nbsp;";
 %>
-<table border='0' cellpadding='0', cellspacing='0'><tr><td align='bottom'>
+<table border='0' cellpadding='0', cellspacing='0'><tr><td align='bottom' id='<%=labelKey%>'>
 <span class='smallLabel'><%=label%></span>
 
 </td></tr>

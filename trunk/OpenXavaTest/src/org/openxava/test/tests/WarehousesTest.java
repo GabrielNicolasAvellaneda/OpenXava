@@ -12,6 +12,13 @@ public class WarehousesTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Warehouses");		
 	}	
 	
+	public void testChangeValueProgrammatic() throws Exception {
+		execute("CRUD.new");
+		assertLabel("name", "Name");
+		execute("Warehouses.changeNameLabel");
+		assertLabel("name", "Malnom");
+	}
+	
 	public void testNotLoseFilterOnChangeMode() throws Exception {
 		assertListRowCount(10);
 		setConditionValues(new String [] {"1"} );
