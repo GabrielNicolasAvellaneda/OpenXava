@@ -160,7 +160,7 @@
 			year, number, date, paid;
 			customerDiscount, customerTypeDiscount, yearDiscount;
 			comment;
-			<section name="seller">customer</section>
+			<section name="customer">customer</section>
 			<section name="details">details</section>			
 			<section name="amounts">amountsSum; vatPercentage; vat</section>
 			<section name="deliveries">deliveries</section>

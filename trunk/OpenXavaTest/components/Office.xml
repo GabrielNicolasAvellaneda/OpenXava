@@ -11,16 +11,29 @@
 <component name="Office">
 
 	<entity>
-		<property name="zoneNumber" key="true"
-			size="3" required="true" type="int"/>   						
 		<property name="number" key="true"
 			size="3" required="true" type="int"/>   									
+		<property name="zoneNumber"
+			size="3" required="true" type="int"/>   												
 		<property name="name" type="String"
 			size="40" required="true"/>
 		<reference name="mainWarehouse" model="Warehouse2" required="true"/>	
 		<reference name="officeManager" model="Clerk"/>	
 		<reference name="defaultCarrier" model="Carrier"/>
 	</entity>
+	
+	<view>
+		<members>			
+			number;
+			<section name="data">
+				zoneNumber;
+				name;
+				mainWarehouse;
+				officeManager;
+				defaultCarrier;
+			</section>
+		</members>
+	</view>
 	
 	<tab>
 		<properties>zoneNumber, number, name, mainWarehouse.name, officeManager.name, defaultCarrier.name</properties>

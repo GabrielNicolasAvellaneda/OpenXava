@@ -44,7 +44,7 @@
       <entity>
          <ejb-name>Office</ejb-name>
 
-         <table-name>XAVATEST_OFFICE</table-name>
+         <table-name>XAVATEST@separator@OFFICE</table-name>
 
          <cmp-field>
             <field-name>_Name</field-name>
@@ -52,13 +52,13 @@
 
         </cmp-field>
          <cmp-field>
-            <field-name>number</field-name>
-            <column-name>NUMBER</column-name>
+            <field-name>_ZoneNumber</field-name>
+            <column-name>ZONE</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>zoneNumber</field-name>
-            <column-name>ZONE</column-name>
+            <field-name>number</field-name>
+            <column-name>NUMBER</column-name>
 
         </cmp-field>
          <cmp-field>
@@ -86,7 +86,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.number = ?1 AND o.officeManager_number = ?2 AND o.zoneNumber = ?3 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.number = ?1 AND o.officeManager_number = ?2 AND o._ZoneNumber = ?3 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -107,7 +107,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.mainWarehouse_number = ?1 AND o.zoneNumber = ?2 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.mainWarehouse_number = ?1 AND o._ZoneNumber = ?2 ]]></jboss-ql>
 
 	     </query>
 

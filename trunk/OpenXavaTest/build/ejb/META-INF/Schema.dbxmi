@@ -20,9 +20,9 @@
 
       <columns xmi:id="Office__Name" name="_Name">
       </columns>
-      <columns xmi:id="Office_number" name="number">
+      <columns xmi:id="Office__ZoneNumber" name="_ZoneNumber">
       </columns>
-      <columns xmi:id="Office_zoneNumber" name="zoneNumber">
+      <columns xmi:id="Office_number" name="number">
       </columns>
       <columns xmi:id="Office_officeManager_number" name="officeManager_number">
       </columns>

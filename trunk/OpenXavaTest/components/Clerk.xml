@@ -14,7 +14,7 @@
 		<property name="name" type="String"
 			size="40" required="true"/>
 	</entity>
-				
+		
 	<entity-mapping table="XAVATEST@separator@CLERK">
 		<property-mapping
 			property="zoneNumber" column="ZONE"/>

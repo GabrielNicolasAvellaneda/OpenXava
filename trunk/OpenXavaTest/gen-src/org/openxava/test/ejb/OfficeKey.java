@@ -12,41 +12,30 @@ public class OfficeKey
 {
 
    public int number;
-   public int zoneNumber;
 
    public OfficeKey()
    {
    }
 
-   public OfficeKey( int number,int zoneNumber )
+   public OfficeKey( int number )
    {
       this.number = number;
-      this.zoneNumber = zoneNumber;
    }
 
    public int getNumber()
    {
       return number;
    }
-   public int getZoneNumber()
-   {
-      return zoneNumber;
-   }
 
    public void setNumber(int number)
    {
       this.number = number;
-   }
-   public void setZoneNumber(int zoneNumber)
-   {
-      this.zoneNumber = zoneNumber;
    }
 
    public int hashCode()
    {
       int _hashCode = 0;
          _hashCode += (int)this.number;
-         _hashCode += (int)this.zoneNumber;
 
       return _hashCode;
    }
@@ -66,7 +55,6 @@ public class OfficeKey
       else
       {
          eq = eq && this.number == pk.number;
-         eq = eq && this.zoneNumber == pk.zoneNumber;
       }
 
       return eq;
@@ -77,7 +65,6 @@ public class OfficeKey
    {
       StringBuffer toStringValue = new StringBuffer("[.");
          toStringValue.append(this.number).append('.');
-         toStringValue.append(this.zoneNumber).append('.');
       toStringValue.append(']');
       return toStringValue.toString();
    }
