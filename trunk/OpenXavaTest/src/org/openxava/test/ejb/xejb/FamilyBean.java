@@ -5,7 +5,6 @@ import javax.ejb.*;
 
 import org.openxava.calculators.*;
 import org.openxava.test.ejb.*;
-import org.openxava.test.ejb.*;
 
 /**
  * @ejb:bean name="Family" type="CMP" jndi-name="OpenXavaTest/ejb/openxava.test/Family" view-type="remote"

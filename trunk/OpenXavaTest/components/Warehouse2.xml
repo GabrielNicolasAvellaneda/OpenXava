@@ -17,6 +17,10 @@
 			size="40" required="true"/>
 	</entity>
 				
+	<tab>
+		<filter class="org.openxava.test.filters.MockFilter"/>
+	</tab>		
+				
 	<entity-mapping table="XAVATEST@separator@WAREHOUSE">
 		<property-mapping 
 			property="zoneNumber" column="ZONE"/>	
