@@ -26,13 +26,13 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 	private static Map providers;
 	
 	public static IConnectionProvider createByComponent(String componentName) throws XavaException {
-		String packageName = MetaComponent.get(componentName).getPackageNameWithSlash();
-		String jndi = getDatasourcesJNDIByPackage().getProperty(packageName);		
+		String packageName = MetaComponent.get(componentName).getPackageNameWithSlash();		
+		String jndi = getDatasourcesJNDIByPackage().getProperty(packageName);				
 		if (Is.emptyString(jndi)) {
 			throw new XavaException("no_data_source_for_component", componentName);
 		}
 		DataSourceConnectionProvider provider = new DataSourceConnectionProvider();		
-		provider.setDataSourceJNDI("java:/" + jndi);
+		provider.setDataSourceJNDI(jndi);
 		return provider;
 	}
 	
@@ -52,10 +52,18 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 	public DataSource getDataSource() throws NamingException {
 		if (dataSource == null) {
 			Context ctx = new InitialContext();
-			dataSource = (DataSource) ctx.lookup(getDataSourceJNDI());						
+			String jndi = isWebsphere(ctx)?"jdbc/" + getDataSourceJNDI():"java:/" + getDataSourceJNDI();
+			dataSource = (DataSource) ctx.lookup(jndi);						
 		}
 		return dataSource;
 	}
+	
+	private boolean isWebsphere(Context ctx) throws NamingException {
+		String pkgs = (String) ctx.getEnvironment().get("java.naming.factory.url.pkgs");
+		if (pkgs == null) return false;
+		return pkgs.indexOf("ibm") >= 0;
+	}
+	
 	/**
 	 * DataSource to wrap
 	 */
@@ -123,7 +131,7 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 				ex.printStackTrace();
 				throw new XavaException(ex.getLocalizedMessage());
 			}
-		}
+		}		
 		return datasourcesJNDIByPackage;
 	}
 	

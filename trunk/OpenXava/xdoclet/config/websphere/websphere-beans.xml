@@ -4,11 +4,7 @@
             xmi:id="MapFacade"
             jndiName="@subcontext@/ejb/@package@/MapFacade"
         >
-            <enterpriseBean xmi:type="ejb:Session" href="META-INF/ejb-jar.xml#MapFacade"/>
-				    <resRefBindings xmi:id="ResourceRefBinding_666" jndiName="jdbc/@datasource@">
-				      <bindingResourceRef href="META-INF/ejb-jar.xml#ResourceRef_1110393998360"/>
-				    </resRefBindings>
-										
+            <enterpriseBean xmi:type="ejb:Session" href="META-INF/ejb-jar.xml#MapFacade"/>										
         </ejbBindings>
 
         <ejbBindings
@@ -16,6 +12,9 @@
             jndiName="@subcontext@/ejb/@package@/Server"
         >
             <enterpriseBean xmi:type="ejb:Session" href="META-INF/ejb-jar.xml#Server"/>
+				    <resRefBindings xmi:id="ResourceRefBinding_666" jndiName="jdbc/@datasource@">
+				      <bindingResourceRef href="META-INF/ejb-jar.xml#Server_datasource"/>
+				    </resRefBindings>						
         </ejbBindings>
 
         <ejbBindings
@@ -23,4 +22,7 @@
             jndiName="@subcontext@/ejb/@package@/EntityTab"
         >
             <enterpriseBean xmi:type="ejb:Session" href="META-INF/ejb-jar.xml#EntityTab"/>
+				    <resRefBindings xmi:id="ResourceRefBinding_667" jndiName="jdbc/@datasource@">
+				      <bindingResourceRef href="META-INF/ejb-jar.xml#EntityTab_datasource"/>
+				    </resRefBindings>												
         </ejbBindings>
