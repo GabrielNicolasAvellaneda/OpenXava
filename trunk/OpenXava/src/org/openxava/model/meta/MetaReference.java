@@ -3,6 +3,7 @@ package org.openxava.model.meta;
 
 import java.util.*;
 
+import org.openxava.calculators.*;
 import org.openxava.component.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
@@ -22,6 +23,8 @@ public class MetaReference extends MetaMember implements Cloneable {
 	private String role;
 	private boolean required;
 	private boolean key;
+	private MetaCalculator metaCalculatorDefaultValue;
+	private ICalculator defaultValueCalculator;
 	
 	/**
 	 * Comentario de constructor Referencia.
@@ -186,4 +189,31 @@ public class MetaReference extends MetaMember implements Cloneable {
 		}
 	}	
 	
+	public MetaCalculator getMetaCalculatorDefaultValue() {
+		return metaCalculatorDefaultValue;
+	}
+	public void setMetaCalculatorDefaultValue(
+			MetaCalculator metaCalculatorDefaultValue) throws XavaException {
+		if (metaCalculatorDefaultValue != null && metaCalculatorDefaultValue.isOnCreate()) {
+			throw new XavaException("reference_not_default_values_on_create", getName());
+		}
+		this.metaCalculatorDefaultValue = metaCalculatorDefaultValue;		
+	}
+	
+	/**
+	 * 
+	 * @return null si no tiene calculador para valor inicial.
+	 */
+	public ICalculator getDefaultValueCalculator() throws XavaException {
+		if (!hasDefaultValueCalculator()) return null;
+		if (defaultValueCalculator == null) {
+			defaultValueCalculator = metaCalculatorDefaultValue.createCalculator();
+		}
+		return defaultValueCalculator;
+	}
+	
+	public boolean hasDefaultValueCalculator() {		
+		return metaCalculatorDefaultValue != null;
+	}
+		
 }

@@ -141,6 +141,10 @@ public class MetaAggregateEjb extends MetaAggregate implements IMetaEjb {
 		return impl.obtainPrimaryKeyAFromKeyWithoutConversors(valoresClave);
 	}
 	
+	public Map obtainMapFromPrimaryKey(Object primaryKey) throws XavaException {
+		return impl.obtainMapFromPrimaryKey(primaryKey);
+	}
+	
 	public String getClassName() throws XavaException {		
 		return getRemote();
 	}

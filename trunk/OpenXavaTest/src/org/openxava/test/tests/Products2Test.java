@@ -16,6 +16,12 @@ public class Products2Test extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Products2");		
 	}
 	
+	public void testDefaultValueCalculatorForReferences() throws Exception {
+		execute("CRUD.new");
+		assertValue("family.number", "2");		
+		assertValue("warehouse.KEY", "[.4.4.]");
+	}
+	
 	public void testFocusMoveToReferenceAsDescriptionsList() throws Exception {
 		execute("CRUD.new");
 		setValue("family.number", "1");
@@ -92,8 +98,9 @@ public class Products2Test extends ModuleTestBase {
 			{ "3", "SERVICIOS" }	
 		};
 		
-		assertValue("family.number", "");		
+		assertValue("family.number", "2"); // 2 is the default value		
 		assertValidValues("family.number", familyValues);
+		setValue("family.number", "");
 		
 		String [][] voidValues = {
 			{ "", "" }
@@ -249,7 +256,8 @@ public class Products2Test extends ModuleTestBase {
 	}
 	
 	public void testDescriptionsListReferenceValidation() throws Exception {						
-		execute("CRUD.new");		
+		execute("CRUD.new");	
+		setValue("family.number", ""); // because has a default value
 		execute("CRUD.save");				
 		assertError("Value for Family in Product is required");
 		assertError("Value for Subfamily in Product is required");

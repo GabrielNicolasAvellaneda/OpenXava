@@ -148,7 +148,7 @@
  hidden (true|false) "false"
 >
 
-<!ELEMENT reference EMPTY>
+<!ELEMENT reference (default-value-calculator?)>
 <!ATTLIST reference
  name CDATA #IMPLIED
  label CDATA #IMPLIED

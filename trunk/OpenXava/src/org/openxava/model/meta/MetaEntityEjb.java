@@ -150,6 +150,9 @@ public class MetaEntityEjb extends MetaEntity implements IMetaEjb {
 			return impl.obtainPrimaryKeyAFromKeyWithoutConversors(valoresClave);
 	}
 	
+	public Map obtainMapFromPrimaryKey(Object primaryKey) throws XavaException {
+		return impl.obtainMapFromPrimaryKey(primaryKey);
+	}		
 	
 	public ModelMapping getMapping() throws XavaException {
 		return getMetaComponent().getEntityMapping();

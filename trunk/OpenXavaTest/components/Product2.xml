@@ -23,10 +23,16 @@
 				<set property="string" value="COCHE"/>
 			</validator>								
 		</property>
-		<reference name="family" model="Family2" required="true"/>
+		<reference name="family" model="Family2" required="true">
+			<default-value-calculator class="org.openxava.calculators.IntegerCalculator">
+				<set property="value" value="2"/>
+			</default-value-calculator>
+		</reference>
 		<reference name="subfamily" model="Subfamily2" required="true"/>
 		 			
-		<reference name="warehouse" model="Warehouse2"/>
+		<reference name="warehouse" model="Warehouse2">
+			<default-value-calculator class="org.openxava.test.calculators.DefaultWarehouse2Calculator"/>
+		</reference>
 		
 		<property name="unitPrice"
 			stereotype="MONEY" required="true">

@@ -190,7 +190,26 @@ public class MetaEjbImpl implements Serializable {
 		}
 		return ejbHome;
 	}
-
+	
+	public Map obtainMapFromPrimaryKey(Object primaryKey) throws XavaException {
+		try {
+			Map result = new HashMap();
+			PropertiesManager pk = new PropertiesManager(primaryKey); 
+			for (Iterator it = metaModel.getAllMetaPropertiesKey().iterator(); it.hasNext();) {
+				MetaProperty property = (MetaProperty) it.next(); 
+				String propertyName = property.getName();
+				String propertyNameInKey = property.getMapping().hasConverter()?"_" + Strings.firstUpper(propertyName):propertyName;
+				Object value = pk.executeGet(propertyNameInKey);
+				result.put(propertyName, value);
+			}		
+			return result;
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			throw new XavaException("primary_key_to_map_error", (primaryKey==null?null:primaryKey.getClass()));
+		}
+	}
+	
 	public Object obtainPrimaryKeyFromAllValues(Map valores)
 		throws XavaException {
 		Map valoresClave = metaModel.extractKeyValues(valores);
