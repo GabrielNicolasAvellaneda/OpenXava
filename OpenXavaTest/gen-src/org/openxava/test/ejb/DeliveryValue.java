@@ -11,6 +11,8 @@ public class DeliveryValue
    extends java.lang.Object
    implements java.io.Serializable 
 {
+   private java.util.Date dateAsLabel;
+   private boolean dateAsLabelHasBeenSet = false;
    private int distance;
    private boolean distanceHasBeenSet = false;
    private java.lang.String incidents;
@@ -47,6 +49,8 @@ public class DeliveryValue
    //TODO Cloneable is better than this !
    public DeliveryValue( DeliveryValue otherValue )
    {
+	  this.dateAsLabel = otherValue.dateAsLabel;
+	  dateAsLabelHasBeenSet = true;
 	  this.distance = otherValue.distance;
 	  distanceHasBeenSet = true;
 	  this.incidents = otherValue.incidents;
@@ -77,6 +81,20 @@ public class DeliveryValue
 	  invoice_numberHasBeenSet = true;
    }
 
+   public java.util.Date getDateAsLabel()
+   {
+	  return this.dateAsLabel;
+   }
+
+   public void setDateAsLabel( java.util.Date dateAsLabel )
+   {
+	  this.dateAsLabel = dateAsLabel;
+	  dateAsLabelHasBeenSet = true;
+   }
+
+   public boolean dateAsLabelHasBeenSet(){
+	  return dateAsLabelHasBeenSet;
+   }
    public int getDistance()
    {
 	  return this.distance;
@@ -278,7 +296,7 @@ public class DeliveryValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("distance=" + getDistance() + " " + "incidents=" + getIncidents() + " " + "driverType=" + getDriverType() + " " + "remarks=" + getRemarks() + " " + "employee=" + getEmployee() + " " + "description=" + getDescription() + " " + "vehicle=" + getVehicle() + " " + "transportMode=" + getTransportMode() + " " + "date=" + getDate() + " " + "number=" + getNumber() + " " + "type_number=" + getType_number() + " " + "carrier_number=" + getCarrier_number() + " " + "invoice_year=" + getInvoice_year() + " " + "invoice_number=" + getInvoice_number());
+	  str.append("dateAsLabel=" + getDateAsLabel() + " " + "distance=" + getDistance() + " " + "incidents=" + getIncidents() + " " + "driverType=" + getDriverType() + " " + "remarks=" + getRemarks() + " " + "employee=" + getEmployee() + " " + "description=" + getDescription() + " " + "vehicle=" + getVehicle() + " " + "transportMode=" + getTransportMode() + " " + "date=" + getDate() + " " + "number=" + getNumber() + " " + "type_number=" + getType_number() + " " + "carrier_number=" + getCarrier_number() + " " + "invoice_year=" + getInvoice_year() + " " + "invoice_number=" + getInvoice_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -330,6 +348,14 @@ public class DeliveryValue
 	  {
 		 DeliveryValue that = (DeliveryValue) other;
 		 boolean lEquals = true;
+		 if( this.dateAsLabel == null )
+		 {
+			lEquals = lEquals && ( that.dateAsLabel == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.dateAsLabel.equals( that.dateAsLabel );
+		 }
 		 lEquals = lEquals && this.distance == that.distance;
 		 if( this.incidents == null )
 		 {
@@ -414,6 +440,8 @@ public class DeliveryValue
 
    public int hashCode(){
 	  int result = 17;
+      result = 37*result + ((this.dateAsLabel != null) ? this.dateAsLabel.hashCode() : 0);
+
       result = 37*result + (int) distance;
 
       result = 37*result + ((this.incidents != null) ? this.incidents.hashCode() : 0);

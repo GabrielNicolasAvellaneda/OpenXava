@@ -21,7 +21,8 @@
 
 <!ELEMENT formatter (set*)>
 <!ATTLIST formatter
-  class CDATA #REQUIRED
+  class CDATA #IMPLIED
+	from-type (true|false) "false"
 >
 
 <!ELEMENT set EMPTY>

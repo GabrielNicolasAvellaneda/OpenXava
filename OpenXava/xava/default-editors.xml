@@ -36,6 +36,7 @@
   </editor>
   
   <editor url="labelEditor.jsp">
+		<formatter from-type="true"/>		
     <for-stereotype stereotype="ETIQUETA"/>
     <for-stereotype stereotype="LABEL"/>
   </editor>

@@ -17,6 +17,11 @@
 		<property name="date" type="java.util.Date" required="true">
 			<default-value-calculator class="org.openxava.calculators.CurrentDateCalculator"/>
 		</property>	
+		<property name="dateAsLabel" type="java.util.Date" stereotype="LABEL">
+			<calculator class="org.openxava.calculators.ByPassCalculator">
+				<set property="source" from="date"/>
+			</calculator>
+		</property>
 		<property name="description" type="String"/>
 		<property name="distance">
 			<valid-values>
@@ -123,7 +128,7 @@
 	</view>		
 	
 	<tab>
-		<properties>invoice.year, invoice.number, type.number, type.description, number, date, description, distance</properties>
+		<properties>invoice.year, invoice.number, type.number, type.description, number, date, description, distance, dateAsLabel</properties>
 	</tab>
 	
 	<entity-mapping table="XAVATEST@separator@DELIVERY">

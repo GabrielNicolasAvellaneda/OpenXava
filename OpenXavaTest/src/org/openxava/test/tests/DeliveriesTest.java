@@ -33,6 +33,15 @@ public class DeliveriesTest extends ModuleTestBase {
 	public DeliveriesTest(String testName) {
 		super(testName, "OpenXavaTest", "Deliveries");		
 	}
+	
+	public void testWhenStereotypeWithoutFormatterUseTypeFormatter() throws Exception {
+		// date: Without stereotype, use date formatter
+		String date = getValueInList(0, "date");		
+		// dataAsLabel: With stereotype, but it has no formatter,
+		// hence it must to use date formatter		
+		String dateAsLabel = getValueInList(0, "dateAsLabel");		
+		assertEquals(date, dateAsLabel);
+	}
 		
 	public void testUseListWithOtherModelAndReturnToModuleList() throws Exception {
 		execute("CRUD.new");

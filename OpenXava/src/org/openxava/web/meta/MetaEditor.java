@@ -16,6 +16,7 @@ import org.openxava.util.meta.*;
  */
 public class MetaEditor {
 	
+	private boolean formatterFromType;
 	private IFormatter formatter;
 	private String propertiesURL;
 	private java.lang.String url;	
@@ -159,4 +160,10 @@ public class MetaEditor {
 		frame = b;
 	}
 
+	public boolean isFormatterFromType() {
+		return formatterFromType;
+	}
+	public void setFormatterFromType(boolean formatterFromType) {
+		this.formatterFromType = formatterFromType;
+	}
 }

@@ -34,9 +34,13 @@ public class WebEditors {
 			if (ed.hasFormatter()) {								
 				return ed.getFormatter().parse(request, string);
 			}
-			else {				
-				return p.parse(string, request.getLocale());
+			else if (ed.isFormatterFromType()){
+				MetaEditor edType = MetaWebEditors.getMetaEditorForType(p.getTypeName());
+				if (edType != null && edType.hasFormatter()) {				
+					return edType.getFormatter().parse(request, string);
+				}
 			}
+			return p.parse(string, request.getLocale());
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
@@ -46,15 +50,19 @@ public class WebEditors {
 		}
 	}
 	
-	public static String format(HttpServletRequest request, MetaProperty p, Object objeto, Messages errores) throws XavaException {
+	public static String format(HttpServletRequest request, MetaProperty p, Object object, Messages errores) throws XavaException {
 		try {
 			MetaEditor ed = MetaWebEditors.getMetaEditorFor(p);
 			if (ed.hasFormatter()) {				
-				return ed.getFormatter().format(request, objeto);
+				return ed.getFormatter().format(request, object);
 			}
-			else {
-				return p.format(objeto, request.getLocale());
-			}
+			else if (ed.isFormatterFromType()){
+				MetaEditor edType = MetaWebEditors.getMetaEditorForType(p.getTypeName());
+				if (edType != null && edType.hasFormatter()) {				
+					return edType.getFormatter().format(request, object);
+				}
+			}			
+			return p.format(object, request.getLocale());									
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();			

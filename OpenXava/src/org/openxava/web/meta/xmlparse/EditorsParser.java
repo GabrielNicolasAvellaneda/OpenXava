@@ -31,7 +31,7 @@ public class EditorsParser extends ParserBase {
 		MetaEditor editor = new MetaEditor();				
 		editor.setUrl(url);
 		editor.setFormat(getAttributeBoolean(el, xformat[lang]));
-		editor.setFrame(getAttributeBoolean(el, xwithframe[lang]));
+		editor.setFrame(getAttributeBoolean(el, xwithframe[lang]));		
 		String dependsStereotypes = el.getAttribute(xdepends_stereotypes[lang]);
 		String dependsProperties = el.getAttribute(xdepends_properties[lang]);
 		if (
@@ -43,6 +43,10 @@ public class EditorsParser extends ParserBase {
 		editor.setDependsProperties(dependsProperties);
 		fillProperties(editor, el);				
 		editor.setFormatterClassName(getFormatterClass(el));
+		editor.setFormatterFromType(getFormatterFromType(el));
+		if (editor.isFormatterFromType() && !Is.emptyString(editor.getFormatterClassName())) {
+			throw new XavaException("formatter_class_and_from_type_not_compatible");
+		}
 		fillSets(el, editor);
 		addEditorsForType(editor, el);
 		addEditorsForStereotype(editor, el);
@@ -77,6 +81,17 @@ public class EditorsParser extends ParserBase {
 		return el.getAttribute(xclass[lang]);						
 	}
 	
+	private boolean getFormatterFromType(Element n) throws XavaException {
+		NodeList l = n.getElementsByTagName(xformatter[lang]);
+		int c = l.getLength();
+		if (c > 1) {
+			throw new XavaException("no_more_1_formatter");
+		}
+		if (c < 1) return false;
+		Element el = (Element) l.item(0);					
+		return getAttributeBoolean(el, xfrom_type[lang]);						
+	}
+		
 	private void fillProperties(MetaEditor editor, Element n) {
 		NodeList l = n.getElementsByTagName(xproperty[lang]);
 		int c = l.getLength();

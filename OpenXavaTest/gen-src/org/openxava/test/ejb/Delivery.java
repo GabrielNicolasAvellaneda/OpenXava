@@ -10,6 +10,9 @@ public interface Delivery
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.ejb.IDelivery
 {
 
+   public java.util.Date getDateAsLabel(  )
+      throws java.rmi.RemoteException;
+
    public int getDistance(  )
       throws java.rmi.RemoteException;
 
