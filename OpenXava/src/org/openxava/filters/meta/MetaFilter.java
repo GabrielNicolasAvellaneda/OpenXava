@@ -17,11 +17,11 @@ public class MetaFilter implements Serializable {
 	private Collection metaSets;
 	private Collection propertiesSetNames;
 	
-	public void _addMetaSet(MetaSet metaPoner) {
+	public void _addMetaSet(MetaSet metaSet) {
 		if (metaSets == null) {
 			metaSets = new ArrayList();
 		}
-		metaSets.add(metaPoner);
+		metaSets.add(metaSet);
 		propertiesSetNames = null;
 	}
 	
@@ -31,11 +31,11 @@ public class MetaFilter implements Serializable {
 			if (!(o instanceof IFilter)) {
 				throw new XavaException("implements_required", getClassName(), IFilter.class.getName());
 			}
-			IFilter filtro = (IFilter) o;
+			IFilter filter = (IFilter) o;
 			if (hasMetaSets()) {
-				asignarValoresPropiedades(filtro);
+				assignPropertyValues(filter);
 			}						
-			return filtro;
+			return filter;
 		}
 		catch (XavaException ex) {
 			throw ex;
@@ -46,23 +46,17 @@ public class MetaFilter implements Serializable {
 		}
 	}
 
-	/**
-	 * Method asignarValoresPropiedades.
-	 * @param calculador
-	 */
-	private void asignarValoresPropiedades(IFilter filtro) throws Exception {
-		PropertiesManager mp = new PropertiesManager(filtro);
+	private void assignPropertyValues(IFilter filter) throws Exception {
+		PropertiesManager mp = new PropertiesManager(filter);
 		Iterator it = getMetaSets().iterator();
 		while (it.hasNext()) {
-			MetaSet metaPoner = (MetaSet) it.next();
-			mp.executeSetFromString(metaPoner.getPropertyName(), metaPoner.getValue());			
+			MetaSet metaSet = (MetaSet) it.next();
+			mp.executeSetFromString(metaSet.getPropertyName(), metaSet.getValue());			
 		}		
 	}
 
-	
 	/**
-	 * 
-	 * @return nunca nulo
+	 * @return Not null
 	 */
 	public Collection getMetaSets() {
 		return metaSets==null?new ArrayList():metaSets;
@@ -72,33 +66,25 @@ public class MetaFilter implements Serializable {
 		return metaSets != null;
 	}
 
-	/**
-	 * Returns the nombreClase.
-	 * @return String
-	 */
 	public String getClassName() {
 		return className;
 	}
 	
-	public String getPropertyNameForPropertyFrom(String nombrePropiedadDesde) throws ElementNotFoundException {
+	public String getPropertyNameForPropertyFrom(String nameForPropertyFrom) throws ElementNotFoundException {
 		if (metaSets==null) 		 
-			throw new ElementNotFoundException("filter_not_value_from", nombrePropiedadDesde);
+			throw new ElementNotFoundException("filter_not_value_from", nameForPropertyFrom);
 		Iterator it = metaSets.iterator();
 		while (it.hasNext()) {
-			MetaSet metaPoner = (MetaSet) it.next();
-			if (metaPoner.getPropertyNameFrom().equals(nombrePropiedadDesde)) {
-				return metaPoner.getPropertyName();
+			MetaSet metaSet = (MetaSet) it.next();
+			if (metaSet.getPropertyNameFrom().equals(nameForPropertyFrom)) {
+				return metaSet.getPropertyName();
 			}
 		}	
-		throw new ElementNotFoundException("filter_not_value_from", nombrePropiedadDesde);
+		throw new ElementNotFoundException("filter_not_value_from", nameForPropertyFrom);
 	}
 
-	/**
-	 * Sets the nombreClase.
-	 * @param nombreClase The nombreClase to set
-	 */
-	public void setClassName(String nombreClase) {
-		this.className = nombreClase;
+	public void setClassName(String className) {
+		this.className = className;
 	}
 
 	public Object filter(Object[] objects) throws FilterException, XavaException {

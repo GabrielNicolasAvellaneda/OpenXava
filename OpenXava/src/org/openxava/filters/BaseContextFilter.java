@@ -7,8 +7,8 @@ import org.openxava.util.*;
 
 
 /**
- * Filtro base que permite acceder a objeto del contexto
- * del módulo actual y también de otros módulos.
+ * Base filter to allow access to a context object of
+ * current module and the other modules too. <p>
  * 
  * @author Javier Paniza
  */
@@ -17,6 +17,7 @@ abstract public class BaseContextFilter implements IRequestFilter {
 
 	private HttpServletRequest request;	
 	private ModuleContext context;
+	private String nombre;
 
 	public void setRequest(HttpServletRequest request) {
 		this.request = request;		
@@ -26,26 +27,26 @@ abstract public class BaseContextFilter implements IRequestFilter {
 	protected ModuleContext getContext() {
 		if (context == null) {
 			context = (ModuleContext) request.getSession().getAttribute("context");
-			Assert.assertNotNull("Debería existir un objeto de sesión llamado 'contexto'", context);
+			Assert.assertNotNull(XavaResources.getString("webcontext_required"), context);
 		}
 		return context;		
 	}	
 	
-	protected Object get(String nombre) throws XavaException {
-		return getContext().get(request, nombre);
+	protected Object get(String name) throws XavaException {
+		this.nombre = name;
+		return getContext().get(request, name);
 	}
 	
-	protected String getString(String nombre) throws XavaException {
-		return (String) get(nombre);
+	protected String getString(String name) throws XavaException {
+		return (String) get(name);
 	}
 	
-	protected Integer getInteger(String nombre) throws XavaException {
-		return (Integer) get(nombre);
+	protected Integer getInteger(String name) throws XavaException {
+		return (Integer) get(name);
 	}
 
-	protected Long getLong(String nombre) throws XavaException {
-		return (Long) get(nombre);
+	protected Long getLong(String name) throws XavaException {
+		return (Long) get(name);
 	}
 	
-
 }

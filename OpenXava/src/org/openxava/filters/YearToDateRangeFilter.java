@@ -6,6 +6,8 @@ import org.openxava.util.*;
 
 
 /**
+ * Convert a year in a date range. <p>
+ * 
  * @author Javier Paniza
  */
 public class YearToDateRangeFilter implements IFilter {

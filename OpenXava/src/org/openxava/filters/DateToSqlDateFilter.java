@@ -2,6 +2,8 @@ package org.openxava.filters;
 
 
 /**
+ * Convert all <code>java.util.Date</code> arguments in <code>java.sql.Date</code>. <p> 
+ * 
  * @author Javier Paniza
  */
 public class DateToSqlDateFilter implements IFilter {
