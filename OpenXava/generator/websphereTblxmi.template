@@ -24,11 +24,28 @@ String schema = mapping.getSchema();
 <RDBSchema:RDBTable xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:RDBSchema="RDBSchema.xmi" xmi:id="#(tableId)#" name="#(table)#" primaryKey="C4404645">
   <database href="META-INF/backends/OPENXAVA/DB.dbxmi##DB"/>
   <schema href="META-INF/backends/OPENXAVA/#(schema)#.schxmi###(schema)#"/>
-  <columns xmi:type="RDBSchema:RDBColumn" xmi:id="DNI" name="DNI">
-    <type xmi:type="RDBSchema:DB2AS400CharacterStringType" xmi:id="DB2AS400CharacterStringType_1107953075972" characterSet="800" length="10">
-      <originatingType xmi:type="RDBSchema:DB2AS400CharacterStringType" href="DB2UDBAS400_V5_Primitives.xmi##DB2AS400CharacterStringType_3"/>
+# 
+for (Iterator it=mapping.getPropertyMappings().iterator(); it.hasNext();) {
+	PropertyMapping pMapping = (PropertyMapping) it.next();	
+	Collection fields = new ArrayList();
+	if (pMapping.hasMultipleConverter()) {
+		fields.add(getCmpFields());
+	}
+	else {
+		fields.add(pMapping.toCmpField());
+	}
+	for (Iterator itFields=fields.iterator(); it.hasNext();) {
+		CmpField field = (CmpField) it.next();
+		String type = getType(field);
+# 
+  <columns xmi:type="RDBSchema:RDBColumn" xmi:id="#(field.getColumn())#" name="#(field.getColumn())#">
+    <type xmi:type="RDBSchema:#(type)#" xmi:id="#(type)#_#(field)#">
+      <originatingType xmi:type="RDBSchema:#(type)#" href="DB2UDBAS400_V5_Primitives.xmi##DB2AS400CharacterStringType_3"/>
     </type>
   </columns>
+# 
+	}
+# 
   <columns xmi:type="RDBSchema:RDBColumn" xmi:id="NOMBRE" name="NOMBRE" allowNull="true">
     <type xmi:type="RDBSchema:DB2AS400CharacterStringType" xmi:id="DB2AS400CharacterStringType_1107953075973" characterSet="800" length="20">
       <originatingType xmi:type="RDBSchema:DB2AS400CharacterStringType" href="DB2UDBAS400_V5_Primitives.xmi##DB2AS400CharacterStringType_3"/>

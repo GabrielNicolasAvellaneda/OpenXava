@@ -14,7 +14,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 
 	private MetaComponent metaComponent;
 	private String table;
-	private Map mapeosPropiedades = new HashMap();
+	private Map propertyMappings = new HashMap();
 	private Map mapeosReferencias;
 	private Collection propiedadesModelo = new ArrayList(); // de String
 	private Collection columnasTabla = new ArrayList(); // de String
@@ -68,7 +68,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 
 	public void addPropertyMapping(PropertyMapping mapeoPropiedad)
 		throws XavaException {
-		mapeosPropiedades.put(
+		propertyMappings.put(
 			mapeoPropiedad.getProperty(),
 			mapeoPropiedad);
 		propiedadesModelo.add(mapeoPropiedad.getProperty());
@@ -120,9 +120,9 @@ abstract public class ModelMapping implements java.io.Serializable {
 	public PropertyMapping getPropertyMapping(String nombre)
 		throws XavaException {
 		PropertyMapping p =
-			mapeosPropiedades == null
+			propertyMappings == null
 				? null
-				: (PropertyMapping) mapeosPropiedades.get(nombre);
+				: (PropertyMapping) propertyMappings.get(nombre);
 		if (p == null) {
 			throw new ElementNotFoundException(
 				"No encontrado mapeo de propiedad "
@@ -181,7 +181,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 		boolean cualificarColumnaMapeoReferencia)
 		throws XavaException {
 		PropertyMapping mapeoPropiedad =
-			(PropertyMapping) mapeosPropiedades.get(propiedadModelo);
+			(PropertyMapping) propertyMappings.get(propiedadModelo);
 		if (mapeoPropiedad == null) {
 			int idx = propiedadModelo.indexOf('.');
 			if (idx >= 0) {
@@ -191,7 +191,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 					.getMetaReference(nombreReferencia)
 					.isAggregate()) {
 					mapeoPropiedad =
-						(PropertyMapping) mapeosPropiedades.get(
+						(PropertyMapping) propertyMappings.get(
 							nombreReferencia + "_" + nombrePropiedad);
 					if (mapeoPropiedad == null) {
 						throw new ElementNotFoundException(
@@ -355,12 +355,12 @@ abstract public class ModelMapping implements java.io.Serializable {
 	 * @return boolean
 	 */
 	public boolean hasPropertyMapping(String nombreMiembro) {
-		return mapeosPropiedades.containsKey(nombreMiembro);
+		return propertyMappings.containsKey(nombreMiembro);
 	}
 
 	//	Sería buena idea obtener los conversores por defecto de un archivo xml en el futuro
 	private void establecerConversoresDefecto() throws XavaException {
-		Iterator it = mapeosPropiedades.values().iterator();
+		Iterator it = propertyMappings.values().iterator();
 		while (it.hasNext()) {
 			PropertyMapping mapeoPropiedad = (PropertyMapping) it.next();
 			establecerConversorDefecto(mapeoPropiedad);
@@ -474,7 +474,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 			getReferenceMapping(
 				referencia).getColumnForReferencedModelProperty(
 				propiedadDeReferencia);
-		if (mapeosPropiedades == null) {
+		if (propertyMappings == null) {
 			throw new XavaException(
 				"Propiedad "
 					+ propiedadDeReferencia
@@ -482,7 +482,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 					+ referencia
 					+ " no tiene una propiedad solapada");
 		}
-		Iterator it = mapeosPropiedades.values().iterator();
+		Iterator it = propertyMappings.values().iterator();
 		while (it.hasNext()) {
 			PropertyMapping mapeo = (PropertyMapping) it.next();
 			if (columna.equals(mapeo.getColumn()))
@@ -515,10 +515,10 @@ abstract public class ModelMapping implements java.io.Serializable {
 	}
 
 	private PropertyMapping getMappingForColumn(String columna) throws XavaException {
-		if (mapeosPropiedades == null) {
+		if (propertyMappings == null) {
 			throw new ElementNotFoundException("mapping_not_found_no_property_mappings", columna); 
 		}			
-		Iterator it = mapeosPropiedades.values().iterator();
+		Iterator it = propertyMappings.values().iterator();
 		while (it.hasNext()) {
 			PropertyMapping mapeoPropiedad = (PropertyMapping) it.next();
 			if (mapeoPropiedad.getColumn().equals(columna)) {
@@ -532,6 +532,10 @@ abstract public class ModelMapping implements java.io.Serializable {
 		PropertyMapping mapeo = getMappingForColumn(columna);
 		if (!mapeo.hasConverter()) return Strings.change(mapeo.getProperty(), ".", "_");
 		return "_" + Strings.change(Strings.firstUpper(mapeo.getProperty()), ".", "_");
+	}
+	
+	public Collection getPropertyMappings() {
+		return propertyMappings.values();
 	}
 	
 }

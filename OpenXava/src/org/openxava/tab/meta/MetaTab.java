@@ -68,7 +68,23 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	private Collection rowStyles;
 
 	private String defaultPropertiesNames;
-
+	
+	public static String getTitleI18n(Locale locale, String modelName, String tabName) throws XavaException {
+		String id = null;
+		if (Is.emptyString(tabName)) {
+			id = modelName + ".tab.title"; 
+		}
+		else {
+			id = modelName + ".tabs." + tabName + ".title";
+		}
+		if (Labels.exists(id)) {
+			return Labels.get(id, locale);
+		}		
+		else {
+			return null;
+		}
+	}
+	
 	public MetaModel getMetaModel() throws XavaException {
 		return getMetaComponent().getMetaEntity();
 	}
