@@ -12,7 +12,7 @@ public class GoListAction extends BaseAction implements IChangeModeAction, INavi
 		
 	private View view;
 	private Tab tab;
-	private int page;
+	private Tab mainTab;
 		
 	public String getNextMode() {		
 		return IChangeModeAction.LIST;
@@ -20,13 +20,7 @@ public class GoListAction extends BaseAction implements IChangeModeAction, INavi
 
 	public void execute() throws Exception {		
 		getView().clear();
-		getTab().setAllSelected(null); // If add or remove not unsynchronize the selection		
-		getTab().setBaseConditionForReference(null);	// For remove effect of use tab in references 
-																			// This not affects to base condition of module, 
-																			// which it is set again
-		getTab().setTabName(null); // Thus list mode restore the default module tab name
-		
-		getTab().goPage(page); 		
+		setTab(getMainTab());
 	}
 
 	public View getView() {
@@ -53,10 +47,10 @@ public class GoListAction extends BaseAction implements IChangeModeAction, INavi
 		return DEFAULT_VIEW;
 	}
 
-	public int getPage() {
-		return page;
+	public Tab getMainTab() {
+		return mainTab;
 	}
-	public void setPage(int page) {
-		this.page = page;
+	public void setMainTab(Tab maintTab) {
+		this.mainTab = maintTab;
 	}
 }
