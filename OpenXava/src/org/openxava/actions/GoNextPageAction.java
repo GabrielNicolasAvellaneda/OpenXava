@@ -9,7 +9,7 @@ import org.openxava.tab.*;
 
 public class GoNextPageAction extends BaseAction {
 	
-	private Tab tab;
+	private Tab tab;	
 
 	public void execute() throws Exception {
 		tab.pageForward();
