@@ -1,5 +1,10 @@
 package org.openxava.actions;
 
+import java.util.*;
+
+import org.openxava.model.meta.*;
+import org.openxava.util.*;
+
 import net.sf.hibernate.*;
 import net.sf.hibernate.cfg.*;
 
@@ -32,9 +37,14 @@ abstract public class HibernateBaseAction extends ViewBaseAction {
 	
 	protected abstract void executeHibernate() throws Exception;
 	
-	private static SessionFactory getSessionFactory() throws HibernateException {
+	private static SessionFactory getSessionFactory() throws HibernateException, XavaException {
 		if (sessionFactory == null) {
-			sessionFactory = new Configuration().configure("/hibernate.cfg.xml").buildSessionFactory();
+			Configuration configuration = new Configuration().configure("/hibernate.cfg.xml");
+			for (Iterator it = MetaModel.getAllGenerated().iterator(); it.hasNext();) {
+				MetaModel model = (MetaModel) it.next();
+				configuration.addResource(model.getName() + ".hbm.xml");
+			}
+			sessionFactory = configuration.buildSessionFactory();
 		}
 		return sessionFactory; 
 	}
