@@ -289,7 +289,7 @@ public class Dates {
 	 * @param boolean includeStartDate<p>
 	 *  
 	 */	
-	  public static int getDaysInterval (Date startDate, Date endDate,
+	  public static int daysInterval (Date startDate, Date endDate,
 	  		boolean includeStartDate ) {
 		
 		startDate = Dates.removeTime(startDate);
