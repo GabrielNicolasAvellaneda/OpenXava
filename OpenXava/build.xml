@@ -41,7 +41,7 @@
 	
 	<target name="init">
 		<tstamp/>
-		<available file="../${project.ejb}/OpenXava/aplicacion.xml" 
+		<available file="../${project.ejb}/xava/aplicacion.xml" 
 			property="xava.presente"/>
 		<available file="../${project.ejb}/${meta-inf.dir}/jbosscmp-jdbc.xml" 
 			property="jboss.mapping.xml" value="jbosscmp-jdbc.xml"/>
@@ -54,7 +54,7 @@
 		
     <target name="copyDTDs">     
     
-		<copy todir="../${project}/OpenXava/dtds" overwrite="true">
+		<copy todir="../${project}/xava/dtds" overwrite="true">
 			<fileset dir="../OpenXava/xava/dtds" excludes="componente.dtd,component.dtd"/>
 		</copy>
 		
