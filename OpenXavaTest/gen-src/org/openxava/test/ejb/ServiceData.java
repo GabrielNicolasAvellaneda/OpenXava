@@ -16,64 +16,9 @@ public class ServiceData
    private int detail_type;
    private int detail_subfamily;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.ServiceValue ServiceValue = null;
-
-   public org.openxava.test.ejb.ServiceValue getServiceValue()
-   {
-	  if( ServiceValue == null )
-	  {
-          ServiceValue = new org.openxava.test.ejb.ServiceValue();
-	  }
-      try
-         {
-            ServiceValue.setFamily( getFamily() );
-            ServiceValue.setDescription( getDescription() );
-            ServiceValue.setNumber( getNumber() );
-            ServiceValue.setDetail( getDetail() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return ServiceValue;
-   }
-
-   public void setServiceValue( org.openxava.test.ejb.ServiceValue valueHolder )
-   {
-
-	  try
-	  {
-		 setFamily( valueHolder.getFamily() );
-		 setDescription( valueHolder.getDescription() );
-		 setDetail( valueHolder.getDetail() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public ServiceData()
    {
    }
-
-  /*
-   public ServiceData( java.lang.Integer _Family,java.lang.String _Description,int number,int detail_type,int detail_subfamily )
-   {
-      set_Family(_Family);
-      set_Description(_Description);
-      setNumber(number);
-      setDetail_type(detail_type);
-      setDetail_subfamily(detail_subfamily);
-   }
-   */
 
    public ServiceData( ServiceData otherData )
    {

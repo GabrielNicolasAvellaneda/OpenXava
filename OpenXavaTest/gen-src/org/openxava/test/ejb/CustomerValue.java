@@ -32,46 +32,9 @@ public class CustomerValue
    private java.lang.String address_state_id;
    private boolean address_state_idHasBeenSet = false;
 
-   // private org.openxava.test.ejb.CustomerKey pk;
-
    public CustomerValue()
    {
-	 // pk = new org.openxava.test.ejb.CustomerKey();
    }
-
-   /*
-   public CustomerValue(org.openxava.test.ejb.CustomerKey pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public CustomerValue( int type,java.lang.String remarks,java.lang.String relationWithSeller,byte[] photo,java.lang.String name,int number,int seller_number,int alternateSeller_number,org.openxava.test.ejb.Address address,java.lang.String address_state_id )
-   {
-	  this.type = type;
-	  typeHasBeenSet = true;
-	  this.remarks = remarks;
-	  remarksHasBeenSet = true;
-	  this.relationWithSeller = relationWithSeller;
-	  relationWithSellerHasBeenSet = true;
-	  this.photo = photo;
-	  photoHasBeenSet = true;
-	  this.name = name;
-	  nameHasBeenSet = true;
-	  this.number = number;
-	  numberHasBeenSet = true;
-	  this.seller_number = seller_number;
-	  seller_numberHasBeenSet = true;
-	  this.alternateSeller_number = alternateSeller_number;
-	  alternateSeller_numberHasBeenSet = true;
-	  this.address = address;
-	  addressHasBeenSet = true;
-	  this.address_state_id = address_state_id;
-	  address_state_idHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.CustomerKey(this.getNumber());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public CustomerValue( CustomerValue otherValue )
@@ -96,24 +59,7 @@ public class CustomerValue
 	  addressHasBeenSet = true;
 	  this.address_state_id = otherValue.address_state_id;
 	  address_state_idHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.CustomerKey(this.getNumber());
    }
-
-   /*
-   public org.openxava.test.ejb.CustomerKey getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.CustomerKey pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setNumber( pk.number );
-   }
-   */
 
    public int getType()
    {
@@ -124,7 +70,6 @@ public class CustomerValue
    {
 	  this.type = type;
 	  typeHasBeenSet = true;
-
    }
 
    public boolean typeHasBeenSet(){
@@ -139,7 +84,6 @@ public class CustomerValue
    {
 	  this.remarks = remarks;
 	  remarksHasBeenSet = true;
-
    }
 
    public boolean remarksHasBeenSet(){
@@ -154,7 +98,6 @@ public class CustomerValue
    {
 	  this.relationWithSeller = relationWithSeller;
 	  relationWithSellerHasBeenSet = true;
-
    }
 
    public boolean relationWithSellerHasBeenSet(){
@@ -169,7 +112,6 @@ public class CustomerValue
    {
 	  this.photo = photo;
 	  photoHasBeenSet = true;
-
    }
 
    public boolean photoHasBeenSet(){
@@ -184,7 +126,6 @@ public class CustomerValue
    {
 	  this.name = name;
 	  nameHasBeenSet = true;
-
    }
 
    public boolean nameHasBeenSet(){
@@ -199,8 +140,6 @@ public class CustomerValue
    {
 	  this.number = number;
 	  numberHasBeenSet = true;
-
-		 //pk.setNumber(number);
    }
 
    public boolean numberHasBeenSet(){
@@ -215,7 +154,6 @@ public class CustomerValue
    {
 	  this.seller_number = seller_number;
 	  seller_numberHasBeenSet = true;
-
    }
 
    public boolean seller_numberHasBeenSet(){
@@ -230,7 +168,6 @@ public class CustomerValue
    {
 	  this.alternateSeller_number = alternateSeller_number;
 	  alternateSeller_numberHasBeenSet = true;
-
    }
 
    public boolean alternateSeller_numberHasBeenSet(){
@@ -245,7 +182,6 @@ public class CustomerValue
    {
 	  this.address = address;
 	  addressHasBeenSet = true;
-
    }
 
    public boolean addressHasBeenSet(){
@@ -260,7 +196,6 @@ public class CustomerValue
    {
 	  this.address_state_id = address_state_id;
 	  address_state_idHasBeenSet = true;
-
    }
 
    public boolean address_state_idHasBeenSet(){

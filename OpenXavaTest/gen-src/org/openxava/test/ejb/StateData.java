@@ -13,59 +13,9 @@ public class StateData
    private java.lang.String _Name;
    private java.lang.String id;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.StateValue StateValue = null;
-
-   public org.openxava.test.ejb.StateValue getStateValue()
-   {
-	  if( StateValue == null )
-	  {
-          StateValue = new org.openxava.test.ejb.StateValue();
-	  }
-      try
-         {
-            StateValue.setFullName( getFullName() );
-            StateValue.setName( getName() );
-            StateValue.setId( getId() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return StateValue;
-   }
-
-   public void setStateValue( org.openxava.test.ejb.StateValue valueHolder )
-   {
-
-	  try
-	  {
-		 setFullName( valueHolder.getFullName() );
-		 setName( valueHolder.getName() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public StateData()
    {
    }
-
-  /*
-   public StateData( java.lang.String _Name,java.lang.String id )
-   {
-      set_Name(_Name);
-      setId(id);
-   }
-   */
 
    public StateData( StateData otherData )
    {

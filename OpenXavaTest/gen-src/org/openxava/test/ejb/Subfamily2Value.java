@@ -20,34 +20,9 @@ public class Subfamily2Value
    private int family_number;
    private boolean family_numberHasBeenSet = false;
 
-   // private org.openxava.test.ejb.Subfamily2Key pk;
-
    public Subfamily2Value()
    {
-	 // pk = new org.openxava.test.ejb.Subfamily2Key();
    }
-
-   /*
-   public Subfamily2Value(org.openxava.test.ejb.Subfamily2Key pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public Subfamily2Value( java.lang.String remarks,java.lang.String description,int number,int family_number )
-   {
-	  this.remarks = remarks;
-	  remarksHasBeenSet = true;
-	  this.description = description;
-	  descriptionHasBeenSet = true;
-	  this.number = number;
-	  numberHasBeenSet = true;
-	  this.family_number = family_number;
-	  family_numberHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.Subfamily2Key(this.getNumber());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public Subfamily2Value( Subfamily2Value otherValue )
@@ -60,24 +35,7 @@ public class Subfamily2Value
 	  numberHasBeenSet = true;
 	  this.family_number = otherValue.family_number;
 	  family_numberHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.Subfamily2Key(this.getNumber());
    }
-
-   /*
-   public org.openxava.test.ejb.Subfamily2Key getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.Subfamily2Key pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setNumber( pk.number );
-   }
-   */
 
    public java.lang.String getRemarks()
    {
@@ -88,7 +46,6 @@ public class Subfamily2Value
    {
 	  this.remarks = remarks;
 	  remarksHasBeenSet = true;
-
    }
 
    public boolean remarksHasBeenSet(){
@@ -103,7 +60,6 @@ public class Subfamily2Value
    {
 	  this.description = description;
 	  descriptionHasBeenSet = true;
-
    }
 
    public boolean descriptionHasBeenSet(){
@@ -118,8 +74,6 @@ public class Subfamily2Value
    {
 	  this.number = number;
 	  numberHasBeenSet = true;
-
-		 //pk.setNumber(number);
    }
 
    public boolean numberHasBeenSet(){
@@ -134,7 +88,6 @@ public class Subfamily2Value
    {
 	  this.family_number = family_number;
 	  family_numberHasBeenSet = true;
-
    }
 
    public boolean family_numberHasBeenSet(){

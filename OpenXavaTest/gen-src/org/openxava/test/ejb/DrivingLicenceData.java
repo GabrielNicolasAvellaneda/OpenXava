@@ -14,59 +14,9 @@ public class DrivingLicenceData
    private java.lang.String type;
    private java.lang.String _Description;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.DrivingLicenceValue DrivingLicenceValue = null;
-
-   public org.openxava.test.ejb.DrivingLicenceValue getDrivingLicenceValue()
-   {
-	  if( DrivingLicenceValue == null )
-	  {
-          DrivingLicenceValue = new org.openxava.test.ejb.DrivingLicenceValue();
-	  }
-      try
-         {
-            DrivingLicenceValue.setLevel( getLevel() );
-            DrivingLicenceValue.setType( getType() );
-            DrivingLicenceValue.setDescription( getDescription() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return DrivingLicenceValue;
-   }
-
-   public void setDrivingLicenceValue( org.openxava.test.ejb.DrivingLicenceValue valueHolder )
-   {
-
-	  try
-	  {
-		 setDescription( valueHolder.getDescription() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public DrivingLicenceData()
    {
    }
-
-  /*
-   public DrivingLicenceData( int level,java.lang.String type,java.lang.String _Description )
-   {
-      setLevel(level);
-      setType(type);
-      set_Description(_Description);
-   }
-   */
 
    public DrivingLicenceData( DrivingLicenceData otherData )
    {

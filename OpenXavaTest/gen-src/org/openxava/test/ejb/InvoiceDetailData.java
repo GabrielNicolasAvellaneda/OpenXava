@@ -23,85 +23,9 @@ public class InvoiceDetailData
    private int invoice_year;
    private int invoice_number;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.InvoiceDetailValue InvoiceDetailValue = null;
-
-   public org.openxava.test.ejb.InvoiceDetailValue getInvoiceDetailValue()
-   {
-	  if( InvoiceDetailValue == null )
-	  {
-          InvoiceDetailValue = new org.openxava.test.ejb.InvoiceDetailValue();
-	  }
-      try
-         {
-            InvoiceDetailValue.setAmount( getAmount() );
-            InvoiceDetailValue.setUnitPrice( getUnitPrice() );
-            InvoiceDetailValue.setOid( getOid() );
-            InvoiceDetailValue.setRemarks( getRemarks() );
-            InvoiceDetailValue.setDeliveryDate( getDeliveryDate() );
-            InvoiceDetailValue.setQuantity( getQuantity() );
-            InvoiceDetailValue.setServiceType( getServiceType() );
-            InvoiceDetailValue.setProduct_number( getProduct_number() );
-            InvoiceDetailValue.setSoldBy_number( getSoldBy_number() );
-            InvoiceDetailValue.setInvoice_year( getInvoice_year() );
-            InvoiceDetailValue.setInvoice_number( getInvoice_number() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return InvoiceDetailValue;
-   }
-
-   public void setInvoiceDetailValue( org.openxava.test.ejb.InvoiceDetailValue valueHolder )
-   {
-
-	  try
-	  {
-		 setAmount( valueHolder.getAmount() );
-		 setUnitPrice( valueHolder.getUnitPrice() );
-		 setRemarks( valueHolder.getRemarks() );
-		 setDeliveryDate( valueHolder.getDeliveryDate() );
-		 setQuantity( valueHolder.getQuantity() );
-		 setServiceType( valueHolder.getServiceType() );
-		 setProduct_number( valueHolder.getProduct_number() );
-		 setSoldBy_number( valueHolder.getSoldBy_number() );
-		 setInvoice_year( valueHolder.getInvoice_year() );
-		 setInvoice_number( valueHolder.getInvoice_number() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public InvoiceDetailData()
    {
    }
-
-  /*
-   public InvoiceDetailData( java.math.BigDecimal _UnitPrice,java.lang.String oid,java.lang.String _Remarks,int deliveryDate_day,int deliveryDate_month,int deliveryDate_year,java.lang.Integer _Quantity,java.lang.Integer _ServiceType,long product_number,int soldBy_number,int invoice_year,int invoice_number )
-   {
-      set_UnitPrice(_UnitPrice);
-      setOid(oid);
-      set_Remarks(_Remarks);
-      setDeliveryDate_day(deliveryDate_day);
-      setDeliveryDate_month(deliveryDate_month);
-      setDeliveryDate_year(deliveryDate_year);
-      set_Quantity(_Quantity);
-      set_ServiceType(_ServiceType);
-      setProduct_number(product_number);
-      setSoldBy_number(soldBy_number);
-      setInvoice_year(invoice_year);
-      setInvoice_number(invoice_number);
-   }
-   */
 
    public InvoiceDetailData( InvoiceDetailData otherData )
    {

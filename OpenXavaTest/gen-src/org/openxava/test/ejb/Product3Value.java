@@ -20,34 +20,9 @@ public class Product3Value
    private java.lang.String family_oid;
    private boolean family_oidHasBeenSet = false;
 
-   // private org.openxava.test.ejb.Product3Key pk;
-
    public Product3Value()
    {
-	 // pk = new org.openxava.test.ejb.Product3Key();
    }
-
-   /*
-   public Product3Value(org.openxava.test.ejb.Product3Key pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public Product3Value( java.lang.String comments,java.lang.String description,long number,java.lang.String family_oid )
-   {
-	  this.comments = comments;
-	  commentsHasBeenSet = true;
-	  this.description = description;
-	  descriptionHasBeenSet = true;
-	  this.number = number;
-	  numberHasBeenSet = true;
-	  this.family_oid = family_oid;
-	  family_oidHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.Product3Key(this.getNumber());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public Product3Value( Product3Value otherValue )
@@ -60,24 +35,7 @@ public class Product3Value
 	  numberHasBeenSet = true;
 	  this.family_oid = otherValue.family_oid;
 	  family_oidHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.Product3Key(this.getNumber());
    }
-
-   /*
-   public org.openxava.test.ejb.Product3Key getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.Product3Key pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setNumber( pk.number );
-   }
-   */
 
    public java.lang.String getComments()
    {
@@ -88,7 +46,6 @@ public class Product3Value
    {
 	  this.comments = comments;
 	  commentsHasBeenSet = true;
-
    }
 
    public boolean commentsHasBeenSet(){
@@ -103,7 +60,6 @@ public class Product3Value
    {
 	  this.description = description;
 	  descriptionHasBeenSet = true;
-
    }
 
    public boolean descriptionHasBeenSet(){
@@ -118,8 +74,6 @@ public class Product3Value
    {
 	  this.number = number;
 	  numberHasBeenSet = true;
-
-		 //pk.setNumber(number);
    }
 
    public boolean numberHasBeenSet(){
@@ -134,7 +88,6 @@ public class Product3Value
    {
 	  this.family_oid = family_oid;
 	  family_oidHasBeenSet = true;
-
    }
 
    public boolean family_oidHasBeenSet(){

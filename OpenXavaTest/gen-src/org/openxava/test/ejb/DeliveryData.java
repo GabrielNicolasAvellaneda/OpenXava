@@ -26,91 +26,9 @@ public class DeliveryData
    private int invoice_year;
    private int invoice_number;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.DeliveryValue DeliveryValue = null;
-
-   public org.openxava.test.ejb.DeliveryValue getDeliveryValue()
-   {
-	  if( DeliveryValue == null )
-	  {
-          DeliveryValue = new org.openxava.test.ejb.DeliveryValue();
-	  }
-      try
-         {
-            DeliveryValue.setDistance( getDistance() );
-            DeliveryValue.setIncidents( getIncidents() );
-            DeliveryValue.setDriverType( getDriverType() );
-            DeliveryValue.setRemarks( getRemarks() );
-            DeliveryValue.setEmployee( getEmployee() );
-            DeliveryValue.setDescription( getDescription() );
-            DeliveryValue.setVehicle( getVehicle() );
-            DeliveryValue.setTransportMode( getTransportMode() );
-            DeliveryValue.setDate( getDate() );
-            DeliveryValue.setNumber( getNumber() );
-            DeliveryValue.setType_number( getType_number() );
-            DeliveryValue.setCarrier_number( getCarrier_number() );
-            DeliveryValue.setInvoice_year( getInvoice_year() );
-            DeliveryValue.setInvoice_number( getInvoice_number() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return DeliveryValue;
-   }
-
-   public void setDeliveryValue( org.openxava.test.ejb.DeliveryValue valueHolder )
-   {
-
-	  try
-	  {
-		 setDistance( valueHolder.getDistance() );
-		 setIncidents( valueHolder.getIncidents() );
-		 setDriverType( valueHolder.getDriverType() );
-		 setRemarks( valueHolder.getRemarks() );
-		 setEmployee( valueHolder.getEmployee() );
-		 setDescription( valueHolder.getDescription() );
-		 setVehicle( valueHolder.getVehicle() );
-		 setTransportMode( valueHolder.getTransportMode() );
-		 setDate( valueHolder.getDate() );
-		 setCarrier_number( valueHolder.getCarrier_number() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public DeliveryData()
    {
    }
-
-  /*
-   public DeliveryData( java.lang.String _Distance,java.lang.String _Incidents,java.lang.String _DriverType,java.lang.String _Remarks,java.lang.String _Employee,java.lang.String _Description,java.lang.String _Vehicle,int date_day,int date_month,int date_year,int number,int type_number,java.lang.Integer carrier_number,int invoice_year,int invoice_number )
-   {
-      set_Distance(_Distance);
-      set_Incidents(_Incidents);
-      set_DriverType(_DriverType);
-      set_Remarks(_Remarks);
-      set_Employee(_Employee);
-      set_Description(_Description);
-      set_Vehicle(_Vehicle);
-      setDate_day(date_day);
-      setDate_month(date_month);
-      setDate_year(date_year);
-      setNumber(number);
-      setType_number(type_number);
-      setCarrier_number(carrier_number);
-      setInvoice_year(invoice_year);
-      setInvoice_number(invoice_number);
-   }
-   */
 
    public DeliveryData( DeliveryData otherData )
    {

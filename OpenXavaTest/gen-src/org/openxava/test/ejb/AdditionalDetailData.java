@@ -15,62 +15,9 @@ public class AdditionalDetailData
    private int service_number;
    private int type_number;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.AdditionalDetailValue AdditionalDetailValue = null;
-
-   public org.openxava.test.ejb.AdditionalDetailValue getAdditionalDetailValue()
-   {
-	  if( AdditionalDetailValue == null )
-	  {
-          AdditionalDetailValue = new org.openxava.test.ejb.AdditionalDetailValue();
-	  }
-      try
-         {
-            AdditionalDetailValue.setCounter( getCounter() );
-            AdditionalDetailValue.setSubfamily( getSubfamily() );
-            AdditionalDetailValue.setService_number( getService_number() );
-            AdditionalDetailValue.setType_number( getType_number() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return AdditionalDetailValue;
-   }
-
-   public void setAdditionalDetailValue( org.openxava.test.ejb.AdditionalDetailValue valueHolder )
-   {
-
-	  try
-	  {
-		 setSubfamily( valueHolder.getSubfamily() );
-		 setType_number( valueHolder.getType_number() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public AdditionalDetailData()
    {
    }
-
-  /*
-   public AdditionalDetailData( int counter,java.lang.Integer _Subfamily,int service_number,int type_number )
-   {
-      setCounter(counter);
-      set_Subfamily(_Subfamily);
-      setService_number(service_number);
-      setType_number(type_number);
-   }
-   */
 
    public AdditionalDetailData( AdditionalDetailData otherData )
    {

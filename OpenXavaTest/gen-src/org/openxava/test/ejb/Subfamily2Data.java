@@ -15,63 +15,9 @@ public class Subfamily2Data
    private int number;
    private int family_number;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.Subfamily2Value Subfamily2Value = null;
-
-   public org.openxava.test.ejb.Subfamily2Value getSubfamily2Value()
-   {
-	  if( Subfamily2Value == null )
-	  {
-          Subfamily2Value = new org.openxava.test.ejb.Subfamily2Value();
-	  }
-      try
-         {
-            Subfamily2Value.setRemarks( getRemarks() );
-            Subfamily2Value.setDescription( getDescription() );
-            Subfamily2Value.setNumber( getNumber() );
-            Subfamily2Value.setFamily_number( getFamily_number() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return Subfamily2Value;
-   }
-
-   public void setSubfamily2Value( org.openxava.test.ejb.Subfamily2Value valueHolder )
-   {
-
-	  try
-	  {
-		 setRemarks( valueHolder.getRemarks() );
-		 setDescription( valueHolder.getDescription() );
-		 setFamily_number( valueHolder.getFamily_number() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public Subfamily2Data()
    {
    }
-
-  /*
-   public Subfamily2Data( java.lang.String _Remarks,java.lang.String _Description,int number,int family_number )
-   {
-      set_Remarks(_Remarks);
-      set_Description(_Description);
-      setNumber(number);
-      setFamily_number(family_number);
-   }
-   */
 
    public Subfamily2Data( Subfamily2Data otherData )
    {

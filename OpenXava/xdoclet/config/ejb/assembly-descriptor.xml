@@ -1,4 +1,4 @@
-
+	<assembly-descriptor>
 		<container-transaction>
 			<method>
 				<ejb-name>Server</ejb-name>
@@ -7,4 +7,4 @@
 			</method>
 			<trans-attribute>NotSupported</trans-attribute>
 		</container-transaction>
-
+	</assembly-descriptor>

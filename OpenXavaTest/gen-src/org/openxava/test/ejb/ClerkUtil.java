@@ -23,8 +23,6 @@ public class ClerkUtil
             return javax.rmi.PortableRemoteObject.narrow(objRef, narrowTo);
          else
             return objRef;
-      } catch (Exception ex) {
-      	 throw new javax.naming.NamingException(ex.getMessage());
       } finally {
          initialContext.close();
       }
@@ -55,3 +53,4 @@ public class ClerkUtil
    }
 
 }
+

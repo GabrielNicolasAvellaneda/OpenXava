@@ -14,25 +14,9 @@ public class FamilyData
    private int number;
    private java.lang.String description;
 
-  /*
-  // begin value object
-
-  // end value object
-
- */
-
    public FamilyData()
    {
    }
-
-  /*
-   public FamilyData( java.lang.String oid,int number,java.lang.String description )
-   {
-      setOid(oid);
-      setNumber(number);
-      setDescription(description);
-   }
-   */
 
    public FamilyData( FamilyData otherData )
    {

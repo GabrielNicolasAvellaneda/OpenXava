@@ -14,60 +14,9 @@ public class Warehouse2Data
    private java.lang.Integer _Number;
    private int zoneNumber;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.Warehouse2Value Warehouse2Value = null;
-
-   public org.openxava.test.ejb.Warehouse2Value getWarehouse2Value()
-   {
-	  if( Warehouse2Value == null )
-	  {
-          Warehouse2Value = new org.openxava.test.ejb.Warehouse2Value();
-	  }
-      try
-         {
-            Warehouse2Value.setName( getName() );
-            Warehouse2Value.setNumber( getNumber() );
-            Warehouse2Value.setZoneNumber( getZoneNumber() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return Warehouse2Value;
-   }
-
-   public void setWarehouse2Value( org.openxava.test.ejb.Warehouse2Value valueHolder )
-   {
-
-	  try
-	  {
-		 setName( valueHolder.getName() );
-		 setNumber( valueHolder.getNumber() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public Warehouse2Data()
    {
    }
-
-  /*
-   public Warehouse2Data( java.lang.String _Name,java.lang.Integer _Number,int zoneNumber )
-   {
-      set_Name(_Name);
-      set_Number(_Number);
-      setZoneNumber(zoneNumber);
-   }
-   */
 
    public Warehouse2Data( Warehouse2Data otherData )
    {

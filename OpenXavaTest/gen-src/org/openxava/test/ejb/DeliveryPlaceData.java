@@ -18,72 +18,9 @@ public class DeliveryPlaceData
    private int preferredWarehouse_zoneNumber;
    private java.lang.Integer preferredWarehouse_number;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.DeliveryPlaceValue DeliveryPlaceValue = null;
-
-   public org.openxava.test.ejb.DeliveryPlaceValue getDeliveryPlaceValue()
-   {
-	  if( DeliveryPlaceValue == null )
-	  {
-          DeliveryPlaceValue = new org.openxava.test.ejb.DeliveryPlaceValue();
-	  }
-      try
-         {
-            DeliveryPlaceValue.setOid( getOid() );
-            DeliveryPlaceValue.setRemarks( getRemarks() );
-            DeliveryPlaceValue.setAddress( getAddress() );
-            DeliveryPlaceValue.setName( getName() );
-            DeliveryPlaceValue.setCustomer_number( getCustomer_number() );
-            DeliveryPlaceValue.setPreferredWarehouse_zoneNumber( getPreferredWarehouse_zoneNumber() );
-            DeliveryPlaceValue.setPreferredWarehouse_number( getPreferredWarehouse_number() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return DeliveryPlaceValue;
-   }
-
-   public void setDeliveryPlaceValue( org.openxava.test.ejb.DeliveryPlaceValue valueHolder )
-   {
-
-	  try
-	  {
-		 setRemarks( valueHolder.getRemarks() );
-		 setAddress( valueHolder.getAddress() );
-		 setName( valueHolder.getName() );
-		 setCustomer_number( valueHolder.getCustomer_number() );
-		 setPreferredWarehouse_zoneNumber( valueHolder.getPreferredWarehouse_zoneNumber() );
-		 setPreferredWarehouse_number( valueHolder.getPreferredWarehouse_number() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public DeliveryPlaceData()
    {
    }
-
-  /*
-   public DeliveryPlaceData( java.lang.String oid,java.lang.String _Remarks,java.lang.String _Address,java.lang.String _Name,int customer_number,int preferredWarehouse_zoneNumber,java.lang.Integer preferredWarehouse_number )
-   {
-      setOid(oid);
-      set_Remarks(_Remarks);
-      set_Address(_Address);
-      set_Name(_Name);
-      setCustomer_number(customer_number);
-      setPreferredWarehouse_zoneNumber(preferredWarehouse_zoneNumber);
-      setPreferredWarehouse_number(preferredWarehouse_number);
-   }
-   */
 
    public DeliveryPlaceData( DeliveryPlaceData otherData )
    {

@@ -18,32 +18,9 @@ public class DrivingLicenceValue
    private java.lang.String description;
    private boolean descriptionHasBeenSet = false;
 
-   // private org.openxava.test.ejb.DrivingLicenceKey pk;
-
    public DrivingLicenceValue()
    {
-	 // pk = new org.openxava.test.ejb.DrivingLicenceKey();
    }
-
-   /*
-   public DrivingLicenceValue(org.openxava.test.ejb.DrivingLicenceKey pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public DrivingLicenceValue( int level,java.lang.String type,java.lang.String description )
-   {
-	  this.level = level;
-	  levelHasBeenSet = true;
-	  this.type = type;
-	  typeHasBeenSet = true;
-	  this.description = description;
-	  descriptionHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.DrivingLicenceKey(this.getLevel(),this.getType());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public DrivingLicenceValue( DrivingLicenceValue otherValue )
@@ -54,25 +31,7 @@ public class DrivingLicenceValue
 	  typeHasBeenSet = true;
 	  this.description = otherValue.description;
 	  descriptionHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.DrivingLicenceKey(this.getLevel(),this.getType());
    }
-
-   /*
-   public org.openxava.test.ejb.DrivingLicenceKey getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.DrivingLicenceKey pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setLevel( pk.level );
-	  setType( pk.type );
-   }
-   */
 
    public int getLevel()
    {
@@ -83,8 +42,6 @@ public class DrivingLicenceValue
    {
 	  this.level = level;
 	  levelHasBeenSet = true;
-
-		 //pk.setLevel(level);
    }
 
    public boolean levelHasBeenSet(){
@@ -99,8 +56,6 @@ public class DrivingLicenceValue
    {
 	  this.type = type;
 	  typeHasBeenSet = true;
-
-		 //pk.setType(type);
    }
 
    public boolean typeHasBeenSet(){
@@ -115,7 +70,6 @@ public class DrivingLicenceValue
    {
 	  this.description = description;
 	  descriptionHasBeenSet = true;
-
    }
 
    public boolean descriptionHasBeenSet(){

@@ -20,34 +20,9 @@ public class ClerkValue
    private int zoneNumber;
    private boolean zoneNumberHasBeenSet = false;
 
-   // private org.openxava.test.ejb.ClerkKey pk;
-
    public ClerkValue()
    {
-	 // pk = new org.openxava.test.ejb.ClerkKey();
    }
-
-   /*
-   public ClerkValue(org.openxava.test.ejb.ClerkKey pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public ClerkValue( java.lang.String name,int officeNumber,int number,int zoneNumber )
-   {
-	  this.name = name;
-	  nameHasBeenSet = true;
-	  this.officeNumber = officeNumber;
-	  officeNumberHasBeenSet = true;
-	  this.number = number;
-	  numberHasBeenSet = true;
-	  this.zoneNumber = zoneNumber;
-	  zoneNumberHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.ClerkKey(this.getOfficeNumber(),this.getNumber(),this.getZoneNumber());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public ClerkValue( ClerkValue otherValue )
@@ -60,26 +35,7 @@ public class ClerkValue
 	  numberHasBeenSet = true;
 	  this.zoneNumber = otherValue.zoneNumber;
 	  zoneNumberHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.ClerkKey(this.getOfficeNumber(),this.getNumber(),this.getZoneNumber());
    }
-
-   /*
-   public org.openxava.test.ejb.ClerkKey getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.ClerkKey pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setOfficeNumber( pk.officeNumber );
-	  setNumber( pk.number );
-	  setZoneNumber( pk.zoneNumber );
-   }
-   */
 
    public java.lang.String getName()
    {
@@ -90,7 +46,6 @@ public class ClerkValue
    {
 	  this.name = name;
 	  nameHasBeenSet = true;
-
    }
 
    public boolean nameHasBeenSet(){
@@ -105,8 +60,6 @@ public class ClerkValue
    {
 	  this.officeNumber = officeNumber;
 	  officeNumberHasBeenSet = true;
-
-		 //pk.setOfficeNumber(officeNumber);
    }
 
    public boolean officeNumberHasBeenSet(){
@@ -121,8 +74,6 @@ public class ClerkValue
    {
 	  this.number = number;
 	  numberHasBeenSet = true;
-
-		 //pk.setNumber(number);
    }
 
    public boolean numberHasBeenSet(){
@@ -137,8 +88,6 @@ public class ClerkValue
    {
 	  this.zoneNumber = zoneNumber;
 	  zoneNumberHasBeenSet = true;
-
-		 //pk.setZoneNumber(zoneNumber);
    }
 
    public boolean zoneNumberHasBeenSet(){

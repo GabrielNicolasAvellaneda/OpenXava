@@ -16,63 +16,9 @@ public class TransportChargeData
    private int delivery_invoice_year;
    private int delivery_invoice_number;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.TransportChargeValue TransportChargeValue = null;
-
-   public org.openxava.test.ejb.TransportChargeValue getTransportChargeValue()
-   {
-	  if( TransportChargeValue == null )
-	  {
-          TransportChargeValue = new org.openxava.test.ejb.TransportChargeValue();
-	  }
-      try
-         {
-            TransportChargeValue.setAmount( getAmount() );
-            TransportChargeValue.setDelivery_number( getDelivery_number() );
-            TransportChargeValue.setDelivery_type_number( getDelivery_type_number() );
-            TransportChargeValue.setDelivery_invoice_year( getDelivery_invoice_year() );
-            TransportChargeValue.setDelivery_invoice_number( getDelivery_invoice_number() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return TransportChargeValue;
-   }
-
-   public void setTransportChargeValue( org.openxava.test.ejb.TransportChargeValue valueHolder )
-   {
-
-	  try
-	  {
-		 setAmount( valueHolder.getAmount() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public TransportChargeData()
    {
    }
-
-  /*
-   public TransportChargeData( java.math.BigDecimal _Amount,int delivery_number,int delivery_type_number,int delivery_invoice_year,int delivery_invoice_number )
-   {
-      set_Amount(_Amount);
-      setDelivery_number(delivery_number);
-      setDelivery_type_number(delivery_type_number);
-      setDelivery_invoice_year(delivery_invoice_year);
-      setDelivery_invoice_number(delivery_invoice_number);
-   }
-   */
 
    public TransportChargeData( TransportChargeData otherData )
    {

@@ -18,32 +18,9 @@ public class SellerValue
    private java.lang.String level_id;
    private boolean level_idHasBeenSet = false;
 
-   // private org.openxava.test.ejb.SellerKey pk;
-
    public SellerValue()
    {
-	 // pk = new org.openxava.test.ejb.SellerKey();
    }
-
-   /*
-   public SellerValue(org.openxava.test.ejb.SellerKey pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public SellerValue( java.lang.String name,int number,java.lang.String level_id )
-   {
-	  this.name = name;
-	  nameHasBeenSet = true;
-	  this.number = number;
-	  numberHasBeenSet = true;
-	  this.level_id = level_id;
-	  level_idHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.SellerKey(this.getNumber());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public SellerValue( SellerValue otherValue )
@@ -54,24 +31,7 @@ public class SellerValue
 	  numberHasBeenSet = true;
 	  this.level_id = otherValue.level_id;
 	  level_idHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.SellerKey(this.getNumber());
    }
-
-   /*
-   public org.openxava.test.ejb.SellerKey getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.SellerKey pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setNumber( pk.number );
-   }
-   */
 
    public java.lang.String getName()
    {
@@ -82,7 +42,6 @@ public class SellerValue
    {
 	  this.name = name;
 	  nameHasBeenSet = true;
-
    }
 
    public boolean nameHasBeenSet(){
@@ -97,8 +56,6 @@ public class SellerValue
    {
 	  this.number = number;
 	  numberHasBeenSet = true;
-
-		 //pk.setNumber(number);
    }
 
    public boolean numberHasBeenSet(){
@@ -113,7 +70,6 @@ public class SellerValue
    {
 	  this.level_id = level_id;
 	  level_idHasBeenSet = true;
-
    }
 
    public boolean level_idHasBeenSet(){

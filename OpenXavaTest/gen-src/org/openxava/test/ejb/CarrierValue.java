@@ -28,42 +28,9 @@ public class CarrierValue
    private int drivingLicence_level;
    private boolean drivingLicence_levelHasBeenSet = false;
 
-   // private org.openxava.test.ejb.CarrierKey pk;
-
    public CarrierValue()
    {
-	 // pk = new org.openxava.test.ejb.CarrierKey();
    }
-
-   /*
-   public CarrierValue(org.openxava.test.ejb.CarrierKey pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public CarrierValue( java.lang.String remarks,java.lang.String calculated,java.lang.String name,int number,int warehouse_zoneNumber,java.lang.Integer warehouse_number,java.lang.String drivingLicence_type,int drivingLicence_level )
-   {
-	  this.remarks = remarks;
-	  remarksHasBeenSet = true;
-	  this.calculated = calculated;
-	  calculatedHasBeenSet = true;
-	  this.name = name;
-	  nameHasBeenSet = true;
-	  this.number = number;
-	  numberHasBeenSet = true;
-	  this.warehouse_zoneNumber = warehouse_zoneNumber;
-	  warehouse_zoneNumberHasBeenSet = true;
-	  this.warehouse_number = warehouse_number;
-	  warehouse_numberHasBeenSet = true;
-	  this.drivingLicence_type = drivingLicence_type;
-	  drivingLicence_typeHasBeenSet = true;
-	  this.drivingLicence_level = drivingLicence_level;
-	  drivingLicence_levelHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.CarrierKey(this.get_Number());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public CarrierValue( CarrierValue otherValue )
@@ -84,23 +51,7 @@ public class CarrierValue
 	  drivingLicence_typeHasBeenSet = true;
 	  this.drivingLicence_level = otherValue.drivingLicence_level;
 	  drivingLicence_levelHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.CarrierKey(this.get_Number());
    }
-
-   /*
-   public org.openxava.test.ejb.CarrierKey getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.CarrierKey pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-   }
-   */
 
    public java.lang.String getRemarks()
    {
@@ -111,7 +62,6 @@ public class CarrierValue
    {
 	  this.remarks = remarks;
 	  remarksHasBeenSet = true;
-
    }
 
    public boolean remarksHasBeenSet(){
@@ -126,7 +76,6 @@ public class CarrierValue
    {
 	  this.calculated = calculated;
 	  calculatedHasBeenSet = true;
-
    }
 
    public boolean calculatedHasBeenSet(){
@@ -141,7 +90,6 @@ public class CarrierValue
    {
 	  this.name = name;
 	  nameHasBeenSet = true;
-
    }
 
    public boolean nameHasBeenSet(){
@@ -156,7 +104,6 @@ public class CarrierValue
    {
 	  this.number = number;
 	  numberHasBeenSet = true;
-
    }
 
    public boolean numberHasBeenSet(){
@@ -171,7 +118,6 @@ public class CarrierValue
    {
 	  this.warehouse_zoneNumber = warehouse_zoneNumber;
 	  warehouse_zoneNumberHasBeenSet = true;
-
    }
 
    public boolean warehouse_zoneNumberHasBeenSet(){
@@ -186,7 +132,6 @@ public class CarrierValue
    {
 	  this.warehouse_number = warehouse_number;
 	  warehouse_numberHasBeenSet = true;
-
    }
 
    public boolean warehouse_numberHasBeenSet(){
@@ -201,7 +146,6 @@ public class CarrierValue
    {
 	  this.drivingLicence_type = drivingLicence_type;
 	  drivingLicence_typeHasBeenSet = true;
-
    }
 
    public boolean drivingLicence_typeHasBeenSet(){
@@ -216,7 +160,6 @@ public class CarrierValue
    {
 	  this.drivingLicence_level = drivingLicence_level;
 	  drivingLicence_levelHasBeenSet = true;
-
    }
 
    public boolean drivingLicence_levelHasBeenSet(){

@@ -20,34 +20,9 @@ public class ServiceTypeValue
    private int number;
    private boolean numberHasBeenSet = false;
 
-   // private org.openxava.test.ejb.ServiceTypeKey pk;
-
    public ServiceTypeValue()
    {
-	 // pk = new org.openxava.test.ejb.ServiceTypeKey();
    }
-
-   /*
-   public ServiceTypeValue(org.openxava.test.ejb.ServiceTypeKey pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public ServiceTypeValue( int family,java.lang.String description,int subfamily,int number )
-   {
-	  this.family = family;
-	  familyHasBeenSet = true;
-	  this.description = description;
-	  descriptionHasBeenSet = true;
-	  this.subfamily = subfamily;
-	  subfamilyHasBeenSet = true;
-	  this.number = number;
-	  numberHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.ServiceTypeKey(this.getNumber());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public ServiceTypeValue( ServiceTypeValue otherValue )
@@ -60,24 +35,7 @@ public class ServiceTypeValue
 	  subfamilyHasBeenSet = true;
 	  this.number = otherValue.number;
 	  numberHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.ServiceTypeKey(this.getNumber());
    }
-
-   /*
-   public org.openxava.test.ejb.ServiceTypeKey getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.ServiceTypeKey pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setNumber( pk.number );
-   }
-   */
 
    public int getFamily()
    {
@@ -88,7 +46,6 @@ public class ServiceTypeValue
    {
 	  this.family = family;
 	  familyHasBeenSet = true;
-
    }
 
    public boolean familyHasBeenSet(){
@@ -103,7 +60,6 @@ public class ServiceTypeValue
    {
 	  this.description = description;
 	  descriptionHasBeenSet = true;
-
    }
 
    public boolean descriptionHasBeenSet(){
@@ -118,7 +74,6 @@ public class ServiceTypeValue
    {
 	  this.subfamily = subfamily;
 	  subfamilyHasBeenSet = true;
-
    }
 
    public boolean subfamilyHasBeenSet(){
@@ -133,8 +88,6 @@ public class ServiceTypeValue
    {
 	  this.number = number;
 	  numberHasBeenSet = true;
-
-		 //pk.setNumber(number);
    }
 
    public boolean numberHasBeenSet(){

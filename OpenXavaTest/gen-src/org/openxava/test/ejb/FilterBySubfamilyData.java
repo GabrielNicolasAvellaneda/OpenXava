@@ -13,57 +13,9 @@ public class FilterBySubfamilyData
    private java.lang.String oid;
    private int subfamily_number;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.FilterBySubfamilyValue FilterBySubfamilyValue = null;
-
-   public org.openxava.test.ejb.FilterBySubfamilyValue getFilterBySubfamilyValue()
-   {
-	  if( FilterBySubfamilyValue == null )
-	  {
-          FilterBySubfamilyValue = new org.openxava.test.ejb.FilterBySubfamilyValue();
-	  }
-      try
-         {
-            FilterBySubfamilyValue.setOid( getOid() );
-            FilterBySubfamilyValue.setSubfamily_number( getSubfamily_number() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return FilterBySubfamilyValue;
-   }
-
-   public void setFilterBySubfamilyValue( org.openxava.test.ejb.FilterBySubfamilyValue valueHolder )
-   {
-
-	  try
-	  {
-		 setSubfamily_number( valueHolder.getSubfamily_number() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public FilterBySubfamilyData()
    {
    }
-
-  /*
-   public FilterBySubfamilyData( java.lang.String oid,int subfamily_number )
-   {
-      setOid(oid);
-      setSubfamily_number(subfamily_number);
-   }
-   */
 
    public FilterBySubfamilyData( FilterBySubfamilyData otherData )
    {

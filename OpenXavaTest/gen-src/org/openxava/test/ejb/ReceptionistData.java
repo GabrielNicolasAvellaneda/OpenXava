@@ -14,60 +14,9 @@ public class ReceptionistData
    private java.lang.String _Name;
    private java.lang.String deliveryPlace_oid;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.ReceptionistValue ReceptionistValue = null;
-
-   public org.openxava.test.ejb.ReceptionistValue getReceptionistValue()
-   {
-	  if( ReceptionistValue == null )
-	  {
-          ReceptionistValue = new org.openxava.test.ejb.ReceptionistValue();
-	  }
-      try
-         {
-            ReceptionistValue.setOid( getOid() );
-            ReceptionistValue.setName( getName() );
-            ReceptionistValue.setDeliveryPlace_oid( getDeliveryPlace_oid() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return ReceptionistValue;
-   }
-
-   public void setReceptionistValue( org.openxava.test.ejb.ReceptionistValue valueHolder )
-   {
-
-	  try
-	  {
-		 setName( valueHolder.getName() );
-		 setDeliveryPlace_oid( valueHolder.getDeliveryPlace_oid() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public ReceptionistData()
    {
    }
-
-  /*
-   public ReceptionistData( int oid,java.lang.String _Name,java.lang.String deliveryPlace_oid )
-   {
-      setOid(oid);
-      set_Name(_Name);
-      setDeliveryPlace_oid(deliveryPlace_oid);
-   }
-   */
 
    public ReceptionistData( ReceptionistData otherData )
    {

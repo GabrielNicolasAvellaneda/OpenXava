@@ -18,32 +18,9 @@ public class Warehouse2Value
    private int zoneNumber;
    private boolean zoneNumberHasBeenSet = false;
 
-   // private org.openxava.test.ejb.Warehouse2Key pk;
-
    public Warehouse2Value()
    {
-	 // pk = new org.openxava.test.ejb.Warehouse2Key();
    }
-
-   /*
-   public Warehouse2Value(org.openxava.test.ejb.Warehouse2Key pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public Warehouse2Value( java.lang.String name,int number,int zoneNumber )
-   {
-	  this.name = name;
-	  nameHasBeenSet = true;
-	  this.number = number;
-	  numberHasBeenSet = true;
-	  this.zoneNumber = zoneNumber;
-	  zoneNumberHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.Warehouse2Key(this.get_Number(),this.getZoneNumber());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public Warehouse2Value( Warehouse2Value otherValue )
@@ -54,24 +31,7 @@ public class Warehouse2Value
 	  numberHasBeenSet = true;
 	  this.zoneNumber = otherValue.zoneNumber;
 	  zoneNumberHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.Warehouse2Key(this.get_Number(),this.getZoneNumber());
    }
-
-   /*
-   public org.openxava.test.ejb.Warehouse2Key getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.Warehouse2Key pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setZoneNumber( pk.zoneNumber );
-   }
-   */
 
    public java.lang.String getName()
    {
@@ -82,7 +42,6 @@ public class Warehouse2Value
    {
 	  this.name = name;
 	  nameHasBeenSet = true;
-
    }
 
    public boolean nameHasBeenSet(){
@@ -97,7 +56,6 @@ public class Warehouse2Value
    {
 	  this.number = number;
 	  numberHasBeenSet = true;
-
    }
 
    public boolean numberHasBeenSet(){
@@ -112,8 +70,6 @@ public class Warehouse2Value
    {
 	  this.zoneNumber = zoneNumber;
 	  zoneNumberHasBeenSet = true;
-
-		 //pk.setZoneNumber(zoneNumber);
    }
 
    public boolean zoneNumberHasBeenSet(){

@@ -26,40 +26,9 @@ public class ProductValue
    private long number;
    private boolean numberHasBeenSet = false;
 
-   // private org.openxava.test.ejb.ProductKey pk;
-
    public ProductValue()
    {
-	 // pk = new org.openxava.test.ejb.ProductKey();
    }
-
-   /*
-   public ProductValue(org.openxava.test.ejb.ProductKey pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public ProductValue( int familyNumber,java.math.BigDecimal unitPrice,int subfamilyNumber,java.lang.String remarks,java.lang.String description,java.math.BigDecimal unitPriceInPesetas,long number )
-   {
-	  this.familyNumber = familyNumber;
-	  familyNumberHasBeenSet = true;
-	  this.unitPrice = unitPrice;
-	  unitPriceHasBeenSet = true;
-	  this.subfamilyNumber = subfamilyNumber;
-	  subfamilyNumberHasBeenSet = true;
-	  this.remarks = remarks;
-	  remarksHasBeenSet = true;
-	  this.description = description;
-	  descriptionHasBeenSet = true;
-	  this.unitPriceInPesetas = unitPriceInPesetas;
-	  unitPriceInPesetasHasBeenSet = true;
-	  this.number = number;
-	  numberHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.ProductKey(this.getNumber());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public ProductValue( ProductValue otherValue )
@@ -78,24 +47,7 @@ public class ProductValue
 	  unitPriceInPesetasHasBeenSet = true;
 	  this.number = otherValue.number;
 	  numberHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.ProductKey(this.getNumber());
    }
-
-   /*
-   public org.openxava.test.ejb.ProductKey getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.ProductKey pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setNumber( pk.number );
-   }
-   */
 
    public int getFamilyNumber()
    {
@@ -106,7 +58,6 @@ public class ProductValue
    {
 	  this.familyNumber = familyNumber;
 	  familyNumberHasBeenSet = true;
-
    }
 
    public boolean familyNumberHasBeenSet(){
@@ -121,7 +72,6 @@ public class ProductValue
    {
 	  this.unitPrice = unitPrice;
 	  unitPriceHasBeenSet = true;
-
    }
 
    public boolean unitPriceHasBeenSet(){
@@ -136,7 +86,6 @@ public class ProductValue
    {
 	  this.subfamilyNumber = subfamilyNumber;
 	  subfamilyNumberHasBeenSet = true;
-
    }
 
    public boolean subfamilyNumberHasBeenSet(){
@@ -151,7 +100,6 @@ public class ProductValue
    {
 	  this.remarks = remarks;
 	  remarksHasBeenSet = true;
-
    }
 
    public boolean remarksHasBeenSet(){
@@ -166,7 +114,6 @@ public class ProductValue
    {
 	  this.description = description;
 	  descriptionHasBeenSet = true;
-
    }
 
    public boolean descriptionHasBeenSet(){
@@ -181,7 +128,6 @@ public class ProductValue
    {
 	  this.unitPriceInPesetas = unitPriceInPesetas;
 	  unitPriceInPesetasHasBeenSet = true;
-
    }
 
    public boolean unitPriceInPesetasHasBeenSet(){
@@ -196,8 +142,6 @@ public class ProductValue
    {
 	  this.number = number;
 	  numberHasBeenSet = true;
-
-		 //pk.setNumber(number);
    }
 
    public boolean numberHasBeenSet(){

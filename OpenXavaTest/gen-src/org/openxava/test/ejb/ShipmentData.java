@@ -14,60 +14,9 @@ public class ShipmentData
    private java.lang.String _Description;
    private int number;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.ShipmentValue ShipmentValue = null;
-
-   public org.openxava.test.ejb.ShipmentValue getShipmentValue()
-   {
-	  if( ShipmentValue == null )
-	  {
-          ShipmentValue = new org.openxava.test.ejb.ShipmentValue();
-	  }
-      try
-         {
-            ShipmentValue.setType( getType() );
-            ShipmentValue.setDescription( getDescription() );
-            ShipmentValue.setNumber( getNumber() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return ShipmentValue;
-   }
-
-   public void setShipmentValue( org.openxava.test.ejb.ShipmentValue valueHolder )
-   {
-
-	  try
-	  {
-		 setType( valueHolder.getType() );
-		 setDescription( valueHolder.getDescription() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public ShipmentData()
    {
    }
-
-  /*
-   public ShipmentData( java.lang.Integer _Type,java.lang.String _Description,int number )
-   {
-      set_Type(_Type);
-      set_Description(_Description);
-      setNumber(number);
-   }
-   */
 
    public ShipmentData( ShipmentData otherData )
    {

@@ -18,85 +18,9 @@ public class InvoiceData
    private int number;
    private int customer_number;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.InvoiceValue InvoiceValue = null;
-
-   public org.openxava.test.ejb.InvoiceValue getInvoiceValue()
-   {
-	  if( InvoiceValue == null )
-	  {
-          InvoiceValue = new org.openxava.test.ejb.InvoiceValue();
-	  }
-      try
-         {
-            InvoiceValue.setComment( getComment() );
-            InvoiceValue.setDate( getDate() );
-            InvoiceValue.setPaid( isPaid() );
-            InvoiceValue.setDetailsCount( getDetailsCount() );
-            InvoiceValue.setYearDiscount( getYearDiscount() );
-            InvoiceValue.setAmountsSum( getAmountsSum() );
-            InvoiceValue.setImportance( getImportance() );
-            InvoiceValue.setYear( getYear() );
-            InvoiceValue.setCustomerDiscount( getCustomerDiscount() );
-            InvoiceValue.setVatPercentage( getVatPercentage() );
-            InvoiceValue.setCustomerTypeDiscount( getCustomerTypeDiscount() );
-            InvoiceValue.setVat( getVat() );
-            InvoiceValue.setNumber( getNumber() );
-            InvoiceValue.setCustomer_number( getCustomer_number() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return InvoiceValue;
-   }
-
-   public void setInvoiceValue( org.openxava.test.ejb.InvoiceValue valueHolder )
-   {
-
-	  try
-	  {
-		 setComment( valueHolder.getComment() );
-		 setDate( valueHolder.getDate() );
-		 setPaid( valueHolder.isPaid() );
-		 setDetailsCount( valueHolder.getDetailsCount() );
-		 setYearDiscount( valueHolder.getYearDiscount() );
-		 setAmountsSum( valueHolder.getAmountsSum() );
-		 setImportance( valueHolder.getImportance() );
-		 setCustomerDiscount( valueHolder.getCustomerDiscount() );
-		 setVatPercentage( valueHolder.getVatPercentage() );
-		 setCustomerTypeDiscount( valueHolder.getCustomerTypeDiscount() );
-		 setVat( valueHolder.getVat() );
-		 setCustomer_number( valueHolder.getCustomer_number() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public InvoiceData()
    {
    }
-
-  /*
-   public InvoiceData( java.lang.String _Comment,java.util.Date date,java.lang.String _Paid,int year,java.math.BigDecimal _VatPercentage,int number,int customer_number )
-   {
-      set_Comment(_Comment);
-      setDate(date);
-      set_Paid(_Paid);
-      setYear(year);
-      set_VatPercentage(_VatPercentage);
-      setNumber(number);
-      setCustomer_number(customer_number);
-   }
-   */
 
    public InvoiceData( InvoiceData otherData )
    {

@@ -26,40 +26,9 @@ public class DeliveryPlaceValue
    private java.lang.Integer preferredWarehouse_number;
    private boolean preferredWarehouse_numberHasBeenSet = false;
 
-   // private org.openxava.test.ejb.DeliveryPlaceKey pk;
-
    public DeliveryPlaceValue()
    {
-	 // pk = new org.openxava.test.ejb.DeliveryPlaceKey();
    }
-
-   /*
-   public DeliveryPlaceValue(org.openxava.test.ejb.DeliveryPlaceKey pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public DeliveryPlaceValue( java.lang.String oid,java.lang.String remarks,java.lang.String address,java.lang.String name,int customer_number,int preferredWarehouse_zoneNumber,java.lang.Integer preferredWarehouse_number )
-   {
-	  this.oid = oid;
-	  oidHasBeenSet = true;
-	  this.remarks = remarks;
-	  remarksHasBeenSet = true;
-	  this.address = address;
-	  addressHasBeenSet = true;
-	  this.name = name;
-	  nameHasBeenSet = true;
-	  this.customer_number = customer_number;
-	  customer_numberHasBeenSet = true;
-	  this.preferredWarehouse_zoneNumber = preferredWarehouse_zoneNumber;
-	  preferredWarehouse_zoneNumberHasBeenSet = true;
-	  this.preferredWarehouse_number = preferredWarehouse_number;
-	  preferredWarehouse_numberHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.DeliveryPlaceKey(this.getOid());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public DeliveryPlaceValue( DeliveryPlaceValue otherValue )
@@ -78,24 +47,7 @@ public class DeliveryPlaceValue
 	  preferredWarehouse_zoneNumberHasBeenSet = true;
 	  this.preferredWarehouse_number = otherValue.preferredWarehouse_number;
 	  preferredWarehouse_numberHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.DeliveryPlaceKey(this.getOid());
    }
-
-   /*
-   public org.openxava.test.ejb.DeliveryPlaceKey getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.DeliveryPlaceKey pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setOid( pk.oid );
-   }
-   */
 
    public java.lang.String getOid()
    {
@@ -106,8 +58,6 @@ public class DeliveryPlaceValue
    {
 	  this.oid = oid;
 	  oidHasBeenSet = true;
-
-		 //pk.setOid(oid);
    }
 
    public boolean oidHasBeenSet(){
@@ -122,7 +72,6 @@ public class DeliveryPlaceValue
    {
 	  this.remarks = remarks;
 	  remarksHasBeenSet = true;
-
    }
 
    public boolean remarksHasBeenSet(){
@@ -137,7 +86,6 @@ public class DeliveryPlaceValue
    {
 	  this.address = address;
 	  addressHasBeenSet = true;
-
    }
 
    public boolean addressHasBeenSet(){
@@ -152,7 +100,6 @@ public class DeliveryPlaceValue
    {
 	  this.name = name;
 	  nameHasBeenSet = true;
-
    }
 
    public boolean nameHasBeenSet(){
@@ -167,7 +114,6 @@ public class DeliveryPlaceValue
    {
 	  this.customer_number = customer_number;
 	  customer_numberHasBeenSet = true;
-
    }
 
    public boolean customer_numberHasBeenSet(){
@@ -182,7 +128,6 @@ public class DeliveryPlaceValue
    {
 	  this.preferredWarehouse_zoneNumber = preferredWarehouse_zoneNumber;
 	  preferredWarehouse_zoneNumberHasBeenSet = true;
-
    }
 
    public boolean preferredWarehouse_zoneNumberHasBeenSet(){
@@ -197,7 +142,6 @@ public class DeliveryPlaceValue
    {
 	  this.preferredWarehouse_number = preferredWarehouse_number;
 	  preferredWarehouse_numberHasBeenSet = true;
-
    }
 
    public boolean preferredWarehouse_numberHasBeenSet(){
