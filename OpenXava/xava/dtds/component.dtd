@@ -17,7 +17,7 @@
 	collection (true|false) "false" 
 >
 
-<!ELEMENT aggregate ((bean|ejb)?, implements*, (property|reference|collection)*, method*, finder*, postcreate-calculator*, postmodify-calculator*, validator*)>
+<!ELEMENT aggregate ((bean|ejb)?, implements*, (property|reference|collection)*, method*, finder*, postcreate-calculator*, postmodify-calculator*, validator*, remove-validator*)>
 <!ATTLIST aggregate
  name ID #REQUIRED
  label CDATA #IMPLIED

@@ -128,7 +128,7 @@
 			<set property="product"/>
 			<set property="unitPrice"/>
 		</validator>
-				
+		
 	</aggregate>		
 	
 	<view name="Simple">

@@ -20,6 +20,11 @@ public class InvoicesFromCustomersTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "InvoicesFromCustomers");		
 	}
 	
+	public void testListActionsIncludedWhenModeControllerUsed() throws Exception {
+		executeDefaultAction();
+		assertNoPopup();		
+	}
+	
 	public void testModuleChange() throws Exception {
 		// Verifying in initial module
 		assertAction("Invoices.listOfCustomer");

@@ -12,37 +12,49 @@
 		<controller name="CRUD">							<action name="new" 			class="org.openxava.actions.NewAction"			image="images/new.gif"			keystroke="F2">			<use-object name="xava_view"/>					</action>									<action name="save" mode="detail"			class="org.openxava.actions.SaveAction"			image="images/save.gif"			keystroke="F3">						<use-object name="xava_view"/>		</action>				<action name="delete" mode="detail"			class="org.openxava.actions.DeleteAction"			image="images/delete.gif"			keystroke="F4">			<use-object name="xava_view"/>		</action>				<action name="search" mode="detail"			by-default="if-possible"						class="org.openxava.actions.SearchAction"			image="images/find.gif"			keystroke="F8">											</action>				<action name="searchByViewKey" hidden="true"			by-default="if-possible"						class="org.openxava.actions.SearchByViewKeyAction">			<use-object name="xava_view"/>		</action>										<action name="deleteSelected" mode="list"			class="org.openxava.actions.DeleteSelectedAction"			keystroke="Control D">			<use-object name="xava_tab"/>		</action>										</controller>		<controller name="Print">										<action name="generatePdf" mode="list"			class="org.openxava.actions.GenerateReportAction"			image="images/pdf.gif"			keystroke="Control F">			<set property="type" value="pdf"/>			<use-object name="xava_tab"/>					</action>				<action name="generateExcel" mode="list"			class="org.openxava.actions.GenerateReportAction"			image="images/excel.gif"			keystroke="Control X">			<set property="type" value="csv"/>			<use-object name="xava_tab"/>					</action>							</controller>		<controller name="Mode">		<action name="detailAndFirst"			class="org.openxava.actions.GoDetailAction"			keystroke="Control D">			<set property="nextAction" value="Navigation.first"/>			<use-object name="xava_tab"/>
 			<use-object name="xava_page"/>		</action>		<action name="list"			class="org.openxava.actions.GoListAction"			keystroke="Control L">			<use-object name="xava_view"/>			<use-object name="xava_tab"/>
 			<use-object name="xava_page"/>		</action>		<action name="detail"			hidden="true"			class="org.openxava.actions.GoDetailAction"			keystroke="Control D">			<use-object name="xava_tab"/>
-			<use-object name="xava_page"/>		</action>	</controller>		<controller name="List">				<action name="viewDetail"			class="org.openxava.actions.ViewDetailAction"			keystroke="Control D"			hidden="true">			<set property="nextAction" value="Mode.detail"/>			<use-object name="xava_tab"/>			<use-object name="xava_view"/>			<use-object name="xava_row"/>
-		</action>							<action name="goPreviousPage"			class="org.openxava.actions.GoPreviousPageAction"			keystroke="Control A"			hidden="true"			image="images/previous_page.gif">			<use-object name="xava_tab"/>							</action>		<action name="goPage"			class="org.openxava.actions.GoPageAction"			keystroke="Control I"			hidden="true">			<use-object name="xava_tab"/>				</action>																	<action name="goNextPage"			class="org.openxava.actions.GoNextPageAction"			keystroke="Control S"			hidden="true"			image="images/next_page.gif">			<use-object name="xava_tab"/>				</action>													<action name="orderBy"			class="org.openxava.actions.OrderByAction"			hidden="true">			<use-object name="xava_tab"/>				</action>				<!-- 
+			<use-object name="xava_page"/>		</action>	</controller>		<controller name="List">				<action name="viewDetail"			class="org.openxava.actions.ViewDetailAction"			keystroke="Control D"			hidden="true"
+			mode="list">			<set property="nextAction" value="Mode.detail"/>			<use-object name="xava_tab"/>			<use-object name="xava_view"/>			<use-object name="xava_row"/>
+		</action>							<action name="goPreviousPage"			class="org.openxava.actions.GoPreviousPageAction"			keystroke="Control A"			hidden="true"
+			mode="list"			image="images/previous_page.gif">			<use-object name="xava_tab"/>							</action>		<action name="goPage"			class="org.openxava.actions.GoPageAction"			keystroke="Control I"			hidden="true"
+			mode="list">			<use-object name="xava_tab"/>				</action>																	<action name="goNextPage"			class="org.openxava.actions.GoNextPageAction"			keystroke="Control S"			hidden="true"
+			mode="list"			image="images/next_page.gif">			<use-object name="xava_tab"/>				</action>													<action name="orderBy"			class="org.openxava.actions.OrderByAction"			hidden="true"
+			mode="list">			<use-object name="xava_tab"/>				</action>				<!-- 
 			Void action because the search is executed automatically
-			on tab properties setup		-->													<action name="filter" by-default="almost-always"			class="org.openxava.actions.EmptyAction"			hidden="true">		</action>																	<action name="deselectRows"			class="org.openxava.actions.DeselectRowsAction"			hidden="true">						<use-object name="xava_tab"/>		</action>					
+			on tab properties setup		-->													<action name="filter" by-default="almost-always"			class="org.openxava.actions.EmptyAction"			hidden="true"
+			mode="list">		</action>																	<action name="deselectRows"			class="org.openxava.actions.DeselectRowsAction"			hidden="true"
+			mode="list">						<use-object name="xava_tab"/>		</action>					
 		<action name="customize"
 			class="org.openxava.actions.CustomizeListAction"
 			hidden="true"
+			mode="list"
 			image="images/customize.gif">		
 			<use-object name="xava_tab"/>
 		</action>		
 		<action name="moveColumnToLeft"
 			class="org.openxava.actions.MoveColumnToLeftAction"
 			hidden="true"
+			mode="list"
 			image="images/move-left.gif">	
 			<use-object name="xava_tab"/>					
 		</action>				
 		<action name="moveColumnToRight"
 			class="org.openxava.actions.MoveColumnToRightAction"
 			hidden="true"
+			mode="list"
 			image="images/move-right.gif">			
 			<use-object name="xava_tab"/>			
 		</action>						
 		<action name="removeColumn"
 			class="org.openxava.actions.RemoveColumnAction"
 			hidden="true"
+			mode="list"
 			image="images/remove.gif">		
 			<use-object name="xava_tab"/>
 		</action>								
 		<action name="addColumns"
 			class="org.openxava.actions.NavigationAction"
 			hidden="true"
+			mode="list"
 			image="images/add.gif">		
 			<set property="nextController" value="AddColumns"/>
 			<set property="customView" value="xava/addColumns"/>
