@@ -799,6 +799,14 @@ public class Tab {
 		saveUserPreferences();
 	}
 	
+	public void restoreDefaultProperties() throws XavaException { 	
+		clonarMetaTab();
+		getMetaTab().restoreDefaultProperties();		
+		resetAfterChangeProperties();
+		removeUserPreferences();
+	}
+	
+	
 	private void resetAfterChangeProperties() {
 		reset(); 
 		metaProperties = null;
@@ -896,6 +904,26 @@ public class Tab {
 			System.err.println(XavaResources.getString("warning_save_preferences_tab"));
 		}				
 	}
+	
+	private void removeUserPreferences() {
+		if (userPreferences == null) return;
+		try {
+			
+			
+			Session session = getSessionFactory().openSession();				
+			Transaction tx = session.beginTransaction();
+			
+			session.delete(userPreferences);
+			
+			tx.commit();
+			session.close();
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			System.err.println(XavaResources.getString("warning_save_preferences_tab"));
+		}				
+	}
+	
 	
 	private static SessionFactory getSessionFactory() throws HibernateException {
 		if (sessionFactory == null) {

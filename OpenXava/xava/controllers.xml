@@ -52,6 +52,9 @@
 		<action name="addColumns" class="org.openxava.actions.AddColumnsAction">
 			<use-object name="xava_tab"/>			
 		</action>	
+		<action name="restoreDefault" class="org.openxava.actions.RestoreDefaultColumnsAction">
+			<use-object name="xava_tab"/>			
+		</action>			
 		<action name="cancel"
 			class="org.openxava.actions.CancelInListAction">
 		</action>		

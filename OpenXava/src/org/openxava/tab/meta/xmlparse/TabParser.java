@@ -29,7 +29,7 @@ public class TabParser extends XmlElementsNames {
 		if (!Is.emptyString(excludeAll)) {
 			e.setExcludeAll(Boolean.valueOf(excludeAll).booleanValue());
 		}
-		e.setPropertiesNames(ParserUtil.getString(el, xproperties[lang]));
+		e.setDefaultPropertiesNames(ParserUtil.getString(el, xproperties[lang]));		
 		e.setMetaFilter(createFilter(el, lang));
 		fillRowStyles(el, e, lang);
 		e.setBaseCondition(ParserUtil.getString(el, xbase_condition[lang]));		

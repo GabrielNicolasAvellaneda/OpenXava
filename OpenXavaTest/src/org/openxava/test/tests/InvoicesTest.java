@@ -11,7 +11,6 @@ import org.openxava.test.calculators.*;
 import org.openxava.test.ejb.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
-import org.openxava.test.ejb.*;
 
 
 /**
