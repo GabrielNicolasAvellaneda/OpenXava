@@ -29,6 +29,15 @@ Store oid of family and not the code
 		<property-view property="description">
 			<on-change class="org.openxava.test.actions.OnChangeProduct3DescriptionAction"/>
 		</property-view>						
+		
+		<members>
+			number, family;
+			<group name="description">
+				description;
+				comments
+			</group>
+		</members>
+
 	</view>
 		
 	<entity-mapping table="XAVATEST@separator@PRODUCT3">
@@ -42,7 +51,7 @@ Store oid of family and not the code
 				referenced-model-property="oid"/>
 		</reference-mapping>	
 		<property-mapping 
-			property="comments" column="COMMENTS"/>		
+			property="comments" column="COMMENTS"/>								
 	</entity-mapping> 
 
 </component>
