@@ -154,10 +154,15 @@
          <arg value="${generator.dir}/aggregateReference.template"/> 
          <arg value="${generator.dir}/aggregateReference.xml"/>         
        </java>	
-       <java classname="Simple2XML" classpath="${tl.lib}">
-         <arg value="${generator.dir}/ejbean.template"/> 
-         <arg value="${generator.dir}/ejbean.xml"/>         
-       </java>
+       	<java classname="Simple2XML" classpath="${tl.lib}">
+        	<arg value="${generator.dir}/ejbean.template"/> 
+         	<arg value="${generator.dir}/ejbean.xml"/>         
+      	</java>
+		<echo>Generating xml template for POJO</echo>
+		<java classname="Simple2XML" classpath="${tl.lib}">
+			<arg value="${generator.dir}/pojo.template"/> 
+			<arg value="${generator.dir}/pojo.xml"/>         
+		</java>		
   		<echo>Generating xml template for JavaBean</echo>
        <java classname="Simple2XML" classpath="${tl.lib}">
          <arg value="${generator.dir}/bean.template"/> 
@@ -194,6 +199,11 @@
          <arg value="${generator.dir}/ejbean.xml"/> 
          <arg value="${generator.dir}/EJBeanPG.java"/>         
        </java>
+		<echo>Generating POJO classes generator</echo>
+		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
+			<arg value="${generator.dir}/pojo.xml"/> 
+			<arg value="${generator.dir}/PojoPG.java"/>         
+		</java>
        <echo>Generating JavaBean classes generator</echo>
        <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
          <arg value="${generator.dir}/bean.xml"/> 
@@ -230,6 +240,23 @@
     	
     </target>
 	
+    <target name="generateHibernate">     
+    	
+	   <echo>Generating classes</echo>
+    	<delete file="../${project}/gen-src-xava/dnas.properties"/>
+    	<touch file="../${project}/gen-src-xava/last.generation.time"/>
+       <java 
+       		classname="HCodeGenerator" 
+       		classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};${components.dir};../${project}/${classes.dir};${xava.generator.path}" 
+       		fork="yes">
+			<arg value="${project}"/>        		
+	       	<arg value="${domain}"/>
+       		<arg value="${package}"/>
+	       	<arg value="${model.package}"/>       	
+		</java>
+    	
+    </target>
+	
 	<target name="runXDoclet" if="need.generate" >
     	<ant antfile="../OpenXava/xdoclet/build.xml"/>    			
 	</target>
@@ -241,8 +268,8 @@
     	<antcall target="runXDoclet"/>
     </target>
 	
-    <target name="regenerateEJB">      
-    	<delete file="../${project}/gen-src-xava/dnas.properties"/>
+    <target name="regenerateEJB">    
+       	<delete file="../${project}/gen-src-xava/dnas.properties"/>
 		<antcall target="generateEJB"/>
     </target>
 	

@@ -21,7 +21,7 @@ public void setEjb(boolean ejb) {
 public static void generate(XPathContext context, ProgramWriter out, MetaReference ref) throws XavaException {
 	AggregateReferencePG pg = new AggregateReferencePG();
 	pg.setReference(ref);
-	pg.setEjb(!ref.getMetaModel().isGenerateJDO());
+	pg.setEjb(true); // by now
 	pg.generate(context, out);
 }
 

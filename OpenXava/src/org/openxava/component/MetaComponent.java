@@ -45,7 +45,6 @@ public class MetaComponent implements Serializable {
 	private Map metaTabs;
 	private EntityMapping entityMapping;
 	private String packageName;
-	private boolean generateJDO;
 
 	private static Properties packages;
 	
@@ -365,14 +364,6 @@ public class MetaComponent implements Serializable {
 			packageNameWithSlash = Strings.change(getPackageName(), ".", "/");
 		}
 		return packageNameWithSlash;
-	}
-
-	public boolean isGenerateJDO() {
-		return generateJDO;
-	}
-
-	public void setGenerateJDO(boolean b) {
-		generateJDO = b;
 	}
 	
 }

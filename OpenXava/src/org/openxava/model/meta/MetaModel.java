@@ -1113,10 +1113,6 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		return result;
 	}
 	
-	public boolean isGenerateJDO() {
-		return getMetaComponent().isGenerateJDO();
-	}
-
 	public void addInterfaceName(String name) {
 		if (interfaces == null) interfaces = new ArrayList();
 		interfaces.add(name);
