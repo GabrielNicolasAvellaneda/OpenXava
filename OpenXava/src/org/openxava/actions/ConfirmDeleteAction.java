@@ -18,7 +18,11 @@ public class ConfirmDeleteAction extends ViewDetailAction implements INavigation
 		setIncrement(0);
 	}
 
-	public void execute() throws Exception {
+	public void execute() throws Exception { 
+		getView().setEditable(true);
+		getView().setKeyEditable(false);		
+		setNextControllers(PREVIOUS_CONTROLLERS);		
+		setCustomView(DEFAULT_VIEW);
 		try {
 			MapFacade.remove(getModelName(), getView().getKeyValues());
 			resetDescriptionsCache();
@@ -28,11 +32,7 @@ public class ConfirmDeleteAction extends ViewDetailAction implements INavigation
 			return;
 		}		
 		addMessage("object_deleted", getModelName());
-		getView().clear(); 
-		getView().setEditable(true);
-		getView().setKeyEditable(false);		
-		setNextControllers(PREVIOUS_CONTROLLERS);		
-		setCustomView(DEFAULT_VIEW);
+		getView().clear();
 		boolean selected = false;
 		if (getTab().hasSelected()) {
 			removeSelected();
