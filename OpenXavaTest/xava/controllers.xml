@@ -46,6 +46,15 @@
 		</action>		
 	</controller>
 	
+	<controller name="Products3">	
+		<action name="changeFamily" mode="detail" class="org.openxava.test.actions.SetPropertyValueNotifyingAction">				
+				<set property="property" value="family.oid"/>
+				<set property="value" value="1037101896763"/>
+				<use-object name="xava_view"/>
+		</action>						
+	</controller>		
+	
+	
 	<controller name="Customers">
 		<extends controller="Typical"/>
 		<action name="hideSeller" mode="detail"
@@ -84,7 +93,7 @@
 				<set property="property" value="name"/>
 				<set property="label" value="Malnom"/>
 				<use-object name="xava_view"/>
-		</action>				
+		</action>			
 	</controller>
 	
 	<controller name="CustomersNewOnInit">

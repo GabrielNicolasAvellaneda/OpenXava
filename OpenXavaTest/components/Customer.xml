@@ -107,7 +107,7 @@
 		</property>				
 		<property name="name" type="String" size="30" required="true"/>
 	</aggregate>	
-	
+
 	<view>
 		<!-- 
 		For overwrite the label better resource files.

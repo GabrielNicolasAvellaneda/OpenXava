@@ -68,7 +68,8 @@ public class View implements java.io.Serializable {
 	private String modelName;
 	private String viewName;
 	private boolean subview;
-	private boolean section;	 
+	private boolean section;	
+	private boolean group;
 	private boolean collectionDetailVisible = false;
 	private Messages messages; 
 	private Messages errors;
@@ -474,7 +475,8 @@ public class View implements java.io.Serializable {
 		else {// MetaGroup			
 			newView.setModelName(getModelName());			 
 			MetaView metaVista = ((MetaGroup) miembro).getMetaView();
-			newView.setMetaView(metaVista);						
+			newView.setMetaView(metaVista);
+			newView.setGroup(true);
 			getGroupsViews().put(miembro.getName(), newView);						
 			return;			
 		}		
@@ -581,8 +583,8 @@ public class View implements java.io.Serializable {
 	 * @param nombre Puede ser calificado.	 
 	 */
 	public void setValueNotifying(String nombre, Object valor) throws ElementNotFoundException, XavaException {
-		setValue(nombre, valor);		
-		propertyChanged(nombre);
+		setValue(nombre, valor);			
+		propertyChanged(nombre);		
 	}
 	
 	/**
@@ -1481,7 +1483,7 @@ public class View implements java.io.Serializable {
 		}		 		 		
 	}
 	
-	private void tryPropertyChanged(MetaProperty cambiada, String nombreCualificadoCambiada) throws Exception {
+	private void tryPropertyChanged(MetaProperty cambiada, String nombreCualificadoCambiada) throws Exception {		
 		Iterator it = getMetaProperties().iterator(); 									
 		while (it.hasNext()) {
 			MetaProperty pr = (MetaProperty) it.next();				
@@ -1495,7 +1497,7 @@ public class View implements java.io.Serializable {
 			}
 		}	
 		
-		if (hasToSearchOnChangeIfSubview && isSubview() && 
+		if (hasToSearchOnChangeIfSubview && isSubview() && !isGroup() && 
 				( 
 				(getLastPropertyKeyName().equals(cambiada.getName()) && metaPropiedadesContiene(cambiada)) || // visible keys
 				(!hasKeyProperties() && cambiada.isKey() && cambiada.isHidden()) // hidden keys
@@ -1503,7 +1505,7 @@ public class View implements java.io.Serializable {
 			) {	
 			if (!searchingObject) { // Para evitar bucles recursivos infinitos				
 				try {
-					searchingObject = true;										
+					searchingObject = true;					
 					findObject();						
 				}
 				finally {
@@ -1533,13 +1535,14 @@ public class View implements java.io.Serializable {
 				}
 			}			
 		}
-		
+				
 		if (hasSections()) {			
 			int cantidad = getSections().size();
 			for (int i = 0; i < cantidad; i++) {
 				getSectionView(i).propertyChanged(cambiada, nombreCualificadoCambiada);
 			}			
-		}		
+		}
+		
 	}	
 	
 	
@@ -1565,8 +1568,8 @@ public class View implements java.io.Serializable {
 		return (ModuleManager) context.get(request, "manager");		
 	}
 
-	public void findObject() throws Exception {		
-		if (getKeyValuesWithValue().isEmpty()) {				
+	public void findObject() throws Exception {
+		if (getKeyValuesWithValue().isEmpty()) {			
 			clear(); 			
 		}
 		else {					
@@ -2399,4 +2402,10 @@ public class View implements java.io.Serializable {
 		}
 	}
 	
+	private boolean isGroup() {
+		return group;
+	}
+	private void setGroup(boolean group) {
+		this.group = group;
+	}
 }

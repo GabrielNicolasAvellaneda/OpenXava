@@ -27,5 +27,12 @@ public class Products3WithDescriptionsListTest extends ModuleTestBase {
 		setValue("family.oid", "1037101892379");
 		assertValue("comments", "Family changed");
 	}
+	
+	public void testSetValueNotifyingOnReferenceWithHiddenKeyNotResetGroup() throws Exception {
+		execute("CRUD.new");
+		setValue("description", "HOLA");
+		execute("Products3.changeFamily");
+		assertValue("description", "HOLA");
+	}
 						
 }
