@@ -13,6 +13,8 @@ public class ServiceData
    private java.lang.Integer _Family;
    private java.lang.String _Description;
    private int number;
+   private int detail_type;
+   private int detail_subfamily;
 
    public ServiceData()
    {
@@ -23,6 +25,8 @@ public class ServiceData
       set_Family(otherData.get_Family());
       set_Description(otherData.get_Description());
       setNumber(otherData.getNumber());
+      setDetail_type(otherData.getDetail_type());
+      setDetail_subfamily(otherData.getDetail_subfamily());
 
    }
 
@@ -58,11 +62,29 @@ public class ServiceData
       this.number = number;
    }
 
+   public int getDetail_type()
+   {
+      return this.detail_type;
+   }
+   public void setDetail_type( int detail_type )
+   {
+      this.detail_type = detail_type;
+   }
+
+   public int getDetail_subfamily()
+   {
+      return this.detail_subfamily;
+   }
+   public void setDetail_subfamily( int detail_subfamily )
+   {
+      this.detail_subfamily = detail_subfamily;
+   }
+
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Family=" + get_Family() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber());
+      str.append("_Family=" + get_Family() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "detail_type=" + getDetail_type() + " " + "detail_subfamily=" + getDetail_subfamily());
       str.append('}');
 
       return(str.toString());
@@ -92,6 +114,8 @@ public class ServiceData
             lEquals = lEquals && this._Description.equals( lTest._Description );
          }
          lEquals = lEquals && this.number == lTest.number;
+         lEquals = lEquals && this.detail_type == lTest.detail_type;
+         lEquals = lEquals && this.detail_subfamily == lTest.detail_subfamily;
 
          return lEquals;
       }
@@ -110,6 +134,10 @@ public class ServiceData
       result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
 
       result = 37*result + (int) number;
+
+      result = 37*result + (int) detail_type;
+
+      result = 37*result + (int) detail_subfamily;
 
       return result;
    }

@@ -39,7 +39,7 @@ public class MetaApplication extends MetaElement implements java.io.Serializable
 	public MetaModule getMetaModule(String name) throws ElementNotFoundException, XavaException {
 		MetaModule result = (MetaModule) metaModules.get(name);
 		if (result == null) {
-			throw new ElementNotFoundException("component_not_found", name);
+			throw new ElementNotFoundException("module_not_found", name);
 		}
 		return result;
 	}

@@ -18,6 +18,9 @@ public class CustomerData
    private int number;
    private int seller_number;
    private int alternateSeller_number;
+   private java.lang.String _Address_zipCode;
+   private java.lang.String address_street;
+   private java.lang.String address_city;
    private java.lang.String address_state_id;
 
    public CustomerData()
@@ -34,6 +37,9 @@ public class CustomerData
       setNumber(otherData.getNumber());
       setSeller_number(otherData.getSeller_number());
       setAlternateSeller_number(otherData.getAlternateSeller_number());
+      set_Address_zipCode(otherData.get_Address_zipCode());
+      setAddress_street(otherData.getAddress_street());
+      setAddress_city(otherData.getAddress_city());
       setAddress_state_id(otherData.getAddress_state_id());
 
    }
@@ -115,6 +121,33 @@ public class CustomerData
       this.alternateSeller_number = alternateSeller_number;
    }
 
+   public java.lang.String get_Address_zipCode()
+   {
+      return this._Address_zipCode;
+   }
+   public void set_Address_zipCode( java.lang.String _Address_zipCode )
+   {
+      this._Address_zipCode = _Address_zipCode;
+   }
+
+   public java.lang.String getAddress_street()
+   {
+      return this.address_street;
+   }
+   public void setAddress_street( java.lang.String address_street )
+   {
+      this.address_street = address_street;
+   }
+
+   public java.lang.String getAddress_city()
+   {
+      return this.address_city;
+   }
+   public void setAddress_city( java.lang.String address_city )
+   {
+      this.address_city = address_city;
+   }
+
    public java.lang.String getAddress_state_id()
    {
       return this.address_state_id;
@@ -128,7 +161,7 @@ public class CustomerData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Type=" + get_Type() + " " + "_Remarks=" + get_Remarks() + " " + "_RelationWithSeller=" + get_RelationWithSeller() + " " + "photo=" + getPhoto() + " " + "_Name=" + get_Name() + " " + "number=" + getNumber() + " " + "seller_number=" + getSeller_number() + " " + "alternateSeller_number=" + getAlternateSeller_number() + " " + "address_state_id=" + getAddress_state_id());
+      str.append("_Type=" + get_Type() + " " + "_Remarks=" + get_Remarks() + " " + "_RelationWithSeller=" + get_RelationWithSeller() + " " + "photo=" + getPhoto() + " " + "_Name=" + get_Name() + " " + "number=" + getNumber() + " " + "seller_number=" + getSeller_number() + " " + "alternateSeller_number=" + getAlternateSeller_number() + " " + "_Address_zipCode=" + get_Address_zipCode() + " " + "address_street=" + getAddress_street() + " " + "address_city=" + getAddress_city() + " " + "address_state_id=" + getAddress_state_id());
       str.append('}');
 
       return(str.toString());
@@ -177,6 +210,30 @@ public class CustomerData
          lEquals = lEquals && this.number == lTest.number;
          lEquals = lEquals && this.seller_number == lTest.seller_number;
          lEquals = lEquals && this.alternateSeller_number == lTest.alternateSeller_number;
+         if( this._Address_zipCode == null )
+         {
+            lEquals = lEquals && ( lTest._Address_zipCode == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Address_zipCode.equals( lTest._Address_zipCode );
+         }
+         if( this.address_street == null )
+         {
+            lEquals = lEquals && ( lTest.address_street == null );
+         }
+         else
+         {
+            lEquals = lEquals && this.address_street.equals( lTest.address_street );
+         }
+         if( this.address_city == null )
+         {
+            lEquals = lEquals && ( lTest.address_city == null );
+         }
+         else
+         {
+            lEquals = lEquals && this.address_city.equals( lTest.address_city );
+         }
          if( this.address_state_id == null )
          {
             lEquals = lEquals && ( lTest.address_state_id == null );
@@ -219,6 +276,12 @@ public class CustomerData
       result = 37*result + (int) seller_number;
 
       result = 37*result + (int) alternateSeller_number;
+
+      result = 37*result + ((this._Address_zipCode != null) ? this._Address_zipCode.hashCode() : 0);
+
+      result = 37*result + ((this.address_street != null) ? this.address_street.hashCode() : 0);
+
+      result = 37*result + ((this.address_city != null) ? this.address_city.hashCode() : 0);
 
       result = 37*result + ((this.address_state_id != null) ? this.address_state_id.hashCode() : 0);
 
