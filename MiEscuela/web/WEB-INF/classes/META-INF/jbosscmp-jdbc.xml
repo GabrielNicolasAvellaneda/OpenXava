@@ -36,42 +36,6 @@
 <!-- optimistic locking does not express the exclusions needed -->
       </entity>
 
-      <entity>
-         <ejb-name>Alumno</ejb-name>
-
-         <table-name>MYSCHOOL_PUPIL</table-name>
-
-         <cmp-field>
-            <field-name>_Nombre</field-name>
-            <column-name>NAME</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>numero</field-name>
-            <column-name>NUMBER</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>profesor_codigo</field-name>
-            <column-name>TEACHER</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByProfesor</method-name>
-               <method-params>
-                  <method-param>java.lang.String</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Alumno o WHERE o.profesor_codigo = ?1 ]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
    </enterprise-beans>
 
        <type-mappings>

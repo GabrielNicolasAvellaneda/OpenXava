@@ -1,12 +1,5 @@
 package org.xavax.escuela.pruebas;
 
-import java.rmi.*;
-import java.util.*;
-
-import javax.ejb.*;
-import javax.naming.*;
-import javax.rmi.*;
-
 import org.xavax.tests.*;
 
 

@@ -11,11 +11,11 @@
 
         <session>
             <ejb-name>MapFacade</ejb-name>
-            <jndi-name>MiEscuela/ejb/org/xavax/escuela/model/MapFacade</jndi-name>
+            <jndi-name>MiEscuela/ejb/org/xavax/escuela/modelo/MapFacade</jndi-name>
         </session>
         <session>
             <ejb-name>Server</ejb-name>
-            <jndi-name>MiEscuela/ejb/org/xavax/escuela/model/Server</jndi-name>
+            <jndi-name>MiEscuela/ejb/org/xavax/escuela/modelo/Server</jndi-name>
             <resource-ref>
                 <res-ref-name>jdbc/DataSource</res-ref-name>
                 <resource-name>jdbc/DataSource</resource-name>
@@ -23,7 +23,7 @@
         </session>        
         <session>
             <ejb-name>EntityTab</ejb-name>
-            <jndi-name>MiEscuela/ejb/org/xavax/escuela/model/EntityTab</jndi-name>
+            <jndi-name>MiEscuela/ejb/org/xavax/escuela/modelo/EntityTab</jndi-name>
             <resource-ref>
                 <res-ref-name>jdbc/DataSource</res-ref-name>
                 <resource-name>jdbc/DataSource</resource-name>
@@ -32,19 +32,7 @@
 
       <entity>
          <ejb-name>Profesor</ejb-name>
-         <jndi-name>MiEscuela/ejb/org.xavax.escuela.model/Profesor</jndi-name>
-         <resource-ref>
-            <res-ref-name>jdbc/DataSource</res-ref-name>
-            <resource-name>jdbc/DataSource</resource-name>
-         </resource-ref>
-
-        <method-attributes>
-        </method-attributes>
-
-      </entity>
-      <entity>
-         <ejb-name>Alumno</ejb-name>
-         <jndi-name>MiEscuela/ejb/org.xavax.escuela.model/Alumno</jndi-name>
+         <jndi-name>MiEscuela/ejb/org.xavax.escuela.modelo/Profesor</jndi-name>
          <resource-ref>
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <resource-name>jdbc/DataSource</resource-name>

@@ -148,6 +148,10 @@ if (totalSize > 0) {
 for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex(); f++) {
 	String checked=tab.isSelected(f)?"checked='true'":"";
 	String cssClass=f%2==0?"pair":"odd";
+	String style = tab.getStyle(request.getLocale(), f);
+	if (!org.xavax.util.Is.emptyString(style)) {
+		cssClass=cssClass + "-" + style;
+	}
 %>
 <tr class=<%=cssClass%>>
 	<td class=<%=cssClass%> align='center'>

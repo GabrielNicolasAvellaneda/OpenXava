@@ -230,13 +230,21 @@
 >
 
 <!ELEMENT tab
-   (filtro?, propiedad*, propiedades?, condicion-base?, orden-defecto?, consulta*)
+   (filtro?, estilo-fila*, propiedad*, propiedades?, condicion-base?, orden-defecto?, consulta*)
 >
 <!ATTLIST tab
  nombre CDATA #IMPLIED
  excluir-por-clave CDATA #IMPLIED
  excluir-todos CDATA #IMPLIED
 >
+
+<!ELEMENT estilo-fila EMPTY>
+<!ATTLIST estilo-fila
+ estilo CDATA #REQUIRED
+ propiedad CDATA #REQUIRED
+ valor CDATA #REQUIRED
+>
+
 
 
 <!ELEMENT condicion

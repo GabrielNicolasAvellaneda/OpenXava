@@ -7,6 +7,7 @@
 <%@ page import="java.util.Collection" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="org.xavax.util.Is" %>
+<%@ page import="org.xavax.util.Maps" %>
 <%@ page import="org.xavax.view.View" %>
 <%@ page import="org.xavax.model.meta.MetaProperty" %>
 <%@ page import="org.xavax.model.meta.MetaReference" %>
@@ -26,7 +27,7 @@ if (Is.emptyString(propertyPrefixAccumulated)) {
 	idCollection = collectionName;
 }
 else {
-	// removing xavax.NombreModelo.
+	// removing xavax.ModelName.
 	int idx = propertyPrefixAccumulated.indexOf('.');
 	idx = propertyPrefixAccumulated.indexOf('.', idx+1) + 1;
 	idCollection = propertyPrefixAccumulated.substring(idx) + collectionName;
@@ -102,18 +103,7 @@ while (itAggregates.hasNext()) {
 		String fvalue = null;
 		Object value = null;
 		String propertyName = p.getName();
-		int idx = propertyName.indexOf('.');
-		if (idx < 0) {
-			value = row.get(propertyName);
-		}
-		else {
-			String referenceName = propertyName.substring(0, idx);			
-			Map refValues = (Map) row.get(referenceName);
-			if (refValues != null) {
-				String propertyReferenceName = propertyName.substring(idx+1);
-				value = refValues.get(propertyReferenceName);
-			}
-		}
+		value = Maps.getValueFromQualifiedName(row, propertyName);
 		if (p.hasValidValues()) {
 			Number validValue = (Number) value;			
 			fvalue = validValue == null?"":p.getValidValueLabel(request, validValue.intValue());

@@ -19,11 +19,16 @@
   value CDATA #REQUIRED
 >
 
-<!ELEMENT formatter EMPTY>
+<!ELEMENT formatter (set*)>
 <!ATTLIST formatter
   class CDATA #REQUIRED
 >
 
+<!ELEMENT set EMPTY>
+<!ATTLIST set
+ property CDATA #REQUIRED
+ value CDATA #REQUIRED 
+>
 
 <!ELEMENT for-type EMPTY>
 <!ATTLIST for-type

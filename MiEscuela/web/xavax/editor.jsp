@@ -65,7 +65,10 @@ int labelFormat = view.getLabelFormatForProperty(p);
 	<jsp:param name="script" value="<%=script%>"/>
 	<jsp:param name="editable" value="<%=editable%>"/>
 </jsp:include>
-<% if (editable && view.isRepresentsEntityReference() && view.isLastPropertyKey(p)) {
+<% 
+if ((editable && view.isRepresentsEntityReference() && view.isLastKeyProperty(p)) || // with key visible
+	(view.isRepresentsEntityReference() && view.isFirstPropertyAndViewHasNoKeys(p) && view.isKeyEditable())) // with key hidden
+	{
 	String referencedModel = p.getMetaModel().getName();
 %>
 <xavax:image action="<%=view.getSearchAction()%>" argv="<%="keyProperty="+propertyKey%>"/>

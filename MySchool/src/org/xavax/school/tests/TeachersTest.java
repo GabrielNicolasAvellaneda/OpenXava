@@ -17,7 +17,7 @@ public class TeachersTest extends ModuleTestBase {
 		super(testName, "MySchool", "Teachers");		
 	}
 
-	public void testCrearLeerModificarBorrar() throws Exception {
+	public void testCreateReadUpdateDelete() throws Exception {
 		// Create
 		execute("CRUD.new");
 		setValue("id", "JU");
