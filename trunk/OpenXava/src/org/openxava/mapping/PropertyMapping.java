@@ -94,6 +94,13 @@ public class PropertyMapping extends MetaSetsContainer {
 		if (cmpFields == null) return Collections.EMPTY_LIST;
 		return cmpFields;		
 	}
+	
+	public CmpField toCmpField() {
+		CmpField f = new CmpField();
+		f.setCmpTypeName(getCmpTypeName());
+		f.setColumn(f.getColumn());		
+		return f;
+	}
 		
 	private IConverter createConverter() throws XavaException {
 		try {

@@ -722,20 +722,8 @@ public class Tab {
 		return formateador.format(titleArguments);		
 	}
 
-	public static String getTitleI18n(Locale locale, String nombreModelo, String nombreTab) throws XavaException {
-		String id = null;
-		if (Is.emptyString(nombreTab)) {
-			id = nombreModelo + ".tab.title"; 
-		}
-		else {
-			id = nombreModelo + ".tabs." + nombreTab + ".title";
-		}
-		if (Labels.exists(id)) {
-			return Labels.get(id, locale);
-		}		
-		else {
-			return null;
-		}
+	public static String getTitleI18n(Locale locale, String modelName, String tabName) throws XavaException {
+		return MetaTab.getTitleI18n(locale, modelName, tabName);
 	}
 	
 	
