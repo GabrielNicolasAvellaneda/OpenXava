@@ -178,14 +178,74 @@ public class Dates {
 	/**
 	 * Diferencia de dos fechas en años, meses y dias.<p> 
 	 *  
-	 * @param f1 y f2 en cualquier orden; ninguna de las dos puede ser nulo.
+	 * @param f1 y f2 en cualquier orden; ninguna de las dos puede ser nulo. En la
+	 * contabilización de los días, incluirDiaInicio=true incluiría el día de inicio dentro de ésta.
 	 * @return Devuelve un mapa con la diferencia ("anyos", "meses", "dias")
 	 */	
-	public static DateDistance subtract(java.util.Date f1, java.util.Date f2 ) {
+	public static DateDistance subtract(java.util.Date f1, java.util.Date f2,boolean incluirDiaInicio ) {
 		DateDistance df = new DateDistance();
 		if ( null == f1 || null == f2 ) return null;
 		Calendar fmax = Calendar.getInstance(), fmin = Calendar.getInstance();
 		int i;
+		
+		if (incluirDiaInicio){
+		    Calendar cal = Calendar.getInstance();
+		    cal.setTime(f1);
+		    cal.add(Calendar.DATE,-1);
+		    f1= cal.getTime();
+		}
+		
+		f1 = Dates.removeTime(f1);
+		f2 = Dates.removeTime(f2);		
+		if (f1.after(f2)) {
+			fmax.setTime(f1);
+			fmin.setTime(f2);
+		}
+		else if (f1.before(f2)) {
+			fmin.setTime(f1);
+			fmax.setTime(f2);
+		}
+		else {
+			df.dias = 0;
+			df.meses = 0;
+			df.años = 0;
+			return df;
+		}
+		
+		for (i=0; !fmin.after(fmax); i++) {
+			fmin.add(Calendar.YEAR, 1);
+		}
+		df.años = i-1;
+		fmin.add(Calendar.YEAR, -1);
+		
+		for (i=0; !fmin.after(fmax); i++) {
+			fmin.add(Calendar.MONTH, 1);
+		}
+		df.meses=i-1;
+		fmin.add(Calendar.MONTH, -1);
+		
+		for (i=0; !fmin.equals(fmax); i++) {
+			fmin.add(Calendar.DATE, 1);
+		}
+		df.dias=i;
+		
+		return df; 	
+	}
+	
+	/**
+	 * Diferencia de dos fechas en años, meses y dias.<p> 
+	 *  
+	 * @param f1 y f2 en cualquier orden; ninguna de las dos puede ser nulo.
+	 * @return Devuelve un mapa con la diferencia ("anyos", "meses", "dias")
+	 */	
+	public static DateDistance subtract(java.util.Date f1, java.util.Date f2) {
+		DateDistance df = new DateDistance();
+		if ( null == f1 || null == f2 ) return null;
+		Calendar fmax = Calendar.getInstance(), fmin = Calendar.getInstance();
+		int i;
+		
+		
+		
 		f1 = Dates.removeTime(f1);
 		f2 = Dates.removeTime(f2);		
 		if (f1.after(f2)) {
