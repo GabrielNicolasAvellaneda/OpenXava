@@ -76,7 +76,7 @@ public class InvoicesTest extends ModuleTestBase {
 		// Delete
 		execute("CRUD.delete");
 		execute("ConfirmDelete.confirmDelete");
-		assertMessage("Object deleted successfully");				
+		assertMessage("Invoice deleted successfully");				
 	}
 	
 	public void testCustomizeList_addColumns() throws Exception {
@@ -657,7 +657,7 @@ public class InvoicesTest extends ModuleTestBase {
 		// Delete		
 		execute("CRUD.delete");
 		execute("ConfirmDelete.confirmDelete");
-		assertMessage("Object deleted successfully");
+		assertMessage("Invoice deleted successfully");
 	}
 	
 	public void testAggregateValidatorUsingReferencesToContainer() throws Exception { 
@@ -692,7 +692,7 @@ public class InvoicesTest extends ModuleTestBase {
 		// Delete invoice
 		execute("CRUD.delete");
 		execute("ConfirmDelete.confirmDelete");
-		assertMessage("Object deleted successfully");
+		assertMessage("Invoice deleted successfully");
 	}
 	
 	
@@ -747,7 +747,7 @@ public class InvoicesTest extends ModuleTestBase {
 		// Delete		
 		execute("CRUD.delete");
 		execute("ConfirmDelete.confirmDelete");
-		assertMessage("Object deleted successfully");
+		assertMessage("Invoice deleted successfully");
 	}
 	
 	

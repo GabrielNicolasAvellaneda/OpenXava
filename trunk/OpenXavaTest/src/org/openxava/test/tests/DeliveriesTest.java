@@ -60,7 +60,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertNoErrors();
 		execute("CRUD.delete");
 		execute("ConfirmDelete.confirmDelete");
-		assertMessage("Object deleted successfully");
+		assertMessage("DeliveryType deleted successfully");
 		changeModule("Deliveries");
 		assertNoType("66");
 	}
@@ -121,7 +121,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		execute("CRUD.delete");	
 		execute("ConfirmDelete.confirmDelete");											
 		assertNoErrors();
-		assertMessage("Object deleted successfully");
+		assertMessage("Delivery deleted successfully");
 	}
 	
 	
@@ -240,7 +240,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		execute("CRUD.delete");	
 		execute("ConfirmDelete.confirmDelete");											
 		assertNoErrors();
-		assertMessage("Object deleted successfully");
+		assertMessage("Delivery deleted successfully");
 	}
 	
 	public void testConverterWithMetaSets() throws Exception { 				
@@ -288,7 +288,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		execute("CRUD.delete");	
 		execute("ConfirmDelete.confirmDelete");											
 		assertNoErrors();
-		assertMessage("Object deleted successfully");
+		assertMessage("Delivery deleted successfully");
 	}
 	
 	
@@ -459,7 +459,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		execute("CRUD.delete");
 		assertValue("number", "61");
 		execute("ConfirmDelete.confirmDelete");
-		assertMessage("Object deleted successfully");
+		assertMessage("Delivery deleted successfully");
 
 
 		execute("CRUD.new");
@@ -471,7 +471,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		execute("CRUD.delete");
 		assertValue("number", "62");
 		execute("ConfirmDelete.confirmDelete");
-		assertMessage("Object deleted successfully");
+		assertMessage("Delivery deleted successfully");
 
 		execute("CRUD.new");
 		setValue("invoice.year", "2002");
@@ -482,7 +482,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		execute("CRUD.delete");
 		assertValue("number", "63");
 		execute("ConfirmDelete.confirmDelete");
-		assertMessage("Object deleted successfully");		
+		assertMessage("Delivery deleted successfully");		
 	}
 	
 	public void testMultipleMappingProperty() throws Exception { 				
@@ -544,7 +544,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertValue("number", "66");	
 		execute("ConfirmDelete.confirmDelete");											
 		assertNoErrors();
-		assertMessage("Object deleted successfully");
+		assertMessage("Delivery deleted successfully");
 	}
 	
 	public void testCalculatedValueDependentOnChangePropertyOnChangeAndPropertyOnChangeDepedentOnPropertyOnChange() throws Exception { 

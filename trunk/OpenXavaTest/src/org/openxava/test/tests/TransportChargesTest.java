@@ -71,7 +71,7 @@ public class TransportChargesTest extends ModuleTestBase {
 						
 		execute("CRUD.delete");	
 		execute("ConfirmDelete.confirmDelete");											
-		assertMessage("Object deleted successfully");
+		assertMessage("TransportCharge deleted successfully");
 	}
 	
 	public void testKeyNestedReferencesInList() throws Exception {

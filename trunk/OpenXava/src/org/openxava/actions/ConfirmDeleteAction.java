@@ -28,7 +28,7 @@ public class ConfirmDeleteAction extends ViewDetailAction implements INavigation
 			addErrors(ex.getErrors());	
 			return;
 		}		
-		addMessage("object_deleted");
+		addMessage("object_deleted", getModelName());
 		getView().clear(); 
 		getView().setEditable(true);
 		getView().setKeyEditable(false);		

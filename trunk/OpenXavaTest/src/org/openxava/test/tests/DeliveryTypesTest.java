@@ -3,7 +3,6 @@ package org.openxava.test.tests;
 import org.openxava.test.ejb.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
-import org.openxava.test.ejb.*;
 
 
 /**
@@ -65,7 +64,7 @@ public class DeliveryTypesTest extends ModuleTestBase {
 		
 		execute("ConfirmDelete.confirmDelete");
 		assertNoErrors();
-		assertMessage("Object deleted successfully");				 		
+		assertMessage("DeliveryType deleted successfully");				 		
 	}
 	
 			

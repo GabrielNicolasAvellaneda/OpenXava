@@ -35,7 +35,7 @@ public class ServicesTest extends ModuleTestBase {
 		// Delete it
 		execute("CRUD.delete");	
 		execute("ConfirmDelete.confirmDelete");													
-		assertMessage("Object deleted successfully");		
+		assertMessage("Service deleted successfully");		
 	}
 	
 	public void testStereotypeDependenOn2StereotypesAndInsideAggregate() throws Exception {

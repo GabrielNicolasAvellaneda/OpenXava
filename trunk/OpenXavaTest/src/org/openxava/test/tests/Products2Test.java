@@ -175,7 +175,7 @@ public class Products2Test extends ModuleTestBase {
 		assertValue("number", "66");		
 		assertValue("description", "JUNIT PRODUCT");		
 		execute("ConfirmDelete.confirmDelete");		
-		assertMessage("Object deleted successfully");		
+		assertMessage("Product deleted successfully");		
 	}
 					
 	public void testReferencesInListMode() throws Exception {				

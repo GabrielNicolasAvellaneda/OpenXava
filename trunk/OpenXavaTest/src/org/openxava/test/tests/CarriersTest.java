@@ -101,7 +101,7 @@ public class CarriersTest extends ModuleTestBase {
 		execute("CRUD.delete");
 		execute("ConfirmDelete.confirmDelete");
 		assertNoErrors();
-		assertMessage("Object deleted successfully");		
+		assertMessage("Carrier deleted successfully");		
 	}
 	
 	public void testGoListModeWithoutRecords() throws Exception {
@@ -125,7 +125,7 @@ public class CarriersTest extends ModuleTestBase {
 		assertNoEditable("number");
 		assertNoEditable("name");
 		execute("ConfirmDelete.confirmDelete");
-		assertMessage("Object deleted successfully");
+		assertMessage("Carrier deleted successfully");
 		assertNoEditable("number");
 		assertEditable("name");				
 		assertValue("number", "4");
@@ -141,7 +141,7 @@ public class CarriersTest extends ModuleTestBase {
 		assertNoErrors();		
 		execute("CRUD.delete");
 		execute("ConfirmDelete.confirmDelete");
-		assertMessage("Object deleted successfully");
+		assertMessage("Carrier deleted successfully");
 		assertValue("number", "2");
 		assertValue("name", "DOS");
 		execute("Navigation.next");
@@ -154,18 +154,18 @@ public class CarriersTest extends ModuleTestBase {
 		assertNoErrors();				
 		execute("CRUD.delete");
 		execute("ConfirmDelete.confirmDelete");
-		assertMessage("Object deleted successfully");
+		assertMessage("Carrier deleted successfully");
 		assertValue("number", "4");
 		assertValue("name", "CUATRO");
 		execute("CRUD.delete");
 		execute("ConfirmDelete.confirmDelete");
-		assertMessage("Object deleted successfully");
+		assertMessage("Carrier deleted successfully");
 		assertValue("number", "2");
 		assertValue("name", "DOS");
 		assertCarriersCount(1);
 		execute("CRUD.delete");
 		execute("ConfirmDelete.confirmDelete");
-		assertMessage("Object deleted successfully");
+		assertMessage("Carrier deleted successfully");
 		assertValue("number", "");
 		assertValue("name", "");
 		// The last ramain without edit
@@ -192,20 +192,20 @@ public class CarriersTest extends ModuleTestBase {
 		assertNoErrors();		
 		execute("CRUD.delete");
 		execute("ConfirmDelete.confirmDelete");
-		assertMessage("Object deleted successfully");
+		assertMessage("Carrier deleted successfully");
 		assertCarriersCount(4);
 		assertValue("number", "5");
 		assertValue("name", "Cinco");
 		assertNoErrors();
 		execute("CRUD.delete");
 		execute("ConfirmDelete.confirmDelete");
-		assertMessage("Object deleted successfully");
+		assertMessage("Carrier deleted successfully");
 		assertCarriersCount(3);
 		assertValue("number", "2");
 		assertValue("name", "DOS");
 		execute("CRUD.delete");
 		execute("ConfirmDelete.confirmDelete");
-		assertMessage("Object deleted successfully");
+		assertMessage("Carrier deleted successfully");
 		assertValue("number", "");
 		assertValue("name", "");
 		assertCarriersCount(2);
