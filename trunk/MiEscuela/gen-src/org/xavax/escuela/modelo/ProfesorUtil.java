@@ -1,7 +1,7 @@
 /*
  * Generated file - Do not edit!
  */
-package org.xavax.escuela.model;
+package org.xavax.escuela.modelo;
 
 import org.xavax.ejbx.*;
 
@@ -11,7 +11,7 @@ import org.xavax.ejbx.*;
 public class ProfesorUtil
 {
    /** Cached remote home (EJBHome). Uses lazy loading to obtain its value (loaded by getHome() methods). */
-   private static org.xavax.escuela.model.ProfesorHome cachedRemoteHome = null;
+   private static org.xavax.escuela.modelo.ProfesorHome cachedRemoteHome = null;
 
    private static Object lookupHome(java.util.Hashtable environment, String jndiName, Class narrowTo) throws javax.naming.NamingException {
       // Obtain initial context
@@ -36,10 +36,10 @@ public class ProfesorUtil
     * Obtain remote home interface from default initial context
     * @return Home interface for Profesor. Lookup using JNDI_NAME
     */
-   public static org.xavax.escuela.model.ProfesorHome getHome() throws javax.naming.NamingException
+   public static org.xavax.escuela.modelo.ProfesorHome getHome() throws javax.naming.NamingException
    {
       if (cachedRemoteHome == null) {
-            cachedRemoteHome = (org.xavax.escuela.model.ProfesorHome) lookupHome(null, org.xavax.escuela.model.ProfesorHome.JNDI_NAME, org.xavax.escuela.model.ProfesorHome.class);
+            cachedRemoteHome = (org.xavax.escuela.modelo.ProfesorHome) lookupHome(null, org.xavax.escuela.modelo.ProfesorHome.JNDI_NAME, org.xavax.escuela.modelo.ProfesorHome.class);
       }
       return cachedRemoteHome;
    }
@@ -49,9 +49,9 @@ public class ProfesorUtil
     * @param environment Parameters to use for creating initial context
     * @return Home interface for Profesor. Lookup using JNDI_NAME
     */
-   public static org.xavax.escuela.model.ProfesorHome getHome( java.util.Hashtable environment ) throws javax.naming.NamingException
+   public static org.xavax.escuela.modelo.ProfesorHome getHome( java.util.Hashtable environment ) throws javax.naming.NamingException
    {
-       return (org.xavax.escuela.model.ProfesorHome) lookupHome(environment, org.xavax.escuela.model.ProfesorHome.JNDI_NAME, org.xavax.escuela.model.ProfesorHome.class);
+       return (org.xavax.escuela.modelo.ProfesorHome) lookupHome(environment, org.xavax.escuela.modelo.ProfesorHome.JNDI_NAME, org.xavax.escuela.modelo.ProfesorHome.class);
    }
 
 }

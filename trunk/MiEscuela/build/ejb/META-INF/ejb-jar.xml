@@ -61,12 +61,12 @@
 
          <ejb-name>Profesor</ejb-name>
 
-         <home>org.xavax.escuela.model.ProfesorHome</home>
-         <remote>org.xavax.escuela.model.Profesor</remote>
+         <home>org.xavax.escuela.modelo.ProfesorHome</home>
+         <remote>org.xavax.escuela.modelo.Profesor</remote>
 
-         <ejb-class>org.xavax.escuela.model.xejb.ProfesorCMP</ejb-class>
+         <ejb-class>org.xavax.escuela.modelo.xejb.ProfesorCMP</ejb-class>
          <persistence-type>Container</persistence-type>
-         <prim-key-class>org.xavax.escuela.model.ProfesorKey</prim-key-class>
+         <prim-key-class>org.xavax.escuela.modelo.ProfesorKey</prim-key-class>
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Profesor</abstract-schema-name>

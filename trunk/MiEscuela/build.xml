@@ -1,10 +1,15 @@
 <?xml version="1.0"?>
 
-<project name="MiEscuela" default="desplegar" basedir=".">
+<project name="MiEscuela" default="desplegarWar" basedir=".">
 
 	<property name="project" value="MiEscuela" />
 	<property name="package" value="escuela"/>
-	<property name="configuration" value="miescuela" />	
+	<!-- 
+	model.package por defecto es 'model', pero aquí ponemos un 'modelo'
+	más castizo. Si siempre desarrollamos en español podemos poner esto xavax-global.properties
+	-->
+	<property name="model.package" value="modelo"/>	
+	<property name="configuration" value="miescuela" />		
 	<property file="../xavax-global.properties"/>
 	<property file="${configuration}.properties"/>
 	<property name="datasource" value="MySchoolDS"/>
@@ -28,14 +33,6 @@
 		
 	<target name="desplegarWar">
 		<ant antfile="../xavax/build.xml" target="deployWar"/>
-	</target>
-				
-	<target name="desplegar">
-		<ant antfile="../xavax/build.xml" target="deploy"/>
-	</target>
-	
-	<target name="redesplegar">
-		<ant antfile="../xavax/build.xml" target="redeploy"/>
-	</target>
+	</target>				
 		
 </project>

@@ -156,7 +156,7 @@
  role CDATA #IMPLIED
 >
 
-<!ELEMENT collection (reference, condition?, order?, postremove-calculator*)>
+<!ELEMENT collection (reference, ((condition?, order?) | calculator), postremove-calculator*)>
 <!ATTLIST collection
  name CDATA #REQUIRED
  label CDATA #IMPLIED
@@ -224,11 +224,19 @@
 >
 
 <!ELEMENT tab
-   (filter?, property*, properties?, base-condition?, default-order?)
+   (filter?, row-style*, property*, properties?, base-condition?, default-order?)
 >
 <!ATTLIST tab
  name CDATA #IMPLIED
 >
+
+<!ELEMENT row-style EMPTY>
+<!ATTLIST row-style
+ style CDATA #REQUIRED
+ property CDATA #REQUIRED
+ value CDATA #REQUIRED
+>
+
 
 
 <!ELEMENT condition

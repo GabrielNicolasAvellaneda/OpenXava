@@ -19,11 +19,16 @@
   valor CDATA #REQUIRED
 >
 
-<!ELEMENT formateador EMPTY>
+<!ELEMENT formateador (poner*)>
 <!ATTLIST formateador
   clase CDATA #REQUIRED
 >
 
+<!ELEMENT poner EMPTY>
+<!ATTLIST poner
+ propiedad CDATA #REQUIRED
+ valor CDATA #REQUIRED
+>
 
 <!ELEMENT para-tipo EMPTY>
 <!ATTLIST para-tipo

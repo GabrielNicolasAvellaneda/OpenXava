@@ -48,9 +48,21 @@ TR.pair {
 
 TR.selected {
 	font-weight: bold;
-	background: #FFCC00;
+	color: #3366ff;
 }
 
+.odd-highlight {
+	font-weight: bold;
+	background: #eeeeee;
+	color: #3366ff;	
+}
+
+
+.pair-highlight {
+	font-weight: bold;
+	background: #cccccc; 
+	color: #3366ff;	
+}
 
 .prompt {
 	font-weight: bold;

@@ -224,11 +224,19 @@
 >
 
 <!ELEMENT tab
-   (filter?, property*, properties?, base-condition?, default-order?)
+   (filter?, row-style*, property*, properties?, base-condition?, default-order?)
 >
 <!ATTLIST tab
  name CDATA #IMPLIED
 >
+
+<!ELEMENT row-style EMPTY>
+<!ATTLIST row-style
+ style CDATA #REQUIRED
+ property CDATA #REQUIRED
+ value CDATA #REQUIRED
+>
+
 
 
 <!ELEMENT condition
