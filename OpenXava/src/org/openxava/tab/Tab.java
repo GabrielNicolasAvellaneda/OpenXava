@@ -194,7 +194,8 @@ public class Tab {
 		if (tableModel == null) {						
 			IEntityTab tab = EntityTabFactory.create(getMetaTab());
 			tab.search(getCondition(), getKey());
-			tableModel = tab.getTable();			
+			tableModel = tab.getTable();	
+			tableModel.getValueAt(0,0); // To load data, thus it's posible go directly to other page than first 
 		}
 		return tableModel;
 	}
@@ -544,7 +545,7 @@ public class Tab {
 		notResetNextTime = b;
 	}
 	
-	public int getLastPage() {
+	public int getLastPage() {		
 		return (tableModel.getRowCount() - 1)/ BLOCK_SIZE + 1;
 	}
 
@@ -653,7 +654,7 @@ public class Tab {
 		tableModel  = null;	
 		selected  = null;
 		metaTab = null;
-		metaTabCloned = false;			
+		metaTabCloned = false;
 	}
 	
 	public String getTabName() {
