@@ -280,7 +280,38 @@ public class Dates {
 			return df;
 		}
 	
-	
+
+	/** 
+	 * Returns number of days between startDate and endDate<p> 
+	 *  
+	 * @param java.util.Date startDate
+	 * @param java.util.Date endDate
+	 * @param boolean includeStartDate<p>
+	 *  
+	 */	
+	  public static int getDaysInterval (Date startDate, Date endDate,
+	  		boolean includeStartDate ) {
+		
+		startDate = Dates.removeTime(startDate);
+		Calendar start = Calendar.getInstance();
+		start.setTime(startDate);		
+
+		endDate = Dates.removeTime(endDate);		
+		Calendar end = Calendar.getInstance();
+		end.setTime(endDate);
+		
+		if (includeStartDate) {
+			start.add(Calendar.DATE, -1);
+		}
+		
+		int days = 0;
+		while (start.before(end)) {
+			days++;
+			start.add(Calendar.DATE,1);
+		}
+		return days;
+	}
+
 	
 	public static class DateDistance {
 		public  int dias;
