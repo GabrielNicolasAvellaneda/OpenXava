@@ -1,0 +1,731 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="es">
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>Tutorial OpenXava espa&ntilde;ol</title>
+</head>
+<body>
+<br>
+<br>
+Bienvenido a este breve periplo de introducci&oacute;n en el mundox
+de OpenXava.<br>
+Estas instrucciones suponen que el archivo openxava-1.0.zip se
+descomprime en el directorio OPENXAVA_HOME, el eclipse en ECLIPSE_HOME
+y
+el jboss en JBOSS_HOME.<br>
+Esto es lo que vamos a hacer para empezar a xavear:<br>
+<ul>
+  <li><a href="#Descargar_software_base_necesario">Descargar
+software base necesario.</a><br>
+  </li>
+  <li><a href="#Instalar_jdk_de_java">Instalar y configurar
+JDK.</a><br>
+  </li>
+  <li><a href="#Instalar_y_configurar_JBoss">Instalar y
+configurar
+JBoss.</a></li>
+  <li><a href="#Instalar_y_configurar_Eclipse_y_openxava">Instalar
+y
+configurar Eclipse y OpenXava.</a></li>
+  <li><a href="#Ejecutar_aplicaci%F3n_ejemplo_MiEscuela">Ejecutar
+aplicaci&oacute;n ejemplo MiEscuela.</a></li>
+  <li><a href="#Ejecutar_prueba_junit_de_aplicaci%F3n">Ejecutar
+pruebas
+junit de la aplicaci&oacute;n MiEscuela.</a><br>
+  </li>
+  <li><a href="#Modificar_aplicaci%F3n_ejemplo_MiEscuela">Modificar
+aplicaci&oacute;n ejemplo MiEscuela.</a></li>
+  <li><a href="#Ejecutar_pruebas_junit_completas_para">Ejecutar
+pruebas
+junit completas para OpenXava.</a></li>
+  <li><a href="#Ayuda">Ayuda</a><br>
+  </li>
+</ul>
+<h4><a name="Descargar_software_base_necesario"></a>Descargar
+software base necesario</h4>
+<ul>
+  <li>Descargar JDK desde <a
+ href="http://java.sun.com/j2se/1.4.2/download.html">http://java.sun.com/j2se/1.4.2/download.html</a>,
+y
+picando en <span style="font-style: italic;">Download
+J2SE JDK</span>. &iexcl;Ojo!, no
+descargar ni J2EE ni NetBeans.<br>
+  </li>
+  <li>Descargar JBoss 4.0.x de <a href="http://www.jboss.org/">www.jboss.org</a>.
+    <span style="font-family: monospace;"></span></li>
+  <li>Descargar Eclipse 3.0.1 de <a href="http://www.eclipse.org/">www.eclipse.org</a></li>
+  <li>Descargar XmlBuddy (un
+plugin para editar XML con eclipse) de <a
+ href="http://www.xmlbuddy.com/">www.xmlbuddy.com</a>
+(la
+versi&oacute;n gratuita es suficiente).</li>
+</ul>
+<h4><a name="Instalar_jdk_de_java"></a>Instalar
+y configurar JDK <br>
+</h4>
+<ul>
+  <li>Instalar JDK de java.</li>
+  <li>Crear una variable de
+entorno <span style="font-family: monospace;">JAVA_HOME</span>
+y darle como valor la
+ruta en donde est&aacute; instalado el JDK, p. ej. <span
+ style="font-family: monospace;">JAVA_HOME=/opt/jdk1.4.2_07</span>
+o <span style="font-family: monospace;">JAVA_HOME=C:\jdk1.4.2_07</span>.<br>
+  </li>
+  <li>A&ntilde;adir el
+directorio <span style="font-family: monospace;">bin</span>
+de java a nuestro <span style="font-family: monospace;">PATH</span>,
+como
+sigue: export <span style="font-family: monospace;">PATH=$JAVA_HOME/bin:$PATH</span>
+(en caso de UNIX), en caso de
+Windows se hace desde <span style="font-style: italic;">Panel de
+Control &gt; Sistema</span>.</li>
+</ul>
+<h4><a name="Instalar_y_configurar_JBoss"></a>Instalar
+y configurar
+JBoss</h4>
+<ul>
+  <li><span style="font-family: monospace;"></span>Descomprimir <span
+ style="font-family: monospace;">jboss-4.0.x.zip</span>
+en el directorio deseado (a partir de ahora JBOSS_HOME).<span
+ style="font-family: monospace;"></span> </li>
+  <li>Descomprimir <span style="font-family: monospace;">jboss-4.0.x-tunning.zip</span>
+dentro de JBOSS_HOME. Ha de sobreescribir archivos existentes.<br>
+  </li>
+  <li>Ejecutar <span style="font-family: monospace;">JBOSS_HOME/bin/run.sh</span>
+(en
+UNIX) o <span style="font-family: monospace;">JBOSS_HOME</span><span
+ style="font-family: monospace;">\bin\</span><span
+ style="font-family: monospace;">run.bat</span>
+(en
+Windows).</li>
+  <li>Esperamos a ver en la
+consola '<span style="font-family: monospace;">JBoss
+(MX MicroKernel) ... Started in ...</span>'</li>
+  <li>Pulsamos <span style="font-style: italic;">Ctrl-C</span>
+y
+esperamos a que se pare el JBoss.</li>
+  <li>Volvemos a descomprimir <span style="font-family: monospace;">jboss-4.0.x-tunning.zip
+    </span>(un tramite necesario
+para que se instalen bien las db)<span style="font-family: monospace;"><br>
+    </span></li>
+  <li>Ejecutamos de nuevo <span style="font-family: monospace;">run.sh</span>
+o <span style="font-family: monospace;">run.bat</span><br>
+  </li>
+  <li>Cuando veamos el mensaje '<span style="font-family: monospace;">JBoss
+(MX MicroKernel) ... Started in ...</span>'
+ya tenemos
+el Servidor de Aplicaciones listo para servir aplicaciones.</li>
+</ul>
+<h4><a name="Instalar_y_configurar_Eclipse_y_openxava"></a>Instalar
+y
+configurar Eclipse y OpenXava</h4>
+<ul>
+  <li>Descomprimir <span style="font-family: monospace;">eclipse-SDK-3.0.1.zip&nbsp;</span>
+en el directorio deseado (a partir de ahora ECLIPSE_HOME)<span
+ style="font-family: monospace;">.</span> </li>
+  <li>Descomprimir el contenido
+del zip de XmlBuddy en <span style="font-family: monospace;">ECLIPSE_HOME/plugins</span></li>
+  <li>Editar el archivo <span style="font-family: monospace;">OPENXAVA_HOME/workspace/openxava.properties</span>
+para ajustar las
+rutas a nuestra instalaci&oacute;n.</li>
+  <li>Ejecutar <span style="font-family: monospace;">ECLIPSE_HOME/eclipse</span></li>
+  <li>Pedir&aacute; el
+directorio del workspace, hay que poner <span
+ style="font-family: monospace;">XAVA_HOME/workspace</span></li>
+  <li>Ya dentro del eclipse ir a <span style="font-style: italic;">Windows
+&gt;
+Preferences &gt; Java &gt; Build Path &gt; Classpath
+Variables</span> y ajustar el valor
+de la variable JBOSS_HOME.<br>
+    <span style="color: rgb(255, 0, 0);"></span></li>
+</ul>
+<h4><a name="Ejecutar_aplicaci&oacute;n_ejemplo_MiEscuela"></a>Ejecutar
+aplicaci&oacute;n ejemplo MiEscuela</h4>
+Las tareas ant mencionadas est&aacute;n dadas de alta en el
+eclipse,
+as&iacute; que para ejecutarlas solo hay que pulsar la flechita que
+hay
+en el bot&oacute;n para lanzar herramientas externas <span
+ style="color: rgb(255, 0, 0);"></span><img
+ style="width: 16px; height: 16px;" alt="external tools"
+ src="images/external_tools.gif"><br>
+<ul>
+  <li>Ejecutar la tarea ant <span style="font-style: italic;">MiEscuela.desplegarEJB</span>.<br>
+  </li>
+  <li>Esperar
+a que en la consola
+de jboss aparezca <span style="font-family: monospace;">Started J2EE
+application: ... MiEscuela.ear</span></li>
+  <li>Ejecutar la tarea ant <span style="font-style: italic;">MiEscuela.desplegarWar</span>.</li>
+  <li>Esperar a que en la consola
+de jboss aparezca <span style="font-family: monospace;">[TomcatDeployer]
+deploy, ctxPath=/MiEscuela ...</span></li>
+  <li>Abrir un navegador de
+internet e ir a la url <a
+ href="http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Profesores">http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Profesores</a></li>
+  <li>Ahora podemos jugar con la
+aplicaci&oacute;n y ver como se
+comporta.</li>
+</ul>
+<h4><a name="Ejecutar_prueba_junit_de_aplicaci&oacute;n"></a>Ejecutar
+prueba
+junit de aplicaci&oacute;n MiEscuela</h4>
+<ul>
+  <li>Ponerse encima de la clase <span style="font-family: monospace;">PruebaProfesores</span>
+(que est&aacute; en <span style="font-family: monospace;">src/org.openxava.escuela.pruebas</span>)
+y con el bot&oacute;n derecho escoger <span style="font-style: italic;">Run
+&gt; JUnit Test</span></li>
+</ul>
+Las pruebas junit de OpenXava permiten probar un m&oacute;dulo como
+si
+fueramos un cliente que est&aacute; probando la
+aplicaci&oacute;n con
+un navegador. As&iacute; podemos automatizar el proceso de probar
+nuestras aplicaciones. Os invito a examinar el c&oacute;digo de <span
+ style="font-family: monospace;">PruebaProfesores</span>
+para hacerse
+una idea de como se hace una prueba junit para OpenXava. Si queremos
+hacer
+aplicaciones de calidad es imprescindible que nos aficionemos a las
+pruebas junit.<br>
+<h4><a name="Modificar_aplicaci&oacute;n_ejemplo_MiEscuela"></a>Modificar
+aplicaci&oacute;n ejemplo MiEscuela</h4>
+<h5>A&ntilde;adir otro
+componente y su mantenimiento</h5>
+Copiamos el archivo <span style="font-family: monospace;">components/Profesor.xml</span>
+y lo pegamos dandole el
+nombre de <span style="font-family: monospace;">Alumno.xml</span>.<br>
+Cambiamos <span style="font-family: monospace;">Alumno.xml</span>
+hasta que quede de la siguiente forma:<br>
+<br>
+<span style="font-family: monospace;">&lt;?xml
+version="1.0"
+encoding="ISO-8859-1"?&gt;
+</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;!DOCTYPE
+componente SYSTEM
+"dtds/componente.dtd"&gt;
+</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;componente
+nombre="</span><span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">Alumno</span><span
+ style="font-family: monospace;">"&gt;
+</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;entidad&gt;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;propiedad nombre="</span><span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">numero</span><span
+ style="font-family: monospace;">" tipo="</span><span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">int</span><span
+ style="font-family: monospace;">" clave="true"
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; longitud="</span><span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">2</span><span
+ style="font-family: monospace;">"
+requerido="true"/&gt;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;propiedad nombre="nombre"
+tipo="String" </span>
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+longitud="40"
+requerido="true"/&gt;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp; </span>
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;/entidad&gt;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </span>
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;mapeo-entidad tabla="MYSCHOOL@separator@</span><span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">PUPIL</span><span
+ style="font-family: monospace;">"&gt;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;mapeo-propiedad
+propiedad-modelo="</span><span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">numero</span><span
+ style="font-family: monospace;">" columna-tabla="</span><span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">NUMBER</span><span
+ style="font-family: monospace;">"/&gt;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;mapeo-propiedad
+propiedad-modelo="nombre"
+columna-tabla="NAME"/&gt;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;/mapeo-entidad&gt; </span>
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; </span>
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;/componente&gt;<br>
+<br style="font-family: monospace;">
+</span>Lo marcado en <span
+ style="color: rgb(51, 102, 255); font-weight: bold;">azul</span>
+es lo
+que hay que cambiar.<br>
+Tambi&eacute;n tenemos que editar el archivo <span
+ style="font-family: monospace;">xava/aplicacion.xml</span>,
+y
+a&ntilde;adir un nuevo m&oacute;dulo:<br>
+<br>
+<span style="font-family: monospace;">&lt;?xml
+version = "1.0" encoding
+= "ISO-8859-1"?&gt;
+</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;!DOCTYPE
+aplicacion SYSTEM
+"dtds/aplicacion.dtd"&gt;
+</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;aplicacion
+nombre="MiEscuela"&gt; </span>
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;modulo
+nombre="Profesores"&gt;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;modelo
+nombre="Profesor"/&gt;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;controlador
+nombre="Typical"/&gt;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;/modulo&gt;&nbsp;&nbsp;&nbsp; &nbsp;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+</span><br style="font-family: monospace;">
+<span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;modulo nombre="Alumnos"&gt;
+</span><br
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">
+<span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;modelo nombre="Alumno"/&gt;
+</span><br
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">
+<span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;controlador
+nombre="Typical"/&gt;
+</span><br
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">
+<span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;/modulo&gt;&nbsp;&nbsp;&nbsp; &nbsp;
+</span><br
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; </span>
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;/aplicacion&gt;</span><br
+ style="font-family: monospace;">
+<br>
+Lo marcada en <span
+ style="color: rgb(51, 102, 255); font-weight: bold;">azul</span>
+es lo
+que hay que a&ntilde;adir.<br>
+Ahora solo tenemos que regenerar c&oacute;digo y redesplegar:<br>
+<ul>
+  <li>Ejecutamos la tarea ant <span style="font-style: italic;">MiEscuela.generarEJB</span></li>
+  <li>Pulsar el bot&oacute;n <span style="font-style: italic;">Build
+All</span> <img style="width: 16px; height: 16px;" alt="Build All"
+ src="images/builder.gif"><br>
+  </li>
+  <li>Ejecutamos la tarea ant <span style="font-style: italic;">MiEscuela.desplegarEJB</span></li>
+  <li>Ejecutamos la tarea ant <span style="font-style: italic;">MiEscuela.desplegarWar</span></li>
+  <li>Abrimos un navegador y vamos
+a la url <a
+ href="http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Alumnos">http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Alumnos</a></li>
+  <li>Y a jugar...<br>
+  </li>
+</ul>
+<h5>Que los alumnos y los
+profesores se conozcan</h5>
+Es sencillo hacer que un alumno tenga una referencia a un profesor,
+modificamos el archivo <span style="font-family: monospace;">Alumno.xml</span>
+para que quede as&iacute;:<br>
+<br>
+<span style="font-family: monospace;">&lt;?xml
+version="1.0"
+encoding="ISO-8859-1"?&gt;</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;!DOCTYPE
+componente SYSTEM
+"dtds/componente.dtd"&gt;</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;componente
+nombre="Alumno"&gt;</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;entidad&gt;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;propiedad nombre="numero"
+tipo="int" clave="true"</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; longitud="2"
+requerido="true"/&gt;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;propiedad nombre="nombre"
+tipo="String" </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; longitud="40"
+requerido="true"/&gt;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp; </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; </span><span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&lt;referencia
+nombre="profesor"/&gt;</span><span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;/entidad&gt;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;mapeo-entidad
+tabla="MYSCHOOL@separator@PUPIL"&gt;</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;mapeo-propiedad
+propiedad-modelo="numero" columna-tabla="NUMBER"/&gt;</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;mapeo-propiedad
+propiedad-modelo="nombre" columna-tabla="NAME"/&gt;</span><br
+ style="font-family: monospace;">
+<span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;mapeo-referencia
+referencia-modelo="profesor"&gt;</span><br
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">
+<span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&lt;detalle-mapeo-referencia
+columna-tabla="TEACHER" propiedad-modelo-referenciado="codigo"/&gt;</span><br
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">
+<span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;/mapeo-referencia&gt;</span><br
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;/mapeo-entidad&gt; </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;/componente&gt;</span><br
+ style="font-family: monospace;">
+<br style="font-family: monospace;">
+Y ahora lo probamos:<br>
+<ul>
+  <li>Ejecutamos la tarea ant <span style="font-style: italic;">MiEscuela.generarEJB</span></li>
+  <li>Pulsar el bot&oacute;n <span style="font-style: italic;">Build
+All</span> <img style="width: 16px; height: 16px;" alt="Build All"
+ src="images/builder.gif"></li>
+  <li>Ejecutamos la tarea ant <span style="font-style: italic;">MiEscuela.desplegarEJB</span></li>
+  <li>Ejecutamos la tarea ant <span style="font-style: italic;">MiEscuela.desplegarWar</span></li>
+  <li>Abrimos un navegador y vamos
+a la url <a
+ href="http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Alumnos">http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Alumnos</a></li>
+</ul>
+Como se ve, harto sencillo.<br>
+Si queremos que la referencia se visualice en formato combo hemos de
+cambiar <span style="font-family: monospace;">Alumno.xml</span>
+para
+que quede as&iacute;:<br>
+<br>
+<span style="font-family: monospace;">&lt;?xml
+version="1.0"
+encoding="ISO-8859-1"?&gt;</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;!DOCTYPE
+componente SYSTEM
+"dtds/componente.dtd"&gt;</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;componente
+nombre="Alumno"&gt;</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;entidad&gt;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;propiedad nombre="numero"
+tipo="int" clave="true"</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; longitud="2"
+requerido="true"/&gt;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;propiedad nombre="nombre"
+tipo="String" </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; longitud="40"
+requerido="true"/&gt;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp; </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;referencia
+nombre="profesor"/&gt;&nbsp;&nbsp;&nbsp; </span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;/entidad&gt;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+</span><br style="font-family: monospace;">
+<span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&lt;vista&gt;</span><br
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">
+<span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;vista-referencia
+referencia="profesor"&gt;</span><br
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">
+<span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&lt;lista-descripciones/&gt;</span><br
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">
+<span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;/vista-referencia&gt;</span><br
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">
+<span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&lt;/vista&gt;</span><br
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;mapeo-entidad
+tabla="MYSCHOOL@separator@PUPIL"&gt;</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;mapeo-propiedad
+propiedad-modelo="numero" columna-tabla="NUMBER"/&gt;</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;mapeo-propiedad
+propiedad-modelo="nombre" columna-tabla="NAME"/&gt;</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;mapeo-referencia
+referencia-modelo="profesor"&gt;</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;detalle-mapeo-referencia columna-tabla="TEACHER"
+propiedad-modelo-referenciado="codigo"/&gt;</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;/mapeo-referencia&gt;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;/mapeo-entidad&gt; </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;/componente&gt;<br>
+<br style="font-family: monospace;">
+</span>Y desplegar:<br>
+<ul>
+  <li>Pulsar el bot&oacute;n <span style="font-style: italic;">Build
+All</span> <img style="width: 16px; height: 16px;" alt="Build All"
+ src="images/builder.gif"></li>
+  <li>Ejecutamos la tarea <span style="font-style: italic;">ant
+MiEscuela.desplegarWar</span></li>
+  <li>Abrimos un
+navegador y vamos a la url <a
+ href="http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Alumnos">http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Alumnos</a></li>
+</ul>
+Y ahora vamos a poner una colecci&oacute;n de alumnos en el
+profesor. Tocamos <span style="font-family: monospace;">Profesor.xml</span>
+y lo dejamos as&iacute;:<br>
+<br>
+<span style="font-family: monospace;">&lt;?xml
+version="1.0"
+encoding="ISO-8859-1"?&gt;</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;!DOCTYPE
+componente SYSTEM
+"dtds/componente.dtd"&gt;</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;componente
+nombre="Profesor"&gt;</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;entidad&gt;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;propiedad nombre="codigo"
+tipo="String" clave="true"</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; longitud="5"
+requerido="true"/&gt;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;propiedad nombre="nombre"
+tipo="String" </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; longitud="40"
+requerido="true"/&gt;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp; </span><br style="font-family: monospace;">
+<span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;coleccion
+nombre="alumnos"&gt;</span><br
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">
+<span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&lt;referencia
+modelo="Alumno"/&gt;</span><br
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">
+<span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;/coleccion&gt;</span><br
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;/entidad&gt;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;mapeo-entidad
+tabla="MYSCHOOL@separator@TEACHER"&gt;</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;mapeo-propiedad
+propiedad-modelo="codigo" columna-tabla="ID"/&gt;</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;mapeo-propiedad
+propiedad-modelo="nombre" columna-tabla="NAME"/&gt;</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;/mapeo-entidad&gt; </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;/componente&gt;<br>
+<br style="font-family: monospace;">
+</span>Volvemos a desplegar:<br>
+<ul>
+  <li>Ejecutamos la tarea ant <span style="font-style: italic;">MiEscuela.generarEJB</span><br>
+  </li>
+  <li>Pulsar el bot&oacute;n <span style="font-style: italic;">Build
+All</span> <img style="width: 16px; height: 16px;" alt="Build All"
+ src="images/builder.gif"></li>
+  <li>Ejecutamos la tarea ant <span style="font-style: italic;">MiEscuela.desplegarEJB</span></li>
+  <li>Ejecutamos la tarea ant <span style="font-style: italic;">MiEscuela.desplegarWar</span></li>
+  <li>Abrimos un navegador y vamos
+a la url <a
+ href="http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Profesores">http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Profesores</a></li>
+</ul>
+Y eso es todo amigos.<br>
+Con este ejemplo se ve como cambios peque&ntilde;os se efectuan con
+poco esfuerzo y el efecto se ve de forma instantanea.<br>
+<h4><a name="Ejecutar_pruebas_junit_completas_para"></a>Ejecutar
+pruebas junit completas para OpenXava</h4>
+El proyecto OpenXavaTest tiene una doble funci&oacute;n, por una
+parte
+sirve como prueba junit completa de OpenXava (actualmente
+m&aacute;s
+de
+230 pruebas), y as&iacute; asegura la robustez constante de
+OpenXava;
+y
+por
+otra parte sirve como documentaci&oacute;n de referencia de
+OpenXava.
+Lo
+que se puede hacer, c&oacute;mo y el comportamiento que ha de tener
+todo lo podemos ver en OpenXavaTest.<br>
+Vamos all&aacute;:<br>
+<ul>
+  <li>Ejecutar la tarea ant <span style="font-style: italic;">OpenXavaTest.deployEJB</span></li>
+  <li>Ejecutar la tarea ant <span style="font-style: italic;">OpenXavaTest.deployWar</span></li>
+  <li>Editar el archivo de
+OpenXavaTest <span style="font-family: monospace;">properties/xava-junit.properties</span>
+y hacer que la propiedad <span style="font-family: monospace;">custormerImage</span>
+apunte a una imagen v&aacute;lida en el sistema.<br>
+  </li>
+  <li>Ponerse encima de la clase <span style="font-family: monospace;">XavaSuite</span>
+(que
+est&aacute; en <span style="font-family: monospace;">src/org.openxava.test.tests</span>)
+y con el bot&oacute;n derecho escoger <span style="font-style: italic;">Run
+&gt; JUnit Test</span></li>
+</ul>
+<h4><a name="Ayuda"></a>Ayuda</h4>
+Si se
+quiere tener una idea de todas las posibilidades de OpenXava, que van
+mucho m&aacute;s all&aacute; de lo visto en este
+c&aacute;ndido
+ejemplo, hay que
+echarle un vistazo al proyecto OpenXavaTest.<br>
+<br>
+Se puede obtener ayuda para ejecutar este tutorial o cualquier problema
+con OpenXava
+en:<br>
+<a href="http://sourceforge.net/forum/forum.php?forum_id=437013">http://sourceforge.net/forum/forum.php?forum_id=437013</a><br>
+<br>
+El sitio oficial de OpenXava es <a
+ href="http://www.gestion400.com/openxava">www.gestion400.com/openxava</a><br>
+<br>
+</body>
+</html>

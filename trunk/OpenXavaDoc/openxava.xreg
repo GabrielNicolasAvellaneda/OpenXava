@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<registry>
+
+		<!-- English -->
+    <portlet-entry name="Description" hidden="false" type="ref"
+        parent="HTML" application="false">
+        <meta-info>
+            <title>J2EE made easy using XML</title>
+            <description>What is OpenXava and its main features?</description>
+        </meta-info>
+        <classname>org.apache.jetspeed.portal.portlets.FileServerPortlet</classname>
+        <url cachedOnURL="true">/html/en/description.html</url>
+        <category group="Jetspeed">OpenXava</category>
+    </portlet-entry>
+
+    <portlet-entry name="BusinessComponent" hidden="false" type="ref"
+        parent="HTML" application="false">
+        <meta-info>
+            <title>Business component oriented</title>
+            <description>Applications architecture around Business Component</description>
+        </meta-info>
+        <classname>org.apache.jetspeed.portal.portlets.FileServerPortlet</classname>
+        <url cachedOnURL="true">/html/en/business-component.html</url>
+        <category group="Jetspeed">OpenXava</category>
+    </portlet-entry>
+		
+    <portlet-entry name="CustomCodeStrategy" hidden="false" type="ref"
+        parent="HTML" application="false">
+        <meta-info>
+            <title>Strategy to insert custom code</title>
+            <description>Strategy to insert custom code in our applications</description>
+        </meta-info>
+        <classname>org.apache.jetspeed.portal.portlets.FileServerPortlet</classname>
+        <url cachedOnURL="true">/html/en/custom-code-strategy.html</url>
+        <category group="Jetspeed">OpenXava</category>
+    </portlet-entry>
+
+    <portlet-entry name="FAQ_en" hidden="false" type="ref"
+        parent="HTML" application="false">
+        <meta-info>
+            <title>Frequent questions about OpenXava</title>
+            <description>Frequent questions about OpenXava</description>
+        </meta-info>
+        <classname>org.apache.jetspeed.portal.portlets.FileServerPortlet</classname>
+        <url cachedOnURL="true">/html/en/faq.html</url>
+        <category group="Jetspeed">OpenXava</category>
+    </portlet-entry>
+
+    <portlet-entry name="Future" hidden="false" type="ref"
+        parent="HTML" application="false">
+        <meta-info>
+            <title>Future versions</title>
+            <description>Possible technical goals where OpenXava goes</description>
+        </meta-info>
+        <classname>org.apache.jetspeed.portal.portlets.FileServerPortlet</classname>
+        <url cachedOnURL="true">/html/en/future.html</url>
+        <category group="Jetspeed">OpenXava</category>
+    </portlet-entry>
+		
+    <portlet-entry name="History" hidden="false" type="ref"
+        parent="HTML" application="false">
+        <meta-info>
+            <title>History</title>
+            <description>How was born and grew OpenXava?</description>
+        </meta-info>
+        <classname>org.apache.jetspeed.portal.portlets.FileServerPortlet</classname>
+        <url cachedOnURL="true">/html/en/history.html</url>
+        <category group="Jetspeed">OpenXava</category>
+    </portlet-entry>		
+		
+    <portlet-entry name="Tutorial_en" hidden="false" type="ref"
+        parent="HTML" application="false">
+        <meta-info>
+            <title>Tutorial for OpenXava initiation</title>
+            <description>Tutorial for OpenXava initiation</description>
+        </meta-info>
+        <classname>org.apache.jetspeed.portal.portlets.FileServerPortlet</classname>
+        <url cachedOnURL="true">/html/en/tutorial.html</url>
+        <category group="Jetspeed">OpenXava</category>
+    </portlet-entry>
+		
+    <portlet-entry name="Snapshots" hidden="false" type="ref"
+        parent="HTML" application="false">
+        <meta-info>
+            <title>Snapshots</title>
+            <description>OpenXava Applications Snapshots</description>
+        </meta-info>
+        <classname>org.apache.jetspeed.portal.portlets.FileServerPortlet</classname>
+        <url cachedOnURL="true">/html/snapshot.html</url>
+        <category group="Jetspeed">OpenXava</category>
+    </portlet-entry>
+		
+	
+	
+		<!-- Español -->
+    <portlet-entry name="Descripcion" hidden="false" type="ref"
+        parent="HTML" application="false">
+        <meta-info>
+            <title>J2EE hecho fácil con XML</title>
+            <description>¿Qué es OpenXava y que caracteristicas principales tiene?</description>
+        </meta-info>
+        <classname>org.apache.jetspeed.portal.portlets.FileServerPortlet</classname>
+        <url cachedOnURL="true">/html/es/descripcion.html</url>
+        <category group="Jetspeed">OpenXava</category>
+    </portlet-entry>
+
+    <portlet-entry name="ComponenteNegocio" hidden="false" type="ref"
+        parent="HTML" application="false">
+        <meta-info>
+            <title>Orientado a componentes de negocio</title>
+            <description>Arquitectura de aplicaciones alrededor de Componentes de Negocio</description>
+        </meta-info>
+        <classname>org.apache.jetspeed.portal.portlets.FileServerPortlet</classname>
+        <url cachedOnURL="true">/html/es/componente-negocio.html</url>
+        <category group="Jetspeed">OpenXava</category>
+    </portlet-entry>
+		
+    <portlet-entry name="EstrategiaCodigoPropio" hidden="false" type="ref"
+        parent="HTML" application="false">
+        <meta-info>
+            <title>Estrategia para insertar código propio</title>
+            <description>Estrategía para insertar código propio en nuestras aplicaciones</description>
+        </meta-info>
+        <classname>org.apache.jetspeed.portal.portlets.FileServerPortlet</classname>
+        <url cachedOnURL="true">/html/es/estrategia-codigo-propio.html</url>
+        <category group="Jetspeed">OpenXava</category>
+    </portlet-entry>
+
+
+    <portlet-entry name="FAQ_es" hidden="false" type="ref"
+        parent="HTML" application="false">
+        <meta-info>
+            <title>Preguntas frecuentes sobre OpenXava</title>
+            <description>Preguntas frecuentes sobre OpenXava</description>
+        </meta-info>
+        <classname>org.apache.jetspeed.portal.portlets.FileServerPortlet</classname>
+        <url cachedOnURL="true">/html/es/faq.html</url>
+        <category group="Jetspeed">OpenXava</category>
+    </portlet-entry>
+
+    <portlet-entry name="Futuro" hidden="false" type="ref"
+        parent="HTML" application="false">
+        <meta-info>
+            <title>Futuras versiones</title>
+            <description>Posibles direcciones técnicas hacía donde va OpenXava</description>
+        </meta-info>
+        <classname>org.apache.jetspeed.portal.portlets.FileServerPortlet</classname>
+        <url cachedOnURL="true">/html/es/futuro.html</url>
+        <category group="Jetspeed">OpenXava</category>
+    </portlet-entry>
+		
+    <portlet-entry name="Historia" hidden="false" type="ref"
+        parent="HTML" application="false">
+        <meta-info>
+            <title>Historia</title>
+            <description>¿Cómo surgió y creció OpenXava?</description>
+        </meta-info>
+        <classname>org.apache.jetspeed.portal.portlets.FileServerPortlet</classname>
+        <url cachedOnURL="true">/html/es/historia.html</url>
+        <category group="Jetspeed">OpenXava</category>
+    </portlet-entry>		
+		
+    <portlet-entry name="Tutorial_es" hidden="false" type="ref"
+        parent="HTML" application="false">
+        <meta-info>
+            <title>Tutorial de iniciación a OpenXava</title>
+            <description>Tutorial de introducción a OpenXava</description>
+        </meta-info>
+        <classname>org.apache.jetspeed.portal.portlets.FileServerPortlet</classname>
+        <url cachedOnURL="true">/html/es/tutorial.html</url>
+        <category group="Jetspeed">OpenXava</category>
+    </portlet-entry>
+		
+    <portlet-entry name="Pantallazos" hidden="false" type="ref"
+        parent="HTML" application="false">
+        <meta-info>
+            <title>Pantallazos</title>
+            <description>Pantallazos de aplicaciones OpenXava</description>
+        </meta-info>
+        <classname>org.apache.jetspeed.portal.portlets.FileServerPortlet</classname>
+        <url cachedOnURL="true">/html/snapshot.html</url>
+        <category group="Jetspeed">OpenXava</category>
+    </portlet-entry>
+		
+
+</registry>
