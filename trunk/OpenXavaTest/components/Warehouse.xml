@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE component SYSTEM "dtds/component.dtd">
+
+<!-- Implemented with a handmade EJB -->
+
+<component name="Warehouse">
+
+	<!-- 
+		Resource files (Labels.properties and ${project}-labels.properties 
+		take preference over label attribute, and i18n files is 
+		prefered over 'label' attribute'.
+		-->
+	<entity label="Warehouse">
+		<ejb remote="org.openxava.test.ejb.Warehouse"
+			home="org.openxava.test.ejb.WarehouseHome"
+			primaryKey="org.openxava.test.ejb.WarehouseKey"
+			jndi="ejb/openxava.test/Warehouse"/>		
+		<!-- 
+			We set the types in zone and number because
+			code is generate in OTHERS beans with references
+			to this. If this is not the case not would be needed.
+		-->			
+		<property name="zoneNumber" label="Zone"
+			size="3" required="true" type="int"/>   			
+		<property name="number"
+			size="3" required="true" type="int"/>   
+		<property name="name"
+			size="40" required="true"/>
+	</entity>
+				
+	<entity-mapping table="XAVATEST@separator@WAREHOUSE">
+		<property-mapping 
+			property="zoneNumber" column="ZONE"/>	
+		<property-mapping 
+			property="number" column="NUMBER"/>
+		<property-mapping
+			property="name" column="NAME"/>
+	</entity-mapping> 
+	
+</component>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE component SYSTEM "dtds/component.dtd">
+
+<!--
+	Example of valid-values with converter used as key
+-->
+
+<component name="Shipment">
+
+	<entity>  
+		<property name="type" key="true" required="true">
+			<valid-values>
+				<valid-value value="Internal"/>
+				<valid-value value="External"/>
+			</valid-values>
+		</property>
+		<property name="number" type="int" key="true" size="5" required="true"/>
+		<property name="description" type="String" size="50" required="true"/>
+	</entity>		
+	
+	<entity-mapping table="XAVATEST@separator@SHIPMENT">
+		<property-mapping
+			property="type" column="TYPE" cmp-type="Integer">
+			<converter class="org.openxava.converters.ValidValuesBase0Converter"/>
+		</property-mapping>
+		<property-mapping
+			property="number" column="NUMBER"/>
+		<property-mapping
+			property="description" column="DESCRIPTION"/>			
+	</entity-mapping>
+	
+</component>

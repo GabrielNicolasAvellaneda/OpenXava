@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE component SYSTEM "dtds/component.dtd">
+
+<!-- 
+	Implemented using a handmade xdoclet EJB 
+	Version withou oid exists (Family2)
+-->
+
+<component name="Family">
+
+	<entity>
+		<ejb remote="org.openxava.test.ejb.Family"
+			home="org.openxava.test.ejb.FamilyHome"
+			primaryKey="org.openxava.test.ejb.FamilyKey"
+			jndi="ejb/openxava.test/Family"/>		
+		<property name="oid" type="String" hidden="true" key="true"/>
+		<property name="number" size="3" required="true"/>   
+		<property name="description" size="40" required="true"/>
+	</entity>
+	
+	<view>
+		<property name="products" stereotype="PRODUCT3"/>
+		<members>number; description; products</members>
+	</view>	
+	
+	<tab>		
+		<default-order>${number} asc</default-order>
+	</tab>	
+	
+	<entity-mapping table="XAVATEST@separator@FAMILY">
+		<property-mapping 
+			property="oid" column="OID"/>	
+		<property-mapping 
+			property="number" column="NUMBER"/>
+		<property-mapping
+			property="description" column="DESCRIPTION"/>
+	</entity-mapping> 
+	
+</component>
