@@ -13,11 +13,14 @@ public class WarehousesTest extends ModuleTestBase {
 	}	
 	
 	public void testRememberListPage() throws Exception {
+		assertListRowCount(10);
 		assertNoAction("List.goPreviousPage");
 		execute("List.goPage", "page=2");
+		assertListRowCount(10);
 		assertAction("List.goPreviousPage");
 		execute("Mode.detailAndFirst");
 		execute("Mode.list");
+		assertListRowCount(10);
 		assertAction("List.goPreviousPage");
 	}
 	

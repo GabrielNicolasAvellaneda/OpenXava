@@ -24,8 +24,9 @@ public class GoListAction extends BaseAction implements IChangeModeAction, INavi
 		getTab().setBaseConditionForReference(null);	// For remove effect of use tab in references 
 																			// This not affects to base condition of module, 
 																			// which it is set again
-		getTab().setTabName(null); // Thus list mode restore the default module tab name		
-		getTab().goPage(page);		
+		getTab().setTabName(null); // Thus list mode restore the default module tab name
+		
+		getTab().goPage(page); 		
 	}
 
 	public View getView() {
