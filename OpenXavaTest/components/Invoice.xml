@@ -61,6 +61,12 @@
 			</calculator>
 		</property>
 		
+		<property name="sellerDiscount" stereotype="MONEY">
+			<calculator class="org.openxava.test.calculators.SellerInvoiceDiscountCalculator">
+				<set property="sellerNumber" from="customer.seller.number"/>
+			</calculator>	
+		</property>
+		
 		<property name="yearDiscount" stereotype="MONEY">
 			<calculator class="org.openxava.test.calculators.YearInvoiceDiscountCalculator">
 				<set property="year"/>
@@ -201,6 +207,10 @@
 		<properties>year, number, date, amountsSum, vat, detailsCount, paid, importance</properties>
 	</tab>
 	
+	<tab name="Level4Reference">
+		<properties>year, number, customer.seller.level.description</properties>
+	</tab>
+		
 	<tab name="Simple">
 		<properties>year, number, date</properties>		
 		<default-order>${year} desc, ${number} desc</default-order>

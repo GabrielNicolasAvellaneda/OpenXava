@@ -28,13 +28,16 @@ public interface Invoice
    public void setPaid( boolean newPaid )
       throws java.rmi.RemoteException;
 
-   public int getDetailsCount(  )
-      throws java.rmi.RemoteException;
-
    public java.math.BigDecimal getYearDiscount(  )
       throws java.rmi.RemoteException;
 
+   public int getDetailsCount(  )
+      throws java.rmi.RemoteException;
+
    public java.math.BigDecimal getAmountsSum(  )
+      throws java.rmi.RemoteException;
+
+   public java.math.BigDecimal getSellerDiscount(  )
       throws java.rmi.RemoteException;
 
    public java.lang.String getImportance(  )

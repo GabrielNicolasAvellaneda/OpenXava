@@ -88,7 +88,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 	String tagValueObject = ejb &amp;&amp; isPublic?"@ejb.value-object match=\"persistentCalculatedAndAggregate\"":"";
 	String tagInterfaceMethod = ejb &amp;&amp; isPublic?"@ejb:interface-method":"";
 	if (property.isCalculated()) {
-		// Calculateds
+		// Calculated ones
 	</java> 	
 	/**
 	 * <expr>tagValueObject</expr>
@@ -110,15 +110,27 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 				String propertyNameFrom = set.getPropertyNameFrom();
 				MetaProperty p = metaModel.getMetaProperty(propertyNameFrom);				
 				if (propertyNameFrom.indexOf('.') &gt;= 0) {
-					if (ejb &amp;&amp; (p.isKey() || p.getMetaModel() instanceof MetaAggregate)) {
-						propertyNameFrom = Strings.firstUpper(Strings.change(propertyNameFrom, ".", "_"));
-					}
-					else {
-						StringTokenizer st = new StringTokenizer(propertyNameFrom, ".");
-						String ref = st.nextToken();
-						String pro = st.nextToken();
-						propertyNameFrom = Strings.firstUpper(ref) + "().get" + Strings.firstUpper(pro);
-					}
+					StringTokenizer st = new StringTokenizer(propertyNameFrom, ".");
+					StringBuffer propertyNameFromInJava = new StringBuffer();
+					boolean isEmbededKey = ejb &amp;&amp; (p.isKey() || p.getMetaModel() instanceof MetaAggregate);
+					while (st.hasMoreTokens()) {
+						String token = st.nextToken();
+						if (propertyNameFromInJava.length() &gt; 0) {
+							if (isEmbededKey &amp;&amp; !st.hasMoreTokens()) {
+								propertyNameFromInJava.append("_");
+							}
+							else {
+								propertyNameFromInJava.append("().get");						
+							}						
+						}
+						if (isEmbededKey &amp;&amp; !st.hasMoreTokens()) {
+							propertyNameFromInJava.append(token);					
+						}
+						else {
+							propertyNameFromInJava.append(Strings.firstUpper(token));								
+						}
+					}			
+					propertyNameFrom = propertyNameFromInJava.toString();
 				}
 				else {
 					propertyNameFrom = Strings.firstUpper(propertyNameFrom);

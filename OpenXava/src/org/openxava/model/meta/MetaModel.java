@@ -900,8 +900,24 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		this.metaComponent = componente;
 	}
 	
-	public boolean isCalculated(String nombrePropiedad) throws XavaException {
-		return getCalculatedPropertiesNames().contains(nombrePropiedad);
+	public boolean isCalculated(String propertyName) throws XavaException {
+		/* tmp
+		return getCalculatedPropertiesNames().contains(propertyName);
+		*/
+		boolean r = getCalculatedPropertiesNames().contains(propertyName);
+		if (r) return r;
+		
+		int idx = propertyName.indexOf('.');
+		if (idx >= 0) {				
+			String refName = propertyName.substring(0, idx);								
+			String property = propertyName.substring(idx + 1);
+			System.out.println("[MetaModel.isCalculated] Procesando " + propertyName); //  tmp
+			boolean rx = getMetaReference(refName).getMetaModelReferenced().isCalculated(property);
+			System.out.println("[MetaModel.isCalculated] " + propertyName + " procesada = " + r); //  tmp
+			return rx;
+		}
+		
+		return false;
 	}	
 
 	/**

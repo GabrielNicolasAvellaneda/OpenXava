@@ -97,11 +97,16 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 					calculadorTab.getMetaCalculator();	
 				if (metaCalculador.containsMetaSets()) {
 					Iterator itMetaPoners =
-						metaCalculador.getMetaSetsWithoutValue().iterator();
+						metaCalculador.getMetaSetsWithoutValue().iterator();					
+					int idx = calculadorTab.getPropertyName().indexOf('.');
+					String ref = "";
+					if (idx >= 0) {
+						ref = calculadorTab.getPropertyName().substring(0, idx + 1);
+					}
 					while (itMetaPoners.hasNext()) {
 						MetaSet metaPoner = (MetaSet) itMetaPoners.next();
 						Object valor =
-							getValor(metaPoner.getPropertyNameFrom(), fila, nombresPropiedades);
+							getValor(ref + metaPoner.getPropertyNameFrom(), fila, nombresPropiedades);
 						try {	
 							mpCalculador.executeSet(
 								metaPoner.getPropertyName(),
@@ -119,7 +124,7 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 				}
 				if (calculador instanceof IJDBCCalculator) {
 					((IJDBCCalculator) calculador).setConnectionProvider(getConnectionProvider());
-				}				
+				}
 				fila[calculadorTab.getIndex()] = calculador.calculate();
 			}
 			catch (Exception ex) {

@@ -387,13 +387,13 @@ public class EntityTab implements IEntityTabImpl {
 			
 			while (it.hasNext()) {
 				MetaProperty metaPropiedad = (MetaProperty) it.next();
-				int indicePropiedad = getIndicePropiedad(metaPropiedad.getName());								
+				int indicePropiedad = getIndicePropiedad(metaPropiedad.getQualifiedName());
 				tabCalculators.add(new TabCalculator(metaPropiedad, indicePropiedad));
 			}			
 			it = metaTab.getMetaPropertiesCalculated().iterator();
 			while (it.hasNext()) {
 				MetaProperty metaPropiedad = (MetaProperty) it.next();
-				int indicePropiedad = getIndicePropiedad(metaPropiedad.getName());												
+				int indicePropiedad = getIndicePropiedad(metaPropiedad.getQualifiedName());
 				tabCalculators.add(new TabCalculator(metaPropiedad, indicePropiedad));
 			}
 		}

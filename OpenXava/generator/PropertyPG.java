@@ -13,7 +13,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Mar 14 10:35:44 CET 2005
+ * @version Mon Mar 14 19:28:31 CET 2005
  */
 public class PropertyPG {
     Properties properties = new Properties();
@@ -103,7 +103,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     	String tagValueObject = ejb && isPublic?"@ejb.value-object match=\"persistentCalculatedAndAggregate\"":"";
     	String tagInterfaceMethod = ejb && isPublic?"@ejb:interface-method":"";
     	if (property.isCalculated()) {
-    		// Calculateds
+    		// Calculated ones
     	
     out.print(" \t\n\t/**\n\t * ");
     out.print(tagValueObject);
@@ -136,15 +136,27 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     				String propertyNameFrom = set.getPropertyNameFrom();
     				MetaProperty p = metaModel.getMetaProperty(propertyNameFrom);				
     				if (propertyNameFrom.indexOf('.') >= 0) {
-    					if (ejb && (p.isKey() || p.getMetaModel() instanceof MetaAggregate)) {
-    						propertyNameFrom = Strings.firstUpper(Strings.change(propertyNameFrom, ".", "_"));
-    					}
-    					else {
-    						StringTokenizer st = new StringTokenizer(propertyNameFrom, ".");
-    						String ref = st.nextToken();
-    						String pro = st.nextToken();
-    						propertyNameFrom = Strings.firstUpper(ref) + "().get" + Strings.firstUpper(pro);
-    					}
+    					StringTokenizer st = new StringTokenizer(propertyNameFrom, ".");
+    					StringBuffer propertyNameFromInJava = new StringBuffer();
+    					boolean isEmbededKey = ejb && (p.isKey() || p.getMetaModel() instanceof MetaAggregate);
+    					while (st.hasMoreTokens()) {
+    						String token = st.nextToken();
+    						if (propertyNameFromInJava.length() > 0) {
+    							if (isEmbededKey && !st.hasMoreTokens()) {
+    								propertyNameFromInJava.append("_");
+    							}
+    							else {
+    								propertyNameFromInJava.append("().get");						
+    							}						
+    						}
+    						if (isEmbededKey && !st.hasMoreTokens()) {
+    							propertyNameFromInJava.append(token);					
+    						}
+    						else {
+    							propertyNameFromInJava.append(Strings.firstUpper(token));								
+    						}
+    					}			
+    					propertyNameFrom = propertyNameFromInJava.toString();
     				}
     				else {
     					propertyNameFrom = Strings.firstUpper(propertyNameFrom);
@@ -582,7 +594,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Mar 14 10:35:44 CET 2005", // date this file was generated
+        { "Mon Mar 14 19:28:32 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/property.xml", // input file
              "/home/javi/workspace/OpenXava/generator/PropertyPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

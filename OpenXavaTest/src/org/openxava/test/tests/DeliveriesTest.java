@@ -42,6 +42,19 @@ public class DeliveriesTest extends ModuleTestBase {
 		String dateAsLabel = getValueInList(0, "dateAsLabel");		
 		assertEquals(date, dateAsLabel);
 	}
+	
+	public void testSecondLevelCalculatedPropertyAndDependenOf3LevelPropertyInList() throws Exception {
+		int c = getListRowCount();
+		boolean withoutDiscount = false;
+		boolean withDiscount = true;
+		for (int i=0; i<c; i++) {
+			String value = getValueInList(0, "invoice.sellerDiscount");
+			if ("0".equals(value)) withoutDiscount = true;
+			else if ("20".equals(value)) withDiscount = true;
+			else fail("Only 0 or 20 are valid values for invoice.sellerDiscount");
+		}
+		assertTrue("It's required deliveries with invoices with and without seller discount", withDiscount && withoutDiscount);
+	}
 		
 	public void testUseListWithOtherModelAndReturnToModuleList() throws Exception {
 		execute("CRUD.new");
