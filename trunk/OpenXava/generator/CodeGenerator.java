@@ -54,10 +54,10 @@ abstract public class CodeGenerator {
 		for (int i = 0; i < components.length; i++) {
 			String file = components[i];				
 			if (file.endsWith(".xml") || file.endsWith(".XML") || file.endsWith("Xml")) {
-				try {
-					generate(componentsPath, file);						
+				try {					
+					generate(componentsPath, file);											
 				}
-				catch (Exception ex) {
+				catch (Exception ex) {					
 					ex.printStackTrace();
 					System.err.println(XavaResources.getString("generation_xdoclet_code_error", file));
 				}
@@ -71,10 +71,8 @@ abstract public class CodeGenerator {
 		int currentDNA = getCurrentDNA(component);  		
 		if (currentDNA != 0 && currentDNA == getOldDNA(component)) return;		
 		setDNA(component, currentDNA);
-		generate(component, componentsPath, file); 
+		generate(component, componentsPath, file); 		
 	}
-	
-
 	
 	public String getProject() {
 		return project;

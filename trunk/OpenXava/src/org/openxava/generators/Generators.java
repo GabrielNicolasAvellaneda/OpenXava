@@ -127,6 +127,9 @@ public class Generators {
 		if ("java.util.Date".equals(javaTypeName) || "java.sql.Date".equals(javaTypeName)) {
 			return href?"SQL92_Primitives.xmi#SQLDate_1":"RDBSchema:SQLDate";
 		}
+		if ("long".equals(javaTypeName) || "Long".equals(javaTypeName) || "java.lang.Long".equals(javaTypeName)) {
+			return href?"SQL92_Primitives.xmi#SQLNumeric_1":"RDBSchema:SQLNumeric";
+		}		
 		if ("double".equals(javaTypeName) || "Double".equals(javaTypeName) || "java.math.Double".equals(javaTypeName)) {
 			return href?"SQL92_Primitives.xmi#SQLApproximateNumeric_2":"RDBSchema:SQLApproximateNumeric";
 		}
@@ -141,6 +144,9 @@ public class Generators {
 		}
 		if ("java.sql.Timestamp".equals(javaTypeName)) {
 			return href?"SQL92_Primitives.xmi#SQLTimestamp_1":"RDBSchema:SQLTimestamp";
+		}
+		if ("byte[]".equals(javaTypeName)) {
+			return href?"SQL99_Primitives.xmi#SQLBinaryLargeObject_1":"RDBSchema:SQLBinaryLargeObject";
 		}
 		throw new XavaException("websphere_type_not_supported", javaTypeName);
 	}

@@ -1,0 +1,25 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE ejb-jar PUBLIC "-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 1.1//EN" "http://java.sun.com/j2ee/dtds/ejb-jar_1_1.dtd">
+<ejb-jar id = "ejb-jar_ID">      
+	<display-name>handmadeEJB-xava-test</display-name>      
+	<enterprise-beans>         
+		<entity id = "Warehouse">            
+			<ejb-name>Warehouse</ejb-name>            
+			<home>org.openxava.test.ejb.WarehouseHome</home>            
+			<remote>org.openxava.test.ejb.Warehouse</remote>            
+			<ejb-class>org.openxava.test.ejb.xejb.WarehouseBean</ejb-class>            
+			<persistence-type>Container</persistence-type>            
+			<prim-key-class>org.openxava.test.ejb.WarehouseKey</prim-key-class>            
+			<reentrant>False</reentrant>            
+			<cmp-field>               
+				<field-name>zoneNumber</field-name>            
+			</cmp-field>            
+			<cmp-field>               
+				<field-name>number</field-name>            
+			</cmp-field>            
+			<cmp-field>   
+				<field-name>name</field-name>            
+			</cmp-field>            
+		</entity>         		
+	</enterprise-beans>      
+</ejb-jar>

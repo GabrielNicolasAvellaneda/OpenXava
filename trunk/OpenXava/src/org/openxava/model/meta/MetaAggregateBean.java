@@ -60,16 +60,11 @@ public class MetaAggregateBean extends MetaAggregate {
 	public void setGenerate(boolean generar) {
 		this.generate = generar;
 	}
-	/**
-	 * @see org.openxava.model.meta.MetaModel#getMapping()
-	 */
 
 	public ModelMapping getMapping() throws XavaException {
-		throw new XavaException("aggregate_bean_no_mapping");
+		throw new XavaException("aggregate_bean_no_mapping", getName(), getMetaComponent().getName());
 	}
-
-	
-	
+		
 	public Collection getMetaPropertiesPersistents(MetaReference ref) throws XavaException {
 		Collection result = (Collection) getMapaReferenciasPropiedadesPersistente().get(ref);		
 		if (result != null) {

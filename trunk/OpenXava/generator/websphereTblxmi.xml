@@ -23,6 +23,9 @@ String table = mapping.getUnqualifiedTable();
 String schema = mapping.getSchema();
 String pk = table + "PK";
 String pkMembers = mapping.getKeyColumnsAsString();
+if (schema == null) {
+	throw new XavaException("websphere_schema_required", componentName);
+}
 </java> 
 
 &lt;RDBSchema:RDBTable xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:RDBSchema="RDBSchema.xmi" xmi:id="<expr>tableId</expr>" name="<expr>table</expr>" primaryKey="<expr>pk</expr>"&gt;

@@ -74,11 +74,10 @@ public class WebsphereCodeGenerator extends CodeGenerator {
 			backendPath + "/" + tableId + ".tblxmi",			
 			component.getName()								
 		};
-		WebsphereTblxmiPG.main(argv);
-				
-		Iterator itAggregatesBean = component.getMetaAggregatesBeanGenerated().iterator();
-		while (itAggregatesBean.hasNext()) {
-			MetaAggregateBean aggregate = (MetaAggregateBean) itAggregatesBean.next();
+		WebsphereTblxmiPG.main(argv);			
+		Iterator itAggregates = component.getMetaAggregatesEjbXDocLet().iterator();
+		while (itAggregates.hasNext()) {
+			MetaAggregate aggregate = (MetaAggregate) itAggregates.next();
 			String aggregateName = aggregate.getName();
 			String aggregateTableId = Strings.change(aggregate.getMapping().getTable(), ".", "_");
 			String [] argvAg = {				
@@ -88,7 +87,7 @@ public class WebsphereCodeGenerator extends CodeGenerator {
 				aggregateName				
 			};			
 			WebsphereTblxmiPG.main(argvAg);
-		}			
+		}					
 		
 	}
 	

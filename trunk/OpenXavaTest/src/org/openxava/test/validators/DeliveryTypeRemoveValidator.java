@@ -5,12 +5,10 @@ import java.util.*;
 import org.openxava.test.ejb.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
-import org.openxava.test.ejb.*;
 
 /**
  * @author Javier Paniza
  */
-
 public class DeliveryTypeRemoveValidator implements IRemoveValidator {
 	
 	private IDeliveryType deliveryType;

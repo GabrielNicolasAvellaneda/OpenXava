@@ -39,7 +39,7 @@
 		<reference-view reference="subfamily" search="false"/>
 	</view>
 	
-	<entity-mapping table="MOCKTABLE">
+	<entity-mapping table="XAVATEST@separator@MOCKTABLE">
 		<property-mapping property="oid" column="OID"/>
 		<reference-mapping reference="subfamily">
 			<reference-mapping-detail 

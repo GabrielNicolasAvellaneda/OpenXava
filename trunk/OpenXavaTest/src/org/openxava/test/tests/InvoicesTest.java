@@ -1043,11 +1043,8 @@ public class InvoicesTest extends ModuleTestBase {
 	
 	private Product getProduct() throws Exception {
 		if (product == null) {
-			Collection products = ProductUtil.getHome().findAll();
-			if (products.isEmpty()) {
-				fail("It must to have products to run this test");
-			}
-			product = (Product) PortableRemoteObject.narrow(products.iterator().next(), Product.class);
+			product = (Product) PortableRemoteObject.narrow(
+					ProductUtil.getHome().findByPrimaryKey(new ProductKey(2)), Product.class);
 		}
 		return product;
 	}

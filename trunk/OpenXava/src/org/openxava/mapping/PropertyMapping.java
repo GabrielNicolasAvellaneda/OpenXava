@@ -172,7 +172,8 @@ public class PropertyMapping extends MetaSetsContainer {
 	}
 	
 	private MetaProperty getMetaProperty() throws XavaException {
-		return modelMapping.getMetaModel().getMetaProperty(getProperty());
+		String property = Strings.change(getProperty(), "_", ".");
+		return modelMapping.getMetaModel().getMetaProperty(property);
 	}
 
 }
