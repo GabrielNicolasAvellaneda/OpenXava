@@ -2,6 +2,7 @@
 
 <%@ page import="org.openxava.tab.impl.IXTableModel" %>
 <%@ page import="org.openxava.util.Strings" %>
+<%@ page import="org.openxava.util.XavaPreferences" %>
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
 <%@ page import="org.openxava.web.WebEditors" %>
 
@@ -199,13 +200,7 @@ if (lastRow != null) {
 
 <table width="100%" class="list-info">
 <tr>
-
 <td>
-<fmt:message key="list_count">
-	<fmt:param><%=totalSize%></fmt:param> 
-</fmt:message>
-</td>
-<td align='right'>
 <%
 int last=tab.getLastPage();
 int current=tab.getPage();
@@ -224,6 +219,13 @@ if (!tab.isLastPage()) {
 %>
  <xava:image action='List.goNextPage'/> 
 <% } %>	 
+</td>
+<td  align='right'>
+<% if (XavaPreferences.getInstance().isShowCountInList()) { %>
+<fmt:message key="list_count">
+	<fmt:param><%=totalSize%></fmt:param> 
+</fmt:message>
+<% } %>
 </td>
 </tr>
 </table>

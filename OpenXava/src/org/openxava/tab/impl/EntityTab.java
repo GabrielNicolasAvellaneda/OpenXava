@@ -575,6 +575,7 @@ public class EntityTab implements IEntityTabImpl {
 	
 
 	public int getResultSize() throws RemoteException {
+		if (!XavaPreferences.getInstance().isShowCountInList()) return Integer.MAX_VALUE; // tmp		
 		return getDataProvider(getComponentName()).getResultSize(tabProvider);		
 	}
 

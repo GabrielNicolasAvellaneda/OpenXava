@@ -84,6 +84,44 @@
 			</filterset> 			         
 		</copy>				
 	</target>
+	
+	<target name="generateWebsphereMapping">
+		<echo>Generating xml template for Websphere Mapping</echo>
+		<java classname="Simple2XML" classpath="${tl.lib}">
+			<arg value="${generator.dir}/websphereDbxmi.template"/> 
+			<arg value="${generator.dir}/websphereDbxmi.xml"/>         
+		</java>				
+		<java classname="Simple2XML" classpath="${tl.lib}">
+			<arg value="${generator.dir}/websphereSchxmi.template"/> 
+			<arg value="${generator.dir}/websphereSchxmi.xml"/>         
+		</java>						
+		<echo>Generating Websphere Mapping classes generator</echo>
+		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
+			<arg value="${generator.dir}/websphereDbxmi.xml"/>
+			<arg value="${generator.dir}/WebsphereDbxmiPG.java"/>
+		</java>
+		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
+			<arg value="${generator.dir}/websphereSchxmi.xml"/>
+			<arg value="${generator.dir}/WebsphereSchxmiPG.java"/>
+		</java>		
+		<echo>Compiling classes generators</echo>
+		<javac srcdir="${generator.dir}"
+			destdir="${generator.dir}"
+			classpath="${tl.lib};${xava.lib};${j2ee.lib}"
+		/>
+		
+		<echo>Generating Websphere Mapping</echo>		
+		<java 
+			classname="WebsphereCodeGenerator" 
+			classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};${components.dir};../${project}/${classes.dir};${xava.generator.path}" 
+			fork="yes">
+			<arg value="${project}"/>        		
+	       	<arg value="${domain}"/>
+       		<arg value="${package}"/>
+	       	<arg value="${ejb.package}"/>       	
+		</java>
+		
+	</target>
         
 	<target name="regenerateEJBGenerator">     
 		<echo>Generating xml template for EJB</echo>

@@ -11,6 +11,11 @@ import org.openxava.util.*;
 
 
 /**
+ * Base class for EntityMapping and AggregateMapping, 
+ * and some static methods about mapping. <p> 
+ * 
+ * tmp: ¿Mover las métodos estáticos a otra clase?
+ * 
  * @author Javier Paniza
  */
 abstract public class ModelMapping implements java.io.Serializable {
@@ -25,6 +30,42 @@ abstract public class ModelMapping implements java.io.Serializable {
 	abstract public String getModelName() throws XavaException;
 
 	abstract public MetaModel getMetaModel() throws XavaException;
+	
+	public static Collection getSchemas() throws XavaException {
+		// tmp: Se llama 2 veces: ¿caché?
+		Collection r = new HashSet();
+		for (Iterator it = MetaComponent.getAllLoaded().iterator(); it.hasNext();) {
+			MetaComponent comp = (MetaComponent) it.next();
+			String table = comp.getEntityMapping().getTable();			
+			int idx = table.indexOf('.'); 
+			if (idx >= 0) {
+				r.add(table.substring(0, idx));
+			}
+			for (Iterator itMappings = comp.getAggregateMappings().iterator(); itMappings.hasNext();) {
+				ModelMapping mapping = (ModelMapping) itMappings.next();
+				String aggregateTable = mapping.getTable();			
+				int idxAggregate = aggregateTable.indexOf('.'); 
+				if (idxAggregate >= 0) {
+					r.add(aggregateTable.substring(0, idxAggregate));
+				}				
+			}
+		}		
+		return r;
+	}
+	
+	public static Collection getTables() throws XavaException {		
+		Collection r = new HashSet();
+		for (Iterator it = MetaComponent.getAllLoaded().iterator(); it.hasNext();) {
+			MetaComponent comp = (MetaComponent) it.next();
+			r.add(comp.getEntityMapping().getTable());									
+			for (Iterator itMappings = comp.getAggregateMappings().iterator(); itMappings.hasNext();) {
+				ModelMapping mapping = (ModelMapping) itMappings.next();
+				r.add(mapping.getTable());												
+			}
+		}		
+		return r;
+	}
+	
 
 	/**
 	 * Util especialmente para averiguar el tipo de
@@ -540,5 +581,4 @@ abstract public class ModelMapping implements java.io.Serializable {
 		return "_" + Strings.change(Strings.firstUpper(mapeo.getProperty()), ".", "_");
 	}
 	
-
 }

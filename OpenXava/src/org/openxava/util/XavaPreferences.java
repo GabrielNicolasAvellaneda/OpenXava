@@ -55,7 +55,10 @@ public class XavaPreferences {
 		return "true".equalsIgnoreCase(getProperties().getProperty("descriptionsCalculatorAsEJB", "false"));
 	}
 	
-	
+	public boolean isShowCountInList() {
+		return "true".equalsIgnoreCase(getProperties().getProperty("showCountInList", "true"));
+	}
+		
 	public String getFormLineSpacing() {
 		return getProperties().getProperty("formLineSpacing", "1");
 	}

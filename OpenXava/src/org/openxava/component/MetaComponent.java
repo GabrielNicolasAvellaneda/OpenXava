@@ -154,6 +154,10 @@ public class MetaComponent implements Serializable {
 			throw new ElementNotFoundException("aggregate_mapping_not_found", nombre, getName());
 		}
 		return (AggregateMapping) aggregatesMapping.get(nombre);
+	}
+	
+	public Collection getAggregateMappings() throws  XavaException {
+		return aggregatesMapping == null?Collections.EMPTY_LIST:aggregatesMapping.values(); 
 	}	
 	
 	/**
