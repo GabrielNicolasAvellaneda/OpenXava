@@ -4,6 +4,7 @@
 
 <project name="OpenXava" default="deployWar">
 
+	<property name="default.language" value="en"/>
 	<property name="datasource" value="DataSource"/>
 	<property name="dist.base.dir" value = ".."/>
 	<property name="dist.dir" value = "${dist.base.dir}/${project}.dist"/>
@@ -315,7 +316,25 @@
 	    	<filterset>	    	
 				<filtersfile file="${configuration}.properties"/>				
 			</filterset> 			             		
-  		</copy>		  		  				
+  		</copy>	
+		<copy file="../OpenXava/bin/Messages_${default.language}.properties" 
+			tofile="../OpenXava/bin/Messages.properties"/>
+		<copy file="../OpenXava/bin/Labels_${default.language}.properties" 
+			tofile="../OpenXava/bin/Labels.properties"/>		
+		<copy file="../OpenXava/bin/XavaResources_${default.language}.properties" 
+			tofile="../OpenXava/bin/XavaResources.properties"/>				
+		<copy file="../${project}/${classes.dir}/${project}-messages_${default.language}.properties" 
+			tofile="../${project}/${classes.dir}/${project}-messages.properties"
+			failonerror="false"/>
+		<copy file="../${project}/${classes.dir}/${project}-labels_${default.language}.properties" 
+			tofile="../${project}/${classes.dir}/${project}-labels.properties"
+			failonerror="false"/>
+		<copy file="../${project}/${classes.dir}/Mensajes${project}_${default.language}.properties" 
+			tofile="../${project}/${classes.dir}/Mensajes${project}.properties"
+			failonerror="false"/>
+		<copy file="../${project}/${classes.dir}/Etiquetas${project}_${default.language}.properties" 
+			tofile="../${project}/${classes.dir}/Etiquetas${project}.properties"
+			failonerror="false"/>
 		<jar jarfile="../${project}/web/WEB-INF/lib/openxava.jar" basedir="../OpenXava/bin"/>
 		<copy file="${jboss.dir}/client/jboss-client.jar" todir="../${project}/web/WEB-INF/lib"/>
 		<jar jarfile="${dist.dir}/${name.war}.war" basedir="web"/>
