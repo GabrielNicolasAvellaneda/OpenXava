@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 
 import javax.ejb.*;
+import javax.ejb.ObjectNotFoundException;
 
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -13,7 +14,7 @@ import net.sf.hibernate.*;
 
 
 /**
- * @author Javier Paniza
+ * @author Mª Carmen Gimeno
  */
 public class HibernateMapFacadeImpl extends MapFacadeBean {
 	
@@ -22,19 +23,34 @@ public class HibernateMapFacadeImpl extends MapFacadeBean {
 	protected Object findEntity(IMetaEjb metaModel, Map keyValues) throws FinderException {
 		try {
 			MetaEjbImpl ejbImpl = new MetaEjbImpl(metaModel);
-			Class clase = metaModel.getPropertiesClass();
-			String nombreClaseKey = clase.getName() + "$Key";
-			Class claseKey = Class.forName(nombreClaseKey);
-			Object key = ejbImpl.obtainPrimaryKeyFromKey(keyValues, claseKey, true);
-			return getSession().get(metaModel.getPropertiesClass(), (Serializable) key);			
+			Class className = metaModel.getPropertiesClass();
+			Object key = null;
+			if (keyValues.size() == 1) {
+				key = keyValues.values().iterator().next();
+			}
+			else {
+				throw new RuntimeException("Claves múltiples todavía no soportadas");
+				/* String nombreClaseKey = clase.getName() + "$Key";
+				Class claseKey = Class.forName(nombreClaseKey);
+				Object key = ejbImpl.obtainPrimaryKeyFromKey(keyValues, claseKey, true); */
+			}
+			
+			Object result = getSession().get(className, (Serializable) key);
+			if (result == null) {
+				throw new ObjectNotFoundException(
+						XavaResources.getString(
+								"object_with_key_not_found",
+								metaModel.getName(),keyValues));
+			}
+			return result;
 		}	
+		catch (FinderException ex) {
+			throw ex;
+		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			throw new EJBException(
-				"Imposible realizar la búsqueda de "
-					+ metaModel.getName()
-					+ " por:\n"
-					+ ex.getLocalizedMessage()); // tmp i18n
+			throw new RuntimeException(  //tmp: ¿HibernateException?
+					XavaResources.getString("find_error",metaModel.getName()));
 		}
 	}
 	
@@ -47,7 +63,7 @@ public class HibernateMapFacadeImpl extends MapFacadeBean {
 		throws CreateException, ValidationException, XavaException {
 			Object object = null;
 			try {				
-				object = metaEjb.getRemoteClass().newInstance();
+				object = metaEjb.getPropertiesClass().newInstance();
 				PropertiesManager mp = new PropertiesManager(object);
 				mp.executeSets(values);
 				getSession().save(object);
@@ -55,7 +71,7 @@ public class HibernateMapFacadeImpl extends MapFacadeBean {
 			}
 			catch (Exception ex) {
 				ex.printStackTrace();
-				throw new CreateException("Imposible grabar"); // tmp: i18n
+				throw new CreateException(XavaResources.getString("create_persistent_error",ex.getMessage())); 
 			}
 	}
 	
@@ -65,7 +81,7 @@ public class HibernateMapFacadeImpl extends MapFacadeBean {
 		}
 		catch (HibernateException ex) {
 			ex.printStackTrace();
-			throw new RemoveException("Imposible borrar " + model); // tmp: i18n
+			throw new RemoveException(XavaResources.getString("remove_error",metaModel.getName(),ex.getMessage())); 
 		}
 	}
 	
