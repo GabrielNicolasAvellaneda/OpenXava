@@ -178,111 +178,175 @@ public class Dates {
 	/**
 	 * Diferencia de dos fechas en años, meses y dias.<p> 
 	 *  
-	 * @param f1 y f2 en cualquier orden; ninguna de las dos puede ser nulo. En la
-	 * contabilización de los días, incluirDiaInicio=true incluiría el día de inicio dentro de ésta.
+	 * @param f1 y f2 en cualquier orden; ninguna de las dos puede ser nulo.
 	 * @return Devuelve un mapa con la diferencia ("anyos", "meses", "dias")
 	 */	
-	public static DateDistance subtract(java.util.Date f1, java.util.Date f2,boolean incluirDiaInicio ) {
+	public static DateDistance subtract(java.util.Date f1, java.util.Date f2, boolean includeStartDate ) {
 		DateDistance df = new DateDistance();
 		if ( null == f1 || null == f2 ) return null;
 		Calendar fmax = Calendar.getInstance(), fmin = Calendar.getInstance();
 		int i;
-		
-		if (incluirDiaInicio){
-		    Calendar cal = Calendar.getInstance();
-		    cal.setTime(f1);
-		    cal.add(Calendar.DATE,-1);
-		    f1= cal.getTime();
-		}
-		
 		f1 = Dates.removeTime(f1);
 		f2 = Dates.removeTime(f2);		
 		if (f1.after(f2)) {
 			fmax.setTime(f1);
 			fmin.setTime(f2);
 		}
-		else if (f1.before(f2)) {
+		else {
 			fmin.setTime(f1);
 			fmax.setTime(f2);
 		}
+		
+		if (includeStartDate) {
+			fmin.add(Calendar.DATE, -1);
+		}
+		
+		int tope = fmax.getActualMaximum(Calendar.DATE);
+		int mesInicio = fmin.get(Calendar.MONTH);
+		int mesFin = fmax.get(Calendar.MONTH);
+		int anyoInicio = fmin.get(Calendar.YEAR);
+		int anyoFin = fmax.get(Calendar.YEAR);
+		int diaInicio = fmin.get(Calendar.DATE);
+		int diaFin = fmax.get(Calendar.DATE);
+		
+		if (diaInicio < diaFin || diaInicio == diaFin) {
+			while (fmin.get(Calendar.MONTH) != mesFin || fmin.get(Calendar.YEAR) != anyoFin) {
+				fmin.add(Calendar.MONTH, +1);
+				df.meses++;
+				if (df.meses == 12) {
+					df.meses = 0;
+					df.años++;
+				}
+			}
+			while (!fmin.equals(fmax)) {
+				fmin.add(Calendar.DATE, 1);				
+				df.dias++;
+				if (df.dias == tope) {
+					df.meses++;
+					if (df.meses == 12) {
+						df.meses = 0;
+						df.años++;
+					}
+					df.dias = 0;
+				}
+			}			
+		}
 		else {
-			df.dias = 0;
-			df.meses = 0;
-			df.años = 0;
-			return df;
+			int FM;
+			int FA;			
+			if (mesFin == 0) {
+				FM = 11;
+				FA = anyoFin - 1;
+			}
+			else {
+				FM = mesFin -1;
+				FA = anyoFin;
+			}
+			while (fmin.get(Calendar.MONTH) != FM || fmin.get(Calendar.YEAR) != FA) {
+				fmin.add(Calendar.MONTH, +1);
+				df.meses++;
+				if (df.meses == 12) {
+					df.meses = 0;
+					df.años++;
+				}
+			}
+			while (!fmin.equals(fmax)) {
+				fmin.add(Calendar.DATE, 1);
+				df.dias++;
+				if (df.dias == tope) {
+					df.meses++;
+					if (df.meses == 12) {
+						df.meses = 0;
+						df.años++;
+					}
+					df.dias = 0;
+				}
+			}			
 		}
-		
-		for (i=0; !fmin.after(fmax); i++) {
-			fmin.add(Calendar.YEAR, 1);
-		}
-		df.años = i-1;
-		fmin.add(Calendar.YEAR, -1);
-		
-		for (i=0; !fmin.after(fmax); i++) {
-			fmin.add(Calendar.MONTH, 1);
-		}
-		df.meses=i-1;
-		fmin.add(Calendar.MONTH, -1);
-		
-		for (i=0; !fmin.equals(fmax); i++) {
-			fmin.add(Calendar.DATE, 1);
-		}
-		df.dias=i;
-		
 		return df; 	
 	}
 	
-	/**
-	 * Diferencia de dos fechas en años, meses y dias.<p> 
-	 *  
-	 * @param f1 y f2 en cualquier orden; ninguna de las dos puede ser nulo.
-	 * @return Devuelve un mapa con la diferencia ("anyos", "meses", "dias")
-	 */	
 	public static DateDistance subtract(java.util.Date f1, java.util.Date f2) {
 		DateDistance df = new DateDistance();
 		if ( null == f1 || null == f2 ) return null;
 		Calendar fmax = Calendar.getInstance(), fmin = Calendar.getInstance();
 		int i;
-		
-		
-		
 		f1 = Dates.removeTime(f1);
 		f2 = Dates.removeTime(f2);		
 		if (f1.after(f2)) {
 			fmax.setTime(f1);
 			fmin.setTime(f2);
 		}
-		else if (f1.before(f2)) {
+		else {
 			fmin.setTime(f1);
 			fmax.setTime(f2);
 		}
+		
+		int tope = fmax.getActualMaximum(Calendar.DATE);
+		int mesInicio = fmin.get(Calendar.MONTH);
+		int mesFin = fmax.get(Calendar.MONTH);
+		int anyoInicio = fmin.get(Calendar.YEAR);
+		int anyoFin = fmax.get(Calendar.YEAR);
+		int diaInicio = fmin.get(Calendar.DATE);
+		int diaFin = fmax.get(Calendar.DATE);
+		
+		if (diaInicio < diaFin || diaInicio == diaFin) {
+			while (fmin.get(Calendar.MONTH) != mesFin || fmin.get(Calendar.YEAR) != anyoFin) {
+				fmin.add(Calendar.MONTH, +1);
+				df.meses++;
+				if (df.meses == 12) {
+					df.meses = 0;
+					df.años++;
+				}
+			}
+			while (!fmin.equals(fmax)) {
+				fmin.add(Calendar.DATE, 1);				
+				df.dias++;
+				if (df.dias == tope) {
+					df.meses++;
+					if (df.meses == 12) {
+						df.meses = 0;
+						df.años++;
+					}
+					df.dias = 0;
+				}
+			}			
+		}
 		else {
-			df.dias = 0;
-			df.meses = 0;
-			df.años = 0;
-			return df;
+			int FM;
+			int FA;			
+			if (mesFin == 0) {
+				FM = 11;
+				FA = anyoFin - 1;
+			}
+			else {
+				FM = mesFin -1;
+				FA = anyoFin;
+			}
+			while (fmin.get(Calendar.MONTH) != FM || fmin.get(Calendar.YEAR) != FA) {
+				fmin.add(Calendar.MONTH, +1);
+				df.meses++;
+				if (df.meses == 12) {
+					df.meses = 0;
+					df.años++;
+				}
+			}
+			while (!fmin.equals(fmax)) {
+				fmin.add(Calendar.DATE, 1);
+				df.dias++;
+				if (df.dias == tope) {
+					df.meses++;
+					if (df.meses == 12) {
+						df.meses = 0;
+						df.años++;
+					}
+					df.dias = 0;
+				}
+			}			
 		}
-		
-		for (i=0; !fmin.after(fmax); i++) {
-			fmin.add(Calendar.YEAR, 1);
-		}
-		df.años = i-1;
-		fmin.add(Calendar.YEAR, -1);
-		
-		for (i=0; !fmin.after(fmax); i++) {
-			fmin.add(Calendar.MONTH, 1);
-		}
-		df.meses=i-1;
-		fmin.add(Calendar.MONTH, -1);
-		
-		for (i=0; !fmin.equals(fmax); i++) {
-			fmin.add(Calendar.DATE, 1);
-		}
-		df.dias=i;
-		
 		return df; 	
 	}
-	
+		
 	/**
 	 * Reciba dos mapas con un número de días, meses y años y los suma. 
 	 *  
