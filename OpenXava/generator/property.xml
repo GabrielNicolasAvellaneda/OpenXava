@@ -56,10 +56,9 @@ public static void generateEJB(XPathContext context, ProgramWriter out, MetaProp
 	generate(context, out, property, true, true);
 }
 
-public static void generatePrivate(XPathContext context, ProgramWriter out, MetaProperty property) throws XavaException {
-	generate(context, out, property, false, false);
+public static void generatePrivate(XPathContext context, ProgramWriter out, MetaProperty property, boolean ejb) throws XavaException {
+	generate(context, out, property, false, ejb);
 }
-
 
 private static void generate(XPathContext context, ProgramWriter out, MetaProperty property, boolean isPublic, boolean isEjb) throws XavaException {
 	PropertyPG pg = new PropertyPG();

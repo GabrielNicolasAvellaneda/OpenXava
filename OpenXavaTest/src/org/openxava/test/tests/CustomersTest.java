@@ -2,6 +2,7 @@ package org.openxava.test.tests;
 
 import org.openxava.test.ejb.*;
 import org.openxava.tests.*;
+import org.openxava.util.*;
 
 /**
  * @author Javier Paniza
@@ -34,6 +35,13 @@ public class CustomersTest extends ModuleTestBase {
 	public CustomersTest(String testName, String moduleName, boolean section) {
 		super(testName, "OpenXavaTest", moduleName);		
 		this.section = section?"_section0":"";		
+	}
+	
+	public void testObtainAggregateValues() throws Exception {
+		String city = getValueInList(0, "address.city");
+		assertTrue("Value for city in first customer is required for run this test", !Is.emptyString(city));
+		execute("Mode.detailAndFirst");
+		assertValue("address.city", city);
 	}
 	
 	public void testChangeLabelProgrammatic() throws Exception {

@@ -44,7 +44,7 @@
       <entity>
          <ejb-name>Office</ejb-name>
 
-         <table-name>XAVATEST@separator@OFFICE</table-name>
+         <table-name>XAVATEST_OFFICE</table-name>
 
          <cmp-field>
             <field-name>_Name</field-name>
@@ -606,6 +606,21 @@
          <cmp-field>
             <field-name>alternateSeller_number</field-name>
             <column-name>ALTERNATESELLER_NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Address_zipCode</field-name>
+            <column-name>ZIPCODE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>address_street</field-name>
+            <column-name>STREET</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>address_city</field-name>
+            <column-name>CITY</column-name>
 
         </cmp-field>
          <cmp-field>
@@ -1377,6 +1392,16 @@
          <cmp-field>
             <field-name>number</field-name>
             <column-name>NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>detail_type</field-name>
+            <column-name>TYPE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>detail_subfamily</field-name>
+            <column-name>SUBFAMILY</column-name>
 
         </cmp-field>
 

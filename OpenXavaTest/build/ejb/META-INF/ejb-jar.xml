@@ -825,6 +825,18 @@
             <description><![CDATA[]]></description>
             <field-name>alternateSeller_number</field-name>
          </cmp-field>
+         <cmp-field id="CmpAttribute_Customer__Address_zipCode">
+            <description><![CDATA[]]></description>
+            <field-name>_Address_zipCode</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_Customer_address_street">
+            <description><![CDATA[]]></description>
+            <field-name>address_street</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_Customer_address_city">
+            <description><![CDATA[]]></description>
+            <field-name>address_city</field-name>
+         </cmp-field>
          <cmp-field id="CmpAttribute_Customer_address_state_id">
             <description><![CDATA[]]></description>
             <field-name>address_state_id</field-name>
@@ -1792,6 +1804,14 @@
          <cmp-field id="CmpAttribute_Service_number">
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_Service_detail_type">
+            <description><![CDATA[]]></description>
+            <field-name>detail_type</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_Service_detail_subfamily">
+            <description><![CDATA[]]></description>
+            <field-name>detail_subfamily</field-name>
          </cmp-field>
 
          <env-entry>
