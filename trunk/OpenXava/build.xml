@@ -162,7 +162,7 @@
 		
 	</target>
         
-	<target name="regenerateEJBGenerator">     
+	<target name="regenerateGenerator">     
 		<echo>Generating xml template for EJB</echo>
        <java classname="Simple2XML" classpath="${tl.lib}">
          <arg value="${generator.dir}/postcreate.template"/> 
@@ -203,6 +203,11 @@
          <arg value="${generator.dir}/interface.template"/> 
          <arg value="${generator.dir}/interface.xml"/>         
        </java>       
+		<echo>Generating xml template for hibernate mapping</echo>
+		<java classname="Simple2XML" classpath="${tl.lib}">
+			<arg value="${generator.dir}/hibernate.template"/> 
+			<arg value="${generator.dir}/hibernate.xml"/>         
+		</java> 
 		
        <echo>Generating EJB classes generator</echo>
        <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
@@ -244,7 +249,12 @@
          <arg value="${generator.dir}/interface.xml"/> 
          <arg value="${generator.dir}/InterfacePG.java"/>         
        </java>
-              
+		<echo>Generating hibernate mapping classes generator</echo>
+		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
+			<arg value="${generator.dir}/hibernate.xml"/> 
+			<arg value="${generator.dir}/HibernatePG.java"/>         
+		</java>       
+		
        <echo>Compiling classes generators</echo>
 	   <javac srcdir="${generator.dir}"
 	         destdir="${generator.dir}"
@@ -421,7 +431,7 @@
     </target>	
 	
 	<target name="updateDataSourceInfo">
-		<echo file="../${project.ejb}/${classes.dir}/datasource.properties">${domain}/${package}/${ejb.package}=${datasource}</echo>
+		<echo file="../${project.ejb}/${classes.dir}/datasource.properties">${domain}/${package}=${datasource}</echo>
 	</target>
 	
 	<target name="filterI18n" if="configuration">

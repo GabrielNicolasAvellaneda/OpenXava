@@ -34,12 +34,12 @@ public class HCodeGenerator extends CodeGenerator {
 	protected void generate(MetaComponent component, String componentsPath, String file) throws Exception {
 		if (!component.getMetaEntity().isGenerateXDocLet()) return; //by now, better isGeneratePojo() or so
 		String dirPackage = toDirPackage(getPackageName());		
-		String modelPath = "../" + getProject() + "/gen-src-xava/" + dirPackage;		
+		String modelPath = "../" + getProject() + "/gen-src-xava/" + dirPackage; //tmp ¿una sola vez?		
 		// Creataing directories
 		File fModelPath = new File(modelPath);
 		fModelPath.mkdirs();
+		
 		// Main entity			
-					
 		System.out.println(XavaResources.getString("generating_pojo_code", component.getName()));			
 		String [] argv = {				
 			componentsPath  + "/" + file,				
@@ -48,7 +48,18 @@ public class HCodeGenerator extends CodeGenerator {
 			component.getName()								
 		};
 		PojoPG.main(argv);
-			
+				
+		// Hibernate mapping
+		String mappingPath = "../" + getProject() + "/build/hibernate/"; //tmp ¿una sola vez?
+		System.out.println(XavaResources.getString("generating_hibernate_mapping", component.getName()));			
+		String [] argvMap = {				
+			componentsPath  + "/" + file,				
+			mappingPath + component.getName() + ".hbm.xml",
+			getJavaPackage(),
+			component.getName()								
+		};
+		HibernatePG.main(argvMap);
+		
 	}
 		
 }

@@ -24,10 +24,11 @@ import org.openxava.view.meta.*;
 
 public class MetaComponent implements Serializable {
 	
-	private String packageNameWithSlash;
-
 	private static Map components = new HashMap();
-
+	private static Properties packages;
+	
+	private String packageNameWithSlash;
+	private String packageNameWithSlashWithoutModel;
 	private String name;
 	private MetaEntity metaEntity;
 	private Map metaAggregates;	
@@ -37,7 +38,6 @@ public class MetaComponent implements Serializable {
 	private EntityMapping entityMapping;
 	private String packageName;
 
-	private static Properties packages;
 	
 	MetaComponent() {
 	}
@@ -347,6 +347,19 @@ public class MetaComponent implements Serializable {
 			packageNameWithSlash = Strings.change(getPackageName(), ".", "/");
 		}
 		return packageNameWithSlash;
+	}
+	
+	/**
+	 * Exclude the last package, usually the model package.
+	 */
+	public String getPackageNameWithSlashWithoutModel() throws XavaException {
+		if (packageNameWithSlashWithoutModel == null) {
+			packageNameWithSlashWithoutModel = Strings.change(getPackageName(), ".", "/");
+			packageNameWithSlashWithoutModel = packageNameWithSlashWithoutModel.substring(0, packageNameWithSlashWithoutModel.lastIndexOf('/'));
+			System.out.println("[MetaComponent.getPackageNameWithSlashWithoutModel] packageNameWithSlashWithoutModel = " + packageNameWithSlashWithoutModel); //  tmp
+			
+		}
+		return packageNameWithSlashWithoutModel;
 	}
 	
 }

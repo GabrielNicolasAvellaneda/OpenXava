@@ -26,8 +26,9 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 	private static Map providers;
 	
 	public static IConnectionProvider createByComponent(String componentName) throws XavaException {
-		String packageName = MetaComponent.get(componentName).getPackageNameWithSlash();		
-		String jndi = getDatasourcesJNDIByPackage().getProperty(packageName);				
+		String packageName = MetaComponent.get(componentName).getPackageNameWithSlashWithoutModel();		
+		String jndi = getDatasourcesJNDIByPackage().getProperty(packageName);
+		
 		if (Is.emptyString(jndi)) {
 			throw new XavaException("no_data_source_for_component", componentName);
 		}

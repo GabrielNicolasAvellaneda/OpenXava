@@ -76,7 +76,33 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		}		
 		return r;
 	}
-		
+	
+	/**
+	 * All models (Entities and Aggregates) where its java code is generated.
+	 * @return of type MetaModel
+	 * @throws XavaException
+	 */
+	public static Collection getAllGenerated() throws XavaException { 
+		Collection r = new HashSet();
+		for (Iterator it = MetaComponent.getAllLoaded().iterator(); it.hasNext();) {
+			MetaComponent comp = (MetaComponent) it.next();
+			MetaEntity en = comp.getMetaEntity();
+			if (en.isGenerateXDocLet()) { // At momment, pojo and hibernate will be treated
+				r.add(en);
+			}
+									
+			for (Iterator itAggregates = comp.getMetaAggregates().iterator(); itAggregates.hasNext();) {
+				MetaAggregate ag = (MetaAggregate) itAggregates.next();
+				if (ag instanceof MetaAggregateEjb) { // At momment, pojo and hibernate will be treated
+					if (ag.isGenerateXDocLet()) {
+						r.add(ag);
+					}
+				}
+			}
+		}		
+		return r;
+	}
+	
 	public void addMetaFinder(MetaFinder metaBuscador) {
 		if (metaFinders == null) metaFinders = new ArrayList();
 		metaFinders.add(metaBuscador);		
