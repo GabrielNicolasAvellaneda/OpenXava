@@ -7,7 +7,7 @@
 
    <enterprise-beans>
 
-  <!-- xavax Sessions Beans -->
+  <!-- OpenXava Sessions Beans -->
 
         <session>
             <ejb-name>MapFacade</ejb-name>
@@ -32,7 +32,7 @@
 
       <entity>
          <ejb-name>Profesor</ejb-name>
-         <jndi-name>@subcontext@/ejb/org.xavax.escuela.modelo/Profesor</jndi-name>
+         <jndi-name>@subcontext@/ejb/org.openxava.escuela.modelo/Profesor</jndi-name>
          <resource-ref>
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <resource-name>jdbc/DataSource</resource-name>

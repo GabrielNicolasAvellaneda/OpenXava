@@ -64,6 +64,7 @@
   vista CDATA #IMPLIED
   marco (true|false) "true"
 	crear (true|false) "true"
+	buscar (true|false) "true"
 >
 
 <!ELEMENT lista-descripciones EMPTY>

@@ -12,17 +12,17 @@
    <!-- Sessions Beans de Xava -->
 		<session id="MapFacade">            
 			<ejb-name>MapFacade</ejb-name>            
-			<home>org.xavax.model.impl.MapFacadeHome</home>            
-			<remote>org.xavax.model.impl.MapFacadeRemote</remote>            
-			<ejb-class>org.xavax.model.impl.MapFacadeBean</ejb-class>            
+			<home>org.openxava.model.impl.MapFacadeHome</home>            
+			<remote>org.openxava.model.impl.MapFacadeRemote</remote>            
+			<ejb-class>org.openxava.model.impl.MapFacadeBean</ejb-class>            
 			<session-type>Stateless</session-type>            
 			<transaction-type>Container</transaction-type>         
 		</session>
 		<session id="Server">            
 			<ejb-name>Server</ejb-name>            
-			<home>org.xavax.util.impl.ServerHome</home>            
-			<remote>org.xavax.util.impl.ServerRemote</remote>            
-			<ejb-class>org.xavax.util.impl.ServerBean</ejb-class>            
+			<home>org.openxava.util.impl.ServerHome</home>            
+			<remote>org.openxava.util.impl.ServerRemote</remote>            
+			<ejb-class>org.openxava.util.impl.ServerBean</ejb-class>            
 			<session-type>Stateless</session-type>            
 			<transaction-type>Container</transaction-type>         
 			<env-entry>
@@ -38,9 +38,9 @@
 		</session>		
 		<session id="EntityTab">
 			<ejb-name>EntityTab</ejb-name>
-			<home>org.xavax.tab.impl.EntityTabHome</home>
-			<remote>org.xavax.tab.impl.EntityTabRemote</remote>
-			<ejb-class>org.xavax.tab.impl.EntityTabBean</ejb-class>
+			<home>org.openxava.tab.impl.EntityTabHome</home>
+			<remote>org.openxava.tab.impl.EntityTabRemote</remote>
+			<ejb-class>org.openxava.tab.impl.EntityTabBean</ejb-class>
 			<session-type>Stateless</session-type>
 			<transaction-type>Container</transaction-type>
 			<env-entry>
@@ -61,12 +61,12 @@
 
          <ejb-name>Profesor</ejb-name>
 
-         <home>org.xavax.escuela.modelo.ProfesorHome</home>
-         <remote>org.xavax.escuela.modelo.Profesor</remote>
+         <home>org.openxava.escuela.modelo.ProfesorHome</home>
+         <remote>org.openxava.escuela.modelo.Profesor</remote>
 
-         <ejb-class>org.xavax.escuela.modelo.xejb.ProfesorCMP</ejb-class>
+         <ejb-class>org.openxava.escuela.modelo.xejb.ProfesorCMP</ejb-class>
          <persistence-type>Container</persistence-type>
-         <prim-key-class>org.xavax.escuela.modelo.ProfesorKey</prim-key-class>
+         <prim-key-class>org.openxava.escuela.modelo.ProfesorKey</prim-key-class>
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Profesor</abstract-schema-name>
