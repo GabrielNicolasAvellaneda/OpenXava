@@ -146,18 +146,15 @@ public class CustomersWithSectionTest extends CustomersTest {
 		assertNoErrors();
 		assertListColumnCount(3);		
 		execute("Print.generatePdf"); 
-		assertContentTypeForPopup("application/pdf");				
+		assertContentTypeForPopup("application/pdf");
+		
 	}
 		
-	public void testAddRemoveTabColumnsDynamically() throws Exception {	
+	public void testRestoreColumns_addRemoveTabColumnsDynamically() throws Exception {
 		// Restoring initial tab setup
 		execute("List.customize");
-		execute("List.addColumns");		
-		checkRow("selectedProperties", "address.city");				
-		execute("AddColumns.addColumns");
-		execute("List.addColumns");
-		checkRow("selectedProperties", "seller.level.description");
-		execute("AddColumns.addColumns");
+		execute("List.addColumns");							
+		execute("AddColumns.restoreDefault");		
 		// End restoring
 		
 		assertListColumnCount(5);

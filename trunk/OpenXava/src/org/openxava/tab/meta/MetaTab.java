@@ -67,6 +67,8 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 
 	private Collection rowStyles;
 
+	private String defaultPropertiesNames;
+
 	public MetaModel getMetaModel() throws XavaException {
 		return getMetaComponent().getMetaEntity();
 	}
@@ -329,12 +331,17 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	private List crearNombresTodasPropiedades() throws XavaException {
 		return getMetaEntidad().getPropertiesNamesWithoutHidden();
 	}
+	
+	public void setDefaultPropertiesNames(String properties) {
+		this.defaultPropertiesNames = properties;
+		setPropertiesNames(properties);
+	}
 
 	/**
 	 * Separados por comas.
 	 */
-	public void setPropertiesNames(String propiedades) {
-		this.properties = propiedades;
+	public void setPropertiesNames(String properties) {
+		this.properties = properties;
 
 		this.propertiesNames = null;
 		this.metaProperties = null;
@@ -738,13 +745,18 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	/**
 	 * For dynamically remove all properties to this tab
 	 */
-	public void clearProperties() {
+	public void clearProperties() { 
 		if (propertiesNames == null)
 			return;
 		propertiesNames.clear();
 		resetAfterAddRemoveProperty();
 	}
-
+	
+	public void restoreDefaultProperties() { 
+		setPropertiesNames(defaultPropertiesNames); 
+		resetAfterAddRemoveProperty();
+	}
+	
 	private void resetAfterAddRemoveProperty() {
 		selectSQL = null;
 		metaProperties = null;
