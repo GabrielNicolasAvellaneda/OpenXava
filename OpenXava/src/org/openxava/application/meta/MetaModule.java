@@ -1,14 +1,9 @@
 package org.openxava.application.meta;
 
-
 import java.util.*;
 
 import org.openxava.controller.*;
 import org.openxava.util.meta.*;
-
-
-
-
 
 /**
  * @author Javier Paniza
@@ -27,77 +22,46 @@ public class MetaModule extends MetaElement implements java.io.Serializable {
 	private String modeControllerName;	
 	private MetaReport metaReport;
 
-
-
-	/**
-	 * Gets the modelo
-	 * @return Returns a String
-	 */
 	public String getModelName() {
 		return modelName;
 	}
-	/**
-	 * Sets the modelo
-	 * @param modelo The modelo to set
-	 */
-	public void setModelName(String modelo) {
-		this.modelName = modelo;
+	public void setModelName(String modelName) {
+		this.modelName = modelName;
 	}
 
-
-	/**
-	 * Gets the aplicacion
-	 * @return Returns a Aplicacion
-	 */
 	public MetaApplication getMetaApplication() {
 		return metaApplication;
 	}
-	/**
-	 * Sets the aplicacion
-	 * @param aplicacion The aplicacion to set
-	 */
-	public void setMetaApplication(MetaApplication aplicacion) {
-		this.metaApplication = aplicacion;
+	public void setMetaApplication(MetaApplication application) {
+		this.metaApplication = application;
 	}
 
-
-	/**
-	 * Gets the controladores
-	 * @return De <tt>String</tt>. 
-	 */
 	public Collection getControllersNames() {
 		return controllersNames;
+	}		
+	public void addControllerName(String controller) {
+		controllersNames.add(controller);
 	}
-	
-	
-	public void addControllerName(String controlador) {
-		controllersNames.add(controlador);
-	}
-
 
 	public String getSwingViewClass() {
 		return swingViewClass;
 	}
-
 	public void setSwingViewClass(String swingViewClass) {
 		this.swingViewClass = swingViewClass;
 	}
 
-
 	public MetaReport getMetaReport() {
 		return metaReport;
 	}
-
-	public void setMetaReport(MetaReport metaListado) {
-		this.metaReport = metaListado;
+	public void setMetaReport(MetaReport metaReport) {
+		this.metaReport = metaReport;
 	}
 	
 	public String getViewName() {
 		return viewName;
 	}
-
-	public void setViewName(String nombreVista) {
-		this.viewName = nombreVista;
+	public void setViewName(String viewName) {
+		this.viewName = viewName;
 	}
 
 	public String getTabName() {
@@ -116,7 +80,6 @@ public class MetaModule extends MetaElement implements java.io.Serializable {
 	public String getModeControllerName() {
 		return modeControllerName;
 	}
-
 	public void setModeControllerName(String string) {
 		modeControllerName = string;
 	}
@@ -124,10 +87,10 @@ public class MetaModule extends MetaElement implements java.io.Serializable {
 	public String getWebViewURL() {
 		return webViewURL;
 	}
-
 	public void setWebViewURL(String string) {
 		webViewURL = string;
 	}
+	
 	public Environment getEnvironment() {
 		if (environment == null) {
 			environment = new Environment(environmentVariables);
@@ -135,11 +98,9 @@ public class MetaModule extends MetaElement implements java.io.Serializable {
 		return environment;
 	}
 
-	public void addEnvironmentVariable(String nombre, String valor) {
+	public void addEnvironmentVariable(String name, String value) {
 		if (environmentVariables == null) environmentVariables = new HashMap();
-		environmentVariables.put(nombre, valor);
+		environmentVariables.put(name, value);
 	}	
 
 }
-
-

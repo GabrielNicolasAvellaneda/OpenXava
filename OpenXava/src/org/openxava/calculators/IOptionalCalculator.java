@@ -1,17 +1,14 @@
 package org.openxava.calculators;
 
 /**
- * Un calculador que puede optar por no realizar
- * el calculo bajo ciertas circunstancias. <p>
+ * A calculator that can choose do no calculation.
  * 
  * @author Javier Paniza
  */
 public interface IOptionalCalculator extends ICalculator {
 	
 	/**
-	 * El resultado resuelto solo tendra sentido si se llama
-	 * antes a <tt>calcular</tt>.
-	 * 
+	 * The result only is valid if this method return <tt>true</tt>.
 	 */
 	boolean isCalculate();
 

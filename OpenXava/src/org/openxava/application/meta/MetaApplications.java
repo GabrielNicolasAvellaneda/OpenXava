@@ -6,73 +6,62 @@ import java.util.*;
 import org.openxava.application.meta.xmlparse.*;
 import org.openxava.util.*;
 
-
-
-
 /**
  * 
  * @author Javier Paniza
  */
 public class MetaApplications {
 	
-	private static Collection nombresAplicaciones;
+	private static Collection applicationNames;
 
-	private static Map metaAplicaciones;
+	private static Map metaAplicacions;
 	
 	/**
-	 * Solo se ha de llamar desde dentro del parser.
-	 * @throws XavaException
+	 * Only call this from parser.
 	 */
-	public static void _addMetaApplication(MetaApplication aplicacion) throws XavaException {
-		if (metaAplicaciones == null) {
+	public static void _addMetaApplication(MetaApplication application) throws XavaException {
+		if (metaAplicacions == null) {
 			throw new XavaException("only_from_parse", "MetaApplications._addMetaApplication");
 		}
-		metaAplicaciones.put(aplicacion.getName(), aplicacion);
+		metaAplicacions.put(application.getName(), application);
 	}
 	
 	/**
-	 * @return Colección de <tt>Aplicacion</tt>. Nunca nulo.
+	 * @return Collection of <tt>MetaApplication</tt>. Not null.
 	 */
 	public static Collection getMetaApplications() throws XavaException {
-		if (metaAplicaciones == null) {
-			configurar();
+		if (metaAplicacions == null) {
+			configure();
 		}
-		return metaAplicaciones.values();
+		return metaAplicacions.values();
 	}
 	
-	private static void configurar() throws XavaException {
-		metaAplicaciones = new HashMap();
-		ApplicationParser.configurarAplicaciones();
+	private static void configure() throws XavaException {
+		metaAplicacions = new HashMap();
+		ApplicationParser.configureApplications();
 	}
 	
-	/**
-	 * 
-	 * @param nombre java.lang.String
-	 * @exception XavaException  Cualquier problema.
-	 * @exception ElementNotFoundException
-	 */
-	public static MetaApplication getMetaApplication(String nombre) throws ElementNotFoundException, XavaException {
-		if (metaAplicaciones == null) {
-			configurar();
+	public static MetaApplication getMetaApplication(String name) throws ElementNotFoundException, XavaException {
+		if (metaAplicacions == null) {
+			configure();
 		}
-		MetaApplication result = (MetaApplication) metaAplicaciones.get(nombre);
+		MetaApplication result = (MetaApplication) metaAplicacions.get(name);
 		if (result == null) {
-			throw new ElementNotFoundException(
-				"La aplicación " + nombre + " no está definida");
+			throw new ElementNotFoundException("application_not_found", name);
 		}
 		return result;
 	}
 
 	public static Collection getApplicationsNames() throws XavaException {
-		if (nombresAplicaciones == null) {
-			nombresAplicaciones = new ArrayList();
+		if (applicationNames == null) {
+			applicationNames = new ArrayList();
 			Iterator it = getMetaApplications().iterator();
 			while (it.hasNext()) {
 				MetaApplication ap = (MetaApplication) it.next();
-				nombresAplicaciones.add(ap.getName());
+				applicationNames.add(ap.getName());
 			}
 		}
-		return nombresAplicaciones;
+		return applicationNames;
 	}
 	
 }

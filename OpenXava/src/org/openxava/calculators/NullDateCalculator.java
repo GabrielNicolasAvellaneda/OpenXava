@@ -8,13 +8,13 @@ import org.openxava.util.*;
  */
 public class NullDateCalculator implements ICalculator {
 
-	private final static java.util.Date FECHA_NULA = Dates.create(1, 1, 1); 
+	private final static java.util.Date NULL_DATE = Dates.create(1, 1, 1); 
 
 	/**
 	 * @see org.openxava.calculators.ICalculator#calculate()
 	 */
 	public Object calculate() throws Exception {
-		return FECHA_NULA;
+		return NULL_DATE;
 	}
 
 }

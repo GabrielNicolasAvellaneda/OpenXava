@@ -11,19 +11,17 @@ import org.w3c.dom.*;
  * @author: Javier Paniza
  */
 public class ApplicationParser extends ParserBase {
-	
-			
+				
 	private ApplicationParser(String xmlFileURL, int language) {
 		super(xmlFileURL, language);		
 	}
 	
-	public static void configurarAplicaciones() throws XavaException {
+	public static void configureApplications() throws XavaException {
 		ApplicationParser enParser = new ApplicationParser("application.xml", ENGLISH);
 		enParser.parse();		
 		ApplicationParser esParser = new ApplicationParser("aplicacion.xml", ESPAÑOL);
 		esParser.parse();
 	}
-
 
 	private void addApplication() throws XavaException {
 		MetaApplication application = new MetaApplication();				
@@ -90,9 +88,7 @@ public class ApplicationParser extends ParserBase {
 		}
 		return null;
 	}
-	
-	
-	
+			
 	private String createSwingView(Element el) throws XavaException {
 		NodeList l = el.getElementsByTagName(xswing_view[lang]);
 		if (l.getLength() > 0) {
@@ -114,8 +110,8 @@ public class ApplicationParser extends ParserBase {
 	private String createModeController(Element el) throws XavaException {
 		NodeList l = el.getElementsByTagName(xmode_controller[lang]);
 		if (l.getLength() > 0) {
-			Element elModeControllerSecciones = (Element) l.item(0);
-			return elModeControllerSecciones.getAttribute(xname[lang]);
+			Element elModeController = (Element) l.item(0);
+			return elModeController.getAttribute(xname[lang]);
 		}
 		return null;
 	}	
@@ -131,14 +127,13 @@ public class ApplicationParser extends ParserBase {
 		}
 		return null;
 	}
-	
-		
+			
 	private void fillControllers(Element el, MetaModule container) throws XavaException {
 		NodeList l = el.getElementsByTagName(xcontroller[lang]);
 		int c = l.getLength();
-		if (MetaControllers.WEB.equals(MetaControllers.getContext()) && // en web 
-			!Is.emptyString(container.getModelName()) && // con modelo
-			Is.emptyString(container.getModeControllerName()) // y sin controlador de secciones
+		if (MetaControllers.WEB.equals(MetaControllers.getContext()) && // in web 
+			!Is.emptyString(container.getModelName()) && // with model
+			Is.emptyString(container.getModeControllerName()) // and withoud mode controller
 		) {
 			container.addControllerName("Navigation");
 			container.addControllerName("List");
@@ -160,6 +155,5 @@ public class ApplicationParser extends ParserBase {
 			container.addEnvironmentVariable(name, value);
 		}
 	}
-	
-	
+		
 }

@@ -7,10 +7,6 @@ import java.util.*;
  */
 public class CurrentYearCalculator implements ICalculator {
 
-
-	/**
-	 * @see org.openxava.calculators.ICalculator#calculate()
-	 */
 	public Object calculate() throws Exception {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new java.util.Date());
