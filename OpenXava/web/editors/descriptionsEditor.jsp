@@ -131,7 +131,7 @@ if (editable) {
 	<option value=""></option>
 <%
 	java.util.Iterator it = descriptions.iterator();
-	String selectedDescription = "";
+	String selectedDescription = "";	
 	while (it.hasNext()) {
 		KeyAndDescription cl = (KeyAndDescription) it.next();	
 		String selected = "";

@@ -24,6 +24,7 @@
 		</property>		
 		<property name="number" type="int" key="true" size="5" required="true"/>
 		<property name="description" type="String" size="50" required="true"/>
+		<finder name="all" arguments="" collection="true"/>
 	</entity>		
 	
 	<entity-mapping table="XAVATEST@separator@SHIPMENT">

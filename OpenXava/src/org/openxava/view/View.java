@@ -1382,17 +1382,16 @@ public class View implements java.io.Serializable {
 				String stringPropertyValue = st.nextToken();
 				if (hasConverter) { 
 					try {
-						// At momment only with Strings
-						if ("java.lang.String".equals(p.getCMPTypeName())) {
-							stringPropertyValue = p.getMapping().getConverter().toJava(stringPropertyValue).toString();
-						}
+						propertyValue = p.getMapping().getConverter().toJava(p.parse(stringPropertyValue)); 						
 					}
 					catch (Exception ex) {
 						ex.printStackTrace();
 						throw new XavaException("html_to_java_reference_conversion_error");
 					}
 				}
-				propertyValue = WebEditors.parse(getRequest(), p, stringPropertyValue, getErrors());
+				else {
+					propertyValue = WebEditors.parse(getRequest(), p, stringPropertyValue, getErrors());
+				}
 			}			
 			String valueKey = qualifier + "." + ref.getName() + "." + propertyName + ".value";			 
 			if (WebEditors.mustToFormat(p)) { 

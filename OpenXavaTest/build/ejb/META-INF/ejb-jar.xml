@@ -1595,6 +1595,15 @@
             <res-auth>Container</res-auth>
          </resource-ref>
 
+         <query>
+            <query-method>
+               <method-name>findAll</method-name>
+               <method-params>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Shipment o]]></ejb-ql>
+         </query>
 	  <!-- Write a file named ejb-finders-ShipmentBean.xml if you want to define extra finders. -->
 
       </entity>

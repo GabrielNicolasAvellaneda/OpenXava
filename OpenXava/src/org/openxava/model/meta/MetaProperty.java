@@ -86,8 +86,11 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		}
 	}
 	
+	/**
+	 * The first value is 1, to left 0 for no value case.
+	 */
 	public int getValidValueIndex(Object value) { 
-		return getValidValues().indexOf(value);
+		return getValidValues().indexOf(value) + 1;
 	}
 	
 	public String getValidValueLabel(ServletRequest request, int i) { 	

@@ -1218,7 +1218,7 @@
       <entity>
          <ejb-name>Shipment</ejb-name>
 
-         <table-name>XAVATEST_SHIPMENT</table-name>
+         <table-name>XAVATEST@separator@SHIPMENT</table-name>
 
          <cmp-field>
             <field-name>_Type</field-name>
@@ -1240,6 +1240,16 @@
             <column-name>NUMBER</column-name>
 
         </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findAll</method-name>
+               <method-params>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Shipment o]]></jboss-ql>
+
+	     </query>
 
 <!-- jboss 3.2 features -->
 <!-- optimistic locking does not express the exclusions needed -->
