@@ -19,6 +19,15 @@ public class EJBTest extends TestCase {
 		super(name);
 	}
 	
+	public void testCalculatedPropertyDependOnMultiLevelProperty() throws Exception {
+		InvoiceValue value = new InvoiceValue();
+		value.setYear(2005);
+		value.setNumber(66);
+		Invoice invoice = InvoiceUtil.getHome().create(value);		
+		assertEquals(null,  invoice.getSellerDiscount());
+		invoice.remove();
+	}
+	
 	public void testAggregatesInValues() throws Exception {
 		CustomerValue v = new CustomerValue();
 		v.getAddress(); // Only for test no compile error

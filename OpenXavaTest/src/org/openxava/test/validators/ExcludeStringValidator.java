@@ -1,7 +1,5 @@
 package org.openxava.test.validators;
 
-import java.rmi.*;
-
 import org.openxava.util.*;
 import org.openxava.validators.*;
 
@@ -18,7 +16,7 @@ public class ExcludeStringValidator implements IPropertyValidator {
 		Object value,
 		String objectName,
 		String propertyName)
-		throws RemoteException {
+		throws Exception {
 		if (value==null) return;
 		if (value.toString().indexOf(getString()) >= 0) {
 			errors.add("exclude_string", propertyName, objectName, getString());
