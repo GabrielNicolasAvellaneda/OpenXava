@@ -4,7 +4,6 @@ import java.math.*;
 
 import org.openxava.test.ejb.*;
 import org.openxava.tests.*;
-import org.openxava.test.ejb.*;
 
 
 /**
@@ -15,6 +14,16 @@ public class Products2Test extends ModuleTestBase {
 	
 	public Products2Test(String testName) {
 		super(testName, "OpenXavaTest", "Products2");		
+	}
+	
+	public void testListToDetailAlwaysMainView() throws Exception {
+		execute("CRUD.new");		
+		assertExists("unitPrice");
+		execute("Reference.createNew", "model=Family2,keyProperty=xava.Product2.family.number");
+		assertNotExists("unitPrice");
+		execute("Mode.list");
+		execute("CRUD.new");		
+		assertExists("unitPrice");				
 	}
 	
 	public void testSetEditableOnReferencesAsDescriptionsList() throws Exception {		

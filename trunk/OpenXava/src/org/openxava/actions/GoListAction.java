@@ -1,5 +1,7 @@
 package org.openxava.actions;
 
+import java.util.*;
+
 import org.openxava.tab.*;
 import org.openxava.view.*;
 
@@ -13,14 +15,25 @@ public class GoListAction extends BaseAction implements IChangeModeAction, INavi
 	private View view;
 	private Tab tab;
 	private Tab mainTab;
+	private Stack previousViews;
 		
 	public String getNextMode() {		
 		return IChangeModeAction.LIST;
 	}
 
-	public void execute() throws Exception {		
+	public void execute() throws Exception {
+		restoreMainView();
 		getView().clear();
 		setTab(getMainTab());
+	}
+	
+
+	private void restoreMainView() {
+		View mainView = null;
+		while (!previousViews.isEmpty()) {
+			mainView = (View) previousViews.pop();
+		}
+		if (mainView != null) setView(mainView);
 	}
 
 	public View getView() {
@@ -52,5 +65,11 @@ public class GoListAction extends BaseAction implements IChangeModeAction, INavi
 	}
 	public void setMainTab(Tab maintTab) {
 		this.mainTab = maintTab;
+	}
+	public Stack getPreviousViews() {
+		return previousViews;
+	}
+	public void setPreviousViews(Stack previousViews) {
+		this.previousViews = previousViews;
 	}
 }

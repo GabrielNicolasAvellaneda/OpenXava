@@ -4,12 +4,10 @@ import java.rmi.*;
 
 import org.openxava.calculators.*;
 import org.openxava.test.ejb.*;
-import org.openxava.test.ejb.*;
 
 /**
  * @author Javier Paniza
  */
-
 public class DeliveryTypePostcreateCalculator implements IEntityCalculator {
 	
 	private IDeliveryType deliveryType;
