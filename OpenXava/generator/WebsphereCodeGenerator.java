@@ -16,7 +16,6 @@ public class WebsphereCodeGenerator extends CodeGenerator {
 	
 	public static void main(String [] argv) {
 		if (argv.length != 4) {
-			// tmp: Revisar mensaje i18n
 			System.err.println(XavaResources.getString("generator_argv_required"));
 			System.exit(1);			
 		}
@@ -57,6 +56,14 @@ public class WebsphereCodeGenerator extends CodeGenerator {
 		
 			WebsphereSchxmiPG.main(argvSch);
 		}
+		
+		// Generate mapxmi
+		String [] argvMap = {				
+			"../OpenXava/xava/controllers.xml", // A XML file is required, but it's not used				
+			backendPath + "/Map.mapxmi"								
+		};
+		WebsphereMapxmiPG.main(argvMap);
+				
 		super.generate(componentsPath, components);
 	}
 	
@@ -68,7 +75,7 @@ public class WebsphereCodeGenerator extends CodeGenerator {
 			component.getName()								
 		};
 		WebsphereTblxmiPG.main(argv);
-		
+				
 		Iterator itAggregatesBean = component.getMetaAggregatesBeanGenerated().iterator();
 		while (itAggregatesBean.hasNext()) {
 			MetaAggregateBean aggregate = (MetaAggregateBean) itAggregatesBean.next();

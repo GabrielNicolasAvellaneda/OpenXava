@@ -99,6 +99,10 @@
 			<arg value="${generator.dir}/websphereTblxmi.template"/> 
 			<arg value="${generator.dir}/websphereTblxmi.xml"/>         
 		</java>								
+		<java classname="Simple2XML" classpath="${tl.lib}">
+			<arg value="${generator.dir}/websphereMapxmi.template"/> 
+			<arg value="${generator.dir}/websphereMapxmi.xml"/>         
+		</java>										
 		<echo>Generating Websphere Mapping classes generator</echo>
 		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
 			<arg value="${generator.dir}/websphereDbxmi.xml"/>
@@ -112,6 +116,10 @@
 			<arg value="${generator.dir}/websphereTblxmi.xml"/>
 			<arg value="${generator.dir}/WebsphereTblxmiPG.java"/>
 		</java>				
+		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
+			<arg value="${generator.dir}/websphereMapxmi.xml"/>
+			<arg value="${generator.dir}/WebsphereMapxmiPG.java"/>
+		</java>						
 		<echo>Compiling classes generators</echo>
 		<javac srcdir="${generator.dir}"
 			destdir="${generator.dir}"
@@ -300,6 +308,15 @@
 				<filter token="separator" value="${separator}"/>
 			</filterset>
 		</copy>
+		<copy file="../${project.ejb}/${meta-inf.dir}/ibm-ejb-jar-bnd.xmi" 
+			toFile="../${project.ejb}/${classes.dir}/META-INF/ibm-ejb-jar-bnd.xmi" 
+			overwrite="yes" failonerror="no">
+			<filterset>
+				<filter token="subcontext" value="${subcontext}"/>
+				<filter token="datasource" value="${datasource}"/>
+				<filter token="package" value="${domain}/${package}/${ejb.package}"/>
+			</filterset>
+		</copy>
 	</target>
 	
 	<target name="filterWithConfiguration" if="configuration" 
@@ -331,6 +348,16 @@
 				<filter token="separator" value="${separator}"/>				
 			</filterset>
 		</copy>
+		<copy file="../${project.ejb}/${meta-inf.dir}/ibm-ejb-jar-bnd.xmi" 
+			toFile="../${project.ejb}/${classes.dir}/META-INF/ibm-ejb-jar-bnd.xmi" 
+			overwrite="yes" failonerror="no">
+			<filterset>
+				<filtersfile file="${configuration}.properties"/>
+				<filter token="subcontext" value="${subcontext}"/>
+				<filter token="datasource" value="${datasource}"/>
+				<filter token="package" value="${domain}/${package}/${ejb.package}"/>				
+			</filterset>
+		</copy>		
 	</target>
 	
 	<target name="createEJBJar" 

@@ -12,9 +12,9 @@ String schema = properties.getProperty("arg3");
   <database href="META-INF/backends/OPENXAVA/DB.dbxmi##DB"/>
 # 
 for (Iterator it=Mapping.getTablesBySchema(schema).iterator(); it.hasNext();) {
-	String idTable = Strings.change((String) it.next(), ".", "_");
+	String tableId = Strings.change((String) it.next(), ".", "_");
 # 
-  <tables xmi:type="RDBSchema:RDBTable" href="META-INF/backends/OPENXAVA/#(idTable)#.tblxmi###(idTable)#"/>
+  <tables xmi:type="RDBSchema:RDBTable" href="META-INF/backends/OPENXAVA/#(tableId)#.tblxmi###(tableId)#"/>
 # 
 }
 # 

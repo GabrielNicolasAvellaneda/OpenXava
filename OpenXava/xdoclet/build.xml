@@ -73,6 +73,10 @@
 			
 			<websphere 
 				destdir="${meta-inf.dir}"
+				datasource="jdbc/@datasource@"
+				xmlencoding="ISO-8859-1"
+				validatexml="true"
+				mergeDir="${config.dir}/websphere"
 			/>
 
       </ejbdoclet>

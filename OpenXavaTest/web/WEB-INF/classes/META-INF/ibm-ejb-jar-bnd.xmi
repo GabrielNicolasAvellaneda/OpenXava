@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejbbnd:EJBJarBinding xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:commonbnd="commonbnd.xmi" xmlns:ejbbnd="ejbbnd.xmi" xmlns:ejb="ejb.xmi" xmlns:common="common.xmi" xmi:id="EJBJarBinding_1">
+
+    <ejbJar href="META-INF/ejb-jar.xml#ejb-jar_1"/>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_1"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/DrivingLicence"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_DrivingLicence"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_2"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Office"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Office"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_3"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Delivery"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Delivery"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_4"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Clerk"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Clerk"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_5"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/SellerLevel"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_SellerLevel"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_6"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/State"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_State"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_7"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Product"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Product"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_8"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Warehouse2"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Warehouse2"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_9"
+
+            jndiName="OpenXavaTest/ejb/openxava.test/Family"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Family"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_10"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/ServiceType"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_ServiceType"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_11"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/DeliveryPlace"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_DeliveryPlace"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_12"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Seller"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Seller"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_13"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Customer"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Customer"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_14"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Subfamily"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Subfamily"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_15"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/DeliveryType"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_DeliveryType"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_16"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/InvoiceDetail"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_InvoiceDetail"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_17"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Product2"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Product2"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_18"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/AdditionalDetail"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_AdditionalDetail"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_19"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/TransportCharge"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_TransportCharge"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_20"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Invoice"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Invoice"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_21"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Product3"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Product3"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_22"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Shipment"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Shipment"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_23"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Carrier"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Carrier"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_24"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Subfamily2"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Subfamily2"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_25"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/FilterBySubfamily"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_FilterBySubfamily"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_26"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Service"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Service"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_27"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Family2"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Family2"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="ContainerManagedEntity_bnd_28"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Receptionist"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Receptionist"/>
+
+        </ejbBindings>
+
+</ejbbnd:EJBJarBinding>
