@@ -1,6 +1,7 @@
 package org.openxava.model.meta;
 
 import java.util.*;
+
 import javax.ejb.*;
 
 import org.openxava.util.*;
@@ -87,6 +88,8 @@ public interface IMetaEjb extends IMetaModel {
 	Object obtainPrimaryKeyFromKey(Map valoresClave) throws XavaException;
 	
 	Object obtainPrimaryKeyFromKeyWithoutConversors(Map valoresClave) throws XavaException;
+	
+	Map obtainMapFromPrimaryKey(Object primaryKey) throws XavaException;
 		
 }
 

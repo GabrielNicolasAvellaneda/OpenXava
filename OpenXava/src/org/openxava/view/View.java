@@ -990,10 +990,10 @@ public class View implements java.io.Serializable {
 	 *
 	 */
 	private void calculateDefaultValues() throws XavaException {		
-		Collection properties = new ArrayList(getMetaModel().getMetaPropertiesWithDefaultValueCalculator());
-		properties.addAll(getMetaModel().getMetaPropertiesViewWithDefaultCalculator());
 		
-		// Properties		
+		// Properties
+		Collection properties = new ArrayList(getMetaModel().getMetaPropertiesWithDefaultValueCalculator());
+		properties.addAll(getMetaModel().getMetaPropertiesViewWithDefaultCalculator());		
 		if (!properties.isEmpty()) {		
 			Map nombresMiembros = getMembersNames();		
 			Iterator it = properties.iterator();
@@ -1003,7 +1003,7 @@ public class View implements java.io.Serializable {
 				if (nombresMiembros.containsKey(p.getName())) {				
 					try {
 						if (!p.getMetaCalculatorDefaultValue().containsMetaSetsWithoutValue()) { // Así evitamos calcular las dependientes
-							setValue(p.getName(), p.getCalculatorDefaultValue().calculate());
+							setValue(p.getName(), p.getDefaultValueCalculator().calculate());
 							puestos.add(p.getName());
 						}					
 					}
@@ -1027,6 +1027,7 @@ public class View implements java.io.Serializable {
 				}
 			}
 		}
+		
 				
 		// On change events
 		Iterator itPropiedadesAlCambiar = getMetaView().getPropertiesNamesThrowOnChange().iterator();
@@ -1060,6 +1061,58 @@ public class View implements java.io.Serializable {
 			for (int i = 0; i < cantidad; i++) {
 				getSectionView(i).calculateDefaultValues();
 			}	
+		}
+		
+		// References
+		Collection references = getMetaModel().getMetaReferencesWithDefaultValueCalculator();		
+		
+		if (!references.isEmpty()) {		
+			Map nombresMiembros = getMembersNames();		
+			Iterator it = references.iterator();
+			Collection puestos = new ArrayList();		
+			while (it.hasNext()) {
+				MetaReference ref = (MetaReference) it.next();
+				if (nombresMiembros.containsKey(ref.getName())) {
+					try {
+						if (!ref.getMetaCalculatorDefaultValue().containsMetaSetsWithoutValue()) { // Así evitamos calcular las dependientes
+							Object value = ref.getDefaultValueCalculator().calculate();
+							IMetaEjb referencedModel = (IMetaEjb) ref.getMetaModelReferenced();	
+							if (referencedModel.getPrimaryKeyClass().isInstance(value)) {
+								Map values = referencedModel.obtainMapFromPrimaryKey(value);
+								setValue(ref.getName(), values);
+								puestos.addAll(referencedModel.getAllKeyPropertiesNames());
+							}		
+							else {
+								Collection keys = referencedModel.getAllKeyPropertiesNames();
+								if (keys.size() != 1) {
+									throw new XavaException("reference_calculator_with_multiple_key_requires_key_class", ref.getName(), referencedModel.getPrimaryKey());
+								}
+								String propertyKeyName = ref.getName() + "." + (String) keys.iterator().next();
+								setValue(propertyKeyName, value);
+								puestos.add(propertyKeyName);
+							}
+						}					
+					}
+					catch (Exception ex) {
+						ex.printStackTrace();
+						getErrors().add("calculate_default_value_error", ref.getName());
+					}				 
+				}
+			}
+			
+			if (!puestos.isEmpty()) { 
+				Iterator itPuestos = puestos.iterator();
+				while (itPuestos.hasNext()) {
+					String nombrePropiedad = (String) itPuestos.next();										
+					try {
+						hasToSearchOnChangeIfSubview = false;
+						propertyChanged(nombrePropiedad);
+					}
+					finally {
+						hasToSearchOnChangeIfSubview = true;						
+					}
+				}
+			}
 		}		
 		
 	}
@@ -1491,8 +1544,8 @@ public class View implements java.io.Serializable {
 				if (pr.hasCalculator()) {
 					calcularValor(pr, pr.getMetaCalculator(), pr.getCalculator(), errors, messages);					
 				}
-				if (pr.hasCalculatorDefaultValue() && esValorVacio(getValue(pr.getName()))) {					
-					calcularValor(pr, pr.getMetaCalculatorDefaultValue(), pr.getCalculatorDefaultValue(), errors, messages);					
+				if (pr.hasDefaultValueCalculator() && esValorVacio(getValue(pr.getName()))) {					
+					calcularValor(pr, pr.getMetaCalculatorDefaultValue(), pr.getDefaultValueCalculator(), errors, messages);					
 				}
 			}
 		}	

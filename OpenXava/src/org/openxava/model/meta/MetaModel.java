@@ -52,6 +52,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	private Collection persistentPropertiesNames;
 	private Collection interfaces;
 	private Collection recursiveQualifiedPropertiesNames;
+	private Collection metaReferencesWithDefaultValueCalculator;
 	
 	public MetaModel() {
 		super();
@@ -721,7 +722,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 			ArrayList result = new ArrayList();
 			while (it.hasNext()) {
 				MetaProperty p = (MetaProperty) it.next();
-				if (p.hasCalculatorDefaultValue()) {
+				if (p.hasDefaultValueCalculator()) {
 					result.add(p);
 				}
 			}
@@ -736,13 +737,28 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 			ArrayList result = new ArrayList();
 			while (it.hasNext()) {
 				MetaProperty p = (MetaProperty) it.next();
-				if (p.hasCalculatorDefaultValue()) {
+				if (p.hasDefaultValueCalculator()) {
 					result.add(p);
 				}
 			}
 			metaPropertiesViewWithDefaultCalculator = Collections.unmodifiableCollection(result);
 		}
 		return metaPropertiesViewWithDefaultCalculator;
+	}
+	
+	public Collection getMetaReferencesWithDefaultValueCalculator() {
+		if (metaReferencesWithDefaultValueCalculator == null) {
+			Iterator it = getMetaReferences().iterator();
+			ArrayList result = new ArrayList();
+			while (it.hasNext()) {
+				MetaReference ref = (MetaReference) it.next();
+				if (ref.hasDefaultValueCalculator()) {
+					result.add(ref);
+				}
+			}
+			metaReferencesWithDefaultValueCalculator = Collections.unmodifiableCollection(result);
+		}
+		return metaReferencesWithDefaultValueCalculator;
 	}
 	
 	
@@ -927,9 +943,6 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	}
 	
 	public boolean isCalculated(String propertyName) throws XavaException {
-		/* tmp
-		return getCalculatedPropertiesNames().contains(propertyName);
-		*/
 		boolean r = getCalculatedPropertiesNames().contains(propertyName);
 		if (r) return r;
 		
@@ -940,7 +953,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 			return getMetaReference(refName).getMetaModelReferenced().isCalculated(property);
 		}
 		
-		return false;
+		return false;		
 	}	
 
 	/**

@@ -154,7 +154,7 @@
  oculta (true|false) "false"
 >
 
-<!ELEMENT referencia EMPTY>
+<!ELEMENT referencia (calculador-valor-defecto?)>
 <!ATTLIST referencia
  nombre CDATA #IMPLIED
  etiqueta CDATA #IMPLIED

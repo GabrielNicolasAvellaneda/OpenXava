@@ -283,7 +283,7 @@ public class ModelParser extends XmlElementsNames {
 		NodeList l = el.getElementsByTagName(xdefault_value_calculator[lang]);
 		int c = l.getLength();
 		if (c > 1) {			
-			throw new XavaException("property_no_more_1_default_value_calculator");
+			throw new XavaException("no_more_1_default_value_calculator");
 		}
 		if (c < 1) return null;
 		return CalculatorParser.parseCalculator(l.item(0), lang);
@@ -303,6 +303,7 @@ public class ModelParser extends XmlElementsNames {
 		r.setRequired(ParserUtil.getAttributeBoolean(el, xrequired[lang]));
 		r.setKey(ParserUtil.getAttributeBoolean(el, xkey[lang]));
 		r.setRole(el.getAttribute(xrole[lang]));
+		r.setMetaCalculatorDefaultValue(crearCalculadorValorDefeto(el, lang));
 		
 		return r;
 	}
