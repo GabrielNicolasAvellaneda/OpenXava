@@ -1087,7 +1087,7 @@ public class View implements java.io.Serializable {
 	 * Si en estos momento se puede editar.
 	 */
 	public boolean isEditable(MetaProperty metaProperty) {
-		try {						
+		try {							
 			if (metaProperty.isReadOnly()) return false;
 			if (metaProperty.isKey()) return isKeyEditable();
 			if (!isEditable()) return false;			
