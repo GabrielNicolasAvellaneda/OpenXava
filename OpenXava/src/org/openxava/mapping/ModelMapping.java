@@ -65,6 +65,13 @@ abstract public class ModelMapping implements java.io.Serializable {
 		if (idx < 0) return null;
 		return table.substring(0, idx);
 	}
+	
+	public String getUnqualifiedTable() {
+		int idx = table.indexOf('.'); 
+		if (idx < 0) return table;
+		return table.substring(idx+1);
+	}
+	
 
 	public void addPropertyMapping(PropertyMapping mapeoPropiedad)
 		throws XavaException {
@@ -147,6 +154,16 @@ abstract public class ModelMapping implements java.io.Serializable {
 	 */
 	public Collection getColumns() {
 		return columnasTabla;
+	}
+	
+	public String getKeyColumnsAsString() throws XavaException {
+		StringBuffer r = new StringBuffer();
+		for (Iterator it=getMetaModel().getAllMetaPropertiesKey().iterator(); it.hasNext();) {
+			MetaProperty pr = (MetaProperty) it.next();
+			r.append(pr.getMapping().getColumn());
+			if (it.hasNext()) r.append(',');
+		}
+		return r.toString();
 	}
 	
 	public String getQualifiedColumn(String modelProperty)

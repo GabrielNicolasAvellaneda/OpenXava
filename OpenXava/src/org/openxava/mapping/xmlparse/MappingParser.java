@@ -35,9 +35,9 @@ public class MappingParser extends XmlElementsNames {
 		return e;
 	}
 	
-	private static PropertyMapping createPropertyMapping(Node n, int lang) throws XavaException {		
+	private static PropertyMapping createPropertyMapping(ModelMapping parent, Node n, int lang) throws XavaException {		
 		Element el = (Element) n;
-		PropertyMapping p = new PropertyMapping();
+		PropertyMapping p = new PropertyMapping(parent);
 		p.setProperty(el.getAttribute(xmodel_property[lang]));
 		p.setColumn(el.getAttribute(xtable_column[lang]));
 		p.setCmpTypeName(el.getAttribute(xcmp_type[lang]));
@@ -45,9 +45,9 @@ public class MappingParser extends XmlElementsNames {
 		return p;
 	}
 	
-	private static PropertyMapping createMultiplePropertyMapping(Node n, int lang) throws XavaException {		
+	private static PropertyMapping createMultiplePropertyMapping(ModelMapping parent, Node n, int lang) throws XavaException {		
 		Element el = (Element) n;
-		PropertyMapping p = new PropertyMapping();
+		PropertyMapping p = new PropertyMapping(parent);
 		p.setProperty(el.getAttribute(xmodel_property[lang]));
 		p.setColumn(el.getAttribute(xtable_column[lang]));
 		p.setCmpTypeName(el.getAttribute(xcmp_type[lang]));
@@ -143,7 +143,7 @@ public class MappingParser extends XmlElementsNames {
 		NodeList l = el.getElementsByTagName(xproperty_mapping[lang]);
 		int c = l.getLength();
 		for (int i = 0; i < c; i++) {
-			container.addPropertyMapping(createPropertyMapping(l.item(i), lang));
+			container.addPropertyMapping(createPropertyMapping(container, l.item(i), lang));
 		}
 	}
 	
@@ -152,7 +152,7 @@ public class MappingParser extends XmlElementsNames {
 		NodeList l = el.getElementsByTagName(xmultiple_property_mapping[lang]);
 		int c = l.getLength();
 		for (int i = 0; i < c; i++) {
-			container.addPropertyMapping(createMultiplePropertyMapping(l.item(i), lang));
+			container.addPropertyMapping(createMultiplePropertyMapping(container, l.item(i), lang));
 		}
 	}
 		

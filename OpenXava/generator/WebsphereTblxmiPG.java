@@ -4,13 +4,14 @@ import org.w3c.dom.*;
 import java.io.*;
 import java.util.*;
 import org.openxava.component.MetaComponent;
-import org.openxava.util.Strings;
+import org.openxava.generators.Generators;
+import org.openxava.util.*;
 import org.openxava.model.meta.*;
 import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Mar 07 19:27:46 CET 2005
+ * @version Wed Mar 09 11:16:16 CET 2005
  */
 public class WebsphereTblxmiPG {
     Properties properties = new Properties();
@@ -35,18 +36,71 @@ public class WebsphereTblxmiPG {
     	mapping = component.getAggregateMapping(aggregateName);	
     }
     String tableId = Strings.change(mapping.getTable(), ".", "_");
-    String table = mapping.getTable();
+    String table = mapping.getUnqualifiedTable();
     String schema = mapping.getSchema();
+    String pk = table + "PK";
+    String pkMembers = mapping.getKeyColumnsAsString();
     
     out.print(" \n\n<RDBSchema:RDBTable xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:RDBSchema=\"RDBSchema.xmi\" xmi:id=\"");
     out.print(tableId);
     out.print("\" name=\"");
     out.print(table);
-    out.print("\" primaryKey=\"C4404645\">\n  <database href=\"META-INF/backends/OPENXAVA/DB.dbxmi#DB\"/>\n  <schema href=\"META-INF/backends/OPENXAVA/");
+    out.print("\" primaryKey=\"");
+    out.print(pk);
+    out.print("\">\n  <database href=\"META-INF/backends/OPENXAVA/DB.dbxmi#DB\"/>\n  <schema href=\"META-INF/backends/OPENXAVA/");
     out.print(schema);
     out.print(".schxmi#");
     out.print(schema);
-    out.print("\"/>\n  <columns xmi:type=\"RDBSchema:RDBColumn\" xmi:id=\"DNI\" name=\"DNI\">\n    <type xmi:type=\"RDBSchema:DB2AS400CharacterStringType\" xmi:id=\"DB2AS400CharacterStringType_1107953075972\" characterSet=\"800\" length=\"10\">\n      <originatingType xmi:type=\"RDBSchema:DB2AS400CharacterStringType\" href=\"DB2UDBAS400_V5_Primitives.xmi#DB2AS400CharacterStringType_3\"/>\n    </type>\n  </columns>\n  <columns xmi:type=\"RDBSchema:RDBColumn\" xmi:id=\"NOMBRE\" name=\"NOMBRE\" allowNull=\"true\">\n    <type xmi:type=\"RDBSchema:DB2AS400CharacterStringType\" xmi:id=\"DB2AS400CharacterStringType_1107953075973\" characterSet=\"800\" length=\"20\">\n      <originatingType xmi:type=\"RDBSchema:DB2AS400CharacterStringType\" href=\"DB2UDBAS400_V5_Primitives.xmi#DB2AS400CharacterStringType_3\"/>\n    </type>\n  </columns>\n  <columns xmi:type=\"RDBSchema:RDBColumn\" xmi:id=\"APELLIDOS\" name=\"APELLIDOS\" allowNull=\"true\">\n    <type xmi:type=\"RDBSchema:DB2AS400CharacterStringType\" xmi:id=\"DB2AS400CharacterStringType_1107953075974\" characterSet=\"800\" length=\"50\">\n      <originatingType xmi:type=\"RDBSchema:DB2AS400CharacterStringType\" href=\"DB2UDBAS400_V5_Primitives.xmi#DB2AS400CharacterStringType_3\"/>\n    </type>\n  </columns>\n  <namedGroup xmi:type=\"RDBSchema:SQLReference\" xmi:id=\"C4404645\" name=\"C4404645\" members=\"DNI\" constraint=\"SQLConstraint_1107953075972\"/>\n  <constraints xmi:id=\"SQLConstraint_1107953075972\" name=\"C4404645\" type=\"PRIMARYKEY\" primaryKey=\"C4404645\"/>\n</RDBSchema:RDBTable>");
+    out.print("\"/>");
+    
+    for (Iterator it=mapping.getPropertyMappings().iterator(); it.hasNext();) {
+    	PropertyMapping pMapping = (PropertyMapping) it.next();	
+    	Collection fields = new ArrayList();
+    	if (pMapping.hasMultipleConverter()) {
+    		fields.addAll(pMapping.getCmpFields());
+    	}
+    	else {
+    		fields.add(pMapping.toCmpField());
+    	}
+    	for (Iterator itFields=fields.iterator(); itFields.hasNext();) {
+    		CmpField field = (CmpField) itFields.next();
+    		String type = Generators.getWebsphereSQLType(field.getCmpTypeName(), false);
+    		String href = Generators.getWebsphereSQLType(field.getCmpTypeName(), true);
+    
+    out.print(" \n  <columns xmi:type=\"RDBSchema:RDBColumn\" xmi:id=\"");
+    out.print(field.getColumn());
+    out.print("\" name=\"");
+    out.print(field.getColumn());
+    out.print("\">\n    <type xmi:type=\"");
+    out.print(type);
+    out.print("\" xmi:id=\"");
+    out.print(type);
+    out.print("_");
+    out.print(field);
+    out.print("\">\n      <originatingType xmi:type=\"");
+    out.print(type);
+    out.print("\" href=\"");
+    out.print(href);
+    out.print("\"/>\n    </type>\n  </columns>");
+    
+    	}
+    }
+    
+    out.print(" \n  <namedGroup xmi:type=\"RDBSchema:SQLReference\" xmi:id=\"");
+    out.print(pk);
+    out.print("\" name=\"");
+    out.print(pk);
+    out.print("\" members=\"");
+    out.print(pkMembers);
+    out.print("\" constraint=\"SQLConstraint_");
+    out.print(pk);
+    out.print("\"/>\n  <constraints xmi:id=\"SQLConstraint_");
+    out.print(pk);
+    out.print("\" name=\"");
+    out.print(pk);
+    out.print("\" type=\"PRIMARYKEY\" primaryKey=\"");
+    out.print(pk);
+    out.print("\"/>\n</RDBSchema:RDBTable>");
     
         } catch (Exception e) {
             System.out.println("Exception: "+e.getMessage());
@@ -81,7 +135,7 @@ public class WebsphereTblxmiPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Mar 07 19:27:46 CET 2005", // date this file was generated
+        { "Wed Mar 09 11:16:17 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/websphereTblxmi.xml", // input file
              "/home/javi/workspace/OpenXava/generator/WebsphereTblxmiPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
