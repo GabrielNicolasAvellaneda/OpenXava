@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!ELEMENT editors (editor*)>
+
+
+<!ELEMENT editor (property*, formatter?, (for-type | for-stereotype | for-model-property)+)>
+<!ATTLIST editor
+ clasa CDATA #IMPLIED
+ url CDATA #IMPLIED
+ format (true|false) "true" 
+ depends-stereotypes CDATA #IMPLIED
+ depends-properties CDATA #IMPLIED
+ frame (true|false) "false" 
+>
+
+<!ELEMENT property EMPTY>
+<!ATTLIST property
+  name CDATA #REQUIRED
+  value CDATA #REQUIRED
+>
+
+<!ELEMENT formatter (set*)>
+<!ATTLIST formatter
+  class CDATA #REQUIRED
+>
+
+<!ELEMENT set EMPTY>
+<!ATTLIST set
+ property CDATA #REQUIRED
+ value CDATA #REQUIRED 
+>
+
+<!ELEMENT for-type EMPTY>
+<!ATTLIST for-type
+ type CDATA #REQUIRED
+>
+
+<!ELEMENT for-stereotype EMPTY>
+<!ATTLIST for-stereotype
+ stereotype CDATA #REQUIRED
+>
+
+<!ELEMENT for-model-property EMPTY>
+<!ATTLIST for-model-property
+ model CDATA #REQUIRED
+ property CDATA #REQUIRED 
+>

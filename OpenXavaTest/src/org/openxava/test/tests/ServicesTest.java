@@ -1,0 +1,118 @@
+package org.openxava.test.tests;
+
+import org.openxava.tests.*;
+
+
+/**
+ * @author Javier Paniza
+ */
+
+public class ServicesTest extends ModuleTestBase {
+			
+	public ServicesTest(String nombreTest) {
+		super(nombreTest, "OpenXavaTest", "Services");		
+	}
+	
+	public void testRemoveAggregateFromCollectionWithReferenceToParentAsKey() throws Exception {
+		execute("CRUD.new");
+		execute("Collection.new", "viewObject=xava_view_additionalDetails");
+		setValue("number", "66");
+		setValue("description", "JUNIT SERVICE");
+		setValue("family", "1");
+		setValue("detail.subfamily", "1");
+		setValue("detail.type", "2"); // Assuming that 2 exists
+		setValue("additionalDetails.subfamily", "1");
+		setValue("additionalDetails.type.number", "2");
+		execute("Collection.save", "viewObject=xava_view_additionalDetails");
+		assertNoErrors();
+		
+		assertCollectionRowCount("additionalDetails", 1);
+		execute("Collection.edit", "row=0,viewObject=xava_view_additionalDetails");
+		execute("Collection.remove", "viewObject=xava_view_additionalDetails");		
+		assertNoErrors();
+		assertCollectionRowCount("additionalDetails", 0);
+		
+		// Delete it
+		execute("CRUD.delete");	
+		execute("ConfirmDelete.confirmDelete");													
+		assertMessage("Object deleted successfully");		
+	}
+	
+	public void testStereotypeDependenOn2StereotypesAndInsideAggregate() throws Exception {
+		String [][] empty = {
+			{ "", "" }
+		};
+		
+		execute("CRUD.new");
+		String [][] familyValues = {
+			{ "", "" },
+			{ "1" , "SOFTWARE" },
+			{ "2" , "HARDWARE" },
+			{ "3" , "SERVICIOS" }
+		};
+		assertValidValues("family", familyValues);
+		assertValidValues("detail.subfamily", empty);
+		assertValidValues("detail.type", empty);
+		
+		setValue("family", "1");
+		String [][] subfamilyValues = {
+			{ "", "" },
+			{ "1" , "01 DESARROLLO" },
+			{ "2" , "02 GESTION" },
+			{ "3" , "03 SISTEMA" }
+		};
+		assertValidValues("family", familyValues);
+		assertValidValues("detail.subfamily", subfamilyValues);
+		assertValidValues("detail.type", empty);
+
+		setValue("detail.subfamily", "1");
+		String [][] typeValues = {
+			{ "", "" },
+			{ "2" , "CORREGIR BUG" }
+		};
+		assertValidValues("family", familyValues);
+		assertValidValues("detail.subfamily", subfamilyValues);
+		assertValidValues("detail.type", typeValues);
+	}
+	
+	public void testReferenceInAggregateOfCollectionDependentFromPropertyInAggregateAndPropertyAndEntity() throws Exception {
+		String [][] empty = {
+			{ "", "" }
+		};
+		
+		execute("CRUD.new");
+		execute("Collection.new", "viewObject=xava_view_additionalDetails");
+		
+		String [][] familyValues = {
+			{ "", "" },
+			{ "1" , "SOFTWARE" },
+			{ "2" , "HARDWARE" },
+			{ "3" , "SERVICIOS" }
+		};
+		assertValidValues("family", familyValues);
+		assertValidValues("additionalDetails.subfamily", empty);
+		assertValidValues("additionalDetails.type.number", empty);
+		
+		setValue("family", "1");
+		String [][] subfamilyValues = {
+			{ "", "" },
+			{ "1" , "01 DESARROLLO" },
+			{ "2" , "02 GESTION" },
+			{ "3" , "03 SISTEMA" }
+		};
+		assertValidValues("family", familyValues);
+		assertValidValues("additionalDetails.subfamily", subfamilyValues);
+		assertValidValues("additionalDetails.type.number", empty);
+
+		setValue("additionalDetails.subfamily", "1");
+		String [][] typeValues = {
+			{ "", "" },
+			{ "2" , "CORREGIR BUG" }
+		};
+		assertValidValues("family", familyValues);
+		assertValidValues("additionalDetails.subfamily", subfamilyValues);
+		assertValidValues("additionalDetails.type.number", typeValues);
+	}
+	
+					
+}

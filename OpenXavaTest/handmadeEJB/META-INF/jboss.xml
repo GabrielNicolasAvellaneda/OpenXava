@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<jboss>
+    <secure>false</secure>
+    <container-configurations />
+    <resource-managers>
+        <resource-manager res-class="org.jboss.ejb.deployment.JDBCResource">
+            <res-name>jdbc/DataSource</res-name>
+            <res-jndi-name>java:/@datasource@</res-jndi-name>
+        </resource-manager>
+    </resource-managers>
+    <enterprise-beans>
+        
+        <entity>
+            <ejb-name>Warehouse</ejb-name>
+            <jndi-name>@subcontext@/ejb/openxava.test/Warehouse</jndi-name>
+        </entity>        
+    </enterprise-beans>
+</jboss>

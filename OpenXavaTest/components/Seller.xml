@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE component SYSTEM "dtds/component.dtd">
+
+<component name="Seller">
+
+	<entity>
+		<property name="number" type="int" key="true"
+			size="3" required="true"/>   
+		<property name="name" type="String"
+			size="40" required="true"/>
+		<reference name="level" model="SellerLevel"/>			
+		<collection name="customers">	
+			<reference model="Customer" role="seller"/>			
+		</collection>
+		<finder name="all" arguments="" collection="true">
+			<condition>1 = 1</condition>
+		</finder>
+	</entity>
+	
+	<view members="number; name"/>
+	
+	<view name="DecorateName">
+		<property-view property="number">
+			<on-change class="org.openxava.test.actions.DecorateNameAction"/>
+		</property-view>
+		<members>number; name</members>
+	</view>
+	
+	<view name="Complete">
+		<reference-view reference="level">
+			<descriptions-list/>
+		</reference-view>
+		<property-view property="level.id">
+			<on-change class="org.openxava.test.actions.OnChangeVoidAction"/>
+		</property-view>
+		<collection-view collection="customers" view="Simple">
+			<list-properties>number, name, remarks, relationWithSeller, seller.level.description</list-properties>
+		</collection-view>		
+		<members>number; name; level; customers</members>
+	</view>
+	
+	<tab>
+		<filter class="org.openxava.test.filters.NumbersToLettersFilter"/>
+	</tab>
+	
+	<entity-mapping table="XAVATEST@separator@SELLER">
+		<property-mapping 
+			property="number" column="NUMBER"/>
+		<property-mapping
+			property="name" column="NAME"/>
+		<reference-mapping reference="level">
+			<reference-mapping-detail column="LEVEL" referenced-model-property="id"/>
+		</reference-mapping>
+	</entity-mapping> 
+	
+</component>

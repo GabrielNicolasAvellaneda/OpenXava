@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE component SYSTEM "dtds/component.dtd">
+
+<!--
+Store oid of family and not the code
+-->
+
+<component name="Product3">
+
+	<entity>		
+		<property name="number" key="true" type="long"
+			size="10" required="true"/>    
+		<property name="description" type="String"
+			size="40" required="true"/>
+		<reference name="family" model="Family" required="true"/>
+		<property name="comments" stereotype="MEMO"/>
+	</entity> 
+	
+	<view name="WithDescriptionsList">
+		<reference-view reference="family">
+			<descriptions-list/>
+		</reference-view>
+		<property-view property="family.oid">
+			<on-change class="org.openxava.test.actions.OnChangeFamilyAction"/>
+		</property-view>		
+	</view>
+		
+	<entity-mapping table="XAVATEST@separator@PRODUCT3">
+		<property-mapping 
+			property="number" column="NUMBER"/>
+		<property-mapping 
+			property="description" column="DESCRIPTION"/>
+		<reference-mapping reference="family">
+			<reference-mapping-detail 
+				column="FAMILY" 
+				referenced-model-property="oid"/>
+		</reference-mapping>	
+		<property-mapping 
+			property="comments" column="COMMENTS"/>		
+	</entity-mapping> 
+
+</component>

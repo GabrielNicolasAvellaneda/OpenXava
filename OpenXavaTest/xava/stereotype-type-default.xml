@@ -1,0 +1,17 @@
+<?xml version = "1.0" encoding = "ISO-8859-1"?>
+
+<!DOCTYPE  stereotype-type-default SYSTEM "dtds/stereotype-type-default.dtd">
+
+<!-- OpenXavaTest -->
+
+<stereotype-type-default>
+
+	<for stereotype="FAMILY" type="int"/>
+	<for stereotype="SUBFAMILY" type="int"/>
+	<for stereotype="SERVICE_TYPE" type="int"/>
+	<for stereotype="NO_FORMATING_STRING" type="String"/>
+	<for stereotype="PRODUCT3" type="long"/>
+	<for stereotype="WAREHOUSE" type="org.openxava.test.ejb.WarehouseKey"/>
+	<for stereotype="PERSON_NAME" type="String"/>
+
+</stereotype-type-default>
