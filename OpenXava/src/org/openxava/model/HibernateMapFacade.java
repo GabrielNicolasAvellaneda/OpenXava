@@ -225,6 +225,7 @@ public class HibernateMapFacade {
 	 * @exception XavaException  Problemas relacionados con Xava. Anula la transacción.
 	 * @exception RemoteException  Problemas de sistema. Anula la transacción.
 	 */	
+	/*
 	public static Map getValores(
 		String nombreModelo,
 		Map valoresClave,
@@ -263,6 +264,7 @@ public class HibernateMapFacade {
 			throw new RemoteException("Error de sistema al intengar obtener datos de " + nombreModelo + ": " + ex.getLocalizedMessage());						
 		}						
 	}
+	*/
 		
 	/**
 	 * Obtiene todos los valores de la entidad a partir de la propia entidad. <p>
@@ -330,6 +332,7 @@ public class HibernateMapFacade {
 	 * @exception RemoteException  Problemas de sistema. Anula la transacción.
 	 * @exception ValidationException  Si algún problema de validación impide que se borre la entidad
 	 */
+	/*
 	public static void borrar(String nombreModelo, Map valoresClave)
 		throws RemoveException, RemoteException, XavaException, ValidationException {
 		Assert.arg(nombreModelo, valoresClave);
@@ -366,6 +369,7 @@ public class HibernateMapFacade {
 			throw new RemoteException("Error de sistema al intengar borrar un objeto de tipo " + nombreModelo + ": " + ex.getLocalizedMessage());						
 		}																			
 	}
+	*/
 
 	/**
 	 * Establece nuevos valores en la entidad obtenida a partir de un mapa con 
@@ -380,6 +384,7 @@ public class HibernateMapFacade {
 	 * @exception XavaException  Problemas relacionados con Xava. Anula la transacción.
 	 * @exception RemoteException  Problemas de sistema. Anula la transacción.
 	 */	
+	/*
 	public static void setValores(
 		java.lang.String nombreModelo,
 		Map valoresClave,
@@ -421,6 +426,7 @@ public class HibernateMapFacade {
 			throw new RemoteException("Error de sistema al intengar obtener datos de " + nombreModelo + ": " + ex.getLocalizedMessage());						
 		}																					
 	}
+	*/
 	
 	/**	 
 	 * Valida el mapa con los datos enviados pero sin crear o modificar ninguna entidad. <p>
@@ -449,6 +455,7 @@ public class HibernateMapFacade {
 	 * Solo funciona si el compomente especificado esta implementado usando
 	 * <i>EntityBeans</i>. <br>	 
 	 */		
+	/*
 	public static Object toPrimaryKey(String nombreEntidad, Map valoresClave) throws XavaException {
 		try {
 			MetaEntidadEjb m = (MetaEntidadEjb) Componente.get(nombreEntidad).getMetaEntidad();
@@ -459,6 +466,7 @@ public class HibernateMapFacade {
 			throw new XavaException("La entidad del componente " + nombreEntidad + " no está implementado como un EntityBean");
 		}
 	}
+	*/
 	
 
 	/**

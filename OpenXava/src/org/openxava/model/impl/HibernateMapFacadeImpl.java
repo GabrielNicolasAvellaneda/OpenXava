@@ -1,8 +1,13 @@
 package org.openxava.model.impl;
 
+import java.io.*;
 import java.util.*;
 
 import javax.ejb.*;
+
+import org.openxava.model.meta.*;
+import org.openxava.util.*;
+import org.openxava.validators.*;
 
 import net.sf.hibernate.*;
 
@@ -14,66 +19,54 @@ public class HibernateMapFacadeImpl extends MapFacadeBean {
 	
 	private Session session;
 		
-	protected Object findEntidad(IMetaEjb metaEntidad, Map valoresClave) throws FinderException {
+	protected Object findEntity(IMetaEjb metaModel, Map keyValues) throws FinderException {
 		try {
-			MetaEjbImpl ejbImpl = new MetaEjbImpl(metaEntidad);
-			Class clase = metaEntidad.getClasePropiedades();
+			MetaEjbImpl ejbImpl = new MetaEjbImpl(metaModel);
+			Class clase = metaModel.getPropertiesClass();
 			String nombreClaseKey = clase.getName() + "$Key";
 			Class claseKey = Class.forName(nombreClaseKey);
-			Object key = ejbImpl.obtenerPrimaryKeyAPartirDeClave(valoresClave, claseKey, true);
-			return getSession().getObjectById(key, true);			
+			Object key = ejbImpl.obtainPrimaryKeyFromKey(keyValues, claseKey, true);
+			return getSession().get(metaModel.getPropertiesClass(), (Serializable) key);			
 		}	
-		catch (JDOObjectNotFoundException ex) {
-			throw new ObjectNotFoundException(ex.getLocalizedMessage());
-		}
 		catch (Exception ex) {
 			ex.printStackTrace();
 			throw new EJBException(
 				"Imposible realizar la búsqueda de "
-					+ metaEntidad.getNombre()
+					+ metaModel.getName()
 					+ " por:\n"
-					+ ex.getLocalizedMessage());
+					+ ex.getLocalizedMessage()); // tmp i18n
 		}
 	}
 	
-	protected IReplicable narrowReplicable(MetaModelo metaModelo, Object o) throws XavaException {
-		return new POJOReplicable(o); 
+	protected IPropertiesContainer narrowPropertiesContainer(MetaModel metaModel, Object o) throws XavaException {
+		return new POJOPropertiesContainerAdapter(o); 
 	}
 	
 		
-	protected Object crearObjetoPersistente(IMetaEjb metaEjb, Map valores)
-		throws CreateException, ValidacionException, XavaException {
-			Object objeto = null;
+	protected Object createPersistentObject(IMetaEjb metaEjb, Map values)
+		throws CreateException, ValidationException, XavaException {
+			Object object = null;
 			try {				
-				objeto = metaEjb.getClaseRemote().newInstance();
-				ManejadorPropiedades mp = new ManejadorPropiedades(objeto);
-				mp.ejecutarSets(valores);
-				getSession().makePersistent(objeto);
-				return objeto;
-			}
-			catch (JDODataStoreException ex) {
-				// Comprobamos que ya existe
-				try {					
-					Object key = getSession().getObjectId(objeto);	
-					getSession().getObjectById(key, true);
-				}
-				catch (JDOObjectNotFoundException ex2) {
-					ex2.printStackTrace();
-					throw new EJBException("Imposible crear un nuevo objeto por: " + ex2.getLocalizedMessage());
-				}
-				throw new DuplicateKeyException("Ya existe un objeto con esa clave");						
-			}						
-			catch (XavaException ex) {
-				throw ex;
+				object = metaEjb.getRemoteClass().newInstance();
+				PropertiesManager mp = new PropertiesManager(object);
+				mp.executeSets(values);
+				getSession().save(object);
+				return object;
 			}
 			catch (Exception ex) {
 				ex.printStackTrace();
-				throw new EJBException("Imposible crear un nuevo objeto por: " + ex.getLocalizedMessage());
+				throw new CreateException("Imposible grabar"); // tmp: i18n
 			}
 	}
 	
-	protected void borrarObjetoPersistente(MetaModelo metaModelo, Object modelo) throws RemoveException, XavaException {
-		getSession().deletePersistent(modelo);
+	protected void removePersistentObject(MetaModel metaModel, Object model) throws RemoveException, XavaException {
+		try {
+			getSession().delete(model);
+		}
+		catch (HibernateException ex) {
+			ex.printStackTrace();
+			throw new RemoveException("Imposible borrar " + model); // tmp: i18n
+		}
 	}
 	
 	public Session getSession() {
