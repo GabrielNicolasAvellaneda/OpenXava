@@ -13,7 +13,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Mar 10 10:07:33 CET 2005
+ * @version Sat Mar 12 14:13:18 CET 2005
  */
 public class PropertyPG {
     Properties properties = new Properties();
@@ -88,8 +88,8 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
      */
     public boolean generate(XPathContext context, ProgramWriter out) {
         try {    
-    	if (GeneratorFactory.has(property)) {
-    		IPropertyCodeGenerator generator = GeneratorFactory.create(property);
+    	if (GeneratorFactory.has(property, ejb)) {
+    		IPropertyCodeGenerator generator = GeneratorFactory.create(property, ejb);
     		String propertyCode = generator.generate();
     
     out.print(" \n\t");
@@ -100,8 +100,8 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     	String propertyName = Strings.firstUpper(property.getName());	
     	String type = property.getTypeName();	
     	String get = type.equals("boolean")?"is":"get";	
-    	String tagValueObject = isPublic?"@ejb.value-object match=\"persistentCalculatedAndAggregate\"":"";
-    	String tagInterfaceMethod = isPublic?"@ejb:interface-method":"";
+    	String tagValueObject = ejb && isPublic?"@ejb.value-object match=\"persistentCalculatedAndAggregate\"":"";
+    	String tagInterfaceMethod = ejb && isPublic?"@ejb:interface-method":"";
     	if (property.isCalculated()) {
     		// Calculateds
     	
@@ -221,7 +221,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     		PropertyMapping propertyMapping = modelMapping.getPropertyMapping(property.getName());
     		
     		String ejbPkField = "";
-    		String ejbSetInterfaceMethod = isPublic?"@ejb:interface-method":"";
+    		String ejbSetInterfaceMethod = ejb && isPublic?"@ejb:interface-method":"";
     		if (property.isKey()) {
     			ejbPkField = "@ejb:pk-field";
     			ejbSetInterfaceMethod = "";			
@@ -582,9 +582,9 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Mar 10 10:07:33 CET 2005", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/property.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/PropertyPG.java" }, // output file
+        { "Sat Mar 12 14:13:18 CET 2005", // date this file was generated
+             "/home/mcarmen/workspace/OpenXava/generator/property.xml", // input file
+             "/home/mcarmen/workspace/OpenXava/generator/PropertyPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

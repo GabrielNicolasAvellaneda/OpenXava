@@ -24,8 +24,9 @@ public class GeneratorsParser extends ParserBase {
 	private void createForStereotype(Node n) throws XavaException {
 		Element el = (Element) n;
 		String name = el.getAttribute(xname[lang]);
+		String modelType = el.getAttribute(xmodel_type[lang]);
 		String className = el.getAttribute(xclass[lang]);		
-		GeneratorFactory._addForStereotype(name, className);
+		GeneratorFactory._addForStereotype(name, modelType, className);
 	}
 		
 	private void createForStereotypes() throws XavaException {
