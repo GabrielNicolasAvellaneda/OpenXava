@@ -1,6 +1,12 @@
 <h2>Para migrar de OpenXava 1.0 a OpenXava 1.1</h2>
 
-<h4>Pruebas junit</h>
+<h4>APIs</h4>
+<ul>
+<li>MetaView.getMetaViewCollection pasa a llamarse MetaView.getMetaCollectionView
+<li>MetaView.getMetaViewReference pasa a llamarse MetaView.getMetaReferenceView
+</ul>
+
+<h4>Pruebas junit</h4>
 <ul>
 <li> Se cambia el mensaje 'Objeto borrado satisfactoriamente' por 
 	'{0} borrado satisfactoriamente'. Así es necesario cambiar los asserts
