@@ -12,6 +12,15 @@ public class WarehousesTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Warehouses");		
 	}	
 	
+	public void testRememberListPage() throws Exception {
+		assertNoAction("List.goPreviousPage");
+		execute("List.goPage", "page=2");
+		assertAction("List.goPreviousPage");
+		execute("Mode.detailAndFirst");
+		execute("Mode.list");
+		assertAction("List.goPreviousPage");
+	}
+	
 	public void testCheckUncheckRows() throws Exception {
 		checkRow(1);
 		execute("List.goNextPage");

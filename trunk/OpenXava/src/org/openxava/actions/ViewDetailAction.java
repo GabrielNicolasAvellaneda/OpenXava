@@ -20,7 +20,7 @@ public class ViewDetailAction extends ViewBaseAction implements IChainAction, IM
 	private String nextAction;
 	private boolean atListBegin;
 	private boolean noElementsInList;
-	private String model;
+	private String model;	
 	
 	public void execute() throws Exception {		
 		getView().setModelName(model); 

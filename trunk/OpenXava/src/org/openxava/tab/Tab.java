@@ -59,6 +59,7 @@ public class Tab {
 	private boolean customize;
 	private String titleId = null;
 	private static SessionFactory sessionFactory;
+	private boolean notResetPageNextTime;
 	
 	public Tab() {			
 	}
@@ -414,8 +415,11 @@ public class Tab {
 			return;
 		}		
 		tableModel = null;
-		initialIndex = 0;		
-		page = 1;		
+		if (!notResetPageNextTime) { 
+			notResetPageNextTime = false;
+			initialIndex = 0; 		
+			page = 1;	
+		}
 	}
 	
 	public int [] getSelected() {		
@@ -551,15 +555,16 @@ public class Tab {
 
 
 	/**
-	 * 1 es la primera página
-	 * @param pagina
+	 * 1 is the first page
+	 * @param page
 	 */
-	public void goPage(int pagina) {
-		this.page = pagina;
-		recalcularIndices();		
+	public void goPage(int page) {
+		this.page = page;
+		recalculateIndices();
+		notResetPageNextTime = true; 
 	}
 	
-	private void recalcularIndices() {
+	private void recalculateIndices() {
 		initialIndex = (page - 1) * BLOCK_SIZE;		
 	}
 
@@ -643,10 +648,8 @@ public class Tab {
 		conditionComparators = null;
 		conditionValues = null;
 		metaProperties = null;
-		metaPropertiesNotCalculated = null;
-		page = 1;
-		notResetNextTime = false;
-		initialIndex = 0;	 			
+		metaPropertiesNotCalculated = null;		
+		notResetNextTime = false;		 	 			
 		tableModel  = null;	
 		selected  = null;
 		metaTab = null;
