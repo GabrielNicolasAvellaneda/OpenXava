@@ -48,11 +48,6 @@ if (manager.isXavaView()) { // here and after action execution
 	}
 }
 
-%>
-
-<jsp:include page="../objects.jsp"/>
-
-<%
 manager.initModule(request, errors, messages);
 if (manager.actionOfThisModule(request)) {
 	manager.execute(request, errors, messages);	

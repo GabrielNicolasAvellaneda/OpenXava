@@ -140,6 +140,10 @@ public class ProductsTest extends ModuleTestBase {
 	public void testNavigationWithDepedentsStereotypes() throws Exception {
 		assertActions(listActions);
 		execute("Mode.detailAndFirst");
+		assertValue("number", "1");
+		assertValue("familyNumber", "1");
+		assertValue("subfamilyNumber", "2");		
+		execute("Navigation.next");		
 		assertValue("number", "2");
 		assertValue("familyNumber", "2");
 		assertValue("subfamilyNumber", "11");		
@@ -282,9 +286,9 @@ public class ProductsTest extends ModuleTestBase {
 
 	public void testCalculatedInListMode() throws Exception {		
 		assertActions(listActions);
-		assertValueInList(0, "number", "2");
-		assertValueInList(0, "unitPrice", "20");
-		assertValueInList(0, "unitPriceInPesetas", "3,328");
+		assertValueInList(1, "number", "2");
+		assertValueInList(1, "unitPrice", "20");
+		assertValueInList(1, "unitPriceInPesetas", "3,328");
 	}
 	
 	public void testValidationWithValidatorsChanged() throws Exception {

@@ -11,7 +11,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Mar 10 09:37:05 CET 2005
+ * @version Wed Mar 23 11:55:00 CET 2005
  */
 public class WebsphereTblxmiPG {
     Properties properties = new Properties();
@@ -40,6 +40,9 @@ public class WebsphereTblxmiPG {
     String schema = mapping.getSchema();
     String pk = table + "PK";
     String pkMembers = mapping.getKeyColumnsAsString();
+    if (schema == null) {
+    	throw new XavaException("websphere_schema_required", componentName);
+    }
     
     out.print(" \n\n<RDBSchema:RDBTable xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:RDBSchema=\"RDBSchema.xmi\" xmi:id=\"");
     out.print(tableId);
@@ -135,7 +138,7 @@ public class WebsphereTblxmiPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Mar 10 09:37:05 CET 2005", // date this file was generated
+        { "Wed Mar 23 11:55:00 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/websphereTblxmi.xml", // input file
              "/home/javi/workspace/OpenXava/generator/WebsphereTblxmiPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

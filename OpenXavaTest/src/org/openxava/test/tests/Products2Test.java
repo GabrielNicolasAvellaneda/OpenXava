@@ -127,6 +127,10 @@ public class Products2Test extends ModuleTestBase {
 	
 	public void testNavigationWithDescriptionsListReferenceDependents() throws Exception {		
 		execute("Mode.detailAndFirst");
+		assertValue("number", "1");
+		assertValue("family.number", "1");
+		assertValue("subfamily.number", "2");		
+		execute("Navigation.next");		
 		assertValue("number", "2");
 		assertValue("family.number", "2");
 		assertValue("subfamily.number", "11");		
@@ -194,9 +198,9 @@ public class Products2Test extends ModuleTestBase {
 	}
 					
 	public void testReferencesInListMode() throws Exception {				
-		assertValueInList(0, "number", "2");
-		assertValueInList(0, "family.description", "HARDWARE");
-		assertValueInList(0, "subfamily.description", "SERVIDORES");
+		assertValueInList(1, "number", "2");
+		assertValueInList(1, "family.description", "HARDWARE");
+		assertValueInList(1, "subfamily.description", "SERVIDORES");
 	}
 	
 	public void testCreateReferencesFromDescriptionsList() throws Exception {

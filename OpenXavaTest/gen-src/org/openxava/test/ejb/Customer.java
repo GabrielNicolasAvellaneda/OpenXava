@@ -7,7 +7,7 @@ package org.openxava.test.ejb;
  * Remote interface for Customer.
  */
 public interface Customer
-   extends org.openxava.ejbx.EJBReplicable, org.openxava.test.ejb.ICustomer, org.openxava.test.ejb.IWithName
+   extends org.openxava.ejbx.EJBReplicable, org.openxava.test.ejb.ICustomer
 {
 
    public int getType(  )

@@ -128,9 +128,9 @@ therefore it's show some features more advances of stereotypes.
 		<property-mapping
 			property="subfamilyNumber" column="SUBFAMILY"/>						
 		<property-mapping
-			property="warehouseZoneNumber" column="ZONE"/>												
+			property="warehouseZoneNumber" column="ZONE" cmp-type="Integer"/>												
 		<property-mapping
-			property="warehouseNumber" column="WAREHOUSE"/>									
+			property="warehouseNumber" column="WAREHOUSE" cmp-type="Integer"/>									
 		<property-mapping
 			property="unitPrice" column="UNITPRICE"/>
 		<property-mapping

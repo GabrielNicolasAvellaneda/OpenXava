@@ -2,7 +2,6 @@ package org.openxava.test.calculators;
 
 import org.openxava.calculators.*;
 import org.openxava.test.ejb.*;
-import org.openxava.test.ejb.*;
 
 
 /**
