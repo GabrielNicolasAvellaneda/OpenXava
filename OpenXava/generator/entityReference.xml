@@ -32,7 +32,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
 MetaModel metaModel = reference.getMetaModel();
 ModelMapping modelMapping = null;
 if (metaModel instanceof MetaAggregateBean) {
-	modelMapping = metaModel.getXavaxComponent().getEntityMapping();
+	modelMapping = metaModel.getMetaComponent().getEntityMapping();
 }
 else {
 	modelMapping = metaModel.getMapping();

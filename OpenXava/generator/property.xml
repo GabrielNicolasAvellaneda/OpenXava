@@ -23,7 +23,7 @@ private ModelMapping modelMapping=null;
 public void setMetaModel(IMetaModel metaModel) throws XavaException {
 	this.metaModel = metaModel;
 	if (metaModel instanceof MetaAggregateBean) {
-		this.modelMapping = metaModel.getXavaxComponent().getEntityMapping();
+		this.modelMapping = metaModel.getMetaComponent().getEntityMapping();
 	}
 	else {
 		this.modelMapping = metaModel.getMapping();
