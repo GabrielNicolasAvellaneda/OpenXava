@@ -4,7 +4,6 @@ import java.math.*;
 
 import org.openxava.calculators.*;
 
-
 /**
  * @author Javier Paniza
  */

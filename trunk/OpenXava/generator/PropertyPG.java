@@ -13,7 +13,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Mar 14 19:28:31 CET 2005
+ * @version Thu Mar 17 16:58:31 CET 2005
  */
 public class PropertyPG {
     Properties properties = new Properties();
@@ -212,7 +212,13 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     			
     out.print(" \n\t\t\treturn ");
     out.print(Generators.generateCast(property.getTypeName(), calculateValueSentence));
-    out.print(";\n\t\t}\n\t\tcatch (Exception ex) {\n\t\t\tex.printStackTrace();\n\t\t\tthrow new ");
+    out.print(";\n\t\t}\n\t\tcatch (NullPointerException ex) {\n\t\t\t// Usually for multilevel property access with null references");
+    if (property.getType().isPrimitive()) { 
+    out.print(" \n\t\t\treturn 0;");
+    } else { 
+    out.print(" \n\t\t\treturn null;");
+    } 
+    out.print(" \t\t\t\n\t\t}\n\t\tcatch (Exception ex) {\n\t\t\tex.printStackTrace();\n\t\t\tthrow new ");
     out.print(getExcepcion());
     out.print("(XavaResources.getString(\"generator.calculate_value_error\", \"");
     out.print(propertyName);
@@ -594,7 +600,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Mar 14 19:28:32 CET 2005", // date this file was generated
+        { "Thu Mar 17 16:58:32 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/property.xml", // input file
              "/home/javi/workspace/OpenXava/generator/PropertyPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

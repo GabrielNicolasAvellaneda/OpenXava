@@ -5,7 +5,6 @@ import java.sql.*;
 import org.openxava.calculators.*;
 import org.openxava.util.*;
 
-
 /**
  * @author Javier Paniza
  */

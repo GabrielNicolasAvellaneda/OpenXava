@@ -164,6 +164,14 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 			# 
 			return #(Generators.generateCast(property.getTypeName(), calculateValueSentence))#;
 		}
+		catch (NullPointerException ex) {
+			// Usually for multilevel property access with null references
+			# if (property.getType().isPrimitive()) { # 
+			return 0;
+			# } else { # 
+			return null;
+			# } # 			
+		}
 		catch (Exception ex) {
 			ex.printStackTrace();
 			throw new #(getExcepcion())#(XavaResources.getString("generator.calculate_value_error", "#(propertyName)#", "#(metaModel.getName())#", ex.getLocalizedMessage()));
