@@ -911,10 +911,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		if (idx >= 0) {				
 			String refName = propertyName.substring(0, idx);								
 			String property = propertyName.substring(idx + 1);
-			System.out.println("[MetaModel.isCalculated] Procesando " + propertyName); //  tmp
-			boolean rx = getMetaReference(refName).getMetaModelReferenced().isCalculated(property);
-			System.out.println("[MetaModel.isCalculated] " + propertyName + " procesada = " + r); //  tmp
-			return rx;
+			return getMetaReference(refName).getMetaModelReferenced().isCalculated(property);
 		}
 		
 		return false;
@@ -1187,12 +1184,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 			Object name = it.next();
 			if (getMapMetaProperties().containsKey(name)) {
 				if (Is.emptyString(prefix)) result.add(name);
-				else {
-					// by now calculated properties are exclude away first level
-					if (!getMetaProperty((String)name).isCalculated()) { 
-						result.add(prefix + name);
-					}
-				}
+				else result.add(prefix + name);				
 			}
 		}
 		for (Iterator it=getMetaReferences().iterator(); it.hasNext();) {
