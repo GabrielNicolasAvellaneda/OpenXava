@@ -95,6 +95,10 @@
 			<arg value="${generator.dir}/websphereSchxmi.template"/> 
 			<arg value="${generator.dir}/websphereSchxmi.xml"/>         
 		</java>						
+		<java classname="Simple2XML" classpath="${tl.lib}">
+			<arg value="${generator.dir}/websphereTblxmi.template"/> 
+			<arg value="${generator.dir}/websphereTblxmi.xml"/>         
+		</java>								
 		<echo>Generating Websphere Mapping classes generator</echo>
 		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
 			<arg value="${generator.dir}/websphereDbxmi.xml"/>
@@ -104,12 +108,17 @@
 			<arg value="${generator.dir}/websphereSchxmi.xml"/>
 			<arg value="${generator.dir}/WebsphereSchxmiPG.java"/>
 		</java>		
+		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
+			<arg value="${generator.dir}/websphereTblxmi.xml"/>
+			<arg value="${generator.dir}/WebsphereTblxmiPG.java"/>
+		</java>				
 		<echo>Compiling classes generators</echo>
 		<javac srcdir="${generator.dir}"
 			destdir="${generator.dir}"
 			classpath="${tl.lib};${xava.lib};${j2ee.lib}"
 		/>
 		
+		<delete file="../${project}/gen-src-xava/dnas.properties"/>
 		<echo>Generating Websphere Mapping</echo>		
 		<java 
 			classname="WebsphereCodeGenerator" 

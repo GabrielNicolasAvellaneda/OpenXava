@@ -7,15 +7,7 @@ import org.openxava.converters.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 
-
-
-
 /**
- * Base class for EntityMapping and AggregateMapping, 
- * and some static methods about mapping. <p> 
- * 
- * tmp: ¿Mover las métodos estáticos a otra clase?
- * 
  * @author Javier Paniza
  */
 abstract public class ModelMapping implements java.io.Serializable {
@@ -31,42 +23,6 @@ abstract public class ModelMapping implements java.io.Serializable {
 
 	abstract public MetaModel getMetaModel() throws XavaException;
 	
-	public static Collection getSchemas() throws XavaException {
-		// tmp: Se llama 2 veces: ¿caché?
-		Collection r = new HashSet();
-		for (Iterator it = MetaComponent.getAllLoaded().iterator(); it.hasNext();) {
-			MetaComponent comp = (MetaComponent) it.next();
-			String table = comp.getEntityMapping().getTable();			
-			int idx = table.indexOf('.'); 
-			if (idx >= 0) {
-				r.add(table.substring(0, idx));
-			}
-			for (Iterator itMappings = comp.getAggregateMappings().iterator(); itMappings.hasNext();) {
-				ModelMapping mapping = (ModelMapping) itMappings.next();
-				String aggregateTable = mapping.getTable();			
-				int idxAggregate = aggregateTable.indexOf('.'); 
-				if (idxAggregate >= 0) {
-					r.add(aggregateTable.substring(0, idxAggregate));
-				}				
-			}
-		}		
-		return r;
-	}
-	
-	public static Collection getTables() throws XavaException {		
-		Collection r = new HashSet();
-		for (Iterator it = MetaComponent.getAllLoaded().iterator(); it.hasNext();) {
-			MetaComponent comp = (MetaComponent) it.next();
-			r.add(comp.getEntityMapping().getTable());									
-			for (Iterator itMappings = comp.getAggregateMappings().iterator(); itMappings.hasNext();) {
-				ModelMapping mapping = (ModelMapping) itMappings.next();
-				r.add(mapping.getTable());												
-			}
-		}		
-		return r;
-	}
-	
-
 	/**
 	 * Util especialmente para averiguar el tipo de
 	 * propiedades que no estan en el modelo, solo
@@ -74,7 +30,6 @@ abstract public class ModelMapping implements java.io.Serializable {
 	 */
 	public Class getType(String nombrePropiedad) throws XavaException {
 		try {
-
 			return getMetaModel().getMetaProperty(nombrePropiedad).getType();
 		}
 		catch (ElementNotFoundException ex) {
@@ -98,19 +53,17 @@ abstract public class ModelMapping implements java.io.Serializable {
 		}
 	}
 
-	/**
-	 * Gets the tabla
-	 * @return Returns a String
-	 */
 	public String getTable() {
 		return table;
 	}
-	/**
-	 * Sets the tabla
-	 * @param tabla The tabla to set
-	 */
 	public void setTable(String tabla) {
 		this.table = tabla;
+	}
+	
+	public String getSchema() {
+		int idx = table.indexOf('.'); 
+		if (idx < 0) return null;
+		return table.substring(0, idx);
 	}
 
 	public void addPropertyMapping(PropertyMapping mapeoPropiedad)

@@ -63,7 +63,7 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 			select = condicion;
 		else
 			select = generarSelect() + " WHERE " + condicion;					
-		selectSize = crearSelectTamaño(select);			
+		selectSize = crearSelectTamaño(select);
 	}
 	
 	// Crea y devuelve el select a partir de las propiedades tabla y los campos
