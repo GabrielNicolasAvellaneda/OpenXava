@@ -9,12 +9,17 @@
 #declarations
 
 private String getExcepcion() {
-	return metaModel.isGenerateJDO()?"JDOException":"EJBException";
+	return ejb?"EJBException":"RuntimeException";
 }
 
 private MetaProperty property=null;
 public void setProperty(MetaProperty property) {
 	this.property = property;
+}
+
+private boolean ejb=false;
+public void setEjb(boolean ejb) {
+	this.ejb = ejb;
 }
 
 private IMetaModel metaModel=null;
@@ -43,19 +48,24 @@ public void setPublic(boolean isPublic) {
 	this.propertyAccessLevel = isPublic?"public":"private";
 }
 public static void generate(XPathContext context, ProgramWriter out, MetaProperty property) throws XavaException {
-	generate(context, out, property, true);
+	generate(context, out, property, true, false);
+}
+
+public static void generateEJB(XPathContext context, ProgramWriter out, MetaProperty property) throws XavaException {
+	generate(context, out, property, true, true);
 }
 
 public static void generatePrivate(XPathContext context, ProgramWriter out, MetaProperty property) throws XavaException {
-	generate(context, out, property, false);
+	generate(context, out, property, false, false);
 }
 
 
-private static void generate(XPathContext context, ProgramWriter out, MetaProperty property, boolean isPublic) throws XavaException {
+private static void generate(XPathContext context, ProgramWriter out, MetaProperty property, boolean isPublic, boolean isEjb) throws XavaException {
 	PropertyPG pg = new PropertyPG();
 	pg.setProperty(property);
 	pg.setMetaModel(property.getMetaModel());
 	pg.setPublic(isPublic);
+	pg.setEjb(isEjb);
 	pg.generate(context, out);
 }
 
@@ -99,7 +109,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 				String propertyNameFrom = set.getPropertyNameFrom();
 				MetaProperty p = metaModel.getMetaProperty(propertyNameFrom);				
 				if (propertyNameFrom.indexOf('.') >= 0) {
-					if (p.isKey() || p.getMetaModel() instanceof MetaAggregate) {
+					if (ejb && (p.isKey() || p.getMetaModel() instanceof MetaAggregate)) {
 						propertyNameFrom = Strings.firstUpper(Strings.change(propertyNameFrom, ".", "_"));
 					}
 					else {
@@ -126,10 +136,17 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 			# 
 				#(property.getName())#Calculator.setEntity(this);
 			# } 
-			if (IJDBCCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+			if (IJDBCCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) {
+				if (ejb) { 
 			# 
 				#(property.getName())#Calculator.setConnectionProvider(getPortableContext());			
 			# 			
+				}
+				else { // not ejb
+			# 
+				#(property.getName())#Calculator.setConnectionProvider(DataSourceConnectionProvider.getByComponent("#(metaModel.getMetaComponent().getName())#"));		
+			# 			
+				}
 			}  
 			String calculateValueSentence = property.getName() + "Calculator.calculate()";		
 			# 
@@ -182,6 +199,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 			Iterator itCmpFields = propertyMapping.getCmpFields().iterator();
 			while (itCmpFields.hasNext()) {
 				CmpField cmpField = (CmpField) itCmpFields.next();
+				if (ejb) {
 		# 
 	/**	 
 	 * @ejb:persistent-field
@@ -191,6 +209,18 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 	public abstract void set#(propertyName)#_#(cmpField.getConverterPropertyName())#(#(cmpField.getCmpTypeName())# newValue);
 	
 		# 
+				}
+				else { // not ejb
+		# 
+	private #(cmpField.getCmpTypeName())# #(property.getName())#_#(cmpField.getConverterPropertyName())#;
+	private #(cmpField.getCmpTypeName())# get#(propertyName)#_#(cmpField.getConverterPropertyName())#() {
+		return #(property.getName())#_#(cmpField.getConverterPropertyName())#;
+	}
+	private void set#(propertyName)#_#(cmpField.getConverterPropertyName())#(#(cmpField.getCmpTypeName())# newValue) {
+		this.#(property.getName())#_#(cmpField.getConverterPropertyName())# = newValue;
+	}
+		# 	
+				}
 			}
 		# 
 	/**
@@ -247,7 +277,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 			String cmpType = propertyMapping.getCmpTypeName();
 			String getSentence = "get" + propertyName + "Converter().toJava(get_"+propertyName+"())";			
 			String setSentence = "get" + propertyName + "Converter().toDB(" + Generators.generatePrimitiveWrapper(type, "new" + propertyName) + ")";
-			if (metaModel.isGenerateJDO()) {
+			if (!ejb) {
 # 
 	#(attributeAccessLevel)# #(cmpType)# _#(property.getName())#;
 	private #(cmpType)# get_#(propertyName)#() {
@@ -299,7 +329,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 	}	
 # 		
 		} else { // normal
-			if (metaModel.isGenerateJDO()) {
+			if (!ejb) {
 			# 
 	#(attributeAccessLevel)# #(type)# #(property.getName())#;
 	#(propertyAccessLevel)# #(type)# #(get)##(propertyName)#() {

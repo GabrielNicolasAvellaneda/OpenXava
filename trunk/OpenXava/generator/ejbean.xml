@@ -729,7 +729,7 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 Iterator itProperties = metaModel.getMetaProperties().iterator();	
 while (itProperties.hasNext()) {	
 	MetaProperty property = (MetaProperty) itProperties.next();
-	PropertyPG.generate(context, out, property); 
+	PropertyPG.generateEJB(context, out, property); 
 }
 </java> 
 

@@ -35,7 +35,6 @@ public interface IMetaModel {
 	int getMetaCalculatorsPostModifyCount();
 	MetaCalculator getMetaCalculatorPostModify(int idx);
 	Collection getMetaCollectionsWithConditionInOthersModels() throws XavaException;
-	boolean isGenerateJDO();
 	Map extractKeyValues(Map valores) throws XavaException;
 	Class getPropertiesClass() throws XavaException;
 	Collection getInterfacesNames();

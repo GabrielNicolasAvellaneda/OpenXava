@@ -13,19 +13,24 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Feb 22 10:45:34 CET 2005
+ * @version Sat Mar 05 14:02:01 CET 2005
  */
 public class PropertyPG {
     Properties properties = new Properties();
 
 
 private String getExcepcion() {
-	return metaModel.isGenerateJDO()?"JDOException":"EJBException";
+	return ejb?"EJBException":"RuntimeException";
 }
 
 private MetaProperty property=null;
 public void setProperty(MetaProperty property) {
 	this.property = property;
+}
+
+private boolean ejb=false;
+public void setEjb(boolean ejb) {
+	this.ejb = ejb;
 }
 
 private IMetaModel metaModel=null;
@@ -54,19 +59,24 @@ public void setPublic(boolean isPublic) {
 	this.propertyAccessLevel = isPublic?"public":"private";
 }
 public static void generate(XPathContext context, ProgramWriter out, MetaProperty property) throws XavaException {
-	generate(context, out, property, true);
+	generate(context, out, property, true, false);
+}
+
+public static void generateEJB(XPathContext context, ProgramWriter out, MetaProperty property) throws XavaException {
+	generate(context, out, property, true, true);
 }
 
 public static void generatePrivate(XPathContext context, ProgramWriter out, MetaProperty property) throws XavaException {
-	generate(context, out, property, false);
+	generate(context, out, property, false, false);
 }
 
 
-private static void generate(XPathContext context, ProgramWriter out, MetaProperty property, boolean isPublic) throws XavaException {
+private static void generate(XPathContext context, ProgramWriter out, MetaProperty property, boolean isPublic, boolean isEjb) throws XavaException {
 	PropertyPG pg = new PropertyPG();
 	pg.setProperty(property);
 	pg.setMetaModel(property.getMetaModel());
 	pg.setPublic(isPublic);
+	pg.setEjb(isEjb);
 	pg.generate(context, out);
 }
 
@@ -126,7 +136,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     				String propertyNameFrom = set.getPropertyNameFrom();
     				MetaProperty p = metaModel.getMetaProperty(propertyNameFrom);				
     				if (propertyNameFrom.indexOf('.') >= 0) {
-    					if (p.isKey() || p.getMetaModel() instanceof MetaAggregate) {
+    					if (ejb && (p.isKey() || p.getMetaModel() instanceof MetaAggregate)) {
     						propertyNameFrom = Strings.firstUpper(Strings.change(propertyNameFrom, ".", "_"));
     					}
     					else {
@@ -168,12 +178,23 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     out.print(property.getName());
     out.print("Calculator.setEntity(this);");
     } 
-    			if (IJDBCCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+    			if (IJDBCCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) {
+    				if (ejb) { 
     			
     out.print(" \n\t\t\t\t");
     out.print(property.getName());
     out.print("Calculator.setConnectionProvider(getPortableContext());");
     			
+    				}
+    				else { // not ejb
+    			
+    out.print(" \n\t\t\t\t");
+    out.print(property.getName());
+    out.print("Calculator.setConnectionProvider(DataSourceConnectionProvider.getByComponent(\"");
+    out.print(metaModel.getMetaComponent().getName());
+    out.print("\"));");
+    			
+    				}
     			}  
     			String calculateValueSentence = property.getName() + "Calculator.calculate()";		
     			
@@ -240,6 +261,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     			Iterator itCmpFields = propertyMapping.getCmpFields().iterator();
     			while (itCmpFields.hasNext()) {
     				CmpField cmpField = (CmpField) itCmpFields.next();
+    				if (ejb) {
     		
     out.print(" \n\t/**\t \n\t * @ejb:persistent-field\n\t * @jboss:column-name \"");
     out.print(cmpField.getColumn());
@@ -257,6 +279,38 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     out.print(cmpField.getCmpTypeName());
     out.print(" newValue);");
     
+    				}
+    				else { // not ejb
+    		
+    out.print(" \n\tprivate ");
+    out.print(cmpField.getCmpTypeName());
+    out.print(" ");
+    out.print(property.getName());
+    out.print("_");
+    out.print(cmpField.getConverterPropertyName());
+    out.print(";\n\tprivate ");
+    out.print(cmpField.getCmpTypeName());
+    out.print(" get");
+    out.print(propertyName);
+    out.print("_");
+    out.print(cmpField.getConverterPropertyName());
+    out.print("() {\n\t\treturn ");
+    out.print(property.getName());
+    out.print("_");
+    out.print(cmpField.getConverterPropertyName());
+    out.print(";\n\t}\n\tprivate void set");
+    out.print(propertyName);
+    out.print("_");
+    out.print(cmpField.getConverterPropertyName());
+    out.print("(");
+    out.print(cmpField.getCmpTypeName());
+    out.print(" newValue) {\n\t\tthis.");
+    out.print(property.getName());
+    out.print("_");
+    out.print(cmpField.getConverterPropertyName());
+    out.print(" = newValue;\n\t}");
+    	
+    				}
     			}
     		
     out.print(" \n\t/**\n\t * ");
@@ -344,7 +398,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     			String cmpType = propertyMapping.getCmpTypeName();
     			String getSentence = "get" + propertyName + "Converter().toJava(get_"+propertyName+"())";			
     			String setSentence = "get" + propertyName + "Converter().toDB(" + Generators.generatePrimitiveWrapper(type, "new" + propertyName) + ")";
-    			if (metaModel.isGenerateJDO()) {
+    			if (!ejb) {
     
     out.print(" \n\t");
     out.print(attributeAccessLevel);
@@ -437,7 +491,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     out.print("\"));\n\t\t}\t\t\n\t}");
     		
     		} else { // normal
-    			if (metaModel.isGenerateJDO()) {
+    			if (!ejb) {
     			
     out.print(" \n\t");
     out.print(attributeAccessLevel);
@@ -528,9 +582,9 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Feb 22 10:45:34 CET 2005", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/property.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/PropertyPG.java" }, // output file
+        { "Sat Mar 05 14:02:01 CET 2005", // date this file was generated
+             "/home/mcarmen/workspace/OpenXava/generator/property.xml", // input file
+             "/home/mcarmen/workspace/OpenXava/generator/PropertyPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
