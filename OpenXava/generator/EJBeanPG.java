@@ -14,7 +14,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Mar 07 10:45:22 CET 2005
+ * @version Thu Mar 10 10:07:35 CET 2005
  */
 public class EJBeanPG {
     Properties properties = new Properties();
@@ -157,7 +157,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print(interfaces);
     out.print("\"\n * @ejb:data-object extends=\"java.lang.Object\"\n * @ejb:home extends=\"javax.ejb.EJBHome\"\n * @ejb:pk extends=\"java.lang.Object\"\n *\n * @ejb.value-object name=\"");
     out.print(name);
-    out.print("\" match=\"persistentCalculatedAndAggregate\"\n *   \n * @ejb:env-entry name=\"DATA_SOURCE\" type=\"java.lang.String\" value=\"jdbc/DataSource\"\n * @ejb:resource-ref  res-name=\"jdbc/DataSource\" res-type=\"javax.sql.DataSource\"  res-auth=\"Container\"\n * @jboss:resource-ref  res-ref-name=\"jdbc/DataSource\" resource-name=\"jdbc/DataSource\"\n *");
+    out.print("\" match=\"persistentCalculatedAndAggregate\"\n *   \n * @ejb:env-entry name=\"DATA_SOURCE\" type=\"java.lang.String\" value=\"jdbc/DataSource\"\n * @ejb:resource-ref  res-name=\"jdbc/DataSource\" res-type=\"javax.sql.DataSource\"  res-auth=\"Container\" jndi-name=\"jdbc/@datasource@\"\n * @jboss:resource-ref  res-ref-name=\"jdbc/DataSource\" resource-name=\"jdbc/DataSource\"\n *");
     
      // Finders for references
      Iterator itEntityReferences = metaModel.getMetaReferencesWithMapping().iterator(); 
@@ -1325,7 +1325,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Mar 07 10:45:23 CET 2005", // date this file was generated
+        { "Thu Mar 10 10:07:36 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/ejbean.xml", // input file
              "/home/javi/workspace/OpenXava/generator/EJBeanPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

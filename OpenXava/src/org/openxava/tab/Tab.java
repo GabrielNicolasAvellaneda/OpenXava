@@ -829,7 +829,7 @@ public class Tab {
 		this.titleId = titleId;
 	}
 	
-	private void loadUserPreferences() {		
+	private void loadUserPreferences() {
 		try {			
 			Session session = getSessionFactory().openSession();				
 			Transaction tx = session.beginTransaction();
@@ -851,7 +851,7 @@ public class Tab {
 		catch (Exception ex) {
 			ex.printStackTrace();
 			System.err.println(XavaResources.getString("warning_load_preferences_tab"));
-		}		
+		}			
 	}
 	
 	private String getUserName() {
@@ -899,7 +899,7 @@ public class Tab {
 		catch (Exception ex) {
 			ex.printStackTrace();
 			System.err.println(XavaResources.getString("warning_save_preferences_tab"));
-		}				
+		}	
 	}
 	
 	private void removeUserPreferences() {

@@ -149,7 +149,7 @@ import <expr>packageName</expr>.*;
  * @ejb.value-object name="<expr>name</expr>" match="persistentCalculatedAndAggregate"
  *   
  * @ejb:env-entry name="DATA_SOURCE" type="java.lang.String" value="jdbc/DataSource"
- * @ejb:resource-ref  res-name="jdbc/DataSource" res-type="javax.sql.DataSource"  res-auth="Container"
+ * @ejb:resource-ref  res-name="jdbc/DataSource" res-type="javax.sql.DataSource"  res-auth="Container" jndi-name="jdbc/@datasource@"
  * @jboss:resource-ref  res-ref-name="jdbc/DataSource" resource-name="jdbc/DataSource"
  *
  <java>

@@ -31,7 +31,7 @@
 				<env-entry-type>java.lang.String</env-entry-type>
 				<env-entry-value>jdbc/DataSource</env-entry-value>
 			</env-entry>
-			<resource-ref>
+			<resource-ref id="Server_datasource">
 				<res-ref-name>jdbc/DataSource</res-ref-name>
 				<res-type>javax.sql.DataSource</res-type>
 				<res-auth>Container</res-auth>
@@ -49,7 +49,7 @@
 				<env-entry-type>java.lang.String</env-entry-type>
 				<env-entry-value>jdbc/DataSource</env-entry-value>
 			</env-entry>
-			<resource-ref>
+			<resource-ref id="EntityTab_datasource">
 				<res-ref-name>jdbc/DataSource</res-ref-name>
 				<res-type>javax.sql.DataSource</res-type>
 				<res-auth>Container</res-auth>
@@ -71,15 +71,15 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>DrivingLicence</abstract-schema-name>
-         <cmp-field id="CMPAttribute_1">
+         <cmp-field id="CmpAttribute_DrivingLicence_level">
             <description><![CDATA[]]></description>
             <field-name>level</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_2">
+         <cmp-field id="CmpAttribute_DrivingLicence_type">
             <description><![CDATA[]]></description>
             <field-name>type</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_3">
+         <cmp-field id="CmpAttribute_DrivingLicence__Description">
             <description><![CDATA[]]></description>
             <field-name>_Description</field-name>
          </cmp-field>
@@ -97,6 +97,7 @@
          </resource-ref>
 
 	  <!-- Write a file named ejb-finders-DrivingLicenceBean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_Office">
@@ -113,27 +114,27 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Office</abstract-schema-name>
-         <cmp-field id="CMPAttribute_4">
+         <cmp-field id="CmpAttribute_Office__Name">
             <description><![CDATA[]]></description>
             <field-name>_Name</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_5">
+         <cmp-field id="CmpAttribute_Office_number">
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_6">
+         <cmp-field id="CmpAttribute_Office_zoneNumber">
             <description><![CDATA[]]></description>
             <field-name>zoneNumber</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_7">
+         <cmp-field id="CmpAttribute_Office_officeManager_number">
             <description><![CDATA[]]></description>
             <field-name>officeManager_number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_8">
+         <cmp-field id="CmpAttribute_Office_defaultCarrier_number">
             <description><![CDATA[]]></description>
             <field-name>defaultCarrier_number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_9">
+         <cmp-field id="CmpAttribute_Office_mainWarehouse_number">
             <description><![CDATA[]]></description>
             <field-name>mainWarehouse_number</field-name>
          </cmp-field>
@@ -184,6 +185,7 @@
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.mainWarehouse_number = ?1 AND o.zoneNumber = ?2]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-OfficeBean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_Delivery">
@@ -200,63 +202,63 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Delivery</abstract-schema-name>
-         <cmp-field id="CMPAttribute_10">
+         <cmp-field id="CmpAttribute_Delivery__Distance">
             <description><![CDATA[]]></description>
             <field-name>_Distance</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_11">
+         <cmp-field id="CmpAttribute_Delivery__Incidents">
             <description><![CDATA[]]></description>
             <field-name>_Incidents</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_12">
+         <cmp-field id="CmpAttribute_Delivery__DriverType">
             <description><![CDATA[]]></description>
             <field-name>_DriverType</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_13">
+         <cmp-field id="CmpAttribute_Delivery__Remarks">
             <description><![CDATA[]]></description>
             <field-name>_Remarks</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_14">
+         <cmp-field id="CmpAttribute_Delivery__Employee">
             <description><![CDATA[]]></description>
             <field-name>_Employee</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_15">
+         <cmp-field id="CmpAttribute_Delivery__Description">
             <description><![CDATA[]]></description>
             <field-name>_Description</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_16">
+         <cmp-field id="CmpAttribute_Delivery__Vehicle">
             <description><![CDATA[]]></description>
             <field-name>_Vehicle</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_17">
+         <cmp-field id="CmpAttribute_Delivery_date_day">
             <description><![CDATA[]]></description>
             <field-name>date_day</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_18">
+         <cmp-field id="CmpAttribute_Delivery_date_month">
             <description><![CDATA[]]></description>
             <field-name>date_month</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_19">
+         <cmp-field id="CmpAttribute_Delivery_date_year">
             <description><![CDATA[]]></description>
             <field-name>date_year</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_20">
+         <cmp-field id="CmpAttribute_Delivery_number">
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_21">
+         <cmp-field id="CmpAttribute_Delivery_type_number">
             <description><![CDATA[]]></description>
             <field-name>type_number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_22">
+         <cmp-field id="CmpAttribute_Delivery_carrier_number">
             <description><![CDATA[]]></description>
             <field-name>carrier_number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_23">
+         <cmp-field id="CmpAttribute_Delivery_invoice_year">
             <description><![CDATA[]]></description>
             <field-name>invoice_year</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_24">
+         <cmp-field id="CmpAttribute_Delivery_invoice_number">
             <description><![CDATA[]]></description>
             <field-name>invoice_number</field-name>
          </cmp-field>
@@ -314,6 +316,7 @@
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-DeliveryBean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_Clerk">
@@ -330,19 +333,19 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Clerk</abstract-schema-name>
-         <cmp-field id="CMPAttribute_25">
+         <cmp-field id="CmpAttribute_Clerk__Name">
             <description><![CDATA[]]></description>
             <field-name>_Name</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_26">
+         <cmp-field id="CmpAttribute_Clerk_officeNumber">
             <description><![CDATA[]]></description>
             <field-name>officeNumber</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_27">
+         <cmp-field id="CmpAttribute_Clerk_number">
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_28">
+         <cmp-field id="CmpAttribute_Clerk_zoneNumber">
             <description><![CDATA[]]></description>
             <field-name>zoneNumber</field-name>
          </cmp-field>
@@ -360,6 +363,7 @@
          </resource-ref>
 
 	  <!-- Write a file named ejb-finders-ClerkBean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_SellerLevel">
@@ -376,11 +380,11 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>SellerLevel</abstract-schema-name>
-         <cmp-field id="CMPAttribute_29">
+         <cmp-field id="CmpAttribute_SellerLevel__Description">
             <description><![CDATA[]]></description>
             <field-name>_Description</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_30">
+         <cmp-field id="CmpAttribute_SellerLevel_id">
             <description><![CDATA[]]></description>
             <field-name>id</field-name>
          </cmp-field>
@@ -398,6 +402,7 @@
          </resource-ref>
 
 	  <!-- Write a file named ejb-finders-SellerLevelBean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_State">
@@ -414,11 +419,11 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>State</abstract-schema-name>
-         <cmp-field id="CMPAttribute_31">
+         <cmp-field id="CmpAttribute_State__Name">
             <description><![CDATA[]]></description>
             <field-name>_Name</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_32">
+         <cmp-field id="CmpAttribute_State_id">
             <description><![CDATA[]]></description>
             <field-name>id</field-name>
          </cmp-field>
@@ -436,6 +441,7 @@
          </resource-ref>
 
 	  <!-- Write a file named ejb-finders-StateBean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_Product">
@@ -452,35 +458,35 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Product</abstract-schema-name>
-         <cmp-field id="CMPAttribute_33">
+         <cmp-field id="CmpAttribute_Product__FamilyNumber">
             <description><![CDATA[]]></description>
             <field-name>_FamilyNumber</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_34">
+         <cmp-field id="CmpAttribute_Product__UnitPrice">
             <description><![CDATA[]]></description>
             <field-name>_UnitPrice</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_35">
+         <cmp-field id="CmpAttribute_Product_warehouseZoneNumber">
             <description><![CDATA[]]></description>
             <field-name>warehouseZoneNumber</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_36">
+         <cmp-field id="CmpAttribute_Product_warehouseNumber">
             <description><![CDATA[]]></description>
             <field-name>warehouseNumber</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_37">
+         <cmp-field id="CmpAttribute_Product__SubfamilyNumber">
             <description><![CDATA[]]></description>
             <field-name>_SubfamilyNumber</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_38">
+         <cmp-field id="CmpAttribute_Product__Remarks">
             <description><![CDATA[]]></description>
             <field-name>_Remarks</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_39">
+         <cmp-field id="CmpAttribute_Product__Description">
             <description><![CDATA[]]></description>
             <field-name>_Description</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_40">
+         <cmp-field id="CmpAttribute_Product_number">
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
@@ -507,6 +513,7 @@
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product o WHERE 1 = 1]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-ProductBean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_Warehouse2">
@@ -523,15 +530,15 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Warehouse2</abstract-schema-name>
-         <cmp-field id="CMPAttribute_41">
+         <cmp-field id="CmpAttribute_Warehouse2__Name">
             <description><![CDATA[]]></description>
             <field-name>_Name</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_42">
+         <cmp-field id="CmpAttribute_Warehouse2__Number">
             <description><![CDATA[]]></description>
             <field-name>_Number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_43">
+         <cmp-field id="CmpAttribute_Warehouse2_zoneNumber">
             <description><![CDATA[]]></description>
             <field-name>zoneNumber</field-name>
          </cmp-field>
@@ -549,6 +556,7 @@
          </resource-ref>
 
 	  <!-- Write a file named ejb-finders-Warehouse2Bean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_Family">
@@ -565,20 +573,21 @@
          <reentrant>False</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Family</abstract-schema-name>
-         <cmp-field id="CMPAttribute_44">
+         <cmp-field id="CmpAttribute_Family_oid">
             <description><![CDATA[]]></description>
             <field-name>oid</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_45">
+         <cmp-field id="CmpAttribute_Family_number">
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_46">
+         <cmp-field id="CmpAttribute_Family_description">
             <description><![CDATA[]]></description>
             <field-name>description</field-name>
          </cmp-field>
 
 	  <!-- Write a file named ejb-finders-FamilyBean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_ServiceType">
@@ -595,19 +604,19 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>ServiceType</abstract-schema-name>
-         <cmp-field id="CMPAttribute_47">
+         <cmp-field id="CmpAttribute_ServiceType__Family">
             <description><![CDATA[]]></description>
             <field-name>_Family</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_48">
+         <cmp-field id="CmpAttribute_ServiceType__Description">
             <description><![CDATA[]]></description>
             <field-name>_Description</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_49">
+         <cmp-field id="CmpAttribute_ServiceType__Subfamily">
             <description><![CDATA[]]></description>
             <field-name>_Subfamily</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_50">
+         <cmp-field id="CmpAttribute_ServiceType_number">
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
@@ -625,6 +634,7 @@
          </resource-ref>
 
 	  <!-- Write a file named ejb-finders-ServiceTypeBean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_DeliveryPlace">
@@ -641,31 +651,31 @@
          <reentrant>true</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>DeliveryPlace</abstract-schema-name>
-         <cmp-field id="CMPAttribute_51">
+         <cmp-field id="CmpAttribute_DeliveryPlace_oid">
             <description><![CDATA[]]></description>
             <field-name>oid</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_52">
+         <cmp-field id="CmpAttribute_DeliveryPlace__Remarks">
             <description><![CDATA[]]></description>
             <field-name>_Remarks</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_53">
+         <cmp-field id="CmpAttribute_DeliveryPlace__Address">
             <description><![CDATA[]]></description>
             <field-name>_Address</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_54">
+         <cmp-field id="CmpAttribute_DeliveryPlace__Name">
             <description><![CDATA[]]></description>
             <field-name>_Name</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_55">
+         <cmp-field id="CmpAttribute_DeliveryPlace_customer_number">
             <description><![CDATA[]]></description>
             <field-name>customer_number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_56">
+         <cmp-field id="CmpAttribute_DeliveryPlace_preferredWarehouse_zoneNumber">
             <description><![CDATA[]]></description>
             <field-name>preferredWarehouse_zoneNumber</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_57">
+         <cmp-field id="CmpAttribute_DeliveryPlace_preferredWarehouse_number">
             <description><![CDATA[]]></description>
             <field-name>preferredWarehouse_number</field-name>
          </cmp-field>
@@ -704,6 +714,7 @@
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryPlace o WHERE o.preferredWarehouse_number = ?1 AND o.preferredWarehouse_zoneNumber = ?2]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-DeliveryPlaceBean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_Seller">
@@ -720,15 +731,15 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Seller</abstract-schema-name>
-         <cmp-field id="CMPAttribute_58">
+         <cmp-field id="CmpAttribute_Seller__Name">
             <description><![CDATA[]]></description>
             <field-name>_Name</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_59">
+         <cmp-field id="CmpAttribute_Seller_number">
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_60">
+         <cmp-field id="CmpAttribute_Seller_level_id">
             <description><![CDATA[]]></description>
             <field-name>level_id</field-name>
          </cmp-field>
@@ -765,6 +776,7 @@
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE 1 = 1]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-SellerBean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_Customer">
@@ -781,39 +793,39 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Customer</abstract-schema-name>
-         <cmp-field id="CMPAttribute_61">
+         <cmp-field id="CmpAttribute_Customer__Type">
             <description><![CDATA[]]></description>
             <field-name>_Type</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_62">
+         <cmp-field id="CmpAttribute_Customer__Remarks">
             <description><![CDATA[]]></description>
             <field-name>_Remarks</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_63">
+         <cmp-field id="CmpAttribute_Customer__RelationWithSeller">
             <description><![CDATA[]]></description>
             <field-name>_RelationWithSeller</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_64">
+         <cmp-field id="CmpAttribute_Customer_photo">
             <description><![CDATA[]]></description>
             <field-name>photo</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_65">
+         <cmp-field id="CmpAttribute_Customer__Name">
             <description><![CDATA[]]></description>
             <field-name>_Name</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_66">
+         <cmp-field id="CmpAttribute_Customer_number">
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_67">
+         <cmp-field id="CmpAttribute_Customer_seller_number">
             <description><![CDATA[]]></description>
             <field-name>seller_number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_68">
+         <cmp-field id="CmpAttribute_Customer_alternateSeller_number">
             <description><![CDATA[]]></description>
             <field-name>alternateSeller_number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_69">
+         <cmp-field id="CmpAttribute_Customer_address_state_id">
             <description><![CDATA[]]></description>
             <field-name>address_state_id</field-name>
          </cmp-field>
@@ -909,6 +921,7 @@
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Customer o]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-CustomerBean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_Subfamily">
@@ -925,23 +938,23 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Subfamily</abstract-schema-name>
-         <cmp-field id="CMPAttribute_70">
+         <cmp-field id="CmpAttribute_Subfamily__FamilyNumber">
             <description><![CDATA[]]></description>
             <field-name>_FamilyNumber</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_71">
+         <cmp-field id="CmpAttribute_Subfamily_oid">
             <description><![CDATA[]]></description>
             <field-name>oid</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_72">
+         <cmp-field id="CmpAttribute_Subfamily__Remarks">
             <description><![CDATA[]]></description>
             <field-name>_Remarks</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_73">
+         <cmp-field id="CmpAttribute_Subfamily__Description">
             <description><![CDATA[]]></description>
             <field-name>_Description</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_74">
+         <cmp-field id="CmpAttribute_Subfamily__Number">
             <description><![CDATA[]]></description>
             <field-name>_Number</field-name>
          </cmp-field>
@@ -959,6 +972,7 @@
          </resource-ref>
 
 	  <!-- Write a file named ejb-finders-SubfamilyBean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_DeliveryType">
@@ -975,11 +989,11 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>DeliveryType</abstract-schema-name>
-         <cmp-field id="CMPAttribute_75">
+         <cmp-field id="CmpAttribute_DeliveryType__Description">
             <description><![CDATA[]]></description>
             <field-name>_Description</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_76">
+         <cmp-field id="CmpAttribute_DeliveryType_number">
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
@@ -997,6 +1011,7 @@
          </resource-ref>
 
 	  <!-- Write a file named ejb-finders-DeliveryTypeBean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_InvoiceDetail">
@@ -1013,51 +1028,51 @@
          <reentrant>true</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>InvoiceDetail</abstract-schema-name>
-         <cmp-field id="CMPAttribute_77">
+         <cmp-field id="CmpAttribute_InvoiceDetail__UnitPrice">
             <description><![CDATA[]]></description>
             <field-name>_UnitPrice</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_78">
+         <cmp-field id="CmpAttribute_InvoiceDetail_oid">
             <description><![CDATA[]]></description>
             <field-name>oid</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_79">
+         <cmp-field id="CmpAttribute_InvoiceDetail__Remarks">
             <description><![CDATA[]]></description>
             <field-name>_Remarks</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_80">
+         <cmp-field id="CmpAttribute_InvoiceDetail_deliveryDate_day">
             <description><![CDATA[]]></description>
             <field-name>deliveryDate_day</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_81">
+         <cmp-field id="CmpAttribute_InvoiceDetail_deliveryDate_month">
             <description><![CDATA[]]></description>
             <field-name>deliveryDate_month</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_82">
+         <cmp-field id="CmpAttribute_InvoiceDetail_deliveryDate_year">
             <description><![CDATA[]]></description>
             <field-name>deliveryDate_year</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_83">
+         <cmp-field id="CmpAttribute_InvoiceDetail__Quantity">
             <description><![CDATA[]]></description>
             <field-name>_Quantity</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_84">
+         <cmp-field id="CmpAttribute_InvoiceDetail__ServiceType">
             <description><![CDATA[]]></description>
             <field-name>_ServiceType</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_85">
+         <cmp-field id="CmpAttribute_InvoiceDetail_product_number">
             <description><![CDATA[]]></description>
             <field-name>product_number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_86">
+         <cmp-field id="CmpAttribute_InvoiceDetail_soldBy_number">
             <description><![CDATA[]]></description>
             <field-name>soldBy_number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_87">
+         <cmp-field id="CmpAttribute_InvoiceDetail_invoice_year">
             <description><![CDATA[]]></description>
             <field-name>invoice_year</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_88">
+         <cmp-field id="CmpAttribute_InvoiceDetail_invoice_number">
             <description><![CDATA[]]></description>
             <field-name>invoice_number</field-name>
          </cmp-field>
@@ -1106,6 +1121,7 @@
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o.invoice_year = ?1 AND o.invoice_number = ?2]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-InvoiceDetailBean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_Product2">
@@ -1122,31 +1138,31 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Product2</abstract-schema-name>
-         <cmp-field id="CMPAttribute_89">
+         <cmp-field id="CmpAttribute_Product2__UnitPrice">
             <description><![CDATA[]]></description>
             <field-name>_UnitPrice</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_90">
+         <cmp-field id="CmpAttribute_Product2__Description">
             <description><![CDATA[]]></description>
             <field-name>_Description</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_91">
+         <cmp-field id="CmpAttribute_Product2_number">
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_92">
+         <cmp-field id="CmpAttribute_Product2_warehouse_zoneNumber">
             <description><![CDATA[]]></description>
             <field-name>warehouse_zoneNumber</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_93">
+         <cmp-field id="CmpAttribute_Product2_warehouse_number">
             <description><![CDATA[]]></description>
             <field-name>warehouse_number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_94">
+         <cmp-field id="CmpAttribute_Product2_family_number">
             <description><![CDATA[]]></description>
             <field-name>family_number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_95">
+         <cmp-field id="CmpAttribute_Product2_subfamily_number">
             <description><![CDATA[]]></description>
             <field-name>subfamily_number</field-name>
          </cmp-field>
@@ -1204,6 +1220,7 @@
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE 1 = 1]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-Product2Bean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_AdditionalDetail">
@@ -1220,19 +1237,19 @@
          <reentrant>true</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>AdditionalDetail</abstract-schema-name>
-         <cmp-field id="CMPAttribute_96">
+         <cmp-field id="CmpAttribute_AdditionalDetail_counter">
             <description><![CDATA[]]></description>
             <field-name>counter</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_97">
+         <cmp-field id="CmpAttribute_AdditionalDetail__Subfamily">
             <description><![CDATA[]]></description>
             <field-name>_Subfamily</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_98">
+         <cmp-field id="CmpAttribute_AdditionalDetail_service_number">
             <description><![CDATA[]]></description>
             <field-name>service_number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_99">
+         <cmp-field id="CmpAttribute_AdditionalDetail_type_number">
             <description><![CDATA[]]></description>
             <field-name>type_number</field-name>
          </cmp-field>
@@ -1270,6 +1287,7 @@
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM AdditionalDetail o WHERE o.type_number = ?1]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-AdditionalDetailBean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_TransportCharge">
@@ -1286,23 +1304,23 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>TransportCharge</abstract-schema-name>
-         <cmp-field id="CMPAttribute_100">
+         <cmp-field id="CmpAttribute_TransportCharge__Amount">
             <description><![CDATA[]]></description>
             <field-name>_Amount</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_101">
+         <cmp-field id="CmpAttribute_TransportCharge_delivery_number">
             <description><![CDATA[]]></description>
             <field-name>delivery_number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_102">
+         <cmp-field id="CmpAttribute_TransportCharge_delivery_type_number">
             <description><![CDATA[]]></description>
             <field-name>delivery_type_number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_103">
+         <cmp-field id="CmpAttribute_TransportCharge_delivery_invoice_year">
             <description><![CDATA[]]></description>
             <field-name>delivery_invoice_year</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_104">
+         <cmp-field id="CmpAttribute_TransportCharge_delivery_invoice_number">
             <description><![CDATA[]]></description>
             <field-name>delivery_invoice_number</field-name>
          </cmp-field>
@@ -1342,6 +1360,7 @@
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM TransportCharge o]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-TransportChargeBean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_Invoice">
@@ -1358,31 +1377,31 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Invoice</abstract-schema-name>
-         <cmp-field id="CMPAttribute_105">
+         <cmp-field id="CmpAttribute_Invoice__Comment">
             <description><![CDATA[]]></description>
             <field-name>_Comment</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_106">
+         <cmp-field id="CmpAttribute_Invoice_date">
             <description><![CDATA[]]></description>
             <field-name>date</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_107">
+         <cmp-field id="CmpAttribute_Invoice__Paid">
             <description><![CDATA[]]></description>
             <field-name>_Paid</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_108">
+         <cmp-field id="CmpAttribute_Invoice_year">
             <description><![CDATA[]]></description>
             <field-name>year</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_109">
+         <cmp-field id="CmpAttribute_Invoice__VatPercentage">
             <description><![CDATA[]]></description>
             <field-name>_VatPercentage</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_110">
+         <cmp-field id="CmpAttribute_Invoice_number">
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_111">
+         <cmp-field id="CmpAttribute_Invoice_customer_number">
             <description><![CDATA[]]></description>
             <field-name>customer_number</field-name>
          </cmp-field>
@@ -1437,6 +1456,7 @@
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Invoice o WHERE o._Paid <> 'S']]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-InvoiceBean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_Product3">
@@ -1453,19 +1473,19 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Product3</abstract-schema-name>
-         <cmp-field id="CMPAttribute_112">
+         <cmp-field id="CmpAttribute_Product3__Comments">
             <description><![CDATA[]]></description>
             <field-name>_Comments</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_113">
+         <cmp-field id="CmpAttribute_Product3__Description">
             <description><![CDATA[]]></description>
             <field-name>_Description</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_114">
+         <cmp-field id="CmpAttribute_Product3_number">
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_115">
+         <cmp-field id="CmpAttribute_Product3_family_oid">
             <description><![CDATA[]]></description>
             <field-name>family_oid</field-name>
          </cmp-field>
@@ -1493,6 +1513,7 @@
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product3 o WHERE o.family_oid = ?1]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-Product3Bean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_Shipment">
@@ -1509,15 +1530,15 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Shipment</abstract-schema-name>
-         <cmp-field id="CMPAttribute_116">
+         <cmp-field id="CmpAttribute_Shipment__Type">
             <description><![CDATA[]]></description>
             <field-name>_Type</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_117">
+         <cmp-field id="CmpAttribute_Shipment__Description">
             <description><![CDATA[]]></description>
             <field-name>_Description</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_118">
+         <cmp-field id="CmpAttribute_Shipment_number">
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
@@ -1535,6 +1556,7 @@
          </resource-ref>
 
 	  <!-- Write a file named ejb-finders-ShipmentBean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_Carrier">
@@ -1551,31 +1573,31 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Carrier</abstract-schema-name>
-         <cmp-field id="CMPAttribute_119">
+         <cmp-field id="CmpAttribute_Carrier__Remarks">
             <description><![CDATA[]]></description>
             <field-name>_Remarks</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_120">
+         <cmp-field id="CmpAttribute_Carrier__Name">
             <description><![CDATA[]]></description>
             <field-name>_Name</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_121">
+         <cmp-field id="CmpAttribute_Carrier__Number">
             <description><![CDATA[]]></description>
             <field-name>_Number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_122">
+         <cmp-field id="CmpAttribute_Carrier_warehouse_zoneNumber">
             <description><![CDATA[]]></description>
             <field-name>warehouse_zoneNumber</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_123">
+         <cmp-field id="CmpAttribute_Carrier_warehouse_number">
             <description><![CDATA[]]></description>
             <field-name>warehouse_number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_124">
+         <cmp-field id="CmpAttribute_Carrier_drivingLicence_type">
             <description><![CDATA[]]></description>
             <field-name>drivingLicence_type</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_125">
+         <cmp-field id="CmpAttribute_Carrier_drivingLicence_level">
             <description><![CDATA[]]></description>
             <field-name>drivingLicence_level</field-name>
          </cmp-field>
@@ -1636,6 +1658,7 @@
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Carrier o]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-CarrierBean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_Subfamily2">
@@ -1652,19 +1675,19 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Subfamily2</abstract-schema-name>
-         <cmp-field id="CMPAttribute_126">
+         <cmp-field id="CmpAttribute_Subfamily2__Remarks">
             <description><![CDATA[]]></description>
             <field-name>_Remarks</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_127">
+         <cmp-field id="CmpAttribute_Subfamily2__Description">
             <description><![CDATA[]]></description>
             <field-name>_Description</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_128">
+         <cmp-field id="CmpAttribute_Subfamily2_number">
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_129">
+         <cmp-field id="CmpAttribute_Subfamily2_family_number">
             <description><![CDATA[]]></description>
             <field-name>family_number</field-name>
          </cmp-field>
@@ -1692,6 +1715,7 @@
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Subfamily2 o WHERE o.family_number = ?1]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-Subfamily2Bean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_FilterBySubfamily">
@@ -1708,11 +1732,11 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>FilterBySubfamily</abstract-schema-name>
-         <cmp-field id="CMPAttribute_130">
+         <cmp-field id="CmpAttribute_FilterBySubfamily_oid">
             <description><![CDATA[]]></description>
             <field-name>oid</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_131">
+         <cmp-field id="CmpAttribute_FilterBySubfamily_subfamily_number">
             <description><![CDATA[]]></description>
             <field-name>subfamily_number</field-name>
          </cmp-field>
@@ -1740,6 +1764,7 @@
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o.subfamily_number = ?1]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-FilterBySubfamilyBean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_Service">
@@ -1756,15 +1781,15 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Service</abstract-schema-name>
-         <cmp-field id="CMPAttribute_132">
+         <cmp-field id="CmpAttribute_Service__Family">
             <description><![CDATA[]]></description>
             <field-name>_Family</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_133">
+         <cmp-field id="CmpAttribute_Service__Description">
             <description><![CDATA[]]></description>
             <field-name>_Description</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_134">
+         <cmp-field id="CmpAttribute_Service_number">
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
@@ -1782,6 +1807,7 @@
          </resource-ref>
 
 	  <!-- Write a file named ejb-finders-ServiceBean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_Family2">
@@ -1798,11 +1824,11 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Family2</abstract-schema-name>
-         <cmp-field id="CMPAttribute_135">
+         <cmp-field id="CmpAttribute_Family2__Description">
             <description><![CDATA[]]></description>
             <field-name>_Description</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_136">
+         <cmp-field id="CmpAttribute_Family2_number">
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
@@ -1820,6 +1846,7 @@
          </resource-ref>
 
 	  <!-- Write a file named ejb-finders-Family2Bean.xml if you want to define extra finders. -->
+
       </entity>
 
       <entity id="ContainerManagedEntity_Receptionist">
@@ -1836,15 +1863,15 @@
          <reentrant>true</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Receptionist</abstract-schema-name>
-         <cmp-field id="CMPAttribute_137">
+         <cmp-field id="CmpAttribute_Receptionist_oid">
             <description><![CDATA[]]></description>
             <field-name>oid</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_138">
+         <cmp-field id="CmpAttribute_Receptionist__Name">
             <description><![CDATA[]]></description>
             <field-name>_Name</field-name>
          </cmp-field>
-         <cmp-field id="CMPAttribute_139">
+         <cmp-field id="CmpAttribute_Receptionist_deliveryPlace_oid">
             <description><![CDATA[]]></description>
             <field-name>deliveryPlace_oid</field-name>
          </cmp-field>
@@ -1872,6 +1899,7 @@
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Receptionist o WHERE o.deliveryPlace_oid = ?1]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-ReceptionistBean.xml if you want to define extra finders. -->
+
       </entity>
 
      <!--
