@@ -28,6 +28,10 @@
 		<ant antfile="../OpenXava/build.xml" target="generateEJB"/>		
 	</target>
 	
+	<target name="generateHibernate">
+		<ant antfile="../OpenXava/build.xml" target="generateHibernate"/>		
+	</target>
+	
 	<target name="regenerateEJB">
 		<ant antfile="../OpenXava/build.xml" target="regenerateEJB"/>		
 	</target>

@@ -203,12 +203,6 @@
       </columns>
       <columns xmi:id="Customer_alternateSeller_number" name="alternateSeller_number">
       </columns>
-      <columns xmi:id="Customer__Address_zipCode" name="_Address_zipCode">
-      </columns>
-      <columns xmi:id="Customer_address_street" name="address_street">
-      </columns>
-      <columns xmi:id="Customer_address_city" name="address_city">
-      </columns>
       <columns xmi:id="Customer_address_state_id" name="address_state_id">
       </columns>
 
@@ -405,10 +399,6 @@
       <columns xmi:id="Service__Description" name="_Description">
       </columns>
       <columns xmi:id="Service_number" name="number">
-      </columns>
-      <columns xmi:id="Service_detail_type" name="detail_type">
-      </columns>
-      <columns xmi:id="Service_detail_subfamily" name="detail_subfamily">
       </columns>
 
    </RDBSchema:RDBTable>
