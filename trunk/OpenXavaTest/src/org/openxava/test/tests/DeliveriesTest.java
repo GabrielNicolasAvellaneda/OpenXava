@@ -5,6 +5,7 @@ import java.text.*;
 import java.util.*;
 
 import javax.ejb.*;
+import javax.rmi.*;
 
 import org.openxava.test.calculators.*;
 import org.openxava.test.ejb.*;
@@ -32,6 +33,24 @@ public class DeliveriesTest extends ModuleTestBase {
 		
 	public DeliveriesTest(String testName) {
 		super(testName, "OpenXavaTest", "Deliveries");		
+	}
+	
+	public void testReferenceAsDescriptionsListWithValidValuesInKey() throws Exception {
+		execute("Mode.detailAndFirst");
+		assertValue("shipment.KEY", "");
+		Shipment shipment = (Shipment)
+			PortableRemoteObject.narrow(
+				ShipmentUtil.getHome().findAll().iterator().next(), Shipment.class);		
+		setValue("shipment.KEY", shipment.getPrimaryKey().toString());
+		execute("CRUD.save");
+		assertNoErrors();
+		execute("Mode.list");
+		execute("Mode.detailAndFirst");
+		assertValue("shipment.KEY", shipment.getPrimaryKey().toString());
+		assertDescriptionValue("shipment.KEY", shipment.getDescription());
+		// Restoring		
+		setValue("shipment.KEY", "");
+		execute("CRUD.save");
 	}
 	
 	public void testWhenStereotypeWithoutFormatterUseTypeFormatter() throws Exception {

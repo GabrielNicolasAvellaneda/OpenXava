@@ -21,6 +21,9 @@ public interface ShipmentHome
    public org.openxava.test.ejb.Shipment create(org.openxava.test.ejb.ShipmentValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
+   public java.util.Collection findAll()
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public org.openxava.test.ejb.Shipment findByPrimaryKey(org.openxava.test.ejb.ShipmentKey pk)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

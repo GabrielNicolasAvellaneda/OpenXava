@@ -14,7 +14,7 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 	public void execute() throws Exception {
 		try {			
 			Map memberNames = getView().getMemberNamesWithHidden();
-			Map values = MapFacade.getValues(getModelName(), getView().getKeyValues(), memberNames);
+			Map values = MapFacade.getValues(getModelName(), getView().getKeyValues(), memberNames);			
 			getView().setEditable(true);	
 			getView().setKeyEditable(false);			
 			getView().setValues(values);									
