@@ -26,7 +26,7 @@ Datasource for xavax-test application
      name="jboss:service=HypersonicMyShool">
      <attribute name="Port">1667</attribute>
      <attribute name="Silent">true</attribute>
-     <attribute name="Database">MySchool-db</attribute>
+     <attribute name="Database">my-school-db</attribute>
      <attribute name="Trace">false</attribute>
      <attribute name="No_system_exit">true</attribute>
    </mbean>
