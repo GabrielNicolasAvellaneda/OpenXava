@@ -93,7 +93,7 @@ public class InvoicesTest extends ModuleTestBase {
 		execute("List.customize");
 		execute("List.addColumns");
 		
-		assertCollectionRowCount("xavaPropertiesList", 21);
+		assertCollectionRowCount("xavaPropertiesList", 22);
 		assertValueInCollection("xavaPropertiesList",  0, 1, "vatPercentage");
 		assertValueInCollection("xavaPropertiesList",  1, 1, "comment");
 		assertValueInCollection("xavaPropertiesList",  2, 1, "customerDiscount");
@@ -115,6 +115,7 @@ public class InvoicesTest extends ModuleTestBase {
 		assertValueInCollection("xavaPropertiesList", 18, 1, "customer.address.city");
 		assertValueInCollection("xavaPropertiesList", 19, 1, "customer.address.state.id");
 		assertValueInCollection("xavaPropertiesList", 20, 1, "customer.address.state.name");		
+		assertValueInCollection("xavaPropertiesList", 21, 1, "customer.address.state.fullName");
 		
 		checkRow("selectedProperties", "yearDiscount"); 
 		checkRow("selectedProperties", "customer.address.city"); 
@@ -135,7 +136,7 @@ public class InvoicesTest extends ModuleTestBase {
 		
 		execute("List.addColumns");
 
-		assertCollectionRowCount("xavaPropertiesList", 19);
+		assertCollectionRowCount("xavaPropertiesList", 20);
 		assertValueInCollection("xavaPropertiesList",  0, 1, "vatPercentage");
 		assertValueInCollection("xavaPropertiesList",  1, 1, "comment");
 		assertValueInCollection("xavaPropertiesList",  2, 1, "customerDiscount");
@@ -154,7 +155,8 @@ public class InvoicesTest extends ModuleTestBase {
 		assertValueInCollection("xavaPropertiesList", 15, 1, "customer.address.street");
 		assertValueInCollection("xavaPropertiesList", 16, 1, "customer.address.zipCode");
 		assertValueInCollection("xavaPropertiesList", 17, 1, "customer.address.state.id");		
-		assertValueInCollection("xavaPropertiesList", 18, 1, "customer.address.state.name");		
+		assertValueInCollection("xavaPropertiesList", 18, 1, "customer.address.state.name");
+		assertValueInCollection("xavaPropertiesList", 19, 1, "customer.address.state.fullName");
 		
 		execute("AddColumns.cancel");
 		
