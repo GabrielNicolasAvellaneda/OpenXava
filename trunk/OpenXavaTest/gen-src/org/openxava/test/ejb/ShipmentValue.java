@@ -18,32 +18,9 @@ public class ShipmentValue
    private int number;
    private boolean numberHasBeenSet = false;
 
-   // private org.openxava.test.ejb.ShipmentKey pk;
-
    public ShipmentValue()
    {
-	 // pk = new org.openxava.test.ejb.ShipmentKey();
    }
-
-   /*
-   public ShipmentValue(org.openxava.test.ejb.ShipmentKey pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public ShipmentValue( int type,java.lang.String description,int number )
-   {
-	  this.type = type;
-	  typeHasBeenSet = true;
-	  this.description = description;
-	  descriptionHasBeenSet = true;
-	  this.number = number;
-	  numberHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.ShipmentKey(this.get_Type(),this.getNumber());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public ShipmentValue( ShipmentValue otherValue )
@@ -54,24 +31,7 @@ public class ShipmentValue
 	  descriptionHasBeenSet = true;
 	  this.number = otherValue.number;
 	  numberHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.ShipmentKey(this.get_Type(),this.getNumber());
    }
-
-   /*
-   public org.openxava.test.ejb.ShipmentKey getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.ShipmentKey pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setNumber( pk.number );
-   }
-   */
 
    public int getType()
    {
@@ -82,7 +42,6 @@ public class ShipmentValue
    {
 	  this.type = type;
 	  typeHasBeenSet = true;
-
    }
 
    public boolean typeHasBeenSet(){
@@ -97,7 +56,6 @@ public class ShipmentValue
    {
 	  this.description = description;
 	  descriptionHasBeenSet = true;
-
    }
 
    public boolean descriptionHasBeenSet(){
@@ -112,8 +70,6 @@ public class ShipmentValue
    {
 	  this.number = number;
 	  numberHasBeenSet = true;
-
-		 //pk.setNumber(number);
    }
 
    public boolean numberHasBeenSet(){

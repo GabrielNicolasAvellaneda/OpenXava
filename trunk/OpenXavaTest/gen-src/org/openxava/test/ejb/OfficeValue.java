@@ -30,44 +30,9 @@ public class OfficeValue
    private java.lang.Integer mainWarehouse_number;
    private boolean mainWarehouse_numberHasBeenSet = false;
 
-   // private org.openxava.test.ejb.OfficeKey pk;
-
    public OfficeValue()
    {
-	 // pk = new org.openxava.test.ejb.OfficeKey();
    }
-
-   /*
-   public OfficeValue(org.openxava.test.ejb.OfficeKey pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public OfficeValue( java.lang.String name,int number,int zoneNumber,int officeManager_zoneNumber,int officeManager_officeNumber,int officeManager_number,java.lang.Integer defaultCarrier_number,int mainWarehouse_zoneNumber,java.lang.Integer mainWarehouse_number )
-   {
-	  this.name = name;
-	  nameHasBeenSet = true;
-	  this.number = number;
-	  numberHasBeenSet = true;
-	  this.zoneNumber = zoneNumber;
-	  zoneNumberHasBeenSet = true;
-	  this.officeManager_zoneNumber = officeManager_zoneNumber;
-	  officeManager_zoneNumberHasBeenSet = true;
-	  this.officeManager_officeNumber = officeManager_officeNumber;
-	  officeManager_officeNumberHasBeenSet = true;
-	  this.officeManager_number = officeManager_number;
-	  officeManager_numberHasBeenSet = true;
-	  this.defaultCarrier_number = defaultCarrier_number;
-	  defaultCarrier_numberHasBeenSet = true;
-	  this.mainWarehouse_zoneNumber = mainWarehouse_zoneNumber;
-	  mainWarehouse_zoneNumberHasBeenSet = true;
-	  this.mainWarehouse_number = mainWarehouse_number;
-	  mainWarehouse_numberHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.OfficeKey(this.getNumber(),this.getZoneNumber());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public OfficeValue( OfficeValue otherValue )
@@ -90,25 +55,7 @@ public class OfficeValue
 	  mainWarehouse_zoneNumberHasBeenSet = true;
 	  this.mainWarehouse_number = otherValue.mainWarehouse_number;
 	  mainWarehouse_numberHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.OfficeKey(this.getNumber(),this.getZoneNumber());
    }
-
-   /*
-   public org.openxava.test.ejb.OfficeKey getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.OfficeKey pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setNumber( pk.number );
-	  setZoneNumber( pk.zoneNumber );
-   }
-   */
 
    public java.lang.String getName()
    {
@@ -119,7 +66,6 @@ public class OfficeValue
    {
 	  this.name = name;
 	  nameHasBeenSet = true;
-
    }
 
    public boolean nameHasBeenSet(){
@@ -134,8 +80,6 @@ public class OfficeValue
    {
 	  this.number = number;
 	  numberHasBeenSet = true;
-
-		 //pk.setNumber(number);
    }
 
    public boolean numberHasBeenSet(){
@@ -150,8 +94,6 @@ public class OfficeValue
    {
 	  this.zoneNumber = zoneNumber;
 	  zoneNumberHasBeenSet = true;
-
-		 //pk.setZoneNumber(zoneNumber);
    }
 
    public boolean zoneNumberHasBeenSet(){
@@ -166,7 +108,6 @@ public class OfficeValue
    {
 	  this.officeManager_zoneNumber = officeManager_zoneNumber;
 	  officeManager_zoneNumberHasBeenSet = true;
-
    }
 
    public boolean officeManager_zoneNumberHasBeenSet(){
@@ -181,7 +122,6 @@ public class OfficeValue
    {
 	  this.officeManager_officeNumber = officeManager_officeNumber;
 	  officeManager_officeNumberHasBeenSet = true;
-
    }
 
    public boolean officeManager_officeNumberHasBeenSet(){
@@ -196,7 +136,6 @@ public class OfficeValue
    {
 	  this.officeManager_number = officeManager_number;
 	  officeManager_numberHasBeenSet = true;
-
    }
 
    public boolean officeManager_numberHasBeenSet(){
@@ -211,7 +150,6 @@ public class OfficeValue
    {
 	  this.defaultCarrier_number = defaultCarrier_number;
 	  defaultCarrier_numberHasBeenSet = true;
-
    }
 
    public boolean defaultCarrier_numberHasBeenSet(){
@@ -226,7 +164,6 @@ public class OfficeValue
    {
 	  this.mainWarehouse_zoneNumber = mainWarehouse_zoneNumber;
 	  mainWarehouse_zoneNumberHasBeenSet = true;
-
    }
 
    public boolean mainWarehouse_zoneNumberHasBeenSet(){
@@ -241,7 +178,6 @@ public class OfficeValue
    {
 	  this.mainWarehouse_number = mainWarehouse_number;
 	  mainWarehouse_numberHasBeenSet = true;
-
    }
 
    public boolean mainWarehouse_numberHasBeenSet(){

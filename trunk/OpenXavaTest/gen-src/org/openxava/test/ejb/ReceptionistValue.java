@@ -18,32 +18,9 @@ public class ReceptionistValue
    private java.lang.String deliveryPlace_oid;
    private boolean deliveryPlace_oidHasBeenSet = false;
 
-   // private org.openxava.test.ejb.ReceptionistKey pk;
-
    public ReceptionistValue()
    {
-	 // pk = new org.openxava.test.ejb.ReceptionistKey();
    }
-
-   /*
-   public ReceptionistValue(org.openxava.test.ejb.ReceptionistKey pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public ReceptionistValue( int oid,java.lang.String name,java.lang.String deliveryPlace_oid )
-   {
-	  this.oid = oid;
-	  oidHasBeenSet = true;
-	  this.name = name;
-	  nameHasBeenSet = true;
-	  this.deliveryPlace_oid = deliveryPlace_oid;
-	  deliveryPlace_oidHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.ReceptionistKey(this.getOid());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public ReceptionistValue( ReceptionistValue otherValue )
@@ -54,24 +31,7 @@ public class ReceptionistValue
 	  nameHasBeenSet = true;
 	  this.deliveryPlace_oid = otherValue.deliveryPlace_oid;
 	  deliveryPlace_oidHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.ReceptionistKey(this.getOid());
    }
-
-   /*
-   public org.openxava.test.ejb.ReceptionistKey getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.ReceptionistKey pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setOid( pk.oid );
-   }
-   */
 
    public int getOid()
    {
@@ -82,8 +42,6 @@ public class ReceptionistValue
    {
 	  this.oid = oid;
 	  oidHasBeenSet = true;
-
-		 //pk.setOid(oid);
    }
 
    public boolean oidHasBeenSet(){
@@ -98,7 +56,6 @@ public class ReceptionistValue
    {
 	  this.name = name;
 	  nameHasBeenSet = true;
-
    }
 
    public boolean nameHasBeenSet(){
@@ -113,7 +70,6 @@ public class ReceptionistValue
    {
 	  this.deliveryPlace_oid = deliveryPlace_oid;
 	  deliveryPlace_oidHasBeenSet = true;
-
    }
 
    public boolean deliveryPlace_oidHasBeenSet(){

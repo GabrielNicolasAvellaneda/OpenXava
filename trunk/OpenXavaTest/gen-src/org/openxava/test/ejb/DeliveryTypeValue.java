@@ -16,30 +16,9 @@ public class DeliveryTypeValue
    private int number;
    private boolean numberHasBeenSet = false;
 
-   // private org.openxava.test.ejb.DeliveryTypeKey pk;
-
    public DeliveryTypeValue()
    {
-	 // pk = new org.openxava.test.ejb.DeliveryTypeKey();
    }
-
-   /*
-   public DeliveryTypeValue(org.openxava.test.ejb.DeliveryTypeKey pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public DeliveryTypeValue( java.lang.String description,int number )
-   {
-	  this.description = description;
-	  descriptionHasBeenSet = true;
-	  this.number = number;
-	  numberHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.DeliveryTypeKey(this.getNumber());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public DeliveryTypeValue( DeliveryTypeValue otherValue )
@@ -48,24 +27,7 @@ public class DeliveryTypeValue
 	  descriptionHasBeenSet = true;
 	  this.number = otherValue.number;
 	  numberHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.DeliveryTypeKey(this.getNumber());
    }
-
-   /*
-   public org.openxava.test.ejb.DeliveryTypeKey getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.DeliveryTypeKey pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setNumber( pk.number );
-   }
-   */
 
    public java.lang.String getDescription()
    {
@@ -76,7 +38,6 @@ public class DeliveryTypeValue
    {
 	  this.description = description;
 	  descriptionHasBeenSet = true;
-
    }
 
    public boolean descriptionHasBeenSet(){
@@ -91,8 +52,6 @@ public class DeliveryTypeValue
    {
 	  this.number = number;
 	  numberHasBeenSet = true;
-
-		 //pk.setNumber(number);
    }
 
    public boolean numberHasBeenSet(){

@@ -20,34 +20,9 @@ public class AdditionalDetailValue
    private int type_number;
    private boolean type_numberHasBeenSet = false;
 
-   // private org.openxava.test.ejb.AdditionalDetailKey pk;
-
    public AdditionalDetailValue()
    {
-	 // pk = new org.openxava.test.ejb.AdditionalDetailKey();
    }
-
-   /*
-   public AdditionalDetailValue(org.openxava.test.ejb.AdditionalDetailKey pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public AdditionalDetailValue( int counter,int subfamily,int service_number,int type_number )
-   {
-	  this.counter = counter;
-	  counterHasBeenSet = true;
-	  this.subfamily = subfamily;
-	  subfamilyHasBeenSet = true;
-	  this.service_number = service_number;
-	  service_numberHasBeenSet = true;
-	  this.type_number = type_number;
-	  type_numberHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.AdditionalDetailKey(this.getCounter(),this.getService_number());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public AdditionalDetailValue( AdditionalDetailValue otherValue )
@@ -60,25 +35,7 @@ public class AdditionalDetailValue
 	  service_numberHasBeenSet = true;
 	  this.type_number = otherValue.type_number;
 	  type_numberHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.AdditionalDetailKey(this.getCounter(),this.getService_number());
    }
-
-   /*
-   public org.openxava.test.ejb.AdditionalDetailKey getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.AdditionalDetailKey pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setCounter( pk.counter );
-	  setService_number( pk.service_number );
-   }
-   */
 
    public int getCounter()
    {
@@ -89,8 +46,6 @@ public class AdditionalDetailValue
    {
 	  this.counter = counter;
 	  counterHasBeenSet = true;
-
-		 //pk.setCounter(counter);
    }
 
    public boolean counterHasBeenSet(){
@@ -105,7 +60,6 @@ public class AdditionalDetailValue
    {
 	  this.subfamily = subfamily;
 	  subfamilyHasBeenSet = true;
-
    }
 
    public boolean subfamilyHasBeenSet(){
@@ -120,8 +74,6 @@ public class AdditionalDetailValue
    {
 	  this.service_number = service_number;
 	  service_numberHasBeenSet = true;
-
-		 //pk.setService_number(service_number);
    }
 
    public boolean service_numberHasBeenSet(){
@@ -136,7 +88,6 @@ public class AdditionalDetailValue
    {
 	  this.type_number = type_number;
 	  type_numberHasBeenSet = true;
-
    }
 
    public boolean type_numberHasBeenSet(){

@@ -16,30 +16,9 @@ public class FilterBySubfamilyValue
    private int subfamily_number;
    private boolean subfamily_numberHasBeenSet = false;
 
-   // private org.openxava.test.ejb.FilterBySubfamilyKey pk;
-
    public FilterBySubfamilyValue()
    {
-	 // pk = new org.openxava.test.ejb.FilterBySubfamilyKey();
    }
-
-   /*
-   public FilterBySubfamilyValue(org.openxava.test.ejb.FilterBySubfamilyKey pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public FilterBySubfamilyValue( java.lang.String oid,int subfamily_number )
-   {
-	  this.oid = oid;
-	  oidHasBeenSet = true;
-	  this.subfamily_number = subfamily_number;
-	  subfamily_numberHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.FilterBySubfamilyKey(this.getOid());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public FilterBySubfamilyValue( FilterBySubfamilyValue otherValue )
@@ -48,24 +27,7 @@ public class FilterBySubfamilyValue
 	  oidHasBeenSet = true;
 	  this.subfamily_number = otherValue.subfamily_number;
 	  subfamily_numberHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.FilterBySubfamilyKey(this.getOid());
    }
-
-   /*
-   public org.openxava.test.ejb.FilterBySubfamilyKey getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.FilterBySubfamilyKey pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setOid( pk.oid );
-   }
-   */
 
    public java.lang.String getOid()
    {
@@ -76,8 +38,6 @@ public class FilterBySubfamilyValue
    {
 	  this.oid = oid;
 	  oidHasBeenSet = true;
-
-		 //pk.setOid(oid);
    }
 
    public boolean oidHasBeenSet(){
@@ -92,7 +52,6 @@ public class FilterBySubfamilyValue
    {
 	  this.subfamily_number = subfamily_number;
 	  subfamily_numberHasBeenSet = true;
-
    }
 
    public boolean subfamily_numberHasBeenSet(){

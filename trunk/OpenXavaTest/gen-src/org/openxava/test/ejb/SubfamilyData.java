@@ -16,68 +16,9 @@ public class SubfamilyData
    private java.lang.String _Description;
    private java.lang.Integer _Number;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.SubfamilyValue SubfamilyValue = null;
-
-   public org.openxava.test.ejb.SubfamilyValue getSubfamilyValue()
-   {
-	  if( SubfamilyValue == null )
-	  {
-          SubfamilyValue = new org.openxava.test.ejb.SubfamilyValue();
-	  }
-      try
-         {
-            SubfamilyValue.setFamily( getFamily() );
-            SubfamilyValue.setFamilyNumber( getFamilyNumber() );
-            SubfamilyValue.setOid( getOid() );
-            SubfamilyValue.setRemarks( getRemarks() );
-            SubfamilyValue.setDescription( getDescription() );
-            SubfamilyValue.setNumber( getNumber() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return SubfamilyValue;
-   }
-
-   public void setSubfamilyValue( org.openxava.test.ejb.SubfamilyValue valueHolder )
-   {
-
-	  try
-	  {
-		 setFamily( valueHolder.getFamily() );
-		 setFamilyNumber( valueHolder.getFamilyNumber() );
-		 setRemarks( valueHolder.getRemarks() );
-		 setDescription( valueHolder.getDescription() );
-		 setNumber( valueHolder.getNumber() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public SubfamilyData()
    {
    }
-
-  /*
-   public SubfamilyData( java.lang.Integer _FamilyNumber,java.lang.String oid,java.lang.String _Remarks,java.lang.String _Description,java.lang.Integer _Number )
-   {
-      set_FamilyNumber(_FamilyNumber);
-      setOid(oid);
-      set_Remarks(_Remarks);
-      set_Description(_Description);
-      set_Number(_Number);
-   }
-   */
 
    public SubfamilyData( SubfamilyData otherData )
    {

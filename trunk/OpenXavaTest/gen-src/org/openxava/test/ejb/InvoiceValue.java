@@ -40,54 +40,9 @@ public class InvoiceValue
    private int customer_number;
    private boolean customer_numberHasBeenSet = false;
 
-   // private org.openxava.test.ejb.InvoiceKey pk;
-
    public InvoiceValue()
    {
-	 // pk = new org.openxava.test.ejb.InvoiceKey();
    }
-
-   /*
-   public InvoiceValue(org.openxava.test.ejb.InvoiceKey pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public InvoiceValue( java.lang.String comment,java.util.Date date,boolean paid,int detailsCount,java.math.BigDecimal yearDiscount,java.math.BigDecimal amountsSum,java.lang.String importance,int year,java.math.BigDecimal customerDiscount,java.math.BigDecimal vatPercentage,java.math.BigDecimal customerTypeDiscount,java.math.BigDecimal vat,int number,int customer_number )
-   {
-	  this.comment = comment;
-	  commentHasBeenSet = true;
-	  this.date = date;
-	  dateHasBeenSet = true;
-	  this.paid = paid;
-	  paidHasBeenSet = true;
-	  this.detailsCount = detailsCount;
-	  detailsCountHasBeenSet = true;
-	  this.yearDiscount = yearDiscount;
-	  yearDiscountHasBeenSet = true;
-	  this.amountsSum = amountsSum;
-	  amountsSumHasBeenSet = true;
-	  this.importance = importance;
-	  importanceHasBeenSet = true;
-	  this.year = year;
-	  yearHasBeenSet = true;
-	  this.customerDiscount = customerDiscount;
-	  customerDiscountHasBeenSet = true;
-	  this.vatPercentage = vatPercentage;
-	  vatPercentageHasBeenSet = true;
-	  this.customerTypeDiscount = customerTypeDiscount;
-	  customerTypeDiscountHasBeenSet = true;
-	  this.vat = vat;
-	  vatHasBeenSet = true;
-	  this.number = number;
-	  numberHasBeenSet = true;
-	  this.customer_number = customer_number;
-	  customer_numberHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.InvoiceKey(this.getYear(),this.getNumber());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public InvoiceValue( InvoiceValue otherValue )
@@ -120,25 +75,7 @@ public class InvoiceValue
 	  numberHasBeenSet = true;
 	  this.customer_number = otherValue.customer_number;
 	  customer_numberHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.InvoiceKey(this.getYear(),this.getNumber());
    }
-
-   /*
-   public org.openxava.test.ejb.InvoiceKey getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.InvoiceKey pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setYear( pk.year );
-	  setNumber( pk.number );
-   }
-   */
 
    public java.lang.String getComment()
    {
@@ -149,7 +86,6 @@ public class InvoiceValue
    {
 	  this.comment = comment;
 	  commentHasBeenSet = true;
-
    }
 
    public boolean commentHasBeenSet(){
@@ -164,7 +100,6 @@ public class InvoiceValue
    {
 	  this.date = date;
 	  dateHasBeenSet = true;
-
    }
 
    public boolean dateHasBeenSet(){
@@ -179,7 +114,6 @@ public class InvoiceValue
    {
 	  this.paid = paid;
 	  paidHasBeenSet = true;
-
    }
 
    public boolean paidHasBeenSet(){
@@ -194,7 +128,6 @@ public class InvoiceValue
    {
 	  this.detailsCount = detailsCount;
 	  detailsCountHasBeenSet = true;
-
    }
 
    public boolean detailsCountHasBeenSet(){
@@ -209,7 +142,6 @@ public class InvoiceValue
    {
 	  this.yearDiscount = yearDiscount;
 	  yearDiscountHasBeenSet = true;
-
    }
 
    public boolean yearDiscountHasBeenSet(){
@@ -224,7 +156,6 @@ public class InvoiceValue
    {
 	  this.amountsSum = amountsSum;
 	  amountsSumHasBeenSet = true;
-
    }
 
    public boolean amountsSumHasBeenSet(){
@@ -239,7 +170,6 @@ public class InvoiceValue
    {
 	  this.importance = importance;
 	  importanceHasBeenSet = true;
-
    }
 
    public boolean importanceHasBeenSet(){
@@ -254,8 +184,6 @@ public class InvoiceValue
    {
 	  this.year = year;
 	  yearHasBeenSet = true;
-
-		 //pk.setYear(year);
    }
 
    public boolean yearHasBeenSet(){
@@ -270,7 +198,6 @@ public class InvoiceValue
    {
 	  this.customerDiscount = customerDiscount;
 	  customerDiscountHasBeenSet = true;
-
    }
 
    public boolean customerDiscountHasBeenSet(){
@@ -285,7 +212,6 @@ public class InvoiceValue
    {
 	  this.vatPercentage = vatPercentage;
 	  vatPercentageHasBeenSet = true;
-
    }
 
    public boolean vatPercentageHasBeenSet(){
@@ -300,7 +226,6 @@ public class InvoiceValue
    {
 	  this.customerTypeDiscount = customerTypeDiscount;
 	  customerTypeDiscountHasBeenSet = true;
-
    }
 
    public boolean customerTypeDiscountHasBeenSet(){
@@ -315,7 +240,6 @@ public class InvoiceValue
    {
 	  this.vat = vat;
 	  vatHasBeenSet = true;
-
    }
 
    public boolean vatHasBeenSet(){
@@ -330,8 +254,6 @@ public class InvoiceValue
    {
 	  this.number = number;
 	  numberHasBeenSet = true;
-
-		 //pk.setNumber(number);
    }
 
    public boolean numberHasBeenSet(){
@@ -346,7 +268,6 @@ public class InvoiceValue
    {
 	  this.customer_number = customer_number;
 	  customer_numberHasBeenSet = true;
-
    }
 
    public boolean customer_numberHasBeenSet(){

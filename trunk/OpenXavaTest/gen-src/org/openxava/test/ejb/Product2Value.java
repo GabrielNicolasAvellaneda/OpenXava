@@ -28,42 +28,9 @@ public class Product2Value
    private int subfamily_number;
    private boolean subfamily_numberHasBeenSet = false;
 
-   // private org.openxava.test.ejb.Product2Key pk;
-
    public Product2Value()
    {
-	 // pk = new org.openxava.test.ejb.Product2Key();
    }
-
-   /*
-   public Product2Value(org.openxava.test.ejb.Product2Key pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public Product2Value( java.math.BigDecimal unitPrice,java.lang.String description,java.math.BigDecimal unitPriceInPesetas,long number,int warehouse_zoneNumber,java.lang.Integer warehouse_number,int family_number,int subfamily_number )
-   {
-	  this.unitPrice = unitPrice;
-	  unitPriceHasBeenSet = true;
-	  this.description = description;
-	  descriptionHasBeenSet = true;
-	  this.unitPriceInPesetas = unitPriceInPesetas;
-	  unitPriceInPesetasHasBeenSet = true;
-	  this.number = number;
-	  numberHasBeenSet = true;
-	  this.warehouse_zoneNumber = warehouse_zoneNumber;
-	  warehouse_zoneNumberHasBeenSet = true;
-	  this.warehouse_number = warehouse_number;
-	  warehouse_numberHasBeenSet = true;
-	  this.family_number = family_number;
-	  family_numberHasBeenSet = true;
-	  this.subfamily_number = subfamily_number;
-	  subfamily_numberHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.Product2Key(this.getNumber());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public Product2Value( Product2Value otherValue )
@@ -84,24 +51,7 @@ public class Product2Value
 	  family_numberHasBeenSet = true;
 	  this.subfamily_number = otherValue.subfamily_number;
 	  subfamily_numberHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.Product2Key(this.getNumber());
    }
-
-   /*
-   public org.openxava.test.ejb.Product2Key getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.Product2Key pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setNumber( pk.number );
-   }
-   */
 
    public java.math.BigDecimal getUnitPrice()
    {
@@ -112,7 +62,6 @@ public class Product2Value
    {
 	  this.unitPrice = unitPrice;
 	  unitPriceHasBeenSet = true;
-
    }
 
    public boolean unitPriceHasBeenSet(){
@@ -127,7 +76,6 @@ public class Product2Value
    {
 	  this.description = description;
 	  descriptionHasBeenSet = true;
-
    }
 
    public boolean descriptionHasBeenSet(){
@@ -142,7 +90,6 @@ public class Product2Value
    {
 	  this.unitPriceInPesetas = unitPriceInPesetas;
 	  unitPriceInPesetasHasBeenSet = true;
-
    }
 
    public boolean unitPriceInPesetasHasBeenSet(){
@@ -157,8 +104,6 @@ public class Product2Value
    {
 	  this.number = number;
 	  numberHasBeenSet = true;
-
-		 //pk.setNumber(number);
    }
 
    public boolean numberHasBeenSet(){
@@ -173,7 +118,6 @@ public class Product2Value
    {
 	  this.warehouse_zoneNumber = warehouse_zoneNumber;
 	  warehouse_zoneNumberHasBeenSet = true;
-
    }
 
    public boolean warehouse_zoneNumberHasBeenSet(){
@@ -188,7 +132,6 @@ public class Product2Value
    {
 	  this.warehouse_number = warehouse_number;
 	  warehouse_numberHasBeenSet = true;
-
    }
 
    public boolean warehouse_numberHasBeenSet(){
@@ -203,7 +146,6 @@ public class Product2Value
    {
 	  this.family_number = family_number;
 	  family_numberHasBeenSet = true;
-
    }
 
    public boolean family_numberHasBeenSet(){
@@ -218,7 +160,6 @@ public class Product2Value
    {
 	  this.subfamily_number = subfamily_number;
 	  subfamily_numberHasBeenSet = true;
-
    }
 
    public boolean subfamily_numberHasBeenSet(){

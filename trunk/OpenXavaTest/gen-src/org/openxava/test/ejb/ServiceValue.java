@@ -20,34 +20,9 @@ public class ServiceValue
    private org.openxava.test.ejb.Detail detail;
    private boolean detailHasBeenSet = false;
 
-   // private org.openxava.test.ejb.ServiceKey pk;
-
    public ServiceValue()
    {
-	 // pk = new org.openxava.test.ejb.ServiceKey();
    }
-
-   /*
-   public ServiceValue(org.openxava.test.ejb.ServiceKey pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public ServiceValue( int family,java.lang.String description,int number,org.openxava.test.ejb.Detail detail )
-   {
-	  this.family = family;
-	  familyHasBeenSet = true;
-	  this.description = description;
-	  descriptionHasBeenSet = true;
-	  this.number = number;
-	  numberHasBeenSet = true;
-	  this.detail = detail;
-	  detailHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.ServiceKey(this.getNumber());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public ServiceValue( ServiceValue otherValue )
@@ -60,24 +35,7 @@ public class ServiceValue
 	  numberHasBeenSet = true;
 	  this.detail = otherValue.detail;
 	  detailHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.ServiceKey(this.getNumber());
    }
-
-   /*
-   public org.openxava.test.ejb.ServiceKey getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.ServiceKey pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setNumber( pk.number );
-   }
-   */
 
    public int getFamily()
    {
@@ -88,7 +46,6 @@ public class ServiceValue
    {
 	  this.family = family;
 	  familyHasBeenSet = true;
-
    }
 
    public boolean familyHasBeenSet(){
@@ -103,7 +60,6 @@ public class ServiceValue
    {
 	  this.description = description;
 	  descriptionHasBeenSet = true;
-
    }
 
    public boolean descriptionHasBeenSet(){
@@ -118,8 +74,6 @@ public class ServiceValue
    {
 	  this.number = number;
 	  numberHasBeenSet = true;
-
-		 //pk.setNumber(number);
    }
 
    public boolean numberHasBeenSet(){
@@ -134,7 +88,6 @@ public class ServiceValue
    {
 	  this.detail = detail;
 	  detailHasBeenSet = true;
-
    }
 
    public boolean detailHasBeenSet(){

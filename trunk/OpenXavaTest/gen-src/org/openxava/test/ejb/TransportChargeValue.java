@@ -22,36 +22,9 @@ public class TransportChargeValue
    private int delivery_invoice_number;
    private boolean delivery_invoice_numberHasBeenSet = false;
 
-   // private org.openxava.test.ejb.TransportChargeKey pk;
-
    public TransportChargeValue()
    {
-	 // pk = new org.openxava.test.ejb.TransportChargeKey();
    }
-
-   /*
-   public TransportChargeValue(org.openxava.test.ejb.TransportChargeKey pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public TransportChargeValue( java.math.BigDecimal amount,int delivery_number,int delivery_type_number,int delivery_invoice_year,int delivery_invoice_number )
-   {
-	  this.amount = amount;
-	  amountHasBeenSet = true;
-	  this.delivery_number = delivery_number;
-	  delivery_numberHasBeenSet = true;
-	  this.delivery_type_number = delivery_type_number;
-	  delivery_type_numberHasBeenSet = true;
-	  this.delivery_invoice_year = delivery_invoice_year;
-	  delivery_invoice_yearHasBeenSet = true;
-	  this.delivery_invoice_number = delivery_invoice_number;
-	  delivery_invoice_numberHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.TransportChargeKey(this.getDelivery_number(),this.getDelivery_type_number(),this.getDelivery_invoice_year(),this.getDelivery_invoice_number());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public TransportChargeValue( TransportChargeValue otherValue )
@@ -66,27 +39,7 @@ public class TransportChargeValue
 	  delivery_invoice_yearHasBeenSet = true;
 	  this.delivery_invoice_number = otherValue.delivery_invoice_number;
 	  delivery_invoice_numberHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.TransportChargeKey(this.getDelivery_number(),this.getDelivery_type_number(),this.getDelivery_invoice_year(),this.getDelivery_invoice_number());
    }
-
-   /*
-   public org.openxava.test.ejb.TransportChargeKey getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.TransportChargeKey pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setDelivery_number( pk.delivery_number );
-	  setDelivery_type_number( pk.delivery_type_number );
-	  setDelivery_invoice_year( pk.delivery_invoice_year );
-	  setDelivery_invoice_number( pk.delivery_invoice_number );
-   }
-   */
 
    public java.math.BigDecimal getAmount()
    {
@@ -97,7 +50,6 @@ public class TransportChargeValue
    {
 	  this.amount = amount;
 	  amountHasBeenSet = true;
-
    }
 
    public boolean amountHasBeenSet(){
@@ -112,8 +64,6 @@ public class TransportChargeValue
    {
 	  this.delivery_number = delivery_number;
 	  delivery_numberHasBeenSet = true;
-
-		 //pk.setDelivery_number(delivery_number);
    }
 
    public boolean delivery_numberHasBeenSet(){
@@ -128,8 +78,6 @@ public class TransportChargeValue
    {
 	  this.delivery_type_number = delivery_type_number;
 	  delivery_type_numberHasBeenSet = true;
-
-		 //pk.setDelivery_type_number(delivery_type_number);
    }
 
    public boolean delivery_type_numberHasBeenSet(){
@@ -144,8 +92,6 @@ public class TransportChargeValue
    {
 	  this.delivery_invoice_year = delivery_invoice_year;
 	  delivery_invoice_yearHasBeenSet = true;
-
-		 //pk.setDelivery_invoice_year(delivery_invoice_year);
    }
 
    public boolean delivery_invoice_yearHasBeenSet(){
@@ -160,8 +106,6 @@ public class TransportChargeValue
    {
 	  this.delivery_invoice_number = delivery_invoice_number;
 	  delivery_invoice_numberHasBeenSet = true;
-
-		 //pk.setDelivery_invoice_number(delivery_invoice_number);
    }
 
    public boolean delivery_invoice_numberHasBeenSet(){

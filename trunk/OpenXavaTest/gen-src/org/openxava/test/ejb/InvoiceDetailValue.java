@@ -34,48 +34,9 @@ public class InvoiceDetailValue
    private int invoice_number;
    private boolean invoice_numberHasBeenSet = false;
 
-   // private org.openxava.test.ejb.InvoiceDetailKey pk;
-
    public InvoiceDetailValue()
    {
-	 // pk = new org.openxava.test.ejb.InvoiceDetailKey();
    }
-
-   /*
-   public InvoiceDetailValue(org.openxava.test.ejb.InvoiceDetailKey pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public InvoiceDetailValue( java.math.BigDecimal amount,java.math.BigDecimal unitPrice,java.lang.String oid,java.lang.String remarks,java.util.Date deliveryDate,int quantity,int serviceType,long product_number,int soldBy_number,int invoice_year,int invoice_number )
-   {
-	  this.amount = amount;
-	  amountHasBeenSet = true;
-	  this.unitPrice = unitPrice;
-	  unitPriceHasBeenSet = true;
-	  this.oid = oid;
-	  oidHasBeenSet = true;
-	  this.remarks = remarks;
-	  remarksHasBeenSet = true;
-	  this.deliveryDate = deliveryDate;
-	  deliveryDateHasBeenSet = true;
-	  this.quantity = quantity;
-	  quantityHasBeenSet = true;
-	  this.serviceType = serviceType;
-	  serviceTypeHasBeenSet = true;
-	  this.product_number = product_number;
-	  product_numberHasBeenSet = true;
-	  this.soldBy_number = soldBy_number;
-	  soldBy_numberHasBeenSet = true;
-	  this.invoice_year = invoice_year;
-	  invoice_yearHasBeenSet = true;
-	  this.invoice_number = invoice_number;
-	  invoice_numberHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.InvoiceDetailKey(this.getOid());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public InvoiceDetailValue( InvoiceDetailValue otherValue )
@@ -102,24 +63,7 @@ public class InvoiceDetailValue
 	  invoice_yearHasBeenSet = true;
 	  this.invoice_number = otherValue.invoice_number;
 	  invoice_numberHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.InvoiceDetailKey(this.getOid());
    }
-
-   /*
-   public org.openxava.test.ejb.InvoiceDetailKey getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.InvoiceDetailKey pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setOid( pk.oid );
-   }
-   */
 
    public java.math.BigDecimal getAmount()
    {
@@ -130,7 +74,6 @@ public class InvoiceDetailValue
    {
 	  this.amount = amount;
 	  amountHasBeenSet = true;
-
    }
 
    public boolean amountHasBeenSet(){
@@ -145,7 +88,6 @@ public class InvoiceDetailValue
    {
 	  this.unitPrice = unitPrice;
 	  unitPriceHasBeenSet = true;
-
    }
 
    public boolean unitPriceHasBeenSet(){
@@ -160,8 +102,6 @@ public class InvoiceDetailValue
    {
 	  this.oid = oid;
 	  oidHasBeenSet = true;
-
-		 //pk.setOid(oid);
    }
 
    public boolean oidHasBeenSet(){
@@ -176,7 +116,6 @@ public class InvoiceDetailValue
    {
 	  this.remarks = remarks;
 	  remarksHasBeenSet = true;
-
    }
 
    public boolean remarksHasBeenSet(){
@@ -191,7 +130,6 @@ public class InvoiceDetailValue
    {
 	  this.deliveryDate = deliveryDate;
 	  deliveryDateHasBeenSet = true;
-
    }
 
    public boolean deliveryDateHasBeenSet(){
@@ -206,7 +144,6 @@ public class InvoiceDetailValue
    {
 	  this.quantity = quantity;
 	  quantityHasBeenSet = true;
-
    }
 
    public boolean quantityHasBeenSet(){
@@ -221,7 +158,6 @@ public class InvoiceDetailValue
    {
 	  this.serviceType = serviceType;
 	  serviceTypeHasBeenSet = true;
-
    }
 
    public boolean serviceTypeHasBeenSet(){
@@ -236,7 +172,6 @@ public class InvoiceDetailValue
    {
 	  this.product_number = product_number;
 	  product_numberHasBeenSet = true;
-
    }
 
    public boolean product_numberHasBeenSet(){
@@ -251,7 +186,6 @@ public class InvoiceDetailValue
    {
 	  this.soldBy_number = soldBy_number;
 	  soldBy_numberHasBeenSet = true;
-
    }
 
    public boolean soldBy_numberHasBeenSet(){
@@ -266,7 +200,6 @@ public class InvoiceDetailValue
    {
 	  this.invoice_year = invoice_year;
 	  invoice_yearHasBeenSet = true;
-
    }
 
    public boolean invoice_yearHasBeenSet(){
@@ -281,7 +214,6 @@ public class InvoiceDetailValue
    {
 	  this.invoice_number = invoice_number;
 	  invoice_numberHasBeenSet = true;
-
    }
 
    public boolean invoice_numberHasBeenSet(){

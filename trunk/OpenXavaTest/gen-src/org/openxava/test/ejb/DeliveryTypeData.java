@@ -13,57 +13,9 @@ public class DeliveryTypeData
    private java.lang.String _Description;
    private int number;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.DeliveryTypeValue DeliveryTypeValue = null;
-
-   public org.openxava.test.ejb.DeliveryTypeValue getDeliveryTypeValue()
-   {
-	  if( DeliveryTypeValue == null )
-	  {
-          DeliveryTypeValue = new org.openxava.test.ejb.DeliveryTypeValue();
-	  }
-      try
-         {
-            DeliveryTypeValue.setDescription( getDescription() );
-            DeliveryTypeValue.setNumber( getNumber() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return DeliveryTypeValue;
-   }
-
-   public void setDeliveryTypeValue( org.openxava.test.ejb.DeliveryTypeValue valueHolder )
-   {
-
-	  try
-	  {
-		 setDescription( valueHolder.getDescription() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public DeliveryTypeData()
    {
    }
-
-  /*
-   public DeliveryTypeData( java.lang.String _Description,int number )
-   {
-      set_Description(_Description);
-      setNumber(number);
-   }
-   */
 
    public DeliveryTypeData( DeliveryTypeData otherData )
    {

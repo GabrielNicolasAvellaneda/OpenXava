@@ -18,74 +18,9 @@ public class Product2Data
    private int family_number;
    private int subfamily_number;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.Product2Value Product2Value = null;
-
-   public org.openxava.test.ejb.Product2Value getProduct2Value()
-   {
-	  if( Product2Value == null )
-	  {
-          Product2Value = new org.openxava.test.ejb.Product2Value();
-	  }
-      try
-         {
-            Product2Value.setUnitPrice( getUnitPrice() );
-            Product2Value.setDescription( getDescription() );
-            Product2Value.setUnitPriceInPesetas( getUnitPriceInPesetas() );
-            Product2Value.setNumber( getNumber() );
-            Product2Value.setWarehouse_zoneNumber( getWarehouse_zoneNumber() );
-            Product2Value.setWarehouse_number( getWarehouse_number() );
-            Product2Value.setFamily_number( getFamily_number() );
-            Product2Value.setSubfamily_number( getSubfamily_number() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return Product2Value;
-   }
-
-   public void setProduct2Value( org.openxava.test.ejb.Product2Value valueHolder )
-   {
-
-	  try
-	  {
-		 setUnitPrice( valueHolder.getUnitPrice() );
-		 setDescription( valueHolder.getDescription() );
-		 setUnitPriceInPesetas( valueHolder.getUnitPriceInPesetas() );
-		 setWarehouse_zoneNumber( valueHolder.getWarehouse_zoneNumber() );
-		 setWarehouse_number( valueHolder.getWarehouse_number() );
-		 setFamily_number( valueHolder.getFamily_number() );
-		 setSubfamily_number( valueHolder.getSubfamily_number() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public Product2Data()
    {
    }
-
-  /*
-   public Product2Data( java.math.BigDecimal _UnitPrice,java.lang.String _Description,long number,int warehouse_zoneNumber,java.lang.Integer warehouse_number,int family_number,int subfamily_number )
-   {
-      set_UnitPrice(_UnitPrice);
-      set_Description(_Description);
-      setNumber(number);
-      setWarehouse_zoneNumber(warehouse_zoneNumber);
-      setWarehouse_number(warehouse_number);
-      setFamily_number(family_number);
-      setSubfamily_number(subfamily_number);
-   }
-   */
 
    public Product2Data( Product2Data otherData )
    {

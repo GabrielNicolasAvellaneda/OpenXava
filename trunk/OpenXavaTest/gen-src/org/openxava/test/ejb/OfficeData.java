@@ -17,74 +17,9 @@ public class OfficeData
    private java.lang.Integer defaultCarrier_number;
    private java.lang.Integer mainWarehouse_number;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.OfficeValue OfficeValue = null;
-
-   public org.openxava.test.ejb.OfficeValue getOfficeValue()
-   {
-	  if( OfficeValue == null )
-	  {
-          OfficeValue = new org.openxava.test.ejb.OfficeValue();
-	  }
-      try
-         {
-            OfficeValue.setName( getName() );
-            OfficeValue.setNumber( getNumber() );
-            OfficeValue.setZoneNumber( getZoneNumber() );
-            OfficeValue.setOfficeManager_zoneNumber( getOfficeManager_zoneNumber() );
-            OfficeValue.setOfficeManager_officeNumber( getOfficeManager_officeNumber() );
-            OfficeValue.setOfficeManager_number( getOfficeManager_number() );
-            OfficeValue.setDefaultCarrier_number( getDefaultCarrier_number() );
-            OfficeValue.setMainWarehouse_zoneNumber( getMainWarehouse_zoneNumber() );
-            OfficeValue.setMainWarehouse_number( getMainWarehouse_number() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return OfficeValue;
-   }
-
-   public void setOfficeValue( org.openxava.test.ejb.OfficeValue valueHolder )
-   {
-
-	  try
-	  {
-		 setName( valueHolder.getName() );
-		 setOfficeManager_zoneNumber( valueHolder.getOfficeManager_zoneNumber() );
-		 setOfficeManager_officeNumber( valueHolder.getOfficeManager_officeNumber() );
-		 setOfficeManager_number( valueHolder.getOfficeManager_number() );
-		 setDefaultCarrier_number( valueHolder.getDefaultCarrier_number() );
-		 setMainWarehouse_zoneNumber( valueHolder.getMainWarehouse_zoneNumber() );
-		 setMainWarehouse_number( valueHolder.getMainWarehouse_number() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public OfficeData()
    {
    }
-
-  /*
-   public OfficeData( java.lang.String _Name,int number,int zoneNumber,int officeManager_number,java.lang.Integer defaultCarrier_number,java.lang.Integer mainWarehouse_number )
-   {
-      set_Name(_Name);
-      setNumber(number);
-      setZoneNumber(zoneNumber);
-      setOfficeManager_number(officeManager_number);
-      setDefaultCarrier_number(defaultCarrier_number);
-      setMainWarehouse_number(mainWarehouse_number);
-   }
-   */
 
    public OfficeData( OfficeData otherData )
    {

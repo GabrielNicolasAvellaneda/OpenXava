@@ -40,54 +40,9 @@ public class DeliveryValue
    private int invoice_number;
    private boolean invoice_numberHasBeenSet = false;
 
-   // private org.openxava.test.ejb.DeliveryKey pk;
-
    public DeliveryValue()
    {
-	 // pk = new org.openxava.test.ejb.DeliveryKey();
    }
-
-   /*
-   public DeliveryValue(org.openxava.test.ejb.DeliveryKey pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public DeliveryValue( int distance,java.lang.String incidents,java.lang.String driverType,java.lang.String remarks,java.lang.String employee,java.lang.String description,java.lang.String vehicle,java.lang.String transportMode,java.util.Date date,int number,int type_number,java.lang.Integer carrier_number,int invoice_year,int invoice_number )
-   {
-	  this.distance = distance;
-	  distanceHasBeenSet = true;
-	  this.incidents = incidents;
-	  incidentsHasBeenSet = true;
-	  this.driverType = driverType;
-	  driverTypeHasBeenSet = true;
-	  this.remarks = remarks;
-	  remarksHasBeenSet = true;
-	  this.employee = employee;
-	  employeeHasBeenSet = true;
-	  this.description = description;
-	  descriptionHasBeenSet = true;
-	  this.vehicle = vehicle;
-	  vehicleHasBeenSet = true;
-	  this.transportMode = transportMode;
-	  transportModeHasBeenSet = true;
-	  this.date = date;
-	  dateHasBeenSet = true;
-	  this.number = number;
-	  numberHasBeenSet = true;
-	  this.type_number = type_number;
-	  type_numberHasBeenSet = true;
-	  this.carrier_number = carrier_number;
-	  carrier_numberHasBeenSet = true;
-	  this.invoice_year = invoice_year;
-	  invoice_yearHasBeenSet = true;
-	  this.invoice_number = invoice_number;
-	  invoice_numberHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.DeliveryKey(this.getNumber(),this.getType_number(),this.getInvoice_year(),this.getInvoice_number());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public DeliveryValue( DeliveryValue otherValue )
@@ -120,27 +75,7 @@ public class DeliveryValue
 	  invoice_yearHasBeenSet = true;
 	  this.invoice_number = otherValue.invoice_number;
 	  invoice_numberHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.DeliveryKey(this.getNumber(),this.getType_number(),this.getInvoice_year(),this.getInvoice_number());
    }
-
-   /*
-   public org.openxava.test.ejb.DeliveryKey getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.DeliveryKey pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setNumber( pk.number );
-	  setType_number( pk.type_number );
-	  setInvoice_year( pk.invoice_year );
-	  setInvoice_number( pk.invoice_number );
-   }
-   */
 
    public int getDistance()
    {
@@ -151,7 +86,6 @@ public class DeliveryValue
    {
 	  this.distance = distance;
 	  distanceHasBeenSet = true;
-
    }
 
    public boolean distanceHasBeenSet(){
@@ -166,7 +100,6 @@ public class DeliveryValue
    {
 	  this.incidents = incidents;
 	  incidentsHasBeenSet = true;
-
    }
 
    public boolean incidentsHasBeenSet(){
@@ -181,7 +114,6 @@ public class DeliveryValue
    {
 	  this.driverType = driverType;
 	  driverTypeHasBeenSet = true;
-
    }
 
    public boolean driverTypeHasBeenSet(){
@@ -196,7 +128,6 @@ public class DeliveryValue
    {
 	  this.remarks = remarks;
 	  remarksHasBeenSet = true;
-
    }
 
    public boolean remarksHasBeenSet(){
@@ -211,7 +142,6 @@ public class DeliveryValue
    {
 	  this.employee = employee;
 	  employeeHasBeenSet = true;
-
    }
 
    public boolean employeeHasBeenSet(){
@@ -226,7 +156,6 @@ public class DeliveryValue
    {
 	  this.description = description;
 	  descriptionHasBeenSet = true;
-
    }
 
    public boolean descriptionHasBeenSet(){
@@ -241,7 +170,6 @@ public class DeliveryValue
    {
 	  this.vehicle = vehicle;
 	  vehicleHasBeenSet = true;
-
    }
 
    public boolean vehicleHasBeenSet(){
@@ -256,7 +184,6 @@ public class DeliveryValue
    {
 	  this.transportMode = transportMode;
 	  transportModeHasBeenSet = true;
-
    }
 
    public boolean transportModeHasBeenSet(){
@@ -271,7 +198,6 @@ public class DeliveryValue
    {
 	  this.date = date;
 	  dateHasBeenSet = true;
-
    }
 
    public boolean dateHasBeenSet(){
@@ -286,8 +212,6 @@ public class DeliveryValue
    {
 	  this.number = number;
 	  numberHasBeenSet = true;
-
-		 //pk.setNumber(number);
    }
 
    public boolean numberHasBeenSet(){
@@ -302,8 +226,6 @@ public class DeliveryValue
    {
 	  this.type_number = type_number;
 	  type_numberHasBeenSet = true;
-
-		 //pk.setType_number(type_number);
    }
 
    public boolean type_numberHasBeenSet(){
@@ -318,7 +240,6 @@ public class DeliveryValue
    {
 	  this.carrier_number = carrier_number;
 	  carrier_numberHasBeenSet = true;
-
    }
 
    public boolean carrier_numberHasBeenSet(){
@@ -333,8 +254,6 @@ public class DeliveryValue
    {
 	  this.invoice_year = invoice_year;
 	  invoice_yearHasBeenSet = true;
-
-		 //pk.setInvoice_year(invoice_year);
    }
 
    public boolean invoice_yearHasBeenSet(){
@@ -349,8 +268,6 @@ public class DeliveryValue
    {
 	  this.invoice_number = invoice_number;
 	  invoice_numberHasBeenSet = true;
-
-		 //pk.setInvoice_number(invoice_number);
    }
 
    public boolean invoice_numberHasBeenSet(){

@@ -15,63 +15,9 @@ public class Product3Data
    private long number;
    private java.lang.String family_oid;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.Product3Value Product3Value = null;
-
-   public org.openxava.test.ejb.Product3Value getProduct3Value()
-   {
-	  if( Product3Value == null )
-	  {
-          Product3Value = new org.openxava.test.ejb.Product3Value();
-	  }
-      try
-         {
-            Product3Value.setComments( getComments() );
-            Product3Value.setDescription( getDescription() );
-            Product3Value.setNumber( getNumber() );
-            Product3Value.setFamily_oid( getFamily_oid() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return Product3Value;
-   }
-
-   public void setProduct3Value( org.openxava.test.ejb.Product3Value valueHolder )
-   {
-
-	  try
-	  {
-		 setComments( valueHolder.getComments() );
-		 setDescription( valueHolder.getDescription() );
-		 setFamily_oid( valueHolder.getFamily_oid() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public Product3Data()
    {
    }
-
-  /*
-   public Product3Data( java.lang.String _Comments,java.lang.String _Description,long number,java.lang.String family_oid )
-   {
-      set_Comments(_Comments);
-      set_Description(_Description);
-      setNumber(number);
-      setFamily_oid(family_oid);
-   }
-   */
 
    public Product3Data( Product3Data otherData )
    {

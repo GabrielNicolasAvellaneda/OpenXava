@@ -372,4 +372,9 @@
         </resource-manager>
     </resource-managers>
 
+  <!--
+    | for container settings, you can merge in jboss-container.xml
+    | this can contain <invoker-proxy-bindings/> and <container-configurations/>
+  -->
+
 </jboss>

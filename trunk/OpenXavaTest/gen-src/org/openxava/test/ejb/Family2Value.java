@@ -16,30 +16,9 @@ public class Family2Value
    private int number;
    private boolean numberHasBeenSet = false;
 
-   // private org.openxava.test.ejb.Family2Key pk;
-
    public Family2Value()
    {
-	 // pk = new org.openxava.test.ejb.Family2Key();
    }
-
-   /*
-   public Family2Value(org.openxava.test.ejb.Family2Key pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public Family2Value( java.lang.String description,int number )
-   {
-	  this.description = description;
-	  descriptionHasBeenSet = true;
-	  this.number = number;
-	  numberHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.Family2Key(this.getNumber());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public Family2Value( Family2Value otherValue )
@@ -48,24 +27,7 @@ public class Family2Value
 	  descriptionHasBeenSet = true;
 	  this.number = otherValue.number;
 	  numberHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.Family2Key(this.getNumber());
    }
-
-   /*
-   public org.openxava.test.ejb.Family2Key getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.Family2Key pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setNumber( pk.number );
-   }
-   */
 
    public java.lang.String getDescription()
    {
@@ -76,7 +38,6 @@ public class Family2Value
    {
 	  this.description = description;
 	  descriptionHasBeenSet = true;
-
    }
 
    public boolean descriptionHasBeenSet(){
@@ -91,8 +52,6 @@ public class Family2Value
    {
 	  this.number = number;
 	  numberHasBeenSet = true;
-
-		 //pk.setNumber(number);
    }
 
    public boolean numberHasBeenSet(){

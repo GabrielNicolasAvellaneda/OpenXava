@@ -24,38 +24,9 @@ public class SubfamilyValue
    private int number;
    private boolean numberHasBeenSet = false;
 
-   // private org.openxava.test.ejb.SubfamilyKey pk;
-
    public SubfamilyValue()
    {
-	 // pk = new org.openxava.test.ejb.SubfamilyKey();
    }
-
-   /*
-   public SubfamilyValue(org.openxava.test.ejb.SubfamilyKey pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public SubfamilyValue( java.lang.String family,int familyNumber,java.lang.String oid,java.lang.String remarks,java.lang.String description,int number )
-   {
-	  this.family = family;
-	  familyHasBeenSet = true;
-	  this.familyNumber = familyNumber;
-	  familyNumberHasBeenSet = true;
-	  this.oid = oid;
-	  oidHasBeenSet = true;
-	  this.remarks = remarks;
-	  remarksHasBeenSet = true;
-	  this.description = description;
-	  descriptionHasBeenSet = true;
-	  this.number = number;
-	  numberHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.SubfamilyKey(this.getOid());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public SubfamilyValue( SubfamilyValue otherValue )
@@ -72,24 +43,7 @@ public class SubfamilyValue
 	  descriptionHasBeenSet = true;
 	  this.number = otherValue.number;
 	  numberHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.SubfamilyKey(this.getOid());
    }
-
-   /*
-   public org.openxava.test.ejb.SubfamilyKey getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.SubfamilyKey pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setOid( pk.oid );
-   }
-   */
 
    public java.lang.String getFamily()
    {
@@ -100,7 +54,6 @@ public class SubfamilyValue
    {
 	  this.family = family;
 	  familyHasBeenSet = true;
-
    }
 
    public boolean familyHasBeenSet(){
@@ -115,7 +68,6 @@ public class SubfamilyValue
    {
 	  this.familyNumber = familyNumber;
 	  familyNumberHasBeenSet = true;
-
    }
 
    public boolean familyNumberHasBeenSet(){
@@ -130,8 +82,6 @@ public class SubfamilyValue
    {
 	  this.oid = oid;
 	  oidHasBeenSet = true;
-
-		 //pk.setOid(oid);
    }
 
    public boolean oidHasBeenSet(){
@@ -146,7 +96,6 @@ public class SubfamilyValue
    {
 	  this.remarks = remarks;
 	  remarksHasBeenSet = true;
-
    }
 
    public boolean remarksHasBeenSet(){
@@ -161,7 +110,6 @@ public class SubfamilyValue
    {
 	  this.description = description;
 	  descriptionHasBeenSet = true;
-
    }
 
    public boolean descriptionHasBeenSet(){
@@ -176,7 +124,6 @@ public class SubfamilyValue
    {
 	  this.number = number;
 	  numberHasBeenSet = true;
-
    }
 
    public boolean numberHasBeenSet(){

@@ -13,57 +13,9 @@ public class Family2Data
    private java.lang.String _Description;
    private int number;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.Family2Value Family2Value = null;
-
-   public org.openxava.test.ejb.Family2Value getFamily2Value()
-   {
-	  if( Family2Value == null )
-	  {
-          Family2Value = new org.openxava.test.ejb.Family2Value();
-	  }
-      try
-         {
-            Family2Value.setDescription( getDescription() );
-            Family2Value.setNumber( getNumber() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return Family2Value;
-   }
-
-   public void setFamily2Value( org.openxava.test.ejb.Family2Value valueHolder )
-   {
-
-	  try
-	  {
-		 setDescription( valueHolder.getDescription() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public Family2Data()
    {
    }
-
-  /*
-   public Family2Data( java.lang.String _Description,int number )
-   {
-      set_Description(_Description);
-      setNumber(number);
-   }
-   */
 
    public Family2Data( Family2Data otherData )
    {

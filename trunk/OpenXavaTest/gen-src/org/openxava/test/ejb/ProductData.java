@@ -19,73 +19,9 @@ public class ProductData
    private java.lang.String _Description;
    private long number;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.ProductValue ProductValue = null;
-
-   public org.openxava.test.ejb.ProductValue getProductValue()
-   {
-	  if( ProductValue == null )
-	  {
-          ProductValue = new org.openxava.test.ejb.ProductValue();
-	  }
-      try
-         {
-            ProductValue.setFamilyNumber( getFamilyNumber() );
-            ProductValue.setUnitPrice( getUnitPrice() );
-            ProductValue.setSubfamilyNumber( getSubfamilyNumber() );
-            ProductValue.setRemarks( getRemarks() );
-            ProductValue.setDescription( getDescription() );
-            ProductValue.setUnitPriceInPesetas( getUnitPriceInPesetas() );
-            ProductValue.setNumber( getNumber() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return ProductValue;
-   }
-
-   public void setProductValue( org.openxava.test.ejb.ProductValue valueHolder )
-   {
-
-	  try
-	  {
-		 setFamilyNumber( valueHolder.getFamilyNumber() );
-		 setUnitPrice( valueHolder.getUnitPrice() );
-		 setSubfamilyNumber( valueHolder.getSubfamilyNumber() );
-		 setRemarks( valueHolder.getRemarks() );
-		 setDescription( valueHolder.getDescription() );
-		 setUnitPriceInPesetas( valueHolder.getUnitPriceInPesetas() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public ProductData()
    {
    }
-
-  /*
-   public ProductData( java.lang.Integer _FamilyNumber,java.math.BigDecimal _UnitPrice,int warehouseZoneNumber,int warehouseNumber,java.lang.Integer _SubfamilyNumber,java.lang.String _Remarks,java.lang.String _Description,long number )
-   {
-      set_FamilyNumber(_FamilyNumber);
-      set_UnitPrice(_UnitPrice);
-      setWarehouseZoneNumber(warehouseZoneNumber);
-      setWarehouseNumber(warehouseNumber);
-      set_SubfamilyNumber(_SubfamilyNumber);
-      set_Remarks(_Remarks);
-      set_Description(_Description);
-      setNumber(number);
-   }
-   */
 
    public ProductData( ProductData otherData )
    {

@@ -18,75 +18,9 @@ public class CarrierData
    private java.lang.String drivingLicence_type;
    private int drivingLicence_level;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.CarrierValue CarrierValue = null;
-
-   public org.openxava.test.ejb.CarrierValue getCarrierValue()
-   {
-	  if( CarrierValue == null )
-	  {
-          CarrierValue = new org.openxava.test.ejb.CarrierValue();
-	  }
-      try
-         {
-            CarrierValue.setRemarks( getRemarks() );
-            CarrierValue.setCalculated( getCalculated() );
-            CarrierValue.setName( getName() );
-            CarrierValue.setNumber( getNumber() );
-            CarrierValue.setWarehouse_zoneNumber( getWarehouse_zoneNumber() );
-            CarrierValue.setWarehouse_number( getWarehouse_number() );
-            CarrierValue.setDrivingLicence_type( getDrivingLicence_type() );
-            CarrierValue.setDrivingLicence_level( getDrivingLicence_level() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return CarrierValue;
-   }
-
-   public void setCarrierValue( org.openxava.test.ejb.CarrierValue valueHolder )
-   {
-
-	  try
-	  {
-		 setRemarks( valueHolder.getRemarks() );
-		 setCalculated( valueHolder.getCalculated() );
-		 setName( valueHolder.getName() );
-		 setNumber( valueHolder.getNumber() );
-		 setWarehouse_zoneNumber( valueHolder.getWarehouse_zoneNumber() );
-		 setWarehouse_number( valueHolder.getWarehouse_number() );
-		 setDrivingLicence_type( valueHolder.getDrivingLicence_type() );
-		 setDrivingLicence_level( valueHolder.getDrivingLicence_level() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public CarrierData()
    {
    }
-
-  /*
-   public CarrierData( java.lang.String _Remarks,java.lang.String _Name,java.lang.Integer _Number,int warehouse_zoneNumber,java.lang.Integer warehouse_number,java.lang.String drivingLicence_type,int drivingLicence_level )
-   {
-      set_Remarks(_Remarks);
-      set_Name(_Name);
-      set_Number(_Number);
-      setWarehouse_zoneNumber(warehouse_zoneNumber);
-      setWarehouse_number(warehouse_number);
-      setDrivingLicence_type(drivingLicence_type);
-      setDrivingLicence_level(drivingLicence_level);
-   }
-   */
 
    public CarrierData( CarrierData otherData )
    {

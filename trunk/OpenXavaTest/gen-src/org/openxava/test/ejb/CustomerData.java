@@ -23,83 +23,9 @@ public class CustomerData
    private java.lang.String address_city;
    private java.lang.String address_state_id;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.CustomerValue CustomerValue = null;
-
-   public org.openxava.test.ejb.CustomerValue getCustomerValue()
-   {
-	  if( CustomerValue == null )
-	  {
-          CustomerValue = new org.openxava.test.ejb.CustomerValue();
-	  }
-      try
-         {
-            CustomerValue.setType( getType() );
-            CustomerValue.setRemarks( getRemarks() );
-            CustomerValue.setRelationWithSeller( getRelationWithSeller() );
-            CustomerValue.setPhoto( getPhoto() );
-            CustomerValue.setName( getName() );
-            CustomerValue.setNumber( getNumber() );
-            CustomerValue.setSeller_number( getSeller_number() );
-            CustomerValue.setAlternateSeller_number( getAlternateSeller_number() );
-            CustomerValue.setAddress( getAddress() );
-            CustomerValue.setAddress_state_id( getAddress_state_id() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return CustomerValue;
-   }
-
-   public void setCustomerValue( org.openxava.test.ejb.CustomerValue valueHolder )
-   {
-
-	  try
-	  {
-		 setType( valueHolder.getType() );
-		 setRemarks( valueHolder.getRemarks() );
-		 setRelationWithSeller( valueHolder.getRelationWithSeller() );
-		 setPhoto( valueHolder.getPhoto() );
-		 setName( valueHolder.getName() );
-		 setSeller_number( valueHolder.getSeller_number() );
-		 setAlternateSeller_number( valueHolder.getAlternateSeller_number() );
-		 setAddress( valueHolder.getAddress() );
-		 setAddress_state_id( valueHolder.getAddress_state_id() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public CustomerData()
    {
    }
-
-  /*
-   public CustomerData( java.lang.Integer _Type,java.lang.String _Remarks,java.lang.String _RelationWithSeller,byte[] photo,java.lang.String _Name,int number,int seller_number,int alternateSeller_number,java.lang.String _Address_zipCode,java.lang.String address_street,java.lang.String address_city,java.lang.String address_state_id )
-   {
-      set_Type(_Type);
-      set_Remarks(_Remarks);
-      set_RelationWithSeller(_RelationWithSeller);
-      setPhoto(photo);
-      set_Name(_Name);
-      setNumber(number);
-      setSeller_number(seller_number);
-      setAlternateSeller_number(alternateSeller_number);
-      set_Address_zipCode(_Address_zipCode);
-      setAddress_street(address_street);
-      setAddress_city(address_city);
-      setAddress_state_id(address_state_id);
-   }
-   */
 
    public CustomerData( CustomerData otherData )
    {

@@ -14,60 +14,9 @@ public class SellerData
    private int number;
    private java.lang.String level_id;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.SellerValue SellerValue = null;
-
-   public org.openxava.test.ejb.SellerValue getSellerValue()
-   {
-	  if( SellerValue == null )
-	  {
-          SellerValue = new org.openxava.test.ejb.SellerValue();
-	  }
-      try
-         {
-            SellerValue.setName( getName() );
-            SellerValue.setNumber( getNumber() );
-            SellerValue.setLevel_id( getLevel_id() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return SellerValue;
-   }
-
-   public void setSellerValue( org.openxava.test.ejb.SellerValue valueHolder )
-   {
-
-	  try
-	  {
-		 setName( valueHolder.getName() );
-		 setLevel_id( valueHolder.getLevel_id() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public SellerData()
    {
    }
-
-  /*
-   public SellerData( java.lang.String _Name,int number,java.lang.String level_id )
-   {
-      set_Name(_Name);
-      setNumber(number);
-      setLevel_id(level_id);
-   }
-   */
 
    public SellerData( SellerData otherData )
    {

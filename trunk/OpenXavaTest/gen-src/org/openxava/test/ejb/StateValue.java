@@ -18,32 +18,9 @@ public class StateValue
    private java.lang.String id;
    private boolean idHasBeenSet = false;
 
-   // private org.openxava.test.ejb.StateKey pk;
-
    public StateValue()
    {
-	 // pk = new org.openxava.test.ejb.StateKey();
    }
-
-   /*
-   public StateValue(org.openxava.test.ejb.StateKey pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public StateValue( java.lang.String fullName,java.lang.String name,java.lang.String id )
-   {
-	  this.fullName = fullName;
-	  fullNameHasBeenSet = true;
-	  this.name = name;
-	  nameHasBeenSet = true;
-	  this.id = id;
-	  idHasBeenSet = true;
-	  //pk = new org.openxava.test.ejb.StateKey(this.getId());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public StateValue( StateValue otherValue )
@@ -54,24 +31,7 @@ public class StateValue
 	  nameHasBeenSet = true;
 	  this.id = otherValue.id;
 	  idHasBeenSet = true;
-
-	  // pk = new org.openxava.test.ejb.StateKey(this.getId());
    }
-
-   /*
-   public org.openxava.test.ejb.StateKey getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.test.ejb.StateKey pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setId( pk.id );
-   }
-   */
 
    public java.lang.String getFullName()
    {
@@ -82,7 +42,6 @@ public class StateValue
    {
 	  this.fullName = fullName;
 	  fullNameHasBeenSet = true;
-
    }
 
    public boolean fullNameHasBeenSet(){
@@ -97,7 +56,6 @@ public class StateValue
    {
 	  this.name = name;
 	  nameHasBeenSet = true;
-
    }
 
    public boolean nameHasBeenSet(){
@@ -112,8 +70,6 @@ public class StateValue
    {
 	  this.id = id;
 	  idHasBeenSet = true;
-
-		 //pk.setId(id);
    }
 
    public boolean idHasBeenSet(){

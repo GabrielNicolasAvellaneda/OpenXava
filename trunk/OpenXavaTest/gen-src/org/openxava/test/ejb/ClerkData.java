@@ -15,61 +15,9 @@ public class ClerkData
    private int number;
    private int zoneNumber;
 
-  /*
-  // begin value object
-   private org.openxava.test.ejb.ClerkValue ClerkValue = null;
-
-   public org.openxava.test.ejb.ClerkValue getClerkValue()
-   {
-	  if( ClerkValue == null )
-	  {
-          ClerkValue = new org.openxava.test.ejb.ClerkValue();
-	  }
-      try
-         {
-            ClerkValue.setName( getName() );
-            ClerkValue.setOfficeNumber( getOfficeNumber() );
-            ClerkValue.setNumber( getNumber() );
-            ClerkValue.setZoneNumber( getZoneNumber() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return ClerkValue;
-   }
-
-   public void setClerkValue( org.openxava.test.ejb.ClerkValue valueHolder )
-   {
-
-	  try
-	  {
-		 setName( valueHolder.getName() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public ClerkData()
    {
    }
-
-  /*
-   public ClerkData( java.lang.String _Name,int officeNumber,int number,int zoneNumber )
-   {
-      set_Name(_Name);
-      setOfficeNumber(officeNumber);
-      setNumber(number);
-      setZoneNumber(zoneNumber);
-   }
-   */
 
    public ClerkData( ClerkData otherData )
    {
