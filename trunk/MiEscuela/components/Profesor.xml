@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE componente SYSTEM "dtds/componente.dtd">
+
+<componente nombre="Profesor">
+
+	<entidad>
+		<propiedad nombre="codigo" tipo="String" clave="true"
+			longitud="5" requerido="true"/>
+		<propiedad nombre="nombre" tipo="String" 
+			longitud="40" requerido="true"/>			  
+	</entidad>
+						
+	<mapeo-entidad tabla="MYSCHOOL@separator@TEACHER">
+		<mapeo-propiedad propiedad-modelo="codigo" columna-tabla="ID"/>
+		<mapeo-propiedad propiedad-modelo="nombre" columna-tabla="NAME"/>
+	</mapeo-entidad> 
+				
+</componente>
