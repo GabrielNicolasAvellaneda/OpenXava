@@ -23,6 +23,7 @@ public class DeliveryData
    private int number;
    private int type_number;
    private java.lang.Integer shipment_type;
+   private int shipment_mode;
    private int shipment_number;
    private java.lang.Integer carrier_number;
    private int invoice_year;
@@ -47,6 +48,7 @@ public class DeliveryData
       setNumber(otherData.getNumber());
       setType_number(otherData.getType_number());
       setShipment_type(otherData.getShipment_type());
+      setShipment_mode(otherData.getShipment_mode());
       setShipment_number(otherData.getShipment_number());
       setCarrier_number(otherData.getCarrier_number());
       setInvoice_year(otherData.getInvoice_year());
@@ -176,6 +178,15 @@ public class DeliveryData
       this.shipment_type = shipment_type;
    }
 
+   public int getShipment_mode()
+   {
+      return this.shipment_mode;
+   }
+   public void setShipment_mode( int shipment_mode )
+   {
+      this.shipment_mode = shipment_mode;
+   }
+
    public int getShipment_number()
    {
       return this.shipment_number;
@@ -216,7 +227,7 @@ public class DeliveryData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Distance=" + get_Distance() + " " + "_Incidents=" + get_Incidents() + " " + "_DriverType=" + get_DriverType() + " " + "_Remarks=" + get_Remarks() + " " + "_Employee=" + get_Employee() + " " + "_Description=" + get_Description() + " " + "_Vehicle=" + get_Vehicle() + " " + "date_day=" + getDate_day() + " " + "date_month=" + getDate_month() + " " + "date_year=" + getDate_year() + " " + "number=" + getNumber() + " " + "type_number=" + getType_number() + " " + "shipment_type=" + getShipment_type() + " " + "shipment_number=" + getShipment_number() + " " + "carrier_number=" + getCarrier_number() + " " + "invoice_year=" + getInvoice_year() + " " + "invoice_number=" + getInvoice_number());
+      str.append("_Distance=" + get_Distance() + " " + "_Incidents=" + get_Incidents() + " " + "_DriverType=" + get_DriverType() + " " + "_Remarks=" + get_Remarks() + " " + "_Employee=" + get_Employee() + " " + "_Description=" + get_Description() + " " + "_Vehicle=" + get_Vehicle() + " " + "date_day=" + getDate_day() + " " + "date_month=" + getDate_month() + " " + "date_year=" + getDate_year() + " " + "number=" + getNumber() + " " + "type_number=" + getType_number() + " " + "shipment_type=" + getShipment_type() + " " + "shipment_mode=" + getShipment_mode() + " " + "shipment_number=" + getShipment_number() + " " + "carrier_number=" + getCarrier_number() + " " + "invoice_year=" + getInvoice_year() + " " + "invoice_number=" + getInvoice_number());
       str.append('}');
 
       return(str.toString());
@@ -298,6 +309,7 @@ public class DeliveryData
          {
             lEquals = lEquals && this.shipment_type.equals( lTest.shipment_type );
          }
+         lEquals = lEquals && this.shipment_mode == lTest.shipment_mode;
          lEquals = lEquals && this.shipment_number == lTest.shipment_number;
          if( this.carrier_number == null )
          {
@@ -347,6 +359,8 @@ public class DeliveryData
       result = 37*result + (int) type_number;
 
       result = 37*result + ((this.shipment_type != null) ? this.shipment_type.hashCode() : 0);
+
+      result = 37*result + (int) shipment_mode;
 
       result = 37*result + (int) shipment_number;
 

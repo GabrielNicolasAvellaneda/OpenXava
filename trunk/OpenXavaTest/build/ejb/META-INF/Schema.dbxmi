@@ -61,6 +61,8 @@
       </columns>
       <columns xmi:id="Delivery_shipment_type" name="shipment_type">
       </columns>
+      <columns xmi:id="Delivery_shipment_mode" name="shipment_mode">
+      </columns>
       <columns xmi:id="Delivery_shipment_number" name="shipment_number">
       </columns>
       <columns xmi:id="Delivery_carrier_number" name="carrier_number">
@@ -355,6 +357,8 @@
       <columns xmi:id="Shipment__Type" name="_Type">
       </columns>
       <columns xmi:id="Shipment__Description" name="_Description">
+      </columns>
+      <columns xmi:id="Shipment_mode" name="mode">
       </columns>
       <columns xmi:id="Shipment_number" name="number">
       </columns>

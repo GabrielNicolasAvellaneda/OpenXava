@@ -19,6 +19,9 @@ public interface Shipment
    public void setDescription( java.lang.String newDescription )
       throws java.rmi.RemoteException;
 
+   public int getMode(  )
+      throws java.rmi.RemoteException;
+
    public int getNumber(  )
       throws java.rmi.RemoteException;
 

@@ -12,6 +12,7 @@ public class ShipmentData
 {
    private java.lang.Integer _Type;
    private java.lang.String _Description;
+   private int mode;
    private int number;
 
    public ShipmentData()
@@ -22,12 +23,13 @@ public class ShipmentData
    {
       set_Type(otherData.get_Type());
       set_Description(otherData.get_Description());
+      setMode(otherData.getMode());
       setNumber(otherData.getNumber());
 
    }
 
    public org.openxava.test.ejb.ShipmentKey getPrimaryKey() {
-     org.openxava.test.ejb.ShipmentKey pk = new org.openxava.test.ejb.ShipmentKey(this.get_Type(),this.getNumber());
+     org.openxava.test.ejb.ShipmentKey pk = new org.openxava.test.ejb.ShipmentKey(this.get_Type(),this.getMode(),this.getNumber());
      return pk;
    }
 
@@ -49,6 +51,15 @@ public class ShipmentData
       this._Description = _Description;
    }
 
+   public int getMode()
+   {
+      return this.mode;
+   }
+   public void setMode( int mode )
+   {
+      this.mode = mode;
+   }
+
    public int getNumber()
    {
       return this.number;
@@ -62,7 +73,7 @@ public class ShipmentData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Type=" + get_Type() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber());
+      str.append("_Type=" + get_Type() + " " + "_Description=" + get_Description() + " " + "mode=" + getMode() + " " + "number=" + getNumber());
       str.append('}');
 
       return(str.toString());
@@ -91,6 +102,7 @@ public class ShipmentData
          {
             lEquals = lEquals && this._Description.equals( lTest._Description );
          }
+         lEquals = lEquals && this.mode == lTest.mode;
          lEquals = lEquals && this.number == lTest.number;
 
          return lEquals;
@@ -108,6 +120,8 @@ public class ShipmentData
       result = 37*result + ((this._Type != null) ? this._Type.hashCode() : 0);
 
       result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
+
+      result = 37*result + (int) mode;
 
       result = 37*result + (int) number;
 

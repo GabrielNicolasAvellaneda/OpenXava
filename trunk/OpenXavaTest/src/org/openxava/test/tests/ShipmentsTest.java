@@ -18,6 +18,7 @@ public class ShipmentsTest extends ModuleTestBase {
 		execute("CRUD.new");
 		
 		setValue("type", "1");
+		setValue("mode", "2");
 		setValue("number", "66");
 		setValue("description", "JUNIT SHIPMENT");
 		execute("CRUD.save"); 		
@@ -25,13 +26,16 @@ public class ShipmentsTest extends ModuleTestBase {
 		
 		assertValue("number", "");
 		assertValue("type", "0");
+		assertValue("mode", "0");
 		assertValue("description", "");
 		
 		// Search just created
 		setValue("type", "1");
+		setValue("mode", "2");
 		setValue("number", "66");
 		execute("CRUD.search");
 		assertValue("type", "1"); 		
+		assertValue("mode", "2");
 		assertValue("number", "66");
 		assertValue("description", "JUNIT SHIPMENT");
 				
@@ -40,14 +44,17 @@ public class ShipmentsTest extends ModuleTestBase {
 		execute("CRUD.save");
 		assertNoErrors();
 		assertValue("type", "0");
+		assertValue("mode", "0");
 		assertValue("number", "");		
 		assertValue("description", "");
 		
 		// Verify
 		setValue("type", "1");
+		setValue("mode", "2");
 		setValue("number", "66");
 		execute("CRUD.search");		
 		assertValue("number", "66");
+		assertValue("mode", "2");
 		assertValue("type", "1"); 
 		assertValue("description", "JUNIT SHIPMENT MODIFIED");
 										
@@ -63,6 +70,7 @@ public class ShipmentsTest extends ModuleTestBase {
 		execute("CRUD.new");
 		
 		setValue("type", "1");
+		setValue("mode", "2");
 		setValue("number", "66");
 		setValue("description", "JUNIT SHIPMENT");
 		execute("CRUD.save"); 		
