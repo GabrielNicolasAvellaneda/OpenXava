@@ -7,15 +7,11 @@ import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 
-
 /**
  * @author Javier Paniza
  */
 public class NextIntegerCalculator implements IJDBCCalculator {
 	
-
-	
-		
 	private String packageName;
 	private IConnectionProvider provider;
 	private String model;
@@ -23,9 +19,8 @@ public class NextIntegerCalculator implements IJDBCCalculator {
 
 	private String select;
 
-
-	public void setConnectionProvider(IConnectionProvider proveedor) {
-		this.provider = proveedor;
+	public void setConnectionProvider(IConnectionProvider provider) {
+		this.provider = provider;
 	}
 
 	public Object calculate() throws Exception {					
@@ -92,38 +87,19 @@ public class NextIntegerCalculator implements IJDBCCalculator {
 		return select;		
 	}				
 
-
-	/**
-	 * Returns the modelo.
-	 * @return String
-	 */
 	public String getModel() {
 		return model;
 	}
-
-	/**
-	 * Sets the modelo.
-	 * @param modelo The modelo to set
-	 */
-	public void setModel(String modelo) {
-		this.model = modelo;
+	public void setModel(String model) {
+		this.model = model;
 		this.select = null;		
 	}
 
-	/**
-	 * Returns the propiedad.
-	 * @return String
-	 */
 	public String getProperty() {
 		return property;
 	}
-
-	/**
-	 * Sets the propiedad.
-	 * @param propiedad The propiedad to set
-	 */
-	public void setProperty(String propiedad) {
-		this.property = propiedad;
+	public void setProperty(String property) {
+		this.property = property;
 		this.select = null;
 	}
 

@@ -6,52 +6,46 @@ import java.util.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
 
-
-
-
-
 /**
  * @author Javier Paniza
  */
 public class MetaApplication extends MetaElement implements java.io.Serializable {
 
 
-	private Map metaModulos = new HashMap();
-	
+	private Map metaModules = new HashMap();	
 	
 	/**
 	 * 
-	 * @param nuevo Nunca nulo
+	 * @param newModule Not null
 	 */
-	public void addMetaModule(MetaModule nuevo) {
-		metaModulos.put(nuevo.getName(), nuevo);
-		nuevo.setMetaApplication(this);
+	public void addMetaModule(MetaModule newModule) {
+		metaModules.put(newModule.getName(), newModule);
+		newModule.setMetaApplication(this);
 	}
 	
 	
 	/**
 	 * 
-	 * @exception XavaException  Cualquier problema. 
-	 * @return de <tt>Modulo</tt>. Nunca nulo.
+	 * @exception XavaException  Any problem 
+	 * @return de <tt>MetaModule</tt>. Not null.
 	 */
 	public Collection getMetaModules() throws XavaException {
-		return metaModulos.values();
+		return metaModules.values();
 	}
 	
 	/**
      * @exception ElementNotFoundException
 	 */
-	public MetaModule getMetaModule(String nombre) throws ElementNotFoundException, XavaException {
-		MetaModule result = (MetaModule) metaModulos.get(nombre);
+	public MetaModule getMetaModule(String name) throws ElementNotFoundException, XavaException {
+		MetaModule result = (MetaModule) metaModules.get(name);
 		if (result == null) {
-			throw new ElementNotFoundException(
-				"El modulo " + nombre + " no está definido");
+			throw new ElementNotFoundException("component_not_found", name);
 		}
 		return result;
 	}
 	
 	public String toString() {
-		return "Aplicacion: " + getName(); 
+		return "Application: " + getName(); 
 	}
 
 	public String getId() {

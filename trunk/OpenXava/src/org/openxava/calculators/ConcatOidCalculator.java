@@ -2,9 +2,9 @@ package org.openxava.calculators;
 
 
 /**
- * Crea una cadena en la que concatena cadena1:cadena2[:cadena3]:contador. <p>
+ * It create a strint that concat string1:string2[:string3]:counter. <p>
  * 
- * El separador por defecto son los : (dos puntos) 
+ * Default separator is :  
  * 
  * @author Javier Paniza
  */

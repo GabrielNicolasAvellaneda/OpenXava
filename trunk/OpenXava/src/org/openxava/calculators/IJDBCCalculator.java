@@ -9,11 +9,12 @@ import org.openxava.util.*;
 public interface IJDBCCalculator extends ICalculator {
 	
 	/**
-	 * Este metodo es llamado desde el sistema para proveer
-	 * un proveedor de conexiones JDBC. <p>
-	 * 
-	 * Cuando se ejecuta calcular el sistema ya ha llamado
-	 * a este metodo con un proveedor de conexiones valido.<br>
+	 * This method is call from the system to provide a
+	 * JDBC connection provider. <p>
+	 *
+	 * When the <tt>calculate</tt> method is called this
+	 * method alredy has been called with a valid connection
+	 * provider.<br> 
 	 */
 	public void setConnectionProvider(IConnectionProvider proveedor);
 

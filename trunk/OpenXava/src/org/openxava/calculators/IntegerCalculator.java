@@ -1,7 +1,6 @@
 package org.openxava.calculators;
 
 
-
 /**
  * @author Javier Paniza
  */

@@ -102,14 +102,14 @@ public class CustomersTest extends ModuleTestBase {
 		assertListRowCount(total);						
 	}
 	
-	
-	public void testImageEditor() throws Exception {
-		// For run well this test is needed put a valid value to customerImage in xava-junit.properties
+		
+	public void testImageEditor() throws Exception { 
 		execute("CRUD.new");
 		execute("ImageEditor.changeImage", "newImageProperty=foto");
 		assertNoErrors();
 		assertAction("LoadImage.loadImage");		
-		setFileValue("newImage", getProperty("custormerImage"));
+		String imageUrl = System.getProperty("user.dir") + "/test-images/foto_javi.jpg";
+		setFileValue("newImage", imageUrl);
 		execute("LoadImage.loadImage");
 		assertNoErrors();
 	}

@@ -1,9 +1,8 @@
 package org.openxava.calculators;
 
 
-
 /**
- * @author ana
+ * @author Ana Andrés
  */
 public class TrueCalculator implements ICalculator{
 

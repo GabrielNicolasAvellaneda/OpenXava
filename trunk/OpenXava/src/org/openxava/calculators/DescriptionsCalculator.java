@@ -12,11 +12,12 @@ import org.openxava.util.*;
 
 
 /**
- * Obtiene una colección de descripciones. <p>
+ * It obtain a description collection. <p>
  * 
  * @author Javier Paniza
  */
 public class DescriptionsCalculator implements IJDBCCalculator {
+	
 	private boolean removeSpacesInKey;
 	private String packageName;	
 	private IConnectionProvider provider;
@@ -39,23 +40,18 @@ public class DescriptionsCalculator implements IJDBCCalculator {
 	private Collection keyPropertiesCollection;	
 	
 
-	/**
-	 * @see org.openxava.calculators.IJDBCCalculator#setConnectionProvider(IConnectionProvider)
-	 */
-	public void setConnectionProvider(IConnectionProvider proveedor) {		
-		this.provider = proveedor;
+	public void setConnectionProvider(IConnectionProvider provider) {		
+		this.provider = provider;
 	}
 	
 	/**
-	 * La ejecucion pura, sin cache, sin llamada al servidor,...
+	 * Pure execution, without cache, without call to server,... <p>
 	 * 
-	 * Mejor llamar a {@link #getDescripciones} si se quiere usar
-	 * directamente.<br>
-	 * 
-	 * @see org.openxava.calculators.ICalculator#calculate()
+	 * Better call to {@link #getDescriptions} if you wish to use
+	 * directly.<br>
 	 */
 	public Object calculate() throws Exception {		
-	 	comprobarPrecondiciones();			 	
+	 	checkPreconditions();			 	
 	 	if (!XavaPreferences.getInstance().isDescriptionsCalculatorAsEJB()) {
 	 		setConnectionProvider(DataSourceConnectionProvider.getByComponent(getComponentName()));
 	 	}
@@ -73,18 +69,18 @@ public class DescriptionsCalculator implements IJDBCCalculator {
 				Iterator it = getParameters().iterator();
 				int i = 1;
 				while (it.hasNext()) {	
-					Object dato = it.next();					
-					ps.setObject(i++, dato);
+					Object data = it.next();					
+					ps.setObject(i++, data);
 				}	
 				
 			}			
 			ResultSet rs = ps.executeQuery();
 			List result = new ArrayList();
-			if (esClaveMultiple()) {
-				leerConClaveMultiple(result, rs); 		
+			if (isMultipleKey()) {
+				readWithMultipleKey(result, rs); 		
 			}
 			else {
-				leerConClaveSimple(result, rs);
+				readWithSimpleKey(result, rs);
 			}
 			rs.close();
 			ps.close();
@@ -110,7 +106,7 @@ public class DescriptionsCalculator implements IJDBCCalculator {
 		return packageName;
 	}
 
-	private void comprobarPrecondiciones() throws XavaException {
+	private void checkPreconditions() throws XavaException {
 		if (Is.emptyString(getModel())) {
 			throw new XavaException("descriptions_calculator_model_required", getClass().getName());
 		}
@@ -122,51 +118,45 @@ public class DescriptionsCalculator implements IJDBCCalculator {
 		}				
 	}
 
-	private void leerConClaveSimple(Collection result, ResultSet rs) throws Exception {
-		int columnas = rs.getMetaData().getColumnCount();
+	private void readWithSimpleKey(Collection result, ResultSet rs) throws Exception {
+		int columns = rs.getMetaData().getColumnCount();
 		while (rs.next()) {
 			KeyAndDescription el = new KeyAndDescription();
-			Object clave = getObject(getKeyProperty(), rs, 1, false);
-			if (clave instanceof String && isRemoveSpacesInKey()) clave = ((String) clave).trim();
-			el.setKey(clave);
-			el.setDescription(obtenerDescripcion(2, columnas, rs));
+			Object key = getObject(getKeyProperty(), rs, 1, false);
+			if (key instanceof String && isRemoveSpacesInKey()) key = ((String) key).trim();
+			el.setKey(key);
+			el.setDescription(obtainDescription(2, columns, rs));
 			result.add(el);
 		}		
 	}
 
-
-	/**
-	 * Method leerConClaveMultiple.
-	 * @param result
-	 * @param rs
-	 */
-	private void leerConClaveMultiple(Collection result, ResultSet rs) throws Exception {		
-		int columnas = rs.getMetaData().getColumnCount();
+	private void readWithMultipleKey(Collection result, ResultSet rs) throws Exception {		
+		int columns = rs.getMetaData().getColumnCount();
 		while (rs.next()) {
 			KeyAndDescription el = new KeyAndDescription();
 			int idx=1;		
-			Iterator itNombresClave = getKeyPropertiesCollection().iterator();
-			Map clave = new HashMap();
-			while (itNombresClave.hasNext()) {
-				String nombre = (String) itNombresClave.next();
-				clave.put(nombre, getObject(nombre, rs, idx++, isUseConvertersInKeys()));
+			Iterator itKeyNames = getKeyPropertiesCollection().iterator();
+			Map key = new HashMap();
+			while (itKeyNames.hasNext()) {
+				String name = (String) itKeyNames.next();
+				key.put(name, getObject(name, rs, idx++, isUseConvertersInKeys()));
 			}		
 			if(isUseConvertersInKeys()) {			
-				el.setKey(getMetaModel().obtainPrimaryKeyFromKey(clave));			
+				el.setKey(getMetaModel().obtainPrimaryKeyFromKey(key));			
 			} else {
-				el.setKey(getMetaModel().obtainPrimaryKeyFromKeyWithoutConversors(clave));			
+				el.setKey(getMetaModel().obtainPrimaryKeyFromKeyWithoutConversors(key));			
 			}
-			el.setDescription(obtenerDescripcion(idx, columnas, rs));			
+			el.setDescription(obtainDescription(idx, columns, rs));			
 			result.add(el);
 		}		
 	}
 	
-	private String obtenerDescripcion(int idx, int columnas, ResultSet rs) throws SQLException {
+	private String obtainDescription(int idx, int columns, ResultSet rs) throws SQLException {
 		StringBuffer des = new StringBuffer();
-		while (idx <= columnas) {			
+		while (idx <= columns) {			
 			des.append(rs.getObject(idx));				
 			idx++;
-			if (idx <= columnas) {
+			if (idx <= columns) {
 				des.append(" ");			
 			}
 		}
@@ -175,7 +165,7 @@ public class DescriptionsCalculator implements IJDBCCalculator {
 
 	private IMetaEjb getMetaModel() throws XavaException {
 		if (metaModel == null) {
-			if (esAgregado()) {
+			if (isAggregate()) {
 				metaModel = (IMetaEjb) MetaComponent.get(getComponentName()).getMetaAggregate(getAggregateName());
 			}	
 			else {		
@@ -185,46 +175,42 @@ public class DescriptionsCalculator implements IJDBCCalculator {
 		return metaModel;
 	}
 
-	/**
-	 * Method getCantidadCamposClaves.
-	 * @return int
-	 */
-	private int getCantidadCamposClaves() {
+	private int getKeyFieldsCount() {
 		return getKeyPropertiesCollection().size();
 	}
 
 	
-	private Object getObject(String nombrePropiedad, ResultSet rs, int i, boolean usarConversor) throws Exception {
-		if (usarConversor && getMapeo().hasConverter(nombrePropiedad)) {
-			return getObjectConConversor(nombrePropiedad, rs, i);
+	private Object getObject(String propertyName, ResultSet rs, int i, boolean useConverter) throws Exception {
+		if (useConverter && getMapping().hasConverter(propertyName)) {
+			return getObjectWithConverter(propertyName, rs, i);
 		}
-		Class tipo = getTipoCodigo(nombrePropiedad);
-		if (!tipo.isPrimitive()) return rs.getObject(i);
-		if (tipo.equals(Integer.TYPE)) {
+		Class type = getCodeType(propertyName);
+		if (!type.isPrimitive()) return rs.getObject(i);
+		if (type.equals(Integer.TYPE)) {
 			return new Integer(rs.getInt(i));
 		}
-		else if (tipo.equals(Long.TYPE)) {
+		else if (type.equals(Long.TYPE)) {
 			return new Long(rs.getLong(i));
 		}
-		else if (tipo.equals(Short.TYPE)) {
+		else if (type.equals(Short.TYPE)) {
 			return new Short(rs.getShort(i));
 		}		
-		else if (tipo.equals(Double.TYPE)) {
+		else if (type.equals(Double.TYPE)) {
 			return new Double(rs.getDouble(i));
 		}		
-		else if (tipo.equals(Float.TYPE)) {
+		else if (type.equals(Float.TYPE)) {
 			return new Float(rs.getFloat(i));
 		}				
 		return rs.getObject(i);	
 	}
 	
-	private boolean esClaveMultiple() {
+	private boolean isMultipleKey() {
 		return !Is.emptyString(keyProperties);
 	}
 		
-	private Class getTipoCodigo(String nombrePropiedad) throws XavaException {
+	private Class getCodeType(String propertyName) throws XavaException {
 		try {
-			return getMapeo().getType(nombrePropiedad);
+			return getMapping().getType(propertyName);
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
@@ -233,26 +219,25 @@ public class DescriptionsCalculator implements IJDBCCalculator {
 	}
 	
 	/**
-	 * Hace una llamada remota si estamos en un cliente.<br>
-	 * Hace caché según para los valores de los parametros actuales.<br>
+	 * It uses caché depend on current parameter values. <p>
 	 * 
-	 * @return Coleccion de <tt>CodigoDescripcion</tt>. Nunca nulo.
+	 * @return Collection of <tt>KeyAndDescription</tt>. Not null.
 	 */
 	public Collection getDescriptions() throws Exception {	
-		if (condicionTieneArgumentos() && !hasParameters()) return Collections.EMPTY_LIST;
+		if (conditionHasArguments() && !hasParameters()) return Collections.EMPTY_LIST;
 		if (!isUseCache()) {
 			return (Collection) calculate();
 		}
-		Collection guardado = (Collection) getCache().get(getParameters());
-		if (guardado != null) {						
-			return guardado;
+		Collection saved = (Collection) getCache().get(getParameters());
+		if (saved != null) {						
+			return saved;
 		}
-		Collection resultado = (Collection) calculate();
-		getCache().put(getParameters(), resultado);				
-		return resultado;	
+		Collection result = (Collection) calculate();
+		getCache().put(getParameters(), result);				
+		return result;	
 	}
 
-	private boolean condicionTieneArgumentos() {
+	private boolean conditionHasArguments() {
 		return this.condition != null && this.condition.indexOf('?') >= 0;		
 	}
 
@@ -264,21 +249,14 @@ public class DescriptionsCalculator implements IJDBCCalculator {
 	}
 
 	/**
-	 * Se usa cuando hay una sola propiedad que actua
-	 * como clave. <p>
+	 * It's used when there is only a key property.
 	 * 
-	 * Es excluyente con <tt>propiedadesClave</tt> 
-     *
-	 * @return String
+	 * It's exclusive with <tt>keyProperties</tt>. 
 	 */
 	public String getKeyProperty() {
 		return keyProperty;
 	}
 
-	/**
-	 * Returns the propiedadDescripcion.
-	 * @return String
-	 */
 	public String getDescriptionProperty() {
 		return descriptionProperty;
 	}
@@ -286,86 +264,71 @@ public class DescriptionsCalculator implements IJDBCCalculator {
 	private Collection getKeyPropertiesCollection() {
 		if (keyPropertiesCollection == null) {
 			keyPropertiesCollection = new ArrayList();
-			String fuente = Is.emptyString(keyProperty)?keyProperties:keyProperty;
-			StringTokenizer st = new StringTokenizer(fuente, ",");
+			String source = Is.emptyString(keyProperty)?keyProperties:keyProperty;
+			StringTokenizer st = new StringTokenizer(source, ",");
 			while (st.hasMoreElements()) {
 				keyPropertiesCollection.add(st.nextToken().trim());
 			}
 		}
 		return keyPropertiesCollection;
 	}
-	
-
-	
-
-	public void setKeyProperty(String propiedadCodigo) {		
-		this.keyProperty = propiedadCodigo;		
+		
+	public void setKeyProperty(String keyProperty) {		
+		this.keyProperty = keyProperty;		
 	}
 
-	/**
-	 * Sets the propiedadDescripcion.
-	 * @param propiedadDescripcion The propiedadDescripcion to set
-	 */
-	public void setDescriptionProperty(String propiedadDescripcion) {
-		this.descriptionProperty = propiedadDescripcion;
+	public void setDescriptionProperty(String descriptionProperty) {
+		this.descriptionProperty = descriptionProperty;
 	}
 	
 	private String getSelect() throws XavaException {
 		if (select == null) {			
-			ModelMapping mapeo = getMapeo();
+			ModelMapping mapping = getMapping();
 			StringBuffer sb = new StringBuffer("select ");
-			Iterator itPropiedadesClave = getKeyPropertiesCollection().iterator();
-			while (itPropiedadesClave.hasNext()) {
-				String propiedadClave = (String) itPropiedadesClave.next();				
-				sb.append(mapeo.getColumn(propiedadClave));				
+			Iterator itKeyProperties = getKeyPropertiesCollection().iterator();
+			while (itKeyProperties.hasNext()) {
+				String keyProperty = (String) itKeyProperties.next();				
+				sb.append(mapping.getColumn(keyProperty));				
 				sb.append(", ");				
 			}
 			if (Is.emptyString(getDescriptionProperties())) {				
-				sb.append(mapeo.getColumn(getDescriptionProperty()));				
+				sb.append(mapping.getColumn(getDescriptionProperty()));				
 			}
 			else {
 				StringTokenizer st = new StringTokenizer(getDescriptionProperties(), ",");
 				while (st.hasMoreTokens()) {
-					String propiedadDescripcion = st.nextToken().trim();					
-					sb.append(mapeo.getColumn(propiedadDescripcion));					
+					String descriptionProperty = st.nextToken().trim();					
+					sb.append(mapping.getColumn(descriptionProperty));					
 					if (st.hasMoreTokens()) {
 						sb.append(", ");
 					}					
 				}
 			}			
 			sb.append(" from ");
-			sb.append(mapeo.getTable());
-			if (hayCondicion()) {
+			sb.append(mapping.getTable());
+			if (hasCondition()) {
 				sb.append(" where ");
-				sb.append(getCondicionSQL(mapeo));
+				sb.append(getConditionSQL(mapping));
 			}
 			select = sb.toString();						
 		}				
 		return select;
 	}
 	
-	private boolean hayCondicion() {
+	private boolean hasCondition() {
 		return !Is.emptyString(condition);
 	}
 	
-	private String getCondicionSQL(ModelMapping mapeo) throws XavaException {
-		return mapeo.changePropertiesByColumns(getCondition());
+	private String getConditionSQL(ModelMapping mapping) throws XavaException {
+		return mapping.changePropertiesByColumns(getCondition());
 	}
 
-	/**
-	 * Returns the modelo.
-	 * @return String
-	 */
 	public String getModel() {
 		return model;
 	}
 
-	/**
-	 * Sets the modelo.
-	 * @param modelo The modelo to set
-	 */
-	public void setModel(String modelo) {
-		this.model = modelo==null?"":modelo;
+	public void setModel(String model) {
+		this.model = model==null?"":model;
 		this.metaModel = null;		
 		this.componentName = null;
 		this.aggregateName = null;
@@ -374,78 +337,57 @@ public class DescriptionsCalculator implements IJDBCCalculator {
 		if (st.hasMoreTokens()) this.aggregateName = st.nextToken();
 	}
 
-	/**
-	 * Returns the condiciones.
-	 * @return String
-	 */
 	public String getCondition() {
 		return condition;
 	}
 
-	/**
-	 * Sets the condiciones.
-	 * @param condiciones The condiciones to set
-	 */
-	public void setCondition(String condiciones) {	    
-	    if (condiciones!=null && condiciones.toLowerCase().indexOf("year(curdate())")>=0){
-	        Calendar cal=Calendar.getInstance();
-	        cal.setTime(new java.util.Date());
-	    	condiciones = Strings.change(condiciones,"year(curdate())",String.valueOf(cal.get(Calendar.YEAR)));
-	    	System.out.println("[DescriptionsCalculator.setCondition:] La sustituimos:" + condiciones);
-	    }
-	    
-		this.condition = condiciones;		
+	public void setCondition(String condition) {	    
+		if (condition!=null && condition.toLowerCase().indexOf("year(curdate())")>=0){
+			Calendar cal=Calendar.getInstance();
+			cal.setTime(new java.util.Date());
+			condition = Strings.change(condition,"year(curdate())",String.valueOf(cal.get(Calendar.YEAR)));
+		}	    
+		this.condition = condition;		
 	}
-
 
 	public boolean hasParameters() {
 		return parameters != null && !parameters.isEmpty();
 	}
-	/**
-	 * Returns the parametro.
-	 * @return Object
-	 */
 	public Collection getParameters() {
 		return parameters;
 	}
 
-	public void setParameters(Collection parametros) {
-		this.parameters = parametros;		
+	public void setParameters(Collection parameters) {
+		this.parameters = parameters;		
 	}
 	
-	public void setParameters(Collection parametros, IFilter filtro) throws FilterException {		
-		if (filtro != null) {
-			Object [] param = parametros==null?null:parametros.toArray();			
-			param = (Object []) filtro.filter(param);			
-			parametros = Arrays.asList(param);			
+	public void setParameters(Collection parameters, IFilter filter) throws FilterException {		
+		if (filter != null) {
+			Object [] param = parameters==null?null:parameters.toArray();			
+			param = (Object []) filter.filter(param);			
+			parameters = Arrays.asList(param);			
 		}
-		this.parameters = parametros;				
+		this.parameters = parameters;				
 	}
 		
-	private Object getObjectConConversor(String nombrePropiedad, ResultSet rs, int i) throws Exception {
-		IConverter conversor = getMapeo().getConverter(nombrePropiedad);
-		return conversor.toJava(rs.getObject(i));
+	private Object getObjectWithConverter(String propertyName, ResultSet rs, int i) throws Exception {
+		IConverter converter = getMapping().getConverter(propertyName);
+		return converter.toJava(rs.getObject(i));
 	}
 	
 	/**
-	 * Se usa cuando hay una mas de una propiedad que actua
-	 * como clave, o habiendo solo una se quiere usar una
-	 * clase envoltorio de clave primaria. <p>
+	 * It's used when there are more than one property that
+	 * it's key, or with only one It's preferred use a wrapper
+	 * class as primary key. <p>
 	 * 
-	 * Es excluyente con <tt>propiedadesClave</tt> 
-     *
-	 * @return String
+	 * It's exclusive with <tt>keyProperties</tt>. 
 	 */
 	public String getKeyProperties() {
 		return keyProperties;
 	}
 
-	/**
-	 * Sets the propiedadesClave.
-	 * @param propiedadesClave The propiedadesClave to set
-	 */
-	public void setKeyProperties(String propiedadesClave) {		
-		this.keyProperties = propiedadesClave;
+	public void setKeyProperties(String keyProperties) {		
+		this.keyProperties = keyProperties;
 	}
 
 
@@ -457,11 +399,11 @@ public class DescriptionsCalculator implements IJDBCCalculator {
 		return componentName;
 	}
 	
-	private boolean esAgregado() {
+	private boolean isAggregate() {
 		return !Is.emptyString(aggregateName);
 	}
 	
-	private ModelMapping getMapeo() throws XavaException {
+	private ModelMapping getMapping() throws XavaException {
 		return getMetaModel().getMapping();
 	}
 
@@ -493,30 +435,18 @@ public class DescriptionsCalculator implements IJDBCCalculator {
 		descriptionProperties = string;
 	}
 
-	/**
-	 * @return
-	 */
 	public boolean isRemoveSpacesInKey() {
 		return removeSpacesInKey;
 	}
 
-	/**
-	 * @param b
-	 */
 	public void setRemoveSpacesInKey(boolean b) {
 		removeSpacesInKey = b;
 	}
 
-	/**
-	 * 
-	 */
 	public boolean isUseConvertersInKeys() {
 		return useConvertersInKeys;		
 	}
 
-	/**
-	 * 
-	 */
 	public void setUseConvertersInKeys(boolean b) {
 		useConvertersInKeys = b;
 	}

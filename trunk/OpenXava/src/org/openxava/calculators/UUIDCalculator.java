@@ -7,7 +7,7 @@ import org.openxava.util.*;
 
 
 /**
- * Genera un Identificador Universal Unico de 32 caracteres alfanuméricos. 
+ * It generate a Universal Unic IDentifier of 32 alphanumeric characters. <p>
  * 
  * @author Javier Paniza
  */
