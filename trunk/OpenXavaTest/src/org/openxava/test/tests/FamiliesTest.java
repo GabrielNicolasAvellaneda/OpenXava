@@ -51,8 +51,10 @@ public class FamiliesTest extends ModuleTestBase {
 		execute("Navigation.next");
 		
 		String [][] productsOfFamily3 = {
-				{ "", "" },				
+				{ "", "" },
+				{ "77", "ANATHEMA" },
 				{ "2", "XAVA COURSE" }
+				
 		};		
 		assertValidValues("products", productsOfFamily3);								
 	}

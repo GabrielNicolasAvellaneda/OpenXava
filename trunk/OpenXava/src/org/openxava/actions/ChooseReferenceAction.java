@@ -25,6 +25,7 @@ public class ChooseReferenceAction extends ViewBaseAction implements INavigation
 			clave = (Map) getTab().getTableModel().getObjectAt(selectedOnes[0]);
 		}		
 		getReferenceSubview().setValuesNotifying(clave);
+		getReferenceSubview().findObject();
 		getTab().setModelName(getView().getModelName());
 	}
 

@@ -14,10 +14,10 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 	public void execute() throws Exception {
 		try {						
 			Map memberNames = getView().getMemberNamesWithHidden();
-			Map values = MapFacade.getValues(getModelName(), getView().getKeyValues(), memberNames);			
-			getView().setValues(values);			
+			Map values = MapFacade.getValues(getModelName(), getView().getKeyValues(), memberNames);									
 			getView().setEditable(true);	
 			getView().setKeyEditable(false);			
+			getView().setValuesNotifying(values);
 		}
 		catch (ObjectNotFoundException ex) {
 			getView().clear();
