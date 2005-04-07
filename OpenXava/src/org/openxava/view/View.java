@@ -364,14 +364,14 @@ public class View implements java.io.Serializable {
 	/**
 	 * @param recalculatingValues If true reobtain values from views, groups and sections.
 	 */
-	private Object getValue(String name, boolean recalculatingValues) throws XavaException {		
+	private Object getValue(String name, boolean recalculatingValues) throws XavaException {
 		int idx = name.indexOf('.');		
 		if (idx < 0) { 			
 			if (!getMemberNamesWithoutSeccions().contains(name) && (hidden == null || !hidden.contains(name)) && !getMetaModel().getKeyPropertiesNames().contains(name)) {				
 				return getValorEnSecciones(name, recalculatingValues);
 			}
 			else {				
-				if (hasSubview(name)) { 					
+				if (hasSubview(name)) { 										
 					View subvista = getSubview(name);
 					if (!subvista.isRepresentsCollection()) {						
 						return subvista.getValues();
@@ -393,7 +393,7 @@ public class View implements java.io.Serializable {
 		}		
 	}
 	
-	public Object getValue(String name) throws XavaException {		
+	public Object getValue(String name) throws XavaException {
 		return getValue(name, true);
 	}
 	
@@ -610,10 +610,10 @@ public class View implements java.io.Serializable {
 					return false;
 				}
 			}
-			else {				
-				if (hasSubview(name)) {					 					
+			else {								
+				if (hasSubview(name)) {
 					View subvista = getSubview(name);
-					if (!subvista.isRepresentsCollection()) {						
+					if (!subvista.isRepresentsCollection()) {
 						subvista.setValues((Map)value);										
 					}
 					else {						
@@ -1371,9 +1371,10 @@ public class View implements java.io.Serializable {
 		IMetaEjb metaModel = (IMetaEjb) ref.getMetaModelReferenced(); 
 		Class keyClass = metaModel.getPrimaryKeyClass();
 		Field [] fields = keyClass.getFields();
-		StringTokenizer st = new StringTokenizer(value, "[.]");
+		if (!value.startsWith("[")) value = "";
+		StringTokenizer st = new StringTokenizer(Strings.change(value, "..", ". ."), "[.]");
 		for (int i = 0; i < fields.length; i++) {
-			String propertyName = fields[i].getName();			
+			String propertyName = fields[i].getName();						
 			boolean hasConverter = propertyName.startsWith("_"); 
 			if (hasConverter) propertyName = Strings.firstLower(propertyName.substring(1));						
 			MetaProperty p = metaModel.getMetaProperty(propertyName);
@@ -1382,7 +1383,8 @@ public class View implements java.io.Serializable {
 				String stringPropertyValue = st.nextToken();
 				if (hasConverter) { 
 					try {
-						propertyValue = p.getMapping().getConverter().toJava(p.parse(stringPropertyValue)); 						
+						Object parsedValue = Strings.toObject(p.getMapping().getCmpType(), stringPropertyValue);
+						propertyValue = p.getMapping().getConverter().toJava(parsedValue);
 					}
 					catch (Exception ex) {
 						ex.printStackTrace();
@@ -1390,13 +1392,13 @@ public class View implements java.io.Serializable {
 					}
 				}
 				else {
-					propertyValue = WebEditors.parse(getRequest(), p, stringPropertyValue, getErrors());
-				}
+					propertyValue = WebEditors.parse(getRequest(), p, stringPropertyValue, getErrors());	
+				}								
 			}			
 			String valueKey = qualifier + "." + ref.getName() + "." + propertyName + ".value";			 
-			if (WebEditors.mustToFormat(p)) { 
+			if (WebEditors.mustToFormat(p)) {
 				getRequest().setAttribute(valueKey, propertyValue);
-				setValue(ref.getName() + "." + p.getName(), propertyValue);														
+				setValue(ref.getName() + "." + p.getName(), propertyValue);
 			}									
 		}				
 	}

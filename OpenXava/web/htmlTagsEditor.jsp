@@ -21,7 +21,7 @@ if (hasFrame) {
 	postEditor="</td></tr></table>";
 }
 else if (first) {
-	preLabel="<th align='left' class=etiqueta id=" + labelKey + " >";
+	preLabel="<th align='left' class=label id=" + labelKey + " >";
 	postLabel="</th>";
 	preIcons="<td>";
 	postIcons="</td>";
@@ -29,7 +29,7 @@ else if (first) {
 	postEditor="</td>";
 }
 else {
-	preLabel="<th align='left' class=etiqueta id=" + labelKey + " >&nbsp;&nbsp;";
+	preLabel="<th align='left' class=label id=" + labelKey + " >&nbsp;&nbsp;";
 	postLabel="</th>";
 	preIcons="<td>";
 	postIcons="</td>";

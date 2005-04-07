@@ -10,7 +10,7 @@ public class ShipmentData
    extends java.lang.Object
    implements java.io.Serializable
 {
-   private java.lang.Integer _Type;
+   private java.lang.String _Type;
    private java.lang.String _Description;
    private int mode;
    private int number;
@@ -33,11 +33,11 @@ public class ShipmentData
      return pk;
    }
 
-   public java.lang.Integer get_Type()
+   public java.lang.String get_Type()
    {
       return this._Type;
    }
-   public void set_Type( java.lang.Integer _Type )
+   public void set_Type( java.lang.String _Type )
    {
       this._Type = _Type;
    }

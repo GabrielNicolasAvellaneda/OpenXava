@@ -29,8 +29,10 @@
 	
 	<entity-mapping table="XAVATEST@separator@SHIPMENT">
 		<property-mapping
-			property="type" column="TYPE" cmp-type="Integer">
-			<converter class="org.openxava.converters.ValidValuesBase0Converter"/>
+			property="type" column="TYPE" cmp-type="String">
+			<converter class="org.openxava.converters.ValidValuesLetterConverter">
+				<set property="letters" value="IE"/>
+			</converter>
 		</property-mapping>
 		<property-mapping
 			property="mode" column="MODE"/>		

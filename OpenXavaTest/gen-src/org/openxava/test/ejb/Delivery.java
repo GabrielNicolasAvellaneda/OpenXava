@@ -88,7 +88,7 @@ public interface Delivery
    public void setShipmentKey( org.openxava.test.ejb.ShipmentKey key )
       throws java.rmi.RemoteException;
 
-   public java.lang.Integer getShipment_type(  )
+   public java.lang.String getShipment_type(  )
       throws java.rmi.RemoteException;
 
    public int getShipment_mode(  )

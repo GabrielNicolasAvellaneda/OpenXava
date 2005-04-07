@@ -141,6 +141,10 @@ public class PropertyMapping extends MetaSetsContainer {
 		if ("Long".equals(cmpTypeName)) return "java.lang.Long";
 		return cmpTypeName;
 	}
+	
+	public Class getCmpType() throws ClassNotFoundException {
+		return Class.forName(getCmpTypeName());
+	}
 
 	/**
 	 * Sets the nombreTipoCmp.

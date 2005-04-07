@@ -22,7 +22,7 @@ public class DeliveryData
    private int date_year;
    private int number;
    private int type_number;
-   private java.lang.Integer shipment_type;
+   private java.lang.String shipment_type;
    private int shipment_mode;
    private int shipment_number;
    private java.lang.Integer carrier_number;
@@ -169,11 +169,11 @@ public class DeliveryData
       this.type_number = type_number;
    }
 
-   public java.lang.Integer getShipment_type()
+   public java.lang.String getShipment_type()
    {
       return this.shipment_type;
    }
-   public void setShipment_type( java.lang.Integer shipment_type )
+   public void setShipment_type( java.lang.String shipment_type )
    {
       this.shipment_type = shipment_type;
    }
