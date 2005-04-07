@@ -11,7 +11,7 @@ public class ShipmentKey
    implements java.io.Serializable
 {
 
-   public java.lang.Integer _Type;
+   public java.lang.String _Type;
    public int mode;
    public int number;
 
@@ -19,14 +19,14 @@ public class ShipmentKey
    {
    }
 
-   public ShipmentKey( java.lang.Integer _Type,int mode,int number )
+   public ShipmentKey( java.lang.String _Type,int mode,int number )
    {
       this._Type = _Type;
       this.mode = mode;
       this.number = number;
    }
 
-   public java.lang.Integer get_Type()
+   public java.lang.String get_Type()
    {
       return _Type;
    }
@@ -39,7 +39,7 @@ public class ShipmentKey
       return number;
    }
 
-   public void set_Type(java.lang.Integer _Type)
+   public void set_Type(java.lang.String _Type)
    {
       this._Type = _Type;
    }

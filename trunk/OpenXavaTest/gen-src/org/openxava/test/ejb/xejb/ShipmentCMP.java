@@ -120,9 +120,9 @@ public abstract class ShipmentCMP
 
 /* Value Objects END */
 
-   public abstract java.lang.Integer get_Type() ;
+   public abstract java.lang.String get_Type() ;
 
-   public abstract void set_Type( java.lang.Integer _Type ) ;
+   public abstract void set_Type( java.lang.String _Type ) ;
 
    public abstract java.lang.String get_Description() ;
 

@@ -8,7 +8,6 @@ import javax.rmi.*;
 import org.openxava.test.ejb.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
-import org.openxava.test.ejb.*;
 
 
 /**

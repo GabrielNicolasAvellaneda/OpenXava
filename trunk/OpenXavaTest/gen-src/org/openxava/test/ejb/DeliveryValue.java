@@ -35,7 +35,7 @@ public class DeliveryValue
    private boolean numberHasBeenSet = false;
    private int type_number;
    private boolean type_numberHasBeenSet = false;
-   private java.lang.Integer shipment_type;
+   private java.lang.String shipment_type;
    private boolean shipment_typeHasBeenSet = false;
    private int shipment_mode;
    private boolean shipment_modeHasBeenSet = false;
@@ -261,12 +261,12 @@ public class DeliveryValue
    public boolean type_numberHasBeenSet(){
 	  return type_numberHasBeenSet;
    }
-   public java.lang.Integer getShipment_type()
+   public java.lang.String getShipment_type()
    {
 	  return this.shipment_type;
    }
 
-   public void setShipment_type( java.lang.Integer shipment_type )
+   public void setShipment_type( java.lang.String shipment_type )
    {
 	  this.shipment_type = shipment_type;
 	  shipment_typeHasBeenSet = true;

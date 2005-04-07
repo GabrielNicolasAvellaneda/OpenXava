@@ -230,7 +230,7 @@
             <query-method>
                <method-name>findByShipment</method-name>
                <method-params>
-                  <method-param>java.lang.Integer</method-param>
+                  <method-param>java.lang.String</method-param>
                   <method-param>int</method-param>
                   <method-param>int</method-param>
                </method-params>
@@ -1223,7 +1223,7 @@
       <entity>
          <ejb-name>Shipment</ejb-name>
 
-         <table-name>XAVATEST_SHIPMENT</table-name>
+         <table-name>XAVATEST@separator@SHIPMENT</table-name>
 
          <cmp-field>
             <field-name>_Type</field-name>
