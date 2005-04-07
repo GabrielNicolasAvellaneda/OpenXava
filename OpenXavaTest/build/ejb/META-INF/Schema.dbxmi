@@ -18,6 +18,8 @@
    <RDBSchema:RDBTable xmi:id="RDBTable_Office" name="" primaryKey="Office_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Office_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Office" constraint="Constraint_Office_"/>
 
+      <columns xmi:id="Office__Receptionist" name="_Receptionist">
+      </columns>
       <columns xmi:id="Office__Name" name="_Name">
       </columns>
       <columns xmi:id="Office__ZoneNumber" name="_ZoneNumber">

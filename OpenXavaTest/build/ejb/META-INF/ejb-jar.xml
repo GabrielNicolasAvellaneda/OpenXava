@@ -114,6 +114,10 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Office</abstract-schema-name>
+         <cmp-field id="CmpAttribute_Office__Receptionist">
+            <description><![CDATA[]]></description>
+            <field-name>_Receptionist</field-name>
+         </cmp-field>
          <cmp-field id="CmpAttribute_Office__Name">
             <description><![CDATA[]]></description>
             <field-name>_Name</field-name>
@@ -1954,6 +1958,15 @@
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Receptionist o WHERE o.deliveryPlace_oid = ?1]]></ejb-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findAll</method-name>
+               <method-params>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Receptionist o]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-ReceptionistBean.xml if you want to define extra finders. -->
 

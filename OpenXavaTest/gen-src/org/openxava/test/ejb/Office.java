@@ -10,6 +10,12 @@ public interface Office
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.ejb.IOffice
 {
 
+   public int getReceptionist(  )
+      throws java.rmi.RemoteException;
+
+   public void setReceptionist( int newReceptionist )
+      throws java.rmi.RemoteException;
+
    public java.lang.String getName(  )
       throws java.rmi.RemoteException;
 

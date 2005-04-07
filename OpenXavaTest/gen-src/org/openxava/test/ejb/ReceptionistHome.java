@@ -30,6 +30,9 @@ public interface ReceptionistHome
    public java.util.Collection findByDeliveryPlace(java.lang.String oid)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
+   public java.util.Collection findAll()
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public org.openxava.test.ejb.Receptionist findByPrimaryKey(org.openxava.test.ejb.ReceptionistKey pk)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

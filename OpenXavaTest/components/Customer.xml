@@ -106,6 +106,7 @@
 			</default-value-calculator>
 		</property>				
 		<property name="name" type="String" size="30" required="true"/>
+		<finder name="all" arguments="" collection="true"/>
 	</aggregate>	
 
 	<view>

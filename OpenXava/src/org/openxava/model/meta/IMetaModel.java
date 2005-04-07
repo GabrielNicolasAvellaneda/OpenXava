@@ -10,7 +10,7 @@ import org.openxava.util.*;
  */
 public interface IMetaModel {
 	String getName(); 
-	Collection getMetaFinders();
+	Collection getMetaFinders();	
 	MetaProperty getMetaProperty(String nombre) throws ElementNotFoundException, XavaException;
 	MetaReference getMetaReference(String nombre) throws ElementNotFoundException, XavaException;
 	MetaMethod getMetaMethod(String nombre) throws ElementNotFoundException, XavaException;
@@ -39,5 +39,6 @@ public interface IMetaModel {
 	Class getPropertiesClass() throws XavaException;
 	Collection getInterfacesNames();
 	String getImplements();
-		
+	boolean isKey(String name) throws XavaException;
+	Collection getRecursiveQualifiedPropertiesNames() throws XavaException;
 }

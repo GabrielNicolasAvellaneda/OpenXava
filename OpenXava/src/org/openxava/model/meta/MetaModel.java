@@ -1233,5 +1233,14 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		}			
 		return result;		
 	}
+
+	public static MetaModel get(String modelName) throws XavaException { 
+		if (modelName.indexOf('.') < 0) {
+			return MetaComponent.get(modelName).getMetaEntity();
+		}
+		else {
+			return MetaAggregate.getAggregate(modelName);
+		}
+	}
 	
 }

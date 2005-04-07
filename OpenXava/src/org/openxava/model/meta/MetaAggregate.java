@@ -14,7 +14,7 @@ abstract public class MetaAggregate extends MetaModel {
 		super();
 	}
 		
-	public static MetaAggregate get(String name) throws XavaException {
+	static MetaAggregate getAggregate(String name) throws ElementNotFoundException, XavaException {
 		int idx = name.indexOf('.');
 		if (idx < 0) {
 			throw new ElementNotFoundException("aggregate_need_qualified", name);

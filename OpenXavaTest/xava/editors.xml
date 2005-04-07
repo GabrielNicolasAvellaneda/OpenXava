@@ -81,5 +81,11 @@
     <for-stereotype stereotype="PRODUCT3"/>
   </editor>
 	
+  <editor url="descriptionsEditor.jsp">
+  	<property name="model" value="Customer.Receptionist"/>
+  	<property name="keyProperty" value="oid"/>
+		<property name="descriptionProperty" value="name"/>
+    <for-stereotype stereotype="RECEPTIONIST"/>
+  </editor>
 	        
 </editors>

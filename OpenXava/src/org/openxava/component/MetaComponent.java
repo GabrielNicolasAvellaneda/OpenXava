@@ -332,7 +332,7 @@ public class MetaComponent implements Serializable {
 				ex.printStackTrace();
 				throw new XavaException("component_package_error", getName());
 			}
-		}		
+		}				
 		return ejbPackage;
 	}
 	

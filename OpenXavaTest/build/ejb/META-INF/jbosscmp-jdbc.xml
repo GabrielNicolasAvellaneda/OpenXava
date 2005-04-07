@@ -47,6 +47,11 @@
          <table-name>XAVATEST_OFFICE</table-name>
 
          <cmp-field>
+            <field-name>_Receptionist</field-name>
+            <column-name>RECEPTIONIST_OID</column-name>
+
+        </cmp-field>
+         <cmp-field>
             <field-name>_Name</field-name>
             <column-name>NAME</column-name>
 
@@ -1218,7 +1223,7 @@
       <entity>
          <ejb-name>Shipment</ejb-name>
 
-         <table-name>XAVATEST@separator@SHIPMENT</table-name>
+         <table-name>XAVATEST_SHIPMENT</table-name>
 
          <cmp-field>
             <field-name>_Type</field-name>
@@ -1500,6 +1505,15 @@
                </method-params>
             </query-method>
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Receptionist o WHERE o.deliveryPlace_oid = ?1 ]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findAll</method-name>
+               <method-params>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Receptionist o]]></jboss-ql>
 
 	     </query>
 

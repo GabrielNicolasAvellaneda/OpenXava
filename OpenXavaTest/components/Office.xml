@@ -20,6 +20,7 @@
 		<reference name="mainWarehouse" model="Warehouse2" required="true"/>	
 		<reference name="officeManager" model="Clerk"/>	
 		<reference name="defaultCarrier" model="Carrier"/>
+		<property name="receptionist" stereotype="RECEPTIONIST"/>
 	</entity>
 	
 	<view>
@@ -31,6 +32,7 @@
 				mainWarehouse;
 				officeManager;
 				defaultCarrier;
+				receptionist;
 			</section>
 		</members>
 	</view>
@@ -70,6 +72,8 @@
 					referenced-model-property="number" 
 					column="CARRIER_NUMBER"/>			
 		</reference-mapping>					
+		<property-mapping
+			property="receptionist" column="RECEPTIONIST_OID"/>
 	</entity-mapping> 
 	
 </component>

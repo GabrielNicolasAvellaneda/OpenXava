@@ -40,8 +40,8 @@ public class EntityTab implements IEntityTabImpl {
 	private TableModelBean table;
 	private MetaTab metaTab;
 	private String modelName;
-	private transient MetaEntity metaEntity = null;
-	private transient EntityMapping entityMapping = null;
+	private transient IMetaModel metaModel = null;
+	private transient ModelMapping mapping = null;
 	private int[] indexesPK = null;	
 	private List propertiesNames;
 	private Map keyIndexes = null;
@@ -195,13 +195,13 @@ public class EntityTab implements IEntityTabImpl {
 			tabProvider = new JDBCTabProvider();
 			table = new TableModelBean();
 			table.setTranslateHeading(false);
-			this.modelName = componentName;
-			this.metaEntity = null;
-			this.entityMapping = null;
+			this.mapping = null;
 			this.indexesPK = null;
 			if (this.metaTab == null) {			
 				this.metaTab = MetaComponent.get(componentName).getMetaTab(tabName);
 			}
+			this.modelName = this.metaTab.getModelName();
+			this.metaModel = metaTab.getMetaModel();
 			table.setHeading(getHeading());
 			table.setColumnsClasses(getColumnsClasses());
 			tabProvider.setFields(getCampos());
@@ -227,7 +227,7 @@ public class EntityTab implements IEntityTabImpl {
 		// Primero la clave
 		Iterator itNombresPK = getNombresPK().iterator();
 		while (itNombresPK.hasNext()) {
-			c.add(getEntityMapping().getQualifiedColumn((String) itNombresPK.next()));
+			c.add(getMapping().getQualifiedColumn((String) itNombresPK.next()));
 		}
 				
 		// Luego lo demas
@@ -268,7 +268,7 @@ public class EntityTab implements IEntityTabImpl {
 		StringBuffer result = new StringBuffer("SELECT ");		
 		Iterator itNombresPK = getNombresPK().iterator();
 		while (itNombresPK.hasNext()) {
-			result.append(getEntityMapping().getQualifiedColumn((String) itNombresPK.next()));
+			result.append(getMapping().getQualifiedColumn((String) itNombresPK.next()));
 			result.append(", ");
 		}
 		result.append(s.substring(7));						
@@ -287,7 +287,7 @@ public class EntityTab implements IEntityTabImpl {
 	}
 
 	private String getNombreTablaDB() throws XavaException {
-		return getEntityMapping().getTable();
+		return getMapping().getTable();
 	}
 
 	// Implementa IEntityTabImpl
@@ -368,7 +368,7 @@ public class EntityTab implements IEntityTabImpl {
 		int cantidad = getPropertiesNames().size();
 		for (int i = indexesPK.length; i < cantidad; i++) {			
 			String nombre = (String) getPropertiesNames().get(i);
-			MetaProperty metaPropiedad = getMetaEntity().getMetaProperty(nombre);
+			MetaProperty metaPropiedad = getMetaModel().getMetaProperty(nombre);
 			if (metaPropiedad.hasValidValues()) {		
 				int valorPosible = ((Number) fila[i]).intValue();
 				fila[i] = metaPropiedad.getValidValue(valorPosible); 					
@@ -408,16 +408,16 @@ public class EntityTab implements IEntityTabImpl {
 			tabConverters = new ArrayList();			
 			Iterator it = getPropertiesNames().iterator();
 			int i=0;
-			String tabla = getEntityMapping().getTable();
+			String tabla = getMapping().getTable();
 			while (it.hasNext()) {
 				String nombrePropiedad = (String) it.next();
 				try {															
-					IConverter conversor = getEntityMapping().getConverter(nombrePropiedad);
+					IConverter conversor = getMapping().getConverter(nombrePropiedad);
 					if (conversor != null) {
 						tabConverters.add(new TabConverter(nombrePropiedad, i,  conversor));
 					}
 					else {
-						PropertyMapping mapeoPropiedad = getEntityMapping().getPropertyMapping(nombrePropiedad);
+						PropertyMapping mapeoPropiedad = getMapping().getPropertyMapping(nombrePropiedad);
 						IMultipleConverter conversorMultiple =  mapeoPropiedad.getMultipleConverter();
 						if (conversorMultiple != null) {							
 							tabConverters.add(new TabConverter(nombrePropiedad, i, conversorMultiple, mapeoPropiedad.getCmpFields(), getCampos(), tabla));
@@ -460,16 +460,16 @@ public class EntityTab implements IEntityTabImpl {
 	}
 	
 	private Collection getNombresPK() throws XavaException {		
-		return getMetaEntity().getKeyFields();
+		return getMetaModel().getAllKeyPropertiesNames();
 	}
 	
 	
 
-	private MetaEntity getMetaEntity() throws XavaException {
-		if (metaEntity == null) {
-			metaEntity = MetaComponent.get(this.modelName).getMetaEntity();
+	private IMetaModel getMetaModel() throws XavaException {
+		if (metaModel == null) {
+			metaModel = MetaModel.get(this.modelName);
 		}
-		return metaEntity;
+		return metaModel;
 	}
 
 	private Map getKeyIndexes()
@@ -480,7 +480,7 @@ public class EntityTab implements IEntityTabImpl {
 			int i = 0;
 			while (it.hasNext()) {
 				String nombrePropiedad = (String) it.next();
-				if (getMetaEntity().isKey(nombrePropiedad)) {
+				if (getMetaModel().isKey(nombrePropiedad)) {
 					keyIndexes.put(nombrePropiedad, new Integer(i));
 				}
 				i++;
@@ -489,11 +489,11 @@ public class EntityTab implements IEntityTabImpl {
 		return keyIndexes;
 	}
 
-	private EntityMapping getEntityMapping() throws XavaException {
-		if (entityMapping == null) {
-			entityMapping = MetaComponent.get(this.modelName).getEntityMapping();
+	private ModelMapping getMapping() throws XavaException {
+		if (mapping == null) {
+			mapping = getMetaModel().getMapping();
 		}
-		return entityMapping;
+		return mapping;
 	}
 
 	/**
@@ -515,7 +515,7 @@ public class EntityTab implements IEntityTabImpl {
 	 */
 	public void setComponentName(String string) {
 		componentName = string;
-		metaEntity = null;
+		metaModel = null;
 		keyIndexes = null;
 		selectBase = null;
 	}

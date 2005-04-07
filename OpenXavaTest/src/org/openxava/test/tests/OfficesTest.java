@@ -19,6 +19,14 @@ public class OfficesTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Offices");		
 	}
 	
+	public void testDescriptionEditorInStereotypeWithAggregateAsModel() throws Exception {
+		execute("CRUD.new");
+		assertExists("receptionist");
+		int count = ReceptionistUtil.getHome().findAll().size() + 1;
+		assertTrue("At least 2 receptionists are required for run this test", count > 2);
+		assertValidValuesCount("receptionist", count);		
+	}
+	
 	public void testMoreThanOneReferenceWithoutValue() throws Exception {
 		// for test sql inner join behaviour
 		deleteAllOffices();
