@@ -66,8 +66,8 @@ public class Server {
 				try {					
 					ohome = BeansContext.get().lookup("ejb/"+packageName+"/Server");
 				}
-				catch (Exception ex) {
-					packageName = MetaComponent.getQualifiedPackageForUnqualifiedPackage(packageName);					
+				catch (Exception ex) {					
+					packageName = MetaComponent.getQualifiedPackageForUnqualifiedPackage(packageName);
 					ohome = BeansContext.get().lookup("ejb/"+packageName+"/Server"); 
 				}				
 				ServerHome home = (ServerHome) PortableRemoteObject.narrow(ohome, ServerHome.class);

@@ -360,9 +360,9 @@ public class MetaComponent implements Serializable {
 	 */
 	public static String getQualifiedPackageForUnqualifiedPackage(String unqualifiedPackage) throws XavaException {
 		try {
-			return
-				getPackages().getProperty("package.domain." + unqualifiedPackage, "") + "/" +
-				unqualifiedPackage;
+			String domain = getPackagesEJB().getProperty("package.domain." + unqualifiedPackage, "");
+			if (Is.emptyString(domain)) domain = getPackages().getProperty("package.domain." + unqualifiedPackage, "");
+			return domain	 + "/" + unqualifiedPackage;
 		}
 		catch (Exception ex) {			
 			ex.printStackTrace();

@@ -61,6 +61,14 @@ public class CarriersTest extends ModuleTestBase {
 		}
 	}
 	
+	public void testResetSelectedOnReturnToList() throws Exception {
+		checkRow(3);
+		assertRowChecked(3);
+		execute("CRUD.new");
+		execute("Mode.list");
+		assertRowUnchecked(3);
+	}
+	
 	public void testActionOfCalculatedPropertyAlwaysPresent() throws Exception {
 		execute("CRUD.new");
 		assertAction("Carriers.translateName");
