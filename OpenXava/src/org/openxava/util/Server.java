@@ -63,13 +63,13 @@ public class Server {
 			ServerRemote remote = (ServerRemote) getRemotes().get(packageName);
 			if (remote == null) {							
 				Object ohome = null;
-				try {
+				try {					
 					ohome = BeansContext.get().lookup("ejb/"+packageName+"/Server");
 				}
 				catch (Exception ex) {
-					packageName = MetaComponent.getQualifiedPackageForUnqualifiedPackage(packageName); 
+					packageName = MetaComponent.getQualifiedPackageForUnqualifiedPackage(packageName);					
 					ohome = BeansContext.get().lookup("ejb/"+packageName+"/Server"); 
-				}
+				}				
 				ServerHome home = (ServerHome) PortableRemoteObject.narrow(ohome, ServerHome.class);
 				remote = home.create();
 				getRemotes().put(packageName, remote);				

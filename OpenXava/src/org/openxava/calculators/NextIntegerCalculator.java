@@ -59,8 +59,8 @@ public class NextIntegerCalculator implements IJDBCCalculator {
 	
 	private String getPackageName() throws XavaException {		
 		if (packageName == null) {
-			packageName = MetaComponent.get(getModel()).getPackageName();
-		}
+			packageName = MetaComponent.get(getModel()).getPackageNameWithSlashWithoutModel();			
+		}		
 		return packageName;
 	}
 
