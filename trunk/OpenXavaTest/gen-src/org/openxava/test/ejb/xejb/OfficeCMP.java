@@ -18,6 +18,7 @@ public abstract class OfficeCMP
       {
          dataHolder = new org.openxava.test.ejb.OfficeData();
 
+         dataHolder.set_Receptionist( get_Receptionist() );
          dataHolder.set_Name( get_Name() );
          dataHolder.set_ZoneNumber( get_ZoneNumber() );
          dataHolder.setNumber( getNumber() );
@@ -38,6 +39,7 @@ public abstract class OfficeCMP
    {
       try
       {
+         set_Receptionist( dataHolder.get_Receptionist() );
          set_Name( dataHolder.get_Name() );
          set_ZoneNumber( dataHolder.get_ZoneNumber() );
          setOfficeManager_number( dataHolder.getOfficeManager_number() );
@@ -95,6 +97,7 @@ public abstract class OfficeCMP
       OfficeValue = new org.openxava.test.ejb.OfficeValue();
       try
          {
+            OfficeValue.setReceptionist( getReceptionist() );
             OfficeValue.setName( getName() );
             OfficeValue.setZoneNumber( getZoneNumber() );
             OfficeValue.setNumber( getNumber() );
@@ -119,6 +122,7 @@ public abstract class OfficeCMP
 
 	  try
 	  {
+		 setReceptionist( valueHolder.getReceptionist() );
 		 setName( valueHolder.getName() );
 		 setZoneNumber( valueHolder.getZoneNumber() );
 		 setOfficeManager_zoneNumber( valueHolder.getOfficeManager_zoneNumber() );
@@ -136,6 +140,10 @@ public abstract class OfficeCMP
    }
 
 /* Value Objects END */
+
+   public abstract java.lang.Integer get_Receptionist() ;
+
+   public abstract void set_Receptionist( java.lang.Integer _Receptionist ) ;
 
    public abstract java.lang.String get_Name() ;
 

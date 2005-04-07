@@ -740,6 +740,12 @@ public class ModuleTestBase extends TestCase {
 		}
 	}
 	
+	protected void assertValidValuesCount(String name, int count) throws Exception {
+		String [] descripciones = getForm().getOptions(getPropertyPrefix() + name);
+		assertEquals(XavaResources.getString("unexpected_valid_values", name), count, descripciones.length);
+	}
+	
+	
 	protected String [] getKeysValidValues(String name) throws Exception {
 		return getForm().getOptionValues(getPropertyPrefix() + name);
 	}

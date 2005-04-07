@@ -188,7 +188,8 @@ public class DescriptionsCalculator implements ICalculator {
 	
 	private MetaTab getMetaTab() throws XavaException {
 		if (metaTab == null) {
-			metaTab = getMetaModel().getMetaComponent().getMetaTab().cloneMetaTab();
+			metaTab = new MetaTab();
+			metaTab.setMetaModel(getMetaModel());
 			metaTab.setPropertiesNames(getKeyProperties() + ", " +  getDescriptionProperties());				
 		}
 		return metaTab;

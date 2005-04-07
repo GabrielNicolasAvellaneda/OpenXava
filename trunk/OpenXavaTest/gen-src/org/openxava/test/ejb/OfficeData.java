@@ -10,6 +10,7 @@ public class OfficeData
    extends java.lang.Object
    implements java.io.Serializable
 {
+   private java.lang.Integer _Receptionist;
    private java.lang.String _Name;
    private java.lang.Integer _ZoneNumber;
    private int number;
@@ -23,6 +24,7 @@ public class OfficeData
 
    public OfficeData( OfficeData otherData )
    {
+      set_Receptionist(otherData.get_Receptionist());
       set_Name(otherData.get_Name());
       set_ZoneNumber(otherData.get_ZoneNumber());
       setNumber(otherData.getNumber());
@@ -35,6 +37,15 @@ public class OfficeData
    public org.openxava.test.ejb.OfficeKey getPrimaryKey() {
      org.openxava.test.ejb.OfficeKey pk = new org.openxava.test.ejb.OfficeKey(this.getNumber());
      return pk;
+   }
+
+   public java.lang.Integer get_Receptionist()
+   {
+      return this._Receptionist;
+   }
+   public void set_Receptionist( java.lang.Integer _Receptionist )
+   {
+      this._Receptionist = _Receptionist;
    }
 
    public java.lang.String get_Name()
@@ -95,7 +106,7 @@ public class OfficeData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Name=" + get_Name() + " " + "_ZoneNumber=" + get_ZoneNumber() + " " + "number=" + getNumber() + " " + "officeManager_number=" + getOfficeManager_number() + " " + "defaultCarrier_number=" + getDefaultCarrier_number() + " " + "mainWarehouse_number=" + getMainWarehouse_number());
+      str.append("_Receptionist=" + get_Receptionist() + " " + "_Name=" + get_Name() + " " + "_ZoneNumber=" + get_ZoneNumber() + " " + "number=" + getNumber() + " " + "officeManager_number=" + getOfficeManager_number() + " " + "defaultCarrier_number=" + getDefaultCarrier_number() + " " + "mainWarehouse_number=" + getMainWarehouse_number());
       str.append('}');
 
       return(str.toString());
@@ -108,6 +119,14 @@ public class OfficeData
          OfficeData lTest = (OfficeData) pOther;
          boolean lEquals = true;
 
+         if( this._Receptionist == null )
+         {
+            lEquals = lEquals && ( lTest._Receptionist == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Receptionist.equals( lTest._Receptionist );
+         }
          if( this._Name == null )
          {
             lEquals = lEquals && ( lTest._Name == null );
@@ -154,6 +173,8 @@ public class OfficeData
    public int hashCode()
    {
       int result = 17;
+
+      result = 37*result + ((this._Receptionist != null) ? this._Receptionist.hashCode() : 0);
 
       result = 37*result + ((this._Name != null) ? this._Name.hashCode() : 0);
 

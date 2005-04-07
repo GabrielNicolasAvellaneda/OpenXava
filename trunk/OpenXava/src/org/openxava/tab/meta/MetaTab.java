@@ -18,55 +18,32 @@ import org.openxava.util.meta.*;
 public class MetaTab implements java.io.Serializable, Cloneable {
 
 	private String defaultOrder;
-
 	private String sQLDefaultOrder;
-
 	private String sQLBaseCondition;
-
 	private String selectSQL;
-
 	private Collection metaPropertiesHiddenCalculated;
-
 	private Collection metaPropertiesHidden;
-
 	private String name;
-
 	private MetaComponent metaComponent;
-
 	private List metaConsults = new ArrayList();
-
 	private List propertiesNames = null;
-
 	private List metaProperties = null;
-
 	private List metaPropertiesCalculated = null;
-
 	private String properties; // separadas por comas, como en el archivo xml
-
 	private String select;
-
 	private Collection entityReferencesMappings;	
-
 	private Collection tableColumns;
-
+	private String modelName; 
+	private IMetaModel metaModel;
 	private boolean excludeAll = false;
-
 	private boolean excludeByKey = false;
-
 	private MetaFilter metaFilter;
-
 	private IFilter filter;
-
 	private List hiddenPropertiesNames;
-
 	private Collection hiddenTableColumns;
-
 	private String baseCondition;
-
 	private Map metaPropertiesTab;
-
 	private Collection rowStyles;
-
 	private String defaultPropertiesNames;
 	
 	public static String getTitleI18n(Locale locale, String modelName, String tabName) throws XavaException {
@@ -85,8 +62,13 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		}
 	}
 	
-	public MetaModel getMetaModel() throws XavaException {
-		return getMetaComponent().getMetaEntity();
+	public IMetaModel getMetaModel() throws XavaException {
+		return metaModel;
+	}
+	public void setMetaModel(IMetaModel metaModel) {
+		this.metaModel = metaModel;
+		this.metaComponent = metaModel.getMetaComponent();
+		this.modelName = metaModel.getName();
 	}
 
 	public void addMetaConsult(MetaConsult consulta) {
@@ -236,7 +218,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 			String nombre = (String) it.next();
 			try {
 				columnasTabla
-						.add(getEntityMapping().getQualifiedColumn(nombre));
+						.add(getMapping().getQualifiedColumn(nombre));
 			} catch (ElementNotFoundException ex) {
 				columnasTabla.add("0"); // Sera sustituido
 			}
@@ -383,8 +365,8 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		this.selectSQL = null; 
 	}
 
-	EntityMapping getEntityMapping() throws XavaException {
-		return getMetaComponent().getEntityMapping();
+	ModelMapping getMapping() throws XavaException {
+		return getMetaModel().getMapping();
 	}
 
 	public String getSelect() throws XavaException {
@@ -396,7 +378,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 
 	public String getSelectSQL() throws XavaException {
 		if (selectSQL == null) {			
-			selectSQL = getEntityMapping().changePropertiesByColumns(
+			selectSQL = getMapping().changePropertiesByColumns(
 					getSelect());			
 		}		
 		return selectSQL;
@@ -433,7 +415,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 			select.append(itColumnasCampoCmpPropiedadesMultiples.next());
 		}
 		select.append(" from ");
-		select.append(getEntityMapping().getTable());
+		select.append(getMapping().getTable());
 		// para las referencias		
 		if (hasReferences()) {
 			// las tablas
@@ -473,7 +455,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 			throws XavaException {
 		Collection columnasCampoCmpPropiedadesMultiples = new ArrayList();
 		Iterator it = getMetaProperties().iterator();
-		String tabla = getEntityMapping().getTable();
+		String tabla = getMapping().getTable();
 		while (it.hasNext()) {
 			MetaProperty p = (MetaProperty) it.next();
 			PropertyMapping mapeo = p.getMapping();
@@ -580,6 +562,8 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	 */
 	public void setMetaComponent(MetaComponent componente) {
 		this.metaComponent = componente;
+		this.metaModel = this.metaComponent.getMetaEntity();
+		this.modelName = this.metaComponent.getName();
 	}
 
 	/**
@@ -794,7 +778,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 
 	public String getSQLBaseCondition() throws XavaException {
 		if (sQLBaseCondition == null) {
-			sQLBaseCondition = getEntityMapping().changePropertiesByColumns(
+			sQLBaseCondition = getMapping().changePropertiesByColumns(
 					getBaseCondition());
 		}
 		return sQLBaseCondition;
@@ -834,7 +818,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 
 	public String getSQLDefaultOrder() throws XavaException {
 		if (sQLDefaultOrder == null) {
-			sQLDefaultOrder = getEntityMapping().changePropertiesByColumns(
+			sQLDefaultOrder = getMapping().changePropertiesByColumns(
 					getDefaultOrder());
 		}
 		return sQLDefaultOrder;
@@ -912,5 +896,13 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		return rowStyles==null?Collections.EMPTY_LIST:rowStyles;
 	}
 
+	public String getModelName() {
+		return modelName;
+	}
+	public void setModelName(String modelName) throws XavaException {
+		this.modelName = modelName;		
+		this.metaModel = MetaModel.get(modelName);
+		this.metaComponent = this.metaModel.getMetaComponent();
+	}
 }
 

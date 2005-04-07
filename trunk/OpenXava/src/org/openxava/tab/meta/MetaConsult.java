@@ -32,7 +32,7 @@ public class MetaConsult extends MetaElement {
 		parametro.setMetaConsult(this);
 	}
 	
-	MetaModel getMetaModel() throws XavaException {
+	IMetaModel getMetaModel() throws XavaException {
 		if (metaTab == null) {
 			throw new XavaException("tab_consult_required");
 		}		
@@ -117,7 +117,7 @@ public class MetaConsult extends MetaElement {
 					condicion = selectTab + union + condicion; 
 				}
 			}
-			conditionSQL = getMetaTab().getEntityMapping().changePropertiesByColumns(condicion);
+			conditionSQL = getMetaTab().getMapping().changePropertiesByColumns(condicion);
 		}
 		return conditionSQL;
 	}

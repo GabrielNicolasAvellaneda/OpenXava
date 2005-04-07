@@ -11,6 +11,8 @@ public class OfficeValue
    extends java.lang.Object
    implements java.io.Serializable 
 {
+   private int receptionist;
+   private boolean receptionistHasBeenSet = false;
    private java.lang.String name;
    private boolean nameHasBeenSet = false;
    private int zoneNumber;
@@ -37,6 +39,8 @@ public class OfficeValue
    //TODO Cloneable is better than this !
    public OfficeValue( OfficeValue otherValue )
    {
+	  this.receptionist = otherValue.receptionist;
+	  receptionistHasBeenSet = true;
 	  this.name = otherValue.name;
 	  nameHasBeenSet = true;
 	  this.zoneNumber = otherValue.zoneNumber;
@@ -57,6 +61,20 @@ public class OfficeValue
 	  mainWarehouse_numberHasBeenSet = true;
    }
 
+   public int getReceptionist()
+   {
+	  return this.receptionist;
+   }
+
+   public void setReceptionist( int receptionist )
+   {
+	  this.receptionist = receptionist;
+	  receptionistHasBeenSet = true;
+   }
+
+   public boolean receptionistHasBeenSet(){
+	  return receptionistHasBeenSet;
+   }
    public java.lang.String getName()
    {
 	  return this.name;
@@ -188,7 +206,7 @@ public class OfficeValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("name=" + getName() + " " + "zoneNumber=" + getZoneNumber() + " " + "number=" + getNumber() + " " + "officeManager_zoneNumber=" + getOfficeManager_zoneNumber() + " " + "officeManager_officeNumber=" + getOfficeManager_officeNumber() + " " + "officeManager_number=" + getOfficeManager_number() + " " + "defaultCarrier_number=" + getDefaultCarrier_number() + " " + "mainWarehouse_zoneNumber=" + getMainWarehouse_zoneNumber() + " " + "mainWarehouse_number=" + getMainWarehouse_number());
+	  str.append("receptionist=" + getReceptionist() + " " + "name=" + getName() + " " + "zoneNumber=" + getZoneNumber() + " " + "number=" + getNumber() + " " + "officeManager_zoneNumber=" + getOfficeManager_zoneNumber() + " " + "officeManager_officeNumber=" + getOfficeManager_officeNumber() + " " + "officeManager_number=" + getOfficeManager_number() + " " + "defaultCarrier_number=" + getDefaultCarrier_number() + " " + "mainWarehouse_zoneNumber=" + getMainWarehouse_zoneNumber() + " " + "mainWarehouse_number=" + getMainWarehouse_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -234,6 +252,7 @@ public class OfficeValue
 	  {
 		 OfficeValue that = (OfficeValue) other;
 		 boolean lEquals = true;
+		 lEquals = lEquals && this.receptionist == that.receptionist;
 		 if( this.name == null )
 		 {
 			lEquals = lEquals && ( that.name == null );
@@ -274,6 +293,8 @@ public class OfficeValue
 
    public int hashCode(){
 	  int result = 17;
+      result = 37*result + (int) receptionist;
+
       result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);
 
       result = 37*result + (int) zoneNumber;
