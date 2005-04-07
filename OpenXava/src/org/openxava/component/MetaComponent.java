@@ -26,6 +26,7 @@ public class MetaComponent implements Serializable {
 	
 	private static Map components = new HashMap();
 	private static Properties packages;
+	private static Properties packagesEJB;
 		
 	private String packageNameWithSlashWithoutModel;
 	private String name;
@@ -301,7 +302,7 @@ public class MetaComponent implements Serializable {
 		if (packageName==null) {
 			try {
 				packageName = getPackages().getProperty(getName());
-				if (packageName == null) {
+				if (packageName == null) {					
 					packageName = getPackagesEJB().getProperty(getName());
 				}
 			}
@@ -309,7 +310,7 @@ public class MetaComponent implements Serializable {
 				ex.printStackTrace();
 				throw new XavaException("component_package_error", getName());
 			}
-		}
+		}		
 		return packageName;
 	}
 	
@@ -345,24 +346,23 @@ public class MetaComponent implements Serializable {
 	}
 	
 	private static Properties getPackagesEJB() throws IOException {
-		if (packages == null) {
+		if (packagesEJB == null) {
 			PropertiesReader reader = new PropertiesReader(MetaComponent.class, "packages-ejb.properties");
-			packages = reader.get();
+			packagesEJB = reader.get();
 		}
-		return packages;
+		return packagesEJB;
 	}
 	
 		
 	/** 
-	 * @param unqualifiedPackage For example, of org.openxava.test.model is test, 
-	 * 			that is to say, without domain (org.openxava) and model package (model).
+	 * @param unqualifiedPackage For example, of org.openxava.test is test, 
+	 * 			that is to say, without domain (org.openxava).
 	 */
 	public static String getQualifiedPackageForUnqualifiedPackage(String unqualifiedPackage) throws XavaException {
 		try {
 			return
 				getPackages().getProperty("package.domain." + unqualifiedPackage, "") + "/" +
-				unqualifiedPackage + "/" +
-				getPackages().getProperty("package.model." + unqualifiedPackage, "");
+				unqualifiedPackage;
 		}
 		catch (Exception ex) {			
 			ex.printStackTrace();
