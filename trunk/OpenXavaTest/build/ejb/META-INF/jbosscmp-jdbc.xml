@@ -123,7 +123,7 @@
       <entity>
          <ejb-name>Delivery</ejb-name>
 
-         <table-name>XAVATEST_DELIVERY</table-name>
+         <table-name>XAVATEST@separator@DELIVERY</table-name>
 
          <cmp-field>
             <field-name>_Distance</field-name>
@@ -1041,7 +1041,7 @@
       <entity>
          <ejb-name>TransportCharge</ejb-name>
 
-         <table-name>XAVATEST_TRANSPORTCHARGE</table-name>
+         <table-name>XAVATEST@separator@TRANSPORTCHARGE</table-name>
 
          <cmp-field>
             <field-name>_Amount</field-name>
@@ -1223,7 +1223,7 @@
       <entity>
          <ejb-name>Shipment</ejb-name>
 
-         <table-name>XAVATEST@separator@SHIPMENT</table-name>
+         <table-name>XAVATEST_SHIPMENT</table-name>
 
          <cmp-field>
             <field-name>_Type</field-name>
@@ -1393,7 +1393,7 @@
       <entity>
          <ejb-name>FilterBySubfamily</ejb-name>
 
-         <table-name>XAVATEST_MOCKTABLE</table-name>
+         <table-name>XAVATEST@separator@MOCKTABLE</table-name>
 
          <cmp-field>
             <field-name>oid</field-name>
