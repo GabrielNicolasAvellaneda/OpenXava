@@ -21,7 +21,9 @@ public class OnChangeVehicleAction extends OnChangePropertyBaseAction {
 			getView().setValue("driverType", "PILOT");
 		}	
 		else {
-			getView().setValue("driverType", "");							
+			Object value = getView().getValue("driverType"); 
+			value = value == null?"":value;
+			getView().setValue("driverType",  value + "X"); 							
 		}
 	}
 
