@@ -35,6 +35,11 @@ public class DeliveriesTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Deliveries");		
 	}
 	
+	public void testOnChangeActionOnlyOnce() throws Exception {
+		execute("CRUD.new");
+		assertValue("driverType", "X");
+	}
+	
 	public void testReferenceAsDescriptionsListWithValidValuesInKey() throws Exception {
 		execute("Mode.detailAndFirst");
 		assertValue("shipment.KEY", "");
@@ -607,7 +612,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertValue("distance", "0");
 		assertValue("vehicle", "");
 		assertValue("transportMode", "");
-		assertValue("driverType", "");	
+		assertValue("driverType", "DRIVERX");	
 	}
 	
 	public void testOnChangeWithQualifiedProperty() throws Exception { 

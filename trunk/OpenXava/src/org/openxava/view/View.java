@@ -93,7 +93,11 @@ public class View implements java.io.Serializable {
 
 	private String propertyPrefix;
 
-	private Map labels;	
+	private Map labels;
+
+	private Collection executedActions;	
+
+	private boolean registeringExecutedActions = false;
 		
 	public View() {
 		oid = siguienteOid++;
@@ -989,9 +993,14 @@ public class View implements java.io.Serializable {
 	 * Set the defaul values in the empty fields.  
 	 *
 	 */
-	private void calculateDefaultValues() throws XavaException {		
-		
+	private void calculateDefaultValues() throws XavaException {
 		// Properties
+		if (getParent() == null) {
+			getRoot().registeringExecutedActions = true;
+		}
+		
+		try {
+					
 		Collection properties = new ArrayList(getMetaModel().getMetaPropertiesWithDefaultValueCalculator());
 		properties.addAll(getMetaModel().getMetaPropertiesViewWithDefaultCalculator());		
 		if (!properties.isEmpty()) {		
@@ -1029,10 +1038,10 @@ public class View implements java.io.Serializable {
 		}
 		
 				
-		// On change events
+		// On change events					
 		Iterator itPropiedadesAlCambiar = getMetaView().getPropertiesNamesThrowOnChange().iterator();
 		while (itPropiedadesAlCambiar.hasNext()) {
-			String nombrePropiedad = (String) itPropiedadesAlCambiar.next();			
+			String nombrePropiedad = (String) itPropiedadesAlCambiar.next();
 			propertyChanged(nombrePropiedad);
 		}
 				
@@ -1099,7 +1108,6 @@ public class View implements java.io.Serializable {
 					}				 
 				}
 			}
-			
 			if (!puestos.isEmpty()) { 
 				Iterator itPuestos = puestos.iterator();
 				while (itPuestos.hasNext()) {
@@ -1113,8 +1121,32 @@ public class View implements java.io.Serializable {
 					}
 				}
 			}
-		}		
+		}
 		
+		
+		}
+		finally {			
+			if (getParent() == null) {
+				getRoot().registeringExecutedActions = false;		
+				resetExecutedActions();
+			}
+		}		
+	}
+
+	private void resetExecutedActions() {		
+		if (getRoot().executedActions != null) getRoot().executedActions.clear();		
+	}
+	
+	private void registerExecutedAction(String name, Object action) {
+		if (!getRoot().registeringExecutedActions) return;		
+		if (getRoot().executedActions == null) getRoot().executedActions = new HashSet();
+		getRoot().executedActions.add(name + "::" + action.getClass());
+	}
+	
+	private boolean actionRegisteredAsExecuted(String name, Object action) {
+		if (!getRoot().registeringExecutedActions) return false;		
+		if (getRoot().executedActions == null) return false;
+		return getRoot().executedActions.contains(name + "::" + action.getClass());
 	}
 
 	private boolean tieneValor(Object v) {		
@@ -1336,7 +1368,7 @@ public class View implements java.io.Serializable {
 						
 			if (!isSubview() && !isSection()) {			
 			  String changedProperty = getRequest().getParameter("changed_property");			  
-				if (!Is.emptyString(changedProperty)) {															
+				if (!Is.emptyString(changedProperty)) {					
 					propertyChanged(changedProperty);							
 				}			
 			}						
@@ -1533,7 +1565,7 @@ public class View implements java.io.Serializable {
 		catch (Exception ex) {
 			ex.printStackTrace();
 			System.err.println(XavaResources.getString("property_changed_warning", cambiada));
-			getErrors().add("change_property_error");
+			getErrors().add("change_property_error");			
 		}		 		 		
 	}
 	
@@ -1568,11 +1600,14 @@ public class View implements java.io.Serializable {
 			}			
 		}			
 		if (!isSection() && getMetaView().hasOnChangeAction(nombreCualificadoCambiada)) {			
-			IOnChangePropertyAction accion = getMetaView().createOnChangeAction(nombreCualificadoCambiada);			
-			accion.setView(this);
-			accion.setChangedProperty(nombreCualificadoCambiada); 
-			accion.setNewValue(getValue(nombreCualificadoCambiada)); 
-			getModuleManager(getRequest()).executeAction(accion, getErrors(), getMessages(), getRequest());			
+			IOnChangePropertyAction accion = getMetaView().createOnChangeAction(nombreCualificadoCambiada);
+			if (!actionRegisteredAsExecuted(nombreCualificadoCambiada, accion)) {
+				accion.setView(this);
+				accion.setChangedProperty(nombreCualificadoCambiada); 
+				accion.setNewValue(getValue(nombreCualificadoCambiada));
+				getModuleManager(getRequest()).executeAction(accion, getErrors(), getMessages(), getRequest());
+				registerExecutedAction(nombreCualificadoCambiada, accion);
+			}
 		} 
 		
 		if (tieneGrupos()) {			
@@ -1580,7 +1615,7 @@ public class View implements java.io.Serializable {
 			while (itGrupos.hasNext()) {
 				View v = (View) itGrupos.next();
 				try {
-					v.tryPropertyChanged(cambiada, nombreCualificadoCambiada);
+					v.tryPropertyChanged(cambiada, nombreCualificadoCambiada);					
 				}
 				catch (ElementNotFoundException ex) {
 					// The common case of a qualified property  whose
@@ -1593,10 +1628,9 @@ public class View implements java.io.Serializable {
 		if (hasSections()) {			
 			int cantidad = getSections().size();
 			for (int i = 0; i < cantidad; i++) {
-				getSectionView(i).propertyChanged(cambiada, nombreCualificadoCambiada);
+				getSectionView(i).propertyChanged(cambiada, nombreCualificadoCambiada);				
 			}			
 		}
-		
 	}	
 	
 	
