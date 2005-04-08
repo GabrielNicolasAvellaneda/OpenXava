@@ -316,7 +316,7 @@
 	</controller>	
 	
 	<!--
-	Because his name is Warehouse2Creation (model name + Creation) it is used
+	Because its name is Warehouse2Creation (model name + Creation) it is used
 	by default for create from reference, instead of NewCreation.
 	Action 'new' is executed automatically.
 	-->

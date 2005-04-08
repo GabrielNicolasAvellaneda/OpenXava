@@ -84,9 +84,10 @@ public class DescriptionsCalculator implements ICalculator {
 					String name = (String) itKeyNames.next();
 					key.put(name, table.getValueAt(i, iKey++));
 				}		
-				if(isUseConvertersInKeys()) {			
+				if(isUseConvertersInKeys()) {
 					el.setKey(getMetaModel().obtainPrimaryKeyFromKey(key));			
-				} else {
+				} 
+				else {
 					el.setKey(getMetaModel().obtainPrimaryKeyFromKeyWithoutConversors(key));			
 				}				
 			}
