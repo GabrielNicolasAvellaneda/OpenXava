@@ -3,8 +3,12 @@
 <!DOCTYPE component SYSTEM "dtds/component.dtd">
 
 <!-- 
-	Implemented using a handmade xdoclet EJB 
-	Version withou oid exists (Family2)
+	Implemented using a handmade xdoclet EJB,
+	and a simple handame bean (POJO) too. (for use with hibernate for example).
+	It's not typical use both styles in the same application,
+	but it's here for ilustrative purpose.
+	
+	Version without oid exists (Family2)
 -->
 
 <component name="Family">
@@ -14,7 +18,8 @@
 			home="org.openxava.test.ejb.FamilyHome"
 			primaryKey="org.openxava.test.ejb.FamilyKey"
 			jndi="ejb/openxava.test/Family"/>		
-		<property name="oid" type="String" hidden="true" key="true"/>
+		<bean class="org.openxava.test.model.Family"/>	
+		<property name="oid" type="String" hidden="true" key="true" required="false"/>
 		<property name="number" size="3" required="true"/>   
 		<property name="description" size="40" required="true"/>
 	</entity>

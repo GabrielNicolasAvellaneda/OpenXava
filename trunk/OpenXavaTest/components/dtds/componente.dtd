@@ -5,7 +5,7 @@
  nombre ID #REQUIRED
 >
 
-<!ELEMENT entidad (ejb?, implementa*, (propiedad|referencia|coleccion)*, metodo*, buscador*, calculador-poscrear*, calculador-posmodificar*, validador*, validador-borrar*)>
+<!ELEMENT entidad (ejb?, bean?, implementa*, (propiedad|referencia|coleccion)*, metodo*, buscador*, calculador-poscrear*, calculador-posmodificar*, validador*, validador-borrar*)>
 <!ATTLIST entidad
  etiqueta CDATA #IMPLIED
 >
