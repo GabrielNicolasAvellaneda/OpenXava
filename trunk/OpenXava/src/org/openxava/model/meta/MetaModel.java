@@ -512,8 +512,11 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		ArrayList result = new ArrayList();
 		while (it.hasNext()) {
 			MetaProperty p = (MetaProperty) it.next();
+			/* tmp
 			if (p.isKey() && !p.hasCalcultaroDefaultValueOnCreate() || 
-				p.isRequired()) 
+				p.isRequired())
+				*/ 
+			if (p.isRequired()) // tmp
 			{
 				result.add(p.getName());
 			}
@@ -533,8 +536,10 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 			String nombre = (String) it.next();
 			if (containsMetaProperty(nombre)) {
 				MetaProperty p = getMetaProperty(nombre);
+				/* tmp
 				if (p.isKey() && !p.hasCalcultaroDefaultValueOnCreate() || 
-					p.isRequired())	{
+					p.isRequired())	{ */
+				if (p.isRequired()) { // tmp
 					result.add(p.getName());
 				}				
 			}

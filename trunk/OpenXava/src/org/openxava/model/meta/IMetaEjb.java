@@ -90,6 +90,8 @@ public interface IMetaEjb extends IMetaModel {
 	Object obtainPrimaryKeyFromKeyWithoutConversors(Map valoresClave) throws XavaException;
 	
 	Map obtainMapFromPrimaryKey(Object primaryKey) throws XavaException;
+	
+	Class getBeanClass() throws XavaException;
 		
 }
 

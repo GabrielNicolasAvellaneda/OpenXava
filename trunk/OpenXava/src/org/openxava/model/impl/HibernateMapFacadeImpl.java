@@ -23,7 +23,7 @@ public class HibernateMapFacadeImpl extends MapFacadeBean {
 	protected Object findEntity(IMetaEjb metaModel, Map keyValues) throws FinderException {
 		try {
 			MetaEjbImpl ejbImpl = new MetaEjbImpl(metaModel);
-			Class className = metaModel.getPropertiesClass();
+			Class className = metaModel.getBeanClass();
 			Object key = null;
 			if (keyValues.size() == 1) {
 				key = keyValues.values().iterator().next();
@@ -63,7 +63,7 @@ public class HibernateMapFacadeImpl extends MapFacadeBean {
 		throws CreateException, ValidationException, XavaException {
 			Object object = null;
 			try {				
-				object = metaEjb.getPropertiesClass().newInstance();
+				object = metaEjb.getBeanClass().newInstance();
 				PropertiesManager mp = new PropertiesManager(object);
 				mp.executeSets(values);
 				getSession().save(object);
