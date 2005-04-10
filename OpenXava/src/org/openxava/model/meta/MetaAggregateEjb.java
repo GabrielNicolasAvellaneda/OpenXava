@@ -148,6 +148,10 @@ public class MetaAggregateEjb extends MetaAggregate implements IMetaEjb {
 	public String getClassName() throws XavaException {		
 		return getRemote();
 	}
+	public Class getBeanClass() throws XavaException {
+		throw new UnsupportedOperationException ("No soportado todavia"); //tmp
+		
+	}
 	
 }
 

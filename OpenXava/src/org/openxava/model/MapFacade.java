@@ -20,7 +20,7 @@ import org.openxava.validators.*;
  * 
  * @author Javier Paniza
  */
-public class MapFacade {
+public class MapFacadeEJB {
 	
 	private static Map remotes;
 

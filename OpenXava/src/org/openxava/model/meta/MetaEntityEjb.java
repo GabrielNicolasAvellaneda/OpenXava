@@ -16,6 +16,7 @@ import org.openxava.util.*;
 public class MetaEntityEjb extends MetaEntity implements IMetaEjb {
 	
 	private MetaEjbImpl impl = new MetaEjbImpl(this);	
+	private java.lang.String beanClassName;
 	private Collection keyFields;
 	
 	public Class getRemoteClass() throws XavaException {
@@ -161,6 +162,31 @@ public class MetaEntityEjb extends MetaEntity implements IMetaEjb {
 	public String getClassName() throws XavaException {		
 		return getRemote();
 	}
+	
+	public String getBeanClassName() throws XavaException {
+		if (Is.emptyString(beanClassName)) {
+			beanClassName = getMetaComponent().getPackageName() + "." + getName();
+		}
+		return beanClassName;
+	}
+	
+	public void setBeanClassName(java.lang.String newClase) {
+		beanClassName = newClase;
+	}
+
+	public Class getBeanClass() throws XavaException {
+		try {
+			return Class.forName(getBeanClassName());
+		} catch (ClassNotFoundException ex) {
+			ex.printStackTrace();
+			throw new XavaException( // tmp: i18n
+				"No se encuentra la clase "
+					+ getBeanClass()
+					+ " asociada al modelo "
+					+ getName());
+		}
+	}
+	
 	
 }
 

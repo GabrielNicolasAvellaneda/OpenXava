@@ -5,7 +5,7 @@
  name ID #REQUIRED
 >
 
-<!ELEMENT entity (ejb?, implements*, (property|reference|collection)*, method*, finder*, postcreate-calculator*, postmodify-calculator*, validator*, remove-validator*)>
+<!ELEMENT entity (ejb?, bean?, implements*, (property|reference|collection)*, method*, finder*, postcreate-calculator*, postmodify-calculator*, validator*, remove-validator*)>
 <!ATTLIST entity
  label CDATA #IMPLIED
 >

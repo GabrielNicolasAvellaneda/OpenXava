@@ -23,7 +23,11 @@ public class ModelParser extends XmlElementsNames {
 		}
 		else {			
 			e.setGenerateXDocLet(true);
-		}		
+		}
+		if (hasBean(el, lang)) {
+			e.setBeanClassName(getBeanClass(el, lang));
+		}				
+
 		fillMembers(el, e, lang);								
 		return e;
 	}
@@ -188,7 +192,7 @@ public class ModelParser extends XmlElementsNames {
 		p.setStereotype(el.getAttribute(xstereotype[lang]));
 		p.setTypeName(el.getAttribute(xtype[lang]));
 		p.setSize(ParserUtil.getAttributeInt(el, xsize[lang]));
-		p.setRequired(ParserUtil.getAttributeBoolean(el, xrequired[lang]));
+		//p.setRequired(ParserUtil.getAttributeBoolean(el, xrequired[lang])); tmp
 		p.setHidden(ParserUtil.getAttributeBoolean(el, xhidden[lang]));
 		boolean key = ParserUtil.getAttributeBoolean(el, xkey[lang]);
 		if (key) p.setKey(key);
@@ -204,6 +208,13 @@ public class ModelParser extends XmlElementsNames {
 		}
 		p.setMetaCalculator(createCalculator(el, lang));
 		p.setMetaCalculatorDefaultValue(crearCalculadorValorDefeto(el, lang));
+		if (Is.emptyString(el.getAttribute(xrequired[lang]))) {
+			// Calculating a valid default value for required
+			p.setRequired(p.isKey() && !p.hasCalcultaroDefaultValueOnCreate());
+		}
+		else {
+			p.setRequired(ParserUtil.getAttributeBoolean(el, xrequired[lang]));
+		}
 		return p;
 	}
 	
