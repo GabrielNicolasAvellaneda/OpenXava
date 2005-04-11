@@ -97,8 +97,8 @@ public class MetaEditor {
 	}
 	
 	private boolean dependsPropertyName(MetaProperty p) {
-		if (propertiesIDepend == null) return false; 		
-		return propertiesIDepend.contains(p.getName()); 
+		if (propertiesIDepend == null) return false;		
+		return propertiesIDepend.contains(p.getName());
 	}
 
 	public boolean hasFormatter() {		

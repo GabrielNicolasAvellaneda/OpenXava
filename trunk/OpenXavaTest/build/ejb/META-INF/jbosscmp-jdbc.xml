@@ -1182,7 +1182,7 @@
       <entity>
          <ejb-name>Product3</ejb-name>
 
-         <table-name>XAVATEST_PRODUCT3</table-name>
+         <table-name>XAVATEST@separator@PRODUCT3</table-name>
 
          <cmp-field>
             <field-name>_Comments</field-name>
