@@ -192,7 +192,6 @@ public class ModelParser extends XmlElementsNames {
 		p.setStereotype(el.getAttribute(xstereotype[lang]));
 		p.setTypeName(el.getAttribute(xtype[lang]));
 		p.setSize(ParserUtil.getAttributeInt(el, xsize[lang]));
-		//p.setRequired(ParserUtil.getAttributeBoolean(el, xrequired[lang])); tmp
 		p.setHidden(ParserUtil.getAttributeBoolean(el, xhidden[lang]));
 		boolean key = ParserUtil.getAttributeBoolean(el, xkey[lang]);
 		if (key) p.setKey(key);

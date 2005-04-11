@@ -9,55 +9,56 @@ import org.openxava.util.*;
 /**
  * @author Javier Paniza
  */
+
 public class GeneratorFactory {
 	
-	private static Map clasesEJB;
-	private static Map clasesPOJO;
+	private static Map ejbClasses;
+	private static Map pojoClasses;
 	
 	public static IPropertyCodeGenerator create(MetaProperty metaProperty, boolean ejb) throws Exception {
 		if (!has(metaProperty, ejb)) return null;
-		Map clases = ejb?clasesEJB:clasesPOJO;
-		String clase = (String) clases.get(metaProperty.getStereotype());
-		Object o = instanciar(clase);
+		Map classes = ejb?ejbClasses:pojoClasses;
+		String className = (String) classes.get(metaProperty.getStereotype());
+		Object o = instantiate(className);
 		if (!(o instanceof IPropertyCodeGenerator)) {
-			throw new XavaException("implements_required", clase, "IPropertyCodeGenerator");
+			throw new XavaException("implements_required", className, "IPropertyCodeGenerator");
 		}
-		IPropertyCodeGenerator generador = (IPropertyCodeGenerator) o;
-		generador.setMetaProperty(metaProperty);
-		return generador;		
+		IPropertyCodeGenerator generator = (IPropertyCodeGenerator) o;
+		generator.setMetaProperty(metaProperty);
+		return generator;		
 	}
 	
-	public static boolean has(MetaProperty metaPropiedad, boolean ejb) throws Exception {		
+	public static boolean has(MetaProperty metaProperty, boolean ejb) throws Exception {		
 		configure();
-		Map clases = ejb?clasesEJB:clasesPOJO;
-		return clases.containsKey(metaPropiedad.getStereotype());				
+		Map classes = ejb?ejbClasses:pojoClasses;
+		return classes.containsKey(metaProperty.getStereotype());				
 	}
 	
 	public static void _addForStereotype(String name, String modelType, String className) throws XavaException {
-		if (clasesEJB == null || clasesPOJO==null) {
+		if (ejbClasses == null || pojoClasses==null) {
 			throw new XavaException("only_from_parse", "GeneratorFactory._addForStereotype");
 		}		
 		if ("ejb".equals(modelType)) {  
-			clasesEJB.put(name, className);
+			ejbClasses.put(name, className);
 		}
 		else if ("pojo".equals(modelType)) {  
-			clasesPOJO.put(name, className);
+			pojoClasses.put(name, className);
 		}
 		else {
-			clasesEJB.put(name, className);
-			clasesPOJO.put(name, className);
+			ejbClasses.put(name, className);
+			pojoClasses.put(name, className);
 		}
 	}
 	
-	private static Object instanciar(String className) throws Exception {
+	private static Object instantiate(String className) throws Exception {
 		return Class.forName(className).newInstance();		
 	}
 	
 	private static void configure() throws XavaException {
-		if (clasesEJB != null) return;
-		clasesEJB = new HashMap();
-		clasesPOJO = new HashMap();
-		GeneratorsParser.configurarGeneradores();
+		if (ejbClasses != null) return;
+		ejbClasses = new HashMap();
+		pojoClasses = new HashMap();
+		GeneratorsParser.configureGenerators();
 	}
 
 }

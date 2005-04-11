@@ -11,13 +11,13 @@ import org.openxava.util.*;
 
 public class BooleanFormatter implements IFormatter {
 	
-	public String format(HttpServletRequest request, Object booleano) {
+	public String format(HttpServletRequest request, Object booleanValue) {
 		try {
-			if (booleano == null) {
+			if (booleanValue == null) {
 				return Labels.get("no", request.getLocale());
 			}
 			else {
-				boolean r = ((Boolean) booleano).booleanValue();
+				boolean r = ((Boolean) booleanValue).booleanValue();
 				return r?Labels.get("yes", request.getLocale()):Labels.get("no", request.getLocale());
 			}		
 		}
@@ -27,14 +27,15 @@ public class BooleanFormatter implements IFormatter {
 		}
 	}
 	
-	public Object parse(HttpServletRequest request, String cadena) {
-		if (Is.emptyString(cadena)) return Boolean.FALSE;
+	public Object parse(HttpServletRequest request, String string) {
+		if (Is.emptyString(string)) return Boolean.FALSE;
 		if (
-			"Sí".equalsIgnoreCase(cadena) ||
-			"SÍ".equalsIgnoreCase(cadena) ||
-			"Si".equalsIgnoreCase(cadena) ||
-			"true".equalsIgnoreCase(cadena) ||
-			"verdadero".equalsIgnoreCase(cadena)) return Boolean.TRUE;	 				
+			"yes".equalsIgnoreCase(string) ||
+			"Sí".equalsIgnoreCase(string) ||
+			"SÍ".equalsIgnoreCase(string) ||
+			"Si".equalsIgnoreCase(string) ||
+			"true".equalsIgnoreCase(string) ||
+			"verdadero".equalsIgnoreCase(string)) return Boolean.TRUE;	 				
 		return Boolean.FALSE;
 	}
 	

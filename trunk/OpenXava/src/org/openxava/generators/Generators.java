@@ -9,108 +9,108 @@ import org.openxava.util.*;
  */
 public class Generators {
 
-	public static String generateCast(String tipo, String sentencia) throws XavaException {
-		if (tipo == null) {
-			throw new XavaException("cast_type_required", sentencia); 
+	public static String generateCast(String type, String sentence) throws XavaException {
+		if (type == null) {
+			throw new XavaException("cast_type_required", sentence); 
 		}
-		tipo = tipo.trim();
-		if (tipo.equals("boolean")) {
-			return "((Boolean) " + sentencia + ").booleanValue()";
+		type = type.trim();
+		if (type.equals("boolean")) {
+			return "((Boolean) " + sentence + ").booleanValue()";
 		}
-		else if (tipo.equals("byte")) {
-			return "((Byte) " + sentencia + ").byteValue()";
+		else if (type.equals("byte")) {
+			return "((Byte) " + sentence + ").byteValue()";
 		}
-		else if (tipo.equals("char")) {
-			return "((Character) " + sentencia + ").charValue()";
+		else if (type.equals("char")) {
+			return "((Character) " + sentence + ").charValue()";
 		}
-		else if (tipo.equals("short")) {
-			return "((Short) " + sentencia + ").shortValue()";
+		else if (type.equals("short")) {
+			return "((Short) " + sentence + ").shortValue()";
 		}
-		else if (tipo.equals("int")) {
-			return "((Integer) " + sentencia + ").intValue()";
+		else if (type.equals("int")) {
+			return "((Integer) " + sentence + ").intValue()";
 		}
-		else if (tipo.equals("long")) {
-			return "((Long) " + sentencia + ").longValue()";
+		else if (type.equals("long")) {
+			return "((Long) " + sentence + ").longValue()";
 		}
-		else if (tipo.equals("float")) {
-			return "((Float) " + sentencia + ").floatValue()";
+		else if (type.equals("float")) {
+			return "((Float) " + sentence + ").floatValue()";
 		}
-		else if (tipo.equals("double")) {
-			return "((Double) " + sentencia + ").doubleValue()";
+		else if (type.equals("double")) {
+			return "((Double) " + sentence + ").doubleValue()";
 		}
 		else {
-			return "(" + tipo + ") " + sentencia;
+			return "(" + type + ") " + sentence;
 		}
 	}
 	
-	public static String generatePrimitiveWrapper(String tipo, String sentencia) throws XavaException {
-		if (tipo == null) {
-			throw new XavaException("Imposible determinar a que tipo moldea la sentencia " + sentencia); 
+	public static String generatePrimitiveWrapper(String type, String sentence) throws XavaException {
+		if (type == null) {
+			throw new XavaException("cast_type_required", sentence); 
 		}
-		tipo = tipo.trim();
-		if (tipo.equals("boolean")) {
-			return "new Boolean(" + sentencia + ")";
+		type = type.trim();
+		if (type.equals("boolean")) {
+			return "new Boolean(" + sentence + ")";
 		}
-		else if (tipo.equals("byte")) {
-			return "new Byte(" + sentencia + ")";
+		else if (type.equals("byte")) {
+			return "new Byte(" + sentence + ")";
 		}
-		else if (tipo.equals("char")) {
-			return "new Character(" + sentencia + ")";
+		else if (type.equals("char")) {
+			return "new Character(" + sentence + ")";
 		}
-		else if (tipo.equals("short")) {
-			return "new Short(" + sentencia + ")";
+		else if (type.equals("short")) {
+			return "new Short(" + sentence + ")";
 		}
-		else if (tipo.equals("int")) {
-			return "new Integer(" + sentencia + ")";
+		else if (type.equals("int")) {
+			return "new Integer(" + sentence + ")";
 		}
-		else if (tipo.equals("long")) {
-			return "new Long(" + sentencia + ")";
+		else if (type.equals("long")) {
+			return "new Long(" + sentence + ")";
 		}
-		else if (tipo.equals("float")) {
-			return "new Float(" + sentencia + ")";
+		else if (type.equals("float")) {
+			return "new Float(" + sentence + ")";
 		}
-		else if (tipo.equals("double")) {
-			return "new Double(" + sentencia + ")";
+		else if (type.equals("double")) {
+			return "new Double(" + sentence + ")";
 		}
 		else {
-			return sentencia;
+			return sentence;
 		}
 	}
 	
-	public static String generateCastFromString(String tipo, String sentencia) throws XavaException {
-		if (tipo == null) {
-			throw new XavaException("to_string_type_required", sentencia); 
+	public static String generateCastFromString(String type, String sentence) throws XavaException {
+		if (type == null) {
+			throw new XavaException("to_string_type_required", sentence); 
 		}
-		tipo = tipo.trim();
-		if (tipo.equals("boolean")) {			
-			return "Boolean.valueOf(" + sentencia + ").booleanValue()";
+		type = type.trim();
+		if (type.equals("boolean")) {			
+			return "Boolean.valueOf(" + sentence + ").booleanValue()";
 		}
-		else if (tipo.equals("byte")) {			
-			return "Byte.parseByte(" + sentencia + ")";
+		else if (type.equals("byte")) {			
+			return "Byte.parseByte(" + sentence + ")";
 		}
-		else if (tipo.equals("char")) {
-			return sentencia + ".length() > 0?" + sentencia + ".charAt(0):' '";
+		else if (type.equals("char")) {
+			return sentence + ".length() > 0?" + sentence + ".charAt(0):' '";
 		}
-		else if (tipo.equals("short")) {						
-			return "Short.parseShort(" + sentencia + ")";
+		else if (type.equals("short")) {						
+			return "Short.parseShort(" + sentence + ")";
 		}
-		else if (tipo.equals("int")) {
-			return "Integer.parseInt(" + sentencia + ")";			
+		else if (type.equals("int")) {
+			return "Integer.parseInt(" + sentence + ")";			
 		}
-		else if (tipo.equals("long")) {
-			return "Long.parseLong(" + sentencia + ")";			
+		else if (type.equals("long")) {
+			return "Long.parseLong(" + sentence + ")";			
 		}
-		else if (tipo.equals("float")) {			
-			return "Float.parseFloat(" + sentencia + ")";
+		else if (type.equals("float")) {			
+			return "Float.parseFloat(" + sentence + ")";
 		}
-		else if (tipo.equals("double")) {
-			return "Double.parseDouble(" + sentencia + ")";			
+		else if (type.equals("double")) {
+			return "Double.parseDouble(" + sentence + ")";			
 		}
-		else if (tipo.equals("java.math.BigDecimal") || tipo.equals("BigDecimal")) {
-			return "new BigDecimal(" + sentencia + ")";
+		else if (type.equals("java.math.BigDecimal") || type.equals("BigDecimal")) {
+			return "new BigDecimal(" + sentence + ")";
 		}
 		else {
-			return sentencia;
+			return sentence;
 		}
 	}
 	
