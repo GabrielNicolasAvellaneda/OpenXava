@@ -91,7 +91,7 @@ public class WebEditors {
 	 */
 	public static boolean depends(MetaProperty a, MetaProperty b) {
 		try {			
-			if (a.depends(b)) return true;			
+			if (a.depends(b)) return true;
 			return MetaWebEditors.getMetaEditorFor(a).depends(b);
 		}
 		catch (ElementNotFoundException ex) {

@@ -1716,10 +1716,10 @@ public class View implements java.io.Serializable {
 	}
 
 	private boolean hasDependentsProperties(MetaProperty p) {
-		try {
+		try {			
 			// In this view						
 			for (Iterator it = getMetaPropertiesQualified().iterator(); it.hasNext();) {
-				Object element = (Object) it.next();
+				Object element = (Object) it.next();				
 				if (element instanceof MetaProperty && !PropertiesSeparator.INSTANCE.equals(element)) {
 					MetaProperty pro = (MetaProperty) element;					
 					if (WebEditors.depends(pro, p)) {				
@@ -2057,19 +2057,25 @@ public class View implements java.io.Serializable {
 		return getMetaView().getMetaDescriptionList(ref).getDescriptionPropertiesNames();
 	}	
 	
-	public boolean throwsReferenceChanged(MetaReference ref) throws XavaException {						 		
+	public boolean throwsReferenceChanged(MetaReference ref) throws XavaException {		
 		if (getDepends().contains(ref.getName())) return true;
 		Iterator itClaves = ref.getMetaModelReferenced().getKeyPropertiesNames().iterator();
 		while (itClaves.hasNext()) {			
-			String nombreRef = ref.getName() + "." + itClaves.next();
+			String propertyKey = (String) itClaves.next();
+			String nombreRef = ref.getName() + "." + propertyKey;
 			if (getMetaView().hasOnChangeAction(nombreRef)) {
 				return true;
-			}			
+			}
+			
 			Iterator itProperties = getRoot().getMetaPropertiesQualified().iterator();
 			while (itProperties.hasNext()) {
 				MetaProperty p = (MetaProperty) itProperties.next();
 				if (p.getPropertyNamesThatIDepend().contains(nombreRef)) return true;				
 			}
+			
+			MetaProperty p = ref.getMetaModelReferenced().getMetaProperty(propertyKey).cloneMetaProperty();
+			p.setName(nombreRef);
+			if (hasDependentsProperties(p)) return true;			
 		}
 		return false;					
 	}

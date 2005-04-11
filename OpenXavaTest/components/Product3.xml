@@ -18,6 +18,7 @@ Store oid of family and not the code
 	</entity> 
 	
 	<view name="WithDescriptionsList">
+		
 		<reference-view reference="family">
 			<descriptions-list/>
 		</reference-view>
@@ -32,14 +33,14 @@ Store oid of family and not the code
 		
 		<members>
 			number, family;
-			<group name="description">
+			<group name="description">				
 				description;
 				comments
 			</group>
 		</members>
 
 	</view>
-		
+			
 	<entity-mapping table="XAVATEST@separator@PRODUCT3">
 		<property-mapping 
 			property="number" column="NUMBER"/>

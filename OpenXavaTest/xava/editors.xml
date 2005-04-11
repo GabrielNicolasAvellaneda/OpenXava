@@ -52,6 +52,15 @@
 		<property name="descriptionsFormatter" value="org.openxava.test.formatters.FamilyDescriptionsFormatter"/>	
 		<for-stereotype stereotype="SUBFAMILY"/>
   </editor>
+
+  <editor url="descriptionsEditor.jsp" depends-properties="family.number"> 
+		<property name="model" value="Subfamily"/>
+		<property name="keyProperty" value="number"/>
+		<property name="descriptionProperties" value="description"/>
+		<property name="condition" value="${familyNumber} = ?"/>
+		<property name="parameterValuesProperties" value="family.number"/>
+		<for-stereotype stereotype="SUBFAMILY_DEPENDS_REFERENCE"/>
+  </editor>
   
   <editor	url="descriptionsEditor.jsp" frame="true">
   	<property name="model" value="Warehouse"/>

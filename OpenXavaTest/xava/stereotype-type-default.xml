@@ -8,6 +8,7 @@
 
 	<for stereotype="FAMILY" type="int"/>
 	<for stereotype="SUBFAMILY" type="int"/>
+	<for stereotype="SUBFAMILY_DEPENDS_REFERENCE" type="int"/>
 	<for stereotype="SERVICE_TYPE" type="int"/>
 	<for stereotype="NO_FORMATING_STRING" type="String"/>
 	<for stereotype="PRODUCT3" type="long"/>
