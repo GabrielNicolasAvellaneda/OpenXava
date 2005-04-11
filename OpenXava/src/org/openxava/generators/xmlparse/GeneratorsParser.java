@@ -10,11 +10,11 @@ import org.w3c.dom.*;
  */
 public class GeneratorsParser extends ParserBase {
 
-	public GeneratorsParser(String urlArchivoXml, int language) {
-		super(urlArchivoXml, language);
+	public GeneratorsParser(String urlXmlFile, int language) {
+		super(urlXmlFile, language);
 	}
 	
-	public static void configurarGeneradores() throws XavaException {
+	public static void configureGenerators() throws XavaException {
 		GeneratorsParser enParser = new GeneratorsParser("code-generators.xml", ENGLISH);
 		enParser.parse();		
 		GeneratorsParser esParser = new GeneratorsParser("generadores-codigo.xml", ESPAÑOL);

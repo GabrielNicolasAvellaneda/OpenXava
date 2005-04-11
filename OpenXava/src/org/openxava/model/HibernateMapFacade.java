@@ -16,7 +16,7 @@ import org.openxava.util.*;
 import org.openxava.validators.*;
 
 
-public class MapFacade {
+public class HibernateMapFacade {
 	
 	private static HibernateMapFacadeImpl impl = new HibernateMapFacadeImpl(); 
 	private static SessionFactory sessionFactory;

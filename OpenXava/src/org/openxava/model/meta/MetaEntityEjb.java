@@ -177,13 +177,10 @@ public class MetaEntityEjb extends MetaEntity implements IMetaEjb {
 	public Class getBeanClass() throws XavaException {
 		try {
 			return Class.forName(getBeanClassName());
-		} catch (ClassNotFoundException ex) {
+		} 
+		catch (ClassNotFoundException ex) {
 			ex.printStackTrace();
-			throw new XavaException( // tmp: i18n
-				"No se encuentra la clase "
-					+ getBeanClass()
-					+ " asociada al modelo "
-					+ getName());
+			throw new XavaException("no_class_for_model", getBeanClass(), getName());
 		}
 	}
 	

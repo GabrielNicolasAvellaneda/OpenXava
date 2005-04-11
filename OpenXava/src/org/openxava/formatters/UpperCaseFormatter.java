@@ -8,12 +8,12 @@ import javax.servlet.http.*;
 
 public class UpperCaseFormatter implements IFormatter {
 	
-	public String format(HttpServletRequest request, Object cadena) {		
-		return cadena==null?"":cadena.toString().toUpperCase();			
+	public String format(HttpServletRequest request, Object string) {		
+		return string==null?"":string.toString().toUpperCase();			
 	}
 	
-	public Object parse(HttpServletRequest request, String cadena) {
-		return cadena==null?"":cadena.toString().toUpperCase();		
+	public Object parse(HttpServletRequest request, String string) {
+		return string==null?"":string.toString().toUpperCase();		
 	}
 	
 }

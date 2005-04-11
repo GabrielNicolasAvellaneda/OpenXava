@@ -1482,8 +1482,7 @@ public class MapFacadeBean implements SessionBean {
 
 	private void validarExistenRequeridos(Messages errores, MetaModel metaModelo, Map valores)
 		throws XavaException {		
-		Iterator it = metaModelo.getRequiredMemberNames().iterator();
-		System.out.println("[MapFacadeBean.validarExistenRequeridos] metaModelo.getRequiredMemberNames()=" + metaModelo.getRequiredMemberNames()); //  tmp
+		Iterator it = metaModelo.getRequiredMemberNames().iterator();		
 		while (it.hasNext()) {
 			String nombre = (String) it.next();			
 			if (!valores.containsKey(nombre)) {				
