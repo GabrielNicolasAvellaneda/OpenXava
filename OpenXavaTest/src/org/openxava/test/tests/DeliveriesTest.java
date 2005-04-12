@@ -657,7 +657,8 @@ public class DeliveriesTest extends ModuleTestBase {
 		setValue("deliveredBy", "2");
 		assertNoMessages();
 		setValue("carrier.number", "3");
-		assertMessage("Carrier changed");
+		assertMessagesCount(1);
+		assertMessage("Carrier changed");		
 		assertValue("remarks", "The carrier is 3");				
 		setValue("carrier.number", "2");		
 		assertValue("remarks", "The carrier is 2");				
