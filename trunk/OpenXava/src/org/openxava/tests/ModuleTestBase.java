@@ -644,10 +644,18 @@ public class ModuleTestBase extends TestCase {
 			fail(XavaResources.getString("no_error_and_expected", new Integer(expectedCount)));
 			return;
 		}
-		assertEquals(XavaResources.getString("error_count_unexpected"), expectedCount, table.getRowCount());
+		assertEquals(XavaResources.getString("errors_count_unexpected"), expectedCount, table.getRowCount());
 	}
 	
-	
+	protected void assertMessagesCount(int expectedCount) throws Exception {		
+		WebTable table = response.getTableWithID("messages");
+		if (table == null && expectedCount > 0) {
+			fail(XavaResources.getString("no_message_and_expected", new Integer(expectedCount)));
+			return;
+		}
+		assertEquals(XavaResources.getString("messages_count_unexpected"), expectedCount, table.getRowCount());
+	}
+			
 	protected void assertNoError(String mensaje) throws Exception {		
 		WebTable table = response.getTableWithID("errors");
 		if (table == null) {			
@@ -686,7 +694,6 @@ public class ModuleTestBase extends TestCase {
 	protected void assertNoMessages() throws Exception {
 		assertNoMensajes("messages", "Mensaje");		
 	}
-	
 	
 	private void assertNoMensajes(String id, String label) throws Exception {		
 		WebTable table = response.getTableWithID(id);
