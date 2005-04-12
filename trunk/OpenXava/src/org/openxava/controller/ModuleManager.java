@@ -456,7 +456,7 @@ public class ModuleManager {
 	}
 
 	private String getViewName() {
-		if (IChangeModeAction.LIST.equals(getModeName()) && !getMetaActionsSections().isEmpty()) {
+		if (IChangeModeAction.LIST.equals(getModeName())) {
 			return "xava/list";
 		}		
 		if (viewName == null) {			
@@ -598,6 +598,7 @@ public class ModuleManager {
 	
 	public void initModule(HttpServletRequest request, Messages errors, Messages messages) {
 		if (!moduleInitiated) {
+			modeName = getMetaActionsSections().isEmpty()?IChangeModeAction.DETAIL:null;
 			Iterator it = getMetaActionsOnInit().iterator();
 			while (it.hasNext()) {
 				MetaAction a = (MetaAction) it.next();
