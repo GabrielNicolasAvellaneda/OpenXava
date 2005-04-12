@@ -34,7 +34,7 @@
 			<descriptions-list condition="${family.number} = 2"/>
 		</reference-view>
 	</view>
-	
+
 	<view name="WithSubfamilyForm">	
 		<reference-view reference="subfamily" search="false"/>
 	</view>
