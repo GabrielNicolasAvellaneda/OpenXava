@@ -14,7 +14,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Sat Apr 09 11:31:02 CEST 2005
+ * @version Tue Apr 12 18:28:30 CEST 2005
  */
 public class EJBeanPG {
     Properties properties = new Properties();
@@ -505,7 +505,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     		Iterator it = containerModel.getAllKeyPropertiesNames().iterator();
     		while (it.hasNext()) {
     			String originalName = (String) it.next();
-    			if (modelMapping.isReferencePropertyOverlappingWithSomeProperty(originalName)) continue;
+    			if (containerModel.getMapping().isReferencePropertyOverlappingWithSomeProperty(originalName)) continue;
     			String propertyName = Strings.change(originalName, ".", "_");
     			
     		
@@ -1321,9 +1321,9 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Sat Apr 09 11:31:03 CEST 2005", // date this file was generated
-             "/home/mcarmen/workspace/OpenXava/generator/ejbean.xml", // input file
-             "/home/mcarmen/workspace/OpenXava/generator/EJBeanPG.java" }, // output file
+        { "Tue Apr 12 18:28:31 CEST 2005", // date this file was generated
+             "/home/javi/workspace/OpenXava/generator/ejbean.xml", // input file
+             "/home/javi/workspace/OpenXava/generator/EJBeanPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

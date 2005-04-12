@@ -123,7 +123,7 @@
       <entity>
          <ejb-name>Delivery</ejb-name>
 
-         <table-name>XAVATEST_DELIVERY</table-name>
+         <table-name>XAVATEST@separator@DELIVERY</table-name>
 
          <cmp-field>
             <field-name>_Distance</field-name>
@@ -988,6 +988,60 @@
       </entity>
 
       <entity>
+         <ejb-name>DeliveryDetail</ejb-name>
+
+         <table-name>XAVATEST@separator@DELIVERYDETAIL</table-name>
+
+         <cmp-field>
+            <field-name>oid</field-name>
+            <column-name>OID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Description</field-name>
+            <column-name>DESCRIPTION</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>delivery_number</field-name>
+            <column-name>DELIVERY_NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>delivery_type_number</field-name>
+            <column-name>DELIVERY_TYPE_NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>delivery_invoice_year</field-name>
+            <column-name>DELIVERY_INVOICE_YEAR</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>delivery_invoice_number</field-name>
+            <column-name>DELIVERY_INVOICE_NUMBER</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByDelivery</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryDetail o WHERE o.delivery_number = ?1 AND o.delivery_type_number = ?2 AND o.delivery_invoice_year = ?3 AND o.delivery_invoice_number = ?4 ]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
          <ejb-name>AdditionalDetail</ejb-name>
 
          <table-name>XAVATEST_SERVICEDETAIL</table-name>
@@ -1182,7 +1236,7 @@
       <entity>
          <ejb-name>Product3</ejb-name>
 
-         <table-name>XAVATEST@separator@PRODUCT3</table-name>
+         <table-name>XAVATEST_PRODUCT3</table-name>
 
          <cmp-field>
             <field-name>_Comments</field-name>

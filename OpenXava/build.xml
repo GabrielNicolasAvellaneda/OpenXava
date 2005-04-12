@@ -107,7 +107,7 @@
 		<antcall target="filterXavaFilesWithoutConfiguration"/>
 	</target>
 		
-	<target name="generateWebsphereMapping">
+	<target name="generateWebsphereMapping" depends="filterXavaFiles">
 		<echo>Generating xml template for Websphere Mapping</echo>
 		<java classname="Simple2XML" classpath="${tl.lib}">
 			<arg value="${generator.dir}/websphereDbxmi.template"/> 

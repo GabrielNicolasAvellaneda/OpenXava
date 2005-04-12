@@ -293,6 +293,23 @@
       </columns>
 
    </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_DeliveryDetail" name="" primaryKey="DeliveryDetail_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="DeliveryDetail_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_DeliveryDetail" constraint="Constraint_DeliveryDetail_"/>
+
+      <columns xmi:id="DeliveryDetail_oid" name="oid">
+      </columns>
+      <columns xmi:id="DeliveryDetail__Description" name="_Description">
+      </columns>
+      <columns xmi:id="DeliveryDetail_delivery_number" name="delivery_number">
+      </columns>
+      <columns xmi:id="DeliveryDetail_delivery_type_number" name="delivery_type_number">
+      </columns>
+      <columns xmi:id="DeliveryDetail_delivery_invoice_year" name="delivery_invoice_year">
+      </columns>
+      <columns xmi:id="DeliveryDetail_delivery_invoice_number" name="delivery_invoice_number">
+      </columns>
+
+   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_AdditionalDetail" name="" primaryKey="AdditionalDetail_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="AdditionalDetail_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_AdditionalDetail" constraint="Constraint_AdditionalDetail_"/>
 

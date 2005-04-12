@@ -422,7 +422,7 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 		Iterator it = containerModel.getAllKeyPropertiesNames().iterator();
 		while (it.hasNext()) {
 			String originalName = (String) it.next();
-			if (modelMapping.isReferencePropertyOverlappingWithSomeProperty(originalName)) continue;
+			if (containerModel.getMapping().isReferencePropertyOverlappingWithSomeProperty(originalName)) continue;
 			String propertyName = Strings.change(originalName, ".", "_");
 			
 		</java> 
