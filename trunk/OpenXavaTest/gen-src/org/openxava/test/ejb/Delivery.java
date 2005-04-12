@@ -67,6 +67,9 @@ public interface Delivery
    public int getNumber(  )
       throws java.rmi.RemoteException;
 
+   public java.util.Collection getDetails(  )
+      throws java.rmi.RemoteException;
+
    public org.openxava.test.ejb.DeliveryType getType(  )
       throws java.rmi.RemoteException;
 

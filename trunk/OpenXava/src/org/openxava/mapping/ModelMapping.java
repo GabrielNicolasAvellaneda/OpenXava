@@ -102,17 +102,13 @@ abstract public class ModelMapping implements java.io.Serializable {
 	 * @exception XavaException  Algún problema.
 	 */
 	public ReferenceMapping getReferenceMapping(String nombre)
-		throws XavaException {
+		throws XavaException {		
 		ReferenceMapping r =
 			mapeosReferencias == null
 				? null
 				: (ReferenceMapping) mapeosReferencias.get(nombre);
 		if (r == null) {
-			throw new ElementNotFoundException(
-				"No encontrado mapeo de referencia "
-					+ nombre
-					+ " en mapeo de "
-					+ getModelName());
+			throw new ElementNotFoundException("reference_mapping_not_found", nombre, getModelName());
 		}
 		return r;
 	}
@@ -472,7 +468,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 		return false;
 	}
 		
-	public boolean isReferencePropertyOverlappingWithSomeProperty(String propiedadCualificada)	throws XavaException {		
+	public boolean isReferencePropertyOverlappingWithSomeProperty(String propiedadCualificada)	throws XavaException {
 		int idx = propiedadCualificada.indexOf('.');
 		if (idx < 0) return false;
 		String ref = propiedadCualificada.substring(0, idx);

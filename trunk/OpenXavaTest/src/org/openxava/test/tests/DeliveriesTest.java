@@ -167,7 +167,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		execute("CRUD.delete");	
 		execute("ConfirmDelete.confirmDelete");											
 		assertNoErrors();
-		assertMessage("Delivery deleted successfully");
+		assertMessage("Delivery deleted successfully");		
 	}
 	
 	
