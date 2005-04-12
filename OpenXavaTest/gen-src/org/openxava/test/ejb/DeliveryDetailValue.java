@@ -11,10 +11,10 @@ public class DeliveryDetailValue
    extends java.lang.Object
    implements java.io.Serializable 
 {
-   private long oid;
-   private boolean oidHasBeenSet = false;
    private java.lang.String description;
    private boolean descriptionHasBeenSet = false;
+   private int number;
+   private boolean numberHasBeenSet = false;
    private int delivery_number;
    private boolean delivery_numberHasBeenSet = false;
    private int delivery_type_number;
@@ -31,10 +31,10 @@ public class DeliveryDetailValue
    //TODO Cloneable is better than this !
    public DeliveryDetailValue( DeliveryDetailValue otherValue )
    {
-	  this.oid = otherValue.oid;
-	  oidHasBeenSet = true;
 	  this.description = otherValue.description;
 	  descriptionHasBeenSet = true;
+	  this.number = otherValue.number;
+	  numberHasBeenSet = true;
 	  this.delivery_number = otherValue.delivery_number;
 	  delivery_numberHasBeenSet = true;
 	  this.delivery_type_number = otherValue.delivery_type_number;
@@ -45,20 +45,6 @@ public class DeliveryDetailValue
 	  delivery_invoice_numberHasBeenSet = true;
    }
 
-   public long getOid()
-   {
-	  return this.oid;
-   }
-
-   public void setOid( long oid )
-   {
-	  this.oid = oid;
-	  oidHasBeenSet = true;
-   }
-
-   public boolean oidHasBeenSet(){
-	  return oidHasBeenSet;
-   }
    public java.lang.String getDescription()
    {
 	  return this.description;
@@ -72,6 +58,20 @@ public class DeliveryDetailValue
 
    public boolean descriptionHasBeenSet(){
 	  return descriptionHasBeenSet;
+   }
+   public int getNumber()
+   {
+	  return this.number;
+   }
+
+   public void setNumber( int number )
+   {
+	  this.number = number;
+	  numberHasBeenSet = true;
+   }
+
+   public boolean numberHasBeenSet(){
+	  return numberHasBeenSet;
    }
    public int getDelivery_number()
    {
@@ -134,7 +134,7 @@ public class DeliveryDetailValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("oid=" + getOid() + " " + "description=" + getDescription() + " " + "delivery_number=" + getDelivery_number() + " " + "delivery_type_number=" + getDelivery_type_number() + " " + "delivery_invoice_year=" + getDelivery_invoice_year() + " " + "delivery_invoice_number=" + getDelivery_invoice_number());
+	  str.append("description=" + getDescription() + " " + "number=" + getNumber() + " " + "delivery_number=" + getDelivery_number() + " " + "delivery_type_number=" + getDelivery_type_number() + " " + "delivery_invoice_year=" + getDelivery_invoice_year() + " " + "delivery_invoice_number=" + getDelivery_invoice_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -148,7 +148,7 @@ public class DeliveryDetailValue
    protected boolean hasIdentity()
    {
 	  boolean ret = true;
-	  ret = ret && oidHasBeenSet;
+	  ret = ret && numberHasBeenSet;
 	  return ret;
    }
 
@@ -162,7 +162,7 @@ public class DeliveryDetailValue
 		 DeliveryDetailValue that = (DeliveryDetailValue) other;
 		 if ( ! that.hasIdentity() ) return false;
 		 boolean lEquals = true;
-		 lEquals = lEquals && this.oid == that.oid;
+		 lEquals = lEquals && this.number == that.number;
 
 		 lEquals = lEquals && isIdentical(that);
 
@@ -203,9 +203,9 @@ public class DeliveryDetailValue
 
    public int hashCode(){
 	  int result = 17;
-      result = 37*result + (int)(oid^(oid>>>32));
-
       result = 37*result + ((this.description != null) ? this.description.hashCode() : 0);
+
+      result = 37*result + (int) number;
 
       result = 37*result + (int) delivery_number;
 

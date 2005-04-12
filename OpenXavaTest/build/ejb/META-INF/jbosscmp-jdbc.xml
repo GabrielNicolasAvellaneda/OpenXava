@@ -993,13 +993,13 @@
          <table-name>XAVATEST@separator@DELIVERYDETAIL</table-name>
 
          <cmp-field>
-            <field-name>oid</field-name>
-            <column-name>OID</column-name>
+            <field-name>_Description</field-name>
+            <column-name>DESCRIPTION</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>_Description</field-name>
-            <column-name>DESCRIPTION</column-name>
+            <field-name>number</field-name>
+            <column-name>NUMBER</column-name>
 
         </cmp-field>
          <cmp-field>

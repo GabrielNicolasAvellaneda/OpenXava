@@ -18,8 +18,8 @@ public abstract class DeliveryDetailCMP
       {
          dataHolder = new org.openxava.test.ejb.DeliveryDetailData();
 
-         dataHolder.setOid( getOid() );
          dataHolder.set_Description( get_Description() );
+         dataHolder.setNumber( getNumber() );
          dataHolder.setDelivery_number( getDelivery_number() );
          dataHolder.setDelivery_type_number( getDelivery_type_number() );
          dataHolder.setDelivery_invoice_year( getDelivery_invoice_year() );
@@ -95,8 +95,8 @@ public abstract class DeliveryDetailCMP
       DeliveryDetailValue = new org.openxava.test.ejb.DeliveryDetailValue();
       try
          {
-            DeliveryDetailValue.setOid( getOid() );
             DeliveryDetailValue.setDescription( getDescription() );
+            DeliveryDetailValue.setNumber( getNumber() );
             DeliveryDetailValue.setDelivery_number( getDelivery_number() );
             DeliveryDetailValue.setDelivery_type_number( getDelivery_type_number() );
             DeliveryDetailValue.setDelivery_invoice_year( getDelivery_invoice_year() );
@@ -131,13 +131,13 @@ public abstract class DeliveryDetailCMP
 
 /* Value Objects END */
 
-   public abstract long getOid() ;
-
-   public abstract void setOid( long oid ) ;
-
    public abstract java.lang.String get_Description() ;
 
    public abstract void set_Description( java.lang.String _Description ) ;
+
+   public abstract int getNumber() ;
+
+   public abstract void setNumber( int number ) ;
 
    public abstract int getDelivery_number() ;
 

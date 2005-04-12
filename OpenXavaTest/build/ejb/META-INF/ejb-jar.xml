@@ -1277,13 +1277,13 @@
          <reentrant>true</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>DeliveryDetail</abstract-schema-name>
-         <cmp-field id="CmpAttribute_DeliveryDetail_oid">
-            <description><![CDATA[]]></description>
-            <field-name>oid</field-name>
-         </cmp-field>
          <cmp-field id="CmpAttribute_DeliveryDetail__Description">
             <description><![CDATA[]]></description>
             <field-name>_Description</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_DeliveryDetail_number">
+            <description><![CDATA[]]></description>
+            <field-name>number</field-name>
          </cmp-field>
          <cmp-field id="CmpAttribute_DeliveryDetail_delivery_number">
             <description><![CDATA[]]></description>

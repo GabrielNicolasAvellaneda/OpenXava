@@ -1450,7 +1450,7 @@ public class View implements java.io.Serializable {
 			if (hasDependentsProperties(p)) return true;			
 			if (getMetaView().hasOnChangeAction(p.getName())) return true;			
 			if (!isSubview()) return false;				
-			return getLastPropertyKeyName().equals(p.getName());
+			return isRepresentsEntityReference() && getLastPropertyKeyName().equals(p.getName());
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();

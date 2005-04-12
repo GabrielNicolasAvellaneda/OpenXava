@@ -35,6 +35,14 @@ public class DeliveriesTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Deliveries");		
 	}
 	
+	public void testAggregateInCollectionWithVisibleKeyDoesNotTryToSearchOnChangeKey() throws Exception {
+		execute("CRUD.new");
+		execute("Sections.change", "activeSection=2");
+		execute("Collection.new", "viewObject=xava_view_section2_details");
+		setValue("details.number", "66");
+		assertNoErrors();
+	}
+	
 	public void testOnChangeActionOnlyOnce() throws Exception {
 		execute("CRUD.new");
 		assertValue("driverType", "X");
