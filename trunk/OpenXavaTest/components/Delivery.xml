@@ -55,11 +55,9 @@
 							
 	</entity>		
 	
-	<aggregate name="DeliveryDetail">
-				
-		<property name="oid" key="true" hidden="true" type="long"/>		
+	<aggregate name="DeliveryDetail">				
+		<property name="number" key="true" type="int"/>		
 		<property name="description" type="String"/>
-
 	</aggregate>
 	
 	<view>
@@ -129,6 +127,7 @@
 			deliveredBy, carrier, employee;			
 			<section name="remarks">advice; remarks</section>
 			<section name="incidents">incidents</section>
+			<section name="details">details</section>
 		</members>
 
 	</view>
@@ -212,9 +211,8 @@
 			<reference-mapping-detail referenced-model-property="type.number" column="DELIVERY_TYPE_NUMBER"/>
 			<reference-mapping-detail referenced-model-property="number" column="DELIVERY_NUMBER"/>						
 		</reference-mapping>
-		
-		<property-mapping property="description" column="DESCRIPTION"/>
-		<property-mapping property="oid" column="OID"/>
+		<property-mapping property="number" column="NUMBER"/>
+		<property-mapping property="description" column="DESCRIPTION"/>		
 	</aggregate-mapping>
 	
 </component>

@@ -11,31 +11,31 @@ public class DeliveryDetailKey
    implements java.io.Serializable
 {
 
-   public long oid;
+   public int number;
 
    public DeliveryDetailKey()
    {
    }
 
-   public DeliveryDetailKey( long oid )
+   public DeliveryDetailKey( int number )
    {
-      this.oid = oid;
+      this.number = number;
    }
 
-   public long getOid()
+   public int getNumber()
    {
-      return oid;
+      return number;
    }
 
-   public void setOid(long oid)
+   public void setNumber(int number)
    {
-      this.oid = oid;
+      this.number = number;
    }
 
    public int hashCode()
    {
       int _hashCode = 0;
-         _hashCode += (int)this.oid;
+         _hashCode += (int)this.number;
 
       return _hashCode;
    }
@@ -54,7 +54,7 @@ public class DeliveryDetailKey
       }
       else
       {
-         eq = eq && this.oid == pk.oid;
+         eq = eq && this.number == pk.number;
       }
 
       return eq;
@@ -64,7 +64,7 @@ public class DeliveryDetailKey
    public String toString()
    {
       StringBuffer toStringValue = new StringBuffer("[.");
-         toStringValue.append(this.oid).append('.');
+         toStringValue.append(this.number).append('.');
       toStringValue.append(']');
       return toStringValue.toString();
    }

@@ -10,8 +10,8 @@ public class DeliveryDetailData
    extends java.lang.Object
    implements java.io.Serializable
 {
-   private long oid;
    private java.lang.String _Description;
+   private int number;
    private int delivery_number;
    private int delivery_type_number;
    private int delivery_invoice_year;
@@ -23,8 +23,8 @@ public class DeliveryDetailData
 
    public DeliveryDetailData( DeliveryDetailData otherData )
    {
-      setOid(otherData.getOid());
       set_Description(otherData.get_Description());
+      setNumber(otherData.getNumber());
       setDelivery_number(otherData.getDelivery_number());
       setDelivery_type_number(otherData.getDelivery_type_number());
       setDelivery_invoice_year(otherData.getDelivery_invoice_year());
@@ -33,17 +33,8 @@ public class DeliveryDetailData
    }
 
    public org.openxava.test.ejb.DeliveryDetailKey getPrimaryKey() {
-     org.openxava.test.ejb.DeliveryDetailKey pk = new org.openxava.test.ejb.DeliveryDetailKey(this.getOid());
+     org.openxava.test.ejb.DeliveryDetailKey pk = new org.openxava.test.ejb.DeliveryDetailKey(this.getNumber());
      return pk;
-   }
-
-   public long getOid()
-   {
-      return this.oid;
-   }
-   public void setOid( long oid )
-   {
-      this.oid = oid;
    }
 
    public java.lang.String get_Description()
@@ -53,6 +44,15 @@ public class DeliveryDetailData
    public void set_Description( java.lang.String _Description )
    {
       this._Description = _Description;
+   }
+
+   public int getNumber()
+   {
+      return this.number;
+   }
+   public void setNumber( int number )
+   {
+      this.number = number;
    }
 
    public int getDelivery_number()
@@ -95,7 +95,7 @@ public class DeliveryDetailData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("oid=" + getOid() + " " + "_Description=" + get_Description() + " " + "delivery_number=" + getDelivery_number() + " " + "delivery_type_number=" + getDelivery_type_number() + " " + "delivery_invoice_year=" + getDelivery_invoice_year() + " " + "delivery_invoice_number=" + getDelivery_invoice_number());
+      str.append("_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "delivery_number=" + getDelivery_number() + " " + "delivery_type_number=" + getDelivery_type_number() + " " + "delivery_invoice_year=" + getDelivery_invoice_year() + " " + "delivery_invoice_number=" + getDelivery_invoice_number());
       str.append('}');
 
       return(str.toString());
@@ -108,7 +108,6 @@ public class DeliveryDetailData
          DeliveryDetailData lTest = (DeliveryDetailData) pOther;
          boolean lEquals = true;
 
-         lEquals = lEquals && this.oid == lTest.oid;
          if( this._Description == null )
          {
             lEquals = lEquals && ( lTest._Description == null );
@@ -117,6 +116,7 @@ public class DeliveryDetailData
          {
             lEquals = lEquals && this._Description.equals( lTest._Description );
          }
+         lEquals = lEquals && this.number == lTest.number;
          lEquals = lEquals && this.delivery_number == lTest.delivery_number;
          lEquals = lEquals && this.delivery_type_number == lTest.delivery_type_number;
          lEquals = lEquals && this.delivery_invoice_year == lTest.delivery_invoice_year;
@@ -134,9 +134,9 @@ public class DeliveryDetailData
    {
       int result = 17;
 
-      result = 37*result + (int)(oid^(oid>>>32));
-
       result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
+
+      result = 37*result + (int) number;
 
       result = 37*result + (int) delivery_number;
 
