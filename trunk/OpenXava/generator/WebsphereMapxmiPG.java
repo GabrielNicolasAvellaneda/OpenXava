@@ -11,7 +11,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Apr 12 13:08:09 CEST 2005
+ * @version Fri Apr 15 19:26:54 CEST 2005
  */
 public class WebsphereMapxmiPG {
     Properties properties = new Properties();
@@ -47,29 +47,10 @@ private static long id = System.currentTimeMillis();
     out.print(tableId);
     out.print("\"/>\n    </helper>");
     
-    	for (Iterator itProperties=mapping.getPropertyMappings().iterator(); itProperties.hasNext();) {
-    		PropertyMapping pMapping = (PropertyMapping) itProperties.next();	
-    		Collection fields = new ArrayList();
-    		if (pMapping.hasMultipleConverter()) {
-    			fields.addAll(pMapping.getCmpFields());
-    		}
-    		else {
-    			fields.add(pMapping.toCmpField());
-    		}
-    		for (Iterator itFields=fields.iterator(); itFields.hasNext();) {
-    			CmpField field = (CmpField) itFields.next();
-    			String column = field.getColumn();
-    			String sufixAttribute = null;
-    			if (pMapping.hasMultipleConverter()) {
-    				sufixAttribute = "_" + pMapping.getProperty() + "_" + field.getConverterPropertyName();
-    			}
-    			else if (pMapping.hasConverter()) {
-    				sufixAttribute = "__" + Strings.firstUpper(pMapping.getProperty());
-    			}			 
-    			else {
-    				sufixAttribute = "_" + pMapping.getProperty();
-    			}
-    			String cmpAttributeId = "CmpAttribute_" + model.getName() + sufixAttribute;
+    	for (Iterator itFields=mapping.getCmpFields().iterator(); itFields.hasNext();) {
+    		CmpField field = (CmpField) itFields.next();
+    		String column = field.getColumn();
+    		String cmpAttributeId = "CmpAttribute_" + model.getName() + "_" + field.getCmpPropertyName();
     
     out.print(" \n    <nested xmi:type=\"ejbrdbmapping:RDBEjbFieldMapper\" xmi:id=\"RDBEjbFieldMapper_");
     out.print(id++);
@@ -81,7 +62,6 @@ private static long id = System.currentTimeMillis();
     out.print(column);
     out.print("\"/>\n    </nested>");
     
-    		}
     	}
     
     out.print(" \n    <inputs xmi:type=\"ejb:ContainerManagedEntity\" href=\"META-INF/ejb-jar.xml#ContainerManagedEntity_");
@@ -129,7 +109,7 @@ private static long id = System.currentTimeMillis();
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Apr 12 13:08:09 CEST 2005", // date this file was generated
+        { "Fri Apr 15 19:26:54 CEST 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/websphereMapxmi.xml", // input file
              "/home/javi/workspace/OpenXava/generator/WebsphereMapxmiPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

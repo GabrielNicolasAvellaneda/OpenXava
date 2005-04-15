@@ -86,7 +86,7 @@ while (itAggregates.hasNext()) {
 <tr class=<%=cssClass%>>
 <% if (lineAction != null) { %>
 <td class=<%=cssClass%>>
-<xava:link action="<%=lineAction%>" argv='<%="row="+f + ",viewObject="+viewName%>'/>
+<xava:link action='<%=lineAction%>' argv='<%="row=" + f + ",viewObject=" + viewName%>'/>
 </td>
 <% } %>
 <% if (hasListActions) { %>
@@ -137,17 +137,17 @@ if (view.displayDetailInCollection(collectionName)) {
 </td></tr>
 <tr><td>
 <% if (collectionEditable || collectionMembersEditables) { %>
-<xava:link action="Collection.save" argv="<%="viewObject="+viewName%>"/>
+<xava:link action="Collection.save" argv='<%="viewObject="+viewName%>'/>
 <% } %>
-&nbsp;<xava:link action="Collection.hiddenDetail" argv="<%="viewObject="+viewName%>"/>
+&nbsp;<xava:link action="Collection.hiddenDetail" argv='<%="viewObject="+viewName%>'/>
 <% if (collectionEditable) { %>
-&nbsp;<xava:link action="Collection.remove" argv="<%="viewObject="+viewName%>"/>
+&nbsp;<xava:link action="Collection.remove" argv='<%="viewObject="+viewName%>'/>
 <% } %>
 <% 
 Iterator itDetailActions = subview.getActionsNamesDetail().iterator();
 while (itDetailActions.hasNext()) {
 %>
-&nbsp;<xava:link action="<%=itDetailActions.next().toString()%>" argv="<%="viewObject="+viewName%>"/>
+&nbsp;<xava:link action="<%=itDetailActions.next().toString()%>" argv='<%="viewObject="+viewName%>'/>
 <%	
 } // while detail actions
 %>
@@ -159,13 +159,13 @@ while (itDetailActions.hasNext()) {
 %>
 <tr><td colspan="<%=subview.getMetaPropertiesList().size()+1%>">
 <% if (collectionEditable) { %>
-<xava:link action="Collection.new" argv="<%="viewObject="+viewName%>"/>
+<xava:link action="Collection.new" argv='<%="viewObject="+viewName%>'/>
 
 		<% 
 		Iterator itListActions = subview.getActionsNamesList().iterator();
 		while (itListActions.hasNext()) {
 		%>
-&nbsp;<xava:link action="<%=itListActions.next().toString()%>" argv="<%="viewObject="+viewName%>"/>
+&nbsp;<xava:link action="<%=itListActions.next().toString()%>" argv='<%="viewObject="+viewName%>'/>
 		<%	
 		} // while list actions
 		%>

@@ -9,6 +9,7 @@ public class CmpField implements Serializable {
 	
 	private String converterPropertyName;
 	private String column;
+	private String cmpPropertyName; 
 	private String cmpTypeName; 
 
 	public String getColumn() {
@@ -35,4 +36,10 @@ public class CmpField implements Serializable {
 		cmpTypeName = string;
 	}
 
+	public String getCmpPropertyName() {
+		return cmpPropertyName;
+	}
+	public void setCmpPropertyName(String cmpPropertyName) {
+		this.cmpPropertyName = cmpPropertyName;
+	}
 }

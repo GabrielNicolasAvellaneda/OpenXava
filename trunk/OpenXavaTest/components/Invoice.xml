@@ -256,7 +256,11 @@
 		<property-mapping
 			property="number" column="NUMBER"/>
 		<property-mapping
-			property="date" column="DATE"/>			
+			property="date" column="DATE" cmp-type="java.sql.Date">			
+			<!-- tmp 
+			<converter class="org.openxava.converters.DateUtilSQLConverter"/>
+			-->
+		</property-mapping>	
 		<property-mapping
 			property="vatPercentage" column="VATPERCENTAGE"/>
 		<property-mapping

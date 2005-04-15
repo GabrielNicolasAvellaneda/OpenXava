@@ -49,13 +49,13 @@ public class Products2Test extends ModuleTestBase {
 		execute("CRUD.new");
 		assertNotExists("zoneOne");
 		
-		Warehouse2Key warehouseKeyZone1 = new Warehouse2Key();
+		WarehouseKey warehouseKeyZone1 = new WarehouseKey();
 		warehouseKeyZone1.set_Number(new Integer(1));
 		warehouseKeyZone1.setZoneNumber(1); 
 		setValue("warehouse.KEY", warehouseKeyZone1.toString());
 		assertExists("zoneOne");
 		
-		Warehouse2Key warehouseKeyZone2 = new Warehouse2Key();
+		WarehouseKey warehouseKeyZone2 = new WarehouseKey();
 		warehouseKeyZone2.set_Number(new Integer(1));
 		warehouseKeyZone2.setZoneNumber(2); 
 		setValue("warehouse.KEY", warehouseKeyZone2.toString());
@@ -156,7 +156,7 @@ public class Products2Test extends ModuleTestBase {
 		setValue("family.number", "2");
 		assertNoErrors();
 		setValue("subfamily.number", "12");
-		Warehouse2Key warehouseKey = new Warehouse2Key();
+		WarehouseKey warehouseKey = new WarehouseKey();
 		warehouseKey.set_Number(new Integer(1));
 		warehouseKey.setZoneNumber(2); 
 		setValue("warehouse.KEY", warehouseKey.toString());

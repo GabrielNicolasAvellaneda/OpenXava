@@ -30,8 +30,8 @@
 		</reference>
 		<reference name="subfamily" model="Subfamily2" required="true"/>
 		 			
-		<reference name="warehouse" model="Warehouse2">
-			<default-value-calculator class="org.openxava.test.calculators.DefaultWarehouse2Calculator"/>
+		<reference name="warehouse" model="Warehouse">
+			<default-value-calculator class="org.openxava.test.calculators.DefaultWarehouseCalculator"/>
 		</reference>
 		
 		<property name="unitPrice"

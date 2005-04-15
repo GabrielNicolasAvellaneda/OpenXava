@@ -123,7 +123,7 @@
       <entity>
          <ejb-name>Delivery</ejb-name>
 
-         <table-name>XAVATEST@separator@DELIVERY</table-name>
+         <table-name>XAVATEST_DELIVERY</table-name>
 
          <cmp-field>
             <field-name>_Distance</field-name>
@@ -404,31 +404,6 @@
       </entity>
 
       <entity>
-         <ejb-name>Warehouse2</ejb-name>
-
-         <table-name>XAVATEST_WAREHOUSE</table-name>
-
-         <cmp-field>
-            <field-name>_Name</field-name>
-            <column-name>NAME</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Number</field-name>
-            <column-name>NUMBER</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>zoneNumber</field-name>
-            <column-name>ZONE</column-name>
-
-        </cmp-field>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
          <ejb-name>Family</ejb-name>
 
          <table-name>XAVATEST@separator@FAMILY</table-name>
@@ -545,6 +520,31 @@
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryPlace o WHERE o.preferredWarehouse_number = ?1 AND o.preferredWarehouse_zoneNumber = ?2 ]]></jboss-ql>
 
 	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Warehouse</ejb-name>
+
+         <table-name>XAVATEST_WAREHOUSE</table-name>
+
+         <cmp-field>
+            <field-name>_Name</field-name>
+            <column-name>NAME</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Number</field-name>
+            <column-name>NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>zoneNumber</field-name>
+            <column-name>ZONE</column-name>
+
+        </cmp-field>
 
 <!-- jboss 3.2 features -->
 <!-- optimistic locking does not express the exclusions needed -->
@@ -990,7 +990,7 @@
       <entity>
          <ejb-name>DeliveryDetail</ejb-name>
 
-         <table-name>XAVATEST@separator@DELIVERYDETAIL</table-name>
+         <table-name>XAVATEST_DELIVERYDETAIL</table-name>
 
          <cmp-field>
             <field-name>_Description</field-name>
@@ -1406,7 +1406,7 @@
       <entity>
          <ejb-name>Subfamily2</ejb-name>
 
-         <table-name>XAVATEST_SUBFAMILY</table-name>
+         <table-name>XAVATEST_SUBFAMILY2</table-name>
 
          <cmp-field>
             <field-name>_Remarks</field-name>
@@ -1513,7 +1513,7 @@
       <entity>
          <ejb-name>Family2</ejb-name>
 
-         <table-name>XAVATEST_FAMILY</table-name>
+         <table-name>XAVATEST_FAMILY2</table-name>
 
          <cmp-field>
             <field-name>_Description</field-name>

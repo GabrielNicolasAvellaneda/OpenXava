@@ -17,7 +17,7 @@
 			size="3" required="true" type="int"/>   												
 		<property name="name" type="String"
 			size="40" required="true"/>
-		<reference name="mainWarehouse" model="Warehouse2" required="true"/>	
+		<reference name="mainWarehouse" model="Warehouse" required="true"/>	
 		<reference name="officeManager" model="Clerk"/>	
 		<reference name="defaultCarrier" model="Carrier"/>
 		<property name="receptionist" stereotype="RECEPTIONIST"/>

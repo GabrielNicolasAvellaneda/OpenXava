@@ -74,20 +74,26 @@ public class PropertyMapping extends MetaSetsContainer {
 		return !Is.emptyString(multipleConverterClassName); 
 	}
 	
-	public Collection getCmpFields() {
-		if (cmpFields == null) return Collections.EMPTY_LIST;
+	public Collection getCmpFields() throws XavaException {
+		if (cmpFields == null) return Collections.singletonList(toCmpField());
 		return cmpFields;		
 	}
 	
-	public CmpField toCmpField() throws XavaException {
+	CmpField toCmpField() throws XavaException {
 		CmpField f = new CmpField();
 		if (Is.emptyString(getCmpTypeName())) {
-			f.setCmpTypeName(getMetaProperty().getTypeName());
+			f.setCmpTypeName(getMetaProperty().getType().getName());
 		}
 		else {
 			f.setCmpTypeName(getCmpTypeName());
 		}
-		f.setColumn(getColumn());		
+		f.setColumn(getColumn());
+		if (hasConverter()) {
+			f.setCmpPropertyName("_" + Strings.firstUpper(getProperty()));
+		}
+		else {
+			f.setCmpPropertyName(getProperty());
+		}
 		return f;
 	}
 		
@@ -164,6 +170,7 @@ public class PropertyMapping extends MetaSetsContainer {
 	
 	public void addCmpField(CmpField cmp) {
 		if (cmpFields == null) cmpFields = new ArrayList();
+		cmp.setCmpPropertyName(getProperty() + "_" + cmp.getConverterPropertyName());
 		cmpFields.add(cmp);		
 	}
 

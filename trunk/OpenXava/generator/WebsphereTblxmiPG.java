@@ -11,7 +11,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Apr 12 13:08:08 CEST 2005
+ * @version Fri Apr 15 19:26:53 CEST 2005
  */
 public class WebsphereTblxmiPG {
     Properties properties = new Properties();
@@ -56,19 +56,14 @@ public class WebsphereTblxmiPG {
     out.print(schema);
     out.print("\"/>");
     
-    for (Iterator it=mapping.getPropertyMappings().iterator(); it.hasNext();) {
-    	PropertyMapping pMapping = (PropertyMapping) it.next();	
-    	Collection fields = new ArrayList();
-    	if (pMapping.hasMultipleConverter()) {
-    		fields.addAll(pMapping.getCmpFields());
+    for (Iterator it=mapping.getCmpFields().iterator(); it.hasNext();) {
+    	CmpField field = (CmpField) it.next();
+    	String cmpTypeName = field.getCmpTypeName();
+    	if (Is.emptyString(cmpTypeName)) {
+    		throw new XavaException("unknow_type", field.getCmpPropertyName(), mapping.getModelName());
     	}
-    	else {
-    		fields.add(pMapping.toCmpField());
-    	}
-    	for (Iterator itFields=fields.iterator(); itFields.hasNext();) {
-    		CmpField field = (CmpField) itFields.next();
-    		String type = Generators.getWebsphereSQLType(field.getCmpTypeName(), false);
-    		String href = Generators.getWebsphereSQLType(field.getCmpTypeName(), true);
+    	String type = Generators.getWebsphereSQLType(cmpTypeName, false);
+    	String href = Generators.getWebsphereSQLType(cmpTypeName, true);
     
     out.print(" \n  <columns xmi:type=\"RDBSchema:RDBColumn\" xmi:id=\"");
     out.print(field.getColumn());
@@ -86,7 +81,6 @@ public class WebsphereTblxmiPG {
     out.print(href);
     out.print("\"/>\n    </type>\n  </columns>");
     
-    	}
     }
     
     out.print(" \n  <namedGroup xmi:type=\"RDBSchema:SQLReference\" xmi:id=\"");
@@ -138,7 +132,7 @@ public class WebsphereTblxmiPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Apr 12 13:08:08 CEST 2005", // date this file was generated
+        { "Fri Apr 15 19:26:53 CEST 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/websphereTblxmi.xml", // input file
              "/home/javi/workspace/OpenXava/generator/WebsphereTblxmiPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

@@ -13,7 +13,7 @@ public class ProductData
    private java.lang.Integer _FamilyNumber;
    private java.math.BigDecimal _UnitPrice;
    private int warehouseZoneNumber;
-   private int warehouseNumber;
+   private java.lang.Integer warehouseNumber;
    private java.lang.Integer _SubfamilyNumber;
    private java.lang.String _Remarks;
    private java.lang.String _Description;
@@ -68,11 +68,11 @@ public class ProductData
       this.warehouseZoneNumber = warehouseZoneNumber;
    }
 
-   public int getWarehouseNumber()
+   public java.lang.Integer getWarehouseNumber()
    {
       return this.warehouseNumber;
    }
-   public void setWarehouseNumber( int warehouseNumber )
+   public void setWarehouseNumber( java.lang.Integer warehouseNumber )
    {
       this.warehouseNumber = warehouseNumber;
    }
@@ -147,7 +147,14 @@ public class ProductData
             lEquals = lEquals && this._UnitPrice.equals( lTest._UnitPrice );
          }
          lEquals = lEquals && this.warehouseZoneNumber == lTest.warehouseZoneNumber;
-         lEquals = lEquals && this.warehouseNumber == lTest.warehouseNumber;
+         if( this.warehouseNumber == null )
+         {
+            lEquals = lEquals && ( lTest.warehouseNumber == null );
+         }
+         else
+         {
+            lEquals = lEquals && this.warehouseNumber.equals( lTest.warehouseNumber );
+         }
          if( this._SubfamilyNumber == null )
          {
             lEquals = lEquals && ( lTest._SubfamilyNumber == null );
@@ -192,7 +199,7 @@ public class ProductData
 
       result = 37*result + (int) warehouseZoneNumber;
 
-      result = 37*result + (int) warehouseNumber;
+      result = 37*result + ((this.warehouseNumber != null) ? this.warehouseNumber.hashCode() : 0);
 
       result = 37*result + ((this._SubfamilyNumber != null) ? this._SubfamilyNumber.hashCode() : 0);
 

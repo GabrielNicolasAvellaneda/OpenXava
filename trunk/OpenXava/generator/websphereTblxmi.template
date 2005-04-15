@@ -31,19 +31,14 @@ if (schema == null) {
   <database href="META-INF/backends/OPENXAVA/DB.dbxmi##DB"/>
   <schema href="META-INF/backends/OPENXAVA/#(schema)#.schxmi###(schema)#"/>
 # 
-for (Iterator it=mapping.getPropertyMappings().iterator(); it.hasNext();) {
-	PropertyMapping pMapping = (PropertyMapping) it.next();	
-	Collection fields = new ArrayList();
-	if (pMapping.hasMultipleConverter()) {
-		fields.addAll(pMapping.getCmpFields());
+for (Iterator it=mapping.getCmpFields().iterator(); it.hasNext();) {
+	CmpField field = (CmpField) it.next();
+	String cmpTypeName = field.getCmpTypeName();
+	if (Is.emptyString(cmpTypeName)) {
+		throw new XavaException("unknow_type", field.getCmpPropertyName(), mapping.getModelName());
 	}
-	else {
-		fields.add(pMapping.toCmpField());
-	}
-	for (Iterator itFields=fields.iterator(); itFields.hasNext();) {
-		CmpField field = (CmpField) itFields.next();
-		String type = Generators.getWebsphereSQLType(field.getCmpTypeName(), false);
-		String href = Generators.getWebsphereSQLType(field.getCmpTypeName(), true);
+	String type = Generators.getWebsphereSQLType(cmpTypeName, false);
+	String href = Generators.getWebsphereSQLType(cmpTypeName, true);
 # 
   <columns xmi:type="RDBSchema:RDBColumn" xmi:id="#(field.getColumn())#" name="#(field.getColumn())#">
     <type xmi:type="#(type)#" xmi:id="#(type)#_#(field)#">
@@ -51,7 +46,6 @@ for (Iterator it=mapping.getPropertyMappings().iterator(); it.hasNext();) {
     </type>
   </columns>
 # 
-	}
 }
 # 
   <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="#(pk)#" name="#(pk)#" members="#(pkMembers)#" constraint="SQLConstraint_#(pk)#"/>

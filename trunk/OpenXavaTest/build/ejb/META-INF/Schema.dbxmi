@@ -127,17 +127,6 @@
       </columns>
 
    </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_Warehouse2" name="" primaryKey="Warehouse2_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Warehouse2_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Warehouse2" constraint="Constraint_Warehouse2_"/>
-
-      <columns xmi:id="Warehouse2__Name" name="_Name">
-      </columns>
-      <columns xmi:id="Warehouse2__Number" name="_Number">
-      </columns>
-      <columns xmi:id="Warehouse2_zoneNumber" name="zoneNumber">
-      </columns>
-
-   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_Family" name="" primaryKey="Family_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Family_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Family" constraint="Constraint_Family_"/>
 
@@ -178,6 +167,17 @@
       <columns xmi:id="DeliveryPlace_preferredWarehouse_zoneNumber" name="preferredWarehouse_zoneNumber">
       </columns>
       <columns xmi:id="DeliveryPlace_preferredWarehouse_number" name="preferredWarehouse_number">
+      </columns>
+
+   </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Warehouse" name="" primaryKey="Warehouse_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Warehouse_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Warehouse" constraint="Constraint_Warehouse_"/>
+
+      <columns xmi:id="Warehouse__Name" name="_Name">
+      </columns>
+      <columns xmi:id="Warehouse__Number" name="_Number">
+      </columns>
+      <columns xmi:id="Warehouse_zoneNumber" name="zoneNumber">
       </columns>
 
    </RDBSchema:RDBTable>

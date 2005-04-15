@@ -264,8 +264,7 @@
 		<delete file="../${project}/gen-src-xava/dnas.properties"/>
     </target>        
 	
-    <target name="generateXDoclet">     
-    	
+    <target name="generateXDoclet">         	
 	   <echo>Generating classes</echo>
     	<touch file="../${project}/gen-src-xava/last.generation.time"/>
        <java 
@@ -277,7 +276,6 @@
        		<arg value="${package}"/>
 	       	<arg value="${ejb.package}"/>       	
 		</java>
-    	
     </target>
 	
     <target name="generateHibernate">     
@@ -349,6 +347,15 @@
 				<filter token="package" value="${domain}/${package}"/>
 			</filterset>
 		</copy>
+		<copy todir="../${project.ejb}/${classes.dir}/META-INF/backends" 
+			overwrite="yes" failonerror="no">
+			<fileset dir="../${project.ejb}/${meta-inf.dir}/backends"/>
+			<filterset>
+				<filter token="subcontext" value="${subcontext}"/>
+				<filter token="datasource" value="${datasource}"/>
+				<filter token="package" value="${domain}/${package}"/>				
+			</filterset>
+		</copy>						
 	</target>
 	
 	<target name="filterWithConfiguration" if="configuration" 
@@ -390,6 +397,16 @@
 				<filter token="package" value="${domain}/${package}"/>				
 			</filterset>
 		</copy>		
+		<copy todir="../${project.ejb}/${classes.dir}/META-INF/backends" 
+			overwrite="yes" failonerror="no">
+			<fileset dir="../${project.ejb}/${meta-inf.dir}/backends"/>
+			<filterset>
+				<filtersfile file="${configuration}.properties"/>
+				<filter token="subcontext" value="${subcontext}"/>
+				<filter token="datasource" value="${datasource}"/>
+				<filter token="package" value="${domain}/${package}"/>				
+			</filterset>
+		</copy>				
 	</target>
 	
 	<target name="createEJBJar" 

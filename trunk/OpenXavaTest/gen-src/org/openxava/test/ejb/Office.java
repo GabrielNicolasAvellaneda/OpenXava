@@ -67,16 +67,16 @@ public interface Office
    public java.lang.Integer getDefaultCarrier_number(  )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.ejb.Warehouse2 getMainWarehouse(  )
+   public org.openxava.test.ejb.Warehouse getMainWarehouse(  )
       throws java.rmi.RemoteException;
 
-   public void setMainWarehouse( org.openxava.test.ejb.Warehouse2 newMainWarehouse )
+   public void setMainWarehouse( org.openxava.test.ejb.Warehouse newMainWarehouse )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.ejb.Warehouse2Key getMainWarehouseKey(  )
+   public org.openxava.test.ejb.WarehouseKey getMainWarehouseKey(  )
       throws java.rmi.RemoteException;
 
-   public void setMainWarehouseKey( org.openxava.test.ejb.Warehouse2Key key )
+   public void setMainWarehouseKey( org.openxava.test.ejb.WarehouseKey key )
       throws java.rmi.RemoteException;
 
    public int getMainWarehouse_zoneNumber(  )

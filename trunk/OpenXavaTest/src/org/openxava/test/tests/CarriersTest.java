@@ -100,11 +100,11 @@ public class CarriersTest extends ModuleTestBase {
 	
 	public void testCreateFromReferenceWithOwnController() throws Exception {
 		execute("CRUD.new");		
-		execute("Reference.createNew", "model=Warehouse2,keyProperty=xava.Carrier.warehouse.number");		
+		execute("Reference.createNew", "model=Warehouse,keyProperty=xava.Carrier.warehouse.number");		
 		assertNoErrors();
 		assertAction("NewCreation.saveNew");
 		assertAction("NewCreation.cancel");
-		assertValue("Warehouse2", "name", "NEW WAREHOUSE");
+		assertValue("Warehouse", "name", "NEW WAREHOUSE");
 	}
 	
 	

@@ -48,7 +48,7 @@
 		</collection>
 		
 		<finder name="all" arguments="" collection="true"/>
-		
+				
 		<validator class="org.openxava.test.validators.DeliveryValidator">
 			<set property="invoice"/>
 		</validator>
@@ -207,7 +207,7 @@
 	<aggregate-mapping aggregate="DeliveryDetail" table="XAVATEST@separator@DELIVERYDETAIL">
 		<reference-mapping reference="delivery">
 			<reference-mapping-detail referenced-model-property="invoice.year" column="DELIVERY_INVOICE_YEAR"/>
-			<reference-mapping-detail referenced-model-property="invoice.number" column="DELIVERY_INVOICE_NUMBER"/>
+			<reference-mapping-detail referenced-model-property="invoice.number" column="DELIVERY_INVOICE_NUMBER"/>			
 			<reference-mapping-detail referenced-model-property="type.number" column="DELIVERY_TYPE_NUMBER"/>
 			<reference-mapping-detail referenced-model-property="number" column="DELIVERY_NUMBER"/>						
 		</reference-mapping>

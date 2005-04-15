@@ -21,7 +21,10 @@
 			<calculator class="org.openxava.calculators.EmptyStringCalculator"/>
 		</property>
 		<property name="description" type="String" size="40" required="true"/>
-		<property name="remarks" stereotype="MEMO" size="400"/>									
+		<property name="remarks" stereotype="MEMO" size="400"/>
+		<property name="remarksDB" type="String">
+			<calculator class="org.openxava.test.calculators.SubfamilyPureRemarksCalculator"/>
+		</property>									
 	</entity>
 	
 	<view>

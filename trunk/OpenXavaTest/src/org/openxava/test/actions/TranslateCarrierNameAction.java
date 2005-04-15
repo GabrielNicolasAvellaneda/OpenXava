@@ -4,7 +4,6 @@ import java.util.*;
 
 import org.openxava.actions.*;
 import org.openxava.test.ejb.*;
-import org.openxava.test.ejb.*;
 
 
 

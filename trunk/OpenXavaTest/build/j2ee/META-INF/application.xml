@@ -17,8 +17,4 @@
 		<ejb>OpenXavaTest.jar</ejb>
 	</module>
 
-	<module>
-		<ejb>OpenXavaTest-handmade-ejb.jar</ejb>
-	</module>
-
 </application>

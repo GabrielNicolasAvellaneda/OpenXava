@@ -6,7 +6,7 @@
 	<property name="package" value="test"/>
 	<property name="ejb.package" value="ejb"/>
 	<property name="configuration" value="jboss-hypersonic"/>
-	<!-- property name="configuration" value="websphere-as400" /-->	
+	<!--property name="configuration" value="websphere-as400"/-->	
 	<property file="../openxava.properties"/>
 	<property file="${configuration}.properties"/>
 	<property name="datasource" value="OpenXavaTestDS"/>
@@ -40,10 +40,6 @@
 		       
 	<target name="createEJBJars">
         <ant antfile = "../OpenXava/build.xml" target="createEJBJar"/>      		
-        <ant antfile = "../OpenXava/build.xml" target="createEJBJar">
-        	<property name="name.jar" value ="${project}-handmade-ejb"/>             	
-        	<property name="meta-inf.dir" value ="handmadeEJB/META-INF"/>          	
-        </ant>    
 	</target>
 		
 	<target name="deployEJB" depends ="createEJBJars">		
@@ -58,7 +54,8 @@
 		<ant antfile="../OpenXava/build.xml" target="generateWebsphereMapping"/>
 	</target>
 	
-	<target name="createWebsphereEar">
+	<target name="createWebsphereEar" depends="createEJBJars">
+		<ant antfile="../OpenXava/build.xml" target="createWar"/>
 		<ant antfile="../OpenXava/build.xml" target="createEar"/>
 	</target>
 					
