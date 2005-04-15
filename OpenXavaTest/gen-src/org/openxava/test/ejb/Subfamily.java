@@ -34,6 +34,9 @@ public interface Subfamily
    public void setDescription( java.lang.String newDescription )
       throws java.rmi.RemoteException;
 
+   public java.lang.String getRemarksDB(  )
+      throws java.rmi.RemoteException;
+
    public int getNumber(  )
       throws java.rmi.RemoteException;
 

@@ -23,36 +23,16 @@ for (Iterator itModels=MetaModel.getAllPersistent().iterator(); itModels.hasNext
       <table href="META-INF/backends/OPENXAVA/#(tableId)#.tblxmi###(tableId)#"/>
     </helper>
 # 
-	for (Iterator itProperties=mapping.getPropertyMappings().iterator(); itProperties.hasNext();) {
-		PropertyMapping pMapping = (PropertyMapping) itProperties.next();	
-		Collection fields = new ArrayList();
-		if (pMapping.hasMultipleConverter()) {
-			fields.addAll(pMapping.getCmpFields());
-		}
-		else {
-			fields.add(pMapping.toCmpField());
-		}
-		for (Iterator itFields=fields.iterator(); itFields.hasNext();) {
-			CmpField field = (CmpField) itFields.next();
-			String column = field.getColumn();
-			String sufixAttribute = null;
-			if (pMapping.hasMultipleConverter()) {
-				sufixAttribute = "_" + pMapping.getProperty() + "_" + field.getConverterPropertyName();
-			}
-			else if (pMapping.hasConverter()) {
-				sufixAttribute = "__" + Strings.firstUpper(pMapping.getProperty());
-			}			 
-			else {
-				sufixAttribute = "_" + pMapping.getProperty();
-			}
-			String cmpAttributeId = "CmpAttribute_" + model.getName() + sufixAttribute;
+	for (Iterator itFields=mapping.getCmpFields().iterator(); itFields.hasNext();) {
+		CmpField field = (CmpField) itFields.next();
+		String column = field.getColumn();
+		String cmpAttributeId = "CmpAttribute_" + model.getName() + "_" + field.getCmpPropertyName();
 # 
     <nested xmi:type="ejbrdbmapping:RDBEjbFieldMapper" xmi:id="RDBEjbFieldMapper_#(id++)#">
       <inputs xmi:type="ejb:CMPAttribute" href="META-INF/ejb-jar.xml###(cmpAttributeId)#"/>
       <outputs xmi:type="RDBSchema:RDBColumn" href="META-INF/backends/OPENXAVA/#(tableId)#.tblxmi###(column)#"/>
     </nested>
 # 
-		}
 	}
 # 
     <inputs xmi:type="ejb:ContainerManagedEntity" href="META-INF/ejb-jar.xml##ContainerManagedEntity_#(model.getName())#"/>

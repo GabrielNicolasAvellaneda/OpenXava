@@ -316,11 +316,11 @@
 	</controller>	
 	
 	<!--
-	Because its name is Warehouse2Creation (model name + Creation) it is used
+	Because its name is WarehouseCreation (model name + Creation) it is used
 	by default for create from reference, instead of NewCreation.
 	Action 'new' is executed automatically.
 	-->
-	<controller name="Warehouse2Creation">
+	<controller name="WarehouseCreation">
 		<extends controller="NewCreation"/>
 		<action name="new" hidden="true"
 			class="org.openxava.test.actions.CreateNewWarehouseFromReferenceAction"

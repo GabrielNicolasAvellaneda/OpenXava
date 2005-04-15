@@ -73,9 +73,9 @@ public class ProductsTest extends ModuleTestBase {
 		execute("CRUD.new");
 		String [][] zone1WarehouseValues = new String [][] { // It is assumed that 1 is default zone
 			{ "", "" },
-			{ "Warehouse: 1/1", "CENTRAL VALENCIA" },
-			{ "Warehouse: 1/3", "VALENCIA NORTE" },
-			{ "Warehouse: 1/2", "VALENCIA SURETE" }
+			{ "[.1.1.]", "CENTRAL VALENCIA" },
+			{ "[.3.1.]", "VALENCIA NORTE" },
+			{ "[.2.1.]", "VALENCIA SURETE" }
 		};
 		
 		assertValidValues("warehouseKey", zone1WarehouseValues);
@@ -163,7 +163,7 @@ public class ProductsTest extends ModuleTestBase {
 		setValue("description", "TEST PRODUCT");
 		setValue("familyNumber", "1");
 		setValue("subfamilyNumber", "1");
-		setValue("warehouseKey", "Warehouse: 1/1");
+		setValue("warehouseKey", "[.1.1.]");
 		setValue("unitPrice", "125.66");
 		assertNoEditable("unitPriceInPesetas");
 		execute("CRUD.save");				
@@ -177,7 +177,7 @@ public class ProductsTest extends ModuleTestBase {
 		assertValue("description", "TEST PRODUCT");
 		assertValue("familyNumber", "1");
 		assertValue("subfamilyNumber", "1");
-		assertValue("warehouseKey", "Warehouse: 1/1");
+		assertValue("warehouseKey", "[.1.1.]");
 		assertValue("unitPrice", "125.66");
 				
 		// Go to page for delete
@@ -252,7 +252,7 @@ public class ProductsTest extends ModuleTestBase {
 		setValue("description", "UNA MOTO RAPIDA");
 		setValue("familyNumber", "1");
 		setValue("subfamilyNumber", "1");
-		setValue("warehouseKey", "Warehouse: 1/1");
+		setValue("warehouseKey", "[.1.1.]");
 		setValue("unitPrice", "100");
 		assertNoEditable("unitPriceInPesetas");
 		execute("CRUD.save");				
@@ -272,7 +272,7 @@ public class ProductsTest extends ModuleTestBase {
 		setValue("description", "UN PRODUCTO CARO");
 		setValue("familyNumber", "1");
 		setValue("subfamilyNumber", "1");
-		setValue("warehouseKey", "Warehouse: 1/1");
+		setValue("warehouseKey", "[.1.1.]");
 		setValue("unitPrice", "100");
 		assertNoEditable("unitPriceInPesetas");
 		execute("CRUD.save");				

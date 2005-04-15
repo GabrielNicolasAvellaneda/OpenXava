@@ -21,6 +21,8 @@ public class SubfamilyValue
    private boolean remarksHasBeenSet = false;
    private java.lang.String description;
    private boolean descriptionHasBeenSet = false;
+   private java.lang.String remarksDB;
+   private boolean remarksDBHasBeenSet = false;
    private int number;
    private boolean numberHasBeenSet = false;
 
@@ -41,6 +43,8 @@ public class SubfamilyValue
 	  remarksHasBeenSet = true;
 	  this.description = otherValue.description;
 	  descriptionHasBeenSet = true;
+	  this.remarksDB = otherValue.remarksDB;
+	  remarksDBHasBeenSet = true;
 	  this.number = otherValue.number;
 	  numberHasBeenSet = true;
    }
@@ -115,6 +119,20 @@ public class SubfamilyValue
    public boolean descriptionHasBeenSet(){
 	  return descriptionHasBeenSet;
    }
+   public java.lang.String getRemarksDB()
+   {
+	  return this.remarksDB;
+   }
+
+   public void setRemarksDB( java.lang.String remarksDB )
+   {
+	  this.remarksDB = remarksDB;
+	  remarksDBHasBeenSet = true;
+   }
+
+   public boolean remarksDBHasBeenSet(){
+	  return remarksDBHasBeenSet;
+   }
    public int getNumber()
    {
 	  return this.number;
@@ -134,7 +152,7 @@ public class SubfamilyValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("family=" + getFamily() + " " + "familyNumber=" + getFamilyNumber() + " " + "oid=" + getOid() + " " + "remarks=" + getRemarks() + " " + "description=" + getDescription() + " " + "number=" + getNumber());
+	  str.append("family=" + getFamily() + " " + "familyNumber=" + getFamilyNumber() + " " + "oid=" + getOid() + " " + "remarks=" + getRemarks() + " " + "description=" + getDescription() + " " + "remarksDB=" + getRemarksDB() + " " + "number=" + getNumber());
 	  str.append('}');
 
 	  return(str.toString());
@@ -212,6 +230,14 @@ public class SubfamilyValue
 		 {
 			lEquals = lEquals && this.description.equals( that.description );
 		 }
+		 if( this.remarksDB == null )
+		 {
+			lEquals = lEquals && ( that.remarksDB == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.remarksDB.equals( that.remarksDB );
+		 }
 		 lEquals = lEquals && this.number == that.number;
 
 		 return lEquals;
@@ -233,6 +259,8 @@ public class SubfamilyValue
       result = 37*result + ((this.remarks != null) ? this.remarks.hashCode() : 0);
 
       result = 37*result + ((this.description != null) ? this.description.hashCode() : 0);
+
+      result = 37*result + ((this.remarksDB != null) ? this.remarksDB.hashCode() : 0);
 
       result = 37*result + (int) number;
 

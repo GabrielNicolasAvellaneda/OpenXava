@@ -145,7 +145,7 @@ public class Generators {
 		if ("java.sql.Timestamp".equals(javaTypeName)) {
 			return href?"SQL92_Primitives.xmi#SQLTimestamp_1":"RDBSchema:SQLTimestamp";
 		}
-		if ("byte[]".equals(javaTypeName)) {
+		if ("[B".equals(javaTypeName) || "byte[]".equals(javaTypeName)) {
 			return href?"SQL99_Primitives.xmi#SQLBinaryLargeObject_1":"RDBSchema:SQLBinaryLargeObject";
 		}
 		throw new XavaException("websphere_type_not_supported", javaTypeName);

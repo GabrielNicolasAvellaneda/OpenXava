@@ -34,16 +34,16 @@ public interface Carrier
    public java.util.Collection getFellowCarriers(  )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.ejb.Warehouse2 getWarehouse(  )
+   public org.openxava.test.ejb.Warehouse getWarehouse(  )
       throws java.rmi.RemoteException;
 
-   public void setWarehouse( org.openxava.test.ejb.Warehouse2 newWarehouse )
+   public void setWarehouse( org.openxava.test.ejb.Warehouse newWarehouse )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.ejb.Warehouse2Key getWarehouseKey(  )
+   public org.openxava.test.ejb.WarehouseKey getWarehouseKey(  )
       throws java.rmi.RemoteException;
 
-   public void setWarehouseKey( org.openxava.test.ejb.Warehouse2Key key )
+   public void setWarehouseKey( org.openxava.test.ejb.WarehouseKey key )
       throws java.rmi.RemoteException;
 
    public int getWarehouse_zoneNumber(  )

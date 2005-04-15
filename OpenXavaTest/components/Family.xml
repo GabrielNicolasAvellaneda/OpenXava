@@ -3,8 +3,9 @@
 <!DOCTYPE component SYSTEM "dtds/component.dtd">
 
 <!-- 
-	Implemented using a handmade xdoclet EJB,
-	and a simple handame bean (POJO) too. (for use with hibernate for example).
+	Implemented using a handmade EJB (in this case with XDoclet, 
+	but a pure handmade EJB, or wizard generated EJB is like this too).
+	and a simple handmade bean (POJO) too. (for use with hibernate for example).
 	It's not typical use both styles in the same application,
 	but it's here for ilustrative purpose.
 	

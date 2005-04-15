@@ -7,7 +7,7 @@ import org.openxava.actions.*;
 /**
  * @author Javier Paniza
  */
-public class EditInvoiceDetailAction extends EditElementInCollectionAction{
+public class EditInvoiceDetailAction extends EditElementInCollectionAction {
 
 	public void execute() throws Exception {
 		super.execute();

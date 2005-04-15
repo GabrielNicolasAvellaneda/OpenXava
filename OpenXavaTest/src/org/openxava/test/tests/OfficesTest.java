@@ -156,10 +156,10 @@ public class OfficesTest extends ModuleTestBase {
 
 	private String getWarehouseName() throws Exception {
 		if (warehouseName == null) {
-			Warehouse2Key key = new Warehouse2Key();
+			WarehouseKey key = new WarehouseKey();
 			key.setZoneNumber(2);
 			key.set_Number(new Integer(1));			
-			Warehouse2 warehouse = Warehouse2Util.getHome().findByPrimaryKey(key);
+			Warehouse warehouse = WarehouseUtil.getHome().findByPrimaryKey(key);
 			warehouseName = warehouse.getName();
 		}
 		return warehouseName;
@@ -191,7 +191,7 @@ public class OfficesTest extends ModuleTestBase {
 		int c = getListRowCount();
 		assertTrue("It must to have at least one warehouse in zone " + zone + " and number " + number + " for run test", c > 0);
 		assertLabelInList(0, "Zone");
-		assertLabelInList(1, "Number");
+		assertLabelInList(1, "Warehouse number");
 		for (int i = 0; i < c; i++) {
 			assertValueInList(i, 0, zone);
 			assertValueInList(i, 1, number);

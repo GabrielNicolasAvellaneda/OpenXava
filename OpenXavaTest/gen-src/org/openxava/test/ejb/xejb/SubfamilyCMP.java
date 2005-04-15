@@ -98,6 +98,7 @@ public abstract class SubfamilyCMP
             SubfamilyValue.setOid( getOid() );
             SubfamilyValue.setRemarks( getRemarks() );
             SubfamilyValue.setDescription( getDescription() );
+            SubfamilyValue.setRemarksDB( getRemarksDB() );
             SubfamilyValue.setNumber( getNumber() );
 
          }
@@ -118,6 +119,7 @@ public abstract class SubfamilyCMP
 		 setFamilyNumber( valueHolder.getFamilyNumber() );
 		 setRemarks( valueHolder.getRemarks() );
 		 setDescription( valueHolder.getDescription() );
+		 setRemarksDB( valueHolder.getRemarksDB() );
 		 setNumber( valueHolder.getNumber() );
 
 	  }

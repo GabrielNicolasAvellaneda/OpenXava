@@ -13,7 +13,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Apr 12 18:28:28 CEST 2005
+ * @version Fri Apr 15 21:26:32 CEST 2005
  */
 public class PropertyPG {
     Properties properties = new Properties();
@@ -599,7 +599,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Apr 12 18:28:28 CEST 2005", // date this file was generated
+        { "Fri Apr 15 21:26:32 CEST 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/property.xml", // input file
              "/home/javi/workspace/OpenXava/generator/PropertyPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

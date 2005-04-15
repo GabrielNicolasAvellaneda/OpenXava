@@ -5,8 +5,6 @@
 <!--
 Family2 not have oid,
 like the typical number/description table.
-It go against tje same table that Family, because we don't
-save it hence the oid do not disturb
 -->
 
 <component name="Family2">
@@ -18,7 +16,7 @@ save it hence the oid do not disturb
 			size="40" required="true"/>
 	</entity>
 					
-	<entity-mapping table="XAVATEST@separator@FAMILY">
+	<entity-mapping table="XAVATEST@separator@FAMILY2">
 		<property-mapping 
 			property="number" column="NUMBER"/>
 		<property-mapping

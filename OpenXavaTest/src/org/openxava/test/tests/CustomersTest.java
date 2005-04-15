@@ -71,7 +71,7 @@ public class CustomersTest extends ModuleTestBase {
 		execute("CRUD.new");		
 		execute("Collection.new", "viewObject=xava_view" + getSection() + "_deliveryPlaces");		
 		assertValue("deliveryPlaces.remarks", "");
-		Warehouse2Key warehouseKey = new Warehouse2Key();
+		WarehouseKey warehouseKey = new WarehouseKey();
 		warehouseKey.set_Number(new Integer(1));
 		warehouseKey.setZoneNumber(1); 
 		setValue("deliveryPlaces.preferredWarehouse.KEY", warehouseKey.toString());

@@ -15,7 +15,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 	private MetaComponent metaComponent;
 	private String table;
 	private Map propertyMappings = new HashMap();
-	private Map mapeosReferencias;
+	private Map referenceMappings;
 	private Collection propiedadesModelo = new ArrayList(); // de String
 	private Collection columnasTabla = new ArrayList(); // de String
 
@@ -86,9 +86,9 @@ abstract public class ModelMapping implements java.io.Serializable {
 
 	public void addReferenceMapping(ReferenceMapping mapeoReferencia)
 		throws XavaException {
-		if (mapeosReferencias == null)
-			mapeosReferencias = new HashMap();
-		mapeosReferencias.put(
+		if (referenceMappings == null)
+			referenceMappings = new HashMap();
+		referenceMappings.put(
 			mapeoReferencia.getReference(),
 			mapeoReferencia);
 		mapeoReferencia.setContainer(this);
@@ -104,9 +104,9 @@ abstract public class ModelMapping implements java.io.Serializable {
 	public ReferenceMapping getReferenceMapping(String nombre)
 		throws XavaException {		
 		ReferenceMapping r =
-			mapeosReferencias == null
+			referenceMappings == null
 				? null
-				: (ReferenceMapping) mapeosReferencias.get(nombre);
+				: (ReferenceMapping) referenceMappings.get(nombre);
 		if (r == null) {
 			throw new ElementNotFoundException("reference_mapping_not_found", nombre, getModelName());
 		}
@@ -154,10 +154,10 @@ abstract public class ModelMapping implements java.io.Serializable {
 	
 	public String getKeyColumnsAsString() throws XavaException {
 		StringBuffer r = new StringBuffer();
-		for (Iterator it=getMetaModel().getAllMetaPropertiesKey().iterator(); it.hasNext();) {
-			MetaProperty pr = (MetaProperty) it.next();
-			r.append(pr.getMapping().getColumn());
-			if (it.hasNext()) r.append(',');
+		for (Iterator it=getMetaModel().getAllKeyPropertiesNames().iterator(); it.hasNext();) {
+			String pr = (String) it.next();
+			r.append(getColumn(pr));
+			if (it.hasNext()) r.append(' ');
 		}
 		return r.toString();
 	}
@@ -391,14 +391,16 @@ abstract public class ModelMapping implements java.io.Serializable {
 				getMetaModel().getMetaProperty(
 					mapeoPropiedad.getProperty());
 		}
-		catch (ElementNotFoundException ex) {			//
+		catch (ElementNotFoundException ex) {			
 			return;
 		}
-		if (p.isKey())
+		if (p.isKey() || !getMetaModel().isGenerateXDocLet()) 
 			return;
 		// Lo conversores en las claves son engorrosos para el programador
 		// y normalmente inconvenientes
 		// si se quiere conversor para clave que se ponga explicitamente	
+		// Y si el código es generado no la conversión la hará el programador
+		// del bean dentro de su set y get
 		if (java.lang.String.class.equals(p.getType())) {
 			mapeoPropiedad.setConverterClassName(
 				org.openxava.converters.TrimStringConverter
@@ -441,9 +443,9 @@ abstract public class ModelMapping implements java.io.Serializable {
 	}
 
 	public boolean hasReferenceMapping(MetaReference metaReferencia) {
-		if (mapeosReferencias == null)
+		if (referenceMappings == null)
 			return false;
-		return mapeosReferencias.containsKey(metaReferencia.getName());
+		return referenceMappings.containsKey(metaReferencia.getName());
 	}
 
 	public boolean isReferenceOverlappingWithSomeProperty(
@@ -547,8 +549,34 @@ abstract public class ModelMapping implements java.io.Serializable {
 		return "_" + Strings.change(Strings.firstUpper(mapeo.getProperty()), ".", "_");
 	}
 	
-	public Collection getPropertyMappings() {
+	private Collection getPropertyMappings() {
 		return propertyMappings.values();
 	}
 	
+	private Collection getReferenceMappings() { 
+		return referenceMappings==null?Collections.EMPTY_LIST:referenceMappings.values();
+	}
+		
+	public Collection getCmpFields() throws XavaException { 
+		Collection r = new ArrayList();
+		Collection mappedColumns = new HashSet();
+		for (Iterator it=getPropertyMappings().iterator(); it.hasNext();) {
+			PropertyMapping pMapping = (PropertyMapping) it.next();
+			r.addAll(pMapping.getCmpFields());
+			mappedColumns.add(pMapping.getColumn());
+		}
+		for (Iterator it=getReferenceMappings().iterator(); it.hasNext();) {
+			ReferenceMapping rMapping = (ReferenceMapping) it.next();
+			for (Iterator itFields=rMapping.getCmpFields().iterator(); itFields.hasNext();) {
+				CmpField field = (CmpField) itFields.next();
+				if (!mappedColumns.contains(field.getColumn())) {
+					r.add(field);
+					mappedColumns.add(field.getColumn());
+				}
+			}
+		}
+		
+		return r;
+	}
+		
 }

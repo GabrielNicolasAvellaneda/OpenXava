@@ -544,49 +544,6 @@
 
       </entity>
 
-      <entity id="ContainerManagedEntity_Warehouse2">
-         <description><![CDATA[]]></description>
-
-         <ejb-name>Warehouse2</ejb-name>
-
-         <home>org.openxava.test.ejb.Warehouse2Home</home>
-         <remote>org.openxava.test.ejb.Warehouse2</remote>
-
-         <ejb-class>org.openxava.test.ejb.xejb.Warehouse2CMP</ejb-class>
-         <persistence-type>Container</persistence-type>
-         <prim-key-class>org.openxava.test.ejb.Warehouse2Key</prim-key-class>
-         <reentrant>false</reentrant>
-         <cmp-version>2.x</cmp-version>
-         <abstract-schema-name>Warehouse2</abstract-schema-name>
-         <cmp-field id="CmpAttribute_Warehouse2__Name">
-            <description><![CDATA[]]></description>
-            <field-name>_Name</field-name>
-         </cmp-field>
-         <cmp-field id="CmpAttribute_Warehouse2__Number">
-            <description><![CDATA[]]></description>
-            <field-name>_Number</field-name>
-         </cmp-field>
-         <cmp-field id="CmpAttribute_Warehouse2_zoneNumber">
-            <description><![CDATA[]]></description>
-            <field-name>zoneNumber</field-name>
-         </cmp-field>
-
-         <env-entry>
-            <env-entry-name>DATA_SOURCE</env-entry-name>
-            <env-entry-type>java.lang.String</env-entry-type>
-            <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
-         </env-entry>
-
-         <resource-ref id="ResRef_8">
-            <res-ref-name>jdbc/DataSource</res-ref-name>
-            <res-type>javax.sql.DataSource</res-type>
-            <res-auth>Container</res-auth>
-         </resource-ref>
-
-	  <!-- Write a file named ejb-finders-Warehouse2Bean.xml if you want to define extra finders. -->
-
-      </entity>
-
       <entity id="ContainerManagedEntity_Family">
          <description><![CDATA[]]></description>
 
@@ -655,7 +612,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_9">
+         <resource-ref id="ResRef_8">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -714,7 +671,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_10">
+         <resource-ref id="ResRef_9">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -742,6 +699,49 @@
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryPlace o WHERE o.preferredWarehouse_number = ?1 AND o.preferredWarehouse_zoneNumber = ?2]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-DeliveryPlaceBean.xml if you want to define extra finders. -->
+
+      </entity>
+
+      <entity id="ContainerManagedEntity_Warehouse">
+         <description><![CDATA[]]></description>
+
+         <ejb-name>Warehouse</ejb-name>
+
+         <home>org.openxava.test.ejb.WarehouseHome</home>
+         <remote>org.openxava.test.ejb.Warehouse</remote>
+
+         <ejb-class>org.openxava.test.ejb.xejb.WarehouseCMP</ejb-class>
+         <persistence-type>Container</persistence-type>
+         <prim-key-class>org.openxava.test.ejb.WarehouseKey</prim-key-class>
+         <reentrant>false</reentrant>
+         <cmp-version>2.x</cmp-version>
+         <abstract-schema-name>Warehouse</abstract-schema-name>
+         <cmp-field id="CmpAttribute_Warehouse__Name">
+            <description><![CDATA[]]></description>
+            <field-name>_Name</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_Warehouse__Number">
+            <description><![CDATA[]]></description>
+            <field-name>_Number</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_Warehouse_zoneNumber">
+            <description><![CDATA[]]></description>
+            <field-name>zoneNumber</field-name>
+         </cmp-field>
+
+         <env-entry>
+            <env-entry-name>DATA_SOURCE</env-entry-name>
+            <env-entry-type>java.lang.String</env-entry-type>
+            <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
+         </env-entry>
+
+         <resource-ref id="ResRef_10">
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <res-type>javax.sql.DataSource</res-type>
+            <res-auth>Container</res-auth>
+         </resource-ref>
+
+	  <!-- Write a file named ejb-finders-WarehouseBean.xml if you want to define extra finders. -->
 
       </entity>
 

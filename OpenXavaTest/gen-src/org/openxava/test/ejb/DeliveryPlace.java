@@ -49,16 +49,16 @@ public interface DeliveryPlace
    public int getCustomer_number(  )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.ejb.Warehouse2 getPreferredWarehouse(  )
+   public org.openxava.test.ejb.Warehouse getPreferredWarehouse(  )
       throws java.rmi.RemoteException;
 
-   public void setPreferredWarehouse( org.openxava.test.ejb.Warehouse2 newPreferredWarehouse )
+   public void setPreferredWarehouse( org.openxava.test.ejb.Warehouse newPreferredWarehouse )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.ejb.Warehouse2Key getPreferredWarehouseKey(  )
+   public org.openxava.test.ejb.WarehouseKey getPreferredWarehouseKey(  )
       throws java.rmi.RemoteException;
 
-   public void setPreferredWarehouseKey( org.openxava.test.ejb.Warehouse2Key key )
+   public void setPreferredWarehouseKey( org.openxava.test.ejb.WarehouseKey key )
       throws java.rmi.RemoteException;
 
    public int getPreferredWarehouse_zoneNumber(  )

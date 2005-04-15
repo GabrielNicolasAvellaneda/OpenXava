@@ -14,7 +14,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Apr 12 18:28:30 CEST 2005
+ * @version Fri Apr 15 21:26:34 CEST 2005
  */
 public class EJBeanPG {
     Properties properties = new Properties();
@@ -1321,7 +1321,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Apr 12 18:28:31 CEST 2005", // date this file was generated
+        { "Fri Apr 15 21:26:35 CEST 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/ejbean.xml", // input file
              "/home/javi/workspace/OpenXava/generator/EJBeanPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

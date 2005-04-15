@@ -4,6 +4,7 @@ package org.openxava.mapping;
 import java.util.*;
 
 import org.openxava.component.*;
+import org.openxava.model.meta.*;
 import org.openxava.util.*;
 
 
@@ -19,7 +20,7 @@ public class ReferenceMapping implements java.io.Serializable {
 	public void addDetail(ReferenceMappingDetail detalle) {
 		details.put(detalle.getReferencedModelProperty(), detalle);
 		detalle.setContainer(this);
-		columns.add(detalle.getColumn()); // para conservar el orden. A lo mejor con JDO2 ya no hace falta
+		columns.add(detalle.getColumn()); // para conservar el orden. 
 	}
 	
 	/**
@@ -113,15 +114,6 @@ public class ReferenceMapping implements java.io.Serializable {
 	}
 	
 	public Collection getColumns() {
-		/* A lo mejor con jdo2 se peude volver a hacer así.
-		Collection columnas = new ArrayList();
-		Iterator it = getDetalles().iterator();
-		while (it.hasNext()) {
-			DetalleMapeoReferencia d = (DetalleMapeoReferencia) it.next();
-			columnas.add(d.getColumnaTabla());
-		}
-		return columnas;
-		*/
 		return columns;
 	}
 	
@@ -130,6 +122,25 @@ public class ReferenceMapping implements java.io.Serializable {
 			return getContainer().getCMPAttributeForColumn(getColumnForReferencedModelProperty(nombrePropiedadModeloReferenciado));
 		}
 		return Strings.change(getReference() + "_" + nombrePropiedadModeloReferenciado, ".", "_");
+	}
+
+	public Collection getCmpFields() throws XavaException {
+		Collection fields = new ArrayList();  
+		for (Iterator it=getDetails().iterator(); it.hasNext();) {
+			ReferenceMappingDetail d = (ReferenceMappingDetail) it.next();
+			CmpField field = new CmpField();
+			field.setCmpPropertyName(
+					getReference() + "_" + 
+					Strings.change(d.getReferencedModelProperty(), ".", "_"));
+			String propertyName = 
+				Strings.change(getReference(), "_", ".") + "." +
+				Strings.change(d.getReferencedModelProperty(), "_", ".");
+			MetaProperty property = getContainer().getMetaModel().getMetaProperty(propertyName);
+			field.setCmpTypeName(property.getMapping().toCmpField().getCmpTypeName());			
+			field.setColumn(d.getColumn());
+			fields.add(field);
+		}
+		return fields;
 	}
 	
 }

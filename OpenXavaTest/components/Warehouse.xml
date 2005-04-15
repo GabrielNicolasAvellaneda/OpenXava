@@ -2,38 +2,28 @@
 
 <!DOCTYPE component SYSTEM "dtds/component.dtd">
 
-<!-- Implemented with a handmade EJB -->
-
 <component name="Warehouse">
 
-	<!-- 
-		Resource files (Labels.properties and ${project}-labels.properties 
-		take preference over label attribute, and i18n files is 
-		prefered over 'label' attribute'.
-		-->
-	<entity label="Warehouse">
-		<ejb remote="org.openxava.test.ejb.Warehouse"
-			home="org.openxava.test.ejb.WarehouseHome"
-			primaryKey="org.openxava.test.ejb.WarehouseKey"
-			jndi="ejb/openxava.test/Warehouse"/>		
-		<!-- 
-			We set the types in zone and number because
-			code is generate in OTHERS beans with references
-			to this. If this is not the case not would be needed.
-		-->			
-		<property name="zoneNumber" label="Zone"
+	<entity>
+		<property name="zoneNumber" key="true"
 			size="3" required="true" type="int"/>   			
-		<property name="number"
+		<property name="number" key="true"
 			size="3" required="true" type="int"/>   
-		<property name="name"
+		<property name="name" type="String"
 			size="40" required="true"/>
 	</entity>
+				
+	<tab>
+		<filter class="org.openxava.test.filters.MockFilter"/>
+	</tab>		
 				
 	<entity-mapping table="XAVATEST@separator@WAREHOUSE">
 		<property-mapping 
 			property="zoneNumber" column="ZONE"/>	
 		<property-mapping 
-			property="number" column="NUMBER"/>
+			property="number" column="NUMBER"  cmp-type="Integer">
+			<converter class="org.openxava.converters.IntegerNumberConverter"/>						
+		</property-mapping>
 		<property-mapping
 			property="name" column="NAME"/>
 	</entity-mapping> 

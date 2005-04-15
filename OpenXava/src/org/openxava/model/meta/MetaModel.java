@@ -11,7 +11,6 @@ import org.openxava.util.meta.*;
 import org.openxava.validators.meta.*;
 import org.openxava.view.meta.*;
 
-
 /**
  *
  * 
@@ -63,7 +62,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	 * @return of type MetaModel
 	 * @throws XavaException
 	 */
-	public static Collection getAllPersistent() throws XavaException { 
+	public static Collection getAllPersistent() throws XavaException {  
 		Collection r = new HashSet();
 		for (Iterator it = MetaComponent.getAllLoaded().iterator(); it.hasNext();) {
 			MetaComponent comp = (MetaComponent) it.next();

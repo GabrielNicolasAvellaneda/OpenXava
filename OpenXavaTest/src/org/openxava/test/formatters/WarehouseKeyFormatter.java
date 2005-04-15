@@ -28,13 +28,9 @@ public class WarehouseKeyFormatter implements IFormatter {
 		if (Is.emptyString(string) || "0".equals(string)) {
 			return null; 
 		}		
-		StringTokenizer st = new StringTokenizer(string, ":/");
+		StringTokenizer st = new StringTokenizer(string, "[.");
 		if (!st.hasMoreTokens()) {
 			throw new ParseException(BAD_STRING, 0);			
-		}
-		st.nextToken();
-		if (!st.hasMoreTokens()) {
-			throw new ParseException(BAD_STRING, 0);	
 		}
 		String szoneNumber = st.nextToken().trim();
 		if (!st.hasMoreTokens()) {
@@ -45,7 +41,7 @@ public class WarehouseKeyFormatter implements IFormatter {
 		WarehouseKey key = new WarehouseKey();
 		try {
 			key.zoneNumber  = Integer.parseInt(szoneNumber);
-			key.number = Integer.parseInt(snumber);
+			key._Number = new Integer(snumber);
 		}
 		catch (NumberFormatException ex) {
 			throw new ParseException("Impossible to parse WarehouseKey: zoneNumber and number must be numerics", 0);			

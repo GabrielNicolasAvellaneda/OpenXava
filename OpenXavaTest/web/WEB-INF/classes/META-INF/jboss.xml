@@ -1,18 +1,392 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE jboss PUBLIC "-//JBoss//DTD JBOSS 3.2//EN" "http://www.jboss.org/j2ee/dtd/jboss_3_2.dtd">
+
 <jboss>
-    <secure>false</secure>
-    <container-configurations />
-    <resource-managers>
-        <resource-manager res-class="org.jboss.ejb.deployment.JDBCResource">
+
+   <unauthenticated-principal>nobody</unauthenticated-principal>
+
+   <enterprise-beans>
+
+  <!-- OpenXava Sessions Beans -->
+
+        <session>
+            <ejb-name>MapFacade</ejb-name>
+            <jndi-name>OpenXavaTest/ejb/org/openxava/test/MapFacade</jndi-name>
+        </session>
+        <session>
+            <ejb-name>Server</ejb-name>
+            <jndi-name>OpenXavaTest/ejb/org/openxava/test/Server</jndi-name>
+            <resource-ref>
+                <res-ref-name>jdbc/DataSource</res-ref-name>
+                <resource-name>jdbc/DataSource</resource-name>
+            </resource-ref>
+        </session>        
+        <session>
+            <ejb-name>EntityTab</ejb-name>
+            <jndi-name>OpenXavaTest/ejb/org/openxava/test/EntityTab</jndi-name>
+            <resource-ref>
+                <res-ref-name>jdbc/DataSource</res-ref-name>
+                <resource-name>jdbc/DataSource</resource-name>
+            </resource-ref>
+        </session>
+
+      <entity>
+         <ejb-name>DrivingLicence</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/DrivingLicence</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Office</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/Office</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Delivery</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/Delivery</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Clerk</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/Clerk</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>SellerLevel</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/SellerLevel</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>State</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/State</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Product</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/Product</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Family</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/openxava.test/Family</jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>ServiceType</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/ServiceType</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>DeliveryPlace</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/DeliveryPlace</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Warehouse</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/Warehouse</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Seller</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/Seller</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Customer</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/Customer</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Subfamily</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/Subfamily</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>DeliveryType</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/DeliveryType</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>InvoiceDetail</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/InvoiceDetail</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Product2</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/Product2</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>DeliveryDetail</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/DeliveryDetail</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>AdditionalDetail</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/AdditionalDetail</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>TransportCharge</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/TransportCharge</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Invoice</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/Invoice</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Product3</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/Product3</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Shipment</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/Shipment</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Carrier</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/Carrier</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Subfamily2</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/Subfamily2</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>FilterBySubfamily</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/FilterBySubfamily</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Service</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/Service</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Family2</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/Family2</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Receptionist</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.ejb/Receptionist</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+
+   </enterprise-beans>
+
+      <resource-managers>
+        <resource-manager>
             <res-name>jdbc/DataSource</res-name>
             <res-jndi-name>java:/OpenXavaTestDS</res-jndi-name>
         </resource-manager>
     </resource-managers>
-    <enterprise-beans>
-        
-        <entity>
-            <ejb-name>Warehouse</ejb-name>
-            <jndi-name>OpenXavaTest/ejb/openxava.test/Warehouse</jndi-name>
-        </entity>        
-    </enterprise-beans>
+
+  <!--
+    | for container settings, you can merge in jboss-container.xml
+    | this can contain <invoker-proxy-bindings/> and <container-configurations/>
+  -->
+
 </jboss>

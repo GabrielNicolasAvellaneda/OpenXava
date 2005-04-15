@@ -3,7 +3,7 @@
 	 */
 	public org.openxava.test.ejb.WarehouseKey getWarehouseKey() {
 		org.openxava.test.ejb.WarehouseKey key = new org.openxava.test.ejb.WarehouseKey();
-		key.number = getWarehouseNumber();
+		key._Number = getWarehouseNumber();
 		key.zoneNumber = getWarehouseZoneNumber();
 		return key;
 	}
@@ -12,7 +12,7 @@
 	 * @ejb:interface-method
 	 */
 	public void setWarehouseKey(org.openxava.test.ejb.WarehouseKey warehouseKey) {
-		setWarehouseNumber(warehouseKey.number);
+		setWarehouseNumber(warehouseKey._Number);
 		setWarehouseZoneNumber(warehouseKey.zoneNumber);
 	}
 	
@@ -30,6 +30,6 @@
 	 *
 	 * @jboss:column-name "WAREHOUSE"
 	 */
-	public abstract int getWarehouseNumber();
-	public abstract void setWarehouseNumber(int newWarehouseNumber);
+	public abstract Integer getWarehouseNumber();
+	public abstract void setWarehouseNumber(Integer newWarehouseNumber);
 	

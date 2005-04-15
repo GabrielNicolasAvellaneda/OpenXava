@@ -149,9 +149,9 @@ public abstract class ProductCMP
 
    public abstract void setWarehouseZoneNumber( int warehouseZoneNumber ) ;
 
-   public abstract int getWarehouseNumber() ;
+   public abstract java.lang.Integer getWarehouseNumber() ;
 
-   public abstract void setWarehouseNumber( int warehouseNumber ) ;
+   public abstract void setWarehouseNumber( java.lang.Integer warehouseNumber ) ;
 
    public abstract java.lang.Integer get_SubfamilyNumber() ;
 

@@ -5,12 +5,12 @@ import javax.ejb.*;
 
 import org.openxava.actions.*;
 
-
 /**
  * @author Javier Paniza
  */
 public class ViewProductFromInvoiceDetailAction
-	extends CollectionElementViewBaseAction implements INavigationAction{
+	extends CollectionElementViewBaseAction 
+	implements INavigationAction { // tmp: ¿Navigations? Si cambiamos cambiar guia referencia
 
 	private Map invoiceValues;
 

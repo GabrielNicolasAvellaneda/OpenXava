@@ -17,7 +17,7 @@
 		</property>
 		<reference name="drivingLicence"/>
 		<reference name="warehouse"
-			model="Warehouse2" required="true"/>
+			model="Warehouse" required="true"/>
 			
 		<!-- Others carriers of same warehouse -->	
 		<collection name="fellowCarriers"> 			

@@ -134,20 +134,15 @@ public class EJBTest extends TestCase {
 		assertEquals("DETAIL WITH SPACES", detail.getRemarks());
 	}
 	
-	public void testConvertersAllPropertiesOnCreate() throws Exception { // On way to avoid nulls
-		// Subfamily use default converter for remarks
+	public void testConvertersAllPropertiesOnCreate() throws Exception { // One way to avoid nulls	
 		Map v = new HashMap();
 		v.put("number", new Integer(77));
 		v.put("description", "PROVA JUNIT 77");
 		Subfamily f = SubfamilyUtil.getHome().create(v);
-		// Subfamily use converter NoConversion for remarks
-		Subfamily2 f2 = Subfamily2Util.getHome().findByPrimaryKey(new Subfamily2Key(77));
+		SubfamilyKey key = (SubfamilyKey) f.getPrimaryKey(); 
+		Subfamily f2 = SubfamilyUtil.getHome().findByPrimaryKey(key);
 		assertEquals("PROVA JUNIT 77", f2.getDescription());
-		// Since it does not have converter we read what there is in the data base,
-		// that it has to is empty string, not null. Because on create from subfamily
-		// the converte is applied		
-		assertEquals("", f2.getRemarks()); 
-		
+		assertEquals("", f2.getRemarksDB()); 		
 		f.remove();
 	}
 
