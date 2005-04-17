@@ -22,4 +22,10 @@ public class Family implements Serializable {
 	public void setNumber(int number) {
 		this.number = number;
 	}
+	public String getOid() {
+		return oid;
+	}
+	public void setOid(String oid) {
+		this.oid = oid;
+	}
 }

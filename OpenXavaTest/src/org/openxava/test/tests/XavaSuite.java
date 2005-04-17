@@ -38,7 +38,6 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(DeliveriesTest.class));
 		suite.addTest(new TestSuite(DeliveryTypesTest.class));		
 		suite.addTest(new TestSuite(EJBTest.class));
-		suite.addTest(new TestSuite(FamiliesHibernateTest.class));
 		suite.addTest(new TestSuite(FamiliesTest.class));
 		suite.addTest(new TestSuite(FamiliesWithInheritanceControllerTest.class));
 		suite.addTest(new TestSuite(FamilyProductsReportTest.class));
