@@ -18,8 +18,6 @@ import net.sf.hibernate.*;
  */
 public class HibernateMapFacadeImpl extends MapFacadeBean {
 	
-	private Session session;
-		
 	protected Object findEntity(IMetaEjb metaModel, Map keyValues) throws FinderException {
 		try {
 			MetaEjbImpl ejbImpl = new MetaEjbImpl(metaModel);
@@ -85,14 +83,5 @@ public class HibernateMapFacadeImpl extends MapFacadeBean {
 		}
 	}
 	
-	public Session getSession() {
-		return session;
-	}
-
-	public void setSession(Session session) {
-		this.session = session;
-	}
 	
-	
-
 }

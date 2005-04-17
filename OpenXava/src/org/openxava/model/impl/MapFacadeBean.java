@@ -7,6 +7,8 @@ import java.util.*;
 import javax.ejb.*;
 import javax.rmi.*;
 
+import net.sf.hibernate.Session;
+
 import org.openxava.calculators.*;
 import org.openxava.component.*;
 import org.openxava.ejbx.*;
@@ -23,7 +25,8 @@ import org.openxava.validators.meta.*;
 public class MapFacadeBean implements SessionBean {
 	private javax.ejb.SessionContext mySessionCtx = null;
 	private final static long serialVersionUID = 3206093459760846163L;
-
+	private IPersistenceProvider persistenceProvider;
+	private Session session;
 
 	/**
 	 * 
@@ -1511,11 +1514,13 @@ public class MapFacadeBean implements SessionBean {
 	}
 
 	protected Object findEntity(IMetaEjb metaEntidad, Map valoresClave)	throws FinderException, XavaException {
-			Object key = metaEntidad.obtainPrimaryKeyFromKey(valoresClave);
-			return findEntity(metaEntidad, key);
+			getPersistenceProvider().setSession(getSession());
+			return getPersistenceProvider().find(metaEntidad, valoresClave);
+			/*Object key = metaEntidad.obtainPrimaryKeyFromKey(valoresClave);
+			return findEntity(metaEntidad, key); tmp */ 
 	}
 	
-	protected Object findEntity(IMetaEjb metaEntidad, Object key)	throws FinderException {		
+	/*protected Object findEntity(IMetaEjb metaEntidad, Object key)	throws FinderException { //tmp ¿quitar?		
 		Class claseHome = null;
 		Class clasePK = null;
 		try {
@@ -1540,7 +1545,7 @@ public class MapFacadeBean implements SessionBean {
 			ex.printStackTrace();
 			throw new EJBException(XavaResources.getString("find_error", metaEntidad.getName()));			
 		}
-	}
+	} tmp */
 	
 
 	/**
@@ -1801,5 +1806,18 @@ public class MapFacadeBean implements SessionBean {
 			}
 		}				
 	}
-
+	
+	private IPersistenceProvider getPersistenceProvider() {
+		if (persistenceProvider == null) {
+			persistenceProvider = new HibernatePersistenceProvider();  //tmp De momento
+		}
+		return persistenceProvider;
+	}
+	
+	public Session getSession() {
+		return session;
+	}
+	public void setSession(Session session) {
+		this.session = session;
+	}
 }
