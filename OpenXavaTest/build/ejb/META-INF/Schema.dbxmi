@@ -343,7 +343,7 @@
 
       <columns xmi:id="Invoice__Comment" name="_Comment">
       </columns>
-      <columns xmi:id="Invoice_date" name="date">
+      <columns xmi:id="Invoice__Date" name="_Date">
       </columns>
       <columns xmi:id="Invoice__Paid" name="_Paid">
       </columns>

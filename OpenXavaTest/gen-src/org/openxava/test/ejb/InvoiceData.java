@@ -11,7 +11,7 @@ public class InvoiceData
    implements java.io.Serializable
 {
    private java.lang.String _Comment;
-   private java.util.Date date;
+   private java.sql.Date _Date;
    private java.lang.String _Paid;
    private int year;
    private java.math.BigDecimal _VatPercentage;
@@ -25,7 +25,7 @@ public class InvoiceData
    public InvoiceData( InvoiceData otherData )
    {
       set_Comment(otherData.get_Comment());
-      setDate(otherData.getDate());
+      set_Date(otherData.get_Date());
       set_Paid(otherData.get_Paid());
       setYear(otherData.getYear());
       set_VatPercentage(otherData.get_VatPercentage());
@@ -48,13 +48,13 @@ public class InvoiceData
       this._Comment = _Comment;
    }
 
-   public java.util.Date getDate()
+   public java.sql.Date get_Date()
    {
-      return this.date;
+      return this._Date;
    }
-   public void setDate( java.util.Date date )
+   public void set_Date( java.sql.Date _Date )
    {
-      this.date = date;
+      this._Date = _Date;
    }
 
    public java.lang.String get_Paid()
@@ -106,7 +106,7 @@ public class InvoiceData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Comment=" + get_Comment() + " " + "date=" + getDate() + " " + "_Paid=" + get_Paid() + " " + "year=" + getYear() + " " + "_VatPercentage=" + get_VatPercentage() + " " + "number=" + getNumber() + " " + "customer_number=" + getCustomer_number());
+      str.append("_Comment=" + get_Comment() + " " + "_Date=" + get_Date() + " " + "_Paid=" + get_Paid() + " " + "year=" + getYear() + " " + "_VatPercentage=" + get_VatPercentage() + " " + "number=" + getNumber() + " " + "customer_number=" + getCustomer_number());
       str.append('}');
 
       return(str.toString());
@@ -127,13 +127,13 @@ public class InvoiceData
          {
             lEquals = lEquals && this._Comment.equals( lTest._Comment );
          }
-         if( this.date == null )
+         if( this._Date == null )
          {
-            lEquals = lEquals && ( lTest.date == null );
+            lEquals = lEquals && ( lTest._Date == null );
          }
          else
          {
-            lEquals = lEquals && this.date.equals( lTest.date );
+            lEquals = lEquals && this._Date.equals( lTest._Date );
          }
          if( this._Paid == null )
          {
@@ -169,7 +169,7 @@ public class InvoiceData
 
       result = 37*result + ((this._Comment != null) ? this._Comment.hashCode() : 0);
 
-      result = 37*result + ((this.date != null) ? this.date.hashCode() : 0);
+      result = 37*result + ((this._Date != null) ? this._Date.hashCode() : 0);
 
       result = 37*result + ((this._Paid != null) ? this._Paid.hashCode() : 0);
 

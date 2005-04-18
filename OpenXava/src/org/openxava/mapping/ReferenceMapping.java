@@ -17,16 +17,12 @@ public class ReferenceMapping implements java.io.Serializable {
 	private String referencedModelName;
 	private Collection columns = new ArrayList();
 
-	public void addDetail(ReferenceMappingDetail detalle) {
-		details.put(detalle.getReferencedModelProperty(), detalle);
-		detalle.setContainer(this);
-		columns.add(detalle.getColumn()); // para conservar el orden. 
+	public void addDetail(ReferenceMappingDetail detail) {
+		details.put(detail.getReferencedModelProperty(), detail);
+		detail.setContainer(this);
+		columns.add(detail.getColumn()); // To keep order 
 	}
 	
-	/**
-	 * Gets the nombreModeloReferenciado
-	 * @return Returns a String
-	 */
 	String getReferencedModelName() throws XavaException {
 		if (referencedModelName == null) {
 			referencedModelName = getContainer().getMetaModel().getMetaReference(getReference()).getReferencedModelName();
@@ -34,40 +30,31 @@ public class ReferenceMapping implements java.io.Serializable {
 		return referencedModelName;
 	}
 	
-	/**
-	 */
 	public String getReferencedTable() throws XavaException {
 		return getReferencedMapping().getTable();
 	}
 	
 	/**
-	 * Columna cualificada. <p>
-	 * 
-	 * @param propiedad
-	 * @return String
-	 * @throws ElementNotFoundException
-	 * @throws XavaException	 
+	 * Qualified column. <p>
 	 */
-	public String getColumnForReferencedModelProperty(String propiedad) throws XavaException {
-		Object result = details.get(propiedad);
+	public String getColumnForReferencedModelProperty(String property) throws ElementNotFoundException, XavaException {
+		Object result = details.get(property);
 		if (result == null) {
-			throw new ElementNotFoundException("reference_mapping_property_not_found", propiedad, referencedModelName, reference);
+			throw new ElementNotFoundException("reference_mapping_property_not_found", property, referencedModelName, reference);
 		}
 		return ((ReferenceMappingDetail) result).getColumn();  
 	}
 	
 	/**
-	 * Columna no cualificada. <p>
-	 * 
-	 * @param propiedad	 
+	 * Column not qualified. <p>	 
 	 */
-	public boolean hasColumnForReferencedModelProperty(String propiedad) {
-		return details.containsKey(propiedad);
+	public boolean hasColumnForReferencedModelProperty(String property) {
+		return details.containsKey(property);
 	}
 	
 	
 	/**
-	 * @return nunca nulo.
+	 * @return Not null.
 	 */
 	public Collection getDetails() {
 		return details.values();
@@ -81,47 +68,29 @@ public class ReferenceMapping implements java.io.Serializable {
 		return referencedMapping;
 	}
 
-
-	/**
-	 * Gets the contenedor
-	 * @return Returns a MapeoEntidad
-	 */
 	public ModelMapping getContainer() {
 		return container;
 	}
-	/**
-	 * Sets the contenedor
-	 * @param contenedor The contenedor to set
-	 */
-	public void setContainer(ModelMapping contenedor) {
-		this.container = contenedor;
+	public void setContainer(ModelMapping container) {
+		this.container = container;
 	}
 
-
-	/**
-	 * Gets the referenciaModelo
-	 * @return Returns a String
-	 */
 	public String getReference() {
 		return reference;
 	}
-	/**
-	 * Sets the referenciaModelo
-	 * @param referenciaModelo The referenciaModelo to set
-	 */
-	public void setReference(String referenciaModelo) {
-		this.reference = referenciaModelo;
+	public void setReference(String reference) {
+		this.reference = reference;
 	}
 	
 	public Collection getColumns() {
 		return columns;
 	}
 	
-	public String getCMPAttribute(String nombrePropiedadModeloReferenciado) throws XavaException {
-		if (getContainer().isReferenceOverlappingWithSomeProperty(getReference(), nombrePropiedadModeloReferenciado)) {
-			return getContainer().getCMPAttributeForColumn(getColumnForReferencedModelProperty(nombrePropiedadModeloReferenciado));
+	public String getCMPAttribute(String propertyNameOfReferencedModel) throws XavaException {
+		if (getContainer().isReferenceOverlappingWithSomeProperty(getReference(), propertyNameOfReferencedModel)) {
+			return getContainer().getCMPAttributeForColumn(getColumnForReferencedModelProperty(propertyNameOfReferencedModel));
 		}
-		return Strings.change(getReference() + "_" + nombrePropiedadModeloReferenciado, ".", "_");
+		return Strings.change(getReference() + "_" + propertyNameOfReferencedModel, ".", "_");
 	}
 
 	public Collection getCmpFields() throws XavaException {

@@ -435,7 +435,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 					select.append(detalle.getQualifiedColumn());
 					select.append(" = ");
 					select.append(detalle
-							.getColumnaTablaReferenciadaCualificada());
+							.getQualifiedColumnOfReferencedTable());
 					if (itDetalles.hasNext()) {
 						select.append(" and ");
 					}

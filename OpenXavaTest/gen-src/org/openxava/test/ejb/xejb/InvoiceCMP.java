@@ -19,7 +19,7 @@ public abstract class InvoiceCMP
          dataHolder = new org.openxava.test.ejb.InvoiceData();
 
          dataHolder.set_Comment( get_Comment() );
-         dataHolder.setDate( getDate() );
+         dataHolder.set_Date( get_Date() );
          dataHolder.set_Paid( get_Paid() );
          dataHolder.setYear( getYear() );
          dataHolder.set_VatPercentage( get_VatPercentage() );
@@ -40,7 +40,7 @@ public abstract class InvoiceCMP
       try
       {
          set_Comment( dataHolder.get_Comment() );
-         setDate( dataHolder.getDate() );
+         set_Date( dataHolder.get_Date() );
          set_Paid( dataHolder.get_Paid() );
          set_VatPercentage( dataHolder.get_VatPercentage() );
          setCustomer_number( dataHolder.getCustomer_number() );
@@ -153,9 +153,9 @@ public abstract class InvoiceCMP
 
    public abstract void set_Comment( java.lang.String _Comment ) ;
 
-   public abstract java.util.Date getDate() ;
+   public abstract java.sql.Date get_Date() ;
 
-   public abstract void setDate( java.util.Date date ) ;
+   public abstract void set_Date( java.sql.Date _Date ) ;
 
    public abstract java.lang.String get_Paid() ;
 

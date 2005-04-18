@@ -16,8 +16,8 @@ public class PropertyMapping extends MetaSetsContainer {
 	private String multipleConverterClassName;
 	private IConverter converter;
 	private IMultipleConverter multipleConverter;
-	private boolean conversorCreado = false;
-	private boolean conversorMultipleCreado = false;
+	private boolean converterCreated = false;
+	private boolean multpleConverterCreated = false;
 	private String cmpTypeName;
 	private ModelMapping modelMapping;
 	
@@ -28,39 +28,39 @@ public class PropertyMapping extends MetaSetsContainer {
 	public String getColumn() {
 		return column;
 	}
-	public void setColumn(String columnaTabla) {
-		this.column = columnaTabla;
+	public void setColumn(String tableColumn) {
+		this.column = tableColumn;
 	}
 
 	public String getProperty() {
 		return property;
 	}
-	public void setProperty(String propiedadModelo) {
-		this.property = propiedadModelo;
+	public void setProperty(String modelProperty) {
+		this.property = modelProperty;
 	}
 	
-	public void setConverterClassName(String nombreClaseConversor) {
-		this.converterClassName = nombreClaseConversor;
+	public void setConverterClassName(String converterClassName) {
+		this.converterClassName = converterClassName;		
 	}
 
 	/** 
-	 * @return nulo si el mapeo no tiene conversor asignado.
+	 * @return Null if mapping does not have converter
 	 */	
 	public  IConverter getConverter() throws XavaException {
-		if (!conversorCreado) {
+		if (!converterCreated) {
 			converter = createConverter();
-			conversorCreado = true;
+			converterCreated = true;
 		}
 		return converter;
 	}
 	
 	/** 
-	 * @return nulo si el mapeo no tiene conversor asignado.
+	 * @return Null if mapping does not have multiple converter
 	 */	
 	public  IMultipleConverter getMultipleConverter() throws XavaException {
-		if (!conversorMultipleCreado) {
+		if (!multpleConverterCreated) {
 			multipleConverter = createMultipleConverter();
-			conversorMultipleCreado = true;
+			multpleConverterCreated = true;
 		}
 		return multipleConverter;
 	}
@@ -134,14 +134,8 @@ public class PropertyMapping extends MetaSetsContainer {
 			throw new XavaException("create_converter_error", getProperty(), ex.getLocalizedMessage());
 		}
 	}
-	
-	
-	/**
-	 * Returns the nombreTipoCmp.
-	 * @return String
-	 */
+		
 	public String getCmpTypeName() {
-		if (cmpTypeName==null) return "java.lang.Object";
 		if ("String".equals(cmpTypeName)) return "java.lang.String";
 		if ("Integer".equals(cmpTypeName)) return "java.lang.Integer";
 		if ("Long".equals(cmpTypeName)) return "java.lang.Long";
@@ -152,18 +146,10 @@ public class PropertyMapping extends MetaSetsContainer {
 		return Class.forName(getCmpTypeName());
 	}
 
-	/**
-	 * Sets the nombreTipoCmp.
-	 * @param nombreTipoCmp The nombreTipoCmp to set
-	 */
-	public void setCmpTypeName(String nombreTipoCmp) {
-		this.cmpTypeName = nombreTipoCmp;
+	public void setCmpTypeName(String cmpTypeName) {
+		this.cmpTypeName = cmpTypeName;
 	}
 
-	/**
-	 * Returns the .
-	 * @return String
-	 */
 	public String getConverterClassName() {
 		return converterClassName;
 	}
@@ -179,7 +165,7 @@ public class PropertyMapping extends MetaSetsContainer {
 	}
 
 	public void setMultipleConverterClassName(String string) {
-		multipleConverterClassName = string;
+		this.multipleConverterClassName = string;
 	}
 	
 	private MetaProperty getMetaProperty() throws XavaException {

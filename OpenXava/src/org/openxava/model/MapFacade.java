@@ -15,410 +15,404 @@ import org.openxava.validators.*;
 
 
 /**
- * Permite manipular los objetos del modelo en formato
- * mapa de Java. <p>
+ * Allows manage model objects in <code>Map</code> format. <p>
+ * 
+ * It's used in generic OpenXava action to make CRUD operations,
+ * but if it's convenient for you, you can use directly.<p>
+ * 
+ * A principle a good dessign is use maps for generic or automatic
+ * things, but in all other cases the use of the model objects directly
+ * is better, because the compiler do a good work for us, we can use
+ * method calls, etc.<p>
+ * 
+ * We use the EJB exceptions (CreateException, FinderException, RemoveException,
+ * etc) with the typical semantic associated to each. Although the implementation
+ * does not use EJB.<br>
+ * We use RemoteException to indicate a system error. Although the implementation
+ * is local.<br>
+ * 
+ * EJB exceptions and RemoteException for any system errors are used for years
+ * by enterprise java programmer, because this we think a good idea keep this
+ * exceptions and its semantics while we can change the implementation of MapFacade (for
+ * example for use POJOs instead EJB, or local process instead of remote objects,
+ * or hibernate/jdo instead of entitybeans).<p>
+ * 
+ * The first parameter of each metho is <code>modelName</code>, this is a
+ * name of a OpenXava component (Customer, Invoice, etc) or a qualified aggregate 
+ * (Invoice.InvoiceDetail for example).<p>   
  * 
  * @author Javier Paniza
  */
+
 public class MapFacade {
 	
 	private static Map remotes;
 
 
 	/**
-	 * Crea una nueva entidad a partir de un mapa con
-	 * sus valores iniciales. <p>
+	 * Creates a new entity from a map with its initial values. <p> 
 	 * 
-	 * @param nombreModelo  Nombre Xava del modelo. No puede ser nulo.
-	 * @param valores  Valores iniciales para crear la entidad. No puede ser nulo.
-	 * @return Entidad creadada, no es un mapa es el objeto creado
-	 *          (EntityBean, objeto jdo o cualquiera que sea
-	 *           el modelos subyacente usado). Nunca nulo.
-	 * @exception CreateException  Problema de lógica al crear.
-	 * @exception ValidationException  Problema al validar los valores enviados.
-	 * @exception XavaException  Problemas relacionados con OpenXava. Anula la transacción.
-	 * @exception RemoteException  Problemas de sistema. Anula la transacción.
+	 * @param modelName  OpenXava model name. Not null
+	 * @param values  Initial values for create the entity. Not null
+	 * @return Created entity, not a map it's the created object
+	 *          (EntityBean, POJO object o the form used in the underlying model). Not null.
+	 * @exception CreateException  Logic problem on creation.
+	 * @exception ValidationException  Data validation problems.
+	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
+	 * @exception RemoteException  System problem. Rollback transaction.
 	 */
-	public static Object create(String nombreModelo, Map valores) 
+	public static Object create(String modelName, Map values) 
 		throws
 			CreateException,ValidationException, 
 			XavaException, RemoteException 
 	{
-		Assert.arg(nombreModelo, valores);					
+		Assert.arg(modelName, values);					
 		try {									
-			return getRemote(nombreModelo).create(nombreModelo, valores);
+			return getRemote(modelName).create(modelName, values);
 		}
 		catch (RemoteException ex) {
-			anularRemote(nombreModelo);
-			return getRemote(nombreModelo).create(nombreModelo, valores);
+			annulRemote(modelName);
+			return getRemote(modelName).create(modelName, values);
 		}							
 	}
 	
-	/**	 
-	 * Crea un nueva agregado a partir de un mapa con
-	 * sus valores iniciales. <p>
+	/**
+	 * Creates a new aggregate from a map with its initial values. <p>	 
 	 * 
-	 * @param nombreModelo  Nombre Xava del modelo. No puede ser nulo.
-	 * @param claveContenedor  Clave de la entidad o agregado que contiene al agregado.
-	 * @param contador  Contador usado para generar la clave del agregado, indica el número
-	 * 				de orden. La implementación del agregado puede optar por ignorarlo.
-	 * @param valores  Valores iniciales para crear el agregado. No puede ser nulo.
-	 * @return Agregado creadado, no es un mapa es el objeto creado
-	 *          (EntityBean, objeto jdo o cualquiera que sea
-	 *           el modelos subyacente usado). Nunca nulo.
-	 * @exception CreateException  Problema de lógica al crear.
-	 * @exception ValidationException  Problema al validar los valores enviados.
-	 * @exception XavaException  Problemas relacionados con OpenXava. Anula la transacción.
-	 * @exception RemoteException  Problemas de sistema. Anula la transacción.
+	 * @param modelName  OpenXava model name. Not null
+	 * @param containerKey  Key of entity or aggregate that contains this aggregate
+	 * @param counter Counter used to generate the aggregate key, indicates the
+	 * 		order number. The aggregate implementation can ignorate it.  
+	 * @param values  Initial values for create the aggregate. Not null.
+	 * @return Aggregate created, not a map but the create object
+	 *          (EntityBean, POJO object o the form used in the underlying model). Not null.
+	 * @exception CreateException  Logic problem on creation.
+	 * @exception ValidationException  Data validation problems.
+	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
+	 * @exception RemoteException  System problem. Rollback transaction.
 	 */
-	public static Object createAggregate(String nombreModelo, Map claveContenedor, int contador, Map valores) 
+	public static Object createAggregate(String modelName, Map containerKey, int counter, Map values) 
 		throws
 			CreateException,ValidationException, 
 			XavaException, RemoteException 
 	{
-		Assert.arg(nombreModelo, claveContenedor, valores);					
+		Assert.arg(modelName, containerKey, values);					
 		try {		
-			return getRemote(nombreModelo).createAggregate(nombreModelo, claveContenedor, contador, valores);
+			return getRemote(modelName).createAggregate(modelName, containerKey, counter, values);
 		}
 		catch (RemoteException ex) {
-			anularRemote(nombreModelo);
-			return getRemote(nombreModelo).createAggregate(nombreModelo, claveContenedor, contador, valores);
+			annulRemote(modelName);
+			return getRemote(modelName).createAggregate(modelName, containerKey, counter, values);
 		}							
 	}
 	
-	/**	 
-	 * Crea un nueva agregado a partir de un mapa con
-	 * sus valores iniciales. <p>
+	/**
+	 * Creates a new aggregate from a map with its initial values. <p>	 
 	 * 
-	 * @param nombreModelo  Nombre Xava del modelo. No puede ser nulo.
-	 * @param contenedor  Objecto contenedor o clave (en formato objeto) del objeto contenedor.
-	 * @param contador  Contador usado para generar la clave del agregado, indica el número
-	 * 				de orden. La implementación del agregado puede optar por ignorarlo.
-	 * @param valores  Valores iniciales para crear el agregado. No puede ser nulo.
-	 * @return Agregado creadado, no es un mapa es el objeto creado
-	 *          (EntityBean, objeto jdo o cualquiera que sea
-	 *           el modelos subyacente usado). Nunca nulo.
-	 * @exception CreateException  Problema de lógica al crear.
-	 * @exception ValidationException  Problema al validar los valores enviados.
-	 * @exception XavaException  Problemas relacionados con OpenXava. Anula la transacción.
-	 * @exception RemoteException  Problemas de sistema. Anula la transacción.
+	 * @param modelName  OpenXava model name. Not null
+	 * @param container  Container object (or container key in object format) that contains
+	 * 		the aggregate.
+	 * @param counter Counter used to generate the aggregate key, indicates the
+	 * 		order number. The aggregate implementation can ignorate it.  
+	 * @param values  Initial values for create the aggregate. Not null.
+	 * @return Aggregate created, not a map but the create object
+	 *          (EntityBean, POJO object o the form used in the underlying model). Not null.
+	 * @exception CreateException  Logic problem on creation.
+	 * @exception ValidationException  Data validation problems.
+	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
+	 * @exception RemoteException  System problem. Rollback transaction.
 	 */
-	public static Object createAggregate(String nombreModelo, Object contenedor, int contador, Map valores) 
+	public static Object createAggregate(String modelName, Object container, int counter, Map values) 
 		throws
 			CreateException,ValidationException, 
 			XavaException, RemoteException 
 	{
-		Assert.arg(nombreModelo, contenedor, valores);					
+		Assert.arg(modelName, container, values);					
 		try {									
-			return getRemote(nombreModelo).createAggregate(nombreModelo, contenedor, contador, valores);
+			return getRemote(modelName).createAggregate(modelName, container, counter, values);
 		}
 		catch (RemoteException ex) {
-			anularRemote(nombreModelo);
-			return getRemote(nombreModelo).createAggregate(nombreModelo, contenedor, contador, valores);
+			annulRemote(modelName);
+			return getRemote(modelName).createAggregate(modelName, container, counter, values);
 		}							
 	}
 	
-	/**	 
-	 * Crea una nueva entidad a partir de un mapa con sus valores iniciales y
-	 * devuelve un mapa con los valores de la entidad creada.
-	 * <p>
-	 *
-	 * @param nombreModelo  Nombre Xava del modelo. No puede ser nulo.
-	 * @param valores  Valores iniciales para crear la entidad. No puede ser nulo.
-	 * @return Un mapa con los valores del objeto creado. Las propiedades
-	 * contenidas son las enviadas al crear.
-	 * @exception CreateException  Problema de lógica al crear.
-	 * @exception ValidationException  Problema al validar los valores enviados.
-	 * @exception XavaException  Problemas relacionados con OpenXava. Anula la transacción.
-	 * @exception RemoteException  Problemas de sistema. Anula la transacción.
+	/**	
+	 * Creates a new entity from a map with its initials values and
+	 * return a map with the values of created entity. <p>
+	 *  
+	 * @param modelName  OpenXava model name. Not null
+	 * @param values  Initial values to create entity. Not null
+	 * @return A map with the created object values. The properties are the
+	 * 		sent ones on create. 
+	 * @exception CreateException  Logic problem on creation.
+	 * @exception ValidationException  Data validation problems.
+	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
+	 * @exception RemoteException  System problem. Rollback transaction.
 	 */
-	public static Map createReturningValues(String nombreModelo, Map valores)
+	public static Map createReturningValues(String modelName, Map values)
 		throws
 			CreateException,ValidationException,
 			XavaException, RemoteException
 	{
-		Assert.arg(nombreModelo, valores);		
+		Assert.arg(modelName, values);		
 		try {
-			return getRemote(nombreModelo).createReturningValues(nombreModelo, valores);
+			return getRemote(modelName).createReturningValues(modelName, values);
 		}
 		catch (RemoteException ex) {
-			anularRemote(nombreModelo);
-			return getRemote(nombreModelo).createReturningValues(nombreModelo, valores);
+			annulRemote(modelName);
+			return getRemote(modelName).createReturningValues(modelName, values);
 		}
 		
 	}
 	
 	
 	/**
-	 * Crea una nueva entidad a partir de un mapa con sus valores iniciales y
-	 * devuelve un mapa con los valores de la clave de la entidad creada.
-	 * <p>
+	 * Creates a new entity from a map with its initial values and
+	 * return a map with the key values of the created entity. <p>
 	 *
-	 * @param nombreModelo  Nombre Xava del modelo. No puede ser nulo.
-	 * @param valores  Valores iniciales para crear la entidad. No puede ser nulo.
-	 * @return Un mapa con los valores de la clave del objeto creado.
-	 * @exception CreateException  Problema de lógica al crear.
-	 * @exception ValidationException  Problema al validar los valores enviados.
-	 * @exception XavaException  Problemas relacionados con OpenXava. Anula la transacción.
-	 * @exception RemoteException  Problemas de sistema. Anula la transacción.
+	 * @param modelName  OpenXava model name. Not null
+	 * @param values  Initial values to create the entity. Not null
+	 * @return A map with key value of created object
+	 * @exception CreateException  Logic problem on creation.
+	 * @exception ValidationException  Data validation problems.
+	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
+	 * @exception RemoteException  System problem. Rollback transaction.
 	 */
-	public static Map createReturningKey(String nombreModelo, Map valores)
+	public static Map createReturningKey(String modelName, Map values)
 		throws
 			CreateException,ValidationException,
 			XavaException, RemoteException
 	{
-		Assert.arg(nombreModelo, valores);		
+		Assert.arg(modelName, values);		
 		try {
-			return getRemote(nombreModelo).createReturningKey(nombreModelo, valores);
+			return getRemote(modelName).createReturningKey(modelName, values);
 		}
 		catch (RemoteException ex) {
-			anularRemote(nombreModelo);
-			return getRemote(nombreModelo).createReturningKey(nombreModelo, valores);
-		}
-		
+			annulRemote(modelName);
+			return getRemote(modelName).createReturningKey(modelName, values);
+		}		
 	}
-	
-	
-	
-	
-	/**	 	 
-	 * Crea un nuevo agregado a partir de un mapa con
-	 * sus valores iniciales y devuelve un mapa con la clave. <p>
+				
+	/**	
+	 * Creates a new aggregate from a map with its initial values
+	 * and return a map with the key. <p>  	 
 	 * 
-	 * @param nombreModelo  Nombre Xava del modelo. No puede ser nulo.
-	 * @param claveContenedor  Clave de la entidad o agregado que contiene al agregado.
-	 * @param contador  Contador usado para generar la clave del agregado, indica el número
-	 * 				de orden. La implementación del agregado puede optar por ignorarlo.
-	 * @param valores  Valores iniciales para crear el agregado. No puede ser nulo.
-	 * @return Un mapa con la clave del agregado creado
-	 * @exception CreateException  Problema de lógica al crear.
-	 * @exception ValidationException  Problema al validar los valores enviados.
-	 * @exception XavaException  Problemas relacionados con OpenXava. Anula la transacción.
-	 * @exception RemoteException  Problemas de sistema. Anula la transacción.
+	 * @param modelName  OpenXava model name. Not null
+	 * @param containerKey  Key of entity or aggregate that contains this aggregate	
+ 	 * @param counter Counter used to generate the aggregate key, indicates the
+	 * 		order number. The aggregate implementation can ignorate it.  
+	 * @param values  Initial values for create the aggregate. Not null.
+	 * @return Key values of created aggregate.
+	 * @exception CreateException  Logic problem on creation.
+	 * @exception ValidationException  Data validation problems.
+	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
+	 * @exception RemoteException  System problem. Rollback transaction.
 	 */
-	public static Map createAggregateReturningKey(String nombreModelo, Map claveContenedor, int contador, Map valores) 
+	public static Map createAggregateReturningKey(String modelName, Map containerKey, int counter, Map values) 
 		throws
 			CreateException,ValidationException, 
 			XavaException, RemoteException 
 	{
-		Assert.arg(nombreModelo, claveContenedor, valores);					
+		Assert.arg(modelName, containerKey, values);					
 		try {		
-			return getRemote(nombreModelo).createAggregateReturningKey(nombreModelo, claveContenedor, contador, valores);
+			return getRemote(modelName).createAggregateReturningKey(modelName, containerKey, counter, values);
 		}
 		catch (RemoteException ex) {
-			anularRemote(nombreModelo);
-			return getRemote(nombreModelo).createAggregateReturningKey(nombreModelo, claveContenedor, contador, valores);
+			annulRemote(modelName);
+			return getRemote(modelName).createAggregateReturningKey(modelName, containerKey, counter, values);
 		}							
 	}
 	
 	
 	/**
-	 * Obtiene los valores especificados de la entidad/agreado a partir de un mapa con 
-	 * los valores de la clave primaria. <p>
+	 * Obtain the specified values from entity/aggregate from a map with 
+	 * primary key values. <p>
 	 * 
-	 * El parametro <tt>nombreMiembros</tt> es un mapa para
-	 * poder tener una estructura jerarquica.
-	 * Los nombres de propiedades están en la parte
-	 * de clave. Si es una propiedad simple el valor será nulo, y
-	 * en caso contrario tiene un mapa con la misma estructura.<br>
-	 * Por ejemplo, si tenemos un <tt>Cliente</tt> que
-	 * referencia a un <tt>Comercial</tt>,
-	 * podriamos enviar un mapa con los siguiente valores:
-	 * <pre>
-	 * { "codigo", null }
-	 * { "nombre", null }
-	 * { "comercial", { {"codigo", null}, {"nombre", null} } }
+	 * The <code>memberNames</tt> parameter is a map to use a treelike structure.<br>
+	 * The property names are in key part. If it's a simple property the value
+	 * is null, otherwise it has a map with the same structure.<br>
+	 * For example, if we have a <code>Customer</tt> that references
+	 * to a <code>Seller</code>,
+	 * we can send a map with the next values:
+	 * <pre> 
+	 * { "number", null }
+	 * { "name", null }
+	 * { "seller", { {"number", null}, {"name", null} } }
 	 * </pre>
 	 * 
-	 * @param nombreModelo  Nombre Xava del modelo. Puede ser el nombre
-	 * 	de un agregado cualificado. No puede ser nulo.
-	 * @param valoresClave  Valores de la clave de la entidad a buscar. No puede ser nulo.
-	 * @param nombreMiembros  Nombres de los miembros de los que se obtendrá 
-	 * 						  la información. No puede ser nulo. 
-	 * @return Mapa con los datos de la entidad. Nunca nulo.
-	 * @exception FinderException  Problema de lógica al buscar.
-	 * @exception ObjectNotFoundException  No existe una entidad con esa clave.
-	 * @exception XavaException  Problemas relacionados con OpenXava. Anula la transacción.
-	 * @exception RemoteException  Problemas de sistema. Anula la transacción.
+	 * @param modelName  OpenXava model name. Not null.
+	 * @param keyValues  Key values of object to find. Not null.
+	 * @param memberNames Member names to obtain its values. Not null  
+	 * @return Map with entity values. Not null.
+	 * @exception ObjectNotFoundException  If object with this key does not exist 
+	 * @exception FinderException  Logic problem on find.	
+	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
+	 * @exception RemoteException  System problem. Rollback transaction.
 	 */	
 	public static Map getValues(
-		String nombreModelo,
-		Map valoresClave,
-		Map nombreMiembros)
+		String modelName,
+		Map keyValues,
+		Map memberNames)
 		throws FinderException, XavaException, RemoteException 
 	{						
-		Assert.arg(nombreModelo, valoresClave, nombreMiembros);		
-		if (valoresClave.isEmpty()) {
-			throw new ObjectNotFoundException(XavaResources.getString("empty_key_object_not_found", nombreModelo));						
+		Assert.arg(modelName, keyValues, memberNames);		
+		if (keyValues.isEmpty()) {
+			throw new ObjectNotFoundException(XavaResources.getString("empty_key_object_not_found", modelName));						
 		}
 		try {					
-			return getRemote(nombreModelo).getValues(nombreModelo, valoresClave, nombreMiembros);
+			return getRemote(modelName).getValues(modelName, keyValues, memberNames);
 		}
 		catch (RemoteException ex) {
-			anularRemote(nombreModelo);
-			return getRemote(nombreModelo).getValues(nombreModelo, valoresClave, nombreMiembros);
+			annulRemote(modelName);
+			return getRemote(modelName).getValues(modelName, keyValues, memberNames);
 		}		
 	}
 		
 	/**
-	 * Obtiene todos los valores de la entidad a partir de la propia entidad. <p>
+	 * Obtain the values of the entity/aggregate from the own entity. <p> 
 	 * 
-	 * El parametro <tt>nombreMiembros</tt> es un mapa para
-	 * poder tener una estructura jerarquica.
-	 * Los nombres de propiedades están en la parte
-	 * de clave. Si es una propiedad simple el valor será nulo, y
-	 * en caso contrario tiene un mapa con la misma estructura.<br>
-	 * Por ejemplo, si tenemos un <tt>Cliente</tt> que
-	 * referencia a un <tt>Comercial</tt>,
-	 * podriamos enviar un mapa con los siguiente valores:
-	 * <pre>
-	 * { "codigo", null }
-	 * { "nombre", null }
-	 * { "comercial", { {"codigo", null}, {"nombre", null} } }
+	 * The <code>memberNames</tt> parameter is a map to use a treelike structure.<br>
+	 * The property names are in key part. If it's a simple property the value
+	 * is null, otherwise it has a map with the same structure.<br>
+	 * For example, if we have a <code>Customer</tt> that references
+	 * to a <code>Seller</code>,
+	 * we can send a map with the next values:
+	 * <pre> 
+	 * { "number", null }
+	 * { "name", null }
+	 * { "seller", { {"number", null}, {"name", null} } }
 	 * </pre>
 	 * 
-	 * @param nombreModelo  Nombre Xava del modelo. No puede ser nulo.
-	 * @param entidad  Entidad de la queremos obtener los valores. No puede ser nulo.
-	 * @param nombreMiembros  Nombres de los miembros de los que se obtendrá 
-	 * 						  la información. Los nombres se guardan
-	 *                        en la clave del mapa. Nuncan nulo. 
-	 * @return Mapa con los datos de la entidad. Nunca nulo.
-	 * @exception XavaException  Problemas relacionados con OpenXava. Anula la transacción.
-	 * @exception RemoteException  Problemas de sistema. Anula la transacción.
+	 * @param modelName  OpenXava model name. Not null.
+	 * @param entity  Object to obtain values from it. Not null.
+	 * @param memberNames Member names to obtain its values. Not null  
+	 * @return Map with entity values. Not null.
+	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
+	 * @exception RemoteException  System problem. Rollback transaction.
 	 */	
-	public static Map getValues(String nombreModelo, Object entidad, Map nombreMiembros)
+	public static Map getValues(String modelName, Object entity, Map memberNames)
 		throws XavaException, RemoteException 
 	{		
-		Assert.arg(nombreModelo, entidad, nombreMiembros);
+		Assert.arg(modelName, entity, memberNames);
 		try {
-			return getRemote(nombreModelo).getValues(nombreModelo, entidad, nombreMiembros);
+			return getRemote(modelName).getValues(modelName, entity, memberNames);
 		}
 		catch (RemoteException ex) {
-			anularRemote(nombreModelo);
-			return getRemote(nombreModelo).getValues(nombreModelo, entidad, nombreMiembros);
+			annulRemote(modelName);
+			return getRemote(modelName).getValues(modelName, entity, memberNames);
 		}
 			
 	}
 	
 	/**
-	 * Obtiene la entidad a partir de un mapa con 
-	 * los valores de la clave primaria. <p>
+	 * Obtain the entity/aggregate from a map with key values. <p>
 	 * 
-	 * @param nombreModelo  Nombre Xava del modelo. No puede ser nulo.
-	 * @param valoresClave  Valores de la clave de la entidad a buscar. No puede ser nulo.
- 	 * @return La entidad. Nunca nulo.
-	 * @exception FinderException  Problema de lógica al buscar.
-	 * @exception ObjectNotFoundException  No existe una entidad con esa clave.	 
-	 * @exception RemoteException  Problemas de sistema. Anula la transacción.
-	 */
-	public static Object findEntity(String nombreModelo, Map valoresClave)
-		throws FinderException, RemoteException 
+	 * @param modelName  OpenXava model name. Not null
+	 * @param keyValues  Key values of entity to find. Not null
+ 	 * @return The entity or aggregate. Not null
+	 * @exception ObjectNotFoundException  If object with this key does not exist 
+	 * @exception FinderException  Logic problem on find.	
+	 * @exception RemoteException  System problem. Rollback transaction.
+	 */ 
+	public static Object findEntity(String modelName, Map keyValues)
+		throws ObjectNotFoundException, FinderException, RemoteException 
 	{	
-		if (valoresClave==null) return null;
-		Assert.arg(nombreModelo, valoresClave);
+		if (keyValues==null) return null;
+		Assert.arg(modelName, keyValues);
 		try {
-			return getRemote(nombreModelo).findEntity(nombreModelo, valoresClave);
+			return getRemote(modelName).findEntity(modelName, keyValues);
 		}
 		catch (RemoteException ex) {
-			anularRemote(nombreModelo);
-			return getRemote(nombreModelo).findEntity(nombreModelo, valoresClave);
+			annulRemote(modelName);
+			return getRemote(modelName).findEntity(modelName, keyValues);
 		}					
 	}	
 
 	/**
-	 * Borra la entidad a partir de un mapa con
-	 * su clave. <p>
+	 * Remove the entity/aggregate from a map with its key. <p> 
 	 * 
-	 * @param nombreModelo  Nombre Xava del modelo. No puede ser nulo.
-	 * @param valoresClave  Valores con la clave de la entidad a borrar. Nunca nulo.
-	 * @return Entidad creadada, no es un mapa es el objeto creado
-	 *          (EntityBean, objeto jdo o cualquiera que sea
-	 *           el modelos subyacente usado). Nunca nulo.
-	 * @exception RemoveException  Problema de lógica al borrar.
-	 * @exception XavaException  Problemas relacionados con OpenXava. Anula la transacción.
-	 * @exception RemoteException  Problemas de sistema. Anula la transacción.
-	 * @exception ValidationException  Si algún problema de validación impide que se borre la entidad
+	 * @param modelName  OpenXava model name. No puede ser nulo.
+	 * @param keyValues  Valores con la clave de la entidad a borrar. Nunca nulo.
+	 * @exception RemoveException  Logic problem on remove.
+	 * @exception ValidationException  Data validation problems.
+	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
+	 * @exception RemoteException  System problem. Rollback transaction.
 	 */
-	public static void remove(String nombreModelo, Map valoresClave)
+	public static void remove(String modelName, Map keyValues)
 		throws RemoveException, RemoteException, XavaException, ValidationException {
-		Assert.arg(nombreModelo, valoresClave);
+		Assert.arg(modelName, keyValues);
 		try {
-			getRemote(nombreModelo).remove(nombreModelo, valoresClave);
+			getRemote(modelName).remove(modelName, keyValues);
 		}
 		catch (RemoteException ex) {
-			anularRemote(nombreModelo);
-			getRemote(nombreModelo).remove(nombreModelo, valoresClave);
+			annulRemote(modelName);
+			getRemote(modelName).remove(modelName, keyValues);
 		}
 		
 	}
 
 	/**
-	 * Establece nuevos valores en la entidad obtenida a partir de un mapa con 
-	 * los valores de la clave primaria. <p>
+	 * Set new values to a entity/aggregate that is found from its key values. <p>
 	 * 
-	 * @param nombreModelo  Nombre Xava del modelo. No puede ser nulo.
-	 * @param valoresClave  Valores de la clave de la entidad a buscar. No puede ser nulo.
-	 * @param valores  Nuevos valores a establecer. No puede ser nulo.
-	 * @exception FinderException  Problema de lógica al buscar.
-	 * @exception ObjectNotFoundException  No existe una entidad con esa clave.
-	 * @exception ValidationException  Problema al validar los valores enviados.
-	 * @exception XavaException  Problemas relacionados con OpenXava. Anula la transacción.
-	 * @exception RemoteException  Problemas de sistema. Anula la transacción.
+	 * @param modelName  OpenXava model name. Not null.
+	 * @param keyValues  Key values of object. Not null.
+	 * @param values  New values to set. Not null.
+	 * @exception ObjectNotFoundException  If object with this key does not exist 
+	 * @exception FinderException  Logic problem on find.	
+	 * @exception ValidationException  Data validation problems.	 * 
+	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
+	 * @exception RemoteException  System problem. Rollback transaction.
 	 */	
-	public static void setValues(
-		java.lang.String nombreModelo,
-		Map valoresClave,
-		Map valores)
-		throws FinderException,	ValidationException,
+	public static void setValues(String modelName, Map keyValues,	Map values)
+		throws ObjectNotFoundException, FinderException,	ValidationException,
 				XavaException,  RemoteException 
 	{
-		Assert.arg(nombreModelo, valoresClave, valores);				
+		Assert.arg(modelName, keyValues, values);				
 		try {			
-			getRemote(nombreModelo).setValues(nombreModelo, valoresClave, valores);								
+			getRemote(modelName).setValues(modelName, keyValues, values);								
 		}
 		catch (RemoteException ex) {
-			anularRemote(nombreModelo);
-			getRemote(nombreModelo).setValues(nombreModelo, valoresClave, valores);			
+			annulRemote(modelName);
+			getRemote(modelName).setValues(modelName, keyValues, values);			
 		}				
 	}
 	
 	/**	 
-	 * Valida el mapa con los datos enviados pero sin crear o modificar ninguna entidad. <p>
+	 * Validates the sent values but does not create or update the object. <p>
+	 *
+	 * Only validates the sent data, it does not certify that exist all needed data
+	 * to create a new object.<br> 
 	 * 
-	 * Solo valida los datos enviados, no certifica que existen todos los datos necesarios
-	 * para crear, algo que solo se hace al llamar a crera.
-	 * 
-	 * @param nombreModelo  Nombre Xava de la entidad. No puede ser nulo.
-	 * @param valores  Nuevos valores a establecer. No puede ser nulo.
-	 * @return Lista de mensajes con errores de valicación. Nunca nulo.
-	 * @exception XavaException  Problemas relacionados con OpenXava. Anula la transacción.
-	 * @exception RemoteException  Problemas de sistema. Anula la transacción.	  
+	 * @param modelName  OpenXava model name. Not null.
+	 * @param values  Values to validate. Not null.
+	 * @return Message list with validation errors. Not null.
+	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
+	 * @exception RemoteException  System problem. Rollback transaction.
 	 */	
-	public static Messages validate(
-		java.lang.String nombreModelo,		
-		Map valores)
+	public static Messages validate(String modelName, Map values)
 		throws XavaException,  RemoteException 
 	{
-		Assert.arg(nombreModelo, valores);			
+		Assert.arg(modelName, values);			
 		try {
-			return getRemote(nombreModelo).validate(nombreModelo, valores);								
+			return getRemote(modelName).validate(modelName, values);								
 		}
 		catch (RemoteException ex) {
-			anularRemote(nombreModelo);
-			return getRemote(nombreModelo).validate(nombreModelo, valores);			
+			annulRemote(modelName);
+			return getRemote(modelName).validate(modelName, values);			
 		}
 				
 	}
 	
 									
 	
-	private static MapFacadeRemote getRemote(String nombreModelo) throws RemoteException {
+	private static MapFacadeRemote getRemote(String modelName) throws RemoteException {
 		try {			
-			int idx = nombreModelo.indexOf('.'); 
+			int idx = modelName.indexOf('.'); 
 			if (idx >=0) {
-				nombreModelo = nombreModelo.substring(0, idx);				 				
+				modelName = modelName.substring(0, idx);				 				
 			}			
-			String paquete = MetaComponent.get(nombreModelo).getPackageNameWithSlashWithoutModel();			
+			String paquete = MetaComponent.get(modelName).getPackageNameWithSlashWithoutModel();			
 			MapFacadeRemote remote = (MapFacadeRemote) getRemotes().get(paquete);
 			if (remote == null) {							
 				Object ohome = BeansContext.get().lookup("ejb/"+paquete+"/MapFacade");
@@ -430,24 +424,21 @@ public class MapFacade {
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			throw new RemoteException(XavaResources.getString("facade_remote", nombreModelo));
+			throw new RemoteException(XavaResources.getString("facade_remote", modelName));
 		}		
 	}
 			
 	/**
-	 * Convierte un mapa de objetos en la clave primaria del <i>EntityBean</i>. <p>
-	 * 
-	 * Solo funciona si el compomente especificado esta implementado usando
-	 * <i>EntityBeans</i>. <br>	 
+	 * Convert from a map with primary key values to primary key object. <p> 
 	 */		
-	public static Object toPrimaryKey(String nombreEntidad, Map valoresClave) throws XavaException {
+	public static Object toPrimaryKey(String entityName, Map keyValues) throws XavaException {
 		try {
-			MetaEntityEjb m = (MetaEntityEjb) MetaComponent.get(nombreEntidad).getMetaEntity();
-			return m.obtainPrimaryKeyFromKey(valoresClave);
+			MetaEntityEjb m = (MetaEntityEjb) MetaComponent.get(entityName).getMetaEntity();
+			return m.obtainPrimaryKeyFromKey(keyValues);
 		}
 		catch (ClassCastException ex) {
 			ex.printStackTrace();
-			throw new XavaException("no_entity_bean", nombreEntidad);
+			throw new XavaException("no_entity_bean", entityName);
 		}
 	}
 	
@@ -458,55 +449,53 @@ public class MapFacade {
 		return remotes;
 	}
 	
-	private static void anularRemote(String nombreModelo) {
+	private static void annulRemote(String modelName) {
 		try {
-			int idx = nombreModelo.indexOf('.'); 
+			int idx = modelName.indexOf('.'); 
 			if (idx >=0) {
-				nombreModelo = nombreModelo.substring(0, idx);				 				
+				modelName = modelName.substring(0, idx);				 				
 			}			
-			String paquete = MetaComponent.get(nombreModelo).getPackageNameWithSlashWithoutModel();			
+			String paquete = MetaComponent.get(modelName).getPackageNameWithSlashWithoutModel();			
 			getRemotes().remove(paquete);			
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
-			System.err.println("¡ADVERTENCIA! Imposible eliminar FachadaMapaRemote del caché local");
+			ex.printStackTrace();			
+			System.err.println(XavaResources.getString("cache_facade_remote_warning"));
 		}		
 	}
 
 
 	/**
-	 * Borra un elemento de una colección. <p>
+	 * Removes a elemente from a collection. <p>
 	 * 
-	 * Si es un agregado borra el agregado, y si es una referencia a entidad
-	 * hace que deje de apuntar al objeto padre, y por ende ya no está en la colección.<br>
+	 * If it's a aggregate remove the aggregate, and if it's a entity reference
+	 * make the left to point to the parent object, hence left the collection.<br>
+	 *
+	 * Does not delete aggregates directly, but with this method, because
+	 * thus the needed logic for remove a element from a collection is executed.<br>   
 	 * 
-	 * Los agregados no se deben borrar directamente, sino mediante este método
-	 * ya que así se ejecuta toda la lógica necesaria para quitar el elemento de la
-	 * colección, que a veces puede ser algo más que borrar el agregado.<br> 
-	 * 
-	 * @param nombreModelo  Nombre Xava del modelo. No puede ser nulo.
-	 * @param valoresClave  Valores de la clave de la entidad a buscar. No puede ser nulo.
-	 * @param nombreColeccion  Nombre de la colección del elemento a borrar. No puede ser nulo.
-	 * @param valoresClaveElementoColeccion  Clave del elemento a borrar. No puede ser nulo.
-	 * @exception FinderException  Problema de lógica al buscar.
-	 * @exception ObjectNotFoundException  No existe una entidad con esa clave.
-	 * @exception ValidationException  Problema al validar al realizar el borrado.
-	 * @exception XavaException  Problemas relacionados con OpenXava. Anula la transacción.
-	 * @exception RemoveExction Problema de lógica al realizar el borrado.
-	 * @exception RemoteException  Problemas de sistema. Anula la transacción.
+	 * @param modelName  OpenXava model name. Not null.
+	 * @param keyValues  Key value of the container of the collection. Not null.
+	 * @param collectionName  Collection name of the container collection of element to remove. Not null.
+	 * @param collectionElementKeyValues  Key value of element to remove. Not null.
+	 * @exception ObjectNotFoundException  If object with this key does not exist 
+	 * @exception FinderException  Logic problem on find.	
+	 * @exception ValidationException  Data validation problems.
+	 * @exception RemoveException  Logic problem on remove. 
+	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
+	 * @exception RemoteException  System problem. Rollback transaction.
 	 */	
-
-	public static void removeCollectionElement(String nombreModelo, Map valoresClave, String nombreColeccion, Map valoresClaveElementoColeccion) 
-		throws FinderException,	ValidationException, RemoveException,
+	public static void removeCollectionElement(String modelName, Map keyValues, String collectionName, Map collectionElementKeyValues) 
+		throws ObjectNotFoundException, FinderException,	ValidationException, RemoveException,
 			XavaException,  RemoteException 
 	{
-		Assert.arg(nombreModelo, valoresClave, nombreColeccion, valoresClaveElementoColeccion);
+		Assert.arg(modelName, keyValues, collectionName, collectionElementKeyValues);
 		try {
-			getRemote(nombreModelo).removeCollectionElement(nombreModelo, valoresClave, nombreColeccion, valoresClaveElementoColeccion);
+			getRemote(modelName).removeCollectionElement(modelName, keyValues, collectionName, collectionElementKeyValues);
 		}
 		catch (RemoteException ex) {
-			anularRemote(nombreModelo);
-			getRemote(nombreModelo).removeCollectionElement(nombreModelo, valoresClave, nombreColeccion, valoresClaveElementoColeccion);
+			annulRemote(modelName);
+			getRemote(modelName).removeCollectionElement(modelName, keyValues, collectionName, collectionElementKeyValues);
 		}
 	}	
 

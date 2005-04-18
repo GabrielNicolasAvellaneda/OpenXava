@@ -11,12 +11,12 @@ public class AggregateMapping extends ModelMapping {
 
 	private String modelName;
 		
-	public void addReferenceMapping(ReferenceMapping mapeoReferencia) throws XavaException { 		
-		super.addReferenceMapping(mapeoReferencia);
+	public void addReferenceMapping(ReferenceMapping referenceMapping) throws XavaException { 		
+		super.addReferenceMapping(referenceMapping);
 
-		if (!getMetaModel().containsMetaReference(mapeoReferencia.getReference())) {
+		if (!getMetaModel().containsMetaReference(referenceMapping.getReference())) {
 			MetaReference r = new MetaReference();
-			r.setReferencedModelName(Strings.firstUpper(mapeoReferencia.getReference()));		
+			r.setReferencedModelName(Strings.firstUpper(referenceMapping.getReference()));		
 			getMetaModel().addMetaReference(r);
 			getMetaModel().setContainerModelName(r.getReferencedModelName()); 
 		}
@@ -27,12 +27,8 @@ public class AggregateMapping extends ModelMapping {
 		return modelName;
 	}
 
-	/**
-	 * Sets the nombreAgregado.
-	 * @param nombreAgregado The nombreAgregado to set
-	 */
-	public void setModelName(String nombreAgregado) {
-		this.modelName = nombreAgregado;
+	public void setModelName(String modelName) {
+		this.modelName = modelName;
 	}
 
 
