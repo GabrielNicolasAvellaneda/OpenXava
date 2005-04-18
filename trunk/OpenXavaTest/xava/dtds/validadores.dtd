@@ -27,5 +27,5 @@
 
 <!ELEMENT para-estereotipo EMPTY>
 <!ATTLIST para-estereotipo
-  para-estereotipo CDATA #REQUIRED
+  estereotipo CDATA #REQUIRED
 >

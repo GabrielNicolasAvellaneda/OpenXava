@@ -16,24 +16,24 @@ abstract public class ModelMapping implements java.io.Serializable {
 	private String table;
 	private Map propertyMappings = new HashMap();
 	private Map referenceMappings;
-	private Collection propiedadesModelo = new ArrayList(); // de String
-	private Collection columnasTabla = new ArrayList(); // de String
+	private Collection modelProperties = new ArrayList(); // of String
+	private Collection tableColumns = new ArrayList(); // of String
 
 	abstract public String getModelName() throws XavaException;
 
 	abstract public MetaModel getMetaModel() throws XavaException;
 	
 	/**
-	 * Util especialmente para averiguar el tipo de
-	 * propiedades que no estan en el modelo, solo
-	 * en esta en el mapeo. <p>
+	 * Util specially to find out the type of
+	 * properties that are not in model, only
+	 * in mapping.
 	 */
 	public Class getType(String nombrePropiedad) throws XavaException {
 		try {
 			return getMetaModel().getMetaProperty(nombrePropiedad).getType();
 		}
 		catch (ElementNotFoundException ex) {
-			// Lo intantamos sacar de la clave primaria
+			// Try to obtain it from primary key
 			if (!(getMetaModel() instanceof MetaEntityEjb))
 				return java.lang.Object.class;
 			MetaEntityEjb metaEntidad = (MetaEntityEjb) getMetaModel();
@@ -43,11 +43,9 @@ abstract public class ModelMapping implements java.io.Serializable {
 			}
 			catch (NoSuchFieldException ex2) {
 				System.err.println(
-					"ADVERTENCIA: Imposible averiguar tipo de la propiedad "
-						+ nombrePropiedad
-						+ " en el mapeo de "
-						+ getMetaComponent().getName());
-				// Si no lo conseguimos averiguar devolvemos un valor por defecto
+						XavaResources.getString("property_type_from_mapping_warning", 
+								nombrePropiedad, getMetaComponent().getName()));
+				// If we does not obtain type return a default value
 				return java.lang.Object.class;
 			}
 		}
@@ -73,83 +71,70 @@ abstract public class ModelMapping implements java.io.Serializable {
 	}
 	
 
-	public void addPropertyMapping(PropertyMapping mapeoPropiedad)
+	public void addPropertyMapping(PropertyMapping propertyMapping)
 		throws XavaException {
 		propertyMappings.put(
-			mapeoPropiedad.getProperty(),
-			mapeoPropiedad);
-		propiedadesModelo.add(mapeoPropiedad.getProperty());
-		// Para conservar el orden
-		columnasTabla.add(mapeoPropiedad.getColumn());
-		// Para conservar el orden
+			propertyMapping.getProperty(),
+			propertyMapping);
+		modelProperties.add(propertyMapping.getProperty());
+		// To keep order
+		tableColumns.add(propertyMapping.getColumn());
 	}
 
-	public void addReferenceMapping(ReferenceMapping mapeoReferencia)
+	public void addReferenceMapping(ReferenceMapping referenceMapping)
 		throws XavaException {
 		if (referenceMappings == null)
 			referenceMappings = new HashMap();
 		referenceMappings.put(
-			mapeoReferencia.getReference(),
-			mapeoReferencia);
-		mapeoReferencia.setContainer(this);
+			referenceMapping.getReference(),
+			referenceMapping);
+		referenceMapping.setContainer(this);
 	}
 
 	/**
-	 *
-	 * @return Nunca nulo
-	 * @param nombre java.lang.String
-	 * @exception ElementNotFoundException  Si la referencia solicitada no existe o algún otro problema.
-	 * @exception XavaException  Algún problema.
+	 * @return Not null
 	 */
-	public ReferenceMapping getReferenceMapping(String nombre)
-		throws XavaException {		
+	public ReferenceMapping getReferenceMapping(String name)
+		throws XavaException, ElementNotFoundException {		
 		ReferenceMapping r =
 			referenceMappings == null
 				? null
-				: (ReferenceMapping) referenceMappings.get(nombre);
+				: (ReferenceMapping) referenceMappings.get(name);
 		if (r == null) {
-			throw new ElementNotFoundException("reference_mapping_not_found", nombre, getModelName());
+			throw new ElementNotFoundException("reference_mapping_not_found", name, getModelName());
 		}
 		return r;
 	}
 
 	/**
-	 *
-	 * @return Nunca nulo
-	 * @param nombre java.lang.String
-	 * @exception ElementNotFoundException  Si la referencia solicitada no existe o algún otro problema.
-	 * @exception XavaException  Algún problema.
+	 * @return Not null
 	 */
-	public PropertyMapping getPropertyMapping(String nombre)
-		throws XavaException {
+	public PropertyMapping getPropertyMapping(String name)
+		throws XavaException, ElementNotFoundException {
 		PropertyMapping p =
 			propertyMappings == null
 				? null
-				: (PropertyMapping) propertyMappings.get(nombre);
+				: (PropertyMapping) propertyMappings.get(name);
 		if (p == null) {
-			throw new ElementNotFoundException(
-				"No encontrado mapeo de propiedad "
-					+ nombre
-					+ " en mapeo de "
-					+ getModelName());
+			throw new ElementNotFoundException("property_mapping_not_found", name, getModelName());
 		}
 		return p;
 	}
 
 	/**
-	 * En el orden en que se han añadido.
-	 * @return Collection de <tt>String</tt>.
+	 * In the order that they was added.
+	 * @return Collection of <tt>String</tt>.
 	 */
 	public Collection getModelProperties() {
-		return propiedadesModelo;
+		return modelProperties;
 	}
 
 	/**
-	 * En el orden en que se han añadido.
-	 * @return Collection de <tt>String</tt>.
+	 * In the order that they was added.
+	 * @return Collection of <tt>String</tt>.
 	 */
 	public Collection getColumns() {
-		return columnasTabla;
+		return tableColumns;
 	}
 	
 	public String getKeyColumnsAsString() throws XavaException {
@@ -168,7 +153,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 		String tableColumn = getTableColumn(modelProperty, true);				
 		if (Is.emptyString(tableColumn))
 			return "'" + modelProperty + "'";
-		// for calculated fields or created by multiple coverter
+		// for calculated fields or created by multiple converter
 		if (modelProperty.indexOf('.') >= 0) {			
 			return tableColumn;
 		}
@@ -178,290 +163,235 @@ abstract public class ModelMapping implements java.io.Serializable {
 	}
 
 	/**
-	 * Soporta el uso de referencias con puntos,
-	 * esto es: mireferencia.mipropiedad.
-	 *
-	 * @exception ElementNotFoundException
-	 * @exception XavaException
+	 * Support the use of references with dots,
+	 * this is: myreference.myproperty.
 	 */
 	public String getColumn(String propiedadModelo)
-		throws XavaException {
+		throws ElementNotFoundException, XavaException {
 		return getTableColumn(propiedadModelo, false);
 	}
 
 	private String getTableColumn(
-		String propiedadModelo,
-		boolean cualificarColumnaMapeoReferencia)
+		String modelProperty,
+		boolean qualifyReferenceMappingColumn)
 		throws XavaException {
-		PropertyMapping mapeoPropiedad =
-			(PropertyMapping) propertyMappings.get(propiedadModelo);
-		if (mapeoPropiedad == null) {
-			int idx = propiedadModelo.indexOf('.');
+		PropertyMapping propertyMapping =
+			(PropertyMapping) propertyMappings.get(modelProperty);
+		if (propertyMapping == null) {
+			int idx = modelProperty.indexOf('.');
 			if (idx >= 0) {
-				String nombreReferencia = propiedadModelo.substring(0, idx);
-				String nombrePropiedad = propiedadModelo.substring(idx + 1);
+				String referenceName = modelProperty.substring(0, idx);
+				String propertyName = modelProperty.substring(idx + 1);
 				if (getMetaModel()
-					.getMetaReference(nombreReferencia)
+					.getMetaReference(referenceName)
 					.isAggregate()) {
-					mapeoPropiedad =
+					propertyMapping =
 						(PropertyMapping) propertyMappings.get(
-							nombreReferencia + "_" + nombrePropiedad);
-					if (mapeoPropiedad == null) {
+							referenceName + "_" + propertyName);
+					if (propertyMapping == null) {
 						throw new ElementNotFoundException(
 								"property_mapping_not_found", 
-								nombreReferencia + "_" + nombrePropiedad, getModelName());
+								referenceName + "_" + propertyName, getModelName());
 					}
-					return mapeoPropiedad.getColumn();
+					return propertyMapping.getColumn();
 				}
-				ReferenceMapping mapeoReferencia =
-					getReferenceMapping(nombreReferencia);
-				if (mapeoReferencia
-					.hasColumnForReferencedModelProperty(nombrePropiedad)) {
-					if (cualificarColumnaMapeoReferencia) {
+				ReferenceMapping referenceMapping =
+					getReferenceMapping(referenceName);
+				if (referenceMapping
+					.hasColumnForReferencedModelProperty(propertyName)) {
+					if (qualifyReferenceMappingColumn) {
 						return getTable()
 							+ "."
-							+ mapeoReferencia
+							+ referenceMapping
 								.getColumnForReferencedModelProperty(
-								nombrePropiedad);
+								propertyName);
 					}
 					else {
-						return mapeoReferencia
+						return referenceMapping
 							.getColumnForReferencedModelProperty(
-							nombrePropiedad);
+							propertyName);
 					}
 				}
 				else {					
-					ModelMapping mapeoReferenciado =
-						mapeoReferencia.getReferencedMapping();
-					String nombreTabla = mapeoReferenciado.getTable();
-					boolean secondLevel = nombrePropiedad.indexOf('.') >= 0;
-					String nombreColumna =
-						mapeoReferenciado.getTableColumn(nombrePropiedad, secondLevel);
-					if (cualificarColumnaMapeoReferencia && !secondLevel) {						
-						return nombreTabla + "." + nombreColumna;
+					ModelMapping referencedMapping =
+						referenceMapping.getReferencedMapping();
+					String tableName = referencedMapping.getTable();
+					boolean secondLevel = propertyName.indexOf('.') >= 0;
+					String columnName =
+						referencedMapping.getTableColumn(propertyName, secondLevel);
+					if (qualifyReferenceMappingColumn && !secondLevel) {						
+						return tableName + "." + columnName;
 					}
 					else {
-						return nombreColumna;
+						return columnName;
 					}
 				}
 			}
-			throw new ElementNotFoundException(
-				"Error de mapeo O/R: La propiedad "
-					+ propiedadModelo
-					+ " no tiene campo definido en el mapeo");
+			throw new ElementNotFoundException("property_mapping_not_found", modelProperty, getModelName());
 		}
-		return mapeoPropiedad.getColumn();
+		return propertyMapping.getColumn();
 	}
 
 	/**
-	 * @exception ElementNotFoundException Si no exista la propiedad.
-	 * @exception XavaException
-	 * @return nulo si la propidad existe pero no tiene conversor
+	 * @exception ElementNotFoundException If property does not exist.
+	 * @exception XavaException Any problem
+	 * @return nulo If property exists but it does not have converter.
 	 */
-	public IConverter getConverter(String propiedadModelo)
-		throws XavaException {
-		return getPropertyMapping(propiedadModelo).getConverter();
+	public IConverter getConverter(String modelProperty)
+		throws ElementNotFoundException, XavaException {
+		return getPropertyMapping(modelProperty).getConverter();
 	}
 
 	/**
-	 * @exception ElementNotFoundException Si no exista la propiedad.
-	 * @exception XavaException
-	 * @return nulo si la propidad existe pero no tiene conversor
+	 * @exception ElementNotFoundException If property does not exist.
+	 * @exception XavaException Any problem
+	 * @return nulo If property exists but it does not have converter.
 	 */
-	public IMultipleConverter getMultipleConverter(String propiedadModelo)
-		throws XavaException {
-		return getPropertyMapping(propiedadModelo).getMultipleConverter();
+	public IMultipleConverter getMultipleConverter(String modelProperty)
+		throws ElementNotFoundException, XavaException {
+		return getPropertyMapping(modelProperty).getMultipleConverter();
 	}
 
 	/**
-	 * Si existe la propiedad indicada y tiene conversor.
+	 * If the property exists and has converter.
 	 */
-	public boolean hasConverter(String nombrePropiedad) {
+	public boolean hasConverter(String propertyName) {
 		try {
-			return getPropertyMapping(nombrePropiedad).hasConverter();
+			return getPropertyMapping(propertyName).hasConverter();
 		}
 		catch (XavaException ex) {
 			return false;
 		}
 	}
 
-	/**
-	 * Gets the componente
-	 * @return Returns a Componente
-	 */
 	public MetaComponent getMetaComponent() {
 		return metaComponent;
 	}
-	/**
-	 * Sets the componente
-	 * @param componente The componente to set
-	 */
 	public void setMetaComponent(MetaComponent componente) throws XavaException {
 		this.metaComponent = componente;		
-		establecerConversoresDefecto();
+		setupDefaultConverters();
 	}
 
 	/**
-	 * Las propiedades entre ${ }. <p>
-	 * Por ejemplo, cambiaria
+	 * Change the properties inside ${ } by the database columns. <p>
+	 * For example, it would change:
 	 * <pre>
-	 * select ${codigo}, ${nombre}
+	 * select ${number}, ${name}
 	 * </pre>
-	 * por
+	 * by
 	 * <pre>
 	 * select TGRCOD, TGRDEN
 	 * </pre>
 	 */
-	public String changePropertiesByColumns(String origen)
+	public String changePropertiesByColumns(String source)
 		throws XavaException {
-		StringBuffer r = new StringBuffer(origen);
+		StringBuffer r = new StringBuffer(source);
 		int i = r.toString().indexOf("${");
 		int f = 0;
 		while (i >= 0) {
 			f = r.toString().indexOf("}", i + 2);
 			if (f < 0)
 				break;
-			String propiedad = r.substring(i + 2, f);
-			String columna = "0"; // asi se quedara si es calculada
-			if (!getMetaModel().isCalculated(propiedad)) {				
-				columna = getQualifiedColumn(propiedad);				
+			String property = r.substring(i + 2, f);
+			String column = "0"; // thus it remained if it is calculated
+			if (!getMetaModel().isCalculated(property)) {				
+				column = getQualifiedColumn(property);				
 			}
-			r.replace(i, f + 1, columna);
+			r.replace(i, f + 1, column);
 			i = r.toString().indexOf("${");
 		}
 		return r.toString();
 	}
 
-	public String changePropertiesByCMPAttributes(String origen)
+	public String changePropertiesByCMPAttributes(String source)
 		throws XavaException {
-		StringBuffer r = new StringBuffer(origen);
+		StringBuffer r = new StringBuffer(source);
 		int i = r.toString().indexOf("${");
 		int f = 0;
 		while (i >= 0) {
 			f = r.toString().indexOf("}", i + 2);
 			if (f < 0)
 				break;
-			String propiedad = r.substring(i + 2, f);
-			String atributoCMP = null;
-			if (propiedad.indexOf('.') >= 0) {
-				atributoCMP = "o." + Strings.change(propiedad, ".", "_");
+			String propety = r.substring(i + 2, f);
+			String cmpAttribute = null;
+			if (propety.indexOf('.') >= 0) {
+				cmpAttribute = "o." + Strings.change(propety, ".", "_");
 			}
 			else {			
-				MetaProperty metaPropiedad =
-					getMetaModel().getMetaProperty(propiedad);
-				if (metaPropiedad.getMapping().hasConverter()) {
-					atributoCMP = "o._" + Strings.firstUpper(propiedad);
+				MetaProperty metaProperty =
+					getMetaModel().getMetaProperty(propety);
+				if (metaProperty.getMapping().hasConverter()) {
+					cmpAttribute = "o._" + Strings.firstUpper(propety);
 				}
 				else {
-					atributoCMP = "o." + propiedad;
+					cmpAttribute = "o." + propety;
 				}
 			}
-			r.replace(i, f + 1, atributoCMP);
+			r.replace(i, f + 1, cmpAttribute);
 			i = r.toString().indexOf("${");
 		}
 		return r.toString();
 	}
 
-	/**
-	 * Method tieneMapeoPropiedad.
-	 * @param nombreMiembro
-	 * @return boolean
-	 */
-	public boolean hasPropertyMapping(String nombreMiembro) {
-		return propertyMappings.containsKey(nombreMiembro);
+	public boolean hasPropertyMapping(String memberName) {
+		return propertyMappings.containsKey(memberName);
 	}
 
-	//	Sería buena idea obtener los conversores por defecto de un archivo xml en el futuro
-	private void establecerConversoresDefecto() throws XavaException {
+	private void setupDefaultConverters() throws XavaException {
 		Iterator it = propertyMappings.values().iterator();
 		while (it.hasNext()) {
-			PropertyMapping mapeoPropiedad = (PropertyMapping) it.next();
-			establecerConversorDefecto(mapeoPropiedad);
+			PropertyMapping propertyMapping = (PropertyMapping) it.next();
+			setDefaultConverter(propertyMapping);
 		}
 	}
-
-	// Sería buena idea obtener los conversores por defecto de un archivo xml en el futuro		 
-	private void establecerConversorDefecto(PropertyMapping mapeoPropiedad)
+		 
+	private void setDefaultConverter(PropertyMapping propertyMapping)
 		throws XavaException {
-		if (mapeoPropiedad.hasConverter())
+		if (propertyMapping.hasConverter() || propertyMapping.hasMultipleConverter()) 
 			return;
 		MetaProperty p = null;
 		try {
 			p =
 				getMetaModel().getMetaProperty(
-					mapeoPropiedad.getProperty());
+					propertyMapping.getProperty());
 		}
 		catch (ElementNotFoundException ex) {			
 			return;
 		}
+		
+		// Converters in keys are troublesome for programmer and
+		// usually disadvantages.
+		// If you need a converter in key then you can put it explicitly.
+	
+		// And in the case of code not generated, the conversion is
+		// responsability of the programmer that write the bean (in get and set).		
 		if (p.isKey() || !getMetaModel().isGenerateXDocLet()) 
 			return;
-		// Lo conversores en las claves son engorrosos para el programador
-		// y normalmente inconvenientes
-		// si se quiere conversor para clave que se ponga explicitamente	
-		// Y si el código es generado no la conversión la hará el programador
-		// del bean dentro de su set y get
-		if (java.lang.String.class.equals(p.getType())) {
-			mapeoPropiedad.setConverterClassName(
-				org.openxava.converters.TrimStringConverter
-					.class
-					.getName());
-			mapeoPropiedad.setCmpTypeName("String");
-		}
-		else if (
-			int.class.equals(p.getType())
-				|| java.lang.Integer.class.equals(p.getType())) {
-			mapeoPropiedad.setConverterClassName(
-				IntegerNumberConverter
-					.class
-					.getName());
-			mapeoPropiedad.setCmpTypeName("Integer");
-		}
-		else if (
-			boolean.class.equals(p.getType())
-				|| java.lang.Boolean.class.equals(p.getType())) {
-			mapeoPropiedad.setConverterClassName(
-				Boolean01Converter.class.getName());
-			mapeoPropiedad.setCmpTypeName("Integer");
-		}		
-		else if (
-			long.class.equals(p.getType())
-				|| java.lang.Long.class.equals(p.getType())) {
-			mapeoPropiedad.setConverterClassName(
-				LongNumberConverter
-					.class
-					.getName());
-			mapeoPropiedad.setCmpTypeName("Long");
-		}
-		else if (java.math.BigDecimal.class.equals(p.getType())) {
-			mapeoPropiedad.setConverterClassName(
-				BigDecimalNumberConverter
-					.class
-					.getName());
-			mapeoPropiedad.setCmpTypeName("java.math.BigDecimal");
-		}
+		
+		propertyMapping.setConverterClassName(DefaultConverter.getConverterClassNameFor(p));
+		propertyMapping.setCmpTypeName(DefaultConverter.getCmpTypeFor(p));
 	}
 
-	public boolean hasReferenceMapping(MetaReference metaReferencia) {
+	public boolean hasReferenceMapping(MetaReference metaReference) {
 		if (referenceMappings == null)
 			return false;
-		return referenceMappings.containsKey(metaReferencia.getName());
+		return referenceMappings.containsKey(metaReference.getName());
 	}
 
 	public boolean isReferenceOverlappingWithSomeProperty(
-		String referencia,
-		String propiedadDeReferencia)
+		String reference,
+		String propertiesOfReference)
 		throws XavaException {
-		String columna =
+		String column =
 			getReferenceMapping(
-				referencia).getColumnForReferencedModelProperty(
-				propiedadDeReferencia);
-		return getColumns().contains(columna);
+				reference).getColumnForReferencedModelProperty(
+				propertiesOfReference);
+		return getColumns().contains(column);
 	}
 
-	public boolean isReferenceOverlappingWithSomeProperty(String referencia)
+	public boolean isReferenceOverlappingWithSomeProperty(String reference)
 		throws XavaException {
-		Iterator it = getReferenceMapping(referencia).getDetails().iterator();
+		Iterator it = getReferenceMapping(reference).getDetails().iterator();
 		while (it.hasNext()) {
 			ReferenceMappingDetail d = (ReferenceMappingDetail) it.next();
 			if (getColumns().contains(d.getColumn()))
@@ -470,83 +400,74 @@ abstract public class ModelMapping implements java.io.Serializable {
 		return false;
 	}
 		
-	public boolean isReferencePropertyOverlappingWithSomeProperty(String propiedadCualificada)	throws XavaException {
-		int idx = propiedadCualificada.indexOf('.');
+	public boolean isReferencePropertyOverlappingWithSomeProperty(String qualifiedProperty)	throws XavaException {
+		int idx = qualifiedProperty.indexOf('.');
 		if (idx < 0) return false;
-		String ref = propiedadCualificada.substring(0, idx);
-		String pr = propiedadCualificada.substring(idx + 1);
+		String ref = qualifiedProperty.substring(0, idx);
+		String pr = qualifiedProperty.substring(idx + 1);
 		return isReferenceOverlappingWithSomeProperty(ref, pr);
 	}
 
 	/**	 
-	 * @throws XavaException Si no tiene una propiedad solapada, u otro problema.
+	 * @throws XavaException If it does not have a overlapped property, or any other problem.
 	 */
 	public String getOverlappingPropertyForReference(
-		String referencia,
-		String propiedadDeReferencia)
+		String reference,
+		String propertyOfReference)
 		throws XavaException {
-		String columna =
+		String column =
 			getReferenceMapping(
-				referencia).getColumnForReferencedModelProperty(
-				propiedadDeReferencia);
+				reference).getColumnForReferencedModelProperty(
+				propertyOfReference);
 		if (propertyMappings == null) {
-			throw new XavaException(
-				"Propiedad "
-					+ propiedadDeReferencia
-					+ " de "
-					+ referencia
-					+ " no tiene una propiedad solapada");
+			throw new XavaException("reference_property_not_overlapped", 				
+					propertyOfReference, reference);
 		}
 		Iterator it = propertyMappings.values().iterator();
 		while (it.hasNext()) {
-			PropertyMapping mapeo = (PropertyMapping) it.next();
-			if (columna.equals(mapeo.getColumn()))
-				return mapeo.getProperty();
+			PropertyMapping mapping = (PropertyMapping) it.next();
+			if (column.equals(mapping.getColumn()))
+				return mapping.getProperty();
 		}
-		throw new XavaException(
-			"Propiedad "
-				+ propiedadDeReferencia
-				+ " de "
-				+ referencia
-				+ " no tiene una propiedad solapada");
+		throw new XavaException("reference_property_not_overlapped", 				
+				propertyOfReference, reference);
 	}
 
 	/**
-	 * 
-	 * @return De tipo <tt>String</tt> y nunca nulo.
+	 * @return Of <tt>String</tt> and not null.
 	 */
-	public Collection getOverlappingPropertiesOfReference(String referencia)
+	public Collection getOverlappingPropertiesOfReference(String reference)
 		throws XavaException {
-		Collection propiedadesSolapadasDeReferencia = new ArrayList();
-		Iterator it = getReferenceMapping(referencia).getDetails().iterator();
+		Collection overlappingPropertiesOfReference = new ArrayList();
+		Iterator it = getReferenceMapping(reference).getDetails().iterator();
 		while (it.hasNext()) {
 			ReferenceMappingDetail d = (ReferenceMappingDetail) it.next();
 			if (getColumns().contains(d.getColumn())) {
-				propiedadesSolapadasDeReferencia.add(
+				overlappingPropertiesOfReference.add(
 					d.getReferencedModelProperty());
 			}
 		}
-		return propiedadesSolapadasDeReferencia;
+		return overlappingPropertiesOfReference;
 	}
 
-	private PropertyMapping getMappingForColumn(String columna) throws XavaException {
+	private PropertyMapping getMappingForColumn(String column) throws XavaException {
 		if (propertyMappings == null) {
-			throw new ElementNotFoundException("mapping_not_found_no_property_mappings", columna); 
+			throw new ElementNotFoundException("mapping_not_found_no_property_mappings", column); 
 		}			
 		Iterator it = propertyMappings.values().iterator();
 		while (it.hasNext()) {
-			PropertyMapping mapeoPropiedad = (PropertyMapping) it.next();
-			if (mapeoPropiedad.getColumn().equals(columna)) {
-				return mapeoPropiedad; 
+			PropertyMapping propertyMapping = (PropertyMapping) it.next();
+			if (propertyMapping.getColumn().equals(column)) {
+				return propertyMapping; 
 			}
 		}		 
-		throw new ElementNotFoundException("mapping_for_column_not_found", columna);
+		throw new ElementNotFoundException("mapping_for_column_not_found", column);
 	}
 	
-	String getCMPAttributeForColumn(String columna) throws XavaException {
-		PropertyMapping mapeo = getMappingForColumn(columna);
-		if (!mapeo.hasConverter()) return Strings.change(mapeo.getProperty(), ".", "_");
-		return "_" + Strings.change(Strings.firstUpper(mapeo.getProperty()), ".", "_");
+	String getCMPAttributeForColumn(String column) throws XavaException {
+		PropertyMapping mapping = getMappingForColumn(column);
+		if (!mapping.hasConverter()) return Strings.change(mapping.getProperty(), ".", "_");
+		return "_" + Strings.change(Strings.firstUpper(mapping.getProperty()), ".", "_");
 	}
 	
 	private Collection getPropertyMappings() {

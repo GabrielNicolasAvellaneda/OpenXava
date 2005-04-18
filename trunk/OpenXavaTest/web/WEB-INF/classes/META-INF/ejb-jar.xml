@@ -1489,9 +1489,9 @@
             <description><![CDATA[]]></description>
             <field-name>_Comment</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Invoice_date">
+         <cmp-field id="CmpAttribute_Invoice__Date">
             <description><![CDATA[]]></description>
-            <field-name>date</field-name>
+            <field-name>_Date</field-name>
          </cmp-field>
          <cmp-field id="CmpAttribute_Invoice__Paid">
             <description><![CDATA[]]></description>

@@ -7,7 +7,6 @@ import org.openxava.util.meta.*;
 import org.openxava.util.xmlparse.*;
 import org.w3c.dom.*;
 
-
 /**
  * @author: Javier Paniza
  */
@@ -107,9 +106,7 @@ public class MappingParser extends XmlElementsNames {
 			container.addCmpField(createCmpField(l.item(i), lang));
 		}
 	}
-	
-	
-	
+			
 	private static ReferenceMappingDetail createReferenceMappingDetail(Node n, int lang) throws XavaException {
 		Element el = (Element) n;
 		ReferenceMappingDetail p = new ReferenceMappingDetail();
@@ -180,7 +177,7 @@ public class MappingParser extends XmlElementsNames {
 		a.setPropertyName(el.getAttribute(xproperty[lang]));
 		a.setValue(el.getAttribute(xvalue[lang]));
 		if (!Is.emptyString(el.getAttribute(xfrom[lang]))) {
-			throw new XavaException("Atributo 'desde' no soportado en 'poners' de conversores");
+			throw new XavaException("attribute_from_not_in_converter");
 		}						
 		return a;
 	}

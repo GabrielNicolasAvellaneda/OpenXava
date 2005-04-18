@@ -9,6 +9,7 @@ import net.sf.hibernate.*;
 import net.sf.hibernate.cfg.*;
 
 import org.openxava.component.*;
+import org.openxava.converters.*;
 import org.openxava.filters.*;
 import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
@@ -400,18 +401,19 @@ public class Tab {
 			for (int i = indexIncrement; i < key.length; i++) {
 				MetaProperty p = (MetaProperty) metaPropertiesKey.get(i - indexIncrement);
 				// If has a converter, apply
-				if (p.getMapping().hasConverter()) {					
-					key[i] = p.getMapping().getConverter().toDB(key[i]);
+				
+				if (p.getMapping().hasConverter()) {
+					try {	
+						key[i] = p.getMapping().getConverter().toDB(key[i]);
+					}
+					catch (ConversionException ex) {
+						if (!java.util.Date.class.isAssignableFrom(p.getType())) {
+							// because Dates are special, maybe a year or a month and this
+							// is not convertible by a date converter 
+							throw ex;
+						}
+					}
 				}
-			}									
-		}
-		
-		// Filter dates, since some jdbc drivers not support java.util.Date		
-		if (key != null) {
-			for (int i = 0; i < key.length; i++) {
-				if (key[i] instanceof java.util.Date) {
-					key[i] = Dates.toSQL((java.util.Date) key[i]);
-				}				
 			}									
 		}
 		

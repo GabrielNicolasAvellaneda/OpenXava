@@ -1161,7 +1161,7 @@
 
         </cmp-field>
          <cmp-field>
-            <field-name>date</field-name>
+            <field-name>_Date</field-name>
             <column-name>DATE</column-name>
 
         </cmp-field>
