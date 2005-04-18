@@ -1514,13 +1514,15 @@ public class MapFacadeBean implements SessionBean {
 	}
 
 	protected Object findEntity(IMetaEjb metaEntidad, Map valoresClave)	throws FinderException, XavaException {
+		/* tmp: Para versión hibernate
 			getPersistenceProvider().setSession(getSession());
 			return getPersistenceProvider().find(metaEntidad, valoresClave);
-			/*Object key = metaEntidad.obtainPrimaryKeyFromKey(valoresClave);
-			return findEntity(metaEntidad, key); tmp */ 
+		*/
+		Object key = metaEntidad.obtainPrimaryKeyFromKey(valoresClave);
+		return findEntity(metaEntidad, key);  
 	}
 	
-	/*protected Object findEntity(IMetaEjb metaEntidad, Object key)	throws FinderException { //tmp ¿quitar?		
+	protected Object findEntity(IMetaEjb metaEntidad, Object key)	throws FinderException { 		
 		Class claseHome = null;
 		Class clasePK = null;
 		try {
@@ -1545,7 +1547,7 @@ public class MapFacadeBean implements SessionBean {
 			ex.printStackTrace();
 			throw new EJBException(XavaResources.getString("find_error", metaEntidad.getName()));			
 		}
-	} tmp */
+	} 
 	
 
 	/**
