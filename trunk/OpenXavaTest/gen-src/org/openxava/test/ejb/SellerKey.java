@@ -64,7 +64,16 @@ public class SellerKey
    public String toString()
    {
       StringBuffer toStringValue = new StringBuffer("[.");
-         toStringValue.append(this.number).append('.');
+      java.lang.reflect.Field [] fields = getClass().getFields();
+      for (int i=0; i < fields.length; i++) {
+      	try {
+      	 	toStringValue.append(fields[i].get(this)).append('.');
+      	}
+      	catch (IllegalAccessException ex) {
+      	 	ex.printStackTrace();
+      	 	toStringValue.append(" ").append('.');
+      	}
+      }
       toStringValue.append(']');
       return toStringValue.toString();
    }

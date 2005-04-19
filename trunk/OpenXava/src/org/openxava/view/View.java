@@ -1414,9 +1414,9 @@ public class View implements java.io.Serializable {
 		Class keyClass = metaModel.getPrimaryKeyClass();
 		Field [] fields = keyClass.getFields();
 		if (!value.startsWith("[")) value = "";
-		StringTokenizer st = new StringTokenizer(Strings.change(value, "..", ". ."), "[.]");
+		StringTokenizer st = new StringTokenizer(Strings.change(value, "..", ". ."), "[.]");		
 		for (int i = 0; i < fields.length; i++) {
-			String propertyName = fields[i].getName();						
+			String propertyName = fields[i].getName();			
 			boolean hasConverter = propertyName.startsWith("_"); 
 			if (hasConverter) propertyName = Strings.firstLower(propertyName.substring(1));						
 			MetaProperty p = metaModel.getMetaProperty(propertyName);
@@ -1974,6 +1974,7 @@ public class View implements java.io.Serializable {
 	}
 
 	public boolean isRepresentsAggregate() {
+		if (isGroup()) return getParent().isRepresentsAggregate();
 		return representsAggregate;
 	}
 

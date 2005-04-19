@@ -221,8 +221,12 @@
 
 		<members>
 			viewProperty;
-			street, zipCode, city, state;
+			street, zipCode;
+			<group name="city">
+				city, state;
+			</group>
 		</members>
+
 	</view>
 	
 	<view model="DeliveryPlace">	
