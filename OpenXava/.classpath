@@ -14,10 +14,10 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-logging-1.0.2.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/itext-1.01.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/jasperreports-0.5.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/j2ee.jar"/>
 	<classpathentry kind="src" path="hibernate"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/hibernate2.jar"/>
 	<classpathentry exported="true" kind="var" path="JUNIT_HOME/junit.jar"/>
 	<classpathentry kind="src" path="properties"/>
+	<classpathentry exported="true" kind="lib" path="lib/j2ee.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

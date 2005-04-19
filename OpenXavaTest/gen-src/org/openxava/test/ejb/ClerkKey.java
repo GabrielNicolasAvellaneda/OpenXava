@@ -88,9 +88,16 @@ public class ClerkKey
    public String toString()
    {
       StringBuffer toStringValue = new StringBuffer("[.");
-         toStringValue.append(this.officeNumber).append('.');
-         toStringValue.append(this.number).append('.');
-         toStringValue.append(this.zoneNumber).append('.');
+      java.lang.reflect.Field [] fields = getClass().getFields();
+      for (int i=0; i < fields.length; i++) {
+      	try {
+      	 	toStringValue.append(fields[i].get(this)).append('.');
+      	}
+      	catch (IllegalAccessException ex) {
+      	 	ex.printStackTrace();
+      	 	toStringValue.append(" ").append('.');
+      	}
+      }
       toStringValue.append(']');
       return toStringValue.toString();
    }
