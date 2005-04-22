@@ -271,6 +271,9 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 	 */
 	public void set#(propertyName)#(#(type)# new#(propertyName)#) {
 		try {
+			# if (ejb) { #
+			this.modified = true;
+			# } #
 			# 
 			String argv = Generators.generatePrimitiveWrapper(type, "new" + propertyName);
 			# 
@@ -339,6 +342,9 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 	 */
 	#(propertyAccessLevel)# void set#(propertyName)#(#(type)# new#(propertyName)#) {
 		try {
+			# if (ejb) { # 
+			this.modified = true;
+			# } # 
 			set_#(propertyName)#(#(Generators.generateCast(cmpType, setSentence))#);
 		}
 		catch (org.openxava.converters.ConversionException ex) {

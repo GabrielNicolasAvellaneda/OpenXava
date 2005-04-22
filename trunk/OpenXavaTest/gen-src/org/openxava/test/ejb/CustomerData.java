@@ -13,7 +13,7 @@ public class CustomerData
    private java.lang.Integer _Type;
    private java.lang.String _Remarks;
    private java.lang.String _RelationWithSeller;
-   private byte[] photo;
+   private byte[] _Photo;
    private java.lang.String _Name;
    private int number;
    private int seller_number;
@@ -32,7 +32,7 @@ public class CustomerData
       set_Type(otherData.get_Type());
       set_Remarks(otherData.get_Remarks());
       set_RelationWithSeller(otherData.get_RelationWithSeller());
-      setPhoto(otherData.getPhoto());
+      set_Photo(otherData.get_Photo());
       set_Name(otherData.get_Name());
       setNumber(otherData.getNumber());
       setSeller_number(otherData.getSeller_number());
@@ -76,13 +76,13 @@ public class CustomerData
       this._RelationWithSeller = _RelationWithSeller;
    }
 
-   public byte[] getPhoto()
+   public byte[] get_Photo()
    {
-      return this.photo;
+      return this._Photo;
    }
-   public void setPhoto( byte[] photo )
+   public void set_Photo( byte[] _Photo )
    {
-      this.photo = photo;
+      this._Photo = _Photo;
    }
 
    public java.lang.String get_Name()
@@ -161,7 +161,7 @@ public class CustomerData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Type=" + get_Type() + " " + "_Remarks=" + get_Remarks() + " " + "_RelationWithSeller=" + get_RelationWithSeller() + " " + "photo=" + getPhoto() + " " + "_Name=" + get_Name() + " " + "number=" + getNumber() + " " + "seller_number=" + getSeller_number() + " " + "alternateSeller_number=" + getAlternateSeller_number() + " " + "_Address_zipCode=" + get_Address_zipCode() + " " + "address_street=" + getAddress_street() + " " + "address_city=" + getAddress_city() + " " + "address_state_id=" + getAddress_state_id());
+      str.append("_Type=" + get_Type() + " " + "_Remarks=" + get_Remarks() + " " + "_RelationWithSeller=" + get_RelationWithSeller() + " " + "_Photo=" + get_Photo() + " " + "_Name=" + get_Name() + " " + "number=" + getNumber() + " " + "seller_number=" + getSeller_number() + " " + "alternateSeller_number=" + getAlternateSeller_number() + " " + "_Address_zipCode=" + get_Address_zipCode() + " " + "address_street=" + getAddress_street() + " " + "address_city=" + getAddress_city() + " " + "address_state_id=" + getAddress_state_id());
       str.append('}');
 
       return(str.toString());
@@ -198,7 +198,7 @@ public class CustomerData
          {
             lEquals = lEquals && this._RelationWithSeller.equals( lTest._RelationWithSeller );
          }
-         lEquals = lEquals && this.photo == lTest.photo;
+         lEquals = lEquals && this._Photo == lTest._Photo;
          if( this._Name == null )
          {
             lEquals = lEquals && ( lTest._Name == null );
@@ -261,10 +261,10 @@ public class CustomerData
 
       result = 37*result + ((this._RelationWithSeller != null) ? this._RelationWithSeller.hashCode() : 0);
 
-      if (photo != null) {
-        for (int i=0; i<photo.length; i++)
+      if (_Photo != null) {
+        for (int i=0; i<_Photo.length; i++)
         {
-          long l = photo[i];
+          long l = _Photo[i];
           result = 37*result + (int)(l^(l>>>32));
         }
       }

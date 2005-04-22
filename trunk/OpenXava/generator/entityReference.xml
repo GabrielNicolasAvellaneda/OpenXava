@@ -71,6 +71,9 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 	 * <expr>interfaceMethodSet</expr>
 	 */
 	public void set<expr>referenceName</expr>(<expr>referencedModelClass</expr> new<expr>referenceName</expr>) {
+<java>if (ejb) { </java> 
+		this.modified = true;
+<java>} </java> 
 		try {	
 			if (new<expr>referenceName</expr> == null) set<expr>referenceName</expr>Key(null);
 			else set<expr>referenceName</expr>Key((<expr>referencedKeyClass</expr>) new<expr>referenceName</expr>.getPrimaryKey());
@@ -85,29 +88,32 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 	 * @ejb:interface-method
 	 */
 	public <expr>referencedKeyClass</expr> get<expr>referenceName</expr>Key() {				
-			<expr>referencedKeyClass</expr> key = new <expr>referencedKeyClass</expr>();
-			<java>
-			String prefixGet = "get" + referenceName + "_";
-			Iterator itKeys = referencedModel.getAllKeyPropertiesNames().iterator();
-			while (itKeys.hasNext()) {
-				String key = Strings.change((String) itKeys.next(), ".", "_");
-				String keyAttribute=null;
-				if (referencedMapping.hasConverter(key)) {
-					keyAttribute = "_" + Strings.firstUpper(key);
-				}
-				else {
-					keyAttribute = key;
-				}				
-			</java> 
-			key.<expr>keyAttribute</expr> = <expr>prefixGet</expr><expr>key</expr>();			
-			<java>} </java>		
-			return key;
+		<expr>referencedKeyClass</expr> key = new <expr>referencedKeyClass</expr>();
+		<java>
+		String prefixGet = "get" + referenceName + "_";
+		Iterator itKeys = referencedModel.getAllKeyPropertiesNames().iterator();
+		while (itKeys.hasNext()) {
+			String key = Strings.change((String) itKeys.next(), ".", "_");
+			String keyAttribute=null;
+			if (referencedMapping.hasConverter(key)) {
+				keyAttribute = "_" + Strings.firstUpper(key);
+			}
+			else {
+				keyAttribute = key;
+			}				
+		</java> 
+		key.<expr>keyAttribute</expr> = <expr>prefixGet</expr><expr>key</expr>();			
+		<java>} </java>		
+		return key;
 	}	
 	
 	/**
 	 * <expr>interfaceMethodSet</expr>
 	 */
 	public void set<expr>referenceName</expr>Key(<expr>referencedKeyClass</expr> key) {
+<java>if (ejb) { </java> 
+		this.modified = true;
+<java>} </java> 		
 		if (key == null) {
 			key = new <expr>referencedKeyClass</expr>();
 		}

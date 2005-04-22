@@ -38,7 +38,7 @@ public class DeliveryTypesTest extends ModuleTestBase {
 		DeliveryValue deliveryValue = new DeliveryValue();
 		deliveryValue.setInvoice_year(2002);
 		deliveryValue.setInvoice_number(1);
-		deliveryValue.setType_number(66);		
+		deliveryValue.setType_number(66);				
 		deliveryValue.setNumber(66);
 		deliveryValue.setDescription("JUNIT FOR DELIVERY TYPE");		
 		Delivery delivery = DeliveryUtil.getHome().create(deliveryValue);

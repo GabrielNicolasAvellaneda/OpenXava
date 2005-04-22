@@ -13,7 +13,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Apr 18 09:24:10 CEST 2005
+ * @version Thu Apr 21 19:34:52 CEST 2005
  */
 public class PropertyPG {
     Properties properties = new Properties();
@@ -377,6 +377,9 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     out.print(" new");
     out.print(propertyName);
     out.print(") {\n\t\ttry {");
+    if (ejb) { 
+    out.print("\n\t\t\tthis.modified = true;");
+    } 
     
     			String argv = Generators.generatePrimitiveWrapper(type, "new" + propertyName);
     			
@@ -493,7 +496,11 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     out.print(type);
     out.print(" new");
     out.print(propertyName);
-    out.print(") {\n\t\ttry {\n\t\t\tset_");
+    out.print(") {\n\t\ttry {");
+    if (ejb) { 
+    out.print(" \n\t\t\tthis.modified = true;");
+    } 
+    out.print(" \n\t\t\tset_");
     out.print(propertyName);
     out.print("(");
     out.print(Generators.generateCast(cmpType, setSentence));
@@ -599,7 +606,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Apr 18 09:24:10 CEST 2005", // date this file was generated
+        { "Thu Apr 21 19:34:52 CEST 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/property.xml", // input file
              "/home/javi/workspace/OpenXava/generator/PropertyPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

@@ -4,7 +4,6 @@ import java.util.*;
 
 import org.openxava.filters.*;
 
-
 /**
  * @author Javier Paniza
  */

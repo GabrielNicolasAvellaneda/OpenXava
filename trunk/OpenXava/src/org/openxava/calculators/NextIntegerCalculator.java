@@ -30,7 +30,7 @@ public class NextIntegerCalculator implements IJDBCCalculator {
 	public int calculateNextInteger()
 		throws Exception {
 		if (XSystem.onClient()) {
-			Object r = Server.calculate(this, getPackageName());
+			Object r = Server.calculate(this, getPackageName());			
 			if (r instanceof Number) {
 				return ((Number) r).intValue();
 			}

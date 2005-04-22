@@ -106,7 +106,32 @@
 		<antcall target="filterXavaFilesWithConfiguration"/>
 		<antcall target="filterXavaFilesWithoutConfiguration"/>
 	</target>
-		
+	
+	<target name="filterHibernateFilesWithoutConfiguration" unless="configuration">
+		<copy todir="../${project.ejb}/${classes.dir}" overwrite="yes" failonerror="false">		
+			<fileset dir="../${project.ejb}/ejb/hibernate"/>
+	    	<filterset>	    	
+				<filter token="separator" value="${separator}"/>
+			</filterset> 			         
+		</copy>			
+	</target>	
+	
+	<target name="filterHibernateFilesWithConfiguration" if="configuration">
+		<copy todir="../${project.ejb}/${classes.dir}" overwrite="yes" failonerror="false">		
+			<fileset dir="../${project.ejb}/build/hibernate"/>
+	    	<filterset>	    	
+				<filtersfile file="${configuration}.properties"/>				
+				<filter token="separator" value="${separator}"/>
+			</filterset> 			         
+		</copy>			
+	</target>
+	
+	
+	<target name="filterHibernateFiles" depends="copyDTDs">
+		<antcall target="filterHibernateFilesWithConfiguration"/>
+		<antcall target="filterHibernateFilesWithoutConfiguration"/>
+	</target>
+			
 	<target name="generateWebsphereMapping" depends="filterXavaFiles">
 		<echo>Generating xml template for Websphere Mapping</echo>
 		<java classname="Simple2XML" classpath="${tl.lib}">
@@ -470,6 +495,9 @@
 		<antcall target="filterXavaFiles">  		
 			<param name="classes.dir" value="web/WEB-INF/classes"/>
 		</antcall>
+		<antcall target="filterHibernateFiles">  		
+			<param name="classes.dir" value="web/WEB-INF/classes"/>
+		</antcall>		
 		<antcall target="filterI18n"/>  		
 		<copy file="../OpenXava/bin/Messages_${default.language}.properties" 
 			tofile="../OpenXava/bin/Messages.properties"/>

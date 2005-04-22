@@ -370,6 +370,16 @@ abstract public class ModelMapping implements java.io.Serializable {
 		
 		propertyMapping.setConverterClassName(DefaultConverter.getConverterClassNameFor(p));
 		propertyMapping.setCmpTypeName(DefaultConverter.getCmpTypeFor(p));
+		
+		if (!propertyMapping.hasConverter()) {
+			// In this way every no key property will have a converter
+			// this is util because in code generated for properties with converter
+			// there are things needed for every property (at least in ejb implementation)
+			propertyMapping.setConverterClassName(NoConversionConverter.class.getName());
+			String cmpType = p.getType().isPrimitive()?Primitives.toWrapperClass(p.getType()).getName():p.getType().getName();
+			if ("[B".equals(cmpType)) cmpType = "byte []";
+			propertyMapping.setCmpTypeName(cmpType);
+		}					
 	}
 
 	public boolean hasReferenceMapping(MetaReference metaReference) {

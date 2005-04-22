@@ -65,6 +65,9 @@ for (Iterator itReferences = referencedModel.getMetaReferences().iterator(); itR
 	 */
 <java>} </java> 	 
 	public void set<expr>referenceName</expr>(<expr>referencedModelClass</expr> new<expr>referenceName</expr>) { 
+<java>if (ejb) { </java> 
+		this.modified = true;
+<java>} </java> 	
 		if (new<expr>referenceName</expr> == null) new<expr>referenceName</expr> = new <expr>referencedModelClass</expr>();
 <java>	
 for (Iterator itAggregateProperties = referencedModel.getMetaProperties().iterator(); itAggregateProperties.hasNext();) {	

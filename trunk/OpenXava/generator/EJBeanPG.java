@@ -14,7 +14,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Apr 18 09:24:12 CEST 2005
+ * @version Thu Apr 21 19:34:54 CEST 2005
  */
 public class EJBeanPG {
     Properties properties = new Properties();
@@ -240,7 +240,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print(packageName);
     out.print(".I");
     out.print(name);
-    out.print(", EntityBean {\t\n\t\t\t\n\tprivate boolean creating = false;\t\t\n\n\t// Create");
+    out.print(", EntityBean {\t\n\t\t\t\n\tprivate boolean creating = false;\t\t\n\tprivate boolean modified = false;\n\n\t// Create");
     	
     	// For the aggregates
     	IMetaEjb containerModel = (IMetaEjb) metaModel.getMetaModelContainer();
@@ -260,7 +260,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print(containerClass);
     out.print(" container, int counter, Map values)");
     } 
-    out.print(" \n\t\tthrows\n\t\t\tCreateException,\n\t\t\tValidationException {\n\t\tinitMembers();\t\n\t\tcreating = true;\t\n\t\texecuteSets(values);");
+    out.print(" \n\t\tthrows\n\t\t\tCreateException,\n\t\t\tValidationException {\n\t\tinitMembers();\t\n\t\tcreating = true;\t\n\t\tmodified = false;\n\t\texecuteSets(values);");
     if (aggregateName != null) { 
     out.print(" \n\t\t");
     out.print(containerKeyClass);
@@ -375,7 +375,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print(keyClass);
     out.print(" ejbCreate(");
     out.print(containerKeyClass);
-    out.print(" containerKey, int counter, Map values)\t\n\t\tthrows\n\t\t\tCreateException,\n\t\t\tValidationException {\n\t\tinitMembers();\t\n\t\tcreating = true;\n\t\texecuteSets(values);");
+    out.print(" containerKey, int counter, Map values)\t\n\t\tthrows\n\t\t\tCreateException,\n\t\t\tValidationException {\n\t\tinitMembers();\t\n\t\tcreating = true;\n\t\tmodified = false;\n\t\texecuteSets(values);");
     
     		Iterator it = containerModel.getAllKeyPropertiesNames().iterator();
     		while (it.hasNext()) {
@@ -490,7 +490,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print(name);
     out.print("Data data)");
     } 
-    out.print(" \n\t\tthrows\n\t\t\tCreateException,\n\t\t\tValidationException {\n\t\tinitMembers();\t\n\t\tcreating = true;\t\n\t\tsetData(data);");
+    out.print(" \n\t\tthrows\n\t\t\tCreateException,\n\t\t\tValidationException {\n\t\tinitMembers();\t\n\t\tcreating = true;\t\n\t\tmodified = false;\n\t\tsetData(data);");
     if (aggregateName != null) { 
     out.print(" \n\t\t");
     out.print(containerKeyClass);
@@ -656,7 +656,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print(name);
     out.print("Value value)");
     } 
-    out.print(" \n\t\tthrows\n\t\t\tCreateException,\n\t\t\tValidationException {\n\t\tinitMembers();\t\n\t\tcreating = true;\t\n\t\tset");
+    out.print(" \n\t\tthrows\n\t\t\tCreateException,\n\t\t\tValidationException {\n\t\tinitMembers();\t\n\t\tcreating = true;\t\n\t\tmodified = false;\n\t\tset");
     out.print(name);
     out.print("Value(value);");
     if (aggregateName != null) { 
@@ -797,7 +797,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print(packageName);
     out.print(".");
     out.print(name);
-    out.print("Value value)\n\t\tthrows\n\t\t\tCreateException,\n\t\t\tValidationException {\n\t\tinitMembers();\t\n\t\tcreating = true;\n\t\tset");
+    out.print("Value value)\n\t\tthrows\n\t\t\tCreateException,\n\t\t\tValidationException {\n\t\tinitMembers();\t\n\t\tcreating = true;\n\t\tmodified = false;\n\t\tset");
     out.print(name);
     out.print("Value(value);");
     
@@ -902,9 +902,9 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     PostcreatePG.generate(context, out, metaModel); 
     out.print("\t\t\t\n\t}");
     } 
-    out.print("\n\t\n\tpublic void ejbLoad() {\n\t\tcreating = false;\n\t}\n\t\n\tpublic void ejbStore() {\n\t\tif (creating) {\n\t\t\tcreating = false;\n\t\t\treturn;\n\t\t}");
+    out.print("\n\t\n\tpublic void ejbLoad() {\n\t\tcreating = false;\n\t\tmodified = false;\n\t}\n\t\n\tpublic void ejbStore() {\n\t\tif (creating) {\n\t\t\tcreating = false;\n\t\t\treturn;\n\t\t}\n\t\tif (!modified) return;");
     PostmodifyPG.generate(context, out, metaModel); 
-    out.print("\t\t\t\n\t} \t\n\t\n\t// Properties/Propiedades");
+    out.print("\t\t\t\n\t\t\n\t\tmodified = false;\n\t} \t\n\t\n\t// Properties/Propiedades");
     
     Iterator itProperties = metaModel.getMetaProperties().iterator();	
     while (itProperties.hasNext()) {	
@@ -1321,7 +1321,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Apr 18 09:24:13 CEST 2005", // date this file was generated
+        { "Thu Apr 21 19:34:55 CEST 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/ejbean.xml", // input file
              "/home/javi/workspace/OpenXava/generator/EJBeanPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
