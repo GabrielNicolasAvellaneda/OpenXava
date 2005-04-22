@@ -5,8 +5,8 @@ import java.util.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 
-import net.sf.hibernate.*;
-import net.sf.hibernate.cfg.*;
+import org.hibernate.*;
+import org.hibernate.cfg.*;
 
 /**
  * @author Mª Carmen Gimeno

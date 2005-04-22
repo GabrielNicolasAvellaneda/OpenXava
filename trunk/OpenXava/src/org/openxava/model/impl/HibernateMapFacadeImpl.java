@@ -10,7 +10,7 @@ import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
 
-import net.sf.hibernate.*;
+import org.hibernate.*;
 
 
 /**

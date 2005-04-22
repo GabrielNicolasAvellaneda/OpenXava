@@ -6,8 +6,8 @@ import java.util.*;
 import javax.ejb.*;
 import javax.ejb.ObjectNotFoundException;
 
-import net.sf.hibernate.*;
-import net.sf.hibernate.cfg.*;
+import org.hibernate.*;
+import org.hibernate.cfg.*;
 
 import org.openxava.component.*;
 import org.openxava.model.impl.*;

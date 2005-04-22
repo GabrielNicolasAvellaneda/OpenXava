@@ -5,7 +5,7 @@ import java.util.*;
 
 import javax.ejb.*;
 
-import net.sf.hibernate.*;
+import org.hibernate.*;
 
 import org.openxava.model.meta.*;
 import org.openxava.util.*;

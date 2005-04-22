@@ -1,6 +1,6 @@
 package org.openxava.test.actions;
 
-import net.sf.hibernate.*;
+import org.hibernate.*;
 import org.openxava.actions.*;
 import org.openxava.test.model.*;
 
