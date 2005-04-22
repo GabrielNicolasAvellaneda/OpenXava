@@ -5,8 +5,8 @@ import java.util.*;
 
 import javax.servlet.http.*;
 
-import net.sf.hibernate.*;
-import net.sf.hibernate.cfg.*;
+import org.hibernate.*;
+import org.hibernate.cfg.*;
 
 import org.openxava.component.*;
 import org.openxava.converters.*;

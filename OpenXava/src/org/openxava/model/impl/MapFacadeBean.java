@@ -7,7 +7,7 @@ import java.util.*;
 import javax.ejb.*;
 import javax.rmi.*;
 
-import net.sf.hibernate.Session;
+import org.hibernate.Session;
 
 import org.openxava.calculators.*;
 import org.openxava.component.*;
