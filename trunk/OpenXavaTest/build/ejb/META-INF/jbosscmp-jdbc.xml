@@ -553,7 +553,7 @@
       <entity>
          <ejb-name>Seller</ejb-name>
 
-         <table-name>XAVATEST@separator@SELLER</table-name>
+         <table-name>XAVATEST_SELLER</table-name>
 
          <cmp-field>
             <field-name>_Name</field-name>

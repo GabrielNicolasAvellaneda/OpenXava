@@ -24,7 +24,7 @@ public class MetaAggregateBean extends MetaAggregate {
 	
 	public java.lang.String getBeanClass() throws XavaException {
 		if (Is.emptyString(beanClass)) {
-			beanClass = getMetaComponent().getPackageName() + "." + getName();
+			beanClass = getMetaComponent().getEJBPackage() + "." + getName();
 		}
 		return beanClass;
 	}

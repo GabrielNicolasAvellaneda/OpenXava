@@ -79,7 +79,7 @@ while (itAggregates.hasNext()) {
 	Map row = (Map) itAggregates.next();
 	String cssClass=f%2==0?"pair":"odd";
 	if (f == subview.getCollectionEditingRow()) { 
-		cssClass = "selected";
+		cssClass = cssClass + "-selected";
 	}
 	
 %>
