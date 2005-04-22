@@ -1206,15 +1206,13 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 
 	public Collection getRecursiveQualifiedPropertiesNames() throws XavaException {
 		if (recursiveQualifiedPropertiesNames == null) {
-			Collection parents = new HashSet();
-			recursiveQualifiedPropertiesNames = createQualifiedPropertiesNames("", parents);
+			recursiveQualifiedPropertiesNames = createQualifiedPropertiesNames("");
 		}
 		return recursiveQualifiedPropertiesNames;
 	}
 	
-	private Collection createQualifiedPropertiesNames(String prefix, Collection parents) throws XavaException {
+	private Collection createQualifiedPropertiesNames(String prefix) throws XavaException {
 		List result = new ArrayList();		
-		parents.add(getName());
 		for (Iterator it = getMembersNames().iterator(); it.hasNext();) {
 			Object name = it.next();
 			if (getMapMetaProperties().containsKey(name)) {
@@ -1223,9 +1221,8 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 			}
 		}
 		for (Iterator it=getMetaReferences().iterator(); it.hasNext();) {
-			MetaReference ref = (MetaReference) it.next();
-			if (parents.contains(ref.getReferencedModelName())) continue;			 
-			result.addAll(ref.getMetaModelReferenced().createQualifiedPropertiesNames(prefix + ref.getName() + ".", parents));
+			MetaReference ref = (MetaReference) it.next();			 
+			result.addAll(ref.getMetaModelReferenced().createQualifiedPropertiesNames(prefix + ref.getName() + "."));
 		}			
 		return result;		
 	}
