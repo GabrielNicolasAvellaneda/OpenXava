@@ -977,7 +977,7 @@ public class InvoicesTest extends ModuleTestBase {
 		DeliveryValue deliveryValue = new DeliveryValue();
 		deliveryValue.setInvoice_year(getInvoiceKey().getYear());
 		deliveryValue.setInvoice_number(getInvoiceKey().getNumber());
-		deliveryValue.setType_number(1);		
+		deliveryValue.setType_number(1); 		
 		deliveryValue.setNumber(666);
 		deliveryValue.setDate(Dates.create(22,2,2004));
 		deliveryValue.setDescription("Delivery JUNIT 666");

@@ -199,6 +199,7 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 			implements <expr>packageName</expr>.I<expr>name</expr>, EntityBean {	
 			
 	private boolean creating = false;		
+	private boolean modified = false;
 
 	// Create	
 
@@ -223,6 +224,7 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 			ValidationException {
 		initMembers();	
 		creating = true;	
+		modified = false;
 		executeSets(values);
 	<java>if (aggregateName != null) { </java> 
 		<expr>containerKeyClass</expr> containerKey = null;
@@ -321,6 +323,7 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 			ValidationException {
 		initMembers();	
 		creating = true;
+		modified = false;
 		executeSets(values);
 		<java>
 		Iterator it = containerModel.getAllKeyPropertiesNames().iterator();
@@ -408,6 +411,7 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 			ValidationException {
 		initMembers();	
 		creating = true;	
+		modified = false;
 		setData(data);	
 	<java>if (aggregateName != null) { </java> 
 		<expr>containerKeyClass</expr> containerKey = null;
@@ -529,6 +533,7 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 			ValidationException {
 		initMembers();	
 		creating = true;	
+		modified = false;
 		set<expr>name</expr>Value(value);	
 	<java>if (aggregateName != null) { </java> 
 		<expr>containerKeyClass</expr> containerKey = null;
@@ -633,6 +638,7 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 			ValidationException {
 		initMembers();	
 		creating = true;
+		modified = false;
 		set<expr>name</expr>Value(value);
 		<java>
 		Iterator it = containerModel.getAllKeyPropertiesNames().iterator();
@@ -711,6 +717,7 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 	
 	public void ejbLoad() {
 		creating = false;
+		modified = false;
 	}
 	
 	public void ejbStore() {
@@ -718,8 +725,11 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 			creating = false;
 			return;
 		}
+		if (!modified) return;
 		
 		<java>PostmodifyPG.generate(context, out, metaModel); </java>			
+		
+		modified = false;
 	} 	
 	
 	// Properties/Propiedades

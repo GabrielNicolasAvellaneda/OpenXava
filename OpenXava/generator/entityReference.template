@@ -70,6 +70,9 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 	 * #(interfaceMethodSet)#
 	 */
 	public void set#(referenceName)#(#(referencedModelClass)# new#(referenceName)#) {
+# if (ejb) { # 
+		this.modified = true;
+# } # 
 		try {	
 			if (new#(referenceName)# == null) set#(referenceName)#Key(null);
 			else set#(referenceName)#Key((#(referencedKeyClass)#) new#(referenceName)#.getPrimaryKey());
@@ -84,29 +87,32 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 	 * @ejb:interface-method
 	 */
 	public #(referencedKeyClass)# get#(referenceName)#Key() {				
-			#(referencedKeyClass)# key = new #(referencedKeyClass)#();
-			# 
-			String prefixGet = "get" + referenceName + "_";
-			Iterator itKeys = referencedModel.getAllKeyPropertiesNames().iterator();
-			while (itKeys.hasNext()) {
-				String key = Strings.change((String) itKeys.next(), ".", "_");
-				String keyAttribute=null;
-				if (referencedMapping.hasConverter(key)) {
-					keyAttribute = "_" + Strings.firstUpper(key);
-				}
-				else {
-					keyAttribute = key;
-				}				
-			# 
-			key.#(keyAttribute)# = #(prefixGet)##(key)#();			
-			# } #		
-			return key;
+		#(referencedKeyClass)# key = new #(referencedKeyClass)#();
+		# 
+		String prefixGet = "get" + referenceName + "_";
+		Iterator itKeys = referencedModel.getAllKeyPropertiesNames().iterator();
+		while (itKeys.hasNext()) {
+			String key = Strings.change((String) itKeys.next(), ".", "_");
+			String keyAttribute=null;
+			if (referencedMapping.hasConverter(key)) {
+				keyAttribute = "_" + Strings.firstUpper(key);
+			}
+			else {
+				keyAttribute = key;
+			}				
+		# 
+		key.#(keyAttribute)# = #(prefixGet)##(key)#();			
+		# } #		
+		return key;
 	}	
 	
 	/**
 	 * #(interfaceMethodSet)#
 	 */
 	public void set#(referenceName)#Key(#(referencedKeyClass)# key) {
+# if (ejb) { # 
+		this.modified = true;
+# } # 		
 		if (key == null) {
 			key = new #(referencedKeyClass)#();
 		}

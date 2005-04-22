@@ -21,7 +21,7 @@ public abstract class CustomerCMP
          dataHolder.set_Type( get_Type() );
          dataHolder.set_Remarks( get_Remarks() );
          dataHolder.set_RelationWithSeller( get_RelationWithSeller() );
-         dataHolder.setPhoto( getPhoto() );
+         dataHolder.set_Photo( get_Photo() );
          dataHolder.set_Name( get_Name() );
          dataHolder.setNumber( getNumber() );
          dataHolder.setSeller_number( getSeller_number() );
@@ -47,7 +47,7 @@ public abstract class CustomerCMP
          set_Type( dataHolder.get_Type() );
          set_Remarks( dataHolder.get_Remarks() );
          set_RelationWithSeller( dataHolder.get_RelationWithSeller() );
-         setPhoto( dataHolder.getPhoto() );
+         set_Photo( dataHolder.get_Photo() );
          set_Name( dataHolder.get_Name() );
          setSeller_number( dataHolder.getSeller_number() );
          setAlternateSeller_number( dataHolder.getAlternateSeller_number() );
@@ -163,9 +163,9 @@ public abstract class CustomerCMP
 
    public abstract void set_RelationWithSeller( java.lang.String _RelationWithSeller ) ;
 
-   public abstract byte[] getPhoto() ;
+   public abstract byte[] get_Photo() ;
 
-   public abstract void setPhoto( byte[] photo ) ;
+   public abstract void set_Photo( byte[] _Photo ) ;
 
    public abstract java.lang.String get_Name() ;
 

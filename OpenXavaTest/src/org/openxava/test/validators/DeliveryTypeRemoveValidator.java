@@ -18,7 +18,7 @@ public class DeliveryTypeRemoveValidator implements IRemoveValidator {
 	}
 
 	public void validate(Messages errors) throws Exception {
-		Collection deliveries = DeliveryUtil.getHome().findByType(deliveryType.getNumber());
+		Collection deliveries = DeliveryUtil.getHome().findByType(deliveryType.getNumber());				
 		if 	(!deliveries.isEmpty()) {
 			errors.add("not_remove_delivery_type_if_in_deliveries");	
 		}

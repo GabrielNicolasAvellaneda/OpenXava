@@ -4,16 +4,11 @@ import java.util.*;
 
 import org.openxava.filters.*;
 
-
 /**
  * @author Javier Paniza
  */
 
 public class DefaultYearFilter extends BaseContextFilter {
-
-	public DefaultYearFilter() {
-		super();		
-	}
 
 	public Object filter(Object o) throws FilterException {		
 		if (o == null) {

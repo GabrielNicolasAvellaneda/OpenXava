@@ -201,7 +201,7 @@
       </columns>
       <columns xmi:id="Customer__RelationWithSeller" name="_RelationWithSeller">
       </columns>
-      <columns xmi:id="Customer_photo" name="photo">
+      <columns xmi:id="Customer__Photo" name="_Photo">
       </columns>
       <columns xmi:id="Customer__Name" name="_Name">
       </columns>

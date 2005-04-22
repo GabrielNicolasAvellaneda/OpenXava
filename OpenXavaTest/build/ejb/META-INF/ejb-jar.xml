@@ -833,9 +833,9 @@
             <description><![CDATA[]]></description>
             <field-name>_RelationWithSeller</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Customer_photo">
+         <cmp-field id="CmpAttribute_Customer__Photo">
             <description><![CDATA[]]></description>
-            <field-name>photo</field-name>
+            <field-name>_Photo</field-name>
          </cmp-field>
          <cmp-field id="CmpAttribute_Customer__Name">
             <description><![CDATA[]]></description>

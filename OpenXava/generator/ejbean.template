@@ -198,6 +198,7 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 			implements #(packageName)#.I#(name)#, EntityBean {	
 			
 	private boolean creating = false;		
+	private boolean modified = false;
 
 	// Create	
 
@@ -222,6 +223,7 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 			ValidationException {
 		initMembers();	
 		creating = true;	
+		modified = false;
 		executeSets(values);
 	# if (aggregateName != null) { # 
 		#(containerKeyClass)# containerKey = null;
@@ -320,6 +322,7 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 			ValidationException {
 		initMembers();	
 		creating = true;
+		modified = false;
 		executeSets(values);
 		# 
 		Iterator it = containerModel.getAllKeyPropertiesNames().iterator();
@@ -407,6 +410,7 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 			ValidationException {
 		initMembers();	
 		creating = true;	
+		modified = false;
 		setData(data);	
 	# if (aggregateName != null) { # 
 		#(containerKeyClass)# containerKey = null;
@@ -528,6 +532,7 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 			ValidationException {
 		initMembers();	
 		creating = true;	
+		modified = false;
 		set#(name)#Value(value);	
 	# if (aggregateName != null) { # 
 		#(containerKeyClass)# containerKey = null;
@@ -632,6 +637,7 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 			ValidationException {
 		initMembers();	
 		creating = true;
+		modified = false;
 		set#(name)#Value(value);
 		# 
 		Iterator it = containerModel.getAllKeyPropertiesNames().iterator();
@@ -710,6 +716,7 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 	
 	public void ejbLoad() {
 		creating = false;
+		modified = false;
 	}
 	
 	public void ejbStore() {
@@ -717,8 +724,11 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 			creating = false;
 			return;
 		}
+		if (!modified) return;
 		
 		# PostmodifyPG.generate(context, out, metaModel); #			
+		
+		modified = false;
 	} 	
 	
 	// Properties/Propiedades

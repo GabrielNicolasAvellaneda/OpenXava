@@ -333,7 +333,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		DeliveryKey key = new DeliveryKey();
 		key.setInvoice_year(2002);
 		key.setInvoice_number(1);
-		key.setType_number(1);
+		key.setType_number(1);		
 		key.setNumber(66);
 		String distanceDB = DeliveryUtil.getHome().findByPrimaryKey(key).getData().get_Distance();
 		assertEquals("distance in database incorrect", "N", distanceDB);
@@ -378,7 +378,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		DeliveryKey key = new DeliveryKey();
 		key.setInvoice_year(2002);
 		key.setInvoice_number(1);
-		key.setType_number(1);
+		key.setType_number(1);		
 		key.setNumber(1);
 		try {
 			DeliveryUtil.getHome().findByPrimaryKey(key);

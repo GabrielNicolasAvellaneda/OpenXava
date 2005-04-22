@@ -13,7 +13,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Apr 18 09:24:11 CEST 2005
+ * @version Thu Apr 21 19:34:53 CEST 2005
  */
 public class EntityReferencePG {
     Properties properties = new Properties();
@@ -85,7 +85,11 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     out.print(referencedModelClass);
     out.print(" new");
     out.print(referenceName);
-    out.print(") {\n\t\ttry {\t\n\t\t\tif (new");
+    out.print(") {");
+    if (ejb) { 
+    out.print(" \n\t\tthis.modified = true;");
+    } 
+    out.print(" \n\t\ttry {\t\n\t\t\tif (new");
     out.print(referenceName);
     out.print(" == null) set");
     out.print(referenceName);
@@ -103,38 +107,42 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     out.print(referencedKeyClass);
     out.print(" get");
     out.print(referenceName);
-    out.print("Key() {\t\t\t\t\n\t\t\t");
+    out.print("Key() {\t\t\t\t\n\t\t");
     out.print(referencedKeyClass);
     out.print(" key = new ");
     out.print(referencedKeyClass);
     out.print("();");
     
-    			String prefixGet = "get" + referenceName + "_";
-    			Iterator itKeys = referencedModel.getAllKeyPropertiesNames().iterator();
-    			while (itKeys.hasNext()) {
-    				String key = Strings.change((String) itKeys.next(), ".", "_");
-    				String keyAttribute=null;
-    				if (referencedMapping.hasConverter(key)) {
-    					keyAttribute = "_" + Strings.firstUpper(key);
-    				}
-    				else {
-    					keyAttribute = key;
-    				}				
-    			
-    out.print(" \n\t\t\tkey.");
+    		String prefixGet = "get" + referenceName + "_";
+    		Iterator itKeys = referencedModel.getAllKeyPropertiesNames().iterator();
+    		while (itKeys.hasNext()) {
+    			String key = Strings.change((String) itKeys.next(), ".", "_");
+    			String keyAttribute=null;
+    			if (referencedMapping.hasConverter(key)) {
+    				keyAttribute = "_" + Strings.firstUpper(key);
+    			}
+    			else {
+    				keyAttribute = key;
+    			}				
+    		
+    out.print(" \n\t\tkey.");
     out.print(keyAttribute);
     out.print(" = ");
     out.print(prefixGet);
     out.print(key);
     out.print("();");
     } 
-    out.print("\t\t\n\t\t\treturn key;\n\t}\t\n\t\n\t/**\n\t * ");
+    out.print("\t\t\n\t\treturn key;\n\t}\t\n\t\n\t/**\n\t * ");
     out.print(interfaceMethodSet);
     out.print("\n\t */\n\tpublic void set");
     out.print(referenceName);
     out.print("Key(");
     out.print(referencedKeyClass);
-    out.print(" key) {\n\t\tif (key == null) {\n\t\t\tkey = new ");
+    out.print(" key) {");
+    if (ejb) { 
+    out.print(" \n\t\tthis.modified = true;");
+    } 
+    out.print(" \t\t\n\t\tif (key == null) {\n\t\t\tkey = new ");
     out.print(referencedKeyClass);
     out.print("();\n\t\t}");
     
@@ -276,7 +284,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Apr 18 09:24:11 CEST 2005", // date this file was generated
+        { "Thu Apr 21 19:34:53 CEST 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/entityReference.xml", // input file
              "/home/javi/workspace/OpenXava/generator/EntityReferencePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
