@@ -93,7 +93,7 @@ public class InvoicesTest extends ModuleTestBase {
 		execute("List.customize");
 		execute("List.addColumns");
 		
-		assertCollectionRowCount("xavaPropertiesList", 22);
+		assertCollectionRowCount("xavaPropertiesList", 26);
 		assertValueInCollection("xavaPropertiesList",  0, 1, "vatPercentage");
 		assertValueInCollection("xavaPropertiesList",  1, 1, "comment");
 		assertValueInCollection("xavaPropertiesList",  2, 1, "customerDiscount");
@@ -110,12 +110,16 @@ public class InvoicesTest extends ModuleTestBase {
 		assertValueInCollection("xavaPropertiesList", 13, 1, "customer.seller.name");
 		assertValueInCollection("xavaPropertiesList", 14, 1, "customer.seller.level.id");
 		assertValueInCollection("xavaPropertiesList", 15, 1, "customer.seller.level.description");
-		assertValueInCollection("xavaPropertiesList", 16, 1, "customer.address.street");
-		assertValueInCollection("xavaPropertiesList", 17, 1, "customer.address.zipCode");
-		assertValueInCollection("xavaPropertiesList", 18, 1, "customer.address.city");
-		assertValueInCollection("xavaPropertiesList", 19, 1, "customer.address.state.id");
-		assertValueInCollection("xavaPropertiesList", 20, 1, "customer.address.state.name");		
-		assertValueInCollection("xavaPropertiesList", 21, 1, "customer.address.state.fullName");
+		assertValueInCollection("xavaPropertiesList", 16, 1, "customer.alternateSeller.number");
+		assertValueInCollection("xavaPropertiesList", 17, 1, "customer.alternateSeller.name");
+		assertValueInCollection("xavaPropertiesList", 18, 1, "customer.alternateSeller.level.id");
+		assertValueInCollection("xavaPropertiesList", 19, 1, "customer.alternateSeller.level.description");		
+		assertValueInCollection("xavaPropertiesList", 20, 1, "customer.address.street");
+		assertValueInCollection("xavaPropertiesList", 21, 1, "customer.address.zipCode");
+		assertValueInCollection("xavaPropertiesList", 22, 1, "customer.address.city");
+		assertValueInCollection("xavaPropertiesList", 23, 1, "customer.address.state.id");
+		assertValueInCollection("xavaPropertiesList", 24, 1, "customer.address.state.name");		
+		assertValueInCollection("xavaPropertiesList", 25, 1, "customer.address.state.fullName");
 		
 		checkRow("selectedProperties", "yearDiscount"); 
 		checkRow("selectedProperties", "customer.address.city"); 
@@ -136,7 +140,7 @@ public class InvoicesTest extends ModuleTestBase {
 		
 		execute("List.addColumns");
 
-		assertCollectionRowCount("xavaPropertiesList", 20);
+		assertCollectionRowCount("xavaPropertiesList", 24);
 		assertValueInCollection("xavaPropertiesList",  0, 1, "vatPercentage");
 		assertValueInCollection("xavaPropertiesList",  1, 1, "comment");
 		assertValueInCollection("xavaPropertiesList",  2, 1, "customerDiscount");
@@ -151,12 +155,16 @@ public class InvoicesTest extends ModuleTestBase {
 		assertValueInCollection("xavaPropertiesList", 11, 1, "customer.seller.number");
 		assertValueInCollection("xavaPropertiesList", 12, 1, "customer.seller.name");
 		assertValueInCollection("xavaPropertiesList", 13, 1, "customer.seller.level.id");
-		assertValueInCollection("xavaPropertiesList", 14, 1, "customer.seller.level.description");		
-		assertValueInCollection("xavaPropertiesList", 15, 1, "customer.address.street");
-		assertValueInCollection("xavaPropertiesList", 16, 1, "customer.address.zipCode");
-		assertValueInCollection("xavaPropertiesList", 17, 1, "customer.address.state.id");		
-		assertValueInCollection("xavaPropertiesList", 18, 1, "customer.address.state.name");
-		assertValueInCollection("xavaPropertiesList", 19, 1, "customer.address.state.fullName");
+		assertValueInCollection("xavaPropertiesList", 14, 1, "customer.seller.level.description");
+		assertValueInCollection("xavaPropertiesList", 15, 1, "customer.alternateSeller.number");
+		assertValueInCollection("xavaPropertiesList", 16, 1, "customer.alternateSeller.name");
+		assertValueInCollection("xavaPropertiesList", 17, 1, "customer.alternateSeller.level.id");
+		assertValueInCollection("xavaPropertiesList", 18, 1, "customer.alternateSeller.level.description");					
+		assertValueInCollection("xavaPropertiesList", 19, 1, "customer.address.street");
+		assertValueInCollection("xavaPropertiesList", 20, 1, "customer.address.zipCode");
+		assertValueInCollection("xavaPropertiesList", 21, 1, "customer.address.state.id");		
+		assertValueInCollection("xavaPropertiesList", 22, 1, "customer.address.state.name");
+		assertValueInCollection("xavaPropertiesList", 23, 1, "customer.address.state.fullName");
 		
 		execute("AddColumns.cancel");
 		
