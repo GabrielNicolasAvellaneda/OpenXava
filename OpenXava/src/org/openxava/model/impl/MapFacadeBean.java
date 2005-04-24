@@ -5,13 +5,10 @@ import java.rmi.*;
 import java.util.*;
 
 import javax.ejb.*;
-import javax.rmi.*;
-
 import org.hibernate.Session;
 
 import org.openxava.calculators.*;
 import org.openxava.component.*;
-import org.openxava.ejbx.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
@@ -210,8 +207,9 @@ public class MapFacadeBean implements SessionBean {
 			}
 			Map valoresConvertidos = convertSubmapsInObject(metaEjb, valores, true);
 			Object entidadNueva = null;
-			if (metaModeloContenedor == null) {				
-				entidadNueva = createPersistentObject((IMetaEjb)metaEjb, valoresConvertidos);
+			if (metaModeloContenedor == null) {
+				// tmp 
+				entidadNueva = getPersistenceProvider().create((IMetaEjb)metaEjb, valoresConvertidos);
 			} else {				
 				entidadNueva =
 					executeEJBCreate(
@@ -260,7 +258,7 @@ public class MapFacadeBean implements SessionBean {
 	}
 
 
-	protected Object createPersistentObject(IMetaEjb metaEjb, Map valores)
+	/* tmp protected Object createPersistentObject(IMetaEjb metaEjb, Map valores)
 		throws CreateException, ValidationException, XavaException {
 		try {
 			return EJBFactory.create(metaEjb.obtainHome(), metaEjb.getHomeClass(), valores);		
@@ -279,7 +277,7 @@ public class MapFacadeBean implements SessionBean {
 			ex.printStackTrace();
 			throw new EJBException(XavaResources.getString("create_persistent_error", ex.getLocalizedMessage()));
 		}
-	}
+	} */
 
 
 	protected Object executeEJBCreate(
@@ -613,7 +611,8 @@ public class MapFacadeBean implements SessionBean {
 			RemoteException,
 			FinderException,
 			ValidationException {
-		Object entidadMoldeada = narrowEntidad(metaModelo, modelo);
+	//tmp	Object entidadMoldeada = narrowEntidad(metaModelo, modelo);
+		Object entidadMoldeada = getPersistenceProvider().toPropertiesContainer(metaModelo, modelo);
 		MetaAggregateEjb metaAgregadoEjb = (MetaAggregateEjb) metaColeccion.getMetaReference().getMetaModelReferenced();
 		if (coleccion == null) coleccion = Collections.EMPTY_LIST;
 		Iterator it = coleccion.iterator();
@@ -644,7 +643,7 @@ public class MapFacadeBean implements SessionBean {
 			RemoteException,
 			FinderException {
 		if (coleccion == null) return;		
-		Object entidadMoldeada = narrowEntidad(metaModelo, modelo);
+		Object entidadMoldeada = getPersistenceProvider().toPropertiesContainer(metaModelo, modelo);
 		MetaAggregateEjb metaAgregadoEjb = (MetaAggregateEjb) metaColeccion.getMetaReference().getMetaModelReferenced();
 		
 		Iterator it = coleccion.iterator();
@@ -687,7 +686,7 @@ public class MapFacadeBean implements SessionBean {
 		MetaCollection metaColeccion,
 		Collection coleccion)
 		throws XavaException, FinderException {
-		Object entidadMoldeada = narrowEntidad(metaModelo, modelo);
+		Object entidadMoldeada = getPersistenceProvider().toPropertiesContainer(metaModelo, modelo);
 		MetaEntity metaEntidadReferenciado =
 			(MetaEntity) metaColeccion.getMetaReference().getMetaModelReferenced();
 		Iterator it = coleccion.iterator();
@@ -861,7 +860,7 @@ public class MapFacadeBean implements SessionBean {
 			if (entity == null)
 				return null;						
 			if (membersNames == null) return Collections.EMPTY_MAP;					
-			IPropertiesContainer r = narrowPropertiesContainer(metaModel, entity);			
+			IPropertiesContainer r = getPersistenceProvider().toPropertiesContainer(metaModel, entity);			
 			StringBuffer nombres = new StringBuffer();
 			addKey(metaModel, membersNames); // always return the key althought it don't is aunque no se solicit
 			removeViewProperties(metaModel, membersNames);			
@@ -1183,9 +1182,9 @@ public class MapFacadeBean implements SessionBean {
 	 * @return pruebas.xvista.ab.modelo.Producto
 	 * @param o java.lang.Object
 	 */
-	protected IPropertiesContainer narrowPropertiesContainer(MetaModel metaModelo, Object o) throws XavaException {
+	/*tmp private IPropertiesContainer narrowPropertiesContainer(MetaModel metaModelo, Object o) throws XavaException {
 		return (EJBReplicable) narrowEntidad(metaModelo, o); 
-	}
+	} */
 
 	private void removeKeyFields(MetaModel metaModelo, Map valores)
 		throws XavaException {
@@ -1266,7 +1265,7 @@ public class MapFacadeBean implements SessionBean {
 			if (!metaModelo.getMetaCollectionsAgregate().isEmpty()) {
 				borrarTodasColeccionesAgregados(metaModelo, modelo);
 			}
-			removePersistentObject(metaModelo, modelo);			
+			getPersistenceProvider().remove(metaModelo, modelo);			
 		} catch (ValidationException ex) {
 			throw ex;					
 		} catch (XavaException ex) {
@@ -1280,9 +1279,9 @@ public class MapFacadeBean implements SessionBean {
 		}
 	}
 	
-	protected void removePersistentObject(MetaModel metaModelo, Object modelo) throws RemoteException, RemoveException, XavaException {
-		((EJBReplicable) narrowPropertiesContainer(metaModelo, modelo)).remove();		
-	}
+	/*tmp protected void removePersistentObject(MetaModel metaModelo, Object modelo) throws RemoteException, RemoveException, XavaException {
+		((EJBReplicable) getPersistenceProvider().toPropertiesContainer(metaModelo, modelo)).remove();		
+	} */
 	
 	/**
 	 * @param metaEntidad
@@ -1321,7 +1320,7 @@ public class MapFacadeBean implements SessionBean {
 			Map collections = extractCollections(metaModel, values);
 			validar(metaModel, values, keyValues, null);			
 			Object entity = findEntity((IMetaEjb) metaModel, keyValues);			
-			IPropertiesContainer r = narrowPropertiesContainer(metaModel, entity);			
+			IPropertiesContainer r = getPersistenceProvider().toPropertiesContainer(metaModel, entity);			
 			r.executeSets(convertSubmapsInObject(metaModel, values, true));			
 			if (collections != null) {
 				modifyCollections(metaModel, entity, collections);
@@ -1441,7 +1440,8 @@ public class MapFacadeBean implements SessionBean {
 						else {
 							IMetaEjb containerReference = (IMetaEjb) metaModel.getMetaModelContainer();
 							try {							
-								valor = findEntity(containerReference, containerKey);
+			// tmp					valor = findEntity(containerReference, containerKey);
+								valor = getPersistenceProvider().find(containerReference, containerKey);
 							}
 							catch (ObjectNotFoundException ex) {
 								valor = null;
@@ -1513,16 +1513,15 @@ public class MapFacadeBean implements SessionBean {
 		}
 	}
 
-	protected Object findEntity(IMetaEjb metaEntidad, Map valoresClave)	throws FinderException, XavaException {
-		/* tmp: Para versión hibernate
-			getPersistenceProvider().setSession(getSession());
-			return getPersistenceProvider().find(metaEntidad, valoresClave);
-		*/
-		Object key = metaEntidad.obtainPrimaryKeyFromKey(valoresClave);
-		return findEntity(metaEntidad, key);  
+	private Object findEntity(IMetaEjb metaEntidad, Map valoresClave)	throws FinderException, XavaException {
+		// tmp: Para versión hibernate
+		return getPersistenceProvider().find(metaEntidad, valoresClave);
+		
+	/*	Object key = metaEntidad.obtainPrimaryKeyFromKey(valoresClave);
+		return findEntity(metaEntidad, key); */  
 	}
 	
-	protected Object findEntity(IMetaEjb metaEntidad, Object key)	throws FinderException { 		
+/* TMP	protected Object findEntity(IMetaEjb metaEntidad, Object key)	throws FinderException { 		
 		Class claseHome = null;
 		Class clasePK = null;
 		try {
@@ -1547,7 +1546,7 @@ public class MapFacadeBean implements SessionBean {
 			ex.printStackTrace();
 			throw new EJBException(XavaResources.getString("find_error", metaEntidad.getName()));			
 		}
-	} 
+	} */ 
 	
 
 	/**
@@ -1702,13 +1701,13 @@ public class MapFacadeBean implements SessionBean {
 	/**
 	 * Un <i>narrow</i> al tipo concreto que tiene el <i>EntityBean</i>. <p>
 	 */
-	private Object narrowEntidad(MetaModel metaModelo, Object modelo)
+/*tmp	private Object narrowEntidad(MetaModel metaModelo, Object modelo)
 		throws XavaException {
 		if (!(metaModelo instanceof IMetaEjb)) {
 			throw new XavaException("only_ejb_error");
 		}
 		return PortableRemoteObject.narrow(modelo, ((IMetaEjb) metaModelo).getRemoteClass());
-	}
+	} */
 	
 	private void setRollbackOnly() {
 		getSessionContext().setRollbackOnly();
@@ -1813,6 +1812,7 @@ public class MapFacadeBean implements SessionBean {
 		if (persistenceProvider == null) {
 			persistenceProvider = new HibernatePersistenceProvider();  //tmp De momento
 		}
+		persistenceProvider.setSession(getSession());
 		return persistenceProvider;
 	}
 	
