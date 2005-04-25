@@ -24,7 +24,7 @@ public class POJOPropertiesContainerAdapter implements IPropertiesContainer {
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			throw new RemoteException("Imposible obtener propiedades del objeto"); // tmp: i18n
+			throw new RemoteException(XavaResources.getString("get_properties_error", ex.getLocalizedMessage()));
 		}
 	}
 
@@ -37,11 +37,11 @@ public class POJOPropertiesContainerAdapter implements IPropertiesContainer {
 				throw (ValidationException) ex.getTargetException(); 
 			}
 			ex.printStackTrace();
-			throw new RemoteException("Imposible actualizar propiedades del objeto"); // tmp: i18n			
+			throw new RemoteException(XavaResources.getString("set_properties_error", ex.getLocalizedMessage()));			
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			throw new RemoteException("Imposible actualizar propiedades del objeto"); // tmp: i18n
+			throw new RemoteException(XavaResources.getString("set_properties_error", ex.getLocalizedMessage()));
 		}		
 	}
 

@@ -63,7 +63,7 @@ public class EJBReplicableBase extends EntityBase {
 		}
 		catch (InvocationTargetException ex) {
 			ex.getTargetException().printStackTrace();
-			throw new EJBException(XavaResources.getString("ejb_get_properties_error", ex.getTargetException().getMessage()));
+			throw new EJBException(XavaResources.getString("get_properties_error", ex.getTargetException().getMessage()));
 		}
 	}    
 
@@ -81,7 +81,7 @@ public class EJBReplicableBase extends EntityBase {
 			}
 			else {
 				cause.printStackTrace();
-				throw new EJBException(XavaResources.getString("ejb_set_properties_error", ex.getTargetException().getMessage()));
+				throw new EJBException(XavaResources.getString("set_properties_error", ex.getTargetException().getMessage()));
 			}
 		}	  	
 	}    
