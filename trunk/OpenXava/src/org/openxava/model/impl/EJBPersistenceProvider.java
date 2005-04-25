@@ -19,23 +19,23 @@ import org.openxava.validators.*;
  */
 public class EJBPersistenceProvider implements IPersistenceProvider {
 
-	public Object find(IMetaEjb metaEntidad, Map valoresClave)
+	public Object find(IMetaEjb metaEntity, Map keyValues)
 			throws FinderException, XavaException {
-		Object key = metaEntidad.obtainPrimaryKeyFromKey(valoresClave);
-		return find(metaEntidad, key);
+		Object key = metaEntity.obtainPrimaryKeyFromKey(keyValues);
+		return find(metaEntity, key);
 	}
 
-	public Object find(IMetaEjb metaEntidad, Object key) throws FinderException {
+	public Object find(IMetaEjb metaEntity, Object key) throws FinderException {
 		Class claseHome = null;
 		Class clasePK = null;
 		try {
-			clasePK = metaEntidad.getPrimaryKeyClass();
+			clasePK = metaEntity.getPrimaryKeyClass();
 			Class[] classArg = {
 				clasePK
 			};
-			claseHome = metaEntidad.getHomeClass();
+			claseHome = metaEntity.getHomeClass();
 			Method m = claseHome.getMethod("findByPrimaryKey", classArg);
-			Object home = metaEntidad.obtainHome();
+			Object home = metaEntity.obtainHome();
 			Object[] arg = {
 				key
 			};
@@ -53,35 +53,34 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 			else {
 				th.printStackTrace();
 				throw new EJBException(XavaResources.getString("find_error",
-						metaEntidad.getName()));
+						metaEntity.getName()));
 			}
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			throw new EJBException(XavaResources.getString("find_error", metaEntidad
+			throw new EJBException(XavaResources.getString("find_error", metaEntity
 					.getName()));
 		}
 	}
 
-	public IPropertiesContainer toPropertiesContainer(MetaModel metaModelo,
+	public IPropertiesContainer toPropertiesContainer(MetaModel metaModel,
 			Object o) throws XavaException {
-		if (!(metaModelo instanceof IMetaEjb)) {
+		if (!(metaModel instanceof IMetaEjb)) {
 			throw new XavaException("only_ejb_error");
 		}
 		return (IPropertiesContainer) PortableRemoteObject.narrow(o,
-				((IMetaEjb) metaModelo).getRemoteClass());
+				((IMetaEjb) metaModel).getRemoteClass());
 	}
 
-	public Object create(IMetaEjb metaEjb, Map valores)
+	public Object create(IMetaEjb metaEjb, Map values)
 			throws CreateException, ValidationException, XavaException {
 		try {
 			return EJBFactory.create(metaEjb.obtainHome(), metaEjb.getHomeClass(),
-					valores);
+					values);
 		}
 		catch (NoSuchMethodException ex) {
 			ex.printStackTrace();
-			throw new XavaException("Es obligado que el bean " + metaEjb.getJndi()
-					+ " tenga un constructor create(Map )");
+			throw new XavaException("ejb_create_map_required", metaEjb.getJndi()); 
 		}
 		catch (ValidationException ex) {
 			throw ex;
@@ -89,19 +88,18 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 		catch (RemoteException ex) {
 			ex.printStackTrace();
 			throw new EJBException(XavaResources.getString("create_persistent_error",
+					metaEjb.getName(),
 					ex.getLocalizedMessage()));
 		}
 	}
 
-	public void remove(MetaModel metaModelo, Object modelo)
+	public void remove(MetaModel metaModel, Object object)
 			throws RemoteException, RemoveException, XavaException {
-		((EJBReplicable) toPropertiesContainer(metaModelo,
-				modelo)).remove();
+		((EJBReplicable) toPropertiesContainer(metaModel,
+				object)).remove();
 	}
 
-	public void setSession(Session session) {
-		// TODO Auto-generated method stub
-
+	public void setSession(Session session) { // tmp: remove
 	}
 
 }

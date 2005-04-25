@@ -71,7 +71,7 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 		catch (Exception ex) {
 			ex.printStackTrace();
 			throw new CreateException(XavaResources.getString(
-					"create_persistent_error", ex.getMessage()));
+					"create_persistent_error", metaEjb.getName(), ex.getMessage()));
 		}
 	}
 
@@ -96,7 +96,6 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 	}
 
 	public Object find(IMetaEjb metaEntidad, Object key) throws FinderException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

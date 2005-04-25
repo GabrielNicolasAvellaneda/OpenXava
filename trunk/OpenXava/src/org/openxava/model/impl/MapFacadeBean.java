@@ -17,144 +17,139 @@ import org.openxava.validators.meta.*;
 
 
 /**
- * This is a Session Bean Class
+ * Implement the logic of MapFacade. <p>
+ * 
+ * @author Javier Paniza
  */
+
+// tmp: Falta cambiar los setRollbackOnly por algo genérico
+// tmp: Quitar IMetaEjb (si hay)
+// tmp: Quitar EJBException
+
 public class MapFacadeBean implements SessionBean {
+	
 	private javax.ejb.SessionContext mySessionCtx = null;
 	private final static long serialVersionUID = 3206093459760846163L;
 	private IPersistenceProvider persistenceProvider;
-	private Session session;
+	private Session session; // tmp: remove
 
-	/**
-	 * 
-	 * @param entidad javax.ejb.EJBObject
-	 * @param valores java.util.Map
-	 */
-	private Map convertSubmapsInObject(MetaModel metaModelo, Map valores, boolean referencesAsKey)
+	private Map convertSubmapsInObject(MetaModel metaModel, Map values, boolean referencesAsKey)
 		throws ValidationException, XavaException {		
 		Map result = new HashMap();		
-		Iterator it = valores.entrySet().iterator();				
+		Iterator it = values.entrySet().iterator();				
 		while (it.hasNext()) {
 			Map.Entry en = (Map.Entry) it.next();
-			String nombreMiembro = (String) en.getKey();
-			Object valor = null;			
-			if (metaModelo.containsMetaProperty(nombreMiembro)) {
-				valor = en.getValue();
+			String memberName = (String) en.getKey();
+			Object value = null;			
+			if (metaModel.containsMetaProperty(memberName)) {
+				value = en.getValue();
 			} else
-				if (metaModelo.containsMetaReference(nombreMiembro)) {
-					MetaReference ref = metaModelo.getMetaReference(nombreMiembro);
+				if (metaModel.containsMetaReference(memberName)) {
+					MetaReference ref = metaModel.getMetaReference(memberName);
 					if (!referencesAsKey || ref.isAggregate()) {
-						valor = mapaToObjetoReferenciado(metaModelo, nombreMiembro, (Map) en.getValue());
+						value = mapToReferencedObject(metaModel, memberName, (Map) en.getValue());
 					}
 					else {
-						MetaEntityEjb entidadReferenciada = (MetaEntityEjb) ref.getMetaModelReferenced();
-						nombreMiembro = nombreMiembro + "Key";						
-						valor = entidadReferenciada.obtainPrimaryKeyFromKey((Map) en.getValue());									
+						MetaEntityEjb referencedEntity = (MetaEntityEjb) ref.getMetaModelReferenced();
+						memberName = memberName + "Key";						
+						value = referencedEntity.obtainPrimaryKeyFromKey((Map) en.getValue());									
 					}
-				} else if (metaModelo.getMapping().hasPropertyMapping(nombreMiembro)) {  
-					valor = en.getValue();
+				} else if (metaModel.getMapping().hasPropertyMapping(memberName)) {  
+					value = en.getValue();
 				} else {
-					throw new EJBException(
-						"No se reconoce el miembro "
-							+ nombreMiembro
-							+ " en "
-							+ metaModelo.getName());
+					setRollbackOnly();
+					throw new XavaException("member_not_found", memberName, metaModel.getName());
 				}
-			result.put(nombreMiembro, valor);
+			result.put(memberName, value);
 		}
 		return result;
 	}
-	/**
-	 * 
-	 * @param valores void
-	 */
-	public Object create(String nombreModelo, Map valores)
+
+	public Object create(String modelName, Map values)
 		throws CreateException, XavaException, ValidationException {
-		MetaModel metaModelo = getMetaModel(nombreModelo);					
-		return createEjb(metaModelo, valores, null, null, 0);			
+		MetaModel metaModel = getMetaModel(modelName);					
+		return createEjb(metaModel, values, null, null, 0);			
+	}
+			
+	public Map createReturningValues(String entityName, Map values)
+			throws CreateException, XavaException, ValidationException {
+		MetaEntityEjb metaEntity = (MetaEntityEjb) MetaComponent.get(entityName).getMetaEntity();
+		Object entity = createEjb(metaEntity, values, null, null, 0);
+		return getValues(metaEntity, entity, values);
 	}
 	
+	public Map createReturningKey(String entityName, Map values)
+			throws CreateException, XavaException, ValidationException {
+		MetaEntityEjb metaEntity = (MetaEntityEjb) MetaComponent.get(entityName).getMetaEntity();
+		Object entity = createEjb(metaEntity, values, null, null, 0);
+		return getValues(metaEntity, entity, getKeyNames(metaEntity));
+	}
 		
-	public Map createReturningValues(String nombreEntidad, Map valores)
-			throws CreateException, XavaException, ValidationException {
-		MetaEntityEjb metaEntidad = (MetaEntityEjb) MetaComponent.get(nombreEntidad).getMetaEntity();
-		Object entidad = createEjb(metaEntidad, valores, null, null, 0);
-		return getValues(metaEntidad, entidad, valores);
-	}
-	
-	public Map createReturningKey(String nombreEntidad, Map valores)
-			throws CreateException, XavaException, ValidationException {
-		MetaEntityEjb metaEntidad = (MetaEntityEjb) MetaComponent.get(nombreEntidad).getMetaEntity();
-		Object entidad = createEjb(metaEntidad, valores, null, null, 0);
-		return getValues(metaEntidad, entidad, getNombresClave(metaEntidad));
-	}
-	
-	
-	public Object createAggregate(String nombreModelo, Map valoresClaveContenedor, int contador, Map valores) 
+	public Object createAggregate(String modelName, Map containerKeyValues, int counter, Map values) 
 		throws CreateException,ValidationException, XavaException 
 	{		
-		MetaModel metaModelo = getMetaModel(nombreModelo);
-		MetaModel metaModeloContenedor = metaModelo.getMetaModelContainer();
+		MetaModel metaModel = getMetaModel(modelName);
+		MetaModel metaModelContainer = metaModel.getMetaModelContainer();
 		try {					
-			Object claveContenedor = ((IMetaEjb) metaModeloContenedor).obtainPrimaryKeyFromKey(valoresClaveContenedor);
-			return crearAgregado(metaModelo, claveContenedor, contador, valores);
+			Object containerKey = ((IMetaEjb) metaModelContainer).obtainPrimaryKeyFromKey(containerKeyValues);
+			return createAggregate(metaModel, containerKey, counter, values);
 		}
 		catch (ClassCastException ex) {
-			throw new XavaException(metaModeloContenedor.getName() + " ha de estar implementado como un EJB (y no como un bean) para poder crearlo con FachadaMapa.crearAgregado");					
+			throw new XavaException("aggregate_must_be_persistent_for_create", metaModelContainer.getName());					
 		}
 	}
 	
-	public Object createAggregate(String nombreModelo, Object contenedor, int contador, Map valores) 
+	public Object createAggregate(String modelName, Object container, int counter, Map values) 
 		throws CreateException,ValidationException, XavaException
 	{		
-		MetaModel metaModelo = getMetaModel(nombreModelo);		
-		return crearAgregado(metaModelo, contenedor, contador, valores);
+		MetaModel metaModel = getMetaModel(modelName);		
+		return createAggregate(metaModel, container, counter, values);
 	}
 	
-	public Map createAggregateReturningKey(String nombreModelo, Map valoresClaveContenedor, int contador, Map valores) 
+	public Map createAggregateReturningKey(String modelName, Map containerKeyValues, int counter, Map values) 
 		throws CreateException,ValidationException, XavaException 
 	{		
-		MetaModel metaModelo = getMetaModel(nombreModelo);
-		MetaModel metaModeloContenedor = metaModelo.getMetaModelContainer();
+		MetaModel metaModel = getMetaModel(modelName);
+		MetaModel metaModelContainer = metaModel.getMetaModelContainer();
 		try {					
-			Object claveContenedor = ((IMetaEjb) metaModeloContenedor).obtainPrimaryKeyFromKey(valoresClaveContenedor);
-			Object agregado = crearAgregado(metaModelo, claveContenedor, contador, valores);						
-			return getValues(metaModelo, agregado, getNombresClave(metaModelo));			
+			Object containerKey = ((IMetaEjb) metaModelContainer).obtainPrimaryKeyFromKey(containerKeyValues);
+			Object aggregate = createAggregate(metaModel, containerKey, counter, values);						
+			return getValues(metaModel, aggregate, getKeyNames(metaModel));			
 		}
 		catch (ClassCastException ex) {
-			throw new XavaException(metaModeloContenedor.getName() + " ha de estar implementado como un EJB (y no como un bean) para poder crearlo con FachadaMapa.crearAgregado");					
+			throw new XavaException("aggregate_must_be_persistent_for_create", metaModelContainer.getName());					
 		}
 	}
 	
 	
-	private Map getNombresClave(MetaModel metaModelo) throws XavaException {
-		Iterator itPropiedades = metaModelo.getKeyPropertiesNames().iterator();
-		Map nombres = new HashMap();
-		while (itPropiedades.hasNext()) {
-			nombres.put(itPropiedades.next(), null);
+	private Map getKeyNames(MetaModel metaModel) throws XavaException {
+		Iterator itProperties = metaModel.getKeyPropertiesNames().iterator();
+		Map names = new HashMap();
+		while (itProperties.hasNext()) {
+			names.put(itProperties.next(), null);
 		}
-		Iterator itReferencias = metaModelo.getMetaReferencesKey().iterator();
-		while (itReferencias.hasNext()) {
-			MetaReference ref = (MetaReference) itReferencias.next();
-			nombres.put(ref.getName(), getNombresClave(ref.getMetaModelReferenced()));
+		Iterator itReferences = metaModel.getMetaReferencesKey().iterator();
+		while (itReferences.hasNext()) {
+			MetaReference ref = (MetaReference) itReferences.next();
+			names.put(ref.getName(), getKeyNames(ref.getMetaModelReferenced()));
 		}		
-		return nombres;
+		return names;
 	}
 	
-	private Object crearAgregado(MetaModel metaModelo, Object contenedor, int contador, Map valores) 
+	private Object createAggregate(MetaModel metaModel, Object container, int counter, Map values) 
 		throws CreateException,ValidationException, XavaException 
 	{				
-		MetaModel metaModeloContenedor = metaModelo.getMetaModelContainer();								
-		int intentos = 0;
-		// Un bucle con 10 intentos, por si el contador está repetido, por haber borrado
+		MetaModel metaModelContainer = metaModel.getMetaModelContainer();								
+		int attempts = 0;
+		// Loop with 10 attempts, because the counter can be repeated because deleted objects
 		do {				 
 			try {
-				return createEjb(metaModelo, valores, metaModeloContenedor, contenedor, contador);
+				return createEjb(metaModel, values, metaModelContainer, container, counter);
 			}
 			catch (DuplicateKeyException ex) {
-				if (intentos > 10) throw ex;
-				contador++;
-				intentos++;
+				if (attempts > 10) throw ex;
+				counter++;
+				attempts++;
 			}				
 		}
 		while (true);			
@@ -163,140 +158,92 @@ public class MapFacadeBean implements SessionBean {
 	
 
 	/**
-	 * Permite crear <i>EntityBeans</i> independientes o agregadas a otros
-	 * <i>EntityBeans</i>. <p>
+	 * Allows create independent entities or aggregates to another entities. <p>
+	 *
+	 * If the argument <tt>metaModelContainer</tt> is null it assume
+	 * a independent entity else a aggregate.<p>
 	 * 
-	 * Una entidad independiente requiere un <i>home</i> con un
-	 * método <tt>create(Map valoresIniciales)</tt>, mientras que una entidad agregada
-	 * requiere un <i>home</i> con un método 
-	 * <tt>create(Object entidadContenedora, int numeroSecuencia, Map valoresIniciales)</tt>. <p>
-	 * 
-	 * Si el argumento <tt>metaEntidadContenedora</tt> es nulo se tomará
-	 * por una entidad independiente, en caso contrarío por una agregada.<p>
-	 * 
-	 * 
-	 * @param metaEjb  de la entidad o agregado a crear. Ha de implementar IMetaEjb
-	 * @param valores a asignar a la entidad a crear.
-	 * @param metaEntidadContenedora  Solo si la entidad a crear es un agregado. Sería
-	 *                                la metaentidad de la entidad contenedora.
-	 * @param entidadContenedora Solo si la entidad a crear es un agregado. Sería
-	 *                                la entidad contenedora.
-	 * @param numero Solo si la entidad a crear es un agregado. Es un número de secuencia.
-	 * @return La entidad creada.
+	 * @param metaModel  of entity or aggregate to create. It must to implement IMetaEjb
+	 * @param values  to assign to entity to create.
+	 * @param metaModelContainer  Only if the object is a aggregate. It's the MetaModel of container model.
+	 * @param containerModel Only if object to create is a aggregate.
+	 * @param number  Only if object to create is a aggregate. It's a secuential number.
+	 * @return The created entity.
 	 */
 	private Object createEjb(
-		MetaModel metaEjb,
-		Map valores,
-		MetaModel metaModeloContenedor,
+		MetaModel metaModel,
+		Map values,
+		MetaModel metaModelContainer,
 		Object containerKey,
-		int numero)
+		int number)
 		throws CreateException, ValidationException, XavaException {						
 		try {
-			if (!(metaEjb instanceof IMetaEjb)) {
+			if (!(metaModel instanceof IMetaEjb)) {
 				throw new IllegalArgumentException(XavaResources.getString("argument_type_error", "metaEjb", "MapFacadeBean.createEjb", "IMetaEjb"));
 			}
-			//quitarCamposSoloLectura(metaEjb, valores); // no quitamos los de solo lectura porque puede que se necesiten inicializar al crear
-			quitarCamposCalculados(metaEjb, valores); 			
-			Messages erroresValidacion = new Messages(); 
-			validarExistenRequeridos(erroresValidacion, metaEjb, valores);
-			Map colecciones = extractCollections(metaEjb, valores);			
-			validar(erroresValidacion, metaEjb, valores, null, containerKey);
-			removeViewProperties(metaEjb, valores); 
-			if (erroresValidacion.contains()) {
-				throw new ValidationException(erroresValidacion);			
+			//removeReadOnlyFields(metaEjb, values); // not remove the read only fields because it maybe needed initialized on create
+			removeCalculatedFields(metaModel, values); 			
+			Messages validationErrors = new Messages(); 
+			validateExistRequired(validationErrors, metaModel, values);
+			Map collections = extractCollections(metaModel, values);			
+			validate(validationErrors, metaModel, values, null, containerKey);
+			removeViewProperties(metaModel, values); 
+			if (validationErrors.contains()) {
+				throw new ValidationException(validationErrors);			
 			}
-			Map valoresConvertidos = convertSubmapsInObject(metaEjb, valores, true);
-			Object entidadNueva = null;
-			if (metaModeloContenedor == null) {
-				// tmp 
-				entidadNueva = getPersistenceProvider().create((IMetaEjb)metaEjb, valoresConvertidos);
+			Map convertedValues = convertSubmapsInObject(metaModel, values, true);
+			Object newObject = null;
+			if (metaModelContainer == null) {
+				newObject = getPersistenceProvider().create((IMetaEjb)metaModel, convertedValues);
 			} else {				
-				entidadNueva =
+				newObject =
 					executeEJBCreate(
-						(IMetaEjb) metaEjb,
-						valoresConvertidos,
-						metaModeloContenedor,
+						(IMetaEjb) metaModel,
+						convertedValues,
+						metaModelContainer,
 						containerKey,
-						numero);
+						number);
 			}			
 
-			if (colecciones != null) {
-				añadirColecciones(metaEjb, entidadNueva, colecciones);
+			if (collections != null) {
+				addCollections(metaModel, newObject, collections);
 			}
-			return entidadNueva;
+			return newObject;
 		} catch (ValidationException ex) {
 			throw ex;
 		} catch (DuplicateKeyException ex) {
 			ex.printStackTrace();
 			throw new DuplicateKeyException(
-				"Imposible crear una nueva entidad de tipo "
-					+ metaEjb.getName()
-					+ " porque ya existe un objeto con esa clave");				
+				XavaResources.getString("no_create_exists", metaModel.getName()));	
 		} catch (CreateException ex) {
 			ex.printStackTrace();
-			throw new CreateException(
-				"Imposible crear una nueva entidad de tipo "
-					+ metaEjb.getName()
-					+ " por:\n"
-					+ ex.getLocalizedMessage());
-		} catch (RemoteException ex) {
+			throw new CreateException(XavaResources.getString("create_error", metaModel.getName()));		} catch (RemoteException ex) {
 			ex.printStackTrace();
-			throw new EJBException(
-				"Imposible crear una nueva entidad de tipo "
-					+ metaEjb.getName()
-					+ " por:\n"
-					+ ex.getLocalizedMessage());
+			throw new EJBException(XavaResources.getString("create_error", metaModel.getName()));
 		} catch (XavaException ex) {
 			setRollbackOnly();
 			ex.printStackTrace();
-			throw new XavaException(
-				"Imposible crear una nueva entidad de tipo "
-					+ metaEjb.getName()
-					+ " por:\n"
-					+ ex.getLocalizedMessage());
+			throw new XavaException("create_error", metaModel.getName());
 		}
 	}
 
-
-	/* tmp protected Object createPersistentObject(IMetaEjb metaEjb, Map valores)
-		throws CreateException, ValidationException, XavaException {
-		try {
-			return EJBFactory.create(metaEjb.obtainHome(), metaEjb.getHomeClass(), valores);		
-		} 
-		catch (NoSuchMethodException ex) {
-			ex.printStackTrace();
-			throw new XavaException(
-				"Es obligado que el bean "
-					+ metaEjb.getJndi()
-					+ " tenga un constructor create(Map )");
-		} 
-		catch (ValidationException ex) {
-			throw ex;
-		} 
-		catch (RemoteException ex) {
-			ex.printStackTrace();
-			throw new EJBException(XavaResources.getString("create_persistent_error", ex.getLocalizedMessage()));
-		}
-	} */
-
-
-	protected Object executeEJBCreate(
+	private Object executeEJBCreate(
 		IMetaEjb metaEjb,
-		Map valores,
-		MetaModel metaModeloContenedor,
-		Object modeloContenedor, // puede ser la clave
-		int numero)
+		Map values,
+		MetaModel metaModelContainer,
+		Object containerModel, // can be key
+		int number)
 		throws CreateException, ValidationException, RemoteException, XavaException {
-		Class claseDeContenedor = modeloContenedor.getClass();
+		Class containerClass = containerModel.getClass();
 		try {
-			IMetaEjb contenedorEjb = (IMetaEjb) metaModeloContenedor; 
-			if (!claseDeContenedor.equals(contenedorEjb.getPrimaryKeyClass())) {
-				claseDeContenedor = contenedorEjb.getRemoteClass();
+			IMetaEjb ejbContainer = (IMetaEjb) metaModelContainer; 
+			if (!containerClass.equals(ejbContainer.getPrimaryKeyClass())) {
+				containerClass = ejbContainer.getRemoteClass();
 			}									 
-			Class claseHomeAgregado = metaEjb.getHomeClass();
-			Class[] argClass = { claseDeContenedor, int.class, java.util.Map.class };
-			Method m = claseHomeAgregado.getDeclaredMethod("create", argClass);
-			Object[] args = { modeloContenedor, new Integer(numero), valores };
+			Class aggregateHomeClass = metaEjb.getHomeClass();
+			Class[] argClass = { containerClass, int.class, java.util.Map.class };
+			Method m = aggregateHomeClass.getDeclaredMethod("create", argClass);
+			Object[] args = { containerModel, new Integer(number), values };
 			return m.invoke(metaEjb.obtainHome(), args);
 		} catch (InvocationTargetException ex) {
 			Throwable th = ex.getTargetException();
@@ -312,191 +259,179 @@ public class MapFacadeBean implements SessionBean {
 				throw new RemoteException(ex2.getLocalizedMessage(), ex2);
 			}
 		} catch (NoSuchMethodException ex) {
-			throw new XavaException(
-				"Es obligado que el bean "
-					+ metaEjb.getJndi()
-					+ " tenga un constructor "
-					+ "create("
-					+ claseDeContenedor
-					+ "  , int , Map )");
+			throw new XavaException("ejb_create_map3_required", metaEjb.getJndi(), containerClass);  
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			throw new RemoteException(
-				"Imposible crear un nuevo "
-					+ metaEjb.getJndi()
-					+ " por:\n"
-					+ ex.getLocalizedMessage());
+			throw new RemoteException(XavaResources.getString("create_error", metaEjb.getJndi()));				
 		}
 	}
 
 
 	/**
-	 * @param valores Se modifica.
-	 * @return Nulo si no hay ninguna.
+	 * @param values  is modified
+	 * @return Nulo  If nothing
 	 */
-	private Map extractCollections(MetaModel metaModelo, Map valores)
+	private Map extractCollections(MetaModel metaModel, Map values)
 		throws XavaException {
-		Iterator it = metaModelo.getColectionsNames().iterator();
+		Iterator it = metaModel.getColectionsNames().iterator();
 		Map result = new HashMap();
 		while (it.hasNext()) {
-			Object nombre = it.next();
-			if (valores.containsKey(nombre)) {
-				result.put(nombre, valores.get(nombre));
-				valores.remove(nombre);
+			Object name = it.next();
+			if (values.containsKey(name)) {
+				result.put(name, values.get(name));
+				values.remove(name);
 			}
 		}
 		return result.size() == 0 ? null : result;
 	}
 
 
-	private void añadirColecciones(
-		MetaModel metaModelo,
-		Object modelo,
-		Map colecciones)
+	private void addCollections(
+		MetaModel metaModel,
+		Object modelObject,
+		Map collections)
 		throws ValidationException, XavaException {
-		Iterator it = colecciones.entrySet().iterator();
-		Messages errores = new Messages();
+		Iterator it = collections.entrySet().iterator();
+		Messages errors = new Messages();
 		while (it.hasNext()) {
 			Map.Entry e = (Map.Entry) it.next();
-			String nombreMiembro = (String) e.getKey();
-			Collection coleccion = null;
+			String memberName = (String) e.getKey();
+			Collection collection = null;
 			try {				
-				coleccion = (Collection) e.getValue();
+				collection = (Collection) e.getValue();
 			}
 			catch (ClassCastException ex) {
-				throw new XavaException("collection_type_required", nombreMiembro, metaModelo.getName(), e.getValue().getClass().getName());
+				throw new XavaException("collection_type_required", memberName, metaModel.getName(), e.getValue().getClass().getName());
 			}
 			
-			añadirColeccion(errores, metaModelo, modelo, nombreMiembro, coleccion);
+			addCollection(errors, metaModel, modelObject, memberName, collection);
 			
-			if (errores.contains()) {
+			if (errors.contains()) {
 				setRollbackOnly();
-				throw new ValidationException(errores);
+				throw new ValidationException(errors);
 			}
 		}
 	}
 
 
 	private void modifyCollections(
-		MetaModel metaModelo,
-		Object entidad,
-		Map colecciones)
+		MetaModel metaModel,
+		Object modelObject,
+		Map collections)
 		throws ValidationException, XavaException {		
-		Iterator it = colecciones.entrySet().iterator();
-		Messages errores = new Messages();
+		Iterator it = collections.entrySet().iterator();
+		Messages errors = new Messages();
 		while (it.hasNext()) {
 			Map.Entry e = (Map.Entry) it.next();
-			String nombreMiembro = (String) e.getKey();
-			Collection coleccion = null;
+			String memberName = (String) e.getKey();
+			Collection collection = null;
 			try {
-				coleccion = (Collection) e.getValue();				
+				collection = (Collection) e.getValue();				
 			}
 			catch (ClassCastException ex) {
-				throw new XavaException("collection_type_required", nombreMiembro, metaModelo.getName(), e.getValue().getClass().getName());
+				throw new XavaException("collection_type_required", memberName, metaModel.getName(), e.getValue().getClass().getName());
 			}
-			modificarColeccion(errores, metaModelo, entidad, nombreMiembro, coleccion);
+			modifyCollection(errors, metaModel, modelObject, memberName, collection);
 		}
-		if (errores.contains()) {
+		if (errors.contains()) {
 			setRollbackOnly();
-			throw new ValidationException(errores);		
+			throw new ValidationException(errors);		
 		}		
 	} 
 
 
-	private void modificarColeccion(
-		Messages errores,
-		MetaModel metaModelo,
-		Object entidad,
-		String nombreMiembro,
-		Collection coleccion)
+	private void modifyCollection(
+		Messages errors,
+		MetaModel metaModel,
+		Object modelObject,
+		String memberName,
+		Collection collection)
 		throws XavaException {		
 		try {
-			// Lo siguiente no es la opción más eficiente
-			refrescarColeccion(metaModelo, entidad, nombreMiembro, coleccion);
-			borrarColeccion(metaModelo, entidad, nombreMiembro); 
-			añadirColeccion(errores, metaModelo, entidad, nombreMiembro, coleccion);
+			// The next is not the most efficient option
+			refreshCollection(metaModel, modelObject, memberName, collection);
+			removeCollection(metaModel, modelObject, memberName); 
+			addCollection(errors, metaModel, modelObject, memberName, collection);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			throw new XavaException("assign_collection_error", nombreMiembro, metaModelo.getName(), ex.getLocalizedMessage());
+			throw new XavaException("assign_collection_error", memberName, metaModel.getName(), ex.getLocalizedMessage());
 		}		
 	}
 
-
-	private void borrarColeccion(
-		MetaModel metaModelo,
-		Object entidad,
-		MetaCollection metaColeccion)
+	private void removeCollection(
+		MetaModel metaModel,
+		Object modelObject,
+		MetaCollection metaCollection)
 		throws XavaException {
 		try {
-			if (metaColeccion.isAggregate()) {
-				borrarColeccionAgregados(metaModelo, entidad, metaColeccion);
+			if (metaCollection.isAggregate()) {
+				removeAggregateCollection(metaModel, modelObject, metaCollection);
 			} else {
-				borrarColeccionEntidades(metaModelo, entidad, metaColeccion);
+				removeEntityCollection(metaModel, modelObject, metaCollection);
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			throw new XavaException("remove_collection_error", metaColeccion.getName(), metaModelo.getName(), ex.getLocalizedMessage());
+			throw new XavaException("remove_collection_error", metaCollection.getName(), metaModel.getName(), ex.getLocalizedMessage());
 		}
 	}
 
-
-	private void borrarColeccion(
-		MetaModel metaModelo,
-		Object entidad,
-		String nombreMiembro)
+	private void removeCollection(
+		MetaModel metaModel,
+		Object modelObject,
+		String memberName)
 		throws XavaException {
-		borrarColeccion(metaModelo, entidad, metaModelo.getMetaCollection(nombreMiembro));
+		removeCollection(metaModel, modelObject, metaModel.getMetaCollection(memberName));
 	}
 
 
-	private void borrarColeccionEntidades(
-		MetaModel metaModelo,
-		Object entidad,
-		MetaCollection metaColeccion)
+	private void removeEntityCollection(
+		MetaModel metaModel,
+		Object modelObject,
+		MetaCollection metaCollection)
 		throws XavaException {
-		Object existentes =
-			ejecutarGetXX(metaModelo, entidad, metaColeccion.getName());
-		if (existentes instanceof Enumeration) {
-			Enumeration e = (Enumeration) existentes;
+		Object existing =
+			executeGetXX(metaModel, modelObject, metaCollection.getName());
+		if (existing instanceof Enumeration) {
+			Enumeration e = (Enumeration) existing;
 			while (e.hasMoreElements()) {
-				Object entidadAsociada = e.nextElement();
-				ejecutarRemoveXX(metaModelo, entidad, metaColeccion, entidadAsociada);
+				Object associatedEntity = e.nextElement();
+				executeRemoveXX(metaModel, modelObject, metaCollection, associatedEntity);
 			}
 		}
-		else if (existentes instanceof Collection){
-			Iterator it = ((Collection) existentes).iterator();
+		else if (existing instanceof Collection){
+			Iterator it = ((Collection) existing).iterator();
 			while (it.hasNext()) {
-				Object entidadAsociada = it.next();
-				ejecutarRemoveXX(metaModelo, entidad, metaColeccion, entidadAsociada);
+				Object associatedEntity = it.next();
+				executeRemoveXX(metaModel, modelObject, metaCollection, associatedEntity);
 			}			
 		}
 		else {
-			throw new XavaException("collection_type_not_supported", existentes.getClass());
+			throw new XavaException("collection_type_not_supported", existing.getClass());
 		}
 	}
 
 
-	private void borrarColeccionAgregados(
-		MetaModel metaModelo,
-		Object entidad,
-		MetaCollection metaColeccion)
+	private void removeAggregateCollection(
+		MetaModel metaModel,
+		Object modelObject,
+		MetaCollection metaCollection)
 		throws XavaException, FinderException, ValidationException, RemoveException, RemoteException {
 		Enumeration enum = null;	
-		Object existentes =
-			ejecutarGetXX(metaModelo, entidad, metaColeccion.getName());								
-		if (existentes instanceof Enumeration) {
-			enum = (Enumeration) existentes;
+		Object existing =
+			executeGetXX(metaModel, modelObject, metaCollection.getName());								
+		if (existing instanceof Enumeration) {
+			enum = (Enumeration) existing;
 		}
-		else if (existentes instanceof Collection) {
-			enum = Collections.enumeration((Collection) existentes);
+		else if (existing instanceof Collection) {
+			enum = Collections.enumeration((Collection) existing);
 		}
 		else {
 			throw new XavaException("collection_type_not_supported");
 		}									
-		MetaModel metaModeloAgregado = metaColeccion.getMetaReference().getMetaModelReferenced();
+		MetaModel metaModelAggregate = metaCollection.getMetaReference().getMetaModelReferenced();
 		while (enum.hasMoreElements()) {
 			try {		
-				borrar(metaModeloAgregado, enum.nextElement());
+				remove(metaModelAggregate, enum.nextElement());
 			}
 			catch (ValidationException ex) {
 				setRollbackOnly();
@@ -505,158 +440,146 @@ public class MapFacadeBean implements SessionBean {
 		}
 	}
 
-
-	private void borrarTodasColeccionesAgregados(
-		MetaModel metaModelo,
-		Object entidad)
+	private void removeAllAggregateCollections(
+		MetaModel metaModel,
+		Object modelObject)
 		throws Exception {
 
-
 		Iterator it =
-			metaModelo.getMetaCollectionsAgregate().iterator();
+			metaModel.getMetaCollectionsAgregate().iterator();
 		while (it.hasNext()) {
-			MetaCollection metaColeccion = (MetaCollection) it.next();
-			borrarColeccionAgregados(metaModelo, entidad, metaColeccion);
+			MetaCollection metaCollection = (MetaCollection) it.next();
+			removeAggregateCollection(metaModel, modelObject, metaCollection);
 		}
 	}
 
 
-	private void añadirColeccion(
-		Messages errores,
-		MetaModel metaModelo,
-		Object modelo,
-		String nombreMiembro,
-		Collection coleccion)
+	private void addCollection(
+		Messages errors,
+		MetaModel metaModel,
+		Object model,
+		String memberName,
+		Collection collection)
 		throws XavaException {
-		añadirColeccion(
-			errores,
-			metaModelo,
-			modelo,
-			metaModelo.getMetaCollection(nombreMiembro),
-			coleccion);
+		addCollection(
+			errors,
+			metaModel,
+			model,
+			metaModel.getMetaCollection(memberName),
+			collection);
 	}
 
 
-	private void añadirColeccion(
-		Messages errores,
-		MetaModel metaModelo,
-		Object modelo,
-		MetaCollection metaColeccion,
-		Collection coleccion)
+	private void addCollection(
+		Messages errors,
+		MetaModel metaModel,
+		Object model,
+		MetaCollection metaCollection,
+		Collection collection)
 		throws XavaException {
 		try {						
-			metaColeccion.validate(errores, coleccion, null, null);
-			MetaReference metaReferencia = metaColeccion.getMetaReference();
-			if (metaReferencia.isAggregate()) {
-				añadirColeccionAgregados(					
-					metaModelo,
-					modelo,
-					metaColeccion,
-					coleccion);
-			} else { // Entidad normal
-				añadirColeccionEntidades(metaModelo, modelo, metaColeccion, coleccion);
+			metaCollection.validate(errors, collection, null, null);
+			MetaReference metaReference = metaCollection.getMetaReference();
+			if (metaReference.isAggregate()) {
+				addAggregateCollection(					
+					metaModel,
+					model,
+					metaCollection,
+					collection);
+			} else { // Normal entity
+				addEntityCollection(metaModel, model, metaCollection, collection);
 			}
 		}
 		catch (ValidationException ex) {
-			errores.add(ex.getErrors());
+			errors.add(ex.getErrors());
 		} 
 		catch (Exception ex) {
 			ex.printStackTrace();
 			throw new XavaException("add_to_collection_error",
-					metaColeccion.getName(),
-					metaModelo.getName(),
+					metaCollection.getName(),
+					metaModel.getName(),
 					ex.getLocalizedMessage());
 		}
 	}
 	
-	private void refrescarColeccion(		
-		MetaModel metaModelo,
-		Object modelo,
-		String nombreMiembro,
-		Collection coleccion)
+	private void refreshCollection(		
+		MetaModel metaModel,
+		Object modelObject,
+		String memberName,
+		Collection collection)
 		throws XavaException {
 		try {									
-			MetaCollection metaColeccion = metaModelo.getMetaCollection(nombreMiembro);
-			MetaReference metaReferencia = metaColeccion.getMetaReference();
-			if (metaReferencia.isAggregate()) {
-				refrescarColeccionAgregados(					
-					metaModelo,
-					modelo,
-					metaColeccion,
-					coleccion);
+			MetaCollection metaCollection = metaModel.getMetaCollection(memberName);
+			MetaReference metaReference = metaCollection.getMetaReference();
+			if (metaReference.isAggregate()) {
+				refreshAggregateCollection(					
+					metaModel,
+					modelObject,
+					metaCollection,
+					collection);
 			}
 		} 
 		catch (Exception ex) {
 			ex.printStackTrace();
-			throw new XavaException(
-				"Imposible refrescar elementos de la colección "
-					+ nombreMiembro
-					+ " a "
-					+ metaModelo.getName()
-					+ " por:\n"
-					+ ex.getLocalizedMessage());
+			throw new XavaException("refresh_error", memberName, metaModel.getName());
 		}
 	}
 	
 
 
-	private void añadirColeccionAgregados(
-		MetaModel metaModelo,
-		Object modelo,
-		MetaCollection metaColeccion,
-		Collection coleccion)
+	private void addAggregateCollection(
+		MetaModel metaModel,
+		Object modelObject,
+		MetaCollection metaCollection,
+		Collection collection)
 		throws
 			XavaException,
 			CreateException,
 			RemoteException,
 			FinderException,
 			ValidationException {
-	//tmp	Object entidadMoldeada = narrowEntidad(metaModelo, modelo);
-		Object entidadMoldeada = getPersistenceProvider().toPropertiesContainer(metaModelo, modelo);
-		MetaAggregateEjb metaAgregadoEjb = (MetaAggregateEjb) metaColeccion.getMetaReference().getMetaModelReferenced();
-		if (coleccion == null) coleccion = Collections.EMPTY_LIST;
-		Iterator it = coleccion.iterator();
-		int numero = 0;
+		Object object = getPersistenceProvider().toPropertiesContainer(metaModel, modelObject);
+		MetaAggregateEjb metaAgregadoEjb = (MetaAggregateEjb) metaCollection.getMetaReference().getMetaModelReferenced();
+		if (collection == null) collection = Collections.EMPTY_LIST;
+		Iterator it = collection.iterator();
+		int number = 0;
 		while (it.hasNext()) {
-			Map valores = (Map) it.next();
-			Object entidadAgregada =
-				crearAgregadoEjb(
-					metaModelo,
-					entidadMoldeada,
+			Map values = (Map) it.next();
+			Object aggregateEntity =
+				createAggregateEjb(
+					metaModel,
+					object,
 					metaAgregadoEjb,
-					valores,
-					numero++);
-			// Al crear el agregado ya enviamos el contenedor por lo que ya nace
-			// agregado y no es necesario (ni posible) hacer un add explicito		
-			//ejecutarAddXX(metaModelo, entidadMoldeada, metaColeccion, entidadAgregada);
+					values,
+					number++);
 		}
 	}
 	
-	private void refrescarColeccionAgregados( 
-		MetaModel metaModelo,
-		Object modelo,
-		MetaCollection metaColeccion,
-		Collection coleccion)
+	private void refreshAggregateCollection( 
+		MetaModel metaModel,
+		Object modelObject,
+		MetaCollection metaCollection,
+		Collection collection)
 		throws
 			XavaException,
 			CreateException,
 			RemoteException,
 			FinderException {
-		if (coleccion == null) return;		
-		Object entidadMoldeada = getPersistenceProvider().toPropertiesContainer(metaModelo, modelo);
-		MetaAggregateEjb metaAgregadoEjb = (MetaAggregateEjb) metaColeccion.getMetaReference().getMetaModelReferenced();
+		if (collection == null) return;		
+		Object object = getPersistenceProvider().toPropertiesContainer(metaModel, modelObject);
+		MetaAggregateEjb metaAgregadoEjb = (MetaAggregateEjb) metaCollection.getMetaReference().getMetaModelReferenced();
 		
-		Iterator it = coleccion.iterator();
-		int numero = 0;
-		String nombreModeloAgregado = metaModelo.getName() + "." + metaAgregadoEjb.getName(); 
+		Iterator it = collection.iterator();
+		int number = 0;
+		String aggregateModelName = metaModel.getName() + "." + metaAgregadoEjb.getName(); 
 		while (it.hasNext()) {
-			Map valores = (Map) it.next();						
+			Map values = (Map) it.next();						
 			try {							
-				Map valoresViejos = getValues(nombreModeloAgregado, valores, getNombresMiembros(metaAgregadoEjb)); 
-				Map valoresNuevos = new HashMap(valores);
-				valores.clear();
-				valores.putAll(valoresViejos);
-				valores.putAll(valoresNuevos);				
+				Map oldValues = getValues(aggregateModelName, values, getMemberNames(metaAgregadoEjb)); 
+				Map newValues = new HashMap(values);
+				values.clear();
+				values.putAll(oldValues);
+				values.putAll(newValues);				
 			}
 			catch (FinderException ex) {
 			}
@@ -664,103 +587,70 @@ public class MapFacadeBean implements SessionBean {
 	}
 	
 
-	private Object crearAgregadoEjb(
-		MetaModel metaModeloPrincipal,
-		Object modeloPrincipal,
-		MetaAggregateEjb metaAgregadoEjb,
-		Map valores,
-		int numero)
+	private Object createAggregateEjb(
+		MetaModel metaModelMain,
+		Object mainModel,
+		MetaAggregateEjb metaAggregateEjb,
+		Map values,
+		int number)
 		throws CreateException, ValidationException, RemoteException, XavaException {
 		return createEjb(
-			metaAgregadoEjb,
-			valores,
-			metaModeloPrincipal,
-			modeloPrincipal,
-			numero);
+			metaAggregateEjb,
+			values,
+			metaModelMain,
+			mainModel,
+			number);
 	}
 
 
-	private void añadirColeccionEntidades(
-		MetaModel metaModelo,
-		Object modelo,
-		MetaCollection metaColeccion,
-		Collection coleccion)
+	private void addEntityCollection(
+		MetaModel metaModel,
+		Object modelObject,
+		MetaCollection metaCollection,
+		Collection collection)
 		throws XavaException, FinderException {
-		Object entidadMoldeada = getPersistenceProvider().toPropertiesContainer(metaModelo, modelo);
-		MetaEntity metaEntidadReferenciado =
-			(MetaEntity) metaColeccion.getMetaReference().getMetaModelReferenced();
-		Iterator it = coleccion.iterator();
+		Object object = getPersistenceProvider().toPropertiesContainer(metaModel, modelObject);
+		MetaEntity metaEntityReferenced =
+			(MetaEntity) metaCollection.getMetaReference().getMetaModelReferenced();
+		Iterator it = collection.iterator();
 		while (it.hasNext()) {
-			Map valores = (Map) it.next();
-			Object entidadAsociada =
-				buscarEntidadAsociada(metaEntidadReferenciado, valores);
-			ejecutarAddXX(metaModelo, entidadMoldeada, metaColeccion, entidadAsociada);
+			Map values = (Map) it.next();
+			Object associatedEntity =
+				findAssociatedEntity(metaEntityReferenced, values);
+			executeAddXX(metaModel, object, metaCollection, associatedEntity);
 		}
 	}
 
 
-	/**
-	 * ejbActivate method comment
-	 * @exception java.rmi.RemoteException La descripción de excepción.
-	 */
 	public void ejbActivate() throws java.rmi.RemoteException {
 	}
-	/**
-	 * ejbCreate method comment
-	 * @exception javax.ejb.CreateException La descripción de excepción.
-	 * @exception java.rmi.RemoteException La descripción de excepción.
-	 */
 	public void ejbCreate()
 		throws javax.ejb.CreateException, java.rmi.RemoteException {
 	}
-	/**
-	 * ejbPassivate method comment
-	 * @exception java.rmi.RemoteException La descripción de excepción.
-	 */
 	public void ejbPassivate() throws java.rmi.RemoteException {
 	}
-	/**
-	 * ejbRemove method comment
-	 * @exception java.rmi.RemoteException La descripción de excepción.
-	 */
 	public void ejbRemove() throws java.rmi.RemoteException {
 	}
 
-
-	/**
-	 * Fecha de creación: (31/07/2001 11:25:15)
-	 */
-	private Object getObjetoReferenciado(Object contenedor, String nombreMiembro) {
+	private Object getReferencedObject(Object container, String memberName) {
 		try {
 			PropertiesManager man =
-				new PropertiesManager(contenedor);
-			Object result = man.executeGet(nombreMiembro);
+				new PropertiesManager(container);
+			Object result = man.executeGet(memberName);
 			return result;
 		} catch (PropertiesManagerException ex) {
 			ex.printStackTrace();
-			throw new EJBException(
-				"Imposible obtener el valor de la propiedad "
-					+ nombreMiembro
-					+ " por:\n"
-					+ ex.getLocalizedMessage());
+			throw new EJBException(XavaResources.getString("get_property_error", memberName));
 		} catch (InvocationTargetException ex) {
 			Throwable th = ex.getTargetException();
 			th.printStackTrace();
-			throw new EJBException(
-				"Imposible obtener el valor de la propiedad "
-					+ nombreMiembro
-					+ " por:\n"
-					+ th.getLocalizedMessage());
+			throw new EJBException(XavaResources.getString("get_property_error", memberName));
 		}
 	}
-	/**
-	 * getSessionContext method comment
-	 * @return javax.ejb.SessionContext
-	 */
+
 	public javax.ejb.SessionContext getSessionContext() {
 		return mySessionCtx;
 	}
-
 
 	public Map getValues(
 		String modelName,
@@ -778,150 +668,124 @@ public class MapFacadeBean implements SessionBean {
 		} catch (XavaException ex) {
 			setRollbackOnly();
 			ex.printStackTrace();
-			throw new XavaException(
-				"Imposible obtener valores de "
-					+ modelName
-					+ " por:\n"
-					+ ex.getLocalizedMessage());
+			throw new XavaException("get_values_error", modelName);
 		}
 	}
 	
-	private Map getValores( 
-		MetaModel metaModelo,
-		Map valoresClave,
-		Map nombreMiembros)
+	private Map getValues( 
+		MetaModel metaModel,
+		Map keyValues,
+		Map memberNames)
 		throws FinderException, XavaException { 
 		try {									 
 			Map result =
 				getValues(
-					metaModelo,
-					findEntity((IMetaEjb)metaModelo, valoresClave),
-					nombreMiembros);			
+					metaModel,
+					findEntity((IMetaEjb)metaModel, keyValues),
+					memberNames);			
 			return result;
 		} catch (XavaException ex) {
 			setRollbackOnly();
 			ex.printStackTrace();
-			throw new XavaException(
-				"Imposible obtener valores de "
-					+ metaModelo.getName()
-					+ " por:\n"
-					+ ex.getLocalizedMessage());
+			throw new XavaException("get_values_error", metaModel.getName());
 		}
 	}
 	
-
-	/** 
-	 * @param nombreModelo Puede ser un agregado si lo cualificamos	  
-	 */
-	private MetaModel getMetaModel(String nombreModelo) throws XavaException { 
-		int idx = nombreModelo.indexOf('.');			
+	private MetaModel getMetaModel(String modelName) throws XavaException { 
+		int idx = modelName.indexOf('.');			
 		if (idx < 0) {
-			return MetaComponent.get(nombreModelo).getMetaEntity();
+			return MetaComponent.get(modelName).getMetaEntity();
 		}
 		else {
-			String componente = nombreModelo.substring(0, idx);
-			idx = nombreModelo.lastIndexOf('.'); // por si tenemos: MiEntidad.MiAgregado.MiOtroAgregado --> Coge MiOtroAgregado dentro del Componente MiEntidad
-			String agregado = nombreModelo.substring(idx + 1);
-			return MetaComponent.get(componente).getMetaAggregate(agregado);
+			String component = modelName.substring(0, idx);
+			idx = modelName.lastIndexOf('.'); // just in case we have: MyEntity.MyAggregate.MyAnotherAggregate --> It get MyAnotherAggregate within MyEntity Component
+			String aggregate = modelName.substring(idx + 1);
+			return MetaComponent.get(component).getMetaAggregate(aggregate);
 		}
 	}
 
 	public Map getValues(
-		String nombreModelo,
-		Object entidad,
-		Map nombreMiembros) throws XavaException
+		String modelName,
+		Object modelObject,
+		Map memberNames) throws XavaException
 		 {		
 		try {			
-			MetaModel metaModelo = getMetaModel(nombreModelo);
-			Map result = getValues(metaModelo, entidad, nombreMiembros);						
+			MetaModel metaModel = getMetaModel(modelName);
+			Map result = getValues(metaModel, modelObject, memberNames);						
 			return result;
 		} catch (XavaException ex) {
 			setRollbackOnly();
 			ex.printStackTrace();
-			throw new XavaException(
-				"Imposible obtener valores de "
-					+ nombreModelo
-					+ " por:\n"
-					+ ex.getLocalizedMessage());
+			throw new XavaException("get_values_error", modelName);
 		}
 	}
 
-
-	/**
-	 * 
-	 * @return java.util.Map
-	 * @param entity javax.ejb.EJBObject Si es nulo se devolverá nulo
-	 */
 	private Map getValues(
 		MetaModel metaModel, 
-		Object entity,
+		Object modelObject,
 		Map membersNames) throws XavaException {
 		try {
-			if (entity == null)
+			if (modelObject == null)
 				return null;						
 			if (membersNames == null) return Collections.EMPTY_MAP;					
-			IPropertiesContainer r = getPersistenceProvider().toPropertiesContainer(metaModel, entity);			
-			StringBuffer nombres = new StringBuffer();
+			IPropertiesContainer r = getPersistenceProvider().toPropertiesContainer(metaModel, modelObject);			
+			StringBuffer names = new StringBuffer();
 			addKey(metaModel, membersNames); // always return the key althought it don't is aunque no se solicit
 			removeViewProperties(metaModel, membersNames);			
 			Iterator it = membersNames.keySet().iterator();			
 			Map result = new HashMap();			
 			while (it.hasNext()) {
-				String nombreMiembro = (String) it.next();
-				if (metaModel.containsMetaProperty(nombreMiembro) ||
-					(metaModel.isKey(nombreMiembro) && !metaModel.containsMetaReference(nombreMiembro))) {
-//					if (!metaEntidad.esCalculada(nombreMiembro)) {
-						nombres.append(nombreMiembro);
-						nombres.append(":");
-//					} // de momento los calculados se excluyen
-				} else {
-					Map nombresSubmiembros = (Map) membersNames.get(nombreMiembro);
-					if (metaModel.containsMetaReference(nombreMiembro)) {						
+				String memberName = (String) it.next();
+				if (metaModel.containsMetaProperty(memberName) ||
+					(metaModel.isKey(memberName) && !metaModel.containsMetaReference(memberName))) {
+					names.append(memberName);
+					names.append(":");
+				} 
+				else {
+					Map submemberNames = (Map) membersNames.get(memberName);
+					if (metaModel.containsMetaReference(memberName)) {						
 						result.put(
-							nombreMiembro,
-							getValoresReferencia(metaModel, entity, nombreMiembro, nombresSubmiembros));
-					}else if (metaModel.containsMetaCollection(nombreMiembro)) {						
+							memberName,
+							getReferenceValues(metaModel, modelObject, memberName, submemberNames));
+					}
+					else if (metaModel.containsMetaCollection(memberName)) {						
 						result.put(
-							nombreMiembro,
-							getValoresColeccion(metaModel, entity, nombreMiembro, nombresSubmiembros));
-					} else {
-						throw new XavaException(
-							"No se reconoce el miembro "
-								+ nombreMiembro
-								+ " en "
-								+ metaModel.getName());
+							memberName,
+							getCollectionValues(metaModel, modelObject, memberName, submemberNames));
+					} 
+					else {
+						throw new XavaException("member_not_found", memberName, metaModel.getName());
 					}
 				}
 			}			
-			result.putAll(r.executeGets(nombres.toString()));			
+			result.putAll(r.executeGets(names.toString()));			
 			return result;
 		} catch (RemoteException ex) {
 			ex.printStackTrace();
-			throw new EJBException(
-				"Problemas al obtener valores de una entidad:\n" + ex.getLocalizedMessage());
+			throw new EJBException(XavaResources.getString("get_values_error", metaModel.getName()));
 		}
 	}
 	
-	private Map getNombresMiembros(MetaModel metaModelo) throws XavaException {
-		return getNombresMiembros(metaModelo, false);
+	private Map getMemberNames(MetaModel metaModel) throws XavaException {
+		return getMemberNames(metaModel, false);
 	}
 	
-	private Map getNombresMiembros(MetaModel metaModelo, boolean soloClave) throws XavaException {
-		Map nombresMiembros = new HashMap();
-		Collection propiedades = soloClave?metaModelo.getKeyPropertiesNames():metaModelo.getPropertiesNames(); 
-		Iterator itPropiedades = propiedades.iterator();
-		while (itPropiedades.hasNext()) {
-			nombresMiembros.put(itPropiedades.next(), null);
+	private Map getMemberNames(MetaModel metaModel, boolean onlyKey) throws XavaException {
+		Map memberNames = new HashMap();
+		Collection properties = onlyKey?metaModel.getKeyPropertiesNames():metaModel.getPropertiesNames(); 
+		Iterator itProperties = properties.iterator();
+		while (itProperties.hasNext()) {
+			memberNames.put(itProperties.next(), null);
 		}
 		
-		Iterator itReferencias = metaModelo.getMetaReferences().iterator();
-		while (itReferencias.hasNext()) {
-			MetaReference ref = (MetaReference) itReferencias.next();
-			if (soloClave && !ref.isKey()) break;
-			nombresMiembros.put(ref.getName(), getNombresMiembros(ref.getMetaModelReferenced(), true));
+		Iterator itReferences = metaModel.getMetaReferences().iterator();
+		while (itReferences.hasNext()) {
+			MetaReference ref = (MetaReference) itReferences.next();
+			if (onlyKey && !ref.isKey()) break;
+			memberNames.put(ref.getName(), getMemberNames(ref.getMetaModelReferenced(), true));
 		}
 		
-		return nombresMiembros;		
+		return memberNames;		
 	}
 	
 	private void addKey(MetaModel metaModel, Map memberNames) throws XavaException {
@@ -933,156 +797,128 @@ public class MapFacadeBean implements SessionBean {
 		Iterator itRef = metaModel.getMetaReferencesKey().iterator();
 		while (itRef.hasNext()) {
 			MetaReference ref = (MetaReference) itRef.next();
-			Map nombresClaveReferencia = null;
-			nombresClaveReferencia = (Map) memberNames.get(ref.getName());
-			if (nombresClaveReferencia == null) {
-				nombresClaveReferencia = new HashMap();
+			Map referenceKeyNames = null;
+			referenceKeyNames = (Map) memberNames.get(ref.getName());
+			if (referenceKeyNames == null) {
+				referenceKeyNames = new HashMap();
 			}
-			addKey(ref.getMetaModelReferenced(), nombresClaveReferencia);
-			memberNames.put(ref.getName(), nombresClaveReferencia);
+			addKey(ref.getMetaModelReferenced(), referenceKeyNames);
+			memberNames.put(ref.getName(), referenceKeyNames);
 		}				
 	}
 	
 	/**
-	 * Si se envía nulo como <tt>nombresPropiedades</tt> se devuelve un mapa vacío. <p>
+	 * If we send null as <tt>nombresPropiedades</tt> it return a empty Map. <p>
 	 */
-	private Map getValoresAgregado(MetaAggregate metaAgregado, Object agregado, Map nombresMiembros) throws XavaException {
-		if (nombresMiembros == null) return Collections.EMPTY_MAP;
-		PropertiesManager man = new PropertiesManager(agregado);
-		StringBuffer nombres = new StringBuffer();
+	private Map getAggregateValues(MetaAggregate metaAggregate, Object aggregate, Map memberNames) throws XavaException {
+		if (memberNames == null) return Collections.EMPTY_MAP;
+		PropertiesManager man = new PropertiesManager(aggregate);
+		StringBuffer names = new StringBuffer();
 				
 		Map result = new HashMap();
 		
-		Iterator itClaves = metaAgregado.getKeyPropertiesNames().iterator();
-		while (itClaves.hasNext()) {
-			nombres.append(itClaves.next());
-			nombres.append(":");			
+		Iterator itKeys = metaAggregate.getKeyPropertiesNames().iterator();
+		while (itKeys.hasNext()) {
+			names.append(itKeys.next());
+			names.append(":");			
 		}
 		
-		removeViewProperties(metaAgregado, nombresMiembros); 
+		removeViewProperties(metaAggregate, memberNames); 
 		 
-		Iterator it = nombresMiembros.keySet().iterator();		
+		Iterator it = memberNames.keySet().iterator();		
 		while (it.hasNext()) {
-			String nombreMiembro = (String) it.next();
-			if (metaAgregado.containsMetaProperty(nombreMiembro)) {
-				nombres.append(nombreMiembro);
-				nombres.append(":");
+			String memberName = (String) it.next();
+			if (metaAggregate.containsMetaProperty(memberName)) {
+				names.append(memberName);
+				names.append(":");
 			} else
-				if (metaAgregado.containsMetaReference(nombreMiembro)) {
-					Map nombresSubmiembros = (Map) nombresMiembros.get(nombreMiembro);
+				if (metaAggregate.containsMetaReference(memberName)) {
+					Map submemberNames = (Map) memberNames.get(memberName);
 					result.put(
-						nombreMiembro,
-						getValoresReferencia(metaAgregado, agregado, nombreMiembro, nombresSubmiembros));
+						memberName,
+						getReferenceValues(metaAggregate, aggregate, memberName, submemberNames));
 				} else {
-					throw new XavaException(
-						"No se reconoce el miembro "
-							+ nombreMiembro
-							+ " en "
-							+ metaAgregado.getName());
+					throw new XavaException("member_not_found", memberName, metaAggregate.getName());
 				}
 		}
 		try {
-			result.putAll(man.executeGets(nombres.toString()));
+			result.putAll(man.executeGets(names.toString()));
 		} catch (PropertiesManagerException ex) {
 			ex.printStackTrace();
-			throw new EJBException(
-				"Imposible obtener el valor de las propiedades de "
-					+ metaAgregado.getName()
-					+ " por:\n"
-					+ ex.getLocalizedMessage());
+			throw new EJBException(XavaResources.getString("get_values_error", metaAggregate.getName()));
 		} catch (InvocationTargetException ex) {
 			Throwable th = ex.getTargetException();
 			th.printStackTrace();
-			throw new EJBException(
-				"Imposible obtener el valor de la propiedades de "
-					+ metaAgregado.getName()
-					+ " por:\n"
-					+ th.getLocalizedMessage());
+			throw new EJBException(XavaResources.getString("get_values_error", metaAggregate.getName()));
 		}
 		return result;
 	}
 
 
 	/**
-	 * Si <tt>nombreMiembros</tt> es nulo se devuelve un mapa vacío
+	 * If <tt>memberNames</tt> is null then return a empty map.
 	 */
-	private Map getValoresEntidadAsociada(MetaEntity metaEntidad, Object entidad, Map nombresMiembros) throws XavaException {
-		if (nombresMiembros == null) return new HashMap();
-		Map result = getValues(metaEntidad, entidad, nombresMiembros);
+	private Map getAssociatedEntityValues(MetaEntity metaEntity, Object modelObject, Map memberNames) throws XavaException {
+		if (memberNames == null) return new HashMap();
+		Map result = getValues(metaEntity, modelObject, memberNames);
 		return result;
 	}
 
-
-	/**
-	 * 
-	 * @param entidad javax.ejb.EJBObject
-	 */
-	private Map getValoresReferencia(
+	private Map getReferenceValues(
 		MetaModel metaModel,
 		Object model,
 		String memberName,
 		Map submembersNames) throws XavaException {
 		try {			
 			MetaReference r = metaModel.getMetaReference(memberName);
-			Object objeto = getObjetoReferenciado(model, memberName);
+			Object object = getReferencedObject(model, memberName);
 			if (r.isAggregate()) {
-				return getValoresAgregado((MetaAggregate) r.getMetaModelReferenced(), objeto, submembersNames);
-			} else {				
-				return getValoresEntidadAsociada((MetaEntity) r.getMetaModelReferenced(), objeto, submembersNames);
+				return getAggregateValues((MetaAggregate) r.getMetaModelReferenced(), object, submembersNames);
+			} 
+			else {				
+				return getAssociatedEntityValues((MetaEntity) r.getMetaModelReferenced(), object, submembersNames);
 			}
 		} catch (XavaException ex) {
 			ex.printStackTrace();
-			throw new XavaException(
-				"Imposible obtener valores de la referencia "
-					+ memberName
-					+ " de "
-					+ metaModel.getName());
+			throw new XavaException("get_reference_error", memberName, metaModel.getName());
 		}
 	}
 	
-	/**
-	 * 
-	 * @param entidad javax.ejb.EJBObject
-	 */
-	private Collection getValoresColeccion(
-		MetaModel metaModelo,
-		Object modelo,
-		String nombreMiembro,
-		Map nombresMiembros) throws XavaException {
+	private Collection getCollectionValues(
+		MetaModel metaModel,
+		Object modelObject,
+		String memberName,
+		Map memberNames) throws XavaException {
 		try {
-			MetaCollection c = metaModelo.getMetaCollection(nombreMiembro);
-			Object objeto = getObjetoReferenciado(modelo, nombreMiembro);
-			return getValoresColeccion(
+			MetaCollection c = metaModel.getMetaCollection(memberName);
+			Object object = getReferencedObject(modelObject, memberName);
+			return getCollectionValues(
 					c.getMetaReference().getMetaModelReferenced(),
-					c.isAggregate(),	objeto, nombresMiembros);
+					c.isAggregate(),	object, memberNames);
 		} catch (XavaException ex) {
 			ex.printStackTrace();
-			throw new XavaException(
-				"Imposible obtener valores de la coleccion "
-					+ nombreMiembro
-					+ " de "
-					+ metaModelo.getName());
+			throw new XavaException("get_collection_elements_error", memberName, metaModel.getName());
 		}
 	}
 	
-	private Collection getValoresColeccion(
-		MetaModel modelo,
-		boolean agregado,
-		Object elementos, Map nombresMiembros) throws XavaException {
+	private Collection getCollectionValues(
+		MetaModel metaModel,
+		boolean aggregate,
+		Object elements, Map memberNames) throws XavaException {
 		Collection result = new ArrayList();
 		Enumeration enum = null;
-		if (elementos instanceof Enumeration) {
-			enum = (Enumeration) elementos;
+		if (elements instanceof Enumeration) {
+			enum = (Enumeration) elements;
 		}
-		else if (elementos instanceof Collection) {
-			enum = Collections.enumeration((Collection) elementos);
+		else if (elements instanceof Collection) {
+			enum = Collections.enumeration((Collection) elements);
 		}
 		else {
 			throw new XavaException("collection_type_not_supported");
 		}		
 		while (enum.hasMoreElements()) {
-			Object objeto = enum.nextElement();			
-			result.add(getValues(modelo, objeto, nombresMiembros));
+			Object object = enum.nextElement();			
+			result.add(getValues(metaModel, object, memberNames));
 		}
 		return result;
 	}
@@ -1107,196 +943,154 @@ public class MapFacadeBean implements SessionBean {
 			ex.printStackTrace();
 			throw new EJBException(XavaResources.getString("instantiate_error", metaAggregate.getBeanClass()));
 		} catch (InvocationTargetException ex) {
-			lanzarValidacionException(
+			throwsValicationException(
 				ex, XavaResources.getString("assign_values_error", metaAggregate.getBeanClass(), ex.getLocalizedMessage())); 				
-			throw new EJBException(); // Nunca ocurre
+			throw new EJBException(); // Never
 		} catch (PropertiesManagerException ex) {
 			ex.printStackTrace();
 			throw new EJBException(XavaResources.getString("assign_values_error", metaAggregate.getBeanClass(), ex.getLocalizedMessage()));
 		}
 	}
 
-
-	/**
-	 * Lanza ValidacionException o EJBException
-	 * Fecha de creación: (31/07/2001 13:15:09)
-	 */
-	private void lanzarValidacionException(
+	private void throwsValicationException(
 		InvocationTargetException ex,
-		String ejbmensaje)
+		String ejbmessage)
 		throws ValidationException {
 		Throwable th = ex.getTargetException();
 		if (th instanceof ValidationException) {
 			throw (ValidationException) th;
 		}
 		th.printStackTrace();
-		throw new EJBException(ejbmensaje);
+		throw new EJBException(ejbmessage);
 	}
 
-
-	/**
-	 * 
-	 * @return java.util.Map
-	 * @param entidad javax.ejb.EJBObject
-	 */
-	private Object mapaToObjetoReferenciado(
-		MetaModel metaModelo,
-		String nombreMiembro,
-		Map valores)
+	private Object mapToReferencedObject(
+		MetaModel metaModel,
+		String memberName,
+		Map values)
 		throws ValidationException, XavaException {
 		MetaReference r = null;
 		try {
-			if (Maps.isEmpty(valores)) return null;			
-			r = metaModelo.getMetaReference(nombreMiembro);
+			if (Maps.isEmpty(values)) return null;			
+			r = metaModel.getMetaReference(memberName);
 			if (r.isAggregate()) {
-				return instanceAggregate((MetaAggregateBean) r.getMetaModelReferenced(), valores);
+				return instanceAggregate((MetaAggregateBean) r.getMetaModelReferenced(), values);
 			} else {
-				return buscarEntidadAsociada((MetaEntity) r.getMetaModelReferenced(), valores);
+				return findAssociatedEntity((MetaEntity) r.getMetaModelReferenced(), values);
 			}
 		} catch (FinderException ex) {
 			ex.printStackTrace();
 			throw new EJBException(XavaResources.getString("map_to_reference_error",
 					r.getName(),					
-					metaModelo.getName(),					
-					nombreMiembro));
+					metaModel.getName(),					
+					memberName));
 		} catch (XavaException ex) {
 			throw ex;
 		}
 	}
 
-	private Object buscarEntidadAsociada(MetaEntity metaEntidad, Map valores)
+	private Object findAssociatedEntity(MetaEntity metaEntity, Map values)
 		throws FinderException, XavaException {
-		Map valoresClave = extraerValoresClave(metaEntidad, valores);
-		return findEntity(metaEntidad.getName(), valoresClave);
+		Map keyValues = extractKeyValues(metaEntity, values);
+		return findEntity(metaEntity.getName(), keyValues);
 	}
 
 
-	private Map extraerValoresClave(MetaEntity metaEntidad, Map valores)
+	private Map extractKeyValues(MetaEntity metaEntity, Map values)
 		throws XavaException {
-		return metaEntidad.extractKeyValues(valores);
+		return metaEntity.extractKeyValues(values);
 	}
 
-
-	/**
-	 * 
-	 * @return pruebas.xvista.ab.modelo.Producto
-	 * @param o java.lang.Object
-	 */
-	/*tmp private IPropertiesContainer narrowPropertiesContainer(MetaModel metaModelo, Object o) throws XavaException {
-		return (EJBReplicable) narrowEntidad(metaModelo, o); 
-	} */
-
-	private void removeKeyFields(MetaModel metaModelo, Map valores)
+	private void removeKeyFields(MetaModel metaModel, Map values)
 		throws XavaException {
-		Iterator claves = metaModelo.getKeyPropertiesNames().iterator();
-		while (claves.hasNext()) {
-			valores.remove(claves.next());
+		Iterator keys = metaModel.getKeyPropertiesNames().iterator();
+		while (keys.hasNext()) {
+			values.remove(keys.next());
 		}
-		Iterator itRef = metaModelo.getMetaReferencesKey().iterator();
+		Iterator itRef = metaModel.getMetaReferencesKey().iterator();
 		while (itRef.hasNext()) {
 			MetaReference ref = (MetaReference) itRef.next();
-			valores.remove(ref.getName());
+			values.remove(ref.getName());
 		}		
 	}
 
-
-	/**
-	 * 
-	 * @param metaEntidad paniza.xava.xmodelo.modelo.Entidad
-	 * @param valores java.util.Map
-	 */
-	private void removeReadOnlyFields(MetaModel metaModelo, Map valores)
+	private void removeReadOnlyFields(MetaModel metaModel, Map values)
 		throws XavaException {
-		Iterator aQuitar = metaModelo.getOnlyReadPropertiesNames().iterator();
-		while (aQuitar.hasNext()) {
-			valores.remove(aQuitar.next());
+		Iterator toRemove = metaModel.getOnlyReadPropertiesNames().iterator();
+		while (toRemove.hasNext()) {
+			values.remove(toRemove.next());
+		}
+	}
+		
+	private void removeCalculatedFields(MetaModel metaModel, Map values)
+		throws XavaException {
+		Iterator toRemove = metaModel.getCalculatedPropertiesNames().iterator();
+		while (toRemove.hasNext()) {
+			values.remove(toRemove.next());
 		}
 	}
 	
-	/**
-	 * 
-	 * @param metaEntidad paniza.xava.xmodelo.modelo.Entidad
-	 * @param valores java.util.Map
-	 */
-	private void quitarCamposCalculados(MetaModel metaModelo, Map valores)
+	private void removeViewProperties(MetaModel metaModel, Map values)
 		throws XavaException {
-		Iterator aQuitar = metaModelo.getCalculatedPropertiesNames().iterator();
-		while (aQuitar.hasNext()) {
-			valores.remove(aQuitar.next());
-		}
-	}
-	
-	private void removeViewProperties(MetaModel metaModelo, Map valores)
-		throws XavaException {
-		Iterator aQuitar = metaModelo.getViewPropertiesNames().iterator();
-		while (aQuitar.hasNext()) {
-			valores.remove(aQuitar.next());
+		Iterator toRemove = metaModel.getViewPropertiesNames().iterator();
+		while (toRemove.hasNext()) {
+			values.remove(toRemove.next());
 		}
 	}	
 		
-
-
-	public void remove(String nombreModelo, Map valoresClave)
+	public void remove(String modelName, Map keyValues)
 		throws RemoveException, ValidationException, XavaException 
 	{		
-		MetaModel  metaModelo = getMetaModel(nombreModelo);
-		remove(metaModelo, valoresClave);			
+		MetaModel  metaModel = getMetaModel(modelName);
+		remove(metaModel, keyValues);			
 	}
 	
-	public void remove(MetaModel metaModelo, Map valoresClave)
+	public void remove(MetaModel metaModel, Map keyValues)
 		throws RemoveException, ValidationException, XavaException {
 		try {			
-			Object entidad = findEntity((IMetaEjb)metaModelo, valoresClave);
-			borrar(metaModelo, entidad);
+			Object object = findEntity((IMetaEjb)metaModel, keyValues);
+			remove(metaModel, object);
 		} catch (FinderException ex) {
 			ex.printStackTrace();
 			throw new RemoveException(XavaResources.getString("remove_error",
-				metaModelo.getName(), ex.getLocalizedMessage()));
+				metaModel.getName(), ex.getLocalizedMessage()));
 		}		
 	}
 		
-	private void borrar(MetaModel  metaModelo, Object modelo)
+	private void remove(MetaModel metaModel, Object modelObject)
 		throws RemoveException, ValidationException, XavaException {
 		try {
-			Messages errores = validarParaBorrar(metaModelo, modelo);
-			if (!errores.isEmpty()) {
-				throw new ValidationException(errores);
+			Messages errors = validateOnRemove(metaModel, modelObject);
+			if (!errors.isEmpty()) {
+				throw new ValidationException(errors);
 			}
-			if (!metaModelo.getMetaCollectionsAgregate().isEmpty()) {
-				borrarTodasColeccionesAgregados(metaModelo, modelo);
+			if (!metaModel.getMetaCollectionsAgregate().isEmpty()) {
+				removeAllAggregateCollections(metaModel, modelObject);
 			}
-			getPersistenceProvider().remove(metaModelo, modelo);			
+			getPersistenceProvider().remove(metaModel, modelObject);			
 		} catch (ValidationException ex) {
 			throw ex;					
 		} catch (XavaException ex) {
 			setRollbackOnly();
 			ex.printStackTrace();
-			throw new XavaException("remove_error", metaModelo.getName(), ex.getLocalizedMessage());				
+			throw new XavaException("remove_error", metaModel.getName(), ex.getLocalizedMessage());				
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new EJBException(XavaResources.getString("remove_error",
-				metaModelo.getName(), ex.getLocalizedMessage()));
+				metaModel.getName(), ex.getLocalizedMessage()));
 		}
 	}
 	
-	/*tmp protected void removePersistentObject(MetaModel metaModelo, Object modelo) throws RemoteException, RemoveException, XavaException {
-		((EJBReplicable) getPersistenceProvider().toPropertiesContainer(metaModelo, modelo)).remove();		
-	} */
-	
-	/**
-	 * @param metaEntidad
-	 * @param entidad
-	 */
-	private Messages validarParaBorrar(MetaModel metaModelo, Object entidad) throws Exception {		
-		Messages errores = new Messages();
-		Iterator it = metaModelo.getMetaValidatorsRemove().iterator();
+	private Messages validateOnRemove(MetaModel metaModel, Object modelObject) throws Exception {		
+		Messages errors = new Messages();
+		Iterator it = metaModel.getMetaValidatorsRemove().iterator();
 		while (it.hasNext()) {
-			MetaValidator metaValidador = (MetaValidator) it.next(); 
-			IRemoveValidator validador = metaValidador.getRemoveValidator();
-			validador.setEntity(entidad);
-			validador.validate(errores);			
+			MetaValidator metaValidator = (MetaValidator) it.next(); 
+			IRemoveValidator validator = metaValidator.getRemoveValidator();
+			validator.setEntity(modelObject);
+			validator.validate(errors);			
 		}				 		
-		return errores;		
+		return errors;		
 	}
 		
 	public void setSessionContext(javax.ejb.SessionContext ctx)
@@ -1318,7 +1112,7 @@ public class MapFacadeBean implements SessionBean {
 			removeReadOnlyFields(metaModel, values);
 			removeViewProperties(metaModel, values);
 			Map collections = extractCollections(metaModel, values);
-			validar(metaModel, values, keyValues, null);			
+			validate(metaModel, values, keyValues, null);			
 			Object entity = findEntity((IMetaEjb) metaModel, keyValues);			
 			IPropertiesContainer r = getPersistenceProvider().toPropertiesContainer(metaModel, entity);			
 			r.executeSets(convertSubmapsInObject(metaModel, values, true));			
@@ -1335,48 +1129,48 @@ public class MapFacadeBean implements SessionBean {
 	}
 	
 
-	private void validar(
-		Messages errores,
-		MetaModel metaModelo,
-		String nombreMiembro,
-		Object valor) throws XavaException {			
+	private void validate(
+		Messages errors,
+		MetaModel metaModel,
+		String memberName,
+		Object values) throws XavaException {			
 		try {			
-			if (metaModelo.containsMetaProperty(nombreMiembro)) {
-				metaModelo.getMetaProperty(nombreMiembro).validate(errores, valor);
+			if (metaModel.containsMetaProperty(memberName)) {
+				metaModel.getMetaProperty(memberName).validate(errors, values);
 			} else
-				if (metaModelo.containsMetaReference(nombreMiembro)) {
-					MetaReference ref = metaModelo.getMetaReference(nombreMiembro); 
-					MetaModel modeloReferenciado = ref.getMetaModelReferenced();
-					Map valores = (Map) valor;					
-					if (tieneValor(valores)) {
-						if (ref.isAggregate()) validar(errores, modeloReferenciado, valores, valores, null);
+				if (metaModel.containsMetaReference(memberName)) {
+					MetaReference ref = metaModel.getMetaReference(memberName); 
+					MetaModel referencedModel = ref.getMetaModelReferenced();
+					Map mapValues = (Map) values;					
+					if (hasValue(mapValues)) {
+						if (ref.isAggregate()) validate(errors, referencedModel, mapValues, mapValues, null);
 					} else
-						if (metaModelo
-							.getMetaReference(nombreMiembro)
+						if (metaModel
+							.getMetaReference(memberName)
 							.isRequired()) {
-							errores.add("required", nombreMiembro, metaModelo.getName());
+							errors.add("required", memberName, metaModel.getName());
 						}
 						
-				} else if (metaModelo.containsMetaCollection(nombreMiembro)) {
-					// Por aquí nunca pasa porque las colecciones se tratan antes
-					metaModelo.getMetaCollection(nombreMiembro).validate(errores, valor, null, null);
-				} else if (metaModelo.containsMetaPropertyView(nombreMiembro)) { 										
-					metaModelo.getMetaPropertyView(nombreMiembro).validate(errores, valor);									
+				} else if (metaModel.containsMetaCollection(memberName)) {
+					// It never happens this way 
+					metaModel.getMetaCollection(memberName).validate(errors, values, null, null);
+				} else if (metaModel.containsMetaPropertyView(memberName)) { 										
+					metaModel.getMetaPropertyView(memberName).validate(errors, values);									
 				} else {					
-					System.err.println(XavaResources.getString("not_validate_member_warning", nombreMiembro, metaModelo.getName()));
+					System.err.println(XavaResources.getString("not_validate_member_warning", memberName, metaModel.getName()));
 				}
 		} catch (XavaException ex) {
 			ex.printStackTrace();
-			throw new XavaException("validate_error", nombreMiembro, metaModelo.getName());
+			throw new XavaException("validate_error", memberName, metaModel.getName());
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			throw new EJBException(XavaResources.getString("validate_error", nombreMiembro, metaModelo.getName()));				
+			throw new EJBException(XavaResources.getString("validate_error", memberName, metaModel.getName()));				
 		}
 	}
 	
-	private boolean tieneValor(Map valores) {
-		if (valores == null) return false;
-		Iterator it = valores.values().iterator();
+	private boolean hasValue(Map values) {
+		if (values == null) return false;
+		Iterator it = values.values().iterator();
 		while (it.hasNext()) {
 			Object v = it.next();
 			if (v == null) continue;
@@ -1387,83 +1181,78 @@ public class MapFacadeBean implements SessionBean {
 		return false;
 	}
 	
-	public Messages validate(String nombreModelo, Map valores) throws XavaException { 			
-		MetaEntityEjb metaEntidad = (MetaEntityEjb) MetaComponent.get(nombreModelo).getMetaEntity();		
-		Messages erroresValidacion = new Messages(); 				
-		validar(erroresValidacion, metaEntidad, valores, null, null);
-		return erroresValidacion;
+	public Messages validate(String modelName, Map values) throws XavaException { 			
+		MetaEntityEjb metaEntity = (MetaEntityEjb) MetaComponent.get(modelName).getMetaEntity();		
+		Messages validationErrors = new Messages(); 				
+		validate(validationErrors, metaEntity, values, null, null);
+		return validationErrors;
 	}
 	
-	/**
-	 * 
-	 * @param valores void
-	 */
-	private void validar(Messages errores, MetaModel metaModelo, Map valores, Map valoresClave, Object containerKey)	  
+	private void validate(Messages errors, MetaModel metaModel, Map values, Map keyValues, Object containerKey)	  
 		throws XavaException {		
-		Iterator it = valores.entrySet().iterator();		
+		Iterator it = values.entrySet().iterator();		
 		while (it.hasNext()) {
 			Map.Entry en = (Map.Entry) it.next();
-			String nombre = (String) en.getKey();
-			Object valor = en.getValue();
-			validar(errores, metaModelo, nombre, valor);
+			String name = (String) en.getKey();
+			Object value = en.getValue();
+			validate(errors, metaModel, name, value);
 		}
-		if (metaModelo.containsValidadors()) {
-			validateWintModelValidator(errores, metaModelo, valores, valoresClave, containerKey);			
+		if (metaModel.containsValidadors()) {
+			validateWintModelValidator(errors, metaModel, values, keyValues, containerKey);			
 		}
 	}
 	
 	private void validateWintModelValidator(Messages errors, MetaModel metaModel, Map values, Map keyValues, Object containerKey) throws XavaException {				
 		try {
 			String containerReferenceName = Strings.firstLower(metaModel.getMetaModelContainer().getName());
-			Iterator itValidadores = metaModel.getMetaValidators().iterator();
-			while (itValidadores.hasNext()) {
-				MetaValidator metaValidador = (MetaValidator) itValidadores.next();
-				Iterator itPoners =  metaValidador.getMetaSetsWithoutValue().iterator();
-				IValidator v = metaValidador.createValidator();
+			Iterator itValidators = metaModel.getMetaValidators().iterator();
+			while (itValidators.hasNext()) {
+				MetaValidator metaValidator = (MetaValidator) itValidators.next();
+				Iterator itSets =  metaValidator.getMetaSetsWithoutValue().iterator();
+				IValidator v = metaValidator.createValidator();
 				PropertiesManager mp = new PropertiesManager(v);		
-				while (itPoners.hasNext()) {
-					MetaSet poner = (MetaSet) itPoners.next();					
-					Object valor = values.get(poner.getPropertyNameFrom());
-					if (valor == null && !values.containsKey(poner.getPropertyNameFrom())) {
+				while (itSets.hasNext()) {
+					MetaSet set = (MetaSet) itSets.next();					
+					Object value = values.get(set.getPropertyNameFrom());
+					if (value == null && !values.containsKey(set.getPropertyNameFrom())) {
 						if (keyValues != null) { 
-							Map nombreMiembro = new HashMap();
-							nombreMiembro.put(poner.getPropertyNameFrom(), null);
-							Map valorMiembro = getValores(metaModel, keyValues, nombreMiembro);
-							valor = valorMiembro.get(poner.getPropertyNameFrom());
+							Map memberName = new HashMap();
+							memberName.put(set.getPropertyNameFrom(), null);
+							Map memberValue = getValues(metaModel, keyValues, memberName);
+							value = memberValue.get(set.getPropertyNameFrom());
 						}											
 					}
-					if (poner.getPropertyNameFrom().equals(containerReferenceName)) {
+					if (set.getPropertyNameFrom().equals(containerReferenceName)) {
 						if (containerKey == null) {							
 							Object object = findEntity(((IMetaEjb)metaModel), keyValues);
-							valor = Objects.execute(object, "get" + metaModel.getMetaModelContainer().getName());
+							value = Objects.execute(object, "get" + metaModel.getMetaModelContainer().getName());
 						}
 						else {
 							IMetaEjb containerReference = (IMetaEjb) metaModel.getMetaModelContainer();
 							try {							
-			// tmp					valor = findEntity(containerReference, containerKey);
-								valor = getPersistenceProvider().find(containerReference, containerKey);
+								value = getPersistenceProvider().find(containerReference, containerKey);
 							}
 							catch (ObjectNotFoundException ex) {
-								valor = null;
+								value = null;
 							}			
 						}
 					}
-					else if (metaModel.containsMetaReference(poner.getPropertyNameFrom())) {
-						MetaReference ref = metaModel.getMetaReference(poner.getPropertyNameFrom());
+					else if (metaModel.containsMetaReference(set.getPropertyNameFrom())) {
+						MetaReference ref = metaModel.getMetaReference(set.getPropertyNameFrom());
 						if (ref.isAggregate()) {
-							valor = mapaToObjetoReferenciado(metaModel, poner.getPropertyNameFrom(), (Map) valor);
+							value = mapToReferencedObject(metaModel, set.getPropertyNameFrom(), (Map) value);
 						}
 						else {
-							IMetaEjb entidadReferenciada = (IMetaEjb) ref.getMetaModelReferenced();
+							IMetaEjb referencedEntity = (IMetaEjb) ref.getMetaModelReferenced();
 							try {
-								valor = findEntity(entidadReferenciada, (Map) valor);
+								value = findEntity(referencedEntity, (Map) value);
 							}
 							catch (ObjectNotFoundException ex) {
-								valor = null;
+								value = null;
 							}																															
 						}						
 					}
-					mp.executeSet(poner.getPropertyName(), valor);									
+					mp.executeSet(set.getPropertyName(), value);									
 				}			
 				v.validate(errors);
 			}		
@@ -1474,26 +1263,25 @@ public class MapFacadeBean implements SessionBean {
 		}
 	}
 	
-	private void validar(MetaModel metaModelo, Map valores, Map valoresClave, Object containerKey)
+	private void validate(MetaModel metaModel, Map values, Map keyValues, Object containerKey)
 		throws ValidationException, XavaException, RemoteException {
-		Messages errores = new Messages();		
-		validar(errores, metaModelo, valores, valoresClave, containerKey);		
-		if (errores.contains()) {
-			throw new ValidationException(errores);
+		Messages errors = new Messages();		
+		validate(errors, metaModel, values, keyValues, containerKey);		
+		if (errors.contains()) {
+			throw new ValidationException(errors);
 		}
 	}
 
-	private void validarExistenRequeridos(Messages errores, MetaModel metaModelo, Map valores)
+	private void validateExistRequired(Messages errors, MetaModel metaModel, Map values)
 		throws XavaException {		
-		Iterator it = metaModelo.getRequiredMemberNames().iterator();		
+		Iterator it = metaModel.getRequiredMemberNames().iterator();		
 		while (it.hasNext()) {
-			String nombre = (String) it.next();			
-			if (!valores.containsKey(nombre)) {				
-				errores.add("required", nombre, metaModelo.getName());
+			String name = (String) it.next();			
+			if (!values.containsKey(name)) {				
+				errors.add("required", name, metaModel.getName());
 			}
 		}
 	}
-
 
 	public Object findEntity(String modelName, Map keyValues)
 		throws FinderException {
@@ -1505,305 +1293,231 @@ public class MapFacadeBean implements SessionBean {
 			throw new EJBException(XavaResources.getString("model_not_found", modelName));
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			throw new EJBException(
-				"Imposible realizar la búsqueda de "
-					+ modelName
-					+ " por:\n"
-					+ ex.getLocalizedMessage());
+			throw new EJBException(XavaResources.getString("find_error", modelName));
 		}
 	}
 
-	private Object findEntity(IMetaEjb metaEntidad, Map valoresClave)	throws FinderException, XavaException {
-		// tmp: Para versión hibernate
-		return getPersistenceProvider().find(metaEntidad, valoresClave);
-		
-	/*	Object key = metaEntidad.obtainPrimaryKeyFromKey(valoresClave);
-		return findEntity(metaEntidad, key); */  
+	private Object findEntity(IMetaEjb metaEntity, Map keyValues)	throws FinderException, XavaException {
+		return getPersistenceProvider().find(metaEntity, keyValues);
 	}
 	
-/* TMP	protected Object findEntity(IMetaEjb metaEntidad, Object key)	throws FinderException { 		
-		Class claseHome = null;
-		Class clasePK = null;
-		try {
-			clasePK = metaEntidad.getPrimaryKeyClass();
-			Class[] classArg = { clasePK };
-			claseHome = metaEntidad.getHomeClass();
-			Method m = claseHome.getMethod("findByPrimaryKey", classArg);								
-			Object home = metaEntidad.obtainHome();
-			Object[] arg = { key };
-			return m.invoke(home, arg);
-		} catch (NoSuchMethodException ex) {
-			throw new EJBException(XavaResources.getString("findByPrimaryKey_expected", claseHome.getName(), clasePK.getName()));				
-		} catch (InvocationTargetException ex) {
-			Throwable th = ex.getTargetException();
-			if (th instanceof FinderException) {
-				throw (FinderException) th;
-			} else {
-				th.printStackTrace();
-				throw new EJBException(XavaResources.getString("find_error", metaEntidad.getName()));
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			throw new EJBException(XavaResources.getString("find_error", metaEntidad.getName()));			
-		}
-	} */ 
-	
-
-	/**
-	 * @param entidadMoldeada Nunca nulo.
-	 * @param nombreMiembro Nunca nulo.
-	 */
-	private Object ejecutarGetXX(
-		MetaModel metaModelo,
-		Object entidadMoldeada,
-		String nombreMiembro)
+	private Object executeGetXX(
+		MetaModel metaModel,
+		Object modelObject,
+		String memberName)
 		throws XavaException {
-		String metodo = "get" + primeraAMayuscula(nombreMiembro);
+		String method = "get" + Strings.firstUpper(memberName);
 		try {
-			return Objects.execute(entidadMoldeada, metodo);
+			return Objects.execute(modelObject, method);
 		} catch (NoSuchMethodException ex) {
-			throw new XavaException("method_expected", metaModelo.getClassName(), metodo);
+			throw new XavaException("method_expected", metaModel.getClassName(), method);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new XavaException("method_execution_error",
-					metaModelo.getClassName(),					
-					metodo,					
+					metaModel.getClassName(),					
+					method,					
 					ex.getLocalizedMessage());
 		}
 	}
 
-
-	/**
-	 * @param entidadMoldeada Nunca nulo.
-	 * @param nombreMiembro Nunca nulo.
-	 * @param argumento Nunca nulo.
-	 */
-	private void ejecutarAddXX(
-		MetaModel metaModelo,
-		Object modeloMoldeado,
-		MetaCollection metaColeccion,
-		Object argumento)
+	private void executeAddXX(
+		MetaModel metaModel,
+		Object modelObject,
+		MetaCollection metaCollection,
+		Object argument)
 		throws XavaException {
 		IMetaEjb metaEjb = null;	
 		try {	
-			metaEjb = (IMetaEjb) metaColeccion.getMetaReference().getMetaModelReferenced();
+			metaEjb = (IMetaEjb) metaCollection.getMetaReference().getMetaModelReferenced();
 		}
 		catch (ClassCastException ex) {
 			throw new XavaException("only_ejb_collections_error");
 		}
-		String nombreColeccion = primeraAMayuscula(metaColeccion.getName()); 
+		String collectionName = Strings.firstUpper(metaCollection.getName()); 
 		try {
-			ejecutar(metaModelo, modeloMoldeado, 
-				"addTo" + nombreColeccion, 
-				metaEjb.getRemoteClass(), argumento);
+			execute(metaModel, modelObject, 
+				"addTo" + collectionName, 
+				metaEjb.getRemoteClass(), argument);
 		}
 		catch (NoSuchMethodException ex) {
 			try {
-				ejecutar(metaModelo, modeloMoldeado, 
-					"add" + nombreColeccion, 
-					metaEjb.getRemoteClass(), argumento);			
+				execute(metaModel, modelObject, 
+					"add" + collectionName, 
+					metaEjb.getRemoteClass(), argument);			
 			}
 			catch (NoSuchMethodException ex2) {
 				throw new XavaException("add_method_expected", 
-						metaModelo.getPropertiesClass(),
-						nombreColeccion,
-						argumento.getClass().getName());
+						metaModel.getPropertiesClass(),
+						collectionName,
+						argument.getClass().getName());
 			}
 		}
 	}
 
-
-	/**
-	 * @param entidadMoldeada Nunca nulo.
-	 * @param nombreMiembro Nunca nulo.
-	 * @param argumento Nunca nulo.
-	 */
-	private void ejecutarRemoveXX(
-		MetaModel metaModelo,
-		Object entidadMoldeada,
-		MetaCollection metaColeccion,
-		Object argumento)
+	private void executeRemoveXX(
+		MetaModel metaModel,
+		Object modelObject,
+		MetaCollection metaCollection,
+		Object argument)
 		throws XavaException {
 			
 		IMetaEjb metaEjb = null;	
 		try {	
-			metaEjb = (IMetaEjb) metaColeccion.getMetaReference().getMetaModelReferenced();
+			metaEjb = (IMetaEjb) metaCollection.getMetaReference().getMetaModelReferenced();
 		}
 		catch (ClassCastException ex) {
 			throw new XavaException("only_ejb_collections_error");
 		}
-		String nombreColeccion = primeraAMayuscula(metaColeccion.getName()); 
+		String collectionName = Strings.firstUpper(metaCollection.getName()); 
 		try {			
-			ejecutar(metaModelo, entidadMoldeada, 
-				"removeFrom" + nombreColeccion, 
-				metaEjb.getRemoteClass(), argumento);
+			execute(metaModel, modelObject, 
+				"removeFrom" + collectionName, 
+				metaEjb.getRemoteClass(), argument);
 		}
 		catch (NoSuchMethodException ex) {
 			try {
-				ejecutar(metaModelo, entidadMoldeada, 
-					"remove" + nombreColeccion, 
-					metaEjb.getRemoteClass(), argumento);			
+				execute(metaModel, modelObject, 
+					"remove" + collectionName, 
+					metaEjb.getRemoteClass(), argument);			
 			}
 			catch (NoSuchMethodException ex2) {
 				throw new XavaException("remove_method_expected",				
-					metaModelo.getPropertiesClass(),
-					nombreColeccion, 					
-					argumento.getClass().getName()); 				
+					metaModel.getPropertiesClass(),
+					collectionName, 					
+					argument.getClass().getName()); 				
 			}
 		}			
 	}
 
-
 	/**
-	 * Ejecuta el método indicado (add, remove, etc) sobre el miembor indicado. <p>
-	 * 
-	 * @param entidadMoldeada Nunca nulo.
-	 * @param nombreMiembro Nunca nulo.
-	 * @param argumento Nunca nulo.
+	 * Execute the method (add, remove, etc) on the member. <p>
 	 */
-	private void ejecutar(
-		MetaModel metaModelo,
-		Object modeloMoldeado,
-		String nombreMetodo,
-		Class claseArgumento,
-		Object argumento)
+	private void execute(
+		MetaModel metaModel,
+		Object modelObject,
+		String methodName,
+		Class argumentClass,
+		Object argument)
 		throws NoSuchMethodException, XavaException  {		
-		if (argumento == null) {
+		if (argument == null) {
 			throw new XavaException("not_null_argument_error",				
-					modeloMoldeado.getClass().getName(),
-					nombreMetodo);
+					modelObject.getClass().getName(),
+					methodName);
 		}
 		try {
 			Objects.execute(
-				modeloMoldeado,
-				nombreMetodo,
-				claseArgumento,
-				argumento);
+				modelObject,
+				methodName,
+				argumentClass,
+				argument);
 		} catch (NoSuchMethodException ex) {
 			throw new NoSuchMethodException(XavaResources.getString("method_expected",				
-					metaModelo.getPropertiesClass(),					
-					nombreMetodo+ "("	+ argumento.getClass().getName()+ ")"));
+					metaModel.getPropertiesClass(),					
+					methodName+ "("	+ argument.getClass().getName()+ ")"));
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new XavaException("method_execution_error",				
-					metaModelo.getPropertiesClass().getName(),					
-					nombreMetodo,					
+					metaModel.getPropertiesClass().getName(),					
+					methodName,					
 					ex.getLocalizedMessage());
 		}
 	}
 
-
-	private String primeraAMayuscula(String s) {
-		return s.substring(0, 1).toUpperCase() + s.substring(1);
-	}
-
-
-	/**
-	 * Un <i>narrow</i> al tipo concreto que tiene el <i>EntityBean</i>. <p>
-	 */
-/*tmp	private Object narrowEntidad(MetaModel metaModelo, Object modelo)
-		throws XavaException {
-		if (!(metaModelo instanceof IMetaEjb)) {
-			throw new XavaException("only_ejb_error");
-		}
-		return PortableRemoteObject.narrow(modelo, ((IMetaEjb) metaModelo).getRemoteClass());
-	} */
-	
 	private void setRollbackOnly() {
-		getSessionContext().setRollbackOnly();
+		getSessionContext().setRollbackOnly(); // tmp: Mover al IPersistenceProvider
 	}
 
-	public void removeCollectionElement(String nombreModelo, Map valoresClave, String nombreColeccion, Map valoresClaveElementoColeccion) 
+	public void removeCollectionElement(String modelName, Map keyValues, String collectionName, Map collectionElementKeyValues) 
 		throws FinderException,	ValidationException, XavaException, RemoveException 
 	{
-		MetaModel metaModelo = getMetaModel(nombreModelo);
-		MetaCollection metaColeccion = metaModelo.getMetaCollection(nombreColeccion);
-		MetaModel metaModeloReferenciado = metaColeccion.getMetaReference().getMetaModelReferenced();
-		if (metaColeccion.isAggregate()) {						
-			remove(metaModeloReferenciado, valoresClaveElementoColeccion);
+		MetaModel metaModel = getMetaModel(modelName);
+		MetaCollection metaCollection = metaModel.getMetaCollection(collectionName);
+		MetaModel metaModelReferenced = metaCollection.getMetaReference().getMetaModelReferenced();
+		if (metaCollection.isAggregate()) {						
+			remove(metaModelReferenced, collectionElementKeyValues);
 		}
 		else {
-			Map clavePapaNula = new HashMap();
-			clavePapaNula.put(Strings.firstLower(nombreModelo), null);						
-			setValues(metaModeloReferenciado, valoresClaveElementoColeccion, clavePapaNula);					
+			Map nullParentKey = new HashMap();
+			nullParentKey.put(Strings.firstLower(modelName), null);						
+			setValues(metaModelReferenced, collectionElementKeyValues, nullParentKey);					
 		}												
-		if (metaColeccion.hasPostRemoveCalculators()) {
-			ejecutarPosborrarElementoColeccion(metaModelo, valoresClave, metaColeccion);			
+		if (metaCollection.hasPostRemoveCalculators()) {
+			executePostremoveCollectionElement(metaModel, keyValues, metaCollection);			
 		}						
 	} 
 	
-	private void ejecutarPosborrarElementoColeccion(MetaModel metaModelo, Map valoresClave, MetaCollection metaColeccion) throws FinderException, ValidationException, XavaException {
-		Iterator itCalculadores = metaColeccion.getMetaCalculatorsPostRemove().iterator();
-		while (itCalculadores.hasNext()) {
-			MetaCalculator metaCalculador = (MetaCalculator) itCalculadores.next();			
-			ICalculator calculador = metaCalculador.createCalculator();
-			PropertiesManager mp = new PropertiesManager(calculador);
-			Collection poners =  metaCalculador.getMetaSetsWithoutValue();
-			if (metaCalculador.containsMetaSetsWithoutValue()) {
-				Map nombrePropiedadesNecesitadas = new HashMap();
-				Iterator itPoners = poners.iterator();
-				while (itPoners.hasNext()) {
-					MetaSet poner = (MetaSet) itPoners.next();
-					nombrePropiedadesNecesitadas.put(poner.getPropertyNameFrom(), null);
+	private void executePostremoveCollectionElement(MetaModel metaModel, Map keyValues, MetaCollection metaCollection) throws FinderException, ValidationException, XavaException {
+		Iterator itCalculators = metaCollection.getMetaCalculatorsPostRemove().iterator();
+		while (itCalculators.hasNext()) {
+			MetaCalculator metaCalculator = (MetaCalculator) itCalculators.next();			
+			ICalculator calculator = metaCalculator.createCalculator();
+			PropertiesManager mp = new PropertiesManager(calculator);
+			Collection sets =  metaCalculator.getMetaSetsWithoutValue();
+			if (metaCalculator.containsMetaSetsWithoutValue()) {
+				Map neededPropertyNames = new HashMap();
+				Iterator itSets = sets.iterator();
+				while (itSets.hasNext()) {
+					MetaSet set = (MetaSet) itSets.next();
+					neededPropertyNames.put(set.getPropertyNameFrom(), null);
 				}												
-				Map valores = getValores(metaModelo, valoresClave, nombrePropiedadesNecesitadas);
+				Map values = getValues(metaModel, keyValues, neededPropertyNames);
 				
-				itPoners = poners.iterator();											
-				while (itPoners.hasNext()) {
-					MetaSet poner = (MetaSet) itPoners.next();
-					Object valor = valores.get(poner.getPropertyNameFrom());
-					if (valor == null && !valores.containsKey(poner.getPropertyNameFrom())) {
-						if (valoresClave != null) { 
-							Map nombreMiembro = new HashMap();
-							nombreMiembro.put(poner.getPropertyNameFrom(), null);
-							Map valorMiembro = getValores(metaModelo, valoresClave, nombreMiembro);
-							valor = valorMiembro.get(poner.getPropertyNameFrom());
+				itSets = sets.iterator();											
+				while (itSets.hasNext()) {
+					MetaSet set = (MetaSet) itSets.next();
+					Object value = values.get(set.getPropertyNameFrom());
+					if (value == null && !values.containsKey(set.getPropertyNameFrom())) {
+						if (keyValues != null) { 
+							Map memberName = new HashMap();
+							memberName.put(set.getPropertyNameFrom(), null);
+							Map memberValue = getValues(metaModel, keyValues, memberName);
+							value = memberValue.get(set.getPropertyNameFrom());
 						}											
 					}
 						
-					if (metaModelo.containsMetaReference(poner.getPropertyNameFrom())) {
-						MetaReference ref = metaModelo.getMetaReference(poner.getPropertyNameFrom());
+					if (metaModel.containsMetaReference(set.getPropertyNameFrom())) {
+						MetaReference ref = metaModel.getMetaReference(set.getPropertyNameFrom());
 						if (ref.isAggregate()) {
-							valor = mapaToObjetoReferenciado(metaModelo, poner.getPropertyNameFrom(), (Map) valor);
+							value = mapToReferencedObject(metaModel, set.getPropertyNameFrom(), (Map) value);
 						}
 						else {
-							IMetaEjb entidadReferenciada = (IMetaEjb) ref.getMetaModelReferenced();
+							IMetaEjb referencedEntity = (IMetaEjb) ref.getMetaModelReferenced();
 							try {
-								valor = findEntity(entidadReferenciada, (Map) valor);
+								value = findEntity(referencedEntity, (Map) value);
 							}
 							catch (ObjectNotFoundException ex) {
-								valor = null;
+								value = null;
 							}
 																																
 						}						
 					}
 					try {			
-						mp.executeSet(poner.getPropertyName(), valor);
+						mp.executeSet(set.getPropertyName(), value);
 					}
 					catch (Exception ex) {
 						ex.printStackTrace();
-						throw new XavaException("calculator_property_error", valor, poner.getPropertyName());
+						throw new XavaException("calculator_property_error", value, set.getPropertyName());
 					}									
 				}
 			}			
 			
-			if (calculador instanceof IEntityCalculator) {
-				Object entidad = findEntity((IMetaEjb) metaModelo, valoresClave);
+			if (calculator instanceof IEntityCalculator) {
+				Object entity = findEntity((IMetaEjb) metaModel, keyValues);
 				try {
-					((IEntityCalculator) calculador).setEntity(entidad);
+					((IEntityCalculator) calculator).setEntity(entity);
 				}
 				catch (Exception ex) {
 					ex.printStackTrace();
-					throw new XavaException("assign_entity_to_calculator_error", metaModelo.getName(), valoresClave);
+					throw new XavaException("assign_entity_to_calculator_error", metaModel.getName(), keyValues);
 				}									
 				
 			}
 			try {
-				calculador.calculate();
+				calculator.calculate();
 			}
 			catch (Exception ex) {
 				ex.printStackTrace();
-				throw new EJBException(XavaResources.getString("postremove_error", metaModelo.getName(), valoresClave));
+				throw new EJBException(XavaResources.getString("postremove_error", metaModel.getName(), keyValues));
 			}
 		}				
 	}
@@ -1817,7 +1531,7 @@ public class MapFacadeBean implements SessionBean {
 		return persistenceProvider;
 	}
 	
-	public Session getSession() {
+	public Session getSession() { 
 		return session;
 	}
 	public void setSession(Session session) {
