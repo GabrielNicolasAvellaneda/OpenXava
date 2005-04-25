@@ -1,9 +1,7 @@
 package org.openxava.converters;
 
-
-
 /**
- * In java a int and in database a String.
+ * In java an int and in database a String.
  * 
  * @author Javier Paniza
  */

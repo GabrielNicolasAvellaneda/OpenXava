@@ -1810,7 +1810,8 @@ public class MapFacadeBean implements SessionBean {
 	
 	private IPersistenceProvider getPersistenceProvider() {
 		if (persistenceProvider == null) {
-			persistenceProvider = new HibernatePersistenceProvider();  //tmp De momento
+			//persistenceProvider = new HibernatePersistenceProvider();  //tmp De momento
+			persistenceProvider = new EJBPersistenceProvider();  //tmp De momento
 		}
 		persistenceProvider.setSession(getSession());
 		return persistenceProvider;
