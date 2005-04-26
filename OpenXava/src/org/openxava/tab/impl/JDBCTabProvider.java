@@ -152,7 +152,7 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 	 *
 	 * @param rs  <tt>!= null</tt>
 	 */
-	private void posicionar(ResultSet rs) throws SQLException {		
+	private void posicionar(ResultSet rs) throws SQLException {
 		try {
 			// Lo intentamos a estilo JDBC 2
 			rs.absolute(current);
@@ -210,13 +210,19 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 	 * @param  con  <tt>!= null</tt>
 	 */
 	private ResultSet nextBlock(Connection con) throws SQLException {
+		
 		// assert(con)
-		PreparedStatement ps =
+		
+		/* Not in this way because TYPE_SCROLL_INTENSIVE has a very poor performance
+		   in some databases
+		  PreparedStatement ps =
 			con.prepareStatement(
 				select,
 				ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
-		//PreparedStatement ps = con.prepareStatement(select);
+		*/
+				
+		PreparedStatement ps = con.prepareStatement(select); 
 		// Llena lo valores de clave
 		StringBuffer mensaje =
 			new StringBuffer("[JDBCTabProvider.siguienteBloque] ejecutando ");
@@ -230,6 +236,7 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 				mensaje.append(", ");
 		}
 		System.out.println(mensaje);
+		
 		ResultSet rs = ps.executeQuery();
 		posicionar(rs);
 
@@ -237,7 +244,7 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 	}
 
 	// Implementa ITabProvider
-	public DataChunk nextChunk() throws RemoteException {				
+	public DataChunk nextChunk() throws RemoteException {		
 		if (select == null || eof) { // todavía no se ha llamado a buscar
 			return new DataChunk(new Vector(), true, current); // Vacío
 		}
