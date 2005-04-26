@@ -21,10 +21,12 @@ public class InvoiceValue
    private boolean yearDiscountHasBeenSet = false;
    private int detailsCount;
    private boolean detailsCountHasBeenSet = false;
-   private java.math.BigDecimal amountsSum;
-   private boolean amountsSumHasBeenSet = false;
+   private boolean considerable;
+   private boolean considerableHasBeenSet = false;
    private java.math.BigDecimal sellerDiscount;
    private boolean sellerDiscountHasBeenSet = false;
+   private java.math.BigDecimal amountsSum;
+   private boolean amountsSumHasBeenSet = false;
    private java.lang.String importance;
    private boolean importanceHasBeenSet = false;
    private int year;
@@ -59,10 +61,12 @@ public class InvoiceValue
 	  yearDiscountHasBeenSet = true;
 	  this.detailsCount = otherValue.detailsCount;
 	  detailsCountHasBeenSet = true;
-	  this.amountsSum = otherValue.amountsSum;
-	  amountsSumHasBeenSet = true;
+	  this.considerable = otherValue.considerable;
+	  considerableHasBeenSet = true;
 	  this.sellerDiscount = otherValue.sellerDiscount;
 	  sellerDiscountHasBeenSet = true;
+	  this.amountsSum = otherValue.amountsSum;
+	  amountsSumHasBeenSet = true;
 	  this.importance = otherValue.importance;
 	  importanceHasBeenSet = true;
 	  this.year = otherValue.year;
@@ -151,19 +155,19 @@ public class InvoiceValue
    public boolean detailsCountHasBeenSet(){
 	  return detailsCountHasBeenSet;
    }
-   public java.math.BigDecimal getAmountsSum()
+   public boolean isConsiderable()
    {
-	  return this.amountsSum;
+	  return this.considerable;
    }
 
-   public void setAmountsSum( java.math.BigDecimal amountsSum )
+   public void setConsiderable( boolean considerable )
    {
-	  this.amountsSum = amountsSum;
-	  amountsSumHasBeenSet = true;
+	  this.considerable = considerable;
+	  considerableHasBeenSet = true;
    }
 
-   public boolean amountsSumHasBeenSet(){
-	  return amountsSumHasBeenSet;
+   public boolean considerableHasBeenSet(){
+	  return considerableHasBeenSet;
    }
    public java.math.BigDecimal getSellerDiscount()
    {
@@ -178,6 +182,20 @@ public class InvoiceValue
 
    public boolean sellerDiscountHasBeenSet(){
 	  return sellerDiscountHasBeenSet;
+   }
+   public java.math.BigDecimal getAmountsSum()
+   {
+	  return this.amountsSum;
+   }
+
+   public void setAmountsSum( java.math.BigDecimal amountsSum )
+   {
+	  this.amountsSum = amountsSum;
+	  amountsSumHasBeenSet = true;
+   }
+
+   public boolean amountsSumHasBeenSet(){
+	  return amountsSumHasBeenSet;
    }
    public java.lang.String getImportance()
    {
@@ -296,7 +314,7 @@ public class InvoiceValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("comment=" + getComment() + " " + "date=" + getDate() + " " + "paid=" + isPaid() + " " + "yearDiscount=" + getYearDiscount() + " " + "detailsCount=" + getDetailsCount() + " " + "amountsSum=" + getAmountsSum() + " " + "sellerDiscount=" + getSellerDiscount() + " " + "importance=" + getImportance() + " " + "year=" + getYear() + " " + "customerDiscount=" + getCustomerDiscount() + " " + "vatPercentage=" + getVatPercentage() + " " + "customerTypeDiscount=" + getCustomerTypeDiscount() + " " + "vat=" + getVat() + " " + "number=" + getNumber() + " " + "customer_number=" + getCustomer_number());
+	  str.append("comment=" + getComment() + " " + "date=" + getDate() + " " + "paid=" + isPaid() + " " + "yearDiscount=" + getYearDiscount() + " " + "detailsCount=" + getDetailsCount() + " " + "considerable=" + isConsiderable() + " " + "sellerDiscount=" + getSellerDiscount() + " " + "amountsSum=" + getAmountsSum() + " " + "importance=" + getImportance() + " " + "year=" + getYear() + " " + "customerDiscount=" + getCustomerDiscount() + " " + "vatPercentage=" + getVatPercentage() + " " + "customerTypeDiscount=" + getCustomerTypeDiscount() + " " + "vat=" + getVat() + " " + "number=" + getNumber() + " " + "customer_number=" + getCustomer_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -370,14 +388,7 @@ public class InvoiceValue
 			lEquals = lEquals && this.yearDiscount.equals( that.yearDiscount );
 		 }
 		 lEquals = lEquals && this.detailsCount == that.detailsCount;
-		 if( this.amountsSum == null )
-		 {
-			lEquals = lEquals && ( that.amountsSum == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.amountsSum.equals( that.amountsSum );
-		 }
+		 lEquals = lEquals && this.considerable == that.considerable;
 		 if( this.sellerDiscount == null )
 		 {
 			lEquals = lEquals && ( that.sellerDiscount == null );
@@ -385,6 +396,14 @@ public class InvoiceValue
 		 else
 		 {
 			lEquals = lEquals && this.sellerDiscount.equals( that.sellerDiscount );
+		 }
+		 if( this.amountsSum == null )
+		 {
+			lEquals = lEquals && ( that.amountsSum == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.amountsSum.equals( that.amountsSum );
 		 }
 		 if( this.importance == null )
 		 {
@@ -448,9 +467,11 @@ public class InvoiceValue
 
       result = 37*result + (int) detailsCount;
 
-      result = 37*result + ((this.amountsSum != null) ? this.amountsSum.hashCode() : 0);
+      result = 37*result + (considerable ? 0 : 1);
 
       result = 37*result + ((this.sellerDiscount != null) ? this.sellerDiscount.hashCode() : 0);
+
+      result = 37*result + ((this.amountsSum != null) ? this.amountsSum.hashCode() : 0);
 
       result = 37*result + ((this.importance != null) ? this.importance.hashCode() : 0);
 

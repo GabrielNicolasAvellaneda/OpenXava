@@ -36,6 +36,12 @@
 			</calculator>		
 		</property>
 		<property name="paid" type="boolean"/>
+		<property name="considerable" type="boolean">
+			<calculator class="org.openxava.test.calculators.ConsiderableCalculator">
+				<set property="amount" from="amountsSum"/>
+				<set property="limit" value="10000"/>
+			</calculator>	
+		</property>	
 		
 		<property name="importance" type="String" size="10">
 			<calculator class="org.openxava.test.calculators.ImportanceCalculator">
