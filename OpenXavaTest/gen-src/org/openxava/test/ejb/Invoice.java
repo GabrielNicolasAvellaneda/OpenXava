@@ -34,10 +34,13 @@ public interface Invoice
    public int getDetailsCount(  )
       throws java.rmi.RemoteException;
 
-   public java.math.BigDecimal getAmountsSum(  )
+   public boolean isConsiderable(  )
       throws java.rmi.RemoteException;
 
    public java.math.BigDecimal getSellerDiscount(  )
+      throws java.rmi.RemoteException;
+
+   public java.math.BigDecimal getAmountsSum(  )
       throws java.rmi.RemoteException;
 
    public java.lang.String getImportance(  )

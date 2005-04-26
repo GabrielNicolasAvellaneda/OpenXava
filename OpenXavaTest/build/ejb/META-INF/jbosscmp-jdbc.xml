@@ -802,7 +802,7 @@
       <entity>
          <ejb-name>InvoiceDetail</ejb-name>
 
-         <table-name>XAVATEST_INVOICEDETAIL</table-name>
+         <table-name>XAVATEST@separator@INVOICEDETAIL</table-name>
 
          <cmp-field>
             <field-name>_UnitPrice</field-name>
@@ -1153,7 +1153,7 @@
       <entity>
          <ejb-name>Invoice</ejb-name>
 
-         <table-name>XAVATEST_INVOICE</table-name>
+         <table-name>XAVATEST@separator@INVOICE</table-name>
 
          <cmp-field>
             <field-name>_Comment</field-name>

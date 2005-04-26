@@ -166,7 +166,9 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 		}
 		catch (NullPointerException ex) {
 			// Usually for multilevel property access with null references
-			<java>if (property.getType().isPrimitive()) { </java> 
+			<java>if (boolean.class.equals(property.getType())) { </java>
+			return false;
+			<java>} else if (property.getType().isPrimitive()) { </java> 
 			return 0;
 			<java>} else { </java> 
 			return null;
