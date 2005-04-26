@@ -23,7 +23,7 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 	private String componentName;
 	private IConnectionProvider connectionProvider;
 		
-	public DataChunk nextChunk(ITabProvider tabProvider, String nombreModelo, List nombresPropiedades, Collection calculadoresTab, Map indicesClave, Collection conversoresTab) throws RemoteException {
+	public DataChunk nextChunk(ITabProvider tabProvider, String nombreModelo, List nombresPropiedades, Collection calculadoresTab, Map indicesClave, Collection conversoresTab) throws RemoteException {		
 		if (tabProvider instanceof JDBCTabProvider) {
 			((JDBCTabProvider) tabProvider).setConnectionProvider(getConnectionProvider());
 		}

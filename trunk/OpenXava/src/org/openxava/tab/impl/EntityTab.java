@@ -291,7 +291,7 @@ public class EntityTab implements IEntityTabImpl {
 	}
 
 	// Implementa IEntityTabImpl
-	public DataChunk nextChunk() throws RemoteException {
+	public DataChunk nextChunk() throws RemoteException {		
 		Collection calculadoresTab = null;
 		Map indicesClave = null;
 		String nombreModelo = null;
@@ -312,7 +312,7 @@ public class EntityTab implements IEntityTabImpl {
 		}
 		DataChunk tv = null; 		
 		try {
-			tv = getDataProvider(getComponentName()).nextChunk(tabProvider, nombreModelo, nombresPropiedades, calculadoresTab, indicesClave, tabConverters);						
+			tv = getDataProvider(getComponentName()).nextChunk(tabProvider, nombreModelo, nombresPropiedades, calculadoresTab, indicesClave, tabConverters);
 		}
 		catch (Exception ex) {
 			cancelDataProvider(getComponentName());
@@ -334,7 +334,6 @@ public class EntityTab implements IEntityTabImpl {
 			ex.printStackTrace();
 			throw new RemoteException(XavaResources.getString("tab_valid_values_error"));
 		}
-		
 		return tv;		
 	}
 

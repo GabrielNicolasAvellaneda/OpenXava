@@ -13,6 +13,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/j2ee.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/hibernate3.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/jasperreports.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-fileupload.jar"/>
+	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/commons-fileupload.jar"/>
+	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/itext.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
