@@ -3,6 +3,7 @@ package org.openxava.test.calculators;
 import java.sql.*;
 
 import org.openxava.calculators.*;
+import org.openxava.component.*;
 import org.openxava.util.*;
 
 /**
@@ -21,8 +22,9 @@ public class DetailsCountCalculator implements IJDBCCalculator {
 
 	public Object calculate() throws Exception {
 		Connection con = provider.getConnection();
-		try {			
-			PreparedStatement ps = con.prepareStatement("select count(*) from XAVATEST_INVOICEDETAIL where INVOICE_YEAR = ? and INVOICE_NUMBER = ?");						
+		try {		
+			String table = MetaComponent.get("Invoice").getAggregateMapping("InvoiceDetail").getTable();
+			PreparedStatement ps = con.prepareStatement("select count(*) from " + table + " where INVOICE_YEAR = ? and INVOICE_NUMBER = ?");						
 			ps.setInt(1, getYear());
 			ps.setInt(2, getNumber());
 			ResultSet rs = ps.executeQuery();

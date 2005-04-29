@@ -998,15 +998,13 @@ public class View implements java.io.Serializable {
 		if (getParent() == null) {
 			getRoot().registeringExecutedActions = true;
 		}
-		
-		try {
-					
+		try {					
 			Collection properties = new ArrayList(getMetaModel().getMetaPropertiesWithDefaultValueCalculator());
-			properties.addAll(getMetaModel().getMetaPropertiesViewWithDefaultCalculator());		
+			properties.addAll(getMetaModel().getMetaPropertiesViewWithDefaultCalculator());
 			if (!properties.isEmpty()) {		
 				Map nombresMiembros = getMembersNames();		
 				Iterator it = properties.iterator();
-				Collection puestos = new ArrayList();		
+				Collection puestos = new ArrayList();
 				while (it.hasNext()) {
 					MetaProperty p = (MetaProperty) it.next();			
 					if (nombresMiembros.containsKey(p.getName())) {				
@@ -1025,7 +1023,7 @@ public class View implements java.io.Serializable {
 				if (!puestos.isEmpty()) {
 					Iterator itPuestos = puestos.iterator();
 					while (itPuestos.hasNext()) {
-						String nombrePropiedad = (String) itPuestos.next();										
+						String nombrePropiedad = (String) itPuestos.next();
 						try {
 							hasToSearchOnChangeIfSubview = false;
 							propertyChanged(nombrePropiedad);
@@ -1036,8 +1034,7 @@ public class View implements java.io.Serializable {
 					}
 				}
 			}
-			
-					
+								
 			// On change events					
 			Iterator itPropiedadesAlCambiar = getMetaView().getPropertiesNamesThrowOnChange().iterator();
 			while (itPropiedadesAlCambiar.hasNext()) {
@@ -1122,7 +1119,6 @@ public class View implements java.io.Serializable {
 					}
 				}
 			}
-				
 		}
 		finally {			
 			if (getParent() == null) {

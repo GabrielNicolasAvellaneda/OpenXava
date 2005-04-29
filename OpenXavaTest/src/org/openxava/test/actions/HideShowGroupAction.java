@@ -3,7 +3,6 @@ package org.openxava.test.actions;
 import org.openxava.actions.*;
 import org.openxava.util.*;
 
-
 /**
  * @author Javier Paniza
  */
@@ -29,23 +28,20 @@ public class HideShowGroupAction extends ViewBaseAction {
 	public boolean isShow() {
 		return show;
 	}
-
-	public boolean isHide() {
-		return hide;
-	}
-
 	public void setShow(boolean b) {
 		show = b;
 	}
 
+	public boolean isHide() {
+		return hide;
+	}	
 	public void setHide(boolean b) {
 		hide = b;
 	}
-
+	
 	public String getGroup() {
 		return group;
 	}
-
 	public void setGroup(String string) {
 		group = string;
 	}

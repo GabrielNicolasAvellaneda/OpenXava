@@ -165,7 +165,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.number = ?1 AND o.officeManager_number = ?2 AND o._ZoneNumber = ?3]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.number = ?1 AND o.officeManager_number = ?2 AND o._ZoneNumber = ?3 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -175,7 +175,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.defaultCarrier_number = ?1]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.defaultCarrier_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -186,7 +186,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.mainWarehouse_number = ?1 AND o._ZoneNumber = ?2]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.mainWarehouse_number = ?1 AND o._ZoneNumber = ?2 ]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-OfficeBean.xml if you want to define extra finders. -->
 
@@ -299,7 +299,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o.type_number = ?1]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o.type_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -311,7 +311,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o.shipment_type = ?1 AND o.shipment_mode = ?2 AND o.shipment_number = ?3]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o.shipment_type = ?1 AND o.shipment_mode = ?2 AND o.shipment_number = ?3 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -321,7 +321,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o.carrier_number = ?1]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o.carrier_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -332,7 +332,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o.invoice_year = ?1 AND o.invoice_number = ?2]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o.invoice_year = ?1 AND o.invoice_number = ?2 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -685,7 +685,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryPlace o WHERE o.customer_number = ?1]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryPlace o WHERE o.customer_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -696,7 +696,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryPlace o WHERE o.preferredWarehouse_number = ?1 AND o.preferredWarehouse_zoneNumber = ?2]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryPlace o WHERE o.preferredWarehouse_number = ?1 AND o.preferredWarehouse_zoneNumber = ?2 ]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-DeliveryPlaceBean.xml if you want to define extra finders. -->
 
@@ -792,7 +792,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE o.level_id = ?1]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE o.level_id = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -890,7 +890,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o.seller_number = ?1]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o.seller_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -900,7 +900,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o.alternateSeller_number = ?1]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o.alternateSeller_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1137,7 +1137,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o.product_number = ?1]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o.product_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1147,7 +1147,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o.soldBy_number = ?1]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o.soldBy_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1158,7 +1158,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o.invoice_year = ?1 AND o.invoice_number = ?2]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o.invoice_year = ?1 AND o.invoice_number = ?2 ORDER BY o._ServiceType desc]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-InvoiceDetailBean.xml if you want to define extra finders. -->
 
@@ -1228,7 +1228,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o.warehouse_number = ?1 AND o.warehouse_zoneNumber = ?2]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o.warehouse_number = ?1 AND o.warehouse_zoneNumber = ?2 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1238,7 +1238,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o.family_number = ?1]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o.family_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1248,7 +1248,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o.subfamily_number = ?1]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o.subfamily_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1325,7 +1325,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryDetail o WHERE o.delivery_number = ?1 AND o.delivery_type_number = ?2 AND o.delivery_invoice_year = ?3 AND o.delivery_invoice_number = ?4]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryDetail o WHERE o.delivery_number = ?1 AND o.delivery_type_number = ?2 AND o.delivery_invoice_year = ?3 AND o.delivery_invoice_number = ?4 ]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-DeliveryDetailBean.xml if you want to define extra finders. -->
 
@@ -1382,7 +1382,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM AdditionalDetail o WHERE o.service_number = ?1]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM AdditionalDetail o WHERE o.service_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1392,7 +1392,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM AdditionalDetail o WHERE o.type_number = ?1]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM AdditionalDetail o WHERE o.type_number = ?1 ]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-AdditionalDetailBean.xml if you want to define extra finders. -->
 
@@ -1456,7 +1456,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM TransportCharge o WHERE o.delivery_number = ?1 AND o.delivery_type_number = ?2 AND o.delivery_invoice_year = ?3 AND o.delivery_invoice_number = ?4]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM TransportCharge o WHERE o.delivery_number = ?1 AND o.delivery_type_number = ?2 AND o.delivery_invoice_year = ?3 AND o.delivery_invoice_number = ?4 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1534,7 +1534,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Invoice o WHERE o.customer_number = ?1]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Invoice o WHERE o.customer_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1618,7 +1618,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product3 o WHERE o.family_oid = ?1]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product3 o WHERE o.family_oid = ?1 ]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-Product3Bean.xml if you want to define extra finders. -->
 
@@ -1744,7 +1744,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Carrier o WHERE o.warehouse_number = ?1 AND o.warehouse_zoneNumber = ?2]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Carrier o WHERE o.warehouse_number = ?1 AND o.warehouse_zoneNumber = ?2 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1755,7 +1755,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Carrier o WHERE o.drivingLicence_level = ?1 AND o.drivingLicence_type = ?2]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Carrier o WHERE o.drivingLicence_level = ?1 AND o.drivingLicence_type = ?2 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1833,7 +1833,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Subfamily2 o WHERE o.family_number = ?1]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Subfamily2 o WHERE o.family_number = ?1 ]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-Subfamily2Bean.xml if you want to define extra finders. -->
 
@@ -1882,7 +1882,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o.subfamily_number = ?1]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o.subfamily_number = ?1 ]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-FilterBySubfamilyBean.xml if you want to define extra finders. -->
 
@@ -2025,7 +2025,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Receptionist o WHERE o.deliveryPlace_oid = ?1]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Receptionist o WHERE o.deliveryPlace_oid = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
