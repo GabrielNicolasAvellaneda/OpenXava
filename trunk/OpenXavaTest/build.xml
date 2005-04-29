@@ -6,11 +6,10 @@
 	<property name="package" value="test"/>
 	<property name="ejb.package" value="ejb"/>
 	<property name="configuration" value="jboss-hypersonic"/>
-	<!--property name="configuration" value="websphere-as400"/-->	
+	<!-- property name="configuration" value="websphere-as400"/ -->	
 	<property file="../openxava.properties"/>
 	<property file="${configuration}.properties"/>
 	<property name="datasource" value="OpenXavaTestDS"/>
-	<property name="separator" value="_"/>
 	<property name="jetspeed.dir" value="${jboss.dir}/server/default/deployable/OpenXavaTest.war"/>		
 
 	<target name="touchHistory">
@@ -36,27 +35,28 @@
 	
 	<target name="regenerateEJB">
 		<ant antfile="../OpenXava/build.xml" target="regenerateEJB"/>		
-	</target>
+	</target>		
 		       
 	<target name="createEJBJars">
         <ant antfile = "../OpenXava/build.xml" target="createEJBJar"/>      		
 	</target>
-		
+	
 	<target name="deployEJB" depends ="createEJBJars">		
 		<ant antfile="../OpenXava/build.xml" target="deployEJB"/>
 	</target>
-		
+					
 	<target name="deployWar" depends="touchHistory">
 		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
 	</target>
 	
-	<target name="generateWebsphereMapping">
-		<ant antfile="../OpenXava/build.xml" target="generateWebsphereMapping"/>
+	<target name="regenerateWebsphereMapping">
+		<ant antfile="../OpenXava/build.xml" target="regenerateWebsphereMapping"/>
 	</target>
 	
-	<target name="createWebsphereEar" depends="createEJBJars">
-		<ant antfile="../OpenXava/build.xml" target="createWar"/>
-		<ant antfile="../OpenXava/build.xml" target="createEar"/>
+	<target name="createWebsphereEar">
+		<ant antfile="../OpenXava/build.xml" target="generateWebsphereMapping"/>
+		<antcall target="createEJBJars"/>
+		<ant antfile="../OpenXava/build.xml" target="createWebsphereEar"/>
 	</target>
 					
 	<!--

@@ -6,6 +6,8 @@
 
 	<property name="default.language" value="en"/>
 	<property name="datasource" value="DataSource"/>
+	<property name="datasource.prefix" value="java:"/>
+	<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
 	<property name="dist.base.dir" value = ".."/>
 	<property name="dist.dir" value = "${dist.base.dir}/${project}.dist"/>
 	<property name="file.ear" value = "${project}.ear"/>	
@@ -109,30 +111,39 @@
 	
 	<target name="filterHibernateFilesWithoutConfiguration" unless="configuration">
 		<copy todir="../${project.ejb}/${classes.dir}" overwrite="yes" failonerror="false">		
-			<fileset dir="../${project.ejb}/ejb/hibernate"/>
+			<fileset dir="../OpenXava/hibernate"/>
+			<fileset dir="../${project.ejb}/hibernate"/>			
+			<fileset dir="../${project.ejb}/build/hibernate"/>
 	    	<filterset>	    	
 				<filter token="separator" value="${separator}"/>
+	    		<filter token="datasource" value="${datasource}"/>
+	    		<filter token="datasource.prefix" value="${datasource.prefix}"/>
+	    		<filter token="hibernate.dialect" value="${hibernate.dialect}"/>
 			</filterset> 			         
 		</copy>			
 	</target>	
 	
 	<target name="filterHibernateFilesWithConfiguration" if="configuration">
 		<copy todir="../${project.ejb}/${classes.dir}" overwrite="yes" failonerror="false">		
+			<fileset dir="../OpenXava/hibernate"/>
+			<fileset dir="../${project.ejb}/hibernate"/>
 			<fileset dir="../${project.ejb}/build/hibernate"/>
 	    	<filterset>	    	
 				<filtersfile file="${configuration}.properties"/>				
 				<filter token="separator" value="${separator}"/>
+	    		<filter token="datasource" value="${datasource}"/>
+	    		<filter token="datasource.prefix" value="${datasource.prefix}"/>
+	    		<filter token="hibernate.dialect" value="${hibernate.dialect}"/>	    		
 			</filterset> 			         
 		</copy>			
 	</target>
-	
-	
+		
 	<target name="filterHibernateFiles" depends="copyDTDs">
 		<antcall target="filterHibernateFilesWithConfiguration"/>
 		<antcall target="filterHibernateFilesWithoutConfiguration"/>
 	</target>
 			
-	<target name="generateWebsphereMapping" depends="filterXavaFiles">
+	<target name="regenerateWebsphereMapping">
 		<echo>Generating xml template for Websphere Mapping</echo>
 		<java classname="Simple2XML" classpath="${tl.lib}">
 			<arg value="${generator.dir}/websphereDbxmi.template"/> 
@@ -173,6 +184,10 @@
 			classpath="${tl.lib};${xava.lib};${j2ee.lib}"
 		/>
 		
+		<antcall target="generateWebsphereMapping"/>
+	</target>
+	
+	<target name="generateWebsphereMapping" depends="filterXavaFiles">
 		<delete file="../${project}/gen-src-xava/dnas.properties"/>
 		<echo>Generating Websphere Mapping</echo>		
 		<java 
@@ -183,10 +198,9 @@
 	       	<arg value="${domain}"/>
        		<arg value="${package}"/>
 	       	<arg value="${ejb.package}"/>       	
-		</java>
-		
+		</java>		
 	</target>
-        
+	        
 	<target name="regenerateGenerator">     
 		<echo>Generating xml template for EJB</echo>
        <java classname="Simple2XML" classpath="${tl.lib}">
@@ -434,8 +448,13 @@
 		</copy>				
 	</target>
 	
+	<target name="configureJNDI" if="jndi.conf">
+		<copy file="../${project.ejb}/properties/jndi-${jndi.conf}.properties" 
+			tofile="../${project.ejb}/properties/jndi.properties" overwrite="true"/>
+	</target>
+	
 	<target name="createEJBJar" 
-		depends="createDist, updateDataSourceInfo, filterWithoutConfiguration, filterWithConfiguration, filterXavaFiles">
+		depends="createDist, updateDataSourceInfo, filterWithoutConfiguration, filterWithConfiguration, filterXavaFiles, configureJNDI">
 		<jar jarfile="${dist.dir}/${name.jar}.jar" 
 			basedir="../${project.ejb}/${classes.dir}" 
 			manifest="../${project.ejb}/${meta-inf.dir}/MANIFEST.MF"/>
@@ -468,6 +487,12 @@
         <jar jarfile="${dist.dir}/${file.ear}" basedir="${dist.dir}" excludes="*.ear"/>
     </target>
 	
+	<target name="createWebsphereEar" depends="createLibJars">		
+		<antcall target="createWar"/>
+		<copy file="../${project}/build/j2ee/META-INF/application-websphere.xml" tofile="${dist.dir}/META-INF/application.xml" overwrite="true"/>				
+		<jar jarfile="${dist.dir}/${file.ear}" basedir="${dist.dir}" excludes="*.ear"/>
+	</target>	
+	
     <target name="deployEJB"  depends="createEar">        
         <copy file="${dist.dir}/${file.ear}" todir="${deploy.dir}"/>
     </target>	
@@ -485,7 +510,7 @@
   		</copy>			
 	</target>
 				
-	<target name="createWar" depends="createDist, updateDataSourceInfo">
+	<target name="createWar" depends="createDist, updateDataSourceInfo, configureJNDI">
   		<copy todir="../${project}/web/xava">
     		<fileset dir="../OpenXava/web" excludes="WEB-INF/**"/>
   		</copy>		

@@ -153,16 +153,10 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 	 * @param rs  <tt>!= null</tt>
 	 */
 	private void posicionar(ResultSet rs) throws SQLException {
-		try {
-			// Lo intentamos a estilo JDBC 2
-			rs.absolute(current);
-		}
-		catch (Throwable ex) { // No hay que fiarse de los controladores JDBC
-			// ... y ahora a estilo JDBC 1
-			for (int i = 0; i < current; i++) {
-				if (!rs.next())
-					return;
-			}
+		//rs.absolute(current); // this only run with TYPE_SCROLL_INSENSITIVE, and this is very slow on executing query in some databases
+		for (int i = 0; i < current; i++) {
+			if (!rs.next())
+				return;
 		}
 	}
 	/** Campos del tabla a incluir. */

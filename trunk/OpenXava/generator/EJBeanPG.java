@@ -14,7 +14,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Apr 26 19:07:37 CEST 2005
+ * @version Fri Apr 29 19:20:19 CEST 2005
  */
 public class EJBeanPG {
     Properties properties = new Properties();
@@ -165,20 +165,20 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
      	MetaModel referencedModel = reference.getMetaModelReferenced();
      	String arguments = generateFinderArgumentsByKeyDeclaration(referencedModel);
      	String condition = generateEJBQLforReference(metaModel, reference.getName());
-    	String conditionJBoss = condition + " " + reference.getEJBQLOrderFromReferencedModel();
+    	String conditionWithOrder = condition + " " + reference.getEJBQLOrderFromReferencedModel();
      
     out.print(" \t\n * @ejb:finder signature=\"Collection findBy");
     out.print(referenceName);
     out.print("(");
     out.print(arguments);
     out.print(")\" query=\"");
-    out.print(condition);
+    out.print(conditionWithOrder);
     out.print("\" view-type=\"remote\" result-type-mapping=\"Remote\"\n * @jboss:query signature=\"Collection findBy");
     out.print(referenceName);
     out.print("(");
     out.print(arguments);
     out.print(")\" query=\"");
-    out.print(conditionJBoss);
+    out.print(conditionWithOrder);
     out.print("\"");
     } 
     // Finders for collections with condition
@@ -1321,7 +1321,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Apr 26 19:07:38 CEST 2005", // date this file was generated
+        { "Fri Apr 29 19:20:20 CEST 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/ejbean.xml", // input file
              "/home/javi/workspace/OpenXava/generator/EJBeanPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

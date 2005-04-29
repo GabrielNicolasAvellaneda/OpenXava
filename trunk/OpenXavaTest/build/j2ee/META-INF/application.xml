@@ -3,8 +3,8 @@
 
 <application>
 	<display-name>OpenXavaTest</display-name>
-	
-	<!--
+
+	<!--	
 	<module>
 		<web>
 			<web-uri>OpenXavaTest.war</web-uri>

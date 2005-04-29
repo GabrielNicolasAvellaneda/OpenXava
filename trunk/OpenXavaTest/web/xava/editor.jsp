@@ -62,10 +62,12 @@ String label = view.getLabelForProperty(p);
 </td></tr>
 <tr><td valign='middle'>
 <% } %>
-<jsp:include page="<%=WebEditors.getUrl(p)%>">
-	<jsp:param name="script" value="<%=script%>"/>
-	<jsp:param name="editable" value="<%=editable%>"/>
-</jsp:include>
+<%
+String editorURL = WebEditors.getUrl(p);
+char nexus = editorURL.indexOf('?') < 0?'?':'&';
+editorURL = editorURL + nexus + "script="+script+"&editable="+editable;
+%>
+<jsp:include page="<%=editorURL%>"/>
 <% 
 if ((editable && view.isRepresentsEntityReference() && view.isLastKeyProperty(p)) || // with key visible
 	(view.isRepresentsEntityReference() && view.isFirstPropertyAndViewHasNoKeys(p) && view.isKeyEditable())) // with key hidden

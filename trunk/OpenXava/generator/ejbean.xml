@@ -160,10 +160,10 @@ import <expr>packageName</expr>.*;
  	MetaModel referencedModel = reference.getMetaModelReferenced();
  	String arguments = generateFinderArgumentsByKeyDeclaration(referencedModel);
  	String condition = generateEJBQLforReference(metaModel, reference.getName());
-	String conditionJBoss = condition + " " + reference.getEJBQLOrderFromReferencedModel();
+	String conditionWithOrder = condition + " " + reference.getEJBQLOrderFromReferencedModel();
  </java> 	
- * @ejb:finder signature="Collection findBy<expr>referenceName</expr>(<expr>arguments</expr>)" query="<expr>condition</expr>" view-type="remote" result-type-mapping="Remote"
- * @jboss:query signature="Collection findBy<expr>referenceName</expr>(<expr>arguments</expr>)" query="<expr>conditionJBoss</expr>"
+ * @ejb:finder signature="Collection findBy<expr>referenceName</expr>(<expr>arguments</expr>)" query="<expr>conditionWithOrder</expr>" view-type="remote" result-type-mapping="Remote"
+ * @jboss:query signature="Collection findBy<expr>referenceName</expr>(<expr>arguments</expr>)" query="<expr>conditionWithOrder</expr>"
  <java>} 
 // Finders for collections with condition
  Iterator itCollectionsWithCondition = metaModel.getMetaCollectionsWithConditionInOthersModels().iterator(); 
