@@ -1,6 +1,7 @@
 package org.openxava.model.impl;
 
 import java.io.*;
+import java.rmi.*;
 import java.util.*;
 
 import javax.ejb.*;
@@ -48,7 +49,7 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			throw new RuntimeException( //tmp: ¿HibernateException?
+			throw new HibernateException( 
 					XavaResources.getString("find_error", metaModel.getName()));
 		}
 	}
@@ -97,5 +98,15 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 
 	public Object find(IMetaEjb metaEntidad, Object key) throws FinderException {
 		return null;
+	}
+
+	public void commit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void rollback() {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -33,55 +33,45 @@ public class MapFacadeBean implements SessionBean {
 	private IPersistenceProvider persistenceProvider;
 	private Session session; // tmp: remove
 
-	private Map convertSubmapsInObject(MetaModel metaModel, Map values, boolean referencesAsKey)
-		throws ValidationException, XavaException {		
-		Map result = new HashMap();		
-		Iterator it = values.entrySet().iterator();				
-		while (it.hasNext()) {
-			Map.Entry en = (Map.Entry) it.next();
-			String memberName = (String) en.getKey();
-			Object value = null;			
-			if (metaModel.containsMetaProperty(memberName)) {
-				value = en.getValue();
-			} else
-				if (metaModel.containsMetaReference(memberName)) {
-					MetaReference ref = metaModel.getMetaReference(memberName);
-					if (!referencesAsKey || ref.isAggregate()) {
-						value = mapToReferencedObject(metaModel, memberName, (Map) en.getValue());
-					}
-					else {
-						MetaEntityEjb referencedEntity = (MetaEntityEjb) ref.getMetaModelReferenced();
-						memberName = memberName + "Key";						
-						value = referencedEntity.obtainPrimaryKeyFromKey((Map) en.getValue());									
-					}
-				} else if (metaModel.getMapping().hasPropertyMapping(memberName)) {  
-					value = en.getValue();
-				} else {
-					setRollbackOnly();
-					throw new XavaException("member_not_found", memberName, metaModel.getName());
-				}
-			result.put(memberName, value);
-		}
-		return result;
-	}
-
+	
 	public Object create(String modelName, Map values)
-		throws CreateException, XavaException, ValidationException {
-		MetaModel metaModel = getMetaModel(modelName);					
-		return createEjb(metaModel, values, null, null, 0);			
+		throws CreateException, XavaException, ValidationException, RemoteException {
+		IPersistenceProvider persistenceProvider = createPersistenceProvider();
+		try {
+			MetaModel metaModel = getMetaModel(modelName);					
+			Object result = createEjb(persistenceProvider, metaModel, values, null, null, 0);
+			persistenceProvider.commit();
+			return result;
+		} 
+		catch (CreateException ex) {
+			rollback(persistenceProvider);
+			throw ex;
+		}
+		catch (ValidationException ex) {
+			rollback(persistenceProvider);
+			throw ex;
+		}
+		catch (XavaException ex) {
+			rollback(persistenceProvider);
+			throw ex;
+		}
+		catch (Exception ex) {
+			rollback(persistenceProvider);
+			throw new RemoteException(ex.getMessage());
+		}
 	}
 			
 	public Map createReturningValues(String entityName, Map values)
 			throws CreateException, XavaException, ValidationException {
 		MetaEntityEjb metaEntity = (MetaEntityEjb) MetaComponent.get(entityName).getMetaEntity();
-		Object entity = createEjb(metaEntity, values, null, null, 0);
+		Object entity = createEjb(getPersistenceProvider(), metaEntity, values, null, null, 0);
 		return getValues(metaEntity, entity, values);
 	}
 	
 	public Map createReturningKey(String entityName, Map values)
 			throws CreateException, XavaException, ValidationException {
 		MetaEntityEjb metaEntity = (MetaEntityEjb) MetaComponent.get(entityName).getMetaEntity();
-		Object entity = createEjb(metaEntity, values, null, null, 0);
+		Object entity = createEjb(getPersistenceProvider(), metaEntity, values, null, null, 0);
 		return getValues(metaEntity, entity, getKeyNames(metaEntity));
 	}
 		
@@ -144,7 +134,7 @@ public class MapFacadeBean implements SessionBean {
 		// Loop with 10 attempts, because the counter can be repeated because deleted objects
 		do {				 
 			try {
-				return createEjb(metaModel, values, metaModelContainer, container, counter);
+				return createEjb(getPersistenceProvider(), metaModel, values, metaModelContainer, container, counter);
 			}
 			catch (DuplicateKeyException ex) {
 				if (attempts > 10) throw ex;
@@ -171,6 +161,7 @@ public class MapFacadeBean implements SessionBean {
 	 * @return The created entity.
 	 */
 	private Object createEjb(
+		IPersistenceProvider persistenceProvider,	
 		MetaModel metaModel,
 		Map values,
 		MetaModel metaModelContainer,
@@ -194,7 +185,7 @@ public class MapFacadeBean implements SessionBean {
 			Map convertedValues = convertSubmapsInObject(metaModel, values, true);
 			Object newObject = null;
 			if (metaModelContainer == null) {
-				newObject = getPersistenceProvider().create((IMetaEjb)metaModel, convertedValues);
+				newObject = persistenceProvider.create((IMetaEjb)metaModel, convertedValues);
 			} else {				
 				newObject =
 					executeEJBCreate(
@@ -595,6 +586,7 @@ public class MapFacadeBean implements SessionBean {
 		int number)
 		throws CreateException, ValidationException, RemoteException, XavaException {
 		return createEjb(
+			getPersistenceProvider(), //tmp	
 			metaAggregateEjb,
 			values,
 			metaModelMain,
@@ -1423,10 +1415,16 @@ public class MapFacadeBean implements SessionBean {
 		}
 	}
 
-	private void setRollbackOnly() {
-		getSessionContext().setRollbackOnly(); // tmp: Mover al IPersistenceProvider
+	private void setRollbackOnly() { //tmp: quitar
+		getSessionContext().setRollbackOnly(); 
 	}
 
+	private void rollback (IPersistenceProvider pp) {
+		getSessionContext().setRollbackOnly();
+		pp.rollback();
+	}
+	
+	
 	public void removeCollectionElement(String modelName, Map keyValues, String collectionName, Map collectionElementKeyValues) 
 		throws FinderException,	ValidationException, XavaException, RemoveException 
 	{
@@ -1522,13 +1520,57 @@ public class MapFacadeBean implements SessionBean {
 		}				
 	}
 	
-	private IPersistenceProvider getPersistenceProvider() {
+	private Map convertSubmapsInObject(MetaModel metaModel, Map values,
+			boolean referencesAsKey) throws ValidationException, XavaException {
+		Map result = new HashMap();
+		Iterator it = values.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry en = (Map.Entry) it.next();
+			String memberName = (String) en.getKey();
+			Object value = null;
+			if (metaModel.containsMetaProperty(memberName)) {
+				value = en.getValue();
+			}
+			else if (metaModel.containsMetaReference(memberName)) {
+				MetaReference ref = metaModel.getMetaReference(memberName);
+				if (!referencesAsKey || ref.isAggregate()) {
+					value = mapToReferencedObject(metaModel, memberName, (Map) en
+							.getValue());
+				}
+				else {
+					MetaEntityEjb referencedEntity = (MetaEntityEjb) ref
+							.getMetaModelReferenced();
+					memberName = memberName + "Key";
+					value = referencedEntity.obtainPrimaryKeyFromKey((Map) en.getValue());
+				}
+			}
+			else if (metaModel.getMapping().hasPropertyMapping(memberName)) {
+				value = en.getValue();
+			}
+			else {
+				setRollbackOnly();
+				throw new XavaException("member_not_found", memberName, metaModel
+						.getName());
+			}
+			result.put(memberName, value);
+		}
+		return result;
+	}
+
+	
+	private IPersistenceProvider getPersistenceProvider() {  //tmp quitar
 		if (persistenceProvider == null) {
-			//persistenceProvider = new HibernatePersistenceProvider();  //tmp De momento
-			persistenceProvider = new EJBPersistenceProvider();  //tmp De momento
+			persistenceProvider = new HibernatePersistenceProvider();  //tmp De momento
+			// persistenceProvider = new EJBPersistenceProvider();  //tmp De momento
 		}
 		persistenceProvider.setSession(getSession());
 		return persistenceProvider;
+	}
+	
+	private IPersistenceProvider createPersistenceProvider() {
+		IPersistenceProvider persistenceProvider = new HibernatePersistenceProvider();
+		persistenceProvider.setSession(getSession());
+		return persistenceProvider; 
 	}
 	
 	public Session getSession() { 
@@ -1537,4 +1579,6 @@ public class MapFacadeBean implements SessionBean {
 	public void setSession(Session session) {
 		this.session = session;
 	}
+	
+	
 }

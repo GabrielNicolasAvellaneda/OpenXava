@@ -94,12 +94,27 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 	}
 
 	public void remove(MetaModel metaModel, Object object)
-			throws RemoteException, RemoveException, XavaException {
-		((EJBReplicable) toPropertiesContainer(metaModel,
+			throws RemoveException, XavaException {
+		try {
+			
+			((EJBReplicable) toPropertiesContainer(metaModel,
 				object)).remove();
+		}
+		catch (RemoteException ex) {
+			ex.printStackTrace();
+			throw new EJBException(XavaResources.getString("remove_error",
+					metaModel.getName(),
+					ex.getLocalizedMessage()));
+		}
 	}
 
 	public void setSession(Session session) { // tmp: remove
+	}
+
+	public void commit() {
+	}
+
+	public void rollback() {
 	}
 
 }
