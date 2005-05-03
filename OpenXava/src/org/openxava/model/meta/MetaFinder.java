@@ -10,7 +10,7 @@ import org.openxava.util.*;
  */
 public class MetaFinder implements Serializable {
 	
-	private static Map argumentosJBoss11AEJBQL;
+	private static Map argumentsJBoss11ToEJBQL;
 	 	
 	private String name;
 	private String arguments;	
@@ -19,70 +19,38 @@ public class MetaFinder implements Serializable {
 	private String order;
 	private MetaModel metaModel;
 	
-	/**
-	 * Returns the argumentos.
-	 * @return String
-	 */
 	public String getArguments() {
 		arguments = Strings.change(arguments, "String", "java.lang.String");
 		arguments = Strings.change(arguments, "java.lang.java.lang.String", "java.lang.String");
 		return arguments;
 	}
 
-	/**
-	 * Returns the coleccion.
-	 * @return boolean
-	 */
 	public boolean isCollection() {
 		return collection;
 	}
 
-	/**
-	 * Returns the condicion.
-	 * @return String
-	 */
 	public String getCondition() {
 		return condition;
 	}
 
-	/**
-	 * Returns the nombre.
-	 * @return String
-	 */
 	public String getName() {
 		return name;
 	}
 
-	/**
-	 * Sets the argumentos.
-	 * @param argumentos The argumentos to set
-	 */
-	public void setArguments(String argumentos) {
-		this.arguments = argumentos;
+	public void setArguments(String arguments) {
+		this.arguments = arguments;
 	}
 
-	/**
-	 * Sets the coleccion.
-	 * @param coleccion The coleccion to set
-	 */
-	public void setCollection(boolean coleccion) {
-		this.collection = coleccion;
+	public void setCollection(boolean collection) {
+		this.collection = collection;
 	}
 
-	/**
-	 * Sets the condicion.
-	 * @param condicion The condicion to set
-	 */
-	public void setCondition(String condicion) {
-		this.condition = condicion;
+	public void setCondition(String condition) {
+		this.condition = condition;
 	}
 
-	/**
-	 * Sets the nombre.
-	 * @param nombre The nombre to set
-	 */
-	public void setName(String nombre) {
-		this.name = nombre;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	public String getSQLCondition() throws XavaException {		
@@ -96,8 +64,8 @@ public class MetaFinder implements Serializable {
 		sb.append(" o");
 		if (!Is.emptyString(this.condition)) {
 			sb.append(" WHERE ");			
-			String condicionAtributos = getMetaModel().getMapping().changePropertiesByCMPAttributes(this.condition);			 
-			sb.append(Strings.change(condicionAtributos, getArgumentosJBoss11AEJBQL()));
+			String attributesCondition = getMetaModel().getMapping().changePropertiesByCMPAttributes(this.condition);			 
+			sb.append(Strings.change(attributesCondition, getArgumentsJBoss11ToEJBQL()));
 		}
 		return sb.toString();
 	}
@@ -111,26 +79,14 @@ public class MetaFinder implements Serializable {
 		return sb.toString();
 	}
 
-	/**
-	 * Returns the metaEntidad.
-	 * @return MetaEntidad
-	 */
 	public MetaModel getMetaModel() {
 		return metaModel;
 	}
 
-	/**
-	 * Sets the metaEntidad.
-	 * @param metaEntidad The metaEntidad to set
-	 */
-	public void setMetaModel(MetaModel metaEntidad) {
-		this.metaModel = metaEntidad;
+	public void setMetaModel(MetaModel metaModel) {
+		this.metaModel = metaModel;
 	}
 
-	/**
-	 * Returns the orden.
-	 * @return String
-	 */
 	public String getOrder() {
 		return order;
 	}
@@ -140,22 +96,18 @@ public class MetaFinder implements Serializable {
 		return getMetaModel().getMapping().changePropertiesByColumns(this.order);
 	}
 
-	/**
-	 * Sets the orden.
-	 * @param orden The orden to set
-	 */
-	public void setOrder(String orden) {
-		this.order = orden;
+	public void setOrder(String order) {
+		this.order = order;
 	}
 	
-	private static Map getArgumentosJBoss11AEJBQL() {
-		if (argumentosJBoss11AEJBQL == null) {
-			argumentosJBoss11AEJBQL = new HashMap();
+	private static Map getArgumentsJBoss11ToEJBQL() {
+		if (argumentsJBoss11ToEJBQL == null) {
+			argumentsJBoss11ToEJBQL = new HashMap();
 			for (int i=0; i<30; i++) {
-				argumentosJBoss11AEJBQL.put("{" + i+ "}", "?" + (i+1));
+				argumentsJBoss11ToEJBQL.put("{" + i+ "}", "?" + (i+1));
 			}			
 		}
-		return argumentosJBoss11AEJBQL;
+		return argumentsJBoss11ToEJBQL;
 	}
 
 }

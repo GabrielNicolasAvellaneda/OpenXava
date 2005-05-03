@@ -6,56 +6,56 @@ import org.openxava.model.meta.xmlparse.*;
 import org.openxava.util.*;
 
 /**
- * Clase de utilidad para acceder a la longitud por defecto de un tipo o esterotipo. <p>
+ * Utility class to access to default length of a type or stereotype. <p>
  * 
  * @author Javier Paniza
  */
 public class DefaultSize {
 		
-	private static Map estereotipos;
-	private static Map tipos;
+	private static Map stereotypes;
+	private static Map types;
 	
-	public static void _addForStereotype(String nombre, int longitud) throws XavaException {
-		if (estereotipos == null) {
+	public static void _addForStereotype(String name, int length) throws XavaException {
+		if (stereotypes == null) {
 			throw new XavaException("only_from_parse", "DefaultSize._addForStereotype");
 		}		
-		estereotipos.put(nombre, new Integer(longitud));
+		stereotypes.put(name, new Integer(length));
 	}
 	
-	public static void _addForType(String nombreClase, int longitud) throws XavaException {
-		if (tipos == null) {
+	public static void _addForType(String className, int length) throws XavaException {
+		if (types == null) {
 			throw new XavaException("only_from_parse", "DefaultSize._addForType");
 		}			
-		tipos.put(nombreClase, new Integer(longitud));
+		types.put(className, new Integer(length));
 	}
 	
 	
-	public static int forStereotype(String nombre) throws ElementNotFoundException, XavaException {
-		if (estereotipos == null) {
-			configurar();
+	public static int forStereotype(String name) throws ElementNotFoundException, XavaException {
+		if (stereotypes == null) {
+			configure();
 		}
-		Integer result = (Integer) estereotipos.get(nombre);
+		Integer result = (Integer) stereotypes.get(name);
 		if (result == null) {
-			throw new ElementNotFoundException("default_size_for_stereotype_not_found", nombre);
+			throw new ElementNotFoundException("default_size_for_stereotype_not_found", name);
 		}
 		return result.intValue();
 	}
 	
-	public static int forType(Class clase) throws ElementNotFoundException, XavaException {
-		if (tipos == null) {
-			configurar();
+	public static int forType(Class className) throws ElementNotFoundException, XavaException {
+		if (types == null) {
+			configure();
 		}
-		Integer result = (Integer) tipos.get(clase.getName());
+		Integer result = (Integer) types.get(className.getName());
 		if (result == null) {
-			throw new ElementNotFoundException("default_size_for_type_not_found", clase.getName());
+			throw new ElementNotFoundException("default_size_for_type_not_found", className.getName());
 		}
 		return result.intValue();		
 	}
 	
-	private static void configurar() throws XavaException {
-		estereotipos = new HashMap();
-		tipos = new HashMap();
-		DefaultSizeParser.configurarLongitudDefecto();
+	private static void configure() throws XavaException {
+		stereotypes = new HashMap();
+		types = new HashMap();
+		DefaultSizeParser.configureDefaultSize();
 	}
 	
 	

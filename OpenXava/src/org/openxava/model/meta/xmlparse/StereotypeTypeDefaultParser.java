@@ -10,11 +10,11 @@ import org.w3c.dom.*;
  */
 public class StereotypeTypeDefaultParser extends ParserBase {	
 
-	public StereotypeTypeDefaultParser(String urlArchivoXml, int language) {
-		super(urlArchivoXml, language);
+	public StereotypeTypeDefaultParser(String xmlFileURL, int language) {
+		super(xmlFileURL, language);
 	}
 	
-	public static void configurarTipoEstereotipoDefecto() throws XavaException {
+	public static void configureStereotypeTypeDefault() throws XavaException {
 		StereotypeTypeDefaultParser enParser = new StereotypeTypeDefaultParser("stereotype-type-default.xml", ENGLISH);
 		enParser.parse();		
 		StereotypeTypeDefaultParser esParser = new StereotypeTypeDefaultParser("tipo-estereotipo-defecto.xml", ESPAÑOL);

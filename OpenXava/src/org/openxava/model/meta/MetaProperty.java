@@ -1,6 +1,5 @@
 package org.openxava.model.meta;
 
-
 import java.math.*;
 import java.rmi.*;
 import java.text.*;
@@ -14,8 +13,6 @@ import org.openxava.util.*;
 import org.openxava.util.meta.*;
 import org.openxava.validators.*;
 import org.openxava.validators.meta.*;
-
-
 
 /**
  * @author Javier Paniza
@@ -39,39 +36,18 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	private MetaCalculator metaCalculatorDefaultValue;		
 	private ICalculator calculator;	
 	private ICalculator defaultValueCalculator;
-	
-
-
 	private Collection dependentPropertiesNames;
-
 	private String typeName;
 	private boolean key;
 	private boolean isKeySet;
 	private boolean mappingSet;
 	private PropertyMapping mapping;
-	
-	
-	/**
-	 * Comentario de constructor Propiedad.
-	 */
-	public MetaProperty() {
-		super();
+		
+	public void addValidValue(Object validValue) {
+		getValidValues().add(validValue);
 	}
-	/**
-	 * Inserte aquí la descripción del método.
-	 * Fecha de creación: (26/07/2001 17:38:34)
-	 * @return java.util.Collection
-	 */
-	public void addValidValue(Object valorPosible) {
-		getValidValues().add(valorPosible);
-	}
-	/**
-	 * Inserte aquí la descripción del método.
-	 * Fecha de creación: (26/07/2001 17:49:19)
-	 * @param valor java.lang.Object
-	 */
-	public void containsValidValue(Object valor) {
-		getValidValues().contains(valor);
+	public void containsValidValue(Object value) {
+		getValidValues().contains(value);
 	}
 	
 	public Object getValidValue(int i) {
@@ -81,7 +57,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		}
 		catch (IndexOutOfBoundsException ex) {
 			ex.printStackTrace();
-			System.err.println("[MetaPropiedad.getValorPosible] ¡ADVERTENCIA!: No existe valor posible para índice " + i);
+			System.err.println("[MetaProperty.getValidValue] " + XavaResources.getString("valid_value_not_found_for_index_warning")); 			
 			return "[" + i  + "]"; 
 		}
 	}
@@ -97,16 +73,16 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		return getValidValueLabel(XavaResources.getLocale(request), i);
 	}
 
-	public String getValidValueLabel(Locale locale, Object valor) { 	
-		return obtenerEtiquetaValorPosible(locale, valor);
+	public String getValidValueLabel(Locale locale, Object value) { 	
+		return obtainValidValueLabel(locale, value);
 	}
 	
-	public String getValidValueLabel(ServletRequest request, Object valor) { 	
-		return obtenerEtiquetaValorPosible(XavaResources.getLocale(request), valor);
+	public String getValidValueLabel(ServletRequest request, Object value) { 	
+		return obtainValidValueLabel(XavaResources.getLocale(request), value);
 	}
 		
 	public String getValidValueLabel(Locale locale, int i) { 
-		return obtenerEtiquetaValorPosible(locale, getValidValue(i));
+		return obtainValidValueLabel(locale, getValidValue(i));
 	}
 
 	/**
@@ -132,22 +108,19 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		return sb.toString();
 	}
 	
-	private String obtenerEtiquetaValorPosible(Locale locale, Object valor) { 
-		String id = getId() + "." + valor;
+	private String obtainValidValueLabel(Locale locale, Object value) { 
+		String id = getId() + "." + value;
 		try {											
 			return Labels.get(id, locale);
 		}
 		catch (Exception ex) {			
 			System.err.println(XavaResources.getString("label_i18n_warning", id)); 				
-			return Strings.firstUpper(valor.toString());
+			return Strings.firstUpper(value.toString());
 		}		
 	}
-	
-	
-	
-	private IPropertyValidator crearValidadorRequerido() throws XavaException {
-		// assert(getValidador()
-		String claseValidador = null;
+		
+	private IPropertyValidator createRequiredValidator() throws XavaException {
+		String validatorClass = null;
 		try {
 			MetaValidatorRequired vr = null;
 			if (!Is.emptyString(getStereotype())) {
@@ -157,31 +130,20 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				vr = MetaValidators.getMetaValidatorRequiredFor(getType().getName());	
 			}
 			if (vr == null) {
-				System.err.println(
-					"ADVERTENCIA: No hay definido un validador para comprobar una propiedad requerida de tipo "
-						+ getType());
+				System.err.println(XavaResources.getString("required_validator_not_found_for_type", getType()));
 				return new TolerantValidator();
 			}
-			claseValidador = vr.getValidatorClass();
-			return (IPropertyValidator) Class.forName(claseValidador).newInstance();
+			validatorClass = vr.getValidatorClass();
+			return (IPropertyValidator) Class.forName(validatorClass).newInstance();
 		} catch (ClassCastException ex) {
 			ex.printStackTrace();
-			throw new XavaException(
-				"El validador " + claseValidador + " ha de implementar IValidadorPropiedad");
+			throw new XavaException("property_validator_invalid_class", validatorClass); 
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			throw new XavaException(
-				"Imposible instanciar validador para comprobar si la propiedad está presente"
-					+ getName()
-					+ " por:\n"
-					+ ex.getLocalizedMessage());
+			throw new XavaException("create_validator_error", getName(), ex.getLocalizedMessage());
 		}
 	}
 	
-	/**
-	 * 
-	 * @return java.lang.String
-	 */
 	public java.lang.String getStereotype() {
 		return stereotype;
 	}
@@ -207,8 +169,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	
 	/**
 	 * 
-	 * @return Puede devolver -1, si para ese tipo de dato no tiene
-	 *         sentido el concepto de longitud.
+	 * @return Can return -1 if the datatype does not have length concept
 	 */
 	public int getSize() throws XavaException {		
 		if (size == 0) {
@@ -218,55 +179,47 @@ public class MetaProperty extends MetaMember implements Cloneable {
 					return size;
 				}
 				catch (ElementNotFoundException ex) {
-					// Lo dejamos correr y asi coge la del tipo
+					// left that get size from type
 				}
 			}
 						
 			if (hasValidValues()) {
-				size = crearLogitudSegunValoresPosibles();
+				size = createLengthFromValidValues();
 			}
 			else {
 				try {
 					size = DefaultSize.forType(getType());
 				}
 				catch (ElementNotFoundException ex) {
-					size = -1; // Sin longitud. Hay tipos de datos donde no tiene sentido la longitud
+					size = -1; // Without length. In some datatypes this is fine
 				}
 			}
 		}
 		return size;
 	}
 
-	/**
-	 * Method crearLogitudSegunValoresPosibles.
-	 * @return int
-	 */
-	private int crearLogitudSegunValoresPosibles() {		
+	private int createLengthFromValidValues() {		
 		Iterator it = getValidValues().iterator();
 		int t = 0;
 		while (it.hasNext()) {
-			String valor = (String) it.next();			
-			if (valor != null && valor.length() > t) t = valor.length();
+			String value = (String) it.next();			
+			if (value != null && value.length() > t) t = value.length();
 		}
 		return t;
 	}
 
-	/**
-	 * 
-	 * @return java.lang.Class
-	 */
 	public Class getType() throws XavaException {				
 		if (type == null) {			
 			if (Is.emptyString(getTypeName())) {				
-				type = obtenerTipoDesdeModelo(getName());
+				type = obtainTypeFromModel(getName());
 			}
 			else {
 				try { 					
-					type = obtenerTipo(getTypeName());
+					type = obtainType(getTypeName());
 				}
 				catch (XavaException ex) {
 					try {
-						type = obtenerTipoDesdeModelo(getName());
+						type = obtainTypeFromModel(getName());
 					}
 					catch (XavaException ex2) {
 						throw new XavaException("incorrect_type_for_property", getName(), getTypeName());
@@ -284,15 +237,15 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		return mapeo.getCmpTypeName();
 	}
 	
-	private Class obtenerTipoDesdeModelo(String nombrePropiedad) throws XavaException {
+	private Class obtainTypeFromModel(String propertyName) throws XavaException {
 		try {
-			return getMetaModel().getPropertyDescriptor(nombrePropiedad).getPropertyType();
+			return getMetaModel().getPropertyDescriptor(propertyName).getPropertyType();
 		}
 		catch (ElementNotFoundException ex) {
 			return java.lang.Object.class;
 		}		
 		catch (Exception ex) {			
-			throw new XavaException("type_from_model_error", nombrePropiedad);
+			throw new XavaException("type_from_model_error", propertyName);
 		}
 	}
 		
@@ -313,68 +266,60 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		return typeName;
 	}
 	
-	public void setTypeName(String tipo) throws XavaException {
-		this.typeName = tipo;
+	public void setTypeName(String type) throws XavaException {
+		this.typeName = type;
 	}
 	
-	private Class obtenerTipo(String tipo) throws XavaException {		
-		if (Is.emptyString(tipo)) {
+	private Class obtainType(String type) throws XavaException {		
+		if (Is.emptyString(type)) {
 			return null;			
 		}
-		Class result = getClasePrimitivo(tipo);
-		if ("byte[]".equals(tipo) || "byte []".equals(tipo)) return byte[].class;
+		Class result = getPrimitiveClass(type);
+		if ("byte[]".equals(type) || "byte []".equals(type)) return byte[].class;
 		if (result == null) {
 			try {
-				result = Class.forName(tipo);
+				result = Class.forName(type);
 			}
 			catch (ClassNotFoundException ex) {
 				try {
-					result = Class.forName("java.lang." + tipo);
+					result = Class.forName("java.lang." + type);
 				}
 				catch (ClassNotFoundException ex2) {
-					throw new XavaException("set_type_error", getName(), tipo);
+					throw new XavaException("set_type_error", getName(), type);
 				}
 			}
 		}
 		return result;
 	}
 	
-	/**
-	 * Method getClasePrimitivo.
-	 * @param tipo
-	 * @return Class
-	 */
-	private Class getClasePrimitivo(String tipo) {
-		if (tipo.equals("boolean")) {
+	private Class getPrimitiveClass(String type) {
+		if (type.equals("boolean")) {
 			return Boolean.TYPE;	
 		}
-		else if (tipo.equals("byte")) {
+		else if (type.equals("byte")) {
 			return Byte.TYPE;
 		}
-		else if (tipo.equals("char")) {
+		else if (type.equals("char")) {
 			return Character.TYPE;
 		}
-		else if (tipo.equals("short")) {
+		else if (type.equals("short")) {
 			return Short.TYPE;
 		}
-		else if (tipo.equals("int")) {
+		else if (type.equals("int")) {
 			return Integer.TYPE;
 		}
-		else if (tipo.equals("long")) {
+		else if (type.equals("long")) {
 			return Long.TYPE;
 		}
-		else if (tipo.equals("float")) {
+		else if (type.equals("float")) {
 			return Float.TYPE;
 		}
-		else if (tipo.equals("double")) {
+		else if (type.equals("double")) {
 			return Double.TYPE;
 		}
 		return null;
 	}
 
-
-
-	
 	public boolean hasDefaultValueCalculator() {		
 		return metaCalculatorDefaultValue != null;
 	}
@@ -383,13 +328,9 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		return metaCalculator != null;
 	}
 	
-	
-	
-	
-		
 	/**
 	 * 
-	 * @return null si no tiene calculador para valor inicial.
+	 * @return null if this does not have calculator for default value
 	 */
 	public ICalculator getDefaultValueCalculator() throws XavaException {
 		if (!hasDefaultValueCalculator()) return null;
@@ -401,7 +342,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	
 	/**
 	 * 
-	 * @return null si no tiene calculador.
+	 * @return null if this does not have calculator 
 	 */
 	public ICalculator getCalculator() throws XavaException {
 		if (!hasCalculator()) return null;
@@ -413,7 +354,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	
 	
 	/**
-	 * @return de IValidadorPropiedad
+	 * @return of IPropertyValidator
 	 */
 	private Collection getValidators() throws XavaException {
 		if (validators == null) {
@@ -421,32 +362,24 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			if (metaValidators != null) {
 				Iterator it = metaValidators.iterator();
 				while (it.hasNext()) {
-					MetaValidator metaValidador = (MetaValidator) it.next();
-					validators.add(metaValidador.createPropertyValidator());
+					MetaValidator metaValidator = (MetaValidator) it.next();
+					validators.add(metaValidator.createPropertyValidator());
 				}
 			}
 			if (isRequired()) {
-				validators.add(crearValidadorRequerido());
+				validators.add(createRequiredValidator());
 			}
 		}
 		return validators;
 	}
 	
-	/**
-	 * Inserte aquí la descripción del método.
-	 * Fecha de creación: (26/07/2001 17:38:34)
-	 * @return java.util.Collection
-	 */
 	private List getValidValues() {
 		if (validValues == null) {
 			validValues = new ArrayList();
 		}
 		return validValues;
 	}
-	/**
-	 * 
-	 * @return boolean
-	 */
+	
 	public boolean isKey() {
 		if (!isKeySet) {			
 			try {
@@ -470,8 +403,8 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		return key;
 	}
 	
-	public void setKey(boolean clave) {		
-		this.key = clave;
+	public void setKey(boolean key) {		
+		this.key = key;
 		isKeySet = true;
 	}
 	
@@ -484,56 +417,39 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		return getMapping() != null;
 	}
 	
-	/**
-	 * 
-	 * @return boolean
-	 */
 	public boolean isRequired() {
 		return required;
 	}
-	/**
-	 * 
-	 * @param newEstereotipo java.lang.String
-	 */
-	public void setStereotype(java.lang.String newEstereotipo) {
-		stereotype = newEstereotipo;
+
+	public void setStereotype(String newStereotype) {
+		stereotype = newStereotype;
 	}
-	/**
-	 * 
-	 * @param newRequerido boolean
-	 */
-	public void setRequired(boolean newRequerido) {
-		required = newRequerido;
+	
+	public void setRequired(boolean newRequired) {
+		required = newRequired;
 	}
-	/**
-	 * 
-	 * @param newTamaño int
-	 */
-	public void setSize(int newLongitud) {
-		size = newLongitud;
+	
+	public void setSize(int newSize) {
+		size = newSize;
 	}
-	/**
-	 * Inserte aquí la descripción del método.
-	 * Fecha de creación: (26/07/2001 18:39:08)
-	 * @return boolean
-	 */
+	
 	public boolean hasValidValues() {
 		if (validValues == null) return false;
 		return validValues.size() > 0;
 	}
-	
-	
-	public void validate(Messages errores,	Object objeto) throws RemoteException {
+		
+	public void validate(Messages errors,	Object object) throws RemoteException {
 		try {
 			Iterator it = getValidators().iterator();
 			while (it.hasNext()) {
 				IPropertyValidator v = (IPropertyValidator) it.next();								
-				v.validate(errores, objeto, getName(), getMetaModel().getName());
+				v.validate(errors, object, getName(), getMetaModel().getName());
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new RemoteException(
-				"Imposible validar por:\n" + ex.getLocalizedMessage());
+					XavaResources.getString("validate_error", getName(), getMetaModel().getName()));
+					
 		}
 	}
 	
@@ -547,16 +463,13 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	
 	public Iterator validValuesLabels(Locale locale) {
 		Iterator it = validValues();
-		Collection etiquetas = new ArrayList();
+		Collection labels = new ArrayList();
 		while (it.hasNext()) {
-			etiquetas.add(obtenerEtiquetaValorPosible(locale, it.next()));
+			labels.add(obtainValidValueLabel(locale, it.next()));
 		}
-		return etiquetas.iterator();
+		return labels.iterator();
 	}
 	
-	/**
-	 * Si es clave no se considera de solo lectura. <p>
-	 */
 	public boolean isReadOnly() throws XavaException {
 		if (!readOnlyCalculated) {
 			if (isKey()) readOnly = false;
@@ -576,19 +489,16 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			System.err.println("[MetaProperty.calculateIfReadOnly] ¡ADVERTENCIA! Imposible comprobar si la propiedad " + getName() + " de " + getMetaModel().getName() + " es de solo lectura");
+			System.err.println("[MetaProperty.calculateIfReadOnly] " + XavaResources.getString("read_only_property_warning", getName(), getMetaModel().getName()));
 			return true;			
 		}
 	}
 	
-	/**
-	 * @see java.lang.Object#clone()
-	 */
 	public MetaProperty cloneMetaProperty() throws XavaException {
 		try {
 			MetaProperty clon = (MetaProperty) super.clone();
-			// Lo siguiente es para obligar a calcular las propiedades, y
-			// así poder desconectar la metapropiedad clonada del modelo (p. ej. cambiando el nombre de propiedad)
+			// The next is to force calculate its properties and thus
+			// the cloned metaproperty can be desconected from model 
 			clon.isReadOnly();
 			clon.getType();
 			return clon;
@@ -603,40 +513,20 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		}
 	}
 	
-	
-
-	
-	
-	/**
-	 * Returns the metaCalculador.
-	 * @return MetaCalculador
-	 */
 	public MetaCalculator getMetaCalculator() {
 		return metaCalculator;
 	}
 
-	/**
-	 * Sets the metaCalculador.
-	 * @param metaCalculador The metaCalculador to set
-	 */
-	public void setMetaCalculator(MetaCalculator metaCalculador) {
-		this.metaCalculator = metaCalculador;
+	public void setMetaCalculator(MetaCalculator metaCalculator) {
+		this.metaCalculator = metaCalculator;
 	}
 
-	/**
-	 * Returns the metaCalculadorValorInicial.
-	 * @return MetaCalculador
-	 */
 	public MetaCalculator getMetaCalculatorDefaultValue() {
 		return metaCalculatorDefaultValue;
 	}
 
-	/**
-	 * Sets the metaCalculadorValorInicial.
-	 * @param metaCalculadorValorInicial The metaCalculadorValorInicial to set
-	 */
-	public void setMetaCalculatorDefaultValue(MetaCalculator metaCalculadorValorInicial) {
-		this.metaCalculatorDefaultValue = metaCalculadorValorInicial;
+	public void setMetaCalculatorDefaultValue(MetaCalculator metaCalculatorDefaultValue) {
+		this.metaCalculatorDefaultValue = metaCalculatorDefaultValue;
 	}
 	
 	public boolean hasDependentProperties() throws XavaException {
@@ -647,8 +537,8 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		if (dependentPropertiesNames == null) {
 			dependentPropertiesNames = new ArrayList();	
 			if (hasMetaModel()) {
-				llenarNombresPropiedadesDependientes(getMetaModel().getMetaPropertiesCalculated(), false);
-				llenarNombresPropiedadesDependientes(getMetaModel().getMetaPropertiesWithDefaultValueCalculator(), true);
+				fillDependedPropertiesNames(getMetaModel().getMetaPropertiesCalculated(), false);
+				fillDependedPropertiesNames(getMetaModel().getMetaPropertiesWithDefaultValueCalculator(), true);
 			}
 		}
 		return dependentPropertiesNames;
@@ -656,31 +546,29 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	
 	/**
 	 * 
-	 * @param otra Puede ser nulo, en cuyo caso devuelve falso.
+	 * @param other  Can be null, and in which case return false
 	 */
-	public boolean depends(MetaProperty otra) throws XavaException {
-		if (otra == null) return false;
-		if (!otra.hasDependentProperties()) return false;
-		return otra.getDependentPropertiesNames().contains(getName());
+	public boolean depends(MetaProperty other) throws XavaException {
+		if (other == null) return false;
+		if (!other.hasDependentProperties()) return false;
+		return other.getDependentPropertiesNames().contains(getName());
 	}
 		
 	public boolean hasMetaModel() {		
 		return getMetaModel() != null;
 	}
 	
-	
-	
-	private void llenarNombresPropiedadesDependientes(Collection metaPropiedades, boolean valorInicial) {
-		Iterator it = metaPropiedades.iterator();
+	private void fillDependedPropertiesNames(Collection metaProperties, boolean initialValue) {
+		Iterator it = metaProperties.iterator();
 		while (it.hasNext()) {
-			MetaProperty metaPropiedad = (MetaProperty) it.next();
-			MetaSetsContainer metaCalculador = valorInicial?metaPropiedad.getMetaCalculatorDefaultValue():metaPropiedad.getMetaCalculator();
-			if (!metaCalculador.containsMetaSets()) continue;
-			Iterator itMetaPoners = metaCalculador.getMetaSets().iterator();
-			while (itMetaPoners.hasNext()) {
-				MetaSet metaPoner = (MetaSet) itMetaPoners.next();
-				if (metaPoner.getPropertyNameFrom().equals(getName())) {
-					dependentPropertiesNames.add(metaPropiedad.getName());
+			MetaProperty metaProperty = (MetaProperty) it.next();
+			MetaSetsContainer metaCalculator = initialValue?metaProperty.getMetaCalculatorDefaultValue():metaProperty.getMetaCalculator();
+			if (!metaCalculator.containsMetaSets()) continue;
+			Iterator itMetaSets = metaCalculator.getMetaSets().iterator();
+			while (itMetaSets.hasNext()) {
+				MetaSet metaSet = (MetaSet) itMetaSets.next();
+				if (metaSet.getPropertyNameFrom().equals(getName())) {
+					dependentPropertiesNames.add(metaProperty.getName());
 				}					
 			}
 		}		
@@ -706,53 +594,37 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			} 
 			
 			propertyNamesThatIDepend = new ArrayList();
-			Iterator itMetaPoners = metaCalculador.getMetaSets().iterator();
-			while (itMetaPoners.hasNext()) {
-				MetaSet metaPoner = (MetaSet) itMetaPoners.next();
-				if (!metaPoner.hasValue()) {
-					propertyNamesThatIDepend.add(metaPoner.getPropertyNameFrom());
+			Iterator itMetaSets = metaCalculador.getMetaSets().iterator();
+			while (itMetaSets.hasNext()) {
+				MetaSet metaSet = (MetaSet) itMetaSets.next();
+				if (!metaSet.hasValue()) {
+					propertyNamesThatIDepend.add(metaSet.getPropertyNameFrom());
 				}										
 			}
 		}
 		return propertyNamesThatIDepend;				
 	}
 	
-
-	/**
-	 * Sets the soloLectura.
-	 * @param soloLectura The soloLectura to set
-	 */
-	public void setReadOnly(boolean soloLectura) {		
-		this.readOnly = soloLectura;
+	public void setReadOnly(boolean readOnly) {		
+		this.readOnly = readOnly;
 		this.readOnlyCalculated = true;				
 	}
 
-	/**
-	 * <tt>isOculto</tt> en femenino.
-	 * @return boolean
-	 */
 	public boolean isHidden() {
 		return hidden;
 	}
 
-	/**
-	 * Sets the oculta.
-	 * @param oculta The oculta to set
-	 */
-	public void setHidden(boolean oculta) {
-		this.hidden = oculta;
+	public void setHidden(boolean hidden) {
+		this.hidden = hidden;
 	}
-	/**
-	 * Method tieneCalculadorValorDefectoAlCrear.
-	 * @return boolean
-	 */
-	public boolean hasCalcultaroDefaultValueOnCreate() {
+		
+	public boolean hasCalculatorDefaultValueOnCreate() {
 		return 	metaCalculatorDefaultValue != null &&
 				metaCalculatorDefaultValue.isOnCreate();		
 	}
 	
 	/**
-	 * Puede ser nulo.
+	 * Can be null
 	 */
 	public PropertyMapping getMapping() throws XavaException {	
 		if (!mappingSet) {
@@ -762,11 +634,11 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				return null;
 			}
 			String propertyName = null;
-			ModelMapping mapeoModelo = null;
+			ModelMapping modelMapping = null;
 			if (getMetaModel() instanceof MetaAggregateBean) {
 				if (getQualifiedName().indexOf('.')>= 0) {
 					propertyName = Strings.change(getQualifiedName(), ".", "_");
-					mapeoModelo = getMetaModel().getMetaComponent().getEntityMapping();
+					modelMapping = getMetaModel().getMetaComponent().getEntityMapping();
 				}
 				else {
 					mapping = null;
@@ -774,11 +646,11 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				}
 			}
 			if (propertyName == null) propertyName = getName();
-			if (mapeoModelo == null) mapeoModelo = getMetaModel().getMapping();									
-			if (mapeoModelo == null) mapping = null;
+			if (modelMapping == null) modelMapping = getMetaModel().getMapping();									
+			if (modelMapping == null) mapping = null;
 			else {
 				try {
-					mapping = mapeoModelo.getPropertyMapping(propertyName);
+					mapping = modelMapping.getPropertyMapping(propertyName);
 				}
 				catch (ElementNotFoundException ex) {								
 					mapping = null;
@@ -797,7 +669,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	 * 
 	 * If argument is primitive return the match wrapper.
 	 * 
-	 * @return Puede ser nulo. 
+	 * @return Can be null 
 	 */
 	public Object parse(String value) throws ParseException, XavaException {
 		return parse(value, Locale.getDefault());
@@ -811,7 +683,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	 * 
 	 * If argument is primitive return the match wrapper.
 	 * 
-	 * @return Puede ser nulo. 
+	 * @return Can be null 
 	 */
 	public Object parse(String value, Locale locale) throws ParseException, XavaException {
 		if (value == null) return null;		
@@ -860,7 +732,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	
 	
 	/**
-	 * Conver a valid value for this property in a String
+	 * Convert a valid value for this property in a String
 	 * valid for display to user. <p>
 	 * 
 	 * @return Can be null. 	 	 
@@ -870,7 +742,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	}
 	
 	/**
-	 * Conver a valid value for this property in a String
+	 * Convert a valid value for this property in a String
 	 * valid for display to user. <p>
 	 * 
 	 * @return Can be null. 	 	 
@@ -909,19 +781,19 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		throw new XavaException("to_string_on_property_not_supported", type);
 	}
 		
-	public void addMetaValidator(MetaValidator metaValidador) {
+	public void addMetaValidator(MetaValidator metaValidator) {
 		if (metaValidators == null) metaValidators = new ArrayList();
-		metaValidators.add(metaValidador);		
+		metaValidators.add(metaValidator);		
 	}
 	
 	public String toString() {
-		return "MetaPropiedad:" + getId();
+		return "MetaProperty:" + getId();
 	}
 	
 	public boolean equals(Object o) {
 		if (!(o instanceof MetaProperty)) return false;
-		MetaProperty otra = (MetaProperty) o;
-		return getQualifiedName().equals(otra.getQualifiedName());
+		MetaProperty other = (MetaProperty) o;
+		return getQualifiedName().equals(other.getQualifiedName());
 	}
 
 }

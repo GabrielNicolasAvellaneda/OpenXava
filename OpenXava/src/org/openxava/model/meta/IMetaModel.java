@@ -11,9 +11,9 @@ import org.openxava.util.*;
 public interface IMetaModel {
 	String getName(); 
 	Collection getMetaFinders();	
-	MetaProperty getMetaProperty(String nombre) throws ElementNotFoundException, XavaException;
-	MetaReference getMetaReference(String nombre) throws ElementNotFoundException, XavaException;
-	MetaMethod getMetaMethod(String nombre) throws ElementNotFoundException, XavaException;
+	MetaProperty getMetaProperty(String name) throws ElementNotFoundException, XavaException;
+	MetaReference getMetaReference(String name) throws ElementNotFoundException, XavaException;
+	MetaMethod getMetaMethod(String name) throws ElementNotFoundException, XavaException;
 	Collection getKeyPropertiesNames() throws XavaException;
 	Collection getAllKeyPropertiesNames() throws XavaException;
 	Collection getMetaProperties();
@@ -35,7 +35,7 @@ public interface IMetaModel {
 	int getMetaCalculatorsPostModifyCount();
 	MetaCalculator getMetaCalculatorPostModify(int idx);
 	Collection getMetaCollectionsWithConditionInOthersModels() throws XavaException;
-	Map extractKeyValues(Map valores) throws XavaException;
+	Map extractKeyValues(Map values) throws XavaException;
 	Class getPropertiesClass() throws XavaException;
 	Collection getInterfacesNames();
 	String getImplements();

@@ -18,8 +18,8 @@ import org.openxava.tab.meta.*;
 import org.openxava.util.*;
 
 
-/** 
- * Objeto de sesión para trabajar con datos tabulares. <p>
+/**
+ * Session object to work with tabular data. <p> 
  * 
  * @author Javier Paniza
  */
@@ -62,10 +62,6 @@ public class Tab {
 	private static SessionFactory sessionFactory;
 	private boolean notResetPageNextTime;
 	private boolean sortRemainingProperties;
-	
-	public Tab() {			
-	}
-	
 	
 	public List getMetaProperties() {
 		if (metaProperties == null) {
@@ -120,49 +116,49 @@ public class Tab {
 	}
 	
 	
-	public void setBaseCondition(String condicion) throws XavaException { 		
-		if (Is.equal(this.baseCondition, condicion)) return;
-		this.baseCondition = condicion;		
+	public void setBaseCondition(String condition) throws XavaException { 		
+		if (Is.equal(this.baseCondition, condition)) return;
+		this.baseCondition = condition;		
 		this.condition = null;
 	}
 		
 	/**
-	 * Esto es una alternativa a setModelo, y se usa cuando este tab representa
-	 * una colección de referencia 
+	 * This is an alternative to setModelName, and is used when this
+	 * tab represent a collection of references.
 	 */
-	public void setReferencesCollection(String modelo, String nombreColeccion) throws XavaException {
-		MetaModel metaModelo = MetaComponent.get(modelo).getMetaEntity(); 
-		MetaReference ref = metaModelo.getMetaCollection(nombreColeccion).getMetaReference();
+	public void setReferencesCollection(String model, String collectionName) throws XavaException {
+		MetaModel metaModel = MetaComponent.get(model).getMetaEntity(); 
+		MetaReference ref = metaModel.getMetaCollection(collectionName).getMetaReference();
 		setModelName(ref.getReferencedModelName());		
 		referencesCollectionMapping = ref.getMetaModelReferenced().getMapping().getReferenceMapping(ref.getRole());
-		crearCondicionBaseParaReferencia();
-		clonarMetaTab();
+		createBaseConditionForReference();
+		cloneMetaTab();
 		getMetaTab().setPropertiesNames("*");
 	}
 	
-	private void crearCondicionBaseParaReferencia() throws XavaException {				
+	private void createBaseConditionForReference() throws XavaException {				
 		Iterator it = referencesCollectionMapping.getDetails().iterator();
-		StringBuffer condicion = new StringBuffer();
+		StringBuffer condition = new StringBuffer();
 		while (it.hasNext()) {
-			ReferenceMappingDetail detalle = (ReferenceMappingDetail) it.next();
-			condicion.append(detalle.getColumn());
-			condicion.append(" = ?");
-			if (it.hasNext()) condicion.append(" and "); 
+			ReferenceMappingDetail detail = (ReferenceMappingDetail) it.next();
+			condition.append(detail.getColumn());
+			condition.append(" = ?");
+			if (it.hasNext()) condition.append(" and "); 
 		}
-		setBaseConditionForReference(condicion.toString());
+		setBaseConditionForReference(condition.toString());
 	}
 	
-	public void setBaseConditionValuesForReference(Map valores) throws XavaException { 
-		ReferenceMapping mapeo = referencesCollectionMapping;
-		Iterator it = mapeo.getDetails().iterator();
-		baseConditionValuesForReference = new Object[mapeo.getDetails().size()];
+	public void setBaseConditionValuesForReference(Map values) throws XavaException { 
+		ReferenceMapping mapping = referencesCollectionMapping;
+		Iterator it = mapping.getDetails().iterator();
+		baseConditionValuesForReference = new Object[mapping.getDetails().size()];
 		for (int i=0; i<baseConditionValuesForReference.length; i++) {
 			ReferenceMappingDetail detalle = (ReferenceMappingDetail) it.next();
-			baseConditionValuesForReference[i] = valores.get(detalle.getReferencedModelProperty());
+			baseConditionValuesForReference[i] = values.get(detalle.getReferencedModelProperty());
 		}		
 	}
 		
-	private void clonarMetaTab() throws XavaException { 
+	private void cloneMetaTab() throws XavaException { 
 		if (metaTabCloned) return;		
 		metaTab = getMetaTab().cloneMetaTab();		
 		metaTabCloned = true;
@@ -195,7 +191,7 @@ public class Tab {
 	}
 	
 	/**
-	 * A table model with on-demmand data reading. <p>
+	 * A table model with on-demand data reading. <p>
 	 * 
 	 * Suitable for UI.
 	 */
@@ -243,15 +239,15 @@ public class Tab {
 	
 	private String createCondition() throws Exception {
 		StringBuffer sb = new StringBuffer();
-		boolean primeraCondicion = true;
+		boolean firstCondition = true;
 		metaPropertiesKey = null;
 		if (!Is.emptyString(getBaseConditionForReference())) {
 			sb.append(getSQLBaseConditionForReference());
-			primeraCondicion = false;						
+			firstCondition = false;						
 		}
 		else if (!Is.emptyString(getBaseCondition())) {
 			sb.append(getSQLBaseCondition());
-			primeraCondicion = false;			
+			firstCondition = false;			
 		}		
 		if (!(conditionValues == null || conditionValues.length == 0)) {
 			MetaProperty pOrder = null;
@@ -265,7 +261,7 @@ public class Tab {
 					this.conditionValues[i] = null; 
 				}
 				if (!Is.emptyString(this.conditionValues[i])) {												
-					if (primeraCondicion) primeraCondicion = false;
+					if (firstCondition) firstCondition = false;
 					else sb.append(" and ");
 					ModelMapping mapping = getMetaTab().getMetaModel().getMapping();					
 					String column = mapping.getQualifiedColumn(p.getQualifiedName());					
@@ -325,74 +321,74 @@ public class Tab {
 		if (conditionValues == null || conditionValues.length == 0) { 
 			return filterKey(null);
 		}
-		Collection clave = new ArrayList();
+		Collection key = new ArrayList();
 		
 		for (int i = 0; i < this.conditionValues.length; i++) {
-			String valor = this.conditionValues[i];
-			if (!Is.emptyString(valor)) {
+			String value = this.conditionValues[i];
+			if (!Is.emptyString(value)) {
 								
 				if (STARTS_COMPARATOR.equals(this.conditionComparators[i])) {
-					valor = valor.trim().toUpperCase() + "%";
-					clave.add(valor);
+					value = value.trim().toUpperCase() + "%";
+					key.add(value);
 				}
 				else if (CONTAINS_COMPARATOR.equals(this.conditionComparators[i])) {
-					valor = "%" + valor.trim().toUpperCase() + "%";
-					clave.add(valor);
+					value = "%" + value.trim().toUpperCase() + "%";
+					key.add(value);
 				} 
 				else if (YEAR_COMPARATOR.equals(this.conditionComparators[i]) || MONTH_COMPARATOR.equals(this.conditionComparators[i])) {
-					valor = valor.trim().toUpperCase();
+					value = value.trim().toUpperCase();
 					try {					
-						clave.add(new Integer(valor));
+						key.add(new Integer(value));
 					}
 					catch (Exception ex) {
 						ex.printStackTrace();
 						System.err.println(XavaResources.getString("tab_key_value_warning"));
-						clave.add(null);
+						key.add(null);
 					}										
 				}
 				else {
-					valor = valor.trim().toUpperCase();
+					value = value.trim().toUpperCase();
 					MetaProperty p = (MetaProperty) getMetaPropertiesNotCalculated().get(i);
 					try {					
-						clave.add(p.parse(valor));
+						key.add(p.parse(value));
 					}
 					catch (Exception ex) {
 						ex.printStackTrace();
 						System.err.println(XavaResources.getString("tab_key_value_warning"));
-						clave.add(null);
+						key.add(null);
 					}					
 				}
 				
 			}
 		}		
-		return filterKey(clave.toArray());
+		return filterKey(key.toArray());
 	}
 	
 	private Object[] filterKey(Object[] key) throws XavaException {		
 		// first, for references
 		if (baseConditionValuesForReference != null && baseConditionValuesForReference.length > 0) {
 			if (key==null) key=new Object[0];
-			Object [] nuevaClave = new Object[baseConditionValuesForReference.length + key.length];
+			Object [] newKey = new Object[baseConditionValuesForReference.length + key.length];
 			int j = 0;
 			for (int i = 0; i < baseConditionValuesForReference.length; i++) {
-				nuevaClave[j++] = baseConditionValuesForReference[i];
+				newKey[j++] = baseConditionValuesForReference[i];
 			}
 			for (int i = 0; i < key.length; i++) {
-				 nuevaClave[j++] = key[i];
+				 newKey[j++] = key[i];
 			}			
-			key = nuevaClave;
+			key = newKey;
 		}		
 		
 		// Filter of meta tabs
 		int indexIncrement = 0;
 		if (getMetaTab().hasFilter()) {
-			IFilter filtro = getMetaTab().getMetaFilter().getFilter();
+			IFilter filter = getMetaTab().getMetaFilter().getFilter();
 			
-			if (filtro instanceof IRequestFilter) {
-				((IRequestFilter) filtro).setRequest(request);
+			if (filter instanceof IRequestFilter) {
+				((IRequestFilter) filter).setRequest(request);
 			}
 			int original = key == null?0:key.length;
-			key = (Object[]) filtro.filter(key);
+			key = (Object[]) filter.filter(key);
 			indexIncrement = key == null?0:key.length - original;
 		}
 		
@@ -437,32 +433,17 @@ public class Tab {
 		return selected;
 	}
 	
-	public Map [] getClavesSeleccionados() {
-		if (selected == null) return new Map[0];
-		Map [] claves = new Map[selected.length];
-		for (int i = 0; i < claves.length; i++) {
-			try {
-				claves[i] = (Map) tableModel.getObjectAt(selected[i]);
-			}
-			catch (Exception ex) {
-				claves[i] = Collections.EMPTY_MAP;
-				System.err.println(XavaResources.getString("tab_row_key_warning", new Integer(i)));
-			}
-		}
-		return claves;
-	}
-	
 	public boolean hasSelected() {
 		return selected != null && selected.length > 0;
 	}
 	
 	/**
-	 * Cambia todos los seleccionados. <p>
+	 * Change all selected. <p>
 	 *
-	 * Se cumple la postcondición <tt>this.seleccinados == valores</tt>
+	 * Postcondition: <tt>this.selected == values</tt>
 	 */
-	public void setAllSelected(int [] valores) {
-		this.selected = valores;
+	public void setAllSelected(int [] values) {
+		this.selected = values;
 	}
 	
 	public void deselectVisualizedRows() { 
@@ -484,11 +465,11 @@ public class Tab {
 	}
 
 	/**
-	 * Cambias los seleccionados solo dentro del rango de la página actual. <p>
+	 * Change the selelected ones only within the current page range. <p>
 	 * 
-	 * Es decir, que NO se cumple la postcondición de <tt>this.seleccinados == valores</tt>	 
+	 * Postcondition <tt>this.selected == values</tt> <b>is not fulfilled</b> 	 
 	 */
-	public void setSelected(int [] valores) {				
+	public void setSelected(int [] values) {				
 		List r = new ArrayList();
 		if (selected != null) {	
 			for (int i=0; i<selected.length; i++) {
@@ -498,8 +479,8 @@ public class Tab {
 				}
 			}
 		}				
-		for (int i=0; i<valores.length; i++) {			
-			r.add(new Integer(valores[i]));			
+		for (int i=0; i<values.length; i++) {			
+			r.add(new Integer(values[i]));			
 		}		
 		Collections.sort(r);		
 		selected = new int[r.size()];		
@@ -514,11 +495,11 @@ public class Tab {
 	
 	
 	
-	private String toString(int[] valores) {
-		if (valores == null) return "[VACIO]";
+	private String toString(int[] values) {
+		if (values == null) return "[VACIO]";
 		StringBuffer sb = new StringBuffer("[");
-		for (int i = 0; i < valores.length; i++) {
-			sb.append(valores[i]);
+		for (int i = 0; i < values.length; i++) {
+			sb.append(values[i]);
 			sb.append(", ");
 		}
 		sb.append("]");
@@ -526,9 +507,9 @@ public class Tab {
 	}
 
 
-	public boolean isSelected(int fila) {
+	public boolean isSelected(int row) {
 		if (selected == null || selected.length == 0) return false;
-		return Arrays.binarySearch(selected, fila) >= 0;
+		return Arrays.binarySearch(selected, row) >= 0;
 	}
 	
 	public int getInitialIndex() {		
@@ -556,7 +537,7 @@ public class Tab {
 	}
 	
 	public int getLastPage() {		
-		return (tableModel.getRowCount() - 1)/ BLOCK_SIZE + 1;
+		return (tableModel.getRowCount() - 1) / BLOCK_SIZE + 1;
 	}
 
 	public void pageBack() {
@@ -595,10 +576,10 @@ public class Tab {
 		}
 	}
 	
-	public void setConditionValues(String [] valores) throws XavaException {		
-	  if (Arrays.equals(this.conditionValues, valores)) return;
-		if (getMetaPropertiesNotCalculated().size() != valores.length) return; // to avoid problems on changing module
-	  this.conditionValues = valores;
+	public void setConditionValues(String [] values) throws XavaException {		
+	  if (Arrays.equals(this.conditionValues, values)) return;
+		if (getMetaPropertiesNotCalculated().size() != values.length) return; // to avoid problems on changing module
+	  this.conditionValues = values;
 	  goPage(1);
 	  condition = null;	  
 	}
@@ -607,10 +588,10 @@ public class Tab {
 		return conditionValues; 
 	}
 	
-	public void setConditionComparators(String [] comparadores) throws XavaException {		
-		if (Arrays.equals(this.conditionComparators, comparadores)) return; 		
-		if (getMetaPropertiesNotCalculated().size() != comparadores.length) return;		
-		this.conditionComparators = comparadores;
+	public void setConditionComparators(String [] comparators) throws XavaException {		
+		if (Arrays.equals(this.conditionComparators, comparators)) return; 		
+		if (getMetaPropertiesNotCalculated().size() != comparators.length) return;		
+		this.conditionComparators = comparators;
 		condition = null;						
 	}
 	
@@ -618,13 +599,13 @@ public class Tab {
 		return conditionComparators;
 	}
 	
-	public void orderBy(String propiedad) {
-		if (Is.equal(propiedad, orderBy)) {
+	public void orderBy(String property) {
+		if (Is.equal(property, orderBy)) {
 			descendingOrder = !descendingOrder;
 		}
 		else {
 			descendingOrder = false;
-			orderBy = propiedad;
+			orderBy = property;
 		}
 		condition = null;		
 	}
@@ -633,12 +614,12 @@ public class Tab {
 		return orderBy;
 	}
 	
-	public boolean isOrderAscending(String nombre) {
-		return !descendingOrder && Is.equal(nombre, orderBy);
+	public boolean isOrderAscending(String name) {
+		return !descendingOrder && Is.equal(name, orderBy);
 	}
 	
-	public boolean isOrderDescending(String nombre) {
-		return descendingOrder && Is.equal(nombre, orderBy);
+	public boolean isOrderDescending(String name) {
+		return descendingOrder && Is.equal(name, orderBy);
 	}
 	
 	
@@ -646,14 +627,14 @@ public class Tab {
 		return modelName;
 	}
 
-	public void setModelName(String nuevo) {
-		if (Is.equal(modelName, nuevo)) return;
-		modelName = nuevo;		
-		reiniciarEstado();
+	public void setModelName(String newModelName) {
+		if (Is.equal(modelName, newModelName)) return;
+		modelName = newModelName;		
+		reinitState();
 		loadUserPreferences();
 	}
 
-	private void reiniciarEstado() {		
+	private void reinitState() {		
 		descendingOrder = false;
 		orderBy = null;	
 		condition = null;		
@@ -672,10 +653,10 @@ public class Tab {
 		return tabName;
 	}
 
-	public void setTabName(String nuevo) {		
-		if (Is.equal(tabName, nuevo)) return;
-		tabName = nuevo;
-		reiniciarEstado();		
+	public void setTabName(String newTabName) {		
+		if (Is.equal(tabName, newTabName)) return;
+		tabName = newTabName;
+		reinitState();		
 		loadUserPreferences();
 	}
 
@@ -716,47 +697,46 @@ public class Tab {
 		Locale locale = XavaResources.getLocale(request);		
 		String title = titleId==null?getTitleI18n(locale, modelName, tabName):Labels.get(titleId, locale);
 		if (title != null) return putTitleArguments(locale, title);
-		String etiquetaModelo = MetaComponent.get(modelName).getMetaEntity().getLabel();
-		return XavaResources.getString(request, "report_title", etiquetaModelo);					
+		String modelLabel = MetaComponent.get(modelName).getMetaEntity().getLabel();
+		return XavaResources.getString(request, "report_title", modelLabel);					
 	}
 	
-	private String putTitleArguments(Locale locale, String titulo) {
-		if (titleArguments == null || titleArguments.length == 0) return titulo;
+	private String putTitleArguments(Locale locale, String title) {
+		if (titleArguments == null || titleArguments.length == 0) return title;
 		MessageFormat formateador = new MessageFormat("");
 		formateador.setLocale(locale);
-		formateador.applyPattern(titulo);
+		formateador.applyPattern(title);
 		return formateador.format(titleArguments);		
 	}
 
 	public static String getTitleI18n(Locale locale, String modelName, String tabName) throws XavaException {
 		return MetaTab.getTitleI18n(locale, modelName, tabName);
 	}
-	
-	
+		
 	public String getBaseConditionForReference() {
 		return baseConditionForReference;
 	}
 	public void setBaseConditionForReference(
-			String condicionBaseParaReferencia) {
-		this.baseConditionForReference = condicionBaseParaReferencia;
+			String baseConditionForReference) {
+		this.baseConditionForReference = baseConditionForReference;
 	}
 
 	public void addProperty(String propertyName) throws XavaException {
-		clonarMetaTab();
+		cloneMetaTab();
 		getMetaTab().addProperty(propertyName);
 		resetAfterChangeProperties();
 		saveUserPreferences();
 	}
 	
 	public void addProperty(int index, String propertyName) throws XavaException {
-		clonarMetaTab();
+		cloneMetaTab();
 		getMetaTab().addProperty(index, propertyName);
 		resetAfterChangeProperties();
 		saveUserPreferences();
 	}
 	
 	public void addProperties(Collection properties) throws XavaException {
-		clonarMetaTab();
+		cloneMetaTab();
 		for (Iterator it=properties.iterator(); it.hasNext();) {
 			getMetaTab().addProperty((String)it.next());
 		}		
@@ -767,42 +747,42 @@ public class Tab {
 	
 
 	public void removeProperty(String propertyName) throws XavaException {
-		clonarMetaTab();
+		cloneMetaTab();
 		getMetaTab().removeProperty(propertyName);
 		resetAfterChangeProperties();
 		saveUserPreferences();
 	}
 	
 	public void removeProperty(int index) throws XavaException {
-		clonarMetaTab();
+		cloneMetaTab();
 		getMetaTab().removeProperty(index);
 		resetAfterChangeProperties();
 		saveUserPreferences();
 	}	
 	
 	public void movePropertyToRight(int index) throws XavaException {
-		clonarMetaTab();
+		cloneMetaTab();
 		getMetaTab().movePropertyToRight(index);		
 		resetAfterChangeProperties();
 		saveUserPreferences();
 	}
 	
 	public void movePropertyToLeft(int index) throws XavaException {
-		clonarMetaTab();
+		cloneMetaTab();
 		getMetaTab().movePropertyToLeft(index);
 		resetAfterChangeProperties();
 		saveUserPreferences();
 	}
 		
 	public void clearProperties() throws XavaException {	
-		clonarMetaTab();
+		cloneMetaTab();
 		getMetaTab().clearProperties();		
 		resetAfterChangeProperties();
 		saveUserPreferences();
 	}
 	
 	public void restoreDefaultProperties() throws XavaException { 	
-		clonarMetaTab();
+		cloneMetaTab();
 		getMetaTab().restoreDefaultProperties();		
 		resetAfterChangeProperties();
 		removeUserPreferences();
@@ -845,7 +825,7 @@ public class Tab {
 			userPreferences = (TabUserPreferences) query.uniqueResult();
 		
 			if (userPreferences != null) {										
-				clonarMetaTab();
+				cloneMetaTab();
 				getMetaTab().setPropertiesNames(userPreferences.getPropertiesNames());		
 				resetAfterChangeProperties();
 			}

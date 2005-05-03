@@ -4,9 +4,6 @@ package org.openxava.model.meta;
 import java.util.*;
 
 import org.openxava.util.*;
-import org.openxava.util.meta.*;
-
-
 
 /**
  * 
@@ -15,37 +12,25 @@ import org.openxava.util.meta.*;
  */
 abstract public class MetaEntity extends MetaModel {
 	
-
-	
 	/**
-	 * Comentario de constructor Entidad.
-	 */
-	public MetaEntity() {
-		super();
-	}
-	
-	/**
-	 * @return Los nombres de los los campos clave. String.
+	 * @return The names of key fields. Of <tt>String</tt>.
 	 */
 	abstract public Collection getKeyFields() throws XavaException;
-
 	
-	public boolean isKey(String nombrePropiedad) throws XavaException {	
-		if (isGenerateXDocLet() && super.isKey(nombrePropiedad)) return true; 	
-		return getKeyFields().contains(nombrePropiedad);		
+	public boolean isKey(String propertyName) throws XavaException {	
+		if (isGenerateXDocLet() && super.isKey(propertyName)) return true; 	
+		return getKeyFields().contains(propertyName);		
 	}
 
 	/**
-	 * Del componente
-	 * @see MetaElement#getName()
+	 * From component
 	 */
 	public String getName() {
 		return getMetaComponent().getName();
 	}
 	
 	/**
-	 * Si tiene campos claves (<tt>getCamposClave</tt>) que no
-	 * son propiedades (y por ende no coinciden con <tt>getNombresPropiedadesClave())</tt>
+	 * If has key fields that aren't properties hence does not math with key properties. <p>
 	 */
 	public boolean hasHiddenKeys() throws XavaException {		
 		return !getKeyPropertiesNames().containsAll(getKeyFields());
@@ -54,7 +39,5 @@ abstract public class MetaEntity extends MetaModel {
 	public String getId() {
 		return getName();
 	}
-
-
 
 }

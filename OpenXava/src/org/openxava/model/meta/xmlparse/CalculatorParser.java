@@ -6,8 +6,6 @@ import org.openxava.util.meta.*;
 import org.openxava.util.xmlparse.*;
 import org.w3c.dom.*;
 
-
-
 /**
  * 
  * @author: Javier Paniza
@@ -23,16 +21,15 @@ public class CalculatorParser extends XmlElementsNames {
 		return e;
 	}
 	
-	private static void fillSets(Element el, MetaSetsContainer contenedor, int lang)
+	private static void fillSets(Element el, MetaSetsContainer container, int lang)
 		throws XavaException {
 		NodeList l = el.getElementsByTagName(xset[lang]);
 		int c = l.getLength();
 		for (int i = 0; i < c; i++) {
-			contenedor.addMetaSet(createSet(l.item(i), lang));
+			container.addMetaSet(createSet(l.item(i), lang));
 		}
 	}
-	
-	
+		
 	private static MetaSet createSet(Node n, int lang) throws XavaException {
 		Element el = (Element) n;
 		MetaSet a = new MetaSet();		

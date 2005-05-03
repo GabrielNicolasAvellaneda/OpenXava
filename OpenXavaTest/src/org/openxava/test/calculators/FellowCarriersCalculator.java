@@ -13,7 +13,7 @@ public class FellowCarriersCalculator implements IEntityCalculator {
 	private ICarrier carrier;
 
 	public Object calculate() throws Exception {
-		return CarrierUtil.getHome().findFellowCarriersDeCarrier(
+		return CarrierUtil.getHome().findFellowCarriersOfCarrier(
 			carrier.getWarehouseKey().getZoneNumber(),
 			carrier.getWarehouseKey().get_Number(),
 			new Integer(carrier.getNumber())

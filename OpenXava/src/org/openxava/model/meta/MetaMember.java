@@ -1,9 +1,7 @@
 package org.openxava.model.meta;
 
-
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
-
 
 /**
  * @author Javier Paniza
@@ -14,19 +12,12 @@ abstract public class MetaMember extends MetaElement {
 	private String labelId;
 	private String qualifiedName;
 
-	/**
-	 * Comentario de constructor Propiedad.
-	 */
-	public MetaMember() {
-		super();
-	}
-	
 	public MetaModel getMetaModel() {		
 		return metaModel;
 	}
 
-	public void setMetaModel(MetaModel newContenedor) {
-		metaModel = newContenedor;		
+	public void setMetaModel(MetaModel newContainer) {
+		metaModel = newContainer;		
 	}
 	
 	public String getQualifiedName() {
@@ -44,15 +35,6 @@ abstract public class MetaMember extends MetaElement {
 		qualifiedName = newQualifiedName;
 	}
 		
-	/**
-	 * Idem que {@link #isHidden()} pero en femenino. <p>
-	 *
-	 * La mayoría de los descendientes de miembro son femenino, así
-	 * que en femenino suena mejor.
-	 * 
-	 * @return boolean
-	 * @see #isHidden()
-	 */
 	public boolean isHidden() {
 		return false;
 	}
@@ -66,10 +48,7 @@ abstract public class MetaMember extends MetaElement {
 	}
 	
 	/**
-	 * Id usado para buscar la etiqueta en el archivo de recursos. <p>
-	 * 
-	 * Esta propiedad no se llena desde los archivos xml, solo
-	 * se usa programáticamente; de momento.	 
+	 * Id used to look up label in resource files. <p>
 	 */ 	
 	public String getLabelId() {
 		return labelId;

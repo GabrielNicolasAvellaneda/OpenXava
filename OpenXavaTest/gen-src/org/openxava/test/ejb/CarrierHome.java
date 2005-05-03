@@ -27,7 +27,7 @@ public interface CarrierHome
    public java.util.Collection findByDrivingLicence(int level, java.lang.String type)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
-   public java.util.Collection findFellowCarriersDeCarrier(int warehouse_zoneNumber, java.lang.Integer warehouse_number, java.lang.Integer _Number)
+   public java.util.Collection findFellowCarriersOfCarrier(int warehouse_zoneNumber, java.lang.Integer warehouse_number, java.lang.Integer _Number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
    public java.util.Collection findAll()

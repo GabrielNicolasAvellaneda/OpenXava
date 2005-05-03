@@ -1759,7 +1759,7 @@
          </query>
          <query>
             <query-method>
-               <method-name>findFellowCarriersDeCarrier</method-name>
+               <method-name>findFellowCarriersOfCarrier</method-name>
                <method-params>
                   <method-param>int</method-param>
                   <method-param>java.lang.Integer</method-param>

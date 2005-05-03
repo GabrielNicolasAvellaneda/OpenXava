@@ -2,7 +2,6 @@ package org.openxava.model.meta;
 
 import org.openxava.component.*;
 import org.openxava.util.*;
-import org.openxava.util.meta.*;
 
 
 /**
@@ -10,10 +9,6 @@ import org.openxava.util.meta.*;
  */
 abstract public class MetaAggregate extends MetaModel {
 	
-	public MetaAggregate() {
-		super();
-	}
-		
 	static MetaAggregate getAggregate(String name) throws ElementNotFoundException, XavaException {
 		int idx = name.indexOf('.');
 		if (idx < 0) {
@@ -24,16 +19,12 @@ abstract public class MetaAggregate extends MetaModel {
 		return MetaComponent.get(component).getMetaAggregate(aggregate);
 	}
 	
-	/**
-	 * @see MetaElement#setName(String)
-	 */	
-	public void setName(String newNombre) {
-		super.setName(newNombre);
+	public void setName(String newName) {
+		super.setName(newName);
 	}
 	
 	public String getId() {
 		return getMetaComponent().getName() + "." + getName();		
 	}
-		
-	
+			
 }

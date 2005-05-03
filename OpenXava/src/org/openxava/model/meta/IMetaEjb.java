@@ -14,83 +14,34 @@ import org.openxava.util.*;
 
 public interface IMetaEjb extends IMetaModel {
 	
-	Class getRemoteClass() throws XavaException;
-	
-	/**
-	 * 
-	 * @return java.lang.String
-	 */
+	Class getRemoteClass() throws XavaException;	
 	java.lang.String getHome() throws XavaException;
-	
-	/**
-	 * 
-	 * @return java.lang.String
-	 */
 	java.lang.String getJndi() throws XavaException;
-	
-	/**
-	 * 
-	 * @return java.lang.String
-	 */
 	java.lang.String getPrimaryKey() throws XavaException;
-	
-	/**
-	 * 
-	 * @param newPrimaryKey java.lang.String
-	 */
 	void setPrimaryKey(java.lang.String newPrimaryKey);
-	
-	
-	/**
-	 * 
-	 * @return java.lang.String
-	 */
 	java.lang.String getRemote() throws XavaException;
-	
-	/**
-	 * 
-	 * @param newRemote java.lang.String
-	 */
 	void setRemote(java.lang.String newRemote);
-	
-	
-	/**
-	 * 
-	 * @param newHome java.lang.String
-	 */
 	void setHome(java.lang.String newHome);
-	
-	/**
-	 * 
-	 * @param newJndi java.lang.String
-	 */
-	void setJndi(java.lang.String newJndi);
-	
-	
-	Class getHomeClass() throws XavaException;
-	
+	void setJndi(java.lang.String newJndi);	
+	Class getHomeClass() throws XavaException;	
 	Class getPrimaryKeyClass() throws XavaException;
 	
 	/**
+	 * For use inside EJB. <p>
 	 * Para usarse desde dentro de un EJB. <p>
+	 * 
+	 * One would not use from client because throws
+	 * <tt>EJBExceptin</tt> on fail. 
 	 *
-	 * No se debería usar desde el cliente ya que lanza
-	 * una <tt>EJBException</tt> si falla.<br>
-	 *
-	 * @exception EJBException Si hay algún problema
-	 * @return Home moldado
+	 * @exception EJBException If any problem
+	 * @return Molded (with corba cast) home
 	 */
 	EJBHome obtainHome() throws XavaException;
 	
-	Object obtainPrimaryKeyFromAllValues(Map valores) throws XavaException;
-		
-
-	Object obtainPrimaryKeyFromKey(Map valoresClave) throws XavaException;
-	
-	Object obtainPrimaryKeyFromKeyWithoutConversors(Map valoresClave) throws XavaException;
-	
-	Map obtainMapFromPrimaryKey(Object primaryKey) throws XavaException;
-	
+	Object obtainPrimaryKeyFromAllValues(Map values) throws XavaException;
+	Object obtainPrimaryKeyFromKey(Map keyValues) throws XavaException;	
+	Object obtainPrimaryKeyFromKeyWithoutConversors(Map keyValues) throws XavaException;	
+	Map obtainMapFromPrimaryKey(Object primaryKey) throws XavaException;	
 	Class getBeanClass() throws XavaException;
 		
 }

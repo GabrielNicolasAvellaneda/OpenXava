@@ -6,41 +6,36 @@ import org.openxava.model.meta.xmlparse.*;
 import org.openxava.util.*;
 
 /**
- * Clase de utilidad para acceder al tipo por defecto de un esterotipo. <p>
+ * Utility class to access to default type from a stereotype. <p>
  * 
  * @author Javier Paniza
  */
 public class TypeStereotypeDefault {
 		
 	private static Map stereotypes;
-	
-	
-	public static void _addForStereotype(String nombre, String tipo) throws XavaException {
+		
+	public static void _addForStereotype(String name, String type) throws XavaException {
 		if (stereotypes == null) {
 			throw new XavaException("only_from_parse", "TypeStereotypeDefault._addForStereotype");
 		}				
-		stereotypes.put(nombre, tipo);
+		stereotypes.put(name, type);
 	}
 	
-	
-	
-	
-	public static String forStereotype(String nombre) throws ElementNotFoundException, XavaException {
+	public static String forStereotype(String name) throws ElementNotFoundException, XavaException {
 		if (stereotypes == null) {
-			configurar();
+			configure();
 		}		 
-		String result = (String) stereotypes.get(nombre);		
+		String result = (String) stereotypes.get(name);		
 		if (result == null) {
-			throw new ElementNotFoundException("default_type_for_stereotype_not_found", nombre);
+			throw new ElementNotFoundException("default_type_for_stereotype_not_found", name);
 		}
 		
 		return result;
 	}
 			
-	private static void configurar() throws XavaException {
+	private static void configure() throws XavaException {
 		stereotypes = new HashMap();		
-		StereotypeTypeDefaultParser.configurarTipoEstereotipoDefecto();
+		StereotypeTypeDefaultParser.configureStereotypeTypeDefault();
 	}
-	
 	
 }
