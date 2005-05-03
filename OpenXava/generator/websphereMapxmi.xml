@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<tl>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+<tl>&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
 <declare import="java.util.*"/>
 <declare import="org.openxava.util.Strings"/>
 <declare import="org.openxava.component.MetaComponent"/>

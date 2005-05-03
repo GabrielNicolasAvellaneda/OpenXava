@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 #declare import="org.openxava.component.MetaComponent"#
 #declare import="org.openxava.generators.Generators"#
 #declare import="org.openxava.util.*"#
