@@ -6,7 +6,7 @@ import org.openxava.mapping.*;
 import org.openxava.util.*;
 
 /**
- * Agregado cuya implementación es un JavaBean. <p>
+ * Aggregate whose implementation is a JavaBean. <p>
  * 
  * @author: Javier Paniza
  */
@@ -16,11 +16,7 @@ public class MetaAggregateBean extends MetaAggregate {
 	private java.lang.String beanClass;
 	private boolean generate;
 
-	private Map mapaReferenciasPropiedadesPersistente;
-	
-	public MetaAggregateBean() {
-		super();
-	}
+	private Map persistentPropertiesReferencesMap;
 	
 	public java.lang.String getBeanClass() throws XavaException {
 		if (Is.emptyString(beanClass)) {
@@ -29,8 +25,8 @@ public class MetaAggregateBean extends MetaAggregate {
 		return beanClass;
 	}
 	
-	public void setBeanClass(java.lang.String newClase) {
-		beanClass = newClase;
+	public void setBeanClass(java.lang.String newClass) {
+		beanClass = newClass;
 	}
 		
 	public Class getPropertiesClass() throws XavaException {
@@ -38,27 +34,16 @@ public class MetaAggregateBean extends MetaAggregate {
 			return Class.forName(getBeanClass());
 		} catch (ClassNotFoundException ex) {
 			ex.printStackTrace();
-			throw new XavaException(
-				"No se encuentra la clase "
-					+ getBeanClass()
-					+ " asociada al modelo "
-					+ getName());
+			throw new XavaException("no_class_for_model", getBeanClass(), getName());
 		}
 	}
-	/**
-	 * Returns the generar.
-	 * @return boolean
-	 */
+
 	public boolean isGenerate() {
 		return generate;
 	}
 
-	/**
-	 * Sets the generar.
-	 * @param generar The generar to set
-	 */
-	public void setGenerate(boolean generar) {
-		this.generate = generar;
+	public void setGenerate(boolean generate) {
+		this.generate = generate;
 	}
 
 	public ModelMapping getMapping() throws XavaException {
@@ -66,36 +51,33 @@ public class MetaAggregateBean extends MetaAggregate {
 	}
 		
 	public Collection getMetaPropertiesPersistents(MetaReference ref) throws XavaException {
-		Collection result = (Collection) getMapaReferenciasPropiedadesPersistente().get(ref);		
+		Collection result = (Collection) getPersistentPropertiesReferencesMap().get(ref);		
 		if (result != null) {
 			return result;
 		}
 		result = new ArrayList();
-		Iterator it = getMembersNames().iterator(); // nombres miembros para que esté ordenado
+		Iterator it = getMembersNames().iterator(); // member names to keep order
 		
-		ModelMapping mapeo = ref.getMetaModel().getMapping();
-		String prefijo = ref.getName() + "_";
+		ModelMapping mapping = ref.getMetaModel().getMapping();
+		String prefix = ref.getName() + "_";
 		while (it.hasNext()) {
-			String nombre = (String) it.next();
-			if (!containsMetaProperty(nombre)) continue;			
-			if (mapeo.hasPropertyMapping(prefijo + nombre)) {
-				MetaProperty p = (MetaProperty) getMetaProperty(nombre);
+			String name = (String) it.next();
+			if (!containsMetaProperty(name)) continue;			
+			if (mapping.hasPropertyMapping(prefix + name)) {
+				MetaProperty p = (MetaProperty) getMetaProperty(name);
 				result.add(p);
 			}
 		}					
 		result = Collections.unmodifiableCollection(result);
-		getMapaReferenciasPropiedadesPersistente().put(ref, result);
+		getPersistentPropertiesReferencesMap().put(ref, result);
 		return result;
 	}
-
-	/**
-	 * Method getMapaReferenciasPropiedadesPersistente.
-	 */
-	private Map getMapaReferenciasPropiedadesPersistente() {
-		if (mapaReferenciasPropiedadesPersistente == null) {
-			mapaReferenciasPropiedadesPersistente = new HashMap();
+	
+	private Map getPersistentPropertiesReferencesMap() {
+		if (persistentPropertiesReferencesMap == null) {
+			persistentPropertiesReferencesMap = new HashMap();
 		}
-		return mapaReferenciasPropiedadesPersistente;
+		return persistentPropertiesReferencesMap;
 	}
 
 	
@@ -111,8 +93,6 @@ public class MetaAggregateBean extends MetaAggregate {
 
 	public String getClassName() throws XavaException {
 		return getBeanClass();
-	}
-	
-
+	}	
 
 }

@@ -30,8 +30,8 @@ public class MetaEjbImpl implements Serializable {
 	private java.lang.String primaryKey;	
 	private IMetaModel metaModel;
 		
-	public MetaEjbImpl(IMetaModel metaModelo) {
-		this.metaModel = metaModelo;		
+	public MetaEjbImpl(IMetaModel metaModel) {
+		this.metaModel = metaModel;		
 	}
 	
 	private String getPackageName() throws XavaException {
@@ -46,33 +46,20 @@ public class MetaEjbImpl implements Serializable {
 		if (remoteClass == null) {
 			try {
 				remoteClass = Class.forName(getRemote());
-			} catch (Exception ex) {
+			} 
+			catch (Exception ex) {
 				ex.printStackTrace();
-				throw new XavaException(
-					"Imposible crear la clase "
-						+ getRemote()
-						+ " por:\n"
-						+ ex.getLocalizedMessage());
+				throw new XavaException("create_class_error", getRemote());
 			}
 		}
 		return remoteClass;
 	}
-	/**
-	 * 
-	 * @return java.lang.String
-	 * @throws XavaException
-	 */
 	public java.lang.String getHome() throws XavaException {
 		if (Is.emptyString(home)) {
 			home = getPackageName() + "." + getModelName() + "Home";			
 		}
 		return home;
 	}
-	/**
-	 * 
-	 * @return java.lang.String
-	 * @throws XavaException
-	 */
 	public java.lang.String getJndi() throws XavaException {
 		if (Is.emptyString(jndi)) {
 			jndi = "ejb/" + getPackageName() + "/" + getModelName();			
@@ -80,31 +67,16 @@ public class MetaEjbImpl implements Serializable {
 		return jndi;
 	}
 	
-	/**
-	 * 
-	 * @return java.lang.String
-	 * @throws XavaException
-	 */
 	public java.lang.String getPrimaryKey() throws XavaException {
 		if (Is.emptyString(primaryKey)) {
 			primaryKey = getPackageName() + "." + getModelName() + "Key";
 		}
 		return primaryKey;
 	}
-	/**
-	 * 
-	 * @param newPrimaryKey java.lang.String
-	 */
 	public void setPrimaryKey(java.lang.String newPrimaryKey) {
 		primaryKey = newPrimaryKey;
 	}
 	
-	
-	/**
-	 * 
-	 * @return java.lang.String
-	 * @throws XavaException
-	 */
 	public java.lang.String getRemote() throws XavaException {
 		if (Is.emptyString(remote)) {
 			remote = getPackageName() + "." + getModelName();
@@ -112,79 +84,55 @@ public class MetaEjbImpl implements Serializable {
 		return remote;
 	}	
 	
-	/**
-	 * 
-	 * @param newRemote java.lang.String
-	 */
 	public void setRemote(java.lang.String newRemote) {
 		remote = newRemote;
 	}
 	
-	
-	/**
-	 * 
-	 * @param newHome java.lang.String
-	 */
 	public void setHome(java.lang.String newHome) {
 		home = newHome;
 	}
-	/**
-	 * 
-	 * @param newJndi java.lang.String
-	 */
+	
 	public void setJndi(java.lang.String newJndi) {
 		jndi = newJndi;
-	}
-	
+	}	
 	
 	public Class getHomeClass() throws XavaException {
 		if (homeClass == null) {
 			try {
 				homeClass = Class.forName(getHome());
-			} catch (Exception ex) {
+			} 
+			catch (Exception ex) {
 				ex.printStackTrace();
-				throw new XavaException(
-					"Imposible crear la clase " + getHome() + " por:\n" + ex.getLocalizedMessage());
+				throw new XavaException("create_class_error", getHome());
 			}
 		}
 		return homeClass;
 	}
+	
 	public Class getPrimaryKeyClass() throws XavaException {
 		if (primaryKeyClass == null) {
 			try {
 				primaryKeyClass = Class.forName(getPrimaryKey());
-			} catch (Exception ex) {
+			} 
+			catch (Exception ex) {
 				ex.printStackTrace();
-				throw new XavaException(
-					"Imposible crear la clase "
-						+ getPrimaryKey()
-						+ " por:\n"
-						+ ex.getLocalizedMessage());
+				throw new XavaException("create_class_error", getPrimaryKey());
 			}
 		}
 		return primaryKeyClass;
 	}
 	
-	/**
-	 * Para usarse desde dentro de un EJB. <p>
-	 *
-	 * No se debería usar desde el cliente ya que lanza
-	 * una <tt>EJBException</tt> si falla.<br>
-	 *
-	 * @exception EJBException Si hay algún problema
-	 * @return Home moldado
-	 * @throws XavaException
-	 */
 	public EJBHome obtainHome() throws XavaException {		
 		if (ejbHome == null) { 
 			try {
 				IContext ctx = BeansContext.get();				
 				Object o = ctx.lookup(getJndi());
 				ejbHome = (EJBHome) PortableRemoteObject.narrow(o, getHomeClass());
-			} catch (Exception ex) {
+			} 
+			catch (Exception ex) {
 				ex.printStackTrace();
 				throw new EJBException(
-					"Imposible obtener y moldear home vinculado a " + getJndi());
+						XavaResources.getString("ejbhome_error") + ". JNDI: " + getJndi());
 			}
 		}
 		return ejbHome;
@@ -209,51 +157,51 @@ public class MetaEjbImpl implements Serializable {
 		}
 	}
 	
-	public Object obtainPrimaryKeyFromAllValues(Map valores)
+	public Object obtainPrimaryKeyFromAllValues(Map values)
 		throws XavaException {
-		Map valoresClave = metaModel.extractKeyValues(valores);
-		return obtainPrimaryKeyFromKey(valoresClave);
+		Map keyValues = metaModel.extractKeyValues(values);
+		return obtainPrimaryKeyFromKey(keyValues);
 	}
 	
-	public Object obtainPrimaryKeyFromKey(Map valoresClave) throws XavaException {
-		return obtainPrimaryKeyFromKey(valoresClave, getPrimaryKeyClass(), true);
+	public Object obtainPrimaryKeyFromKey(Map keyValues) throws XavaException {
+		return obtainPrimaryKeyFromKey(keyValues, getPrimaryKeyClass(), true);
 	}
 	
-	public Object obtainPrimaryKeyAFromKeyWithoutConversors(Map valoresClave) throws XavaException {
-		return obtainPrimaryKeyFromKey(valoresClave, getPrimaryKeyClass(), false);
+	public Object obtainPrimaryKeyAFromKeyWithoutConversors(Map keyValues) throws XavaException {
+		return obtainPrimaryKeyFromKey(keyValues, getPrimaryKeyClass(), false);
 	}
 		
-	public Object obtainPrimaryKeyFromKey(Map valoresClave, Class clasePK, boolean usarConversores)
+	public Object obtainPrimaryKeyFromKey(Map keyValues, Class pkClass, boolean useConverters)
 		throws XavaException {
 		try {			
-			if (valoresClave == null || valoresClave.isEmpty()) return null;			
-			Object key = clasePK.newInstance();
-			Field[] fields = clasePK.getFields();
-			cambiarPuntoPorSubrayado(valoresClave);			
-			valoresClave = getAplanado("", valoresClave);			
+			if (keyValues == null || keyValues.isEmpty()) return null;			
+			Object key = pkClass.newInstance();
+			Field[] fields = pkClass.getFields();
+			changeDotByUnderline(keyValues);			
+			keyValues = getFlatten("", keyValues);			
 			for (int i = 0; i < fields.length; i++) {
 				Field f = fields[i];
-				String nombre = f.getName();					
-				if (nombre.startsWith("_")) { // usa conversor
-					nombre = Strings.firstLower(nombre.substring(1));
+				String name = f.getName();					
+				if (name.startsWith("_")) { // uses converter
+					name = Strings.firstLower(name.substring(1));
 				}				
 				try {
-					Object value = valoresClave.get(nombre);					
-					if (value == null && !valoresClave.containsKey(nombre)) {
-						int idx = nombre.indexOf("_");
+					Object value = keyValues.get(name);					
+					if (value == null && !keyValues.containsKey(name)) {
+						int idx = name.indexOf("_");
 						if (idx >= 0) {
-							String referencia = nombre.substring(0, idx);
-							String miembro = nombre.substring(idx + 1);
-							Map valoresReferencia = (Map) valoresClave.get(referencia);
-							if (valoresReferencia != null) {
-								value = valoresReferencia.get(miembro);
+							String reference = name.substring(0, idx);
+							String member = name.substring(idx + 1);
+							Map referenceValues = (Map) keyValues.get(reference);
+							if (referenceValues != null) {
+								value = referenceValues.get(member);
 							}
 						}
 					}
 					try {						 
 						if (!(f.getType().isPrimitive() && value == null)) {
-							if (usarConversores && getMapeo().hasConverter(nombre)) { 
-								asignarUsandoConversor(key, nombre, f, value);
+							if (useConverters && getMapping().hasConverter(name)) { 
+								assignUsingConverter(key, name, f, value);
 							}
 							else {
 								f.set(key, value);
@@ -261,16 +209,16 @@ public class MetaEjbImpl implements Serializable {
 						}						
 					}
 					catch (IllegalArgumentException ex) {
-						// por si fuera un problema de molde desde BigDecimal
+						// In case of a cast problem from BigDecimal
 						if (value instanceof BigDecimal) {							
-							asignarDesdeBigDecimal(key, f, (BigDecimal) value);
+							assignFromBigDecimal(key, f, (BigDecimal) value);
 						}
-						// por si fuera un problema de molde desde java.util.Date
+						// In case of a cast problem from java.util.Date
 						else if (value instanceof java.util.Date) {
-							asignarDesdeUtilDate(key, f, (java.util.Date) value);
+							assignFromUtilDate(key, f, (java.util.Date) value);
 						}
 						else if (value instanceof String) {
-							if (!assignFromValidValues(key, nombre, f, (String) value)) {
+							if (!assignFromValidValues(key, name, f, (String) value)) {
 								String valueType = value == null?"null":value.getClass().getName();
 								throw new IllegalArgumentException(XavaResources.getString("assign_type_mismatch", f.getName(), key.getClass(), f.getType(), valueType));																
 							}
@@ -280,106 +228,103 @@ public class MetaEjbImpl implements Serializable {
 							throw new IllegalArgumentException(XavaResources.getString("assign_type_mismatch", f.getName(), key.getClass(), f.getType(), valueType));
 						}
 					}
-				} catch (Exception ex) {					
-					if (!valoresClave.containsKey(nombre)) {
+				} 
+				catch (Exception ex) {					
+					if (!keyValues.containsKey(name)) {
 						throw new IllegalArgumentException(
-							"Es necesario que el mapa con valores de clave tenga una propiedad "
-								+ nombre);
+							XavaResources.getString("property_in_key_map_required", name));	
 					} else {
 						throw ex;
 					}
 				}
 			}
 			return key;
-		} catch (Exception ex) {
+		} 
+		catch (Exception ex) {
 			ex.printStackTrace();
-			throw new XavaException(
-				"Imposible obtener la clave primaria de "
-					+ getModelName()
-					+ " por:\n"
-					+ ex.getLocalizedMessage());
+			throw new XavaException("primary_key_error", getModelName());
 		}
 	}
 	
 	
-	private Map getAplanado(String prefijo, Map valoresClave) {
-		Map plano = new HashMap();
-		Iterator it = valoresClave.entrySet().iterator();
+	private Map getFlatten(String prefix, Map keyValues) {
+		Map flatten = new HashMap();
+		Iterator it = keyValues.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry e = (Map.Entry) it.next();
 			if (e.getValue() instanceof Map) {				
-				plano.putAll(getAplanado(prefijo + e.getKey() + "_", (Map) e.getValue()));
+				flatten.putAll(getFlatten(prefix + e.getKey() + "_", (Map) e.getValue()));
 			}
 			else {
-				plano.put(prefijo + e.getKey(), e.getValue());
+				flatten.put(prefix + e.getKey(), e.getValue());
 			}
 		}
-		return plano;
+		return flatten;
 	}
 
-	private void cambiarPuntoPorSubrayado(Map valores) {
-		Iterator it = valores.keySet().iterator();
-		Collection aBorrar = null;
-		Map aAñadir = null;
+	private void changeDotByUnderline(Map values) {
+		Iterator it = values.keySet().iterator();
+		Collection toRemove = null;
+		Map toAdd = null;
 		while (it.hasNext()) {
-			String nombre = (String) it.next();
-			if (nombre.indexOf('.') >= 0) {
-				if (aBorrar == null) aBorrar = new ArrayList();
-				aBorrar.add(nombre);
-				String nuevoNombre = Strings.change(nombre, ".", "_");
-				Object valor = valores.get(nombre);
-				if (aAñadir == null) aAñadir = new HashMap();				
-				aAñadir.put(nuevoNombre, valor);
+			String name = (String) it.next();
+			if (name.indexOf('.') >= 0) {
+				if (toRemove == null) toRemove = new ArrayList();
+				toRemove.add(name);
+				String newName = Strings.change(name, ".", "_");
+				Object value = values.get(name);
+				if (toAdd == null) toAdd = new HashMap();				
+				toAdd.put(newName, value);
 			}
 		}		
-		if (aBorrar != null) {
-			Iterator itBorrar = aBorrar.iterator();
-			while (itBorrar.hasNext()) {
-				valores.remove(itBorrar.next());
+		if (toRemove != null) {
+			Iterator itRemove = toRemove.iterator();
+			while (itRemove.hasNext()) {
+				values.remove(itRemove.next());
 			}
-			valores.putAll(aAñadir);
+			values.putAll(toAdd);
 		}
 		
 	}
 
-	private void asignarDesdeBigDecimal(Object o, Field f, BigDecimal valor) throws XavaException {
+	private void assignFromBigDecimal(Object o, Field f, BigDecimal value) throws XavaException {
 		try {
-			Class tipo = f.getType();
-			if (tipo.equals(int.class)) {
-				f.setInt(o, valor.intValue());
+			Class type = f.getType();
+			if (type.equals(int.class)) {
+				f.setInt(o, value.intValue());
 			}
-			else if (tipo.equals(Integer.class)) {
-				f.set(o, new Integer(valor.intValue()));
+			else if (type.equals(Integer.class)) {
+				f.set(o, new Integer(value.intValue()));
 			}
-			else if (tipo.equals(long.class)) {
-				f.setLong(o, valor.longValue());
+			else if (type.equals(long.class)) {
+				f.setLong(o, value.longValue());
 			}
-			else if (tipo.equals(Long.class)) {
-				f.set(o, new Long(valor.longValue()));
+			else if (type.equals(Long.class)) {
+				f.set(o, new Long(value.longValue()));
 			}
-			else if (tipo.equals(float.class)) {
-				f.setFloat(o, valor.floatValue());
+			else if (type.equals(float.class)) {
+				f.setFloat(o, value.floatValue());
 			}
-			else if (tipo.equals(Float.class)) {
-				f.set(o, new Float(valor.floatValue()));
+			else if (type.equals(Float.class)) {
+				f.set(o, new Float(value.floatValue()));
 			}
-			else if (tipo.equals(double.class)) {
-				f.setDouble(o, valor.doubleValue());
+			else if (type.equals(double.class)) {
+				f.setDouble(o, value.doubleValue());
 			}
-			else if (tipo.equals(Double.class)) {
-				f.set(o, new Double(valor.doubleValue()));
+			else if (type.equals(Double.class)) {
+				f.set(o, new Double(value.doubleValue()));
 			}
-			else if (tipo.equals(short.class)) {
-				f.setShort(o, valor.shortValue());
+			else if (type.equals(short.class)) {
+				f.setShort(o, value.shortValue());
 			}
-			else if (tipo.equals(Short.class)) {
-				f.set(o, new Short(valor.shortValue()));
+			else if (type.equals(Short.class)) {
+				f.set(o, new Short(value.shortValue()));
 			}
-			else if (tipo.equals(byte.class)) {
-				f.setByte(o, valor.byteValue());
+			else if (type.equals(byte.class)) {
+				f.setByte(o, value.byteValue());
 			}
-			else if (tipo.equals(Byte.class)) {
-				f.set(o, new Byte(valor.byteValue()));
+			else if (type.equals(Byte.class)) {
+				f.set(o, new Byte(value.byteValue()));
 			}
 			else {						
 				throw new XavaException("bigdecimal_to_no_number_error");
@@ -391,11 +336,11 @@ public class MetaEjbImpl implements Serializable {
 
 	}
 	
-	private void asignarDesdeUtilDate(Object o, Field f, java.util.Date valor) throws XavaException {
+	private void assignFromUtilDate(Object o, Field f, java.util.Date value) throws XavaException {
 		try {			
 			Class tipo = f.getType();
 			if (tipo.equals(java.sql.Date.class)) {				
-				f.set(o, new java.sql.Date(valor.getTime()));
+				f.set(o, new java.sql.Date(value.getTime()));
 			}
 			else {						
 				throw new XavaException("utildate_not_compatible");
@@ -407,19 +352,19 @@ public class MetaEjbImpl implements Serializable {
 
 	}
 	
-	private void asignarUsandoConversor(Object o, String nombrePropiedad, Field f, Object valor) throws XavaException {		
+	private void assignUsingConverter(Object o, String propertyName, Field f, Object value) throws XavaException {		
 		try {			
-			MetaProperty pr = metaModel.getMetaProperty(nombrePropiedad);			
-			if (pr.hasValidValues() && valor instanceof String) {
-				valor = new Integer(pr.getValidValueIndex(valor));
+			MetaProperty pr = metaModel.getMetaProperty(propertyName);			
+			if (pr.hasValidValues() && value instanceof String) {
+				value = new Integer(pr.getValidValueIndex(value));
 			}
-			IConverter conversor = getMapeo().getConverter(nombrePropiedad);
-			valor = conversor.toDB(valor);
-			f.set(o, valor);
+			IConverter converter = getMapping().getConverter(propertyName);
+			value = converter.toDB(value);
+			f.set(o, value);
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			throw new XavaException("value_to_member_error", nombrePropiedad,  o.getClass().getName(), ex.getLocalizedMessage());
+			throw new XavaException("value_to_member_error", propertyName,  o.getClass().getName(), ex.getLocalizedMessage());
 		}
 
 	}
@@ -434,9 +379,8 @@ public class MetaEjbImpl implements Serializable {
 	}
 	
 	
-	private ModelMapping getMapeo() throws XavaException {
+	private ModelMapping getMapping() throws XavaException {
 		return metaModel.getMapping();	
 	}
 	
 }
-

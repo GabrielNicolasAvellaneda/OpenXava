@@ -4,7 +4,6 @@ import java.io.*;
 
 import org.openxava.util.*;
 
-
 /**
  * @author Javier Paniza
  */
@@ -60,9 +59,8 @@ public class MetaMethod implements Serializable {
 		return metaCalculator;
 	}
 
-	public void setMetaCalculator(MetaCalculator calculador) {
-		metaCalculator = calculador;
+	public void setMetaCalculator(MetaCalculator calculator) {
+		metaCalculator = calculator;
 	}
 	
-
 }

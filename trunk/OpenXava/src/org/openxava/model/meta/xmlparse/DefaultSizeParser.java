@@ -10,11 +10,11 @@ import org.w3c.dom.*;
  */
 public class DefaultSizeParser extends ParserBase {
 
-	public DefaultSizeParser(String urlArchivoXml, int language) {
-		super(urlArchivoXml, language);
+	public DefaultSizeParser(String xmlFileURL, int language) {
+		super(xmlFileURL, language);
 	}
 	
-	public static void configurarLongitudDefecto() throws XavaException {
+	public static void configureDefaultSize() throws XavaException {
 		DefaultSizeParser enParser = new DefaultSizeParser("default-size.xml", ENGLISH);
 		enParser.parse();		
 		DefaultSizeParser esParser = new DefaultSizeParser("longitud-defecto.xml", ESPAÑOL);

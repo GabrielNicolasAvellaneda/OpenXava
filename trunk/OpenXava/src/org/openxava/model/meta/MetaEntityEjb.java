@@ -22,99 +22,39 @@ public class MetaEntityEjb extends MetaEntity implements IMetaEjb {
 	public Class getRemoteClass() throws XavaException {
 		return impl.getRemoteClass();
 	}
-	/**
-	 * 
-	 * @return java.lang.String
-	 * @throws XavaException
-	 */
 	public java.lang.String getHome() throws XavaException {
 		return impl.getHome();
-	}
-	
-	/**
-	 * 
-	 * @param newHome java.lang.String
-	 */
+	}	
 	public void setHome(java.lang.String newHome) {
 		impl.setHome(newHome);
 	}
-	
-	
-	/**
-	 * 
-	 * @return java.lang.String
-	 * @throws XavaException
-	 */
 	public java.lang.String getJndi() throws XavaException {
 		return impl.getJndi();
 	}
-	
-	/**
-	 * 
-	 * @param newJndi java.lang.String
-	 */
 	public void setJndi(java.lang.String newJndi) {
 		impl.setJndi(newJndi);
 	}
-	
-	
-	/**
-	 * 
-	 * @return java.lang.String
-	 * @throws XavaException
-	 */
 	public java.lang.String getPrimaryKey() throws XavaException {
 		return impl.getPrimaryKey();
 	}
-	
-	/**
-	 * 
-	 * @param newPrimaryKey java.lang.String
-	 */
 	public void setPrimaryKey(java.lang.String newPrimaryKey) {
 		impl.setPrimaryKey(newPrimaryKey);
-	}
-	
-	
-	/**
-	 * 
-	 * @return java.lang.String
-	 * @throws XavaException
-	 */
+	}	
 	public java.lang.String getRemote() throws XavaException {
 		return impl.getRemote();
 	}	
-	
-	/**
-	 * 
-	 * @param newRemote java.lang.String
-	 */
 	public void setRemote(java.lang.String newRemote) {
 		impl.setRemote(newRemote);
-	}
-				
+	}				
 	public Class getHomeClass() throws XavaException {
 		return impl.getHomeClass();
-	}
-	
+	}	
 	public Class getPrimaryKeyClass() throws XavaException {
 		return impl.getPrimaryKeyClass();
 	}
-	
-	/**
-	 * Para usarse desde dentro de un EJB. <p>
-	 *
-	 * No se debería usar desde el cliente ya que lanza
-	 * una <tt>EJBException</tt> si falla.<br>
-	 *
-	 * @exception EJBException Si hay algún problema
-	 * @return Home moldado
-	 * @throws XavaException
-	 */
 	public EJBHome obtainHome() throws XavaException {
 		return impl.obtainHome();
 	}
-
 	
 	public Collection getKeyFields() throws XavaException {
 		if (keyFields == null) {
@@ -136,19 +76,19 @@ public class MetaEntityEjb extends MetaEntity implements IMetaEjb {
 		return getRemoteClass();
 	}
 	
-	public Object obtainPrimaryKeyFromAllValues(Map valores)
+	public Object obtainPrimaryKeyFromAllValues(Map values)
 		throws XavaException {		
-		return impl.obtainPrimaryKeyFromKey(valores);
+		return impl.obtainPrimaryKeyFromKey(values);
 	}
 
-	public Object obtainPrimaryKeyFromKey(Map valoresClave)
+	public Object obtainPrimaryKeyFromKey(Map keyValues)
 		throws XavaException {
-			return impl.obtainPrimaryKeyFromKey(valoresClave);
+			return impl.obtainPrimaryKeyFromKey(keyValues);
 	}
 	
-	public Object obtainPrimaryKeyFromKeyWithoutConversors(Map valoresClave)
+	public Object obtainPrimaryKeyFromKeyWithoutConversors(Map keyValues)
 		throws XavaException {
-			return impl.obtainPrimaryKeyAFromKeyWithoutConversors(valoresClave);
+			return impl.obtainPrimaryKeyAFromKeyWithoutConversors(keyValues);
 	}
 	
 	public Map obtainMapFromPrimaryKey(Object primaryKey) throws XavaException {

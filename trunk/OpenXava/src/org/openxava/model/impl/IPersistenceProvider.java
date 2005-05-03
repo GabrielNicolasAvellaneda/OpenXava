@@ -16,7 +16,7 @@ import org.openxava.validators.*;
  * used in {@link MapFacadeBean}. <p>
  * 
  * tmp: Doc each method
- * tmp: IMetaEjb
+ * tmp: IMetaEjb: Before release hibernate version revise all references to EJB in model packages.
  * tmp: Como excepción de sistema
  * se puede usar cualquier RuntimeException como por ejemplo JDOException,
  * HibernateException, EJBException etc.

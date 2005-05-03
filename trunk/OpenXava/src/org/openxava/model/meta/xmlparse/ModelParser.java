@@ -161,8 +161,7 @@ public class ModelParser extends XmlElementsNames {
 				container.addMetaCalculatorPostRemove(CalculatorParser.parseCalculator(d, lang));
 			}
 		}
-	}
-	
+	}	
 				
 	private static boolean hasEjb(Element el, int lang) {
 		return ParserUtil.getElement(el, xejb[lang]) != null;
@@ -206,10 +205,10 @@ public class ModelParser extends XmlElementsNames {
 			}
 		}
 		p.setMetaCalculator(createCalculator(el, lang));
-		p.setMetaCalculatorDefaultValue(crearCalculadorValorDefeto(el, lang));
+		p.setMetaCalculatorDefaultValue(createDefaultValueCalculator(el, lang));
 		if (Is.emptyString(el.getAttribute(xrequired[lang]))) {
 			// Calculating a valid default value for required
-			p.setRequired(p.isKey() && !p.hasCalcultaroDefaultValueOnCreate());
+			p.setRequired(p.isKey() && !p.hasCalculatorDefaultValueOnCreate());
 		}
 		else {
 			p.setRequired(ParserUtil.getAttributeBoolean(el, xrequired[lang]));
@@ -289,7 +288,7 @@ public class ModelParser extends XmlElementsNames {
 		return CalculatorParser.parseCalculator(l.item(0), lang);
 	}
 	
-	private static MetaCalculator crearCalculadorValorDefeto(Element el, int lang) throws XavaException {
+	private static MetaCalculator createDefaultValueCalculator(Element el, int lang) throws XavaException {
 		NodeList l = el.getElementsByTagName(xdefault_value_calculator[lang]);
 		int c = l.getLength();
 		if (c > 1) {			
@@ -313,7 +312,7 @@ public class ModelParser extends XmlElementsNames {
 		r.setRequired(ParserUtil.getAttributeBoolean(el, xrequired[lang]));
 		r.setKey(ParserUtil.getAttributeBoolean(el, xkey[lang]));
 		r.setRole(el.getAttribute(xrole[lang]));
-		r.setMetaCalculatorDefaultValue(crearCalculadorValorDefeto(el, lang));
+		r.setMetaCalculatorDefaultValue(createDefaultValueCalculator(el, lang));
 		
 		return r;
 	}

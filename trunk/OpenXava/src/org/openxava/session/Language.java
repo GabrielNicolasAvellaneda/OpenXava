@@ -19,8 +19,7 @@ public class Language {
 	private Locale defaultLocale;
 	
 	/**
-	 * Identificador del idioma, p. ej: es, ca, en, etc.
-	 * @return
+	 * Language identifier, for example: es, ca, en, etc.
 	 */
 	public String getId() {		
 		return id;
@@ -50,27 +49,27 @@ public class Language {
 				if ("ca".equals(this.id)) return getChangeToSpainAction();
 			}
 			catch (XavaException ex) {
-				System.err.println("¡ADVERTENCIA! Imposible crear acción para cambiar a castellano, devolvemos acción para cambiar a valenciano");
+				System.err.println(XavaResources.getString("to_spanish_warning"));
 				return  getChangeToValencianoAction();
 			}
 			return  getChangeToValencianoAction();
 		}
 		catch (XavaException ex) {
-			System.err.println("¡ADVERTENCIA! Imposible crear acciones para cambiar de idioma, se devuelve acción vacía");
+			System.err.println(XavaResources.getString("change_language_create_action_warning"));
 			return new MetaAction();
 		}
 	}
 
 	private static MetaAction getChangeToValencianoAction() throws XavaException {
 		if (changeToValencianoAction == null) {
-			changeToValencianoAction = MetaControllers.getMetaAction("Idiomas.cambiarAValenciano");
+			changeToValencianoAction = MetaControllers.getMetaAction("Languages.changeToValenciano");
 		}
 		return changeToValencianoAction;
 	}
 	
 	private static MetaAction getChangeToSpainAction() throws XavaException {
 		if (changeToSpainAction == null) {
-			changeToSpainAction = MetaControllers.getMetaAction("Idiomas.cambiarACastellano");
+			changeToSpainAction = MetaControllers.getMetaAction("Languages.changeToSpanish");
 		}
 		return changeToSpainAction;
 	}
@@ -79,9 +78,9 @@ public class Language {
 		return defaultLocale;
 	}
 
-	public void setDefaultLocale(Locale nuevo) {
-		if (Is.equal(defaultLocale, nuevo)) return;
-		defaultLocale = nuevo;
+	public void setDefaultLocale(Locale newLocale) {
+		if (Is.equal(defaultLocale, newLocale)) return;
+		defaultLocale = newLocale;
 		setLocale(defaultLocale);
 	}
 

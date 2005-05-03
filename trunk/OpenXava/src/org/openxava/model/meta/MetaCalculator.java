@@ -17,11 +17,8 @@ public class MetaCalculator extends MetaSetsContainer implements Serializable {
 	private boolean onCreate;
 		
 	/**
-	 * Crea un calculador cada vez que se llama a este método,
-	 * configurado con los valores asignados en xml.
-	 * 
-	 * @return ICalculador
-	 * @throws XavaException
+	 * Create a calculator whenever this method is called,
+	 * congured with values assigned in xml. <p> 
 	 */
 	public ICalculator createCalculator() throws XavaException {		
 		try {
@@ -29,26 +26,23 @@ public class MetaCalculator extends MetaSetsContainer implements Serializable {
 			if (!(o instanceof ICalculator)) {
 				throw new XavaException("calculator_implements_icalculator", getClassName());
 			}
-			ICalculator calculador = (ICalculator) o;
+			ICalculator calculator = (ICalculator) o;
 			if (containsMetaSets()) {
-				assignPropertiesValues(calculador);
+				assignPropertiesValues(calculator);
 			}									
-			return calculador;
+			return calculator;
 		}
 		catch (XavaException ex) {
 			throw ex;
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			throw new XavaException("create_calculater_error", getClassName(), ex.getLocalizedMessage());
+			throw new XavaException("create_calculator_error", getClassName(), ex.getLocalizedMessage());
 		}
 	}
 	
 	/**
-	 * La primera vez crea, y las veces sucesivas devuelve el creado la primera
-	 * vez. <p>
-	 * 
-	 * @return ICalculador
+	 * First time creates it, and successive times uses the created one. <p> 
 	 */
 	public ICalculator getCalculator() throws XavaException {
 		if (calculator == null) {
@@ -57,40 +51,18 @@ public class MetaCalculator extends MetaSetsContainer implements Serializable {
 		return calculator;
 	}
 
-
-	
-	
-
-	/**
-	 * Returns the nombreClase.
-	 * @return String
-	 */
 	public String getClassName() {
 		return className;
 	}
-	
-	/**
-	 * Sets the nombreClase.
-	 * @param nombreClase The nombreClase to set
-	 */
-	public void setClassName(String nombreClase) {
-		this.className = nombreClase;
+	public void setClassName(String className) {
+		this.className = className;
 	}
 
-	/**
-	 * Returns the alCrear.
-	 * @return boolean
-	 */
 	public boolean isOnCreate() {
 		return onCreate;
 	}
-
-	/**
-	 * Sets the alCrear.
-	 * @param alCrear The alCrear to set
-	 */
-	public void setOnCreate(boolean alCrear) {
-		this.onCreate = alCrear;
+	public void setOnCreate(boolean onCreate) {
+		this.onCreate = onCreate;
 	}
 
 }

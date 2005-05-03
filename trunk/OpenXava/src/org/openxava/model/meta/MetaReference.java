@@ -1,6 +1,5 @@
 package org.openxava.model.meta;
 
-
 import java.util.*;
 
 import org.openxava.calculators.*;
@@ -8,15 +7,12 @@ import org.openxava.component.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
 
-
-
 /**
  * 
  * @author: Javier Paniza
  */
 
 public class MetaReference extends MetaMember implements Cloneable {
-
 
 	private MetaModel metaModelReferenced;
 	private String referencedModelName;
@@ -26,30 +22,23 @@ public class MetaReference extends MetaMember implements Cloneable {
 	private MetaCalculator metaCalculatorDefaultValue;
 	private ICalculator defaultValueCalculator;
 	
-	/**
-	 * Comentario de constructor Referencia.
-	 */
-	public MetaReference() {
-		super();
-	}
-	
 	public MetaCollection getMetaCollectionFromReferencedModel() throws XavaException { 				
 		Iterator it = getMetaModelReferenced().getMetaCollections().iterator();
-		String nombreModelo = getMetaModel().getName();
+		String modelName = getMetaModel().getName();
 		while (it.hasNext()) {
-			MetaCollection metaColeccion = (MetaCollection) it.next();
-			if (metaColeccion.getMetaReference().getRole().equals(getName()) &&
-				nombreModelo.equals(metaColeccion.getMetaReference().getReferencedModelName())
+			MetaCollection metaCollection = (MetaCollection) it.next();
+			if (metaCollection.getMetaReference().getRole().equals(getName()) &&
+				modelName.equals(metaCollection.getMetaReference().getReferencedModelName())
 			) {
-				return metaColeccion;
+				return metaCollection;
 			}  			
 		}
 		return null;		
 	}
 	
 	public String getOrderFromReferencedModel() throws XavaException {
-		MetaCollection metaColeccion = getMetaCollectionFromReferencedModel(); 				
-		return metaColeccion==null?null:metaColeccion.getOrder();		
+		MetaCollection metaCollection = getMetaCollectionFromReferencedModel(); 				
+		return metaCollection==null?null:metaCollection.getOrder();		
 	}
 	
 	public String getSQLOrderFromReferencedModel() throws XavaException { 
@@ -59,46 +48,38 @@ public class MetaReference extends MetaMember implements Cloneable {
 	}
 	
 	public String getEJBQLOrderFromReferencedModel() throws XavaException { 
-		String orden = getOrderFromReferencedModel();		
-		if (orden == null) return "";		
-		return "ORDER BY " + getMetaModel().getMapping().changePropertiesByCMPAttributes(orden);
+		String order = getOrderFromReferencedModel();		
+		if (order == null) return "";		
+		return "ORDER BY " + getMetaModel().getMapping().changePropertiesByCMPAttributes(order);
 	}
 					
-	/**
-	 */
 	public MetaModel getMetaModelReferenced() throws XavaException {
 		if (metaModelReferenced == null) {
-			ElementName nombreModelo = new ElementName(getReferencedModelName());			
-			if (nombreModelo.isQualified()) { // calificado
-				String nombreComponente = nombreModelo.getContainerName();
-				String nombreAgregado = nombreModelo.getUnqualifiedName();
-				return MetaComponent.get(nombreComponente).getMetaAggregate(nombreAgregado);
+			ElementName modelName = new ElementName(getReferencedModelName());			
+			if (modelName.isQualified()) { 
+				String componentName = modelName.getContainerName();
+				String aggregateName = modelName.getUnqualifiedName();
+				return MetaComponent.get(componentName).getMetaAggregate(aggregateName);
 			}
 			
-			// No calificado
+			// Not qualified
 			
 			try {				
-				// Así buscamos el agregados local
+				// look for local aggregate
 				metaModelReferenced = getMetaModel().getMetaComponent().getMetaAggregate(getReferencedModelName());
 			}
 			catch (ElementNotFoundException ex) {
-				// Buscamos la entidad (buscando el componente)
+				// look for entity (looking for component)
 				metaModelReferenced = MetaComponent.get(getReferencedModelName()).getMetaEntity();
 			}
 		}
 		return metaModelReferenced;
 	}
 	
-	/**
-	 */
 	public boolean isAggregate() throws XavaException {
 		return getMetaModelReferenced() instanceof MetaAggregate;
 	}
-	
-		
-	/**
-	 * @see Elemento#getLabel()
-	 */
+			
 	public String getLabel() {
 		String e = super.getLabel();
 		try {
@@ -108,10 +89,6 @@ public class MetaReference extends MetaMember implements Cloneable {
 		}
 	}
 	
-	/**
-	 * Gets the nombreModeloReferenciado
-	 * @return Returns a String
-	 */
 	public String getReferencedModelName() {
 		if (Is.emptyString(referencedModelName)) {
 			referencedModelName = Strings.firstUpper(super.getName());
@@ -119,33 +96,17 @@ public class MetaReference extends MetaMember implements Cloneable {
 		return referencedModelName;
 	}
 	
-	/**
-	 * Sets the nombreModeloReferenciado
-	 * @param nombreModeloReferenciado The nombreModeloReferenciado to set
-	 */
-	public void setReferencedModelName(String nombreModeloReferenciado) {
-		this.referencedModelName = nombreModeloReferenciado;
+	public void setReferencedModelName(String referencedModelName) {
+		this.referencedModelName = referencedModelName;
 	}
 	
-	/**
-	 * Gets the requerido
-	 * @return Returns a boolean
-	 */
 	public boolean isRequired() {
 		return required;
 	}
-	/**
-	 * Sets the requerido
-	 * @param requerido The requerido to set
-	 */
-	public void setRequired(boolean requerido) {
-		this.required = requerido;
+	public void setRequired(boolean required) {
+		this.required = required;
 	}
 
-
-	/**
-	 * @see Elemento#getName()
-	 */
 	public String getName() {
 		if (Is.emptyString(super.getName())) {
 			ElementName n = new ElementName(getReferencedModelName());
@@ -154,20 +115,11 @@ public class MetaReference extends MetaMember implements Cloneable {
 		return super.getName();
 	}
 
-	/**
-	 * Returns the cometidoDestino.
-	 * @return String
-	 */
 	public String getRole() {		
 		return Is.emptyString(role)?Strings.firstLower(getMetaModel().getName()):role;
 	}
-
-	/**
-	 * Sets the cometidoDestino.
-	 * @param cometidoDestino The cometidoDestino to set
-	 */
-	public void setRole(String cometidoDestino) {
-		this.role = cometidoDestino;
+	public void setRole(String role) {
+		this.role = role;
 	}
 	
 		
@@ -202,7 +154,7 @@ public class MetaReference extends MetaMember implements Cloneable {
 	
 	/**
 	 * 
-	 * @return null si no tiene calculador para valor inicial.
+	 * @return null if this does not have default value calculator
 	 */
 	public ICalculator getDefaultValueCalculator() throws XavaException {
 		if (!hasDefaultValueCalculator()) return null;
