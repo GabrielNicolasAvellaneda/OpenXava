@@ -305,6 +305,7 @@ public class ModuleManager {
 					if (moduleChange.hasReinitNextModule()) {						
 						getContext().put(getApplicationName(), nextModule, "manager", null);
 					}
+					request.setAttribute("xava.sendParametersToTab", "false");
 				}
 			}			
 		}
@@ -604,8 +605,8 @@ public class ModuleManager {
 				MetaAction a = (MetaAction) it.next();
 				executeAction(a, errors, messages, request); 
 			}
-			moduleInitiated = true;
-		}		
+			moduleInitiated = true;			
+		}
 	}
 	
 	public String getEnctype() { 		

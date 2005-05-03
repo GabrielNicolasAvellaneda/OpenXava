@@ -18,9 +18,12 @@ if (manager.isListMode()) {
 	tab.deselectVisualizedRows();
 }
 %>
+
+<% if (!"false".equals(request.getAttribute("xava.sendParametersToTab"))) { // tmp %>
 <jsp:setProperty name="tab" property="selected"/>
 <jsp:setProperty name="tab" property="conditionComparators"/>
 <jsp:setProperty name="tab" property="conditionValues"/>
+<% } %>
 
 
 <%

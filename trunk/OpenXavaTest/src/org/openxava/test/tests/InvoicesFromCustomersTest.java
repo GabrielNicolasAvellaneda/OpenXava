@@ -20,6 +20,16 @@ public class InvoicesFromCustomersTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "InvoicesFromCustomers");		
 	}
 	
+	public void testSelectedFromCalledModuleNotPropagateToCallerModule() throws Exception {
+		assertRowUnchecked(0);
+		execute("Invoices.listOfCustomer", "row=0");
+		assertListNotEmpty();
+		checkRow(0);
+		assertRowChecked(0);
+		execute("CustomerInvoices.return");
+		assertRowUnchecked(0);
+	}
+	
 	public void testListActionsIncludedWhenModeControllerUsed() throws Exception {
 		executeDefaultAction();
 		assertNoPopup();		
