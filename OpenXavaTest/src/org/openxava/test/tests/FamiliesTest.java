@@ -24,7 +24,7 @@ public class FamiliesTest extends ModuleTestBase {
 	public FamiliesTest(String testName) {
 		super(testName, "OpenXavaTest", "Families");		
 	}
-
+	
 	public void testCreateReadUpdateDelete() throws Exception {
 		assertListRowCount(3);
 		// Create
@@ -33,6 +33,7 @@ public class FamiliesTest extends ModuleTestBase {
 		setValue("description","Family JUnit");
 		execute("CRUD.save");
 		assertNoErrors();
+		
 		execute("Mode.list");
 		assertListRowCount(4);
 		// Read

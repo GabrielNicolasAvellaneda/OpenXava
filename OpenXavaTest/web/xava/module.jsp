@@ -19,7 +19,7 @@ if (manager.isListMode()) {
 }
 %>
 
-<% if (!"false".equals(request.getAttribute("xava.sendParametersToTab"))) { // tmp %>
+<% if (!"false".equals(request.getAttribute("xava.sendParametersToTab"))) { %>
 <jsp:setProperty name="tab" property="selected"/>
 <jsp:setProperty name="tab" property="conditionComparators"/>
 <jsp:setProperty name="tab" property="conditionValues"/>

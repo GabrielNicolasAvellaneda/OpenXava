@@ -57,6 +57,13 @@
 	
 	<controller name="Customers">
 		<extends controller="Typical"/>
+		<action name="save" mode="detail"
+			class="org.openxava.actions.SaveAction"
+			image="images/save.gif"
+			keystroke="F3">			
+			<set property="resetAfter" value="false"/>
+			<use-object name="xava_view"/>
+		</action>				
 		<action name="hideSeller" mode="detail"
 			class="org.openxava.test.actions.HideShowGroupAction">								
 			<set property="group" value="seller"/>	
@@ -223,7 +230,7 @@
 	</controller>
 	
 	<controller name="Families">
-		<extends controller="Typical"/>
+		<extends controller="Typical"/>		
 		<action name="new" image="images/new.gif"
 			class="org.openxava.test.actions.CreateNewFamilyAction">					
 			<use-object name="xava_view"/>			
