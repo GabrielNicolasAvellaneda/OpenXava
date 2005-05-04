@@ -182,7 +182,7 @@ public class CustomersTest extends ModuleTestBase {
 		
 	
 	// references to entities and aggregates
-	public void testCreateModifyAndReadWithReferences() throws Exception {				
+	public void testCreateModifyAndReadWithReferencesAndOverwriteSaveAction() throws Exception {				
 		// Create one new
 		execute("CRUD.new");
 		assertNoErrors();
@@ -196,8 +196,23 @@ public class CustomersTest extends ModuleTestBase {
 		setValue("seller.number", "1");
 		setValue("relationWithSeller", "A RELATION");
 		setValue("alternateSeller.number", "2");		
-		execute("CRUD.save"); 		
+		execute("Customers.save");  		
 		assertNoErrors();
+
+		assertNoEditable("number");
+		assertEditable("type");		
+		assertValue("number", "66");
+		assertValue("type", "2");
+		assertValue("name", "Junit Customer"); // Testing formatter with sets
+		assertValue("address.street", "JUNIT STREET"); // Testing overwrite default formatter for applicacion. Use UpperCaseFormatter
+		assertValue("address.zipCode", "66666");
+		assertValue("address.city", "POBLE JUNIT PER A J");
+		assertValue("address.state.id", "NY");
+		assertValue("seller.number", "1");
+		assertValue("relationWithSeller", "A RELATION");
+		assertValue("alternateSeller.number", "2");						
+
+		execute("CRUD.new"); 
 		assertValue("number", "");
 		assertValue("type", "1");
 		assertValue("name", "");
@@ -229,13 +244,15 @@ public class CustomersTest extends ModuleTestBase {
 		
 		// Modify
 		setValue("seller.number", "2");
-		execute("CRUD.save");
+		execute("Customers.save");
 		assertNoErrors();
+		execute("CRUD.new");
 		assertValue("number", "");
 		assertValue("type", "1");
 		assertValue("name", "");
 		
 		// Verifying modified
+		execute("CRUD.new");
 		setValue("number", "66");
 		execute("CRUD.search");		
 		assertValue("number", "66");
@@ -329,7 +346,7 @@ public class CustomersTest extends ModuleTestBase {
 		setValue("address.zipCode", "66666");
 		setValue("address.city", "POBLE JUNIT PER A J");
 		setValue("address.state.id", "NY");
-		execute("CRUD.save");
+		execute("Customers.save");
 		assertNoErrors();
 		
 		// Verifying that it is in the list althought it has not seller

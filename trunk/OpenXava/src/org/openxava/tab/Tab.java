@@ -954,4 +954,20 @@ public class Tab {
 	public void setSortRemainingProperties(boolean sortRemainingProperties) {
 		this.sortRemainingProperties = sortRemainingProperties;
 	}
+	
+	public Map [] getSelectedKeys() {
+		if (selected == null) return new Map[0];
+		Map [] keys = new Map[selected.length];
+		for (int i = 0; i < keys.length; i++) {
+			try {
+				keys[i] = (Map) tableModel.getObjectAt(selected[i]);
+			}
+			catch (Exception ex) {
+				keys[i] = Collections.EMPTY_MAP;
+				System.err.println(XavaResources.getString("tab_row_key_warning", new Integer(i)));
+			}
+		}
+		return keys;
+	}	
+	
 }

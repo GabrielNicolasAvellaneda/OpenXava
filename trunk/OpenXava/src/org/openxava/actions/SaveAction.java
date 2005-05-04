@@ -27,6 +27,9 @@ public class SaveAction extends ViewBaseAction {
 				getView().reset();
 				getView().setKeyEditable(true);
 			}
+			else {
+				getView().setKeyEditable(false);
+			}			
 			resetDescriptionsCache();
 		}
 		catch (ValidationException ex) {			
