@@ -552,15 +552,13 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 		set<expr>containerName</expr>_<expr>propertyName</expr>(containerKey.<expr>propertyName</expr>);		
 		<java>} </java> 
 			
-	<java>} 
-	  else { // It is not aggregate
+	<java>} // if has aggregate
 		Iterator itKeyProperties = metaModel.getAllKeyPropertiesNames().iterator();
 		while (itKeyProperties.hasNext()) {
 			String propertyName = Strings.change(Strings.firstUpper((String) itKeyProperties.next()), ".", "_");			
 		</java> 
 		set<expr>propertyName</expr>(value.get<expr>propertyName</expr>());		
 		<java>} 
-		} // else if has aggregate
 		properties = metaModel.getMetaPropertiesWithDefaultValueOnCreate();					
 		if (!properties.isEmpty()) {
 		</java> 
@@ -646,6 +644,12 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 			String propertyName = Strings.change((String) it.next(), ".", "_");
 		</java>
 		set<expr>containerName</expr>_<expr>propertyName</expr>(containerKey.<expr>propertyName</expr>);
+		<java>} 
+		itKeyProperties = metaModel.getAllKeyPropertiesNames().iterator();
+		while (itKeyProperties.hasNext()) {
+			String propertyName = Strings.change(Strings.firstUpper((String) itKeyProperties.next()), ".", "_");			
+		</java> 
+		set<expr>propertyName</expr>(value.get<expr>propertyName</expr>());		
 		<java>} 
 		properties = metaModel.getMetaPropertiesWithDefaultValueOnCreate();
 		if (!properties.isEmpty()) {
