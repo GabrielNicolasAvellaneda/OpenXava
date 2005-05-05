@@ -139,12 +139,16 @@ abstract public class ModelMapping implements java.io.Serializable {
 	
 	public String getKeyColumnsAsString() throws XavaException {
 		StringBuffer r = new StringBuffer();
+		Collection columns = new HashSet();
 		for (Iterator it=getMetaModel().getAllKeyPropertiesNames().iterator(); it.hasNext();) {
 			String pr = (String) it.next();
-			r.append(getColumn(pr));
-			if (it.hasNext()) r.append(' ');
-		}
-		return r.toString();
+			String column = getColumn(pr);
+			if (columns.contains(column)) continue;
+			columns.add(column);
+			r.append(column);
+			r.append(' ');
+		}		
+		return r.toString().trim();
 	}
 	
 	public String getQualifiedColumn(String modelProperty)

@@ -394,45 +394,6 @@
 
       </entity>
 
-      <entity id="ContainerManagedEntity_SellerLevel">
-         <description><![CDATA[]]></description>
-
-         <ejb-name>SellerLevel</ejb-name>
-
-         <home>org.openxava.test.ejb.SellerLevelHome</home>
-         <remote>org.openxava.test.ejb.SellerLevel</remote>
-
-         <ejb-class>org.openxava.test.ejb.xejb.SellerLevelCMP</ejb-class>
-         <persistence-type>Container</persistence-type>
-         <prim-key-class>org.openxava.test.ejb.SellerLevelKey</prim-key-class>
-         <reentrant>false</reentrant>
-         <cmp-version>2.x</cmp-version>
-         <abstract-schema-name>SellerLevel</abstract-schema-name>
-         <cmp-field id="CmpAttribute_SellerLevel__Description">
-            <description><![CDATA[]]></description>
-            <field-name>_Description</field-name>
-         </cmp-field>
-         <cmp-field id="CmpAttribute_SellerLevel_id">
-            <description><![CDATA[]]></description>
-            <field-name>id</field-name>
-         </cmp-field>
-
-         <env-entry>
-            <env-entry-name>DATA_SOURCE</env-entry-name>
-            <env-entry-type>java.lang.String</env-entry-type>
-            <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
-         </env-entry>
-
-         <resource-ref id="ResRef_5">
-            <res-ref-name>jdbc/DataSource</res-ref-name>
-            <res-type>javax.sql.DataSource</res-type>
-            <res-auth>Container</res-auth>
-         </resource-ref>
-
-	  <!-- Write a file named ejb-finders-SellerLevelBean.xml if you want to define extra finders. -->
-
-      </entity>
-
       <entity id="ContainerManagedEntity_State">
          <description><![CDATA[]]></description>
 
@@ -462,13 +423,52 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_6">
+         <resource-ref id="ResRef_5">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
          </resource-ref>
 
 	  <!-- Write a file named ejb-finders-StateBean.xml if you want to define extra finders. -->
+
+      </entity>
+
+      <entity id="ContainerManagedEntity_SellerLevel">
+         <description><![CDATA[]]></description>
+
+         <ejb-name>SellerLevel</ejb-name>
+
+         <home>org.openxava.test.ejb.SellerLevelHome</home>
+         <remote>org.openxava.test.ejb.SellerLevel</remote>
+
+         <ejb-class>org.openxava.test.ejb.xejb.SellerLevelCMP</ejb-class>
+         <persistence-type>Container</persistence-type>
+         <prim-key-class>org.openxava.test.ejb.SellerLevelKey</prim-key-class>
+         <reentrant>false</reentrant>
+         <cmp-version>2.x</cmp-version>
+         <abstract-schema-name>SellerLevel</abstract-schema-name>
+         <cmp-field id="CmpAttribute_SellerLevel__Description">
+            <description><![CDATA[]]></description>
+            <field-name>_Description</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_SellerLevel_id">
+            <description><![CDATA[]]></description>
+            <field-name>id</field-name>
+         </cmp-field>
+
+         <env-entry>
+            <env-entry-name>DATA_SOURCE</env-entry-name>
+            <env-entry-type>java.lang.String</env-entry-type>
+            <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
+         </env-entry>
+
+         <resource-ref id="ResRef_6">
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <res-type>javax.sql.DataSource</res-type>
+            <res-auth>Container</res-auth>
+         </resource-ref>
+
+	  <!-- Write a file named ejb-finders-SellerLevelBean.xml if you want to define extra finders. -->
 
       </entity>
 
@@ -1839,6 +1839,98 @@
 
       </entity>
 
+      <entity id="ContainerManagedEntity_Office2">
+         <description><![CDATA[]]></description>
+
+         <ejb-name>Office2</ejb-name>
+
+         <home>org.openxava.test.ejb.Office2Home</home>
+         <remote>org.openxava.test.ejb.Office2</remote>
+
+         <ejb-class>org.openxava.test.ejb.xejb.Office2CMP</ejb-class>
+         <persistence-type>Container</persistence-type>
+         <prim-key-class>org.openxava.test.ejb.Office2Key</prim-key-class>
+         <reentrant>false</reentrant>
+         <cmp-version>2.x</cmp-version>
+         <abstract-schema-name>Office2</abstract-schema-name>
+         <cmp-field id="CmpAttribute_Office2__Receptionist">
+            <description><![CDATA[]]></description>
+            <field-name>_Receptionist</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_Office2__Name">
+            <description><![CDATA[]]></description>
+            <field-name>_Name</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_Office2_zoneNumber">
+            <description><![CDATA[]]></description>
+            <field-name>zoneNumber</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_Office2_number">
+            <description><![CDATA[]]></description>
+            <field-name>number</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_Office2_officeManager_number">
+            <description><![CDATA[]]></description>
+            <field-name>officeManager_number</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_Office2_defaultCarrier_number">
+            <description><![CDATA[]]></description>
+            <field-name>defaultCarrier_number</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_Office2_mainWarehouse_number">
+            <description><![CDATA[]]></description>
+            <field-name>mainWarehouse_number</field-name>
+         </cmp-field>
+
+         <env-entry>
+            <env-entry-name>DATA_SOURCE</env-entry-name>
+            <env-entry-type>java.lang.String</env-entry-type>
+            <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
+         </env-entry>
+
+         <resource-ref id="ResRef_25">
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <res-type>javax.sql.DataSource</res-type>
+            <res-auth>Container</res-auth>
+         </resource-ref>
+
+         <query>
+            <query-method>
+               <method-name>findByOfficeManager</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office2 o WHERE o.number = ?1 AND o.officeManager_number = ?2 AND o.zoneNumber = ?3 ]]></ejb-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByDefaultCarrier</method-name>
+               <method-params>
+                  <method-param>java.lang.Integer</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office2 o WHERE o.defaultCarrier_number = ?1 ]]></ejb-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByMainWarehouse</method-name>
+               <method-params>
+                  <method-param>java.lang.Integer</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office2 o WHERE o.mainWarehouse_number = ?1 AND o.zoneNumber = ?2 ]]></ejb-ql>
+         </query>
+	  <!-- Write a file named ejb-finders-Office2Bean.xml if you want to define extra finders. -->
+
+      </entity>
+
       <entity id="ContainerManagedEntity_FilterBySubfamily">
          <description><![CDATA[]]></description>
 
@@ -1868,7 +1960,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_25">
+         <resource-ref id="ResRef_26">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -1929,7 +2021,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_26">
+         <resource-ref id="ResRef_27">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -1968,7 +2060,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_27">
+         <resource-ref id="ResRef_28">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -2011,7 +2103,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_28">
+         <resource-ref id="ResRef_29">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>

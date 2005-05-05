@@ -304,13 +304,13 @@
       </entity>
 
       <entity>
-         <ejb-name>SellerLevel</ejb-name>
+         <ejb-name>State</ejb-name>
 
-         <table-name>XAVATEST_SELLERLEVEL</table-name>
+         <table-name>XAVATEST_STATE</table-name>
 
          <cmp-field>
-            <field-name>_Description</field-name>
-            <column-name>DESCRIPTION</column-name>
+            <field-name>_Name</field-name>
+            <column-name>NAME</column-name>
 
         </cmp-field>
          <cmp-field>
@@ -324,13 +324,13 @@
       </entity>
 
       <entity>
-         <ejb-name>State</ejb-name>
+         <ejb-name>SellerLevel</ejb-name>
 
-         <table-name>XAVATEST_STATE</table-name>
+         <table-name>XAVATEST_SELLERLEVEL</table-name>
 
          <cmp-field>
-            <field-name>_Name</field-name>
-            <column-name>NAME</column-name>
+            <field-name>_Description</field-name>
+            <column-name>DESCRIPTION</column-name>
 
         </cmp-field>
          <cmp-field>
@@ -1437,6 +1437,85 @@
                </method-params>
             </query-method>
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Subfamily2 o WHERE o.family_number = ?1 ]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Office2</ejb-name>
+
+         <table-name>XAVATEST_OFFICE2</table-name>
+
+         <cmp-field>
+            <field-name>_Receptionist</field-name>
+            <column-name>RECEPTIONIST_OID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Name</field-name>
+            <column-name>NAME</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>zoneNumber</field-name>
+            <column-name>ZONE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>number</field-name>
+            <column-name>NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>officeManager_number</field-name>
+            <column-name>MANAGER_NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>defaultCarrier_number</field-name>
+            <column-name>CARRIER_NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>mainWarehouse_number</field-name>
+            <column-name>WAREHOUSE_NUMBER</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByOfficeManager</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Office2 o WHERE o.number = ?1 AND o.officeManager_number = ?2 AND o.zoneNumber = ?3 ]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByDefaultCarrier</method-name>
+               <method-params>
+                  <method-param>java.lang.Integer</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Office2 o WHERE o.defaultCarrier_number = ?1 ]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByMainWarehouse</method-name>
+               <method-params>
+                  <method-param>java.lang.Integer</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Office2 o WHERE o.mainWarehouse_number = ?1 AND o.zoneNumber = ?2 ]]></jboss-ql>
 
 	     </query>
 

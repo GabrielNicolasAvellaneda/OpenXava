@@ -451,6 +451,8 @@
 	<target name="configureJNDI" if="jndi.conf">
 		<copy file="../${project.ejb}/properties/jndi-${jndi.conf}.properties" 
 			tofile="../${project.ejb}/properties/jndi.properties" overwrite="true"/>
+		<copy file="../${project.ejb}/properties/jndi-${jndi.conf}.properties" 
+			tofile="../${project.ejb}/${classes.dir}/jndi.properties" overwrite="true"/>		
 	</target>
 	
 	<target name="createEJBJar" 

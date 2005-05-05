@@ -79,8 +79,8 @@
 
       </entity>
       <entity>
-         <ejb-name>SellerLevel</ejb-name>
-         <jndi-name>@subcontext@/ejb/org.openxava.test.ejb/SellerLevel</jndi-name>
+         <ejb-name>State</ejb-name>
+         <jndi-name>@subcontext@/ejb/org.openxava.test.ejb/State</jndi-name>
          <resource-ref>
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <resource-name>jdbc/DataSource</resource-name>
@@ -91,8 +91,8 @@
 
       </entity>
       <entity>
-         <ejb-name>State</ejb-name>
-         <jndi-name>@subcontext@/ejb/org.openxava.test.ejb/State</jndi-name>
+         <ejb-name>SellerLevel</ejb-name>
+         <jndi-name>@subcontext@/ejb/org.openxava.test.ejb/SellerLevel</jndi-name>
          <resource-ref>
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <resource-name>jdbc/DataSource</resource-name>
@@ -317,6 +317,18 @@
       <entity>
          <ejb-name>Subfamily2</ejb-name>
          <jndi-name>@subcontext@/ejb/org.openxava.test.ejb/Subfamily2</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Office2</ejb-name>
+         <jndi-name>@subcontext@/ejb/org.openxava.test.ejb/Office2</jndi-name>
          <resource-ref>
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <resource-name>jdbc/DataSource</resource-name>
