@@ -64,6 +64,21 @@ public class EJBTest extends TestCase {
 		f.remove();  
 	}
 	
+	public void testCreateAggregateWithValueObject() throws Exception {
+		DeliveryDetailValue value = new DeliveryDetailValue();
+		value.setNumber(66);
+		value.setDescription("PROVA JUNIT");
+		DeliveryDetailUtil.getHome().create(new DeliveryKey(), 0, value);
+		DeliveryDetail d = DeliveryDetailUtil.getHome().findByPrimaryKey(new DeliveryDetailKey(66));
+		assertEquals("number", 66, d.getNumber());
+		assertEquals("description", "PROVA JUNIT", d.getDescription());
+		DeliveryDetailValue obtainedValue = d.getDeliveryDetailValue();
+		assertEquals("number", 66, obtainedValue.getNumber());
+		assertEquals("description", "PROVA JUNIT", obtainedValue.getDescription());
+		d.remove();  
+	}
+	
+	
 	public void testKeyReferences() throws Exception {
 		DeliveryValue value = new DeliveryValue();
 		value.setInvoice_year(2099);
@@ -88,6 +103,8 @@ public class EJBTest extends TestCase {
 		assertEquals("value.description", "JUNIT EJB", deliveryValue.getDescription());		
 		delivery.remove(); 
 	}
+	
+	
 	
 	public void testXavaMethods() throws Exception {
 		ProductValue value = new ProductValue();

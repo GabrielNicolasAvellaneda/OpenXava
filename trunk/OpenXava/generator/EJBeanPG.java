@@ -14,7 +14,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu May 05 10:46:03 CEST 2005
+ * @version Thu May 05 13:45:13 CEST 2005
  */
 public class EJBeanPG {
     Properties properties = new Properties();
@@ -682,8 +682,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print(propertyName);
     out.print(");");
     } 
-    } 
-    	  else { // It is not aggregate
+    } // if has aggregate
     		Iterator itKeyProperties = metaModel.getAllKeyPropertiesNames().iterator();
     		while (itKeyProperties.hasNext()) {
     			String propertyName = Strings.change(Strings.firstUpper((String) itKeyProperties.next()), ".", "_");			
@@ -694,7 +693,6 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print(propertyName);
     out.print("());");
     } 
-    		} // else if has aggregate
     		properties = metaModel.getMetaPropertiesWithDefaultValueOnCreate();					
     		if (!properties.isEmpty()) {
     		
@@ -812,6 +810,16 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print("(containerKey.");
     out.print(propertyName);
     out.print(");");
+    } 
+    		itKeyProperties = metaModel.getAllKeyPropertiesNames().iterator();
+    		while (itKeyProperties.hasNext()) {
+    			String propertyName = Strings.change(Strings.firstUpper((String) itKeyProperties.next()), ".", "_");			
+    		
+    out.print(" \n\t\tset");
+    out.print(propertyName);
+    out.print("(value.get");
+    out.print(propertyName);
+    out.print("());");
     } 
     		properties = metaModel.getMetaPropertiesWithDefaultValueOnCreate();
     		if (!properties.isEmpty()) {
@@ -1321,7 +1329,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu May 05 10:46:04 CEST 2005", // date this file was generated
+        { "Thu May 05 13:45:14 CEST 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/ejbean.xml", // input file
              "/home/javi/workspace/OpenXava/generator/EJBeanPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

@@ -551,15 +551,13 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 		set#(containerName)#_#(propertyName)#(containerKey.#(propertyName)#);		
 		# } # 
 			
-	# } 
-	  else { // It is not aggregate
+	# } // if has aggregate
 		Iterator itKeyProperties = metaModel.getAllKeyPropertiesNames().iterator();
 		while (itKeyProperties.hasNext()) {
 			String propertyName = Strings.change(Strings.firstUpper((String) itKeyProperties.next()), ".", "_");			
 		# 
 		set#(propertyName)#(value.get#(propertyName)#());		
 		# } 
-		} // else if has aggregate
 		properties = metaModel.getMetaPropertiesWithDefaultValueOnCreate();					
 		if (!properties.isEmpty()) {
 		# 
@@ -645,6 +643,12 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 			String propertyName = Strings.change((String) it.next(), ".", "_");
 		#
 		set#(containerName)#_#(propertyName)#(containerKey.#(propertyName)#);
+		# } 
+		itKeyProperties = metaModel.getAllKeyPropertiesNames().iterator();
+		while (itKeyProperties.hasNext()) {
+			String propertyName = Strings.change(Strings.firstUpper((String) itKeyProperties.next()), ".", "_");			
+		# 
+		set#(propertyName)#(value.get#(propertyName)#());		
 		# } 
 		properties = metaModel.getMetaPropertiesWithDefaultValueOnCreate();
 		if (!properties.isEmpty()) {
