@@ -88,21 +88,21 @@
       </columns>
 
    </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_SellerLevel" name="" primaryKey="SellerLevel_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="SellerLevel_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_SellerLevel" constraint="Constraint_SellerLevel_"/>
-
-      <columns xmi:id="SellerLevel__Description" name="_Description">
-      </columns>
-      <columns xmi:id="SellerLevel_id" name="id">
-      </columns>
-
-   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_State" name="" primaryKey="State_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="State_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_State" constraint="Constraint_State_"/>
 
       <columns xmi:id="State__Name" name="_Name">
       </columns>
       <columns xmi:id="State_id" name="id">
+      </columns>
+
+   </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_SellerLevel" name="" primaryKey="SellerLevel_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="SellerLevel_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_SellerLevel" constraint="Constraint_SellerLevel_"/>
+
+      <columns xmi:id="SellerLevel__Description" name="_Description">
+      </columns>
+      <columns xmi:id="SellerLevel_id" name="id">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -412,6 +412,25 @@
       <columns xmi:id="Subfamily2_number" name="number">
       </columns>
       <columns xmi:id="Subfamily2_family_number" name="family_number">
+      </columns>
+
+   </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Office2" name="" primaryKey="Office2_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Office2_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Office2" constraint="Constraint_Office2_"/>
+
+      <columns xmi:id="Office2__Receptionist" name="_Receptionist">
+      </columns>
+      <columns xmi:id="Office2__Name" name="_Name">
+      </columns>
+      <columns xmi:id="Office2_zoneNumber" name="zoneNumber">
+      </columns>
+      <columns xmi:id="Office2_number" name="number">
+      </columns>
+      <columns xmi:id="Office2_officeManager_number" name="officeManager_number">
+      </columns>
+      <columns xmi:id="Office2_defaultCarrier_number" name="defaultCarrier_number">
+      </columns>
+      <columns xmi:id="Office2_mainWarehouse_number" name="mainWarehouse_number">
       </columns>
 
    </RDBSchema:RDBTable>
