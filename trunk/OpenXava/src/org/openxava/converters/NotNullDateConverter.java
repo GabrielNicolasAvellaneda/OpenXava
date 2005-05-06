@@ -19,16 +19,16 @@ public class NotNullDateConverter implements IConverter{
 		if (!(o instanceof Date)) {		
 			throw new ConversionException("conversion_java_utildate_expected");
 		}
-		Date date = (Date)o;
+		Date date = new Date(((java.sql.Date) o).getTime());
 		return (date.compareTo(NULL_DATE) == 0) ? null : date;
 	}
 
 	public Object toDB(Object o) throws ConversionException {
-		if (o == null) return NULL_DATE;
+		if (o == null) return Dates.toSQL(NULL_DATE);
 		if (!(o instanceof Date)) {		
 			throw new ConversionException("conversion_db_utildate_expected");
 		}
-		return o;
+		return Dates.toSQL((Date)o);
 	}
 
 }
