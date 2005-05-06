@@ -534,6 +534,13 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 		creating = true;	
 		modified = false;
 		set#(name)#Value(value);	
+		# 
+		Iterator itKeyProperties = metaModel.getAllKeyPropertiesNames().iterator();
+		while (itKeyProperties.hasNext()) {
+			String propertyName = Strings.change(Strings.firstUpper((String) itKeyProperties.next()), ".", "_");			
+		# 
+		set#(propertyName)#(value.get#(propertyName)#());		
+		# } # 		
 	# if (aggregateName != null) { # 
 		#(containerKeyClass)# containerKey = null;
 		try {
@@ -552,12 +559,6 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 		# } # 
 			
 	# } // if has aggregate
-		Iterator itKeyProperties = metaModel.getAllKeyPropertiesNames().iterator();
-		while (itKeyProperties.hasNext()) {
-			String propertyName = Strings.change(Strings.firstUpper((String) itKeyProperties.next()), ".", "_");			
-		# 
-		set#(propertyName)#(value.get#(propertyName)#());		
-		# } 
 		properties = metaModel.getMetaPropertiesWithDefaultValueOnCreate();					
 		if (!properties.isEmpty()) {
 		# 
@@ -638,17 +639,19 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 		modified = false;
 		set#(name)#Value(value);
 		# 
-		Iterator it = containerModel.getAllKeyPropertiesNames().iterator();
-		while (it.hasNext()) {
-			String propertyName = Strings.change((String) it.next(), ".", "_");
-		#
-		set#(containerName)#_#(propertyName)#(containerKey.#(propertyName)#);
-		# } 
 		itKeyProperties = metaModel.getAllKeyPropertiesNames().iterator();
 		while (itKeyProperties.hasNext()) {
 			String propertyName = Strings.change(Strings.firstUpper((String) itKeyProperties.next()), ".", "_");			
 		# 
 		set#(propertyName)#(value.get#(propertyName)#());		
+		# 
+		} 
+		
+		Iterator it = containerModel.getAllKeyPropertiesNames().iterator();
+		while (it.hasNext()) {
+			String propertyName = Strings.change((String) it.next(), ".", "_");
+		#
+		set#(containerName)#_#(propertyName)#(containerKey.#(propertyName)#);
 		# } 
 		properties = metaModel.getMetaPropertiesWithDefaultValueOnCreate();
 		if (!properties.isEmpty()) {

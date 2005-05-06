@@ -65,17 +65,30 @@ public class EJBTest extends TestCase {
 	}
 	
 	public void testCreateAggregateWithValueObject() throws Exception {
-		DeliveryDetailValue value = new DeliveryDetailValue();
-		value.setNumber(66);
-		value.setDescription("PROVA JUNIT");
-		DeliveryDetailUtil.getHome().create(new DeliveryKey(), 0, value);
-		DeliveryDetail d = DeliveryDetailUtil.getHome().findByPrimaryKey(new DeliveryDetailKey(66));
-		assertEquals("number", 66, d.getNumber());
-		assertEquals("description", "PROVA JUNIT", d.getDescription());
-		DeliveryDetailValue obtainedValue = d.getDeliveryDetailValue();
-		assertEquals("number", 66, obtainedValue.getNumber());
-		assertEquals("description", "PROVA JUNIT", obtainedValue.getDescription());
-		d.remove();  
+		AdditionalDetailValue value = new AdditionalDetailValue();
+		value.setCounter(0);
+		value.setSubfamily(1);
+		value.setType_number(2);
+		ServiceKey serviceKey = new ServiceKey();
+		serviceKey.setNumber(66);		
+		AdditionalDetailUtil.getHome().create(serviceKey, 0, value);
+		AdditionalDetailKey additionalDetailKey = new AdditionalDetailKey();
+		additionalDetailKey.setService_number(66);
+		additionalDetailKey.setCounter(0);
+
+		AdditionalDetail d = AdditionalDetailUtil.getHome().findByPrimaryKey(additionalDetailKey);
+		assertEquals("counter", 0, d.getCounter());
+		assertEquals("subfamily", 1, d.getSubfamily());
+		assertEquals("type_number", 2, d.getType_number());
+		assertEquals("service_number", 66, d.getService_number());		
+
+		AdditionalDetailValue obtainedValue = d.getAdditionalDetailValue();
+		assertEquals("counter", 0, obtainedValue.getCounter());
+		assertEquals("subfamily", 1, obtainedValue.getSubfamily());
+		assertEquals("type_number", 2, obtainedValue.getType_number());
+		assertEquals("service_number", 66, obtainedValue.getService_number());		
+		
+		d.remove();		
 	}
 	
 	
