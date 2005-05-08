@@ -117,4 +117,7 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 	public void rollback() {
 	}
 
+	public void begin() {
+	}
+
 }

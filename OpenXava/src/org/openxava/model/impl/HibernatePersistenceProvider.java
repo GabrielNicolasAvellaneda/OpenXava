@@ -1,13 +1,13 @@
 package org.openxava.model.impl;
 
 import java.io.*;
-import java.rmi.*;
 import java.util.*;
 
 import javax.ejb.*;
 import javax.ejb.ObjectNotFoundException;
 
 import org.hibernate.*;
+import org.hibernate.cfg.*;
 
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -19,7 +19,9 @@ import org.openxava.validators.*;
 public class HibernatePersistenceProvider implements IPersistenceProvider {
 
 	private Session session;
-
+	private Transaction transaction;
+	private static SessionFactory sessionFactory;
+	
 	public Object find(IMetaEjb metaModel, Map keyValues) throws FinderException {
 		try {
 			MetaEjbImpl ejbImpl = new MetaEjbImpl(metaModel);
@@ -101,12 +103,40 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 	}
 
 	public void commit() {
-		// TODO Auto-generated method stub
-		
+	  transaction.commit();
+		session.close();
+		transaction = null;
+		session = null;
 	}
 
 	public void rollback() {
-		// TODO Auto-generated method stub
-		
+		transaction.rollback();
+		session.close();
+		transaction = null;
+		session = null;
 	}
+
+	public void begin() {
+		session = getSessionFactory().openSession();
+		transaction = session.beginTransaction();	
+	}
+	
+	private static SessionFactory getSessionFactory() throws HibernateException {
+		if (sessionFactory == null) {
+			try {
+				Configuration configuration = new Configuration().configure("/hibernate.cfg.xml");
+				for (Iterator it = MetaModel.getAllGenerated().iterator(); it.hasNext();) {
+					MetaModel model = (MetaModel) it.next();
+					configuration.addResource(model.getName() + ".hbm.xml");
+				}
+				sessionFactory = configuration.buildSessionFactory();
+			} 
+			catch (Exception ex) {
+				ex.printStackTrace();
+				throw new HibernateException(XavaResources.getString("hibernate_session_factory_creation_error"));
+			}
+		}
+		return sessionFactory; 
+	}
+	
 }
