@@ -44,7 +44,7 @@
       <entity>
          <ejb-name>Office</ejb-name>
 
-         <table-name>XAVATEST@separator@OFFICE</table-name>
+         <table-name>XAVATEST_OFFICE</table-name>
 
          <cmp-field>
             <field-name>_Receptionist</field-name>
@@ -1447,7 +1447,7 @@
       <entity>
          <ejb-name>Office2</ejb-name>
 
-         <table-name>XAVATEST@separator@OFFICE2</table-name>
+         <table-name>XAVATEST_OFFICE2</table-name>
 
          <cmp-field>
             <field-name>_Receptionist</field-name>
