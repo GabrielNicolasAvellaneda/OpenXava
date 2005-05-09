@@ -1647,16 +1647,16 @@ public class MapFacadeBean implements SessionBean {
 	
 	private IPersistenceProvider getPersistenceProvider() {  //tmp quitar
 		if (persistenceProvider == null) {
-			persistenceProvider = new HibernatePersistenceProvider();  //tmp De momento
-			//persistenceProvider = new EJBPersistenceProvider();  //tmp De momento
+			//persistenceProvider = new HibernatePersistenceProvider();  //tmp De momento
+			persistenceProvider = new EJBPersistenceProvider();  //tmp De momento
 		}
 		//persistenceProvider.setSession(getSession());
 		return persistenceProvider;
 	}
 	
 	private IPersistenceProvider createPersistenceProvider() {
-		IPersistenceProvider persistenceProvider = new HibernatePersistenceProvider(); // tmp
-		//IPersistenceProvider persistenceProvider = new EJBPersistenceProvider(); // tmp
+		//IPersistenceProvider persistenceProvider = new HibernatePersistenceProvider(); // tmp
+		IPersistenceProvider persistenceProvider = new EJBPersistenceProvider(); // tmp
 		return persistenceProvider; 
 	}
 	
