@@ -1,31 +1,29 @@
 package org.openxava.tab.impl;
 
 /**
- * Excepción lanzada por algunas clases de este paquete. <p>
+ * Exception throwed by some classes of this package. <p>
  *
- * Será lanzada para indicar la imposibilidad de realizar una
- * operación y no haya una excepción más específica.<br>
- * También se puede usar para indicar un error de sistema en clases
- * o interfaces no remotos (si usaramos RemoteException hariamos
- * código no compatible con CORBA).
+ * It will throw to indicate the imposibility of complete
+ * an operation and there are no more specific exception. <br>
+ * 
+ * Also it can be used to indicate a system error in a
+ * no remote interface (for compatibility with CORBA).
  *
- * @version 00.04.08
  * @author  Javier Paniza
  */
 
 public class TabException extends Exception {
 
-  /**
-   * Se crea a partir del mensaje indicado. <br>
-   */
-  public TabException(String mensaje) {
-	super(mensaje);
+  public TabException(String message) {
+  	super(message);
   }
+  
   /**
-   * Se crea a partir de una excepción. <br>
-   * No la anida, solo usa su mensaje.<br>
+   * From another exception. <br>
+   * No nested it, only use its message.<br>
    */
   public TabException(Throwable ex) {
-	super(ex.getLocalizedMessage());
+  	super(ex.getLocalizedMessage());
   }
+  
 }

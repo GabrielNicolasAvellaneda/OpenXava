@@ -1,4 +1,4 @@
-<!ELEMENT default-converter (for-stereotype|for-type)+>
+<!ELEMENT converters (for-stereotype|for-type)+>
 
 <!ELEMENT for-stereotype EMPTY>
 <!ATTLIST for-stereotype

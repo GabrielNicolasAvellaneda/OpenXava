@@ -16,23 +16,20 @@ import org.openxava.util.*;
 
 
 /**
- * Implementación local del Tab (IEntityTabImpl) configurada a partir de un componente OpenXava. <p>
+ * Local Tab ({@link IEntityTabImpl}) implementation configured from an OpenXava component. <p> 
  * 
- * Este tab sirve para todos los beans que se quiera, solo
- * hay que indicar el nombre del modelo en el create.<br>
+ * This tab is valid for all components, you only need to indicate
+ * the model name on create. <br>
  * 
  * @author Javier Paniza
  */
 public class EntityTab implements IEntityTabImpl {
 	
-	private static Map dataProviders;	 
-
-	private String selectBase;
-
-	// Tamaño de cada bloque que se envía
 	private static final int DEFAULT_CHUNK_SIZE = 50;
 	
 	private int chunkSize = DEFAULT_CHUNK_SIZE;
+	private static Map dataProviders;	 
+	private String selectBase;
 	private String componentName;
 	private String tabName;
 
@@ -52,25 +49,20 @@ public class EntityTab implements IEntityTabImpl {
 	private boolean	knowIfHasPropertiesWithValidValues = false;
 	private boolean _hasPropertiesWithValidValues;
 	
-	/** Constructor por defecto. */
-	public EntityTab() {
-	}
-	
-	// Implementa IEntityTab
-	public void search(int indice, Object clave)
+	public void search(int index, Object key)
 		throws FinderException, RemoteException {
-		tabProvider.search(indice, clave);
+		tabProvider.search(index, key);
 	}
 	
-	public void search(String condicion, Object clave) throws FinderException, RemoteException {
+	public void search(String condition, Object key) throws FinderException, RemoteException {
 		try {			
 			StringBuffer select = new StringBuffer(getSelectBase().toUpperCase());			
-			if (!Is.emptyString(condicion)) {
+			if (!Is.emptyString(condition)) {
 				if (select.indexOf("WHERE") < 0) select.append(" WHERE "); 
 				else select.append(" AND "); 				
-				select.append(condicion);				
+				select.append(condition);				
 			}															
-			tabProvider.search(select.toString(), clave);
+			tabProvider.search(select.toString(), key);
 		}
 		catch (XavaException ex) {
 			ex.printStackTrace();
@@ -80,41 +72,35 @@ public class EntityTab implements IEntityTabImpl {
 	
 	private String getSelectBase() throws XavaException {
 		if (selectBase == null) {
-			selectBase = insertarCamposClave(metaTab.getSelectSQL());
+			selectBase = insertKeyFields(metaTab.getSelectSQL());
 		}
 		return selectBase;
 	}
 	
-
-	// Implementa IEntityTab
 	/**
-	 * Devuelve un mapa con los valores de las claves.
+	 * Return a map with key values.
 	 */
-	public Object findEntity(Object[] clave) throws FinderException, RemoteException {
+	public Object findEntity(Object[] key) throws FinderException, RemoteException {
 		try {
 			Map result = new HashMap();
-			for (int i = 0; i < clave.length; i++) {
-				int iPropiedad = getIndexesPK()[i];
-				String nombre = (String) getPropertiesNames().get(iPropiedad);
-				result.put(nombre, clave[i]);
+			for (int i = 0; i < key.length; i++) {
+				int iProperty = getIndexesPK()[i];
+				String name = (String) getPropertiesNames().get(iProperty);
+				result.put(name, key[i]);
 			}			
 			return result;
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
 			throw new RemoteException(
-				"Imposible buscar entidad "
-					+ this.modelName
-					+ " por:\n"
-					+ ex.getLocalizedMessage());
+				XavaResources.getString("tab_entity_find_error"));
 		}
 	}
 
 
-	/** Cabeceras que aparecerán en la tabla. */
 	private String[] getHeading() throws XavaException {
-		String[] result = new String[getPropiedades().size() + getIndexesPK().length];
-		Iterator it = getPropiedades().iterator();		
+		String[] result = new String[getProperties().size() + getIndexesPK().length];
+		Iterator it = getProperties().iterator();		
 		int i = getIndexesPK().length;
 		while (it.hasNext()) {
 			MetaProperty p = (MetaProperty) it.next();
@@ -124,13 +110,12 @@ public class EntityTab implements IEntityTabImpl {
 	}
 
 	/**
-	 * Clase asociada a cada columna de la tabla. <br>
-	 * Se especifica el nombre de la clase completo en
-	 * un <code>String</code>.<br>
+	 * Associated class with each column table. <br>
+	 * Complete class name is specified in String format.<br>
 	 */
 	private String[] getColumnsClasses() throws XavaException {
-		String[] result = new String[getPropiedades().size() + getIndexesPK().length];
-		Iterator it = getPropiedades().iterator();
+		String[] result = new String[getProperties().size() + getIndexesPK().length];
+		Iterator it = getProperties().iterator();
 		int i = getIndexesPK().length;
 		while (it.hasNext()) {
 			MetaProperty p = (MetaProperty) it.next();
@@ -139,41 +124,41 @@ public class EntityTab implements IEntityTabImpl {
 		return result;
 	}
 
-	private String getColumnClass(Class tipo) throws XavaException {
-		String nombre = tipo.getName();
-		if (!tipo.isPrimitive())
-			return nombre;
+	private String getColumnClass(Class type) throws XavaException {
+		String name = type.getName();
+		if (!type.isPrimitive())
+			return name;
 
-		// Es primitivo
-		if (nombre.equals("boolean")) {
+		// It's primitive
+		if (name.equals("boolean")) {
 			return "java.lang.Boolean";
 		}
-		else if (nombre.equals("byte")) {
+		else if (name.equals("byte")) {
 			return "java.lang.Byte";
 		}
-		else if (nombre.equals("char")) {
+		else if (name.equals("char")) {
 			return "java.lang.Character";
 		}
-		else if (nombre.equals("short")) {
+		else if (name.equals("short")) {
 			return "java.lang.Short";
 		}
-		else if (nombre.equals("int")) {
+		else if (name.equals("int")) {
 			return "java.lang.Integer";
 		}
-		else if (nombre.equals("long")) {
+		else if (name.equals("long")) {
 			return "java.lang.Long";
 		}
-		else if (nombre.equals("float")) {
+		else if (name.equals("float")) {
 			return "java.lang.Float";
 		}
-		else if (nombre.equals("double")) {
+		else if (name.equals("double")) {
 			return "java.lang.Double";
 		}
-		throw new XavaException("primitive_type_not_recognized", nombre);
+		throw new XavaException("primitive_type_not_recognized", name);
 	}
 
-	// Implementa IEntityTab
-	public IXTableModel getTable()  throws RemoteException {
+
+	public IXTableModel getTable()  throws RemoteException { 
 		try {
 			table.setEntityTab(this);
 			return new HiddenXTableModel(table, getIndexesPK()); 
@@ -184,9 +169,6 @@ public class EntityTab implements IEntityTabImpl {
 		}   
 	}
 
-	/**
-	 * Inicialización del bean.
-	 */
 	public void init() throws InitException {
 		try {
 			if (Is.emptyString(componentName)) {
@@ -204,33 +186,29 @@ public class EntityTab implements IEntityTabImpl {
 			this.metaModel = metaTab.getMetaModel();
 			table.setHeading(getHeading());
 			table.setColumnsClasses(getColumnsClasses());
-			tabProvider.setFields(getCampos());
-			tabProvider.setConditions(getCondiciones());			
-			tabProvider.setTable(getNombreTablaDB());
+			tabProvider.setFields(getFields());
+			tabProvider.setConditions(getConditions());			
+			tabProvider.setTable(getTableNameDB());
 			tabProvider.setChunkSize(getChunkSize());
 			table.setPKIndexes(getIndexesPK());
 			table.invariant();
-			//tabProvider.invariante(); No puede ser porque falta el connectionProvider que se establece en el servidor
+			//tabProvider.invariant(); // It is not possible because still lacks connectionProvider
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			throw new InitException(
-				"Error al iniciar el gestor de datos tabulares de "
-					+ modelName
-					+ ": "
-					+ ex.getMessage());
+			throw new InitException("tab_init_error", modelName);
 		}
 	}
 
-	private String[] getCampos() throws XavaException {
+	private String[] getFields() throws XavaException {
 		Collection c = new ArrayList();
-		// Primero la clave
-		Iterator itNombresPK = getNombresPK().iterator();
-		while (itNombresPK.hasNext()) {
-			c.add(getMapping().getQualifiedColumn((String) itNombresPK.next()));
+		// First the key
+		Iterator itKeyNames = getKeyNames().iterator();
+		while (itKeyNames.hasNext()) {
+			c.add(getMapping().getQualifiedColumn((String) itKeyNames.next()));
 		}
 				
-		// Luego lo demas
+		// Then the others
 		c.addAll(metaTab.getTableColumns());
 		c.addAll(metaTab.getHiddenTableColumns());
 				
@@ -240,45 +218,42 @@ public class EntityTab implements IEntityTabImpl {
 	}
 	
 
-	private String[] getCondiciones() throws RemoteException {
+	private String[] getConditions() throws RemoteException {
 		try {
-			Collection metaConsultas = metaTab.getMetaConsults();
-			String[] condiciones = new String[metaConsultas.size()];
-			Iterator it = metaConsultas.iterator();
+			Collection metaConsults = metaTab.getMetaConsults();
+			String[] conditions = new String[metaConsults.size()];
+			Iterator it = metaConsults.iterator();
 			int i = 0;
 			while (it.hasNext()) {
-				MetaConsult consulta = (MetaConsult) it.next();
-				condiciones[i++] = insertarCamposClave(consulta.getConditionSQL());
+				MetaConsult consult = (MetaConsult) it.next();
+				conditions[i++] = insertKeyFields(consult.getConditionSQL());
 			}
-			return condiciones;
+			return conditions;
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
 			throw new RemoteException(
-				"Imposible obtener condiciones del tab de "
-					+ this.modelName
-					+ " por:\n"
-					+ ex.getLocalizedMessage());
+					XavaResources.getString("tab_conditions_error", this.modelName));
 		}
 	}
 	
-	private String insertarCamposClave(String select) throws XavaException {				
+	private String insertKeyFields(String select) throws XavaException {				
 		String s = select.trim().toUpperCase();
 		if (!(s.startsWith("SELECT ") || (s.startsWith("SELECT\t")))) return select;				
 		StringBuffer result = new StringBuffer("SELECT ");		
-		Iterator itNombresPK = getNombresPK().iterator();
-		while (itNombresPK.hasNext()) {
-			result.append(getMapping().getQualifiedColumn((String) itNombresPK.next()));
+		Iterator itKeyNames = getKeyNames().iterator();
+		while (itKeyNames.hasNext()) {
+			result.append(getMapping().getQualifiedColumn((String) itKeyNames.next()));
 			result.append(", ");
 		}
 		result.append(s.substring(7));						
 		return result.toString();
 	}
 
-	// Siempre los primeros campos, que ademas son siempre ocultos
+	// Always the firsts fields that are hidden too
 	private int[] getIndexesPK() throws XavaException {		
 		if (indexesPK == null) {
-			indexesPK = new int[getNombresPK().size()];
+			indexesPK = new int[getKeyNames().size()];
 			for (int i = 0; i < indexesPK.length; i++) {
 				indexesPK[i]=i;
 			}
@@ -286,25 +261,24 @@ public class EntityTab implements IEntityTabImpl {
 		return indexesPK;
 	}
 
-	private String getNombreTablaDB() throws XavaException {
+	private String getTableNameDB() throws XavaException {
 		return getMapping().getTable();
 	}
 
-	// Implementa IEntityTabImpl
 	public DataChunk nextChunk() throws RemoteException {		
-		Collection calculadoresTab = null;
-		Map indicesClave = null;
-		String nombreModelo = null;
-		List nombresPropiedades = null;
+		Collection tabCalculators = null;
+		Map keyIndexes = null;
+		String modelName = null;
+		List propertiesNames = null;
 		try {		
 			if (metaTab.hasCalculatedProperties()) {
-				nombreModelo = this.componentName;
-				calculadoresTab = getTabCalculators();
-				indicesClave = getKeyIndexes();
-				nombresPropiedades = getPropertiesNames();
+				modelName = this.componentName;
+				tabCalculators = getTabCalculators();
+				keyIndexes = getKeyIndexes();
+				propertiesNames = getPropertiesNames();
 			}		
-			Collection conversoresTab = getTabConverters();
-			if (conversoresTab.isEmpty()) conversoresTab = null;
+			Collection tabConverters = getTabConverters();
+			if (tabConverters.isEmpty()) tabConverters = null;
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
@@ -312,21 +286,21 @@ public class EntityTab implements IEntityTabImpl {
 		}
 		DataChunk tv = null; 		
 		try {
-			tv = getDataProvider(getComponentName()).nextChunk(tabProvider, nombreModelo, nombresPropiedades, calculadoresTab, indicesClave, tabConverters);
+			tv = getDataProvider(getComponentName()).nextChunk(tabProvider, modelName, propertiesNames, tabCalculators, keyIndexes, tabConverters);
 		}
 		catch (Exception ex) {
 			cancelDataProvider(getComponentName());
-			tv = getDataProvider(getComponentName()).nextChunk(tabProvider, nombreModelo, nombresPropiedades, calculadoresTab, indicesClave, tabConverters);			
+			tv = getDataProvider(getComponentName()).nextChunk(tabProvider, modelName, propertiesNames, tabCalculators, keyIndexes, tabConverters);			
 		}
 		tabProvider.setCurrent(tv.getIndexNext());				
 		List data = tv.getData();
 		int l = data.size();
 		
-		// Conversion de valores-posibles
+		// valid-values conversion
 		try {
-			if (tienePropiedadesConValoresPosibles()) {
+			if (hasValidValuesProperties()) {
 				for (int i = 0; i < l; i++) {
-					data.set(i, hacerConversionesValoresPosibles((Object[]) data.get(i)));
+					data.set(i, doValidValuesConversions((Object[]) data.get(i)));
 				}
 			}
 		}
@@ -337,47 +311,40 @@ public class EntityTab implements IEntityTabImpl {
 		return tv;		
 	}
 
-	/**
-	 * Method tienePropiedadesConValoresPosibles.
-	 * @return boolean
-	 */
-	private boolean tienePropiedadesConValoresPosibles() throws XavaException {
+	private boolean hasValidValuesProperties() throws XavaException {
 		if (!knowIfHasPropertiesWithValidValues) {
-			_hasPropertiesWithValidValues = averiguarSiTienePropiedadesConValoresPosibles();
+			_hasPropertiesWithValidValues = calculateIfHasValidValuesProperties();
 			knowIfHasPropertiesWithValidValues = true;
 		}
 		return _hasPropertiesWithValidValues;
 	}
 	
-	private boolean averiguarSiTienePropiedadesConValoresPosibles() throws XavaException {
-		Iterator it = getPropiedades().iterator();
+	private boolean calculateIfHasValidValuesProperties() throws XavaException {
+		Iterator it = getProperties().iterator();
 		while (it.hasNext()) {
-			MetaProperty metaPropiedad = (MetaProperty) it.next();
-			if (metaPropiedad.hasValidValues()) {
+			MetaProperty metaProperty = (MetaProperty) it.next();
+			if (metaProperty.hasValidValues()) {
 				return true;
 			}			
 		}
 		return false;		
 	}
 
-
-	
-	
-	private Object[] hacerConversionesValoresPosibles(Object[] fila) throws XavaException {
-		int cantidad = getPropertiesNames().size();
-		for (int i = indexesPK.length; i < cantidad; i++) {			
-			String nombre = (String) getPropertiesNames().get(i);
-			MetaProperty metaPropiedad = getMetaModel().getMetaProperty(nombre);
-			if (metaPropiedad.hasValidValues()) {		
-				int valorPosible = ((Number) fila[i]).intValue();
-				fila[i] = metaPropiedad.getValidValue(valorPosible); 					
+	private Object[] doValidValuesConversions(Object[] row) throws XavaException {
+		int size = getPropertiesNames().size();
+		for (int i = indexesPK.length; i < size; i++) {			
+			String name = (String) getPropertiesNames().get(i);
+			MetaProperty metaProperty = getMetaModel().getMetaProperty(name);
+			if (metaProperty.hasValidValues()) {		
+				int validValue = ((Number) row[i]).intValue();
+				row[i] = metaProperty.getValidValue(validValue); 					
 			}
 		}
-		return fila;
+		return row;
 	}
 
 	/**
-	 * De CalculadorTab
+	 * @return Of TabCalculator
 	 */
 	private Collection getTabCalculators() throws XavaException {
 		if (tabCalculators == null) {
@@ -385,46 +352,46 @@ public class EntityTab implements IEntityTabImpl {
 			Iterator it = metaTab.getMetaPropertiesHiddenCalculated().iterator();
 			
 			while (it.hasNext()) {
-				MetaProperty metaPropiedad = (MetaProperty) it.next();
-				int indicePropiedad = getIndicePropiedad(metaPropiedad.getQualifiedName());
-				tabCalculators.add(new TabCalculator(metaPropiedad, indicePropiedad));
+				MetaProperty metaProperty = (MetaProperty) it.next();
+				int propertyIndex = getPropertyIndex(metaProperty.getQualifiedName());
+				tabCalculators.add(new TabCalculator(metaProperty, propertyIndex));
 			}			
 			it = metaTab.getMetaPropertiesCalculated().iterator();
 			while (it.hasNext()) {
-				MetaProperty metaPropiedad = (MetaProperty) it.next();
-				int indicePropiedad = getIndicePropiedad(metaPropiedad.getQualifiedName());
-				tabCalculators.add(new TabCalculator(metaPropiedad, indicePropiedad));
+				MetaProperty metaProperty = (MetaProperty) it.next();
+				int propertyIndex = getPropertyIndex(metaProperty.getQualifiedName());
+				tabCalculators.add(new TabCalculator(metaProperty, propertyIndex));
 			}
 		}
 		return tabCalculators;
 	}
 	
 	/**
-	 * De ConversorTab
+	 * @return Of TabConverter
 	 */
 	private Collection getTabConverters() throws XavaException {
 		if (tabConverters == null) {
 			tabConverters = new ArrayList();			
 			Iterator it = getPropertiesNames().iterator();
 			int i=0;
-			String tabla = getMapping().getTable();
+			String table = getMapping().getTable();
 			while (it.hasNext()) {
-				String nombrePropiedad = (String) it.next();
+				String propertyName = (String) it.next();
 				try {															
-					IConverter conversor = getMapping().getConverter(nombrePropiedad);
-					if (conversor != null) {
-						tabConverters.add(new TabConverter(nombrePropiedad, i,  conversor));
+					IConverter converter = getMapping().getConverter(propertyName);
+					if (converter != null) {
+						tabConverters.add(new TabConverter(propertyName, i,  converter));
 					}
 					else {
-						PropertyMapping mapeoPropiedad = getMapping().getPropertyMapping(nombrePropiedad);
-						IMultipleConverter conversorMultiple =  mapeoPropiedad.getMultipleConverter();
-						if (conversorMultiple != null) {							
-							tabConverters.add(new TabConverter(nombrePropiedad, i, conversorMultiple, mapeoPropiedad.getCmpFields(), getCampos(), tabla));
+						PropertyMapping propertyMapping = getMapping().getPropertyMapping(propertyName);
+						IMultipleConverter multipleConverter =  propertyMapping.getMultipleConverter();
+						if (multipleConverter != null) {							
+							tabConverters.add(new TabConverter(propertyName, i, multipleConverter, propertyMapping.getCmpFields(), getFields(), table));
 						}																							
 					}
 				}
 				catch (ElementNotFoundException ex) {
-					// Asi excluimos propiedades que no estan en el mapeo
+					// Thus we exclude the property out of mapping
 				}
 				i++;
 			}
@@ -432,38 +399,35 @@ public class EntityTab implements IEntityTabImpl {
 		return tabConverters;
 	}
 	
-
-	private int getIndicePropiedad(String nombrePropiedad)
+	private int getPropertyIndex(String propertyName)
 		throws XavaException {
-		return getPropertiesNames().indexOf(nombrePropiedad);
+		return getPropertiesNames().indexOf(propertyName);
 	}
 
 	/**
-	 * @return Colección de objetos de tipo <tt>MetaPropiedad</tt>.
+	 * @return Of <tt>MetaProperty</tt>.
 	 */
-	private Collection getPropiedades() throws XavaException {
+	private Collection getProperties() throws XavaException {
 		return metaTab.getMetaProperties();
 	}
 
 	/**
-	 * @return Colección de objetos de tipo <tt>String</tt>.
+	 * @return Of <tt>String</tt>.
 	 */
 	private List getPropertiesNames() throws XavaException {
 		if (propertiesNames == null) {
 			propertiesNames = new ArrayList();
-			propertiesNames.addAll(getNombresPK());
+			propertiesNames.addAll(getKeyNames());
 			propertiesNames.addAll(metaTab.getPropertiesNames());
 			propertiesNames.addAll(metaTab.getHiddenPropertiesNames());
 		}
 		return propertiesNames;
 	}
 	
-	private Collection getNombresPK() throws XavaException {		
+	private Collection getKeyNames() throws XavaException {		
 		return getMetaModel().getAllKeyPropertiesNames();
 	}
 	
-	
-
 	private IMetaModel getMetaModel() throws XavaException {
 		if (metaModel == null) {
 			metaModel = MetaModel.get(this.modelName);
@@ -478,9 +442,9 @@ public class EntityTab implements IEntityTabImpl {
 			keyIndexes = new HashMap();
 			int i = 0;
 			while (it.hasNext()) {
-				String nombrePropiedad = (String) it.next();
-				if (getMetaModel().isKey(nombrePropiedad)) {
-					keyIndexes.put(nombrePropiedad, new Integer(i));
+				String propertyName = (String) it.next();
+				if (getMetaModel().isKey(propertyName)) {
+					keyIndexes.put(propertyName, new Integer(i));
 				}
 				i++;
 			}		
@@ -495,23 +459,14 @@ public class EntityTab implements IEntityTabImpl {
 		return mapping;
 	}
 
-	/**
-	 * @return
-	 */
 	public String getComponentName() {
 		return componentName;
 	}
 
-	/**
-	 * @return
-	 */
 	public String getTabName() {
 		return tabName;
 	}
 
-	/**
-	 * @param string
-	 */
 	public void setComponentName(String string) {
 		componentName = string;
 		metaModel = null;
@@ -519,9 +474,6 @@ public class EntityTab implements IEntityTabImpl {
 		selectBase = null;
 	}
 
-	/**
-	 * @param string
-	 */
 	public void setTabName(String string) {
 		tabName = string;
 		selectBase = null;
@@ -571,8 +523,6 @@ public class EntityTab implements IEntityTabImpl {
 		}		
 	}	
 	
-	
-
 	public int getResultSize() throws RemoteException {
 		if (!XavaPreferences.getInstance().isShowCountInList()) {
 			return table.getRowCount(); 

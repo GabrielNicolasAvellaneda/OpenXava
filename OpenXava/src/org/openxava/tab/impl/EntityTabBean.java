@@ -5,7 +5,6 @@ import java.util.*;
 
 import org.openxava.ejbx.*;
 
-
 /**
  * 
  * @author Javier Paniza

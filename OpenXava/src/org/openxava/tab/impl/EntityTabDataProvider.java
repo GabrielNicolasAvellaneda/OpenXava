@@ -23,7 +23,7 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 	private String componentName;
 	private IConnectionProvider connectionProvider;
 		
-	public DataChunk nextChunk(ITabProvider tabProvider, String nombreModelo, List nombresPropiedades, Collection calculadoresTab, Map indicesClave, Collection conversoresTab) throws RemoteException {		
+	public DataChunk nextChunk(ITabProvider tabProvider, String modelName, List propertiesNames, Collection tabCalculators, Map keyIndexes, Collection tabConverters) throws RemoteException {		
 		if (tabProvider instanceof JDBCTabProvider) {
 			((JDBCTabProvider) tabProvider).setConnectionProvider(getConnectionProvider());
 		}
@@ -41,9 +41,9 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 		
 		// Conversion
 		try {
-			if (conversoresTab != null) {
+			if (tabConverters != null) {
 				for (int i = 0; i < l; i++) {
-					data.set(i, hacerConversiones((Object[]) data.get(i), conversoresTab));
+					data.set(i, doConversions((Object[]) data.get(i), tabConverters));
 				}
 			}
 		}
@@ -52,11 +52,11 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 			throw new RemoteException(XavaResources.getString("tab_conversion_error"));
 		}
 				
-		// calculos	
+		// Calculations
 		try {
-			if (calculadoresTab != null) {
+			if (tabCalculators != null) {
 				for (int i = 0; i < l; i++) {
-					data.set(i, hacerCalculos(nombreModelo, (Object[]) data.get(i), calculadoresTab, indicesClave, nombresPropiedades));
+					data.set(i, doCalculations(modelName, (Object[]) data.get(i), tabCalculators, keyIndexes, propertiesNames));
 				}
 			}
 		}
@@ -85,122 +85,115 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 		this.connectionProvider = provider;
 	}
 
-	private Object[] hacerCalculos(String nombreModelo, Object[] fila, Collection calculadoresTab, Map indicesClave, List nombresPropiedades) throws XavaException {
-		Object entidad = null;
-		Iterator itCalculadores = calculadoresTab.iterator();
-		while (itCalculadores.hasNext()) {
-			TabCalculator calculadorTab = (TabCalculator) itCalculadores.next();
+	private Object[] doCalculations(String modelName, Object[] row, Collection tabCalculators, Map keyIndexes, List propertiesNames) throws XavaException {
+		Object entity = null;
+		Iterator itCalculators = tabCalculators.iterator();
+		while (itCalculators.hasNext()) {
+			TabCalculator tabCalculator = (TabCalculator) itCalculators.next();
 			try {
-				PropertiesManager mpCalculador =
-					calculadorTab.getPropertiesManager();
-				MetaSetsContainer metaCalculador =
-					calculadorTab.getMetaCalculator();	
-				if (metaCalculador.containsMetaSets()) {
-					Iterator itMetaPoners =
-						metaCalculador.getMetaSetsWithoutValue().iterator();					
-					int idx = calculadorTab.getPropertyName().indexOf('.');
+				PropertiesManager mpCalculator =
+					tabCalculator.getPropertiesManager();
+				MetaSetsContainer metaCalculator =
+					tabCalculator.getMetaCalculator();	
+				if (metaCalculator.containsMetaSets()) {
+					Iterator itMetaSets =
+						metaCalculator.getMetaSetsWithoutValue().iterator();					
+					int idx = tabCalculator.getPropertyName().indexOf('.');
 					String ref = "";
 					if (idx >= 0) {
-						ref = calculadorTab.getPropertyName().substring(0, idx + 1);
+						ref = tabCalculator.getPropertyName().substring(0, idx + 1);
 					}
-					while (itMetaPoners.hasNext()) {
-						MetaSet metaPoner = (MetaSet) itMetaPoners.next();
-						Object valor =
-							getValor(ref + metaPoner.getPropertyNameFrom(), fila, nombresPropiedades);
+					while (itMetaSets.hasNext()) {
+						MetaSet metaSet = (MetaSet) itMetaSets.next();
+						Object value =
+							getValue(ref + metaSet.getPropertyNameFrom(), row, propertiesNames);
 						try {	
-							mpCalculador.executeSet(
-								metaPoner.getPropertyName(),
-								valor);
+							mpCalculator.executeSet(
+								metaSet.getPropertyName(),
+								value);
 						}
 						catch (PropertiesManagerException ex) {
-							throw new XavaException("calculator_property_not_found", metaPoner.getPropertyName(), valor.getClass().getName());
+							throw new XavaException("calculator_property_not_found", metaSet.getPropertyName(), value.getClass().getName());
 						}
 					}
 				}
-				ICalculator calculador = calculadorTab.getCalculator();
-				if (calculador instanceof IEntityCalculator) {
-					if (entidad == null) entidad = getEntidad(nombreModelo, fila, indicesClave); 
-					((IEntityCalculator) calculador).setEntity(entidad);
+				ICalculator calculator = tabCalculator.getCalculator();
+				if (calculator instanceof IEntityCalculator) {
+					if (entity == null) entity = getEntity(modelName, row, keyIndexes); 
+					((IEntityCalculator) calculator).setEntity(entity);
 				}
-				if (calculador instanceof IJDBCCalculator) {
-					((IJDBCCalculator) calculador).setConnectionProvider(getConnectionProvider());
+				if (calculator instanceof IJDBCCalculator) {
+					((IJDBCCalculator) calculator).setConnectionProvider(getConnectionProvider());
 				}
-				fila[calculadorTab.getIndex()] = calculador.calculate();
+				row[tabCalculator.getIndex()] = calculator.calculate();
 			}
 			catch (Exception ex) {
 				ex.printStackTrace();
 				System.err.println(
-					"ADVERTENCIA: Imposible calcular el valor de la propiedad "
-						+ calculadorTab.getPropertyName()
-						+ " desde un tab");
-				fila[calculadorTab.getIndex()] = "ERROR";
+						XavaResources.getString("tab_calculate_property_warning", tabCalculator.getPropertyName()));
+				row[tabCalculator.getIndex()] = "ERROR";
 			}
 		}
-		return fila;		
+		return row;		
 	}
 	
 	/**
-	 * Devuelve la entidad correspondiente a la fila enviada. <p>
+	 * Return the entity associated to the sent row. <p>
 	 *
-	 * @param fila  Fila íntegra con los datos tabulares.
-	 * @param indicesClave Mapa con nombre e indice de las claves.
-	 * @exception  FinderException  Si no se consigue localizar la fila.
-	 * @exception  NullPointerException  Si <tt>fila == null</tt>.
+	 * @param row  Complete row with tabular data
+	 * @param keyIndexes Map with names and indexes of key
+	 * @exception  FinderException  If cannot find the row
+	 * @exception  NullPointerException  If <tt>row == null</tt>.
 	 */
-	private Object getEntidad(String nombreModelo, Object[] fila, Map indicesClave)
+	private Object getEntity(String modelName, Object[] row, Map keyIndexes)
 		throws FinderException, XavaException, RemoteException {
-		if (indicesClave == null) return null;
-		Iterator it = indicesClave.entrySet().iterator();
-		Map clave = new HashMap();		
+		if (keyIndexes == null) return null;
+		Iterator it = keyIndexes.entrySet().iterator();
+		Map key = new HashMap();		
 		while (it.hasNext()) {
 			Map.Entry e = (Map.Entry) it.next();
-			String nombrePropiedad = (String) e.getKey();
-			int indice = ((Integer) e.getValue()).intValue();			
-			clave.put(nombrePropiedad, fila[indice]);						
+			String propertyName = (String) e.getKey();
+			int index = ((Integer) e.getValue()).intValue();			
+			key.put(propertyName, row[index]);						
 		}
-		return MapFacade.findEntity(nombreModelo, clave);
+		return MapFacade.findEntity(modelName, key);
 	}
-	
-	
-	private Object[] hacerConversiones(Object[] fila, Collection conversoresTab) throws XavaException {
-		Iterator itConversores = conversoresTab.iterator();
-		while (itConversores.hasNext()) {
-			TabConverter conversorTab = (TabConverter) itConversores.next();
+		
+	private Object[] doConversions(Object[] row, Collection tabConverters) throws XavaException {
+		Iterator itConverters = tabConverters.iterator();
+		while (itConverters.hasNext()) {
+			TabConverter tabConverter = (TabConverter) itConverters.next();
 			try {				
-				int idx = conversorTab.getIndex();
-				if (conversorTab.tieneMultipleConverter()) { 
-					IMultipleConverter conversor = conversorTab.getMultipleConverter();
-					PropertiesManager mp = new PropertiesManager(conversor);					
-					Iterator itCamposCmp = conversorTab.getCmpFields().iterator();
-					while (itCamposCmp.hasNext()) {
-						CmpField campo = (CmpField) itCamposCmp.next();
-						Object valor = fila[conversorTab.getIndex(campo)]; 
-						mp.executeSet(campo.getConverterPropertyName(), valor);					
+				int idx = tabConverter.getIndex();
+				if (tabConverter.hasMultipleConverter()) { 
+					IMultipleConverter converter = tabConverter.getMultipleConverter();
+					PropertiesManager mp = new PropertiesManager(converter);					
+					Iterator itCmpFields = tabConverter.getCmpFields().iterator();
+					while (itCmpFields.hasNext()) {
+						CmpField field = (CmpField) itCmpFields.next();
+						Object value = row[tabConverter.getIndex(field)]; 
+						mp.executeSet(field.getConverterPropertyName(), value);					
 					}										
-					fila[idx] = conversor.toJava();										
+					row[idx] = converter.toJava();										
 				}
 				else {
-					IConverter conversor = conversorTab.getConverter();					
-					fila[idx] = conversor.toJava(fila[idx]);					
+					IConverter converter = tabConverter.getConverter();					
+					row[idx] = converter.toJava(row[idx]);					
 				}
 			}
 			catch (Exception ex) {
 				ex.printStackTrace();
 				System.err.println(
-					"ADVERTENCIA: Imposible convertir el valor de la propiedad "
-						+ conversorTab.getPropertyName()
-						+ " desde un tab");
-				fila[conversorTab.getIndex()] = "ERROR";
+					XavaResources.getString("tab_conversion_property_warning", tabConverter.getPropertyName()));	
+				row[tabConverter.getIndex()] = "ERROR";
 			}
 		}
-		return fila;
+		return row;
 	}
-
 	
-
-	private Object getValor(String nombrePropiedad, Object[] valores, List nombresPropiedades)
+	private Object getValue(String propertyName, Object[] values, List propertiesNames)
 		throws XavaException {
-		return valores[nombresPropiedades.indexOf(nombrePropiedad)];
+		return values[propertiesNames.indexOf(propertyName)];
 	}
 	
 	public int getResultSize(ITabProvider tabProvider) {

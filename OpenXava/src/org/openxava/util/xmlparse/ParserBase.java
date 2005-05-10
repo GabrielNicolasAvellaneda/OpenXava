@@ -15,7 +15,7 @@ import org.w3c.dom.*;
 abstract public class ParserBase extends XmlElementsNames {
 
 	protected final static int ENGLISH = 0;
-	protected final static int ESPAÑOL = 1;
+	protected final static int ESPANOL = 1;
 	protected int lang;
 	 			
 	private Element root;

@@ -5,38 +5,41 @@ import java.rmi.*;
 import javax.ejb.*;
 
 /**
-  Interface que permite buscar entre varias busquedas predefinidas
-y también especificando una condición concreta. <p>
-
-  Puede ser implementado por un controlador. Cuando se realice
-una busqueda el controlador implementador se encargará de actualizar
-el modelo si procede.<br>
-
-  Se usan excepciones típicas de EJB para facilitar una
-posible implementación remota.<br>
-
-  @author  Javier Paniza
-*/
+ * Allows search along some predefined searches and specifying a
+ * concrete condition too. <p>
+ * 
+ * It uses EJB exceptions to facilitate a remote implementation.<br>
+ * 
+ * @author  Javier Paniza
+ */
 
 public interface ISearch {
 
   /**
-   * Se índica el índice de la busqueda que desea realizar y la clave. <br>
-   * Si no se encuentra ningún objeto se generará una colección o secuencia
-   * vacía, pero no se lanza ninguna excepción. <br>
-   * @exception FinderException  Si hay algún problema de lógica.
-   * @exception RemoteException  Si hay algún problema de sistema.
-   * @exception IndexOutOfBoundsException  Si se especifica el índice de una
-   *                                       consulta que no existe.
+   * Execute the search. <p>
+   * 
+   * If there are no object then generate a empty result, but does not
+   * throw a exception. <br>
+   * 
+   * @param index  Index of serach to execute
+   * @param key  Key to send to search 
+   * @exception FinderException  Any logic problem on search
+   * @exception RemoteException  Any system problem on search
+   * @exception IndexOutOfBoundsException  If index of consult does not exist
    */
-  void search(int indice, Object clave) throws FinderException, RemoteException;
+  void search(int index, Object key) throws FinderException, RemoteException;
 
   /**
-   * Se índica la condición de la busqueda que desea realizar y la clave. <br>
-   * Si no se encuentra ningún objeto se generará una colección o secuencia
-   * vacía, pero no se lanza ninguna excepción. <br>
-   * @exception FinderException  Si hay algún problema de lógica.
-   * @exception RemoteException  Si hay algún problema de sistema.
+   * Execute search. <p>
+   * 
+   * If there are no object then generate a empty result, but does not
+   * throw a exception. <br>
+   * 
+   * @param condition  Condition to use in search.
+   * @param key  Key to send to search 
+   * @exception FinderException  Any logic problem on search
+   * @exception RemoteException  Any system problem on search
    */  
-  void search(String condicion, Object clave) throws FinderException, RemoteException;
+  void search(String condition, Object key) throws FinderException, RemoteException;
+  
 }

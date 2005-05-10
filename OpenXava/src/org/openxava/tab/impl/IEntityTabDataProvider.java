@@ -5,7 +5,7 @@ import java.util.*;
 
 public interface IEntityTabDataProvider {
 	
-	DataChunk nextChunk(ITabProvider tabProvider, String nombreModelo, List nombresPropiedades, Collection calculadoresTab, Map indicesClave, Collection conversoresTab) throws RemoteException;
+	DataChunk nextChunk(ITabProvider tabProvider, String modelName, List propertiesNames, Collection tabCalculators, Map keyIndexes, Collection tabConverters) throws RemoteException;
 	int getResultSize(ITabProvider tabProvider) throws RemoteException;
 		
 }

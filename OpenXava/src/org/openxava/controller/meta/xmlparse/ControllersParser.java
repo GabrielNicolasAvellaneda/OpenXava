@@ -22,7 +22,7 @@ public class ControllersParser extends ParserBase {
 		ControllersParser enParser = new ControllersParser("controllers.xml", ENGLISH);
 		enParser.setContext(context);
 		enParser.parse();		
-		ControllersParser esParser = new ControllersParser("controladores.xml", ESPAÑOL);
+		ControllersParser esParser = new ControllersParser("controladores.xml", ESPANOL);
 		esParser.setContext(context);
 		esParser.parse();
 	}

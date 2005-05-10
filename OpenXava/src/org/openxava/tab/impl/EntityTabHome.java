@@ -1,4 +1,5 @@
 package org.openxava.tab.impl;
+
 /**
  * Home interface for Enterprise Bean: EntityTab
  */
