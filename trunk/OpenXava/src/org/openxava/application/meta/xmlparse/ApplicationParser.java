@@ -19,7 +19,7 @@ public class ApplicationParser extends ParserBase {
 	public static void configureApplications() throws XavaException {
 		ApplicationParser enParser = new ApplicationParser("application.xml", ENGLISH);
 		enParser.parse();		
-		ApplicationParser esParser = new ApplicationParser("aplicacion.xml", ESPAÑOL);
+		ApplicationParser esParser = new ApplicationParser("aplicacion.xml", ESPANOL);
 		esParser.parse();
 	}
 

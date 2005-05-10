@@ -23,7 +23,7 @@ public class ValidatorsParser extends ParserBase {
 	public static void configurarValidadores() throws XavaException {
 		ValidatorsParser enParser = new ValidatorsParser("validators.xml", ENGLISH);
 		enParser.parse();
-		ValidatorsParser esParser = new ValidatorsParser("validadores.xml", ESPAÑOL);
+		ValidatorsParser esParser = new ValidatorsParser("validadores.xml", ESPANOL);
 		esParser.parse();		
 	}
 	

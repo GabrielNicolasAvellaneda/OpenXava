@@ -8,17 +8,19 @@ import org.w3c.dom.*;
 /**
  * @author: Javier Paniza
  */
-public class DefaultConverterParser extends ParserBase {
+public class ConvertersParser extends ParserBase {
 
-	public DefaultConverterParser(String urlArchivoXml, int language) {
+	public ConvertersParser(String urlArchivoXml, int language) {
 		super(urlArchivoXml, language);
 	}
 	
-	public static void configureDefaultConverter() throws XavaException {
-		DefaultConverterParser enParser = new DefaultConverterParser("default-converter.xml", ENGLISH);
+	public static void configureConverters() throws XavaException {
+		ConvertersParser parserDefault = new ConvertersParser("default-converters.xml", ENGLISH);
+		parserDefault.parse();		
+		ConvertersParser enParser = new ConvertersParser("converters.xml", ENGLISH);
 		enParser.parse();		
-		DefaultConverterParser esParser = new DefaultConverterParser("conversor-defecto.xml", ESPAÑOL);
-		esParser.parse();
+		ConvertersParser esParser = new ConvertersParser("conversores.xml", ESPANOL);
+		esParser.parse();		
 	}
 	
 	private void createForStereotype(Node n) throws XavaException {
@@ -26,7 +28,7 @@ public class DefaultConverterParser extends ParserBase {
 		String stereotype = el.getAttribute(xstereotype[lang]);		
 		String converterClass = el.getAttribute(xconverter_class[lang]);
 		String cmpType = el.getAttribute(xcmp_type[lang]);
-		DefaultConverter._addForStereotype(stereotype, converterClass, cmpType);
+		Converters._addForStereotype(stereotype, converterClass, cmpType);
 	}
 	
 	private void createForType(Node n) throws XavaException {
@@ -34,7 +36,7 @@ public class DefaultConverterParser extends ParserBase {
 		String type = el.getAttribute(xtype[lang]);
 		String converterClass = el.getAttribute(xconverter_class[lang]);
 		String cmpType = el.getAttribute(xcmp_type[lang]);
-		DefaultConverter._addForType(type, converterClass, cmpType);
+		Converters._addForType(type, converterClass, cmpType);
 	}
 		
 	private void createForStereotypes() throws XavaException {

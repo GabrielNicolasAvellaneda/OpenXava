@@ -3,81 +3,79 @@ package org.openxava.tab.impl;
 import java.util.*;
 
 /**
- * Decora un {@link IXTableModel} para ocultar columnas. <p>
+ * Decorate an {@link IXTableModel} to hidden columns. <p>
  *
- * El uso es muy sencillo, un ejemplo:
+ * It's easy to use, for example:
  * <pre>
- * int [] ocultas = {0, 1};
- * IXTableModel decorada = new OcultaXTableModel(original, ocultas);
+ * int [] hidden = {0, 1};
+ * IXTableModel decorated = new HiddenXTableModel(original, hidden);
  * </pre>
- * Después de esto podemos usar <tt>decorada</tt> la cual presenta
- * los datos de <tt>original</tt> pero sin visualizar las columnas
- * 1 y 2.<br>
+ * After this you can use <tt>decorated</tt> which display data
+ * from <tt>original</tt> but without columns 1 and 2.<br>
  *
- * @version 00.06.14
  * @author  Javier Paniza
  */
 public class HiddenXTableModel extends XTableModelDecoratorBase {
 
-  private int [] indices;
+  private int [] indexes;
   private int columnCount;
 
   /**
-   * @param aDecorar  <tt>TableModel</tt> a decorar ocultando columnas.
-   * @param indiceOcultas  Indice de las columnas a ocultar, si es <tt>null</tt>
-   *                       no se oculta ninguna.
-   * @exception IllegalArgumentException  Si <tt>aDecorar == null</tt>.
+   * @param toDecorate  <tt>TableModel</tt> to decorate hidden columns
+   * @param hiddenIndexes  Indexes of columns to hidden, if <tt>null</tt>
+   *                       no columns are hidden.
+   * @exception IllegalArgumentException  If <tt>toDecorate == null</tt>.
    */
-  public HiddenXTableModel(IXTableModel aDecorar, int [] indiceOcultas) {
-	super(aDecorar);
-	// assert(aDecorar);
-	int nc = aDecorar.getColumnCount();
-	Vector original = new Vector();
-	int i;
-	// ponemos los índices originales
-	for (i=0; i<nc; i++) {
-	  original.add(new Integer(i));
-	}
-	// quitamos los ocultos, si procede
-	if (indiceOcultas != null) {
-	  for (i=0; i<indiceOcultas.length; i++) {
-		original.remove(new Integer(indiceOcultas[i]));
-	  }
-	}
-	// Iniciamos columnCount e indices
-	columnCount = original.size();
-	indices = new int[columnCount];
-	for (i=0; i<columnCount; i++) {
-	  indices[i] = ((Integer) original.get(i)).intValue();
-	}
+  public HiddenXTableModel(IXTableModel toDecorate, int [] hiddenIndexes) {
+		super(toDecorate);
+		// assert(toDecorate);
+		int nc = toDecorate.getColumnCount();
+		Vector original = new Vector();
+		int i;
+		// put the original indexes
+		for (i=0; i<nc; i++) {
+		  original.add(new Integer(i));
+		}
+		// remove the hidden ones, if apply
+		if (hiddenIndexes != null) {
+		  for (i=0; i<hiddenIndexes.length; i++) {
+			original.remove(new Integer(hiddenIndexes[i]));
+		  }
+		}
+		// Init columnCount and indexes
+		columnCount = original.size();
+		indexes = new int[columnCount];
+		for (i=0; i<columnCount; i++) {
+		  indexes[i] = ((Integer) original.get(i)).intValue();
+		}
   }
 
   public Class getColumnClass(int columnIndex) {
-	return super.getColumnClass(toFilaOriginal(columnIndex));
+  	return super.getColumnClass(toOriginalColumn(columnIndex));
   }
 
   public int getColumnCount() {
-	return columnCount;
+  	return columnCount;
   }
 
   public String getColumnName(int columnIndex) {
-	return super.getColumnName(toFilaOriginal(columnIndex));
+  	return super.getColumnName(toOriginalColumn(columnIndex));
   }
 
   public Object getValueAt(int rowIndex, int columnIndex) {
-	return super.getValueAt(rowIndex, toFilaOriginal(columnIndex));
+  	return super.getValueAt(rowIndex, toOriginalColumn(columnIndex));
   }
 
   public boolean isCellEditable(int rowIndex, int columnIndex) {
-	return super.isCellEditable(rowIndex, toFilaOriginal(columnIndex));
+  	return super.isCellEditable(rowIndex, toOriginalColumn(columnIndex));
   }
 
-  public void setValueAt(Object valor, int rowIndex, int columnIndex) {
-	super.setValueAt(valor, rowIndex, toFilaOriginal(columnIndex));
+  public void setValueAt(Object value, int rowIndex, int columnIndex) {
+  	super.setValueAt(value, rowIndex, toOriginalColumn(columnIndex));
   }
-  // Convirte el número de la fila visualizada en el
-  // número de la fila del tablaModel decorado
-  private int toFilaOriginal(int filaVisible) {
-	return indices[filaVisible];
+  
+  private int toOriginalColumn(int visibleColumn) {
+  	return indexes[visibleColumn];
   }
+  
 }

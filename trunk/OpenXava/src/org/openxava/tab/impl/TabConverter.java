@@ -67,7 +67,7 @@ class TabConverter implements java.io.Serializable {
 		return multipleConverter;
 	}
 	
-	public boolean tieneMultipleConverter() {
+	public boolean hasMultipleConverter() {
 		return multipleConverter != null;
 	}
 

@@ -5,33 +5,30 @@ import java.util.*;
 import javax.swing.table.*;
 
 /**
- * <code>TableModel</code> en el que se pueden poner y coger todos
- * los datos en formato <code>Vector</code>. <p>
+ * <code>TableModel</code> that allows put and get all data in <code>Vector</code>
+ * format. <p>
  *
- * El tipo de dato de cada posición del vector depende del <code>TableModel</code>
- * concreto, pero típicamente será un array de objetos (uno por columna).<br>
- * La asignación del vector es por referencia (no se hace copia), por lo
- * que si se obtiene el vector y se cambia se está cambiando el modelo, por supuesto,
- * si se hace esto es necesario lanzar después las notificaciones de cambio del
- * modelo que apliquen.<br>
- *
- * @version 00.04.17
+ * The data type of each position depends on the concrete<code>TableModel</code>,
+ * but typically is a object array (one by column). <br>
+ * The vector is assigned vy reference (copy is not made).
+ * 
  * @author  Javier Paniza
  */
 
 public interface IVectorTableModel extends TableModel {
 
   /**
-   * Vector con los datos contenidos en el modelo. <br>
+   * Vector with data contained in model. <br>
    *
    * @return <code>[!= null]</code>
    */
   Vector getVector();
+  
   /**
-   * Establece un vector con los datos del modelo. <br>
+   * Set vector with model data. <br>
    *
-   * @param vector  Si es <code>null</code> se establece como si fuera
-   *                un vector vacío.
+   * @param vector  If <code>null</code> empty vector is assumed.
    */
   void setVector(Vector vector);
+  
 }

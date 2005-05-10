@@ -11,7 +11,7 @@ import org.openxava.util.*;
  * 
  * @author Javier Paniza
  */
-public class DefaultConverter {
+public class Converters {
 		
 	private static Map stereotypeConverters;
 	private static Map stereotypeCmpTypes;
@@ -20,7 +20,7 @@ public class DefaultConverter {
 	
 	public static void _addForStereotype(String name, String converterClass, String cmpType) throws XavaException {
 		if (stereotypeConverters == null) {
-			throw new XavaException("only_from_parse", "DefaultConverter._addForStereotype");
+			throw new XavaException("only_from_parse", "Converters._addForStereotype");
 		}		
 		stereotypeConverters.put(name, converterClass);
 		stereotypeCmpTypes.put(name, cmpType);		
@@ -28,7 +28,7 @@ public class DefaultConverter {
 	
 	public static void _addForType(String typeName, String converterClass, String cmpType) throws XavaException {
 		if (typeConverters == null) {
-			throw new XavaException("only_from_parse", "DefaultConverter._addForType");
+			throw new XavaException("only_from_parse", "Converters._addForType");
 		}			
 		typeConverters.put(typeName, converterClass);
 		typeCmpTypes.put(typeName, cmpType);
@@ -59,7 +59,7 @@ public class DefaultConverter {
 		stereotypeCmpTypes = new HashMap();
 		typeConverters = new HashMap();
 		typeCmpTypes = new HashMap();
-		DefaultConverterParser.configureDefaultConverter();
+		ConvertersParser.configureConverters();
 	}
 		
 }

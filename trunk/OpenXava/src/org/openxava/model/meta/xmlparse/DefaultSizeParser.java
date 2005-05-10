@@ -17,7 +17,7 @@ public class DefaultSizeParser extends ParserBase {
 	public static void configureDefaultSize() throws XavaException {
 		DefaultSizeParser enParser = new DefaultSizeParser("default-size.xml", ENGLISH);
 		enParser.parse();		
-		DefaultSizeParser esParser = new DefaultSizeParser("longitud-defecto.xml", ESPAÑOL);
+		DefaultSizeParser esParser = new DefaultSizeParser("longitud-defecto.xml", ESPANOL);
 		esParser.parse();
 	}
 	

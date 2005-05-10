@@ -17,7 +17,7 @@ public class StereotypeTypeDefaultParser extends ParserBase {
 	public static void configureStereotypeTypeDefault() throws XavaException {
 		StereotypeTypeDefaultParser enParser = new StereotypeTypeDefaultParser("stereotype-type-default.xml", ENGLISH);
 		enParser.parse();		
-		StereotypeTypeDefaultParser esParser = new StereotypeTypeDefaultParser("tipo-estereotipo-defecto.xml", ESPAÑOL);
+		StereotypeTypeDefaultParser esParser = new StereotypeTypeDefaultParser("tipo-estereotipo-defecto.xml", ESPANOL);
 		esParser.parse();
 	}
 	

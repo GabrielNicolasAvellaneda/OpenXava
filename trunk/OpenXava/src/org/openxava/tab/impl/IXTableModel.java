@@ -5,29 +5,29 @@ import java.rmi.*;
 import javax.ejb.*;
 
 /**
- * TableModel eXtendido. <p>
- * Tiene la posibilidad de obtener un objeto por fila,
- * reiniciar la tabla y conocer el tamaño de la colección visualizada.<br>
- * Diseñado inicialmente para su uso en {@link IEntityTab}.<br>
+ * Extended TableModel. <p>
  *
- * @version 00.01.27
+ * Allows to obtain a object from a row, refresh and to know the result size.<br>
+ *  
+ * Util for use in {@link IEntityTab}.<br>
+ *
  * @author  Javier Paniza
  */
 
 public interface IXTableModel extends IObjectTableModel, IRefreshTableModel {
 
-  // Incluido en IObjectTableModel, para no ser un interface abstracto
+  // Included in IObjectTableModel, but by CORBA whims
   Object getObjectAt(int rowIndex) throws FinderException;
-  // Incluido en IRefrescarTableModel, para no ser un interface abstracto
+  // Included in IRefreshTableModel, but by CORBA whims
   void refresh() throws TabException;
 	void removeAllRows();
 	/**
+	 * Total count of objects represented by this table model. <p>
 	 * Cantidad de objetos total representados por el table model. <p>
 	 * 
-	 * getRowCount() por su parte ofrece la cantidad de objetos cargados, no
-	 * la total.
+	 * <code>getRowCount()</code> in another side, 
+	 * return the loaded objects count, not total.<br>
 	 */
 	int getTotalSize() throws RemoteException;
-
 	
 }

@@ -1,8 +1,12 @@
 <?xml version = "1.0" encoding = "ISO-8859-1"?>
 
-<!DOCTYPE default-converter SYSTEM "dtds/default-converter.dtd">
+<!DOCTYPE converters SYSTEM "dtds/converters.dtd">
 
-<default-converter>	<for-type type="java.lang.String" 
+<!--
+	In your project use the name 'converters.xml' or 'conversores.xml'
+	-->
+
+<converters>	<for-type type="java.lang.String" 
 		converter-class="org.openxava.converters.TrimStringConverter"
 		cmp-type="java.lang.String"/>
 			<for-type type="int" 
@@ -37,4 +41,4 @@
 		converter-class="org.openxava.converters.DateUtilSQLConverter"
 		cmp-type="java.sql.Date"/>
 
-</default-converter>
+</converters>

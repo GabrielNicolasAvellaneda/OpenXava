@@ -5,37 +5,25 @@ import java.rmi.*;
 import javax.ejb.*;
 
 /**
- * Interface que facilita una <b>impl</b>ementación remota de
- * un {@link IEntityTab}. <p>
+ * Interface to facilite a remote <b>impl</b>elmentation of
+ * a {@link IEntityTab}. <p>
  *
- * Añade métodos que no serán usados nunca por el usuario final
- * del componente, pero que tienen que estar disponible de
- * forma pública y remota para poder implementar {@link IXTableModel}
- * de forma remota.<br>
+ * Adds methods not intended to use with final user (a programmer)
+ * of the component, but that they are utils to implement {@link IXTableModel}.<br>
  *
- * @version 0.2.17
  * @author  Javier Paniza
  */
-
-/*
-00.01.27  Creación
-00.02.17  Se divide en IEntityTab y IEntidadImpl
-*/
-
 
 public interface IEntityTabImpl extends IEntityTab, ITabProvider
 {
 
   /**
-   * Busca una entidad concreta a partir de una clave. <br>
-   * Esta clave se suele obtener de las columnas de la
-   * tabla.<br>
-   * Este método es un método de utilidad normalmente llamado por
-   * la tabla para implementar <code>getObjectAt</code>. No será
-   * tipico que el programador de aplicaciones lo llame directamente.
-   *
-   * @exception FinderException  Si hay algún problema de lógica.
-   * @exception RemoteException  Si hay algún problema de sistema.
+   * Search a concrete entity from a key. <p>
+   * 
+   * Ususally thie key is obtained from columns of table (IXTableModel).<br>
+   * This method is used from IXTableModel.getObjectAt. It is not normal
+   * that a application programmer call this method directly.<br>
    */
   Object findEntity(Object [] clave) throws FinderException, RemoteException;
+  
 }

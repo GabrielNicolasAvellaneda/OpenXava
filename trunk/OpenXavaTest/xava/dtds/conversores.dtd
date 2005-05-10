@@ -1,4 +1,4 @@
-<!ELEMENT conversor-defecto (para-estereotipo|para-tipo)+>
+<!ELEMENT conversores (para-estereotipo|para-tipo)+>
 
 <!ELEMENT para-estereotipo EMPTY>
 <!ATTLIST para-estereotipo

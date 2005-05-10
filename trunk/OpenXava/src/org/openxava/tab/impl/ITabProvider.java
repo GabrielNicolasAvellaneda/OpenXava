@@ -2,36 +2,33 @@ package org.openxava.tab.impl;
 
 import java.rmi.*;
 
-
-
 /**
- * Proveedor de datos para un <code>TableModel</code> o similar. <p>
- * Permite basicamente realizar consultas y después obtener los
- * datos de la consulta a trozos.<br>
+ * Data provider for a <code>TableModel</code> or similar. <p>
  *
- * @version 0.1.27
+ * Allows execute consult and then obtain the data chunk by chunk.<br>
+ * 
  * @author  Javier Paniza
  */
 
 public interface ITabProvider extends ISearch {
 	
   /**
-   * Obtiene el siguiente trozo de datos. <br>
-   * Este método puede ser llamado por un <code>TableModel</code>
-   * para obtener más datos a medida que los necesite.<br>
+   * Obtain the next data chunk. <p> 
+   * 
+   * This method can be call from a <code>TableModel</code> to
+   * obtain data on demand.
    */
   DataChunk nextChunk() throws RemoteException;
   
   /**
-   * Cantidad de registro de la última consulta ejecutada.
+   * Record (or object, or row) count of last consult.
    */
   int getResultSize() throws RemoteException; 
   
   /**
-   * La siguientez ve que se llame a <tt>siguienteTrozo</tt>
-   * devuelve el primert trozo y con datos recientes de la db. <p> 
-   *  
-   * @throws RemoteException
+   * If you call this method the next time that you call
+   * {@link #nextChunk} you will obtain the first chunk and
+   * fresh data from db.
    */
   void reset() throws RemoteException;  
   

@@ -21,7 +21,7 @@ public class EditorsParser extends ParserBase {
 		defaultParser.parse();		
 		EditorsParser enParser = new EditorsParser("editors.xml", ENGLISH);
 		enParser.parse();				
-		EditorsParser esParser = new EditorsParser("editores.xml", ESPAÑOL);
+		EditorsParser esParser = new EditorsParser("editores.xml", ESPANOL);
 		esParser.parse();		
 	}
 	

@@ -9,13 +9,11 @@ import org.openxava.util.*;
 
 
 /**
- * Clase base para construir decoradores de {@link IXTableModel}. <p>
+ * Base class to create {@link IXTableModel} decorators. <p>
+ * 
+ * A decorator as describe in GoF book.
+ * By default simply redirect the call to <tt>IXTableModel</tt> original. <br>
  *
- * Al decir decorador nos referimos al patrón GoF <i>Decorator</i>.<br>
- * Por defecto simplemente redirecciona las llamadas al <tt>IXTableModel</tt>
- * enviado en el constructor.<br>
- *
- * @version 00.06.14
  * @author  Javier Paniza
  */
 
@@ -25,12 +23,12 @@ public class XTableModelDecoratorBase
 	private IXTableModel impl;
 
 	/**
-	 * @param aDecorar <tt>IXTableModel</tt> a decorar.
-	 * @exception IllegalArgumentException Si <tt>aDecorar == null</tt>.
+	 * @param toDecorate <tt>IXTableModel</tt> to decorate.
+	 * @exception IllegalArgumentException If <tt>toDecorate == null</tt>.
 	 */
-	public XTableModelDecoratorBase(IXTableModel aDecorar) {
-		Assert.arg(aDecorar);
-		impl = aDecorar;
+	public XTableModelDecoratorBase(IXTableModel toDecorate) {
+		Assert.arg(toDecorate);
+		impl = toDecorate;
 	}
 	
 	public void addTableModelListener(TableModelListener l) {
@@ -68,9 +66,7 @@ public class XTableModelDecoratorBase
 	public void refresh() throws TabException {
 		impl.refresh();
 	}
-	/**
-	 * @see org.openxava.tab.impl.IXTableModel
-	 */
+	
 	public void removeAllRows() {
 		impl.removeAllRows();
 	}

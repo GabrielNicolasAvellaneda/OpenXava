@@ -79,7 +79,7 @@ class ComponentParser extends ParserBase {
 	}
 	
 	protected void createObjects() throws XavaException {
-		lang = "componente".equals(getRoot().getNodeName())?ESPAÑOL:ENGLISH;
+		lang = "componente".equals(getRoot().getNodeName())?ESPANOL:ENGLISH;
 		createComponent();
 		createEntity();
 		createAggregate();

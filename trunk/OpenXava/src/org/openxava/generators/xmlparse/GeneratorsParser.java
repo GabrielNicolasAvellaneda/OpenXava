@@ -17,7 +17,7 @@ public class GeneratorsParser extends ParserBase {
 	public static void configureGenerators() throws XavaException {
 		GeneratorsParser enParser = new GeneratorsParser("code-generators.xml", ENGLISH);
 		enParser.parse();		
-		GeneratorsParser esParser = new GeneratorsParser("generadores-codigo.xml", ESPAÑOL);
+		GeneratorsParser esParser = new GeneratorsParser("generadores-codigo.xml", ESPANOL);
 		esParser.parse();
 	}
 	

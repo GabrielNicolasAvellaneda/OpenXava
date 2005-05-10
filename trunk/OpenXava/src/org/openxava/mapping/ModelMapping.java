@@ -372,8 +372,8 @@ abstract public class ModelMapping implements java.io.Serializable {
 		if (p.isKey() || !getMetaModel().isGenerateXDocLet()) 
 			return;
 		
-		propertyMapping.setConverterClassName(DefaultConverter.getConverterClassNameFor(p));
-		propertyMapping.setCmpTypeName(DefaultConverter.getCmpTypeFor(p));
+		propertyMapping.setConverterClassName(Converters.getConverterClassNameFor(p));
+		propertyMapping.setCmpTypeName(Converters.getCmpTypeFor(p));
 		
 		if (!propertyMapping.hasConverter()) {
 			// In this way every no key property will have a converter
