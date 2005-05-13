@@ -62,7 +62,7 @@ public class ModuleTestBase extends TestCase {
 		conversation = new WebConversation();
 		if (getLocale() != null) {
 			conversation.setHeaderField("Accept-Language", getLocale());
-			Locale.setDefault(new Locale(getLocale()));
+			Locale.setDefault(new Locale(getLocale(), ""));
 		}
 		response = conversation.getResponse( "http://localhost:" + getPort() + "/" + application + "/xava/module.jsp?application="+application+"&module=" + module);
 		setForm(response.getForms()[0]);	
@@ -264,9 +264,21 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected void setConditionComparators(String [] values) throws Exception {
+		filterConditionComparators(values);
 		getForm().setParameter("conditionComparators", values);
 	}
 	
+	private void filterConditionComparators(String[] values) {
+		for (int i = 0; i < values.length; i++) {
+			if ("=".equals(values[i])) values[i] = "eq";
+			if ("<>".equals(values[i])) values[i] = "ne";
+			if (">=".equals(values[i])) values[i] = "ge";
+			if ("<=".equals(values[i])) values[i] = "le";
+			if (">".equals(values[i])) values[i] = "gt";
+			if ("<".equals(values[i])) values[i] = "lt";
+		}		
+	}
+
 	protected void setValueNotNotify(String name, String value) throws Exception {
 		getForm().setParameter(getPropertyPrefix() + name, value);
 	}

@@ -12,7 +12,7 @@ public class YearInvoiceDiscountCalculator implements ICalculator {
 	
 	private int year;
 
-	public Object calculate() throws Exception {
+	public Object calculate() throws Exception {		
 		if (year < 2002) return new BigDecimal("0.00");
 		if (year < 2004) return new BigDecimal("200.00");
 		return new BigDecimal("400.00");
