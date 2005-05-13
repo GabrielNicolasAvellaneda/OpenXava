@@ -479,7 +479,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	
 	private Collection getEntityReferencesMappings() throws XavaException {	
 		if (entityReferencesMappings == null) {
-			entityReferencesMappings = new LinkedHashSet();
+			entityReferencesMappings = new ArrayList(); 
 			for (Iterator itProperties = getPropertiesNames().iterator(); itProperties.hasNext();) {
 				String property = (String) itProperties.next();
 				fillEntityReferencesMappings(entityReferencesMappings, property, getMetaComponent().getMetaEntity());
@@ -501,7 +501,8 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 			boolean hasMoreLevels = memberName.indexOf('.') >= 0;
 			if (!ref.isAggregate()) {												
 				if (hasMoreLevels || !ref.getMetaModelReferenced().isKey(memberName)) {
-					result.add(metaModel.getMapping().getReferenceMapping(referenceName));
+					ReferenceMapping rm = metaModel.getMapping().getReferenceMapping(referenceName);
+					if (!result.contains(rm))	result.add(rm);
 				}
 			}			
 			 

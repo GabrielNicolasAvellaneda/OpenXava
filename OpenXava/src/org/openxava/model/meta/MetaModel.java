@@ -1130,11 +1130,11 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 				if (Is.emptyString(prefix)) result.add(name);
 				else result.add(prefix + name);				
 			}
-		}
-		for (Iterator it=getMetaReferences().iterator(); it.hasNext();) {
-			MetaReference ref = (MetaReference) it.next();			 
-			result.addAll(ref.getMetaModelReferenced().createQualifiedPropertiesNames(prefix + ref.getName() + "."));
-		}			
+			else if (getMapMetaReferences().containsKey(name)) { 
+				MetaReference ref = (MetaReference) getMapMetaReferences().get(name);
+				result.addAll(ref.getMetaModelReferenced().createQualifiedPropertiesNames(prefix + ref.getName() + "."));
+			}
+		} 
 		return result;		
 	}
 

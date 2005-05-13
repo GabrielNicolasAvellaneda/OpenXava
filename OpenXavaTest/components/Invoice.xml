@@ -212,7 +212,7 @@
 	<tab>
 		<properties>year, number, date, amountsSum, vat, detailsCount, paid, importance</properties>
 	</tab>
-	
+		
 	<tab name="Level4Reference">
 		<properties>year, number, customer.seller.level.description</properties>
 	</tab>

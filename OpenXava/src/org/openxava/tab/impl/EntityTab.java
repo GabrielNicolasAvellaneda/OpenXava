@@ -58,7 +58,7 @@ public class EntityTab implements IEntityTabImpl {
 		try {			
 			StringBuffer select = new StringBuffer(getSelectBase().toUpperCase());			
 			if (!Is.emptyString(condition)) {
-				if (select.indexOf("WHERE") < 0) select.append(" WHERE "); 
+				if (select.toString().indexOf("WHERE") < 0) select.append(" WHERE "); 
 				else select.append(" AND "); 				
 				select.append(condition);				
 			}															

@@ -258,7 +258,7 @@ public class Tab {
 					pOrder = p;
 				}				
 				if (Is.emptyString(this.conditionComparators[i])) {
-					this.conditionValues[i] = null; 
+					this.conditionValues[i] = ""; 
 				}
 				if (!Is.emptyString(this.conditionValues[i])) {												
 					if (firstCondition) firstCondition = false;
@@ -313,7 +313,13 @@ public class Tab {
 		if (STARTS_COMPARATOR.equals(comparator)) return "like";
 		if (CONTAINS_COMPARATOR.equals(comparator)) return "like";
 		if (YEAR_COMPARATOR.equals(comparator)) return "=";
-		if (MONTH_COMPARATOR.equals(comparator)) return "=";
+		if (MONTH_COMPARATOR.equals(comparator)) return "=";		
+		if ("eq".equals(comparator)) return "=";
+		if ("ne".equals(comparator)) return "<>";
+		if ("ge".equals(comparator)) return ">=";
+		if ("le".equals(comparator)) return "<=";
+		if ("gt".equals(comparator)) return ">";
+		if ("lt".equals(comparator)) return "<";
 		return comparator;
 	}
 	

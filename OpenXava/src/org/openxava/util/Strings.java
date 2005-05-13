@@ -411,7 +411,7 @@ private static StringBuffer repetirSB(int cantidad, String cadena) {
 		while (i >= 0) {
 			int f = i + original.length();			
 			sb.replace(i, f, nueva);			
-			i = sb.indexOf(original, i + nueva.length());
+			i = sb.toString().indexOf(original, i + nueva.length());
 		}		
 		return sb.toString();
 	} 

@@ -5,8 +5,7 @@
 
 <!ELEMENT editor (property*, formatter?, (for-type | for-stereotype | for-model-property)+)>
 <!ATTLIST editor
- clasa CDATA #IMPLIED
- url CDATA #IMPLIED
+ url CDATA #REQUIRED
  format (true|false) "true" 
  depends-stereotypes CDATA #IMPLIED
  depends-properties CDATA #IMPLIED

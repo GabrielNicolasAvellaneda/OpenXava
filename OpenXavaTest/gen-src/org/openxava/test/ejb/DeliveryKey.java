@@ -3,6 +3,10 @@
  */
 package org.openxava.test.ejb;
 
+import java.util.*;
+
+import org.openxava.util.*;
+
 /**
  * Primary key for Delivery.
  */
@@ -96,11 +100,35 @@ public class DeliveryKey
       return eq;
    }
 
+   /**
+    * Create from a string with the format of toString() method
+    */
+   public DeliveryKey createFromString(String string) throws IllegalArgumentException, IllegalAccessException {
+      StringTokenizer st = new StringTokenizer(string, "[.]");
+      DeliveryKey key = new DeliveryKey();
+      java.lang.reflect.Field [] fields = key.getClass().getFields();
+      Arrays.sort(fields, FieldComparator.getInstance());
+      for (int i = 0; i < fields.length; i++) {
+         String v = st.nextToken();
+         Class type = fields[i].getType();
+         Object value = null;
+         if (!type.equals(String.class)) {
+            value = Strings.toObject(type, string);
+         }
+         else {
+            value = string;
+         }
+         fields[i].set(key, value);
+      }
+      return key;
+   }
+
    /** @return String representation of this pk in the form of [.field1.field2.field3]. */
    public String toString()
    {
       StringBuffer toStringValue = new StringBuffer("[.");
       java.lang.reflect.Field [] fields = getClass().getFields();
+      Arrays.sort(fields, FieldComparator.getInstance());
       for (int i=0; i < fields.length; i++) {
       	try {
       	 	toStringValue.append(fields[i].get(this)).append('.');

@@ -997,16 +997,16 @@ public class View implements java.io.Serializable {
 		// Properties
 		if (getParent() == null) {
 			getRoot().registeringExecutedActions = true;
-		}
+		}		
 		try {					
-			Collection properties = new ArrayList(getMetaModel().getMetaPropertiesWithDefaultValueCalculator());
-			properties.addAll(getMetaModel().getMetaPropertiesViewWithDefaultCalculator());
+			Collection properties = new ArrayList(getMetaModel().getMetaPropertiesWithDefaultValueCalculator());			
+			properties.addAll(getMetaModel().getMetaPropertiesViewWithDefaultCalculator());			
 			if (!properties.isEmpty()) {		
-				Map nombresMiembros = getMembersNames();		
+				Map nombresMiembros = getMembersNames();				
 				Iterator it = properties.iterator();
-				Collection puestos = new ArrayList();
+				Collection puestos = new ArrayList();				
 				while (it.hasNext()) {
-					MetaProperty p = (MetaProperty) it.next();			
+					MetaProperty p = (MetaProperty) it.next();					
 					if (nombresMiembros.containsKey(p.getName())) {				
 						try {
 							if (!p.getMetaCalculatorDefaultValue().containsMetaSetsWithoutValue()) { // Así evitamos calcular las dependientes
@@ -1019,31 +1019,33 @@ public class View implements java.io.Serializable {
 							getErrors().add("calculate_default_value_error", p.getName());
 						}				 
 					}
-				}
+				}				
 				if (!puestos.isEmpty()) {
-					Iterator itPuestos = puestos.iterator();
-					while (itPuestos.hasNext()) {
-						String nombrePropiedad = (String) itPuestos.next();
+					Iterator itPuestos = puestos.iterator();					
+					boolean hasNext = itPuestos.hasNext(); 
+					while (hasNext) {												 
+						String nombrePropiedad = (String) itPuestos.next();						 
 						try {
-							hasToSearchOnChangeIfSubview = false;
-							propertyChanged(nombrePropiedad);
+							hasToSearchOnChangeIfSubview = false;							
+							propertyChanged(nombrePropiedad);							
 						}
 						finally {
 							hasToSearchOnChangeIfSubview = true;						
-						}
-					}
+						}						
+						hasNext = itPuestos.hasNext(); // Loop in this way to bypass a bug in Websphere 5.0.2.9 JDK						
+					}					
 				}
 			}
 								
 			// On change events					
-			Iterator itPropiedadesAlCambiar = getMetaView().getPropertiesNamesThrowOnChange().iterator();
+			Iterator itPropiedadesAlCambiar = getMetaView().getPropertiesNamesThrowOnChange().iterator();			
 			while (itPropiedadesAlCambiar.hasNext()) {
 				String nombrePropiedad = (String) itPropiedadesAlCambiar.next();
 				propertyChanged(nombrePropiedad);
-			}
+			}			
 					
 			// Subviews		
-			Iterator itSubvistas = getSubviews().values().iterator();
+			Iterator itSubvistas = getSubviews().values().iterator();			
 			while (itSubvistas.hasNext()) {
 				View subvista = (View) itSubvistas.next();
 				if (subvista.isRepresentsAggregate()) { 
@@ -1052,14 +1054,14 @@ public class View implements java.io.Serializable {
 				else { // Referencia a entidad
 					subvista.clear();
 				}
-			}
+			}			
 					
 			// Groups		
-			Iterator itGroups = getGroupsViews().values().iterator();
+			Iterator itGroups = getGroupsViews().values().iterator();			
 			while (itGroups.hasNext()) {
 				View group = (View) itGroups.next(); 
 				group.calculateDefaultValues();
-			}
+			}			
 					
 			// Sections		
 			if (hasSections()) {
@@ -1067,15 +1069,14 @@ public class View implements java.io.Serializable {
 				for (int i = 0; i < cantidad; i++) {
 					getSectionView(i).calculateDefaultValues();
 				}	
-			}
+			}			
 			
 			// References
-			Collection references = getMetaModel().getMetaReferencesWithDefaultValueCalculator();		
-			
+			Collection references = getMetaModel().getMetaReferencesWithDefaultValueCalculator();					
 			if (!references.isEmpty()) {		
 				Map nombresMiembros = getMembersNames();		
 				Iterator it = references.iterator();
-				Collection puestos = new ArrayList();		
+				Collection puestos = new ArrayList();						
 				while (it.hasNext()) {
 					MetaReference ref = (MetaReference) it.next();
 					if (nombresMiembros.containsKey(ref.getName())) {
@@ -1104,10 +1105,11 @@ public class View implements java.io.Serializable {
 							getErrors().add("calculate_default_value_error", ref.getName());
 						}				 
 					}
-				}
+				}				
 				if (!puestos.isEmpty()) { 
 					Iterator itPuestos = puestos.iterator();
-					while (itPuestos.hasNext()) {
+					boolean hasNext = itPuestos.hasNext(); 
+					while (hasNext) {
 						String nombrePropiedad = (String) itPuestos.next();										
 						try {
 							hasToSearchOnChangeIfSubview = false;
@@ -1116,16 +1118,17 @@ public class View implements java.io.Serializable {
 						finally {
 							hasToSearchOnChangeIfSubview = true;						
 						}
+						hasNext = itPuestos.hasNext(); // Loop in this way to bypass a bug in Websphere 5.0.2.9 JDK
 					}
 				}
 			}
 		}
-		finally {			
+		finally {						
 			if (getParent() == null) {
 				getRoot().registeringExecutedActions = false;		
 				resetExecutedActions();
-			}
-		}		
+			}			
+		}				
 	}
 
 	private void resetExecutedActions() {		
