@@ -3,11 +3,8 @@ package org.openxava.util;
 import java.text.DateFormat;
 import java.util.*;
 
-
-
-
 /**
- * Utilidades para trabajar con fechas (<tt>java.util.Date</tt>). <p>
+ * Utilities to working with dates (<tt>java.util.Date</tt>). <p>  
  * 
  * @author Javier Paniza
  */
@@ -16,67 +13,65 @@ public class Dates {
 	private static DateFormat dateFormat;
 	
 	/**
-	 * Con la hora a 0.
-	 * Si dia, mes y año son 0 devuelve nulo.
+	 * With hour to 0.
+	 * If day, month and year are 0 return null.
 	 */	
-	public static Date create(int dia, int mes, int año) {
-		if (dia == 0 && mes == 0 && año == 0) return null;
+	public static Date create(int day, int month, int year) {
+		if (day == 0 && month == 0 && year == 0) return null;
 		Calendar cal = Calendar.getInstance();
-		cal.set(año, mes - 1, dia, 0, 0, 0);
+		cal.set(year, month - 1, day, 0, 0, 0);
 		cal.set(Calendar.MILLISECOND, 0);
 		return cal.getTime();			
 	}
-	
-	
+		
 	/**
-	 * La fecha de hoy sin hora.
+	 * Current date without time. 
 	 */
 	public static Date createCurrent() {
 		return removeTime(new java.util.Date());
 	}
 	
 	/**
-	 * Devuelve el dia asociado a la fecha. <p>
+	 * Returns the day of date. <p>
 	 * 
-	 * Si la fecha es nulo devuelve 0.
+	 * If date is null return 0.
 	 */
-	public static int getDay(Date fecha) {
-		if (fecha == null) return 0;
+	public static int getDay(Date date) {
+		if (date == null) return 0;
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(fecha);
+		cal.setTime(date);
 		return cal.get(Calendar.DAY_OF_MONTH);
 	}
 	
 	/**
-	 * Devuelve el año (con 4 cifras) asociado a la fecha. <p>
+	 * Returns the year (4 digits) of date. <o> 
 	 * 
-	 * Si la fecha es nulo devuelve 0.
+	 * If date is null returns 0.
 	 */
-	public static int getYear(Date fecha) {
-		if (fecha == null) return 0;
+	public static int getYear(Date date) {
+		if (date == null) return 0;
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(fecha);
+		cal.setTime(date);
 		return cal.get(Calendar.YEAR);
 	}
 	
 	/**
-	 * Devuelve el mes (de 1 a 12) asociado a la fecha. <p>
+	 * Returns the month (1 to 12) of date. <p>
 	 * 
-	 * Si la fecha es nulo devuelve 0.
+	 * If date is null returns 0.
 	 */
-	public static int getMonth(Date fecha) {
-		if (fecha == null) return 0;
+	public static int getMonth(Date date) {
+		if (date == null) return 0;
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(fecha);
+		cal.setTime(date);
 		return cal.get(Calendar.MONTH) + 1;
-	}
-	
+	}	
 	
 	/**
-	 * Deja a cero las horas, los minutos, los segundo y los milisegundos. <p>
+	 * Puts hours, minutes, seconds and milliseconds to zero. <p>
 	 * 
-	 * @param fecha Fecha de la que se quita la hora. Si es nulo se devuelve nulo.
-	 * @return La misma fecha enviada como argumento. No se crea un nuevo objeto fecha.
+	 * @return The same date sent as argument (a new date is not created). If null
+	 * 			if sent a null is returned.
 	 */
 	public static Date removeTime(Date fecha) {
 		if (fecha == null) return null;
@@ -91,38 +86,37 @@ public class Dates {
 	}
 	
 	/**
-	 * Devuelve un clon pero sin horas, minutos, segundo nif milisegundos. <p>
+	 * Returns a clone but without hours, minutes, seconds and milliseconds. <p>
 	 * 
-	 * @param fecha Fecha a clonar. Si es nulo se devuelve nulo.
-	 * @return La misma fecha enviada como argumento. El argumento no se cambia sino que
-	 * 	se crea un nuevo objeto fecha.
+	 * @return The same date sent as argument (a new date is not created). If null
+	 * 			if sent a null is returned.
 	 */
-	public static Date clonWithoutTime(Date fecha) {
-		if (fecha == null) return null;
-		Date result = (Date) fecha.clone();
+	public static Date clonWithoutTime(Date date) {
+		if (date == null) return null;
+		Date result = (Date) date.clone();
 		removeTime(result);
 		return result;
 	}
 		
 	/**
-	 * Crea una java.sql.Date a partir de una java.util.Date. <p>
+	 * Creates a java.sql.Date from a java.util.Date. <p>
 	 * 
-	 * @param fecha Si nulo devuelve nulo. <p>
+	 * @param date If null returns null
 	 */
-	public static java.sql.Date toSQL(java.util.Date fecha) {
-		if (fecha == null) return null;
-		return new java.sql.Date(fecha.getTime());		
+	public static java.sql.Date toSQL(java.util.Date date) {
+		if (date == null) return null;
+		return new java.sql.Date(date.getTime());		
 	}
 	
 	/**
-	 * Una cadena con la fecha en formato corto según el <i>locale</i> actual.
+	 * String with date in short format according current <i>locale</i>.
 	 * 
-	 * @param fecha Si es nulo se devuelve cadena vacía.
-	 * @return Nuncan nulo.
+	 * @param date  If null returns empty string
+	 * @return Not null
 	 */
-	public static String toString(java.util.Date fecha) {
-		if (fecha == null) return "";
-		return getDateFormat().format(fecha);			
+	public static String toString(java.util.Date date) {
+		if (date == null) return "";
+		return getDateFormat().format(date);			
 	}
 	
 	private static DateFormat getDateFormat() {
@@ -133,32 +127,32 @@ public class Dates {
 	}
 
 	/**
-	 * Crea una fecha con la dd/mm/aa de la original
-	 * y la hora actual. <p>
+	 * Creates a date with day, month and year of original,
+	 * but with current time. <p>
 	 *  
-	 * @param fecha No se cambia
-	 * @return Nuncan nulo
+	 * @param date  It is not changed
+	 * @return If arguments is null then is null
 	 */
-	public static java.util.Date withTime(java.util.Date fecha) {
-		if (fecha == null) return null;
+	public static java.util.Date withTime(java.util.Date date) {
+		if (date == null) return null;
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(fecha);
-		int año = cal.get(Calendar.YEAR);
-		int mes = cal.get(Calendar.MONTH);
-		int dia = cal.get(Calendar.DAY_OF_MONTH);
+		cal.setTime(date);
+		int year = cal.get(Calendar.YEAR);
+		int month = cal.get(Calendar.MONTH);
+		int day = cal.get(Calendar.DAY_OF_MONTH);
 		cal.setTime(new java.util.Date());
-		cal.set(Calendar.YEAR, año);
-		cal.set(Calendar.MONTH, mes);
-		cal.set(Calendar.DAY_OF_MONTH, dia);
+		cal.set(Calendar.YEAR, year);
+		cal.set(Calendar.MONTH, month);
+		cal.set(Calendar.DAY_OF_MONTH, day);
 		return cal.getTime();
 	}
 	
 	/**
-	 * Si las 2 fechas son iguales a nivel de día/mes/año
-	 * ignorando la hora en la comparación. <p>
+	 * Compares if 2 dates are equals at day, month and year
+	 * level, ignoring time in comparing. 
 	 * 
-	 * @param f1 Puede ser nulo
-	 * @param f2 Puede ser nulo
+	 * @param f1 Can be null
+	 * @param f2 Can be null
 	 */
 	public static boolean isDifferentDay(java.util.Date f1, java.util.Date f2) {
 		if (f1 == null && f2 == null) return false;
@@ -176,235 +170,153 @@ public class Dates {
 	}
 	
 	/**
-	 * Diferencia de dos fechas en años, meses y dias.<p> 
+	 * Difference of 2 dates in years, months and days. <p>  
 	 *  
-	 * @param f1 y f2 en cualquier orden; ninguna de las dos puede ser nulo.
-	 * @return Devuelve un mapa con la diferencia ("anyos", "meses", "dias")
+	 * @param f1  If null returns null
+	 * @param f2  If null returns null 
 	 */	
-	public static DateDistance subtract(java.util.Date f1, java.util.Date f2, boolean includeStartDate ) {
-	    DateDistance df = new DateDistance();
-        if (null == f1 || null == f2)
-            return null;
-        Calendar fmax = Calendar.getInstance(), fmin = Calendar.getInstance();
+	public static DateDistance dateDistance(java.util.Date f1, java.util.Date f2, boolean includeStartDate ) {
+		DateDistance df = new DateDistance();
+		if (null == f1 || null == f2)
+			return null;
+		Calendar fmax = Calendar.getInstance(), fmin = Calendar.getInstance();
 
-        f1 = Dates.removeTime(f1);
-        f2 = Dates.removeTime(f2);
+		f1 = Dates.removeTime(f1);
+		f2 = Dates.removeTime(f2);
 
-        if (f1.after(f2)) {
-            fmax.setTime(f1);
-            fmin.setTime(f2);
-        } else {
-            fmin.setTime(f1);
-            fmax.setTime(f2);
-        }
+		if (f1.after(f2)) {
+			fmax.setTime(f1);
+			fmin.setTime(f2);
+		} 
+		else {
+			fmin.setTime(f1);
+			fmax.setTime(f2);
+		}
         
-        int diaInicio = fmin.get(Calendar.DATE);
-        int mesInicio = fmin.get(Calendar.MONTH);
-        int anyoInicio = fmin.get(Calendar.YEAR);
-        int diaFin = fmax.get(Calendar.DATE);
-        int mesFin = fmax.get(Calendar.MONTH);
-        int anyoFin = fmax.get(Calendar.YEAR);
-        int topeInicial = fmin.getActualMaximum(Calendar.DATE);
-        int topeFinal = fmax.getActualMaximum(Calendar.DATE);
-        int picoInicial = 0;
-        int picoFinal = 0;
+		int initDay = fmin.get(Calendar.DATE);
+		int initMonth = fmin.get(Calendar.MONTH);
+		int initYear = fmin.get(Calendar.YEAR);
+		int endDay = fmax.get(Calendar.DATE);
+		int endMonth = fmax.get(Calendar.MONTH);
+		int endYear = fmax.get(Calendar.YEAR);
+		int initLimit = fmin.getActualMaximum(Calendar.DATE);
+		int finalLimit = fmax.getActualMaximum(Calendar.DATE);
+		int initPeak = 0;
+		int finalPeak = 0;
         
+		if (initMonth == endMonth && initYear == endYear) {
+			while (!fmin.getTime().equals(fmax.getTime())) {
+				fmin.add(Calendar.DATE, 1);
+				df.days++;
+			}
 
-        if (mesInicio == mesFin && anyoInicio == anyoFin) {
-            while (!fmin.getTime().equals(fmax.getTime())) {
-                fmin.add(Calendar.DATE, 1);
-                df.dias++;
-            }
-
-            if (includeStartDate) {
-                df.dias++;
-            }
-            if (df.dias >= topeFinal) {
-                df.meses++;
-                df.dias = 0;
-            }
-            return df;
-        }
-
+			if (includeStartDate) {
+				df.days++;
+			}
+			if (df.days >= finalLimit) {
+				df.months++;
+				df.days = 0;
+			}
+			return df;
+		}
         
-        if (diaInicio != 1) {
-            while (fmin.get(Calendar.DATE) != 1) {
-                fmin.add(Calendar.DATE, 1);
-                picoInicial++;
-            }
-        }
+		if (initDay != 1) {
+			while (fmin.get(Calendar.DATE) != 1) {
+				fmin.add(Calendar.DATE, 1);
+				initPeak++;
+			}
+		}
         
-        while (fmin.get(Calendar.MONTH) != mesFin
-                || fmin.get(Calendar.YEAR) != anyoFin) {
-            fmin.add(Calendar.MONTH, 1);
-            df.meses++;
-            if (df.meses == 12) {
-                df.años++;
-                df.meses = 0;
-            }
-        }
+		while (fmin.get(Calendar.MONTH) != endMonth
+				|| fmin.get(Calendar.YEAR) != endYear) {
+			fmin.add(Calendar.MONTH, 1);
+			df.months++;
+			if (df.months == 12) {
+				df.years++;
+				df.months = 0;
+			}
+		}
         
-        while (!fmin.getTime().equals(fmax.getTime())) {
-            fmin.add(Calendar.DATE, 1);
-            picoFinal++;
-        }
+		while (!fmin.getTime().equals(fmax.getTime())) {
+			fmin.add(Calendar.DATE, 1);
+			finalPeak++;
+		}
         
-        int pico = picoInicial + picoFinal;
-        if (includeStartDate) {
-            pico++;
-        }
+		int peak = initPeak + finalPeak;
+		if (includeStartDate) {
+			peak++;
+		}
         
-        if (pico >= topeFinal) {
-            pico = pico - topeFinal;
-            df.meses++;
-            if (df.meses == 12) {
-                df.años++;
-                df.meses = 0;
-            }
-        }
-        df.dias = pico;
-        return df;
-
-        
+		if (peak >= finalLimit) {
+			peak = peak - finalLimit;
+			df.months++;
+			if (df.months == 12) {
+				df.months++;
+				df.months = 0;
+			}
+		}
+		df.days = peak;
+		return df;        
 	}
-	
-	public static DateDistance subtract(java.util.Date f1, java.util.Date f2) {
-        DateDistance df = new DateDistance();
-        if (null == f1 || null == f2)
-            return null;
-        Calendar fmax = Calendar.getInstance(), fmin = Calendar.getInstance();
-    
-        f1 = Dates.removeTime(f1);
-        f2 = Dates.removeTime(f2);
-    
-        if (f1.after(f2)) {
-            fmax.setTime(f1);
-            fmin.setTime(f2);
-        } else {
-            fmin.setTime(f1);
-            fmax.setTime(f2);
-        }
-        
-        int diaInicio = fmin.get(Calendar.DATE);
-        int mesInicio = fmin.get(Calendar.MONTH);
-        int anyoInicio = fmin.get(Calendar.YEAR);
-        int diaFin = fmax.get(Calendar.DATE);
-        int mesFin = fmax.get(Calendar.MONTH);
-        int anyoFin = fmax.get(Calendar.YEAR);
-        int topeInicial = fmin.getActualMaximum(Calendar.DATE);
-        int topeFinal = fmax.getActualMaximum(Calendar.DATE);
-        int picoInicial = 0;
-        int picoFinal = 0;
-        
-    
-        if (mesInicio == mesFin && anyoInicio == anyoFin) {
-            while (!fmin.getTime().equals(fmax.getTime())) {
-                fmin.add(Calendar.DATE, 1);
-                df.dias++;
-            }
-    
-            
-            if (df.dias >= topeFinal) {
-                df.meses++;
-                df.dias = 0;
-            }
-            return df;
-        }
-    
-        
-        if (diaInicio != 1) {
-            while (fmin.get(Calendar.DATE) != 1) {
-                fmin.add(Calendar.DATE, 1);
-                picoInicial++;
-            }
-        }
-        
-        while (fmin.get(Calendar.MONTH) != mesFin
-                || fmin.get(Calendar.YEAR) != anyoFin) {
-            fmin.add(Calendar.MONTH, 1);
-            df.meses++;
-            if (df.meses == 12) {
-                df.años++;
-                df.meses = 0;
-            }
-        }
-        
-        while (!fmin.getTime().equals(fmax.getTime())) {
-            fmin.add(Calendar.DATE, 1);
-            picoFinal++;
-        }
-        
-        int pico = picoInicial + picoFinal;
-        
-        
-        if (pico >= topeFinal) {
-            pico = pico - topeFinal;
-            df.meses++;
-            if (df.meses == 12) {
-                df.años++;
-                df.meses = 0;
-            }
-        }
-        df.dias = pico;
-        return df;
-    }
-		
+
 	/**
-	 * Reciba dos mapas con un número de días, meses y años y los suma. 
+	 * Difference of 2 dates in years, months and days. <p>  
 	 *  
-	 * @param mapa1 y mapa2 deben contener "anyos", "meses" y "dias"; ninguno de los dos puede ser nulo.
-	 * @return Devuelve un mapa con la suma ("anyos", "meses", "dias")
+	 * @param f1  If null returns null
+	 * @param f2  If null returns null 
 	 */	
-	public static DateDistance addDateDistances(DateDistance mapa1, DateDistance mapa2 ) {
+	public static DateDistance dataDistance(java.util.Date f1, java.util.Date f2) {
+		return dateDistance(f1, f2, false);		
+	}
+		
+	public static DateDistance addDateDistances(DateDistance dis1, DateDistance dis2) {
 		DateDistance df=new DateDistance();
-		if ( null == mapa1 || null == mapa2 ) return null;
-		
-		
-		int anyos, meses, dias;
-		dias = mapa1.dias + mapa2.dias;
-		meses = dias / 30;
-		dias = dias % 30;
-		
-		meses = meses + mapa1.meses + mapa2.meses ;
-		anyos =  meses / 12 ;
-		meses = meses % 12;		
+		if ( null == dis1 || null == dis2 ) return null;
 				
-		anyos = anyos + ( mapa1.años + mapa2.años );
-		df.años=anyos;
-		df.meses=meses;
-		df.dias=dias;
+		int years, months, days;
+		days = dis1.days + dis2.days;
+		months = days / 30;
+		days = days % 30;
+		
+		months = months + dis1.months + dis2.months ;
+		years =  months / 12 ;
+		months = months % 12;		
+				
+		years = years + ( dis1.years + dis2.years );
+		df.years = years;
+		df.months=months;
+		df.days=days;
 				
 		return df;
 	}
 	
 	
-	public static DateDistance subtractDateDistances(Dates.DateDistance mapa1, Dates.DateDistance mapa2 ) {
-			DateDistance df = new DateDistance();
-			if ( null == mapa1 || null == mapa2 ) return null;
-			
-		
-			int anyos=0;
-			int meses=0;
-			int dias=0;
-			dias = mapa1.dias - mapa2.dias;
-			meses = mapa1.meses - mapa2.meses;
-			anyos =mapa1.años - mapa2.años;
-			
-			if (dias<0){
-				dias=dias+30;
-				meses=meses-1;
-			}
-			if (meses<0){
-				meses=meses+12;
-				anyos=anyos-1;
-			}
-			
-		df.años=anyos;
-		df.meses=meses;
-		df.dias=dias;
+	public static DateDistance subtractDateDistances(DateDistance dis1, DateDistance dis2) {
+		DateDistance df = new DateDistance();
+		if ( null == dis1 || null == dis2 ) return null;
 				
-			return df;
+		int years=0;
+		int months=0;
+		int days=0;
+		days = dis1.days - dis2.days;
+		months = dis1.months - dis2.months;
+		years =dis1.years - dis2.years;
+			
+		if (days<0) {
+			days=days+30;
+			months=months-1;
 		}
+		if (months<0){
+			months=months+12;
+			years=years-1;
+		}
+			
+		df.years = years;
+		df.months = months;
+		df.days = days;
+				
+		return df;
+	}
 	
 
 	/** 
@@ -437,13 +349,13 @@ public class Dates {
 		}
 		return days;
 	}
-
 	
 	public static class DateDistance {
-		public  int dias;
-		public  int meses;
-		public  int años;
+		public  int days;
+		public  int months;
+		public  int years;
 	}
+	
 }
 
 

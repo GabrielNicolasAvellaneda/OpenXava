@@ -2,27 +2,24 @@ package org.openxava.util;
 
 
 /**
- * Utilidad para hacer afirmaciones. <p>
+ * Utility to make asserts. <p>
  *
- * En la mayoría de los casos estas afirmaciones consisten
- * en comprobar si un objeto es nulo. Hay una variedad de
- * métodos que lanzan diferentes tipos de excepciones.<br>
- * Una de las excepciones que se lanza es <tt>AssertException</tt>, 
- * pero no es preceptivo que sea esta.<p>
+ * In most case this asserts verify if the object is null.
+ * There are a variety of methods that throw differents exceptions.<br>
+ * One of the thrown exception is <tt>AssertException</tt>, but this
+ * is not mandatory.<p>
  *
- * Si alguno de los métodos lanza una excepción esto suele
- * indicar un error en el software, normalmente que el
- * programador-usuario no ha cumplido con los contratos del
- * componente. <br>
- * Los mensajes no tienen que especificar el lugar en donde
- * se rompe el contrato, ni el contrato que se ha roto. La
- * traza (que se imprime siempre) indica el lugar y la clase
- * de la excepción el mótivo. Yendo a la documentación del
- * método que produce la excepción se podrá ver con detalle
- * que pasa.<br>
+ * If some of this methods throw exception this is usually
+ * due to a software error, normally a exception that the
+ * user-programmer has not fullfilled the contract. <br>
+ * The messages does not have to specify the place where
+ * contract is break or which contract is broken. The
+ * trace (that always is printed) indicate the place and
+ * the exception class. In the doc of method that throw the
+ * exception you can obtain more info about it.<br>
  *
- * Los nombres y funcionamiento coinciden con los de JUnit,
- * la diferencia está en la excepción lanzada.<br> 
+ * The names and behaviour match with JUnit,
+ * the difference is the thrown exceptions. <br>
  *
  * @author  Javier Paniza
  */
@@ -30,58 +27,63 @@ package org.openxava.util;
 public class Assert {
 
   /**
-   * Comprueba el argumento. <br>
+   * Verify argument. <br>
    *
-   * @exception IllegalArgumentException Si <tt>o == null</tt>.
+   * @exception IllegalArgumentException If <tt>o == null</tt>.
    */
   public final static void arg(Object o) {
-	if (o == null) {
-	  lanzar(new IllegalArgumentException(XavaResources.getString("assert_no_null_argv")));
-	}
+		if (o == null) {
+		  throwException(new IllegalArgumentException(XavaResources.getString("assert_no_null_argv")));
+		}
   }
+  
   /**
-   * Comprueba los argumento. <br>
+   * Verify arguments. <br>
    *
-   * @exception IllegalArgumentException Si <tt>o1 == null || o2 == null</tt>.
+   * @exception IllegalArgumentException If <tt>o1 == null || o2 == null</tt>.
    */
   public final static void arg(Object o1, Object o2) {
-	if (o1 == null || o2 == null) {
-	  lanzar(new IllegalArgumentException(XavaResources.getString("assert_no_null_argv")));
-	}
+		if (o1 == null || o2 == null) {
+		  throwException(new IllegalArgumentException(XavaResources.getString("assert_no_null_argv")));
+		}
   }
+  
   /**
-   * Comprueba los argumento. <br>
+   * Verify arguments. <br>
    *
-   * @exception IllegalArgumentException Si <tt>o1 == null || o2 == null || o3 == null</tt>.
+   * @exception IllegalArgumentException If <tt>o1 == null || o2 == null || o3 == null</tt>.
    */
   public final static void arg(Object o1, Object o2, Object o3) {
-	if (o1 == null || o2 == null || o3 == null) {
-	  lanzar(new IllegalArgumentException(XavaResources.getString("assert_no_null_argv")));
-	}
+		if (o1 == null || o2 == null || o3 == null) {
+		  throwException(new IllegalArgumentException(XavaResources.getString("assert_no_null_argv")));
+		}
   }
+  
   /**
-   * Comprueba los argumento. <br>
+   * Verify arguments. <br>
    *
-   * @exception IllegalArgumentException Si <tt>o1 == null || o2 == null || o3 == null || o4 == null</tt>.
+   * @exception IllegalArgumentException If <tt>o1 == null || o2 == null || o3 == null || o4 == null</tt>.
    */
   public final static void arg(Object o1, Object o2, Object o3, Object o4) {
 	if (o1 == null || o2 == null || o3 == null || o4 == null) {
-	  lanzar(new IllegalArgumentException(XavaResources.getString("assert_no_null_argv")));
+	  throwException(new IllegalArgumentException(XavaResources.getString("assert_no_null_argv")));
 	}
   }
+  
 	/**
 	 * Asserts that a condition is true. <p>
 	 *
-	 * @exception AssertException  Si no se cumple la afirmación.	 
+	 * @exception AssertException  If condition is false	 
 	 */
 	static public void assertTrue(String message, boolean condition) {
 		if (!condition)
 			fail(message);
 	}
+	
 	/**
 	 * Asserts that a condition is true. <p>
 	 *
-	 * @exception AssertException  Si no se cumple la afirmación.
+	 * @exception AssertException  If condition is false
 	 */
 	static public void assertTrue(boolean condition) {
 		assertTrue(null, condition);
@@ -91,7 +93,7 @@ public class Assert {
 	 * @param expected the expected value of an object
 	 * @param actual the actual value of an object
 	 * @param delta tolerated delta
-	 * @exception AssertException  Si no se cumple la afirmación.	 
+	 * @exception AssertException  If assert is not fulfilled	 
 	 */
 	static public void assertEquals(double expected, double actual, double delta) {
 	    assertEquals(null, expected, actual, delta);
@@ -100,7 +102,7 @@ public class Assert {
 	 * Asserts that two longs are equal.
 	 * @param expected the expected value of an object
 	 * @param actual the actual value of an object
-	 * @exception AssertException  Si no se cumple la afirmación.	 
+	 * @exception AssertException  If assert is not fulfilled	 
 	 */
 	static public void assertEquals(long expected, long actual) {
 	    assertEquals(null, expected, actual);
@@ -110,7 +112,7 @@ public class Assert {
 	 *
 	 * @param expected the expected value of an object
 	 * @param actual the actual value of an object
-	 * @exception AssertException  Si no se cumple la afirmación.	 
+	 * @exception AssertException  If assert is not fulfilled	 
 	 */
 	static public void assertEquals(Object expected, Object actual) {
 	    assertEquals(null, expected, actual);
@@ -121,7 +123,7 @@ public class Assert {
 	 * @param expected the expected value of an object
 	 * @param actual the actual value of an object
 	 * @param delta tolerated delta
-	 * @exception AssertException  Si no se cumple la afirmación.
+	 * @exception AssertException  If assert is not fulfilled
 	 */
 	static public void assertEquals(String message, double expected, double actual, double delta) {
 		if (!(Math.abs(expected-actual) <= delta)) // Because comparison with NaN always returns false
@@ -132,18 +134,18 @@ public class Assert {
 	 * @param message the detail message for this assertion
 	 * @param expected the expected value of an object
 	 * @param actual the actual value of an object
-	 * @exception AssertException  Si no se cumple la afirmación.	 
+	 * @exception AssertException  If assert is not fulfilled	 
 	 */
 	static public void assertEquals(String message, long expected, long actual) {
 	    assertEquals(message, new Long(expected), new Long(actual));
 	}
-	/**
+	/** 
 	 * Asserts that two objects are equal. If they are not
 	 * an AssertionFailedError is thrown.
 	 * @param message the detail message for this assertion
 	 * @param expected the expected value of an object
 	 * @param actual the actual value of an object
-	 * @exception AssertException  Si no se cumple la afirmación.	 
+	 * @exception AssertException  If assert is not fulfilled	 
 	 */
 	static public void assertEquals(String message, Object expected, Object actual) {
 		if (expected == null && actual == null)
@@ -152,10 +154,11 @@ public class Assert {
 			return;
 		failNotEquals(message, expected, actual);
 	}
+	
 	/**
 	 * Asserts that an object isn't null.
 	 *
-	 * @exception AssertException  Si no se cumple la afirmación.	 
+	 * @exception AssertException  If assert is not fulfilled	 
 	 */
 	static public void assertNotNull(Object object) {
 		assertNotNull(null, object);
@@ -163,7 +166,7 @@ public class Assert {
 	/**
 	 * Asserts that an object isn't null.
 	 *
-	 * @exception AssertException  Si no se cumple la afirmación.	 
+	 * @exception AssertException  If assert is not fulfilled	 
 	 */
 	static public void assertNotNull(String message, Object object) {
 		assertTrue(message, object != null); 
@@ -171,7 +174,7 @@ public class Assert {
 	/**
 	 * Asserts that an object is null.
 	 *
-	 * @exception AssertException  Si no se cumple la afirmación.	 
+	 * @exception AssertException  If assert is not fulfilled	 
 	 */
 	static public void assertNull(Object object) {
 		assertNull(null, object);
@@ -179,7 +182,7 @@ public class Assert {
 	/**
 	 * Asserts that an object is null.
 	 *
-	 * @exception AssertException  Si no se cumple la afirmación.
+	 * @exception AssertException  If assert is not fulfilled
 	 */
 	static public void assertNull(String message, Object object) {
 		assertTrue(message, object == null); 
@@ -189,7 +192,7 @@ public class Assert {
 	 *
 	 * @param expected the expected value of an object
 	 * @param actual the actual value of an object
-	 * @exception AssertException  Si no se cumple la afirmación.	 
+	 * @exception AssertException  If assert is not fulfilled	 
 	 */
 	static public void assertSame(Object expected, Object actual) {
 	    assertSame(null, expected, actual);
@@ -200,45 +203,49 @@ public class Assert {
 	 * @param message the detail message for this assertion
 	 * @param expected the expected value of an object
 	 * @param actual the actual value of an object
-	 * @exception AssertException  Si no se cumple la afirmación.	 
+	 * @exception AssertException  If assert is not fulfilled	 
 	 */
 	static public void assertSame(String message, Object expected, Object actual) {
 		if (expected == actual)
 			return;
 		failNotSame(message, expected, actual);
 	}
-/**
- * Lanza una AssertException e imprime la traza. <p>
- */
-public final static void fail() {
-	lanzar(new AssertException());
-}
-/**
- * Lanza una AssertException e imprime la traza. <p>
- */
-public final static void fail(String mensaje) {
-	lanzar(new AssertException(mensaje));
-}
+	
+	/**
+	 * Throws a AssertException and print the trace. <p>
+	 */
+	public final static void fail() {
+		throwException(new AssertException());
+	}
+	
+	/**
+	 * Throws a AssertException and print the trace. <p>
+	 */
+	public final static void fail(String message) {
+		throwException(new AssertException(message));
+	}
 	static private void failNotEquals(String message, Object expected, Object actual) {
 		String formatted= "";
 		if (message != null)
 			formatted= message+" ";
-		fail(formatted+"esperado:<"+expected+"> pero fue:<"+actual+">");
+		fail(formatted+ XavaResources.getString("expected_but_was", expected, actual));
 	}
 	static private void failNotSame(String message, Object expected, Object actual) {
 		String formatted= "";
 		if (message != null)
 			formatted= message+" ";
-		fail(formatted+" esperado el mismo");
+		fail(formatted+ XavaResources.getString("expected_same"));
 	}
-  // Lanza la excepción, pero imprime la traza
-  private static void lanzar(RuntimeException ex) {
-	try {
-	  throw ex;
-	}
-	catch (RuntimeException ex2) {
-	  ex.printStackTrace();
-	  throw ex2;
-	}
+	
+  // Throws exception and print stack trace
+  private static void throwException(RuntimeException ex) {
+		try {
+		  throw ex;
+		}
+		catch (RuntimeException ex2) {
+		  ex.printStackTrace();
+		  throw ex2;
+		}
   }
+  
 }

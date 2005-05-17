@@ -5,7 +5,6 @@ import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
 
-
 /**
  * 
  * @author Javier Paniza
@@ -28,91 +27,44 @@ public class MetaParameter extends MetaElement {
 		return metaConsult.getMetaModel().getMetaProperty(getPropertyName());
 	}
 		
-	
-	/**
-	 * Gets the propiedad
-	 * @return Returns a String
-	 */
 	public String getPropertyName() {
 		return propertyName;
 	}
-	/**
-	 * Sets the propiedad
-	 * @param propiedad The propiedad to set
-	 */
-	public void setPropertyName(String nombrePropiedad) {
-		this.propertyName = nombrePropiedad;
+	public void setPropertyName(String propertyName) {
+		this.propertyName = propertyName;
 	}
 
-
-	/**
-	 * Gets the consulta
-	 * @return Returns a Consulta
-	 */
 	public MetaConsult getMetaConsult() {
 		return metaConsult;
 	}
-	
-	/**
-	 * Sets the consulta
-	 * @param consulta The consulta to set
-	 */
-	public void setMetaConsult(MetaConsult consulta) {
-		this.metaConsult = consulta;
+	public void setMetaConsult(MetaConsult consult) {
+		this.metaConsult = consult;
 	}
 
-	/**
-	 * Returns the rango.
-	 * @return boolean
-	 */
 	public boolean isRange() {
 		return range;
 	}
-
-	/**
-	 * Sets the rango.
-	 * @param rango The rango to set
-	 */
-	public void setRange(boolean rango) {
-		this.range = rango;
+	public void setRange(boolean range) {
+		this.range = range;
 	}
 
-	/**
-	 * Returns the like.
-	 * @return boolean
-	 */
 	public boolean isLike() {
 		return like;
 	}
-
-	/**
-	 * Sets the like.
-	 * @param like The like to set
-	 */
 	public void setLike(boolean like) {
 		this.like = like;
 	}
 
-	/**
-	 * Returns the metaFiltro.
-	 * @return MetaFiltro
-	 */
 	public MetaFilter getMetaFilter() {
 		return metaFilter;
 	}
-
-	/**
-	 * Sets the metaFiltro.
-	 * @param metaFiltro The metaFiltro to set
-	 */
-	public void setMetaFilter(MetaFilter metaFiltro) {
-		this.metaFilter = metaFiltro;
+	public void setMetaFilter(MetaFilter metaFilter) {
+		this.metaFilter = metaFilter;
 	}
 
-
-	public void setLabel(String newEtiqueta) {		
-		super.setLabel(newEtiqueta);
-		hasLabel = !Is.emptyString(newEtiqueta);
+	public void setLabel(String newLabel) {		
+		super.setLabel(newLabel);
+		hasLabel = !Is.emptyString(newLabel);
 	}
 
 
@@ -130,14 +82,12 @@ public class MetaParameter extends MetaElement {
 	}
 	
 	/**
-	 * Si tiene etiqueta propia, y no usa la de la propiedad. 
+	 * If has own label, and it does not use the property's label.
 	 */
 	public boolean hasLabel() {
 		return hasLabel;
 	}
 	
-	
-
 }
 
 

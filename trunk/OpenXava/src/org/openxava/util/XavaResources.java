@@ -61,7 +61,7 @@ public class XavaResources {
 	}	
 	
 	/**
-	 * Locale usado para obtener los recursos en una aplicación web. <p>
+	 * Locale used to obtain resource in web application. <p>
 	 */
 	public static Locale getLocale(ServletRequest request) {
 		Object o = request.getAttribute("xava.locale");		
@@ -73,12 +73,10 @@ public class XavaResources {
 				return (Locale) o;
 			}
 			else {
-				System.err.println("¡ADVERTENCIA! Atributo xava.locale debería ser de tipo java.util.Locale. Se usa Locale por defecto");
+				System.err.println(XavaResources.getString("xava_locale_warning"));
 				return request.getLocale();
 			}
 		}		
 	}
 	
-	
-
 }

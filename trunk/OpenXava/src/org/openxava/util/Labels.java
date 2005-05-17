@@ -79,9 +79,9 @@ public class Labels {
 			return true;
 		}
 		catch (MissingResourceException ex) {
-			int idxPunto = id.indexOf(".");
-			if (idxPunto < 0) return false;
-			return exists(id.substring(idxPunto + 1));
+			int idx = id.indexOf(".");
+			if (idx < 0) return false;
+			return exists(id.substring(idx + 1));
 		}
 	}
 	
@@ -107,12 +107,12 @@ public class Labels {
 		return rb.getString(id);
 	}
 	
-	public static String removeUnderlined(String etiqueta) {				
-		int idx =  etiqueta.indexOf('_');
-		if (idx < 0) return etiqueta;
-		String ini = idx > 0?etiqueta.substring(0, idx - 1):"";
-		String fin = idx == etiqueta.length() - 1?"":etiqueta.substring(idx + 1);
-		return ini + fin;
+	public static String removeUnderlined(String label) {				
+		int idx =  label.indexOf('_');
+		if (idx < 0) return label;
+		String ini = idx > 0?label.substring(0, idx - 1):"";
+		String end = idx == label.length() - 1?"":label.substring(idx + 1);
+		return ini + end;
 	}
 		
 }

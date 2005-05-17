@@ -1,55 +1,53 @@
 package org.openxava.util;
 
 /**
- * Utilidades para trabajar con datos primitivos de Java. <p>
+ * Utilities to work with Java primitive data. <p> 
  * 
- * Datos primitivos son <tt>boolean, byte, char, short, int, 
- * long, float</tt> and <tt>double</tt>.<br>
+ * Primitive types are <code>boolean, byte, char, short, int, 
+ * long, float</code> and <code>double</code>.<br>
  * 
  * @author Javier Paniza
  */
 public class Primitives {
 	
 	/**
-	 * Clase envoltorio correspondiente a la clase de dato primitivo
-	 * enviado. <p>
-	 * 
-	 * Es decir, si se recibe <tt>int.class</tt>, se devuelve 
-	 * <tt>Integer.class</tt>. <p>
-	 * 
-	 * Si se recibe una clase de un dato no primitivo se devuelve
-	 * esa misma clase.<br>
-	 * Si se recibe nulo se devuelve nulo.<br>
+	 * Wrapper class corresponding to class of primitive sent. <p>
+	 *
+	 * That is, if it receive a <code>int.class</code> then
+	 * returns a <code>Integer.class</code>. <p>  
+	 *
+	 * If receives a class of a no primitive class then returns
+	 * the same class. <br> 
+	 * If receives null returns null.<br>
 	 */
-	public static Class toWrapperClass(Class origen) {
-		if (origen == null) return null;
-		if (!origen.isPrimitive()) return origen;
-		if (origen.equals(boolean.class)) {
+	public static Class toWrapperClass(Class origin) {
+		if (origin == null) return null;
+		if (!origin.isPrimitive()) return origin;
+		if (origin.equals(boolean.class)) {
 			return Boolean.class;
 		}
-		else if (origen.equals(byte.class)) {
+		else if (origin.equals(byte.class)) {
 			return Byte.class;
 		}
-		else if (origen.equals(char.class)) {
+		else if (origin.equals(char.class)) {
 			return Character.class;
 		}
-		else if (origen.equals(short.class)) {
+		else if (origin.equals(short.class)) {
 			return Short.class;
 		}
-		else if (origen.equals(int.class)) {
+		else if (origin.equals(int.class)) {
 			return Integer.class;
 		}
-		else if (origen.equals(long.class)) {
+		else if (origin.equals(long.class)) {
 			return Long.class;
 		}
-		else if (origen.equals(float.class)) {
+		else if (origin.equals(float.class)) {
 			return Float.class;
 		}
-		else if (origen.equals(double.class)) {
+		else if (origin.equals(double.class)) {
 			return Double.class;
 		}
-		throw new IllegalArgumentException(XavaResources.getString("primitive_type_not_recognized" + origen));
+		throw new IllegalArgumentException(XavaResources.getString("primitive_type_not_recognized" + origin));
 	}
 	
 }
-

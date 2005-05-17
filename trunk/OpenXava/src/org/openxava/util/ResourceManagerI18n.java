@@ -9,16 +9,16 @@ import java.util.*;
 
 public class ResourceManagerI18n {
 	
-	private String archivoRecursos;
+	private String resourcesFile;
 		
-	public ResourceManagerI18n(String archivoRecursos) {
-		Assert.assertNotNull("Es obligado especificar archivo de recursos", archivoRecursos);
-		this.archivoRecursos = archivoRecursos;
+	public ResourceManagerI18n(String resourcesFile) {
+		Assert.assertNotNull("Resource file is required", resourcesFile); // this message cannot be i18n
+		this.resourcesFile = resourcesFile;
 	}
 	
 	public String getString(String key) {	
 		try {			
-			return ResourceBundle.getBundle(archivoRecursos).getString(key);
+			return ResourceBundle.getBundle(resourcesFile).getString(key);
 		}
 		catch (MissingResourceException e) {
 			System.err.println(XavaResources.getString("element_i18n_warning", key));			
@@ -43,15 +43,15 @@ public class ResourceManagerI18n {
 	}	
 	
 	public String getString(String key, Object [] argv) {
-		MessageFormat formateador = new MessageFormat("");
-		formateador.setLocale(Locale.getDefault());
-		formateador.applyPattern(getString(key));
-		return formateador.format(argv);		
+		MessageFormat formatter = new MessageFormat("");
+		formatter.setLocale(Locale.getDefault());
+		formatter.applyPattern(getString(key));
+		return formatter.format(argv);		
 	}
 	
 	public String getString(Locale locale, String key) {	
 		try {			
-			return ResourceBundle.getBundle(archivoRecursos, locale).getString(key);
+			return ResourceBundle.getBundle(resourcesFile, locale).getString(key);
 		}
 		catch (MissingResourceException e) {
 			System.err.println(XavaResources.getString("element_i18n_warning", key));
@@ -73,7 +73,7 @@ public class ResourceManagerI18n {
 
 	public int getChar(String key) {
 		try {
-			String s = ResourceBundle.getBundle(archivoRecursos).getString(key);
+			String s = ResourceBundle.getBundle(resourcesFile).getString(key);
 			if (s == null) return ' ';
 			if (s.length() == 0) return ' ';
 			return s.charAt(0);			

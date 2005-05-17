@@ -3,24 +3,24 @@ package org.openxava.util;
 import java.util.*;
 
 /**
- * Utilidades para trabajar con mapas. <p>
+ * Utilities to work with maps. <p> 
  * 
  * @author Javier Paniza
  */
 public class Maps {
 
 	/**
-	 * Devuelve un clon. <p>
+	 * Create a clone. <p>
 	 *
-	 * Intenta hace un clon usando el método <tt>clon()</tt> del origen si éste
-	 * es <tt>Cloneable</tt>. En caso contrario hace el clon manual del mapa, sin
-	 * clonar los elementos (es decir, <b>no</b> hace un clon <b>PROFUNDO</b>).<br>
+	 * Tries to make a clone using the <code>clone()</code> method of
+	 * the origin if this is <code>Cloneable</tt>, otherwise do a manual clon
+	 * of the map, without clone the elements (it's to say, it does <b>not</b>
+	 * make a <b>deep</b> clone).<br>
 	 * 
-	 * @return Puede ser nulo (si la original es nulo), y será del mismo tipo que la original.
-	 * @param m Mapa original a clonar. Ha de ser <tt>Cloneable</tt> o en su defecto,
-	 *                                  tener un constructor por defecto e implementado el
-	 *                                  método <tt>putAll</tt>. 
-	 * @exception IllegalArgumentException Si argumento no cumple sus precondiciones.
+	 * @return Can be null (if the original is null), and the same type of original.
+	 * @param m  Original map to clone. Has to be <tt>Cloneable</tt> or has a
+	 * 																	default contructor and implementing <code>putAll</code> method.
+	 * @exception IllegalArgumentException If precondition is broken
 	 */
 	public static Map clone(Map m) {
 		if (m == null)
@@ -53,14 +53,15 @@ public class Maps {
 	}
 	
 	/**
-	 * Hace un clon del mapa a mano.
+	 * Makes a clone of map manually. <p>  
+	 * 
 	 * @return <tt>instanceof  origen.getClass()</tt>
-	 * @param origen No puede ser nulo. Ha de tener un constructor por defecto. 
+	 * @param origin  Cannot be null.  Must to have a default constructor 
 	 */
-	private static Map manualClone(Map origen) {
+	private static Map manualClone(Map origin) {
 		try {
-			Map result = (Map) origen.getClass().newInstance();
-			result.putAll(origen);
+			Map result = (Map) origin.getClass().newInstance();
+			result.putAll(origin);
 			return result;
 		}
 		catch (Exception ex) {
@@ -70,18 +71,18 @@ public class Maps {
 	}
 	
 	/**
-	 * Hace un clon recursivo del mapa. <p>
+	 * Does a recursive clone of map. <p>
 	 * 
-	 * Un clon recursivo significa que si algún valor es a su vez un mapa se aplica
-	 * este mismo método.
+	 * A recursive clone means that if some value is a map itself this method is
+	 * applied to it. 
 	 * 
 	 * @return <tt>instanceof  origen.getClass()</tt>
-	 * @param origen No puede ser nulo. Ha de tener un constructor por defecto. 
+	 * @param origin Cannot be null. Must to have a default constructor 
 	 */
-	public static Map recursiveClone(Map origen) {
+	public static Map recursiveClone(Map origin) {
 		try {
-			Map result = (Map) origen.getClass().newInstance();
-			Iterator it = origen.entrySet().iterator();
+			Map result = (Map) origin.getClass().newInstance();
+			Iterator it = origin.entrySet().iterator();
 			while (it.hasNext()) {
 				Map.Entry en = (Map.Entry) it.next();
 				Object value = en.getValue();
@@ -102,31 +103,30 @@ public class Maps {
 	
 	
 	/**
-	 * Se considera vacío si es nulo, sin elementos, con elementos nulos o
-	 * elementos con valor neutro (ceros, cadenas vacias).
+	 * It's empty if is null, without elements, with null elements or
+	 * elements with neutral value (zeroes, empty strings).
 	 * 
-	 * @param valores Puede ser nulo
-	 * @return Si está o no vacía.
+	 * @param values Can be null.
 	 */
-	public static boolean isEmpty(Map valores) {
-		if (valores == null) return true;
-		if (valores.size() == 0) return true;
-		Iterator it = valores.values().iterator();
+	public static boolean isEmpty(Map values) {
+		if (values == null) return true;
+		if (values.size() == 0) return true;
+		Iterator it = values.values().iterator();
 		while (it.hasNext()) {
-			Object valor = it.next();					
-			if (valor instanceof String) {
-				 if (!((String) valor).trim().equals("")) return false;
+			Object value = it.next();					
+			if (value instanceof String) {
+				 if (!((String) value).trim().equals("")) return false;
 			}
-			else if (valor instanceof Number) {
-				 if (((Number) valor).intValue() != 0) return false;
+			else if (value instanceof Number) {
+				 if (((Number) value).intValue() != 0) return false;
 			}
-			else if (valor instanceof Map) {				
-				if (!isEmpty((Map) valor)) return false;				
+			else if (value instanceof Map) {				
+				if (!isEmpty((Map) value)) return false;				
 			}
-			else if (valor instanceof Collection) {
-				 if (((Collection) valor).size() > 0) return false;			
+			else if (value instanceof Collection) {
+				 if (((Collection) value).size() > 0) return false;			
 			}
-			else if (valor != null) return false;			 			
+			else if (value != null) return false;			 			
 		}		
 		return true;
 	}

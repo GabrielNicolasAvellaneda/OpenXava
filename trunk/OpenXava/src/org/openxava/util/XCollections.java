@@ -3,59 +3,64 @@ package org.openxava.util;
 import java.util.*;
 
 /**
- * Utilidades para trabajar con colecciones, enumeraciones e iteradores. <p>
+ * Utilities to work with collections, enumerations and iterators. <p> 
  * 
  * @author Javier Paniza
  */
 public class XCollections {
 
 
-/**
- * Añade los elementos de la enumeración a la colección indicada. <p>
- *
- * @param coleccion En donde se añaden los elementos. No puede ser nulo.
- * @param aAñadir   Elementos a añadir. Si es nulo no se añade nada
- */
-public static void add(Collection coleccion, Enumeration aAñadir) {
-	Assert.arg(coleccion);	
-	if (aAñadir == null) return;
-	while (aAñadir.hasMoreElements()) {
-		coleccion.add(aAñadir.nextElement());
-	}	
-}
-/**
- * Envia a salida estandar los elementos de la colección. <p>
- * 
- * Util para depurar.<br>
- * @param c  Puede ser nulo,
- */
-public static void println(Collection c) {
-	if (c == null) return;
-	println(c.iterator());
-}
-/**
- * Envía a salida estándar los elementos por los que se itera. <p>
- * 
- * @param it Puede ser nulo.
- */
-public static void println(Iterator it) {
-	if (it == null) return;
-	while (it.hasNext()) {
-		System.out.println(" - " + it.next());
+	/**
+	 * Adds elements from the enumeration to the collection. <p>
+	 * 	 
+	 * @param collection Not null
+	 * @param toAdd  If null no elements are added.
+	 */
+	public static void add(Collection collection, Enumeration toAdd) {
+		Assert.arg(collection);	
+		if (toAdd == null) return;
+		while (toAdd.hasMoreElements()) {
+			collection.add(toAdd.nextElement());
+		}	
 	}
-}
-/**
- * Devuelve una colleción a partir de una enumeración. <p>
- *
- * @return Nunca será nulo
- * @param e Si se envía nulo se devolverá una colección vacía
- */
-public Collection toCollection(Enumeration e) {
-	Vector result = new Vector();
-	if (e == null) return result;
-	while (e.hasMoreElements()) {
-		result.add(e.nextElement());
-	}	
-	return result;
-}
+	
+	/**
+	 * Print in standard output the collection elements. <p> 
+	 * 
+	 * Util to debug.<br>
+	 * @param c  Can be null.
+	 */
+	public static void println(Collection c) {
+		if (c == null) return;
+		println(c.iterator());
+	}
+	
+	/**
+	 * Print in standard output the elements by it iterate. <p> 
+	 * 
+	 * Util to debug.<br>
+	 * @param c  Can be null.
+	 */
+	public static void println(Iterator it) {
+		if (it == null) return;
+		while (it.hasNext()) {
+			System.out.println(" - " + it.next());
+		}
+	}
+	
+	/**
+	 * Returns a collection from a enumeration. <p>
+	 * 
+	 * @return  Not null.
+	 * @param e  If null then returns a empty collection
+	 */
+	public Collection toCollection(Enumeration e) {
+		Collection result = new ArrayList();
+		if (e == null) return result;
+		while (e.hasMoreElements()) {
+			result.add(e.nextElement());
+		}	
+		return result;
+	}
+	
 }

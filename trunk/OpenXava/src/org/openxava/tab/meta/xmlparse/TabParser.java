@@ -9,8 +9,6 @@ import org.openxava.util.*;
 import org.openxava.util.xmlparse.*;
 import org.w3c.dom.*;
 
-
-
 /**
  * 
  * @author: Javier Paniza

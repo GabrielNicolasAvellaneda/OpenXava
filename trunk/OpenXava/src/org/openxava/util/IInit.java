@@ -2,40 +2,39 @@ package org.openxava.util;
 
 
 /**
- * Con posibilidad de ser iniciado. <p>
+ * With the posibility of be initiated. <p> 
  *
- * Este interfaz se penso inicialmente para usar
- * con {@link Factory}. Aunque puede ser usado
- * en otras situaciones, en donde creemos un objeto
- * de una clase desconocida y necesitemos iniciarlo.
- * Un ejemplo de posible uso:
+ * This interface is thought to be used with {@link Factory}.
+ * Although it can be used in others situations, where you
+ * create a object of unknow class y you need initiate it.<p>
+ * 
+ * A possible example of use: 
  * <pre>
- * IInit obj = (IInit) miClase.newInstance();
+ * IInit obj = (IInit) myClass.newInstance();
  * obj.init("obj");
  * </pre>
- * Los objetos que implementen este interfaz generalmente
- * tendrán un constructor por defecto, y la inicialización
- * se hará en el método {@link #init}.
+ * The object that implements this interface generally
+ * have a default constructor, and you initiate the object
+ * with {@link #init}.<br>
  *
- * @version 00.02.10
  * @author  Javier Paniza
  */
 
 public interface IInit {
 
-  // Puede ser null, en ese caso funcionamiento dependiente del objeto
   /**
-   * Inicialización del objeto. <p>
-   * La inicialización debería ponerse en este método, y
-   * no en el constructor.<br>
-   * Es posible especificar un nombre, así podemos tener
-   * diferentes configuraciones de un mismo tipo de
-   * de objeto identificadas con un nombre. Este nombre
-   * puede usarse para leer de un archivo de propiedades,
-   * con la tradicionales sentencias if u otra técnica.<br>
+   * Initiate the object. <p> 
+   * 
+   * The init process must to be in this metho, and not in
+   * constructor.<br>
+   * It possible to specefy a name, thus you can have
+   * different configurations in the same object type.
+   * This name can be used to read a properties file, with
+   * if/else or another technique.
    *
-   * @param nombre Nombre del contexto a inicializar.
-   * @exception InitException  Si hay algún problema al iniciar.
+   * @param name Identifier name used on init. Can be null.
+   * @exception InitException  Some problem on initiate.
    */
-  void init(String nombre) throws InitException;
+  void init(String name) throws InitException;
+  
 }

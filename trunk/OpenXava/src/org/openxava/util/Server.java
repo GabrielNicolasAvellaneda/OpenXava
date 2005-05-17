@@ -13,10 +13,10 @@ import org.openxava.util.impl.*;
 
 
 /**
- * Sirve para ejecutar facilmente codigo en el servidor. <p>
+ * Executes code in server. <p>
  * 
- * De momento calculadores, pero se puede ampliar para otro
- * tipo de comandos, validaciones, etc.
+ * Connects to EJB server en execute the code using
+ * a SessionBean.
  * 
  * @author Javier Paniza
  */
@@ -24,39 +24,36 @@ public class Server {
 	
 	private static Map remotes;
 
-	public static Object calculate(ICalculator calculador, String paquete) throws Exception {
+	public static Object calculate(ICalculator calculator, String packageName) throws Exception {
 		try {
-			return getRemote(paquete).calculate(calculador);
+			return getRemote(packageName).calculate(calculator);
 		}
 		catch (RemoteException ex) {
-			anularRemote(paquete);
-			return getRemote(paquete).calculate(calculador);
+			annulRemote(packageName);
+			return getRemote(packageName).calculate(calculator);
 		}		
 	}
 	
-	public static Object calculateWithoutTransaction(ICalculator calculador, String paquete) throws Exception {
+	public static Object calculateWithoutTransaction(ICalculator calculator, String packageName) throws Exception {
 		try {
-			return getRemote(paquete).calculateWithoutTransaction(calculador);
+			return getRemote(packageName).calculateWithoutTransaction(calculator);
 		}
 		catch (RemoteException ex) {
-			anularRemote(paquete);
-			return getRemote(paquete).calculateWithoutTransaction(calculador);
+			annulRemote(packageName);
+			return getRemote(packageName).calculateWithoutTransaction(calculator);
 		}		
 	}
 	
-	public static IRemoteAction execute(IRemoteAction accion, String paquete) throws Exception {
+	public static IRemoteAction execute(IRemoteAction action, String packageName) throws Exception {
 		try {
-			return getRemote(paquete).execute(accion);
+			return getRemote(packageName).execute(action);
 		}
 		catch (RemoteException ex) {
-			anularRemote(paquete);
-			return getRemote(paquete).execute(accion);
-		}
-		
+			annulRemote(packageName);
+			return getRemote(packageName).execute(action);
+		}		
 	}
-	
-	
-	
+			
 	private static ServerRemote getRemote(String packageName) throws RemoteException {
 		try {						
 			packageName = Strings.change(packageName, ".", "/");
@@ -90,9 +87,9 @@ public class Server {
 		return remotes;
 	}
 	
-	private static void anularRemote(String paquete) {
-		paquete = Strings.change(paquete, ".", "/");
-		getRemotes().remove(paquete);			
+	private static void annulRemote(String packageName) {
+		packageName = Strings.change(packageName, ".", "/");
+		getRemotes().remove(packageName);			
 	}	
 		
 }

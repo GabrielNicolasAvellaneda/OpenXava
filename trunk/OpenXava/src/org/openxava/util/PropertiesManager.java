@@ -5,10 +5,10 @@ import java.lang.reflect.*;
 import java.util.*;
 
 /**
- * Maneja mediante reflexión las propiedades de un objeto. <p>
+ * Manages with reflection the properties of a object. <p> 
  *
- * Excluye automáticamente la propiedad <tt>class</tt> de <tt>Object</tt> y
- * las propiedades indexadas que no tengan acceso no indexado.<br>
+ * Excludes automatically the property <code>class</code> of <code>Object</code>
+ * and the indexed properties with no indexed access.<br>
  *
  * @author  Javier Paniza
  */
@@ -16,61 +16,55 @@ import java.util.*;
 public class PropertiesManager implements java.io.Serializable {
 
 	private transient Map propertyDescriptors;
-	private Object objeto;
-	private Class clase;
+	private Object object;
+	private Class theClass;
 
-	/**
-	 * Constructor por defecto.
-	 */
 	public PropertiesManager() {
 	}
 
 	/**
-	 * Constructor a partir de la clase del objeto a manejar.
+	 * Constructor from a the class of the object to manage. <o> 
 	 *
-	 * Este valor inicial puede cambiar a lo largo de la vida
-	 * de <tt>this</tt>.<br>
+	 * This initial value can change in the life of <code>this</code>.
 	 */
-	public PropertiesManager(Class clase) {
-		this.clase = clase;
+	public PropertiesManager(Class theClass) {
+		this.theClass = theClass;
 	}
+	
 
 	/**
-	 * Constructor a partir del objeto a manejar. <p>
+	 * Constructor from the object to manage. <p> 
 	 *
-	 * @param objeto  Objeto a manejar
+	 * @param object  Object to manage
 	 */
-	public PropertiesManager(Object objeto) {
-		this.objeto = objeto;
+	public PropertiesManager(Object object) {
+		this.object = object;
 	}
+	
 	/**
-	 * Permite obtener el valor de la propiedad indicada. <p>
+	 * Gets the value of the indicated property. <p>
 	 *
-	 * <p>Precondición</b>
+	 * <p>Precondition</b>
 	 * <ul>
-	 * <li> <tt>this.objeto != null</tt>
-	 * <li> <tt>this.tieneGetter(nombrePropiedad)</tt>
+	 * <li> <tt>this.object != null</tt>
+	 * <li> <tt>this.hasGetter(propertyName)</tt>
 	 * </ul>
 	 *
-	 * @param nombrePropiedad  Nombre de la propiedad de la que se quiere obtener el valro
-	 * @return Valor de la propiedad
-	 * @exception InvocationTargetException  Excepción originada por el método de acceso original.
-	 * @exception PropertiesManagerException  Algún problema inesperado.
+	 * @param propertyName  Property name to obtain its value
+	 * @return Value of the property
+	 * @exception InvocationTargetException  Excepción originated by the original access method
+	 * @exception PropertiesManagerException  Some unexpected problem
 	 */
-	public Object executeGet(String nombrePropiedad)
+	public Object executeGet(String propertyName)
 		throws InvocationTargetException, PropertiesManagerException {
 		try {
-			PropertyDescriptor pd = getPropertyDescriptor(nombrePropiedad);
+			PropertyDescriptor pd = getPropertyDescriptor(propertyName);
 			Method met = pd.getReadMethod();
 			if (met == null) {
 				throw new PropertiesManagerException(
-					"La propiedad "
-						+ nombrePropiedad
-						+ " en "
-						+ getClase()
-						+ " es de solo escritura");
+					XavaResources.getString("write_only_property", propertyName, getTheClass()));
 			}
-			return met.invoke(objeto, null);
+			return met.invoke(object, null);
 		}
 		catch (PropertiesManagerException ex) {
 			throw ex;
@@ -80,95 +74,87 @@ public class PropertiesManager implements java.io.Serializable {
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			System.out.println(
-				"ADVERTENCIA: Imposible obtener el valor de la propiedad "
-					+ nombrePropiedad);
 			throw new PropertiesManagerException(
-				"Imposible obtener el valor de la propiedad "
-					+ nombrePropiedad);
+					XavaResources.getString("get_property_error", propertyName));
 		}
 	}
+	
 	/**
-	 * Permite obtener los valores de un conjunto de propiedades de una vez. <p>
+	 * Gets a group of property values in a map. <p> 
 	 *
-	 * <p>Precondición</b>
+	 * <p>Precondition</b>
 	 * <ul>
-	 * <li> <tt>this.objeto != null</tt>
+	 * <li> <tt>this.object != null</tt>
 	 * </ul>
 	 *
-	 * @param propiedadesAReplica  Nombres de las propiedades a replicar, separadas
-	 *                             por dos puntos (:). Las propiedades han de
-	 *                             existir en el objeto receptor. Si se envía nulo
-	 *                             se devuelve un mapa vacío.
-	 * @return Mapa con <tt>String nombrePropiedad:Object valor</tt>. Nunca será nulo.
-	 * @exception InvocationTargetException  Excepción originada por el método de acceso original.
-	 * @exception PropertiesManagerException  Algún problema inesperado.
+	 * @param properties  Names of properties to get, separated by colon (:).
+	 * 		The properties must to exist in the object. If properties is null
+	 * 		a empty map is returned.
+	 * @return  Map with <tt>String propertyName:Object value</tt>. Not null.
+	 * @exception InvocationTargetException  Exception originated by original access method
+	 * @exception PropertiesManagerException  Some unexpected problem
 	 */
-	public Map executeGets(String propiedadesAReplicar)
+	public Map executeGets(String properties)
 		throws InvocationTargetException, PropertiesManagerException {
 		Map rs = new HashMap();
-		if (propiedadesAReplicar == null)
+		if (properties == null)
 			return rs;
-		Iterator ipropiedades =
-			stringToArrayString(propiedadesAReplicar).iterator();
-		while (ipropiedades.hasNext()) {
-			String nombre = (String) ipropiedades.next();
-			Object valor = executeGet(nombre);
-			rs.put(nombre, valor);
+		Iterator iproperties =
+			stringToArrayString(properties).iterator();
+		while (iproperties.hasNext()) {
+			String name = (String) iproperties.next();
+			Object value = executeGet(name);
+			rs.put(name, value);
 		}
 		return rs;
 	}
+	
 	/**
-	 * Actualiza la propiedad indicada. <p>
+	 * Update property. <p>
 	 *
-	 * <p>Precondición</b>
+	 * <p>Precondition</b>
 	 * <ul>
-	 * <li> <tt>this.objeto != null</tt>
+	 * <li> <tt>this.object != null</tt>
 	 * </ul>   
 	 *
-	 * @param nombrePropiedad Nombre de la propiedad a actualizar.
-	 * @param valor  Nuevo valor para la propiedad. Tiene que ser de un tipo permitido.
-	 * @exception InvocationTargetException  Excepción originada por el método de acceso original.
-	 * @exception PropertiesManagerException  Algún problema inesperado.
+	 * @param propertyName Property name to update
+	 * @param value  New value for property. Has to be of compatible type
+	 * @exception InvocationTargetException  Excepction originated from original access method
+	 * @exception PropertiesManagerException  Any unexpected problem
 	 */
-	public void executeSet(String nombrePropiedad, Object valor)
+	public void executeSet(String propertyName, Object value)
 		throws InvocationTargetException, PropertiesManagerException {
 		Method met = null;
 		PropertyDescriptor pd = null; 	
 		try {
-			pd = getPropertyDescriptor(nombrePropiedad);
+			pd = getPropertyDescriptor(propertyName);
 			met = pd.getWriteMethod();
 			if (met == null) {
 				throw new PropertiesManagerException(
-					"La propiedad "
-						+ nombrePropiedad
-						+ " en "
-						+ getClase()
-						+ " es de solo lectura");
+						XavaResources.getString("read_only_property", propertyName, getTheClass()));
 			}
 
-			if (valor == null && pd.getPropertyType().isPrimitive()) {
-				valor = nuloToValorDefecto(pd.getPropertyType());
+			if (value == null && pd.getPropertyType().isPrimitive()) {
+				value = nullToDefaultValue(pd.getPropertyType());
 			}
-			Object[] arg = { valor };
+			Object[] arg = { value };
 
-			met.invoke(objeto, arg);
+			met.invoke(object, arg);
 		}
 		catch (PropertiesManagerException ex) {
 			throw ex;
 		}
 		catch (IllegalArgumentException ex) {			
-			Object numero = intentarConvertirEnNumero(pd.getPropertyType(), valor);  			
-			if (numero != null) {
-				Object [] arg = { numero };
+			Object number = tryConvertInNumber(pd.getPropertyType(), value);  			
+			if (number != null) {
+				Object [] arg = { number };
 				try {
-					met.invoke(objeto, arg);
+					met.invoke(object, arg);
 				}
 				catch (Exception ex2) {
 					ex.printStackTrace();
 					throw new PropertiesManagerException(
-						"Imposible actualizar el valor de la propiedad "
-							+ nombrePropiedad);
+							XavaResources.getString("set_property_error", propertyName));
 				}				
 			}
 			else {
@@ -181,50 +167,44 @@ public class PropertiesManager implements java.io.Serializable {
 		catch (Exception ex) {
 			ex.printStackTrace();
 			throw new PropertiesManagerException(
-				"Imposible actualizar el valor de la propiedad "
-					+ nombrePropiedad);
+					XavaResources.getString("set_property_error", propertyName));
 		}
 	}
 
 	/**
-	 * Actualiza la propiedad indicada conviertiendolo
-	 * en el tipo adecuado desde una cadena. <p>
+	 * Update property from a string, making needed conversions. <p>
 	 *
-	 * <p>Precondición</b>
+	 * <p>Precondition</b>
 	 * <ul>
-	 * <li> <tt>this.objeto != null</tt>
+	 * <li> <tt>this.object != null</tt>
 	 * </ul>   
 	 *
-	 * @param nombrePropiedad Nombre de la propiedad a actualizar.
-	 * @param valor  Nuevo valor para la propiedad. Tiene que ser de un tipo permitido, o bien una
-	 *                        cadena cuyo contenido pueda convertirse al tipo permitido.
-	 * @exception InvocationTargetException  Excepción originada por el método de acceso original.
-	 * @exception PropertiesManagerException  Algún problema inesperado.
+	 * @param propertyName  Name of property to update
+	 * @param value  New value for property. Must to be a compatible type or a string
+	 * 		parseable to a compatible type.
+	 * @exception InvocationTargetException  Exception from original access method
+	 * @exception PropertiesManagerException  Any unexpected problem
 	 */
-	public void executeSetFromString(String nombrePropiedad, Object valor)
+	public void executeSetFromString(String propertyName, Object value)
 		throws InvocationTargetException, PropertiesManagerException {
 		try {
-			PropertyDescriptor pd = getPropertyDescriptor(nombrePropiedad);
+			PropertyDescriptor pd = getPropertyDescriptor(propertyName);
 			Method met = pd.getWriteMethod();
 			if (met == null) {
 				throw new PropertiesManagerException(
-					"La propiedad "
-						+ nombrePropiedad
-						+ " en "
-						+ getClase()
-						+ " es de solo lectura");
+						XavaResources.getString("read_only_property", propertyName, getTheClass()));
 			}
 
-			if (valor == null && pd.getPropertyType().isPrimitive()) {
-				valor = nuloToValorDefecto(pd.getPropertyType());
+			if (value == null && pd.getPropertyType().isPrimitive()) {
+				value = nullToDefaultValue(pd.getPropertyType());
 			}
-			Class tipo = pd.getPropertyType();
-			if (valor instanceof String && !tipo.equals(String.class)) {
-				valor = Strings.toObject(tipo, (String) valor);
+			Class type = pd.getPropertyType();
+			if (value instanceof String && !type.equals(String.class)) {
+				value = Strings.toObject(type, (String) value);
 			}
-			Object[] arg = { valor };
+			Object[] arg = { value };
 
-			met.invoke(objeto, arg);
+			met.invoke(object, arg);
 		}
 		catch (PropertiesManagerException ex) {
 			throw ex;
@@ -235,60 +215,54 @@ public class PropertiesManager implements java.io.Serializable {
 		catch (Exception ex) {
 			ex.printStackTrace();
 			throw new PropertiesManagerException(
-				"Imposible actualizar el valor de la propiedad "
-					+ nombrePropiedad);
+					XavaResources.getString("set_property_error", propertyName));
 		}
 	}
 
-	/**
-	 * Method nuloToValorDefecto.
-	 * @param valor
-	 * @return Object
-	 */
-	private Object nuloToValorDefecto(Class tipo) {
-		if (tipo.equals(java.lang.Integer.TYPE)) {
+	private Object nullToDefaultValue(Class type) {
+		if (type.equals(java.lang.Integer.TYPE)) {
 			return new Integer(0);
 		}
-		else if (tipo.equals(java.lang.Long.TYPE)) {
+		else if (type.equals(java.lang.Long.TYPE)) {
 			return new Long(0);
 		}
-		else if (tipo.equals(java.lang.Short.TYPE)) {
+		else if (type.equals(java.lang.Short.TYPE)) {
 			return new Short((short) 0);
 		}
-		else if (tipo.equals(java.lang.Boolean.TYPE)) {
+		else if (type.equals(java.lang.Boolean.TYPE)) {
 			return new Boolean(false);
 		}
-		else if (tipo.equals(java.lang.Double.TYPE)) {
+		else if (type.equals(java.lang.Double.TYPE)) {
 			return new Double(0);
 		}
-		else if (tipo.equals(java.lang.Float.TYPE)) {
+		else if (type.equals(java.lang.Float.TYPE)) {
 			return new Float(0);
 		}
-		else if (tipo.equals(java.lang.Byte.TYPE)) {
+		else if (type.equals(java.lang.Byte.TYPE)) {
 			return new Byte((byte) 0);
 		}
 		return null;
 	}
 
 	/**
-	 * Actualiza las propiedades indicadas de un solo golpe. <p>
+	 * Sets property values from a map. <p> 
 	 *
-	 * <p>Precondición</b>
+	 * <p>Precondition</b>
 	 * <ul>
-	 * <li> <tt>this.objeto != null</tt>
-	 * <li> <tt>this.tieneSetter(nombrePropiedad)</tt>   
+	 * <li> <tt>this.object != null</tt>
+	 * <li> <tt>this.hasSetter(propertyName)</tt>   
 	 * </ul>   
 	 *
-	 * @param propiedadesAActualizar Mapa con <tt>String nombrePropiedad:Object valor</tt>.
-	 *                               Nulo se toma como un mapa vacío.
-	 * @exception InvocationTargetException  Excepción originada por el método de acceso original.
-	 * @exception PropertiesManagerException  Algún problema inesperado.
+	 * @param properties Map with <tt>String propertyName:Object value</tt>.
+	 *                               Null is assumed as empty map
+	 * @exception InvocationTargetException  Excepcion from original access method
+	 * @exception PropertiesManagerException  Any unexpected method
 	 */
-	public void executeSets(Map propiedadesAActualizar)
+	public void executeSets(Map properties)
 		throws InvocationTargetException, PropertiesManagerException {
-		if (propiedadesAActualizar == null)
+		if (properties == null)
 			return;
-		Iterator ipro = propiedadesAActualizar.entrySet().iterator();
+		Iterator ipro = properties.entrySet().iterator();
 		while (ipro.hasNext()) {
 			Map.Entry e = (Map.Entry) ipro.next();
 			executeSet((String) e.getKey(), e.getValue());
@@ -296,25 +270,25 @@ public class PropertiesManager implements java.io.Serializable {
 	}
 
 	/**
-	 * Actualiza las propiedades indicadas de un solo golpe intentando
-	 * convertir los valores <tt>String</tt> en el tipo adecuado. <p>
+	 * Sets property values from a map, trying to convert strings to value of
+	 * valid type for properties. <p> 
 	 *
-	 * <p>Precondición</b>
+	 * <p>Precondition</b>
 	 * <ul>
-	 * <li> <tt>this.objeto != null</tt>
-	 * <li> <tt>this.tieneSetter(nombrePropiedad)</tt>   
+	 * <li> <tt>this.object != null</tt>
+	 * <li> <tt>this.hasSetter(propertyName)</tt>   
 	 * </ul>   
 	 *
-	 * @param propiedadesAActualizar Mapa con <tt>String nombrePropiedad:Object valor</tt>.
-	 *                               Nulo se toma como un mapa vacío.
-	 * @exception InvocationTargetException  Excepción originada por el método de acceso original.
-	 * @exception PropertiesManagerException  Algún problema inesperado.
+	 * @param properties Map with <tt>String propertyName:Object value</tt>.
+	 *                               Null is assumed as empty map
+	 * @exception InvocationTargetException  Excepcion from original access method
+	 * @exception PropertiesManagerException  Any unexpected method
 	 */
-	public void executeSetsFromStrings(Map propiedadesAActualizar)
+	public void executeSetsFromStrings(Map properties)
 		throws InvocationTargetException, PropertiesManagerException {
-		if (propiedadesAActualizar == null)
+		if (properties == null)
 			return;
-		Iterator ipro = propiedadesAActualizar.entrySet().iterator();
+		Iterator ipro = properties.entrySet().iterator();
 		while (ipro.hasNext()) {
 			Map.Entry e = (Map.Entry) ipro.next();
 			executeSetFromString((String) e.getKey(), e.getValue());
@@ -322,27 +296,27 @@ public class PropertiesManager implements java.io.Serializable {
 	}
 
 	/**
-	 * Si la propiedad indicada existe.
+	 * If the property exists.
 	 */
-	public boolean exists(String nombrePropiedad)
+	public boolean exists(String propertyName)
 		throws PropertiesManagerException {
-		return getPropertyDescriptors().containsKey(nombrePropiedad);
+		return getPropertyDescriptors().containsKey(propertyName);
 	}
-	/**
-	 */
-	private Class getClase() {
-		if (clase == null) {
-			if (objeto == null) {
+	
+	private Class getTheClass() {
+		if (theClass == null) {
+			if (object == null) {
 				throw new IllegalStateException(XavaResources.getString("properties_manager_object_required"));
 			}
-			clase = objeto.getClass();
+			theClass = object.getClass();
 		}
-		return clase;
+		return theClass;
 	}
+	
 	/**
-	 * Los nombres de todas las propiedades manejadas por <tt>this</tt>. <p>
+	 * Names of all properties managed by <code>this</code>. <p>
 	 * 
-	 * @return Nunca será nulo
+	 * @return Not null
 	 */
 	public String[] getPropertiesNames()
 		throws PropertiesManagerException {
@@ -355,11 +329,11 @@ public class PropertiesManager implements java.io.Serializable {
 		}
 		return result;
 	}
+	
 	/**
-	 * Los nombres de todas las propiedades manejadas por <tt>this</tt> con
-	 * método <i>set</i>. <p>
+	 * Names of all properties managed by <code>this</code> with <i>setter</i> method. <p>
 	 * 
-	 * @return Nunca será nulo
+	 * @return Not null
 	 */
 	public String[] getWritablesPropertiesNames()
 		throws PropertiesManagerException {
@@ -368,20 +342,20 @@ public class PropertiesManager implements java.io.Serializable {
 		Collection result = new ArrayList();
 		Iterator it = pd.keySet().iterator();
 		for (int i = 0; i < c; i++) {
-			String nombre = (String) it.next();
-			if (hasSetter(nombre)) {
-				result.add(nombre);
+			String name = (String) it.next();
+			if (hasSetter(name)) {
+				result.add(name);
 			}
 		}
 		String[] rs = new String[result.size()];
 		result.toArray(rs);
 		return rs;
 	}
+	
 	/**
-	 * Los nombres de todas las propiedades manejadas por <tt>this</tt> con
-	 * método <i>get</i>. <p>
+	 * Names of all properties managed by <code>this</code> with <i>getter</i> method. <p>
 	 * 
-	 * @return Nunca será nulo
+	 * @return Not null
 	 */
 	public String[] getReadablesPropertiesNames()
 		throws PropertiesManagerException {
@@ -390,39 +364,39 @@ public class PropertiesManager implements java.io.Serializable {
 		Collection result = new ArrayList();
 		Iterator it = pd.keySet().iterator();
 		for (int i = 0; i < c; i++) {
-			String nombre = (String) it.next();
-			if (hasGetter(nombre)) {
-				result.add(nombre);
+			String name = (String) it.next();
+			if (hasGetter(name)) {
+				result.add(name);
 			}
 		}
 		String[] rs = new String[result.size()];
 		result.toArray(rs);
 		return rs;
 	}
+	
 	/**
-	 * Objeto del que se manejan las propiedades.
+	 * Object of which the properties are handled.
 	 */
 	public java.lang.Object getObject() {
-		return objeto;
+		return object;
 	}
-	public PropertyDescriptor getPropertyDescriptor(String nombrePropiedad)
+	
+	public PropertyDescriptor getPropertyDescriptor(String propertyName)
 		throws PropertiesManagerException {
 		PropertyDescriptor rs =
-			(PropertyDescriptor) getPropertyDescriptors().get(nombrePropiedad);
+			(PropertyDescriptor) getPropertyDescriptors().get(propertyName);
 		if (rs == null) {
 			throw new PropertiesManagerException(
-				"Propiedad "
-					+ nombrePropiedad
-					+ " no encontrada en "
-					+ getClase().getName());
+				XavaResources.getString("property_not_found", propertyName, getTheClass().getName())); 
 		}
 		return rs;
 	}
+	
 	private Map getPropertyDescriptors() throws PropertiesManagerException {
 		if (propertyDescriptors == null) {
 			try {
 				propertyDescriptors = new HashMap();
-				BeanInfo info = Introspector.getBeanInfo(getClase());
+				BeanInfo info = Introspector.getBeanInfo(getTheClass());
 				PropertyDescriptor[] pds = info.getPropertyDescriptors();
 				for (int i = 0; i < pds.length; i++) {
 					if (!(pds[i].getName().equals("class")
@@ -438,83 +412,83 @@ public class PropertiesManager implements java.io.Serializable {
 		}
 		return propertyDescriptors;
 	}
+	
 	/**
-	 * Objeto del que se manejan las propiades.
+	 * Object of which the properties are handled.
 	 */
-	public void setObject(java.lang.Object newObjeto) {
-		if (clase == null || !clase.isInstance(newObjeto)) {
-			clase = null;
+	public void setObject(java.lang.Object newObject) {
+		if (theClass == null || !theClass.isInstance(newObject)) {
+			theClass = null;
 			propertyDescriptors = null;
 		}
-		objeto = newObjeto;
+		object = newObject;
 	}
+	
 	// of String
-	// assert(propiedadesAReplicar)
-	private Collection stringToArrayString(String propiedadesAReplicar) {
+	// assert(properties)
+	private Collection stringToArrayString(String properties) {
 		Collection rs = new Vector();
-		StringTokenizer st = new StringTokenizer(propiedadesAReplicar, ":");
+		StringTokenizer st = new StringTokenizer(properties, ":");
 		while (st.hasMoreTokens()) {
 			rs.add(st.nextToken());
 		}
 		return rs;
 	}
+	
 	/**
-	 * Si la propiedad indicada tiene <i>getter</i>. <p>
-	 * @return boolean
-	 * @param nombrePropiedad java.lang.String
+	 * If the property has <i>getter</i>. <p>
 	 */
-	public boolean hasGetter(String nombrePropiedad)
+	public boolean hasGetter(String propertyName)
 		throws PropertiesManagerException {
-		return getPropertyDescriptor(nombrePropiedad).getReadMethod() != null;
-	}
-	/**
-	 * Si la propiedad indicada tiene <i>setter</i>. <p>
-	 * @return boolean
-	 * @param nombrePropiedad java.lang.String
-	 */
-	public boolean hasSetter(String nombrePropiedad)
-		throws PropertiesManagerException {
-		return getPropertyDescriptor(nombrePropiedad).getWriteMethod() != null;
+		return getPropertyDescriptor(propertyName).getReadMethod() != null;
 	}
 	
-	private Object intentarConvertirEnNumero(Class tipo, Object o)  {
+	/**
+	 * If the property has <i>setter</i>. <p>
+	 */
+	public boolean hasSetter(String propertyName)
+		throws PropertiesManagerException {
+		return getPropertyDescriptor(propertyName).getWriteMethod() != null;
+	}
+	
+	private Object tryConvertInNumber(Class type, Object o)  {
 		if (!(o instanceof Number)) return null;
-		Number valor = (Number) o;		
-		if (tipo.equals(int.class)) {
-			return new Integer(valor.intValue());
+		Number value = (Number) o;		
+		if (type.equals(int.class)) {
+			return new Integer(value.intValue());
 		}
-		else if (tipo.equals(Integer.class)) {
-			return new Integer(valor.intValue());
+		else if (type.equals(Integer.class)) {
+			return new Integer(value.intValue());
 		}
-		else if (tipo.equals(long.class)) {
-			return new Long(valor.longValue());
+		else if (type.equals(long.class)) {
+			return new Long(value.longValue());
 		}
-		else if (tipo.equals(Long.class)) {
-			return new Long(valor.longValue());
+		else if (type.equals(Long.class)) {
+			return new Long(value.longValue());
 		}
-		else if (tipo.equals(float.class)) {
-			return new Float(valor.floatValue());
+		else if (type.equals(float.class)) {
+			return new Float(value.floatValue());
 		}
-		else if (tipo.equals(Float.class)) {
-			return new Float(valor.floatValue());
+		else if (type.equals(Float.class)) {
+			return new Float(value.floatValue());
 		}
-		else if (tipo.equals(double.class)) {
-			return new Double(valor.doubleValue());
+		else if (type.equals(double.class)) {
+			return new Double(value.doubleValue());
 		}
-		else if (tipo.equals(Double.class)) {
-			return new Double(valor.doubleValue());
+		else if (type.equals(Double.class)) {
+			return new Double(value.doubleValue());
 		}
-		else if (tipo.equals(short.class)) {
-			return new Short(valor.shortValue());
+		else if (type.equals(short.class)) {
+			return new Short(value.shortValue());
 		}
-		else if (tipo.equals(Short.class)) {
-			return new Short(valor.shortValue());
+		else if (type.equals(Short.class)) {
+			return new Short(value.shortValue());
 		}
-		else if (tipo.equals(byte.class)) {
-			return new Byte(valor.byteValue());
+		else if (type.equals(byte.class)) {
+			return new Byte(value.byteValue());
 		}
-		else if (tipo.equals(Byte.class)) {
-			return new Byte(valor.byteValue());
+		else if (type.equals(Byte.class)) {
+			return new Byte(value.byteValue());
 		}
 		return null;
 	}

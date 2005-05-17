@@ -8,12 +8,12 @@ import java.net.*;
  */
 public class Resources {
 	
-	public static String loadAsString(Class claseBase, String nombreRecurso) throws IOException {
-		URL recurso = claseBase.getClassLoader().getResource(nombreRecurso);
-		if (recurso == null) {
-			throw new IOException(XavaResources.getString("resource_not_found", nombreRecurso));
+	public static String loadAsString(Class baseClass, String resourceName) throws IOException {
+		URL resource = baseClass.getClassLoader().getResource(resourceName);
+		if (resource == null) {
+			throw new IOException(XavaResources.getString("resource_not_found", resourceName));
 		}
-		InputStream is = recurso.openStream();
+		InputStream is = resource.openStream();
 		StringBuffer sb = new StringBuffer();
 		byte [] buf = new byte[500];
 		int c = is.read(buf);

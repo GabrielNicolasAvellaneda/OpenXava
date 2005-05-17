@@ -27,9 +27,9 @@ public class MetaConsult extends MetaElement {
 	private IFilter filter;
 	private String label;
 				
-	public void addMetaParameter(MetaParameter parametro) {
-		metaParameters.add(parametro);
-		parametro.setMetaConsult(this);
+	public void addMetaParameter(MetaParameter parameter) {
+		metaParameters.add(parameter);
+		parameter.setMetaConsult(this);
 	}
 	
 	IMetaModel getMetaModel() throws XavaException {
@@ -40,176 +40,138 @@ public class MetaConsult extends MetaElement {
 	} 
 	
 	/**
-	 * @return Nunca nulo, de tipo <tt>MetaParametro</tt> y de solo lectura.
+	 * @return Not null, of type <tt>MetaParameter</tt> and read only.
 	 */
 	public Collection getMetaParameters() {
 		return Collections.unmodifiableCollection(metaParameters);
 	}
 	
-
-	
-	
-
 	/**
-	 * Gets the condicion
-	 * @return Nulo significa que se la condicion SQL se calcula por defecto,
-	 *         y cadena vacia significa que no hay condicion(se seleccionan
-	 *         todos los objetos. 
+	 * @return Null means condition SQL is calculated by default,
+	 * 					and empty string means there are no conditions (all objects are selected)
 	 */
 	public String getCondition() {		
 		return condition==null?null:condition.trim();
 	}
-	/**
-	 * Sets the condicion
-	 * @param condicion The condicion to set
-	 */
-	public void setCondition(String condicion) {
-		this.condition = condicion;
+	public void setCondition(String condition) {
+		this.condition = condition;
 		this.conditionSQL = null;
 	}
 
-
-	/**
-	 * Gets the etiqueta
-	 * @return Returns a String
-	 */
 	public String getLabel() {
 		if (has18nLabel()) return super.getLabel();
 		if (Is.emptyString(label)) {
 			try {
-				label = crearEtiquetaDefecto();
+				label = createDefaultLabel();
 			}
 			catch (XavaException ex) {
 				ex.printStackTrace();
-				System.err.println("¡ADVERTENCIA! Imposible obtener etiqueta para la consulta " + getId());
+				System.err.println(XavaResources.getString("label_i18n_warning", getId()));
 			}
 		}
 		return label;
 	}
 	
-	/**
-	 * Sets the etiqueta
-	 * @param etiqueta The etiqueta to set
-	 */
-	public void setLabel(String etiqueta) {
-		super.setLabel(etiqueta);
-		this.label = etiqueta;
+	public void setLabel(String label) {
+		super.setLabel(label);
+		this.label = label;
 	}
 	
 	/**
-	 * La condición pero usando los nombres de columna de la tabla subyacente.
-	 * Si no se ha establecido condición aquí se crea una por defecto.
+	 * Condition but using column name of underlying tables. <p>
+	 * If condition is not set, here a default one is created.
 	 */
 	public String getConditionSQL() throws XavaException {
 		if (conditionSQL == null) {
-			String condicion = getCondition();			
-			if (Is.emptyString(condicion)) {
-				condicion = crearCondicionDefecto();
+			String condition = getCondition();			
+			if (Is.emptyString(condition)) {
+				condition = createDefaultCondition();
 			}
-			if (!condicion.trim().toUpperCase().startsWith("SELECT") &&
+			if (!condition.trim().toUpperCase().startsWith("SELECT") &&
 				(metaTab.hasReferences() || metaTab.hasBaseCondition())) { 
-				if (condicion.trim().equals("")) {
-					condicion = metaTab.getSelect(); 
+				if (condition.trim().equals("")) {
+					condition = metaTab.getSelect(); 
 				}
 				else {
 					String selectTab = metaTab.getSelect();
 					String union = selectTab.toUpperCase().indexOf("WHERE")<0?" WHERE ":" AND ";
-					condicion = selectTab + union + condicion; 
+					condition = selectTab + union + condition; 
 				}
 			}
-			conditionSQL = getMetaTab().getMapping().changePropertiesByColumns(condicion);
+			conditionSQL = getMetaTab().getMapping().changePropertiesByColumns(condition);
 		}
 		return conditionSQL;
 	}
 	
 	
-	private String crearCondicionDefecto() throws XavaException {
+	private String createDefaultCondition() throws XavaException {
 		Iterator it = getMetaParameters().iterator();		
-		StringBuffer condicion = new StringBuffer();
+		StringBuffer condition = new StringBuffer();
 		while (it.hasNext()) {
-			MetaParameter parametro = (MetaParameter) it.next();			
-			condicion.append("${");
-			condicion.append(parametro.getPropertyName());
-			if (parametro.isRange()) {
-				condicion.append("} between ? and ?");
+			MetaParameter parameter = (MetaParameter) it.next();			
+			condition.append("${");
+			condition.append(parameter.getPropertyName());
+			if (parameter.isRange()) {
+				condition.append("} between ? and ?");
 			}
-			else if (parametro.isLike()) {
-				condicion.append("} like ?");						
+			else if (parameter.isLike()) {
+				condition.append("} like ?");						
 			}			
 			else {
-				condicion.append("} = ?");
+				condition.append("} = ?");
 			}
 			if (it.hasNext()) {
-				condicion.append(" AND ");
+				condition.append(" AND ");
 			}
 		}
-		return condicion.toString();
+		return condition.toString();
 	}
 	
 	
-	private String crearEtiquetaDefecto() throws XavaException {
-		Collection metaParametros = getMetaParameters();
-		Iterator it = metaParametros.iterator();		
-		int cantidad = metaParametros.size();
-		StringBuffer etiqueta = new StringBuffer(XavaResources.getString("por"));
-		etiqueta.append(' ');
+	private String createDefaultLabel() throws XavaException {
+		Collection metaParameters = getMetaParameters();
+		Iterator it = metaParameters.iterator();		
+		int count = metaParameters.size();
+		StringBuffer label = new StringBuffer(XavaResources.getString("por"));
+		label.append(' ');
 		int c=0;
 		while (it.hasNext()) {
-			MetaParameter parametro = (MetaParameter) it.next();	
-			String etiquetaPropiedad = null;		
+			MetaParameter parameter = (MetaParameter) it.next();	
+			String propertyLabel = null;		
 			c++;			
-			etiqueta.append(parametro.getMetaProperty().getLabel());
-			if (c < cantidad) {
-				if (c == cantidad -1) {
-					etiqueta.append(' ');
-					etiqueta.append(XavaResources.getString("y"));
-					etiqueta.append(' ');
+			label.append(parameter.getMetaProperty().getLabel());
+			if (c < count) {
+				if (c == count -1) {
+					label.append(' ');
+					label.append(XavaResources.getString("y"));
+					label.append(' ');
 				}
 				else {
-					etiqueta.append(", ");
+					label.append(", ");
 				}
 			}
 		}
-		return etiqueta.toString();
+		return label.toString();
 	}
 
-
-	/**
-	 * Gets the tab
-	 * @return Returns a Tab
-	 */
 	MetaTab getMetaTab() {
 		return metaTab;
 	}
-	/**
-	 * Sets the tab
-	 * @param tab The tab to set
-	 */
 	void setMetaTab(MetaTab tab) {
 		this.metaTab = tab;
 	}
 		
 
-
-	/**
-	 * Returns the metaFiltro.
-	 * @return MetaFiltro
-	 */
 	public MetaFilter getMetaFilter() {
 		return metaFilter;
 	}
-
-	/**
-	 * Sets the metaFiltro.
-	 * @param metaFiltro The metaFiltro to set
-	 */
-	public void setMetaFilter(MetaFilter metaFiltro) {
-		this.metaFilter = metaFiltro;
+	public void setMetaFilter(MetaFilter metaFilter) {
+		this.metaFilter = metaFilter;
 	}
 	
 	/**
-	 * Aplica el filtro asociado a esta consulta si lo hay,
-	 * y también el del tab contenedor. <p> 	 
+	 * Apply filter associated to this consult if it is,
+	 * and of the container tab too. <p>
 	 */
 	public Object filterParameters(Object o) throws XavaException {
 		Object result = o;		
@@ -225,10 +187,6 @@ public class MetaConsult extends MetaElement {
 		}
 		return filter;
 	}
-	/**
-	 * Method usaOrderBy.
-	 * @return boolean
-	 */
 	public boolean useOrderBy() {
 		return condition != null && condition.toUpperCase().indexOf("ORDER BY") >= 0;
 	}
@@ -243,8 +201,8 @@ public class MetaConsult extends MetaElement {
 		while (i >= 0) {			
 			f = r.toString().indexOf("}", i+2);
 			if (f < 0) break;
-			String propiedad = r.substring(i+2, f);
-			result.add(propiedad);
+			String property = r.substring(i+2, f);
+			result.add(property);
 			i = r.indexOf("${", f);
 		}
 		return result;
@@ -255,7 +213,6 @@ public class MetaConsult extends MetaElement {
 		return getMetaTab().getId() + ".consultas." + getName();
 	}
 	
-
 }
 
 
