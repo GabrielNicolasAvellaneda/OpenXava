@@ -6,30 +6,29 @@ import java.rmi.*;
 /**
  * Cualquier cosa que atrape recurso y tenga que liberarlos. <p>
  *
- * Es una aproximación para trabajar con objetos que tienen
- * que atrapar y liberar recursos (conexiones a objetos remotos,
- * bases de datos, etc). Los recursos se obtienen bajo demanda
- * (<i>lazy initialization</i>) y cuando se quieran liberar se llama
- * al método {@link #liberar}.<br>
- * Podemos usar otra aproximación con el interface {@link IIniciarParar}.<p>
+ * It is a approximation to work with object that have
+ * to trap and release resources (connections to remote object,
+ * databases, etc). The resources are obtained on demmand
+ * (<i>lazy initialization</i>) and when you wish to release
+ * you can call to {@link liberate}.<br>
+ * 
+ * RemoteException is used to allow implement by a remote object,
+ * although this is not mandatory.<br> 
  *
- * Se usan excepciones remotas por si se quiere
- * implementar por un objeto remoto, aunque esto
- * no es preceptivo.<br>
- *
- * @version 00.05.23
  * @author  Javier Paniza
  */
 
 public interface ILiberate {
 
   /**
-   * Libera todos los recursos atrapados. <br>
-   * Es importante llamar a este método cuando ya no necesitemos más el objeto,
-   * sin embargo puede ser llamado en cualquier momento de la vida del objeto,
-   * y después de llamarse el objeto sigue siendo utilizable.<br>
+   * Liberate all catched resources. <p> 
+   * 
+   * It is important to call this method when you do not need any more this object,
+   * although can be called in any momment of object life cycle. 
+   * After you call this method the object continues being usable.<br>  
    *
-   * @exception RemoteException  Si hay algún problema al liberar los recursos.
+   * @exception RemoteException  Any problem releasing resources
    */
   void liberate() throws RemoteException;
+  
 }

@@ -2,10 +2,8 @@ package org.openxava.util;
 
 import java.io.*;
 
-
-
 /**
- * Una clase que engloba una clave y una descripcion. <p>
+ * A class with a key and a description. <p>
  * 
  * @author Javier Paniza
  */
@@ -17,56 +15,33 @@ public class KeyAndDescription implements Serializable {
 	public KeyAndDescription() {
 	}
 	
-	public KeyAndDescription(Object clave, Object descripcion) {
-		this.key = clave;
-		this.description = descripcion;
+	public KeyAndDescription(Object key, Object description) {
+		this.key = key;
+		this.description = description;
 	}
 
-	/**
-	 * Returns the codigo.
-	 * @return Object
-	 */
 	public Object getKey() {
 		return key;
 	}
 
-	/**
-	 * Returns the descripcion.
-	 * @return Object
-	 */
 	public Object getDescription() {
 		return description;
 	}
 
-	/**
-	 * Sets the codigo.
-	 * @param codigo The codigo to set
-	 */
-	public void setKey(Object codigo) {
-		this.key = codigo;
+	public void setKey(Object key) {
+		this.key = key;
 	}
 
-	/**
-	 * Sets the descripcion.
-	 * @param descripcion The descripcion to set
-	 */
-	public void setDescription(Object descripcion) {
-		this.description = descripcion;
+	public void setDescription(Object description) {
+		this.description = description;
 	}
 	
-	/**
-	 * @see java.lang.Object#equals(Object)
-	 */
-	public boolean equals(Object otro) {
-		if (!(otro instanceof KeyAndDescription)) return false;
-		KeyAndDescription o = (KeyAndDescription) otro;	
+	public boolean equals(Object other) {
+		if (!(other instanceof KeyAndDescription)) return false;
+		KeyAndDescription o = (KeyAndDescription) other;	
 		return Is.equal(this.key, o.key);	
 	}
 
-	
-	/**
-	 * @see java.lang.Object#toString()
-	 */
 	public String toString() {
 		if (showCode)
 			return description==null?"":description.toString().trim() + " [" +key+"]";
@@ -74,20 +49,12 @@ public class KeyAndDescription implements Serializable {
 			return description==null?"":description.toString().trim();
 	}
 
-	/**
-	 * Returns the mostrarCodigo.
-	 * @return boolean
-	 */
 	public boolean isShowCode() {
 		return showCode;
 	}
 
-	/**
-	 * Sets the mostrarCodigo.
-	 * @param mostrarCodigo The mostrarCodigo to set
-	 */
-	public void setShowCode(boolean mostrarCodigo) {
-		this.showCode = mostrarCodigo;
+	public void setShowCode(boolean showCode) {
+		this.showCode = showCode;
 	}
 
 }

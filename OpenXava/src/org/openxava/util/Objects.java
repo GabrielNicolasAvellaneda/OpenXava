@@ -48,7 +48,7 @@ public static Object clone(Object o) throws CloneNotSupportedException {
  * @return Clon del objeto enviado. Hace un clon de todos los niveles, completo, profundo.
  * @exception ClonException  Algún problema al clonar.
  */
-public static Object deepClone(Object origen) throws ClonException {
+public static Object deepClone(Object origen) throws CloneException {
 	try {
 		if (origen == null) return null;
 		// leemos
@@ -66,7 +66,7 @@ public static Object deepClone(Object origen) throws ClonException {
 	}
 	catch (Exception ex) {
 		ex.printStackTrace();
-		throw new ClonException(XavaResources.getString("deep_clone_error", origen));
+		throw new CloneException(XavaResources.getString("deep_clone_error", origen));
 	}
 }
 

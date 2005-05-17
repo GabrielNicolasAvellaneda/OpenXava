@@ -2,8 +2,7 @@ package org.openxava.util;
 
 
 /**
- * Lanzada cuando se intenta obtener un elemento definido en
- * un archivo xml que no existe. <p>
+ * A OpenXava element does no exists. <p> 
  * 
  * @author Javier Paniza
  */
@@ -29,7 +28,6 @@ public class ElementNotFoundException extends XavaException {
 		super(s, argv0, argv1, argv2);
 	}
 	
-		
 }
 
 

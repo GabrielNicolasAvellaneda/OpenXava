@@ -44,11 +44,11 @@ public class ModuleTestBase extends TestCase {
 	private static boolean isLocaleSet = false;
 	private static String locale;
 	
-	public ModuleTestBase(String nameTest, String aplicacion, String modulo) {
+	public ModuleTestBase(String nameTest, String application, String modul) {
 		super(nameTest);
 		MetaControllers.setContext(MetaControllers.WEB);
-		this.application = aplicacion;
-		this.module = modulo;
+		this.application = application;
+		this.module = modul;
 	}
 	
 	protected void setUp() throws Exception {
@@ -97,12 +97,12 @@ public class ModuleTestBase extends TestCase {
 	}
 
 	/**
-	 * Simula la pulsación de un botón o vínculo.
-	 * 
-	 * Para algunas cosas es necesario, porque ejecutar no lanza
-	 * todos los eventos posibles. Pero no funciona bien en todos
-	 * los casos (a veces parece como si se pulsara 2 veces) así
-	 * que ejecutar sigue siendo favorito. 
+	 * Simulate the a link o button click.
+	 * <p>
+	 * For some this is necessary, because execute does not
+	 * throw all possible events. But it does not work in
+	 * all cases (sometimes it seems like if user click 2 times)
+	 * hence execute is still the favorite. 
 	 */	
 	protected void click(String action) throws Exception { 
 		Button b = getForm().getButtonWithID(action);
@@ -127,11 +127,11 @@ public class ModuleTestBase extends TestCase {
 	
 	
 	/**
-	 * Ejecuta mediante javascript la acción, es el que se suele usar.
+	 * Execute the action using javascript, is the preferred way.
 	 */
-	protected void execute(String accion) throws Exception {
-		assertAction(accion);
-		response.getScriptableObject().setLocation("javascript:executeXavaAction(document.forms[0], '" + accion + "')");
+	protected void execute(String action) throws Exception {
+		assertAction(action);
+		response.getScriptableObject().setLocation("javascript:executeXavaAction(document.forms[0], '" + action + "')");
 		response = conversation.getCurrentPage();
 		if ("text/html".equals(response.getContentType())) {
 			setForm(response.getForms()[0]);						
@@ -139,13 +139,13 @@ public class ModuleTestBase extends TestCase {
 	}
 										 	
 	protected void assertFocusOn(String name) throws Exception {
-		String propiedadFoco = getForm().getParameterValue("focus_property_id");
-		assertEquals(XavaResources.getString("focus_in_unexpected_place"), getPropertyPrefix() + name, propiedadFoco);		
+		String focusProperty = getForm().getParameterValue("focus_property_id");
+		assertEquals(XavaResources.getString("focus_in_unexpected_place"), getPropertyPrefix() + name, focusProperty);		
 	}
 	
-	protected void execute(String accion, String argumentos) throws Exception {
-		assertAction(accion);
-		response.getScriptableObject().setLocation("javascript:executeXavaAction(document.forms[0], '" + accion + "', '" + argumentos+ "')");
+	protected void execute(String action, String arguments) throws Exception {
+		assertAction(action);
+		response.getScriptableObject().setLocation("javascript:executeXavaAction(document.forms[0], '" + action + "', '" + arguments+ "')");
 		response = conversation.getCurrentPage();
 		setForm(response.getForms()[0]);								
 	}
@@ -183,17 +183,17 @@ public class ModuleTestBase extends TestCase {
 	protected String getLabel(String name) throws Exception {		
 		return response.getElementWithID(getPropertyPrefix() + name + "_LABEL_").getText().trim();
 	}
-	
-	
+		
 	/**
-	 * Por si no trabajamos con la vista principal
+	 * In case we does not work with main view.
 	 */
-	protected String getValue(String modelo, String name) throws Exception {		
-		return getForm().getParameterValue("xava." + modelo +"." + name);
+	protected String getValue(String model, String name) throws Exception {		
+		return getForm().getParameterValue("xava." + model +"." + name);
 	}
-	
-	
-	// Solo para depurar
+		
+	/**
+	 * Only for debug.
+	 */
 	protected void printHtml() throws Exception {
 		System.out.println(response.getText());
 	}
@@ -237,9 +237,10 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	/**
-	 * Código html actual. <p>
-	 * No es aconsejable usarlo mucho pues el test tendría dependencia
-	 * con html y sería más difícil de portal.	 
+	 * Current HTML code.
+	 * <p>
+	 * It is not very advisable because this will cause dependency
+	 * to HTML and it will be difficult migrate to another presentation tecnology.
 	 */
 	protected String getHtml() throws IOException {
 		return response.getText();
@@ -319,79 +320,76 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	/**
-	 * Por si no trabajamos con la vista principal.
+	 * In case we do not work with main view. <p>
 	 */
-	protected void setValue(String modelo, String name, String value) throws Exception {		
-		getForm().setParameter("xava." + modelo + "." + name, value);
+	protected void setValue(String model, String name, String value) throws Exception {		
+		getForm().setParameter("xava." + model + "." + name, value);
 	}
 	
 	protected void assertLabel(String name, String expectedLabel) throws Exception {		
 		assertEquals(XavaResources.getString("unexpected_label", name), expectedLabel, getLabel(name));		
 	}
-	
-	
+		
 	protected void assertValue(String name, String value) throws Exception {		
 		if ("false".equals(value) && !getForm().isTextParameter(getPropertyPrefix() + name)) { // possibly a checkbox
 			value = null; 
 		}
 		assertEquals(XavaResources.getString("unexpected_value", name), value, getValue(name));		
 	}
-		
-	
+			
 	protected void assertValueIgnoringCase(String name, String value) throws Exception {		
 		assertTrue(XavaResources.getString("unexpected_value", name), value.equalsIgnoreCase(getValue(name)));		
 	}
-	
-	
-	protected void assertValue(String modelo, String name, String value) throws Exception {
-		assertEquals(XavaResources.getString("unexpected_value_in_model", name, modelo), value, getValue(modelo, name));		
+		
+	protected void assertValue(String model, String name, String value) throws Exception {
+		assertEquals(XavaResources.getString("unexpected_value_in_model", name, model), value, getValue(model, name));		
 	}
 	
 	protected void assertDescriptionValue(String name, String value) throws Exception {
 		assertEquals(XavaResources.getString("unexpected_description", name), value, getDescriptionValue(name));		
 	}
 
-	protected void assertAction(String accion) {
-		assertTrue(XavaResources.getString("action_not_found_in_ui", accion), getAcciones().contains(accion));
+	protected void assertAction(String action) {
+		assertTrue(XavaResources.getString("action_not_found_in_ui", action), getActions().contains(action));
 	}
 	
-	protected void assertNoAction(String accion) {
-		assertTrue(XavaResources.getString("action_found_in_ui", accion), !getAcciones().contains(accion));
+	protected void assertNoAction(String action) {
+		assertTrue(XavaResources.getString("action_found_in_ui", action), !getActions().contains(action));
 	}
 	
-	private List getAcciones() {
+	private List getActions() {
 		String [] p = getForm().getParameterNames();
-		List acciones = new ArrayList();		
+		List actions = new ArrayList();		
 		for (int i = 0; i < p.length; i++) {			
 			if (!p[i].startsWith(ACTION_PREFIX)) continue;
-			acciones.add(quitarPrefijoAccion(p[i]));			
+			actions.add(removeActionPrefix(p[i]));			
 		}				
-		return acciones;		
+		return actions;		
 	}		
 			
 	protected void assertActions(String [] expectedActions) throws Exception {
-		List accionesEnFormulario = getAcciones();			
-		Collection faltan = new ArrayList();		
+		List actionsInForm = getActions();			
+		Collection left = new ArrayList();		
 		for (int i = 0; i < expectedActions.length; i++) {
-			String accionEsperada = expectedActions[i];				
-			if (accionesEnFormulario.contains(accionEsperada)) {
-				accionesEnFormulario.remove(accionEsperada);
+			String expectedAction = expectedActions[i];				
+			if (actionsInForm.contains(expectedAction)) {
+				actionsInForm.remove(expectedAction);
 			}
 			else {
-				faltan.add(accionEsperada);
+				left.add(expectedAction);
 			}				
 		}			
 
-		if (!faltan.isEmpty()) {
-			fail(XavaResources.getString("actions_expected", faltan));
+		if (!left.isEmpty()) {
+			fail(XavaResources.getString("actions_expected", left));
 		}
-		if (!accionesEnFormulario.isEmpty()) {
-			fail(XavaResources.getString("actions_not_expected", accionesEnFormulario));
+		if (!actionsInForm.isEmpty()) {
+			fail(XavaResources.getString("actions_not_expected", actionsInForm));
 		}
 	} 
 		
-	private String quitarPrefijoAccion(String accion) {		
-		return accion.substring(ACTION_PREFIX.length() + 1);
+	private String removeActionPrefix(String action) {		
+		return action.substring(ACTION_PREFIX.length() + 1);
 	}
 
 	private String getPropertyPrefix() throws Exception {
@@ -402,30 +400,30 @@ public class ModuleTestBase extends TestCase {
 		return propertyPrefix;
 	}
 	
-	protected String getValueInList(int fila, String name) throws Exception {
+	protected String getValueInList(int row, String name) throws Exception {
 		int columna = getMetaTab().getPropertiesNames().indexOf(name);
-		return getValueInList(fila, columna);
+		return getValueInList(row, columna);
 	}
 	
-	protected String getValueInList(int fila, int columna) throws Exception {
-		return getTableCellInList(fila, columna).getText();
+	protected String getValueInList(int row, int column) throws Exception {
+		return getTableCellInList(row, column).getText();
 	}
 	
-	private TableCell getTableCellInList(int fila, int columna) throws Exception { 
-		WebTable tabla = response.getTableWithID("list");
-		if (tabla == null) {
+	private TableCell getTableCellInList(int row, int column) throws Exception { 
+		WebTable table = response.getTableWithID("list");
+		if (table == null) {
 			fail(XavaResources.getString("list_not_displayed"));			
 		}
-		return tabla.getTableCell(fila+2, columna+2);
+		return table.getTableCell(row+2, column+2);
 	}
 	
 	
-	protected String getValueInCollection(String coleccion, int fila, String name) throws Exception {		
-		MetaCollectionView metaVistaColeccion = getMetaView().getMetaCollectionView(coleccion);
-		List propiedadesLista = metaVistaColeccion.getPropertiesListNames();
-		if (propiedadesLista.isEmpty()) propiedadesLista = getMetaModel().getPropertiesNames();
-		int columna = propiedadesLista.indexOf(name);
-		return getValueInCollection(coleccion, fila, columna);
+	protected String getValueInCollection(String collection, int row, String name) throws Exception {		
+		MetaCollectionView metaCollectionView = getMetaView().getMetaCollectionView(collection);
+		List propertiesList = metaCollectionView.getPropertiesListNames();
+		if (propertiesList.isEmpty()) propertiesList = getMetaModel().getPropertiesNames();
+		int column = propertiesList.indexOf(name);
+		return getValueInCollection(collection, row, column);
 	}
 	
 	
@@ -433,15 +431,15 @@ public class ModuleTestBase extends TestCase {
 		return getTableCellInCollection(collection, row, column).getText();
 	}
 	
-	private TableCell getTableCellInCollection(String coleccion, int fila, int columna) throws Exception {
-		WebTable tabla = response.getTableWithID(coleccion);
-		if (tabla == null) {
-			fail(XavaResources.getString("collection_not_displayed", coleccion));			
+	private TableCell getTableCellInCollection(String collection, int row, int column) throws Exception {
+		WebTable table = response.getTableWithID(collection);
+		if (table == null) {
+			fail(XavaResources.getString("collection_not_displayed", collection));			
 		}
-		int incremento = tabla.getTableCell(fila+1, 0).getLinks().length > 0?1:0;
-		String [] elementos = tabla.getTableCell(fila+1, incremento).getElementNames();
-		if (elementos != null && elementos.length > 0 && elementos[0].endsWith("__SELECTED__")) incremento++;
-		return tabla.getTableCell(fila+1, columna+incremento);		
+		int increment = table.getTableCell(row+1, 0).getLinks().length > 0?1:0;
+		String [] elements = table.getTableCell(row+1, increment).getElementNames();
+		if (elements != null && elements.length > 0 && elements[0].endsWith("__SELECTED__")) increment++;
+		return table.getTableCell(row+1, column+increment);		
 	}
 	
 	protected void assertRowStyleInList(int row, String expectedStyle) throws Exception {
@@ -459,47 +457,42 @@ public class ModuleTestBase extends TestCase {
 		fail(XavaResources.getString("row_style_not_excepted"));
 	}
 	
-	
-	
 	/**
 	 * Rows count displayed with data. <p>
 	 * 
 	 * Exclude heading and footing, and the not displayed data (maybe in cache).
 	 */
 	protected int getListRowCount() throws Exception {
-		WebTable tabla = response.getTableWithID("list");
-		if (tabla == null) {
+		WebTable table = response.getTableWithID("list");
+		if (table == null) {
 			fail(XavaResources.getString("list_not_displayed"));			
 		}		
-		return tabla.getRowCount() - 2;		
+		return table.getRowCount() - 2;		
 	}
 	
 	protected int getListColumnCount() throws Exception {
-		WebTable tabla = response.getTableWithID("list");
-		if (tabla == null) {
+		WebTable table = response.getTableWithID("list");
+		if (table == null) {
 			fail(XavaResources.getString("list_not_displayed"));			
 		}
-		return tabla.getColumnCount() - 2;		
+		return table.getColumnCount() - 2;		
 	}
 	
-	
-	
-	
 	/**
-	 * Cantidad de filas visualizadas con datos. <p>
-	 * Excluye las cabeceras y pies, y los datos no visualizados (aunque cacheados).
+	 * Row count displayed with data. <p>
+	 * Excludes heading and footing, and not displayed data (but cached). 
 	 */
 	protected int getCollectionRowCount(String collection) throws Exception {
-		WebTable tabla = response.getTableWithID(collection);
-		if (tabla == null) {
+		WebTable table = response.getTableWithID(collection);
+		if (table == null) {
 			fail(XavaResources.getString("collection_not_displayed", collection));			
 		}
-		return tabla.getRowCount() - 2;		
+		return table.getRowCount() - 2;		
 	}
 	
 	/**
-	 * Cantidad de filas visualizadas con datos. <p>
-	 * Excluye las cabeceras y pies, y los datos no visualizados (aunque cacheados).
+	 * Row count displayed with data. <p>
+	 * Excludes heading and footing, and not displayed data (but cached). 
 	 */
 	protected void assertCollectionRowCount(String collection, int cantidadEsperada) throws Exception {
 		assertEquals(XavaResources.getString("collection_row_count", collection), cantidadEsperada, getCollectionRowCount(collection));
@@ -542,15 +535,12 @@ public class ModuleTestBase extends TestCase {
 	
 	
 	protected void assertLabelInList(int column, String label) throws Exception {
-		WebTable tabla = response.getTableWithID("list");
-		if (tabla == null) {
+		WebTable table = response.getTableWithID("list");
+		if (table == null) {
 			fail(XavaResources.getString("list_not_displayed"));	
 		}
-		assertEquals(XavaResources.getString("label_not_match", new Integer(column)), label, tabla.getCellAsText(0, column+2).trim());
-	}
-	
-	
-	
+		assertEquals(XavaResources.getString("label_not_match", new Integer(column)), label, table.getCellAsText(0, column+2).trim());
+	}			
 	
 	protected void checkRow(int row) throws Exception {
 		checkRow("selected", row);
@@ -587,13 +577,13 @@ public class ModuleTestBase extends TestCase {
 	
 	private void uncheckRow(String id, int row) throws Exception {		
 		String [] sel = getForm().getParameterValues(id);
-		Collection nuevosSeleccionados = new ArrayList();
+		Collection selectedNewOnes = new ArrayList();
 		String sfila = String.valueOf(row);
 		for (int i = 0; i < sel.length; i++) {
-			if (!sfila.equals(sel[i])) nuevosSeleccionados.add(sel[i]);
+			if (!sfila.equals(sel[i])) selectedNewOnes.add(sel[i]);
 		}
-		String [] nsel = new String[nuevosSeleccionados.size()];
-		nuevosSeleccionados.toArray(nsel);
+		String [] nsel = new String[selectedNewOnes.size()];
+		selectedNewOnes.toArray(nsel);
 		getForm().setParameter(id, nsel);
 	}
 	
@@ -613,41 +603,41 @@ public class ModuleTestBase extends TestCase {
 			isel[i] = new Integer(sel[i]);
 		}
 		
-		Integer [] esperadas = new Integer[rows.length];
+		Integer [] expected = new Integer[rows.length];
 		for (int i = 0; i < rows.length; i++) {
-			esperadas[i] = new Integer(rows[i]);
+			expected[i] = new Integer(rows[i]);
 		}
 		
 		Arrays.sort(isel);
-		Arrays.sort(esperadas);
+		Arrays.sort(expected);
 		assertEquals(XavaResources.getString("selected_rows_not_match"),
-			Arrays.asList(esperadas), Arrays.asList(isel));
+			Arrays.asList(expected), Arrays.asList(isel));
 	}
 	
 	protected void assertRowUnchecked(int row) {
 		String [] sel = getForm().getParameterValues("selected");
 		Arrays.sort(sel);
-		String sfila = String.valueOf(row);		
-		assertTrue(XavaResources.getString("selected_row_unexpected", new Integer(row)), Arrays.binarySearch(sel, sfila) < 0);
+		String srow = String.valueOf(row);		
+		assertTrue(XavaResources.getString("selected_row_unexpected", new Integer(row)), Arrays.binarySearch(sel, srow) < 0);
 	}
 	
 	
-	protected void assertError(String mensaje) throws Exception {		
+	protected void assertError(String message) throws Exception {		
 		WebTable table = response.getTableWithID("errors");
 		if (table == null) {
-			fail(XavaResources.getString("error_not_found", mensaje));
+			fail(XavaResources.getString("error_not_found", message));
 			return;
 		}
 		int rc = table.getRowCount();
-		StringBuffer errores = new StringBuffer();
+		StringBuffer errors = new StringBuffer();
 		for (int i = 0; i < rc; i++) {
 			String error = table.getCellAsText(i, 0).trim();
-			errores.append(error);
-			errores.append('\n');			
-			if (error.equals(mensaje)) return;
+			errors.append(error);
+			errors.append('\n');			
+			if (error.equals(message)) return;
 		}
-		System.out.println(XavaResources.getString("errors_produced", errores));
-		fail(XavaResources.getString("error_not_found", mensaje));
+		System.out.println(XavaResources.getString("errors_produced", errors));
+		fail(XavaResources.getString("error_not_found", message));
 	}
 	
 	protected void assertErrorsCount(int expectedCount) throws Exception {		
@@ -668,7 +658,7 @@ public class ModuleTestBase extends TestCase {
 		assertEquals(XavaResources.getString("messages_count_unexpected"), expectedCount, table.getRowCount());
 	}
 			
-	protected void assertNoError(String mensaje) throws Exception {		
+	protected void assertNoError(String message) throws Exception {		
 		WebTable table = response.getTableWithID("errors");
 		if (table == null) {			
 			return;
@@ -676,7 +666,7 @@ public class ModuleTestBase extends TestCase {
 		int rc = table.getRowCount();				
 		for (int i = 0; i < rc; i++) {
 			String error = table.getCellAsText(i, 0).trim();
-			if (error.equals(mensaje)) fail(XavaResources.getString("error_found", mensaje));
+			if (error.equals(message)) fail(XavaResources.getString("error_found", message));
 		}
 	}
 	
@@ -688,14 +678,14 @@ public class ModuleTestBase extends TestCase {
 			return;
 		}
 		int rc = table.getRowCount();
-		StringBuffer mensajes = new StringBuffer();
+		StringBuffer messages = new StringBuffer();
 		for (int i = 0; i < rc; i++) {
 			String m = table.getCellAsText(i, 0).trim();
 			if (m.equals(message)) return;
-			mensajes.append(m);
-			mensajes.append('\n');												
+			messages.append(m);
+			messages.append('\n');												
 		}
-		System.out.println(XavaResources.getString("messages_produced", mensajes));
+		System.out.println(XavaResources.getString("messages_produced", messages));
 		fail(XavaResources.getString("message_not_found", message));
 	}
 	
@@ -722,46 +712,44 @@ public class ModuleTestBase extends TestCase {
 		}
 	}
 	
-	
-	
 	private MetaTab getMetaTab() throws XavaException {
 		if (metaTab == null) {
-			MetaModule metaModulo = MetaApplications.getMetaApplication(this.application).getMetaModule(this.module);
-			metaTab = MetaComponent.get(metaModulo.getModelName()).getMetaTab(metaModulo.getTabName());			
+			MetaModule metaModule = MetaApplications.getMetaApplication(this.application).getMetaModule(this.module);
+			metaTab = MetaComponent.get(metaModule.getModelName()).getMetaTab(metaModule.getTabName());			
 		}
 		return metaTab;
 	}
 	
 	private MetaView getMetaView() throws XavaException {
 		if (metaView == null) {
-			MetaModule metaModulo = MetaApplications.getMetaApplication(this.application).getMetaModule(this.module);			 			
-			metaView = getMetaModel().getMetaView(metaModulo.getViewName());			
+			MetaModule metaModule = MetaApplications.getMetaApplication(this.application).getMetaModule(this.module);			 			
+			metaView = getMetaModel().getMetaView(metaModule.getViewName());			
 		}
 		return metaView;
 	}
 	
 	private MetaModel getMetaModel() throws XavaException {
 		if (metaModel == null) {
-			MetaModule metaModulo = MetaApplications.getMetaApplication(this.application).getMetaModule(this.module);
-			metaModel = MetaComponent.get(metaModulo.getModelName()).getMetaEntity(); 									
+			MetaModule metaModule = MetaApplications.getMetaApplication(this.application).getMetaModule(this.module);
+			metaModel = MetaComponent.get(metaModule.getModelName()).getMetaEntity(); 									
 		}
 		return metaModel;
 	}	
 
 	
 	protected void assertValidValues(String name, String [][] values) throws Exception {
-		String [] descripciones = getForm().getOptions(getPropertyPrefix() + name);		
-		String [] claves = getForm().getOptionValues(getPropertyPrefix() + name);
-		assertEquals(XavaResources.getString("unexpected_valid_values", name), values.length, descripciones.length);
+		String [] descriptions = getForm().getOptions(getPropertyPrefix() + name);		
+		String [] keys = getForm().getOptionValues(getPropertyPrefix() + name);
+		assertEquals(XavaResources.getString("unexpected_valid_values", name), values.length, descriptions.length);
 		for (int i = 0; i < values.length; i++) {
-			assertEquals(XavaResources.getString("unexpected_key", name), values[i][0], claves[i]); 
-			assertEquals(XavaResources.getString("unexpected_description", name), values[i][1], descripciones[i]);
+			assertEquals(XavaResources.getString("unexpected_key", name), values[i][0], keys[i]); 
+			assertEquals(XavaResources.getString("unexpected_description", name), values[i][1], descriptions[i]);
 		}
 	}
 	
 	protected void assertValidValuesCount(String name, int count) throws Exception {
-		String [] descripciones = getForm().getOptions(getPropertyPrefix() + name);
-		assertEquals(XavaResources.getString("unexpected_valid_values", name), count, descripciones.length);
+		String [] descripcions = getForm().getOptions(getPropertyPrefix() + name);
+		assertEquals(XavaResources.getString("unexpected_valid_values", name), count, descripcions.length);
 	}
 	
 	
@@ -777,22 +765,22 @@ public class ModuleTestBase extends TestCase {
 		assertEditable(name, "false", XavaResources.getString("must_not_to_be_editable"));
 	}
 		
-	private void assertEditable(String name, String value, String  mensaje) throws Exception {
+	private void assertEditable(String name, String value, String  message) throws Exception {
 		String v = getValue(name + EDITABLE_SUFIX);		
-		assertTrue(name + " " + mensaje, value.equals(v)); 		
+		assertTrue(name + " " + message, value.equals(v)); 		
 	}
 	
-	protected void assertListTitle(String tituloEsperado) throws Exception {
-		WebTable tabla = response.getTableWithID("list-title");
-		if (tabla == null) {
+	protected void assertListTitle(String expectedTitle) throws Exception {
+		WebTable table = response.getTableWithID("list-title");
+		if (table == null) {
 			fail(XavaResources.getString("title_not_displayed"));			
 		}
-		assertEquals(XavaResources.getString("incorrect_title"), tituloEsperado, tabla.getCellAsText(0, 0));
+		assertEquals(XavaResources.getString("incorrect_title"), expectedTitle, table.getCellAsText(0, 0));
 	}
 	
 	protected void assertNoListTitle() throws Exception {
-		WebTable tabla = response.getTableWithID("list-title");
-		if (tabla != null) {
+		WebTable table = response.getTableWithID("list-title");
+		if (table != null) {
 			fail(XavaResources.getString("title_displayed"));			
 		}		
 	}
@@ -830,9 +818,9 @@ public class ModuleTestBase extends TestCase {
 		if (xavaJunitProperties == null) {
 			try {
 				xavaJunitProperties = new Properties();
-				URL recurso = ModuleTestBase.class.getClassLoader().getResource("xava-junit.properties");
-				if (recurso != null) {
-					xavaJunitProperties.load(recurso.openStream());
+				URL resource = ModuleTestBase.class.getClassLoader().getResource("xava-junit.properties");
+				if (resource != null) {
+					xavaJunitProperties.load(resource.openStream());
 				}
 			}
 			catch (IOException ex) {					

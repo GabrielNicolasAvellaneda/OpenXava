@@ -1884,8 +1884,8 @@ public class MapFacadeBean implements SessionBean {
 	}
 
 	private IPersistenceProvider createPersistenceProvider() {
-		IPersistenceProvider persistenceProvider = new HibernatePersistenceProvider(); // tmp
-		//IPersistenceProvider persistenceProvider = new EJBPersistenceProvider(); // tmp
+		//IPersistenceProvider persistenceProvider = new HibernatePersistenceProvider(); // tmp
+		IPersistenceProvider persistenceProvider = new EJBPersistenceProvider(); // tmp
 		return persistenceProvider; 
 	}
 

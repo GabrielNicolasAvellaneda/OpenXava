@@ -3,7 +3,7 @@ package org.openxava.util;
 import java.sql.*;
 
 /**
- * Provee conexiones JDBC. <p>
+ * Provides JDBC connections. <p>
  *
  * @author  Javier Paniza
  */
@@ -11,33 +11,38 @@ import java.sql.*;
 public interface IConnectionProvider {
 
   /**
-   * Devuelve una conexión JDBC por defecto. <br>
-   * @exception SQLException  Si hay problemas al obtener la conexión.
+   * Returns a JDBC connection by default. <p>
+   * 
+   * @exception SQLException  If there are problem obtaining the connetion
    */
   Connection getConnection() throws SQLException;
+  
   /**
-   * Devuelve una conexión JDBC a partir de un nombre identificativo. <br>
-   * @param dataSourceName  Nombre de la fuente de datos de donde obtener la conexión.<br>
-   * @exception SQLException  Si hay problemas al obtener la conexión.
+   * Returns a JDBC connection from a identifier. <p>
+   * 
+   * @param dataSourceName  Name of data source from what I obtain the connection
+   * @exception SQLException  If there are problem obtaining the connetion
    */
   Connection getConnection(String dataSourceName) throws SQLException;
   
 	/**
-	 * Establece la clave usada para establecer la conexión. <p>
+	 * Sets password used to create connection. <p>	 * 
 	 *
-	 * Ha de llamarse también a {@link #setUsuario}. Aunque no
-	 * es preceptivo establecer usuario/clave.<br>
+	 * Must to call to {@link #setUser} too. Although set user and password
+	 * is not mandatory.<br>
 	 */
 	void setPassword(String password);
+	
   /**
-   * Establece el nombre de la fuente de datos usada
-   * cuando se use {@link #getConnection}. <br>
+   * Sets the datasource name used when using {@link #getConnection}. <br>
    */
   void setDefaultDataSource(String dataSourceName);
+  
 	/**
-	 * Establece el usuario usado para establecer la conexión. <p>
+	 * Sets the user used to craete the connection. <p> 
 	 *
-	 * No es obligado llamar a este método.<br>
+	 * It is not mandatory to call this method.<br>
 	 */
   void setUser(String user);
+  
 }

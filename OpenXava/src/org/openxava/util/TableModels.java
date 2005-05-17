@@ -14,16 +14,16 @@ public class TableModels {
 	public static String toCSV(TableModel table) {
 		if (table == null) return "";
 		StringBuffer cvs = new StringBuffer();
-		int columnas = table.getColumnCount(); 
-		for (int i=0; i<columnas; i++) {
+		int columns = table.getColumnCount(); 
+		for (int i=0; i<columns; i++) {
 			cvs.append(table.getColumnName(i));
-			if (i < columnas - 1) cvs.append(SEPARATOR);
+			if (i < columns - 1) cvs.append(SEPARATOR);
 		}
 		cvs.append('\n');
 		for (int fila=0; fila < table.getRowCount(); fila++) {
-			for (int i=0; i<columnas; i++) {
+			for (int i=0; i<columns; i++) {
 				cvs.append(table.getValueAt(fila, i));
-				if (i < columnas - 1) cvs.append(SEPARATOR);
+				if (i < columns - 1) cvs.append(SEPARATOR);
 			}
 			cvs.append('\n');			
 		}

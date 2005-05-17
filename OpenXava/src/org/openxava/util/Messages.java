@@ -35,8 +35,8 @@ public class Messages implements java.io.Serializable {
 			return toString(Locale.getDefault());
 		}
 		
-		public boolean equals(Object otro) {
-			Message m = (Message) otro;
+		public boolean equals(Object other) {
+			Message m = (Message) other;
 			return id.equals(m.id);
 		}
 		
@@ -44,22 +44,22 @@ public class Messages implements java.io.Serializable {
 			try {
 				String m = getMessage(id, locale);
 				if (argv == null || argv.length == 0) return m;
-				return formatear(m, traducir(argv, locale), locale);
+				return format(m, translate(argv, locale), locale);
 			}
 			catch (Exception ex) {
-				System.err.println("¡ADVERTENCIA! No es posible obtener el mensaje " + id);
+				System.err.println(XavaResources.getString("label_i18n_warning", id));
 				return id;
 			}
 		}
 				
-		private Object[] traducir(Object[] argv, Locale locale) {			
+		private Object[] translate(Object[] argv, Locale locale) {			
 			Object [] result = new Object[argv.length];
 			for (int i = 0; i < argv.length; i++) {
 				Object v = argv[i];
 				if (v instanceof String) {
 					try {
 						try {
-							result[i] = getMessage((String)v, locale);
+							result[i] = getMessage((String) v, locale);
 						}
 						catch (MissingResourceException ex) {						
 							result[i] = Labels.removeUnderlined(Labels.get((String)v, locale)); 
@@ -97,96 +97,93 @@ public class Messages implements java.io.Serializable {
 			return rb.getString(id);
 		}
 		
-		private String formatear(String mensaje, Object [] argv, Locale locale) {
-			MessageFormat formateador = new MessageFormat("");
-			formateador.setLocale(locale);
-			formateador.applyPattern(mensaje);
-			return formateador.format(argv);		
+		private String format(String message, Object [] argv, Locale locale) {
+			MessageFormat formatter = new MessageFormat("");
+			formatter.setLocale(locale);
+			formatter.applyPattern(message);
+			return formatter.format(argv);		
 		}
 		
 	}
 	
-	private Collection mensajes = new ArrayList();
-	private Collection miembros;
+	private Collection messages = new ArrayList();
+	private Collection members;
 		
-	public void add(String idMensaje) {
-		mensajes.add(new Message(idMensaje));		
+	public void add(String idMessage) {
+		messages.add(new Message(idMessage));		
 	}
 	
-	public boolean contains(String idMensaje) {
-		return mensajes.contains(new Message(idMensaje));
+	public boolean contains(String idMessage) {
+		return messages.contains(new Message(idMessage));
 	}
 	
-	public void remove(String idMensaje) {
-		mensajes.remove(new Message(idMensaje));		
+	public void remove(String idMessage) {
+		messages.remove(new Message(idMessage));		
 	}
 	public void removeAll() {
-		mensajes.clear();
-		if (miembros != null) miembros.clear();
+		messages.clear();
+		if (members != null) members.clear();
 	}
 	
-	public void add(String idMensaje, Object [] ids) {		
+	public void add(String idMessage, Object [] ids) {		
 		if (ids != null) {
 			if (ids.length == 1) addMember(ids[0]);
 			else if (ids.length > 1) {
 				addMember(ids[0], ids[1]);
 			} 
 		}
-		mensajes.add(new Message(idMensaje, ids));
+		messages.add(new Message(idMessage, ids));
 	}
 	
 
-	private void addMember(Object miembro) {
-		addMember(miembro, null);
+	private void addMember(Object member) {
+		addMember(member, null);
 	}
 
-	private void addMember(Object miembro, Object modelo) {		
-		if (miembro instanceof String) {
+	private void addMember(Object member, Object model) {		
+		if (member instanceof String) {
 			Object id = null;
-			if (modelo instanceof String) id = miembro; 
-			else id = modelo + "." + miembro;
-			if (miembros == null) miembros = new ArrayList();		
-			miembros.add(id); 
+			if (model instanceof String) id = member; 
+			else id = model + "." + member;
+			if (members == null) members = new ArrayList();		
+			members.add(id); 
 		}				
 	}
 
-	public void add(String idMensaje, Object id0) {
-		add(idMensaje, new Object [] { id0 });
+	public void add(String idMessage, Object id0) {
+		add(idMessage, new Object [] { id0 });
 	}
 	
-	public void add(String idMensaje, Object id0, Object id1) {
-		add(idMensaje, new Object [] { id0, id1 });
+	public void add(String idMessage, Object id0, Object id1) {
+		add(idMessage, new Object [] { id0, id1 });
 	}
 	
-	public void add(String idMensaje, Object id0, Object id1, Object id2) {
-		add(idMensaje, new Object [] { id0, id1, id2 });
+	public void add(String idMessage, Object id0, Object id1, Object id2) {
+		add(idMessage, new Object [] { id0, id1, id2 });
 	}
 	
-	public void add(String idMensaje, Object id0, Object id1, Object id2, Object id3) {
-		add(idMensaje, new Object [] { id0, id1, id2, id3 });
+	public void add(String idMessage, Object id0, Object id1, Object id2, Object id3) {
+		add(idMessage, new Object [] { id0, id1, id2, id3 });
 	}
 	
-	public void add(String idMensaje, Object id0, Object id1, Object id2, Object id3, Object id4) {
-		add(idMensaje, new Object [] { id0, id1, id2, id3, id4 });
+	public void add(String idMessage, Object id0, Object id1, Object id2, Object id3, Object id4) {
+		add(idMessage, new Object [] { id0, id1, id2, id3, id4 });
 	}
 	
-	public void add(String idMensaje, Object id0, Object id1, Object id2, Object id3, Object id4, Object id5) {
-		add(idMensaje, new Object [] { id0, id1, id2, id3, id4, id5 });
+	public void add(String idMessage, Object id0, Object id1, Object id2, Object id3, Object id4, Object id5) {
+		add(idMessage, new Object [] { id0, id1, id2, id3, id4, id5 });
 	}
-	
-	
-	
 	
 	public boolean contains() {
-		return !mensajes.isEmpty();
+		return !messages.isEmpty();
 	}
 	
 	public boolean isEmpty() {
-		return mensajes.isEmpty();
+		return messages.isEmpty();
 	}
 	
 	public String toString() {
-		Iterator it = mensajes.iterator();
+		Iterator it = messages.iterator();
 		StringBuffer r = new StringBuffer();
 		while (it.hasNext()) {			
 			r.append(it.next());
@@ -195,11 +192,11 @@ public class Messages implements java.io.Serializable {
 		return r.toString();
 	}
 	
-	public void add(Messages mensajes) {		
-		this.mensajes.addAll(mensajes.mensajes);		
-		if (mensajes.miembros != null) {
-			if (this.miembros == null) this.miembros = new ArrayList();
-			this.miembros.addAll(mensajes.miembros);
+	public void add(Messages messages) {		
+		this.messages.addAll(messages.messages);		
+		if (messages.members != null) {
+			if (this.members == null) this.members = new ArrayList();
+			this.members.addAll(messages.members);
 		}
 	}
 	
@@ -212,7 +209,7 @@ public class Messages implements java.io.Serializable {
 	}
 	
 	public Collection getStrings(Locale locale) {
-		Iterator it = mensajes.iterator();
+		Iterator it = messages.iterator();
 		Collection r = new ArrayList();
 		while (it.hasNext()) {
 			r.add(((Message) it.next()).toString(locale));
@@ -221,9 +218,9 @@ public class Messages implements java.io.Serializable {
 	}
 	
 	public boolean memberHas(MetaMember m) {
-		if (miembros == null) return false;		
-		if (m.getMetaModel() != null && miembros.contains(m.getMetaModel().getName() + "." + m.getName())) return true;
-		return miembros.contains(m.getName());
+		if (members == null) return false;		
+		if (m.getMetaModel() != null && members.contains(m.getMetaModel().getName() + "." + m.getName())) return true;
+		return members.contains(m.getName());
 	}
 
 }

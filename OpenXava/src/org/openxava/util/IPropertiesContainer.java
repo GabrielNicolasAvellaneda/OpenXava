@@ -7,8 +7,7 @@ import org.openxava.validators.*;
 
 
 /**
- * Básicamente permite actualizar y obtener un cojunto de propiedades
- * de un solo golpe.<br>
+ * Allows update and read object properties to/from a Map. <p> 
  *
  * @author  Javier Paniza
  */
@@ -16,22 +15,23 @@ import org.openxava.validators.*;
 public interface IPropertiesContainer {
 
   /**
-   * Permite obtener los valores de un conjunto de propiedades de una vez. <p>
+   * Obtain the values of properties in a Map. <p> 
    *
-   * @param propiedadesAReplica  Nombres de las propiedades a replicar, separadas
-   *                             por dos puntos (:). Las propiedades han de
-   *                             existir en el objeto receptor.
-   * @return Mapa con <tt>String nombrePropiedad:Object valor</tt>. Nunca será nulo.
-   * @exception RemoteException  Algún problema de sistema u otro problema inesperado.
+   * @param properties  Names of properties to obtain separated by 
+   * 		a colon (:). The properties have to exists in the object.
+   * @return Map with<tt>String propertyName:Object value</tt>. Not null
+   * @exception RemoteException  Some system problem or another unexpected problem
    */
-  Map executeGets(String propiedadesAReplicar) throws RemoteException;
+  Map executeGets(String properties) throws RemoteException;
+  
   /**
-   * Actualiza las propiedades indicadas de un solo golpe. <p>
+   * Update the properties from a map. <p> 
    *
-   * @param propiedadesAActualizar Mapa con <tt>String nombrePropiedad:Object valor</tt>.
-   *                               Nulo se toma como un mapa vacío.
-   * @exception ValidationException  Algún problema de validación de los datos que se quieren asignar.
-   * @exception RemoteException  Algún problema de sistema u otro problema inesperado.
+   * @param properties Map with <tt>String propertyName:Object value</tt>. Null is like a empty map.
+   *                               
+   * @exception ValidationException  Some problem validating the data
+   * @exception RemoteException  Some system problem or another unexpected problem
    */
-  void executeSets(Map propiedadesAActualizar) throws ValidationException, RemoteException;  
+  void executeSets(Map properties) throws ValidationException, RemoteException;
+  
 }

@@ -1,10 +1,10 @@
 package org.openxava.util;
 
 /**
- * Representa una alineación de un texto u otro elemento. <p>
+ * Represents a text (or another element) align. <p>
  *
- * En numero de objeto de esta clase es finito y accesible únicamente
- * mediante las variables final o el método {@link #get}.<br>
+ * The number of objects of this class is finete and accesible
+ * only by final variables or the method {@link #get}.<br>
  * 
  * @author: Javier Paniza
  */
@@ -12,111 +12,107 @@ package org.openxava.util;
 public class Align implements java.io.Serializable {
 	private int code;
 	private String description;
-	private final static int CODIGO_DEFECTO = 0;
-	private final static int CODIGO_IZQUIERDA = 1;
-	private final static int CODIGO_CENTRO = 2;
-	private final static int CODIGO_DERECHA = 3;
+	private final static int DEFAULT_CODE = 0;
+	private final static int LEFT_CODE = 1;
+	private final static int CENTER_CODE = 2;
+	private final static int RIGHT_CODE = 3;
 	
-	public final static Align DEFAULT = new Align(CODIGO_DEFECTO, "Por defecto");
-	public final static Align LEFT = new Align(CODIGO_IZQUIERDA, "Izquierda");
-	public final static Align CENTER = new Align(CODIGO_CENTRO, "Centro");
-	public final static Align RIGHT = new Align(CODIGO_DERECHA, "Derecha");
+	public final static Align DEFAULT = new Align(DEFAULT_CODE, "By default");
+	public final static Align LEFT = new Align(LEFT_CODE, "Left");
+	public final static Align CENTER = new Align(CENTER_CODE, "Center");
+	public final static Align RIGHT = new Align(RIGHT_CODE, "Right");
 
 	private final static Align [] all = {
 		DEFAULT, LEFT, CENTER, RIGHT			
 	};
-/**
- * Comentario de constructor Alineacion.
- *
- * @param codigo Identificador único.
- * @param descripcion  No ha de ser nulo.
- */
-protected Align(int code, String description) {
-	this.code = code;
-	this.description = description;
-}
-/**
- */
-public boolean equals(Object objeto) {
-	if (!(objeto instanceof Align)) {
-		return false;
+	
+	protected Align(int code, String description) {
+		this.code = code;
+		this.description = description;
 	}
-	return code == ((Align) objeto).code;	
-}
-/**
- * Obtiene la alineación asociada al código indicado. <p>
- * 
- * @param codigo int
- * @exception IllegalStateException  Si el código indicado no corresponde a ninguna alineación existente.
- */
-public static Align get(int codigo) {
-	switch (codigo) {
-		case CODIGO_DEFECTO:
-			return DEFAULT;
-		case CODIGO_IZQUIERDA:
-			return LEFT;
-		case CODIGO_CENTRO:
-			return CENTER;
-		case CODIGO_DERECHA:
-			return RIGHT;
-		default:
-			throw new IllegalArgumentException(XavaResources.getString("align_invalid_code", new Integer(codigo)));
+
+	public boolean equals(Object object) {
+		if (!(object instanceof Align)) {
+			return false;
+		}
+		return code == ((Align) object).code;	
 	}
-}
-/**
- */
-public int getCode() {
-	return code;
-}
-/**
- * @return Nunca será nulo.
- */
-public java.lang.String getDescription() {
-	return description;
-}
-/**
- * Todas la alineaciones disponibles. <p>
- *
- * @return Nunca será nulo.
- */
-public static Align [] getAll() {
-	return all;
-}
-/**
- * Para facilitar preguntar que tipo de alineación es <tt>this</tt>.<p>
- *
- * @return <tt>true si this.equals(Alineacion.CENTRO)</tt>
- */
-public boolean isCenter() {
-	return code == CODIGO_CENTRO;
-}
-/**
- * Para facilitar preguntar que tipo de alineación es <tt>this</tt>.<p>
- *
- * @return <tt>true si this.equals(Alineacion.DEFECTO)</tt>
- */
-public boolean isDefault() {
-	return code == CODIGO_DEFECTO;
-}
-/**
- * Para facilitar preguntar que tipo de alineación es <tt>this</tt>.<p>
- *
- * @return <tt>true si this.equals(Alineacion.DERECHA)</tt>
- */
-public boolean isRight() {
-	return code == CODIGO_DERECHA;
-}
-/**
- * Para facilitar preguntar que tipo de alineación es <tt>this</tt>.<p>
- *
- * @return <tt>true si this.equals(Alineacion.IZQUIERDA)</tt>
- */
-public boolean isIzquierda() {
-	return code == CODIGO_IZQUIERDA;
-}
-/**
- */
-public String toString() {
-	return getDescription();
-}
+	
+	/**
+	 * Obtain align associated to indicated code. <p>
+	 * 
+	 * @exception IllegalStateException  If code does not match with a existing align.
+	 */
+	public static Align get(int code) {
+		switch (code) {
+			case DEFAULT_CODE:
+				return DEFAULT;
+			case LEFT_CODE:
+				return LEFT;
+			case CENTER_CODE:
+				return CENTER;
+			case RIGHT_CODE:
+				return RIGHT;
+			default:
+				throw new IllegalArgumentException(XavaResources.getString("align_invalid_code", new Integer(code)));
+		}
+	}
+	
+	public int getCode() {
+		return code;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+	
+	/**
+	 * All available aligns. <p>
+	 *
+	 * @return Not null
+	 */
+	public static Align [] getAll() {
+		return all;
+	}
+	
+	/**
+	 * Facilitates ask about what type of align is <tt>this</tt>. <p>
+	 *
+	 * @return <tt>true if this.equals(Align.CENTER)</tt>
+	 */
+	public boolean isCenter() {
+		return code == CENTER_CODE;
+	}
+
+	/**
+	 * Facilitates ask about what type of align is <tt>this</tt>. <p>
+	 *
+	 * @return <tt>true if this.equals(Align.DEFAULT)</tt>
+	 */
+	public boolean isDefault() {
+		return code == DEFAULT_CODE;
+	}
+	
+	/**
+	 * Facilitates ask about what type of align is <tt>this</tt>. <p>
+	 *
+	 * @return <tt>true if this.equals(Align.RIGHT)</tt>
+	 */
+	public boolean isRight() {
+		return code == RIGHT_CODE;
+	}
+	
+	/**
+	 * Facilitates ask about what type of align is <tt>this</tt>. <p>
+	 *
+	 * @return <tt>true if this.equals(Align.LEFT)</tt>
+	 */
+	public boolean isLeft() {
+		return code == LEFT_CODE;
+	}
+	
+	public String toString() {
+		return getDescription();
+	}
+	
 }

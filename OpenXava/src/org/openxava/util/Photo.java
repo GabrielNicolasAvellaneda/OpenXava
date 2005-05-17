@@ -1,9 +1,12 @@
 package org.openxava.util;
 
 /**
- * Envuelve una array de bytes para poder grabar fotos
- * en bases de datos que no soporten <tt>byte []</tt> pero sí
- * <tt>java.lang.Object</tt>. <p>
+ * Wraps a byte array to allow store photos in
+ * a database with no support to <code>byte []</code> o
+ * BLOBs, but yes <code>java.lang.Object</code>. <p>
+ * 
+ * Serialize object for long term persistence is discourage,
+ * hence use this class only in extreme cases.<br> 
  * 
  * @author Javier Paniza
  */
@@ -11,8 +14,8 @@ public class Photo implements java.io.Serializable {
 
 	public byte[] data;
 
-	public Photo(byte[] datos) {
-		this.data = datos;
+	public Photo(byte[] data) {
+		this.data = data;
 	}
 
 }

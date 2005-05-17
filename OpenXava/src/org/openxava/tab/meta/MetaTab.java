@@ -29,7 +29,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	private List propertiesNames = null;
 	private List metaProperties = null;
 	private List metaPropertiesCalculated = null;
-	private String properties; // separadas por comas, como en el archivo xml
+	private String properties; // separated by commas, like in xml file
 	private String select;
 	private Collection entityReferencesMappings;	
 	private Collection tableColumns;
@@ -71,28 +71,28 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		this.modelName = metaModel.getName();
 	}
 
-	public void addMetaConsult(MetaConsult consulta) {
-		metaConsults.add(consulta);
-		consulta.setMetaTab(this);
+	public void addMetaConsult(MetaConsult consult) {
+		metaConsults.add(consult);
+		consult.setMetaTab(this);
 	}
 
 	/**
-	 * @return Nunca nulo, de solo lectura y de tipo <tt>MetaConsulta</tt>.
+	 * @return Not null, read only and of type <tt>MetaConsult</tt>.
 	 */
 	public Collection getMetaConsults() {
 		return Collections.unmodifiableCollection(metaConsults);
 	}
 
-	public static MetaTab createDefault(MetaComponent componente)
+	public static MetaTab createDefault(MetaComponent component)
 			throws XavaException {
 		MetaTab tab = new MetaTab();
-		tab.setMetaComponent(componente);
+		tab.setMetaComponent(component);
 		tab.addDefaultMetaConsults();
 		return tab;
 	}
 
 	/**
-	 * @return Nunca nulo, de tipo <tt>MetaPropiedad</tt> y de solo lectura.
+	 * @return Not null, read only and of type <tt>MetaProperty</tt>.
 	 */
 	public List getMetaProperties() throws XavaException {
 		if (metaProperties == null) {
@@ -108,58 +108,57 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		return metaPropertiesHidden;
 	}
 
-	public List namesToMetaProperties(Collection nombres) throws XavaException {
-		List metaPropiedades = new ArrayList();
-		Iterator it = nombres.iterator();
+	public List namesToMetaProperties(Collection names) throws XavaException {
+		List metaProperties = new ArrayList();
+		Iterator it = names.iterator();
 		int i = -1;
 		while (it.hasNext()) {
 			i++;
-			String nombre = (String) it.next();
-			MetaProperty metaPropiedadTab = null;
+			String name = (String) it.next();
+			MetaProperty metaPropertyTab = null;
 			try {
-				MetaProperty metaPropiedad = getMetaEntidad().getMetaProperty(
-						nombre).cloneMetaProperty();
-				metaPropiedad.setQualifiedName(nombre);
-				String idEtiqueta = getId() + ".properties." + nombre;
+				MetaProperty metaProperty = getMetaEntity().getMetaProperty(
+						name).cloneMetaProperty();
+				metaProperty.setQualifiedName(name);
+				String idEtiqueta = getId() + ".properties." + name;
 				if (Labels.exists(idEtiqueta)) {
-					metaPropiedad.setLabelId(idEtiqueta);
+					metaProperty.setLabelId(idEtiqueta);
 				} else if (metaPropertiesTab != null) {
-					// De momento solo sobreescribimos desde la propiedad del
-					// tab la etiqueta.
-					metaPropiedadTab = (MetaProperty) metaPropertiesTab
-							.get(nombre);
-					if (metaPropiedadTab != null) {
-						metaPropiedad = metaPropiedad.cloneMetaProperty();
-						metaPropiedad.setLabel(metaPropiedadTab.getLabel());
+					// By now only the label overwrited from the property of tab 
+					metaPropertyTab = (MetaProperty) metaPropertiesTab
+							.get(name);
+					if (metaPropertyTab != null) {
+						metaProperty = metaProperty.cloneMetaProperty();
+						metaProperty.setLabel(metaPropertyTab.getLabel());
 					}
 				}
-				metaPropiedades.add(metaPropiedad);
+				metaProperties.add(metaProperty);
 			} catch (ElementNotFoundException ex) {
-				MetaProperty noEnEntidad = new MetaProperty();
-				noEnEntidad.setName(nombre);
-				noEnEntidad.setTypeName("java.lang.Object");
-				if (metaPropiedadTab != null) {
-					noEnEntidad.setLabel(metaPropiedadTab.getLabel());
+				MetaProperty notInEntity = new MetaProperty();
+				notInEntity.setName(name);
+				notInEntity.setTypeName("java.lang.Object");
+				if (metaPropertyTab != null) {
+					notInEntity.setLabel(metaPropertyTab.getLabel());
 				}
-				metaPropiedades.add(noEnEntidad);
+				metaProperties.add(notInEntity);
 			}
 		}
-		return metaPropiedades;
+		return metaProperties;
 	}
 
 	/**
-	 * No incluye las ocultas
+	 * Hidden ones are not included
 	 * 
-	 * @return Nunca nulo, de tipo <tt>MetaPropiedad</tt> y de solo lectura.
+	 * @return Not null, read only and of type <tt>MetaProperty</tt>.
 	 */
 	public Collection getMetaPropertiesCalculated() throws XavaException {
 		if (metaPropertiesCalculated == null) {
 			metaPropertiesCalculated = new ArrayList();
 			Iterator it = getMetaProperties().iterator();
 			while (it.hasNext()) {
-				MetaProperty metaPropiedad = (MetaProperty) it.next();
-				if (metaPropiedad.isCalculated()) {					
-					metaPropertiesCalculated.add(metaPropiedad);
+				MetaProperty metaProperty = (MetaProperty) it.next();
+				if (metaProperty.isCalculated()) {					
+					metaPropertiesCalculated.add(metaProperty);
 				}
 			}
 		}
@@ -168,16 +167,16 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 
 	/**
 	 * 
-	 * @return Nunca nulo, de tipo <tt>MetaPropiedad</tt> y de solo lectura.
+	 * @return Not null, read only and of type <tt>MetaProperty</tt>.
 	 */
 	public Collection getMetaPropertiesHiddenCalculated() throws XavaException {
 		if (metaPropertiesHiddenCalculated == null) {
 			metaPropertiesHiddenCalculated = new ArrayList();
 			Iterator it = getMetaPropertiesHidden().iterator();
 			while (it.hasNext()) {
-				MetaProperty metaPropiedad = (MetaProperty) it.next();
-				if (metaPropiedad.isCalculated()) {
-					metaPropertiesHiddenCalculated.add(metaPropiedad);
+				MetaProperty metaProperty = (MetaProperty) it.next();
+				if (metaProperty.isCalculated()) {
+					metaPropertiesHiddenCalculated.add(metaProperty);
 				}
 			}
 		}
@@ -189,97 +188,93 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	}
 
 	/**
-	 * @return Nunca nulo, de tipo <tt>String</tt> y de solo lectura.
+	 * @return Not null, read only and of type <tt>String</tt>.
 	 */
 	public Collection getTableColumns() throws XavaException {
 		if (tableColumns == null) {
-			tableColumns = getColumnasTabla(getPropertiesNames());
+			tableColumns = getTableColumns(getPropertiesNames());
 		}
 		return tableColumns;
 	}
 
 	/**
-	 * @return Nunca nulo, de tipo <tt>String</tt> y de solo lectura.
+	 * @return Not null, read only and of type <tt>String</tt>.
 	 */
 	public Collection getHiddenTableColumns() throws XavaException {
 		if (hiddenTableColumns == null) {
-			hiddenTableColumns = getColumnasTabla(getHiddenPropertiesNames());
+			hiddenTableColumns = getTableColumns(getHiddenPropertiesNames());
 			hiddenTableColumns
-					.addAll(getColumnasCampoCmpPropiedadesMultiples());
+					.addAll(getCmpFieldsColumnsInMultipleProperties());
 		}
 		return hiddenTableColumns;
 	}
 
-	private Collection getColumnasTabla(Collection nombrePropiedades)
+	private Collection getTableColumns(Collection propertyNames)
 			throws XavaException {
-		Collection columnasTabla = new ArrayList();
-		Iterator it = nombrePropiedades.iterator();
+		Collection tableColumns = new ArrayList();
+		Iterator it = propertyNames.iterator();
 		while (it.hasNext()) {
-			String nombre = (String) it.next();
+			String name = (String) it.next();
 			try {
-				columnasTabla
-						.add(getMapping().getQualifiedColumn(nombre));
-			} catch (ElementNotFoundException ex) {
-				columnasTabla.add("0"); // Sera sustituido
+				tableColumns
+						.add(getMapping().getQualifiedColumn(name));
+			} 
+			catch (ElementNotFoundException ex) {
+				tableColumns.add("0"); // It will be replaced
 			}
 		}
-		return columnasTabla;
+		return tableColumns;
 	}
 
 	/**
-	 * @return Nunca nulo, de tipo <tt>String</tt> y de solo lectura.
+	 * @return Not null, read only of type <tt>String</tt>.
 	 */
 	public List getPropertiesNames() throws XavaException {
 		if (propertiesNames == null) {
-			if (!sonTodasPropiedades()) {
-				propertiesNames = crearNombresPropiedades();
-			} else {
-				propertiesNames = crearNombresTodasPropiedades();
+			if (!areAllProperties()) {
+				propertiesNames = createPropertiesNames();
+			} 
+			else {
+				propertiesNames = createAllPropertiesNames();
 			}
 		}
 		return propertiesNames;
 	}
 
 	/**
-	 * Nombres de propiedades que es necesario que existan pero no han de
-	 * aparecer al usuarios.
+	 * Names of properties that must to exist but is not needed show they
+	 * to users.
 	 * <p>
+	 * Usually are properties used to calcualte others. <br>
+	 * The keys are excluded. <br>
 	 * 
-	 * Normalmente son propiedades usadas para calcular otras. <br>
-	 * Las claves no se tienen en cuenta. <br>
-	 * 
-	 * @return Nunca nulo, de tipo <tt>String</tt> y de solo lectura.
+	 * @return Not null, read only and of type <tt>String</tt>.
 	 */
 	public List getHiddenPropertiesNames() throws XavaException {
 		if (hiddenPropertiesNames == null) {
-			hiddenPropertiesNames = obtenerNombresPropiedadesUsadasParaCalcular();
+			hiddenPropertiesNames = obtainPropertiesNamesUsedToCalculate();
 			hiddenPropertiesNames
-					.addAll(obtenerNombresPropiedadesUsadasEnOrderBy());
+					.addAll(obtainPropertiesNamesUsedInOrderBy());
 		}
 		return hiddenPropertiesNames;
 	}
 
-	/**
-	 * Method obtenerNombresPropiedadesUsadasEnOrderBy.
-	 * 
-	 * @return Collection
-	 */
-	private Collection obtenerNombresPropiedadesUsadasEnOrderBy()
+	private Collection obtainPropertiesNamesUsedInOrderBy()
 			throws XavaException {
 		List result = new ArrayList();
-		Iterator itConsultas = getMetaConsults().iterator();
-		while (itConsultas.hasNext()) {
-			MetaConsult consulta = (MetaConsult) itConsultas.next();
-			if (consulta.useOrderBy()) {
-				Iterator itPropiedades = consulta.getOrderByPropertiesNames()
+		Iterator itConsults = getMetaConsults().iterator();
+		while (itConsults.hasNext()) {
+			MetaConsult consult = (MetaConsult) itConsults.next();
+			if (consult.useOrderBy()) {
+				Iterator itProperties = consult.getOrderByPropertiesNames()
 						.iterator();
-				while (itPropiedades.hasNext()) {
-					String propiedad = (String) itPropiedades.next();
-					if (!getPropertiesNames().contains(propiedad)
-							&& !hiddenPropertiesNames.contains(propiedad)
-							&& !result.contains(propiedad)
-							&& !getMetaModel().isKey(propiedad)) {
-						result.add(propiedad);
+				while (itProperties.hasNext()) {
+					String property = (String) itProperties.next();
+					if (!getPropertiesNames().contains(property)
+							&& !hiddenPropertiesNames.contains(property)
+							&& !result.contains(property)
+							&& !getMetaModel().isKey(property)) {
+						result.add(property);
 					}
 				}
 			}
@@ -287,22 +282,22 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		return result;
 	}
 
-	private List obtenerNombresPropiedadesUsadasParaCalcular()
+	private List obtainPropertiesNamesUsedToCalculate()
 			throws XavaException {
 		Set result = new HashSet();
-		Iterator itPropiedades = getMetaPropertiesCalculated().iterator();
-		while (itPropiedades.hasNext()) {
-			MetaProperty metaProperty = (MetaProperty) itPropiedades.next();
+		Iterator itProperties = getMetaPropertiesCalculated().iterator();
+		while (itProperties.hasNext()) {
+			MetaProperty metaProperty = (MetaProperty) itProperties.next();
 			if (!metaProperty.hasCalculator())
 				continue;
-			MetaSetsContainer metaCalculador = metaProperty
+			MetaSetsContainer metaCalculator = metaProperty
 					.getMetaCalculator();
-			if (!metaCalculador.containsMetaSets())
+			if (!metaCalculator.containsMetaSets())
 				continue;
-			Iterator itPoners = metaCalculador.getMetaSets().iterator();
-			while (itPoners.hasNext()) {
-				MetaSet poner = (MetaSet) itPoners.next();
-				String propertyNameFrom = poner.getPropertyNameFrom();
+			Iterator itSets = metaCalculator.getMetaSets().iterator();
+			while (itSets.hasNext()) {
+				MetaSet set = (MetaSet) itSets.next();
+				String propertyNameFrom = set.getPropertyNameFrom();
 				if (!Is.emptyString(propertyNameFrom)
 						&& !getPropertiesNames().contains(propertyNameFrom)) {
 					String qualifiedName = metaProperty.getQualifiedName();
@@ -320,12 +315,12 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		return new ArrayList(result);
 	}
 
-	private boolean sonTodasPropiedades() {
+	private boolean areAllProperties() {
 		return properties == null || properties.trim().equals("*");
 	}
 
-	// assert(!sonTodasPropiedades());
-	private List crearNombresPropiedades() {
+	// assert(!areAllProperties());
+	private List createPropertiesNames() {
 		StringTokenizer st = new StringTokenizer(properties, ",");
 		List result = new ArrayList();
 		while (st.hasMoreTokens()) {
@@ -334,8 +329,8 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		return result;
 	}
 
-	private List crearNombresTodasPropiedades() throws XavaException {
-		return getMetaEntidad().getPropertiesNamesWithoutHidden();
+	private List createAllPropertiesNames() throws XavaException {
+		return getMetaEntity().getPropertiesNamesWithoutHidden();
 	}
 	
 	public void setDefaultPropertiesNames(String properties) {
@@ -344,7 +339,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	}
 
 	/**
-	 * Separados por comas.
+	 * Comma separated.
 	 */
 	public void setPropertiesNames(String properties) {
 		this.properties = properties;
@@ -371,7 +366,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 
 	public String getSelect() throws XavaException {
 		if (select == null) {
-			select = crearSelect();
+			select = createSelect();
 		}
 		return select;
 	}
@@ -384,59 +379,59 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		return selectSQL;
 	}
 
-	private String crearSelect() throws XavaException {
+	private String createSelect() throws XavaException {
 		if (hasBaseCondition()) {
-			String condicionBase = getBaseCondition();
-			if (condicionBase.trim().toUpperCase().startsWith("SELECT ")) {
-				return condicionBase;
+			String baseCondition = getBaseCondition();
+			if (baseCondition.trim().toUpperCase().startsWith("SELECT ")) {
+				return baseCondition;
 			}
 		}
-		// select básico
+		// baseic select
 		StringBuffer select = new StringBuffer("select ");
-		Iterator itPropiedades = getPropertiesNames().iterator();
-		while (itPropiedades.hasNext()) {
+		Iterator itProperties = getPropertiesNames().iterator();
+		while (itProperties.hasNext()) {
 			select.append("${");
-			select.append(itPropiedades.next());
+			select.append(itProperties.next());
 			select.append('}');
-			if (itPropiedades.hasNext())
+			if (itProperties.hasNext())
 				select.append(", ");
 		}
-		Iterator itPropiedadesOcultas = getHiddenPropertiesNames().iterator();
-		while (itPropiedadesOcultas.hasNext()) {
+		Iterator itHiddenProperties = getHiddenPropertiesNames().iterator();
+		while (itHiddenProperties.hasNext()) {
 			select.append(", ");
 			select.append("${");
-			select.append(itPropiedadesOcultas.next());
+			select.append(itHiddenProperties.next());
 			select.append('}');
 		}
-		Iterator itColumnasCampoCmpPropiedadesMultiples = getColumnasCampoCmpPropiedadesMultiples()
+		Iterator itCmpFieldsColumnsInMultipleProperties = getCmpFieldsColumnsInMultipleProperties()
 				.iterator();
-		while (itColumnasCampoCmpPropiedadesMultiples.hasNext()) {
+		while (itCmpFieldsColumnsInMultipleProperties.hasNext()) {
 			select.append(", ");
-			select.append(itColumnasCampoCmpPropiedadesMultiples.next());
+			select.append(itCmpFieldsColumnsInMultipleProperties.next());
 		}
 		select.append(" from ");
 		select.append(getMapping().getTable());
-		// para las referencias		
+		// for the references		
 		if (hasReferences()) {
-			// las tablas
+			// the tables
 
-			Iterator itMapeosReferencias = getEntityReferencesMappings()
+			Iterator itReferencesMappings = getEntityReferencesMappings()
 					.iterator();
-			while (itMapeosReferencias.hasNext()) {
-				ReferenceMapping mapeoReferencia = (ReferenceMapping) itMapeosReferencias.next();				
+			while (itReferencesMappings.hasNext()) {
+				ReferenceMapping referenceMapping = (ReferenceMapping) itReferencesMappings.next();				
 				select.append(" left join ");				
-				select.append(mapeoReferencia.getReferencedTable());
-				// el where de unión
+				select.append(referenceMapping.getReferencedTable());
+				// where of join
 				select.append(" on ");
-				Iterator itDetalles = mapeoReferencia.getDetails().iterator();
-				while (itDetalles.hasNext()) {
-					ReferenceMappingDetail detalle = (ReferenceMappingDetail) itDetalles
+				Iterator itDetails = referenceMapping.getDetails().iterator();
+				while (itDetails.hasNext()) {
+					ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails
 							.next();
-					select.append(detalle.getQualifiedColumn());
+					select.append(detail.getQualifiedColumn());
 					select.append(" = ");
-					select.append(detalle
+					select.append(detail
 							.getQualifiedColumnOfReferencedTable());
-					if (itDetalles.hasNext()) {
+					if (itDetails.hasNext()) {
 						select.append(" and ");
 					}
 				}
@@ -451,26 +446,26 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		return select.toString();
 	}
 
-	private Collection getColumnasCampoCmpPropiedadesMultiples()
+	private Collection getCmpFieldsColumnsInMultipleProperties()
 			throws XavaException {
-		Collection columnasCampoCmpPropiedadesMultiples = new ArrayList();
+		Collection cmpFieldsColumnsInMultipleProperties = new ArrayList();
 		Iterator it = getMetaProperties().iterator();
-		String tabla = getMapping().getTable();
+		String table = getMapping().getTable();
 		while (it.hasNext()) {
 			MetaProperty p = (MetaProperty) it.next();
-			PropertyMapping mapeo = p.getMapping();
-			if (mapeo != null) {
-				if (mapeo.hasMultipleConverter()) {
-					Iterator itCampos = mapeo.getCmpFields().iterator();
-					while (itCampos.hasNext()) {
-						CmpField campo = (CmpField) itCampos.next();
-						columnasCampoCmpPropiedadesMultiples.add(tabla + "."
-								+ campo.getColumn());
+			PropertyMapping mapping = p.getMapping();
+			if (mapping != null) {
+				if (mapping.hasMultipleConverter()) {
+					Iterator itFields = mapping.getCmpFields().iterator();
+					while (itFields.hasNext()) {
+						CmpField field = (CmpField) itFields.next();
+						cmpFieldsColumnsInMultipleProperties.add(table + "."
+								+ field.getColumn());
 					}
 				}
 			}
 		}
-		return columnasCampoCmpPropiedadesMultiples;
+		return cmpFieldsColumnsInMultipleProperties;
 	}
 
 	public boolean hasReferences() throws XavaException {
@@ -514,137 +509,81 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		
 	public void addDefaultMetaConsults() throws XavaException {
 		if (!isExcludeByKey())
-			añadirMetaConsultaClavePrimaria();
+			addPrimaryKeyMetaConsult();
 		if (!isExcludeAll())
-			añadirMetaConsultaTodos();
+			addAllMetaConsult();
 	}
 
-	private void añadirMetaConsultaTodos() {
-		MetaConsult todos = new MetaConsult();
-		todos.setName("todos");
-		todos.setCondition("");
-		addMetaConsult(todos);
+	private void addAllMetaConsult() {
+		MetaConsult all = new MetaConsult();
+		all.setName("todos"); // in spanish because this feature is used only in spanish/swing version
+		all.setCondition("");
+		addMetaConsult(all);
 	}
 
-	private void añadirMetaConsultaClavePrimaria() throws XavaException {
-		Collection propiedades = getMetaModel().getMetaPropertiesKey();
-		if (propiedades.isEmpty())
+	private void addPrimaryKeyMetaConsult() throws XavaException {
+		Collection properties = getMetaModel().getMetaPropertiesKey();
+		if (properties.isEmpty())
 			return;
-		Iterator it = propiedades.iterator();
-		MetaConsult porClave = new MetaConsult();
-		porClave.setMetaTab(this);
+		Iterator it = properties.iterator();
+		MetaConsult byKey = new MetaConsult();
+		byKey.setMetaTab(this);
 		while (it.hasNext()) {
-			MetaProperty propiedad = (MetaProperty) it.next();
-			MetaParameter parametro = new MetaParameter();
-			parametro.setPropertyName(propiedad.getName());
-			porClave.addMetaParameter(parametro);
+			MetaProperty property = (MetaProperty) it.next();
+			MetaParameter parameter = new MetaParameter();
+			parameter.setPropertyName(property.getName());
+			byKey.addMetaParameter(parameter);
 		}
-		metaConsults.add(0, porClave);
+		metaConsults.add(0, byKey);
 	}
 
-	private MetaEntity getMetaEntidad() throws XavaException {
+	private MetaEntity getMetaEntity() throws XavaException {
 		return getMetaComponent().getMetaEntity();
 	}
 
-	/**
-	 * Gets the componente
-	 * 
-	 * @return Returns a Componente
-	 */
 	public MetaComponent getMetaComponent() {
 		return metaComponent;
 	}
 
-	/**
-	 * Sets the componente
-	 * 
-	 * @param componente
-	 *            The componente to set
-	 */
-	public void setMetaComponent(MetaComponent componente) {
-		this.metaComponent = componente;
+	public void setMetaComponent(MetaComponent component) {
+		this.metaComponent = component;
 		this.metaModel = this.metaComponent.getMetaEntity();
 		this.modelName = this.metaComponent.getName();
 	}
 
-	/**
-	 * Returns the excluirPorClave.
-	 * 
-	 * @return boolean
-	 */
 	public boolean isExcludeByKey() {
 		return excludeByKey;
 	}
 
-	/**
-	 * Returns the excluirTodos.
-	 * 
-	 * @return boolean
-	 */
 	public boolean isExcludeAll() {
 		return excludeAll;
 	}
 
-	/**
-	 * Sets the excluirPorClave.
-	 * 
-	 * @param excluirPorClave
-	 *            The excluirPorClave to set
-	 */
-	public void setExcludeByKey(boolean excluirPorClave) {
-		this.excludeByKey = excluirPorClave;
+	public void setExcludeByKey(boolean excludeByKey) {
+		this.excludeByKey = excludeByKey;
 	}
 
-	/**
-	 * Sets the excluirTodos.
-	 * 
-	 * @param excluirTodos
-	 *            The excluirTodos to set
-	 */
-	public void setExcludeAll(boolean excluirTodos) {
-		this.excludeAll = excluirTodos;
+	public void setExcludeAll(boolean excludeAll) {
+		this.excludeAll = excludeAll;
 	}
 
-	/**
-	 * Returns the nombre.
-	 * 
-	 * @return String
-	 */
 	public String getName() {
 		return name == null ? "" : name;
 	}
 
-	private boolean tieneNombre() {
+	private boolean hasName() {
 		return name != null && !name.trim().equals("");
 	}
 
-	/**
-	 * Sets the nombre.
-	 * 
-	 * @param nombre
-	 *            The nombre to set
-	 */
-	public void setName(String nombre) {
-		this.name = nombre;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	/**
-	 * Returns the metaFiltro.
-	 * 
-	 * @return MetaFiltro
-	 */
 	public MetaFilter getMetaFilter() {
 		return metaFilter;
 	}
-
-	/**
-	 * Sets the metaFiltro.
-	 * 
-	 * @param metaFiltro
-	 *            The metaFiltro to set
-	 */
-	public void setMetaFilter(MetaFilter metaFiltro) {
-		this.metaFilter = metaFiltro;
+	public void setMetaFilter(MetaFilter metaFilter) {
+		this.metaFilter = metaFilter;
 	}
 
 	public boolean hasFilter() {
@@ -652,7 +591,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	}
 
 	/**
-	 * Aplica el filtro asociado a este tab si lo hay.
+	 * Apply the filter associated to this tab if there is is.
 	 */
 	Object filterParameters(Object o) throws XavaException {
 		if (getMetaFilter() == null)
@@ -667,16 +606,11 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		return filter;
 	}
 
-	/**
-	 * Method addMetaPropiedad.
-	 * 
-	 * @param metaPropiedad
-	 */
-	public void addMetaProperty(MetaProperty metaPropiedad) {
+	public void addMetaProperty(MetaProperty metaProperty) {
 		if (metaPropertiesTab == null) {
 			metaPropertiesTab = new HashMap();
 		}
-		metaPropertiesTab.put(metaPropiedad.getName(), metaPropiedad);
+		metaPropertiesTab.put(metaProperty.getName(), metaProperty);
 	}
 
 	/**
@@ -790,10 +724,9 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	}
 
 	/**
-	 * Aplica el filtro asociado a este tab a los objetos enviado.
+	 * Apply the tab filter to sent objects.
 	 * <p>
-	 * 
-	 * Se usará para filtrar los argumentos. <br>
+	 * It's used to filter arguments. <br>
 	 */
 	public Object filter(Object[] objects) throws FilterException,
 			XavaException {
@@ -803,7 +736,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	}
 
 	public String getId() {
-		if (!tieneNombre())
+		if (!hasName())
 			return getMetaComponent().getName() + ".tab";
 		return getMetaComponent().getName() + ".tabs." + getName();
 	}
@@ -812,8 +745,8 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		return defaultOrder;
 	}
 
-	public void setDefaultOrder(String ordenDefecto) {
-		this.defaultOrder = ordenDefecto;
+	public void setDefaultOrder(String defaultOrder) {
+		this.defaultOrder = defaultOrder;
 		this.sQLDefaultOrder = null;
 	}
 

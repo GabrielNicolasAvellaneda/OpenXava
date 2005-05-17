@@ -1,31 +1,37 @@
 package org.openxava.util;
+
 /**
- * Utilidades globales referentes al sistema. <p>
+ * Global utilities about the system. <p>
  * 
  * @author Javier Paniza
  */
+
 public class XSystem {
 
-	private static boolean enServidor = false;
-/**
- * Hace que {@link #enServidor} devuelva <tt>true</tt>.
- *
- * Se devería llamar desde un bloque estático en la clase base común de ejb, o
- * en todos los ejbs si no hay clase base.<br>
- */
-public static void _setOnServer() {
-	enServidor = true;
-}
-/**
- * Si estamos en un cliente: aplicación java, applet, servlet, jsp, etc. <p>
- */
-public static boolean onClient() {
-	return !onServer();
-}
-/**
- * Si estamos en un servidor EJB. <p>
- */
-public static boolean onServer() {
-	return enServidor;
-}
+	private static boolean onServer = false;
+	
+	/**
+	 * Does that {@link #onServer} returns <tt>true</tt>.
+	 *
+	 * Must to be called from a static block in a common base class of EJB, or
+	 * in all EJB is there aren't base class.<br>
+	 */
+	public static void _setOnServer() {
+		onServer = true;
+	}
+	
+	/**
+	 * If we are in a client: java application, applet, servlet, jsp, etc. <p> 
+	 */
+	public static boolean onClient() {
+		return !onServer();
+	}
+	
+	/**
+	 * If we are in a EJB server. <p>
+	 */
+	public static boolean onServer() {
+		return onServer;
+	}
+	
 }
