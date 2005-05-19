@@ -92,7 +92,7 @@ public class CarriersTest extends ModuleTestBase {
 		key.setType("C ");
 		key.setLevel(1);
 		assertValue("remarks","");		
-		setValue("drivingLicence.KEY", key.toString());
+		setValue("drivingLicence.KEY", key.toString());		
 		assertNoErrors();
 		assertValue("drivingLicence.KEY", key.toString());
 		assertValue("remarks", "He can drive trucks");

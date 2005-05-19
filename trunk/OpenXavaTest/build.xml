@@ -7,7 +7,7 @@
 	<property name="ejb.package" value="ejb"/>
 	<property name="configuration" value="jboss-hypersonic" />
 	<!-- property name="configuration" value="websphere-as400" /-->	
-	<!-- property name="configuration" value="jboss-as400"/-->
+	<!-- property name="configuration" value="jboss-as400" /-->
 	<property file="../openxava.properties"/>
 	<property file="${configuration}.properties"/>
 	<property name="datasource" value="OpenXavaTestDS"/>
