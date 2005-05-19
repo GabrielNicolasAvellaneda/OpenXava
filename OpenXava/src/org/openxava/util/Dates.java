@@ -265,7 +265,7 @@ public class Dates {
 	 * @param f1  If null returns null
 	 * @param f2  If null returns null 
 	 */	
-	public static DateDistance dataDistance(java.util.Date f1, java.util.Date f2) {
+	public static DateDistance dateDistance(java.util.Date f1, java.util.Date f2) {
 		return dateDistance(f1, f2, false);		
 	}
 		

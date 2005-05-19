@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-1"  ?>
 
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.HashMap" %>
+<%@ page import="org.openxava.util.XavaResources" %>
 <%@ page import="org.openxava.util.Primitives" %>
 <%@ page import="org.openxava.util.Strings" %>
 <%@ page import="org.openxava.util.Is" %>
@@ -47,19 +47,6 @@ if (!Is.emptyString(propertiesNames)) {
 
 String language = request.getParameter("language");
 language = language == null?request.getLocale().getDisplayLanguage():language;
-if ("es".equals(language)) {
-%>
-	<fmt:setLocale value="es" scope="request"/>
-<%
-} else if ("ca".equals(language)) {
-%>	
-	<fmt:setLocale value="ca" scope="request"/>
-<%
-} else {
-%>	
-	<fmt:setLocale value="en" scope="request"/>
-<%
-}
 java.util.Locale locale = new java.util.Locale(language, "");
 
 int columnsSeparation = 4;
@@ -120,8 +107,6 @@ else {
 }
 
 %>
-<fmt:setBundle basename="XavaResources" scope="request"/>
-
 <jasperReport
 		 name="<%=modelName%>"
 		 columnCount="1"
@@ -328,7 +313,8 @@ while (it.hasNext()) {
 					<textElement textAlignment="<%=getAlign(p)%>" verticalAlignment="Top" lineSpacing="Single">
 						<font reportFont="Arial_Normal" size="10"/>
 					</textElement>
-				<text><![CDATA[<%=p.getLabel(locale)%>]]></text>
+					<% String label = "<![CDATA[" + p.getLabel(locale) + "]]>"; %>
+					<text><%=label%></text>
 				</staticText>
 <%
 	x+=(width+columnsSeparation);
@@ -382,7 +368,7 @@ while (it.hasNext()) {
 					<%		
 					String type=getType(p);
 					%>
-					<textFieldExpression   class="<%=type%>"><![CDATA[$F{<%=Strings.change(p.getQualifiedName(), ".", "_")%>}]]></textFieldExpression>
+					<textFieldExpression   class="<%=type%>">$F{<%=Strings.change(p.getQualifiedName(), ".", "_")%>}</textFieldExpression>
 				</textField>
 <%
 	x+=(width+columnsSeparation);
@@ -412,7 +398,11 @@ while (it.hasNext()) {
 					<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
 						<font reportFont="Arial_Normal" size="10"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["<fmt:message key='page'/> " + $V{PAGE_NUMBER} + " <fmt:message key='of'/> "]]></textFieldExpression>
+				<%
+				String iniPageLabel = "<![CDATA[\"" + XavaResources.getString(request, "page") + " \"";
+				String endPageLabel = " \" " + XavaResources.getString("of") + " \"]]>";
+				%>
+				<textFieldExpression class="java.lang.String"><%=iniPageLabel%> + $V{PAGE_NUMBER} + <%=endPageLabel%></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None" >					<reportElement
 						mode="Transparent"

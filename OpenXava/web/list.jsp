@@ -124,11 +124,13 @@ while (it.hasNext()) {
 </jsp:include>
 	<% } else { // Not boolean %>
 <th class=search align="left">
-<jsp:include page="comparatorsCombo.jsp">
-	<jsp:param name="comparator" value="<%=comparator%>" />
-	<jsp:param name="isString" value="<%=isString%>" />
-	<jsp:param name="isDate" value="<%=isDate%>" />
-</jsp:include>
+<% 
+String urlComparatorsCombo = "comparatorsCombo.jsp" // in this way because websphere 6 has problems with jsp:param
+	+ "?comparator=" + comparator
+	+ "&isString=" + isString
+	+ "&isDate=" + isDate;
+%>
+<jsp:include page="<%=urlComparatorsCombo%>" />
 <input name="conditionValues" class=editor type="text" maxlength="<%=maxLength%>" size="<%=length%>" value="<%=value%>"/>
 	<% } %>
 </th>

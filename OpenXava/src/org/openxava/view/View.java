@@ -1412,6 +1412,7 @@ public class View implements java.io.Serializable {
 		IMetaEjb metaModel = (IMetaEjb) ref.getMetaModelReferenced(); 
 		Class keyClass = metaModel.getPrimaryKeyClass();
 		Field [] fields = keyClass.getFields();
+		Arrays.sort(fields, FieldComparator.getInstance());
 		if (!value.startsWith("[")) value = "";
 		StringTokenizer st = new StringTokenizer(Strings.change(value, "..", ". ."), "[.]");		
 		for (int i = 0; i < fields.length; i++) {

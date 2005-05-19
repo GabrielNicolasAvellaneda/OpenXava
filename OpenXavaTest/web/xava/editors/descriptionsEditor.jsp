@@ -18,8 +18,13 @@ String propertyKey = request.getParameter("propertyKey");
 String script = request.getParameter("script");
 // conditionForId is for have a different cache for each condition
 String conditionForId = request.getParameter("condition");
-if (conditionForId == null) conditionForId = request.getParameter("condicion");
-String descriptionsCalculatorKey = (conditionForId==null)?propertyKey + ".descriptionsCalculator":propertyKey + "." + conditionForId + ".descriptionsCalculator";
+if (Is.emptyString(conditionForId)) conditionForId = request.getParameter("condicion");
+conditionForId = Is.emptyString(conditionForId)?"":"." + conditionForId;
+// orderForId is for have a different cache for each order
+String orderForId = request.getParameter("orderByKey");
+if (Is.emptyString(orderForId)) orderForId = request.getParameter("ordenadoPorClave");
+orderForId = Is.emptyString(orderForId)?"":"." + orderForId;
+String descriptionsCalculatorKey = propertyKey + conditionForId + orderForId + ".descriptionsCalculator";
 DescriptionsCalculator calculator = (DescriptionsCalculator) request.getSession().getAttribute(descriptionsCalculatorKey);	
 
 IFilter filter = null;

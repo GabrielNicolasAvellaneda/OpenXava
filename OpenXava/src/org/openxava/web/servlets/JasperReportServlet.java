@@ -49,7 +49,7 @@ public class JasperReportServlet extends HttpServlet {
 		surl.append("&tab=");
 		surl.append(tab);
 		surl.append("&properties=");
-		surl.append(properties);				
+		surl.append(properties);						
 		URL url = new URL(surl.toString());		
 		return url.openStream();
 	}

@@ -19,10 +19,10 @@ public class ClerkUtil
       try {
          Object objRef = initialContext.lookup(jndiName);
          // only narrow if necessary
-         if (narrowTo.isInstance(java.rmi.Remote.class))
+         // if (narrowTo.isInstance(java.rmi.Remote.class)) // this does not like much to websphere 6
             return javax.rmi.PortableRemoteObject.narrow(objRef, narrowTo);
-         else
-            return objRef;
+         /*else
+            return objRef;*/
       } finally {
          initialContext.close();
       }
