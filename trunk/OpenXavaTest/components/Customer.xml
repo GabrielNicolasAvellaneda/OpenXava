@@ -178,7 +178,7 @@
 				remarks
 			</section>
 		</members>
-				
+						
 	</view>
 		
 	<view name="Simple" members="number; type; name; address"/>

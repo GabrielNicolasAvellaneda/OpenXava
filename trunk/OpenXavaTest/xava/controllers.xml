@@ -110,6 +110,10 @@
 			keystroke="F2">
 			<use-object name="xava_view"/>			
 		</action>			
+		<action name="getName" mode="detail"
+			class="org.openxava.test.actions.GetNameAction">
+			<use-object name="xava_view"/>
+		</action>		
 	</controller>
 		
 	<controller name="Invoices">

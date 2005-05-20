@@ -17,5 +17,11 @@ public class CustomersNewOnInitTest extends ModuleTestBase {
 		assertAction("Mode.list");
 		assertNoAction("Mode.detailAndFirst");
 	}
+	
+	public void testGetValueFromAGroupInSectionAfterNew() throws Exception {
+		setValue("name", "Juanillo");
+		execute("CustomersNewOnInit.getName");		
+		assertMessage("The name is Juanillo");
+	}
 				
 }
