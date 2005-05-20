@@ -79,7 +79,7 @@ public class InvoiceKey
    /**
     * Create from a string with the format of toString() method
     */
-   public InvoiceKey createFromString(String string) throws IllegalArgumentException, IllegalAccessException {
+   public static InvoiceKey createFromString(String string) throws IllegalArgumentException, IllegalAccessException {
       StringTokenizer st = new StringTokenizer(string, "[.]");
       InvoiceKey key = new InvoiceKey();
       java.lang.reflect.Field [] fields = key.getClass().getFields();
@@ -89,7 +89,7 @@ public class InvoiceKey
          Class type = fields[i].getType();
          Object value = null;
          if (!type.equals(String.class)) {
-            value = Strings.toObject(type, string);
+            value = Strings.toObject(type, v);
          }
          else {
             value = string;

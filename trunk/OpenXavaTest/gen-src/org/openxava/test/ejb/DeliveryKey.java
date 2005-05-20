@@ -103,7 +103,7 @@ public class DeliveryKey
    /**
     * Create from a string with the format of toString() method
     */
-   public DeliveryKey createFromString(String string) throws IllegalArgumentException, IllegalAccessException {
+   public static DeliveryKey createFromString(String string) throws IllegalArgumentException, IllegalAccessException {
       StringTokenizer st = new StringTokenizer(string, "[.]");
       DeliveryKey key = new DeliveryKey();
       java.lang.reflect.Field [] fields = key.getClass().getFields();
@@ -113,7 +113,7 @@ public class DeliveryKey
          Class type = fields[i].getType();
          Object value = null;
          if (!type.equals(String.class)) {
-            value = Strings.toObject(type, string);
+            value = Strings.toObject(type, v);
          }
          else {
             value = string;

@@ -74,7 +74,7 @@ public class StateKey
    /**
     * Create from a string with the format of toString() method
     */
-   public StateKey createFromString(String string) throws IllegalArgumentException, IllegalAccessException {
+   public static StateKey createFromString(String string) throws IllegalArgumentException, IllegalAccessException {
       StringTokenizer st = new StringTokenizer(string, "[.]");
       StateKey key = new StateKey();
       java.lang.reflect.Field [] fields = key.getClass().getFields();
@@ -84,7 +84,7 @@ public class StateKey
          Class type = fields[i].getType();
          Object value = null;
          if (!type.equals(String.class)) {
-            value = Strings.toObject(type, string);
+            value = Strings.toObject(type, v);
          }
          else {
             value = string;
