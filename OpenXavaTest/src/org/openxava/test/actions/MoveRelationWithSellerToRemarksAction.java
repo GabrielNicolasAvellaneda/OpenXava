@@ -7,7 +7,7 @@ import org.openxava.actions.*;
  */
 public class MoveRelationWithSellerToRemarksAction extends ViewBaseAction {
 
-	public void execute() throws Exception {				
+	public void execute() throws Exception {		
 		Object rel = getView().getValue("relationWithSeller");		
 		getView().setValue("remarks", rel);
 	}

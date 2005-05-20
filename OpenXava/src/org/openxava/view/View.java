@@ -370,12 +370,12 @@ public class View implements java.io.Serializable {
 	 */
 	private Object getValue(String name, boolean recalculatingValues) throws XavaException {
 		int idx = name.indexOf('.');		
-		if (idx < 0) { 			
+		if (idx < 0) { 						
 			if (!getMemberNamesWithoutSeccions().contains(name) && (hidden == null || !hidden.contains(name)) && !getMetaModel().getKeyPropertiesNames().contains(name)) {				
 				return getValorEnSecciones(name, recalculatingValues);
 			}
 			else {				
-				if (hasSubview(name)) { 										
+				if (hasSubview(name)) { 															
 					View subvista = getSubview(name);
 					if (!subvista.isRepresentsCollection()) {						
 						return subvista.getValues();
@@ -384,13 +384,13 @@ public class View implements java.io.Serializable {
 						return subvista.getCollectionValues();
 					}
 				}
-				else {										
-					if (values == null) return null;										
+				else {															
+					if (values == null && !recalculatingValues)	return null;										
 					return recalculatingValues?getValues().get(name):values.get(name);					
 				}				 							 								
 			} 
 		} 
-		else {			
+		else {						
 			String subvista = name.substring(0, idx);			
 			String miembro = name.substring(idx+1);						
 			return getSubview(subvista).getValue(miembro, recalculatingValues);
