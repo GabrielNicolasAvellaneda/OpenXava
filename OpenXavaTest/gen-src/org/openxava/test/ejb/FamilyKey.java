@@ -74,7 +74,7 @@ public class FamilyKey
    /**
     * Create from a string with the format of toString() method
     */
-   public FamilyKey createFromString(String string) throws IllegalArgumentException, IllegalAccessException {
+   public static FamilyKey createFromString(String string) throws IllegalArgumentException, IllegalAccessException {
       StringTokenizer st = new StringTokenizer(string, "[.]");
       FamilyKey key = new FamilyKey();
       java.lang.reflect.Field [] fields = key.getClass().getFields();
@@ -84,7 +84,7 @@ public class FamilyKey
          Class type = fields[i].getType();
          Object value = null;
          if (!type.equals(String.class)) {
-            value = Strings.toObject(type, string);
+            value = Strings.toObject(type, v);
          }
          else {
             value = string;

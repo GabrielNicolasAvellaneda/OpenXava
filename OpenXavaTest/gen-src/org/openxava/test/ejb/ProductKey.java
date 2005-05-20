@@ -67,7 +67,7 @@ public class ProductKey
    /**
     * Create from a string with the format of toString() method
     */
-   public ProductKey createFromString(String string) throws IllegalArgumentException, IllegalAccessException {
+   public static ProductKey createFromString(String string) throws IllegalArgumentException, IllegalAccessException {
       StringTokenizer st = new StringTokenizer(string, "[.]");
       ProductKey key = new ProductKey();
       java.lang.reflect.Field [] fields = key.getClass().getFields();
@@ -77,7 +77,7 @@ public class ProductKey
          Class type = fields[i].getType();
          Object value = null;
          if (!type.equals(String.class)) {
-            value = Strings.toObject(type, string);
+            value = Strings.toObject(type, v);
          }
          else {
             value = string;

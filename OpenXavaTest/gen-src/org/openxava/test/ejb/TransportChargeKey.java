@@ -103,7 +103,7 @@ public class TransportChargeKey
    /**
     * Create from a string with the format of toString() method
     */
-   public TransportChargeKey createFromString(String string) throws IllegalArgumentException, IllegalAccessException {
+   public static TransportChargeKey createFromString(String string) throws IllegalArgumentException, IllegalAccessException {
       StringTokenizer st = new StringTokenizer(string, "[.]");
       TransportChargeKey key = new TransportChargeKey();
       java.lang.reflect.Field [] fields = key.getClass().getFields();
@@ -113,7 +113,7 @@ public class TransportChargeKey
          Class type = fields[i].getType();
          Object value = null;
          if (!type.equals(String.class)) {
-            value = Strings.toObject(type, string);
+            value = Strings.toObject(type, v);
          }
          else {
             value = string;

@@ -67,7 +67,7 @@ public class ServiceKey
    /**
     * Create from a string with the format of toString() method
     */
-   public ServiceKey createFromString(String string) throws IllegalArgumentException, IllegalAccessException {
+   public static ServiceKey createFromString(String string) throws IllegalArgumentException, IllegalAccessException {
       StringTokenizer st = new StringTokenizer(string, "[.]");
       ServiceKey key = new ServiceKey();
       java.lang.reflect.Field [] fields = key.getClass().getFields();
@@ -77,7 +77,7 @@ public class ServiceKey
          Class type = fields[i].getType();
          Object value = null;
          if (!type.equals(String.class)) {
-            value = Strings.toObject(type, string);
+            value = Strings.toObject(type, v);
          }
          else {
             value = string;

@@ -19,6 +19,19 @@ public class EJBTest extends TestCase {
 		super(name);
 	}
 	
+	public void testKeyToAndFromString() throws Exception {
+		DeliveryKey key = new DeliveryKey();		
+		key.setInvoice_year(2002);
+		key.setInvoice_number(1);
+		key.setType_number(7);
+		key.setNumber(66);
+		DeliveryKey key2 = DeliveryKey.createFromString(key.toString());
+		assertEquals("invoice_year", 2002, key2.getInvoice_year());
+		assertEquals("invoice_number", 1, key2.getInvoice_number());
+		assertEquals("type_number", 7, key2.getType_number());
+		assertEquals("number", 66, key2.getNumber());		
+	}
+	
 	public void testCalculatedPropertyDependOnMultiLevelProperty() throws Exception {
 		InvoiceValue value = new InvoiceValue();
 		value.setYear(2005);

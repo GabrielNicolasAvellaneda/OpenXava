@@ -67,7 +67,7 @@ public class SellerKey
    /**
     * Create from a string with the format of toString() method
     */
-   public SellerKey createFromString(String string) throws IllegalArgumentException, IllegalAccessException {
+   public static SellerKey createFromString(String string) throws IllegalArgumentException, IllegalAccessException {
       StringTokenizer st = new StringTokenizer(string, "[.]");
       SellerKey key = new SellerKey();
       java.lang.reflect.Field [] fields = key.getClass().getFields();
@@ -77,7 +77,7 @@ public class SellerKey
          Class type = fields[i].getType();
          Object value = null;
          if (!type.equals(String.class)) {
-            value = Strings.toObject(type, string);
+            value = Strings.toObject(type, v);
          }
          else {
             value = string;

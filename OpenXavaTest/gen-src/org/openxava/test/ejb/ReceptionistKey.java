@@ -67,7 +67,7 @@ public class ReceptionistKey
    /**
     * Create from a string with the format of toString() method
     */
-   public ReceptionistKey createFromString(String string) throws IllegalArgumentException, IllegalAccessException {
+   public static ReceptionistKey createFromString(String string) throws IllegalArgumentException, IllegalAccessException {
       StringTokenizer st = new StringTokenizer(string, "[.]");
       ReceptionistKey key = new ReceptionistKey();
       java.lang.reflect.Field [] fields = key.getClass().getFields();
@@ -77,7 +77,7 @@ public class ReceptionistKey
          Class type = fields[i].getType();
          Object value = null;
          if (!type.equals(String.class)) {
-            value = Strings.toObject(type, string);
+            value = Strings.toObject(type, v);
          }
          else {
             value = string;

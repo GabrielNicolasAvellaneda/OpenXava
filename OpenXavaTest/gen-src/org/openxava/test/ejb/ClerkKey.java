@@ -91,7 +91,7 @@ public class ClerkKey
    /**
     * Create from a string with the format of toString() method
     */
-   public ClerkKey createFromString(String string) throws IllegalArgumentException, IllegalAccessException {
+   public static ClerkKey createFromString(String string) throws IllegalArgumentException, IllegalAccessException {
       StringTokenizer st = new StringTokenizer(string, "[.]");
       ClerkKey key = new ClerkKey();
       java.lang.reflect.Field [] fields = key.getClass().getFields();
@@ -101,7 +101,7 @@ public class ClerkKey
          Class type = fields[i].getType();
          Object value = null;
          if (!type.equals(String.class)) {
-            value = Strings.toObject(type, string);
+            value = Strings.toObject(type, v);
          }
          else {
             value = string;
