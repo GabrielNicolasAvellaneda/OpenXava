@@ -461,7 +461,7 @@
       <entity>
          <ejb-name>DeliveryPlace</ejb-name>
 
-         <table-name>XAVATEST_DELIVERYPLACE</table-name>
+         <table-name>XAVATEST@separator@DELIVERYPLACE</table-name>
 
          <cmp-field>
             <field-name>oid</field-name>
@@ -598,7 +598,7 @@
       <entity>
          <ejb-name>Customer</ejb-name>
 
-         <table-name>XAVATEST_CUSTOMER</table-name>
+         <table-name>XAVATEST@separator@CUSTOMER</table-name>
 
          <cmp-field>
             <field-name>_Type</field-name>
@@ -1612,7 +1612,7 @@
       <entity>
          <ejb-name>Receptionist</ejb-name>
 
-         <table-name>XAVATEST_RECEPTIONIST</table-name>
+         <table-name>XAVATEST@separator@RECEPTIONIST</table-name>
 
          <cmp-field>
             <field-name>oid</field-name>
