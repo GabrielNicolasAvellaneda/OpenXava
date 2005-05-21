@@ -47,7 +47,9 @@ import org.openxava.validators.*;
 public class MapFacade {
 	
 	private static Map remotes;
-
+  private static boolean usesEJBObtained;
+  private static boolean usesEJB;
+  private static IMapFacadeImpl localImpl;
 
 	/**
 	 * Creates a new entity from a map with its initial values. <p> 
@@ -68,11 +70,11 @@ public class MapFacade {
 	{
 		Assert.arg(modelName, values);					
 		try {									
-			return getRemote(modelName).create(modelName, values);
+			return getImpl(modelName).create(modelName, values);
 		}
 		catch (RemoteException ex) {
-			annulRemote(modelName);
-			return getRemote(modelName).create(modelName, values);
+			annulImpl(modelName);
+			return getImpl(modelName).create(modelName, values);
 		}							
 	}
 	
@@ -98,11 +100,11 @@ public class MapFacade {
 	{
 		Assert.arg(modelName, containerKey, values);					
 		try {		
-			return getRemote(modelName).createAggregate(modelName, containerKey, counter, values);
+			return getImpl(modelName).createAggregate(modelName, containerKey, counter, values);
 		}
 		catch (RemoteException ex) {
-			annulRemote(modelName);
-			return getRemote(modelName).createAggregate(modelName, containerKey, counter, values);
+			annulImpl(modelName);
+			return getImpl(modelName).createAggregate(modelName, containerKey, counter, values);
 		}							
 	}
 	
@@ -129,11 +131,11 @@ public class MapFacade {
 	{
 		Assert.arg(modelName, container, values);					
 		try {									
-			return getRemote(modelName).createAggregate(modelName, container, counter, values);
+			return getImpl(modelName).createAggregate(modelName, container, counter, values);
 		}
 		catch (RemoteException ex) {
-			annulRemote(modelName);
-			return getRemote(modelName).createAggregate(modelName, container, counter, values);
+			annulImpl(modelName);
+			return getImpl(modelName).createAggregate(modelName, container, counter, values);
 		}							
 	}
 	
@@ -157,11 +159,11 @@ public class MapFacade {
 	{
 		Assert.arg(modelName, values);		
 		try {
-			return getRemote(modelName).createReturningValues(modelName, values);
+			return getImpl(modelName).createReturningValues(modelName, values);
 		}
 		catch (RemoteException ex) {
-			annulRemote(modelName);
-			return getRemote(modelName).createReturningValues(modelName, values);
+			annulImpl(modelName);
+			return getImpl(modelName).createReturningValues(modelName, values);
 		}
 		
 	}
@@ -186,11 +188,11 @@ public class MapFacade {
 	{
 		Assert.arg(modelName, values);		
 		try {
-			return getRemote(modelName).createReturningKey(modelName, values);
+			return getImpl(modelName).createReturningKey(modelName, values);
 		}
 		catch (RemoteException ex) {
-			annulRemote(modelName);
-			return getRemote(modelName).createReturningKey(modelName, values);
+			annulImpl(modelName);
+			return getImpl(modelName).createReturningKey(modelName, values);
 		}		
 	}
 				
@@ -216,11 +218,11 @@ public class MapFacade {
 	{
 		Assert.arg(modelName, containerKey, values);					
 		try {		
-			return getRemote(modelName).createAggregateReturningKey(modelName, containerKey, counter, values);
+			return getImpl(modelName).createAggregateReturningKey(modelName, containerKey, counter, values);
 		}
 		catch (RemoteException ex) {
-			annulRemote(modelName);
-			return getRemote(modelName).createAggregateReturningKey(modelName, containerKey, counter, values);
+			annulImpl(modelName);
+			return getImpl(modelName).createAggregateReturningKey(modelName, containerKey, counter, values);
 		}							
 	}
 	
@@ -261,11 +263,11 @@ public class MapFacade {
 			throw new ObjectNotFoundException(XavaResources.getString("empty_key_object_not_found", modelName));						
 		}
 		try {					
-			return getRemote(modelName).getValues(modelName, keyValues, memberNames);
+			return getImpl(modelName).getValues(modelName, keyValues, memberNames);
 		}
 		catch (RemoteException ex) {
-			annulRemote(modelName);
-			return getRemote(modelName).getValues(modelName, keyValues, memberNames);
+			annulImpl(modelName);
+			return getImpl(modelName).getValues(modelName, keyValues, memberNames);
 		}		
 	}
 		
@@ -296,11 +298,11 @@ public class MapFacade {
 	{		
 		Assert.arg(modelName, entity, memberNames);
 		try {
-			return getRemote(modelName).getValues(modelName, entity, memberNames);
+			return getImpl(modelName).getValues(modelName, entity, memberNames);
 		}
 		catch (RemoteException ex) {
-			annulRemote(modelName);
-			return getRemote(modelName).getValues(modelName, entity, memberNames);
+			annulImpl(modelName);
+			return getImpl(modelName).getValues(modelName, entity, memberNames);
 		}
 			
 	}
@@ -321,11 +323,11 @@ public class MapFacade {
 		if (keyValues==null) return null;
 		Assert.arg(modelName, keyValues);
 		try {
-			return getRemote(modelName).findEntity(modelName, keyValues);
+			return getImpl(modelName).findEntity(modelName, keyValues);
 		}
 		catch (RemoteException ex) {
-			annulRemote(modelName);
-			return getRemote(modelName).findEntity(modelName, keyValues);
+			annulImpl(modelName);
+			return getImpl(modelName).findEntity(modelName, keyValues);
 		}					
 	}	
 
@@ -343,11 +345,11 @@ public class MapFacade {
 		throws RemoveException, RemoteException, XavaException, ValidationException {
 		Assert.arg(modelName, keyValues);
 		try {
-			getRemote(modelName).remove(modelName, keyValues);
+			getImpl(modelName).remove(modelName, keyValues);
 		}
 		catch (RemoteException ex) {
-			annulRemote(modelName);
-			getRemote(modelName).remove(modelName, keyValues);
+			annulImpl(modelName);
+			getImpl(modelName).remove(modelName, keyValues);
 		}
 		
 	}
@@ -370,11 +372,11 @@ public class MapFacade {
 	{
 		Assert.arg(modelName, keyValues, values);				
 		try {			
-			getRemote(modelName).setValues(modelName, keyValues, values);								
+			getImpl(modelName).setValues(modelName, keyValues, values);								
 		}
 		catch (RemoteException ex) {
-			annulRemote(modelName);
-			getRemote(modelName).setValues(modelName, keyValues, values);			
+			annulImpl(modelName);
+			getImpl(modelName).setValues(modelName, keyValues, values);			
 		}				
 	}
 	
@@ -395,18 +397,19 @@ public class MapFacade {
 	{
 		Assert.arg(modelName, values);			
 		try {
-			return getRemote(modelName).validate(modelName, values);								
+			return getImpl(modelName).validate(modelName, values);								
 		}
 		catch (RemoteException ex) {
-			annulRemote(modelName);
-			return getRemote(modelName).validate(modelName, values);			
+			annulImpl(modelName);
+			return getImpl(modelName).validate(modelName, values);			
 		}
 				
 	}
 	
 									
 	
-	private static MapFacadeRemote getRemote(String modelName) throws RemoteException {
+	private static IMapFacadeImpl getImpl(String modelName) throws RemoteException {
+		if (!usesEJB()) return getLocalImpl();
 		try {			
 			int idx = modelName.indexOf('.'); 
 			if (idx >=0) {
@@ -449,7 +452,8 @@ public class MapFacade {
 		return remotes;
 	}
 	
-	private static void annulRemote(String modelName) {
+	private static void annulImpl(String modelName) {
+		if (!usesEJB()) return;
 		try {
 			int idx = modelName.indexOf('.'); 
 			if (idx >=0) {
@@ -491,12 +495,27 @@ public class MapFacade {
 	{
 		Assert.arg(modelName, keyValues, collectionName, collectionElementKeyValues);
 		try {
-			getRemote(modelName).removeCollectionElement(modelName, keyValues, collectionName, collectionElementKeyValues);
+			getImpl(modelName).removeCollectionElement(modelName, keyValues, collectionName, collectionElementKeyValues);
 		}
 		catch (RemoteException ex) {
-			annulRemote(modelName);
-			getRemote(modelName).removeCollectionElement(modelName, keyValues, collectionName, collectionElementKeyValues);
+			annulImpl(modelName);
+			getImpl(modelName).removeCollectionElement(modelName, keyValues, collectionName, collectionElementKeyValues);
 		}
 	}	
 
+	private static boolean usesEJB() {
+		if (!usesEJBObtained) {
+			usesEJB = XavaPreferences.getInstance().isMapFacadeAsEJB();
+			usesEJBObtained = true;
+		}
+		return usesEJB;
+	}
+	
+	private static IMapFacadeImpl getLocalImpl() {
+		if (localImpl==null) {
+			localImpl = new MapFacadeBean();
+		}
+		return localImpl;
+	}
+	
 }

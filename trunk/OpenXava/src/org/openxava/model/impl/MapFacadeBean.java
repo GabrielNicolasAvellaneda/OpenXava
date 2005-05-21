@@ -24,7 +24,8 @@ import org.openxava.validators.meta.*;
 // tmp: Quitar IMetaEjb (si hay)
 // tmp: Quitar EJBException
 
-public class MapFacadeBean implements SessionBean {
+public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
+	
 	
 	private javax.ejb.SessionContext mySessionCtx = null;
 	private final static long serialVersionUID = 3206093459760846163L;
@@ -35,7 +36,7 @@ public class MapFacadeBean implements SessionBean {
 		try {
 			persistenceProvider.begin();
 			MetaModel metaModel = getMetaModel(modelName);					
-			Object result = createEjb(persistenceProvider, metaModel, values, null, null, 0);
+			Object result = create(persistenceProvider, metaModel, values, null, null, 0);
 			persistenceProvider.commit();
 			return result;
 		} 
@@ -468,14 +469,14 @@ public class MapFacadeBean implements SessionBean {
 	private Map createReturningKey(IPersistenceProvider persistenceProvider, String modelName, Map values)
 		throws CreateException, XavaException, ValidationException {
 		MetaEntityEjb metaEntity = (MetaEntityEjb) MetaComponent.get(modelName).getMetaEntity();
-		Object entity = createEjb(persistenceProvider, metaEntity, values, null, null, 0);
+		Object entity = create(persistenceProvider, metaEntity, values, null, null, 0);
 		return getValues(persistenceProvider, metaEntity, entity, getKeyNames(metaEntity));
 	}
 	
 	private Map createReturningValues(IPersistenceProvider persistenceProvider, String modelName, Map values)
 		throws CreateException, XavaException, ValidationException {
 		MetaEntityEjb metaEntity = (MetaEntityEjb) MetaComponent.get(modelName).getMetaEntity();
-		Object entity = createEjb(persistenceProvider, metaEntity, values, null, null, 0);
+		Object entity = create(persistenceProvider, metaEntity, values, null, null, 0);
 		return getValues(persistenceProvider, metaEntity, entity, values);
 	}
 		
@@ -522,7 +523,7 @@ public class MapFacadeBean implements SessionBean {
 		// Loop with 10 attempts, because the counter can be repeated because deleted objects
 		do {				 
 			try {
-				return createEjb(persistenceProvider, metaModel, values, metaModelContainer, container, counter);
+				return create(persistenceProvider, metaModel, values, metaModelContainer, container, counter);
 			}
 			catch (DuplicateKeyException ex) {
 				if (attempts > 10) throw ex;
@@ -548,7 +549,7 @@ public class MapFacadeBean implements SessionBean {
 	 * @param number  Only if object to create is a aggregate. It's a secuential number.
 	 * @return The created entity.
 	 */
-	private Object createEjb(
+	private Object create(
 		IPersistenceProvider persistenceProvider,	
 		MetaModel metaModel,
 		Map values,
@@ -986,7 +987,7 @@ public class MapFacadeBean implements SessionBean {
 		Map values,
 		int number)
 		throws CreateException, ValidationException, RemoteException, XavaException {
-		return createEjb(
+		return create(
 			persistenceProvider, 	
 			metaAggregateEjb,
 			values,
@@ -1883,10 +1884,14 @@ public class MapFacadeBean implements SessionBean {
 		}
 	}
 
-	private IPersistenceProvider createPersistenceProvider() {
-		//IPersistenceProvider persistenceProvider = new HibernatePersistenceProvider(); // tmp
-		IPersistenceProvider persistenceProvider = new EJBPersistenceProvider(); // tmp
-		return persistenceProvider; 
+	private IPersistenceProvider createPersistenceProvider() throws RemoteException {
+		try {
+			return (IPersistenceProvider) Class.forName(XavaPreferences.getInstance().getPersistenceProviderClass()).newInstance();
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RemoteException(XavaResources.getString("persistence_provider_creation_error"));
+		}
 	}
 
 }

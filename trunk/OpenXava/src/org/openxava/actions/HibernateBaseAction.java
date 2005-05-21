@@ -2,6 +2,7 @@ package org.openxava.actions;
 
 import java.util.*;
 
+import org.openxava.model.impl.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 
@@ -15,7 +16,7 @@ import org.hibernate.cfg.*;
 abstract public class HibernateBaseAction extends ViewBaseAction {
 
 	private Session session;
-	private static SessionFactory sessionFactory;
+	// tmp private static SessionFactory sessionFactory;
 	
 	
 	final public void execute() throws Exception {
@@ -38,7 +39,7 @@ abstract public class HibernateBaseAction extends ViewBaseAction {
 	protected abstract void executeHibernate() throws Exception;
 	
 	private static SessionFactory getSessionFactory() throws HibernateException, XavaException {
-		if (sessionFactory == null) {
+	/* tmp	if (sessionFactory == null) {
 			Configuration configuration = new Configuration().configure("/hibernate.cfg.xml");
 			for (Iterator it = MetaModel.getAllGenerated().iterator(); it.hasNext();) {
 				MetaModel model = (MetaModel) it.next();
@@ -51,7 +52,8 @@ abstract public class HibernateBaseAction extends ViewBaseAction {
 			}
 			sessionFactory = configuration.buildSessionFactory();
 		}
-		return sessionFactory; 
+		return sessionFactory; */
+		return HibernatePersistenceProvider.getSessionFactory();
 	}
 	
 	protected Session getSession() {
