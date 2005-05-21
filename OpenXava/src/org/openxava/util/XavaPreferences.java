@@ -59,4 +59,12 @@ public class XavaPreferences {
 		return getProperties().getProperty("formLineSpacing", "1");
 	}
 	
+	public String getPersistenceProviderClass() {
+		return getProperties().getProperty("persistenceProviderClass", "org.openxava.model.impl.EJBPersistenceProvider");
+	}
+	
+	public boolean isMapFacadeAsEJB() {
+		return "true".equalsIgnoreCase(getProperties().getProperty("mapFacadeAsEJB", "true"));
+	}
+	
 }
