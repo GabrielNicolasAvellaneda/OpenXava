@@ -126,8 +126,14 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 			try {
 				Configuration configuration = new Configuration().configure("/hibernate.cfg.xml");
 				for (Iterator it = MetaModel.getAllGenerated().iterator(); it.hasNext();) {
-					MetaModel model = (MetaModel) it.next();					
-					configuration.addResource(model.getName() + ".hbm.xml");
+					MetaModel model = (MetaModel) it.next();
+					try {
+						configuration.addResource(model.getName() + ".hbm.xml");
+					}
+					catch (Exception ex) {
+						ex.printStackTrace();
+						System.err.println(XavaResources.getString("hibernate_mapping_not_loaded_warning", model.getName()));
+					}
 				}
 				sessionFactory = configuration.buildSessionFactory();
 			} 

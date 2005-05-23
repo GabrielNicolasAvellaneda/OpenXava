@@ -80,11 +80,17 @@ public class DescriptionsCalculator implements ICalculator {
 			if (isMultipleKey()) {
 				Iterator itKeyNames = getKeyPropertiesCollection().iterator();
 				Map key = new HashMap();
+				boolean isNull = true; 
 				while (itKeyNames.hasNext()) {
 					String name = (String) itKeyNames.next();
-					key.put(name, table.getValueAt(i, iKey++));
+					Object value = table.getValueAt(i, iKey++);
+					key.put(name, value);
+					if (value != null) isNull = false; 
 				}		
-				if(isUseConvertersInKeys()) {
+				if (isNull) { 
+					el.setKey(null);
+				}
+				else if(isUseConvertersInKeys()) {
 					el.setKey(getMetaModel().obtainPrimaryKeyFromKey(key));			
 				} 
 				else {

@@ -18,7 +18,8 @@ public class ProductsTest extends ModuleTestBase {
 		"CRUD.save",
 		"CRUD.delete",
 		"CRUD.search",		
-		"Mode.list"		
+		"Mode.list",
+		"Products.changeDefaultZone"
 	};
 	
 	private String [] listActions = {
