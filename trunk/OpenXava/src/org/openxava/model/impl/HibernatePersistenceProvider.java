@@ -126,9 +126,8 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 			try {
 				Configuration configuration = new Configuration().configure("/hibernate.cfg.xml");
 				for (Iterator it = MetaModel.getAllGenerated().iterator(); it.hasNext();) {
-					MetaModel model = (MetaModel) it.next();
-					System.out.println("[HibernatePersistenceProvider.getSessionFactory] ModelName= " + model.getName()); //  tmp
-					configuration.addResource("/" + model.getName() + ".hbm.xml");
+					MetaModel model = (MetaModel) it.next();					
+					configuration.addResource(model.getName() + ".hbm.xml");
 				}
 				sessionFactory = configuration.buildSessionFactory();
 			} 

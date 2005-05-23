@@ -10,7 +10,7 @@ import org.openxava.util.meta.MetaSet;
 
 /**
  * Program Generator created by TL2Java
- * @version Sat May 21 11:25:34 CEST 2005
+ * @version Mon May 23 09:17:46 CEST 2005
  */
 public class PostcreatePG {
     Properties properties = new Properties();
@@ -157,9 +157,9 @@ public static void generate(XPathContext context, ProgramWriter out, IMetaEjb me
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Sat May 21 11:25:34 CEST 2005", // date this file was generated
-             "/home/mcarmen/workspace/OpenXava/generator/postcreate.xml", // input file
-             "/home/mcarmen/workspace/OpenXava/generator/PostcreatePG.java" }, // output file
+        { "Mon May 23 09:17:46 CEST 2005", // date this file was generated
+             "/home/javi/workspace/OpenXava/generator/postcreate.xml", // input file
+             "/home/javi/workspace/OpenXava/generator/PostcreatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
