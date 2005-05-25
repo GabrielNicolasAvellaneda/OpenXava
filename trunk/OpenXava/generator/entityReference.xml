@@ -19,6 +19,11 @@ public void setEjb(boolean ejb) {
 	this.ejb = ejb;
 }
 
+private String getExcepcion() {
+	return ejb?"EJBException":"RuntimeException";
+}
+
+
 public static void generate(XPathContext context, ProgramWriter out, MetaReference ref) throws XavaException {
 	EntityReferencePG pg = new EntityReferencePG();
 	pg.setReference(ref);
@@ -38,6 +43,7 @@ else {
 	modelMapping = metaModel.getMapping();
 }	
 String referenceName = Strings.firstUpper(reference.getName());
+ReferenceMapping referenceMapping = modelMapping.getReferenceMapping(reference.getName());
 IMetaEjb referencedModel = (IMetaEjb) reference.getMetaModelReferenced();
 ModelMapping referencedMapping = referencedModel.getMapping();
 String referencedModelClass = referencedModel.getRemote();
@@ -93,14 +99,15 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 		String prefixGet = "get" + referenceName + "_";
 		Iterator itKeys = referencedModel.getAllKeyPropertiesNames().iterator();
 		while (itKeys.hasNext()) {
-			String key = Strings.change((String) itKeys.next(), ".", "_");
-			String keyAttribute=null;
-			if (referencedMapping.hasConverter(key)) {
+			String property = (String) itKeys.next();
+			String key = Strings.change(property, ".", "_"); 
+			String keyAttribute = null;
+			if (referencedMapping.hasConverter(key) || property.indexOf('.') &gt;= 0) { 
 				keyAttribute = "_" + Strings.firstUpper(key);
 			}
 			else {
 				keyAttribute = key;
-			}				
+			}
 		</java> 
 		key.<expr>keyAttribute</expr> = <expr>prefixGet</expr><expr>key</expr>();			
 		<java>} </java>		
@@ -121,9 +128,10 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 		String prefixSet = "set" + referenceName + "_";
 		itKeys = referencedModel.getAllKeyPropertiesNames().iterator();		
 		while (itKeys.hasNext()) {
-			String key = Strings.change((String) itKeys.next(), ".", "_");
+		    String property = (String) itKeys.next(); 
+			String key = Strings.change(property, ".", "_");
 			String keyAttribute=null;
-			if (referencedMapping.hasConverter(key)) {
+			if (referencedMapping.hasConverter(key) || property.indexOf('.') &gt;= 0) {
 				keyAttribute = "_" + Strings.firstUpper(key);
 			}
 			else {
@@ -176,18 +184,54 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 		else {
 			type = property.getTypeName();
 		}	
-		String column = modelMapping.getReferenceMapping(reference.getName()).getColumnForReferencedModelProperty(originalProperty.getName());	
+		String column = modelMapping.getReferenceMapping(reference.getName()).getColumnForReferencedModelProperty(originalProperty.getName());			
 	</java>
 	/**		
-	 * @ejb:interface-method
 	 * @ejb:persistent-field
 	 * <expr>pkField</expr>
-	 * @ejb.value-object match="persistentCalculatedAndAggregate"
 	 * @jboss:column-name "<expr>column</expr>"
 	 */
-	public abstract <expr>type</expr> get<expr>propertyName</expr>();
-	public abstract void set<expr>propertyName</expr>(<expr>type</expr> new<expr>propertyName</expr>);				
+	public abstract <expr>type</expr> get_<expr>propertyName</expr>();
+	public abstract void set_<expr>propertyName</expr>(<expr>type</expr> new<expr>propertyName</expr>);
 
+	/**		
+	 * @ejb:interface-method
+	 * @ejb.value-object match="persistentCalculatedAndAggregate"
+	 */
+	public <expr>type</expr> get<expr>propertyName</expr>() {
+		<java>
+		if (referenceMapping.hasConverter(originalProperty.getName())) {			
+			String getSentence = property.getName() + "Converter.toJava(get_" + propertyName + "())";							
+		</java> 
+		try {
+			return <expr>Generators.generateCast(type, getSentence)</expr>;
+		}
+		catch (org.openxava.converters.ConversionException ex) {
+			ex.printStackTrace();
+			throw new <expr>getExcepcion()</expr>(XavaResources.getString("generator.conversion_error", "<expr>reference.getName()</expr>.<expr>originalProperty.getName()</expr>", "<expr>metaModel.getName()</expr>", "<expr>type</expr>"));
+		}		
+		<java>} else { </java> 
+		return get_<expr>propertyName</expr>(); 				
+		<java>} </java> 
+	}
+	public void set<expr>propertyName</expr>(<expr>type</expr> new<expr>propertyName</expr>) {
+		<java>
+		if (referenceMapping.hasConverter(originalProperty.getName())) {			
+			String sentence = property.getName() + "Converter.toDB(new" + propertyName + ")";							
+		</java> 
+		try {
+			set_<expr>propertyName</expr>(<expr>Generators.generateCast(type, sentence)</expr>);
+		}
+		catch (org.openxava.converters.ConversionException ex) {
+			ex.printStackTrace();
+			throw new <expr>getExcepcion()</expr>(XavaResources.getString("generator.conversion_error", "<expr>reference.getName()</expr>.<expr>originalProperty.getName()</expr>", "<expr>metaModel.getName()</expr>", "<expr>type</expr>"));
+		}		
+		<java>} else { </java> 
+		set_<expr>propertyName</expr>(new<expr>propertyName</expr>); 				
+		<java>} </java> 	
+	}
+
+					
 	<java>} // while referenced entity key properties </java> 
 
 	private <expr>homeClass</expr> <expr>homeAttribute</expr>;	
@@ -199,4 +243,20 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 		}
 		return <expr>homeAttribute</expr>;
 	}	
-</tl>
+
+	<java>
+	for (Iterator it = referenceMapping.getDetails().iterator(); it.hasNext(); ) {	
+		ReferenceMappingDetail detail = (ReferenceMappingDetail) it.next();
+		if (detail.hasConverter()) {
+			String key = Strings.change(detail.getReferencedModelProperty(), ".", "_");
+	</java> 
+	
+	private static final <expr>detail.getConverterClassName()</expr> 
+		<expr>reference.getName()</expr>_<expr>key</expr>Converter =
+			new <expr>detail.getConverterClassName()</expr>();
+	<java>
+		}
+	}
+	</java> 
+	
+	</tl>

@@ -10,6 +10,7 @@ public class ReferenceMappingDetail implements java.io.Serializable {
 	private String referencedModelProperty;
 	private ReferenceMapping container;
 	private String referencedTableColumn;
+	private String converterClassName;
 	
 	
 	public String getColumn() {
@@ -18,7 +19,6 @@ public class ReferenceMappingDetail implements java.io.Serializable {
 	public void setColumn(String tableColumn) {
 		this.column = tableColumn;
 	}
-
 
 	public String getReferencedModelProperty() {
 		return referencedModelProperty;
@@ -52,5 +52,15 @@ public class ReferenceMappingDetail implements java.io.Serializable {
 	}
 
 
+	public String getConverterClassName() {
+		return converterClassName;
+	}
+	public void setConverterClassName(String converterClassName) {
+		this.converterClassName = converterClassName;
+	}
+	public boolean hasConverter() {
+		return !Is.emptyString(converterClassName);
+	}
+	
 }
 

@@ -22,9 +22,9 @@ public abstract class Office2CMP
          dataHolder.set_Name( get_Name() );
          dataHolder.setZoneNumber( getZoneNumber() );
          dataHolder.setNumber( getNumber() );
-         dataHolder.setOfficeManager_number( getOfficeManager_number() );
-         dataHolder.setDefaultCarrier_number( getDefaultCarrier_number() );
-         dataHolder.setMainWarehouse_number( getMainWarehouse_number() );
+         dataHolder.set_OfficeManager_number( get_OfficeManager_number() );
+         dataHolder.set_DefaultCarrier_number( get_DefaultCarrier_number() );
+         dataHolder.set_MainWarehouse_number( get_MainWarehouse_number() );
 
       }
       catch (RuntimeException e)
@@ -41,8 +41,8 @@ public abstract class Office2CMP
       {
          set_Receptionist( dataHolder.get_Receptionist() );
          set_Name( dataHolder.get_Name() );
-         setOfficeManager_number( dataHolder.getOfficeManager_number() );
-         setDefaultCarrier_number( dataHolder.getDefaultCarrier_number() );
+         set_OfficeManager_number( dataHolder.get_OfficeManager_number() );
+         set_DefaultCarrier_number( dataHolder.get_DefaultCarrier_number() );
 
       }
       catch (Exception e)
@@ -127,6 +127,7 @@ public abstract class Office2CMP
 		 setOfficeManager_number( valueHolder.getOfficeManager_number() );
 		 setDefaultCarrier_number( valueHolder.getDefaultCarrier_number() );
 		 setMainWarehouse_zoneNumber( valueHolder.getMainWarehouse_zoneNumber() );
+		 setMainWarehouse_number( valueHolder.getMainWarehouse_number() );
 
 	  }
 	  catch (Exception e)
@@ -153,16 +154,16 @@ public abstract class Office2CMP
 
    public abstract void setNumber( int number ) ;
 
-   public abstract int getOfficeManager_number() ;
+   public abstract int get_OfficeManager_number() ;
 
-   public abstract void setOfficeManager_number( int officeManager_number ) ;
+   public abstract void set_OfficeManager_number( int _OfficeManager_number ) ;
 
-   public abstract java.lang.Integer getDefaultCarrier_number() ;
+   public abstract java.lang.Integer get_DefaultCarrier_number() ;
 
-   public abstract void setDefaultCarrier_number( java.lang.Integer defaultCarrier_number ) ;
+   public abstract void set_DefaultCarrier_number( java.lang.Integer _DefaultCarrier_number ) ;
 
-   public abstract java.lang.Integer getMainWarehouse_number() ;
+   public abstract java.lang.Integer get_MainWarehouse_number() ;
 
-   public abstract void setMainWarehouse_number( java.lang.Integer mainWarehouse_number ) ;
+   public abstract void set_MainWarehouse_number( java.lang.Integer _MainWarehouse_number ) ;
 
 }

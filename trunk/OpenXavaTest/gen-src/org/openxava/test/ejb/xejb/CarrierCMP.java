@@ -21,10 +21,10 @@ public abstract class CarrierCMP
          dataHolder.set_Remarks( get_Remarks() );
          dataHolder.set_Name( get_Name() );
          dataHolder.set_Number( get_Number() );
-         dataHolder.setWarehouse_zoneNumber( getWarehouse_zoneNumber() );
-         dataHolder.setWarehouse_number( getWarehouse_number() );
-         dataHolder.setDrivingLicence_type( getDrivingLicence_type() );
-         dataHolder.setDrivingLicence_level( getDrivingLicence_level() );
+         dataHolder.set_Warehouse_zoneNumber( get_Warehouse_zoneNumber() );
+         dataHolder.set_Warehouse_number( get_Warehouse_number() );
+         dataHolder.set_DrivingLicence_type( get_DrivingLicence_type() );
+         dataHolder.set_DrivingLicence_level( get_DrivingLicence_level() );
 
       }
       catch (RuntimeException e)
@@ -41,10 +41,10 @@ public abstract class CarrierCMP
       {
          set_Remarks( dataHolder.get_Remarks() );
          set_Name( dataHolder.get_Name() );
-         setWarehouse_zoneNumber( dataHolder.getWarehouse_zoneNumber() );
-         setWarehouse_number( dataHolder.getWarehouse_number() );
-         setDrivingLicence_type( dataHolder.getDrivingLicence_type() );
-         setDrivingLicence_level( dataHolder.getDrivingLicence_level() );
+         set_Warehouse_zoneNumber( dataHolder.get_Warehouse_zoneNumber() );
+         set_Warehouse_number( dataHolder.get_Warehouse_number() );
+         set_DrivingLicence_type( dataHolder.get_DrivingLicence_type() );
+         set_DrivingLicence_level( dataHolder.get_DrivingLicence_level() );
 
       }
       catch (Exception e)
@@ -150,20 +150,20 @@ public abstract class CarrierCMP
 
    public abstract void set_Number( java.lang.Integer _Number ) ;
 
-   public abstract int getWarehouse_zoneNumber() ;
+   public abstract int get_Warehouse_zoneNumber() ;
 
-   public abstract void setWarehouse_zoneNumber( int warehouse_zoneNumber ) ;
+   public abstract void set_Warehouse_zoneNumber( int _Warehouse_zoneNumber ) ;
 
-   public abstract java.lang.Integer getWarehouse_number() ;
+   public abstract java.lang.Integer get_Warehouse_number() ;
 
-   public abstract void setWarehouse_number( java.lang.Integer warehouse_number ) ;
+   public abstract void set_Warehouse_number( java.lang.Integer _Warehouse_number ) ;
 
-   public abstract java.lang.String getDrivingLicence_type() ;
+   public abstract java.lang.String get_DrivingLicence_type() ;
 
-   public abstract void setDrivingLicence_type( java.lang.String drivingLicence_type ) ;
+   public abstract void set_DrivingLicence_type( java.lang.String _DrivingLicence_type ) ;
 
-   public abstract int getDrivingLicence_level() ;
+   public abstract int get_DrivingLicence_level() ;
 
-   public abstract void setDrivingLicence_level( int drivingLicence_level ) ;
+   public abstract void set_DrivingLicence_level( int _DrivingLicence_level ) ;
 
 }

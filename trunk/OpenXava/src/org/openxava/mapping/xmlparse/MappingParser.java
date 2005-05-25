@@ -85,6 +85,19 @@ public class MappingParser extends XmlElementsNames {
 		fillSet((Element)l.item(0), container, lang);				
 	}
 	
+	private static void fillConverter(Element el, ReferenceMappingDetail container, int lang)
+		throws XavaException {			
+		NodeList l = el.getElementsByTagName(xconverter[lang]);
+		int c = l.getLength();
+		if (c == 0) return;
+		if (c > 1) {
+			throw new XavaException("only_1_converter");
+		}
+		container.setConverterClassName(getConverterClassName(l.item(0), lang));
+		// fillSet((Element)l.item(0), container, lang);				
+	}
+	
+	
 	private static void fillMultipleConverter(Element el, PropertyMapping container, int lang)
 		throws XavaException {			
 		NodeList l = el.getElementsByTagName(xconverter[lang]);
@@ -112,6 +125,7 @@ public class MappingParser extends XmlElementsNames {
 		ReferenceMappingDetail p = new ReferenceMappingDetail();
 		p.setColumn(el.getAttribute(xtable_column[lang]));
 		p.setReferencedModelProperty(el.getAttribute(xreferenced_model_property[lang]));
+		fillConverter(el, p, lang);
 		return p;
 	}
 	

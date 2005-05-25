@@ -14,7 +14,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon May 23 09:17:50 CEST 2005
+ * @version Wed May 25 12:26:40 CEST 2005
  */
 public class EJBeanPG {
     Properties properties = new Properties();
@@ -76,8 +76,9 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
 	Iterator it = referencedModel.getAllKeyPropertiesNames().iterator();
 	while (it.hasNext()) {		
 		String propertyName = (String) it.next();		
-		result.append("o.");
-		result.append(referenceMapping.getCMPAttribute(propertyName));
+		result.append("o."); 
+		String cmpAttribute = referenceMapping.getCMPAttribute(propertyName);
+		result.append(cmpAttribute); 
 		result.append(" = ?");		
 		result.append(++n);
 		if (it.hasNext()) {
@@ -86,9 +87,6 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
 	}
 	return result.toString();
 }
-
-
-
 
 
 
@@ -274,14 +272,19 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     
     		Iterator it = containerModel.getAllKeyPropertiesNames().iterator();
     		while (it.hasNext()) {
-    			String propertyName = Strings.change((String) it.next(), ".", "_");			
+    			String propertyName = (String) it.next(); 
+    			String propertyNameInKey = propertyName;
+    			if (propertyName.indexOf('.') >= 0) {				
+    				propertyName = Strings.change(propertyName, ".", "_");
+    				propertyNameInKey = "_" + Strings.firstUpper(propertyName);
+    			}						
     		
     out.print(" \n\t\tset");
     out.print(containerName);
     out.print("_");
     out.print(propertyName);
     out.print("(containerKey.");
-    out.print(propertyName);
+    out.print(propertyNameInKey);
     out.print(");");
     } 
     } 
@@ -379,14 +382,19 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     
     		Iterator it = containerModel.getAllKeyPropertiesNames().iterator();
     		while (it.hasNext()) {
-    			String propertyName = Strings.change((String) it.next(), ".", "_");			
+    			String propertyName = (String) it.next();
+    			String propertyNameInKey = propertyName; 
+    			if (propertyName.indexOf('.') >= 0) {
+    				propertyName= Strings.change(propertyName, ".", "_");
+    				propertyNameInKey = "_" + Strings.firstUpper(propertyName);
+    			}
     		
     out.print(" \n\t\tset");
     out.print(containerName);
     out.print("_");
     out.print(propertyName);
     out.print("(containerKey.");
-    out.print(propertyName);
+    out.print(propertyNameInKey);
     out.print(");");
     }  
     			
@@ -506,15 +514,19 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     		while (it.hasNext()) {
     			String originalName = (String) it.next();
     			if (containerModel.getMapping().isReferencePropertyOverlappingWithSomeProperty(originalName)) continue;
-    			String propertyName = Strings.change(originalName, ".", "_");
-    			
+    			String propertyName = originalName; 
+    			String propertyNameInKey = originalName; 
+    			if (originalName.indexOf('.') >= 0) { 
+    				propertyName = Strings.change(originalName, ".", "_");
+    				propertyNameInKey = "_" + Strings.firstUpper(propertyName);				
+    			}
     		
     out.print(" \n\t\tset");
     out.print(containerName);
     out.print("_");
     out.print(propertyName);
     out.print("(containerKey.");
-    out.print(propertyName);
+    out.print(propertyNameInKey);
     out.print(");");
     } 
     } 
@@ -524,7 +536,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     			String keyProperty = (String) itKeyProperties.next();
     			if (modelMapping.isReferencePropertyOverlappingWithSomeProperty(keyProperty)) continue;
     			String propertyName = Strings.change(Strings.firstUpper(keyProperty), ".", "_");
-    			if (modelMapping.hasConverter(keyProperty)) {
+    			if (modelMapping.hasConverter(keyProperty) || keyProperty.indexOf('.') >= 0) { 
     		
     out.print("  \n\t\tset_");
     out.print(propertyName);
@@ -662,7 +674,8 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     
     		Iterator itKeyProperties = metaModel.getAllKeyPropertiesNames().iterator();
     		while (itKeyProperties.hasNext()) {
-    			String propertyName = Strings.change(Strings.firstUpper((String) itKeyProperties.next()), ".", "_");			
+    			String propertyName = (String) itKeyProperties.next();
+    			propertyName = Strings.firstUpper(Strings.change(propertyName, ".", "_"));
     		
     out.print(" \n\t\tset");
     out.print(propertyName);
@@ -683,14 +696,19 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     
     		Iterator it = containerModel.getAllKeyPropertiesNames().iterator();
     		while (it.hasNext()) {
-    			String propertyName = Strings.change((String) it.next(), ".", "_");			
+    			String propertyName = (String) it.next();
+    			String propertyNameInKey = propertyName;
+    			if (propertyName.indexOf('.') >= 0) {
+    				propertyName = Strings.change(propertyName, ".", "_");
+    				propertyNameInKey = "_" + Strings.firstUpper(propertyName);
+    			}
     		
     out.print(" \n\t\tset");
     out.print(containerName);
     out.print("_");
     out.print(propertyName);
     out.print("(containerKey.");
-    out.print(propertyName);
+    out.print(propertyNameInKey);
     out.print(");");
     } 
     } // if has aggregate
@@ -802,7 +820,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     
     		itKeyProperties = metaModel.getAllKeyPropertiesNames().iterator();
     		while (itKeyProperties.hasNext()) {
-    			String propertyName = Strings.change(Strings.firstUpper((String) itKeyProperties.next()), ".", "_");			
+    			String propertyName = Strings.change(Strings.firstUpper((String) itKeyProperties.next()), ".", "_");						
     		
     out.print(" \n\t\tset");
     out.print(propertyName);
@@ -814,14 +832,19 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     		
     		Iterator it = containerModel.getAllKeyPropertiesNames().iterator();
     		while (it.hasNext()) {
-    			String propertyName = Strings.change((String) it.next(), ".", "_");
+    			String propertyName = (String) it.next();
+    			String propertyNameInKey = propertyName;
+    			if (propertyName.indexOf('.') >= 0) {
+    				propertyName = Strings.change(propertyName, ".", "_");
+    				propertyNameInKey = "_" + Strings.firstUpper(propertyName);
+    			}
     		
     out.print("\n\t\tset");
     out.print(containerName);
     out.print("_");
     out.print(propertyName);
     out.print("(containerKey.");
-    out.print(propertyName);
+    out.print(propertyNameInKey);
     out.print(");");
     } 
     		properties = metaModel.getMetaPropertiesWithDefaultValueOnCreate();
@@ -1297,7 +1320,18 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     			}
     		}
     		
-    out.print(" \n\t}\n\t\t\n}");
+    
+    		for (Iterator it = metaModel.getMetaReferencesWithMapping().iterator(); it.hasNext(); ) {
+    			MetaReference ref = (MetaReference) it.next();
+    			String refName = Strings.firstUpper(ref.getName());
+    		
+    out.print(" \n\t\tset");
+    out.print(refName);
+    out.print("Key(null);");
+    
+    		}
+    		
+    out.print(" \t\n\t}\n\t\t\n}");
     
         } catch (Exception e) {
             System.out.println("Exception: "+e.getMessage());
@@ -1332,7 +1366,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon May 23 09:17:50 CEST 2005", // date this file was generated
+        { "Wed May 25 12:26:41 CEST 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/ejbean.xml", // input file
              "/home/javi/workspace/OpenXava/generator/EJBeanPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

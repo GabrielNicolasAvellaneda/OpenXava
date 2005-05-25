@@ -24,7 +24,7 @@ public abstract class InvoiceCMP
          dataHolder.setYear( getYear() );
          dataHolder.set_VatPercentage( get_VatPercentage() );
          dataHolder.setNumber( getNumber() );
-         dataHolder.setCustomer_number( getCustomer_number() );
+         dataHolder.set_Customer_number( get_Customer_number() );
 
       }
       catch (RuntimeException e)
@@ -43,7 +43,7 @@ public abstract class InvoiceCMP
          set_Date( dataHolder.get_Date() );
          set_Paid( dataHolder.get_Paid() );
          set_VatPercentage( dataHolder.get_VatPercentage() );
-         setCustomer_number( dataHolder.getCustomer_number() );
+         set_Customer_number( dataHolder.get_Customer_number() );
 
       }
       catch (Exception e)
@@ -175,8 +175,8 @@ public abstract class InvoiceCMP
 
    public abstract void setNumber( int number ) ;
 
-   public abstract int getCustomer_number() ;
+   public abstract int get_Customer_number() ;
 
-   public abstract void setCustomer_number( int customer_number ) ;
+   public abstract void set_Customer_number( int _Customer_number ) ;
 
 }

@@ -19,7 +19,7 @@ public abstract class FilterBySubfamilyCMP
          dataHolder = new org.openxava.test.ejb.FilterBySubfamilyData();
 
          dataHolder.setOid( getOid() );
-         dataHolder.setSubfamily_number( getSubfamily_number() );
+         dataHolder.set_Subfamily_number( get_Subfamily_number() );
 
       }
       catch (RuntimeException e)
@@ -34,7 +34,7 @@ public abstract class FilterBySubfamilyCMP
    {
       try
       {
-         setSubfamily_number( dataHolder.getSubfamily_number() );
+         set_Subfamily_number( dataHolder.get_Subfamily_number() );
 
       }
       catch (Exception e)
@@ -119,8 +119,8 @@ public abstract class FilterBySubfamilyCMP
 
    public abstract void setOid( java.lang.String oid ) ;
 
-   public abstract int getSubfamily_number() ;
+   public abstract int get_Subfamily_number() ;
 
-   public abstract void setSubfamily_number( int subfamily_number ) ;
+   public abstract void set_Subfamily_number( int _Subfamily_number ) ;
 
 }

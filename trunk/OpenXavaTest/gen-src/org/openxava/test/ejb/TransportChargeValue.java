@@ -130,10 +130,6 @@ public class TransportChargeValue
    protected boolean hasIdentity()
    {
 	  boolean ret = true;
-	  ret = ret && delivery_numberHasBeenSet;
-	  ret = ret && delivery_type_numberHasBeenSet;
-	  ret = ret && delivery_invoice_yearHasBeenSet;
-	  ret = ret && delivery_invoice_numberHasBeenSet;
 	  return ret;
    }
 
@@ -147,10 +143,6 @@ public class TransportChargeValue
 		 TransportChargeValue that = (TransportChargeValue) other;
 		 if ( ! that.hasIdentity() ) return false;
 		 boolean lEquals = true;
-		 lEquals = lEquals && this.delivery_number == that.delivery_number;
-		 lEquals = lEquals && this.delivery_type_number == that.delivery_type_number;
-		 lEquals = lEquals && this.delivery_invoice_year == that.delivery_invoice_year;
-		 lEquals = lEquals && this.delivery_invoice_number == that.delivery_invoice_number;
 
 		 lEquals = lEquals && isIdentical(that);
 
@@ -176,6 +168,10 @@ public class TransportChargeValue
 		 {
 			lEquals = lEquals && this.amount.equals( that.amount );
 		 }
+		 lEquals = lEquals && this.delivery_number == that.delivery_number;
+		 lEquals = lEquals && this.delivery_type_number == that.delivery_type_number;
+		 lEquals = lEquals && this.delivery_invoice_year == that.delivery_invoice_year;
+		 lEquals = lEquals && this.delivery_invoice_number == that.delivery_invoice_number;
 
 		 return lEquals;
 	  }

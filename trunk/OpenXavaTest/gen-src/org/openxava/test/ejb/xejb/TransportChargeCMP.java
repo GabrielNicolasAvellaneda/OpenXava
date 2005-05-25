@@ -19,10 +19,10 @@ public abstract class TransportChargeCMP
          dataHolder = new org.openxava.test.ejb.TransportChargeData();
 
          dataHolder.set_Amount( get_Amount() );
-         dataHolder.setDelivery_number( getDelivery_number() );
-         dataHolder.setDelivery_type_number( getDelivery_type_number() );
-         dataHolder.setDelivery_invoice_year( getDelivery_invoice_year() );
-         dataHolder.setDelivery_invoice_number( getDelivery_invoice_number() );
+         dataHolder.set_Delivery_number( get_Delivery_number() );
+         dataHolder.set_Delivery_type_number( get_Delivery_type_number() );
+         dataHolder.set_Delivery_invoice_year( get_Delivery_invoice_year() );
+         dataHolder.set_Delivery_invoice_number( get_Delivery_invoice_number() );
 
       }
       catch (RuntimeException e)
@@ -111,6 +111,10 @@ public abstract class TransportChargeCMP
 	  try
 	  {
 		 setAmount( valueHolder.getAmount() );
+		 setDelivery_number( valueHolder.getDelivery_number() );
+		 setDelivery_type_number( valueHolder.getDelivery_type_number() );
+		 setDelivery_invoice_year( valueHolder.getDelivery_invoice_year() );
+		 setDelivery_invoice_number( valueHolder.getDelivery_invoice_number() );
 
 	  }
 	  catch (Exception e)
@@ -125,20 +129,20 @@ public abstract class TransportChargeCMP
 
    public abstract void set_Amount( java.math.BigDecimal _Amount ) ;
 
-   public abstract int getDelivery_number() ;
+   public abstract int get_Delivery_number() ;
 
-   public abstract void setDelivery_number( int delivery_number ) ;
+   public abstract void set_Delivery_number( int _Delivery_number ) ;
 
-   public abstract int getDelivery_type_number() ;
+   public abstract int get_Delivery_type_number() ;
 
-   public abstract void setDelivery_type_number( int delivery_type_number ) ;
+   public abstract void set_Delivery_type_number( int _Delivery_type_number ) ;
 
-   public abstract int getDelivery_invoice_year() ;
+   public abstract int get_Delivery_invoice_year() ;
 
-   public abstract void setDelivery_invoice_year( int delivery_invoice_year ) ;
+   public abstract void set_Delivery_invoice_year( int _Delivery_invoice_year ) ;
 
-   public abstract int getDelivery_invoice_number() ;
+   public abstract int get_Delivery_invoice_number() ;
 
-   public abstract void setDelivery_invoice_number( int delivery_invoice_number ) ;
+   public abstract void set_Delivery_invoice_number( int _Delivery_invoice_number ) ;
 
 }

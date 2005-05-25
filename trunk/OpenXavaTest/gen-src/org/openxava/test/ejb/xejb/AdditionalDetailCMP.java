@@ -20,8 +20,8 @@ public abstract class AdditionalDetailCMP
 
          dataHolder.setCounter( getCounter() );
          dataHolder.set_Subfamily( get_Subfamily() );
-         dataHolder.setService_number( getService_number() );
-         dataHolder.setType_number( getType_number() );
+         dataHolder.set_Service_number( get_Service_number() );
+         dataHolder.set_Type_number( get_Type_number() );
 
       }
       catch (RuntimeException e)
@@ -37,7 +37,7 @@ public abstract class AdditionalDetailCMP
       try
       {
          set_Subfamily( dataHolder.get_Subfamily() );
-         setType_number( dataHolder.getType_number() );
+         set_Type_number( dataHolder.get_Type_number() );
 
       }
       catch (Exception e)
@@ -110,6 +110,7 @@ public abstract class AdditionalDetailCMP
 	  try
 	  {
 		 setSubfamily( valueHolder.getSubfamily() );
+		 setService_number( valueHolder.getService_number() );
 		 setType_number( valueHolder.getType_number() );
 
 	  }
@@ -129,12 +130,12 @@ public abstract class AdditionalDetailCMP
 
    public abstract void set_Subfamily( java.lang.Integer _Subfamily ) ;
 
-   public abstract int getService_number() ;
+   public abstract int get_Service_number() ;
 
-   public abstract void setService_number( int service_number ) ;
+   public abstract void set_Service_number( int _Service_number ) ;
 
-   public abstract int getType_number() ;
+   public abstract int get_Type_number() ;
 
-   public abstract void setType_number( int type_number ) ;
+   public abstract void set_Type_number( int _Type_number ) ;
 
 }

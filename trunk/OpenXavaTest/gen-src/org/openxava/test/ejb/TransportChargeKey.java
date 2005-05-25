@@ -15,64 +15,64 @@ public class TransportChargeKey
    implements java.io.Serializable
 {
 
-   public int delivery_number;
-   public int delivery_type_number;
-   public int delivery_invoice_year;
-   public int delivery_invoice_number;
+   public int _Delivery_number;
+   public int _Delivery_type_number;
+   public int _Delivery_invoice_year;
+   public int _Delivery_invoice_number;
 
    public TransportChargeKey()
    {
    }
 
-   public TransportChargeKey( int delivery_number,int delivery_type_number,int delivery_invoice_year,int delivery_invoice_number )
+   public TransportChargeKey( int _Delivery_number,int _Delivery_type_number,int _Delivery_invoice_year,int _Delivery_invoice_number )
    {
-      this.delivery_number = delivery_number;
-      this.delivery_type_number = delivery_type_number;
-      this.delivery_invoice_year = delivery_invoice_year;
-      this.delivery_invoice_number = delivery_invoice_number;
+      this._Delivery_number = _Delivery_number;
+      this._Delivery_type_number = _Delivery_type_number;
+      this._Delivery_invoice_year = _Delivery_invoice_year;
+      this._Delivery_invoice_number = _Delivery_invoice_number;
    }
 
-   public int getDelivery_number()
+   public int get_Delivery_number()
    {
-      return delivery_number;
+      return _Delivery_number;
    }
-   public int getDelivery_type_number()
+   public int get_Delivery_type_number()
    {
-      return delivery_type_number;
+      return _Delivery_type_number;
    }
-   public int getDelivery_invoice_year()
+   public int get_Delivery_invoice_year()
    {
-      return delivery_invoice_year;
+      return _Delivery_invoice_year;
    }
-   public int getDelivery_invoice_number()
+   public int get_Delivery_invoice_number()
    {
-      return delivery_invoice_number;
+      return _Delivery_invoice_number;
    }
 
-   public void setDelivery_number(int delivery_number)
+   public void set_Delivery_number(int _Delivery_number)
    {
-      this.delivery_number = delivery_number;
+      this._Delivery_number = _Delivery_number;
    }
-   public void setDelivery_type_number(int delivery_type_number)
+   public void set_Delivery_type_number(int _Delivery_type_number)
    {
-      this.delivery_type_number = delivery_type_number;
+      this._Delivery_type_number = _Delivery_type_number;
    }
-   public void setDelivery_invoice_year(int delivery_invoice_year)
+   public void set_Delivery_invoice_year(int _Delivery_invoice_year)
    {
-      this.delivery_invoice_year = delivery_invoice_year;
+      this._Delivery_invoice_year = _Delivery_invoice_year;
    }
-   public void setDelivery_invoice_number(int delivery_invoice_number)
+   public void set_Delivery_invoice_number(int _Delivery_invoice_number)
    {
-      this.delivery_invoice_number = delivery_invoice_number;
+      this._Delivery_invoice_number = _Delivery_invoice_number;
    }
 
    public int hashCode()
    {
       int _hashCode = 0;
-         _hashCode += (int)this.delivery_number;
-         _hashCode += (int)this.delivery_type_number;
-         _hashCode += (int)this.delivery_invoice_year;
-         _hashCode += (int)this.delivery_invoice_number;
+         _hashCode += (int)this._Delivery_number;
+         _hashCode += (int)this._Delivery_type_number;
+         _hashCode += (int)this._Delivery_invoice_year;
+         _hashCode += (int)this._Delivery_invoice_number;
 
       return _hashCode;
    }
@@ -91,10 +91,10 @@ public class TransportChargeKey
       }
       else
       {
-         eq = eq && this.delivery_number == pk.delivery_number;
-         eq = eq && this.delivery_type_number == pk.delivery_type_number;
-         eq = eq && this.delivery_invoice_year == pk.delivery_invoice_year;
-         eq = eq && this.delivery_invoice_number == pk.delivery_invoice_number;
+         eq = eq && this._Delivery_number == pk._Delivery_number;
+         eq = eq && this._Delivery_type_number == pk._Delivery_type_number;
+         eq = eq && this._Delivery_invoice_year == pk._Delivery_invoice_year;
+         eq = eq && this._Delivery_invoice_number == pk._Delivery_invoice_number;
       }
 
       return eq;

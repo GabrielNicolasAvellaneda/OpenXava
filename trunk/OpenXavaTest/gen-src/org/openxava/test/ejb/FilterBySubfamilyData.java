@@ -11,7 +11,7 @@ public class FilterBySubfamilyData
    implements java.io.Serializable
 {
    private java.lang.String oid;
-   private int subfamily_number;
+   private int _Subfamily_number;
 
    public FilterBySubfamilyData()
    {
@@ -20,7 +20,7 @@ public class FilterBySubfamilyData
    public FilterBySubfamilyData( FilterBySubfamilyData otherData )
    {
       setOid(otherData.getOid());
-      setSubfamily_number(otherData.getSubfamily_number());
+      set_Subfamily_number(otherData.get_Subfamily_number());
 
    }
 
@@ -38,20 +38,20 @@ public class FilterBySubfamilyData
       this.oid = oid;
    }
 
-   public int getSubfamily_number()
+   public int get_Subfamily_number()
    {
-      return this.subfamily_number;
+      return this._Subfamily_number;
    }
-   public void setSubfamily_number( int subfamily_number )
+   public void set_Subfamily_number( int _Subfamily_number )
    {
-      this.subfamily_number = subfamily_number;
+      this._Subfamily_number = _Subfamily_number;
    }
 
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("oid=" + getOid() + " " + "subfamily_number=" + getSubfamily_number());
+      str.append("oid=" + getOid() + " " + "_Subfamily_number=" + get_Subfamily_number());
       str.append('}');
 
       return(str.toString());
@@ -72,7 +72,7 @@ public class FilterBySubfamilyData
          {
             lEquals = lEquals && this.oid.equals( lTest.oid );
          }
-         lEquals = lEquals && this.subfamily_number == lTest.subfamily_number;
+         lEquals = lEquals && this._Subfamily_number == lTest._Subfamily_number;
 
          return lEquals;
       }
@@ -88,7 +88,7 @@ public class FilterBySubfamilyData
 
       result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
 
-      result = 37*result + (int) subfamily_number;
+      result = 37*result + (int) _Subfamily_number;
 
       return result;
    }

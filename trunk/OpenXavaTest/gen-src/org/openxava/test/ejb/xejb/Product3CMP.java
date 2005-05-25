@@ -21,7 +21,7 @@ public abstract class Product3CMP
          dataHolder.set_Comments( get_Comments() );
          dataHolder.set_Description( get_Description() );
          dataHolder.setNumber( getNumber() );
-         dataHolder.setFamily_oid( getFamily_oid() );
+         dataHolder.set_Family_oid( get_Family_oid() );
 
       }
       catch (RuntimeException e)
@@ -38,7 +38,7 @@ public abstract class Product3CMP
       {
          set_Comments( dataHolder.get_Comments() );
          set_Description( dataHolder.get_Description() );
-         setFamily_oid( dataHolder.getFamily_oid() );
+         set_Family_oid( dataHolder.get_Family_oid() );
 
       }
       catch (Exception e)
@@ -135,8 +135,8 @@ public abstract class Product3CMP
 
    public abstract void setNumber( long number ) ;
 
-   public abstract java.lang.String getFamily_oid() ;
+   public abstract java.lang.String get_Family_oid() ;
 
-   public abstract void setFamily_oid( java.lang.String family_oid ) ;
+   public abstract void set_Family_oid( java.lang.String _Family_oid ) ;
 
 }

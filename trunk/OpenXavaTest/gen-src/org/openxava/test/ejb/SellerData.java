@@ -12,7 +12,7 @@ public class SellerData
 {
    private java.lang.String _Name;
    private int number;
-   private java.lang.String level_id;
+   private java.lang.String _Level_id;
 
    public SellerData()
    {
@@ -22,7 +22,7 @@ public class SellerData
    {
       set_Name(otherData.get_Name());
       setNumber(otherData.getNumber());
-      setLevel_id(otherData.getLevel_id());
+      set_Level_id(otherData.get_Level_id());
 
    }
 
@@ -49,20 +49,20 @@ public class SellerData
       this.number = number;
    }
 
-   public java.lang.String getLevel_id()
+   public java.lang.String get_Level_id()
    {
-      return this.level_id;
+      return this._Level_id;
    }
-   public void setLevel_id( java.lang.String level_id )
+   public void set_Level_id( java.lang.String _Level_id )
    {
-      this.level_id = level_id;
+      this._Level_id = _Level_id;
    }
 
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Name=" + get_Name() + " " + "number=" + getNumber() + " " + "level_id=" + getLevel_id());
+      str.append("_Name=" + get_Name() + " " + "number=" + getNumber() + " " + "_Level_id=" + get_Level_id());
       str.append('}');
 
       return(str.toString());
@@ -84,13 +84,13 @@ public class SellerData
             lEquals = lEquals && this._Name.equals( lTest._Name );
          }
          lEquals = lEquals && this.number == lTest.number;
-         if( this.level_id == null )
+         if( this._Level_id == null )
          {
-            lEquals = lEquals && ( lTest.level_id == null );
+            lEquals = lEquals && ( lTest._Level_id == null );
          }
          else
          {
-            lEquals = lEquals && this.level_id.equals( lTest.level_id );
+            lEquals = lEquals && this._Level_id.equals( lTest._Level_id );
          }
 
          return lEquals;
@@ -109,7 +109,7 @@ public class SellerData
 
       result = 37*result + (int) number;
 
-      result = 37*result + ((this.level_id != null) ? this.level_id.hashCode() : 0);
+      result = 37*result + ((this._Level_id != null) ? this._Level_id.hashCode() : 0);
 
       return result;
    }

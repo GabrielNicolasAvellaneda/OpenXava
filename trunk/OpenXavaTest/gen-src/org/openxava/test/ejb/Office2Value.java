@@ -222,7 +222,6 @@ public class Office2Value
 	  boolean ret = true;
 	  ret = ret && zoneNumberHasBeenSet;
 	  ret = ret && numberHasBeenSet;
-	  ret = ret && mainWarehouse_numberHasBeenSet;
 	  return ret;
    }
 
@@ -238,14 +237,6 @@ public class Office2Value
 		 boolean lEquals = true;
 		 lEquals = lEquals && this.zoneNumber == that.zoneNumber;
 		 lEquals = lEquals && this.number == that.number;
-		 if( this.mainWarehouse_number == null )
-		 {
-			lEquals = lEquals && ( that.mainWarehouse_number == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.mainWarehouse_number.equals( that.mainWarehouse_number );
-		 }
 
 		 lEquals = lEquals && isIdentical(that);
 
@@ -284,6 +275,14 @@ public class Office2Value
 			lEquals = lEquals && this.defaultCarrier_number.equals( that.defaultCarrier_number );
 		 }
 		 lEquals = lEquals && this.mainWarehouse_zoneNumber == that.mainWarehouse_zoneNumber;
+		 if( this.mainWarehouse_number == null )
+		 {
+			lEquals = lEquals && ( that.mainWarehouse_number == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.mainWarehouse_number.equals( that.mainWarehouse_number );
+		 }
 
 		 return lEquals;
 	  }

@@ -67,17 +67,17 @@
 
         </cmp-field>
          <cmp-field>
-            <field-name>officeManager_number</field-name>
+            <field-name>_OfficeManager_number</field-name>
             <column-name>MANAGER_NUMBER</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>defaultCarrier_number</field-name>
+            <field-name>_DefaultCarrier_number</field-name>
             <column-name>CARRIER_NUMBER</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>mainWarehouse_number</field-name>
+            <field-name>_MainWarehouse_number</field-name>
             <column-name>WAREHOUSE_NUMBER</column-name>
 
         </cmp-field>
@@ -91,7 +91,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.number = ?1 AND o.officeManager_number = ?2 AND o._ZoneNumber = ?3 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.number = ?1 AND o._OfficeManager_number = ?2 AND o._ZoneNumber = ?3 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -101,7 +101,7 @@
                   <method-param>java.lang.Integer</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.defaultCarrier_number = ?1 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o._DefaultCarrier_number = ?1 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -112,7 +112,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.mainWarehouse_number = ?1 AND o._ZoneNumber = ?2 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o._MainWarehouse_number = ?1 AND o._ZoneNumber = ?2 ]]></jboss-ql>
 
 	     </query>
 
@@ -181,37 +181,37 @@
 
         </cmp-field>
          <cmp-field>
-            <field-name>type_number</field-name>
+            <field-name>_Type_number</field-name>
             <column-name>TYPE</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>shipment_type</field-name>
+            <field-name>_Shipment_type</field-name>
             <column-name>SHIPMENT_TYPE</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>shipment_mode</field-name>
+            <field-name>_Shipment_mode</field-name>
             <column-name>SHIPMENT_MODE</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>shipment_number</field-name>
+            <field-name>_Shipment_number</field-name>
             <column-name>SHIPMENT_NUMBER</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>carrier_number</field-name>
+            <field-name>_Carrier_number</field-name>
             <column-name>CARRIER</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>invoice_year</field-name>
+            <field-name>_Invoice_year</field-name>
             <column-name>INVOICE_YEAR</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>invoice_number</field-name>
+            <field-name>_Invoice_number</field-name>
             <column-name>INVOICE_NUMBER</column-name>
 
         </cmp-field>
@@ -223,7 +223,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o.type_number = ?1 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o._Type_number = ?1 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -235,7 +235,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o.shipment_type = ?1 AND o.shipment_mode = ?2 AND o.shipment_number = ?3 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o._Shipment_type = ?1 AND o._Shipment_mode = ?2 AND o._Shipment_number = ?3 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -245,7 +245,7 @@
                   <method-param>java.lang.Integer</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o.carrier_number = ?1 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o._Carrier_number = ?1 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -256,7 +256,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o.invoice_year = ?1 AND o.invoice_number = ?2 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o._Invoice_year = ?1 AND o._Invoice_number = ?2 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -484,17 +484,17 @@
 
         </cmp-field>
          <cmp-field>
-            <field-name>customer_number</field-name>
+            <field-name>_Customer_number</field-name>
             <column-name>CUSTOMER</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>preferredWarehouse_zoneNumber</field-name>
+            <field-name>_PreferredWarehouse_zoneNumber</field-name>
             <column-name>WAREHOUSE_ZONE</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>preferredWarehouse_number</field-name>
+            <field-name>_PreferredWarehouse_number</field-name>
             <column-name>WAREHOUSE_NUMBER</column-name>
 
         </cmp-field>
@@ -506,7 +506,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryPlace o WHERE o.customer_number = ?1 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryPlace o WHERE o._Customer_number = ?1 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -517,7 +517,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryPlace o WHERE o.preferredWarehouse_number = ?1 AND o.preferredWarehouse_zoneNumber = ?2 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryPlace o WHERE o._PreferredWarehouse_number = ?1 AND o._PreferredWarehouse_zoneNumber = ?2 ]]></jboss-ql>
 
 	     </query>
 
@@ -566,7 +566,7 @@
 
         </cmp-field>
          <cmp-field>
-            <field-name>level_id</field-name>
+            <field-name>_Level_id</field-name>
             <column-name>LEVEL</column-name>
 
         </cmp-field>
@@ -578,7 +578,7 @@
                   <method-param>java.lang.String</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE o.level_id = ?1 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE o._Level_id = ?1 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -631,12 +631,12 @@
 
         </cmp-field>
          <cmp-field>
-            <field-name>seller_number</field-name>
+            <field-name>_Seller_number</field-name>
             <column-name>SELLER_NUMBER</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>alternateSeller_number</field-name>
+            <field-name>_AlternateSeller_number</field-name>
             <column-name>ALTERNATESELLER_NUMBER</column-name>
 
         </cmp-field>
@@ -656,7 +656,7 @@
 
         </cmp-field>
          <cmp-field>
-            <field-name>address_state_id</field-name>
+            <field-name>_Address_state_id</field-name>
             <column-name>STATE</column-name>
 
         </cmp-field>
@@ -668,7 +668,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o.seller_number = ?1 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Seller_number = ?1 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -678,7 +678,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o.alternateSeller_number = ?1 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._AlternateSeller_number = ?1 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -845,22 +845,22 @@
 
         </cmp-field>
          <cmp-field>
-            <field-name>product_number</field-name>
+            <field-name>_Product_number</field-name>
             <column-name>PRODUCT_NUMBER</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>soldBy_number</field-name>
+            <field-name>_SoldBy_number</field-name>
             <column-name>SOLDBY_NUMBER</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>invoice_year</field-name>
+            <field-name>_Invoice_year</field-name>
             <column-name>INVOICE_YEAR</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>invoice_number</field-name>
+            <field-name>_Invoice_number</field-name>
             <column-name>INVOICE_NUMBER</column-name>
 
         </cmp-field>
@@ -872,7 +872,7 @@
                   <method-param>long</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o.product_number = ?1 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o._Product_number = ?1 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -882,7 +882,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o.soldBy_number = ?1 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o._SoldBy_number = ?1 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -893,7 +893,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o.invoice_year = ?1 AND o.invoice_number = ?2 ORDER BY o._ServiceType desc]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o._Invoice_year = ?1 AND o._Invoice_number = ?2 ORDER BY o._ServiceType desc]]></jboss-ql>
 
 	     </query>
 
@@ -922,22 +922,22 @@
 
         </cmp-field>
          <cmp-field>
-            <field-name>warehouse_zoneNumber</field-name>
+            <field-name>_Warehouse_zoneNumber</field-name>
             <column-name>ZONE</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>warehouse_number</field-name>
+            <field-name>_Warehouse_number</field-name>
             <column-name>WAREHOUSE</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>family_number</field-name>
+            <field-name>_Family_number</field-name>
             <column-name>FAMILY</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>subfamily_number</field-name>
+            <field-name>_Subfamily_number</field-name>
             <column-name>SUBFAMILY</column-name>
 
         </cmp-field>
@@ -950,7 +950,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o.warehouse_number = ?1 AND o.warehouse_zoneNumber = ?2 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o._Warehouse_number = ?1 AND o._Warehouse_zoneNumber = ?2 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -960,7 +960,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o.family_number = ?1 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o._Family_number = ?1 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -970,7 +970,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o.subfamily_number = ?1 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o._Subfamily_number = ?1 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -1003,22 +1003,22 @@
 
         </cmp-field>
          <cmp-field>
-            <field-name>delivery_number</field-name>
+            <field-name>_Delivery_number</field-name>
             <column-name>DELIVERY_NUMBER</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>delivery_type_number</field-name>
+            <field-name>_Delivery_type_number</field-name>
             <column-name>DELIVERY_TYPE_NUMBER</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>delivery_invoice_year</field-name>
+            <field-name>_Delivery_invoice_year</field-name>
             <column-name>DELIVERY_INVOICE_YEAR</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>delivery_invoice_number</field-name>
+            <field-name>_Delivery_invoice_number</field-name>
             <column-name>DELIVERY_INVOICE_NUMBER</column-name>
 
         </cmp-field>
@@ -1033,7 +1033,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryDetail o WHERE o.delivery_number = ?1 AND o.delivery_type_number = ?2 AND o.delivery_invoice_year = ?3 AND o.delivery_invoice_number = ?4 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryDetail o WHERE o._Delivery_number = ?1 AND o._Delivery_type_number = ?2 AND o._Delivery_invoice_year = ?3 AND o._Delivery_invoice_number = ?4 ]]></jboss-ql>
 
 	     </query>
 
@@ -1057,12 +1057,12 @@
 
         </cmp-field>
          <cmp-field>
-            <field-name>service_number</field-name>
+            <field-name>_Service_number</field-name>
             <column-name>SERVICE</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>type_number</field-name>
+            <field-name>_Type_number</field-name>
             <column-name>TYPE</column-name>
 
         </cmp-field>
@@ -1074,7 +1074,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM AdditionalDetail o WHERE o.service_number = ?1 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM AdditionalDetail o WHERE o._Service_number = ?1 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -1084,7 +1084,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM AdditionalDetail o WHERE o.type_number = ?1 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM AdditionalDetail o WHERE o._Type_number = ?1 ]]></jboss-ql>
 
 	     </query>
 
@@ -1103,22 +1103,22 @@
 
         </cmp-field>
          <cmp-field>
-            <field-name>delivery_number</field-name>
+            <field-name>_Delivery_number</field-name>
             <column-name>DELIVERY_NUMBER</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>delivery_type_number</field-name>
+            <field-name>_Delivery_type_number</field-name>
             <column-name>DELIVERY_TYPE</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>delivery_invoice_year</field-name>
+            <field-name>_Delivery_invoice_year</field-name>
             <column-name>DELIVERY_INVOICE_YEAR</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>delivery_invoice_number</field-name>
+            <field-name>_Delivery_invoice_number</field-name>
             <column-name>DELIVERY_INVOICE_NUMBER</column-name>
 
         </cmp-field>
@@ -1133,7 +1133,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM TransportCharge o WHERE o.delivery_number = ?1 AND o.delivery_type_number = ?2 AND o.delivery_invoice_year = ?3 AND o.delivery_invoice_number = ?4 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM TransportCharge o WHERE o._Delivery_number = ?1 AND o._Delivery_type_number = ?2 AND o._Delivery_invoice_year = ?3 AND o._Delivery_invoice_number = ?4 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -1186,7 +1186,7 @@
 
         </cmp-field>
          <cmp-field>
-            <field-name>customer_number</field-name>
+            <field-name>_Customer_number</field-name>
             <column-name>CUSTOMER_NUMBER</column-name>
 
         </cmp-field>
@@ -1198,7 +1198,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Invoice o WHERE o.customer_number = ?1 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Invoice o WHERE o._Customer_number = ?1 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -1254,7 +1254,7 @@
 
         </cmp-field>
          <cmp-field>
-            <field-name>family_oid</field-name>
+            <field-name>_Family_oid</field-name>
             <column-name>FAMILY</column-name>
 
         </cmp-field>
@@ -1266,7 +1266,7 @@
                   <method-param>java.lang.String</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product3 o WHERE o.family_oid = ?1 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product3 o WHERE o._Family_oid = ?1 ]]></jboss-ql>
 
 	     </query>
 
@@ -1335,22 +1335,22 @@
 
         </cmp-field>
          <cmp-field>
-            <field-name>warehouse_zoneNumber</field-name>
+            <field-name>_Warehouse_zoneNumber</field-name>
             <column-name>WAREHOUSE_ZONE</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>warehouse_number</field-name>
+            <field-name>_Warehouse_number</field-name>
             <column-name>WAREHOUSE_NUMBER</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>drivingLicence_type</field-name>
+            <field-name>_DrivingLicence_type</field-name>
             <column-name>DRIVINGLICENCE_TYPE</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>drivingLicence_level</field-name>
+            <field-name>_DrivingLicence_level</field-name>
             <column-name>DRIVINGLICENCE_LEVEL</column-name>
 
         </cmp-field>
@@ -1363,7 +1363,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Carrier o WHERE o.warehouse_number = ?1 AND o.warehouse_zoneNumber = ?2 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Carrier o WHERE o._Warehouse_number = ?1 AND o._Warehouse_zoneNumber = ?2 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -1374,7 +1374,7 @@
                   <method-param>java.lang.String</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Carrier o WHERE o.drivingLicence_level = ?1 AND o.drivingLicence_type = ?2 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Carrier o WHERE o._DrivingLicence_level = ?1 AND o._DrivingLicence_type = ?2 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -1386,7 +1386,7 @@
                   <method-param>java.lang.Integer</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Carrier o WHERE o.warehouse_zoneNumber = ?1 AND o.warehouse_number = ?2 AND NOT (o._Number = ?3) ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Carrier o WHERE o._Warehouse_zoneNumber = ?1 AND o._Warehouse_number = ?2 AND NOT (o._Number = ?3) ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -1424,7 +1424,7 @@
 
         </cmp-field>
          <cmp-field>
-            <field-name>family_number</field-name>
+            <field-name>_Family_number</field-name>
             <column-name>FAMILY</column-name>
 
         </cmp-field>
@@ -1436,7 +1436,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Subfamily2 o WHERE o.family_number = ?1 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Subfamily2 o WHERE o._Family_number = ?1 ]]></jboss-ql>
 
 	     </query>
 
@@ -1470,17 +1470,17 @@
 
         </cmp-field>
          <cmp-field>
-            <field-name>officeManager_number</field-name>
+            <field-name>_OfficeManager_number</field-name>
             <column-name>MANAGER_NUMBER</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>defaultCarrier_number</field-name>
+            <field-name>_DefaultCarrier_number</field-name>
             <column-name>CARRIER_NUMBER</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>mainWarehouse_number</field-name>
+            <field-name>_MainWarehouse_number</field-name>
             <column-name>WAREHOUSE_NUMBER</column-name>
 
         </cmp-field>
@@ -1494,7 +1494,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Office2 o WHERE o.number = ?1 AND o.officeManager_number = ?2 AND o.zoneNumber = ?3 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Office2 o WHERE o.number = ?1 AND o._OfficeManager_number = ?2 AND o.zoneNumber = ?3 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -1504,7 +1504,7 @@
                   <method-param>java.lang.Integer</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Office2 o WHERE o.defaultCarrier_number = ?1 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Office2 o WHERE o._DefaultCarrier_number = ?1 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -1515,7 +1515,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Office2 o WHERE o.mainWarehouse_number = ?1 AND o.zoneNumber = ?2 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Office2 o WHERE o._MainWarehouse_number = ?1 AND o.zoneNumber = ?2 ]]></jboss-ql>
 
 	     </query>
 
@@ -1534,7 +1534,7 @@
 
         </cmp-field>
          <cmp-field>
-            <field-name>subfamily_number</field-name>
+            <field-name>_Subfamily_number</field-name>
             <column-name>SUBFAMILY</column-name>
 
         </cmp-field>
@@ -1546,7 +1546,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o.subfamily_number = ?1 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o._Subfamily_number = ?1 ]]></jboss-ql>
 
 	     </query>
 
@@ -1625,7 +1625,7 @@
 
         </cmp-field>
          <cmp-field>
-            <field-name>deliveryPlace_oid</field-name>
+            <field-name>_DeliveryPlace_oid</field-name>
             <column-name>DELIVERYPLACE</column-name>
 
         </cmp-field>
@@ -1637,7 +1637,7 @@
                   <method-param>java.lang.String</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Receptionist o WHERE o.deliveryPlace_oid = ?1 ]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Receptionist o WHERE o._DeliveryPlace_oid = ?1 ]]></jboss-ql>
 
 	     </query>
          <query>

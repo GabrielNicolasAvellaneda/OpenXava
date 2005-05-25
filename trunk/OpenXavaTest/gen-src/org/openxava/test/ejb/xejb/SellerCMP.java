@@ -20,7 +20,7 @@ public abstract class SellerCMP
 
          dataHolder.set_Name( get_Name() );
          dataHolder.setNumber( getNumber() );
-         dataHolder.setLevel_id( getLevel_id() );
+         dataHolder.set_Level_id( get_Level_id() );
 
       }
       catch (RuntimeException e)
@@ -36,7 +36,7 @@ public abstract class SellerCMP
       try
       {
          set_Name( dataHolder.get_Name() );
-         setLevel_id( dataHolder.getLevel_id() );
+         set_Level_id( dataHolder.get_Level_id() );
 
       }
       catch (Exception e)
@@ -127,8 +127,8 @@ public abstract class SellerCMP
 
    public abstract void setNumber( int number ) ;
 
-   public abstract java.lang.String getLevel_id() ;
+   public abstract java.lang.String get_Level_id() ;
 
-   public abstract void setLevel_id( java.lang.String level_id ) ;
+   public abstract void set_Level_id( java.lang.String _Level_id ) ;
 
 }

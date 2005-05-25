@@ -308,7 +308,7 @@
 >
 
 
-<!ELEMENT reference-mapping-detail EMPTY>
+<!ELEMENT reference-mapping-detail (converter?)>
 <!ATTLIST reference-mapping-detail
  column CDATA #REQUIRED
  referenced-model-property CDATA #REQUIRED 

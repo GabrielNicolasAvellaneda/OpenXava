@@ -13,7 +13,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon May 23 09:17:48 CEST 2005
+ * @version Wed May 25 12:26:39 CEST 2005
  */
 public class EntityReferencePG {
     Properties properties = new Properties();
@@ -28,6 +28,11 @@ private boolean ejb;
 public void setEjb(boolean ejb) {
 	this.ejb = ejb;
 }
+
+private String getExcepcion() {
+	return ejb?"EJBException":"RuntimeException";
+}
+
 
 public static void generate(XPathContext context, ProgramWriter out, MetaReference ref) throws XavaException {
 	EntityReferencePG pg = new EntityReferencePG();
@@ -52,6 +57,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     	modelMapping = metaModel.getMapping();
     }	
     String referenceName = Strings.firstUpper(reference.getName());
+    ReferenceMapping referenceMapping = modelMapping.getReferenceMapping(reference.getName());
     IMetaEjb referencedModel = (IMetaEjb) reference.getMetaModelReferenced();
     ModelMapping referencedMapping = referencedModel.getMapping();
     String referencedModelClass = referencedModel.getRemote();
@@ -116,14 +122,15 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     		String prefixGet = "get" + referenceName + "_";
     		Iterator itKeys = referencedModel.getAllKeyPropertiesNames().iterator();
     		while (itKeys.hasNext()) {
-    			String key = Strings.change((String) itKeys.next(), ".", "_");
-    			String keyAttribute=null;
-    			if (referencedMapping.hasConverter(key)) {
+    			String property = (String) itKeys.next();
+    			String key = Strings.change(property, ".", "_"); 
+    			String keyAttribute = null;
+    			if (referencedMapping.hasConverter(key) || property.indexOf('.') >= 0) { 
     				keyAttribute = "_" + Strings.firstUpper(key);
     			}
     			else {
     				keyAttribute = key;
-    			}				
+    			}
     		
     out.print(" \n\t\tkey.");
     out.print(keyAttribute);
@@ -149,9 +156,10 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     		String prefixSet = "set" + referenceName + "_";
     		itKeys = referencedModel.getAllKeyPropertiesNames().iterator();		
     		while (itKeys.hasNext()) {
-    			String key = Strings.change((String) itKeys.next(), ".", "_");
+    		    String property = (String) itKeys.next(); 
+    			String key = Strings.change(property, ".", "_");
     			String keyAttribute=null;
-    			if (referencedMapping.hasConverter(key)) {
+    			if (referencedMapping.hasConverter(key) || property.indexOf('.') >= 0) {
     				keyAttribute = "_" + Strings.firstUpper(key);
     			}
     			else {
@@ -211,23 +219,83 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     		else {
     			type = property.getTypeName();
     		}	
-    		String column = modelMapping.getReferenceMapping(reference.getName()).getColumnForReferencedModelProperty(originalProperty.getName());	
+    		String column = modelMapping.getReferenceMapping(reference.getName()).getColumnForReferencedModelProperty(originalProperty.getName());			
     	
-    out.print("\n\t/**\t\t\n\t * @ejb:interface-method\n\t * @ejb:persistent-field\n\t * ");
+    out.print("\n\t/**\t\t\n\t * @ejb:persistent-field\n\t * ");
     out.print(pkField);
-    out.print("\n\t * @ejb.value-object match=\"persistentCalculatedAndAggregate\"\n\t * @jboss:column-name \"");
+    out.print("\n\t * @jboss:column-name \"");
     out.print(column);
     out.print("\"\n\t */\n\tpublic abstract ");
     out.print(type);
-    out.print(" get");
+    out.print(" get_");
     out.print(propertyName);
-    out.print("();\n\tpublic abstract void set");
+    out.print("();\n\tpublic abstract void set_");
     out.print(propertyName);
     out.print("(");
     out.print(type);
     out.print(" new");
     out.print(propertyName);
+    out.print(");\n\n\t/**\t\t\n\t * @ejb:interface-method\n\t * @ejb.value-object match=\"persistentCalculatedAndAggregate\"\n\t */\n\tpublic ");
+    out.print(type);
+    out.print(" get");
+    out.print(propertyName);
+    out.print("() {");
+    
+    		if (referenceMapping.hasConverter(originalProperty.getName())) {			
+    			String getSentence = property.getName() + "Converter.toJava(get_" + propertyName + "())";							
+    		
+    out.print(" \n\t\ttry {\n\t\t\treturn ");
+    out.print(Generators.generateCast(type, getSentence));
+    out.print(";\n\t\t}\n\t\tcatch (org.openxava.converters.ConversionException ex) {\n\t\t\tex.printStackTrace();\n\t\t\tthrow new ");
+    out.print(getExcepcion());
+    out.print("(XavaResources.getString(\"generator.conversion_error\", \"");
+    out.print(reference.getName());
+    out.print(".");
+    out.print(originalProperty.getName());
+    out.print("\", \"");
+    out.print(metaModel.getName());
+    out.print("\", \"");
+    out.print(type);
+    out.print("\"));\n\t\t}");
+    } else { 
+    out.print(" \n\t\treturn get_");
+    out.print(propertyName);
+    out.print("();");
+    } 
+    out.print(" \n\t}\n\tpublic void set");
+    out.print(propertyName);
+    out.print("(");
+    out.print(type);
+    out.print(" new");
+    out.print(propertyName);
+    out.print(") {");
+    
+    		if (referenceMapping.hasConverter(originalProperty.getName())) {			
+    			String sentence = property.getName() + "Converter.toDB(new" + propertyName + ")";							
+    		
+    out.print(" \n\t\ttry {\n\t\t\tset_");
+    out.print(propertyName);
+    out.print("(");
+    out.print(Generators.generateCast(type, sentence));
+    out.print(");\n\t\t}\n\t\tcatch (org.openxava.converters.ConversionException ex) {\n\t\t\tex.printStackTrace();\n\t\t\tthrow new ");
+    out.print(getExcepcion());
+    out.print("(XavaResources.getString(\"generator.conversion_error\", \"");
+    out.print(reference.getName());
+    out.print(".");
+    out.print(originalProperty.getName());
+    out.print("\", \"");
+    out.print(metaModel.getName());
+    out.print("\", \"");
+    out.print(type);
+    out.print("\"));\n\t\t}");
+    } else { 
+    out.print(" \n\t\tset_");
+    out.print(propertyName);
+    out.print("(new");
+    out.print(propertyName);
     out.print(");");
+    } 
+    out.print(" \t\n\t}");
     } // while referenced entity key properties 
     out.print(" \n\n\tprivate ");
     out.print(homeClass);
@@ -250,6 +318,25 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     out.print(".class);\t\t\t \t\t\n\t\t}\n\t\treturn ");
     out.print(homeAttribute);
     out.print(";\n\t}");
+    
+    	for (Iterator it = referenceMapping.getDetails().iterator(); it.hasNext(); ) {	
+    		ReferenceMappingDetail detail = (ReferenceMappingDetail) it.next();
+    		if (detail.hasConverter()) {
+    			String key = Strings.change(detail.getReferencedModelProperty(), ".", "_");
+    	
+    out.print(" \n\t\n\tprivate static final ");
+    out.print(detail.getConverterClassName());
+    out.print(" \n\t\t");
+    out.print(reference.getName());
+    out.print("_");
+    out.print(key);
+    out.print("Converter =\n\t\t\tnew ");
+    out.print(detail.getConverterClassName());
+    out.print("();");
+    
+    		}
+    	}
+    	
     
         } catch (Exception e) {
             System.out.println("Exception: "+e.getMessage());
@@ -284,7 +371,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon May 23 09:17:48 CEST 2005", // date this file was generated
+        { "Wed May 25 12:26:39 CEST 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/entityReference.xml", // input file
              "/home/javi/workspace/OpenXava/generator/EntityReferencePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

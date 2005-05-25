@@ -13,7 +13,7 @@ public class Product3Data
    private java.lang.String _Comments;
    private java.lang.String _Description;
    private long number;
-   private java.lang.String family_oid;
+   private java.lang.String _Family_oid;
 
    public Product3Data()
    {
@@ -24,7 +24,7 @@ public class Product3Data
       set_Comments(otherData.get_Comments());
       set_Description(otherData.get_Description());
       setNumber(otherData.getNumber());
-      setFamily_oid(otherData.getFamily_oid());
+      set_Family_oid(otherData.get_Family_oid());
 
    }
 
@@ -60,20 +60,20 @@ public class Product3Data
       this.number = number;
    }
 
-   public java.lang.String getFamily_oid()
+   public java.lang.String get_Family_oid()
    {
-      return this.family_oid;
+      return this._Family_oid;
    }
-   public void setFamily_oid( java.lang.String family_oid )
+   public void set_Family_oid( java.lang.String _Family_oid )
    {
-      this.family_oid = family_oid;
+      this._Family_oid = _Family_oid;
    }
 
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Comments=" + get_Comments() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "family_oid=" + getFamily_oid());
+      str.append("_Comments=" + get_Comments() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "_Family_oid=" + get_Family_oid());
       str.append('}');
 
       return(str.toString());
@@ -103,13 +103,13 @@ public class Product3Data
             lEquals = lEquals && this._Description.equals( lTest._Description );
          }
          lEquals = lEquals && this.number == lTest.number;
-         if( this.family_oid == null )
+         if( this._Family_oid == null )
          {
-            lEquals = lEquals && ( lTest.family_oid == null );
+            lEquals = lEquals && ( lTest._Family_oid == null );
          }
          else
          {
-            lEquals = lEquals && this.family_oid.equals( lTest.family_oid );
+            lEquals = lEquals && this._Family_oid.equals( lTest._Family_oid );
          }
 
          return lEquals;
@@ -130,7 +130,7 @@ public class Product3Data
 
       result = 37*result + (int)(number^(number>>>32));
 
-      result = 37*result + ((this.family_oid != null) ? this.family_oid.hashCode() : 0);
+      result = 37*result + ((this._Family_oid != null) ? this._Family_oid.hashCode() : 0);
 
       return result;
    }

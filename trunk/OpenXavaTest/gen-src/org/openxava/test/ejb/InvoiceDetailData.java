@@ -18,10 +18,10 @@ public class InvoiceDetailData
    private int deliveryDate_year;
    private java.lang.Integer _Quantity;
    private java.lang.Integer _ServiceType;
-   private long product_number;
-   private int soldBy_number;
-   private int invoice_year;
-   private int invoice_number;
+   private long _Product_number;
+   private int _SoldBy_number;
+   private int _Invoice_year;
+   private int _Invoice_number;
 
    public InvoiceDetailData()
    {
@@ -37,10 +37,10 @@ public class InvoiceDetailData
       setDeliveryDate_year(otherData.getDeliveryDate_year());
       set_Quantity(otherData.get_Quantity());
       set_ServiceType(otherData.get_ServiceType());
-      setProduct_number(otherData.getProduct_number());
-      setSoldBy_number(otherData.getSoldBy_number());
-      setInvoice_year(otherData.getInvoice_year());
-      setInvoice_number(otherData.getInvoice_number());
+      set_Product_number(otherData.get_Product_number());
+      set_SoldBy_number(otherData.get_SoldBy_number());
+      set_Invoice_year(otherData.get_Invoice_year());
+      set_Invoice_number(otherData.get_Invoice_number());
 
    }
 
@@ -121,47 +121,47 @@ public class InvoiceDetailData
       this._ServiceType = _ServiceType;
    }
 
-   public long getProduct_number()
+   public long get_Product_number()
    {
-      return this.product_number;
+      return this._Product_number;
    }
-   public void setProduct_number( long product_number )
+   public void set_Product_number( long _Product_number )
    {
-      this.product_number = product_number;
-   }
-
-   public int getSoldBy_number()
-   {
-      return this.soldBy_number;
-   }
-   public void setSoldBy_number( int soldBy_number )
-   {
-      this.soldBy_number = soldBy_number;
+      this._Product_number = _Product_number;
    }
 
-   public int getInvoice_year()
+   public int get_SoldBy_number()
    {
-      return this.invoice_year;
+      return this._SoldBy_number;
    }
-   public void setInvoice_year( int invoice_year )
+   public void set_SoldBy_number( int _SoldBy_number )
    {
-      this.invoice_year = invoice_year;
+      this._SoldBy_number = _SoldBy_number;
    }
 
-   public int getInvoice_number()
+   public int get_Invoice_year()
    {
-      return this.invoice_number;
+      return this._Invoice_year;
    }
-   public void setInvoice_number( int invoice_number )
+   public void set_Invoice_year( int _Invoice_year )
    {
-      this.invoice_number = invoice_number;
+      this._Invoice_year = _Invoice_year;
+   }
+
+   public int get_Invoice_number()
+   {
+      return this._Invoice_number;
+   }
+   public void set_Invoice_number( int _Invoice_number )
+   {
+      this._Invoice_number = _Invoice_number;
    }
 
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_UnitPrice=" + get_UnitPrice() + " " + "oid=" + getOid() + " " + "_Remarks=" + get_Remarks() + " " + "deliveryDate_day=" + getDeliveryDate_day() + " " + "deliveryDate_month=" + getDeliveryDate_month() + " " + "deliveryDate_year=" + getDeliveryDate_year() + " " + "_Quantity=" + get_Quantity() + " " + "_ServiceType=" + get_ServiceType() + " " + "product_number=" + getProduct_number() + " " + "soldBy_number=" + getSoldBy_number() + " " + "invoice_year=" + getInvoice_year() + " " + "invoice_number=" + getInvoice_number());
+      str.append("_UnitPrice=" + get_UnitPrice() + " " + "oid=" + getOid() + " " + "_Remarks=" + get_Remarks() + " " + "deliveryDate_day=" + getDeliveryDate_day() + " " + "deliveryDate_month=" + getDeliveryDate_month() + " " + "deliveryDate_year=" + getDeliveryDate_year() + " " + "_Quantity=" + get_Quantity() + " " + "_ServiceType=" + get_ServiceType() + " " + "_Product_number=" + get_Product_number() + " " + "_SoldBy_number=" + get_SoldBy_number() + " " + "_Invoice_year=" + get_Invoice_year() + " " + "_Invoice_number=" + get_Invoice_number());
       str.append('}');
 
       return(str.toString());
@@ -217,10 +217,10 @@ public class InvoiceDetailData
          {
             lEquals = lEquals && this._ServiceType.equals( lTest._ServiceType );
          }
-         lEquals = lEquals && this.product_number == lTest.product_number;
-         lEquals = lEquals && this.soldBy_number == lTest.soldBy_number;
-         lEquals = lEquals && this.invoice_year == lTest.invoice_year;
-         lEquals = lEquals && this.invoice_number == lTest.invoice_number;
+         lEquals = lEquals && this._Product_number == lTest._Product_number;
+         lEquals = lEquals && this._SoldBy_number == lTest._SoldBy_number;
+         lEquals = lEquals && this._Invoice_year == lTest._Invoice_year;
+         lEquals = lEquals && this._Invoice_number == lTest._Invoice_number;
 
          return lEquals;
       }
@@ -250,13 +250,13 @@ public class InvoiceDetailData
 
       result = 37*result + ((this._ServiceType != null) ? this._ServiceType.hashCode() : 0);
 
-      result = 37*result + (int)(product_number^(product_number>>>32));
+      result = 37*result + (int)(_Product_number^(_Product_number>>>32));
 
-      result = 37*result + (int) soldBy_number;
+      result = 37*result + (int) _SoldBy_number;
 
-      result = 37*result + (int) invoice_year;
+      result = 37*result + (int) _Invoice_year;
 
-      result = 37*result + (int) invoice_number;
+      result = 37*result + (int) _Invoice_number;
 
       return result;
    }

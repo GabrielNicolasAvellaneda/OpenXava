@@ -21,14 +21,14 @@ public class EJBTest extends TestCase {
 	
 	public void testKeyToAndFromString() throws Exception {
 		DeliveryKey key = new DeliveryKey();		
-		key.setInvoice_year(2002);
-		key.setInvoice_number(1);
-		key.setType_number(7);
+		key.set_Invoice_year(2002);
+		key.set_Invoice_number(1);
+		key.set_Type_number(7);
 		key.setNumber(66);
 		DeliveryKey key2 = DeliveryKey.createFromString(key.toString());
-		assertEquals("invoice_year", 2002, key2.getInvoice_year());
-		assertEquals("invoice_number", 1, key2.getInvoice_number());
-		assertEquals("type_number", 7, key2.getType_number());
+		assertEquals("invoice_year", 2002, key2.get_Invoice_year());
+		assertEquals("invoice_number", 1, key2.get_Invoice_number());
+		assertEquals("type_number", 7, key2.get_Type_number());
 		assertEquals("number", 66, key2.getNumber());		
 	}
 	
@@ -86,7 +86,7 @@ public class EJBTest extends TestCase {
 		serviceKey.setNumber(66);		
 		AdditionalDetailUtil.getHome().create(serviceKey, 0, value);
 		AdditionalDetailKey additionalDetailKey = new AdditionalDetailKey();
-		additionalDetailKey.setService_number(66);
+		additionalDetailKey.set_Service_number(66);
 		additionalDetailKey.setCounter(0);
 
 		AdditionalDetail d = AdditionalDetailUtil.getHome().findByPrimaryKey(additionalDetailKey);
@@ -113,8 +113,8 @@ public class EJBTest extends TestCase {
 		value.setDescription("JUNIT EJB");
 		DeliveryUtil.getHome().create(value);
 		DeliveryKey key = new DeliveryKey();
-		key.setInvoice_year(2099);
-		key.setInvoice_number(99);
+		key.set_Invoice_year(2099);
+		key.set_Invoice_number(99);
 		key.setNumber(66);
 		Delivery delivery = DeliveryUtil.getHome().findByPrimaryKey(key);
 		InvoiceKey invoiceKey = delivery.getInvoiceKey();

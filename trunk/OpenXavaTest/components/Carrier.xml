@@ -82,7 +82,9 @@
 		<reference-mapping reference="drivingLicence">
 			<reference-mapping-detail 
 				column="DRIVINGLICENCE_TYPE" 
-				referenced-model-property="type"/> 
+				referenced-model-property="type">
+				<converter class="org.openxava.converters.NotNullStringConverter"/>
+			</reference-mapping-detail>	
 			<reference-mapping-detail 
 				column="DRIVINGLICENCE_LEVEL" 
 				referenced-model-property="level"/> 				

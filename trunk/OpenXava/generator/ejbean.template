@@ -65,8 +65,9 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
 	Iterator it = referencedModel.getAllKeyPropertiesNames().iterator();
 	while (it.hasNext()) {		
 		String propertyName = (String) it.next();		
-		result.append("o.");
-		result.append(referenceMapping.getCMPAttribute(propertyName));
+		result.append("o."); 
+		String cmpAttribute = referenceMapping.getCMPAttribute(propertyName);
+		result.append(cmpAttribute); 
 		result.append(" = ?");		
 		result.append(++n);
 		if (it.hasNext()) {
@@ -75,9 +76,6 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
 	}
 	return result.toString();
 }
-
-
-
 
 
 #
@@ -237,9 +235,14 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 		# 
 		Iterator it = containerModel.getAllKeyPropertiesNames().iterator();
 		while (it.hasNext()) {
-			String propertyName = Strings.change((String) it.next(), ".", "_");			
+			String propertyName = (String) it.next(); 
+			String propertyNameInKey = propertyName;
+			if (propertyName.indexOf('.') >= 0) {				
+				propertyName = Strings.change(propertyName, ".", "_");
+				propertyNameInKey = "_" + Strings.firstUpper(propertyName);
+			}						
 		# 
-		set#(containerName)#_#(propertyName)#(containerKey.#(propertyName)#);		
+		set#(containerName)#_#(propertyName)#(containerKey.#(propertyNameInKey)#);
 		# } # 
 			
 	# } 
@@ -327,9 +330,14 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 		# 
 		Iterator it = containerModel.getAllKeyPropertiesNames().iterator();
 		while (it.hasNext()) {
-			String propertyName = Strings.change((String) it.next(), ".", "_");			
+			String propertyName = (String) it.next();
+			String propertyNameInKey = propertyName; 
+			if (propertyName.indexOf('.') >= 0) {
+				propertyName= Strings.change(propertyName, ".", "_");
+				propertyNameInKey = "_" + Strings.firstUpper(propertyName);
+			}
 		# 
-		set#(containerName)#_#(propertyName)#(containerKey.#(propertyName)#);		
+		set#(containerName)#_#(propertyName)#(containerKey.#(propertyNameInKey)#);		
 		# }  
 			
 		properties = metaModel.getMetaPropertiesWithDefaultValueOnCreate();					
@@ -426,10 +434,14 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 		while (it.hasNext()) {
 			String originalName = (String) it.next();
 			if (containerModel.getMapping().isReferencePropertyOverlappingWithSomeProperty(originalName)) continue;
-			String propertyName = Strings.change(originalName, ".", "_");
-			
+			String propertyName = originalName; 
+			String propertyNameInKey = originalName; 
+			if (originalName.indexOf('.') >= 0) { 
+				propertyName = Strings.change(originalName, ".", "_");
+				propertyNameInKey = "_" + Strings.firstUpper(propertyName);				
+			}
 		# 
-		set#(containerName)#_#(propertyName)#(containerKey.#(propertyName)#);		
+		set#(containerName)#_#(propertyName)#(containerKey.#(propertyNameInKey)#);		
 		# } # 
 			
 	# } 
@@ -439,7 +451,7 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 			String keyProperty = (String) itKeyProperties.next();
 			if (modelMapping.isReferencePropertyOverlappingWithSomeProperty(keyProperty)) continue;
 			String propertyName = Strings.change(Strings.firstUpper(keyProperty), ".", "_");
-			if (modelMapping.hasConverter(keyProperty)) {
+			if (modelMapping.hasConverter(keyProperty) || keyProperty.indexOf('.') >= 0) { 
 		#  
 		set_#(propertyName)#(data.get_#(propertyName)#());		
 		# 			
@@ -537,9 +549,10 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 		# 
 		Iterator itKeyProperties = metaModel.getAllKeyPropertiesNames().iterator();
 		while (itKeyProperties.hasNext()) {
-			String propertyName = Strings.change(Strings.firstUpper((String) itKeyProperties.next()), ".", "_");			
+			String propertyName = (String) itKeyProperties.next();
+			propertyName = Strings.firstUpper(Strings.change(propertyName, ".", "_"));
 		# 
-		set#(propertyName)#(value.get#(propertyName)#());		
+		set#(propertyName)#(value.get#(propertyName)#());
 		# } # 		
 	# if (aggregateName != null) { # 
 		#(containerKeyClass)# containerKey = null;
@@ -553,9 +566,14 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 		# 
 		Iterator it = containerModel.getAllKeyPropertiesNames().iterator();
 		while (it.hasNext()) {
-			String propertyName = Strings.change((String) it.next(), ".", "_");			
+			String propertyName = (String) it.next();
+			String propertyNameInKey = propertyName;
+			if (propertyName.indexOf('.') >= 0) {
+				propertyName = Strings.change(propertyName, ".", "_");
+				propertyNameInKey = "_" + Strings.firstUpper(propertyName);
+			}
 		# 
-		set#(containerName)#_#(propertyName)#(containerKey.#(propertyName)#);		
+		set#(containerName)#_#(propertyName)#(containerKey.#(propertyNameInKey)#);		
 		# } # 
 			
 	# } // if has aggregate
@@ -641,17 +659,22 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 		# 
 		itKeyProperties = metaModel.getAllKeyPropertiesNames().iterator();
 		while (itKeyProperties.hasNext()) {
-			String propertyName = Strings.change(Strings.firstUpper((String) itKeyProperties.next()), ".", "_");			
+			String propertyName = Strings.change(Strings.firstUpper((String) itKeyProperties.next()), ".", "_");						
 		# 
-		set#(propertyName)#(value.get#(propertyName)#());		
+		set#(propertyName)#(value.get#(propertyName)#()); 
 		# 
 		} 
 		
 		Iterator it = containerModel.getAllKeyPropertiesNames().iterator();
 		while (it.hasNext()) {
-			String propertyName = Strings.change((String) it.next(), ".", "_");
+			String propertyName = (String) it.next();
+			String propertyNameInKey = propertyName;
+			if (propertyName.indexOf('.') >= 0) {
+				propertyName = Strings.change(propertyName, ".", "_");
+				propertyNameInKey = "_" + Strings.firstUpper(propertyName);
+			}
 		#
-		set#(containerName)#_#(propertyName)#(containerKey.#(propertyName)#);
+		set#(containerName)#_#(propertyName)#(containerKey.#(propertyNameInKey)#);
 		# } 
 		properties = metaModel.getMetaPropertiesWithDefaultValueOnCreate();
 		if (!properties.isEmpty()) {
@@ -1075,6 +1098,16 @@ while (itMethods.hasNext()) {
 			}
 		}
 		# 
+		
+		# 
+		for (Iterator it = metaModel.getMetaReferencesWithMapping().iterator(); it.hasNext(); ) {
+			MetaReference ref = (MetaReference) it.next();
+			String refName = Strings.firstUpper(ref.getName());
+		# 
+		set#(refName)#Key(null);
+		# 
+		}
+		# 	
 	}
 		
 }

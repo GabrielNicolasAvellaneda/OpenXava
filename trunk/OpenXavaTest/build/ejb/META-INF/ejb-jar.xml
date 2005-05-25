@@ -130,17 +130,17 @@
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Office_officeManager_number">
+         <cmp-field id="CmpAttribute_Office__OfficeManager_number">
             <description><![CDATA[]]></description>
-            <field-name>officeManager_number</field-name>
+            <field-name>_OfficeManager_number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Office_defaultCarrier_number">
+         <cmp-field id="CmpAttribute_Office__DefaultCarrier_number">
             <description><![CDATA[]]></description>
-            <field-name>defaultCarrier_number</field-name>
+            <field-name>_DefaultCarrier_number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Office_mainWarehouse_number">
+         <cmp-field id="CmpAttribute_Office__MainWarehouse_number">
             <description><![CDATA[]]></description>
-            <field-name>mainWarehouse_number</field-name>
+            <field-name>_MainWarehouse_number</field-name>
          </cmp-field>
 
          <env-entry>
@@ -165,7 +165,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.number = ?1 AND o.officeManager_number = ?2 AND o._ZoneNumber = ?3 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.number = ?1 AND o._OfficeManager_number = ?2 AND o._ZoneNumber = ?3 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -175,7 +175,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.defaultCarrier_number = ?1 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o._DefaultCarrier_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -186,7 +186,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.mainWarehouse_number = ?1 AND o._ZoneNumber = ?2 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o._MainWarehouse_number = ?1 AND o._ZoneNumber = ?2 ]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-OfficeBean.xml if you want to define extra finders. -->
 
@@ -250,33 +250,33 @@
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Delivery_type_number">
+         <cmp-field id="CmpAttribute_Delivery__Type_number">
             <description><![CDATA[]]></description>
-            <field-name>type_number</field-name>
+            <field-name>_Type_number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Delivery_shipment_type">
+         <cmp-field id="CmpAttribute_Delivery__Shipment_type">
             <description><![CDATA[]]></description>
-            <field-name>shipment_type</field-name>
+            <field-name>_Shipment_type</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Delivery_shipment_mode">
+         <cmp-field id="CmpAttribute_Delivery__Shipment_mode">
             <description><![CDATA[]]></description>
-            <field-name>shipment_mode</field-name>
+            <field-name>_Shipment_mode</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Delivery_shipment_number">
+         <cmp-field id="CmpAttribute_Delivery__Shipment_number">
             <description><![CDATA[]]></description>
-            <field-name>shipment_number</field-name>
+            <field-name>_Shipment_number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Delivery_carrier_number">
+         <cmp-field id="CmpAttribute_Delivery__Carrier_number">
             <description><![CDATA[]]></description>
-            <field-name>carrier_number</field-name>
+            <field-name>_Carrier_number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Delivery_invoice_year">
+         <cmp-field id="CmpAttribute_Delivery__Invoice_year">
             <description><![CDATA[]]></description>
-            <field-name>invoice_year</field-name>
+            <field-name>_Invoice_year</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Delivery_invoice_number">
+         <cmp-field id="CmpAttribute_Delivery__Invoice_number">
             <description><![CDATA[]]></description>
-            <field-name>invoice_number</field-name>
+            <field-name>_Invoice_number</field-name>
          </cmp-field>
 
          <env-entry>
@@ -299,7 +299,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o.type_number = ?1 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o._Type_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -311,7 +311,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o.shipment_type = ?1 AND o.shipment_mode = ?2 AND o.shipment_number = ?3 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o._Shipment_type = ?1 AND o._Shipment_mode = ?2 AND o._Shipment_number = ?3 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -321,7 +321,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o.carrier_number = ?1 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o._Carrier_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -332,7 +332,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o.invoice_year = ?1 AND o.invoice_number = ?2 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Delivery o WHERE o._Invoice_year = ?1 AND o._Invoice_number = ?2 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -652,17 +652,17 @@
             <description><![CDATA[]]></description>
             <field-name>_Name</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_DeliveryPlace_customer_number">
+         <cmp-field id="CmpAttribute_DeliveryPlace__Customer_number">
             <description><![CDATA[]]></description>
-            <field-name>customer_number</field-name>
+            <field-name>_Customer_number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_DeliveryPlace_preferredWarehouse_zoneNumber">
+         <cmp-field id="CmpAttribute_DeliveryPlace__PreferredWarehouse_zoneNumber">
             <description><![CDATA[]]></description>
-            <field-name>preferredWarehouse_zoneNumber</field-name>
+            <field-name>_PreferredWarehouse_zoneNumber</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_DeliveryPlace_preferredWarehouse_number">
+         <cmp-field id="CmpAttribute_DeliveryPlace__PreferredWarehouse_number">
             <description><![CDATA[]]></description>
-            <field-name>preferredWarehouse_number</field-name>
+            <field-name>_PreferredWarehouse_number</field-name>
          </cmp-field>
 
          <env-entry>
@@ -685,7 +685,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryPlace o WHERE o.customer_number = ?1 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryPlace o WHERE o._Customer_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -696,7 +696,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryPlace o WHERE o.preferredWarehouse_number = ?1 AND o.preferredWarehouse_zoneNumber = ?2 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryPlace o WHERE o._PreferredWarehouse_number = ?1 AND o._PreferredWarehouse_zoneNumber = ?2 ]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-DeliveryPlaceBean.xml if you want to define extra finders. -->
 
@@ -767,9 +767,9 @@
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Seller_level_id">
+         <cmp-field id="CmpAttribute_Seller__Level_id">
             <description><![CDATA[]]></description>
-            <field-name>level_id</field-name>
+            <field-name>_Level_id</field-name>
          </cmp-field>
 
          <env-entry>
@@ -792,7 +792,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE o.level_id = ?1 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE o._Level_id = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -845,13 +845,13 @@
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Customer_seller_number">
+         <cmp-field id="CmpAttribute_Customer__Seller_number">
             <description><![CDATA[]]></description>
-            <field-name>seller_number</field-name>
+            <field-name>_Seller_number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Customer_alternateSeller_number">
+         <cmp-field id="CmpAttribute_Customer__AlternateSeller_number">
             <description><![CDATA[]]></description>
-            <field-name>alternateSeller_number</field-name>
+            <field-name>_AlternateSeller_number</field-name>
          </cmp-field>
          <cmp-field id="CmpAttribute_Customer__Address_zipCode">
             <description><![CDATA[]]></description>
@@ -865,9 +865,9 @@
             <description><![CDATA[]]></description>
             <field-name>address_city</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Customer_address_state_id">
+         <cmp-field id="CmpAttribute_Customer__Address_state_id">
             <description><![CDATA[]]></description>
-            <field-name>address_state_id</field-name>
+            <field-name>_Address_state_id</field-name>
          </cmp-field>
 
          <env-entry>
@@ -890,7 +890,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o.seller_number = ?1 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Seller_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -900,7 +900,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o.alternateSeller_number = ?1 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._AlternateSeller_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1100,21 +1100,21 @@
             <description><![CDATA[]]></description>
             <field-name>_ServiceType</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_InvoiceDetail_product_number">
+         <cmp-field id="CmpAttribute_InvoiceDetail__Product_number">
             <description><![CDATA[]]></description>
-            <field-name>product_number</field-name>
+            <field-name>_Product_number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_InvoiceDetail_soldBy_number">
+         <cmp-field id="CmpAttribute_InvoiceDetail__SoldBy_number">
             <description><![CDATA[]]></description>
-            <field-name>soldBy_number</field-name>
+            <field-name>_SoldBy_number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_InvoiceDetail_invoice_year">
+         <cmp-field id="CmpAttribute_InvoiceDetail__Invoice_year">
             <description><![CDATA[]]></description>
-            <field-name>invoice_year</field-name>
+            <field-name>_Invoice_year</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_InvoiceDetail_invoice_number">
+         <cmp-field id="CmpAttribute_InvoiceDetail__Invoice_number">
             <description><![CDATA[]]></description>
-            <field-name>invoice_number</field-name>
+            <field-name>_Invoice_number</field-name>
          </cmp-field>
 
          <env-entry>
@@ -1137,7 +1137,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o.product_number = ?1 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o._Product_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1147,7 +1147,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o.soldBy_number = ?1 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o._SoldBy_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1158,7 +1158,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o.invoice_year = ?1 AND o.invoice_number = ?2 ORDER BY o._ServiceType desc]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o._Invoice_year = ?1 AND o._Invoice_number = ?2 ORDER BY o._ServiceType desc]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-InvoiceDetailBean.xml if you want to define extra finders. -->
 
@@ -1190,21 +1190,21 @@
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Product2_warehouse_zoneNumber">
+         <cmp-field id="CmpAttribute_Product2__Warehouse_zoneNumber">
             <description><![CDATA[]]></description>
-            <field-name>warehouse_zoneNumber</field-name>
+            <field-name>_Warehouse_zoneNumber</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Product2_warehouse_number">
+         <cmp-field id="CmpAttribute_Product2__Warehouse_number">
             <description><![CDATA[]]></description>
-            <field-name>warehouse_number</field-name>
+            <field-name>_Warehouse_number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Product2_family_number">
+         <cmp-field id="CmpAttribute_Product2__Family_number">
             <description><![CDATA[]]></description>
-            <field-name>family_number</field-name>
+            <field-name>_Family_number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Product2_subfamily_number">
+         <cmp-field id="CmpAttribute_Product2__Subfamily_number">
             <description><![CDATA[]]></description>
-            <field-name>subfamily_number</field-name>
+            <field-name>_Subfamily_number</field-name>
          </cmp-field>
 
          <env-entry>
@@ -1228,7 +1228,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o.warehouse_number = ?1 AND o.warehouse_zoneNumber = ?2 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o._Warehouse_number = ?1 AND o._Warehouse_zoneNumber = ?2 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1238,7 +1238,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o.family_number = ?1 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o._Family_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1248,7 +1248,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o.subfamily_number = ?1 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o._Subfamily_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1285,21 +1285,21 @@
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_DeliveryDetail_delivery_number">
+         <cmp-field id="CmpAttribute_DeliveryDetail__Delivery_number">
             <description><![CDATA[]]></description>
-            <field-name>delivery_number</field-name>
+            <field-name>_Delivery_number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_DeliveryDetail_delivery_type_number">
+         <cmp-field id="CmpAttribute_DeliveryDetail__Delivery_type_number">
             <description><![CDATA[]]></description>
-            <field-name>delivery_type_number</field-name>
+            <field-name>_Delivery_type_number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_DeliveryDetail_delivery_invoice_year">
+         <cmp-field id="CmpAttribute_DeliveryDetail__Delivery_invoice_year">
             <description><![CDATA[]]></description>
-            <field-name>delivery_invoice_year</field-name>
+            <field-name>_Delivery_invoice_year</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_DeliveryDetail_delivery_invoice_number">
+         <cmp-field id="CmpAttribute_DeliveryDetail__Delivery_invoice_number">
             <description><![CDATA[]]></description>
-            <field-name>delivery_invoice_number</field-name>
+            <field-name>_Delivery_invoice_number</field-name>
          </cmp-field>
 
          <env-entry>
@@ -1325,7 +1325,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryDetail o WHERE o.delivery_number = ?1 AND o.delivery_type_number = ?2 AND o.delivery_invoice_year = ?3 AND o.delivery_invoice_number = ?4 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryDetail o WHERE o._Delivery_number = ?1 AND o._Delivery_type_number = ?2 AND o._Delivery_invoice_year = ?3 AND o._Delivery_invoice_number = ?4 ]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-DeliveryDetailBean.xml if you want to define extra finders. -->
 
@@ -1353,13 +1353,13 @@
             <description><![CDATA[]]></description>
             <field-name>_Subfamily</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_AdditionalDetail_service_number">
+         <cmp-field id="CmpAttribute_AdditionalDetail__Service_number">
             <description><![CDATA[]]></description>
-            <field-name>service_number</field-name>
+            <field-name>_Service_number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_AdditionalDetail_type_number">
+         <cmp-field id="CmpAttribute_AdditionalDetail__Type_number">
             <description><![CDATA[]]></description>
-            <field-name>type_number</field-name>
+            <field-name>_Type_number</field-name>
          </cmp-field>
 
          <env-entry>
@@ -1382,7 +1382,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM AdditionalDetail o WHERE o.service_number = ?1 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM AdditionalDetail o WHERE o._Service_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1392,7 +1392,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM AdditionalDetail o WHERE o.type_number = ?1 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM AdditionalDetail o WHERE o._Type_number = ?1 ]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-AdditionalDetailBean.xml if you want to define extra finders. -->
 
@@ -1416,21 +1416,21 @@
             <description><![CDATA[]]></description>
             <field-name>_Amount</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_TransportCharge_delivery_number">
+         <cmp-field id="CmpAttribute_TransportCharge__Delivery_number">
             <description><![CDATA[]]></description>
-            <field-name>delivery_number</field-name>
+            <field-name>_Delivery_number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_TransportCharge_delivery_type_number">
+         <cmp-field id="CmpAttribute_TransportCharge__Delivery_type_number">
             <description><![CDATA[]]></description>
-            <field-name>delivery_type_number</field-name>
+            <field-name>_Delivery_type_number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_TransportCharge_delivery_invoice_year">
+         <cmp-field id="CmpAttribute_TransportCharge__Delivery_invoice_year">
             <description><![CDATA[]]></description>
-            <field-name>delivery_invoice_year</field-name>
+            <field-name>_Delivery_invoice_year</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_TransportCharge_delivery_invoice_number">
+         <cmp-field id="CmpAttribute_TransportCharge__Delivery_invoice_number">
             <description><![CDATA[]]></description>
-            <field-name>delivery_invoice_number</field-name>
+            <field-name>_Delivery_invoice_number</field-name>
          </cmp-field>
 
          <env-entry>
@@ -1456,7 +1456,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM TransportCharge o WHERE o.delivery_number = ?1 AND o.delivery_type_number = ?2 AND o.delivery_invoice_year = ?3 AND o.delivery_invoice_number = ?4 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM TransportCharge o WHERE o._Delivery_number = ?1 AND o._Delivery_type_number = ?2 AND o._Delivery_invoice_year = ?3 AND o._Delivery_invoice_number = ?4 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1509,9 +1509,9 @@
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Invoice_customer_number">
+         <cmp-field id="CmpAttribute_Invoice__Customer_number">
             <description><![CDATA[]]></description>
-            <field-name>customer_number</field-name>
+            <field-name>_Customer_number</field-name>
          </cmp-field>
 
          <env-entry>
@@ -1534,7 +1534,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Invoice o WHERE o.customer_number = ?1 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Invoice o WHERE o._Customer_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1593,9 +1593,9 @@
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Product3_family_oid">
+         <cmp-field id="CmpAttribute_Product3__Family_oid">
             <description><![CDATA[]]></description>
-            <field-name>family_oid</field-name>
+            <field-name>_Family_oid</field-name>
          </cmp-field>
 
          <env-entry>
@@ -1618,7 +1618,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product3 o WHERE o.family_oid = ?1 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product3 o WHERE o._Family_oid = ?1 ]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-Product3Bean.xml if you want to define extra finders. -->
 
@@ -1706,21 +1706,21 @@
             <description><![CDATA[]]></description>
             <field-name>_Number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Carrier_warehouse_zoneNumber">
+         <cmp-field id="CmpAttribute_Carrier__Warehouse_zoneNumber">
             <description><![CDATA[]]></description>
-            <field-name>warehouse_zoneNumber</field-name>
+            <field-name>_Warehouse_zoneNumber</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Carrier_warehouse_number">
+         <cmp-field id="CmpAttribute_Carrier__Warehouse_number">
             <description><![CDATA[]]></description>
-            <field-name>warehouse_number</field-name>
+            <field-name>_Warehouse_number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Carrier_drivingLicence_type">
+         <cmp-field id="CmpAttribute_Carrier__DrivingLicence_type">
             <description><![CDATA[]]></description>
-            <field-name>drivingLicence_type</field-name>
+            <field-name>_DrivingLicence_type</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Carrier_drivingLicence_level">
+         <cmp-field id="CmpAttribute_Carrier__DrivingLicence_level">
             <description><![CDATA[]]></description>
-            <field-name>drivingLicence_level</field-name>
+            <field-name>_DrivingLicence_level</field-name>
          </cmp-field>
 
          <env-entry>
@@ -1744,7 +1744,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Carrier o WHERE o.warehouse_number = ?1 AND o.warehouse_zoneNumber = ?2 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Carrier o WHERE o._Warehouse_number = ?1 AND o._Warehouse_zoneNumber = ?2 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1755,7 +1755,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Carrier o WHERE o.drivingLicence_level = ?1 AND o.drivingLicence_type = ?2 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Carrier o WHERE o._DrivingLicence_level = ?1 AND o._DrivingLicence_type = ?2 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1767,7 +1767,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Carrier o WHERE o.warehouse_zoneNumber = ?1 AND o.warehouse_number = ?2 AND NOT (o._Number = ?3) ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Carrier o WHERE o._Warehouse_zoneNumber = ?1 AND o._Warehouse_number = ?2 AND NOT (o._Number = ?3) ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1808,9 +1808,9 @@
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Subfamily2_family_number">
+         <cmp-field id="CmpAttribute_Subfamily2__Family_number">
             <description><![CDATA[]]></description>
-            <field-name>family_number</field-name>
+            <field-name>_Family_number</field-name>
          </cmp-field>
 
          <env-entry>
@@ -1833,7 +1833,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Subfamily2 o WHERE o.family_number = ?1 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Subfamily2 o WHERE o._Family_number = ?1 ]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-Subfamily2Bean.xml if you want to define extra finders. -->
 
@@ -1869,17 +1869,17 @@
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Office2_officeManager_number">
+         <cmp-field id="CmpAttribute_Office2__OfficeManager_number">
             <description><![CDATA[]]></description>
-            <field-name>officeManager_number</field-name>
+            <field-name>_OfficeManager_number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Office2_defaultCarrier_number">
+         <cmp-field id="CmpAttribute_Office2__DefaultCarrier_number">
             <description><![CDATA[]]></description>
-            <field-name>defaultCarrier_number</field-name>
+            <field-name>_DefaultCarrier_number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Office2_mainWarehouse_number">
+         <cmp-field id="CmpAttribute_Office2__MainWarehouse_number">
             <description><![CDATA[]]></description>
-            <field-name>mainWarehouse_number</field-name>
+            <field-name>_MainWarehouse_number</field-name>
          </cmp-field>
 
          <env-entry>
@@ -1904,7 +1904,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office2 o WHERE o.number = ?1 AND o.officeManager_number = ?2 AND o.zoneNumber = ?3 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office2 o WHERE o.number = ?1 AND o._OfficeManager_number = ?2 AND o.zoneNumber = ?3 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1914,7 +1914,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office2 o WHERE o.defaultCarrier_number = ?1 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office2 o WHERE o._DefaultCarrier_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1925,7 +1925,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office2 o WHERE o.mainWarehouse_number = ?1 AND o.zoneNumber = ?2 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office2 o WHERE o._MainWarehouse_number = ?1 AND o.zoneNumber = ?2 ]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-Office2Bean.xml if you want to define extra finders. -->
 
@@ -1949,9 +1949,9 @@
             <description><![CDATA[]]></description>
             <field-name>oid</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_FilterBySubfamily_subfamily_number">
+         <cmp-field id="CmpAttribute_FilterBySubfamily__Subfamily_number">
             <description><![CDATA[]]></description>
-            <field-name>subfamily_number</field-name>
+            <field-name>_Subfamily_number</field-name>
          </cmp-field>
 
          <env-entry>
@@ -1974,7 +1974,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o.subfamily_number = ?1 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o._Subfamily_number = ?1 ]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-FilterBySubfamilyBean.xml if you want to define extra finders. -->
 
@@ -2092,9 +2092,9 @@
             <description><![CDATA[]]></description>
             <field-name>_Name</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Receptionist_deliveryPlace_oid">
+         <cmp-field id="CmpAttribute_Receptionist__DeliveryPlace_oid">
             <description><![CDATA[]]></description>
-            <field-name>deliveryPlace_oid</field-name>
+            <field-name>_DeliveryPlace_oid</field-name>
          </cmp-field>
 
          <env-entry>
@@ -2117,7 +2117,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Receptionist o WHERE o.deliveryPlace_oid = ?1 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Receptionist o WHERE o._DeliveryPlace_oid = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>

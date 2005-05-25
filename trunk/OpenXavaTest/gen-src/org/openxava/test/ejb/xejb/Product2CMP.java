@@ -21,10 +21,10 @@ public abstract class Product2CMP
          dataHolder.set_UnitPrice( get_UnitPrice() );
          dataHolder.set_Description( get_Description() );
          dataHolder.setNumber( getNumber() );
-         dataHolder.setWarehouse_zoneNumber( getWarehouse_zoneNumber() );
-         dataHolder.setWarehouse_number( getWarehouse_number() );
-         dataHolder.setFamily_number( getFamily_number() );
-         dataHolder.setSubfamily_number( getSubfamily_number() );
+         dataHolder.set_Warehouse_zoneNumber( get_Warehouse_zoneNumber() );
+         dataHolder.set_Warehouse_number( get_Warehouse_number() );
+         dataHolder.set_Family_number( get_Family_number() );
+         dataHolder.set_Subfamily_number( get_Subfamily_number() );
 
       }
       catch (RuntimeException e)
@@ -41,10 +41,10 @@ public abstract class Product2CMP
       {
          set_UnitPrice( dataHolder.get_UnitPrice() );
          set_Description( dataHolder.get_Description() );
-         setWarehouse_zoneNumber( dataHolder.getWarehouse_zoneNumber() );
-         setWarehouse_number( dataHolder.getWarehouse_number() );
-         setFamily_number( dataHolder.getFamily_number() );
-         setSubfamily_number( dataHolder.getSubfamily_number() );
+         set_Warehouse_zoneNumber( dataHolder.get_Warehouse_zoneNumber() );
+         set_Warehouse_number( dataHolder.get_Warehouse_number() );
+         set_Family_number( dataHolder.get_Family_number() );
+         set_Subfamily_number( dataHolder.get_Subfamily_number() );
 
       }
       catch (Exception e)
@@ -149,20 +149,20 @@ public abstract class Product2CMP
 
    public abstract void setNumber( long number ) ;
 
-   public abstract int getWarehouse_zoneNumber() ;
+   public abstract int get_Warehouse_zoneNumber() ;
 
-   public abstract void setWarehouse_zoneNumber( int warehouse_zoneNumber ) ;
+   public abstract void set_Warehouse_zoneNumber( int _Warehouse_zoneNumber ) ;
 
-   public abstract java.lang.Integer getWarehouse_number() ;
+   public abstract java.lang.Integer get_Warehouse_number() ;
 
-   public abstract void setWarehouse_number( java.lang.Integer warehouse_number ) ;
+   public abstract void set_Warehouse_number( java.lang.Integer _Warehouse_number ) ;
 
-   public abstract int getFamily_number() ;
+   public abstract int get_Family_number() ;
 
-   public abstract void setFamily_number( int family_number ) ;
+   public abstract void set_Family_number( int _Family_number ) ;
 
-   public abstract int getSubfamily_number() ;
+   public abstract int get_Subfamily_number() ;
 
-   public abstract void setSubfamily_number( int subfamily_number ) ;
+   public abstract void set_Subfamily_number( int _Subfamily_number ) ;
 
 }

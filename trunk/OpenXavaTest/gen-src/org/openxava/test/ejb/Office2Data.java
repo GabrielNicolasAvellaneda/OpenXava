@@ -14,9 +14,9 @@ public class Office2Data
    private java.lang.String _Name;
    private int zoneNumber;
    private int number;
-   private int officeManager_number;
-   private java.lang.Integer defaultCarrier_number;
-   private java.lang.Integer mainWarehouse_number;
+   private int _OfficeManager_number;
+   private java.lang.Integer _DefaultCarrier_number;
+   private java.lang.Integer _MainWarehouse_number;
 
    public Office2Data()
    {
@@ -28,14 +28,14 @@ public class Office2Data
       set_Name(otherData.get_Name());
       setZoneNumber(otherData.getZoneNumber());
       setNumber(otherData.getNumber());
-      setOfficeManager_number(otherData.getOfficeManager_number());
-      setDefaultCarrier_number(otherData.getDefaultCarrier_number());
-      setMainWarehouse_number(otherData.getMainWarehouse_number());
+      set_OfficeManager_number(otherData.get_OfficeManager_number());
+      set_DefaultCarrier_number(otherData.get_DefaultCarrier_number());
+      set_MainWarehouse_number(otherData.get_MainWarehouse_number());
 
    }
 
    public org.openxava.test.ejb.Office2Key getPrimaryKey() {
-     org.openxava.test.ejb.Office2Key pk = new org.openxava.test.ejb.Office2Key(this.getZoneNumber(),this.getNumber(),this.getMainWarehouse_number());
+     org.openxava.test.ejb.Office2Key pk = new org.openxava.test.ejb.Office2Key(this.getZoneNumber(),this.getNumber(),this.get_MainWarehouse_number());
      return pk;
    }
 
@@ -75,38 +75,38 @@ public class Office2Data
       this.number = number;
    }
 
-   public int getOfficeManager_number()
+   public int get_OfficeManager_number()
    {
-      return this.officeManager_number;
+      return this._OfficeManager_number;
    }
-   public void setOfficeManager_number( int officeManager_number )
+   public void set_OfficeManager_number( int _OfficeManager_number )
    {
-      this.officeManager_number = officeManager_number;
-   }
-
-   public java.lang.Integer getDefaultCarrier_number()
-   {
-      return this.defaultCarrier_number;
-   }
-   public void setDefaultCarrier_number( java.lang.Integer defaultCarrier_number )
-   {
-      this.defaultCarrier_number = defaultCarrier_number;
+      this._OfficeManager_number = _OfficeManager_number;
    }
 
-   public java.lang.Integer getMainWarehouse_number()
+   public java.lang.Integer get_DefaultCarrier_number()
    {
-      return this.mainWarehouse_number;
+      return this._DefaultCarrier_number;
    }
-   public void setMainWarehouse_number( java.lang.Integer mainWarehouse_number )
+   public void set_DefaultCarrier_number( java.lang.Integer _DefaultCarrier_number )
    {
-      this.mainWarehouse_number = mainWarehouse_number;
+      this._DefaultCarrier_number = _DefaultCarrier_number;
+   }
+
+   public java.lang.Integer get_MainWarehouse_number()
+   {
+      return this._MainWarehouse_number;
+   }
+   public void set_MainWarehouse_number( java.lang.Integer _MainWarehouse_number )
+   {
+      this._MainWarehouse_number = _MainWarehouse_number;
    }
 
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Receptionist=" + get_Receptionist() + " " + "_Name=" + get_Name() + " " + "zoneNumber=" + getZoneNumber() + " " + "number=" + getNumber() + " " + "officeManager_number=" + getOfficeManager_number() + " " + "defaultCarrier_number=" + getDefaultCarrier_number() + " " + "mainWarehouse_number=" + getMainWarehouse_number());
+      str.append("_Receptionist=" + get_Receptionist() + " " + "_Name=" + get_Name() + " " + "zoneNumber=" + getZoneNumber() + " " + "number=" + getNumber() + " " + "_OfficeManager_number=" + get_OfficeManager_number() + " " + "_DefaultCarrier_number=" + get_DefaultCarrier_number() + " " + "_MainWarehouse_number=" + get_MainWarehouse_number());
       str.append('}');
 
       return(str.toString());
@@ -137,22 +137,22 @@ public class Office2Data
          }
          lEquals = lEquals && this.zoneNumber == lTest.zoneNumber;
          lEquals = lEquals && this.number == lTest.number;
-         lEquals = lEquals && this.officeManager_number == lTest.officeManager_number;
-         if( this.defaultCarrier_number == null )
+         lEquals = lEquals && this._OfficeManager_number == lTest._OfficeManager_number;
+         if( this._DefaultCarrier_number == null )
          {
-            lEquals = lEquals && ( lTest.defaultCarrier_number == null );
+            lEquals = lEquals && ( lTest._DefaultCarrier_number == null );
          }
          else
          {
-            lEquals = lEquals && this.defaultCarrier_number.equals( lTest.defaultCarrier_number );
+            lEquals = lEquals && this._DefaultCarrier_number.equals( lTest._DefaultCarrier_number );
          }
-         if( this.mainWarehouse_number == null )
+         if( this._MainWarehouse_number == null )
          {
-            lEquals = lEquals && ( lTest.mainWarehouse_number == null );
+            lEquals = lEquals && ( lTest._MainWarehouse_number == null );
          }
          else
          {
-            lEquals = lEquals && this.mainWarehouse_number.equals( lTest.mainWarehouse_number );
+            lEquals = lEquals && this._MainWarehouse_number.equals( lTest._MainWarehouse_number );
          }
 
          return lEquals;
@@ -175,11 +175,11 @@ public class Office2Data
 
       result = 37*result + (int) number;
 
-      result = 37*result + (int) officeManager_number;
+      result = 37*result + (int) _OfficeManager_number;
 
-      result = 37*result + ((this.defaultCarrier_number != null) ? this.defaultCarrier_number.hashCode() : 0);
+      result = 37*result + ((this._DefaultCarrier_number != null) ? this._DefaultCarrier_number.hashCode() : 0);
 
-      result = 37*result + ((this.mainWarehouse_number != null) ? this.mainWarehouse_number.hashCode() : 0);
+      result = 37*result + ((this._MainWarehouse_number != null) ? this._MainWarehouse_number.hashCode() : 0);
 
       return result;
    }
