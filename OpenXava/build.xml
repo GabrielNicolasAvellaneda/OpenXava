@@ -73,6 +73,7 @@
 			<fileset dir="../${project.ejb}/xava"/>
 	    	<filterset>	    	
 				<filter token="separator" value="${separator}"/>
+				<filter token="collection" value="${collection}"/>
 			</filterset> 			         
 		</copy>			
 		<!-- to replace within xava components -->
@@ -80,6 +81,7 @@
 			<fileset dir="../${project.ejb}/components"/>
 	    	<filterset>	    	
 				<filter token="separator" value="${separator}"/>
+				<filter token="collection" value="${collection}"/>
 			</filterset> 			         
 		</copy>				
 	</target>
@@ -92,6 +94,7 @@
 	    	<filterset>	    	
 				<filtersfile file="${configuration}.properties"/>				
 				<filter token="separator" value="${separator}"/>
+				<filter token="collection" value="${collection}"/>
 			</filterset> 			         
 		</copy>			
 		<!-- to replace within xava components -->
@@ -100,6 +103,7 @@
 	    	<filterset>	    	
 				<filtersfile file="${configuration}.properties"/>				
 				<filter token="separator" value="${separator}"/>
+				<filter token="collection" value="${collection}"/>
 			</filterset> 			         
 		</copy>				
 	</target>
@@ -116,6 +120,7 @@
 			<fileset dir="../${project.ejb}/build/hibernate"/>
 	    	<filterset>	    	
 				<filter token="separator" value="${separator}"/>
+				<filter token="collection" value="${collection}"/>
 	    		<filter token="datasource" value="${datasource}"/>
 	    		<filter token="datasource.prefix" value="${datasource.prefix}"/>
 	    		<filter token="hibernate.dialect" value="${hibernate.dialect}"/>
@@ -131,6 +136,7 @@
 	    	<filterset>	    	
 				<filtersfile file="${configuration}.properties"/>				
 				<filter token="separator" value="${separator}"/>
+				<filter token="collection" value="${collection}"/>
 	    		<filter token="datasource" value="${datasource}"/>
 	    		<filter token="datasource.prefix" value="${datasource.prefix}"/>
 	    		<filter token="hibernate.dialect" value="${hibernate.dialect}"/>	    		
@@ -358,6 +364,7 @@
 			overwrite="yes">
 			<filterset>
 				<filter token="separator" value="${separator}"/>
+				<filter token="collection" value="${collection}"/>
 			</filterset>
 		</copy>
 		<copy file="../${project.ejb}/${meta-inf.dir}/jboss.xml" 
@@ -375,6 +382,7 @@
 			<filterset>
 				<filter token="datasource" value="${datasource}"/>
 				<filter token="separator" value="${separator}"/>
+				<filter token="collection" value="${collection}"/>
 			</filterset>
 		</copy>
 		<copy file="../${project.ejb}/${meta-inf.dir}/ibm-ejb-jar-bnd.xmi" 
@@ -405,6 +413,7 @@
 			<filterset>				
 				<filtersfile file="${configuration}.properties"/>
 				<filter token="separator" value="${separator}"/>
+				<filter token="collection" value="${collection}"/>
 			</filterset>
 		</copy>
 		<copy file="../${project.ejb}/${meta-inf.dir}/jboss.xml" 
@@ -424,6 +433,7 @@
 				<filtersfile file="${configuration}.properties"/>				
 				<filter token="datasource" value="${datasource}"/>
 				<filter token="separator" value="${separator}"/>				
+				<filter token="collection" value="${collection}"/>
 			</filterset>
 		</copy>
 		<copy file="../${project.ejb}/${meta-inf.dir}/ibm-ejb-jar-bnd.xmi" 
