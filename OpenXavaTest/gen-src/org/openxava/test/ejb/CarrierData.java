@@ -13,10 +13,10 @@ public class CarrierData
    private java.lang.String _Remarks;
    private java.lang.String _Name;
    private java.lang.Integer _Number;
-   private int warehouse_zoneNumber;
-   private java.lang.Integer warehouse_number;
-   private java.lang.String drivingLicence_type;
-   private int drivingLicence_level;
+   private int _Warehouse_zoneNumber;
+   private java.lang.Integer _Warehouse_number;
+   private java.lang.String _DrivingLicence_type;
+   private int _DrivingLicence_level;
 
    public CarrierData()
    {
@@ -27,10 +27,10 @@ public class CarrierData
       set_Remarks(otherData.get_Remarks());
       set_Name(otherData.get_Name());
       set_Number(otherData.get_Number());
-      setWarehouse_zoneNumber(otherData.getWarehouse_zoneNumber());
-      setWarehouse_number(otherData.getWarehouse_number());
-      setDrivingLicence_type(otherData.getDrivingLicence_type());
-      setDrivingLicence_level(otherData.getDrivingLicence_level());
+      set_Warehouse_zoneNumber(otherData.get_Warehouse_zoneNumber());
+      set_Warehouse_number(otherData.get_Warehouse_number());
+      set_DrivingLicence_type(otherData.get_DrivingLicence_type());
+      set_DrivingLicence_level(otherData.get_DrivingLicence_level());
 
    }
 
@@ -66,47 +66,47 @@ public class CarrierData
       this._Number = _Number;
    }
 
-   public int getWarehouse_zoneNumber()
+   public int get_Warehouse_zoneNumber()
    {
-      return this.warehouse_zoneNumber;
+      return this._Warehouse_zoneNumber;
    }
-   public void setWarehouse_zoneNumber( int warehouse_zoneNumber )
+   public void set_Warehouse_zoneNumber( int _Warehouse_zoneNumber )
    {
-      this.warehouse_zoneNumber = warehouse_zoneNumber;
-   }
-
-   public java.lang.Integer getWarehouse_number()
-   {
-      return this.warehouse_number;
-   }
-   public void setWarehouse_number( java.lang.Integer warehouse_number )
-   {
-      this.warehouse_number = warehouse_number;
+      this._Warehouse_zoneNumber = _Warehouse_zoneNumber;
    }
 
-   public java.lang.String getDrivingLicence_type()
+   public java.lang.Integer get_Warehouse_number()
    {
-      return this.drivingLicence_type;
+      return this._Warehouse_number;
    }
-   public void setDrivingLicence_type( java.lang.String drivingLicence_type )
+   public void set_Warehouse_number( java.lang.Integer _Warehouse_number )
    {
-      this.drivingLicence_type = drivingLicence_type;
+      this._Warehouse_number = _Warehouse_number;
    }
 
-   public int getDrivingLicence_level()
+   public java.lang.String get_DrivingLicence_type()
    {
-      return this.drivingLicence_level;
+      return this._DrivingLicence_type;
    }
-   public void setDrivingLicence_level( int drivingLicence_level )
+   public void set_DrivingLicence_type( java.lang.String _DrivingLicence_type )
    {
-      this.drivingLicence_level = drivingLicence_level;
+      this._DrivingLicence_type = _DrivingLicence_type;
+   }
+
+   public int get_DrivingLicence_level()
+   {
+      return this._DrivingLicence_level;
+   }
+   public void set_DrivingLicence_level( int _DrivingLicence_level )
+   {
+      this._DrivingLicence_level = _DrivingLicence_level;
    }
 
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Remarks=" + get_Remarks() + " " + "_Name=" + get_Name() + " " + "_Number=" + get_Number() + " " + "warehouse_zoneNumber=" + getWarehouse_zoneNumber() + " " + "warehouse_number=" + getWarehouse_number() + " " + "drivingLicence_type=" + getDrivingLicence_type() + " " + "drivingLicence_level=" + getDrivingLicence_level());
+      str.append("_Remarks=" + get_Remarks() + " " + "_Name=" + get_Name() + " " + "_Number=" + get_Number() + " " + "_Warehouse_zoneNumber=" + get_Warehouse_zoneNumber() + " " + "_Warehouse_number=" + get_Warehouse_number() + " " + "_DrivingLicence_type=" + get_DrivingLicence_type() + " " + "_DrivingLicence_level=" + get_DrivingLicence_level());
       str.append('}');
 
       return(str.toString());
@@ -143,24 +143,24 @@ public class CarrierData
          {
             lEquals = lEquals && this._Number.equals( lTest._Number );
          }
-         lEquals = lEquals && this.warehouse_zoneNumber == lTest.warehouse_zoneNumber;
-         if( this.warehouse_number == null )
+         lEquals = lEquals && this._Warehouse_zoneNumber == lTest._Warehouse_zoneNumber;
+         if( this._Warehouse_number == null )
          {
-            lEquals = lEquals && ( lTest.warehouse_number == null );
+            lEquals = lEquals && ( lTest._Warehouse_number == null );
          }
          else
          {
-            lEquals = lEquals && this.warehouse_number.equals( lTest.warehouse_number );
+            lEquals = lEquals && this._Warehouse_number.equals( lTest._Warehouse_number );
          }
-         if( this.drivingLicence_type == null )
+         if( this._DrivingLicence_type == null )
          {
-            lEquals = lEquals && ( lTest.drivingLicence_type == null );
+            lEquals = lEquals && ( lTest._DrivingLicence_type == null );
          }
          else
          {
-            lEquals = lEquals && this.drivingLicence_type.equals( lTest.drivingLicence_type );
+            lEquals = lEquals && this._DrivingLicence_type.equals( lTest._DrivingLicence_type );
          }
-         lEquals = lEquals && this.drivingLicence_level == lTest.drivingLicence_level;
+         lEquals = lEquals && this._DrivingLicence_level == lTest._DrivingLicence_level;
 
          return lEquals;
       }
@@ -180,13 +180,13 @@ public class CarrierData
 
       result = 37*result + ((this._Number != null) ? this._Number.hashCode() : 0);
 
-      result = 37*result + (int) warehouse_zoneNumber;
+      result = 37*result + (int) _Warehouse_zoneNumber;
 
-      result = 37*result + ((this.warehouse_number != null) ? this.warehouse_number.hashCode() : 0);
+      result = 37*result + ((this._Warehouse_number != null) ? this._Warehouse_number.hashCode() : 0);
 
-      result = 37*result + ((this.drivingLicence_type != null) ? this.drivingLicence_type.hashCode() : 0);
+      result = 37*result + ((this._DrivingLicence_type != null) ? this._DrivingLicence_type.hashCode() : 0);
 
-      result = 37*result + (int) drivingLicence_level;
+      result = 37*result + (int) _DrivingLicence_level;
 
       return result;
    }

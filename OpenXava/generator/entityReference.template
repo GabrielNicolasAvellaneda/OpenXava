@@ -18,6 +18,11 @@ public void setEjb(boolean ejb) {
 	this.ejb = ejb;
 }
 
+private String getExcepcion() {
+	return ejb?"EJBException":"RuntimeException";
+}
+
+
 public static void generate(XPathContext context, ProgramWriter out, MetaReference ref) throws XavaException {
 	EntityReferencePG pg = new EntityReferencePG();
 	pg.setReference(ref);
@@ -37,6 +42,7 @@ else {
 	modelMapping = metaModel.getMapping();
 }	
 String referenceName = Strings.firstUpper(reference.getName());
+ReferenceMapping referenceMapping = modelMapping.getReferenceMapping(reference.getName());
 IMetaEjb referencedModel = (IMetaEjb) reference.getMetaModelReferenced();
 ModelMapping referencedMapping = referencedModel.getMapping();
 String referencedModelClass = referencedModel.getRemote();
@@ -92,14 +98,15 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 		String prefixGet = "get" + referenceName + "_";
 		Iterator itKeys = referencedModel.getAllKeyPropertiesNames().iterator();
 		while (itKeys.hasNext()) {
-			String key = Strings.change((String) itKeys.next(), ".", "_");
-			String keyAttribute=null;
-			if (referencedMapping.hasConverter(key)) {
+			String property = (String) itKeys.next();
+			String key = Strings.change(property, ".", "_"); 
+			String keyAttribute = null;
+			if (referencedMapping.hasConverter(key) || property.indexOf('.') >= 0) { 
 				keyAttribute = "_" + Strings.firstUpper(key);
 			}
 			else {
 				keyAttribute = key;
-			}				
+			}
 		# 
 		key.#(keyAttribute)# = #(prefixGet)##(key)#();			
 		# } #		
@@ -120,9 +127,10 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 		String prefixSet = "set" + referenceName + "_";
 		itKeys = referencedModel.getAllKeyPropertiesNames().iterator();		
 		while (itKeys.hasNext()) {
-			String key = Strings.change((String) itKeys.next(), ".", "_");
+		    String property = (String) itKeys.next(); 
+			String key = Strings.change(property, ".", "_");
 			String keyAttribute=null;
-			if (referencedMapping.hasConverter(key)) {
+			if (referencedMapping.hasConverter(key) || property.indexOf('.') >= 0) {
 				keyAttribute = "_" + Strings.firstUpper(key);
 			}
 			else {
@@ -175,18 +183,54 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 		else {
 			type = property.getTypeName();
 		}	
-		String column = modelMapping.getReferenceMapping(reference.getName()).getColumnForReferencedModelProperty(originalProperty.getName());	
+		String column = modelMapping.getReferenceMapping(reference.getName()).getColumnForReferencedModelProperty(originalProperty.getName());			
 	#
 	/**		
-	 * @ejb:interface-method
 	 * @ejb:persistent-field
 	 * #(pkField)#
-	 * @ejb.value-object match="persistentCalculatedAndAggregate"
 	 * @jboss:column-name "#(column)#"
 	 */
-	public abstract #(type)# get#(propertyName)#();
-	public abstract void set#(propertyName)#(#(type)# new#(propertyName)#);				
+	public abstract #(type)# get_#(propertyName)#();
+	public abstract void set_#(propertyName)#(#(type)# new#(propertyName)#);
 
+	/**		
+	 * @ejb:interface-method
+	 * @ejb.value-object match="persistentCalculatedAndAggregate"
+	 */
+	public #(type)# get#(propertyName)#() {
+		# 
+		if (referenceMapping.hasConverter(originalProperty.getName())) {			
+			String getSentence = property.getName() + "Converter.toJava(get_" + propertyName + "())";							
+		# 
+		try {
+			return #(Generators.generateCast(type, getSentence))#;
+		}
+		catch (org.openxava.converters.ConversionException ex) {
+			ex.printStackTrace();
+			throw new #(getExcepcion())#(XavaResources.getString("generator.conversion_error", "#(reference.getName())#.#(originalProperty.getName())#", "#(metaModel.getName())#", "#(type)#"));
+		}		
+		# } else { # 
+		return get_#(propertyName)#(); 				
+		# } # 
+	}
+	public void set#(propertyName)#(#(type)# new#(propertyName)#) {
+		# 
+		if (referenceMapping.hasConverter(originalProperty.getName())) {			
+			String sentence = property.getName() + "Converter.toDB(new" + propertyName + ")";							
+		# 
+		try {
+			set_#(propertyName)#(#(Generators.generateCast(type, sentence))#);
+		}
+		catch (org.openxava.converters.ConversionException ex) {
+			ex.printStackTrace();
+			throw new #(getExcepcion())#(XavaResources.getString("generator.conversion_error", "#(reference.getName())#.#(originalProperty.getName())#", "#(metaModel.getName())#", "#(type)#"));
+		}		
+		# } else { # 
+		set_#(propertyName)#(new#(propertyName)#); 				
+		# } # 	
+	}
+
+					
 	# } // while referenced entity key properties # 
 
 	private #(homeClass)# #(homeAttribute)#;	
@@ -198,3 +242,20 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 		}
 		return #(homeAttribute)#;
 	}	
+
+	# 
+	for (Iterator it = referenceMapping.getDetails().iterator(); it.hasNext(); ) {	
+		ReferenceMappingDetail detail = (ReferenceMappingDetail) it.next();
+		if (detail.hasConverter()) {
+			String key = Strings.change(detail.getReferencedModelProperty(), ".", "_");
+	# 
+	
+	private static final #(detail.getConverterClassName())# 
+		#(reference.getName())#_#(key)#Converter =
+			new #(detail.getConverterClassName())#();
+	# 
+		}
+	}
+	# 
+	
+	

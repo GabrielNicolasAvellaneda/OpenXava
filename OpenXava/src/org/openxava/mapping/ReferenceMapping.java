@@ -90,7 +90,8 @@ public class ReferenceMapping implements java.io.Serializable {
 		if (getContainer().isReferenceOverlappingWithSomeProperty(getReference(), propertyNameOfReferencedModel)) {
 			return getContainer().getCMPAttributeForColumn(getColumnForReferencedModelProperty(propertyNameOfReferencedModel));
 		}
-		return Strings.change(getReference() + "_" + propertyNameOfReferencedModel, ".", "_");
+		// tmp return Strings.change(getReference() + "_" + propertyNameOfReferencedModel, ".", "_");
+		return "_" + Strings.change(Strings.firstUpper(getReference()) + "_" + propertyNameOfReferencedModel, ".", "_");
 	}
 
 	public Collection getCmpFields() throws XavaException {
@@ -110,6 +111,12 @@ public class ReferenceMapping implements java.io.Serializable {
 			fields.add(field);
 		}
 		return fields;
+	}
+	
+	public boolean hasConverter(String property) {
+		ReferenceMappingDetail detail = (ReferenceMappingDetail) details.get(property);
+		if (detail == null) return false;
+		return detail.hasConverter();
 	}
 	
 }

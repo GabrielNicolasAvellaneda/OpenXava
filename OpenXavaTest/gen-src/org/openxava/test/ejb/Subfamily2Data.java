@@ -13,7 +13,7 @@ public class Subfamily2Data
    private java.lang.String _Remarks;
    private java.lang.String _Description;
    private int number;
-   private int family_number;
+   private int _Family_number;
 
    public Subfamily2Data()
    {
@@ -24,7 +24,7 @@ public class Subfamily2Data
       set_Remarks(otherData.get_Remarks());
       set_Description(otherData.get_Description());
       setNumber(otherData.getNumber());
-      setFamily_number(otherData.getFamily_number());
+      set_Family_number(otherData.get_Family_number());
 
    }
 
@@ -60,20 +60,20 @@ public class Subfamily2Data
       this.number = number;
    }
 
-   public int getFamily_number()
+   public int get_Family_number()
    {
-      return this.family_number;
+      return this._Family_number;
    }
-   public void setFamily_number( int family_number )
+   public void set_Family_number( int _Family_number )
    {
-      this.family_number = family_number;
+      this._Family_number = _Family_number;
    }
 
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Remarks=" + get_Remarks() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "family_number=" + getFamily_number());
+      str.append("_Remarks=" + get_Remarks() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "_Family_number=" + get_Family_number());
       str.append('}');
 
       return(str.toString());
@@ -103,7 +103,7 @@ public class Subfamily2Data
             lEquals = lEquals && this._Description.equals( lTest._Description );
          }
          lEquals = lEquals && this.number == lTest.number;
-         lEquals = lEquals && this.family_number == lTest.family_number;
+         lEquals = lEquals && this._Family_number == lTest._Family_number;
 
          return lEquals;
       }
@@ -123,7 +123,7 @@ public class Subfamily2Data
 
       result = 37*result + (int) number;
 
-      result = 37*result + (int) family_number;
+      result = 37*result + (int) _Family_number;
 
       return result;
    }

@@ -12,7 +12,7 @@ public class ReceptionistData
 {
    private int oid;
    private java.lang.String _Name;
-   private java.lang.String deliveryPlace_oid;
+   private java.lang.String _DeliveryPlace_oid;
 
    public ReceptionistData()
    {
@@ -22,7 +22,7 @@ public class ReceptionistData
    {
       setOid(otherData.getOid());
       set_Name(otherData.get_Name());
-      setDeliveryPlace_oid(otherData.getDeliveryPlace_oid());
+      set_DeliveryPlace_oid(otherData.get_DeliveryPlace_oid());
 
    }
 
@@ -49,20 +49,20 @@ public class ReceptionistData
       this._Name = _Name;
    }
 
-   public java.lang.String getDeliveryPlace_oid()
+   public java.lang.String get_DeliveryPlace_oid()
    {
-      return this.deliveryPlace_oid;
+      return this._DeliveryPlace_oid;
    }
-   public void setDeliveryPlace_oid( java.lang.String deliveryPlace_oid )
+   public void set_DeliveryPlace_oid( java.lang.String _DeliveryPlace_oid )
    {
-      this.deliveryPlace_oid = deliveryPlace_oid;
+      this._DeliveryPlace_oid = _DeliveryPlace_oid;
    }
 
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("oid=" + getOid() + " " + "_Name=" + get_Name() + " " + "deliveryPlace_oid=" + getDeliveryPlace_oid());
+      str.append("oid=" + getOid() + " " + "_Name=" + get_Name() + " " + "_DeliveryPlace_oid=" + get_DeliveryPlace_oid());
       str.append('}');
 
       return(str.toString());
@@ -84,13 +84,13 @@ public class ReceptionistData
          {
             lEquals = lEquals && this._Name.equals( lTest._Name );
          }
-         if( this.deliveryPlace_oid == null )
+         if( this._DeliveryPlace_oid == null )
          {
-            lEquals = lEquals && ( lTest.deliveryPlace_oid == null );
+            lEquals = lEquals && ( lTest._DeliveryPlace_oid == null );
          }
          else
          {
-            lEquals = lEquals && this.deliveryPlace_oid.equals( lTest.deliveryPlace_oid );
+            lEquals = lEquals && this._DeliveryPlace_oid.equals( lTest._DeliveryPlace_oid );
          }
 
          return lEquals;
@@ -109,7 +109,7 @@ public class ReceptionistData
 
       result = 37*result + ((this._Name != null) ? this._Name.hashCode() : 0);
 
-      result = 37*result + ((this.deliveryPlace_oid != null) ? this.deliveryPlace_oid.hashCode() : 0);
+      result = 37*result + ((this._DeliveryPlace_oid != null) ? this._DeliveryPlace_oid.hashCode() : 0);
 
       return result;
    }

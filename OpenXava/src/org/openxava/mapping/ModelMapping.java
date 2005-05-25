@@ -316,19 +316,19 @@ abstract public class ModelMapping implements java.io.Serializable {
 			f = r.toString().indexOf("}", i + 2);
 			if (f < 0)
 				break;
-			String propety = r.substring(i + 2, f);
+			String property = r.substring(i + 2, f);
 			String cmpAttribute = null;
-			if (propety.indexOf('.') >= 0) {
-				cmpAttribute = "o." + Strings.change(propety, ".", "_");
+			if (property.indexOf('.') >= 0) {
+				cmpAttribute = "o._" + Strings.firstUpper(Strings.change(property, ".", "_"));
 			}
 			else {			
 				MetaProperty metaProperty =
-					getMetaModel().getMetaProperty(propety);
+					getMetaModel().getMetaProperty(property);
 				if (metaProperty.getMapping().hasConverter()) {
-					cmpAttribute = "o._" + Strings.firstUpper(propety);
+					cmpAttribute = "o._" + Strings.firstUpper(property);
 				}
 				else {
-					cmpAttribute = "o." + propety;
+					cmpAttribute = "o." + property;
 				}
 			}
 			r.replace(i, f + 1, cmpAttribute);

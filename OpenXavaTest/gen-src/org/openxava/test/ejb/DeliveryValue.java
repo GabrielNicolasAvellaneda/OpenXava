@@ -365,9 +365,6 @@ public class DeliveryValue
    {
 	  boolean ret = true;
 	  ret = ret && numberHasBeenSet;
-	  ret = ret && type_numberHasBeenSet;
-	  ret = ret && invoice_yearHasBeenSet;
-	  ret = ret && invoice_numberHasBeenSet;
 	  return ret;
    }
 
@@ -382,9 +379,6 @@ public class DeliveryValue
 		 if ( ! that.hasIdentity() ) return false;
 		 boolean lEquals = true;
 		 lEquals = lEquals && this.number == that.number;
-		 lEquals = lEquals && this.type_number == that.type_number;
-		 lEquals = lEquals && this.invoice_year == that.invoice_year;
-		 lEquals = lEquals && this.invoice_number == that.invoice_number;
 
 		 lEquals = lEquals && isIdentical(that);
 
@@ -475,6 +469,7 @@ public class DeliveryValue
 		 {
 			lEquals = lEquals && this.date.equals( that.date );
 		 }
+		 lEquals = lEquals && this.type_number == that.type_number;
 		 if( this.shipment_type == null )
 		 {
 			lEquals = lEquals && ( that.shipment_type == null );
@@ -493,6 +488,8 @@ public class DeliveryValue
 		 {
 			lEquals = lEquals && this.carrier_number.equals( that.carrier_number );
 		 }
+		 lEquals = lEquals && this.invoice_year == that.invoice_year;
+		 lEquals = lEquals && this.invoice_number == that.invoice_number;
 
 		 return lEquals;
 	  }

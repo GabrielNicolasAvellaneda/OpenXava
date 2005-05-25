@@ -16,7 +16,7 @@ public class InvoiceData
    private int year;
    private java.math.BigDecimal _VatPercentage;
    private int number;
-   private int customer_number;
+   private int _Customer_number;
 
    public InvoiceData()
    {
@@ -30,7 +30,7 @@ public class InvoiceData
       setYear(otherData.getYear());
       set_VatPercentage(otherData.get_VatPercentage());
       setNumber(otherData.getNumber());
-      setCustomer_number(otherData.getCustomer_number());
+      set_Customer_number(otherData.get_Customer_number());
 
    }
 
@@ -93,20 +93,20 @@ public class InvoiceData
       this.number = number;
    }
 
-   public int getCustomer_number()
+   public int get_Customer_number()
    {
-      return this.customer_number;
+      return this._Customer_number;
    }
-   public void setCustomer_number( int customer_number )
+   public void set_Customer_number( int _Customer_number )
    {
-      this.customer_number = customer_number;
+      this._Customer_number = _Customer_number;
    }
 
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Comment=" + get_Comment() + " " + "_Date=" + get_Date() + " " + "_Paid=" + get_Paid() + " " + "year=" + getYear() + " " + "_VatPercentage=" + get_VatPercentage() + " " + "number=" + getNumber() + " " + "customer_number=" + getCustomer_number());
+      str.append("_Comment=" + get_Comment() + " " + "_Date=" + get_Date() + " " + "_Paid=" + get_Paid() + " " + "year=" + getYear() + " " + "_VatPercentage=" + get_VatPercentage() + " " + "number=" + getNumber() + " " + "_Customer_number=" + get_Customer_number());
       str.append('}');
 
       return(str.toString());
@@ -153,7 +153,7 @@ public class InvoiceData
             lEquals = lEquals && this._VatPercentage.equals( lTest._VatPercentage );
          }
          lEquals = lEquals && this.number == lTest.number;
-         lEquals = lEquals && this.customer_number == lTest.customer_number;
+         lEquals = lEquals && this._Customer_number == lTest._Customer_number;
 
          return lEquals;
       }
@@ -179,7 +179,7 @@ public class InvoiceData
 
       result = 37*result + (int) number;
 
-      result = 37*result + (int) customer_number;
+      result = 37*result + (int) _Customer_number;
 
       return result;
    }

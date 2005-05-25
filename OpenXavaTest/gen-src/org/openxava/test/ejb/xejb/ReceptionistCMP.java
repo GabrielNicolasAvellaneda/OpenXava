@@ -20,7 +20,7 @@ public abstract class ReceptionistCMP
 
          dataHolder.setOid( getOid() );
          dataHolder.set_Name( get_Name() );
-         dataHolder.setDeliveryPlace_oid( getDeliveryPlace_oid() );
+         dataHolder.set_DeliveryPlace_oid( get_DeliveryPlace_oid() );
 
       }
       catch (RuntimeException e)
@@ -36,7 +36,7 @@ public abstract class ReceptionistCMP
       try
       {
          set_Name( dataHolder.get_Name() );
-         setDeliveryPlace_oid( dataHolder.getDeliveryPlace_oid() );
+         set_DeliveryPlace_oid( dataHolder.get_DeliveryPlace_oid() );
 
       }
       catch (Exception e)
@@ -127,8 +127,8 @@ public abstract class ReceptionistCMP
 
    public abstract void set_Name( java.lang.String _Name ) ;
 
-   public abstract java.lang.String getDeliveryPlace_oid() ;
+   public abstract java.lang.String get_DeliveryPlace_oid() ;
 
-   public abstract void setDeliveryPlace_oid( java.lang.String deliveryPlace_oid ) ;
+   public abstract void set_DeliveryPlace_oid( java.lang.String _DeliveryPlace_oid ) ;
 
 }

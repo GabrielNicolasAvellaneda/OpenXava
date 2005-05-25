@@ -29,13 +29,13 @@ public abstract class DeliveryCMP
          dataHolder.setDate_month( getDate_month() );
          dataHolder.setDate_year( getDate_year() );
          dataHolder.setNumber( getNumber() );
-         dataHolder.setType_number( getType_number() );
-         dataHolder.setShipment_type( getShipment_type() );
-         dataHolder.setShipment_mode( getShipment_mode() );
-         dataHolder.setShipment_number( getShipment_number() );
-         dataHolder.setCarrier_number( getCarrier_number() );
-         dataHolder.setInvoice_year( getInvoice_year() );
-         dataHolder.setInvoice_number( getInvoice_number() );
+         dataHolder.set_Type_number( get_Type_number() );
+         dataHolder.set_Shipment_type( get_Shipment_type() );
+         dataHolder.set_Shipment_mode( get_Shipment_mode() );
+         dataHolder.set_Shipment_number( get_Shipment_number() );
+         dataHolder.set_Carrier_number( get_Carrier_number() );
+         dataHolder.set_Invoice_year( get_Invoice_year() );
+         dataHolder.set_Invoice_number( get_Invoice_number() );
 
       }
       catch (RuntimeException e)
@@ -60,10 +60,10 @@ public abstract class DeliveryCMP
          setDate_day( dataHolder.getDate_day() );
          setDate_month( dataHolder.getDate_month() );
          setDate_year( dataHolder.getDate_year() );
-         setShipment_type( dataHolder.getShipment_type() );
-         setShipment_mode( dataHolder.getShipment_mode() );
-         setShipment_number( dataHolder.getShipment_number() );
-         setCarrier_number( dataHolder.getCarrier_number() );
+         set_Shipment_type( dataHolder.get_Shipment_type() );
+         set_Shipment_mode( dataHolder.get_Shipment_mode() );
+         set_Shipment_number( dataHolder.get_Shipment_number() );
+         set_Carrier_number( dataHolder.get_Carrier_number() );
 
       }
       catch (Exception e)
@@ -159,10 +159,13 @@ public abstract class DeliveryCMP
 		 setVehicle( valueHolder.getVehicle() );
 		 setTransportMode( valueHolder.getTransportMode() );
 		 setDate( valueHolder.getDate() );
+		 setType_number( valueHolder.getType_number() );
 		 setShipment_type( valueHolder.getShipment_type() );
 		 setShipment_mode( valueHolder.getShipment_mode() );
 		 setShipment_number( valueHolder.getShipment_number() );
 		 setCarrier_number( valueHolder.getCarrier_number() );
+		 setInvoice_year( valueHolder.getInvoice_year() );
+		 setInvoice_number( valueHolder.getInvoice_number() );
 
 	  }
 	  catch (Exception e)
@@ -217,32 +220,32 @@ public abstract class DeliveryCMP
 
    public abstract void setNumber( int number ) ;
 
-   public abstract int getType_number() ;
+   public abstract int get_Type_number() ;
 
-   public abstract void setType_number( int type_number ) ;
+   public abstract void set_Type_number( int _Type_number ) ;
 
-   public abstract java.lang.String getShipment_type() ;
+   public abstract java.lang.String get_Shipment_type() ;
 
-   public abstract void setShipment_type( java.lang.String shipment_type ) ;
+   public abstract void set_Shipment_type( java.lang.String _Shipment_type ) ;
 
-   public abstract int getShipment_mode() ;
+   public abstract int get_Shipment_mode() ;
 
-   public abstract void setShipment_mode( int shipment_mode ) ;
+   public abstract void set_Shipment_mode( int _Shipment_mode ) ;
 
-   public abstract int getShipment_number() ;
+   public abstract int get_Shipment_number() ;
 
-   public abstract void setShipment_number( int shipment_number ) ;
+   public abstract void set_Shipment_number( int _Shipment_number ) ;
 
-   public abstract java.lang.Integer getCarrier_number() ;
+   public abstract java.lang.Integer get_Carrier_number() ;
 
-   public abstract void setCarrier_number( java.lang.Integer carrier_number ) ;
+   public abstract void set_Carrier_number( java.lang.Integer _Carrier_number ) ;
 
-   public abstract int getInvoice_year() ;
+   public abstract int get_Invoice_year() ;
 
-   public abstract void setInvoice_year( int invoice_year ) ;
+   public abstract void set_Invoice_year( int _Invoice_year ) ;
 
-   public abstract int getInvoice_number() ;
+   public abstract int get_Invoice_number() ;
 
-   public abstract void setInvoice_number( int invoice_number ) ;
+   public abstract void set_Invoice_number( int _Invoice_number ) ;
 
 }

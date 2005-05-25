@@ -26,10 +26,10 @@ public abstract class InvoiceDetailCMP
          dataHolder.setDeliveryDate_year( getDeliveryDate_year() );
          dataHolder.set_Quantity( get_Quantity() );
          dataHolder.set_ServiceType( get_ServiceType() );
-         dataHolder.setProduct_number( getProduct_number() );
-         dataHolder.setSoldBy_number( getSoldBy_number() );
-         dataHolder.setInvoice_year( getInvoice_year() );
-         dataHolder.setInvoice_number( getInvoice_number() );
+         dataHolder.set_Product_number( get_Product_number() );
+         dataHolder.set_SoldBy_number( get_SoldBy_number() );
+         dataHolder.set_Invoice_year( get_Invoice_year() );
+         dataHolder.set_Invoice_number( get_Invoice_number() );
 
       }
       catch (RuntimeException e)
@@ -51,10 +51,10 @@ public abstract class InvoiceDetailCMP
          setDeliveryDate_year( dataHolder.getDeliveryDate_year() );
          set_Quantity( dataHolder.get_Quantity() );
          set_ServiceType( dataHolder.get_ServiceType() );
-         setProduct_number( dataHolder.getProduct_number() );
-         setSoldBy_number( dataHolder.getSoldBy_number() );
-         setInvoice_year( dataHolder.getInvoice_year() );
-         setInvoice_number( dataHolder.getInvoice_number() );
+         set_Product_number( dataHolder.get_Product_number() );
+         set_SoldBy_number( dataHolder.get_SoldBy_number() );
+         set_Invoice_year( dataHolder.get_Invoice_year() );
+         set_Invoice_number( dataHolder.get_Invoice_number() );
 
       }
       catch (Exception e)
@@ -185,20 +185,20 @@ public abstract class InvoiceDetailCMP
 
    public abstract void set_ServiceType( java.lang.Integer _ServiceType ) ;
 
-   public abstract long getProduct_number() ;
+   public abstract long get_Product_number() ;
 
-   public abstract void setProduct_number( long product_number ) ;
+   public abstract void set_Product_number( long _Product_number ) ;
 
-   public abstract int getSoldBy_number() ;
+   public abstract int get_SoldBy_number() ;
 
-   public abstract void setSoldBy_number( int soldBy_number ) ;
+   public abstract void set_SoldBy_number( int _SoldBy_number ) ;
 
-   public abstract int getInvoice_year() ;
+   public abstract int get_Invoice_year() ;
 
-   public abstract void setInvoice_year( int invoice_year ) ;
+   public abstract void set_Invoice_year( int _Invoice_year ) ;
 
-   public abstract int getInvoice_number() ;
+   public abstract int get_Invoice_number() ;
 
-   public abstract void setInvoice_number( int invoice_number ) ;
+   public abstract void set_Invoice_number( int _Invoice_number ) ;
 
 }

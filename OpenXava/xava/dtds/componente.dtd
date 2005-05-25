@@ -334,7 +334,7 @@
 >
 
 
-<!ELEMENT detalle-mapeo-referencia EMPTY>
+<!ELEMENT detalle-mapeo-referencia (conversor?)>
 <!ATTLIST detalle-mapeo-referencia
  columna-tabla CDATA #REQUIRED
  propiedad-modelo-referenciado CDATA #REQUIRED 

@@ -17,17 +17,17 @@ public class Office2Key
 
    public int zoneNumber;
    public int number;
-   public java.lang.Integer mainWarehouse_number;
+   public java.lang.Integer _MainWarehouse_number;
 
    public Office2Key()
    {
    }
 
-   public Office2Key( int zoneNumber,int number,java.lang.Integer mainWarehouse_number )
+   public Office2Key( int zoneNumber,int number,java.lang.Integer _MainWarehouse_number )
    {
       this.zoneNumber = zoneNumber;
       this.number = number;
-      this.mainWarehouse_number = mainWarehouse_number;
+      this._MainWarehouse_number = _MainWarehouse_number;
    }
 
    public int getZoneNumber()
@@ -38,9 +38,9 @@ public class Office2Key
    {
       return number;
    }
-   public java.lang.Integer getMainWarehouse_number()
+   public java.lang.Integer get_MainWarehouse_number()
    {
-      return mainWarehouse_number;
+      return _MainWarehouse_number;
    }
 
    public void setZoneNumber(int zoneNumber)
@@ -51,9 +51,9 @@ public class Office2Key
    {
       this.number = number;
    }
-   public void setMainWarehouse_number(java.lang.Integer mainWarehouse_number)
+   public void set_MainWarehouse_number(java.lang.Integer _MainWarehouse_number)
    {
-      this.mainWarehouse_number = mainWarehouse_number;
+      this._MainWarehouse_number = _MainWarehouse_number;
    }
 
    public int hashCode()
@@ -61,7 +61,7 @@ public class Office2Key
       int _hashCode = 0;
          _hashCode += (int)this.zoneNumber;
          _hashCode += (int)this.number;
-         if (this.mainWarehouse_number != null) _hashCode += this.mainWarehouse_number.hashCode();
+         if (this._MainWarehouse_number != null) _hashCode += this._MainWarehouse_number.hashCode();
 
       return _hashCode;
    }
@@ -82,13 +82,13 @@ public class Office2Key
       {
          eq = eq && this.zoneNumber == pk.zoneNumber;
          eq = eq && this.number == pk.number;
-         if( this.mainWarehouse_number != null )
+         if( this._MainWarehouse_number != null )
          {
-            eq = eq && this.mainWarehouse_number.equals( pk.getMainWarehouse_number() );
+            eq = eq && this._MainWarehouse_number.equals( pk.get_MainWarehouse_number() );
          }
-         else  // this.mainWarehouse_number == null
+         else  // this._MainWarehouse_number == null
          {
-            eq = eq && ( pk.getMainWarehouse_number() == null );
+            eq = eq && ( pk.get_MainWarehouse_number() == null );
          }
       }
 

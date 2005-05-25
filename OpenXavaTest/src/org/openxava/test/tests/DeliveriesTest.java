@@ -331,9 +331,9 @@ public class DeliveriesTest extends ModuleTestBase {
 		
 		// Verifying database value
 		DeliveryKey key = new DeliveryKey();
-		key.setInvoice_year(2002);
-		key.setInvoice_number(1);
-		key.setType_number(1);		
+		key.set_Invoice_year(2002);
+		key.set_Invoice_number(1);
+		key.set_Type_number(1);		
 		key.setNumber(66);
 		String distanceDB = DeliveryUtil.getHome().findByPrimaryKey(key).getData().get_Distance();
 		assertEquals("distance in database incorrect", "N", distanceDB);
@@ -376,9 +376,9 @@ public class DeliveriesTest extends ModuleTestBase {
 		
 		// Verifying that it is deleted
 		DeliveryKey key = new DeliveryKey();
-		key.setInvoice_year(2002);
-		key.setInvoice_number(1);
-		key.setType_number(1);		
+		key.set_Invoice_year(2002);
+		key.set_Invoice_number(1);
+		key.set_Type_number(1);		
 		key.setNumber(1);
 		try {
 			DeliveryUtil.getHome().findByPrimaryKey(key);

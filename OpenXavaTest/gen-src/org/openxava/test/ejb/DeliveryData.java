@@ -21,13 +21,13 @@ public class DeliveryData
    private int date_month;
    private int date_year;
    private int number;
-   private int type_number;
-   private java.lang.String shipment_type;
-   private int shipment_mode;
-   private int shipment_number;
-   private java.lang.Integer carrier_number;
-   private int invoice_year;
-   private int invoice_number;
+   private int _Type_number;
+   private java.lang.String _Shipment_type;
+   private int _Shipment_mode;
+   private int _Shipment_number;
+   private java.lang.Integer _Carrier_number;
+   private int _Invoice_year;
+   private int _Invoice_number;
 
    public DeliveryData()
    {
@@ -46,18 +46,18 @@ public class DeliveryData
       setDate_month(otherData.getDate_month());
       setDate_year(otherData.getDate_year());
       setNumber(otherData.getNumber());
-      setType_number(otherData.getType_number());
-      setShipment_type(otherData.getShipment_type());
-      setShipment_mode(otherData.getShipment_mode());
-      setShipment_number(otherData.getShipment_number());
-      setCarrier_number(otherData.getCarrier_number());
-      setInvoice_year(otherData.getInvoice_year());
-      setInvoice_number(otherData.getInvoice_number());
+      set_Type_number(otherData.get_Type_number());
+      set_Shipment_type(otherData.get_Shipment_type());
+      set_Shipment_mode(otherData.get_Shipment_mode());
+      set_Shipment_number(otherData.get_Shipment_number());
+      set_Carrier_number(otherData.get_Carrier_number());
+      set_Invoice_year(otherData.get_Invoice_year());
+      set_Invoice_number(otherData.get_Invoice_number());
 
    }
 
    public org.openxava.test.ejb.DeliveryKey getPrimaryKey() {
-     org.openxava.test.ejb.DeliveryKey pk = new org.openxava.test.ejb.DeliveryKey(this.getNumber(),this.getType_number(),this.getInvoice_year(),this.getInvoice_number());
+     org.openxava.test.ejb.DeliveryKey pk = new org.openxava.test.ejb.DeliveryKey(this.getNumber(),this.get_Type_number(),this.get_Invoice_year(),this.get_Invoice_number());
      return pk;
    }
 
@@ -160,74 +160,74 @@ public class DeliveryData
       this.number = number;
    }
 
-   public int getType_number()
+   public int get_Type_number()
    {
-      return this.type_number;
+      return this._Type_number;
    }
-   public void setType_number( int type_number )
+   public void set_Type_number( int _Type_number )
    {
-      this.type_number = type_number;
-   }
-
-   public java.lang.String getShipment_type()
-   {
-      return this.shipment_type;
-   }
-   public void setShipment_type( java.lang.String shipment_type )
-   {
-      this.shipment_type = shipment_type;
+      this._Type_number = _Type_number;
    }
 
-   public int getShipment_mode()
+   public java.lang.String get_Shipment_type()
    {
-      return this.shipment_mode;
+      return this._Shipment_type;
    }
-   public void setShipment_mode( int shipment_mode )
+   public void set_Shipment_type( java.lang.String _Shipment_type )
    {
-      this.shipment_mode = shipment_mode;
-   }
-
-   public int getShipment_number()
-   {
-      return this.shipment_number;
-   }
-   public void setShipment_number( int shipment_number )
-   {
-      this.shipment_number = shipment_number;
+      this._Shipment_type = _Shipment_type;
    }
 
-   public java.lang.Integer getCarrier_number()
+   public int get_Shipment_mode()
    {
-      return this.carrier_number;
+      return this._Shipment_mode;
    }
-   public void setCarrier_number( java.lang.Integer carrier_number )
+   public void set_Shipment_mode( int _Shipment_mode )
    {
-      this.carrier_number = carrier_number;
-   }
-
-   public int getInvoice_year()
-   {
-      return this.invoice_year;
-   }
-   public void setInvoice_year( int invoice_year )
-   {
-      this.invoice_year = invoice_year;
+      this._Shipment_mode = _Shipment_mode;
    }
 
-   public int getInvoice_number()
+   public int get_Shipment_number()
    {
-      return this.invoice_number;
+      return this._Shipment_number;
    }
-   public void setInvoice_number( int invoice_number )
+   public void set_Shipment_number( int _Shipment_number )
    {
-      this.invoice_number = invoice_number;
+      this._Shipment_number = _Shipment_number;
+   }
+
+   public java.lang.Integer get_Carrier_number()
+   {
+      return this._Carrier_number;
+   }
+   public void set_Carrier_number( java.lang.Integer _Carrier_number )
+   {
+      this._Carrier_number = _Carrier_number;
+   }
+
+   public int get_Invoice_year()
+   {
+      return this._Invoice_year;
+   }
+   public void set_Invoice_year( int _Invoice_year )
+   {
+      this._Invoice_year = _Invoice_year;
+   }
+
+   public int get_Invoice_number()
+   {
+      return this._Invoice_number;
+   }
+   public void set_Invoice_number( int _Invoice_number )
+   {
+      this._Invoice_number = _Invoice_number;
    }
 
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Distance=" + get_Distance() + " " + "_Incidents=" + get_Incidents() + " " + "_DriverType=" + get_DriverType() + " " + "_Remarks=" + get_Remarks() + " " + "_Employee=" + get_Employee() + " " + "_Description=" + get_Description() + " " + "_Vehicle=" + get_Vehicle() + " " + "date_day=" + getDate_day() + " " + "date_month=" + getDate_month() + " " + "date_year=" + getDate_year() + " " + "number=" + getNumber() + " " + "type_number=" + getType_number() + " " + "shipment_type=" + getShipment_type() + " " + "shipment_mode=" + getShipment_mode() + " " + "shipment_number=" + getShipment_number() + " " + "carrier_number=" + getCarrier_number() + " " + "invoice_year=" + getInvoice_year() + " " + "invoice_number=" + getInvoice_number());
+      str.append("_Distance=" + get_Distance() + " " + "_Incidents=" + get_Incidents() + " " + "_DriverType=" + get_DriverType() + " " + "_Remarks=" + get_Remarks() + " " + "_Employee=" + get_Employee() + " " + "_Description=" + get_Description() + " " + "_Vehicle=" + get_Vehicle() + " " + "date_day=" + getDate_day() + " " + "date_month=" + getDate_month() + " " + "date_year=" + getDate_year() + " " + "number=" + getNumber() + " " + "_Type_number=" + get_Type_number() + " " + "_Shipment_type=" + get_Shipment_type() + " " + "_Shipment_mode=" + get_Shipment_mode() + " " + "_Shipment_number=" + get_Shipment_number() + " " + "_Carrier_number=" + get_Carrier_number() + " " + "_Invoice_year=" + get_Invoice_year() + " " + "_Invoice_number=" + get_Invoice_number());
       str.append('}');
 
       return(str.toString());
@@ -300,27 +300,27 @@ public class DeliveryData
          lEquals = lEquals && this.date_month == lTest.date_month;
          lEquals = lEquals && this.date_year == lTest.date_year;
          lEquals = lEquals && this.number == lTest.number;
-         lEquals = lEquals && this.type_number == lTest.type_number;
-         if( this.shipment_type == null )
+         lEquals = lEquals && this._Type_number == lTest._Type_number;
+         if( this._Shipment_type == null )
          {
-            lEquals = lEquals && ( lTest.shipment_type == null );
+            lEquals = lEquals && ( lTest._Shipment_type == null );
          }
          else
          {
-            lEquals = lEquals && this.shipment_type.equals( lTest.shipment_type );
+            lEquals = lEquals && this._Shipment_type.equals( lTest._Shipment_type );
          }
-         lEquals = lEquals && this.shipment_mode == lTest.shipment_mode;
-         lEquals = lEquals && this.shipment_number == lTest.shipment_number;
-         if( this.carrier_number == null )
+         lEquals = lEquals && this._Shipment_mode == lTest._Shipment_mode;
+         lEquals = lEquals && this._Shipment_number == lTest._Shipment_number;
+         if( this._Carrier_number == null )
          {
-            lEquals = lEquals && ( lTest.carrier_number == null );
+            lEquals = lEquals && ( lTest._Carrier_number == null );
          }
          else
          {
-            lEquals = lEquals && this.carrier_number.equals( lTest.carrier_number );
+            lEquals = lEquals && this._Carrier_number.equals( lTest._Carrier_number );
          }
-         lEquals = lEquals && this.invoice_year == lTest.invoice_year;
-         lEquals = lEquals && this.invoice_number == lTest.invoice_number;
+         lEquals = lEquals && this._Invoice_year == lTest._Invoice_year;
+         lEquals = lEquals && this._Invoice_number == lTest._Invoice_number;
 
          return lEquals;
       }
@@ -356,19 +356,19 @@ public class DeliveryData
 
       result = 37*result + (int) number;
 
-      result = 37*result + (int) type_number;
+      result = 37*result + (int) _Type_number;
 
-      result = 37*result + ((this.shipment_type != null) ? this.shipment_type.hashCode() : 0);
+      result = 37*result + ((this._Shipment_type != null) ? this._Shipment_type.hashCode() : 0);
 
-      result = 37*result + (int) shipment_mode;
+      result = 37*result + (int) _Shipment_mode;
 
-      result = 37*result + (int) shipment_number;
+      result = 37*result + (int) _Shipment_number;
 
-      result = 37*result + ((this.carrier_number != null) ? this.carrier_number.hashCode() : 0);
+      result = 37*result + ((this._Carrier_number != null) ? this._Carrier_number.hashCode() : 0);
 
-      result = 37*result + (int) invoice_year;
+      result = 37*result + (int) _Invoice_year;
 
-      result = 37*result + (int) invoice_number;
+      result = 37*result + (int) _Invoice_number;
 
       return result;
    }

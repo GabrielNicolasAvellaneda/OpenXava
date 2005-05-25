@@ -13,10 +13,10 @@ public class Product2Data
    private java.math.BigDecimal _UnitPrice;
    private java.lang.String _Description;
    private long number;
-   private int warehouse_zoneNumber;
-   private java.lang.Integer warehouse_number;
-   private int family_number;
-   private int subfamily_number;
+   private int _Warehouse_zoneNumber;
+   private java.lang.Integer _Warehouse_number;
+   private int _Family_number;
+   private int _Subfamily_number;
 
    public Product2Data()
    {
@@ -27,10 +27,10 @@ public class Product2Data
       set_UnitPrice(otherData.get_UnitPrice());
       set_Description(otherData.get_Description());
       setNumber(otherData.getNumber());
-      setWarehouse_zoneNumber(otherData.getWarehouse_zoneNumber());
-      setWarehouse_number(otherData.getWarehouse_number());
-      setFamily_number(otherData.getFamily_number());
-      setSubfamily_number(otherData.getSubfamily_number());
+      set_Warehouse_zoneNumber(otherData.get_Warehouse_zoneNumber());
+      set_Warehouse_number(otherData.get_Warehouse_number());
+      set_Family_number(otherData.get_Family_number());
+      set_Subfamily_number(otherData.get_Subfamily_number());
 
    }
 
@@ -66,47 +66,47 @@ public class Product2Data
       this.number = number;
    }
 
-   public int getWarehouse_zoneNumber()
+   public int get_Warehouse_zoneNumber()
    {
-      return this.warehouse_zoneNumber;
+      return this._Warehouse_zoneNumber;
    }
-   public void setWarehouse_zoneNumber( int warehouse_zoneNumber )
+   public void set_Warehouse_zoneNumber( int _Warehouse_zoneNumber )
    {
-      this.warehouse_zoneNumber = warehouse_zoneNumber;
-   }
-
-   public java.lang.Integer getWarehouse_number()
-   {
-      return this.warehouse_number;
-   }
-   public void setWarehouse_number( java.lang.Integer warehouse_number )
-   {
-      this.warehouse_number = warehouse_number;
+      this._Warehouse_zoneNumber = _Warehouse_zoneNumber;
    }
 
-   public int getFamily_number()
+   public java.lang.Integer get_Warehouse_number()
    {
-      return this.family_number;
+      return this._Warehouse_number;
    }
-   public void setFamily_number( int family_number )
+   public void set_Warehouse_number( java.lang.Integer _Warehouse_number )
    {
-      this.family_number = family_number;
+      this._Warehouse_number = _Warehouse_number;
    }
 
-   public int getSubfamily_number()
+   public int get_Family_number()
    {
-      return this.subfamily_number;
+      return this._Family_number;
    }
-   public void setSubfamily_number( int subfamily_number )
+   public void set_Family_number( int _Family_number )
    {
-      this.subfamily_number = subfamily_number;
+      this._Family_number = _Family_number;
+   }
+
+   public int get_Subfamily_number()
+   {
+      return this._Subfamily_number;
+   }
+   public void set_Subfamily_number( int _Subfamily_number )
+   {
+      this._Subfamily_number = _Subfamily_number;
    }
 
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_UnitPrice=" + get_UnitPrice() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "warehouse_zoneNumber=" + getWarehouse_zoneNumber() + " " + "warehouse_number=" + getWarehouse_number() + " " + "family_number=" + getFamily_number() + " " + "subfamily_number=" + getSubfamily_number());
+      str.append("_UnitPrice=" + get_UnitPrice() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "_Warehouse_zoneNumber=" + get_Warehouse_zoneNumber() + " " + "_Warehouse_number=" + get_Warehouse_number() + " " + "_Family_number=" + get_Family_number() + " " + "_Subfamily_number=" + get_Subfamily_number());
       str.append('}');
 
       return(str.toString());
@@ -136,17 +136,17 @@ public class Product2Data
             lEquals = lEquals && this._Description.equals( lTest._Description );
          }
          lEquals = lEquals && this.number == lTest.number;
-         lEquals = lEquals && this.warehouse_zoneNumber == lTest.warehouse_zoneNumber;
-         if( this.warehouse_number == null )
+         lEquals = lEquals && this._Warehouse_zoneNumber == lTest._Warehouse_zoneNumber;
+         if( this._Warehouse_number == null )
          {
-            lEquals = lEquals && ( lTest.warehouse_number == null );
+            lEquals = lEquals && ( lTest._Warehouse_number == null );
          }
          else
          {
-            lEquals = lEquals && this.warehouse_number.equals( lTest.warehouse_number );
+            lEquals = lEquals && this._Warehouse_number.equals( lTest._Warehouse_number );
          }
-         lEquals = lEquals && this.family_number == lTest.family_number;
-         lEquals = lEquals && this.subfamily_number == lTest.subfamily_number;
+         lEquals = lEquals && this._Family_number == lTest._Family_number;
+         lEquals = lEquals && this._Subfamily_number == lTest._Subfamily_number;
 
          return lEquals;
       }
@@ -166,13 +166,13 @@ public class Product2Data
 
       result = 37*result + (int)(number^(number>>>32));
 
-      result = 37*result + (int) warehouse_zoneNumber;
+      result = 37*result + (int) _Warehouse_zoneNumber;
 
-      result = 37*result + ((this.warehouse_number != null) ? this.warehouse_number.hashCode() : 0);
+      result = 37*result + ((this._Warehouse_number != null) ? this._Warehouse_number.hashCode() : 0);
 
-      result = 37*result + (int) family_number;
+      result = 37*result + (int) _Family_number;
 
-      result = 37*result + (int) subfamily_number;
+      result = 37*result + (int) _Subfamily_number;
 
       return result;
    }

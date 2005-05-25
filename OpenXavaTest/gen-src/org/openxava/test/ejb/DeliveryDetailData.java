@@ -12,10 +12,10 @@ public class DeliveryDetailData
 {
    private java.lang.String _Description;
    private int number;
-   private int delivery_number;
-   private int delivery_type_number;
-   private int delivery_invoice_year;
-   private int delivery_invoice_number;
+   private int _Delivery_number;
+   private int _Delivery_type_number;
+   private int _Delivery_invoice_year;
+   private int _Delivery_invoice_number;
 
    public DeliveryDetailData()
    {
@@ -25,10 +25,10 @@ public class DeliveryDetailData
    {
       set_Description(otherData.get_Description());
       setNumber(otherData.getNumber());
-      setDelivery_number(otherData.getDelivery_number());
-      setDelivery_type_number(otherData.getDelivery_type_number());
-      setDelivery_invoice_year(otherData.getDelivery_invoice_year());
-      setDelivery_invoice_number(otherData.getDelivery_invoice_number());
+      set_Delivery_number(otherData.get_Delivery_number());
+      set_Delivery_type_number(otherData.get_Delivery_type_number());
+      set_Delivery_invoice_year(otherData.get_Delivery_invoice_year());
+      set_Delivery_invoice_number(otherData.get_Delivery_invoice_number());
 
    }
 
@@ -55,47 +55,47 @@ public class DeliveryDetailData
       this.number = number;
    }
 
-   public int getDelivery_number()
+   public int get_Delivery_number()
    {
-      return this.delivery_number;
+      return this._Delivery_number;
    }
-   public void setDelivery_number( int delivery_number )
+   public void set_Delivery_number( int _Delivery_number )
    {
-      this.delivery_number = delivery_number;
-   }
-
-   public int getDelivery_type_number()
-   {
-      return this.delivery_type_number;
-   }
-   public void setDelivery_type_number( int delivery_type_number )
-   {
-      this.delivery_type_number = delivery_type_number;
+      this._Delivery_number = _Delivery_number;
    }
 
-   public int getDelivery_invoice_year()
+   public int get_Delivery_type_number()
    {
-      return this.delivery_invoice_year;
+      return this._Delivery_type_number;
    }
-   public void setDelivery_invoice_year( int delivery_invoice_year )
+   public void set_Delivery_type_number( int _Delivery_type_number )
    {
-      this.delivery_invoice_year = delivery_invoice_year;
+      this._Delivery_type_number = _Delivery_type_number;
    }
 
-   public int getDelivery_invoice_number()
+   public int get_Delivery_invoice_year()
    {
-      return this.delivery_invoice_number;
+      return this._Delivery_invoice_year;
    }
-   public void setDelivery_invoice_number( int delivery_invoice_number )
+   public void set_Delivery_invoice_year( int _Delivery_invoice_year )
    {
-      this.delivery_invoice_number = delivery_invoice_number;
+      this._Delivery_invoice_year = _Delivery_invoice_year;
+   }
+
+   public int get_Delivery_invoice_number()
+   {
+      return this._Delivery_invoice_number;
+   }
+   public void set_Delivery_invoice_number( int _Delivery_invoice_number )
+   {
+      this._Delivery_invoice_number = _Delivery_invoice_number;
    }
 
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "delivery_number=" + getDelivery_number() + " " + "delivery_type_number=" + getDelivery_type_number() + " " + "delivery_invoice_year=" + getDelivery_invoice_year() + " " + "delivery_invoice_number=" + getDelivery_invoice_number());
+      str.append("_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "_Delivery_number=" + get_Delivery_number() + " " + "_Delivery_type_number=" + get_Delivery_type_number() + " " + "_Delivery_invoice_year=" + get_Delivery_invoice_year() + " " + "_Delivery_invoice_number=" + get_Delivery_invoice_number());
       str.append('}');
 
       return(str.toString());
@@ -117,10 +117,10 @@ public class DeliveryDetailData
             lEquals = lEquals && this._Description.equals( lTest._Description );
          }
          lEquals = lEquals && this.number == lTest.number;
-         lEquals = lEquals && this.delivery_number == lTest.delivery_number;
-         lEquals = lEquals && this.delivery_type_number == lTest.delivery_type_number;
-         lEquals = lEquals && this.delivery_invoice_year == lTest.delivery_invoice_year;
-         lEquals = lEquals && this.delivery_invoice_number == lTest.delivery_invoice_number;
+         lEquals = lEquals && this._Delivery_number == lTest._Delivery_number;
+         lEquals = lEquals && this._Delivery_type_number == lTest._Delivery_type_number;
+         lEquals = lEquals && this._Delivery_invoice_year == lTest._Delivery_invoice_year;
+         lEquals = lEquals && this._Delivery_invoice_number == lTest._Delivery_invoice_number;
 
          return lEquals;
       }
@@ -138,13 +138,13 @@ public class DeliveryDetailData
 
       result = 37*result + (int) number;
 
-      result = 37*result + (int) delivery_number;
+      result = 37*result + (int) _Delivery_number;
 
-      result = 37*result + (int) delivery_type_number;
+      result = 37*result + (int) _Delivery_type_number;
 
-      result = 37*result + (int) delivery_invoice_year;
+      result = 37*result + (int) _Delivery_invoice_year;
 
-      result = 37*result + (int) delivery_invoice_number;
+      result = 37*result + (int) _Delivery_invoice_number;
 
       return result;
    }

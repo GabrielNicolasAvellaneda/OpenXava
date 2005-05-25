@@ -26,11 +26,11 @@
       </columns>
       <columns xmi:id="Office_number" name="number">
       </columns>
-      <columns xmi:id="Office_officeManager_number" name="officeManager_number">
+      <columns xmi:id="Office__OfficeManager_number" name="_OfficeManager_number">
       </columns>
-      <columns xmi:id="Office_defaultCarrier_number" name="defaultCarrier_number">
+      <columns xmi:id="Office__DefaultCarrier_number" name="_DefaultCarrier_number">
       </columns>
-      <columns xmi:id="Office_mainWarehouse_number" name="mainWarehouse_number">
+      <columns xmi:id="Office__MainWarehouse_number" name="_MainWarehouse_number">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -59,19 +59,19 @@
       </columns>
       <columns xmi:id="Delivery_number" name="number">
       </columns>
-      <columns xmi:id="Delivery_type_number" name="type_number">
+      <columns xmi:id="Delivery__Type_number" name="_Type_number">
       </columns>
-      <columns xmi:id="Delivery_shipment_type" name="shipment_type">
+      <columns xmi:id="Delivery__Shipment_type" name="_Shipment_type">
       </columns>
-      <columns xmi:id="Delivery_shipment_mode" name="shipment_mode">
+      <columns xmi:id="Delivery__Shipment_mode" name="_Shipment_mode">
       </columns>
-      <columns xmi:id="Delivery_shipment_number" name="shipment_number">
+      <columns xmi:id="Delivery__Shipment_number" name="_Shipment_number">
       </columns>
-      <columns xmi:id="Delivery_carrier_number" name="carrier_number">
+      <columns xmi:id="Delivery__Carrier_number" name="_Carrier_number">
       </columns>
-      <columns xmi:id="Delivery_invoice_year" name="invoice_year">
+      <columns xmi:id="Delivery__Invoice_year" name="_Invoice_year">
       </columns>
-      <columns xmi:id="Delivery_invoice_number" name="invoice_number">
+      <columns xmi:id="Delivery__Invoice_number" name="_Invoice_number">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -162,11 +162,11 @@
       </columns>
       <columns xmi:id="DeliveryPlace__Name" name="_Name">
       </columns>
-      <columns xmi:id="DeliveryPlace_customer_number" name="customer_number">
+      <columns xmi:id="DeliveryPlace__Customer_number" name="_Customer_number">
       </columns>
-      <columns xmi:id="DeliveryPlace_preferredWarehouse_zoneNumber" name="preferredWarehouse_zoneNumber">
+      <columns xmi:id="DeliveryPlace__PreferredWarehouse_zoneNumber" name="_PreferredWarehouse_zoneNumber">
       </columns>
-      <columns xmi:id="DeliveryPlace_preferredWarehouse_number" name="preferredWarehouse_number">
+      <columns xmi:id="DeliveryPlace__PreferredWarehouse_number" name="_PreferredWarehouse_number">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -188,7 +188,7 @@
       </columns>
       <columns xmi:id="Seller_number" name="number">
       </columns>
-      <columns xmi:id="Seller_level_id" name="level_id">
+      <columns xmi:id="Seller__Level_id" name="_Level_id">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -207,9 +207,9 @@
       </columns>
       <columns xmi:id="Customer_number" name="number">
       </columns>
-      <columns xmi:id="Customer_seller_number" name="seller_number">
+      <columns xmi:id="Customer__Seller_number" name="_Seller_number">
       </columns>
-      <columns xmi:id="Customer_alternateSeller_number" name="alternateSeller_number">
+      <columns xmi:id="Customer__AlternateSeller_number" name="_AlternateSeller_number">
       </columns>
       <columns xmi:id="Customer__Address_zipCode" name="_Address_zipCode">
       </columns>
@@ -217,7 +217,7 @@
       </columns>
       <columns xmi:id="Customer_address_city" name="address_city">
       </columns>
-      <columns xmi:id="Customer_address_state_id" name="address_state_id">
+      <columns xmi:id="Customer__Address_state_id" name="_Address_state_id">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -264,13 +264,13 @@
       </columns>
       <columns xmi:id="InvoiceDetail__ServiceType" name="_ServiceType">
       </columns>
-      <columns xmi:id="InvoiceDetail_product_number" name="product_number">
+      <columns xmi:id="InvoiceDetail__Product_number" name="_Product_number">
       </columns>
-      <columns xmi:id="InvoiceDetail_soldBy_number" name="soldBy_number">
+      <columns xmi:id="InvoiceDetail__SoldBy_number" name="_SoldBy_number">
       </columns>
-      <columns xmi:id="InvoiceDetail_invoice_year" name="invoice_year">
+      <columns xmi:id="InvoiceDetail__Invoice_year" name="_Invoice_year">
       </columns>
-      <columns xmi:id="InvoiceDetail_invoice_number" name="invoice_number">
+      <columns xmi:id="InvoiceDetail__Invoice_number" name="_Invoice_number">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -283,13 +283,13 @@
       </columns>
       <columns xmi:id="Product2_number" name="number">
       </columns>
-      <columns xmi:id="Product2_warehouse_zoneNumber" name="warehouse_zoneNumber">
+      <columns xmi:id="Product2__Warehouse_zoneNumber" name="_Warehouse_zoneNumber">
       </columns>
-      <columns xmi:id="Product2_warehouse_number" name="warehouse_number">
+      <columns xmi:id="Product2__Warehouse_number" name="_Warehouse_number">
       </columns>
-      <columns xmi:id="Product2_family_number" name="family_number">
+      <columns xmi:id="Product2__Family_number" name="_Family_number">
       </columns>
-      <columns xmi:id="Product2_subfamily_number" name="subfamily_number">
+      <columns xmi:id="Product2__Subfamily_number" name="_Subfamily_number">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -300,13 +300,13 @@
       </columns>
       <columns xmi:id="DeliveryDetail_number" name="number">
       </columns>
-      <columns xmi:id="DeliveryDetail_delivery_number" name="delivery_number">
+      <columns xmi:id="DeliveryDetail__Delivery_number" name="_Delivery_number">
       </columns>
-      <columns xmi:id="DeliveryDetail_delivery_type_number" name="delivery_type_number">
+      <columns xmi:id="DeliveryDetail__Delivery_type_number" name="_Delivery_type_number">
       </columns>
-      <columns xmi:id="DeliveryDetail_delivery_invoice_year" name="delivery_invoice_year">
+      <columns xmi:id="DeliveryDetail__Delivery_invoice_year" name="_Delivery_invoice_year">
       </columns>
-      <columns xmi:id="DeliveryDetail_delivery_invoice_number" name="delivery_invoice_number">
+      <columns xmi:id="DeliveryDetail__Delivery_invoice_number" name="_Delivery_invoice_number">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -317,9 +317,9 @@
       </columns>
       <columns xmi:id="AdditionalDetail__Subfamily" name="_Subfamily">
       </columns>
-      <columns xmi:id="AdditionalDetail_service_number" name="service_number">
+      <columns xmi:id="AdditionalDetail__Service_number" name="_Service_number">
       </columns>
-      <columns xmi:id="AdditionalDetail_type_number" name="type_number">
+      <columns xmi:id="AdditionalDetail__Type_number" name="_Type_number">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -328,13 +328,13 @@
 
       <columns xmi:id="TransportCharge__Amount" name="_Amount">
       </columns>
-      <columns xmi:id="TransportCharge_delivery_number" name="delivery_number">
+      <columns xmi:id="TransportCharge__Delivery_number" name="_Delivery_number">
       </columns>
-      <columns xmi:id="TransportCharge_delivery_type_number" name="delivery_type_number">
+      <columns xmi:id="TransportCharge__Delivery_type_number" name="_Delivery_type_number">
       </columns>
-      <columns xmi:id="TransportCharge_delivery_invoice_year" name="delivery_invoice_year">
+      <columns xmi:id="TransportCharge__Delivery_invoice_year" name="_Delivery_invoice_year">
       </columns>
-      <columns xmi:id="TransportCharge_delivery_invoice_number" name="delivery_invoice_number">
+      <columns xmi:id="TransportCharge__Delivery_invoice_number" name="_Delivery_invoice_number">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -353,7 +353,7 @@
       </columns>
       <columns xmi:id="Invoice_number" name="number">
       </columns>
-      <columns xmi:id="Invoice_customer_number" name="customer_number">
+      <columns xmi:id="Invoice__Customer_number" name="_Customer_number">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -366,7 +366,7 @@
       </columns>
       <columns xmi:id="Product3_number" name="number">
       </columns>
-      <columns xmi:id="Product3_family_oid" name="family_oid">
+      <columns xmi:id="Product3__Family_oid" name="_Family_oid">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -392,13 +392,13 @@
       </columns>
       <columns xmi:id="Carrier__Number" name="_Number">
       </columns>
-      <columns xmi:id="Carrier_warehouse_zoneNumber" name="warehouse_zoneNumber">
+      <columns xmi:id="Carrier__Warehouse_zoneNumber" name="_Warehouse_zoneNumber">
       </columns>
-      <columns xmi:id="Carrier_warehouse_number" name="warehouse_number">
+      <columns xmi:id="Carrier__Warehouse_number" name="_Warehouse_number">
       </columns>
-      <columns xmi:id="Carrier_drivingLicence_type" name="drivingLicence_type">
+      <columns xmi:id="Carrier__DrivingLicence_type" name="_DrivingLicence_type">
       </columns>
-      <columns xmi:id="Carrier_drivingLicence_level" name="drivingLicence_level">
+      <columns xmi:id="Carrier__DrivingLicence_level" name="_DrivingLicence_level">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -411,7 +411,7 @@
       </columns>
       <columns xmi:id="Subfamily2_number" name="number">
       </columns>
-      <columns xmi:id="Subfamily2_family_number" name="family_number">
+      <columns xmi:id="Subfamily2__Family_number" name="_Family_number">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -426,11 +426,11 @@
       </columns>
       <columns xmi:id="Office2_number" name="number">
       </columns>
-      <columns xmi:id="Office2_officeManager_number" name="officeManager_number">
+      <columns xmi:id="Office2__OfficeManager_number" name="_OfficeManager_number">
       </columns>
-      <columns xmi:id="Office2_defaultCarrier_number" name="defaultCarrier_number">
+      <columns xmi:id="Office2__DefaultCarrier_number" name="_DefaultCarrier_number">
       </columns>
-      <columns xmi:id="Office2_mainWarehouse_number" name="mainWarehouse_number">
+      <columns xmi:id="Office2__MainWarehouse_number" name="_MainWarehouse_number">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -439,7 +439,7 @@
 
       <columns xmi:id="FilterBySubfamily_oid" name="oid">
       </columns>
-      <columns xmi:id="FilterBySubfamily_subfamily_number" name="subfamily_number">
+      <columns xmi:id="FilterBySubfamily__Subfamily_number" name="_Subfamily_number">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -474,7 +474,7 @@
       </columns>
       <columns xmi:id="Receptionist__Name" name="_Name">
       </columns>
-      <columns xmi:id="Receptionist_deliveryPlace_oid" name="deliveryPlace_oid">
+      <columns xmi:id="Receptionist__DeliveryPlace_oid" name="_DeliveryPlace_oid">
       </columns>
 
    </RDBSchema:RDBTable>

@@ -14,9 +14,9 @@ public class DeliveryPlaceData
    private java.lang.String _Remarks;
    private java.lang.String _Address;
    private java.lang.String _Name;
-   private int customer_number;
-   private int preferredWarehouse_zoneNumber;
-   private java.lang.Integer preferredWarehouse_number;
+   private int _Customer_number;
+   private int _PreferredWarehouse_zoneNumber;
+   private java.lang.Integer _PreferredWarehouse_number;
 
    public DeliveryPlaceData()
    {
@@ -28,9 +28,9 @@ public class DeliveryPlaceData
       set_Remarks(otherData.get_Remarks());
       set_Address(otherData.get_Address());
       set_Name(otherData.get_Name());
-      setCustomer_number(otherData.getCustomer_number());
-      setPreferredWarehouse_zoneNumber(otherData.getPreferredWarehouse_zoneNumber());
-      setPreferredWarehouse_number(otherData.getPreferredWarehouse_number());
+      set_Customer_number(otherData.get_Customer_number());
+      set_PreferredWarehouse_zoneNumber(otherData.get_PreferredWarehouse_zoneNumber());
+      set_PreferredWarehouse_number(otherData.get_PreferredWarehouse_number());
 
    }
 
@@ -75,38 +75,38 @@ public class DeliveryPlaceData
       this._Name = _Name;
    }
 
-   public int getCustomer_number()
+   public int get_Customer_number()
    {
-      return this.customer_number;
+      return this._Customer_number;
    }
-   public void setCustomer_number( int customer_number )
+   public void set_Customer_number( int _Customer_number )
    {
-      this.customer_number = customer_number;
-   }
-
-   public int getPreferredWarehouse_zoneNumber()
-   {
-      return this.preferredWarehouse_zoneNumber;
-   }
-   public void setPreferredWarehouse_zoneNumber( int preferredWarehouse_zoneNumber )
-   {
-      this.preferredWarehouse_zoneNumber = preferredWarehouse_zoneNumber;
+      this._Customer_number = _Customer_number;
    }
 
-   public java.lang.Integer getPreferredWarehouse_number()
+   public int get_PreferredWarehouse_zoneNumber()
    {
-      return this.preferredWarehouse_number;
+      return this._PreferredWarehouse_zoneNumber;
    }
-   public void setPreferredWarehouse_number( java.lang.Integer preferredWarehouse_number )
+   public void set_PreferredWarehouse_zoneNumber( int _PreferredWarehouse_zoneNumber )
    {
-      this.preferredWarehouse_number = preferredWarehouse_number;
+      this._PreferredWarehouse_zoneNumber = _PreferredWarehouse_zoneNumber;
+   }
+
+   public java.lang.Integer get_PreferredWarehouse_number()
+   {
+      return this._PreferredWarehouse_number;
+   }
+   public void set_PreferredWarehouse_number( java.lang.Integer _PreferredWarehouse_number )
+   {
+      this._PreferredWarehouse_number = _PreferredWarehouse_number;
    }
 
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("oid=" + getOid() + " " + "_Remarks=" + get_Remarks() + " " + "_Address=" + get_Address() + " " + "_Name=" + get_Name() + " " + "customer_number=" + getCustomer_number() + " " + "preferredWarehouse_zoneNumber=" + getPreferredWarehouse_zoneNumber() + " " + "preferredWarehouse_number=" + getPreferredWarehouse_number());
+      str.append("oid=" + getOid() + " " + "_Remarks=" + get_Remarks() + " " + "_Address=" + get_Address() + " " + "_Name=" + get_Name() + " " + "_Customer_number=" + get_Customer_number() + " " + "_PreferredWarehouse_zoneNumber=" + get_PreferredWarehouse_zoneNumber() + " " + "_PreferredWarehouse_number=" + get_PreferredWarehouse_number());
       str.append('}');
 
       return(str.toString());
@@ -151,15 +151,15 @@ public class DeliveryPlaceData
          {
             lEquals = lEquals && this._Name.equals( lTest._Name );
          }
-         lEquals = lEquals && this.customer_number == lTest.customer_number;
-         lEquals = lEquals && this.preferredWarehouse_zoneNumber == lTest.preferredWarehouse_zoneNumber;
-         if( this.preferredWarehouse_number == null )
+         lEquals = lEquals && this._Customer_number == lTest._Customer_number;
+         lEquals = lEquals && this._PreferredWarehouse_zoneNumber == lTest._PreferredWarehouse_zoneNumber;
+         if( this._PreferredWarehouse_number == null )
          {
-            lEquals = lEquals && ( lTest.preferredWarehouse_number == null );
+            lEquals = lEquals && ( lTest._PreferredWarehouse_number == null );
          }
          else
          {
-            lEquals = lEquals && this.preferredWarehouse_number.equals( lTest.preferredWarehouse_number );
+            lEquals = lEquals && this._PreferredWarehouse_number.equals( lTest._PreferredWarehouse_number );
          }
 
          return lEquals;
@@ -182,11 +182,11 @@ public class DeliveryPlaceData
 
       result = 37*result + ((this._Name != null) ? this._Name.hashCode() : 0);
 
-      result = 37*result + (int) customer_number;
+      result = 37*result + (int) _Customer_number;
 
-      result = 37*result + (int) preferredWarehouse_zoneNumber;
+      result = 37*result + (int) _PreferredWarehouse_zoneNumber;
 
-      result = 37*result + ((this.preferredWarehouse_number != null) ? this.preferredWarehouse_number.hashCode() : 0);
+      result = 37*result + ((this._PreferredWarehouse_number != null) ? this._PreferredWarehouse_number.hashCode() : 0);
 
       return result;
    }

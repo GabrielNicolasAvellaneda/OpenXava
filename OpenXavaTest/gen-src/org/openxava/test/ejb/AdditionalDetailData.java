@@ -12,8 +12,8 @@ public class AdditionalDetailData
 {
    private int counter;
    private java.lang.Integer _Subfamily;
-   private int service_number;
-   private int type_number;
+   private int _Service_number;
+   private int _Type_number;
 
    public AdditionalDetailData()
    {
@@ -23,13 +23,13 @@ public class AdditionalDetailData
    {
       setCounter(otherData.getCounter());
       set_Subfamily(otherData.get_Subfamily());
-      setService_number(otherData.getService_number());
-      setType_number(otherData.getType_number());
+      set_Service_number(otherData.get_Service_number());
+      set_Type_number(otherData.get_Type_number());
 
    }
 
    public org.openxava.test.ejb.AdditionalDetailKey getPrimaryKey() {
-     org.openxava.test.ejb.AdditionalDetailKey pk = new org.openxava.test.ejb.AdditionalDetailKey(this.getCounter(),this.getService_number());
+     org.openxava.test.ejb.AdditionalDetailKey pk = new org.openxava.test.ejb.AdditionalDetailKey(this.getCounter(),this.get_Service_number());
      return pk;
    }
 
@@ -51,29 +51,29 @@ public class AdditionalDetailData
       this._Subfamily = _Subfamily;
    }
 
-   public int getService_number()
+   public int get_Service_number()
    {
-      return this.service_number;
+      return this._Service_number;
    }
-   public void setService_number( int service_number )
+   public void set_Service_number( int _Service_number )
    {
-      this.service_number = service_number;
+      this._Service_number = _Service_number;
    }
 
-   public int getType_number()
+   public int get_Type_number()
    {
-      return this.type_number;
+      return this._Type_number;
    }
-   public void setType_number( int type_number )
+   public void set_Type_number( int _Type_number )
    {
-      this.type_number = type_number;
+      this._Type_number = _Type_number;
    }
 
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("counter=" + getCounter() + " " + "_Subfamily=" + get_Subfamily() + " " + "service_number=" + getService_number() + " " + "type_number=" + getType_number());
+      str.append("counter=" + getCounter() + " " + "_Subfamily=" + get_Subfamily() + " " + "_Service_number=" + get_Service_number() + " " + "_Type_number=" + get_Type_number());
       str.append('}');
 
       return(str.toString());
@@ -95,8 +95,8 @@ public class AdditionalDetailData
          {
             lEquals = lEquals && this._Subfamily.equals( lTest._Subfamily );
          }
-         lEquals = lEquals && this.service_number == lTest.service_number;
-         lEquals = lEquals && this.type_number == lTest.type_number;
+         lEquals = lEquals && this._Service_number == lTest._Service_number;
+         lEquals = lEquals && this._Type_number == lTest._Type_number;
 
          return lEquals;
       }
@@ -114,9 +114,9 @@ public class AdditionalDetailData
 
       result = 37*result + ((this._Subfamily != null) ? this._Subfamily.hashCode() : 0);
 
-      result = 37*result + (int) service_number;
+      result = 37*result + (int) _Service_number;
 
-      result = 37*result + (int) type_number;
+      result = 37*result + (int) _Type_number;
 
       return result;
    }

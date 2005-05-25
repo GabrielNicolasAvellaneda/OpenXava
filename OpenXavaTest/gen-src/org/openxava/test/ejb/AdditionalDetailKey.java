@@ -16,41 +16,41 @@ public class AdditionalDetailKey
 {
 
    public int counter;
-   public int service_number;
+   public int _Service_number;
 
    public AdditionalDetailKey()
    {
    }
 
-   public AdditionalDetailKey( int counter,int service_number )
+   public AdditionalDetailKey( int counter,int _Service_number )
    {
       this.counter = counter;
-      this.service_number = service_number;
+      this._Service_number = _Service_number;
    }
 
    public int getCounter()
    {
       return counter;
    }
-   public int getService_number()
+   public int get_Service_number()
    {
-      return service_number;
+      return _Service_number;
    }
 
    public void setCounter(int counter)
    {
       this.counter = counter;
    }
-   public void setService_number(int service_number)
+   public void set_Service_number(int _Service_number)
    {
-      this.service_number = service_number;
+      this._Service_number = _Service_number;
    }
 
    public int hashCode()
    {
       int _hashCode = 0;
          _hashCode += (int)this.counter;
-         _hashCode += (int)this.service_number;
+         _hashCode += (int)this._Service_number;
 
       return _hashCode;
    }
@@ -70,7 +70,7 @@ public class AdditionalDetailKey
       else
       {
          eq = eq && this.counter == pk.counter;
-         eq = eq && this.service_number == pk.service_number;
+         eq = eq && this._Service_number == pk._Service_number;
       }
 
       return eq;

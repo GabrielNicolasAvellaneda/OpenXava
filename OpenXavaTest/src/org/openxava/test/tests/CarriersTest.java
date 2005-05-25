@@ -31,6 +31,7 @@ public class CarriersTest extends ModuleTestBase {
 		CarrierValue v = new CarrierValue();		
 		v.setWarehouse_number(new Integer(1));
 		v.setWarehouse_zoneNumber(1);
+		// driving licence is not set to test converters in references 
 		
 		v.setNumber(1);
 		v.setName("UNO");

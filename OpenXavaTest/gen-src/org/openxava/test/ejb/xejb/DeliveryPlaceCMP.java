@@ -22,9 +22,9 @@ public abstract class DeliveryPlaceCMP
          dataHolder.set_Remarks( get_Remarks() );
          dataHolder.set_Address( get_Address() );
          dataHolder.set_Name( get_Name() );
-         dataHolder.setCustomer_number( getCustomer_number() );
-         dataHolder.setPreferredWarehouse_zoneNumber( getPreferredWarehouse_zoneNumber() );
-         dataHolder.setPreferredWarehouse_number( getPreferredWarehouse_number() );
+         dataHolder.set_Customer_number( get_Customer_number() );
+         dataHolder.set_PreferredWarehouse_zoneNumber( get_PreferredWarehouse_zoneNumber() );
+         dataHolder.set_PreferredWarehouse_number( get_PreferredWarehouse_number() );
 
       }
       catch (RuntimeException e)
@@ -42,9 +42,9 @@ public abstract class DeliveryPlaceCMP
          set_Remarks( dataHolder.get_Remarks() );
          set_Address( dataHolder.get_Address() );
          set_Name( dataHolder.get_Name() );
-         setCustomer_number( dataHolder.getCustomer_number() );
-         setPreferredWarehouse_zoneNumber( dataHolder.getPreferredWarehouse_zoneNumber() );
-         setPreferredWarehouse_number( dataHolder.getPreferredWarehouse_number() );
+         set_Customer_number( dataHolder.get_Customer_number() );
+         set_PreferredWarehouse_zoneNumber( dataHolder.get_PreferredWarehouse_zoneNumber() );
+         set_PreferredWarehouse_number( dataHolder.get_PreferredWarehouse_number() );
 
       }
       catch (Exception e)
@@ -151,16 +151,16 @@ public abstract class DeliveryPlaceCMP
 
    public abstract void set_Name( java.lang.String _Name ) ;
 
-   public abstract int getCustomer_number() ;
+   public abstract int get_Customer_number() ;
 
-   public abstract void setCustomer_number( int customer_number ) ;
+   public abstract void set_Customer_number( int _Customer_number ) ;
 
-   public abstract int getPreferredWarehouse_zoneNumber() ;
+   public abstract int get_PreferredWarehouse_zoneNumber() ;
 
-   public abstract void setPreferredWarehouse_zoneNumber( int preferredWarehouse_zoneNumber ) ;
+   public abstract void set_PreferredWarehouse_zoneNumber( int _PreferredWarehouse_zoneNumber ) ;
 
-   public abstract java.lang.Integer getPreferredWarehouse_number() ;
+   public abstract java.lang.Integer get_PreferredWarehouse_number() ;
 
-   public abstract void setPreferredWarehouse_number( java.lang.Integer preferredWarehouse_number ) ;
+   public abstract void set_PreferredWarehouse_number( java.lang.Integer _PreferredWarehouse_number ) ;
 
 }

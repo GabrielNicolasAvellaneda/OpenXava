@@ -113,7 +113,6 @@ public class AdditionalDetailValue
    {
 	  boolean ret = true;
 	  ret = ret && counterHasBeenSet;
-	  ret = ret && service_numberHasBeenSet;
 	  return ret;
    }
 
@@ -128,7 +127,6 @@ public class AdditionalDetailValue
 		 if ( ! that.hasIdentity() ) return false;
 		 boolean lEquals = true;
 		 lEquals = lEquals && this.counter == that.counter;
-		 lEquals = lEquals && this.service_number == that.service_number;
 
 		 lEquals = lEquals && isIdentical(that);
 
@@ -147,6 +145,7 @@ public class AdditionalDetailValue
 		 AdditionalDetailValue that = (AdditionalDetailValue) other;
 		 boolean lEquals = true;
 		 lEquals = lEquals && this.subfamily == that.subfamily;
+		 lEquals = lEquals && this.service_number == that.service_number;
 		 lEquals = lEquals && this.type_number == that.type_number;
 
 		 return lEquals;

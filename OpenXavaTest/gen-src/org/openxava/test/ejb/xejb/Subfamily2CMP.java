@@ -21,7 +21,7 @@ public abstract class Subfamily2CMP
          dataHolder.set_Remarks( get_Remarks() );
          dataHolder.set_Description( get_Description() );
          dataHolder.setNumber( getNumber() );
-         dataHolder.setFamily_number( getFamily_number() );
+         dataHolder.set_Family_number( get_Family_number() );
 
       }
       catch (RuntimeException e)
@@ -38,7 +38,7 @@ public abstract class Subfamily2CMP
       {
          set_Remarks( dataHolder.get_Remarks() );
          set_Description( dataHolder.get_Description() );
-         setFamily_number( dataHolder.getFamily_number() );
+         set_Family_number( dataHolder.get_Family_number() );
 
       }
       catch (Exception e)
@@ -135,8 +135,8 @@ public abstract class Subfamily2CMP
 
    public abstract void setNumber( int number ) ;
 
-   public abstract int getFamily_number() ;
+   public abstract int get_Family_number() ;
 
-   public abstract void setFamily_number( int family_number ) ;
+   public abstract void set_Family_number( int _Family_number ) ;
 
 }
