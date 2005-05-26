@@ -11,6 +11,14 @@ public class WarehousesTest extends ModuleTestBase {
 	public WarehousesTest(String testName) {
 		super(testName, "OpenXavaTest", "Warehouses");		
 	}	
+	
+	public void testNavigateInListWithALotOfObjects() throws Exception {
+		assertListRowCount(10);
+		execute("List.goPage", "page=6");
+		assertListRowCount(10);
+		execute("List.goNextPage");
+		assertListRowCount(3); // It sssumed 63 objects
+	}
 		
 	public void testNotLoseFilterOnChangeMode() throws Exception {
 		assertListRowCount(10);
@@ -29,7 +37,7 @@ public class WarehousesTest extends ModuleTestBase {
 		};
 		setConditionValues(condition);
 		execute("List.filter");
-		assertListRowCount(4); 
+		assertListRowCount(5); 
 	}
 	
 	public void testRememberListPage() throws Exception {
