@@ -119,13 +119,13 @@ public class TableModelBean implements IXTableModel, java.io.Serializable {
 			System.out.println(
 				"[TableModelBean.getRow] nextChunk="
 					+ timeNextChunk);
-			List data = sig.getData();
-			Iterator it = data.iterator();
+			List newData = sig.getData();
+			Iterator it = newData.iterator();
 			while (it.hasNext()) {
 				this.data.addElement(it.next());
 			}
 			allLoaded = sig.isLast();
-			rowCount = allLoaded ? data.size() : data.size() + 1;
+			rowCount = allLoaded ? this.data.size() : this.data.size() + 1;
 			fireModelChanged();
 		}
 		if (rowIndex >= rowCount)
