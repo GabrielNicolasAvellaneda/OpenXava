@@ -86,7 +86,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	public void remove(String modelName, Map keyValues)
+	public void delete(String modelName, Map keyValues)
 		throws RemoveException, ValidationException, XavaException, RemoteException 
 	{		
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();

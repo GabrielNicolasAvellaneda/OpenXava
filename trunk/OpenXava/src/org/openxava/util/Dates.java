@@ -251,7 +251,7 @@ public class Dates {
 			peak = peak - finalLimit;
 			df.months++;
 			if (df.months == 12) {
-				df.months++;
+				df.years++;
 				df.months = 0;
 			}
 		}

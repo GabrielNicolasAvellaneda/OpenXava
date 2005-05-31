@@ -345,11 +345,11 @@ public class MapFacade {
 		throws RemoveException, RemoteException, XavaException, ValidationException {
 		Assert.arg(modelName, keyValues);
 		try {
-			getImpl(modelName).remove(modelName, keyValues);
+			getImpl(modelName).delete(modelName, keyValues);
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			getImpl(modelName).remove(modelName, keyValues);
+			getImpl(modelName).delete(modelName, keyValues);
 		}
 		
 	}

@@ -20,6 +20,8 @@
 	<property name="classes.dir" value="web/WEB-INF/classes"/>
 	<property name="name.war" value="${project}"/>	
 	<property name="jboss.mapping.xml" value="jaws.xml"/>
+	<property name="openxavads.separator" value="_"/>
+	<property name="openxavads.hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
 	<property name="separator" value="."/>
 	<property name="meta-inf.dir" value="build/ejb/META-INF"/>
 	<property name="project.ejb" value = "${project}"/>
@@ -118,8 +120,10 @@
 			<fileset dir="../OpenXava/hibernate"/>
 			<fileset dir="../${project.ejb}/hibernate"/>			
 			<fileset dir="../${project.ejb}/build/hibernate"/>
-	    	<filterset>	    	
+	    	<filterset>	    		    		
 				<filter token="separator" value="${separator}"/>
+	    		<filter token="openxavads.separator" value="${openxavads.separator}"/>
+	    		<filter token="openxavads.hibernate.dialect" value="${openxavads.hibernate.dialect}"/>
 				<filter token="collection" value="${collection}"/>
 	    		<filter token="datasource" value="${datasource}"/>
 	    		<filter token="datasource.prefix" value="${datasource.prefix}"/>
@@ -136,6 +140,8 @@
 	    	<filterset>	    	
 				<filtersfile file="${configuration}.properties"/>				
 				<filter token="separator" value="${separator}"/>
+	    		<filter token="openxavads.separator" value="${openxavads.separator}"/>
+	    		<filter token="openxavads.hibernate.dialect" value="${openxavads.hibernate.dialect}"/>
 				<filter token="collection" value="${collection}"/>
 	    		<filter token="datasource" value="${datasource}"/>
 	    		<filter token="datasource.prefix" value="${datasource.prefix}"/>

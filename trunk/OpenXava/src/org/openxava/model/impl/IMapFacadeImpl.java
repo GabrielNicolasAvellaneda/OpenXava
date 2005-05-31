@@ -27,7 +27,7 @@ public interface IMapFacadeImpl {
 	void setValues(String modelName, Map keyValues, Map values)
 		throws FinderException, ValidationException, XavaException, RemoteException;
 				
-	void remove(String modelName, Map keyValues)
+	void delete(String modelName, Map keyValues)
 		throws RemoveException, XavaException, ValidationException, RemoteException;
 		
 	Object findEntity(String modelName, Map keyValues)

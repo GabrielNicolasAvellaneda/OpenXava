@@ -462,26 +462,26 @@ public class View implements java.io.Serializable {
 	}
 	
 
-	private void crearYAñadirSubvista(MetaMember miembro) throws XavaException {
-		if (!(miembro instanceof MetaReference || miembro instanceof MetaCollection || miembro instanceof MetaGroup)) return;				
+	private void createAndAddSubview(MetaMember member) throws XavaException {
+		if (!(member instanceof MetaReference || member instanceof MetaCollection || member instanceof MetaGroup)) return;				
 		View newView = new View();
 		newView.setSubview(true);
 		newView.setParent(this);
 		
 		MetaReference ref = null;
-		if (miembro instanceof MetaReference) {
-			ref = (MetaReference) miembro;
+		if (member instanceof MetaReference) {
+			ref = (MetaReference) member;
 		}
-		else if (miembro instanceof MetaCollection) {
-			ref = ((MetaCollection) miembro).getMetaReference();
+		else if (member instanceof MetaCollection) {
+			ref = ((MetaCollection) member).getMetaReference();
 			newView.setRepresentsCollection(true);						
 		}
 		else {// MetaGroup			
 			newView.setModelName(getModelName());			 
-			MetaView metaVista = ((MetaGroup) miembro).getMetaView();
+			MetaView metaVista = ((MetaGroup) member).getMetaView();
 			newView.setMetaView(metaVista);
 			newView.setGroup(true);
-			getGroupsViews().put(miembro.getName(), newView);						
+			getGroupsViews().put(member.getName(), newView);						
 			return;			
 		}		
 		if (ref.isAggregate()) {
@@ -497,7 +497,7 @@ public class View implements java.io.Serializable {
 		}
 		newView.setMetaView(getMetaView().getMetaView(ref));
 		if (newView.isRepresentsCollection()) {
-			MetaCollectionView metaVistaColeccion = getMetaView().getMetaCollectionView(miembro.getName());
+			MetaCollectionView metaVistaColeccion = getMetaView().getMetaCollectionView(member.getName());
 			if (metaVistaColeccion != null) {
 				Collection nombresPropiedadesLista = metaVistaColeccion.getPropertiesListNames();
 				if (!nombresPropiedadesLista.isEmpty()) {
@@ -531,8 +531,8 @@ public class View implements java.io.Serializable {
 				newView.setReadOnly(metaReferenceView.isReadOnly());
 			}
 		}
-		newView.setMemberName(miembro.getName());		
-		subviews.put(miembro.getName(), newView);
+		newView.setMemberName(member.getName());		
+		subviews.put(member.getName(), newView);
 	} 
 	 
 		
@@ -575,7 +575,7 @@ public class View implements java.io.Serializable {
 			Iterator it = getMetaMembers().iterator();
 			while (it.hasNext()) {
 				MetaMember miembro = (MetaMember) it.next();								
-				crearYAñadirSubvista(miembro);
+				createAndAddSubview(miembro);
 			}								
 		}
 		return subviews;

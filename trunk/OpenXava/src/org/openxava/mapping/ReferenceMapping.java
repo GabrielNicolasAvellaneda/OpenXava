@@ -90,7 +90,6 @@ public class ReferenceMapping implements java.io.Serializable {
 		if (getContainer().isReferenceOverlappingWithSomeProperty(getReference(), propertyNameOfReferencedModel)) {
 			return getContainer().getCMPAttributeForColumn(getColumnForReferencedModelProperty(propertyNameOfReferencedModel));
 		}
-		// tmp return Strings.change(getReference() + "_" + propertyNameOfReferencedModel, ".", "_");
 		return "_" + Strings.change(Strings.firstUpper(getReference()) + "_" + propertyNameOfReferencedModel, ".", "_");
 	}
 
@@ -99,9 +98,9 @@ public class ReferenceMapping implements java.io.Serializable {
 		for (Iterator it=getDetails().iterator(); it.hasNext();) {
 			ReferenceMappingDetail d = (ReferenceMappingDetail) it.next();
 			CmpField field = new CmpField();
-			field.setCmpPropertyName(
-					getReference() + "_" + 
-					Strings.change(d.getReferencedModelProperty(), ".", "_"));
+			field.setCmpPropertyName( 
+					"_" + Strings.firstUpper(getReference()) + "_" + 
+					Strings.change(d.getReferencedModelProperty(), ".", "_"));			
 			String propertyName = 
 				Strings.change(getReference(), "_", ".") + "." +
 				Strings.change(d.getReferencedModelProperty(), "_", ".");

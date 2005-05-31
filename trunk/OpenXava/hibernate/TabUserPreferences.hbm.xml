@@ -6,7 +6,7 @@
 
   <class 
   	name="TabUserPreferences"
-  	table="OPENXAVA@separator@TABUSERPREFERENCES">
+  	table="OPENXAVA@openxavads.separator@TABUSERPREFERENCES">
   
     <id name="oid" column="OID" access="field" unsaved-value="-1">
 			<generator class="identity"/>

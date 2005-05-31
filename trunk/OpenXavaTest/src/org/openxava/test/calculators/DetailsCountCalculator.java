@@ -46,8 +46,8 @@ public class DetailsCountCalculator implements IJDBCCalculator {
 		return number;
 	}
 
-	public void setYear(int año) {
-		this.year = año;
+	public void setYear(int year) {
+		this.year = year;
 	}
 
 	public void setNumber(int numero) {
