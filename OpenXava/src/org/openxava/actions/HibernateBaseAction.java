@@ -39,20 +39,6 @@ abstract public class HibernateBaseAction extends ViewBaseAction {
 	protected abstract void executeHibernate() throws Exception;
 	
 	private static SessionFactory getSessionFactory() throws HibernateException, XavaException {
-	/* tmp	if (sessionFactory == null) {
-			Configuration configuration = new Configuration().configure("/hibernate.cfg.xml");
-			for (Iterator it = MetaModel.getAllGenerated().iterator(); it.hasNext();) {
-				MetaModel model = (MetaModel) it.next();
-				try {
-					configuration.addResource(model.getName() + ".hbm.xml");					
-				}
-				catch (Exception ex) {
-					System.err.println("¡ADVERTENCIA! Mapeo hibernate para " + model.getName() + " no añadido"); // tmp: i18n
-				}
-			}
-			sessionFactory = configuration.buildSessionFactory();
-		}
-		return sessionFactory; */
 		return HibernatePersistenceProvider.getSessionFactory();
 	}
 	

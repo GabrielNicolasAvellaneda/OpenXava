@@ -397,7 +397,7 @@ public class InvoicesTest extends ModuleTestBase {
 	
 	public void testValidateExistsRequiredReference() throws Exception {
 		execute("CRUD.new");
-		String año = getValue("year");		
+		String year = getValue("year");		
 		setValue("number", "66");
 		execute("Sections.change", "activeSection=2");
 		setValue("vatPercentage", "24");		
@@ -688,7 +688,7 @@ public class InvoicesTest extends ModuleTestBase {
 		execute("CRUD.new");
 		execute("Sections.change", "activeSection=0");				
 		
-		String año = getValue("year");		
+		String year = getValue("year");		
 		setValue("number", "66");
 		setValue("paid", "true");
 		setValue("customer.number", "1");
@@ -726,7 +726,7 @@ public class InvoicesTest extends ModuleTestBase {
 		assertExists("customer.number");
 		assertNotExists("vatPercentage");
 		
-		String año = getValue("year");		
+		String year = getValue("year");		
 		setValue("number", "66");
 		
 		setValue("customer.number", "1");
