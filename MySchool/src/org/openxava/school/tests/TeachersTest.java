@@ -49,7 +49,7 @@ public class TeachersTest extends ModuleTestBase {
 		// Delete it
 		execute("CRUD.delete");
 		execute("ConfirmDelete.confirmDelete");
-		assertMessage("Object deleted successfully");				
+		assertMessage("Teacher deleted successfully");				
 	}
 	
 }

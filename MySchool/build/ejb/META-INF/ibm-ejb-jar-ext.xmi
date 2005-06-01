@@ -1,0 +1,13 @@
+<ejbext:EJBJarExtension xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ejbext="ejbext.xmi" xmlns:ejb="ejb.xmi" xmi:id="ejb-jar_ID_Ext">
+  <ejbJar href="META-INF/ejb-jar.xml#ejb-jar_1"/>
+
+    <ejbExtensions 
+		xmi:type="ejbext:EntityExtension" xmi:id="ContainerManagedEntity_ext_1">
+      <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_1"/>
+      <structure xmi:id="Teacher_BeanStructure" inheritenceRoot="false"/>
+      <beanCache xmi:id="ContainerManagedEntity__BeanCache_1" activateAt="TRANSACTION" loadAt="TRANSACTION"/>
+      <internationalization xmi:id="ContainerManagedEntity_BeanInternationalization_1" invocationLocale="CALLER"/>
+      <localTran xmi:id="ContainerManagedEntity_LocalTran_1" boundary="BEAN_METHOD" unresolvedAction="ROLLBACK"/>
+
+    </ejbExtensions>
+</ejbext:EJBJarExtension>

@@ -13,57 +13,9 @@ public class TeacherData
    private java.lang.String _Name;
    private java.lang.String id;
 
-  /*
-  // begin value object
-   private org.openxava.school.model.TeacherValue TeacherValue = null;
-
-   public org.openxava.school.model.TeacherValue getTeacherValue()
-   {
-	  if( TeacherValue == null )
-	  {
-          TeacherValue = new org.openxava.school.model.TeacherValue();
-	  }
-      try
-         {
-            TeacherValue.setName( getName() );
-            TeacherValue.setId( getId() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return TeacherValue;
-   }
-
-   public void setTeacherValue( org.openxava.school.model.TeacherValue valueHolder )
-   {
-
-	  try
-	  {
-		 setName( valueHolder.getName() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public TeacherData()
    {
    }
-
-  /*
-   public TeacherData( java.lang.String _Name,java.lang.String id )
-   {
-      set_Name(_Name);
-      setId(id);
-   }
-   */
 
    public TeacherData( TeacherData otherData )
    {

@@ -28,9 +28,10 @@ if (WebEditors.mustToFormat(p)) {
 }
 boolean editable = view.isEditable(p);
 String editableKey = propertyKey + "_EDITABLE_";
+String labelKey = propertyKey + "_LABEL_";
 
 int labelFormat = view.getLabelFormatForProperty(p);
-
+String label = view.getLabelForProperty(p);
 %>
 
 <%@ include file="htmlTagsEditor.jsp"%>
@@ -39,7 +40,7 @@ int labelFormat = view.getLabelFormatForProperty(p);
 
 <%=preLabel%>
 <% if (labelFormat == MetaPropertyView.NORMAL_LABEL) { %>
-<%=p.getLabel(request)%>
+<%=label%>
 <% } %>
 <%=postLabel%>
 <%=preIcons%>
@@ -53,18 +54,20 @@ int labelFormat = view.getLabelFormatForProperty(p);
 <%=postIcons%>
 <%=preEditor%>
 <% if (labelFormat == MetaPropertyView.SMALL_LABEL) { 
-	String label = labelFormat == MetaPropertyView.SMALL_LABEL?p.getLabel(request):"&nbsp;";
+	label = labelFormat == MetaPropertyView.SMALL_LABEL?label:"&nbsp;";
 %>
-<table border='0' cellpadding='0', cellspacing='0'><tr><td align='bottom'>
+<table border='0' cellpadding='0', cellspacing='0'><tr><td align='bottom' id='<%=labelKey%>'>
 <span class='smallLabel'><%=label%></span>
 
 </td></tr>
 <tr><td valign='middle'>
 <% } %>
-<jsp:include page="<%=WebEditors.getUrl(p)%>">
-	<jsp:param name="script" value="<%=script%>"/>
-	<jsp:param name="editable" value="<%=editable%>"/>
-</jsp:include>
+<%
+String editorURL = WebEditors.getUrl(p);
+char nexus = editorURL.indexOf('?') < 0?'?':'&';
+editorURL = editorURL + nexus + "script="+script+"&editable="+editable;
+%>
+<jsp:include page="<%=editorURL%>"/>
 <% 
 if ((editable && view.isRepresentsEntityReference() && view.isLastKeyProperty(p)) || // with key visible
 	(view.isRepresentsEntityReference() && view.isFirstPropertyAndViewHasNoKeys(p) && view.isKeyEditable())) // with key hidden
@@ -72,14 +75,14 @@ if ((editable && view.isRepresentsEntityReference() && view.isLastKeyProperty(p)
 	String referencedModel = p.getMetaModel().getName();
 %>
 	<% if (view.isSearch()) {%>
-<xava:image action="<%=view.getSearchAction()%>" argv="<%="keyProperty="+propertyKey%>"/>
+<xava:image action='<%=view.getSearchAction()%>' argv='<%="keyProperty="+propertyKey%>'/>
 	<% } %>
 	<% if (view.isCreateNew()) {%>
 <xava:link action='Reference.createNew' argv='<%="model="+referencedModel + ",keyProperty=" + propertyKey%>'/>
 	<% } %>
 <% } %>
 <%
-if (editable) {
+if (editable || p.isReadOnly()) {
 	java.util.Iterator itActions = view.getActionsNamesForProperty(p).iterator();
 	while (itActions.hasNext()) {
 		String action = (String) itActions.next();

@@ -44,7 +44,7 @@ view.setActiveSection(activeSection);
 	%>
 		<td class="TabLeftLow"></td>
 		<td valign="middle" class="TabMiddleLow" style="background-color: #FFCC00;" >&nbsp;
-			<xava:link action="Sections.change" argv="<%="activeSection="+i%>">
+			<xava:link action='Sections.change' argv='<%="activeSection="+i%>'>
 			<%=section.getLabel(request)%>
 			</xava:link>        
 		&nbsp;</td>

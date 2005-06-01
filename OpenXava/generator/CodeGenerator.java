@@ -135,11 +135,11 @@ abstract public class CodeGenerator {
 				if (file.endsWith(".xml") || file.endsWith(".XML") || file.endsWith("Xml")) {					
 					load(file);
 				}								
-			}			
+			}
 			
 			generate(componentsPath, components);
 			
-			savePackages();
+			savePackages(); 
 			saveDNAs();
 		}
 		catch (Exception ex) {
@@ -153,6 +153,7 @@ abstract public class CodeGenerator {
 		try {
 			String componentName = file.substring(0, file.length() - 4);
 			MetaComponent.get(componentName).setPackageName(getJavaPackage());
+			MetaComponent.get(componentName).setEJBPackage(getJavaPackage()); 
 			packages.put(componentName, getJavaPackage());
 		}
 		catch (XavaException ex) {

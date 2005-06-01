@@ -1,0 +1,16 @@
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:RDBSchema="RDBSchema.xmi">
+
+   <RDBSchema:RDBDatabase xmi:id="RDBDatabase_1" name="TopDownDB" tableGroup="RDBTable_1 RDBTable_2">
+      <dataTypeSet href="UDBV7_Primitives.xmi#SQLPrimitives_1"/>
+   </RDBSchema:RDBDatabase>
+
+   <RDBSchema:RDBTable xmi:id="RDBTable_Teacher" name="" primaryKey="Teacher_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Teacher_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Teacher" constraint="Constraint_Teacher_"/>
+
+      <columns xmi:id="Teacher__Name" name="_Name">
+      </columns>
+      <columns xmi:id="Teacher_id" name="id">
+      </columns>
+
+   </RDBSchema:RDBTable>
+</xmi:XMI>

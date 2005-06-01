@@ -48,7 +48,7 @@ public class PruebaProfesores extends ModuleTestBase {
 		// Borramos
 		execute("CRUD.delete");
 		execute("ConfirmDelete.confirmDelete");
-		assertMessage("Objeto borrado satisfactoriamente");				
+		assertMessage("Profesor borrado satisfactoriamente");				
 	}
 	
 }

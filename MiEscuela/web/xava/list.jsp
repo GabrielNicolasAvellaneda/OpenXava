@@ -2,6 +2,7 @@
 
 <%@ page import="org.openxava.tab.impl.IXTableModel" %>
 <%@ page import="org.openxava.util.Strings" %>
+<%@ page import="org.openxava.util.XavaPreferences" %>
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
 <%@ page import="org.openxava.web.WebEditors" %>
 
@@ -123,11 +124,13 @@ while (it.hasNext()) {
 </jsp:include>
 	<% } else { // Not boolean %>
 <th class=search align="left">
-<jsp:include page="comparatorsCombo.jsp">
-	<jsp:param name="comparator" value="<%=comparator%>" />
-	<jsp:param name="isString" value="<%=isString%>" />
-	<jsp:param name="isDate" value="<%=isDate%>" />
-</jsp:include>
+<% 
+String urlComparatorsCombo = "comparatorsCombo.jsp" // in this way because websphere 6 has problems with jsp:param
+	+ "?comparator=" + comparator
+	+ "&isString=" + isString
+	+ "&isDate=" + isDate;
+%>
+<jsp:include page="<%=urlComparatorsCombo%>" />
 <input name="conditionValues" class=editor type="text" maxlength="<%=maxLength%>" size="<%=length%>" value="<%=value%>"/>
 	<% } %>
 </th>
@@ -199,13 +202,7 @@ if (lastRow != null) {
 
 <table width="100%" class="list-info">
 <tr>
-
 <td>
-<fmt:message key="list_count">
-	<fmt:param><%=totalSize%></fmt:param> 
-</fmt:message>
-</td>
-<td align='right'>
 <%
 int last=tab.getLastPage();
 int current=tab.getPage();
@@ -224,6 +221,13 @@ if (!tab.isLastPage()) {
 %>
  <xava:image action='List.goNextPage'/> 
 <% } %>	 
+</td>
+<td  align='right'>
+<% if (XavaPreferences.getInstance().isShowCountInList()) { %>
+<fmt:message key="list_count">
+	<fmt:param><%=totalSize%></fmt:param> 
+</fmt:message>
+<% } %>
 </td>
 </tr>
 </table>
