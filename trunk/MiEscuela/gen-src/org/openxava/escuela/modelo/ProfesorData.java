@@ -13,57 +13,9 @@ public class ProfesorData
    private java.lang.String _Nombre;
    private java.lang.String codigo;
 
-  /*
-  // begin value object
-   private org.openxava.escuela.modelo.ProfesorValue ProfesorValue = null;
-
-   public org.openxava.escuela.modelo.ProfesorValue getProfesorValue()
-   {
-	  if( ProfesorValue == null )
-	  {
-          ProfesorValue = new org.openxava.escuela.modelo.ProfesorValue();
-	  }
-      try
-         {
-            ProfesorValue.setNombre( getNombre() );
-            ProfesorValue.setCodigo( getCodigo() );
-                   }
-         catch (Exception e)
-         {
-            throw new javax.ejb.EJBException(e);
-         }
-
-	  return ProfesorValue;
-   }
-
-   public void setProfesorValue( org.openxava.escuela.modelo.ProfesorValue valueHolder )
-   {
-
-	  try
-	  {
-		 setNombre( valueHolder.getNombre() );
-	  }
-	  catch (Exception e)
-	  {
-		 throw new javax.ejb.EJBException(e);
-	  }
-   }
-
-  // end value object
-
- */
-
    public ProfesorData()
    {
    }
-
-  /*
-   public ProfesorData( java.lang.String _Nombre,java.lang.String codigo )
-   {
-      set_Nombre(_Nombre);
-      setCodigo(codigo);
-   }
-   */
 
    public ProfesorData( ProfesorData otherData )
    {

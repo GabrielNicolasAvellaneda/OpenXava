@@ -19,12 +19,10 @@ public class TeacherUtil
       try {
          Object objRef = initialContext.lookup(jndiName);
          // only narrow if necessary
-         if (narrowTo.isInstance(java.rmi.Remote.class))
+         // if (narrowTo.isInstance(java.rmi.Remote.class)) // this does not like much to websphere 6
             return javax.rmi.PortableRemoteObject.narrow(objRef, narrowTo);
-         else
-            return objRef;
-      } catch (Exception ex) {
-      	 throw new javax.naming.NamingException(ex.getMessage());
+         /*else
+            return objRef;*/
       } finally {
          initialContext.close();
       }
@@ -55,3 +53,4 @@ public class TeacherUtil
    }
 
 }
+

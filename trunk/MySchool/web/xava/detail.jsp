@@ -38,12 +38,12 @@ while (it.hasNext()) {
 			String valueKey = propertyKey + ".value";
 			request.setAttribute(propertyKey, p);
 			request.setAttribute(valueKey, view.getValue(p.getName()));
+			String urlEditor = "editor.jsp" // in this way because websphere 6 has problems with jsp:param
+				+ "?propertyKey=" + propertyKey
+				+ "&first=" + first
+				+ "&hasFrame=" + hasFrame;
 %>
-	<jsp:include page="editor.jsp">
-		<jsp:param name="propertyKey" value="<%=propertyKey%>"/>
-		<jsp:param name="first" value="<%=first%>"/>
-		<jsp:param name="hasFrame" value="<%=hasFrame%>"/>
-	</jsp:include>
+	<jsp:include page="<%=urlEditor%>" />
 <%
 			first = false;
 		}
@@ -68,11 +68,11 @@ while (it.hasNext()) {
 				lastWasEditor = true;
 				String referenceKey = propertyPrefix +  ref.getName();
 				request.setAttribute(referenceKey, ref);			
+				String urlDescriptionsList = "descriptionsList.jsp" // in this way because websphere 6 has problems with jsp:param
+					+ "?referenceKey=" + referenceKey
+					+ "&first=" + first;
 	%>
-		<jsp:include page="descriptionsList.jsp">
-			<jsp:param name="referenceKey" value="<%=referenceKey%>"/>
-			<jsp:param name="first" value="<%=first%>"/>
-		</jsp:include>
+		<jsp:include page="<%=urlDescriptionsList%>"/>
 	<%
 				first = false;		
 			}

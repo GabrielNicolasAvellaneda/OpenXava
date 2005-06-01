@@ -5,7 +5,7 @@
  name ID #REQUIRED
 >
 
-<!ELEMENT entity (ejb?, implements*, (property|reference|collection)*, method*, finder*, postcreate-calculator*, postmodify-calculator*, validator*, remove-validator*)>
+<!ELEMENT entity (ejb?, bean?, implements*, (property|reference|collection)*, method*, finder*, postcreate-calculator*, postmodify-calculator*, validator*, remove-validator*)>
 <!ATTLIST entity
  label CDATA #IMPLIED
 >
@@ -17,7 +17,7 @@
 	collection (true|false) "false" 
 >
 
-<!ELEMENT aggregate ((bean|ejb)?, implements*, (property|reference|collection)*, method*, finder*, postcreate-calculator*, postmodify-calculator*, validator*)>
+<!ELEMENT aggregate ((bean|ejb)?, implements*, (property|reference|collection)*, method*, finder*, postcreate-calculator*, postmodify-calculator*, validator*, remove-validator*)>
 <!ATTLIST aggregate
  name ID #REQUIRED
  label CDATA #IMPLIED
@@ -57,6 +57,7 @@
 <!ATTLIST reference-view
   reference CDATA #REQUIRED
   view CDATA #IMPLIED
+	read-only (true|false) "false"
   frame (true|false) "true"
 	create (true|false) "true"
 	search (true|false) "true"
@@ -147,7 +148,7 @@
  hidden (true|false) "false"
 >
 
-<!ELEMENT reference EMPTY>
+<!ELEMENT reference (default-value-calculator?)>
 <!ATTLIST reference
  name CDATA #IMPLIED
  label CDATA #IMPLIED
@@ -307,7 +308,7 @@
 >
 
 
-<!ELEMENT reference-mapping-detail EMPTY>
+<!ELEMENT reference-mapping-detail (converter?)>
 <!ATTLIST reference-mapping-detail
  column CDATA #REQUIRED
  referenced-model-property CDATA #REQUIRED 

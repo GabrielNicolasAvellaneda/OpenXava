@@ -336,6 +336,11 @@ public class MetaComponent implements Serializable {
 		}				
 		return ejbPackage;
 	}
+	public void setEJBPackage(String packageName) { 
+		this.ejbPackage = packageName;
+	}
+
+	
 	
 	private static Properties getPackages() throws IOException {
 		if (packages == null) {

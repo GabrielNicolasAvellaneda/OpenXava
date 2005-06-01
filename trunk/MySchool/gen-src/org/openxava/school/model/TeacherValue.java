@@ -16,30 +16,9 @@ public class TeacherValue
    private java.lang.String id;
    private boolean idHasBeenSet = false;
 
-   // private org.openxava.school.model.TeacherKey pk;
-
    public TeacherValue()
    {
-	 // pk = new org.openxava.school.model.TeacherKey();
    }
-
-   /*
-   public TeacherValue(org.openxava.school.model.TeacherKey pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public TeacherValue( java.lang.String name,java.lang.String id )
-   {
-	  this.name = name;
-	  nameHasBeenSet = true;
-	  this.id = id;
-	  idHasBeenSet = true;
-	  //pk = new org.openxava.school.model.TeacherKey(this.getId());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public TeacherValue( TeacherValue otherValue )
@@ -48,24 +27,7 @@ public class TeacherValue
 	  nameHasBeenSet = true;
 	  this.id = otherValue.id;
 	  idHasBeenSet = true;
-
-	  // pk = new org.openxava.school.model.TeacherKey(this.getId());
    }
-
-   /*
-   public org.openxava.school.model.TeacherKey getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.school.model.TeacherKey pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setId( pk.id );
-   }
-   */
 
    public java.lang.String getName()
    {
@@ -76,7 +38,6 @@ public class TeacherValue
    {
 	  this.name = name;
 	  nameHasBeenSet = true;
-
    }
 
    public boolean nameHasBeenSet(){
@@ -91,8 +52,6 @@ public class TeacherValue
    {
 	  this.id = id;
 	  idHasBeenSet = true;
-
-		 //pk.setId(id);
    }
 
    public boolean idHasBeenSet(){

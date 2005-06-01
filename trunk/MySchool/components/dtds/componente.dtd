@@ -5,7 +5,7 @@
  nombre ID #REQUIRED
 >
 
-<!ELEMENT entidad (ejb?, implementa*, (propiedad|referencia|coleccion)*, metodo*, buscador*, calculador-poscrear*, calculador-posmodificar*, validador*, validador-borrar*)>
+<!ELEMENT entidad (ejb?, bean?, implementa*, (propiedad|referencia|coleccion)*, metodo*, buscador*, calculador-poscrear*, calculador-posmodificar*, validador*, validador-borrar*)>
 <!ATTLIST entidad
  etiqueta CDATA #IMPLIED
 >
@@ -17,7 +17,7 @@
 	coleccion (true|false) "false" 
 >
 
-<!ELEMENT agregado ((bean|ejb)?, implementa*, (propiedad|referencia|coleccion)*, metodo*, buscador*, calculador-poscrear*, calculador-posmodificar*, validador*)>
+<!ELEMENT agregado ((bean|ejb)?, implementa*, (propiedad|referencia|coleccion)*, metodo*, buscador*, calculador-poscrear*, calculador-posmodificar*, validador*, validador-borrar*)>
 <!ATTLIST agregado
  nombre ID #REQUIRED
  etiqueta CDATA #IMPLIED
@@ -62,6 +62,7 @@
 <!ATTLIST vista-referencia
   referencia CDATA #REQUIRED
   vista CDATA #IMPLIED
+	solo-lectura (true|false) "false"
   marco (true|false) "true"
 	crear (true|false) "true"
 	buscar (true|false) "true"
@@ -153,7 +154,7 @@
  oculta (true|false) "false"
 >
 
-<!ELEMENT referencia EMPTY>
+<!ELEMENT referencia (calculador-valor-defecto?)>
 <!ATTLIST referencia
  nombre CDATA #IMPLIED
  etiqueta CDATA #IMPLIED
@@ -333,7 +334,7 @@
 >
 
 
-<!ELEMENT detalle-mapeo-referencia EMPTY>
+<!ELEMENT detalle-mapeo-referencia (conversor?)>
 <!ATTLIST detalle-mapeo-referencia
  columna-tabla CDATA #REQUIRED
  propiedad-modelo-referenciado CDATA #REQUIRED 

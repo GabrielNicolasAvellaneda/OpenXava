@@ -92,8 +92,7 @@ public class CarriersTest extends ModuleTestBase {
 		DrivingLicenceKey key = new DrivingLicenceKey();
 		key.setType("C ");
 		key.setLevel(1);
-		assertValue("remarks","");		
-		System.out.println("[CarriersTest.testPropertyDependsDescriptionsListReference_multipleKeyWithSpaces] " + key); //  tmp
+		assertValue("remarks","");			
 		setValue("drivingLicence.KEY", key.toString());		
 		assertNoErrors();
 		assertValue("drivingLicence.KEY", key.toString());

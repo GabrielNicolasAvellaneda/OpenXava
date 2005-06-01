@@ -46,10 +46,18 @@ TR.pair {
 	background: #cccccc; 
 }
 
-TR.selected {
+TR.odd-selected {
 	font-weight: bold;
 	color: #3366ff;
+	background: #eeeeee;
 }
+
+TR.pair-selected {
+	font-weight: bold;
+	color: #3366ff;
+	background: #cccccc;
+}
+
 
 .odd-highlight {
 	font-weight: bold;

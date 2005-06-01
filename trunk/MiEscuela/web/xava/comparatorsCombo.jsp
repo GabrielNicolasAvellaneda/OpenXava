@@ -5,11 +5,11 @@ String comparator = request.getParameter("comparator");
 boolean isString = "true".equals(request.getParameter("isString"));
 boolean isDate = "true".equals(request.getParameter("isDate"));
 String eq = "eq".equals(comparator)?"selected='selected'":"";
-String ne = "<>".equals(comparator)?"selected='selected'":"";
-String ge = ">eq".equals(comparator)?"selected='selected'":"";
-String le = "<eq".equals(comparator)?"selected='selected'":"";
-String gt = ">".equals(comparator)?"selected='selected'":"";
-String lt = "<".equals(comparator)?"selected='selected'":"";
+String ne = "ne".equals(comparator)?"selected='selected'":"";
+String ge = "ge".equals(comparator)?"selected='selected'":"";
+String le = "le".equals(comparator)?"selected='selected'":"";
+String gt = "gt".equals(comparator)?"selected='selected'":"";
+String lt = "lt".equals(comparator)?"selected='selected'":"";
 String startsWith = "starts_comparator".equals(comparator)?"selected='selected'":"";
 String contains = "contains_comparator".equals(comparator)?"selected='selected'":"";
 String year = "year_comparator".equals(comparator)?"selected='selected'":"";
@@ -25,12 +25,12 @@ String month = "month_comparator".equals(comparator)?"selected='selected'":"";
 	<%
 	}
 	%>
-	<option value="=" <%=eq%>>=</option>
-	<option value="<>" <%=ne%>><></option>
-	<option value=">=" <%=ge%>>>=</option>
-	<option value="<=" <%=le%>><=</option>	
-	<option value=">" <%=gt%>>></option>
-	<option value="<" <%=lt%>><</option>
+	<option value="eq" <%=eq%>>=</option>
+	<option value="ne" <%=ne%>><></option>
+	<option value="ge" <%=ge%>>>=</option>
+	<option value="le" <%=le%>><=</option>	
+	<option value="gt" <%=gt%>>></option>
+	<option value="lt" <%=lt%>><</option>
 	<%
 	if (isDate) {
 	%>

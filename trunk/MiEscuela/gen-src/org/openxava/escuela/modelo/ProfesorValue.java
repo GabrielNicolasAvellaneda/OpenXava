@@ -16,30 +16,9 @@ public class ProfesorValue
    private java.lang.String codigo;
    private boolean codigoHasBeenSet = false;
 
-   // private org.openxava.escuela.modelo.ProfesorKey pk;
-
    public ProfesorValue()
    {
-	 // pk = new org.openxava.escuela.modelo.ProfesorKey();
    }
-
-   /*
-   public ProfesorValue(org.openxava.escuela.modelo.ProfesorKey pk)
-   {
-	  this.pk = pk;
-   }
-   */
-
-   /*
-   public ProfesorValue( java.lang.String nombre,java.lang.String codigo )
-   {
-	  this.nombre = nombre;
-	  nombreHasBeenSet = true;
-	  this.codigo = codigo;
-	  codigoHasBeenSet = true;
-	  //pk = new org.openxava.escuela.modelo.ProfesorKey(this.getCodigo());
-   }
-   */
 
    //TODO Cloneable is better than this !
    public ProfesorValue( ProfesorValue otherValue )
@@ -48,24 +27,7 @@ public class ProfesorValue
 	  nombreHasBeenSet = true;
 	  this.codigo = otherValue.codigo;
 	  codigoHasBeenSet = true;
-
-	  // pk = new org.openxava.escuela.modelo.ProfesorKey(this.getCodigo());
    }
-
-   /*
-   public org.openxava.escuela.modelo.ProfesorKey getPrimaryKey()
-   {
-	  return pk;
-   }
-
-   public void setPrimaryKey( org.openxava.escuela.modelo.ProfesorKey pk )
-   {
-      // it's also nice to update PK object - just in case
-      // somebody would ask for it later...
-      this.pk = pk;
-	  setCodigo( pk.codigo );
-   }
-   */
 
    public java.lang.String getNombre()
    {
@@ -76,7 +38,6 @@ public class ProfesorValue
    {
 	  this.nombre = nombre;
 	  nombreHasBeenSet = true;
-
    }
 
    public boolean nombreHasBeenSet(){
@@ -91,8 +52,6 @@ public class ProfesorValue
    {
 	  this.codigo = codigo;
 	  codigoHasBeenSet = true;
-
-		 //pk.setCodigo(codigo);
    }
 
    public boolean codigoHasBeenSet(){

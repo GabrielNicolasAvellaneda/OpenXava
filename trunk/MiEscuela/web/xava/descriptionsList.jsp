@@ -15,6 +15,7 @@ viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObjec
 org.openxava.view.View view = (org.openxava.view.View) context.get(request, viewObject);
 String referenceKey = request.getParameter("referenceKey");
 MetaReference ref = (MetaReference) request.getAttribute(referenceKey); 
+String labelKey = referenceKey + "_LABEL_";
 %>
 
 <%@ include file="htmlTagsEditor.jsp"%>
@@ -87,21 +88,20 @@ String script = throwChanged?
 String parameterValuesProperties=view.getParameterValuesPropertiesInDescriptionsList(ref);
 String condition = view.getConditionInDescriptionsList(ref);
 boolean orderByKey = view.isOrderByKeyInDescriptionsList(ref);
+String urlDescriptionEditor = "editors/descriptionsEditor.jsp" // in this way because websphere 6 has problems with jsp:param
+	+ "?script=" + script
+	+ "&propertyKey=" + propertyKey
+	+ "&editable=" + editable
+	+ "&model=" + ref.getReferencedModelName()
+	+ "&keyProperty=" + keyProperty
+	+ "&keyProperties=" + keyProperties
+	+ "&descriptionProperty=" + descriptionProperty
+	+ "&descriptionProperties=" + descriptionProperties
+	+ "&parameterValuesProperties=" + parameterValuesProperties
+	+ "&condition=" + condition
+	+ "&orderByKey=" + orderByKey;
 %>
-
-<jsp:include page="editors/descriptionsEditor.jsp">
-	<jsp:param name="script" value="<%=script%>"/>
-	<jsp:param name="propertyKey" value="<%=propertyKey%>"/>
-	<jsp:param name="editable" value="<%=editable%>"/>
-	<jsp:param name="model" value="<%=ref.getReferencedModelName() %>"/>
-	<jsp:param name="keyProperty" value="<%=keyProperty%>"/>
-	<jsp:param name="keyProperties" value="<%=keyProperties%>"/>
-	<jsp:param name="descriptionProperty" value="<%=descriptionProperty%>"/>	
-	<jsp:param name="descriptionProperties" value="<%=descriptionProperties%>"/>	
-	<jsp:param name="parameterValuesProperties" value="<%=parameterValuesProperties%>"/>
-	<jsp:param name="condition" value="<%=condition%>"/>
-	<jsp:param name="orderByKey" value="<%=orderByKey%>"/>	
-</jsp:include>
+<jsp:include page="<%=urlDescriptionEditor%>" />
 
 <%
 if (editable && view.isCreateNewForReference(ref)) {

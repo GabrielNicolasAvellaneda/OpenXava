@@ -18,9 +18,12 @@ if (manager.isListMode()) {
 	tab.deselectVisualizedRows();
 }
 %>
+
+<% if (!"false".equals(request.getAttribute("xava.sendParametersToTab"))) { %>
 <jsp:setProperty name="tab" property="selected"/>
 <jsp:setProperty name="tab" property="conditionComparators"/>
 <jsp:setProperty name="tab" property="conditionValues"/>
+<% } %>
 
 
 <%
@@ -48,11 +51,6 @@ if (manager.isXavaView()) { // here and after action execution
 	}
 }
 
-%>
-
-<jsp:include page="../objects.jsp"/>
-
-<%
 manager.initModule(request, errors, messages);
 if (manager.actionOfThisModule(request)) {
 	manager.execute(request, errors, messages);	

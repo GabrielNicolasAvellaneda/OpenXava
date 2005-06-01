@@ -3,6 +3,7 @@
 <!ELEMENT para-estereotipo EMPTY>
 <!ATTLIST para-estereotipo
  nombre CDATA #REQUIRED
+ tipo-modelo (ejb|pojo|ALL) "ALL"
  clase CDATA #REQUIRED
 >
 
