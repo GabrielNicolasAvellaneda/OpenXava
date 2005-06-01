@@ -6,11 +6,11 @@
   <title>Tutorial OpenXava espa&ntilde;ol</title>
 </head>
 <body>
-<br>
+<h1>Tutorial OpenXava</h1>
 <br>
 Bienvenido a este breve periplo de introducci&oacute;n en el mundox
 de OpenXava.<br>
-Estas instrucciones suponen que el archivo openxava-1.0.zip se
+Estas instrucciones suponen que el archivo openxava-1.1.zip se
 descomprime en el directorio OPENXAVA_HOME, el eclipse en ECLIPSE_HOME
 y
 el jboss en JBOSS_HOME.<br>
@@ -28,13 +28,13 @@ JBoss.</a></li>
   <li><a href="#Instalar_y_configurar_Eclipse_y_openxava">Instalar
 y
 configurar Eclipse y OpenXava.</a></li>
-  <li><a href="#Ejecutar_aplicaci%F3n_ejemplo_MiEscuela">Ejecutar
+  <li><a href="#Ejecutar_aplicacion_ejemplo_MiEscuela">Ejecutar
 aplicaci&oacute;n ejemplo MiEscuela.</a></li>
-  <li><a href="#Ejecutar_prueba_junit_de_aplicaci%F3n">Ejecutar
+  <li><a href="#Ejecutar_prueba_junit_de_aplicacion">Ejecutar
 pruebas
 junit de la aplicaci&oacute;n MiEscuela.</a><br>
   </li>
-  <li><a href="#Modificar_aplicaci%F3n_ejemplo_MiEscuela">Modificar
+  <li><a href="#Modificar_aplicacion_ejemplo_MiEscuela">Modificar
 aplicaci&oacute;n ejemplo MiEscuela.</a></li>
   <li><a href="#Ejecutar_pruebas_junit_completas_para">Ejecutar
 pruebas
@@ -46,15 +46,15 @@ junit completas para OpenXava.</a></li>
 software base necesario</h4>
 <ul>
   <li>Descargar JDK desde <a
- href="http://java.sun.com/j2se/1.4.2/download.html">http://java.sun.com/j2se/1.4.2/download.html</a>,
+ href="http://java.sun.com/j2se/1.5.0/download.html">http://java.sun.com/j2se/1.5.0/download.html</a>,
 y
 picando en <span style="font-style: italic;">Download
-J2SE JDK</span>. &iexcl;Ojo!, no
+JDK 5.0</span>. &iexcl;Ojo!, no
 descargar ni J2EE ni NetBeans.<br>
   </li>
-  <li>Descargar JBoss 4.0.x de <a href="http://www.jboss.org/">www.jboss.org</a>.
+  <li>Descargar JBoss 4.0.2 de <a href="http://www.jboss.org/">www.jboss.org</a>.
     <span style="font-family: monospace;"></span></li>
-  <li>Descargar Eclipse 3.0.1 de <a href="http://www.eclipse.org/">www.eclipse.org</a></li>
+  <li>Descargar Eclipse 3.0.2 de <a href="http://www.eclipse.org/">www.eclipse.org</a></li>
   <li>Descargar XmlBuddy (un
 plugin para editar XML con eclipse) de <a
  href="http://www.xmlbuddy.com/">www.xmlbuddy.com</a>
@@ -65,13 +65,14 @@ versi&oacute;n gratuita es suficiente).</li>
 y configurar JDK <br>
 </h4>
 <ul>
-  <li>Instalar JDK de java.</li>
+  <li>Instalar JDK de Java.</li>
   <li>Crear una variable de
 entorno <span style="font-family: monospace;">JAVA_HOME</span>
 y darle como valor la
 ruta en donde est&aacute; instalado el JDK, p. ej. <span
- style="font-family: monospace;">JAVA_HOME=/opt/jdk1.4.2_07</span>
-o <span style="font-family: monospace;">JAVA_HOME=C:\jdk1.4.2_07</span>.<br>
+ style="font-family: monospace;">JAVA_HOME=/opt/jdk1.5.0_03</span>
+o <span style="font-family: monospace;">JAVA_HOME=C:\Archivos de
+programa\Java\jdk1.5.0_03</span>.<br>
   </li>
   <li>A&ntilde;adir el
 directorio <span style="font-family: monospace;">bin</span>
@@ -84,14 +85,14 @@ Control &gt; Sistema</span>.</li>
 </ul>
 <h4><a name="Instalar_y_configurar_JBoss"></a>Instalar
 y configurar
-JBoss</h4>
+JBoss&nbsp;</h4>
 <ul>
   <li><span style="font-family: monospace;"></span>Descomprimir <span
- style="font-family: monospace;">jboss-4.0.x.zip</span>
+ style="font-family: monospace;">jboss-4.0.2.zip</span>
 en el directorio deseado (a partir de ahora JBOSS_HOME).<span
  style="font-family: monospace;"></span> </li>
-  <li>Descomprimir <span style="font-family: monospace;">jboss-4.0.x-tunning.zip</span>
-dentro de JBOSS_HOME. Ha de sobreescribir archivos existentes.<br>
+  <li>Descomprimir <span style="font-family: monospace;">openxava-db.zip</span>&nbsp;dentro
+de <span style="font-family: monospace;">JBOSS_HOME/server/default</span>.<br>
   </li>
   <li>Ejecutar <span style="font-family: monospace;">JBOSS_HOME/bin/run.sh</span>
 (en
@@ -106,8 +107,8 @@ consola '<span style="font-family: monospace;">JBoss
   <li>Pulsamos <span style="font-style: italic;">Ctrl-C</span>
 y
 esperamos a que se pare el JBoss.</li>
-  <li>Volvemos a descomprimir <span style="font-family: monospace;">jboss-4.0.x-tunning.zip
-    </span>(un tramite necesario
+  <li>Volvemos a descomprimir&nbsp;<span style="font-family: monospace;">openxava-db.zip&nbsp;</span>(un
+tramite necesario
 para que se instalen bien las db)<span style="font-family: monospace;"><br>
     </span></li>
   <li>Ejecutamos de nuevo <span style="font-family: monospace;">run.sh</span>
@@ -122,7 +123,7 @@ el Servidor de Aplicaciones listo para servir aplicaciones.</li>
 y
 configurar Eclipse y OpenXava</h4>
 <ul>
-  <li>Descomprimir <span style="font-family: monospace;">eclipse-SDK-3.0.1.zip&nbsp;</span>
+  <li>Descomprimir <span style="font-family: monospace;">eclipse-SDK-3.0.2.zip&nbsp;</span>
 en el directorio deseado (a partir de ahora ECLIPSE_HOME)<span
  style="font-family: monospace;">.</span> </li>
   <li>Descomprimir el contenido
@@ -133,7 +134,7 @@ rutas a nuestra instalaci&oacute;n.</li>
   <li>Ejecutar <span style="font-family: monospace;">ECLIPSE_HOME/eclipse</span></li>
   <li>Pedir&aacute; el
 directorio del workspace, hay que poner <span
- style="font-family: monospace;">XAVA_HOME/workspace</span></li>
+ style="font-family: monospace;">OPENXAVA_HOME/workspace</span></li>
   <li>Ya dentro del eclipse ir a <span style="font-style: italic;">Windows
 &gt;
 Preferences &gt; Java &gt; Build Path &gt; Classpath
@@ -141,10 +142,9 @@ Variables</span> y ajustar el valor
 de la variable JBOSS_HOME.<br>
     <span style="color: rgb(255, 0, 0);"></span></li>
 </ul>
-<h4><a name="Ejecutar_aplicaci&oacute;n_ejemplo_MiEscuela"></a>Ejecutar
+<h4><a name="Ejecutar_aplicacion_ejemplo_MiEscuela"></a>Ejecutar
 aplicaci&oacute;n ejemplo MiEscuela</h4>
-Las tareas ant mencionadas est&aacute;n dadas de alta en el
-eclipse,
+Las tareas ant mencionadas est&aacute;n dadas de alta en el Eclipse,
 as&iacute; que para ejecutarlas solo hay que pulsar la flechita que
 hay
 en el bot&oacute;n para lanzar herramientas externas <span
@@ -169,7 +169,7 @@ internet e ir a la url <a
 aplicaci&oacute;n y ver como se
 comporta.</li>
 </ul>
-<h4><a name="Ejecutar_prueba_junit_de_aplicaci&oacute;n"></a>Ejecutar
+<h4><a name="Ejecutar_prueba_junit_de_aplicacion"></a>Ejecutar
 prueba
 junit de aplicaci&oacute;n MiEscuela</h4>
 <ul>
@@ -190,7 +190,7 @@ una idea de como se hace una prueba junit para OpenXava. Si queremos
 hacer
 aplicaciones de calidad es imprescindible que nos aficionemos a las
 pruebas junit.<br>
-<h4><a name="Modificar_aplicaci&oacute;n_ejemplo_MiEscuela"></a>Modificar
+<h4><a name="Modificar_aplicacion_ejemplo_MiEscuela"></a>Modificar
 aplicaci&oacute;n ejemplo MiEscuela</h4>
 <h5>A&ntilde;adir otro
 componente y su mantenimiento</h5>
@@ -685,9 +685,8 @@ pruebas junit completas para OpenXava</h4>
 El proyecto OpenXavaTest tiene una doble funci&oacute;n, por una
 parte
 sirve como prueba junit completa de OpenXava (actualmente
-m&aacute;s
-de
-230 pruebas), y as&iacute; asegura la robustez constante de
+unas
+270 pruebas), y as&iacute; asegura la robustez constante de
 OpenXava;
 y
 por
@@ -700,11 +699,6 @@ Vamos all&aacute;:<br>
 <ul>
   <li>Ejecutar la tarea ant <span style="font-style: italic;">OpenXavaTest.deployEJB</span></li>
   <li>Ejecutar la tarea ant <span style="font-style: italic;">OpenXavaTest.deployWar</span></li>
-  <li>Editar el archivo de
-OpenXavaTest <span style="font-family: monospace;">properties/xava-junit.properties</span>
-y hacer que la propiedad <span style="font-family: monospace;">custormerImage</span>
-apunte a una imagen v&aacute;lida en el sistema.<br>
-  </li>
   <li>Ponerse encima de la clase <span style="font-family: monospace;">XavaSuite</span>
 (que
 est&aacute; en <span style="font-family: monospace;">src/org.openxava.test.tests</span>)
@@ -723,6 +717,9 @@ Se puede obtener ayuda para ejecutar este tutorial o cualquier problema
 con OpenXava
 en:<br>
 <a href="http://sourceforge.net/forum/forum.php?forum_id=437013">http://sourceforge.net/forum/forum.php?forum_id=437013</a><br>
+<br>
+Puedes aprender m&aacute;s sobre OpenXava leyendo su gu&iacute;a de
+referencia, la puedes descargar de:<br>
 <br>
 El sitio oficial de OpenXava es <a
  href="http://www.gestion400.com/openxava">www.gestion400.com/openxava</a><br>

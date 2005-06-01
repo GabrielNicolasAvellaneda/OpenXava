@@ -6,11 +6,11 @@
   <title>OpenXava Tutorial in English</title>
 </head>
 <body>
-<br>
+<h1>OpenXava Tutorial</h1>
 <br>
 Welcome to this short <span id="transl1">voyage</span>
 to start to use OpenXava.<br>
-These instructions suposses&nbsp; that openxava-1.0.zip is
+These instructions suposses&nbsp; that openxava-1.1.zip is
 decompressed in OPENXAVA_HOME directory, eclipse in ECLIPSE_HOME and
 jboss in JBOSS_HOME.<br>
 Here are the steps to begin to use OpenXava:<br>
@@ -28,13 +28,13 @@ JBoss.</a></li>
   <li><a href="#Instalar_y_configurar_Eclipse_y_openxava">Install
 and
 configure Eclipse and OpenXava.</a></li>
-  <li><a href="#Ejecutar_aplicaci%F3n_ejemplo_MiEscuela">Execute
+  <li><a href="#Ejecutar_aplicacion_ejemplo_MiEscuela">Execute
 example application MySchool.</a></li>
-  <li><a href="#Ejecutar_prueba_junit_de_aplicaci%F3n">Execute
+  <li><a href="#Ejecutar_prueba_junit_de_aplicacion">Execute
 junit
 tests of MySchool application.</a><br>
   </li>
-  <li><a href="#Modificar_aplicaci%F3n_ejemplo_MiEscuela">Modify
+  <li><a href="#Modificar_aplicacion_ejemplo_MiEscuela">Modify
 example application MySchool.</a></li>
   <li><a href="#Ejecutar_pruebas_junit_completas_para">Execute
 full
@@ -47,14 +47,14 @@ base
 software needed</h4>
 <ul>
   <li>Download JDK from <a
- href="http://java.sun.com/j2se/1.4.2/download.html">http://java.sun.com/j2se/1.4.2/download.html</a>,
-and click <span style="font-style: italic;">Download
-J2SE JDK</span>. Warning!, do not
+ href="http://java.sun.com/j2se/1.5.0/download.html">http://java.sun.com/j2se/1.5.0/download.html</a>,
+and click <span style="font-style: italic;">Download&nbsp;JDK 5.0</span>.
+Warning!, do not
 download J2EE or NetBeans.<br>
   </li>
-  <li>Download JBoss 4.0.x from <a href="http://www.jboss.org/">www.jboss.org</a>.
+  <li>Download JBoss 4.0.2 from <a href="http://www.jboss.org/">www.jboss.org</a>.
     <span style="font-family: monospace;"></span></li>
-  <li>Download Eclipse 3.0.1 from <a href="http://www.eclipse.org/">www.eclipse.org</a></li>
+  <li>Download Eclipse 3.0.2 from <a href="http://www.eclipse.org/">www.eclipse.org</a></li>
   <li>Download XmlBuddy (a XML
 plugin for Eclipse) from <a href="http://www.xmlbuddy.com/">www.xmlbuddy.com</a>
 (the free version).</li>
@@ -67,8 +67,9 @@ and configure JDK <br>
   <li>Create a environment
 variable <span style="font-family: monospace;">JAVA_HOME</span>
 and set the value of JDK installation directory, for example <span
- style="font-family: monospace;">JAVA_HOME=/opt/j2sdk1.4.2_07</span>
-o <span style="font-family: monospace;">JAVA_HOME=C:\j2sdk1.4.2_07</span>.<br>
+ style="font-family: monospace;">JAVA_HOME=/opt/j2sdk1.5.0_03</span>
+or <span style="font-family: monospace;">JAVA_HOME=C:\Program
+files\Java\j2sdk1.5.0_03</span>.<br>
   </li>
   <li>Add java <span style="font-family: monospace;">bin</span>
 directory to your <span style="font-family: monospace;">PATH</span>,
@@ -83,12 +84,12 @@ and configure
 JBoss</h4>
 <ul>
   <li><span style="font-family: monospace;"></span>Decompress <span
- style="font-family: monospace;">jboss-4.0.x.zip</span>
+ style="font-family: monospace;">jboss-4.0.2.zip</span>
 in a directory
 to your choice (from now JBOSS_HOME).<span
  style="font-family: monospace;"></span> </li>
-  <li>Decompress <span style="font-family: monospace;">jboss-4.0.x-tunning.zip</span>
-inside JBOSS_HOME. It should overwrite existing files.<br>
+  <li>Decompress <span style="font-family: monospace;">openxava-db.zip</span>
+inside <span style="font-family: monospace;">JBOSS_HOME/server/default</span>.<br>
   </li>
   <li>Execute <span style="font-family: monospace;">JBOSS_HOME/bin/run.sh</span>
 (in
@@ -102,21 +103,21 @@ Windows).</li>
   <li>Step <span style="font-style: italic;">Ctrl-C</span>
 and wait
 JBoss to stop.</li>
-  <li>Decompress again <span style="font-family: monospace;">jboss-4.0.x-tunning.zip
+  <li>Decompress again&nbsp;<span style="font-family: monospace;">openxava-db.zip
     </span>(a required step for a
 correct installation of databases)<span style="font-family: monospace;"><br>
     </span></li>
   <li>Execute again <span style="font-family: monospace;">run.sh</span>
 or <span style="font-family: monospace;">run.bat</span><br>
   </li>
-  <li>When you say '<span style="font-family: monospace;">JBoss
+  <li>When you see '<span style="font-family: monospace;">JBoss
 (MX MicroKernel) ... Started in ...</span>'
 then Application Server is ready for server applications.</li>
 </ul>
 <h4><a name="Instalar_y_configurar_Eclipse_y_openxava"></a>Install
 and configure Eclipse and OpenXava</h4>
 <ul>
-  <li>Decompress <span style="font-family: monospace;">eclipse-SDK-3.0.1.zip&nbsp;</span>
+  <li>Decompress <span style="font-family: monospace;">eclipse-SDK-3.0.2.zip&nbsp;</span>
 in a directory to your choice (from now ECLIPSE_HOME)<span
  style="font-family: monospace;">.</span> </li>
   <li>Decompress XmlBuddy zip in <span style="font-family: monospace;">ECLIPSE_HOME/plugins</span></li>
@@ -132,7 +133,7 @@ Variables</span> and set the value
 of JBOSS_HOME variable.<br>
     <span style="color: rgb(255, 0, 0);"></span></li>
 </ul>
-<h4><a name="Ejecutar_aplicaci&oacute;n_ejemplo_MiEscuela"></a>Execute
+<h4><a name="Ejecutar_aplicacion_ejemplo_MiEscuela"></a>Execute
 example application
 MySchool</h4>
 The ant targets used are set in Eclipse,
@@ -157,7 +158,7 @@ and go to url <a
   <li>Now you can play with the
 application, and see how it works.</li>
 </ul>
-<h4><a name="Ejecutar_prueba_junit_de_aplicaci&oacute;n"></a>Execute
+<h4><a name="Ejecutar_prueba_junit_de_aplicacion"></a>Execute
 junit
 test of MySchool application</h4>
 <ul>
@@ -176,7 +177,7 @@ of how create a junit test for OpenXava. If you want to develop quality
 applications is <span id="transl1">essential
 t</span><span id="transl1">o
 become fond</span><span id="transl1"> to junit test.</span><br>
-<h4><a name="Modificar_aplicaci&oacute;n_ejemplo_MiEscuela"></a>Modify
+<h4><a name="Modificar_aplicacion_ejemplo_MiEscuela"></a>Modify
 example
 application MySchool</h4>
 <h5>Add other component and its
@@ -694,7 +695,7 @@ the effect is seen on instantaneous form.<br>
 full
 junit test suite for OpenXava</h4>
 The OpenXavaTest project has a double function, it is server as full
-junit test suite for OpenXava (currently more than 230 tests), so it
+junit test suite for OpenXava (currently more or less 270 tests), so it
 assures
 the constant robustness of OpenXava; and on the other hand is the
 official
@@ -705,10 +706,6 @@ Let's go:<br>
   <li>Execute ant target <span style="font-style: italic;">OpenXavaTest.deployEJB</span></li>
   <li>Execute ant target <span style="font-style: italic;">OpenXavaTest</span><span
  style="font-style: italic;">.deployWar</span></li>
-  <li>Edit the OpenXavaTest file <span style="font-family: monospace;">properties/xava-junit.properties</span>
-and modify property <span style="font-family: monospace;">custormerImage</span>
-to reference a valid image in the system.<br>
-  </li>
   <li>Go to class <span style="font-family: monospace;">XavaSuite</span>
 (in <span style="font-family: monospace;">src/org.openxava.test.tests</span>)
 and with right button choose <span style="font-style: italic;">Run
@@ -725,6 +722,10 @@ You can obtain help for executing this tutorial or for any other
 problem
 with OpenXava in:<br>
 <a href="http://sourceforge.net/forum/forum.php?forum_id=419690">http://sourceforge.net/forum/forum.php?forum_id=419690</a><br>
+<br>
+You can learn more things about OpenXava reading its Reference Guide,
+you can download it from:<br>
+<br>
 <br>
 The official site of OpenXava is <a
  href="http://www.gestion400.com/openxava">www.gestion400.com/openxava</a><br>
