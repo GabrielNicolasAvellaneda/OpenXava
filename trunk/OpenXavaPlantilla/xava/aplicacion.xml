@@ -1,0 +1,1 @@
+<?xml version = "1.0" encoding = "ISO-8859-1"?><!DOCTYPE aplicacion SYSTEM "dtds/aplicacion.dtd"><aplicacion nombre="MiAplicacion"> 		<modulo nombre="MiModulo">		<modelo nombre="MiComponente"/>		<controlador nombre="Typical"/>	</modulo>	 	</aplicacion>
