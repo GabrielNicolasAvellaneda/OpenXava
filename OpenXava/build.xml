@@ -30,6 +30,7 @@
     <property name="server.properties.tmp.dir" value="${user.home}/tmpServerProperties"/>        
 	<property name="model.package" value="model"/>
 	<property name="ejb.package" value="${model.package}"/>
+	<property name="build.compiler" value="javac1.3"/>
 			
    <!-- Set up java.class.path -->
    <path id="project.class.path">
