@@ -255,11 +255,11 @@ public class ModuleManager {
 			if (action instanceof IChangeControllersAction) {
 				IChangeControllersAction changeControllersAction = (IChangeControllersAction) action;
 				String [] nextControllers = changeControllersAction.getNextControllers();				
-				if (nextControllers != INavigationAction.SAME_CONTROLLERS) {
-					if (nextControllers.equals(INavigationAction.DEFAULT_CONTROLLERS)) {
+				if (nextControllers != IChangeControllersAction.SAME_CONTROLLERS) {
+					if (nextControllers.equals(IChangeControllersAction.DEFAULT_CONTROLLERS)) {
 						setupModuleControllers();															
 					}
-					else if (nextControllers.equals(INavigationAction.PREVIOUS_CONTROLLERS)) {
+					else if (nextControllers.equals(IChangeControllersAction.PREVIOUS_CONTROLLERS)) {
 						restorePreviousControllers();															
 					}													
 					else {

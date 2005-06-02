@@ -4,7 +4,8 @@
 
 	<property name="project" value="MySchool" />
 	<property name="package" value="school"/>
-	<property name="configuration" value="myschool" />	
+	<property name="configuration" value="jboss-hypersonic" />		
+	<!-- property name="configuration" value="websphere-as400" /-->	
 	<property file="../openxava.properties"/>
 	<property file="${configuration}.properties"/>
 	<property name="datasource" value="MySchoolDS"/>
