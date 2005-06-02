@@ -1,0 +1,8 @@
+<!ELEMENT generadores-codigo (para-estereotipo)+>
+
+<!ELEMENT para-estereotipo EMPTY>
+<!ATTLIST para-estereotipo
+ nombre CDATA #REQUIRED
+ clase CDATA #REQUIRED
+>
+

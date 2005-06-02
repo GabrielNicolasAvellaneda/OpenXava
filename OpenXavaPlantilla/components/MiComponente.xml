@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE componente SYSTEM "dtds/componente.dtd">
+
+<componente nombre="MiComponente">
+
+	<entidad>
+		<propiedad nombre="codigo" tipo="String" clave="true"
+			longitud="5" requerido="true"/>
+		<propiedad nombre="nombre" tipo="String" 
+			longitud="40" requerido="true"/>			  
+	</entidad>
+						
+	<mapeo-entidad tabla="MIESQUEMA@separator@MITABLA">
+		<mapeo-propiedad propiedad-modelo="codigo" columna-tabla="CODIGO"/>
+		<mapeo-propiedad propiedad-modelo="nombre" columna-tabla="NOMBRE"/>
+	</mapeo-entidad> 
+				
+</componente>
