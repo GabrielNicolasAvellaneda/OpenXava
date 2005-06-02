@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!ELEMENT editores (editor*)>
+
+
+<!ELEMENT editor (propiedad*, formateador?, (para-tipo | para-estereotipo | para-propiedad-modelo)+)>
+<!ATTLIST editor
+ clase CDATA #IMPLIED
+ url CDATA #IMPLIED
+ formatear (true|false) "true" 
+ depende-de-estereotipos CDATA #IMPLIED
+ depende-de-propiedades CDATA #IMPLIED
+ enmarcable (true|false) "false" 
+>
+
+<!ELEMENT propiedad EMPTY>
+<!ATTLIST propiedad
+  nombre CDATA #REQUIRED
+  valor CDATA #REQUIRED
+>
+
+<!ELEMENT formateador (poner*)>
+<!ATTLIST formateador
+  clase CDATA #REQUIRED
+>
+
+<!ELEMENT poner EMPTY>
+<!ATTLIST poner
+ propiedad CDATA #REQUIRED
+ valor CDATA #REQUIRED
+>
+
+<!ELEMENT para-tipo EMPTY>
+<!ATTLIST para-tipo
+ tipo CDATA #REQUIRED
+>
+
+<!ELEMENT para-estereotipo EMPTY>
+<!ATTLIST para-estereotipo
+ estereotipo CDATA #REQUIRED
+>
+
+<!ELEMENT para-propiedad-modelo EMPTY>
+<!ATTLIST para-propiedad-modelo
+ modelo CDATA #REQUIRED
+ propiedad CDATA #REQUIRED 
+>

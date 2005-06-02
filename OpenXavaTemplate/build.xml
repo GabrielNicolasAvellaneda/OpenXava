@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<project name="MyApplication" default="deployWar" basedir=".">
+
+	<property name="project" value="MyApplication" />
+	<property name="package" value="myapplication"/>
+	<property name="configuration" value="jboss-hypersonic" />		
+	<!-- property name="configuration" value="websphere-as400" /-->	
+	<property file="${configuration}.properties"/>
+	<property file="../openxava.properties"/>	
+	<property name="datasource" value="MyDataSourceDS"/>
+	<property name="separator" value="_"/>
+		
+	<target name="generateEJB">
+		<ant antfile="../OpenXava/build.xml" target="generateEJB"/>		
+	</target>
+	
+	<target name="regenerateEJB">
+		<ant antfile="../OpenXava/build.xml" target="regenerateEJB"/>		
+	</target>
+		       
+	<target name="createEJBJar">
+        <ant antfile = "../OpenXava/build.xml" target="createEJBJar"/>      		
+	</target>
+		
+	<target name="deployEJB" depends ="createEJBJar">		
+		<ant antfile="../OpenXava/build.xml" target="deployEJB"/>
+	</target>
+		
+	<target name="deployWar">
+		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
+	</target>				
+		
+</project>
