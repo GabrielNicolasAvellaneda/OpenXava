@@ -30,5 +30,11 @@
 	<target name="deployWar">
 		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
 	</target>
-						
+	
+	<target name="createWebsphereEar">
+		<ant antfile="../OpenXava/build.xml" target="generateWebsphereMapping"/>
+		<antcall target="createEJBJar"/>
+		<ant antfile="../OpenXava/build.xml" target="createWebsphereEar"/>
+	</target>
+							
 </project>
