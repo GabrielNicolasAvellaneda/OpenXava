@@ -46,6 +46,18 @@
         <url cachedOnURL="true">/html/en/faq.html</url>
         <category group="Jetspeed">OpenXava</category>
     </portlet-entry>
+		
+    <portlet-entry name="WebSphere_en" hidden="false" type="ref"
+        parent="HTML" application="false">
+        <meta-info>
+            <title>OpenXava Applications in WebSphere</title>
+            <description>OpenXava Applications in WebSphere</description>
+        </meta-info>
+        <classname>org.apache.jetspeed.portal.portlets.FileServerPortlet</classname>
+        <url cachedOnURL="true">/html/en/websphere.html</url>
+        <category group="Jetspeed">OpenXava</category>
+    </portlet-entry>
+		
 
     <portlet-entry name="Future" hidden="false" type="ref"
         parent="HTML" application="false">
@@ -58,6 +70,17 @@
         <category group="Jetspeed">OpenXava</category>
     </portlet-entry>
 		
+    <portlet-entry name="New" hidden="false" type="ref"
+        parent="HTML" application="false">
+        <meta-info>
+            <title>New</title>
+            <description>New features and last OpenXava version</description>
+        </meta-info>
+        <classname>org.apache.jetspeed.portal.portlets.FileServerPortlet</classname>
+        <url cachedOnURL="true">/html/en/new.html</url>
+        <category group="Jetspeed">OpenXava</category>
+    </portlet-entry>
+				
     <portlet-entry name="History" hidden="false" type="ref"
         parent="HTML" application="false">
         <meta-info>
@@ -127,7 +150,6 @@
         <category group="Jetspeed">OpenXava</category>
     </portlet-entry>
 
-
     <portlet-entry name="FAQ_es" hidden="false" type="ref"
         parent="HTML" application="false">
         <meta-info>
@@ -138,6 +160,17 @@
         <url cachedOnURL="true">/html/es/faq.html</url>
         <category group="Jetspeed">OpenXava</category>
     </portlet-entry>
+		
+    <portlet-entry name="WebSphere_es" hidden="false" type="ref"
+        parent="HTML" application="false">
+        <meta-info>
+            <title>Aplication OpenXava en WebSphere</title>
+            <description>Aplication OpenXava en WebSphere</description>
+        </meta-info>
+        <classname>org.apache.jetspeed.portal.portlets.FileServerPortlet</classname>
+        <url cachedOnURL="true">/html/es/websphere.html</url>
+        <category group="Jetspeed">OpenXava</category>
+    </portlet-entry>		
 
     <portlet-entry name="Futuro" hidden="false" type="ref"
         parent="HTML" application="false">
@@ -150,6 +183,17 @@
         <category group="Jetspeed">OpenXava</category>
     </portlet-entry>
 		
+    <portlet-entry name="Nuevo" hidden="false" type="ref"
+        parent="HTML" application="false">
+        <meta-info>
+            <title>Nuevo</title>
+            <description>Nuevas características en la última versión de OpenXava</description>
+        </meta-info>
+        <classname>org.apache.jetspeed.portal.portlets.FileServerPortlet</classname>
+        <url cachedOnURL="true">/html/es/nuevo.html</url>
+        <category group="Jetspeed">OpenXava</category>
+    </portlet-entry>
+				
     <portlet-entry name="Historia" hidden="false" type="ref"
         parent="HTML" application="false">
         <meta-info>
