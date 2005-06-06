@@ -164,8 +164,8 @@
     <portlet-entry name="WebSphere_es" hidden="false" type="ref"
         parent="HTML" application="false">
         <meta-info>
-            <title>Aplication OpenXava en WebSphere</title>
-            <description>Aplication OpenXava en WebSphere</description>
+            <title>Aplicación OpenXava en WebSphere</title>
+            <description>Aplicación OpenXava en WebSphere</description>
         </meta-info>
         <classname>org.apache.jetspeed.portal.portlets.FileServerPortlet</classname>
         <url cachedOnURL="true">/html/es/websphere.html</url>
