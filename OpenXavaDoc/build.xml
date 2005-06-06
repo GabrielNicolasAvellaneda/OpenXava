@@ -2,8 +2,8 @@
 
 <project name="OpenXavaDoc" default="deploy" basedir=".">
 
-	<property name="xava.version" value="1.0"/>
-	<property name="xava.workspace" value="/home/javi/openxava-1.0/workspace"/>
+	<property name="xava.version" value="1.1"/>
+	<property name="xava.workspace" value="/home/javi/openxava/openxava-1.1/workspace"/>
 	<property file="../openxava.properties"/>
 	<property name="jetspeed.dir" value="${jboss.dir}/server/default/deployable/openxava.war"/>
 
