@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejbbnd:EJBJarBinding xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:commonbnd="commonbnd.xmi" xmlns:ejbbnd="ejbbnd.xmi" xmlns:ejb="ejb.xmi" xmlns:common="common.xmi" xmi:id="EJBJarBinding_1">
+
+    <ejbJar href="META-INF/ejb-jar.xml#ejb-jar_1"/>
+
+    <!-- OpenXava Sessions Beans -->
+
+        <ejbBindings
+            xmi:id="MapFacade"
+            jndiName="OpenXavaTest/ejb/org/openxava/test/MapFacade"
+        >
+            <enterpriseBean xmi:type="ejb:Session" href="META-INF/ejb-jar.xml#MapFacade"/>										
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="Server"
+            jndiName="OpenXavaTest/ejb/org/openxava/test/Server"
+        >
+            <enterpriseBean xmi:type="ejb:Session" href="META-INF/ejb-jar.xml#Server"/>
+				    <resRefBindings xmi:id="ResourceRefBinding_666" jndiName="jdbc/OpenXavaTestDS">
+				      <bindingResourceRef href="META-INF/ejb-jar.xml#Server_datasource"/>
+				    </resRefBindings>						
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="EntityTab"
+            jndiName="OpenXavaTest/ejb/org/openxava/test/EntityTab"
+        >
+            <enterpriseBean xmi:type="ejb:Session" href="META-INF/ejb-jar.xml#EntityTab"/>
+				    <resRefBindings xmi:id="ResourceRefBinding_667" jndiName="jdbc/OpenXavaTestDS">
+				      <bindingResourceRef href="META-INF/ejb-jar.xml#EntityTab_datasource"/>
+				    </resRefBindings>												
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_1"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/DrivingLicence"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_DrivingLicence"/>
+
+            <resRefBindings xmi:id="ResRefBnd_1" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_1"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_2"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Office"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Office"/>
+
+            <resRefBindings xmi:id="ResRefBnd_2" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_2"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_3"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Delivery"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Delivery"/>
+
+            <resRefBindings xmi:id="ResRefBnd_3" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_3"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_4"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Clerk"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Clerk"/>
+
+            <resRefBindings xmi:id="ResRefBnd_4" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_4"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_5"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/State"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_State"/>
+
+            <resRefBindings xmi:id="ResRefBnd_5" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_5"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_6"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/SellerLevel"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_SellerLevel"/>
+
+            <resRefBindings xmi:id="ResRefBnd_6" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_6"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_7"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Product"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Product"/>
+
+            <resRefBindings xmi:id="ResRefBnd_7" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_7"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_8"
+
+            jndiName="OpenXavaTest/ejb/openxava.test/Family"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Family"/>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_9"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/ServiceType"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_ServiceType"/>
+
+            <resRefBindings xmi:id="ResRefBnd_8" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_8"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_10"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/DeliveryPlace"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_DeliveryPlace"/>
+
+            <resRefBindings xmi:id="ResRefBnd_9" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_9"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_11"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Warehouse"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Warehouse"/>
+
+            <resRefBindings xmi:id="ResRefBnd_10" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_10"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_12"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Seller"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Seller"/>
+
+            <resRefBindings xmi:id="ResRefBnd_11" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_11"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_13"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Customer"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Customer"/>
+
+            <resRefBindings xmi:id="ResRefBnd_12" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_12"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_14"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Subfamily"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Subfamily"/>
+
+            <resRefBindings xmi:id="ResRefBnd_13" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_13"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_15"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/DeliveryType"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_DeliveryType"/>
+
+            <resRefBindings xmi:id="ResRefBnd_14" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_14"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_16"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/InvoiceDetail"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_InvoiceDetail"/>
+
+            <resRefBindings xmi:id="ResRefBnd_15" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_15"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_17"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Product2"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Product2"/>
+
+            <resRefBindings xmi:id="ResRefBnd_16" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_16"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_18"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/DeliveryDetail"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_DeliveryDetail"/>
+
+            <resRefBindings xmi:id="ResRefBnd_17" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_17"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_19"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/AdditionalDetail"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_AdditionalDetail"/>
+
+            <resRefBindings xmi:id="ResRefBnd_18" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_18"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_20"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/TransportCharge"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_TransportCharge"/>
+
+            <resRefBindings xmi:id="ResRefBnd_19" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_19"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_21"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Invoice"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Invoice"/>
+
+            <resRefBindings xmi:id="ResRefBnd_20" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_20"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_22"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Product3"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Product3"/>
+
+            <resRefBindings xmi:id="ResRefBnd_21" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_21"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_23"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Shipment"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Shipment"/>
+
+            <resRefBindings xmi:id="ResRefBnd_22" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_22"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_24"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Carrier"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Carrier"/>
+
+            <resRefBindings xmi:id="ResRefBnd_23" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_23"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_25"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Subfamily2"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Subfamily2"/>
+
+            <resRefBindings xmi:id="ResRefBnd_24" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_24"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_26"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Office2"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Office2"/>
+
+            <resRefBindings xmi:id="ResRefBnd_25" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_25"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_27"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/FilterBySubfamily"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_FilterBySubfamily"/>
+
+            <resRefBindings xmi:id="ResRefBnd_26" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_26"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_28"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Service"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Service"/>
+
+            <resRefBindings xmi:id="ResRefBnd_27" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_27"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_29"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Family2"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Family2"/>
+
+            <resRefBindings xmi:id="ResRefBnd_28" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_28"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_30"
+
+            jndiName="OpenXavaTest/ejb/org.openxava.test.ejb/Receptionist"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Receptionist"/>
+
+            <resRefBindings xmi:id="ResRefBnd_29" jndiName="jdbc/OpenXavaTestDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_29"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <defaultCMPConnectionFactory xmi:id="CMPConnectionFactoryBinding_1" jndiName="jdbc/OpenXavaTestDS" resAuth="Per_Connection_Factory"/>
+
+</ejbbnd:EJBJarBinding>

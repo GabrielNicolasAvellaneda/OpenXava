@@ -52,10 +52,10 @@ public class DescriptionsCalculator implements ICalculator {
 			throw new XavaException("descriptions_calculator_keyProperty_required", getClass().getName());
 		}
 		List result = read();
-		Comparator comparador = isOrderByKey()?
+		Comparator comparator = isOrderByKey()?
 			KeyAndDescriptionComparator.getByKey():
 			KeyAndDescriptionComparator.getByDescription();						
-		Collections.sort(result, comparador);						
+		Collections.sort(result, comparator);						
 		return result;
 	}
 
