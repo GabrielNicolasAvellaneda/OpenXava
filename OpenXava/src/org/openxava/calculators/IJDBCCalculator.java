@@ -16,6 +16,6 @@ public interface IJDBCCalculator extends ICalculator {
 	 * method alredy has been called with a valid connection
 	 * provider.<br> 
 	 */
-	public void setConnectionProvider(IConnectionProvider proveedor);
+	public void setConnectionProvider(IConnectionProvider provider);
 
 }

@@ -62,6 +62,13 @@ public class CarriersTest extends ModuleTestBase {
 		}
 	}
 	
+	public void testJDBCAction() throws Exception {
+		assertListRowCount(5); 		
+		execute("Carriers.deleteAll");
+		assertNoErrors();
+		assertListRowCount(1);
+	}
+	
 	public void testResetSelectedOnReturnToList() throws Exception {
 		checkRow(3);
 		assertRowChecked(3);

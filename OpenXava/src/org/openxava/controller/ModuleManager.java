@@ -216,6 +216,10 @@ public class ModuleManager {
 			if (action instanceof IRequestAction) {
 				((IRequestAction) action).setRequest(request);
 			}
+			
+			if (action instanceof IJDBCAction) {
+				((IJDBCAction) action).setConnectionProvider(DataSourceConnectionProvider.getByComponent(getModelName()));
+			}			
 						
 			if (action instanceof IRemoteAction) {
 				IRemoteAction remote = (IRemoteAction) action;

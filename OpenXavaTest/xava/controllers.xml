@@ -219,6 +219,7 @@
 			class="org.openxava.test.actions.ChangeToLowerCaseAction">
 			<use-object name="xava_tab"/>
 		</action>						
+		
 	</controller>
 	
 	<controller name="MyReference">
@@ -328,9 +329,15 @@
 	</controller>
 	
 	<controller name="Carriers">
-		<action name="translateName" 
+		
+		<action name="translateName" hidden="true"
 			class="org.openxava.test.actions.TranslateCarrierNameAction">
 		</action>		
+		
+		<action name="deleteAll" class="org.openxava.test.actions.DeleteAllAction">
+			<set property="model" value="Carrier" />
+		</action>
+		
 	</controller>	
 	
 	<!--
