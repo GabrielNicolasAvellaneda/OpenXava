@@ -1,5 +1,7 @@
 package org.openxava.actions;
 
+import java.util.Map;
+
 import javax.ejb.*;
 
 import org.openxava.model.*;
@@ -17,11 +19,11 @@ public class SaveAction extends ViewBaseAction {
 		try {					
 			if (getView().isKeyEditable()) {
 				// Create
-				MapFacade.create(getModelName(), getView().getValues());				
+				MapFacade.create(getModelName(), getValuesToSave());				
 			}
 			else {
 				// Modify				
-				MapFacade.setValues(getModelName(), getView().getKeyValues(), getView().getValues());				
+				MapFacade.setValues(getModelName(), getView().getKeyValues(), getValuesToSave());				
 			}
 			if (isResetAfter()) {
 				getView().reset();
@@ -41,6 +43,10 @@ public class SaveAction extends ViewBaseAction {
 		catch (DuplicateKeyException ex) {
 			addError("no_create_exists");
 		}
+	}
+	
+	protected Map getValuesToSave() throws Exception {
+		return getView().getValues();
 	}
 	
 	public boolean isResetAfter() {
