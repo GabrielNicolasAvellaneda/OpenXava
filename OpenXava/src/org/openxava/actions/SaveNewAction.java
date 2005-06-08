@@ -5,6 +5,7 @@ import java.util.*;
 import javax.ejb.*;
 
 import org.openxava.model.*;
+import org.openxava.util.XavaException;
 import org.openxava.validators.*;
 import org.openxava.view.*;
 
@@ -22,8 +23,8 @@ public class SaveNewAction extends BaseAction implements INavigationAction {
 	public void execute() throws Exception {
 		nextView = SAME_VIEW;		
 		try {					
-			// Create								
-			MapFacade.create(view.getModelName(), getView().getValues());
+			// Create
+			MapFacade.create(view.getModelName(), getValuesToSave());
 			nextControllers = PREVIOUS_CONTROLLERS;
 			nextView = DEFAULT_VIEW;				
 			if (!getPreviousViews().empty()) {
@@ -37,6 +38,10 @@ public class SaveNewAction extends BaseAction implements INavigationAction {
 		catch (DuplicateKeyException ex) {
 			addError("no_create_exists");
 		}
+	}
+	
+	protected Map getValuesToSave() throws Exception {
+		return getView().getValues();
 	}
 	
 	public View getView() {
