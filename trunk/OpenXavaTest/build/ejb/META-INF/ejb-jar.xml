@@ -920,7 +920,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Name like ?1]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Name like ?1 ORDER BY o._Name desc]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -931,7 +931,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Name like ?1 and o._RelationWithSeller = ?2]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Name like ?1 and o._RelationWithSeller = ?2 ORDER BY o._Name desc]]></ejb-ql>
          </query>
          <query>
             <query-method>

@@ -14,7 +14,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Jun 02 09:57:35 CEST 2005
+ * @version Wed Jun 08 16:52:11 CEST 2005
  */
 public class EJBeanPG {
     Properties properties = new Properties();
@@ -184,7 +184,6 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
      while (itCollectionsWithCondition.hasNext()) {
      	MetaCollection collection = (MetaCollection) itCollectionsWithCondition.next();	
      	String condition = collection.getEJBQLCondition();
-    	String conditionJBoss = collection.getJBossQLCondition();
     	String finderName = collection.getFinderName();
     	String arguments = collection.getFinderArguments();
      
@@ -199,7 +198,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print("(");
     out.print(arguments);
     out.print(")\" query=\"");
-    out.print(conditionJBoss);
+    out.print(condition);
     out.print("\"");
     }  
      // User defined finders
@@ -209,7 +208,6 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
      	String finderName = Strings.firstUpper(finder.getName());
      	String arguments = finder.getArguments();
      	String condition = finder.getEJBQLCondition(); 	
-     	String conditionJBoss = finder.getJBossQLCondition();
      	String type = finder.isCollection()?"Collection":name;
      
     out.print(" \t\n * @ejb:finder signature=\"");
@@ -227,7 +225,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print("(");
     out.print(arguments);
     out.print(")\" query=\"");
-    out.print(conditionJBoss);
+    out.print(condition);
     out.print("\"");
     } 
     out.print(" \n * \n * @jboss:table-name \"");
@@ -1366,7 +1364,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Jun 02 09:57:36 CEST 2005", // date this file was generated
+        { "Wed Jun 08 16:52:12 CEST 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/ejbean.xml", // input file
              "/home/javi/workspace/OpenXava/generator/EJBeanPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

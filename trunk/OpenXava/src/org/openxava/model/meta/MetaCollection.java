@@ -120,17 +120,13 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 			String condition = changePropertiesThisByArguments(getCondition(), true); 			
 			sb.append(metaModel.getMapping().changePropertiesByCMPAttributes(condition));
 		}
+		if (!Is.emptyString(this.order)) { 		
+			sb.append(" ORDER BY ");
+			sb.append(getMetaReference().getMetaModelReferenced().getMapping().changePropertiesByCMPAttributes(this.order));
+		}
 		return sb.toString();
 	}
 	
-	public String getJBossQLCondition() throws XavaException {
-		if (Is.emptyString(this.order)) return getEJBQLCondition();
-		StringBuffer sb = new StringBuffer(getEJBQLCondition());
-		sb.append(" ORDER BY ");
-		sb.append(getMetaReference().getMetaModelReferenced().getMapping().changePropertiesByCMPAttributes(this.order));
-		return sb.toString();
-	}
-		
 	private String changePropertiesThisByArguments(String source, boolean ejbql) throws XavaException {			
 		StringBuffer r = new StringBuffer(source);
 		Collection properties = new ArrayList();

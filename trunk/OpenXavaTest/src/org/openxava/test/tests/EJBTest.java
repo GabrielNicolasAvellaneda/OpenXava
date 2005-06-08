@@ -19,6 +19,19 @@ public class EJBTest extends TestCase {
 		super(name);
 	}
 	
+	public void testOrderBy() throws Exception {
+		Collection customers = CustomerUtil.getHome().findByNameLike("%");		
+		String previous = "{}";
+		for (Iterator it = customers.iterator(); it.hasNext();) {
+			Customer customer = (Customer) PortableRemoteObject.narrow(it.next(), Customer.class);
+			String name = customer.getName();			
+			if (name.compareTo(previous) > 0) {				
+				fail("The names must to be ordered");
+			}
+			previous = name;
+		}
+	}
+	
 	public void testKeyToAndFromString() throws Exception {
 		DeliveryKey key = new DeliveryKey();		
 		key.set_Invoice_year(2002);

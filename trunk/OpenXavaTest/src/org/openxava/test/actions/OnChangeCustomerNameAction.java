@@ -13,7 +13,7 @@ public class OnChangeCustomerNameAction extends OnChangePropertyBaseAction {
 	public void execute() throws Exception {				
 		String value = (String) getNewValue();
 		if (value == null) return;
-		if (value.startsWith("JAVI")) {
+		if (value.startsWith("Javi")) {
 			getView().setValue("type", new Integer(2));
 		}		
 	}
