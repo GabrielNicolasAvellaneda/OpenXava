@@ -15,6 +15,14 @@ public class PersonNameFormatter implements IFormatter {
 	private boolean firstLetterInUpperCase = false;
 
 	public String format(HttpServletRequest request, Object object)	throws Exception {
+		return transform(object);
+	}
+
+	public Object parse(HttpServletRequest request, String string) throws Exception {
+		return transform(string);
+	}
+	
+	public String transform(Object object) {
 		if (!(object instanceof String)) return "";
 		if (!isFirstLetterInUpperCase()) return (String) object; 		
 		StringTokenizer st = new StringTokenizer((String) object);
@@ -23,11 +31,7 @@ public class PersonNameFormatter implements IFormatter {
 			result.append(Strings.firstUpper(st.nextToken().toLowerCase()));
 			if (st.hasMoreTokens()) result.append(' ');			
 		}
-		return result.toString();
-	}
-
-	public Object parse(HttpServletRequest request, String string) throws Exception {
-		return string;
+		return result.toString();		
 	}
 
 	public boolean isFirstLetterInUpperCase() {

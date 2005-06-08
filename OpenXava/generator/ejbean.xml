@@ -168,12 +168,11 @@ import <expr>packageName</expr>.*;
  while (itCollectionsWithCondition.hasNext()) {
  	MetaCollection collection = (MetaCollection) itCollectionsWithCondition.next();	
  	String condition = collection.getEJBQLCondition();
-	String conditionJBoss = collection.getJBossQLCondition();
 	String finderName = collection.getFinderName();
 	String arguments = collection.getFinderArguments();
  </java> 	
  * @ejb:finder signature="Collection find<expr>finderName</expr>(<expr>arguments</expr>)" query="<expr>condition</expr>" view-type="remote" result-type-mapping="Remote"
- * @jboss:query signature="Collection find<expr>finderName</expr>(<expr>arguments</expr>)" query="<expr>conditionJBoss</expr>" 
+ * @jboss:query signature="Collection find<expr>finderName</expr>(<expr>arguments</expr>)" query="<expr>condition</expr>" 
  <java>}  
  // User defined finders
  Iterator itFinders = metaModel.getMetaFinders().iterator();
@@ -182,11 +181,10 @@ import <expr>packageName</expr>.*;
  	String finderName = Strings.firstUpper(finder.getName());
  	String arguments = finder.getArguments();
  	String condition = finder.getEJBQLCondition(); 	
- 	String conditionJBoss = finder.getJBossQLCondition();
  	String type = finder.isCollection()?"Collection":name;
  </java> 	
  * @ejb:finder signature="<expr>type</expr> find<expr>finderName</expr>(<expr>arguments</expr>)" query="<expr>condition</expr>" view-type="remote" result-type-mapping="Remote"
- * @jboss:query signature="<expr>type</expr> find<expr>finderName</expr>(<expr>arguments</expr>)" query="<expr>conditionJBoss</expr>"
+ * @jboss:query signature="<expr>type</expr> find<expr>finderName</expr>(<expr>arguments</expr>)" query="<expr>condition</expr>"
  <java>} </java> 
  * 
  * @jboss:table-name "<expr>table</expr>"

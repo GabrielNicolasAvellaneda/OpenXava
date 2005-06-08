@@ -36,7 +36,7 @@
     <for-stereotype stereotype="FAMILY"/>
   </editor>
       
-  <!-- It is possible specify dependencies from stereotypes or properties -->    
+  <!-- It is possible to specify dependencies from stereotypes or properties -->    
   <editor url="descriptionsEditor.jsp" depends-stereotypes="FAMILY">          
   <!--  
   <editor url="descriptionsEditor.jsp" depends-properties="familyNumber">

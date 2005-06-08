@@ -67,18 +67,13 @@ public class MetaFinder implements Serializable {
 			String attributesCondition = getMetaModel().getMapping().changePropertiesByCMPAttributes(this.condition);			 
 			sb.append(Strings.change(attributesCondition, getArgumentsJBoss11ToEJBQL()));
 		}
+		if (!Is.emptyString(this.order)) {			
+			sb.append(" ORDER BY ");
+			sb.append(getMetaModel().getMapping().changePropertiesByCMPAttributes(this.order));
+		}
 		return sb.toString();
 	}
 	
-	
-	public String getJBossQLCondition() throws XavaException {
-		if (Is.emptyString(this.order)) return getEJBQLCondition();
-		StringBuffer sb = new StringBuffer(getEJBQLCondition());
-		sb.append(" ORDER BY ");
-		sb.append(getMetaModel().getMapping().changePropertiesByCMPAttributes(this.order));
-		return sb.toString();
-	}
-
 	public MetaModel getMetaModel() {
 		return metaModel;
 	}
