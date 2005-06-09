@@ -64,18 +64,33 @@ public class MetaView extends MetaElement implements Cloneable {
 		metaViewProperties.put(metaPropiedad.getName(), metaPropiedad);
 	}
 	
-	public void addMetaViewReference(MetaReferenceView metaVistaReferencia) {
-		if (metaViewsReferences == null) metaViewsReferences = new HashMap();		
-		metaViewsReferences.put(metaVistaReferencia.getReferenceName(), metaVistaReferencia);
+	public void addMetaViewReference(MetaReferenceView metaVistaReferencia) throws XavaException {
+		if (metaViewsReferences == null) metaViewsReferences = new HashMap();
+		else {
+			if (metaViewsReferences.containsKey(metaVistaReferencia.getReferenceName())) {
+				throw new XavaException("reference_view_already_defined", metaVistaReferencia.getReferenceName(), getName(), getModelName());
+			}
+		}
+		metaViewsReferences.put(metaVistaReferencia.getReferenceName(), metaVistaReferencia);		
 	}
 	
-	public void addMetaViewProperty(MetaPropertyView metaVistaPropiedad) {
+	public void addMetaViewProperty(MetaPropertyView metaVistaPropiedad) throws XavaException {
 		if (metaViewsProperties == null) metaViewsProperties = new HashMap();
+		else {
+			if (metaViewsProperties.containsKey(metaVistaPropiedad.getPropertyName())) {
+				throw new XavaException("property_view_already_defined", metaVistaPropiedad.getPropertyName(), getName(), getModelName());
+			}
+		}
 		metaViewsProperties.put(metaVistaPropiedad.getPropertyName(), metaVistaPropiedad);
 	}	
 	
-	public void addMetaViewCollection(MetaCollectionView metaVistaColeccion) {
+	public void addMetaViewCollection(MetaCollectionView metaVistaColeccion) throws XavaException {
 		if (metaViewsCollections == null) metaViewsCollections = new HashMap();
+		else {
+			if (metaViewsCollections.containsKey(metaVistaColeccion.getCollectionName())) {
+				throw new XavaException("collection_view_already_defined", metaVistaColeccion.getCollectionName(), getName(), getModelName());
+			}
+		}		
 		metaViewsCollections.put(metaVistaColeccion.getCollectionName(), metaVistaColeccion);		
 	}	
 	
