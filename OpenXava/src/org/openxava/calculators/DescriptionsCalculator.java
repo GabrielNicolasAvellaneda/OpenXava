@@ -73,7 +73,8 @@ public class DescriptionsCalculator implements ICalculator {
 	
 	private List read() throws Exception {
 		List result = new ArrayList();
-		TableModel table = executeQuery();		 
+		TableModel table = executeQuery();
+		if (table == null) return result;
 		for (int i=0; i<table.getRowCount(); i++) {
 			KeyAndDescription el = new KeyAndDescription();			
 			int iKey = 0;
@@ -214,6 +215,7 @@ public class DescriptionsCalculator implements ICalculator {
 			Iterator it = getParameters().iterator();
 			for (int i=0; i<key.length; i++) {	
 				key[i] = it.next();
+				if (key[i] == null) return null;
 			}				
 		}				
 		tab.search(condition, key);
