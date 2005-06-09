@@ -1579,7 +1579,7 @@ public class View implements java.io.Serializable {
 		}		 		 		
 	}
 	
-	private void tryPropertyChanged(MetaProperty cambiada, String nombreCualificadoCambiada) throws Exception {		
+	private void tryPropertyChanged(MetaProperty cambiada, String nombreCualificadoCambiada) throws Exception {
 		Iterator it = getMetaProperties().iterator(); 									
 		while (it.hasNext()) {
 			MetaProperty pr = (MetaProperty) it.next();				
@@ -1608,10 +1608,10 @@ public class View implements java.io.Serializable {
 					searchingObject = false;				 
 				}				
 			}			
-		}			
+		}		
 		if (!isSection() && getMetaView().hasOnChangeAction(nombreCualificadoCambiada)) {			
 			IOnChangePropertyAction accion = getMetaView().createOnChangeAction(nombreCualificadoCambiada);
-			if (!actionRegisteredAsExecuted(nombreCualificadoCambiada, accion)) {
+			if (!actionRegisteredAsExecuted(nombreCualificadoCambiada, accion)) {				
 				accion.setView(this);
 				accion.setChangedProperty(nombreCualificadoCambiada); 
 				accion.setNewValue(getValue(nombreCualificadoCambiada));
