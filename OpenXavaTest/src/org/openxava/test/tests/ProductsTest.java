@@ -19,7 +19,8 @@ public class ProductsTest extends ModuleTestBase {
 		"CRUD.delete",
 		"CRUD.search",		
 		"Mode.list",
-		"Products.changeDefaultZone"
+		"Products.setLimitZoneTo1",
+		"Products.setLimitZoneTo0"
 	};
 	
 	private String [] listActions = {
@@ -73,6 +74,7 @@ public class ProductsTest extends ModuleTestBase {
 		
 	public void testFiltersInDescriptionsEditor() throws Exception {
 		execute("CRUD.new");
+		execute("Products.setLimitZoneTo1"); 
 		WarehouseKey key1 = new WarehouseKey();
 		key1.setZoneNumber(1);
 		key1.set_Number(new Integer(1));
@@ -83,7 +85,7 @@ public class ProductsTest extends ModuleTestBase {
 		key3.setZoneNumber(1);
 		key3.set_Number(new Integer(3));		
 		
-		String [][] zone1WarehouseValues = new String [][] { // It is assumed that 1 is default zone
+		String [][] zone1WarehouseValues = new String [][] {
 			{ "", "" },
 			{ key1.toString(), "CENTRAL VALENCIA" },
 			{ key3.toString(), "VALENCIA NORTE" },

@@ -66,8 +66,8 @@
   	<property name="model" value="Warehouse"/>
   	<property name="keyProperties" value="zoneNumber, number"/>
 		<property name="descriptionProperty" value="name"/>
-		<property name="filter" value="org.openxava.test.filters.DefaultZoneFilter"/>
-		<property name="condition" value="${zoneNumber} = ?"/>
+		<property name="filter" value="org.openxava.test.filters.LimitZoneFilter"/>
+		<property name="condition" value="${zoneNumber} &lt;= ?"/>
   	<formatter class="org.openxava.test.formatters.WarehouseKeyFormatter"/>	
     <for-stereotype stereotype="WAREHOUSE"/>
   </editor>
