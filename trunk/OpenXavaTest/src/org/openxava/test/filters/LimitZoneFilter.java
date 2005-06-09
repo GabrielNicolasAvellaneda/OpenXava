@@ -9,29 +9,29 @@ import org.openxava.filters.*;
  * @author Javier Paniza
  */
 
-public class DefaultZoneFilter extends BaseContextFilter {
+public class LimitZoneFilter extends BaseContextFilter {
 
 	public Object filter(Object o) throws FilterException {		
 		if (o == null) {
-			return new Object [] { getDefaultZone() };
+			return new Object [] { getLimitZone() };
 		}		
 		if (o instanceof Object []) {			
 			List c = new ArrayList(Arrays.asList((Object []) o));
-			c.add(0, getDefaultZone());
+			c.add(0, getLimitZone());
 			return c.toArray();			
 		} 
 		else {
-			return new Object [] { getDefaultZone(), o	};
+			return new Object [] { getLimitZone(), o	};
 		}		
 	}
 
-	private Integer getDefaultZone() throws FilterException {
+	private Integer getLimitZone() throws FilterException {
 		try {
-			return getInteger("xavatest_defaultZone");			
+			return getInteger("xavatest_limitZone");			
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			throw new FilterException("Impossible to obtain default zone associated to session");
+			throw new FilterException("Impossible to obtain limit zone associated to session");
 		}
 	}
 	

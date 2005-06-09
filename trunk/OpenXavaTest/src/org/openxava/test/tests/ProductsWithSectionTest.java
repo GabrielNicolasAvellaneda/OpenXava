@@ -15,6 +15,7 @@ public class ProductsWithSectionTest extends ProductsTest {
 	
 	public void testEmptyCombosUsingComposeKeys() throws Exception {
 		execute("CRUD.new");
+		execute("Products.setLimitZoneTo1"); 
 		
 		WarehouseKey key1 = new WarehouseKey();
 		key1.setZoneNumber(1);
@@ -26,7 +27,7 @@ public class ProductsWithSectionTest extends ProductsTest {
 		key3.setZoneNumber(1);
 		key3.set_Number(new Integer(3));		
 		
-		String [][] zone1WarehouseValues = new String [][] { // It is assumed that 1 is default zone
+		String [][] zone1WarehouseValues = new String [][] {
 			{ "", "" },
 			{ key1.toString(), "CENTRAL VALENCIA" },
 			{ key3.toString(), "VALENCIA NORTE" },
@@ -35,7 +36,7 @@ public class ProductsWithSectionTest extends ProductsTest {
 			
 		assertValidValues("warehouseKey", zone1WarehouseValues);
 		
-		execute("Products.changeDefaultZone");		
+		execute("Products.setLimitZoneTo0");		
 		String [][] zoneEmptyWarehouseValues = new String [][] { 
 			{ "", "" },		
 		};		
