@@ -13,8 +13,8 @@ public class ServiceData
    private java.lang.Integer _Family;
    private java.lang.String _Description;
    private int number;
-   private int detail_type;
-   private int detail_subfamily;
+   private java.lang.Integer _Detail_type;
+   private java.lang.Integer _Detail_subfamily;
 
    public ServiceData()
    {
@@ -25,8 +25,8 @@ public class ServiceData
       set_Family(otherData.get_Family());
       set_Description(otherData.get_Description());
       setNumber(otherData.getNumber());
-      setDetail_type(otherData.getDetail_type());
-      setDetail_subfamily(otherData.getDetail_subfamily());
+      set_Detail_type(otherData.get_Detail_type());
+      set_Detail_subfamily(otherData.get_Detail_subfamily());
 
    }
 
@@ -62,29 +62,29 @@ public class ServiceData
       this.number = number;
    }
 
-   public int getDetail_type()
+   public java.lang.Integer get_Detail_type()
    {
-      return this.detail_type;
+      return this._Detail_type;
    }
-   public void setDetail_type( int detail_type )
+   public void set_Detail_type( java.lang.Integer _Detail_type )
    {
-      this.detail_type = detail_type;
+      this._Detail_type = _Detail_type;
    }
 
-   public int getDetail_subfamily()
+   public java.lang.Integer get_Detail_subfamily()
    {
-      return this.detail_subfamily;
+      return this._Detail_subfamily;
    }
-   public void setDetail_subfamily( int detail_subfamily )
+   public void set_Detail_subfamily( java.lang.Integer _Detail_subfamily )
    {
-      this.detail_subfamily = detail_subfamily;
+      this._Detail_subfamily = _Detail_subfamily;
    }
 
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Family=" + get_Family() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "detail_type=" + getDetail_type() + " " + "detail_subfamily=" + getDetail_subfamily());
+      str.append("_Family=" + get_Family() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "_Detail_type=" + get_Detail_type() + " " + "_Detail_subfamily=" + get_Detail_subfamily());
       str.append('}');
 
       return(str.toString());
@@ -114,8 +114,22 @@ public class ServiceData
             lEquals = lEquals && this._Description.equals( lTest._Description );
          }
          lEquals = lEquals && this.number == lTest.number;
-         lEquals = lEquals && this.detail_type == lTest.detail_type;
-         lEquals = lEquals && this.detail_subfamily == lTest.detail_subfamily;
+         if( this._Detail_type == null )
+         {
+            lEquals = lEquals && ( lTest._Detail_type == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Detail_type.equals( lTest._Detail_type );
+         }
+         if( this._Detail_subfamily == null )
+         {
+            lEquals = lEquals && ( lTest._Detail_subfamily == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Detail_subfamily.equals( lTest._Detail_subfamily );
+         }
 
          return lEquals;
       }
@@ -135,9 +149,9 @@ public class ServiceData
 
       result = 37*result + (int) number;
 
-      result = 37*result + (int) detail_type;
+      result = 37*result + ((this._Detail_type != null) ? this._Detail_type.hashCode() : 0);
 
-      result = 37*result + (int) detail_subfamily;
+      result = 37*result + ((this._Detail_subfamily != null) ? this._Detail_subfamily.hashCode() : 0);
 
       return result;
    }

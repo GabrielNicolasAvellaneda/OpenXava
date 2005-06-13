@@ -66,6 +66,10 @@
 			<condition>${type} = 2</condition>
 		</finder>
 		
+		<finder name="byStreet" arguments="String street" collection="true">
+			<condition>${address.street} = {0}</condition>
+		</finder>
+		
 		<finder name="all" arguments="" collection="true"/>
 															
 	</entity>

@@ -14,13 +14,13 @@ public class ServerBean extends SessionBase {
 	}
 	
 	
-	public Object calculate(ICalculator calculador) throws Exception {		
-		XSystem._setOnServer(); // para asegurarse
-		if (calculador instanceof IJDBCCalculator) {			
-			((IJDBCCalculator) calculador).setConnectionProvider(getPortableContext());
+	public Object calculate(ICalculator calculator) throws Exception {		
+		XSystem._setOnServer(); // to secure it
+		if (calculator instanceof IJDBCCalculator) {			
+			((IJDBCCalculator) calculator).setConnectionProvider(getPortableContext());
 		}
 		try {
-			return calculador.calculate();
+			return calculator.calculate();
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
@@ -28,16 +28,16 @@ public class ServerBean extends SessionBase {
 		}
 	}	
 	
-	public Object calculateWithoutTransaction(ICalculator calculador) throws Exception {
-		XSystem._setOnServer(); // para asegurarse	
-		return calculate(calculador);
+	public Object calculateWithoutTransaction(ICalculator calculator) throws Exception {
+		XSystem._setOnServer(); // to secure it	
+		return calculate(calculator);
 	}
 	
-	public IRemoteAction execute(IRemoteAction accion) throws Exception {
-		XSystem._setOnServer(); // para asegurarse
+	public IRemoteAction execute(IRemoteAction action) throws Exception {
+		XSystem._setOnServer(); // to secure it
 		try {
-			accion.execute();
-			return accion;
+			action.execute();
+			return action;
 		}
 		catch (Exception ex) {
 			ex.printStackTrace(); 

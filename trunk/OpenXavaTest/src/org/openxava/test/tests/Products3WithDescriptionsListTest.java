@@ -14,6 +14,7 @@ public class Products3WithDescriptionsListTest extends ModuleTestBase {
 	
 	public void testNotOnChangeActionWhenSearch() throws Exception {
 		execute("CRUD.new");
+		execute("Products3.showDescription"); // description is hide in a init action for test purpose
 		setValue("number", "77");
 		execute("CRUD.search");
 		assertValue("description", "ANATHEMA");
@@ -22,6 +23,7 @@ public class Products3WithDescriptionsListTest extends ModuleTestBase {
 	
 	public void testDescriptionsListWithHiddenKeyThrowsChanged() throws Exception {
 		execute("CRUD.new");
+		execute("Products3.showDescription"); // description is hide in a init action for test purpose
 		assertNoErrors();
 		assertValue("comments", "");
 		setValue("family.oid", "1037101892379");
@@ -30,6 +32,7 @@ public class Products3WithDescriptionsListTest extends ModuleTestBase {
 	
 	public void testSetValueNotifyingOnReferenceWithHiddenKeyNotResetGroup() throws Exception {
 		execute("CRUD.new");
+		execute("Products3.showDescription"); // description is hide in a init action for test purpose
 		setValue("description", "HOLA");
 		execute("Products3.changeFamily");
 		assertValue("description", "HOLA");

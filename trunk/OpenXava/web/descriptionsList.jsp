@@ -88,6 +88,19 @@ String script = throwChanged?
 String parameterValuesProperties=view.getParameterValuesPropertiesInDescriptionsList(ref);
 String condition = view.getConditionInDescriptionsList(ref);
 boolean orderByKey = view.isOrderByKeyInDescriptionsList(ref);
+org.openxava.tab.meta.MetaTab metaTab = ref.getMetaModelReferenced().getMetaComponent().getMetaTab();
+String filterArg = "";
+if (metaTab.hasFilter()) {
+	filterArg = "&filter=" + metaTab.getMetaFilter().getClassName();
+}
+if (metaTab.hasBaseCondition()) {
+	if (org.openxava.util.Is.emptyString(condition)) {
+		condition = metaTab.getBaseCondition();
+	}
+	else {
+		condition = metaTab.getBaseCondition() + " AND " + condition;
+	}
+}
 String urlDescriptionEditor = "editors/descriptionsEditor.jsp" // in this way because websphere 6 has problems with jsp:param
 	+ "?script=" + script
 	+ "&propertyKey=" + propertyKey
@@ -99,7 +112,8 @@ String urlDescriptionEditor = "editors/descriptionsEditor.jsp" // in this way be
 	+ "&descriptionProperties=" + descriptionProperties
 	+ "&parameterValuesProperties=" + parameterValuesProperties
 	+ "&condition=" + condition
-	+ "&orderByKey=" + orderByKey;
+	+ "&orderByKey=" + orderByKey
+	+ filterArg;
 %>
 <jsp:include page="<%=urlDescriptionEditor%>" />
 

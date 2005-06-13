@@ -19,8 +19,8 @@ public class CustomerData
    private int _Seller_number;
    private int _AlternateSeller_number;
    private java.lang.String _Address_zipCode;
-   private java.lang.String address_street;
-   private java.lang.String address_city;
+   private java.lang.String _Address_street;
+   private java.lang.String _Address_city;
    private java.lang.String _Address_state_id;
 
    public CustomerData()
@@ -38,8 +38,8 @@ public class CustomerData
       set_Seller_number(otherData.get_Seller_number());
       set_AlternateSeller_number(otherData.get_AlternateSeller_number());
       set_Address_zipCode(otherData.get_Address_zipCode());
-      setAddress_street(otherData.getAddress_street());
-      setAddress_city(otherData.getAddress_city());
+      set_Address_street(otherData.get_Address_street());
+      set_Address_city(otherData.get_Address_city());
       set_Address_state_id(otherData.get_Address_state_id());
 
    }
@@ -130,22 +130,22 @@ public class CustomerData
       this._Address_zipCode = _Address_zipCode;
    }
 
-   public java.lang.String getAddress_street()
+   public java.lang.String get_Address_street()
    {
-      return this.address_street;
+      return this._Address_street;
    }
-   public void setAddress_street( java.lang.String address_street )
+   public void set_Address_street( java.lang.String _Address_street )
    {
-      this.address_street = address_street;
+      this._Address_street = _Address_street;
    }
 
-   public java.lang.String getAddress_city()
+   public java.lang.String get_Address_city()
    {
-      return this.address_city;
+      return this._Address_city;
    }
-   public void setAddress_city( java.lang.String address_city )
+   public void set_Address_city( java.lang.String _Address_city )
    {
-      this.address_city = address_city;
+      this._Address_city = _Address_city;
    }
 
    public java.lang.String get_Address_state_id()
@@ -161,7 +161,7 @@ public class CustomerData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Type=" + get_Type() + " " + "_Remarks=" + get_Remarks() + " " + "_RelationWithSeller=" + get_RelationWithSeller() + " " + "_Photo=" + get_Photo() + " " + "_Name=" + get_Name() + " " + "number=" + getNumber() + " " + "_Seller_number=" + get_Seller_number() + " " + "_AlternateSeller_number=" + get_AlternateSeller_number() + " " + "_Address_zipCode=" + get_Address_zipCode() + " " + "address_street=" + getAddress_street() + " " + "address_city=" + getAddress_city() + " " + "_Address_state_id=" + get_Address_state_id());
+      str.append("_Type=" + get_Type() + " " + "_Remarks=" + get_Remarks() + " " + "_RelationWithSeller=" + get_RelationWithSeller() + " " + "_Photo=" + get_Photo() + " " + "_Name=" + get_Name() + " " + "number=" + getNumber() + " " + "_Seller_number=" + get_Seller_number() + " " + "_AlternateSeller_number=" + get_AlternateSeller_number() + " " + "_Address_zipCode=" + get_Address_zipCode() + " " + "_Address_street=" + get_Address_street() + " " + "_Address_city=" + get_Address_city() + " " + "_Address_state_id=" + get_Address_state_id());
       str.append('}');
 
       return(str.toString());
@@ -218,21 +218,21 @@ public class CustomerData
          {
             lEquals = lEquals && this._Address_zipCode.equals( lTest._Address_zipCode );
          }
-         if( this.address_street == null )
+         if( this._Address_street == null )
          {
-            lEquals = lEquals && ( lTest.address_street == null );
+            lEquals = lEquals && ( lTest._Address_street == null );
          }
          else
          {
-            lEquals = lEquals && this.address_street.equals( lTest.address_street );
+            lEquals = lEquals && this._Address_street.equals( lTest._Address_street );
          }
-         if( this.address_city == null )
+         if( this._Address_city == null )
          {
-            lEquals = lEquals && ( lTest.address_city == null );
+            lEquals = lEquals && ( lTest._Address_city == null );
          }
          else
          {
-            lEquals = lEquals && this.address_city.equals( lTest.address_city );
+            lEquals = lEquals && this._Address_city.equals( lTest._Address_city );
          }
          if( this._Address_state_id == null )
          {
@@ -279,9 +279,9 @@ public class CustomerData
 
       result = 37*result + ((this._Address_zipCode != null) ? this._Address_zipCode.hashCode() : 0);
 
-      result = 37*result + ((this.address_street != null) ? this.address_street.hashCode() : 0);
+      result = 37*result + ((this._Address_street != null) ? this._Address_street.hashCode() : 0);
 
-      result = 37*result + ((this.address_city != null) ? this.address_city.hashCode() : 0);
+      result = 37*result + ((this._Address_city != null) ? this._Address_city.hashCode() : 0);
 
       result = 37*result + ((this._Address_state_id != null) ? this._Address_state_id.hashCode() : 0);
 

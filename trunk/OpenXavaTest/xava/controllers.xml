@@ -67,7 +67,22 @@
 				<set property="property" value="family.oid"/>
 				<set property="value" value="1037101896763"/>
 				<use-object name="xava_view"/>
-		</action>						
+		</action>					
+		
+		<action name="hideDescription" mode="detail" on-init="true" 
+			class="org.openxava.test.actions.HideShowGroupAction">								
+			<set property="group" value="description"/>	
+			<set property="hide" value="true"/>	
+			<use-object name="xava_view"/>
+		</action>				
+		
+		<action name="showDescription" mode="detail" 
+			class="org.openxava.test.actions.HideShowGroupAction">								
+			<set property="group" value="description"/>	
+			<set property="show" value="true"/>	
+			<use-object name="xava_view"/>
+		</action>				
+					
 	</controller>		
 	
 	
@@ -80,13 +95,15 @@
 			<set property="resetAfter" value="false"/>
 			<use-object name="xava_view"/>
 		</action>				
-		<action name="hideSeller" mode="detail"
+
+		<action name="hideSeller" mode="detail" 
 			class="org.openxava.test.actions.HideShowGroupAction">								
 			<set property="group" value="seller"/>	
 			<set property="hide" value="true"/>	
 			<use-object name="xava_view"/>
 		</action>				
-		<action name="showSeller" mode="detail"
+
+		<action name="showSeller" mode="detail" 
 			class="org.openxava.test.actions.HideShowGroupAction">								
 			<set property="group" value="seller"/>	
 			<set property="show" value="true"/>	
@@ -131,6 +148,7 @@
 			<use-object name="xava_view"/>
 		</action>		
 	</controller>
+		
 		
 	<controller name="Invoices">
 		<action name="searchFromDelivery" hidden="true"

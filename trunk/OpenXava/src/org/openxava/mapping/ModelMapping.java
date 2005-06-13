@@ -357,7 +357,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 		try {
 			p =
 				getMetaModel().getMetaProperty(
-					propertyMapping.getProperty());
+					Strings.change(propertyMapping.getProperty(), "_", "."));
 		}
 		catch (ElementNotFoundException ex) {			
 			return;
