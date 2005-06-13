@@ -646,12 +646,12 @@
 
         </cmp-field>
          <cmp-field>
-            <field-name>address_street</field-name>
+            <field-name>_Address_street</field-name>
             <column-name>STREET</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>address_city</field-name>
+            <field-name>_Address_city</field-name>
             <column-name>CITY</column-name>
 
         </cmp-field>
@@ -728,6 +728,16 @@
                </method-params>
             </query-method>
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Type = 2]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByStreet</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Address_street = ?1]]></jboss-ql>
 
 	     </query>
          <query>
@@ -1575,12 +1585,12 @@
 
         </cmp-field>
          <cmp-field>
-            <field-name>detail_type</field-name>
+            <field-name>_Detail_type</field-name>
             <column-name>TYPE</column-name>
 
         </cmp-field>
          <cmp-field>
-            <field-name>detail_subfamily</field-name>
+            <field-name>_Detail_subfamily</field-name>
             <column-name>SUBFAMILY</column-name>
 
         </cmp-field>

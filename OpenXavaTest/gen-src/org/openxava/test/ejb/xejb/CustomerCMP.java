@@ -27,8 +27,8 @@ public abstract class CustomerCMP
          dataHolder.set_Seller_number( get_Seller_number() );
          dataHolder.set_AlternateSeller_number( get_AlternateSeller_number() );
          dataHolder.set_Address_zipCode( get_Address_zipCode() );
-         dataHolder.setAddress_street( getAddress_street() );
-         dataHolder.setAddress_city( getAddress_city() );
+         dataHolder.set_Address_street( get_Address_street() );
+         dataHolder.set_Address_city( get_Address_city() );
          dataHolder.set_Address_state_id( get_Address_state_id() );
 
       }
@@ -52,8 +52,8 @@ public abstract class CustomerCMP
          set_Seller_number( dataHolder.get_Seller_number() );
          set_AlternateSeller_number( dataHolder.get_AlternateSeller_number() );
          set_Address_zipCode( dataHolder.get_Address_zipCode() );
-         setAddress_street( dataHolder.getAddress_street() );
-         setAddress_city( dataHolder.getAddress_city() );
+         set_Address_street( dataHolder.get_Address_street() );
+         set_Address_city( dataHolder.get_Address_city() );
          set_Address_state_id( dataHolder.get_Address_state_id() );
 
       }
@@ -187,13 +187,13 @@ public abstract class CustomerCMP
 
    public abstract void set_Address_zipCode( java.lang.String _Address_zipCode ) ;
 
-   public abstract java.lang.String getAddress_street() ;
+   public abstract java.lang.String get_Address_street() ;
 
-   public abstract void setAddress_street( java.lang.String address_street ) ;
+   public abstract void set_Address_street( java.lang.String _Address_street ) ;
 
-   public abstract java.lang.String getAddress_city() ;
+   public abstract java.lang.String get_Address_city() ;
 
-   public abstract void setAddress_city( java.lang.String address_city ) ;
+   public abstract void set_Address_city( java.lang.String _Address_city ) ;
 
    public abstract java.lang.String get_Address_state_id() ;
 

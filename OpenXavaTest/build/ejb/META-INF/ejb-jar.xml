@@ -857,13 +857,13 @@
             <description><![CDATA[]]></description>
             <field-name>_Address_zipCode</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Customer_address_street">
+         <cmp-field id="CmpAttribute_Customer__Address_street">
             <description><![CDATA[]]></description>
-            <field-name>address_street</field-name>
+            <field-name>_Address_street</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Customer_address_city">
+         <cmp-field id="CmpAttribute_Customer__Address_city">
             <description><![CDATA[]]></description>
-            <field-name>address_city</field-name>
+            <field-name>_Address_city</field-name>
          </cmp-field>
          <cmp-field id="CmpAttribute_Customer__Address_state_id">
             <description><![CDATA[]]></description>
@@ -950,6 +950,16 @@
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Type = 2]]></ejb-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByStreet</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Address_street = ?1]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -2006,13 +2016,13 @@
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Service_detail_type">
+         <cmp-field id="CmpAttribute_Service__Detail_type">
             <description><![CDATA[]]></description>
-            <field-name>detail_type</field-name>
+            <field-name>_Detail_type</field-name>
          </cmp-field>
-         <cmp-field id="CmpAttribute_Service_detail_subfamily">
+         <cmp-field id="CmpAttribute_Service__Detail_subfamily">
             <description><![CDATA[]]></description>
-            <field-name>detail_subfamily</field-name>
+            <field-name>_Detail_subfamily</field-name>
          </cmp-field>
 
          <env-entry>

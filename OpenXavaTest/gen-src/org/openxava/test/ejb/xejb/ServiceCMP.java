@@ -21,8 +21,8 @@ public abstract class ServiceCMP
          dataHolder.set_Family( get_Family() );
          dataHolder.set_Description( get_Description() );
          dataHolder.setNumber( getNumber() );
-         dataHolder.setDetail_type( getDetail_type() );
-         dataHolder.setDetail_subfamily( getDetail_subfamily() );
+         dataHolder.set_Detail_type( get_Detail_type() );
+         dataHolder.set_Detail_subfamily( get_Detail_subfamily() );
 
       }
       catch (RuntimeException e)
@@ -39,8 +39,8 @@ public abstract class ServiceCMP
       {
          set_Family( dataHolder.get_Family() );
          set_Description( dataHolder.get_Description() );
-         setDetail_type( dataHolder.getDetail_type() );
-         setDetail_subfamily( dataHolder.getDetail_subfamily() );
+         set_Detail_type( dataHolder.get_Detail_type() );
+         set_Detail_subfamily( dataHolder.get_Detail_subfamily() );
 
       }
       catch (Exception e)
@@ -137,12 +137,12 @@ public abstract class ServiceCMP
 
    public abstract void setNumber( int number ) ;
 
-   public abstract int getDetail_type() ;
+   public abstract java.lang.Integer get_Detail_type() ;
 
-   public abstract void setDetail_type( int detail_type ) ;
+   public abstract void set_Detail_type( java.lang.Integer _Detail_type ) ;
 
-   public abstract int getDetail_subfamily() ;
+   public abstract java.lang.Integer get_Detail_subfamily() ;
 
-   public abstract void setDetail_subfamily( int detail_subfamily ) ;
+   public abstract void set_Detail_subfamily( java.lang.Integer _Detail_subfamily ) ;
 
 }

@@ -145,7 +145,7 @@ public class View implements java.io.Serializable {
 				}
 			}
 			metaMiembros = filtrada;
-		}
+		}		
 		if (!incluirOcultos && hidden != null) quitarOcultos(metaMiembros);
 		removeOverlapedProperties(metaMiembros);
 		return metaMiembros;	
@@ -397,7 +397,7 @@ public class View implements java.io.Serializable {
 		}		
 	}
 	
-	public Object getValue(String name) throws XavaException {
+	public Object getValue(String name) throws XavaException {		
 		return getValue(name, true);
 	}
 	
@@ -425,12 +425,17 @@ public class View implements java.io.Serializable {
 		return subvista;
 	}
 	
-	public View getGroupView(String nombre) throws XavaException {				
-		View subvista = (View) getGroupsViews().get(nombre);
-		if (subvista == null) {			
-			throw new ElementNotFoundException("subview_group_no_found", nombre, getModelName());						
+	public View getGroupView(String name) throws XavaException {
+		View subview = (View) getGroupsViews().get(name);
+		if (subview == null) {			
+			groupsViews = null; // to force reload the group views
+			subviews = null;
+			subview = (View) getGroupsViews().get(name);
+			if (subview == null) {
+				throw new ElementNotFoundException("subview_group_no_found", name, getModelName());
+			}
 		}				
-		return subvista;
+		return subview;
 	}
 		
 	private View buscarSubvistaEnSeccion(String nombre) throws XavaException {
@@ -908,10 +913,10 @@ public class View implements java.io.Serializable {
 
 	private Collection getMemberNamesWithoutSeccions() throws XavaException { 
 		if (memberNamesWithoutSeccions==null) { 	
-			Iterator it = createMetaMembers(true).iterator();			
+			Iterator it = createMetaMembers(true).iterator();						
 			memberNamesWithoutSeccions = new ArrayList();
 			while (it.hasNext()) {
-				MetaMember m = (MetaMember) it.next();				
+				MetaMember m = (MetaMember) it.next();
 				if (m instanceof MetaProperty && !m.equals(PropertiesSeparator.INSTANCE)) {					
 					memberNamesWithoutSeccions.add(m.getName());
 				}
@@ -921,7 +926,7 @@ public class View implements java.io.Serializable {
 				else if (m instanceof MetaCollection) {					
 					memberNamesWithoutSeccions.add(m.getName());
 				}				
-				else if (m instanceof MetaGroup) { 
+				else if (m instanceof MetaGroup && !isHidden(m.getName())) {  
 					memberNamesWithoutSeccions.addAll(getGroupView(((MetaGroup) m).getName()).getMemberNamesWithoutSeccions());					
 				}
 			}					
@@ -2209,7 +2214,8 @@ public class View implements java.io.Serializable {
 			for (int i = 0; i < cantidad; i++) {				
 				getSectionView(i).setHidden(nombre, oculto);				
 			}	
-		}				
+		}
+		
 	}
 		
 	public View getParent() { 
