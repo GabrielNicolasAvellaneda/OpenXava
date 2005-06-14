@@ -36,7 +36,9 @@ public class ImageTag extends TagSupport implements IActionTag {
 			pageContext.getOut().print(" title='");
 			pageContext.getOut().print(metaAction.getDescription(request));
 			pageContext.getOut().print("'");			
-			pageContext.getOut().print(" href=\"javascript:executeXavaAction(document.");
+			pageContext.getOut().print(" href=\"javascript:executeXavaAction(");
+			pageContext.getOut().print(metaAction.isTakesLong());
+			pageContext.getOut().print(", document.");
 			pageContext.getOut().print(manager.getForm());
 			pageContext.getOut().print(", '");
 			pageContext.getOut().print(getAction());

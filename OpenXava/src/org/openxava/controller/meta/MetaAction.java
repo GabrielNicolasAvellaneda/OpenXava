@@ -27,6 +27,7 @@ public class MetaAction extends MetaElement {
 	private MetaController metaController;
 	private int byDefault;
 	private boolean onInit;
+	private boolean takesLong;
 	
 	public MetaAction() {
 	}
@@ -205,4 +206,10 @@ public class MetaAction extends MetaElement {
 		onInit = b;
 	}
 
+	public boolean isTakesLong() {
+		return takesLong;
+	}
+	public void setTakesLong(boolean takesLong) {
+		this.takesLong = takesLong;
+	}
 }

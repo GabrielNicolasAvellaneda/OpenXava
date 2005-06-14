@@ -13,8 +13,8 @@ manager.setSession(session);
 <tr>
 <td>
 
-<button name="xava.ACCION_DEFECTO" 
-	onclick="executeXavaAction(<%=manager.getForm()%>, '<%=manager.getDefaultActionQualifiedName()%>')"
+<button name="xava.DEFAULT_ACTION" 
+	onclick="executeXavaAction(false, <%=manager.getForm()%>, '<%=manager.getDefaultActionQualifiedName()%>')"
 	style="padding: 0; border: none; background-color:transparent">
 </button>
 

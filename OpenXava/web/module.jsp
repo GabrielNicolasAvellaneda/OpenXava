@@ -1,4 +1,5 @@
 <%@ page import="org.openxava.util.Is" %>
+<%@ page import="org.openxava.util.XavaResources" %>
 
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="messages" class="org.openxava.util.Messages" scope="request"/>
@@ -107,12 +108,18 @@ else { // All else
 
 
 <script>
-function executeXavaAction(formu, action) {
+function executeXavaAction(takesLong, formu, action) {
+	if (takesLong) {
+		document.getElementById('processingLayer').style.display='block';
+	}
 	formu.focus_forward.value = "false";
 	formu.xava_action.value=action;	
 	formu.submit();	
 }
-function executeXavaAction(formu, action, argv) {	
+function executeXavaAction(takesLong, formu, action, argv) {	
+	if (takesLong) {
+		document.getElementById('processingLayer').style.display='block';
+	}
 	formu.focus_forward.value = "false";
 	formu.xava_action.value=action;	
 	formu.xava_action_argv.value=argv;	
@@ -146,6 +153,15 @@ function setFocus() {
 </head>
 
 <body bgcolor="#ffffff" onload="setFocus()">
+
+<%-- Layer for progress bar --%>
+<div id='processingLayer' style='position:absolute;top:100px;left:150px;display:none'>
+<table cellspacing='0'>
+	<tr class='odd'>
+		<td align='center' valign='middle' style='line-height:1.4;padding:25px 80px;border:2px solid #000'><%=XavaResources.getString(request, "processing")%><br><img src='images/processing.gif'/></td>
+	</tr>
+</table>
+</div>
 
 <div class="module">
 <form name="<%=manager.getForm()%>" method="POST" <%=manager.getEnctype()%>>
