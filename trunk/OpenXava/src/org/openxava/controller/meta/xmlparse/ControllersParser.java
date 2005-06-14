@@ -99,6 +99,7 @@ public class ControllersParser extends ParserBase {
 		result.setHidden(getAttributeBoolean(el, xhidden[lang]));
 		result.setOnInit(getAttributeBoolean(el, xon_init[lang]));
 		result.setByDefault(toByDefault(el.getAttribute(xby_default[lang])));
+		result.setTakesLong(getAttributeBoolean(el, xtakes_long[lang]));
 		fillSet(el, result);
 		fillUseObject(el, result);
 		return result;

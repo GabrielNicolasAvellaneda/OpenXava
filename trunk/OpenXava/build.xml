@@ -31,6 +31,7 @@
 	<property name="model.package" value="model"/>
 	<property name="ejb.package" value="${model.package}"/>
 	<property name="build.compiler" value="javac1.3"/>
+	<property name="deploy.portlets.dir" value="${deploy.dir}/jetspeed.war/WEB-INF/deploy"/>
 			
    <!-- Set up java.class.path -->
    <path id="project.class.path">
@@ -570,9 +571,8 @@
 		<copy file="${dist.dir}/${name.war}.war" todir="${deploy.dir}" overwrite="true"/>
 	</target>
 
-	<target name="redeploy">
-    	<delete file="../${project}/gen-src-xava/dnas.properties"/>
-		<antcall target="deploy"/>
-	</target>	
+	<target name="deployPortlets" depends="createWar">
+		<copy file="${dist.dir}/${name.war}.war" todir="${deploy.portlets.dir}" overwrite="true"/>		
+	</target>
 		                    
 </project>

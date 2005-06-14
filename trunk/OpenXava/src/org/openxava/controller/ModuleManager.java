@@ -159,7 +159,7 @@ public class ModuleManager {
 				if (actionOfThisModule(request)) {
 					String xavaAction = request.getParameter("xava_action");					
 					if (isFormUpload()) {
-						xavaAction = getDefaultActionQualifiedName(); // In uplado form we execute the default action						
+						xavaAction = getDefaultActionQualifiedName(); // In upload form we execute the default action						
 					}																				
 					if (!Is.emptyString(xavaAction)) {						
 						String actionValue = request.getParameter("xava_action_argv");

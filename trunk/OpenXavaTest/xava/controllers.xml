@@ -304,6 +304,13 @@
 		</action>
 			
 	</controller>
+	
+	<controller name="FamilyProductsReport">
+		<action name="generate" 
+			class="org.openxava.test.actions.GenerateFamilyProductsReportAction"
+			takes-long="true"/>
+		
+	</controller>	
 
 	<controller name="StatesHibernate"> 
 		<action name="search" image="images/search.gif" mode="detail" 

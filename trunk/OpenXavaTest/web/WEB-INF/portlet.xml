@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<portlet-app id="OpenXavaTest" version="1.0">
+  <portlet id="Carriers">
+    <init-param>
+      <name>ViewPage</name>
+      <value>/xava/module.jsp?application=OpenXavaTest&amp;module=Carriers</value>
+    </init-param>
+    <portlet-name>Carriers</portlet-name>
+    <display-name>Carriers</display-name>
+    <portlet-class>org.apache.portals.bridges.common.GenericServletPortlet</portlet-class>
+    <expiration-cache>-1</expiration-cache>
+    <supports>
+      <mime-type>text/html</mime-type>
+      <portlet-mode>VIEW</portlet-mode>
+    </supports>
+    <supported-locale>en</supported-locale>
+    <supported-locale>es</supported-locale>
+		<!--
+    <resource-bundle>org.apache.jetspeed.demo.simple.resources.DisplayRequestResources</resource-bundle>
+		-->
+    <portlet-info>
+      <title>Carriers</title>
+      <short-title>Carriers</short-title>
+    </portlet-info>
+  </portlet>
+	
+</portlet-app>
+

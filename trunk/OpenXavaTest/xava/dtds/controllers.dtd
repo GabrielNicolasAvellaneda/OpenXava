@@ -23,6 +23,7 @@
  hidden (true|false) "false"
  on-init (true|false) "false"
  by-default (never|if-possible|almost-always|always) "never"
+ takes-long (true|false) "false"
 >
 
 <!ELEMENT use-object EMPTY>

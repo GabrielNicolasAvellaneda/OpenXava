@@ -24,6 +24,7 @@
  oculta (true|false) "false"
  al-iniciar (true|false) "false"
  por-defecto (nunca|si-posible|casi-siempre|siempre) "nunca"
+ cuesta (true|false) "false" 
 >
 
 <!ELEMENT usa-objeto EMPTY>

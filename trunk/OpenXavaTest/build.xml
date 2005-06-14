@@ -11,7 +11,6 @@
 	<property file="../openxava.properties"/>
 	<property file="${configuration}.properties"/>
 	<property name="datasource" value="OpenXavaTestDS"/>
-	<property name="jetspeed.dir" value="${jboss.dir}/server/default/deployable/OpenXavaTest.war"/>		
 
 	<target name="touchHistory">
 		<tstamp>
@@ -60,42 +59,8 @@
 		<ant antfile="../OpenXava/build.xml" target="createWebsphereEar"/>
 	</target>
 					
-	<!--
-	At moment with Jetspeed 1.x,
-	jetspeed.dir must to be a descompressed jetspeed1.x
-	-->
-	<target name="deployJetSpeed" depends ="createEJBJars"> 
-		<!--
-  		<copy todir="${jetspeed.dir}/html" overwrite="true">
-    		<fileset dir="jetspeed" excludes="portlets/**"/>    		
-  		</copy>				
-  		<copy todir="${jetspeed.dir}/WEB-INF/conf" overwrite="true">
-    		<fileset dir="jetspeed/portlets"/>    		
-  		</copy>
-  		-->
-  		<copy todir="${jetspeed.dir}/WEB-INF/templates/jsp/portlets/html" overwrite="true">
-    		<fileset dir="web" excludes="WEB-INF/**,images/**"/>    		
-  		</copy>			
-  		<copy todir="${jetspeed.dir}/images" overwrite="true">
-    		<fileset dir="web/xava/images"/>
-  		</copy>		  		  		
-  		<copy todir="${jetspeed.dir}/style" overwrite="true">
-    		<fileset dir="web/xava/style"/>    		
-    	</copy>
-    			 
-    	<copy todir="${jetspeed.dir}/WEB-INF/lib">
-  			<fileset dir="web/WEB-INF/lib"/>
-  		</copy> 		  		
-  		
-  		<copy todir="${jetspeed.dir}/WEB-INF" file="web/WEB-INF/openxava.tld"/>
-  		<copy todir="${jetspeed.dir}/WEB-INF/lib" file="web/WEB-INF/lib/standard.jar"/>
-  		<copy todir="${jetspeed.dir}/WEB-INF/lib" file="web/WEB-INF/lib/jstl.jar"/>
-  		  
-  		<copy todir="${jetspeed.dir}/xava" file="web/xava/jasperReport.jsp"/>
-		<jar jarfile="${jetspeed.dir}/WEB-INF/lib/Registro.jar" basedir="web/WEB-INF/classes"/>  		
-		<jar jarfile="${jetspeed.dir}/WEB-INF/lib/openxava.jar" basedir="../OpenXava/bin"/>
-
+	<target name="deployPortlets"> 
+		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
 	</target>
-		
-		
+				
 </project>

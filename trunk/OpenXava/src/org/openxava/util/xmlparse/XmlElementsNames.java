@@ -145,5 +145,6 @@ public class XmlElementsNames {
 	protected final static String [] xfrom_type = { "from-type", "del-tipo" };
 	protected final static String [] xmodel_type = { "model-type", "tipo-modelo" };
 	protected final static String [] xconverter_class = { "converter-class", "clase-conversor" };
+	protected final static String [] xtakes_long = { "takes-long", "cuesta" };
 	
 }

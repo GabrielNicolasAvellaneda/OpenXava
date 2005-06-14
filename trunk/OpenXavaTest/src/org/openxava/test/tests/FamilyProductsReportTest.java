@@ -17,5 +17,11 @@ public class FamilyProductsReportTest extends ModuleTestBase {
 		assertNoAction("Reference.search");
 		assertAction("Reference.createNew");
 	}
+	
+	public void testActionWithTakesLong() throws Exception {
+		// For the moment only testing that it does not crash
+		execute("FamilyProductsReport.generate");
+		assertNoErrors();
+	}
 
 }
