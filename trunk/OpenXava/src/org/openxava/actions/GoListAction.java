@@ -24,11 +24,14 @@ public class GoListAction extends BaseAction implements IChangeModeAction, INavi
 	public void execute() throws Exception {
 		restoreMainView();
 		if (getView() != null) getView().clear();
+		if (getMainTab() != null && getTab() != null) {
+			getMainTab().setRequest(getTab().getRequest());
+		}
 		setTab(getMainTab());
 		if (getTab() != null) getTab().deselectAll();
 	}
 	
-
+	
 	private void restoreMainView() {
 		View mainView = null;
 		while (previousViews != null && !previousViews.isEmpty()) {
