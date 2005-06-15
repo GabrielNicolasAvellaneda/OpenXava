@@ -1,0 +1,67 @@
+package org.openxava.web.portlets;
+
+import java.io.*;
+
+import javax.portlet.*;
+
+/**
+ * Allows define an OpenXava as a standard JSR-168 portlet. <p>
+ * 
+ * You only need to define the OpenXava application and module.<br> 
+ * In this way:
+ *
+ * <pre>
+ *  <!-- Portlet Preferences -->
+ *  <portlet-preferences>
+ *    <preference>
+ *      <description>OpenXava application name</description>
+ *      <name>Application</name>
+ *      <value>MyApplication</value>
+ *      <non-modifiable/>
+ *    </preference>
+ *    <preference>
+ *      <description>OpenXava module name</description>
+ *      <name>Module</name>
+ *      <value>MyModule</value>
+ *      <non-modifiable/>
+ *    </preference>
+ *  </portlet-preferences>
+ * </pre>
+ *
+ * @author  Javier Paniza
+ */
+
+public class XavaPortlet extends GenericPortlet {
+
+	/**
+	 * Name of portlet preference for OpenXava application. 
+	 */
+	public static final String PARAM_APPLICATION = "Application";
+	
+	/**
+	 * Name of portlet preference for OpenXava module. 
+	 */
+	public static final String PARAM_MODULE = "Module";
+	
+	private String moduleURL;
+	
+	public void init(PortletConfig config) throws PortletException {
+		super.init(config);
+		this.moduleURL = "/xava/module.jsp?application=" +
+			config.getInitParameter(PARAM_APPLICATION) + "&module=" +			
+			config.getInitParameter(PARAM_MODULE);
+	}
+
+	/**
+	 * Execute the OpenXava module as define by the init parameters PARAM_APPLICATION
+	 * and PARAM_MODULE.
+	 * @throws PortletException
+	 * @throws IOException
+	 */
+	public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
+		PortletContext context = getPortletContext();
+		PortletRequestDispatcher rd = context.getRequestDispatcher(moduleURL);
+		rd.include(request, response);
+	}
+
+}

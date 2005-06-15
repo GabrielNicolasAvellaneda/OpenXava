@@ -148,8 +148,8 @@ function setFocus() {
 <html>
 <head>
 <title>OpenXava - <%=manager.getModuleDescription() %></title>
-<link href="style/default.css" rel="stylesheet" type="text/css">
-<link href="style/jetspeed.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/xava/style/default.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/xava/style/jetspeed.css" rel="stylesheet" type="text/css">
 </head>
 
 <body bgcolor="#ffffff" onload="setFocus()">

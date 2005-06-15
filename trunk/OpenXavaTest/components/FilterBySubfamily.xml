@@ -20,23 +20,32 @@
 
 	<entity>  
 		<property name="oid" key="true" type="String" hidden="true"/>
-		<reference name="subfamily" model="Subfamily2"/>			
+		<reference name="subfamily" model="Subfamily2"/>
+		<reference name="subfamilyTo" model="Subfamily2"/> <!-- tmp -->
 	</entity>		
 	
 	<view name="Family1">
 		<reference-view reference="subfamily" create="false">
 			<descriptions-list condition="${family.number} = 1"/>
 		</reference-view>
+		<members>subfamily</members>
 	</view>
 	
 	<view name="Family2">
 		<reference-view reference="subfamily" create="false">
 			<descriptions-list condition="${family.number} = 2"/>
 		</reference-view>
+		<members>subfamily</members>
 	</view>
 
 	<view name="WithSubfamilyForm">	
 		<reference-view reference="subfamily" search="false"/>
+		<members>subfamily</members>
+	</view>
+	
+	<!-- tmp -->
+	<view name="Range">
+		<members>subfamily; subfamilyTo</members>
 	</view>
 	
 	<entity-mapping table="XAVATEST@separator@MOCKTABLE">
@@ -46,6 +55,11 @@
 				column="SUBFAMILY" 
 				referenced-model-property="number"/> 
 		</reference-mapping>
+		<reference-mapping reference="subfamilyTo">
+			<reference-mapping-detail 
+				column="SUBFAMILYTO" 
+				referenced-model-property="number"/> 
+		</reference-mapping>		
 	</entity-mapping>
 	
 </component>

@@ -215,7 +215,7 @@
 		</java>		
 	</target>
 	        
-	<target name="regenerateGenerator">     
+	<target name="regenerateGenerator">    
 		<echo>Generating xml template for EJB</echo>
        <java classname="Simple2XML" classpath="${tl.lib}">
          <arg value="${generator.dir}/postcreate.template"/> 
@@ -570,8 +570,42 @@
 	<target name="deployWar" depends ="createWar">		
 		<copy file="${dist.dir}/${name.war}.war" todir="${deploy.dir}" overwrite="true"/>
 	</target>
+	
+	<target name="regeneratePortletXml">
+		<echo>Generating xml template for Portlet Application</echo>
+		<java classname="Simple2XML" classpath="${tl.lib}">
+			<arg value="${generator.dir}/portletxml.template"/> 
+			<arg value="${generator.dir}/portletxml.xml"/>         
+		</java>				
+		<echo>Generating Portlet Application classes generator</echo>
+		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
+			<arg value="${generator.dir}/portletxml.xml"/>
+			<arg value="${generator.dir}/PortletXmlPG.java"/>
+		</java>
+		<echo>Compiling classes generators</echo>
+		<javac srcdir="${generator.dir}"
+			destdir="${generator.dir}"
+			classpath="${tl.lib};${xava.lib};${j2ee.lib}"
+		/>
+		
+		<antcall target="generatePortletXml"/>
+		
+	</target>
+	
+	<target name="generatePortletXml">
+		<echo>Generating portlet.xml</echo>		
+		<java 
+			classname="PortletXmlPG" 
+			classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};${components.dir};../${project}/${classes.dir};${xava.generator.path}" 
+			fork="yes">
+			<arg value="../${project}/web/WEB-INF/web.xml"/>        		
+	       	<arg value="../${project}/web/WEB-INF/portlet.xml"/>
+			<arg value="${project}"/>
+		</java>		
+	</target>	
 
-	<target name="deployPortlets" depends="createWar">
+	<target name="deployPortlets" depends="generatePortletXml">		
+		<antcall target="createWar"/>
 		<copy file="${dist.dir}/${name.war}.war" todir="${deploy.portlets.dir}" overwrite="true"/>		
 	</target>
 		                    

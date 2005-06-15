@@ -45,11 +45,11 @@ String label = view.getLabelForProperty(p);
 <%=postLabel%>
 <%=preIcons%>
 <% if (p.isKey()) { %>
-<img src="images/key.gif"/>
+<img src="<%=request.getContextPath()%>/xava/images/key.gif"/>
 <% } else if (p.isRequired()) { %>	
-<img src="images/required.gif"/>
+<img src="<%=request.getContextPath()%>/xava/images/required.gif"/>
 <% } if (errors.memberHas(p)) { %>
-<img src="images/error.gif"/>
+<img src="<%=request.getContextPath()%>/xava/images/error.gif"/>
 <% } %>
 <%=postIcons%>
 <%=preEditor%>

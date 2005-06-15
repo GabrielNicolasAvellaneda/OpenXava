@@ -57,14 +57,14 @@ while (it.hasNext()) {
 <%
 		if (tab.isOrderAscending(property.getQualifiedName())) {
 %>
-<img src="images/ascending.gif" alt="Ordenado ascendentemente" border="0" align="middle"/>
+<img src="<%=request.getContextPath()%>/xava/images/ascending.gif" alt="Ordenado ascendentemente" border="0" align="middle"/>
 <%
 		}
 %>
 <%
 		if (tab.isOrderDescending(property.getQualifiedName())) {
 %>
-<img src="images/descending.gif" alt="Ordenado descendente" border="0" align="middle"/>
+<img src="<%=request.getContextPath()%>/xava/images/descending.gif" alt="Ordenado descendente" border="0" align="middle"/>
 <%
 		}
 %>
