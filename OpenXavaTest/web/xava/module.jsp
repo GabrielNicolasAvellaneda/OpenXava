@@ -1,3 +1,7 @@
+<%
+System.out.println("[modulo.jsp] >> request="+request); //  tmp
+%>
+
 <%@ page import="org.openxava.util.Is" %>
 <%@ page import="org.openxava.util.XavaResources" %>
 
@@ -148,8 +152,8 @@ function setFocus() {
 <html>
 <head>
 <title>OpenXava - <%=manager.getModuleDescription() %></title>
-<link href="style/default.css" rel="stylesheet" type="text/css">
-<link href="style/jetspeed.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/xava/style/default.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/xava/style/jetspeed.css" rel="stylesheet" type="text/css">
 </head>
 
 <body bgcolor="#ffffff" onload="setFocus()">
@@ -229,4 +233,8 @@ function setFocus() {
 
 <%
 }
+%>
+
+<%
+System.out.println("[modulo.jsp] << request="+request); //  tmp
 %>

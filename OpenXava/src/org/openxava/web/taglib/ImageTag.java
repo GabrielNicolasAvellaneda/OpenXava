@@ -48,7 +48,7 @@ public class ImageTag extends TagSupport implements IActionTag {
 			}
 			pageContext.getOut().print("')\">");
 			pageContext.getOut().print("<img src='");
-			pageContext.getOut().print(metaAction.getImage());
+			pageContext.getOut().print(request.getContextPath() + "/xava/" + metaAction.getImage());
 			pageContext.getOut().println("'");
 			pageContext.getOut().print("\talt='");
 			pageContext.getOut().print(metaAction.getDescription(request));
