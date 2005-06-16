@@ -129,7 +129,7 @@ abstract public class MetaElement implements java.io.Serializable {
 		}
 		catch (Exception ex) {
 			if (has18nLabel()) return getLabel(locale); 
-			return description==null?"":description;									 
+			return Is.emptyString(description)?getLabel(locale):description;
 		}		
 	}
 	

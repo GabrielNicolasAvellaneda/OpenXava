@@ -1,7 +1,3 @@
-<%
-System.out.println("[modulo.jsp] >> request="+request); //  tmp
-%>
-
 <%@ page import="org.openxava.util.Is" %>
 <%@ page import="org.openxava.util.XavaResources" %>
 
@@ -233,8 +229,4 @@ function setFocus() {
 
 <%
 }
-%>
-
-<%
-System.out.println("[modulo.jsp] << request="+request); //  tmp
 %>

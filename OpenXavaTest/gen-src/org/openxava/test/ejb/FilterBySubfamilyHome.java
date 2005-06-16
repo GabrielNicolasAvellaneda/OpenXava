@@ -21,6 +21,9 @@ public interface FilterBySubfamilyHome
    public org.openxava.test.ejb.FilterBySubfamily create(org.openxava.test.ejb.FilterBySubfamilyValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
+   public java.util.Collection findBySubfamilyTo(int number)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public java.util.Collection findBySubfamily(int number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

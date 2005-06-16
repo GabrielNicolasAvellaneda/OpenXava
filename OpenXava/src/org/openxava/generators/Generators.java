@@ -1,5 +1,8 @@
 package org.openxava.generators;
 
+import java.io.*;
+import java.util.*;
+
 import org.openxava.util.*;
 
 /**
@@ -149,6 +152,22 @@ public class Generators {
 			return href?"SQL99_Primitives.xmi#SQLBinaryLargeObject_1":"RDBSchema:SQLBinaryLargeObject";
 		}
 		throw new XavaException("websphere_type_not_supported", javaTypeName);
+	}
+	
+	/**
+	 * @return of Locale
+	 */
+	public static Collection getAvailableLocales(String resourcesFilesPath) {
+		File dir = new File(resourcesFilesPath);
+		String [] files = dir.list();
+		Collection result = new HashSet();
+		for (int i = 0; i < files.length; i++) {
+			int idx = files[i].lastIndexOf('_');
+			if (idx >= 0) {
+				result.add(new Locale(files[i].substring(idx + 1, idx + 3)));
+			}
+		}
+		return result;
 	}
 	
 }

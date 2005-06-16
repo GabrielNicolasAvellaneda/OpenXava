@@ -1536,11 +1536,16 @@
       <entity>
          <ejb-name>FilterBySubfamily</ejb-name>
 
-         <table-name>XAVATEST_MOCKTABLE</table-name>
+         <table-name>XAVATEST@separator@MOCKTABLE</table-name>
 
          <cmp-field>
             <field-name>oid</field-name>
             <column-name>OID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_SubfamilyTo_number</field-name>
+            <column-name>SUBFAMILYTO</column-name>
 
         </cmp-field>
          <cmp-field>
@@ -1549,6 +1554,16 @@
 
         </cmp-field>
 
+         <query>
+            <query-method>
+               <method-name>findBySubfamilyTo</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o._SubfamilyTo_number = ?1 ]]></jboss-ql>
+
+	     </query>
          <query>
             <query-method>
                <method-name>findBySubfamily</method-name>

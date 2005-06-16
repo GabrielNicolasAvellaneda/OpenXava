@@ -2489,6 +2489,13 @@ public class View implements java.io.Serializable {
 				}
 			}
 		}		
+		if (!Is.emptyString(getMemberName())) {
+			int idx = p.getId().lastIndexOf('.');
+			String id = p.getId().substring(0, idx) + "." + getMemberName() + p.getId().substring(idx);			
+			if (Labels.exists(id, getRequest().getLocale())) {				
+				return Labels.get(id, getRequest().getLocale());
+			}
+		}
 		return p.getLabel(getRequest());
 	}
 	
