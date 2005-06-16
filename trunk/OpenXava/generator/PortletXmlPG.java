@@ -5,10 +5,11 @@ import java.io.*;
 import java.util.*;
 import java.util.*;
 import org.openxava.application.meta.*;
+import org.openxava.generators.Generators;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Jun 14 19:47:13 CEST 2005
+ * @version Wed Jun 15 19:44:18 CEST 2005
  */
 public class PortletXmlPG {
     Properties properties = new Properties();
@@ -25,6 +26,8 @@ public class PortletXmlPG {
     String applicationName = properties.getProperty("arg3");
     MetaApplication application = MetaApplications.getMetaApplication(applicationName);
     
+    Collection locales = Generators.getAvailableLocales("../" + applicationName + "/i18n");
+    
     out.print(" \n\n<portlet-app id=\"");
     out.print(applicationName);
     out.print("\" version=\"1.0\">");
@@ -32,15 +35,57 @@ public class PortletXmlPG {
     for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
     	MetaModule module = (MetaModule) it.next();
     
-    out.print(" \n\n  <portlet id=\"");
+    out.print(" \n\n\t<portlet id=\"");
     out.print(module.getName());
-    out.print("\">\n    <init-param>\n      <name>Application</name>\n      <value>");
+    out.print("\">\n\t\t<init-param>\n\t\t\t<name>Application</name>\n\t\t\t<value>");
     out.print(applicationName);
-    out.print("</value>\n    </init-param>\n    <init-param>\n      <name>Module</name>\n      <value>");
+    out.print("</value>\n\t\t</init-param>\n\t\t<init-param>\n\t\t\t<name>Module</name>\n\t\t\t<value>");
     out.print(module.getName());
-    out.print("</value>\n    </init-param>\t\t\n    <portlet-name>");
+    out.print("</value>\n\t\t</init-param>\t\t\n\t\t<portlet-name>");
     out.print(module.getName());
-    out.print("</portlet-name>\n    <display-name>FALTA</display-name>\n    <portlet-class>org.openxava.web.portlets.XavaPortlet</portlet-class>\n    <expiration-cache>-1</expiration-cache>\n    <supports>\n      <mime-type>text/html</mime-type>\n      <portlet-mode>VIEW</portlet-mode>\n    </supports>\n    <supported-locale>en</supported-locale>\n    <supported-locale>es</supported-locale>\n    <supported-locale>ca</supported-locale>\n    <portlet-info>\n      <title>FALTA</title>\n      <short-title>FALTA</short-title>\n    </portlet-info>\n  </portlet>");
+    out.print("</portlet-name>\n\t\t<display-name>");
+    out.print(module.getLabel());
+    out.print("</display-name>");
+    for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
+        	Locale locale = (Locale) itLocales.next();
+        
+    out.print("    \n\t\t<display-name xml:lang=\"");
+    out.print(locale);
+    out.print("\">");
+    out.print(module.getLabel(locale));
+    out.print("</display-name>");
+    } 
+    out.print(" \n\t\t<portlet-class>org.openxava.web.portlets.XavaPortlet</portlet-class>\n\t\t<expiration-cache>-1</expiration-cache>\n\t\t<supports>\n\t\t\t<mime-type>text/html</mime-type>\n\t\t\t<portlet-mode>VIEW</portlet-mode>\n\t\t</supports>");
+    for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
+    out.print("\n\t\t<supported-locale>");
+    out.print(itLocales.next());
+    out.print("</supported-locale>");
+    } 
+    out.print(" \n\t\t<portlet-info>\n\t\t\t<title>");
+    out.print(module.getDescription());
+    out.print("</title>");
+    for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
+        	Locale locale = (Locale) itLocales.next();
+        
+    out.print("    \n\t\t\t<title xml:lang=\"");
+    out.print(locale);
+    out.print("\">");
+    out.print(module.getDescription(locale));
+    out.print("</title>");
+    } 
+    out.print("       \n\t\t\t<short-title>");
+    out.print(module.getLabel());
+    out.print("</short-title>");
+    for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
+        	Locale locale = (Locale) itLocales.next();
+        
+    out.print("    \t\n\t\t\t<short-title xml:lang=\"");
+    out.print(locale);
+    out.print("\">");
+    out.print(module.getLabel(locale));
+    out.print("</short-title>");
+    } 
+    out.print("      \n\t\t</portlet-info>\n\t</portlet>");
     
     }
     
@@ -79,7 +124,7 @@ public class PortletXmlPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Jun 14 19:47:13 CEST 2005", // date this file was generated
+        { "Wed Jun 15 19:44:18 CEST 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/portletxml.xml", // input file
              "/home/javi/workspace/OpenXava/generator/PortletXmlPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

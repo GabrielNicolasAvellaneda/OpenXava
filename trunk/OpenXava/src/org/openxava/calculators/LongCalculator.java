@@ -2,22 +2,22 @@ package org.openxava.calculators;
 
 
 /**
- * @author Javier Paniza
+ * @author Miguel Embuena
  */
 public class LongCalculator implements ICalculator {
 
-	private int value;
+	private long value;
 
 	public Object calculate() throws Exception {
 		return new Long(value);
 	}
 
-	public int getValue() {
+	public long getValue() {
 		return value;
 	}
 
-	public void setValue(int i) {
-		value = i;
+	public void setValue(long l) {
+		value = l;
 	}
 
 }

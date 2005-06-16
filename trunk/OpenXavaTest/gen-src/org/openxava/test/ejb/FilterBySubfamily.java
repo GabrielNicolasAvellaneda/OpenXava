@@ -13,6 +13,21 @@ public interface FilterBySubfamily
    public java.lang.String getOid(  )
       throws java.rmi.RemoteException;
 
+   public org.openxava.test.ejb.Subfamily2 getSubfamilyTo(  )
+      throws java.rmi.RemoteException;
+
+   public void setSubfamilyTo( org.openxava.test.ejb.Subfamily2 newSubfamilyTo )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.ejb.Subfamily2Key getSubfamilyToKey(  )
+      throws java.rmi.RemoteException;
+
+   public void setSubfamilyToKey( org.openxava.test.ejb.Subfamily2Key key )
+      throws java.rmi.RemoteException;
+
+   public int getSubfamilyTo_number(  )
+      throws java.rmi.RemoteException;
+
    public org.openxava.test.ejb.Subfamily2 getSubfamily(  )
       throws java.rmi.RemoteException;
 

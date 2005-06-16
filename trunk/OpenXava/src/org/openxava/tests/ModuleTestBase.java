@@ -180,8 +180,12 @@ public class ModuleTestBase extends TestCase {
 		return getForm().getParameterValue(getPropertyPrefix() + name);
 	}
 	
-	protected String getLabel(String name) throws Exception {		
-		return response.getElementWithID(getPropertyPrefix() + name + "_LABEL_").getText().trim();
+	protected String getLabel(String name) throws Exception {
+		HTMLElement element = response.getElementWithID(getPropertyPrefix() + name + "_LABEL_");
+		if (element == null) {
+			fail(XavaResources.getString("label_not_found_in_ui", name));
+		}
+		return element.getText().trim();
 	}
 		
 	/**

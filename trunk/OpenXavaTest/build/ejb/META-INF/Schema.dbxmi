@@ -439,6 +439,8 @@
 
       <columns xmi:id="FilterBySubfamily_oid" name="oid">
       </columns>
+      <columns xmi:id="FilterBySubfamily__SubfamilyTo_number" name="_SubfamilyTo_number">
+      </columns>
       <columns xmi:id="FilterBySubfamily__Subfamily_number" name="_Subfamily_number">
       </columns>
 

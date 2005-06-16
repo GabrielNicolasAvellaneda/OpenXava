@@ -13,6 +13,8 @@ public class FilterBySubfamilyValue
 {
    private java.lang.String oid;
    private boolean oidHasBeenSet = false;
+   private int subfamilyTo_number;
+   private boolean subfamilyTo_numberHasBeenSet = false;
    private int subfamily_number;
    private boolean subfamily_numberHasBeenSet = false;
 
@@ -25,6 +27,8 @@ public class FilterBySubfamilyValue
    {
 	  this.oid = otherValue.oid;
 	  oidHasBeenSet = true;
+	  this.subfamilyTo_number = otherValue.subfamilyTo_number;
+	  subfamilyTo_numberHasBeenSet = true;
 	  this.subfamily_number = otherValue.subfamily_number;
 	  subfamily_numberHasBeenSet = true;
    }
@@ -42,6 +46,20 @@ public class FilterBySubfamilyValue
 
    public boolean oidHasBeenSet(){
 	  return oidHasBeenSet;
+   }
+   public int getSubfamilyTo_number()
+   {
+	  return this.subfamilyTo_number;
+   }
+
+   public void setSubfamilyTo_number( int subfamilyTo_number )
+   {
+	  this.subfamilyTo_number = subfamilyTo_number;
+	  subfamilyTo_numberHasBeenSet = true;
+   }
+
+   public boolean subfamilyTo_numberHasBeenSet(){
+	  return subfamilyTo_numberHasBeenSet;
    }
    public int getSubfamily_number()
    {
@@ -62,7 +80,7 @@ public class FilterBySubfamilyValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("oid=" + getOid() + " " + "subfamily_number=" + getSubfamily_number());
+	  str.append("oid=" + getOid() + " " + "subfamilyTo_number=" + getSubfamilyTo_number() + " " + "subfamily_number=" + getSubfamily_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -115,6 +133,7 @@ public class FilterBySubfamilyValue
 	  {
 		 FilterBySubfamilyValue that = (FilterBySubfamilyValue) other;
 		 boolean lEquals = true;
+		 lEquals = lEquals && this.subfamilyTo_number == that.subfamilyTo_number;
 		 lEquals = lEquals && this.subfamily_number == that.subfamily_number;
 
 		 return lEquals;
@@ -128,6 +147,8 @@ public class FilterBySubfamilyValue
    public int hashCode(){
 	  int result = 17;
       result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
+
+      result = 37*result + (int) subfamilyTo_number;
 
       result = 37*result + (int) subfamily_number;
 

@@ -21,7 +21,7 @@
 	<entity>  
 		<property name="oid" key="true" type="String" hidden="true"/>
 		<reference name="subfamily" model="Subfamily2"/>
-		<reference name="subfamilyTo" model="Subfamily2"/> <!-- tmp -->
+		<reference name="subfamilyTo" model="Subfamily2"/> 		
 	</entity>		
 	
 	<view name="Family1">
@@ -43,7 +43,6 @@
 		<members>subfamily</members>
 	</view>
 	
-	<!-- tmp -->
 	<view name="Range">
 		<members>subfamily; subfamilyTo</members>
 	</view>
