@@ -23,6 +23,7 @@ import com.meterware.httpunit.*;
 public class ModuleTestBase extends TestCase {
 	
 	private List parameters;
+	private static String host;
 	private static String port;	
 	private MetaModel metaModel;
 	private MetaView metaView;
@@ -64,7 +65,7 @@ public class ModuleTestBase extends TestCase {
 			conversation.setHeaderField("Accept-Language", getLocale());
 			Locale.setDefault(new Locale(getLocale(), ""));
 		}
-		response = conversation.getResponse( "http://localhost:" + getPort() + "/" + application + "/xava/module.jsp?application="+application+"&module=" + module);
+		response = conversation.getResponse( "http://" + getHost() + ":" + getPort() + "/" + application + "/xava/module.jsp?application="+application+"&module=" + module);
 		setForm(response.getForms()[0]);	
 		propertyPrefix = null;		
 	}
@@ -799,6 +800,13 @@ public class ModuleTestBase extends TestCase {
 		}
 		return port;		
 	}
+	
+	private static String getHost() {
+		if (host == null) {
+			host = getXavaJunitProperties().getProperty("host", "localhost");
+		}
+		return host;		
+	}	
 	
 	private static String getLocale() {
 		if (!isLocaleSet) {
