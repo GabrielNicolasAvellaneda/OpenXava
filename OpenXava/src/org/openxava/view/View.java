@@ -86,6 +86,7 @@ public class View implements java.io.Serializable {
 	private Collection actionsNamesList;
 	private int [] listSelected;
 	private boolean readOnly; // Always not editable, marked from xml
+	private boolean onlyThrowsOnChange; 
 
 	private Collection metaPropertiesIncludingSections;
 
@@ -333,6 +334,24 @@ public class View implements java.io.Serializable {
 		addValues(map);						
 	}
 	
+
+	/**
+	 * Set the values and execute the on-change actions associated to
+	 * the assigned properties. <p>
+	 */
+	public void setValuesExecutingOnChangeActions(Map values) throws XavaException {
+		setOnlyThrowsOnChange(true);
+		try {
+			setValuesNotifying(values);
+		}
+		finally {
+			setOnlyThrowsOnChange(false);
+		}
+	}
+	
+	/**
+	 * Set the values and throws are events associated to the changed values. 
+	 */
 	public void setValuesNotifying(Map values) throws XavaException {		
 		setValues(values); 
 		Iterator it = values.keySet().iterator();
@@ -1585,35 +1604,39 @@ public class View implements java.io.Serializable {
 	}
 	
 	private void tryPropertyChanged(MetaProperty cambiada, String nombreCualificadoCambiada) throws Exception {
-		Iterator it = getMetaProperties().iterator(); 									
-		while (it.hasNext()) {
-			MetaProperty pr = (MetaProperty) it.next();				
-			if (dependeDe(pr, cambiada, nombreCualificadoCambiada)) { 					
-				if (pr.hasCalculator()) {
-					calcularValor(pr, pr.getMetaCalculator(), pr.getCalculator(), errors, messages);					
-				}
-				if (pr.hasDefaultValueCalculator() && esValorVacio(getValue(pr.getName()))) {					
-					calcularValor(pr, pr.getMetaCalculatorDefaultValue(), pr.getDefaultValueCalculator(), errors, messages);					
-				}
-			}
-		}	
 		
-		if (hasToSearchOnChangeIfSubview && isSubview() && !isGroup() && 
-				( 
-				(getLastPropertyKeyName().equals(cambiada.getName()) && metaPropiedadesContiene(cambiada)) || // visible keys
-				(!hasKeyProperties() && cambiada.isKey() && cambiada.isHidden()) // hidden keys
-				)
-			) {	
-			if (!searchingObject) { // Para evitar bucles recursivos infinitos				
-				try {
-					searchingObject = true;					
-					findObject();						
+		if (!isOnlyThrowsOnChange()) {
+			Iterator it = getMetaProperties().iterator(); 									
+			while (it.hasNext()) {
+				MetaProperty pr = (MetaProperty) it.next();				
+				if (dependeDe(pr, cambiada, nombreCualificadoCambiada)) { 					
+					if (pr.hasCalculator()) {
+						calcularValor(pr, pr.getMetaCalculator(), pr.getCalculator(), errors, messages);					
+					}
+					if (pr.hasDefaultValueCalculator() && esValorVacio(getValue(pr.getName()))) {					
+						calcularValor(pr, pr.getMetaCalculatorDefaultValue(), pr.getDefaultValueCalculator(), errors, messages);					
+					}
 				}
-				finally {
-					searchingObject = false;				 
-				}				
-			}			
-		}		
+			}	
+			
+			if (hasToSearchOnChangeIfSubview && isSubview() && !isGroup() && 
+					( 
+					(getLastPropertyKeyName().equals(cambiada.getName()) && metaPropiedadesContiene(cambiada)) || // visible keys
+					(!hasKeyProperties() && cambiada.isKey() && cambiada.isHidden()) // hidden keys
+					)
+				) {	
+				if (!searchingObject) { // Para evitar bucles recursivos infinitos				
+					try {
+						searchingObject = true;					
+						findObject();						
+					}
+					finally {
+						searchingObject = false;				 
+					}				
+				}			
+			}
+		} // of if (!isOnlyThrowsOnChange())
+		
 		if (!isSection() && getMetaView().hasOnChangeAction(nombreCualificadoCambiada)) {			
 			IOnChangePropertyAction accion = getMetaView().createOnChangeAction(nombreCualificadoCambiada);
 			if (!actionRegisteredAsExecuted(nombreCualificadoCambiada, accion)) {				
@@ -2526,4 +2549,13 @@ public class View implements java.io.Serializable {
 	private void setGroup(boolean group) {
 		this.group = group;
 	}
+	public boolean isOnlyThrowsOnChange() {
+		if (getParent() == null) return onlyThrowsOnChange;
+		return getParent().isOnlyThrowsOnChange();
+	}
+	public void setOnlyThrowsOnChange(boolean onlyThrowsOnChange) {
+		if (getParent() == null) this.onlyThrowsOnChange = onlyThrowsOnChange;
+		else getParent().setOnlyThrowsOnChange(onlyThrowsOnChange);
+	}
+	
 }
