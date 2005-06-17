@@ -111,6 +111,7 @@ else { // All else
 function executeXavaAction(takesLong, formu, action) {
 	if (takesLong) {
 		document.getElementById('processingLayer').style.display='block';
+		setTimeout('document.images["processingImage"].src = "images/processing.gif"', 1);		
 	}
 	formu.focus_forward.value = "false";
 	formu.xava_action.value=action;	
@@ -119,6 +120,7 @@ function executeXavaAction(takesLong, formu, action) {
 function executeXavaAction(takesLong, formu, action, argv) {	
 	if (takesLong) {
 		document.getElementById('processingLayer').style.display='block';
+		setTimeout('document.images["processingImage"].src = "images/processing.gif"', 1);
 	}
 	formu.focus_forward.value = "false";
 	formu.xava_action.value=action;	
@@ -157,9 +159,12 @@ function setFocus() {
 <%-- Layer for progress bar --%>
 <div id='processingLayer' style='position:absolute;top:100px;left:150px;display:none'>
 <table cellspacing='0'>
-	<tr class='odd'>
-		<td align='center' valign='middle' style='line-height:1.4;padding:25px 80px;border:2px solid #000'><%=XavaResources.getString(request, "processing")%><br><img src='images/processing.gif'/></td>
-	</tr>
+   <tr class='odd'>
+       <td align='center' valign='middle' style='line-height:1.4;padding:25px 80px;border:2px solid #000'>
+           <%=XavaResources.getString(request, "processing")%><br/>
+           <img src='images/processing.gif' name='processingImage'/>
+       </td>
+   </tr>
 </table>
 </div>
 

@@ -32,7 +32,7 @@ public class NextLongCalculator implements IJDBCCalculator {
 		if (XSystem.onClient()) {
 			Object r = Server.calculate(this, getPackageName());			
 			if (r instanceof Number) {
-				return ((Number) r).intValue();
+				return ((Number) r).longValue();
 			}
 			return 0;
 		}
