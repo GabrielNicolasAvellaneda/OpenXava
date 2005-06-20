@@ -35,52 +35,50 @@ abstract public class ParserBase extends XmlElementsNames {
 	
 	abstract protected void createObjects() throws XavaException;
 	
-	protected boolean getBoolean(Element el, String etiqueta) {
-		return ParserUtil.getBoolean(el, etiqueta);
+	protected boolean getBoolean(Element el, String label) {
+		return ParserUtil.getBoolean(el, label);
 	}
 	
-	protected boolean getAttributeBoolean(Element el, String etiqueta) {
-		return ParserUtil.getAttributeBoolean(el, etiqueta);
+	protected boolean getAttributeBoolean(Element el, String label) {
+		return ParserUtil.getAttributeBoolean(el, label);
 	}
 	
-	protected Element getElement(Element el, String etiqueta) {
-		return ParserUtil.getElement(el, etiqueta);
+	protected Element getElement(Element el, String label) {
+		return ParserUtil.getElement(el, label);
 	}
 	
-	protected int getInt(Element el, String etiqueta) throws XavaException {
-		return ParserUtil.getInt(el, etiqueta);
+	protected int getInt(Element el, String label) throws XavaException {
+		return ParserUtil.getInt(el, label);
 	}
 	
-	protected int getAttributeInt(Element el, String etiqueta) throws XavaException {
-		return ParserUtil.getAttributeInt(el, etiqueta);
+	protected int getAttributeInt(Element el, String label) throws XavaException {
+		return ParserUtil.getAttributeInt(el, label);
 	}
 	
 	protected org.w3c.dom.Element getRoot() {
 		return root;
 	}
 
-	protected String getString(Element el, String etiqueta) {
-		return ParserUtil.getString(el, etiqueta);
+	protected String getString(Element el, String label) {
+		return ParserUtil.getString(el, label);
 	}
 	
 	public void parse() throws XavaException {
-		String urlArchivoXmlCompleta = null;
+		String xmlFileCompleteURL = null;
 		try {						
 			Enumeration resources = getClass().getClassLoader().getResources(xmlFileURL);
 			while (resources.hasMoreElements()) {
 				URL resource = (URL) resources.nextElement();
-				urlArchivoXmlCompleta = resource.toExternalForm();				
-				_parse(urlArchivoXmlCompleta);				
+				xmlFileCompleteURL = resource.toExternalForm();				
+				_parse(xmlFileCompleteURL);				
 			}			
-		} catch (XavaException ex) {
+		} 
+		catch (XavaException ex) {
 			throw ex;
-		} catch (Exception ex) {
+		} 
+		catch (Exception ex) {
 			ex.printStackTrace();
-			throw new XavaException(
-				"Imposible cargar configuración del modelo a partir de "
-					+ urlArchivoXmlCompleta
-					+ " por:\n"
-					+ ex.getLocalizedMessage());
+			throw new XavaException("xml_loading_error", xmlFileCompleteURL);
 		}
 	}
 	
@@ -91,18 +89,15 @@ abstract public class ParserBase extends XmlElementsNames {
 		return documentBuilder;
 	}
 	
-	private void _parse(String urlArchivoXmlCompleta) throws XavaException {
+	private void _parse(String xmlFileCompleteURL) throws XavaException {
 		try {						
-			Document doc = getDocumentBuilder().parse(urlArchivoXmlCompleta);
+			Document doc = getDocumentBuilder().parse(xmlFileCompleteURL);
 			root = (Element) doc.getDocumentElement();
 			createObjects();
-		} catch (Exception ex) {
+		} 
+		catch (Exception ex) {
 			ex.printStackTrace();
-			throw new XavaException(
-				"Imposible cargar configuración del modelo a partir de "
-					+ urlArchivoXmlCompleta
-					+ " por:\n"
-					+ ex.getLocalizedMessage());
+			throw new XavaException("xml_loading_error", xmlFileCompleteURL);
 		}		
 	}
 	

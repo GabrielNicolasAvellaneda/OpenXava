@@ -1,8 +1,13 @@
 package org.openxava.test.tests;
 
 import java.rmi.*;
+import java.util.*;
+
 import javax.ejb.*;
 import javax.naming.*;
+import javax.rmi.*;
+
+import org.openxava.test.ejb.*;
 import org.openxava.tests.*;
 import org.openxava.validators.*;
 
@@ -22,16 +27,17 @@ public class CarriersTest extends ModuleTestBase {
 	
 	protected void setUp() throws Exception {
 		
-		super.setUp();
 		
-		// deleteAll();
-		/* createUsingUI();
-		createUsingEJB(); */ 		
-		execute("Carriers.createAll");
-		assertNoErrors();
+		
+		deleteAll();
+		// tmp createUsingUI();
+		createUsingEJB(); // tmp 		
+		// tmp execute("Carriers.createAll");
+		// tmp assertNoErrors();
+		super.setUp();
 	}
 
-	/*private void createUsingEJB() throws CreateException, ValidationException, RemoteException, NamingException { //tmp
+	private void createUsingEJB() throws CreateException, ValidationException, RemoteException, NamingException { //tmp
 		// Create the needed set
 		CarrierValue v = new CarrierValue();		
 		v.setWarehouse_number(new Integer(1));
@@ -54,7 +60,7 @@ public class CarriersTest extends ModuleTestBase {
 		v.setName("Cinco");
 		v.setWarehouse_zoneNumber(2);
 		CarrierUtil.getHome().create(v);
-	} */
+	} 
 
 	private void createUsingUI() throws Exception { //tmp
 		execute("CRUD.new");
@@ -94,15 +100,14 @@ public class CarriersTest extends ModuleTestBase {
 
 	private void deleteAll()
 		throws Exception {
-/*tmp		Iterator it = CarrierUtil.getHome().findAll().iterator();
+		Iterator it = CarrierUtil.getHome().findAll().iterator();
 		while (it.hasNext()) {
 			Carrier t = (Carrier) PortableRemoteObject.narrow(it.next(), Carrier.class);
 			t.remove(); 
-		} */
-		execute("Carriers.deleteAll");
+		}
+		// tmp execute("Carriers.deleteAll");
 	}
 	
-	// CAMBIA
 	public void testJDBCAction() throws Exception {
 		assertListRowCount(5); 		
 		execute("Carriers.deleteAll");
@@ -110,7 +115,6 @@ public class CarriersTest extends ModuleTestBase {
 		assertListRowCount(1);
 	}
 	
-	// NO CAMBIA
 	public void testResetSelectedOnReturnToList() throws Exception {
 		checkRow(3);
 		assertRowChecked(3);
@@ -119,7 +123,6 @@ public class CarriersTest extends ModuleTestBase {
 		assertRowUnchecked(3);
 	}
 	
-	// NO CAMBIA
 	public void testActionOfCalculatedPropertyAlwaysPresent() throws Exception {
 		execute("CRUD.new");
 		assertAction("Carriers.translateName");
@@ -127,7 +130,6 @@ public class CarriersTest extends ModuleTestBase {
 		assertNoEditable("calculated");
 	}
 	
-	//  NO CAMBIA
 	public void testFilterIgnoringCase() throws Exception {
 		assertListRowCount(5);
 		String [] condition = { "", "cinco" };
@@ -138,7 +140,6 @@ public class CarriersTest extends ModuleTestBase {
 		assertValueInList(0, "name", "Cinco");
 	}
 	
-	// NO CAMBIA
 	public void testPropertyDependsDescriptionsListReference_multipleKeyWithSpaces() throws Exception {
 		execute("CRUD.new");		
 		DrivingLicenceKey key = new DrivingLicenceKey();
@@ -151,7 +152,6 @@ public class CarriersTest extends ModuleTestBase {
 		assertValue("remarks", "He can drive trucks");
 	}
 	
-	// NO CAMBIA
 	public void testCreateFromReferenceWithOwnController() throws Exception {
 		execute("CRUD.new");		
 		execute("Reference.createNew", "model=Warehouse,keyProperty=xava.Carrier.warehouse.number");		
@@ -161,7 +161,6 @@ public class CarriersTest extends ModuleTestBase {
 		assertValue("Warehouse", "name", "NEW WAREHOUSE");
 	}
 	
-	// SI CAMBIA
 	public void testDeleteUsingBeforeReferenceSearch() throws Exception {
 		assertListNotEmpty();
 		execute("Mode.detailAndFirst");
@@ -173,7 +172,6 @@ public class CarriersTest extends ModuleTestBase {
 		assertMessage("Carrier deleted successfully");		
 	}
 	
-	// SI CAMBIA
 	public void testGoListModeWithoutRecords() throws Exception {
 		execute("Mode.detailAndFirst");
 		assertNoErrors();		
