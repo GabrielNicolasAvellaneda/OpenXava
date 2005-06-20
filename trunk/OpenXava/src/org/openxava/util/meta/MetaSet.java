@@ -14,10 +14,6 @@ public class MetaSet implements Serializable {
 	private String propertyNameFrom;
 	private String value;
 
-	/**
-	 * Returns the nombrePropiedad.
-	 * @return String
-	 */
 	public String getPropertyName() {
 		return propertyName;
 	}
@@ -28,20 +24,20 @@ public class MetaSet implements Serializable {
 		return propertyNameFrom;
 	}
 
-	public void setPropertyName(String nombrePropiedad) {
-		this.propertyName = nombrePropiedad;
+	public void setPropertyName(String propertyName) {
+		this.propertyName = propertyName;
 	}
 
-	public void setPropertyNameFrom(String nombrePropiedadDesde) {
-		this.propertyNameFrom = nombrePropiedadDesde;
+	public void setPropertyNameFrom(String propertyNameFrom) {
+		this.propertyNameFrom = propertyNameFrom;
 	}
 
 	public String getValue() {
 		return value;
 	}
 
-	public void setValue(String valor) {
-		this.value = valor;
+	public void setValue(String value) {
+		this.value = value;
 	}
 	
 	public boolean hasValue() {

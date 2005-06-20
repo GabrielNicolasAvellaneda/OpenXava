@@ -14,13 +14,6 @@ abstract public class MetaElement implements java.io.Serializable {
 	private java.lang.String name;
 	private String label;
 
-	/**
-	 * Comentario de constructor Elemento.
-	 */
-	public MetaElement() {
-		super();
-	}
-	
 	protected boolean has18nLabel() {		
 		String id = getId();
 		if (id == null) return false;
@@ -33,7 +26,7 @@ abstract public class MetaElement implements java.io.Serializable {
 		}					
 		catch (Exception ex) {
 			ex.printStackTrace();
-			System.err.println("¡ADVERTENCIA! Imposible determinar si el elemento " + id + " tiene etiqueta internacionalizada, asumimos que no");
+			System.err.println(XavaResources.getString("element_i18n_warning", id));
 			return false;
 		}
 	}
@@ -81,31 +74,24 @@ abstract public class MetaElement implements java.io.Serializable {
 	
 		
 	/**
-	 * Id único del elemento,  normalmente usado para buscar la etiqueta en los archivos de recursos.	 
+	 * Unique id of element, normally used to search the label in the resources files.	 
 	 */
 	public abstract String getId();
 	
 	
-	/**
-	 * 
-	 * @return java.lang.String Nunca nulo
+	/**	 
+	 * @return java.lang.String Not null
 	 */
 	public java.lang.String getName() {
 		return name == null ? "" : name;
 	}
-	/**
-	 * 
-	 * @param newEtiqueta char
-	 */
-	public void setLabel(String newEtiqueta) {
-		label = newEtiqueta;
+	
+	public void setLabel(String newLabel) {
+		label = newLabel;
 	}
-	/**
-	 * 
-	 * @param newNombre java.lang.String
-	 */
-	public void setName(java.lang.String newNombre) {
-		name = newNombre;
+	
+	public void setName(java.lang.String newName) {
+		name = newName;
 	}
 	
 	
@@ -136,8 +122,8 @@ abstract public class MetaElement implements java.io.Serializable {
 	public String getDescription(ServletRequest request) {
 		return getDescription(getLocale(request));
 	}	
-	public void setDescription(String nuevo) {
-		description = nuevo;
+	public void setDescription(String newDescription) {
+		description = newDescription;
 	}
 		
 	

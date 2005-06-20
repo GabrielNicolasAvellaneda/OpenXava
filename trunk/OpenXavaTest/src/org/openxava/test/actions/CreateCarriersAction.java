@@ -2,10 +2,10 @@ package org.openxava.test.actions;
 
 import java.util.*;
 
-import org.openxava.actions.*;
 import org.openxava.model.*;
 
 /**
+ * tmp maybe we remove this action, it is used in CarriersTest
  * @author Mª Carmen Gimeno Alabau
  */
 public class CreateCarriersAction extends DeleteAllAction {

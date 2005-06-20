@@ -11,65 +11,62 @@ import org.openxava.util.*;
  */
 public class MetaSetsContainer implements Serializable {
 		
-	private Collection metaPoners;
+	private Collection metaSets;
 		
-	public void addMetaSet(MetaSet metaPoner) {
-		if (metaPoners == null) {
-			metaPoners = new ArrayList();
+	public void addMetaSet(MetaSet metaSet) {
+		if (metaSets == null) {
+			metaSets = new ArrayList();
 		}
-		metaPoners.add(metaPoner);		
+		metaSets.add(metaSet);		
 	}
 	
-	protected void assignPropertiesValues(Object objeto) throws Exception {		
-		PropertiesManager mp = new PropertiesManager(objeto);
+	protected void assignPropertiesValues(Object object) throws Exception {		
+		PropertiesManager mp = new PropertiesManager(object);
 		Iterator it = getMetaSets().iterator();
 		while (it.hasNext()) {
-			MetaSet metaPoner = (MetaSet) it.next();
-			mp.executeSetFromString(metaPoner.getPropertyName(), metaPoner.getValue());			
+			MetaSet metaSet = (MetaSet) it.next();
+			mp.executeSetFromString(metaSet.getPropertyName(), metaSet.getValue());			
 		}		
 	}
-
 	
-	/**
-	 * 
-	 * @return nunca nulo
+	/** 
+	 * @return  Not null
 	 */
 	public Collection getMetaSets() {
-		return metaPoners==null?Collections.EMPTY_LIST:metaPoners;
+		return metaSets==null?Collections.EMPTY_LIST:metaSets;
 	}
 	
 	public Collection getMetaSetsWithoutValue() {		
 		Collection result = new ArrayList();
 		Iterator it = getMetaSets().iterator();
 		while (it.hasNext()) {
-			MetaSet poner = (MetaSet) it.next();
-			if (!poner.hasValue()) {
-				result.add(poner);
+			MetaSet set = (MetaSet) it.next();
+			if (!set.hasValue()) {
+				result.add(set);
 			}
 		}
 		return result;
 	}
 	
 	public boolean containsMetaSets() {
-		return metaPoners != null;
+		return metaSets != null;
 	}
 	
 	public boolean containsMetaSetsWithoutValue() {
 		return containsMetaSets() && !getMetaSetsWithoutValue().isEmpty();
-	}
+	}	
 	
-	
-	public String getPropertyNameForPropertyFrom(String nombrePropiedadDesde) throws ElementNotFoundException {
-		if (metaPoners==null) 		 
-			throw new ElementNotFoundException("not_value_from_other_property", nombrePropiedadDesde);
-		Iterator it = metaPoners.iterator();
+	public String getPropertyNameForPropertyFrom(String propertyNameFrom) throws ElementNotFoundException {
+		if (metaSets==null) 		 
+			throw new ElementNotFoundException("not_value_from_other_property", propertyNameFrom);
+		Iterator it = metaSets.iterator();
 		while (it.hasNext()) {
-			MetaSet metaPoner = (MetaSet) it.next();
-			if (metaPoner.getPropertyNameFrom().equals(nombrePropiedadDesde)) {
-				return metaPoner.getPropertyName();
+			MetaSet metaSet = (MetaSet) it.next();
+			if (metaSet.getPropertyNameFrom().equals(propertyNameFrom)) {
+				return metaSet.getPropertyName();
 			}
 		}	
-		throw new ElementNotFoundException("not_value_from_other_property", nombrePropiedadDesde);
+		throw new ElementNotFoundException("not_value_from_other_property", propertyNameFrom);
 	}
 
 }
