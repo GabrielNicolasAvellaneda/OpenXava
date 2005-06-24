@@ -190,6 +190,8 @@
       </columns>
       <columns xmi:id="Seller__Level_id" name="_Level_id">
       </columns>
+      <columns xmi:id="Seller__Boss_number" name="_Boss_number">
+      </columns>
 
    </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_Customer" name="" primaryKey="Customer_PRIMARYKEY" database="RDBDatabase_1">

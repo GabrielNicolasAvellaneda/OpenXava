@@ -570,6 +570,11 @@
             <column-name>LEVEL</column-name>
 
         </cmp-field>
+         <cmp-field>
+            <field-name>_Boss_number</field-name>
+            <column-name>BOSS</column-name>
+
+        </cmp-field>
 
          <query>
             <query-method>
@@ -579,6 +584,16 @@
                </method-params>
             </query-method>
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE o._Level_id = ?1 ]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByBoss</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE o._Boss_number = ?1 ]]></jboss-ql>
 
 	     </query>
          <query>

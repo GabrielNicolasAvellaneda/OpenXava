@@ -21,6 +21,12 @@ public class SellersTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Sellers");		
 	}
 	
+	public void testCustomizeListSupportsRecursiveReferences() throws Exception {
+		execute("List.customize");
+		execute("List.addColumns");
+		assertAction("AddColumns.addColumns");
+	}
+	
 	public void testOnChangeListDescriptionReferenceWithStringSingleKey() throws Exception {
 		execute("CRUD.new");
 		setValue("level.id", "A");
