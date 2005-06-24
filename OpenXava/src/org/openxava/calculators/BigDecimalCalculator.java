@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 
 /**
- * @author Javier Paniza
+ * @author Luis Miguel Hernández
  */
 public class BigDecimalCalculator implements ICalculator {
 
@@ -16,7 +16,7 @@ public class BigDecimalCalculator implements ICalculator {
 	}
 
 	public Object getValue() {
-	    if (value==null) return new BigDecimal(0);
+	  if (value==null) return new BigDecimal(0);
 		return value.toString();
 	}
 

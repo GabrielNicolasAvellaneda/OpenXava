@@ -13,7 +13,12 @@ MetaApplication application = MetaApplications.getMetaApplication(applicationNam
 Collection locales = Generators.getAvailableLocales("../" + applicationName + "/i18n");
 </java> 
 
-&lt;portlet-app id="<expr>applicationName</expr>" version="1.0"&gt;
+&lt;portlet-app id="<expr>applicationName</expr>"
+	xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd" 
+	version="1.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
+&gt;
 
 <java>
 for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
@@ -21,14 +26,12 @@ for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
 </java> 
 
 	&lt;portlet id="<expr>module.getName()</expr>"&gt;
-		&lt;init-param&gt;
-			&lt;name&gt;Application&lt;/name&gt;
-			&lt;value&gt;<expr>applicationName</expr>&lt;/value&gt;
-		&lt;/init-param&gt;
-		&lt;init-param&gt;
-			&lt;name&gt;Module&lt;/name&gt;
-			&lt;value&gt;<expr>module.getName()</expr>&lt;/value&gt;
-		&lt;/init-param&gt;		
+		&lt;description&gt;<expr>module.getDescription()</expr>&lt;/description&gt;
+    <java>for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
+    	Locale locale = (Locale) itLocales.next();
+    </java>    
+		&lt;description xml:lang="<expr>locale</expr>"&gt;<expr>module.getDescription(locale)</expr>&lt;/description&gt;
+	<java>} </java>       
 		&lt;portlet-name&gt;<expr>module.getName()</expr>&lt;/portlet-name&gt;
 		&lt;display-name&gt;<expr>module.getLabel()</expr>&lt;/display-name&gt;
     <java>for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
@@ -37,6 +40,14 @@ for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
 		&lt;display-name xml:lang="<expr>locale</expr>"&gt;<expr>module.getLabel(locale)</expr>&lt;/display-name&gt;
     <java>} </java> 
 		&lt;portlet-class&gt;org.openxava.web.portlets.XavaPortlet&lt;/portlet-class&gt;
+		&lt;init-param&gt;
+			&lt;name&gt;Application&lt;/name&gt;
+			&lt;value&gt;<expr>applicationName</expr>&lt;/value&gt;
+		&lt;/init-param&gt;
+		&lt;init-param&gt;
+			&lt;name&gt;Module&lt;/name&gt;
+			&lt;value&gt;<expr>module.getName()</expr>&lt;/value&gt;
+		&lt;/init-param&gt;				
 		&lt;expiration-cache&gt;-1&lt;/expiration-cache&gt;
 		&lt;supports&gt;
 			&lt;mime-type&gt;text/html&lt;/mime-type&gt;
@@ -47,17 +58,7 @@ for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
     <java>} </java> 
 		&lt;portlet-info&gt;
 			&lt;title&gt;<expr>module.getDescription()</expr>&lt;/title&gt;
-    <java>for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
-    	Locale locale = (Locale) itLocales.next();
-    </java>    
-			&lt;title xml:lang="<expr>locale</expr>"&gt;<expr>module.getDescription(locale)</expr>&lt;/title&gt;
-	<java>} </java>       
 			&lt;short-title&gt;<expr>module.getLabel()</expr>&lt;/short-title&gt;
-    <java>for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
-    	Locale locale = (Locale) itLocales.next();
-    </java>    	
-			&lt;short-title xml:lang="<expr>locale</expr>"&gt;<expr>module.getLabel(locale)</expr>&lt;/short-title&gt;
-	<java>} </java>      
 		&lt;/portlet-info&gt;
 	&lt;/portlet&gt;
 <java>

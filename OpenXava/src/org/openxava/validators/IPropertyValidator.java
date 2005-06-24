@@ -4,23 +4,23 @@ package org.openxava.validators;
 import org.openxava.util.*;
 
 /**
- * Validador para una propiedad.
+ * Validator for a single property.
  * 
  * @author Javier Paniza
  */
 public interface IPropertyValidator extends java.io.Serializable {
 
 	/**
-	 * Valida. <p>
+	 * Validate. <p>
 	 *
-	 * Los errores de validación se añaden a un objeto de tipo <tt>Errores</tt>. <br>
+	 * The validation errores are added to an object of type <code>Messages</code>. <br> 
 	 *
-	 * @param errores Nunca nulo. Lista de ids para leer en el archivo de recursos.
-	 * @param valor Valor a validar. Puede ser nulo.
-	 * @param nombrePropiedad Id de la propiedad en el archivo de recursos 
-	 * @param nombreModelo Id del objeto en archivo de recursos.	 
-	 * @exception Exception  Algún problema de sistema.
+	 * @param errors  Not null. Ids list to read in the resources file
+	 * @param value  Value to validate. It can be null
+	 * @param propertyName  Property id in the resources file 
+	 * @param modelName  Object id in the resources file.	 
+	 * @exception Exception  Any unexpected problem.
 	 */
-	void validate(Messages errores,	Object valor,	String nombrePropiedad,	String nombreModelo) throws Exception;
+	void validate(Messages errors, Object value,	String propertyName, String modelName) throws Exception;
 
 }

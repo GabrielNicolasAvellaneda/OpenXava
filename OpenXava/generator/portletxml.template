@@ -12,7 +12,12 @@ MetaApplication application = MetaApplications.getMetaApplication(applicationNam
 Collection locales = Generators.getAvailableLocales("../" + applicationName + "/i18n");
 # 
 
-<portlet-app id="#(applicationName)#" version="1.0">
+<portlet-app id="#(applicationName)#"
+	xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd" 
+	version="1.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
+>
 
 # 
 for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
@@ -20,14 +25,12 @@ for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
 # 
 
 	<portlet id="#(module.getName())#">
-		<init-param>
-			<name>Application</name>
-			<value>#(applicationName)#</value>
-		</init-param>
-		<init-param>
-			<name>Module</name>
-			<value>#(module.getName())#</value>
-		</init-param>		
+		<description>#(module.getDescription())#</description>
+    # for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
+    	Locale locale = (Locale) itLocales.next();
+    #    
+		<description xml:lang="#(locale)#">#(module.getDescription(locale))#</description>
+	# } #       
 		<portlet-name>#(module.getName())#</portlet-name>
 		<display-name>#(module.getLabel())#</display-name>
     # for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
@@ -36,6 +39,14 @@ for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
 		<display-name xml:lang="#(locale)#">#(module.getLabel(locale))#</display-name>
     # } # 
 		<portlet-class>org.openxava.web.portlets.XavaPortlet</portlet-class>
+		<init-param>
+			<name>Application</name>
+			<value>#(applicationName)#</value>
+		</init-param>
+		<init-param>
+			<name>Module</name>
+			<value>#(module.getName())#</value>
+		</init-param>				
 		<expiration-cache>-1</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>
@@ -46,17 +57,7 @@ for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
     # } # 
 		<portlet-info>
 			<title>#(module.getDescription())#</title>
-    # for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
-    	Locale locale = (Locale) itLocales.next();
-    #    
-			<title xml:lang="#(locale)#">#(module.getDescription(locale))#</title>
-	# } #       
 			<short-title>#(module.getLabel())#</short-title>
-    # for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
-    	Locale locale = (Locale) itLocales.next();
-    #    	
-			<short-title xml:lang="#(locale)#">#(module.getLabel(locale))#</short-title>
-	# } #      
 		</portlet-info>
 	</portlet>
 # 

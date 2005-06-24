@@ -11,12 +11,13 @@ import org.openxava.util.*;
 public class NotNullValidator implements IPropertyValidator {
 
 	public void validate(
-		Messages errores,
-		Object objeto,
-		String nombrePropiedad,
-		String nombreModelo) {
-		if (objeto == null) {
-			errores.add("required", nombrePropiedad, nombreModelo);
+		Messages errors,
+		Object object,
+		String propertyName,
+		String modelName) {
+		if (object == null) {
+			errors.add("required", propertyName, modelName);
 		}
 	}
+	
 }

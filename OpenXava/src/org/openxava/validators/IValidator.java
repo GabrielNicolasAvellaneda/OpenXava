@@ -5,20 +5,19 @@ import org.openxava.util.*;
 
 
 /**
- * Validador. <p>
+ * Validator. <p>
  *  
- * El método de esta interfaz no recibe el valor a validar,
- * este se ha de asignar como una propiedad. Las propiedades
- * que tenga el validador dependen de lo genérico que se quiera hacer.<br>
+ * The method of this interfaces does not receive the value to validate,
+ * this must to be assigned as property.
  * 
- * Por ejemplo, podemos usar un validador de la siguiente forma:
+ * For example, you can use a validator in the next way:  
  * <pre>
- * IValidador v = new ValidadorLimite();
- * v.setLimite(1000);
- * v.setValor(factura.getImporte()); // por ejemplo
- * Mensajes errores = new Mensajes();
- * v.validar(errores);
- * // Y a errores se añade un  mensaje de validación si procede 
+ * IValidator v = new LimitValidator();
+ * v.setLimit(1000);
+ * v.setValue(invoice.getAmount()); // For example
+ * Messages errors = new Messages();
+ * v.validate(errors);
+ * // If there are validation errors are added to 'errors'. 
  * </pre>
  *  
  * @author Javier Paniza
@@ -27,13 +26,12 @@ import org.openxava.util.*;
 public interface IValidator {
 	
 	/**
-	 * Realiza la validación. <p>
+	 * Does validation. <p>
 	 * 
-	 * @param errores Lista de errores de validación, una lista de id para 
-	 * 								leer en un archivo de recursos.
-	 * @throws Exception Cualquier problema que ocurra que impida realizar
-	 *	la validación
+	 * @param errors  Validation errors list; a list of id to read in
+	 * 								the resources file  
+	 * @throws Exception  Any unexpected problem
 	 */
-	void validate(Messages errores) throws Exception;
+	void validate(Messages errors) throws Exception;
 
 }

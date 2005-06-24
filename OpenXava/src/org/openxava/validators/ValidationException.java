@@ -9,30 +9,30 @@ import org.openxava.util.*;
 
 public class ValidationException extends Exception {
 	
-	private Messages errores;
+	private Messages errors;
 	
 	public ValidationException() {		
 	}
 	
-	public ValidationException(String textoMensaje) {
-		super(textoMensaje);
+	public ValidationException(String messageText) {
+		super(messageText);
 	}
 
 	public ValidationException(ValidationException ex) {		
-		errores = ((ValidationException) ex).getErrors();
+		errors = ((ValidationException) ex).getErrors();
 	}
 
-	public ValidationException(Messages errores) {
-		this.errores = errores;		
+	public ValidationException(Messages errors) {
+		this.errors = errors;		
 	}
 	
 	public String getMessage() {
-		return errores==null?super.getMessage():errores.toString();		
+		return errors==null?super.getMessage():errors.toString();		
 	}
 
 	
 	public Messages getErrors() {
-		return errores;
+		return errors;
 	}
 	
 }
