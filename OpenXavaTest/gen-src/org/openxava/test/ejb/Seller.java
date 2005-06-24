@@ -43,6 +43,21 @@ public interface Seller
    public java.lang.String getLevel_id(  )
       throws java.rmi.RemoteException;
 
+   public org.openxava.test.ejb.Seller getBoss(  )
+      throws java.rmi.RemoteException;
+
+   public void setBoss( org.openxava.test.ejb.Seller newBoss )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.ejb.SellerKey getBossKey(  )
+      throws java.rmi.RemoteException;
+
+   public void setBossKey( org.openxava.test.ejb.SellerKey key )
+      throws java.rmi.RemoteException;
+
+   public int getBoss_number(  )
+      throws java.rmi.RemoteException;
+
    public org.openxava.test.ejb.SellerData getData(  )
       throws java.rmi.RemoteException;
 

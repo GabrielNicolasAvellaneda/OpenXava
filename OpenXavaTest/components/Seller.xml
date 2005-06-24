@@ -13,6 +13,7 @@
 		<collection name="customers">	
 			<reference model="Customer" role="seller"/>			
 		</collection>
+		<reference name="boss" model="Seller"/>
 		<finder name="all" arguments="" collection="true">
 			<condition>1 = 1</condition>
 		</finder>
@@ -52,6 +53,9 @@
 		<reference-mapping reference="level">
 			<reference-mapping-detail column="LEVEL" referenced-model-property="id"/>
 		</reference-mapping>
+		<reference-mapping reference="boss">
+			<reference-mapping-detail column="BOSS" referenced-model-property="number"/>
+		</reference-mapping>		
 	</entity-mapping> 
 	
 </component>

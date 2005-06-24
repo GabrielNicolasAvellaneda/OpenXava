@@ -17,6 +17,8 @@ public class SellerValue
    private boolean numberHasBeenSet = false;
    private java.lang.String level_id;
    private boolean level_idHasBeenSet = false;
+   private int boss_number;
+   private boolean boss_numberHasBeenSet = false;
 
    public SellerValue()
    {
@@ -31,6 +33,8 @@ public class SellerValue
 	  numberHasBeenSet = true;
 	  this.level_id = otherValue.level_id;
 	  level_idHasBeenSet = true;
+	  this.boss_number = otherValue.boss_number;
+	  boss_numberHasBeenSet = true;
    }
 
    public java.lang.String getName()
@@ -75,12 +79,26 @@ public class SellerValue
    public boolean level_idHasBeenSet(){
 	  return level_idHasBeenSet;
    }
+   public int getBoss_number()
+   {
+	  return this.boss_number;
+   }
+
+   public void setBoss_number( int boss_number )
+   {
+	  this.boss_number = boss_number;
+	  boss_numberHasBeenSet = true;
+   }
+
+   public boolean boss_numberHasBeenSet(){
+	  return boss_numberHasBeenSet;
+   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("name=" + getName() + " " + "number=" + getNumber() + " " + "level_id=" + getLevel_id());
+	  str.append("name=" + getName() + " " + "number=" + getNumber() + " " + "level_id=" + getLevel_id() + " " + "boss_number=" + getBoss_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -142,6 +160,7 @@ public class SellerValue
 		 {
 			lEquals = lEquals && this.level_id.equals( that.level_id );
 		 }
+		 lEquals = lEquals && this.boss_number == that.boss_number;
 
 		 return lEquals;
 	  }
@@ -158,6 +177,8 @@ public class SellerValue
       result = 37*result + (int) number;
 
       result = 37*result + ((this.level_id != null) ? this.level_id.hashCode() : 0);
+
+      result = 37*result + (int) boss_number;
 
 	  return result;
    }

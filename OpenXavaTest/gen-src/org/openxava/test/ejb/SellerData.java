@@ -13,6 +13,7 @@ public class SellerData
    private java.lang.String _Name;
    private int number;
    private java.lang.String _Level_id;
+   private int _Boss_number;
 
    public SellerData()
    {
@@ -23,6 +24,7 @@ public class SellerData
       set_Name(otherData.get_Name());
       setNumber(otherData.getNumber());
       set_Level_id(otherData.get_Level_id());
+      set_Boss_number(otherData.get_Boss_number());
 
    }
 
@@ -58,11 +60,20 @@ public class SellerData
       this._Level_id = _Level_id;
    }
 
+   public int get_Boss_number()
+   {
+      return this._Boss_number;
+   }
+   public void set_Boss_number( int _Boss_number )
+   {
+      this._Boss_number = _Boss_number;
+   }
+
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Name=" + get_Name() + " " + "number=" + getNumber() + " " + "_Level_id=" + get_Level_id());
+      str.append("_Name=" + get_Name() + " " + "number=" + getNumber() + " " + "_Level_id=" + get_Level_id() + " " + "_Boss_number=" + get_Boss_number());
       str.append('}');
 
       return(str.toString());
@@ -92,6 +103,7 @@ public class SellerData
          {
             lEquals = lEquals && this._Level_id.equals( lTest._Level_id );
          }
+         lEquals = lEquals && this._Boss_number == lTest._Boss_number;
 
          return lEquals;
       }
@@ -110,6 +122,8 @@ public class SellerData
       result = 37*result + (int) number;
 
       result = 37*result + ((this._Level_id != null) ? this._Level_id.hashCode() : 0);
+
+      result = 37*result + (int) _Boss_number;
 
       return result;
    }

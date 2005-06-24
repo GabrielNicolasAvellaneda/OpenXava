@@ -1117,12 +1117,14 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 
 	public Collection getRecursiveQualifiedPropertiesNames() throws XavaException {
 		if (recursiveQualifiedPropertiesNames == null) {
-			recursiveQualifiedPropertiesNames = createQualifiedPropertiesNames("");
+			Collection parents = new HashSet();
+			parents.add(getName());			
+			recursiveQualifiedPropertiesNames = createQualifiedPropertiesNames(parents, "");
 		}
 		return recursiveQualifiedPropertiesNames;
 	}
 	
-	private Collection createQualifiedPropertiesNames(String prefix) throws XavaException {
+	private Collection createQualifiedPropertiesNames(Collection parents, String prefix) throws XavaException {
 		List result = new ArrayList();		
 		for (Iterator it = getMembersNames().iterator(); it.hasNext();) {
 			Object name = it.next();
@@ -1130,9 +1132,14 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 				if (Is.emptyString(prefix)) result.add(name);
 				else result.add(prefix + name);				
 			}
-			else if (getMapMetaReferences().containsKey(name)) { 
+			else if (getMapMetaReferences().containsKey(name)) {
 				MetaReference ref = (MetaReference) getMapMetaReferences().get(name);
-				result.addAll(ref.getMetaModelReferenced().createQualifiedPropertiesNames(prefix + ref.getName() + "."));
+				if (!parents.contains(ref.getReferencedModelName())) {
+					Collection newParents = new HashSet();
+					newParents.addAll(parents);
+					newParents.add(ref.getReferencedModelName());	
+					result.addAll(ref.getMetaModelReferenced().createQualifiedPropertiesNames(newParents, prefix + ref.getName() + "."));
+				}
 			}
 		} 
 		return result;		

@@ -24,6 +24,9 @@ public interface SellerHome
    public java.util.Collection findByLevel(java.lang.String id)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
+   public java.util.Collection findByBoss(int number)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public java.util.Collection findAll()
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
