@@ -3,17 +3,18 @@ package org.openxava.validators;
 import org.openxava.util.*;
 
 /**
- * Lo da todo por válido. <p>
+ * Everything is valid. <p>
  * 
  * @author Javier Paniza
  */
 public class TolerantValidator implements IPropertyValidator {
 
 	public void validate(
-		Messages errores,
-		Object objeto,
-		String nombreObjeto,
-		String nombrePropiedad)
+		Messages errors,
+		Object object,
+		String objectName,
+		String propertyName)
 		throws java.rmi.RemoteException {
 	}
+	
 }

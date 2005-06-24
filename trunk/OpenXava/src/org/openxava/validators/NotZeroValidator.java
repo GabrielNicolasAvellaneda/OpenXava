@@ -16,51 +16,51 @@ public class NotZeroValidator implements IPropertyValidator {
 	private static Float ZERO_FLOAT = new Float("0");
 
 	public void validate(
-		Messages errores,
-		Object objeto,
-		String nombrePropiedad,
-		String nombreModelo) {			
-		if (objeto == null) {
-			errores.add("numeric_not_null", nombrePropiedad, nombreModelo);				
+		Messages errors,
+		Object object,
+		String propertyName,
+		String modelName) {			
+		if (object == null) {
+			errors.add("numeric_not_null", propertyName, modelName);				
 		}
 		Number n = null;
-		if (objeto instanceof Number) {
-			n = (Number) objeto;
+		if (object instanceof Number) {
+			n = (Number) object;
 		}
-		else if (objeto instanceof String) {
+		else if (object instanceof String) {
 			try {
-				n = new BigDecimal((String) objeto);
+				n = new BigDecimal((String) object);
 			}
 			catch (NumberFormatException ex) {
-				errores.add("numeric", nombrePropiedad, nombreModelo);
+				errors.add("numeric", propertyName, modelName);
 				return;
 			}
 		}
 		else {
-			errores.add("numeric", nombrePropiedad, nombreModelo);
+			errors.add("numeric", propertyName, modelName);
 			return;
 		}
 		if (n instanceof BigDecimal) {
 			BigDecimal bd = (BigDecimal) n;
 			if (bd.compareTo(ZERO_BIGDECIMAL) == 0) {
-				errores.add("required", nombrePropiedad, nombreModelo);
+				errors.add("required", propertyName, modelName);
 			}
 		}
 		else if (n instanceof Double) {
 			Double db = (Double) n;
 			if (db.compareTo(ZERO_DOUBLE) == 0) {
-				errores.add("required", nombrePropiedad, nombreModelo);
+				errors.add("required", propertyName, modelName);
 			}
 		}
 		else if (n instanceof Float) {
 			Float fl = (Float) n;
 			if (fl.compareTo(ZERO_FLOAT) == 0) {
-				errores.add("required", nombrePropiedad, nombreModelo);
+				errors.add("required", propertyName, modelName);
 			}
 		}
 
 		else if (n.intValue() == 0) {
-			errores.add("required", nombrePropiedad, nombreModelo);
+			errors.add("required", propertyName, modelName);
 		}
 	}
 }

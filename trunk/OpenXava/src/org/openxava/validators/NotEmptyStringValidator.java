@@ -11,17 +11,17 @@ import org.openxava.util.*;
 public class NotEmptyStringValidator implements IPropertyValidator {
 
 	public void validate(
-		Messages errores,
-		Object objeto,
-		String nombrePropiedad,
-		String nombreModelo) {
+		Messages errors,
+		Object object,
+		String propertyName,
+		String modelName) {
 		try {
-			if (Is.emptyString((String) objeto)) {
-				errores.add("required", nombrePropiedad, nombreModelo);
+			if (Is.emptyString((String) object)) {
+				errors.add("required", propertyName, modelName);
 			}
 		}
 		catch (ClassCastException ex) {
-			errores.add("expected_type", nombrePropiedad, nombreModelo, "string");
+			errors.add("expected_type", propertyName, modelName, "string");
 		}
 	}
 

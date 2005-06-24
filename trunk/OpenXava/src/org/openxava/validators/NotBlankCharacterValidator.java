@@ -11,17 +11,17 @@ import org.openxava.util.*;
 public class NotBlankCharacterValidator implements IPropertyValidator {
 
 	public void validate(
-		Messages errores,
-		Object objeto,
-		String nombrePropiedad,
-		String nombreModelo) {
+		Messages errors,
+		Object object,
+		String propertyName,
+		String modelName) {
 		try {
-			if (Character.isWhitespace(((Character) objeto).charValue())) {
-				errores.add("required", nombrePropiedad, nombreModelo);
+			if (Character.isWhitespace(((Character) object).charValue())) {
+				errors.add("required", propertyName, modelName);
 			}
 		}
 		catch (ClassCastException ex) {
-			errores.add("expected_type", nombrePropiedad, nombreModelo, "caracter");
+			errors.add("expected_type", propertyName, modelName, "caracter");
 		}
 	}
 }
