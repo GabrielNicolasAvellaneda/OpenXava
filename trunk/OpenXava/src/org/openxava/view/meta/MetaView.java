@@ -98,6 +98,10 @@ public class MetaView extends MetaElement implements Cloneable {
 	 * Incluso si está dentro de una sección  
 	 */
 	public MetaProperty getMetaProperty(String nombre) throws XavaException {
+		return getMetaProperty(nombre, true);
+	}
+	
+	private MetaProperty getMetaProperty(String nombre, boolean searchInGroups) throws XavaException {
 		try {
 			return getMetaPropiedadVista(nombre);			
 		}
@@ -113,6 +117,9 @@ public class MetaView extends MetaElement implements Cloneable {
 				}
 			}
 			MetaProperty p = (MetaProperty) metaProperties.get(nombre);
+			if (searchInGroups && p == null) {
+				p = getMetaPropertyInGroup(nombre);
+			}
 			if (p == null) {
 				throw new ElementNotFoundException("property_not_found_in_view", nombre, getName(), getModelName());
 			}
@@ -120,6 +127,20 @@ public class MetaView extends MetaElement implements Cloneable {
 		}
 	}
 	
+	
+	private MetaProperty getMetaPropertyInGroup(String name) throws XavaException { 
+		if (metaGroups == null) return null;
+		for (Iterator it = metaGroups.values().iterator(); it.hasNext(); ) {
+			MetaGroup metaGroup = (MetaGroup) it.next();
+			try {
+				return metaGroup.getMetaView().getMetaProperty(name, false);
+			}
+			catch (ElementNotFoundException ex) {				
+			}
+		}
+		return null;
+	}
+
 	// incluye los miembros de las secciones
 	private Collection getAllMetaMembers() throws XavaException { 
 		if (!hasSections()) return getMetaMembers();
