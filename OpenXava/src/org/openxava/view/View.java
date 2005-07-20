@@ -27,6 +27,8 @@ import org.openxava.web.*;
 
 public class View implements java.io.Serializable {
 
+	private static final long serialVersionUID = -7582669617830655121L;
+
 	private final static int [] EMPTY_SELECTED = new int[0];
 	
 	private String editCollectionElementAction;
@@ -89,6 +91,7 @@ public class View implements java.io.Serializable {
 	private boolean onlyThrowsOnChange; 
 
 	private Collection metaPropertiesIncludingSections;
+	private Collection metaPropertiesIncludingGroups;
 
 	private Collection metaMembersIncludingHiddenKey;
 
@@ -186,6 +189,7 @@ public class View implements java.io.Serializable {
 		this.metaProperties = null;
 		this.calculatedPropertiesNames = null;
 		this.metaPropertiesIncludingSections = null;
+		this.metaPropertiesIncludingGroups = null;
 		this.metaPropertiesQualified = null;
 		this.mapStereotypesProperties = null;
 		this.lastPropertyKeyName = null;
@@ -270,8 +274,7 @@ public class View implements java.io.Serializable {
 				
 		if (hasSections()) {
 			int cantidad = getSections().size();
-			for (int i=0; i<cantidad; i++) {				
-				Map valoresSeccion = getSectionView(i).getValues(todos);				
+			for (int i=0; i<cantidad; i++) {												
 				values.putAll(getSectionView(i).getValues(todos));
 			}
 		}									
@@ -680,14 +683,6 @@ public class View implements java.io.Serializable {
 			View subvista = (View) it.next();			
 			boolean intento = subvista.trySetValue(nombre, valor);			
 		}				
-	}
-	
-	private void propertyChangedInGroup(String nombre) throws XavaException { 
-		Iterator it = getGroupsViews().values().iterator();
-		while (it.hasNext()) {
-			View subvista = (View) it.next();			
-			subvista.propertyChanged(nombre); 	 				
-		}		
 	}
 	
 	private boolean setValorEnSecciones(String nombre, Object valor) throws XavaException {		
@@ -1323,6 +1318,7 @@ public class View implements java.io.Serializable {
 		mapStereotypesProperties = null;
 		metaProperties = null;
 		metaPropertiesIncludingSections = null;
+		metaPropertiesIncludingGroups = null;
 		metaPropertiesQualified = null;
 		calculatedPropertiesNames = null;
 		lastPropertyKeyName = null;		
@@ -1518,7 +1514,7 @@ public class View implements java.io.Serializable {
 		return lastPropertyKeyName;		
 	}
 
-	private void propertyChanged(String propertyId) {		
+	private void propertyChanged(String propertyId) {
 		try {														
 			String nombre = removeNamePrefix(propertyId);
 			if (nombre.endsWith(".KEY")) {
@@ -1544,9 +1540,6 @@ public class View implements java.io.Serializable {
 			int idxPunto = nombre.indexOf('.');			
 			if (idxPunto >= 0) { // es calificada				
 				String nombreSubvista = nombre.substring(0, idxPunto);	
-				if (getMembersNamesInGroup().contains(nombreSubvista)) { 
-					propertyChangedInGroup(nombre);
-				}							
 				String propertyName = nombre.substring(idxPunto + 1);
 				View subview = getSubview(nombreSubvista);				
 				subview.propertyChanged(propertyName);
@@ -1562,20 +1555,17 @@ public class View implements java.io.Serializable {
 					}
 				}
 			}
-			else {													
-				if (getMembersNamesInGroup().contains(nombre)) { 
-					propertyChangedInGroup(nombre);
-				}																
+			else {	
 				MetaProperty cambiada = null;
 				try {					
-					cambiada = getMetaView().getMetaProperty(nombre);					
+					cambiada = getMetaView().getMetaProperty(nombre);
 				}				
-				catch (ElementNotFoundException ex) {								
+				catch (ElementNotFoundException ex) {
 					// try to obtain from model in case it is an hidden key 
-					cambiada = getMetaModel().getMetaProperty(nombre); 
+					cambiada = getMetaModel().getMetaProperty(nombre);					
 					if (!(cambiada.isKey() && cambiada.isHidden())) throw ex;
 				}	
-				propertyChanged(cambiada, nombre);				
+				propertyChanged(cambiada, nombre);
 				if (getParent() != null) {
 					String qualifiedName = Is.emptyString(getMemberName())?nombre:(getMemberName() + "." + nombre);
 					getParent().propertyChanged(cambiada, qualifiedName);
@@ -1592,7 +1582,7 @@ public class View implements java.io.Serializable {
 		}				 		 		
 	}
 	
-	private void propertyChanged(MetaProperty cambiada, String nombreCualificadoCambiada) {		
+	private void propertyChanged(MetaProperty cambiada, String nombreCualificadoCambiada) {
 		try {			
 			tryPropertyChanged(cambiada, nombreCualificadoCambiada);
 		}
@@ -1604,9 +1594,8 @@ public class View implements java.io.Serializable {
 	}
 	
 	private void tryPropertyChanged(MetaProperty cambiada, String nombreCualificadoCambiada) throws Exception {
-		
-		if (!isOnlyThrowsOnChange()) {
-			Iterator it = getMetaProperties().iterator(); 									
+		if (!isOnlyThrowsOnChange()) {					
+			Iterator it = getMetaPropertiesIncludingGroups().iterator();
 			while (it.hasNext()) {
 				MetaProperty pr = (MetaProperty) it.next();				
 				if (dependeDe(pr, cambiada, nombreCualificadoCambiada)) { 					
@@ -1637,18 +1626,19 @@ public class View implements java.io.Serializable {
 			}
 		} // of if (!isOnlyThrowsOnChange())
 		
-		if (!isSection() && getMetaView().hasOnChangeAction(nombreCualificadoCambiada)) {			
+		if (!isSection() && getMetaView().hasOnChangeAction(nombreCualificadoCambiada)) {
 			IOnChangePropertyAction accion = getMetaView().createOnChangeAction(nombreCualificadoCambiada);
-			if (!actionRegisteredAsExecuted(nombreCualificadoCambiada, accion)) {				
-				accion.setView(this);
+			if (!actionRegisteredAsExecuted(nombreCualificadoCambiada, accion)) {
+				if (this.isGroup()) accion.setView(this.getParent());
+				else accion.setView(this);
 				accion.setChangedProperty(nombreCualificadoCambiada); 
-				accion.setNewValue(getValue(nombreCualificadoCambiada));
+				accion.setNewValue(getValue(nombreCualificadoCambiada));								
 				getModuleManager(getRequest()).executeAction(accion, getErrors(), getMessages(), getRequest());
 				registerExecutedAction(nombreCualificadoCambiada, accion);
 			}
 		} 
 		
-		if (tieneGrupos()) {			
+		if (tieneGrupos()) {
 			Iterator itGrupos = getGroupsViews().values().iterator();
 			while (itGrupos.hasNext()) {
 				View v = (View) itGrupos.next();
@@ -1660,7 +1650,7 @@ public class View implements java.io.Serializable {
 					// her subview is not in this group (maybe in another group
 					// or main view)
 				}
-			}			
+			}		
 		}
 				
 		if (hasSections()) {			
@@ -1900,7 +1890,7 @@ public class View implements java.io.Serializable {
 	
 	private Collection getMetaPropertiesIncludingSections() throws XavaException {
 		if (!hasSections()) return getMetaProperties();
-		if (metaPropertiesIncludingSections == null) { // falta reset
+		if (metaPropertiesIncludingSections == null) { 
 			metaPropertiesIncludingSections = new ArrayList(getMetaProperties());
 			int cantidad = getSections().size();
 			for (int i = 0; i < cantidad; i++) {
@@ -1910,6 +1900,18 @@ public class View implements java.io.Serializable {
 		return metaPropertiesIncludingSections;
 	}
 	
+	private Collection getMetaPropertiesIncludingGroups() throws XavaException {
+		if (!tieneGrupos()) return getMetaProperties();
+		if (metaPropertiesIncludingGroups == null) {
+			metaPropertiesIncludingGroups = new ArrayList(getMetaProperties());			
+			for (Iterator it = getGroupsViews().values().iterator(); it.hasNext();) {
+				View group = (View) it.next();
+				metaPropertiesIncludingGroups.addAll(group.getMetaProperties());
+			}	
+		}
+		return metaPropertiesIncludingGroups;
+	}
+		
 	public Collection getMetaPropertiesList() throws XavaException {
 		if (metaPropertiesList == null) {
 			metaPropertiesList = new ArrayList();
