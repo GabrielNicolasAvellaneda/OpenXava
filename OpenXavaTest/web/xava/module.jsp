@@ -1,6 +1,8 @@
 <%@ page import="org.openxava.util.Is" %>
 <%@ page import="org.openxava.util.XavaResources" %>
 
+<%@ include file="script.jsp" %>
+
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="messages" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
