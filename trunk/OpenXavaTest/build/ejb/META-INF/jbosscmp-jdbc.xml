@@ -431,7 +431,7 @@
       <entity>
          <ejb-name>ServiceType</ejb-name>
 
-         <table-name>XAVATEST_SERVICETYPE</table-name>
+         <table-name>XAVATEST@separator@SERVICETYPE</table-name>
 
          <cmp-field>
             <field-name>_Family</field-name>
@@ -553,7 +553,7 @@
       <entity>
          <ejb-name>Seller</ejb-name>
 
-         <table-name>XAVATEST@separator@SELLER</table-name>
+         <table-name>XAVATEST_SELLER</table-name>
 
          <cmp-field>
             <field-name>_Name</field-name>

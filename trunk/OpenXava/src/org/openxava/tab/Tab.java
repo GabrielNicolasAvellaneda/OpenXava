@@ -196,12 +196,24 @@ public class Tab {
 	 * Suitable for UI.
 	 */
 	public IXTableModel getTableModel() throws Exception {		
-		if (tableModel == null) {						
-			IEntityTab tab = EntityTabFactory.create(getMetaTab());
-			tab.search(getCondition(), getKey());
-			tableModel = tab.getTable();	
-			tableModel.getValueAt(0,0); // To load data, thus it's posible go directly to other page than first 
+		if (tableModel == null) {
+			try {
+				tableModel = createTableModel();
+			}
+			catch (Exception ex) {
+				restoreDefaultProperties(); // if fails because user customized list uses properties no longer existing 
+				tableModel = createTableModel();
+			}
 		}
+		return tableModel;
+	}
+	
+	private IXTableModel createTableModel() throws Exception {
+		IXTableModel tableModel = null;
+		IEntityTab tab = EntityTabFactory.create(getMetaTab());
+		tab.search(getCondition(), getKey());
+		tableModel = tab.getTable();	
+		tableModel.getValueAt(0,0); // To load data, thus it's posible go directly to other page than first
 		return tableModel;
 	}
 	
@@ -896,8 +908,6 @@ public class Tab {
 	private void removeUserPreferences() {
 		if (userPreferences == null) return;
 		try {
-			
-			
 			Session session = getSessionFactory().openSession();				
 			Transaction tx = session.beginTransaction();
 			
