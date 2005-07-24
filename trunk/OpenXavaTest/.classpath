@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="hibernate"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="components"/>
 	<classpathentry kind="src" path="xava"/>
@@ -10,5 +11,6 @@
 	<classpathentry kind="src" path="properties"/>
 	<classpathentry kind="src" path="/OpenXava"/>
 	<classpathentry kind="var" path="JBOSS_HOME/client/jbossall-client.jar"/>
+	<classpathentry kind="var" path="JBOSS_HOME/server/default/lib/hsqldb.jar"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>
