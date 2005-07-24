@@ -123,26 +123,29 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 	
 	public static SessionFactory getSessionFactory() throws HibernateException {
 		if (sessionFactory == null) {
-			try {
-				Configuration configuration = new Configuration().configure("/hibernate.cfg.xml");
-				for (Iterator it = MetaModel.getAllGenerated().iterator(); it.hasNext();) {
-					MetaModel model = (MetaModel) it.next();
-					try {
-						configuration.addResource(model.getName() + ".hbm.xml");
-					}
-					catch (Exception ex) {
-						ex.printStackTrace();
-						System.err.println(XavaResources.getString("hibernate_mapping_not_loaded_warning", model.getName()));
-					}
-				}
-				sessionFactory = configuration.buildSessionFactory();
-			} 
-			catch (Exception ex) {
-				ex.printStackTrace();
-				throw new HibernateException(XavaResources.getString("hibernate_session_factory_creation_error"));
-			}
+			sessionFactory = createSessionFactory("/hibernate.cfg.xml");
 		}
 		return sessionFactory; 
 	}
 	
+	public static SessionFactory createSessionFactory(String hibernateCfg) throws HibernateException {
+		try {
+			Configuration configuration = new Configuration().configure(hibernateCfg);
+			for (Iterator it = MetaModel.getAllGenerated().iterator(); it.hasNext();) {
+				MetaModel model = (MetaModel) it.next();
+				try {
+					configuration.addResource(model.getName() + ".hbm.xml");
+				}
+				catch (Exception ex) {
+					ex.printStackTrace();
+					System.err.println(XavaResources.getString("hibernate_mapping_not_loaded_warning", model.getName()));
+				}
+			}
+			return configuration.buildSessionFactory();
+		} 
+		catch (Exception ex) {
+			ex.printStackTrace();
+			throw new HibernateException(XavaResources.getString("hibernate_session_factory_creation_error"));
+		}
+	}
 }

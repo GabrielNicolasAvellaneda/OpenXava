@@ -15,5 +15,11 @@
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/commons-fileupload.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/itext.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/portlet-api-1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-logging.jar"/>
+	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/dom4j.jar"/>
+	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/commons-collections.jar"/>
+	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/ehcache.jar"/>
+	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/cglib.jar"/>
+	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/asm.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
