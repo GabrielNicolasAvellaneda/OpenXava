@@ -371,10 +371,7 @@
 		<action name="deleteAll" class="org.openxava.test.actions.DeleteAllAction">
 			<set property="model" value="Carrier" />
 		</action>
-    <!-- tmp  -->
-		<action name="createAll" class="org.openxava.test.actions.CreateCarriersAction">
-			<set property="model" value="Carrier" />
-		</action>	
+    	
 	</controller>	
 	
 	<!--

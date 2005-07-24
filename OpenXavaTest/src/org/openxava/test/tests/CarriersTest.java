@@ -7,6 +7,8 @@ import javax.ejb.*;
 import javax.naming.*;
 import javax.rmi.*;
 
+import org.hibernate.*;
+import org.openxava.model.impl.*;
 import org.openxava.test.ejb.*;
 import org.openxava.tests.*;
 import org.openxava.validators.*;
@@ -19,22 +21,24 @@ import org.openxava.validators.*;
 
 public class CarriersTest extends ModuleTestBase {
 	
-	
+	private Session session;
+	private static SessionFactory sessionFactory;
+	private Transaction transaction;
 	
 	public CarriersTest(String testName) {
 		super(testName, "OpenXavaTest", "Carriers");		
 	}
 	
 	protected void setUp() throws Exception {
-		
-		
-		
+		// getSession();  //tmp		
 		deleteAll();
-		// tmp createUsingUI();
-		createUsingEJB(); // tmp 		
-		// tmp execute("Carriers.createAll");
-		// tmp assertNoErrors();
+		createUsingEJB();  		
 		super.setUp();
+	}
+	
+	protected void tearDown() throws Exception {
+		super.tearDown();
+		closeSession();
 	}
 
 	private void createUsingEJB() throws CreateException, ValidationException, RemoteException, NamingException { //tmp
@@ -61,43 +65,7 @@ public class CarriersTest extends ModuleTestBase {
 		v.setWarehouse_zoneNumber(2);
 		CarrierUtil.getHome().create(v);
 	} 
-
-	private void createUsingUI() throws Exception { //tmp
-		execute("CRUD.new");
-		setValue("number", "1");
-		setValue("name", "UNO");
-		setValue("warehouse.zoneNumber", "1");
-		setValue("warehouse.number", "1");
-		execute("CRUD.save");
-		
-		setValue("number", "2");
-		setValue("name", "DOS");
-		setValue("warehouse.zoneNumber", "1");
-		setValue("warehouse.number", "1");
-		execute("CRUD.save");
-		
-		setValue("number", "3");
-		setValue("name", "TRES");
-		setValue("warehouse.zoneNumber", "1");
-		setValue("warehouse.number", "1");
-		execute("CRUD.save");
-		
-		setValue("number", "4");
-		setValue("name", "CUATRO");
-		setValue("warehouse.zoneNumber", "1");
-		setValue("warehouse.number", "1");
-		execute("CRUD.save");
-		
-		setValue("number", "5");
-		setValue("name", "Cinco");
-		setValue("warehouse.zoneNumber", "2");
-		setValue("warehouse.number", "1");
-		execute("CRUD.save");
-		
-		execute("Mode.list");
-		assertListRowCount(5);
-	}
-
+	
 	private void deleteAll()
 		throws Exception {
 		Iterator it = CarrierUtil.getHome().findAll().iterator();
@@ -105,7 +73,6 @@ public class CarriersTest extends ModuleTestBase {
 			Carrier t = (Carrier) PortableRemoteObject.narrow(it.next(), Carrier.class);
 			t.remove(); 
 		}
-		// tmp execute("Carriers.deleteAll");
 	}
 	
 	public void testJDBCAction() throws Exception {
@@ -342,8 +309,31 @@ public class CarriersTest extends ModuleTestBase {
 		assertValueInCollection("fellowCarriers", 2, "name", "FOUR");		
 	}
 	
-	private void assertCarriersCount(int c) throws Exception{
+	private void assertCarriersCount(int c) throws Exception {
 		assertEquals("Carriers count", c, CarrierUtil.getHome().findAll().size());		
 	}
 	
+	private Session getSession() throws Exception {
+		if (session == null) {
+			session = getSessionFactory().openSession();
+			transaction = session.beginTransaction();
+		} 
+		return session;
+	}
+	
+	private static SessionFactory getSessionFactory() throws Exception {
+		if (sessionFactory == null) {
+			sessionFactory = HibernatePersistenceProvider.createSessionFactory("/hibernate-junit.cfg.xml");
+		}
+		return sessionFactory;
+	}
+	
+	private void closeSession() throws Exception {
+		if (session != null) {
+		  transaction.commit();
+			session.close();
+			transaction = null;
+			session = null;
+		}
+	}
 }
