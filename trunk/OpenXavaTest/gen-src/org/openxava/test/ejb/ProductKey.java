@@ -15,6 +15,8 @@ public class ProductKey
    implements java.io.Serializable
 {
 
+   private static final long serialVersionUID = 1L;
+
    public long number;
 
    public ProductKey()

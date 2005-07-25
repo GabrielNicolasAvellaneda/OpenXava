@@ -15,6 +15,8 @@ public class ReceptionistKey
    implements java.io.Serializable
 {
 
+   private static final long serialVersionUID = 1L;
+
    public int oid;
 
    public ReceptionistKey()

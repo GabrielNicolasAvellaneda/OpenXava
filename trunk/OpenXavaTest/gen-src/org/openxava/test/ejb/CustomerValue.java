@@ -11,6 +11,9 @@ public class CustomerValue
    extends java.lang.Object
    implements java.io.Serializable 
 {
+
+   private static final long serialVersionUID = 1L;
+
    private int type;
    private boolean typeHasBeenSet = false;
    private java.lang.String remarks;

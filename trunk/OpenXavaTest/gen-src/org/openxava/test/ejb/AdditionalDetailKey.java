@@ -15,6 +15,8 @@ public class AdditionalDetailKey
    implements java.io.Serializable
 {
 
+   private static final long serialVersionUID = 1L;
+
    public int counter;
    public int _Service_number;
 

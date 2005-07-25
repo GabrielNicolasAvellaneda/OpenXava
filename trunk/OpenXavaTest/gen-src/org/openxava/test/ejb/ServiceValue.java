@@ -11,6 +11,9 @@ public class ServiceValue
    extends java.lang.Object
    implements java.io.Serializable 
 {
+
+   private static final long serialVersionUID = 1L;
+
    private int family;
    private boolean familyHasBeenSet = false;
    private java.lang.String description;

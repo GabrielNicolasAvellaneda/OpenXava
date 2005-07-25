@@ -15,6 +15,8 @@ public class Family2Key
    implements java.io.Serializable
 {
 
+   private static final long serialVersionUID = 1L;
+
    public int number;
 
    public Family2Key()

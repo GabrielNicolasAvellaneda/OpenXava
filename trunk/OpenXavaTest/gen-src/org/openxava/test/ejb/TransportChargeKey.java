@@ -15,6 +15,8 @@ public class TransportChargeKey
    implements java.io.Serializable
 {
 
+   private static final long serialVersionUID = 1L;
+
    public int _Delivery_number;
    public int _Delivery_type_number;
    public int _Delivery_invoice_year;

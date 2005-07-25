@@ -11,6 +11,9 @@ public class InvoiceDetailValue
    extends java.lang.Object
    implements java.io.Serializable 
 {
+
+   private static final long serialVersionUID = 1L;
+
    private java.math.BigDecimal amount;
    private boolean amountHasBeenSet = false;
    private java.math.BigDecimal unitPrice;

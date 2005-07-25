@@ -15,6 +15,8 @@ public class ShipmentKey
    implements java.io.Serializable
 {
 
+   private static final long serialVersionUID = 1L;
+
    public java.lang.String _Type;
    public int mode;
    public int number;

@@ -11,6 +11,9 @@ public class OfficeValue
    extends java.lang.Object
    implements java.io.Serializable 
 {
+
+   private static final long serialVersionUID = 1L;
+
    private int receptionist;
    private boolean receptionistHasBeenSet = false;
    private java.lang.String name;

@@ -15,6 +15,8 @@ public class SellerLevelKey
    implements java.io.Serializable
 {
 
+   private static final long serialVersionUID = 1L;
+
    public java.lang.String id;
 
    public SellerLevelKey()

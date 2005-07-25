@@ -15,6 +15,8 @@ public class InvoiceKey
    implements java.io.Serializable
 {
 
+   private static final long serialVersionUID = 1L;
+
    public int year;
    public int number;
 
