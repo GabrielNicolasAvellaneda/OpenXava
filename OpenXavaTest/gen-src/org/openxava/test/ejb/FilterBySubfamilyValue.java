@@ -11,6 +11,9 @@ public class FilterBySubfamilyValue
    extends java.lang.Object
    implements java.io.Serializable 
 {
+
+   private static final long serialVersionUID = 1L;
+
    private java.lang.String oid;
    private boolean oidHasBeenSet = false;
    private int subfamilyTo_number;

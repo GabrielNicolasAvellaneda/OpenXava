@@ -15,6 +15,8 @@ public class ClerkKey
    implements java.io.Serializable
 {
 
+   private static final long serialVersionUID = 1L;
+
    public int officeNumber;
    public int number;
    public int zoneNumber;

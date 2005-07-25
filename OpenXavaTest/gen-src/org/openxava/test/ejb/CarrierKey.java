@@ -15,6 +15,8 @@ public class CarrierKey
    implements java.io.Serializable
 {
 
+   private static final long serialVersionUID = 1L;
+
    public java.lang.Integer _Number;
 
    public CarrierKey()

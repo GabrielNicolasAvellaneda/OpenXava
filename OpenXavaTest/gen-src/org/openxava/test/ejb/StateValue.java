@@ -11,6 +11,9 @@ public class StateValue
    extends java.lang.Object
    implements java.io.Serializable 
 {
+
+   private static final long serialVersionUID = 1L;
+
    private java.lang.String fullName;
    private boolean fullNameHasBeenSet = false;
    private java.lang.String name;

@@ -15,6 +15,8 @@ public class DeliveryDetailKey
    implements java.io.Serializable
 {
 
+   private static final long serialVersionUID = 1L;
+
    public int number;
 
    public DeliveryDetailKey()

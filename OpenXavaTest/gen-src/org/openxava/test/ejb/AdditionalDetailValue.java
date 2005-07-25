@@ -11,6 +11,9 @@ public class AdditionalDetailValue
    extends java.lang.Object
    implements java.io.Serializable 
 {
+
+   private static final long serialVersionUID = 1L;
+
    private int counter;
    private boolean counterHasBeenSet = false;
    private int subfamily;

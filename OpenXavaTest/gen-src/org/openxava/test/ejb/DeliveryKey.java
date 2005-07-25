@@ -15,6 +15,8 @@ public class DeliveryKey
    implements java.io.Serializable
 {
 
+   private static final long serialVersionUID = 1L;
+
    public int number;
    public int _Type_number;
    public int _Invoice_year;

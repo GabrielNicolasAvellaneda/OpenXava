@@ -11,6 +11,9 @@ public class ProductValue
    extends java.lang.Object
    implements java.io.Serializable 
 {
+
+   private static final long serialVersionUID = 1L;
+
    private int familyNumber;
    private boolean familyNumberHasBeenSet = false;
    private java.math.BigDecimal unitPrice;

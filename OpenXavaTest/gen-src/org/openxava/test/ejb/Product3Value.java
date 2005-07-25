@@ -11,6 +11,9 @@ public class Product3Value
    extends java.lang.Object
    implements java.io.Serializable 
 {
+
+   private static final long serialVersionUID = 1L;
+
    private java.lang.String comments;
    private boolean commentsHasBeenSet = false;
    private java.lang.String description;

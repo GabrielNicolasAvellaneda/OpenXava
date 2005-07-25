@@ -15,6 +15,8 @@ public class Office2Key
    implements java.io.Serializable
 {
 
+   private static final long serialVersionUID = 1L;
+
    public int zoneNumber;
    public int number;
    public java.lang.Integer _MainWarehouse_number;

@@ -11,6 +11,9 @@ public class SubfamilyValue
    extends java.lang.Object
    implements java.io.Serializable 
 {
+
+   private static final long serialVersionUID = 1L;
+
    private java.lang.String family;
    private boolean familyHasBeenSet = false;
    private int familyNumber;

@@ -11,6 +11,9 @@ public class ReceptionistValue
    extends java.lang.Object
    implements java.io.Serializable 
 {
+
+   private static final long serialVersionUID = 1L;
+
    private int oid;
    private boolean oidHasBeenSet = false;
    private java.lang.String name;

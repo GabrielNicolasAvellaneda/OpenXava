@@ -11,6 +11,9 @@ public class DrivingLicenceValue
    extends java.lang.Object
    implements java.io.Serializable 
 {
+
+   private static final long serialVersionUID = 1L;
+
    private int level;
    private boolean levelHasBeenSet = false;
    private java.lang.String type;

@@ -318,6 +318,7 @@
     </target>        
 	
     <target name="generateXDoclet">         	
+
 	   <echo>Generating classes</echo>
     	<touch file="../${project}/gen-src-xava/last.generation.time"/>
        <java 
@@ -347,7 +348,7 @@
 		</java>
     	
     </target>
-	
+		
 	<target name="runXDoclet" if="need.generate" >
     	<ant antfile="../OpenXava/xdoclet/build.xml"/>    			
 	</target>

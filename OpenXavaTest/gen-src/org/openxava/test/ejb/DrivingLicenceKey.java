@@ -15,6 +15,8 @@ public class DrivingLicenceKey
    implements java.io.Serializable
 {
 
+   private static final long serialVersionUID = 1L;
+
    public int level;
    public java.lang.String type;
 

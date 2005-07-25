@@ -11,6 +11,9 @@ public class DeliveryValue
    extends java.lang.Object
    implements java.io.Serializable 
 {
+
+   private static final long serialVersionUID = 1L;
+
    private java.util.Date dateAsLabel;
    private boolean dateAsLabelHasBeenSet = false;
    private int distance;

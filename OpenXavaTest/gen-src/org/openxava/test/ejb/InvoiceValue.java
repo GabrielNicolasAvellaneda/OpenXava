@@ -11,6 +11,9 @@ public class InvoiceValue
    extends java.lang.Object
    implements java.io.Serializable 
 {
+
+   private static final long serialVersionUID = 1L;
+
    private java.lang.String comment;
    private boolean commentHasBeenSet = false;
    private java.util.Date date;

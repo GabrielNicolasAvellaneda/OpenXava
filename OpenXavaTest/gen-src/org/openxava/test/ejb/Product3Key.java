@@ -15,6 +15,8 @@ public class Product3Key
    implements java.io.Serializable
 {
 
+   private static final long serialVersionUID = 1L;
+
    public long number;
 
    public Product3Key()
