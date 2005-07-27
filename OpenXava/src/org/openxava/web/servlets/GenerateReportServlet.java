@@ -10,12 +10,12 @@ import javax.servlet.http.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.*;
+
 import org.openxava.model.meta.*;
 import org.openxava.tab.*;
 import org.openxava.util.*;
-
-import dori.jasper.engine.*;
-import dori.jasper.engine.data.*;
 
 /**
  * @author Javier Paniza
