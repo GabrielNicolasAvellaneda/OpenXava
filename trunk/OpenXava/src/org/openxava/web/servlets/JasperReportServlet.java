@@ -6,9 +6,9 @@ import java.net.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-import org.openxava.util.*;
+import net.sf.jasperreports.engine.*;
 
-import dori.jasper.engine.*;
+import org.openxava.util.*;
 
 /**
  * @author Javier Paniza

@@ -276,7 +276,7 @@ else {
 					<reportElement
 						mode="Opaque"
 						x="0"
-						y="15"
+						y="14"
 						width="<%=columnWidth%>"
 						height="0"
 						forecolor="#000000"
