@@ -44,6 +44,23 @@ public class SellersTest extends ModuleTestBase {
 		deleteCustomers();						
 	}
 	
+	public void testSearchElementInReferencesCollectionUsingList() throws Exception {
+		execute("CRUD.new");
+		execute("Collection.new", "viewObject=xava_view_customers");
+		execute("Reference.search", "keyProperty=xava.Seller.customers.number"); 
+		String name = getValueInList(1, 0);
+		execute("ReferenceSearch.choose", "row=1");
+		assertValue("customers.name", name);
+	}
+	
+	public void testCreateElementInReferencesCollectionUsingList() throws Exception {
+		execute("CRUD.new");
+		execute("Collection.new", "viewObject=xava_view_customers");
+		execute("Reference.createNew", "model=Customer,keyProperty=xava.Seller.customers.number");
+		assertAction("NewCreation.saveNew");
+		assertAction("NewCreation.cancel");
+	}
+	
 	private void createSeller66() throws Exception {
 		execute("CRUD.new");
 		setValue("number", "66");
