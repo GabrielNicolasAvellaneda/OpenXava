@@ -2190,8 +2190,8 @@ public class View implements java.io.Serializable {
 			MetaReference ref = getParent().getMetaModel().getMetaReference(getMemberName());			
 			return getParent().isCreateNewForReference(ref);
 		}
-		catch (ElementNotFoundException ex) {			
-			return false;
+		catch (ElementNotFoundException ex) {
+			return getParent().getMetaModel().containsMetaCollection(getMemberName());			
 		}
 	}
 	
@@ -2200,8 +2200,8 @@ public class View implements java.io.Serializable {
 			MetaReference ref = getParent().getMetaModel().getMetaReference(getMemberName());			
 			return getParent().isSearchForReference(ref);
 		}
-		catch (ElementNotFoundException ex) {			
-			return false;
+		catch (ElementNotFoundException ex) {
+			return getParent().getMetaModel().containsMetaCollection(getMemberName());
 		}
 	}
 	
@@ -2516,10 +2516,14 @@ public class View implements java.io.Serializable {
 		}		
 		if (!Is.emptyString(getMemberName())) {
 			int idx = p.getId().lastIndexOf('.');
-			String id = p.getId().substring(0, idx) + "." + getMemberName() + p.getId().substring(idx);			
-			if (Labels.exists(id, getRequest().getLocale())) {				
+			String id = p.getId().substring(0, idx) + "." + getMemberName() + p.getId().substring(idx);
+			if (Labels.existsExact(id, getRequest().getLocale())) {								
 				return Labels.get(id, getRequest().getLocale());
 			}
+			id = getMemberName() + p.getId().substring(idx);
+			if (Labels.existsExact(id, getRequest().getLocale())) {				
+				return Labels.get(id, getRequest().getLocale());
+			}			
 		}
 		return p.getLabel(getRequest());
 	}

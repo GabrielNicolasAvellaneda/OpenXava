@@ -34,6 +34,11 @@ public class InvoicesTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Invoices");		
 	}
 	
+	public void testI18nOfLabelOfAConcreteView() throws Exception {
+		execute("CRUD.new");
+		assertLabel("customer.number", "Little code");
+	}
+	
 	public void testTestingCheckBox() throws Exception {
 		// Demo for make tests with checkbox
 		

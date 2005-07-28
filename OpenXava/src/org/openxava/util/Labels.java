@@ -85,6 +85,16 @@ public class Labels {
 		}
 	}
 	
+	public static boolean existsExact(String id, Locale locale) throws XavaException {
+		if (id == null) return false;
+		try {
+			getResource(id, locale);
+			return true;
+		}
+		catch (MissingResourceException ex) {
+			return false;
+		}
+	}
 	
 	private static String getResource(String id, Locale locale) throws MissingResourceException, XavaException {
 		Iterator it = MetaApplications.getApplicationsNames().iterator();

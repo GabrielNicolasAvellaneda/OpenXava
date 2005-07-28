@@ -406,8 +406,8 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected String getValueInList(int row, String name) throws Exception {
-		int columna = getMetaTab().getPropertiesNames().indexOf(name);
-		return getValueInList(row, columna);
+		int column = getMetaTab().getPropertiesNames().indexOf(name);		
+		return getValueInList(row, column);
 	}
 	
 	protected String getValueInList(int row, int column) throws Exception {

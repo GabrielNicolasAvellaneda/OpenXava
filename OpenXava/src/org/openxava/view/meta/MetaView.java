@@ -207,17 +207,17 @@ public class MetaView extends MetaElement implements Cloneable {
 	private MetaMember modify(MetaMember miembro) throws XavaException {
 		if (miembro instanceof MetaProperty) {
 			MetaProperty propiedad = (MetaProperty) miembro;
+			MetaProperty nueva = propiedad.cloneMetaProperty();
+			miembro = nueva;
 			MetaPropertyView vistaPropiedad = getMetaVistaPropiedadPara(propiedad.getName());						
 			if (vistaPropiedad != null) {				
-				String etiqueta = vistaPropiedad.getLabel();
-				MetaProperty nueva = propiedad.cloneMetaProperty();
+				String etiqueta = vistaPropiedad.getLabel();				
 				if (!Is.emptyString(etiqueta)) {					
 					nueva.setLabel(etiqueta);					
 				}
 				if (!nueva.isCalculated()) {
 					nueva.setReadOnly(vistaPropiedad.isReadOnly());
 				}
-				miembro = nueva;
 			}
 		}
 		String idEtiqueta = isSection()?
