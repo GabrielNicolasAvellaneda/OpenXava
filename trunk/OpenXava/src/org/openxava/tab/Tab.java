@@ -62,6 +62,7 @@ public class Tab {
 	private static SessionFactory sessionFactory;
 	private boolean notResetPageNextTime;
 	private boolean sortRemainingProperties;
+	private boolean rowsHidden;
 	
 	public List getMetaProperties() {
 		if (metaProperties == null) {
@@ -599,6 +600,7 @@ public class Tab {
 		if (getMetaPropertiesNotCalculated().size() != values.length) return; // to avoid problems on changing module
 	  this.conditionValues = values;
 	  goPage(1);
+	  rowsHidden = false;
 	  condition = null;	  
 	}
 	
@@ -846,6 +848,7 @@ public class Tab {
 				cloneMetaTab();
 				getMetaTab().setPropertiesNames(userPreferences.getPropertiesNames());		
 				resetAfterChangeProperties();
+				rowsHidden = userPreferences.isRowsHidden(); 
 			}
 			
 			tx.commit();
@@ -894,6 +897,7 @@ public class Tab {
 			}
 			
 			userPreferences.setPropertiesNames(getPropertiesNamesAsString());
+			userPreferences.setRowsHidden(rowsHidden); 
 			session.saveOrUpdate(userPreferences);
 			
 			tx.commit();
@@ -984,6 +988,28 @@ public class Tab {
 			}
 		}
 		return keys;
+	}
+
+
+	public void hideRows() {		
+		this.rowsHidden = true;
+		saveUserPreferences();
 	}	
+	
+	public void showRows() {
+		this.rowsHidden = false;
+		saveUserPreferences();
+	}
+	
+	public boolean isRowsHidden() {
+		return rowsHidden;
+	}
+	
+	/**
+	 * If you like show or hide rows is better calling to {@link #showRows} and {@link #hideRows}. <p>	 
+	 */
+	public void setRowsHidden(boolean rowsHidden) {
+		this.rowsHidden = rowsHidden;
+	}
 	
 }

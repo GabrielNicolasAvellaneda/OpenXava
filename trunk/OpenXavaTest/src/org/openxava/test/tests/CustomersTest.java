@@ -22,6 +22,7 @@ public class CustomersTest extends ModuleTestBase {
 		"List.orderBy",
 		"List.viewDetail",
 		"List.customize",
+		"List.hideRows",
 		"Customers.hideSellerInList",
 		"Customers.showSellerInList"
 	};

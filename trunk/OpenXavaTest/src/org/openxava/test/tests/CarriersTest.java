@@ -75,6 +75,37 @@ public class CarriersTest extends ModuleTestBase {
 		}
 	}
 	
+	public void testHideShowRows() throws Exception {
+		assertListRowCount(5);
+		assertAction("List.hideRows");
+		assertNoAction("List.showRows");
+		
+		execute("List.hideRows");		
+		assertListRowCount(1);
+		assertNoAction("List.hideRows");
+		assertAction("List.showRows");
+		
+		execute("List.filter");
+		assertListRowCount(5);
+		assertAction("List.hideRows");
+		assertNoAction("List.showRows");
+
+		resetModule();
+		assertListRowCount(1);
+		assertNoAction("List.hideRows");
+		assertAction("List.showRows");
+
+		execute("List.showRows");
+		assertListRowCount(5);
+		assertAction("List.hideRows");
+		assertNoAction("List.showRows");
+		
+		resetModule();
+		assertListRowCount(5);
+		assertAction("List.hideRows");
+		assertNoAction("List.showRows");		
+	}
+	
 	public void testJDBCAction() throws Exception {
 		assertListRowCount(5); 		
 		execute("Carriers.deleteAll");

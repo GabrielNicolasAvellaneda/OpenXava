@@ -15,6 +15,7 @@
 		<property name="user" column="USER"/>
 		<property name="tab" column="TAB"/>
 		<property name="propertiesNames" column="PROPERTIESNAMES"/>
+		<property name="rowsHidden" column="ROWSHIDDEN"/>
 		
   </class>
 
