@@ -2044,6 +2044,10 @@
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
+         <cmp-field id="CmpAttribute_Service__Detail_free">
+            <description><![CDATA[]]></description>
+            <field-name>_Detail_free</field-name>
+         </cmp-field>
          <cmp-field id="CmpAttribute_Service__Detail_type">
             <description><![CDATA[]]></description>
             <field-name>_Detail_type</field-name>

@@ -46,8 +46,9 @@ String referencedModelClass = referencedModel.getBeanClass();
 for (Iterator itAggregateProperties = referencedModel.getMetaProperties().iterator(); itAggregateProperties.hasNext();) {	
 	MetaProperty property = (MetaProperty) itAggregateProperties.next();
 	String propertyName = Strings.firstUpper(property.getName());
+	String get = "boolean".equals(property.getTypeName())?"is":"get";
 		</java>		
-		r.set<expr>propertyName</expr>(get<expr>referenceName</expr>_<expr>property.getName()</expr>());			
+		r.set<expr>propertyName</expr>(<expr>get</expr><expr>referenceName</expr>_<expr>property.getName()</expr>());			
 		<java>
 }		
 for (Iterator itReferences = referencedModel.getMetaReferences().iterator(); itReferences.hasNext();) {	
