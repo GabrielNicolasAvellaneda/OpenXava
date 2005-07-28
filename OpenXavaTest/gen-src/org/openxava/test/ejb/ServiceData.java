@@ -13,6 +13,7 @@ public class ServiceData
    private java.lang.Integer _Family;
    private java.lang.String _Description;
    private int number;
+   private java.lang.Integer _Detail_free;
    private java.lang.Integer _Detail_type;
    private java.lang.Integer _Detail_subfamily;
 
@@ -25,6 +26,7 @@ public class ServiceData
       set_Family(otherData.get_Family());
       set_Description(otherData.get_Description());
       setNumber(otherData.getNumber());
+      set_Detail_free(otherData.get_Detail_free());
       set_Detail_type(otherData.get_Detail_type());
       set_Detail_subfamily(otherData.get_Detail_subfamily());
 
@@ -62,6 +64,15 @@ public class ServiceData
       this.number = number;
    }
 
+   public java.lang.Integer get_Detail_free()
+   {
+      return this._Detail_free;
+   }
+   public void set_Detail_free( java.lang.Integer _Detail_free )
+   {
+      this._Detail_free = _Detail_free;
+   }
+
    public java.lang.Integer get_Detail_type()
    {
       return this._Detail_type;
@@ -84,7 +95,7 @@ public class ServiceData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Family=" + get_Family() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "_Detail_type=" + get_Detail_type() + " " + "_Detail_subfamily=" + get_Detail_subfamily());
+      str.append("_Family=" + get_Family() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "_Detail_free=" + get_Detail_free() + " " + "_Detail_type=" + get_Detail_type() + " " + "_Detail_subfamily=" + get_Detail_subfamily());
       str.append('}');
 
       return(str.toString());
@@ -114,6 +125,14 @@ public class ServiceData
             lEquals = lEquals && this._Description.equals( lTest._Description );
          }
          lEquals = lEquals && this.number == lTest.number;
+         if( this._Detail_free == null )
+         {
+            lEquals = lEquals && ( lTest._Detail_free == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Detail_free.equals( lTest._Detail_free );
+         }
          if( this._Detail_type == null )
          {
             lEquals = lEquals && ( lTest._Detail_type == null );
@@ -148,6 +167,8 @@ public class ServiceData
       result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
 
       result = 37*result + (int) number;
+
+      result = 37*result + ((this._Detail_free != null) ? this._Detail_free.hashCode() : 0);
 
       result = 37*result + ((this._Detail_type != null) ? this._Detail_type.hashCode() : 0);
 

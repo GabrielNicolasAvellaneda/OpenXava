@@ -21,7 +21,8 @@
 	
 	<aggregate name="Detail">
 		<property name="subfamily" stereotype="SUBFAMILY" required="true"/>
-		<property name="type" stereotype="SERVICE_TYPE" required="true"/>					
+		<property name="type" stereotype="SERVICE_TYPE" required="true"/>
+		<property name="free" type="boolean"/>					
 	</aggregate>
 	
 	<aggregate name="AdditionalDetail">
@@ -47,6 +48,7 @@
 		<property-mapping property="family" column="FAMILY"/>
 		<property-mapping property="detail_subfamily" column="SUBFAMILY"/>
 		<property-mapping property="detail_type" column="TYPE"/>		
+		<property-mapping property="detail_free" column="FREE"/>
 	</entity-mapping>
 	
 	<aggregate-mapping aggregate="AdditionalDetail" table="XAVATEST@separator@SERVICEDETAIL">

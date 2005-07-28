@@ -1615,6 +1615,11 @@
 
         </cmp-field>
          <cmp-field>
+            <field-name>_Detail_free</field-name>
+            <column-name>FREE</column-name>
+
+        </cmp-field>
+         <cmp-field>
             <field-name>_Detail_type</field-name>
             <column-name>TYPE</column-name>
 
