@@ -37,7 +37,6 @@ String lastRow = request.getParameter("lastRow");
 </th>
 <%
 tab.reset();
-IXTableModel model = tab.getTableModel();
 java.util.Collection properties = tab.getMetaProperties();
 java.util.Iterator it = properties.iterator();
 int columnIndex = 0;
@@ -146,7 +145,18 @@ String urlComparatorsCombo = "comparatorsCombo.jsp" // in this way because websp
 </tr>
 <% } /* if (filtrar) */ %>
 <%
-int totalSize = tab.getTotalSize();
+int totalSize = 0;
+if (tab.isRowsHidden()) {
+%>
+	<tr><td align="center">
+	<xava:link action="List.showRows"/>
+	</td></tr>
+<%
+}
+else {
+	
+IXTableModel model = tab.getTableModel(); 
+totalSize = tab.getTotalSize();
 if (totalSize > 0) {
 for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex(); f++) {
 	String checked=tab.isSelected(f)?"checked='true'":"";
@@ -190,6 +200,8 @@ else {
 </td></tr>
 <%
 }
+}
+
 if (lastRow != null) {
 %>
 <tr>
@@ -199,7 +211,7 @@ if (lastRow != null) {
 }
 %>
 </table>
-
+<% if (!tab.isRowsHidden()) { %>
 <table width="100%" class="list-info">
 <tr>
 <td>
@@ -228,7 +240,8 @@ if (!tab.isLastPage()) {
 	<fmt:param><%=totalSize%></fmt:param> 
 </fmt:message>
 <% } %>
+(<xava:link action="List.hideRows"/>)
 </td>
 </tr>
 </table>
-
+<% } %>

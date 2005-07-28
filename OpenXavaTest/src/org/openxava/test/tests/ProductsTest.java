@@ -32,7 +32,8 @@ public class ProductsTest extends ModuleTestBase {
 		"List.filter",
 		"List.customize",
 		"List.orderBy",
-		"List.viewDetail"				
+		"List.viewDetail",
+		"List.hideRows"
 	};
 	
 	private String [] deleteActions = {

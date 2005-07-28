@@ -28,7 +28,8 @@ public class DeliveriesTest extends ModuleTestBase {
 		"List.filter",
 		"List.customize",
 		"List.orderBy",
-		"List.viewDetail"				
+		"List.viewDetail",
+		"List.hideRows"
 	};
 		
 	public DeliveriesTest(String testName) {

@@ -16,6 +16,7 @@ public class CustomersWithSectionTest extends CustomersTest {
 			"List.orderBy",
 			"List.viewDetail",
 			"List.customize",
+			"List.hideRows",
 			"Customers.hideSellerInList",
 			"Customers.showSellerInList"
 		};
@@ -34,6 +35,7 @@ public class CustomersWithSectionTest extends CustomersTest {
 			"List.moveColumnToLeft",
 			"List.moveColumnToRight",
 			"List.removeColumn",
+			"List.hideRows",
 			"Customers.hideSellerInList",
 			"Customers.showSellerInList"
 		};

@@ -9,6 +9,7 @@ public class TabUserPreferences implements java.io.Serializable {
 	private String user;
 	private String tab; // The name of tab in this format: 'Component.tabName'
 	private String propertiesNames;
+	private boolean rowsHidden; 
 
 	public String getPropertiesNames() {
 		return propertiesNames;
@@ -28,5 +29,11 @@ public class TabUserPreferences implements java.io.Serializable {
 	}
 	public void setTab(String tab) {
 		this.tab = tab;
+	}
+	public boolean isRowsHidden() {
+		return rowsHidden;
+	}
+	public void setRowsHidden(boolean rowsHidden) {
+		this.rowsHidden = rowsHidden;
 	}
 }

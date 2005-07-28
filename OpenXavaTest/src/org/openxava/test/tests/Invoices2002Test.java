@@ -19,6 +19,7 @@ public class Invoices2002Test extends ModuleTestBase {
 		"List.customize",
 		"List.orderBy",
 		"List.viewDetail",
+		"List.hideRows",
 		"Invoices2002.changeListTitle"
 	};
 

@@ -29,7 +29,8 @@ public class FamiliesWithInheritanceControllerTest extends ModuleTestBase {
 		"List.filter",
 		"List.customize",
 		"List.orderBy",
-		"List.viewDetail"				
+		"List.viewDetail",
+		"List.hideRows"
 	};
 	
 	

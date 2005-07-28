@@ -32,8 +32,9 @@
 			mode="list"			image="images/next_page.gif">			<use-object name="xava_tab"/>				</action>													<action name="orderBy"			class="org.openxava.actions.OrderByAction"			hidden="true"
 			mode="list">			<use-object name="xava_tab"/>				</action>				<!-- 
 			Void action because the search is executed automatically
-			on tab properties setup		-->													<action name="filter" by-default="almost-always"			class="org.openxava.actions.EmptyAction"			hidden="true"
-			mode="list">		</action>																	<action name="deselectRows"			class="org.openxava.actions.DeselectRowsAction"			hidden="true"
+			on tab properties setup		-->													<action name="filter" by-default="almost-always"			class="org.openxava.actions.FilterAction"			hidden="true"
+			mode="list">
+			<use-object name="xava_tab"/>		</action>																	<action name="deselectRows"			class="org.openxava.actions.DeselectRowsAction"			hidden="true"
 			mode="list">						<use-object name="xava_tab"/>		</action>					
 		<action name="customize"
 			class="org.openxava.actions.CustomizeListAction"
@@ -70,7 +71,20 @@
 			image="images/add.gif">		
 			<set property="nextController" value="AddColumns"/>
 			<set property="customView" value="xava/addColumns"/>
-		</action>											</controller>
+		</action>			
+		<action name="hideRows"
+			class="org.openxava.actions.HideRowsAction"
+			hidden="true"
+			mode="list">
+			<use-object name="xava_tab"/>
+		</action>
+		<action name="showRows"
+			class="org.openxava.actions.ShowRowsAction"
+			hidden="true"
+			mode="list">
+			<use-object name="xava_tab"/>
+		</action>		
+	</controller>
 	
 	<controller name="AddColumns">
 		<action name="sort" class="org.openxava.actions.SortColumnsAction" image="images/sort.gif">			
