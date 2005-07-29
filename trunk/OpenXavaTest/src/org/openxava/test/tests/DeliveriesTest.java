@@ -36,6 +36,13 @@ public class DeliveriesTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Deliveries");		
 	}
 	
+	public void testDateCalendarEditor() throws Exception {
+		execute("CRUD.new");
+		assertExists("invoice.date");
+		assertNotExists("invoice.date_CALENDAR_BUTTON_");
+		assertExists("date_CALENDAR_BUTTON_");		
+	}
+	
 	public void testAggregateInCollectionWithVisibleKeyDoesNotTryToSearchOnChangeKey() throws Exception {
 		execute("CRUD.new");
 		execute("Sections.change", "activeSection=2");
