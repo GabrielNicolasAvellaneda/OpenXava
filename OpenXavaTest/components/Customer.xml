@@ -127,13 +127,13 @@
 		<property-view property="alternateSeller.number">
 			<on-change class="org.openxava.test.actions.OnChangeVoidAction"/>
 		</property-view>
-						
+					
 		<reference-view reference="seller" frame="false">
 			<search-action action="MyReference.search"/>
 		</reference-view>			
 		
 		<reference-view reference="alternateSeller" view="DecorateName" create="false"/>
-
+		
 		<members>
 			number; 
 			type; 
@@ -147,10 +147,10 @@
 			alternateSeller; 
 			deliveryPlaces; 
 			remarks
-		</members>		
-						
-	</view>
+		</members>
 	
+	</view>
+		
 	<view name="WithSection">		
 		<property-view property="name">
 			<on-change class="org.openxava.test.actions.OnChangeCustomerNameAction"/>
@@ -202,7 +202,7 @@
 				<group name="customer">
 					type;
 					name; 
-				</group>
+				</group>;
 				<group name="seller">
 					seller;
 					relationWithSeller; 

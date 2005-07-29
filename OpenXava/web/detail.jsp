@@ -135,14 +135,19 @@ while (it.hasNext()) {
 	<%
 			} // withFrame
 		} else if (m instanceof MetaGroup) {
-			MetaGroup grup = (MetaGroup) m;
-			String viewName = viewObject + "_" + grup.getName();
-			View subview = view.getGroupView(grup.getName());
+			MetaGroup group = (MetaGroup) m;
+			String viewName = viewObject + "_" + group.getName();
+			View subview = view.getGroupView(group.getName());
 			context.put(request, viewName, subview);
 	%>
+		<% 
+		if (first) { 
+			first = false;
+		%>
 		<tr><td colspan="4">
-		<table class=frame width='100%'>
-		<tr class=frame><th align='left'><%=grup.getLabel(request)%></th></tr>
+		<% } %>
+		<table class=frame style="float:left; margin-right:4px">
+		<tr class=frame><th align='left'><%=group.getLabel(request)%></th></tr>
 		<tr><td class=frame>
 		<jsp:include page="detail.jsp">
 			<jsp:param name="viewObject" value="<%=viewName%>" />
@@ -151,7 +156,7 @@ while (it.hasNext()) {
 		</table>		
 	<%
 		}
-	} // if not is MetaProperty
+	} // if is not MetaProperty
 }
 %>
 <% if (lastWasEditor) { %>
