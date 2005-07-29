@@ -17,13 +17,14 @@ while (indx>=0){
 }
 if (editable || !label) {
 %>
-	<input type="text" name="<%=propertyKey%>" id="<%=propertyKey%>" class=editor title="<%=p.getDescription(request)%>"
+<input type="text" name="<%=propertyKey%>" id="<%=propertyKey%>" class=editor title="<%=p.getDescription(request)%>"
 	align='<%=align%>'
 	maxlength="<%=p.getSize()%>" 
 	size="<%=p.getSize()%>"  
-	value="<%=fvalue%>" <%=disabled%>	<%=script%>><input type="reset" value=" ... "
-onclick="return showCalendar('<%=propertyKey%>', '%d/%m/%Y');"><br />
-	
+	value="<%=fvalue%>" <%=disabled%>	<%=script%>><%if (editable) {%><input type="reset" value=" ... "
+	name="<%=propertyKey%>_CALENDAR_BUTTON_"
+	onclick="return showCalendar('<%=propertyKey%>', '%d/%m/%Y');"><br /><%} %>
+
 	
 <%
 
