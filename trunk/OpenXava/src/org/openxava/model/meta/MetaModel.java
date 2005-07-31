@@ -80,7 +80,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	 */
 	public static Collection getAllGenerated() throws XavaException { 
 		Collection r = new HashSet();
-		for (Iterator it = MetaComponent.getAllLoaded().iterator(); it.hasNext();) {
+		for (Iterator it = MetaComponent.getAll().iterator(); it.hasNext();) {
 			MetaComponent comp = (MetaComponent) it.next();
 			MetaEntity en = comp.getMetaEntity();
 			if (en.isGenerateXDocLet()) { // At momment, pojo and hibernate will be treated
