@@ -27,7 +27,8 @@ public class MetaComponent implements Serializable {
 	private static Map components = new HashMap();
 	private static Properties packages;
 	private static Properties packagesEJB;
-		
+	private static boolean allComponentsLoaded = false;
+	
 	private String packageNameWithSlashWithoutModel;
 	private String name;
 	private MetaEntity metaEntity;
@@ -38,7 +39,7 @@ public class MetaComponent implements Serializable {
 	private EntityMapping entityMapping;
 	private String packageName;
 	private String ejbPackage;
-
+	
 	
 	/**
 	 * 
@@ -52,7 +53,7 @@ public class MetaComponent implements Serializable {
 			if (r == null) {				
 				throw new ElementNotFoundException("component_not_found", name);
 			}
-			r.validar();						
+			r.validate();						
 			components.put(name, r);
 		}		
 		return r;
@@ -286,7 +287,7 @@ public class MetaComponent implements Serializable {
 		this.entityMapping = mapping;
 	}
 	
-	private void validar() throws XavaException {		
+	private void validate() throws XavaException {		
 		if (Is.emptyString(getName())) {
 			throw new XavaException("component_name_required");
 		}
@@ -385,6 +386,26 @@ public class MetaComponent implements Serializable {
 			packageNameWithSlashWithoutModel = packageNameWithSlashWithoutModel.substring(0, packageNameWithSlashWithoutModel.lastIndexOf('/'));
 		}
 		return packageNameWithSlashWithoutModel;
+	}
+
+
+	public static Collection getAll() throws XavaException {
+		if (!allComponentsLoaded) {
+			try {
+				for (Iterator it = getPackages().keySet().iterator(); it.hasNext();) {
+					String name = (String) it.next();
+					if (!name.startsWith("package.")) {
+						get(name);
+					}	
+				}
+				allComponentsLoaded = true;
+			}
+			catch (IOException ex) {
+				ex.printStackTrace();
+				throw new XavaException("loading_components_error");
+			}
+		}
+		return getAllLoaded();
 	}
 		
 }
