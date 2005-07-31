@@ -30,7 +30,6 @@ public class CarriersTest extends ModuleTestBase {
 	}
 	
 	protected void setUp() throws Exception {
-		// getSession();  //tmp		
 		deleteAll();
 		createUsingEJB();  		
 		super.setUp();
@@ -68,11 +67,7 @@ public class CarriersTest extends ModuleTestBase {
 	
 	private void deleteAll()
 		throws Exception {
-		Iterator it = CarrierUtil.getHome().findAll().iterator();
-		while (it.hasNext()) {
-			Carrier t = (Carrier) PortableRemoteObject.narrow(it.next(), Carrier.class);
-			t.remove(); 
-		}
+		getSession().createQuery("delete from Carrier").executeUpdate(); 
 	}
 	
 	public void testHideShowRows() throws Exception {
