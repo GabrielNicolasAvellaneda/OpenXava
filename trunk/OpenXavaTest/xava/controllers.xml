@@ -15,7 +15,19 @@
 		That is to say, it is better specify the labels in resources files and not here.		
 	-->	
 	
+	<controller name="EditableOnOff">
+		<action name="setOn" mode="detail"
+			class="org.openxava.test.actions.SetEditableOnAction">
+			<use-object name="xava_view"/>
+		</action>
+		<action name="setOff" mode="detail"
+			class="org.openxava.test.actions.SetEditableOffAction">
+			<use-object name="xava_view"/>
+		</action>
+	</controller>
+		
 	<controller name="Deliveries">
+		<extends controller="EditableOnOff"/>
 		<action name="search" mode="detail"
 			by-default="if-possible" hidden="true"			
 			class="org.openxava.test.actions.SearchDeliveryAction"
@@ -39,7 +51,8 @@
 		</action>
 	</controller>
 	
-	<controller name="Products">
+	<controller name="Products">	
+		<extends controller="EditableOnOff"/>		
 		<action name="setLimitZoneTo1" class="org.openxava.test.actions.ChangeLimitZoneAction" mode="detail">			
 			<set property="newLimitZone" value="1"/>
 			<use-object name="xavatest_limitZone"/>
@@ -47,8 +60,8 @@
 		<action name="setLimitZoneTo0" class="org.openxava.test.actions.ChangeLimitZoneAction" mode="detail">			
 			<set property="newLimitZone" value="0"/>
 			<use-object name="xavatest_limitZone"/>
-		</action>		
-		
+		</action>				
+		<action name="changeProductPrice" class="org.openxava.test.actions.ChangeProductPriceAction" mode="detail"/>					
 	</controller>	
 	
 	<controller name="Products2">
@@ -88,6 +101,7 @@
 	
 	<controller name="Customers">
 		<extends controller="Typical"/>
+		<extends controller="EditableOnOff"/>
 		<action name="save" mode="detail"
 			class="org.openxava.actions.SaveAction"
 			image="images/save.gif"
@@ -130,12 +144,12 @@
 			<use-object name="xava_view"/>
 		</action>
 		<action name="changeNameLabel" mode="detail" class="org.openxava.test.actions.ChangeLabelAction">				
-				<set property="property" value="name"/>
-				<set property="label" value="Malnom"/>
-				<use-object name="xava_view"/>
+			<set property="property" value="name"/>
+			<set property="label" value="Malnom"/>
+			<use-object name="xava_view"/>
 		</action>			
 	</controller>
-	
+			
 	<controller name="CustomersNewOnInit">
 		<action name="new" 
 			class="org.openxava.actions.NewAction"
@@ -392,7 +406,5 @@
 	<controller name="Return">	
 		<action name="return" class="org.openxava.actions.CancelAction"/>		
 	</controller>
-	
-	
-	
+			
 </controllers>

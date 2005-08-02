@@ -79,8 +79,7 @@ public class InvoicesTest extends ModuleTestBase {
 		assertValue("paid", "false"); // assert if checkbox is false
 		
 		// Delete
-		execute("CRUD.delete");
-		execute("ConfirmDelete.confirmDelete");
+		execute("CRUD.delete");		
 		assertMessage("Invoice deleted successfully");				
 	}
 	
@@ -682,8 +681,7 @@ public class InvoicesTest extends ModuleTestBase {
 		assertValue("comment", "DETAIL DELETED"); // verifying postdelete-calculator in collection
 								
 		// Delete		
-		execute("CRUD.delete");
-		execute("ConfirmDelete.confirmDelete");
+		execute("CRUD.delete");		
 		assertMessage("Invoice deleted successfully");
 	}
 	
@@ -717,8 +715,7 @@ public class InvoicesTest extends ModuleTestBase {
 		assertError("It is not possible to add details, the invoice is paid");		
 		
 		// Delete invoice
-		execute("CRUD.delete");
-		execute("ConfirmDelete.confirmDelete");
+		execute("CRUD.delete");		
 		assertMessage("Invoice deleted successfully");
 	}
 	
@@ -772,8 +769,7 @@ public class InvoicesTest extends ModuleTestBase {
 		assertNoErrors();
 								
 		// Delete		
-		execute("CRUD.delete");
-		execute("ConfirmDelete.confirmDelete");
+		execute("CRUD.delete");		
 		assertMessage("Invoice deleted successfully");
 	}
 	

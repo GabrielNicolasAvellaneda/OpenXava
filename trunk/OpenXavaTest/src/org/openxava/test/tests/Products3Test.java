@@ -35,9 +35,7 @@ public class Products3Test extends ModuleTestBase {
 		assertValue("family.number", familyNumber);
 		assertValue("family.description", familyDescription);
 		
-		execute("CRUD.delete");
-		assertNoAction("Reference.search");
-		execute("ConfirmDelete.confirmDelete");
+		execute("CRUD.delete");			
 		assertMessage("Product deleted successfully");
 	}
 						

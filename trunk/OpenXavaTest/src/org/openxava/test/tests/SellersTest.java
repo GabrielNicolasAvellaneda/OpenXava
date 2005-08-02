@@ -142,8 +142,7 @@ public class SellersTest extends ModuleTestBase {
 		execute("CRUD.search");
 		assertNoErrors();
 
-		execute("CRUD.delete");	
-		execute("ConfirmDelete.confirmDelete");											
+		execute("CRUD.delete");											
 		assertNoErrors();
 		assertMessage("Seller deleted successfully");
 		assertExists("number"); // A bug did that the screen remained in blank after delete		

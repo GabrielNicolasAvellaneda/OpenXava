@@ -112,7 +112,7 @@
 		<property name="name" type="String" size="30" required="true"/>
 		<finder name="all" arguments="" collection="true"/>
 	</aggregate>	
-
+	
 	<view>
 		<!-- 
 		For overwrite the label better resource files.
@@ -127,13 +127,13 @@
 		<property-view property="alternateSeller.number">
 			<on-change class="org.openxava.test.actions.OnChangeVoidAction"/>
 		</property-view>
-					
+
 		<reference-view reference="seller" frame="false">
 			<search-action action="MyReference.search"/>
 		</reference-view>			
 		
 		<reference-view reference="alternateSeller" view="DecorateName" create="false"/>
-		
+		 
 		<members>
 			number; 
 			type; 
@@ -143,7 +143,7 @@
 			<group name="seller">
 				seller;
 				relationWithSeller; 
-			</group>
+			</group>;
 			alternateSeller; 
 			deliveryPlaces; 
 			remarks

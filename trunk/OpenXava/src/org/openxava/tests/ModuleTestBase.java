@@ -132,7 +132,7 @@ public class ModuleTestBase extends TestCase {
 	 */
 	protected void execute(String action) throws Exception {
 		assertAction(action);
-		response.getScriptableObject().setLocation("javascript:executeXavaAction(false, document.forms[0], '" + action + "')");
+		response.getScriptableObject().setLocation("javascript:executeXavaAction(false, false, document.forms[0], '" + action + "')");
 		response = conversation.getCurrentPage();
 		if ("text/html".equals(response.getContentType())) {
 			setForm(response.getForms()[0]);						
@@ -146,7 +146,7 @@ public class ModuleTestBase extends TestCase {
 	
 	protected void execute(String action, String arguments) throws Exception {
 		assertAction(action);
-		response.getScriptableObject().setLocation("javascript:executeXavaAction(false, document.forms[0], '" + action + "', '" + arguments+ "')");
+		response.getScriptableObject().setLocation("javascript:executeXavaAction(false, false, document.forms[0], '" + action + "', '" + arguments+ "')");
 		response = conversation.getCurrentPage();
 		setForm(response.getForms()[0]);								
 	}
@@ -354,7 +354,7 @@ public class ModuleTestBase extends TestCase {
 		assertEquals(XavaResources.getString("unexpected_description", name), value, getDescriptionValue(name));		
 	}
 
-	protected void assertAction(String action) {
+	protected void assertAction(String action) {		
 		assertTrue(XavaResources.getString("action_not_found_in_ui", action), getActions().contains(action));
 	}
 	

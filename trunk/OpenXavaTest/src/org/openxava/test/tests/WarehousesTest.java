@@ -109,31 +109,12 @@ public class WarehousesTest extends ModuleTestBase {
 		assertValue("number", "666");		
 		assertValue("name", "WAREHOUSE JUNIT MODIFIED");
 				
-		// Go to page for delete
-		execute("CRUD.delete");
-		assertAction("ConfirmDelete.confirmDelete");
-		assertAction("ConfirmDelete.cancel");		
-		assertValue("zoneNumber", "66");
-		assertValue("number", "666");		
-		assertValue("name", "WAREHOUSE JUNIT MODIFIED");
-		// Cancel
-		execute("ConfirmDelete.cancel");		
-		assertNoAction("Warehouses.toLowerCase");
-		assertAction("Warehouses.changeZone");
-		
-		// Return to page for delete
-		execute("CRUD.delete");
-		assertAction("ConfirmDelete.confirmDelete");
-		assertAction("ConfirmDelete.cancel");
-		assertValue("zoneNumber", "66");
-		assertValue("number", "666");		
-		assertValue("name", "WAREHOUSE JUNIT MODIFIED");
 		// Delete
-		execute("ConfirmDelete.confirmDelete");
+		execute("CRUD.delete");
 		assertNoAction("Warehouses.toLowerCase");
-		assertAction("Warehouses.changeZone");
-		
+		assertAction("Warehouses.changeZone");		
 		assertMessage("Warehouse deleted successfully");
+		
 		// Verifying is deleted
 		execute("CRUD.new");
 		setValue("zoneNumber", "66");
@@ -174,11 +155,6 @@ public class WarehousesTest extends ModuleTestBase {
 		setValue("number", "666");
 		execute("CRUD.search");				
 		execute("CRUD.delete");
-		assertAction("ConfirmDelete.confirmDelete");
-		assertAction("ConfirmDelete.cancel");
-		assertValue("zoneNumber", "66");
-		assertValue("number", "666");				
-		execute("ConfirmDelete.confirmDelete");
 		assertNoAction("Warehouses.toLowerCase");
 		assertAction("Warehouses.changeZone");
 

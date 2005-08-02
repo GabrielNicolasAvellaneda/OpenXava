@@ -17,10 +17,13 @@ public class ProductsTest extends ModuleTestBase {
 		"CRUD.new",
 		"CRUD.save",
 		"CRUD.delete",
-		"CRUD.search",		
+		"CRUD.search",
+		"EditableOnOff.setOn",
+		"EditableOnOff.setOff",
 		"Mode.list",
 		"Products.setLimitZoneTo1",
-		"Products.setLimitZoneTo0"
+		"Products.setLimitZoneTo0",
+		"Products.changeProductPrice"
 	};
 	
 	private String [] listActions = {
@@ -35,13 +38,7 @@ public class ProductsTest extends ModuleTestBase {
 		"List.viewDetail",
 		"List.hideRows"
 	};
-	
-	private String [] deleteActions = {
-		"ConfirmDelete.confirmDelete",
-		"ConfirmDelete.cancel",
-		"Mode.list"		
-	};
-	
+		
 	public ProductsTest(String testName) {
 		super(testName, "OpenXavaTest", "Products");		
 	}
@@ -147,8 +144,7 @@ public class ProductsTest extends ModuleTestBase {
 		execute("Mode.detailAndFirst");
 		String subfamily = getDescriptionValue("subfamilyNumber");
 		assertTrue("Subfamily must not to be empty", !Is.emptyString(subfamily));
-		execute("CRUD.delete");
-		assertNoErrors();
+		execute("EditableOnOff.setOff");
 		assertDescriptionValue("subfamilyNumber", subfamily);		
 	}
 	
@@ -197,12 +193,6 @@ public class ProductsTest extends ModuleTestBase {
 				
 		// Go to page for delete
 		execute("CRUD.delete");
-		assertAction("ConfirmDelete.confirmDelete");
-		assertAction("ConfirmDelete.cancel");		
-		assertValue("number", "66");		
-		assertValue("description", "TEST PRODUCT");		
-		execute("ConfirmDelete.confirmDelete");
-		assertActions(detailActions);
 		assertMessage("Product deleted successfully");		
 	}
 	
@@ -318,19 +308,25 @@ public class ProductsTest extends ModuleTestBase {
 	}
 
 	public void testGoFromListToDetailAlwaysSetDefaultController_editableWellOnSearch() throws Exception {
+		String [] changeProductPriceActions = {
+			"Mode.list",
+			"ChangeProductsPrice.save"	
+		};
+		
 		assertActions(listActions);
 		execute("Mode.detailAndFirst");
 		assertNoEditable("number");
 		assertEditable("description");		
 		assertActions(detailActions);
-		execute("CRUD.delete");		
-		assertActions(deleteActions);	
+		execute("Products.changeProductPrice");		
+		assertActions(changeProductPriceActions);	
 		execute("Mode.list");
 		assertActions(listActions);
 		execute("Mode.detailAndFirst");
 		assertActions(detailActions);
 		assertNoEditable("number");
 		assertEditable("description");
+		
 	}
 								
 	public void testOnChangeDependentsOfPropertyWithDefaultValue() throws Exception {

@@ -59,8 +59,7 @@ public class ShipmentsTest extends ModuleTestBase {
 		assertValue("description", "JUNIT SHIPMENT MODIFIED");
 										
 		// Delete
-		execute("CRUD.delete");
-		execute("ConfirmDelete.confirmDelete");											
+		execute("CRUD.delete");											
 		assertNoErrors();
 		assertMessage("Shipment deleted successfully");		
 	}

@@ -110,7 +110,8 @@ else { // All else
 
 
 <script>
-function executeXavaAction(takesLong, formu, action) {
+function executeXavaAction(isConfirm, takesLong, formu, action) {
+	if (isConfirm && !confirm('<%=XavaResources.getString(request, "are_you_sure")%>')) return;
 	if (takesLong) {
 		document.getElementById('processingLayer').style.display='block';
 		setTimeout('document.images["processingImage"].src = "images/processing.gif"', 1);		
@@ -119,7 +120,8 @@ function executeXavaAction(takesLong, formu, action) {
 	formu.xava_action.value=action;	
 	formu.submit();	
 }
-function executeXavaAction(takesLong, formu, action, argv) {	
+function executeXavaAction(isConfirm, takesLong, formu, action, argv) {	
+	if (isConfirm && !confirm('<%=XavaResources.getString(request, "are_you_sure")%>')) return;
 	if (takesLong) {
 		document.getElementById('processingLayer').style.display='block';
 		setTimeout('document.images["processingImage"].src = "images/processing.gif"', 1);

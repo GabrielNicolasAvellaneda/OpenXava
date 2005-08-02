@@ -51,8 +51,7 @@ public class FamiliesTest extends ModuleTestBase {
 		// Delete
 		execute("List.viewDetail", "row=3");
 		assertNoErrors();
-		execute("CRUD.delete");
-		execute("ConfirmDelete.confirmDelete");
+		execute("CRUD.delete");		
 		assertMessage("Family deleted successfully");		
 		execute("Mode.list");
 		assertListRowCount(3);

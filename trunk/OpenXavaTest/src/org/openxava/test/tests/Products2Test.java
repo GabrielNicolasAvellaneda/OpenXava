@@ -217,13 +217,8 @@ public class Products2Test extends ModuleTestBase {
 		assertValue("subfamily.number", "13");
 
 				
-		// Go to page for delete
+		// Delete
 		execute("CRUD.delete");
-		assertAction("ConfirmDelete.confirmDelete");
-		assertAction("ConfirmDelete.cancel");		
-		assertValue("number", "66");		
-		assertValue("description", "JUNIT PRODUCT");		
-		execute("ConfirmDelete.confirmDelete");		
 		assertMessage("Product deleted successfully");		
 	}
 					

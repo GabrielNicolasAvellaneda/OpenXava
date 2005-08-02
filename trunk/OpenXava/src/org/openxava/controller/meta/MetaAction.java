@@ -28,6 +28,7 @@ public class MetaAction extends MetaElement {
 	private int byDefault;
 	private boolean onInit;
 	private boolean takesLong;
+	private boolean confirm;
 	
 	public MetaAction() {
 	}
@@ -211,5 +212,13 @@ public class MetaAction extends MetaElement {
 	}
 	public void setTakesLong(boolean takesLong) {
 		this.takesLong = takesLong;
+	}
+
+	public boolean isConfirm() {
+		return confirm;
+	}
+
+	public void setConfirm(boolean confirm) {
+		this.confirm = confirm;
 	}
 }
