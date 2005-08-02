@@ -68,8 +68,7 @@ public class TransportChargesTest extends ModuleTestBase {
 		assertValue("delivery.invoice.number", number);
 		assertValue("amount", "777");
 						
-		execute("CRUD.delete");	
-		execute("ConfirmDelete.confirmDelete");											
+		execute("CRUD.delete");										
 		assertMessage("TransportCharge deleted successfully");
 	}
 	

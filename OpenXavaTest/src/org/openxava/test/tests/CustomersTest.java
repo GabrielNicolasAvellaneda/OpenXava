@@ -263,8 +263,7 @@ public class CustomersTest extends ModuleTestBase {
 		assertValue("seller.name", "JUANVI LLAVADOR");
 										
 		// Delete it
-		execute("CRUD.delete");	
-		execute("ConfirmDelete.confirmDelete");											
+		execute("CRUD.delete");													
 		assertNoErrors();
 		assertMessage("Customer deleted successfully");
 	}
@@ -373,8 +372,7 @@ public class CustomersTest extends ModuleTestBase {
 		assertValue("alternateSeller.name", "");
 		
 		// Delete it
-		execute("CRUD.delete");	
-		execute("ConfirmDelete.confirmDelete");											
+		execute("CRUD.delete");											
 		assertNoErrors();
 		assertMessage("Customer deleted successfully");
 	}
@@ -484,8 +482,7 @@ public class CustomersTest extends ModuleTestBase {
 		assertValueInCollection("deliveryPlaces.receptionists", 1, 0, "RECEPTIONISTS JUNIT 2 - 2");
 		
 		// Delete
-		execute("CRUD.delete");	
-		execute("ConfirmDelete.confirmDelete");											
+		execute("CRUD.delete");												
 		assertNoErrors();
 		assertMessage("Customer deleted successfully");
 	}
@@ -497,13 +494,13 @@ public class CustomersTest extends ModuleTestBase {
 		assertNoEditable("seller.name");
 		assertAction("Reference.search");
 		
-		execute("CRUD.delete");
+		execute("EditableOnOff.setOff");
 		assertNoEditable("address.street");
 		assertNoEditable("seller.number");
 		assertNoEditable("seller.name");
 		assertNoAction("Reference.search");
 		
-		execute("ConfirmDelete.cancel");
+		execute("EditableOnOff.setOn");
 		assertEditable("address.street");
 		assertEditable("seller.number");
 		assertNoEditable("seller.name");

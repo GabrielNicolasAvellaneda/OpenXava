@@ -56,15 +56,13 @@ public class DeliveryTypesTest extends ModuleTestBase {
 		assertValue("number", "66");
 		assertValue("description", "JUNIT MODIFIED"); // 'MODIFIED' is added in postmodify
 				
-		execute("CRUD.delete");
-		execute("ConfirmDelete.confirmDelete");
+		execute("CRUD.delete");		
 		assertError("Delivery type can not delete because it is used in deliveries");
 		assertEditable("description"); // because return to main view (and controllers)
 		
 		delivery.remove();
 		
-		execute("CRUD.delete");
-		execute("ConfirmDelete.confirmDelete");
+		execute("CRUD.delete");		
 		assertNoErrors();
 		assertMessage("DeliveryType deleted successfully");				 		
 	}

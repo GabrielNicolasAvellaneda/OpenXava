@@ -4,7 +4,6 @@
 
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <%
-
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
 manager.setSession(session);
 %>
@@ -14,7 +13,7 @@ manager.setSession(session);
 <td>
 
 <button name="xava.DEFAULT_ACTION" 
-	onclick="executeXavaAction(false, <%=manager.getForm()%>, '<%=manager.getDefaultActionQualifiedName()%>')"
+	onclick="executeXavaAction(false, false, <%=manager.getForm()%>, '<%=manager.getDefaultActionQualifiedName()%>')"
 	style="padding: 0; border: none; background-color:transparent">
 </button>
 

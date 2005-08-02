@@ -120,8 +120,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		setValue("number", "66");
 		execute("CRUD.search");
 		assertNoErrors();
-		execute("CRUD.delete");
-		execute("ConfirmDelete.confirmDelete");
+		execute("CRUD.delete");		
 		assertMessage("DeliveryType deleted successfully");
 		changeModule("Deliveries");
 		assertNoType("66");
@@ -180,8 +179,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertValue("remarks", "HIDDEN REMARK");
 																
 		// Delete it
-		execute("CRUD.delete");	
-		execute("ConfirmDelete.confirmDelete");											
+		execute("CRUD.delete");													
 		assertNoErrors();
 		assertMessage("Delivery deleted successfully");		
 	}
@@ -204,6 +202,8 @@ public class DeliveriesTest extends ModuleTestBase {
 			"Deliveries.activateDeactivateSection",
 			"Deliveries.hideActions",
 			"Deliveries.viewCurrentYearInvoices",
+			"EditableOnOff.setOn",
+			"EditableOnOff.setOff",
 			"Remarks.hideRemarks",
 			"Remarks.showRemarks",
 			"Remarks.setRemarks"			
@@ -299,8 +299,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertEditable("description");
 																
 		// Delete it
-		execute("CRUD.delete");	
-		execute("ConfirmDelete.confirmDelete");											
+		execute("CRUD.delete");													
 		assertNoErrors();
 		assertMessage("Delivery deleted successfully");
 	}
@@ -347,8 +346,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertEquals("distance in database incorrect", "N", distanceDB);
 																		
 		// Delete
-		execute("CRUD.delete");	
-		execute("ConfirmDelete.confirmDelete");											
+		execute("CRUD.delete");													
 		assertNoErrors();
 		assertMessage("Delivery deleted successfully");
 	}
@@ -519,8 +517,6 @@ public class DeliveriesTest extends ModuleTestBase {
 				
 		// Delete
 		execute("CRUD.delete");
-		assertValue("number", "61");
-		execute("ConfirmDelete.confirmDelete");
 		assertMessage("Delivery deleted successfully");
 
 
@@ -531,8 +527,6 @@ public class DeliveriesTest extends ModuleTestBase {
 		setValue("number", "62");
 		execute("CRUD.search");				
 		execute("CRUD.delete");
-		assertValue("number", "62");
-		execute("ConfirmDelete.confirmDelete");
 		assertMessage("Delivery deleted successfully");
 
 		execute("CRUD.new");
@@ -541,9 +535,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		setValue("type.number", "1");
 		setValue("number", "63");
 		execute("CRUD.search");						
-		execute("CRUD.delete");
-		assertValue("number", "63");
-		execute("ConfirmDelete.confirmDelete");
+		execute("CRUD.delete");			
 		assertMessage("Delivery deleted successfully");		
 	}
 	
@@ -603,8 +595,6 @@ public class DeliveriesTest extends ModuleTestBase {
 																		
 		// Delete
 		execute("CRUD.delete");
-		assertValue("number", "66");	
-		execute("ConfirmDelete.confirmDelete");											
 		assertNoErrors();
 		assertMessage("Delivery deleted successfully");
 	}
@@ -715,7 +705,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		execute("Mode.detailAndFirst");
 		assertEditable("description"); // out of section
 		assertEditable("advice"); // in section
-		execute("CRUD.delete");
+		execute("EditableOnOff.setOff");
 		assertNoEditable("description"); // out of section
 		assertNoEditable("advice"); // in section				
 	}

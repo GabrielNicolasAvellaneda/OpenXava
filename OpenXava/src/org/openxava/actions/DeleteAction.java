@@ -1,28 +1,77 @@
 package org.openxava.actions;
 
+import java.util.*;
+
+import org.openxava.model.*;
+import org.openxava.validators.*;
+
 /**
  * @author Javier Paniza
  */
 
-public class DeleteAction extends ViewBaseAction implements IChangeControllersAction {
-	
-	
-	private String[] nextControllers;
+public class DeleteAction extends ViewDetailAction {
+		
+	public DeleteAction() {
+		setIncrement(0);
+	}
 
-	public void execute() throws Exception {
-		nextControllers = null;
+	public void execute() throws Exception { 
 		if (getView().isKeyEditable()) {
 			addError("no_delete_not_exists");
+			return;
+		}
+		try {
+			MapFacade.remove(getModelName(), getView().getKeyValues());
+			resetDescriptionsCache();
+		}
+		catch (ValidationException ex) {
+			addErrors(ex.getErrors());	
+			return;
 		}		
-		else {
-			getView().setEditable(false);
-			getView().setKeyEditable(false);		
-			nextControllers = new String [] { "ConfirmDelete" }; 
-		}		
+		addMessage("object_deleted", getModelName());
+		getView().clear();
+		boolean selected = false;
+		if (getTab().hasSelected()) {
+			removeSelected();
+			selected = true;
+		}
+		else getTab().reset();		 		
+		super.execute(); // viewDetail
+		if (isNoElementsInList()) {
+			if (
+				(!selected && getTab().getTotalSize() > 0) ||
+				(selected && getTab().getSelected().length > 0)
+			) {				
+				setIncrement(-1);
+				getErrors().remove("no_list_elements");								
+				super.execute();													
+			}
+			else {							
+				getView().setKeyEditable(false);
+				getView().setEditable(false);
+			}
+		}
 	}
-	
-	public String [] getNextControllers() {
-		return nextControllers;
+
+	private void removeSelected() {
+		int row = getRow();		
+		int [] selectedOnes = getTab().getSelected();
+		if (Arrays.binarySearch(selectedOnes, row) < 0) return;		
+		int [] news = new int[selectedOnes.length-1];
+		int j = 0;		
+		for (int i = 0; i < news.length; i++) {
+			int v = selectedOnes[j];
+			if (v == row) {
+				j++; i--;				
+			} 
+			else  {				
+				news[i] = v;
+				j++;
+			}					
+		}
+		getTab().setAllSelected(news);
 	}
-	
+
 }
+
+

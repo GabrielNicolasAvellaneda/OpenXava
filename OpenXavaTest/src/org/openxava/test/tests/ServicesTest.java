@@ -33,8 +33,7 @@ public class ServicesTest extends ModuleTestBase {
 		assertCollectionRowCount("additionalDetails", 0);
 		
 		// Delete it
-		execute("CRUD.delete");	
-		execute("ConfirmDelete.confirmDelete");													
+		execute("CRUD.delete");														
 		assertMessage("Service deleted successfully");		
 	}
 	
