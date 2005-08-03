@@ -20,7 +20,7 @@ public class ValidatorsParser extends ParserBase {
 		super(urlArchivoXml, language);
 	}
 	
-	public static void configurarValidadores() throws XavaException {
+	public static void configureValidators() throws XavaException {
 		ValidatorsParser enParser = new ValidatorsParser("validators.xml", ENGLISH);
 		enParser.parse();
 		ValidatorsParser esParser = new ValidatorsParser("validadores.xml", ESPANOL);

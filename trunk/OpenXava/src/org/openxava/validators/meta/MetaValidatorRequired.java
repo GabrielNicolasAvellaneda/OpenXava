@@ -3,7 +3,6 @@ package org.openxava.validators.meta;
 import org.openxava.util.*;
 
 /**
- * Inserte aquí la descripción del tipo.
  * 
  * @author Javier Paniza
  */
@@ -14,16 +13,6 @@ public class MetaValidatorRequired {
 	private java.lang.String validatorName;
 	public java.lang.String validatorClass;
 	
-	/**
-	 * Comentario de constructor ValidadorRequerido.
-	 */
-	public MetaValidatorRequired() {
-		super();
-	}
-	/**
-	 * 
-	 * @return java.lang.String
-	 */
 	public java.lang.String getValidatorClass() throws XavaException {
 		if (validatorClass == null) {
 			validatorClass =
@@ -33,55 +22,33 @@ public class MetaValidatorRequired {
 		}
 		return validatorClass;
 	}
-	/**
-	 * 
-	 * @return java.lang.String
-	 */
+
 	public java.lang.String getValidatorName() {
 		return validatorName;
 	}
-	/**
-	 * 
-	 * @return java.lang.String
-	 */
+
 	public java.lang.String getForType() {
 		return forType;
 	}
-	/**
-	 * 
-	 * @param newClaseValidador java.lang.String
-	 */
-	public void setValidatorClass(java.lang.String newClaseValidador) {
-		validatorClass = newClaseValidador;
+
+	public void setValidatorClass(java.lang.String newValidatorClass) {
+		validatorClass = newValidatorClass;
 	}
-	/**
-	 * 
-	 * @param newNombreValidador java.lang.String
-	 */
-	public void setValidatorName(java.lang.String newNombreValidador) {
-		validatorName = newNombreValidador;
+
+	public void setValidatorName(java.lang.String newValidatorName) {
+		validatorName = newValidatorName;
 	}
-	/**
-	 * 
-	 * @param newParaClase java.lang.String
-	 */
-	public void setForType(java.lang.String newParaClase) {
-		forType = newParaClase;
+
+	public void setForType(java.lang.String newForType) {
+		forType = newForType;
 	}
-	/**
-	 * Returns the paraEstereotipo.
-	 * @return String
-	 */
+
 	public String getForStereotype() {
 		return forStereotype;
 	}
 
-	/**
-	 * Sets the paraEstereotipo.
-	 * @param paraEstereotipo The paraEstereotipo to set
-	 */
-	public void setForStereotype(String paraEstereotipo) {
-		this.forStereotype = paraEstereotipo;
+	public void setForStereotype(String newForStereotype) {
+		this.forStereotype = newForStereotype;
 	}
 
 }
