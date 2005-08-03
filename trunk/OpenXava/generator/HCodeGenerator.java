@@ -2,6 +2,7 @@
 import org.openxava.util.*;
 import org.openxava.component.*;
 import org.openxava.model.meta.*;
+
 import java.io.*;
 import java.util.*;
 
@@ -48,7 +49,23 @@ public class HCodeGenerator extends CodeGenerator {
 			component.getName()								
 		};
 		PojoPG.main(argv);
-				
+		
+		//	 Aggregates in bean format
+		Iterator itAggregatesBean = component.getMetaAggregatesBeanGenerated().iterator();
+		while (itAggregatesBean.hasNext()) {
+			MetaAggregateBean aggregate = (MetaAggregateBean) itAggregatesBean.next();
+			String aggregateName = aggregate.getName();
+			String [] argvAg = {				
+				componentsPath  + "/" + file,
+				modelPath + "/" + aggregateName + ".java",
+				getJavaPackage(),
+				component.getName(),
+				aggregateName				
+			};
+			System.out.println(XavaResources.getString("generating_aggregate_javabean_code", aggregateName));
+			BeanPG.main(argvAg);
+		}
+		
 		// Hibernate mapping
 		String mappingPath = "../" + getProject() + "/build/hibernate/"; //tmp ¿una sola vez?
 		System.out.println(XavaResources.getString("generating_hibernate_mapping", component.getName()));			

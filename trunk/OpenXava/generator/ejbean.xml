@@ -925,7 +925,7 @@ while (itReferences.hasNext()) {
 	MetaReference reference = (MetaReference) itReferences.next();
 	String referenceName = Strings.firstUpper(reference.getName());	
 	if (reference.getMetaModelReferenced() instanceof MetaAggregateBean) {	
-		AggregateReferencePG.generate(context, out, reference);
+		AggregateReferencePG.generateEJB(context, out, reference);
 	} 
 	else { // reference to entity or aggreate implemented as EJB
 		EntityReferencePG.generate(context, out, reference);
