@@ -70,7 +70,7 @@ Iterator itReferences = metaModel.getMetaReferences().iterator();
 while (itReferences.hasNext()) {	
 	MetaReference ref = (MetaReference) itReferences.next();
 	if (ref.getMetaModelReferenced() instanceof MetaAggregateBean) {
-//		AggregateReferencePG.generate(context, out, ref); by now
+		AggregateReferencePG.generate(context, out, ref); 
 	}
 	else {
 		String refName = Strings.firstUpper(ref.getName());

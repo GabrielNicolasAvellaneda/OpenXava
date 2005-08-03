@@ -18,10 +18,17 @@ public void setEjb(boolean ejb) {
 	this.ejb = ejb;
 }
 
+public static void generateEJB(XPathContext context, ProgramWriter out, MetaReference ref) throws XavaException {
+	AggregateReferencePG pg = new AggregateReferencePG();
+	pg.setReference(ref);
+	pg.setEjb(true); 
+	pg.generate(context, out);
+}
+
 public static void generate(XPathContext context, ProgramWriter out, MetaReference ref) throws XavaException {
 	AggregateReferencePG pg = new AggregateReferencePG();
 	pg.setReference(ref);
-	pg.setEjb(true); // by now
+	pg.setEjb(false); 
 	pg.generate(context, out);
 }
 

@@ -73,7 +73,31 @@ else {
 <java>	
 		} 
 	}
-</java>   
+</java>
+   
+<java>
+Iterator itReferences = metaModel.getMetaReferences().iterator();	
+while (itReferences.hasNext()) {	
+	MetaReference reference = (MetaReference) itReferences.next();
+	String referenceName = Strings.firstUpper(reference.getName());	
+	if (reference.getMetaModelReferenced() instanceof MetaAggregateBean) {	
+		for (Iterator itAggregateProperties = reference.getMetaModelReferenced().getMetaProperties().iterator(); itAggregateProperties.hasNext();) {	
+			MetaProperty property = (MetaProperty) itAggregateProperties.next();
+			String propertyName = "_" + referenceName + "_" + property.getName();
+			String column = mapping.getColumn(reference.getName() + "_" + property.getName()); 
+</java> 
+		&lt;property name="<expr>propertyName</expr>" column="<expr>column</expr>"/&gt;
+<java>           
+		} 
+	
+	} 
+	else { // reference to entity or aggreate implemented as EJB
+</java> 
+		&lt;!-- Referencia a entidad: <expr>referenceName</expr>		--&gt;
+<java>
+	}
+} 
+</java>
 		
   &lt;/class&gt;
 

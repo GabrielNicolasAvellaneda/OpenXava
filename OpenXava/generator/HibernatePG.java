@@ -10,7 +10,7 @@ import org.openxava.util.Strings;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Jul 28 11:06:18 CEST 2005
+ * @version Wed Aug 03 18:24:28 CEST 2005
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -99,7 +99,36 @@ public class HibernatePG {
     		} 
     	}
     
-    out.print("   \n\t\t\n  </class>\n\n</hibernate-mapping>");
+    
+    Iterator itReferences = metaModel.getMetaReferences().iterator();	
+    while (itReferences.hasNext()) {	
+    	MetaReference reference = (MetaReference) itReferences.next();
+    	String referenceName = Strings.firstUpper(reference.getName());	
+    	if (reference.getMetaModelReferenced() instanceof MetaAggregateBean) {	
+    		for (Iterator itAggregateProperties = reference.getMetaModelReferenced().getMetaProperties().iterator(); itAggregateProperties.hasNext();) {	
+    			MetaProperty property = (MetaProperty) itAggregateProperties.next();
+    			String propertyName = "_" + referenceName + "_" + property.getName();
+    			String column = mapping.getColumn(reference.getName() + "_" + property.getName()); 
+    
+    out.print(" \n\t\t<property name=\"");
+    out.print(propertyName);
+    out.print("\" column=\"");
+    out.print(column);
+    out.print("\"/>");
+               
+    		} 
+    	
+    	} 
+    	else { // reference to entity or aggreate implemented as EJB
+    
+    out.print(" \n\t\t<!-- Referencia a entidad: ");
+    out.print(referenceName);
+    out.print("\t\t-->");
+    
+    	}
+    } 
+    
+    out.print("\n\t\t\n  </class>\n\n</hibernate-mapping>");
     
         } catch (Exception e) {
             System.out.println("Exception: "+e.getMessage());
@@ -134,9 +163,9 @@ public class HibernatePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Jul 28 11:06:19 CEST 2005", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/hibernate.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/HibernatePG.java" }, // output file
+        { "Wed Aug 03 18:24:28 CEST 2005", // date this file was generated
+             "/home/mcarmen/workspace/OpenXava/generator/hibernate.xml", // input file
+             "/home/mcarmen/workspace/OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
