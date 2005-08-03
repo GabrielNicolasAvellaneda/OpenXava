@@ -6,7 +6,6 @@ import org.openxava.util.*;
 import org.openxava.validators.meta.xmlparse.*;
 
 /**
- * Inserte aquí la descripción del tipo.
  * 
  * @author Javier Paniza
  */
@@ -22,6 +21,7 @@ public class MetaValidators {
 		}
 		metaValidators.put(newMetaValidator.getName(), newMetaValidator);
 	}
+	
 	public static void _addMetaValidatorRequired(MetaValidatorRequired newMetaValidator) throws XavaException {
 		if (metaValidatorsRequired == null) {
 			throw new XavaException("only_from_parse", "MetaValidators._addMetaValidatorRequired");
@@ -39,48 +39,37 @@ public class MetaValidators {
 	
 	/**
 	 * 
-	 * @return Nulo si no lo encuentra
+	 * @return Null if not found
 	 */
-	private static MetaValidatorRequired buscarDePapa(String paraClase)
+	private static MetaValidatorRequired findFromParent(String forType)
 		throws XavaException {
 		try {
-			if (esEstereotipo(paraClase)) return null;
-			if (esTipoPrimitivo(paraClase))
+			if (isStereotype(forType)) return null;
+			if (isPrimitiveType(forType))
 				return null;
-			while (!paraClase.equals("java.lang.Object")) {
-				paraClase = Class.forName(paraClase).getSuperclass().getName();
+			while (!forType.equals("java.lang.Object")) {
+				forType = Class.forName(forType).getSuperclass().getName();
 				MetaValidatorRequired v =
-					(MetaValidatorRequired) metaValidatorsRequired.get(paraClase);
+					(MetaValidatorRequired) metaValidatorsRequired.get(forType);
 				if (v != null)
 					return v;
 			}
 			return null;
-		} catch (ClassNotFoundException ex) {
+		} 
+		catch (ClassNotFoundException ex) {
 			ex.printStackTrace();
-			throw new XavaException(
-				"Imposible encontrar validador para "
-					+ paraClase
-					+ ". Clase no encontrada: "
-					+ ex.getMessage());
+			throw new XavaException("class_not_found_searching_validator", forType, ex.getMessage());
 		}
 	}
 	
-	private static boolean esEstereotipo(String paraClase) {
-		return paraClase.indexOf(".") < 0;
+	private static boolean isStereotype(String forType) {
+		return forType.indexOf(".") < 0;
 	}
 	
-	/**
-	 * 
-	 * @return boolean
-	 * @param nombreClase java.lang.String
-	 */
-	private static boolean esTipoPrimitivo(String nombreClase) {
-		return getPrimitiveTypes().contains(nombreClase);
+	private static boolean isPrimitiveType(String className) {
+		return getPrimitiveTypes().contains(className);
 	}
-	/**
-	 * 
-	 * @return java.util.Collection
-	 */
+
 	private static Collection getPrimitiveTypes() {
 		if (primitiveTypes == null) {
 			primitiveTypes = new ArrayList();
@@ -95,39 +84,42 @@ public class MetaValidators {
 		}
 		return primitiveTypes;
 	}
+	
 	/**
-	 * @exception XavaException Si no está registrado el validador con ese nombre, u otro problema.
+	 * @exception XavaException If the validator is not registered or another problem.
 	 */
-	public static MetaValidator getMetaValidator(String nombre) throws XavaException {
+	public static MetaValidator getMetaValidator(String name) throws XavaException {
 		if (metaValidators == null) {
 			metaValidators = new HashMap();
 			metaValidatorsRequired = new HashMap();
-			ValidatorsParser.configurarValidadores();
+			ValidatorsParser.configureValidators();
 		}
-		MetaValidator v = (MetaValidator) metaValidators.get(nombre);
+		MetaValidator v = (MetaValidator) metaValidators.get(name);
 		if (v == null) {
-			throw new XavaException("validator_no_registered", nombre);
+			throw new XavaException("validator_no_registered", name);
 		}
 		return v;
 	}
+	
 	/**
-	 * @return Nulo si no existe un validador para esa clase.
+	 * @return Null if a validator for the clase is not found.
 	 */
-	public static MetaValidatorRequired getMetaValidatorRequiredFor(String tipoOEstereotipo)
+	public static MetaValidatorRequired getMetaValidatorRequiredFor(String typeOrStereotype)
 		throws XavaException {
 		if (metaValidatorsRequired == null) {
 			metaValidators = new HashMap();
 			metaValidatorsRequired = new HashMap();
-			ValidatorsParser.configurarValidadores();
+			ValidatorsParser.configureValidators();
 		}
 		MetaValidatorRequired v =
-			(MetaValidatorRequired) metaValidatorsRequired.get(tipoOEstereotipo);
+			(MetaValidatorRequired) metaValidatorsRequired.get(typeOrStereotype);
 		if (v == null) {
-			v = buscarDePapa(tipoOEstereotipo);
+			v = findFromParent(typeOrStereotype);
 			if (v != null) {
-				metaValidatorsRequired.put(tipoOEstereotipo, v);
+				metaValidatorsRequired.put(typeOrStereotype, v);
 			}
 		}
 		return v;
 	}
+	
 }
