@@ -344,6 +344,11 @@ public class Strings {
 		  	if (Is.emptyString(string)) return new Boolean(false);
 		  	return new Boolean(string.trim());	  				  				  		
 	  	}
+        
+        if (type.equals(Object.class)) {
+            return string;
+        }
+        
   	}
   	catch (Exception ex) {
   		ex.printStackTrace();
