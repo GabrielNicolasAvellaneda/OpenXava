@@ -151,7 +151,7 @@ public class ModuleManager {
 			);				
 	}
 	
-	public void execute(HttpServletRequest request, Messages errors, Messages messages) {		
+	public void execute(HttpServletRequest request, Messages errors, Messages messages) {
 		try {									
 			if (errors.isEmpty()) { // Only it's executed the action if there aren't errors
 				// The next condition is for avoid to execute a action of another module

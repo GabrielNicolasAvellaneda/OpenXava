@@ -120,7 +120,7 @@ String urlDescriptionEditor = "editors/descriptionsEditor.jsp" // in this way be
 <%
 if (editable && view.isCreateNewForReference(ref)) {
 %>
-<xava:link action='Reference.createNew' argv='<%="model="+ref.getReferencedModelName() + ",keyProperty=" + propertyKey%>'/>
+<xava:action action='Reference.createNew' argv='<%="model="+ref.getReferencedModelName() + ",keyProperty=" + propertyKey%>'/>
 <%
 }
 %>

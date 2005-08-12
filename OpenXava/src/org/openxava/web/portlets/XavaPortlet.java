@@ -46,22 +46,24 @@ public class XavaPortlet extends GenericPortlet {
 	private String moduleURL;
 	
 	public void init(PortletConfig config) throws PortletException {
-		super.init(config);
+		super.init(config);		
 		this.moduleURL = "/xava/module.jsp?application=" +
 			config.getInitParameter(PARAM_APPLICATION) + "&module=" +			
-			config.getInitParameter(PARAM_MODULE);
+			config.getInitParameter(PARAM_MODULE);		
 	}
 
 	/**
-	 * Execute the OpenXava module as define by the init parameters PARAM_APPLICATION
+	 * Executes the OpenXava module as defined by the init parameters PARAM_APPLICATION
 	 * and PARAM_MODULE.
 	 * @throws PortletException
 	 * @throws IOException
 	 */
 	public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
+		PortletURL url = response.createRenderURL();
+		request.setAttribute("xava.formAction", "action='" + url.toString() + "'");		
 		PortletContext context = getPortletContext();
 		PortletRequestDispatcher rd = context.getRequestDispatcher(moduleURL);
 		rd.include(request, response);
 	}
-
+	
 }
