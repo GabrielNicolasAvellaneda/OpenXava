@@ -75,10 +75,10 @@ if ((editable && view.isRepresentsEntityReference() && view.isLastKeyProperty(p)
 	String referencedModel = p.getMetaModel().getName();
 %>
 	<% if (view.isSearch()) {%>
-<xava:image action='<%=view.getSearchAction()%>' argv='<%="keyProperty="+propertyKey%>'/>
+<xava:action action='<%=view.getSearchAction()%>' argv='<%="keyProperty="+propertyKey%>'/>
 	<% } %>
 	<% if (view.isCreateNew()) {%>
-<xava:link action='Reference.createNew' argv='<%="model="+referencedModel + ",keyProperty=" + propertyKey%>'/>
+<xava:action action='Reference.createNew' argv='<%="model="+referencedModel + ",keyProperty=" + propertyKey%>'/>
 	<% } %>
 <% } %>
 <%
