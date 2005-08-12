@@ -14,7 +14,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Aug 08 08:35:43 CEST 2005
+ * @version Fri Aug 12 14:46:26 CEST 2005
  */
 public class InterfacePG {
     Properties properties = new Properties();
@@ -237,7 +237,7 @@ public class InterfacePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Aug 08 08:35:43 CEST 2005", // date this file was generated
+        { "Fri Aug 12 14:46:26 CEST 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/interface.xml", // input file
              "/home/javi/workspace/OpenXava/generator/InterfacePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

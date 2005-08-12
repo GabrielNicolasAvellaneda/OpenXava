@@ -53,7 +53,6 @@ if (manager.isXavaView()) { // here and after action execution
 		view.assignValuesToWebView();
 	}
 }
-
 manager.initModule(request, errors, messages);
 if (manager.actionOfThisModule(request)) {
 	manager.execute(request, errors, messages);	
@@ -84,6 +83,7 @@ location.href="http://<%=request.getServerName()%>:<%=request.getServerPort()%><
 <%
 	}
 }
+
 boolean returnToPreviousModule = org.openxava.actions.IChangeModuleAction.PREVIOUS_MODULE.equals(manager.getNextModule());
 if (returnToPreviousModule) { 
 	org.openxava.controller.ModuleManager parentManager = (org.openxava.controller.ModuleManager) context.get(request.getParameter("application"), request.getParameter("parent"), "manager", "org.openxava.controller.ModuleManager");			
@@ -173,7 +173,13 @@ function setFocus() {
 </div>
 
 <div class="module">
-<form name="<%=manager.getForm()%>" method="POST" <%=manager.getEnctype()%>>
+<%
+String xavaFormAction = (String) request.getAttribute("xava.formAction");
+if (xavaFormAction == null) xavaFormAction = "";
+%>
+<form name='<%=manager.getForm()%>' 
+	method='POST' <%=manager.getEnctype()%> 
+	<%=xavaFormAction%>>
 <INPUT type="hidden" name="xava_action" value=""/>
 <INPUT type="hidden" name="xava_action_argv" value=""/>
 <INPUT type="hidden" name="xava_action_application" value="<%=request.getParameter("application")%>"/>
