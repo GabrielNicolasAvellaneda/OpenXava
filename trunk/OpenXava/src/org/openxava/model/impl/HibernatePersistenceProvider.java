@@ -27,8 +27,9 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 			MetaEjbImpl ejbImpl = new MetaEjbImpl(metaModel);
 			Class className = metaModel.getBeanClass();
 			Object key = null;
-			if (keyValues.size() == 1) {
-				key = keyValues.values().iterator().next();
+						
+			if (metaModel.getKeyPropertiesNames().size() == 1) {
+				key = keyValues.get(metaModel.getKeyPropertiesNames().iterator().next());
 			}
 			else {
 				throw new RuntimeException("Claves múltiples todavía no soportadas");

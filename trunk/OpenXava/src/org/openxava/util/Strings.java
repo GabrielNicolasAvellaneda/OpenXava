@@ -244,7 +244,46 @@ public class Strings {
 		}
 		return rs;
   }
+ 
+  /**
+   * Converts a collection of objects in a string of comma separated elements. <p> 
+   *
+   * For example, a collection of 3 elements with 3 names 
+   * is converted to the string <i>Angel, Manolo, Antonia</i> <br>
+   *
+   * @param collection  Collection with the elements. If null return a empty string
+   * @return Not null, including the case <tt>list == null</tt>.
+   */
+  public final static String toString(Collection collection) {
+  	return toString(collection, ",");
+  }
   
+  /**
+   * Converts a collection of objects in string of elements separated by a 
+   * arbitrary character . <p> 
+   *
+   * For example, a collection of 3 elements with this 3 names
+   * is converted to a string of 3 elements with this 3 names and colon (for example).<br>
+   *
+   * @param collection  A collection of objects. If null return a empty string
+   * @param separator  The character used as separator.
+   * @return Not null, including the case <tt>list == null</tt>.
+   */
+  public final static String toString(Collection collection, String separator) {
+		Assert.arg(separator);
+		StringBuffer cad = new StringBuffer();
+		if (collection == null) return "";
+		Iterator itCollections = collection.iterator();	
+		while (itCollections.hasNext()) {	
+			cad.append(itCollections.next());
+			if (itCollections.hasNext()) {
+				cad.append(separator);
+			}	
+		}	
+		return cad.toString();
+  }
+ 
+   
   /**
    * Converts a string a object of the specified type. <p>
    * 

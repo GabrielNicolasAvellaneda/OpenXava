@@ -232,7 +232,11 @@
        <java classname="Simple2XML" classpath="${tl.lib}">
          <arg value="${generator.dir}/entityReference.template"/> 
          <arg value="${generator.dir}/entityReference.xml"/>         
-       </java>						
+       </java>
+		<java classname="Simple2XML" classpath="${tl.lib}">
+		  <arg value="${generator.dir}/entityReferenceEJB.template"/> 
+		  <arg value="${generator.dir}/entityReferenceEJB.xml"/>         
+		</java>
        <java classname="Simple2XML" classpath="${tl.lib}">
          <arg value="${generator.dir}/aggregateReference.template"/> 
          <arg value="${generator.dir}/aggregateReference.xml"/>         
@@ -278,6 +282,10 @@
 	   <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
 	     <arg value="${generator.dir}/entityReference.xml"/> 
 	     <arg value="${generator.dir}/EntityReferencePG.java"/>         
+	   </java>  		
+	   <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
+	     <arg value="${generator.dir}/entityReferenceEJB.xml"/> 
+	     <arg value="${generator.dir}/EntityReferenceEJBPG.java"/>         
 	   </java>  		
        <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
          <arg value="${generator.dir}/aggregateReference.xml"/> 

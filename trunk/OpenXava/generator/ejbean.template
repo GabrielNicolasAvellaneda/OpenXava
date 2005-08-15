@@ -927,7 +927,7 @@ while (itReferences.hasNext()) {
 		AggregateReferencePG.generateEJB(context, out, reference);
 	} 
 	else { // reference to entity or aggreate implemented as EJB
-		EntityReferencePG.generate(context, out, reference);
+		EntityReferenceEJBPG.generate(context, out, reference);
 	}
 } 
 # 

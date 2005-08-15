@@ -11,8 +11,10 @@ public class XavaPreferences {
 	private final static String FILE_PROPERTIES="xava.properties";
 		
 	private Properties properties;
-	private static XavaPreferences instance; 
-
+	private static XavaPreferences instance;
+	private boolean ejb2PersistenceLoaded=false;
+  private boolean ejb2Persistence=false;
+  
 	public static XavaPreferences getInstance() {
 		if (instance == null) {
 			instance = new XavaPreferences();
@@ -66,5 +68,12 @@ public class XavaPreferences {
 	public boolean isMapFacadeAsEJB() {
 		return "true".equalsIgnoreCase(getProperties().getProperty("mapFacadeAsEJB", "true"));
 	}
-	
+
+	public boolean isEJB2Persistence() {
+		if (!ejb2PersistenceLoaded) {
+			ejb2PersistenceLoaded = true;
+			ejb2Persistence = getPersistenceProviderClass().toUpperCase().indexOf("EJB") >= 0;
+		}	
+		return ejb2Persistence;
+	}
 }

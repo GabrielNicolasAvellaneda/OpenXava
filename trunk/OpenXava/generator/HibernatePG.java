@@ -10,7 +10,7 @@ import org.openxava.util.Strings;
 
 /**
  * Program Generator created by TL2Java
- * @version Fri Aug 12 14:46:27 CEST 2005
+ * @version Mon Aug 15 13:26:45 CEST 2005
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -117,18 +117,88 @@ public class HibernatePG {
     out.print("\"/>");
                
     		} 
-    	
+    		for (Iterator itAggregateReferences = reference.getMetaModelReferenced().getMetaReferences().iterator(); itAggregateReferences.hasNext();) {	
+    			MetaReference ref = (MetaReference) itAggregateReferences.next();
+    			String refName = reference.getName() + "_" + ref.getName();
+    			Collection columns = mapping.getReferenceMapping(reference.getName() + "_" + ref.getName()).getColumns();   
+      			if (columns.size() == 1) {	
+    				String column = (String) columns.iterator().next();
+    
+    out.print(" \n\t\t<many-to-one name=\"");
+    out.print(refName);
+    out.print("\" column=\"");
+    out.print(column);
+    out.print("\"/>");
+    
+    			}
+    			else { 
+    
+    out.print(" \n\t\t<!--  Mapping of \"");
+    out.print(reference.getName() + "_" + ref.getName());
+    out.print("\": multiple key still not supported -->");
+    
+    			}         
+    		}
     	} 
     	else { // reference to entity or aggreate implemented as EJB
+    		Collection columns = mapping.getReferenceMapping(reference.getName()).getColumns();   
+      		if (columns.size() == 1) {	
+    			String column = (String) columns.iterator().next();
     
-    out.print(" \n\t\t<!-- Referencia a entidad: ");
-    out.print(referenceName);
-    out.print("\t\t-->");
+    out.print(" \n\t\t<many-to-one name=\"");
+    out.print(reference.getName());
+    out.print("\" column=\"");
+    out.print(column);
+    out.print("\"/>");
     
+    		}
+    		else { 
+    
+    out.print(" \n\t\t<!--  Mapping of \"");
+    out.print(reference.getName());
+    out.print("\": multiple key still not supported -->");
+    
+    		}
     	}
     } 
+     
+    Iterator itCollections = metaModel.getMetaCollections().iterator();	
+    while (itCollections.hasNext()) {	
+    	MetaCollection col = (MetaCollection) itCollections.next();
+    	boolean isAggregate = col.getMetaReference().getMetaModelReferenced() instanceof MetaAggregate;
+    	if (isAggregate || col.hasCalculator() || col.hasCondition()) {
+    		continue;
+    	}
+    	String roleName = col.getMetaReference().getRole();	 
+    	Collection columns = col.getMetaReference().getMetaModelReferenced().getMapping().getReferenceMapping(roleName).getColumns();
+    	if (columns.size() == 1) {	
+    		String column = (String) columns.iterator().next();
+    		Collection cKeys = col.getMetaReference().getMetaModelReferenced().getAllKeyPropertiesNames();
+    		String nKeys = Strings.toString(cKeys);          		
     
-    out.print("\n\t\t\n  </class>\n\n</hibernate-mapping>");
+    out.print(" \n\t\t<set name=\"");
+    out.print(col.getName());
+    out.print("\" order-by=\"");
+    out.print(nKeys);
+    out.print("\">\n\t\t\t<key column=\"");
+    out.print(column);
+    out.print("\"/>\n\t\t\t<one-to-many class=\"");
+    out.print(col.getMetaReference().getMetaModelReferenced().getName());
+    out.print("\"/>\n\t\t</set>");
+    
+    	}	
+    	else { 
+    
+    out.print(" \n\t\t<!--  Mapping of \"");
+    out.print(col.getName());
+    out.print("\": multiple key still not supported -->");
+    
+    	}
+    
+    }
+    
+    
+    out.print(" \t\n  </class>\n\n</hibernate-mapping>");
     
         } catch (Exception e) {
             System.out.println("Exception: "+e.getMessage());
@@ -163,9 +233,9 @@ public class HibernatePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Fri Aug 12 14:46:27 CEST 2005", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/hibernate.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/HibernatePG.java" }, // output file
+        { "Mon Aug 15 13:26:45 CEST 2005", // date this file was generated
+             "/home/mcarmen/workspace/OpenXava/generator/hibernate.xml", // input file
+             "/home/mcarmen/workspace/OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

@@ -15,6 +15,7 @@ public interface IMetaModel {
 	MetaReference getMetaReference(String name) throws ElementNotFoundException, XavaException;
 	MetaMethod getMetaMethod(String name) throws ElementNotFoundException, XavaException;
 	Collection getKeyPropertiesNames() throws XavaException;
+	Collection getKeyReferencesNames() throws XavaException;
 	Collection getAllKeyPropertiesNames() throws XavaException;
 	Collection getMetaProperties();
 	Collection getMetaReferences();
