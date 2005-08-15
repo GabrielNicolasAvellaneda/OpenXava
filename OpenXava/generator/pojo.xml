@@ -6,6 +6,7 @@
 <declare import="org.openxava.model.meta.*"/>
 <declare import="org.openxava.calculators.*"/>
 <declare import="org.openxava.generators.*"/>
+<declare import="org.openxava.mapping.*"/>
 
 
 <java>
@@ -73,16 +74,7 @@ while (itReferences.hasNext()) {
 		AggregateReferencePG.generate(context, out, ref); 
 	}
 	else {
-		String refName = Strings.firstUpper(ref.getName());
-	</java> 
-	private <expr>ref.getReferencedModelName()</expr> <expr>ref.getName()</expr>;
-	public <expr>ref.getReferencedModelName()</expr> get<expr>refName</expr>() {
-		return <expr>ref.getName()</expr>;
-	}
-	public void set<expr>refName</expr>(<expr>ref.getReferencedModelName()</expr> new<expr>ref.getReferencedModelName()</expr>) {
-		this.<expr>ref.getName()</expr> = new<expr>ref.getReferencedModelName()</expr>;
-	}	
-	<java>
+		EntityReferencePG.generate(context, out, ref); 
 	}
 }
 </java> 
@@ -99,6 +91,9 @@ while (itCollections.hasNext()) {
 	public java.util.Collection get<expr>colName</expr>() {
 		return <expr>col.getName()</expr>;
 	}
+	public void set<expr>colName</expr>(java.util.Collection <expr>col.getName()</expr>) {
+		this.<expr>col.getName()</expr> = <expr>col.getName()</expr>;
+	}
 	<java>
 }
 </java> 
@@ -114,6 +109,65 @@ while (itCollections.hasNext()) {
 		}
 		return metaModel;
 	}
+	
+	public String toString() {		
+	<java>
+		StringBuffer string = new StringBuffer();
+		string.append('"');
+		string.append(name);
+		Collection metaProperties = metaModel.getMetaPropertiesKey();
+		Iterator itKeys = metaProperties.iterator();	
+		while (itKeys.hasNext()) {	
+			MetaProperty key = (MetaProperty) itKeys.next();
+			PropertyMapping pMapping = key.getMapping();
+			String atributeName = pMapping.hasConverter()?"_"+key.getName():key.getName();	
+			string.append("::");
+			string.append('"');
+			string.append(" + ");
+			string.append(atributeName);
+			if (itKeys.hasNext()) {
+   				string.append(" + ");
+   				string.append('"');
+			}
+		}
+		
+		if (metaProperties.isEmpty()) {
+			string.append("::");
+			string.append('"');
+		}
+		
+		itKeys = metaModel.getKeyReferencesNames().iterator();	
+		if (itKeys.hasNext() &amp;&amp; !metaProperties.isEmpty()) {
+			string.append(" + ");
+			string.append('"');
+		}	
+		while (itKeys.hasNext()) {	
+			String key = (String) itKeys.next();
+			if (!metaProperties.isEmpty()) {
+				string.append("::");
+				string.append('"');
+			}	
+			string.append(" + ");
+			string.append(key);
+			if (itKeys.hasNext()) {
+   				string.append(" + ");
+   				string.append('"');
+			}
+		}
+		
+	</java> 
+		return <expr>string</expr>;
+	}
+
+	public boolean equals(Object other) {		
+		if (other == null) return false;
+		return toString().equals(other.toString());
+	}
+	
+	public int hashCode() {		
+		return toString().hashCode();
+	}
+	
 }
 
 </tl>

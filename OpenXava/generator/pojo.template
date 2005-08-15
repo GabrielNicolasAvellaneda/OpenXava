@@ -5,6 +5,7 @@
 #declare import="org.openxava.model.meta.*"#
 #declare import="org.openxava.calculators.*"#
 #declare import="org.openxava.generators.*"#
+#declare import="org.openxava.mapping.*"#
 
 
 # 
@@ -72,16 +73,7 @@ while (itReferences.hasNext()) {
 		AggregateReferencePG.generate(context, out, ref); 
 	}
 	else {
-		String refName = Strings.firstUpper(ref.getName());
-	# 
-	private #(ref.getReferencedModelName())# #(ref.getName())#;
-	public #(ref.getReferencedModelName())# get#(refName)#() {
-		return #(ref.getName())#;
-	}
-	public void set#(refName)#(#(ref.getReferencedModelName())# new#(ref.getReferencedModelName())#) {
-		this.#(ref.getName())# = new#(ref.getReferencedModelName())#;
-	}	
-	# 
+		EntityReferencePG.generate(context, out, ref); 
 	}
 }
 # 
@@ -98,6 +90,9 @@ while (itCollections.hasNext()) {
 	public java.util.Collection get#(colName)#() {
 		return #(col.getName())#;
 	}
+	public void set#(colName)#(java.util.Collection #(col.getName())#) {
+		this.#(col.getName())# = #(col.getName())#;
+	}
 	# 
 }
 # 
@@ -113,5 +108,64 @@ while (itCollections.hasNext()) {
 		}
 		return metaModel;
 	}
+	
+	public String toString() {		
+	# 
+		StringBuffer string = new StringBuffer();
+		string.append('"');
+		string.append(name);
+		Collection metaProperties = metaModel.getMetaPropertiesKey();
+		Iterator itKeys = metaProperties.iterator();	
+		while (itKeys.hasNext()) {	
+			MetaProperty key = (MetaProperty) itKeys.next();
+			PropertyMapping pMapping = key.getMapping();
+			String atributeName = pMapping.hasConverter()?"_"+key.getName():key.getName();	
+			string.append("::");
+			string.append('"');
+			string.append(" + ");
+			string.append(atributeName);
+			if (itKeys.hasNext()) {
+   				string.append(" + ");
+   				string.append('"');
+			}
+		}
+		
+		if (metaProperties.isEmpty()) {
+			string.append("::");
+			string.append('"');
+		}
+		
+		itKeys = metaModel.getKeyReferencesNames().iterator();	
+		if (itKeys.hasNext() && !metaProperties.isEmpty()) {
+			string.append(" + ");
+			string.append('"');
+		}	
+		while (itKeys.hasNext()) {	
+			String key = (String) itKeys.next();
+			if (!metaProperties.isEmpty()) {
+				string.append("::");
+				string.append('"');
+			}	
+			string.append(" + ");
+			string.append(key);
+			if (itKeys.hasNext()) {
+   				string.append(" + ");
+   				string.append('"');
+			}
+		}
+		
+	# 
+		return #(string)#;
+	}
+
+	public boolean equals(Object other) {		
+		if (other == null) return false;
+		return toString().equals(other.toString());
+	}
+	
+	public int hashCode() {		
+		return toString().hashCode();
+	}
+	
 }
 

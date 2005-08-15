@@ -88,16 +88,68 @@ while (itReferences.hasNext()) {
 		<property name="#(propertyName)#" column="#(column)#"/>
 #            
 		} 
-	
+		for (Iterator itAggregateReferences = reference.getMetaModelReferenced().getMetaReferences().iterator(); itAggregateReferences.hasNext();) {	
+			MetaReference ref = (MetaReference) itAggregateReferences.next();
+			String refName = reference.getName() + "_" + ref.getName();
+			Collection columns = mapping.getReferenceMapping(reference.getName() + "_" + ref.getName()).getColumns();   
+  			if (columns.size() == 1) {	
+				String column = (String) columns.iterator().next();
+# 
+		<many-to-one name="#(refName)#" column="#(column)#"/>
+# 
+			}
+			else { 
+# 
+		<!--  Mapping of "#(reference.getName() + "_" + ref.getName())#": multiple key still not supported -->
+# 
+			}         
+		}
 	} 
 	else { // reference to entity or aggreate implemented as EJB
+		Collection columns = mapping.getReferenceMapping(reference.getName()).getColumns();   
+  		if (columns.size() == 1) {	
+			String column = (String) columns.iterator().next();
 # 
-		<!-- Referencia a entidad: #(referenceName)#		-->
+		<many-to-one name="#(reference.getName())#" column="#(column)#"/>
 # 
+		}
+		else { 
+# 
+		<!--  Mapping of "#(reference.getName())#": multiple key still not supported -->
+# 
+		}
 	}
 } 
-#
-		
+ 
+Iterator itCollections = metaModel.getMetaCollections().iterator();	
+while (itCollections.hasNext()) {	
+	MetaCollection col = (MetaCollection) itCollections.next();
+	boolean isAggregate = col.getMetaReference().getMetaModelReferenced() instanceof MetaAggregate;
+	if (isAggregate || col.hasCalculator() || col.hasCondition()) {
+		continue;
+	}
+	String roleName = col.getMetaReference().getRole();	 
+	Collection columns = col.getMetaReference().getMetaModelReferenced().getMapping().getReferenceMapping(roleName).getColumns();
+	if (columns.size() == 1) {	
+		String column = (String) columns.iterator().next();
+		Collection cKeys = col.getMetaReference().getMetaModelReferenced().getAllKeyPropertiesNames();
+		String nKeys = Strings.toString(cKeys);          		
+# 
+		<set name="#(col.getName())#" order-by="#(nKeys)#">
+			<key column="#(column)#"/>
+			<one-to-many class="#(col.getMetaReference().getMetaModelReferenced().getName())#"/>
+		</set>	
+# 
+	}	
+	else { 
+# 
+		<!--  Mapping of "#(col.getName())#": multiple key still not supported -->
+# 
+	}
+
+}
+
+# 	
   </class>
 
 </hibernate-mapping>

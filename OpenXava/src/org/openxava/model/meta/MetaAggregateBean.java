@@ -97,7 +97,7 @@ public class MetaAggregateBean extends MetaAggregate {
 	}	
 
 	private boolean isUsingEJB() {
-		return XavaPreferences.getInstance().getPersistenceProviderClass().toUpperCase().indexOf("EJB") >= 0;
+		return XavaPreferences.getInstance().isEJB2Persistence();
 	}
 	
 }

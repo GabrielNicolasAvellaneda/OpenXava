@@ -111,7 +111,12 @@ for (Iterator itReferences = referencedModel.getMetaReferences().iterator(); itR
 		AggregateReferencePG.generate(context, out, ref);
 	} 
 	else { // reference to entity or aggregate implemented as EJB
-		EntityReferencePG.generate(context, out, ref);
+	    if (ejb) {
+			EntityReferenceEJBPG.generate(context, out, ref);
+		}	
+		else {
+			EntityReferencePG.generate(context, out, ref);
+		}
 	}		
 } 
 </java> </tl>

@@ -73,14 +73,17 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			return result;
 		} 
 		catch (FinderException ex) {
+			ex.printStackTrace();
 			rollback(persistenceProvider);
 			throw ex;
 		}
 		catch (XavaException ex) {
+			ex.printStackTrace();
 			rollback(persistenceProvider);
 			throw ex;
 		}
 		catch (Exception ex) {
+			ex.printStackTrace();
 			rollback(persistenceProvider);
 			throw new RemoteException(ex.getMessage());
 		}
@@ -571,7 +574,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			if (validationErrors.contains()) {
 				throw new ValidationException(validationErrors);			
 			}
-			Map convertedValues = convertSubmapsInObject(persistenceProvider, metaModel, values, true);
+			Map convertedValues = convertSubmapsInObject(persistenceProvider, metaModel, values, XavaPreferences.getInstance().isEJB2Persistence());
 			Object newObject = null;
 			if (metaModelContainer == null) {
 				newObject = persistenceProvider.create((IMetaEjb)metaModel, convertedValues);
@@ -1466,7 +1469,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			validate(persistenceProvider, metaModel, values, keyValues, null);			
 			Object entity = findEntity(persistenceProvider, (IMetaEjb) metaModel, keyValues);			
 			IPropertiesContainer r = persistenceProvider.toPropertiesContainer(metaModel, entity);			
-			r.executeSets(convertSubmapsInObject(persistenceProvider, metaModel, values, true));			
+			r.executeSets(convertSubmapsInObject(persistenceProvider, metaModel, values, XavaPreferences.getInstance().isEJB2Persistence()));			
 			if (collections != null) {
 				modifyCollections(persistenceProvider, metaModel, entity, collections);
 			}			
@@ -1847,7 +1850,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			}
 			else if (metaModel.containsMetaReference(memberName)) {
 				MetaReference ref = metaModel.getMetaReference(memberName);
-				if (!referencesAsKey || ref.isAggregate()) {
+				if (!referencesAsKey || ref.isAggregate()) { 
 					value = mapToReferencedObject(persistenceProvider, metaModel, memberName, (Map) en
 							.getValue());
 				}

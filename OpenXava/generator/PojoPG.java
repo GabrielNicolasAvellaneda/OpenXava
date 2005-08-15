@@ -10,10 +10,11 @@ import org.openxava.component.MetaComponent;
 import org.openxava.model.meta.*;
 import org.openxava.calculators.*;
 import org.openxava.generators.*;
+import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Fri Aug 12 14:46:25 CEST 2005
+ * @version Mon Aug 15 13:26:43 CEST 2005
  */
 public class PojoPG {
     Properties properties = new Properties();
@@ -77,30 +78,7 @@ public class PojoPG {
     		AggregateReferencePG.generate(context, out, ref); 
     	}
     	else {
-    		String refName = Strings.firstUpper(ref.getName());
-    	
-    out.print(" \n\tprivate ");
-    out.print(ref.getReferencedModelName());
-    out.print(" ");
-    out.print(ref.getName());
-    out.print(";\n\tpublic ");
-    out.print(ref.getReferencedModelName());
-    out.print(" get");
-    out.print(refName);
-    out.print("() {\n\t\treturn ");
-    out.print(ref.getName());
-    out.print(";\n\t}\n\tpublic void set");
-    out.print(refName);
-    out.print("(");
-    out.print(ref.getReferencedModelName());
-    out.print(" new");
-    out.print(ref.getReferencedModelName());
-    out.print(") {\n\t\tthis.");
-    out.print(ref.getName());
-    out.print(" = new");
-    out.print(ref.getReferencedModelName());
-    out.print(";\n\t}");
-    
+    		EntityReferencePG.generate(context, out, ref); 
     	}
     }
     
@@ -116,6 +94,14 @@ public class PojoPG {
     out.print(";\n\tpublic java.util.Collection get");
     out.print(colName);
     out.print("() {\n\t\treturn ");
+    out.print(col.getName());
+    out.print(";\n\t}\n\tpublic void set");
+    out.print(colName);
+    out.print("(java.util.Collection ");
+    out.print(col.getName());
+    out.print(") {\n\t\tthis.");
+    out.print(col.getName());
+    out.print(" = ");
     out.print(col.getName());
     out.print(";\n\t}");
     
@@ -133,7 +119,55 @@ public class PojoPG {
     out.print(aggregateName);
     out.print("\");");
     } 
-    out.print(" \t\n\t\t}\n\t\treturn metaModel;\n\t}\n}");
+    out.print(" \t\n\t\t}\n\t\treturn metaModel;\n\t}\n\t\n\tpublic String toString() {");
+    
+    		StringBuffer string = new StringBuffer();
+    		string.append('"');
+    		string.append(name);
+    		Collection metaProperties = metaModel.getMetaPropertiesKey();
+    		Iterator itKeys = metaProperties.iterator();	
+    		while (itKeys.hasNext()) {	
+    			MetaProperty key = (MetaProperty) itKeys.next();
+    			PropertyMapping pMapping = key.getMapping();
+    			String atributeName = pMapping.hasConverter()?"_"+key.getName():key.getName();	
+    			string.append("::");
+    			string.append('"');
+    			string.append(" + ");
+    			string.append(atributeName);
+    			if (itKeys.hasNext()) {
+       				string.append(" + ");
+       				string.append('"');
+    			}
+    		}
+    		
+    		if (metaProperties.isEmpty()) {
+    			string.append("::");
+    			string.append('"');
+    		}
+    		
+    		itKeys = metaModel.getKeyReferencesNames().iterator();	
+    		if (itKeys.hasNext() && !metaProperties.isEmpty()) {
+    			string.append(" + ");
+    			string.append('"');
+    		}	
+    		while (itKeys.hasNext()) {	
+    			String key = (String) itKeys.next();
+    			if (!metaProperties.isEmpty()) {
+    				string.append("::");
+    				string.append('"');
+    			}	
+    			string.append(" + ");
+    			string.append(key);
+    			if (itKeys.hasNext()) {
+       				string.append(" + ");
+       				string.append('"');
+    			}
+    		}
+    		
+    	
+    out.print(" \n\t\treturn ");
+    out.print(string);
+    out.print(";\n\t}\n\n\tpublic boolean equals(Object other) {\t\t\n\t\tif (other == null) return false;\n\t\treturn toString().equals(other.toString());\n\t}\n\t\n\tpublic int hashCode() {\t\t\n\t\treturn toString().hashCode();\n\t}\n\t\n}");
     
         } catch (Exception e) {
             System.out.println("Exception: "+e.getMessage());
@@ -168,9 +202,9 @@ public class PojoPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Fri Aug 12 14:46:25 CEST 2005", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/pojo.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/PojoPG.java" }, // output file
+        { "Mon Aug 15 13:26:43 CEST 2005", // date this file was generated
+             "/home/mcarmen/workspace/OpenXava/generator/pojo.xml", // input file
+             "/home/mcarmen/workspace/OpenXava/generator/PojoPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
