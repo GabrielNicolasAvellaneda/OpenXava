@@ -43,6 +43,11 @@
   			overwrite="true">
     		<fileset dir="es"/>    		
   		</copy>			
+  		<copy 
+  			todir="${jetspeed.dir}/html/de" 
+  			overwrite="true">
+    		<fileset dir="de"/>    		
+  		</copy>					
 		<touch file="${jetspeed.dir}/WEB-INF/web.xml"/>
 	</target>
 				

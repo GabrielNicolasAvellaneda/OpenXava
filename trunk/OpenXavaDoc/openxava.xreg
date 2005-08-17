@@ -226,6 +226,28 @@
         <url cachedOnURL="true">/html/snapshot.html</url>
         <category group="Jetspeed">OpenXava</category>
     </portlet-entry>
-		
+    
+		<!-- German -->
+    <portlet-entry name="Beschreibung" hidden="false" type="ref"
+        parent="HTML" application="false">
+        <meta-info>
+            <title>J2EE made easy using XML</title>
+            <description>What is OpenXava and its main features?</description>
+        </meta-info>
+        <classname>org.apache.jetspeed.portal.portlets.FileServerPortlet</classname>
+        <url cachedOnURL="true">/html/de/beschreibung.html</url>
+        <category group="Jetspeed">OpenXava</category>
+    </portlet-entry>
 
+    <portlet-entry name="Geschaftskomponenten" hidden="false" type="ref"
+        parent="HTML" application="false">
+        <meta-info>
+            <title>Geschäftskomponenten</title>
+            <description>Geschäftskomponenten bilden die Grundlage</description>
+        </meta-info>
+        <classname>org.apache.jetspeed.portal.portlets.FileServerPortlet</classname>
+        <url cachedOnURL="true">/html/de/geschaftskomponente.html</url>
+        <category group="Jetspeed">OpenXava</category>
+    </portlet-entry>
+    
 </registry>
