@@ -29,7 +29,7 @@ public class NextLongCalculator implements IJDBCCalculator {
 
 	public long calculateNextLong()
 		throws Exception {
-		if (XSystem.onClient()) {
+		if (provider == null) {
 			Object r = Server.calculate(this, getPackageName());			
 			if (r instanceof Number) {
 				return ((Number) r).longValue();
