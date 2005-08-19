@@ -386,7 +386,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 				return baseCondition;
 			}
 		}
-		// baseic select
+		// basic select
 		StringBuffer select = new StringBuffer("select ");
 		Iterator itProperties = getPropertiesNames().iterator();
 		while (itProperties.hasNext()) {
@@ -415,22 +415,35 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		if (hasReferences()) {
 			// the tables
 
-			Iterator itReferencesMappings = getEntityReferencesMappings()
-					.iterator();
+			Iterator itReferencesMappings = getEntityReferencesMappings().iterator();
 			while (itReferencesMappings.hasNext()) {
 				ReferenceMapping referenceMapping = (ReferenceMapping) itReferencesMappings.next();				
-				select.append(" left join ");				
+				select.append(" left join ");						
 				select.append(referenceMapping.getReferencedTable());
+				select.append(" as ");
+				select.append("T_");
+				select.append(referenceMapping.getReference());
 				// where of join
 				select.append(" on ");
 				Iterator itDetails = referenceMapping.getDetails().iterator();
 				while (itDetails.hasNext()) {
-					ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails
-							.next();
-					select.append(detail.getQualifiedColumn());
+					ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
+					String modelThatContainsReference = detail.getContainer().getContainer().getModelName();
+					if (modelThatContainsReference.equals(getModelName())) {
+						select.append(detail.getQualifiedColumn());
+					}
+					else {
+						select.append("T_");
+						select.append(modelThatContainsReference); // Maybe this does not work when more than one 3 level reference to same model 
+						select.append(".");
+						select.append(detail.getColumn());												
+					}
 					select.append(" = ");
-					select.append(detail
-							.getQualifiedColumnOfReferencedTable());
+					select.append("T_");
+					select.append(referenceMapping.getReference());
+					select.append(".");
+					select.append(detail.getReferencedTableColumn());					
+					
 					if (itDetails.hasNext()) {
 						select.append(" and ");
 					}
@@ -442,7 +455,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		if (hasBaseCondition()) {
 			select.append(" where ");
 			select.append(getBaseCondition());
-		}		
+		}				
 		return select.toString();
 	}
 

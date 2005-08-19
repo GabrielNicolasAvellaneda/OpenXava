@@ -43,8 +43,6 @@ public class View implements java.io.Serializable {
 	private int collectionEditingRow = -1;
 	private boolean searchingObject;
 	private Collection memberNamesWithoutSeccions;
-	private boolean hasSubview;
-	private boolean knowIfHasSubview;
 	private View parent;	
 	private Collection metaPropertiesList;
 	private boolean knowIfDisplayDetailInCollection;
@@ -857,14 +855,14 @@ public class View implements java.io.Serializable {
 	public List getCollectionValues() throws XavaException { 
 		if (!isRepresentsCollection()) return Collections.EMPTY_LIST;
 		if (collectionValues == null) {
-			Map nombresMiembros = new HashMap();
-			nombresMiembros.put(getMemberName(), getCollectionMemberNames());
-			View raiz = getRoot();			
+			Map membersNames = new HashMap();
+			membersNames.put(getMemberName(), getCollectionMemberNames());
+			View root = getRoot();			
 			try {							
-				Map valores = MapFacade.getValues(getParent().getModelName(), getParent().getKeyValues(), nombresMiembros);
-				collectionValues = (List) valores.get(getMemberName());				
+				Map values = MapFacade.getValues(getParent().getModelName(), getParent().getKeyValues(), membersNames);
+				collectionValues = (List) values.get(getMemberName());				
 			}
-			catch (ObjectNotFoundException ex) { // Estamos creando uno nuevo				
+			catch (ObjectNotFoundException ex) { // New one is creating				
 				collectionValues = Collections.EMPTY_LIST; 								
 			}
 			catch (Exception ex) {
@@ -890,8 +888,8 @@ public class View implements java.io.Serializable {
 			Iterator it = getMetaPropertiesList().iterator();
 			while (it.hasNext()) {
 				MetaProperty pr = (MetaProperty) it.next();
-				String nombrePropiedad = pr.getName();
-				addQualifiedMemberToMap(nombrePropiedad, collectionMemberNames);
+				String propertyName = pr.getName();
+				addQualifiedMemberToMap(propertyName, collectionMemberNames);
 			}		
 		}	
 		return collectionMemberNames;
@@ -903,18 +901,18 @@ public class View implements java.io.Serializable {
 			collectionMemberNames.put(propertyName, null);				
 		}
 		else {
-			String nombreReferencia = propertyName.substring(0, idx);
-			String nombrePropiedadReferencia = propertyName.substring(idx+1);			
-			Map ref = (Map) collectionMemberNames.get(nombreReferencia);
+			String referenceName = propertyName.substring(0, idx);
+			String referencePropertyName = propertyName.substring(idx+1);			
+			Map ref = (Map) collectionMemberNames.get(referenceName);
 			if (ref == null) {
 				ref = new HashMap();
-				collectionMemberNames.put(nombreReferencia, ref);
+				collectionMemberNames.put(referenceName, ref);
 			}
-			if (nombrePropiedadReferencia.indexOf('.') < 0) {
-				ref.put(nombrePropiedadReferencia, null);
+			if (referencePropertyName.indexOf('.') < 0) {
+				ref.put(referencePropertyName, null);
 			}
 			else {
-				addQualifiedMemberToMap(nombrePropiedadReferencia, ref);
+				addQualifiedMemberToMap(referencePropertyName, ref);
 			}												
 		}			
 	}
@@ -942,24 +940,8 @@ public class View implements java.io.Serializable {
 		return memberNamesWithoutSeccions;
 	}
 
-	private boolean haySubvistas() throws XavaException {		
-		if (knowIfHasSubview) return hasSubview;		
-		knowIfHasSubview = true;
-		Iterator it = getMetaMembers().iterator();
-		while (it.hasNext()) {
-			MetaMember miembro = (MetaMember) it.next();			
-			if (miembro instanceof MetaReference || miembro instanceof MetaCollection) {				
-				hasSubview = true;
-				return hasSubview;
-			} 
-		}				
-		hasSubview = false;
-		return hasSubview;
-	}
-
 	/**
-	 * Borra los datos y pone valores por defecto.
-	 *
+	 * Clear all data and set the default values.
 	 */
 	public void reset() throws XavaException {					
 		clear();		
@@ -967,8 +949,7 @@ public class View implements java.io.Serializable {
 	}
 	
 	/**
-	 * Borra los datos visualizados.
-	 *
+	 * Clear all displayed data. 
 	 */
 	public void clear() throws XavaException {		
 		setIdFocusProperty(null);
@@ -981,22 +962,22 @@ public class View implements java.io.Serializable {
 			values.put(e.getKey(), null);			
 		}					
 		if (hasSubviews()) {
-			Iterator itSubvistas = getSubviews().values().iterator();
-			while (itSubvistas.hasNext()) {
-				View subvista = (View) itSubvistas.next();
-				subvista.clear();
+			Iterator itSubviews = getSubviews().values().iterator();
+			while (itSubviews.hasNext()) {
+				View subview = (View) itSubviews.next();
+				subview.clear();
 			}
 		}
 		if (hasGroups()) {
-			Iterator itSubvistas = getGroupsViews().values().iterator();
-			while (itSubvistas.hasNext()) {
-				View subvista = (View) itSubvistas.next();
-				subvista.clear();
+			Iterator itSubviews = getGroupsViews().values().iterator();
+			while (itSubviews.hasNext()) {
+				View subview = (View) itSubviews.next();
+				subview.clear();
 			}
 		}						
 		if (hasSections()) {
-			int cantidad = getSections().size();
-			for (int i = 0; i < cantidad; i++) {
+			int quantity = getSections().size();
+			for (int i = 0; i < quantity; i++) {
 				getSectionView(i).clear();
 			}	
 		}		
@@ -1004,7 +985,6 @@ public class View implements java.io.Serializable {
 	
 	/**
 	 * Set the defaul values in the empty fields.  
-	 *
 	 */
 	private void calculateDefaultValues() throws XavaException {
 		// Properties
@@ -1015,16 +995,16 @@ public class View implements java.io.Serializable {
 			Collection properties = new ArrayList(getMetaModel().getMetaPropertiesWithDefaultValueCalculator());			
 			properties.addAll(getMetaModel().getMetaPropertiesViewWithDefaultCalculator());			
 			if (!properties.isEmpty()) {		
-				Map nombresMiembros = getMembersNames();				
+				Map membersNames = getMembersNames();				
 				Iterator it = properties.iterator();
-				Collection puestos = new ArrayList();				
+				Collection alreadyPut = new ArrayList();				
 				while (it.hasNext()) {
 					MetaProperty p = (MetaProperty) it.next();					
-					if (nombresMiembros.containsKey(p.getName())) {				
+					if (membersNames.containsKey(p.getName())) {				
 						try {
-							if (!p.getMetaCalculatorDefaultValue().containsMetaSetsWithoutValue()) { // Así evitamos calcular las dependientes
+							if (!p.getMetaCalculatorDefaultValue().containsMetaSetsWithoutValue()) { // This way to avoid calculate the dependend ones
 								setValue(p.getName(), p.getDefaultValueCalculator().calculate());
-								puestos.add(p.getName());
+								alreadyPut.add(p.getName());
 							}					
 						}
 						catch (Exception ex) {
@@ -1033,39 +1013,39 @@ public class View implements java.io.Serializable {
 						}				 
 					}
 				}				
-				if (!puestos.isEmpty()) {
-					Iterator itPuestos = puestos.iterator();					
-					boolean hasNext = itPuestos.hasNext(); 
+				if (!alreadyPut.isEmpty()) {
+					Iterator itAlreadyPut = alreadyPut.iterator();					
+					boolean hasNext = itAlreadyPut.hasNext(); 
 					while (hasNext) {												 
-						String nombrePropiedad = (String) itPuestos.next();						 
+						String propertyName = (String) itAlreadyPut.next();						 
 						try {
 							hasToSearchOnChangeIfSubview = false;							
-							propertyChanged(nombrePropiedad);							
+							propertyChanged(propertyName);							
 						}
 						finally {
 							hasToSearchOnChangeIfSubview = true;						
 						}						
-						hasNext = itPuestos.hasNext(); // Loop in this way to bypass a bug in Websphere 5.0.2.9 JDK						
+						hasNext = itAlreadyPut.hasNext(); // Loop in this way to bypass a bug in Websphere 5.0.2.9 JDK						
 					}					
 				}
 			}
 								
 			// On change events					
-			Iterator itPropiedadesAlCambiar = getMetaView().getPropertiesNamesThrowOnChange().iterator();			
-			while (itPropiedadesAlCambiar.hasNext()) {
-				String nombrePropiedad = (String) itPropiedadesAlCambiar.next();
-				propertyChanged(nombrePropiedad);
+			Iterator itOnChangeProperties = getMetaView().getPropertiesNamesThrowOnChange().iterator();			
+			while (itOnChangeProperties.hasNext()) {
+				String propertyName = (String) itOnChangeProperties.next();
+				propertyChanged(propertyName);
 			}			
 					
 			// Subviews		
-			Iterator itSubvistas = getSubviews().values().iterator();			
-			while (itSubvistas.hasNext()) {
-				View subvista = (View) itSubvistas.next();
-				if (subvista.isRepresentsAggregate()) { 
-					subvista.calculateDefaultValues();
+			Iterator itSubviews = getSubviews().values().iterator();			
+			while (itSubviews.hasNext()) {
+				View subview = (View) itSubviews.next();
+				if (subview.isRepresentsAggregate()) { 
+					subview.calculateDefaultValues();
 				}
-				else { // Referencia a entidad
-					subvista.clear();
+				else { // Reference to entity
+					subview.clear();
 				}
 			}			
 					
@@ -1078,8 +1058,8 @@ public class View implements java.io.Serializable {
 					
 			// Sections		
 			if (hasSections()) {
-				int cantidad = getSections().size();
-				for (int i = 0; i < cantidad; i++) {
+				int quantity = getSections().size();
+				for (int i = 0; i < quantity; i++) {
 					getSectionView(i).calculateDefaultValues();
 				}	
 			}			
@@ -1087,20 +1067,20 @@ public class View implements java.io.Serializable {
 			// References
 			Collection references = getMetaModel().getMetaReferencesWithDefaultValueCalculator();					
 			if (!references.isEmpty()) {		
-				Map nombresMiembros = getMembersNames();		
+				Map membersNames = getMembersNames();		
 				Iterator it = references.iterator();
-				Collection puestos = new ArrayList();						
+				Collection alreadyPut = new ArrayList();						
 				while (it.hasNext()) {
 					MetaReference ref = (MetaReference) it.next();
-					if (nombresMiembros.containsKey(ref.getName())) {
+					if (membersNames.containsKey(ref.getName())) {
 						try {
-							if (!ref.getMetaCalculatorDefaultValue().containsMetaSetsWithoutValue()) { // Así evitamos calcular las dependientes
+							if (!ref.getMetaCalculatorDefaultValue().containsMetaSetsWithoutValue()) { // This way to avoid calculated dependend ones
 								Object value = ref.getDefaultValueCalculator().calculate();
 								IMetaEjb referencedModel = (IMetaEjb) ref.getMetaModelReferenced();	
 								if (referencedModel.getPrimaryKeyClass().isInstance(value)) {
 									Map values = referencedModel.obtainMapFromPrimaryKey(value);
 									setValue(ref.getName(), values);
-									puestos.addAll(referencedModel.getAllKeyPropertiesNames());
+									alreadyPut.addAll(referencedModel.getAllKeyPropertiesNames());
 								}		
 								else {
 									Collection keys = referencedModel.getAllKeyPropertiesNames();
@@ -1109,7 +1089,7 @@ public class View implements java.io.Serializable {
 									}
 									String propertyKeyName = ref.getName() + "." + (String) keys.iterator().next();
 									setValue(propertyKeyName, value);
-									puestos.add(propertyKeyName);
+									alreadyPut.add(propertyKeyName);
 								}
 							}					
 						}
@@ -1119,19 +1099,19 @@ public class View implements java.io.Serializable {
 						}				 
 					}
 				}				
-				if (!puestos.isEmpty()) { 
-					Iterator itPuestos = puestos.iterator();
-					boolean hasNext = itPuestos.hasNext(); 
+				if (!alreadyPut.isEmpty()) { 
+					Iterator itAlreadyPut = alreadyPut.iterator();
+					boolean hasNext = itAlreadyPut.hasNext(); 
 					while (hasNext) {
-						String nombrePropiedad = (String) itPuestos.next();										
+						String propertyName = (String) itAlreadyPut.next();										
 						try {
 							hasToSearchOnChangeIfSubview = false;
-							propertyChanged(nombrePropiedad);
+							propertyChanged(propertyName);
 						}
 						finally {
 							hasToSearchOnChangeIfSubview = true;						
 						}
-						hasNext = itPuestos.hasNext(); // Loop in this way to bypass a bug in Websphere 5.0.2.9 JDK
+						hasNext = itAlreadyPut.hasNext(); // Loop in this way to bypass a bug in Websphere 5.0.2.9 JDK
 					}
 				}
 			}
@@ -1318,7 +1298,6 @@ public class View implements java.io.Serializable {
 		lastPropertyKeyName = null;		
 		depends = null;
 		subviews = null;
-		knowIfHasSubview = false;
 		sectionsViews = null;		
 	}
 	

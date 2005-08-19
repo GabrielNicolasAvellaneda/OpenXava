@@ -153,13 +153,25 @@ abstract public class ModelMapping implements java.io.Serializable {
 	
 	public String getQualifiedColumn(String modelProperty)
 		throws XavaException {		
-		String r = null;
-		String tableColumn = getTableColumn(modelProperty, true);				
+		String tableColumn = getTableColumn(modelProperty, true);						
 		if (Is.emptyString(tableColumn))
 			return "'" + modelProperty + "'";
 		// for calculated fields or created by multiple converter
+		
 		if (modelProperty.indexOf('.') >= 0) {			
-			return tableColumn;
+			if (tableColumn.indexOf('.') < 0) return tableColumn;			
+			if (tableColumn.startsWith(getTable() + ".")) return tableColumn;
+			String reference = modelProperty.substring(0, modelProperty.lastIndexOf('.'));
+			// The next code uses the alias of the table instead of its name. In order to
+			// support multiple references to the same model
+			if (reference.indexOf('.') >= 0) {				
+				if (getMetaModel().getMetaProperty(modelProperty).isKey()) {
+					reference = reference.substring(0, reference.lastIndexOf('.'));
+				}				
+				reference = reference.substring(reference.lastIndexOf('.') + 1);
+				
+			}
+			return "T_" + reference + tableColumn.substring(tableColumn.lastIndexOf('.')) ;
 		}
 		else  {			
 			return getTable() + "." + tableColumn;

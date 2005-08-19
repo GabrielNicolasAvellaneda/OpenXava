@@ -250,9 +250,13 @@
 	<tab name="Complete"/>
 	
 	<tab name="TwoSellers">
-		<properties>name, type, seller.number, alternateSeller.number</properties>	
+		<properties>name, type, seller.name, address.city, seller.level.description, alternateSeller.name</properties>	
 	</tab>
 		
+	<tab name="TwoSellersNumber">
+		<properties>name, type, seller.number, alternateSeller.number</properties>	
+	</tab>
+			
 	<entity-mapping table="XAVATEST@separator@CUSTOMER">
 		<property-mapping
 			property="number" column="NUMBER"/>

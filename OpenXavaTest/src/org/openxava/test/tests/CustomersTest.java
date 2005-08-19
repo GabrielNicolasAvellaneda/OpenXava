@@ -37,7 +37,7 @@ public class CustomersTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", moduleName);		
 		this.section = section?"_section0":"";		
 	}
-	
+		
 	public void testObtainAggregateValues() throws Exception {
 		String city = getValueInList(0, "address.city");
 		assertTrue("Value for city in first customer is required for run this test", !Is.emptyString(city));
