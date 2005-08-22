@@ -26,7 +26,7 @@ import org.openxava.web.*;
  */
 
 public class View implements java.io.Serializable {
-
+	
 	private static final long serialVersionUID = -7582669617830655121L;
 
 	private final static int [] EMPTY_SELECTED = new int[0];
@@ -58,7 +58,7 @@ public class View implements java.io.Serializable {
 	private Map membersNames;
 	private MetaModel metaModel;
 	private Collection metaMembers;
-	private Map values; 
+	private Map values;  
 	private MetaView metaView;
 	private boolean keyEditable = true;
 	private boolean editable = true;
@@ -108,7 +108,7 @@ public class View implements java.io.Serializable {
 	public Collection getMetaMembers() throws XavaException {
 		if (metaMembers == null) {
 			metaMembers = createMetaMembers(false); 
-		}
+		}				
 		return metaMembers;		
 	}
 	
@@ -157,12 +157,12 @@ public class View implements java.io.Serializable {
 		Iterator it = metaMembers.iterator();		
 		while (it.hasNext()) {
 			MetaMember m = (MetaMember) it.next();
-			if (hidden.contains(m.getName())) it.remove();
+			if (hidden.contains(m.getName())) it.remove();			
 		}
 	}
 	
 	private void removeOverlapedProperties(Collection metaMembers) throws XavaException { 		
-		if (!(isRepresentsEntityReference() && !isRepresentsCollection())) return;
+		if (!(representsEntityReference && !isRepresentsCollection())) return; 
 		if (getParent().isRepresentsAggregate()) return; // At momment references to entity in aggregage can not be overlapped
 		ModelMapping parentMapping = getParent().getMetaModel().getMapping();
 		String referenceName = getMemberName();
@@ -235,14 +235,14 @@ public class View implements java.io.Serializable {
 		return getValues(true);
 	}
 		
-	private Map getValues(boolean all) throws XavaException {
+	private Map getValues(boolean all) throws XavaException {		
 		Map hiddenKey = null;
 		if (values == null) { 
 			values = new HashMap(); 			
 		}
 		else {
 			hiddenKey = getHiddenKey(values);
-		}
+		}		
 		if (hasSubviews()) {
 			Iterator it = getSubviews().entrySet().iterator();
 			while (it.hasNext()) {
@@ -265,7 +265,7 @@ public class View implements java.io.Serializable {
 				values.putAll(v.getValues(all));
 			}			
 		}
-				
+		
 		if (hasSections()) {
 			int quantity = getSections().size();
 			for (int i=0; i<quantity; i++) {												
@@ -304,7 +304,7 @@ public class View implements java.io.Serializable {
 			String key = (String) en.getKey();
 			Object value = en.getValue();
 			int idx = key.indexOf('.');
-			if (idx < 0) {		
+			if (idx < 0) {
 				setValue(key, value);
 			}
 			else {
@@ -316,19 +316,19 @@ public class View implements java.io.Serializable {
 						
 		if (isSubview() && !isRepresentsAggregate()) { // to throwing code change on search in subview						
 			try {				
-				searchingObject = true; // to avoid the searching				 					
-				propertyChanged(getLastPropertyKeyName());
+				searchingObject = true; // to avoid the searching
+				propertyChanged(getLastPropertyKeyName());				
 			}
 			finally {				
 				searchingObject = false;
 			}
-		}			
+		}					
 	}
 	
 	public void setValues(Map map) throws XavaException {		
 		if (values == null) values = new HashMap();
-		else values.clear();		
-		addValues(map);						
+		else values.clear();				
+		addValues(map);								
 	}
 	
 
@@ -387,7 +387,7 @@ public class View implements java.io.Serializable {
 	private Object getValue(String name, boolean recalculatingValues) throws XavaException {
 		int idx = name.indexOf('.');		
 		if (idx < 0) { 						
-			if (!getMemberNamesWithoutSeccions().contains(name) && (hidden == null || !hidden.contains(name)) && !getMetaModel().getKeyPropertiesNames().contains(name)) {				
+			if (!getMemberNamesWithoutSeccions().contains(name) && (hidden == null || !hidden.contains(name)) && !getMetaModel().getKeyPropertiesNames().contains(name)) {
 				return getValueInSections(name, recalculatingValues);
 			}
 			else {				
@@ -396,24 +396,24 @@ public class View implements java.io.Serializable {
 					if (!subview.isRepresentsCollection()) {						
 						return subview.getValues();
 					}
-					else {												
+					else {						
 						return subview.getCollectionValues();
 					}
 				}
 				else {															
-					if (values == null && !recalculatingValues)	return null;										
-					return recalculatingValues?getValues().get(name):values.get(name);					
+					if (values == null && !recalculatingValues) return null;
+					return recalculatingValues?getValues().get(name):values.get(name);
 				}				 							 								
-			} 
+			} 			
 		} 
 		else {						
 			String subview = name.substring(0, idx);			
-			String member = name.substring(idx+1);						
+			String member = name.substring(idx+1);			
 			return getSubview(subview).getValue(member, recalculatingValues);
 		}		
 	}
 	
-	public Object getValue(String name) throws XavaException {		
+	public Object getValue(String name) throws XavaException {
 		return getValue(name, true);
 	}
 	
@@ -475,9 +475,13 @@ public class View implements java.io.Serializable {
 		if (!hasGroups()) return null;
 		Iterator it = getGroupsViews().values().iterator();
 		while (it.hasNext()) {
-			View groupView = (View) it.next();
+			View groupView = (View) it.next();			
 			View subview = (View) groupView.getSubviews().get(name);
 			if (subview != null) return subview;
+			if (groupView.hasGroups()) {
+				subview = groupView.findSubviewInGroup(name);
+				if (subview != null) return subview;
+			}
 		}
 		return null;
 	}
@@ -627,23 +631,23 @@ public class View implements java.io.Serializable {
 	public boolean trySetValue(String name, Object value) throws XavaException {
 		int idx = name.indexOf('.');		
 		if (idx < 0) {
-			if (getMembersNamesInGroup().contains(name)) {				
-				trySetValueInGroups(name, value);
+			if (getMembersNamesInGroup().contains(name)) {
+				trySetValueInGroups(name, value);				
 			}																	
 			else if (!getMemberNamesWithoutSeccions().contains(name) && !getMetaModel().getKeyPropertiesNames().contains(name) && !getMetaModel().getKeyReferencesNames().contains(name)) {				
-				if (!setValueInSections(name, value)) {										
+				if (!setValueInSections(name, value)) { 
 					return false;
 				}
 			}
 			else {								
-				if (hasSubview(name)) {
+				if (hasSubview(name)) {					
 					View subview = getSubview(name);
 					if (!subview.isRepresentsCollection()) {
 						subview.setValues((Map)value);										
 					}
 					else {						
 						throw new XavaException("no_set_collection_value_error", name);
-					}
+					}					
 				}
 				else { 										
 					if (values == null) values = new HashMap();
@@ -655,7 +659,7 @@ public class View implements java.io.Serializable {
 			String subview = name.substring(0, idx);
 			String member = name.substring(idx+1);
 			getSubview(subview).setValue(member, value);		
-		}
+		}		
 		return true;
 	}
 	
@@ -664,8 +668,8 @@ public class View implements java.io.Serializable {
 			membersNamesInGroup = new ArrayList();		
 			Iterator it = getGroupsViews().values().iterator();		
 			while (it.hasNext()) {
-				View subview = (View) it.next();												
-				membersNamesInGroup.addAll(subview.getMembersNames().keySet());	 					
+				View subview = (View) it.next();																
+				membersNamesInGroup.addAll(subview.getMembersNamesWithHidden().keySet());
 			}		
 		}
 		return membersNamesInGroup;
@@ -679,13 +683,11 @@ public class View implements java.io.Serializable {
 		}				
 	}
 	
-	private boolean setValueInSections(String name, Object value) throws XavaException {		
+	private boolean setValueInSections(String name, Object value) throws XavaException {
 		if (!hasSections()) return false;
-		int quantity = getSections().size();
-		for (int i = 0; i < quantity; i++) {							
-			if (getSectionView(i).trySetValue(name, value)) {
-				return true;
-			} 				
+		int quantity = getSections().size();		
+		for (int i = 0; i < quantity; i++) {			
+			if (getSectionView(i).trySetValue(name, value))	return true;			 				
 		}		
 		return false;
 	}
@@ -1158,6 +1160,23 @@ public class View implements java.io.Serializable {
 				getSubview(ref.getName()).setEditable(false);
 			}
 		}
+
+		if (hasGroups()) { 
+			it = getGroupsViews().values().iterator();
+			while (it.hasNext()) {				
+				View subvista = (View) it.next();
+				subvista.setKeyEditable(b);
+			}
+		}
+		
+		
+		if (hasSections()) {
+			int cantidad = getSections().size();
+			for (int i = 0; i < cantidad; i++) {
+				getSectionView(i).setKeyEditable(b);
+			}	
+		}	
+						
 	}
 	
 	/**
@@ -1268,15 +1287,15 @@ public class View implements java.io.Serializable {
 		return modelName;
 	}
 
-	public void setModelName(String nuevo) {				
+	public void setModelName(String nuevo) { 				
 		if (Is.equal(modelName, nuevo)) return;		
 		modelName = nuevo;
 		keyEditable = true;
-		editable = true;				
-		resetMembers();
+		editable = true;		
+		resetMembers();		
 	}
 	
-	private void resetMembers() {
+	private void resetMembers() { 
 		propertyPrefix = null;
 		viewName = null;
 		membersNames = null;
@@ -1298,7 +1317,8 @@ public class View implements java.io.Serializable {
 		lastPropertyKeyName = null;		
 		depends = null;
 		subviews = null;
-		sectionsViews = null;		
+		sectionsViews = null;
+		groupsViews = null; 
 	}
 	
 	public void assignValuesToWebView() {
@@ -1457,6 +1477,7 @@ public class View implements java.io.Serializable {
 	}
 	
 	public boolean isFirstPropertyAndViewHasNoKeys(MetaProperty pr) throws XavaException {
+		if (isGroup()) return getParent().isFirstPropertyAndViewHasNoKeys(pr); 
 		if (!pr.hasMetaModel()) return false; // maybe a view property
 		if (getMetaProperties().isEmpty()) return false;
 		MetaProperty first = (MetaProperty) getMetaProperties().get(0);
@@ -1487,7 +1508,7 @@ public class View implements java.io.Serializable {
 		return lastPropertyKeyName;		
 	}
 
-	private void propertyChanged(String propertyId) {
+	private void propertyChanged(String propertyId) {		
 		try {														
 			String nombre = removeNamePrefix(propertyId);
 			if (nombre.endsWith(".KEY")) {
@@ -1568,19 +1589,18 @@ public class View implements java.io.Serializable {
 	
 	private void tryPropertyChanged(MetaProperty cambiada, String nombreCualificadoCambiada) throws Exception {
 		if (!isOnlyThrowsOnChange()) {					
-			Iterator it = getMetaPropertiesIncludingGroups().iterator();
+			Iterator it = getMetaPropertiesIncludingGroups().iterator();			
 			while (it.hasNext()) {
 				MetaProperty pr = (MetaProperty) it.next();				
-				if (dependeDe(pr, cambiada, nombreCualificadoCambiada)) { 					
+				if (dependeDe(pr, cambiada, nombreCualificadoCambiada)) {
 					if (pr.hasCalculator()) {
 						calcularValor(pr, pr.getMetaCalculator(), pr.getCalculator(), errors, messages);					
 					}
 					if (pr.hasDefaultValueCalculator() && isEmptyValue(getValue(pr.getName()))) {					
 						calcularValor(pr, pr.getMetaCalculatorDefaultValue(), pr.getDefaultValueCalculator(), errors, messages);					
-					}
+					}					
 				}
-			}	
-			
+			}				
 			if (hasToSearchOnChangeIfSubview && isSubview() && !isGroup() && 
 					( 
 					(getLastPropertyKeyName().equals(cambiada.getName()) && metaPropiedadesContiene(cambiada)) || // visible keys
@@ -1597,20 +1617,19 @@ public class View implements java.io.Serializable {
 					}				
 				}			
 			}
-		} // of if (!isOnlyThrowsOnChange())
-		
+		} // of if (!isOnlyThrowsOnChange())		
 		if (!isSection() && getMetaView().hasOnChangeAction(nombreCualificadoCambiada)) {
 			IOnChangePropertyAction accion = getMetaView().createOnChangeAction(nombreCualificadoCambiada);
 			if (!actionRegisteredAsExecuted(nombreCualificadoCambiada, accion)) {
-				if (this.isGroup()) accion.setView(this.getParent());
-				else accion.setView(this);
+				View viewOfAction = this;
+				while (viewOfAction.isGroup()) viewOfAction = viewOfAction.getParent();
+				accion.setView(viewOfAction);
 				accion.setChangedProperty(nombreCualificadoCambiada); 
 				accion.setNewValue(getValue(nombreCualificadoCambiada));								
 				getModuleManager(getRequest()).executeAction(accion, getErrors(), getMessages(), getRequest());
 				registerExecutedAction(nombreCualificadoCambiada, accion);
 			}
-		} 
-		
+		} 		
 		if (hasGroups()) {
 			Iterator itGrupos = getGroupsViews().values().iterator();
 			while (itGrupos.hasNext()) {
@@ -1624,14 +1643,14 @@ public class View implements java.io.Serializable {
 					// or main view)
 				}
 			}		
-		}
-				
+		}			
 		if (hasSections()) {			
 			int cantidad = getSections().size();
 			for (int i = 0; i < cantidad; i++) {
 				getSectionView(i).propertyChanged(cambiada, nombreCualificadoCambiada);				
 			}			
 		}
+		
 	}	
 	
 	
@@ -1684,31 +1703,31 @@ public class View implements java.io.Serializable {
 		return name.substring(compo.length() + "xava".length() + 2);
 	}
 
-	private void calcularValor(MetaProperty metaPropiedad, MetaCalculator metaCalculador, ICalculator calculador, Messages errores, Messages mensajes) {
+	private void calcularValor(MetaProperty metaPropiedad, MetaCalculator metaCalculador, ICalculator calculador, Messages errores, Messages mensajes) {		
 		try {					
 			PropertiesManager mp = new PropertiesManager(calculador);
 			Iterator it = metaCalculador.getMetaSets().iterator();
 			while (it.hasNext()) {
-				MetaSet poner = (MetaSet) it.next();
+				MetaSet poner = (MetaSet) it.next();				
 				Object valor = null;
-				if (poner.hasValue()) {
+				if (poner.hasValue()) {					
 					valor = poner.getValue();
 				}
-				else {												
+				else {
 					valor = getValue(poner.getPropertyNameFrom());					
 				}
-				mp.executeSet(poner.getPropertyName(), valor);	
-			}
+				mp.executeSet(poner.getPropertyName(), valor);				
+			}			
 			Object nuevoValor = calculador.calculate();			
 			if (calculador instanceof IOptionalCalculator) {
 				if (!((IOptionalCalculator) calculador).isCalculate()) {
 					return;
 				}
-			}		
+			}			
 			Object viejo = getValue(metaPropiedad.getName());
 			if (!Is.equal(viejo, nuevoValor)) {				
 				setValueNotifying(metaPropiedad.getName(), nuevoValor);
-			}
+			}			
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
@@ -1876,11 +1895,11 @@ public class View implements java.io.Serializable {
 	private Collection getMetaPropertiesIncludingGroups() throws XavaException {
 		if (!hasGroups()) return getMetaProperties();
 		if (metaPropertiesIncludingGroups == null) {
-			metaPropertiesIncludingGroups = new ArrayList(getMetaProperties());			
+			metaPropertiesIncludingGroups = new ArrayList(getMetaProperties());	
 			for (Iterator it = getGroupsViews().values().iterator(); it.hasNext();) {
 				View group = (View) it.next();
 				metaPropertiesIncludingGroups.addAll(group.getMetaProperties());
-			}	
+			}			
 		}
 		return metaPropertiesIncludingGroups;
 	}
@@ -1957,7 +1976,7 @@ public class View implements java.io.Serializable {
 		return viewName;
 	}
 
-	public void setViewName(String newView) {
+	public void setViewName(String newView) { 
 		if (Is.equal(viewName, newView)) return;
 		resetMembers();
 		viewName = newView;
@@ -1985,7 +2004,7 @@ public class View implements java.io.Serializable {
 		representsAggregate = b;
 	}
 			
-	public String getSearchAction() throws XavaException {
+	public String getSearchAction() throws XavaException {		
 		if (getMetaView().hasMetaSearchAction()) {
 			String accion = getMetaView().getMetaSearchAction().getActionName();
 			if (!Is.emptyString(accion)) return accion; 
@@ -2169,6 +2188,7 @@ public class View implements java.io.Serializable {
 	}
 	
 	public boolean isSearch() throws XavaException {
+		if (isGroup()) return getParent().isSearch(); 
 		try {			
 			MetaReference ref = getParent().getMetaModel().getMetaReference(getMemberName());			
 			return getParent().isSearchForReference(ref);
@@ -2178,7 +2198,7 @@ public class View implements java.io.Serializable {
 		}
 	}
 	
-	public boolean isHidden(String nombre) {
+	public boolean isHidden(String nombre) {		
 		return hidden != null && hidden.contains(nombre);
 	}
 
@@ -2308,6 +2328,7 @@ public class View implements java.io.Serializable {
 	}
 
 	public boolean isRepresentsEntityReference() {
+		if (isGroup()) return getParent().isRepresentsEntityReference(); 
 		return representsEntityReference;
 	}
 

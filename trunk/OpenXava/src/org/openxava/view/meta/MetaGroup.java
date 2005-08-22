@@ -1,5 +1,7 @@
 package org.openxava.view.meta;
 
+import java.util.*;
+
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 
@@ -13,15 +15,16 @@ public class MetaGroup extends MetaMember {
 	private MetaView metaView;
 	private MetaView metaViewParent;
 	
-	public MetaGroup(MetaView padre) {
-		this.metaViewParent = padre;
+	
+	public MetaGroup(MetaView parent) {
+		this.metaViewParent = parent;
 	}
 	
 	public MetaView getMetaView() throws XavaException {
 		if (metaView == null) {
 			try {
 				metaView = (MetaView) metaViewParent.clone();
-				metaView.setMembersNames(membersNames);
+				metaView.setMembersNames(membersNames);				
 			} 
 			catch (CloneNotSupportedException e) {
 				throw new XavaException("group_view_error_no_clone");			

@@ -41,13 +41,13 @@
 
 <!ELEMENT section (#PCDATA|group)*>
 <!ATTLIST section
-	name CDATA #IMPLIED
+  name CDATA #IMPLIED
   label CDATA #IMPLIED
 >
 
-<!ELEMENT group (#PCDATA)>
+<!ELEMENT group (#PCDATA|group)*>
 <!ATTLIST group
-	name CDATA #IMPLIED
+  name CDATA #IMPLIED
   label CDATA #IMPLIED
 >
 
@@ -57,10 +57,10 @@
 <!ATTLIST reference-view
   reference CDATA #REQUIRED
   view CDATA #IMPLIED
-	read-only (true|false) "false"
+  read-only (true|false) "false"
   frame (true|false) "true"
-	create (true|false) "true"
-	search (true|false) "true"
+  create (true|false) "true"
+  search (true|false) "true"
 >
 
 <!ELEMENT descriptions-list EMPTY>

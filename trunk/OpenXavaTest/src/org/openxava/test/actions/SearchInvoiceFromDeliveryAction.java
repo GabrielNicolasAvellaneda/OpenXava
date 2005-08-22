@@ -15,11 +15,11 @@ public class SearchInvoiceFromDeliveryAction extends ViewBaseAction {
 	
 	public void execute() throws Exception {		 
 		try {			
-			Map key = (Map) getView().getKeyValues().get("invoice");			
+			Map key = (Map) getView().getKeyValues().get("invoice");		
 			getView().setModelName("Invoice");			
-			Map membersNames = getView().getMembersNames();									
-			Map values = MapFacade.getValues(getModelName(), key, membersNames);												 										
-			getView().setValues(values);
+			Map membersNames = getView().getMembersNames();
+			Map values = MapFacade.getValues(getModelName(), key, membersNames);
+			getView().setValues(values);			
 			getView().setKeyEditable(false);						
 		}
 		catch (ObjectNotFoundException ex) {

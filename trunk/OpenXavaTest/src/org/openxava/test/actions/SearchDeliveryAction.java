@@ -12,7 +12,7 @@ import org.openxava.util.*;
 public class SearchDeliveryAction extends SearchByViewKeyAction {
 			
 	public void execute() throws Exception {		
-		super.execute();		
+		super.execute();
 		if (!Is.emptyString(getView().getValueString("employee"))) {
 			getView().setValue("deliveredBy", new Integer(1));
 			getView().setHidden("carrier", true);
