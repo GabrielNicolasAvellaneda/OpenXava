@@ -88,12 +88,10 @@ public class ViewParser extends XmlElementsNames {
 			Element n = (Element) l.item(i);
 			String name = n.getAttribute(xname[lang]);
 			String label = n.getAttribute(xlabel[lang]);
-			Node fc = n.getFirstChild();
-			String members = fc == null ? "" : fc.getNodeValue();			
+			String members = getMembers(n, lang); 
 			v.addMetaGroup(name, label, members);
 		}
 	}
-	
 	
 	private static void fillMediator(Element el, MetaView container, int lang) // only use in spanish/swing version
 		throws XavaException {

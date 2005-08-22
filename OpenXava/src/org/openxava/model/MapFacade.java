@@ -371,7 +371,7 @@ public class MapFacade {
 				XavaException,  RemoteException 
 	{
 		Assert.arg(modelName, keyValues, values);				
-		try {			
+		try {
 			getImpl(modelName).setValues(modelName, keyValues, values);								
 		}
 		catch (RemoteException ex) {

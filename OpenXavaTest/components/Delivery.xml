@@ -116,20 +116,27 @@
 			<descriptions-list/>
 		</reference-view>
 		
-		
 		<members>
 			invoice;			
-			type, number;			
-			date;
-			description;
-			shipment;
-			distance, vehicle, transportMode, driverType;
-			deliveredBy, carrier, employee;			
+			<group name="deliveryData">
+				type, number;			
+				date;
+				description;
+				shipment;
+				<group name="transportData">
+					distance; vehicle; transportMode; driverType;
+				</group>
+				<group name="deliveryByData">
+					deliveredBy;
+					carrier;
+					employee;			
+				</group>
+			</group>
 			<section name="remarks">advice; remarks</section>
 			<section name="incidents">incidents</section>
 			<section name="details">details</section>
 		</members>
-
+				
 	</view>
 	
 	<view name="InInvoice">

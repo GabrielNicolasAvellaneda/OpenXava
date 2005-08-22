@@ -496,15 +496,15 @@ public class MetaView extends MetaElement implements Cloneable {
 		sections.add(section);
 	}
 	
-	public void addMetaGroup(String nombre, String etiqueta, String miembros) throws XavaException {
+	public void addMetaGroup(String name, String label, String members) throws XavaException {
 		if (metaGroups == null) metaGroups = new HashMap();
-		MetaGroup metaGrupo = new MetaGroup(this);
-		metaGrupo.setName(nombre); 		
-		metaGrupo.setLabel(etiqueta);
-		metaGrupo.setMembersNames(miembros);				
-		metaGroups.put(nombre, metaGrupo);		
+		MetaGroup metaGroup = new MetaGroup(this);
+		metaGroup.setName(name); 		
+		metaGroup.setLabel(label);
+		metaGroup.setMembersNames(members);				
+		metaGroups.put(name, metaGroup);		
 	}
-	
+		
 	private MetaGroup getMetaGroup(String nombre) throws XavaException {
 		if (metaGroups == null) {
 			throw new ElementNotFoundException("group_not_found_no_groups", nombre);
