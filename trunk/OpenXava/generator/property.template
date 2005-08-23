@@ -118,14 +118,17 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 								propertyNameFromInJava.append("_");
 							}
 							else {
+								if (isEmbededKey) {
+									propertyNameFromInJava.append("Remote");
+								}	
 								propertyNameFromInJava.append("().get");						
 							}						
 						}
 						if (isEmbededKey && !st.hasMoreTokens()) {
-							propertyNameFromInJava.append(token);					
+							propertyNameFromInJava.append(token);
 						}
 						else {
-							propertyNameFromInJava.append(Strings.firstUpper(token));								
+							propertyNameFromInJava.append(Strings.firstUpper(token));	
 						}
 					}			
 					propertyNameFrom = propertyNameFromInJava.toString();
@@ -141,7 +144,9 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 			# 
 				} else {	
 			#  	
+			
 			#(property.getName())#Calculator.set#(propertyNameInCalculator)#(#(getPropertyFrom)##(propertyNameFrom)#());
+			
 			# 	}} // else/sets 	 
 			if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
 			# 

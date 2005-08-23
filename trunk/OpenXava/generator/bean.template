@@ -37,7 +37,7 @@ Iterator itReferences = metaAggregate.getMetaReferences().iterator();
 while (itReferences.hasNext()) {	
 	MetaReference ref = (MetaReference) itReferences.next();	
 	String attributeName = ref.getName();
-	String type = ref.getMetaModelReferenced().getClassName();
+	String type = ref.getMetaModelReferenced().getInterfaceName();
 # 
 	private #(type)# #(attributeName)#;
 # } //while #
@@ -71,7 +71,7 @@ while (itReferences.hasNext()) {
 	MetaReference ref = (MetaReference) itReferences.next();	
 	String attributeName = ref.getName();
 	String propertyName = Strings.firstUpper(attributeName);
-	String type = ref.getMetaModelReferenced().getClassName();
+	String type = ref.getMetaModelReferenced().getInterfaceName();
 # 
 	public #(type)# get#(propertyName)#() {
 		return #(attributeName)#;

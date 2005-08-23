@@ -29,7 +29,6 @@
     <property name="server.properties.dir" value="../OpenXava/build/server-properties"/>
     <property name="server.properties.tmp.dir" value="${user.home}/tmpServerProperties"/>        
 	<property name="model.package" value="model"/>
-	<property name="ejb.package" value="${model.package}"/>
 	<property name="build.compiler" value="javac1.3"/>
 	<property name="deploy.portlets.dir" value="${deploy.dir}/jetspeed.war/WEB-INF/deploy"/>
 			
@@ -211,7 +210,7 @@
 			<arg value="${project}"/>        		
 	       	<arg value="${domain}"/>
        		<arg value="${package}"/>
-	       	<arg value="${ejb.package}"/>       	
+	       	<arg value="${model.package}"/>       	
 		</java>		
 	</target>
 	        
@@ -330,13 +329,13 @@
 	   <echo>Generating classes</echo>
     	<touch file="../${project}/gen-src-xava/last.generation.time"/>
        <java 
-       		classname="CodeGenerator" 
+       		classname="EJBCodeGenerator" 
        		classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};${components.dir};../${project}/${classes.dir};${xava.generator.path}" 
        		fork="yes">
 			<arg value="${project}"/>        		
 	       	<arg value="${domain}"/>
        		<arg value="${package}"/>
-	       	<arg value="${ejb.package}"/>       	
+	       	<arg value="${model.package}"/>       	
 		</java>
     </target>
 	

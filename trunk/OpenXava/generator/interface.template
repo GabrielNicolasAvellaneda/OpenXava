@@ -84,8 +84,8 @@ while (itCollections.hasNext()) {
 	MetaReference reference = collection.getMetaReference();	
 	IMetaEjb referencedModel = (IMetaEjb) reference.getMetaModelReferenced();
 	String referencedModelName = reference.getReferencedModelName();
-	String referencedModelClass = referencedModel.getRemote();		
-
+	String referencedModelClass = referencedModel.getInterfaceName();	
+	
  if (!reference.isAggregate() && !collection.hasCondition() && !collection.hasCalculator()) { 
 # 
 	void addTo#(collectionName)#(#(referencedModelClass)# newElement) throws RemoteException;
@@ -117,7 +117,7 @@ while (itReferences.hasNext()) {
 
 # } else { // reference to entity or EJB aggregate
 		IMetaEjb referencedModel = (IMetaEjb) reference.getMetaModelReferenced();
-		String referencedModelClass = referencedModel.getRemote();
+		String referencedModelClass = referencedModel.getInterfaceName();
 		String referencedKeyClass = referencedModel.getPrimaryKey();
 # 
 
