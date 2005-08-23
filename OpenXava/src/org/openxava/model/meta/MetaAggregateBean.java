@@ -20,7 +20,7 @@ public class MetaAggregateBean extends MetaAggregate {
 	
 	public java.lang.String getBeanClass() throws XavaException {
 		if (Is.emptyString(beanClass)) {
-			String packageName = isUsingEJB()?getMetaComponent().getEJBPackage():getMetaComponent().getPackageName();
+			String packageName = getMetaComponent().getPackageName();
 			beanClass =  packageName + "." + getName();
 		}
 		return beanClass;
@@ -96,8 +96,5 @@ public class MetaAggregateBean extends MetaAggregate {
 		return getBeanClass();
 	}	
 
-	private boolean isUsingEJB() {
-		return XavaPreferences.getInstance().isEJB2Persistence();
-	}
 	
 }

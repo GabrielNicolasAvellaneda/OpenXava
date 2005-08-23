@@ -22,25 +22,7 @@ abstract public class CodeGenerator {
 	private boolean dnasChanged = false;
 	private Map toChangeInDNAString;
 
-	public static void main(String [] argv) {
-		if (argv.length != 4) {
-			System.err.println(XavaResources.getString("generator_argv_required"));
-			System.exit(1);			
-		}
-		try {									
-			EJBCodeGenerator g = new EJBCodeGenerator();			
-			g.setProject(argv[0]);			
-			g.setDomain(argv[1]);			
-			g.setUnqualifiedPackage(argv[2]);			
-			g.setModelPackage(argv[3]);
-			g.run();			
-		}	
-		catch (Exception ex) {
-			ex.printStackTrace();
-			System.exit(2);
-		}	
-	}
-
+	
 	/**
 	 * Overwrite this for code generation by component
 	 */
@@ -153,7 +135,6 @@ abstract public class CodeGenerator {
 		try {
 			String componentName = file.substring(0, file.length() - 4);
 			MetaComponent.get(componentName).setPackageName(getJavaPackage());
-			MetaComponent.get(componentName).setEJBPackage(getJavaPackage()); 
 			packages.put(componentName, getJavaPackage());
 		}
 		catch (XavaException ex) {

@@ -34,16 +34,16 @@
 			verbose="false">
             
 			<fileset dir="../${project}/${src.dir}">
-				<include name="${domain}/${package}/${ejb.package}/xejb/*Bean.java" />
+				<include name="${domain}/${package}/${model.package}/xejb/*Bean.java" />
 			</fileset>
        
 			<fileset dir="../${project}/${src.dir.2}">
-				<include name="${domain}/${package}/${ejb.package}/xejb/*Bean.java" />
+				<include name="${domain}/${package}/${model.package}/xejb/*Bean.java" />
 			</fileset>
        
-			<packageSubstitution packages="${ejb.package}.xejb" substituteWith="${ejb.package}"/>
+			<packageSubstitution packages="${model.package}.xejb" substituteWith="${model.package}"/>
         
-			<remoteinterface/>            
+			<remoteinterface  pattern="{0}Remote"/>            
 			<homeinterface/>
 			<valueobject  generatePKConstructor="true"/>
 			<dataobject/>

@@ -35,7 +35,7 @@ public class MetaEjbImpl implements Serializable {
 	}
 	
 	private String getPackageName() throws XavaException {
-		return metaModel.getMetaComponent().getEJBPackage();
+		return metaModel.getMetaComponent().getPackageName();
 	}
 	
 	private String getModelName() {
@@ -79,7 +79,7 @@ public class MetaEjbImpl implements Serializable {
 	
 	public java.lang.String getRemote() throws XavaException {
 		if (Is.emptyString(remote)) {
-			remote = getPackageName() + "." + getModelName();
+			remote = getPackageName() + "." + getModelName() + "Remote";
 		}
 		return remote;
 	}	

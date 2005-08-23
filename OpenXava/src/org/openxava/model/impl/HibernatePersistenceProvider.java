@@ -32,14 +32,10 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 				key = keyValues.get(metaModel.getKeyPropertiesNames().iterator().next());
 			}
 			else {
-				throw new RuntimeException("Claves múltiples todavía no soportadas");
-				/*
-				 * String nombreClaseKey = clase.getName() + "$Key"; Class claseKey =
-				 * Class.forName(nombreClaseKey); Object key =
-				 * ejbImpl.obtainPrimaryKeyFromKey(keyValues, claseKey, true);
-				 */
-			}
-
+				key = className.newInstance();
+				PropertiesManager pm = new PropertiesManager(key);
+				pm.executeSets(keyValues);				
+			}		
 			Object result = getSession().get(className, (Serializable) key);
 			if (result == null) {
 				throw new ObjectNotFoundException(XavaResources.getString(

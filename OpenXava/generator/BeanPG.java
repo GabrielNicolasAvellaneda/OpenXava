@@ -9,7 +9,7 @@ import org.openxava.component.MetaComponent;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Aug 16 09:26:47 CEST 2005
+ * @version Tue Aug 23 19:36:33 CEST 2005
  */
 public class BeanPG {
     Properties properties = new Properties();
@@ -55,7 +55,7 @@ public class BeanPG {
     while (itReferences.hasNext()) {	
     	MetaReference ref = (MetaReference) itReferences.next();	
     	String attributeName = ref.getName();
-    	String type = ref.getMetaModelReferenced().getClassName();
+    	String type = ref.getMetaModelReferenced().getInterfaceName();
     
     out.print(" \n\tprivate ");
     out.print(type);
@@ -97,7 +97,7 @@ public class BeanPG {
     	MetaReference ref = (MetaReference) itReferences.next();	
     	String attributeName = ref.getName();
     	String propertyName = Strings.firstUpper(attributeName);
-    	String type = ref.getMetaModelReferenced().getClassName();
+    	String type = ref.getMetaModelReferenced().getInterfaceName();
     
     out.print(" \n\tpublic ");
     out.print(type);
@@ -152,9 +152,9 @@ public class BeanPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Aug 16 09:26:47 CEST 2005", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/bean.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/BeanPG.java" }, // output file
+        { "Tue Aug 23 19:36:33 CEST 2005", // date this file was generated
+             "/home/mcarmen/workspace/OpenXava/generator/bean.xml", // input file
+             "/home/mcarmen/workspace/OpenXava/generator/BeanPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

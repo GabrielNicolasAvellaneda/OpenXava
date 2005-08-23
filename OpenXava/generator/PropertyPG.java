@@ -13,7 +13,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Aug 16 09:26:42 CEST 2005
+ * @version Tue Aug 23 19:36:29 CEST 2005
  */
 public class PropertyPG {
     Properties properties = new Properties();
@@ -145,14 +145,17 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     								propertyNameFromInJava.append("_");
     							}
     							else {
+    								if (isEmbededKey) {
+    									propertyNameFromInJava.append("Remote");
+    								}	
     								propertyNameFromInJava.append("().get");						
     							}						
     						}
     						if (isEmbededKey && !st.hasMoreTokens()) {
-    							propertyNameFromInJava.append(token);					
+    							propertyNameFromInJava.append(token);
     						}
     						else {
-    							propertyNameFromInJava.append(Strings.firstUpper(token));								
+    							propertyNameFromInJava.append(Strings.firstUpper(token));	
     						}
     					}			
     					propertyNameFrom = propertyNameFromInJava.toString();
@@ -174,7 +177,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     
     				} else {	
     			
-    out.print("  \t\n\t\t\t");
+    out.print("  \t\n\t\t\t\n\t\t\t");
     out.print(property.getName());
     out.print("Calculator.set");
     out.print(propertyNameInCalculator);
@@ -608,9 +611,9 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Aug 16 09:26:42 CEST 2005", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/property.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/PropertyPG.java" }, // output file
+        { "Tue Aug 23 19:36:29 CEST 2005", // date this file was generated
+             "/home/mcarmen/workspace/OpenXava/generator/property.xml", // input file
+             "/home/mcarmen/workspace/OpenXava/generator/PropertyPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

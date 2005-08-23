@@ -45,7 +45,7 @@ String referenceName = Strings.firstUpper(reference.getName());
 ReferenceMapping referenceMapping = modelMapping.getReferenceMapping(reference.getName());
 IMetaEjb referencedModel = (IMetaEjb) reference.getMetaModelReferenced();
 ModelMapping referencedMapping = referencedModel.getMapping();
-String referencedModelClass = referencedModel.getRemote();
+String referencedModelClass = referencedModel.getInterfaceName();
 String referencedJNDI = referencedModel.getJndi();
 String referencedKeyClass = referencedModel.getPrimaryKey();
 String homeClass = referencedModel.getHome();		
@@ -72,6 +72,15 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 			throw new EJBException(XavaResources.getString("get_reference_error", "#(referenceName)#", "#(metaModel.getName())#"));
 		}		
 	}	
+	
+	
+	/**
+	 * @ejb:interface-method
+	 */
+	public #(referencedModel.getRemote())# get#(referenceName)#Remote() {
+		return (#(referencedModel.getRemote())#) get#(referenceName)#();
+	}
+	
 	/**
 	 * #(interfaceMethodSet)#
 	 */
@@ -81,7 +90,10 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 # } # 
 		try {	
 			if (new#(referenceName)# == null) set#(referenceName)#Key(null);
-			else set#(referenceName)#Key((#(referencedKeyClass)#) new#(referenceName)#.getPrimaryKey());
+			else {
+				#(referencedModel.getRemote())# remote = (#(referencedModel.getRemote())#) new#(referenceName)#;
+				set#(referenceName)#Key((#(referencedKeyClass)#) remote.getPrimaryKey());
+			}	
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();

@@ -19,11 +19,11 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
 # 
 String refName = Strings.firstUpper(reference.getName());
 # 
-	private #(reference.getReferencedModelName())# #(reference.getName())#;
-	public #(reference.getReferencedModelName())# get#(refName)#() {
+	private #(reference.getMetaModelReferenced().getInterfaceName())# #(reference.getName())#;
+	public #(reference.getMetaModelReferenced().getInterfaceName())# get#(refName)#() {
 		return #(reference.getName())#;
 	}
-	public void set#(refName)#(#(reference.getReferencedModelName())# new#(reference.getReferencedModelName())#) {
+	public void set#(refName)#(#(reference.getMetaModelReferenced().getInterfaceName())# new#(reference.getReferencedModelName())#) {
 		this.#(reference.getName())# = new#(reference.getReferencedModelName())#;
 	}	
 	

@@ -14,7 +14,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Aug 16 09:26:48 CEST 2005
+ * @version Tue Aug 23 19:36:34 CEST 2005
  */
 public class InterfacePG {
     Properties properties = new Properties();
@@ -114,8 +114,8 @@ public class InterfacePG {
     	MetaReference reference = collection.getMetaReference();	
     	IMetaEjb referencedModel = (IMetaEjb) reference.getMetaModelReferenced();
     	String referencedModelName = reference.getReferencedModelName();
-    	String referencedModelClass = referencedModel.getRemote();		
-    
+    	String referencedModelClass = referencedModel.getInterfaceName();	
+    	
      if (!reference.isAggregate() && !collection.hasCondition() && !collection.hasCalculator()) { 
     
     out.print(" \n\tvoid addTo");
@@ -157,7 +157,7 @@ public class InterfacePG {
     out.print(") throws RemoteException;");
     } else { // reference to entity or EJB aggregate
     		IMetaEjb referencedModel = (IMetaEjb) reference.getMetaModelReferenced();
-    		String referencedModelClass = referencedModel.getRemote();
+    		String referencedModelClass = referencedModel.getInterfaceName();
     		String referencedKeyClass = referencedModel.getPrimaryKey();
     
     out.print(" \n\n\t// ");
@@ -237,9 +237,9 @@ public class InterfacePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Aug 16 09:26:48 CEST 2005", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/interface.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/InterfacePG.java" }, // output file
+        { "Tue Aug 23 19:36:34 CEST 2005", // date this file was generated
+             "/home/mcarmen/workspace/OpenXava/generator/interface.xml", // input file
+             "/home/mcarmen/workspace/OpenXava/generator/InterfacePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

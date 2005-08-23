@@ -95,7 +95,7 @@ while (itReferences.hasNext()) {
   			if (columns.size() == 1) {	
 				String column = (String) columns.iterator().next();
 # 
-		<many-to-one name="#(refName)#" column="#(column)#"/>
+		<many-to-one name="#(refName)#" column="#(column)#" class="#(ref.getMetaModelReferenced().getPOJOClassName())#"/>
 # 
 			}
 			else { 
@@ -110,7 +110,7 @@ while (itReferences.hasNext()) {
   		if (columns.size() == 1) {	
 			String column = (String) columns.iterator().next();
 # 
-		<many-to-one name="#(reference.getName())#" column="#(column)#"/>
+		<many-to-one name="#(reference.getName())#" column="#(column)#" class="#(reference.getMetaModelReferenced().getPOJOClassName())#"/>
 # 
 		}
 		else { 

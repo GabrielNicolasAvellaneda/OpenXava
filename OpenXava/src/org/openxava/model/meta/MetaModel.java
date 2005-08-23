@@ -1154,4 +1154,12 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		}
 	}
 	
+	public String getInterfaceName()  throws XavaException {
+		return getMetaComponent().getPackageName() + ".I" + getName();
+	}
+	
+	public String getPOJOClassName()  throws XavaException {
+		return getMetaComponent().getPackageName() + "." + getName();
+	}
+	
 }

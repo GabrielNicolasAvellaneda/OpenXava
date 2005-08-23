@@ -10,11 +10,6 @@ import java.util.*;
  */
 public class EJBCodeGenerator extends CodeGenerator{
 	
-	protected String getPackagesFile() {
-		return "packages-ejb.properties";
-	}
-
-	
 	protected void generate(MetaComponent component, String componentsPath, String file) throws Exception {		
 		String dirPackage = toDirPackage(getPackageName());		
 		String modelPath = "../" + getProject() + "/gen-src-xava/" + dirPackage;		
@@ -87,4 +82,23 @@ public class EJBCodeGenerator extends CodeGenerator{
 		}		
 	}
 	
+public static void main(String [] argv) {
+		if (argv.length != 4) {
+			System.err.println(XavaResources.getString("generator_argv_required"));
+			System.exit(1);			
+		}
+		try {									
+			EJBCodeGenerator g = new EJBCodeGenerator();			
+			g.setProject(argv[0]);			
+			g.setDomain(argv[1]);			
+			g.setUnqualifiedPackage(argv[2]);			
+			g.setModelPackage(argv[3]);
+			g.run();			
+		}	
+		catch (Exception ex) {
+			ex.printStackTrace();
+			System.exit(2);
+		}	
+	}
+
 }

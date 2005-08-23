@@ -13,7 +13,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Aug 16 09:26:43 CEST 2005
+ * @version Tue Aug 23 19:36:30 CEST 2005
  */
 public class EntityReferenceEJBPG {
     Properties properties = new Properties();
@@ -60,7 +60,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     ReferenceMapping referenceMapping = modelMapping.getReferenceMapping(reference.getName());
     IMetaEjb referencedModel = (IMetaEjb) reference.getMetaModelReferenced();
     ModelMapping referencedMapping = referencedModel.getMapping();
-    String referencedModelClass = referencedModel.getRemote();
+    String referencedModelClass = referencedModel.getInterfaceName();
     String referencedJNDI = referencedModel.getJndi();
     String referencedKeyClass = referencedModel.getPrimaryKey();
     String homeClass = referencedModel.getHome();		
@@ -83,7 +83,15 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     out.print(referenceName);
     out.print("\", \"");
     out.print(metaModel.getName());
-    out.print("\"));\n\t\t}\t\t\n\t}\t\n\t/**\n\t * ");
+    out.print("\"));\n\t\t}\t\t\n\t}\t\n\t\n\t\n\t/**\n\t * @ejb:interface-method\n\t */\n\tpublic ");
+    out.print(referencedModel.getRemote());
+    out.print(" get");
+    out.print(referenceName);
+    out.print("Remote() {\n\t\treturn (");
+    out.print(referencedModel.getRemote());
+    out.print(") get");
+    out.print(referenceName);
+    out.print("();\n\t}\n\t\n\t/**\n\t * ");
     out.print(interfaceMethodSet);
     out.print("\n\t */\n\tpublic void set");
     out.print(referenceName);
@@ -99,13 +107,17 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     out.print(referenceName);
     out.print(" == null) set");
     out.print(referenceName);
-    out.print("Key(null);\n\t\t\telse set");
+    out.print("Key(null);\n\t\t\telse {\n\t\t\t\t");
+    out.print(referencedModel.getRemote());
+    out.print(" remote = (");
+    out.print(referencedModel.getRemote());
+    out.print(") new");
+    out.print(referenceName);
+    out.print(";\n\t\t\t\tset");
     out.print(referenceName);
     out.print("Key((");
     out.print(referencedKeyClass);
-    out.print(") new");
-    out.print(referenceName);
-    out.print(".getPrimaryKey());\n\t\t}\n\t\tcatch (Exception ex) {\n\t\t\tex.printStackTrace();\n\t\t\tthrow new EJBException(XavaResources.getString(\"set_reference_error\", \"");
+    out.print(") remote.getPrimaryKey());\n\t\t\t}\t\n\t\t}\n\t\tcatch (Exception ex) {\n\t\t\tex.printStackTrace();\n\t\t\tthrow new EJBException(XavaResources.getString(\"set_reference_error\", \"");
     out.print(referenceName);
     out.print("\", \"");
     out.print(metaModel.getName());
@@ -371,9 +383,9 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Aug 16 09:26:44 CEST 2005", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/entityReferenceEJB.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/EntityReferenceEJBPG.java" }, // output file
+        { "Tue Aug 23 19:36:31 CEST 2005", // date this file was generated
+             "/home/mcarmen/workspace/OpenXava/generator/entityReferenceEJB.xml", // input file
+             "/home/mcarmen/workspace/OpenXava/generator/EntityReferenceEJBPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
