@@ -44,8 +44,14 @@ public class ReferenceSearchAction extends ViewBaseAction implements INavigation
 		getTab().setModelName(subview.getModelName());
 		MetaReference ref = getMetaReference(metaRootModel, viewInfo.memberName);
 		
-		ModelMapping rootMapping = metaRootModel.getMapping();			 
-		if (metaRootModel.containsMetaReference(ref.getName()) && // because maybe a collection of references 
+		ModelMapping rootMapping = null;
+		try {
+			rootMapping = metaRootModel.getMapping();
+		}
+		catch (XavaException ex) {			
+			// In case of an aggregate without mapping
+		}
+		if (rootMapping != null && metaRootModel.containsMetaReference(ref.getName()) && // because maybe a collection of references 
 			rootMapping.isReferenceOverlappingWithSomeProperty(ref.getName())) {
 			StringBuffer condition = new StringBuffer();			
 			Iterator itOverlappingProperties = rootMapping.getOverlappingPropertiesOfReference(ref.getName()).iterator();			
