@@ -1261,7 +1261,7 @@
       <entity>
          <ejb-name>Product3</ejb-name>
 
-         <table-name>XAVATEST_PRODUCT3</table-name>
+         <table-name>XAVATEST@separator@PRODUCT3</table-name>
 
          <cmp-field>
             <field-name>_Comments</field-name>
@@ -1279,8 +1279,28 @@
 
         </cmp-field>
          <cmp-field>
+            <field-name>_Subfamily1_family_oid</field-name>
+            <column-name>FAMILY1</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Subfamily1_subfamily_oid</field-name>
+            <column-name>SUBFAMILY1</column-name>
+
+        </cmp-field>
+         <cmp-field>
             <field-name>_Family_oid</field-name>
             <column-name>FAMILY</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Subfamily2_family_oid</field-name>
+            <column-name>FAMILY2</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Subfamily2_subfamily_oid</field-name>
+            <column-name>SUBFAMILY2</column-name>
 
         </cmp-field>
 

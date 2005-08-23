@@ -20,8 +20,20 @@ public class Product3Value
    private boolean descriptionHasBeenSet = false;
    private long number;
    private boolean numberHasBeenSet = false;
+   private org.openxava.test.ejb.SubfamilyInfo subfamily1;
+   private boolean subfamily1HasBeenSet = false;
+   private java.lang.String subfamily1_family_oid;
+   private boolean subfamily1_family_oidHasBeenSet = false;
+   private java.lang.String subfamily1_subfamily_oid;
+   private boolean subfamily1_subfamily_oidHasBeenSet = false;
    private java.lang.String family_oid;
    private boolean family_oidHasBeenSet = false;
+   private org.openxava.test.ejb.SubfamilyInfo subfamily2;
+   private boolean subfamily2HasBeenSet = false;
+   private java.lang.String subfamily2_family_oid;
+   private boolean subfamily2_family_oidHasBeenSet = false;
+   private java.lang.String subfamily2_subfamily_oid;
+   private boolean subfamily2_subfamily_oidHasBeenSet = false;
 
    public Product3Value()
    {
@@ -36,8 +48,20 @@ public class Product3Value
 	  descriptionHasBeenSet = true;
 	  this.number = otherValue.number;
 	  numberHasBeenSet = true;
+	  this.subfamily1 = otherValue.subfamily1;
+	  subfamily1HasBeenSet = true;
+	  this.subfamily1_family_oid = otherValue.subfamily1_family_oid;
+	  subfamily1_family_oidHasBeenSet = true;
+	  this.subfamily1_subfamily_oid = otherValue.subfamily1_subfamily_oid;
+	  subfamily1_subfamily_oidHasBeenSet = true;
 	  this.family_oid = otherValue.family_oid;
 	  family_oidHasBeenSet = true;
+	  this.subfamily2 = otherValue.subfamily2;
+	  subfamily2HasBeenSet = true;
+	  this.subfamily2_family_oid = otherValue.subfamily2_family_oid;
+	  subfamily2_family_oidHasBeenSet = true;
+	  this.subfamily2_subfamily_oid = otherValue.subfamily2_subfamily_oid;
+	  subfamily2_subfamily_oidHasBeenSet = true;
    }
 
    public java.lang.String getComments()
@@ -82,6 +106,48 @@ public class Product3Value
    public boolean numberHasBeenSet(){
 	  return numberHasBeenSet;
    }
+   public org.openxava.test.ejb.SubfamilyInfo getSubfamily1()
+   {
+	  return this.subfamily1;
+   }
+
+   public void setSubfamily1( org.openxava.test.ejb.SubfamilyInfo subfamily1 )
+   {
+	  this.subfamily1 = subfamily1;
+	  subfamily1HasBeenSet = true;
+   }
+
+   public boolean subfamily1HasBeenSet(){
+	  return subfamily1HasBeenSet;
+   }
+   public java.lang.String getSubfamily1_family_oid()
+   {
+	  return this.subfamily1_family_oid;
+   }
+
+   public void setSubfamily1_family_oid( java.lang.String subfamily1_family_oid )
+   {
+	  this.subfamily1_family_oid = subfamily1_family_oid;
+	  subfamily1_family_oidHasBeenSet = true;
+   }
+
+   public boolean subfamily1_family_oidHasBeenSet(){
+	  return subfamily1_family_oidHasBeenSet;
+   }
+   public java.lang.String getSubfamily1_subfamily_oid()
+   {
+	  return this.subfamily1_subfamily_oid;
+   }
+
+   public void setSubfamily1_subfamily_oid( java.lang.String subfamily1_subfamily_oid )
+   {
+	  this.subfamily1_subfamily_oid = subfamily1_subfamily_oid;
+	  subfamily1_subfamily_oidHasBeenSet = true;
+   }
+
+   public boolean subfamily1_subfamily_oidHasBeenSet(){
+	  return subfamily1_subfamily_oidHasBeenSet;
+   }
    public java.lang.String getFamily_oid()
    {
 	  return this.family_oid;
@@ -96,12 +162,54 @@ public class Product3Value
    public boolean family_oidHasBeenSet(){
 	  return family_oidHasBeenSet;
    }
+   public org.openxava.test.ejb.SubfamilyInfo getSubfamily2()
+   {
+	  return this.subfamily2;
+   }
+
+   public void setSubfamily2( org.openxava.test.ejb.SubfamilyInfo subfamily2 )
+   {
+	  this.subfamily2 = subfamily2;
+	  subfamily2HasBeenSet = true;
+   }
+
+   public boolean subfamily2HasBeenSet(){
+	  return subfamily2HasBeenSet;
+   }
+   public java.lang.String getSubfamily2_family_oid()
+   {
+	  return this.subfamily2_family_oid;
+   }
+
+   public void setSubfamily2_family_oid( java.lang.String subfamily2_family_oid )
+   {
+	  this.subfamily2_family_oid = subfamily2_family_oid;
+	  subfamily2_family_oidHasBeenSet = true;
+   }
+
+   public boolean subfamily2_family_oidHasBeenSet(){
+	  return subfamily2_family_oidHasBeenSet;
+   }
+   public java.lang.String getSubfamily2_subfamily_oid()
+   {
+	  return this.subfamily2_subfamily_oid;
+   }
+
+   public void setSubfamily2_subfamily_oid( java.lang.String subfamily2_subfamily_oid )
+   {
+	  this.subfamily2_subfamily_oid = subfamily2_subfamily_oid;
+	  subfamily2_subfamily_oidHasBeenSet = true;
+   }
+
+   public boolean subfamily2_subfamily_oidHasBeenSet(){
+	  return subfamily2_subfamily_oidHasBeenSet;
+   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("comments=" + getComments() + " " + "description=" + getDescription() + " " + "number=" + getNumber() + " " + "family_oid=" + getFamily_oid());
+	  str.append("comments=" + getComments() + " " + "description=" + getDescription() + " " + "number=" + getNumber() + " " + "subfamily1=" + getSubfamily1() + " " + "subfamily1_family_oid=" + getSubfamily1_family_oid() + " " + "subfamily1_subfamily_oid=" + getSubfamily1_subfamily_oid() + " " + "family_oid=" + getFamily_oid() + " " + "subfamily2=" + getSubfamily2() + " " + "subfamily2_family_oid=" + getSubfamily2_family_oid() + " " + "subfamily2_subfamily_oid=" + getSubfamily2_subfamily_oid());
 	  str.append('}');
 
 	  return(str.toString());
@@ -163,6 +271,30 @@ public class Product3Value
 		 {
 			lEquals = lEquals && this.description.equals( that.description );
 		 }
+		 if( this.subfamily1 == null )
+		 {
+			lEquals = lEquals && ( that.subfamily1 == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.subfamily1.equals( that.subfamily1 );
+		 }
+		 if( this.subfamily1_family_oid == null )
+		 {
+			lEquals = lEquals && ( that.subfamily1_family_oid == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.subfamily1_family_oid.equals( that.subfamily1_family_oid );
+		 }
+		 if( this.subfamily1_subfamily_oid == null )
+		 {
+			lEquals = lEquals && ( that.subfamily1_subfamily_oid == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.subfamily1_subfamily_oid.equals( that.subfamily1_subfamily_oid );
+		 }
 		 if( this.family_oid == null )
 		 {
 			lEquals = lEquals && ( that.family_oid == null );
@@ -170,6 +302,30 @@ public class Product3Value
 		 else
 		 {
 			lEquals = lEquals && this.family_oid.equals( that.family_oid );
+		 }
+		 if( this.subfamily2 == null )
+		 {
+			lEquals = lEquals && ( that.subfamily2 == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.subfamily2.equals( that.subfamily2 );
+		 }
+		 if( this.subfamily2_family_oid == null )
+		 {
+			lEquals = lEquals && ( that.subfamily2_family_oid == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.subfamily2_family_oid.equals( that.subfamily2_family_oid );
+		 }
+		 if( this.subfamily2_subfamily_oid == null )
+		 {
+			lEquals = lEquals && ( that.subfamily2_subfamily_oid == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.subfamily2_subfamily_oid.equals( that.subfamily2_subfamily_oid );
 		 }
 
 		 return lEquals;
@@ -188,7 +344,19 @@ public class Product3Value
 
       result = 37*result + (int)(number^(number>>>32));
 
+      result = 37*result + ((this.subfamily1 != null) ? this.subfamily1.hashCode() : 0);
+
+      result = 37*result + ((this.subfamily1_family_oid != null) ? this.subfamily1_family_oid.hashCode() : 0);
+
+      result = 37*result + ((this.subfamily1_subfamily_oid != null) ? this.subfamily1_subfamily_oid.hashCode() : 0);
+
       result = 37*result + ((this.family_oid != null) ? this.family_oid.hashCode() : 0);
+
+      result = 37*result + ((this.subfamily2 != null) ? this.subfamily2.hashCode() : 0);
+
+      result = 37*result + ((this.subfamily2_family_oid != null) ? this.subfamily2_family_oid.hashCode() : 0);
+
+      result = 37*result + ((this.subfamily2_subfamily_oid != null) ? this.subfamily2_subfamily_oid.hashCode() : 0);
 
 	  return result;
    }

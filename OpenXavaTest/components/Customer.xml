@@ -26,7 +26,7 @@
 				stereotype="MEMO"
 				size="400"/>
 		  
-		<reference name="address"	model="Address" required="true"/>
+		<reference name="address" model="Address" required="true"/>
 
 		<reference name="seller" model="Seller"/>   
 
@@ -212,8 +212,9 @@
 					relationWithSeller; 
 				</group>
 			</section>
-		</members>				
+		</members>					
 	</view>
+	
 				
 	<view model="Address">
 				

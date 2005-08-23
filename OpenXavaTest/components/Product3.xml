@@ -15,8 +15,18 @@ Store oid of family and not the code
 			size="40" required="true"/>
 		<reference name="family" model="Family" required="true"/>
 		<property name="comments" stereotype="MEMO"/>
+		<!--  tmp ini -->
+		<reference name="subfamily1" model="SubfamilyInfo" required="true"/>
+		<reference name="subfamily2" model="SubfamilyInfo" required="true"/>
+		<!--  tmp fin -->
 	</entity> 
 	
+	<!-- tmp -->
+	<aggregate name="SubfamilyInfo">
+		<reference name="family" model="Family2"/>
+		<reference name="subfamily" model="Subfamily2"/>
+	</aggregate>
+		
 	<view name="WithDescriptionsList">
 		
 		<reference-view reference="family">
@@ -40,7 +50,36 @@ Store oid of family and not the code
 		</members>
 
 	</view>
-			
+	
+	<!-- tmp -->
+	<view model="SubfamilyInfo">
+	
+		<reference-view reference="family">
+			<descriptions-list/>
+		</reference-view>
+		
+		<reference-view reference="subfamily">
+		<!--  tmp  
+			<descriptions-list 
+				depends="this.family"
+				condition="${family.number} = ?"/>			  													
+				-->
+		</reference-view>		
+		
+	</view>
+	
+	<!-- tmp -->
+	<view>
+		<members>
+			number; 
+			family;
+			description;			
+			subfamily1;
+			subfamily2;
+			comments;
+		</members>
+	</view>
+				
 	<entity-mapping table="XAVATEST@separator@PRODUCT3">
 		<property-mapping 
 			property="number" column="NUMBER"/>
@@ -53,6 +92,30 @@ Store oid of family and not the code
 		</reference-mapping>	
 		<property-mapping 
 			property="comments" column="COMMENTS"/>								
+		<!-- tmp -->
+		<reference-mapping reference="subfamily1_family">
+			<reference-mapping-detail 
+				column="FAMILY1" 
+				referenced-model-property="oid"/>
+		</reference-mapping>	
+		<reference-mapping reference="subfamily1_subfamily">
+			<reference-mapping-detail 
+				column="SUBFAMILY1" 
+				referenced-model-property="oid"/>
+		</reference-mapping>	
+		<reference-mapping reference="subfamily2_family">
+			<reference-mapping-detail 
+				column="FAMILY2" 
+				referenced-model-property="oid"/>
+		</reference-mapping>	
+		<reference-mapping reference="subfamily2_subfamily">
+			<reference-mapping-detail 
+				column="SUBFAMILY2" 
+				referenced-model-property="oid"/>
+		</reference-mapping>	
+		
+		
+			
 	</entity-mapping> 
 
 </component>

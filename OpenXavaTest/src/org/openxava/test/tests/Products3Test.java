@@ -38,5 +38,48 @@ public class Products3Test extends ModuleTestBase {
 		execute("CRUD.delete");			
 		assertMessage("Product deleted successfully");
 	}
+	
+	public void _testSameAggregateTwiceWithDependentReferences() throws Exception {	// tmp	
+		String [][] familyValues = {
+			{ "", "" },			
+			{ "2", "HARDWARE" },
+			{ "3", "SERVICIOS" },
+			{ "1", "SOFTWARE" }
+		};
+		String [][] hardwareValues = {
+			{ "", ""},
+			{ "12", "PC"},
+			{ "13", "PERIFERICOS"},			
+			{ "11", "SERVIDORES"}						
+		};
+		String [][] softwareValues = {
+			{ "", ""},
+			{ "1", "DESARROLLO"},
+			{ "2", "GESTION"},						  
+			{ "3", "SISTEMA"}						
+		};		
+		String [][] voidValues = {
+			{ "", "" },
+		};
+		
+		execute("CRUD.new");		
+		assertValidValues("subfamily1.family.number", familyValues);
+		assertValidValues("subfamily1.subfamily.number", voidValues);
+		assertValidValues("subfamily2.family.number", familyValues);
+		assertValidValues("subfamily2.subfamily.number", voidValues);
+		
+
+		setValue("subfamily1.family.number", "2");
+		assertValidValues("subfamily1.family.number", familyValues);
+		assertValidValues("subfamily1.subfamily.number", hardwareValues);
+		assertValidValues("subfamily2.family.number", familyValues);
+		assertValidValues("subfamily2.subfamily.number", voidValues);
+		
+		setValue("subfamily2.family.number", "1");
+		assertValidValues("subfamily1.family.number", familyValues);
+		assertValidValues("subfamily1.subfamily.number", hardwareValues);
+		assertValidValues("subfamily2.family.number", familyValues);
+		assertValidValues("subfamily2.subfamily.number", softwareValues);		
+	}
 						
 }

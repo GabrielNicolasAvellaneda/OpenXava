@@ -21,7 +21,11 @@ public abstract class Product3CMP
          dataHolder.set_Comments( get_Comments() );
          dataHolder.set_Description( get_Description() );
          dataHolder.setNumber( getNumber() );
+         dataHolder.set_Subfamily1_family_oid( get_Subfamily1_family_oid() );
+         dataHolder.set_Subfamily1_subfamily_oid( get_Subfamily1_subfamily_oid() );
          dataHolder.set_Family_oid( get_Family_oid() );
+         dataHolder.set_Subfamily2_family_oid( get_Subfamily2_family_oid() );
+         dataHolder.set_Subfamily2_subfamily_oid( get_Subfamily2_subfamily_oid() );
 
       }
       catch (RuntimeException e)
@@ -38,7 +42,11 @@ public abstract class Product3CMP
       {
          set_Comments( dataHolder.get_Comments() );
          set_Description( dataHolder.get_Description() );
+         set_Subfamily1_family_oid( dataHolder.get_Subfamily1_family_oid() );
+         set_Subfamily1_subfamily_oid( dataHolder.get_Subfamily1_subfamily_oid() );
          set_Family_oid( dataHolder.get_Family_oid() );
+         set_Subfamily2_family_oid( dataHolder.get_Subfamily2_family_oid() );
+         set_Subfamily2_subfamily_oid( dataHolder.get_Subfamily2_subfamily_oid() );
 
       }
       catch (Exception e)
@@ -94,7 +102,13 @@ public abstract class Product3CMP
             Product3Value.setComments( getComments() );
             Product3Value.setDescription( getDescription() );
             Product3Value.setNumber( getNumber() );
+            Product3Value.setSubfamily1( getSubfamily1() );
+            Product3Value.setSubfamily1_family_oid( getSubfamily1_family_oid() );
+            Product3Value.setSubfamily1_subfamily_oid( getSubfamily1_subfamily_oid() );
             Product3Value.setFamily_oid( getFamily_oid() );
+            Product3Value.setSubfamily2( getSubfamily2() );
+            Product3Value.setSubfamily2_family_oid( getSubfamily2_family_oid() );
+            Product3Value.setSubfamily2_subfamily_oid( getSubfamily2_subfamily_oid() );
 
          }
          catch (Exception e)
@@ -112,7 +126,13 @@ public abstract class Product3CMP
 	  {
 		 setComments( valueHolder.getComments() );
 		 setDescription( valueHolder.getDescription() );
+		 setSubfamily1( valueHolder.getSubfamily1() );
+		 setSubfamily1_family_oid( valueHolder.getSubfamily1_family_oid() );
+		 setSubfamily1_subfamily_oid( valueHolder.getSubfamily1_subfamily_oid() );
 		 setFamily_oid( valueHolder.getFamily_oid() );
+		 setSubfamily2( valueHolder.getSubfamily2() );
+		 setSubfamily2_family_oid( valueHolder.getSubfamily2_family_oid() );
+		 setSubfamily2_subfamily_oid( valueHolder.getSubfamily2_subfamily_oid() );
 
 	  }
 	  catch (Exception e)
@@ -135,8 +155,24 @@ public abstract class Product3CMP
 
    public abstract void setNumber( long number ) ;
 
+   public abstract java.lang.String get_Subfamily1_family_oid() ;
+
+   public abstract void set_Subfamily1_family_oid( java.lang.String _Subfamily1_family_oid ) ;
+
+   public abstract java.lang.String get_Subfamily1_subfamily_oid() ;
+
+   public abstract void set_Subfamily1_subfamily_oid( java.lang.String _Subfamily1_subfamily_oid ) ;
+
    public abstract java.lang.String get_Family_oid() ;
 
    public abstract void set_Family_oid( java.lang.String _Family_oid ) ;
+
+   public abstract java.lang.String get_Subfamily2_family_oid() ;
+
+   public abstract void set_Subfamily2_family_oid( java.lang.String _Subfamily2_family_oid ) ;
+
+   public abstract java.lang.String get_Subfamily2_subfamily_oid() ;
+
+   public abstract void set_Subfamily2_subfamily_oid( java.lang.String _Subfamily2_subfamily_oid ) ;
 
 }

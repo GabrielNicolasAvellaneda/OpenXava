@@ -116,7 +116,20 @@ if (parameterValuesStereotypes != null || parameterValuesProperties != null) {
 	java.util.Collection p = new java.util.ArrayList();
 	while (it.hasNext()) {
 		String parameterValueKey = (String) it.next();		
-		Object parameterValue = parameterValueKey==null?null:view.getRoot().getValue(parameterValueKey);
+		// tmp ini
+		/* tmp
+		org.openxava.view.View v = null;
+		if (parameterValueKey.startsWith("this.")) {
+			parameterValueKey = parameterValueKey.substring(5);
+			v = view;
+		}
+		else {
+			v = view.getRoot();
+		}
+		*/
+		// tmp fin
+		org.openxava.view.View v = view.getRoot(); // tmp
+		Object parameterValue = parameterValueKey==null?null:v.getValue(parameterValueKey);
 		p.add(parameterValue);
 	}
 	calculator.setParameters(p, filter);

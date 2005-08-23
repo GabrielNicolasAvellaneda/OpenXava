@@ -13,7 +13,11 @@ public class Product3Data
    private java.lang.String _Comments;
    private java.lang.String _Description;
    private long number;
+   private java.lang.String _Subfamily1_family_oid;
+   private java.lang.String _Subfamily1_subfamily_oid;
    private java.lang.String _Family_oid;
+   private java.lang.String _Subfamily2_family_oid;
+   private java.lang.String _Subfamily2_subfamily_oid;
 
    public Product3Data()
    {
@@ -24,7 +28,11 @@ public class Product3Data
       set_Comments(otherData.get_Comments());
       set_Description(otherData.get_Description());
       setNumber(otherData.getNumber());
+      set_Subfamily1_family_oid(otherData.get_Subfamily1_family_oid());
+      set_Subfamily1_subfamily_oid(otherData.get_Subfamily1_subfamily_oid());
       set_Family_oid(otherData.get_Family_oid());
+      set_Subfamily2_family_oid(otherData.get_Subfamily2_family_oid());
+      set_Subfamily2_subfamily_oid(otherData.get_Subfamily2_subfamily_oid());
 
    }
 
@@ -60,6 +68,24 @@ public class Product3Data
       this.number = number;
    }
 
+   public java.lang.String get_Subfamily1_family_oid()
+   {
+      return this._Subfamily1_family_oid;
+   }
+   public void set_Subfamily1_family_oid( java.lang.String _Subfamily1_family_oid )
+   {
+      this._Subfamily1_family_oid = _Subfamily1_family_oid;
+   }
+
+   public java.lang.String get_Subfamily1_subfamily_oid()
+   {
+      return this._Subfamily1_subfamily_oid;
+   }
+   public void set_Subfamily1_subfamily_oid( java.lang.String _Subfamily1_subfamily_oid )
+   {
+      this._Subfamily1_subfamily_oid = _Subfamily1_subfamily_oid;
+   }
+
    public java.lang.String get_Family_oid()
    {
       return this._Family_oid;
@@ -69,11 +95,29 @@ public class Product3Data
       this._Family_oid = _Family_oid;
    }
 
+   public java.lang.String get_Subfamily2_family_oid()
+   {
+      return this._Subfamily2_family_oid;
+   }
+   public void set_Subfamily2_family_oid( java.lang.String _Subfamily2_family_oid )
+   {
+      this._Subfamily2_family_oid = _Subfamily2_family_oid;
+   }
+
+   public java.lang.String get_Subfamily2_subfamily_oid()
+   {
+      return this._Subfamily2_subfamily_oid;
+   }
+   public void set_Subfamily2_subfamily_oid( java.lang.String _Subfamily2_subfamily_oid )
+   {
+      this._Subfamily2_subfamily_oid = _Subfamily2_subfamily_oid;
+   }
+
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Comments=" + get_Comments() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "_Family_oid=" + get_Family_oid());
+      str.append("_Comments=" + get_Comments() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "_Subfamily1_family_oid=" + get_Subfamily1_family_oid() + " " + "_Subfamily1_subfamily_oid=" + get_Subfamily1_subfamily_oid() + " " + "_Family_oid=" + get_Family_oid() + " " + "_Subfamily2_family_oid=" + get_Subfamily2_family_oid() + " " + "_Subfamily2_subfamily_oid=" + get_Subfamily2_subfamily_oid());
       str.append('}');
 
       return(str.toString());
@@ -103,6 +147,22 @@ public class Product3Data
             lEquals = lEquals && this._Description.equals( lTest._Description );
          }
          lEquals = lEquals && this.number == lTest.number;
+         if( this._Subfamily1_family_oid == null )
+         {
+            lEquals = lEquals && ( lTest._Subfamily1_family_oid == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Subfamily1_family_oid.equals( lTest._Subfamily1_family_oid );
+         }
+         if( this._Subfamily1_subfamily_oid == null )
+         {
+            lEquals = lEquals && ( lTest._Subfamily1_subfamily_oid == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Subfamily1_subfamily_oid.equals( lTest._Subfamily1_subfamily_oid );
+         }
          if( this._Family_oid == null )
          {
             lEquals = lEquals && ( lTest._Family_oid == null );
@@ -110,6 +170,22 @@ public class Product3Data
          else
          {
             lEquals = lEquals && this._Family_oid.equals( lTest._Family_oid );
+         }
+         if( this._Subfamily2_family_oid == null )
+         {
+            lEquals = lEquals && ( lTest._Subfamily2_family_oid == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Subfamily2_family_oid.equals( lTest._Subfamily2_family_oid );
+         }
+         if( this._Subfamily2_subfamily_oid == null )
+         {
+            lEquals = lEquals && ( lTest._Subfamily2_subfamily_oid == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Subfamily2_subfamily_oid.equals( lTest._Subfamily2_subfamily_oid );
          }
 
          return lEquals;
@@ -130,7 +206,15 @@ public class Product3Data
 
       result = 37*result + (int)(number^(number>>>32));
 
+      result = 37*result + ((this._Subfamily1_family_oid != null) ? this._Subfamily1_family_oid.hashCode() : 0);
+
+      result = 37*result + ((this._Subfamily1_subfamily_oid != null) ? this._Subfamily1_subfamily_oid.hashCode() : 0);
+
       result = 37*result + ((this._Family_oid != null) ? this._Family_oid.hashCode() : 0);
+
+      result = 37*result + ((this._Subfamily2_family_oid != null) ? this._Subfamily2_family_oid.hashCode() : 0);
+
+      result = 37*result + ((this._Subfamily2_subfamily_oid != null) ? this._Subfamily2_subfamily_oid.hashCode() : 0);
 
       return result;
    }

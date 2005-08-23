@@ -25,6 +25,42 @@ public interface Product3
    public long getNumber(  )
       throws java.rmi.RemoteException;
 
+   public org.openxava.test.ejb.SubfamilyInfo getSubfamily1(  )
+      throws java.rmi.RemoteException;
+
+   public void setSubfamily1( org.openxava.test.ejb.SubfamilyInfo newSubfamily1 )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.ejb.Family getSubfamily1_family(  )
+      throws java.rmi.RemoteException;
+
+   public void setSubfamily1_family( org.openxava.test.ejb.Family newSubfamily1_family )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.ejb.FamilyKey getSubfamily1_familyKey(  )
+      throws java.rmi.RemoteException;
+
+   public void setSubfamily1_familyKey( org.openxava.test.ejb.FamilyKey key )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getSubfamily1_family_oid(  )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.ejb.Subfamily getSubfamily1_subfamily(  )
+      throws java.rmi.RemoteException;
+
+   public void setSubfamily1_subfamily( org.openxava.test.ejb.Subfamily newSubfamily1_subfamily )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.ejb.SubfamilyKey getSubfamily1_subfamilyKey(  )
+      throws java.rmi.RemoteException;
+
+   public void setSubfamily1_subfamilyKey( org.openxava.test.ejb.SubfamilyKey key )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getSubfamily1_subfamily_oid(  )
+      throws java.rmi.RemoteException;
+
    public org.openxava.test.ejb.Family getFamily(  )
       throws java.rmi.RemoteException;
 
@@ -38,6 +74,42 @@ public interface Product3
       throws java.rmi.RemoteException;
 
    public java.lang.String getFamily_oid(  )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.ejb.SubfamilyInfo getSubfamily2(  )
+      throws java.rmi.RemoteException;
+
+   public void setSubfamily2( org.openxava.test.ejb.SubfamilyInfo newSubfamily2 )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.ejb.Family getSubfamily2_family(  )
+      throws java.rmi.RemoteException;
+
+   public void setSubfamily2_family( org.openxava.test.ejb.Family newSubfamily2_family )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.ejb.FamilyKey getSubfamily2_familyKey(  )
+      throws java.rmi.RemoteException;
+
+   public void setSubfamily2_familyKey( org.openxava.test.ejb.FamilyKey key )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getSubfamily2_family_oid(  )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.ejb.Subfamily getSubfamily2_subfamily(  )
+      throws java.rmi.RemoteException;
+
+   public void setSubfamily2_subfamily( org.openxava.test.ejb.Subfamily newSubfamily2_subfamily )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.ejb.SubfamilyKey getSubfamily2_subfamilyKey(  )
+      throws java.rmi.RemoteException;
+
+   public void setSubfamily2_subfamilyKey( org.openxava.test.ejb.SubfamilyKey key )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getSubfamily2_subfamily_oid(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.ejb.Product3Data getData(  )
