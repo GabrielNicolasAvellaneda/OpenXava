@@ -1617,9 +1617,25 @@
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
+         <cmp-field id="CmpAttribute_Product3__Subfamily1_family_oid">
+            <description><![CDATA[]]></description>
+            <field-name>_Subfamily1_family_oid</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_Product3__Subfamily1_subfamily_oid">
+            <description><![CDATA[]]></description>
+            <field-name>_Subfamily1_subfamily_oid</field-name>
+         </cmp-field>
          <cmp-field id="CmpAttribute_Product3__Family_oid">
             <description><![CDATA[]]></description>
             <field-name>_Family_oid</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_Product3__Subfamily2_family_oid">
+            <description><![CDATA[]]></description>
+            <field-name>_Subfamily2_family_oid</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_Product3__Subfamily2_subfamily_oid">
+            <description><![CDATA[]]></description>
+            <field-name>_Subfamily2_subfamily_oid</field-name>
          </cmp-field>
 
          <env-entry>

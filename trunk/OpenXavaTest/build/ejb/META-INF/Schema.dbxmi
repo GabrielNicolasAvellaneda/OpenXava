@@ -368,7 +368,15 @@
       </columns>
       <columns xmi:id="Product3_number" name="number">
       </columns>
+      <columns xmi:id="Product3__Subfamily1_family_oid" name="_Subfamily1_family_oid">
+      </columns>
+      <columns xmi:id="Product3__Subfamily1_subfamily_oid" name="_Subfamily1_subfamily_oid">
+      </columns>
       <columns xmi:id="Product3__Family_oid" name="_Family_oid">
+      </columns>
+      <columns xmi:id="Product3__Subfamily2_family_oid" name="_Subfamily2_family_oid">
+      </columns>
+      <columns xmi:id="Product3__Subfamily2_subfamily_oid" name="_Subfamily2_subfamily_oid">
       </columns>
 
    </RDBSchema:RDBTable>
