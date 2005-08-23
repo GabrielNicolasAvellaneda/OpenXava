@@ -185,10 +185,12 @@
 						
 	</view>
 		
-	<view name="Simple" members="number; type; name; address">
-		<reference-view reference="address" view="Simple"/>
-	</view>
-		
+	<view name="Simple" members="number; type; name; address"/>
+	
+	<view name="SimpleStateAsForm" members="number; type; name; address">
+		<reference-view reference="address" view="StateAsForm"/>
+	</view>	
+	
 	<view name="SomeMembersReadOnly" members="number; type; name; seller; alternateSeller">
 		<property-view property="name" read-only="true"/>
 		<reference-view reference="seller" read-only="true"/>
@@ -236,7 +238,7 @@
 
 	</view>
 	
-	<view model="Address" name="Simple"/>		
+	<view model="Address" name="StateAsForm"/>		
 	
 	<view model="DeliveryPlace">	
 		<reference-view reference="preferredWarehouse">
