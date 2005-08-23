@@ -2,7 +2,7 @@ package org.openxava.test.validators;
 
 import java.math.*;
 
-import org.openxava.test.ejb.*;
+import org.openxava.test.model.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
 
@@ -12,9 +12,9 @@ import org.openxava.validators.*;
 
 public class InvoiceDetailValidator implements IValidator {
 	
-	private Invoice invoice;
+	private IInvoice invoice;
 	private String oid; // At moment oid is only for verify that can be set without crash
-	private Product product;	
+	private IProduct product;	
 	private BigDecimal unitPrice;
 
 	public void validate(Messages errors) throws Exception {		
@@ -31,11 +31,11 @@ public class InvoiceDetailValidator implements IValidator {
 		}		
 	}
 	
-	public Product getProduct() {
+	public IProduct getProduct() {
 		return product;
 	}
 
-	public void setProduct(Product object) {
+	public void setProduct(IProduct object) {
 		product = object;
 	}
 
@@ -55,10 +55,10 @@ public class InvoiceDetailValidator implements IValidator {
 		oid = string;		
 	}
 
-	public Invoice getInvoice() {
+	public IInvoice getInvoice() {
 		return invoice;
 	}
-	public void setInvoice(Invoice invoice) {
+	public void setInvoice(IInvoice invoice) {
 		this.invoice = invoice;
 	}
 }

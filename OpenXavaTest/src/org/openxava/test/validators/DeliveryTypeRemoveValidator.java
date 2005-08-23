@@ -2,7 +2,7 @@ package org.openxava.test.validators;
 
 import java.util.*;
 
-import org.openxava.test.ejb.*;
+import org.openxava.test.model.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
 

@@ -1,6 +1,6 @@
 package org.openxava.test.tests;
 
-import org.openxava.test.ejb.*;
+import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
 
@@ -41,7 +41,7 @@ public class DeliveryTypesTest extends ModuleTestBase {
 		deliveryValue.setType_number(66);				
 		deliveryValue.setNumber(66);
 		deliveryValue.setDescription("JUNIT FOR DELIVERY TYPE");		
-		Delivery delivery = DeliveryUtil.getHome().create(deliveryValue);
+		DeliveryRemote delivery = DeliveryUtil.getHome().create(deliveryValue);
 		
 		setValue("number", "66");
 		execute("CRUD.search");

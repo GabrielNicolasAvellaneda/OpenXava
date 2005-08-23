@@ -12,7 +12,7 @@
 	<for stereotype="SERVICE_TYPE" type="int"/>
 	<for stereotype="NO_FORMATING_STRING" type="String"/>
 	<for stereotype="PRODUCT3" type="long"/>
-	<for stereotype="WAREHOUSE" type="org.openxava.test.ejb.WarehouseKey"/>
+	<for stereotype="WAREHOUSE" type="org.openxava.test.model.WarehouseKey"/>
 	<for stereotype="PERSON_NAME" type="String"/>
 	<for stereotype="RECEPTIONIST" type="int"/>
 

@@ -96,22 +96,22 @@ Store oid of family and not the code
 		<reference-mapping reference="subfamily1_family">
 			<reference-mapping-detail 
 				column="FAMILY1" 
-				referenced-model-property="oid"/>
+				referenced-model-property="number"/>
 		</reference-mapping>	
 		<reference-mapping reference="subfamily1_subfamily">
 			<reference-mapping-detail 
 				column="SUBFAMILY1" 
-				referenced-model-property="oid"/>
+				referenced-model-property="number"/>
 		</reference-mapping>	
 		<reference-mapping reference="subfamily2_family">
 			<reference-mapping-detail 
 				column="FAMILY2" 
-				referenced-model-property="oid"/>
+				referenced-model-property="number"/>
 		</reference-mapping>	
 		<reference-mapping reference="subfamily2_subfamily">
 			<reference-mapping-detail 
 				column="SUBFAMILY2" 
-				referenced-model-property="oid"/>
+				referenced-model-property="number"/>
 		</reference-mapping>	
 		
 		

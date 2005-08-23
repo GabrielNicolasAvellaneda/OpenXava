@@ -6,7 +6,7 @@ import java.util.*;
 import javax.servlet.http.*;
 
 import org.openxava.formatters.*;
-import org.openxava.test.ejb.*;
+import org.openxava.test.model.*;
 import org.openxava.util.*;
 
 

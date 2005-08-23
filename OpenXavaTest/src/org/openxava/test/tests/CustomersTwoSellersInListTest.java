@@ -1,6 +1,5 @@
 package org.openxava.test.tests;
 
-import org.openxava.test.ejb.*;
 import org.openxava.tests.*;
 
 /**

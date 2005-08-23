@@ -3,9 +3,8 @@ package org.openxava.test.tests;
 import java.util.*;
 import javax.rmi.*;
 
-import org.openxava.test.ejb.*;
+import org.openxava.test.model.*;
 import org.openxava.tests.*;
-import org.openxava.test.ejb.*;
 import org.openxava.util.*;
 
 
@@ -90,14 +89,14 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 		InvoiceKey key = new InvoiceKey();
 		key.setYear(Integer.parseInt(year));
 		key.setNumber(Integer.parseInt(number));
-		Invoice invoice = InvoiceUtil.getHome().findByPrimaryKey(key);		
+		IInvoice invoice = InvoiceUtil.getHome().findByPrimaryKey(key);		
 		assertValueInList(row, "customer.seller.level.description", invoice.getCustomer().getSeller().getLevel().getDescription());		
 	}
 
 	private InvoiceKey getInvoiceKey() throws Exception {
 		Iterator it = InvoiceUtil.getHome().findAll().iterator();
 		while (it.hasNext()) {			
-			Invoice invoice = (Invoice) PortableRemoteObject.narrow(it.next(), Invoice.class);
+			InvoiceRemote invoice = (InvoiceRemote) PortableRemoteObject.narrow(it.next(), InvoiceRemote.class);
 			if (invoice.getDetailsCount() > 0) {
 				return (InvoiceKey) invoice.getPrimaryKey(); 
 			}			

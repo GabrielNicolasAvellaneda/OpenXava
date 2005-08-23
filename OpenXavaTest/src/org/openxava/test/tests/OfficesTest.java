@@ -1,7 +1,7 @@
 package org.openxava.test.tests;
 
 
-import org.openxava.test.ejb.*;
+import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
 
@@ -159,7 +159,7 @@ public class OfficesTest extends ModuleTestBase {
 			WarehouseKey key = new WarehouseKey();
 			key.setZoneNumber(2);
 			key.set_Number(new Integer(1));			
-			Warehouse warehouse = WarehouseUtil.getHome().findByPrimaryKey(key);
+			IWarehouse warehouse = WarehouseUtil.getHome().findByPrimaryKey(key);
 			warehouseName = warehouse.getName();
 		}
 		return warehouseName;
@@ -171,7 +171,7 @@ public class OfficesTest extends ModuleTestBase {
 				key.setZoneNumber(2);
 				key.setOfficeNumber(2);
 				key.setNumber(1);
-				Clerk clerk = ClerkUtil.getHome().findByPrimaryKey(key);
+				IClerk clerk = ClerkUtil.getHome().findByPrimaryKey(key);
 				clerkName = clerk.getName();
 		}
 		return clerkName;

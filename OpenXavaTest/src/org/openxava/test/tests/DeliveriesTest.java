@@ -8,7 +8,7 @@ import javax.ejb.*;
 import javax.rmi.*;
 
 import org.openxava.test.calculators.*;
-import org.openxava.test.ejb.*;
+import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
 
@@ -59,9 +59,9 @@ public class DeliveriesTest extends ModuleTestBase {
 	public void testReferenceAsDescriptionsListWithValidValuesInKey() throws Exception {
 		execute("Mode.detailAndFirst");
 		assertValue("shipment.KEY", "");
-		Shipment shipment = (Shipment)
+		ShipmentRemote shipment = (ShipmentRemote)
 			PortableRemoteObject.narrow(
-				ShipmentUtil.getHome().findAll().iterator().next(), Shipment.class);		
+				ShipmentUtil.getHome().findAll().iterator().next(), ShipmentRemote.class);		
 		setValue("shipment.KEY", shipment.getPrimaryKey().toString());
 		execute("CRUD.save");
 		assertNoErrors();

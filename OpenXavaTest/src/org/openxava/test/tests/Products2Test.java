@@ -2,7 +2,7 @@ package org.openxava.test.tests;
 
 import java.math.*;
 
-import org.openxava.test.ejb.*;
+import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
 
