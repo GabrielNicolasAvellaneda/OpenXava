@@ -57,7 +57,7 @@ public class PercentageCalculator implements ICalculator {
 		}
 	}
 	
-	public Object calculate() throws Exception {
+	public Object calculate() throws Exception {			
 		return getValueAsBigDecimal().multiply(getPercentageAsBigDecimal()).divide(HUNDRED, getScale(), getRounding());
 	}
 

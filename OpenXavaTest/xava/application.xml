@@ -2,7 +2,7 @@
 	
 	<module name="CustomersSimple">	
 		<model name="Customer"/>
-		<view name="Simple"/>
+		<view name="SimpleStateAsForm"/>
 		<controller name="Typical"/>
 	</module>
 			<module name="CustomersWithSection">			<model name="Customer"/>		<view name="WithSection"/>		<controller name="Customers"/>			</module>		<module name="CustomersNewOnInit">			<model name="Customer"/>		<view name="SectionGroup"/>		<controller name="CustomersNewOnInit"/>			</module>		<module name="CustomersTwoSellersInList">			<model name="Customer"/>		<tab name="TwoSellers"/>		<controller name="Typical"/>			</module>

@@ -13,7 +13,7 @@ public class ConcatCalculator implements ICalculator {
 	private Object string3=null;
 	private Object string4=null;
 	
-	public Object calculate() throws Exception {
+	public Object calculate() throws Exception {		
 		StringBuffer r = new StringBuffer(string1==null?"":string1.toString());
 		r.append(separator);
 		r.append(string2);
