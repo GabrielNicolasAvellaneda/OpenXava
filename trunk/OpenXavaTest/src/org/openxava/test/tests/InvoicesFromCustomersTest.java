@@ -4,7 +4,7 @@ import java.util.*;
 
 import javax.rmi.*;
 
-import org.openxava.test.ejb.*;
+import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
 /**
@@ -81,12 +81,12 @@ public class InvoicesFromCustomersTest extends ModuleTestBase {
 		assertListRowCount(getInvoices().size());		
 		Iterator it = getInvoices().iterator();
 		while (it.hasNext()) {
-			Invoice invoice = (Invoice) PortableRemoteObject.narrow(it.next(), Invoice.class);
+			IInvoice invoice = (IInvoice) PortableRemoteObject.narrow(it.next(), IInvoice.class);
 			assertInvoiceInList(invoice);			
 		}
 	}
 
-	private void assertInvoiceInList(Invoice invoice) throws Exception {
+	private void assertInvoiceInList(IInvoice invoice) throws Exception {
 		int rowCount = getListRowCount();
 		String year = String.valueOf(invoice.getYear());
 		String number = String.valueOf(invoice.getNumber());

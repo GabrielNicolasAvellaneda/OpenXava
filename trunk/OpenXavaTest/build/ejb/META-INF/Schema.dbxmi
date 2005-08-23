@@ -4,6 +4,27 @@
       <dataTypeSet href="UDBV7_Primitives.xmi#SQLPrimitives_1"/>
    </RDBSchema:RDBDatabase>
 
+   <RDBSchema:RDBTable xmi:id="RDBTable_Product" name="" primaryKey="Product_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Product_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Product" constraint="Constraint_Product_"/>
+
+      <columns xmi:id="Product__FamilyNumber" name="_FamilyNumber">
+      </columns>
+      <columns xmi:id="Product__UnitPrice" name="_UnitPrice">
+      </columns>
+      <columns xmi:id="Product_warehouseZoneNumber" name="warehouseZoneNumber">
+      </columns>
+      <columns xmi:id="Product_warehouseNumber" name="warehouseNumber">
+      </columns>
+      <columns xmi:id="Product__SubfamilyNumber" name="_SubfamilyNumber">
+      </columns>
+      <columns xmi:id="Product__Remarks" name="_Remarks">
+      </columns>
+      <columns xmi:id="Product__Description" name="_Description">
+      </columns>
+      <columns xmi:id="Product_number" name="number">
+      </columns>
+
+   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_DrivingLicence" name="" primaryKey="DrivingLicence_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="DrivingLicence_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_DrivingLicence" constraint="Constraint_DrivingLicence_"/>
 
@@ -15,22 +36,51 @@
       </columns>
 
    </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_Office" name="" primaryKey="Office_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Office_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Office" constraint="Constraint_Office_"/>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Office2" name="" primaryKey="Office2_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Office2_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Office2" constraint="Constraint_Office2_"/>
 
-      <columns xmi:id="Office__Receptionist" name="_Receptionist">
+      <columns xmi:id="Office2__Receptionist" name="_Receptionist">
       </columns>
-      <columns xmi:id="Office__Name" name="_Name">
+      <columns xmi:id="Office2__Name" name="_Name">
       </columns>
-      <columns xmi:id="Office__ZoneNumber" name="_ZoneNumber">
+      <columns xmi:id="Office2_zoneNumber" name="zoneNumber">
       </columns>
-      <columns xmi:id="Office_number" name="number">
+      <columns xmi:id="Office2_number" name="number">
       </columns>
-      <columns xmi:id="Office__OfficeManager_number" name="_OfficeManager_number">
+      <columns xmi:id="Office2__OfficeManager_number" name="_OfficeManager_number">
       </columns>
-      <columns xmi:id="Office__DefaultCarrier_number" name="_DefaultCarrier_number">
+      <columns xmi:id="Office2__DefaultCarrier_number" name="_DefaultCarrier_number">
       </columns>
-      <columns xmi:id="Office__MainWarehouse_number" name="_MainWarehouse_number">
+      <columns xmi:id="Office2__MainWarehouse_number" name="_MainWarehouse_number">
+      </columns>
+
+   </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Customer" name="" primaryKey="Customer_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Customer_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Customer" constraint="Constraint_Customer_"/>
+
+      <columns xmi:id="Customer__Type" name="_Type">
+      </columns>
+      <columns xmi:id="Customer__Remarks" name="_Remarks">
+      </columns>
+      <columns xmi:id="Customer__RelationWithSeller" name="_RelationWithSeller">
+      </columns>
+      <columns xmi:id="Customer__Photo" name="_Photo">
+      </columns>
+      <columns xmi:id="Customer__Name" name="_Name">
+      </columns>
+      <columns xmi:id="Customer_number" name="number">
+      </columns>
+      <columns xmi:id="Customer__Seller_number" name="_Seller_number">
+      </columns>
+      <columns xmi:id="Customer__AlternateSeller_number" name="_AlternateSeller_number">
+      </columns>
+      <columns xmi:id="Customer__Address_zipCode" name="_Address_zipCode">
+      </columns>
+      <columns xmi:id="Customer__Address_street" name="_Address_street">
+      </columns>
+      <columns xmi:id="Customer__Address_city" name="_Address_city">
+      </columns>
+      <columns xmi:id="Customer__Address_state_id" name="_Address_state_id">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -75,6 +125,120 @@
       </columns>
 
    </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_FilterBySubfamily" name="" primaryKey="FilterBySubfamily_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="FilterBySubfamily_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_FilterBySubfamily" constraint="Constraint_FilterBySubfamily_"/>
+
+      <columns xmi:id="FilterBySubfamily_oid" name="oid">
+      </columns>
+      <columns xmi:id="FilterBySubfamily__SubfamilyTo_number" name="_SubfamilyTo_number">
+      </columns>
+      <columns xmi:id="FilterBySubfamily__Subfamily_number" name="_Subfamily_number">
+      </columns>
+
+   </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_SellerLevel" name="" primaryKey="SellerLevel_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="SellerLevel_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_SellerLevel" constraint="Constraint_SellerLevel_"/>
+
+      <columns xmi:id="SellerLevel__Description" name="_Description">
+      </columns>
+      <columns xmi:id="SellerLevel_id" name="id">
+      </columns>
+
+   </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Invoice" name="" primaryKey="Invoice_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Invoice_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Invoice" constraint="Constraint_Invoice_"/>
+
+      <columns xmi:id="Invoice__Comment" name="_Comment">
+      </columns>
+      <columns xmi:id="Invoice__Date" name="_Date">
+      </columns>
+      <columns xmi:id="Invoice__Paid" name="_Paid">
+      </columns>
+      <columns xmi:id="Invoice_year" name="year">
+      </columns>
+      <columns xmi:id="Invoice__VatPercentage" name="_VatPercentage">
+      </columns>
+      <columns xmi:id="Invoice_number" name="number">
+      </columns>
+      <columns xmi:id="Invoice__Customer_number" name="_Customer_number">
+      </columns>
+
+   </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_DeliveryDetail" name="" primaryKey="DeliveryDetail_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="DeliveryDetail_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_DeliveryDetail" constraint="Constraint_DeliveryDetail_"/>
+
+      <columns xmi:id="DeliveryDetail__Description" name="_Description">
+      </columns>
+      <columns xmi:id="DeliveryDetail_number" name="number">
+      </columns>
+      <columns xmi:id="DeliveryDetail__Delivery_number" name="_Delivery_number">
+      </columns>
+      <columns xmi:id="DeliveryDetail__Delivery_type_number" name="_Delivery_type_number">
+      </columns>
+      <columns xmi:id="DeliveryDetail__Delivery_invoice_year" name="_Delivery_invoice_year">
+      </columns>
+      <columns xmi:id="DeliveryDetail__Delivery_invoice_number" name="_Delivery_invoice_number">
+      </columns>
+
+   </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Product3" name="" primaryKey="Product3_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Product3_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Product3" constraint="Constraint_Product3_"/>
+
+      <columns xmi:id="Product3__Comments" name="_Comments">
+      </columns>
+      <columns xmi:id="Product3__Description" name="_Description">
+      </columns>
+      <columns xmi:id="Product3_number" name="number">
+      </columns>
+      <columns xmi:id="Product3__Subfamily1_family_number" name="_Subfamily1_family_number">
+      </columns>
+      <columns xmi:id="Product3__Subfamily1_subfamily_number" name="_Subfamily1_subfamily_number">
+      </columns>
+      <columns xmi:id="Product3__Family_oid" name="_Family_oid">
+      </columns>
+      <columns xmi:id="Product3__Subfamily2_family_number" name="_Subfamily2_family_number">
+      </columns>
+      <columns xmi:id="Product3__Subfamily2_subfamily_number" name="_Subfamily2_subfamily_number">
+      </columns>
+
+   </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_State" name="" primaryKey="State_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="State_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_State" constraint="Constraint_State_"/>
+
+      <columns xmi:id="State__Name" name="_Name">
+      </columns>
+      <columns xmi:id="State_id" name="id">
+      </columns>
+
+   </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Subfamily2" name="" primaryKey="Subfamily2_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Subfamily2_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Subfamily2" constraint="Constraint_Subfamily2_"/>
+
+      <columns xmi:id="Subfamily2__Remarks" name="_Remarks">
+      </columns>
+      <columns xmi:id="Subfamily2__Description" name="_Description">
+      </columns>
+      <columns xmi:id="Subfamily2_number" name="number">
+      </columns>
+      <columns xmi:id="Subfamily2__Family_number" name="_Family_number">
+      </columns>
+
+   </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Subfamily" name="" primaryKey="Subfamily_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Subfamily_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Subfamily" constraint="Constraint_Subfamily_"/>
+
+      <columns xmi:id="Subfamily__FamilyNumber" name="_FamilyNumber">
+      </columns>
+      <columns xmi:id="Subfamily_oid" name="oid">
+      </columns>
+      <columns xmi:id="Subfamily__Remarks" name="_Remarks">
+      </columns>
+      <columns xmi:id="Subfamily__Description" name="_Description">
+      </columns>
+      <columns xmi:id="Subfamily__Number" name="_Number">
+      </columns>
+
+   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_Clerk" name="" primaryKey="Clerk_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Clerk_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Clerk" constraint="Constraint_Clerk_"/>
 
@@ -88,66 +252,72 @@
       </columns>
 
    </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_State" name="" primaryKey="State_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="State_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_State" constraint="Constraint_State_"/>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Warehouse" name="" primaryKey="Warehouse_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Warehouse_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Warehouse" constraint="Constraint_Warehouse_"/>
 
-      <columns xmi:id="State__Name" name="_Name">
+      <columns xmi:id="Warehouse__Name" name="_Name">
       </columns>
-      <columns xmi:id="State_id" name="id">
+      <columns xmi:id="Warehouse__Number" name="_Number">
       </columns>
-
-   </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_SellerLevel" name="" primaryKey="SellerLevel_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="SellerLevel_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_SellerLevel" constraint="Constraint_SellerLevel_"/>
-
-      <columns xmi:id="SellerLevel__Description" name="_Description">
-      </columns>
-      <columns xmi:id="SellerLevel_id" name="id">
+      <columns xmi:id="Warehouse_zoneNumber" name="zoneNumber">
       </columns>
 
    </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_Product" name="" primaryKey="Product_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Product_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Product" constraint="Constraint_Product_"/>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Office" name="" primaryKey="Office_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Office_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Office" constraint="Constraint_Office_"/>
 
-      <columns xmi:id="Product__FamilyNumber" name="_FamilyNumber">
+      <columns xmi:id="Office__Receptionist" name="_Receptionist">
       </columns>
-      <columns xmi:id="Product__UnitPrice" name="_UnitPrice">
+      <columns xmi:id="Office__Name" name="_Name">
       </columns>
-      <columns xmi:id="Product_warehouseZoneNumber" name="warehouseZoneNumber">
+      <columns xmi:id="Office__ZoneNumber" name="_ZoneNumber">
       </columns>
-      <columns xmi:id="Product_warehouseNumber" name="warehouseNumber">
+      <columns xmi:id="Office_number" name="number">
       </columns>
-      <columns xmi:id="Product__SubfamilyNumber" name="_SubfamilyNumber">
+      <columns xmi:id="Office__OfficeManager_number" name="_OfficeManager_number">
       </columns>
-      <columns xmi:id="Product__Remarks" name="_Remarks">
+      <columns xmi:id="Office__DefaultCarrier_number" name="_DefaultCarrier_number">
       </columns>
-      <columns xmi:id="Product__Description" name="_Description">
-      </columns>
-      <columns xmi:id="Product_number" name="number">
+      <columns xmi:id="Office__MainWarehouse_number" name="_MainWarehouse_number">
       </columns>
 
    </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_Family" name="" primaryKey="Family_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Family_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Family" constraint="Constraint_Family_"/>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Family2" name="" primaryKey="Family2_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Family2_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Family2" constraint="Constraint_Family2_"/>
 
-      <columns xmi:id="Family_oid" name="oid">
+      <columns xmi:id="Family2__Description" name="_Description">
       </columns>
-      <columns xmi:id="Family_number" name="number">
-      </columns>
-      <columns xmi:id="Family_description" name="description">
+      <columns xmi:id="Family2_number" name="number">
       </columns>
 
    </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_ServiceType" name="" primaryKey="ServiceType_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="ServiceType_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_ServiceType" constraint="Constraint_ServiceType_"/>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Service" name="" primaryKey="Service_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Service_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Service" constraint="Constraint_Service_"/>
 
-      <columns xmi:id="ServiceType__Family" name="_Family">
+      <columns xmi:id="Service__Family" name="_Family">
       </columns>
-      <columns xmi:id="ServiceType__Description" name="_Description">
+      <columns xmi:id="Service__Description" name="_Description">
       </columns>
-      <columns xmi:id="ServiceType__Subfamily" name="_Subfamily">
+      <columns xmi:id="Service_number" name="number">
       </columns>
-      <columns xmi:id="ServiceType_number" name="number">
+      <columns xmi:id="Service__Detail_free" name="_Detail_free">
+      </columns>
+      <columns xmi:id="Service__Detail_type" name="_Detail_type">
+      </columns>
+      <columns xmi:id="Service__Detail_subfamily" name="_Detail_subfamily">
+      </columns>
+
+   </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Shipment" name="" primaryKey="Shipment_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Shipment_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Shipment" constraint="Constraint_Shipment_"/>
+
+      <columns xmi:id="Shipment__Type" name="_Type">
+      </columns>
+      <columns xmi:id="Shipment__Description" name="_Description">
+      </columns>
+      <columns xmi:id="Shipment_mode" name="mode">
+      </columns>
+      <columns xmi:id="Shipment_number" name="number">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -170,80 +340,42 @@
       </columns>
 
    </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_Warehouse" name="" primaryKey="Warehouse_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Warehouse_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Warehouse" constraint="Constraint_Warehouse_"/>
+   <RDBSchema:RDBTable xmi:id="RDBTable_TransportCharge" name="" primaryKey="TransportCharge_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="TransportCharge_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_TransportCharge" constraint="Constraint_TransportCharge_"/>
 
-      <columns xmi:id="Warehouse__Name" name="_Name">
+      <columns xmi:id="TransportCharge__Amount" name="_Amount">
       </columns>
-      <columns xmi:id="Warehouse__Number" name="_Number">
+      <columns xmi:id="TransportCharge__Delivery_number" name="_Delivery_number">
       </columns>
-      <columns xmi:id="Warehouse_zoneNumber" name="zoneNumber">
+      <columns xmi:id="TransportCharge__Delivery_type_number" name="_Delivery_type_number">
       </columns>
-
-   </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_Seller" name="" primaryKey="Seller_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Seller_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Seller" constraint="Constraint_Seller_"/>
-
-      <columns xmi:id="Seller__Name" name="_Name">
+      <columns xmi:id="TransportCharge__Delivery_invoice_year" name="_Delivery_invoice_year">
       </columns>
-      <columns xmi:id="Seller_number" name="number">
-      </columns>
-      <columns xmi:id="Seller__Level_id" name="_Level_id">
-      </columns>
-      <columns xmi:id="Seller__Boss_number" name="_Boss_number">
+      <columns xmi:id="TransportCharge__Delivery_invoice_number" name="_Delivery_invoice_number">
       </columns>
 
    </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_Customer" name="" primaryKey="Customer_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Customer_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Customer" constraint="Constraint_Customer_"/>
+   <RDBSchema:RDBTable xmi:id="RDBTable_ServiceType" name="" primaryKey="ServiceType_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="ServiceType_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_ServiceType" constraint="Constraint_ServiceType_"/>
 
-      <columns xmi:id="Customer__Type" name="_Type">
+      <columns xmi:id="ServiceType__Family" name="_Family">
       </columns>
-      <columns xmi:id="Customer__Remarks" name="_Remarks">
+      <columns xmi:id="ServiceType__Description" name="_Description">
       </columns>
-      <columns xmi:id="Customer__RelationWithSeller" name="_RelationWithSeller">
+      <columns xmi:id="ServiceType__Subfamily" name="_Subfamily">
       </columns>
-      <columns xmi:id="Customer__Photo" name="_Photo">
-      </columns>
-      <columns xmi:id="Customer__Name" name="_Name">
-      </columns>
-      <columns xmi:id="Customer_number" name="number">
-      </columns>
-      <columns xmi:id="Customer__Seller_number" name="_Seller_number">
-      </columns>
-      <columns xmi:id="Customer__AlternateSeller_number" name="_AlternateSeller_number">
-      </columns>
-      <columns xmi:id="Customer__Address_zipCode" name="_Address_zipCode">
-      </columns>
-      <columns xmi:id="Customer__Address_street" name="_Address_street">
-      </columns>
-      <columns xmi:id="Customer__Address_city" name="_Address_city">
-      </columns>
-      <columns xmi:id="Customer__Address_state_id" name="_Address_state_id">
+      <columns xmi:id="ServiceType_number" name="number">
       </columns>
 
    </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_Subfamily" name="" primaryKey="Subfamily_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Subfamily_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Subfamily" constraint="Constraint_Subfamily_"/>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Family" name="" primaryKey="Family_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Family_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Family" constraint="Constraint_Family_"/>
 
-      <columns xmi:id="Subfamily__FamilyNumber" name="_FamilyNumber">
+      <columns xmi:id="Family_oid" name="oid">
       </columns>
-      <columns xmi:id="Subfamily_oid" name="oid">
+      <columns xmi:id="Family_number" name="number">
       </columns>
-      <columns xmi:id="Subfamily__Remarks" name="_Remarks">
-      </columns>
-      <columns xmi:id="Subfamily__Description" name="_Description">
-      </columns>
-      <columns xmi:id="Subfamily__Number" name="_Number">
-      </columns>
-
-   </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_DeliveryType" name="" primaryKey="DeliveryType_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="DeliveryType_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_DeliveryType" constraint="Constraint_DeliveryType_"/>
-
-      <columns xmi:id="DeliveryType__Description" name="_Description">
-      </columns>
-      <columns xmi:id="DeliveryType_number" name="number">
+      <columns xmi:id="Family_description" name="description">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -295,101 +427,14 @@
       </columns>
 
    </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_DeliveryDetail" name="" primaryKey="DeliveryDetail_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="DeliveryDetail_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_DeliveryDetail" constraint="Constraint_DeliveryDetail_"/>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Receptionist" name="" primaryKey="Receptionist_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Receptionist_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Receptionist" constraint="Constraint_Receptionist_"/>
 
-      <columns xmi:id="DeliveryDetail__Description" name="_Description">
+      <columns xmi:id="Receptionist_oid" name="oid">
       </columns>
-      <columns xmi:id="DeliveryDetail_number" name="number">
+      <columns xmi:id="Receptionist__Name" name="_Name">
       </columns>
-      <columns xmi:id="DeliveryDetail__Delivery_number" name="_Delivery_number">
-      </columns>
-      <columns xmi:id="DeliveryDetail__Delivery_type_number" name="_Delivery_type_number">
-      </columns>
-      <columns xmi:id="DeliveryDetail__Delivery_invoice_year" name="_Delivery_invoice_year">
-      </columns>
-      <columns xmi:id="DeliveryDetail__Delivery_invoice_number" name="_Delivery_invoice_number">
-      </columns>
-
-   </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_AdditionalDetail" name="" primaryKey="AdditionalDetail_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="AdditionalDetail_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_AdditionalDetail" constraint="Constraint_AdditionalDetail_"/>
-
-      <columns xmi:id="AdditionalDetail_counter" name="counter">
-      </columns>
-      <columns xmi:id="AdditionalDetail__Subfamily" name="_Subfamily">
-      </columns>
-      <columns xmi:id="AdditionalDetail__Service_number" name="_Service_number">
-      </columns>
-      <columns xmi:id="AdditionalDetail__Type_number" name="_Type_number">
-      </columns>
-
-   </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_TransportCharge" name="" primaryKey="TransportCharge_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="TransportCharge_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_TransportCharge" constraint="Constraint_TransportCharge_"/>
-
-      <columns xmi:id="TransportCharge__Amount" name="_Amount">
-      </columns>
-      <columns xmi:id="TransportCharge__Delivery_number" name="_Delivery_number">
-      </columns>
-      <columns xmi:id="TransportCharge__Delivery_type_number" name="_Delivery_type_number">
-      </columns>
-      <columns xmi:id="TransportCharge__Delivery_invoice_year" name="_Delivery_invoice_year">
-      </columns>
-      <columns xmi:id="TransportCharge__Delivery_invoice_number" name="_Delivery_invoice_number">
-      </columns>
-
-   </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_Invoice" name="" primaryKey="Invoice_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Invoice_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Invoice" constraint="Constraint_Invoice_"/>
-
-      <columns xmi:id="Invoice__Comment" name="_Comment">
-      </columns>
-      <columns xmi:id="Invoice__Date" name="_Date">
-      </columns>
-      <columns xmi:id="Invoice__Paid" name="_Paid">
-      </columns>
-      <columns xmi:id="Invoice_year" name="year">
-      </columns>
-      <columns xmi:id="Invoice__VatPercentage" name="_VatPercentage">
-      </columns>
-      <columns xmi:id="Invoice_number" name="number">
-      </columns>
-      <columns xmi:id="Invoice__Customer_number" name="_Customer_number">
-      </columns>
-
-   </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_Product3" name="" primaryKey="Product3_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Product3_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Product3" constraint="Constraint_Product3_"/>
-
-      <columns xmi:id="Product3__Comments" name="_Comments">
-      </columns>
-      <columns xmi:id="Product3__Description" name="_Description">
-      </columns>
-      <columns xmi:id="Product3_number" name="number">
-      </columns>
-      <columns xmi:id="Product3__Subfamily1_family_oid" name="_Subfamily1_family_oid">
-      </columns>
-      <columns xmi:id="Product3__Subfamily1_subfamily_oid" name="_Subfamily1_subfamily_oid">
-      </columns>
-      <columns xmi:id="Product3__Family_oid" name="_Family_oid">
-      </columns>
-      <columns xmi:id="Product3__Subfamily2_family_oid" name="_Subfamily2_family_oid">
-      </columns>
-      <columns xmi:id="Product3__Subfamily2_subfamily_oid" name="_Subfamily2_subfamily_oid">
-      </columns>
-
-   </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_Shipment" name="" primaryKey="Shipment_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Shipment_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Shipment" constraint="Constraint_Shipment_"/>
-
-      <columns xmi:id="Shipment__Type" name="_Type">
-      </columns>
-      <columns xmi:id="Shipment__Description" name="_Description">
-      </columns>
-      <columns xmi:id="Shipment_mode" name="mode">
-      </columns>
-      <columns xmi:id="Shipment_number" name="number">
+      <columns xmi:id="Receptionist__DeliveryPlace_oid" name="_DeliveryPlace_oid">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -412,83 +457,38 @@
       </columns>
 
    </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_Subfamily2" name="" primaryKey="Subfamily2_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Subfamily2_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Subfamily2" constraint="Constraint_Subfamily2_"/>
+   <RDBSchema:RDBTable xmi:id="RDBTable_DeliveryType" name="" primaryKey="DeliveryType_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="DeliveryType_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_DeliveryType" constraint="Constraint_DeliveryType_"/>
 
-      <columns xmi:id="Subfamily2__Remarks" name="_Remarks">
+      <columns xmi:id="DeliveryType__Description" name="_Description">
       </columns>
-      <columns xmi:id="Subfamily2__Description" name="_Description">
-      </columns>
-      <columns xmi:id="Subfamily2_number" name="number">
-      </columns>
-      <columns xmi:id="Subfamily2__Family_number" name="_Family_number">
+      <columns xmi:id="DeliveryType_number" name="number">
       </columns>
 
    </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_Office2" name="" primaryKey="Office2_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Office2_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Office2" constraint="Constraint_Office2_"/>
+   <RDBSchema:RDBTable xmi:id="RDBTable_AdditionalDetail" name="" primaryKey="AdditionalDetail_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="AdditionalDetail_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_AdditionalDetail" constraint="Constraint_AdditionalDetail_"/>
 
-      <columns xmi:id="Office2__Receptionist" name="_Receptionist">
+      <columns xmi:id="AdditionalDetail_counter" name="counter">
       </columns>
-      <columns xmi:id="Office2__Name" name="_Name">
+      <columns xmi:id="AdditionalDetail__Subfamily" name="_Subfamily">
       </columns>
-      <columns xmi:id="Office2_zoneNumber" name="zoneNumber">
+      <columns xmi:id="AdditionalDetail__Service_number" name="_Service_number">
       </columns>
-      <columns xmi:id="Office2_number" name="number">
-      </columns>
-      <columns xmi:id="Office2__OfficeManager_number" name="_OfficeManager_number">
-      </columns>
-      <columns xmi:id="Office2__DefaultCarrier_number" name="_DefaultCarrier_number">
-      </columns>
-      <columns xmi:id="Office2__MainWarehouse_number" name="_MainWarehouse_number">
+      <columns xmi:id="AdditionalDetail__Type_number" name="_Type_number">
       </columns>
 
    </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_FilterBySubfamily" name="" primaryKey="FilterBySubfamily_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="FilterBySubfamily_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_FilterBySubfamily" constraint="Constraint_FilterBySubfamily_"/>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Seller" name="" primaryKey="Seller_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Seller_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Seller" constraint="Constraint_Seller_"/>
 
-      <columns xmi:id="FilterBySubfamily_oid" name="oid">
+      <columns xmi:id="Seller__Name" name="_Name">
       </columns>
-      <columns xmi:id="FilterBySubfamily__SubfamilyTo_number" name="_SubfamilyTo_number">
+      <columns xmi:id="Seller_number" name="number">
       </columns>
-      <columns xmi:id="FilterBySubfamily__Subfamily_number" name="_Subfamily_number">
+      <columns xmi:id="Seller__Level_id" name="_Level_id">
       </columns>
-
-   </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_Service" name="" primaryKey="Service_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Service_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Service" constraint="Constraint_Service_"/>
-
-      <columns xmi:id="Service__Family" name="_Family">
-      </columns>
-      <columns xmi:id="Service__Description" name="_Description">
-      </columns>
-      <columns xmi:id="Service_number" name="number">
-      </columns>
-      <columns xmi:id="Service__Detail_free" name="_Detail_free">
-      </columns>
-      <columns xmi:id="Service__Detail_type" name="_Detail_type">
-      </columns>
-      <columns xmi:id="Service__Detail_subfamily" name="_Detail_subfamily">
-      </columns>
-
-   </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_Family2" name="" primaryKey="Family2_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Family2_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Family2" constraint="Constraint_Family2_"/>
-
-      <columns xmi:id="Family2__Description" name="_Description">
-      </columns>
-      <columns xmi:id="Family2_number" name="number">
-      </columns>
-
-   </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_Receptionist" name="" primaryKey="Receptionist_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Receptionist_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Receptionist" constraint="Constraint_Receptionist_"/>
-
-      <columns xmi:id="Receptionist_oid" name="oid">
-      </columns>
-      <columns xmi:id="Receptionist__Name" name="_Name">
-      </columns>
-      <columns xmi:id="Receptionist__DeliveryPlace_oid" name="_DeliveryPlace_oid">
+      <columns xmi:id="Seller__Boss_number" name="_Boss_number">
       </columns>
 
    </RDBSchema:RDBTable>

@@ -4,7 +4,6 @@
 
 	<property name="project" value="OpenXavaTest" />
 	<property name="package" value="test"/>
-	<property name="ejb.package" value="ejb"/>
 	<property name="configuration" value="jboss-hypersonic" />
 	<!-- property name="configuration" value="websphere-as400" /-->	
 	<!-- property name="configuration" value="jboss-as400" /-->

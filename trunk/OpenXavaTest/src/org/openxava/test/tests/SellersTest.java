@@ -2,7 +2,7 @@ package org.openxava.test.tests;
 
 import java.rmi.*;
 
-import org.openxava.test.ejb.*;
+import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
 
@@ -12,8 +12,8 @@ import org.openxava.tests.*;
 
 public class SellersTest extends ModuleTestBase {
 	
-	private Customer customer2;
-	private Customer customer1;
+	private CustomerRemote customer2;
+	private CustomerRemote customer1;
 	private CustomerValue customerValue1;
 	private CustomerValue customerValue2;
 
@@ -169,14 +169,14 @@ public class SellersTest extends ModuleTestBase {
 		return customerValue2;
 	}
 	
-	private Customer getCustomer1() throws Exception {
+	private CustomerRemote getCustomer1() throws Exception {
 		if (customer1 == null) {
 			createCustomers();
 		}
 		return customer1;
 	}
 		
-	private Customer getCustomer2() throws Exception {
+	private CustomerRemote getCustomer2() throws Exception {
 		if (customer2 == null) {
 			createCustomers();
 		}

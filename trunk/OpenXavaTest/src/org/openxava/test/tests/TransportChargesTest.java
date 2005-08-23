@@ -5,7 +5,7 @@ import java.util.*;
 
 import javax.rmi.*;
 
-import org.openxava.test.ejb.*;
+import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
 
@@ -109,7 +109,7 @@ public class TransportChargesTest extends ModuleTestBase {
 	private void deleteAll() throws Exception {
 		Iterator it = TransportChargeUtil.getHome().findAll().iterator();
 		while (it.hasNext()) {
-			TransportCharge charge = (TransportCharge) PortableRemoteObject.narrow(it.next(), TransportCharge.class);
+			TransportChargeRemote charge = (TransportChargeRemote) PortableRemoteObject.narrow(it.next(), TransportChargeRemote.class);
 			charge.remove();
 		}		
 	}	
@@ -119,7 +119,7 @@ public class TransportChargesTest extends ModuleTestBase {
 		assertTrue("At least 2 deliveries is required to run this test", deliveries.size() > 1);
 		Iterator it = deliveries.iterator();
 		
-		DeliveryValue delivery1 = ((Delivery) PortableRemoteObject.narrow(it.next(), Delivery.class)).getDeliveryValue();		
+		DeliveryValue delivery1 = ((DeliveryRemote) PortableRemoteObject.narrow(it.next(), DeliveryRemote.class)).getDeliveryValue();		
 		charge1 = new TransportChargeValue();
 		
 		charge1.setDelivery_invoice_year(delivery1.getInvoice_year());		
@@ -128,7 +128,7 @@ public class TransportChargesTest extends ModuleTestBase {
 		charge1.setAmount(new BigDecimal("100.00"));					
 		TransportChargeUtil.getHome().create(charge1);
 		
-		DeliveryValue delivery2 = ((Delivery) PortableRemoteObject.narrow(it.next(), Delivery.class)).getDeliveryValue();		
+		DeliveryValue delivery2 = ((DeliveryRemote) PortableRemoteObject.narrow(it.next(), DeliveryRemote.class)).getDeliveryValue();		
 		charge2 = new TransportChargeValue();
 		charge2.setDelivery_invoice_year(delivery2.getInvoice_year());
 		charge2.setDelivery_invoice_number(delivery2.getInvoice_number());

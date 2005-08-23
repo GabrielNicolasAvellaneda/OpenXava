@@ -8,7 +8,7 @@ import java.util.*;
 import javax.rmi.*;
 
 import org.openxava.test.calculators.*;
-import org.openxava.test.ejb.*;
+import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
 
@@ -24,11 +24,11 @@ public class InvoicesTest extends ModuleTestBase {
 	private String productUnitPricePlus10;
 	private String productUnitPrice;
 	private String sellerNumber;
-	private Seller seller;
+	private ISeller seller;
 	private String productUnitPriceInPesetas;
 	private String productDescription;
 	private String productNumber;
-	private Product product;
+	private IProduct product;
 
 	public InvoicesTest(String testName) {
 		super(testName, "OpenXavaTest", "Invoices");		
@@ -378,7 +378,7 @@ public class InvoicesTest extends ModuleTestBase {
 	
 	public void testReadOnlyCollectionWithPropertiesInDetailIncludedInListWithoutAction() throws Exception {
 		deleteInvoiceDeliveries();
-		Delivery delivery = createDelivery();
+		IDelivery delivery = createDelivery();
 		
 		execute("CRUD.new");
 		setValue("year", String.valueOf(getInvoiceKey().getYear()));
@@ -921,7 +921,7 @@ public class InvoicesTest extends ModuleTestBase {
 	
 	public void testViewCollectionElementWithKeyWithReference() throws Exception {
 		deleteInvoiceDeliveries();
-		Delivery delivery = createDelivery();
+		IDelivery delivery = createDelivery();
 		
 		execute("CRUD.new");
 		setValue("year", String.valueOf(getInvoiceKey().getYear()));
@@ -976,15 +976,15 @@ public class InvoicesTest extends ModuleTestBase {
 	}
 		
 	private void deleteInvoiceDeliveries() throws Exception {
-		Invoice invoice = InvoiceUtil.getHome().findByPrimaryKey(getInvoiceKey());
+		IInvoice invoice = InvoiceUtil.getHome().findByPrimaryKey(getInvoiceKey());
 		Iterator it = invoice.getDeliveries().iterator();
 		while (it.hasNext()) {
-			Delivery delivery = (Delivery) PortableRemoteObject.narrow(it.next(), Delivery.class);
+			DeliveryRemote delivery = (DeliveryRemote) PortableRemoteObject.narrow(it.next(), DeliveryRemote.class);
 			delivery.remove();	
 		}		
 	}
 
-	private Delivery createDelivery() throws Exception {
+	private IDelivery createDelivery() throws Exception {
 		DeliveryValue deliveryValue = new DeliveryValue();
 		deliveryValue.setInvoice_year(getInvoiceKey().getYear());
 		deliveryValue.setInvoice_number(getInvoiceKey().getNumber());
@@ -1052,21 +1052,21 @@ public class InvoicesTest extends ModuleTestBase {
 		return DecimalFormat.getInstance().format(getProductUnitPriceDB().multiply(new BigDecimal(cantidad)));
 	}
 	
-	private Product getProduct() throws Exception {
+	private IProduct getProduct() throws Exception {
 		if (product == null) {
-			product = (Product) PortableRemoteObject.narrow(
-					ProductUtil.getHome().findByPrimaryKey(new ProductKey(2)), Product.class);
+			product = (IProduct) PortableRemoteObject.narrow(
+					ProductUtil.getHome().findByPrimaryKey(new ProductKey(2)), IProduct.class);
 		}
 		return product;
 	}
 	
-	private Seller getSeller() throws Exception {
+	private ISeller getSeller() throws Exception {
 		if (seller == null) {
 			Collection sellers = SellerUtil.getHome().findAll();
 			if (sellers.isEmpty()) {
 				fail("It must to have sellers to run this test");
 			}
-			seller = (Seller) PortableRemoteObject.narrow(sellers.iterator().next(), Seller.class);
+			seller = (ISeller) PortableRemoteObject.narrow(sellers.iterator().next(), ISeller.class);
 		}
 		return seller;
 	}
@@ -1094,7 +1094,7 @@ public class InvoicesTest extends ModuleTestBase {
 		if (invoiceKey == null) {		
 			Iterator it = InvoiceUtil.getHome().findAll().iterator();
 			while (it.hasNext()) {			
-				Invoice invoice = (Invoice) PortableRemoteObject.narrow(it.next(), Invoice.class);
+				InvoiceRemote invoice = (InvoiceRemote) PortableRemoteObject.narrow(it.next(), InvoiceRemote.class);
 				if (invoice.getDetailsCount() > 0) {
 					invoiceKey = (InvoiceKey) invoice.getPrimaryKey();
 					break;

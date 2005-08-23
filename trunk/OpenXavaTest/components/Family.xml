@@ -15,9 +15,9 @@
 <component name="Family">
 
 	<entity>
-		<ejb remote="org.openxava.test.ejb.Family"
-			home="org.openxava.test.ejb.FamilyHome"
-			primaryKey="org.openxava.test.ejb.FamilyKey"
+		<ejb remote="org.openxava.test.model.FamilyRemote"
+			home="org.openxava.test.model.FamilyHome"
+			primaryKey="org.openxava.test.model.FamilyKey"
 			jndi="ejb/openxava.test/Family"/>		
 		<bean class="org.openxava.test.model.Family"/>	
 		<property name="oid" type="String" hidden="true" key="true" required="false"/>

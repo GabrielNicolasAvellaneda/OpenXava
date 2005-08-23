@@ -5,7 +5,7 @@ import java.util.*;
 
 import javax.rmi.*;
 
-import org.openxava.test.ejb.*;
+import org.openxava.test.model.*;
 
 import junit.framework.*;
 
@@ -23,7 +23,7 @@ public class EJBTest extends TestCase {
 		Collection customers = CustomerUtil.getHome().findByNameLike("%");		
 		String previous = "{}";
 		for (Iterator it = customers.iterator(); it.hasNext();) {
-			Customer customer = (Customer) PortableRemoteObject.narrow(it.next(), Customer.class);
+			CustomerRemote customer = (CustomerRemote) PortableRemoteObject.narrow(it.next(), CustomerRemote.class);
 			String name = customer.getName();			
 			if (name.compareTo(previous) > 0) {				
 				fail("The names must to be ordered");
@@ -49,7 +49,7 @@ public class EJBTest extends TestCase {
 		InvoiceValue value = new InvoiceValue();
 		value.setYear(2005);
 		value.setNumber(66);
-		Invoice invoice = InvoiceUtil.getHome().create(value);		
+		InvoiceRemote invoice = InvoiceUtil.getHome().create(value);		
 		assertEquals(null,  invoice.getSellerDiscount());
 		invoice.remove();
 	}
@@ -60,7 +60,7 @@ public class EJBTest extends TestCase {
 	}
 	
 	public void testImplementInterfaces() throws Exception {
-		assertTrue("Customer should implement IWithName", IWithName.class.isAssignableFrom(Customer.class));
+		assertTrue("Customer should implement IWithName", IWithName.class.isAssignableFrom(CustomerRemote.class));
 		assertTrue("Address should implemenr IWithState", IWithCity.class.isAssignableFrom(Address.class));
 	}
 	
@@ -68,7 +68,7 @@ public class EJBTest extends TestCase {
 		InvoiceKey key = new InvoiceKey();		
 		key.year = 2002;
 		key.number = 1;		
-		Invoice invoice = InvoiceUtil.getHome().findByPrimaryKey(key);
+		InvoiceRemote invoice = InvoiceUtil.getHome().findByPrimaryKey(key);
 		InvoiceValue v = invoice.getInvoiceValue();
 		assertEquals("amountsSum", new BigDecimal("2500.00"), v.getAmountsSum());
 		assertEquals("vat", new BigDecimal("400.00"), v.getVat());
@@ -81,7 +81,7 @@ public class EJBTest extends TestCase {
 		value.setNumber(66);
 		value.setDescription("PROVA JUNIT");
 		Family2Util.getHome().create(value);
-		Family2 f = Family2Util.getHome().findByPrimaryKey(new Family2Key(66));
+		Family2Remote f = Family2Util.getHome().findByPrimaryKey(new Family2Key(66));
 		assertEquals("number", 66, f.getNumber());
 		assertEquals("description", "PROVA JUNIT", f.getDescription());
 		Family2Value obtainedValue = f.getFamily2Value();
@@ -102,7 +102,7 @@ public class EJBTest extends TestCase {
 		additionalDetailKey.set_Service_number(66);
 		additionalDetailKey.setCounter(0);
 
-		AdditionalDetail d = AdditionalDetailUtil.getHome().findByPrimaryKey(additionalDetailKey);
+		AdditionalDetailRemote d = AdditionalDetailUtil.getHome().findByPrimaryKey(additionalDetailKey);
 		assertEquals("counter", 0, d.getCounter());
 		assertEquals("subfamily", 1, d.getSubfamily());
 		assertEquals("type_number", 2, d.getType_number());
@@ -129,7 +129,7 @@ public class EJBTest extends TestCase {
 		key.set_Invoice_year(2099);
 		key.set_Invoice_number(99);
 		key.setNumber(66);
-		Delivery delivery = DeliveryUtil.getHome().findByPrimaryKey(key);
+		DeliveryRemote delivery = DeliveryUtil.getHome().findByPrimaryKey(key);
 		InvoiceKey invoiceKey = delivery.getInvoiceKey();
 		assertEquals("invoice_year", 2099, invoiceKey.getYear());
 		assertEquals("invoice_number", 99, invoiceKey.getNumber());
@@ -152,7 +152,7 @@ public class EJBTest extends TestCase {
 		value.setSubfamilyNumber(1);
 		value.setDescription("DESCRIPTION JUNIT");
 		value.setUnitPrice(new BigDecimal("100.00"));
-		Product product = ProductUtil.getHome().create(value);
+		ProductRemote product = ProductUtil.getHome().create(value);
 		try {		
 			assertEquals(new BigDecimal("100.00"), product.getUnitPrice());
 			product.increasePrice();
@@ -174,16 +174,16 @@ public class EJBTest extends TestCase {
 	
 	public void testConvertersByDefault() throws Exception {
 		Iterator it = InvoiceUtil.getHome().findAll().iterator();
-		Invoice invoice = null;
+		InvoiceRemote invoice = null;
 		while (it.hasNext()) {
-			invoice  = (Invoice) PortableRemoteObject.narrow(it.next(), Invoice.class);
+			invoice  = (InvoiceRemote) PortableRemoteObject.narrow(it.next(), InvoiceRemote.class);
 			if (invoice.getDetailsCount() > 0) break;
 			invoice = null;
 		}
 		assertNotNull("At least ones invoice is required for run this test", invoice);
 		invoice.setComment(" INVOICE WITH SPACES ");
-		InvoiceDetail detail = (InvoiceDetail) PortableRemoteObject.narrow(
-				invoice.getDetails().iterator().next(), InvoiceDetail.class);
+		InvoiceDetailRemote detail = (InvoiceDetailRemote) PortableRemoteObject.narrow(
+				invoice.getDetails().iterator().next(), InvoiceDetailRemote.class);
 		detail.setRemarks(" DETAIL WITH SPACES ");
 		
 		assertEquals("INVOICE WITH SPACES", invoice.getComment());
@@ -194,9 +194,9 @@ public class EJBTest extends TestCase {
 		Map v = new HashMap();
 		v.put("number", new Integer(77));
 		v.put("description", "PROVA JUNIT 77");
-		Subfamily f = SubfamilyUtil.getHome().create(v);
+		SubfamilyRemote f = SubfamilyUtil.getHome().create(v);
 		SubfamilyKey key = (SubfamilyKey) f.getPrimaryKey(); 
-		Subfamily f2 = SubfamilyUtil.getHome().findByPrimaryKey(key);
+		SubfamilyRemote f2 = SubfamilyUtil.getHome().findByPrimaryKey(key);
 		assertEquals("PROVA JUNIT 77", f2.getDescription());
 		assertEquals("", f2.getRemarksDB()); 		
 		f.remove();

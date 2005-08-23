@@ -7,7 +7,7 @@ import java.util.*;
 import javax.rmi.*;
 
 import org.openxava.calculators.*;
-import org.openxava.test.ejb.*;
+import org.openxava.test.model.*;
 
 /**
  * @author Javier Paniza
@@ -21,7 +21,7 @@ public class AmountsSumCalculator implements IEntityCalculator {
 		Iterator itDetails = invoice.getDetails().iterator();
 		BigDecimal result = new BigDecimal(0);
 		while (itDetails.hasNext()) {
-			InvoiceDetail detail = (InvoiceDetail) PortableRemoteObject.narrow(itDetails.next(), InvoiceDetail.class);
+			IInvoiceDetail detail = (IInvoiceDetail) PortableRemoteObject.narrow(itDetails.next(), IInvoiceDetail.class);
 			result = result.add(detail.getAmount());
 		}
 		return result;
