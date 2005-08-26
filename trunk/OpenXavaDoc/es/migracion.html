@@ -1,3 +1,45 @@
+<h2>Para migrar de OpenXava 1.1 a OpenXava 1.2</h2>
+
+<h4>Código generado</h4>
+<p>
+Ahora las interfaces remote de EJB tienen el sufijo <i>Remote</i>, y la
+interfaz de negocio generada para cada componente (por ejempo <code>ICliente</code>)
+no contiene todos los métodos de la interface remota.<br>
+Esto es para permitir que la futura versión 2 de OpenXava pueda trabajar
+con EJB e Hibernate en el mismo projecto y a la vez.<br>
+Para adaptar el código hay que:
+<ul>
+<li>Borrar todo el código generado
+<li>Regenerar el código EJB
+<li>Compilar
+<li>Buscar y corregir los errores de sintaxis
+</ul>
+Para corregir los errores de sintaxis se tiene que hacer cambios como éste:
+<pre>
+<b>Cliente</b> cliente = ClienteUtil.getHome().findByNombre("PEPE");
+String nombre = cliente.getNombre();
+</pre>
+Cambiarlo por:
+<pre>
+<b>ICliente</b> cliente = ClienteUtil.getHome().findByNombre("PEPE");
+String nombre = cliente.getNombre();
+</pre>
+Si se usan métodos específicos de EJB hay que moldear a la interfaz remota:
+<pre>
+<b>Cliente</b> cliente = ClienteUtil.getHome().findByNombre("PEPE");
+ClienteKey key = cliente.getPrimaryKey();
+</pre>
+Cambiarlo por:
+<pre>
+<b>ClienteRemote</b> cliente = ClienteUtil.getHome().findByNombre("PEPE");
+ClienteKey key = cliente.getPrimaryKey();
+</pre>
+Es decir, cambiar <code>Cliente</code> por <code>ICliente</code> cuando sea posible,
+de no serlo cambiarlo por <code>CustomeRemote</code>.
+</p>
+
+
+
 <h2>Para migrar de OpenXava 1.0 a OpenXava 1.1</h2>
 
 <h4>APIs</h4>
