@@ -157,6 +157,7 @@ public class CustomersTest extends ModuleTestBase {
 		execute("ReferenceSearch.choose", "row=0");
 		assertTrue("The name of first seller can't be empty string", sellerName.trim().length() > 0);		
 		assertValue("seller.name", sellerName);
+		assertNoAction("MyReference.yes"); // to sure that not returns to MyReference controller
 	}
 
 	public void testValidValues() throws Exception {   				

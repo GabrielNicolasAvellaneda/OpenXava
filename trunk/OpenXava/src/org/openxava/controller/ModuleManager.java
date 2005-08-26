@@ -268,7 +268,8 @@ public class ModuleManager {
 					}													
 					else {
 						memorizeControllers();										
-						setControllersNames(nextControllers);						
+						setControllersNames(nextControllers);
+						executeInitAction(request, errors, messages);
 					}
 				}
 			}			
@@ -332,6 +333,7 @@ public class ModuleManager {
 	private void setControllersNames(String [] names) {				
 		metaControllers = null;
 		metaActions = null;
+		metaActionsOnInit = null;
 		defaultActionQualifiedName = null;
 		this.controllersNames = names;
 	}
@@ -604,13 +606,17 @@ public class ModuleManager {
 	public void initModule(HttpServletRequest request, Messages errors, Messages messages) {
 		if (!moduleInitiated) {
 			modeName = getMetaActionsSections().isEmpty()?IChangeModeAction.DETAIL:null;
-			Iterator it = getMetaActionsOnInit().iterator();
-			while (it.hasNext()) {
-				MetaAction a = (MetaAction) it.next();
-				executeAction(a, errors, messages, request); 
-			}
-			moduleInitiated = true;			
+			moduleInitiated = true;
+			executeInitAction(request, errors, messages);
 		}
+	}
+	
+	private void executeInitAction(HttpServletRequest request, Messages errors, Messages messages) {
+		Iterator it = getMetaActionsOnInit().iterator();
+		while (it.hasNext()) {
+			MetaAction a = (MetaAction) it.next();			
+			executeAction(a, errors, messages, request); 
+		}		
 	}
 	
 	public String getEnctype() { 		

@@ -14,7 +14,7 @@ public class CancelReferenceSearchAction extends ViewBaseAction implements INavi
 	private boolean editable = true;
 	private Tab tab;
 		 	
-	public void execute() throws Exception {
+	public void execute() throws Exception {		
 		getTab().setModelName(getView().getModelName());		
 	}
 	
@@ -32,4 +32,5 @@ public class CancelReferenceSearchAction extends ViewBaseAction implements INavi
 	public void setTab(Tab tab) {
 		this.tab = tab;
 	}
+
 }

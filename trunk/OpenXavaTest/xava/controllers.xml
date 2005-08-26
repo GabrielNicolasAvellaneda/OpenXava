@@ -61,7 +61,9 @@
 			<set property="newLimitZone" value="0"/>
 			<use-object name="xavatest_limitZone"/>
 		</action>				
-		<action name="changeProductPrice" class="org.openxava.test.actions.ChangeProductPriceAction" mode="detail"/>					
+		<action name="changeProductPrice" class="org.openxava.test.actions.ChangeProductPriceAction" mode="detail">					
+			<use-object name="xava_view"/> 
+		</action>
 	</controller>	
 	
 	<controller name="Products2">
@@ -267,11 +269,13 @@
 		<action name="search" hidden="true"
 			class="org.openxava.test.actions.MySearchAction"
 			image="images/search.gif">				
+			
 		</action>			
 		
 		<action name="yes" 
 			class="org.openxava.actions.ReferenceSearchAction">			
-			<set property="keyProperty" value="xava.Customer.seller.number"/>
+			<set property="keyProperty" value="xava.Customer.seller.number"/>			
+			<set property="nextController" value="MyReferenceSearch"/>			
 			<use-object name="xava_view"/>
 			<use-object name="xava_referenceSubview"/>
 			<use-object name="xava_tab"/>
@@ -281,7 +285,15 @@
 		<action name="no" class="org.openxava.actions.CancelAction"/>
 		
 	</controller>
-	
+
+	<controller name="MyReferenceSearch">
+		<extends controller="ReferenceSearch"/>			
+		<action name="resetPreviousControllers" on-init="true" hidden="true"
+			class="org.openxava.actions.ResetPreviousControllersAction">
+			<use-object name="xava_previousControllers"/>
+		</action>
+	</controller>
+		
 	<controller name="Families">
 		<extends controller="Typical"/>		
 		<action name="new" image="images/new.gif"

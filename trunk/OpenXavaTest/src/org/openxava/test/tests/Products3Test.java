@@ -39,7 +39,7 @@ public class Products3Test extends ModuleTestBase {
 		assertMessage("Product deleted successfully");
 	}
 	
-	public void _testSameAggregateTwiceWithDependentReferences() throws Exception {	// tmp	
+	public void testSameAggregateTwiceWithDependentReferences() throws Exception {	
 		String [][] familyValues = {
 			{ "", "" },			
 			{ "2", "HARDWARE" },
