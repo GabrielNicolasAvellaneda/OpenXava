@@ -1,3 +1,43 @@
+<h2>Migration from OpenXava 1.1 to OpenXava 1.2</h2>
+
+<h4>Generated code</h4>
+<p>
+Now EJB remote interface has the suffix <i>Remote</i>, and the business interface
+generated for each component (for example <code>ICustomer</code>) has no all methods of
+the remote interface.<br>
+This is for allowing to the future version 2 of OpenXava work with EJB and
+Hibernate in the same project and at same time.<br>
+In order to adapt you code to this, you must:
+<ul>
+<li>Delete all generated code
+<li>Regenerate all EJB code
+<li>Build all
+<li>Search and correct all syntax error
+</ul>
+For correct syntax error you can change code in this way:
+<pre>
+<b>Customer</b> customer = CustomerUtil.getHome().findByName("PEPE");
+String name = customer.getName();
+</pre>
+By this:
+<pre>
+<b>ICustomer</b> customer = CustomerUtil.getHome().findByName("PEPE");
+String name = customer.getName();
+</pre>
+If you use specific EJB methods then you need cast to remote interface:
+<pre>
+<b>Customer</b> customer = CustomerUtil.getHome().findByName("PEPE");
+CustomerKey key = customer.getPrimaryKey();
+</pre>
+By this:
+<pre>
+<b>CustomerRemote</b> customer = CustomerUtil.getHome().findByName("PEPE");
+CustomerKey key = customer.getPrimaryKey();
+</pre>
+That is, change <code>Customer</code> by <code>ICustomer</code> when possible, 
+if not possible change <code>Customer</code> by <code>CustomerRemote</code>.
+</p>
+
 <h2>Migration from OpenXava 1.0 to OpenXava 1.1</h2>
 
 <h4>APIs</h4>
