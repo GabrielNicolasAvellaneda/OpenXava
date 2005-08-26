@@ -319,14 +319,14 @@ public class ProductsTest extends ModuleTestBase {
 		assertEditable("description");		
 		assertActions(detailActions);
 		execute("Products.changeProductPrice");		
-		assertActions(changeProductPriceActions);	
+		assertActions(changeProductPriceActions);
+		assertNoEditable("unitPrice"); 		
 		execute("Mode.list");
 		assertActions(listActions);
 		execute("Mode.detailAndFirst");
 		assertActions(detailActions);
 		assertNoEditable("number");
-		assertEditable("description");
-		
+		assertEditable("unitPrice");		
 	}
 								
 	public void testOnChangeDependentsOfPropertyWithDefaultValue() throws Exception {

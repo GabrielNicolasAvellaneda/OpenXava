@@ -2068,7 +2068,7 @@ public class View implements java.io.Serializable {
 		}
 		return noEditablesMemberNames;
 	}
-
+	
 	public HttpServletRequest getRequest() {
 		if (request == null) return getParent().getRequest();
 		return request;
@@ -2118,8 +2118,7 @@ public class View implements java.io.Serializable {
 			depends = new ArrayList();
 			Iterator it = getMetaView().getMetaDescriptionsLists().iterator();
 			while (it.hasNext()) {
-				MetaDescriptionsList metaListaDescripciones = (MetaDescriptionsList) it.next();
-				// tmp ini					
+				MetaDescriptionsList metaListaDescripciones = (MetaDescriptionsList) it.next();					
 				StringTokenizer st = new StringTokenizer(metaListaDescripciones.getDepends(), ",");
 				while (st.hasMoreTokens()) {
 					String token = st.nextToken().trim();
@@ -2130,11 +2129,8 @@ public class View implements java.io.Serializable {
 						depends.add(token);
 					}
 				}					
-				// tmp fin
-				// tmp depends.add(metaListaDescripciones.getDepends()); 
 			}
-		}
-		System.out.println("[View.getDepends] " + depends); //  tmp
+		}		
 		return depends;
 	}
 	
@@ -2148,13 +2144,8 @@ public class View implements java.io.Serializable {
 		while (st.hasMoreTokens()) {
 			String member = st.nextToken().trim();
 			try {
-				MetaModel fromIDepends = getMetaModel().getMetaReference(depends).getMetaModelReferenced(); // tmp 
-				// tmp ini
-				/*
 				String reference = member.startsWith("this.")?member.substring(5):member; 
 				MetaModel fromIDepends = getMetaModel().getMetaReference(reference).getMetaModelReferenced();
-				*/
-				// tmp fin
 				for (Iterator it=fromIDepends.getKeyPropertiesNames().iterator(); it.hasNext();) {
 					String key = (String) it.next();
 					if (result.length() > 0) result.append(',');

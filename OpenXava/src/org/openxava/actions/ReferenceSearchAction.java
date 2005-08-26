@@ -31,7 +31,8 @@ public class ReferenceSearchAction extends ViewBaseAction implements INavigation
 	private String keyProperty;
 	private View referenceSubview;		
 	private Tab tab;	
-	private String currentReferenceLabel; 
+	private String currentReferenceLabel;
+	private String nextController = "ReferenceSearch"; // If you change the default value change setter and getter doc too
 	
 	public void execute() throws Exception {
 		Tab tab = new Tab();
@@ -112,7 +113,7 @@ public class ReferenceSearchAction extends ViewBaseAction implements INavigation
 	}
 
 	public String[] getNextControllers() {		
-		return new String[]{ "ReferenceSearch" };
+		return new String[]{ getNextController() }; 
 	}
 
 	public String getCustomView() {		
@@ -141,6 +142,20 @@ public class ReferenceSearchAction extends ViewBaseAction implements INavigation
 
 	public void setCurrentReferenceLabel(String string) {
 		currentReferenceLabel = string;
+	}
+
+	/**
+	 * By default "ReferenceSearch".
+	 */
+	public String getNextController() {
+		return nextController;
+	}
+	
+	/**
+	 * By default "ReferenceSearch".
+	 */
+	public void setNextController(String nextController) {
+		this.nextController = nextController;
 	}
 
 }

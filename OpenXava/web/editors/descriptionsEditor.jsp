@@ -4,7 +4,6 @@
 <%@ page import="org.openxava.util.Is" %>
 <%@ page import="org.openxava.util.XavaResources" %>
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
-<%@ page import="org.openxava.model.meta.MetaEjbImpl" %>
 <%@ page import="org.openxava.calculators.DescriptionsCalculator" %>
 <%@ page import="org.openxava.formatters.IFormatter" %>
 <%@ page import="org.openxava.filters.IFilter" %>
@@ -116,19 +115,14 @@ if (parameterValuesStereotypes != null || parameterValuesProperties != null) {
 	java.util.Collection p = new java.util.ArrayList();
 	while (it.hasNext()) {
 		String parameterValueKey = (String) it.next();		
-		// tmp ini
-		/* tmp
 		org.openxava.view.View v = null;
-		if (parameterValueKey.startsWith("this.")) {
+		if (parameterValueKey != null && parameterValueKey.startsWith("this.")) {
 			parameterValueKey = parameterValueKey.substring(5);
 			v = view;
 		}
 		else {
 			v = view.getRoot();
 		}
-		*/
-		// tmp fin
-		org.openxava.view.View v = view.getRoot(); // tmp
 		Object parameterValue = parameterValueKey==null?null:v.getValue(parameterValueKey);
 		p.add(parameterValue);
 	}

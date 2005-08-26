@@ -13,7 +13,7 @@ public class ChooseReferenceAction extends ViewBaseAction implements INavigation
 	 	
 	private Tab tab;
 	private View referenceSubview;
-	private int row = -1;
+	private int row = -1;	
 	
 	public void execute() throws Exception {						
 		int [] selectedOnes = tab.getSelected();
