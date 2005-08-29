@@ -45,6 +45,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	private Map metaPropertiesTab;
 	private Collection rowStyles;
 	private String defaultPropertiesNames;
+	private Map entityReferencesReferenceNames;
 	
 	public static String getTitleI18n(Locale locale, String modelName, String tabName) throws XavaException {
 		String id = null;
@@ -350,7 +351,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		this.metaPropertiesHidden = null;
 		this.metaPropertiesCalculated = null;
 		this.entityReferencesMappings = null;
-		this.entityReferencesMappings = null;
+		this.entityReferencesReferenceNames = null; 
 		this.tableColumns = null;
 		this.hiddenPropertiesNames = null;
 		this.hiddenTableColumns = null;
@@ -415,7 +416,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		if (hasReferences()) {
 			// the tables
 
-			Iterator itReferencesMappings = getEntityReferencesMappings().iterator();
+			Iterator itReferencesMappings = getEntityReferencesMappings().iterator();			
 			while (itReferencesMappings.hasNext()) {
 				ReferenceMapping referenceMapping = (ReferenceMapping) itReferencesMappings.next();				
 				select.append(" left join ");						
@@ -434,7 +435,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 					}
 					else {
 						select.append("T_");
-						select.append(modelThatContainsReference); // Maybe this does not work when more than one 3 level reference to same model 
+						select.append(entityReferencesReferenceNames.get(referenceMapping));
 						select.append(".");
 						select.append(detail.getColumn());												
 					}
@@ -488,19 +489,20 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	private Collection getEntityReferencesMappings() throws XavaException {	
 		if (entityReferencesMappings == null) {
 			entityReferencesMappings = new ArrayList(); 
+			entityReferencesReferenceNames = new HashMap(); 
 			for (Iterator itProperties = getPropertiesNames().iterator(); itProperties.hasNext();) {
 				String property = (String) itProperties.next();
-				fillEntityReferencesMappings(entityReferencesMappings, property, getMetaComponent().getMetaEntity());
+				fillEntityReferencesMappings(entityReferencesMappings, property, getMetaComponent().getMetaEntity(), "");
 			}
 			for (Iterator itProperties = getHiddenPropertiesNames().iterator(); itProperties.hasNext();) {
 				String property = (String) itProperties.next();
-				fillEntityReferencesMappings(entityReferencesMappings, property, getMetaComponent().getMetaEntity());
+				fillEntityReferencesMappings(entityReferencesMappings, property, getMetaComponent().getMetaEntity(), "");
 			}						
 		}
 		return entityReferencesMappings;
 	}
 	
-	private void fillEntityReferencesMappings(Collection result, String property, MetaModel metaModel) throws XavaException {		
+	private void fillEntityReferencesMappings(Collection result, String property, MetaModel metaModel, String parentReference) throws XavaException {		
 		int idx = property.indexOf('.');				
 		if (idx >= 0) {
 			String referenceName = property.substring(0, idx);					
@@ -510,12 +512,15 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 			if (!ref.isAggregate()) {												
 				if (hasMoreLevels || !ref.getMetaModelReferenced().isKey(memberName)) {
 					ReferenceMapping rm = metaModel.getMapping().getReferenceMapping(referenceName);
-					if (!result.contains(rm))	result.add(rm);
+					if (!result.contains(rm)) {
+						entityReferencesReferenceNames.put(rm, parentReference); 
+						result.add(rm);
+					}
 				}
 			}			
 			 
 			if (hasMoreLevels) {
-				fillEntityReferencesMappings(result, memberName, MetaComponent.get(ref.getReferencedModelName()).getMetaEntity());
+				fillEntityReferencesMappings(result, memberName, MetaComponent.get(ref.getReferencedModelName()).getMetaEntity(), referenceName);
 			}
 		}		
 	}
@@ -709,7 +714,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		metaPropertiesCalculated = null;
 		select = null;
 		entityReferencesMappings = null;
-		entityReferencesMappings = null;
+		entityReferencesReferenceNames = null;
 		tableColumns = null;
 		hiddenPropertiesNames = null;
 		hiddenTableColumns = null;
@@ -801,9 +806,9 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 			if (r.entityReferencesMappings != null) {
 				r.entityReferencesMappings = new ArrayList(entityReferencesMappings);
 			}
-			if (r.entityReferencesMappings != null) {
-				r.entityReferencesMappings = new ArrayList(
-						entityReferencesMappings);
+			if (r.entityReferencesReferenceNames != null) { 
+				r.entityReferencesReferenceNames = new HashMap(
+						entityReferencesReferenceNames);
 			}
 			if (r.tableColumns != null) {
 				r.tableColumns = new ArrayList(tableColumns);

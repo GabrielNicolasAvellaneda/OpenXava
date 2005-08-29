@@ -18,7 +18,7 @@ public class CustomersTwoSellersInListTest extends ModuleTestBase {
 		assertValueInList(0, "name", "Javi");
 		assertValueInList(0, "seller.name", "MANUEL CHAVARRI");
 		assertValueInList(0, "seller.level.description", "MANAGER");
-		assertValueInList(0, "alternateSeller.name", "JUANVI LLAVADOR");
+		assertValueInList(0, "alternateSeller.name", "JUANVI LLAVADOR");		
 	}	
 			
 }
