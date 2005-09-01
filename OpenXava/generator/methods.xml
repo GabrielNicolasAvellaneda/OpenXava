@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<tl><declare import="org.openxava.model.meta.*"/>
+<declare import="org.openxava.util.*"/>
+<declare import="org.openxava.util.meta.MetaSet"/>
+<declare import="org.openxava.calculators.*"/>
+<declare import="org.openxava.generators.Generators"/>
+
+<declarations>
+
+private String getException() {
+	return ejb?"EJBException":"RuntimeException";
+}
+
+private IMetaModel metaModel=null;
+public void setMetaModel(IMetaModel metaModel) {
+	this.metaModel = metaModel;
+}
+
+private boolean ejb=false;
+public void setEjb(boolean ejb) {
+	this.ejb = ejb;
+}
+
+public static void generate(XPathContext context, ProgramWriter out, IMetaModel metaModel) throws XavaException {
+	generate(context, out, metaModel, false);
+}
+
+public static void generateEJB(XPathContext context, ProgramWriter out, IMetaModel metaModel) throws XavaException {
+	generate(context, out, metaModel, true);
+}
+
+private static void generate(XPathContext context, ProgramWriter out, IMetaModel metaModel, boolean isEjb) throws XavaException {
+	MethodsPG pg = new MethodsPG();
+	pg.setMetaModel(metaModel);
+	pg.setEjb(isEjb);
+	pg.generate(context, out);
+}
+
+</declarations> 
+
+	// Methods/Metodos
+<java>
+Iterator itMethods = metaModel.getMetaMethods().iterator();	
+while (itMethods.hasNext()) {	
+	MetaMethod method = (MetaMethod) itMethods.next();
+	String throwSentence = method.hasExceptions()?"throws " + method.getExceptions():"";
+</java> 
+	/**
+	 * @ejb:interface-method
+	 */
+	public <expr>method.getTypeName()</expr> <expr>method.getName()</expr>(<expr>method.getArguments()</expr>) <expr>throwSentence</expr> {
+		try {
+			<java>
+			MetaCalculator calculator = method.getMetaCalculator();
+			String calculatorClass = calculator.getClassName();
+			</java> 		
+			<expr>calculatorClass</expr> <expr>method.getName()</expr>Calculator = (<expr>calculatorClass</expr>)
+				getMetaModel().getMetaMethod("<expr>method.getName()</expr>").getMetaCalculator().getCalculator();
+			<java>	
+			Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
+			while (itSets.hasNext()) {
+				MetaSet set = (MetaSet) itSets.next();
+				String propertyNameInCalculator = Strings.firstUpper(set.getPropertyName());
+				String propertyNameFrom = set.getPropertyNameFrom();
+				if (propertyNameFrom .indexOf('.') &gt;= 0) {
+					MetaProperty p = metaModel.getMetaProperty(propertyNameFrom);
+					if (p.isKey() || p.getMetaModel() instanceof MetaAggregate) {
+						propertyNameFrom  = Strings.firstUpper(Strings.change(propertyNameFrom , ".", "_"));
+					}
+					else {
+						StringTokenizer st = new StringTokenizer(propertyNameFrom , ".");
+						String ref = st.nextToken();
+						String pro = st.nextToken();
+						propertyNameFrom  = Strings.firstUpper(ref) + "().get" + Strings.firstUpper(pro);
+					}
+				}
+				else {
+					propertyNameFrom  = Strings.firstUpper(propertyNameFrom );
+				}
+				String value = set.getValue();
+				if (set.hasValue()) {
+			</java> 
+			<expr>method.getName()</expr>Calculator.set<expr>propertyNameInCalculator</expr>("<expr>value</expr>");
+			<java>
+			} else {	
+			</java>  	
+			<expr>method.getName()</expr>Calculator.set<expr>propertyNameInCalculator</expr>(get<expr>propertyNameFrom</expr>());
+			<java>	}} // else/poners 	 
+			if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+			</java> 
+				<expr>method.getName()</expr>Calculator.setEntity(this);
+			<java>} 
+			if (IJDBCCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+			</java> 
+				<expr>method.getName()</expr>Calculator.setConnectionProvider(getPortableContext());
+			<java>			
+			}  
+			if (method.hasArguments()) {
+				StringTokenizer st = new StringTokenizer(method.getArguments(), ",");
+				while (st.hasMoreTokens()) {
+					StringTokenizer stArgument = new StringTokenizer(st.nextToken());
+					stArgument.nextToken();
+					String argumentName = stArgument.nextToken().trim();
+					String argumentProperty = Strings.firstUpper(argumentName);
+			</java> 		
+			<expr>method.getName()</expr>Calculator.set<expr>argumentProperty</expr>(<expr>argumentName</expr>);
+			<java>
+				}
+			}
+			String calculateValueSentence = method.getName() + "Calculator.calculate()";
+			if ("void".equals(method.getTypeName())) {
+			</java> 
+			<expr>calculateValueSentence</expr>;
+			<java>
+			} else {
+			</java> 
+			return <expr>Generators.generateCast(method.getTypeName(), calculateValueSentence)</expr>;			
+			<java>
+			}
+			if (method.hasExceptions()) {
+				StringTokenizer st = new StringTokenizer(method.getExceptions(), ",");
+				while (st.hasMoreTokens()) {
+					String exception = st.nextToken().trim();
+			</java> 
+		}
+		catch (<expr>exception</expr> ex) {
+			throw ex;					
+			<java>		
+				} // while exceptions						
+			} // if has exceptions
+			</java> 
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			throw new <expr>getException()</expr>(XavaResources.getString("method_execution_error", "<expr>method.getName()</expr>", "<expr>metaModel.getName()</expr>"));
+		}
+	}
+
+<java>		
+}
+</java> 
+</tl>

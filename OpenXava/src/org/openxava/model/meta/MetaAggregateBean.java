@@ -14,8 +14,7 @@ import org.openxava.util.*;
 public class MetaAggregateBean extends MetaAggregate {
 	
 	private java.lang.String beanClass;
-	private boolean generate;
-
+	
 	private Map persistentPropertiesReferencesMap;
 	
 	public java.lang.String getBeanClass() throws XavaException {
@@ -37,14 +36,6 @@ public class MetaAggregateBean extends MetaAggregate {
 			ex.printStackTrace();
 			throw new XavaException("no_class_for_model", getBeanClass(), getName());
 		}
-	}
-
-	public boolean isGenerate() {
-		return generate;
-	}
-
-	public void setGenerate(boolean generate) {
-		this.generate = generate;
 	}
 
 	public ModelMapping getMapping() throws XavaException {

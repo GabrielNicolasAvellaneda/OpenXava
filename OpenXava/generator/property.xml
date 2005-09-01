@@ -9,7 +9,7 @@
 
 <declarations>
 
-private String getExcepcion() {
+private String getException() {
 	return ejb?"EJBException":"RuntimeException";
 }
 
@@ -181,7 +181,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			throw new <expr>getExcepcion()</expr>(XavaResources.getString("generator.calculate_value_error", "<expr>propertyName</expr>", "<expr>metaModel.getName()</expr>", ex.getLocalizedMessage()));
+			throw new <expr>getException()</expr>(XavaResources.getString("generator.calculate_value_error", "<expr>propertyName</expr>", "<expr>metaModel.getName()</expr>", ex.getLocalizedMessage()));
 		}
 	}
 	public void set<expr>propertyName</expr>(<expr>type</expr> new<expr>propertyName</expr>) {
@@ -214,7 +214,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 			}
 			catch (Exception ex) {
 				ex.printStackTrace();
-				throw new <expr>getExcepcion()</expr>(XavaResources.getString("generator.create_converter_error", "<expr>property.getName()</expr>"));
+				throw new <expr>getException()</expr>(XavaResources.getString("generator.create_converter_error", "<expr>property.getName()</expr>"));
 			}
 			
 		}	
@@ -270,7 +270,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 		}
 		catch (org.openxava.converters.ConversionException ex) {
 			ex.printStackTrace();
-			throw new <expr>getExcepcion()</expr>(XavaResources.getString("generator.conversion_error", "<expr>propertyName</expr>", "<expr>metaModel.getName()</expr>", "<expr>type</expr>"));
+			throw new <expr>getException()</expr>(XavaResources.getString("generator.conversion_error", "<expr>propertyName</expr>", "<expr>metaModel.getName()</expr>", "<expr>type</expr>"));
 		}
 	}
 
@@ -298,7 +298,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 		}
 		catch (org.openxava.converters.ConversionException ex) {
 			ex.printStackTrace();
-			throw new <expr>getExcepcion()</expr>(XavaResources.getString("generator.conversion_db_error", "<expr>propertyName</expr>", "<expr>metaModel.getName()</expr>"));
+			throw new <expr>getException()</expr>(XavaResources.getString("generator.conversion_db_error", "<expr>propertyName</expr>", "<expr>metaModel.getName()</expr>"));
 		}		
 	}	
 		<java>
@@ -341,7 +341,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 		}
 		catch (org.openxava.converters.ConversionException ex) {
 			ex.printStackTrace();
-			throw new <expr>getExcepcion()</expr>(XavaResources.getString("generator.conversion_error", "<expr>propertyName</expr>", "<expr>metaModel.getName()</expr>", "<expr>type</expr>"));
+			throw new <expr>getException()</expr>(XavaResources.getString("generator.conversion_error", "<expr>propertyName</expr>", "<expr>metaModel.getName()</expr>", "<expr>type</expr>"));
 		}
 	}
 	
@@ -357,7 +357,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 		}
 		catch (org.openxava.converters.ConversionException ex) {
 			ex.printStackTrace();
-			throw new <expr>getExcepcion()</expr>(XavaResources.getString("generator.conversion_error", "<expr>propertyName</expr>", "<expr>metaModel.getName()</expr>", "<expr>type</expr>"));
+			throw new <expr>getException()</expr>(XavaResources.getString("generator.conversion_error", "<expr>propertyName</expr>", "<expr>metaModel.getName()</expr>", "<expr>type</expr>"));
 		}		
 	}	
 <java>		

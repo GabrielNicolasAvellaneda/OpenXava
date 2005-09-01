@@ -180,14 +180,14 @@ public class MetaComponent implements Serializable {
 	 * 			<tt>generateXDocLet	 == true</tt>. Not null.
 	 * @exception XavaException Any other problem.
 	 */
-	public Collection getMetaAggregatesEjbXDocLet() throws  XavaException {
+	public Collection getMetaAggregatesEjbGenerate() throws  XavaException {
 		Iterator it = getMetaAggregates().iterator();
 		Collection result = new ArrayList();
 		while (it.hasNext()) {
 			Object element = it.next();
 			if (!(element instanceof MetaAggregateEjb)) continue;
 			MetaAggregateEjb aggregate = (MetaAggregateEjb) element;
-			if (aggregate.isGenerateXDocLet()) {
+			if (aggregate.isGenerate()) {
 				result.add(aggregate);
 			}
 		}

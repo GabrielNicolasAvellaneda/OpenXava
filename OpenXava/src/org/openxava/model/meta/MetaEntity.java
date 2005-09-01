@@ -18,7 +18,7 @@ abstract public class MetaEntity extends MetaModel {
 	abstract public Collection getKeyFields() throws XavaException;
 	
 	public boolean isKey(String propertyName) throws XavaException {	
-		if (isGenerateXDocLet() && super.isKey(propertyName)) return true; 	
+		if (isGenerate() && super.isKey(propertyName)) return true; 	
 		return getKeyFields().contains(propertyName);		
 	}
 

@@ -75,7 +75,7 @@ public class WebsphereCodeGenerator extends CodeGenerator {
 			component.getName()								
 		};
 		WebsphereTblxmiPG.main(argv);			
-		Iterator itAggregates = component.getMetaAggregatesEjbXDocLet().iterator();
+		Iterator itAggregates = component.getMetaAggregatesEjbGenerate().iterator();
 		while (itAggregates.hasNext()) {
 			MetaAggregate aggregate = (MetaAggregate) itAggregates.next();
 			String aggregateName = aggregate.getName();

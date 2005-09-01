@@ -43,6 +43,8 @@ else {
 package #(packageName)#;
 
 import java.util.*;
+import java.math.*;
+import java.rmi.RemoteException;
 import org.openxava.component.MetaComponent;
 import org.openxava.model.meta.MetaModel;
 import org.openxava.util.*;
@@ -51,7 +53,7 @@ import org.openxava.util.*;
  * 
  * @author MCarmen Gimeno
  */
-public class #(name)# implements java.io.Serializable {	
+public class #(name)# implements java.io.Serializable, #(metaModel.getInterfaceName())# {	
 	
 	// Properties/Propiedades
 	
@@ -85,6 +87,9 @@ Iterator itCollections = metaModel.getMetaCollections().iterator();
 while (itCollections.hasNext()) {	
 	MetaCollection col = (MetaCollection) itCollections.next();
 	String colName = Strings.firstUpper(col.getName());
+	MetaReference reference = col.getMetaReference();
+	String colType = reference.getMetaModelReferenced().getInterfaceName();
+	String roleName = Strings.firstUpper(reference.getRole());
 	# 
 	private java.util.Collection #(col.getName())#;
 	public java.util.Collection get#(colName)#() {
@@ -93,10 +98,34 @@ while (itCollections.hasNext()) {
 	public void set#(colName)#(java.util.Collection #(col.getName())#) {
 		this.#(col.getName())# = #(col.getName())#;
 	}
-	# 
-}
+	
+# 
+	if (!reference.isAggregate() && 
+		!col.hasCondition() && 
+		!col.hasCalculator() && 
+		!reference.getMetaModelReferenced().getMetaReference(reference.getRole()).isKey()) { 
 # 
 	
+	public void addTo#(colName)#(#(colType)# newElement) throws RemoteException {
+		this.get#(colName)#().add(newElement);
+		newElement.set#(roleName)#(this);
+	}
+	public void removeFrom#(colName)#(#(colType)# toRemove) throws RemoteException {
+		this.get#(colName)#().remove(toRemove);
+		toRemove.set#(roleName)#(null);
+	}
+# 
+	}
+# 
+
+# 
+}
+# 
+
+# 	
+	MethodsPG.generate(context, out, metaModel); 
+# 	
+
 	private MetaModel metaModel;
 	private MetaModel getMetaModel() throws XavaException {
 		if (metaModel == null) {

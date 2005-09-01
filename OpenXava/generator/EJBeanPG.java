@@ -14,7 +14,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Aug 23 19:36:32 CEST 2005
+ * @version Thu Sep 01 20:10:50 CEST 2005
  */
 public class EJBeanPG {
     Properties properties = new Properties();
@@ -967,7 +967,10 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print(" ");
     out.print(homeAttribute);
     out.print(";");
-    if (!reference.isAggregate() && !collection.hasCondition() && !collection.hasCalculator()) { 
+    if (!reference.isAggregate() && 
+    	!collection.hasCondition() && 
+    	!collection.hasCalculator() && 
+    	!reference.getMetaModelReferenced().getMetaReference(reference.getRole()).isKey()) { 
     out.print("\n\t/**\n\t * @ejb:interface-method\n\t */\n\tpublic void addTo");
     out.print(collectionName);
     out.print("(");
@@ -1121,141 +1124,8 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     	}
     } 
     
-    out.print(" \n\t// Methods/Metodos");
-    
-    Iterator itMethods = metaModel.getMetaMethods().iterator();	
-    while (itMethods.hasNext()) {	
-    	MetaMethod method = (MetaMethod) itMethods.next();
-    	String throwSentence = method.hasExceptions()?"throws " + method.getExceptions():"";
-    
-    out.print(" \n\t/**\n\t * @ejb:interface-method\n\t */\n\tpublic ");
-    out.print(method.getTypeName());
-    out.print(" ");
-    out.print(method.getName());
-    out.print("(");
-    out.print(method.getArguments());
-    out.print(") ");
-    out.print(throwSentence);
-    out.print(" {\n\t\ttry {");
-    
-    			MetaCalculator calculator = method.getMetaCalculator();
-    			String calculatorClass = calculator.getClassName();
-    			
-    out.print(" \t\t\n\t\t\t");
-    out.print(calculatorClass);
-    out.print(" ");
-    out.print(method.getName());
-    out.print("Calculator = (");
-    out.print(calculatorClass);
-    out.print(")\n\t\t\t\tgetMetaModel().getMetaMethod(\"");
-    out.print(method.getName());
-    out.print("\").getMetaCalculator().getCalculator();");
     	
-    			Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
-    			while (itSets.hasNext()) {
-    				MetaSet set = (MetaSet) itSets.next();
-    				String propertyNameInCalculator = Strings.firstUpper(set.getPropertyName());
-    				String propertyNameFrom = set.getPropertyNameFrom();
-    				if (propertyNameFrom .indexOf('.') >= 0) {
-    					MetaProperty p = metaModel.getMetaProperty(propertyNameFrom);
-    					if (p.isKey() || p.getMetaModel() instanceof MetaAggregate) {
-    						propertyNameFrom  = Strings.firstUpper(Strings.change(propertyNameFrom , ".", "_"));
-    					}
-    					else {
-    						StringTokenizer st = new StringTokenizer(propertyNameFrom , ".");
-    						String ref = st.nextToken();
-    						String pro = st.nextToken();
-    						propertyNameFrom  = Strings.firstUpper(ref) + "().get" + Strings.firstUpper(pro);
-    					}
-    				}
-    				else {
-    					propertyNameFrom  = Strings.firstUpper(propertyNameFrom );
-    				}
-    				String value = set.getValue();
-    				if (set.hasValue()) {
-    			
-    out.print(" \n\t\t\t");
-    out.print(method.getName());
-    out.print("Calculator.set");
-    out.print(propertyNameInCalculator);
-    out.print("(\"");
-    out.print(value);
-    out.print("\");");
-    
-    			} else {	
-    			
-    out.print("  \t\n\t\t\t");
-    out.print(method.getName());
-    out.print("Calculator.set");
-    out.print(propertyNameInCalculator);
-    out.print("(get");
-    out.print(propertyNameFrom);
-    out.print("());");
-    	}} // else/poners 	 
-    			if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
-    			
-    out.print(" \n\t\t\t\t");
-    out.print(method.getName());
-    out.print("Calculator.setEntity(this);");
-    } 
-    			if (IJDBCCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
-    			
-    out.print(" \n\t\t\t\t");
-    out.print(method.getName());
-    out.print("Calculator.setConnectionProvider(getPortableContext());");
-    			
-    			}  
-    			if (method.hasArguments()) {
-    				StringTokenizer st = new StringTokenizer(method.getArguments(), ",");
-    				while (st.hasMoreTokens()) {
-    					StringTokenizer stArgument = new StringTokenizer(st.nextToken());
-    					stArgument.nextToken();
-    					String argumentName = stArgument.nextToken().trim();
-    					String argumentProperty = Strings.firstUpper(argumentName);
-    			
-    out.print(" \t\t\n\t\t\t");
-    out.print(method.getName());
-    out.print("Calculator.set");
-    out.print(argumentProperty);
-    out.print("(");
-    out.print(argumentName);
-    out.print(");");
-    
-    				}
-    			}
-    			String calculateValueSentence = method.getName() + "Calculator.calculate()";
-    			if ("void".equals(method.getTypeName())) {
-    			
-    out.print(" \n\t\t\t");
-    out.print(calculateValueSentence);
-    out.print(";");
-    
-    			} else {
-    			
-    out.print(" \n\t\t\treturn ");
-    out.print(Generators.generateCast(method.getTypeName(), calculateValueSentence));
-    out.print(";");
-    
-    			}
-    			if (method.hasExceptions()) {
-    				StringTokenizer st = new StringTokenizer(method.getExceptions(), ",");
-    				while (st.hasMoreTokens()) {
-    					String exception = st.nextToken().trim();
-    			
-    out.print(" \n\t\t}\n\t\tcatch (");
-    out.print(exception);
-    out.print(" ex) {\n\t\t\tthrow ex;");
-    		
-    				} // while exceptions						
-    			} // if has exceptions
-    			
-    out.print(" \n\t\t}\n\t\tcatch (Exception ex) {\n\t\t\tex.printStackTrace();\n\t\t\tthrow new EJBException(XavaResources.getString(\"method_execution_error\", \"");
-    out.print(method.getName());
-    out.print("\", \"");
-    out.print(name);
-    out.print("\"));\n\t\t}\n\t}");
-    		
-    }
+    	MethodsPG.generateEJB(context, out, metaModel); 
     
     out.print(" \n\n\tprivate MetaModel metaModel;\n\tprivate MetaModel getMetaModel() throws XavaException {\n\t\tif (metaModel == null) {");
     if (aggregateName == null) { 
@@ -1364,7 +1234,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Aug 23 19:36:32 CEST 2005", // date this file was generated
+        { "Thu Sep 01 20:10:51 CEST 2005", // date this file was generated
              "/home/mcarmen/workspace/OpenXava/generator/ejbean.xml", // input file
              "/home/mcarmen/workspace/OpenXava/generator/EJBeanPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

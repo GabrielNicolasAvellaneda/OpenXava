@@ -386,7 +386,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				if (!(getMetaModel() instanceof MetaEntity)) {								
 					key= false;
 				}
-				else if (getMetaModel().isGenerateXDocLet()) {						
+				else if (getMetaModel().isGenerate()) {						
 					key = false;						
 				}
 				else {				

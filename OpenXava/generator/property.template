@@ -8,7 +8,7 @@
 
 #declarations
 
-private String getExcepcion() {
+private String getException() {
 	return ejb?"EJBException":"RuntimeException";
 }
 
@@ -180,7 +180,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			throw new #(getExcepcion())#(XavaResources.getString("generator.calculate_value_error", "#(propertyName)#", "#(metaModel.getName())#", ex.getLocalizedMessage()));
+			throw new #(getException())#(XavaResources.getString("generator.calculate_value_error", "#(propertyName)#", "#(metaModel.getName())#", ex.getLocalizedMessage()));
 		}
 	}
 	public void set#(propertyName)#(#(type)# new#(propertyName)#) {
@@ -213,7 +213,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 			}
 			catch (Exception ex) {
 				ex.printStackTrace();
-				throw new #(getExcepcion())#(XavaResources.getString("generator.create_converter_error", "#(property.getName())#"));
+				throw new #(getException())#(XavaResources.getString("generator.create_converter_error", "#(property.getName())#"));
 			}
 			
 		}	
@@ -269,7 +269,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 		}
 		catch (org.openxava.converters.ConversionException ex) {
 			ex.printStackTrace();
-			throw new #(getExcepcion())#(XavaResources.getString("generator.conversion_error", "#(propertyName)#", "#(metaModel.getName())#", "#(type)#"));
+			throw new #(getException())#(XavaResources.getString("generator.conversion_error", "#(propertyName)#", "#(metaModel.getName())#", "#(type)#"));
 		}
 	}
 
@@ -297,7 +297,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 		}
 		catch (org.openxava.converters.ConversionException ex) {
 			ex.printStackTrace();
-			throw new #(getExcepcion())#(XavaResources.getString("generator.conversion_db_error", "#(propertyName)#", "#(metaModel.getName())#"));
+			throw new #(getException())#(XavaResources.getString("generator.conversion_db_error", "#(propertyName)#", "#(metaModel.getName())#"));
 		}		
 	}	
 		# 
@@ -340,7 +340,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 		}
 		catch (org.openxava.converters.ConversionException ex) {
 			ex.printStackTrace();
-			throw new #(getExcepcion())#(XavaResources.getString("generator.conversion_error", "#(propertyName)#", "#(metaModel.getName())#", "#(type)#"));
+			throw new #(getException())#(XavaResources.getString("generator.conversion_error", "#(propertyName)#", "#(metaModel.getName())#", "#(type)#"));
 		}
 	}
 	
@@ -356,7 +356,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 		}
 		catch (org.openxava.converters.ConversionException ex) {
 			ex.printStackTrace();
-			throw new #(getExcepcion())#(XavaResources.getString("generator.conversion_error", "#(propertyName)#", "#(metaModel.getName())#", "#(type)#"));
+			throw new #(getException())#(XavaResources.getString("generator.conversion_error", "#(propertyName)#", "#(metaModel.getName())#", "#(type)#"));
 		}		
 	}	
 # 		

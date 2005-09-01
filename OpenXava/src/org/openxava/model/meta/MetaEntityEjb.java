@@ -59,7 +59,7 @@ public class MetaEntityEjb extends MetaEntity implements IMetaEjb {
 	public Collection getKeyFields() throws XavaException {
 		if (keyFields == null) {
 			keyFields = new ArrayList();	
-			if (isGenerateXDocLet()) {
+			if (isGenerate()) {
 				keyFields.addAll(getAllKeyPropertiesNames());
 			}
 			else {		

@@ -14,7 +14,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Aug 23 19:36:33 CEST 2005
+ * @version Thu Sep 01 20:10:52 CEST 2005
  */
 public class PojoPG {
     Properties properties = new Properties();
@@ -59,9 +59,11 @@ public class PojoPG {
     } 
     out.print("\n\npackage ");
     out.print(packageName);
-    out.print(";\n\nimport java.util.*;\nimport org.openxava.component.MetaComponent;\nimport org.openxava.model.meta.MetaModel;\nimport org.openxava.util.*;\n\n/**\n * \n * @author MCarmen Gimeno\n */\npublic class ");
+    out.print(";\n\nimport java.util.*;\nimport java.math.*;\nimport java.rmi.RemoteException;\nimport org.openxava.component.MetaComponent;\nimport org.openxava.model.meta.MetaModel;\nimport org.openxava.util.*;\n\n/**\n * \n * @author MCarmen Gimeno\n */\npublic class ");
     out.print(name);
-    out.print(" implements java.io.Serializable {\t\n\t\n\t// Properties/Propiedades");
+    out.print(" implements java.io.Serializable, ");
+    out.print(metaModel.getInterfaceName());
+    out.print(" {\t\n\t\n\t// Properties/Propiedades");
     
     Iterator itProperties = metaModel.getMetaProperties().iterator();	
     while (itProperties.hasNext()) {	
@@ -88,6 +90,9 @@ public class PojoPG {
     while (itCollections.hasNext()) {	
     	MetaCollection col = (MetaCollection) itCollections.next();
     	String colName = Strings.firstUpper(col.getName());
+    	MetaReference reference = col.getMetaReference();
+    	String colType = reference.getMetaModelReferenced().getInterfaceName();
+    	String roleName = Strings.firstUpper(reference.getRole());
     	
     out.print(" \n\tprivate java.util.Collection ");
     out.print(col.getName());
@@ -105,9 +110,38 @@ public class PojoPG {
     out.print(col.getName());
     out.print(";\n\t}");
     
+    	if (!reference.isAggregate() && 
+    		!col.hasCondition() && 
+    		!col.hasCalculator() && 
+    		!reference.getMetaModelReferenced().getMetaReference(reference.getRole()).isKey()) { 
+    
+    out.print(" \n\t\n\tpublic void addTo");
+    out.print(colName);
+    out.print("(");
+    out.print(colType);
+    out.print(" newElement) throws RemoteException {\n\t\tthis.get");
+    out.print(colName);
+    out.print("().add(newElement);\n\t\tnewElement.set");
+    out.print(roleName);
+    out.print("(this);\n\t}\n\tpublic void removeFrom");
+    out.print(colName);
+    out.print("(");
+    out.print(colType);
+    out.print(" toRemove) throws RemoteException {\n\t\tthis.get");
+    out.print(colName);
+    out.print("().remove(toRemove);\n\t\ttoRemove.set");
+    out.print(roleName);
+    out.print("(null);\n\t}");
+    
+    	}
+    
+    
     }
     
-    out.print(" \n\t\n\tprivate MetaModel metaModel;\n\tprivate MetaModel getMetaModel() throws XavaException {\n\t\tif (metaModel == null) {");
+    	
+    	MethodsPG.generate(context, out, metaModel); 
+    
+    out.print(" \t\n\n\tprivate MetaModel metaModel;\n\tprivate MetaModel getMetaModel() throws XavaException {\n\t\tif (metaModel == null) {");
     if (aggregateName == null) { 
     out.print("\n\t\t\tmetaModel = MetaComponent.get(\"");
     out.print(componentName);
@@ -202,7 +236,7 @@ public class PojoPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Aug 23 19:36:33 CEST 2005", // date this file was generated
+        { "Thu Sep 01 20:10:52 CEST 2005", // date this file was generated
              "/home/mcarmen/workspace/OpenXava/generator/pojo.xml", // input file
              "/home/mcarmen/workspace/OpenXava/generator/PojoPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

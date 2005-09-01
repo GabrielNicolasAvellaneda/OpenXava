@@ -43,4 +43,5 @@ public interface IMetaModel {
 	String getImplements();
 	boolean isKey(String name) throws XavaException;
 	Collection getRecursiveQualifiedPropertiesNames() throws XavaException;
+	Collection getMetaReferencesKey() throws XavaException;
 }

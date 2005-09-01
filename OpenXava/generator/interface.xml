@@ -87,7 +87,10 @@ while (itCollections.hasNext()) {
 	String referencedModelName = reference.getReferencedModelName();
 	String referencedModelClass = referencedModel.getInterfaceName();	
 	
- if (!reference.isAggregate() &amp;&amp; !collection.hasCondition() &amp;&amp; !collection.hasCalculator()) { 
+ 	if (!reference.isAggregate() &amp;&amp; 
+		!collection.hasCondition() &amp;&amp; 
+		!collection.hasCalculator() &amp;&amp; 
+		!reference.getMetaModelReferenced().getMetaReference(reference.getRole()).isKey()) {	
 </java> 
 	void addTo<expr>collectionName</expr>(<expr>referencedModelClass</expr> newElement) throws RemoteException;
 	void removeFrom<expr>collectionName</expr>(<expr>referencedModelClass</expr> toRemove) throws RemoteException;
@@ -119,18 +122,14 @@ while (itReferences.hasNext()) {
 <java>} else { // reference to entity or EJB aggregate
 		IMetaEjb referencedModel = (IMetaEjb) reference.getMetaModelReferenced();
 		String referencedModelClass = referencedModel.getInterfaceName();
-		String referencedKeyClass = referencedModel.getPrimaryKey();
+		
 </java> 
 
 	// <expr>referenceName</expr> : Reference/Referencia
 	
 	<expr>referencedModelClass</expr> get<expr>referenceName</expr>() throws RemoteException;
 	void set<expr>referenceName</expr>(<expr>referencedModelClass</expr> new<expr>referenceName</expr>) throws RemoteException;
-	
-	<expr>referencedKeyClass</expr> get<expr>referenceName</expr>Key() throws RemoteException;
-	void set<expr>referenceName</expr>Key(<expr>referencedKeyClass</expr> key) throws RemoteException;
-	
-	
+			
 <java>} // if/else aggregate/reference </java>
 
 <java>} // References </java>

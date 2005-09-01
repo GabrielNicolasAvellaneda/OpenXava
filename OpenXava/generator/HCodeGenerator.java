@@ -33,50 +33,99 @@ public class HCodeGenerator extends CodeGenerator {
 	}
 		
 	protected void generate(MetaComponent component, String componentsPath, String file) throws Exception {
-		if (!component.getMetaEntity().isGenerateXDocLet()) return; //by now, better isGeneratePojo() or so
 		String dirPackage = toDirPackage(getPackageName());		
 		String modelPath = "../" + getProject() + "/gen-src-xava/" + dirPackage; //tmp ¿una sola vez?		
 		// Creataing directories
 		File fModelPath = new File(modelPath);
 		fModelPath.mkdirs();
 		
-		// Main entity			
-		System.out.println(XavaResources.getString("generating_pojo_code", component.getName()));			
-		String [] argv = {				
-			componentsPath  + "/" + file,				
-			modelPath + "/" + component.getName() + ".java",
-			getJavaPackage(),
-			component.getName()								
-		};
-		PojoPG.main(argv);
-		
-		//	 Aggregates in bean format
-		Iterator itAggregatesBean = component.getMetaAggregatesBeanGenerated().iterator();
-		while (itAggregatesBean.hasNext()) {
-			MetaAggregateBean aggregate = (MetaAggregateBean) itAggregatesBean.next();
-			String aggregateName = aggregate.getName();
-			String [] argvAg = {				
-				componentsPath  + "/" + file,
-				modelPath + "/" + aggregateName + ".java",
+		if (component.getMetaEntity().isGenerate()) { 
+			// Main entity			
+			System.out.println(XavaResources.getString("generating_pojo_code", component.getName()));			
+			String [] argv = {				
+				componentsPath  + "/" + file,				
+				modelPath + "/" + component.getName() + ".java",
 				getJavaPackage(),
-				component.getName(),
-				aggregateName				
+				component.getName()								
 			};
-			System.out.println(XavaResources.getString("generating_aggregate_javabean_code", aggregateName));
-			BeanPG.main(argvAg);
+			PojoPG.main(argv);
+			
+			String [] argvInterface = {
+				componentsPath  + "/" + file,
+				modelPath + "/I" + component.getName() + ".java",
+				getJavaPackage(),
+				component.getName()
+			};						
+			InterfacePG.main(argvInterface);						
+							
+			//	 Aggregates in bean format
+			Iterator itAggregatesBean = component.getMetaAggregatesBeanGenerated().iterator();
+			while (itAggregatesBean.hasNext()) {
+				MetaAggregateBean aggregate = (MetaAggregateBean) itAggregatesBean.next();
+				String aggregateName = aggregate.getName();
+				String [] argvAg = {				
+					componentsPath  + "/" + file,
+					modelPath + "/" + aggregateName + ".java",
+					getJavaPackage(),
+					component.getName(),
+					aggregateName				
+				};
+				System.out.println(XavaResources.getString("generating_aggregate_javabean_code", aggregateName));
+				BeanPG.main(argvAg);
+			}
+			
+			// Hibernate mapping
+			String mappingPath = "../" + getProject() + "/build/hibernate/"; //tmp ¿una sola vez?
+			System.out.println(XavaResources.getString("generating_hibernate_mapping", component.getName()));			
+			String [] argvMap = {				
+				componentsPath  + "/" + file,				
+				mappingPath + component.getName() + ".hbm.xml",
+				getJavaPackage(),
+				component.getName()								
+			};
+			HibernatePG.main(argvMap);
 		}
 		
-		// Hibernate mapping
-		String mappingPath = "../" + getProject() + "/build/hibernate/"; //tmp ¿una sola vez?
-		System.out.println(XavaResources.getString("generating_hibernate_mapping", component.getName()));			
-		String [] argvMap = {				
-			componentsPath  + "/" + file,				
-			mappingPath + component.getName() + ".hbm.xml",
-			getJavaPackage(),
-			component.getName()								
-		};
-		HibernatePG.main(argvMap);
-		
+		//	Agreggates as persistent objects		
+		Iterator itPersistentAggregates = component.getMetaAggregatesEjbGenerate().iterator();
+		while (itPersistentAggregates.hasNext()) {
+			MetaAggregateEjb aggregate = (MetaAggregateEjb) itPersistentAggregates.next();
+			String aggregateName = aggregate.getName();
+			
+			System.out.println(XavaResources.getString("generating_pojo_code", aggregateName));
+			
+			String [] argv = {				
+				componentsPath  + "/" + file,				
+				modelPath + "/" + aggregateName + ".java",
+				getJavaPackage(),
+				component.getName(),			
+				aggregateName					
+			};
+			
+			PojoPG.main(argv); 
+			
+			String [] argvInterface = {
+				componentsPath  + "/" + file,
+				modelPath + "/I" + aggregateName + ".java",
+				getJavaPackage(),
+				component.getName(),
+				aggregateName
+			};						
+			InterfacePG.main(argvInterface);					
+			
+			//	Hibernate mapping
+			String mappingPath = "../" + getProject() + "/build/hibernate/"; //tmp ¿una sola vez?
+			System.out.println(XavaResources.getString("generating_hibernate_mapping", aggregateName));			
+			String [] argvMap = {				
+				componentsPath  + "/" + file,				
+				mappingPath + aggregateName + ".hbm.xml",
+				getJavaPackage(),
+				component.getName(),
+				aggregateName								
+			};
+			HibernatePG.main(argvMap);
+			
+		}						
 	}
 		
 }

@@ -240,6 +240,10 @@
          <arg value="${generator.dir}/aggregateReference.template"/> 
          <arg value="${generator.dir}/aggregateReference.xml"/>         
        </java>	
+		<java classname="Simple2XML" classpath="${tl.lib}">
+		 <arg value="${generator.dir}/methods.template"/> 
+		 <arg value="${generator.dir}/methods.xml"/>         
+		</java>	
        	<java classname="Simple2XML" classpath="${tl.lib}">
         	<arg value="${generator.dir}/ejbean.template"/> 
          	<arg value="${generator.dir}/ejbean.xml"/>         
@@ -290,6 +294,10 @@
          <arg value="${generator.dir}/aggregateReference.xml"/> 
          <arg value="${generator.dir}/AggregateReferencePG.java"/>         
        </java>  
+		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
+			<arg value="${generator.dir}/methods.xml"/> 
+			<arg value="${generator.dir}/MethodsPG.java"/>         
+		</java>  	
        <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
          <arg value="${generator.dir}/ejbean.xml"/> 
          <arg value="${generator.dir}/EJBeanPG.java"/>         
