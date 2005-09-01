@@ -59,7 +59,7 @@
 		<property name="number" key="true" type="int"/>		
 		<property name="description" type="String"/>
 	</aggregate>
-	
+		
 	<view>
 		<property name="deliveredBy">
 			<valid-values>      
@@ -115,7 +115,7 @@
 		<reference-view reference="shipment">	
 			<descriptions-list/>
 		</reference-view>
-		
+
 		<members>
 			invoice;			
 			<group name="deliveryData">
@@ -136,9 +136,8 @@
 			<section name="incidents">incidents</section>
 			<section name="details">details</section>
 		</members>
-				
 	</view>
-	
+			
 	<view name="InInvoice">
 				
 		<members>
@@ -150,6 +149,39 @@
 		
 	</view>		
 	
+	<view name="GroupsInSections">
+	
+		<reference-view reference="invoice" view="Simple"/>
+		
+		<reference-view reference="type">	
+			<descriptions-list/>
+		</reference-view>
+							
+		<property-view property="vehicle">
+			<on-change class="org.openxava.test.actions.OnChangeAddMessageAction"/>
+		</property-view>
+		
+		<members>
+			invoice;			
+			type, number;
+			<section name="deliveryData">							
+				date;
+				description;
+				shipment;
+				<group name="transportData">
+					distance; vehicle; transportMode; driverType;
+				</group>
+				<group name="deliveryByData">
+					carrier;
+					employee;			
+				</group>			
+			</section>
+			<section name="remarks">remarks</section>
+			<section name="incidents">incidents</section>
+			<section name="details">details</section>
+		</members>
+	</view>
+		
 	<tab>
 		<properties>invoice.year, invoice.number, type.number, type.description, number, date, description, distance, dateAsLabel, invoice.sellerDiscount</properties>
 	</tab>

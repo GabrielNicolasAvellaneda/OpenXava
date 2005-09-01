@@ -7,7 +7,7 @@ import org.openxava.actions.*;
  * @author Javier Paniza
  */
 public class OnChangeVehicleAction extends OnChangePropertyBaseAction {
-
+	
 	public void execute() throws Exception {
 		String v = (String) getNewValue();
 		String vehicle = v==null?"":v;
