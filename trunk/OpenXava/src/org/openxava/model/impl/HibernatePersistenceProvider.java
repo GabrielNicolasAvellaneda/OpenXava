@@ -21,20 +21,23 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 	private Session session;
 	private Transaction transaction;
 	private static SessionFactory sessionFactory;
-	
+		
 	public Object find(IMetaEjb metaModel, Map keyValues) throws FinderException {
 		try {
 			MetaEjbImpl ejbImpl = new MetaEjbImpl(metaModel);
 			Class className = metaModel.getBeanClass();
 			Object key = null;
 						
-			if (metaModel.getKeyPropertiesNames().size() == 1) {
+			if (metaModel.getAllKeyPropertiesNames().size() == 1) {
 				key = keyValues.get(metaModel.getKeyPropertiesNames().iterator().next());
 			}
 			else {
 				key = className.newInstance();
 				PropertiesManager pm = new PropertiesManager(key);
-				pm.executeSets(keyValues);				
+				System.out.println("[HibernatePersistenceProvider.find] clase de key)=" + key.getClass()); //  tmp
+				System.out.println("[HibernatePersistenceProvider.find] keyValues=" + keyValues); //  tmp
+				pm.executeSets(keyValues);
+				System.out.println("[HibernatePersistenceProvider.find] key=" + key); //  tmp
 			}		
 			Object result = getSession().get(className, (Serializable) key);
 			if (result == null) {
@@ -107,15 +110,15 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 	}
 
 	public void rollback() {
-		transaction.rollback();
-		session.close();
+		if (transaction != null) transaction.rollback();
+		if (session != null) session.close();
 		transaction = null;
 		session = null;
 	}
 
 	public void begin() {
 		session = getSessionFactory().openSession();
-		transaction = session.beginTransaction();	
+		transaction = session.beginTransaction();
 	}
 	
 	public static SessionFactory getSessionFactory() throws HibernateException {
@@ -135,7 +138,7 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 				}
 				catch (Exception ex) {
 					ex.printStackTrace();
-					System.err.println(XavaResources.getString("hibernate_mapping_not_loaded_warning", model.getName()));
+					System.err.println(XavaResources.getString("hibernate_mapping_not_loaded_warning", model.getName())); 
 				}
 			}
 			return configuration.buildSessionFactory();

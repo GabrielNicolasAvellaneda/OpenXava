@@ -792,7 +792,10 @@ while (itCollections.hasNext()) {
 
 	private <expr>homeClass</expr> <expr>homeAttribute</expr>;
 
-<java>if (!reference.isAggregate() &amp;&amp; !collection.hasCondition() &amp;&amp; !collection.hasCalculator()) { </java>
+<java>if (!reference.isAggregate() &amp;&amp; 
+	!collection.hasCondition() &amp;&amp; 
+	!collection.hasCalculator() &amp;&amp; 
+	!reference.getMetaModelReferenced().getMetaReference(reference.getRole()).isKey()) { </java>
 	/**
 	 * @ejb:interface-method
 	 */
@@ -932,106 +935,9 @@ while (itReferences.hasNext()) {
 	}
 } 
 </java> 
-	// Methods/Metodos
-<java>
-Iterator itMethods = metaModel.getMetaMethods().iterator();	
-while (itMethods.hasNext()) {	
-	MetaMethod method = (MetaMethod) itMethods.next();
-	String throwSentence = method.hasExceptions()?"throws " + method.getExceptions():"";
-</java> 
-	/**
-	 * @ejb:interface-method
-	 */
-	public <expr>method.getTypeName()</expr> <expr>method.getName()</expr>(<expr>method.getArguments()</expr>) <expr>throwSentence</expr> {
-		try {
-			<java>
-			MetaCalculator calculator = method.getMetaCalculator();
-			String calculatorClass = calculator.getClassName();
-			</java> 		
-			<expr>calculatorClass</expr> <expr>method.getName()</expr>Calculator = (<expr>calculatorClass</expr>)
-				getMetaModel().getMetaMethod("<expr>method.getName()</expr>").getMetaCalculator().getCalculator();
-			<java>	
-			Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
-			while (itSets.hasNext()) {
-				MetaSet set = (MetaSet) itSets.next();
-				String propertyNameInCalculator = Strings.firstUpper(set.getPropertyName());
-				String propertyNameFrom = set.getPropertyNameFrom();
-				if (propertyNameFrom .indexOf('.') &gt;= 0) {
-					MetaProperty p = metaModel.getMetaProperty(propertyNameFrom);
-					if (p.isKey() || p.getMetaModel() instanceof MetaAggregate) {
-						propertyNameFrom  = Strings.firstUpper(Strings.change(propertyNameFrom , ".", "_"));
-					}
-					else {
-						StringTokenizer st = new StringTokenizer(propertyNameFrom , ".");
-						String ref = st.nextToken();
-						String pro = st.nextToken();
-						propertyNameFrom  = Strings.firstUpper(ref) + "().get" + Strings.firstUpper(pro);
-					}
-				}
-				else {
-					propertyNameFrom  = Strings.firstUpper(propertyNameFrom );
-				}
-				String value = set.getValue();
-				if (set.hasValue()) {
-			</java> 
-			<expr>method.getName()</expr>Calculator.set<expr>propertyNameInCalculator</expr>("<expr>value</expr>");
-			<java>
-			} else {	
-			</java>  	
-			<expr>method.getName()</expr>Calculator.set<expr>propertyNameInCalculator</expr>(get<expr>propertyNameFrom</expr>());
-			<java>	}} // else/poners 	 
-			if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
-			</java> 
-				<expr>method.getName()</expr>Calculator.setEntity(this);
-			<java>} 
-			if (IJDBCCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
-			</java> 
-				<expr>method.getName()</expr>Calculator.setConnectionProvider(getPortableContext());
-			<java>			
-			}  
-			if (method.hasArguments()) {
-				StringTokenizer st = new StringTokenizer(method.getArguments(), ",");
-				while (st.hasMoreTokens()) {
-					StringTokenizer stArgument = new StringTokenizer(st.nextToken());
-					stArgument.nextToken();
-					String argumentName = stArgument.nextToken().trim();
-					String argumentProperty = Strings.firstUpper(argumentName);
-			</java> 		
-			<expr>method.getName()</expr>Calculator.set<expr>argumentProperty</expr>(<expr>argumentName</expr>);
-			<java>
-				}
-			}
-			String calculateValueSentence = method.getName() + "Calculator.calculate()";
-			if ("void".equals(method.getTypeName())) {
-			</java> 
-			<expr>calculateValueSentence</expr>;
-			<java>
-			} else {
-			</java> 
-			return <expr>Generators.generateCast(method.getTypeName(), calculateValueSentence)</expr>;			
-			<java>
-			}
-			if (method.hasExceptions()) {
-				StringTokenizer st = new StringTokenizer(method.getExceptions(), ",");
-				while (st.hasMoreTokens()) {
-					String exception = st.nextToken().trim();
-			</java> 
-		}
-		catch (<expr>exception</expr> ex) {
-			throw ex;					
-			<java>		
-				} // while exceptions						
-			} // if has exceptions
-			</java> 
-		}
-		catch (Exception ex) {
-			ex.printStackTrace();
-			throw new EJBException(XavaResources.getString("method_execution_error", "<expr>method.getName()</expr>", "<expr>name</expr>"));
-		}
-	}
-
-<java>		
-}
+ 
+<java>	
+	MethodsPG.generateEJB(context, out, metaModel); 
 </java> 
 
 	private MetaModel metaModel;

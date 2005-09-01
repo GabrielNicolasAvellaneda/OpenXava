@@ -44,6 +44,8 @@ else {
 package <expr>packageName</expr>;
 
 import java.util.*;
+import java.math.*;
+import java.rmi.RemoteException;
 import org.openxava.component.MetaComponent;
 import org.openxava.model.meta.MetaModel;
 import org.openxava.util.*;
@@ -52,7 +54,7 @@ import org.openxava.util.*;
  * 
  * @author MCarmen Gimeno
  */
-public class <expr>name</expr> implements java.io.Serializable {	
+public class <expr>name</expr> implements java.io.Serializable, <expr>metaModel.getInterfaceName()</expr> {	
 	
 	// Properties/Propiedades
 	
@@ -86,6 +88,9 @@ Iterator itCollections = metaModel.getMetaCollections().iterator();
 while (itCollections.hasNext()) {	
 	MetaCollection col = (MetaCollection) itCollections.next();
 	String colName = Strings.firstUpper(col.getName());
+	MetaReference reference = col.getMetaReference();
+	String colType = reference.getMetaModelReferenced().getInterfaceName();
+	String roleName = Strings.firstUpper(reference.getRole());
 	</java> 
 	private java.util.Collection <expr>col.getName()</expr>;
 	public java.util.Collection get<expr>colName</expr>() {
@@ -94,10 +99,34 @@ while (itCollections.hasNext()) {
 	public void set<expr>colName</expr>(java.util.Collection <expr>col.getName()</expr>) {
 		this.<expr>col.getName()</expr> = <expr>col.getName()</expr>;
 	}
-	<java>
-}
+	
+<java>
+	if (!reference.isAggregate() &amp;&amp; 
+		!col.hasCondition() &amp;&amp; 
+		!col.hasCalculator() &amp;&amp; 
+		!reference.getMetaModelReferenced().getMetaReference(reference.getRole()).isKey()) { 
 </java> 
 	
+	public void addTo<expr>colName</expr>(<expr>colType</expr> newElement) throws RemoteException {
+		this.get<expr>colName</expr>().add(newElement);
+		newElement.set<expr>roleName</expr>(this);
+	}
+	public void removeFrom<expr>colName</expr>(<expr>colType</expr> toRemove) throws RemoteException {
+		this.get<expr>colName</expr>().remove(toRemove);
+		toRemove.set<expr>roleName</expr>(null);
+	}
+<java>
+	}
+</java> 
+
+<java>
+}
+</java> 
+
+<java>	
+	MethodsPG.generate(context, out, metaModel); 
+</java> 	
+
 	private MetaModel metaModel;
 	private MetaModel getMetaModel() throws XavaException {
 		if (metaModel == null) {

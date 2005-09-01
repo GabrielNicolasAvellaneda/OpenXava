@@ -19,10 +19,10 @@ public class ModelParser extends XmlElementsNames {
 		e.setLabel(el.getAttribute(xlabel[lang]));
 		if (hasEjb(el, lang)) {							
 			fillEjbInfo(el, e, lang);
-			e.setGenerateXDocLet(false);
+			e.setGenerate(false);
 		}
 		else {			
-			e.setGenerateXDocLet(true);
+			e.setGenerate(true);
 		}
 		if (hasBean(el, lang)) {
 			e.setBeanClassName(getBeanClass(el, lang));
@@ -35,8 +35,8 @@ public class ModelParser extends XmlElementsNames {
 	public static MetaAggregate parseAggregate(Node n, MetaModel container, int lang) throws XavaException {
 		Element el = (Element) n;
 		if (hasEjb(el, lang)) {
-			MetaAggregateEjb r = crearAgregadoEjb(n, lang);
-			r.setGenerateXDocLet(false);
+			MetaAggregateEjb r = createAggregateEjb(n, lang);
+			r.setGenerate(false);
 			return r;			
 		}
 		else if (hasBean(el, lang)) {
@@ -52,8 +52,8 @@ public class ModelParser extends XmlElementsNames {
 				return r;
 			}
 			else {
-				MetaAggregateEjb r = crearAgregadoEjb(n, lang);
-				r.setGenerateXDocLet(true);
+				MetaAggregateEjb r = createAggregateEjb(n, lang);
+				r.setGenerate(true);
 				return r;
 			}
 		}		
@@ -71,7 +71,7 @@ public class ModelParser extends XmlElementsNames {
 		return a;
 	}
 	
-	private static MetaAggregateEjb crearAgregadoEjb(Node n, int lang) throws XavaException {	
+	private static MetaAggregateEjb createAggregateEjb(Node n, int lang) throws XavaException {	
 		Element el = (Element) n;		
 		MetaAggregateEjb a = new MetaAggregateEjb();
 		a.setName(el.getAttribute(xname[lang]));

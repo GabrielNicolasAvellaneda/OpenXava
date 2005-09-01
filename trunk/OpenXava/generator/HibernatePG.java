@@ -7,10 +7,11 @@ import org.openxava.component.MetaComponent;
 import org.openxava.model.meta.*;
 import org.openxava.mapping.*;
 import org.openxava.util.Strings;
+import org.openxava.util.XavaException;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Aug 23 19:36:35 CEST 2005
+ * @version Thu Sep 01 20:10:56 CEST 2005
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -50,10 +51,14 @@ public class HibernatePG {
     out.print("\">");
     
     Collection keyProperties = metaModel.getMetaPropertiesKey(); 
-    if (keyProperties.size() == 1) {
-    	MetaProperty key = (MetaProperty) keyProperties.iterator().next();
-    	PropertyMapping pMapping = key.getMapping();
-    	String propertyName = pMapping.hasConverter()?"_"+Strings.firstUpper(key.getName()):key.getName();	
+    Collection keyReferences = metaModel.getMetaReferencesKey();
+    if (keyProperties.size() + keyReferences.size() == 0) {
+    	throw new XavaException("model_without_key_error", name);
+    }
+    else if (keyProperties.size() == 1 &&  keyReferences.size() == 0) {
+    		MetaProperty key = (MetaProperty) keyProperties.iterator().next();
+    		PropertyMapping pMapping = key.getMapping();
+    		String propertyName = pMapping.hasConverter()?"_"+Strings.firstUpper(key.getName()):key.getName();	
     
     out.print(" \t\n\t\t<id name=\"");
     out.print(propertyName);
@@ -79,6 +84,40 @@ public class HibernatePG {
     	
     	}
     
+    	for (Iterator it = keyReferences.iterator(); it.hasNext();) {
+    		MetaReference key = (MetaReference) it.next();
+    		ReferenceMapping pMapping = mapping.getReferenceMapping(key.getName());
+    		String referenceName = key.getName();	
+    		String className = key.getMetaModelReferenced().getPOJOClassName();		
+    		if (mapping.isReferenceOverlappingWithSomeProperty(referenceName)) {
+    
+    out.print(" \t\t\n\t\t\t<!-- Maping of \"");
+    out.print(referenceName);
+    out.print("\" : Overlapping references still not supported -->");
+    		
+    		}
+    		else {
+    
+    out.print(" \t\n\t\t\t<key-many-to-one name=\"");
+    out.print(referenceName);
+    out.print("\" class=\"");
+    out.print(className);
+    out.print("\">");
+    
+    			for (Iterator itC = pMapping.getColumns().iterator(); itC.hasNext();) {
+    				String col = (String) itC.next();
+    
+    out.print(" \t\t\t\n\t\t\t\t<column name=\"");
+    out.print(col);
+    out.print("\" />");
+    
+    			}
+    
+    out.print(" \t\t\t\t\t\t\n\t\t\t</key-many-to-one>");
+    	
+     		}
+     	}
+    
     out.print("  \t\n\t\t</composite-id>");
     		
     }
@@ -89,20 +128,29 @@ public class HibernatePG {
     		PropertyMapping pMapping = prop.getMapping();
     		String propertyName = pMapping.hasConverter()?"_"+Strings.firstUpper(prop.getName()):prop.getName();			
     		if (!prop.isKey()) {
+    			if (pMapping.hasMultipleConverter()) {
+    
+    out.print(" \n\t\t<!--  Mapping of \"");
+    out.print(propertyName);
+    out.print("\" : multiple columns mapping still not supported -->");
+    			
+    			}
+    			else {
     
     out.print(" \t\n\t\t<property name=\"");
     out.print(propertyName);
     out.print("\" column=\"");
     out.print(pMapping.getColumn());
     out.print("\"/>");
-    	
+    
+    			} 	
     		} 
     	}
-    
-    
+     
     Iterator itReferences = metaModel.getMetaReferences().iterator();	
     while (itReferences.hasNext()) {	
     	MetaReference reference = (MetaReference) itReferences.next();
+    	if (reference.isKey()) continue;
     	String referenceName = Strings.firstUpper(reference.getName());	
     	if (reference.getMetaModelReferenced() instanceof MetaAggregateBean) {	
     		for (Iterator itAggregateProperties = reference.getMetaModelReferenced().getMetaProperties().iterator(); itAggregateProperties.hasNext();) {	
@@ -170,17 +218,17 @@ public class HibernatePG {
     while (itCollections.hasNext()) {	
     	MetaCollection col = (MetaCollection) itCollections.next();
     	boolean isAggregate = col.getMetaReference().getMetaModelReferenced() instanceof MetaAggregate;
-    	if (isAggregate || col.hasCalculator() || col.hasCondition()) {
+    	if (col.hasCalculator() || col.hasCondition()) {
     		continue;
     	}
     	String roleName = col.getMetaReference().getRole();	 
     	Collection columns = col.getMetaReference().getMetaModelReferenced().getMapping().getReferenceMapping(roleName).getColumns();
+    	Collection cKeys = col.getMetaReference().getMetaModelReferenced().getAllKeyPropertiesNames();
+    	String nKeys = Strings.toString(cKeys);          		
     	if (columns.size() == 1) {	
     		String column = (String) columns.iterator().next();
-    		Collection cKeys = col.getMetaReference().getMetaModelReferenced().getAllKeyPropertiesNames();
-    		String nKeys = Strings.toString(cKeys);          		
     
-    out.print(" \n\t\t<set name=\"");
+    out.print("  \n\t\t<set name=\"");
     out.print(col.getName());
     out.print("\" order-by=\"");
     out.print(nKeys);
@@ -193,9 +241,25 @@ public class HibernatePG {
     	}	
     	else { 
     
-    out.print(" \n\t\t<!--  Mapping of \"");
+    out.print(" \n\t\t<set name=\"");
     out.print(col.getName());
-    out.print("\": multiple key still not supported -->");
+    out.print("\" order-by=\"");
+    out.print(nKeys);
+    out.print("\">\n\t\t\t<key>");
+    
+    		Iterator itCol = columns.iterator();	
+    		while (itCol.hasNext()) {	
+    			String column = (String) itCol.next();
+    
+    out.print(" \t\t\t\n\t\t\t\t<column name=\"");
+    out.print(column);
+    out.print("\"/>");
+    			
+    		}	
+    
+    out.print(" \n\t\t\t</key>\t\n\t\t\t<one-to-many class=\"");
+    out.print(col.getMetaReference().getMetaModelReferenced().getName());
+    out.print("\"/>\n\t\t</set>");
     
     	}
     
@@ -237,7 +301,7 @@ public class HibernatePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Aug 23 19:36:35 CEST 2005", // date this file was generated
+        { "Thu Sep 01 20:10:56 CEST 2005", // date this file was generated
              "/home/mcarmen/workspace/OpenXava/generator/hibernate.xml", // input file
              "/home/mcarmen/workspace/OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

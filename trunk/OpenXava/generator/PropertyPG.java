@@ -13,13 +13,13 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Aug 23 19:36:29 CEST 2005
+ * @version Thu Sep 01 20:10:45 CEST 2005
  */
 public class PropertyPG {
     Properties properties = new Properties();
 
 
-private String getExcepcion() {
+private String getException() {
 	return ejb?"EJBException":"RuntimeException";
 }
 
@@ -223,7 +223,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     out.print(" \n\t\t\treturn null;");
     } 
     out.print(" \t\t\t\n\t\t}\n\t\tcatch (Exception ex) {\n\t\t\tex.printStackTrace();\n\t\t\tthrow new ");
-    out.print(getExcepcion());
+    out.print(getException());
     out.print("(XavaResources.getString(\"generator.calculate_value_error\", \"");
     out.print(propertyName);
     out.print("\", \"");
@@ -271,7 +271,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     out.print("Converter(\"");
     out.print(property.getName());
     out.print("\");\n\t\t\t}\n\t\t\tcatch (Exception ex) {\n\t\t\t\tex.printStackTrace();\n\t\t\t\tthrow new ");
-    out.print(getExcepcion());
+    out.print(getException());
     out.print("(XavaResources.getString(\"generator.create_converter_error\", \"");
     out.print(property.getName());
     out.print("\"));\n\t\t\t}\n\t\t\t\n\t\t}\t\n\t\treturn ");
@@ -366,7 +366,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     out.print(" \n\t\t\treturn ");
     out.print(Generators.generateCast(type, toJavaSentence));
     out.print(";\n\t\t}\n\t\tcatch (org.openxava.converters.ConversionException ex) {\n\t\t\tex.printStackTrace();\n\t\t\tthrow new ");
-    out.print(getExcepcion());
+    out.print(getException());
     out.print("(XavaResources.getString(\"generator.conversion_error\", \"");
     out.print(propertyName);
     out.print("\", \"");
@@ -411,7 +411,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     			}
     		
     out.print(" \t\t\t\n\t\t}\n\t\tcatch (org.openxava.converters.ConversionException ex) {\n\t\t\tex.printStackTrace();\n\t\t\tthrow new ");
-    out.print(getExcepcion());
+    out.print(getException());
     out.print("(XavaResources.getString(\"generator.conversion_db_error\", \"");
     out.print(propertyName);
     out.print("\", \"");
@@ -484,7 +484,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     out.print("() {\n\t\ttry {\n\t\t\treturn ");
     out.print(Generators.generateCast(type, getSentence));
     out.print(";\n\t\t}\n\t\tcatch (org.openxava.converters.ConversionException ex) {\n\t\t\tex.printStackTrace();\n\t\t\tthrow new ");
-    out.print(getExcepcion());
+    out.print(getException());
     out.print("(XavaResources.getString(\"generator.conversion_error\", \"");
     out.print(propertyName);
     out.print("\", \"");
@@ -510,7 +510,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     out.print("(");
     out.print(Generators.generateCast(cmpType, setSentence));
     out.print(");\n\t\t}\n\t\tcatch (org.openxava.converters.ConversionException ex) {\n\t\t\tex.printStackTrace();\n\t\t\tthrow new ");
-    out.print(getExcepcion());
+    out.print(getException());
     out.print("(XavaResources.getString(\"generator.conversion_error\", \"");
     out.print(propertyName);
     out.print("\", \"");
@@ -611,7 +611,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Aug 23 19:36:29 CEST 2005", // date this file was generated
+        { "Thu Sep 01 20:10:45 CEST 2005", // date this file was generated
              "/home/mcarmen/workspace/OpenXava/generator/property.xml", // input file
              "/home/mcarmen/workspace/OpenXava/generator/PropertyPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

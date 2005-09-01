@@ -14,7 +14,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Aug 23 19:36:34 CEST 2005
+ * @version Thu Sep 01 20:10:55 CEST 2005
  */
 public class InterfacePG {
     Properties properties = new Properties();
@@ -116,7 +116,10 @@ public class InterfacePG {
     	String referencedModelName = reference.getReferencedModelName();
     	String referencedModelClass = referencedModel.getInterfaceName();	
     	
-     if (!reference.isAggregate() && !collection.hasCondition() && !collection.hasCalculator()) { 
+     	if (!reference.isAggregate() && 
+    		!collection.hasCondition() && 
+    		!collection.hasCalculator() && 
+    		!reference.getMetaModelReferenced().getMetaReference(reference.getRole()).isKey()) {	
     
     out.print(" \n\tvoid addTo");
     out.print(collectionName);
@@ -158,7 +161,7 @@ public class InterfacePG {
     } else { // reference to entity or EJB aggregate
     		IMetaEjb referencedModel = (IMetaEjb) reference.getMetaModelReferenced();
     		String referencedModelClass = referencedModel.getInterfaceName();
-    		String referencedKeyClass = referencedModel.getPrimaryKey();
+    		
     
     out.print(" \n\n\t// ");
     out.print(referenceName);
@@ -172,15 +175,7 @@ public class InterfacePG {
     out.print(referencedModelClass);
     out.print(" new");
     out.print(referenceName);
-    out.print(") throws RemoteException;\n\t\n\t");
-    out.print(referencedKeyClass);
-    out.print(" get");
-    out.print(referenceName);
-    out.print("Key() throws RemoteException;\n\tvoid set");
-    out.print(referenceName);
-    out.print("Key(");
-    out.print(referencedKeyClass);
-    out.print(" key) throws RemoteException;");
+    out.print(") throws RemoteException;");
     } // if/else aggregate/reference 
     } // References 
     out.print("\n\n\t// Methods");
@@ -237,7 +232,7 @@ public class InterfacePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Aug 23 19:36:34 CEST 2005", // date this file was generated
+        { "Thu Sep 01 20:10:55 CEST 2005", // date this file was generated
              "/home/mcarmen/workspace/OpenXava/generator/interface.xml", // input file
              "/home/mcarmen/workspace/OpenXava/generator/InterfacePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

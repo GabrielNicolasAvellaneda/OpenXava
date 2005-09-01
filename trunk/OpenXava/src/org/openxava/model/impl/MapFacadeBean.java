@@ -1282,7 +1282,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			enum = Collections.enumeration((Collection) elements);
 		}
 		else {
-			throw new XavaException("collection_type_not_supported");
+			String collectionType = elements == null?"null":elements.getClass().getName();
+			throw new XavaException("collection_type_not_supported", collectionType);
 		}		
 		while (enum.hasMoreElements()) {
 			Object object = enum.nextElement();			

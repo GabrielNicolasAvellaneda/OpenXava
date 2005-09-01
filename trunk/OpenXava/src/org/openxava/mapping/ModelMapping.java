@@ -381,7 +381,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 	
 		// And in the case of code not generated, the conversion is
 		// responsability of the programmer that write the bean (in get and set).		
-		if (p.isKey() || !getMetaModel().isGenerateXDocLet()) 
+		if (p.isKey() || !getMetaModel().isGenerate()) 
 			return;
 		
 		propertyMapping.setConverterClassName(Converters.getConverterClassNameFor(p));

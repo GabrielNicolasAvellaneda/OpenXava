@@ -37,7 +37,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	private Collection membersNames = new ArrayList();
 	private Collection calculatedPropertiesNames;
 	private MetaView metaViewByDefault;
-	private boolean generateXDocLet;
+	private boolean generate;
 	
 	
 	private Collection metaPropertiesWithDefaultValueCalculator;
@@ -83,14 +83,14 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		for (Iterator it = MetaComponent.getAll().iterator(); it.hasNext();) {
 			MetaComponent comp = (MetaComponent) it.next();
 			MetaEntity en = comp.getMetaEntity();
-			if (en.isGenerateXDocLet()) { // At momment, pojo and hibernate will be treated
+			if (en.isGenerate()) { // At momment, pojo and hibernate will be treated
 				r.add(en);
 			}
 									
 			for (Iterator itAggregates = comp.getMetaAggregates().iterator(); itAggregates.hasNext();) {
 				MetaAggregate ag = (MetaAggregate) itAggregates.next();
 				if (ag instanceof MetaAggregateEjb) { // At momment, pojo and hibernate will be treated
-					if (ag.isGenerateXDocLet()) {
+					if (ag.isGenerate()) {
 						r.add(ag);
 					}
 				}
@@ -511,7 +511,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	 * 
 	 * @return Collection of <tt>String</tt>, not null and read only 
 	 */
-	public Collection getAllKeyPropertiesNames() throws XavaException {
+	public Collection getAllKeyPropertiesNames() throws XavaException {  //tmp Guardar el resultado
 		ArrayList result = new ArrayList(getKeyPropertiesNames());
 		Iterator itRef = getMetaReferencesKey().iterator(); 
 		while (itRef.hasNext()) {
@@ -886,12 +886,12 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		return getName();
 	}
 		
-	public boolean isGenerateXDocLet() {
-		return generateXDocLet;
+	public boolean isGenerate() {
+		return generate;
 	}
 
-	public void setGenerateXDocLet(boolean generaXDocLet) {		
-		this.generateXDocLet = generaXDocLet;
+	public void setGenerate(boolean generate) {		
+		this.generate = generate;
 	}
 	
 	

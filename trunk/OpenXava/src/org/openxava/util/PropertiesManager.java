@@ -118,7 +118,9 @@ public class PropertiesManager implements java.io.Serializable {
 	 * </ul>   
 	 *
 	 * @param propertyName Property name to update
-	 * @param value  New value for property. Has to be of compatible type
+	 * @param value  New value for property. Has to be of compatible type. If value is a Map
+	 * 		and the property type is not a map then convert the map in an object of the property
+	 * 		type.
 	 * @exception InvocationTargetException  Excepction originated from original access method
 	 * @exception PropertiesManagerException  Any unexpected problem
 	 */
@@ -136,6 +138,9 @@ public class PropertiesManager implements java.io.Serializable {
 
 			if (value == null && pd.getPropertyType().isPrimitive()) {
 				value = nullToDefaultValue(pd.getPropertyType());
+			}
+			else if (value instanceof Map && !Map.class.isAssignableFrom(pd.getPropertyType())) {
+				value = mapToObject(pd.getPropertyType(), (Map) value);
 			}
 			Object[] arg = { value };
 
@@ -169,6 +174,21 @@ public class PropertiesManager implements java.io.Serializable {
 			throw new PropertiesManagerException(
 					XavaResources.getString("set_property_error", propertyName));
 		}
+	}
+
+	private Object mapToObject(Class propertyType, Map values) throws ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, PropertiesManagerException {
+		Class objectClass = null;
+		if (propertyType.isInterface()) {
+			String className = Strings.change(propertyType.getName(), ".I", ".");
+			objectClass = Class.forName(className);
+		}
+		else {
+			objectClass = propertyType;
+		}
+		Object object = objectClass.newInstance();
+		PropertiesManager pm = new PropertiesManager(object);
+		pm.executeSets(values);
+		return object;
 	}
 
 	/**
@@ -252,7 +272,8 @@ public class PropertiesManager implements java.io.Serializable {
 	 * <li> <tt>this.object != null</tt>
 	 * <li> <tt>this.hasSetter(propertyName)</tt>   
 	 * </ul>   
-	 *
+	 * Supports nested Maps. <br>
+	 * 
 	 * @param properties Map with <tt>String propertyName:Object value</tt>.
 	 *                               Null is assumed as empty map
 	 * @exception InvocationTargetException  Excepcion from original access method

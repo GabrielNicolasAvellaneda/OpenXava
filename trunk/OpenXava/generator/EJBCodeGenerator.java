@@ -20,7 +20,7 @@ public class EJBCodeGenerator extends CodeGenerator{
 		File fModelXEjbPath = new File(modelXEjbPath);
 		fModelXEjbPath.mkdirs();			
 		// Main entity			
-		if (component.getMetaEntity().isGenerateXDocLet()) {			
+		if (component.getMetaEntity().isGenerate()) {			
 			System.out.println(XavaResources.getString("generating_xdoclet_code", component.getName()));			
 			String [] argv = {				
 				componentsPath  + "/" + file,				
@@ -54,7 +54,7 @@ public class EJBCodeGenerator extends CodeGenerator{
 			BeanPG.main(argv);
 		}			
 		// Agreggates in EJB format		
-		Iterator itAggregatesEjb = component.getMetaAggregatesEjbXDocLet().iterator();
+		Iterator itAggregatesEjb = component.getMetaAggregatesEjbGenerate().iterator();
 		while (itAggregatesEjb.hasNext()) {
 			MetaAggregateEjb aggregate = (MetaAggregateEjb) itAggregatesEjb.next();
 			String aggregateName = aggregate.getName();
