@@ -337,12 +337,19 @@ public class View implements java.io.Serializable {
 	 * the assigned properties. <p>
 	 */
 	public void setValuesExecutingOnChangeActions(Map values) throws XavaException {
+		if (getParent() == null) {
+			getRoot().registeringExecutedActions = true;
+		}		
 		setOnlyThrowsOnChange(true);
 		try {
 			setValuesNotifying(values);
 		}
 		finally {
 			setOnlyThrowsOnChange(false);
+			if (getParent() == null) {
+				getRoot().registeringExecutedActions = false;		
+				resetExecutedActions();
+			}			
 		}
 	}
 	
