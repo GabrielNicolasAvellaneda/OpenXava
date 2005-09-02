@@ -30,7 +30,7 @@
     <property name="server.properties.tmp.dir" value="${user.home}/tmpServerProperties"/>        
 	<property name="model.package" value="model"/>
 	<property name="build.compiler" value="javac1.3"/>
-	<property name="deploy.portlets.dir" value="${deploy.dir}/jetspeed.war/WEB-INF/deploy"/>
+	<property name="deploy.portlets.dir" value="${deploy.dir}/openxava.war/WEB-INF/deploy"/>
 			
    <!-- Set up java.class.path -->
    <path id="project.class.path">

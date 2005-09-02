@@ -1,12 +1,12 @@
 <!-- JavaScript for calendar in date editors -->
 
 <!-- Loading Theme file(s) -->
-<link rel="stylesheet" type="text/css" media="all" href="./editors/calendar/skins/aqua/theme.css" title="Aqua" />
+<link rel="stylesheet" type="text/css" media="all" href="<%=request.getContextPath()%>/xava/editors/calendar/skins/aqua/theme.css" title="Aqua" />
 <!-- import the calendar script -->
-<script type="text/javascript" src="./editors/calendar/calendar.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/calendar.js"></script>
 
 <!-- import the language module -->
-<script type="text/javascript" src="./editors/calendar/lang/calendar-<%=request.getLocale().getLanguage()%>.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/lang/calendar-<%=request.getLocale().getLanguage()%>.js"></script>
 
 <!-- other languages might be available in the lang directory; please check
 your distribution archive. -->
