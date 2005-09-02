@@ -15,10 +15,12 @@ org.openxava.view.View view = (org.openxava.view.View) context.get(request, view
 String propertyKey = request.getParameter("propertyKey");
 MetaProperty p = (MetaProperty) request.getAttribute(propertyKey);
 
+org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
+String formName = manager.getForm();	
 boolean throwsChanged=view.throwsPropertyChanged(p);
 String scriptFoco = "onfocus=focus_property.value='" + propertyKey + "'";
 String script = throwsChanged?
-	"onchange='throwPropertyChanged(\"" + propertyKey + "\")' ":"";
+	"onchange='throwPropertyChanged(" + formName + ", \"" + propertyKey + "\")' ":"";
 script = script + scriptFoco;
 Object value = request.getAttribute(propertyKey + ".value");
 
