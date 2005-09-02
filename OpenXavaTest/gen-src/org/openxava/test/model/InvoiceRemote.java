@@ -70,12 +70,6 @@ public interface InvoiceRemote
    public java.util.Collection getDetails(  )
       throws java.rmi.RemoteException;
 
-   public void addToDeliveries( org.openxava.test.model.DeliveryRemote newElement )
-      throws java.rmi.RemoteException;
-
-   public void removeFromDeliveries( org.openxava.test.model.DeliveryRemote toRemove )
-      throws java.rmi.RemoteException;
-
    public java.util.Collection getDeliveries(  )
       throws java.rmi.RemoteException;
 
