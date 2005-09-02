@@ -267,8 +267,8 @@ public class View implements java.io.Serializable {
 		}
 		
 		if (hasSections()) {
-			int quantity = getSections().size();
-			for (int i=0; i<quantity; i++) {												
+			int count = getSections().size();
+			for (int i=0; i<count; i++) {												
 				values.putAll(getSectionView(i).getValues(all));
 			}
 		}									
@@ -463,8 +463,8 @@ public class View implements java.io.Serializable {
 		
 	private View findSubviewInSection(String name) throws XavaException {
 		if (!hasSections()) return null;
-		int quantity = getSections().size();
-		for (int i=0; i<quantity; i++) {
+		int count = getSections().size();
+		for (int i=0; i<count; i++) {
 			View sectionView = getSectionView(i); 
 			View subview = (View) sectionView.getSubviews().get(name);
 			if (subview == null) {
@@ -692,8 +692,8 @@ public class View implements java.io.Serializable {
 	
 	private boolean setValueInSections(String name, Object value) throws XavaException {
 		if (!hasSections()) return false;
-		int quantity = getSections().size();		
-		for (int i = 0; i < quantity; i++) {			
+		int count = getSections().size();		
+		for (int i = 0; i < count; i++) {			
 			if (getSectionView(i).trySetValue(name, value))	return true;			 				
 		}		
 		return false;
@@ -710,8 +710,8 @@ public class View implements java.io.Serializable {
 		if (!hasSections()) {
 			throw new ElementNotFoundException("no_sections_error");
 		}
-		int quantity = getSections().size();
-		for (int i = 0; i < quantity; i++) {							
+		int count = getSections().size();
+		for (int i = 0; i < count; i++) {							
 			if (getSectionView(i).getMetaView().getName().equals(sectionName)) {
 				return getSectionView(i);				
 			} 				
@@ -721,8 +721,8 @@ public class View implements java.io.Serializable {
 		
 	private Object getValueInSections(String name, boolean recalculatingValues) throws XavaException { 
 		if (!hasSections()) return null;
-		int quantity = getSections().size();
-		for (int i = 0; i < quantity; i++) {			
+		int count = getSections().size();
+		for (int i = 0; i < count; i++) {			
 			Object value = getSectionView(i).getValue(name, recalculatingValues);
 			if (value != null) return value;
 		}
@@ -824,8 +824,8 @@ public class View implements java.io.Serializable {
 			}
 		}			
 		if (hasSections()) {
-			int quantity = getSections().size();
-			for (int i = 0; i < quantity; i++) {
+			int count = getSections().size();
+			for (int i = 0; i < count; i++) {
 				Map names = getSectionView(i).createCalculatedPropertiesNames();
 				if (!names.isEmpty()) memberNames.putAll(names);
 			}
@@ -985,8 +985,8 @@ public class View implements java.io.Serializable {
 			}
 		}						
 		if (hasSections()) {
-			int quantity = getSections().size();
-			for (int i = 0; i < quantity; i++) {
+			int count = getSections().size();
+			for (int i = 0; i < count; i++) {
 				getSectionView(i).clear();
 			}	
 		}		
@@ -1067,8 +1067,8 @@ public class View implements java.io.Serializable {
 					
 			// Sections		
 			if (hasSections()) {
-				int quantity = getSections().size();
-				for (int i = 0; i < quantity; i++) {
+				int count = getSections().size();
+				for (int i = 0; i < count; i++) {
 					getSectionView(i).calculateDefaultValues();
 				}	
 			}			
@@ -1149,10 +1149,6 @@ public class View implements java.io.Serializable {
 		return getRoot().executedActions.contains(name + "::" + action.getClass());
 	}
 
-	private boolean tieneValor(Object v) {		
-		return !(v == null || "".equals(v) || "0".equals(v));
-	}
-
 	public boolean isKeyEditable() {
 		return !isReadOnly() && keyEditable;
 	}
@@ -1171,15 +1167,15 @@ public class View implements java.io.Serializable {
 		if (hasGroups()) { 
 			it = getGroupsViews().values().iterator();
 			while (it.hasNext()) {				
-				View subvista = (View) it.next();
-				subvista.setKeyEditable(b);
+				View subview = (View) it.next();
+				subview.setKeyEditable(b);
 			}
 		}
 		
 		
 		if (hasSections()) {
-			int cantidad = getSections().size();
-			for (int i = 0; i < cantidad; i++) {
+			int count = getSections().size();
+			for (int i = 0; i < count; i++) {
 				getSectionView(i).setKeyEditable(b);
 			}	
 		}	
@@ -1187,7 +1183,7 @@ public class View implements java.io.Serializable {
 	}
 	
 	/**
-	 * Si en estos momento se puede editar.
+	 * If at this moment is editable.
 	 */
 	public boolean isEditable(MetaProperty metaProperty) {
 		try {							
@@ -1203,7 +1199,7 @@ public class View implements java.io.Serializable {
 	}
 	
 	/**
-	 * Si en estos momento se puede editar.
+	 * If at this moment is editable.
 	 */
 	public boolean isEditable(MetaReference metaReference) {
 		try {
@@ -1219,29 +1215,29 @@ public class View implements java.io.Serializable {
 		}		
 	}
 
-	public boolean isEditable(String miembro) throws XavaException {				
-		return isEditable(getMetaView().getMetaProperty(miembro));
+	public boolean isEditable(String member) throws XavaException {				
+		return isEditable(getMetaView().getMetaProperty(member));
 	}
 	
-	private boolean isMarkAsEditable(String nombre) {
+	private boolean isMarkAsEditable(String name) {
 		if (noEditablesMemberNames == null) return true;
-		return !getNoEditablesMembersNames().contains(nombre);
+		return !getNoEditablesMembersNames().contains(name);
 	}
 	
-	public void setEditable(String nombre, boolean editable) throws XavaException {
-		if (editable) getNoEditablesMembersNames().remove(nombre);
-		else getNoEditablesMembersNames().add(nombre);
+	public void setEditable(String name, boolean editable) throws XavaException {
+		if (editable) getNoEditablesMembersNames().remove(name);
+		else getNoEditablesMembersNames().add(name);
 		if (hasGroups()) {
 			Iterator it = getGroupsViews().values().iterator();
 			while (it.hasNext()) {
 				View v = (View) it.next();
-				v.setEditable(nombre, editable);
+				v.setEditable(name, editable);
 			}
 		}
 		if (hasSections()) {
-			int cantidad = getSections().size();
-			for (int i = 0; i < cantidad; i++) {
-				getSectionView(i).setEditable(nombre, editable);
+			int count = getSections().size();
+			for (int i = 0; i < count; i++) {
+				getSectionView(i).setEditable(name, editable);
 			}	
 		}						
 	}
@@ -1256,13 +1252,13 @@ public class View implements java.io.Serializable {
 		if (hasSubviews()) { 
 			Iterator it = getSubviews().values().iterator();
 			while (it.hasNext()) {				
-				View subvista = (View) it.next();
-				if (subvista.isRepresentsCollection()) continue; 
-				if (subvista.isRepresentsEntityReference()) {
-					subvista.setKeyEditable(b);
+				View subview = (View) it.next();
+				if (subview.isRepresentsCollection()) continue; 
+				if (subview.isRepresentsEntityReference()) {
+					subview.setKeyEditable(b);
 				}
 				else {
-					subvista.setEditable(b);
+					subview.setEditable(b);
 				}						
 			}
 		}
@@ -1283,8 +1279,8 @@ public class View implements java.io.Serializable {
 		
 		
 		if (hasSections()) {
-			int cantidad = getSections().size();
-			for (int i = 0; i < cantidad; i++) {
+			int count = getSections().size();
+			for (int i = 0; i < count; i++) {
 				getSectionView(i).setEditable(b);
 			}	
 		}				
@@ -1294,9 +1290,9 @@ public class View implements java.io.Serializable {
 		return modelName;
 	}
 
-	public void setModelName(String nuevo) { 				
-		if (Is.equal(modelName, nuevo)) return;		
-		modelName = nuevo;
+	public void setModelName(String newModel) { 				
+		if (Is.equal(modelName, newModel)) return;		
+		modelName = newModel;
 		keyEditable = true;
 		editable = true;		
 		resetMembers();		
@@ -1344,14 +1340,14 @@ public class View implements java.io.Serializable {
 				if (m instanceof MetaProperty) {						
 					MetaProperty p = (MetaProperty) m;										
 					if (!PropertiesSeparator.INSTANCE.equals(m)) { 
-						String clavePropiedad= "xava." + qualifier + "." + p.getName();						
-						String claveValor = clavePropiedad + ".value";						
-						String resultado = getRequest().getParameter(clavePropiedad);						
-						Object valor = WebEditors.parse(getRequest(), p, resultado, getErrors());
-						boolean isHiddenKeyWithoutValue = p.isHidden() && Is.emptyString(resultado); // for not reset hidden values
+						String propertyKey= "xava." + qualifier + "." + p.getName();						
+						String valueKey = propertyKey + ".value";						
+						String result = getRequest().getParameter(propertyKey);						
+						Object value = WebEditors.parse(getRequest(), p, result, getErrors());
+						boolean isHiddenKeyWithoutValue = p.isHidden() && Is.emptyString(result); // for not reset hidden values
 						if (!isHiddenKeyWithoutValue && WebEditors.mustToFormat(p)) { 
-							getRequest().setAttribute(claveValor, valor);
-							setValue(p.getName(), getRequest().getAttribute(claveValor));																					
+							getRequest().setAttribute(valueKey, value);
+							setValue(p.getName(), getRequest().getAttribute(valueKey));																					
 						}						
 					}
 				}
@@ -1380,8 +1376,8 @@ public class View implements java.io.Serializable {
 			}
 						
 			if (hasSections()) {				
-				View seccion = getSectionView(getActiveSection());
-				seccion.assignValuesToWebView(qualifier);
+				View section = getSectionView(getActiveSection());
+				section.assignValuesToWebView(qualifier);
 			}			
 						
 			if (!isSubview() && !isSection()) {			
@@ -1408,8 +1404,8 @@ public class View implements java.io.Serializable {
 		}						
 	}
 	
-	private void fillListSelected(String calificador) {
-		String id = "xava." + calificador + ".__SELECTED__";
+	private void fillListSelected(String qualifier) {
+		String id = "xava." + qualifier + ".__SELECTED__";
 		String [] sel = getRequest().getParameterValues(id);
 		if (sel == null || sel.length == 0) {
 			listSelected = null;
@@ -1422,7 +1418,7 @@ public class View implements java.io.Serializable {
 	}
 	
 	/**
-	 * Indices de las filas seleccionadas en el formato lista de una colección 
+	 * Indices of the selected rows in the list mode of a collection.  
 	 */
 	public int [] getListSelected() {
 		return listSelected==null?EMPTY_SELECTED:listSelected;
@@ -1517,64 +1513,64 @@ public class View implements java.io.Serializable {
 
 	private void propertyChanged(String propertyId) {		
 		try {														
-			String nombre = removeNamePrefix(propertyId);
-			if (nombre.endsWith(".KEY")) {
-				String nombreRef = nombre.substring(0, nombre.length() - 4);
+			String name = removeNamePrefix(propertyId);
+			if (name.endsWith(".KEY")) {
+				String refName = name.substring(0, name.length() - 4);
 				MetaModel referencedModel = null;
 				try {
-					referencedModel = getMetaModel().getMetaReference(nombreRef).getMetaModelReferenced();
+					referencedModel = getMetaModel().getMetaReference(refName).getMetaModelReferenced();
 				}
 				catch (ElementNotFoundException ex) {
 					// try if is a collection
-					int idx = nombreRef.indexOf('.');
-					String collectionName = nombreRef.substring(0, idx);
-					String refName = nombreRef.substring(idx+1);
-					referencedModel = getMetaModel().getMetaCollection(collectionName).getMetaReference().getMetaModelReferenced().getMetaReference(refName).getMetaModelReferenced();
+					int idx = refName.indexOf('.');
+					String collectionName = refName.substring(0, idx);
+					String refName2 = refName.substring(idx+1);
+					referencedModel = getMetaModel().getMetaCollection(collectionName).getMetaReference().getMetaModelReferenced().getMetaReference(refName2).getMetaModelReferenced();
 				}
 				
-				Iterator itPropiedadesClave = referencedModel.getKeyPropertiesNames().iterator();
-				while (itPropiedadesClave.hasNext()) {
-					propertyChanged(nombreRef + "." + itPropiedadesClave.next());								
+				Iterator itKeyProperties = referencedModel.getKeyPropertiesNames().iterator();
+				while (itKeyProperties.hasNext()) {
+					propertyChanged(refName + "." + itKeyProperties.next());								
 				}
 				return;								
 			}
-			int idxPunto = nombre.indexOf('.');			
-			if (idxPunto >= 0) { // es calificada				
-				String nombreSubvista = nombre.substring(0, idxPunto);	
-				String propertyName = nombre.substring(idxPunto + 1);
-				View subview = getSubview(nombreSubvista);				
+			int idxDot = name.indexOf('.');			
+			if (idxDot >= 0) { // it's qualified				
+				String subviewName = name.substring(0, idxDot);	
+				String propertyName = name.substring(idxDot + 1);
+				View subview = getSubview(subviewName);				
 				subview.propertyChanged(propertyName);
 				try {
-					MetaProperty changed = subview.getMetaView().getMetaProperty(propertyName);
-					propertyChanged(changed, nombre);
+					MetaProperty changedProperty = subview.getMetaView().getMetaProperty(propertyName);
+					propertyChanged(changedProperty, name);
 				}
 				catch (ElementNotFoundException ex) {
 					// try if is hidden
-					MetaProperty changed = subview.getMetaModel().getMetaProperty(propertyName);					
-					if (changed.isHidden()) {						
-						propertyChanged(changed, nombre);
+					MetaProperty changedProperty = subview.getMetaModel().getMetaProperty(propertyName);					
+					if (changedProperty.isHidden()) {						
+						propertyChanged(changedProperty, name);
 					}
 				}
 			}
 			else {	
-				MetaProperty cambiada = null;
+				MetaProperty changedProperty = null;
 				try {					
-					cambiada = getMetaView().getMetaProperty(nombre);
+					changedProperty = getMetaView().getMetaProperty(name);
 				}				
 				catch (ElementNotFoundException ex) {
 					// try to obtain from model in case it is an hidden key 
-					cambiada = getMetaModel().getMetaProperty(nombre);					
-					if (!(cambiada.isKey() && cambiada.isHidden())) throw ex;
+					changedProperty = getMetaModel().getMetaProperty(name);					
+					if (!(changedProperty.isKey() && changedProperty.isHidden())) throw ex;
 				}	
-				propertyChanged(cambiada, nombre);
+				propertyChanged(changedProperty, name);
 				if (getParent() != null) {
-					String qualifiedName = Is.emptyString(getMemberName())?nombre:(getMemberName() + "." + nombre);
-					getParent().propertyChanged(cambiada, qualifiedName);
+					String qualifiedName = Is.emptyString(getMemberName())?name:(getMemberName() + "." + name);
+					getParent().propertyChanged(changedProperty, qualifiedName);
 				}
 			}		
 		}
-		catch (ElementNotFoundException ex) {			
-			// Para que secciones que no tienen todas las propiedades no lancen excepciones
+		catch (ElementNotFoundException ex) {
+			// So that sections that do not have all the properties do not throw exceptions
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
@@ -1583,23 +1579,23 @@ public class View implements java.io.Serializable {
 		}				 		 		
 	}
 	
-	private void propertyChanged(MetaProperty cambiada, String nombreCualificadoCambiada) {
+	private void propertyChanged(MetaProperty changedProperty, String changedPropertyQualifiedName) {
 		try {			
-			tryPropertyChanged(cambiada, nombreCualificadoCambiada);
+			tryPropertyChanged(changedProperty, changedPropertyQualifiedName);
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			System.err.println(XavaResources.getString("property_changed_warning", cambiada));
+			System.err.println(XavaResources.getString("property_changed_warning", changedProperty));
 			getErrors().add("change_property_error");			
 		}		 		 		
 	}
 	
-	private void tryPropertyChanged(MetaProperty cambiada, String nombreCualificadoCambiada) throws Exception {
+	private void tryPropertyChanged(MetaProperty changedProperty, String changedPropertyQualifiedName) throws Exception {
 		if (!isOnlyThrowsOnChange()) {					
 			Iterator it = getMetaPropertiesIncludingGroups().iterator();			
 			while (it.hasNext()) {
 				MetaProperty pr = (MetaProperty) it.next();				
-				if (dependeDe(pr, cambiada, nombreCualificadoCambiada)) {
+				if (dependsOn(pr, changedProperty, changedPropertyQualifiedName)) {
 					if (pr.hasCalculator()) {
 						calcularValor(pr, pr.getMetaCalculator(), pr.getCalculator(), errors, messages);					
 					}
@@ -1610,11 +1606,11 @@ public class View implements java.io.Serializable {
 			}				
 			if (hasToSearchOnChangeIfSubview && isSubview() && !isGroup() && 
 					( 
-					(getLastPropertyKeyName().equals(cambiada.getName()) && metaPropiedadesContiene(cambiada)) || // visible keys
-					(!hasKeyProperties() && cambiada.isKey() && cambiada.isHidden()) // hidden keys
+					(getLastPropertyKeyName().equals(changedProperty.getName()) && metaPropiedadesContiene(changedProperty)) || // visible keys
+					(!hasKeyProperties() && changedProperty.isKey() && changedProperty.isHidden()) // hidden keys
 					)
 				) {	
-				if (!searchingObject) { // Para evitar bucles recursivos infinitos				
+				if (!searchingObject) { // To avoid recursive infinites loops				
 					try {
 						searchingObject = true;					
 						findObject();						
@@ -1625,24 +1621,24 @@ public class View implements java.io.Serializable {
 				}			
 			}
 		} // of if (!isOnlyThrowsOnChange())		
-		if (!isSection() && getMetaView().hasOnChangeAction(nombreCualificadoCambiada)) {
-			IOnChangePropertyAction accion = getMetaView().createOnChangeAction(nombreCualificadoCambiada);
-			if (!actionRegisteredAsExecuted(nombreCualificadoCambiada, accion)) {
+		if (!isSection() && getMetaView().hasOnChangeAction(changedPropertyQualifiedName)) {
+			IOnChangePropertyAction action = getMetaView().createOnChangeAction(changedPropertyQualifiedName);
+			if (!actionRegisteredAsExecuted(changedPropertyQualifiedName, action)) {
 				View viewOfAction = this;
 				while (viewOfAction.isGroup()) viewOfAction = viewOfAction.getParent();
-				accion.setView(viewOfAction);
-				accion.setChangedProperty(nombreCualificadoCambiada); 
-				accion.setNewValue(getValue(nombreCualificadoCambiada));								
-				getModuleManager(getRequest()).executeAction(accion, getErrors(), getMessages(), getRequest());
-				registerExecutedAction(nombreCualificadoCambiada, accion);
+				action.setView(viewOfAction);
+				action.setChangedProperty(changedPropertyQualifiedName); 
+				action.setNewValue(getValue(changedPropertyQualifiedName));								
+				getModuleManager(getRequest()).executeAction(action, getErrors(), getMessages(), getRequest());
+				registerExecutedAction(changedPropertyQualifiedName, action);
 			}
 		} 		
 		if (hasGroups()) {
-			Iterator itGrupos = getGroupsViews().values().iterator();
-			while (itGrupos.hasNext()) {
-				View v = (View) itGrupos.next();
+			Iterator itGroups = getGroupsViews().values().iterator();
+			while (itGroups.hasNext()) {
+				View v = (View) itGroups.next();
 				try {
-					v.tryPropertyChanged(cambiada, nombreCualificadoCambiada);					
+					v.tryPropertyChanged(changedProperty, changedPropertyQualifiedName);					
 				}
 				catch (ElementNotFoundException ex) {
 					// The common case of a qualified property  whose
@@ -1652,18 +1648,18 @@ public class View implements java.io.Serializable {
 			}		
 		}			
 		if (hasSections()) {			
-			int cantidad = getSections().size();
-			for (int i = 0; i < cantidad; i++) {
-				getSectionView(i).propertyChanged(cambiada, nombreCualificadoCambiada);				
+			int count = getSections().size();
+			for (int i = 0; i < count; i++) {
+				getSectionView(i).propertyChanged(changedProperty, changedPropertyQualifiedName);				
 			}			
 		}
 		
 	}	
 	
 	
-	private boolean dependeDe(MetaProperty pr, MetaProperty cambiada, String nombreCualificadoCambiada) throws XavaException {		
-		if (pr.depends(cambiada)) return true;
-		if (pr.getPropertyNamesThatIDepend().contains(nombreCualificadoCambiada) ) {
+	private boolean dependsOn(MetaProperty pr, MetaProperty changedProperty, String changedPropertyQualifiedName) throws XavaException {		
+		if (pr.depends(changedProperty)) return true;
+		if (pr.getPropertyNamesThatIDepend().contains(changedPropertyQualifiedName) ) {
 			return true;
 		}		 					
 		return false;

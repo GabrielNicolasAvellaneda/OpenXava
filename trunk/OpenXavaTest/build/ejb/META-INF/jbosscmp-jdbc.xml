@@ -183,7 +183,7 @@
       <entity>
          <ejb-name>Customer</ejb-name>
 
-         <table-name>XAVATEST@separator@CUSTOMER</table-name>
+         <table-name>XAVATEST_CUSTOMER</table-name>
 
          <cmp-field>
             <field-name>_Type</field-name>
@@ -698,7 +698,7 @@
       <entity>
          <ejb-name>Product3</ejb-name>
 
-         <table-name>XAVATEST@separator@PRODUCT3</table-name>
+         <table-name>XAVATEST_PRODUCT3</table-name>
 
          <cmp-field>
             <field-name>_Comments</field-name>
@@ -1089,7 +1089,7 @@
       <entity>
          <ejb-name>DeliveryPlace</ejb-name>
 
-         <table-name>XAVATEST@separator@DELIVERYPLACE</table-name>
+         <table-name>XAVATEST_DELIVERYPLACE</table-name>
 
          <cmp-field>
             <field-name>oid</field-name>
@@ -1457,7 +1457,7 @@
       <entity>
          <ejb-name>Receptionist</ejb-name>
 
-         <table-name>XAVATEST@separator@RECEPTIONIST</table-name>
+         <table-name>XAVATEST_RECEPTIONIST</table-name>
 
          <cmp-field>
             <field-name>oid</field-name>
