@@ -192,7 +192,7 @@ else {
 		String script = "";
 		if (it.hasNext()) {
 			if (subview.throwsPropertyChanged(p)) {
-				script = "onchange='throwPropertyChanged(\"" + propertyKey + "\")'";
+				script = "onchange='throwPropertyChanged(document." + formName + ", \"" + propertyKey + "\")'";
 			}
 		}
 		else {

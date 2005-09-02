@@ -307,7 +307,7 @@ public class ModuleTestBase extends TestCase {
 		
 		// If onchange then reload the page, because onchange do submit
 		HTMLElement el = response.getElementsWithName(getPropertyPrefix() +  name)[0];
-		String onchange = el.getAttribute("onchange");		
+		String onchange = el.getAttribute("onchange");	
 		if (!Is.emptyString(onchange)) {
 			if (checkbox) { // in checkbox case is needed throw onchange event
 				response.getScriptableObject().setLocation("javascript:" + onchange);

@@ -131,11 +131,11 @@ function executeXavaAction(isConfirm, takesLong, formu, action, argv) {
 	formu.xava_action_argv.value=argv;	
 	formu.submit();
 }
-function throwPropertyChanged(property) {	
-	document.forms[0].focus_forward.value = "true";
-	document.forms[0].focus_property.value=property;	
-	document.forms[0].changed_property.value=property;	
-	document.forms[0].submit();
+function throwPropertyChanged(formu, property) {	
+	formu.focus_forward.value = "true";
+	formu.focus_property.value=property;	
+	formu.changed_property.value=property;	
+	formu.submit();
 }
 <% String focusPropertyId = view.getFocusPropertyId(); %>
 function setFocus() {

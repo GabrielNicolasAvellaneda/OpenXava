@@ -81,9 +81,11 @@ else {
 String descriptionProperty = view.getDescriptionPropertyInDescriptionsList(ref);
 String descriptionProperties = view.getDescriptionPropertiesInDescriptionsList(ref);
 
+org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
+String formName = manager.getForm();	
 boolean throwChanged=view.throwsReferenceChanged(ref);
 String script = throwChanged?
-	"onchange='throwPropertyChanged(\"" + propertyKey + "\")'":"";
+	"onchange='throwPropertyChanged(" + formName + ", \"" + propertyKey + "\")'":"";
 
 String parameterValuesProperties=view.getParameterValuesPropertiesInDescriptionsList(ref);
 String condition = view.getConditionInDescriptionsList(ref);
