@@ -92,6 +92,7 @@
   view CDATA #IMPLIED
   read-only (true|false) "false"
   edit-only (true|false) "false"
+  create-reference (true|false) "true"
 >
 
 <!ELEMENT list-properties (#PCDATA)>
