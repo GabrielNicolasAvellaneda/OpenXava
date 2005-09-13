@@ -39,7 +39,9 @@ public class JasperReportServlet extends HttpServlet {
 	}
 	
 	private InputStream getCorrienteListado(HttpServletRequest request, String modelo, String lenguaje, String tab, String properties) throws IOException {
-		StringBuffer surl = new StringBuffer("http://localhost:");
+		StringBuffer surl = new StringBuffer("http://");
+		surl.append(request.getServerName());
+		surl.append(':');
 		surl.append(request.getServerPort());		
 		surl.append(request.getRequestURI());
 		surl.append(".jsp?model=");
