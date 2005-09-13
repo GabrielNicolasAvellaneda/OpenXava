@@ -156,7 +156,9 @@ public class GenerateReportServlet extends HttpServlet {
 	}
 			
 	private InputStream getReport(HttpServletRequest request, Tab tab) throws IOException {
-		StringBuffer surl = new StringBuffer("http://localhost:");
+		StringBuffer surl = new StringBuffer("http://");
+		surl.append(request.getServerName());
+		surl.append(':');
 		surl.append(request.getServerPort());		
 		surl.append(request.getContextPath());		
 		surl.append("/xava/jasperReport");
