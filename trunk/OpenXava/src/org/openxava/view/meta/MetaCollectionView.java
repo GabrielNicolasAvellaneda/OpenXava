@@ -20,6 +20,7 @@ public class MetaCollectionView implements Serializable {
 	private String viewName;
 	private boolean readOnly;
 	private boolean editOnly; 
+	private boolean createReference;
 	
 	public void addActionDetailName(String nombreAccion) {
 		if (actionsDetailNames == null) actionsDetailNames = new ArrayList();
@@ -121,5 +122,13 @@ public class MetaCollectionView implements Serializable {
 	}
 	public void setEditActionName(String editActionName) {
 		this.editActionName = editActionName;
+	}
+
+	public boolean isCreateReference() {
+		return createReference;
+	}
+
+	public void setCreateReference(boolean createReference) {
+		this.createReference = createReference;
 	}
 }

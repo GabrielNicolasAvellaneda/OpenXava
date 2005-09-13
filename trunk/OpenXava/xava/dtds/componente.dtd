@@ -97,6 +97,7 @@
   vista CDATA #IMPLIED
   solo-lectura (true|false) "false"
   solo-edicion (true|false) "false"
+  crear-referencia (true|false) "true"  
 >
 
 <!ELEMENT propiedades-lista (#PCDATA)>

@@ -2195,8 +2195,11 @@ public class View implements java.io.Serializable {
 			MetaReference ref = getParent().getMetaModel().getMetaReference(getMemberName());			
 			return getParent().isCreateNewForReference(ref);
 		}
-		catch (ElementNotFoundException ex) {
-			return getParent().getMetaModel().containsMetaCollection(getMemberName());			
+		catch (ElementNotFoundException ex) {			
+			if (!getParent().getMetaModel().containsMetaCollection(getMemberName())) return false;
+			MetaCollectionView collectionView = getParent().getMetaView().getMetaCollectionView(getMemberName());
+			if (collectionView == null) return true;
+			return collectionView.isCreateReference(); 
 		}
 	}
 	
