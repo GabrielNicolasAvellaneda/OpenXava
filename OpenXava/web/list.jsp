@@ -7,8 +7,9 @@
 <%@ page import="org.openxava.web.WebEditors" %>
 
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
-
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
+<jsp:useBean id="style" class="org.openxava.web.Style" scope="request"/>
+
 <%
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
 String tabObject = request.getParameter("tabObject");
@@ -29,10 +30,10 @@ String lastRow = request.getParameter("lastRow");
 </table>
 <% } %>
 
-<table id="list" class="list" width="100%">
+<table id="list" class=<%=style.getList()%> width="100%">
 <tr>
-<th class=list width="60"><xava:image action="List.customize"/></th>
-<th class=list width="5">
+<th class=<%=style.getList()%> width="60"><xava:image action="List.customize"/></th>
+<th class=<%=style.getList()%> width="5">
 <% if (tab.isCustomize()) { %><xava:image action="List.addColumns"/><% } %>
 </th>
 <%
@@ -43,7 +44,7 @@ int columnIndex = 0;
 while (it.hasNext()) {
 	MetaProperty property = (MetaProperty) it.next();
 %>
-<th class=list>
+<th class=<%=style.getList()%>>
 <% if (tab.isCustomize()) { %><xava:image action="List.moveColumnToLeft" argv='<%="columnIndex="+columnIndex%>'/><% } %>
 <%
 	if (property.isCalculated()) {		
@@ -84,11 +85,11 @@ while (it.hasNext()) {
 %>
 </tr>
 <% if (filter) { %>
-<tr class=search>
-<th class=search width="60">
+<tr class=<%=style.getSearch()%>>
+<th class=<%=style.getSearch()%> width="60">
 <xava:button action="List.filter"/>
 </th>
-<th class=search width="5"></th>
+<th class=<%=style.getSearch()%> width="5"></th>
 <%
 it = properties.iterator();
 String [] conditionValues = tab.getConditionValues();
@@ -108,7 +109,7 @@ while (it.hasNext()) {
 		iConditionValues++;
 		if (isValidValues) {
 	%>	
-<th class=search align="left">
+<th class=<%=style.getSearch()%> align="left">
 <jsp:include page="comparatorsValidValuesCombo.jsp">
 	<jsp:param name="validValues" value="<%=property.getValidValuesLabels(request)%>" />
 	<jsp:param name="value" value="<%=value%>" />
@@ -117,12 +118,12 @@ while (it.hasNext()) {
 		}
 		else if (isBoolean) { 
 	%>
-<th class=search align="left">
+<th class=<%=style.getSearch()%> align="left">
 <jsp:include page="comparatorsBooleanCombo.jsp">
 	<jsp:param name="comparator" value="<%=comparator%>" />
 </jsp:include>
 	<% } else { // Not boolean %>
-<th class=search align="left">
+<th class=<%=style.getSearch()%> align="left">
 <% 
 String urlComparatorsCombo = "comparatorsCombo.jsp" // in this way because websphere 6 has problems with jsp:param
 	+ "?comparator=" + comparator
@@ -130,14 +131,14 @@ String urlComparatorsCombo = "comparatorsCombo.jsp" // in this way because websp
 	+ "&isDate=" + isDate;
 %>
 <jsp:include page="<%=urlComparatorsCombo%>" />
-<input name="conditionValues" class=editor type="text" maxlength="<%=maxLength%>" size="<%=length%>" value="<%=value%>"/>
+<input name="conditionValues" class=<%=style.getEditor()%> type="text" maxlength="<%=maxLength%>" size="<%=length%>" value="<%=value%>"/>
 	<% } %>
 </th>
 <% 
 	}
 	else {
 %>
-<th class=search></th>
+<th class=<%=style.getSearch()%>></th>
 <%
 	} 
 } // while	
@@ -160,10 +161,10 @@ totalSize = tab.getTotalSize();
 if (totalSize > 0) {
 for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex(); f++) {
 	String checked=tab.isSelected(f)?"checked='true'":"";
-	String cssClass=f%2==0?"pair":"odd";
-	String style = tab.getStyle(request.getLocale(), f);
-	if (!org.openxava.util.Is.emptyString(style)) {
-		cssClass=cssClass + "-" + style;
+	String cssClass=f%2==0?style.getPair():style.getOdd();
+	String cssStyle = tab.getStyle(request.getLocale(), f);
+	if (!org.openxava.util.Is.emptyString(cssStyle)) {
+		cssClass=cssClass + "-" + cssStyle;
 	}
 %>
 <tr class=<%=cssClass%>>
@@ -195,7 +196,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 }
 else {
 %>
-<tr><td class=mensajes>
+<tr><td class=<%=style.getMessages()%>>
 <b><fmt:message key="no_objects"/></b>
 </td></tr>
 <%
@@ -212,7 +213,7 @@ if (lastRow != null) {
 %>
 </table>
 <% if (!tab.isRowsHidden()) { %>
-<table width="100%" class="list-info">
+<table width="100%" class=<%=style.getListInfo()%>>
 <tr>
 <td>
 <%

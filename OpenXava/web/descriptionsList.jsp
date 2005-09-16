@@ -4,10 +4,10 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="org.openxava.model.meta.MetaReference" %>
 <%@ page import="org.openxava.model.meta.IMetaEjb" %>
-<%@ page import="org.openxava.model.meta.MetaEjbImpl" %>
 
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
+<jsp:useBean id="style" class="org.openxava.web.Style" scope="request"/>
 
 <%
 String viewObject = request.getParameter("viewObject");
@@ -31,11 +31,11 @@ boolean editable = view.isEditable(ref);
 <%=postLabel%>
 <%=preIcons%>
 <% if (ref.isKey()) { %>
-<img src="images/key.gif"/>
+<img src="<%=request.getContextPath()%>/xava/images/key.gif"/>
 <% } else if (ref.isRequired()) {  %>	
-<img src="images/required.gif"/>
+<img src="<%=request.getContextPath()%>/xava/images/required.gif"/>
 <% } if ( errors.memberHas(ref)) {%>
-<img src="images/error.gif"/>
+<img src="<%=request.getContextPath()%>/xava/images/error.gif"/>
 <% } %>
 <%=postIcons%>
 <%=preEditor%>

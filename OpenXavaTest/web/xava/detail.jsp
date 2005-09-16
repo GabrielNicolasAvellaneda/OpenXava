@@ -9,6 +9,7 @@
 <%@ page import="org.openxava.web.WebEditors" %>
 
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
+<jsp:useBean id="style" class="org.openxava.web.Style" scope="request"/>
 <%
 String viewObject = request.getParameter("viewObject");
 viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObject;
@@ -90,9 +91,9 @@ while (it.hasNext()) {
 				}
 				if (withFrame) { 
 	%>				
-		<table class=frame width='100%'>
-		<tr class=frame><th align='left'><%=ref.getLabel(request)%></th></tr>
-		<tr><td class=frame>
+		<table class=<%=style.getFrame()%> width='100%'>
+		<tr class=<%=style.getFrame()%>><th align='left'><%=ref.getLabel(request)%></th></tr>
+		<tr><td class=<%=style.getFrame()%>>
 	<%
 				} // withFrame
 	%>	
@@ -117,9 +118,9 @@ while (it.hasNext()) {
 	<%
 			if (withFrame) {
 	%>	
-		<table class=frame width='100%'>
-		<tr class=frame><th align='left'><%=collection.getLabel(request)%></th></tr>
-		<tr><td class=frame>		
+		<table class=<%=style.getFrame()%> width='100%'>
+		<tr class=<%=style.getFrame()%>><th align='left'><%=collection.getLabel(request)%></th></tr>
+		<tr><td class=<%=style.getFrame()%>>		
 	<%
 			} // conFrame
 	%>	
@@ -146,9 +147,9 @@ while (it.hasNext()) {
 		%>
 		<tr><td colspan="4">
 		<% } %>
-		<table class=frame style="float:left; margin-right:4px">
-		<tr class=frame><th align='left'><%=group.getLabel(request)%></th></tr>
-		<tr><td class=frame>
+		<table class=<%=style.getFrame()%> style="float:left; margin-right:4px">
+		<tr class=<%=style.getFrame()%>><th align='left'><%=group.getLabel(request)%></th></tr>
+		<tr><td class=<%=style.getFrame()%>>
 		<jsp:include page="detail.jsp">
 			<jsp:param name="viewObject" value="<%=viewName%>" />
 		</jsp:include>

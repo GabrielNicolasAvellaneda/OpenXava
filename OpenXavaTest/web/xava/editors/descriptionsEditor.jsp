@@ -1,4 +1,5 @@
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
+<jsp:useBean id="style" class="org.openxava.web.Style" scope="request"/>
 
 <%@ page import="org.openxava.util.KeyAndDescription" %>
 <%@ page import="org.openxava.util.Is" %>
@@ -139,7 +140,7 @@ boolean editable = "true".equals(request.getParameter("editable"));
 boolean label = org.openxava.util.XavaPreferences.getInstance().isReadOnlyAsLabel() || "true".equalsIgnoreCase(request.getParameter("readOnlyAsLabel"));
 if (editable) { 
 %>
-<select name="<%=propertyKey%>" class=editor <%=script%> title="<%=title%>">
+<select name="<%=propertyKey%>" class=<%=style.getEditor()%> <%=script%> title="<%=title%>">
 	<option value=""></option>
 <%
 	java.util.Iterator it = descriptions.iterator();
@@ -177,7 +178,7 @@ if (editable) {
 	}
 	else {	
 %>
-	<input name="<%=propertyKey%>__DESCRIPTION__" class=editor		
+	<input name="<%=propertyKey%>__DESCRIPTION__" class=<%=style.getEditor()%>
 		type="text" 
 		title="<%=title%>"
 		maxlength="<%=description.toString().length()%>" 

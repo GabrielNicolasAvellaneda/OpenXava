@@ -49,7 +49,7 @@ public class View implements java.io.Serializable {
 	private boolean displayDetailInCollection;
 	private String lastPropertyKeyName;
 	private Map subviews;
-	private Set hidden;		
+	private Set hiddenMembers;		
 	private int oid;
 	private List metaProperties;
 	private Collection metaPropertiesQualified;
@@ -148,7 +148,7 @@ public class View implements java.io.Serializable {
 			}
 			metaMembers = filtered;
 		}		
-		if (!hiddenIncluded && hidden != null) removeHidden(metaMembers);
+		if (!hiddenIncluded && hiddenMembers != null) removeHidden(metaMembers);
 		removeOverlapedProperties(metaMembers);
 		return metaMembers;	
 	}
@@ -157,7 +157,7 @@ public class View implements java.io.Serializable {
 		Iterator it = metaMembers.iterator();		
 		while (it.hasNext()) {
 			MetaMember m = (MetaMember) it.next();
-			if (hidden.contains(m.getName())) it.remove();			
+			if (hiddenMembers.contains(m.getName())) it.remove();			
 		}
 	}
 	
@@ -394,7 +394,7 @@ public class View implements java.io.Serializable {
 	private Object getValue(String name, boolean recalculatingValues) throws XavaException {
 		int idx = name.indexOf('.');		
 		if (idx < 0) { 						
-			if (!getMemberNamesWithoutSeccions().contains(name) && (hidden == null || !hidden.contains(name)) && !getMetaModel().getKeyPropertiesNames().contains(name)) {
+			if (!getMemberNamesWithoutSeccions().contains(name) && (hiddenMembers == null || !hiddenMembers.contains(name)) && !getMetaModel().getKeyPropertiesNames().contains(name)) {
 				return getValueInSections(name, recalculatingValues);
 			}
 			else {				
@@ -1597,16 +1597,16 @@ public class View implements java.io.Serializable {
 				MetaProperty pr = (MetaProperty) it.next();				
 				if (dependsOn(pr, changedProperty, changedPropertyQualifiedName)) {
 					if (pr.hasCalculator()) {
-						calcularValor(pr, pr.getMetaCalculator(), pr.getCalculator(), errors, messages);					
+						calculateValue(pr, pr.getMetaCalculator(), pr.getCalculator(), errors, messages);					
 					}
 					if (pr.hasDefaultValueCalculator() && isEmptyValue(getValue(pr.getName()))) {					
-						calcularValor(pr, pr.getMetaCalculatorDefaultValue(), pr.getDefaultValueCalculator(), errors, messages);					
+						calculateValue(pr, pr.getMetaCalculatorDefaultValue(), pr.getDefaultValueCalculator(), errors, messages);					
 					}					
 				}
 			}				
 			if (hasToSearchOnChangeIfSubview && isSubview() && !isGroup() && 
 					( 
-					(getLastPropertyKeyName().equals(changedProperty.getName()) && metaPropiedadesContiene(changedProperty)) || // visible keys
+					(getLastPropertyKeyName().equals(changedProperty.getName()) && metaPropertiesContains(changedProperty)) || // visible keys
 					(!hasKeyProperties() && changedProperty.isKey() && changedProperty.isHidden()) // hidden keys
 					)
 				) {	
@@ -1665,11 +1665,11 @@ public class View implements java.io.Serializable {
 		return false;
 	}
 
-	private boolean metaPropiedadesContiene(MetaProperty cambiada) throws XavaException {
+	private boolean metaPropertiesContains(MetaProperty changedProperty) throws XavaException {
 		Iterator it = getMetaProperties().iterator();
 		while (it.hasNext()) {
 			MetaProperty p = (MetaProperty) it.next();
-			if (p.equals(cambiada)) return true;
+			if (p.equals(changedProperty)) return true;
 		}
 		return false;
 	}
@@ -1685,8 +1685,7 @@ public class View implements java.io.Serializable {
 		}
 		else {					
 			try {				
-				setValues(MapFacade.getValues(getModelName(), getKeyValues(), getMembersNamesWithHidden()));
-				
+				setValues(MapFacade.getValues(getModelName(), getKeyValues(), getMembersNamesWithHidden()));				
 			}
 			catch (ObjectNotFoundException ex) {						
 				getErrors().add("object_with_key_not_found", getModelName(), getKeyValues());
@@ -1706,35 +1705,35 @@ public class View implements java.io.Serializable {
 		return name.substring(compo.length() + "xava".length() + 2);
 	}
 
-	private void calcularValor(MetaProperty metaPropiedad, MetaCalculator metaCalculador, ICalculator calculador, Messages errores, Messages mensajes) {		
+	private void calculateValue(MetaProperty metaProperty, MetaCalculator metaCalculator, ICalculator calculator, Messages errors, Messages messages) {		
 		try {					
-			PropertiesManager mp = new PropertiesManager(calculador);
-			Iterator it = metaCalculador.getMetaSets().iterator();
+			PropertiesManager mp = new PropertiesManager(calculator);
+			Iterator it = metaCalculator.getMetaSets().iterator();
 			while (it.hasNext()) {
-				MetaSet poner = (MetaSet) it.next();				
-				Object valor = null;
-				if (poner.hasValue()) {					
-					valor = poner.getValue();
+				MetaSet set = (MetaSet) it.next();				
+				Object value = null;
+				if (set.hasValue()) {					
+					value = set.getValue();
 				}
 				else {
-					valor = getValue(poner.getPropertyNameFrom());					
+					value = getValue(set.getPropertyNameFrom());					
 				}
-				mp.executeSet(poner.getPropertyName(), valor);				
+				mp.executeSet(set.getPropertyName(), value);				
 			}			
-			Object nuevoValor = calculador.calculate();			
-			if (calculador instanceof IOptionalCalculator) {
-				if (!((IOptionalCalculator) calculador).isCalculate()) {
+			Object newValue = calculator.calculate();			
+			if (calculator instanceof IOptionalCalculator) {
+				if (!((IOptionalCalculator) calculator).isCalculate()) {
 					return;
 				}
 			}			
-			Object viejo = getValue(metaPropiedad.getName());
-			if (!Is.equal(viejo, nuevoValor)) {				
-				setValueNotifying(metaPropiedad.getName(), nuevoValor);
+			Object old = getValue(metaProperty.getName());
+			if (!Is.equal(old, newValue)) {				
+				setValueNotifying(metaProperty.getName(), newValue);
 			}			
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			System.err.println(XavaResources.getString("value_calculate_warning", metaPropiedad));
+			System.err.println(XavaResources.getString("value_calculate_warning", metaProperty));
 		}		
 	}
 
@@ -1786,70 +1785,69 @@ public class View implements java.io.Serializable {
 	private Collection getMetaPropertiesQualified() throws XavaException {		
 		if (metaPropertiesQualified == null) {
 			metaPropertiesQualified = new ArrayList();
-			llenarMetaPropiedadesCalificadas(this, metaPropertiesQualified, null); 
+			fillMetaPropertiesQualified(this, metaPropertiesQualified, null); 
 			if (hasSections()) {
-				int cantidad = getSections().size();
-				for (int i=0; i<cantidad; i++) {				
-					llenarMetaPropiedadesCalificadas(getSectionView(i), metaPropertiesQualified, null);								
+				int count = getSections().size();
+				for (int i=0; i<count; i++) {				
+					fillMetaPropertiesQualified(getSectionView(i), metaPropertiesQualified, null);								
 				}			
 			}			
 		}
 		return metaPropertiesQualified;
 	}
 	
-	private void llenarMetaPropiedadesCalificadas(View vista, Collection propiedades, String prefijo) throws XavaException {		
-		Iterator it = vista.getMetaMembers().iterator(); 		
+	private void fillMetaPropertiesQualified(View view, Collection properties, String prefix) throws XavaException {		
+		Iterator it = view.getMetaMembers().iterator(); 		
 		while (it.hasNext()) {
 			Object element = (Object) it.next();
 			if (element instanceof MetaProperty && !PropertiesSeparator.INSTANCE.equals(element)) {
 				MetaProperty pro = (MetaProperty) element;
-				if (prefijo == null) propiedades.add(pro);
+				if (prefix == null) properties.add(pro);
 				else {
 					MetaProperty p = pro.cloneMetaProperty();
-					p.setName(prefijo + p.getName());
-					propiedades.add(p);
+					p.setName(prefix + p.getName());
+					properties.add(p);
 				}
 			}
 			else if (element instanceof MetaReference) {
 				MetaReference ref = (MetaReference) element;
-				View subvista = vista.getSubview(ref.getName());
-				llenarMetaPropiedadesCalificadas(subvista, propiedades, ref.getName() + ".");
+				View subview = view.getSubview(ref.getName());
+				fillMetaPropertiesQualified(subview, properties, ref.getName() + ".");
 			}
 			else if (element instanceof MetaGroup) {				
 				MetaGroup group = (MetaGroup) element;
-				View subvista = vista.getGroupView(group.getName());
-				llenarMetaPropiedadesCalificadas(subvista, propiedades, prefijo);				
+				View subview = view.getGroupView(group.getName());
+				fillMetaPropertiesQualified(subview, properties, prefix);				
 			}
 		}		
 	}
 
 	
 	/**	  
-	 * @param stereotypesList Comma separate
+	 * @param stereotypesList Comma separated
 	 */
 	public Collection getPropertiesNamesFromStereotypesList(String stereotypesList) throws XavaException {
 		if (Is.emptyString(stereotypesList)) return Collections.EMPTY_LIST;
 		StringTokenizer st = new StringTokenizer(stereotypesList, ", ");
 		Collection r = new ArrayList();
 		while (st.hasMoreTokens()) {
-			String estereotipo = st.nextToken().trim();
-			String propiedad = getNombrePropiedadDesdeEstereotipo(estereotipo);
-			if (propiedad != null) {
-				r.add(propiedad);
+			String stereotype = st.nextToken().trim();
+			String property = getPropertyNameFromStereotype(stereotype);
+			if (property != null) {
+				r.add(property);
 			}
 			else {
-				System.err.println(XavaResources.getString("property_for_stereotype_warning", estereotipo));
+				System.err.println(XavaResources.getString("property_for_stereotype_warning", stereotype));
 				r.add(null);
 			}
 		} 				
-		return r;
-				
+		return r;				
 	}
 	
-	private String getNombrePropiedadDesdeEstereotipo(String stereotype) {		
-		if (getParent() != null) return getParent().getNombrePropiedadDesdeEstereotipo(stereotype);
-		String propiedad = (String) getMapStereotypesProperties().get(stereotype);
-		if (propiedad != null) return propiedad;
+	private String getPropertyNameFromStereotype(String stereotype) {		
+		if (getParent() != null) return getParent().getPropertyNameFromStereotype(stereotype);
+		String property = (String) getMapStereotypesProperties().get(stereotype);
+		if (property != null) return property;
 		try {			
 			Iterator it = getMetaPropertiesIncludingSections().iterator();
 			while (it.hasNext()) {
@@ -1887,8 +1885,8 @@ public class View implements java.io.Serializable {
 		if (!hasSections()) return getMetaProperties();
 		if (metaPropertiesIncludingSections == null) { 
 			metaPropertiesIncludingSections = new ArrayList(getMetaProperties());
-			int cantidad = getSections().size();
-			for (int i = 0; i < cantidad; i++) {
+			int count = getSections().size();
+			for (int i = 0; i < count; i++) {
 				metaPropertiesIncludingSections.addAll(getSectionView(i).getMetaProperties());
 			}	
 		}
@@ -1937,8 +1935,8 @@ public class View implements java.io.Serializable {
 	}
 	
 		
-	private void setMetaPropertiesList(Collection metaPropiedades) throws XavaException {  
-		this.metaPropertiesList = metaPropiedades;
+	private void setMetaPropertiesList(Collection metaProperties) throws XavaException {  
+		this.metaPropertiesList = metaProperties;
 		setLabelsIdForMetaPropertiesList();
 	}
 
@@ -1950,31 +1948,19 @@ public class View implements java.io.Serializable {
 	}
 
 	/**	  
-	 * @param propertiesList Properties names comma separate
+	 * @param propertiesList Properties names comma separated
 	 */
 	public Collection getPropertiesNamesFromPropertiesList(String propertiesList) throws XavaException {
 		if (Is.emptyString(propertiesList)) return Collections.EMPTY_LIST;
 		StringTokenizer st = new StringTokenizer(propertiesList, ", ");
 		Collection r = new ArrayList();
 		while (st.hasMoreTokens()) {
-			String propiedad = st.nextToken().trim();
-			r.add(propiedad);
+			String property = st.nextToken().trim();
+			r.add(property);
 		}
 		return r;
 	}
 	
-	private String getPropertyPrefix() throws XavaException { 
-		if (propertyPrefix == null) {
-			if (Is.emptyString(getModelName())) {
-				propertyPrefix = "xava." + getModelName() + ".";
-			}
-			else { 
-				propertyPrefix = "xava." + getMetaModel().getMetaComponent().getName() + ".";
-			}				
-		}
-		return propertyPrefix;
-	}
-			
 	public String getViewName() {
 		return viewName;
 	}
@@ -2009,8 +1995,8 @@ public class View implements java.io.Serializable {
 			
 	public String getSearchAction() throws XavaException {		
 		if (getMetaView().hasMetaSearchAction()) {
-			String accion = getMetaView().getMetaSearchAction().getActionName();
-			if (!Is.emptyString(accion)) return accion; 
+			String action = getMetaView().getMetaSearchAction().getActionName();
+			if (!Is.emptyString(action)) return action; 
 		}		
 		return "Reference.search";					
 	}
@@ -2023,7 +2009,7 @@ public class View implements java.io.Serializable {
 		representsCollection = b;
 	}
 	
-	public boolean displayDetailInCollection(String nombreColeccion) throws XavaException {
+	public boolean displayDetailInCollection(String collectionName) throws XavaException {
 		if (knowIfDisplayDetailInCollection) return displayDetailInCollection;
 		Iterator it = getMetaMembers().iterator();
 		while (it.hasNext()) {
@@ -2057,12 +2043,12 @@ public class View implements java.io.Serializable {
 		return messages;
 	}
 
-	public void setErrors(Messages mensajes) {	
-		errors = mensajes;
+	public void setErrors(Messages messages) {	
+		errors = messages;
 	}
 
-	public void setMessages(Messages mensajes) throws XavaException {
-		this.messages = mensajes;		
+	public void setMessages(Messages messages) throws XavaException {
+		this.messages = messages;		
 	}
 	
 	private Set getNoEditablesMembersNames() {
@@ -2095,22 +2081,22 @@ public class View implements java.io.Serializable {
 	
 	public boolean throwsReferenceChanged(MetaReference ref) throws XavaException {		
 		if (getDepends().contains(ref.getName())) return true;
-		Iterator itClaves = ref.getMetaModelReferenced().getKeyPropertiesNames().iterator();
-		while (itClaves.hasNext()) {			
-			String propertyKey = (String) itClaves.next();
-			String nombreRef = ref.getName() + "." + propertyKey;
-			if (getMetaView().hasOnChangeAction(nombreRef)) {
+		Iterator itKeys = ref.getMetaModelReferenced().getKeyPropertiesNames().iterator();
+		while (itKeys.hasNext()) {			
+			String propertyKey = (String) itKeys.next();
+			String refName = ref.getName() + "." + propertyKey;
+			if (getMetaView().hasOnChangeAction(refName)) {
 				return true;
 			}
 			
 			Iterator itProperties = getRoot().getMetaPropertiesQualified().iterator();
 			while (itProperties.hasNext()) {
 				MetaProperty p = (MetaProperty) itProperties.next();
-				if (p.getPropertyNamesThatIDepend().contains(nombreRef)) return true;				
+				if (p.getPropertyNamesThatIDepend().contains(refName)) return true;				
 			}
 			
 			MetaProperty p = ref.getMetaModelReferenced().getMetaProperty(propertyKey).cloneMetaProperty();
-			p.setName(nombreRef);
+			p.setName(refName);
 			if (hasDependentsProperties(p)) return true;			
 		}
 		return false;					
@@ -2121,8 +2107,8 @@ public class View implements java.io.Serializable {
 			depends = new ArrayList();
 			Iterator it = getMetaView().getMetaDescriptionsLists().iterator();
 			while (it.hasNext()) {
-				MetaDescriptionsList metaListaDescripciones = (MetaDescriptionsList) it.next();					
-				StringTokenizer st = new StringTokenizer(metaListaDescripciones.getDepends(), ",");
+				MetaDescriptionsList metaDescriptionsList = (MetaDescriptionsList) it.next();					
+				StringTokenizer st = new StringTokenizer(metaDescriptionsList.getDepends(), ",");
 				while (st.hasMoreTokens()) {
 					String token = st.nextToken().trim();
 					if (token.startsWith("this.")) {
@@ -2167,15 +2153,15 @@ public class View implements java.io.Serializable {
 	}	
 
 	public String getConditionInDescriptionsList(MetaReference ref) throws XavaException {
-		MetaDescriptionsList listaDescripciones = getMetaView().getMetaDescriptionList(ref);
-		if (listaDescripciones == null) return "";
-		return listaDescripciones.getCondition();
+		MetaDescriptionsList descriptionsList = getMetaView().getMetaDescriptionList(ref);
+		if (descriptionsList == null) return "";
+		return descriptionsList.getCondition();
 	}	
 		
 	public boolean isOrderByKeyInDescriptionsList(MetaReference ref) throws XavaException {
-		MetaDescriptionsList listaDescripciones = getMetaView().getMetaDescriptionList(ref);
-		if (listaDescripciones == null) return false;
-		return listaDescripciones.isOrderByKey();
+		MetaDescriptionsList descriptionsList = getMetaView().getMetaDescriptionList(ref);
+		if (descriptionsList == null) return false;
+		return descriptionsList.isOrderByKey();
 	}
 
 	public boolean isCreateNewForReference(MetaReference ref) throws XavaException {
@@ -2214,17 +2200,17 @@ public class View implements java.io.Serializable {
 		}
 	}
 	
-	public boolean isHidden(String nombre) {		
-		return hidden != null && hidden.contains(nombre);
+	public boolean isHidden(String name) {		
+		return hiddenMembers != null && hiddenMembers.contains(name);
 	}
 
-	public void setHidden(String nombre, boolean oculto) throws XavaException {				
-		if (hidden == null) {
-			if (!oculto) return;		
-			hidden = new HashSet();
+	public void setHidden(String name, boolean hidden) throws XavaException {				
+		if (hiddenMembers == null) {
+			if (!hidden) return;		
+			hiddenMembers = new HashSet();
 		}
-		if (oculto) hidden.add(nombre);
-		else hidden.remove(nombre); 		
+		if (hidden) hiddenMembers.add(name);
+		else hiddenMembers.remove(name); 		
 		metaMembers = null;
 		metaMembersIncludingHiddenKey = null;
 		membersNames = null;		
@@ -2232,21 +2218,21 @@ public class View implements java.io.Serializable {
 		membersNamesWithHidden = null;
 		membersNamesInGroup = null;
 		
-		// Los ocultos se pasan todos a todas las secciones y grupos,
-		// así si una propiedad aparece en la cabecera y en varias
-		// secciones, es ocultada/mostrada en todos sitios.
+		// The hidden ones are sent to all sections and groups,
+		// thus if a property is shown in heading and in some
+		// sections, is hidden/show in all places.
 		if (hasGroups()) {
 			Iterator it = getGroupsViews().values().iterator();
 			while (it.hasNext()) {
 				View v = (View) it.next();
-				v.setHidden(nombre, oculto);
+				v.setHidden(name, hidden);
 			}
 		}
 		
 		if (hasSections()) {
-			int cantidad = getSections().size();
-			for (int i = 0; i < cantidad; i++) {				
-				getSectionView(i).setHidden(nombre, oculto);				
+			int count = getSections().size();
+			for (int i = 0; i < count; i++) {				
+				getSectionView(i).setHidden(name, hidden);				
 			}	
 		}
 		
@@ -2263,8 +2249,8 @@ public class View implements java.io.Serializable {
 		return parent.getRoot();
 	}
 
-	private void setParent(View vista) {
-		parent = vista;
+	private void setParent(View view) {
+		parent = view;
 	}
 	
 	public boolean hasSections() throws XavaException {		
@@ -2276,19 +2262,19 @@ public class View implements java.io.Serializable {
 		return getMetaView().getSections();
 	}
 	
-	public View getSectionView(int indice) throws XavaException {		
+	public View getSectionView(int index) throws XavaException {		
 		if (sectionsViews == null) {
 			sectionsViews = new View[getSections().size()];			
 		}
-		if (sectionsViews[indice] == null) {
+		if (sectionsViews[index] == null) {
 			View v = new View();
 			v.setSection(true);
 			v.setParent(this);			
 			v.setModelName(getModelName()); 
-			v.setMetaView((MetaView) getSections().get(indice));
-			sectionsViews[indice] = v;
+			v.setMetaView((MetaView) getSections().get(index));
+			sectionsViews[index] = v;
 		}		
-		return sectionsViews[indice];
+		return sectionsViews[index];
 	}
 			
 	public boolean isSection() {
