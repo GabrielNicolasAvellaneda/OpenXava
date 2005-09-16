@@ -1,8 +1,11 @@
 package org.openxava.web.portlets;
 
 import java.io.*;
+import java.util.*;
 
 import javax.portlet.*;
+
+import org.openxava.web.*;
 
 /**
  * Allows define an OpenXava as a standard JSR-168 portlet. <p>
@@ -44,12 +47,14 @@ public class XavaPortlet extends GenericPortlet {
 	public static final String PARAM_MODULE = "Module";
 	
 	private String moduleURL;
+
+	private static Style style;
 	
 	public void init(PortletConfig config) throws PortletException {
 		super.init(config);		
 		this.moduleURL = "/xava/module.jsp?application=" +
 			config.getInitParameter(PARAM_APPLICATION) + "&module=" +			
-			config.getInitParameter(PARAM_MODULE);		
+			config.getInitParameter(PARAM_MODULE);				
 	}
 
 	/**
@@ -59,11 +64,24 @@ public class XavaPortlet extends GenericPortlet {
 	 * @throws IOException
 	 */
 	public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
+		Object style = getStyle(request);		
+		request.setAttribute("style", style);		
 		PortletURL url = response.createRenderURL();
 		request.setAttribute("xava.formAction", "action='" + url.toString() + "'");		
 		PortletContext context = getPortletContext();
 		PortletRequestDispatcher rd = context.getRequestDispatcher(moduleURL);
 		rd.include(request, response);
+	}
+		
+
+	private Style getStyle(RenderRequest request) {
+		if (style == null) {
+			String portal = request.getPortalContext().getPortalInfo().toLowerCase(); 
+			if (portal.indexOf("jetspeed") >= 0) style = JetSpeed2Style.getInstance();
+			// else if (portal.indexOf("websphere") >= 0) style = WebSpherePortalStyle.getInstace();
+			else style = Style.getInstance();
+		}
+		return style;
 	}
 	
 }

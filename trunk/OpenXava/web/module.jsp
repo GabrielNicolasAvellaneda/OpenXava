@@ -6,8 +6,10 @@
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="messages" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
+<jsp:useBean id="style" class="org.openxava.web.Style" scope="request"/>
 
 <%
+boolean isPortlet = (request.getAttribute("xava.formAction") != null);
 boolean messagesOnTop = !"false".equalsIgnoreCase(request.getParameter("messagesOnTop"));
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
 manager.setSession(session);
@@ -114,7 +116,7 @@ function executeXavaAction(isConfirm, takesLong, formu, action) {
 	if (isConfirm && !confirm('<%=XavaResources.getString(request, "are_you_sure")%>')) return;
 	if (takesLong) {
 		document.getElementById('processingLayer').style.display='block';
-		setTimeout('document.images["processingImage"].src = "images/processing.gif"', 1);		
+		setTimeout('document.images["processingImage"].src = "<%=request.getContextPath()%>/xava/images/processing.gif"', 1);		
 	}
 	formu.focus_forward.value = "false";
 	formu.xava_action.value=action;	
@@ -124,7 +126,7 @@ function executeXavaAction(isConfirm, takesLong, formu, action, argv) {
 	if (isConfirm && !confirm('<%=XavaResources.getString(request, "are_you_sure")%>')) return;
 	if (takesLong) {
 		document.getElementById('processingLayer').style.display='block';
-		setTimeout('document.images["processingImage"].src = "images/processing.gif"', 1);
+		setTimeout('document.images["processingImage"].src = "<%=request.getContextPath()%>/xava/images/processing.gif"', 1);
 	}
 	formu.focus_forward.value = "false";
 	formu.xava_action.value=action;	
@@ -149,30 +151,32 @@ function setFocus() {
 
 
 
-
+<% if (!isPortlet) { %>
 <!DOCTYPE HTML PUBLIC "-//w3c//dtd html 4.0 transitional//en">
 <html>
 <head>
 <title>OpenXava - <%=manager.getModuleDescription() %></title>
 <link href="<%=request.getContextPath()%>/xava/style/default.css" rel="stylesheet" type="text/css">
-<link href="<%=request.getContextPath()%>/xava/style/jetspeed.css" rel="stylesheet" type="text/css">
 </head>
 
 <body bgcolor="#ffffff" onload="setFocus()">
+<% } %>
+
+<link href="<%=request.getContextPath()%>/xava/style/openxava.css" rel="stylesheet" type="text/css">
 
 <%-- Layer for progress bar --%>
 <div id='processingLayer' style='position:absolute;top:100px;left:150px;display:none'>
 <table cellspacing='0'>
-   <tr class='odd'>
+   <tr class='<%=style.getProcessing()%>'>
        <td align='center' valign='middle' style='line-height:1.4;padding:25px 80px;border:2px solid #000'>
            <%=XavaResources.getString(request, "processing")%><br/>
-           <img src='images/processing.gif' name='processingImage'/>
+           <img src='<%=request.getContextPath()%>/xava/images/processing.gif' name='processingImage'/>
        </td>
    </tr>
 </table>
 </div>
 
-<div class="module">
+<div class="<%=style.getModule()%>">
 <%
 String xavaFormAction = (String) request.getAttribute("xava.formAction");
 if (xavaFormAction == null) xavaFormAction = "";
@@ -194,7 +198,7 @@ if (xavaFormAction == null) xavaFormAction = "";
   <tbody>
   	<% if (org.openxava.util.XavaPreferences.getInstance().isButtonBarOnTop()) { %>
     <tr>
-      <td class=buttonBar>
+      <td class='<%=style.getButtonBar()%>'>
       	<jsp:include page="buttonBar.jsp"/>
       </td>
     </tr>
@@ -212,13 +216,13 @@ if (xavaFormAction == null) xavaFormAction = "";
     </tr>            
     <% } %>
     <tr>      		
-		<td class=body>
-		<jsp:include page="<%=manager.getViewURL()%>"/>
+		<td>
+		<jsp:include page='<%=manager.getViewURL()%>'/>
 		</td>
     </tr>
   	<% if (org.openxava.util.XavaPreferences.getInstance().isButtonBarOnBottom()) { %>    
     <tr>
-      <td class=buttonBar>
+      <td class="<%=style.getButtonBar()%>">
 		<jsp:include page="buttonBar.jsp"/>
       </td>
     </tr>
@@ -240,7 +244,9 @@ if (xavaFormAction == null) xavaFormAction = "";
 </form>
 </div>
 
+<% if (!isPortlet) { %>
 </body></html>
+<% } %>
 
 <%
 }

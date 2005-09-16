@@ -2,6 +2,8 @@
 
 <%@ page import="java.util.StringTokenizer" %>
 
+<jsp:useBean id="style" class="org.openxava.web.Style" scope="request"/>
+
 <%
 String validValues = request.getParameter("validValues");
 String value = request.getParameter("value");
@@ -15,7 +17,7 @@ catch (Exception ex) {
 
 <input type="hidden" name="conditionComparators" value="=">
 
-<select name="conditionValues" class=editor>
+<select name="conditionValues" class=<%=style.getEditor()%>>
 	<option value=""></option>
 <%
 	StringTokenizer st = new StringTokenizer(validValues, "|");

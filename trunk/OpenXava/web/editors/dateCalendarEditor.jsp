@@ -1,4 +1,6 @@
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
+
+<jsp:useBean id="style" class="org.openxava.web.Style" scope="request"/>
   
  <%
 String propertyKey = request.getParameter("propertyKey");
@@ -17,7 +19,7 @@ while (indx>=0){
 }
 if (editable || !label) {
 %>
-<input type="text" name="<%=propertyKey%>" id="<%=propertyKey%>" class=editor title="<%=p.getDescription(request)%>"
+<input type="text" name="<%=propertyKey%>" id="<%=propertyKey%>" class=<%=style.getEditor()%> title="<%=p.getDescription(request)%>"
 	align='<%=align%>'
 	maxlength="<%=p.getSize()%>" 
 	size="<%=p.getSize()%>"  

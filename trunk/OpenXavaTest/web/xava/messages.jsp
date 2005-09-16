@@ -1,5 +1,5 @@
 <jsp:useBean id="messages" class="org.openxava.util.Messages" scope="request"/>
-
+<jsp:useBean id="style" class="org.openxava.web.Style" scope="request"/>
 
 <% 
 if (messages.contains()) {
@@ -9,7 +9,7 @@ if (messages.contains()) {
 	java.util.Iterator it = messages.getStrings(request).iterator();	
 	while (it.hasNext()) {		
 %>
-<tr><td class='messages'>
+<tr><td class=<%=style.getMessages()%>>
 <%=it.next()%>
 </td></tr>
 <% } %>

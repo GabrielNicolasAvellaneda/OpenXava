@@ -1,5 +1,7 @@
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
 
+<jsp:useBean id="style" class="org.openxava.web.Style" scope="request"/>
+
 <%
 String propertyKey = request.getParameter("propertyKey");
 MetaProperty p = (MetaProperty) request.getAttribute(propertyKey);
@@ -13,7 +15,7 @@ int rows = p.getSize() / 80 + 1;
 %>
 
 
-<textarea name="<%=propertyKey%>" class=editor
+<textarea name="<%=propertyKey%>" class=<%=style.getEditor()%>
 	rows="<%=rows%>" cols="80"
 	title="<%=p.getDescription(request)%>"	
 	<%=disabled%>

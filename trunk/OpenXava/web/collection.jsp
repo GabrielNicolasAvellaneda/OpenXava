@@ -2,6 +2,7 @@
 
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
+<jsp:useBean id="style" class="org.openxava.web.Style" scope="request"/>
 
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.Collection" %>
@@ -11,7 +12,6 @@
 <%@ page import="org.openxava.view.View" %>
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
 <%@ page import="org.openxava.model.meta.MetaReference" %>
-<%@ page import="org.openxava.controller.meta.MetaAction" %>
 <%@ page import="org.openxava.web.WebEditors" %>
 
 <%
@@ -47,13 +47,13 @@ else {
 String propertyPrefix = Is.emptyString(propertyPrefixAccumulated)?"xava." + view.getModelName() + "." + collectionName + ".":propertyPrefixAccumulated + collectionName + ".";
 %>
 
-<table id=<%=idCollection%> class=list>
+<table id=<%=idCollection%> class=<%=style.getList()%>>
 <tr>
 	<% if (lineAction != null) { %>	
-	<th class=list>
+	<th class=<%=style.getList()%>>
 	<% } %>
 	<% if (hasListActions) { %>	
-	<th class=list>
+	<th class=<%=style.getList()%>>
 	<% } %>
 
 <%
@@ -62,7 +62,7 @@ Iterator it = subview.getMetaPropertiesList().iterator();
 while (it.hasNext()) {
 	MetaProperty p = (MetaProperty) it.next();
 %>
-	<th class=list><%=p.getLabel(request)%></th>
+	<th class=<%=style.getList()%>><%=p.getLabel(request)%></th>
 <%
 }
 %>
@@ -77,7 +77,7 @@ Iterator itAggregates = aggregates.iterator();
 int f=0;
 while (itAggregates.hasNext()) {
 	Map row = (Map) itAggregates.next();
-	String cssClass=f%2==0?"pair":"odd";
+	String cssClass=f%2==0?style.getPair():style.getOdd();
 	if (f == subview.getCollectionEditingRow()) { 
 		cssClass = cssClass + "-selected";
 	}
@@ -127,9 +127,9 @@ if (view.displayDetailInCollection(collectionName)) {
 	if (collectionView.isCollectionDetailVisible()) {
 %>	
 <tr><td colspan="<%=subview.getMetaPropertiesList().size()+1%>">		
-<table class=frame width='100%'>
-<tr class=frame><th align='left'><%=ref.getLabel(request)%></th></tr>
-<tr><td class=frame>
+<table class=<%=style.getFrame()%> width='100%'>
+<tr class=<%=style.getFrame()%>><th align='left'><%=ref.getLabel(request)%></th></tr>
+<tr><td class=<%=style.getFrame()%>>
 <jsp:include page="detail.jsp"> 
 	<jsp:param name="viewObject" value="<%=viewName%>" />
 	<jsp:param name="propertyPrefix" value="<%=propertyPrefix%>" />
