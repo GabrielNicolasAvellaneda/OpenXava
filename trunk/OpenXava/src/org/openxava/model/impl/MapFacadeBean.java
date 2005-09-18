@@ -796,7 +796,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	}
 
 
-	private void removeAggregateCollection(
+	private void removeAggregateCollection(   //tmp quitar
 		IPersistenceProvider persistenceProvider,	
 		MetaModel metaModel,
 		Object modelObject,
@@ -825,7 +825,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 
-	private void removeAllAggregateCollections(
+	private void removeAllAggregateCollections( // tmp quitar
 		IPersistenceProvider persistenceProvider,	
 		MetaModel metaModel,
 		Object modelObject)
@@ -1427,9 +1427,11 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			if (!errors.isEmpty()) {
 				throw new ValidationException(errors);
 			}
+			/* tmp
 			if (!metaModel.getMetaCollectionsAgregate().isEmpty()) {
 				removeAllAggregateCollections(persistenceProvider, metaModel, modelObject);
 			}
+			*/
 			persistenceProvider.remove(metaModel, modelObject);			
 		} catch (ValidationException ex) {
 			throw ex;					
@@ -1635,7 +1637,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		return persistenceProvider.find(metaEntity, keyValues);
 	}
 	
-	private Object executeGetXX(
+	static Object executeGetXX(  //tmp  static private
 		MetaModel metaModel,
 		Object modelObject,
 		String memberName)

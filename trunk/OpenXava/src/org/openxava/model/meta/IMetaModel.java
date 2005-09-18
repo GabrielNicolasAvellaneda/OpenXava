@@ -10,6 +10,7 @@ import org.openxava.util.*;
  */
 public interface IMetaModel {
 	String getName(); 
+	Class getPOJOClass() throws XavaException, ClassNotFoundException;   
 	String getInterfaceName() throws XavaException;
 	Collection getMetaFinders();	
 	MetaProperty getMetaProperty(String name) throws ElementNotFoundException, XavaException;
