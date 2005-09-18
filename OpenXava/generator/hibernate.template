@@ -142,7 +142,7 @@ while (itReferences.hasNext()) {
 			}         
 		}
 	} 
-	else { // reference to entity or aggreate implemented as EJB
+	else { // reference to entity or persistent aggregate 
 		Collection columns = mapping.getReferenceMapping(reference.getName()).getColumns();   
   		if (columns.size() == 1) {	
 			String column = (String) columns.iterator().next();

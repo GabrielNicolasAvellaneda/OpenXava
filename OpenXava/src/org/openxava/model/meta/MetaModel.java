@@ -18,6 +18,8 @@ import org.openxava.view.meta.*;
  */
 abstract public class MetaModel extends MetaElement implements IMetaModel {
 
+	private Class pojoClass;
+	private Collection allKeyPropertiesNames;
 	private List metaCalculatorsPostCreate;
 	private List metaCalculatorsPostModify;
 	private List propertiesNamesWithoutHidden;
@@ -511,17 +513,20 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	 * 
 	 * @return Collection of <tt>String</tt>, not null and read only 
 	 */
-	public Collection getAllKeyPropertiesNames() throws XavaException {  //tmp Guardar el resultado
-		ArrayList result = new ArrayList(getKeyPropertiesNames());
-		Iterator itRef = getMetaReferencesKey().iterator(); 
-		while (itRef.hasNext()) {
-			MetaReference ref = (MetaReference) itRef.next();
-			Iterator itProperties = ref.getMetaModelReferenced().getAllKeyPropertiesNames().iterator();
-			while (itProperties.hasNext()) {
-				result.add(ref.getName() + "." + itProperties.next());
-			}
-		}		
-		return Collections.unmodifiableCollection(result);
+	public Collection getAllKeyPropertiesNames() throws XavaException {  
+		if (allKeyPropertiesNames==null) {
+			ArrayList result = new ArrayList(getKeyPropertiesNames());
+			Iterator itRef = getMetaReferencesKey().iterator(); 
+			while (itRef.hasNext()) {
+				MetaReference ref = (MetaReference) itRef.next();
+				Iterator itProperties = ref.getMetaModelReferenced().getAllKeyPropertiesNames().iterator();
+				while (itProperties.hasNext()) {
+					result.add(ref.getName() + "." + itProperties.next());
+				}
+			}		
+			allKeyPropertiesNames = Collections.unmodifiableCollection(result);
+		}
+		return allKeyPropertiesNames;
 	}
 	
 	
@@ -1160,6 +1165,14 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	
 	public String getPOJOClassName()  throws XavaException {
 		return getMetaComponent().getPackageName() + "." + getName();
+	}
+	
+	public Class getPOJOClass() throws XavaException, ClassNotFoundException { //tmp ¿inicializacion vaga?
+		if (pojoClass==null){
+			pojoClass =  Class.forName(getPOJOClassName());
+		}
+		return pojoClass;
+			
 	}
 	
 }

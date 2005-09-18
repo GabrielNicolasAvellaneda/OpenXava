@@ -96,17 +96,58 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 	public void remove(MetaModel metaModel, Object object)
 			throws RemoveException, XavaException {
 		try {
-			
+			if (!metaModel.getMetaCollectionsAgregate().isEmpty()) {
+				removeAllAggregateCollections(metaModel, object);
+			}
+
 			((EJBReplicable) toPropertiesContainer(metaModel,
 				object)).remove();
 		}
-		catch (RemoteException ex) {
+		catch (RemoveException ex) {
+			throw ex;
+		}
+		catch (XavaException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
 			ex.printStackTrace();
 			throw new EJBException(XavaResources.getString("remove_error",
 					metaModel.getName(),
 					ex.getLocalizedMessage()));
 		}
 	}
+
+	private void removeAllAggregateCollections(MetaModel metaModel,	Object modelObject)	throws Exception {
+			Iterator it =
+				metaModel.getMetaCollectionsAgregate().iterator();
+			while (it.hasNext()) {
+				MetaCollection metaCollection = (MetaCollection) it.next();
+				removeAggregateCollection(metaModel, modelObject, metaCollection);
+			}
+		}
+	
+	private void removeAggregateCollection( 
+			MetaModel metaModel,
+			Object modelObject,
+			MetaCollection metaCollection)
+			throws XavaException, FinderException, ValidationException, RemoveException, RemoteException {
+			Enumeration enum = null;	
+			Object existing =
+				MapFacadeBean.executeGetXX(metaModel, modelObject, metaCollection.getName());								
+			if (existing instanceof Enumeration) {
+				enum = (Enumeration) existing;
+			}
+			else if (existing instanceof Collection) {
+				enum = Collections.enumeration((Collection) existing);
+			}
+			else {
+				throw new XavaException("collection_type_not_supported");
+			}									
+			MetaModel metaModelAggregate = metaCollection.getMetaReference().getMetaModelReferenced();
+			while (enum.hasMoreElements()) {
+				remove(metaModelAggregate, enum.nextElement());
+			}
+		}
 
 	public void setSession(Session session) { // tmp: remove
 	}

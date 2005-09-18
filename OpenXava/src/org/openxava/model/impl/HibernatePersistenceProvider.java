@@ -14,6 +14,7 @@ import org.openxava.util.*;
 import org.openxava.validators.*;
 
 /**
+ * tmp: quitar todas las referencias e ejb
  * @author Mª Carmen Gimeno Alabau
  */
 public class HibernatePersistenceProvider implements IPersistenceProvider {
@@ -25,21 +26,18 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 	public Object find(IMetaEjb metaModel, Map keyValues) throws FinderException {
 		try {
 			MetaEjbImpl ejbImpl = new MetaEjbImpl(metaModel);
-			Class className = metaModel.getBeanClass();
+			Class modelClass = metaModel.getPOJOClass();
 			Object key = null;
 						
 			if (metaModel.getAllKeyPropertiesNames().size() == 1) {
 				key = keyValues.get(metaModel.getKeyPropertiesNames().iterator().next());
 			}
 			else {
-				key = className.newInstance();
+				key = modelClass.newInstance();
 				PropertiesManager pm = new PropertiesManager(key);
-				System.out.println("[HibernatePersistenceProvider.find] clase de key)=" + key.getClass()); //  tmp
-				System.out.println("[HibernatePersistenceProvider.find] keyValues=" + keyValues); //  tmp
 				pm.executeSets(keyValues);
-				System.out.println("[HibernatePersistenceProvider.find] key=" + key); //  tmp
 			}		
-			Object result = getSession().get(className, (Serializable) key);
+			Object result = getSession().get(modelClass, (Serializable) key);
 			if (result == null) {
 				throw new ObjectNotFoundException(XavaResources.getString(
 						"object_with_key_not_found", metaModel.getName(), keyValues));
