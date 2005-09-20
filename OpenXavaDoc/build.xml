@@ -4,8 +4,8 @@
 
 	<property name="xava.version" value="1.1"/>
 	<property name="xava.workspace" value="/home/javi/openxava/openxava-1.1/workspace"/>
-	<property file="../openxava.properties"/>
-	<property name="jetspeed.dir" value="${jboss.dir}/server/default/deployable/openxava.war"/>
+	<property file="../openxava.properties"/>	
+	<property name="deploy.portlets.dir" value="${deploy.dir}/openxava.war/WEB-INF/deploy"/>
 
 	<target name="apidoc">
 		<javadoc
@@ -22,33 +22,7 @@
 	</target>
 
 	<target name="deploy">
-		<copy file="openxava.xreg" todir="${jetspeed.dir}/WEB-INF/conf" overwrite="true"/>
-  		<copy
-  			todir="${jetspeed.dir}/images"
-  			overwrite="true">
-    		<fileset dir="images"/>
-  		</copy>		
-  		<copy
-  			todir="${jetspeed.dir}/html"
-  			overwrite="true">
-    		<fileset dir="common"/>
-  		</copy>
-  		<copy
-  			todir="${jetspeed.dir}/html/en"
-  			overwrite="true">
-    		<fileset dir="en"/>
-  		</copy>
-  		<copy 
-  			todir="${jetspeed.dir}/html/es" 
-  			overwrite="true">
-    		<fileset dir="es"/>    		
-  		</copy>			
-  		<copy 
-  			todir="${jetspeed.dir}/html/de" 
-  			overwrite="true">
-    		<fileset dir="de"/>    		
-  		</copy>					
-		<touch file="${jetspeed.dir}/WEB-INF/web.xml"/>
+		<jar jarfile="${deploy.portlets.dir}/OpenXavaDoc.war" basedir="web"/>		
 	</target>
 				
 </project>
