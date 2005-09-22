@@ -6,6 +6,7 @@ import javax.servlet.jsp.tagext.*;
 
 import org.openxava.controller.*;
 import org.openxava.controller.meta.*;
+import org.openxava.web.*;
 
 
 /**
@@ -33,6 +34,9 @@ public class ButtonTag extends TagSupport {
 			pageContext.getOut().print(" title='");
 			pageContext.getOut().print(metaAction.getDescription(request));
 			pageContext.getOut().print("'");
+			pageContext.getOut().print(" class=");
+			Style style = (Style) request.getAttribute("style");
+			pageContext.getOut().print(style.getButton());
 			pageContext.getOut().print("\tonclick='executeXavaAction(");
 			pageContext.getOut().print(metaAction.isConfirm());
 			pageContext.getOut().print(", ");

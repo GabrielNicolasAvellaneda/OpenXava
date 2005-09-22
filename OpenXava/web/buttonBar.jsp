@@ -3,6 +3,8 @@
 <%@ page import="org.openxava.controller.meta.MetaAction" %>
 
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
+<jsp:useBean id="style" class="org.openxava.web.Style" scope="request"/>
+
 <%
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
 manager.setSession(session);
@@ -10,13 +12,12 @@ manager.setSession(session);
 
 <table width="100%">
 <tr>
-<td>
+<td style='vertical-align: middle'>
 
 <button name="xava.DEFAULT_ACTION" 
 	onclick="executeXavaAction(false, false, <%=manager.getForm()%>, '<%=manager.getDefaultActionQualifiedName()%>')"
 	style="padding: 0; border: none; background-color:transparent">
 </button>
-
 
 <%
 java.util.Iterator it = manager.getMetaActions().iterator();
@@ -35,8 +36,8 @@ while (it.hasNext()) {
 }
 %>
 </td>
-<td align="right">
 
+<td align="right" style='vertical-align: middle' class=<%=style.getMode()%>>
 <%
 java.util.Iterator itSections = manager.getMetaActionsSections().iterator();
 boolean firstTime = true;

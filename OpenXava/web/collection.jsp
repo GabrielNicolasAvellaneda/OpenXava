@@ -50,10 +50,10 @@ String propertyPrefix = Is.emptyString(propertyPrefixAccumulated)?"xava." + view
 <table id=<%=idCollection%> class=<%=style.getList()%>>
 <tr>
 	<% if (lineAction != null) { %>	
-	<th class=<%=style.getList()%>>
+	<th class=<%=style.getListHeader()%>>
 	<% } %>
 	<% if (hasListActions) { %>	
-	<th class=<%=style.getList()%>>
+	<th class=<%=style.getListHeader()%>>
 	<% } %>
 
 <%
@@ -62,7 +62,7 @@ Iterator it = subview.getMetaPropertiesList().iterator();
 while (it.hasNext()) {
 	MetaProperty p = (MetaProperty) it.next();
 %>
-	<th class=<%=style.getList()%>><%=p.getLabel(request)%></th>
+	<th class=<%=style.getListHeader()%>><%=p.getLabel(request)%></th>
 <%
 }
 %>
@@ -77,15 +77,15 @@ Iterator itAggregates = aggregates.iterator();
 int f=0;
 while (itAggregates.hasNext()) {
 	Map row = (Map) itAggregates.next();
-	String cssClass=f%2==0?style.getPair():style.getOdd();
+	String cssClass=f%2==0?style.getListPair():style.getListOdd();
 	if (f == subview.getCollectionEditingRow()) { 
-		cssClass = cssClass + "-selected";
+		cssClass = cssClass=f%2==0?style.getListPairSelected():style.getListOddSelected();
 	}
 	
 %>
 <tr class=<%=cssClass%>>
 <% if (lineAction != null) { %>
-<td class=<%=cssClass%>>
+<td class=<%=cssClass%> style='vertical-align: middle;text-align: center'>
 <xava:link action="<%=lineAction%>" argv='<%="row="+f + ",viewObject="+viewName%>'/>
 </td>
 <% } %>
@@ -99,7 +99,7 @@ while (itAggregates.hasNext()) {
 	it = subview.getMetaPropertiesList().iterator();
 	while (it.hasNext()) {
 		MetaProperty p = (MetaProperty) it.next();
-		String align = p.isNumber() && !p.hasValidValues()?"align='right'":"";
+		String align = p.isNumber() && !p.hasValidValues()?"style='vertical-align: middle;text-align: right'":"style='vertical-align: middle;'";
 		String fvalue = null;
 		Object value = null;
 		String propertyName = p.getName();
@@ -128,8 +128,8 @@ if (view.displayDetailInCollection(collectionName)) {
 %>	
 <tr><td colspan="<%=subview.getMetaPropertiesList().size()+1%>">		
 <table class=<%=style.getFrame()%> width='100%'>
-<tr class=<%=style.getFrame()%>><th align='left'><%=ref.getLabel(request)%></th></tr>
-<tr><td class=<%=style.getFrame()%>>
+<tr class=<%=style.getFrameTitle()%>><th class=<%=style.getFrameTitleLabel()%> align='left'><%=ref.getLabel(request)%></th></tr>
+<tr><td class=<%=style.getFrameContent()%>>
 <jsp:include page="detail.jsp"> 
 	<jsp:param name="viewObject" value="<%=viewName%>" />
 	<jsp:param name="propertyPrefix" value="<%=propertyPrefix%>" />
