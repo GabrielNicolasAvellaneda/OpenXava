@@ -106,13 +106,6 @@ TD.frame {
 }
 
 
-.section {
-	border-collapse: collapse;
-	padding: 0 0 0 0;
-	margin: 0 0 0 0;
-}
-
-
 .activeSection {
 	border-top-color: #FFCC00;
 	border-left-color: #dddddd;

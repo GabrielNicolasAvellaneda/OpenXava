@@ -448,17 +448,16 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected void assertRowStyleInList(int row, String expectedStyle) throws Exception {
-		TableCell cell = getTableCellInList(row, 0);
-		String style = cell.getAttribute("class");
-		if (style.startsWith("pair-")) style = style.substring("pair-".length());
-		else if (style.startsWith("odd-")) style = style.substring("odd-".length());		
-		assertEquals(XavaResources.getString("row_style_not_excepted"), expectedStyle, style);
+		TableCell cell = getTableCellInList(row, 0);		
+		HTMLElement div = cell.getElementWithID("cellStyle");
+		String style = div.getAttribute("class");		
+		assertEquals(XavaResources.getString("row_style_not_excepted"), expectedStyle, style);		
 	}
 	
 	protected void assertNoRowStyleInList(int row) throws Exception {
 		TableCell cell = getTableCellInList(row, 0);
-		String style = cell.getAttribute("class");
-		if (Is.emptyString(style) || style.equals("pair") || style.equals("odd")) return;
+		HTMLElement div = cell.getElementWithID("cellStyle");
+		if (div == null) return;
 		fail(XavaResources.getString("row_style_not_excepted"));
 	}
 	

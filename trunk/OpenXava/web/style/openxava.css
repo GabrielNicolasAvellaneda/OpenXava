@@ -18,41 +18,42 @@ TH.list {
 	font-weight: normal; 
 }
 
-TR.odd {
+TR.list-odd {
 	font-weight: normal; 
 	background: #eeeeee;
 }
 
-TR.pair {
+TR.list-pair {
 	font-weight: normal;
 	background: #cccccc; 
 }
 
-TR.odd-selected {
+TR.list-odd-selected {
 	font-weight: bold;
 	color: #3366ff;
 	background: #eeeeee;
 }
 
-TR.pair-selected {
+TR.list-pair-selected {
 	font-weight: bold;
 	color: #3366ff;
 	background: #cccccc;
 }
 
-
-.odd-highlight {
+.highlight {
 	font-weight: bold;
-	background: #eeeeee;
 	color: #3366ff;	
 }
 
-
-.pair-highlight {
-	font-weight: bold;
-	background: #cccccc; 
-	color: #3366ff;	
+TR.list-subheader {
+	font-weight: normal;
+	background: #dddddd;	 
 }
+
+.list-info {
+	font-weight: bold;
+}
+
 
 TABLE.frame {
 	border-collapse: collapse;
@@ -92,11 +93,52 @@ TD.frame {
 	background: #eeeeee;
 }
 
-TR.search {
-	font-weight: normal;
-	background: #dddddd;	 
+.jetspeed2-list-info TR.jetspeed2-list-info TD.jetspeed2-list-info {
+	font-size: x-small;
 }
 
-.list-info {
+TD.mode {
+	font-weight: bold;	
+}
+
+TD.jetspeed2-mode {
+	font-size: x-small;
+}
+
+TD.list-title {
 	font-weight: bold;
+	text-align: center;
+}
+
+.PTitleContent {
+	color: black;
+}
+
+.portlet-section-header A:link {
+	color: white;	
+	text-decoration: underline;
+}
+
+.section {
+	border-collapse: collapse;
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;
+}
+
+.activeSection {
+	border-top-color: #FFCC00;
+	border-left-color: #dddddd;
+	border-right-color: #dddddd;
+	border-bottom-color: #dddddd;
+
+	border-style: solid;
+
+	border-top-width: 2px;
+	border-left-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+}
+
+.TabMidle .TabMiddleLow {
+	background-color: #FFCC00;
 }

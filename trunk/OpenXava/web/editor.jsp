@@ -63,7 +63,7 @@ String label = view.getLabelForProperty(p);
 <span class=<%=style.getSmallLabel()%>><%=label%></span>
 
 </td></tr>
-<tr><td valign='middle'>
+<tr><td style='vertical-align: middle'>
 <% } %>
 <%
 String editorURL = WebEditors.getUrl(p);

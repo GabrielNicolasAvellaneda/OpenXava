@@ -47,11 +47,18 @@
 	
 	<target name="init">
 		<tstamp/>
-		<available file="../${project.ejb}/xava/aplicacion.xml" 
-			property="xava.presente"/>
 		<available file="../${project.ejb}/${meta-inf.dir}/jbosscmp-jdbc.xml" 
 			property="jboss.mapping.xml" value="jbosscmp-jdbc.xml"/>
 	</target>
+	
+	<target name="initPortlets">
+		<uptodate property="regenerate.portlet.xml.notRequired"
+			targetfile="../${project.ejb}/web/WEB-INF/portlet.xml">
+			<srcfiles file="../${project.ejb}/xava/application.xml"/>
+			<srcfiles file="../${project.ejb}/xava/aplicacion.xml"/>			
+		</uptodate>
+	</target>
+	
 	
 	<target name="createDist">
 		<mkdir dir="${dist.dir}"/>
@@ -608,7 +615,7 @@
 		
 	</target>
 	
-	<target name="generatePortletXml">
+	<target name="generatePortletXml" unless="regenerate.portlet.xml.notRequired">
 		<echo>Generating portlet.xml</echo>		
 		<java 
 			classname="PortletXmlPG" 
@@ -620,7 +627,7 @@
 		</java>		
 	</target>	
 
-	<target name="deployPortlets" depends="generatePortletXml">		
+	<target name="deployPortlets" depends="initPortlets, generatePortletXml">		
 		<antcall target="createWar"/>
 		<copy file="${dist.dir}/${name.war}.war" todir="${deploy.portlets.dir}" overwrite="true"/>		
 	</target>

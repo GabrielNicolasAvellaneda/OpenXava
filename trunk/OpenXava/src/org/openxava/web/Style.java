@@ -1,20 +1,22 @@
 package org.openxava.web;
 
 /**
- * tmo: ¿Mover a paquete styles?
- * tmp: Doc
- * Falta probar:				JS2		WPS		Nada	JS1
- * - Editores/Etiquetas			X
- * - Mensajes					X
- * - Títulos grupos
- * - Botones
- * - highlight para filas
- * - Carpetas
- * - Listas 
- * - ¿Grupos?
+ * tmp: ¿Mover a paquete styles?
+ * tmp: 
+ * Falta probar:					JS2		WPS	
+ * - Editores/Etiquetas				X
+ * - Mensajes						X
+ * - Vinculos modo					X
+ * - Información lista				X
+ * - Título lista					X
+ * - Botones						X
+ * - Botonera						X
+ * - Marcos(grup, col, ref, edit)	X  
+ * - Listas(highlight)				X 						 		
+ * - Carpetas 						X
  *  
  * Faltaría también:
- * - Borra jetspeed.css
+ * - Borrar jetspeed.css
  * 
  * @author Javier Paniza
  */ 
@@ -41,27 +43,64 @@ public class Style {
 		return "button-bar";
 	}
 	
-	public String getList() { // tmp ¿sobreescribir?
+	public String getList() {  
 		return "list";
 	}
 	
-	public String getPair() { // tmp ¿sobreescribir?
-		return "pair";
+	public String getListHeader() { 
+		return "list";
 	}
 	
-	public String getOdd() { // tmp ¿sobreescribir?
-		return "odd";
+	public String getListSubheader() {
+		return "list-subheader";
+	}	
+	
+	public String getListPair() { 
+		return "list-pair";
+	}
+	
+	public String getListOdd() { 
+		return "list-odd";
+	}
+	
+	public String getListPairSelected() { 
+		return "list-pair-selected";
+	}
+	
+	public String getListOddSelected() { 
+		return "list-odd-selected";
+	}
+		
+	public String getListInfo() {
+		return "list-info";
+	}
+	
+	public String getListTitle() {
+		return "list-title";
 	}
 	
 	public String getFrame() {
 		return "frame";
 	}
 	
-	public String getEditor() { // tmp ¿sobreescribir?
+	public String getFrameTitle() { 
+		return "frame";
+	}
+	
+	public String getFrameTitleLabel() {
+		return "frame";
+	}
+	
+	public String getFrameContent() {
+		return "frame";
+	}
+	
+	
+	public String getEditor() { 
 		return "editor";
 	}
 	
-	public String getLabel() { // tmp ¿sobreescribir?
+	public String getLabel() { 
 		return "label";
 	}
 	
@@ -69,11 +108,11 @@ public class Style {
 		return "small-label";
 	}
 	
-	public String getErrors() { // tmp ¿sobreescribir?
+	public String getErrors() { 
 		return "errors";
 	}
 
-	public String getMessages() { // tmp ¿sobreescribir?
+	public String getMessages() { 
 		return "messages";
 	}
 	
@@ -81,11 +120,52 @@ public class Style {
 		return "processing";
 	}
 			
-	public String getSearch() { // tmp ¿sobreescribir?
-		return "search";
+	public String getMode() { 
+		return "mode";
+	}
+		
+	public String getButton() {
+		return "portlet-form-button";
 	}
 	
-	public String getListInfo() {
-		return "list-info";
+	public String getAscendingImage() {
+		return "ascending.gif";
 	}
+	
+	public String getDescendingImage() {
+		return "descending.gif";
+	}
+	
+	public String getSection() {
+		return "Jetspeed";
+	}
+	
+	public String getSectionActive() {
+		return "activeSection";
+	}	
+	
+	public String getSectionTabLeft() {
+		return "TabLeft";
+	}
+	
+	public String getSectionTabMiddle() {
+		return "TabMiddle";
+	}
+
+	public String getSectionTabRight() {
+		return "TabRight";
+	}
+	
+	public String getSectionTabLeftLow() {
+		return "TabLeftLow";
+	}
+
+	public String getSectionTabMiddleLow() {
+		return "TabMiddleLow";
+	}
+	
+	public String getSectionTabRightLow() {
+		return "TabRightLow";
+	}	
+	
 }

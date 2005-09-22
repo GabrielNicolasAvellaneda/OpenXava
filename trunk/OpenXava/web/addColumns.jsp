@@ -23,7 +23,7 @@ org.openxava.tab.Tab tab = (org.openxava.tab.Tab) context.get(request, tabObject
 int f=0;
 for (Iterator it=tab.getRemainingPropertiesNames().iterator(); it.hasNext();) {	
 	String property = (String) it.next();
-	String cssClass=f%2==0?style.getPair():style.getOdd();
+	String cssClass=f%2==0?style.getListPair():style.getListOdd();
 	f++;
 %>
 <tr class=<%=cssClass%>>

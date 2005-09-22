@@ -1,7 +1,6 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="org.openxava.view.View" %>
 <%@ page import="org.openxava.view.meta.MetaGroup" %>
-<%@ page import="org.openxava.view.meta.MetaView" %>
 <%@ page import="org.openxava.view.meta.PropertiesSeparator" %>
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
 <%@ page import="org.openxava.model.meta.MetaReference" %>
@@ -92,8 +91,8 @@ while (it.hasNext()) {
 				if (withFrame) { 
 	%>				
 		<table class=<%=style.getFrame()%> width='100%'>
-		<tr class=<%=style.getFrame()%>><th align='left'><%=ref.getLabel(request)%></th></tr>
-		<tr><td class=<%=style.getFrame()%>>
+		<tr class=<%=style.getFrameTitle()%>><th align='left' class=<%=style.getFrameTitleLabel()%>><%=ref.getLabel(request)%></th></tr>
+		<tr><td class=<%=style.getFrameContent()%>>
 	<%
 				} // withFrame
 	%>	
@@ -119,10 +118,10 @@ while (it.hasNext()) {
 			if (withFrame) {
 	%>	
 		<table class=<%=style.getFrame()%> width='100%'>
-		<tr class=<%=style.getFrame()%>><th align='left'><%=collection.getLabel(request)%></th></tr>
-		<tr><td class=<%=style.getFrame()%>>		
+		<tr class=<%=style.getFrameTitle()%>><th align='left' class=<%=style.getFrameTitleLabel()%>><%=collection.getLabel(request)%></th></tr>
+		<tr><td class=<%=style.getFrameContent()%>>		
 	<%
-			} // conFrame
+			} // withFrame
 	%>	
 		<jsp:include page="<%=urlCollection%>"> 
 			<jsp:param name="collectionName" value="<%=collection.getName()%>"/>
@@ -148,8 +147,8 @@ while (it.hasNext()) {
 		<tr><td colspan="4">
 		<% } %>
 		<table class=<%=style.getFrame()%> style="float:left; margin-right:4px">
-		<tr class=<%=style.getFrame()%>><th align='left'><%=group.getLabel(request)%></th></tr>
-		<tr><td class=<%=style.getFrame()%>>
+		<tr class=<%=style.getFrameTitle()%>><th align='left' class=<%=style.getFrameTitleLabel()%>><%=group.getLabel(request)%></th></tr>
+		<tr><td class=<%=style.getFrameContent()%>>
 		<jsp:include page="detail.jsp">
 			<jsp:param name="viewObject" value="<%=viewName%>" />
 		</jsp:include>

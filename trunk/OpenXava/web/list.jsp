@@ -24,7 +24,7 @@ String lastRow = request.getParameter("lastRow");
 
 <% if (tab.isTitleVisible()) { %>
 <table width="100%" id="list-title">
-<tr><td align='center'>
+<tr><td class=<%=style.getListTitle()%>>
 <%=tab.getTitle()%>
 </td></tr>
 </table>
@@ -32,8 +32,8 @@ String lastRow = request.getParameter("lastRow");
 
 <table id="list" class=<%=style.getList()%> width="100%">
 <tr>
-<th class=<%=style.getList()%> width="60"><xava:image action="List.customize"/></th>
-<th class=<%=style.getList()%> width="5">
+<th class=<%=style.getListHeader()%> width="60"><xava:image action="List.customize"/></th>
+<th class=<%=style.getListHeader()%> width="5">
 <% if (tab.isCustomize()) { %><xava:image action="List.addColumns"/><% } %>
 </th>
 <%
@@ -44,7 +44,7 @@ int columnIndex = 0;
 while (it.hasNext()) {
 	MetaProperty property = (MetaProperty) it.next();
 %>
-<th class=<%=style.getList()%>>
+<th class=<%=style.getListHeader()%>>
 <% if (tab.isCustomize()) { %><xava:image action="List.moveColumnToLeft" argv='<%="columnIndex="+columnIndex%>'/><% } %>
 <%
 	if (property.isCalculated()) {		
@@ -57,14 +57,14 @@ while (it.hasNext()) {
 <%
 		if (tab.isOrderAscending(property.getQualifiedName())) {
 %>
-<img src="<%=request.getContextPath()%>/xava/images/ascending.gif" alt="Ordenado ascendentemente" border="0" align="middle"/>
+<img src="<%=request.getContextPath()%>/xava/images/<%=style.getAscendingImage()%>" alt="Ordenado ascendentemente" border="0" align="middle"/>
 <%
 		}
 %>
 <%
 		if (tab.isOrderDescending(property.getQualifiedName())) {
 %>
-<img src="<%=request.getContextPath()%>/xava/images/descending.gif" alt="Ordenado descendente" border="0" align="middle"/>
+<img src="<%=request.getContextPath()%>/xava/images/<%=style.getDescendingImage()%>" alt="Ordenado descendente" border="0" align="middle"/>
 <%
 		}
 %>
@@ -85,11 +85,11 @@ while (it.hasNext()) {
 %>
 </tr>
 <% if (filter) { %>
-<tr class=<%=style.getSearch()%>>
-<th class=<%=style.getSearch()%> width="60">
+<tr class=<%=style.getListSubheader()%>>
+<th class=<%=style.getListSubheader()%> width="60">
 <xava:button action="List.filter"/>
 </th>
-<th class=<%=style.getSearch()%> width="5"></th>
+<th class=<%=style.getListSubheader()%> width="5"></th>
 <%
 it = properties.iterator();
 String [] conditionValues = tab.getConditionValues();
@@ -109,7 +109,7 @@ while (it.hasNext()) {
 		iConditionValues++;
 		if (isValidValues) {
 	%>	
-<th class=<%=style.getSearch()%> align="left">
+<th class=<%=style.getListSubheader()%> align="left">
 <jsp:include page="comparatorsValidValuesCombo.jsp">
 	<jsp:param name="validValues" value="<%=property.getValidValuesLabels(request)%>" />
 	<jsp:param name="value" value="<%=value%>" />
@@ -118,12 +118,12 @@ while (it.hasNext()) {
 		}
 		else if (isBoolean) { 
 	%>
-<th class=<%=style.getSearch()%> align="left">
+<th class=<%=style.getListSubheader()%> align="left">
 <jsp:include page="comparatorsBooleanCombo.jsp">
 	<jsp:param name="comparator" value="<%=comparator%>" />
 </jsp:include>
 	<% } else { // Not boolean %>
-<th class=<%=style.getSearch()%> align="left">
+<th class=<%=style.getListSubheader()%> align="left">
 <% 
 String urlComparatorsCombo = "comparatorsCombo.jsp" // in this way because websphere 6 has problems with jsp:param
 	+ "?comparator=" + comparator
@@ -138,13 +138,13 @@ String urlComparatorsCombo = "comparatorsCombo.jsp" // in this way because websp
 	}
 	else {
 %>
-<th class=<%=style.getSearch()%>></th>
+<th class=<%=style.getListSubheader()%>></th>
 <%
 	} 
 } // while	
 %>
 </tr>
-<% } /* if (filtrar) */ %>
+<% } /* if (filter) */ %>
 <%
 int totalSize = 0;
 if (tab.isRowsHidden()) {
@@ -161,14 +161,11 @@ totalSize = tab.getTotalSize();
 if (totalSize > 0) {
 for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex(); f++) {
 	String checked=tab.isSelected(f)?"checked='true'":"";
-	String cssClass=f%2==0?style.getPair():style.getOdd();
+	String cssClass=f%2==0?style.getListPair():style.getListOdd();	
 	String cssStyle = tab.getStyle(request.getLocale(), f);
-	if (!org.openxava.util.Is.emptyString(cssStyle)) {
-		cssClass=cssClass + "-" + cssStyle;
-	}
 %>
 <tr class=<%=cssClass%>>
-	<td class=<%=cssClass%> align='center'>
+	<td class=<%=cssClass%> style='vertical-align: middle;text-align: center'>
 <xava:link action='<%=action%>' argv='<%="row="+f%>'/>
 	</td>
 	<td class=<%=cssClass%>>
@@ -177,7 +174,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 <%
 	for (int c=0; c<model.getColumnCount(); c++) {
 		MetaProperty p = tab.getMetaProperty(c);
-		String align = p.isNumber() && !p.hasValidValues()?"align='right'":"";
+		String align =p.isNumber() && !p.hasValidValues()?"style='vertical-align: middle;text-align: right'":"style='vertical-align: middle;'";
 		String fvalue = null;
 		if (p.hasValidValues()) {
 			fvalue = p.getValidValueLabel(request, model.getValueAt(f, c));
@@ -186,7 +183,11 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 			fvalue = WebEditors.format(request, p, model.getValueAt(f, c), errors);
 		}
 %>
-	<td class=<%=cssClass%> <%=align%>><%=fvalue%></td>
+	<td class=<%=cssClass%> <%=align%>>
+	<% if (cssStyle != null) { %> <div id="cellStyle" class=<%=cssStyle%>> <% } %>
+		<%=fvalue%>
+	<% if (cssStyle != null) { %> </div> <% } %>
+	</td>
 <%
 	}
 %>
@@ -214,8 +215,8 @@ if (lastRow != null) {
 </table>
 <% if (!tab.isRowsHidden()) { %>
 <table width="100%" class=<%=style.getListInfo()%>>
-<tr>
-<td>
+<tr class=<%=style.getListInfo()%>>
+<td class=<%=style.getListInfo()%>>
 <%
 int last=tab.getLastPage();
 int current=tab.getPage();
@@ -226,7 +227,7 @@ if (current > 1) {
 for (int i=1; i<=last; i++) {
 if (i == current) {
 %>	 
-<b> <%=i%> </b>
+ <b><%=i%></b>
 <% } else { %>
  <xava:link action='List.goPage' argv='<%="page="+i%>'><%=i%></xava:link>
 <% }} 
@@ -235,7 +236,7 @@ if (!tab.isLastPage()) {
  <xava:image action='List.goNextPage'/> 
 <% } %>	 
 </td>
-<td  align='right'>
+<td  align='right' class=<%=style.getListInfo()%>>
 <% if (XavaPreferences.getInstance().isShowCountInList()) { %>
 <fmt:message key="list_count">
 	<fmt:param><%=totalSize%></fmt:param> 
