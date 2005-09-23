@@ -11,7 +11,7 @@ import org.openxava.util.XavaException;
 
 /**
  * Program Generator created by TL2Java
- * @version Fri Sep 02 08:47:55 CEST 2005
+ * @version Fri Sep 23 17:12:39 CEST 2005
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -190,7 +190,7 @@ public class HibernatePG {
     			}         
     		}
     	} 
-    	else { // reference to entity or aggreate implemented as EJB
+    	else { // reference to entity or persistent aggregate 
     		Collection columns = mapping.getReferenceMapping(reference.getName()).getColumns();   
       		if (columns.size() == 1) {	
     			String column = (String) columns.iterator().next();
@@ -301,7 +301,7 @@ public class HibernatePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Fri Sep 02 08:47:55 CEST 2005", // date this file was generated
+        { "Fri Sep 23 17:12:39 CEST 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/hibernate.xml", // input file
              "/home/javi/workspace/OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

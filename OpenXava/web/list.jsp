@@ -30,7 +30,7 @@ String lastRow = request.getParameter("lastRow");
 </table>
 <% } %>
 
-<table id="list" class=<%=style.getList()%> width="100%">
+<table id="list" class=<%=style.getList()%> width="100%" <%=style.getListCellSpacing()%>>
 <tr>
 <th class=<%=style.getListHeader()%> width="60"><xava:image action="List.customize"/></th>
 <th class=<%=style.getListHeader()%> width="5">

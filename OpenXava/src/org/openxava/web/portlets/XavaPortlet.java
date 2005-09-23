@@ -76,9 +76,9 @@ public class XavaPortlet extends GenericPortlet {
 
 	private Style getStyle(RenderRequest request) {
 		if (style == null) {
-			String portal = request.getPortalContext().getPortalInfo().toLowerCase(); 
+			String portal = request.getPortalContext().getPortalInfo().toLowerCase();			
 			if (portal.indexOf("jetspeed") >= 0) style = JetSpeed2Style.getInstance();
-			// else if (portal.indexOf("websphere") >= 0) style = WebSpherePortalStyle.getInstace();
+			else if (portal.indexOf("websphere") >= 0) style = WebSpherePortalStyle.getInstance();
 			else style = Style.getInstance();
 		}
 		return style;

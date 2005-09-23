@@ -4,13 +4,13 @@ package org.openxava.web;
  * tmp: ¿Mover a paquete styles?
  * tmp: 
  * Falta probar:					JS2		WPS	
- * - Editores/Etiquetas				X
- * - Mensajes						X
- * - Vinculos modo					X
- * - Información lista				X
- * - Título lista					X
- * - Botones						X
- * - Botonera						X
+ * - Editores/Etiquetas				X		X
+ * - Mensajes(takes-long)			X		X
+ * - Vinculos modo					X		X
+ * - Información lista				X		X
+ * - Título lista					X		X
+ * - Botones						X		X
+ * - Botonera						X		X
  * - Marcos(grup, col, ref, edit)	X  
  * - Listas(highlight)				X 						 		
  * - Carpetas 						X
@@ -45,6 +45,10 @@ public class Style {
 	
 	public String getList() {  
 		return "list";
+	}
+	
+	public String getListCellSpacing() {
+		return ""; 
 	}
 	
 	public String getListHeader() { 

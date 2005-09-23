@@ -97,6 +97,11 @@ TD.frame {
 	font-size: x-small;
 }
 
+.websphere-list-title {
+	font-weight: bold;	
+}
+
+
 TD.mode {
 	font-weight: bold;	
 }
