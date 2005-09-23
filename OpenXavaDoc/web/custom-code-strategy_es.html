@@ -1,0 +1,56 @@
+&iquest;C&oacute;mo se puede insertar nuestra funcionalidad
+personalizada en un componente OpenXava?<br>
+<img style="float: right;" alt="openxava-component"
+ src="/OpenXavaDoc/images/openxava-component.jpg" align="middle"><br>
+<p></p>
+Las piezas azules son objetos que se pueden insertar en nuestros
+componentes, para que tengan nuestra propia funcionalidad. Usamos el
+patr&oacute;n cl&aacute;sico de dise&ntilde;o llamado Estrategia
+(Strategy o Policy).<br>
+Estos son los <span style="font-style: italic;">objetos
+estrat&eacute;gicos</span> que podemos insertar:<br>
+<ul>
+  <li><span style="font-weight: bold;">Calculadores (ICalculator):</span>
+Implementan l&oacute;gica de negocio. Usados para propiedades
+calculadas, para calcular valores por defecto o definir m&eacute;todos.</li>
+  <li><span style="font-weight: bold;">Validadores (IValidator):</span>
+Para validar los datos introducidos por el usuarios. Podemos definirlos
+a nivel de propiedad o a nivel de modelo.</li>
+  <li><span style="font-weight: bold;">Conversores (IConverter):</span>
+Permiten definir la conversi&oacute;n del tipo Java al tipo de la base
+de datos. Usado en el mapeo. Muy util cuando usamos bases de datos
+legadas.</li>
+  <li><span style="font-weight: bold;">Filtros (IFilter):</span>
+Permiten filtrar con nuestro c&oacute;digo los valores enviado al
+gestor de datos tabulares para ejecutar una consulta. Imprescindible
+para hacer aplicaciones reales.</li>
+</ul>
+Adem&aacute;s de en los componentes hay otras clases que nos permiten
+definir el comportamiento de una aplicaci&oacute;n OpenXava:<br>
+<ul>
+  <li><span style="font-weight: bold;">Acciones (IAction):</span> Son
+los objetos que reaccionan a las peticiones del usuario. Se definen en
+controladores.xml.</li>
+  <li><span style="font-weight: bold;">Formateadores (IFormatter):</span>
+Con un formateador podemos especificar como convertir de un formulario
+html (String) al tipo Java y viceversa. As&iacute; podemos definir el
+formato de visualizaci&oacute;n de los datos y su transformaci&oacute;n
+a Java.</li>
+  <li><span style="font-weight: bold;">Generador
+(IPropertyCodeGenerator):</span> Podemos definir nuestro propio
+generador de c&oacute;digo para ciertas propiedades.</li>
+</ul>
+Todos estos <span style="font-style: italic;">objetos de
+estrateg&iacute;a</span> se pueden configurar desde el XML dando
+valores a sus propiedades. De esa forma podemos hacer <span
+ style="font-style: italic;">objetos estrateg&iacute;a</span>
+configurables que podemos reutilizar varias veces. As&iacute; tenemos
+m&aacute;s XML y menos Java.<br>
+De esta forma se tiene suficiente funcionalidad para adaptarse a
+practicamente cualquier necesidad de una aplicaci&oacute;n de
+gesti&oacute;n real. Pero adem&aacute;s, existe la posibilidad de
+escribir a mano de forma &iacute;ntegra el EJB con la l&oacute;gica de
+negocio, o si lo deseamos la interfaz gr&aacute;fica usando
+directamente JSP. Aunque esta virtud existe&nbsp; para aprovechar
+c&oacute;digo ya hecho y no suele ser necesario cuando se escribe
+c&oacute;digo nuevo.<br>

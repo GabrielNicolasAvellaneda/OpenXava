@@ -1,0 +1,12 @@
+Die Geschaftskomponenten bilden die Grundlage einer OpenXava Applikation.
+<br>
+<br>
+Eine Geschaftskomponente (oder OpenXava Komponente) enthalt alle Informationen die mit einem Geschaftskonzept verbunden sind.<br><br>
+Nehmen wir zum Beispiel das Konzept einer Rechnung; alle Informationen einer Rechung werden in der Datei Rechnung.xml definiert.<br>
+In dieser Datei werden alle Überprufungen, Daten, die Geschaftslogik, die grafische Benutzeroberfläche, Tabellendaten, das Datenbankmapping, etc. definiert.<br><br>
+J2EE teilt die Entwickler in verschiedene technische Gruppen auf: Grafikdesigner, Programmierer der Geschaftslogik, <span style="font-style: italic;">Deployer</span> (konfiguiert die Applikation), etc. <br>
+Im Gegenteil dazu versucht OpenXava diese Teilung auf der Grundlage der Funktionalitat, und uberlasst OpenXava die technischen Probleme (grafische Benutzeroberflache, Datenbankzugriff, etc.)
+<br><br>
+In der Praxis hat sich dieser Ansatz bewahrt, vor allen Dingen wenn man im Team arbeitet mit CVS.<br>
+<p>Dadurch das Geschaftskomponenten die Grundlage bilden, ist diese Architektur fur den Anwendungsentwickler einfach, wie man im folgenden sieht:
+<img src="/OpenXavaDoc/images/openxava-architecture.jpg"><br><br>

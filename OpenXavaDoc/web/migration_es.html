@@ -1,0 +1,60 @@
+<h2>Para migrar de OpenXava 1.1 a OpenXava 1.2</h2>
+
+<h4>C&oacute;digo generado</h4>
+Ahora las interfaces remote de EJB tienen el sufijo <i>Remote</i>, y la
+interfaz de negocio generada para cada componente (por ejemplo <code>ICliente</code>)
+no contiene todos los m&eacute;todos de la interface remota.<br>
+Esto es para permitir que la futura versi&oacute;n 2 de OpenXava pueda trabajar
+con EJB e Hibernate en el mismo projecto y a la vez.<br>
+Para adaptar el c&oacute;digo hay que:
+<ul>
+<li>Borrar todo el c&oacute;digo generado
+<li>Regenerar el c&oacute;digo EJB
+<li>Compilar
+<li>Buscar y corregir los errores de sintaxis
+</ul>
+Para corregir los errores de sintaxis se tiene que hacer cambios como &eacute;ste:
+<pre>
+<b>Cliente</b> cliente = ClienteUtil.getHome().findByNombre("PEPE");
+String nombre = cliente.getNombre();
+</pre>
+Cambiarlo por:
+<pre>
+<b>ICliente</b> cliente = ClienteUtil.getHome().findByNombre("PEPE");
+String nombre = cliente.getNombre();
+</pre>
+Si se usan m&eacute;todos espec&iacute;ficos de EJB hay que moldear a la interfaz remota:
+<pre>
+<b>Cliente</b> cliente = ClienteUtil.getHome().findByNombre("PEPE");
+ClienteKey key = cliente.getPrimaryKey();
+</pre>
+Cambiarlo por:
+<pre>
+<b>ClienteRemote</b> cliente = ClienteUtil.getHome().findByNombre("PEPE");
+ClienteKey key = cliente.getPrimaryKey();
+</pre>
+Es decir, cambiar <code>Cliente</code> por <code>ICliente</code> cuando sea posible,
+de no serlo cambiarlo por <code>CustomeRemote</code>.
+</p>
+
+<h4>Otros</h4>
+<ul>
+<li> Cambia el nombre packages-ejb.properties en gen-src-xava a packages.properties
+		(o simplemente borrar packages-ejb.properties y regenera código).
+</li>
+</ul>
+
+<h2>Para migrar de OpenXava 1.0 a OpenXava 1.1</h2>
+
+<h4>APIs</h4>
+<ul>
+<li>MetaView.getMetaViewCollection pasa a llamarse MetaView.getMetaCollectionView
+<li>MetaView.getMetaViewReference pasa a llamarse MetaView.getMetaReferenceView
+</ul>
+
+<h4>Pruebas junit</h4>
+<ul>
+<li> Se cambia el mensaje 'Objeto borrado satisfactoriamente' por 
+	'{0} borrado satisfactoriamente'. As&iacute; es necesario cambiar los asserts
+	de este mensaje.
+</ul>
