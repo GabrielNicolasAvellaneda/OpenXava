@@ -63,5 +63,128 @@
 		</supports>
 		<resource-bundle>Future</resource-bundle>		
 	</portlet> 
-		
+	
+	<portlet id="Tutorial">
+		<description>Tutorial</description>    
+		<portlet-name>Tutorial</portlet-name>
+		<display-name>Tutorial</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>tutorial</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<resource-bundle>Tutorial</resource-bundle>		
+	</portlet> 
+	
+	<portlet id="FAQ">
+		<description>FAQ</description>    
+		<portlet-name>FAQ</portlet-name>
+		<display-name>FAQ</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>faq</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<resource-bundle>FAQ</resource-bundle>		
+	</portlet> 
+	
+	<portlet id="WebSphere">
+		<description>WebSphere</description>    
+		<portlet-name>WebSphere</portlet-name>
+		<display-name>WebSphere</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>websphere</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<resource-bundle>WebSphere</resource-bundle>		
+	</portlet> 
+	
+	<portlet id="CustomCode">
+		<description>CustomCode</description>    
+		<portlet-name>CustomCode</portlet-name>
+		<display-name>CustomCode</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>custom-code-strategy</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<resource-bundle>CustomCode</resource-bundle>		
+	</portlet> 
+
+	<portlet id="BusinessComponent">
+		<description>BusinessComponent</description>    
+		<portlet-name>BusinessComponent</portlet-name>
+		<display-name>BusinessComponent</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>business-component</value>
+		</init-param>
+		<init-param>
+			<name>Languages</name>
+			<value>en,es,de</value>
+		</init-param>		
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<resource-bundle>BusinessComponent</resource-bundle>		
+	</portlet> 
+	
+	<portlet id="Migration">
+		<description>Migration</description>    
+		<portlet-name>Migration</portlet-name>
+		<display-name>Migration</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>migration</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<resource-bundle>Migration</resource-bundle>		
+	</portlet> 
+	
+	<portlet id="Credits">
+		<description>Credits</description>    
+		<portlet-name>Credits</portlet-name>
+		<display-name>Credits</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>credits</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<resource-bundle>Credits</resource-bundle>		
+	</portlet> 
+						
 </portlet-app>

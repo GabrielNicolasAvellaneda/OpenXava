@@ -1,0 +1,273 @@
+<p>OpenXava generates J2EE aplications deployables in <span
+ style="font-style: italic;">IBM Websphere
+Application Server 5.0, 5.1 y 6.0</span>.</p>
+<p>Doing this simply requires executing a ant target that generates an
+EAR compatible with Websphere. Touching your code or XML files is not
+necessary.</p>
+<p>This allows you developing your application using JBoss (hence in an
+agile
+way) and when it is ready for production deploy it in Websphere and of
+course test it.</p>
+This document is a guide for deploying an OpenXava application in
+Websphere. If you does not have one yet it's better that before this
+guide follow the tutorial of OpenXava, and you will obtain a <span
+ style="font-family: monospace;">MySchool.ear</span>.<br>
+<br>
+The next instrusctions works with Websphere 5.0, 5.1 and 6.0. In the
+examples you will connect to an AS/400, but is very easy using another
+database instead.<br>
+<br>
+The steps to follow are:<br>
+<ul>
+  <li><a href="#Crear_una_aplicacion_J2EE_compatible_con">Create a J2EE
+Websphere compatible application.</a></li>
+  <li><a href="#Instalar_Websphere">Install Websphere.</a></li>
+  <li><a href="#Configurar_origenes_de_datos">Setup Data Sources.</a></li>
+  <li><a href="#Crear_tablas_en_la_base_de_datos">Create tables in
+database.</a></li>
+  <li><a href="#Instalar_aplicacion">Install application.</a></li>
+  <li><a href="#Ejecutar_la_aplicacion">Execute application.</a></li>
+</ul>
+<h4><a name="Crear_una_aplicacion_J2EE_compatible_con"></a>Create a
+J2EE Websphere compatible application</h4>
+Open your Eclipse and make that it point to the <span
+ style="font-style: italic;">workspace</span> that comes with OpenXava
+distribution.<br>
+<ul>
+  <li>Edit <span style="font-family: monospace;">MySchool/build.xml</span>
+and set the variable <span style="font-family: monospace;">configuration</span>
+to&nbsp;<span style="font-family: monospace;">websphere-as400</span>.</li>
+  <li>Regenerate code, with the ant target <span
+ style="font-style: italic;">MySchool.regenerateEJB</span>.</li>
+  <li>Compile, click on <span style="font-style: italic;">Build</span>.</li>
+  <li>Execute the target ant <span style="font-style: italic;">MySchool.createWebsphereEar</span>.</li>
+</ul>
+And now you have in <span style="font-family: monospace;">MySchool.dist</span>
+a file named <span style="font-family: monospace;">MySchool.ear</span>
+ready to deploy in Websphere.
+<h4><a name="Instalar_Websphere"></a>Install Websphere</h4>
+This step is your own business. Use the IBM instructions about this
+topic and have luck. Install the last patch level too.<br>
+<h4><a name="Configurar_origenes_de_datos"></a>Setup Data Sources</h4>
+Open the admin console, going to <a href="http://localhost:9090/admin">http://localhost:9090/admin</a>
+(or <a href="http://localhost:9060/admin">http://localhost:9060/admin</a>
+&nbsp;in version 6)<span style="font-weight: bold;"><br>
+</span>First you have to create a J2C entry, that contains an alias for
+an user/password that you will use in order to authenticate against
+your
+database.<span onclick="dr4sdgryt2()" style=""><span
+ style="text-decoration: underline;"><span style="font-weight: bold;"></span></span></span><br>
+<ul>
+  <li><span style="color: rgb(0, 0, 0);"></span>In version 5/5.1: Go to
+    <span style="font-style: italic;">Security &gt;JAAS
+Configuration &gt; J2C Authentication Data</span>.&nbsp;</li>
+  <li><span style="color: rgb(255, 0, 0);"></span>In version 6: Go to<span
+ style="font-style: italic;"> Security &gt; Global Security &gt; JAAS
+Configuration (on right) &gt;&nbsp;J2C Authentication Data</span></li>
+  <li>Click&nbsp;<span style="font-style: italic;">New</span>.</li>
+  <li>In&nbsp;<span style="font-style: italic;">Alias</span>
+fielD type&nbsp;<span style="font-family: monospace;">openxava</span>
+(or another one of your choice).</li>
+  <li>In <span style="font-style: italic;">User ID</span> field&nbsp;<span
+ style="font-style: italic;"></span>type the name of a database user.</li>
+  <li>In <span style="font-style: italic;">Password</span> field type
+the password of that user.</li>
+  <li>Click&nbsp;<span style="font-style: italic;">OK</span>.</li>
+  <li>Click&nbsp;<span style="font-style: italic;">Save</span> that
+goes to another page and click in <span style="font-style: italic;">Save</span>
+button.</li>
+</ul>
+Register your JDBC driver:<br>
+<ul>
+  <li>Go to <span style="font-style: italic;">Resources &gt; JDBC
+Providers</span>.</li>
+  <li>Click <span style="font-style: italic;">New</span>.</li>
+  <li><span style="color: rgb(255, 0, 0);"></span>In version 5/5.1:</li>
+  <ul>
+    <li>In&nbsp;<span style="font-style: italic;">JDBC Providers</span>
+field choose <span style="font-style: italic;">DB2 UDB for
+iSeries
+(Toolbox XA)</span>, or the driver for your database, always the XA
+version.</li>
+    <li>Click&nbsp;<span style="font-style: italic;">Apply</span>.</li>
+    <li>In&nbsp;<span style="font-style: italic;">Classpath</span>
+field type the path for your JDBC Driver (including jar name).</li>
+    <li>Click <span style="font-style: italic;">Apply</span>.</li>
+  </ul>
+  <li><span style="color: rgb(255, 0, 0);"></span>In version 6:</li>
+  <ul>
+    <li>Step 1: Choose DB2 (or your database type).</li>
+    <li>Step 2: DB2 UDB for iSeries (Toolbox) (or your provider type).</li>
+    <li>Step 3: XA data source (always this).</li>
+    <li>Click <span style="font-style: italic;">Next</span>.</li>
+    <li>In&nbsp;<span style="font-style: italic;">Classpath</span>
+field type the path for your JDBC Driver (including jar name).</li>
+    <li>Click <span style="font-style: italic;">Apply</span>.</li>
+  </ul>
+</ul>
+Register the Data Source for OpenXava:
+<ul>
+  <li>Click in&nbsp;<span style="font-style: italic;">Data Sources</span>
+(it's on bottom in 5/5.1, it's on right in 6).</li>
+  <li>Click&nbsp;<span style="font-style: italic;">New</span>.</li>
+  <li>In <span style="font-style: italic;">Name</span>
+field type&nbsp;<span style="font-family: monospace;">OpenXavaDS</span></li>
+  <li>In <span style="font-style: italic;">JNDI Name</span>
+field type&nbsp;<span style="font-family: monospace;">jdbc/OpenXavaDS</span></li>
+  <li>In&nbsp;<span style="font-style: italic;">Component-managed
+Authentication Alias</span> field choose <span
+ style="font-style: italic;">xxxx/openxava</span>.</li>
+  <li>In <span style="font-style: italic;">Container-managed
+Authentication Alias</span> choose&nbsp;<span
+ style="font-style: italic;">xxxx/openxava</span>.</li>
+  <li>In version 5/5.1:</li>
+  <ul>
+    <li>Click&nbsp;<span style="font-style: italic;">Apply</span>.</li>
+    <li>Click&nbsp;<span style="font-style: italic;">Custom Properties</span>,
+this goes to another page.</li>
+    <li>Click&nbsp;<span style="font-style: italic;">serverName</span>&nbsp;
+and in <span style="font-style: italic;">Value</span> field type the
+IP
+of your AS/400 (this only for AS/400).</li>
+    <li>Click&nbsp;<span style="font-style: italic;">OK</span>.</li>
+  </ul>
+  <li>In version 6:</li>
+  <ul>
+    <li>In <span style="font-style: italic;">serverName</span> field
+type&nbsp;the
+IP
+of your AS/400 (this only for AS/400).</li>
+    <li>Click <span style="font-style: italic;">OK</span>.</li>
+  </ul>
+</ul>
+Registre the Data Source for your application:
+<ul>
+  <li>Go to&nbsp;<span style="font-style: italic;">Data Sources</span>.</li>
+  <li>Click&nbsp;<span style="font-style: italic;">New</span>.</li>
+  <li>In <span style="font-style: italic;">Name</span>
+field type <span style="font-family: monospace;">MySchoolDS</span></li>
+  <li>In<span style="font-style: italic;"> JNDI Name</span>
+field type <span style="font-family: monospace;">jdbc/MySchoolDS</span></li>
+  <li>Check the checkbox&nbsp;<span style="font-style: italic;">Container
+managed persistence</span>.</li>
+  <li>In&nbsp;&nbsp;<span style="font-style: italic;">Component-managed
+Authentication Alias</span> field choose <span
+ style="font-style: italic;">xxxx/openxava</span>.</li>
+  <li>In <span style="font-style: italic;">Container-managed
+Authentication Alias</span> choose&nbsp;<span
+ style="font-style: italic;">xxxx/openxava</span>.</li>
+  <li>In version 5/5.1:</li>
+  <ul>
+    <li>Click&nbsp;<span style="font-style: italic;">Apply</span>.</li>
+    <li>Click&nbsp;<span style="font-style: italic;">Custom Properties</span>,
+this goes to another page.</li>
+    <li>Click&nbsp;<span style="font-style: italic;">serverName</span>&nbsp;
+and in <span style="font-style: italic;">Value</span> fiel type the IP
+of your AS/400 (this only for AS/400).</li>
+    <li>Click&nbsp;<span style="font-style: italic;">OK</span>.</li>
+  </ul>
+  <li>In version 6:</li>
+  <ul>
+    <li>In <span style="font-style: italic;">serverName</span> field
+type&nbsp;the
+IP
+of your AS/400 (this only for AS/400).</li>
+    <li>Click <span style="font-style: italic;">OK</span>.</li>
+  </ul>
+  <li>Click&nbsp;<span style="font-style: italic;">Save</span> that
+goes to another page and click in <span style="font-style: italic;">Save</span>
+button.</li>
+</ul>
+Verify the Data Sources just defined:<br>
+<ul>
+  <li>Go to <span style="font-style: italic;">Resources &gt; JDBC
+Providers</span>.</li>
+  <li>Click&nbsp;<span style="font-style: italic;">DB2 UDB for iSeries</span>.</li>
+  <li>Click&nbsp;<span style="font-style: italic;">Data Sources</span>
+(It's on bottom).</li>
+  <li>Choose the two data sources just created by you.</li>
+  <li>Click on <span style="font-style: italic;">Test Connection</span>
+button.</li>
+</ul>
+If message is satisfactory you have concluded well this step.<br>
+<h4><a name="Crear_tablas_en_la_base_de_datos"></a>Create&nbsp;tables
+in database</h4>
+Execute the next script against your DB:<br>
+<pre>CREATE COLLECTION OPENXAVA;<br><br>CREATE TABLE OPENXAVA.TABUSERPREFERENCES<br>	(OID INTEGER GENERATED BY DEFAULT AS IDENTITY(START WITH 0) NOT NULL PRIMARY KEY,<br>	USER VARCHAR(20),<br>	TAB VARCHAR(100),<br>	PROPERTIESNAMES VARCHAR(512));<br>	<br>CREATE INDEX OPENXAVA.TABUSERPREFERENCES01 <br>	ON OPENXAVA.TABUSERPREFERENCES(USER,TAB);<br><br>CREATE COLLECTION MYSCHOOL;</pre>
+<pre>CREATE TABLE MYSCHOOL.TEACHER(ID VARCHAR(5) NOT NULL PRIMARY KEY,NAME<br>VARCHAR(40));</pre>
+<pre>CREATE TABLE MYSCHOOL.PUPIL(NUMBER INTEGER NOT NULL PRIMARY KEY,NAME<br>VARCHAR(40),TEACHER VARCHAR(5));</pre>
+<pre>INSERT INTO MYSCHOOL.TEACHER VALUES('JP','FRANCISCO JAVIER PANIZA<br>LUCAS');</pre>
+<pre>INSERT INTO MYSCHOOL.TEACHER VALUES('MC','M. CARMEN GIMENO ALABAU');</pre>
+<pre>INSERT INTO MYSCHOOL.PUPIL VALUES(1,'LARS',NULL);</pre>
+<pre>INSERT INTO MYSCHOOL.PUPIL VALUES(2,'ANA','JP');</pre>
+<pre>INSERT INTO MYSCHOOL.PUPIL VALUES(3,'LUIS MIGUEL','JP');</pre>
+<pre>INSERT INTO MYSCHOOL.PUPIL VALUES(4,'MIGUEL',NULL);</pre>
+<h4><a name="Instalar_aplicacion"></a>Install application</h4>
+In order to install your application you have to do:<br>
+<ul>
+  <li>Go to <span style="font-style: italic;">Applications &gt;
+Enterprise Applications</span>.</li>
+  <li>Click&nbsp;<span style="font-style: italic;">Install</span>.</li>
+  <li>Click <span style="font-style: italic;">Examine</span> in&nbsp;<span
+ style="font-style: italic;">Local path</span> field, and choose your
+application ear.</li>
+  <li>Click&nbsp;<span style="font-style: italic;">Next</span>.</li>
+  <li>Click&nbsp;<span style="font-style: italic;">Next</span>.</li>
+  <li>Click&nbsp;<span style="font-style: italic;">Continue</span>.</li>
+  <li>Step 1: Click&nbsp;<span style="font-style: italic;">Next</span>.</li>
+  <li>In version 5/5.1:</li>
+  <ul>
+    <li>Step 2: Choose&nbsp;<span style="font-style: italic;">DB2UDBISERIES</span>
+or the appropriate for you database and click&nbsp;<span
+ style="font-style: italic;">Next</span>.&nbsp;</li>
+  </ul>
+  <li>In version 6:</li>
+  <ul>
+    <li>Step 2:&nbsp;Click <span style="font-style: italic;">Next</span>.</li>
+    <li>Step 3: Choose&nbsp;<span style="font-style: italic;">DB2UDBISERIES</span>
+or the appropriate for you database and click&nbsp;<span
+ style="font-style: italic;">Next</span>.&nbsp;</li>
+    <li>Step 6: A warning is shown. Press <span
+ style="font-style: italic;">Continue</span>.</li>
+    <li>Step 8: A warning is shown. Press <span
+ style="font-style: italic;">Continue</span>.</li>
+  </ul>
+  <li>In the others steps click&nbsp;<span style="font-style: italic;">Next</span>,
+until <span style="font-style: italic;">Finish</span> appears, click
+it too.</li>
+  <li>Be patient, your application is now deploying...</li>
+  <li>Click&nbsp;<span style="font-style: italic;">Manage applications</span>.</li>
+  <li>Click on&nbsp;<span style="font-style: italic;">MySchool</span>.</li>
+  <li>In&nbsp;<span style="font-style: italic;">WAR Classloader Policy</span>
+choose&nbsp;<span style="font-style: italic;">Application</span>.</li>
+  <li>Click&nbsp;<span style="font-style: italic;">Apply</span>.</li>
+  <li>Click&nbsp;<span style="font-style: italic;">Web Modules</span>
+(it's on bottom).</li>
+  <li>Click&nbsp;<span style="font-style: italic;">MySchool.war</span>.</li>
+  <li>In&nbsp;<span style="font-style: italic;">Classloader Mode</span>
+field choose <span style="font-style: italic;">PARENT_LAST</span>.</li>
+  <li>Click&nbsp;<span style="font-style: italic;">OK</span>.</li>
+  <li>Click&nbsp;<span style="font-style: italic;">Save</span> that
+goes to another page and click in <span style="font-style: italic;">Save</span>
+button.</li>
+</ul>
+<h4><a name="Ejecutar_la_aplicacion"></a>Execute the application</h4>
+Now everything is ready to execute you application in Websphere:<br>
+<ul>
+  <li>Go to <span style="font-style: italic;">Applications &gt;
+Enterprise Applications</span>.</li>
+  <li>Choose <span style="font-style: italic;">MySchool</span>
+application.</li>
+  <li>Click <span style="font-style: italic;">Start</span>.</li>
+  <li>With your Internet Browser go to <a
+ href="http://localhost:9080/MySchool/xava/module.jsp?application=MySchool&amp;module=Teachers">http://localhost:9080/MySchool/xava/module.jsp?application=MySchool&amp;module=Teachers</a>.</li>
+  <li>Test your application.</li>
+</ul>
+Also you can execute your JUnit Test, in your Eclipse:<br>
+<ul>
+  <li>Editt <span style="font-family: monospace;">MySchool/properties/xava-junit.properties</span>.</li>
+  <li>Change <span style="font-family: monospace;">port=8080</span>
+by <span style="font-family: monospace;">port=9080</span>.</li>
+  <li>Execute <span style="font-family: monospace;">TeachersTest</span>
+as a JUnit Test.</li>
+</ul>
