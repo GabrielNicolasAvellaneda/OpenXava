@@ -162,10 +162,11 @@ while (itReferences.hasNext()) {
 Iterator itCollections = metaModel.getMetaCollections().iterator();	
 while (itCollections.hasNext()) {	
 	MetaCollection col = (MetaCollection) itCollections.next();
-	boolean isAggregate = col.getMetaReference().getMetaModelReferenced() instanceof MetaAggregate;
 	if (col.hasCalculator() || col.hasCondition()) {
 		continue;
 	}
+	boolean isAggregate = col.getMetaReference().getMetaModelReferenced() instanceof MetaAggregate;
+	String cascadeDelete = isAggregate?"cascade='delete'":"";
 	String roleName = col.getMetaReference().getRole();	 
 	Collection columns = col.getMetaReference().getMetaModelReferenced().getMapping().getReferenceMapping(roleName).getColumns();
 	Collection cKeys = col.getMetaReference().getMetaModelReferenced().getAllKeyPropertiesNames();
@@ -173,7 +174,7 @@ while (itCollections.hasNext()) {
 	if (columns.size() == 1) {	
 		String column = (String) columns.iterator().next();
 </java>  
-		&lt;set name="<expr>col.getName()</expr>" order-by="<expr>nKeys</expr>"&gt;
+		&lt;set name="<expr>col.getName()</expr>" order-by="<expr>nKeys</expr>" <expr>cascadeDelete</expr>&gt;
 			&lt;key column="<expr>column</expr>"/&gt;
 			&lt;one-to-many class="<expr>col.getMetaReference().getMetaModelReferenced().getName()</expr>"/&gt;
 		&lt;/set&gt;	
@@ -181,7 +182,7 @@ while (itCollections.hasNext()) {
 	}	
 	else { 
 </java> 
-		&lt;set name="<expr>col.getName()</expr>" order-by="<expr>nKeys</expr>"&gt;
+		&lt;set name="<expr>col.getName()</expr>" order-by="<expr>nKeys</expr>" <expr>cascadeDelete</expr>&gt;
 			&lt;key&gt;
 <java>
 		Iterator itCol = columns.iterator();	
