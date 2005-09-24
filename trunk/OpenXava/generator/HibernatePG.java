@@ -11,7 +11,7 @@ import org.openxava.util.XavaException;
 
 /**
  * Program Generator created by TL2Java
- * @version Fri Sep 23 17:12:39 CEST 2005
+ * @version Sat Sep 24 12:41:15 CEST 2005
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -217,10 +217,11 @@ public class HibernatePG {
     Iterator itCollections = metaModel.getMetaCollections().iterator();	
     while (itCollections.hasNext()) {	
     	MetaCollection col = (MetaCollection) itCollections.next();
-    	boolean isAggregate = col.getMetaReference().getMetaModelReferenced() instanceof MetaAggregate;
     	if (col.hasCalculator() || col.hasCondition()) {
     		continue;
     	}
+    	boolean isAggregate = col.getMetaReference().getMetaModelReferenced() instanceof MetaAggregate;
+    	String cascadeDelete = isAggregate?"cascade='delete'":"";
     	String roleName = col.getMetaReference().getRole();	 
     	Collection columns = col.getMetaReference().getMetaModelReferenced().getMapping().getReferenceMapping(roleName).getColumns();
     	Collection cKeys = col.getMetaReference().getMetaModelReferenced().getAllKeyPropertiesNames();
@@ -232,7 +233,9 @@ public class HibernatePG {
     out.print(col.getName());
     out.print("\" order-by=\"");
     out.print(nKeys);
-    out.print("\">\n\t\t\t<key column=\"");
+    out.print("\" ");
+    out.print(cascadeDelete);
+    out.print(">\n\t\t\t<key column=\"");
     out.print(column);
     out.print("\"/>\n\t\t\t<one-to-many class=\"");
     out.print(col.getMetaReference().getMetaModelReferenced().getName());
@@ -245,7 +248,9 @@ public class HibernatePG {
     out.print(col.getName());
     out.print("\" order-by=\"");
     out.print(nKeys);
-    out.print("\">\n\t\t\t<key>");
+    out.print("\" ");
+    out.print(cascadeDelete);
+    out.print(">\n\t\t\t<key>");
     
     		Iterator itCol = columns.iterator();	
     		while (itCol.hasNext()) {	
@@ -301,9 +306,9 @@ public class HibernatePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Fri Sep 23 17:12:39 CEST 2005", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/hibernate.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/HibernatePG.java" }, // output file
+        { "Sat Sep 24 12:41:15 CEST 2005", // date this file was generated
+             "/home/mcarmen/workspace/OpenXava/generator/hibernate.xml", // input file
+             "/home/mcarmen/workspace/OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
