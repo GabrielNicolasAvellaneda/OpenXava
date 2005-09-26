@@ -33,7 +33,7 @@ public class View implements java.io.Serializable {
 	
 	private String editCollectionElementAction;
 	private boolean focusForward;
-	private String idFocusProperty;
+	private String focusPropertyId;
 	private Map membersNamesWithHidden;
 	private Map groupsViews;
 	private Collection membersNamesInGroup;
@@ -2339,14 +2339,14 @@ public class View implements java.io.Serializable {
 	}
 
 	/**
-	 * Tiene sentido si la subvista representa a una colección, aunque funciona siempre.	 
+	 * Has sense if the subview represents a collection, although always works.	 
 	 */
 	public Collection getActionsNamesDetail() {
 		return actionsNamesDetail==null?Collections.EMPTY_LIST:actionsNamesDetail;
 	}
 
 	/**
-	 * Tiene sentido si la subvista representa a una colección, aunque funciona siempre.	 
+	 * Has sense if the subview represents a collection, although always works.	 
 	 */
 	public void setActionsNamesDetail(Collection collection) {
 		actionsNamesDetail = collection;
@@ -2377,8 +2377,8 @@ public class View implements java.io.Serializable {
 		
 	public String getFocusPropertyId() { 
 		try {
-			if (!Is.emptyString(idFocusProperty) && !focusForward) return idFocusProperty;
-			return calcularIdPropiedadFoco();
+			if (!Is.emptyString(focusPropertyId) && !focusForward) return focusPropertyId;
+			return calculateFocusPropertyId();
 		}
 		catch (Exception ex) { 
 			ex.printStackTrace();
@@ -2387,61 +2387,61 @@ public class View implements java.io.Serializable {
 		}
 	}
 	
-	private String calcularIdPropiedadFoco() throws XavaException {		
-		String prefijo = Is.emptyString(getMemberName())?
+	private String calculateFocusPropertyId() throws XavaException {		
+		String prefix = Is.emptyString(getMemberName())?
 			"xava." + getModelName() + ".":
 			"xava." + getModelName() + "." + getMemberName() + ".";
 			
-		if (Is.emptyString(idFocusProperty)) {
-			return getIdPrimeraPropiedadEditable(prefijo);
+		if (Is.emptyString(focusPropertyId)) {
+			return getFirsEditablePropertyId(prefix);
 		}
 		else {			
-			String nombrePropiedadFoco = idFocusProperty.substring(prefijo.length());			
-			int idx = nombrePropiedadFoco.indexOf('.'); 
+			String focusPropertyName = focusPropertyId.substring(prefix.length());			
+			int idx = focusPropertyName.indexOf('.'); 
 			if (idx < 0) {			
-				String nombre = getNombreSiguientePropiedadFoco(nombrePropiedadFoco);
-				return nombre==null?getIdPrimeraPropiedadEditable(prefijo):prefijo + nombre;
+				String name = getNextFocusPropertyName(focusPropertyName);
+				return name==null?getFirsEditablePropertyId(prefix):prefix + name;
 			}
 			else {
-				String nombreSubvista = nombrePropiedadFoco.substring(0, idx);
-				String miembro = nombrePropiedadFoco.substring(idx + 1);
-				View subvista = getSubview(nombreSubvista);				
-				String nombre = subvista.getNombreSiguientePropiedadFoco(miembro);				
-				if (nombre != null) return prefijo + nombre;				
-				nombre = getNombreSiguientePropiedadFoco(nombreSubvista);				
-				return nombre==null?getIdPrimeraPropiedadEditable(prefijo):prefijo + nombre;				  
+				String subviewName = focusPropertyName.substring(0, idx);
+				String member = focusPropertyName.substring(idx + 1);
+				View subview = getSubview(subviewName);				
+				String name = subview.getNextFocusPropertyName(member);				
+				if (name != null) return prefix + name;				
+				name = getNextFocusPropertyName(subviewName);				
+				return name==null?getFirsEditablePropertyId(prefix):prefix + name;				  
 			}
 		}
 	}
 	
-	private String getIdPrimeraPropiedadEditable(String prefijo) throws XavaException {
+	private String getFirsEditablePropertyId(String prefix) throws XavaException {
 		Iterator it = getMetaProperties().iterator();
 		while (it.hasNext()) {
 			MetaProperty pr = (MetaProperty) it.next();
 			if (isEditable(pr)) {
-				return prefijo + pr.getName();
+				return prefix + pr.getName();
 			}
 		}
 		if (hasSections()) {
-			return getSectionView(getActiveSection()).getIdPrimeraPropiedadEditable(prefijo);
+			return getSectionView(getActiveSection()).getFirsEditablePropertyId(prefix);
 		}
 		return null;
 	}
 
-	private String getNombreSiguientePropiedadFoco(String nombreMiembro) throws XavaException {		
+	private String getNextFocusPropertyName(String memberName) throws XavaException {		
 		Iterator it = getMetaMembers().iterator();
-		boolean encontrado = false;		
+		boolean found = false;		
 		while (it.hasNext()) {
 			MetaMember m = (MetaMember) it.next();			
 			if (m instanceof MetaGroup) {
-				String nombre = getGroupView(m.getName()).getNombreSiguientePropiedadFoco(nombreMiembro);				
-				if (nombre != null) return nombre;
+				String name = getGroupView(m.getName()).getNextFocusPropertyName(memberName);				
+				if (name != null) return name;
 			}			
-			if (m.getName().equals(nombreMiembro)) {				
-				encontrado = true;
+			if (m.getName().equals(memberName)) {				
+				found = true;
 				continue;
 			}
-			if (!encontrado) continue;			
+			if (!found) continue;			
 			if (m instanceof MetaProperty &&
 				!(m instanceof PropertiesSeparator) && 
 				isEditable((MetaProperty) m)) {	
@@ -2461,13 +2461,13 @@ public class View implements java.io.Serializable {
 			}			
 		}
 		if (hasSections()) {
-			return getSectionView(getActiveSection()).getNombreSiguientePropiedadFoco(nombreMiembro);
+			return getSectionView(getActiveSection()).getNextFocusPropertyName(memberName);
 		}		
 		return null;
 	}
 
 	private void setIdFocusProperty(String string) {
-		idFocusProperty = string;
+		focusPropertyId = string;
 	}
 
 	public String getEditCollectionElementAction() {
