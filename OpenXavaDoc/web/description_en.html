@@ -1,44 +1,36 @@
 OpenXava is a framework to develop easily business applications
 with
 XML and Java.<br>
-<br>
 Its virtue
 resides in the fact that the heart of our applications is XML instead
 of Java.<br>
-<br>
-Features:<br>
-<ul>
-  <li>Has been used during years
-to develop real applications.</li>
-  <li>It's focused to make <span style="font-weight: bold;">easy</span>
-to use and to obtain a very high productivity. </li>
-  <li>Learn curve very short.</li>
-  <li><span style="font-weight: bold;">Flexible:</span>
-It's possible
-to insert our own functionality in every place.</li>
-  <li>Based in the concept of
-business component.</li>
-  <li>Totally MVC.</li>
-  <li>Web user interface with rich
-features like <span id="transl1">sophisticated</span>
-business applications.</li>
-  <li>Adapted to work with legacy
-database schemas. </li>
-  <li>Generate a full J2EE
-application (including EJB).</li>
-  <li>Based in standars as XML,
-J2EE, EJB, JSP, etc.<br>
-  </li>
-  <li>Its <span style="font-weight: bold;">Open Source</span>
-(LGPL)
-and based in other Open Source tools like Ant, JUnit, JasperReports,
-TL, XDocLet, Hibernate, etc.</li>
-  <li>The developer can use
-English or Spanish.</li>
-  <li>All labels and messages are
-in <span style="font-weight: bold;">English</span>, <span
- style="font-weight: bold;">Spanish</span>
-and <span style="font-weight: bold;">Catalan</span>;
-by now...<br>
-  </li>
-</ul>
+For example, if you like a J2EE application that works with <i>Pupils</i> 
+you only need to write this simple XML code:
+<pre>
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE component SYSTEM "dtds/component.dtd">
+
+<component name="Pupil">
+
+    <entity>
+        <property name="number" type="int" key="true"
+            size="2" required="true"/>
+        <property name="name" type="String"
+            size="40" required="true"/>             
+    </entity>
+                       
+    <entity-mapping table="MYSCHOOL@separator@PUPIL">
+        <property-mapping property="number" column="NUMBER"/>
+        <property-mapping property="name" column="NAME"/>
+    </entity-mapping>
+               
+</component>
+</pre>
+And no more. No Java classes, no XML files for mapping objects, no design
+of JSP or JSF pages, simply no more.
+OpenXava generates for you a complete J2EE application (with CMP EJB or Hibernate
+for persistence), and with a suitable User Interface for manage your <i>Pupil</i>.<br>
+The resulting application allows you make CRUD operations, searching, filtering, ordering,
+generating reports in PDF format, export to excel, etc.<br>
+But is flexible enough to 

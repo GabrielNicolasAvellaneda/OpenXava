@@ -18,10 +18,6 @@
 			<name>Page</name>
 			<value>description</value>
 		</init-param>
-		<init-param>
-			<name>Languages</name>
-			<value>en,es,de</value>
-		</init-param>		
 		<expiration-cache>-1</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>
@@ -29,6 +25,23 @@
 		</supports>
 		<resource-bundle>Description</resource-bundle>		
 	</portlet> 
+	
+	<portlet id="Features">
+		<description>Features</description>    
+		<portlet-name>Features</portlet-name>
+		<display-name>Features</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>features</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<resource-bundle>Features</resource-bundle>		
+	</portlet> 	
 	
 	<portlet id="New">
 		<description>New</description>    
@@ -45,23 +58,6 @@
 			<portlet-mode>VIEW</portlet-mode>
 		</supports>
 		<resource-bundle>New</resource-bundle>		
-	</portlet> 
-	
-	<portlet id="Future">
-		<description>Future</description>    
-		<portlet-name>Future</portlet-name>
-		<display-name>Future</display-name>    
-		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
-		<init-param>
-			<name>Page</name>
-			<value>future</value>
-		</init-param>
-		<expiration-cache>-1</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>VIEW</portlet-mode>
-		</supports>
-		<resource-bundle>Future</resource-bundle>		
 	</portlet> 
 	
 	<portlet id="Tutorial">
@@ -186,5 +182,23 @@
 		</supports>
 		<resource-bundle>Credits</resource-bundle>		
 	</portlet> 
+	
+	<portlet id="WebSpherePortal">
+		<description>WebSpherePortal</description>    
+		<portlet-name>WebSpherePortal</portlet-name>
+		<display-name>WebSpherePortal</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>websphere-portal</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<resource-bundle>WebSpherePortal</resource-bundle>		
+	</portlet> 
+	
 						
 </portlet-app>
