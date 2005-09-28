@@ -20,6 +20,12 @@
 		<formatter class="org.openxava.formatters.BooleanFormatter"/>      	    <for-type type="boolean"/>    <for-type type="java.lang.Boolean"/>  </editor>        <editor url="dateCalendarEditor.jsp">
 	<formatter class="org.openxava.formatters.DateFormatter"/>    <for-type type="java.util.Date"/>  </editor>    
 
+  <editor url="textEditor.jsp">
+		<formatter class="org.openxava.formatters.TimeFormatter"/>
+    <for-stereotype stereotype="HORA"/>
+    <for-stereotype stereotype="TIME"/>		
+  </editor>	
+
   <editor url="moneyEditor.jsp">		
     <for-stereotype stereotype="DINERO"/>
 		<for-stereotype stereotype="MONEY"/>
