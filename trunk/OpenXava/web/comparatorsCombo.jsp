@@ -1,6 +1,6 @@
 <%@ include file="imports.jsp"%>
 
-<jsp:useBean id="style" class="org.openxava.web.Style" scope="request"/>
+<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%
 String comparator = request.getParameter("comparator");

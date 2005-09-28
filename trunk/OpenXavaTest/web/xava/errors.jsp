@@ -1,5 +1,5 @@
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
-<jsp:useBean id="style" class="org.openxava.web.Style" scope="request"/>
+<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 
 <%

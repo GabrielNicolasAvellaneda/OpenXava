@@ -19,10 +19,10 @@ public interface SellerRemote
    public int getNumber(  )
       throws java.rmi.RemoteException;
 
-   public void addToCustomers( org.openxava.test.model.CustomerRemote newElement )
+   public void addToCustomers( org.openxava.test.model.ICustomer newElement )
       throws java.rmi.RemoteException;
 
-   public void removeFromCustomers( org.openxava.test.model.CustomerRemote toRemove )
+   public void removeFromCustomers( org.openxava.test.model.ICustomer toRemove )
       throws java.rmi.RemoteException;
 
    public java.util.Collection getCustomers(  )

@@ -28,7 +28,7 @@
 
   <editor url="moneyEditor.jsp">		
     <for-stereotype stereotype="DINERO"/>
-		<for-stereotype stereotype="MONEY"/>
+	<for-stereotype stereotype="MONEY"/>
   </editor>
     
   <editor url="imageEditor.jsp" format="false">

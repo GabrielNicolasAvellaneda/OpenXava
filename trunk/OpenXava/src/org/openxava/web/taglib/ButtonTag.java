@@ -7,6 +7,7 @@ import javax.servlet.jsp.tagext.*;
 import org.openxava.controller.*;
 import org.openxava.controller.meta.*;
 import org.openxava.web.*;
+import org.openxava.web.style.*;
 
 
 /**

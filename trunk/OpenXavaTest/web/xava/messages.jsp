@@ -1,5 +1,5 @@
 <jsp:useBean id="messages" class="org.openxava.util.Messages" scope="request"/>
-<jsp:useBean id="style" class="org.openxava.web.Style" scope="request"/>
+<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <% 
 if (messages.contains()) {

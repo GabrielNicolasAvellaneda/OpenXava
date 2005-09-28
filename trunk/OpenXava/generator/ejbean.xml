@@ -782,6 +782,7 @@ while (itCollections.hasNext()) {
 	String homeClass = referencedModel.getHome();
 	String referencedModelName = reference.getReferencedModelName();
 	String referencedModelClass = referencedModel.getRemote();
+	String referencedModelInterface = referencedModel.getInterfaceName();
 	String referencedJNDI = referencedModel.getJndi();
 	String homeAttribute = Strings.firstLower(collectionName) + "Home";
 	String getHome = "get" + Strings.firstUpper(homeAttribute);
@@ -799,10 +800,10 @@ while (itCollections.hasNext()) {
 	/**
 	 * @ejb:interface-method
 	 */
-	public void addTo<expr>collectionName</expr>(<expr>referencedModelClass</expr> newElement) {
+	public void addTo<expr>collectionName</expr>(<expr>referencedModelInterface</expr> newElement) {
 		if (newElement != null) { 
 			try {
-				newElement.set<expr>role</expr>Key((<expr>keyClass</expr>) getEntityContext().getPrimaryKey());
+				((<expr>referencedModelClass</expr>) newElement).set<expr>role</expr>Key((<expr>keyClass</expr>) getEntityContext().getPrimaryKey());
 			}
 			catch (Exception ex) {
 				ex.printStackTrace();
@@ -814,10 +815,10 @@ while (itCollections.hasNext()) {
 	/**
 	 * @ejb:interface-method
 	 */
-	public void removeFrom<expr>collectionName</expr>(<expr>referencedModelClass</expr> toRemove) {
+	public void removeFrom<expr>collectionName</expr>(<expr>referencedModelInterface</expr> toRemove) {
 		if (toRemove != null) {
 			try {
-				toRemove.set<expr>role</expr>Key(null);
+				((<expr>referencedModelClass</expr>) toRemove).set<expr>role</expr>Key(null);
 			}
 			catch (Exception ex) {
 				ex.printStackTrace();

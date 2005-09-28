@@ -17,6 +17,7 @@ public class LinkTag extends TagSupport implements IActionTag {
 
 	private String action;
 	private String argv;
+	private String cssClass;
 	private boolean hasBody;
 
 	public int doStartTag() throws JspException {		
@@ -39,7 +40,12 @@ public class LinkTag extends TagSupport implements IActionTag {
 			
 			pageContext.getOut().print("<a id='");
 			pageContext.getOut().print(getAction());
-			pageContext.getOut().println("'");			
+			pageContext.getOut().println("'");	
+			if (!Is.emptyString(getCssClass())) {
+				pageContext.getOut().print(" class='");
+				pageContext.getOut().print(getCssClass());
+				pageContext.getOut().print("'");	
+			}
 			pageContext.getOut().print(" title='");
 			pageContext.getOut().print(metaAction.getDescription(request));
 			pageContext.getOut().print("'");
@@ -103,7 +109,15 @@ public class LinkTag extends TagSupport implements IActionTag {
 	}
 
 	public void setArgv(String string) {
-		argv = string;
+		argv = string;		
+	}
+
+	public String getCssClass() {
+		return cssClass;
+	}
+
+	public void setCssClass(String cssClass) {
+		this.cssClass = cssClass;
 	}
 
 }

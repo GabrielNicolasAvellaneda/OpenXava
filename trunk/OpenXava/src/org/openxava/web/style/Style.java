@@ -1,22 +1,6 @@
-package org.openxava.web;
+package org.openxava.web.style;
 
 /**
- * tmp: ¿Mover a paquete styles?
- * tmp: 
- * Falta probar:					JS2		WPS	
- * - Editores/Etiquetas				X		X
- * - Mensajes(takes-long)			X		X
- * - Vinculos modo					X		X
- * - Información lista				X		X
- * - Título lista					X		X
- * - Botones						X		X
- * - Botonera						X		X
- * - Marcos(grup, col, ref, edit)	X  
- * - Listas(highlight)				X 						 		
- * - Carpetas 						X
- *  
- * Faltaría también:
- * - Borrar jetspeed.css
  * 
  * @author Javier Paniza
  */ 
@@ -39,10 +23,39 @@ public class Style {
 		return "portlet-font";
 	}
 	
+	public String getModuleSpacing() {
+		return "cellpadding=2 cellspacing=2 border=0 width='100%'";
+	}
+		
 	public String getButtonBar() {
 		return "button-bar";
 	}
 	
+	public String getButtonBarSpacing() {
+		return "";
+	}	
+	
+	public String getButtonBarStart(boolean onBottom) {
+		return "";
+	}
+	
+	public String getButtonBarMiddle(boolean onBottom) {
+		return "";
+	}
+		
+	public String getButtonBarEnd(boolean onBottom) {
+		return "";
+	}
+	
+	
+	public String getMode(boolean onButton) { 
+		return "mode";
+	}
+	
+	public String getDetail() {
+		return "";
+	}
+			
 	public String getList() {  
 		return "list";
 	}
@@ -79,27 +92,38 @@ public class Style {
 		return "list-info";
 	}
 	
+	public String getListInfoDetail() {
+		return getListInfo();
+	}
+		
 	public String getListTitle() {
 		return "list-title";
 	}
 	
+	public String getListTitleWrapper() {
+		return "";
+	}
+		
 	public String getFrame() {
 		return "frame";
 	}
 	
 	public String getFrameTitle() { 
-		return "frame";
+		return getFrame();
 	}
 	
 	public String getFrameTitleLabel() {
-		return "frame";
+		return getFrameTitle();
 	}
 	
 	public String getFrameContent() {
-		return "frame";
+		return getFrame();
 	}
 	
-	
+	public String getFrameSpacing() {
+		return "";
+	}
+		
 	public String getEditor() { 
 		return "editor";
 	}
@@ -115,19 +139,24 @@ public class Style {
 	public String getErrors() { 
 		return "errors";
 	}
+		
 
 	public String getMessages() { 
 		return "messages";
 	}
+
+	/**
+	 * For messages and errors
+	 */
+	public String getMessagesWrapper() { 
+		return "";
+	}
+	
 	
 	public String getProcessing() { 
 		return "processing";
 	}
 			
-	public String getMode() { 
-		return "mode";
-	}
-		
 	public String getButton() {
 		return "portlet-form-button";
 	}
@@ -147,6 +176,21 @@ public class Style {
 	public String getSectionActive() {
 		return "activeSection";
 	}	
+	
+	public String getSectionLink() {
+		return null;
+	}
+	
+	public String getSectionBarLeftDecoration() {
+		return "";
+	}
+	
+	/**
+	 * If Middle and Right decoration is used
+	 */
+	public boolean sectionTabHasDecoration() {
+		return true;
+	}
 	
 	public String getSectionTabLeft() {
 		return "TabLeft";
@@ -170,6 +214,10 @@ public class Style {
 	
 	public String getSectionTabRightLow() {
 		return "TabRightLow";
-	}	
+	}
+	
+	public String getCollectionListActions() {
+		return "";
+	}
 	
 }

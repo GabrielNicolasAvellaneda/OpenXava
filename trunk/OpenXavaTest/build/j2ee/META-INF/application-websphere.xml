@@ -5,12 +5,14 @@
 
 	<display-name>OpenXavaTest</display-name>
 
+	<!-- 
 	<module>
 		<web>
 			<web-uri>OpenXavaTest.war</web-uri>
 			<context-root>OpenXavaTest</context-root>
 		</web>
 	</module>		
+	 -->
 
 	<module>
 		<ejb>OpenXavaTest.jar</ejb>

@@ -6,7 +6,7 @@
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="messages" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
-<jsp:useBean id="style" class="org.openxava.web.Style" scope="request"/>
+<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%
 boolean isPortlet = (request.getAttribute("xava.formAction") != null);
@@ -194,7 +194,7 @@ if (xavaFormAction == null) xavaFormAction = "";
 <INPUT type="hidden" name="focus_property_id" value="<%=focusPropertyId%>"/>
 
 <jsp:include page="languages.jsp"/>
-<table cellpadding="2" cellspacing="2" border="0" width="100%">
+<table <%=style.getModuleSpacing()%>>
   <tbody>
   	<% if (org.openxava.util.XavaPreferences.getInstance().isButtonBarOnTop()) { %>
     <tr>
@@ -205,36 +205,36 @@ if (xavaFormAction == null) xavaFormAction = "";
     <% } %>
     <% if (messagesOnTop && (errors.contains() || messages.contains())) {  %>
     <tr>
-      <td>            
+      <td class=<%=style.getMessagesWrapper()%>>
 		<jsp:include page="errors.jsp"/>
       </td>
     </tr>    
     <tr>
-      <td>
+      <td class=<%=style.getMessagesWrapper()%>>
 		<jsp:include page="messages.jsp"/>
       </td>
     </tr>            
     <% } %>
     <tr>      		
-		<td>
+		<td <%=manager.isListMode()?"":("class=" + style.getDetail())%>>
 		<jsp:include page='<%=manager.getViewURL()%>'/>
 		</td>
     </tr>
   	<% if (org.openxava.util.XavaPreferences.getInstance().isButtonBarOnBottom()) { %>    
     <tr>
       <td class="<%=style.getButtonBar()%>">
-		<jsp:include page="buttonBar.jsp"/>
+		<jsp:include page="buttonBar.jsp?onBottom=true"/>
       </td>
     </tr>
   	<% } %>    
     <% if (!messagesOnTop) { %>
     <tr>
-      <td>
+      <td class=<%=style.getMessagesWrapper()%>>
 		<jsp:include page="errors.jsp"/>
       </td>
     </tr>    
     <tr>
-      <td>
+      <td class=<%=style.getMessagesWrapper()%>>
 		<jsp:include page="messages.jsp"/>
       </td>
     </tr>            

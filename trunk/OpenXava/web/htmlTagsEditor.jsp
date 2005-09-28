@@ -13,7 +13,7 @@ String postEditor=null;
 
 
 if (hasFrame) {
-	preLabel="<tr><td colspan=4><table class=" + style.getFrame() + " width='100%'><tr class=" + style.getFrameTitle() + "><th align='left' class=" + style.getFrameTitleLabel() + " id=" + labelKey + " >";
+	preLabel="<tr><td colspan=4><table class=" + style.getFrame() + " width='100%' " + style.getFrameSpacing() + "><tr class=" + style.getFrameTitle() + "><th align='left' class=" + style.getFrameTitleLabel() + " id=" + labelKey + " >";
 	postLabel="&nbsp;";
 	preIcons="";
 	postIcons="";

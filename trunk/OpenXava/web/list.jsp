@@ -8,7 +8,7 @@
 
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
-<jsp:useBean id="style" class="org.openxava.web.Style" scope="request"/>
+<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
@@ -23,7 +23,7 @@ String lastRow = request.getParameter("lastRow");
 %>
 
 <% if (tab.isTitleVisible()) { %>
-<table width="100%" id="list-title">
+<table width="100%" id="list-title" class=<%=style.getListTitleWrapper()%>>
 <tr><td class=<%=style.getListTitle()%>>
 <%=tab.getTitle()%>
 </td></tr>
@@ -32,7 +32,7 @@ String lastRow = request.getParameter("lastRow");
 
 <table id="list" class=<%=style.getList()%> width="100%" <%=style.getListCellSpacing()%>>
 <tr>
-<th class=<%=style.getListHeader()%> width="60"><xava:image action="List.customize"/></th>
+<th class=<%=style.getListHeader()%> style="text-align: center" width="60"><xava:image action="List.customize"/></th>
 <th class=<%=style.getListHeader()%> width="5">
 <% if (tab.isCustomize()) { %><xava:image action="List.addColumns"/><% } %>
 </th>
@@ -49,11 +49,11 @@ while (it.hasNext()) {
 <%
 	if (property.isCalculated()) {		
 %>
-<%=property.getLabel(request)%>
+<%=property.getLabel(request)%>&nbsp;
 <%
 	} else {
 %>
-<xava:link action='List.orderBy' argv='<%="property="+property.getQualifiedName()%>'><%=property.getLabel(request)%></xava:link>
+<xava:link action='List.orderBy' argv='<%="property="+property.getQualifiedName()%>'><%=property.getLabel(request)%></xava:link>&nbsp;
 <%
 		if (tab.isOrderAscending(property.getQualifiedName())) {
 %>
@@ -86,7 +86,7 @@ while (it.hasNext()) {
 </tr>
 <% if (filter) { %>
 <tr class=<%=style.getListSubheader()%>>
-<th class=<%=style.getListSubheader()%> width="60">
+<th class=<%=style.getListSubheader()%> style="text-align: center" width="60">
 <xava:button action="List.filter"/>
 </th>
 <th class=<%=style.getListSubheader()%> width="5"></th>
@@ -185,7 +185,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 %>
 	<td class=<%=cssClass%> <%=align%>>
 	<% if (cssStyle != null) { %> <div id="cellStyle" class=<%=cssStyle%>> <% } %>
-		<%=fvalue%>
+		<%=fvalue%>&nbsp;
 	<% if (cssStyle != null) { %> </div> <% } %>
 	</td>
 <%
@@ -215,8 +215,8 @@ if (lastRow != null) {
 </table>
 <% if (!tab.isRowsHidden()) { %>
 <table width="100%" class=<%=style.getListInfo()%>>
-<tr class=<%=style.getListInfo()%>>
-<td class=<%=style.getListInfo()%>>
+<tr class='<%=style.getListInfoDetail()%>'>
+<td class='<%=style.getListInfoDetail()%>' style='vertical-align: middle'>
 <%
 int last=tab.getLastPage();
 int current=tab.getPage();
@@ -236,7 +236,7 @@ if (!tab.isLastPage()) {
  <xava:image action='List.goNextPage'/> 
 <% } %>	 
 </td>
-<td  align='right' class=<%=style.getListInfo()%>>
+<td style='text-align: right; vertical-align: middle' class='<%=style.getListInfoDetail()%>'>
 <% if (XavaPreferences.getInstance().isShowCountInList()) { %>
 <fmt:message key="list_count">
 	<fmt:param><%=totalSize%></fmt:param> 

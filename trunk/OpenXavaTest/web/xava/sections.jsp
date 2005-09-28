@@ -1,9 +1,10 @@
 <%@ include file="imports.jsp"%>
 
 <%@ page import="org.openxava.view.meta.MetaView" %>
+<%@ page import="org.openxava.util.Is" %>
 
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
-<jsp:useBean id="style" class="org.openxava.web.Style" scope="request"/>
+<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%
 String viewObject = request.getParameter("viewObject");
@@ -27,6 +28,7 @@ view.setActiveSection(activeSection);
 <div class=<%=style.getSection()%>>
 	<table border="0" cellpadding="0" cellspacing="0">
     	<tr>
+    		<%=style.getSectionBarLeftDecoration()%>    		
 	<% 
 	java.util.Iterator itSections = sections.iterator();
 	int i=0;
@@ -34,22 +36,30 @@ view.setActiveSection(activeSection);
 		MetaView section = (MetaView) itSections.next();
 		if (activeSection == i) {
 	%>        
+			<% if (style.sectionTabHasDecoration()) { %>
 			<td class=<%=style.getSectionTabLeft()%> nowrap="true">&nbsp;</td>
+			<% } %>
 			<td class=<%=style.getSectionTabMiddle()%> style="vertical-align: middle; text-align: center;" nowrap="true">
 			<%=section.getLabel(request)%>
 			</td>
+			<% if (style.sectionTabHasDecoration()) { %>
 			<td class=<%=style.getSectionTabRight()%> nowrap="true">&nbsp;</td>    	
+			<% } %>
     <%
 		}
 		else {
     %>
+    		<% if (style.sectionTabHasDecoration()) { %>
 			<td class=<%=style.getSectionTabLeftLow()%> nowrap="true">&nbsp;</td>
+			<% } %>
 			<td class=<%=style.getSectionTabMiddleLow()%> style="vertical-align: middle; text-align: center;" nowrap="true">
-				<xava:link action='Sections.change' argv='<%="activeSection="+i%>'>
+				<xava:link action='Sections.change' argv='<%="activeSection="+i%>' cssClass='<%=style.getSectionLink()%>'>
 				<%=section.getLabel(request)%>
 				</xava:link>                  	
 			</td>
+			<% if (style.sectionTabHasDecoration()) { %>
 			<td class=<%=style.getSectionTabRightLow()%> nowrap="true">&nbsp;</td>          
+			<% } %>
   	<%   	
 		}
 		i++;

@@ -2,7 +2,7 @@
 
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
-<jsp:useBean id="style" class="org.openxava.web.Style" scope="request"/>
+<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.Collection" %>
@@ -47,7 +47,7 @@ else {
 String propertyPrefix = Is.emptyString(propertyPrefixAccumulated)?"xava." + view.getModelName() + "." + collectionName + ".":propertyPrefixAccumulated + collectionName + ".";
 %>
 
-<table id=<%=idCollection%> class=<%=style.getList()%>>
+<table id=<%=idCollection%> class=<%=style.getList()%> <%=style.getListCellSpacing()%>>
 <tr>
 	<% if (lineAction != null) { %>	
 	<th class=<%=style.getListHeader()%>>
@@ -62,7 +62,7 @@ Iterator it = subview.getMetaPropertiesList().iterator();
 while (it.hasNext()) {
 	MetaProperty p = (MetaProperty) it.next();
 %>
-	<th class=<%=style.getListHeader()%>><%=p.getLabel(request)%></th>
+	<th class=<%=style.getListHeader()%>><%=p.getLabel(request)%>&nbsp;</th>
 <%
 }
 %>
@@ -112,7 +112,7 @@ while (itAggregates.hasNext()) {
 			fvalue = WebEditors.format(request, p, value, errors);	
 		}
 %>
-	<td class=<%=cssClass%> <%=align%>><%=fvalue%></td>
+	<td class=<%=cssClass%> <%=align%>><%=fvalue%>&nbsp;</td>
 <%
 	}
 %>
@@ -127,7 +127,7 @@ if (view.displayDetailInCollection(collectionName)) {
 	if (collectionView.isCollectionDetailVisible()) {
 %>	
 <tr><td colspan="<%=subview.getMetaPropertiesList().size()+1%>">		
-<table class=<%=style.getFrame()%> width='100%'>
+<table class=<%=style.getFrame()%> width='100%' <%=style.getFrameSpacing()%>>
 <tr class=<%=style.getFrameTitle()%>><th class=<%=style.getFrameTitleLabel()%> align='left'><%=ref.getLabel(request)%></th></tr>
 <tr><td class=<%=style.getFrameContent()%>>
 <jsp:include page="detail.jsp"> 
@@ -157,7 +157,7 @@ while (itDetailActions.hasNext()) {
 	}
 	else {// no mostrar
 %>
-<tr><td colspan="<%=subview.getMetaPropertiesList().size()+1%>">
+<tr class=<%=style.getCollectionListActions()%>><td colspan="<%=subview.getMetaPropertiesList().size()+1%>" class=<%=style.getCollectionListActions()%>>
 <% if (collectionEditable) { %>
 <xava:link action="Collection.new" argv='<%="viewObject="+viewName%>'/>
 
