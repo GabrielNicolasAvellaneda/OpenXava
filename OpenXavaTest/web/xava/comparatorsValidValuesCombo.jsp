@@ -2,7 +2,7 @@
 
 <%@ page import="java.util.StringTokenizer" %>
 
-<jsp:useBean id="style" class="org.openxava.web.Style" scope="request"/>
+<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%
 String validValues = request.getParameter("validValues");

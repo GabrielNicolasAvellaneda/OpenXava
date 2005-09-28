@@ -1,6 +1,6 @@
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
 
-<jsp:useBean id="style" class="org.openxava.web.Style" scope="request"/>
+<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%
 String propertyKey = request.getParameter("propertyKey");

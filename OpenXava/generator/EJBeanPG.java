@@ -14,7 +14,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Sep 26 09:51:46 CEST 2005
+ * @version Wed Sep 28 17:12:00 CEST 2005
  */
 public class EJBeanPG {
     Properties properties = new Properties();
@@ -955,6 +955,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     	String homeClass = referencedModel.getHome();
     	String referencedModelName = reference.getReferencedModelName();
     	String referencedModelClass = referencedModel.getRemote();
+    	String referencedModelInterface = referencedModel.getInterfaceName();
     	String referencedJNDI = referencedModel.getJndi();
     	String homeAttribute = Strings.firstLower(collectionName) + "Home";
     	String getHome = "get" + Strings.firstUpper(homeAttribute);
@@ -974,8 +975,10 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print("\n\t/**\n\t * @ejb:interface-method\n\t */\n\tpublic void addTo");
     out.print(collectionName);
     out.print("(");
+    out.print(referencedModelInterface);
+    out.print(" newElement) {\n\t\tif (newElement != null) { \n\t\t\ttry {\n\t\t\t\t((");
     out.print(referencedModelClass);
-    out.print(" newElement) {\n\t\tif (newElement != null) { \n\t\t\ttry {\n\t\t\t\tnewElement.set");
+    out.print(") newElement).set");
     out.print(role);
     out.print("Key((");
     out.print(keyClass);
@@ -986,8 +989,10 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print("\"));\n\t\t\t}\n\t\t}\n\t}\n\t\n\t/**\n\t * @ejb:interface-method\n\t */\n\tpublic void removeFrom");
     out.print(collectionName);
     out.print("(");
+    out.print(referencedModelInterface);
+    out.print(" toRemove) {\n\t\tif (toRemove != null) {\n\t\t\ttry {\n\t\t\t\t((");
     out.print(referencedModelClass);
-    out.print(" toRemove) {\n\t\tif (toRemove != null) {\n\t\t\ttry {\n\t\t\t\ttoRemove.set");
+    out.print(") toRemove).set");
     out.print(role);
     out.print("Key(null);\n\t\t\t}\n\t\t\tcatch (Exception ex) {\n\t\t\t\tex.printStackTrace();\n\t\t\t\tthrow new EJBException(XavaResources.getString(\"remove_collection_element_error\", \"");
     out.print(referencedModelName);
@@ -1234,7 +1239,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Sep 26 09:51:47 CEST 2005", // date this file was generated
+        { "Wed Sep 28 17:12:01 CEST 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/ejbean.xml", // input file
              "/home/javi/workspace/OpenXava/generator/EJBeanPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

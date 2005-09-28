@@ -1,61 +1,54 @@
-package org.openxava.web;
+package org.openxava.web.style;
 
-public class WebSpherePortalStyle extends Style {
+public class JetSpeed2Style extends Style {
 	
-	private static WebSpherePortalStyle instance = null;
+	private static JetSpeed2Style instance = null;
 
-	protected WebSpherePortalStyle() {		
+	protected JetSpeed2Style() {		
 	}
 	
 	public static Style getInstance() {
 		if (instance == null) {
-			instance = new WebSpherePortalStyle();
+			instance = new JetSpeed2Style();
 		}
 		return instance;
 	}
-	
-	public String getButtonBar() {
-		return "";
-	}
+		
 	
 	public String getList() { 
-		return "wpsTable";
-	}
-	
-	public String getListCellSpacing() {
-		return "border=0 cellspacing=0 cellpadding=0";
+		return "";
 	}
 	
 	public String getListHeader() { 
-		return "wpsPagingTable"; // tmp wpsPagingTableHeader";
+		return "portlet-section-header";
 	}
 	
 	public String getListSubheader() {
-		return "wpsTableHead";
+		return "portlet-section-subheader";
 	}
 	
 	public String getListPair() { 
-		return "wpsTableNrmRow";
+		return "portlet-section-body";
 	}
 	
 	public String getListOdd() { 
-		return "wpsTableNrmRow";
+		return "portlet-section-alternate";
 	}
 	
 	public String getListPairSelected() { 
-		return "portlet-table-selected";
+		return "portlet-section-selected";
 	}
 	
 	public String getListOddSelected() { 
-		return "portlet-table-selected";
+		return "portlet-section-selected";
 	}
 				
 	public String getListInfo() {	
-		return "";
+		return "jetspeed2-list-info";
 	}
 	
 	public String getListTitle() {
-		return "websphere-list-title";
+		return "PTitleContent";
 	}	
 	
 	public String getFrame() {
@@ -94,8 +87,8 @@ public class WebSpherePortalStyle extends Style {
 		return "portlet-msg-success"; 
 	}
 				
-	public String getMode() {	
-		return "";
+	public String getMode(boolean onBottom) {	
+		return "jetspeed2-mode";
 	}
 	
 	public String getAscendingImage() {

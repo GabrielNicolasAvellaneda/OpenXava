@@ -6,6 +6,7 @@ import java.util.*;
 import javax.portlet.*;
 
 import org.openxava.web.*;
+import org.openxava.web.style.*;
 
 /**
  * Allows define an OpenXava as a standard JSR-168 portlet. <p>

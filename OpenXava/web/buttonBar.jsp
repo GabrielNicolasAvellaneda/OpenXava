@@ -3,16 +3,18 @@
 <%@ page import="org.openxava.controller.meta.MetaAction" %>
 
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
-<jsp:useBean id="style" class="org.openxava.web.Style" scope="request"/>
+<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
 manager.setSession(session);
+boolean onBottom = Boolean.valueOf(request.getParameter("onBottom")).booleanValue();
 %>
 
-<table width="100%">
+<table width="100%" <%=style.getButtonBarSpacing()%>>
 <tr>
-<td style='vertical-align: middle'>
+<td class=<%=style.getButtonBarStart(onBottom)%> size=1>&nbsp;</td>
+<td style='vertical-align: middle' class=<%=style.getButtonBarMiddle(onBottom)%>>
 
 <button name="xava.DEFAULT_ACTION" 
 	onclick="executeXavaAction(false, false, <%=manager.getForm()%>, '<%=manager.getDefaultActionQualifiedName()%>')"
@@ -37,7 +39,7 @@ while (it.hasNext()) {
 %>
 </td>
 
-<td align="right" style='vertical-align: middle' class=<%=style.getMode()%>>
+<td align="right" style='vertical-align: middle' class=<%=style.getMode(onBottom)%>>
 <%
 java.util.Iterator itSections = manager.getMetaActionsSections().iterator();
 boolean firstTime = true;
@@ -66,5 +68,6 @@ while (itSections.hasNext()) {
 }
 	%>
 </td>
+<td class=<%=style.getButtonBarEnd(onBottom)%> size=2>&nbsp;</td>
 </tr>
 </table>

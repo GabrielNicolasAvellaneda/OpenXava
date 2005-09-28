@@ -93,7 +93,8 @@ TD.frame {
 	background: #eeeeee;
 }
 
-.jetspeed2-list-info TR.jetspeed2-list-info TD.jetspeed2-list-info {
+
+.jetspeed2-list-info, TR.jetspeed2-list-info, TD.jetspeed2-list-info {
 	font-size: x-small;
 }
 
@@ -146,4 +147,8 @@ TD.list-title {
 
 .TabMidle .TabMiddleLow {
 	background-color: #FFCC00;
+}
+
+.websphere-frame-title-label {
+    font-weight: normal;    
 }
