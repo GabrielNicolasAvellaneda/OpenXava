@@ -1,38 +1,49 @@
-OpenXava es un marco de trabajo que con XML y Java permite desarrollar
-f&aacute;cilmente aplicaciones de gesti&oacute;n.<br>
+OpenXava es un marco de trabajo para desarrollar f&acute;cilmente aplicaciones
+de gesti&oacute;n con XML y Java.<br>
 <br>
-Su virtud reside en que el coraz&oacute;n de nuestras aplicaciones es
-XML no Java.<br>
+Su principal virtud reside en el hecho de que el coraz&oacute;n de nuestras aplicaciones
+es XML en vez de Java.<br>
+Por ejemplo, si quieres una aplicaci&oacute;n J2EE para trabajar con <i>Profesores</i>
+solo necesitas escribir este sencillo archivo XML:
+<pre>
+&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+
+&lt;!DOCTYPE componente SYSTEM "dtds/componente.dtd"&gt;
+
+&lt;componente nombre="Profesor"&gt;
+
+	&lt;entidad&gt;
+		&lt;propiedad nombre="codigo" tipo="String" clave="true"
+			longitud="5" requerido="true"/&gt;
+		&lt;propiedad nombre="nombre" tipo="String" 
+			longitud="40" requerido="true"/&gt;		  
+	&lt;/entidad&gt;
+						
+	&lt;mapeo-entidad tabla="MYSCHOOL@separator@TEACHER"&gt;
+		&lt;mapeo-propiedad propiedad-modelo="codigo" columna-tabla="ID"/&gt;
+		&lt;mapeo-propiedad propiedad-modelo="nombre" columna-tabla="NAME"/&gt;
+	&lt;/mapeo-entidad&gt;
+				
+&lt;/componente&gt;
+</pre>
+Y nada m&aacute;s. Nada de clases Java, archivos XML para el mapeo, o dibujar
+p&aacute;ginas JSP o JSF, simplemente nada m&aacute;s.<br>
+OpenXava genera para t&iacute; una aplicaci&oacute;n J2EE completa (con EJB CMP o Hibernate
+para la persistencia) como &eacute;sta, y con una interfaz de usuario para gestionar
+tus <i>Profesores</i>.
+La aplicaci&oacute;n resultante te permite hacer manteniento, b&uacute;squedas, filtros, ordenaciones,
+generar informes en formato PDF, exporta a Excel, etc.<br>
+A pesar de su facilidad para desarrollo r&aacute;pido, OpenXava es suficientemente
+flexible como para que puedas poner tu propio c&oacute;digo en cualquier parte de
+la aplicaci&oacute;n.<br>
+Con solo simples XMLs y c&oacute;digo Java en formato JavaBean (clases de Java realmente 
+reutilizables) puedes construir cualquier aplicaci&oacute;n de gesti&oacute;n J2EE de una manera
+muy productiva.
+De hecho, muchas aplicaciones cr&iacute;ticas de gesti&oacute;n, en producci&oacute;n actualmente, han sido
+desarrolladas con OpenXava.<br>
 <br>
-Caracter&iacute;sticas:<br>
-<ul>
-  <li>Usado durante a&ntilde;os para hacer aplicaciones reales.</li>
-  <li>Centrado en conseguir <span style="font-weight: bold;">sencillez</span>
-y productividad. </li>
-  <li>Curva de
-aprendizaje corta.</li>
-  <li><span style="font-weight: bold;">Flexible</span>. Es posible
-insertar nuestra propia funcionalidad en
-cualquier punto.</li>
-  <li>Basado en el concepto de componente de negocio.</li>
-  <li>Totalmente MVC.</li>
-  <li>Interfaz gr&aacute;fico web con rica funcionalidad propia de
-aplicaciones de gesti&oacute;n.</li>
-  <li>Adaptado para trabajar con esquemas de base de datos legados.<br>
-  </li>
-  <li>Gener&aacute; una aplicaci&oacute;n <span
- style="font-weight: bold;">J2EE</span> (incluyendo EJB)
-completa.</li>
-  <li>Basado en est&aacute;ndares como XML, J2EE, EJB, JSP, etc.<br>
-  </li>
-  <li>De <span style="font-weight: bold;">c&oacute;digo abierto</span>
-(LGPL) y basado en otras herramientas de
-c&oacute;digo abierto como Ant, JUnit, JasperReports, TL, XDocLet,
-Hibernate, etc.</li>
-  <li>El desarrollador puede usar Ingl&eacute;s o Espa&ntilde;ol.</li>
-  <li>Todas las etiquetas y mensajes est&aacute;n en <span
- style="font-weight: bold;">Ingl&eacute;s</span>, <span
- style="font-weight: bold;">Espa&ntilde;ol</span> y <span
- style="font-weight: bold;">Catal&aacute;n</span>; de momento...<br>
-  </li>
-</ul>
+Para aprender m&aacute;s sobre OpenXava lo mejor es <a href="http://sourceforge.net/project/showfiles.php?group_id=123187">descargarlo</a>
+y seguir el <a href="tutorial.psml">tutorial</a>.<br>
+Si quieres conocer todas las posibilidades de OpenXava echale un vistazo a su
+<a href="/OpenXavaDoc/openxava-1.2-guia-referencia.pdf">Gu&iacute;a de Referencia</a>.
+

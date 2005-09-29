@@ -1,36 +1,45 @@
 OpenXava is a framework to develop easily business applications
-with
-XML and Java.<br>
-Its virtue
-resides in the fact that the heart of our applications is XML instead
+with XML and Java.<br>
+<br>
+Its virtue resides in the fact that the heart of our applications is XML instead
 of Java.<br>
-For example, if you like a J2EE application that works with <i>Pupils</i> 
+For example, if you want a J2EE application that works with <i>Teachers</i> 
 you only need to write this simple XML code:
 <pre>
-<?xml version="1.0" encoding="ISO-8859-1"?>
+&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
 
-<!DOCTYPE component SYSTEM "dtds/component.dtd">
+&lt;!DOCTYPE component SYSTEM "dtds/component.dtd"&gt;
 
-<component name="Pupil">
+&lt;component name="Teacher"&gt;
 
-    <entity>
-        <property name="number" type="int" key="true"
-            size="2" required="true"/>
-        <property name="name" type="String"
-            size="40" required="true"/>             
-    </entity>
-                       
-    <entity-mapping table="MYSCHOOL@separator@PUPIL">
-        <property-mapping property="number" column="NUMBER"/>
-        <property-mapping property="name" column="NAME"/>
-    </entity-mapping>
-               
-</component>
+	&lt;entity&gt;
+		&lt;property name="id" type="String" key="true"
+			size="5" required="true"/&gt;
+		&lt;property name="name" type="String" 
+			size="40" required="true"/&gt;			  
+	&lt;/entity&gt;
+						
+	&lt;entity-mapping table="MYSCHOOL@separator@TEACHER"&gt;
+		&lt;property-mapping property="id" column="ID"/&gt;
+		&lt;property-mapping property="name" column="NAME"/&gt;
+	&lt;/entity-mapping&gt; 
+				
+&lt;/component&gt;
 </pre>
 And no more. No Java classes, no XML files for mapping objects, no design
-of JSP or JSF pages, simply no more.
+of JSP or JSF pages, simply no more.<br>
 OpenXava generates for you a complete J2EE application (with CMP EJB or Hibernate
-for persistence), and with a suitable User Interface for manage your <i>Pupil</i>.<br>
+for persistence) like this, and with a suitable User Interface for manage your <i>Teachers</i>.<br>
 The resulting application allows you make CRUD operations, searching, filtering, ordering,
-generating reports in PDF format, export to excel, etc.<br>
-But is flexible enough to 
+generating reports in PDF format, exporting to Excel, etc.<br>
+In spite of its rapid development features, OpenXava is flexible enough 
+to allow you to put your custom code in any part of the application.<br> 
+With only simple XMLs and Java code in JavaBean format (really reusable Java classes) 
+you can construct any J2EE business application in a very productive way.
+In fact, a lot of critical business application, now in production, have been
+developed with OpenXava.<br>
+<br>
+In order to learn more about OpenXava the better way is to <a href="http://sourceforge.net/project/showfiles.php?group_id=123187">download</a>
+it and to follow the <a href="tutorial.psml">tutorial</a>.<br>
+If you want to know all possibilities of OpenXava see its <a href="/OpenXavaDoc/openxava-1.2-reference-guide.pdf">Reference Guide</a>.
+
