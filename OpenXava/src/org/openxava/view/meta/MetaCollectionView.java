@@ -22,50 +22,32 @@ public class MetaCollectionView implements Serializable {
 	private boolean editOnly; 
 	private boolean createReference;
 	
-	public void addActionDetailName(String nombreAccion) {
+	public void addActionDetailName(String actionName) {
 		if (actionsDetailNames == null) actionsDetailNames = new ArrayList();
-		actionsDetailNames.add(nombreAccion);
+		actionsDetailNames.add(actionName);
 	}
 	
-	public void addActionListName(String nombreAccion) {
+	public void addActionListName(String actionName) {
 		if (actionsListNames == null) actionsListNames = new ArrayList();
-		actionsListNames.add(nombreAccion);
+		actionsListNames.add(actionName);
 	}
 	
-	/**
-	 * Returns the nombreClaseMediador.
-	 * @return String
-	 */
 	public String getMediatorClassName() {
 		return mediatorClassName;
 	}
 
-	/**
-	 * Sets the nombreClaseMediador.
-	 * @param nombreClaseMediador The nombreClaseMediador to set
-	 */
-	public void setMediatorClassName(String nombreClaseMediador) {
-		this.mediatorClassName = nombreClaseMediador;
+	public void setMediatorClassName(String mediatorClassName) {
+		this.mediatorClassName = mediatorClassName;
 	}
 
-	/**
-	 * Returns the nombreColeccion.
-	 * @return String
-	 */
 	public String getCollectionName() {
 		return collectionName;
 	}
 
-	/**
-	 * Sets the nombreColeccion.
-	 * @param nombreColeccion The nombreColeccion to set
-	 */
-	public void setCollectionName(String nombreColeccion) {
-		this.collectionName = nombreColeccion;
+	public void setCollectionName(String collectionName) {
+		this.collectionName = collectionName;
 	}
-	
-	
-
+		
 	public String getViewName() {		
 		return viewName;
 	}
@@ -82,10 +64,10 @@ public class MetaCollectionView implements Serializable {
 		return propertiesListNames == null?Collections.EMPTY_LIST:propertiesListNames;
 	}
 
-	public void _setPropertiesList(String propiedadesLista) {				 		
-		if (!Is.emptyString(propiedadesLista)) {
+	public void _setPropertiesList(String listProperties) {				 		
+		if (!Is.emptyString(listProperties)) {
 			propertiesListNames = new ArrayList();
-			StringTokenizer st = new StringTokenizer(propiedadesLista, ",");
+			StringTokenizer st = new StringTokenizer(listProperties, ",");
 			while (st.hasMoreTokens()) {
 				String propiedad = st.nextToken().trim();
 				propertiesListNames.add(propiedad); 

@@ -15,7 +15,7 @@ import org.openxava.util.meta.*;
  */
 public class MetaView extends MetaElement implements Cloneable {
 	
-	// OJO: Si se añaden propiedades ver si hay que hacer clon de ellas
+	// WARNING!: If you add properties you must to see if is needed to make a clon of they
 	
 	private final static String NAME_SEPARATOR = "\n";
 	
@@ -27,8 +27,8 @@ public class MetaView extends MetaElement implements Cloneable {
 	private Map metaProperties;
 	private Collection propertiesNamesThrowOnChange;	
 	private List sections = null;
-	private Collection metaMembers; // De MetaMiembro
-	private Collection _membersNames = new ArrayList(); // De String
+	private Collection metaMembers; // Of MetaMember
+	private Collection _membersNames = new ArrayList(); // Of String
 	private Map metaViewsReferences;
 	private Map metaViewsProperties;
 	private Map metaViewsCollections;
@@ -44,66 +44,55 @@ public class MetaView extends MetaElement implements Cloneable {
 	
 	private String mediatorClassName;
 	
-	/**
-	 * Comentario de constructor Vista.
-	 */
-	public MetaView() {
-		super();
-	}
-		
-	/**
-	 * 
-	 * @param nombrePropiedad java.lang.String
-	 */
-	private void addMemberName(String nombreMiembro) {
-		_membersNames.add(nombreMiembro);
+	private void addMemberName(String memberName) {
+		_membersNames.add(memberName);
 	}
 
-	public void addMetaViewProperty(MetaProperty metaPropiedad) throws XavaException {
+	public void addMetaViewProperty(MetaProperty metaProperty) throws XavaException {
 		if (metaViewProperties == null) metaViewProperties = new HashMap();
-		metaViewProperties.put(metaPropiedad.getName(), metaPropiedad);
+		metaViewProperties.put(metaProperty.getName(), metaProperty);
 	}
 	
-	public void addMetaViewReference(MetaReferenceView metaVistaReferencia) throws XavaException {
+	public void addMetaViewReference(MetaReferenceView metaReferenceView) throws XavaException {
 		if (metaViewsReferences == null) metaViewsReferences = new HashMap();
 		else {
-			if (metaViewsReferences.containsKey(metaVistaReferencia.getReferenceName())) {
-				throw new XavaException("reference_view_already_defined", metaVistaReferencia.getReferenceName(), getName(), getModelName());
+			if (metaViewsReferences.containsKey(metaReferenceView.getReferenceName())) {
+				throw new XavaException("reference_view_already_defined", metaReferenceView.getReferenceName(), getName(), getModelName());
 			}
 		}
-		metaViewsReferences.put(metaVistaReferencia.getReferenceName(), metaVistaReferencia);		
+		metaViewsReferences.put(metaReferenceView.getReferenceName(), metaReferenceView);		
 	}
 	
-	public void addMetaViewProperty(MetaPropertyView metaVistaPropiedad) throws XavaException {
+	public void addMetaViewProperty(MetaPropertyView metaPropertyView) throws XavaException {
 		if (metaViewsProperties == null) metaViewsProperties = new HashMap();
 		else {
-			if (metaViewsProperties.containsKey(metaVistaPropiedad.getPropertyName())) {
-				throw new XavaException("property_view_already_defined", metaVistaPropiedad.getPropertyName(), getName(), getModelName());
+			if (metaViewsProperties.containsKey(metaPropertyView.getPropertyName())) {
+				throw new XavaException("property_view_already_defined", metaPropertyView.getPropertyName(), getName(), getModelName());
 			}
 		}
-		metaViewsProperties.put(metaVistaPropiedad.getPropertyName(), metaVistaPropiedad);
+		metaViewsProperties.put(metaPropertyView.getPropertyName(), metaPropertyView);
 	}	
 	
-	public void addMetaViewCollection(MetaCollectionView metaVistaColeccion) throws XavaException {
+	public void addMetaViewCollection(MetaCollectionView metaCollectionView) throws XavaException {
 		if (metaViewsCollections == null) metaViewsCollections = new HashMap();
 		else {
-			if (metaViewsCollections.containsKey(metaVistaColeccion.getCollectionName())) {
-				throw new XavaException("collection_view_already_defined", metaVistaColeccion.getCollectionName(), getName(), getModelName());
+			if (metaViewsCollections.containsKey(metaCollectionView.getCollectionName())) {
+				throw new XavaException("collection_view_already_defined", metaCollectionView.getCollectionName(), getName(), getModelName());
 			}
 		}		
-		metaViewsCollections.put(metaVistaColeccion.getCollectionName(), metaVistaColeccion);		
+		metaViewsCollections.put(metaCollectionView.getCollectionName(), metaCollectionView);		
 	}	
 	
 	/**
-	 * Incluso si está dentro de una sección  
+	 * Including if property is inside a section  
 	 */
-	public MetaProperty getMetaProperty(String nombre) throws XavaException {
-		return getMetaProperty(nombre, true);
+	public MetaProperty getMetaProperty(String name) throws XavaException {
+		return getMetaProperty(name, true);
 	}
 	
-	private MetaProperty getMetaProperty(String nombre, boolean searchInGroups) throws XavaException {
+	private MetaProperty getMetaProperty(String name, boolean searchInGroups) throws XavaException {
 		try {
-			return getMetaPropiedadVista(nombre);			
+			return getMetaPropiedadVista(name);			
 		}
 		catch (ElementNotFoundException ex) {
 			if (metaProperties == null) {
@@ -116,12 +105,12 @@ public class MetaView extends MetaElement implements Cloneable {
 					}
 				}
 			}
-			MetaProperty p = (MetaProperty) metaProperties.get(nombre);
+			MetaProperty p = (MetaProperty) metaProperties.get(name);
 			if (searchInGroups && p == null) {
-				p = getMetaPropertyInGroup(nombre);
+				p = getMetaPropertyInGroup(name);
 			}
 			if (p == null) {
-				throw new ElementNotFoundException("property_not_found_in_view", nombre, getName(), getModelName());
+				throw new ElementNotFoundException("property_not_found_in_view", name, getName(), getModelName());
 			}
 			return p;
 		}
@@ -141,7 +130,7 @@ public class MetaView extends MetaElement implements Cloneable {
 		return null;
 	}
 
-	// incluye los miembros de las secciones
+	// Including members inside sections
 	private Collection getAllMetaMembers() throws XavaException { 
 		if (!hasSections()) return getMetaMembers();
 		if (allMetaMembers == null) {		
@@ -149,53 +138,53 @@ public class MetaView extends MetaElement implements Cloneable {
 			allMetaMembers.addAll(getMetaMembers());
 			Iterator it = getSections().iterator();
 			while (it.hasNext()) {
-				MetaView seccion = (MetaView) it.next();
-				allMetaMembers.addAll(seccion.getMetaMembers());
+				MetaView section = (MetaView) it.next();
+				allMetaMembers.addAll(section.getMetaMembers());
 			}
 		}
 		return allMetaMembers;
 	}
 	
 	/**
-	 * De la propia vista, que no están en el modelo.	 
+	 * Property only of the view, not in model	 
 	 */
-	private MetaProperty getMetaPropiedadVista(String nombre) throws XavaException {
+	private MetaProperty getMetaPropiedadVista(String name) throws XavaException {
 		if (metaViewProperties == null) 
-			throw new ElementNotFoundException("view_property_not_found", nombre, getName(), getModelName());
-		MetaProperty p = (MetaProperty) metaViewProperties.get(nombre);
+			throw new ElementNotFoundException("view_property_not_found", name, getName(), getModelName());
+		MetaProperty p = (MetaProperty) metaViewProperties.get(name);
 		if (p == null)
-			throw new ElementNotFoundException("view_property_not_found", nombre, getName(), getModelName());
+			throw new ElementNotFoundException("view_property_not_found", name, getName(), getModelName());
 		return p;
 	}
 	
 	/**
 	 * 
-	 * @return Nunca nulo, de tipo <tt>MetaMiembro</tt> y solo lectura
+	 * @return Not null, of type <tt>MetaMember</tt> and read only
 	 */
 	public Collection getMetaMembers() throws XavaException {
 		if (metaMembers == null) {
 			metaMembers = new ArrayList();
 			Iterator it = getMembersNames().iterator();			
 			while (it.hasNext()) {
-				String nombre = (String) it.next();
-				if (nombre.startsWith("__GROUP__")) {
-					String nombreGrupo = nombre.substring("__GROUP__".length());					
-					metaMembers.add(getMetaGroup(nombreGrupo));					
+				String name = (String) it.next();
+				if (name.startsWith("__GROUP__")) {
+					String groupName = name.substring("__GROUP__".length());					
+					metaMembers.add(getMetaGroup(groupName));					
 				}
-				else if (nombre.equals(NAME_SEPARATOR)) {
+				else if (name.equals(NAME_SEPARATOR)) {
 					metaMembers.add(PropertiesSeparator.INSTANCE);
 				}				
 				else {
-					MetaMember miembro = null;
+					MetaMember member = null;
 					try {
-						miembro = getMetaModel().getMetaMember(nombre);
+						member = getMetaModel().getMetaMember(name);
 					}
 					catch (ElementNotFoundException ex) {
-						miembro = getMetaPropiedadVista(nombre);
+						member = getMetaPropiedadVista(name);
 					}
-					if (!miembro.isHidden()) {
-						miembro = modify(miembro);
-						metaMembers.add(miembro);
+					if (!member.isHidden()) {
+						member = modify(member);
+						metaMembers.add(member);
 					}					
 				}
 			}
@@ -204,73 +193,66 @@ public class MetaView extends MetaElement implements Cloneable {
 		return metaMembers;
 	}
 
-	private MetaMember modify(MetaMember miembro) throws XavaException {
-		if (miembro instanceof MetaProperty) {
-			MetaProperty propiedad = (MetaProperty) miembro;
-			MetaProperty nueva = propiedad.cloneMetaProperty();
-			miembro = nueva;
-			MetaPropertyView vistaPropiedad = getMetaVistaPropiedadPara(propiedad.getName());						
-			if (vistaPropiedad != null) {				
-				String etiqueta = vistaPropiedad.getLabel();				
-				if (!Is.emptyString(etiqueta)) {					
-					nueva.setLabel(etiqueta);					
+	private MetaMember modify(MetaMember member) throws XavaException {
+		if (member instanceof MetaProperty) {
+			MetaProperty property = (MetaProperty) member;
+			MetaProperty newProperty = property.cloneMetaProperty();
+			member = newProperty;
+			MetaPropertyView propertyView = getMetaPropertyViewFor(property.getName());						
+			if (propertyView != null) {				
+				String label = propertyView.getLabel();				
+				if (!Is.emptyString(label)) {					
+					newProperty.setLabel(label);					
 				}
-				if (!nueva.isCalculated()) {
-					nueva.setReadOnly(vistaPropiedad.isReadOnly());
+				if (!newProperty.isCalculated()) {
+					newProperty.setReadOnly(propertyView.isReadOnly());
 				}
 			}
 		}
-		String idEtiqueta = isSection()?
-				getParent().getId() + "." + miembro.getName():
-				getId() + "." + miembro.getName();		
-		miembro.setLabelId(idEtiqueta);
-		return miembro;
+		String idLabel = isSection()?
+				getParent().getId() + "." + member.getName():
+				getId() + "." + member.getName();		
+		member.setLabelId(idLabel);
+		return member;
 	}
 	
 	/**
 	 * 
-	 * @return Nunca nulo.
+	 * @return Not null
 	 */
 	public MetaModel getMetaModel() throws XavaException {
 		return metaModel;
 	}
 	
-	public void setMetaModel(MetaModel metaModelo) throws XavaException {
-		this.metaModel = metaModelo;
+	public void setMetaModel(MetaModel metaModel) throws XavaException {
+		this.metaModel = metaModel;
 		if (hasSections()) {
 			Iterator it = getSections().iterator();
 			while (it.hasNext()) {
-				MetaView seccion = (MetaView) it.next();
-				seccion.setMetaModel(metaModelo);
+				MetaView section = (MetaView) it.next();
+				section.setMetaModel(metaModel);
 			}
 		}
 	}
 	
-	/**
-	 * 
-	 * @return java.lang.String
-	 */
 	public java.lang.String getModelName() throws XavaException {
 		return modelName;
 	}
 	
-	public void setModelName(String nombreModelo) throws XavaException {
-		this.modelName = nombreModelo;
+	public void setModelName(String modelName) throws XavaException {
+		this.modelName = modelName;
 		Iterator it = getSections().iterator();
 		while (it.hasNext()) {
 			((MetaView) it.next()).setModelName(this.modelName);
 		}
 	}
-	/**
-	 * 
-	 * @return boolean
-	 */
+	
 	public boolean isAllMembers() {
 		return allMembers;
 	}
 	
 	/**
-	 * Si no tiene miembros a visualizar.
+	 * If does not have members to visualize.
 	 */
 	public boolean isEmpty() throws XavaException {
 		return getMetaMembers().size() == 0;
@@ -278,43 +260,43 @@ public class MetaView extends MetaElement implements Cloneable {
 	
 	/**
 	 * 
-	 * @return Nunca nulo, de tipo <tt>String</tt> y de solo lectura.
+	 * @return Not nul, of type <tt>String</tt> and read only.
 	 */
 	public Collection getMembersNames() throws XavaException {
 		if (isAllMembers() && !membersNamesByDefaultCreated && _membersNames.isEmpty()) {						
-			crearNombresMiembrosPorDefecto();			
+			crearMembersNamesByDefault();			
 		}
 		return Collections.unmodifiableCollection(_membersNames);				
 	}
 	
 	/**
 	 * 
-	 * @param propiedades Nombres separados por comas o espacios.
+	 * @param membersNames  Names separated by commas or spaces.
 	 */
-	public void setMembersNames(String nombresMiembros) throws XavaException {			
-		iniciar();				
-		if (nombresMiembros.trim().equals("*")) {
+	public void setMembersNames(String membersNames) throws XavaException {			
+		init();				
+		if (membersNames.trim().equals("*")) {
 			setAllMembers(true);			
 		} else {
 			setAllMembers(false);			
-			StringTokenizer lineas = new StringTokenizer(nombresMiembros, ";");
-			while (lineas.hasMoreTokens()) {
-				String linea = lineas.nextToken();
-				StringTokenizer nombres = new StringTokenizer(linea, ",");
-				while (nombres.hasMoreTokens()) {	
-					String nombreMiembro = nombres.nextToken().trim();
-					if (!nombreMiembro.equals("")) {
-						addMemberName(nombreMiembro);					
+			StringTokenizer lines = new StringTokenizer(membersNames, ";");
+			while (lines.hasMoreTokens()) {
+				String line = lines.nextToken();
+				StringTokenizer names = new StringTokenizer(line, ",");
+				while (names.hasMoreTokens()) {	
+					String memberName = names.nextToken().trim();
+					if (!memberName.equals("")) {
+						addMemberName(memberName);					
 					}
 				}
-				if (lineas.hasMoreTokens()) {
+				if (lines.hasMoreTokens()) {
 					addMemberName(NAME_SEPARATOR);
 				}				
 			}
 		}
 	}
 	
-	private void iniciar() {
+	private void init() {
 		this._membersNames.clear();
 		this.allMetaMembers = null;
 		metaProperties = null;
@@ -323,40 +305,35 @@ public class MetaView extends MetaElement implements Cloneable {
 		metaMembers = null;		
 	}
 
-	private void crearNombresMiembrosPorDefecto() throws XavaException {
-		MetaModel metaModelo = getMetaModel();
-		if (metaModelo != null) {
-			Iterator it = metaModelo.getMembersNames().iterator();			
+	private void crearMembersNamesByDefault() throws XavaException {
+		MetaModel metaModel = getMetaModel();
+		if (metaModel != null) {
+			Iterator it = metaModel.getMembersNames().iterator();			
 			while (it.hasNext()) {
-				String nombreMiembro = (String) it.next();								
-				addMemberName(nombreMiembro);	
+				String memberName = (String) it.next();								
+				addMemberName(memberName);	
 				addMemberName(NAME_SEPARATOR);			
 			}
 		}
 		membersNamesByDefaultCreated = true;
 	}
 			
-	
-	/**
-	 * 
-	 * @param newTodasPropiedades boolean
-	 */
-	public void setAllMembers(boolean newTodosMiembros) {
-		allMembers = newTodosMiembros;
+	public void setAllMembers(boolean newAllMembers) {
+		allMembers = newAllMembers;
 	}
 	
-	public boolean hasOnChangeAction(String nombreCualificadoPropiedad) { 
-		MetaPropertyView metaVistaPropiedad = getMetaVistaPropiedadPara(nombreCualificadoPropiedad);		
+	public boolean hasOnChangeAction(String qualifiedPropertyName) { 
+		MetaPropertyView metaVistaPropiedad = getMetaPropertyViewFor(qualifiedPropertyName);		
 		if (metaVistaPropiedad == null) return false;
 		return metaVistaPropiedad.hasOnChangeAction(); 
 	}
 		
-	public IOnChangePropertyAction createOnChangeAction(String nombreCualificadoPropiedad) throws XavaException {  
-		MetaPropertyView metaVistaPropiedad = getMetaVistaPropiedadPara(nombreCualificadoPropiedad);		
-		if (metaVistaPropiedad == null) {
-			throw new XavaException("on_change_action_not_found", nombreCualificadoPropiedad);
+	public IOnChangePropertyAction createOnChangeAction(String qualifiedPropertyName) throws XavaException {  
+		MetaPropertyView metaPropertyView = getMetaPropertyViewFor(qualifiedPropertyName);		
+		if (metaPropertyView == null) {
+			throw new XavaException("on_change_action_not_found", qualifiedPropertyName);
 		}
-		return metaVistaPropiedad.createOnChangeAction();
+		return metaPropertyView.createOnChangeAction();
 	}	
 		
 	public boolean hasMetaSearchAction() {
@@ -364,66 +341,66 @@ public class MetaView extends MetaElement implements Cloneable {
 	}
 	
 	/**
-	 * Para buscar objetos del tipo representado por esta
-	 * vista. NO PARA LAS REFERENCIAS.
+	 * To search the objects of type thas is represents by this view.
+	 * <b>Not for the references</b>
 	 */
 	public MetaSearchAction getMetaSearchAction() {
 		if (!hasMetaSearchAction()) return null;
 		return metaSearchAction;
 	}
 	
-	public void setMetaSearchAction(MetaSearchAction metaAccionBuscar) {
-		this.metaSearchAction = metaAccionBuscar;
+	public void setMetaSearchAction(MetaSearchAction metaSearchAction) {
+		this.metaSearchAction = metaSearchAction;
 	}
 	
 	/**
-	 * @return Nulo si no tiene
+	 * @return Null if not found
 	 */
 	public MetaDescriptionsList getMetaDescriptionList(MetaReference r) throws XavaException {
-		if (!tieneMetaVistaReferenciaPara(r)) return null;
-		MetaReferenceView metaVistaReferencia = getMetaReferenceView(r);
-		MetaDescriptionsList metaListaDescripciones = metaVistaReferencia.getMetaDescriptionsList();
-		if (metaListaDescripciones==null) return null;
-		if (Is.emptyString(metaListaDescripciones.getDescriptionPropertyName()) &&
-				Is.emptyString(metaListaDescripciones.getDescriptionPropertiesNames())
+		if (!hasMetaReferenceViewFor(r)) return null;
+		MetaReferenceView metaReferenceView = getMetaReferenceView(r);
+		MetaDescriptionsList metaDescriptionsList = metaReferenceView.getMetaDescriptionsList();
+		if (metaDescriptionsList==null) return null;
+		if (Is.emptyString(metaDescriptionsList.getDescriptionPropertyName()) &&
+				Is.emptyString(metaDescriptionsList.getDescriptionPropertiesNames())
 				) {			
-			Collection propiedades = r.getMetaModelReferenced().getPropertiesNames();
-			if (propiedades.contains("descripcion")) metaListaDescripciones.setDescriptionPropertyName("descripcion");
-			else if (propiedades.contains("description")) metaListaDescripciones.setDescriptionPropertyName("description");
-			else if (propiedades.contains("nombre")) metaListaDescripciones.setDescriptionPropertyName("nombre");
-			else if (propiedades.contains("name")) metaListaDescripciones.setDescriptionPropertyName("name");
+			Collection properties = r.getMetaModelReferenced().getPropertiesNames();
+			if (properties.contains("descripcion")) metaDescriptionsList.setDescriptionPropertyName("descripcion");
+			else if (properties.contains("description")) metaDescriptionsList.setDescriptionPropertyName("description");
+			else if (properties.contains("nombre")) metaDescriptionsList.setDescriptionPropertyName("nombre");
+			else if (properties.contains("name")) metaDescriptionsList.setDescriptionPropertyName("name");
 			else throw new XavaException("description_property_required");  
 		}
-		return metaListaDescripciones;
+		return metaDescriptionsList;
 	}
 	
 	/**
-	 * @return del tipo <tt>ListaDescripciones</tt>
+	 * @return of type <tt>MetaDescriptionsList</tt>
 	 */
 	public Collection getMetaDescriptionsLists() {
-		Collection metaListasDescripciones = new ArrayList();
-		if (metaViewsReferences == null) return metaListasDescripciones;
+		Collection metaDescriptionsLists = new ArrayList();
+		if (metaViewsReferences == null) return metaDescriptionsLists;
 		Iterator it = metaViewsReferences.values().iterator();
 		while (it.hasNext()) {
-			MetaReferenceView vistaReferencia = (MetaReferenceView) it.next();
-			MetaDescriptionsList listaDescripciones = vistaReferencia.getMetaDescriptionsList(); 
-			if (listaDescripciones != null) {
-				metaListasDescripciones.add(listaDescripciones);
+			MetaReferenceView referenceView = (MetaReferenceView) it.next();
+			MetaDescriptionsList descriptionsList = referenceView.getMetaDescriptionsList(); 
+			if (descriptionsList != null) {
+				metaDescriptionsLists.add(descriptionsList);
 			}
 		}
-		return metaListasDescripciones;  
+		return metaDescriptionsLists;  
 	}
 	
 	public MetaView getMetaView(MetaReference r) throws XavaException {
 		MetaView result = null;		
-		if (tieneMetaVistaReferenciaPara(r)) {			
-			MetaReferenceView metaVistaReferencia = getMetaReferenceView(r);
-			String nombreVista = metaVistaReferencia.getViewName();
-			if (Is.emptyString(nombreVista)) {
+		if (hasMetaReferenceViewFor(r)) {			
+			MetaReferenceView metaReferenceView = getMetaReferenceView(r);
+			String viewName = metaReferenceView.getViewName();
+			if (Is.emptyString(viewName)) {
 				result = r.getMetaModelReferenced().getMetaViewByDefault();				
 			}
 			else {
-				result = r.getMetaModelReferenced().getMetaView(nombreVista);				 
+				result = r.getMetaModelReferenced().getMetaView(viewName);				 
 			}
 			try {
 				result = (MetaView) result.clone();
@@ -431,14 +408,14 @@ public class MetaView extends MetaElement implements Cloneable {
 			catch (CloneNotSupportedException e) {
 				throw new XavaException("meta_view_reference_error_no_clone");				
 			}
-			result.setMetaSearchAction(metaVistaReferencia.getMetaSearchAction());	
-			result.setFrame(metaVistaReferencia.isFrame());
-			MetaDescriptionsList metaListaDescripciones = getMetaDescriptionList(r);			
-			if (metaListaDescripciones != null) {
-				result.borrarMiembros();
-				Iterator itClaves = r.getMetaModelReferenced().getKeyPropertiesNames().iterator();
-				while (itClaves.hasNext()) {
-					result.addMemberName((String)itClaves.next());
+			result.setMetaSearchAction(metaReferenceView.getMetaSearchAction());	
+			result.setFrame(metaReferenceView.isFrame());
+			MetaDescriptionsList metaDescriptionsList = getMetaDescriptionList(r);			
+			if (metaDescriptionsList != null) {
+				result.removeMembers();
+				Iterator itKeys = r.getMetaModelReferenced().getKeyPropertiesNames().iterator();
+				while (itKeys.hasNext()) {
+					result.addMemberName((String)itKeys.next());
 				}
 			}
 		}
@@ -449,14 +426,14 @@ public class MetaView extends MetaElement implements Cloneable {
 		return result;
 	}
 	
-	private void borrarMiembros() {
+	private void removeMembers() {
 		if (_membersNames != null) _membersNames.clear();
 		allMetaMembers = null;
 		metaMembers = null;
 		metaProperties = null;				
 	}
 
-	private boolean tieneMetaVistaReferenciaPara(MetaReference r) {				
+	private boolean hasMetaReferenceViewFor(MetaReference r) {				
 		if (metaViewsReferences == null) {
 			return false;
 		}		
@@ -464,7 +441,7 @@ public class MetaView extends MetaElement implements Cloneable {
 	}
 	
 	/**
-	 * @return Nulo si no existe
+	 * @return Null if not found
 	 */
 	public MetaReferenceView getMetaReferenceView(MetaReference r) {
 		if (metaViewsReferences == null) {
@@ -473,9 +450,9 @@ public class MetaView extends MetaElement implements Cloneable {
 		return (MetaReferenceView) metaViewsReferences.get(r.getName());
 	}
 	
-	private MetaPropertyView getMetaVistaPropiedadPara(String nombreCualificadoPropiedad) { 		
+	private MetaPropertyView getMetaPropertyViewFor(String qualifiedPropertyName) { 		
 		if (metaViewsProperties == null) return null;
-		return (MetaPropertyView) metaViewsProperties.get(nombreCualificadoPropiedad);
+		return (MetaPropertyView) metaViewsProperties.get(qualifiedPropertyName);
 	}
 	
 	
@@ -492,7 +469,7 @@ public class MetaView extends MetaElement implements Cloneable {
 		section.parentName = getName();
 		section.setLabel(label);
 		section.setMembersNames(members);
-		promocionar(section);		
+		promote(section);		
 		sections.add(section);
 	}
 	
@@ -505,38 +482,38 @@ public class MetaView extends MetaElement implements Cloneable {
 		metaGroups.put(name, metaGroup);		
 	}
 		
-	private MetaGroup getMetaGroup(String nombre) throws XavaException {
+	private MetaGroup getMetaGroup(String name) throws XavaException {
 		if (metaGroups == null) {
-			throw new ElementNotFoundException("group_not_found_no_groups", nombre);
+			throw new ElementNotFoundException("group_not_found_no_groups", name);
 		}
-		Object result = metaGroups.get(nombre);
+		Object result = metaGroups.get(name);
 		if (result == null) { 
-			throw new ElementNotFoundException("group_not_found", nombre);
+			throw new ElementNotFoundException("group_not_found", name);
 		}
 		return (MetaGroup) result;
 	}
 		
-	private void promocionar(MetaView vista)
+	private void promote(MetaView view)
 		throws XavaException {
-		vista.setMetaSearchAction(this.getMetaSearchAction());
-		vista.setMetaModel(this.getMetaModel());
+		view.setMetaSearchAction(this.getMetaSearchAction());
+		view.setMetaModel(this.getMetaModel());
 				
-		vista.setModelName(this.getModelName());
+		view.setModelName(this.getModelName());
 		
 		if (this.metaViewsProperties == null) {
 			this.metaViewsProperties = new HashMap();
 		}
-		vista.metaViewsProperties = this.metaViewsProperties;
+		view.metaViewsProperties = this.metaViewsProperties;
 		if (this.metaViewsReferences == null) {
 			this.metaViewsReferences = new HashMap();
 		}
-		vista.metaViewsReferences = this.metaViewsReferences;
+		view.metaViewsReferences = this.metaViewsReferences;
 		if (this.metaViewsCollections == null) {
 			this.metaViewsCollections = new HashMap();
 		}
-		vista.metaViewsCollections = this.metaViewsCollections;
-		vista.metaViewProperties = this.metaViewProperties;
-		vista.metaGroups = this.metaGroups; 
+		view.metaViewsCollections = this.metaViewsCollections;
+		view.metaViewProperties = this.metaViewProperties;
+		view.metaGroups = this.metaGroups; 
 	}
 	
 	public boolean hasSections() {
@@ -546,48 +523,29 @@ public class MetaView extends MetaElement implements Cloneable {
 	public void clearSections() {
 		sections =  null;
 	}			
-	
-	
-	/**
-	 * Returns the nombreClaseMediador.
-	 * @return String
-	 */
+		
 	public String getMediatorClassName() throws XavaException {		
 		return mediatorClassName;
 	}
 
-	/**
-	 * Sets the nombreClaseMediador.
-	 * @param nombreClaseMediador The nombreClaseMediador to set
-	 */
-	public void setMediatorClassName(String nombreClaseMediador) {
-		this.mediatorClassName = nombreClaseMediador;
+	public void setMediatorClassName(String mediatorClassName) {
+		this.mediatorClassName = mediatorClassName;
 	}
+	
 	/**
-	 * Method getMetaVistaColeccion.
-	 * @param string
-	 * @return Nulo si no existe.
+	 * @return Null if not found
 	 */
-	public MetaCollectionView getMetaCollectionView(String nombreColeccion) {		
+	public MetaCollectionView getMetaCollectionView(String collectionName) {		
 		if (metaViewsCollections == null) return null;
-		return (MetaCollectionView) metaViewsCollections.get(nombreColeccion);				
+		return (MetaCollectionView) metaViewsCollections.get(collectionName);				
 	}
 	
-	
-	/**
-	 * Returns the sacarMarco.
-	 * @return boolean
-	 */
 	public boolean isFrame() {
 		return frame;
 	}
 
-	/**
-	 * Sets the sacarMarco.
-	 * @param sacarMarco The sacarMarco to set
-	 */
-	public void setFrame(boolean sacarMarco) {
-		this.frame = sacarMarco;
+	public void setFrame(boolean frame) {
+		this.frame = frame;
 	}
 		
 	public String getId() {
@@ -614,9 +572,9 @@ public class MetaView extends MetaElement implements Cloneable {
 				propertiesNamesThrowOnChange = new ArrayList();
 				Iterator it = metaViewsProperties.values().iterator();
 				while (it.hasNext()) {
-					MetaPropertyView vistaPropiedad = (MetaPropertyView) it.next();
-					if (vistaPropiedad.hasOnChangeAction()) {
-						propertiesNamesThrowOnChange.add(vistaPropiedad.getPropertyName());
+					MetaPropertyView propertyView = (MetaPropertyView) it.next();
+					if (propertyView.hasOnChangeAction()) {
+						propertiesNamesThrowOnChange.add(propertyView.getPropertyName());
 					}
 				}
 				propertiesNamesThrowOnChange = Collections.unmodifiableCollection(propertiesNamesThrowOnChange);
@@ -653,15 +611,15 @@ public class MetaView extends MetaElement implements Cloneable {
 	}
 
 	public Collection getActionsNamesForProperty(MetaProperty p) {
-		MetaPropertyView metaVistaPropiedad = getMetaVistaPropiedadPara(p.getName());
-		if (metaVistaPropiedad == null) return Collections.EMPTY_LIST;
-		return metaVistaPropiedad.getActionsNames();
+		MetaPropertyView metaPropertyView = getMetaPropertyViewFor(p.getName());
+		if (metaPropertyView == null) return Collections.EMPTY_LIST;
+		return metaPropertyView.getActionsNames();
 	}
 
 	public int getLabelFormatForProperty(MetaProperty p) {
-		MetaPropertyView metaVistaPropiedad = getMetaVistaPropiedadPara(p.getName());
-		if (metaVistaPropiedad == null) return MetaPropertyView.NORMAL_LABEL;
-		return metaVistaPropiedad.getLabelFormat();
+		MetaPropertyView metaPropertyView = getMetaPropertyViewFor(p.getName());
+		if (metaPropertyView == null) return MetaPropertyView.NORMAL_LABEL;
+		return metaPropertyView.getLabelFormat();
 	}
 
 	private boolean isSection() {

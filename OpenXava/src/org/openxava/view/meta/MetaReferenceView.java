@@ -14,77 +14,44 @@ public class MetaReferenceView implements java.io.Serializable {
 	private boolean search;
 	private boolean readOnly;
 	
-	
-	/**
-	 * Returns the nombreReferencia.
-	 * @return String
-	 */
 	public String getReferenceName() {
 		return referenceName==null?"":referenceName.trim();
 	}
 
-	/**
-	 * Sets the nombreReferencia.
-	 * @param nombreReferencia The nombreReferencia to set
-	 */
-	public void setReferenceName(String nombreReferencia) {
-		this.referenceName = nombreReferencia;
+	public void setReferenceName(String referenceName) {
+		this.referenceName = referenceName;
 	}
 
-	/**
-	 * Returns the metaAccionBuscar.
-	 * @return MetaAccionBuscar
-	 */
 	public MetaSearchAction getMetaSearchAction() {
 		return metaSearchAction;
 	}
 
-	/**
-	 * Sets the metaAccionBuscar.
-	 * @param metaAccionBuscar The metaAccionBuscar to set
-	 */
-	public void setMetaSearchAction(MetaSearchAction metaAccionBuscar) {
-		this.metaSearchAction = metaAccionBuscar;
+	public void setMetaSearchAction(MetaSearchAction metaSearchAction) {
+		this.metaSearchAction = metaSearchAction;
 	}
 
-	/**
-	 * Returns the nombreVista.
-	 * @return String
-	 */
 	public String getViewName() {
 		return viewName;
 	}
 
-	/**
-	 * Sets the nombreVista.
-	 * @param nombreVista The nombreVista to set
-	 */
-	public void setViewName(String nombreVista) {
-		this.viewName = nombreVista;
+	public void setViewName(String viewName) {
+		this.viewName = viewName;
 	}
 
-	/**
-	 * Returns the sacarMarco.
-	 * @return boolean
-	 */
 	public boolean isFrame() {
 		return frame;
 	}
 
-	/**
-	 * Sets the sacarMarco.
-	 * @param sacarMarco The sacarMarco to set
-	 */
-	public void setFrame(boolean sacarMarco) {
-		this.frame = sacarMarco;
+	public void setFrame(boolean frame) {
+		this.frame = frame;
 	}
 	
 	public MetaDescriptionsList getMetaDescriptionsList() {
 		return metaDescriptionsList;
 	}
 
-	public void setMetaDescriptionsList(MetaDescriptionsList descripciones) {
-		metaDescriptionsList = descripciones;
+	public void setMetaDescriptionsList(MetaDescriptionsList descriptions) {
+		metaDescriptionsList = descriptions;
 	}
 
 	public boolean isCreate() {
@@ -105,4 +72,5 @@ public class MetaReferenceView implements java.io.Serializable {
 	public void setReadOnly(boolean readOnly) {
 		this.readOnly = readOnly;
 	}
+	
 }

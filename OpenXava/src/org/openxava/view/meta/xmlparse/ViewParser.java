@@ -50,15 +50,15 @@ public class ViewParser extends XmlElementsNames {
 		NodeList list = n.getChildNodes();
 		StringBuffer r = new StringBuffer();
 		for (int i = 0; i < list.getLength(); i++) {
-			Node nodo = (Node) list.item(i);
-			if (xgroup[lang].equals(nodo.getNodeName())) {
-				String nombreGrupo = ((Element) nodo).getAttribute(xname[lang]);
+			Node node = (Node) list.item(i);
+			if (xgroup[lang].equals(node.getNodeName())) {
+				String groupName = ((Element) node).getAttribute(xname[lang]);
 				r.append("__GROUP__");
-				r.append(nombreGrupo);
+				r.append(groupName);
 				r.append(',');
 			}
 			else {
-				String nodeValue = nodo.getNodeValue();
+				String nodeValue = node.getNodeValue();
 				if (nodeValue != null) r.append(nodeValue);
 			}
 		}
@@ -112,7 +112,7 @@ public class ViewParser extends XmlElementsNames {
 		container.setMediatorClassName(getMediatorClass(found, lang));		
 	}
 	
-	private static void fillMediator(Element el, MetaCollectionView contenedor, int lang)
+	private static void fillMediator(Element el, MetaCollectionView container, int lang)
 		throws XavaException {			
 		NodeList l = el.getElementsByTagName(xmediator[lang]);
 		int c = l.getLength();
@@ -120,7 +120,7 @@ public class ViewParser extends XmlElementsNames {
 		if (c > 1) {
 			throw new XavaException("only_1_mediator");
 		}
-		contenedor.setMediatorClassName(getMediatorClass(l.item(0), lang));
+		container.setMediatorClassName(getMediatorClass(l.item(0), lang));
 	}	
 		
 	private static void fillReferenceViews(Element el, MetaView container, int lang)
@@ -263,8 +263,8 @@ public class ViewParser extends XmlElementsNames {
 		NodeList l = el.getElementsByTagName(xaction[lang]);
 		int c = l.getLength();
 		for (int i=0; i<c; i++) {
-			String accion = ((Element) l.item(i)).getAttribute(xaction[lang]);		
-			container.addActionName(accion);
+			String action = ((Element) l.item(i)).getAttribute(xaction[lang]);		
+			container.addActionName(action);
 		}
 	}	
 		

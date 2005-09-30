@@ -33,8 +33,8 @@ public class MetaGroup extends MetaMember {
 		return metaView;				
 	}
 
-	public void setMembersNames(String miembros) {
-		this.membersNames = miembros;		
+	public void setMembersNames(String members) {
+		this.membersNames = members;		
 	}
 		
 }

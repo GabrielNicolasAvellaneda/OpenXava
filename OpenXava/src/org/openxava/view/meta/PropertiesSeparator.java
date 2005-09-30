@@ -3,11 +3,11 @@ package org.openxava.view.meta;
 import org.openxava.model.meta.*;
 
 /**
- * Se usa dentro de una colección de propiedades para 
- * indicar una separación. <p>
- * 
- * Desciende de <tt>MetaPropiedad</tt> para poderse procesar por
- * cualquier método que reciba <tt>MetaPropiedad</tt>.<br>
+ * It's used in a property collection for
+ * indicate a separation. <p>
+ *
+ * Extends from <tt>MetaProperty</tt> thus it can be processed
+ * by any method that receive a <tt>MetaProperty</tt>.<br> 
  * 
  * @author Javier Paniza
  */
@@ -19,11 +19,8 @@ public class PropertiesSeparator extends MetaProperty {
 	private PropertiesSeparator() {
 	}
 	
-	/**
-	 * @see org.openxava.util.meta.MetaElement#getName()
-	 */
 	public String getName() {
-		return "[SEPARADOR]";
+		return "[SEPARATOR]";
 	}
 	
 	public String getLabel() {
