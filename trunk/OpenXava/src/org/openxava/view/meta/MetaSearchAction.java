@@ -23,19 +23,19 @@ public class MetaSearchAction implements Serializable, Cloneable {
 	/**
 	 * Only for spanish/swing version.
 	 */	
-	public void setClassName(String nombreClase) {
-		this.className = nombreClase;
+	public void setClassName(String className) {
+		this.className = className;
 	}
 	
 	public Map getPropertiesValues() {		
 		return propertiesValues==null?new HashMap():propertiesValues;				
 	}
 
-	public void addPropertyValue(String nombre, String valor) {
+	public void addPropertyValue(String name, String value) {
 		if (propertiesValues == null) {
 			propertiesValues = new HashMap();
 		}
-		propertiesValues.put(nombre, valor);
+		propertiesValues.put(name, value);
 	}
 
 	public String getActionName() {

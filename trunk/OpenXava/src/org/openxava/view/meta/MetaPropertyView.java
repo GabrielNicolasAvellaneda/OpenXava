@@ -21,44 +21,28 @@ public class MetaPropertyView implements java.io.Serializable {
 	private Collection actionsNames;
 	private int labelFormat;
 	
-	public void addActionName(String nombreAccion) {
+	public void addActionName(String actionName) {
 		if (actionsNames == null) actionsNames = new ArrayList();
-		actionsNames.add(nombreAccion);
+		actionsNames.add(actionName);
 	}
 	public Collection getActionsNames() {		
 		return actionsNames==null?Collections.EMPTY_LIST:actionsNames;
 	}
 			
-	/**
-	 * Returns the nombreReferencia.
-	 * @return String
-	 */
 	public String getPropertyName() {
 		return propertyName==null?"":propertyName.trim();
 	}
 
-	/**
-	 * Sets the nombreReferencia.
-	 * @param nombreReferencia The nombreReferencia to set
-	 */
-	public void setPropertyName(String nombreReferencia) {
-		this.propertyName = nombreReferencia;
+	public void setPropertyName(String propertyName) {
+		this.propertyName = propertyName;
 	}
 
-	/**
-	 * Returns the etiqueta.
-	 * @return String
-	 */
 	public String getLabel() {
 		return label;
 	}
 
-	/**
-	 * Sets the etiqueta.
-	 * @param etiqueta The etiqueta to set
-	 */
-	public void setLabel(String etiqueta) {
-		this.label = etiqueta;
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 	public boolean isReadOnly() {
@@ -79,13 +63,8 @@ public class MetaPropertyView implements java.io.Serializable {
 			if (!(o instanceof IOnChangePropertyAction)) {
 				throw new XavaException("on_change_action_implements_error", IOnChangePropertyAction.class.getName(), getOnChangeActionClassName());
 			}
-			IOnChangePropertyAction accion = (IOnChangePropertyAction) o;
-			/* para más adelante
-			if (tieneMetaPoners()) {
-				asignarValoresPropiedades(calculador);
-			}	
-			*/					
-			return accion;
+			IOnChangePropertyAction action = (IOnChangePropertyAction) o;
+			return action;
 		}
 		catch (XavaException ex) {
 			throw ex;
@@ -99,7 +78,6 @@ public class MetaPropertyView implements java.io.Serializable {
 	public String getOnChangeActionClassName() {
 		return onChangeActionClassName;
 	}
-
 	public void setOnChangeActionClassName(String string) {
 		onChangeActionClassName = string;
 	}
@@ -107,7 +85,8 @@ public class MetaPropertyView implements java.io.Serializable {
 	public int getLabelFormat() {
 		return labelFormat;
 	}
-	public void setLabelFormat(int formatoEtiqueta) {
-		this.labelFormat = formatoEtiqueta;
+	public void setLabelFormat(int labelFormat) {
+		this.labelFormat = labelFormat;
 	}
+	
 }
