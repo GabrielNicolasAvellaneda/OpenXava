@@ -82,7 +82,7 @@ public class EJBCodeGenerator extends CodeGenerator{
 		}		
 	}
 	
-public static void main(String [] argv) {
+	public static void main(String [] argv) {
 		if (argv.length != 4) {
 			System.err.println(XavaResources.getString("generator_argv_required"));
 			System.exit(1);			

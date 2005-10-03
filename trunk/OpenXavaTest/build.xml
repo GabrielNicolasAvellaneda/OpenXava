@@ -57,13 +57,15 @@
 		<antcall target="createEJBJars"/>
 		<ant antfile="../OpenXava/build.xml" target="createWebsphereEar"/>
 	</target>
-	
-	<target name="regeneratePortletXml">
-		<ant antfile="../OpenXava/build.xml" target="regeneratePortletXml"/>
+
+	<target name="redeployPortlets"> 
+		<ant antfile="../OpenXava/build.xml" target="regeneratePortletGenerator"/>
+		<touch file="../${project}/xava/application.xml"></touch>
+		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
 	</target>
-					
+	
 	<target name="deployPortlets"> 
 		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
 	</target>
-				
+					
 </project>

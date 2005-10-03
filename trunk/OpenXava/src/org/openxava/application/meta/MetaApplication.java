@@ -12,7 +12,8 @@ import org.openxava.util.meta.*;
 public class MetaApplication extends MetaElement implements java.io.Serializable {
 
 
-	private Map metaModules = new HashMap();	
+	private Map metaModules = new HashMap();
+	private Collection modulesNames = new ArrayList(); // to preserve the order
 	
 	/**
 	 * 
@@ -21,16 +22,27 @@ public class MetaApplication extends MetaElement implements java.io.Serializable
 	public void addMetaModule(MetaModule newModule) {
 		metaModules.put(newModule.getName(), newModule);
 		newModule.setMetaApplication(this);
+		modulesNames.add(newModule.getName()); // to preserve the order
 	}
+
 	
 	
 	/**
 	 * 
 	 * @exception XavaException  Any problem 
-	 * @return de <tt>MetaModule</tt>. Not null.
+	 * @return of <tt>MetaModule</tt>. Not null.
 	 */
 	public Collection getMetaModules() throws XavaException {
 		return metaModules.values();
+	}
+
+	/**
+	 * In the same order that they are found in application.xml/aplicacion.xml. <p>
+	 *  
+	 * @return of <tt>MetaModule</tt>. Not null.
+	 */	
+	public Collection getModulesNames() {
+		return modulesNames;
 	}
 	
 	/**
