@@ -43,6 +43,9 @@ public interface Subfamily2Remote
    public int getFamily_number(  )
       throws java.rmi.RemoteException;
 
+   public java.util.Collection getProductsValues(  )
+      throws java.rmi.RemoteException;
+
    public org.openxava.test.model.Subfamily2Data getData(  )
       throws java.rmi.RemoteException;
 

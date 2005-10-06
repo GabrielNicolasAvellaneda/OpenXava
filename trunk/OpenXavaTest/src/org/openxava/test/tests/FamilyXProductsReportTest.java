@@ -30,5 +30,14 @@ public class FamilyXProductsReportTest extends ModuleTestBase {
 		};		
 		assertValidValues("subfamily.number", subfamiliesFamily2);
 	}
+	
+	public void testJasperReportBaseActionTest() throws Exception {
+		execute("FamilyProductsReport.generate");
+		// Next line: test that errors of a ValidationException thrown from a action are shown
+		assertError("Value for Subfamily in FilterBySubfamily is required"); 
+		setValue("subfamily.number", "1");
+		execute("FamilyProductsReport.generate"); // takes-long is tested too (only testing that no crash)
+		assertContentTypeForPopup("application/pdf");
+	}
 
 }

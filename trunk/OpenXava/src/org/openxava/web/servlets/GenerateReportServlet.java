@@ -18,6 +18,10 @@ import org.openxava.tab.*;
 import org.openxava.util.*;
 
 /**
+ * To generate automatically reports from list mode. <p>
+ * 
+ * Uses JasperReports.
+ * 
  * @author Javier Paniza
  */
 

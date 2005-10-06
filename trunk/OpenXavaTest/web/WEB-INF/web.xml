@@ -16,6 +16,10 @@
 		<servlet-name>generateReport</servlet-name>
 		<servlet-class>org.openxava.web.servlets.GenerateReportServlet</servlet-class>
 	</servlet>		
+	<servlet>
+		<servlet-name>generateCustomReport</servlet-name>
+		<servlet-class>org.openxava.web.servlets.GenerateCustomReportServlet</servlet-class>
+	</servlet>			
 	<servlet-mapping>
 		<servlet-name>images</servlet-name>
 		<url-pattern>/xava/ximage</url-pattern>
@@ -36,6 +40,11 @@
 		<servlet-name>generateReport</servlet-name>
 		<url-pattern>/xava/list.csv</url-pattern>
 	</servlet-mapping>			
+	<servlet-mapping>
+		<servlet-name>generateCustomReport</servlet-name>
+		<url-pattern>/xava/report.pdf</url-pattern>
+	</servlet-mapping>		
+	
   <mime-mapping>
         <extension>
             jnlp
