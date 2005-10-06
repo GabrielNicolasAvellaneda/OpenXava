@@ -333,9 +333,10 @@
 	
 	<controller name="FamilyProductsReport">
 		<action name="generate" 
-			class="org.openxava.test.actions.GenerateFamilyProductsReportAction"
-			takes-long="true"/>
-		
+			class="org.openxava.test.actions.FamilyProductsReportAction"
+			takes-long="true">
+			<use-object name="xava_view"/>			
+		</action>			
 	</controller>	
 
 	<controller name="StatesHibernate"> 

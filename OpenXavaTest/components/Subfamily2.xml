@@ -20,7 +20,13 @@ not save hence the oid don't disturb.
 		<property name="description" type="String"
 			size="40" required="true"/>
 		<property name="remarks" stereotype="MEMO"
-			size="400"/>						
+			size="400"/>
+		<!-- Return a collection of ProductValue (not remote objects) -->	
+		<method name="getProductsValues" type="java.util.Collection">
+			<calculator class="org.openxava.test.calculators.ProductsValuesOfSubfamilyCalculator">
+				<set property="subfamilyNumber" from="number"/>
+			</calculator>
+		</method>							
 	</entity>
 	
 	<view>

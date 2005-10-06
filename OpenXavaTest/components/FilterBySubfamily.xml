@@ -12,15 +12,13 @@
 	with this component it will crash.
 	
 	At moment it is needed to specify the mapping part.
-	
-	This example ONLY SHOW DIALOG, DOES NOT DO ANY REPORT OR PROCESS
 -->
 
 <component name="FilterBySubfamily">
 
 	<entity>  
 		<property name="oid" key="true" type="String" hidden="true"/>
-		<reference name="subfamily" model="Subfamily2"/>
+		<reference name="subfamily" model="Subfamily2" required="true"/>
 		<reference name="subfamilyTo" model="Subfamily2"/> 		
 	</entity>		
 	

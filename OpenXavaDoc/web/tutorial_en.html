@@ -1,23 +1,14 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+</head>
+<body>
 Welcome to this short <span id="transl1">voyage</span>
 to start to use OpenXava.<br>
-These instructions suposses&nbsp; that openxava-1.1.zip is
-decompressed in OPENXAVA_HOME directory, eclipse in ECLIPSE_HOME and
-jboss in JBOSS_HOME.<br>
+These instructions suposses&nbsp; that you have download, install and
+start openxava-1.2.<br>
 Here are the steps to begin to use OpenXava:<br>
 <ul>
-  <li><a href="#Descargar_software_base_necesario">Download
-base
-software needed.</a><br>
-  </li>
-  <li><a href="#Instalar_jdk_de_java">Install and configure
-JDK.</a><br>
-  </li>
-  <li><a href="#Instalar_y_configurar_JBoss">Install and
-configure
-JBoss.</a></li>
-  <li><a href="#Instalar_y_configurar_Eclipse_y_openxava">Install
-and
-configure Eclipse and OpenXava.</a></li>
   <li><a href="#Ejecutar_aplicacion_ejemplo_MiEscuela">Execute
 example application MySchool.</a></li>
   <li><a href="#Ejecutar_prueba_junit_de_aplicacion">Execute
@@ -31,100 +22,6 @@ full
 junit test suite for OpenXava.</a></li>
   <li><a href="#Ayuda">Help</a><br>
   </li>
-</ul>
-<h4><a name="Descargar_software_base_necesario"></a>Download
-base
-software needed</h4>
-<ul>
-  <li>Download JDK from <a
- href="http://java.sun.com/j2se/1.5.0/download.html">http://java.sun.com/j2se/1.5.0/download.html</a>,
-and click <span style="font-style: italic;">Download&nbsp;JDK 5.0</span>.
-Warning!, do not
-download J2EE or NetBeans.<br>
-  </li>
-  <li>Download JBoss 4.0.2 from <a href="http://www.jboss.org/">www.jboss.org</a>.
-    <span style="font-family: monospace;"></span></li>
-  <li>Download Eclipse 3.0.2 from <a href="http://www.eclipse.org/">www.eclipse.org</a></li>
-  <li>Download XmlBuddy (a XML
-plugin for Eclipse) from <a href="http://www.xmlbuddy.com/">www.xmlbuddy.com</a>
-(the free version).</li>
-</ul>
-<h4><a name="Instalar_jdk_de_java"></a>Install
-and configure JDK <br>
-</h4>
-<ul>
-  <li>Install Java JDK.</li>
-  <li>Create a environment
-variable <span style="font-family: monospace;">JAVA_HOME</span>
-and set the value of JDK installation directory, for example <span
- style="font-family: monospace;">JAVA_HOME=/opt/j2sdk1.5.0_03</span>
-or <span style="font-family: monospace;">JAVA_HOME=C:\Program
-files\Java\j2sdk1.5.0_03</span>.<br>
-  </li>
-  <li>Add java <span style="font-family: monospace;">bin</span>
-directory to your <span style="font-family: monospace;">PATH</span>,
-like this: <span style="font-family: monospace;">export
-PATH=$JAVA_HOME/bin:$PATH</span>
-(in UNIX case), in windows case <span style="font-family: monospace;">PATH=%JAVA_HOME%\bin:%PATH%</span>
-(in <span style="font-style: italic;">Control
-Pane &gt; System</span>)</li>
-</ul>
-<h4><a name="Instalar_y_configurar_JBoss"></a>Install
-and configure
-JBoss</h4>
-<ul>
-  <li><span style="font-family: monospace;"></span>Decompress <span
- style="font-family: monospace;">jboss-4.0.2.zip</span>
-in a directory
-to your choice (from now JBOSS_HOME).<span
- style="font-family: monospace;"></span> </li>
-  <li>Decompress <span style="font-family: monospace;">openxava-db.zip</span>
-inside <span style="font-family: monospace;">JBOSS_HOME/server/default</span>.<br>
-  </li>
-  <li>Execute <span style="font-family: monospace;">JBOSS_HOME/bin/run.sh</span>
-(in
-UNIX) or <span style="font-family: monospace;">JBOSS_HOME</span><span
- style="font-family: monospace;">\bin\</span><span
- style="font-family: monospace;">run.bat</span>
-(in
-Windows).</li>
-  <li>Wait to see in console '<span style="font-family: monospace;">JBoss
-(MX MicroKernel) ... Started in ...</span>'</li>
-  <li>Step <span style="font-style: italic;">Ctrl-C</span>
-and wait
-JBoss to stop.</li>
-  <li>Decompress again&nbsp;<span style="font-family: monospace;">openxava-db.zip
-    </span>(a required step for a
-correct installation of databases)<span style="font-family: monospace;"><br>
-    </span></li>
-  <li>Execute again <span style="font-family: monospace;">run.sh</span>
-or <span style="font-family: monospace;">run.bat</span><br>
-  </li>
-  <li>When you see '<span style="font-family: monospace;">JBoss
-(MX MicroKernel) ... Started in ...</span>'
-then Application Server is ready for server applications.</li>
-</ul>
-<h4><a name="Instalar_y_configurar_Eclipse_y_openxava"></a>Install
-and configure Eclipse and OpenXava</h4>
-<ul>
-  <li>Decompress <span style="font-family: monospace;">eclipse-SDK-3.0.2.zip&nbsp;</span>
-in a directory to your choice (from now ECLIPSE_HOME)<span
- style="font-family: monospace;">.</span> </li>
-  <li>Decompress XmlBuddy zip in <span style="font-family: monospace;">ECLIPSE_HOME/plugins</span></li>
-  <li>Edit the file <span style="font-family: monospace;">OPENXAVA_HOME/workspace/openxava.properties</span>
-to set the correct path for your installation.</li>
-  <li>Execute <span style="font-family: monospace;">ECLIPSE_HOME/eclipse</span></li>
-  <li>Eclipse prompts for
-workspace directory, write <span style="font-family: monospace;">OPENXAVA_HOME/workspace</span>.
-In case that you alredave Eclipse installed, you can change the
-worspace with <span style="font-style: italic;">File &gt; Switch
-Workspace</span>.</li>
-  <li>Within Eclipse go to <span style="font-style: italic;">Windows
-&gt;
-Preferences &gt; Java &gt; Build Path &gt; Classpath
-Variables</span> and set the value
-of JBOSS_HOME variable.<br>
-    <span style="color: rgb(255, 0, 0);"></span></li>
 </ul>
 <h4><a name="Ejecutar_aplicacion_ejemplo_MiEscuela"></a>Execute
 example application
@@ -719,3 +616,5 @@ You can learn more things about OpenXava reading its Reference Guide,
 you can download it from:<br>
 <a
  href="http://sourceforge.net/project/showfiles.php?group_id=123187&amp;package_id=144925">http://sourceforge.net/project/showfiles.php?group_id=123187&amp;package_id=144925</a><br>
+</body>
+</html>

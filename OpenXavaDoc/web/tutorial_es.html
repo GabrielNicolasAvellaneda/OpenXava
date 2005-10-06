@@ -1,23 +1,14 @@
-Bienvenido a este breve periplo de introducci&oacute;n en el mundox
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+</head>
+<body>
+Bienvenido a este breve periplo de introducci&oacute;n en el mundo
 de OpenXava.<br>
-Estas instrucciones suponen que el archivo openxava-1.1.zip se
-descomprime en el directorio OPENXAVA_HOME, el eclipse en ECLIPSE_HOME
-y
-el jboss en JBOSS_HOME.<br>
+Estas instrucciones suponen que has descargado, instalado y arrancdo
+openxava-1.2.<br>
 Esto es lo que vamos a hacer para empezar a xavear:<br>
 <ul>
-  <li><a href="#Descargar_software_base_necesario">Descargar
-software base necesario.</a><br>
-  </li>
-  <li><a href="#Instalar_jdk_de_java">Instalar y configurar
-JDK.</a><br>
-  </li>
-  <li><a href="#Instalar_y_configurar_JBoss">Instalar y
-configurar
-JBoss.</a></li>
-  <li><a href="#Instalar_y_configurar_Eclipse_y_openxava">Instalar
-y
-configurar Eclipse y OpenXava.</a></li>
   <li><a href="#Ejecutar_aplicacion_ejemplo_MiEscuela">Ejecutar
 aplicaci&oacute;n ejemplo MiEscuela.</a></li>
   <li><a href="#Ejecutar_prueba_junit_de_aplicacion">Ejecutar
@@ -31,109 +22,6 @@ pruebas
 junit completas para OpenXava.</a></li>
   <li><a href="#Ayuda">Ayuda</a><br>
   </li>
-</ul>
-<h4><a name="Descargar_software_base_necesario"></a>Descargar
-software base necesario</h4>
-<ul>
-  <li>Descargar JDK desde <a
- href="http://java.sun.com/j2se/1.5.0/download.html">http://java.sun.com/j2se/1.5.0/download.html</a>,
-y
-picando en <span style="font-style: italic;">Download
-JDK 5.0</span>. &iexcl;Ojo!, no
-descargar ni J2EE ni NetBeans.<br>
-  </li>
-  <li>Descargar JBoss 4.0.2 de <a href="http://www.jboss.org/">www.jboss.org</a>.
-    <span style="font-family: monospace;"></span></li>
-  <li>Descargar Eclipse 3.0.2 de <a href="http://www.eclipse.org/">www.eclipse.org</a></li>
-  <li>Descargar XmlBuddy (un
-plugin para editar XML con eclipse) de <a
- href="http://www.xmlbuddy.com/">www.xmlbuddy.com</a>
-(la
-versi&oacute;n gratuita es suficiente).</li>
-</ul>
-<h4><a name="Instalar_jdk_de_java"></a>Instalar
-y configurar JDK <br>
-</h4>
-<ul>
-  <li>Instalar JDK de Java.</li>
-  <li>Crear una variable de
-entorno <span style="font-family: monospace;">JAVA_HOME</span>
-y darle como valor la
-ruta en donde est&aacute; instalado el JDK, p. ej. <span
- style="font-family: monospace;">JAVA_HOME=/opt/jdk1.5.0_03</span>
-o <span style="font-family: monospace;">JAVA_HOME=C:\Archivos de
-programa\Java\jdk1.5.0_03</span>.<br>
-  </li>
-  <li>A&ntilde;adir el
-directorio <span style="font-family: monospace;">bin</span>
-de java a nuestro <span style="font-family: monospace;">PATH</span>,
-como
-sigue: export <span style="font-family: monospace;">PATH=$JAVA_HOME/bin:$PATH</span>
-(en caso de UNIX), en caso de
-Windows se hace desde <span style="font-style: italic;">Panel de
-Control &gt; Sistema</span>.</li>
-</ul>
-<h4><a name="Instalar_y_configurar_JBoss"></a>Instalar
-y configurar
-JBoss&nbsp;</h4>
-<ul>
-  <li><span style="font-family: monospace;"></span>Descomprimir <span
- style="font-family: monospace;">jboss-4.0.2.zip</span>
-en el directorio deseado (a partir de ahora JBOSS_HOME).<span
- style="font-family: monospace;"></span> </li>
-  <li>Descomprimir <span style="font-family: monospace;">openxava-db.zip</span>&nbsp;dentro
-de <span style="font-family: monospace;">JBOSS_HOME/server/default</span>.<br>
-  </li>
-  <li>Ejecutar <span style="font-family: monospace;">JBOSS_HOME/bin/run.sh</span>
-(en
-UNIX) o <span style="font-family: monospace;">JBOSS_HOME</span><span
- style="font-family: monospace;">\bin\</span><span
- style="font-family: monospace;">run.bat</span>
-(en
-Windows).</li>
-  <li>Esperamos a ver en la
-consola '<span style="font-family: monospace;">JBoss
-(MX MicroKernel) ... Started in ...</span>'</li>
-  <li>Pulsamos <span style="font-style: italic;">Ctrl-C</span>
-y
-esperamos a que se pare el JBoss.</li>
-  <li>Volvemos a descomprimir&nbsp;<span style="font-family: monospace;">openxava-db.zip&nbsp;</span>(un
-tramite necesario
-para que se instalen bien las db)<span style="font-family: monospace;"><br>
-    </span></li>
-  <li>Ejecutamos de nuevo <span style="font-family: monospace;">run.sh</span>
-o <span style="font-family: monospace;">run.bat</span><br>
-  </li>
-  <li>Cuando veamos el mensaje '<span style="font-family: monospace;">JBoss
-(MX MicroKernel) ... Started in ...</span>'
-ya tenemos
-el Servidor de Aplicaciones listo para servir aplicaciones.</li>
-</ul>
-<h4><a name="Instalar_y_configurar_Eclipse_y_openxava"></a>Instalar
-y
-configurar Eclipse y OpenXava</h4>
-<ul>
-  <li>Descomprimir <span style="font-family: monospace;">eclipse-SDK-3.0.2.zip&nbsp;</span>
-en el directorio deseado (a partir de ahora ECLIPSE_HOME)<span
- style="font-family: monospace;">.</span> </li>
-  <li>Descomprimir el contenido
-del zip de XmlBuddy en <span style="font-family: monospace;">ECLIPSE_HOME/plugins</span></li>
-  <li>Editar el archivo <span style="font-family: monospace;">OPENXAVA_HOME/workspace/openxava.properties</span>
-para ajustar las
-rutas a nuestra instalaci&oacute;n.</li>
-  <li>Ejecutar <span style="font-family: monospace;">ECLIPSE_HOME/eclipse</span></li>
-  <li>Pedir&aacute; el
-directorio del workspace, hay que poner <span
- style="font-family: monospace;">OPENXAVA_HOME/workspace</span>. En el
-caso de no pedirlo, por tener ya instalado el Eclipse, podemos
-cambiarlo con <span style="font-style: italic;">File &gt; Switch
-Workspace</span>.</li>
-  <li>Ya dentro del eclipse ir a <span style="font-style: italic;">Windows
-&gt;
-Preferences &gt; Java &gt; Build Path &gt; Classpath
-Variables</span> y ajustar el valor
-de la variable JBOSS_HOME.<br>
-    <span style="color: rgb(255, 0, 0);"></span></li>
 </ul>
 <h4><a name="Ejecutar_aplicacion_ejemplo_MiEscuela"></a>Ejecutar
 aplicaci&oacute;n ejemplo MiEscuela</h4>
@@ -694,8 +582,8 @@ Vamos all&aacute;:<br>
   <li>Ejecutar la tarea ant <span style="font-style: italic;">OpenXavaTest.deployWar</span></li>
   <li>Ejecutar <span style="font-style: italic;">XavaSuite</span>.
 Podemos buscarlo con el bot&oacute;n <img
- style="width: 16px; height: 16px;" alt="run" src="/OpenXavaDoc/images/run.gif">.<span
- style="font-style: italic;"></span></li>
+ style="width: 16px; height: 16px;" alt="run"
+ src="/OpenXavaDoc/images/run.gif">.<span style="font-style: italic;"></span></li>
 </ul>
 <h4><a name="Ayuda"></a>Ayuda</h4>
 Si se
@@ -714,3 +602,5 @@ Puedes aprender m&aacute;s sobre OpenXava leyendo su gu&iacute;a de
 referencia, la puedes descargar de:<br>
 <a
  href="http://sourceforge.net/project/showfiles.php?group_id=123187&amp;package_id=144925">http://sourceforge.net/project/showfiles.php?group_id=123187&amp;package_id=144925</a><br>
+</body>
+</html>

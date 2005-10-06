@@ -7,6 +7,6 @@ package org.openxava.actions;
 
 public interface IModelAction extends IAction {
 	
-	void setModel(String nombreModelo);
+	void setModel(String modelName);
 
 }

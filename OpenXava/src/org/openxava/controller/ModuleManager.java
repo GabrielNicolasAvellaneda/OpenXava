@@ -8,6 +8,7 @@ import org.openxava.actions.*;
 import org.openxava.application.meta.*;
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
+import org.openxava.validators.*;
 
 /**
  * @author Javier Paniza
@@ -313,6 +314,9 @@ public class ModuleManager {
 					request.setAttribute("xava.sendParametersToTab", "false");
 				}
 			}			
+		}
+		catch (ValidationException ex) {
+			errors.add(ex.getErrors());
 		}
 		catch (Exception ex) {			
 			ex.printStackTrace();
