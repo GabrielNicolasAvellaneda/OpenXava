@@ -44,7 +44,7 @@
 	<view name="Range">
 		<members>subfamily; subfamilyTo</members>
 	</view>
-	
+
 	<entity-mapping table="XAVATEST@separator@MOCKTABLE">
 		<property-mapping property="oid" column="OID"/>
 		<reference-mapping reference="subfamily">

@@ -209,7 +209,7 @@
 			<use-object name="xavatest_invoiceValues"/>
 		</action>		
 	</controller>
-				
+		
 	<controller name="Invoices2002">
 		<action name="init" on-init="true" hidden="true"
 			class="org.openxava.test.actions.InitDefaultYearTo2002Action">
