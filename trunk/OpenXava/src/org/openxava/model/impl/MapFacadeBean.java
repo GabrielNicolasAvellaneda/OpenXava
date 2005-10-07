@@ -567,8 +567,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			//removeReadOnlyFields(metaEjb, values); // not remove the read only fields because it maybe needed initialized on create
 			removeCalculatedFields(metaModel, values); 			
 			Messages validationErrors = new Messages(); 
-			validateExistRequired(validationErrors, metaModel, values);
-			Map collections = extractCollections(metaModel, values);			
+			validateExistRequired(validationErrors, metaModel, values);						
 			validate(persistenceProvider, validationErrors, metaModel, values, null, containerKey);
 			removeViewProperties(metaModel, values); 
 			if (validationErrors.contains()) {
@@ -587,10 +586,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 						containerKey,
 						number);
 			}			
-
-			if (collections != null) {
-				addCollections(persistenceProvider, metaModel, newObject, collections);
-			}
+			// Collections are not managed
 			return newObject;
 		} catch (ValidationException ex) {
 			throw ex;
@@ -648,340 +644,6 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 
-
-	/**
-	 * @param values  is modified
-	 * @return Nulo  If nothing
-	 */
-	private Map extractCollections(MetaModel metaModel, Map values)
-		throws XavaException {
-		Iterator it = metaModel.getColectionsNames().iterator();
-		Map result = new HashMap();
-		while (it.hasNext()) {
-			Object name = it.next();
-			if (values.containsKey(name)) {
-				result.put(name, values.get(name));
-				values.remove(name);
-			}
-		}
-		return result.size() == 0 ? null : result;
-	}
-
-
-	private void addCollections(
-		IPersistenceProvider persistenceProvider,	
-		MetaModel metaModel,
-		Object modelObject,
-		Map collections)
-		throws ValidationException, XavaException {
-		Iterator it = collections.entrySet().iterator();
-		Messages errors = new Messages();
-		while (it.hasNext()) {
-			Map.Entry e = (Map.Entry) it.next();
-			String memberName = (String) e.getKey();
-			Collection collection = null;
-			try {				
-				collection = (Collection) e.getValue();
-			}
-			catch (ClassCastException ex) {
-				throw new XavaException("collection_type_required", memberName, metaModel.getName(), e.getValue().getClass().getName());
-			}
-			
-			addCollection(persistenceProvider, errors, metaModel, modelObject, memberName, collection);
-			
-			if (errors.contains()) {
-				throw new ValidationException(errors);
-			}
-		}
-	}
-
-
-	private void modifyCollections(
-		IPersistenceProvider persistenceProvider,	
-		MetaModel metaModel,
-		Object modelObject,
-		Map collections)
-		throws ValidationException, XavaException {		
-		Iterator it = collections.entrySet().iterator();
-		Messages errors = new Messages();
-		while (it.hasNext()) {
-			Map.Entry e = (Map.Entry) it.next();
-			String memberName = (String) e.getKey();
-			Collection collection = null;
-			try {
-				collection = (Collection) e.getValue();				
-			}
-			catch (ClassCastException ex) {
-				throw new XavaException("collection_type_required", memberName, metaModel.getName(), e.getValue().getClass().getName());
-			}
-			modifyCollection(persistenceProvider, errors, metaModel, modelObject, memberName, collection);
-		}
-		if (errors.contains()) {
-			throw new ValidationException(errors);		
-		}		
-	} 
-
-
-	private void modifyCollection(
-		IPersistenceProvider persistenceProvider,
-		Messages errors,
-		MetaModel metaModel,
-		Object modelObject,
-		String memberName,
-		Collection collection)
-		throws XavaException {		
-		try {
-			// The next is not the most efficient option
-			refreshCollection(persistenceProvider, metaModel, modelObject, memberName, collection);
-			removeCollection(persistenceProvider, metaModel, modelObject, memberName); 
-			addCollection(persistenceProvider, errors, metaModel, modelObject, memberName, collection);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			throw new XavaException("assign_collection_error", memberName, metaModel.getName(), ex.getLocalizedMessage());
-		}		
-	}
-
-	private void removeCollection(
-		IPersistenceProvider persistenceProvider,	
-		MetaModel metaModel,
-		Object modelObject,
-		MetaCollection metaCollection)
-		throws XavaException {
-		try {
-			if (metaCollection.isAggregate()) {
-				removeAggregateCollection(persistenceProvider, metaModel, modelObject, metaCollection);
-			} else {
-				removeEntityCollection(metaModel, modelObject, metaCollection);
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			throw new XavaException("remove_collection_error", metaCollection.getName(), metaModel.getName(), ex.getLocalizedMessage());
-		}
-	}
-
-	private void removeCollection(
-		IPersistenceProvider persistenceProvider,	
-		MetaModel metaModel,
-		Object modelObject,
-		String memberName)
-		throws XavaException {
-		removeCollection(persistenceProvider, metaModel, modelObject, metaModel.getMetaCollection(memberName));
-	}
-
-
-	private void removeEntityCollection(
-		MetaModel metaModel,
-		Object modelObject,
-		MetaCollection metaCollection)
-		throws XavaException {
-		Object existing =
-			executeGetXX(metaModel, modelObject, metaCollection.getName());
-		if (existing instanceof Enumeration) {
-			Enumeration e = (Enumeration) existing;
-			while (e.hasMoreElements()) {
-				Object associatedEntity = e.nextElement();
-				executeRemoveXX(metaModel, modelObject, metaCollection, associatedEntity);
-			}
-		}
-		else if (existing instanceof Collection){
-			Iterator it = ((Collection) existing).iterator();
-			while (it.hasNext()) {
-				Object associatedEntity = it.next();
-				executeRemoveXX(metaModel, modelObject, metaCollection, associatedEntity);
-			}			
-		}
-		else {
-			throw new XavaException("collection_type_not_supported", existing.getClass());
-		}
-	}
-
-
-	private void removeAggregateCollection(   //tmp quitar
-		IPersistenceProvider persistenceProvider,	
-		MetaModel metaModel,
-		Object modelObject,
-		MetaCollection metaCollection)
-		throws XavaException, FinderException, ValidationException, RemoveException, RemoteException {
-		Enumeration enum = null;	
-		Object existing =
-			executeGetXX(metaModel, modelObject, metaCollection.getName());								
-		if (existing instanceof Enumeration) {
-			enum = (Enumeration) existing;
-		}
-		else if (existing instanceof Collection) {
-			enum = Collections.enumeration((Collection) existing);
-		}
-		else {
-			throw new XavaException("collection_type_not_supported");
-		}									
-		MetaModel metaModelAggregate = metaCollection.getMetaReference().getMetaModelReferenced();
-		while (enum.hasMoreElements()) {
-			try {		
-				remove(persistenceProvider, metaModelAggregate, enum.nextElement());
-			}
-			catch (ValidationException ex) {
-				throw ex;
-			}			
-		}
-	}
-
-	private void removeAllAggregateCollections( // tmp quitar
-		IPersistenceProvider persistenceProvider,	
-		MetaModel metaModel,
-		Object modelObject)
-		throws Exception {
-
-		Iterator it =
-			metaModel.getMetaCollectionsAgregate().iterator();
-		while (it.hasNext()) {
-			MetaCollection metaCollection = (MetaCollection) it.next();
-			removeAggregateCollection(persistenceProvider, metaModel, modelObject, metaCollection);
-		}
-	}
-
-
-	private void addCollection(
-		IPersistenceProvider persistenceProvider,	
-		Messages errors,
-		MetaModel metaModel,
-		Object model,
-		String memberName,
-		Collection collection)
-		throws XavaException {
-		addCollection(
-			persistenceProvider, 	
-			errors,
-			metaModel,
-			model,
-			metaModel.getMetaCollection(memberName),
-			collection);
-	}
-
-
-	private void addCollection(
-		IPersistenceProvider persistenceProvider,	
-		Messages errors,
-		MetaModel metaModel,
-		Object model,
-		MetaCollection metaCollection,
-		Collection collection)
-		throws XavaException {
-		try {						
-			metaCollection.validate(errors, collection, null, null);
-			MetaReference metaReference = metaCollection.getMetaReference();
-			if (metaReference.isAggregate()) {
-				addAggregateCollection(
-					persistenceProvider,	
-					metaModel,
-					model,
-					metaCollection,
-					collection);
-			} else { // Normal entity
-				addEntityCollection(persistenceProvider, metaModel, model, metaCollection, collection);
-			}
-		}
-		catch (ValidationException ex) {
-			errors.add(ex.getErrors());
-		} 
-		catch (Exception ex) {
-			ex.printStackTrace();
-			throw new XavaException("add_to_collection_error",
-					metaCollection.getName(),
-					metaModel.getName(),
-					ex.getLocalizedMessage());
-		}
-	}
-	
-	private void refreshCollection(
-		IPersistenceProvider persistenceProvider,	
-		MetaModel metaModel,
-		Object modelObject,
-		String memberName,
-		Collection collection)
-		throws XavaException {
-		try {									
-			MetaCollection metaCollection = metaModel.getMetaCollection(memberName);
-			MetaReference metaReference = metaCollection.getMetaReference();
-			if (metaReference.isAggregate()) {
-				refreshAggregateCollection(					
-					persistenceProvider,
-					metaModel,
-					modelObject,
-					metaCollection,
-					collection);
-			}
-		} 
-		catch (Exception ex) {
-			ex.printStackTrace();
-			throw new XavaException("refresh_error", memberName, metaModel.getName());
-		}
-	}
-	
-
-
-	private void addAggregateCollection(
-		IPersistenceProvider persistenceProvider,
-		MetaModel metaModel,
-		Object modelObject,
-		MetaCollection metaCollection,
-		Collection collection)
-		throws
-			XavaException,
-			CreateException,
-			RemoteException,
-			FinderException,
-			ValidationException {
-		Object object = persistenceProvider.toPropertiesContainer(metaModel, modelObject);
-		MetaAggregateEjb metaAgregadoEjb = (MetaAggregateEjb) metaCollection.getMetaReference().getMetaModelReferenced();
-		if (collection == null) collection = Collections.EMPTY_LIST;
-		Iterator it = collection.iterator();
-		int number = 0;
-		while (it.hasNext()) {
-			Map values = (Map) it.next();
-			Object aggregateEntity =
-				createAggregateEjb(
-					persistenceProvider,	
-					metaModel,
-					object,
-					metaAgregadoEjb,
-					values,
-					number++);
-		}
-	}
-	
-	private void refreshAggregateCollection(
-		IPersistenceProvider persistenceProvider,	
-		MetaModel metaModel,
-		Object modelObject,
-		MetaCollection metaCollection,
-		Collection collection)
-		throws
-			XavaException,
-			CreateException,
-			RemoteException,
-			FinderException {
-		if (collection == null) return;		
-		Object object = persistenceProvider.toPropertiesContainer(metaModel, modelObject);
-		MetaAggregateEjb metaAgregadoEjb = (MetaAggregateEjb) metaCollection.getMetaReference().getMetaModelReferenced();
-		
-		Iterator it = collection.iterator();
-		int number = 0;
-		String aggregateModelName = metaModel.getName() + "." + metaAgregadoEjb.getName(); 
-		while (it.hasNext()) {
-			Map values = (Map) it.next();						
-			try {							
-				Map oldValues = getValuesImpl(persistenceProvider, aggregateModelName, values, getMemberNames(metaAgregadoEjb)); 
-				Map newValues = new HashMap(values);
-				values.clear();
-				values.putAll(oldValues);
-				values.putAll(newValues);				
-			}
-			catch (FinderException ex) {
-			}
-		}
-	}
-	
-
 	private Object createAggregateEjb(
 		IPersistenceProvider persistenceProvider,	
 		MetaModel metaModelMain,
@@ -998,27 +660,6 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			mainModel,
 			number);
 	}
-
-
-	private void addEntityCollection(
-		IPersistenceProvider persistenceProvider,
-		MetaModel metaModel,
-		Object modelObject,
-		MetaCollection metaCollection,
-		Collection collection)
-		throws XavaException, FinderException {
-		Object object = persistenceProvider.toPropertiesContainer(metaModel, modelObject);
-		MetaEntity metaEntityReferenced =
-			(MetaEntity) metaCollection.getMetaReference().getMetaModelReferenced();
-		Iterator it = collection.iterator();
-		while (it.hasNext()) {
-			Map values = (Map) it.next();
-			Object associatedEntity =
-				findAssociatedEntity(persistenceProvider, metaEntityReferenced, values);
-			executeAddXX(metaModel, object, metaCollection, associatedEntity);
-		}
-	}
-
 
 	public void ejbActivate() throws java.rmi.RemoteException {
 	}
@@ -1426,12 +1067,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			Messages errors = validateOnRemove(metaModel, modelObject);
 			if (!errors.isEmpty()) {
 				throw new ValidationException(errors);
-			}
-			/* tmp
-			if (!metaModel.getMetaCollectionsAgregate().isEmpty()) {
-				removeAllAggregateCollections(persistenceProvider, metaModel, modelObject);
-			}
-			*/
+			}			
+			// removing collections are resposibility of persistence provider
 			persistenceProvider.remove(metaModel, modelObject);			
 		} catch (ValidationException ex) {
 			throw ex;					
@@ -1467,15 +1104,12 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		try {			
 			removeKeyFields(metaModel, values);			
 			removeReadOnlyFields(metaModel, values);
-			removeViewProperties(metaModel, values);
-			Map collections = extractCollections(metaModel, values);
+			removeViewProperties(metaModel, values);			
 			validate(persistenceProvider, metaModel, values, keyValues, null);			
 			Object entity = findEntity(persistenceProvider, (IMetaEjb) metaModel, keyValues);			
 			IPropertiesContainer r = persistenceProvider.toPropertiesContainer(metaModel, entity);			
-			r.executeSets(convertSubmapsInObject(persistenceProvider, metaModel, values, XavaPreferences.getInstance().isEJB2Persistence()));			
-			if (collections != null) {
-				modifyCollections(persistenceProvider, metaModel, entity, collections);
-			}			
+			r.executeSets(convertSubmapsInObject(persistenceProvider, metaModel, values, XavaPreferences.getInstance().isEJB2Persistence()));
+			// Collections are not managed			
 		} catch (ValidationException ex) {
 			throw ex;
 		} catch (Exception ex) {
@@ -1484,7 +1118,6 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-
 	private void validate(
 		IPersistenceProvider persistenceProvider,	
 		Messages errors,
@@ -1637,128 +1270,6 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		return persistenceProvider.find(metaEntity, keyValues);
 	}
 	
-	static Object executeGetXX(  //tmp  static private
-		MetaModel metaModel,
-		Object modelObject,
-		String memberName)
-		throws XavaException {
-		String method = "get" + Strings.firstUpper(memberName);
-		try {
-			return Objects.execute(modelObject, method);
-		} catch (NoSuchMethodException ex) {
-			throw new XavaException("method_expected", metaModel.getClassName(), method);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			throw new XavaException("method_execution_error",
-					metaModel.getClassName(),					
-					method,					
-					ex.getLocalizedMessage());
-		}
-	}
-
-	private void executeAddXX(
-		MetaModel metaModel,
-		Object modelObject,
-		MetaCollection metaCollection,
-		Object argument)
-		throws XavaException {
-		IMetaEjb metaEjb = null;	
-		try {	
-			metaEjb = (IMetaEjb) metaCollection.getMetaReference().getMetaModelReferenced();
-		}
-		catch (ClassCastException ex) {
-			throw new XavaException("only_ejb_collections_error");
-		}
-		String collectionName = Strings.firstUpper(metaCollection.getName()); 
-		try {
-			execute(metaModel, modelObject, 
-				"addTo" + collectionName, 
-				metaEjb.getRemoteClass(), argument);
-		}
-		catch (NoSuchMethodException ex) {
-			try {
-				execute(metaModel, modelObject, 
-					"add" + collectionName, 
-					metaEjb.getRemoteClass(), argument);			
-			}
-			catch (NoSuchMethodException ex2) {
-				throw new XavaException("add_method_expected", 
-						metaModel.getPropertiesClass(),
-						collectionName,
-						argument.getClass().getName());
-			}
-		}
-	}
-
-	private void executeRemoveXX(
-		MetaModel metaModel,
-		Object modelObject,
-		MetaCollection metaCollection,
-		Object argument)
-		throws XavaException {
-			
-		IMetaEjb metaEjb = null;	
-		try {	
-			metaEjb = (IMetaEjb) metaCollection.getMetaReference().getMetaModelReferenced();
-		}
-		catch (ClassCastException ex) {
-			throw new XavaException("only_ejb_collections_error");
-		}
-		String collectionName = Strings.firstUpper(metaCollection.getName()); 
-		try {			
-			execute(metaModel, modelObject, 
-				"removeFrom" + collectionName, 
-				metaEjb.getRemoteClass(), argument);
-		}
-		catch (NoSuchMethodException ex) {
-			try {
-				execute(metaModel, modelObject, 
-					"remove" + collectionName, 
-					metaEjb.getRemoteClass(), argument);			
-			}
-			catch (NoSuchMethodException ex2) {
-				throw new XavaException("remove_method_expected",				
-					metaModel.getPropertiesClass(),
-					collectionName, 					
-					argument.getClass().getName()); 				
-			}
-		}			
-	}
-
-	/**
-	 * Execute the method (add, remove, etc) on the member. <p>
-	 */
-	private void execute(
-		MetaModel metaModel,
-		Object modelObject,
-		String methodName,
-		Class argumentClass,
-		Object argument)
-		throws NoSuchMethodException, XavaException  {		
-		if (argument == null) {
-			throw new XavaException("not_null_argument_error",				
-					modelObject.getClass().getName(),
-					methodName);
-		}
-		try {
-			Objects.execute(
-				modelObject,
-				methodName,
-				argumentClass,
-				argument);
-		} catch (NoSuchMethodException ex) {
-			throw new NoSuchMethodException(XavaResources.getString("method_expected",				
-					metaModel.getPropertiesClass(),					
-					methodName+ "("	+ argument.getClass().getName()+ ")"));
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			throw new XavaException("method_execution_error",				
-					metaModel.getPropertiesClass().getName(),					
-					methodName,					
-					ex.getLocalizedMessage());
-		}
-	}
-
 	private void rollback (IPersistenceProvider pp) {
 		if (getSessionContext() != null) getSessionContext().setRollbackOnly();
 		pp.rollback();

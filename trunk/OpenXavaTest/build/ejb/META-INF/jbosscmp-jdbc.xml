@@ -495,7 +495,7 @@
       <entity>
          <ejb-name>FilterBySubfamily</ejb-name>
 
-         <table-name>XAVATEST@separator@MOCKTABLE</table-name>
+         <table-name>XAVATEST_MOCKTABLE</table-name>
 
          <cmp-field>
             <field-name>oid</field-name>
