@@ -1,8 +1,3 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-</head>
-<body>
 Welcome to this short <span id="transl1">voyage</span>
 to start to use OpenXava.<br>
 These instructions suposses&nbsp; that you have download, install and
@@ -26,6 +21,13 @@ junit test suite for OpenXava.</a></li>
 <h4><a name="Ejecutar_aplicacion_ejemplo_MiEscuela"></a>Execute
 example application
 MySchool</h4>
+OpenXava distribution comes with an example application called <span
+ style="font-style: italic;">MySchool</span>, in order to execute it,
+click the link 'MySchool' in left menu, or go to <a
+ href="http://localhost:8080/openxava/portal/MySchool">http://localhost:8080/openxava/portal/MySchool</a>.<br>
+Now you can play with the
+application, and see how it works.<br>
+<br>
 The ant targets used are set in Eclipse,
 so to execute it only it is needed to click on <span id="transl1">arrow
 of External Tools button</span> <span style="color: rgb(255, 0, 0);"></span><img
@@ -51,6 +53,8 @@ application, and see how it works.</li>
 <h4><a name="Ejecutar_prueba_junit_de_aplicacion"></a>Execute
 junit
 test of MySchool application</h4>
+Go to your Eclipse and in your <span style="font-style: italic;">MySchool</span>
+project:
 <ul>
   <li>Go to <span style="font-family: monospace;">TeachersTest</span>
 class (in <span style="font-family: monospace;">src/org.openxava.school.tests</span>)
@@ -225,7 +229,12 @@ name="Typical"/&gt;
 <br>
 The <span style="color: rgb(51, 102, 255); font-weight: bold;">blue</span>
 things are the added ones.<br>
-Now only is needed to regenerate code and redeploy:<br>
+Now only that is needed to&nbsp;generate code and redeploy.<br>
+The ant targets used are set in Eclipse,
+so to execute it only it is needed to click on <span id="transl1">arrow
+of External Tools button</span> <span style="color: rgb(255, 0, 0);"></span><img
+ style="width: 16px; height: 16px;" alt="external tools"
+ src="../../../../../OpenXavaDoc/images/external_tools.gif"><br>
 <ul>
   <li>Execute target ant <span style="font-style: italic;">MySchool.generateEJB</span></li>
   <li>Click on <span style="font-style: italic;">Build
@@ -233,10 +242,18 @@ All</span> <img style="width: 16px; height: 16px;" alt="Build All"
  src="/OpenXavaDoc/images/builder.gif"><br>
   </li>
   <li>Execute target ant <span style="font-style: italic;">MySchool.deployEJB</span></li>
-  <li>Execute target ant <span style="font-style: italic;">MySchool.deployWar</span></li>
-  <li>Open a Internet navigator
-and go to url <a
- href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils">http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils</a></li>
+  <li>Wait to see in JBoss console <span
+ style="font-family: monospace;">Started
+J2EE
+application: ... MySchool.ear</span></li>
+  <li>Execute target ant <span style="font-style: italic;">MySchool.deployPortlets</span></li>
+  <li>Wait to that in console of
+JBoss appears <span style="font-family: monospace;">[TomcatDeployer]
+deploy, ctxPath=/MySchool ...</span></li>
+  <li>Go to <a
+ href="http://localhost:8080/openxava/portal/MySchool/Pupils.psml">http://localhost:8080/openxava/portal/MySchool/Pupils.psml</a></li>
+  <li>If portlet is not displayed, wait some seconds and click in the
+reload button of your browser.</li>
   <li>And let's play...<br>
   </li>
 </ul>
@@ -342,10 +359,10 @@ And now to test it:<br>
 All</span> <img style="width: 16px; height: 16px;" alt="Build All"
  src="/OpenXavaDoc/images/builder.gif"></li>
   <li>Execute ant target <span style="font-style: italic;">MySchool.deployEJB</span></li>
-  <li>Execute ant target <span style="font-style: italic;">MySchool.deployWar</span></li>
-  <li>Open a Internet navigator an
-go to <a
- href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils">http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils</a></li>
+  <li>Execute ant target <span style="font-style: italic;">MySchool.deployPortlets</span></li>
+  <li>Go to <a
+ href="http://localhost:8080/openxava/portal/MySchool/Pupils.psml">http://localhost:8080/openxava/portal/MySchool/Pupils.psml</a><a
+ href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils"></a></li>
 </ul>
 As you see, plain vanilla.<br>
 If you want the reference to be displayed in combo format, you
@@ -471,10 +488,10 @@ referenced-model-property="id"/&gt;</span><span
  style="width: 16px; height: 16px;" alt="Build All"
  src="/OpenXavaDoc/images/builder.gif"></li>
   <li>Execute ant target<span style="font-style: italic;">
-MySchool.deployWar</span></li>
-  <li>Open a Internet navigator
-and go to url <a
- href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils">http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils</a></li>
+MySchool.deployPortlets</span></li>
+  <li>Go to <a
+ href="http://localhost:8080/openxava/portal/MySchool/Pupils.psml">http://localhost:8080/openxava/portal/MySchool/Pupils.psml</a><a
+ href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils"></a></li>
 </ul>
 And now let's go to put a pupils collection in teacher. Touch <span
  style="font-family: monospace;">Teacher.xml</span>
@@ -573,10 +590,10 @@ property="name" column="NAME"/&gt;</span><br
  style="width: 16px; height: 16px;" alt="Build All"
  src="/OpenXavaDoc/images/builder.gif"></li>
   <li>Execute ant target <span style="font-style: italic;">MySchool.deployEJB</span></li>
-  <li>Execute ant target <span style="font-style: italic;">MySchool.deployWar</span></li>
-  <li>Open a Internet navigator
-and go to <a
- href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Teachers">http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Teachers</a></li>
+  <li>Execute ant target <span style="font-style: italic;">MySchool.deployPortlets</span></li>
+  <li>Go to <a
+ href="http://localhost:8080/openxava/portal/MySchool/Teachers.psml">http://localhost:8080/openxava/portal/MySchool/Teachers.psml</a><a
+ href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Teachers"></a></li>
 </ul>
 That's all, folks<br>
 In this example you can see that little changes imply little effort and
@@ -585,7 +602,7 @@ the effect is seen on instantaneous form.<br>
 full
 junit test suite for OpenXava</h4>
 The OpenXavaTest project has a double function, it is server as full
-junit test suite for OpenXava (currently more or less 270 tests), so it
+junit test suite for OpenXava (currently more or less 290 tests), so it
 assures
 the constant robustness of OpenXava; and on the other hand is the
 official
@@ -612,9 +629,5 @@ problem
 with OpenXava in:<br>
 <a href="http://sourceforge.net/forum/forum.php?forum_id=419690">http://sourceforge.net/forum/forum.php?forum_id=419690</a><br>
 <br>
-You can learn more things about OpenXava reading its Reference Guide,
-you can download it from:<br>
-<a
- href="http://sourceforge.net/project/showfiles.php?group_id=123187&amp;package_id=144925">http://sourceforge.net/project/showfiles.php?group_id=123187&amp;package_id=144925</a><br>
-</body>
-</html>
+You can learn more things about OpenXava reading its <a
+ href="/OpenXavaDoc/openxava-1.2-guia-referencia.pdf">Reference Guide</a>.<br>
