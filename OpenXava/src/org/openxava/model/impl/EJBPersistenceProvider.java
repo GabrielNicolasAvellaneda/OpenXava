@@ -127,27 +127,46 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 		}
 	
 	private void removeAggregateCollection( 
-			MetaModel metaModel,
-			Object modelObject,
-			MetaCollection metaCollection)
-			throws XavaException, FinderException, ValidationException, RemoveException, RemoteException {
-			Enumeration enum = null;	
-			Object existing =
-				MapFacadeBean.executeGetXX(metaModel, modelObject, metaCollection.getName());								
-			if (existing instanceof Enumeration) {
-				enum = (Enumeration) existing;
-			}
-			else if (existing instanceof Collection) {
-				enum = Collections.enumeration((Collection) existing);
-			}
-			else {
-				throw new XavaException("collection_type_not_supported");
-			}									
-			MetaModel metaModelAggregate = metaCollection.getMetaReference().getMetaModelReferenced();
-			while (enum.hasMoreElements()) {
-				remove(metaModelAggregate, enum.nextElement());
-			}
+		MetaModel metaModel,
+		Object modelObject,
+		MetaCollection metaCollection)
+		throws XavaException, FinderException, ValidationException, RemoveException, RemoteException {
+		Enumeration enum = null;	
+		Object existing =
+			executeGetXX(metaModel, modelObject, metaCollection.getName());								
+		if (existing instanceof Enumeration) {
+			enum = (Enumeration) existing;
 		}
+		else if (existing instanceof Collection) {
+			enum = Collections.enumeration((Collection) existing);
+		}
+		else {
+			throw new XavaException("collection_type_not_supported");
+		}									
+		MetaModel metaModelAggregate = metaCollection.getMetaReference().getMetaModelReferenced();
+		while (enum.hasMoreElements()) {
+			remove(metaModelAggregate, enum.nextElement());
+		}
+	}
+	
+	private Object executeGetXX(  
+		MetaModel metaModel,
+		Object modelObject,
+		String memberName)
+		throws XavaException {
+		String method = "get" + Strings.firstUpper(memberName);
+		try {
+			return Objects.execute(modelObject, method);
+		} catch (NoSuchMethodException ex) {
+			throw new XavaException("method_expected", metaModel.getClassName(), method);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new XavaException("method_execution_error",
+					metaModel.getClassName(),					
+					method,					
+					ex.getLocalizedMessage());
+		}
+	}	
 
 	public void setSession(Session session) { // tmp: remove
 	}
