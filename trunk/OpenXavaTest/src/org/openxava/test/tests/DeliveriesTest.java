@@ -56,6 +56,22 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertValue("driverType", "X");
 	}
 	
+	public void testAggregateInCollectionWithNotHiddenKey() throws Exception {
+		assertListNotEmpty();
+		execute("Mode.detailAndFirst");
+		execute("Sections.change", "activeSection=2");
+		execute("Collection.new", "viewObject=xava_view_section2_details");
+		setValue("details.number", "66");
+		setValue("details.description", "JUNIT DELIVERY DETAIL");
+		execute("Collection.save", "viewObject=xava_view_section2_details");
+		assertNoErrors();				
+		
+		execute("Collection.edit", "row=0,viewObject=xava_view_section2_details");
+		assertValue("details.number", "66");
+		execute("Collection.remove", "viewObject=xava_view_section2_details");
+		assertNoErrors();
+	}
+	
 	public void testReferenceAsDescriptionsListWithValidValuesInKey() throws Exception {
 		execute("Mode.detailAndFirst");
 		assertValue("shipment.KEY", "");
