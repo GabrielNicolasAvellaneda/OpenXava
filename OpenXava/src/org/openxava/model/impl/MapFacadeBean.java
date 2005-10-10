@@ -1110,9 +1110,14 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			IPropertiesContainer r = persistenceProvider.toPropertiesContainer(metaModel, entity);			
 			r.executeSets(convertSubmapsInObject(persistenceProvider, metaModel, values, XavaPreferences.getInstance().isEJB2Persistence()));
 			// Collections are not managed			
-		} catch (ValidationException ex) {
+		} 
+		catch (FinderException ex) { 
 			throw ex;
-		} catch (Exception ex) {
+		}		
+		catch (ValidationException ex) {
+			throw ex;
+		} 
+		catch (Exception ex) {
 			ex.printStackTrace();
 			throw new XavaException("assign_values_error", metaModel.getName(), ex.getLocalizedMessage()); 
 		}

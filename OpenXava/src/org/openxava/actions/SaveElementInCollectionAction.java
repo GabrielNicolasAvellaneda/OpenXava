@@ -2,6 +2,8 @@ package org.openxava.actions;
 
 import java.util.*;
 
+import javax.ejb.*;
+
 import org.openxava.model.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
@@ -35,16 +37,26 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	}
 
 	private void saveAggregate(Map containerKey) throws Exception{
-		if (getCollectionElementView().getKeyValuesWithValue().isEmpty()) {				
-			int row = getCollectionElementView().getCollectionValues().size();			
-			MapFacade.createAggregate(
-				getCollectionElementView().getModelName(),						
-				containerKey, row+1, // +1 for start in 1, because 0 is equals to no value					
-				getCollectionElementView().getValues() );												 								
+		if (getCollectionElementView().getKeyValuesWithValue().isEmpty()) {
+			createAggregate(containerKey);
 		}
-		else {										
-			MapFacade.setValues(getCollectionElementView().getModelName(), getCollectionElementView().getKeyValues(), getCollectionElementView().getValues());								
+		else {				
+			try {				
+				MapFacade.setValues(getCollectionElementView().getModelName(), getCollectionElementView().getKeyValues(), getCollectionElementView().getValues());				
+			}
+			catch (ObjectNotFoundException ex) {
+				// In case not hidden primary key in aggregate
+				createAggregate(containerKey);				
+			}
 		}								
+	}
+	
+	private void createAggregate(Map containerKey) throws Exception {
+		int row = getCollectionElementView().getCollectionValues().size();			
+		MapFacade.createAggregate(
+			getCollectionElementView().getModelName(),						
+			containerKey, row+1, // +1 for start in 1, because 0 is equals to no value					
+			getCollectionElementView().getValues() );												 										
 	}
 
 	/**

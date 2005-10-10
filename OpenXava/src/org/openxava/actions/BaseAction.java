@@ -141,7 +141,10 @@ abstract public class BaseAction implements IAction, IRequestAction, java.io.Ser
 		this.request= request;
 	}
     
-    public Locale getLocale() {
+	/**
+	 * The Locale of the current request. <p> 
+	 */
+    protected Locale getLocale() {
         return request.getLocale();
     }
     
