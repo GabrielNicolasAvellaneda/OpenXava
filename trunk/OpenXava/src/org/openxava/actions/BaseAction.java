@@ -140,5 +140,9 @@ abstract public class BaseAction implements IAction, IRequestAction, java.io.Ser
 		// the creation of no portable (out of http) actions.
 		this.request= request;
 	}
-	
+    
+    public Locale getLocale() {
+        return request.getLocale();
+    }
+    
 }
