@@ -1,7 +1,6 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="org.openxava.view.View" %>
 <%@ page import="org.openxava.view.meta.MetaGroup" %>
-<%@ page import="org.openxava.view.meta.MetaView" %>
 <%@ page import="org.openxava.view.meta.PropertiesSeparator" %>
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
 <%@ page import="org.openxava.model.meta.MetaReference" %>
@@ -9,6 +8,7 @@
 <%@ page import="org.openxava.web.WebEditors" %>
 
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
+<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 <%
 String viewObject = request.getParameter("viewObject");
 viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObject;
@@ -90,9 +90,9 @@ while (it.hasNext()) {
 				}
 				if (withFrame) { 
 	%>				
-		<table class=frame width='100%'>
-		<tr class=frame><th align='left'><%=ref.getLabel(request)%></th></tr>
-		<tr><td class=frame>
+		<table class=<%=style.getFrame()%> width='100%' <%=style.getFrameSpacing()%>>
+		<tr class=<%=style.getFrameTitle()%>><th align='left' class=<%=style.getFrameTitleLabel()%>><%=ref.getLabel(request)%></th></tr>
+		<tr><td class=<%=style.getFrameContent()%>>
 	<%
 				} // withFrame
 	%>	
@@ -117,11 +117,11 @@ while (it.hasNext()) {
 	<%
 			if (withFrame) {
 	%>	
-		<table class=frame width='100%'>
-		<tr class=frame><th align='left'><%=collection.getLabel(request)%></th></tr>
-		<tr><td class=frame>		
+		<table class=<%=style.getFrame()%> width='100%' <%=style.getFrameSpacing()%>>
+		<tr class=<%=style.getFrameTitle()%>><th align='left' class=<%=style.getFrameTitleLabel()%>><%=collection.getLabel(request)%></th></tr>
+		<tr><td class=<%=style.getFrameContent()%>>		
 	<%
-			} // conFrame
+			} // withFrame
 	%>	
 		<jsp:include page="<%=urlCollection%>"> 
 			<jsp:param name="collectionName" value="<%=collection.getName()%>"/>
@@ -135,15 +135,20 @@ while (it.hasNext()) {
 	<%
 			} // withFrame
 		} else if (m instanceof MetaGroup) {
-			MetaGroup grup = (MetaGroup) m;
-			String viewName = viewObject + "_" + grup.getName();
-			View subview = view.getGroupView(grup.getName());
+			MetaGroup group = (MetaGroup) m;
+			String viewName = viewObject + "_" + group.getName();
+			View subview = view.getGroupView(group.getName());
 			context.put(request, viewName, subview);
 	%>
+		<% 
+		if (first) { 
+			first = false;
+		%>
 		<tr><td colspan="4">
-		<table class=frame width='100%'>
-		<tr class=frame><th align='left'><%=grup.getLabel(request)%></th></tr>
-		<tr><td class=frame>
+		<% } %>
+		<table class=<%=style.getFrame()%> style="float:left; margin-right:4px" <%=style.getFrameSpacing()%>>
+		<tr class=<%=style.getFrameTitle()%>><th align='left' class=<%=style.getFrameTitleLabel()%>><%=group.getLabel(request)%></th></tr>
+		<tr><td class=<%=style.getFrameContent()%>>
 		<jsp:include page="detail.jsp">
 			<jsp:param name="viewObject" value="<%=viewName%>" />
 		</jsp:include>
@@ -151,7 +156,7 @@ while (it.hasNext()) {
 		</table>		
 	<%
 		}
-	} // if not is MetaProperty
+	} // if is not MetaProperty
 }
 %>
 <% if (lastWasEditor) { %>

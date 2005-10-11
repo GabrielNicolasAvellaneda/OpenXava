@@ -1,5 +1,7 @@
 <%@ include file="imports.jsp"%>
 
+<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
+
 <%
 String comparator = request.getParameter("comparator");
 boolean isString = "true".equals(request.getParameter("isString"));
@@ -16,7 +18,7 @@ String year = "year_comparator".equals(comparator)?"selected='selected'":"";
 String month = "month_comparator".equals(comparator)?"selected='selected'":"";
 %>
 
-<select name="conditionComparators" class=editor>
+<select name="conditionComparators" class=<%=style.getEditor()%>>
 	<%
 	if (isString) {
 	%>						

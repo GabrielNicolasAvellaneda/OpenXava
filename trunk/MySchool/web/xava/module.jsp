@@ -1,10 +1,15 @@
 <%@ page import="org.openxava.util.Is" %>
+<%@ page import="org.openxava.util.XavaResources" %>
+
+<%@ include file="script.jsp" %>
 
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="messages" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
+<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%
+boolean isPortlet = (request.getAttribute("xava.formAction") != null);
 boolean messagesOnTop = !"false".equalsIgnoreCase(request.getParameter("messagesOnTop"));
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
 manager.setSession(session);
@@ -50,7 +55,6 @@ if (manager.isXavaView()) { // here and after action execution
 		view.assignValuesToWebView();
 	}
 }
-
 manager.initModule(request, errors, messages);
 if (manager.actionOfThisModule(request)) {
 	manager.execute(request, errors, messages);	
@@ -81,6 +85,7 @@ location.href="http://<%=request.getServerName()%>:<%=request.getServerPort()%><
 <%
 	}
 }
+
 boolean returnToPreviousModule = org.openxava.actions.IChangeModuleAction.PREVIOUS_MODULE.equals(manager.getNextModule());
 if (returnToPreviousModule) { 
 	org.openxava.controller.ModuleManager parentManager = (org.openxava.controller.ModuleManager) context.get(request.getParameter("application"), request.getParameter("parent"), "manager", "org.openxava.controller.ModuleManager");			
@@ -107,22 +112,32 @@ else { // All else
 
 
 <script>
-function executeXavaAction(formu, action) {
+function executeXavaAction(isConfirm, takesLong, formu, action) {
+	if (isConfirm && !confirm('<%=XavaResources.getString(request, "are_you_sure")%>')) return;
+	if (takesLong) {
+		document.getElementById('processingLayer').style.display='block';
+		setTimeout('document.images["processingImage"].src = "<%=request.getContextPath()%>/xava/images/processing.gif"', 1);		
+	}
 	formu.focus_forward.value = "false";
 	formu.xava_action.value=action;	
 	formu.submit();	
 }
-function executeXavaAction(formu, action, argv) {	
+function executeXavaAction(isConfirm, takesLong, formu, action, argv) {	
+	if (isConfirm && !confirm('<%=XavaResources.getString(request, "are_you_sure")%>')) return;
+	if (takesLong) {
+		document.getElementById('processingLayer').style.display='block';
+		setTimeout('document.images["processingImage"].src = "<%=request.getContextPath()%>/xava/images/processing.gif"', 1);
+	}
 	formu.focus_forward.value = "false";
 	formu.xava_action.value=action;	
 	formu.xava_action_argv.value=argv;	
 	formu.submit();
 }
-function throwPropertyChanged(property) {	
-	document.forms[0].focus_forward.value = "true";
-	document.forms[0].focus_property.value=property;	
-	document.forms[0].changed_property.value=property;	
-	document.forms[0].submit();
+function throwPropertyChanged(formu, property) {	
+	formu.focus_forward.value = "true";
+	formu.focus_property.value=property;	
+	formu.changed_property.value=property;	
+	formu.submit();
 }
 <% String focusPropertyId = view.getFocusPropertyId(); %>
 function setFocus() {
@@ -136,19 +151,39 @@ function setFocus() {
 
 
 
-
+<% if (!isPortlet) { %>
 <!DOCTYPE HTML PUBLIC "-//w3c//dtd html 4.0 transitional//en">
 <html>
 <head>
 <title>OpenXava - <%=manager.getModuleDescription() %></title>
-<link href="style/default.css" rel="stylesheet" type="text/css">
-<link href="style/jetspeed.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/xava/style/default.css" rel="stylesheet" type="text/css">
 </head>
 
 <body bgcolor="#ffffff" onload="setFocus()">
+<% } %>
 
-<div class="module">
-<form name="<%=manager.getForm()%>" method="POST" <%=manager.getEnctype()%>>
+<link href="<%=request.getContextPath()%>/xava/style/openxava.css" rel="stylesheet" type="text/css">
+
+<%-- Layer for progress bar --%>
+<div id='processingLayer' style='position:absolute;top:100px;left:150px;display:none'>
+<table cellspacing='0'>
+   <tr class='<%=style.getProcessing()%>'>
+       <td align='center' valign='middle' style='line-height:1.4;padding:25px 80px;border:2px solid #000'>
+           <%=XavaResources.getString(request, "processing")%><br/>
+           <img src='<%=request.getContextPath()%>/xava/images/processing.gif' name='processingImage'/>
+       </td>
+   </tr>
+</table>
+</div>
+
+<div class="<%=style.getModule()%>">
+<%
+String xavaFormAction = (String) request.getAttribute("xava.formAction");
+if (xavaFormAction == null) xavaFormAction = "";
+%>
+<form name='<%=manager.getForm()%>' 
+	method='POST' <%=manager.getEnctype()%> 
+	<%=xavaFormAction%>>
 <INPUT type="hidden" name="xava_action" value=""/>
 <INPUT type="hidden" name="xava_action_argv" value=""/>
 <INPUT type="hidden" name="xava_action_application" value="<%=request.getParameter("application")%>"/>
@@ -159,47 +194,47 @@ function setFocus() {
 <INPUT type="hidden" name="focus_property_id" value="<%=focusPropertyId%>"/>
 
 <jsp:include page="languages.jsp"/>
-<table cellpadding="2" cellspacing="2" border="0" width="100%">
+<table <%=style.getModuleSpacing()%>>
   <tbody>
   	<% if (org.openxava.util.XavaPreferences.getInstance().isButtonBarOnTop()) { %>
     <tr>
-      <td class=buttonBar>
+      <td class='<%=style.getButtonBar()%>'>
       	<jsp:include page="buttonBar.jsp"/>
       </td>
     </tr>
     <% } %>
     <% if (messagesOnTop && (errors.contains() || messages.contains())) {  %>
     <tr>
-      <td>            
+      <td class=<%=style.getMessagesWrapper()%>>
 		<jsp:include page="errors.jsp"/>
       </td>
     </tr>    
     <tr>
-      <td>
+      <td class=<%=style.getMessagesWrapper()%>>
 		<jsp:include page="messages.jsp"/>
       </td>
     </tr>            
     <% } %>
     <tr>      		
-		<td class=body>
-		<jsp:include page="<%=manager.getViewURL()%>"/>
+		<td <%=manager.isListMode()?"":("class=" + style.getDetail())%>>
+		<jsp:include page='<%=manager.getViewURL()%>'/>
 		</td>
     </tr>
   	<% if (org.openxava.util.XavaPreferences.getInstance().isButtonBarOnBottom()) { %>    
     <tr>
-      <td class=buttonBar>
-		<jsp:include page="buttonBar.jsp"/>
+      <td class="<%=style.getButtonBar()%>">
+		<jsp:include page="buttonBar.jsp?onBottom=true"/>
       </td>
     </tr>
   	<% } %>    
     <% if (!messagesOnTop) { %>
     <tr>
-      <td>
+      <td class=<%=style.getMessagesWrapper()%>>
 		<jsp:include page="errors.jsp"/>
       </td>
     </tr>    
     <tr>
-      <td>
+      <td class=<%=style.getMessagesWrapper()%>>
 		<jsp:include page="messages.jsp"/>
       </td>
     </tr>            
@@ -209,7 +244,9 @@ function setFocus() {
 </form>
 </div>
 
+<% if (!isPortlet) { %>
 </body></html>
+<% } %>
 
 <%
 }

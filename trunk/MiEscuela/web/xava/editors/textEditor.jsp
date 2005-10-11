@@ -1,5 +1,7 @@
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
 
+<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
+
 <%
 String propertyKey = request.getParameter("propertyKey");
 MetaProperty p = (MetaProperty) request.getAttribute(propertyKey);
@@ -11,7 +13,7 @@ String script = request.getParameter("script");
 boolean label = org.openxava.util.XavaPreferences.getInstance().isReadOnlyAsLabel();
 if (editable || !label) {
 %>
-<input name="<%=propertyKey%>" class=editor
+<input name="<%=propertyKey%>" class=<%=style.getEditor()%>
 	type="text" 
 	title="<%=p.getDescription(request)%>"
 	align='<%=align%>'

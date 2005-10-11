@@ -4,10 +4,10 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="org.openxava.model.meta.MetaReference" %>
 <%@ page import="org.openxava.model.meta.IMetaEjb" %>
-<%@ page import="org.openxava.model.meta.MetaEjbImpl" %>
 
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
+<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%
 String viewObject = request.getParameter("viewObject");
@@ -31,11 +31,11 @@ boolean editable = view.isEditable(ref);
 <%=postLabel%>
 <%=preIcons%>
 <% if (ref.isKey()) { %>
-<img src="images/key.gif"/>
+<img src="<%=request.getContextPath()%>/xava/images/key.gif"/>
 <% } else if (ref.isRequired()) {  %>	
-<img src="images/required.gif"/>
+<img src="<%=request.getContextPath()%>/xava/images/required.gif"/>
 <% } if ( errors.memberHas(ref)) {%>
-<img src="images/error.gif"/>
+<img src="<%=request.getContextPath()%>/xava/images/error.gif"/>
 <% } %>
 <%=postIcons%>
 <%=preEditor%>
@@ -81,13 +81,28 @@ else {
 String descriptionProperty = view.getDescriptionPropertyInDescriptionsList(ref);
 String descriptionProperties = view.getDescriptionPropertiesInDescriptionsList(ref);
 
+org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
+String formName = manager.getForm();	
 boolean throwChanged=view.throwsReferenceChanged(ref);
 String script = throwChanged?
-	"onchange='throwPropertyChanged(\"" + propertyKey + "\")'":"";
+	"onchange='throwPropertyChanged(" + formName + ", \"" + propertyKey + "\")'":"";
 
 String parameterValuesProperties=view.getParameterValuesPropertiesInDescriptionsList(ref);
 String condition = view.getConditionInDescriptionsList(ref);
 boolean orderByKey = view.isOrderByKeyInDescriptionsList(ref);
+org.openxava.tab.meta.MetaTab metaTab = ref.getMetaModelReferenced().getMetaComponent().getMetaTab();
+String filterArg = "";
+if (metaTab.hasFilter()) {
+	filterArg = "&filter=" + metaTab.getMetaFilter().getClassName();
+}
+if (metaTab.hasBaseCondition()) {
+	if (org.openxava.util.Is.emptyString(condition)) {
+		condition = metaTab.getBaseCondition();
+	}
+	else {
+		condition = metaTab.getBaseCondition() + " AND " + condition;
+	}
+}
 String urlDescriptionEditor = "editors/descriptionsEditor.jsp" // in this way because websphere 6 has problems with jsp:param
 	+ "?script=" + script
 	+ "&propertyKey=" + propertyKey
@@ -99,14 +114,15 @@ String urlDescriptionEditor = "editors/descriptionsEditor.jsp" // in this way be
 	+ "&descriptionProperties=" + descriptionProperties
 	+ "&parameterValuesProperties=" + parameterValuesProperties
 	+ "&condition=" + condition
-	+ "&orderByKey=" + orderByKey;
+	+ "&orderByKey=" + orderByKey
+	+ filterArg;
 %>
 <jsp:include page="<%=urlDescriptionEditor%>" />
 
 <%
 if (editable && view.isCreateNewForReference(ref)) {
 %>
-<xava:link action='Reference.createNew' argv='<%="model="+ref.getReferencedModelName() + ",keyProperty=" + propertyKey%>'/>
+<xava:action action='Reference.createNew' argv='<%="model="+ref.getReferencedModelName() + ",keyProperty=" + propertyKey%>'/>
 <%
 }
 %>

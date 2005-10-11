@@ -11,6 +11,9 @@ public class TeacherValue
    extends java.lang.Object
    implements java.io.Serializable 
 {
+
+   private static final long serialVersionUID = 1L;
+
    private java.lang.String name;
    private boolean nameHasBeenSet = false;
    private java.lang.String id;

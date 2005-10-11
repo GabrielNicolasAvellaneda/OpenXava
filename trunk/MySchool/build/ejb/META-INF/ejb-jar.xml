@@ -63,7 +63,7 @@
          <ejb-name>Teacher</ejb-name>
 
          <home>org.openxava.school.model.TeacherHome</home>
-         <remote>org.openxava.school.model.Teacher</remote>
+         <remote>org.openxava.school.model.TeacherRemote</remote>
 
          <ejb-class>org.openxava.school.model.xejb.TeacherCMP</ejb-class>
          <persistence-type>Container</persistence-type>
