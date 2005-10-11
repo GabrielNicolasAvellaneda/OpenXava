@@ -1,5 +1,7 @@
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
 
+<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
+
 <%
 String propertyKey = request.getParameter("propertyKey");
 MetaProperty p = (MetaProperty) request.getAttribute(propertyKey);
@@ -15,7 +17,7 @@ if (null != agent && agent.indexOf("MSIE")>=0) {
 }
 %>
 
-<INPUT type="CHECKBOX" name="<%=propertyKey%>" class=editor
+<INPUT type="CHECKBOX" name="<%=propertyKey%>" class=<%=style.getEditor()%>
 	value="true" 
 	title="<%=p.getDescription(request)%>"	
 	<%=checked%>

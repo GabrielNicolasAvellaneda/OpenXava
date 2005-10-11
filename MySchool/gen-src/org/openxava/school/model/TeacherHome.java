@@ -12,16 +12,16 @@ public interface TeacherHome
    public static final String COMP_NAME="java:comp/env/ejb/Teacher";
    public static final String JNDI_NAME="@subcontext@/ejb/org.openxava.school.model/Teacher";
 
-   public org.openxava.school.model.Teacher create(java.util.Map values)
+   public org.openxava.school.model.TeacherRemote create(java.util.Map values)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
-   public org.openxava.school.model.Teacher create(org.openxava.school.model.TeacherData data)
+   public org.openxava.school.model.TeacherRemote create(org.openxava.school.model.TeacherData data)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
-   public org.openxava.school.model.Teacher create(org.openxava.school.model.TeacherValue value)
+   public org.openxava.school.model.TeacherRemote create(org.openxava.school.model.TeacherValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
-   public org.openxava.school.model.Teacher findByPrimaryKey(org.openxava.school.model.TeacherKey pk)
+   public org.openxava.school.model.TeacherRemote findByPrimaryKey(org.openxava.school.model.TeacherKey pk)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
 }

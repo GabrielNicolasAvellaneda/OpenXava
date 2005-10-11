@@ -2,6 +2,7 @@
 
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
+<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.Collection" %>
@@ -11,7 +12,6 @@
 <%@ page import="org.openxava.view.View" %>
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
 <%@ page import="org.openxava.model.meta.MetaReference" %>
-<%@ page import="org.openxava.controller.meta.MetaAction" %>
 <%@ page import="org.openxava.web.WebEditors" %>
 
 <%
@@ -47,13 +47,13 @@ else {
 String propertyPrefix = Is.emptyString(propertyPrefixAccumulated)?"xava." + view.getModelName() + "." + collectionName + ".":propertyPrefixAccumulated + collectionName + ".";
 %>
 
-<table id=<%=idCollection%> class=list>
+<table id=<%=idCollection%> class=<%=style.getList()%> <%=style.getListCellSpacing()%>>
 <tr>
 	<% if (lineAction != null) { %>	
-	<th class=list>
+	<th class=<%=style.getListHeader()%>>
 	<% } %>
 	<% if (hasListActions) { %>	
-	<th class=list>
+	<th class=<%=style.getListHeader()%>>
 	<% } %>
 
 <%
@@ -62,7 +62,7 @@ Iterator it = subview.getMetaPropertiesList().iterator();
 while (it.hasNext()) {
 	MetaProperty p = (MetaProperty) it.next();
 %>
-	<th class=list><%=p.getLabel(request)%></th>
+	<th class=<%=style.getListHeader()%>><%=p.getLabel(request)%>&nbsp;</th>
 <%
 }
 %>
@@ -77,15 +77,15 @@ Iterator itAggregates = aggregates.iterator();
 int f=0;
 while (itAggregates.hasNext()) {
 	Map row = (Map) itAggregates.next();
-	String cssClass=f%2==0?"pair":"odd";
+	String cssClass=f%2==0?style.getListPair():style.getListOdd();
 	if (f == subview.getCollectionEditingRow()) { 
-		cssClass = cssClass + "-selected";
+		cssClass = cssClass=f%2==0?style.getListPairSelected():style.getListOddSelected();
 	}
 	
 %>
 <tr class=<%=cssClass%>>
 <% if (lineAction != null) { %>
-<td class=<%=cssClass%>>
+<td class=<%=cssClass%> style='vertical-align: middle;text-align: center'>
 <xava:link action="<%=lineAction%>" argv='<%="row="+f + ",viewObject="+viewName%>'/>
 </td>
 <% } %>
@@ -99,7 +99,7 @@ while (itAggregates.hasNext()) {
 	it = subview.getMetaPropertiesList().iterator();
 	while (it.hasNext()) {
 		MetaProperty p = (MetaProperty) it.next();
-		String align = p.isNumber() && !p.hasValidValues()?"align='right'":"";
+		String align = p.isNumber() && !p.hasValidValues()?"style='vertical-align: middle;text-align: right'":"style='vertical-align: middle;'";
 		String fvalue = null;
 		Object value = null;
 		String propertyName = p.getName();
@@ -112,7 +112,7 @@ while (itAggregates.hasNext()) {
 			fvalue = WebEditors.format(request, p, value, errors);	
 		}
 %>
-	<td class=<%=cssClass%> <%=align%>><%=fvalue%></td>
+	<td class=<%=cssClass%> <%=align%>><%=fvalue%>&nbsp;</td>
 <%
 	}
 %>
@@ -127,9 +127,9 @@ if (view.displayDetailInCollection(collectionName)) {
 	if (collectionView.isCollectionDetailVisible()) {
 %>	
 <tr><td colspan="<%=subview.getMetaPropertiesList().size()+1%>">		
-<table class=frame width='100%'>
-<tr class=frame><th align='left'><%=ref.getLabel(request)%></th></tr>
-<tr><td class=frame>
+<table class=<%=style.getFrame()%> width='100%' <%=style.getFrameSpacing()%>>
+<tr class=<%=style.getFrameTitle()%>><th class=<%=style.getFrameTitleLabel()%> align='left'><%=ref.getLabel(request)%></th></tr>
+<tr><td class=<%=style.getFrameContent()%>>
 <jsp:include page="detail.jsp"> 
 	<jsp:param name="viewObject" value="<%=viewName%>" />
 	<jsp:param name="propertyPrefix" value="<%=propertyPrefix%>" />
@@ -157,7 +157,7 @@ while (itDetailActions.hasNext()) {
 	}
 	else {// no mostrar
 %>
-<tr><td colspan="<%=subview.getMetaPropertiesList().size()+1%>">
+<tr class=<%=style.getCollectionListActions()%>><td colspan="<%=subview.getMetaPropertiesList().size()+1%>" class=<%=style.getCollectionListActions()%>>
 <% if (collectionEditable) { %>
 <xava:link action="Collection.new" argv='<%="viewObject="+viewName%>'/>
 
@@ -192,7 +192,7 @@ else {
 		String script = "";
 		if (it.hasNext()) {
 			if (subview.throwsPropertyChanged(p)) {
-				script = "onchange='throwPropertyChanged(\"" + propertyKey + "\")'";
+				script = "onchange='throwPropertyChanged(" + formName + ", \"" + propertyKey + "\")'";
 			}
 		}
 		else {

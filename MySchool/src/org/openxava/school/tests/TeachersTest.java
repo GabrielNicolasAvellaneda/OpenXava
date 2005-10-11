@@ -47,8 +47,7 @@ public class TeachersTest extends ModuleTestBase {
 		assertValue("name", "JUNIT Teacher MODIFIED");
 		
 		// Delete it
-		execute("CRUD.delete");
-		execute("ConfirmDelete.confirmDelete");
+		execute("CRUD.delete");		
 		assertMessage("Teacher deleted successfully");				
 	}
 	

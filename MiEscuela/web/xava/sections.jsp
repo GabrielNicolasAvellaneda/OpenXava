@@ -1,8 +1,10 @@
 <%@ include file="imports.jsp"%>
 
 <%@ page import="org.openxava.view.meta.MetaView" %>
+<%@ page import="org.openxava.util.Is" %>
 
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
+<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%
 String viewObject = request.getParameter("viewObject");
@@ -19,45 +21,56 @@ if (activeSection >= sections.size()) {
 view.setActiveSection(activeSection);
 %>
 
-<table width='100%' class=section>
-	<tr class=section><td class=section>
 
-	<div  class="Jetspeed" >
-		<table align="left" cellspacing="0" border="0" cellpadding="0"  >
-			<tr width="100%">
-	
+<table width='100%' cellspacing="0" border="0" cellpadding="0">
+	<tr><td>
+
+<div class=<%=style.getSection()%>>
+	<table border="0" cellpadding="0" cellspacing="0">
+    	<tr>
+    		<%=style.getSectionBarLeftDecoration()%>    		
 	<% 
 	java.util.Iterator itSections = sections.iterator();
 	int i=0;
 	while (itSections.hasNext()) {
 		MetaView section = (MetaView) itSections.next();
 		if (activeSection == i) {
-	%>
-		<td class="TabLeft"></td>
-		<td valign="middle"   class="TabMiddle" style="background-color: #FFCC00;">&nbsp;
-			<%=section.getLabel(request) %>
-		&nbsp;</td>
-		<td   class="TabRight"  ></td>
-	<%	
+	%>        
+			<% if (style.sectionTabHasDecoration()) { %>
+			<td class=<%=style.getSectionTabLeft()%> nowrap="true">&nbsp;</td>
+			<% } %>
+			<td class=<%=style.getSectionTabMiddle()%> style="vertical-align: middle; text-align: center;" nowrap="true">
+			<%=section.getLabel(request)%>
+			</td>
+			<% if (style.sectionTabHasDecoration()) { %>
+			<td class=<%=style.getSectionTabRight()%> nowrap="true">&nbsp;</td>    	
+			<% } %>
+    <%
 		}
 		else {
-	%>
-		<td class="TabLeftLow"></td>
-		<td valign="middle" class="TabMiddleLow" style="background-color: #FFCC00;" >&nbsp;
-			<xava:link action='Sections.change' argv='<%="activeSection="+i%>'>
-			<%=section.getLabel(request)%>
-			</xava:link>        
-		&nbsp;</td>
-		<td class="TabRightLow"></td>
-	<%
+    %>
+    		<% if (style.sectionTabHasDecoration()) { %>
+			<td class=<%=style.getSectionTabLeftLow()%> nowrap="true">&nbsp;</td>
+			<% } %>
+			<td class=<%=style.getSectionTabMiddleLow()%> style="vertical-align: middle; text-align: center;" nowrap="true">
+				<xava:link action='Sections.change' argv='<%="activeSection="+i%>' cssClass='<%=style.getSectionLink()%>'>
+				<%=section.getLabel(request)%>
+				</xava:link>                  	
+			</td>
+			<% if (style.sectionTabHasDecoration()) { %>
+			<td class=<%=style.getSectionTabRightLow()%> nowrap="true">&nbsp;</td>          
+			<% } %>
+  	<%   	
 		}
 		i++;
-	}
-	%>	
-	</tr></table></div>
+  	} 
+  	%>                
+	</tr>
+  </table>
+</div>                  
+	
 	</td></tr>
-	<tr>
-		<td class=activeSection>
+	<tr><td class=<%=style.getSectionActive()%>>
 		<%
 			String viewName = viewObject + "_section" + activeSection;
 			context.put(request, viewName, view.getSectionView(activeSection));			
@@ -65,7 +78,6 @@ view.setActiveSection(activeSection);
 		<jsp:include page="detail.jsp"> 
 			<jsp:param name="viewObject" value="<%=viewName%>" />
 		</jsp:include>		
-		</td>
-	</tr>
+	</td></tr>	
 </table>
 <br>

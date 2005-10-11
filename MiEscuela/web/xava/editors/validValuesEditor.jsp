@@ -2,6 +2,8 @@
 <%@ page import="org.openxava.util.Is" %>
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
 
+<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
+
 <%
 String propertyKey = request.getParameter("propertyKey");
 String script = request.getParameter("script");
@@ -12,7 +14,7 @@ boolean editable = "true".equals(request.getParameter("editable"));
 boolean label = org.openxava.util.XavaPreferences.getInstance().isReadOnlyAsLabel();
 if (editable) { 
 %>
-<select name="<%=propertyKey%>" class=editor <%=script%> title="<%=p.getDescription(request)%>">
+<select name="<%=propertyKey%>" class=<%=style.getEditor()%> <%=script%> title="<%=p.getDescription(request)%>">
 	<option value="0"></option>
 <%
 	java.util.Iterator it = p.validValuesLabels(request);
@@ -37,7 +39,7 @@ if (editable) {
 	}
 	else {
 %>
-	<input name = "<%=propertyKey%>_DESCRIPTION_" class=editor
+	<input name = "<%=propertyKey%>_DESCRIPTION_" class=<%=style.getEditor()%>
 	type="text" 
 	title="<%=p.getDescription(request)%>"	
 	maxlength="<%=p.getSize()%>" 	

@@ -2,6 +2,7 @@
 
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
+<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
@@ -15,10 +16,12 @@ org.openxava.view.View view = (org.openxava.view.View) context.get(request, view
 String propertyKey = request.getParameter("propertyKey");
 MetaProperty p = (MetaProperty) request.getAttribute(propertyKey);
 
+org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
+String formName = manager.getForm();	
 boolean throwsChanged=view.throwsPropertyChanged(p);
 String scriptFoco = "onfocus=focus_property.value='" + propertyKey + "'";
 String script = throwsChanged?
-	"onchange='throwPropertyChanged(\"" + propertyKey + "\")' ":"";
+	"onchange='throwPropertyChanged(document." + formName + ", \"" + propertyKey + "\")' ":"";
 script = script + scriptFoco;
 Object value = request.getAttribute(propertyKey + ".value");
 
@@ -45,11 +48,11 @@ String label = view.getLabelForProperty(p);
 <%=postLabel%>
 <%=preIcons%>
 <% if (p.isKey()) { %>
-<img src="images/key.gif"/>
+<img src="<%=request.getContextPath()%>/xava/images/key.gif"/>
 <% } else if (p.isRequired()) { %>	
-<img src="images/required.gif"/>
+<img src="<%=request.getContextPath()%>/xava/images/required.gif"/>
 <% } if (errors.memberHas(p)) { %>
-<img src="images/error.gif"/>
+<img src="<%=request.getContextPath()%>/xava/images/error.gif"/>
 <% } %>
 <%=postIcons%>
 <%=preEditor%>
@@ -57,10 +60,10 @@ String label = view.getLabelForProperty(p);
 	label = labelFormat == MetaPropertyView.SMALL_LABEL?label:"&nbsp;";
 %>
 <table border='0' cellpadding='0', cellspacing='0'><tr><td align='bottom' id='<%=labelKey%>'>
-<span class='smallLabel'><%=label%></span>
+<span class=<%=style.getSmallLabel()%>><%=label%></span>
 
 </td></tr>
-<tr><td valign='middle'>
+<tr><td style='vertical-align: middle'>
 <% } %>
 <%
 String editorURL = WebEditors.getUrl(p);
@@ -75,10 +78,10 @@ if ((editable && view.isRepresentsEntityReference() && view.isLastKeyProperty(p)
 	String referencedModel = p.getMetaModel().getName();
 %>
 	<% if (view.isSearch()) {%>
-<xava:image action='<%=view.getSearchAction()%>' argv='<%="keyProperty="+propertyKey%>'/>
+<xava:action action='<%=view.getSearchAction()%>' argv='<%="keyProperty="+propertyKey%>'/>
 	<% } %>
 	<% if (view.isCreateNew()) {%>
-<xava:link action='Reference.createNew' argv='<%="model="+referencedModel + ",keyProperty=" + propertyKey%>'/>
+<xava:action action='Reference.createNew' argv='<%="model="+referencedModel + ",keyProperty=" + propertyKey%>'/>
 	<% } %>
 <% } %>
 <%

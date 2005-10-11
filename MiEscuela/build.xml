@@ -36,6 +36,10 @@
 		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
 	</target>				
 	
+	<target name="desplegarPortlets"> 
+		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
+	</target>		
+	
 	<target name="crearEarWebsphere">
 		<ant antfile="../OpenXava/build.xml" target="generateWebsphereMapping"/>
 		<antcall target="crearJarEJB"/>

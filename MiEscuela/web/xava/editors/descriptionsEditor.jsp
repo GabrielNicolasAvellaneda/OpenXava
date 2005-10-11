@@ -1,10 +1,10 @@
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
+<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%@ page import="org.openxava.util.KeyAndDescription" %>
 <%@ page import="org.openxava.util.Is" %>
 <%@ page import="org.openxava.util.XavaResources" %>
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
-<%@ page import="org.openxava.model.meta.MetaEjbImpl" %>
 <%@ page import="org.openxava.calculators.DescriptionsCalculator" %>
 <%@ page import="org.openxava.formatters.IFormatter" %>
 <%@ page import="org.openxava.filters.IFilter" %>
@@ -116,7 +116,15 @@ if (parameterValuesStereotypes != null || parameterValuesProperties != null) {
 	java.util.Collection p = new java.util.ArrayList();
 	while (it.hasNext()) {
 		String parameterValueKey = (String) it.next();		
-		Object parameterValue = parameterValueKey==null?null:view.getRoot().getValue(parameterValueKey);
+		org.openxava.view.View v = null;
+		if (parameterValueKey != null && parameterValueKey.startsWith("this.")) {
+			parameterValueKey = parameterValueKey.substring(5);
+			v = view;
+		}
+		else {
+			v = view.getRoot();
+		}
+		Object parameterValue = parameterValueKey==null?null:v.getValue(parameterValueKey);
 		p.add(parameterValue);
 	}
 	calculator.setParameters(p, filter);
@@ -132,7 +140,7 @@ boolean editable = "true".equals(request.getParameter("editable"));
 boolean label = org.openxava.util.XavaPreferences.getInstance().isReadOnlyAsLabel() || "true".equalsIgnoreCase(request.getParameter("readOnlyAsLabel"));
 if (editable) { 
 %>
-<select name="<%=propertyKey%>" class=editor <%=script%> title="<%=title%>">
+<select name="<%=propertyKey%>" class=<%=style.getEditor()%> <%=script%> title="<%=title%>">
 	<option value=""></option>
 <%
 	java.util.Iterator it = descriptions.iterator();
@@ -170,7 +178,7 @@ if (editable) {
 	}
 	else {	
 %>
-	<input name="<%=propertyKey%>__DESCRIPTION__" class=editor		
+	<input name="<%=propertyKey%>__DESCRIPTION__" class=<%=style.getEditor()%>
 		type="text" 
 		title="<%=title%>"
 		maxlength="<%=description.toString().length()%>" 
