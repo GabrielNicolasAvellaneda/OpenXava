@@ -46,8 +46,7 @@ public class PruebaProfesores extends ModuleTestBase {
 		assertValue("nombre", "Profesor JUNIT MODIFICADO");
 		
 		// Borramos
-		execute("CRUD.delete");
-		execute("ConfirmDelete.confirmDelete");
+		execute("CRUD.delete");		
 		assertMessage("Profesor borrado satisfactoriamente");				
 	}
 	

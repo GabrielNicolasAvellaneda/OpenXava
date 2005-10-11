@@ -46,13 +46,13 @@
 
 <!ELEMENT seccion (#PCDATA|grupo)*>
 <!ATTLIST seccion
-	nombre CDATA #IMPLIED
+  nombre CDATA #IMPLIED
   etiqueta CDATA #IMPLIED
 >
 
-<!ELEMENT grupo (#PCDATA)>
+<!ELEMENT grupo (#PCDATA|grupo)*>
 <!ATTLIST grupo
-	nombre CDATA #IMPLIED
+  nombre CDATA #IMPLIED
   etiqueta CDATA #IMPLIED
 >
 
@@ -97,6 +97,7 @@
   vista CDATA #IMPLIED
   solo-lectura (true|false) "false"
   solo-edicion (true|false) "false"
+  crear-referencia (true|false) "true"  
 >
 
 <!ELEMENT propiedades-lista (#PCDATA)>
