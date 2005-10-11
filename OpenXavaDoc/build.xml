@@ -2,10 +2,8 @@
 
 <project name="OpenXavaDoc" default="deploy" basedir=".">
 
-	<property name="xava.version" value="1.1"/>
+	<property name="xava.version" value="1.2"/>
 	<property name="xava.workspace" value="/home/javi/openxava/openxava-1.1/workspace"/>
-	<!-- tmp deploy.dir -->
-	<property name="deploy.dir" value="/home/javi/openxava/openxava-1.2/jboss-4.0.2/server/default/deploy"/>
 	<property file="../openxava.properties"/>	
 
 	<property name="deploy.portlets.dir" value="${deploy.dir}/openxava.war/WEB-INF/deploy"/>
