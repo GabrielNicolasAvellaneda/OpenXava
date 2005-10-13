@@ -2156,7 +2156,13 @@ public class View implements java.io.Serializable {
 		MetaDescriptionsList descriptionsList = getMetaView().getMetaDescriptionList(ref);
 		if (descriptionsList == null) return "";
 		return descriptionsList.getCondition();
-	}	
+	}
+	
+	public String getOrderInDescriptionsList(MetaReference ref) throws XavaException {
+		MetaDescriptionsList descriptionsList = getMetaView().getMetaDescriptionList(ref);
+		if (descriptionsList == null) return "";
+		return descriptionsList.getOrder();
+	}		
 		
 	public boolean isOrderByKeyInDescriptionsList(MetaReference ref) throws XavaException {
 		MetaDescriptionsList descriptionsList = getMetaView().getMetaDescriptionList(ref);
