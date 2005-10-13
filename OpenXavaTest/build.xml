@@ -60,7 +60,7 @@
 
 	<target name="redeployPortlets"> 
 		<ant antfile="../OpenXava/build.xml" target="regeneratePortletGenerator"/>
-		<touch file="../${project}/xava/application.xml"></touch>
+		<touch file="../${project}/xava/application.xml"/>
 		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
 	</target>
 	

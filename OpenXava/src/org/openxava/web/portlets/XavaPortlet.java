@@ -1,11 +1,7 @@
 package org.openxava.web.portlets;
 
 import java.io.*;
-import java.util.*;
-
 import javax.portlet.*;
-
-import org.openxava.web.*;
 import org.openxava.web.style.*;
 
 /**
@@ -53,9 +49,9 @@ public class XavaPortlet extends GenericPortlet {
 	
 	public void init(PortletConfig config) throws PortletException {
 		super.init(config);		
-		this.moduleURL = "/xava/module.jsp?application=" +
+		this.moduleURL = "/WEB-INF/jsp/xava/module.jsp?application=" +
 			config.getInitParameter(PARAM_APPLICATION) + "&module=" +			
-			config.getInitParameter(PARAM_MODULE);				
+			config.getInitParameter(PARAM_MODULE);
 	}
 
 	/**
