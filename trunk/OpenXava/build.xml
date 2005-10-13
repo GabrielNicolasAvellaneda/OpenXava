@@ -554,7 +554,7 @@
   		</copy>			
 	</target>
 				
-	<target name="createWar" depends="createDist, updateDataSourceInfo, configureJNDI">
+	<target name="prepareWar" depends="createDist, updateDataSourceInfo, configureJNDI">
   		<copy todir="../${project}/web/xava">
     		<fileset dir="../OpenXava/web" excludes="WEB-INF/**"/>
   		</copy>		
@@ -588,9 +588,12 @@
 			failonerror="false"/>
 		<jar jarfile="../${project}/web/WEB-INF/lib/openxava.jar" basedir="../OpenXava/bin"/>
 		<copy file="${jboss.dir}/client/jboss-client.jar" todir="../${project}/web/WEB-INF/lib"/>
+	</target>
+	
+	<target name="createWar" depends="prepareWar">
 		<jar jarfile="${dist.dir}/${name.war}.war" basedir="web"/>
 	</target>
-
+	
 	<target name="deployWar" depends ="createWar">		
 		<copy file="${dist.dir}/${name.war}.war" todir="${deploy.dir}" overwrite="true"/>
 	</target>
@@ -667,7 +670,24 @@
 	
 	<!-- Although generates Jetspeed2 files it maybe used for websphere portal or another standard JSR-168 portal too -->
 	<target name="deployPortlets" depends="initPortlets, generatePortletXmlAndJetspee2Files">		
-		<antcall target="createWar"/>
+		<antcall target="prepareWar"/>
+		<mkdir dir="${dist.dir}/${name.war}-portets.war.d"/>
+		<copy todir="${dist.dir}/${name.war}-portets.war.d/WEB-INF">
+			<fileset dir="web/WEB-INF"/>
+		</copy>
+		<copy todir="${dist.dir}/${name.war}-portets.war.d/xava/images">
+			<fileset dir="web/xava/images"/>
+		</copy>		
+		<copy todir="${dist.dir}/${name.war}-portets.war.d/xava/style">
+			<fileset dir="web/xava/style"/>
+		</copy>				
+		<copy todir="${dist.dir}/${name.war}-portets.war.d/xava/editors/calendar">
+			<fileset dir="web/xava/editors/calendar"/>
+		</copy>						
+		<copy todir="${dist.dir}/${name.war}-portets.war.d/WEB-INF/jsp" >
+			<fileset dir="web" excludes="WEB-INF,xava/images,xava/style,xava/editors/calendar"/>
+		</copy>
+		<jar jarfile="${dist.dir}/${name.war}.war" basedir="${dist.dir}/${name.war}-portets.war.d"/>
 		<copy file="${dist.dir}/${name.war}.war" todir="${deploy.portlets.dir}" overwrite="true"/>		
 	</target>
 	
