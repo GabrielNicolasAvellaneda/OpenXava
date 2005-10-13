@@ -68,8 +68,9 @@
   description-property CDATA #IMPLIED
 	description-properties CDATA #IMPLIED
   depends CDATA #IMPLIED
-  condition CDATA #IMPLIED
+  condition CDATA #IMPLIED  
   order-by-key (true|false) "false"    
+  order CDATA #IMPLIED
 >
 
 <!ELEMENT property-view (on-change?, action*)>

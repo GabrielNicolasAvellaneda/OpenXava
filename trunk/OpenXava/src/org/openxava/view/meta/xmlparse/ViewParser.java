@@ -308,7 +308,8 @@ public class ViewParser extends XmlElementsNames {
 		}				
 		m.setDepends(el.getAttribute(xdepends[lang]));
 		m.setCondition(el.getAttribute(xcondition[lang]));
-		m.setOrderByKey(ParserUtil.getAttributeBoolean(el, xorder_by_key[lang]));		
+		m.setOrderByKey(ParserUtil.getAttributeBoolean(el, xorder_by_key[lang]));
+		m.setOrder(el.getAttribute(xorder[lang]));
 		return m;
 	}
 	

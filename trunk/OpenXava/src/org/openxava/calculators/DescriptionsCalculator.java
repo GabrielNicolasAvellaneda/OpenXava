@@ -27,6 +27,7 @@ public class DescriptionsCalculator implements ICalculator {
 	private String descriptionProperty;
 	private String descriptionProperties;
 	private String condition;
+	private String order;
 	private Collection parameters;
 	private String model;
 	private String componentName;
@@ -52,10 +53,12 @@ public class DescriptionsCalculator implements ICalculator {
 			throw new XavaException("descriptions_calculator_keyProperty_required", getClass().getName());
 		}
 		List result = read();
-		Comparator comparator = isOrderByKey()?
-			KeyAndDescriptionComparator.getByKey():
-			KeyAndDescriptionComparator.getByDescription();						
-		Collections.sort(result, comparator);						
+		if (!hasOrder()) { 
+			Comparator comparator = isOrderByKey()?
+				KeyAndDescriptionComparator.getByKey():
+					KeyAndDescriptionComparator.getByDescription();										
+			Collections.sort(result, comparator);
+		}
 		return result;
 	}
 
@@ -209,6 +212,10 @@ public class DescriptionsCalculator implements ICalculator {
 		if (hasCondition()) {
 			condition = getConditionSQL(getMapping());
 		}
+		String order = "";
+		if (hasOrder()) {
+			order = " ORDER BY " + getOrderSQL(getMapping());
+		}
 		Object [] key = null;
 		if (hasParameters()) {
 			key = new Object[getParameters().size()];
@@ -218,7 +225,7 @@ public class DescriptionsCalculator implements ICalculator {
 				if (key[i] == null) return null;
 			}				
 		}				
-		tab.search(condition, key);
+		tab.search(condition + order, key); 
 		return tab.getTable();
 	}
 		
@@ -226,9 +233,18 @@ public class DescriptionsCalculator implements ICalculator {
 		return !Is.emptyString(condition);
 	}
 	
+	private boolean hasOrder() {
+		return !Is.emptyString(order);
+	}
+	
+	
 	private String getConditionSQL(ModelMapping mapping) throws XavaException {
 		return mapping.changePropertiesByColumns(getCondition());
 	}
+	
+	private String getOrderSQL(ModelMapping mapping) throws XavaException {
+		return mapping.changePropertiesByColumns(getOrder());
+	}	
 
 	public String getModel() {
 		return model;
@@ -345,6 +361,14 @@ public class DescriptionsCalculator implements ICalculator {
 
 	public void setUseConvertersInKeys(boolean b) {
 		useConvertersInKeys = b;
+	}
+
+	public String getOrder() {
+		return order;
+	}
+
+	public void setOrder(String order) {
+		this.order = order;
 	}
 
 }

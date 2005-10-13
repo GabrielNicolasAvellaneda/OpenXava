@@ -20,11 +20,16 @@ String script = request.getParameter("script");
 String conditionForId = request.getParameter("condition");
 if (Is.emptyString(conditionForId)) conditionForId = request.getParameter("condicion");
 conditionForId = Is.emptyString(conditionForId)?"":"." + conditionForId;
-// orderForId is for have a different cache for each order
-String orderForId = request.getParameter("orderByKey");
-if (Is.emptyString(orderForId)) orderForId = request.getParameter("ordenadoPorClave");
+// orderByKeyForId is for have a different cache for each orderByKey
+String orderByKeyForId = request.getParameter("orderByKey");
+if (Is.emptyString(orderByKeyForId)) orderByKeyForId = request.getParameter("ordenadoPorClave");
+orderByKeyForId = Is.emptyString(orderByKeyForId)?"":"." + orderByKeyForId;
+//orderForId is for have a different cache for each order
+String orderForId = request.getParameter("order");
+if (Is.emptyString(orderForId)) orderForId = request.getParameter("orden");
 orderForId = Is.emptyString(orderForId)?"":"." + orderForId;
-String descriptionsCalculatorKey = propertyKey + conditionForId + orderForId + ".descriptionsCalculator";
+
+String descriptionsCalculatorKey = propertyKey + conditionForId + orderByKeyForId + orderForId + ".descriptionsCalculator";
 DescriptionsCalculator calculator = (DescriptionsCalculator) request.getSession().getAttribute(descriptionsCalculatorKey);	
 
 IFilter filter = null;
@@ -84,6 +89,9 @@ if (calculator == null) {
 	String condition = request.getParameter("condition");
 	if (condition == null) condition = request.getParameter("condicion");
 	calculator.setCondition(condition);
+	String order = request.getParameter("order");
+	if (order == null) order = request.getParameter("orden");
+	calculator.setOrder(order);
 	calculator.setUseConvertersInKeys(true);
 	String model = request.getParameter("model");
 	if (model == null) model = request.getParameter("modelo");

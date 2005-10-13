@@ -13,12 +13,12 @@ public class FamilyXProductsReportTest extends ModuleTestBase {
 		super(nombreTest, "OpenXavaTest", "Family1ProductsReport");		
 	}
 	
-	public void testDescriptionsComboCacheNotShared() throws Exception {
+	public void testDescriptionsComboCacheNotSharedAndOrderInDescriptionList() throws Exception {
 		String [][] subfamiliesFamily1 = {
 			{ "", ""},
-			{ "1", "DESARROLLO"},
-			{ "2", "GESTION"},						  
-			{ "3", "SISTEMA"}						
+			{ "3", "SISTEMA"},			
+			{ "2", "GESTION"},			
+			{ "1", "DESARROLLO"}
 		};		
 		assertValidValues("subfamily.number", subfamiliesFamily1);
 		changeModule("Family2ProductsReport");
