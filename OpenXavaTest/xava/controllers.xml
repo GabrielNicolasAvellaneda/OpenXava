@@ -179,6 +179,10 @@
 			class="org.openxava.test.actions.EditInvoiceDetailAction">	
 			<use-object name="xava_view"/>
 		</action>			
+		<action name="viewDelivery" hidden="true"
+			class="org.openxava.test.actions.ViewDeliveryFromInvoiceAction">	
+			<use-object name="xava_view"/>
+		</action>					
 		<action name="viewProduct" hidden="true"
 			class="org.openxava.test.actions.ViewProductFromInvoiceDetailAction">	
 			<use-object name="xava_view"/>

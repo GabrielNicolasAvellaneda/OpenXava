@@ -12,6 +12,7 @@ import org.openxava.util.*;
 public class MetaCollectionView implements Serializable {
 	
 	private String editActionName;
+	private String viewActionName; 
 	private Collection actionsDetailNames;
 	private Collection actionsListNames;
 	private List propertiesListNames;
@@ -112,5 +113,13 @@ public class MetaCollectionView implements Serializable {
 
 	public void setCreateReference(boolean createReference) {
 		this.createReference = createReference;
+	}
+
+	public String getViewActionName() {
+		return viewActionName;
+	}
+
+	public void setViewActionName(String viewActionName) {
+		this.viewActionName = viewActionName;
 	}
 }

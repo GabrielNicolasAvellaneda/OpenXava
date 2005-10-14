@@ -87,7 +87,7 @@
 >
 
 
-<!ELEMENT collection-view (list-properties?, edit-action?, list-action*, detail-action*)>
+<!ELEMENT collection-view  (list-properties?, edit-action?, view-action?, list-action*, detail-action*)>
 <!ATTLIST collection-view
   collection CDATA #REQUIRED
   view CDATA #IMPLIED

@@ -92,7 +92,7 @@
 >
 
 
-<!ELEMENT vista-coleccion (mediador?, propiedades-lista?, accion-editar?, accion-lista*, accion-detalle*)>
+<!ELEMENT vista-coleccion (mediador?, propiedades-lista?, accion-editar?, accion-ver?, accion-lista*, accion-detalle*)>
 <!ATTLIST vista-coleccion
   coleccion CDATA #REQUIRED
   vista CDATA #IMPLIED
