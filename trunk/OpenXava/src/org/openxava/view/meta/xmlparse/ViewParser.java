@@ -184,6 +184,7 @@ public class ViewParser extends XmlElementsNames {
 		fillMediator(el, a, lang);
 		a._setPropertiesList(ParserUtil.getString(el, xlist_properties[lang]));
 		fillEditAction(el, a, lang);
+		fillViewAction(el, a, lang);
 		fillDetailActions(el, a, lang); 		
 		fillListActions(el, a, lang);
 		return a;
@@ -237,6 +238,16 @@ public class ViewParser extends XmlElementsNames {
 		String action = ((Element) l.item(0)).getAttribute(xaction[lang]);		
 		container.setEditActionName(action);		
 	}
+	
+	private static void fillViewAction(Element el, MetaCollectionView container, int lang)
+		throws XavaException {
+		NodeList l = el.getElementsByTagName(xview_action[lang]);
+		int c = l.getLength();
+		if (c==0) return;
+		if (c>1) throw new XavaException("no_more_1_view_action_in_collection_view");
+		String action = ((Element) l.item(0)).getAttribute(xaction[lang]);		
+		container.setViewActionName(action);		
+	}	
 	
 	private static void fillDetailActions(Element el, MetaCollectionView container, int lang)
 		throws XavaException {

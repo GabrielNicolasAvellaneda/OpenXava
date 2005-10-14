@@ -161,7 +161,7 @@
 		</collection-view>
 		
 		<collection-view collection="deliveries" view="InInvoice" read-only="true"/>
-		
+						
 		<members>
 			year, number, date, paid;
 			customerDiscount, customerTypeDiscount, yearDiscount;
@@ -209,6 +209,17 @@
 		</members>
 	</view>
 	
+	<view name="Deliveries">
+		<collection-view collection="deliveries" view="InInvoice" read-only="true">
+			<view-action action="Invoices.viewDelivery"/>
+		</collection-view>
+						
+		<members>
+			year, number, date;
+			deliveries
+		</members>						
+	</view>
+		
 	<tab>
 		<properties>year, number, date, amountsSum, vat, detailsCount, paid, importance</properties>
 	</tab>

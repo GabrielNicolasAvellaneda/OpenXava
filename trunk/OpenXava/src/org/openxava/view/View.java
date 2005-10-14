@@ -32,6 +32,7 @@ public class View implements java.io.Serializable {
 	private final static int [] EMPTY_SELECTED = new int[0];
 	
 	private String editCollectionElementAction;
+	private String viewCollectionElementAction;
 	private boolean focusForward;
 	private String focusPropertyId;
 	private Map membersNamesWithHidden;
@@ -544,6 +545,7 @@ public class View implements java.io.Serializable {
 					newView.setActionsNamesList(actionsListNames);
 				}
 				newView.setEditCollectionElementAction(metaCollectionView.getEditActionName());
+				newView.setViewCollectionElementAction(metaCollectionView.getViewActionName());
 				newView.setKeyEditable(!metaCollectionView.isReadOnly());
 				newView.setEditable(!metaCollectionView.isReadOnly());				
 				newView.setCollectionEditable(!metaCollectionView.isReadOnly() && !metaCollectionView.isEditOnly());
@@ -2480,10 +2482,20 @@ public class View implements java.io.Serializable {
 		return Is.emptyString(editCollectionElementAction)?"Collection.edit":editCollectionElementAction;
 	}
 	
+	public String getViewCollectionElementAction() {
+		return Is.emptyString(viewCollectionElementAction)?"Collection.view":viewCollectionElementAction;
+	}
+		
 	public void setEditCollectionElementAction(
 			String editCollectionElementAction) {
 		this.editCollectionElementAction = editCollectionElementAction;
 	}
+	
+	public void setViewCollectionElementAction(
+			String viewCollectionElementAction) {
+		this.viewCollectionElementAction = viewCollectionElementAction;
+	}
+	
 
 	public void recalculateProperties() {
 		try {												

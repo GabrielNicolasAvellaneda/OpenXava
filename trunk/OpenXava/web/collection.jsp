@@ -41,7 +41,7 @@ if (collectionEditable || collectionMembersEditables) {
 }
 else {
 	if (!subview.isDetailMemberInCollection()) {
-		lineAction = "Collection.view";
+		lineAction = subview.getViewCollectionElementAction();
 	}
 }
 String propertyPrefix = Is.emptyString(propertyPrefixAccumulated)?"xava." + view.getModelName() + "." + collectionName + ".":propertyPrefixAccumulated + collectionName + ".";
