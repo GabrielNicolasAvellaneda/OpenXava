@@ -43,7 +43,7 @@ public class JasperReportServlet extends HttpServlet {
 		surl.append(request.getServerName());
 		surl.append(':');
 		surl.append(request.getServerPort());		
-		surl.append(request.getRequestURI());
+		surl.append(request.getRequestURI());		
 		surl.append(".jsp?model=");
 		surl.append(modelo);
 		surl.append("&language=");

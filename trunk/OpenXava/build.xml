@@ -685,8 +685,9 @@
 			<fileset dir="web/xava/editors/calendar"/>
 		</copy>						
 		<copy todir="${dist.dir}/${name.war}-portets.war.d/WEB-INF/jsp" >
-			<fileset dir="web" excludes="WEB-INF,xava/images,xava/style,xava/editors/calendar"/>
+			<fileset dir="web" excludes="WEB-INF/**, xava/images/**, xava/style/**, xava/editors/calendar/**, xava/jasperReport.jsp"/>
 		</copy>
+		<copy todir="${dist.dir}/${name.war}-portets.war.d/xava" file="web/xava/jasperReport.jsp"/>
 		<jar jarfile="${dist.dir}/${name.war}.war" basedir="${dist.dir}/${name.war}-portets.war.d"/>
 		<copy file="${dist.dir}/${name.war}.war" todir="${deploy.portlets.dir}" overwrite="true"/>		
 	</target>
