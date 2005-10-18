@@ -22,28 +22,28 @@ import com.meterware.httpunit.*;
 
 public class ModuleTestBase extends TestCase {
 	
+	private final static String EDITABLE_SUFIX = "_EDITABLE_";
+	private final static String ACTION_PREFIX = "xava.action";
+	
+	private static Properties xavaJunitProperties;
+	private static boolean isLocaleSet = false;
+	private static String locale;
+	private static String jetspeed2URL;
+	private static String jetspeed2UserName;
+	private static String jetspeed2Password;
+		
 	private List parameters;
 	private static String host;
 	private static String port;	
 	private MetaModel metaModel;
 	private MetaView metaView;
-	private String moduleLink;
-
-	private final static String EDITABLE_SUFIX = "_EDITABLE_";
-
 	private MetaTab metaTab;
-
-	private final static String ACTION_PREFIX = "xava.action";
-	
 	private String propertyPrefix;
 	private String application;
 	private String module;
 	private WebConversation conversation;
 	private WebResponse response;
 	private WebForm form;
-	private static Properties xavaJunitProperties;
-	private static boolean isLocaleSet = false;
-	private static String locale;
 	
 	public ModuleTestBase(String nameTest, String application, String modul) {
 		super(nameTest);
@@ -53,7 +53,14 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected void setUp() throws Exception {
-		resetModule();
+		resetModule();	
+	}
+	
+	protected void tearDown() throws Exception {
+		if (isJetspeed2Enabled()) {
+			// logout
+			response = conversation.getResponse("http://" + getHost() + ":" + getPort() + "/" + getJetspeed2URL() + "/login/logout");
+		}
 	}
 	
 	/**
@@ -65,16 +72,32 @@ public class ModuleTestBase extends TestCase {
 			conversation.setHeaderField("Accept-Language", getLocale());
 			Locale.setDefault(new Locale(getLocale(), ""));
 		}
-		response = conversation.getResponse( "http://" + getHost() + ":" + getPort() + "/" + application + "/xava/module.jsp?application="+application+"&module=" + module);
-		setForm(response.getForms()[0]);	
+		if (isJetspeed2Enabled()) {
+			response = conversation.getResponse("http://" + getHost() + ":" + getPort() + "/" + getJetspeed2URL() + "/portal/");
+			resetForm();				
+			getForm().setParameter("org.apache.jetspeed.login.username", getJetspeed2UserName());
+			getForm().setParameter("org.apache.jetspeed.login.password", getJetspeed2Password());
+			getForm().submit();
+		}
+		response = conversation.getResponse(getModuleURL(module));
+		resetForm();
 		propertyPrefix = null;		
 	}
 	
 	protected void changeModule(String module) throws Exception {
 		this.module = module;
-		response = conversation.getResponse( "http://localhost:" + getPort() + "/" + application + "/xava/module.jsp?application="+application+"&module=" + module);
-		setForm(response.getForms()[0]);
+		response = conversation.getResponse(getModuleURL(module));
+		resetForm();		
 		propertyPrefix = null;
+	}
+	
+	private String getModuleURL(String moduleName) {
+		if (isJetspeed2Enabled()) {
+			return "http://" + getHost() + ":" + getPort() + "/" + getJetspeed2URL() + "/portal/" + application + "/" + module + ".psml";
+		}
+		else {
+			return"http://" + getHost() + ":" + getPort() + "/" + application + "/xava/module.jsp?application="+application+"&module=" + module;
+		}		
 	}
 	
 	/**
@@ -122,7 +145,7 @@ public class ModuleTestBase extends TestCase {
 		}
 								
 		if ("text/html".equals(response.getContentType())) {
-			setForm(response.getForms()[0]);						
+			resetForm();
 		}						
 	}
 	
@@ -131,11 +154,11 @@ public class ModuleTestBase extends TestCase {
 	 * Execute the action using javascript, is the preferred way.
 	 */
 	protected void execute(String action) throws Exception {
-		assertAction(action);
-		response.getScriptableObject().setLocation("javascript:executeXavaAction(false, false, document.forms[0], '" + action + "')");
+		assertAction(action);		
+		response.getScriptableObject().setLocation("javascript:executeXavaAction(false, false, document.forms[" + getFormIndex() + "], '" + action + "')");
 		response = conversation.getCurrentPage();
 		if ("text/html".equals(response.getContentType())) {
-			setForm(response.getForms()[0]);						
+			resetForm();
 		}						
 	}
 										 	
@@ -145,17 +168,17 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected void execute(String action, String arguments) throws Exception {
-		assertAction(action);
-		response.getScriptableObject().setLocation("javascript:executeXavaAction(false, false, document.forms[0], '" + action + "', '" + arguments+ "')");
+		assertAction(action); 
+		response.getScriptableObject().setLocation("javascript:executeXavaAction(false, false, document.forms[" + getFormIndex() + "], '" + action + "', '" + arguments+ "')");
 		response = conversation.getCurrentPage();
-		setForm(response.getForms()[0]);								
+		resetForm();
 	}
 	
 	protected void executeDefaultAction() throws Exception {
-		SubmitButton boton = getForm().getSubmitButtons()[0];
-		boton.click();
+		SubmitButton button = getForm().getSubmitButtons()[getFormIndex()];
+		button.click();
 		response = conversation.getCurrentPage();
-		setForm(response.getForms()[0]);								
+		resetForm();
 	}
 	
 	protected void assertExists(String name) throws Exception {		
@@ -313,7 +336,7 @@ public class ModuleTestBase extends TestCase {
 				response.getScriptableObject().setLocation("javascript:" + onchange);
 			}
 			response = conversation.getCurrentPage();
-			setForm(response.getForms()[0]);	
+			resetForm();
 		}
 		
 	}
@@ -817,6 +840,31 @@ public class ModuleTestBase extends TestCase {
 		}
 		return locale;
 	}
+	
+	private static boolean isJetspeed2Enabled() {
+		return !Is.emptyString(getJetspeed2URL());
+	}
+	
+	private static String getJetspeed2URL() {
+		if (jetspeed2URL == null) {
+			jetspeed2URL = getXavaJunitProperties().getProperty("jetspeed2.url");
+		}
+		return jetspeed2URL;				
+	}
+	
+	private static String getJetspeed2UserName() {
+		if (jetspeed2UserName == null) {
+			jetspeed2UserName = getXavaJunitProperties().getProperty("jetspeed2.username");
+		}
+		return jetspeed2UserName;				
+	}
+	
+	private static String getJetspeed2Password() {
+		if (jetspeed2Password == null) {
+			jetspeed2Password = getXavaJunitProperties().getProperty("jetspeed2.password");
+		}
+		return jetspeed2Password;				
+	}
 		
 	/**
 	 * From file xava-junit.properties 
@@ -841,6 +889,10 @@ public class ModuleTestBase extends TestCase {
 		return xavaJunitProperties;
 	}
 	
+	private void resetForm() throws Exception {
+		setForm(response.getForms()[getFormIndex()]);
+	}
+	
 	private void setForm(WebForm form) {
 		this.form = form;
 		parameters = Arrays.asList(form.getParameterNames());
@@ -848,6 +900,10 @@ public class ModuleTestBase extends TestCase {
 	
 	private WebForm getForm() {
 		return form;	
+	}	
+	
+	private int getFormIndex() {		
+		return isJetspeed2Enabled()?1:0; 
 	}	
 			
 }

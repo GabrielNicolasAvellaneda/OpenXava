@@ -15,7 +15,7 @@ public class StateHibernateTest extends ModuleTestBase {
 
 	public void testCreateReadUpdateDeleteWithHandmadeHibernate() throws Exception {
 		assertListNotEmpty();
-		// Create
+		// Create		
 		execute ("StatesHibernate.new");
 		setValue("id","66");
 		setValue("name","State JUnit");
