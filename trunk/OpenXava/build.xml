@@ -555,10 +555,10 @@
 	</target>
 				
 	<target name="prepareWar" depends="createDist, updateDataSourceInfo, configureJNDI">
-  		<copy todir="../${project}/web/xava">
+  		<copy todir="../${project}/web/xava" preservelastmodified="true">
     		<fileset dir="../OpenXava/web" excludes="WEB-INF/**"/>
   		</copy>		
-  		<copy todir="../${project}/web/WEB-INF">
+  		<copy todir="../${project}/web/WEB-INF" preservelastmodified="true">
     		<fileset dir="../OpenXava/web/WEB-INF"/>
   		</copy>		
 		<antcall target="filterXavaFiles">  		
@@ -587,7 +587,7 @@
 			tofile="../${project}/${classes.dir}/Etiquetas${project}.properties"
 			failonerror="false"/>
 		<jar jarfile="../${project}/web/WEB-INF/lib/openxava.jar" basedir="../OpenXava/bin"/>
-		<copy file="${jboss.dir}/client/jboss-client.jar" todir="../${project}/web/WEB-INF/lib"/>
+		<copy file="${jboss.dir}/client/jboss-client.jar" todir="../${project}/web/WEB-INF/lib" preservelastmodified="true"/>
 	</target>
 	
 	<target name="createWar" depends="prepareWar">
