@@ -136,8 +136,7 @@ public class MetaConsult extends MetaElement {
 		label.append(' ');
 		int c=0;
 		while (it.hasNext()) {
-			MetaParameter parameter = (MetaParameter) it.next();	
-			String propertyLabel = null;		
+			MetaParameter parameter = (MetaParameter) it.next();					
 			c++;			
 			label.append(parameter.getMetaProperty().getLabel());
 			if (c < count) {

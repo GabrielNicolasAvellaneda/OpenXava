@@ -396,6 +396,7 @@ public class CustomersTest extends ModuleTestBase {
 		assertValueInList(0, 2, "MANUEL CHAVARRI"); // property of reference to entity
 		assertValueInList(0, 3, "EL PUIG"); // property of reference to aggregate
 		assertValueInList(0, 4, "MANAGER"); // reference with 2 levels of indirection
+		assertValueInList(0, 5, "NEW YORK"); // property of a reference inside an aggregate
 	}
 	
 	public void testNestedAggregateCollections() throws Exception {				

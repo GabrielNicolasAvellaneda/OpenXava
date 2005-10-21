@@ -151,6 +151,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 		return r.toString().trim();
 	}
 	
+	
 	public String getQualifiedColumn(String modelProperty)
 		throws XavaException {		
 		String tableColumn = getTableColumn(modelProperty, true);						
@@ -169,7 +170,6 @@ abstract public class ModelMapping implements java.io.Serializable {
 					reference = reference.substring(0, reference.lastIndexOf('.'));
 				}				
 				reference = reference.substring(reference.lastIndexOf('.') + 1);
-				
 			}
 			return "T_" + reference + tableColumn.substring(tableColumn.lastIndexOf('.')) ;
 		}
@@ -182,12 +182,12 @@ abstract public class ModelMapping implements java.io.Serializable {
 	 * Support the use of references with dots,
 	 * this is: myreference.myproperty.
 	 */
-	public String getColumn(String propiedadModelo)
+	public String getColumn(String modelProperty)
 		throws ElementNotFoundException, XavaException {
-		return getTableColumn(propiedadModelo, false);
+		return getTableColumn(modelProperty, false);
 	}
-
-	private String getTableColumn(
+	
+	private String getTableColumn( 
 		String modelProperty,
 		boolean qualifyReferenceMappingColumn)
 		throws XavaException {
@@ -205,9 +205,17 @@ abstract public class ModelMapping implements java.io.Serializable {
 						(PropertyMapping) propertyMappings.get(
 							referenceName + "_" + propertyName);
 					if (propertyMapping == null) {
-						throw new ElementNotFoundException(
+						int idx2 = propertyName.indexOf('.'); 
+						if (idx2 >= 0) {
+							String referenceName2 = propertyName.substring(0, idx2);
+							String propertyName2 = propertyName.substring(idx2 + 1);
+							return getTableColumn(referenceName + "_" + referenceName2 + "." + propertyName2, qualifyReferenceMappingColumn);							
+						}
+						else {
+							throw new ElementNotFoundException(
 								"property_mapping_not_found", 
 								referenceName + "_" + propertyName, getModelName());
+						}
 					}
 					return propertyMapping.getColumn();
 				}

@@ -303,9 +303,21 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	}
 	
 	public MetaReference getMetaReference(String name) throws ElementNotFoundException, XavaException {
+		if (name == null) {
+			throw new ElementNotFoundException("reference_not_found", name, getName());
+		}
 		MetaReference r = (MetaReference) getMapMetaReferences().get(name);
 		if (r == null) {
-			throw new ElementNotFoundException("reference_not_found", name, getName());
+			name = Strings.change(name, "_", ".");
+			int idx = name.indexOf('.');
+			if (idx >= 0) {
+				String aggregate = name.substring(0, idx);			
+				String nestedReference = name.substring(idx + 1);
+				return getMetaReference(aggregate).getMetaModelReferenced().getMetaReference(nestedReference);
+			}
+			else {
+				throw new ElementNotFoundException("reference_not_found", name, getName());
+			}
 		}
 		return r;
 	}
@@ -1167,7 +1179,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		return getMetaComponent().getPackageName() + "." + getName();
 	}
 	
-	public Class getPOJOClass() throws XavaException, ClassNotFoundException { //tmp ¿inicializacion vaga?
+	public Class getPOJOClass() throws XavaException, ClassNotFoundException { 
 		if (pojoClass==null){
 			pojoClass =  Class.forName(getPOJOClassName());
 		}

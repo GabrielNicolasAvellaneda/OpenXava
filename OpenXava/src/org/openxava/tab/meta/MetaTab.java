@@ -422,8 +422,14 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 				select.append(" left join ");						
 				select.append(referenceMapping.getReferencedTable());
 				select.append(" as ");
-				select.append("T_");
-				select.append(referenceMapping.getReference());
+				select.append("T_");				
+				String reference = referenceMapping.getReference();
+				int idx = reference.lastIndexOf('_'); 
+				if (idx >= 0) {
+					// In the case of reference to entity in aggregate only we will take the last reference name
+					reference = reference.substring(idx + 1);
+				}
+				select.append(reference);
 				// where of join
 				select.append(" on ");
 				Iterator itDetails = referenceMapping.getDetails().iterator();
@@ -434,14 +440,14 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 						select.append(detail.getQualifiedColumn());
 					}
 					else {
-						select.append("T_");
+						select.append("T_");						
 						select.append(entityReferencesReferenceNames.get(referenceMapping));
 						select.append(".");
 						select.append(detail.getColumn());												
 					}
 					select.append(" = ");
 					select.append("T_");
-					select.append(referenceMapping.getReference());
+					select.append(reference);
 					select.append(".");
 					select.append(detail.getReferencedTableColumn());					
 					
@@ -492,17 +498,17 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 			entityReferencesReferenceNames = new HashMap(); 
 			for (Iterator itProperties = getPropertiesNames().iterator(); itProperties.hasNext();) {
 				String property = (String) itProperties.next();
-				fillEntityReferencesMappings(entityReferencesMappings, property, getMetaComponent().getMetaEntity(), "");
+				fillEntityReferencesMappings(entityReferencesMappings, property, getMetaComponent().getMetaEntity(), "", "");
 			}
 			for (Iterator itProperties = getHiddenPropertiesNames().iterator(); itProperties.hasNext();) {
 				String property = (String) itProperties.next();
-				fillEntityReferencesMappings(entityReferencesMappings, property, getMetaComponent().getMetaEntity(), "");
+				fillEntityReferencesMappings(entityReferencesMappings, property, getMetaComponent().getMetaEntity(), "", "");
 			}						
 		}
 		return entityReferencesMappings;
 	}
 	
-	private void fillEntityReferencesMappings(Collection result, String property, MetaModel metaModel, String parentReference) throws XavaException {		
+	private void fillEntityReferencesMappings(Collection result, String property, MetaModel metaModel, String parentReference, String aggregatePrefix) throws XavaException {		
 		int idx = property.indexOf('.');				
 		if (idx >= 0) {
 			String referenceName = property.substring(0, idx);					
@@ -511,7 +517,13 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 			boolean hasMoreLevels = memberName.indexOf('.') >= 0;
 			if (!ref.isAggregate()) {												
 				if (hasMoreLevels || !ref.getMetaModelReferenced().isKey(memberName)) {
-					ReferenceMapping rm = metaModel.getMapping().getReferenceMapping(referenceName);
+					ReferenceMapping rm = null;
+					if (Is.emptyString(aggregatePrefix )) {
+						rm = metaModel.getMapping().getReferenceMapping(referenceName);
+					}
+					else {
+						rm = metaModel.getMetaModelContainer().getMapping().getReferenceMapping(aggregatePrefix + referenceName);						
+					}
 					if (!result.contains(rm)) {
 						entityReferencesReferenceNames.put(rm, parentReference); 
 						result.add(rm);
@@ -520,7 +532,15 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 			}			
 			 
 			if (hasMoreLevels) {
-				fillEntityReferencesMappings(result, memberName, MetaComponent.get(ref.getReferencedModelName()).getMetaEntity(), referenceName);
+				MetaModel refModel = null;
+				if (ref.isAggregate()) {
+					refModel = metaModel.getMetaComponent().getMetaAggregate(ref.getReferencedModelName());
+					fillEntityReferencesMappings(result, memberName, refModel, referenceName, referenceName + "_");
+				}
+				else {
+					refModel = MetaComponent.get(ref.getReferencedModelName()).getMetaEntity();
+					fillEntityReferencesMappings(result, memberName, refModel, referenceName, "");
+				}
 			}
 		}		
 	}
