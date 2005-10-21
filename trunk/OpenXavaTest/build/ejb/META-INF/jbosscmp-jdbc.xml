@@ -4,7 +4,7 @@
 <jbosscmp-jdbc>
    <defaults>
      <datasource>java:/@datasource@</datasource>
-     <datasource-mapping>Hypersonic SQL</datasource-mapping>
+     <datasource-mapping>mySQL</datasource-mapping>
      <preferred-relation-mapping>relation-table</preferred-relation-mapping>
    </defaults>
 

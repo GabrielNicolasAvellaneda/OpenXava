@@ -252,7 +252,7 @@
 	
 	<tab>
 		<row-style style="highlight" property="type" value="steady"/>
-		<properties>name, type, seller.name, address.city, seller.level.description</properties>	
+		<properties>name, type, seller.name, address.city, seller.level.description, address.state.name</properties>	
 	</tab>
 	
 	<tab name="Complete"/>

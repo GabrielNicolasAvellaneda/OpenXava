@@ -12,8 +12,7 @@ import java.util.*;
 public class DateUtilSQLConverter implements IConverter {
 
 	public Object toDB(Object o) throws ConversionException {
-		if (o == null) return null;
-		System.out.println("[DateUtilSQLConverter.toDB] o.getClass()=" + o.getClass()); //  tmp
+		if (o == null) return null;		
 		if (!(o instanceof java.util.Date)) {		
 			throw new ConversionException("conversion_db_utildate_expected");
 		}
