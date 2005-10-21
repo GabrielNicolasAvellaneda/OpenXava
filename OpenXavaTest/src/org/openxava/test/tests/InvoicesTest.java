@@ -97,7 +97,7 @@ public class InvoicesTest extends ModuleTestBase {
 		execute("List.customize");
 		execute("List.addColumns");
 		
-		assertCollectionRowCount("xavaPropertiesList", 27);
+		assertCollectionRowCount("xavaPropertiesList", 28);
 		assertValueInCollection("xavaPropertiesList",  0, 1, "vatPercentage");
 		assertValueInCollection("xavaPropertiesList",  1, 1, "comment");
 		assertValueInCollection("xavaPropertiesList",  2, 1, "considerable");
@@ -125,6 +125,7 @@ public class InvoicesTest extends ModuleTestBase {
 		assertValueInCollection("xavaPropertiesList", 24, 1, "customer.alternateSeller.level.id");
 		assertValueInCollection("xavaPropertiesList", 25, 1, "customer.alternateSeller.level.description");
 		assertValueInCollection("xavaPropertiesList", 26, 1, "customer.relationWithSeller");
+		assertValueInCollection("xavaPropertiesList", 27, 1, "customer.local"); 
 		
 		checkRow("selectedProperties", "yearDiscount"); 
 		checkRow("selectedProperties", "customer.address.city"); 
@@ -145,7 +146,7 @@ public class InvoicesTest extends ModuleTestBase {
 		
 		execute("List.addColumns");
 
-		assertCollectionRowCount("xavaPropertiesList", 25);
+		assertCollectionRowCount("xavaPropertiesList", 26);
 		assertValueInCollection("xavaPropertiesList",  0, 1, "vatPercentage");
 		assertValueInCollection("xavaPropertiesList",  1, 1, "comment");
 		assertValueInCollection("xavaPropertiesList",  2, 1, "considerable");
@@ -171,6 +172,7 @@ public class InvoicesTest extends ModuleTestBase {
 		assertValueInCollection("xavaPropertiesList", 22, 1, "customer.alternateSeller.level.id");
 		assertValueInCollection("xavaPropertiesList", 23, 1, "customer.alternateSeller.level.description");
 		assertValueInCollection("xavaPropertiesList", 24, 1, "customer.relationWithSeller");
+		assertValueInCollection("xavaPropertiesList", 25, 1, "customer.local"); 
 		
 		execute("AddColumns.cancel");
 		

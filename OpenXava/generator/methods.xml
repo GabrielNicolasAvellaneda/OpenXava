@@ -64,15 +64,31 @@ while (itMethods.hasNext()) {
 				String propertyNameFrom = set.getPropertyNameFrom();
 				if (propertyNameFrom .indexOf('.') &gt;= 0) {
 					MetaProperty p = metaModel.getMetaProperty(propertyNameFrom);
-					if (p.isKey() || p.getMetaModel() instanceof MetaAggregate) {
-						propertyNameFrom  = Strings.firstUpper(Strings.change(propertyNameFrom , ".", "_"));
-					}
-					else {
-						StringTokenizer st = new StringTokenizer(propertyNameFrom , ".");
-						String ref = st.nextToken();
-						String pro = st.nextToken();
-						propertyNameFrom  = Strings.firstUpper(ref) + "().get" + Strings.firstUpper(pro);
-					}
+					StringTokenizer st = new StringTokenizer(propertyNameFrom, ".");
+					boolean moreThan2Levels = st.countTokens() &gt; 2;
+					StringBuffer propertyNameFromInJava = new StringBuffer();
+					boolean isEmbededKey = ejb &amp;&amp; ((p.isKey() &amp;&amp; !moreThan2Levels) || (p.getMetaModel() instanceof MetaAggregate));
+					while (st.hasMoreTokens()) {
+						String token = st.nextToken();
+						if (propertyNameFromInJava.length() &gt; 0) {
+							if (isEmbededKey &amp;&amp; !st.hasMoreTokens()) {
+								propertyNameFromInJava.append("_");
+							}
+							else {
+								if (isEmbededKey) {
+									propertyNameFromInJava.append("Remote");
+								}	
+								propertyNameFromInJava.append("().get");						
+							}						
+						}
+						if (isEmbededKey &amp;&amp; !st.hasMoreTokens()) {
+							propertyNameFromInJava.append(token);
+						}
+						else {
+							propertyNameFromInJava.append(Strings.firstUpper(token));	
+						}
+					}			
+					propertyNameFrom = propertyNameFromInJava.toString();
 				}
 				else {
 					propertyNameFrom  = Strings.firstUpper(propertyNameFrom );

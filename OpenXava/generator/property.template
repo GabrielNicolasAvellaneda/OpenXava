@@ -109,8 +109,9 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 				MetaProperty p = metaModel.getMetaProperty(propertyNameFrom);				
 				if (propertyNameFrom.indexOf('.') >= 0) {
 					StringTokenizer st = new StringTokenizer(propertyNameFrom, ".");
+					boolean moreThan2Levels = st.countTokens() > 2;
 					StringBuffer propertyNameFromInJava = new StringBuffer();
-					boolean isEmbededKey = ejb && (p.isKey() || p.getMetaModel() instanceof MetaAggregate);
+					boolean isEmbededKey = ejb && ((p.isKey() && !moreThan2Levels) || (p.getMetaModel() instanceof MetaAggregate));
 					while (st.hasMoreTokens()) {
 						String token = st.nextToken();
 						if (propertyNameFromInJava.length() > 0) {
