@@ -1,22 +1,16 @@
 package org.openxava.web;
 
-import java.util.*;
-
 import javax.servlet.http.*;
 
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.web.meta.*;
 
-
-
 /**
  * @author Javier Paniza
  */
 
-public class WebEditors { 
-
-	private static Properties properties;
+public class WebEditors { 	
 
 	final private static String PREFIX = "editors/";
 	
@@ -28,7 +22,7 @@ public class WebEditors {
 		return MetaWebEditors.getMetaEditorFor(p).isFrame();		
 	}	
 
-	public static Object parse(HttpServletRequest request, MetaProperty p, String string, Messages errores) throws XavaException {
+	public static Object parse(HttpServletRequest request, MetaProperty p, String string, Messages errors) throws XavaException {
 		try {
 			MetaEditor ed = MetaWebEditors.getMetaEditorFor(p);			
 			if (ed.hasFormatter()) {								
@@ -44,13 +38,13 @@ public class WebEditors {
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			String idMensaje = p.isNumber()?"numeric":"no_expected_type";
-			errores.add(idMensaje, p.getName(), p.getMetaModel().getName());
+			String messageId = p.isNumber()?"numeric":"no_expected_type";
+			errors.add(messageId, p.getName(), p.getMetaModel().getName());
 			return null;
 		}
 	}
 	
-	public static String format(HttpServletRequest request, MetaProperty p, Object object, Messages errores) throws XavaException {
+	public static String format(HttpServletRequest request, MetaProperty p, Object object, Messages errors) throws XavaException {
 		try {
 			MetaEditor ed = MetaWebEditors.getMetaEditorFor(p);
 			if (ed.hasFormatter()) {				
@@ -66,7 +60,7 @@ public class WebEditors {
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();			
-			errores.add("no_convert_to_string", p.getName(), p.getMetaModel().getName());
+			errors.add("no_convert_to_string", p.getName(), p.getMetaModel().getName());
 			return "";
 		}
 	}
@@ -84,10 +78,7 @@ public class WebEditors {
 	}
 		
 	/** 
-	 * Si a depende de b;
-	 * @param a
-	 * @param b
-	 * @return
+	 * If a depends on b
 	 */
 	public static boolean depends(MetaProperty a, MetaProperty b) {
 		try {			
@@ -99,7 +90,7 @@ public class WebEditors {
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			System.err.println("¡ADVERTENCIA! Imposible determinar si " + a + " depende de " + b +". Asumimos falso");
+			System.err.println(XavaResources.getString("a_depends_b_warning", a, b));
 			return false;
 		}
 	}

@@ -57,6 +57,7 @@ public class XavaPortlet extends GenericPortlet {
 	/**
 	 * Executes the OpenXava module as defined by the init parameters PARAM_APPLICATION
 	 * and PARAM_MODULE.
+	 * 
 	 * @throws PortletException
 	 * @throws IOException
 	 */

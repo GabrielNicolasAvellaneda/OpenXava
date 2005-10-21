@@ -7,10 +7,8 @@ import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
 
-
-
 /**
- * Editor asociado a un tipo.
+ * Editor associated to a type.
  * 
  * @author Javier Paniza
  */
@@ -37,14 +35,13 @@ public class MetaEditor {
 		return url + getPropertiesURL();
 	}
 
-
 	public void setUrl(java.lang.String string) {
 		url = string;
 	}
 
-	public void addProperty(String nombre, String valor) {
+	public void addProperty(String name, String value) {
 		if (properties == null) properties = new HashMap();
-		properties.put(nombre, valor);
+		properties.put(name, value);
 		propertiesURL = null;		
 	}
 	
@@ -67,18 +64,18 @@ public class MetaEditor {
 		return propertiesURL; 
 	}
 	
-	public void setDependsStereotypes(String estereotipos) {
-		if (estereotipos == null) return;
-		StringTokenizer st = new StringTokenizer(estereotipos, ",");
+	public void setDependsStereotypes(String stereotypes) {
+		if (stereotypes == null) return;
+		StringTokenizer st = new StringTokenizer(stereotypes, ",");
 		stereotypesIDepend = new ArrayList();
 		while (st.hasMoreTokens()) {
 			stereotypesIDepend.add(st.nextToken().trim());			
 		}
 	}
 	
-	public void setDependsProperties(String propiedades) {				
-		if (propiedades == null) return;
-		StringTokenizer st = new StringTokenizer(propiedades, ",");
+	public void setDependsProperties(String properties) {				
+		if (properties == null) return;
+		StringTokenizer st = new StringTokenizer(properties, ",");
 		propertiesIDepend = new ArrayList();
 		while (st.hasMoreTokens()) {
 			propertiesIDepend.add(st.nextToken().trim());			
@@ -106,9 +103,8 @@ public class MetaEditor {
 	}
 	
 	/**
-	 * 
-	 * @return Nunca nulo
-	 * @throws XavaException Por ej, si claseFormat es cadena vacía
+	 * @return Not null
+	 * @throws XavaException For example, if fomartterClassName is empty string
 	 */
 	public IFormatter getFormatter() throws XavaException {
 		if (formatter == null) {
