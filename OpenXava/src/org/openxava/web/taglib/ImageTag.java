@@ -59,8 +59,7 @@ public class ImageTag extends TagSupport implements IActionTag {
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			throw new JspException(
-				"Error: Tag imagen no se puede ejecutar");					
+			throw new JspException(XavaResources.getString("image_tag_error"));				
 		}
 		return SKIP_BODY;
 	}

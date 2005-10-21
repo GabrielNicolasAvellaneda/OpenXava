@@ -30,7 +30,7 @@ public class JasperReportServlet extends HttpServlet {
 					System.getProperty("path.separator") + 
 					application.getRealPath("/WEB-INF/classes/")
 					);											
-			JasperCompileManager.compileReportToStream(getCorrienteListado(request, model, language, tab, properties), response.getOutputStream());
+			JasperCompileManager.compileReportToStream(getReportStream(request, model, language, tab, properties), response.getOutputStream());
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
@@ -38,16 +38,16 @@ public class JasperReportServlet extends HttpServlet {
 		}		
 	}
 	
-	private InputStream getCorrienteListado(HttpServletRequest request, String modelo, String lenguaje, String tab, String properties) throws IOException {
+	private InputStream getReportStream(HttpServletRequest request, String model, String language, String tab, String properties) throws IOException {
 		StringBuffer surl = new StringBuffer("http://");
 		surl.append(request.getServerName());
 		surl.append(':');
 		surl.append(request.getServerPort());		
 		surl.append(request.getRequestURI());		
 		surl.append(".jsp?model=");
-		surl.append(modelo);
+		surl.append(model);
 		surl.append("&language=");
-		surl.append(lenguaje);
+		surl.append(language);
 		surl.append("&tab=");
 		surl.append(tab);
 		surl.append("&properties=");

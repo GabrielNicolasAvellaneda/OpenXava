@@ -6,9 +6,8 @@ import javax.servlet.jsp.tagext.*;
 
 import org.openxava.controller.*;
 import org.openxava.controller.meta.*;
-import org.openxava.web.*;
+import org.openxava.util.*;
 import org.openxava.web.style.*;
-
 
 /**
  * @author Javier Paniza
@@ -53,8 +52,7 @@ public class ButtonTag extends TagSupport {
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			throw new JspException(
-				"Error: Tag boton no se puede ejecutar");					
+			throw new JspException(XavaResources.getString("button_tag_error"));				
 		}
 		return SKIP_BODY;
 	}

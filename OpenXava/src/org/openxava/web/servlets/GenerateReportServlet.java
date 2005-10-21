@@ -75,20 +75,20 @@ public class GenerateReportServlet extends HttpServlet {
 			return original.getColumnClass(c);
 		}
 
-		public boolean isCellEditable(int fila, int columna) {			
-			return original.isCellEditable(fila, columna);
+		public boolean isCellEditable(int row, int column) {			
+			return original.isCellEditable(row, column);
 		}
 
-		public Object getValueAt(int fila, int columna) {
-			Object r = original.getValueAt(fila, columna);						
+		public Object getValueAt(int row, int column) {
+			Object r = original.getValueAt(row, column);						
 			if (r instanceof Boolean) {
 				if (((Boolean) r).booleanValue()) return XavaResources.getString(locale, "yes");
 				return XavaResources.getString(locale, "no");
 			}
 			if (withValidValues) {
-				MetaProperty p = getMetaProperty(columna);
+				MetaProperty p = getMetaProperty(column);
 				if (p.hasValidValues()) {					
-					return p.getValidValueLabel(locale, original.getValueAt(fila, columna));
+					return p.getValidValueLabel(locale, original.getValueAt(row, column));
 				}
 			}
 			
@@ -106,8 +106,8 @@ public class GenerateReportServlet extends HttpServlet {
 			return r;
 		}
 
-		public void setValueAt(Object valor, int fila, int columna) {
-			original.setValueAt(valor, fila, columna);			
+		public void setValueAt(Object value, int row, int column) {
+			original.setValueAt(value, row, column);			
 		}
 
 		public void addTableModelListener(TableModelListener l) {

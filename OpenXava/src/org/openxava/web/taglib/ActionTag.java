@@ -20,8 +20,8 @@ public class ActionTag extends TagSupport {
 
 	public int doStartTag() throws JspException {
 		try {
-			MetaAction metaAccion = MetaControllers.getMetaAction(getAction());
-			actionTag = metaAccion.hasImage()?(IActionTag)new ImageTag():(IActionTag)new LinkTag();
+			MetaAction metaAction = MetaControllers.getMetaAction(getAction());
+			actionTag = metaAction.hasImage()?(IActionTag)new ImageTag():(IActionTag)new LinkTag();
 			actionTag.setPageContext(pageContext);
 			actionTag.setAction(action);
 			actionTag.setArgv(argv);
