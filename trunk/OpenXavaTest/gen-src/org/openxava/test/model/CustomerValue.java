@@ -14,6 +14,8 @@ public class CustomerValue
 
    private static final long serialVersionUID = 1L;
 
+   private boolean local;
+   private boolean localHasBeenSet = false;
    private int type;
    private boolean typeHasBeenSet = false;
    private java.lang.String remarks;
@@ -42,6 +44,8 @@ public class CustomerValue
    //TODO Cloneable is better than this !
    public CustomerValue( CustomerValue otherValue )
    {
+	  this.local = otherValue.local;
+	  localHasBeenSet = true;
 	  this.type = otherValue.type;
 	  typeHasBeenSet = true;
 	  this.remarks = otherValue.remarks;
@@ -64,6 +68,20 @@ public class CustomerValue
 	  address_state_idHasBeenSet = true;
    }
 
+   public boolean isLocal()
+   {
+	  return this.local;
+   }
+
+   public void setLocal( boolean local )
+   {
+	  this.local = local;
+	  localHasBeenSet = true;
+   }
+
+   public boolean localHasBeenSet(){
+	  return localHasBeenSet;
+   }
    public int getType()
    {
 	  return this.type;
@@ -209,7 +227,7 @@ public class CustomerValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("type=" + getType() + " " + "remarks=" + getRemarks() + " " + "relationWithSeller=" + getRelationWithSeller() + " " + "photo=" + getPhoto() + " " + "name=" + getName() + " " + "number=" + getNumber() + " " + "seller_number=" + getSeller_number() + " " + "alternateSeller_number=" + getAlternateSeller_number() + " " + "address=" + getAddress() + " " + "address_state_id=" + getAddress_state_id());
+	  str.append("local=" + isLocal() + " " + "type=" + getType() + " " + "remarks=" + getRemarks() + " " + "relationWithSeller=" + getRelationWithSeller() + " " + "photo=" + getPhoto() + " " + "name=" + getName() + " " + "number=" + getNumber() + " " + "seller_number=" + getSeller_number() + " " + "alternateSeller_number=" + getAlternateSeller_number() + " " + "address=" + getAddress() + " " + "address_state_id=" + getAddress_state_id());
 	  str.append('}');
 
 	  return(str.toString());
@@ -255,6 +273,7 @@ public class CustomerValue
 	  {
 		 CustomerValue that = (CustomerValue) other;
 		 boolean lEquals = true;
+		 lEquals = lEquals && this.local == that.local;
 		 lEquals = lEquals && this.type == that.type;
 		 if( this.remarks == null )
 		 {
@@ -310,6 +329,8 @@ public class CustomerValue
 
    public int hashCode(){
 	  int result = 17;
+      result = 37*result + (local ? 0 : 1);
+
       result = 37*result + (int) type;
 
       result = 37*result + ((this.remarks != null) ? this.remarks.hashCode() : 0);

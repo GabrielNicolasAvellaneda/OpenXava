@@ -10,6 +10,9 @@ public interface CustomerRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.ICustomer
 {
 
+   public boolean isLocal(  )
+      throws java.rmi.RemoteException;
+
    public int getType(  )
       throws java.rmi.RemoteException;
 
@@ -104,6 +107,9 @@ public interface CustomerRemote
       throws java.rmi.RemoteException;
 
    public java.lang.String getAddress_state_id(  )
+      throws java.rmi.RemoteException;
+
+   public void calculateShippingAndHandling(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.CustomerData getData(  )

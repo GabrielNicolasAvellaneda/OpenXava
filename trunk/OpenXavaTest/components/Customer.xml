@@ -38,10 +38,24 @@
 				<set property="string" value="GOOD"/>
 			</default-value-calculator>
 		</property>
-			
+		
 		<collection name="deliveryPlaces">
 			<reference model="DeliveryPlace"/>
 		</collection>	
+		
+		<property name="local" type="boolean">
+			<calculator class="org.openxava.test.calculators.IsLocalCustomerCalculator">
+				<set property="stateId" from="address.state.id"/>
+				<set property="stateName" from="address.state.name"/>
+			</calculator>
+		</property>
+		
+		<method name="calculateShippingAndHandling">
+			<calculator class="org.openxava.test.calculators.ShippingAndHandlingCalculator">
+				<set property="stateId" from="address.state.id"/>
+				<set property="stateName" from="address.state.name"/>
+			</calculator>
+		</method>		
 
 		<finder name="byNumber" arguments="int number">
 			<condition>${number} = {0}</condition>

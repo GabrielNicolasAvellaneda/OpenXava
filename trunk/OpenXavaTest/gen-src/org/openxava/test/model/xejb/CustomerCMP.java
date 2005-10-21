@@ -107,6 +107,7 @@ public abstract class CustomerCMP
       CustomerValue = new org.openxava.test.model.CustomerValue();
       try
          {
+            CustomerValue.setLocal( isLocal() );
             CustomerValue.setType( getType() );
             CustomerValue.setRemarks( getRemarks() );
             CustomerValue.setRelationWithSeller( getRelationWithSeller() );
@@ -132,6 +133,7 @@ public abstract class CustomerCMP
 
 	  try
 	  {
+		 setLocal( valueHolder.isLocal() );
 		 setType( valueHolder.getType() );
 		 setRemarks( valueHolder.getRemarks() );
 		 setRelationWithSeller( valueHolder.getRelationWithSeller() );
