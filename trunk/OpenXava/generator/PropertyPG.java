@@ -13,7 +13,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Fri Oct 21 13:12:01 CEST 2005
+ * @version Mon Oct 24 11:47:53 CEST 2005
  */
 public class PropertyPG {
     Properties properties = new Properties();
@@ -117,6 +117,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     
     			MetaCalculator calculator = property.getMetaCalculator();
     			String calculatorClass = calculator.getClassName();
+    			String qualifiedPropertyName = Strings.change(property.getName(), "_", "."); // for aggregate member case
     			
     out.print(" \t\t\n\t\t\t");
     out.print(calculatorClass);
@@ -125,7 +126,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     out.print("Calculator= (");
     out.print(calculatorClass);
     out.print(")\n\t\t\t\tgetMetaModel().getMetaProperty(\"");
-    out.print(property.getName());
+    out.print(qualifiedPropertyName);
     out.print("\").getMetaCalculator().getCalculator();");
     	
     			Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
@@ -163,6 +164,11 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     				}
     				else {
     					propertyNameFrom = Strings.firstUpper(propertyNameFrom);
+    				}
+    				int idx = propertyName.indexOf('_');
+    				if (idx >= 0) {
+    					String aggregateName = propertyName.substring(0, idx + 1);
+    					propertyNameFrom = aggregateName + Strings.firstLower(propertyNameFrom);
     				}
     				String getPropertyFrom = "boolean".equals(p.getTypeName())?"is":"get";
     				String value = set.getValue();
@@ -612,7 +618,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Fri Oct 21 13:12:01 CEST 2005", // date this file was generated
+        { "Mon Oct 24 11:47:53 CEST 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/property.xml", // input file
              "/home/javi/workspace/OpenXava/generator/PropertyPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
