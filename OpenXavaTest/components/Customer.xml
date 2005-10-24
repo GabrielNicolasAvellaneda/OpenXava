@@ -94,6 +94,14 @@
 		<property name="zipCode" type="int" size="5" required="true"/>  
 		<property name="city" type="String" size="20"	required="true"/>  
 		<reference name="state" required="true"/>
+		<property name="asString" type="String">
+			<calculator class="org.openxava.calculators.ConcatCalculator">
+				<set property="string1" from="street"/>
+				<set property="int2" from="zipCode"/>
+				<set property="string3" from="city"/>
+				<set property="string4" from="state.name"/>
+			</calculator>
+		</property>
 	</aggregate>	
 	
 	<aggregate name="DeliveryPlace">		

@@ -98,9 +98,10 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 			<java>
 			MetaCalculator calculator = property.getMetaCalculator();
 			String calculatorClass = calculator.getClassName();
+			String qualifiedPropertyName = Strings.change(property.getName(), "_", "."); // for aggregate member case
 			</java> 		
 			<expr>calculatorClass</expr> <expr>property.getName()</expr>Calculator= (<expr>calculatorClass</expr>)
-				getMetaModel().getMetaProperty("<expr>property.getName()</expr>").getMetaCalculator().getCalculator();
+				getMetaModel().getMetaProperty("<expr>qualifiedPropertyName</expr>").getMetaCalculator().getCalculator();
 			<java>	
 			Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
 			while (itSets.hasNext()) {
@@ -137,6 +138,11 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 				}
 				else {
 					propertyNameFrom = Strings.firstUpper(propertyNameFrom);
+				}
+				int idx = propertyName.indexOf('_');
+				if (idx &gt;= 0) {
+					String aggregateName = propertyName.substring(0, idx + 1);
+					propertyNameFrom = aggregateName + Strings.firstLower(propertyNameFrom);
 				}
 				String getPropertyFrom = "boolean".equals(p.getTypeName())?"is":"get";
 				String value = set.getValue();
