@@ -56,10 +56,7 @@ for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
     <java>for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { </java>
 		&lt;supported-locale&gt;<expr>itLocales.next()</expr>&lt;/supported-locale&gt;
     <java>} </java> 
-		&lt;portlet-info&gt;
-			&lt;title&gt;<expr>module.getDescription()</expr>&lt;/title&gt;
-			&lt;short-title&gt;<expr>module.getLabel()</expr>&lt;/short-title&gt;
-		&lt;/portlet-info&gt;
+    	&lt;resource-bundle&gt;portlets/<expr>module.getName()</expr>&lt;/resource-bundle&gt;
 	&lt;/portlet&gt;
 <java>
 }

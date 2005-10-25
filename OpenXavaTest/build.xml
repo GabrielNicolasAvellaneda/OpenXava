@@ -58,8 +58,11 @@
 		<ant antfile="../OpenXava/build.xml" target="createWebsphereEar"/>
 	</target>
 
-	<target name="redeployPortlets"> 
+	<target name="regeneratePortletGenerator"> 
 		<ant antfile="../OpenXava/build.xml" target="regeneratePortletGenerator"/>
+	</target>
+	
+	<target name="redeployPortlets"> 
 		<touch file="../${project}/xava/application.xml"/>
 		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
 	</target>
