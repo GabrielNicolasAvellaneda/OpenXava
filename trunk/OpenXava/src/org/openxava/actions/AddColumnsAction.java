@@ -10,10 +10,9 @@ import org.openxava.tab.*;
  * @author Javier Paniza
  */
 public class AddColumnsAction extends BaseAction implements IRequestAction, INavigationAction, IChangeModeAction {
-
+	
 	private HttpServletRequest request;
 	private Tab tab;
-
 
 	public void execute() throws Exception {
 		String [] values = request.getParameterValues("selectedProperties");		

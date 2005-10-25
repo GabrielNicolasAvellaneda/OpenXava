@@ -25,7 +25,7 @@ Collection locales = Generators.getAvailableLocales("../" + applicationName + "/
 for (Iterator it=locales.iterator(); it.hasNext();) {
 	Locale locale = (Locale) it.next();
 </java> 
-	&lt;metadata name="title" xml:lang="<expr>locale</expr>"&gt;<expr>module.getLabel()</expr>&lt;/metadata&gt;
+	&lt;metadata name="title" xml:lang="<expr>locale</expr>"&gt;<expr>module.getLabel(locale)</expr>&lt;/metadata&gt;
 <java>
 }
 </java> 
