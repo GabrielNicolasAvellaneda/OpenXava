@@ -697,6 +697,16 @@ public class ModuleTestBase extends TestCase {
 		}
 	}
 	
+	/**
+	 * The first message
+	 */
+	protected String getMessage() throws Exception {
+		WebTable table = response.getTableWithID("messages");
+		if (table == null || table.getRowCount() == 0) {			
+			return "";
+		}
+		return table.getCellAsText(0, 0).trim();
+	}	
 	
 	protected void assertMessage(String message) throws Exception {		
 		WebTable table = response.getTableWithID("messages");

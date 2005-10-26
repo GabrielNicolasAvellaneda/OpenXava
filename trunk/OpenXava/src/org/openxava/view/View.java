@@ -81,8 +81,9 @@ public class View implements java.io.Serializable {
 	private View [] sectionsViews;
 	private int activeSection;
 	private String memberName;
-	private boolean collectionMembersEditables;
+	private boolean collectionMembersEditables; 
 	private boolean collectionEditable;
+	private boolean collectionEditableFixed;
 	private Collection actionsNamesDetail;
 	private Collection actionsNamesList;
 	private int [] listSelected;
@@ -514,6 +515,7 @@ public class View implements java.io.Serializable {
 			MetaView metaView = ((MetaGroup) member).getMetaView();
 			newView.setMetaView(metaView);
 			newView.setGroup(true);
+			newView.setEditable(isEditable()); 
 			getGroupsViews().put(member.getName(), newView);						
 			return;			
 		}		
@@ -529,7 +531,7 @@ public class View implements java.io.Serializable {
 			newView.setEditable(false);	
 		}
 		newView.setMetaView(getMetaView().getMetaView(ref));
-		if (newView.isRepresentsCollection()) {
+		if (newView.isRepresentsCollection()) {			
 			MetaCollectionView metaCollectionView = getMetaView().getMetaCollectionView(member.getName());
 			if (metaCollectionView != null) {
 				Collection propertiesListNames = metaCollectionView.getPropertiesListNames();
@@ -549,13 +551,16 @@ public class View implements java.io.Serializable {
 				newView.setKeyEditable(!metaCollectionView.isReadOnly());
 				newView.setEditable(!metaCollectionView.isReadOnly());				
 				newView.setCollectionEditable(!metaCollectionView.isReadOnly() && !metaCollectionView.isEditOnly());
-				newView.setCollectionMembersEditables(metaCollectionView.isEditOnly());
-				
+				if (!newView.isCollectionEditable()) {
+					newView.setCollectionEditableFixed(true);
+				}
+				newView.setCollectionMembersEditables(newView.isEditable() || metaCollectionView.isEditOnly()); 				 				
 				newView.setViewName(metaCollectionView.getViewName()); 								
 			}
 			else {
-				newView.setEditable(true);
-				newView.setCollectionEditable(true);
+				newView.setKeyEditable(isEditable()); 
+				newView.setEditable(isEditable()); 
+				newView.setCollectionEditable(isEditable()); 				
 				newView.setCollectionMembersEditables(true);
 			}
 		}
@@ -1250,32 +1255,48 @@ public class View implements java.io.Serializable {
 
 	public void setEditable(boolean b) throws XavaException {		
 		editable = b;
-		
 		if (hasSubviews()) { 
 			Iterator it = getSubviews().values().iterator();
+			
 			while (it.hasNext()) {				
 				View subview = (View) it.next();
-				if (subview.isRepresentsCollection()) continue; 
+				if (subview.isRepresentsCollection()) {
+					subview.setCollectionEditable(b);
+					if (!subview.isCollectionMembersEditables()) {
+						subview.setKeyEditable(false); 
+						subview.setEditable(false); 
+						continue;
+					}					
+				}
 				if (subview.isRepresentsEntityReference()) {
-					subview.setKeyEditable(b);
+					subview.setKeyEditable(b); 
+					subview.setEditable(false); 					
 				}
 				else {
 					subview.setEditable(b);
 				}						
 			}
 		}
-		
+				
 		if (hasGroups()) { 
 			Iterator it = getGroupsViews().values().iterator();
 			while (it.hasNext()) {				
-				View subvista = (View) it.next();
-				if (subvista.isRepresentsCollection()) continue; 
-				if (subvista.isRepresentsEntityReference()) {
-					subvista.setKeyEditable(b);
+				View subview = (View) it.next();
+				if (subview.isRepresentsCollection()) {
+					subview.setCollectionEditable(b);
+					if (!subview.isCollectionMembersEditables()) {
+						subview.setKeyEditable(false); 
+						subview.setEditable(false); 
+						continue;
+					}					
+				}
+				if (subview.isRepresentsEntityReference()) {
+					subview.setKeyEditable(b); 
+					subview.setEditable(false); 					
 				}
 				else {
-					subvista.setEditable(b);
-				}						
+					subview.setEditable(b);
+				}			
 			}
 		}
 		
@@ -2330,6 +2351,7 @@ public class View implements java.io.Serializable {
 	}
 
 	public boolean isCollectionEditable() {
+		if (isCollectionEditableFixed()) return false;
 		return collectionEditable;
 	}
 
@@ -2576,6 +2598,14 @@ public class View implements java.io.Serializable {
 	public void setOnlyThrowsOnChange(boolean onlyThrowsOnChange) {
 		if (getParent() == null) this.onlyThrowsOnChange = onlyThrowsOnChange;
 		else getParent().setOnlyThrowsOnChange(onlyThrowsOnChange);
+	}
+
+	private boolean isCollectionEditableFixed() {
+		return collectionEditableFixed;
+	}
+
+	private void setCollectionEditableFixed(boolean collectionEditableFixed) {
+		this.collectionEditableFixed = collectionEditableFixed;
 	}
 	
 }

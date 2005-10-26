@@ -21,6 +21,14 @@ public class SellersTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Sellers");		
 	}
 	
+	public void testCollectionOfEntityReferencesElementsNotEditables() throws Exception {
+		execute("Mode.detailAndFirst");
+		execute("Collection.edit", "row=0,viewObject=xava_view_customers");
+		assertEditable("customers.number");
+		assertNoEditable("customers.name");
+		assertNoAction("Collection.new"); // of deliveryPlaces
+	}
+	
 	public void testCustomizeListSupportsRecursiveReferences() throws Exception {
 		execute("List.customize");
 		execute("List.addColumns");
@@ -72,9 +80,9 @@ public class SellersTest extends ModuleTestBase {
 		setValue("customers.number", getCustomerNumber1());
 		// Comparing name with ignore case because a formatter in customer name
 		assertValueIgnoringCase("customers.name", getCustomerValue1().getName()); 
-		assertCollectionRowCount("customers",0);
+		assertCollectionRowCount("customers", 0);
 		execute("Collection.save", "viewObject=xava_view_customers");
-		assertCollectionRowCount("customers",1);
+		assertCollectionRowCount("customers", 1);
 		
 		execute("Collection.new", "viewObject=xava_view_customers");
 		assertEditable("customers.number");

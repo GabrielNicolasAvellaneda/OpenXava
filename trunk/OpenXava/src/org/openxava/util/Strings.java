@@ -453,5 +453,12 @@ public class Strings {
 		}		
 		return sb.toString();
 	} 
+	
+	public static String lastToken(String string) {
+		StringTokenizer st = new StringTokenizer(string);
+		String r = null;
+		while (st.hasMoreTokens()) r = st.nextToken();
+		return r;
+	}
     
 }
