@@ -16,10 +16,10 @@ public class EditElementInCollectionAction extends CollectionElementViewBaseActi
 
 	public void execute() throws Exception {
 		getCollectionElementView().setCollectionDetailVisible(true);		
-		Collection aggregates = getCollectionElementView().getCollectionValues(); 
-		if (aggregates == null) return;
-		if (aggregates instanceof List) {
-			Map values = (Map) ((List) aggregates).get(getRow());			
+		Collection elements = getCollectionElementView().getCollectionValues(); 
+		if (elements == null) return;
+		if (elements instanceof List) {
+			Map values = (Map) ((List) elements).get(getRow());			
 			if (!values.keySet().equals(getCollectionElementView().getValues().keySet())) {
 				values = MapFacade.getValues(getCollectionElementView().getModelName(), values, getCollectionElementView().getMembersNames());
 			}								

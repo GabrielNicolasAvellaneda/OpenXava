@@ -170,7 +170,7 @@
 			deliveryPlaces; 
 			remarks
 		</members>
-	
+		
 	</view>
 		
 	<view name="WithSection">		
@@ -207,7 +207,10 @@
 						
 	</view>
 		
+		
 	<view name="Simple" members="number; type; name; address"/>
+	
+	<view name="SimpleWithDeliveryPlaces" members="number; type; name; address; deliveryPlaces"/>
 	
 	<view name="SimpleStateAsForm" members="number; type; name; address">
 		<reference-view reference="address" view="StateAsForm"/>
