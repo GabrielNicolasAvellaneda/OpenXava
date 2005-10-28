@@ -931,9 +931,6 @@ public class InvoicesTest extends ModuleTestBase {
 		setValue("year", String.valueOf(getInvoiceKey().getYear()));
 		setValue("number", String.valueOf(getInvoiceKey().getNumber()));
 		
-		System.out.println("[InvoicesTest.testViewCollectionElementWithKeyWithReference] year="+String.valueOf(getInvoiceKey().getYear())); //  tmp
-		System.out.println("[InvoicesTest.testViewCollectionElementWithKeyWithReference] number="+String.valueOf(getInvoiceKey().getNumber())); //  tmp
-		
 		execute("CRUD.search");
 		assertNoErrors();
 		
