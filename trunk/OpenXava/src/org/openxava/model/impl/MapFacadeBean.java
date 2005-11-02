@@ -344,7 +344,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		try {
 			persistenceProvider.begin();
 			MetaModel metaModel = getMetaModel(modelName);					
-			Messages result = validate(persistenceProvider, modelName, values);
+			Messages result = validate(persistenceProvider, modelName, values, false);
 			persistenceProvider.commit();
 			return result;
 		}	
@@ -410,10 +410,10 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}						
 	}
 	
-	private Messages validate(IPersistenceProvider persistenceProvider, String modelName, Map values) throws XavaException { 			
+	private Messages validate(IPersistenceProvider persistenceProvider, String modelName, Map values, boolean creating) throws XavaException { 			
 		MetaEntityEjb metaEntity = (MetaEntityEjb) MetaComponent.get(modelName).getMetaEntity();		
 		Messages validationErrors = new Messages(); 				
-		validate(persistenceProvider, validationErrors, metaEntity, values, null, null);
+		validate(persistenceProvider, validationErrors, metaEntity, values, null, null, creating);
 		return validationErrors;
 	}
 	
@@ -568,7 +568,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			removeCalculatedFields(metaModel, values); 			
 			Messages validationErrors = new Messages(); 
 			validateExistRequired(validationErrors, metaModel, values);						
-			validate(persistenceProvider, validationErrors, metaModel, values, null, containerKey);
+			validate(persistenceProvider, validationErrors, metaModel, values, null, containerKey, true);
 			removeViewProperties(metaModel, values); 
 			if (validationErrors.contains()) {
 				throw new ValidationException(validationErrors);			
@@ -1105,7 +1105,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			removeKeyFields(metaModel, values);			
 			removeReadOnlyFields(metaModel, values);
 			removeViewProperties(metaModel, values);			
-			validate(persistenceProvider, metaModel, values, keyValues, null);			
+			validate(persistenceProvider, metaModel, values, keyValues, null, false);			
 			Object entity = findEntity(persistenceProvider, (IMetaEjb) metaModel, keyValues);			
 			IPropertiesContainer r = persistenceProvider.toPropertiesContainer(metaModel, entity);			
 			r.executeSets(convertSubmapsInObject(persistenceProvider, metaModel, values, XavaPreferences.getInstance().isEJB2Persistence()));
@@ -1128,17 +1128,18 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		Messages errors,
 		MetaModel metaModel,
 		String memberName,
-		Object values) throws XavaException {			
+		Object values,
+		boolean creating) throws XavaException {			
 		try {			
 			if (metaModel.containsMetaProperty(memberName)) {
-				metaModel.getMetaProperty(memberName).validate(errors, values);
+				metaModel.getMetaProperty(memberName).validate(errors, values, creating); 
 			} else
 				if (metaModel.containsMetaReference(memberName)) {
 					MetaReference ref = metaModel.getMetaReference(memberName); 
 					MetaModel referencedModel = ref.getMetaModelReferenced();
 					Map mapValues = (Map) values;					
 					if (hasValue(mapValues)) {
-						if (ref.isAggregate()) validate(persistenceProvider, errors, referencedModel, mapValues, mapValues, null);
+						if (ref.isAggregate()) validate(persistenceProvider, errors, referencedModel, mapValues, mapValues, null, creating);
 					} else
 						if (metaModel
 							.getMetaReference(memberName)
@@ -1150,7 +1151,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 					// It never happens this way 
 					metaModel.getMetaCollection(memberName).validate(errors, values, null, null);
 				} else if (metaModel.containsMetaPropertyView(memberName)) { 										
-					metaModel.getMetaPropertyView(memberName).validate(errors, values);									
+					metaModel.getMetaPropertyView(memberName).validate(errors, values, creating);									
 				} else {					
 					System.err.println(XavaResources.getString("not_validate_member_warning", memberName, metaModel.getName()));
 				}
@@ -1176,27 +1177,28 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		return false;
 	}
 	
-	private void validate(IPersistenceProvider persistenceProvider, Messages errors, MetaModel metaModel, Map values, Map keyValues, Object containerKey)	  
+	private void validate(IPersistenceProvider persistenceProvider, Messages errors, MetaModel metaModel, Map values, Map keyValues, Object containerKey, boolean creating)	  
 		throws XavaException {		
 		Iterator it = values.entrySet().iterator();		
 		while (it.hasNext()) {
 			Map.Entry en = (Map.Entry) it.next();
 			String name = (String) en.getKey();
 			Object value = en.getValue();
-			validate(persistenceProvider, errors, metaModel, name, value);
+			validate(persistenceProvider, errors, metaModel, name, value, creating);
 		}
 		if (metaModel.containsValidadors()) {
-			validateWintModelValidator(persistenceProvider, errors, metaModel, values, keyValues, containerKey);			
+			validateWintModelValidator(persistenceProvider, errors, metaModel, values, keyValues, containerKey, creating);			
 		}
 	}
 	
-	private void validateWintModelValidator(IPersistenceProvider persistenceProvider, Messages errors, MetaModel metaModel, Map values, Map keyValues, Object containerKey) throws XavaException {				
+	private void validateWintModelValidator(IPersistenceProvider persistenceProvider, Messages errors, MetaModel metaModel, Map values, Map keyValues, Object containerKey, boolean creating) throws XavaException {				
 		try {
 			String containerReferenceName = Strings.firstLower(metaModel.getMetaModelContainer().getName());
 			Iterator itValidators = metaModel.getMetaValidators().iterator();
 			while (itValidators.hasNext()) {
 				MetaValidator metaValidator = (MetaValidator) itValidators.next();
 				Iterator itSets =  metaValidator.getMetaSetsWithoutValue().iterator();
+				if (!creating && metaValidator.isOnlyOnCreate()) continue; 
 				IValidator v = metaValidator.createValidator();
 				PropertiesManager mp = new PropertiesManager(v);		
 				while (itSets.hasNext()) {
@@ -1251,10 +1253,10 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	private void validate(IPersistenceProvider persistenceProvider, MetaModel metaModel, Map values, Map keyValues, Object containerKey)
+	private void validate(IPersistenceProvider persistenceProvider, MetaModel metaModel, Map values, Map keyValues, Object containerKey, boolean creating)
 		throws ValidationException, XavaException, RemoteException {
 		Messages errors = new Messages();		
-		validate(persistenceProvider, errors, metaModel, values, keyValues, containerKey);		
+		validate(persistenceProvider, errors, metaModel, values, keyValues, containerKey, creating);		
 		if (errors.contains()) {
 			throw new ValidationException(errors);
 		}

@@ -149,5 +149,6 @@ public class XmlElementsNames {
 	protected final static String [] xconfirm = { "confirm", "confirmar" };
 	protected final static String [] xcreate_reference = { "create-reference", "crear-referencia" };
 	protected final static String [] xview_action = { "view-action", "accion-ver" };
+	protected final static String [] xonly_on_create = { "only-on-create", "solo-al-crear" };
 	
 }

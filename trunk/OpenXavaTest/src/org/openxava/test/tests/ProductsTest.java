@@ -288,6 +288,32 @@ public class ProductsTest extends ModuleTestBase {
 		execute("CRUD.save");
 		assertError("The products CHEAP can not be of price greater than 100");				
 	}
+	
+	public void testEntityValidatorOnlyOnCreate() throws Exception {		
+		assertActions(listActions);		
+		execute("CRUD.new");
+		assertActions(detailActions);
+		
+		setValue("number", "66");
+		setValue("description", "CUATRE CON PRECIO PROHIBIDO"); // CUATRE is forbidden
+		setValue("familyNumber", "1");
+		setValue("subfamilyNumber", "1");
+		setValue("warehouseKey", "[.1.1.]");
+		setValue("unitPrice", "555"); // 555 is a forbidden price but only on create
+		execute("CRUD.save");
+		assertError("Product can not contains CUATRE in Description");
+		assertError("555 is a forbidden price");
+				
+		execute("CRUD.new");
+		setValue("number", "4");
+		execute("CRUD.search");
+		assertValue("number", "4");
+		assertValue("description", "CUATRE");
+		setValue("unitPrice", "555"); // 555 is a forbidden price but only on create
+		execute("CRUD.save");
+		assertNoErrors(); // because the previous validations are only on create		
+	}
+	
 
 	public void testCalculatedInListMode() throws Exception {		
 		assertActions(listActions);

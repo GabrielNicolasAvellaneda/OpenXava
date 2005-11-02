@@ -185,6 +185,7 @@
 <!ATTLIST validador
  clase CDATA #IMPLIED
  nombre CDATA #IMPLIED
+ solo-al-crear (true|false) "false" 
 >
 
 <!ELEMENT validador-borrar (poner*)>

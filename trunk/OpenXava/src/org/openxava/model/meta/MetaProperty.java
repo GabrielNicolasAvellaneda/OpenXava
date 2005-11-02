@@ -24,6 +24,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	private Collection metaValidators;
 	private DateFormat dateFormat;
 	private Collection validators;
+	private Collection onlyOnCreateValidators; // tmp
 	private Class type;
 	private int size;
 	private boolean required;
@@ -363,7 +364,13 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				Iterator it = metaValidators.iterator();
 				while (it.hasNext()) {
 					MetaValidator metaValidator = (MetaValidator) it.next();
-					validators.add(metaValidator.createPropertyValidator());
+					if (metaValidator.isOnlyOnCreate()) {						
+						if (onlyOnCreateValidators == null) onlyOnCreateValidators = new ArrayList();
+						onlyOnCreateValidators.add(metaValidator.createPropertyValidator());
+					}
+					else {
+						validators.add(metaValidator.createPropertyValidator());
+					}
 				}
 			}
 			if (isRequired()) {
@@ -373,6 +380,11 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		return validators;
 	}
 	
+	private Collection getOnlyOnCreateValidators() throws XavaException {
+		return onlyOnCreateValidators;
+	}
+	
+		
 	private List getValidValues() {
 		if (validValues == null) {
 			validValues = new ArrayList();
@@ -437,22 +449,39 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		if (validValues == null) return false;
 		return validValues.size() > 0;
 	}
-		
-	public void validate(Messages errors,	Object object) throws RemoteException {
+			
+	public void validate(Messages errors, Object object) throws RemoteException {		
 		try {
-			Iterator it = getValidators().iterator();
-			while (it.hasNext()) {
-				IPropertyValidator v = (IPropertyValidator) it.next();								
-				v.validate(errors, object, getName(), getMetaModel().getName());
-			}
-		} catch (Exception ex) {
+			validate(errors, object, getValidators());
+		} 
+		catch (Exception ex) {
 			ex.printStackTrace();
 			throw new RemoteException(
-					XavaResources.getString("validate_error", getName(), getMetaModel().getName()));
-					
+					XavaResources.getString("validate_error", getName(), getMetaModel().getName()));					
 		}
 	}
 	
+	public void validate(Messages errors, Object object, boolean creating) throws RemoteException {
+		try {
+			validate(errors, object, getValidators());
+			if (creating) validate(errors, object, getOnlyOnCreateValidators());
+		} 
+		catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RemoteException(
+					XavaResources.getString("validate_error", getName(), getMetaModel().getName()));					
+		}
+	}
+			
+	private void validate(Messages errors, Object object, Collection validators) throws Exception {
+		if (validators == null) return;
+		Iterator it = validators.iterator();			
+		while (it.hasNext()) {
+			IPropertyValidator v = (IPropertyValidator) it.next();								
+			v.validate(errors, object, getName(), getMetaModel().getName());
+		}
+	}
+		
 	public Iterator validValues() {
 		return getValidValues().iterator();	
 	}
