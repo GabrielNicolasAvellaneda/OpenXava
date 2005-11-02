@@ -20,10 +20,10 @@ public class InvoiceDetailValidator implements IValidator {
 	public void validate(Messages errors) throws Exception {		
 		if (invoice.isPaid()) {
 			errors.add("not_invoice_detail_paid");
-			return; // If possible continue and acumulate more errors
+			return; // It's possible continue and acumulate more errors
 		}		
 		if (product == null) {
-			errors.add("product_required"); // It si not necessary because product is required='true'
+			errors.add("product_required"); // It is not necessary because product is required='true'
 			return; 
 		}
 		if (getProduct().getUnitPrice().compareTo(getUnitPrice()) < 0) {
@@ -34,7 +34,6 @@ public class InvoiceDetailValidator implements IValidator {
 	public IProduct getProduct() {
 		return product;
 	}
-
 	public void setProduct(IProduct object) {
 		product = object;
 	}
@@ -42,7 +41,6 @@ public class InvoiceDetailValidator implements IValidator {
 	public BigDecimal getUnitPrice() {
 		return unitPrice;
 	}
-
 	public void setUnitPrice(BigDecimal decimal) {
 		unitPrice = decimal;
 	}
@@ -50,7 +48,6 @@ public class InvoiceDetailValidator implements IValidator {
 	public String getOid() {
 		return oid;
 	}
-
 	public void setOid(String string) {
 		oid = string;		
 	}
@@ -61,4 +58,5 @@ public class InvoiceDetailValidator implements IValidator {
 	public void setInvoice(IInvoice invoice) {
 		this.invoice = invoice;
 	}
+	
 }

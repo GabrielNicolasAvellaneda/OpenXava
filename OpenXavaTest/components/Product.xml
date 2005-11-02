@@ -21,6 +21,9 @@ therefore it's show some features more advances of stereotypes.
 			<validator class="org.openxava.test.validators.ExcludeStringValidator">
 				<set property="string" value="COCHE"/>
 			</validator>								
+			<validator class="org.openxava.test.validators.ExcludeStringValidator" only-on-create="true">
+				<set property="string" value="CUATRE"/>
+			</validator>											
 		</property>
 		<property name="familyNumber"
 			stereotype="FAMILY" required="true"/>
@@ -69,7 +72,11 @@ therefore it's show some features more advances of stereotypes.
 			<set property="description"/>
 			<set property="unitPrice"/>
 		</validator>						
-				
+		<validator class="org.openxava.test.validators.ForbiddenPriceValidator" only-on-create="true">
+			<set property="forbiddenPrice" value="555"/>
+			<set property="unitPrice"/>
+		</validator>						
+								
 	</entity> 
 	
 	<view>

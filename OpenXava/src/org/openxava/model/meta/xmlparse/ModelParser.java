@@ -7,6 +7,8 @@ import org.openxava.util.xmlparse.*;
 import org.openxava.validators.meta.*;
 import org.w3c.dom.*;
 
+import sun.security.action.*;
+
 /**
  * @author Javier Paniza
  */
@@ -252,7 +254,8 @@ public class ModelParser extends XmlElementsNames {
 		
 		MetaValidator e = new MetaValidator();
 		e.setName(name);
-		e.setClassName(className);		
+		e.setClassName(className);	
+		e.setOnlyOnCreate(ParserUtil.getAttributeBoolean(el, xonly_on_create[lang]));
 		fillSet(el, e, lang);
 		return e;
 	}

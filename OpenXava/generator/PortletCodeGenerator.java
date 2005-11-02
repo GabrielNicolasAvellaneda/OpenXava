@@ -8,7 +8,7 @@ import org.openxava.util.*;
 /**
  * @author Javier Paniza
  */
-public class Jetspeed2CodeGenerator {
+public class PortletCodeGenerator {
 	
 	private final static Locale [] locales = {
 		new Locale("ca"), new Locale("de"), new Locale("en"), 
@@ -19,9 +19,10 @@ public class Jetspeed2CodeGenerator {
 	};
 	
 	private final static Locale defaultLocale = new Locale("en");
-	
+		
 	private String project;
 	private String pagesDir;
+	private boolean generateJetspeed2Files;
 		
 	
 	public String getProject() {
@@ -39,7 +40,15 @@ public class Jetspeed2CodeGenerator {
 	public void setPagesDir(String pagesDir) {
 		this.pagesDir = pagesDir;
 	}
-		
+	
+	public boolean isGenerateJetspeed2Files() {
+		return generateJetspeed2Files;
+	}
+
+	public void setGenerateJetspeed2Files(boolean generateJetspeed2Files) {
+		this.generateJetspeed2Files = generateJetspeed2Files;
+	}
+			
 	private void run() throws Exception {		 
 		try {
 			// portlet.xml
@@ -50,39 +59,44 @@ public class Jetspeed2CodeGenerator {
 			};
 			PortletXmlPG.main(argvPortlet);
 			
-			// folder.metadata
-			String [] argvFolder = {				
-				"../" + project + "/web/WEB-INF/web.xml",				
-				pagesDir + "/" + project + "/folder.metadata",
-				project
-			};			
-			Jetspeed2FolderPG.main(argvFolder);
+			if (isGenerateJetspeed2Files()) {
 			
-			// ds
-			String [] argvDs = {				
-				"../" + project + "/web/WEB-INF/web.xml",				
-				pagesDir + "/" + project + "/" + project + ".ds",
-				project
-			};			
-			Jetspeed2DsPG.main(argvDs);
-						
-			// psml			
-			MetaApplication app = MetaApplications.getMetaApplication(project);
-			for (Iterator it=app.getMetaModules().iterator(); it.hasNext();) {
-				MetaModule module = (MetaModule) it.next();
-				String [] argvPsml = {				
+				// folder.metadata
+				String [] argvFolder = {				
 					"../" + project + "/web/WEB-INF/web.xml",				
-					pagesDir + "/" + project + "/" + module.getName() + ".psml",
-					project,
-					module.getName()
-				};
-				Jetspeed2PsmlPG.main(argvPsml);
+					pagesDir + "/" + project + "/folder.metadata",
+					project
+				};			
+				Jetspeed2FolderPG.main(argvFolder);
+				
+				// ds
+				String [] argvDs = {				
+					"../" + project + "/web/WEB-INF/web.xml",				
+					pagesDir + "/" + project + "/" + project + ".ds",
+					project
+				};			
+				Jetspeed2DsPG.main(argvDs);
+							
+				// psml			
+				MetaApplication app = MetaApplications.getMetaApplication(project);
+				for (Iterator it=app.getMetaModules().iterator(); it.hasNext();) {
+					MetaModule module = (MetaModule) it.next();
+					String [] argvPsml = {				
+						"../" + project + "/web/WEB-INF/web.xml",				
+						pagesDir + "/" + project + "/" + module.getName() + ".psml",
+						project,
+						module.getName()
+					};
+					Jetspeed2PsmlPG.main(argvPsml);
+				}
+				
 			}
 			
 			// i18n resource files							
 			File f = new File("../" + project + "/i18n/portlets/");
 			f.mkdir();
 			Locale.setDefault(defaultLocale);			
+			MetaApplication app = MetaApplications.getMetaApplication(project);
 			for (Iterator it=app.getMetaModules().iterator(); it.hasNext();) {
 				MetaModule module = (MetaModule) it.next();
 				createI18nFiles(module);			
@@ -104,14 +118,15 @@ public class Jetspeed2CodeGenerator {
 	}
 	
 	public static void main(String [] argv) {
-		if (argv.length != 2) {
+		if (argv.length < 2 || argv.length > 3) {
 			System.err.println(XavaResources.getString("jetspeed2_generator_argv_required")); 
 			System.exit(1);			
 		}
 		try {									
-			Jetspeed2CodeGenerator g = new Jetspeed2CodeGenerator();			
+			PortletCodeGenerator g = new PortletCodeGenerator();			
 			g.setProject(argv[0]);			
-			g.setPagesDir(argv[1]);			
+			g.setPagesDir(argv[1]);
+			g.setGenerateJetspeed2Files(Boolean.valueOf(argv[2]).booleanValue()); // optional
 			g.run();			
 		}	
 		catch (Exception ex) {

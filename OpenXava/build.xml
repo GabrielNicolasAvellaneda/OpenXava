@@ -10,6 +10,7 @@
 	<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
 	<property name="dist.base.dir" value = ".."/>
 	<property name="dist.dir" value = "${dist.base.dir}/${project}.dist"/>
+	<property name="dist.portlets.dir" value = "${dist.base.dir}/${project}-portlets.war.d"/>
 	<property name="file.ear" value = "${project}.ear"/>	
 	<property name="xava.lib" value="../OpenXava/bin"/>	
 	<property name="j2ee.lib" location="../OpenXava/lib/j2ee.jar"/>
@@ -31,6 +32,7 @@
 	<property name="model.package" value="model"/>
 	<property name="build.compiler" value="javac1.3"/>
 	<property name="deploy.portlets.dir" value="${deploy.dir}/openxava.war/WEB-INF/deploy"/>
+	<property name="generate.jetspeed2.files" value="true"/>
 	<property name="jetspeed2.pages.dir" value="${deploy.dir}/openxava.war/WEB-INF/pages"/>
 			
    <!-- Set up java.class.path -->
@@ -642,53 +644,42 @@
 		
 	</target>
 	
-	<target name="generatePortletXml" unless="regenerate.portlet.xml.notRequired">
-		<echo>Generating portlet.xml</echo>		
-		<java 
-			classname="PortletXmlPG" 
-			classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};${components.dir};../${project}/${classes.dir};${xava.generator.path}" 
-			fork="yes">
-			<arg value="../${project}/web/WEB-INF/web.xml"/>        		
-	       	<arg value="../${project}/web/WEB-INF/portlet.xml"/>
-			<arg value="${project}"/>
-		</java>		
-	</target>		
-
-	<target name="generatePortletXmlAndJetspee2Files" unless="regenerate.portlet.xml.notRequired">				
+	<target name="generatePortletXml" unless="regenerate.portlet.xml.notRequired">				
 		<delete dir="${jetspeed2.pages.dir}/${project}"/>
 		<mkdir dir="${jetspeed2.pages.dir}/${project}"/>
 		<echo>Generating portlets files</echo>
-		<!-- Jetspeed2CodeGenerator generates portlets.xml, .psml, .ds and all jetspeed2 files -->
+		<!-- PortletCodeGenerator can generate portlets.xml, .psml, .ds and all jetspeed2 files -->
 		<java 
-			classname="Jetspeed2CodeGenerator" 
+			classname="PortletCodeGenerator" 
 			classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};${components.dir};../${project}/${classes.dir};${xava.generator.path}" 
 			fork="yes">
 			<arg value="${project}"/>
 			<arg value="${jetspeed2.pages.dir}"/>
+			<arg value="${generate.jetspeed2.files}"/>
 		</java>		
 	</target>	
 	
 	<!-- Although generates Jetspeed2 files it maybe used for websphere portal or another standard JSR-168 portal too -->
-	<target name="deployPortlets" depends="initPortlets, generatePortletXmlAndJetspee2Files">		
+	<target name="deployPortlets" depends="initPortlets, generatePortletXml">		
 		<antcall target="prepareWar"/>
-		<mkdir dir="${dist.dir}/${name.war}-portets.war.d"/>
-		<copy todir="${dist.dir}/${name.war}-portets.war.d/WEB-INF">
+		<mkdir dir="${dist.portlets.dir}"/>
+		<copy todir="${dist.portlets.dir}/WEB-INF">
 			<fileset dir="web/WEB-INF"/>
 		</copy>
-		<copy todir="${dist.dir}/${name.war}-portets.war.d/xava/images">
+		<copy todir="${dist.portlets.dir}/xava/images">
 			<fileset dir="web/xava/images"/>
 		</copy>		
-		<copy todir="${dist.dir}/${name.war}-portets.war.d/xava/style">
+		<copy todir="${dist.portlets.dir}/xava/style">
 			<fileset dir="web/xava/style"/>
 		</copy>				
-		<copy todir="${dist.dir}/${name.war}-portets.war.d/xava/editors/calendar">
+		<copy todir="${dist.portlets.dir}/xava/editors/calendar">
 			<fileset dir="web/xava/editors/calendar"/>
 		</copy>						
-		<copy todir="${dist.dir}/${name.war}-portets.war.d/WEB-INF/jsp" >
+		<copy todir="${dist.portlets.dir}/WEB-INF/jsp" >
 			<fileset dir="web" excludes="WEB-INF/**, xava/images/**, xava/style/**, xava/editors/calendar/**, xava/jasperReport.jsp"/>
 		</copy>
-		<copy todir="${dist.dir}/${name.war}-portets.war.d/xava" file="web/xava/jasperReport.jsp"/>
-		<jar jarfile="${dist.dir}/${name.war}.war" basedir="${dist.dir}/${name.war}-portets.war.d"/>
+		<copy todir="${dist.portlets.dir}/xava" file="web/xava/jasperReport.jsp"/>
+		<jar jarfile="${dist.dir}/${name.war}.war" basedir="${dist.portlets.dir}"/>
 		<copy file="${dist.dir}/${name.war}.war" todir="${deploy.portlets.dir}" overwrite="true"/>		
 	</target>
 	

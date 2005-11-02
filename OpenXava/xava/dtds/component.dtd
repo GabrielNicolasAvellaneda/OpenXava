@@ -179,6 +179,7 @@
 <!ATTLIST validator
  class CDATA #IMPLIED
  name CDATA #IMPLIED
+ only-on-create (true|false) "false"
 >
 
 <!ELEMENT remove-validator (set*)>

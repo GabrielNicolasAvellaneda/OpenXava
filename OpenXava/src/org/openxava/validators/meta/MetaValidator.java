@@ -15,7 +15,8 @@ public class MetaValidator extends MetaSetsContainer {
 	private IPropertyValidator propertyValidator;
 	private IValidator validator;
 	private java.lang.String name;
-	public java.lang.String className;
+	private boolean onlyOnCreate;	
+	private java.lang.String className;	
 
 	public MetaValidator() {
 		super();
@@ -143,6 +144,14 @@ public class MetaValidator extends MetaSetsContainer {
 			removeValidator = createRemoveValidator();
 		}
 		return removeValidator;
+	}
+
+	public boolean isOnlyOnCreate() {
+		return onlyOnCreate;
+	}
+
+	public void setOnlyOnCreate(boolean onlyOnCreate) {
+		this.onlyOnCreate = onlyOnCreate;
 	}		
 			
 	
