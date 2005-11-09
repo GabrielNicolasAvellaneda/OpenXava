@@ -21,18 +21,25 @@ public class WebEditors {
 	public static boolean hasFrame(MetaProperty p) throws XavaException {
 		return MetaWebEditors.getMetaEditorFor(p).isFrame();		
 	}	
-
-	public static Object parse(HttpServletRequest request, MetaProperty p, String string, Messages errors) throws XavaException {
+	
+	public static Object parse(HttpServletRequest request, MetaProperty p, String [] strings, Messages errors) throws XavaException { 
 		try {
-			MetaEditor ed = MetaWebEditors.getMetaEditorFor(p);			
-			if (ed.hasFormatter()) {								
+			String string = strings == null?null:strings[0];			
+			MetaEditor ed = MetaWebEditors.getMetaEditorFor(p);	
+			if (ed.hasFormatter()) { 								
 				return ed.getFormatter().parse(request, string);
+			}
+			else if (ed.hasMultipleValuesFormatter()) {								
+				return ed.getMultipleValuesFormatter().parse(request, strings);
 			}
 			else if (ed.isFormatterFromType()){
 				MetaEditor edType = MetaWebEditors.getMetaEditorForType(p.getTypeName());
 				if (edType != null && edType.hasFormatter()) {				
 					return edType.getFormatter().parse(request, string);
 				}
+				else if (edType != null && edType.hasMultipleValuesFormatter()) {				
+					return edType.getMultipleValuesFormatter().parse(request, strings);
+				} 
 			}
 			return p.parse(string, request.getLocale());
 		}
@@ -41,19 +48,49 @@ public class WebEditors {
 			String messageId = p.isNumber()?"numeric":"no_expected_type";
 			errors.add(messageId, p.getName(), p.getMetaModel().getName());
 			return null;
-		}
+		}		
+	}
+		
+	public static Object parse(HttpServletRequest request, MetaProperty p, String string, Messages errors) throws XavaException {
+		String [] strings = string == null?null:new String [] { string };
+		return parse(request, p, strings, errors);
+	}
+		
+	public static String format(HttpServletRequest request, MetaProperty p, Object object, Messages errors) throws XavaException {
+		Object result = formatToStringOrArray(request, p, object, errors);
+		if (result instanceof String []) return arrayToString((String []) result);
+		return (String) result;
 	}
 	
-	public static String format(HttpServletRequest request, MetaProperty p, Object object, Messages errors) throws XavaException {
+	private static String arrayToString(String[] strings) {
+		if (strings == null) return "";
+		StringBuffer result = new StringBuffer();
+		for (int i = 0; i < strings.length; i++) {
+			result.append(strings[i]);
+			if (i < strings.length - 1) result.append('/');
+		}
+		return result.toString();
+	}
+
+	/** 
+	 * @return If has a multiple converter return a array of string else return a string
+	 */
+	public static Object formatToStringOrArray(HttpServletRequest request, MetaProperty p, Object object, Messages errors) throws XavaException {
 		try {
 			MetaEditor ed = MetaWebEditors.getMetaEditorFor(p);
 			if (ed.hasFormatter()) {				
 				return ed.getFormatter().format(request, object);
 			}
+			else if (ed.hasMultipleValuesFormatter()) { 
+				return ed.getMultipleValuesFormatter().format(request, object);
+			}
 			else if (ed.isFormatterFromType()){
 				MetaEditor edType = MetaWebEditors.getMetaEditorForType(p.getTypeName());
 				if (edType != null && edType.hasFormatter()) {				
 					return edType.getFormatter().format(request, object);
+				}
+				else if (edType != null && edType.hasMultipleValuesFormatter()) { 
+					return edType.getMultipleValuesFormatter().format(request, object);
 				}
 			}			
 			return p.format(object, request.getLocale());									

@@ -60,7 +60,7 @@ public class PortletCodeGenerator {
 			PortletXmlPG.main(argvPortlet);
 			
 			if (isGenerateJetspeed2Files()) {
-			
+				
 				// folder.metadata
 				String [] argvFolder = {				
 					"../" + project + "/web/WEB-INF/web.xml",				

@@ -384,13 +384,16 @@
     		targetfile="../${project}/gen-src-xava/dnas.properties"/>
     	<antcall target="runXDoclet"/>
     </target>
-	
+		
     <target name="regenerateEJB">    
-       	<delete file="../${project}/gen-src-xava/dnas.properties"/>
+    	<delete>
+   			<fileset dir="../${project}/gen-src"/>
+   			<fileset dir="../${project}/gen-src-xava"/>
+    		<fileset dir="../${project}/${meta-inf.dir}" excludes="MANIFEST.MF"/>
+   		</delete>
 		<antcall target="generateEJB"/>
     </target>
-	
-	
+		
 	<target name="filterWithoutConfiguration" unless="configuration" 
 		depends="init">
 		<copy file="../${project.ejb}/${meta-inf.dir}/ejb-jar.xml" 
@@ -644,8 +647,7 @@
 		
 	</target>
 	
-	<target name="generatePortletXml" unless="regenerate.portlet.xml.notRequired">				
-		<delete dir="${jetspeed2.pages.dir}/${project}"/>
+	<target name="generatePortletXml" unless="regenerate.portlet.xml.notRequired">						
 		<mkdir dir="${jetspeed2.pages.dir}/${project}"/>
 		<echo>Generating portlets files</echo>
 		<!-- PortletCodeGenerator can generate portlets.xml, .psml, .ds and all jetspeed2 files -->

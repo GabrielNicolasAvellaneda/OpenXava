@@ -12,8 +12,9 @@
 		<reference name="level" model="SellerLevel"/>			
 		<collection name="customers">	
 			<reference model="Customer" role="seller"/>			
-		</collection>
+		</collection>		
 		<reference name="boss" model="Seller"/>
+		<property name="regions" stereotype="REGIONS"/>
 		<finder name="all" arguments="" collection="true">
 			<condition>1 = 1</condition>
 		</finder>
@@ -38,8 +39,8 @@
 		<collection-view collection="customers" view="SimpleWithDeliveryPlaces">
 			<list-properties>number, name, remarks, relationWithSeller, seller.level.description</list-properties>
 		</collection-view>		
-
-		<members>number; name; level; customers</members>
+	
+		 <members>number; name; level; regions; customers</members>
 	</view>
 	
 	<view name="CannotCreateCustomer">
@@ -58,10 +59,11 @@
 		<property-mapping 
 			property="number" column="NUMBER"/>
 		<property-mapping
-			property="name" column="NAME"/>
+			property="name" column="NAME"/>		
 		<reference-mapping reference="level">
 			<reference-mapping-detail column="LEVEL" referenced-model-property="id"/>
 		</reference-mapping>
+		<property-mapping property="regions" column="REGIONS"/>			
 		<reference-mapping reference="boss">
 			<reference-mapping-detail column="BOSS" referenced-model-property="number"/>
 		</reference-mapping>		

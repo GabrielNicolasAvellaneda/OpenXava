@@ -21,6 +21,40 @@ public class SellersTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Sellers");		
 	}
 	
+	public void testCustomEditorWithMultipleValuesFormatter() throws Exception {
+		String [] emptyRegions = {};
+		String [] regions = { "1", "3" };
+		String [] oneRegion = { "2" };
+		
+		execute("CRUD.new");
+		assertValues("regions", emptyRegions);
+		setValue("number", "66");
+		setValue("name", "SELLER JUNIT 66");
+		setValue("level.id", "A");
+		setValues("regions", regions);
+		assertValues("regions", regions);
+		
+		execute("CRUD.save");
+		assertNoErrors();
+		assertValues("regions", emptyRegions);		
+		
+		setValue("number", "66");
+		execute("CRUD.search");
+		assertValues("regions", regions);
+		
+		setValues("regions", oneRegion);
+		execute("CRUD.save");
+		assertNoErrors();
+		assertValues("regions", emptyRegions);
+
+		setValue("number", "66");
+		execute("CRUD.search");
+		assertValues("regions", oneRegion);
+		
+		execute("CRUD.delete");
+		assertMessage("Seller deleted successfully");
+	}
+	
 	public void testCollectionOfEntityReferencesElementsNotEditables() throws Exception {
 		execute("Mode.detailAndFirst");
 		execute("Collection.edit", "row=0,viewObject=xava_view_customers");

@@ -6,9 +6,15 @@
 
 <editors>
 
+  <editor url="regionsEditor.jsp">  	
+	<property name="regionsCount" value="3"/>
+	<formatter class="org.openxava.formatters.MultipleValuesByPassFormatter"/>
+  	<for-stereotype stereotype="REGIONS"/>
+  </editor>
+
   <!-- For work only in uppercase -->	
   <editor url="textEditor.jsp"> 
-		<formatter class="org.openxava.formatters.UpperCaseFormatter"/>
+	<formatter class="org.openxava.formatters.UpperCaseFormatter"/>
     <for-type type="java.lang.String"/>
   </editor>
 	

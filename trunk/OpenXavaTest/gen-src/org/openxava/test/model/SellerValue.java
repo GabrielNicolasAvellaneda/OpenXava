@@ -16,6 +16,8 @@ public class SellerValue
 
    private java.lang.String name;
    private boolean nameHasBeenSet = false;
+   private java.lang.String[] regions;
+   private boolean regionsHasBeenSet = false;
    private int number;
    private boolean numberHasBeenSet = false;
    private java.lang.String level_id;
@@ -32,6 +34,8 @@ public class SellerValue
    {
 	  this.name = otherValue.name;
 	  nameHasBeenSet = true;
+	  this.regions = otherValue.regions;
+	  regionsHasBeenSet = true;
 	  this.number = otherValue.number;
 	  numberHasBeenSet = true;
 	  this.level_id = otherValue.level_id;
@@ -53,6 +57,20 @@ public class SellerValue
 
    public boolean nameHasBeenSet(){
 	  return nameHasBeenSet;
+   }
+   public java.lang.String[] getRegions()
+   {
+	  return this.regions;
+   }
+
+   public void setRegions( java.lang.String[] regions )
+   {
+	  this.regions = regions;
+	  regionsHasBeenSet = true;
+   }
+
+   public boolean regionsHasBeenSet(){
+	  return regionsHasBeenSet;
    }
    public int getNumber()
    {
@@ -101,7 +119,7 @@ public class SellerValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("name=" + getName() + " " + "number=" + getNumber() + " " + "level_id=" + getLevel_id() + " " + "boss_number=" + getBoss_number());
+	  str.append("name=" + getName() + " " + "regions=" + getRegions() + " " + "number=" + getNumber() + " " + "level_id=" + getLevel_id() + " " + "boss_number=" + getBoss_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -155,6 +173,14 @@ public class SellerValue
 		 {
 			lEquals = lEquals && this.name.equals( that.name );
 		 }
+		 if( this.regions == null )
+		 {
+			lEquals = lEquals && ( that.regions == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.regions.equals( that.regions );
+		 }
 		 if( this.level_id == null )
 		 {
 			lEquals = lEquals && ( that.level_id == null );
@@ -176,6 +202,8 @@ public class SellerValue
    public int hashCode(){
 	  int result = 17;
       result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);
+
+      result = 37*result + ((this.regions != null) ? this.regions.hashCode() : 0);
 
       result = 37*result + (int) number;
 

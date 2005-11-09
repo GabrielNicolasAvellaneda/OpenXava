@@ -78,7 +78,7 @@
   property CDATA #REQUIRED
   label CDATA #IMPLIED
   read-only (true|false) "false"
-	label-format (NORMAL|SMALL|NO_LABEL) "NORMAL"
+  label-format (NORMAL|SMALL|NO_LABEL) "NORMAL"
 >
 
 <!ELEMENT on-change EMPTY>
@@ -107,6 +107,12 @@
 <!ATTLIST edit-action
   action CDATA #IMPLIED
 >
+
+<!ELEMENT view-action EMPTY>
+<!ATTLIST view-action
+  action CDATA #IMPLIED
+>
+
 
 <!ELEMENT detail-action EMPTY>
 <!ATTLIST detail-action

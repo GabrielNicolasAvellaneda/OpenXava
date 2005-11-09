@@ -14,7 +14,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Fri Oct 28 13:33:11 CEST 2005
+ * @version Tue Nov 08 13:33:06 CET 2005
  */
 public class PojoPG {
     Properties properties = new Properties();
@@ -236,7 +236,7 @@ public class PojoPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Fri Oct 28 13:33:11 CEST 2005", // date this file was generated
+        { "Tue Nov 08 13:33:06 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/pojo.xml", // input file
              "/home/javi/workspace/OpenXava/generator/PojoPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
