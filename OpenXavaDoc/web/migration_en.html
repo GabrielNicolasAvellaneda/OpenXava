@@ -38,6 +38,14 @@ That is, change <code>Customer</code> by <code>ICustomer</code> when possible,
 if not possible change <code>Customer</code> by <code>CustomerRemote</code>.
 </p>
 
+<h4>JUnit tests</h4>
+<ul>
+<li> On deleting an object in a CRUD OpenXava now shows a javascript windows 
+	to confirm, instead	of changing to another controller. Hence in your tests
+	in order to remove an object from CRUD module you only need use execute("CRUD.delete"). 
+	In this case 'yes' is assumed as confirmation answer.
+</ul>
+
 <h4>Others</h4>
 <ul>
 <li> Change the name of packages-ejb.properties in gen-src-xava to packages.properties

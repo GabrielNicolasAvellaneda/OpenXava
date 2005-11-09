@@ -114,6 +114,12 @@
   accion CDATA #IMPLIED
 >
 
+<!ELEMENT accion-ver EMPTY>
+<!ATTLIST accion-ver
+  accion CDATA #IMPLIED
+>
+
+
 <!ELEMENT accion-detalle EMPTY>
 <!ATTLIST accion-detalle
   accion CDATA #IMPLIED

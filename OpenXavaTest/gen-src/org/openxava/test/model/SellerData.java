@@ -11,6 +11,7 @@ public class SellerData
    implements java.io.Serializable
 {
    private java.lang.String _Name;
+   private java.lang.String _Regions;
    private int number;
    private java.lang.String _Level_id;
    private int _Boss_number;
@@ -22,6 +23,7 @@ public class SellerData
    public SellerData( SellerData otherData )
    {
       set_Name(otherData.get_Name());
+      set_Regions(otherData.get_Regions());
       setNumber(otherData.getNumber());
       set_Level_id(otherData.get_Level_id());
       set_Boss_number(otherData.get_Boss_number());
@@ -40,6 +42,15 @@ public class SellerData
    public void set_Name( java.lang.String _Name )
    {
       this._Name = _Name;
+   }
+
+   public java.lang.String get_Regions()
+   {
+      return this._Regions;
+   }
+   public void set_Regions( java.lang.String _Regions )
+   {
+      this._Regions = _Regions;
    }
 
    public int getNumber()
@@ -73,7 +84,7 @@ public class SellerData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Name=" + get_Name() + " " + "number=" + getNumber() + " " + "_Level_id=" + get_Level_id() + " " + "_Boss_number=" + get_Boss_number());
+      str.append("_Name=" + get_Name() + " " + "_Regions=" + get_Regions() + " " + "number=" + getNumber() + " " + "_Level_id=" + get_Level_id() + " " + "_Boss_number=" + get_Boss_number());
       str.append('}');
 
       return(str.toString());
@@ -93,6 +104,14 @@ public class SellerData
          else
          {
             lEquals = lEquals && this._Name.equals( lTest._Name );
+         }
+         if( this._Regions == null )
+         {
+            lEquals = lEquals && ( lTest._Regions == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Regions.equals( lTest._Regions );
          }
          lEquals = lEquals && this.number == lTest.number;
          if( this._Level_id == null )
@@ -118,6 +137,8 @@ public class SellerData
       int result = 17;
 
       result = 37*result + ((this._Name != null) ? this._Name.hashCode() : 0);
+
+      result = 37*result + ((this._Regions != null) ? this._Regions.hashCode() : 0);
 
       result = 37*result + (int) number;
 

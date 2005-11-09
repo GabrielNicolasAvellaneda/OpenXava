@@ -24,7 +24,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	private Collection metaValidators;
 	private DateFormat dateFormat;
 	private Collection validators;
-	private Collection onlyOnCreateValidators; // tmp
+	private Collection onlyOnCreateValidators;
 	private Class type;
 	private int size;
 	private boolean required;
@@ -276,7 +276,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			return null;			
 		}
 		Class result = getPrimitiveClass(type);
-		if ("byte[]".equals(type) || "byte []".equals(type)) return byte[].class;
+		if ("byte[]".equals(type) || "byte []".equals(type)) return byte[].class;		
 		if (result == null) {
 			try {
 				result = Class.forName(type);

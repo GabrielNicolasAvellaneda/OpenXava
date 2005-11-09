@@ -82,7 +82,8 @@ public class PropertyMapping extends MetaSetsContainer {
 	CmpField toCmpField() throws XavaException {
 		CmpField f = new CmpField();
 		if (Is.emptyString(getCmpTypeName())) {
-			f.setCmpTypeName(getMetaProperty().getType().getName());
+			String typeName = getMetaProperty().getType().isArray()?getMetaProperty().getTypeName():getMetaProperty().getType().getName();
+			f.setCmpTypeName(typeName);
 		}
 		else {
 			f.setCmpTypeName(getCmpTypeName());

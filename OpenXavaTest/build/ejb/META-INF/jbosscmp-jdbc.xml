@@ -1662,11 +1662,16 @@
       <entity>
          <ejb-name>Seller</ejb-name>
 
-         <table-name>XAVATEST_SELLER</table-name>
+         <table-name>XAVATEST@separator@SELLER</table-name>
 
          <cmp-field>
             <field-name>_Name</field-name>
             <column-name>NAME</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Regions</field-name>
+            <column-name>REGIONS</column-name>
 
         </cmp-field>
          <cmp-field>

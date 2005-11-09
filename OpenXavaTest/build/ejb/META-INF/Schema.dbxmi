@@ -484,6 +484,8 @@
 
       <columns xmi:id="Seller__Name" name="_Name">
       </columns>
+      <columns xmi:id="Seller__Regions" name="_Regions">
+      </columns>
       <columns xmi:id="Seller_number" name="number">
       </columns>
       <columns xmi:id="Seller__Level_id" name="_Level_id">

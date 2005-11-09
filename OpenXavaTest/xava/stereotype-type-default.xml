@@ -15,5 +15,7 @@
 	<for stereotype="WAREHOUSE" type="org.openxava.test.model.WarehouseKey"/>
 	<for stereotype="PERSON_NAME" type="String"/>
 	<for stereotype="RECEPTIONIST" type="int"/>
+	<for stereotype="REGIONS" type="String []"/>
+	
 
 </stereotype-type-default>

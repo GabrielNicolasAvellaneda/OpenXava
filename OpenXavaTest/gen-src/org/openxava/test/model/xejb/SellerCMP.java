@@ -19,6 +19,7 @@ public abstract class SellerCMP
          dataHolder = new org.openxava.test.model.SellerData();
 
          dataHolder.set_Name( get_Name() );
+         dataHolder.set_Regions( get_Regions() );
          dataHolder.setNumber( getNumber() );
          dataHolder.set_Level_id( get_Level_id() );
          dataHolder.set_Boss_number( get_Boss_number() );
@@ -37,6 +38,7 @@ public abstract class SellerCMP
       try
       {
          set_Name( dataHolder.get_Name() );
+         set_Regions( dataHolder.get_Regions() );
          set_Level_id( dataHolder.get_Level_id() );
          set_Boss_number( dataHolder.get_Boss_number() );
 
@@ -92,6 +94,7 @@ public abstract class SellerCMP
       try
          {
             SellerValue.setName( getName() );
+            SellerValue.setRegions( getRegions() );
             SellerValue.setNumber( getNumber() );
             SellerValue.setLevel_id( getLevel_id() );
             SellerValue.setBoss_number( getBoss_number() );
@@ -111,6 +114,7 @@ public abstract class SellerCMP
 	  try
 	  {
 		 setName( valueHolder.getName() );
+		 setRegions( valueHolder.getRegions() );
 		 setLevel_id( valueHolder.getLevel_id() );
 		 setBoss_number( valueHolder.getBoss_number() );
 
@@ -126,6 +130,10 @@ public abstract class SellerCMP
    public abstract java.lang.String get_Name() ;
 
    public abstract void set_Name( java.lang.String _Name ) ;
+
+   public abstract java.lang.String get_Regions() ;
+
+   public abstract void set_Regions( java.lang.String _Regions ) ;
 
    public abstract int getNumber() ;
 

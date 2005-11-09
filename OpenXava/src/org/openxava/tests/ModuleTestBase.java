@@ -204,6 +204,13 @@ public class ModuleTestBase extends TestCase {
 		return getForm().getParameterValue(getPropertyPrefix() + name);
 	}
 	
+	/**
+	 * For properties with multiple values
+	 */
+	protected String [] getValues(String name) throws Exception {		
+		return getForm().getParameterValues(getPropertyPrefix() + name);
+	}	
+	
 	protected String getLabel(String name) throws Exception {
 		HTMLElement element = response.getElementWithID(getPropertyPrefix() + name + "_LABEL_");
 		if (element == null) {
@@ -341,6 +348,23 @@ public class ModuleTestBase extends TestCase {
 		
 	}
 	
+	/**
+	 * For multiple values properties
+	 */
+	protected void setValues(String name, String [] values) throws Exception {
+		getForm().setParameter(getPropertyPrefix() + name, values);			
+		
+		// If onchange then reload the page, because onchange do submit
+		HTMLElement el = response.getElementsWithName(getPropertyPrefix() +  name)[0];
+		String onchange = el.getAttribute("onchange");	
+		if (!Is.emptyString(onchange)) {
+			response = conversation.getCurrentPage();
+			resetForm();
+		}
+		
+	}
+	
+	
 	protected void setFileValue(String name, String filePath) throws Exception {
 		File file = new File(filePath);		
 		UploadFileSpec [] up =  { new UploadFileSpec(file) };
@@ -364,6 +388,14 @@ public class ModuleTestBase extends TestCase {
 		}
 		assertEquals(XavaResources.getString("unexpected_value", name), value, getValue(name));		
 	}
+
+	/**
+	 * For multiple values property.
+	 */
+	protected void assertValues(String name, String [] values) throws Exception {		
+		assertEquals(XavaResources.getString("unexpected_value", name), Arrays.asList(values), Arrays.asList(getValues(name)));		
+	}
+	
 			
 	protected void assertValueIgnoringCase(String name, String value) throws Exception {		
 		assertTrue(XavaResources.getString("unexpected_value", name), value.equalsIgnoreCase(getValue(name)));		

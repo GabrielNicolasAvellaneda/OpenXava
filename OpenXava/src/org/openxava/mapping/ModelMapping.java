@@ -401,7 +401,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 			// there are things needed for every property (at least in ejb implementation)
 			propertyMapping.setConverterClassName(NoConversionConverter.class.getName());
 			String cmpType = p.getType().isPrimitive()?Primitives.toWrapperClass(p.getType()).getName():p.getType().getName();
-			if ("[B".equals(cmpType)) cmpType = "byte []";
+			if (p.getType().isArray()) cmpType = p.getType().getComponentType().getName() + " []";
 			propertyMapping.setCmpTypeName(cmpType);
 		}					
 	}

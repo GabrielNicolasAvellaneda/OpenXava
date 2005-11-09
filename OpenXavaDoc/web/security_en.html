@@ -1,0 +1,32 @@
+<b>OpenXava has no security or user management system</b><br>
+But you can use the security of your underlaying Java Portal. 
+You should consult your portal documentation about security. 
+Anyways here there are some tips for JetSpeed2<br>
+
+<h4>JetSpeed security and OpenXava</h4>
+When OpenXava deploy portlets also generates the propietary JetSpeed2.
+These files are in openxava.war/WEB-INF/pages inside a folder named 
+as the proyect.
+For example, is your application is <i>MySchool</i> this files are
+in openxava.war/WEB-INF/pages/MySchool<br>
+These files are configured to grant all access to the application to
+user of group 'MySchool', hence if you wish grant or deny access to
+your application you must to create a new group (with JetSpeed Administrative Portlets)
+named 'MySchool' and assign to it all the users of your election.<br>
+
+If you need a more granulated security, you can edit these files and to modify them.
+See documentation about this in <a href="http://portals.apache.org/jetspeed-2/bronco.html">
+JetSpeed 2 Site</a>. Beware, because the jetspeed2 files are overwrited by OpenXava
+when you deploy portlets again. Hence you need to configure your ant task in this way:
+<pre>
+	&lt;target name="deployPortlets"&gt;
+		&lt;ant antfile="../OpenXava/build.xml" target="deployPortlets"&gt;
+			&lt;property name="<b>generate.jetspeed2.files</b>" value="false"/&gt;
+		&lt;/ant&gt;		
+	&lt;/target&gt;	
+</pre>
+
+
+
+
+

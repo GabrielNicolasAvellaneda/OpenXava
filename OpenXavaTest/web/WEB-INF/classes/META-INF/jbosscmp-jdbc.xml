@@ -1670,6 +1670,11 @@
 
         </cmp-field>
          <cmp-field>
+            <field-name>_Regions</field-name>
+            <column-name>REGIONS</column-name>
+
+        </cmp-field>
+         <cmp-field>
             <field-name>number</field-name>
             <column-name>NUMBER</column-name>
 

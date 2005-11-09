@@ -2132,6 +2132,10 @@
             <description><![CDATA[]]></description>
             <field-name>_Name</field-name>
          </cmp-field>
+         <cmp-field id="CmpAttribute_Seller__Regions">
+            <description><![CDATA[]]></description>
+            <field-name>_Regions</field-name>
+         </cmp-field>
          <cmp-field id="CmpAttribute_Seller_number">
             <description><![CDATA[]]></description>
             <field-name>number</field-name>

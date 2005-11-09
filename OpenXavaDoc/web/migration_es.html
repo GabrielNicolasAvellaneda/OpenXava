@@ -37,6 +37,15 @@ Es decir, cambiar <code>Cliente</code> por <code>ICliente</code> cuando sea posi
 de no serlo cambiarlo por <code>CustomeRemote</code>.
 </p>
 
+<h4>Pruebas JUnit</h4>
+<ul>
+<li> Al borrar un objeto en a mantenimiento ahora OpenXava muestra una ventana javascript
+	para confirmar, en vez de cambiar a otro controlador. Por lo tanto en tus pruebas
+	para borrar un objeto en un módulo de mantenimiento solo necesitas usar execute("CRUD.delete"). 
+	En este caso 'Sí' como respuesta de confirmación.
+</ul>
+
+
 <h4>Otros</h4>
 <ul>
 <li> Cambia el nombre packages-ejb.properties en gen-src-xava a packages.properties

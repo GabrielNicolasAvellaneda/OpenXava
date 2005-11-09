@@ -971,8 +971,7 @@ public class View implements java.io.Serializable {
 		setIdFocusProperty(null);
 		setCollectionDetailVisible(false);
 		if (values == null) return;		
-		Iterator it = values.entrySet().iterator();		
-		Map result = new HashMap();
+		Iterator it = values.entrySet().iterator();				
 		while (it.hasNext()) {
 			Map.Entry e = (Map.Entry) it.next();
 			values.put(e.getKey(), null);			
@@ -1364,10 +1363,10 @@ public class View implements java.io.Serializable {
 					MetaProperty p = (MetaProperty) m;										
 					if (!PropertiesSeparator.INSTANCE.equals(m)) { 
 						String propertyKey= "xava." + qualifier + "." + p.getName();						
-						String valueKey = propertyKey + ".value";						
-						String result = getRequest().getParameter(propertyKey);						
-						Object value = WebEditors.parse(getRequest(), p, result, getErrors());
-						boolean isHiddenKeyWithoutValue = p.isHidden() && Is.emptyString(result); // for not reset hidden values
+						String valueKey = propertyKey + ".value";
+						String [] results = getRequest().getParameterValues(propertyKey);
+						Object value = WebEditors.parse(getRequest(), p, results, getErrors());
+						boolean isHiddenKeyWithoutValue = p.isHidden() && (results == null || Is.emptyString(results[0])); // for not reset hidden values
 						if (!isHiddenKeyWithoutValue && WebEditors.mustToFormat(p)) { 
 							getRequest().setAttribute(valueKey, value);
 							setValue(p.getName(), getRequest().getAttribute(valueKey));																					
