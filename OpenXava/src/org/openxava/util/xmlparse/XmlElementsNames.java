@@ -150,5 +150,7 @@ public class XmlElementsNames {
 	protected final static String [] xcreate_reference = { "create-reference", "crear-referencia" };
 	protected final static String [] xview_action = { "view-action", "accion-ver" };
 	protected final static String [] xonly_on_create = { "only-on-create", "solo-al-crear" };
+	protected final static String [] xdoc = { "doc", "doc" };
+	protected final static String [] xlanguages = { "languages", "idiomas" };
 	
 }

@@ -57,6 +57,7 @@ public class ApplicationParser extends ParserBase {
 		m.setWebViewURL(createWebView(el));
 		m.setModeControllerName(createModeController(el));
 		m.setMetaReport(createMetaReport(el));
+		fillDoc(el, m);
 		fillControllers(el, m);
 		fillEnvironmentVar(el, m);		
 		return m;
@@ -88,6 +89,15 @@ public class ApplicationParser extends ParserBase {
 		}
 		return null;
 	}
+	
+	private void fillDoc(Element el, MetaModule metaModule) throws XavaException {
+		NodeList lDoc = el.getElementsByTagName(xdoc[lang]);
+		if (lDoc.getLength() > 0) {
+			Element elModel = (Element) lDoc.item(0);
+			metaModule.setDocURL(elModel.getAttribute(xurl[lang]));
+			metaModule.setDocLanguages(elModel.getAttribute(xlanguages[lang]));
+		}
+	}	
 			
 	private String createSwingView(Element el) throws XavaException {
 		NodeList l = el.getElementsByTagName(xswing_view[lang]);

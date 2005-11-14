@@ -2,23 +2,28 @@ package org.openxava.actions;
 
 import java.util.*;
 
+import javax.servlet.http.*;
+
 import org.openxava.view.*;
 
 /**
  * @author Javier Paniza
  */
 
-public class CancelAction extends ViewBaseAction implements INavigationAction {
+public class CancelAction extends ViewBaseAction implements INavigationAction, IRequestAction {
 	
 	private boolean keyEditable = false;
 	private boolean editable = true;
 	private Stack previousViews;
 	private boolean restoreEditable = false;
+	private HttpServletRequest request;
 		 	
 	public void execute() throws Exception {
 		 
 		if (getPreviousViews() != null && !getPreviousViews().empty()) {
-			setView((View) getPreviousViews().pop());
+			View view = (View) getPreviousViews().pop();
+			view.setRequest(request);
+			setView(view);
 		}
 		if (restoreEditable && getView() != null) {
 			getView().setKeyEditable(keyEditable);
@@ -46,4 +51,10 @@ public class CancelAction extends ViewBaseAction implements INavigationAction {
 	public void setRestoreEditable(boolean restoreEditable) {
 		this.restoreEditable = restoreEditable;
 	}
+	
+	public void setRequest(HttpServletRequest request) {	
+		super.setRequest(request);
+		this.request = request;
+	}
+	
 }

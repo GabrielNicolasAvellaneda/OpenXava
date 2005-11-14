@@ -24,7 +24,6 @@ Collection locales = Generators.getAvailableLocales("../" + applicationName + "/
 for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
 	MetaModule module = (MetaModule) it.next();
 </java> 
-
 	&lt;portlet id="<expr>module.getName()</expr>"&gt;
 		&lt;description&gt;<expr>module.getDescription()</expr>&lt;/description&gt;
     <java>for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
@@ -39,6 +38,17 @@ for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
     </java>    
 		&lt;display-name xml:lang="<expr>locale</expr>"&gt;<expr>module.getLabel(locale)</expr>&lt;/display-name&gt;
     <java>} </java> 
+    <java>if (module.isDoc()) { </java> 
+		&lt;portlet-class&gt;org.openxava.web.portlets.HtmlPortlet&lt;/portlet-class&gt;
+		&lt;init-param&gt;
+			&lt;name&gt;Page&lt;/name&gt;
+			&lt;value&gt;<expr>module.getDocURL()</expr>&lt;/value&gt;
+		&lt;/init-param&gt;
+		&lt;init-param&gt;
+			&lt;name&gt;Languages&lt;/name&gt;
+			&lt;value&gt;<expr>module.getDocLanguages()</expr>&lt;/value&gt;
+		&lt;/init-param&gt;		
+	<java>} else { </java> 
 		&lt;portlet-class&gt;org.openxava.web.portlets.XavaPortlet&lt;/portlet-class&gt;
 		&lt;init-param&gt;
 			&lt;name&gt;Application&lt;/name&gt;
@@ -47,7 +57,8 @@ for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
 		&lt;init-param&gt;
 			&lt;name&gt;Module&lt;/name&gt;
 			&lt;value&gt;<expr>module.getName()</expr>&lt;/value&gt;
-		&lt;/init-param&gt;				
+		&lt;/init-param&gt;			
+	<java>} </java> 
 		&lt;expiration-cache&gt;-1&lt;/expiration-cache&gt;
 		&lt;supports&gt;
 			&lt;mime-type&gt;text/html&lt;/mime-type&gt;

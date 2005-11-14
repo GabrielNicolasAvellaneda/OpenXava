@@ -5,11 +5,17 @@
 >
 
 
-<!ELEMENT modulo ((var-entorno*, modelo?, vista?, vista-swing?, vista-web?, tab?, controlador*, controlador-modo?) | listado)>
+<!ELEMENT modulo (doc | (var-entorno*, modelo?, vista?, vista-swing?, vista-web?, tab?, controlador*, controlador-modo?) | listado)>
 <!ATTLIST modulo
  nombre ID #REQUIRED
  etiqueta CDATA #IMPLIED
  descripcion CDATA #IMPLIED
+>
+
+<!ELEMENT doc EMPTY>
+<!ATTLIST doc
+ url CDATA #REQUIRED
+ idiomas CDATA #IMPLIED
 >
 
 <!ELEMENT var-entorno EMPTY>

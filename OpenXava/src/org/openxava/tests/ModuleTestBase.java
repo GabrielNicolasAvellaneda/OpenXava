@@ -31,6 +31,7 @@ public class ModuleTestBase extends TestCase {
 	private static String jetspeed2URL;
 	private static String jetspeed2UserName;
 	private static String jetspeed2Password;
+	private static int loginFormIndex = -1;
 		
 	private List parameters;
 	private static String host;
@@ -43,7 +44,7 @@ public class ModuleTestBase extends TestCase {
 	private String module;
 	private WebConversation conversation;
 	private WebResponse response;
-	private WebForm form;
+	private WebForm form;	
 	
 	public ModuleTestBase(String nameTest, String application, String modul) {
 		super(nameTest);
@@ -57,7 +58,7 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected void tearDown() throws Exception {
-		if (isJetspeed2Enabled()) {
+		if (isJetspeed2Enabled() && isJetspeed2UserPresent()) {
 			// logout
 			response = conversation.getResponse("http://" + getHost() + ":" + getPort() + "/" + getJetspeed2URL() + "/login/logout");
 		}
@@ -72,9 +73,9 @@ public class ModuleTestBase extends TestCase {
 			conversation.setHeaderField("Accept-Language", getLocale());
 			Locale.setDefault(new Locale(getLocale(), ""));
 		}
-		if (isJetspeed2Enabled()) {
+		if (isJetspeed2Enabled() && isJetspeed2UserPresent()) {
 			response = conversation.getResponse("http://" + getHost() + ":" + getPort() + "/" + getJetspeed2URL() + "/portal/");
-			resetForm();				
+			resetLoginForm();			
 			getForm().setParameter("org.apache.jetspeed.login.username", getJetspeed2UserName());
 			getForm().setParameter("org.apache.jetspeed.login.password", getJetspeed2Password());
 			getForm().submit();
@@ -883,9 +884,14 @@ public class ModuleTestBase extends TestCase {
 		return locale;
 	}
 	
-	private static boolean isJetspeed2Enabled() {
+	public static boolean isJetspeed2Enabled() {
 		return !Is.emptyString(getJetspeed2URL());
 	}
+	
+	private static boolean isJetspeed2UserPresent() {
+		return !Is.emptyString(getJetspeed2UserName());
+	}
+	
 	
 	private static String getJetspeed2URL() {
 		if (jetspeed2URL == null) {
@@ -931,10 +937,15 @@ public class ModuleTestBase extends TestCase {
 		return xavaJunitProperties;
 	}
 	
-	private void resetForm() throws Exception {
+	private void resetForm() throws Exception {		
+		if (getFormIndex() >= response.getForms().length) return; 
 		setForm(response.getForms()[getFormIndex()]);
 	}
 	
+	private void resetLoginForm() throws Exception {
+		setForm(response.getForms()[getLoginFormIndex()]);
+	}
+		
 	private void setForm(WebForm form) {
 		this.form = form;
 		parameters = Arrays.asList(form.getParameterNames());
@@ -944,8 +955,23 @@ public class ModuleTestBase extends TestCase {
 		return form;	
 	}	
 	
-	private int getFormIndex() {		
-		return isJetspeed2Enabled()?1:0; 
+	private int getFormIndex() throws Exception {
+		return isJetspeed2Enabled()?1:0;
+	}
+	
+	private int getLoginFormIndex() throws Exception {
+		if (loginFormIndex == -1) {
+			WebForm [] forms = response.getForms(); 
+			for (int i = 0; i < forms.length; i++) {
+				if (forms[i].hasParameterNamed("org.apache.jetspeed.login.username")) {					
+					loginFormIndex = i;
+					return loginFormIndex;
+				}
+			}
+			loginFormIndex = 0;
+		}
+		return loginFormIndex;
 	}	
+	
 			
 }

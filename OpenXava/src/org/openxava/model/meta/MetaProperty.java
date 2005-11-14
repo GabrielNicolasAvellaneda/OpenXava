@@ -20,9 +20,7 @@ import org.openxava.validators.meta.*;
 public class MetaProperty extends MetaMember implements Cloneable {
 
 	private Collection propertyNamesThatIDepend;
-	private NumberFormat numberFormat;
-	private Collection metaValidators;
-	private DateFormat dateFormat;
+	private Collection metaValidators;	
 	private Collection validators;
 	private Collection onlyOnCreateValidators;
 	private Class type;
@@ -784,8 +782,10 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			if (Integer.class.isAssignableFrom(type) || int.class.isAssignableFrom(type)) {
 				return value.toString();
 			}
-			if (BigDecimal.class.isAssignableFrom(type)) {							
-				return NumberFormat.getNumberInstance(locale).format(value);				
+			if (BigDecimal.class.isAssignableFrom(type)) {
+				NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
+				numberFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
+				return numberFormat.format(value);				
 			}
 			if (java.util.Date.class.isAssignableFrom(type)) {
 				return DateFormat.getDateInstance(DateFormat.SHORT, locale).format(value);

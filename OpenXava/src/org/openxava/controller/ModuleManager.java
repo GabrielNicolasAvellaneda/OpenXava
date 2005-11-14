@@ -409,8 +409,7 @@ public class ModuleManager {
 	private void setObjectsInAction(IAction action, MetaAction metaAction) throws XavaException {		
 		if (!metaAction.usesObjects()) return;		
 		PropertiesManager mp = new PropertiesManager(action);
-		Iterator it = metaAction.getMetaUseObjects().iterator();
-		String controllerName = metaAction.getControllerName();
+		Iterator it = metaAction.getMetaUseObjects().iterator();		
 		while (it.hasNext()) {
 			MetaUseObject metaUseObject = (MetaUseObject) it.next();
 			String objectName = metaUseObject.getName();			 

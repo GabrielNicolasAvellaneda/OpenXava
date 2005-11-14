@@ -3,6 +3,7 @@ package org.openxava.application.meta;
 import java.util.*;
 
 import org.openxava.controller.*;
+import org.openxava.util.*;
 import org.openxava.util.meta.*;
 
 /**
@@ -17,6 +18,8 @@ public class MetaModule extends MetaElement implements java.io.Serializable {
 	private String webViewURL;
 	private String viewName;
 	private String tabName;
+	private String docURL; 
+	private String docLanguages; 
 	private MetaApplication metaApplication;	
 	private Collection controllersNames = new ArrayList();
 	private String modeControllerName;	
@@ -76,7 +79,6 @@ public class MetaModule extends MetaElement implements java.io.Serializable {
 		return getMetaApplication().getId() + "." + getName();
 	}
 
-
 	public String getModeControllerName() {
 		return modeControllerName;
 	}
@@ -101,6 +103,23 @@ public class MetaModule extends MetaElement implements java.io.Serializable {
 	public void addEnvironmentVariable(String name, String value) {
 		if (environmentVariables == null) environmentVariables = new HashMap();
 		environmentVariables.put(name, value);
+	}
+	
+	public boolean isDoc() {
+		return !Is.emptyString(docURL);
+	}
+	
+	public String getDocURL() {
+		return docURL;
+	}
+	public void setDocURL(String docURL) {
+		this.docURL = docURL;
+	}
+	public String getDocLanguages() {
+		return docLanguages==null?"":docLanguages;
+	}
+	public void setDocLanguages(String docLanguages) {
+		this.docLanguages = docLanguages;
 	}	
 
 }
