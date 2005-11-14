@@ -23,7 +23,6 @@ Collection locales = Generators.getAvailableLocales("../" + applicationName + "/
 for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
 	MetaModule module = (MetaModule) it.next();
 # 
-
 	<portlet id="#(module.getName())#">
 		<description>#(module.getDescription())#</description>
     # for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
@@ -38,6 +37,17 @@ for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
     #    
 		<display-name xml:lang="#(locale)#">#(module.getLabel(locale))#</display-name>
     # } # 
+    # if (module.isDoc()) { # 
+		<portlet-class>org.openxava.web.portlets.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>#(module.getDocURL())#</value>
+		</init-param>
+		<init-param>
+			<name>Languages</name>
+			<value>#(module.getDocLanguages())#</value>
+		</init-param>		
+	# } else { # 
 		<portlet-class>org.openxava.web.portlets.XavaPortlet</portlet-class>
 		<init-param>
 			<name>Application</name>
@@ -46,7 +56,8 @@ for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
 		<init-param>
 			<name>Module</name>
 			<value>#(module.getName())#</value>
-		</init-param>				
+		</init-param>			
+	# } # 
 		<expiration-cache>-1</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>

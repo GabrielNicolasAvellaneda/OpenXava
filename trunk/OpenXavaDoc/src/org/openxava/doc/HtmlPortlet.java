@@ -46,7 +46,7 @@ public class HtmlPortlet extends GenericPortlet {
 	
 	public void init(PortletConfig config) throws PortletException {
 		super.init(config);		
-		this.page = "/" + config.getInitParameter(PARAM_PAGE);
+		this.page = "/" + config.getInitParameter(PARAM_PAGE);		
 		this.languages = config.getInitParameter(PARAM_LANGUAGES);
 		if (this.languages == null) this.languages = "en,es";
 	}
@@ -62,7 +62,7 @@ public class HtmlPortlet extends GenericPortlet {
 		String language = request.getLocale().getLanguage();		
 		if (languages.indexOf(language) < 0) {			
 			language = language.equals("ca")?"es":"en";
-		}		
+		}				
 		String url = page + "_" + language + ".html";
 		PortletRequestDispatcher rd = context.getRequestDispatcher(url);						
 		rd.include(request, response);		

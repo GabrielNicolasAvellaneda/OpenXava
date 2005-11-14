@@ -9,7 +9,7 @@ import org.openxava.generators.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Wed Nov 02 18:35:54 CET 2005
+ * @version Fri Nov 11 12:46:26 CET 2005
  */
 public class Jetspeed2FolderPG {
     Properties properties = new Properties();
@@ -89,7 +89,7 @@ public class Jetspeed2FolderPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Wed Nov 02 18:35:54 CET 2005", // date this file was generated
+        { "Fri Nov 11 12:46:26 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/jetspeed2folder.xml", // input file
              "/home/javi/workspace/OpenXava/generator/Jetspeed2FolderPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

@@ -1,0 +1,34 @@
+<b>OpenXava no tiene seguridad o sistema de gestión de usuarios</b><br>
+Pero podemos usar la seguridad del portal Java subyacente.
+Deberías consultar la documentación de tu portal sobre seguridad.
+De todas formas aquí hay algunos trucos para usar con JetSpeed2.<br>
+
+<h4>Seguridad de JetSpeed y OpenXava</h4>
+Cuando OpenXava despliega portlets también genera archivos propios de JetSpeed2.
+Estos archivos están en <code>openxava.war/WEB-INF/pages</code> dentro
+de una carpeta llamada como tu proyecto.
+Por ejemplo, si tu aplicación es <i>MiEscuela</i> estos archivos están
+en <code>openxava.war/WEB-INF/pages/MiEscuela</code><br>
+Estos archivos están configurados para garantizar acceso total a la aplicación a
+los usuarios del grupo 'MiEscuela', por ende si quieres garantizar o denegar acceso a
+tu aplicación tienes que crear un nuevo grupo 
+llamado 'MiEscuela' y asignar a él todos los usuarios que quieras. Esto lo
+puedes hacer con los 'Portlets administrativos Jetspeed'<br>
+Si necesitas una seguridad más granulada, puedes editar estos archivos y modificarlos.
+Mira lo documentación sobre ese tema en <a href="http://portals.apache.org/jetspeed-2/bronco.html">
+JetSpeed 2 Site</a>. Ten cuidado, porque los archiovs de JetSpeed2 son sobreescritos por OpenXava
+cuando despliegas los portlets de nuevo. Por lo tanto necesitas configurar tu
+tarea ant de esta forma:
+<pre>
+&lt;target name="desplegarPortlets"&gt;
+	&lt;ant antfile="../OpenXava/build.xml" target="deployPortlets"&gt;
+		&lt;property name="<b>generate.jetspeed2.files</b>" value="false"/&gt;
+	&lt;/ant&gt;		
+&lt;/target&gt;	
+</pre>
+
+<h4>Restricción de datos por usuario</h4>
+Si deseas restrigir los datos dependiendo del usuario actual, puedes usar
+técnicas de programación. Sobre esto puedes ver el código de
+<code>org.openxava.filters.UserFilter</code>. En este caso se usa <code>request.getRemoteUser()</code>
+para filtrar los datos.

@@ -460,5 +460,17 @@ public class Strings {
 		while (st.hasMoreTokens()) r = st.nextToken();
 		return r;
 	}
+	
+	/**
+	 * 
+	 * @return If string if null or have no tokens returns empty string.
+	 */
+	public static String firstToken(String string, String delim) {
+		if (string == null) return "";
+		StringTokenizer st = new StringTokenizer(string, delim);		
+		if (st.hasMoreTokens()) return st.nextToken().trim();
+		return "";
+	}
+	
     
 }

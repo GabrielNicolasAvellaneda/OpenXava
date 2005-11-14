@@ -4,6 +4,7 @@ import java.rmi.*;
 
 import org.openxava.calculators.*;
 import org.openxava.test.model.*;
+import org.openxava.test.model.xejb.*;
 
 /**
  * @author Javier Paniza
@@ -18,7 +19,7 @@ public class DeliveryTypePostmodifyCalculator implements IEntityCalculator {
 		return null;
 	}
 
-	public void setEntity(Object entity) throws RemoteException {
+	public void setEntity(Object entity) throws RemoteException {		
 		deliveryType = (IDeliveryType) entity;		
 	}
 
