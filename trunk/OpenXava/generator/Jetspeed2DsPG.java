@@ -4,12 +4,13 @@ import org.w3c.dom.*;
 import java.io.*;
 import java.util.*;
 import java.util.*;
+import org.openxava.util.*;
 import org.openxava.application.meta.*;
 import org.openxava.generators.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Fri Nov 11 12:46:27 CET 2005
+ * @version Tue Nov 15 13:52:01 CET 2005
  */
 public class Jetspeed2DsPG {
     Properties properties = new Properties();
@@ -24,28 +25,36 @@ public class Jetspeed2DsPG {
     out.print(" -->");
     
     String applicationName = properties.getProperty("arg3");
+    String folder = properties.getProperty("arg4");
     MetaApplication application = MetaApplications.getMetaApplication(applicationName);
+    String title = Is.emptyString(folder)?application.getLabel():application.getFolderLabel(folder);
+    String group = Is.emptyString(folder)?applicationName:applicationName + "." + Strings.change(folder, "/", ".");
     
     out.print(" \n\n<document-set>\n\t<title>");
-    out.print(applicationName);
+    out.print(title);
     out.print("</title>");
     	
     Collection locales = Generators.getAvailableLocales("../" + applicationName + "/i18n");
     for (Iterator it=locales.iterator(); it.hasNext();) {
     	Locale locale = (Locale) it.next();
+    	String i18nTitle = Is.emptyString(folder)?application.getLabel(locale):application.getFolderLabel(locale, folder);
     
     out.print("     \n\t<metadata name=\"title\" xml:lang=\"");
     out.print(locale);
     out.print("\">");
-    out.print(application.getLabel());
+    out.print(i18nTitle);
     out.print("</metadata>");
     
     }
     
+    folder = folder == null?"":folder + "/";
+    
     out.print(" \n\t\n\t<profile-locator>page</profile-locator>\n\t<document-path regexp=\"true\">/");
     out.print(applicationName);
-    out.print("/*.psml</document-path>\n\n\t<security-constraints>\n\t\t<security-constraint>\n\t\t\t<groups>");
-    out.print(applicationName);
+    out.print("/");
+    out.print(folder);
+    out.print("*.psml</document-path>\n\n\t<security-constraints>\n\t\t<security-constraint>\n\t\t\t<groups>");
+    out.print(group);
     out.print("</groups>\n\t\t\t<permissions>view, edit</permissions>\n\t\t</security-constraint>\n\t</security-constraints>\n\n</document-set>");
     
         } catch (Exception e) {
@@ -81,7 +90,7 @@ public class Jetspeed2DsPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Fri Nov 11 12:46:27 CET 2005", // date this file was generated
+        { "Tue Nov 15 13:52:01 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/jetspeed2ds.xml", // input file
              "/home/javi/workspace/OpenXava/generator/Jetspeed2DsPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

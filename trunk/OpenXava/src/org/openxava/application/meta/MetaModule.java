@@ -13,13 +13,14 @@ public class MetaModule extends MetaElement implements java.io.Serializable {
 	
 	private Map environmentVariables;
 	private Environment environment;
+	private String folder;
 	private String modelName;
 	private String swingViewClass;
 	private String webViewURL;
 	private String viewName;
 	private String tabName;
 	private String docURL; 
-	private String docLanguages; 
+	private String docLanguages;	
 	private MetaApplication metaApplication;	
 	private Collection controllersNames = new ArrayList();
 	private String modeControllerName;	
@@ -120,6 +121,12 @@ public class MetaModule extends MetaElement implements java.io.Serializable {
 	}
 	public void setDocLanguages(String docLanguages) {
 		this.docLanguages = docLanguages;
+	}
+	public String getFolder() {
+		return folder;
+	}
+	public void setFolder(String folder) {
+		this.folder = folder;
 	}	
 
 }

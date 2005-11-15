@@ -221,5 +221,21 @@
 		<resource-bundle>WebSpherePortal</resource-bundle>		
 	</portlet> 
 	
-						
+	<portlet id="Security">
+		<description>Security</description>    
+		<portlet-name>Security</portlet-name>
+		<display-name>Security</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>security</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<resource-bundle>Security</resource-bundle>		
+	</portlet> 
+							
 </portlet-app>

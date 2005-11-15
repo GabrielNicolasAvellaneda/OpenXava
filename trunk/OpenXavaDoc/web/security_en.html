@@ -7,14 +7,18 @@ Anyways here there are some tips for JetSpeed2.<br>
 When OpenXava deploy portlets also generates propietary JetSpeed2 files.
 These files are in <code>openxava.war/WEB-INF/pages</code> inside a folder named 
 as your proyect.
-For example, if your application is <i>MySchool</i> these files are
-in <code>openxava.war/WEB-INF/pages/MySchool</code><br>
-These files are configured to grant all access to the application to
-the users of group 'MySchool', hence if you want grant or deny access to
-your application you must to create a new group
-named 'MySchool' and assign to it all the users of your election. You can do this
-with JetSpeed Administrative Portlets.<br>
-
+For example, if your application is <i>Invoicing</i> these files are
+in <code>openxava.war/WEB-INF/pages/Invoicing</code><br>.
+All files (modules defined inside PSML files) in root folder (in Invoicing) 
+are accessibles to users in group <i>Invoicing</i>, all files in subfolder 
+customers (in Invoicing/customers) are accessibles to users
+in group <i>Invoicing.customers</i>,
+all files in subfolder reports of customers (in Invoicing/customers/reports) 
+are accessibles to users in group <i>Invoicing.customers.reports</i>, and so on.<br>
+Your only need use the Jetspeed Administrative Portlets to create the user groups
+<i>Invoicing</i>, <i>Invoicing.customers</i> and <i>Invoicing.customers.reports</i> and assign your users
+to this groups as you wish.
+<p>
 If you need a more granulated security, you can edit these files and to modify them.
 See documentation about this in <a href="http://portals.apache.org/jetspeed-2/bronco.html">
 JetSpeed 2 Site</a>. Beware, because the JetSpeed2 files are overwrited by OpenXava

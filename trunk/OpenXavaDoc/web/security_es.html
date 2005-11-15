@@ -1,22 +1,27 @@
-<b>OpenXava no tiene seguridad o sistema de gestión de usuarios</b><br>
+<b>OpenXava no tiene seguridad o sistema de gesti&oacute;n de usuarios</b><br>
 Pero podemos usar la seguridad del portal Java subyacente.
-Deberías consultar la documentación de tu portal sobre seguridad.
-De todas formas aquí hay algunos trucos para usar con JetSpeed2.<br>
+Deber&iacute;as consultar la documentaci&oacute;n de tu portal sobre seguridad.
+De todas formas aqu&iacute; hay algunos trucos para usar con JetSpeed2.<br>
 
 <h4>Seguridad de JetSpeed y OpenXava</h4>
-Cuando OpenXava despliega portlets también genera archivos propios de JetSpeed2.
-Estos archivos están en <code>openxava.war/WEB-INF/pages</code> dentro
+Cuando OpenXava despliega portlets tambi&eacute;n genera archivos propios de JetSpeed2.
+Estos archivos est&aacute;n en <code>openxava.war/WEB-INF/pages</code> dentro
 de una carpeta llamada como tu proyecto.
-Por ejemplo, si tu aplicación es <i>MiEscuela</i> estos archivos están
-en <code>openxava.war/WEB-INF/pages/MiEscuela</code><br>
-Estos archivos están configurados para garantizar acceso total a la aplicación a
-los usuarios del grupo 'MiEscuela', por ende si quieres garantizar o denegar acceso a
-tu aplicación tienes que crear un nuevo grupo 
-llamado 'MiEscuela' y asignar a él todos los usuarios que quieras. Esto lo
-puedes hacer con los 'Portlets administrativos Jetspeed'<br>
-Si necesitas una seguridad más granulada, puedes editar estos archivos y modificarlos.
-Mira lo documentación sobre ese tema en <a href="http://portals.apache.org/jetspeed-2/bronco.html">
-JetSpeed 2 Site</a>. Ten cuidado, porque los archiovs de JetSpeed2 son sobreescritos por OpenXava
+Por ejemplo, si tu aplicaci&oacute;n es <i>Facturacion</i> estos archivos est&aacute;n 
+en <code>openxava.war/WEB-INF/pages/Facturacion</code><br>.
+Todos los archivos (m&oacute;dulos definidos dentro de archivos PSML) en la carpeta raiz (en Facturacion) 
+son accesibles a usuarios del grupo <i>Facturacion</i>, todos los archivos en la subcarpeta
+clientes (en Facturacion/clientes) son accesible a usuarios
+en el grupo <i>Invoicing.customers</i>,
+todos los archivos en la subcarpeta informes de clientes (en Facturacion/clientes/informes)
+son accesibles a usuarios en el grupo <i>Facturacion.clientes.informes</i> y as&iacute; por el estilo.<br>
+Solo necesitas usar los Portlets administrativos Jetspeed para crear los grupos de usuarios
+<i>Facturas</i>, <i>Facturas.clientes</i> y <i>Facturas.clientes.informes</i> y asignar tus usuarios
+a estos grupos a tu gusto.
+<p>
+Si necesitas una seguridad m&aacute;s granulada, puedes editar estos archivos y modificarlos.
+Mira lo documentaci&oacute;n sobre ese tema en <a href="http://portals.apache.org/jetspeed-2/bronco.html">
+JetSpeed 2 Site</a>. Ten cuidado, porque los archivos de JetSpeed2 son sobreescritos por OpenXava
 cuando despliegas los portlets de nuevo. Por lo tanto necesitas configurar tu
 tarea ant de esta forma:
 <pre>
@@ -27,8 +32,8 @@ tarea ant de esta forma:
 &lt;/target&gt;	
 </pre>
 
-<h4>Restricción de datos por usuario</h4>
+<h4>Restricci&oacute;n de datos por usuario</h4>
 Si deseas restrigir los datos dependiendo del usuario actual, puedes usar
-técnicas de programación. Sobre esto puedes ver el código de
+t&eacute;cnicas de programaci&oacute;n. Sobre esto puedes ver el c&oacute;digo de
 <code>org.openxava.filters.UserFilter</code>. En este caso se usa <code>request.getRemoteUser()</code>
 para filtrar los datos.

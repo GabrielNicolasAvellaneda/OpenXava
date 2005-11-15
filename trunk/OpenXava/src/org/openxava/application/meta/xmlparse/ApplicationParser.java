@@ -47,7 +47,8 @@ public class ApplicationParser extends ParserBase {
 	private MetaModule createModule(Node n) throws XavaException {
 		Element el = (Element) n;
 		MetaModule m = new MetaModule();
-		m.setName(el.getAttribute(xname[lang]));		
+		m.setName(el.getAttribute(xname[lang]));
+		m.setFolder(Strings.change(el.getAttribute(xfolder[lang]), ".", "/"));
 		m.setLabel(el.getAttribute(xlabel[lang]));
 		m.setDescription(el.getAttribute(xdescription[lang]));
 		m.setModelName(createModel(el));

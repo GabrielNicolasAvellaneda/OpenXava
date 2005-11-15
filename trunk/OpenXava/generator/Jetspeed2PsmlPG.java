@@ -4,12 +4,13 @@ import org.w3c.dom.*;
 import java.io.*;
 import java.util.*;
 import java.util.*;
+import org.openxava.util.*;
 import org.openxava.application.meta.*;
 import org.openxava.generators.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Fri Nov 11 12:46:26 CET 2005
+ * @version Tue Nov 15 13:52:00 CET 2005
  */
 public class Jetspeed2PsmlPG {
     Properties properties = new Properties();
@@ -25,6 +26,8 @@ public class Jetspeed2PsmlPG {
     
     String applicationName = properties.getProperty("arg3");
     String moduleName = properties.getProperty("arg4");
+    String folder = properties.getProperty("arg5");
+    String group = Is.emptyString(folder)?applicationName:applicationName + "." + Strings.change(folder, "/", ".");
     MetaModule module = MetaApplications.getMetaApplication(applicationName).getMetaModule(moduleName);
     
     out.print(" \n\n<page>\n\t<defaults\n\t\tskin=\"orange\"\n\t\tlayout-decorator=\"tigris\"\n\t\tportlet-decorator=\"tigris\"\n\t/>\n\t<title>");
@@ -56,7 +59,7 @@ public class Jetspeed2PsmlPG {
     out.print("::");
     out.print(moduleName);
     out.print("\">\n\t\t\t<property layout=\"OneColumn\" name=\"row\" value=\"0\" />\n\t\t\t<property layout=\"OneColumn\" name=\"column\" value=\"0\" />\n\t\t</fragment>\n\n\t</fragment>\n\n\t<security-constraints>\n\t\t<security-constraint>\n\t\t\t<groups>");
-    out.print(applicationName);
+    out.print(group);
     out.print("</groups>\n\t\t\t<permissions>view, edit</permissions>\n\t\t</security-constraint>\n\t</security-constraints>\n\n</page>");
     
         } catch (Exception e) {
@@ -92,7 +95,7 @@ public class Jetspeed2PsmlPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Fri Nov 11 12:46:26 CET 2005", // date this file was generated
+        { "Tue Nov 15 13:52:00 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/jetspeed2psml.xml", // input file
              "/home/javi/workspace/OpenXava/generator/Jetspeed2PsmlPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

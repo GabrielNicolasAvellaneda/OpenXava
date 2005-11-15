@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 #declare import="java.util.*"#
+#declare import="org.openxava.util.*"#
 #declare import="org.openxava.application.meta.*"#
 #declare import="org.openxava.generators.*"#
 
@@ -8,24 +9,28 @@
 
 # 
 String applicationName = properties.getProperty("arg3");
+String folder = properties.getProperty("arg4");
 MetaApplication application = MetaApplications.getMetaApplication(applicationName);
+String title = Is.emptyString(folder)?application.getLabel():application.getFolderLabel(folder);
+String group = Is.emptyString(folder)?applicationName:applicationName + "." + Strings.change(folder, "/", ".");
 
 Collection locales = Generators.getAvailableLocales("../" + applicationName + "/i18n");
 # 
 <folder>
-	<title>#(application.getLabel())#</title>
+	<title>#(title)#</title>
 # 	
 for (Iterator it=locales.iterator(); it.hasNext();) {
 	Locale locale = (Locale) it.next();
+	String i18nTitle = Is.emptyString(folder)?application.getLabel(locale):application.getFolderLabel(locale, folder);
 #     
-	<metadata name="title" xml:lang="#(locale)#">#(application.getLabel())#</metadata>
+	<metadata name="title" xml:lang="#(locale)#">#(i18nTitle)#</metadata>
 # 
 }
 # 
 
 
 # 	
-for (Iterator it=application.getModulesNames().iterator(); it.hasNext();) {
+for (Iterator it=application.getModulesNamesByFolder(folder).iterator(); it.hasNext();) {
 #     
 	<document-order>#(it.next())#.psml</document-order>
 # 
@@ -34,7 +39,7 @@ for (Iterator it=application.getModulesNames().iterator(); it.hasNext();) {
 
 	<security-constraints>
 		<security-constraint>
-			<groups>#(applicationName)#</groups>
+			<groups>#(group)#</groups>
 			<permissions>view, edit</permissions>
 		</security-constraint>
 	</security-constraints>

@@ -455,11 +455,18 @@ public class Strings {
 	} 
 	
 	public static String lastToken(String string) {
-		StringTokenizer st = new StringTokenizer(string);
+		return lastToken(new StringTokenizer(string));
+	}
+	
+	public static String lastToken(String string, String delim) {
+		return lastToken(new StringTokenizer(string, delim));
+	}
+		
+	private static String lastToken(StringTokenizer st) {
 		String r = null;
 		while (st.hasMoreTokens()) r = st.nextToken();
 		return r;
-	}
+	}	
 	
 	/**
 	 * 

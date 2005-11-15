@@ -51,9 +51,11 @@ public class PortletCodeGenerator {
 			
 	private void run() throws Exception {		 
 		try {
+			Locale.setDefault(defaultLocale);
+			
 			// portlet.xml
 			String [] argvPortlet = {
-				"../" + project + "/web/WEB-INF/web.xml",
+				"../OpenXava/xava/default-size.xml", // some valid xml is required by TL, not used
 				"../" + project + "/web/WEB-INF/portlet.xml",
 				project
 			};
@@ -61,46 +63,81 @@ public class PortletCodeGenerator {
 			
 			if (isGenerateJetspeed2Files()) {
 				
-				// folder.metadata
+				// Remove all
+				File projectFolder = new File(pagesDir + "/" + project);
+				Files.deleteDir(projectFolder);
+				projectFolder.mkdirs();
+
+				// Obtaining application 
+				MetaApplication app = MetaApplications.getMetaApplication(project);				
+				
+				// folder.metadata				
 				String [] argvFolder = {				
-					"../" + project + "/web/WEB-INF/web.xml",				
+					"../OpenXava/xava/default-size.xml", // some valid xml is required by TL, not used				
 					pagesDir + "/" + project + "/folder.metadata",
 					project
 				};			
 				Jetspeed2FolderPG.main(argvFolder);
 				
-				// ds
+				for (Iterator it=app.getFolders().iterator(); it.hasNext();) {
+					String folder = (String) it.next();
+					String folderURL = pagesDir + "/" + project + "/" + folder;
+					new File(folderURL).mkdirs();
+					String [] argvSubFolder = {				
+						"../OpenXava/xava/default-size.xml", // some valid xml is required by TL, not used				
+						folderURL + "/folder.metadata",
+						project,
+						folder
+					};
+					Jetspeed2FolderPG.main(argvSubFolder);
+				}
+				
+				// ds				
 				String [] argvDs = {				
-					"../" + project + "/web/WEB-INF/web.xml",				
+					"../OpenXava/xava/default-size.xml", // some valid xml is required by TL, not used				
 					pagesDir + "/" + project + "/" + project + ".ds",
 					project
-				};			
+				};
 				Jetspeed2DsPG.main(argvDs);
-							
-				// psml			
-				MetaApplication app = MetaApplications.getMetaApplication(project);
+				
+				for (Iterator it=app.getFolders().iterator(); it.hasNext();) {
+					String folder = (String) it.next();	
+					if (Is.emptyString(folder)) continue;					
+					String [] argvSubDs = {				
+						"../OpenXava/xava/default-size.xml", // some valid xml is required by TL, not used				
+						pagesDir + "/" + project + "/" + folder + "/"  + Strings.lastToken(folder, "./") + ".ds",
+						project,
+						folder
+					};
+					Jetspeed2DsPG.main(argvSubDs);
+				}
+								
+				// psml							
 				for (Iterator it=app.getMetaModules().iterator(); it.hasNext();) {
 					MetaModule module = (MetaModule) it.next();
+					String moduleFolder = Is.emptyString(module.getFolder())?"":module.getFolder() + "/";
+					String folder = pagesDir + "/" + project + "/" + moduleFolder;					
 					String [] argvPsml = {				
-						"../" + project + "/web/WEB-INF/web.xml",				
-						pagesDir + "/" + project + "/" + module.getName() + ".psml",
+						"../OpenXava/xava/default-size.xml", // some valid xml is required by TL, not used				
+						folder + module.getName() + ".psml", 
 						project,
-						module.getName()
+						module.getName(),
+						module.getFolder()
 					};
 					Jetspeed2PsmlPG.main(argvPsml);
-				}
+				}				
 				
 			}
 			
-			// i18n resource files							
+			// i18n resource files
 			File f = new File("../" + project + "/i18n/portlets/");
-			f.mkdir();
-			Locale.setDefault(defaultLocale);			
+			f.mkdir();						
 			MetaApplication app = MetaApplications.getMetaApplication(project);
 			for (Iterator it=app.getMetaModules().iterator(); it.hasNext();) {
 				MetaModule module = (MetaModule) it.next();
 				createI18nFiles(module);			
 			}
+			
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
