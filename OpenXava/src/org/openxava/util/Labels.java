@@ -95,8 +95,22 @@ public class Labels {
 			return false;
 		}
 	}
-	
+		
 	private static String getResource(String id, Locale locale) throws MissingResourceException, XavaException {
+		try { 
+			return getExactResource(id, locale);
+		}
+		catch (MissingResourceException ex) {
+			try {
+				return getExactResource(Strings.firstUpper(id), locale);
+			}
+			catch (MissingResourceException ex2) {
+				return getExactResource(Strings.firstLower(id), locale);
+			}
+		}
+	}	
+	
+	private static String getExactResource(String id, Locale locale) throws MissingResourceException, XavaException {
 		Iterator it = MetaApplications.getApplicationsNames().iterator();
 		while (it.hasNext()) {
 			String name = (String) it.next();

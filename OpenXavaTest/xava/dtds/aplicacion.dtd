@@ -8,6 +8,7 @@
 <!ELEMENT modulo (doc | (var-entorno*, modelo?, vista?, vista-swing?, vista-web?, tab?, controlador*, controlador-modo?) | listado)>
 <!ATTLIST modulo
  nombre ID #REQUIRED
+ carpeta CDATA #IMPLIED
  etiqueta CDATA #IMPLIED
  descripcion CDATA #IMPLIED
 >

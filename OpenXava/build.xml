@@ -648,7 +648,6 @@
 	</target>
 	
 	<target name="generatePortletXml" unless="regenerate.portlet.xml.notRequired">						
-		<mkdir dir="${jetspeed2.pages.dir}/${project}"/>
 		<echo>Generating portlets files</echo>
 		<!-- PortletCodeGenerator can generate portlets.xml, .psml, .ds and all jetspeed2 files -->
 		<java 

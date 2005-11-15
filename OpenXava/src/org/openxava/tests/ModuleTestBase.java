@@ -36,6 +36,7 @@ public class ModuleTestBase extends TestCase {
 	private List parameters;
 	private static String host;
 	private static String port;	
+	private MetaModule metaModule;
 	private MetaModel metaModel;
 	private MetaView metaView;
 	private MetaTab metaTab;
@@ -80,21 +81,22 @@ public class ModuleTestBase extends TestCase {
 			getForm().setParameter("org.apache.jetspeed.login.password", getJetspeed2Password());
 			getForm().submit();
 		}
-		response = conversation.getResponse(getModuleURL(module));
+		response = conversation.getResponse(getModuleURL());
 		resetForm();
 		propertyPrefix = null;		
 	}
 	
 	protected void changeModule(String module) throws Exception {
 		this.module = module;
-		response = conversation.getResponse(getModuleURL(module));
+		response = conversation.getResponse(getModuleURL());
 		resetForm();		
 		propertyPrefix = null;
 	}
 	
-	private String getModuleURL(String moduleName) {
+	private String getModuleURL() throws XavaException {
 		if (isJetspeed2Enabled()) {
-			return "http://" + getHost() + ":" + getPort() + "/" + getJetspeed2URL() + "/portal/" + application + "/" + module + ".psml";
+			String folder = Is.emptyString(getMetaModule().getFolder())?"":Strings.change(getMetaModule().getFolder(), ".", "/") + "/";
+			return "http://" + getHost() + ":" + getPort() + "/" + getJetspeed2URL() + "/portal/" + application + "/" + folder + module + ".psml";
 		}
 		else {
 			return"http://" + getHost() + ":" + getPort() + "/" + application + "/xava/module.jsp?application="+application+"&module=" + module;
@@ -783,28 +785,32 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	private MetaTab getMetaTab() throws XavaException {
-		if (metaTab == null) {
-			MetaModule metaModule = MetaApplications.getMetaApplication(this.application).getMetaModule(this.module);
-			metaTab = MetaComponent.get(metaModule.getModelName()).getMetaTab(metaModule.getTabName());			
+		if (metaTab == null) {			
+			metaTab = MetaComponent.get(getMetaModule().getModelName()).getMetaTab(getMetaModule().getTabName());			
 		}
 		return metaTab;
 	}
 	
 	private MetaView getMetaView() throws XavaException {
-		if (metaView == null) {
-			MetaModule metaModule = MetaApplications.getMetaApplication(this.application).getMetaModule(this.module);			 			
-			metaView = getMetaModel().getMetaView(metaModule.getViewName());			
+		if (metaView == null) {						 			
+			metaView = getMetaModel().getMetaView(getMetaModule().getViewName());			
 		}
 		return metaView;
 	}
 	
 	private MetaModel getMetaModel() throws XavaException {
-		if (metaModel == null) {
-			MetaModule metaModule = MetaApplications.getMetaApplication(this.application).getMetaModule(this.module);
-			metaModel = MetaComponent.get(metaModule.getModelName()).getMetaEntity(); 									
+		if (metaModel == null) {			
+			metaModel = MetaComponent.get(getMetaModule().getModelName()).getMetaEntity(); 									
 		}
 		return metaModel;
 	}	
+	
+	private MetaModule getMetaModule() throws XavaException {
+		if (metaModule == null) {
+			metaModule = MetaApplications.getMetaApplication(this.application).getMetaModule(this.module);
+		}
+		return metaModule;
+	}
 
 	
 	protected void assertValidValues(String name, String [][] values) throws Exception {

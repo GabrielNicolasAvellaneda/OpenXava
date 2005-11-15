@@ -2,6 +2,7 @@
 <tl>&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
 
 <declare import="java.util.*"/>
+<declare import="org.openxava.util.*"/>
 <declare import="org.openxava.application.meta.*"/>
 <declare import="org.openxava.generators.*"/>
 
@@ -10,6 +11,8 @@
 <java>
 String applicationName = properties.getProperty("arg3");
 String moduleName = properties.getProperty("arg4");
+String folder = properties.getProperty("arg5");
+String group = Is.emptyString(folder)?applicationName:applicationName + "." + Strings.change(folder, "/", ".");
 MetaModule module = MetaApplications.getMetaApplication(applicationName).getMetaModule(moduleName);
 </java> 
 
@@ -41,7 +44,7 @@ for (Iterator it=locales.iterator(); it.hasNext();) {
 
 	&lt;security-constraints&gt;
 		&lt;security-constraint&gt;
-			&lt;groups&gt;<expr>applicationName</expr>&lt;/groups&gt;
+			&lt;groups&gt;<expr>group</expr>&lt;/groups&gt;
 			&lt;permissions&gt;view, edit&lt;/permissions&gt;
 		&lt;/security-constraint&gt;
 	&lt;/security-constraints&gt;
