@@ -16,10 +16,16 @@ public class SaveAction extends ViewBaseAction {
 	private boolean resetAfter = true;
 
 	public void execute() throws Exception {
-		try {					
+		try {
+			Map values = null;
 			if (getView().isKeyEditable()) {
 				// Create
-				MapFacade.create(getModelName(), getValuesToSave());				
+				if (isResetAfter()) {
+					MapFacade.create(getModelName(), getValuesToSave());					
+				}
+				else {					
+					values = MapFacade.createReturningValues(getModelName(), getValuesToSave());	
+				}								
 			}
 			else {
 				// Modify				
@@ -29,7 +35,8 @@ public class SaveAction extends ViewBaseAction {
 				getView().reset();
 				getView().setKeyEditable(true);
 			}
-			else {
+			else {				
+				getView().setValues(values);
 				getView().setKeyEditable(false);
 			}			
 			resetDescriptionsCache();
