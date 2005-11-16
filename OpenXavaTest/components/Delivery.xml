@@ -67,7 +67,7 @@
 				<valid-value value="Carrier"/>      
 			</valid-values>  	
 			<!-- 
-				A calculator that return 0 is like not have,
+				A calculator that return 0 is like not have it,
 				but we set for verifying that we can have a calculator and not fail
 				-->
 			<default-value-calculator class="org.openxava.calculators.IntegerCalculator">				

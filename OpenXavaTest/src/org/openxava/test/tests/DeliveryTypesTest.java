@@ -15,6 +15,23 @@ public class DeliveryTypesTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "DeliveryTypes");		
 	}
 	
+	public void testSaveActionNotResetRefreshData() throws Exception {
+		execute("CRUD.new");
+		setValue("number", "66");
+		setValue("description", "JUNIT");
+		execute("DeliveryTypes.saveNotReset");
+		assertNoErrors();
+		
+		assertValue("number", "66");		
+		assertValue("description", "JUNIT CREATED"); // 'CREATED' is added in postcreate
+		assertNoEditable("number");
+		assertEditable("description");
+		
+		execute("CRUD.delete");		
+		assertNoErrors();
+		assertMessage("DeliveryType deleted successfully");				 				
+	}
+	
 	public void testPostmodifiyCalculatorNotOnRead() throws Exception {
 		assertListNotEmpty();
 		execute("Mode.detailAndFirst");
