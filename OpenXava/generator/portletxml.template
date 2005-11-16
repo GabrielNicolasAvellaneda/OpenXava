@@ -24,18 +24,18 @@ for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
 	MetaModule module = (MetaModule) it.next();
 # 
 	<portlet id="#(module.getName())#">
-		<description>#(module.getDescription())#</description>
+		<description>#(application.getLabel())# - #(module.getDescription())#</description>
     # for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
     	Locale locale = (Locale) itLocales.next();
     #    
-		<description xml:lang="#(locale)#">#(module.getDescription(locale))#</description>
+		<description xml:lang="#(locale)#">#(application.getLabel(locale))# - #(module.getDescription(locale))#</description>
 	# } #       
 		<portlet-name>#(module.getName())#</portlet-name>
-		<display-name>#(module.getLabel())#</display-name>
+		<display-name>#(application.getLabel())# - #(module.getLabel())#</display-name>
     # for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
     	Locale locale = (Locale) itLocales.next();
     #    
-		<display-name xml:lang="#(locale)#">#(module.getLabel(locale))#</display-name>
+		<display-name xml:lang="#(locale)#">#(application.getLabel(locale))# - #(module.getLabel(locale))#</display-name>
     # } # 
     # if (module.isDoc()) { # 
 		<portlet-class>org.openxava.web.portlets.HtmlPortlet</portlet-class>

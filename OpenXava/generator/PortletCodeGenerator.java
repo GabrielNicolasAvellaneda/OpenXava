@@ -135,7 +135,7 @@ public class PortletCodeGenerator {
 			MetaApplication app = MetaApplications.getMetaApplication(project);
 			for (Iterator it=app.getMetaModules().iterator(); it.hasNext();) {
 				MetaModule module = (MetaModule) it.next();
-				createI18nFiles(module);			
+				createI18nFiles(app, module);			
 			}
 			
 		}
@@ -145,10 +145,10 @@ public class PortletCodeGenerator {
 		}
 	}	
 	
-	private void createI18nFiles(MetaModule module) throws Exception {		
+	private void createI18nFiles(MetaApplication app, MetaModule module) throws Exception {		
 		for (int i = 0; i < locales.length; i++) {
 			Properties i18n = new Properties();			
-			i18n.put("javax.portlet.title", module.getDescription(locales[i]));
+			i18n.put("javax.portlet.title", app.getLabel(locales[i]) + " - " +  module.getDescription(locales[i]));
 			i18n.put("javax.portlet.short-title", module.getLabel(locales[i]));
 			i18n.store(new FileOutputStream("../" + project + "/i18n/portlets/" + module.getName() + "_" + locales[i].getLanguage() + ".properties"), null);
 		}

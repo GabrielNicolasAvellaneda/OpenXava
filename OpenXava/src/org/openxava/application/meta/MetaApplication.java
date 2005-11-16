@@ -33,7 +33,7 @@ public class MetaApplication extends MetaElement implements java.io.Serializable
 		}
 		catch (Exception ex) {
 			System.err.println(XavaResources.getString("element_i18n_warning", folder));
-			return firstUpper(folder);; 			
+			return firstUpper(folder); 			
 		}				
 	}
 	

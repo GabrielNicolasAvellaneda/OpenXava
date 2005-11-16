@@ -10,7 +10,7 @@ import org.openxava.generators.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Nov 15 13:52:00 CET 2005
+ * @version Wed Nov 16 11:57:19 CET 2005
  */
 public class Jetspeed2PsmlPG {
     Properties properties = new Properties();
@@ -95,7 +95,7 @@ public class Jetspeed2PsmlPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Nov 15 13:52:00 CET 2005", // date this file was generated
+        { "Wed Nov 16 11:57:19 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/jetspeed2psml.xml", // input file
              "/home/javi/workspace/OpenXava/generator/Jetspeed2PsmlPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

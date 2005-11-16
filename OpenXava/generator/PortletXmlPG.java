@@ -9,7 +9,7 @@ import org.openxava.generators.Generators;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Nov 15 13:52:00 CET 2005
+ * @version Wed Nov 16 11:57:18 CET 2005
  */
 public class PortletXmlPG {
     Properties properties = new Properties();
@@ -38,6 +38,8 @@ public class PortletXmlPG {
     out.print(" \n\t<portlet id=\"");
     out.print(module.getName());
     out.print("\">\n\t\t<description>");
+    out.print(application.getLabel());
+    out.print(" - ");
     out.print(module.getDescription());
     out.print("</description>");
     for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
@@ -46,12 +48,16 @@ public class PortletXmlPG {
     out.print("    \n\t\t<description xml:lang=\"");
     out.print(locale);
     out.print("\">");
+    out.print(application.getLabel(locale));
+    out.print(" - ");
     out.print(module.getDescription(locale));
     out.print("</description>");
     } 
     out.print("       \n\t\t<portlet-name>");
     out.print(module.getName());
     out.print("</portlet-name>\n\t\t<display-name>");
+    out.print(application.getLabel());
+    out.print(" - ");
     out.print(module.getLabel());
     out.print("</display-name>");
     for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
@@ -60,6 +66,8 @@ public class PortletXmlPG {
     out.print("    \n\t\t<display-name xml:lang=\"");
     out.print(locale);
     out.print("\">");
+    out.print(application.getLabel(locale));
+    out.print(" - ");
     out.print(module.getLabel(locale));
     out.print("</display-name>");
     } 
@@ -123,7 +131,7 @@ public class PortletXmlPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Nov 15 13:52:00 CET 2005", // date this file was generated
+        { "Wed Nov 16 11:57:18 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/portletxml.xml", // input file
              "/home/javi/workspace/OpenXava/generator/PortletXmlPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
