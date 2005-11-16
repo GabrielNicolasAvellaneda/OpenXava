@@ -25,18 +25,18 @@ for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
 	MetaModule module = (MetaModule) it.next();
 </java> 
 	&lt;portlet id="<expr>module.getName()</expr>"&gt;
-		&lt;description&gt;<expr>module.getDescription()</expr>&lt;/description&gt;
+		&lt;description&gt;<expr>application.getLabel()</expr> - <expr>module.getDescription()</expr>&lt;/description&gt;
     <java>for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
     	Locale locale = (Locale) itLocales.next();
     </java>    
-		&lt;description xml:lang="<expr>locale</expr>"&gt;<expr>module.getDescription(locale)</expr>&lt;/description&gt;
+		&lt;description xml:lang="<expr>locale</expr>"&gt;<expr>application.getLabel(locale)</expr> - <expr>module.getDescription(locale)</expr>&lt;/description&gt;
 	<java>} </java>       
 		&lt;portlet-name&gt;<expr>module.getName()</expr>&lt;/portlet-name&gt;
-		&lt;display-name&gt;<expr>module.getLabel()</expr>&lt;/display-name&gt;
+		&lt;display-name&gt;<expr>application.getLabel()</expr> - <expr>module.getLabel()</expr>&lt;/display-name&gt;
     <java>for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
     	Locale locale = (Locale) itLocales.next();
     </java>    
-		&lt;display-name xml:lang="<expr>locale</expr>"&gt;<expr>module.getLabel(locale)</expr>&lt;/display-name&gt;
+		&lt;display-name xml:lang="<expr>locale</expr>"&gt;<expr>application.getLabel(locale)</expr> - <expr>module.getLabel(locale)</expr>&lt;/display-name&gt;
     <java>} </java> 
     <java>if (module.isDoc()) { </java> 
 		&lt;portlet-class&gt;org.openxava.web.portlets.HtmlPortlet&lt;/portlet-class&gt;
