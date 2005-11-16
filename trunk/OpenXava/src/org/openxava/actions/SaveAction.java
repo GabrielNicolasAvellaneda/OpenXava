@@ -56,10 +56,22 @@ public class SaveAction extends ViewBaseAction {
 		return getView().getValues();
 	}
 	
+	/**
+	 * If <tt>true</tt> reset the form after save, else refresh the
+	 * form from database displayed the recently saved data. <p>
+	 * 
+	 * The default value is <tt>true</tt>.
+	 */
 	public boolean isResetAfter() {
 		return resetAfter;
 	}
 
+	/**
+	 * If <tt>true</tt> reset the form after save, else refresh the
+	 * form from database displayed the recently saved data. <p>
+	 * 
+	 * The default value is <tt>true</tt>.
+	 */
 	public void setResetAfter(boolean b) {
 		resetAfter = b;
 	}
