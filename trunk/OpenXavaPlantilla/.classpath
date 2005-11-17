@@ -9,6 +9,5 @@
 	<classpathentry kind="src" path="gen-src-xava"/>
 	<classpathentry kind="src" path="properties"/>
 	<classpathentry kind="src" path="/OpenXava"/>
-	<classpathentry kind="var" path="JBOSS_HOME/client/jbossall-client.jar"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>

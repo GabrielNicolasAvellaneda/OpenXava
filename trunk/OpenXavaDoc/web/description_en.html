@@ -5,31 +5,61 @@ Its virtue resides in the fact that the heart of our applications is XML instead
 of Java.<br>
 For example, if you want a J2EE application that works with <i>Teachers</i> 
 you only need to write this simple XML code:
-<pre>
-&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+<p>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080">&lt;?</FONT><FONT COLOR="#3f7f7f">xml
+</FONT><FONT COLOR="#7f007f">version</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;1.0&quot;
+</FONT><FONT COLOR="#7f007f">encoding</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;ISO-8859-1&quot;</FONT><FONT COLOR="#008080">?&gt;</FONT></FONT></FONT></SPAN><BR>
+<BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080">&lt;!</FONT><FONT COLOR="#3f7f7f">DOCTYPE
+</FONT><FONT COLOR="#000080">component </FONT><FONT COLOR="#808080">SYSTEM
+</FONT><FONT COLOR="#3f7f5f">&quot;dtds/component.dtd&quot;</FONT><FONT COLOR="#008080">&gt;</FONT></FONT></FONT></SPAN><BR>
+<BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080">&lt;</FONT><FONT COLOR="#3f7f7f">component
+</FONT><FONT COLOR="#7f007f">name</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;Teacher&quot;</FONT><FONT COLOR="#008080">&gt;</FONT></FONT></FONT></SPAN><BR>
+<BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;</FONT>&lt;</FONT><FONT COLOR="#3f7f7f">entity</FONT><FONT COLOR="#008080">&gt;</FONT></FONT></FONT></SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</FONT>&lt;</FONT><FONT COLOR="#3f7f7f">property
+</FONT><FONT COLOR="#7f007f">name</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;id&quot;
+</FONT><FONT COLOR="#7f007f">type</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;String&quot;
+</FONT></FONT></FONT>
+</SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#7f007f">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;true&quot;
+</FONT><FONT COLOR="#7f007f">size</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;5&quot;
+</FONT><FONT COLOR="#7f007f">required</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;true&quot;</FONT><FONT COLOR="#008080">/&gt;</FONT></FONT></FONT></SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</FONT>&lt;</FONT><FONT COLOR="#3f7f7f">property
+</FONT><FONT COLOR="#7f007f">name</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;name&quot;
+</FONT><FONT COLOR="#7f007f">type</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;String&quot;
+</FONT></FONT></FONT>
+</SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#7f007f"><FONT COLOR="#2a00ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</FONT>size</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;40&quot;
+</FONT><FONT COLOR="#7f007f">required</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;true&quot;</FONT><FONT COLOR="#008080">/&gt;</FONT><FONT COLOR="#000000">
+ </FONT></FONT></FONT>
+</SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;</FONT>&lt;/</FONT><FONT COLOR="#3f7f7f">entity</FONT><FONT COLOR="#008080">&gt;</FONT></FONT></FONT></SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"><FONT FACE="Monospace"><FONT SIZE=2>						</FONT></FONT></FONT></SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;</FONT>&lt;</FONT><FONT COLOR="#3f7f7f">entity-mapping
+</FONT><FONT COLOR="#7f007f">table</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;MYSCHOOL.TEACHER&quot;</FONT><FONT COLOR="#008080">&gt;</FONT></FONT></FONT></SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</FONT>&lt;</FONT><FONT COLOR="#3f7f7f">property-mapping
+</FONT></FONT></FONT>
+</SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#7f007f"><FONT COLOR="#2a00ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT COLOR="#7f007f">property</FONT><FONT COLOR="#000000">=</FONT>&quot;id&quot;
+</FONT>column</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;ID&quot;</FONT><FONT COLOR="#008080">/&gt;</FONT></FONT></FONT></SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</FONT>&lt;</FONT><FONT COLOR="#3f7f7f">property-mapping
+</FONT></FONT></FONT>
+</SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#7f007f"><FONT COLOR="#3f7f7f">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</FONT>property</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;name&quot;
+</FONT><FONT COLOR="#7f007f">column</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;NAME&quot;</FONT><FONT COLOR="#008080">/&gt;</FONT></FONT></FONT></SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;</FONT>&lt;/</FONT><FONT COLOR="#3f7f7f">entity-mapping</FONT><FONT COLOR="#008080">&gt;</FONT><FONT COLOR="#000000">
+</FONT></FONT></FONT>
+</SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"><FONT FACE="Monospace"><FONT SIZE=2>				</FONT></FONT></FONT></SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT SIZE=2><FONT FACE="Monospace"><FONT COLOR="#008080">&lt;/</FONT><FONT COLOR="#3f7f7f">component</FONT><FONT COLOR="#008080">&gt;</FONT></FONT></FONT></SPAN><BR>
+</p>
 
-&lt;!DOCTYPE component SYSTEM "dtds/component.dtd"&gt;
-
-&lt;component name="Teacher"&gt;
-
-	&lt;entity&gt;
-		&lt;property name="id" type="String" key="true"
-			size="5" required="true"/&gt;
-		&lt;property name="name" type="String" 
-			size="40" required="true"/&gt;			  
-	&lt;/entity&gt;
-						
-	&lt;entity-mapping table="MYSCHOOL@separator@TEACHER"&gt;
-		&lt;property-mapping property="id" column="ID"/&gt;
-		&lt;property-mapping property="name" column="NAME"/&gt;
-	&lt;/entity-mapping&gt; 
-				
-&lt;/component&gt;
-</pre>
 And no more. No Java classes, no XML files for mapping objects, no design
 of JSP or JSF pages, simply no more.<br>
 OpenXava generates for you a complete J2EE application (with CMP EJB or Hibernate
-for persistence) like <a href="MySchool">this</a>, and with a suitable User Interface for manage your <i>Teachers</i>.<br>
+for persistence) like <a href="/openxava/portal/MySchool">this</a>, and with a suitable User Interface for manage your <i>Teachers</i>.<br>
 The resulting application allows you make CRUD operations, searching, filtering, ordering,
 generating reports in PDF format, exporting to Excel, etc.<br>
 In spite of its rapid development features, OpenXava is flexible enough 

@@ -11,7 +11,16 @@
 	<property file="../openxava.properties"/>	
 	<property name="datasource" value="MiFuenteDeDatosDS"/>
 	<property name="separator" value="_"/>
-		
+	
+	<!--
+	type-mapping is used only for jboss, you can use any of this values:
+	FirstSQL/J, Ingres, McKoi, Firebird, InterBase, DB2, Oracle9i, Oracle8,
+	Oracle7, Sybase, PostgreSQL, PostgreSQL 7.2, Hypersonic SQL, PointBase,
+	SOLID, mySQL, MS SQLSERVER, MS SQLSERVER2000, DB2/400, SapDB, Cloudscape,
+	InformixDB, Mimer SQL
+	-->		
+	<property name="type-mapping" value="Hypersonic SQL"/>
+			
 	<target name="generarEJB">
 		<ant antfile="../OpenXava/build.xml" target="generateEJB"/>		
 	</target>
@@ -30,6 +39,15 @@
 		
 	<target name="desplegarWar">
 		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
-	</target>				
-		
+	</target>
+	
+	<target name="redesplegarPortlets"> 
+		<touch file="../${project}/xava/aplicacion.xml"/>
+		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
+	</target>
+	
+	<target name="desplegarPortlets"> 
+		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
+	</target>
+			
 </project>

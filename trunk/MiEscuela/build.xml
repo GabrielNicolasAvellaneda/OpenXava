@@ -36,6 +36,11 @@
 		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
 	</target>				
 	
+	<target name="redeployPortlets"> 
+		<touch file="../${project}/xava/aplicacion.xml"/>
+		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
+	</target>
+		
 	<target name="desplegarPortlets"> 
 		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
 	</target>		

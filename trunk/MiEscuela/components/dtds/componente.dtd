@@ -62,19 +62,20 @@
 <!ATTLIST vista-referencia
   referencia CDATA #REQUIRED
   vista CDATA #IMPLIED
-	solo-lectura (true|false) "false"
+  solo-lectura (true|false) "false"
   marco (true|false) "true"
-	crear (true|false) "true"
-	buscar (true|false) "true"
+  crear (true|false) "true"
+  buscar (true|false) "true"
 >
 
 <!ELEMENT lista-descripciones EMPTY>
 <!ATTLIST lista-descripciones
   propiedad-descripcion CDATA #IMPLIED
-	propiedades-descripcion CDATA #IMPLIED
+  propiedades-descripcion CDATA #IMPLIED
   depende-de CDATA #IMPLIED
   condicion CDATA #IMPLIED
   ordenado-por-clave (true|false) "false"    
+  orden CDATA #IMPLIED
 >
 
 <!ELEMENT vista-propiedad (al-cambiar?, accion*)>
@@ -91,7 +92,7 @@
 >
 
 
-<!ELEMENT vista-coleccion (mediador?, propiedades-lista?, accion-editar?, accion-lista*, accion-detalle*)>
+<!ELEMENT vista-coleccion (mediador?, propiedades-lista?, accion-editar?, accion-ver?, accion-lista*, accion-detalle*)>
 <!ATTLIST vista-coleccion
   coleccion CDATA #REQUIRED
   vista CDATA #IMPLIED
@@ -112,6 +113,12 @@
 <!ATTLIST accion-editar
   accion CDATA #IMPLIED
 >
+
+<!ELEMENT accion-ver EMPTY>
+<!ATTLIST accion-ver
+  accion CDATA #IMPLIED
+>
+
 
 <!ELEMENT accion-detalle EMPTY>
 <!ATTLIST accion-detalle
@@ -184,6 +191,7 @@
 <!ATTLIST validador
  clase CDATA #IMPLIED
  nombre CDATA #IMPLIED
+ solo-al-crear (true|false) "false" 
 >
 
 <!ELEMENT validador-borrar (poner*)>

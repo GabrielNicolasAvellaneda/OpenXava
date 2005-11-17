@@ -5,11 +5,18 @@
 >
 
 
-<!ELEMENT module ((env-var*, model?, view?, web-view?, tab?, controller*, mode-controller?))>
+<!ELEMENT module (doc | (env-var*, model?, view?, web-view?, tab?, controller*, mode-controller?))>
 <!ATTLIST module
  name ID #REQUIRED
+ folder CDATA #IMPLIED
  label CDATA #IMPLIED
  description CDATA #IMPLIED
+>
+
+<!ELEMENT doc EMPTY>
+<!ATTLIST doc
+ url CDATA #REQUIRED
+ languages CDATA #IMPLIED
 >
 
 <!ELEMENT env-var EMPTY>

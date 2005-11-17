@@ -26,7 +26,7 @@ script = script + scriptFoco;
 Object value = request.getAttribute(propertyKey + ".value");
 
 if (WebEditors.mustToFormat(p)) {
-	String fvalue = WebEditors.format(request, p, value, errors);
+	Object fvalue = WebEditors.formatToStringOrArray(request, p, value, errors);
 	request.setAttribute(propertyKey + ".fvalue", fvalue);
 }
 boolean editable = view.isEditable(p);

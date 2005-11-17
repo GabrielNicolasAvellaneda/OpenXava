@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="org.openxava.tab.impl">
+
+  <class 
+  	name="TabUserPreferences"
+  	table="OPENXAVA_TABUSERPREFERENCES">
+  
+    <id name="oid" column="OID" access="field" unsaved-value="-1">
+			<generator class="identity"/>
+		</id>
+		
+		<property name="user" column="USER"/>
+		<property name="tab" column="TAB"/>
+		<property name="propertiesNames" column="PROPERTIESNAMES"/>
+		<property name="rowsHidden" column="ROWSHIDDEN"/>
+		
+  </class>
+
+</hibernate-mapping>
+
