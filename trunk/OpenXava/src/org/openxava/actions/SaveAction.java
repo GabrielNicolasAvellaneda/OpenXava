@@ -28,14 +28,18 @@ public class SaveAction extends ViewBaseAction {
 				}								
 			}
 			else {
-				// Modify				
-				MapFacade.setValues(getModelName(), getView().getKeyValues(), getValuesToSave());				
+				// Modify
+				MapFacade.setValues(getModelName(), getView().getKeyValues(), getValuesToSave());
+				if (!isResetAfter()) {
+					values = MapFacade.getValues(getModelName(), getView().getKeyValues(), getValuesToSave());
+				}
 			}
+			
 			if (isResetAfter()) {
 				getView().reset();
 				getView().setKeyEditable(true);
 			}
-			else {				
+			else {							
 				getView().setValues(values);
 				getView().setKeyEditable(false);
 			}			

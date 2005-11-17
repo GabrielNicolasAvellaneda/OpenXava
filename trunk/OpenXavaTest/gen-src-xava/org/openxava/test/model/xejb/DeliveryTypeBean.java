@@ -198,7 +198,7 @@ abstract public class DeliveryTypeBean extends EJBReplicableBase
 	 * @ejb:interface-method
 	 */
 	public String getDescription() {
-		try {
+		try {			
 			return (String) getDescriptionConverter().toJava(get_Description());
 		}
 		catch (org.openxava.converters.ConversionException ex) {

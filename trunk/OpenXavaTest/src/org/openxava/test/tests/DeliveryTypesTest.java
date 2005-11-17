@@ -27,6 +27,13 @@ public class DeliveryTypesTest extends ModuleTestBase {
 		assertNoEditable("number");
 		assertEditable("description");
 		
+		execute("DeliveryTypes.saveNotReset");
+		assertValue("number", "66");		
+		assertValue("description", "JUNIT CREATED MODIFIED"); // 'MODIFIED' is added in postcreate
+		assertNoEditable("number");
+		assertEditable("description");
+		
+		
 		execute("CRUD.delete");		
 		assertNoErrors();
 		assertMessage("DeliveryType deleted successfully");				 				
