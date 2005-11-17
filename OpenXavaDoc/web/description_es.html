@@ -5,31 +5,60 @@ Su principal virtud reside en el hecho de que el coraz&oacute;n de nuestras apli
 es XML en vez de Java.<br>
 Por ejemplo, si quieres una aplicaci&oacute;n J2EE para trabajar con <i>Profesores</i>
 solo necesitas escribir este sencillo archivo XML:
-<pre>
-&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
-
-&lt;!DOCTYPE componente SYSTEM "dtds/componente.dtd"&gt;
-
-&lt;componente nombre="Profesor"&gt;
-
-	&lt;entidad&gt;
-		&lt;propiedad nombre="codigo" tipo="String" clave="true"
-			longitud="5" requerido="true"/&gt;
-		&lt;propiedad nombre="nombre" tipo="String" 
-			longitud="40" requerido="true"/&gt;		  
-	&lt;/entidad&gt;
-						
-	&lt;mapeo-entidad tabla="MYSCHOOL@separator@TEACHER"&gt;
-		&lt;mapeo-propiedad propiedad-modelo="codigo" columna-tabla="ID"/&gt;
-		&lt;mapeo-propiedad propiedad-modelo="nombre" columna-tabla="NAME"/&gt;
-	&lt;/mapeo-entidad&gt;
-				
-&lt;/componente&gt;
-</pre>
+<p>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080">&lt;?</FONT><FONT COLOR="#3f7f7f">xml
+</FONT><FONT COLOR="#7f007f">version</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;1.0&quot;
+</FONT><FONT COLOR="#7f007f">encoding</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;ISO-8859-1&quot;</FONT><FONT COLOR="#008080">?&gt;</FONT></FONT></FONT></SPAN><BR>
+<BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080">&lt;!</FONT><FONT COLOR="#3f7f7f">DOCTYPE
+</FONT><FONT COLOR="#000080">componente </FONT><FONT COLOR="#808080">SYSTEM
+</FONT><FONT COLOR="#3f7f5f">&quot;dtds/componente.dtd&quot;</FONT><FONT COLOR="#008080">&gt;</FONT></FONT></FONT></SPAN><BR>
+<BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080">&lt;</FONT><FONT COLOR="#3f7f7f">componente
+</FONT><FONT COLOR="#7f007f">nombre</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;Profesor&quot;</FONT><FONT COLOR="#008080">&gt;</FONT></FONT></FONT></SPAN><BR>
+<BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;</FONT>&lt;</FONT><FONT COLOR="#3f7f7f">entidad</FONT><FONT COLOR="#008080">&gt;</FONT></FONT></FONT></SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</FONT>&lt;</FONT><FONT COLOR="#3f7f7f">propiedad
+</FONT><FONT COLOR="#7f007f">nombre</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;codigo&quot;
+</FONT><FONT COLOR="#7f007f">tipo</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;String&quot;
+</FONT></FONT></FONT>
+</SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#7f007f"><FONT COLOR="#2a00ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</FONT>clave</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;true&quot;
+</FONT><FONT COLOR="#7f007f">longitud</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;5&quot;
+</FONT><FONT COLOR="#7f007f">requerido</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;true&quot;</FONT><FONT COLOR="#008080">/&gt;</FONT></FONT></FONT></SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</FONT>&lt;</FONT><FONT COLOR="#3f7f7f">propiedad
+</FONT><FONT COLOR="#7f007f">nombre</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;nombre&quot;
+</FONT><FONT COLOR="#7f007f">tipo</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;String&quot;
+</FONT></FONT></FONT>
+</SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#7f007f"><FONT COLOR="#2a00ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</FONT>longitud</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;40&quot;
+</FONT><FONT COLOR="#7f007f">requerido</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;true&quot;</FONT><FONT COLOR="#008080">/&gt;</FONT><FONT COLOR="#000000">			
+ </FONT></FONT></FONT>
+</SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;</FONT>&lt;/</FONT><FONT COLOR="#3f7f7f">entidad</FONT><FONT COLOR="#008080">&gt;</FONT></FONT></FONT></SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"><FONT FACE="Monospace"><FONT SIZE=2>						</FONT></FONT></FONT></SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;</FONT>&lt;</FONT><FONT COLOR="#3f7f7f">mapeo-entidad
+</FONT><FONT COLOR="#7f007f">tabla</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;MYSCHOOL@separator@TEACHER&quot;</FONT><FONT COLOR="#008080">&gt;</FONT></FONT></FONT></SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</FONT>&lt;</FONT><FONT COLOR="#3f7f7f">mapeo-propiedad
+</FONT></FONT></FONT>
+</SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#7f007f"><FONT COLOR="#3f7f7f">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</FONT>propiedad-modelo</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;codigo&quot;
+</FONT><FONT COLOR="#7f007f">columna-tabla</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;ID&quot;</FONT><FONT COLOR="#008080">/&gt;</FONT></FONT></FONT></SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</FONT>&lt;</FONT><FONT COLOR="#3f7f7f">mapeo-propiedad
+</FONT></FONT></FONT>
+</SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#7f007f"><FONT COLOR="#3f7f7f">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</FONT>propiedad-modelo</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;nombre&quot;
+</FONT><FONT COLOR="#7f007f">columna-tabla</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;NAME&quot;</FONT><FONT COLOR="#008080">/&gt;</FONT></FONT></FONT></SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;</FONT>&lt;/</FONT><FONT COLOR="#3f7f7f">mapeo-entidad</FONT><FONT COLOR="#008080">&gt;</FONT><FONT COLOR="#000000">
+</FONT></FONT></FONT>
+</SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"><FONT FACE="Monospace"><FONT SIZE=2>				</FONT></FONT></FONT></SPAN><BR>
+<SPAN STYLE="margin-bottom: 0cm"><FONT SIZE=2><FONT FACE="Monospace"><FONT COLOR="#008080">&lt;/</FONT><FONT COLOR="#3f7f7f">componente</FONT><FONT COLOR="#008080">&gt;</FONT></FONT></FONT></SPAN><BR>
+</p>
 Y nada m&aacute;s. Nada de clases Java, archivos XML para el mapeo, o dibujar
 p&aacute;ginas JSP o JSF, simplemente nada m&aacute;s.<br>
 OpenXava genera para t&iacute; una aplicaci&oacute;n J2EE completa (con EJB CMP o Hibernate
-para la persistencia) como <a href="MySchool">&eacute;sta</a>, y con una interfaz de usuario para gestionar
+para la persistencia) como <a href="/openxava/portal/MiEscuela">&eacute;sta</a>, y con una interfaz de usuario para gestionar
 tus <i>Profesores</i>.
 La aplicaci&oacute;n resultante te permite hacer manteniento, b&uacute;squedas, filtros, ordenaciones,
 generar informes en formato PDF, exporta a Excel, etc.<br>

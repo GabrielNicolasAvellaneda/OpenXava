@@ -91,6 +91,10 @@ public class ModuleTestBase extends TestCase {
 		response = conversation.getResponse(getModuleURL());
 		resetForm();		
 		propertyPrefix = null;
+		metaModule = null;
+		metaModel = null;
+		metaView = null;
+		metaTab = null;		
 	}
 	
 	private String getModuleURL() throws XavaException {

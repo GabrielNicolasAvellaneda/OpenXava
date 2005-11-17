@@ -28,6 +28,12 @@ request.setAttribute("xava.locale", xava_language.getLocale());
 	<c:when test="${xava_language == 'pt'}">
 		<fmt:setLocale value="pt" scope="request"/>
 	</c:when>
+	<c:when test="${xava_language == 'id'}">
+		<fmt:setLocale value="id" scope="request"/>
+	</c:when>	
+	<c:when test="${xava_language == 'in'}">
+		<fmt:setLocale value="in" scope="request"/>
+	</c:when>		
 </c:choose>
 
 <fmt:setBundle basename="XavaResources" scope="request"/>

@@ -68,8 +68,9 @@
   description-property CDATA #IMPLIED
 	description-properties CDATA #IMPLIED
   depends CDATA #IMPLIED
-  condition CDATA #IMPLIED
+  condition CDATA #IMPLIED  
   order-by-key (true|false) "false"    
+  order CDATA #IMPLIED
 >
 
 <!ELEMENT property-view (on-change?, action*)>
@@ -77,7 +78,7 @@
   property CDATA #REQUIRED
   label CDATA #IMPLIED
   read-only (true|false) "false"
-	label-format (NORMAL|SMALL|NO_LABEL) "NORMAL"
+  label-format (NORMAL|SMALL|NO_LABEL) "NORMAL"
 >
 
 <!ELEMENT on-change EMPTY>
@@ -86,7 +87,7 @@
 >
 
 
-<!ELEMENT collection-view (list-properties?, edit-action?, list-action*, detail-action*)>
+<!ELEMENT collection-view  (list-properties?, edit-action?, view-action?, list-action*, detail-action*)>
 <!ATTLIST collection-view
   collection CDATA #REQUIRED
   view CDATA #IMPLIED
@@ -106,6 +107,12 @@
 <!ATTLIST edit-action
   action CDATA #IMPLIED
 >
+
+<!ELEMENT view-action EMPTY>
+<!ATTLIST view-action
+  action CDATA #IMPLIED
+>
+
 
 <!ELEMENT detail-action EMPTY>
 <!ATTLIST detail-action
@@ -178,6 +185,7 @@
 <!ATTLIST validator
  class CDATA #IMPLIED
  name CDATA #IMPLIED
+ only-on-create (true|false) "false"
 >
 
 <!ELEMENT remove-validator (set*)>

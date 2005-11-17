@@ -59,28 +59,7 @@
 		</supports>
 		<resource-bundle>New</resource-bundle>		
 	</portlet> 
-	
-	<portlet id="Demos">
-		<description>Demos</description>    
-		<portlet-name>Demos</portlet-name>
-		<display-name>Demos</display-name>    
-		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
-		<init-param>
-			<name>Page</name>
-			<value>demos</value>
-		</init-param>
-		<expiration-cache>-1</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>VIEW</portlet-mode>
-		</supports>
-		<portlet-info>
-			<title>Demos</title>
-			<short-title>Demos</short-title>
-		</portlet-info>		
-	</portlet> 
-	
-	
+			
 	<portlet id="Tutorial">
 		<description>Tutorial</description>    
 		<portlet-name>Tutorial</portlet-name>
@@ -237,5 +216,22 @@
 		</supports>
 		<resource-bundle>Security</resource-bundle>		
 	</portlet> 
-							
+	
+	<portlet id="Update">
+		<description>Update</description>    
+		<portlet-name>Update</portlet-name>
+		<display-name>Update</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>update</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<resource-bundle>Update</resource-bundle>		
+	</portlet> 
+								
 </portlet-app>

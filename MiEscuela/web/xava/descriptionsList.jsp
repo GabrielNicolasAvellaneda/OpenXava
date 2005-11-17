@@ -90,6 +90,7 @@ String script = throwChanged?
 String parameterValuesProperties=view.getParameterValuesPropertiesInDescriptionsList(ref);
 String condition = view.getConditionInDescriptionsList(ref);
 boolean orderByKey = view.isOrderByKeyInDescriptionsList(ref);
+String order = view.getOrderInDescriptionsList(ref); 
 org.openxava.tab.meta.MetaTab metaTab = ref.getMetaModelReferenced().getMetaComponent().getMetaTab();
 String filterArg = "";
 if (metaTab.hasFilter()) {
@@ -115,6 +116,7 @@ String urlDescriptionEditor = "editors/descriptionsEditor.jsp" // in this way be
 	+ "&parameterValuesProperties=" + parameterValuesProperties
 	+ "&condition=" + condition
 	+ "&orderByKey=" + orderByKey
+	+ "&order=" + order
 	+ filterArg;
 %>
 <jsp:include page="<%=urlDescriptionEditor%>" />

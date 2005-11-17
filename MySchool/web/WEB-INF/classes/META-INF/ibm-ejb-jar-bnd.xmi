@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejbbnd:EJBJarBinding xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:commonbnd="commonbnd.xmi" xmlns:ejbbnd="ejbbnd.xmi" xmlns:ejb="ejb.xmi" xmlns:common="common.xmi" xmi:id="EJBJarBinding_1">
+
+    <ejbJar href="META-INF/ejb-jar.xml#ejb-jar_1"/>
+
+    <!-- OpenXava Sessions Beans -->
+
+        <ejbBindings
+            xmi:id="MapFacade"
+            jndiName="MySchool/ejb/org/openxava/school/MapFacade"
+        >
+            <enterpriseBean xmi:type="ejb:Session" href="META-INF/ejb-jar.xml#MapFacade"/>										
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="Server"
+            jndiName="MySchool/ejb/org/openxava/school/Server"
+        >
+            <enterpriseBean xmi:type="ejb:Session" href="META-INF/ejb-jar.xml#Server"/>
+				    <resRefBindings xmi:id="ResourceRefBinding_666" jndiName="jdbc/MySchoolDS">
+				      <bindingResourceRef href="META-INF/ejb-jar.xml#Server_datasource"/>
+				    </resRefBindings>						
+        </ejbBindings>
+
+        <ejbBindings
+            xmi:id="EntityTab"
+            jndiName="MySchool/ejb/org/openxava/school/EntityTab"
+        >
+            <enterpriseBean xmi:type="ejb:Session" href="META-INF/ejb-jar.xml#EntityTab"/>
+				    <resRefBindings xmi:id="ResourceRefBinding_667" jndiName="jdbc/MySchoolDS">
+				      <bindingResourceRef href="META-INF/ejb-jar.xml#EntityTab_datasource"/>
+				    </resRefBindings>												
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_1"
+
+            jndiName="MySchool/ejb/org.openxava.school.model/Teacher"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Teacher"/>
+
+            <resRefBindings xmi:id="ResRefBnd_1" jndiName="jdbc/MySchoolDS">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_1"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <defaultCMPConnectionFactory xmi:id="CMPConnectionFactoryBinding_1" jndiName="jdbc/MySchoolDS" resAuth="Per_Connection_Factory"/>
+
+</ejbbnd:EJBJarBinding>
