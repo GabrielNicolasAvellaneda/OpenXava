@@ -14,7 +14,7 @@ public class RegionsConverter implements IConverter {
 		String dbValue = (String) o; 
 		String [] javaValue = new String [dbValue.length()];
 		for (int i = 0; i < javaValue.length; i++) {
-			javaValue[i] = Character.toString(dbValue.charAt(i));
+			javaValue[i] = String.valueOf(dbValue.charAt(i));			
 		}
 		return javaValue;
 	}

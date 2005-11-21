@@ -68,6 +68,7 @@ public class CarriersTest extends ModuleTestBase {
 	private void deleteAll()
 		throws Exception {
 		getSession().createQuery("delete from Carrier").executeUpdate(); 
+		closeSession();
 	}
 	
 	public void testHideShowRows() throws Exception {

@@ -24,7 +24,7 @@
 	
 	<view name="Family1">
 		<reference-view reference="subfamily" create="false">
-			<descriptions-list condition="${family.number} = 1" order="${family.number} desc"/>
+			<descriptions-list condition="${family.number} = 1" order="${number} desc"/>
 		</reference-view>
 		<members>subfamily</members>
 	</view>
