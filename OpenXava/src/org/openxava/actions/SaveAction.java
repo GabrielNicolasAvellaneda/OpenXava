@@ -36,12 +36,12 @@ public class SaveAction extends ViewBaseAction {
 			}
 			
 			if (isResetAfter()) {
-				getView().reset();
 				getView().setKeyEditable(true);
+				getView().reset();				
 			}
-			else {							
-				getView().setValues(values);
+			else {
 				getView().setKeyEditable(false);
+				getView().setValues(values);				
 			}			
 			resetDescriptionsCache();
 		}
