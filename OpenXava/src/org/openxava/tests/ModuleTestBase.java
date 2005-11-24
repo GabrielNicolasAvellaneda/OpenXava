@@ -43,8 +43,8 @@ public class ModuleTestBase extends TestCase {
 	private String propertyPrefix;
 	private String application;
 	private String module;
-	private WebConversation conversation;
-	private WebResponse response;
+	private WebConversation conversation; 
+	private WebResponse response; 
 	private WebForm form;	
 	
 	public ModuleTestBase(String nameTest, String application, String modul) {
@@ -983,5 +983,16 @@ public class ModuleTestBase extends TestCase {
 		return loginFormIndex;
 	}	
 	
-			
+	/**
+	 * This allows you testing using HTTPUnit APIs directly. <p>
+	 * 
+	 * The use of this method is discoraged because binds your test
+	 * to a HTML implemenation.
+	 * Before to use this method look for another more abstract method
+	 * in this class.
+	 */
+	protected WebConversation getConversation() {
+		return conversation; 
+	}
+ 			
 }
