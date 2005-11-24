@@ -87,6 +87,11 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected void changeModule(String module) throws Exception {
+		changeModule(this.application, module);
+	}
+	
+	protected void changeModule(String application, String module) throws Exception {
+		this.application = application;
 		this.module = module;
 		response = conversation.getResponse(getModuleURL());
 		resetForm();		
@@ -96,6 +101,7 @@ public class ModuleTestBase extends TestCase {
 		metaView = null;
 		metaTab = null;		
 	}
+	
 	
 	private String getModuleURL() throws XavaException {
 		if (isJetspeed2Enabled()) {
