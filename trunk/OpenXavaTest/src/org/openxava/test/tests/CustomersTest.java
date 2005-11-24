@@ -1,8 +1,12 @@
 package org.openxava.test.tests;
 
+import java.net.*;
+
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
+
+import com.meterware.httpunit.*;
 
 /**
  * @author Javier Paniza
@@ -119,7 +123,7 @@ public class CustomersTest extends ModuleTestBase {
 	}
 	
 		
-	public void testImageEditor() throws Exception { 
+	public void testImageEditor() throws Exception { 		
 		execute("CRUD.new");
 		execute("ImageEditor.changeImage", "newImageProperty=foto");
 		assertNoErrors();
@@ -128,6 +132,22 @@ public class CustomersTest extends ModuleTestBase {
 		setFileValue("newImage", imageUrl);
 		execute("LoadImage.loadImage");
 		assertNoErrors();
+		
+		WebResponse response = getConversation().getCurrentPage();
+		URL url = response.getURL();
+		String urlPrefix = url.getProtocol() + "://" + url.getHost() + ":" + url.getPort();
+		
+		WebImage image = response.getImageWithName("xava.Customer.photo");
+		String imageURL = null;
+		if (image.getSource().startsWith("/")) {
+			imageURL = urlPrefix + image.getSource();
+		}
+		else {
+			String urlBase = Strings.noLastToken(url.getPath(), "/");
+			imageURL = urlPrefix + urlBase + image.getSource();
+		}
+		response = getConversation().getResponse(imageURL);
+		assertEquals("Image not obtained", 0, response.getContentLength());		
 	}
 			
 	public void testHideShowGroup() throws Exception {		

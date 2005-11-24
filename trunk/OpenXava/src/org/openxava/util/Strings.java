@@ -453,20 +453,64 @@ public class Strings {
 		}		
 		return sb.toString();
 	} 
-	
+
+	/** 
+	 * @return If string if null or have no tokens returns empty string.
+	 */	
 	public static String lastToken(String string) {
+		if (string == null) return "";
 		return lastToken(new StringTokenizer(string));
 	}
-	
+
+	/** 
+	 * @return If string if null or have no tokens returns empty string.
+	 */		
 	public static String lastToken(String string, String delim) {
+		if (string == null) return "";
 		return lastToken(new StringTokenizer(string, delim));
 	}
 		
 	private static String lastToken(StringTokenizer st) {
-		String r = null;
+		String r = "";
 		while (st.hasMoreTokens()) r = st.nextToken();
 		return r;
+	}
+
+	
+	/**
+	 * All string but without last token. <p>
+	 * 
+	 * A trim is applied to the result.
+	 *  
+	 * @return If string if null or have no tokens returns empty string.
+	 */		
+	public static String noLastToken(String string) {
+		if (string == null) return "";
+		return noLastToken(new StringTokenizer(string, " \t\n\r\f", true)).trim();
 	}	
+	
+
+	/**
+	 * All string but without last token. <p>
+	 * 
+	 * Includes the last delim.
+	 *  
+	 * @return If string if null or have no tokens returns empty string.
+	 */		
+	public static String noLastToken(String string, String delim) {
+		if (string == null) return "";
+		return noLastToken(new StringTokenizer(string, delim, true));
+	}	
+	
+	private static String noLastToken(StringTokenizer st) {
+		StringBuffer r = new StringBuffer();
+		int nt = st.countTokens();
+		for (int i = 0; i < nt - 1; i++) {
+			r.append(st.nextToken());
+		}		
+		return r.toString();
+	}	
+	
 	
 	/**
 	 * 

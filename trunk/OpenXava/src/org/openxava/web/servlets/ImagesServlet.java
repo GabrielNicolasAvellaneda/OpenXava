@@ -25,7 +25,7 @@ public class ImagesServlet extends HttpServlet {
 				throw new Exception(XavaResources.getString("image_property_required"));
 			}
 			byte [] image = (byte []) view.getValue(property); 
-			if (image != null) {	
+			if (image != null) {					
 				response.getOutputStream().write(image);
 			}
 		}
