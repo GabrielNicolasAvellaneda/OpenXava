@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE component SYSTEM "dtds/component.dtd">
+
+<component name="Access">
+
+	<entity>
+		<property name="oid" type="int" hidden="true" key="true"/>
+		<property name="model" type="String" size="50"/>
+		<property name="table" type="String" size="50"/>  
+		<property name="date" type="java.util.Date"/>
+		<property name="time" stereotype="TIME"/>
+		<property name="type">
+			<valid-values>
+				<valid-value value="create"/>
+				<valid-value value="read"/>
+				<valid-value value="udate"/>
+				<valid-value value="delete"/>
+			</valid-values>
+		</property>
+		<property name="authorized" type="boolean"/>
+		<property name="recordId" type="String" size="100"/>
+	</entity>
+											
+	<!-- tmp XAVATEST y separador parametrizable -->										
+	<entity-mapping table="XAVATEST_ACCESS">
+		<property-mapping property="oid" column="OID"/>
+		<property-mapping property="model" column="MODEL"/>
+		<property-mapping property="table" column="TABLE"/>
+		<property-mapping property="date" column="DATE"/>
+		<property-mapping property="time" column="TIME"/>
+		<property-mapping property="type" column="TYPE" cmp-type="String">
+			<converter class="org.openxava.converters.ValidValuesLetterConverter">
+				<set property="letters" value="CRUD"/>
+			</converter>
+		</property-mapping>
+		<property-mapping property="authorized" column="AUTHORIZED"/>
+		<property-mapping property="recordId" column="RECORD"/>
+	</entity-mapping> 
+	
+</component>
