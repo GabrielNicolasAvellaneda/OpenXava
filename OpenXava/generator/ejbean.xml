@@ -942,7 +942,7 @@ while (itReferences.hasNext()) {
 </java> 
 
 	private MetaModel metaModel;
-	private MetaModel getMetaModel() throws XavaException {
+	public MetaModel getMetaModel() throws XavaException {
 		if (metaModel == null) {
 		<java>if (aggregateName == null) { </java>
 			metaModel = MetaComponent.get("<expr>componentName</expr>").getMetaEntity();

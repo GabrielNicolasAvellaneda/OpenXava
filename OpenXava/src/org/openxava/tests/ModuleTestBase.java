@@ -93,13 +93,13 @@ public class ModuleTestBase extends TestCase {
 	protected void changeModule(String application, String module) throws Exception {
 		this.application = application;
 		this.module = module;
-		response = conversation.getResponse(getModuleURL());
-		resetForm();		
 		propertyPrefix = null;
 		metaModule = null;
 		metaModel = null;
 		metaView = null;
-		metaTab = null;		
+		metaTab = null;				
+		response = conversation.getResponse(getModuleURL());
+		resetForm();		
 	}
 	
 	

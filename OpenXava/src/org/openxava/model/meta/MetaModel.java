@@ -213,7 +213,15 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	 * 
 	 * @return Not null
 	 */
-	public abstract Class getPropertiesClass() throws XavaException;
+	public Class getPropertiesClass() throws XavaException {
+		try {
+			return Class.forName(getInterfaceName());
+		} 
+		catch (ClassNotFoundException ex) {
+			ex.printStackTrace();
+			throw new XavaException("no_class_for_model", getInterfaceName(), getName());
+		}
+	}
 	
 	public MetaMember getMetaMember(String name) throws ElementNotFoundException, XavaException {
 		try {
@@ -1109,12 +1117,14 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	}
 	
 	public void addInterfaceName(String name) {
-		if (interfaces == null) interfaces = new ArrayList();
-		interfaces.add(name);
+		getInterfacesNames().add(name);
 	}
 	
 	public Collection getInterfacesNames() {
-		if (interfaces == null) return Collections.EMPTY_LIST;
+		if (interfaces == null) {
+			interfaces = new ArrayList();
+			interfaces.add("org.openxava.model.IModel"); 
+		}
 		return interfaces;
 	}
 	

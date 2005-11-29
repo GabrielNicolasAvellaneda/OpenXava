@@ -12,6 +12,36 @@ public class WarehousesTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Warehouses");		
 	}	
 	
+	public void testAccessTracking() throws Exception {
+		// Creating
+		execute("CRUD.new");
+		setValue("zoneNumber", "66");
+		setValue("number", "66");
+		setValue("name", "JUNIT WAREHOUSE");
+		execute("CRUD.save");
+		
+		// Searching
+		setValue("zoneNumber", "66");
+		setValue("number", "66");
+		assertValue("name", "");
+		execute("CRUD.search");
+		assertValue("name", "JUNIT WAREHOUSE");
+		
+		// Modifying
+		setValue("name", "JUNIT WAREHOUSE MODIFIED");
+		execute("CRUD.save");
+		
+		setValue("zoneNumber", "66");
+		setValue("number", "66");
+		assertValue("name", "");
+		execute("CRUD.search");
+		assertValue("name", "JUNIT WAREHOUSE MODIFIED");
+		
+		// Deleting
+		execute("CRUD.delete");
+		assertMessage("Warehouse deleted successfully");		
+	}
+	
 	public void testNavigateInListWithALotOfObjects() throws Exception {
 		assertListRowCount(10);
 		execute("List.goPage", "page=6");

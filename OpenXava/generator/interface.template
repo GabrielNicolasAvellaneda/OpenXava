@@ -27,7 +27,6 @@ else {
 	metaModel =  (IMetaEjb)component.getMetaAggregate(aggregateName);
 	modelMapping = component.getAggregateMapping(aggregateName);	
 }
-
 String interfaces = metaModel.getInterfacesNames().isEmpty()?"":" extends " + metaModel.getImplements();
 #
 

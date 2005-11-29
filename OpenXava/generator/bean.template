@@ -19,6 +19,10 @@ String interfaces = metaAggregate.getInterfacesNames().isEmpty()?"":", " + metaA
 
 package #(packageName)#;
 
+import org.openxava.component.MetaComponent;
+import org.openxava.model.meta.MetaModel;
+import org.openxava.util.XavaException;
+
 public class #(aggregateName)# implements java.io.Serializable#(interfaces)# {
 
 	// Attributes/Atributos
@@ -81,5 +85,12 @@ while (itReferences.hasNext()) {
 	}
 # } //while #
 	
-
+	private MetaModel metaModel;
+	public MetaModel getMetaModel() throws XavaException {
+		if (metaModel == null) {
+			metaModel = MetaComponent.get("#(componentName)#").getMetaAggregate("#(aggregateName)#");
+		}
+		return metaModel;
+	}
+	
 }

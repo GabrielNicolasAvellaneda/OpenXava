@@ -49,7 +49,7 @@ import org.openxava.validators.*;
  * @author Javier Paniza
  */
 
-public class EJBReplicableBase extends EntityBase {
+public class EJBReplicableBase extends EntityBase implements IPropertiesContainer {
 
   private PropertiesManager propertiesManager = new PropertiesManager(this);
 

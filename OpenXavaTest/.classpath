@@ -14,5 +14,6 @@
 	<classpathentry kind="src" path="/OpenXava"/>
 	<classpathentry kind="lib" path="lib/hsqldb.jar"/>
 	<classpathentry kind="lib" path="lib/jbossall-client.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/AccessTracking"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>

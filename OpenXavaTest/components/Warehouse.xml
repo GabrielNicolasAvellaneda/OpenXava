@@ -11,6 +11,14 @@
 			size="3" required="true" type="int"/>   
 		<property name="name" type="String"
 			size="40" required="true"/>
+		<!-- tmp: This must be to move to a generic place -->
+		<postcreate-calculator class="org.openxava.tracking.AccessTrackingCalculator">
+			<set property="accessType" value="Create"/>
+		</postcreate-calculator>
+		<postmodify-calculator class="org.openxava.tracking.AccessTrackingCalculator">
+			<set property="accessType" value="Update"/>
+		</postmodify-calculator>
+		<remove-validator class="org.openxava.tracking.AccessTrackingCalculator"/>
 	</entity>
 			
 	<tab>

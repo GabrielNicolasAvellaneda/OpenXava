@@ -32,7 +32,8 @@ public class MetaAggregateBean extends MetaAggregate {
 	public Class getPropertiesClass() throws XavaException {
 		try {
 			return Class.forName(getBeanClass());
-		} catch (ClassNotFoundException ex) {
+		} 
+		catch (ClassNotFoundException ex) {
 			ex.printStackTrace();
 			throw new XavaException("no_class_for_model", getBeanClass(), getName());
 		}

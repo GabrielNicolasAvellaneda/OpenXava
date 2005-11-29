@@ -127,7 +127,7 @@ while (itCollections.hasNext()) {
 # 	
 
 	private MetaModel metaModel;
-	private MetaModel getMetaModel() throws XavaException {
+	public MetaModel getMetaModel() throws XavaException {
 		if (metaModel == null) {
 		# if (aggregateName == null) { #
 			metaModel = MetaComponent.get("#(componentName)#").getMetaEntity();
