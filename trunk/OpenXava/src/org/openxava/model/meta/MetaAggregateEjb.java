@@ -65,10 +65,6 @@ public class MetaAggregateEjb extends MetaAggregate implements IMetaEjb {
 		return impl.obtainHome();
 	}
 	
-	public java.lang.Class getPropertiesClass() throws XavaException {
-		return getRemoteClass();
-	}
-	
 	public ModelMapping getMapping() throws XavaException {
 		return getMetaComponent().getAggregateMapping(getName());
 	}

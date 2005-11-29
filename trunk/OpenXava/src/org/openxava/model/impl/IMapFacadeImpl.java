@@ -15,15 +15,17 @@ public interface IMapFacadeImpl {
 	Object create(String modelName, Map values)
 		throws 
 			CreateException, ValidationException, 
-			XavaException, RemoteException;
-			
+			XavaException, RemoteException;			
 		
 	Map getValues(String modelName, Map keyValues, Map memberNames)
 		throws FinderException, XavaException, RemoteException;
 		
 	Map getValues(String modelName, Object modelObject, Map memberNames)
 		throws XavaException, RemoteException;
-		
+	
+	Map getKeyValues(String modelName, Object modelObject) 
+		throws XavaException, RemoteException;	
+	
 	void setValues(String modelName, Map keyValues, Map values)
 		throws FinderException, ValidationException, XavaException, RemoteException;
 				

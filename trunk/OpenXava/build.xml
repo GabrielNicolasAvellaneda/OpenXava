@@ -17,6 +17,7 @@
 	<property name="tl.lib" location="../OpenXava/lib/tl.jar"/>
 	<property name="components.dir" value="../${project}/components"/>
 	<property name="generator.dir" value="${workspace.dir}/OpenXava/generator"/>
+	<property name="tracking.classes" value="../AccessTracking/web/WEB-INF/classes;../OpenXava/web/WEB-INF/lib/hibernate3.jar"/>
 	<property name="subcontext" value="${project}"/>				
 	<property name="classes.dir" value="web/WEB-INF/classes"/>
 	<property name="name.war" value="${project}"/>	
@@ -343,18 +344,17 @@
     </target>        
 	
     <target name="generateXDoclet">         	
-
-	   <echo>Generating classes</echo>
-    	<touch file="../${project}/gen-src-xava/last.generation.time"/>
+	   <echo>Generating classes</echo>    	
        <java 
        		classname="EJBCodeGenerator" 
-       		classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};${components.dir};../${project}/${classes.dir};${xava.generator.path}" 
+       		classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};${components.dir};../${project}/${classes.dir};${tracking.classes};${xava.generator.path}" 
        		fork="yes">
 			<arg value="${project}"/>        		
 	       	<arg value="${domain}"/>
        		<arg value="${package}"/>
 	       	<arg value="${model.package}"/>       	
 		</java>
+    	<touch file="../${project}/gen-src-xava/last.generation.time"/>
     </target>
 	
     <target name="generateHibernate">     

@@ -68,8 +68,7 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 		if (!(metaModel instanceof IMetaEjb)) {
 			throw new XavaException("only_ejb_error");
 		}
-		return (IPropertiesContainer) PortableRemoteObject.narrow(o,
-				((IMetaEjb) metaModel).getRemoteClass());
+		return (IPropertiesContainer) PortableRemoteObject.narrow(o, IPropertiesContainer.class);		
 	}
 
 	public Object create(IMetaEjb metaEjb, Map values)

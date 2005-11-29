@@ -44,9 +44,10 @@ else if (keyProperties.size() == 1 &amp;&amp;  keyReferences.size() == 0) {
 		MetaProperty key = (MetaProperty) keyProperties.iterator().next();
 		PropertyMapping pMapping = key.getMapping();
 		String propertyName = pMapping.hasConverter()?"_"+Strings.firstUpper(key.getName()):key.getName();	
+		String generator = key.isHidden() &amp;&amp; !key.hasCalculatorDefaultValueOnCreate()?"native":"assigned";
 </java> 	
 		&lt;id name="<expr>propertyName</expr>" column="<expr>pMapping.getColumn()</expr>"&gt;
-			&lt;generator class="assigned"/&gt;
+			&lt;generator class="<expr>generator</expr>"/&gt;
 		&lt;/id&gt;
 <java>
 }

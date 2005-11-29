@@ -72,10 +72,6 @@ public class MetaEntityEjb extends MetaEntity implements IMetaEjb {
 		return keyFields;
 	}
 	
-	public java.lang.Class getPropertiesClass() throws XavaException {
-		return getRemoteClass();
-	}
-	
 	public Object obtainPrimaryKeyFromAllValues(Map values)
 		throws XavaException {		
 		return impl.obtainPrimaryKeyFromKey(values);

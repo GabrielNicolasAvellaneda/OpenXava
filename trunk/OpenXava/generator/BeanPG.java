@@ -9,7 +9,7 @@ import org.openxava.component.MetaComponent;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Nov 17 18:41:55 CET 2005
+ * @version Mon Nov 28 19:13:20 CET 2005
  */
 public class BeanPG {
     Properties properties = new Properties();
@@ -32,7 +32,7 @@ public class BeanPG {
     out.print(new Date());
     out.print("\n\n// WARNING: NO EDIT\n// OJO: NO EDITAR\n\npackage ");
     out.print(packageName);
-    out.print(";\n\npublic class ");
+    out.print(";\n\nimport org.openxava.component.MetaComponent;\nimport org.openxava.model.meta.MetaModel;\nimport org.openxava.util.XavaException;\n\npublic class ");
     out.print(aggregateName);
     out.print(" implements java.io.Serializable");
     out.print(interfaces);
@@ -117,7 +117,11 @@ public class BeanPG {
     out.print(propertyName);
     out.print(";\n\t}");
     } //while 
-    out.print("\n\t\n\n}");
+    out.print("\n\t\n\tprivate MetaModel metaModel;\n\tpublic MetaModel getMetaModel() throws XavaException {\n\t\tif (metaModel == null) {\n\t\t\tmetaModel = MetaComponent.get(\"");
+    out.print(componentName);
+    out.print("\").getMetaAggregate(\"");
+    out.print(aggregateName);
+    out.print("\");\n\t\t}\n\t\treturn metaModel;\n\t}\n\t\n}");
     
         } catch (Exception e) {
             System.out.println("Exception: "+e.getMessage());
@@ -152,7 +156,7 @@ public class BeanPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Nov 17 18:41:55 CET 2005", // date this file was generated
+        { "Mon Nov 28 19:13:20 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/bean.xml", // input file
              "/home/javi/workspace/OpenXava/generator/BeanPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

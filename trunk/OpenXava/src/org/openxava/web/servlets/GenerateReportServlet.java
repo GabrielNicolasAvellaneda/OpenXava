@@ -27,9 +27,6 @@ import org.openxava.util.*;
 
 public class GenerateReportServlet extends HttpServlet {
 	
-	private static Map changeInLabel;
-
-
 	public static class TableModelDecorator implements TableModel {
 							 
 		private TableModel original;		
@@ -160,7 +157,7 @@ public class GenerateReportServlet extends HttpServlet {
 	}
 			
 	private InputStream getReport(HttpServletRequest request, Tab tab) throws IOException {
-		StringBuffer surl = new StringBuffer("http://");
+		StringBuffer surl = new StringBuffer("http://");		
 		surl.append(request.getServerName());
 		surl.append(':');
 		surl.append(request.getServerPort());		

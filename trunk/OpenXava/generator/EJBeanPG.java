@@ -14,7 +14,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Nov 17 18:41:53 CET 2005
+ * @version Mon Nov 28 19:13:17 CET 2005
  */
 public class EJBeanPG {
     Properties properties = new Properties();
@@ -1132,7 +1132,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     	
     	MethodsPG.generateEJB(context, out, metaModel); 
     
-    out.print(" \n\n\tprivate MetaModel metaModel;\n\tprivate MetaModel getMetaModel() throws XavaException {\n\t\tif (metaModel == null) {");
+    out.print(" \n\n\tprivate MetaModel metaModel;\n\tpublic MetaModel getMetaModel() throws XavaException {\n\t\tif (metaModel == null) {");
     if (aggregateName == null) { 
     out.print("\n\t\t\tmetaModel = MetaComponent.get(\"");
     out.print(componentName);
@@ -1239,7 +1239,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Nov 17 18:41:54 CET 2005", // date this file was generated
+        { "Mon Nov 28 19:13:18 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/ejbean.xml", // input file
              "/home/javi/workspace/OpenXava/generator/EJBeanPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

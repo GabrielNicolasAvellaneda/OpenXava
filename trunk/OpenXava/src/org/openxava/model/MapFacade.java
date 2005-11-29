@@ -47,9 +47,9 @@ import org.openxava.validators.*;
 public class MapFacade {
 	
 	private static Map remotes;
-  private static boolean usesEJBObtained;
-  private static boolean usesEJB;
-  private static IMapFacadeImpl localImpl;
+	private static boolean usesEJBObtained;
+	private static boolean usesEJB;
+	private static IMapFacadeImpl localImpl;
 
 	/**
 	 * Creates a new entity from a map with its initial values. <p> 
@@ -306,6 +306,23 @@ public class MapFacade {
 		}
 			
 	}
+	
+	/** 
+	 * Obtains the values of the key of entity/aggregate. <p> 
+	 * 
+	 * @param modelName  OpenXava model name. Not null.
+	 * @param entity  Object to obtain key values from it. Not null.  
+	 * @return Map with key values. Not null.
+	 * @exception XavaException  Any problem related to OpenXava.
+	 * @exception RemoteException  System problem.
+	 */	
+	public static Map getKeyValues(String modelName, Object entity) 
+		throws XavaException, RemoteException 
+	{		
+		Assert.arg(modelName, entity);		
+		return getLocalImpl().getKeyValues(modelName, entity);				
+	}
+	
 	
 	/**
 	 * Obtain the entity/aggregate from a map with key values. <p>

@@ -315,15 +315,14 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 
-	public Map getValues(
+	public Map getValues( 
 		String modelName,
 		Object modelObject,
 		Map memberNames) throws XavaException, RemoteException  
 		 {		
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {
-			persistenceProvider.begin();
-			MetaModel metaModel = getMetaModel(modelName);					
+			persistenceProvider.begin();								
 			Map result = getValues(persistenceProvider, modelName, modelObject, memberNames);
 			persistenceProvider.commit();
 			return result;
@@ -338,6 +337,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			throw new RemoteException(ex.getMessage());
 		}
 	}
+	
 
 	public Messages validate(String modelName, Map values) throws XavaException, RemoteException {   			
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
@@ -772,28 +772,12 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	private Map getMemberNames(MetaModel metaModel) throws XavaException {
-		return getMemberNames(metaModel, false);
+	public Map getKeyValues(String modelName, Object entity) throws RemoteException, XavaException {
+		IPersistenceProvider persistenceProvider = createPersistenceProvider();
+		MetaModel metaModel = getMetaModel(modelName);
+		return getValues(persistenceProvider, metaModel, entity, getKeyNames(metaModel));
 	}
-	
-	private Map getMemberNames(MetaModel metaModel, boolean onlyKey) throws XavaException {
-		Map memberNames = new HashMap();
-		Collection properties = onlyKey?metaModel.getKeyPropertiesNames():metaModel.getPropertiesNames(); 
-		Iterator itProperties = properties.iterator();
-		while (itProperties.hasNext()) {
-			memberNames.put(itProperties.next(), null);
-		}
 		
-		Iterator itReferences = metaModel.getMetaReferences().iterator();
-		while (itReferences.hasNext()) {
-			MetaReference ref = (MetaReference) itReferences.next();
-			if (onlyKey && !ref.isKey()) break;
-			memberNames.put(ref.getName(), getMemberNames(ref.getMetaModelReferenced(), true));
-		}
-		
-		return memberNames;		
-	}
-	
 	private void addKey(MetaModel metaModel, Map memberNames) throws XavaException {
 		Iterator it = metaModel.getKeyPropertiesNames().iterator();
 		while (it.hasNext()) {

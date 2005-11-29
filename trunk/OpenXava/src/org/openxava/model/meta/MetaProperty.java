@@ -274,7 +274,17 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			return null;			
 		}
 		Class result = getPrimitiveClass(type);
+		
 		if ("byte[]".equals(type) || "byte []".equals(type)) return byte[].class;		
+		if ("String[]".equals(type) || "String []".equals(type)) return String[].class;
+		if ("int[]".equals(type) || "int []".equals(type)) return int[].class;
+		if ("boolean[]".equals(type) || "boolean []".equals(type)) return boolean[].class;		
+		if ("char[]".equals(type) || "char []".equals(type)) return char[].class;
+		if ("short[]".equals(type) || "short []".equals(type)) return short[].class;		
+		if ("long[]".equals(type) || "long []".equals(type)) return long[].class;
+		if ("float[]".equals(type) || "float []".equals(type)) return float[].class;
+		if ("double[]".equals(type) || "double []".equals(type)) return double[].class;
+			
 		if (result == null) {
 			try {
 				result = Class.forName(type);
@@ -403,7 +413,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 					key= ((MetaEntity) getMetaModel()).isKey(getName());
 				}
 			}
-			catch (XavaException ex) {
+			catch (XavaException ex) {  
 				// false is assumed, but isKeySet is not changed, for retry in future 
 				System.err.println(XavaResources.getString("is_key_warning", getName()));
 				return false;
