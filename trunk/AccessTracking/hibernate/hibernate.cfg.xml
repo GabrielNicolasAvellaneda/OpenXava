@@ -1,0 +1,2 @@
+<!DOCTYPE hibernate-configuration PUBLIC 	"-//Hibernate/Hibernate Configuration DTD//EN"	"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">	
+<hibernate-configuration>	<session-factory>		<property name="hibernate.connection.datasource">@datasource.prefix@/@datasource@</property>		<property name="hibernate.dialect">@hibernate.dialect@</property>			</session-factory></hibernate-configuration>

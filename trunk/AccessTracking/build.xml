@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+<project name="AccessTracking" default="deployWar" basedir=".">
+
+	<property name="project" value="AccessTracking" />
+	<property name="package" value="tracking"/>
+	<property name="configuration" value="jboss-hypersonic" />
+	<!-- property name="configuration" value="websphere-as400" /-->	
+	<!-- property name="configuration" value="jboss-as400" /-->
+	<property file="../openxava.properties"/>
+	<property file="${configuration}.properties"/>
+	<property name="datasource" value="OpenXavaTestDS"/>
+
+	<target name="generateHibernate">
+		<ant antfile="../OpenXava/build.xml" target="generateHibernate"/>		
+	</target>
+						
+	<target name="deployWar">
+		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
+	</target>
+		
+	<target name="deployPortlets"> 
+		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
+	</target>
+					
+</project>

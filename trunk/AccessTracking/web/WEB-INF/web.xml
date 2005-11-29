@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+	<display-name>OpenXava Application</display-name>
+	<servlet>
+		<servlet-name>images</servlet-name>
+		<servlet-class>org.openxava.web.servlets.ImagesServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>jasperReport</servlet-name>
+		<servlet-class>org.openxava.web.servlets.JasperReportServlet</servlet-class>
+	</servlet>	
+	<servlet>
+		<servlet-name>generateReport</servlet-name>
+		<servlet-class>org.openxava.web.servlets.GenerateReportServlet</servlet-class>
+	</servlet>		
+	<servlet>
+		<servlet-name>generateCustomReport</servlet-name>
+		<servlet-class>org.openxava.web.servlets.GenerateCustomReportServlet</servlet-class>
+	</servlet>			
+	<servlet-mapping>
+		<servlet-name>images</servlet-name>
+		<url-pattern>/xava/ximage</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>images</servlet-name>
+		<url-pattern>/ximage</url-pattern>
+	</servlet-mapping>	
+	<servlet-mapping>
+		<servlet-name>jasperReport</servlet-name>
+		<url-pattern>/xava/jasperReport</url-pattern>
+	</servlet-mapping>	
+	<servlet-mapping>
+		<servlet-name>generateReport</servlet-name>
+		<url-pattern>/xava/list.pdf</url-pattern>
+	</servlet-mapping>		
+	<servlet-mapping>
+		<servlet-name>generateReport</servlet-name>
+		<url-pattern>/xava/list.csv</url-pattern>
+	</servlet-mapping>			
+	<servlet-mapping>
+		<servlet-name>generateCustomReport</servlet-name>
+		<url-pattern>/xava/report.pdf</url-pattern>
+	</servlet-mapping>		
+	
+  <mime-mapping>
+        <extension>
+            jnlp
+        </extension>
+        <mime-type>
+            application/x-java-jnlp-file
+        </mime-type>
+    </mime-mapping>	
+</web-app>
