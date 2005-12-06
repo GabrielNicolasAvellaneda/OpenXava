@@ -1,17 +1,22 @@
 package org.openxava.mapping;
 
+import java.util.*;
 import org.openxava.component.*;
+import org.openxava.converters.*;
 import org.openxava.util.*;
+import org.openxava.util.meta.*;
 
 
-public class ReferenceMappingDetail implements java.io.Serializable {
+public class ReferenceMappingDetail extends MetaSetsContainer {
 	
 	private String column;
 	private String referencedModelProperty;
 	private ReferenceMapping container;
 	private String referencedTableColumn;
 	private String converterClassName;
-	
+	private boolean converterCreated = false;
+	private IConverter converter;
+	private static boolean someMappingUsesConverters = false; 
 	
 	public String getColumn() {
 		return column;
@@ -56,11 +61,42 @@ public class ReferenceMappingDetail implements java.io.Serializable {
 		return converterClassName;
 	}
 	public void setConverterClassName(String converterClassName) {
+		someMappingUsesConverters = true;
 		this.converterClassName = converterClassName;
 	}
 	public boolean hasConverter() {
 		return !Is.emptyString(converterClassName);
 	}
 	
+	public  IConverter getConverter() throws XavaException {  
+		if (!converterCreated) {
+			converter = createConverter();
+			converterCreated = true;
+		}
+		return converter;
+	}
+	
+	private IConverter createConverter() throws XavaException {  
+		try {
+			if (!hasConverter()) return null;
+			IConverter converter = (IConverter) Class.forName(converterClassName).newInstance();
+			if (containsMetaSets()) {
+				assignPropertiesValues(converter);
+			}						
+			return converter;
+		}
+		catch (ClassCastException ex) {
+			ex.printStackTrace();
+			throw new XavaException("create_converter_classcast_error",  converterClassName, "IConverter");
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			throw new XavaException("create_converter_error", ex.getLocalizedMessage());
+		}
+	}
+	
+	public static boolean someMappingUsesConverters() {
+		return someMappingUsesConverters;
+	}
 }
 
