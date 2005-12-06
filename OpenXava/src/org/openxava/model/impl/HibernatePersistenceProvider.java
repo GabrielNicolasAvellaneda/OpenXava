@@ -9,6 +9,8 @@ import javax.ejb.ObjectNotFoundException;
 import org.hibernate.*;
 import org.hibernate.cfg.*;
 
+import org.openxava.hibernate.*;
+import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
@@ -24,8 +26,7 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 	private static SessionFactory sessionFactory;
 		
 	public Object find(IMetaEjb metaModel, Map keyValues) throws FinderException {
-		try {
-			MetaEjbImpl ejbImpl = new MetaEjbImpl(metaModel);
+		try {			
 			Class modelClass = metaModel.getPOJOClass();
 			Object key = null;
 						
@@ -129,6 +130,7 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 	public static SessionFactory createSessionFactory(String hibernateCfg) throws HibernateException {
 		try {
 			Configuration configuration = new Configuration().configure(hibernateCfg);
+			
 			for (Iterator it = MetaModel.getAllGenerated().iterator(); it.hasNext();) {
 				MetaModel model = (MetaModel) it.next();
 				try {
@@ -138,6 +140,10 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 					ex.printStackTrace();
 					System.err.println(XavaResources.getString("hibernate_mapping_not_loaded_warning", model.getName())); 
 				}
+			}
+			if (ReferenceMappingDetail.someMappingUsesConverters()) {
+				// toJava conversion is not enabled because in references it's useless thus we avoid an unnecessary overload 
+				configuration.getSessionEventListenerConfig().setPreInsertEventListener(new ReferenceConverterToDBListener());
 			}
 			return configuration.buildSessionFactory();
 		} 

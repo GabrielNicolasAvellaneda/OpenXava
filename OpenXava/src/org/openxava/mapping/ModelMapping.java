@@ -18,7 +18,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 	private Map referenceMappings;
 	private Collection modelProperties = new ArrayList(); // of String
 	private Collection tableColumns = new ArrayList(); // of String
-
+	private Collection referenceMappingsWithConverter; // of ReferenceMapping
 	abstract public String getModelName() throws XavaException;
 
 	abstract public MetaModel getMetaModel() throws XavaException;
@@ -401,7 +401,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 			// there are things needed for every property (at least in ejb implementation)
 			propertyMapping.setConverterClassName(NoConversionConverter.class.getName());
 			String cmpType = p.getType().isPrimitive()?Primitives.toWrapperClass(p.getType()).getName():p.getType().getName();
-			if (p.getType().isArray()) cmpType = p.getType().getComponentType().getName() + " []";
+			if ("[B".equals(cmpType)) cmpType = "byte []";
 			propertyMapping.setCmpTypeName(cmpType);
 		}					
 	}
@@ -532,6 +532,29 @@ abstract public class ModelMapping implements java.io.Serializable {
 		}
 		
 		return r;
+	}
+
+	public boolean hasReferenceConverters() {  
+		return !getReferenceMappingsWithConverter().isEmpty();
+	}
+
+	public Collection getReferenceMappingsWithConverter() {  
+		if (referenceMappingsWithConverter == null) {
+			referenceMappingsWithConverter = new ArrayList();
+			Iterator it = getReferenceMappings().iterator();
+			while (it.hasNext()) {
+				ReferenceMapping referenceMapping = (ReferenceMapping) it.next();
+				Collection mrd = referenceMapping.getDetails();
+				Iterator itd = mrd.iterator();
+				while (itd.hasNext()) {
+					ReferenceMappingDetail referenceMappingDetail = (ReferenceMappingDetail) itd.next();
+					if (referenceMappingDetail.hasConverter()) {
+						referenceMappingsWithConverter.add(referenceMapping);
+					}
+				}
+			}
+		}	
+		return referenceMappingsWithConverter;
 	}
 		
 }
