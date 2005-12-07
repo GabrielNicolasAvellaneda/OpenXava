@@ -87,6 +87,7 @@ public abstract class Product3CMP
 
    public void ejbRemove() throws javax.ejb.RemoveException
    {
+      super.ejbRemove();
 
    }
 

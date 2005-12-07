@@ -10,8 +10,6 @@
 	<property file="../openxava.properties"/>
 	<property file="${configuration}.properties"/>
 	<property name="datasource" value="OpenXavaTestDS"/>
-	
-	<property name="dist.dir" value = "${dist.base.dir}/${project}.dist"/> <!-- tmp -->
 
 	<target name="touchHistory">
 		<tstamp>
@@ -39,17 +37,11 @@
 	</target>		
 		       
 	<target name="createEJBJars">
-        <ant antfile = "../OpenXava/build.xml" target="createEJBJar"/>      		
+        <ant antfile="../OpenXava/build.xml" target="createEJBJar"/>      		
 	</target>
 	
 	<target name="deployEJB" depends ="createEJBJars">		
-		<!-- tmp: También es necesario actualizar el MANIFEST.MF -->
-		<jar destfile="${dist.dir}/lib/tracking.jar" basedir="../AccessTracking/web/WEB-INF/classes"/>
-		<copy file="web/WEB-INF/lib/ehcache.jar" todir="${dist.dir}/lib"/>
-		<copy file="web/WEB-INF/lib/antlr.jar" todir="${dist.dir}/lib"/>
-		<copy file="web/WEB-INF/lib/asm.jar" todir="${dist.dir}/lib"/>
-		<copy file="web/WEB-INF/lib/cglib.jar" todir="${dist.dir}/lib"/>
-		<copy file="web/WEB-INF/lib/hibernate3.jar" todir="${dist.dir}/lib"/>
+		<ant antfile="../AccessTracking/build.xml" target="createEJBTracker"/>
 		<ant antfile="../OpenXava/build.xml" target="deployEJB"/>
 	</target>
 					

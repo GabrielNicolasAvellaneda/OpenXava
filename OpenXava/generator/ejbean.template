@@ -195,6 +195,9 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 			
 	private boolean creating = false;		
 	private boolean modified = false;
+	# if (!metaModel.getMetaCalculatorsPostLoad().isEmpty()) { # 
+	private long lastRead;
+	# } #
 
 	// Create	
 
@@ -299,6 +302,14 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 			
 		return null;
 	}
+	
+	# 
+	CalculatorsPG postcreatePG = new CalculatorsPG();
+	postcreatePG.setMetaModel(metaModel);
+	postcreatePG.setCalculators(metaModel.getMetaCalculatorsPostCreate());
+	postcreatePG.setType("PostCreate");
+	postcreatePG.setError("entity_create_error");			
+	# 
 
 	# if (aggregateName == null) { # 
 	public void ejbPostCreate(Map values)
@@ -308,7 +319,7 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 		throws
 			CreateException,
 			ValidationException {
-		# PostcreatePG.generate(context, out, metaModel); # 
+		# postcreatePG.generate(context, out); # 
 	}	
 	
 	 		
@@ -398,7 +409,7 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 		throws
 			CreateException,
 			ValidationException {
-		# PostcreatePG.generate(context, out, metaModel); #			
+		# postcreatePG.generate(context, out); # 
 	}
 
 # } # 
@@ -525,7 +536,7 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 		throws
 			CreateException,
 			ValidationException {
-		# PostcreatePG.generate(context, out, metaModel); #			
+		# postcreatePG.generate(context, out); # 			
 	}
 	
 	
@@ -639,7 +650,7 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 		throws
 			CreateException,
 			ValidationException {
-		# PostcreatePG.generate(context, out, metaModel); #			
+		# postcreatePG.generate(context, out); # 			
 	}
 	
 	# if (aggregateName != null) { #	 
@@ -738,13 +749,30 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 		throws
 			CreateException,
 			ValidationException {
-		# PostcreatePG.generate(context, out, metaModel); #			
+		# postcreatePG.generate(context, out); # 			
 	}	
 	# } #
 	
 	public void ejbLoad() {
 		creating = false;
 		modified = false;
+		
+		# if (!metaModel.getMetaCalculatorsPostLoad().isEmpty()) { # 
+		// ejbLoad is executed often, hence executing calculated each 2 seconds is enougth  
+		long time = System.currentTimeMillis();
+		if (time - lastRead < 2000) {					
+			return;
+		}
+		lastRead = time;		
+		# } # 		
+		# 
+		CalculatorsPG postloadPG = new CalculatorsPG();
+		postloadPG.setMetaModel(metaModel);
+		postloadPG.setCalculators(metaModel.getMetaCalculatorsPostLoad());
+		postloadPG.setType("PostLoad");
+		postloadPG.setError("entity_load_error");
+		postloadPG.generate(context, out);		
+		# 
 	}
 	
 	public void ejbStore() {
@@ -754,9 +782,28 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 		}
 		if (!modified) return;
 		
-		# PostmodifyPG.generate(context, out, metaModel); #			
+		# 
+		CalculatorsPG postmodifyPG = new CalculatorsPG();
+		postmodifyPG.setMetaModel(metaModel);
+		postmodifyPG.setCalculators(metaModel.getMetaCalculatorsPostModify());
+		postmodifyPG.setType("PostModify");
+		postmodifyPG.setError("entity_modify_error");
+		postmodifyPG.generate(context, out);		
+		# 
 		
 		modified = false;
+	} 	
+	
+
+	public void ejbRemove() throws RemoveException {
+		# 
+		CalculatorsPG preremovePG = new CalculatorsPG();
+		preremovePG.setMetaModel(metaModel);
+		preremovePG.setCalculators(metaModel.getMetaCalculatorsPreRemove());
+		preremovePG.setType("PreRemove");
+		preremovePG.setError("entity_remove_error");
+		preremovePG.generate(context, out);		
+		# 						
 	} 	
 	
 	// Properties/Propiedades

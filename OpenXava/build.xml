@@ -96,6 +96,7 @@
 	    	<filterset>	    	
 				<filter token="separator" value="${separator}"/>
 				<filter token="collection" value="${collection}"/>
+	    		<filter token="access.table" value="${access.table}"/>
 			</filterset> 			         
 		</copy>				
 	</target>
@@ -108,7 +109,7 @@
 	    	<filterset>	    	
 				<filtersfile file="${configuration}.properties"/>				
 				<filter token="separator" value="${separator}"/>
-				<filter token="collection" value="${collection}"/>
+				<filter token="collection" value="${collection}"/>	    		
 			</filterset> 			         
 		</copy>			
 		<!-- to replace within xava components -->
@@ -118,6 +119,7 @@
 				<filtersfile file="${configuration}.properties"/>				
 				<filter token="separator" value="${separator}"/>
 				<filter token="collection" value="${collection}"/>
+	    		<filter token="access.table" value="${access.table}"/>	    		
 			</filterset> 			         
 		</copy>				
 	</target>
@@ -228,13 +230,9 @@
 	<target name="regenerateGenerator">    
 		<echo>Generating xml template for EJB</echo>
        <java classname="Simple2XML" classpath="${tl.lib}">
-         <arg value="${generator.dir}/postcreate.template"/> 
-         <arg value="${generator.dir}/postcreate.xml"/>         
-       </java>				
-       <java classname="Simple2XML" classpath="${tl.lib}">
-         <arg value="${generator.dir}/postmodify.template"/> 
-         <arg value="${generator.dir}/postmodify.xml"/>         
-       </java>		       
+         <arg value="${generator.dir}/calculators.template"/> 
+         <arg value="${generator.dir}/calculators.xml"/>         
+       </java>		       		
        <java classname="Simple2XML" classpath="${tl.lib}">
          <arg value="${generator.dir}/property.template"/> 
          <arg value="${generator.dir}/property.xml"/>         
@@ -281,14 +279,10 @@
 		</java> 
 		
        <echo>Generating EJB classes generator</echo>
-       <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-         <arg value="${generator.dir}/postcreate.xml"/>
-         <arg value="${generator.dir}/PostcreatePG.java"/>
-       </java>
-       <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-         <arg value="${generator.dir}/postmodify.xml"/>
-         <arg value="${generator.dir}/PostmodifyPG.java"/>
-       </java>
+        <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
+          <arg value="${generator.dir}/calculators.xml"/>
+          <arg value="${generator.dir}/CalculatorsPG.java"/>
+        </java>		
        <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
          <arg value="${generator.dir}/property.xml"/> 
          <arg value="${generator.dir}/PropertyPG.java"/>         
@@ -354,14 +348,12 @@
        		<arg value="${package}"/>
 	       	<arg value="${model.package}"/>       	
 		</java>
-    	<touch file="../${project}/gen-src-xava/last.generation.time"/>
     </target>
 	
     <target name="generateHibernate">     
     	
 	   <echo>Generating classes</echo>
     	<delete file="../${project}/gen-src-xava/dnas.properties"/>
-    	<touch file="../${project}/gen-src-xava/last.generation.time"/>
        <java 
        		classname="HCodeGenerator" 
        		classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};${components.dir};../${project}/${classes.dir};${xava.generator.path}" 
@@ -374,14 +366,11 @@
     	
     </target>
 		
-	<target name="runXDoclet" if="need.generate" >
+	<target name="runXDoclet">
     	<ant antfile="../OpenXava/xdoclet/build.xml"/>    			
 	</target>
 	        
     <target name="generateEJB" depends="generateXDoclet">         	
-    	<uptodate property="need.generate" 
-    		srcfile="../${project}/gen-src-xava/last.generation.time"
-    		targetfile="../${project}/gen-src-xava/dnas.properties"/>
     	<antcall target="runXDoclet"/>
     </target>
 		
@@ -559,7 +548,7 @@
   		</copy>			
 	</target>
 				
-	<target name="prepareWar" depends="createDist, updateDataSourceInfo, configureJNDI">
+	<target name="prepareWar" depends="createDist, updateDataSourceInfo, configureJNDI">		
   		<copy todir="../${project}/web/xava" preservelastmodified="true">
     		<fileset dir="../OpenXava/web" excludes="WEB-INF/**"/>
   		</copy>		

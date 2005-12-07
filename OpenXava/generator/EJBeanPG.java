@@ -14,7 +14,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Nov 28 19:13:17 CET 2005
+ * @version Wed Dec 07 17:51:13 CET 2005
  */
 public class EJBeanPG {
     Properties properties = new Properties();
@@ -236,7 +236,11 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print(packageName);
     out.print(".I");
     out.print(name);
-    out.print(", EntityBean {\t\n\t\t\t\n\tprivate boolean creating = false;\t\t\n\tprivate boolean modified = false;\n\n\t// Create");
+    out.print(", EntityBean {\t\n\t\t\t\n\tprivate boolean creating = false;\t\t\n\tprivate boolean modified = false;");
+    if (!metaModel.getMetaCalculatorsPostLoad().isEmpty()) { 
+    out.print(" \n\tprivate long lastRead;");
+    } 
+    out.print("\n\n\t// Create");
     	
     	// For the aggregates
     	IMetaEjb containerModel = (IMetaEjb) metaModel.getMetaModelContainer();
@@ -361,6 +365,13 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print("\", ex.getLocalizedMessage()));\n\t\t}");
     } // if 
     out.print(" \n\t\t\t\n\t\treturn null;\n\t}");
+    
+    	CalculatorsPG postcreatePG = new CalculatorsPG();
+    	postcreatePG.setMetaModel(metaModel);
+    	postcreatePG.setCalculators(metaModel.getMetaCalculatorsPostCreate());
+    	postcreatePG.setType("PostCreate");
+    	postcreatePG.setError("entity_create_error");			
+    	
     if (aggregateName == null) { 
     out.print(" \n\tpublic void ejbPostCreate(Map values)");
     } else { 
@@ -369,7 +380,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print(" container, int counter, Map values)");
     } 
     out.print(" \n\t\tthrows\n\t\t\tCreateException,\n\t\t\tValidationException {");
-    PostcreatePG.generate(context, out, metaModel); 
+    postcreatePG.generate(context, out); 
     out.print(" \n\t}");
     if (aggregateName != null) { 
     out.print(" \n\t/**\n\t * @ejb:create-method\n\t */\n\tpublic ");
@@ -473,8 +484,8 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print(" \n\t\t\t\n\t\treturn null;\n\t}\n\n\tpublic void ejbPostCreate(");
     out.print(containerKeyClass);
     out.print(" containerKey, int counter, Map values)\t\n\t\tthrows\n\t\t\tCreateException,\n\t\t\tValidationException {");
-    PostcreatePG.generate(context, out, metaModel); 
-    out.print("\t\t\t\n\t}");
+    postcreatePG.generate(context, out); 
+    out.print(" \n\t}");
     } 
     out.print(" \n\t\n\t/**\n\t * @ejb:create-method\n\t */");
     if (aggregateName == null) { 
@@ -645,8 +656,8 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print("Data data)");
     } 
     out.print(" \n\t\tthrows\n\t\t\tCreateException,\n\t\t\tValidationException {");
-    PostcreatePG.generate(context, out, metaModel); 
-    out.print("\t\t\t\n\t}\n\t\n\t\n\t/**\n\t * @ejb:create-method\n\t */");
+    postcreatePG.generate(context, out); 
+    out.print(" \t\t\t\n\t}\n\t\n\t\n\t/**\n\t * @ejb:create-method\n\t */");
     if (aggregateName == null) { 
     out.print("\t \n\tpublic ");
     out.print(keyClass);
@@ -801,8 +812,8 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print("Value value)");
     } 
     out.print(" \n\t\tthrows\n\t\t\tCreateException,\n\t\t\tValidationException {");
-    PostcreatePG.generate(context, out, metaModel); 
-    out.print("\t\t\t\n\t}");
+    postcreatePG.generate(context, out); 
+    out.print(" \t\t\t\n\t}");
     if (aggregateName != null) { 
     out.print("\t \n\t/**\n\t * @ejb:create-method\n\t */\n\tpublic ");
     out.print(keyClass);
@@ -931,12 +942,40 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print(".");
     out.print(name);
     out.print("Value value)\t\n\t\tthrows\n\t\t\tCreateException,\n\t\t\tValidationException {");
-    PostcreatePG.generate(context, out, metaModel); 
-    out.print("\t\t\t\n\t}");
+    postcreatePG.generate(context, out); 
+    out.print(" \t\t\t\n\t}");
     } 
-    out.print("\n\t\n\tpublic void ejbLoad() {\n\t\tcreating = false;\n\t\tmodified = false;\n\t}\n\t\n\tpublic void ejbStore() {\n\t\tif (creating) {\n\t\t\tcreating = false;\n\t\t\treturn;\n\t\t}\n\t\tif (!modified) return;");
-    PostmodifyPG.generate(context, out, metaModel); 
-    out.print("\t\t\t\n\t\t\n\t\tmodified = false;\n\t} \t\n\t\n\t// Properties/Propiedades");
+    out.print("\n\t\n\tpublic void ejbLoad() {\n\t\tcreating = false;\n\t\tmodified = false;");
+    if (!metaModel.getMetaCalculatorsPostLoad().isEmpty()) { 
+    out.print(" \n\t\t// ejbLoad is executed often, hence executing calculated each 2 seconds is enougth  \n\t\tlong time = System.currentTimeMillis();\n\t\tif (time - lastRead < 2000) {\t\t\t\t\t\n\t\t\treturn;\n\t\t}\n\t\tlastRead = time;");
+    } 
+    
+    		CalculatorsPG postloadPG = new CalculatorsPG();
+    		postloadPG.setMetaModel(metaModel);
+    		postloadPG.setCalculators(metaModel.getMetaCalculatorsPostLoad());
+    		postloadPG.setType("PostLoad");
+    		postloadPG.setError("entity_load_error");
+    		postloadPG.generate(context, out);		
+    		
+    out.print(" \n\t}\n\t\n\tpublic void ejbStore() {\n\t\tif (creating) {\n\t\t\tcreating = false;\n\t\t\treturn;\n\t\t}\n\t\tif (!modified) return;");
+    
+    		CalculatorsPG postmodifyPG = new CalculatorsPG();
+    		postmodifyPG.setMetaModel(metaModel);
+    		postmodifyPG.setCalculators(metaModel.getMetaCalculatorsPostModify());
+    		postmodifyPG.setType("PostModify");
+    		postmodifyPG.setError("entity_modify_error");
+    		postmodifyPG.generate(context, out);		
+    		
+    out.print(" \n\t\t\n\t\tmodified = false;\n\t} \t\n\t\n\n\tpublic void ejbRemove() throws RemoveException {");
+    
+    		CalculatorsPG preremovePG = new CalculatorsPG();
+    		preremovePG.setMetaModel(metaModel);
+    		preremovePG.setCalculators(metaModel.getMetaCalculatorsPreRemove());
+    		preremovePG.setType("PreRemove");
+    		preremovePG.setError("entity_remove_error");
+    		preremovePG.generate(context, out);		
+    		
+    out.print(" \t\t\t\t\t\t\n\t} \t\n\t\n\t// Properties/Propiedades");
     
     Iterator itProperties = metaModel.getMetaProperties().iterator();	
     while (itProperties.hasNext()) {	
@@ -1239,7 +1278,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Nov 28 19:13:18 CET 2005", // date this file was generated
+        { "Wed Dec 07 17:51:14 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/ejbean.xml", // input file
              "/home/javi/workspace/OpenXava/generator/EJBeanPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

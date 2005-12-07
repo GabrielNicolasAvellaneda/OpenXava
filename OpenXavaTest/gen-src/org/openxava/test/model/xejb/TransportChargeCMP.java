@@ -78,6 +78,7 @@ public abstract class TransportChargeCMP
 
    public void ejbRemove() throws javax.ejb.RemoveException
    {
+      super.ejbRemove();
 
    }
 

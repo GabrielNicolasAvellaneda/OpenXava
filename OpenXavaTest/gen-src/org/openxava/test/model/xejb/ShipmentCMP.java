@@ -77,6 +77,7 @@ public abstract class ShipmentCMP
 
    public void ejbRemove() throws javax.ejb.RemoveException
    {
+      super.ejbRemove();
 
    }
 

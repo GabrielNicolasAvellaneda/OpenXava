@@ -77,6 +77,7 @@ public abstract class ClerkCMP
 
    public void ejbRemove() throws javax.ejb.RemoveException
    {
+      super.ejbRemove();
 
    }
 

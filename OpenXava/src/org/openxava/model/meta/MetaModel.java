@@ -21,7 +21,9 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	private Class pojoClass;
 	private Collection allKeyPropertiesNames;
 	private List metaCalculatorsPostCreate;
+	private List metaCalculatorsPostLoad;
 	private List metaCalculatorsPostModify;
+	private List metaCalculatorsPreRemove;
 	private List propertiesNamesWithoutHidden;
 	private String containerModelName;
 	private MetaModel metaModelContainer;
@@ -117,11 +119,21 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		metaCalculatorsPostCreate.add(metaCalculator);
 	}
 	
+	public void addMetaCalculatorPostLoad(MetaCalculator metaCalculator) {		
+		if (metaCalculatorsPostLoad == null) metaCalculatorsPostLoad = new ArrayList();		
+		metaCalculatorsPostLoad.add(metaCalculator);
+	}
+		
 	public void addMetaCalculatorPostModify(MetaCalculator metaCalculator) {		
 		if (metaCalculatorsPostModify == null) metaCalculatorsPostModify = new ArrayList();		
 		metaCalculatorsPostModify.add(metaCalculator);
 	}
-			
+	
+	public void addMetaCalculatorPreRemove(MetaCalculator metaCalculator) {		
+		if (metaCalculatorsPreRemove == null) metaCalculatorsPreRemove = new ArrayList();		
+		metaCalculatorsPreRemove.add(metaCalculator);
+	}
+				
 	public void addMetaValidator(MetaValidator metaValidator) {
 		if (metaValidators == null) metaValidators = new ArrayList();
 		metaValidators.add(metaValidator);				
@@ -988,7 +1000,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	 * 
 	 * @return Not null
 	 */
-	public Collection getMetaCalculatorsPostCreate() {
+	public List getMetaCalculatorsPostCreate() {
 		return metaCalculatorsPostCreate == null?Collections.EMPTY_LIST:metaCalculatorsPostCreate;
 	}
 	
@@ -999,16 +1011,41 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		return (MetaCalculator) metaCalculatorsPostCreate.get(idx);
 	}
 	
-	public int getMetaCalculatorsPostCreateCount() {
-		if (metaCalculatorsPostCreate == null) return 0;
-		return metaCalculatorsPostCreate.size(); 
+	/**
+	 * 
+	 * @return Not null
+	 */
+	public List getMetaCalculatorsPostLoad() {
+		return metaCalculatorsPostLoad == null?Collections.EMPTY_LIST:metaCalculatorsPostLoad;
+	}
+	
+	public MetaCalculator getMetaCalculatorPostLoad(int idx) {
+		if (metaCalculatorsPostLoad == null) {
+			throw new IndexOutOfBoundsException(XavaResources.getString("calculator_out_of_bound", new Integer(idx)));
+		}		
+		return (MetaCalculator) metaCalculatorsPostLoad.get(idx);
 	}
 	
 	/**
 	 * 
 	 * @return Not null
 	 */
-	public Collection getMetaCalculatorsPostModify() {
+	public List getMetaCalculatorsPreRemove() {
+		return metaCalculatorsPreRemove == null?Collections.EMPTY_LIST:metaCalculatorsPreRemove;
+	}
+	
+	public MetaCalculator getMetaCalculatorPreRemove(int idx) {
+		if (metaCalculatorsPreRemove == null) {
+			throw new IndexOutOfBoundsException(XavaResources.getString("calculator_out_of_bound", new Integer(idx)));
+		}		
+		return (MetaCalculator) metaCalculatorsPreRemove.get(idx);
+	}
+		
+	/**
+	 * 
+	 * @return Not null
+	 */
+	public List getMetaCalculatorsPostModify() {
 		return metaCalculatorsPostModify == null?Collections.EMPTY_LIST:metaCalculatorsPostModify;
 	}
 	
@@ -1018,12 +1055,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		}		
 		return (MetaCalculator) metaCalculatorsPostModify.get(idx);
 	}
-	
-	public int getMetaCalculatorsPostModifyCount() {
-		if (metaCalculatorsPostModify == null) return 0;
-		return metaCalculatorsPostModify.size(); 
-	}	
-			
+				
 	/**
 	 * 
 	 * @return Not null

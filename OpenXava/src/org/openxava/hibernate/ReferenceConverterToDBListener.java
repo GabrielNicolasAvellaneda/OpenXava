@@ -5,6 +5,7 @@ import org.hibernate.*;
 import org.hibernate.event.*;
 import org.openxava.converters.*;
 import org.openxava.mapping.*;
+import org.openxava.model.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 
@@ -12,8 +13,8 @@ public class ReferenceConverterToDBListener implements PreInsertEventListener {
 
 	public boolean onPreInsert(PreInsertEvent ev) {
 		String currentReference = "";
-		try {
-			MetaModel metaModel = MetaModel.getByPOJOClass(ev.getEntity().getClass());  // tmp Rescribir usando IModel
+		try {			
+			MetaModel metaModel = ((IModel) ev.getEntity()).getMetaModel();
 			ModelMapping mapping = metaModel.getMapping();
 			if (!mapping.hasReferenceConverters()) return false;
 			List propertyNames = Arrays.asList(ev.getPersister().getPropertyNames());

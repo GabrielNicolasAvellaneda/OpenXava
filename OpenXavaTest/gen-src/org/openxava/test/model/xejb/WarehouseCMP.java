@@ -76,6 +76,7 @@ public abstract class WarehouseCMP
 
    public void ejbRemove() throws javax.ejb.RemoveException
    {
+      super.ejbRemove();
 
    }
 

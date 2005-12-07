@@ -5,7 +5,7 @@
  name ID #REQUIRED
 >
 
-<!ELEMENT entity (ejb?, bean?, implements*, (property|reference|collection)*, method*, finder*, postcreate-calculator*, postmodify-calculator*, validator*, remove-validator*)>
+<!ELEMENT entity (ejb?, bean?, implements*, (property|reference|collection)*, method*, finder*, postcreate-calculator*, postload-calculator*, postmodify-calculator*, preremove-calculator*, validator*, remove-validator*)>
 <!ATTLIST entity
  label CDATA #IMPLIED
 >
@@ -17,7 +17,7 @@
 	collection (true|false) "false" 
 >
 
-<!ELEMENT aggregate ((bean|ejb)?, implements*, (property|reference|collection)*, method*, finder*, postcreate-calculator*, postmodify-calculator*, validator*, remove-validator*)>
+<!ELEMENT aggregate   ((bean|ejb)?, implements*, (property|reference|collection)*, method*, finder*, postcreate-calculator*, postload-calculator*, postmodify-calculator*, preremove-calculator*, validator*, remove-validator*)>
 <!ATTLIST aggregate
  name ID #REQUIRED
  label CDATA #IMPLIED
@@ -211,8 +211,18 @@
  class CDATA #REQUIRED
 >
 
+<!ELEMENT postload-calculator (set*)>
+<!ATTLIST postload-calculator
+ class CDATA #REQUIRED
+>
+
 <!ELEMENT postmodify-calculator (set*)>
 <!ATTLIST postmodify-calculator
+ class CDATA #REQUIRED
+>
+
+<!ELEMENT preremove-calculator (set*)>
+<!ATTLIST preremove-calculator
  class CDATA #REQUIRED
 >
 

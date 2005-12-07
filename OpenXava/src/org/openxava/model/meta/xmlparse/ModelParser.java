@@ -122,9 +122,15 @@ public class ModelParser extends XmlElementsNames {
 			else if (type.equals(xpostcreate_calculator[lang])) {
 				container.addMetaCalculatorPostCreate(CalculatorParser.parseCalculator(d, lang));							
 			}
+			else if (type.equals(xpostload_calculator[lang])) {
+				container.addMetaCalculatorPostLoad(CalculatorParser.parseCalculator(d, lang));							
+			}			
 			else if (type.equals(xpostmodify_calculator[lang])) {
 				container.addMetaCalculatorPostModify(CalculatorParser.parseCalculator(d, lang));							
-			}			
+			}
+			else if (type.equals(xpreremove_calculator[lang])) {
+				container.addMetaCalculatorPreRemove(CalculatorParser.parseCalculator(d, lang));							
+			}						
 			else if (type.equals(xvalidator[lang])) {
 				container.addMetaValidator(createValidator(d, lang));
 			}									

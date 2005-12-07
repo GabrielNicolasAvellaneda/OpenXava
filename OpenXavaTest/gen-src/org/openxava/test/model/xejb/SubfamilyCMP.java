@@ -81,6 +81,7 @@ public abstract class SubfamilyCMP
 
    public void ejbRemove() throws javax.ejb.RemoveException
    {
+      super.ejbRemove();
 
    }
 

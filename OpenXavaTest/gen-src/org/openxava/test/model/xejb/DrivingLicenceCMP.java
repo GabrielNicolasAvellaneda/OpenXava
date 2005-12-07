@@ -76,6 +76,7 @@ public abstract class DrivingLicenceCMP
 
    public void ejbRemove() throws javax.ejb.RemoveException
    {
+      super.ejbRemove();
 
    }
 

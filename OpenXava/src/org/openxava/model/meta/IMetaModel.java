@@ -33,10 +33,14 @@ public interface IMetaModel {
 	Collection getMetaPropertiesPersistents() throws XavaException;
 	MetaModel getMetaModelContainer() throws XavaException;
 	Collection getMetaReferencesWithMapping() throws XavaException;
-	int getMetaCalculatorsPostCreateCount();
+	List getMetaCalculatorsPostCreate(); 	
 	MetaCalculator getMetaCalculatorPostCreate(int idx);
-	int getMetaCalculatorsPostModifyCount();
-	MetaCalculator getMetaCalculatorPostModify(int idx);
+	List getMetaCalculatorsPostModify(); 
+	MetaCalculator getMetaCalculatorPostLoad(int idx);
+	List getMetaCalculatorsPostLoad();  
+	MetaCalculator getMetaCalculatorPreRemove(int idx);
+	List getMetaCalculatorsPreRemove();  
+	MetaCalculator getMetaCalculatorPostModify(int idx);		
 	Collection getMetaCollectionsWithConditionInOthersModels() throws XavaException;
 	Map extractKeyValues(Map values) throws XavaException;
 	Class getPropertiesClass() throws XavaException;

@@ -79,6 +79,7 @@ public abstract class ServiceTypeCMP
 
    public void ejbRemove() throws javax.ejb.RemoveException
    {
+      super.ejbRemove();
 
    }
 

@@ -10,8 +10,25 @@
 	<property file="../openxava.properties"/>
 	<property file="${configuration}.properties"/>
 	<property name="datasource" value="OpenXavaTestDS"/>
-
-	<target name="generateHibernate">
+	<property name="dist.dir" value = "${dist.base.dir}/${project}.dist"/> 
+	<property name="separator" value = "_"/>
+	<property name="access.table" value = "TRACKING${separator}ACCESS"/>
+	
+	<target name="replaceTable">
+		<replace file="../AccessTracking/web/WEB-INF/classes/Access.xml" token="@access.table@" value="${access.table}"/>
+	</target>
+	
+	<!-- In addition to execute this ant your need to edit your MANIFEST.MF to include these jars -->
+	<target name="createEJBTracker" depends="replaceTable">				
+		<jar destfile="${dist.dir}/lib/tracking.jar" basedir="../AccessTracking/web/WEB-INF/classes"/>
+		<copy file="web/WEB-INF/lib/ehcache.jar" todir="${dist.dir}/lib"/>
+		<copy file="web/WEB-INF/lib/antlr.jar" todir="${dist.dir}/lib"/>
+		<copy file="web/WEB-INF/lib/asm.jar" todir="${dist.dir}/lib"/>
+		<copy file="web/WEB-INF/lib/cglib.jar" todir="${dist.dir}/lib"/>
+		<copy file="web/WEB-INF/lib/hibernate3.jar" todir="${dist.dir}/lib"/>
+	</target>
+	
+	<target name="generateHibernate" depends="replaceTable">
 		<ant antfile="../OpenXava/build.xml" target="generateHibernate"/>		
 	</target>
 						
@@ -22,5 +39,7 @@
 	<target name="deployPortlets"> 
 		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
 	</target>
+	
+	
 					
 </project>

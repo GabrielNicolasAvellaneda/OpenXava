@@ -15,10 +15,15 @@
 		<postcreate-calculator class="org.openxava.tracking.AccessTrackingCalculator">
 			<set property="accessType" value="Create"/>
 		</postcreate-calculator>
+		<postload-calculator class="org.openxava.tracking.AccessTrackingCalculator">
+			<set property="accessType" value="Read"/>
+		</postload-calculator>		
 		<postmodify-calculator class="org.openxava.tracking.AccessTrackingCalculator">
 			<set property="accessType" value="Update"/>
 		</postmodify-calculator>
-		<remove-validator class="org.openxava.tracking.AccessTrackingCalculator"/>
+		<preremove-calculator class="org.openxava.tracking.AccessTrackingCalculator">
+			<set property="accessType" value="Delete"/>
+		</preremove-calculator>		
 	</entity>
 			
 	<tab>
