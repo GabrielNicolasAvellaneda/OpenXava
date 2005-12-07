@@ -196,6 +196,9 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 			
 	private boolean creating = false;		
 	private boolean modified = false;
+	<java>if (!metaModel.getMetaCalculatorsPostLoad().isEmpty()) { </java> 
+	private long lastRead;
+	<java>} </java>
 
 	// Create	
 
@@ -300,6 +303,14 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 			
 		return null;
 	}
+	
+	<java>
+	CalculatorsPG postcreatePG = new CalculatorsPG();
+	postcreatePG.setMetaModel(metaModel);
+	postcreatePG.setCalculators(metaModel.getMetaCalculatorsPostCreate());
+	postcreatePG.setType("PostCreate");
+	postcreatePG.setError("entity_create_error");			
+	</java> 
 
 	<java>if (aggregateName == null) { </java> 
 	public void ejbPostCreate(Map values)
@@ -309,7 +320,7 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 		throws
 			CreateException,
 			ValidationException {
-		<java>PostcreatePG.generate(context, out, metaModel); </java> 
+		<java>postcreatePG.generate(context, out); </java> 
 	}	
 	
 	 		
@@ -399,7 +410,7 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 		throws
 			CreateException,
 			ValidationException {
-		<java>PostcreatePG.generate(context, out, metaModel); </java>			
+		<java>postcreatePG.generate(context, out); </java> 
 	}
 
 <java>} </java> 
@@ -526,7 +537,7 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 		throws
 			CreateException,
 			ValidationException {
-		<java>PostcreatePG.generate(context, out, metaModel); </java>			
+		<java>postcreatePG.generate(context, out); </java> 			
 	}
 	
 	
@@ -640,7 +651,7 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 		throws
 			CreateException,
 			ValidationException {
-		<java>PostcreatePG.generate(context, out, metaModel); </java>			
+		<java>postcreatePG.generate(context, out); </java> 			
 	}
 	
 	<java>if (aggregateName != null) { </java>	 
@@ -739,13 +750,30 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 		throws
 			CreateException,
 			ValidationException {
-		<java>PostcreatePG.generate(context, out, metaModel); </java>			
+		<java>postcreatePG.generate(context, out); </java> 			
 	}	
 	<java>} </java>
 	
 	public void ejbLoad() {
 		creating = false;
 		modified = false;
+		
+		<java>if (!metaModel.getMetaCalculatorsPostLoad().isEmpty()) { </java> 
+		// ejbLoad is executed often, hence executing calculated each 2 seconds is enougth  
+		long time = System.currentTimeMillis();
+		if (time - lastRead &lt; 2000) {					
+			return;
+		}
+		lastRead = time;		
+		<java>} </java> 		
+		<java>
+		CalculatorsPG postloadPG = new CalculatorsPG();
+		postloadPG.setMetaModel(metaModel);
+		postloadPG.setCalculators(metaModel.getMetaCalculatorsPostLoad());
+		postloadPG.setType("PostLoad");
+		postloadPG.setError("entity_load_error");
+		postloadPG.generate(context, out);		
+		</java> 
 	}
 	
 	public void ejbStore() {
@@ -755,9 +783,28 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 		}
 		if (!modified) return;
 		
-		<java>PostmodifyPG.generate(context, out, metaModel); </java>			
+		<java>
+		CalculatorsPG postmodifyPG = new CalculatorsPG();
+		postmodifyPG.setMetaModel(metaModel);
+		postmodifyPG.setCalculators(metaModel.getMetaCalculatorsPostModify());
+		postmodifyPG.setType("PostModify");
+		postmodifyPG.setError("entity_modify_error");
+		postmodifyPG.generate(context, out);		
+		</java> 
 		
 		modified = false;
+	} 	
+	
+
+	public void ejbRemove() throws RemoveException {
+		<java>
+		CalculatorsPG preremovePG = new CalculatorsPG();
+		preremovePG.setMetaModel(metaModel);
+		preremovePG.setCalculators(metaModel.getMetaCalculatorsPreRemove());
+		preremovePG.setType("PreRemove");
+		preremovePG.setError("entity_remove_error");
+		preremovePG.generate(context, out);		
+		</java> 						
 	} 	
 	
 	// Properties/Propiedades

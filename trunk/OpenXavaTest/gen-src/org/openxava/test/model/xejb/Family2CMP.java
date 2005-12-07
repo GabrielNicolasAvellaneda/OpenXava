@@ -75,6 +75,7 @@ public abstract class Family2CMP
 
    public void ejbRemove() throws javax.ejb.RemoveException
    {
+      super.ejbRemove();
 
    }
 

@@ -1,5 +1,8 @@
 package org.openxava.test.tests;
 
+import java.text.*;
+import java.util.*;
+
 import org.openxava.tests.*;
 
 /**
@@ -8,48 +11,19 @@ import org.openxava.tests.*;
 
 public class WarehousesTest extends ModuleTestBase {
 	
+		
 	public WarehousesTest(String testName) {
 		super(testName, "OpenXavaTest", "Warehouses");		
 	}	
 	
-	public void testAccessTracking() throws Exception {
-		// Creating
-		execute("CRUD.new");
-		setValue("zoneNumber", "66");
-		setValue("number", "66");
-		setValue("name", "JUNIT WAREHOUSE");
-		execute("CRUD.save");
-		
-		// Searching
-		setValue("zoneNumber", "66");
-		setValue("number", "66");
-		assertValue("name", "");
-		execute("CRUD.search");
-		assertValue("name", "JUNIT WAREHOUSE");
-		
-		// Modifying
-		setValue("name", "JUNIT WAREHOUSE MODIFIED");
-		execute("CRUD.save");
-		
-		setValue("zoneNumber", "66");
-		setValue("number", "66");
-		assertValue("name", "");
-		execute("CRUD.search");
-		assertValue("name", "JUNIT WAREHOUSE MODIFIED");
-		
-		// Deleting
-		execute("CRUD.delete");
-		assertMessage("Warehouse deleted successfully");		
-	}
-	
-	public void testNavigateInListWithALotOfObjects() throws Exception {
+	public void testNavigateInListWithALotOfObjects() throws Exception { 
 		assertListRowCount(10);
 		execute("List.goPage", "page=6");
 		assertListRowCount(10);
 		execute("List.goNextPage");
 		assertListRowCount(3); // It sssumed 63 objects
 	}
-		
+				
 	public void testNotLoseFilterOnChangeMode() throws Exception {
 		assertListRowCount(10);
 		setConditionValues(new String [] {"1"} );
@@ -60,7 +34,7 @@ public class WarehousesTest extends ModuleTestBase {
 		assertListRowCount(3);
 	}
 	
-	public void testFilterFromNoFirstPage() throws Exception {
+	public void testFilterFromNoFirstPage() throws Exception { 
 		execute("List.goPage", "page=2");
 		String [] condition = {
 				"", "2"
@@ -70,7 +44,7 @@ public class WarehousesTest extends ModuleTestBase {
 		assertListRowCount(5); 
 	}
 	
-	public void testRememberListPage() throws Exception {
+	public void testRememberListPage() throws Exception { 
 		assertListRowCount(10);
 		assertNoAction("List.goPreviousPage");
 		execute("List.goPage", "page=2");
@@ -82,7 +56,7 @@ public class WarehousesTest extends ModuleTestBase {
 		assertAction("List.goPreviousPage");
 	}
 	
-	public void testCheckUncheckRows() throws Exception {
+	public void testCheckUncheckRows() throws Exception { 
 		checkRow(1);
 		execute("List.goNextPage");
 		assertNoErrors();
@@ -100,7 +74,20 @@ public class WarehousesTest extends ModuleTestBase {
 		assertRowUnchecked(1);
 	}
 
-	public void testCreateReadUpdateDelete() throws Exception {
+	/**
+	 * Need the project AccessTracking deployed in the application server
+	 * 
+	 * In addition of AccessTracking and CRUD also it test:
+	 * <ul>
+	 * <li> postload-calculator
+	 * <li> preremove-calculator
+	 * </ul>
+	 * @throws Exception
+	 */	
+	public void testAccessTracking_createReadUpdateDelete() throws Exception {
+		getSession().createQuery("delete from Access").executeUpdate();
+		closeSession();
+		
 		assertAction("Warehouses.toLowerCase");
 		assertNoAction("Warehouses.changeZone");
 		
@@ -152,9 +139,68 @@ public class WarehousesTest extends ModuleTestBase {
 		execute("CRUD.search");		
 		assertError("Object not found");
 		assertErrorsCount(1);
+		
+		// Verifying the entries in access tracking		
+		changeModule("AccessTracking", "Accesses");
+		assertListRowCount(5);
+		
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
+		
+		String date = dateFormat.format(new Date());
+		
+		assertValueInList(0, "application", "test");
+		assertValueInList(0, "model", "Warehouse");
+		assertValueInList(0, "table", "XAVATEST_WAREHOUSE");
+		assertValueInList(0, "user", "nobody");
+		assertValueInList(0, "date", date);
+		assertValueInList(0, "time", timeFormat.format(new Date()));
+		assertValueInList(0, "type", "Create");
+		assertValueInList(0, "authorized", "Yes");
+		assertValueInList(0, "recordId", "{zoneNumber=66, number=666}");
+		
+		assertValueInList(1, "application", "test");
+		assertValueInList(1, "model", "Warehouse");
+		assertValueInList(1, "table", "XAVATEST_WAREHOUSE");
+		assertValueInList(1, "user", "nobody");
+		assertValueInList(1, "date", date);
+		assertValueInList(1, "time", timeFormat.format(new Date()));
+		assertValueInList(1, "type", "Read");
+		assertValueInList(1, "authorized", "Yes");
+		assertValueInList(1, "recordId", "{zoneNumber=66, number=666}");
+		
+		assertValueInList(2, "application", "test");
+		assertValueInList(2, "model", "Warehouse");
+		assertValueInList(2, "table", "XAVATEST_WAREHOUSE");
+		assertValueInList(2, "user", "nobody");
+		assertValueInList(2, "date", date);
+		assertValueInList(2, "time", timeFormat.format(new Date()));
+		assertValueInList(2, "type", "Update");
+		assertValueInList(2, "authorized", "Yes");
+		assertValueInList(2, "recordId", "{zoneNumber=66, number=666}");		
+		
+		assertValueInList(3, "application", "test");
+		assertValueInList(3, "model", "Warehouse");
+		assertValueInList(3, "table", "XAVATEST_WAREHOUSE");
+		assertValueInList(3, "user", "nobody");
+		assertValueInList(3, "date", date);
+		assertValueInList(3, "time", timeFormat.format(new Date()));
+		assertValueInList(3, "type", "Delete");
+		assertValueInList(3, "authorized", "Yes");
+		assertValueInList(3, "recordId", "{zoneNumber=66, number=666}");
+		
+		assertValueInList(4, "application", "test");
+		assertValueInList(4, "model", "Warehouse");
+		assertValueInList(4, "table", "XAVATEST_WAREHOUSE");
+		assertValueInList(4, "user", "nobody");
+		assertValueInList(4, "date", date);
+		assertValueInList(4, "time", timeFormat.format(new Date()));
+		assertValueInList(4, "type", "Read");
+		assertValueInList(4, "authorized", "Yes");
+		assertValueInList(4, "recordId", "{zoneNumber=1, number=1}");				
 	}
 	
-	public void testSaveExisting() throws Exception { 
+	public void testSaveExisting() throws Exception {  
 		assertAction("Warehouses.toLowerCase");
 		assertNoAction("Warehouses.changeZone");
 
@@ -212,7 +258,7 @@ public class WarehousesTest extends ModuleTestBase {
 		assertValue("name", name);
 	}
 	
-	public void testListNavigation_ChooseVarious_NavigateInChoosed() throws Exception {
+	public void testListNavigation_ChooseVarious_NavigateInChoosed() throws Exception { 
 		// In list mode on start
 		assertAction("Warehouses.toLowerCase");
 		assertNoAction("Warehouses.changeZone");
@@ -270,7 +316,7 @@ public class WarehousesTest extends ModuleTestBase {
 		assertValue("name", name1);							
 	}
 	
-	public void testRememberSelected() throws Exception {
+	public void testRememberSelected() throws Exception { 
 		// In list mode on start
 		assertAction("Warehouses.toLowerCase");
 		assertNoAction("Warehouses.changeZone");
@@ -284,7 +330,7 @@ public class WarehousesTest extends ModuleTestBase {
 		assertRowsChecked(10, 12);
 	}
 	
-	public void testDefaulActionInListNotReturnToDetail() throws Exception {
+	public void testDefaulActionInListNotReturnToDetail() throws Exception { 
 		// In list mode on start
 		assertAction("Warehouses.toLowerCase");
 		assertNoAction("Warehouses.changeZone");
@@ -294,7 +340,7 @@ public class WarehousesTest extends ModuleTestBase {
 		assertNoAction("Warehouses.changeZone");
 	}
 	
-	public void testValidation() throws Exception {
+	public void testValidation() throws Exception { 
 		assertAction("Warehouses.toLowerCase");
 		assertNoAction("Warehouses.changeZone");
 		
@@ -308,6 +354,6 @@ public class WarehousesTest extends ModuleTestBase {
 		execute("CRUD.save");
 		
 		assertError("Value for Name in Warehouse is required");		
-	}
+	}	
 		
 }

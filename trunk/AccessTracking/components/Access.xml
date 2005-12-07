@@ -6,15 +6,17 @@
 
 	<entity>
 		<property name="oid" type="int" hidden="true" key="true"/>
+		<property name="application" type="String" size="20"/>
 		<property name="model" type="String" size="50"/>
 		<property name="table" type="String" size="50"/>  
+		<property name="user" type="String" size="15"/>
 		<property name="date" type="java.util.Date"/>
 		<property name="time" stereotype="TIME"/>
 		<property name="type">
 			<valid-values>
 				<valid-value value="create"/>
 				<valid-value value="read"/>
-				<valid-value value="udate"/>
+				<valid-value value="update"/>
 				<valid-value value="delete"/>
 			</valid-values>
 		</property>
@@ -22,11 +24,12 @@
 		<property name="recordId" type="String" size="100"/>
 	</entity>
 											
-	<!-- tmp XAVATEST y separador parametrizable -->										
-	<entity-mapping table="XAVATEST_ACCESS">
+	<entity-mapping table="@access.table@">
 		<property-mapping property="oid" column="OID"/>
+		<property-mapping property="application" column="APPLICATION"/>
 		<property-mapping property="model" column="MODEL"/>
 		<property-mapping property="table" column="TABLE"/>
+		<property-mapping property="user" column="USER"/>
 		<property-mapping property="date" column="DATE"/>
 		<property-mapping property="time" column="TIME"/>
 		<property-mapping property="type" column="TYPE" cmp-type="String">

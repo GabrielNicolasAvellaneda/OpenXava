@@ -5,7 +5,7 @@
  nombre ID #REQUIRED
 >
 
-<!ELEMENT entidad (ejb?, bean?, implementa*, (propiedad|referencia|coleccion)*, metodo*, buscador*, calculador-poscrear*, calculador-posmodificar*, validador*, validador-borrar*)>
+<!ELEMENT entidad (ejb?, bean?, implementa*, (propiedad|referencia|coleccion)*, metodo*, buscador*, calculador-poscrear*, calculador-poscargar*, calculador-posmodificar*, calculador-preborrar*, validador*, validador-borrar*)>
 <!ATTLIST entidad
  etiqueta CDATA #IMPLIED
 >
@@ -17,7 +17,7 @@
 	coleccion (true|false) "false" 
 >
 
-<!ELEMENT agregado ((bean|ejb)?, implementa*, (propiedad|referencia|coleccion)*, metodo*, buscador*, calculador-poscrear*, calculador-posmodificar*, validador*, validador-borrar*)>
+<!ELEMENT agregado   ((bean|ejb)?, implementa*, (propiedad|referencia|coleccion)*, metodo*, buscador*, calculador-poscrear*, calculador-poscargar*, calculador-posmodificar*, calculador-preborrar*, validador*, validador-borrar*)>
 <!ATTLIST agregado
  nombre ID #REQUIRED
  etiqueta CDATA #IMPLIED
@@ -55,8 +55,6 @@
   nombre CDATA #IMPLIED
   etiqueta CDATA #IMPLIED
 >
-
-
 
 <!ELEMENT vista-referencia (accion-buscar?|lista-descripciones?)>
 <!ATTLIST vista-referencia
@@ -200,7 +198,6 @@
  nombre CDATA #IMPLIED
 >
 
-
 <!ELEMENT calculador (poner*)>
 <!ATTLIST calculador
  clase CDATA #REQUIRED
@@ -217,8 +214,18 @@
  clase CDATA #REQUIRED
 >
 
+<!ELEMENT calculador-poscargar (poner*)>
+<!ATTLIST calculador-poscargar
+ clase CDATA #REQUIRED
+>
+
 <!ELEMENT calculador-posmodificar (poner*)>
 <!ATTLIST calculador-posmodificar
+ clase CDATA #REQUIRED
+>
+
+<!ELEMENT calculador-preborrar (poner*)>
+<!ATTLIST calculador-preborrar
  clase CDATA #REQUIRED
 >
 

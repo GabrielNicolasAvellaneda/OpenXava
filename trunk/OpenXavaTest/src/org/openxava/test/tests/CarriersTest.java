@@ -24,37 +24,32 @@ public class CarriersTest extends ModuleTestBase {
 		super.setUp();
 	}
 	
-	protected void tearDown() throws Exception {
-		super.tearDown();
-		closeSession();
-	}
-		
 	private void createCarriers() throws Exception {
 		Warehouse wh = new Warehouse();
 		wh.setNumber(1);
 		wh.setZoneNumber(1);
 		Carrier c1 = new Carrier();
 		c1.setWarehouse(wh);
-    // driving licence is not set to test converters in references
+		// driving licence is not set to test converters in references
 		c1.setNumber(1);
 		c1.setName("UNO");
 		getSession().save(c1);
 		
 		Carrier c2 = new Carrier();
 		c2.setWarehouse(wh);
-   	c2.setNumber(2);
+		c2.setNumber(2);
 		c2.setName("DOS");
 		getSession().save(c2);				
 
 		Carrier c3 = new Carrier();
 		c3.setWarehouse(wh);
-   	c3.setNumber(3);
+		c3.setNumber(3);
 		c3.setName("TRES");
 		getSession().save(c3);
 	
 		Carrier c4 = new Carrier();
 		c4.setWarehouse(wh);
-   	c4.setNumber(4);
+		c4.setNumber(4);
 		c4.setName("CUATRO");
 		getSession().save(c4);
 		
@@ -64,7 +59,7 @@ public class CarriersTest extends ModuleTestBase {
 		
 		Carrier c5 = new Carrier();
 		c5.setWarehouse(wh2);
-   	c5.setNumber(5);
+		c5.setNumber(5);
 		c5.setName("Cinco");
 		getSession().save(c5);
 		
@@ -73,7 +68,8 @@ public class CarriersTest extends ModuleTestBase {
 	
 	private void deleteCarriers()
 		throws Exception {
-		getSession().createQuery("delete from Carrier").executeUpdate(); 
+		getSession().createQuery("delete from Carrier").executeUpdate();
+		closeSession();
 	}
 	
 	public void testHideShowRows() throws Exception {

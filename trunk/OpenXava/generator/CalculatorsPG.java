@@ -10,9 +10,9 @@ import org.openxava.util.meta.MetaSet;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Nov 28 19:13:13 CET 2005
+ * @version Wed Dec 07 17:51:09 CET 2005
  */
-public class PostmodifyPG {
+public class CalculatorsPG {
     Properties properties = new Properties();
 
 
@@ -21,10 +21,19 @@ public void setMetaModel(IMetaEjb metaModel) {
 	this.metaModel = metaModel;
 }
 
-public static void generate(XPathContext context, ProgramWriter out, IMetaEjb metaModel) {
-	PostmodifyPG pg = new PostmodifyPG();
-	pg.setMetaModel(metaModel);
-	pg.generate(context, out);
+private List calculators=null;
+public void setCalculators(List calculators) {
+	this.calculators = calculators;
+}
+
+private String type=null;
+public void setType(String type) {
+	this.type = type;
+}
+
+private String error=null;
+public void setError(String error) {
+	this.error = error;
 }
 
 
@@ -34,15 +43,15 @@ public static void generate(XPathContext context, ProgramWriter out, IMetaEjb me
      */
     public boolean generate(XPathContext context, ProgramWriter out) {
         try {    
-    	String name = metaModel.getName();
-    	int count = metaModel.getMetaCalculatorsPostModifyCount();
+    	String name = metaModel.getName();	
+    	int count = calculators.size();
     	if (count > 0) {
     	
     out.print(" \n\t\ttry {");
     
     	} 
     	for (int i=0; i<count; i++) {	 
-    		MetaCalculator calculator = metaModel.getMetaCalculatorPostModify(i);
+    		MetaCalculator calculator = (MetaCalculator) calculators.get(i);
     		String calculatorClass = calculator.getClassName();				
     		
     out.print(" \t\t\n\t\t\t");
@@ -51,7 +60,9 @@ public static void generate(XPathContext context, ProgramWriter out, IMetaEjb me
     out.print(i);
     out.print("= (");
     out.print(calculatorClass);
-    out.print(")\n\t\t\t\tgetMetaModel().getMetaCalculatorPostModify(");
+    out.print(")\n\t\t\t\tgetMetaModel().getMetaCalculator");
+    out.print(type);
+    out.print("(");
     out.print(i);
     out.print(").getCalculator();");
     	
@@ -117,7 +128,9 @@ public static void generate(XPathContext context, ProgramWriter out, IMetaEjb me
     	} // for
     	if (count > 0) {	
     	
-    out.print(" \n\t\t}\n\t\tcatch (Exception ex) {\n\t\t\tex.printStackTrace();\n\t\t\tthrow new EJBException(XavaResources.getString(\"entity_modify_error\", \"");
+    out.print(" \n\t\t}\n\t\tcatch (Exception ex) {\n\t\t\tex.printStackTrace();\n\t\t\tthrow new EJBException(XavaResources.getString(\"");
+    out.print(error);
+    out.print("\", \"");
     out.print(name);
     out.print("\", ex.getLocalizedMessage()));\n\t\t}");
     
@@ -142,7 +155,7 @@ public static void generate(XPathContext context, ProgramWriter out, IMetaEjb me
             ProgramWriter out = args.length>=2
                 ?new ProgramWriter(new FileOutputStream(args[1]))
                 :new ProgramWriter(System.out);
-            PostmodifyPG pg = new PostmodifyPG();
+            CalculatorsPG pg = new CalculatorsPG();
             for (int j=1; j<=args.length; ++j) {
                 pg.properties.put("arg"+j, args[j-1]);
             }
@@ -157,9 +170,9 @@ public static void generate(XPathContext context, ProgramWriter out, IMetaEjb me
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Nov 28 19:13:13 CET 2005", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/postmodify.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/PostmodifyPG.java" }, // output file
+        { "Wed Dec 07 17:51:09 CET 2005", // date this file was generated
+             "/home/javi/workspace/OpenXava/generator/calculators.xml", // input file
+             "/home/javi/workspace/OpenXava/generator/CalculatorsPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

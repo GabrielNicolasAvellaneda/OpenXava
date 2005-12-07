@@ -153,5 +153,7 @@ public class XmlElementsNames {
 	protected final static String [] xdoc = { "doc", "doc" };
 	protected final static String [] xlanguages = { "languages", "idiomas" };
 	protected final static String [] xfolder = { "folder", "carpeta" };
+	protected final static String [] xpostload_calculator = { "postload-calculator", "calculador-poscargar" };
+	protected final static String [] xpreremove_calculator = { "preremove-calculator", "calculador-preborrar" };
 	
 }

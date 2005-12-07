@@ -83,6 +83,7 @@ public abstract class Office2CMP
 
    public void ejbRemove() throws javax.ejb.RemoveException
    {
+      super.ejbRemove();
 
    }
 

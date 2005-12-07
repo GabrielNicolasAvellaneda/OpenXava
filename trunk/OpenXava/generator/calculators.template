@@ -10,28 +10,37 @@ public void setMetaModel(IMetaEjb metaModel) {
 	this.metaModel = metaModel;
 }
 
-public static void generate(XPathContext context, ProgramWriter out, IMetaEjb metaModel) {
-	PostcreatePG pg = new PostcreatePG();
-	pg.setMetaModel(metaModel);
-	pg.generate(context, out);
+private List calculators=null;
+public void setCalculators(List calculators) {
+	this.calculators = calculators;
+}
+
+private String type=null;
+public void setType(String type) {
+	this.type = type;
+}
+
+private String error=null;
+public void setError(String error) {
+	this.error = error;
 }
 
 # 
 
 	# 
-	String name = metaModel.getName();
-	int count = metaModel.getMetaCalculatorsPostCreateCount();
+	String name = metaModel.getName();	
+	int count = calculators.size();
 	if (count > 0) {
 	# 
 		try {
 	# 
 	} 
 	for (int i=0; i<count; i++) {	 
-		MetaCalculator calculator = metaModel.getMetaCalculatorPostCreate(i);
+		MetaCalculator calculator = (MetaCalculator) calculators.get(i);
 		String calculatorClass = calculator.getClassName();				
 		# 		
 			#(calculatorClass)# calculator#(i)#= (#(calculatorClass)#)
-				getMetaModel().getMetaCalculatorPostCreate(#(i)#).getCalculator();
+				getMetaModel().getMetaCalculator#(type)#(#(i)#).getCalculator();
 		# 	
 		Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
 		while (itSets.hasNext()) {
@@ -58,10 +67,10 @@ public static void generate(XPathContext context, ProgramWriter out, IMetaEjb me
 		# 
 			calculator#(i)#.set#(propertyNameInCalculator)#("#(value)#");
 		# 
-			} else {
+		} else {
 		# 
 			calculator#(i)#.set#(propertyNameInCalculator)#(get#(propertyNameFrom)#());
-		# 	}} // else/sets
+		# 	}} // else/poners
 		if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) {
 		# 
 			calculator#(i)#.setEntity(this);
@@ -80,7 +89,7 @@ public static void generate(XPathContext context, ProgramWriter out, IMetaEjb me
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			throw new EJBException(XavaResources.getString("entity_create_error", "#(name)#", ex.getLocalizedMessage()));
+			throw new EJBException(XavaResources.getString("#(error)#", "#(name)#", ex.getLocalizedMessage()));
 		}
 	# 
 	}

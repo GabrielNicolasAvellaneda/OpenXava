@@ -95,6 +95,7 @@ public abstract class InvoiceDetailCMP
 
    public void ejbRemove() throws javax.ejb.RemoveException
    {
+      super.ejbRemove();
 
    }
 

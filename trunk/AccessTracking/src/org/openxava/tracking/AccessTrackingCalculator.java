@@ -6,39 +6,48 @@ import java.util.Date;
 
 import org.hibernate.*;
 import org.openxava.calculators.*;
+import org.openxava.ejbx.*;
 import org.openxava.model.*;
 import org.openxava.model.impl.*;
 import org.openxava.model.meta.*;
 import org.openxava.tracking.model.*;
 import org.openxava.util.*;
-import org.openxava.validators.*;
 
 /**
- * tmp
+ * Calculator to track the accesses to the object. <p>
+ * 
+ * You can assign this calculator to your component in 
+ * <code>postcreate-calculator, postload-calculator,
+ * postmodify-calculator</code> or <code>preremove-calculator</code>.<br>
+ * You need to give some of this values: <code>Create, Read, 
+ * Update</code> or <code>Delete</code> to
+ * the property <code>accessType</code>.<br> 
+ * 
  * 
  * @author Javier Paniza
  */
-public class AccessTrackingCalculator implements IEntityCalculator, IRemoveValidator {
+public class AccessTrackingCalculator implements IEntityCalculator {
 	
+	private static DateFormat timeFormat = new SimpleDateFormat("HH:mm");	
+		
 	private IModel entity;
-	private String accessType; 	 
+	private String accessType; 	 	
 
 	public Object calculate() throws Exception {
-		Transaction tx = null;
 		Session session = null;
 		try {
-			session = HibernatePersistenceProvider.getSessionFactory().openSession();
-			//tx = session.beginTransaction();				
-			Access access = newAccess();
+			Access access = newAccess();			
+			session = HibernatePersistenceProvider.getSessionFactory().openSession();			
 			session.save(access);
-			session.flush();
-			//tx.commit();
+			session.flush();			
 			session.close();
 		}							
 		catch (Exception ex) {
-			//if (tx != null)	tx.rollback();
-			if (session != null) session.close();
-			// tmp throw ex; // tmp Puede que no
+			ex.printStackTrace();
+			if (session != null) {
+				try { session.close(); } catch (Exception ex2) {}
+			}
+			System.err.println(XavaResources.getString("tracking_warning", ex.getLocalizedMessage())); // tracking is not so critial to abort the user work.
 		}								
 		return null;
 	}
@@ -46,18 +55,31 @@ public class AccessTrackingCalculator implements IEntityCalculator, IRemoveValid
 	private Access newAccess() throws Exception {
 		MetaModel metaModel = entity.getMetaModel();
 		Access access = new Access();
+		access.setApplication(getApplicationName(metaModel));
 		access.setModel(metaModel.getName());
+		access.setUser(getUser());
 		access.setTable(metaModel.getMapping().getTable());
 		Date date = new Date();
 		access.setDate(date);		
-		access.setTime(DateFormat.getTimeInstance(DateFormat.SHORT).format(date));
+		access.setTime(timeFormat.format(date));
 		int type = "CRUD".indexOf(getAccessType().substring(0, 1).toUpperCase()) + 1;
+		if (type == 0) {
+			new XavaException("illegal_property_value", "accessType", "AccessTracking", "Create, Read, Update or Delete");
+		}
 		access.setType(type);
 		access.setAuthorized(true);
 		String key = MapFacade.getKeyValues(metaModel.getName(), entity).toString();
 		access.setRecordId(key);
 		return access;
 	}	
+	
+	private String getApplicationName(MetaModel metaModel) throws Exception {
+		return Strings.lastToken(metaModel.getMetaComponent().getPackageNameWithSlashWithoutModel(), "/");		
+	}
+
+	private String getUser() {		
+		return ((EntityBase) entity).getCallerPrincipal().getName();		
+	}
 
 	public void setEntity(Object entity) throws RemoteException {
 		this.entity = (IModel) entity;
@@ -69,11 +91,6 @@ public class AccessTrackingCalculator implements IEntityCalculator, IRemoveValid
 
 	public void setAccessType(String accessType) {
 		this.accessType = accessType;
-	}
-
-	public void validate(Messages errors) throws Exception {
-		setAccessType("Delete");		
-		calculate();
 	}
 
 }

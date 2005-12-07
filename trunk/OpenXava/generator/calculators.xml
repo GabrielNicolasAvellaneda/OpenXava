@@ -11,28 +11,37 @@ public void setMetaModel(IMetaEjb metaModel) {
 	this.metaModel = metaModel;
 }
 
-public static void generate(XPathContext context, ProgramWriter out, IMetaEjb metaModel) {
-	PostmodifyPG pg = new PostmodifyPG();
-	pg.setMetaModel(metaModel);
-	pg.generate(context, out);
+private List calculators=null;
+public void setCalculators(List calculators) {
+	this.calculators = calculators;
+}
+
+private String type=null;
+public void setType(String type) {
+	this.type = type;
+}
+
+private String error=null;
+public void setError(String error) {
+	this.error = error;
 }
 
 </declarations> 
 
 	<java>
-	String name = metaModel.getName();
-	int count = metaModel.getMetaCalculatorsPostModifyCount();
+	String name = metaModel.getName();	
+	int count = calculators.size();
 	if (count &gt; 0) {
 	</java> 
 		try {
 	<java>
 	} 
 	for (int i=0; i&lt;count; i++) {	 
-		MetaCalculator calculator = metaModel.getMetaCalculatorPostModify(i);
+		MetaCalculator calculator = (MetaCalculator) calculators.get(i);
 		String calculatorClass = calculator.getClassName();				
 		</java> 		
 			<expr>calculatorClass</expr> calculator<expr>i</expr>= (<expr>calculatorClass</expr>)
-				getMetaModel().getMetaCalculatorPostModify(<expr>i</expr>).getCalculator();
+				getMetaModel().getMetaCalculator<expr>type</expr>(<expr>i</expr>).getCalculator();
 		<java>	
 		Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
 		while (itSets.hasNext()) {
@@ -81,7 +90,7 @@ public static void generate(XPathContext context, ProgramWriter out, IMetaEjb me
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			throw new EJBException(XavaResources.getString("entity_modify_error", "<expr>name</expr>", ex.getLocalizedMessage()));
+			throw new EJBException(XavaResources.getString("<expr>error</expr>", "<expr>name</expr>", ex.getLocalizedMessage()));
 		}
 	<java>
 	}

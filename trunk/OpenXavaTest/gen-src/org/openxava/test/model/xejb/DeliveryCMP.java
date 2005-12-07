@@ -104,6 +104,7 @@ public abstract class DeliveryCMP
 
    public void ejbRemove() throws javax.ejb.RemoveException
    {
+      super.ejbRemove();
 
    }
 

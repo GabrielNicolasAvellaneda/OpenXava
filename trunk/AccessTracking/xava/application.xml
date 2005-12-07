@@ -6,7 +6,6 @@
 		<env-var name="XAVA_SEARCH_ACTION" value="CRUD.searchReadOnly"/>
 		<model name="Access"/>
 		<controller name="Print"/>
-		<controller name="CRUD"/>
 	</module>
 
 </application>

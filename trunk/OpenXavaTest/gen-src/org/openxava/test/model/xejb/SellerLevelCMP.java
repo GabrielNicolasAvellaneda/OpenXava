@@ -75,6 +75,7 @@ public abstract class SellerLevelCMP
 
    public void ejbRemove() throws javax.ejb.RemoveException
    {
+      super.ejbRemove();
 
    }
 

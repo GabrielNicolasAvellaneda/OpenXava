@@ -85,6 +85,7 @@ public abstract class CarrierCMP
 
    public void ejbRemove() throws javax.ejb.RemoveException
    {
+      super.ejbRemove();
 
    }
 
