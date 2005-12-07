@@ -7,7 +7,6 @@
 	<classpathentry kind="src" path="components"/>
 	<classpathentry kind="src" path="xava"/>
 	<classpathentry kind="src" path="i18n"/>
-	<classpathentry kind="src" path="gen-src"/>
 	<classpathentry kind="src" path="gen-src-xava"/>
 	<classpathentry kind="src" path="properties"/>
 	<classpathentry kind="src" path="/OpenXava"/>
