@@ -125,7 +125,7 @@ while (itReferences.hasNext()) {
 			String column = mapping.getColumn(reference.getName() + "_" + property.getName()); 
 </java> 
 		&lt;property name="<expr>propertyName</expr>" column="<expr>column</expr>"/&gt;
-<java>           
+<java>
 		} 
 		for (Iterator itAggregateReferences = reference.getMetaModelReferenced().getMetaReferences().iterator(); itAggregateReferences.hasNext();) {	
 			MetaReference ref = (MetaReference) itAggregateReferences.next();
@@ -139,7 +139,16 @@ while (itReferences.hasNext()) {
 			}
 			else { 
 </java> 
-		&lt;!--  Mapping of "<expr>reference.getName() + "_" + ref.getName()</expr>": multiple key still not supported --&gt;
+		&lt;many-to-one name="<expr>refName</expr>" class="<expr>ref.getMetaModelReferenced().getPOJOClassName()</expr>"&gt; 
+<java>
+			for (Iterator itC = columns.iterator(); itC.hasNext();) {
+				String col = (String) itC.next();
+</java> 
+			&lt;column name="<expr>col</expr>" /&gt;
+<java>
+			}
+</java> 
+		&lt;/many-to-one&gt;
 <java>
 			}         
 		}
@@ -154,7 +163,16 @@ while (itReferences.hasNext()) {
 		}
 		else { 
 </java> 
-		&lt;!--  Mapping of "<expr>reference.getName()</expr>": multiple key still not supported --&gt;
+		&lt;many-to-one name="<expr>reference.getName()</expr>" class="<expr>reference.getMetaModelReferenced().getPOJOClassName()</expr>"&gt; 
+<java>
+			for (Iterator itC = columns.iterator(); itC.hasNext();) {
+				String col = (String) itC.next();
+</java> 
+			&lt;column name="<expr>col</expr>" /&gt;
+<java>
+			}
+</java> 
+		&lt;/many-to-one&gt;
 <java>
 		}
 	}

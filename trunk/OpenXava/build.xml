@@ -364,6 +364,10 @@
 	       	<arg value="${model.package}"/>       	
 		</java>
     	
+    	<replace dir="../${project.ejb}/build/hibernate">
+    		<replacefilter token="separator" value="${separator}"/>
+    	</replace>
+    	
     </target>
 		
 	<target name="runXDoclet">
