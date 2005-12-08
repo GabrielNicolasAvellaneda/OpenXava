@@ -69,25 +69,19 @@ else {
 		ReferenceMapping pMapping = mapping.getReferenceMapping(key.getName());
 		String referenceName = key.getName();	
 		String className = key.getMetaModelReferenced().getPOJOClassName();		
-		if (mapping.isReferenceOverlappingWithSomeProperty(referenceName)) {
-</java> 		
-			&lt;!-- Maping of "<expr>referenceName</expr>" : Overlapping references still not supported --&gt;
-<java>		
-		}
-		else {
 </java> 	
 			&lt;key-many-to-one name="<expr>referenceName</expr>" class="<expr>className</expr>"&gt; 
 <java>
 			for (Iterator itC = pMapping.getColumns().iterator(); itC.hasNext();) {
 				String col = (String) itC.next();
+				String insertUpdate = mapping.getColumns().contains(col)?"insert='false' update='false'":"";
 </java> 			
-				&lt;column name="<expr>col</expr>" /&gt;
+				&lt;column name="<expr>col</expr>" <expr>insertUpdate</expr>/&gt;
 <java>
 			}
 </java> 						
 			&lt;/key-many-to-one&gt;
 <java>	
- 		}
  	}
 </java>  	
 		&lt;/composite-id&gt;
@@ -167,9 +161,10 @@ while (itReferences.hasNext()) {
 <java>
 			for (Iterator itC = columns.iterator(); itC.hasNext();) {
 				String col = (String) itC.next();
+				String insertUpdate = mapping.getColumns().contains(col)?"insert='false' update='false'":"";
 </java> 
-			&lt;column name="<expr>col</expr>" /&gt;
-<java>
+			&lt;column name="<expr>col</expr>" <expr>insertUpdate</expr>/&gt;
+<java>			
 			}
 </java> 
 		&lt;/many-to-one&gt;

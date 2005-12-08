@@ -11,7 +11,7 @@ import org.openxava.util.XavaException;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Dec 08 11:37:21 CET 2005
+ * @version Thu Dec 08 16:55:20 CET 2005
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -92,14 +92,6 @@ public class HibernatePG {
     		ReferenceMapping pMapping = mapping.getReferenceMapping(key.getName());
     		String referenceName = key.getName();	
     		String className = key.getMetaModelReferenced().getPOJOClassName();		
-    		if (mapping.isReferenceOverlappingWithSomeProperty(referenceName)) {
-    
-    out.print(" \t\t\n\t\t\t<!-- Maping of \"");
-    out.print(referenceName);
-    out.print("\" : Overlapping references still not supported -->");
-    		
-    		}
-    		else {
     
     out.print(" \t\n\t\t\t<key-many-to-one name=\"");
     out.print(referenceName);
@@ -109,16 +101,18 @@ public class HibernatePG {
     
     			for (Iterator itC = pMapping.getColumns().iterator(); itC.hasNext();) {
     				String col = (String) itC.next();
+    				String insertUpdate = mapping.getColumns().contains(col)?"insert='false' update='false'":"";
     
     out.print(" \t\t\t\n\t\t\t\t<column name=\"");
     out.print(col);
-    out.print("\" />");
+    out.print("\" ");
+    out.print(insertUpdate);
+    out.print("/>");
     
     			}
     
     out.print(" \t\t\t\t\t\t\n\t\t\t</key-many-to-one>");
     	
-     		}
      	}
     
     out.print("  \t\n\t\t</composite-id>");
@@ -230,11 +224,14 @@ public class HibernatePG {
     
     			for (Iterator itC = columns.iterator(); itC.hasNext();) {
     				String col = (String) itC.next();
+    				String insertUpdate = mapping.getColumns().contains(col)?"insert='false' update='false'":"";
     
     out.print(" \n\t\t\t<column name=\"");
     out.print(col);
-    out.print("\" />");
-    
+    out.print("\" ");
+    out.print(insertUpdate);
+    out.print("/>");
+    			
     			}
     
     out.print(" \n\t\t</many-to-one>");
@@ -335,7 +332,7 @@ public class HibernatePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Dec 08 11:37:21 CET 2005", // date this file was generated
+        { "Thu Dec 08 16:55:20 CET 2005", // date this file was generated
              "/home/mcarmen/workspace/OpenXava/generator/hibernate.xml", // input file
              "/home/mcarmen/workspace/OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
