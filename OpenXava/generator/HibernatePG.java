@@ -11,7 +11,7 @@ import org.openxava.util.XavaException;
 
 /**
  * Program Generator created by TL2Java
- * @version Wed Dec 07 17:51:18 CET 2005
+ * @version Thu Dec 08 11:37:21 CET 2005
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -166,7 +166,7 @@ public class HibernatePG {
     out.print("\" column=\"");
     out.print(column);
     out.print("\"/>");
-               
+    
     		} 
     		for (Iterator itAggregateReferences = reference.getMetaModelReferenced().getMetaReferences().iterator(); itAggregateReferences.hasNext();) {	
     			MetaReference ref = (MetaReference) itAggregateReferences.next();
@@ -186,9 +186,22 @@ public class HibernatePG {
     			}
     			else { 
     
-    out.print(" \n\t\t<!--  Mapping of \"");
-    out.print(reference.getName() + "_" + ref.getName());
-    out.print("\": multiple key still not supported -->");
+    out.print(" \n\t\t<many-to-one name=\"");
+    out.print(refName);
+    out.print("\" class=\"");
+    out.print(ref.getMetaModelReferenced().getPOJOClassName());
+    out.print("\">");
+    
+    			for (Iterator itC = columns.iterator(); itC.hasNext();) {
+    				String col = (String) itC.next();
+    
+    out.print(" \n\t\t\t<column name=\"");
+    out.print(col);
+    out.print("\" />");
+    
+    			}
+    
+    out.print(" \n\t\t</many-to-one>");
     
     			}         
     		}
@@ -209,9 +222,22 @@ public class HibernatePG {
     		}
     		else { 
     
-    out.print(" \n\t\t<!--  Mapping of \"");
+    out.print(" \n\t\t<many-to-one name=\"");
     out.print(reference.getName());
-    out.print("\": multiple key still not supported -->");
+    out.print("\" class=\"");
+    out.print(reference.getMetaModelReferenced().getPOJOClassName());
+    out.print("\">");
+    
+    			for (Iterator itC = columns.iterator(); itC.hasNext();) {
+    				String col = (String) itC.next();
+    
+    out.print(" \n\t\t\t<column name=\"");
+    out.print(col);
+    out.print("\" />");
+    
+    			}
+    
+    out.print(" \n\t\t</many-to-one>");
     
     		}
     	}
@@ -309,9 +335,9 @@ public class HibernatePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Wed Dec 07 17:51:18 CET 2005", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/hibernate.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/HibernatePG.java" }, // output file
+        { "Thu Dec 08 11:37:21 CET 2005", // date this file was generated
+             "/home/mcarmen/workspace/OpenXava/generator/hibernate.xml", // input file
+             "/home/mcarmen/workspace/OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
