@@ -14,68 +14,10 @@ public class WarehousesTest extends ModuleTestBase {
 		
 	public WarehousesTest(String testName) {
 		super(testName, "OpenXavaTest", "Warehouses");		
-	}	
-	
-	public void testNavigateInListWithALotOfObjects() throws Exception { 
-		assertListRowCount(10);
-		execute("List.goPage", "page=6");
-		assertListRowCount(10);
-		execute("List.goNextPage");
-		assertListRowCount(3); // It sssumed 63 objects
-	}
-				
-	public void testNotLoseFilterOnChangeMode() throws Exception {
-		assertListRowCount(10);
-		setConditionValues(new String [] {"1"} );
-		execute("List.filter");
-		assertListRowCount(3);
-		execute("Mode.detailAndFirst");
-		execute("Mode.list");
-		assertListRowCount(3);
 	}
 	
-	public void testFilterFromNoFirstPage() throws Exception { 
-		execute("List.goPage", "page=2");
-		String [] condition = {
-				"", "2"
-		};
-		setConditionValues(condition);
-		execute("List.filter");
-		assertListRowCount(5); 
-	}
-	
-	public void testRememberListPage() throws Exception { 
-		assertListRowCount(10);
-		assertNoAction("List.goPreviousPage");
-		execute("List.goPage", "page=2");
-		assertListRowCount(10);
-		assertAction("List.goPreviousPage");
-		execute("Mode.detailAndFirst");
-		execute("Mode.list");
-		assertListRowCount(10);
-		assertAction("List.goPreviousPage");
-	}
-	
-	public void testCheckUncheckRows() throws Exception { 
-		checkRow(1);
-		execute("List.goNextPage");
-		assertNoErrors();
-		checkRow(12);
-		execute("List.goPreviousPage");
-		assertNoErrors();
-		assertRowChecked(1);
-		uncheckRow(1);
-		assertRowUnchecked(1);
-		execute("List.goNextPage");
-		assertNoErrors();
-		assertRowChecked(12);
-		execute("List.goPreviousPage");
-		assertNoErrors();
-		assertRowUnchecked(1);
-	}
-
 	/**
-	 * Need the project AccessTracking deployed in the application server
+	 * Needs the project AccessTracking deployed in the application server. <p>
 	 * 
 	 * In addition of AccessTracking and CRUD also it test:
 	 * <ul>
@@ -84,7 +26,7 @@ public class WarehousesTest extends ModuleTestBase {
 	 * </ul>
 	 * @throws Exception
 	 */	
-	public void testAccessTracking_createReadUpdateDelete() throws Exception {
+	public void testAccessTracking_createReadUpdateDelete() throws Exception {		
 		getSession().createQuery("delete from Access").executeUpdate();
 		closeSession();
 		
@@ -100,7 +42,7 @@ public class WarehousesTest extends ModuleTestBase {
 		setValue("number", "666");
 		setValue("name", "WAREHOUSE JUNIT");
 		execute("CRUD.save");
-		// Verifying from is clean
+		// Verifying form is clean
 		assertValue("zoneNumber", "");
 		assertValue("number", "");		
 		assertValue("name", "");
@@ -198,6 +140,64 @@ public class WarehousesTest extends ModuleTestBase {
 		assertValueInList(4, "type", "Read");
 		assertValueInList(4, "authorized", "Yes");
 		assertValueInList(4, "recordId", "{zoneNumber=1, number=1}");				
+	}
+		
+	public void testNavigateInListWithALotOfObjects() throws Exception { 
+		assertListRowCount(10);
+		execute("List.goPage", "page=6");
+		assertListRowCount(10);
+		execute("List.goNextPage");
+		assertListRowCount(3); // It sssumed 63 objects
+	}
+				
+	public void testNotLoseFilterOnChangeMode() throws Exception {
+		assertListRowCount(10);
+		setConditionValues(new String [] {"1"} );
+		execute("List.filter");
+		assertListRowCount(3);
+		execute("Mode.detailAndFirst");
+		execute("Mode.list");
+		assertListRowCount(3);
+	}
+	
+	public void testFilterFromNoFirstPage() throws Exception { 
+		execute("List.goPage", "page=2");
+		String [] condition = {
+				"", "2"
+		};
+		setConditionValues(condition);
+		execute("List.filter");
+		assertListRowCount(5); 
+	}
+	
+	public void testRememberListPage() throws Exception { 
+		assertListRowCount(10);
+		assertNoAction("List.goPreviousPage");
+		execute("List.goPage", "page=2");
+		assertListRowCount(10);
+		assertAction("List.goPreviousPage");
+		execute("Mode.detailAndFirst");
+		execute("Mode.list");
+		assertListRowCount(10);
+		assertAction("List.goPreviousPage");
+	}
+	
+	public void testCheckUncheckRows() throws Exception { 
+		checkRow(1);
+		execute("List.goNextPage");
+		assertNoErrors();
+		checkRow(12);
+		execute("List.goPreviousPage");
+		assertNoErrors();
+		assertRowChecked(1);
+		uncheckRow(1);
+		assertRowUnchecked(1);
+		execute("List.goNextPage");
+		assertNoErrors();
+		assertRowChecked(12);
+		execute("List.goPreviousPage");
+		assertNoErrors();
+		assertRowUnchecked(1);
 	}
 	
 	public void testSaveExisting() throws Exception {  
