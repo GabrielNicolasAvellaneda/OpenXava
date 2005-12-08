@@ -1,6 +1,7 @@
 package org.openxava.test.tests;
 
 
+import org.hibernate.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
@@ -22,7 +23,8 @@ public class OfficesTest extends ModuleTestBase {
 	public void testDescriptionEditorInStereotypeWithAggregateAsModel() throws Exception {
 		execute("CRUD.new");
 		assertExists("receptionist");
-		int count = ReceptionistUtil.getHome().findAll().size() + 1;
+		Query query = getSession().createQuery("select count(*) from Receptionist" );	
+		int count = ((Integer) query.uniqueResult()).intValue() + 1;
 		assertTrue("At least 2 receptionists are required for run this test", count > 2);
 		assertValidValuesCount("receptionist", count);		
 	}

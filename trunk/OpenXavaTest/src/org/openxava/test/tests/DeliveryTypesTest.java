@@ -59,13 +59,18 @@ public class DeliveryTypesTest extends ModuleTestBase {
 		execute("CRUD.save");
 		assertNoErrors();
 		
-		DeliveryValue deliveryValue = new DeliveryValue();
-		deliveryValue.setInvoice_year(2002);
-		deliveryValue.setInvoice_number(1);
-		deliveryValue.setType_number(66);				
-		deliveryValue.setNumber(66);
-		deliveryValue.setDescription("JUNIT FOR DELIVERY TYPE");		
-		DeliveryRemote delivery = DeliveryUtil.getHome().create(deliveryValue);
+		Delivery delivery = new Delivery();
+		Invoice invoice = new Invoice();
+		invoice.setYear(2002);
+		invoice.setNumber(1);
+		delivery.setInvoice(invoice);
+		DeliveryType deliveryType = new DeliveryType();
+		deliveryType.setNumber(66);
+		delivery.setType(deliveryType);
+		delivery.setNumber(66);
+		delivery.setDescription("JUNIT FOR DELIVERY TYPE");
+		getSession().save(delivery);
+		closeSession();
 		
 		setValue("number", "66");
 		execute("CRUD.search");
@@ -84,7 +89,8 @@ public class DeliveryTypesTest extends ModuleTestBase {
 		assertError("Delivery type can not delete because it is used in deliveries");
 		assertEditable("description"); // because return to main view (and controllers)
 		
-		delivery.remove();
+		getSession().delete(delivery);
+		closeSession();
 		
 		execute("CRUD.delete");		
 		assertNoErrors();
