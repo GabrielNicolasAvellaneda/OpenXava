@@ -72,13 +72,13 @@ else {
 </java> 	
 			&lt;key-many-to-one name="<expr>referenceName</expr>" class="<expr>className</expr>"&gt; 
 <java>
-			for (Iterator itC = pMapping.getColumns().iterator(); itC.hasNext();) {
-				String col = (String) itC.next();
-				String insertUpdate = mapping.getColumns().contains(col)?"insert='false' update='false'":"";
+		for (Iterator itC = pMapping.getColumns().iterator(); itC.hasNext();) {
+			String col = (String) itC.next();
+			String insertUpdate = mapping.getColumns().contains(col)?"insert='false' update='false'":"";
 </java> 			
 				&lt;column name="<expr>col</expr>" <expr>insertUpdate</expr>/&gt;
 <java>
-			}
+		}
 </java> 						
 			&lt;/key-many-to-one&gt;
 <java>	

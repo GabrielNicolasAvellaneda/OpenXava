@@ -82,21 +82,25 @@ public class WarehousesTest extends ModuleTestBase {
 		assertError("Object not found");
 		assertErrorsCount(1);
 		
+		// Date and time
+		
+		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
+		String time = timeFormat.format(new Date());
+		
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		String date = dateFormat.format(new Date());
+		
 		// Verifying the entries in access tracking		
 		changeModule("AccessTracking", "Accesses");
 		assertListRowCount(5);
 		
-		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
-		
-		String date = dateFormat.format(new Date());
 		
 		assertValueInList(0, "application", "test");
 		assertValueInList(0, "model", "Warehouse");
 		assertValueInList(0, "table", "XAVATEST_WAREHOUSE");
 		assertValueInList(0, "user", "nobody");
 		assertValueInList(0, "date", date);
-		assertValueInList(0, "time", timeFormat.format(new Date()));
+		assertValueInList(0, "time", time);
 		assertValueInList(0, "type", "Create");
 		assertValueInList(0, "authorized", "Yes");
 		assertValueInList(0, "recordId", "{zoneNumber=66, number=666}");
@@ -106,7 +110,7 @@ public class WarehousesTest extends ModuleTestBase {
 		assertValueInList(1, "table", "XAVATEST_WAREHOUSE");
 		assertValueInList(1, "user", "nobody");
 		assertValueInList(1, "date", date);
-		assertValueInList(1, "time", timeFormat.format(new Date()));
+		assertValueInList(1, "time", time);
 		assertValueInList(1, "type", "Read");
 		assertValueInList(1, "authorized", "Yes");
 		assertValueInList(1, "recordId", "{zoneNumber=66, number=666}");
@@ -116,7 +120,7 @@ public class WarehousesTest extends ModuleTestBase {
 		assertValueInList(2, "table", "XAVATEST_WAREHOUSE");
 		assertValueInList(2, "user", "nobody");
 		assertValueInList(2, "date", date);
-		assertValueInList(2, "time", timeFormat.format(new Date()));
+		assertValueInList(2, "time", time);
 		assertValueInList(2, "type", "Update");
 		assertValueInList(2, "authorized", "Yes");
 		assertValueInList(2, "recordId", "{zoneNumber=66, number=666}");		
@@ -126,7 +130,7 @@ public class WarehousesTest extends ModuleTestBase {
 		assertValueInList(3, "table", "XAVATEST_WAREHOUSE");
 		assertValueInList(3, "user", "nobody");
 		assertValueInList(3, "date", date);
-		assertValueInList(3, "time", timeFormat.format(new Date()));
+		assertValueInList(3, "time", time);
 		assertValueInList(3, "type", "Delete");
 		assertValueInList(3, "authorized", "Yes");
 		assertValueInList(3, "recordId", "{zoneNumber=66, number=666}");
@@ -136,7 +140,7 @@ public class WarehousesTest extends ModuleTestBase {
 		assertValueInList(4, "table", "XAVATEST_WAREHOUSE");
 		assertValueInList(4, "user", "nobody");
 		assertValueInList(4, "date", date);
-		assertValueInList(4, "time", timeFormat.format(new Date()));
+		assertValueInList(4, "time", time);
 		assertValueInList(4, "type", "Read");
 		assertValueInList(4, "authorized", "Yes");
 		assertValueInList(4, "recordId", "{zoneNumber=1, number=1}");				
