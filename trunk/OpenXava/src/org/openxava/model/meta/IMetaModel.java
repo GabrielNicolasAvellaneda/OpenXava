@@ -49,4 +49,5 @@ public interface IMetaModel {
 	boolean isKey(String name) throws XavaException;
 	Collection getRecursiveQualifiedPropertiesNames() throws XavaException;
 	Collection getMetaReferencesKey() throws XavaException;
+	Collection getMetaMembersKey() throws XavaException;
 }
