@@ -603,6 +603,30 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	}
 	
 	/**
+	 * @return Collection of <tt>MetaMember</tt>, not null and read only  //tmp
+	 */
+	public Collection getMetaMembersKey() throws XavaException {
+		Iterator it = getMembersNames().iterator(); // memberNames to keep order		
+		ArrayList result = new ArrayList();
+		while (it.hasNext()) {
+			String name = (String) it.next();
+			if (containsMetaProperty(name)) { 			
+				MetaProperty p = (MetaProperty) getMetaProperty(name);
+				if (p.isKey()) {
+					result.add(p);
+				}
+			}
+			else if (containsMetaReference(name)) {
+				MetaReference r = (MetaReference) getMetaReference(name);
+				if (r.isKey()){
+					result.add(r);
+				}
+			}
+		}
+		return Collections.unmodifiableCollection(result);
+	}
+	
+	/**
 	 * Include qualified properties in case of key references. <p<
 	 * 
 	 * @return Collection of <tt>MetaProperty</tt>, not null and read only
