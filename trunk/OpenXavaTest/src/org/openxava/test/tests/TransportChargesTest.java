@@ -5,6 +5,7 @@ import java.util.*;
 
 import javax.rmi.*;
 
+import org.hibernate.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
@@ -16,8 +17,8 @@ import org.openxava.util.*;
 
 public class TransportChargesTest extends ModuleTestBase {
 	
-	private TransportChargeValue charge1;
-	private TransportChargeValue charge2;
+	private TransportCharge charge1;
+	private TransportCharge charge2;
 		
 	public TransportChargesTest(String testName) {
 		super(testName, "OpenXavaTest", "TransportCharges");		
@@ -80,42 +81,40 @@ public class TransportChargesTest extends ModuleTestBase {
 		
 		assertListRowCount(2);
 		
-		assertValueInList(0, 0, String.valueOf(getCharge1().getDelivery_invoice_year()));
-		assertValueInList(0, 1, String.valueOf(getCharge1().getDelivery_invoice_number()));
-		assertValueInList(0, 2, String.valueOf(getCharge1().getDelivery_number()));
+		assertValueInList(0, 0, String.valueOf(getCharge1().getDelivery().getInvoice().getYear()));
+		assertValueInList(0, 1, String.valueOf(getCharge1().getDelivery().getInvoice().getNumber()));
+		assertValueInList(0, 2, String.valueOf(getCharge1().getDelivery().getNumber()));
 		assertValueInList(0, 3, "100");
 
-		assertValueInList(1, 0, String.valueOf(getCharge2().getDelivery_invoice_year()));
-		assertValueInList(1, 1, String.valueOf(getCharge2().getDelivery_invoice_number()));
-		assertValueInList(1, 2, String.valueOf(getCharge2().getDelivery_number()));
+		assertValueInList(1, 0, String.valueOf(getCharge2().getDelivery().getInvoice().getYear()));
+		assertValueInList(1, 1, String.valueOf(getCharge2().getDelivery().getInvoice().getNumber()));
+		assertValueInList(1, 2, String.valueOf(getCharge2().getDelivery().getNumber()));
 		assertValueInList(1, 3, "200");
 
 		String [] condition = {
-				String.valueOf(getCharge2().getDelivery_invoice_year()),
-				String.valueOf(getCharge2().getDelivery_invoice_number()),
-				String.valueOf(getCharge2().getDelivery_number())
+				String.valueOf(getCharge2().getDelivery().getInvoice().getYear()),
+				String.valueOf(getCharge2().getDelivery().getInvoice().getNumber()),
+				String.valueOf(getCharge2().getDelivery().getNumber())
 		};		
 		setConditionValues(condition);
 		execute("List.filter");
 		
 		assertListRowCount(1);
 		
-		assertValueInList(0, 0, String.valueOf(getCharge2().getDelivery_invoice_year()));
-		assertValueInList(0, 1, String.valueOf(getCharge2().getDelivery_invoice_number()));
-		assertValueInList(0, 2, String.valueOf(getCharge2().getDelivery_number()));
+		assertValueInList(0, 0, String.valueOf(getCharge2().getDelivery().getInvoice().getYear()));
+		assertValueInList(0, 1, String.valueOf(getCharge2().getDelivery().getInvoice().getNumber()));
+		assertValueInList(0, 2, String.valueOf(getCharge2().getDelivery().getNumber()));
 		assertValueInList(0, 3, "200");		
 	}
 
 	private void deleteAll() throws Exception {
-		Iterator it = TransportChargeUtil.getHome().findAll().iterator();
-		while (it.hasNext()) {
-			TransportChargeRemote charge = (TransportChargeRemote) PortableRemoteObject.narrow(it.next(), TransportChargeRemote.class);
-			charge.remove();
-		}		
+		getSession().createQuery("delete from TransportCharge").executeUpdate();
+		closeSession(); 
+		
 	}	
 	
 	private void createSome() throws Exception {
-		Collection deliveries = DeliveryUtil.getHome().findAll();
+	/*	Collection deliveries = DeliveryUtil.getHome().findAll();
 		assertTrue("At least 2 deliveries is required to run this test", deliveries.size() > 1);
 		Iterator it = deliveries.iterator();
 		
@@ -123,7 +122,7 @@ public class TransportChargesTest extends ModuleTestBase {
 		charge1 = new TransportChargeValue();
 		
 		charge1.setDelivery_invoice_year(delivery1.getInvoice_year());		
-		charge1.setDelivery_invoice_number(delivery1.getInvoice_number());		
+		charge1.setDelivery_invoice_number(delivery1.0getInvoice_number());		
 		charge1.setDelivery_number(delivery1.getNumber());		
 		charge1.setAmount(new BigDecimal("100.00"));					
 		TransportChargeUtil.getHome().create(charge1);
@@ -134,14 +133,32 @@ public class TransportChargesTest extends ModuleTestBase {
 		charge2.setDelivery_invoice_number(delivery2.getInvoice_number());
 		charge2.setDelivery_number(delivery2.getNumber());
 		charge2.setAmount(new BigDecimal("200.00"));			
-		TransportChargeUtil.getHome().create(charge2);		
+		TransportChargeUtil.getHome().create(charge2);  */
+		
+		Collection deliveries = getSession().createQuery("select d from Delivery as d").list();	
+		assertTrue("At least 2 deliveries is required to run this test", deliveries.size() > 1);
+		Iterator it = deliveries.iterator();
+		
+		Delivery delivery1 = (Delivery) it.next();		
+		charge1 = new TransportCharge();
+		
+		charge1.setDelivery(delivery1);
+		charge1.setAmount(new BigDecimal("100.00"));
+		getSession().save(charge1);
+						
+		Delivery delivery2 = (Delivery) it.next();		
+		charge2 = new TransportCharge();
+		charge2.setDelivery(delivery2);
+		charge2.setAmount(new BigDecimal("200.00"));			
+		getSession().save(charge2);
+		getSession().flush();
 	}
 	
-	private TransportChargeValue getCharge1() {
+	private TransportCharge getCharge1() {
 		return charge1;
 	}
 
-	private TransportChargeValue getCharge2() {
+	private TransportCharge getCharge2() {
 		return charge2;
 	}
 
