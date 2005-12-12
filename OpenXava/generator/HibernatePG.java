@@ -11,7 +11,7 @@ import org.openxava.util.XavaException;
 
 /**
  * Program Generator created by TL2Java
- * @version Fri Dec 09 09:29:52 CET 2005
+ * @version Mon Dec 12 17:56:19 CET 2005
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -50,12 +50,12 @@ public class HibernatePG {
     out.print(mapping.getTable());
     out.print("\">");
     
+    Collection keyMembers = metaModel.getMetaMembersKey();
     Collection keyProperties = metaModel.getMetaPropertiesKey(); 
-    Collection keyReferences = metaModel.getMetaReferencesKey();
-    if (keyProperties.size() + keyReferences.size() == 0) {
+    if (keyMembers.size() == 0) {
     	throw new XavaException("model_without_key_error", name);
     }
-    else if (keyProperties.size() == 1 &&  keyReferences.size() == 0) {
+    else if (keyProperties.size() == 1 &&  keyMembers.size() == 1) {
     		MetaProperty key = (MetaProperty) keyProperties.iterator().next();
     		PropertyMapping pMapping = key.getMapping();
     		String propertyName = pMapping.hasConverter()?"_"+Strings.firstUpper(key.getName()):key.getName();	
@@ -74,24 +74,23 @@ public class HibernatePG {
     
     out.print(" \n\t\t<composite-id>");
     
-    	for (Iterator it = keyProperties.iterator(); it.hasNext();) {
-    		MetaProperty key = (MetaProperty) it.next();
-    		PropertyMapping pMapping = key.getMapping();
-    		String propertyName = pMapping.hasConverter()?"_"+Strings.firstUpper(key.getName()):key.getName();			
+    	for (Iterator it = keyMembers.iterator(); it.hasNext();) {
+        	MetaMember key = (MetaMember) it.next();
+        	if (key instanceof MetaProperty) {
+    			PropertyMapping pMapping = ((MetaProperty) key).getMapping();
+    			String propertyName = pMapping.hasConverter()?"_"+Strings.firstUpper(key.getName()):key.getName();			
     
     out.print(" \t\n\t\t\t<key-property name=\"");
     out.print(propertyName);
     out.print("\" column=\"");
     out.print(pMapping.getColumn());
     out.print("\"/>");
-    	
-    	}
     
-    	for (Iterator it = keyReferences.iterator(); it.hasNext();) {
-    		MetaReference key = (MetaReference) it.next();
-    		ReferenceMapping pMapping = mapping.getReferenceMapping(key.getName());
-    		String referenceName = key.getName();	
-    		String className = key.getMetaModelReferenced().getPOJOClassName();		
+    		}
+    		if (key instanceof MetaReference) {
+    			ReferenceMapping pMapping = mapping.getReferenceMapping(key.getName());
+    			String referenceName = key.getName();	
+    			String className = ((MetaReference) key).getMetaModelReferenced().getPOJOClassName();		
     
     out.print(" \t\n\t\t\t<key-many-to-one name=\"");
     out.print(referenceName);
@@ -99,9 +98,9 @@ public class HibernatePG {
     out.print(className);
     out.print("\">");
     
-    		for (Iterator itC = pMapping.getColumns().iterator(); itC.hasNext();) {
-    			String col = (String) itC.next();
-    			String insertUpdate = mapping.getColumns().contains(col)?"insert='false' update='false'":"";
+    			for (Iterator itC = pMapping.getColumns().iterator(); itC.hasNext();) {
+    				String col = (String) itC.next();
+    				String insertUpdate = mapping.getColumns().contains(col)?"insert='false' update='false'":"";
     
     out.print(" \t\t\t\n\t\t\t\t<column name=\"");
     out.print(col);
@@ -109,16 +108,16 @@ public class HibernatePG {
     out.print(insertUpdate);
     out.print("/>");
     
-    		}
+    			}
     
     out.print(" \t\t\t\t\t\t\n\t\t\t</key-many-to-one>");
     	
-     	}
+     		}
+     	}	
     
     out.print("  \t\n\t\t</composite-id>");
     		
     }
-    
     	Collection properties = metaModel.getMetaPropertiesPersistents();
     	for (Iterator it = properties.iterator(); it.hasNext();) {
     		MetaProperty prop = (MetaProperty) it.next();
@@ -332,7 +331,7 @@ public class HibernatePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Fri Dec 09 09:29:52 CET 2005", // date this file was generated
+        { "Mon Dec 12 17:56:19 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/hibernate.xml", // input file
              "/home/javi/workspace/OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

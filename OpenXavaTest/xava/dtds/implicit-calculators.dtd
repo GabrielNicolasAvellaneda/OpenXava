@@ -1,0 +1,13 @@
+<!ELEMENT implicit-calculators (for-all-models|for|except-for)*>
+
+<!ELEMENT for-all-models (postcreate-calculator*, postload-calculator*, postmodify-calculator*, preremove-calculator*)>
+
+<!ELEMENT for (postcreate-calculator*, postload-calculator*, postmodify-calculator*, preremove-calculator*)>
+<!ATTLIST for
+  models CDATA #REQUIRED
+>
+
+<!ELEMENT except-for (postcreate-calculator*, postload-calculator*, postmodify-calculator*, preremove-calculator*)>
+<!ATTLIST except-for
+  models CDATA #REQUIRED
+>

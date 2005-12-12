@@ -56,6 +56,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	private Collection interfaces;
 	private Collection recursiveQualifiedPropertiesNames;
 	private Collection metaReferencesWithDefaultValueCalculator;
+	private String qualifiedName;
 	
 	/**
 	 * All models (Entities and Aggregates) with a mapping associated.
@@ -145,6 +146,22 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	}	
 	
 	abstract public String getClassName() throws XavaException;
+	
+	/**
+	 * If entity the name of component, if aggregate the name of component + the name of
+	 * aggregate. <p>
+	 */
+	public String getQualifiedName() {
+		return qualifiedName;
+	}
+	/**
+	 * If entity the name of component, if aggregate the name of component + the name of
+	 * aggregate. <p>
+	 */	
+	public void setQualifiedName(String qualifiedName) {
+		this.qualifiedName = qualifiedName;
+	}
+
 		
 	/**	 
 	 * @return Collection of MetaFinder. Not null

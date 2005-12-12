@@ -19,6 +19,7 @@ abstract public class MetaAggregate extends MetaModel {
 		return MetaComponent.get(component).getMetaAggregate(aggregate);
 	}
 	
+	
 	public void setName(String newName) {
 		super.setName(newName);
 	}
@@ -26,5 +27,5 @@ abstract public class MetaAggregate extends MetaModel {
 	public String getId() {
 		return getMetaComponent().getName() + "." + getName();		
 	}
-			
+				
 }
