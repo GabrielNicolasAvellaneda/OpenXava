@@ -16,17 +16,10 @@ abstract public class MetaEntity extends MetaModel {
 	 * @return The names of key fields. Of <tt>String</tt>.
 	 */
 	abstract public Collection getKeyFields() throws XavaException;
-	
+		
 	public boolean isKey(String propertyName) throws XavaException {	
 		if (isGenerate() && super.isKey(propertyName)) return true; 	
 		return getKeyFields().contains(propertyName);		
-	}
-
-	/**
-	 * From component
-	 */
-	public String getName() {
-		return getMetaComponent().getName();
 	}
 	
 	/**

@@ -47,7 +47,7 @@ class ComponentParser extends ParserBase {
 		if (c != 1) {
 			throw new XavaException("component_only_1_entity", component.getName());
 		}
-		component.setMetaEntity(ModelParser.parseEntity(l.item(0), lang));
+		component.setMetaEntity(ModelParser.parseEntity(l.item(0), component.getName(), lang));
 	}
 	
 	private void createViews() throws XavaException {
