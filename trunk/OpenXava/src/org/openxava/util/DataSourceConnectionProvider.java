@@ -53,18 +53,11 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 	public DataSource getDataSource() throws NamingException {
 		if (dataSource == null) {
 			Context ctx = new InitialContext();
-			String jndi = isWebsphere(ctx)?"jdbc/" + getDataSourceJNDI():"java:/" + getDataSourceJNDI();
-			dataSource = (DataSource) ctx.lookup(jndi);						
+			dataSource = (DataSource) ctx.lookup(getDataSourceJNDI());						
 		}
 		return dataSource;
 	}
-	
-	private boolean isWebsphere(Context ctx) throws NamingException {
-		String pkgs = (String) ctx.getEnvironment().get("java.naming.factory.url.pkgs");
-		if (pkgs == null) return false;
-		return pkgs.indexOf("ibm") >= 0;
-	}
-	
+		
 	/**
 	 * DataSource to wrap
 	 */

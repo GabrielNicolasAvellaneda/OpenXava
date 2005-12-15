@@ -540,7 +540,7 @@
     </target>	
 	
 	<target name="updateDataSourceInfo">
-		<echo file="../${project.ejb}/${classes.dir}/datasource.properties">${domain}/${package}=${datasource}</echo>
+		<echo file="../${project.ejb}/${classes.dir}/datasource.properties">${domain}/${package}=${datasource.prefix}/${datasource}</echo>
 	</target>
 	
 	<target name="filterI18n" if="configuration">
@@ -585,7 +585,9 @@
 			tofile="../${project}/${classes.dir}/Etiquetas${project}.properties"
 			failonerror="false"/>
 		<jar jarfile="../${project}/web/WEB-INF/lib/openxava.jar" basedir="../OpenXava/bin"/>
+		<!-- tmp
 		<copy file="${jboss.dir}/client/jboss-client.jar" todir="../${project}/web/WEB-INF/lib" preservelastmodified="true"/>
+		-->
 	</target>
 	
 	<target name="createWar" depends="prepareWar">
