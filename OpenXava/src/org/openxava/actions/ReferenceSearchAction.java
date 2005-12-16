@@ -31,6 +31,7 @@ public class ReferenceSearchAction extends ViewBaseAction implements INavigation
 	private String keyProperty;
 	private View referenceSubview;		
 	private Tab tab;	
+	private String tabName = "";
 	private String currentReferenceLabel;
 	private String nextController = "ReferenceSearch"; // If you change the default value change setter and getter doc too
 	
@@ -44,6 +45,7 @@ public class ReferenceSearchAction extends ViewBaseAction implements INavigation
 		MetaModel metaRootModel = viewInfo.parent.getMetaModel();		
 		getTab().setModelName(subview.getModelName());
 		MetaReference ref = getMetaReference(metaRootModel, viewInfo.memberName);
+		tab.setTabName(tabName);
 		
 		ModelMapping rootMapping = null;
 		try {
@@ -157,5 +159,14 @@ public class ReferenceSearchAction extends ViewBaseAction implements INavigation
 	public void setNextController(String nextController) {
 		this.nextController = nextController;
 	}
+
+	public String getTabName() {
+		return tabName;
+	}
+
+	public void setTabName(String tabName) {
+		this.tabName = tabName;
+	}
+
 
 }
