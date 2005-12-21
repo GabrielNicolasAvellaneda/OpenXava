@@ -126,11 +126,7 @@ while (itCollections.hasNext()) {
 # 
 	}
 	else if (col.hasCalculator()) {
-# 
-	public java.util.Collection get#(colName)#() {
-		return null;
-	}		
-# 
+		CalculatedCollectionPG.generate(context, out, col);	
 	}
 	if (!reference.isAggregate() && 
 		!col.hasCondition() && 

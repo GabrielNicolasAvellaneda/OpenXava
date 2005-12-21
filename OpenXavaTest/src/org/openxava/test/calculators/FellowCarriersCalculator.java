@@ -2,7 +2,9 @@ package org.openxava.test.calculators;
 
 import java.rmi.*;
 
+import org.hibernate.*;
 import org.openxava.calculators.*;
+import org.openxava.model.impl.*;
 import org.openxava.test.model.*;
 
 /**
@@ -13,11 +15,15 @@ public class FellowCarriersCalculator implements IEntityCalculator {
 	private ICarrier carrier;
 
 	public Object calculate() throws Exception {
-		return CarrierUtil.getHome().findFellowCarriersOfCarrier(
-			carrier.getWarehouse().getZoneNumber(),
-			new Integer(carrier.getWarehouse().getNumber()),
-			new Integer(carrier.getNumber())
-		);
+		Session session = HibernatePersistenceProvider.getCurrentSession();
+		Query query = session.createQuery("from Carrier as o where " +
+				"o.warehouse.zoneNumber = :warehouseZone AND " +
+				"o.warehouse.number = :warehouseNumber AND " +
+				"NOT (o.number = :number)");
+		query.setInteger("warehouseZone", carrier.getWarehouse().getZoneNumber());
+		query.setInteger("warehouseNumber", carrier.getWarehouse().getNumber());
+		query.setInteger("number", carrier.getNumber()); 
+		return query.list();		
 	}
 
 	public void setEntity(Object entity) throws RemoteException {

@@ -230,6 +230,10 @@
 	<target name="regenerateGenerator">    
 		<echo>Generating xml template for EJB</echo>
        <java classname="Simple2XML" classpath="${tl.lib}">
+         <arg value="${generator.dir}/calculatedCollection.template"/> 
+         <arg value="${generator.dir}/calculatedCollection.xml"/>         
+       </java>		       				
+       <java classname="Simple2XML" classpath="${tl.lib}">
          <arg value="${generator.dir}/calculators.template"/> 
          <arg value="${generator.dir}/calculators.xml"/>         
        </java>		       		
@@ -279,6 +283,10 @@
 		</java> 
 		
        <echo>Generating EJB classes generator</echo>
+        <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
+          <arg value="${generator.dir}/calculatedCollection.xml"/>
+          <arg value="${generator.dir}/CalculatedCollectionPG.java"/>
+        </java>				
         <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
           <arg value="${generator.dir}/calculators.xml"/>
           <arg value="${generator.dir}/CalculatorsPG.java"/>
