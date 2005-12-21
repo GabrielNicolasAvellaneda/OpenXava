@@ -7,6 +7,7 @@ import org.openxava.util.*;
  * to the position that it's in property 'words'. 
  * The property words must be a string that contains the chains separating by comma. <p> 
  * 
+ * @author Miguel Embuena
  */
 public class ValidValuesStringConverter implements IConverter {
 

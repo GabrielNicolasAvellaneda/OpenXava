@@ -153,7 +153,7 @@ public class CustomersWithSectionTest extends CustomersTest {
 	}
 	
 	public void testCustomizeList_generatePDF() throws Exception {
-		// Trust in that testCustomizeList_moveAndRemove is executed before
+		// Trusts in that testCustomizeList_moveAndRemove is executed before
 		execute("List.customize");
 		assertListColumnCount(5);
 		execute("List.removeColumn", "columnIndex=3");

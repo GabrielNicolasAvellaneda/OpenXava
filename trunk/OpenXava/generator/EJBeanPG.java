@@ -14,7 +14,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Dec 12 17:56:15 CET 2005
+ * @version Thu Dec 15 13:44:42 CET 2005
  */
 public class EJBeanPG {
     Properties properties = new Properties();
@@ -238,7 +238,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print(name);
     out.print(", EntityBean {\t\n\t\t\t\n\tprivate boolean creating = false;\t\t\n\tprivate boolean modified = false;");
     if (!metaModel.getMetaCalculatorsPostLoad().isEmpty()) { 
-    out.print(" \n\tprivate long lastRead;");
+    out.print(" \n\tprivate static Map lastReads = new HashMap();");
     } 
     out.print("\n\n\t// Create");
     	
@@ -947,7 +947,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     } 
     out.print("\n\t\n\tpublic void ejbLoad() {\n\t\tcreating = false;\n\t\tmodified = false;");
     if (!metaModel.getMetaCalculatorsPostLoad().isEmpty()) { 
-    out.print(" \n\t\t// ejbLoad is executed often, hence executing calculated each 2 seconds is enougth  \n\t\tlong time = System.currentTimeMillis();\n\t\tif (time - lastRead < 2000) {\t\t\t\t\t\n\t\t\treturn;\n\t\t}\n\t\tlastRead = time;");
+    out.print(" \n\t\t// ejbLoad is executed often, hence executing calculated each 5 seconds is enougth  \n\t\tlong time = System.currentTimeMillis();\n\t\tObject key = getEntityContext().getPrimaryKey();\n\t\tLong olastRead = (Long) lastReads.get(key);\n\t\tlong lastRead = olastRead == null?0:olastRead.longValue();\n\t\tif (time - lastRead < 5000) {\t\t\t\t\t\n\t\t\treturn;\n\t\t}\n\t\tlastReads.put(key, new Long(time));");
     } 
     
     		CalculatorsPG postloadPG = new CalculatorsPG();
@@ -1278,7 +1278,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Dec 12 17:56:16 CET 2005", // date this file was generated
+        { "Thu Dec 15 13:44:43 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/ejbean.xml", // input file
              "/home/javi/workspace/OpenXava/generator/EJBeanPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

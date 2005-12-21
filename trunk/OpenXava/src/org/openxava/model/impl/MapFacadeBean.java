@@ -27,11 +27,12 @@ import org.openxava.validators.meta.*;
 public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	
 	
-	private javax.ejb.SessionContext mySessionCtx = null;
+	private javax.ejb.SessionContext sessionContext = null;
 	private final static long serialVersionUID = 3206093459760846163L;
 	
-	public Object create(String modelName, Map values)
+	public Object create(String user, String modelName, Map values)
 		throws CreateException, XavaException, ValidationException, RemoteException {
+		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {
 			persistenceProvider.begin();
@@ -60,14 +61,15 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	}
 	
 	public Map getValues(
+			String user, 
 			String modelName,
 			Map keyValues,
 			Map membersNames)
-			throws FinderException, XavaException, RemoteException {		
+			throws FinderException, XavaException, RemoteException {
+		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {
-			persistenceProvider.begin();
-			MetaModel metaModel = getMetaModel(modelName);					
+			persistenceProvider.begin();							
 			Map result = getValuesImpl(persistenceProvider, modelName, keyValues, membersNames);
 			persistenceProvider.commit();
 			return result;
@@ -89,9 +91,10 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	public void delete(String modelName, Map keyValues)
+	public void delete(String user, String modelName, Map keyValues)
 		throws RemoveException, ValidationException, XavaException, RemoteException 
 	{		
+		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {
 			persistenceProvider.begin();
@@ -117,9 +120,10 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	public void setValues(String modelName, Map keyValues, Map values)
+	public void setValues(String user, String modelName, Map keyValues, Map values)
 		throws FinderException, ValidationException, XavaException, RemoteException 
 	{				
+		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {
 			persistenceProvider.begin();
@@ -146,8 +150,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 
-	public Object findEntity(String modelName, Map keyValues)
+	public Object findEntity(String user, String modelName, Map keyValues)
 		throws FinderException, RemoteException {
+		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {
 			persistenceProvider.begin();
@@ -167,8 +172,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	public Map createReturningValues(String modelName, Map values) 
+	public Map createReturningValues(String user, String modelName, Map values) 
 		throws CreateException, XavaException, ValidationException, RemoteException {
+		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {
 			persistenceProvider.begin();
@@ -196,8 +202,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}		
 	}
 	
-	public Map createReturningKey(String modelName, Map values) 
+	public Map createReturningKey(String user, String modelName, Map values) 
 		throws CreateException, XavaException, ValidationException, RemoteException {
+		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {
 			persistenceProvider.begin();
@@ -225,9 +232,10 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	public Object createAggregate(String modelName, Map containerKeyValues, int counter, Map values)  
+	public Object createAggregate(String user, String modelName, Map containerKeyValues, int counter, Map values)  
 		throws CreateException,ValidationException, XavaException, RemoteException 
 	{		
+		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {
 			persistenceProvider.begin();
@@ -255,9 +263,10 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	public Object createAggregate(String modelName, Object container, int counter, Map values)  
+	public Object createAggregate(String user, String modelName, Object container, int counter, Map values)  
 		throws CreateException,ValidationException, XavaException, RemoteException
 	{		
+		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {
 			persistenceProvider.begin();
@@ -285,9 +294,10 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	public Map createAggregateReturningKey(String modelName, Map containerKeyValues, int counter, Map values)  
+	public Map createAggregateReturningKey(String user, String modelName, Map containerKeyValues, int counter, Map values)  
 		throws CreateException,ValidationException, XavaException, RemoteException 
 	{		
+		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {
 			persistenceProvider.begin();
@@ -316,10 +326,12 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	}
 
 	public Map getValues( 
+		String user, 
 		String modelName,
 		Object modelObject,
 		Map memberNames) throws XavaException, RemoteException  
 		 {		
+		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {
 			persistenceProvider.begin();								
@@ -339,7 +351,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	}
 	
 
-	public Messages validate(String modelName, Map values) throws XavaException, RemoteException {   			
+	public Messages validate(String user, String modelName, Map values) throws XavaException, RemoteException {
+		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {
 			persistenceProvider.begin();
@@ -359,9 +372,10 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	public void removeCollectionElement(String modelName, Map keyValues, String collectionName, Map collectionElementKeyValues)   
+	public void removeCollectionElement(String user, String modelName, Map keyValues, String collectionName, Map collectionElementKeyValues)   
 		throws FinderException,	ValidationException, XavaException, RemoveException, RemoteException 
 	{
+		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {
 			persistenceProvider.begin();
@@ -688,7 +702,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	}
 
 	public javax.ejb.SessionContext getSessionContext() {
-		return mySessionCtx;
+		return sessionContext;
 	}
 
 	
@@ -772,7 +786,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	public Map getKeyValues(String modelName, Object entity) throws RemoteException, XavaException {
+	public Map getKeyValues(String user, String modelName, Object entity) throws RemoteException, XavaException {
+		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		MetaModel metaModel = getMetaModel(modelName);
 		return getValues(persistenceProvider, metaModel, entity, getKeyNames(metaModel));
@@ -1080,7 +1095,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		
 	public void setSessionContext(javax.ejb.SessionContext ctx)
 		throws java.rmi.RemoteException {
-		mySessionCtx = ctx;
+		sessionContext = ctx;
 	}
 		
 	private void setValues(IPersistenceProvider persistenceProvider, MetaModel metaModel, Map keyValues, Map values)
@@ -1171,11 +1186,11 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			validate(persistenceProvider, errors, metaModel, name, value, creating);
 		}
 		if (metaModel.containsValidadors()) {
-			validateWintModelValidator(persistenceProvider, errors, metaModel, values, keyValues, containerKey, creating);			
+			validateWithModelValidator(persistenceProvider, errors, metaModel, values, keyValues, containerKey, creating);			
 		}
 	}
 	
-	private void validateWintModelValidator(IPersistenceProvider persistenceProvider, Messages errors, MetaModel metaModel, Map values, Map keyValues, Object containerKey, boolean creating) throws XavaException {				
+	private void validateWithModelValidator(IPersistenceProvider persistenceProvider, Messages errors, MetaModel metaModel, Map values, Map keyValues, Object containerKey, boolean creating) throws XavaException {				
 		try {
 			String containerReferenceName = Strings.firstLower(metaModel.getMetaModelContainer().getName());
 			Iterator itValidators = metaModel.getMetaValidators().iterator();

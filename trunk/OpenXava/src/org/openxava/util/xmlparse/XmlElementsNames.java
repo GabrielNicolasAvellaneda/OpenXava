@@ -155,8 +155,9 @@ public class XmlElementsNames {
 	protected final static String [] xfolder = { "folder", "carpeta" };
 	protected final static String [] xpostload_calculator = { "postload-calculator", "calculador-poscargar" };
 	protected final static String [] xpreremove_calculator = { "preremove-calculator", "calculador-preborrar" };
-	protected final static String [] xmodels = { "models", "modelos" };
-	protected final static String [] xfor_all_models = { "for-all-models", "para-todos-los-modelos" };
-	protected final static String [] xexcept_for = { "except-for", "excepto-para" };
-	
+	protected final static String [] xfor_models = { "for-models", "para-modelos" };	
+	protected final static String [] xexcept_for_models = { "except-for-models", "excepto-para-modelos" };
+	protected final static String [] xaspect = { "aspect", "aspecto" };
+	protected final static String [] xapply = { "apply", "aplicar" };
+		
 }

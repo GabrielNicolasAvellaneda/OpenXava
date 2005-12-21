@@ -8,7 +8,7 @@ import org.openxava.util.*;
 /**
  * @author Javier Paniza
  */
-public class ImplicitCalculators {
+public class Aspects {
 	
 	static int ALL = -1;
 	static int FOR = 0;
@@ -25,7 +25,7 @@ public class ImplicitCalculators {
 		
 	public static void fillImplicitCalculators(MetaModel container) throws XavaException {
 		if (!parsed) {
-			ImplicitCalculatorsParser.configureImplicitCalculators();
+			AspectsParser.configureAspects();
 			parsed = true;
 		}
 		if (postCreates != null) {
