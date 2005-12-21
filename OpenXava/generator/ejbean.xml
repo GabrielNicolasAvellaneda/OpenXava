@@ -197,7 +197,7 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 	private boolean creating = false;		
 	private boolean modified = false;
 	<java>if (!metaModel.getMetaCalculatorsPostLoad().isEmpty()) { </java> 
-	private long lastRead;
+	private static Map lastReads = new HashMap();
 	<java>} </java>
 
 	// Create	
@@ -759,12 +759,15 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 		modified = false;
 		
 		<java>if (!metaModel.getMetaCalculatorsPostLoad().isEmpty()) { </java> 
-		// ejbLoad is executed often, hence executing calculated each 2 seconds is enougth  
+		// ejbLoad is executed often, hence executing calculated each 5 seconds is enougth  
 		long time = System.currentTimeMillis();
-		if (time - lastRead &lt; 2000) {					
+		Object key = getEntityContext().getPrimaryKey();
+		Long olastRead = (Long) lastReads.get(key);
+		long lastRead = olastRead == null?0:olastRead.longValue();
+		if (time - lastRead &lt; 5000) {					
 			return;
 		}
-		lastRead = time;		
+		lastReads.put(key, new Long(time)); 
 		<java>} </java> 		
 		<java>
 		CalculatorsPG postloadPG = new CalculatorsPG();

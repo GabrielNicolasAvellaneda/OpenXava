@@ -365,7 +365,7 @@
 		</java>
     	
     	<replace dir="../${project.ejb}/build/hibernate">
-    		<replacefilter token="separator" value="${separator}"/>
+    		<replacefilter token="@separator@" value="${separator}"/>
     	</replace>
     	
     </target>
@@ -585,9 +585,7 @@
 			tofile="../${project}/${classes.dir}/Etiquetas${project}.properties"
 			failonerror="false"/>
 		<jar jarfile="../${project}/web/WEB-INF/lib/openxava.jar" basedir="../OpenXava/bin"/>
-		<!-- tmp
 		<copy file="${jboss.dir}/client/jboss-client.jar" todir="../${project}/web/WEB-INF/lib" preservelastmodified="true"/>
-		-->
 	</target>
 	
 	<target name="createWar" depends="prepareWar">

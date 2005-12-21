@@ -3,7 +3,9 @@ package org.openxava.test.tests;
 import java.text.*;
 import java.util.*;
 
+import org.openxava.model.meta.*;
 import org.openxava.tests.*;
+import org.openxava.util.*;
 
 /**
  * @author Javier Paniza
@@ -21,13 +23,14 @@ public class WarehousesTest extends ModuleTestBase {
 	 * 
 	 * In addition of AccessTracking and CRUD also it test:
 	 * <ul>
+	 * <li> Aspects to defining calculators.
 	 * <li> postload-calculator
 	 * <li> preremove-calculator
 	 * </ul>
 	 * @throws Exception
 	 */	
 	public void testAccessTracking_createReadUpdateDelete() throws Exception {		
-		getSession().createQuery("delete from Access").executeUpdate();
+		getSession().createQuery("delete from Access").executeUpdate();		
 		closeSession();
 		
 		assertAction("Warehouses.toLowerCase");
@@ -82,7 +85,7 @@ public class WarehousesTest extends ModuleTestBase {
 		assertError("Object not found");
 		assertErrorsCount(1);
 		
-		// Date and time
+		// Date, time and table
 		
 		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
 		String time = timeFormat.format(new Date());
@@ -90,15 +93,16 @@ public class WarehousesTest extends ModuleTestBase {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		String date = dateFormat.format(new Date());
 		
+		String table = MetaModel.get("Warehouse").getMapping().getTable();
+				
 		// Verifying the entries in access tracking		
 		changeModule("AccessTracking", "Accesses");
 		assertListRowCount(5);
 		
-		
 		assertValueInList(0, "application", "test");
 		assertValueInList(0, "model", "Warehouse");
-		assertValueInList(0, "table", "XAVATEST_WAREHOUSE");
-		assertValueInList(0, "user", "nobody");
+		assertValueInList(0, "table", table);
+		assertTrue("User must to have value", !Is.emptyString(getValueInList(0, "user"))); // Usually 'nobody' or 'UNAUTHENTICATED'
 		assertValueInList(0, "date", date);
 		assertValueInList(0, "time", time);
 		assertValueInList(0, "type", "Create");
@@ -107,8 +111,8 @@ public class WarehousesTest extends ModuleTestBase {
 		
 		assertValueInList(1, "application", "test");
 		assertValueInList(1, "model", "Warehouse");
-		assertValueInList(1, "table", "XAVATEST_WAREHOUSE");
-		assertValueInList(1, "user", "nobody");
+		assertValueInList(1, "table", table);
+		assertTrue("User must to have value", !Is.emptyString(getValueInList(1, "user"))); // Usually 'nobody' or 'UNAUTHENTICATED'
 		assertValueInList(1, "date", date);
 		assertValueInList(1, "time", time);
 		assertValueInList(1, "type", "Read");
@@ -117,8 +121,8 @@ public class WarehousesTest extends ModuleTestBase {
 		
 		assertValueInList(2, "application", "test");
 		assertValueInList(2, "model", "Warehouse");
-		assertValueInList(2, "table", "XAVATEST_WAREHOUSE");
-		assertValueInList(2, "user", "nobody");
+		assertValueInList(2, "table", table);
+		assertTrue("User must to have value", !Is.emptyString(getValueInList(2, "user"))); // Usually 'nobody' or 'UNAUTHENTICATED'
 		assertValueInList(2, "date", date);
 		assertValueInList(2, "time", time);
 		assertValueInList(2, "type", "Update");
@@ -127,8 +131,8 @@ public class WarehousesTest extends ModuleTestBase {
 		
 		assertValueInList(3, "application", "test");
 		assertValueInList(3, "model", "Warehouse");
-		assertValueInList(3, "table", "XAVATEST_WAREHOUSE");
-		assertValueInList(3, "user", "nobody");
+		assertValueInList(3, "table", table);
+		assertTrue("User must to have value", !Is.emptyString(getValueInList(3, "user"))); // Usually 'nobody' or 'UNAUTHENTICATED'
 		assertValueInList(3, "date", date);
 		assertValueInList(3, "time", time);
 		assertValueInList(3, "type", "Delete");
@@ -137,13 +141,14 @@ public class WarehousesTest extends ModuleTestBase {
 		
 		assertValueInList(4, "application", "test");
 		assertValueInList(4, "model", "Warehouse");
-		assertValueInList(4, "table", "XAVATEST_WAREHOUSE");
-		assertValueInList(4, "user", "nobody");
+		assertValueInList(4, "table", table);
+		assertTrue("User must to have value", !Is.emptyString(getValueInList(4, "user"))); // Usually 'nobody' or 'UNAUTHENTICATED'
 		assertValueInList(4, "date", date);
 		assertValueInList(4, "time", time);
 		assertValueInList(4, "type", "Read");
 		assertValueInList(4, "authorized", "Yes");
-		assertValueInList(4, "recordId", "{zoneNumber=1, number=1}");				
+		assertTrue("The key of displayed data must be not empty", !Is.emptyString(getValueInList(4, "recordId")));
+		assertTrue("The key of displayed data must be different", !getValueInList(4, "recordId").equals("{zoneNumber=66, number=666}"));
 	}
 		
 	public void testNavigateInListWithALotOfObjects() throws Exception { 

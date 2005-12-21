@@ -196,7 +196,7 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 	private boolean creating = false;		
 	private boolean modified = false;
 	# if (!metaModel.getMetaCalculatorsPostLoad().isEmpty()) { # 
-	private long lastRead;
+	private static Map lastReads = new HashMap();
 	# } #
 
 	// Create	
@@ -758,12 +758,15 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 		modified = false;
 		
 		# if (!metaModel.getMetaCalculatorsPostLoad().isEmpty()) { # 
-		// ejbLoad is executed often, hence executing calculated each 2 seconds is enougth  
+		// ejbLoad is executed often, hence executing calculated each 5 seconds is enougth  
 		long time = System.currentTimeMillis();
-		if (time - lastRead < 2000) {					
+		Object key = getEntityContext().getPrimaryKey();
+		Long olastRead = (Long) lastReads.get(key);
+		long lastRead = olastRead == null?0:olastRead.longValue();
+		if (time - lastRead < 5000) {					
 			return;
 		}
-		lastRead = time;		
+		lastReads.put(key, new Long(time)); 
 		# } # 		
 		# 
 		CalculatorsPG postloadPG = new CalculatorsPG();

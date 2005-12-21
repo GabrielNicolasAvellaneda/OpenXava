@@ -142,7 +142,7 @@ public class ModelParser extends XmlElementsNames {
 				container.addInterfaceName(d.getAttribute(xinterface[lang]));
 			}			
 		}		
-		ImplicitCalculators.fillImplicitCalculators(container);
+		Aspects.fillImplicitCalculators(container);
 	}
 	
 	private static void fillValidator(Element el, MetaProperty container, int lang)

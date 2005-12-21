@@ -70,11 +70,11 @@ public class MapFacade {
 	{
 		Assert.arg(modelName, values);					
 		try {									
-			return getImpl(modelName).create(modelName, values);
+			return getImpl(modelName).create(Users.getCurrent(), modelName, values);
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			return getImpl(modelName).create(modelName, values);
+			return getImpl(modelName).create(Users.getCurrent(), modelName, values);
 		}							
 	}
 	
@@ -100,11 +100,11 @@ public class MapFacade {
 	{
 		Assert.arg(modelName, containerKey, values);					
 		try {		
-			return getImpl(modelName).createAggregate(modelName, containerKey, counter, values);
+			return getImpl(modelName).createAggregate(Users.getCurrent(), modelName, containerKey, counter, values);
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			return getImpl(modelName).createAggregate(modelName, containerKey, counter, values);
+			return getImpl(modelName).createAggregate(Users.getCurrent(), modelName, containerKey, counter, values);
 		}							
 	}
 	
@@ -131,11 +131,11 @@ public class MapFacade {
 	{
 		Assert.arg(modelName, container, values);					
 		try {									
-			return getImpl(modelName).createAggregate(modelName, container, counter, values);
+			return getImpl(modelName).createAggregate(Users.getCurrent(), modelName, container, counter, values);
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			return getImpl(modelName).createAggregate(modelName, container, counter, values);
+			return getImpl(modelName).createAggregate(Users.getCurrent(), modelName, container, counter, values);
 		}							
 	}
 	
@@ -159,11 +159,11 @@ public class MapFacade {
 	{
 		Assert.arg(modelName, values);		
 		try {
-			return getImpl(modelName).createReturningValues(modelName, values);
+			return getImpl(modelName).createReturningValues(Users.getCurrent(), modelName, values);
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			return getImpl(modelName).createReturningValues(modelName, values);
+			return getImpl(modelName).createReturningValues(Users.getCurrent(), modelName, values);
 		}
 		
 	}
@@ -188,11 +188,11 @@ public class MapFacade {
 	{
 		Assert.arg(modelName, values);		
 		try {
-			return getImpl(modelName).createReturningKey(modelName, values);
+			return getImpl(modelName).createReturningKey(Users.getCurrent(), modelName, values);
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			return getImpl(modelName).createReturningKey(modelName, values);
+			return getImpl(modelName).createReturningKey(Users.getCurrent(), modelName, values);
 		}		
 	}
 				
@@ -218,11 +218,11 @@ public class MapFacade {
 	{
 		Assert.arg(modelName, containerKey, values);					
 		try {		
-			return getImpl(modelName).createAggregateReturningKey(modelName, containerKey, counter, values);
+			return getImpl(modelName).createAggregateReturningKey(Users.getCurrent(), modelName, containerKey, counter, values);
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			return getImpl(modelName).createAggregateReturningKey(modelName, containerKey, counter, values);
+			return getImpl(modelName).createAggregateReturningKey(Users.getCurrent(), modelName, containerKey, counter, values);
 		}							
 	}
 	
@@ -263,11 +263,11 @@ public class MapFacade {
 			throw new ObjectNotFoundException(XavaResources.getString("empty_key_object_not_found", modelName));						
 		}
 		try {					
-			return getImpl(modelName).getValues(modelName, keyValues, memberNames);
+			return getImpl(modelName).getValues(Users.getCurrent(), modelName, keyValues, memberNames);
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			return getImpl(modelName).getValues(modelName, keyValues, memberNames);
+			return getImpl(modelName).getValues(Users.getCurrent(), modelName, keyValues, memberNames);
 		}		
 	}
 		
@@ -298,11 +298,11 @@ public class MapFacade {
 	{		
 		Assert.arg(modelName, entity, memberNames);
 		try {
-			return getImpl(modelName).getValues(modelName, entity, memberNames);
+			return getImpl(modelName).getValues(Users.getCurrent(), modelName, entity, memberNames);
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			return getImpl(modelName).getValues(modelName, entity, memberNames);
+			return getImpl(modelName).getValues(Users.getCurrent(), modelName, entity, memberNames);
 		}
 			
 	}
@@ -320,7 +320,7 @@ public class MapFacade {
 		throws XavaException, RemoteException 
 	{		
 		Assert.arg(modelName, entity);		
-		return getLocalImpl().getKeyValues(modelName, entity);				
+		return getLocalImpl().getKeyValues(Users.getCurrent(), modelName, entity);				
 	}
 	
 	
@@ -340,11 +340,11 @@ public class MapFacade {
 		if (keyValues==null) return null;
 		Assert.arg(modelName, keyValues);
 		try {
-			return getImpl(modelName).findEntity(modelName, keyValues);
+			return getImpl(modelName).findEntity(Users.getCurrent(), modelName, keyValues);
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			return getImpl(modelName).findEntity(modelName, keyValues);
+			return getImpl(modelName).findEntity(Users.getCurrent(), modelName, keyValues);
 		}					
 	}	
 
@@ -362,11 +362,11 @@ public class MapFacade {
 		throws RemoveException, RemoteException, XavaException, ValidationException {
 		Assert.arg(modelName, keyValues);
 		try {
-			getImpl(modelName).delete(modelName, keyValues);
+			getImpl(modelName).delete(Users.getCurrent(), modelName, keyValues);
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			getImpl(modelName).delete(modelName, keyValues);
+			getImpl(modelName).delete(Users.getCurrent(), modelName, keyValues);
 		}
 		
 	}
@@ -389,11 +389,11 @@ public class MapFacade {
 	{
 		Assert.arg(modelName, keyValues, values);				
 		try {
-			getImpl(modelName).setValues(modelName, keyValues, values);								
+			getImpl(modelName).setValues(Users.getCurrent(), modelName, keyValues, values);								
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			getImpl(modelName).setValues(modelName, keyValues, values);			
+			getImpl(modelName).setValues(Users.getCurrent(), modelName, keyValues, values);			
 		}				
 	}
 	
@@ -414,11 +414,11 @@ public class MapFacade {
 	{
 		Assert.arg(modelName, values);			
 		try {
-			return getImpl(modelName).validate(modelName, values);								
+			return getImpl(modelName).validate(Users.getCurrent(), modelName, values);								
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			return getImpl(modelName).validate(modelName, values);			
+			return getImpl(modelName).validate(Users.getCurrent(), modelName, values);			
 		}
 				
 	}
@@ -512,11 +512,11 @@ public class MapFacade {
 	{
 		Assert.arg(modelName, keyValues, collectionName, collectionElementKeyValues);
 		try {
-			getImpl(modelName).removeCollectionElement(modelName, keyValues, collectionName, collectionElementKeyValues);
+			getImpl(modelName).removeCollectionElement(Users.getCurrent(), modelName, keyValues, collectionName, collectionElementKeyValues);
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			getImpl(modelName).removeCollectionElement(modelName, keyValues, collectionName, collectionElementKeyValues);
+			getImpl(modelName).removeCollectionElement(Users.getCurrent(), modelName, keyValues, collectionName, collectionElementKeyValues);
 		}
 	}	
 
