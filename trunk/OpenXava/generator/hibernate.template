@@ -42,7 +42,7 @@ if (keyMembers.size() == 0) {
 else if (keyProperties.size() == 1 &&  keyMembers.size() == 1) {
 		MetaProperty key = (MetaProperty) keyProperties.iterator().next();
 		PropertyMapping pMapping = key.getMapping();
-		String propertyName = pMapping.hasConverter()?"_"+Strings.firstUpper(key.getName()):key.getName();	
+		String propertyName = key.getName();	
 		String generator = key.isHidden() && !key.hasCalculatorDefaultValueOnCreate()?"native":"assigned";
 # 	
 		<id name="#(propertyName)#" column="#(pMapping.getColumn())#">
@@ -58,7 +58,7 @@ else {
     	MetaMember key = (MetaMember) it.next();
     	if (key instanceof MetaProperty) {
 			PropertyMapping pMapping = ((MetaProperty) key).getMapping();
-			String propertyName = pMapping.hasConverter()?"_"+Strings.firstUpper(key.getName()):key.getName();			
+			String propertyName = key.getName();			
 # 	
 			<key-property name="#(propertyName)#" column="#(pMapping.getColumn())#"/>
 # 
@@ -90,7 +90,7 @@ else {
 	for (Iterator it = properties.iterator(); it.hasNext();) {
 		MetaProperty prop = (MetaProperty) it.next();
 		PropertyMapping pMapping = prop.getMapping();
-		String propertyName = pMapping.hasConverter()?"_"+Strings.firstUpper(prop.getName()):prop.getName();			
+		String propertyName = prop.getName();			
 		if (!prop.isKey()) {
 			if (pMapping.hasMultipleConverter()) {
 # 

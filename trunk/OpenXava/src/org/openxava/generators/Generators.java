@@ -170,4 +170,15 @@ public class Generators {
 		return result;
 	}
 	
+	public static String convertPropertyNameInPropertyCall(String propertyName) {
+		StringTokenizer st = new StringTokenizer(propertyName, ".");
+		StringBuffer result = new StringBuffer("get");
+		while (st.hasMoreTokens()) {
+			result.append(Strings.firstUpper(st.nextToken()));
+			if (st.hasMoreTokens()) result.append("().get");
+			else result.append("()");
+		}
+		return result.toString();
+	}
+	
 }

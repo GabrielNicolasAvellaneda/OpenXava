@@ -13,7 +13,11 @@ import org.openxava.validators.*;
 
 public class MetaCollection extends MetaMember implements IPropertyValidator {
 	
-	private Collection metaPropertiesFinderArguments;
+	private final static int SQL = 0;
+	private final static int EJB2QL = 1;
+	private final static int JBOSSQL = 2;
+	private static Map tokensToChangeDollarsAndNL;
+		
 	private int minimum;
 	private String condition;
 	private String order;
@@ -106,7 +110,7 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 	
 	public String getSQLCondition() throws XavaException {
 		if (Is.emptyString(getCondition())) return "";
-		String condicion = changePropertiesThisByArguments(getCondition(), false);
+		String condicion = changePropertiesThisByArguments(getCondition(), JBOSSQL);
 		return getMetaReference().getMetaModelReferenced().getMapping().changePropertiesByColumns(condicion);
 	}
 	
@@ -117,7 +121,7 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 		sb.append(" o");
 		if (!Is.emptyString(this.condition)) {
 			sb.append(" WHERE ");			
-			String condition = changePropertiesThisByArguments(getCondition(), true); 			
+			String condition = changePropertiesThisByArguments(getCondition(), EJB2QL); 			
 			sb.append(metaModel.getMapping().changePropertiesByCMPAttributes(condition));
 		}
 		if (!Is.emptyString(this.order)) { 		
@@ -127,7 +131,36 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 		return sb.toString();
 	}
 	
-	private String changePropertiesThisByArguments(String source, boolean ejbql) throws XavaException {			
+	public String getHQLCondition() throws XavaException {
+		MetaModel metaModel = getMetaReference().getMetaModelReferenced(); 
+		StringBuffer sb = new StringBuffer("from ");
+		sb.append(metaModel.getName());
+		sb.append(" as o");
+		if (!Is.emptyString(this.condition)) {			
+			sb.append(" where ");			
+			String condition = changePropertiesThisByArguments(getCondition(), SQL);
+			condition = Strings.change(condition, getTokensToChangeDollarsAndNL());
+			sb.append(metaModel.getMapping().changePropertiesByCMPAttributes(condition));
+		}
+		if (!Is.emptyString(this.order)) { 		
+			sb.append(" order by ");
+			sb.append(getMetaReference().getMetaModelReferenced().getMapping().changePropertiesByCMPAttributes(this.order));
+		}
+		return sb.toString();
+	}
+	
+	
+	private static Map getTokensToChangeDollarsAndNL() {
+		if (tokensToChangeDollarsAndNL == null) {
+			tokensToChangeDollarsAndNL = new HashMap();
+			tokensToChangeDollarsAndNL.put("${", "o.");
+			tokensToChangeDollarsAndNL.put("}", "");
+			tokensToChangeDollarsAndNL.put("\n", "");			
+		}
+		return tokensToChangeDollarsAndNL;
+	}
+
+	private String changePropertiesThisByArguments(String source, int qlType) throws XavaException {			
 		StringBuffer r = new StringBuffer(source);
 		Collection properties = new ArrayList();
 		int i = r.toString().indexOf("${this.");
@@ -135,9 +168,13 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 		int c = 0;
 		while (i >= 0) {
 			f = r.toString().indexOf("}", i+2);
-			if (f < 0) break;
-			String property = r.substring(i+2, f);
-			String argument = ejbql?"?" + (++c):"{" + (c++) + "}"; 
+			if (f < 0) break;			
+			String argument = null;
+			switch (qlType) {
+				case SQL: argument = "?"; break;
+				case EJB2QL: argument = "?" + (++c); break;
+				case JBOSSQL: argument = "{" + (c++) + "}"; break;				
+			}			 
 			r.replace(i, f+1, argument);
 			i = r.toString().indexOf("${this.");
 		}			
@@ -166,7 +203,7 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 	 */
 	public String getFinderArguments() throws XavaException {
 		StringBuffer arguments = new StringBuffer();
-		Iterator it = getMetaPropertiesFinderArguments().iterator();
+		Iterator it = getMetaPropertiesFinderArguments(false).iterator();
 		while (it.hasNext()) {
 			MetaProperty pr = (MetaProperty) it.next();
 			arguments.append(pr.getType().getName());
@@ -182,42 +219,45 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 	/**
 	 * Util to generate EJB code. 	 
 	 */	
-	public Collection getMetaPropertiesFinderArguments() throws XavaException {
-		if (metaPropertiesFinderArguments == null) {
-			metaPropertiesFinderArguments = new ArrayList();
-			String condition = getCondition();
-			int i = condition.indexOf("${this.");
-			int f = 0;			
-			while (i >= 0) {
-				f = condition.indexOf("}", i+2);
-				if (f < 0) break;
-				String propertyName = condition.substring(i+7, f);
-				MetaProperty original = getMetaModel().getMetaProperty(propertyName);
-				MetaProperty pr = new MetaProperty();
-				boolean isQualified = propertyName.indexOf('.') >= 0;
-				if (isQualified) {
-					pr.setName(Strings.change(propertyName, ".", "_"));
+	public Collection getMetaPropertiesFinderArguments(boolean withDots) throws XavaException {
+		Collection metaPropertiesFinderArguments = new ArrayList();
+		String condition = getCondition();
+		int i = condition.indexOf("${this.");
+		int f = 0;			
+		while (i >= 0) {
+			f = condition.indexOf("}", i+2);
+			if (f < 0) break;
+			String propertyName = condition.substring(i+7, f);
+			MetaProperty original = getMetaModel().getMetaProperty(propertyName);
+			MetaProperty pr = new MetaProperty();
+			boolean isQualified = propertyName.indexOf('.') >= 0;
+			if (isQualified && !withDots) {
+				pr.setName(Strings.change(propertyName, ".", "_"));
+			}
+			else {
+				pr.setName(propertyName);				
+			}
+			if (original.getMapping().hasConverter()) {
+				if (!isQualified) {
+					pr.setName("_" + Strings.firstUpper(pr.getName()));
+				}
+				if (withDots && isQualified) {
+					pr.setTypeName(original.getTypeName());
 				}
 				else {
-					pr.setName(propertyName);				
-				}
-				if (original.getMapping().hasConverter()) {
-					if (!isQualified) {
-						pr.setName("_" + Strings.firstUpper(pr.getName()));
-					}					
 					String typeCmp = original.getMapping().getCmpTypeName();
 					if (Is.emptyString(typeCmp)) {
 						throw new XavaException("tipo_cmp_required", original.getName());
 					}
-					pr.setTypeName(typeCmp);
+					pr.setTypeName(typeCmp);					
 				}
-				else {
-					pr.setTypeName(original.getTypeName());
-				}				
-				metaPropertiesFinderArguments.add(pr);
-				i = condition.indexOf("${this.",f);
-			}						
-		}
+			}
+			else {
+				pr.setTypeName(original.getTypeName());
+			}				
+			metaPropertiesFinderArguments.add(pr);
+			i = condition.indexOf("${this.",f);
+		}						
 		return metaPropertiesFinderArguments;
 	}
 		
