@@ -1,3 +1,5 @@
+
+#declare import="org.openxava.util.Primitives"#
 #declare import="org.openxava.util.Strings"#
 #declare import="org.openxava.util.XavaException"#
 #declare import="org.openxava.util.meta.MetaSet"#
@@ -90,7 +92,8 @@ while (itCollections.hasNext()) {
 	MetaReference reference = col.getMetaReference();
 	String colType = reference.getMetaModelReferenced().getInterfaceName();
 	String roleName = Strings.firstUpper(reference.getRole());
-	# 
+	if (!col.hasCondition() && !col.hasCalculator()) {
+# 
 	private java.util.Collection #(col.getName())#;
 	public java.util.Collection get#(colName)#() {
 		return #(col.getName())#;
@@ -98,8 +101,37 @@ while (itCollections.hasNext()) {
 	public void set#(colName)#(java.util.Collection #(col.getName())#) {
 		this.#(col.getName())# = #(col.getName())#;
 	}
-	
 # 
+	}
+	if (col.hasCondition()) {
+# 
+	public java.util.Collection get#(colName)#() throws RemoteException {
+		org.hibernate.Session session = org.openxava.model.impl.HibernatePersistenceProvider.getCurrentSession();
+		org.hibernate.Query query = session.createQuery("#(col.getHQLCondition())#");		
+# 
+		int i=0;
+		for (Iterator it = col.getMetaPropertiesFinderArguments(true).iterator(); it.hasNext(); i++) {
+			MetaProperty parameter = (MetaProperty) it.next();
+			String argument = Generators.convertPropertyNameInPropertyCall(parameter.getName());
+			if (parameter.getType().isPrimitive()) {
+				argument = Generators.generatePrimitiveWrapper(parameter.getTypeName(), argument);
+			}
+#
+		query.setParameter(#(i)#, #(argument)#);
+# 		
+		}
+# 
+		return query.list();
+	}	
+# 
+	}
+	else if (col.hasCalculator()) {
+# 
+	public java.util.Collection get#(colName)#() {
+		return null;
+	}		
+# 
+	}
 	if (!reference.isAggregate() && 
 		!col.hasCondition() && 
 		!col.hasCalculator() && 
@@ -148,7 +180,7 @@ while (itCollections.hasNext()) {
 		while (itKeys.hasNext()) {	
 			MetaProperty key = (MetaProperty) itKeys.next();
 			PropertyMapping pMapping = key.getMapping();
-			String atributeName = pMapping.hasConverter()?"_"+key.getName():key.getName();	
+			String atributeName = key.getName();	
 			string.append("::");
 			string.append('"');
 			string.append(" + ");

@@ -837,7 +837,7 @@ while (itCollections.hasNext()) {
 	String getHome = "get" + Strings.firstUpper(homeAttribute);
 	String role = Strings.firstUpper(reference.getRole());
 	String finderName = collection.hasCondition()?collection.getFinderName():"By" + role;
-	String finderArguments = collection.hasCondition()?generateFinderArguments(collection.getMetaPropertiesFinderArguments()):generateFinderArgumentsByKey(metaModel);		
+	String finderArguments = collection.hasCondition()?generateFinderArguments(collection.getMetaPropertiesFinderArguments(false)):generateFinderArgumentsByKey(metaModel);		
 #	
 
 	private #(homeClass)# #(homeAttribute)#;

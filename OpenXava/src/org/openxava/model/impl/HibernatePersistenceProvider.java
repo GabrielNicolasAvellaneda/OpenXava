@@ -16,14 +16,17 @@ import org.openxava.util.*;
 import org.openxava.validators.*;
 
 /**
+ * tmp: MOover a paquete 'hibernate', o refactorizar algo de funcionalidad
  * tmp: quitar todas las referencias e ejb
  * @author Mª Carmen Gimeno Alabau
  */
 public class HibernatePersistenceProvider implements IPersistenceProvider {
 
+	private static SessionFactory sessionFactory;
+	private static Map sessions = new HashMap();
+	
 	private Session session;
 	private Transaction transaction;
-	private static SessionFactory sessionFactory;
 		
 	public Object find(IMetaEjb metaModel, Map keyValues) throws FinderException {
 		try {			
@@ -102,22 +105,29 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 	}
 
 	public void commit() {
-	  transaction.commit();
+		sessions.remove(Thread.currentThread());
+		transaction.commit();
 		session.close();
 		transaction = null;
 		session = null;
 	}
 
 	public void rollback() {
+		sessions.remove(Thread.currentThread());
 		if (transaction != null) transaction.rollback();
 		if (session != null) session.close();
-		transaction = null;
+		transaction = null;		
 		session = null;
 	}
 
 	public void begin() {
 		session = getSessionFactory().openSession();
 		transaction = session.beginTransaction();
+		sessions.put(Thread.currentThread(), session);
+	}
+	
+	public static Session getCurrentSession() {
+		return (Session) sessions.get(Thread.currentThread());
 	}
 	
 	public static SessionFactory getSessionFactory() throws HibernateException {

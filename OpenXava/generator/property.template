@@ -315,12 +315,12 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 			String setSentence = "get" + propertyName + "Converter().toDB(" + Generators.generatePrimitiveWrapper(type, "new" + propertyName) + ")";
 			if (!ejb) {
 # 
-	#(attributeAccessLevel)# #(cmpType)# _#(property.getName())#;
+	#(attributeAccessLevel)# #(cmpType)# #(property.getName())#;
 	private #(cmpType)# get_#(propertyName)#() {
-		return _#(property.getName())#;
+		return #(property.getName())#;
 	}
 	private void set_#(propertyName)#(#(cmpType)# new#(propertyName)#) {
-		this._#(property.getName())# = new#(propertyName)#;
+		this.#(property.getName())# = new#(propertyName)#;
 	}
 # 			
 			}
