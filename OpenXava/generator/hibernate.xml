@@ -43,10 +43,11 @@ if (keyMembers.size() == 0) {
 else if (keyProperties.size() == 1 &amp;&amp;  keyMembers.size() == 1) {
 		MetaProperty key = (MetaProperty) keyProperties.iterator().next();
 		PropertyMapping pMapping = key.getMapping();
-		String propertyName = pMapping.hasConverter()?"_"+Strings.firstUpper(key.getName()):key.getName();	
+		String propertyName = key.getName();	
 		String generator = key.isHidden() &amp;&amp; !key.hasCalculatorDefaultValueOnCreate()?"native":"assigned";
+		String type = pMapping.getCmpType().isArray()?"":"type='" + pMapping.getCmpTypeName() + "'";
 </java> 	
-		&lt;id name="<expr>propertyName</expr>" column="<expr>pMapping.getColumn()</expr>"&gt;
+		&lt;id name="<expr>propertyName</expr>" column="<expr>pMapping.getColumn()</expr>" access="field" <expr>type</expr>&gt;
 			&lt;generator class="<expr>generator</expr>"/&gt;
 		&lt;/id&gt;
 <java>
@@ -59,29 +60,36 @@ else {
     	MetaMember key = (MetaMember) it.next();
     	if (key instanceof MetaProperty) {
 			PropertyMapping pMapping = ((MetaProperty) key).getMapping();
-			String propertyName = pMapping.hasConverter()?"_"+Strings.firstUpper(key.getName()):key.getName();			
+			String propertyName = key.getName();			
+			String type = pMapping.getCmpType().isArray()?"":"type='" + pMapping.getCmpTypeName() + "'";			
 </java> 	
-			&lt;key-property name="<expr>propertyName</expr>" column="<expr>pMapping.getColumn()</expr>"/&gt;
+			&lt;key-property name="<expr>propertyName</expr>" column="<expr>pMapping.getColumn()</expr>" access="field" <expr>type</expr>/&gt;
 <java>
 		}
 		if (key instanceof MetaReference) {
-			ReferenceMapping pMapping = mapping.getReferenceMapping(key.getName());
-			String referenceName = key.getName();	
-			String className = ((MetaReference) key).getMetaModelReferenced().getPOJOClassName();		
+			if (mapping.isReferenceOverlappingWithSomeProperty(key.getName())) {
+</java> 
+			&lt;!-- Reference: <expr>key.getName()</expr> Overlapped references still not supported --&gt;
+<java>			
+			}
+			else {
+				ReferenceMapping pMapping = mapping.getReferenceMapping(key.getName());
+				String referenceName = key.getName();	
+				String className = ((MetaReference) key).getMetaModelReferenced().getPOJOClassName();		
 </java> 	
 			&lt;key-many-to-one name="<expr>referenceName</expr>" class="<expr>className</expr>"&gt; 
 <java>
-			for (Iterator itC = pMapping.getColumns().iterator(); itC.hasNext();) {
-				String col = (String) itC.next();
-				String insertUpdate = mapping.getColumns().contains(col)?"insert='false' update='false'":"";
+				for (Iterator itC = pMapping.getColumns().iterator(); itC.hasNext();) {
+					String col = (String) itC.next();				
 </java> 			
-				&lt;column name="<expr>col</expr>" <expr>insertUpdate</expr>/&gt;
+				&lt;column name="<expr>col</expr>"/&gt;
 <java>
-			}
+				}			
 </java> 						
 			&lt;/key-many-to-one&gt;
 <java>	
- 		}
+			}
+ 		} 		
  	}	
 </java>  	
 		&lt;/composite-id&gt;
@@ -91,7 +99,7 @@ else {
 	for (Iterator it = properties.iterator(); it.hasNext();) {
 		MetaProperty prop = (MetaProperty) it.next();
 		PropertyMapping pMapping = prop.getMapping();
-		String propertyName = pMapping.hasConverter()?"_"+Strings.firstUpper(prop.getName()):prop.getName();			
+		String propertyName = prop.getName();			
 		if (!prop.isKey()) {
 			if (pMapping.hasMultipleConverter()) {
 </java> 
@@ -99,8 +107,9 @@ else {
 <java>			
 			}
 			else {
+				String type = pMapping.getCmpType().isArray()?"":"type='" + pMapping.getCmpTypeName() + "'";
 </java> 	
-		&lt;property name="<expr>propertyName</expr>" column="<expr>pMapping.getColumn()</expr>"/&gt;
+		&lt;property name="<expr>propertyName</expr>" column="<expr>pMapping.getColumn()</expr>" access="field" <expr>type</expr>/&gt;
 <java>
 			} 	
 		} 
@@ -116,8 +125,9 @@ while (itReferences.hasNext()) {
 			MetaProperty property = (MetaProperty) itAggregateProperties.next();
 			String propertyName = "_" + referenceName + "_" + property.getName();
 			String column = mapping.getColumn(reference.getName() + "_" + property.getName()); 
+			String type = property.getMapping().getCmpType().isArray()?"":"type='" + property.getMapping().getCmpTypeName() + "'";			
 </java> 
-		&lt;property name="<expr>propertyName</expr>" column="<expr>column</expr>"/&gt;
+		&lt;property name="<expr>propertyName</expr>" column="<expr>column</expr>" access="field" <expr>type</expr>/&gt;
 <java>
 		} 
 		for (Iterator itAggregateReferences = reference.getMetaModelReferenced().getMetaReferences().iterator(); itAggregateReferences.hasNext();) {	
@@ -155,19 +165,25 @@ while (itReferences.hasNext()) {
 <java>
 		}
 		else { 
+			if (mapping.isReferenceOverlappingWithSomeProperty(reference.getName())) {
+</java> 			
+			&lt;!-- Reference: <expr>reference.getName()</expr> Overlapped references still not supported --&gt;
+<java>
+			}
+			else {
 </java> 
 		&lt;many-to-one name="<expr>reference.getName()</expr>" class="<expr>reference.getMetaModelReferenced().getPOJOClassName()</expr>"&gt; 
 <java>
 			for (Iterator itC = columns.iterator(); itC.hasNext();) {
 				String col = (String) itC.next();
-				String insertUpdate = mapping.getColumns().contains(col)?"insert='false' update='false'":"";
 </java> 
-			&lt;column name="<expr>col</expr>" <expr>insertUpdate</expr>/&gt;
+			&lt;column name="<expr>col</expr>"/&gt;
 <java>			
 			}
 </java> 
 		&lt;/many-to-one&gt;
 <java>
+			}
 		}
 	}
 } 

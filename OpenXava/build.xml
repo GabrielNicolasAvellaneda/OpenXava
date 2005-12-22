@@ -382,7 +382,7 @@
     	<ant antfile="../OpenXava/xdoclet/build.xml"/>    			
 	</target>
 	        
-    <target name="generateEJB" depends="generateXDoclet">         	
+    <target name="generateEJB" depends="generateXDoclet, generateHibernate">         	
     	<antcall target="runXDoclet"/>
     </target>
 		

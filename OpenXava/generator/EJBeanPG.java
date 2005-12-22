@@ -14,7 +14,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Dec 15 13:44:42 CET 2005
+ * @version Thu Dec 22 18:07:20 CET 2005
  */
 public class EJBeanPG {
     Properties properties = new Properties();
@@ -1000,7 +1000,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     	String getHome = "get" + Strings.firstUpper(homeAttribute);
     	String role = Strings.firstUpper(reference.getRole());
     	String finderName = collection.hasCondition()?collection.getFinderName():"By" + role;
-    	String finderArguments = collection.hasCondition()?generateFinderArguments(collection.getMetaPropertiesFinderArguments()):generateFinderArgumentsByKey(metaModel);		
+    	String finderArguments = collection.hasCondition()?generateFinderArguments(collection.getMetaPropertiesFinderArguments(false)):generateFinderArgumentsByKey(metaModel);		
     
     out.print("\t\n\n\tprivate ");
     out.print(homeClass);
@@ -1040,90 +1040,12 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print("\"));\n\t\t\t}\n\t\t}\n\t}");
     } // if aggregate 
     if (collection.hasCalculator()) { 
-    out.print("\n\n\t/**\n\t * @ejb:interface-method\n\t */\n\tpublic java.util.Collection get");
-    out.print(collectionName);
-    out.print("() {\t\t\n\t\ttry {");
-    
-    			MetaCalculator calculator = collection.getMetaCalculator();
-    			String calculatorClass = calculator.getClassName();
-    			
-    out.print(" \t\t\n\t\t\t");
-    out.print(calculatorClass);
-    out.print(" ");
-    out.print(collection.getName());
-    out.print("Calculator= (");
-    out.print(calculatorClass);
-    out.print(")\n\t\t\t\tgetMetaModel().getMetaCollection(\"");
-    out.print(collection.getName());
-    out.print("\").getMetaCalculator().getCalculator();");
     	
-    			Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
-    			while (itSets.hasNext()) {
-    				MetaSet set = (MetaSet) itSets.next();
-    				String propertyNameInCalculator = Strings.firstUpper(set.getPropertyName());
-    				String propertyNameFrom = set.getPropertyNameFrom();
-    				MetaProperty p = metaModel.getMetaProperty(propertyNameFrom);				
-    				if (propertyNameFrom.indexOf('.') >= 0) {
-    					if (p.isKey() || p.getMetaModel() instanceof MetaAggregate) {
-    						propertyNameFrom = Strings.firstUpper(Strings.change(propertyNameFrom, ".", "_"));
-    					}
-    					else {
-    						StringTokenizer st = new StringTokenizer(propertyNameFrom, ".");
-    						String ref = st.nextToken();
-    						String pro = st.nextToken();
-    						propertyNameFrom = Strings.firstUpper(ref) + "().get" + Strings.firstUpper(pro);
-    					}
-    				}
-    				else {
-    					propertyNameFrom = Strings.firstUpper(propertyNameFrom);
-    				}
-    				String getPropertyFrom = "boolean".equals(p.getTypeName())?"is":"get";
-    				String value = set.getValue();
-    				if (set.hasValue()) {
-    			
-    out.print(" \n\t\t\t");
-    out.print(collection.getName());
-    out.print("Calculator.set");
-    out.print(propertyNameInCalculator);
-    out.print("(\"");
-    out.print(value);
-    out.print("\");");
+    	CalculatedCollectionPG.generateEJB(context, out, collection);
+    	
+      } else {  
     
-    				} else {	
-    			
-    out.print("  \t\n\t\t\t");
-    out.print(collection.getName());
-    out.print("Calculator.set");
-    out.print(propertyNameInCalculator);
-    out.print("(");
-    out.print(getPropertyFrom);
-    out.print(propertyNameFrom);
-    out.print("());");
-    	}} // else/sets 	 
-    			if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
-    			
-    out.print(" \n\t\t\t\t");
-    out.print(collection.getName());
-    out.print("Calculator.setEntity(this);");
-    } 
-    			if (IJDBCCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
-    			
-    out.print(" \n\t\t\t\t");
-    out.print(collection.getName());
-    out.print("Calculator.setConnectionProvider(getPortableContext());");
-    			
-    			}  
-    			String calculateValueSentence = collection.getName() + "Calculator.calculate()";		
-    			
-    out.print(" \n\t\t\treturn ");
-    out.print(Generators.generateCast("java.util.Collection", calculateValueSentence));
-    out.print(";\n\t\t}\n\t\tcatch (Exception ex) {\n\t\t\tex.printStackTrace();\n\t\t\tthrow new EJBException(XavaResources.getString(\"generator.calculate_value_error\", \"");
-    out.print(collection.getName());
-    out.print("\", \"");
-    out.print(metaModel.getName());
-    out.print("\", ex.getLocalizedMessage()));\n\t\t}\n\t}");
-    } else { 
-    out.print(" \n\n\t/**\n\t * @ejb:interface-method\n\t */\n\tpublic java.util.Collection get");
+    out.print(" \n\t/**\n\t * @ejb:interface-method\n\t */\n\tpublic java.util.Collection get");
     out.print(collectionName);
     out.print("() {\t\t\n\t\ttry {\n\t\t\treturn ");
     out.print(getHome);
@@ -1278,7 +1200,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Dec 15 13:44:43 CET 2005", // date this file was generated
+        { "Thu Dec 22 18:07:21 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/ejbean.xml", // input file
              "/home/javi/workspace/OpenXava/generator/EJBeanPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

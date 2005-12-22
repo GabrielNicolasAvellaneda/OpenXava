@@ -44,8 +44,9 @@ else if (keyProperties.size() == 1 &&  keyMembers.size() == 1) {
 		PropertyMapping pMapping = key.getMapping();
 		String propertyName = key.getName();	
 		String generator = key.isHidden() && !key.hasCalculatorDefaultValueOnCreate()?"native":"assigned";
+		String type = pMapping.getCmpType().isArray()?"":"type='" + pMapping.getCmpTypeName() + "'";
 # 	
-		<id name="#(propertyName)#" column="#(pMapping.getColumn())#">
+		<id name="#(propertyName)#" column="#(pMapping.getColumn())#" access="field" #(type)#>
 			<generator class="#(generator)#"/>
 		</id>
 # 
@@ -59,28 +60,35 @@ else {
     	if (key instanceof MetaProperty) {
 			PropertyMapping pMapping = ((MetaProperty) key).getMapping();
 			String propertyName = key.getName();			
+			String type = pMapping.getCmpType().isArray()?"":"type='" + pMapping.getCmpTypeName() + "'";			
 # 	
-			<key-property name="#(propertyName)#" column="#(pMapping.getColumn())#"/>
+			<key-property name="#(propertyName)#" column="#(pMapping.getColumn())#" access="field" #(type)#/>
 # 
 		}
 		if (key instanceof MetaReference) {
-			ReferenceMapping pMapping = mapping.getReferenceMapping(key.getName());
-			String referenceName = key.getName();	
-			String className = ((MetaReference) key).getMetaModelReferenced().getPOJOClassName();		
+			if (mapping.isReferenceOverlappingWithSomeProperty(key.getName())) {
+# 
+			<!-- Reference: #(key.getName())# Overlapped references still not supported -->
+# 			
+			}
+			else {
+				ReferenceMapping pMapping = mapping.getReferenceMapping(key.getName());
+				String referenceName = key.getName();	
+				String className = ((MetaReference) key).getMetaModelReferenced().getPOJOClassName();		
 # 	
 			<key-many-to-one name="#(referenceName)#" class="#(className)#"> 
 # 
-			for (Iterator itC = pMapping.getColumns().iterator(); itC.hasNext();) {
-				String col = (String) itC.next();
-				String insertUpdate = mapping.getColumns().contains(col)?"insert='false' update='false'":"";
+				for (Iterator itC = pMapping.getColumns().iterator(); itC.hasNext();) {
+					String col = (String) itC.next();				
 # 			
-				<column name="#(col)#" #(insertUpdate)#/>
+				<column name="#(col)#"/>
 # 
-			}
+				}			
 # 						
 			</key-many-to-one>
 # 	
- 		}
+			}
+ 		} 		
  	}	
 #  	
 		</composite-id>
@@ -98,8 +106,9 @@ else {
 # 			
 			}
 			else {
+				String type = pMapping.getCmpType().isArray()?"":"type='" + pMapping.getCmpTypeName() + "'";
 # 	
-		<property name="#(propertyName)#" column="#(pMapping.getColumn())#"/>
+		<property name="#(propertyName)#" column="#(pMapping.getColumn())#" access="field" #(type)#/>
 # 
 			} 	
 		} 
@@ -115,8 +124,9 @@ while (itReferences.hasNext()) {
 			MetaProperty property = (MetaProperty) itAggregateProperties.next();
 			String propertyName = "_" + referenceName + "_" + property.getName();
 			String column = mapping.getColumn(reference.getName() + "_" + property.getName()); 
+			String type = property.getMapping().getCmpType().isArray()?"":"type='" + property.getMapping().getCmpTypeName() + "'";			
 # 
-		<property name="#(propertyName)#" column="#(column)#"/>
+		<property name="#(propertyName)#" column="#(column)#" access="field" #(type)#/>
 # 
 		} 
 		for (Iterator itAggregateReferences = reference.getMetaModelReferenced().getMetaReferences().iterator(); itAggregateReferences.hasNext();) {	
@@ -154,19 +164,25 @@ while (itReferences.hasNext()) {
 # 
 		}
 		else { 
+			if (mapping.isReferenceOverlappingWithSomeProperty(reference.getName())) {
+# 			
+			<!-- Reference: #(reference.getName())# Overlapped references still not supported -->
+# 
+			}
+			else {
 # 
 		<many-to-one name="#(reference.getName())#" class="#(reference.getMetaModelReferenced().getPOJOClassName())#"> 
 # 
 			for (Iterator itC = columns.iterator(); itC.hasNext();) {
 				String col = (String) itC.next();
-				String insertUpdate = mapping.getColumns().contains(col)?"insert='false' update='false'":"";
 # 
-			<column name="#(col)#" #(insertUpdate)#/>
+			<column name="#(col)#"/>
 # 			
 			}
 # 
 		</many-to-one>
 # 
+			}
 		}
 	}
 } 

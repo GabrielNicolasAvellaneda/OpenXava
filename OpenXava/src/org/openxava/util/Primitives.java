@@ -51,6 +51,69 @@ public class Primitives {
 	}
 	
 	/**
+	 * Class for name, but supporting primitive types and arrays of primitive types. <p>
+
+	 * If receives null returns null.<br>
+	 * @throws ClassNotFoundException 
+	 */
+	public static Class classForName(String type) throws ClassNotFoundException {
+		if (Is.emptyString(type)) {
+			return null;			
+		}
+		Class result = getPrimitiveClass(type);
+		
+		if ("byte[]".equals(type) || "byte []".equals(type)) return byte[].class;		
+		if ("String[]".equals(type) || "String []".equals(type)) return String[].class;
+		if ("int[]".equals(type) || "int []".equals(type)) return int[].class;
+		if ("boolean[]".equals(type) || "boolean []".equals(type)) return boolean[].class;		
+		if ("char[]".equals(type) || "char []".equals(type)) return char[].class;
+		if ("short[]".equals(type) || "short []".equals(type)) return short[].class;		
+		if ("long[]".equals(type) || "long []".equals(type)) return long[].class;
+		if ("float[]".equals(type) || "float []".equals(type)) return float[].class;
+		if ("double[]".equals(type) || "double []".equals(type)) return double[].class;
+			
+		if (result == null) {
+			try {
+				result = Class.forName(type);
+			}
+			catch (ClassNotFoundException ex) {
+				result = Class.forName("java.lang." + type);
+			}
+		}
+		return result;
+	}
+	
+	private static Class getPrimitiveClass(String type) {
+		if (type.equals("boolean")) {
+			return Boolean.TYPE;	
+		}
+		else if (type.equals("byte")) {
+			return Byte.TYPE;
+		}
+		else if (type.equals("char")) {
+			return Character.TYPE;
+		}
+		else if (type.equals("short")) {
+			return Short.TYPE;
+		}
+		else if (type.equals("int")) {
+			return Integer.TYPE;
+		}
+		else if (type.equals("long")) {
+			return Long.TYPE;
+		}
+		else if (type.equals("float")) {
+			return Float.TYPE;
+		}
+		else if (type.equals("double")) {
+			return Double.TYPE;
+		}
+		return null;
+	}
+	
+	
+	
+	/**
 	 * Primitive class corresponding to class of wrapper class sent. <p>
 	 *
 	 * That is, if it receive a <code>Integer.class</code> then

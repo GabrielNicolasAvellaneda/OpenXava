@@ -207,8 +207,8 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 			ejbPkField = "@ejb:pk-field";
 			ejbSetInterfaceMethod = "";			
 		}
-		if (propertyMapping.hasConverter() || propertyMapping.hasMultipleConverter()) { // Comun for multiple and normal converter
-			String converterClass = propertyMapping.hasConverter()?propertyMapping.getConverterClassName():propertyMapping.getMultipleConverterClassName();		
+		if (propertyMapping.hasConverter() || propertyMapping.hasMultipleConverter()) { // Common for multiple and normal converter
+			String converterClass = propertyMapping.hasConverter()?"org.openxava.converters.IConverter":propertyMapping.getMultipleConverterClassName();		
 			String multiple = propertyMapping.hasMultipleConverter()?"Multiple":"";
 			# 
 	private #(converterClass)# #(property.getName())#Converter;

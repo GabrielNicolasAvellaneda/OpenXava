@@ -12,20 +12,39 @@ import org.w3c.dom.*;
 public class AspectsParser extends ParserBase {
 	
 
-	private Collection allModels;
-	private Map models;
-	private Map exceptModels;
+	private static Collection allModels;
+	private static Map models;
+	private static Map exceptModels;
+	private boolean applyParsing;
 
 
 	public AspectsParser(String xmlFileURL, int language) {
 		super(xmlFileURL, language);
 	}
+	
+	public static void clear() {
+		allModels = null;
+		models = null;
+		exceptModels = null;			
+	}
 		
 	public static void configureAspects() throws XavaException {
 		AspectsParser enParser = new AspectsParser("aspects.xml", ENGLISH);
-		enParser.parse();		
 		AspectsParser esParser = new AspectsParser("aspectos.xml", ESPANOL);
+		
+		// apply of aspects
+		enParser.setApplyParsing(true);
+		enParser.parse();				
+		esParser.setApplyParsing(true);
 		esParser.parse();
+		
+		// aspects definitions		
+		enParser.setApplyParsing(false);
+		enParser.parse();				
+		esParser.setApplyParsing(false);
+		esParser.parse();	
+		
+		clear();
 	}
 	
 	
@@ -123,8 +142,16 @@ public class AspectsParser extends ParserBase {
 	
 	
 	protected void createObjects() throws XavaException {
-		createApplys();
-		createAspects();
+		if (isApplyParsing()) createApplys();
+		else createAspects();
+	}
+
+	public boolean isApplyParsing() {
+		return applyParsing;
+	}
+
+	public void setApplyParsing(boolean aspectsParsing) {
+		this.applyParsing = aspectsParsing;
 	}
 			
 }

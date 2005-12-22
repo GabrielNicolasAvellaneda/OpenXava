@@ -620,7 +620,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	}
 	
 	/**
-	 * @return Collection of <tt>MetaMember</tt>, not null and read only  //tmp
+	 * @return Collection of <tt>MetaMember</tt>, not null and read only
 	 */
 	public Collection getMetaMembersKey() throws XavaException {
 		Iterator it = getMembersNames().iterator(); // memberNames to keep order		

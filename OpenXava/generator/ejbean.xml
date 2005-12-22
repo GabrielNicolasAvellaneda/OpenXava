@@ -838,7 +838,7 @@ while (itCollections.hasNext()) {
 	String getHome = "get" + Strings.firstUpper(homeAttribute);
 	String role = Strings.firstUpper(reference.getRole());
 	String finderName = collection.hasCondition()?collection.getFinderName():"By" + role;
-	String finderArguments = collection.hasCondition()?generateFinderArguments(collection.getMetaPropertiesFinderArguments()):generateFinderArgumentsByKey(metaModel);		
+	String finderArguments = collection.hasCondition()?generateFinderArguments(collection.getMetaPropertiesFinderArguments(false)):generateFinderArgumentsByKey(metaModel);		
 </java>	
 
 	private <expr>homeClass</expr> <expr>homeAttribute</expr>;
@@ -879,71 +879,12 @@ while (itCollections.hasNext()) {
 	
 <java>} // if aggregate </java>	
 
-<java>if (collection.hasCalculator()) { </java>
-
-	/**
-	 * @ejb:interface-method
-	 */
-	public java.util.Collection get<expr>collectionName</expr>() {		
-		try {
-			<java>
-			MetaCalculator calculator = collection.getMetaCalculator();
-			String calculatorClass = calculator.getClassName();
-			</java> 		
-			<expr>calculatorClass</expr> <expr>collection.getName()</expr>Calculator= (<expr>calculatorClass</expr>)
-				getMetaModel().getMetaCollection("<expr>collection.getName()</expr>").getMetaCalculator().getCalculator();
-			<java>	
-			Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
-			while (itSets.hasNext()) {
-				MetaSet set = (MetaSet) itSets.next();
-				String propertyNameInCalculator = Strings.firstUpper(set.getPropertyName());
-				String propertyNameFrom = set.getPropertyNameFrom();
-				MetaProperty p = metaModel.getMetaProperty(propertyNameFrom);				
-				if (propertyNameFrom.indexOf('.') &gt;= 0) {
-					if (p.isKey() || p.getMetaModel() instanceof MetaAggregate) {
-						propertyNameFrom = Strings.firstUpper(Strings.change(propertyNameFrom, ".", "_"));
-					}
-					else {
-						StringTokenizer st = new StringTokenizer(propertyNameFrom, ".");
-						String ref = st.nextToken();
-						String pro = st.nextToken();
-						propertyNameFrom = Strings.firstUpper(ref) + "().get" + Strings.firstUpper(pro);
-					}
-				}
-				else {
-					propertyNameFrom = Strings.firstUpper(propertyNameFrom);
-				}
-				String getPropertyFrom = "boolean".equals(p.getTypeName())?"is":"get";
-				String value = set.getValue();
-				if (set.hasValue()) {
-			</java> 
-			<expr>collection.getName()</expr>Calculator.set<expr>propertyNameInCalculator</expr>("<expr>value</expr>");
-			<java>
-				} else {	
-			</java>  	
-			<expr>collection.getName()</expr>Calculator.set<expr>propertyNameInCalculator</expr>(<expr>getPropertyFrom</expr><expr>propertyNameFrom</expr>());
-			<java>	}} // else/sets 	 
-			if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
-			</java> 
-				<expr>collection.getName()</expr>Calculator.setEntity(this);
-			<java>} 
-			if (IJDBCCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
-			</java> 
-				<expr>collection.getName()</expr>Calculator.setConnectionProvider(getPortableContext());			
-			<java>			
-			}  
-			String calculateValueSentence = collection.getName() + "Calculator.calculate()";		
-			</java> 
-			return <expr>Generators.generateCast("java.util.Collection", calculateValueSentence)</expr>;
-		}
-		catch (Exception ex) {
-			ex.printStackTrace();
-			throw new EJBException(XavaResources.getString("generator.calculate_value_error", "<expr>collection.getName()</expr>", "<expr>metaModel.getName()</expr>", ex.getLocalizedMessage()));
-		}
-	}
-
-<java>} else { </java> 
-
+<java>if (collection.hasCalculator()) { 
+	
+	CalculatedCollectionPG.generateEJB(context, out, collection);
+	
+  } else {  
+</java> 
 	/**
 	 * @ejb:interface-method
 	 */
