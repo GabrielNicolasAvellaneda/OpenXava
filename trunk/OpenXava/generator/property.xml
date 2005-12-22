@@ -208,8 +208,8 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 			ejbPkField = "@ejb:pk-field";
 			ejbSetInterfaceMethod = "";			
 		}
-		if (propertyMapping.hasConverter() || propertyMapping.hasMultipleConverter()) { // Comun for multiple and normal converter
-			String converterClass = propertyMapping.hasConverter()?propertyMapping.getConverterClassName():propertyMapping.getMultipleConverterClassName();		
+		if (propertyMapping.hasConverter() || propertyMapping.hasMultipleConverter()) { // Common for multiple and normal converter
+			String converterClass = propertyMapping.hasConverter()?"org.openxava.converters.IConverter":propertyMapping.getMultipleConverterClassName();		
 			String multiple = propertyMapping.hasMultipleConverter()?"Multiple":"";
 			</java> 
 	private <expr>converterClass</expr> <expr>property.getName()</expr>Converter;
@@ -316,12 +316,12 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 			String setSentence = "get" + propertyName + "Converter().toDB(" + Generators.generatePrimitiveWrapper(type, "new" + propertyName) + ")";
 			if (!ejb) {
 </java> 
-	<expr>attributeAccessLevel</expr> <expr>cmpType</expr> _<expr>property.getName()</expr>;
+	<expr>attributeAccessLevel</expr> <expr>cmpType</expr> <expr>property.getName()</expr>;
 	private <expr>cmpType</expr> get_<expr>propertyName</expr>() {
-		return _<expr>property.getName()</expr>;
+		return <expr>property.getName()</expr>;
 	}
 	private void set_<expr>propertyName</expr>(<expr>cmpType</expr> new<expr>propertyName</expr>) {
-		this._<expr>property.getName()</expr> = new<expr>propertyName</expr>;
+		this.<expr>property.getName()</expr> = new<expr>propertyName</expr>;
 	}
 <java>			
 			}

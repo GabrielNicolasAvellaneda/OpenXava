@@ -27,7 +27,7 @@ public class Aspects {
 		if (!parsed) {
 			AspectsParser.configureAspects();
 			parsed = true;
-		}
+		}		
 		if (postCreates != null) {
 			fillPostCreate(container, get(postCreates[FOR], null));		
 			fillPostCreate(container, get(postCreates[FOR], container));			

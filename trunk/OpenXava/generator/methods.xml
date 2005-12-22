@@ -107,8 +107,9 @@ while (itMethods.hasNext()) {
 				<expr>method.getName()</expr>Calculator.setEntity(this);
 			<java>} 
 			if (IJDBCCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+				String connectionProvider = ejb?"getPortableContext()":"DataSourceConnectionProvider.getByComponent(\"" + metaModel.getMetaComponent().getName() + "\")";
 			</java> 
-				<expr>method.getName()</expr>Calculator.setConnectionProvider(getPortableContext());
+				<expr>method.getName()</expr>Calculator.setConnectionProvider(<expr>connectionProvider</expr>);
 			<java>			
 			}  
 			if (method.hasArguments()) {

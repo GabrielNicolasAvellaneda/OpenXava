@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
-<tl><declare import="org.openxava.util.Strings"/>
+<tl>
+<declare import="org.openxava.util.Primitives"/>
+<declare import="org.openxava.util.Strings"/>
 <declare import="org.openxava.util.XavaException"/>
 <declare import="org.openxava.util.meta.MetaSet"/>
 <declare import="org.openxava.component.MetaComponent"/>
@@ -91,7 +93,8 @@ while (itCollections.hasNext()) {
 	MetaReference reference = col.getMetaReference();
 	String colType = reference.getMetaModelReferenced().getInterfaceName();
 	String roleName = Strings.firstUpper(reference.getRole());
-	</java> 
+	if (!col.hasCondition() &amp;&amp; !col.hasCalculator()) {
+</java> 
 	private java.util.Collection <expr>col.getName()</expr>;
 	public java.util.Collection get<expr>colName</expr>() {
 		return <expr>col.getName()</expr>;
@@ -99,8 +102,33 @@ while (itCollections.hasNext()) {
 	public void set<expr>colName</expr>(java.util.Collection <expr>col.getName()</expr>) {
 		this.<expr>col.getName()</expr> = <expr>col.getName()</expr>;
 	}
-	
 <java>
+	}
+	if (col.hasCondition()) {
+</java> 
+	public java.util.Collection get<expr>colName</expr>() throws RemoteException {
+		org.hibernate.Session session = org.openxava.model.impl.HibernatePersistenceProvider.getCurrentSession();
+		org.hibernate.Query query = session.createQuery("<expr>col.getHQLCondition()</expr>");		
+<java>
+		int i=0;
+		for (Iterator it = col.getMetaPropertiesFinderArguments(true).iterator(); it.hasNext(); i++) {
+			MetaProperty parameter = (MetaProperty) it.next();
+			String argument = Generators.convertPropertyNameInPropertyCall(parameter.getName());
+			if (parameter.getType().isPrimitive()) {
+				argument = Generators.generatePrimitiveWrapper(parameter.getTypeName(), argument);
+			}
+</java>
+		query.setParameter(<expr>i</expr>, <expr>argument</expr>);
+<java>		
+		}
+</java> 
+		return query.list();
+	}	
+<java>
+	}
+	else if (col.hasCalculator()) {
+		CalculatedCollectionPG.generate(context, out, col);	
+	}
 	if (!reference.isAggregate() &amp;&amp; 
 		!col.hasCondition() &amp;&amp; 
 		!col.hasCalculator() &amp;&amp; 
@@ -144,46 +172,19 @@ while (itCollections.hasNext()) {
 		StringBuffer string = new StringBuffer();
 		string.append('"');
 		string.append(name);
-		Collection metaProperties = metaModel.getMetaPropertiesKey();
-		Iterator itKeys = metaProperties.iterator();	
+		Collection metaMembers = metaModel.getMetaMembersKey();
+		Iterator itKeys = metaMembers.iterator();	
 		while (itKeys.hasNext()) {	
-			MetaProperty key = (MetaProperty) itKeys.next();
-			PropertyMapping pMapping = key.getMapping();
-			String atributeName = pMapping.hasConverter()?"_"+key.getName():key.getName();	
+			MetaMember key = (MetaMember) itKeys.next();
 			string.append("::");
 			string.append('"');
 			string.append(" + ");
-			string.append(atributeName);
+			string.append(key.getName());
 			if (itKeys.hasNext()) {
    				string.append(" + ");
    				string.append('"');
 			}
 		}
-		
-		if (metaProperties.isEmpty()) {
-			string.append("::");
-			string.append('"');
-		}
-		
-		itKeys = metaModel.getKeyReferencesNames().iterator();	
-		if (itKeys.hasNext() &amp;&amp; !metaProperties.isEmpty()) {
-			string.append(" + ");
-			string.append('"');
-		}	
-		while (itKeys.hasNext()) {	
-			String key = (String) itKeys.next();
-			if (!metaProperties.isEmpty()) {
-				string.append("::");
-				string.append('"');
-			}	
-			string.append(" + ");
-			string.append(key);
-			if (itKeys.hasNext()) {
-   				string.append(" + ");
-   				string.append('"');
-			}
-		}
-		
 	</java> 
 		return <expr>string</expr>;
 	}

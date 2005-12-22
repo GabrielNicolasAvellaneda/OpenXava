@@ -171,46 +171,19 @@ while (itCollections.hasNext()) {
 		StringBuffer string = new StringBuffer();
 		string.append('"');
 		string.append(name);
-		Collection metaProperties = metaModel.getMetaPropertiesKey();
-		Iterator itKeys = metaProperties.iterator();	
+		Collection metaMembers = metaModel.getMetaMembersKey();
+		Iterator itKeys = metaMembers.iterator();	
 		while (itKeys.hasNext()) {	
-			MetaProperty key = (MetaProperty) itKeys.next();
-			PropertyMapping pMapping = key.getMapping();
-			String atributeName = key.getName();	
+			MetaMember key = (MetaMember) itKeys.next();
 			string.append("::");
 			string.append('"');
 			string.append(" + ");
-			string.append(atributeName);
+			string.append(key.getName());
 			if (itKeys.hasNext()) {
    				string.append(" + ");
    				string.append('"');
 			}
 		}
-		
-		if (metaProperties.isEmpty()) {
-			string.append("::");
-			string.append('"');
-		}
-		
-		itKeys = metaModel.getKeyReferencesNames().iterator();	
-		if (itKeys.hasNext() && !metaProperties.isEmpty()) {
-			string.append(" + ");
-			string.append('"');
-		}	
-		while (itKeys.hasNext()) {	
-			String key = (String) itKeys.next();
-			if (!metaProperties.isEmpty()) {
-				string.append("::");
-				string.append('"');
-			}	
-			string.append(" + ");
-			string.append(key);
-			if (itKeys.hasNext()) {
-   				string.append(" + ");
-   				string.append('"');
-			}
-		}
-		
 	# 
 		return #(string)#;
 	}

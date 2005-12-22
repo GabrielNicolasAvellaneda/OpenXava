@@ -3,6 +3,7 @@
 import org.w3c.dom.*;
 import java.io.*;
 import java.util.*;
+import org.openxava.util.Primitives;
 import org.openxava.util.Strings;
 import org.openxava.util.XavaException;
 import org.openxava.util.meta.MetaSet;
@@ -14,7 +15,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Dec 15 13:44:43 CET 2005
+ * @version Thu Dec 22 18:07:21 CET 2005
  */
 public class PojoPG {
     Properties properties = new Properties();
@@ -93,7 +94,8 @@ public class PojoPG {
     	MetaReference reference = col.getMetaReference();
     	String colType = reference.getMetaModelReferenced().getInterfaceName();
     	String roleName = Strings.firstUpper(reference.getRole());
-    	
+    	if (!col.hasCondition() && !col.hasCalculator()) {
+    
     out.print(" \n\tprivate java.util.Collection ");
     out.print(col.getName());
     out.print(";\n\tpublic java.util.Collection get");
@@ -110,6 +112,37 @@ public class PojoPG {
     out.print(col.getName());
     out.print(";\n\t}");
     
+    	}
+    	if (col.hasCondition()) {
+    
+    out.print(" \n\tpublic java.util.Collection get");
+    out.print(colName);
+    out.print("() throws RemoteException {\n\t\torg.hibernate.Session session = org.openxava.model.impl.HibernatePersistenceProvider.getCurrentSession();\n\t\torg.hibernate.Query query = session.createQuery(\"");
+    out.print(col.getHQLCondition());
+    out.print("\");");
+    
+    		int i=0;
+    		for (Iterator it = col.getMetaPropertiesFinderArguments(true).iterator(); it.hasNext(); i++) {
+    			MetaProperty parameter = (MetaProperty) it.next();
+    			String argument = Generators.convertPropertyNameInPropertyCall(parameter.getName());
+    			if (parameter.getType().isPrimitive()) {
+    				argument = Generators.generatePrimitiveWrapper(parameter.getTypeName(), argument);
+    			}
+    
+    out.print("\n\t\tquery.setParameter(");
+    out.print(i);
+    out.print(", ");
+    out.print(argument);
+    out.print(");");
+    		
+    		}
+    
+    out.print(" \n\t\treturn query.list();\n\t}");
+    
+    	}
+    	else if (col.hasCalculator()) {
+    		CalculatedCollectionPG.generate(context, out, col);	
+    	}
     	if (!reference.isAggregate() && 
     		!col.hasCondition() && 
     		!col.hasCalculator() && 
@@ -158,46 +191,19 @@ public class PojoPG {
     		StringBuffer string = new StringBuffer();
     		string.append('"');
     		string.append(name);
-    		Collection metaProperties = metaModel.getMetaPropertiesKey();
-    		Iterator itKeys = metaProperties.iterator();	
+    		Collection metaMembers = metaModel.getMetaMembersKey();
+    		Iterator itKeys = metaMembers.iterator();	
     		while (itKeys.hasNext()) {	
-    			MetaProperty key = (MetaProperty) itKeys.next();
-    			PropertyMapping pMapping = key.getMapping();
-    			String atributeName = pMapping.hasConverter()?"_"+key.getName():key.getName();	
+    			MetaMember key = (MetaMember) itKeys.next();
     			string.append("::");
     			string.append('"');
     			string.append(" + ");
-    			string.append(atributeName);
+    			string.append(key.getName());
     			if (itKeys.hasNext()) {
        				string.append(" + ");
        				string.append('"');
     			}
     		}
-    		
-    		if (metaProperties.isEmpty()) {
-    			string.append("::");
-    			string.append('"');
-    		}
-    		
-    		itKeys = metaModel.getKeyReferencesNames().iterator();	
-    		if (itKeys.hasNext() && !metaProperties.isEmpty()) {
-    			string.append(" + ");
-    			string.append('"');
-    		}	
-    		while (itKeys.hasNext()) {	
-    			String key = (String) itKeys.next();
-    			if (!metaProperties.isEmpty()) {
-    				string.append("::");
-    				string.append('"');
-    			}	
-    			string.append(" + ");
-    			string.append(key);
-    			if (itKeys.hasNext()) {
-       				string.append(" + ");
-       				string.append('"');
-    			}
-    		}
-    		
     	
     out.print(" \n\t\treturn ");
     out.print(string);
@@ -236,7 +242,7 @@ public class PojoPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Dec 15 13:44:44 CET 2005", // date this file was generated
+        { "Thu Dec 22 18:07:21 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/pojo.xml", // input file
              "/home/javi/workspace/OpenXava/generator/PojoPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

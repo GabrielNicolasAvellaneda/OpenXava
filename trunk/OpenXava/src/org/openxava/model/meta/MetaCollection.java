@@ -138,13 +138,12 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 		sb.append(" as o");
 		if (!Is.emptyString(this.condition)) {			
 			sb.append(" where ");			
-			String condition = changePropertiesThisByArguments(getCondition(), SQL);
-			condition = Strings.change(condition, getTokensToChangeDollarsAndNL());
-			sb.append(metaModel.getMapping().changePropertiesByCMPAttributes(condition));
+			String condition = changePropertiesThisByArguments(getCondition(), SQL);			
+			sb.append(Strings.change(condition, getTokensToChangeDollarsAndNL()));
 		}
 		if (!Is.emptyString(this.order)) { 		
 			sb.append(" order by ");
-			sb.append(getMetaReference().getMetaModelReferenced().getMapping().changePropertiesByCMPAttributes(this.order));
+			sb.append(Strings.change(this.order, getTokensToChangeDollarsAndNL()));
 		}
 		return sb.toString();
 	}

@@ -13,7 +13,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Dec 15 13:44:38 CET 2005
+ * @version Thu Dec 22 18:07:16 CET 2005
  */
 public class PropertyPG {
     Properties properties = new Properties();
@@ -255,8 +255,8 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     			ejbPkField = "@ejb:pk-field";
     			ejbSetInterfaceMethod = "";			
     		}
-    		if (propertyMapping.hasConverter() || propertyMapping.hasMultipleConverter()) { // Comun for multiple and normal converter
-    			String converterClass = propertyMapping.hasConverter()?propertyMapping.getConverterClassName():propertyMapping.getMultipleConverterClassName();		
+    		if (propertyMapping.hasConverter() || propertyMapping.hasMultipleConverter()) { // Common for multiple and normal converter
+    			String converterClass = propertyMapping.hasConverter()?"org.openxava.converters.IConverter":propertyMapping.getMultipleConverterClassName();		
     			String multiple = propertyMapping.hasMultipleConverter()?"Multiple":"";
     			
     out.print(" \n\tprivate ");
@@ -436,13 +436,13 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     out.print(attributeAccessLevel);
     out.print(" ");
     out.print(cmpType);
-    out.print(" _");
+    out.print(" ");
     out.print(property.getName());
     out.print(";\n\tprivate ");
     out.print(cmpType);
     out.print(" get_");
     out.print(propertyName);
-    out.print("() {\n\t\treturn _");
+    out.print("() {\n\t\treturn ");
     out.print(property.getName());
     out.print(";\n\t}\n\tprivate void set_");
     out.print(propertyName);
@@ -450,7 +450,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     out.print(cmpType);
     out.print(" new");
     out.print(propertyName);
-    out.print(") {\n\t\tthis._");
+    out.print(") {\n\t\tthis.");
     out.print(property.getName());
     out.print(" = new");
     out.print(propertyName);
@@ -618,7 +618,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Dec 15 13:44:39 CET 2005", // date this file was generated
+        { "Thu Dec 22 18:07:17 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/property.xml", // input file
              "/home/javi/workspace/OpenXava/generator/PropertyPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

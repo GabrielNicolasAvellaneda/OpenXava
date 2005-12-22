@@ -7,7 +7,8 @@ import org.openxava.util.Messages;
 import org.openxava.util.Strings;
 
 /**
- * Created on 13-dic-2005 (10:09:52)
+ * To validate the size of integer digits and fraction digits parts. <p>
+ * 
  * @author Ana Andres
  */
 public class BigDecimalValidator implements IPropertyValidator {
@@ -29,14 +30,14 @@ public class BigDecimalValidator implements IPropertyValidator {
             fraction = Integer.parseInt(st.nextToken());
         }
         //
-        if(integer > maximumValue){
-           errors.add("greaterThanTheAwaited", propertyName, modelName, String.valueOf(maximumValue)); 
+        if (integer > maximumValue){
+           errors.add("greater_than_the_awaited", propertyName, modelName, String.valueOf(maximumValue)); 
         }
         //
         if(fraction > 0){
             int lengthFraction = String.valueOf(fraction).length();
-            if(lengthFraction > maximumFractionDigits){
-                errors.add("greaterNumberFraction", String.valueOf(getMaximumFractionDigits()), String.valueOf(lengthFraction));
+            if (lengthFraction > maximumFractionDigits){
+                errors.add("greater_number_fraction", String.valueOf(getMaximumFractionDigits()), String.valueOf(lengthFraction));
             }
         }
     }    

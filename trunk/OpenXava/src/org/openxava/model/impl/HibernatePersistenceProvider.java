@@ -139,7 +139,7 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 	
 	public static SessionFactory createSessionFactory(String hibernateCfg) throws HibernateException {
 		try {
-			Configuration configuration = new Configuration().configure(hibernateCfg);
+			Configuration configuration = new Configuration().configure(hibernateCfg);			
 			
 			for (Iterator it = MetaModel.getAllGenerated().iterator(); it.hasNext();) {
 				MetaModel model = (MetaModel) it.next();

@@ -11,7 +11,7 @@ import org.openxava.generators.Generators;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Dec 15 13:44:41 CET 2005
+ * @version Thu Dec 22 18:07:19 CET 2005
  */
 public class MethodsPG {
     Properties properties = new Properties();
@@ -146,10 +146,13 @@ private static void generate(XPathContext context, ProgramWriter out, IMetaModel
     out.print("Calculator.setEntity(this);");
     } 
     			if (IJDBCCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+    				String connectionProvider = ejb?"getPortableContext()":"DataSourceConnectionProvider.getByComponent(\"" + metaModel.getMetaComponent().getName() + "\")";
     			
     out.print(" \n\t\t\t\t");
     out.print(method.getName());
-    out.print("Calculator.setConnectionProvider(getPortableContext());");
+    out.print("Calculator.setConnectionProvider(");
+    out.print(connectionProvider);
+    out.print(");");
     			
     			}  
     			if (method.hasArguments()) {
@@ -240,7 +243,7 @@ private static void generate(XPathContext context, ProgramWriter out, IMetaModel
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Dec 15 13:44:41 CET 2005", // date this file was generated
+        { "Thu Dec 22 18:07:19 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/methods.xml", // input file
              "/home/javi/workspace/OpenXava/generator/MethodsPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

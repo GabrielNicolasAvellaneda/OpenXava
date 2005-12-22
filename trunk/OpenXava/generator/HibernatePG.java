@@ -11,7 +11,7 @@ import org.openxava.util.XavaException;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Dec 15 13:44:45 CET 2005
+ * @version Thu Dec 22 18:07:23 CET 2005
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -58,14 +58,17 @@ public class HibernatePG {
     else if (keyProperties.size() == 1 &&  keyMembers.size() == 1) {
     		MetaProperty key = (MetaProperty) keyProperties.iterator().next();
     		PropertyMapping pMapping = key.getMapping();
-    		String propertyName = pMapping.hasConverter()?"_"+Strings.firstUpper(key.getName()):key.getName();	
+    		String propertyName = key.getName();	
     		String generator = key.isHidden() && !key.hasCalculatorDefaultValueOnCreate()?"native":"assigned";
+    		String type = pMapping.getCmpType().isArray()?"":"type='" + pMapping.getCmpTypeName() + "'";
     
     out.print(" \t\n\t\t<id name=\"");
     out.print(propertyName);
     out.print("\" column=\"");
     out.print(pMapping.getColumn());
-    out.print("\">\n\t\t\t<generator class=\"");
+    out.print("\" access=\"field\" ");
+    out.print(type);
+    out.print(">\n\t\t\t<generator class=\"");
     out.print(generator);
     out.print("\"/>\n\t\t</id>");
     
@@ -78,19 +81,30 @@ public class HibernatePG {
         	MetaMember key = (MetaMember) it.next();
         	if (key instanceof MetaProperty) {
     			PropertyMapping pMapping = ((MetaProperty) key).getMapping();
-    			String propertyName = pMapping.hasConverter()?"_"+Strings.firstUpper(key.getName()):key.getName();			
+    			String propertyName = key.getName();			
+    			String type = pMapping.getCmpType().isArray()?"":"type='" + pMapping.getCmpTypeName() + "'";			
     
     out.print(" \t\n\t\t\t<key-property name=\"");
     out.print(propertyName);
     out.print("\" column=\"");
     out.print(pMapping.getColumn());
-    out.print("\"/>");
+    out.print("\" access=\"field\" ");
+    out.print(type);
+    out.print("/>");
     
     		}
     		if (key instanceof MetaReference) {
-    			ReferenceMapping pMapping = mapping.getReferenceMapping(key.getName());
-    			String referenceName = key.getName();	
-    			String className = ((MetaReference) key).getMetaModelReferenced().getPOJOClassName();		
+    			if (mapping.isReferenceOverlappingWithSomeProperty(key.getName())) {
+    
+    out.print(" \n\t\t\t<!-- Reference: ");
+    out.print(key.getName());
+    out.print(" Overlapped references still not supported -->");
+    			
+    			}
+    			else {
+    				ReferenceMapping pMapping = mapping.getReferenceMapping(key.getName());
+    				String referenceName = key.getName();	
+    				String className = ((MetaReference) key).getMetaModelReferenced().getPOJOClassName();		
     
     out.print(" \t\n\t\t\t<key-many-to-one name=\"");
     out.print(referenceName);
@@ -98,21 +112,19 @@ public class HibernatePG {
     out.print(className);
     out.print("\">");
     
-    			for (Iterator itC = pMapping.getColumns().iterator(); itC.hasNext();) {
-    				String col = (String) itC.next();
-    				String insertUpdate = mapping.getColumns().contains(col)?"insert='false' update='false'":"";
+    				for (Iterator itC = pMapping.getColumns().iterator(); itC.hasNext();) {
+    					String col = (String) itC.next();				
     
     out.print(" \t\t\t\n\t\t\t\t<column name=\"");
     out.print(col);
-    out.print("\" ");
-    out.print(insertUpdate);
-    out.print("/>");
+    out.print("\"/>");
     
-    			}
+    				}			
     
     out.print(" \t\t\t\t\t\t\n\t\t\t</key-many-to-one>");
     	
-     		}
+    			}
+     		} 		
      	}	
     
     out.print("  \t\n\t\t</composite-id>");
@@ -122,7 +134,7 @@ public class HibernatePG {
     	for (Iterator it = properties.iterator(); it.hasNext();) {
     		MetaProperty prop = (MetaProperty) it.next();
     		PropertyMapping pMapping = prop.getMapping();
-    		String propertyName = pMapping.hasConverter()?"_"+Strings.firstUpper(prop.getName()):prop.getName();			
+    		String propertyName = prop.getName();			
     		if (!prop.isKey()) {
     			if (pMapping.hasMultipleConverter()) {
     
@@ -132,12 +144,15 @@ public class HibernatePG {
     			
     			}
     			else {
+    				String type = pMapping.getCmpType().isArray()?"":"type='" + pMapping.getCmpTypeName() + "'";
     
     out.print(" \t\n\t\t<property name=\"");
     out.print(propertyName);
     out.print("\" column=\"");
     out.print(pMapping.getColumn());
-    out.print("\"/>");
+    out.print("\" access=\"field\" ");
+    out.print(type);
+    out.print("/>");
     
     			} 	
     		} 
@@ -153,12 +168,15 @@ public class HibernatePG {
     			MetaProperty property = (MetaProperty) itAggregateProperties.next();
     			String propertyName = "_" + referenceName + "_" + property.getName();
     			String column = mapping.getColumn(reference.getName() + "_" + property.getName()); 
+    			String type = property.getMapping().getCmpType().isArray()?"":"type='" + property.getMapping().getCmpTypeName() + "'";			
     
     out.print(" \n\t\t<property name=\"");
     out.print(propertyName);
     out.print("\" column=\"");
     out.print(column);
-    out.print("\"/>");
+    out.print("\" access=\"field\" ");
+    out.print(type);
+    out.print("/>");
     
     		} 
     		for (Iterator itAggregateReferences = reference.getMetaModelReferenced().getMetaReferences().iterator(); itAggregateReferences.hasNext();) {	
@@ -214,6 +232,14 @@ public class HibernatePG {
     
     		}
     		else { 
+    			if (mapping.isReferenceOverlappingWithSomeProperty(reference.getName())) {
+    
+    out.print(" \t\t\t\n\t\t\t<!-- Reference: ");
+    out.print(reference.getName());
+    out.print(" Overlapped references still not supported -->");
+    
+    			}
+    			else {
     
     out.print(" \n\t\t<many-to-one name=\"");
     out.print(reference.getName());
@@ -223,18 +249,16 @@ public class HibernatePG {
     
     			for (Iterator itC = columns.iterator(); itC.hasNext();) {
     				String col = (String) itC.next();
-    				String insertUpdate = mapping.getColumns().contains(col)?"insert='false' update='false'":"";
     
     out.print(" \n\t\t\t<column name=\"");
     out.print(col);
-    out.print("\" ");
-    out.print(insertUpdate);
-    out.print("/>");
+    out.print("\"/>");
     			
     			}
     
     out.print(" \n\t\t</many-to-one>");
     
+    			}
     		}
     	}
     } 
@@ -331,7 +355,7 @@ public class HibernatePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Dec 15 13:44:46 CET 2005", // date this file was generated
+        { "Thu Dec 22 18:07:24 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/hibernate.xml", // input file
              "/home/javi/workspace/OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

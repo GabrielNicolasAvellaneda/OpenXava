@@ -136,15 +136,16 @@ public class PropertyMapping extends MetaSetsContainer {
 		}
 	}
 		
-	public String getCmpTypeName() {
+	public String getCmpTypeName() throws XavaException {
+		if (Is.emptyString(cmpTypeName)) cmpTypeName = getMetaProperty().getTypeName();
 		if ("String".equals(cmpTypeName)) return "java.lang.String";
 		if ("Integer".equals(cmpTypeName)) return "java.lang.Integer";
-		if ("Long".equals(cmpTypeName)) return "java.lang.Long";
+		if ("Long".equals(cmpTypeName)) return "java.lang.Long";		
 		return cmpTypeName;
 	}
 	
-	public Class getCmpType() throws ClassNotFoundException {
-		return Class.forName(getCmpTypeName());
+	public Class getCmpType() throws ClassNotFoundException, XavaException {
+		return Primitives.classForName(getCmpTypeName());
 	}
 
 	public void setCmpTypeName(String cmpTypeName) {
