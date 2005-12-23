@@ -68,7 +68,7 @@ else {
 		if (key instanceof MetaReference) {
 			if (mapping.isReferenceOverlappingWithSomeProperty(key.getName())) {
 # 
-			<!-- Reference: #(key.getName())# Overlapped references still not supported -->
+			<!-- Reference: #(key.getName())# : Overlapped references still not supported -->
 # 			
 			}
 			else {
@@ -136,12 +136,12 @@ while (itReferences.hasNext()) {
   			if (columns.size() == 1) {	
 				String column = (String) columns.iterator().next();
 # 
-		<many-to-one name="#(refName)#" column="#(column)#" class="#(ref.getMetaModelReferenced().getPOJOClassName())#"/>
+		<many-to-one name="#(refName)#" column="#(column)#" class="#(ref.getMetaModelReferenced().getPOJOClassName())#" not-found="ignore"/>
 # 
 			}
 			else { 
 # 
-		<many-to-one name="#(refName)#" class="#(ref.getMetaModelReferenced().getPOJOClassName())#"> 
+		<many-to-one name="#(refName)#" class="#(ref.getMetaModelReferenced().getPOJOClassName())#" not-found="ignore"> 
 # 
 			for (Iterator itC = columns.iterator(); itC.hasNext();) {
 				String col = (String) itC.next();
@@ -160,7 +160,7 @@ while (itReferences.hasNext()) {
   		if (columns.size() == 1) {	
 			String column = (String) columns.iterator().next();
 # 
-		<many-to-one name="#(reference.getName())#" column="#(column)#" class="#(reference.getMetaModelReferenced().getPOJOClassName())#"/>
+		<many-to-one name="#(reference.getName())#" column="#(column)#" class="#(reference.getMetaModelReferenced().getPOJOClassName())#" not-found="ignore"/>
 # 
 		}
 		else { 
@@ -171,7 +171,7 @@ while (itReferences.hasNext()) {
 			}
 			else {
 # 
-		<many-to-one name="#(reference.getName())#" class="#(reference.getMetaModelReferenced().getPOJOClassName())#"> 
+		<many-to-one name="#(reference.getName())#" class="#(reference.getMetaModelReferenced().getPOJOClassName())#" not-found="ignore"> 
 # 
 			for (Iterator itC = columns.iterator(); itC.hasNext();) {
 				String col = (String) itC.next();
