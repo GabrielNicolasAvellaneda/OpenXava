@@ -4,10 +4,10 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-import org.hibernate.*;
 import org.openxava.application.meta.*;
 import org.openxava.component.*;
 import org.openxava.controller.meta.*;
+import org.openxava.hibernate.XHibernate;
 import org.openxava.model.impl.*;
 import org.openxava.model.meta.*;
 import org.openxava.tab.meta.*;
@@ -36,10 +36,6 @@ public class ModuleTestBase extends TestCase {
 	private static int loginFormIndex = -1;
 	private static String host;
 	private static String port;
-	private static SessionFactory sessionFactory; 
-
-	private Session session; 	
-	private Transaction transaction; 
 	private List parameters;
 	private MetaModule metaModule;
 	private MetaModel metaModel;
@@ -50,7 +46,11 @@ public class ModuleTestBase extends TestCase {
 	private String module;
 	private WebConversation conversation; 
 	private WebResponse response; 
-	private WebForm form;	
+	private WebForm form;
+	
+	static {
+		XHibernate.setConfigurationFile("/hibernate-junit.cfg.xml");
+	}
 	
 	public ModuleTestBase(String nameTest, String application, String modul) {
 		super(nameTest);
@@ -68,7 +68,7 @@ public class ModuleTestBase extends TestCase {
 			// logout
 			response = conversation.getResponse("http://" + getHost() + ":" + getPort() + "/" + getJetspeed2URL() + "/login/logout");
 		}
-		closeSession();
+		XHibernate.commit();
 	}
 	
 	/**
@@ -1005,42 +1005,6 @@ public class ModuleTestBase extends TestCase {
 	 */
 	protected WebConversation getConversation() {
 		return conversation; 
-	}
-	
-	/**
-	 * Return a hibernate session. <p>
-	 * 
-	 * The first time a hibernate session is created.
-	 * If you have closed the hibernate session, a new one is created. 
-	 */
-	protected Session getSession() throws Exception {
-		if (session == null) {
-			session = getSessionFactory().openSession();
-			transaction = session.beginTransaction();
-		} 
-		return session;
-	}
-	
-	private static SessionFactory getSessionFactory() throws Exception {
-		if (sessionFactory == null) {
-			sessionFactory = HibernatePersistenceProvider.createSessionFactory("/hibernate-junit.cfg.xml");
-		}
-		return sessionFactory;
-	}
-		
-	/**
-	 * Close the hibernate session. <p>
-	 * 
-	 * This flush any data to database and commit transaction.<br>
-	 * If after calling this method you call to getSession() a new hibernate session is reopened.<br>
-	 */
-	protected void closeSession() throws Exception { 
-		if (session != null) {
-		  transaction.commit();
-			session.close();
-			transaction = null;
-			session = null;
-		}
-	}	
+	}		
  			
 }

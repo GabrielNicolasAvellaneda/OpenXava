@@ -1,5 +1,6 @@
 package org.openxava.test.tests;
 
+import org.openxava.hibernate.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
@@ -69,8 +70,8 @@ public class DeliveryTypesTest extends ModuleTestBase {
 		delivery.setType(deliveryType);
 		delivery.setNumber(66);
 		delivery.setDescription("JUNIT FOR DELIVERY TYPE");
-		getSession().save(delivery);
-		closeSession();
+		XHibernate.getSession().save(delivery);
+		XHibernate.commit();
 		
 		setValue("number", "66");
 		execute("CRUD.search");
@@ -89,8 +90,8 @@ public class DeliveryTypesTest extends ModuleTestBase {
 		assertError("Delivery type can not delete because it is used in deliveries");
 		assertEditable("description"); // because return to main view (and controllers)
 		
-		getSession().delete(delivery);
-		closeSession();
+		XHibernate.getSession().delete(delivery);
+		XHibernate.commit();
 		
 		execute("CRUD.delete");		
 		assertNoErrors();

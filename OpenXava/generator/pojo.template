@@ -106,8 +106,7 @@ while (itCollections.hasNext()) {
 	if (col.hasCondition()) {
 # 
 	public java.util.Collection get#(colName)#() throws RemoteException {
-		org.hibernate.Session session = org.openxava.model.impl.HibernatePersistenceProvider.getCurrentSession();
-		org.hibernate.Query query = session.createQuery("#(col.getHQLCondition())#");		
+		org.hibernate.Query query = org.openxava.hibernate.XHibernate.getSession().createQuery("#(col.getHQLCondition())#");		
 # 
 		int i=0;
 		for (Iterator it = col.getMetaPropertiesFinderArguments(true).iterator(); it.hasNext(); i++) {

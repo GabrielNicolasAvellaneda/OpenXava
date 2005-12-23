@@ -15,7 +15,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Dec 22 18:07:21 CET 2005
+ * @version Fri Dec 23 12:06:19 CET 2005
  */
 public class PojoPG {
     Properties properties = new Properties();
@@ -117,7 +117,7 @@ public class PojoPG {
     
     out.print(" \n\tpublic java.util.Collection get");
     out.print(colName);
-    out.print("() throws RemoteException {\n\t\torg.hibernate.Session session = org.openxava.model.impl.HibernatePersistenceProvider.getCurrentSession();\n\t\torg.hibernate.Query query = session.createQuery(\"");
+    out.print("() throws RemoteException {\n\t\torg.hibernate.Query query = org.openxava.hibernate.XHibernate.getSession().createQuery(\"");
     out.print(col.getHQLCondition());
     out.print("\");");
     
@@ -242,7 +242,7 @@ public class PojoPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Dec 22 18:07:21 CET 2005", // date this file was generated
+        { "Fri Dec 23 12:06:19 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/pojo.xml", // input file
              "/home/javi/workspace/OpenXava/generator/PojoPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
