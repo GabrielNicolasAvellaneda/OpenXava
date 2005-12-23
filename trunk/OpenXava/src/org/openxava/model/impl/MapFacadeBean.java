@@ -155,8 +155,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {
-			persistenceProvider.begin();
-			MetaModel metaModel = getMetaModel(modelName);					
+			persistenceProvider.begin();							
 			Object result = findEntity(persistenceProvider, modelName, keyValues);
 			persistenceProvider.commit();
 			return result;
