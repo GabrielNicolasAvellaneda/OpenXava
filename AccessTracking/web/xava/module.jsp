@@ -1,4 +1,5 @@
 <%@ page import="org.openxava.util.Is" %>
+<%@ page import="org.openxava.util.Users" %>
 <%@ page import="org.openxava.util.XavaResources" %>
 
 <%@ include file="script.jsp" %>
@@ -9,6 +10,7 @@
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%
+Users.setCurrent(request.getRemoteUser());
 boolean isPortlet = (request.getAttribute("xava.formAction") != null);
 boolean messagesOnTop = !"false".equalsIgnoreCase(request.getParameter("messagesOnTop"));
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");

@@ -11,11 +11,15 @@
 	<property file="${configuration}.properties"/>
 	<property name="datasource" value="OpenXavaTestDS"/>
 	<property name="dist.dir" value = "${dist.base.dir}/${project}.dist"/> 
-	<property name="separator" value = "_"/>
 	<property name="access.table" value = "TRACKING${separator}ACCESS"/>
 	
 	<target name="replaceTable">
-		<replace file="../AccessTracking/web/WEB-INF/classes/Access.xml" token="@access.table@" value="${access.table}"/>
+		<copy file="../AccessTracking/components/Access.xml" 
+			todir="../AccessTracking/web/WEB-INF/classes" overwrite="true">
+			<filterset>
+				<filter token="access.table" value="${access.table}"/>
+			</filterset>
+		</copy>
 	</target>
 	
 	<!-- In addition to execute this ant your need to edit your MANIFEST.MF to include these jars -->
@@ -25,6 +29,7 @@
 		<copy file="web/WEB-INF/lib/antlr.jar" todir="${dist.dir}/lib"/>
 		<copy file="web/WEB-INF/lib/asm.jar" todir="${dist.dir}/lib"/>
 		<copy file="web/WEB-INF/lib/cglib.jar" todir="${dist.dir}/lib"/>
+		<copy file="web/WEB-INF/lib/dom4j.jar" todir="${dist.dir}/lib"/>
 		<copy file="web/WEB-INF/lib/hibernate3.jar" todir="${dist.dir}/lib"/>
 	</target>
 	

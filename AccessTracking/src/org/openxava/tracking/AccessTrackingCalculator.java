@@ -6,7 +6,7 @@ import java.util.Date;
 
 import org.hibernate.*;
 import org.openxava.calculators.*;
-import org.openxava.ejbx.*;
+import org.openxava.hibernate.XHibernate;
 import org.openxava.model.*;
 import org.openxava.model.impl.*;
 import org.openxava.model.meta.*;
@@ -31,13 +31,13 @@ public class AccessTrackingCalculator implements IEntityCalculator {
 	private static DateFormat timeFormat = new SimpleDateFormat("HH:mm");	
 		
 	private IModel entity;
-	private String accessType; 	 	
+	private String accessType;	
 
 	public Object calculate() throws Exception {
 		Session session = null;
 		try {
 			Access access = newAccess();			
-			session = HibernatePersistenceProvider.getSessionFactory().openSession();			
+			session = XHibernate.getSession();			
 			session.save(access);
 			session.flush();			
 			session.close();
@@ -77,10 +77,11 @@ public class AccessTrackingCalculator implements IEntityCalculator {
 		return Strings.lastToken(metaModel.getMetaComponent().getPackageNameWithSlashWithoutModel(), "/");		
 	}
 
-	private String getUser() {		
-		return ((EntityBase) entity).getCallerPrincipal().getName();		
+	private String getUser() {
+		String user = Users.getCurrent();
+		return user==null?"nobody":user;
 	}
-
+	
 	public void setEntity(Object entity) throws RemoteException {
 		this.entity = (IModel) entity;
 	}	
