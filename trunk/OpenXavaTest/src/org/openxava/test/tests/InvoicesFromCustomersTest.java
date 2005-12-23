@@ -5,6 +5,7 @@ import java.util.*;
 import javax.rmi.*;
 
 import org.hibernate.*;
+import org.openxava.hibernate.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
@@ -99,7 +100,7 @@ public class InvoicesFromCustomersTest extends ModuleTestBase {
 
 	private Collection getInvoices() throws Exception {
 		if (invoices == null) {
-			Query query = getSession().createQuery("select i from Invoice as i where i.customer.number=1" );	
+			Query query = XHibernate.getSession().createQuery("select i from Invoice as i where i.customer.number=1" );	
 			invoices = query.list();    // Javi   
 		} 
 		return invoices;		

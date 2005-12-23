@@ -23,13 +23,11 @@ import org.openxava.validators.*;
  */
 public interface IPersistenceProvider {
 	
-	void setSession(Session s);  //tmp quitar
 	Object find(IMetaEjb metaModel, Map keyValues) throws FinderException, XavaException;
 	Object find(IMetaEjb metaModel, Object key)	throws FinderException;
 	IPropertiesContainer toPropertiesContainer(MetaModel metaModel, Object modelObject) throws XavaException;
 	Object create(IMetaEjb metaEjb, Map values) throws CreateException, ValidationException, XavaException; // tmp : IMetaEjb
 	void remove(MetaModel metaModel, Object modelObject) throws RemoveException, XavaException;
 	void commit();
-	void rollback();
-	void begin();
+	void rollback();	
 }

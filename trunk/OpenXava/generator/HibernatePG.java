@@ -11,7 +11,7 @@ import org.openxava.util.XavaException;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Dec 22 18:07:23 CET 2005
+ * @version Fri Dec 23 12:06:21 CET 2005
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -98,7 +98,7 @@ public class HibernatePG {
     
     out.print(" \n\t\t\t<!-- Reference: ");
     out.print(key.getName());
-    out.print(" Overlapped references still not supported -->");
+    out.print(" : Overlapped references still not supported -->");
     			
     			}
     			else {
@@ -192,7 +192,7 @@ public class HibernatePG {
     out.print(column);
     out.print("\" class=\"");
     out.print(ref.getMetaModelReferenced().getPOJOClassName());
-    out.print("\"/>");
+    out.print("\" not-found=\"ignore\"/>");
     
     			}
     			else { 
@@ -201,7 +201,7 @@ public class HibernatePG {
     out.print(refName);
     out.print("\" class=\"");
     out.print(ref.getMetaModelReferenced().getPOJOClassName());
-    out.print("\">");
+    out.print("\" not-found=\"ignore\">");
     
     			for (Iterator itC = columns.iterator(); itC.hasNext();) {
     				String col = (String) itC.next();
@@ -228,7 +228,7 @@ public class HibernatePG {
     out.print(column);
     out.print("\" class=\"");
     out.print(reference.getMetaModelReferenced().getPOJOClassName());
-    out.print("\"/>");
+    out.print("\" not-found=\"ignore\"/>");
     
     		}
     		else { 
@@ -245,7 +245,7 @@ public class HibernatePG {
     out.print(reference.getName());
     out.print("\" class=\"");
     out.print(reference.getMetaModelReferenced().getPOJOClassName());
-    out.print("\">");
+    out.print("\" not-found=\"ignore\">");
     
     			for (Iterator itC = columns.iterator(); itC.hasNext();) {
     				String col = (String) itC.next();
@@ -355,7 +355,7 @@ public class HibernatePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Dec 22 18:07:24 CET 2005", // date this file was generated
+        { "Fri Dec 23 12:06:21 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/hibernate.xml", // input file
              "/home/javi/workspace/OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

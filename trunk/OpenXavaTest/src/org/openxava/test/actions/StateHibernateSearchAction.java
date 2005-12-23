@@ -2,19 +2,20 @@ package org.openxava.test.actions;
 
 import org.openxava.test.model.*;
 import org.openxava.actions.*;
+import org.openxava.hibernate.*;
 
 
 /**
  * @author Mª Carmen Gimeno 
  */
 
-public class StateHibernateSearchAction extends HibernateBaseAction {
+public class StateHibernateSearchAction extends ViewBaseAction {
 	
-	public void executeHibernate() throws Exception {
+	public void execute() throws Exception {
 		//Query query = session.createQuery("select f from Family as f where f.oid=:oid" );	
 		//query.setString("oid",getView().getValueString("oid"));
 		//Family f =(Family) query.uniqueResult();
-		State s = (State) getSession().get(State.class,getView().getValueString("id"));
+		State s = (State) XHibernate.getSession().get(State.class,getView().getValueString("id"));
 		if (s==null) {
 		  	addError("object_not_found");
 		}

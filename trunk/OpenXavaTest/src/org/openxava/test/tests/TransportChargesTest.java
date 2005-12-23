@@ -6,6 +6,7 @@ import java.util.*;
 import javax.rmi.*;
 
 import org.hibernate.*;
+import org.openxava.hibernate.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
@@ -108,34 +109,13 @@ public class TransportChargesTest extends ModuleTestBase {
 	}
 
 	private void deleteAll() throws Exception {
-		getSession().createQuery("delete from TransportCharge").executeUpdate();
-		closeSession(); 
+		XHibernate.getSession().createQuery("delete from TransportCharge").executeUpdate();
+		XHibernate.commit(); 
 		
 	}	
 	
 	private void createSome() throws Exception {
-	/*	Collection deliveries = DeliveryUtil.getHome().findAll();
-		assertTrue("At least 2 deliveries is required to run this test", deliveries.size() > 1);
-		Iterator it = deliveries.iterator();
-		
-		DeliveryValue delivery1 = ((DeliveryRemote) PortableRemoteObject.narrow(it.next(), DeliveryRemote.class)).getDeliveryValue();		
-		charge1 = new TransportChargeValue();
-		
-		charge1.setDelivery_invoice_year(delivery1.getInvoice_year());		
-		charge1.setDelivery_invoice_number(delivery1.0getInvoice_number());		
-		charge1.setDelivery_number(delivery1.getNumber());		
-		charge1.setAmount(new BigDecimal("100.00"));					
-		TransportChargeUtil.getHome().create(charge1);
-		
-		DeliveryValue delivery2 = ((DeliveryRemote) PortableRemoteObject.narrow(it.next(), DeliveryRemote.class)).getDeliveryValue();		
-		charge2 = new TransportChargeValue();
-		charge2.setDelivery_invoice_year(delivery2.getInvoice_year());
-		charge2.setDelivery_invoice_number(delivery2.getInvoice_number());
-		charge2.setDelivery_number(delivery2.getNumber());
-		charge2.setAmount(new BigDecimal("200.00"));			
-		TransportChargeUtil.getHome().create(charge2);  */
-		
-		Collection deliveries = getSession().createQuery("select d from Delivery as d").list();	
+		Collection deliveries = XHibernate.getSession().createQuery("select d from Delivery as d").list();	
 		assertTrue("At least 2 deliveries is required to run this test", deliveries.size() > 1);
 		Iterator it = deliveries.iterator();
 		
@@ -144,14 +124,14 @@ public class TransportChargesTest extends ModuleTestBase {
 		
 		charge1.setDelivery(delivery1);
 		charge1.setAmount(new BigDecimal("100.00"));
-		getSession().save(charge1);
+		XHibernate.getSession().save(charge1);
 						
 		Delivery delivery2 = (Delivery) it.next();		
 		charge2 = new TransportCharge();
 		charge2.setDelivery(delivery2);
 		charge2.setAmount(new BigDecimal("200.00"));			
-		getSession().save(charge2);
-		getSession().flush();
+		XHibernate.getSession().save(charge2);
+		XHibernate.getSession().flush();
 	}
 	
 	private TransportCharge getCharge1() {

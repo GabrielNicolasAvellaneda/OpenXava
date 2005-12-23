@@ -1,6 +1,7 @@
 package org.openxava.test.tests;
 
 import org.hibernate.*;
+import org.openxava.hibernate.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
@@ -31,25 +32,25 @@ public class CarriersTest extends ModuleTestBase {
 		// driving licence is not set to test converters in references
 		c1.setNumber(1);
 		c1.setName("UNO");
-		getSession().save(c1);
+		XHibernate.getSession().save(c1);
 		
 		Carrier c2 = new Carrier();
 		c2.setWarehouse(wh);
 		c2.setNumber(2);
 		c2.setName("DOS");
-		getSession().save(c2);				
+		XHibernate.getSession().save(c2);				
 
 		Carrier c3 = new Carrier();
 		c3.setWarehouse(wh);
 		c3.setNumber(3);
 		c3.setName("TRES");
-		getSession().save(c3);
+		XHibernate.getSession().save(c3);
 	
 		Carrier c4 = new Carrier();
 		c4.setWarehouse(wh);
 		c4.setNumber(4);
 		c4.setName("CUATRO");
-		getSession().save(c4);
+		XHibernate.getSession().save(c4);
 		
 		Warehouse wh2 = new Warehouse();
 		wh2.setNumber(1);
@@ -59,15 +60,15 @@ public class CarriersTest extends ModuleTestBase {
 		c5.setWarehouse(wh2);
 		c5.setNumber(5);
 		c5.setName("Cinco");
-		getSession().save(c5);
+		XHibernate.getSession().save(c5);
 		
-		closeSession();
+		XHibernate.commit();
 	}
 	
 	private void deleteCarriers()
 		throws Exception {
-		getSession().createQuery("delete from Carrier").executeUpdate();
-		closeSession();
+		XHibernate.getSession().createQuery("delete from Carrier").executeUpdate();
+		XHibernate.commit();
 	}
 	
 	public void testHideShowRows() throws Exception {
@@ -325,7 +326,7 @@ public class CarriersTest extends ModuleTestBase {
 	}
 	
 	private void assertCarriersCount(int c) throws Exception {
-		Query query = getSession().createQuery("select count(*) from Carrier" );	
+		Query query = XHibernate.getSession().createQuery("select count(*) from Carrier" );	
 		int carrierCount = ((Integer) query.uniqueResult()).intValue();
 		assertEquals("Carriers count",c,carrierCount);
 	}

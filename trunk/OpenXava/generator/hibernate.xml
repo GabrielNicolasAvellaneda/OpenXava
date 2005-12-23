@@ -69,7 +69,7 @@ else {
 		if (key instanceof MetaReference) {
 			if (mapping.isReferenceOverlappingWithSomeProperty(key.getName())) {
 </java> 
-			&lt;!-- Reference: <expr>key.getName()</expr> Overlapped references still not supported --&gt;
+			&lt;!-- Reference: <expr>key.getName()</expr> : Overlapped references still not supported --&gt;
 <java>			
 			}
 			else {
@@ -137,12 +137,12 @@ while (itReferences.hasNext()) {
   			if (columns.size() == 1) {	
 				String column = (String) columns.iterator().next();
 </java> 
-		&lt;many-to-one name="<expr>refName</expr>" column="<expr>column</expr>" class="<expr>ref.getMetaModelReferenced().getPOJOClassName()</expr>"/&gt;
+		&lt;many-to-one name="<expr>refName</expr>" column="<expr>column</expr>" class="<expr>ref.getMetaModelReferenced().getPOJOClassName()</expr>" not-found="ignore"/&gt;
 <java>
 			}
 			else { 
 </java> 
-		&lt;many-to-one name="<expr>refName</expr>" class="<expr>ref.getMetaModelReferenced().getPOJOClassName()</expr>"&gt; 
+		&lt;many-to-one name="<expr>refName</expr>" class="<expr>ref.getMetaModelReferenced().getPOJOClassName()</expr>" not-found="ignore"&gt; 
 <java>
 			for (Iterator itC = columns.iterator(); itC.hasNext();) {
 				String col = (String) itC.next();
@@ -161,7 +161,7 @@ while (itReferences.hasNext()) {
   		if (columns.size() == 1) {	
 			String column = (String) columns.iterator().next();
 </java> 
-		&lt;many-to-one name="<expr>reference.getName()</expr>" column="<expr>column</expr>" class="<expr>reference.getMetaModelReferenced().getPOJOClassName()</expr>"/&gt;
+		&lt;many-to-one name="<expr>reference.getName()</expr>" column="<expr>column</expr>" class="<expr>reference.getMetaModelReferenced().getPOJOClassName()</expr>" not-found="ignore"/&gt;
 <java>
 		}
 		else { 
@@ -172,7 +172,7 @@ while (itReferences.hasNext()) {
 			}
 			else {
 </java> 
-		&lt;many-to-one name="<expr>reference.getName()</expr>" class="<expr>reference.getMetaModelReferenced().getPOJOClassName()</expr>"&gt; 
+		&lt;many-to-one name="<expr>reference.getName()</expr>" class="<expr>reference.getMetaModelReferenced().getPOJOClassName()</expr>" not-found="ignore"&gt; 
 <java>
 			for (Iterator itC = columns.iterator(); itC.hasNext();) {
 				String col = (String) itC.next();

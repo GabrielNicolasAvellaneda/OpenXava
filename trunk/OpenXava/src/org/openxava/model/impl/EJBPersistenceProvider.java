@@ -68,7 +68,14 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 		if (!(metaModel instanceof IMetaEjb)) {
 			throw new XavaException("only_ejb_error");
 		}
-		return (IPropertiesContainer) PortableRemoteObject.narrow(o, IPropertiesContainer.class);		
+		try { 
+			return (IPropertiesContainer) PortableRemoteObject.narrow(o, IPropertiesContainer.class);
+		}
+		catch (ClassCastException ex) {
+			// In some cases we can obtain POJO objects from a EJB; 
+			// for example in a calculated collection. This can work thank to this 
+			return new POJOPropertiesContainerAdapter(o);  
+		}
 	}
 
 	public Object create(IMetaEjb metaEjb, Map values)
@@ -167,16 +174,10 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 		}
 	}	
 
-	public void setSession(Session session) { // tmp: remove
-	}
-
 	public void commit() {
 	}
 
 	public void rollback() {
-	}
-
-	public void begin() {
 	}
 
 }

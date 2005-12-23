@@ -35,7 +35,6 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {
-			persistenceProvider.begin();
 			MetaModel metaModel = getMetaModel(modelName);					
 			Object result = create(persistenceProvider, metaModel, values, null, null, 0);
 			persistenceProvider.commit();
@@ -68,8 +67,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			throws FinderException, XavaException, RemoteException {
 		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
-		try {
-			persistenceProvider.begin();							
+		try {							
 			Map result = getValuesImpl(persistenceProvider, modelName, keyValues, membersNames);
 			persistenceProvider.commit();
 			return result;
@@ -97,7 +95,6 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {
-			persistenceProvider.begin();
 			MetaModel metaModel = getMetaModel(modelName);					
 			remove(persistenceProvider, metaModel, keyValues);
 			persistenceProvider.commit();
@@ -126,7 +123,6 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {
-			persistenceProvider.begin();
 			MetaModel metaModel = getMetaModel(modelName);					
 			setValues(persistenceProvider, metaModel, keyValues, values);
 			persistenceProvider.commit();
@@ -154,8 +150,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		throws FinderException, RemoteException {
 		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
-		try {
-			persistenceProvider.begin();							
+		try {							
 			Object result = findEntity(persistenceProvider, modelName, keyValues);
 			persistenceProvider.commit();
 			return result;
@@ -176,8 +171,6 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {
-			persistenceProvider.begin();
-			MetaModel metaModel = getMetaModel(modelName);					
 			Map result = createReturningValues(persistenceProvider, modelName, values);
 			persistenceProvider.commit();
 			return result;
@@ -205,9 +198,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		throws CreateException, XavaException, ValidationException, RemoteException {
 		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
-		try {
-			persistenceProvider.begin();
-			MetaModel metaModel = getMetaModel(modelName);					
+		try {							
 			Map result = createReturningKey(persistenceProvider, modelName, values);
 			persistenceProvider.commit();
 			return result;
@@ -236,9 +227,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	{		
 		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
-		try {
-			persistenceProvider.begin();
-			MetaModel metaModel = getMetaModel(modelName);					
+		try {								
 			Object result = createAggregate(persistenceProvider, modelName, containerKeyValues, counter, values);
 			persistenceProvider.commit();
 			return result;
@@ -267,9 +256,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	{		
 		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
-		try {
-			persistenceProvider.begin();
-			MetaModel metaModel = getMetaModel(modelName);					
+		try {								
 			Object result = createAggregate(persistenceProvider, modelName, container, counter, values);
 			persistenceProvider.commit();
 			return result;
@@ -298,9 +285,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	{		
 		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
-		try {
-			persistenceProvider.begin();
-			MetaModel metaModel = getMetaModel(modelName);					
+		try {					
 			Map result = createAggregateReturningKey(persistenceProvider, modelName, containerKeyValues, counter, values);
 			persistenceProvider.commit();
 			return result;
@@ -332,8 +317,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		 {		
 		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
-		try {
-			persistenceProvider.begin();								
+		try {								
 			Map result = getValues(persistenceProvider, modelName, modelObject, memberNames);
 			persistenceProvider.commit();
 			return result;
@@ -353,9 +337,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	public Messages validate(String user, String modelName, Map values) throws XavaException, RemoteException {
 		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
-		try {
-			persistenceProvider.begin();
-			MetaModel metaModel = getMetaModel(modelName);					
+		try {					
 			Messages result = validate(persistenceProvider, modelName, values, false);
 			persistenceProvider.commit();
 			return result;
@@ -376,9 +358,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	{
 		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
-		try {
-			persistenceProvider.begin();
-			MetaModel metaModel = getMetaModel(modelName);					
+		try {					
 			removeCollectionElement(persistenceProvider, modelName, keyValues, collectionName, collectionElementKeyValues);
 			persistenceProvider.commit();
 		} 
@@ -657,23 +637,6 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 
-	private Object createAggregateEjb(
-		IPersistenceProvider persistenceProvider,	
-		MetaModel metaModelMain,
-		Object mainModel,
-		MetaAggregateEjb metaAggregateEjb,
-		Map values,
-		int number)
-		throws CreateException, ValidationException, RemoteException, XavaException {
-		return create(
-			persistenceProvider, 	
-			metaAggregateEjb,
-			values,
-			metaModelMain,
-			mainModel,
-			number);
-	}
-
 	public void ejbActivate() throws java.rmi.RemoteException {
 	}
 	public void ejbCreate()
@@ -913,19 +876,19 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		boolean aggregate,
 		Object elements, Map memberNames) throws XavaException {
 		Collection result = new ArrayList();
-		Enumeration enum = null;
+		Enumeration enumeration = null;
 		if (elements instanceof Enumeration) {
-			enum = (Enumeration) elements;
+			enumeration = (Enumeration) elements;
 		}
 		else if (elements instanceof Collection) {
-			enum = Collections.enumeration((Collection) elements);
+			enumeration = Collections.enumeration((Collection) elements);
 		}
 		else {
 			String collectionType = elements == null?"null":elements.getClass().getName();
 			throw new XavaException("collection_type_not_supported", collectionType);
 		}		
-		while (enum.hasMoreElements()) {
-			Object object = enum.nextElement();			
+		while (enumeration.hasMoreElements()) {
+			Object object = enumeration.nextElement();			
 			result.add(getValues(persistenceProvider, metaModel, object, memberNames));
 		}
 		return result;

@@ -4,9 +4,11 @@ import java.util.*;
 
 import javax.servlet.http.*;
 
+import org.hibernate.*;
 import org.openxava.actions.*;
 import org.openxava.application.meta.*;
 import org.openxava.controller.meta.*;
+import org.openxava.hibernate.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
 
@@ -314,9 +316,11 @@ public class ModuleManager {
 					request.setAttribute("xava.sendParametersToTab", "false");
 				}
 			}			
+			XHibernate.commit();
 		}
 		catch (ValidationException ex) {
 			errors.add(ex.getErrors());
+			XHibernate.rollback();
 		}
 		catch (Exception ex) {			
 			ex.printStackTrace();
@@ -326,6 +330,7 @@ public class ModuleManager {
 			else {
 				errors.add("no_execute_action");
 			}
+			XHibernate.rollback();
 		}				
 		
 	}
