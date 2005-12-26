@@ -9,20 +9,33 @@ import org.openxava.model.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 
-public class ReferenceConverterToDBListener implements PreInsertEventListener {
+public class ReferenceConverterToDBListener implements PreInsertEventListener, PreUpdateEventListener {
 
 	public boolean onPreInsert(PreInsertEvent ev) {
+		applyConverter((IModel) ev.getEntity(), 
+				Arrays.asList(ev.getPersister().getPropertyNames()),
+				ev.getState());
+		return false;
+	}
+
+	public boolean onPreUpdate(PreUpdateEvent ev) {
+		applyConverter((IModel) ev.getEntity(), 
+				Arrays.asList(ev.getPersister().getPropertyNames()),
+				ev.getState());		
+		return false;
+	}
+	
+	private void applyConverter(IModel model, List propertyNames, Object [] state) {
 		String currentReference = "";
 		try {			
-			MetaModel metaModel = ((IModel) ev.getEntity()).getMetaModel();
+			MetaModel metaModel = model.getMetaModel();
 			ModelMapping mapping = metaModel.getMapping();
-			if (!mapping.hasReferenceConverters()) return false;
-			List propertyNames = Arrays.asList(ev.getPersister().getPropertyNames());
+			if (!mapping.hasReferenceConverters());
 			Collection referenceMappings =  mapping.getReferenceMappingsWithConverter();
 			Iterator it = referenceMappings.iterator();
 			while (it.hasNext()) {
 				ReferenceMapping referenceMapping = (ReferenceMapping) it.next();
-				PropertiesManager pm = new PropertiesManager(ev.getEntity());
+				PropertiesManager pm = new PropertiesManager(model);
 				Object referencedObject = pm.executeGet(referenceMapping.getReference());
 				MetaReference metaReference = metaModel.getMetaReference(referenceMapping.getReference());
 				currentReference = metaReference.getName();
@@ -42,15 +55,13 @@ public class ReferenceConverterToDBListener implements PreInsertEventListener {
 					}
 				}
 				int i = propertyNames.indexOf(metaReference.getName());
-				ev.getState()[i]=referencedObject;
+				state[i]=referencedObject;
 			}
 		} 
 		catch(Exception e){ 
 			e.printStackTrace();
-			throw new HibernateException(XavaResources.getString("generator.conversion_error", currentReference, ev.getEntity().getClass(), ""));
+			throw new HibernateException(XavaResources.getString("generator.conversion_error", currentReference, model.getClass(), ""));
 		}
-		 				
-		return false; 
 	}
 
 }

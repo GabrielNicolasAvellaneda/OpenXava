@@ -14,6 +14,7 @@ import org.openxava.util.*;
 import org.openxava.validators.*;
 
 /**
+ * tmp: Si no tiene estado ¿crear solo una vez? Comprobar transacciones y sesión
  * tmp: quitar todas las referencias e ejb
  * @author Mª Carmen Gimeno Alabau
  */

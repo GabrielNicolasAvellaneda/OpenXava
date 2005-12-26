@@ -149,21 +149,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	public Object findEntity(String user, String modelName, Map keyValues)
 		throws FinderException, RemoteException {
 		Users.setCurrent(user);
-		IPersistenceProvider persistenceProvider = createPersistenceProvider();
-		try {							
-			Object result = findEntity(persistenceProvider, modelName, keyValues);
-			persistenceProvider.commit();
-			return result;
-		}	
-		catch (FinderException ex) {
-			rollback(persistenceProvider);
-			throw ex;
-		}
-		catch (Exception ex) {
-			ex.printStackTrace();
-			rollback(persistenceProvider);
-			throw new RemoteException(ex.getMessage());
-		}
+		IPersistenceProvider persistenceProvider = createPersistenceProvider();							
+		return findEntity(persistenceProvider, modelName, keyValues);
 	}
 	
 	public Map createReturningValues(String user, String modelName, Map values) 
