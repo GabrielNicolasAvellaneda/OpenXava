@@ -10,5 +10,5 @@
 		-->
 				<property name="hibernate.connection.username">sa</property>
 		<property name="hibernate.connection.password"></property>
-		<property name="hibernate.show_sql">true</property>		<mapping resource="Family.hbm.xml"/>			</session-factory>
+		<property name="hibernate.show_sql">false</property>		<mapping resource="Family.hbm.xml"/>			</session-factory>
 	</hibernate-configuration>
