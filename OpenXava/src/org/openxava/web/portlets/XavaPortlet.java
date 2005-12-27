@@ -70,8 +70,14 @@ public class XavaPortlet extends GenericPortlet {
 		PortletRequestDispatcher rd = context.getRequestDispatcher(moduleURL);
 		rd.include(request, response);
 	}
+	
+	public void processAction(ActionRequest request, ActionResponse response) throws PortletException {
+		PortletMode mode = request.getPortletMode();
+		if (mode.equals(PortletMode.EDIT)) {
+			response.setPortletMode(PortletMode.VIEW);
+		}
+	} 	
 		
-
 	private Style getStyle(RenderRequest request) {
 		if (style == null) {
 			String portal = request.getPortalContext().getPortalInfo().toLowerCase();			

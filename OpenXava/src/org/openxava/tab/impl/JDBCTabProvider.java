@@ -14,8 +14,7 @@ import org.openxava.util.*;
  * It is a JavaBean and allows set properties as table name, fields,
  * search condition, etc. <br>
  *
- * Before use this object is conve
- * Antes de usar el objeto es advisable call to {@link #invariant}.<br>
+ * Before use this object is advisable call to {@link #invariant}.<br>
  *
  * @author  Javier Paniza
  */
@@ -334,10 +333,9 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 	
 	private String createSizeSelect(String select) {
 		if (select == null) return null;
-		select = select.toUpperCase();
-		int iniFields = select.indexOf("SELECT") + 6;
-		int iniFrom = select.indexOf("FROM");
-		int end = select.indexOf("ORDER BY");
+		select = select.toUpperCase();		
+		int iniFrom = select.indexOf("FROM ");
+		int end = select.indexOf("ORDER BY ");
 		StringBuffer sb = new StringBuffer("SELECT COUNT(*) ");
 		if (end < 0) sb.append(select.substring(iniFrom));
 		else sb.append(select.substring(iniFrom, end - 1));

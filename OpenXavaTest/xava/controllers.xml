@@ -277,8 +277,13 @@
 		<action name="toLowerCase" mode="list"
 			class="org.openxava.test.actions.ChangeToLowerCaseAction">
 			<use-object name="xava_tab"/>
-		</action>						
+		</action>	
 		
+		<action name="changePageRowCount" mode="list"
+			class="org.openxava.test.actions.ChangePageRowCountAction">
+			<set property="rowCount" value="20"/>
+			<use-object name="xava_tab"/>
+		</action>
 	</controller>
 	
 	<controller name="MyReference">

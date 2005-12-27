@@ -1502,7 +1502,7 @@
       <entity>
          <ejb-name>Carrier</ejb-name>
 
-         <table-name>XAVATEST@separator@CARRIER</table-name>
+         <table-name>XAVATEST_CARRIER</table-name>
 
          <cmp-field>
             <field-name>_Remarks</field-name>
