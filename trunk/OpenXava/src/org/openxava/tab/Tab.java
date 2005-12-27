@@ -26,12 +26,13 @@ import org.openxava.util.*;
 
 public class Tab {
 
-	private final static int BLOCK_SIZE = 10;	
+	private final static int DEFAULT_PAGE_ROW_COUNT = 10;	
 	private final static String STARTS_COMPARATOR = "starts_comparator";
 	private final static String CONTAINS_COMPARATOR = "contains_comparator";
 	private final static String YEAR_COMPARATOR = "year_comparator";
 	private final static String MONTH_COMPARATOR = "month_comparator";
 	
+	private int pageRowCount = DEFAULT_PAGE_ROW_COUNT;
 	private TabUserPreferences userPreferences;
 	private Object [] titleArguments;
 	private List metaPropertiesNotCalculated;
@@ -515,7 +516,7 @@ public class Tab {
 	
 	
 	private String toString(int[] values) {
-		if (values == null) return "[VACIO]";
+		if (values == null) return "[EMPTY]";
 		StringBuffer sb = new StringBuffer("[");
 		for (int i = 0; i < values.length; i++) {
 			sb.append(values[i]);
@@ -536,7 +537,7 @@ public class Tab {
 	}
 	
 	public int getFinalIndex() {		
-		return initialIndex + BLOCK_SIZE;
+		return initialIndex + getPageRowCount();
 	}
 	
 	public boolean isLastPage() {
@@ -556,7 +557,7 @@ public class Tab {
 	}
 	
 	public int getLastPage() {		
-		return (tableModel.getRowCount() - 1) / BLOCK_SIZE + 1;
+		return (tableModel.getRowCount() - 1) / getPageRowCount() + 1;
 	}
 
 	public void pageBack() {
@@ -576,7 +577,7 @@ public class Tab {
 	}
 	
 	private void recalculateIndices() {
-		initialIndex = (page - 1) * BLOCK_SIZE;		
+		initialIndex = (page - 1) * getPageRowCount();		
 	}
 
 
@@ -860,7 +861,10 @@ public class Tab {
 		}			
 	}
 	
-	private String getUserName() {
+	private String getUserName() { 
+		String user = Users.getCurrent();
+		if (user != null) return user;
+		// The next code if to support Jetspeed 1.x. This code will be remove in the future
 		Object rundata = request.getAttribute("rundata");
 		if (rundata == null) { 
 			return "openxava"; // Default user use out of jetspeed, for testing for example
@@ -879,9 +883,7 @@ public class Tab {
 				System.err.println(XavaResources.getString("warning_get_user"));
 				return "openxava";
 			}
-		}
-				
-		
+		}						
 	}
 
 
@@ -1010,6 +1012,14 @@ public class Tab {
 	 */
 	public void setRowsHidden(boolean rowsHidden) {
 		this.rowsHidden = rowsHidden;
+	}
+
+	public int getPageRowCount() {
+		return pageRowCount;
+	}
+
+	public void setPageRowCount(int pageRowCount) {
+		this.pageRowCount = pageRowCount;
 	}
 	
 }

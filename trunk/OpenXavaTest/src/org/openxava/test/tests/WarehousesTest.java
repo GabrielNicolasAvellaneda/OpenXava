@@ -19,6 +19,12 @@ public class WarehousesTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Warehouses");		
 	}
 	
+	public void testChangePageRowCountInTab() throws Exception {
+		assertListRowCount(10);
+		execute("Warehouses.changePageRowCount");
+		assertListRowCount(20);
+	}
+	
 	/**
 	 * Needs the project AccessTracking deployed in the application server. <p>
 	 * 
