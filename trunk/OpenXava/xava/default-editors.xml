@@ -51,4 +51,11 @@
     <for-stereotype stereotype="LABEL"/>
   </editor>
       
+  <editor url="dateTimeCalendarEditor.jsp">
+	<formatter class="org.openxava.formatters.DateTimeFormatter"/>
+    <for-stereotype stereotype="DATETIME"/>
+    <for-stereotype stereotype="FECHAHORA"/>
+  </editor>    
+      
+      
 </editors>
