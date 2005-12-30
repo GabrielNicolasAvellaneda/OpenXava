@@ -326,8 +326,7 @@ public class CarriersTest extends ModuleTestBase {
 	}
 	
 	private void assertCarriersCount(int c) throws Exception {
-		Query query = XHibernate.getSession().createQuery("select count(*) from Carrier" );	
-		int carrierCount = ((Integer) query.uniqueResult()).intValue();
+		int carrierCount = Carrier.findAll().size(); 
 		assertEquals("Carriers count",c,carrierCount);
 	}
 	

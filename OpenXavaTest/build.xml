@@ -4,10 +4,10 @@
 
 	<property name="project" value="OpenXavaTest" />
 	<property name="package" value="test"/>
-	<property name="configuration" value="jboss-hypersonic" />
+	<!-- property name="configuration" value="jboss-hypersonic" /-->
 	<!-- property name="configuration" value="websphere-as400" /-->	
 	<!-- property name="configuration" value="jboss-as400" /-->
-	<!-- property name="configuration" value="tomcat-hypersonic" /-->
+	<property name="configuration" value="tomcat-hypersonic" />
 	<property file="../openxava.properties"/>
 	<property file="${configuration}.properties"/>
 	<property name="datasource" value="OpenXavaTestDS"/>
@@ -28,6 +28,7 @@
 	</target>
 	
 	<target name="generateHibernate">	
+		<ant antfile="../OpenXava/build.xml" target="regenerateGenerator"/>
 		<ant antfile="../OpenXava/build.xml" target="generateHibernate"/>		
 	</target>
 	
@@ -46,6 +47,10 @@
 					
 	<target name="deployWar" depends="touchHistory">
 		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
+	</target>
+	
+	<target name="deploy" depends="touchHistory">
+		<ant antfile="../OpenXava/build.xml" target="deploy"/>
 	</target>
 	
 	<target name="regenerateWebsphereMapping">

@@ -1,6 +1,7 @@
 package org.openxava.test.tests;
 
 import java.net.*;
+import java.util.*;
 
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
@@ -92,10 +93,10 @@ public class CustomersTest extends ModuleTestBase {
 		assertValue("remarks", "RELATION WITH SELLER JUNIT");
 	}
 	
-	public void testFilterByValidValues() throws Exception {		
-		int total = CustomerUtil.getHome().findAll().size();
-		int normalOnes = CustomerUtil.getHome().findNormalOnes().size();
-		int steadyOnes = CustomerUtil.getHome().findSteadyOnes().size();
+	public void testFilterByValidValues() throws Exception {
+		int total = Customer.findAll().size();
+		int normalOnes = Customer.findNormalOnes().size();
+		int steadyOnes = Customer.findSteadyOnes().size();
 		assertTrue("It is required customers for run this test", total > 0);
 		assertTrue("It is required normal customers for run this test", normalOnes > 0);
 		assertTrue("It is required steady customers for run this test", steadyOnes > 0);
@@ -119,7 +120,7 @@ public class CustomersTest extends ModuleTestBase {
 		setConditionValues(totalCondition);		
 		execute("List.filter");
 		assertNoErrors();
-		assertListRowCount(total);						
+		assertListRowCount(total);		
 	}
 	
 		
