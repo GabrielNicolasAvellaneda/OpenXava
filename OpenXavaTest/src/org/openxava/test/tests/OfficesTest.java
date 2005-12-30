@@ -25,8 +25,8 @@ public class OfficesTest extends ModuleTestBase {
 		execute("CRUD.new");
 		assertExists("receptionist");			
 		int count = Receptionist.findAll().size();
-		assertTrue("At least 2 receptionists are required for run this test", count > 2);
-		assertValidValuesCount("receptionist", count);		
+		assertTrue("At least 2 receptionists are required for run this test", count >= 2);
+		assertValidValuesCount("receptionist", count + 1);		
 	}
 	
 	public void testMoreThanOneReferenceWithoutValue() throws Exception {

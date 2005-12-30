@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE component SYSTEM "dtds/component.dtd">
+
+<component name="Clerk">
+
+	<entity>
+		<property name="zoneNumber" key="true"
+			size="3" required="true" type="int"/>   						
+		<property name="officeNumber" key="true"
+			size="3" required="true" type="int"/>   									
+		<property name="number" key="true"
+			size="3" required="true" type="int"/>   												
+		<property name="name" type="String"
+			size="40" required="true"/>
+	</entity>
+	
+	<entity-mapping table="XAVATEST_CLERK">
+		<property-mapping
+			property="zoneNumber" column="ZONE"/>
+		<property-mapping
+			property="officeNumber" column="OFFICE"/>
+		<property-mapping
+			property="number" column="NUMBER"/>
+		<property-mapping
+			property="name" column="NAME"/>
+	</entity-mapping>
+	
+</component>

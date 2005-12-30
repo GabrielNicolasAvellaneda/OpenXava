@@ -5,7 +5,6 @@ import java.rmi.*;
 import org.hibernate.*;
 import org.openxava.calculators.*;
 import org.openxava.hibernate.XHibernate;
-import org.openxava.model.impl.*;
 import org.openxava.test.model.*;
 
 /**

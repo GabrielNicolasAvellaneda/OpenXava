@@ -1,7 +1,6 @@
 package org.openxava.web.servlets;
 
 import java.io.*;
-import java.net.*;
 import java.text.*;
 import java.util.*;
 
@@ -126,7 +125,7 @@ public class GenerateReportServlet extends HttpServlet {
 				tab.setRequest(request);				
 				parameters.put("Title", tab.getTitle());				
 				parameters.put("Organization", getOrganization(request, tab));
-				InputStream is  = getReport(request, tab);															
+				InputStream is  = getReport(request, response, tab);															
 				JRDataSource ds = getDataSource(tab, request);		
 				JasperPrint jprint = JasperFillManager.fillReport(is, parameters, ds);					
 				response.setContentType("application/pdf");				
@@ -156,23 +155,18 @@ public class GenerateReportServlet extends HttpServlet {
 		}
 	}
 			
-	private InputStream getReport(HttpServletRequest request, Tab tab) throws IOException {
-		StringBuffer surl = new StringBuffer("http://");		
-		surl.append(request.getServerName());
-		surl.append(':');
-		surl.append(request.getServerPort());		
-		surl.append(request.getContextPath());		
-		surl.append("/xava/jasperReport");
-		surl.append("?model=");
-		surl.append(tab.getModelName());
-		surl.append("&language=");		
-		surl.append(request.getLocale().getLanguage());
-		surl.append("&tab=");
-		surl.append(tab.getTabName());
-		surl.append("&properties=");
-		surl.append(tab.getPropertiesNamesAsString());						
-		URL url = new URL(surl.toString());		
-		return url.openStream();
+	private InputStream getReport(HttpServletRequest request, HttpServletResponse response, Tab tab) throws ServletException, IOException { 
+		StringBuffer suri = new StringBuffer();
+		suri.append("/xava/jasperReport");
+		suri.append("?model=");
+		suri.append(tab.getModelName());
+		suri.append("&language=");		
+		suri.append(request.getLocale().getLanguage());
+		suri.append("&tab=");
+		suri.append(tab.getTabName());
+		suri.append("&properties=");
+		suri.append(tab.getPropertiesNamesAsString());
+		return Servlets.getURIAsStream(request, response, suri.toString());		
 	}
 	
 	private JRDataSource getDataSource(Tab tab, ServletRequest request) throws Exception {
