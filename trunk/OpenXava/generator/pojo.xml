@@ -154,6 +154,49 @@ while (itCollections.hasNext()) {
 	MethodsPG.generate(context, out, metaModel); 
 </java> 	
 
+	// User defined finders/Buscadores definidos por el usuario
+	
+	
+<java>
+
+ Iterator itFinders = metaModel.getMetaFinders().iterator();
+ while (itFinders.hasNext()) {
+ 	MetaFinder finder = (MetaFinder) itFinders.next();
+ 	String finderName = Strings.firstUpper(finder.getName());
+ 	String arguments = finder.getArguments();
+ 	String condition = finder.getEJBQLCondition(); 	
+ 	String type = finder.isCollection()?"Collection":name;
+ 	String result = finder.isCollection()?"new org.openxava.hibernate.FastSizeList(query, sizeQuery)":"(" + name + ") query.uniqueResult()";
+</java> 	
+ 	public static <expr>type</expr> find<expr>finderName</expr>(<expr>arguments</expr>) {
+ 		org.hibernate.Query query = org.openxava.hibernate.XHibernate.getSession().createQuery("<expr>finder.getHQLCondition()</expr>");
+ 		<java>if (finder.isCollection()) { </java> 
+ 		org.hibernate.Query sizeQuery = org.openxava.hibernate.XHibernate.getSession().createQuery("select count(*) <expr>finder.getHQLCondition()</expr>");
+ 		<java>} </java>
+<java>
+		int i=0;
+		for (Iterator it = finder.getMetaPropertiesArguments().iterator(); it.hasNext(); i++) {
+			MetaProperty parameter = (MetaProperty) it.next();
+			String argument = parameter.getName();
+			if (parameter.getType().isPrimitive()) {
+				argument = Generators.generatePrimitiveWrapper(parameter.getTypeName(), argument);
+			}
+</java> 
+		query.setParameter("arg<expr>i</expr>", <expr>argument</expr>);
+			<java>if (finder.isCollection()) { </java> 
+		sizeQuery.setParameter("arg<expr>i</expr>", <expr>argument</expr>);
+			<java>} </java> 
+<java>
+		}
+</java> 
+ 		return <expr>result</expr>;
+ 	}
+ 	
+<java>
+ }
+</java> 
+
+
 	private MetaModel metaModel;
 	public MetaModel getMetaModel() throws XavaException {
 		if (metaModel == null) {

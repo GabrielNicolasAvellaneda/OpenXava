@@ -15,7 +15,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Dec 27 11:24:42 CET 2005
+ * @version Fri Dec 30 13:03:33 CET 2005
  */
 public class PojoPG {
     Properties properties = new Properties();
@@ -174,7 +174,63 @@ public class PojoPG {
     	
     	MethodsPG.generate(context, out, metaModel); 
     
-    out.print(" \t\n\n\tprivate MetaModel metaModel;\n\tpublic MetaModel getMetaModel() throws XavaException {\n\t\tif (metaModel == null) {");
+    out.print(" \t\n\n\t// User defined finders/Buscadores definidos por el usuario");
+    
+    
+     Iterator itFinders = metaModel.getMetaFinders().iterator();
+     while (itFinders.hasNext()) {
+     	MetaFinder finder = (MetaFinder) itFinders.next();
+     	String finderName = Strings.firstUpper(finder.getName());
+     	String arguments = finder.getArguments();
+     	String condition = finder.getEJBQLCondition(); 	
+     	String type = finder.isCollection()?"Collection":name;
+     	String result = finder.isCollection()?"new org.openxava.hibernate.FastSizeList(query, sizeQuery)":"(" + name + ") query.uniqueResult()";
+    
+    out.print(" \t\n \tpublic static ");
+    out.print(type);
+    out.print(" find");
+    out.print(finderName);
+    out.print("(");
+    out.print(arguments);
+    out.print(") {\n \t\torg.hibernate.Query query = org.openxava.hibernate.XHibernate.getSession().createQuery(\"");
+    out.print(finder.getHQLCondition());
+    out.print("\");");
+    if (finder.isCollection()) { 
+    out.print(" \n \t\torg.hibernate.Query sizeQuery = org.openxava.hibernate.XHibernate.getSession().createQuery(\"select count(*) ");
+    out.print(finder.getHQLCondition());
+    out.print("\");");
+    } 
+    
+    		int i=0;
+    		for (Iterator it = finder.getMetaPropertiesArguments().iterator(); it.hasNext(); i++) {
+    			MetaProperty parameter = (MetaProperty) it.next();
+    			String argument = parameter.getName();
+    			if (parameter.getType().isPrimitive()) {
+    				argument = Generators.generatePrimitiveWrapper(parameter.getTypeName(), argument);
+    			}
+    
+    out.print(" \n\t\tquery.setParameter(\"arg");
+    out.print(i);
+    out.print("\", ");
+    out.print(argument);
+    out.print(");");
+    if (finder.isCollection()) { 
+    out.print(" \n\t\tsizeQuery.setParameter(\"arg");
+    out.print(i);
+    out.print("\", ");
+    out.print(argument);
+    out.print(");");
+    } 
+    
+    		}
+    
+    out.print(" \n \t\treturn ");
+    out.print(result);
+    out.print(";\n \t}");
+    
+     }
+    
+    out.print(" \n\n\n\tprivate MetaModel metaModel;\n\tpublic MetaModel getMetaModel() throws XavaException {\n\t\tif (metaModel == null) {");
     if (aggregateName == null) { 
     out.print("\n\t\t\tmetaModel = MetaComponent.get(\"");
     out.print(componentName);
@@ -242,7 +298,7 @@ public class PojoPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Dec 27 11:24:42 CET 2005", // date this file was generated
+        { "Fri Dec 30 13:03:33 CET 2005", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/pojo.xml", // input file
              "/home/javi/workspace/OpenXava/generator/PojoPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

@@ -75,14 +75,14 @@ if (!Is.emptyString(forwardURI)) {
 	if ("true".equals(forwardInNewWindow)) {
 %>
 <script>
-window.open("http://<%=request.getServerName()%>:<%=request.getServerPort()%><%=request.getContextPath()%><%=forwardURI%>");
+window.open("<%=request.getScheme()%>://<%=request.getServerName()%>:<%=request.getServerPort()%><%=request.getContextPath()%><%=forwardURI%>");
 </script>
 <%	
 	}
 	else {
 %>
 <script>
-location.href="http://<%=request.getServerName()%>:<%=request.getServerPort()%><%=request.getContextPath()%><%=forwardURI%>";
+location.href="<%=request.getScheme()%>://<%=request.getServerName()%>:<%=request.getServerPort()%><%=request.getContextPath()%><%=forwardURI%>";
 </script>
 <%
 	}

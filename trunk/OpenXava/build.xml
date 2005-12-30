@@ -597,11 +597,11 @@
 	</target>
 
 	<target name="deploy" depends="prepareWar">		
-		<mkdir dir="${deploy.dir}/${project}"/>
-		<copy todir="${deploy.dir}/${project}" preservelastmodified="true">
+		<mkdir dir="${deploy.dir}/${name.war}.war"/>
+		<copy todir="${deploy.dir}/${name.war}.war" preservelastmodified="true">
 			<fileset dir="../${project}/web"/>
 		</copy>		
-		<touch file="${deploy.dir}/${project}/WEB-INF/web.xml"/>
+		<touch file="${deploy.dir}/${name.war}.war/WEB-INF/web.xml"/>
 	</target>
 	
 	<target name="regeneratePortletGenerator">

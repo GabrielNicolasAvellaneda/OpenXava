@@ -30,7 +30,7 @@ public class JasperReportServlet extends HttpServlet {
 					System.getProperty("path.separator") + 
 					application.getRealPath("/WEB-INF/classes/")
 					);											
-			JasperCompileManager.compileReportToStream(getReportStream(request, model, language, tab, properties), response.getOutputStream());
+			JasperCompileManager.compileReportToStream(getReportStream(request, response, model, language, tab, properties), response.getOutputStream());
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
@@ -38,22 +38,18 @@ public class JasperReportServlet extends HttpServlet {
 		}		
 	}
 	
-	private InputStream getReportStream(HttpServletRequest request, String model, String language, String tab, String properties) throws IOException {
-		StringBuffer surl = new StringBuffer("http://");
-		surl.append(request.getServerName());
-		surl.append(':');
-		surl.append(request.getServerPort());		
-		surl.append(request.getRequestURI());		
-		surl.append(".jsp?model=");
-		surl.append(model);
-		surl.append("&language=");
-		surl.append(language);
-		surl.append("&tab=");
-		surl.append(tab);
-		surl.append("&properties=");
-		surl.append(properties);						
-		URL url = new URL(surl.toString());		
-		return url.openStream();
+	private InputStream getReportStream(HttpServletRequest request, HttpServletResponse response, String model, String language, String tab, String properties) throws IOException, ServletException {
+		StringBuffer suri = new StringBuffer();
+		suri.append("/xava/jasperReport");		
+		suri.append(".jsp?model=");
+		suri.append(model);
+		suri.append("&language=");
+		suri.append(language);
+		suri.append("&tab=");
+		suri.append(tab);
+		suri.append("&properties=");
+		suri.append(properties);		
+		return Servlets.getURIAsStream(request, response, suri.toString());				
 	}
 	
 }
