@@ -83,7 +83,7 @@
 	
 	<target name="filterXavaFilesWithoutConfiguration" unless="configuration">
 		<!-- to replace within xava files -->
-		<copy todir="../${project.ejb}/${classes.dir}" overwrite="yes">		
+		<copy todir="../${project.ejb}/${classes.dir}">		
 			<fileset dir="../${project.ejb}/xava"/>
 	    	<filterset>	    	
 				<filter token="separator" value="${separator}"/>
@@ -91,7 +91,7 @@
 			</filterset> 			         
 		</copy>			
 		<!-- to replace within xava components -->
-		<copy todir="../${project.ejb}/${classes.dir}" overwrite="yes">		
+		<copy todir="../${project.ejb}/${classes.dir}">		
 			<fileset dir="../${project.ejb}/components"/>
 	    	<filterset>	    	
 				<filter token="separator" value="${separator}"/>
@@ -104,7 +104,7 @@
     	
 	<target name="filterXavaFilesWithConfiguration" if="configuration">
 		<!-- to replace within xava files -->
-		<copy todir="../${project.ejb}/${classes.dir}" overwrite="yes">		
+		<copy todir="../${project.ejb}/${classes.dir}">		
 			<fileset dir="../${project.ejb}/xava"/>
 	    	<filterset>	    	
 				<filtersfile file="${configuration}.properties"/>				
@@ -113,7 +113,7 @@
 			</filterset> 			         
 		</copy>			
 		<!-- to replace within xava components -->
-		<copy todir="../${project.ejb}/${classes.dir}" overwrite="yes">		
+		<copy todir="../${project.ejb}/${classes.dir}">		
 			<fileset dir="../${project.ejb}/components"/>
 	    	<filterset>	    	
 				<filtersfile file="${configuration}.properties"/>				
@@ -130,7 +130,7 @@
 	</target>
 	
 	<target name="filterHibernateFilesWithoutConfiguration" unless="configuration">
-		<copy todir="../${project.ejb}/${classes.dir}" overwrite="yes" failonerror="false">		
+		<copy todir="../${project.ejb}/${classes.dir}" failonerror="false">		
 			<fileset dir="../OpenXava/hibernate"/>
 			<fileset dir="../${project.ejb}/hibernate"/>			
 			<fileset dir="../${project.ejb}/build/hibernate"/>
@@ -147,7 +147,7 @@
 	</target>	
 	
 	<target name="filterHibernateFilesWithConfiguration" if="configuration">
-		<copy todir="../${project.ejb}/${classes.dir}" overwrite="yes" failonerror="false">		
+		<copy todir="../${project.ejb}/${classes.dir}" failonerror="false">		
 			<fileset dir="../OpenXava/hibernate"/>
 			<fileset dir="../${project.ejb}/hibernate"/>
 			<fileset dir="../${project.ejb}/build/hibernate"/>
@@ -213,7 +213,7 @@
 		<antcall target="generateWebsphereMapping"/>
 	</target>
 	
-	<target name="generateWebsphereMapping" depends="filterXavaFiles">
+	<target name="generateWebsphereMapping" depends="filter">
 		<delete file="../${project}/gen-src-xava/dnas.properties"/>
 		<echo>Generating Websphere Mapping</echo>		
 		<java 
@@ -358,7 +358,7 @@
 		</java>
     </target>
 	
-    <target name="generateHibernate">     
+    <target name="generateHibernate" depends="filter">     
     	
 	   <echo>Generating classes</echo>
     	<delete file="../${project}/gen-src-xava/dnas.properties"/>
@@ -372,17 +372,13 @@
 	       	<arg value="${model.package}"/>       	
 		</java>
     	
-    	<replace dir="../${project.ejb}/build/hibernate">
-    		<replacefilter token="@separator@" value="${separator}"/>
-    	</replace>
-    	
     </target>
 		
 	<target name="runXDoclet">
     	<ant antfile="../OpenXava/xdoclet/build.xml"/>    			
 	</target>
 	        
-    <target name="generateEJB" depends="generateXDoclet, generateHibernate">         	
+    <target name="generateEJB" depends="filter, generateXDoclet, generateHibernate">         	
     	<antcall target="runXDoclet"/>
     </target>
 		
@@ -552,13 +548,15 @@
 	</target>
 	
 	<target name="filterI18n" if="configuration">
-  		<copy todir="../${project}/web/WEB-INF/classes" overwrite="true">
+  		<copy todir="../${project}/web/WEB-INF/classes">
     		<fileset dir="../${project}/i18n"/>
 	    	<filterset>	    	
 				<filtersfile file="${configuration}.properties"/>				
 			</filterset> 			             		
   		</copy>			
 	</target>
+	
+	<target name="filter" depends="filterXavaFiles, filterHibernateFiles, filterI18n"/>
 				
 	<target name="prepareWar" depends="createDist, updateDataSourceInfo, configureJNDI">		
   		<copy todir="../${project}/web/xava" preservelastmodified="true">
@@ -567,13 +565,7 @@
   		<copy todir="../${project}/web/WEB-INF" preservelastmodified="true">
     		<fileset dir="../OpenXava/web/WEB-INF"/>
   		</copy>		
-		<antcall target="filterXavaFiles">  		
-			<param name="classes.dir" value="web/WEB-INF/classes"/>
-		</antcall>
-		<antcall target="filterHibernateFiles">  		
-			<param name="classes.dir" value="web/WEB-INF/classes"/>
-		</antcall>		
-		<antcall target="filterI18n"/>  		
+		<antcall target="filter"/>
 		<copy file="../OpenXava/bin/Messages_${default.language}.properties" 
 			tofile="../OpenXava/bin/Messages.properties"/>
 		<copy file="../OpenXava/bin/Labels_${default.language}.properties" 
@@ -602,6 +594,14 @@
 	
 	<target name="deployWar" depends ="createWar">		
 		<copy file="${dist.dir}/${name.war}.war" todir="${deploy.dir}" overwrite="true"/>
+	</target>
+
+	<target name="deploy" depends="prepareWar">		
+		<mkdir dir="${deploy.dir}/${project}"/>
+		<copy todir="${deploy.dir}/${project}" preservelastmodified="true">
+			<fileset dir="../${project}/web"/>
+		</copy>		
+		<touch file="${deploy.dir}/${project}/WEB-INF/web.xml"/>
 	</target>
 	
 	<target name="regeneratePortletGenerator">
@@ -648,7 +648,7 @@
 		
 	</target>
 	
-	<target name="generatePortletXml" unless="regenerate.portlet.xml.notRequired">						
+	<target name="generatePortletXml" depends="filter" unless="regenerate.portlet.xml.notRequired">						
 		<echo>Generating portlets files</echo>
 		<!-- PortletCodeGenerator can generate portlets.xml, .psml, .ds and all jetspeed2 files -->
 		<java 
