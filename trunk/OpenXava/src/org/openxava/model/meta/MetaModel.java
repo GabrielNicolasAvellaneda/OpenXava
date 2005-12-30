@@ -772,11 +772,11 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	public Collection getMetaPropertiesPersistents() throws XavaException {
 		if (metaPropertiesPersistents == null) {
 			Iterator it = getMembersNames().iterator(); // memberNames to keep order
-			ArrayList result = new ArrayList();
+			ArrayList result = new ArrayList();			
 			while (it.hasNext()) {
 				String name = (String) it.next();
 				if (!containsMetaProperty(name)) continue;			
-				MetaProperty p = (MetaProperty) getMetaProperty(name);
+				MetaProperty p = (MetaProperty) getMetaProperty(name);							
 				if (p.isPersistent()) {
 					result.add(p);
 				}
@@ -785,6 +785,25 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		}
 		return metaPropertiesPersistents;
 	}
+	
+	/**
+	 * Order like xml files.
+	 */
+	public Collection getMetaPropertiesPersistentsFromReference(String referenceName) throws XavaException {
+		Iterator it = getMembersNames().iterator(); // memberNames to keep order
+		ArrayList result = new ArrayList();			
+		while (it.hasNext()) {
+			String name = (String) it.next();
+			if (!containsMetaProperty(name)) continue;			
+			MetaProperty p = (MetaProperty) getMetaProperty(name).cloneMetaProperty();
+			p.setQualifiedName(referenceName + "." + p.getName());
+			if (p.isPersistent()) {
+				result.add(p);
+			}
+		}					
+		return result;
+	}
+	
 	
 	/**
 	 * Order like xml files

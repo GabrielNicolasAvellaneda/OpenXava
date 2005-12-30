@@ -15,7 +15,7 @@ import org.openxava.util.*;
  */
 public class TranslateCarrierNameAction extends CollectionBaseAction {
 
-	public void execute() throws Exception {
+	public void execute() throws Exception {		
 		Iterator it = getSelectedObjects().iterator();
 		while (it.hasNext()) {
 			ICarrier carrier = (ICarrier) it.next();

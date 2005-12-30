@@ -621,8 +621,8 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				return null;
 			}
 			String propertyName = null;
-			ModelMapping modelMapping = null;
-			if (getMetaModel() instanceof MetaAggregateBean) {
+			ModelMapping modelMapping = null;			
+			if (getMetaModel() instanceof MetaAggregateBean) {				
 				if (getQualifiedName().indexOf('.')>= 0) {
 					propertyName = Strings.change(getQualifiedName(), ".", "_");
 					modelMapping = getMetaModel().getMetaComponent().getEntityMapping();

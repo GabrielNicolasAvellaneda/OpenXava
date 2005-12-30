@@ -11,6 +11,8 @@ import org.openxava.util.*;
 public class MetaFinder implements Serializable {
 	
 	private static Map argumentsJBoss11ToEJBQL;
+	private static Map argumentsToHQL;
+	private static Map tokensToChangeDollarsAndNL;
 	 	
 	private String name;
 	private String arguments;	
@@ -23,6 +25,22 @@ public class MetaFinder implements Serializable {
 		arguments = Strings.change(arguments, "String", "java.lang.String");
 		arguments = Strings.change(arguments, "java.lang.java.lang.String", "java.lang.String");
 		return arguments;
+	}
+	
+	public Collection getMetaPropertiesArguments() throws XavaException {
+		StringTokenizer st = new StringTokenizer(getArguments(), ",");
+		Collection result = new ArrayList();
+		while (st.hasMoreTokens()) {
+			String argument = st.nextToken();
+			StringTokenizer argumentSt = new StringTokenizer(argument);
+			String type = argumentSt.nextToken().trim();
+			String name = argumentSt.nextToken().trim();			
+			MetaProperty p = new MetaProperty();
+			p.setName(name);
+			p.setTypeName(type);
+			result.add(p);			
+		}
+		return result;
 	}
 
 	public boolean isCollection() {
@@ -74,6 +92,23 @@ public class MetaFinder implements Serializable {
 		return sb.toString();
 	}
 	
+	public String getHQLCondition() throws XavaException {		
+		StringBuffer sb = new StringBuffer("from ");
+		sb.append(getMetaModel().getName());
+		sb.append(" as o");
+		if (!Is.emptyString(this.condition)) {			
+			sb.append(" where ");			
+			String condition = Strings.change(getCondition(), getArgumentsToHQL());			
+			sb.append(Strings.change(condition, getTokensToChangeDollarsAndNL()));
+		}
+		if (!Is.emptyString(this.order)) { 		
+			sb.append(" order by ");
+			sb.append(Strings.change(this.order, getTokensToChangeDollarsAndNL()));
+		}
+		return sb.toString();
+	}
+	
+	
 	public MetaModel getMetaModel() {
 		return metaModel;
 	}
@@ -104,5 +139,26 @@ public class MetaFinder implements Serializable {
 		}
 		return argumentsJBoss11ToEJBQL;
 	}
-
+	
+	private static Map getArgumentsToHQL() {
+		if (argumentsToHQL == null) {
+			argumentsToHQL = new HashMap();
+			for (int i=0; i<30; i++) {
+				argumentsToHQL.put("{" + i+ "}", ":arg" + i);
+			}			
+		}
+		return argumentsToHQL;
+	}
+	
+	static Map getTokensToChangeDollarsAndNL() {
+		if (tokensToChangeDollarsAndNL == null) {
+			tokensToChangeDollarsAndNL = new HashMap();
+			tokensToChangeDollarsAndNL.put("${", "o.");
+			tokensToChangeDollarsAndNL.put("}", "");
+			tokensToChangeDollarsAndNL.put("\n", "");			
+		}
+		return tokensToChangeDollarsAndNL;
+	}
+	
+	
 }

@@ -15,8 +15,7 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 	
 	private final static int SQL = 0;
 	private final static int EJB2QL = 1;
-	private final static int JBOSSQL = 2;
-	private static Map tokensToChangeDollarsAndNL;
+	private final static int JBOSSQL = 2;	
 		
 	private int minimum;
 	private String condition;
@@ -139,26 +138,16 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 		if (!Is.emptyString(this.condition)) {			
 			sb.append(" where ");			
 			String condition = changePropertiesThisByArguments(getCondition(), SQL);			
-			sb.append(Strings.change(condition, getTokensToChangeDollarsAndNL()));
+			sb.append(Strings.change(condition, MetaFinder.getTokensToChangeDollarsAndNL()));
 		}
 		if (!Is.emptyString(this.order)) { 		
 			sb.append(" order by ");
-			sb.append(Strings.change(this.order, getTokensToChangeDollarsAndNL()));
+			sb.append(Strings.change(this.order, MetaFinder.getTokensToChangeDollarsAndNL()));
 		}
 		return sb.toString();
 	}
 	
 	
-	private static Map getTokensToChangeDollarsAndNL() {
-		if (tokensToChangeDollarsAndNL == null) {
-			tokensToChangeDollarsAndNL = new HashMap();
-			tokensToChangeDollarsAndNL.put("${", "o.");
-			tokensToChangeDollarsAndNL.put("}", "");
-			tokensToChangeDollarsAndNL.put("\n", "");			
-		}
-		return tokensToChangeDollarsAndNL;
-	}
-
 	private String changePropertiesThisByArguments(String source, int qlType) throws XavaException {			
 		StringBuffer r = new StringBuffer(source);
 		Collection properties = new ArrayList();

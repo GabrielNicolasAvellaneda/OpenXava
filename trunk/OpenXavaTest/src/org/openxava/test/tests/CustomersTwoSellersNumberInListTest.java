@@ -16,9 +16,8 @@ public class CustomersTwoSellersNumberInListTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "CustomersTwoSellersNumberInList");				
 	}
 	
-	public void testTwoReferencesToSameComponentButOnlyShowingKeyOfEach() throws Exception {
-		Query query = XHibernate.getSession().createQuery("select count(*) from Customer" );	
-		int customerCount = ((Integer) query.uniqueResult()).intValue();
+	public void testTwoReferencesToSameComponentButOnlyShowingKeyOfEach() throws Exception {		
+		int customerCount = Customer.findAll().size();
 		assertListRowCount(customerCount);
 	}
 		

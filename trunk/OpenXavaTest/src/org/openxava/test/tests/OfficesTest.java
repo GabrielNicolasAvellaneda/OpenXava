@@ -23,9 +23,8 @@ public class OfficesTest extends ModuleTestBase {
 	
 	public void testDescriptionEditorInStereotypeWithAggregateAsModel() throws Exception {
 		execute("CRUD.new");
-		assertExists("receptionist");
-		Query query = XHibernate.getSession().createQuery("select count(*) from Receptionist" );	
-		int count = ((Integer) query.uniqueResult()).intValue() + 1;
+		assertExists("receptionist");			
+		int count = Receptionist.findAll().size();
 		assertTrue("At least 2 receptionists are required for run this test", count > 2);
 		assertValidValuesCount("receptionist", count);		
 	}

@@ -120,9 +120,9 @@ public class XHibernate {
 			}
 			if (ReferenceMappingDetail.someMappingUsesConverters()) {
 				// toJava conversion is not enabled because in references it's useless thus we avoid an unnecessary overload
-				ReferenceConverterToDBListener listener = new ReferenceConverterToDBListener();
-				configuration.getSessionEventListenerConfig().setPreInsertEventListener(listener);
-				configuration.getSessionEventListenerConfig().setPreUpdateEventListener(listener);
+				ReferenceConverterToDBListener [] listener = { new ReferenceConverterToDBListener() };				
+				configuration.getEventListeners().setPreInsertEventListeners(listener);
+				configuration.getEventListeners().setPreUpdateEventListeners(listener);
 			}
 			return configuration.buildSessionFactory();
 		} 
