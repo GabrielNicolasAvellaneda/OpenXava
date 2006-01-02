@@ -119,7 +119,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	
 	public void setValues(String user, String modelName, Map keyValues, Map values)
 		throws FinderException, ValidationException, XavaException, RemoteException 
-	{				
+	{						
 		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {
@@ -1049,14 +1049,14 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		
 	private void setValues(IPersistenceProvider persistenceProvider, MetaModel metaModel, Map keyValues, Map values)
 		throws FinderException, ValidationException, XavaException {		
-		try {			
+		try {						
 			removeKeyFields(metaModel, values);			
 			removeReadOnlyFields(metaModel, values);
 			removeViewProperties(metaModel, values);			
 			validate(persistenceProvider, metaModel, values, keyValues, null, false);			
 			Object entity = findEntity(persistenceProvider, (IMetaEjb) metaModel, keyValues);			
 			IPropertiesContainer r = persistenceProvider.toPropertiesContainer(metaModel, entity);			
-			r.executeSets(convertSubmapsInObject(persistenceProvider, metaModel, values, XavaPreferences.getInstance().isEJB2Persistence()));
+			r.executeSets(convertSubmapsInObject(persistenceProvider, metaModel, values, XavaPreferences.getInstance().isEJB2Persistence()));			
 			// Collections are not managed			
 		} 
 		catch (FinderException ex) { 

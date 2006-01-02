@@ -15,7 +15,7 @@ public class SaveAction extends ViewBaseAction {
 		
 	private boolean resetAfter = true;
 
-	public void execute() throws Exception {
+	public void execute() throws Exception {		
 		try {
 			Map values = null;
 			if (getView().isKeyEditable()) {
@@ -28,10 +28,11 @@ public class SaveAction extends ViewBaseAction {
 				}								
 			}
 			else {
-				// Modify
-				MapFacade.setValues(getModelName(), getView().getKeyValues(), getValuesToSave());
-				if (!isResetAfter()) {
-					values = MapFacade.getValues(getModelName(), getView().getKeyValues(), getValuesToSave());
+				// Modify				
+				Map keyValues = getView().getKeyValues();
+				MapFacade.setValues(getModelName(), keyValues, getValuesToSave());				
+				if (!isResetAfter()) {					
+					values = MapFacade.getValues(getModelName(), keyValues, getView().getMembersNamesWithHidden());
 				}
 			}
 			
@@ -48,7 +49,7 @@ public class SaveAction extends ViewBaseAction {
 		catch (ValidationException ex) {			
 			addErrors(ex.getErrors());
 		}
-		catch (ObjectNotFoundException ex) {
+		catch (ObjectNotFoundException ex) {			
 			addError("no_modify_no_exists");
 		}
 		catch (DuplicateKeyException ex) {

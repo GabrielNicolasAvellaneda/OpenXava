@@ -20,7 +20,7 @@
 	<property name="tracking.classes" value="../AccessTracking/web/WEB-INF/classes;../OpenXava/web/WEB-INF/lib/hibernate3.jar"/>
 	<property name="subcontext" value="${project}"/>				
 	<property name="classes.dir" value="web/WEB-INF/classes"/>
-	<property name="name.war" value="${project}"/>	
+	<property name="name.war" value="${project}"/>
 	<property name="jboss.mapping.xml" value="jaws.xml"/>
 	<property name="openxavads.separator" value="_"/>
 	<property name="openxavads.hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
@@ -597,11 +597,11 @@
 	</target>
 
 	<target name="deploy" depends="prepareWar">		
-		<mkdir dir="${deploy.dir}/${name.war}.war"/>
-		<copy todir="${deploy.dir}/${name.war}.war" preservelastmodified="true">
+		<mkdir dir="${deploy.dir}/${name.war}${war.dir.suffix}"/>
+		<copy todir="${deploy.dir}/${name.war}${war.dir.suffix}" preservelastmodified="true">
 			<fileset dir="../${project}/web"/>
 		</copy>		
-		<touch file="${deploy.dir}/${name.war}.war/WEB-INF/web.xml"/>
+		<touch file="${deploy.dir}/${name.war}${war.dir.suffix}/WEB-INF/web.xml"/>
 	</target>
 	
 	<target name="regeneratePortletGenerator">
