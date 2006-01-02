@@ -383,10 +383,10 @@ public class MapFacade {
 	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
 	 * @exception RemoteException  System problem. Rollback transaction.
 	 */	
-	public static void setValues(String modelName, Map keyValues,	Map values)
-		throws ObjectNotFoundException, FinderException,	ValidationException,
+	public static void setValues(String modelName, Map keyValues, Map values)
+		throws ObjectNotFoundException, FinderException, ValidationException,
 				XavaException,  RemoteException 
-	{
+	{		
 		Assert.arg(modelName, keyValues, values);				
 		try {
 			getImpl(modelName).setValues(Users.getCurrent(), modelName, keyValues, values);								
@@ -394,7 +394,7 @@ public class MapFacade {
 		catch (RemoteException ex) {
 			annulImpl(modelName);
 			getImpl(modelName).setValues(Users.getCurrent(), modelName, keyValues, values);			
-		}				
+		}						
 	}
 	
 	/**	 
