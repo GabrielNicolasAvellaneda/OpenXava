@@ -17,6 +17,7 @@ public class MetaDescriptionsList implements java.io.Serializable {
 	private String order;
 	private boolean orderByKey;
 	private Collection dependsNames;
+	private int labelFormat;
 		
 	public String getDescriptionPropertyName() {
 		return descriptionPropertyName;
@@ -81,6 +82,14 @@ public class MetaDescriptionsList implements java.io.Serializable {
 
 	public void setOrder(String order) {
 		this.order = order;
+	}
+
+	public int getLabelFormat() {
+		return labelFormat;
+	}
+
+	public void setLabelFormat(int labelFormat) {
+		this.labelFormat = labelFormat;
 	}
 	
 	

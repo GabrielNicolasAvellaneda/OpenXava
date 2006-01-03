@@ -7,8 +7,28 @@ todav&iacute;a no se soporta al 100%).<br>
 Aunque uses solo la versi&oacute;n EJB necesitas hacer una peque&ntilde;a adaptaci&oacute;n
 en tu proyecto:
 <ul>
-<li> Crea la carpeta build/hibernate en tu proyecto, y hazla de c&oacute;digo fuente.
+<li> Crea la carpeta <code>build/hibernate</code> en tu proyecto, y hazla de c&oacute;digo fuente.
+<li> Crea la carpeta <code>hibernate</code> en tu proyecto, y hazla de c&oacute;digo fuente.
+<li> Crea el archivo <code>hibernate.cfg.xml</code> dentro de la carpeta <code>hibernate</code>.
 </ul>
+El <code>hibernate.cfg.xml</code> ha de ser:
+<pre>
+&lt;!DOCTYPE hibernate-configuration PUBLIC
+   "-//Hibernate/Hibernate Configuration DTD//EN"
+   "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd"&gt;
+  &lt;hibernate-configuration&gt;
+   &lt;session-factory&gt;
+       &lt;property name="hibernate.connection.datasource"&gt;@datasource.prefix@/@datasource@&lt;/property&gt;
+       &lt;property name="hibernate.dialect"&gt;@hibernate.dialect@&lt;/property&gt;
+       &lt;property name="hibernate.show_sql"&gt;false&lt;/property&gt;
+   &lt;/session-factory&gt;
+&lt;/hibernate-configuration&gt;
+</pre>
+Adicionalmente tienes que incluir la propiedad <code>hibernate.dialect</code> en tus
+archivos de configuraci&oacute;n:
+<pre>
+hibernate.dialect=org.hibernate.dialect.HSQLDialect
+</pre>
 
 <h2>Para migrar de OpenXava 1.1 a OpenXava 1.2</h2>
 

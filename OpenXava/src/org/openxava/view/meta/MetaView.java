@@ -444,16 +444,22 @@ public class MetaView extends MetaElement implements Cloneable {
 	 * @return Null if not found
 	 */
 	public MetaReferenceView getMetaReferenceView(MetaReference r) {
-		if (metaViewsReferences == null) {
-			return null;
-		}
-		return (MetaReferenceView) metaViewsReferences.get(r.getName());
+		return getMetaReferenceViewFor(r.getName());
 	}
 	
 	private MetaPropertyView getMetaPropertyViewFor(String qualifiedPropertyName) { 		
 		if (metaViewsProperties == null) return null;
 		return (MetaPropertyView) metaViewsProperties.get(qualifiedPropertyName);
 	}
+	
+	public MetaReferenceView getMetaReferenceViewFor(String ref) {
+		if (metaViewsReferences == null) {
+			return null;
+		}
+		return (MetaReferenceView) metaViewsReferences.get(ref);
+	}
+	
+	
 	
 	
 	public List getSections() throws XavaException {
@@ -621,6 +627,15 @@ public class MetaView extends MetaElement implements Cloneable {
 		if (metaPropertyView == null) return MetaPropertyView.NORMAL_LABEL;
 		return metaPropertyView.getLabelFormat();
 	}
+	
+	public int getLabelFormatForReference(MetaReference ref) {
+		MetaReferenceView metaReferenceView = getMetaReferenceViewFor(ref.getName());
+		if (metaReferenceView == null) return MetaPropertyView.NORMAL_LABEL;
+		MetaDescriptionsList descriptionsList = metaReferenceView.getMetaDescriptionsList(); 
+		if (descriptionsList == null) return MetaPropertyView.NORMAL_LABEL;
+		return descriptionsList.getLabelFormat();		
+	}
+	
 
 	private boolean isSection() {
 		return section;

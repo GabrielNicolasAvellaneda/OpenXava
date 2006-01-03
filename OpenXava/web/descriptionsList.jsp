@@ -4,6 +4,7 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="org.openxava.model.meta.MetaReference" %>
 <%@ page import="org.openxava.model.meta.IMetaEjb" %>
+<%@ page import="org.openxava.view.meta.MetaPropertyView" %>
 
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
@@ -23,11 +24,15 @@ String labelKey = referenceKey + "_LABEL_";
 <%
 String editableKey = referenceKey + "_EDITABLE_";
 boolean editable = view.isEditable(ref);
+int labelFormat = view.getLabelFormatForReference(ref);
+String label = ref.getLabel(request);
 %>
 <input type="hidden" name="<%=editableKey%>" value="<%=editable%>">
 
 <%=preLabel%>
-<%=ref.getLabel(request) %>
+<% if (labelFormat == MetaPropertyView.NORMAL_LABEL) { %>
+<%=label%>
+<% } %>
 <%=postLabel%>
 <%=preIcons%>
 <% if (ref.isKey()) { %>
@@ -39,7 +44,15 @@ boolean editable = view.isEditable(ref);
 <% } %>
 <%=postIcons%>
 <%=preEditor%>
+<% if (labelFormat == MetaPropertyView.SMALL_LABEL) { 
+	label = labelFormat == MetaPropertyView.SMALL_LABEL?label:"&nbsp;";
+%>
+<table border='0' cellpadding='0', cellspacing='0'><tr><td align='bottom' id='<%=labelKey%>'>
+<span class=<%=style.getSmallLabel()%>><%=label%></span>
 
+</td></tr>
+<tr><td style='vertical-align: middle'>
+<% } %>
 <%
 Collection keys = ref.getMetaModelReferenced().getKeyPropertiesNames();
 String keyProperty = "";
@@ -130,3 +143,7 @@ if (editable && view.isCreateNewForReference(ref)) {
 %>
 
 <%=postEditor%>
+<% if (labelFormat == MetaPropertyView.SMALL_LABEL) { %>
+</td></tr>
+</table>
+<% } %>
