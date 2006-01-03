@@ -251,7 +251,7 @@
 		<property-view property="city" label-format="NO_LABEL"/>
 		
 		<reference-view reference="state">
-			<descriptions-list/>
+			<descriptions-list label-format="SMALL"/>
 		</reference-view>
 
 		<members>

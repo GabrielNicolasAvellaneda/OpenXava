@@ -189,8 +189,8 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 		this.table = tabla;
 	}
 	/** Size of chunk returned by {@link #nextChunk}. */
-	public void setChunkSize(int tamañoBloque) {
-		this.chunkSize = tamañoBloque;
+	public void setChunkSize(int chunkSize) {
+		this.chunkSize = chunkSize;
 	}
 	
 	/**

@@ -5,8 +5,27 @@ Now when the EJB code generation is done, the hibernate code generation is
 executed too (although the hibernate version still does not work at 100%).<br>
 Although you use only EJB version, you have to make this little adaptation in your project:
 <ul>
-<li> Create the folder build/hibernate in your project, and make it a source code folder.
+<li> Create the folder <code>build/hibernate</code> in your project, and make it a source code folder.
+<li> Create the folder <code>hibernate</code> in your project, and make it a source code folder.
+<li> Create the file <code>hibernate.cfg.xml</code> inside <code>hibernate</code> folder.
 </ul>
+The <code>hibernate.cfg.xml</code> have to be:
+<pre>
+&lt;!DOCTYPE hibernate-configuration PUBLIC
+   "-//Hibernate/Hibernate Configuration DTD//EN"
+   "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd"&gt;
+  &lt;hibernate-configuration&gt;
+   &lt;session-factory&gt;
+       &lt;property name="hibernate.connection.datasource"&gt;@datasource.prefix@/@datasource@&lt;/property&gt;
+       &lt;property name="hibernate.dialect"&gt;@hibernate.dialect@&lt;/property&gt;
+       &lt;property name="hibernate.show_sql"&gt;false&lt;/property&gt;
+   &lt;/session-factory&gt;
+&lt;/hibernate-configuration&gt;
+</pre>
+In addition you have to include the <code>hibernate.dialect</code> property in your configuration files:
+<pre>
+hibernate.dialect=org.hibernate.dialect.HSQLDialect
+</pre>
 
 <h2>Migration from OpenXava 1.1 to OpenXava 1.2</h2>
 

@@ -2400,6 +2400,11 @@ public class View implements java.io.Serializable {
 		return getMetaView().getLabelFormatForProperty(p);
 	}
 	
+	public int getLabelFormatForReference(MetaReference ref) throws XavaException {
+		return getMetaView().getLabelFormatForReference(ref);
+	}
+	
+	
 	public boolean isFrame() throws XavaException {
 		return getMetaView().isFrame();
 	}
