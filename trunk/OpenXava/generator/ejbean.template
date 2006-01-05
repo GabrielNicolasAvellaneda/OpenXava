@@ -261,7 +261,7 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 			String calculatorClass = calculator.getClassName();
 		# 	
 			#(calculatorClass)# #(property.getName())#Calculator = (#(calculatorClass)#)
-				getMetaModel().getMetaProperty("#(property.getName())#").getMetaCalculatorDefaultValue().getCalculator();
+				getMetaModel().getMetaProperty("#(property.getName())#").getMetaCalculatorDefaultValue().createCalculator();
 		# 
 			Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
 			while (itSets.hasNext()) {
@@ -363,7 +363,7 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 			String calculatorClass = calculator.getClassName();
 		# 	
 			#(calculatorClass)# #(property.getName())#Calculator = (#(calculatorClass)#)
-				getMetaModel().getMetaProperty("#(property.getName())#").getMetaCalculatorDefaultValue().getCalculator();
+				getMetaModel().getMetaProperty("#(property.getName())#").getMetaCalculatorDefaultValue().createCalculator();
 		# 
 			Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
 			while (itSets.hasNext()) {
@@ -486,7 +486,7 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 			String calculatorClass = calculator.getClassName();
 		# 	
 			#(calculatorClass)# #(property.getName())#Calculator= (#(calculatorClass)#)
-				getMetaModel().getMetaProperty("#(property.getName())#").getMetaCalculatorDefaultValue().getCalculator();
+				getMetaModel().getMetaProperty("#(property.getName())#").getMetaCalculatorDefaultValue().createCalculator();
 		# 
 			Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
 			while (itSets.hasNext()) {
@@ -600,7 +600,7 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 			String calculatorClass = calculator.getClassName();
 		# 	
 			#(calculatorClass)# #(property.getName())#Calculator = (#(calculatorClass)#)
-				getMetaModel().getMetaProperty("#(property.getName())#").getMetaCalculatorDefaultValue().getCalculator();
+				getMetaModel().getMetaProperty("#(property.getName())#").getMetaCalculatorDefaultValue().createCalculator();
 		# 
 			Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
 			while (itSets.hasNext()) {
@@ -699,7 +699,7 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 			String calculatorClass = calculator.getClassName();
 		# 
 			#(calculatorClass)# #(property.getName())#Calculator= (#(calculatorClass)#)
-				getMetaModel().getMetaProperty("#(property.getName())#").getMetaCalculatorDefaultValue().getCalculator();
+				getMetaModel().getMetaProperty("#(property.getName())#").getMetaCalculatorDefaultValue().createCalculator();
 		# 
 			Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
 			while (itSets.hasNext()) {

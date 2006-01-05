@@ -1018,7 +1018,7 @@ public class View implements java.io.Serializable {
 					if (membersNames.containsKey(p.getName())) {				
 						try {
 							if (!p.getMetaCalculatorDefaultValue().containsMetaSetsWithoutValue()) { // This way to avoid calculate the dependend ones
-								setValue(p.getName(), p.getDefaultValueCalculator().calculate());
+								setValue(p.getName(), p.createDefaultValueCalculator().calculate());
 								alreadyPut.add(p.getName());
 							}					
 						}
@@ -1622,7 +1622,7 @@ public class View implements java.io.Serializable {
 						calculateValue(pr, pr.getMetaCalculator(), pr.getCalculator(), errors, messages);					
 					}
 					if (pr.hasDefaultValueCalculator() && isEmptyValue(getValue(pr.getName()))) {					
-						calculateValue(pr, pr.getMetaCalculatorDefaultValue(), pr.getDefaultValueCalculator(), errors, messages);					
+						calculateValue(pr, pr.getMetaCalculatorDefaultValue(), pr.createDefaultValueCalculator(), errors, messages);					
 					}					
 				}
 			}				
