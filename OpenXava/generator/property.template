@@ -100,7 +100,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 			String qualifiedPropertyName = Strings.change(property.getName(), "_", "."); // for aggregate member case
 			# 		
 			#(calculatorClass)# #(property.getName())#Calculator= (#(calculatorClass)#)
-				getMetaModel().getMetaProperty("#(qualifiedPropertyName)#").getMetaCalculator().getCalculator();
+				getMetaModel().getMetaProperty("#(qualifiedPropertyName)#").getMetaCalculator().createCalculator();
 			# 	
 			Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
 			while (itSets.hasNext()) {
@@ -369,8 +369,9 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 # 		
 		} else { // normal
 			if (!ejb) {
+				String init = property.hasDefaultValueCalculator()?Generators.defaultInitFor(property.getType()):"";
 			# 
-	#(attributeAccessLevel)# #(type)# #(property.getName())#;
+	#(attributeAccessLevel)# #(type)# #(property.getName())# #(init)#;
 	#(propertyAccessLevel)# #(type)# #(get)##(propertyName)#() {
 		return #(property.getName())#;
 	}

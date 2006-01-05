@@ -5,6 +5,8 @@ import java.util.*;
 import javax.servlet.http.*;
 
 import org.apache.commons.fileupload.*;
+import org.apache.commons.fileupload.disk.*;
+import org.apache.commons.fileupload.servlet.*;
 import org.openxava.util.*;
 import org.openxava.view.*;
 
@@ -19,16 +21,11 @@ public class LoadImageAction extends BaseAction implements INavigationAction, IR
 	private String newImageProperty;
 
 	public void execute() throws Exception {		
-		DiskFileUpload fu = new DiskFileUpload();
-		fu.setSizeMax(1000000);
-		fu.setSizeThreshold(4096);			
-		String dir = System.getProperty("java.io.tmpdir");
-		if (Is.emptyString(dir)) {
-			dir = System.getProperty("user.home");
-		}		
-		
-		fu.setRepositoryPath(dir);				
-		List fileItems = fu.parseRequest(request);
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		factory.setSizeThreshold(1000000);
+					
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		List fileItems = upload.parseRequest(request);
 		
 		Iterator i = fileItems.iterator();
 		while (i.hasNext()) {
@@ -37,7 +34,7 @@ public class LoadImageAction extends BaseAction implements INavigationAction, IR
 			if (fileName != null) {
 				getView().setValue(getNewImageProperty(), fi.get());
 			}			
-		}
+		}		
 	}
 
 	public String[] getNextControllers() {		

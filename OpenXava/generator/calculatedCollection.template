@@ -60,7 +60,7 @@ String collectionName = Strings.firstUpper(collection.getName());
 			String calculatorClass = calculator.getClassName();
 			# 		
 			#(calculatorClass)# #(collection.getName())#Calculator= (#(calculatorClass)#)
-				getMetaModel().getMetaCollection("#(collection.getName())#").getMetaCalculator().getCalculator();
+				getMetaModel().getMetaCollection("#(collection.getName())#").getMetaCalculator().createCalculator();
 			# 	
 			Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
 			while (itSets.hasNext()) {

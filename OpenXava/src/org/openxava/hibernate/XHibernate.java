@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.hibernate.*;
 import org.hibernate.cfg.*;
+import org.hibernate.event.*;
 import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -118,12 +119,31 @@ public class XHibernate {
 					System.err.println(XavaResources.getString("hibernate_mapping_not_loaded_warning", model.getName())); 
 				}
 			}
+			
+				
+			ReferenceConverterToDBListener referenceConverterToDBListener = new ReferenceConverterToDBListener();
+			PreInsertEventListener [] preInsertListener = null;
+			PreUpdateEventListener [] preUpdateListener = null;
 			if (ReferenceMappingDetail.someMappingUsesConverters()) {
 				// toJava conversion is not enabled because in references it's useless thus we avoid an unnecessary overload
-				ReferenceConverterToDBListener [] listener = { new ReferenceConverterToDBListener() };				
-				configuration.getEventListeners().setPreInsertEventListeners(listener);
-				configuration.getEventListeners().setPreUpdateEventListeners(listener);
+				preInsertListener = new PreInsertEventListener [] { 
+					referenceConverterToDBListener,
+					new DefaultCalculatorsListener()
+				};
+				preUpdateListener = new PreUpdateEventListener [] { 
+					referenceConverterToDBListener 
+				};
 			}
+			else {
+				preInsertListener = new PreInsertEventListener [] { 					
+					new DefaultCalculatorsListener()
+				};
+				preUpdateListener = new PreUpdateEventListener [] {  
+				};				
+			}						
+			configuration.getEventListeners().setPreInsertEventListeners(preInsertListener);
+			configuration.getEventListeners().setPreUpdateEventListeners(preUpdateListener);
+			
 			return configuration.buildSessionFactory();
 		} 
 		catch (Exception ex) {

@@ -40,7 +40,7 @@ public void setError(String error) {
 		String calculatorClass = calculator.getClassName();				
 		# 		
 			#(calculatorClass)# calculator#(i)#= (#(calculatorClass)#)
-				getMetaModel().getMetaCalculator#(type)#(#(i)#).getCalculator();
+				getMetaModel().getMetaCalculator#(type)#(#(i)#).createCalculator();
 		# 	
 		Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
 		while (itSets.hasNext()) {

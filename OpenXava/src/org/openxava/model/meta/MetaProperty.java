@@ -33,8 +33,6 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	private boolean readOnlyCalculated = false;
 	private MetaCalculator metaCalculator;	
 	private MetaCalculator metaCalculatorDefaultValue;		
-	private ICalculator calculator;	
-	private ICalculator defaultValueCalculator;
 	private Collection dependentPropertiesNames;
 	private String typeName;
 	private boolean key;
@@ -291,12 +289,9 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	 * 
 	 * @return null if this does not have calculator for default value
 	 */
-	public ICalculator getDefaultValueCalculator() throws XavaException {
+	public ICalculator createDefaultValueCalculator() throws XavaException {
 		if (!hasDefaultValueCalculator()) return null;
-		if (defaultValueCalculator == null) {
-			defaultValueCalculator = metaCalculatorDefaultValue.createCalculator();
-		}
-		return defaultValueCalculator;
+		return metaCalculatorDefaultValue.createCalculator();		
 	}
 	
 	/**
@@ -304,11 +299,8 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	 * @return null if this does not have calculator 
 	 */
 	public ICalculator getCalculator() throws XavaException {
-		if (!hasCalculator()) return null;
-		if (calculator == null) {
-			calculator = metaCalculator.createCalculator();
-		}
-		return calculator;
+		if (!hasCalculator()) return null;		
+		return metaCalculator.createCalculator();
 	}
 	
 	

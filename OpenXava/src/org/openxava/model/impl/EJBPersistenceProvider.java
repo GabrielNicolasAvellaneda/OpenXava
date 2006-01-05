@@ -7,8 +7,6 @@ import java.util.*;
 import javax.ejb.*;
 import javax.rmi.*;
 
-import org.hibernate.*;
-
 import org.openxava.ejbx.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -179,5 +177,49 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 
 	public void rollback() {
 	}
+
+	public Object getKey(IMetaEjb metaModel, Map keyValues) throws XavaException {
+		return metaModel.obtainPrimaryKeyFromKey(keyValues);
+	}
+	
+	public Object createAggregate( 
+		IMetaEjb metaEjb,
+		Map values,
+		MetaModel metaModelContainer,
+		Object containerModel, // can be key
+		int number)
+		throws CreateException, ValidationException, RemoteException, XavaException {
+		Class containerClass = containerModel.getClass();
+		try {
+			IMetaEjb ejbContainer = (IMetaEjb) metaModelContainer; 
+			if (!containerClass.equals(ejbContainer.getPrimaryKeyClass())) {
+				containerClass = ejbContainer.getRemoteClass();
+			}									 
+			Class aggregateHomeClass = metaEjb.getHomeClass();
+			Class[] argClass = { containerClass, int.class, java.util.Map.class };
+			Method m = aggregateHomeClass.getDeclaredMethod("create", argClass);
+			Object[] args = { containerModel, new Integer(number), values };
+			return m.invoke(metaEjb.obtainHome(), args);
+		} catch (InvocationTargetException ex) {
+			Throwable th = ex.getTargetException();
+			try {
+				throw th;
+			} catch (CreateException ex2) {
+				throw ex2;
+			} catch (ValidationException ex2) {
+				throw ex2;
+			} catch (RemoteException ex2) {
+				throw ex2;
+			} catch (Throwable ex2) {
+				throw new RemoteException(ex2.getLocalizedMessage(), ex2);
+			}
+		} catch (NoSuchMethodException ex) {
+			throw new XavaException("ejb_create_map3_required", metaEjb.getJndi(), containerClass);  
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RemoteException(XavaResources.getString("create_error", metaEjb.getJndi()));				
+		}
+	}
+	
 
 }

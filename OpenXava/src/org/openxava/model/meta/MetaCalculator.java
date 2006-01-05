@@ -13,7 +13,6 @@ import org.openxava.util.meta.*;
 public class MetaCalculator extends MetaSetsContainer implements Serializable {
 	
 	private String className;	
-	private ICalculator calculator;
 	private boolean onCreate;
 		
 	/**
@@ -41,16 +40,6 @@ public class MetaCalculator extends MetaSetsContainer implements Serializable {
 		}
 	}
 	
-	/**
-	 * First time creates it, and successive times uses the created one. <p> 
-	 */
-	public ICalculator getCalculator() throws XavaException {
-		if (calculator == null) {
-			calculator = createCalculator();
-		}
-		return calculator;
-	}
-
 	public String getClassName() {
 		return className;
 	}

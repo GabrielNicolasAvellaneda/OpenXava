@@ -1,6 +1,7 @@
 package org.openxava.model.impl;
 
 import java.io.*;
+import java.rmi.*;
 import java.util.*;
 
 import javax.ejb.*;
@@ -15,25 +16,21 @@ import org.openxava.validators.*;
 
 /**
  * tmp: Si no tiene estado ¿crear solo una vez? Comprobar transacciones y sesión
- * tmp: quitar todas las referencias e ejb
+ * tmp: quitar todas las referencias e ejb (incluido IMetaEjb)
  * @author Mª Carmen Gimeno Alabau
  */
 public class HibernatePersistenceProvider implements IPersistenceProvider {
 
 	public Object find(IMetaEjb metaModel, Map keyValues) throws FinderException {
-		try {			
-			Class modelClass = metaModel.getPOJOClass();
-			Object key = null;
-						
+		try {						
+			Object key = null;						
 			if (metaModel.getAllKeyPropertiesNames().size() == 1) {
 				key = keyValues.get(metaModel.getKeyPropertiesNames().iterator().next());
 			}
 			else {
-				key = modelClass.newInstance();
-				PropertiesManager pm = new PropertiesManager(key);
-				pm.executeSets(keyValues);
+				key = getKey(metaModel, keyValues);
 			}		
-			Object result = XHibernate.getSession().get(modelClass, (Serializable) key);
+			Object result = XHibernate.getSession().get(metaModel.getPOJOClass(), (Serializable) key);
 			if (result == null) {
 				throw new ObjectNotFoundException(XavaResources.getString(
 						"object_with_key_not_found", metaModel.getName(), keyValues));
@@ -59,9 +56,9 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 			throws CreateException, ValidationException, XavaException {
 		Object object = null;
 		try {
-			object = metaEjb.getBeanClass().newInstance();
+			object = metaEjb.getPOJOClass().newInstance();
 			PropertiesManager mp = new PropertiesManager(object);
-			mp.executeSets(values);
+			mp.executeSets(values);			
 			XHibernate.getSession().save(object);
 			return object;
 		}
@@ -94,6 +91,26 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 
 	public void rollback() {	
 		XHibernate.rollback();
+	}
+
+	public Object getKey(IMetaEjb metaModel, Map keyValues) throws XavaException {
+		try {
+			Class modelClass = metaModel.getPOJOClass();
+			Object key = modelClass.newInstance();
+			PropertiesManager pm = new PropertiesManager(key);
+			pm.executeSets(keyValues);
+			return key;
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			throw new XavaException("key_for_pojo_error");
+		}
+	}
+
+	public Object createAggregate(IMetaEjb metaEjb, Map values, MetaModel metaModelContainer, Object containerModel, int number) throws CreateException, ValidationException, RemoteException, XavaException {		
+		String container = Strings.firstLower(metaModelContainer.getName());
+		values.put(container, containerModel);
+		return create(metaEjb, values);
 	}
 
 }

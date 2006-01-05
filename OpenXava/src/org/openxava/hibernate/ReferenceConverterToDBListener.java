@@ -1,6 +1,7 @@
 package org.openxava.hibernate;
 
 import java.util.*;
+
 import org.hibernate.*;
 import org.hibernate.event.*;
 import org.openxava.converters.*;
@@ -11,7 +12,7 @@ import org.openxava.util.*;
 
 public class ReferenceConverterToDBListener implements PreInsertEventListener, PreUpdateEventListener {
 
-	public boolean onPreInsert(PreInsertEvent ev) {
+	public boolean onPreInsert(PreInsertEvent ev) {		
 		applyConverter((IModel) ev.getEntity(), 
 				Arrays.asList(ev.getPersister().getPropertyNames()),
 				ev.getState());
@@ -54,7 +55,7 @@ public class ReferenceConverterToDBListener implements PreInsertEventListener, P
 						pm2.executeSet(referenceMappingDetail.getReferencedModelProperty(),conv.toDB(propertyValue));
 					}
 				}
-				int i = propertyNames.indexOf(metaReference.getName());
+				int i = propertyNames.indexOf(metaReference.getName()); // tmp: puede que no funcione si antes referencias con claves múltiples
 				state[i]=referencedObject;
 			}
 		} 
@@ -65,3 +66,4 @@ public class ReferenceConverterToDBListener implements PreInsertEventListener, P
 	}
 
 }
+
