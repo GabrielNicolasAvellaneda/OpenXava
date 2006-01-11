@@ -48,8 +48,14 @@ else if (keyProperties.size() == 1 &amp;&amp;  keyMembers.size() == 1) {
 		String type = pMapping.getCmpType().isArray()?"":"type='" + pMapping.getCmpTypeName() + "'";
 </java> 	
 		&lt;id name="<expr>propertyName</expr>" column="<expr>pMapping.getColumn()</expr>" access="field" <expr>type</expr>&gt;
+		<java>if (key.hasCalculatorDefaultValueOnCreate()) { </java> 
+			&lt;generator class="org.openxava.hibernate.impl.DefaultValueIdentifierGenerator"&gt;
+				&lt;param name="property"&gt;oid&lt;/param&gt;
+			&lt;/generator&gt;								
+		<java>} else { </java> 
 			&lt;generator class="<expr>generator</expr>"/&gt;
-		&lt;/id&gt;
+		<java>} </java> 
+		&lt;/id&gt;		
 <java>
 }
 else {

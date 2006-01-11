@@ -369,9 +369,8 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 # 		
 		} else { // normal
 			if (!ejb) {
-				String init = property.hasDefaultValueCalculator()?Generators.defaultInitFor(property.getType()):"";
 			# 
-	#(attributeAccessLevel)# #(type)# #(property.getName())# #(init)#;
+	#(attributeAccessLevel)# #(type)# #(property.getName())#;
 	#(propertyAccessLevel)# #(type)# #(get)##(propertyName)#() {
 		return #(property.getName())#;
 	}

@@ -166,7 +166,7 @@ while (itCollections.hasNext()) {
  	String arguments = finder.getArguments();
  	String condition = finder.getEJBQLCondition(); 	
  	String type = finder.isCollection()?"Collection":name;
- 	String result = finder.isCollection()?"new org.openxava.hibernate.FastSizeList(query, sizeQuery)":"(" + name + ") query.uniqueResult()";
+ 	String result = finder.isCollection()?"new org.openxava.hibernate.impl.FastSizeList(query, sizeQuery)":"(" + name + ") query.uniqueResult()";
 </java> 	
  	public static <expr>type</expr> find<expr>finderName</expr>(<expr>arguments</expr>) {
  		org.hibernate.Query query = org.openxava.hibernate.XHibernate.getSession().createQuery("<expr>finder.getHQLCondition()</expr>");

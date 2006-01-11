@@ -1,4 +1,4 @@
-package org.openxava.hibernate;
+package org.openxava.hibernate.impl;
 
 import java.util.*;
 
@@ -55,7 +55,7 @@ public class ReferenceConverterToDBListener implements PreInsertEventListener, P
 						pm2.executeSet(referenceMappingDetail.getReferencedModelProperty(),conv.toDB(propertyValue));
 					}
 				}
-				int i = propertyNames.indexOf(metaReference.getName()); // tmp: puede que no funcione si antes referencias con claves múltiples
+				int i = propertyNames.indexOf(metaReference.getName()); 
 				state[i]=referencedObject;
 			}
 		} 

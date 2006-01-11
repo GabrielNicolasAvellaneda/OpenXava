@@ -18,6 +18,7 @@ import org.openxava.view.meta.*;
  */
 abstract public class MetaModel extends MetaElement implements IMetaModel {
 
+	private static boolean someModelHasDefaultCalculatorOnCreateInNotKey = false;
 	private Class pojoClass;
 	private Collection allKeyPropertiesNames;
 	private List metaCalculatorsPostCreate;
@@ -57,6 +58,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	private Collection recursiveQualifiedPropertiesNames;
 	private Collection metaReferencesWithDefaultValueCalculator;
 	private String qualifiedName;
+	private boolean hasDefaultCalculatorOnCreateInNotKey = false;
 	
 	/**
 	 * All models (Entities and Aggregates) with a mapping associated.
@@ -187,6 +189,14 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		newMetaProperty.setMetaModel(this);
 		propertiesNames = null;
 		recursiveQualifiedPropertiesNames = null;
+		if (newMetaProperty.hasCalculatorDefaultValueOnCreate() && !newMetaProperty.isKey()) {
+			someModelHasDefaultCalculatorOnCreateInNotKey = true;
+			hasDefaultCalculatorOnCreateInNotKey = true;
+		}
+	}
+	
+	public boolean hasDefaultCalculatorOnCreateInNotKey() {
+		return hasDefaultCalculatorOnCreateInNotKey ;
 	}
 	
 	/**
@@ -1287,6 +1297,10 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		}
 		return pojoClass;
 			
+	}
+
+	public static boolean someModelHasDefaultCalculatorOnCreateInNotKey() {		
+		return someModelHasDefaultCalculatorOnCreateInNotKey ;
 	}
 	
 }

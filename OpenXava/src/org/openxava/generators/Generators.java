@@ -181,42 +181,4 @@ public class Generators {
 		return result.toString();
 	}
 	
-	public static String defaultInitFor(Class typeClass) {		
-		if (typeClass.isPrimitive()) return "";
-		String type = typeClass.getName();
-		if (type.equals("java.lang.String")) {
-			return "= \"\"";
-		}
-		else if (type.equals("java.lang.Boolean")) {
-			return "= new Boolean(false)";
-		}
-		else if (type.equals("java.lang.Byte")) {
-			return "= new Byte(0)";
-		}
-		else if (type.equals("java.lang.Character")) {
-			return "= new Character('')";
-		}
-		else if (type.equals("java.lang.Short")) {
-			return "= new Short(0)";
-		}
-		else if (type.equals("java.lang.Integer")) {
-			return "= new Integer(0)";
-		}
-		else if (type.equals("java.lang.Long")) {
-			return "= new Long(0)";
-		}
-		else if (type.equals("java.lang.Float")) {
-			return "= new Float(0)";
-		}
-		else if (type.equals("java.lang.Double")) {
-			return "= new Double(0)";
-		}
-		else if (type.equals("java.math.BigDecimal")) {
-			return "= new java.math.BigDecimal(\"0.00\")";
-		}
-		else {
-			return "";
-		}		
-	}
-	
 }
