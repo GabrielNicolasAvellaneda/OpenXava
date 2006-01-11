@@ -1,4 +1,4 @@
-package org.openxava.hibernate;
+package org.openxava.hibernate.impl;
 
 import java.util.*;
 

@@ -1,6 +1,5 @@
 package org.openxava.test.tests;
 
-import org.hibernate.*;
 import org.openxava.hibernate.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;

@@ -5,6 +5,7 @@ import java.util.*;
 import org.hibernate.*;
 import org.hibernate.cfg.*;
 import org.hibernate.event.*;
+import org.openxava.hibernate.impl.*;
 import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -120,29 +121,31 @@ public class XHibernate {
 				}
 			}
 			
-				
-			ReferenceConverterToDBListener referenceConverterToDBListener = new ReferenceConverterToDBListener();
-			PreInsertEventListener [] preInsertListener = null;
-			PreUpdateEventListener [] preUpdateListener = null;
-			if (ReferenceMappingDetail.someMappingUsesConverters()) {
+			Collection preInsertListeners = new ArrayList();
+			Collection preUpdateListeners = new ArrayList();
+			
+			if (ReferenceMappingDetail.someMappingUsesConverters()) {				
 				// toJava conversion is not enabled because in references it's useless thus we avoid an unnecessary overload
-				preInsertListener = new PreInsertEventListener [] { 
-					referenceConverterToDBListener,
-					new DefaultCalculatorsListener()
-				};
-				preUpdateListener = new PreUpdateEventListener [] { 
-					referenceConverterToDBListener 
-				};
+				ReferenceConverterToDBListener referenceConverterToDBListener = new ReferenceConverterToDBListener();
+				preInsertListeners.add(referenceConverterToDBListener); 
+				preUpdateListeners.add(referenceConverterToDBListener); 
 			}
-			else {
-				preInsertListener = new PreInsertEventListener [] { 					
-					new DefaultCalculatorsListener()
-				};
-				preUpdateListener = new PreUpdateEventListener [] {  
-				};				
-			}						
-			configuration.getEventListeners().setPreInsertEventListeners(preInsertListener);
-			configuration.getEventListeners().setPreUpdateEventListeners(preUpdateListener);
+			
+			if (MetaModel.someModelHasDefaultCalculatorOnCreateInNotKey()) {
+				preInsertListeners.add(new DefaultValueCalculatorsListener());
+			}
+			
+			if (!preInsertListeners.isEmpty()) {
+				PreInsertEventListener [] preInsertListenersArray = new PreInsertEventListener[preInsertListeners.size()];
+				preInsertListeners.toArray(preInsertListenersArray);
+				configuration.getEventListeners().setPreInsertEventListeners(preInsertListenersArray);
+			}
+
+			if (!preUpdateListeners.isEmpty()) {
+				PreUpdateEventListener [] preUpdateListenersArray = new PreUpdateEventListener[preUpdateListeners.size()];
+				preUpdateListeners.toArray(preUpdateListenersArray);			
+				configuration.getEventListeners().setPreUpdateEventListeners(preUpdateListenersArray);
+			}
 			
 			return configuration.buildSessionFactory();
 		} 

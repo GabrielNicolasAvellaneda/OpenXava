@@ -441,7 +441,6 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		MetaModel metaModel = getMetaModel(modelName);
 		MetaModel metaModelContainer = metaModel.getMetaModelContainer();
 		try {					
-			// tmp Object containerKey = ((IMetaEjb) metaModelContainer).obtainPrimaryKeyFromKey(containerKeyValues);
 			Object containerKey = persistenceProvider.getKey((IMetaEjb) metaModelContainer, containerKeyValues);
 			return createAggregate(persistenceProvider, metaModel, containerKey, counter, values);
 		}

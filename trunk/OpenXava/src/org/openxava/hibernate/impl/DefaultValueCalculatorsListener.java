@@ -1,4 +1,4 @@
-package org.openxava.hibernate;
+package org.openxava.hibernate.impl;
 
 import java.util.*;
 
@@ -10,19 +10,21 @@ import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
 
-public class DefaultCalculatorsListener implements PreInsertEventListener {
+public class DefaultValueCalculatorsListener implements PreInsertEventListener {
 
-	public boolean onPreInsert(PreInsertEvent ev) {		
+	public boolean onPreInsert(PreInsertEvent ev) {
 		String modelName = "unknow"; 
 		try {
 			IModel model = (IModel) ev.getEntity();
 			MetaModel metaModel = model.getMetaModel();
+			if (!metaModel.hasDefaultCalculatorOnCreateInNotKey()) return false;
 			modelName = metaModel.getName();
 			PropertiesManager pm = new PropertiesManager(model);
 			List propertyNames = Arrays.asList(ev.getPersister().getPropertyNames());
-			Object [] state = ev.getState();
+			Object [] state = ev.getState();			
 			for (Iterator itProperties=metaModel.getMetaPropertiesWithDefaultValueOnCreate().iterator(); itProperties.hasNext();) {
 				MetaProperty pr = (MetaProperty) itProperties.next();
+				if (pr.isKey()) continue; // made by id generator
 				MetaCalculator metaCalculator = pr.getMetaCalculatorDefaultValue();
 				ICalculator calculator = metaCalculator.createCalculator();
 				PropertiesManager pmCalculator = new PropertiesManager(calculator);
@@ -39,17 +41,13 @@ public class DefaultCalculatorsListener implements PreInsertEventListener {
 				Object value = calculator.calculate();
 				pm.executeSet(pr.getName(), value);
 				int i = propertyNames.indexOf(pr.getName());
-				state[i]=value;
+				state[i]=value;								
 			}				
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
 			throw new HibernateException(XavaResources.getString("entity_create_error", modelName, ex.getLocalizedMessage()));
 		}
-		// tmp ini
-		System.out.println("[DefaultCalculatorsListener.onPreInsert] state=" + Arrays.asList(ev.getState())); //  tmp
-		System.out.println("[DefaultCalculatorsListener.onPreInsert] propertyNames=" + Arrays.asList(ev.getPersister().getPropertyNames())); //  tmp
-		// tmp fin
 		return false;
 	}
 

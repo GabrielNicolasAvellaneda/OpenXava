@@ -13,7 +13,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Wed Jan 11 12:28:44 CET 2006
+ * @version Wed Jan 11 19:10:59 CET 2006
  */
 public class PropertyPG {
     Properties properties = new Properties();
@@ -528,7 +528,6 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     		
     		} else { // normal
     			if (!ejb) {
-    				String init = property.hasDefaultValueCalculator()?Generators.defaultInitFor(property.getType()):"";
     			
     out.print(" \n\t");
     out.print(attributeAccessLevel);
@@ -536,8 +535,6 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     out.print(type);
     out.print(" ");
     out.print(property.getName());
-    out.print(" ");
-    out.print(init);
     out.print(";\n\t");
     out.print(propertyAccessLevel);
     out.print(" ");
@@ -621,9 +618,9 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Wed Jan 11 12:28:44 CET 2006", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/property.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/PropertyPG.java" }, // output file
+        { "Wed Jan 11 19:11:00 CET 2006", // date this file was generated
+             "/home/javi/workspace2/OpenXava/generator/property.xml", // input file
+             "/home/javi/workspace2/OpenXava/generator/PropertyPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
