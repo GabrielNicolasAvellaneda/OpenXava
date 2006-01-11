@@ -55,7 +55,7 @@ while (itMethods.hasNext()) {
 			String calculatorClass = calculator.getClassName();
 			</java> 		
 			<expr>calculatorClass</expr> <expr>method.getName()</expr>Calculator = (<expr>calculatorClass</expr>)
-				getMetaModel().getMetaMethod("<expr>method.getName()</expr>").getMetaCalculator().getCalculator();
+				getMetaModel().getMetaMethod("<expr>method.getName()</expr>").getMetaCalculator().createCalculator();
 			<java>	
 			Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
 			while (itSets.hasNext()) {

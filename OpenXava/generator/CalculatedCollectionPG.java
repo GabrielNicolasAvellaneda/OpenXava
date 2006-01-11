@@ -13,7 +13,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Fri Dec 30 13:03:26 CET 2005
+ * @version Wed Jan 11 12:28:42 CET 2006
  */
 public class CalculatedCollectionPG {
     Properties properties = new Properties();
@@ -80,7 +80,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaCollect
     out.print(calculatorClass);
     out.print(")\n\t\t\t\tgetMetaModel().getMetaCollection(\"");
     out.print(collection.getName());
-    out.print("\").getMetaCalculator().getCalculator();");
+    out.print("\").getMetaCalculator().createCalculator();");
     	
     			Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
     			while (itSets.hasNext()) {
@@ -183,7 +183,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaCollect
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Fri Dec 30 13:03:26 CET 2005", // date this file was generated
+        { "Wed Jan 11 12:28:43 CET 2006", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/calculatedCollection.xml", // input file
              "/home/javi/workspace/OpenXava/generator/CalculatedCollectionPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
