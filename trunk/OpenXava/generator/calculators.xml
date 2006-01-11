@@ -41,7 +41,7 @@ public void setError(String error) {
 		String calculatorClass = calculator.getClassName();				
 		</java> 		
 			<expr>calculatorClass</expr> calculator<expr>i</expr>= (<expr>calculatorClass</expr>)
-				getMetaModel().getMetaCalculator<expr>type</expr>(<expr>i</expr>).getCalculator();
+				getMetaModel().getMetaCalculator<expr>type</expr>(<expr>i</expr>).createCalculator();
 		<java>	
 		Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
 		while (itSets.hasNext()) {

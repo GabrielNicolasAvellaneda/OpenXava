@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<tl>&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+<tl>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 
 <declare import="java.util.*"/>
 <declare import="org.openxava.util.*"/>
@@ -22,13 +22,13 @@ MetaModule module = MetaApplications.getMetaApplication(applicationName).getMeta
 		layout-decorator="tigris"
 		portlet-decorator="tigris"
 	/&gt;
-	&lt;title&gt;<expr>module.getName()</expr>&lt;/title&gt;
+	&lt;title&gt;<expr>Strings.toCharSet(module.getName(), "UTF-8")</expr>&lt;/title&gt;
 <java>	
 Collection locales = Generators.getAvailableLocales("../" + applicationName + "/i18n");
 for (Iterator it=locales.iterator(); it.hasNext();) {
 	Locale locale = (Locale) it.next();
 </java> 
-	&lt;metadata name="title" xml:lang="<expr>locale</expr>"&gt;<expr>module.getLabel(locale)</expr>&lt;/metadata&gt;
+	&lt;metadata name="title" xml:lang="<expr>locale</expr>"&gt;<expr>Strings.toCharSet(module.getLabel(locale), "UTF-8")</expr>&lt;/metadata&gt;
 <java>
 }
 </java> 

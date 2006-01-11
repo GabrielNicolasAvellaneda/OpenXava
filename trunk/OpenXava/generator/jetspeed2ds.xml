@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<tl>&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+<tl>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 
 <declare import="java.util.*"/>
 <declare import="org.openxava.util.*"/>
@@ -13,6 +13,7 @@ String applicationName = properties.getProperty("arg3");
 String folder = properties.getProperty("arg4");
 MetaApplication application = MetaApplications.getMetaApplication(applicationName);
 String title = Is.emptyString(folder)?application.getLabel():application.getFolderLabel(folder);
+title = Strings.toCharSet(title, "UTF-8");
 String group = Is.emptyString(folder)?applicationName:applicationName + "." + Strings.change(folder, "/", ".");
 </java> 
 
@@ -23,6 +24,7 @@ Collection locales = Generators.getAvailableLocales("../" + applicationName + "/
 for (Iterator it=locales.iterator(); it.hasNext();) {
 	Locale locale = (Locale) it.next();
 	String i18nTitle = Is.emptyString(folder)?application.getLabel(locale):application.getFolderLabel(locale, folder);
+	i18nTitle = Strings.toCharSet(i18nTitle, "UTF-8");
 </java>     
 	&lt;metadata name="title" xml:lang="<expr>locale</expr>"&gt;<expr>i18nTitle</expr>&lt;/metadata&gt;
 <java>

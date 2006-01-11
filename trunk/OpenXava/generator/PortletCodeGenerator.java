@@ -92,7 +92,8 @@ public class PortletCodeGenerator {
 					Jetspeed2FolderPG.main(argvSubFolder);
 				}
 				
-				// ds				
+				// ds			
+				/* Automatic Document Set generates a too much complicate UI
 				String [] argvDs = {				
 					"../OpenXava/xava/default-size.xml", // some valid xml is required by TL, not used				
 					pagesDir + "/" + project + "/" + project + ".ds",
@@ -111,6 +112,7 @@ public class PortletCodeGenerator {
 					};
 					Jetspeed2DsPG.main(argvSubDs);
 				}
+				*/
 								
 				// psml							
 				for (Iterator it=app.getMetaModules().iterator(); it.hasNext();) {
