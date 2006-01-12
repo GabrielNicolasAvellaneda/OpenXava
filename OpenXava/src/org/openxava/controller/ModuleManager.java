@@ -2,9 +2,12 @@ package org.openxava.controller;
 
 import java.util.*;
 
+import javax.servlet.*;
 import javax.servlet.http.*;
 
-import org.hibernate.*;
+import org.apache.commons.fileupload.*;
+import org.apache.commons.fileupload.disk.*;
+import org.apache.commons.fileupload.servlet.*;
 import org.openxava.actions.*;
 import org.openxava.application.meta.*;
 import org.openxava.controller.meta.*;
@@ -58,6 +61,21 @@ public class ModuleManager {
 			form = "form" + oid;
 		}
 		return form;
+	}
+	
+	/**
+	 * HTML action bind to the current form.
+	 * @return
+	 */
+	public String getFormAction(ServletRequest request) { 
+		Object portletRenderURL = request.getAttribute("xava.portlet.renderURL");
+		Object portletActionURL = request.getAttribute("xava.portlet.actionURL");
+		if (isFormUpload()) {
+			return portletActionURL == null?"":"action='" + portletActionURL + "'";
+		}
+		else {
+			return portletRenderURL == null?"":"action='" + portletRenderURL + "'";
+		}
 	}
 
 	public Collection getMetaActions() {
@@ -222,7 +240,15 @@ public class ModuleManager {
 			
 			if (action instanceof IJDBCAction) {
 				((IJDBCAction) action).setConnectionProvider(DataSourceConnectionProvider.getByComponent(getModelName()));
-			}			
+			}		
+			
+			if (action instanceof IProcessLoadedFileAction) {
+				List fileItems = (List) request.getAttribute("xava.upload.fileitems");
+				String error = (String) request.getAttribute("xava.upload.error");
+				if (!Is.emptyString(error))	errors.add(error);
+				if (fileItems == null && Is.emptyString(error)) fileItems = parseMultipartRequest(request);
+				((IProcessLoadedFileAction) action).setFileItems(fileItems==null?Collections.EMPTY_LIST:fileItems);
+			}
 						
 			if (action instanceof IRemoteAction) {
 				IRemoteAction remote = (IRemoteAction) action;
@@ -333,6 +359,13 @@ public class ModuleManager {
 			XHibernate.rollback();
 		}				
 		
+	}
+
+	private List parseMultipartRequest(HttpServletRequest request) throws FileUploadException {
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		factory.setSizeThreshold(1000000);		
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		return upload.parseRequest(request);						
 	}
 
 	public Environment getEnvironment() throws XavaException {		

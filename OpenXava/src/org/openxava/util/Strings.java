@@ -1,4 +1,5 @@
 package org.openxava.util;
+import java.io.*;
 import java.math.*;
 import java.util.*;
 
@@ -9,6 +10,18 @@ import java.util.*;
  */
 
 public class Strings {
+	
+	/**
+	 * Translate to the charset specified. <p>
+	 * 
+	 * @param original  Original string
+	 * @param charSet   Charset to traslate to, for example, UTF-8, or ISO-8859-1
+	 * @return The string translated
+	 * @throws UnsupportedEncodingException  If charset is not supported 
+	 */
+	public static String toCharSet(String original, String charSet) throws UnsupportedEncodingException {
+		return new String(original.getBytes(charSet));
+	}
 
 	/**
 	 * Cut to specified length. <p> 

@@ -9,6 +9,8 @@ package org.openxava.actions;
  * Since it does not do direct reference to HTTP, it can be used
  * in non web context; simply ignoring this interface.   
  * 
+ * Possibly you need an IProcessLoadedFileAction action in the next controller.<br>
+ *    
  * @author Javier Paniza
  */
 

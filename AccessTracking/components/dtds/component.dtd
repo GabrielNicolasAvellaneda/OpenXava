@@ -66,11 +66,12 @@
 <!ELEMENT descriptions-list EMPTY>
 <!ATTLIST descriptions-list
   description-property CDATA #IMPLIED
-	description-properties CDATA #IMPLIED
+  description-properties CDATA #IMPLIED
   depends CDATA #IMPLIED
   condition CDATA #IMPLIED  
   order-by-key (true|false) "false"    
   order CDATA #IMPLIED
+  label-format (NORMAL|SMALL|NO_LABEL) "NORMAL"
 >
 
 <!ELEMENT property-view (on-change?, action*)>

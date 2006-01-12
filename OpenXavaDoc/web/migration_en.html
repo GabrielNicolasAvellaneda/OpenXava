@@ -5,8 +5,7 @@ Now when the EJB code generation is done, the hibernate code generation is
 executed too (although the hibernate version still does not work at 100%).<br>
 Although you use only EJB version, you have to make this little adaptation in your project:
 <ul>
-<li> Create the folder <code>build/hibernate</code> in your project, and make it a source code folder.
-<li> Create the folder <code>hibernate</code> in your project, and make it a source code folder.
+<li> Create the folder <code>hibernate</code> in your project.
 <li> Create the file <code>hibernate.cfg.xml</code> inside <code>hibernate</code> folder.
 </ul>
 The <code>hibernate.cfg.xml</code> have to be:
@@ -26,6 +25,12 @@ In addition you have to include the <code>hibernate.dialect</code> property in y
 <pre>
 hibernate.dialect=org.hibernate.dialect.HSQLDialect
 </pre>
+
+<h4>XML OpenXava syntax</h4>
+<ul>
+<li> In spanish versi&oacute;n PEQUE&Ntilde;A now is PEQUENA. This is for avoid problems 
+with ISO-8859-1 versus UTF-8.
+</ul>
 
 <h2>Migration from OpenXava 1.1 to OpenXava 1.2</h2>
 

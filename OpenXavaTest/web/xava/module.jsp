@@ -11,7 +11,7 @@
 
 <%
 Users.setCurrent(request.getRemoteUser());
-boolean isPortlet = (request.getAttribute("xava.formAction") != null);
+boolean isPortlet = (request.getAttribute("xava.portlet.renderURL") != null);
 boolean messagesOnTop = !"false".equalsIgnoreCase(request.getParameter("messagesOnTop"));
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
 manager.setSession(session);
@@ -179,13 +179,9 @@ function setFocus() {
 </div>
 
 <div class="<%=style.getModule()%>">
-<%
-String xavaFormAction = (String) request.getAttribute("xava.formAction");
-if (xavaFormAction == null) xavaFormAction = "";
-%>
 <form name='<%=manager.getForm()%>' 
 	method='POST' <%=manager.getEnctype()%> 
-	<%=xavaFormAction%>>
+	<%=manager.getFormAction(request)%>>
 <INPUT type="hidden" name="xava_action" value=""/>
 <INPUT type="hidden" name="xava_action_argv" value=""/>
 <INPUT type="hidden" name="xava_action_application" value="<%=request.getParameter("application")%>"/>

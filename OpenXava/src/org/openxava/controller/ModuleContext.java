@@ -1,6 +1,8 @@
 package org.openxava.controller;
 
 import java.util.*;
+
+import javax.servlet.*;
 import javax.servlet.http.*;
 
 import org.openxava.controller.meta.*;
@@ -25,7 +27,7 @@ public class ModuleContext {
 	 * Return a object asociate to the specified module
 	 * in 'application' and 'module' of request.
 	 */
-	public Object get(HttpServletRequest request, String objectName) throws XavaException {
+	public Object get(HttpServletRequest request, String objectName) throws XavaException {  
 		String application = request.getParameter("application");
 		if (Is.emptyString(application)) {
 			throw new XavaException("application_and_module_required_in_request");
@@ -41,7 +43,7 @@ public class ModuleContext {
 	 * Return a object asociate to the specified module
 	 * in 'application' and 'module' of request.
 	 */
-	public Object get(HttpServletRequest request, String objectName, String className) throws XavaException {
+	public Object get(HttpServletRequest request, String objectName, String className) throws XavaException { 
 		String application = request.getParameter("application");
 		if (Is.emptyString(application)) {
 			throw new XavaException("application_and_module_required_in_request");
