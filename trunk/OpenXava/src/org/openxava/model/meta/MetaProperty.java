@@ -462,6 +462,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	private boolean calculateIfReadOnly() { 
 		try {			
 			if (getMetaModel() == null) return false;
+			if (getMetaModel().isGenerate()) return false;
 			PropertiesManager man = new PropertiesManager(
 				getMetaModel().getPropertiesClass());
 			return !man.hasSetter(getName());

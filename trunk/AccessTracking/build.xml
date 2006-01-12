@@ -40,11 +40,14 @@
 	<target name="deployWar">
 		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
 	</target>
+	
+	<target name="redeployPortlets"> 
+		<touch file="../${project}/xava/application.xml"/>
+		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
+	</target>	
 		
 	<target name="deployPortlets"> 
 		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
 	</target>
-	
-	
-					
+						
 </project>

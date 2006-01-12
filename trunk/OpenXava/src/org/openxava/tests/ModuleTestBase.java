@@ -86,7 +86,7 @@ public class ModuleTestBase extends TestCase {
 			getForm().setParameter("org.apache.jetspeed.login.username", getJetspeed2UserName());
 			getForm().setParameter("org.apache.jetspeed.login.password", getJetspeed2Password());
 			getForm().submit();
-		}
+		}		
 		response = conversation.getResponse(getModuleURL());
 		resetForm();
 		propertyPrefix = null;		
@@ -436,10 +436,10 @@ public class ModuleTestBase extends TestCase {
 		assertTrue(XavaResources.getString("action_found_in_ui", action), !getActions().contains(action));
 	}
 	
-	private List getActions() {
+	private List getActions() { 
 		String [] p = getForm().getParameterNames();
 		List actions = new ArrayList();		
-		for (int i = 0; i < p.length; i++) {			
+		for (int i = 0; i < p.length; i++) {				
 			if (!p[i].startsWith(ACTION_PREFIX)) continue;
 			actions.add(removeActionPrefix(p[i]));			
 		}				
@@ -480,7 +480,7 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected String getValueInList(int row, String name) throws Exception {
-		int column = getMetaTab().getPropertiesNames().indexOf(name);		
+		int column = getMetaTab().getPropertiesNames().indexOf(name);
 		return getValueInList(row, column);
 	}
 	
@@ -978,7 +978,7 @@ public class ModuleTestBase extends TestCase {
 	}	
 	
 	private int getFormIndex() throws Exception {
-		return isJetspeed2Enabled()?1:0;
+		return 0; 
 	}
 	
 	private int getLoginFormIndex() throws Exception {

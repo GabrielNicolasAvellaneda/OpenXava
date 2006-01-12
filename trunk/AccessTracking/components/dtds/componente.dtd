@@ -74,6 +74,7 @@
   condicion CDATA #IMPLIED
   ordenado-por-clave (true|false) "false"    
   orden CDATA #IMPLIED
+  formato-etiqueta (NORMAL|PEQUENA|SIN_ETIQUETA) "NORMAL"
 >
 
 <!ELEMENT vista-propiedad (al-cambiar?, accion*)>
@@ -81,7 +82,7 @@
   propiedad CDATA #REQUIRED
   etiqueta CDATA #IMPLIED
   solo-lectura (true|false) "false"
-	formato-etiqueta (NORMAL|PEQUEÑA|SIN_ETIQUETA) "NORMAL"
+  formato-etiqueta (NORMAL|PEQUENA|SIN_ETIQUETA) "NORMAL"
 >
 
 <!ELEMENT al-cambiar EMPTY>

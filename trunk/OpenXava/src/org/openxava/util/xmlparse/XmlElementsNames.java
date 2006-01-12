@@ -138,7 +138,7 @@ public class XmlElementsNames {
 	protected final static String [] xentity_mapping = { "entity-mapping", "mapeo-entidad" };
 	protected final static String [] xpackage = { "package", "paquete" };
 	protected final static String [] XNORMAL = { "NORMAL", "NORMAL" };
-	protected final static String [] XSMALL = { "SMALL", "PEQUEÑA" };
+	protected final static String [] XSMALL = { "SMALL", "PEQUENA" };
 	protected final static String [] XNO_LABEL = { "NO_LABEL", "SIN_ETIQUETA" };
 	protected final static String [] xstyle = { "style", "estilo" };
 	protected final static String [] xrow_style = { "row-style", "estilo-fila" };

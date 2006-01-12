@@ -11,7 +11,7 @@ String module = request.getParameter("module");
 long dif=System.currentTimeMillis(); // to avoid browser caching
 %>
 
-<img name='<%=propertyKey%>' src='/<%=applicationName%>/ximage?application=<%=applicationName%>&module=<%=module%>&property=<%=p.getName()%>&dif=<%=dif%>' title="<%=p.getDescription(request)%>"/>
+<img name='<%=propertyKey%>' src='/<%=applicationName%>/xava/ximage?application=<%=applicationName%>&module=<%=module%>&property=<%=p.getName()%>&dif=<%=dif%>' title="<%=p.getDescription(request)%>"/>
 	
 <% if (editable) { %>	
 <span valign='middle'>
