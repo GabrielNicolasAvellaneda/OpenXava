@@ -16,7 +16,7 @@
 	<property name="j2ee.lib" location="../OpenXava/lib/j2ee.jar"/>
 	<property name="tl.lib" location="../OpenXava/lib/tl.jar"/>
 	<property name="components.dir" value="../${project}/components"/>
-	<property name="generator.dir" value="${workspace.dir}/OpenXava/generator"/>
+	<property name="generator.dir" value="${workspace.dir}${file.separator}OpenXava${file.separator}generator"/>
 	<property name="tracking.classes" value="../AccessTracking/web/WEB-INF/classes;../OpenXava/web/WEB-INF/lib/hibernate3.jar"/>
 	<property name="subcontext" value="${project}"/>				
 	<property name="classes.dir" value="web/WEB-INF/classes"/>
@@ -227,113 +227,113 @@
 		</java>		
 	</target>
 	        
-	<target name="regenerateGenerator">    
+	<target name="regenerateGenerator"> 
 		<echo>Generating xml template for EJB</echo>
        <java classname="Simple2XML" classpath="${tl.lib}">
-         <arg value="${generator.dir}/calculatedCollection.template"/> 
-         <arg value="${generator.dir}/calculatedCollection.xml"/>         
+         <arg value="${generator.dir}${file.separator}calculatedCollection.template"/> 
+         <arg value="${generator.dir}${file.separator}calculatedCollection.xml"/>         
        </java>		       				
        <java classname="Simple2XML" classpath="${tl.lib}">
-         <arg value="${generator.dir}/calculators.template"/> 
-         <arg value="${generator.dir}/calculators.xml"/>         
+         <arg value="${generator.dir}${file.separator}calculators.template"/> 
+         <arg value="${generator.dir}${file.separator}calculators.xml"/>         
        </java>		       		
        <java classname="Simple2XML" classpath="${tl.lib}">
-         <arg value="${generator.dir}/property.template"/> 
-         <arg value="${generator.dir}/property.xml"/>         
+         <arg value="${generator.dir}${file.separator}property.template"/> 
+         <arg value="${generator.dir}${file.separator}property.xml"/>         
        </java>		
        <java classname="Simple2XML" classpath="${tl.lib}">
-         <arg value="${generator.dir}/entityReference.template"/> 
-         <arg value="${generator.dir}/entityReference.xml"/>         
+         <arg value="${generator.dir}${file.separator}entityReference.template"/> 
+         <arg value="${generator.dir}${file.separator}entityReference.xml"/>         
        </java>
 		<java classname="Simple2XML" classpath="${tl.lib}">
-		  <arg value="${generator.dir}/entityReferenceEJB.template"/> 
-		  <arg value="${generator.dir}/entityReferenceEJB.xml"/>         
+		  <arg value="${generator.dir}${file.separator}entityReferenceEJB.template"/> 
+		  <arg value="${generator.dir}${file.separator}entityReferenceEJB.xml"/>         
 		</java>
        <java classname="Simple2XML" classpath="${tl.lib}">
-         <arg value="${generator.dir}/aggregateReference.template"/> 
-         <arg value="${generator.dir}/aggregateReference.xml"/>         
+         <arg value="${generator.dir}${file.separator}aggregateReference.template"/> 
+         <arg value="${generator.dir}${file.separator}aggregateReference.xml"/>         
        </java>	
 		<java classname="Simple2XML" classpath="${tl.lib}">
-		 <arg value="${generator.dir}/methods.template"/> 
-		 <arg value="${generator.dir}/methods.xml"/>         
+		 <arg value="${generator.dir}${file.separator}methods.template"/> 
+		 <arg value="${generator.dir}${file.separator}methods.xml"/>         
 		</java>	
        	<java classname="Simple2XML" classpath="${tl.lib}">
-        	<arg value="${generator.dir}/ejbean.template"/> 
-         	<arg value="${generator.dir}/ejbean.xml"/>         
+        	<arg value="${generator.dir}${file.separator}ejbean.template"/> 
+         	<arg value="${generator.dir}${file.separator}ejbean.xml"/>         
       	</java>
 		<echo>Generating xml template for POJO</echo>
 		<java classname="Simple2XML" classpath="${tl.lib}">
-			<arg value="${generator.dir}/pojo.template"/> 
-			<arg value="${generator.dir}/pojo.xml"/>         
+			<arg value="${generator.dir}${file.separator}pojo.template"/> 
+			<arg value="${generator.dir}${file.separator}pojo.xml"/>         
 		</java>		
   		<echo>Generating xml template for JavaBean</echo>
        <java classname="Simple2XML" classpath="${tl.lib}">
-         <arg value="${generator.dir}/bean.template"/> 
-         <arg value="${generator.dir}/bean.xml"/>         
+         <arg value="${generator.dir}${file.separator}bean.template"/> 
+         <arg value="${generator.dir}${file.separator}bean.xml"/>         
        </java>
   		<echo>Generating xml template for interface</echo>
        <java classname="Simple2XML" classpath="${tl.lib}">
-         <arg value="${generator.dir}/interface.template"/> 
-         <arg value="${generator.dir}/interface.xml"/>         
+         <arg value="${generator.dir}${file.separator}interface.template"/> 
+         <arg value="${generator.dir}${file.separator}interface.xml"/>         
        </java>       
 		<echo>Generating xml template for hibernate mapping</echo>
 		<java classname="Simple2XML" classpath="${tl.lib}">
-			<arg value="${generator.dir}/hibernate.template"/> 
-			<arg value="${generator.dir}/hibernate.xml"/>         
+			<arg value="${generator.dir}${file.separator}hibernate.template"/> 
+			<arg value="${generator.dir}${file.separator}hibernate.xml"/>         
 		</java> 
 		
        <echo>Generating EJB classes generator</echo>
         <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-          <arg value="${generator.dir}/calculatedCollection.xml"/>
-          <arg value="${generator.dir}/CalculatedCollectionPG.java"/>
+          <arg value="${generator.dir}${file.separator}calculatedCollection.xml"/>
+          <arg value="${generator.dir}${file.separator}CalculatedCollectionPG.java"/>
         </java>				
         <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-          <arg value="${generator.dir}/calculators.xml"/>
-          <arg value="${generator.dir}/CalculatorsPG.java"/>
+          <arg value="${generator.dir}${file.separator}calculators.xml"/>
+          <arg value="${generator.dir}${file.separator}CalculatorsPG.java"/>
         </java>		
        <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-         <arg value="${generator.dir}/property.xml"/> 
-         <arg value="${generator.dir}/PropertyPG.java"/>         
+         <arg value="${generator.dir}${file.separator}property.xml"/> 
+         <arg value="${generator.dir}${file.separator}PropertyPG.java"/>         
        </java>        
 	   <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-	     <arg value="${generator.dir}/entityReference.xml"/> 
-	     <arg value="${generator.dir}/EntityReferencePG.java"/>         
+	     <arg value="${generator.dir}${file.separator}entityReference.xml"/> 
+	     <arg value="${generator.dir}${file.separator}EntityReferencePG.java"/>         
 	   </java>  		
 	   <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-	     <arg value="${generator.dir}/entityReferenceEJB.xml"/> 
-	     <arg value="${generator.dir}/EntityReferenceEJBPG.java"/>         
+	     <arg value="${generator.dir}${file.separator}entityReferenceEJB.xml"/> 
+	     <arg value="${generator.dir}${file.separator}EntityReferenceEJBPG.java"/>         
 	   </java>  		
        <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-         <arg value="${generator.dir}/aggregateReference.xml"/> 
-         <arg value="${generator.dir}/AggregateReferencePG.java"/>         
+         <arg value="${generator.dir}${file.separator}aggregateReference.xml"/> 
+         <arg value="${generator.dir}${file.separator}AggregateReferencePG.java"/>         
        </java>  
 		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-			<arg value="${generator.dir}/methods.xml"/> 
-			<arg value="${generator.dir}/MethodsPG.java"/>         
+			<arg value="${generator.dir}${file.separator}methods.xml"/> 
+			<arg value="${generator.dir}${file.separator}MethodsPG.java"/>         
 		</java>  	
        <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-         <arg value="${generator.dir}/ejbean.xml"/> 
-         <arg value="${generator.dir}/EJBeanPG.java"/>         
+         <arg value="${generator.dir}${file.separator}ejbean.xml"/> 
+         <arg value="${generator.dir}${file.separator}EJBeanPG.java"/>         
        </java>
 		<echo>Generating POJO classes generator</echo>
 		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-			<arg value="${generator.dir}/pojo.xml"/> 
-			<arg value="${generator.dir}/PojoPG.java"/>         
+			<arg value="${generator.dir}${file.separator}pojo.xml"/> 
+			<arg value="${generator.dir}${file.separator}PojoPG.java"/>         
 		</java>
        <echo>Generating JavaBean classes generator</echo>
        <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-         <arg value="${generator.dir}/bean.xml"/> 
-         <arg value="${generator.dir}/BeanPG.java"/>         
+         <arg value="${generator.dir}${file.separator}bean.xml"/> 
+         <arg value="${generator.dir}${file.separator}BeanPG.java"/>         
        </java>
        <echo>Generating Interfaz classes generator</echo>
        <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-         <arg value="${generator.dir}/interface.xml"/> 
-         <arg value="${generator.dir}/InterfacePG.java"/>         
+         <arg value="${generator.dir}${file.separator}interface.xml"/> 
+         <arg value="${generator.dir}${file.separator}InterfacePG.java"/>         
        </java>
 		<echo>Generating hibernate mapping classes generator</echo>
 		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-			<arg value="${generator.dir}/hibernate.xml"/> 
-			<arg value="${generator.dir}/HibernatePG.java"/>         
+			<arg value="${generator.dir}${file.separator}hibernate.xml"/> 
+			<arg value="${generator.dir}${file.separator}HibernatePG.java"/>         
 		</java>       
 		
        <echo>Compiling classes generators</echo>
