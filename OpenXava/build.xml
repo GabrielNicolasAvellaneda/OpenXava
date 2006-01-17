@@ -172,37 +172,37 @@
 	<target name="regenerateWebsphereMapping">
 		<echo>Generating xml template for Websphere Mapping</echo>
 		<java classname="Simple2XML" classpath="${tl.lib}">
-			<arg value="${generator.dir}/websphereDbxmi.template"/> 
-			<arg value="${generator.dir}/websphereDbxmi.xml"/>         
+			<arg value="${generator.dir}${file.separator}websphereDbxmi.template"/> 
+			<arg value="${generator.dir}${file.separator}websphereDbxmi.xml"/>         
 		</java>				
 		<java classname="Simple2XML" classpath="${tl.lib}">
-			<arg value="${generator.dir}/websphereSchxmi.template"/> 
-			<arg value="${generator.dir}/websphereSchxmi.xml"/>         
+			<arg value="${generator.dir}${file.separator}websphereSchxmi.template"/> 
+			<arg value="${generator.dir}${file.separator}websphereSchxmi.xml"/>         
 		</java>						
 		<java classname="Simple2XML" classpath="${tl.lib}">
-			<arg value="${generator.dir}/websphereTblxmi.template"/> 
-			<arg value="${generator.dir}/websphereTblxmi.xml"/>         
+			<arg value="${generator.dir}${file.separator}websphereTblxmi.template"/> 
+			<arg value="${generator.dir}${file.separator}websphereTblxmi.xml"/>         
 		</java>								
 		<java classname="Simple2XML" classpath="${tl.lib}">
-			<arg value="${generator.dir}/websphereMapxmi.template"/> 
-			<arg value="${generator.dir}/websphereMapxmi.xml"/>         
+			<arg value="${generator.dir}${file.separator}websphereMapxmi.template"/> 
+			<arg value="${generator.dir}${file.separator}websphereMapxmi.xml"/>         
 		</java>										
 		<echo>Generating Websphere Mapping classes generator</echo>
 		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-			<arg value="${generator.dir}/websphereDbxmi.xml"/>
-			<arg value="${generator.dir}/WebsphereDbxmiPG.java"/>
+			<arg value="${generator.dir}${file.separator}websphereDbxmi.xml"/>
+			<arg value="${generator.dir}${file.separator}WebsphereDbxmiPG.java"/>
 		</java>
 		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-			<arg value="${generator.dir}/websphereSchxmi.xml"/>
-			<arg value="${generator.dir}/WebsphereSchxmiPG.java"/>
+			<arg value="${generator.dir}${file.separator}websphereSchxmi.xml"/>
+			<arg value="${generator.dir}${file.separator}WebsphereSchxmiPG.java"/>
 		</java>		
 		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-			<arg value="${generator.dir}/websphereTblxmi.xml"/>
-			<arg value="${generator.dir}/WebsphereTblxmiPG.java"/>
+			<arg value="${generator.dir}${file.separator}websphereTblxmi.xml"/>
+			<arg value="${generator.dir}${file.separator}WebsphereTblxmiPG.java"/>
 		</java>				
 		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-			<arg value="${generator.dir}/websphereMapxmi.xml"/>
-			<arg value="${generator.dir}/WebsphereMapxmiPG.java"/>
+			<arg value="${generator.dir}${file.separator}websphereMapxmi.xml"/>
+			<arg value="${generator.dir}${file.separator}WebsphereMapxmiPG.java"/>
 		</java>						
 		<echo>Compiling classes generators</echo>
 		<javac srcdir="${generator.dir}"
@@ -609,38 +609,38 @@
 	<target name="regeneratePortletGenerator">
 		<echo>Generating xml template for Portlet Application</echo>
 		<java classname="Simple2XML" classpath="${tl.lib}">
-			<arg value="${generator.dir}/portletxml.template"/> 
-			<arg value="${generator.dir}/portletxml.xml"/>         
+			<arg value="${generator.dir}${file.separator}portletxml.template"/> 
+			<arg value="${generator.dir}${file.separator}portletxml.xml"/>         
 		</java>				
 		<java classname="Simple2XML" classpath="${tl.lib}">
-			<arg value="${generator.dir}/jetspeed2psml.template"/> 
-			<arg value="${generator.dir}/jetspeed2psml.xml"/>         
+			<arg value="${generator.dir}${file.separator}jetspeed2psml.template"/> 
+			<arg value="${generator.dir}${file.separator}jetspeed2psml.xml"/>         
 		</java>						
 		<java classname="Simple2XML" classpath="${tl.lib}">
-			<arg value="${generator.dir}/jetspeed2folder.template"/> 
-			<arg value="${generator.dir}/jetspeed2folder.xml"/>         
+			<arg value="${generator.dir}${file.separator}jetspeed2folder.template"/> 
+			<arg value="${generator.dir}${file.separator}jetspeed2folder.xml"/>         
 		</java>						
 		<java classname="Simple2XML" classpath="${tl.lib}">
-			<arg value="${generator.dir}/jetspeed2ds.template"/> 
-			<arg value="${generator.dir}/jetspeed2ds.xml"/>         
+			<arg value="${generator.dir}${file.separator}jetspeed2ds.template"/> 
+			<arg value="${generator.dir}${file.separator}jetspeed2ds.xml"/>         
 		</java>								
 				
 		<echo>Generating Portlet Application classes generator</echo>
 		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-			<arg value="${generator.dir}/portletxml.xml"/>
-			<arg value="${generator.dir}/PortletXmlPG.java"/>
+			<arg value="${generator.dir}${file.separator}portletxml.xml"/>
+			<arg value="${generator.dir}${file.separator}PortletXmlPG.java"/>
 		</java>
 		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-			<arg value="${generator.dir}/jetspeed2psml.xml"/>
-			<arg value="${generator.dir}/Jetspeed2PsmlPG.java"/>
+			<arg value="${generator.dir}${file.separator}jetspeed2psml.xml"/>
+			<arg value="${generator.dir}${file.separator}Jetspeed2PsmlPG.java"/>
 		</java>		
 		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-			<arg value="${generator.dir}/jetspeed2folder.xml"/>
-			<arg value="${generator.dir}/Jetspeed2FolderPG.java"/>
+			<arg value="${generator.dir}${file.separator}jetspeed2folder.xml"/>
+			<arg value="${generator.dir}${file.separator}Jetspeed2FolderPG.java"/>
 		</java>				
 		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
-			<arg value="${generator.dir}/jetspeed2ds.xml"/>
-			<arg value="${generator.dir}/Jetspeed2DsPG.java"/>
+			<arg value="${generator.dir}${file.separator}jetspeed2ds.xml"/>
+			<arg value="${generator.dir}${file.separator}Jetspeed2DsPG.java"/>
 		</java>						
 		<echo>Compiling classes generators</echo>
 		<javac srcdir="${generator.dir}"
@@ -652,7 +652,7 @@
 	
 	<target name="generatePortletXml" depends="filter" unless="regenerate.portlet.xml.notRequired">						
 		<echo>Generating portlets files</echo>
-		<!-- PortletCodeGenerator can generate portlets.xml, .psml, .ds and all jetspeed2 files -->
+		<!-- PortletCodeGenerator can generate portlets.xml, .psml and other jetspeed2 files -->
 		<java 
 			classname="PortletCodeGenerator" 
 			classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};${components.dir};../${project}/${classes.dir};${xava.generator.path}" 
