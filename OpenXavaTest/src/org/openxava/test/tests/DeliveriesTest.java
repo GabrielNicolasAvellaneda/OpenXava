@@ -1,13 +1,11 @@
 package org.openxava.test.tests;
 
-import java.math.*;
 import java.text.*;
 import java.util.*;
 
 import javax.ejb.*;
 import javax.rmi.*;
 
-import org.openxava.test.calculators.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
@@ -765,20 +763,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		return df.format(new java.util.Date());
 	}
-	
-	private String getCurrentYear() {
-		DateFormat df = new SimpleDateFormat("yyyy");
-		return df.format(new java.util.Date());
-	}
-
-	private String getYearDiscount(String syear) throws Exception {
-		int year = Integer.parseInt(syear);
-		YearInvoiceDiscountCalculator calculator = new YearInvoiceDiscountCalculator();
-		calculator.setYear(year);
-		BigDecimal bd = (BigDecimal) calculator.calculate();
-		return bd.setScale(0, BigDecimal.ROUND_DOWN).toString();
-	}
-	
+		
 	private void searchInvoiceWithList(String year, String number) throws Exception {
 		execute("Reference.search", "keyProperty=xava.Delivery.invoice.year");
 		setConditionValues(
