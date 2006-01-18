@@ -26,7 +26,7 @@ abstract public class MetaElement implements java.io.Serializable {
 		}					
 		catch (Exception ex) {
 			ex.printStackTrace();
-			System.err.println(XavaResources.getString("element_i18n_warning", id));
+			System.err.println(XavaResources.getString("element_i18n_warning", id));			
 			return false;
 		}
 	}
@@ -61,11 +61,11 @@ abstract public class MetaElement implements java.io.Serializable {
 	 */
 	protected String getLabel(Locale locale, String id) {
 		if (id == null) return "";
-		try {					
+		try {				
 			return Labels.get(id, locale);
 		}
-		catch (Exception ex) {
-			System.err.println(XavaResources.getString("element_i18n_warning", id));
+		catch (Exception ex) {			
+			System.err.println(XavaResources.getString("element_i18n_warning", id));			
 			if (Is.emptyString(label))
 				label = firstUpper(getName());
 			return label;

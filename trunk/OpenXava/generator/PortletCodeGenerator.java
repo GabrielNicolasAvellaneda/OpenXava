@@ -18,7 +18,7 @@ public class PortletCodeGenerator {
 		new Locale("zh")
 	};
 	
-	private final static Locale defaultLocale = new Locale("en");
+	private Locale defaultLocale = Locale.getDefault();
 		
 	private String project;
 	private String pagesDir;
@@ -47,6 +47,12 @@ public class PortletCodeGenerator {
 
 	public void setGenerateJetspeed2Files(boolean generateJetspeed2Files) {
 		this.generateJetspeed2Files = generateJetspeed2Files;
+	}
+	
+	public void setDefaultLocale(String locale) {
+		if (!Is.emptyString(locale)) {
+			defaultLocale = new Locale(locale);
+		}
 	}
 			
 	private void run() throws Exception {		 
@@ -157,7 +163,7 @@ public class PortletCodeGenerator {
 	}
 	
 	public static void main(String [] argv) {
-		if (argv.length < 2 || argv.length > 3) {
+		if (argv.length < 2 || argv.length > 4) {
 			System.err.println(XavaResources.getString("jetspeed2_generator_argv_required")); 
 			System.exit(1);			
 		}
@@ -166,6 +172,9 @@ public class PortletCodeGenerator {
 			g.setProject(argv[0]);			
 			g.setPagesDir(argv[1]);
 			g.setGenerateJetspeed2Files(Boolean.valueOf(argv[2]).booleanValue()); // optional
+			if (argv.length > 3) {
+				g.setDefaultLocale(argv[3]);
+			}
 			g.run();			
 		}	
 		catch (Exception ex) {

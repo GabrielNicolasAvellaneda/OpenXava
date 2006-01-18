@@ -35,6 +35,7 @@
 	<property name="deploy.portlets.dir" value="${deploy.dir}/openxava.war/WEB-INF/deploy"/>
 	<property name="generate.jetspeed2.files" value="true"/>
 	<property name="jetspeed2.pages.dir" value="${deploy.dir}/openxava.war/WEB-INF/pages"/>
+	<property name="portlets.default.locale" value="${user.language}"/>
 			
    <!-- Set up java.class.path -->
    <path id="project.class.path">
@@ -660,6 +661,7 @@
 			<arg value="${project}"/>
 			<arg value="${jetspeed2.pages.dir}"/>
 			<arg value="${generate.jetspeed2.files}"/>
+			<arg value="${portlets.default.locale}"/>
 		</java>		
 	</target>	
 	
