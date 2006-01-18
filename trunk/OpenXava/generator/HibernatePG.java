@@ -11,7 +11,7 @@ import org.openxava.util.XavaException;
 
 /**
  * Program Generator created by TL2Java
- * @version Wed Jan 18 10:17:34 CET 2006
+ * @version Wed Jan 18 16:40:46 CET 2006
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -190,7 +190,14 @@ public class HibernatePG {
     			MetaReference ref = (MetaReference) itAggregateReferences.next();
     			String refName = reference.getName() + "_" + ref.getName();
     			Collection columns = mapping.getReferenceMapping(reference.getName() + "_" + ref.getName()).getColumns();   
-      			if (columns.size() == 1) {	
+    			if (mapping.isReferenceOverlappingWithSomeProperty(reference.getName() + "_" + ref.getName())) {
+    
+    out.print(" \n\t\t\t<!-- Reference: ");
+    out.print(ref.getName());
+    out.print(" : Overlapped references still not supported -->");
+    			
+    			}
+    			else if (columns.size() == 1) {	
     				String column = (String) columns.iterator().next();
     
     out.print(" \n\t\t<many-to-one name=\"");
@@ -226,7 +233,14 @@ public class HibernatePG {
     	} 
     	else { // reference to entity or persistent aggregate 
     		Collection columns = mapping.getReferenceMapping(reference.getName()).getColumns();   
-      		if (columns.size() == 1) {	
+    		if (mapping.isReferenceOverlappingWithSomeProperty(reference.getName())) {
+    
+    out.print(" \t\t\t\n\t\t\t<!-- Reference: ");
+    out.print(reference.getName());
+    out.print(" Overlapped references still not supported -->");
+    
+    		}		
+      		else if (columns.size() == 1) {	
     			String column = (String) columns.iterator().next();
     
     out.print(" \n\t\t<many-to-one name=\"");
@@ -239,14 +253,6 @@ public class HibernatePG {
     
     		}
     		else { 
-    			if (mapping.isReferenceOverlappingWithSomeProperty(reference.getName())) {
-    
-    out.print(" \t\t\t\n\t\t\t<!-- Reference: ");
-    out.print(reference.getName());
-    out.print(" Overlapped references still not supported -->");
-    
-    			}
-    			else {
     
     out.print(" \n\t\t<many-to-one name=\"");
     out.print(reference.getName());
@@ -264,8 +270,7 @@ public class HibernatePG {
     			}
     
     out.print(" \n\t\t</many-to-one>");
-    
-    			}
+    			
     		}
     	}
     } 
@@ -362,7 +367,7 @@ public class HibernatePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Wed Jan 18 10:17:34 CET 2006", // date this file was generated
+        { "Wed Jan 18 16:40:46 CET 2006", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/hibernate.xml", // input file
              "/home/javi/workspace/OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
