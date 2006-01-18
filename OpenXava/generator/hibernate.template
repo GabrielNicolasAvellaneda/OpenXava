@@ -138,7 +138,12 @@ while (itReferences.hasNext()) {
 			MetaReference ref = (MetaReference) itAggregateReferences.next();
 			String refName = reference.getName() + "_" + ref.getName();
 			Collection columns = mapping.getReferenceMapping(reference.getName() + "_" + ref.getName()).getColumns();   
-  			if (columns.size() == 1) {	
+			if (mapping.isReferenceOverlappingWithSomeProperty(reference.getName() + "_" + ref.getName())) {
+# 
+			<!-- Reference: #(ref.getName())# : Overlapped references still not supported -->
+# 			
+			}
+			else if (columns.size() == 1) {	
 				String column = (String) columns.iterator().next();
 # 
 		<many-to-one name="#(refName)#" column="#(column)#" class="#(ref.getMetaModelReferenced().getPOJOClassName())#" not-found="ignore"/>
@@ -162,19 +167,18 @@ while (itReferences.hasNext()) {
 	} 
 	else { // reference to entity or persistent aggregate 
 		Collection columns = mapping.getReferenceMapping(reference.getName()).getColumns();   
-  		if (columns.size() == 1) {	
+		if (mapping.isReferenceOverlappingWithSomeProperty(reference.getName())) {
+# 			
+			<!-- Reference: #(reference.getName())# Overlapped references still not supported -->
+# 
+		}		
+  		else if (columns.size() == 1) {	
 			String column = (String) columns.iterator().next();
 # 
 		<many-to-one name="#(reference.getName())#" column="#(column)#" class="#(reference.getMetaModelReferenced().getPOJOClassName())#" not-found="ignore"/>
 # 
 		}
 		else { 
-			if (mapping.isReferenceOverlappingWithSomeProperty(reference.getName())) {
-# 			
-			<!-- Reference: #(reference.getName())# Overlapped references still not supported -->
-# 
-			}
-			else {
 # 
 		<many-to-one name="#(reference.getName())#" class="#(reference.getMetaModelReferenced().getPOJOClassName())#" not-found="ignore"> 
 # 
@@ -186,8 +190,7 @@ while (itReferences.hasNext()) {
 			}
 # 
 		</many-to-one>
-# 
-			}
+# 			
 		}
 	}
 } 
