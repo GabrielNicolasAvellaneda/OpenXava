@@ -502,7 +502,7 @@
 	</target>
 	
 	<target name="createEJBJar" 
-		depends="createDist, updateDataSourceInfo, filter, configureJNDI">
+		depends="createDist, updateDataSourceInfo, filterWithConfiguration, filterWithoutConfiguration, filter, configureJNDI">
 		<jar jarfile="${dist.dir}/${name.jar}.jar" 
 			basedir="../${project.ejb}/${classes.dir}" 
 			manifest="../${project.ejb}/${meta-inf.dir}/MANIFEST.MF"/>
