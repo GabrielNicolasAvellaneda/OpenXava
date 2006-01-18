@@ -11,7 +11,7 @@ import org.openxava.util.XavaException;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Jan 12 10:33:08 CET 2006
+ * @version Wed Jan 18 10:17:34 CET 2006
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -70,7 +70,9 @@ public class HibernatePG {
     out.print(type);
     out.print(">");
     if (key.hasCalculatorDefaultValueOnCreate()) { 
-    out.print(" \n\t\t\t<generator class=\"org.openxava.hibernate.impl.DefaultValueIdentifierGenerator\">\n\t\t\t\t<param name=\"property\">oid</param>\n\t\t\t</generator>");
+    out.print(" \n\t\t\t<generator class=\"org.openxava.hibernate.impl.DefaultValueIdentifierGenerator\">\n\t\t\t\t<param name=\"property\">");
+    out.print(propertyName);
+    out.print("</param>\n\t\t\t</generator>");
     } else { 
     out.print(" \n\t\t\t<generator class=\"");
     out.print(generator);
@@ -360,7 +362,7 @@ public class HibernatePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Jan 12 10:33:08 CET 2006", // date this file was generated
+        { "Wed Jan 18 10:17:34 CET 2006", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/hibernate.xml", // input file
              "/home/javi/workspace/OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

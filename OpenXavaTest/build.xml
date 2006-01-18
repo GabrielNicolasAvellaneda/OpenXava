@@ -11,6 +11,7 @@
 	<property file="../openxava.properties"/>
 	<property file="${configuration}.properties"/>
 	<property name="datasource" value="OpenXavaTestDS"/>
+	<property name="portlets.default.locale" value="en"/>
 
 	<target name="touchHistory">
 		<tstamp>

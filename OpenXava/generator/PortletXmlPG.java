@@ -9,7 +9,7 @@ import org.openxava.generators.Generators;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Jan 05 14:00:52 CET 2006
+ * @version Wed Jan 18 11:36:32 CET 2006
  */
 public class PortletXmlPG {
     Properties properties = new Properties();
@@ -131,7 +131,7 @@ public class PortletXmlPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Jan 05 14:00:52 CET 2006", // date this file was generated
+        { "Wed Jan 18 11:36:32 CET 2006", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/portletxml.xml", // input file
              "/home/javi/workspace/OpenXava/generator/PortletXmlPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

@@ -32,7 +32,7 @@ public class MetaApplication extends MetaElement implements java.io.Serializable
 			return Labels.get(folder, locale);
 		}
 		catch (Exception ex) {
-			System.err.println(XavaResources.getString("element_i18n_warning", folder));
+			System.err.println(XavaResources.getString("element_i18n_warning", folder));			
 			return firstUpper(folder); 			
 		}				
 	}
