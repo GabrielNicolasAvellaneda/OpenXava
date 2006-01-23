@@ -20,6 +20,7 @@ private String getType(MetaProperty p) throws Exception {
 	if (p.hasValidValues() || 
 		p.getType().equals(boolean.class) ||
 		p.getType().equals(java.lang.Object.class)) return "java.lang.String";
+	if (java.sql.Timestamp.class.equals(p.getType())) return "java.lang.String";
 	if (java.util.Date.class.equals(p.getType())) return "java.lang.String";
 	if (java.math.BigDecimal.class.equals(p.getType())) return "java.lang.String";
 	return Primitives.toWrapperClass(p.getType()).getName();
