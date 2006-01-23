@@ -1,6 +1,7 @@
 package org.openxava.web.servlets;
 
 import java.io.*;
+import java.sql.*;
 import java.text.*;
 import java.util.*;
 
@@ -76,7 +77,8 @@ public class GenerateReportServlet extends HttpServlet {
 		}
 
 		public Object getValueAt(int row, int column) {
-			Object r = original.getValueAt(row, column);						
+			Object r = original.getValueAt(row, column);		
+
 			if (r instanceof Boolean) {
 				if (((Boolean) r).booleanValue()) return XavaResources.getString(locale, "yes");
 				return XavaResources.getString(locale, "no");
@@ -87,7 +89,10 @@ public class GenerateReportServlet extends HttpServlet {
 					return p.getValidValueLabel(locale, original.getValueAt(row, column));
 				}
 			}
-			
+			if (r instanceof Timestamp){
+				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				return dateFormat.format( r );
+			}
 			
 			if (r instanceof java.util.Date) {
 				return DateFormat.getDateInstance(DateFormat.SHORT, locale).format(r);
