@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="MiEscuela" default="desplegarWar" basedir=".">
+<project name="MiEscuela" default="desplegar" basedir=".">
 
 	<property name="project" value="MiEscuela" />
 	<property name="package" value="escuela"/>
@@ -45,6 +45,10 @@
 		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
 	</target>		
 	
+	<target name="desplegar">
+		<ant antfile="../OpenXava/build.xml" target="deploy"/>
+	</target>
+		
 	<target name="crearEarWebsphere">
 		<ant antfile="../OpenXava/build.xml" target="generateWebsphereMapping"/>
 		<antcall target="crearJarEJB"/>

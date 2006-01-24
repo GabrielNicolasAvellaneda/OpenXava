@@ -6,13 +6,12 @@
 String propertyKey = request.getParameter("propertyKey");
 MetaProperty p = (MetaProperty) request.getAttribute(propertyKey);
 boolean editable="true".equals(request.getParameter("editable"));
-String disabled=editable?"":"disabled";
 String applicationName = request.getParameter("application");
 String module = request.getParameter("module");
-long dif=System.currentTimeMillis(); // para evitar que el navegador cachee
+long dif=System.currentTimeMillis(); // to avoid browser caching
 %>
 
-<img src='ximage?application=<%=applicationName%>&module=<%=module%>&property=<%=p.getName()%>&dif=<%=dif%>' title="<%=p.getDescription(request)%>"/>
+<img name='<%=propertyKey%>' src='/<%=applicationName%>/xava/ximage?application=<%=applicationName%>&module=<%=module%>&property=<%=p.getName()%>&dif=<%=dif%>' title="<%=p.getDescription(request)%>"/>
 	
 <% if (editable) { %>	
 <span valign='middle'>

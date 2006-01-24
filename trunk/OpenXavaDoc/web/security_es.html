@@ -20,7 +20,7 @@ Solo necesitas usar los Portlets administrativos Jetspeed para crear los grupos 
 a estos grupos a tu gusto.
 <p>
 Si necesitas una seguridad m&aacute;s granulada, puedes editar estos archivos y modificarlos.
-Mira lo documentaci&oacute;n sobre ese tema en <a href="http://portals.apache.org/jetspeed-2/bronco.html">
+Mira lo documentaci&oacute;n sobre ese tema en <a href="http://portals.apache.org/jetspeed-2/guides/guide-security-declarative-psml.html">
 JetSpeed 2 Site</a>. Ten cuidado, porque los archivos de JetSpeed2 son sobreescritos por OpenXava
 cuando despliegas los portlets de nuevo. Por lo tanto necesitas configurar tu
 tarea ant de esta forma:
@@ -36,4 +36,5 @@ tarea ant de esta forma:
 Si deseas restrigir los datos dependiendo del usuario actual, puedes usar
 t&eacute;cnicas de programaci&oacute;n. Sobre esto puedes ver el c&oacute;digo de
 <code>org.openxava.filters.UserFilter</code>. En este caso se usa <code>request.getRemoteUser()</code>
-para filtrar los datos.
+para filtrar los datos. Adem&aacute;s, podemos usar la API de OpenXava <code>Users.getCurrent()</code> 
+para obtener el nombre del usuario actual en cualquier parte de una aplicaci&oacute;n OpenXava.

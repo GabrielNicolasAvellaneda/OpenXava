@@ -36,8 +36,8 @@ public class AccessTrackingCalculator implements IEntityCalculator {
 	public Object calculate() throws Exception {
 		Session session = null;
 		try {
-			Access access = newAccess();			
-			session = XHibernate.getSession();			
+			Access access = newAccess();
+			session = XHibernate.createSession();
 			session.save(access);
 			session.flush();			
 			session.close();

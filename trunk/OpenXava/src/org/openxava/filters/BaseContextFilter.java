@@ -16,8 +16,7 @@ import org.openxava.util.*;
 abstract public class BaseContextFilter implements IRequestFilter {
 
 	private HttpServletRequest request;	
-	private ModuleContext context;
-	private String nombre;
+	private ModuleContext context;	
 
 	public void setRequest(HttpServletRequest request) {
 		this.request = request;		
@@ -32,8 +31,7 @@ abstract public class BaseContextFilter implements IRequestFilter {
 		return context;		
 	}	
 	
-	protected Object get(String name) throws XavaException {
-		this.nombre = name;
+	protected Object get(String name) throws XavaException {		
 		return getContext().get(request, name);
 	}
 	

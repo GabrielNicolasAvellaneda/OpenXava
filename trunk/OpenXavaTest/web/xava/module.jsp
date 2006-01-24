@@ -249,3 +249,7 @@ function setFocus() {
 <%
 }
 %>
+
+<%
+manager.commit(); // If hibernate, ejb3, etc is used to render some value here is commit
+%>

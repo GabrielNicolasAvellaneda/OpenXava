@@ -524,7 +524,7 @@ public class MapFacade {
 		if (!usesEJBObtained) {
 			usesEJB = XavaPreferences.getInstance().isMapFacadeAsEJB();
 			usesEJBObtained = true;
-		}
+		}		
 		return usesEJB;
 	}
 	

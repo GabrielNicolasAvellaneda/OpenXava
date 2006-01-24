@@ -55,10 +55,22 @@ public class XHibernate {
 		Session s = (Session) currentSession.get();
 		if (s == null || !s.isOpen()) {
 			s = openSession();
-		}
+		}		
 		return s;
 	}
 	
+	/**
+	 * Create a new session. <p>
+	 * 
+	 * This session is not associated with the current thread,
+	 * and no transaction is started.
+	 *
+	 * @return Not null
+	 */
+	public static Session createSession() {
+		return getSessionFactory().openSession();
+	}
+				
 	private static Session openSession() {
 		Session s = getSessionFactory().openSession();
 		currentTransaction.set(s.beginTransaction());

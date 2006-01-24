@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="MySchool" default="deployWar" basedir=".">
+<project name="MySchool" default="deploy" basedir=".">
 
 	<property name="project" value="MySchool" />
 	<property name="package" value="school"/>
@@ -38,6 +38,10 @@
 	
 	<target name="deployPortlets"> 
 		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
+	</target>	
+	
+	<target name="deploy">
+		<ant antfile="../OpenXava/build.xml" target="deploy"/>
 	</target>	
 	
 	<target name="createWebsphereEar">

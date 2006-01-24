@@ -1,4 +1,5 @@
 <%@ page import="org.openxava.util.Is" %>
+<%@ page import="org.openxava.util.Users" %>
 <%@ page import="org.openxava.util.XavaResources" %>
 
 <%@ include file="script.jsp" %>
@@ -9,7 +10,8 @@
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%
-boolean isPortlet = (request.getAttribute("xava.formAction") != null);
+Users.setCurrent(request.getRemoteUser());
+boolean isPortlet = (request.getAttribute("xava.portlet.renderURL") != null);
 boolean messagesOnTop = !"false".equalsIgnoreCase(request.getParameter("messagesOnTop"));
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
 manager.setSession(session);
@@ -73,14 +75,14 @@ if (!Is.emptyString(forwardURI)) {
 	if ("true".equals(forwardInNewWindow)) {
 %>
 <script>
-window.open("http://<%=request.getServerName()%>:<%=request.getServerPort()%><%=request.getContextPath()%><%=forwardURI%>");
+window.open("<%=request.getScheme()%>://<%=request.getServerName()%>:<%=request.getServerPort()%><%=request.getContextPath()%><%=forwardURI%>");
 </script>
 <%	
 	}
 	else {
 %>
 <script>
-location.href="http://<%=request.getServerName()%>:<%=request.getServerPort()%><%=request.getContextPath()%><%=forwardURI%>";
+location.href="<%=request.getScheme()%>://<%=request.getServerName()%>:<%=request.getServerPort()%><%=request.getContextPath()%><%=forwardURI%>";
 </script>
 <%
 	}
@@ -177,13 +179,9 @@ function setFocus() {
 </div>
 
 <div class="<%=style.getModule()%>">
-<%
-String xavaFormAction = (String) request.getAttribute("xava.formAction");
-if (xavaFormAction == null) xavaFormAction = "";
-%>
 <form name='<%=manager.getForm()%>' 
 	method='POST' <%=manager.getEnctype()%> 
-	<%=xavaFormAction%>>
+	<%=manager.getFormAction(request)%>>
 <INPUT type="hidden" name="xava_action" value=""/>
 <INPUT type="hidden" name="xava_action_argv" value=""/>
 <INPUT type="hidden" name="xava_action_application" value="<%=request.getParameter("application")%>"/>

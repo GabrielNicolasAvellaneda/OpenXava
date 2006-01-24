@@ -9,9 +9,9 @@
 	<!-- property name="configuration" value="jboss-as400" /-->
 	<property file="../openxava.properties"/>
 	<property file="${configuration}.properties"/>
-	<property name="datasource" value="OpenXavaTestDS"/>
 	<property name="dist.dir" value = "${dist.base.dir}/${project}.dist"/> 
 	<property name="access.table" value = "TRACKING${separator}ACCESS"/>
+	
 	
 	<target name="replaceTable">
 		<copy file="../AccessTracking/components/Access.xml" 

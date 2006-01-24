@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="MyApplication" default="deployWar" basedir=".">
+<project name="MyApplication" default="deploy" basedir=".">
 
 	<property name="project" value="MyApplication" />
 	<property name="package" value="myapplication"/>
@@ -39,7 +39,11 @@
 		
 	<target name="deployWar">
 		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
-	</target>			
+	</target>		
+	
+	<target name="deploy">
+		<ant antfile="../OpenXava/build.xml" target="deploy"/>
+	</target>	
 	
 	<target name="redeployPortlets"> 
 		<touch file="../${project}/xava/application.xml"/>
