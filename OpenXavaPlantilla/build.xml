@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="MiAplicacion" default="desplegarWar" basedir=".">
+<project name="MiAplicacion" default="desplegar" basedir=".">
 
 	<property name="project" value="MiAplicacion" />
 	<property name="package" value="miaplicacion"/>
@@ -41,6 +41,10 @@
 		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
 	</target>
 	
+	<target name="desplegar">
+		<ant antfile="../OpenXava/build.xml" target="deploy"/>
+	</target>
+		
 	<target name="redesplegarPortlets"> 
 		<touch file="../${project}/xava/aplicacion.xml"/>
 		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>

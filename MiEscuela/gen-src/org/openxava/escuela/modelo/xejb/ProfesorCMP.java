@@ -75,6 +75,7 @@ public abstract class ProfesorCMP
 
    public void ejbRemove() throws javax.ejb.RemoveException
    {
+      super.ejbRemove();
 
    }
 

@@ -219,7 +219,7 @@ public class ModuleManager {
 		executeAction(action, null, errors, messages, null, request);
 	}
 
-	private void executeAction(IAction action, MetaAction metaAction, Messages errors, Messages messages, String propertyValues, HttpServletRequest request) {		
+	private void executeAction(IAction action, MetaAction metaAction, Messages errors, Messages messages, String propertyValues, HttpServletRequest request) {
 		try {						
 			action.setErrors(errors);
 			action.setMessages(messages);
@@ -342,7 +342,7 @@ public class ModuleManager {
 					request.setAttribute("xava.sendParametersToTab", "false");
 				}
 			}			
-			XHibernate.commit();
+			XHibernate.commit(); // after executing action
 		}
 		catch (ValidationException ex) {
 			errors.add(ex.getErrors());
@@ -359,6 +359,16 @@ public class ModuleManager {
 			XHibernate.rollback();
 		}				
 		
+	}
+	
+	public void commit() { // Usually after render page
+		try {
+			XHibernate.commit();
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			XHibernate.rollback();
+		}
 	}
 
 	private List parseMultipartRequest(HttpServletRequest request) throws FileUploadException {

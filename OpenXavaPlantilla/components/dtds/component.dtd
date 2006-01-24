@@ -5,7 +5,7 @@
  name ID #REQUIRED
 >
 
-<!ELEMENT entity (ejb?, implements*, (property|reference|collection)*, method*, finder*, postcreate-calculator*, postmodify-calculator*, validator*, remove-validator*)>
+<!ELEMENT entity (ejb?, bean?, implements*, (property|reference|collection)*, method*, finder*, postcreate-calculator*, postload-calculator*, postmodify-calculator*, preremove-calculator*, validator*, remove-validator*)>
 <!ATTLIST entity
  label CDATA #IMPLIED
 >
@@ -17,7 +17,7 @@
 	collection (true|false) "false" 
 >
 
-<!ELEMENT aggregate ((bean|ejb)?, implements*, (property|reference|collection)*, method*, finder*, postcreate-calculator*, postmodify-calculator*, validator*)>
+<!ELEMENT aggregate   ((bean|ejb)?, implements*, (property|reference|collection)*, method*, finder*, postcreate-calculator*, postload-calculator*, postmodify-calculator*, preremove-calculator*, validator*, remove-validator*)>
 <!ATTLIST aggregate
  name ID #REQUIRED
  label CDATA #IMPLIED
@@ -41,13 +41,13 @@
 
 <!ELEMENT section (#PCDATA|group)*>
 <!ATTLIST section
-	name CDATA #IMPLIED
+  name CDATA #IMPLIED
   label CDATA #IMPLIED
 >
 
-<!ELEMENT group (#PCDATA)>
+<!ELEMENT group (#PCDATA|group)*>
 <!ATTLIST group
-	name CDATA #IMPLIED
+  name CDATA #IMPLIED
   label CDATA #IMPLIED
 >
 
@@ -57,18 +57,21 @@
 <!ATTLIST reference-view
   reference CDATA #REQUIRED
   view CDATA #IMPLIED
+  read-only (true|false) "false"
   frame (true|false) "true"
-	create (true|false) "true"
-	search (true|false) "true"
+  create (true|false) "true"
+  search (true|false) "true"
 >
 
 <!ELEMENT descriptions-list EMPTY>
 <!ATTLIST descriptions-list
   description-property CDATA #IMPLIED
-	description-properties CDATA #IMPLIED
+  description-properties CDATA #IMPLIED
   depends CDATA #IMPLIED
-  condition CDATA #IMPLIED
+  condition CDATA #IMPLIED  
   order-by-key (true|false) "false"    
+  order CDATA #IMPLIED
+  label-format (NORMAL|SMALL|NO_LABEL) "NORMAL"
 >
 
 <!ELEMENT property-view (on-change?, action*)>
@@ -76,7 +79,7 @@
   property CDATA #REQUIRED
   label CDATA #IMPLIED
   read-only (true|false) "false"
-	label-format (NORMAL|SMALL|NO_LABEL) "NORMAL"
+  label-format (NORMAL|SMALL|NO_LABEL) "NORMAL"
 >
 
 <!ELEMENT on-change EMPTY>
@@ -85,12 +88,13 @@
 >
 
 
-<!ELEMENT collection-view (list-properties?, edit-action?, list-action*, detail-action*)>
+<!ELEMENT collection-view  (list-properties?, edit-action?, view-action?, list-action*, detail-action*)>
 <!ATTLIST collection-view
   collection CDATA #REQUIRED
   view CDATA #IMPLIED
   read-only (true|false) "false"
   edit-only (true|false) "false"
+  create-reference (true|false) "true"
 >
 
 <!ELEMENT list-properties (#PCDATA)>
@@ -104,6 +108,12 @@
 <!ATTLIST edit-action
   action CDATA #IMPLIED
 >
+
+<!ELEMENT view-action EMPTY>
+<!ATTLIST view-action
+  action CDATA #IMPLIED
+>
+
 
 <!ELEMENT detail-action EMPTY>
 <!ATTLIST detail-action
@@ -147,7 +157,7 @@
  hidden (true|false) "false"
 >
 
-<!ELEMENT reference EMPTY>
+<!ELEMENT reference (default-value-calculator?)>
 <!ATTLIST reference
  name CDATA #IMPLIED
  label CDATA #IMPLIED
@@ -176,6 +186,7 @@
 <!ATTLIST validator
  class CDATA #IMPLIED
  name CDATA #IMPLIED
+ only-on-create (true|false) "false"
 >
 
 <!ELEMENT remove-validator (set*)>
@@ -201,8 +212,18 @@
  class CDATA #REQUIRED
 >
 
+<!ELEMENT postload-calculator (set*)>
+<!ATTLIST postload-calculator
+ class CDATA #REQUIRED
+>
+
 <!ELEMENT postmodify-calculator (set*)>
 <!ATTLIST postmodify-calculator
+ class CDATA #REQUIRED
+>
+
+<!ELEMENT preremove-calculator (set*)>
+<!ATTLIST preremove-calculator
  class CDATA #REQUIRED
 >
 
@@ -307,7 +328,7 @@
 >
 
 
-<!ELEMENT reference-mapping-detail EMPTY>
+<!ELEMENT reference-mapping-detail (converter?)>
 <!ATTLIST reference-mapping-detail
  column CDATA #REQUIRED
  referenced-model-property CDATA #REQUIRED 

@@ -14,6 +14,8 @@ org.openxava.filters.meta.xmlparse
 org.openxava.formatters
 org.openxava.generators
 org.openxava.generators.xmlparse
+org.openxava.hibernate
+org.openxava.hibernate.impl
 org.openxava.mapping
 org.openxava.mapping.xmlparse
 org.openxava.model

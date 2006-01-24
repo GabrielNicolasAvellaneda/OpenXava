@@ -145,7 +145,7 @@ public class CustomersTest extends ModuleTestBase {
 		else {
 			String urlBase = Strings.noLastToken(url.getPath(), "/");
 			imageURL = urlPrefix + urlBase + image.getSource();
-		}
+		}		
 		response = getConversation().getResponse(imageURL);
 		assertEquals("Image not obtained", 0, response.getContentLength());		
 	}

@@ -20,7 +20,7 @@ Your only need use the Jetspeed Administrative Portlets to create the user group
 to this groups as you wish.
 <p>
 If you need a more granulated security, you can edit these files and to modify them.
-See documentation about this in <a href="http://portals.apache.org/jetspeed-2/bronco.html">
+See documentation about this in <a href="http://portals.apache.org/jetspeed-2/guides/guide-security-declarative-psml.html">
 JetSpeed 2 Site</a>. Beware, because the JetSpeed2 files are overwrited by OpenXava
 when you deploy the portlets again. Hence you need to configure your ant task in this way:
 <pre>
@@ -35,7 +35,8 @@ when you deploy the portlets again. Hence you need to configure your ant task in
 If you wish to restrict data depend on the current user, you can use
 programmatic techniques. About this you can see the code in 
 <code>org.openxava.filters.UserFilter</code>. In this case <code>request.getRemoteUser()</code>
-is used to filter data.
+is used to filter data. Furthermore, you can use the OpenXava API <code>Users.getCurrent()</code> to
+obtain the name of the current user in any part of a OpenXava application.
 
 
 

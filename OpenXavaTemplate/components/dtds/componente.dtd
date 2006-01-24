@@ -5,7 +5,7 @@
  nombre ID #REQUIRED
 >
 
-<!ELEMENT entidad (ejb?, implementa*, (propiedad|referencia|coleccion)*, metodo*, buscador*, calculador-poscrear*, calculador-posmodificar*, validador*, validador-borrar*)>
+<!ELEMENT entidad (ejb?, bean?, implementa*, (propiedad|referencia|coleccion)*, metodo*, buscador*, calculador-poscrear*, calculador-poscargar*, calculador-posmodificar*, calculador-preborrar*, validador*, validador-borrar*)>
 <!ATTLIST entidad
  etiqueta CDATA #IMPLIED
 >
@@ -17,7 +17,7 @@
 	coleccion (true|false) "false" 
 >
 
-<!ELEMENT agregado ((bean|ejb)?, implementa*, (propiedad|referencia|coleccion)*, metodo*, buscador*, calculador-poscrear*, calculador-posmodificar*, validador*)>
+<!ELEMENT agregado   ((bean|ejb)?, implementa*, (propiedad|referencia|coleccion)*, metodo*, buscador*, calculador-poscrear*, calculador-poscargar*, calculador-posmodificar*, calculador-preborrar*, validador*, validador-borrar*)>
 <!ATTLIST agregado
  nombre ID #REQUIRED
  etiqueta CDATA #IMPLIED
@@ -46,34 +46,35 @@
 
 <!ELEMENT seccion (#PCDATA|grupo)*>
 <!ATTLIST seccion
-	nombre CDATA #IMPLIED
+  nombre CDATA #IMPLIED
   etiqueta CDATA #IMPLIED
 >
 
-<!ELEMENT grupo (#PCDATA)>
+<!ELEMENT grupo (#PCDATA|grupo)*>
 <!ATTLIST grupo
-	nombre CDATA #IMPLIED
+  nombre CDATA #IMPLIED
   etiqueta CDATA #IMPLIED
 >
-
-
 
 <!ELEMENT vista-referencia (accion-buscar?|lista-descripciones?)>
 <!ATTLIST vista-referencia
   referencia CDATA #REQUIRED
   vista CDATA #IMPLIED
+  solo-lectura (true|false) "false"
   marco (true|false) "true"
-	crear (true|false) "true"
-	buscar (true|false) "true"
+  crear (true|false) "true"
+  buscar (true|false) "true"
 >
 
 <!ELEMENT lista-descripciones EMPTY>
 <!ATTLIST lista-descripciones
   propiedad-descripcion CDATA #IMPLIED
-	propiedades-descripcion CDATA #IMPLIED
+  propiedades-descripcion CDATA #IMPLIED
   depende-de CDATA #IMPLIED
   condicion CDATA #IMPLIED
   ordenado-por-clave (true|false) "false"    
+  orden CDATA #IMPLIED
+  formato-etiqueta (NORMAL|PEQUENA|SIN_ETIQUETA) "NORMAL"
 >
 
 <!ELEMENT vista-propiedad (al-cambiar?, accion*)>
@@ -81,7 +82,7 @@
   propiedad CDATA #REQUIRED
   etiqueta CDATA #IMPLIED
   solo-lectura (true|false) "false"
-	formato-etiqueta (NORMAL|PEQUEÑA|SIN_ETIQUETA) "NORMAL"
+  formato-etiqueta (NORMAL|PEQUENA|SIN_ETIQUETA) "NORMAL"
 >
 
 <!ELEMENT al-cambiar EMPTY>
@@ -90,12 +91,13 @@
 >
 
 
-<!ELEMENT vista-coleccion (mediador?, propiedades-lista?, accion-editar?, accion-lista*, accion-detalle*)>
+<!ELEMENT vista-coleccion (mediador?, propiedades-lista?, accion-editar?, accion-ver?, accion-lista*, accion-detalle*)>
 <!ATTLIST vista-coleccion
   coleccion CDATA #REQUIRED
   vista CDATA #IMPLIED
   solo-lectura (true|false) "false"
   solo-edicion (true|false) "false"
+  crear-referencia (true|false) "true"  
 >
 
 <!ELEMENT propiedades-lista (#PCDATA)>
@@ -110,6 +112,12 @@
 <!ATTLIST accion-editar
   accion CDATA #IMPLIED
 >
+
+<!ELEMENT accion-ver EMPTY>
+<!ATTLIST accion-ver
+  accion CDATA #IMPLIED
+>
+
 
 <!ELEMENT accion-detalle EMPTY>
 <!ATTLIST accion-detalle
@@ -153,7 +161,7 @@
  oculta (true|false) "false"
 >
 
-<!ELEMENT referencia EMPTY>
+<!ELEMENT referencia (calculador-valor-defecto?)>
 <!ATTLIST referencia
  nombre CDATA #IMPLIED
  etiqueta CDATA #IMPLIED
@@ -182,6 +190,7 @@
 <!ATTLIST validador
  clase CDATA #IMPLIED
  nombre CDATA #IMPLIED
+ solo-al-crear (true|false) "false" 
 >
 
 <!ELEMENT validador-borrar (poner*)>
@@ -189,7 +198,6 @@
  clase CDATA #IMPLIED
  nombre CDATA #IMPLIED
 >
-
 
 <!ELEMENT calculador (poner*)>
 <!ATTLIST calculador
@@ -207,8 +215,18 @@
  clase CDATA #REQUIRED
 >
 
+<!ELEMENT calculador-poscargar (poner*)>
+<!ATTLIST calculador-poscargar
+ clase CDATA #REQUIRED
+>
+
 <!ELEMENT calculador-posmodificar (poner*)>
 <!ATTLIST calculador-posmodificar
+ clase CDATA #REQUIRED
+>
+
+<!ELEMENT calculador-preborrar (poner*)>
+<!ATTLIST calculador-preborrar
  clase CDATA #REQUIRED
 >
 
@@ -333,7 +351,7 @@
 >
 
 
-<!ELEMENT detalle-mapeo-referencia EMPTY>
+<!ELEMENT detalle-mapeo-referencia (conversor?)>
 <!ATTLIST detalle-mapeo-referencia
  columna-tabla CDATA #REQUIRED
  propiedad-modelo-referenciado CDATA #REQUIRED 

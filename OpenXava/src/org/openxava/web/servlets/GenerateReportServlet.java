@@ -122,9 +122,11 @@ public class GenerateReportServlet extends HttpServlet {
 	
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
+		try {			
+			request.getParameter("application"); // for a bug in websphere 5.1 
+			request.getParameter("module"); // for a bug in websphere 5.1		
 			Tab tab = (Tab) request.getSession().getAttribute("xava_reportTab");			
-			String uri = request.getRequestURI(); 
+			String uri = request.getRequestURI();
 			if (uri.endsWith(".pdf")) {
 				Map parameters = new HashMap();
 				tab.setRequest(request);				

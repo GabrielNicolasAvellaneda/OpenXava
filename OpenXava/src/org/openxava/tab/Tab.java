@@ -403,7 +403,6 @@ public class Tab {
 		int indexIncrement = 0;
 		if (getMetaTab().hasFilter()) {
 			IFilter filter = getMetaTab().getMetaFilter().getFilter();
-			
 			if (filter instanceof IRequestFilter) {
 				((IRequestFilter) filter).setRequest(request);
 			}
@@ -682,8 +681,9 @@ public class Tab {
 	}
 
 	public void setRequest(HttpServletRequest request) {
-		this.request = request;
+		this.request = request;		
 	}
+	
 	public HttpServletRequest getRequest() {
 		return request;
 	}

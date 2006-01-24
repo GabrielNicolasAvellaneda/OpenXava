@@ -5,7 +5,7 @@
 <component name="Carrier">
 
 	<entity>
-		<property name="number" type="int" key="true"
+		<property name="number" type="int" key="true" 
 			size="5" required="true"/>
 		<property name="name" stereotype="NO_FORMATING_STRING"
 			size="40" required="true"/>			  

@@ -35,7 +35,7 @@ public class ReferenceSearchAction extends ViewBaseAction implements INavigation
 	private String currentReferenceLabel;
 	private String nextController = "ReferenceSearch"; // If you change the default value change setter and getter doc too
 	
-	public void execute() throws Exception {
+	public void execute() throws Exception {		
 		Tab tab = new Tab();
 		tab.setRequest(getTab().getRequest());
 		setTab(tab);

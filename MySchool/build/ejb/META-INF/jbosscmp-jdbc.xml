@@ -19,7 +19,7 @@
       <entity>
          <ejb-name>Teacher</ejb-name>
 
-         <table-name>MYSCHOOL@separator@TEACHER</table-name>
+         <table-name>MYSCHOOL_TEACHER</table-name>
 
          <cmp-field>
             <field-name>_Name</field-name>
