@@ -1,25 +1,18 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-</head>
-<body>
 Welcome to this short <span id="transl1">voyage</span>
 to start to use OpenXava.<br>
 These instructions suposses&nbsp; that you have download, install and
-start openxava-1.2.<br>
+start openxava.<br>
 Here are the steps to begin to use OpenXava:<br>
 <ul>
   <li><a href="portal/tutorial.psml#Ejecutar_aplicacion_ejemplo_MiEscuela">Execute
+example application MySchool.</a></li>
+  <li><a href="portal/tutorial.psml#Modificar_aplicacion_ejemplo_MiEscuela">Modify
 example application MySchool.</a></li>
   <li><a href="portal/tutorial.psml#Ejecutar_prueba_junit_de_aplicacion">Execute
 junit
 tests of MySchool application.</a><br>
   </li>
-  <li><a href="portal/tutorial.psml#Modificar_aplicacion_ejemplo_MiEscuela">Modify
-example application MySchool.</a></li>
-  <li><a href="portal/tutorial.psml#Ejecutar_pruebas_junit_completas_para">Execute
-full
-junit test suite for OpenXava.</a></li>
+  <li><a href="portal/tutorial.psml#deploy_in_portal">Deploy MySchool in the portal.</a></li>
   <li><a href="portal/tutorial.psml#Ayuda">Help</a><br>
   </li>
 </ul>
@@ -27,32 +20,22 @@ junit test suite for OpenXava.</a></li>
 example application
 MySchool</h4>
 OpenXava distribution comes with an example application called <span
- style="font-style: italic;">MySchool</span>, in order to execute it,
-click the link 'MySchool' in left menu, or go to <a
- href="http://localhost:8080/openxava/portal/MySchool">http://localhost:8080/openxava/portal/MySchool</a>.<br>
-Now you can play with the
-application, and see how it works.<br>
-<h4><a name="Ejecutar_prueba_junit_de_aplicacion"></a>Execute
-junit
-test of MySchool application</h4>
-Go to your Eclipse and in your <span style="font-style: italic;">MySchool</span>
-project:
+ style="font-style: italic;">MySchool</span>, in order to execute it
+follow the next steps, using ant targets. The ant targets used are set in Eclipse,
+so to execute it only it is needed to click on <span id="transl1">arrow
+of External Tools button</span> <span style="color: rgb(255, 0, 0);"></span><img
+ style="width: 16px; height: 16px;" alt="external tools"
+ src="../../../../../OpenXavaDoc/images/external_tools.gif"><br>
 <ul>
-  <li>Go to <span style="font-family: monospace;">TeachersTest</span>
-class (in <span style="font-family: monospace;">src/org.openxava.school.tests</span>)
-and with right button choose <span style="font-style: italic;">Run
-&gt; JUnit Test</span></li>
+  <li>Execute target ant <span style="font-style: italic;">MySchool.deployWar</span></li>
+  <li>Wait to see in JBoss console <span
+ style="font-family: monospace;">deploy, ctxPath=/MySchool, warUrl=.../deploy/MySchool.war/</span></li>
+  <li>Go to <a
+ href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&module=Teachers" target="_blank">http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Teachers</a></li>
+  <li>And let's play...<br>
+  </li>
 </ul>
-The OpenXava junit test allows to test a module like a real user with
-an
-Internet navigator. So it is possible to automatize the test
-application process. Your are encouraged to examine the <span
- style="font-family: monospace;">TeachersTest</span>
-code for make idea
-of how create a junit test for OpenXava. If you want to develop quality
-applications is <span id="transl1">essential
-t</span><span id="transl1">o
-become fond</span><span id="transl1"> to junit test.</span><br>
+
 <h4><a name="Modificar_aplicacion_ejemplo_MiEscuela"></a>Modify
 example
 application MySchool</h4>
@@ -228,14 +211,11 @@ All</span> <img style="width: 16px; height: 16px;" alt="Build All"
  style="font-family: monospace;">Started
 J2EE
 application: ... MySchool.ear</span></li>
-  <li>Execute target ant <span style="font-style: italic;">MySchool.deployPortlets</span></li>
-  <li>Wait to that in console of
-JBoss appears <span style="font-family: monospace;">started Portlet
-Application at: MySchool</span></li>
+  <li>Execute target ant <span style="font-style: italic;">MySchool.deployWar</span></li>
+  <li>Wait to see in JBoss console <span
+ style="font-family: monospace;">deploy, ctxPath=/MySchool, warUrl=.../deploy/MySchool.war/</span></li>
   <li>Go to <a
- href="http://localhost:8080/openxava/portal/MySchool/Pupils.psml">http://localhost:8080/openxava/portal/MySchool/Pupils.psml</a></li>
-  <li>If portlet is not displayed, wait some seconds and click in the
-reload button of your browser.</li>
+ href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&module=Pupils" target="_blank">http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils</a></li>
   <li>And let's play...<br>
   </li>
 </ul>
@@ -341,10 +321,9 @@ And now to test it:<br>
 All</span> <img style="width: 16px; height: 16px;" alt="Build All"
  src="/OpenXavaDoc/images/builder.gif"></li>
   <li>Execute ant target <span style="font-style: italic;">MySchool.deployEJB</span></li>
-  <li>Execute ant target <span style="font-style: italic;">MySchool.deployPortlets</span></li>
+  <li>Execute ant target <span style="font-style: italic;">MySchool.deployWar</span></li>
   <li>Go to <a
- href="http://localhost:8080/openxava/portal/MySchool/Pupils.psml">http://localhost:8080/openxava/portal/MySchool/Pupils.psml</a><a
- href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils"></a></li>
+ href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&module=Pupils" target="_blank">http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils</a></li>
 </ul>
 As you see, plain vanilla.<br>
 If you want the reference to be displayed in combo format, you
@@ -470,10 +449,8 @@ referenced-model-property="id"/&gt;</span><span
  style="width: 16px; height: 16px;" alt="Build All"
  src="/OpenXavaDoc/images/builder.gif"></li>
   <li>Execute ant target<span style="font-style: italic;">
-MySchool.deployPortlets</span></li>
-  <li>Go to <a
- href="http://localhost:8080/openxava/portal/MySchool/Pupils.psml">http://localhost:8080/openxava/portal/MySchool/Pupils.psml</a><a
- href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils"></a></li>
+MySchool.deployWar</span></li>
+  <li>Go to <a href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&module=Pupils" target="_blank">http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils</a></li>
 </ul>
 And now let's go to put a pupils collection in teacher. Touch <span
  style="font-family: monospace;">Teacher.xml</span>
@@ -572,33 +549,48 @@ property="name" column="NAME"/&gt;</span><br
  style="width: 16px; height: 16px;" alt="Build All"
  src="/OpenXavaDoc/images/builder.gif"></li>
   <li>Execute ant target <span style="font-style: italic;">MySchool.deployEJB</span></li>
-  <li>Execute ant target <span style="font-style: italic;">MySchool.deployPortlets</span></li>
+  <li>Execute ant target <span style="font-style: italic;">MySchool.deployWar</span></li>
   <li>Go to <a
- href="http://localhost:8080/openxava/portal/MySchool/Teachers.psml">http://localhost:8080/openxava/portal/MySchool/Teachers.psml</a><a
- href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Teachers"></a></li>
+ href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&module=Teachers" target="_blank">http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Teachers</a></li>
 </ul>
+
+<h4><a name="Ejecutar_prueba_junit_de_aplicacion"></a>Execute
+junit
+test of MySchool application</h4>
+Go to your Eclipse and in your <span style="font-style: italic;">MySchool</span>
+project:
+<ul>
+  <li>Go to <span style="font-family: monospace;">TeachersTest</span>
+class (in <span style="font-family: monospace;">src/org.openxava.school.tests</span>)
+and with right button choose <span style="font-style: italic;">Run
+&gt; JUnit Test</span></li>
+</ul>
+The OpenXava junit test allows to test a module like a real user with
+an
+Internet navigator. So it is possible to automatize the test
+application process. Your are encouraged to examine the <span
+ style="font-family: monospace;">TeachersTest</span>
+code for make idea
+of how create a junit test for OpenXava. If you want to develop quality
+applications is <span id="transl1">essential
+t</span><span id="transl1">o
+become fond</span><span id="transl1"> to junit test.</span><br>
+
+<h4><a name="deploy_in_portal"></a>Deploy MySchool in the portal</h4>
+After your application works fine, you can deploy it in a Java portal:
+<ul>
+  <li>Execute ant target <span style="font-style: italic;">MySchool.deployPortlets</span></li>
+  <li>Wait to that in console of
+JBoss appears <span style="font-family: monospace;">started Portlet
+Application at: MySchool</span></li>  
+  <li>Go to <a
+ href="http://localhost:8080/openxava/portal/MySchool">http://localhost:8080/openxava/portal/MySchool</a></li>
+</ul>
+
 That's all, folks<br>
 In this example you can see that little changes imply little effort and
 the effect is seen on instantaneous form.<br>
-<h4><a name="Ejecutar_pruebas_junit_completas_para"></a>Execute
-full
-junit test suite for OpenXava</h4>
-The OpenXavaTest project has a double function, it is server as full
-junit test suite for OpenXava (currently more or less 290 tests), so it
-assures
-the constant robustness of OpenXava; and on the other hand is the
-official
-reference documentation of OpenXava. Everything possible, how and the
-behaviour of OpenXava is shown in OpenXavaTest.<br>
-Let's go:<br>
-<ul>
-  <li>Execute ant target <span style="font-style: italic;">OpenXavaTest.deployEJB</span></li>
-  <li>Execute ant target <span style="font-style: italic;">OpenXavaTest</span><span
- style="font-style: italic;">.deployWar</span></li>
-  <li>Execute <span style="font-style: italic;">XavaSuite.</span> You
-can find it using&nbsp;<img style="width: 16px; height: 16px;" alt="run"
- src="/OpenXavaDoc/images/run.gif"> button.</li>
-</ul>
+
 <h4><a name="Ayuda"></a>Help</h4>
 If you wish to have an idea of all OpenXava features, that surpass what
 you
@@ -613,5 +605,3 @@ with OpenXava in:<br>
 <br>
 You can learn more things about OpenXava reading its <a
  href="/OpenXavaDoc/openxava-1.2.1-reference-guide.pdf">Reference Guide</a>.<br>
-</body>
-</html>
