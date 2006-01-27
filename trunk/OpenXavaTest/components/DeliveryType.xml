@@ -7,6 +7,9 @@
 	<entity>
 		<property name="number" type="int" key="true"/>
 		<property name="description" type="String" required="true"/>
+		<collection name="deliveries">
+			<reference model="Delivery" role="type"/>
+		</collection>
 		<postcreate-calculator class="org.openxava.test.calculators.DeliveryTypePostcreateCalculator">						
 			<set property="number"/>
 			<set property="suffix" value="CREATED"/>
@@ -14,6 +17,10 @@
 		<postmodify-calculator class="org.openxava.test.calculators.DeliveryTypePostmodifyCalculator"/>						
 		<remove-validator class="org.openxava.test.validators.DeliveryTypeRemoveValidator"/>									
 	</entity>
+	
+	<view>
+		<members>number; description</members>
+	</view>
 	
 	<entity-mapping table="XAVATEST@separator@DELIVERYTYPE">
 		<property-mapping property="number" column="NUMBER"/>		

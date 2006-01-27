@@ -1,7 +1,5 @@
 package org.openxava.test.validators;
 
-import java.util.*;
-
 import org.openxava.test.model.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
@@ -18,8 +16,7 @@ public class DeliveryTypeRemoveValidator implements IRemoveValidator {
 	}
 
 	public void validate(Messages errors) throws Exception {
-		Collection deliveries = DeliveryUtil.getHome().findByType(deliveryType.getNumber());				
-		if 	(!deliveries.isEmpty()) {
+		if 	(!deliveryType.getDeliveries().isEmpty()) {
 			errors.add("not_remove_delivery_type_if_in_deliveries");	
 		}
 	}
