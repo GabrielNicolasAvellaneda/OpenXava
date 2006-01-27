@@ -73,15 +73,13 @@ public class DeliveriesTest extends ModuleTestBase {
 	public void testReferenceAsDescriptionsListWithValidValuesInKey() throws Exception {
 		execute("Mode.detailAndFirst");
 		assertValue("shipment.KEY", "");
-		ShipmentRemote shipment = (ShipmentRemote)
-			PortableRemoteObject.narrow(
-				ShipmentUtil.getHome().findAll().iterator().next(), ShipmentRemote.class);		
-		setValue("shipment.KEY", shipment.getPrimaryKey().toString());
+		IShipment shipment = (IShipment) Shipment.findAll().iterator().next();		
+		setValue("shipment.KEY", shipment.toString());
 		execute("CRUD.save");
 		assertNoErrors();
 		execute("Mode.list");
 		execute("Mode.detailAndFirst");
-		assertValue("shipment.KEY", shipment.getPrimaryKey().toString());
+		assertValue("shipment.KEY", shipment.toString()); 
 		assertDescriptionValue("shipment.KEY", shipment.getDescription());
 		// Restoring		
 		setValue("shipment.KEY", "");
