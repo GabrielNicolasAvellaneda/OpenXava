@@ -14,7 +14,7 @@ import org.openxava.validators.*;
 public class SaveAction extends ViewBaseAction {
 		
 	private boolean resetAfter = true;
-
+    
 	public void execute() throws Exception {		
 		try {
 			Map values = null;
@@ -42,7 +42,8 @@ public class SaveAction extends ViewBaseAction {
 			}
 			else {
 				getView().setKeyEditable(false);
-				getView().setValues(values);				
+				getView().setValues(values);
+                addMessage("saveCorrectly");
 			}			
 			resetDescriptionsCache();
 		}
