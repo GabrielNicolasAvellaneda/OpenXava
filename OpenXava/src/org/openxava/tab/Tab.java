@@ -864,26 +864,7 @@ public class Tab {
 	private String getUserName() { 
 		String user = Users.getCurrent();
 		if (user != null) return user;
-		// The next code if to support Jetspeed 1.x. This code will be remove in the future
-		Object rundata = request.getAttribute("rundata");
-		if (rundata == null) { 
-			return "openxava"; // Default user use out of jetspeed, for testing for example
-		}	
-		else {
-			PropertiesManager pmRundata = new PropertiesManager(rundata);
-			try {
-				// Using introspection for no link OpenXava to turbine and jetspeed1.x
-				// This is temporal. In future JSR-168 compatible, and remove this code 
-				Object jetspeedUser = pmRundata.executeGet("user");
-				PropertiesManager pmUser = new PropertiesManager(jetspeedUser);
-				return (String) pmUser.executeGet("userName");
-			}
-			catch (Exception ex) {				
-				ex.printStackTrace(); 
-				System.err.println(XavaResources.getString("warning_get_user"));
-				return "openxava";
-			}
-		}						
+		return "openxava";
 	}
 
 
