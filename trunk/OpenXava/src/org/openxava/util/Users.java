@@ -20,6 +20,7 @@ public class Users {
 	public static String getCurrent() {
 		return (String) current.get();
 	}
+	
 	/**
 	 * Associated an user to the current thread. <p>
 	 */	
@@ -27,6 +28,12 @@ public class Users {
 		current.set(userName);
 	}
 	
+	/**
+	 * Associated the user of the request to the current thread. <p>
+	 * 
+	 * Takes into account JetSpeed 1.5 user managament, althought
+	 * it's generic enought to work in any servlet container.
+	 */
 	public static void setCurrent(HttpServletRequest request) {
         Object rundata = request.getAttribute("rundata");
 		if (!Is.emptyString(request.getRemoteUser())) {

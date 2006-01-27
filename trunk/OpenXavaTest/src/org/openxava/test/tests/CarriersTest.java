@@ -69,7 +69,7 @@ public class CarriersTest extends ModuleTestBase {
 		XHibernate.getSession().createQuery("delete from Carrier").executeUpdate();
 		XHibernate.commit();
 	}
-	
+		
 	public void testHideShowRows() throws Exception {
 		assertListRowCount(5);
 		assertAction("List.hideRows");
