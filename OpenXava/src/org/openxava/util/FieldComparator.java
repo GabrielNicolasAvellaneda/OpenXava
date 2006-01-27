@@ -20,7 +20,11 @@ public class FieldComparator implements Comparator {
 		if (f1 == f2) return 0;
 		if (f1 == null) return -1;
 		if (f2 == null) return 1;
-		return ((Field) f1).getName().compareTo(((Field) f2).getName());
+		String name1 = ((Field) f1).getName().toLowerCase();
+		if (name1.startsWith("_")) name1 = name1.substring(1);
+		String name2 = ((Field) f2).getName().toLowerCase();
+		if (name2.startsWith("_")) name2 = name2.substring(1);		
+		return name1.compareTo(name2);
 	}
 	
 	public static FieldComparator getInstance() {

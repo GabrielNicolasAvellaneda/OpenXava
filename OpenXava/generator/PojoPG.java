@@ -15,7 +15,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Jan 24 11:48:38 CET 2006
+ * @version Fri Jan 27 18:09:40 CET 2006
  */
 public class PojoPG {
     Properties properties = new Properties();
@@ -242,28 +242,7 @@ public class PojoPG {
     out.print(aggregateName);
     out.print("\");");
     } 
-    out.print(" \t\n\t\t}\n\t\treturn metaModel;\n\t}\n\t\n\tpublic String toString() {");
-    
-    		StringBuffer string = new StringBuffer();
-    		string.append('"');
-    		string.append(name);
-    		Collection metaMembers = metaModel.getMetaMembersKey();
-    		Iterator itKeys = metaMembers.iterator();	
-    		while (itKeys.hasNext()) {	
-    			MetaMember key = (MetaMember) itKeys.next();
-    			string.append("::");
-    			string.append('"');
-    			string.append(" + ");
-    			string.append(key.getName());
-    			if (itKeys.hasNext()) {
-       				string.append(" + ");
-       				string.append('"');
-    			}
-    		}
-    	
-    out.print(" \n\t\treturn ");
-    out.print(string);
-    out.print(";\n\t}\n\n\tpublic boolean equals(Object other) {\t\t\n\t\tif (other == null) return false;\n\t\treturn toString().equals(other.toString());\n\t}\n\t\n\tpublic int hashCode() {\t\t\n\t\treturn toString().hashCode();\n\t}\n\t\n}");
+    out.print(" \t\n\t\t}\n\t\treturn metaModel;\n\t}\n\t\n\tpublic String toString() {\t\t\n\t\tStringBuffer toStringValue = new StringBuffer(\"[.\");\n\t\tjava.lang.reflect.Field [] fields = getClass().getDeclaredFields();\n\t\tArrays.sort(fields, FieldComparator.getInstance());\n\t\tfor (int i=0; i < fields.length; i++) {\n\t\t\ttry {\n\t\t\t\tif (getMetaModel().isKey(fields[i].getName())) {\n\t\t\t\t\ttoStringValue.append(fields[i].get(this)).append('.');\n\t\t\t\t}\n\t\t\t}\n\t\t\tcatch (Exception ex) {\n\t\t\t\tex.printStackTrace();\n\t\t\t\ttoStringValue.append(\" \").append('.');\n\t\t\t}\n\t\t}\n\t\ttoStringValue.append(']');\n\t\treturn toStringValue.toString();\n\t}\n\n\tpublic boolean equals(Object other) {\t\t\n\t\tif (other == null) return false;\n\t\treturn toString().equals(other.toString());\n\t}\n\t\n\tpublic int hashCode() {\t\t\n\t\treturn toString().hashCode();\n\t}\n\t\n}");
     
         } catch (Exception e) {
             System.out.println("Exception: "+e.getMessage());
@@ -298,9 +277,9 @@ public class PojoPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Jan 24 11:48:38 CET 2006", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/pojo.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/PojoPG.java" }, // output file
+        { "Fri Jan 27 18:09:40 CET 2006", // date this file was generated
+             "/home/javi/workspace2/OpenXava/generator/pojo.xml", // input file
+             "/home/javi/workspace2/OpenXava/generator/PojoPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

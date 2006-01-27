@@ -107,9 +107,12 @@ else {
 		String propertyName = prop.getName();			
 		if (!prop.isKey()) {
 			if (pMapping.hasMultipleConverter()) {
+				for (Iterator itCmpFields = pMapping.getCmpFields().iterator(); itCmpFields.hasNext();) {					
+					CmpField field = (CmpField) itCmpFields.next();
 # 
-		<!--  Mapping of "#(propertyName)#" : multiple columns mapping still not supported -->
-# 			
+		<property name="#(propertyName)#_#(field.getConverterPropertyName())#" column="#(field.getColumn())#" access="field" type="#(field.getCmpTypeName())#"/>						
+# 				
+				}
 			}
 			else {
 				String type = pMapping.getCmpType().isArray()?"":"type='" + pMapping.getCmpTypeName() + "'";

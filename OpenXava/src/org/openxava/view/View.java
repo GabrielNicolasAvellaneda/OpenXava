@@ -279,7 +279,7 @@ public class View implements java.io.Serializable {
 			values.putAll(hiddenKey);
 		}
 		
-		return values;
+		return Collections.unmodifiableMap(values);
 	}
 	
 	private Map getHiddenKey(Map keyValues) throws XavaException {
