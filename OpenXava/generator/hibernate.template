@@ -207,9 +207,14 @@ while (itCollections.hasNext()) {
 	boolean isAggregate = col.getMetaReference().getMetaModelReferenced() instanceof MetaAggregate;
 	String cascadeDelete = isAggregate?"cascade='delete'":"";
 	String roleName = col.getMetaReference().getRole();	 
-	Collection columns = col.getMetaReference().getMetaModelReferenced().getMapping().getReferenceMapping(roleName).getColumns();
+	ModelMapping referencedMapping = col.getMetaReference().getMetaModelReferenced().getMapping();
+	Collection columns = referencedMapping.getReferenceMapping(roleName).getColumns();
 	Collection cKeys = col.getMetaReference().getMetaModelReferenced().getAllKeyPropertiesNames();
-	String nKeys = Strings.toString(cKeys);          		
+	StringBuffer nKeys = new StringBuffer();
+	for (Iterator it = cKeys.iterator(); it.hasNext();) {
+		nKeys.append(referencedMapping.getColumn((String) it.next()));
+		if (it.hasNext()) nKeys.append(", ");
+	}
 	if (columns.size() == 1) {	
 		String column = (String) columns.iterator().next();
 #  
