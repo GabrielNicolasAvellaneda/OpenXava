@@ -124,7 +124,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {
 			MetaModel metaModel = getMetaModel(modelName);					
-			setValues(persistenceProvider, metaModel, keyValues, new HashMap(values));
+			setValues(persistenceProvider, metaModel, keyValues, values);
 			persistenceProvider.commit();
 		}
 		catch (FinderException ex) {

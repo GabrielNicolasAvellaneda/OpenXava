@@ -174,6 +174,25 @@
 		
 	</view>
 	
+	<view name="NestedSections">
+		<reference-view reference="customer" view="Simple"/>
+		
+		<members>
+			year, number
+			<section name="customer">customer</section>
+			<section name="data">				 
+				<section name="details">details</section>
+				<section name="amounts">
+					<section name="vat">vatPercentage; vat</section>				
+					<section name="amountsSum">amountsSum</section>
+				</section>
+			</section>						
+			<section name="deliveries">deliveries</section>
+		</members>				
+		
+	</view>
+	
+	
 	<view name="OnlyReadDetails">
 	
 		<collection-view collection="details" read-only="true"/>

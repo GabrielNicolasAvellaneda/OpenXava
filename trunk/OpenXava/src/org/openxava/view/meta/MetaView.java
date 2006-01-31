@@ -275,6 +275,7 @@ public class MetaView extends MetaElement implements Cloneable {
 	 */
 	public void setMembersNames(String membersNames) throws XavaException {			
 		init();				
+		if (membersNames == null) membersNames = "";
 		if (membersNames.trim().equals("*")) {
 			setAllMembers(true);			
 		} else {
@@ -466,7 +467,11 @@ public class MetaView extends MetaElement implements Cloneable {
 		return sections == null?Collections.EMPTY_LIST:sections;		
 	}
 	
-	public void addSection(String name, String label, String members) throws XavaException {
+	/**
+	 * 
+	 * @return The added section
+	 */
+	public MetaView addSection(String name, String label, String members) throws XavaException {
 		if (sections == null) sections = new ArrayList();		
 		MetaView section = new MetaView();
 		section.setSection(true);
@@ -477,6 +482,7 @@ public class MetaView extends MetaElement implements Cloneable {
 		section.setMembersNames(members);
 		promote(section);		
 		sections.add(section);
+		return section; 
 	}
 	
 	public void addMetaGroup(String name, String label, String members) throws XavaException {
@@ -498,7 +504,7 @@ public class MetaView extends MetaElement implements Cloneable {
 		}
 		return (MetaGroup) result;
 	}
-		
+	
 	private void promote(MetaView view)
 		throws XavaException {
 		view.setMetaSearchAction(this.getMetaSearchAction());

@@ -39,7 +39,7 @@
 
 <!ELEMENT members (#PCDATA|group|section)*>
 
-<!ELEMENT section (#PCDATA|group)*>
+<!ELEMENT section (#PCDATA|section|group)*>
 <!ATTLIST section
   name CDATA #IMPLIED
   label CDATA #IMPLIED

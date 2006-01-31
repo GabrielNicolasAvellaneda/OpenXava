@@ -44,7 +44,7 @@
 
 <!ELEMENT miembros (#PCDATA|grupo|seccion)*>
 
-<!ELEMENT seccion (#PCDATA|grupo)*>
+<!ELEMENT seccion (#PCDATA|seccion|grupo)*>
 <!ATTLIST seccion
   nombre CDATA #IMPLIED
   etiqueta CDATA #IMPLIED

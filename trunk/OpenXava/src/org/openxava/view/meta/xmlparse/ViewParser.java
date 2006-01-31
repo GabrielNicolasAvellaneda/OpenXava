@@ -67,17 +67,27 @@ public class ViewParser extends XmlElementsNames {
 	}
 	
 	private static void fillSections(Element el, MetaView v, int lang) throws XavaException {
-		NodeList l = el.getElementsByTagName(xsection[lang]);
+		NodeList nodesMembers = el.getElementsByTagName(xmembers[lang]);
+		if (nodesMembers.getLength() == 0) return;
+		fillSectionsImpl((Element) nodesMembers.item(0), v, lang);		
+	}
+	
+	private static void fillSectionsImpl(Element el, MetaView v, int lang) throws XavaException {
+		NodeList l = el.getChildNodes();
 		int c = l.getLength();
 		for (int i = 0; i < c; i++) {
-			Element n = (Element) l.item(i);
-			String name = n.getAttribute(xname[lang]);
-			String label = n.getAttribute(xlabel[lang]);
+			if (!(l.item(i) instanceof Element)) continue;
+			Element s = (Element) l.item(i);
+			String type = s.getTagName();
+			if (!type.equals(xsection[lang])) continue;
+			String name = s.getAttribute(xname[lang]);
+			String label = s.getAttribute(xlabel[lang]);
 			if (Is.emptyStringAll(name, label)) {
 				throw new XavaException("section_name_or_label_required");			
 			}			
-			String members = getMembers(n, lang);
-			v.addSection(name, label, members);
+			String members = getMembers(s, lang);
+			MetaView newSection = v.addSection(name, label, members);
+			fillSectionsImpl(s, newSection, lang);
 		}
 	}
 	

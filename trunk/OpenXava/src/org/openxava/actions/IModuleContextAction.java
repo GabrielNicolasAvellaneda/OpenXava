@@ -8,6 +8,6 @@ import org.openxava.controller.*;
 
 public interface IModuleContextAction extends IAction {
 	
-	void setContext(ModuleContext contexto);
+	void setContext(ModuleContext context);
 
 }
