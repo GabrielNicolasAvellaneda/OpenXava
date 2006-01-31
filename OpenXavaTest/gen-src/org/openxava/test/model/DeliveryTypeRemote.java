@@ -19,6 +19,9 @@ public interface DeliveryTypeRemote
    public int getNumber(  )
       throws java.rmi.RemoteException;
 
+   public java.util.Collection getDeliveries(  )
+      throws java.rmi.RemoteException;
+
    public org.openxava.test.model.DeliveryTypeData getData(  )
       throws java.rmi.RemoteException;
 

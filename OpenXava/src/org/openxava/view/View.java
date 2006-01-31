@@ -229,12 +229,26 @@ public class View implements java.io.Serializable {
 		return metaModel;
 	}
 	
+	/**
+	 * Copy of the values showed in view. <p>
+	 * 
+	 * It's a copy, if you change it the displayed data
+	 * is not changed. If you wish change displayed data
+	 * you have to use <code>setValues</code> or <code>setValue</code>.<br>
+	 */
 	public Map getValues() throws XavaException {		
-		return getValues(false);
+		return new HashMap(getValues(false));
 	}
-	
+
+	/**
+	 * Copy of all values showed in view. <p>
+	 * 
+	 * It's a copy, if you change it the displayed data
+	 * is not changed. If you wish change displayed data
+	 * you have to use <code>setValues</code> or <code>setValue</code>.<br>
+	 */	
 	public Map getAllValues() throws XavaException {
-		return getValues(true);
+		return new HashMap(getValues(true));
 	}
 		
 	private Map getValues(boolean all) throws XavaException {		
@@ -279,7 +293,7 @@ public class View implements java.io.Serializable {
 			values.putAll(hiddenKey);
 		}
 		
-		return Collections.unmodifiableMap(values);
+		return values;
 	}
 	
 	private Map getHiddenKey(Map keyValues) throws XavaException {
@@ -403,7 +417,7 @@ public class View implements java.io.Serializable {
 				if (hasSubview(name)) { 															
 					View subview = getSubview(name);
 					if (!subview.isRepresentsCollection()) {						
-						return subview.getValues();
+						return subview.getValues(false);
 					}
 					else {						
 						return subview.getCollectionValues();
@@ -411,7 +425,7 @@ public class View implements java.io.Serializable {
 				}
 				else {															
 					if (values == null && !recalculatingValues) return null;
-					return recalculatingValues?getValues().get(name):values.get(name);
+					return recalculatingValues?getValues(false).get(name):values.get(name);
 				}				 							 								
 			} 			
 		} 
@@ -740,12 +754,13 @@ public class View implements java.io.Serializable {
 	 * Excludes those values that are null, zero or empty string.
 	 */
 	public Map getKeyValuesWithValue() throws XavaException {
-		Iterator it = getValues().keySet().iterator();
+		Map values = getValues(false);
+		Iterator it = values.keySet().iterator();
 		Map result = new HashMap();
 		while (it.hasNext()) {
 			String name = (String) it.next();			
 			if (getMetaModel().isKey(name)) {
-				Object value = getValues().get(name);
+				Object value = values.get(name);
 				if (isEmptyValue(value)) continue;
 				result.put(name, value);
 			}			
@@ -761,7 +776,7 @@ public class View implements java.io.Serializable {
 	}
 	
 	public Map getKeyValues() throws XavaException {
-		Map values = getValues();				
+		Map values = getValues(false);				
 		Iterator it = values.keySet().iterator();
 		Map result = new HashMap();
 		while (it.hasNext()) {

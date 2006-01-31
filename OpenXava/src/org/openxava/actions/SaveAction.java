@@ -15,7 +15,7 @@ public class SaveAction extends ViewBaseAction {
 		
 	private boolean resetAfter = true;
     
-	public void execute() throws Exception {		
+	public void execute() throws Exception {
 		try {
 			Map values = null;
 			if (getView().isKeyEditable()) {
@@ -23,8 +23,8 @@ public class SaveAction extends ViewBaseAction {
 				if (isResetAfter()) {
 					MapFacade.create(getModelName(), getValuesToSave());					
 				}
-				else {					
-					values = MapFacade.createReturningValues(getModelName(), getValuesToSave());	
+				else {			
+					values = MapFacade.createReturningValues(getModelName(), getValuesToSave());					
 				}								
 			}
 			else {
