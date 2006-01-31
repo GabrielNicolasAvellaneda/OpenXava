@@ -56,6 +56,10 @@
     <for-stereotype stereotype="DATETIME"/>
     <for-stereotype stereotype="FECHAHORA"/>
   </editor>    
-      
+  
+  <editor url="boldLabelEditor.jsp">
+	<for-stereotype stereotype="ETIQUETA_NEGRITA"/>
+    <for-stereotype stereotype="BOLD_LABEL"/>
+  </editor>
       
 </editors>
