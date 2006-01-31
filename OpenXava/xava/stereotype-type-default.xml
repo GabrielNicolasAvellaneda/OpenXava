@@ -14,7 +14,9 @@
 	<for stereotype="HORA" type="String"/>	
 	<for stereotype="TIME" type="String"/>		
 	<for stereotype="ETIQUETA" type="String"/>	
-	<for stereotype="LABEL" type="String"/>	
+	<for stereotype="LABEL" type="String"/>		
+	<for stereotype="ETIQUETA_NEGRITA" type="String"/>	
+	<for stereotype="BOLD_LABEL" type="String"/>	
 	<for stereotype="DATETIME" type="java.sql.Timestamp"/>
 	<for stereotype="FECHAHORA" type="java.sql.Timestamp"/>
 </stereotype-type-default>
