@@ -359,7 +359,7 @@ public class MapFacade {
 	 * @exception RemoteException  System problem. Rollback transaction.
 	 */
 	public static void remove(String modelName, Map keyValues)
-		throws RemoveException, RemoteException, XavaException, ValidationException {
+		throws RemoveException, RemoteException, XavaException, ValidationException {		
 		Assert.arg(modelName, keyValues);
 		try {
 			getImpl(modelName).delete(Users.getCurrent(), modelName, keyValues);

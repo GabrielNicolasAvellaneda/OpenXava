@@ -1,11 +1,13 @@
 package org.openxava.test.tests;
 
+import java.io.*;
 import java.text.*;
 import java.util.*;
 
 import javax.ejb.*;
-import javax.rmi.*;
 
+import org.hibernate.*;
+import org.openxava.hibernate.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
@@ -33,7 +35,7 @@ public class DeliveriesTest extends ModuleTestBase {
 	public DeliveriesTest(String testName) {
 		super(testName, "OpenXavaTest", "Deliveries");		
 	}
-	
+		
 	public void testDateCalendarEditor() throws Exception {
 		execute("CRUD.new");
 		assertExists("invoice.date");
@@ -133,7 +135,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		execute("CRUD.search");
 		assertNoErrors();
 		execute("CRUD.delete");		
-		assertMessage("DeliveryType deleted successfully");
+		assertMessage("Delivery type deleted successfully");
 		changeModule("Deliveries");
 		assertNoType("66");
 	}
@@ -349,12 +351,9 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertNoErrors();
 		
 		// Verifying database value
-		DeliveryKey key = new DeliveryKey();
-		key.set_Invoice_year(2002);
-		key.set_Invoice_number(1);
-		key.set_Type_number(1);		
-		key.setNumber(66);
-		String distanceDB = DeliveryUtil.getHome().findByPrimaryKey(key).getData().get_Distance();
+		Query query = XHibernate.getSession().createQuery("select d.distance from Delivery as d where "
+				+ "invoice.year=2002 and invoice.number=1 and type.number=1 and number=66");		
+		String distanceDB = (String) query.uniqueResult();
 		assertEquals("distance in database incorrect", "N", distanceDB);
 																		
 		// Delete
@@ -393,17 +392,10 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertNoErrors();
 		
 		// Verifying that it is deleted
-		DeliveryKey key = new DeliveryKey();
-		key.set_Invoice_year(2002);
-		key.set_Invoice_number(1);
-		key.set_Type_number(1);		
-		key.setNumber(1);
-		try {
-			DeliveryUtil.getHome().findByPrimaryKey(key);
-			fail("Delivery " + key + " would be deleted and it is not the case");
-		}
-		catch (ObjectNotFoundException ex) {
-			// everything well
+		Query query = XHibernate.getSession().createQuery("from Delivery where "
+				+ "invoice.year=2002 and invoice.number=1 and type.number=1 and number=1");		
+		if (!query.list().isEmpty()) {
+			fail("Delivery would be deleted and it is not the case");
 		}
 	}
 		

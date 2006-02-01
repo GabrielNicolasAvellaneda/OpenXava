@@ -51,7 +51,7 @@ public class Maps {
 		if (subtree == null) return null;
 		return  getValueFromQualifiedName(subtree, qualifiedName.substring(idx + 1));		
 	}
-	
+		
 	/**
 	 * Makes a clone of map manually. <p>  
 	 * 
@@ -129,6 +129,52 @@ public class Maps {
 			else if (value != null) return false;			 			
 		}		
 		return true;
+	}
+	
+	/**
+	 * Converts a plain map (without levels) in a tree map. <p>
+	 * 
+	 * That is, convert:
+	 * <pre>
+	 * {invoice.year=2006, invoice.number=1, number=3}
+	 * </pre>
+	 * in
+	 * <pre>
+	 * {invoice={year=2006, number=1}, number=3}
+	 * </pre>
+	 *  
+	 * @param plainMap This argument is not changed. The keys must be strings.
+	 * @return A map with the data in tree format.
+	 */
+	public static Map plainToTree(Map plainMap) {
+		Map result = new HashMap();
+		for (Iterator it = plainMap.keySet().iterator(); it.hasNext();) {
+			String key = (String) it.next();
+			int idx = key.indexOf('.'); 
+			if (idx < 0) {
+				result.put(key, plainMap.get(key));
+			}
+			else {
+				String branchName = key.substring(0, idx);
+				String subKey = key.substring(idx + 1);
+				Map branch = (Map) result.get(branchName);
+				if (branch == null) {
+					branch = new HashMap();
+					result.put(branchName, branch);
+				}
+				branch.put(subKey, plainMap.get(key));
+			}
+		}
+		
+		// Next level
+		for (Iterator it = plainMap.entrySet().iterator(); it.hasNext();) {
+			Map.Entry en = (Map.Entry) it.next();
+			if (en.getValue() instanceof Map) {
+				result.put(en.getKey(), plainToTree((Map) en.getValue()));
+			}
+		}
+		
+		return result;
 	}
 	
 }

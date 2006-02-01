@@ -1,6 +1,7 @@
 package org.openxava.model.impl;
 
 import java.io.*;
+import java.lang.reflect.*;
 import java.rmi.*;
 import java.util.*;
 
@@ -29,6 +30,7 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 			}
 			else {
 				key = getKey(metaModel, keyValues);
+				refreshKeyReference(metaModel, key);
 			}		
 			Object result = XHibernate.getSession().get(metaModel.getPOJOClass(), (Serializable) key);
 			if (result == null) {
@@ -44,6 +46,20 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 			ex.printStackTrace();
 			throw new HibernateException( 
 					XavaResources.getString("find_error", metaModel.getName()));
+		}
+	}
+
+	private void refreshKeyReference(IMetaEjb metaModel, Object key) throws XavaException, HibernateException, InvocationTargetException, PropertiesManagerException {
+		// Refresh references keys can be a little inefficient (a SELECT by reference)
+		// but it's needed in order to populate these references well, 
+		// because these reference already have values in its keys thus 
+		// they are not loaded automatically from database
+		Collection references = metaModel.getMetaReferencesKey();
+		if (references.isEmpty()) return;
+		PropertiesManager pm = new PropertiesManager(key);
+		for (Iterator it=metaModel.getMetaReferencesKey().iterator(); it.hasNext();) {
+			MetaReference ref = (MetaReference) it.next();
+			XHibernate.getSession().refresh(pm.executeGet(ref.getName()));
 		}
 	}
 
@@ -81,8 +97,8 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 		}
 	}
 
-	public Object find(IMetaEjb metaEntidad, Object key) throws FinderException {
-		return null;
+	public Object find(IMetaEjb metaEntidad, Object key) throws FinderException { 
+		return null; // tmp Eliminar
 	}
 
 	public void commit() {
@@ -98,7 +114,7 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 			Class modelClass = metaModel.getPOJOClass();
 			Object key = modelClass.newInstance();
 			PropertiesManager pm = new PropertiesManager(key);
-			pm.executeSets(keyValues);
+			pm.executeSets(Maps.plainToTree(keyValues));
 			return key;
 		}
 		catch (Exception ex) {
