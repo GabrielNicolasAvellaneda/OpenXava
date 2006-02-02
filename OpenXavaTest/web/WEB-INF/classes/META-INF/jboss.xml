@@ -211,6 +211,18 @@
 
       </entity>
       <entity>
+         <ejb-name>Task</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/org.openxava.test.model/Task</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
          <ejb-name>Office</ejb-name>
          <jndi-name>OpenXavaTest/ejb/org.openxava.test.model/Office</jndi-name>
          <resource-ref>

@@ -37,7 +37,7 @@ public class DeliveryTypesTest extends ModuleTestBase {
 		
 		execute("CRUD.delete");		
 		assertNoErrors();
-		assertMessage("DeliveryType deleted successfully");				 				
+		assertMessage("Delivery type deleted successfully");				 				
 	}
 	
 	public void testPostmodifiyCalculatorNotOnRead() throws Exception {
@@ -95,7 +95,7 @@ public class DeliveryTypesTest extends ModuleTestBase {
 		
 		execute("CRUD.delete");		
 		assertNoErrors();
-		assertMessage("DeliveryType deleted successfully");				 		
+		assertMessage("Delivery type deleted successfully");				 		
 	}
 	
 			

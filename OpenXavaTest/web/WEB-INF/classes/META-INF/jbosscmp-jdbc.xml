@@ -908,6 +908,41 @@
       </entity>
 
       <entity>
+         <ejb-name>Task</ejb-name>
+
+         <table-name>XAVATEST_TASK</table-name>
+
+         <cmp-field>
+            <field-name>_Comments</field-name>
+            <column-name>COMMENTS</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Summary</field-name>
+            <column-name>SUMMARY</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_User</field-name>
+            <column-name>USERNAME</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>oid</field-name>
+            <column-name>ID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Date</field-name>
+            <column-name>DATE</column-name>
+
+        </cmp-field>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
          <ejb-name>Office</ejb-name>
 
          <table-name>XAVATEST_OFFICE</table-name>
