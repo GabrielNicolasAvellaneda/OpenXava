@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE component SYSTEM "dtds/component.dtd">
+
+<component name="Task">
+
+	<entity>
+		<property name="oid" type="String" key="true" hidden="true">
+			<default-value-calculator class="org.openxava.calculators.UUIDCalculator" 
+				on-create="true"/>
+		</property>
+		<property name="user" stereotype="NO_FORMATING_STRING" size="50" required="true">			  
+			<default-value-calculator class="org.openxava.calculators.CurrentUserCalculator"/>				
+		</property>
+		<property name="date" type="java.util.Date" required="true">
+			<default-value-calculator class="org.openxava.calculators.CurrentDateCalculator"/>				
+		</property>
+		<property name="summary" type="java.lang.String" size="50" required="true"/>
+		<property name="comments" stereotype="MEMO"/>
+	</entity>
+	
+	<view>
+		<property-view property="user" read-only="true"/>
+	</view>
+	
+	<tab>
+		<filter class="org.openxava.filters.UserFilter"/>
+		<base-condition>${user} = ?</base-condition>
+	</tab>
+					
+	<entity-mapping table="XAVATEST_TASK">
+		<property-mapping property="oid" column="ID"/>
+		<property-mapping property="user" column="USERNAME"/>
+		<property-mapping property="date" column="DATE"/>
+		<property-mapping property="summary" column="SUMMARY"/>
+		<property-mapping property="comments" column="COMMENTS"/>
+	</entity-mapping> 
+				
+</component>

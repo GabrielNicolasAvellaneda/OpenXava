@@ -263,6 +263,21 @@
       </columns>
 
    </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Task" name="" primaryKey="Task_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Task_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Task" constraint="Constraint_Task_"/>
+
+      <columns xmi:id="Task__Comments" name="_Comments">
+      </columns>
+      <columns xmi:id="Task__Summary" name="_Summary">
+      </columns>
+      <columns xmi:id="Task__User" name="_User">
+      </columns>
+      <columns xmi:id="Task_oid" name="oid">
+      </columns>
+      <columns xmi:id="Task__Date" name="_Date">
+      </columns>
+
+   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_Office" name="" primaryKey="Office_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Office_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Office" constraint="Constraint_Office_"/>
 
