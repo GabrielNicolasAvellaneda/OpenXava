@@ -123,6 +123,9 @@ public class GenerateReportServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {			
+			if (Users.getCurrent() == null) { // for a bug in websphere portal 5.1 with Domino LDAP
+				Users.setCurrent((String)request.getSession().getAttribute("xava.user"));
+			}						
 			request.getParameter("application"); // for a bug in websphere 5.1 
 			request.getParameter("module"); // for a bug in websphere 5.1		
 			Tab tab = (Tab) request.getSession().getAttribute("xava_reportTab");			

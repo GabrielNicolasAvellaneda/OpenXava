@@ -1,7 +1,8 @@
 package org.openxava.filters;
 
 import java.util.*;
-import javax.servlet.http.*;
+
+import org.openxava.util.*;
 
 /**
  * Inserts the name of the current user as first parameter. <p>
@@ -9,14 +10,8 @@ import javax.servlet.http.*;
  * @author Javier Paniza
  */
 
-public class UserFilter implements IRequestFilter {
+public class UserFilter implements IFilter {
 	
-	private HttpServletRequest request; 
-
-	public void setRequest(HttpServletRequest request) {
-		this.request = request;
-	}
-
 	public Object filter(Object o) throws FilterException {
 		if (o == null) {
 			return new Object [] { getUser() };
@@ -31,8 +26,10 @@ public class UserFilter implements IRequestFilter {
 		}		
 	}
 
-	private String getUser() {
-		return request.getRemoteUser();
+	private String getUser() {		
+		String user = Users.getCurrent();
+		System.out.println("[UserFilter.getUser] Users.getCurrent()=" + user); //  tmp
+		return user;
 	}
 
 }
