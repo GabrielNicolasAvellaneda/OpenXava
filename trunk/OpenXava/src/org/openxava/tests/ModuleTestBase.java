@@ -65,10 +65,29 @@ public class ModuleTestBase extends TestCase {
 	
 	protected void tearDown() throws Exception {
 		if (isJetspeed2Enabled() && isJetspeed2UserPresent()) {
-			// logout
-			response = conversation.getResponse("http://" + getHost() + ":" + getPort() + "/" + getJetspeed2URL() + "/login/logout");
+			logout();			
 		}
 		XHibernate.commit();
+	}
+
+	protected void login(String user, String password) throws Exception {
+		response = conversation.getResponse("http://" + getHost() + ":" + getPort() + "/" + getJetspeed2URL() + "/portal/");
+		resetLoginForm();			
+		getForm().setParameter("org.apache.jetspeed.login.username", user);
+		getForm().setParameter("org.apache.jetspeed.login.password", password);
+		getForm().submit();
+		response = conversation.getResponse(getModuleURL());
+		resetForm();
+	}
+	
+	
+	/**
+	 * User logout. <p>
+	 * 
+	 * At the moment only works against JetSpeed2.
+	 */
+	protected void logout() throws Exception {
+		response = conversation.getResponse("http://" + getHost() + ":" + getPort() + "/" + getJetspeed2URL() + "/login/logout");
 	}
 	
 	/**
@@ -81,14 +100,12 @@ public class ModuleTestBase extends TestCase {
 			Locale.setDefault(new Locale(getLocale(), ""));
 		}
 		if (isJetspeed2Enabled() && isJetspeed2UserPresent()) {
-			response = conversation.getResponse("http://" + getHost() + ":" + getPort() + "/" + getJetspeed2URL() + "/portal/");
-			resetLoginForm();			
-			getForm().setParameter("org.apache.jetspeed.login.username", getJetspeed2UserName());
-			getForm().setParameter("org.apache.jetspeed.login.password", getJetspeed2Password());
-			getForm().submit();
+			login(getJetspeed2UserName(), getJetspeed2Password());
 		}		
-		response = conversation.getResponse(getModuleURL());
-		resetForm();
+		else {
+			response = conversation.getResponse(getModuleURL());
+			resetForm();
+		}		
 		propertyPrefix = null;		
 	}
 	

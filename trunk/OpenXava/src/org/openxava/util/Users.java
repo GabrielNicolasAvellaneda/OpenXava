@@ -34,30 +34,27 @@ public class Users {
 	 * Takes into account JetSpeed 1.5 user managament, althought
 	 * it's generic enought to work in any servlet container.
 	 */
-	public static void setCurrent(HttpServletRequest request) {
+	public static void setCurrent(HttpServletRequest request) {		
         Object rundata = request.getAttribute("rundata");
-		if (!Is.emptyString(request.getRemoteUser())) {
-			current.set(request.getRemoteUser());
-		}
-		else if (rundata != null) {
+        String user = request.getRemoteUser();
+        if (Is.emptyString(user) && rundata != null) {
 			PropertiesManager pmRundata = new PropertiesManager(rundata);
 			try {
 				// Using introspection for no link OpenXava to turbine and jetspeed1.x
 				// This is temporal. In future JSR-168 compatible, and remove this code 
 				Object jetspeedUser = pmRundata.executeGet("user");
 				PropertiesManager pmUser = new PropertiesManager(jetspeedUser);
-				current.set((String) pmUser.executeGet("userName"));
+				user = (String) pmUser.executeGet("userName");
 			}
 			catch (Exception ex) {				
 				ex.printStackTrace(); 
 				System.err.println(XavaResources.getString("warning_get_user"));
-				current.set(null);
+				user = null;
 			}			
 		}
-		else {
-			current.set(null);
-		}
+		
+		current.set(user);
+		request.getSession().setAttribute("xava.user", user);
 	}
-
 
 } 
