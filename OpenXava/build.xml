@@ -550,7 +550,7 @@
 	</target>
 	
 	<target name="filterI18n" if="configuration">
-  		<copy todir="../${project}/web/WEB-INF/classes" overwrite="true">
+  		<copy todir="../${project}/${classes.dir}" overwrite="true">
     		<fileset dir="../${project}/i18n"/>
 	    	<filterset>	    	
 				<filtersfile file="${configuration}.properties"/>				
