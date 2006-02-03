@@ -377,17 +377,19 @@ public class EntityTab implements IEntityTabImpl {
 			String table = getMapping().getTable();
 			while (it.hasNext()) {
 				String propertyName = (String) it.next();
-				try {															
-					IConverter converter = getMapping().getConverter(propertyName);
-					if (converter != null) {
-						tabConverters.add(new TabConverter(propertyName, i,  converter));
-					}
-					else {
-						PropertyMapping propertyMapping = getMapping().getPropertyMapping(propertyName);
-						IMultipleConverter multipleConverter =  propertyMapping.getMultipleConverter();
-						if (multipleConverter != null) {							
-							tabConverters.add(new TabConverter(propertyName, i, multipleConverter, propertyMapping.getCmpFields(), getFields(), table));
-						}																							
+				try {
+					PropertyMapping propertyMapping = getMetaModel().getMetaProperty(propertyName).getMapping();
+					if (propertyMapping != null) {
+						IConverter converter = propertyMapping.getConverter();
+						if (converter != null) {
+							tabConverters.add(new TabConverter(propertyName, i,  converter));
+						}
+						else {							
+							IMultipleConverter multipleConverter =  propertyMapping.getMultipleConverter();
+							if (multipleConverter != null) {							
+								tabConverters.add(new TabConverter(propertyName, i, multipleConverter, propertyMapping.getCmpFields(), getFields(), table));
+							}																							
+						}
 					}
 				}
 				catch (ElementNotFoundException ex) {
