@@ -87,6 +87,10 @@ class TabConverter implements java.io.Serializable {
 	public String getPropertyName() {
 		return propertyName;
 	}
+	
+	public String toString() {
+		return "TabConverter: " + propertyName + ", " + index + ", " + (converter==null?"NULL":converter.getClass().getName());
+	}
 
 }
 

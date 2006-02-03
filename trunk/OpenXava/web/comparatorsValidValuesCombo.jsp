@@ -15,7 +15,7 @@ catch (Exception ex) {
 }
 %>
 
-<input type="hidden" name="conditionComparators" value="=">
+<input type="hidden" name="conditionComparators" value="eq">
 
 <select name="conditionValues" class=<%=style.getEditor()%>>
 	<option value=""></option>

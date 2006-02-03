@@ -83,6 +83,7 @@ public class XavaSuite extends TestSuite {
 		if (ModuleTestBase.isJetspeed2Enabled()) {
 			suite.addTest(new TestSuite(TasksTest.class));
 		}
+		suite.addTest(new TestSuite(TransportCharges2Test.class));
 		suite.addTest(new TestSuite(TransportChargesTest.class));
 		suite.addTest(new TestSuite(WarehousesTest.class));						
 			

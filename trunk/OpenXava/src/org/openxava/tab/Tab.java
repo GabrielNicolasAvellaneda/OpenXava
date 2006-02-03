@@ -595,7 +595,7 @@ public class Tab {
 		}
 	}
 	
-	public void setConditionValues(String [] values) throws XavaException {		
+	public void setConditionValues(String [] values) throws XavaException {
 	  if (Arrays.equals(this.conditionValues, values)) return;
 		if (getMetaPropertiesNotCalculated().size() != values.length) return; // to avoid problems on changing module
 	  this.conditionValues = values;
@@ -608,7 +608,7 @@ public class Tab {
 		return conditionValues; 
 	}
 	
-	public void setConditionComparators(String [] comparators) throws XavaException {		
+	public void setConditionComparators(String [] comparators) throws XavaException {
 		if (Arrays.equals(this.conditionComparators, comparators)) return; 		
 		if (getMetaPropertiesNotCalculated().size() != comparators.length) return;		
 		this.conditionComparators = comparators;

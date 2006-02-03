@@ -19,6 +19,10 @@
 		<properties>delivery.invoice.year, delivery.invoice.number, delivery.number, amount</properties>
 	</tab>
 	
+	<tab name="WithDistance">
+		<properties>delivery.invoice.year, delivery.invoice.number, delivery.number, delivery.distance, amount</properties>	
+	</tab>
+	
 	<entity-mapping table="XAVATEST@separator@TRANSPORTCHARGE">
 		<reference-mapping reference="delivery">
 			<reference-mapping-detail 
