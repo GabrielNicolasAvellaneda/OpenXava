@@ -19,6 +19,8 @@ import org.openxava.view.meta.*;
 abstract public class MetaModel extends MetaElement implements IMetaModel {
 
 	private static boolean someModelHasDefaultCalculatorOnCreateInNotKey = false;
+	private static boolean someModelHasPostCreateCalculator = false;
+	private static boolean someModelHasPostModifyCalculator = false;
 	private Class pojoClass;
 	private Collection allKeyPropertiesNames;
 	private List metaCalculatorsPostCreate;
@@ -120,6 +122,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	public void addMetaCalculatorPostCreate(MetaCalculator metaCalculator) {		
 		if (metaCalculatorsPostCreate == null) metaCalculatorsPostCreate = new ArrayList();		
 		metaCalculatorsPostCreate.add(metaCalculator);
+		someModelHasPostCreateCalculator = true;
 	}
 	
 	public void addMetaCalculatorPostLoad(MetaCalculator metaCalculator) {		
@@ -130,6 +133,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	public void addMetaCalculatorPostModify(MetaCalculator metaCalculator) {		
 		if (metaCalculatorsPostModify == null) metaCalculatorsPostModify = new ArrayList();		
 		metaCalculatorsPostModify.add(metaCalculator);
+		someModelHasPostModifyCalculator = true;
 	}
 	
 	public void addMetaCalculatorPreRemove(MetaCalculator metaCalculator) {		
@@ -1302,5 +1306,14 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	public static boolean someModelHasDefaultCalculatorOnCreateInNotKey() {		
 		return someModelHasDefaultCalculatorOnCreateInNotKey ;
 	}
+	
+	public static boolean someModelHasPostCreateCalculator() {		
+		return someModelHasPostCreateCalculator;
+	}
+	
+	public static boolean someModelHasPostModifyCalculator() {		
+		return someModelHasPostModifyCalculator;
+	}	
+	
 	
 }

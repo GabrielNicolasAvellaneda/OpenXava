@@ -36,7 +36,7 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 			if (result == null) {
 				throw new ObjectNotFoundException(XavaResources.getString(
 						"object_with_key_not_found", metaModel.getName(), keyValues));
-			}
+			}			
 			return result;
 		}
 		catch (FinderException ex) {
@@ -74,8 +74,10 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 		try {
 			object = metaEjb.getPOJOClass().newInstance();
 			PropertiesManager mp = new PropertiesManager(object);
-			mp.executeSets(values);			
-			XHibernate.getSession().save(object);
+			mp.executeSets(values);		
+			Session session = XHibernate.getSession(); 
+			session.save(object);				
+			session.flush();
 			return object;
 		}
 		catch (Exception ex) {
@@ -102,6 +104,7 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 	}
 
 	public void commit() {
+		XHibernate.getSession().flush(); 
 		XHibernate.commit();
 	}
 
