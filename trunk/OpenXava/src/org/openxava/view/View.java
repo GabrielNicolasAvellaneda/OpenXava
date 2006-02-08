@@ -1381,7 +1381,7 @@ public class View implements java.io.Serializable {
 						String valueKey = propertyKey + ".value";
 						String [] results = getRequest().getParameterValues(propertyKey);
 						Object value = WebEditors.parse(getRequest(), p, results, getErrors());
-						boolean isHiddenKeyWithoutValue = p.isHidden() && (results == null || Is.emptyString(results[0])); // for not reset hidden values
+						boolean isHiddenKeyWithoutValue = p.isHidden() && (results == null); // for not reset hidden values
 						if (!isHiddenKeyWithoutValue && WebEditors.mustToFormat(p)) { 
 							getRequest().setAttribute(valueKey, value);
 							setValue(p.getName(), getRequest().getAttribute(valueKey));																					

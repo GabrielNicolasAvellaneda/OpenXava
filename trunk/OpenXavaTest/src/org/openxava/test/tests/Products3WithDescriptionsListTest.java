@@ -11,31 +11,41 @@ public class Products3WithDescriptionsListTest extends ModuleTestBase {
 	public Products3WithDescriptionsListTest(String testName) {
 		super(testName, "OpenXavaTest", "Products3WithDescriptionsList");		
 	}
-	
-	public void testNotOnChangeActionWhenSearch() throws Exception {
-		execute("CRUD.new");
-		execute("Products3.showDescription"); // description is hide in a init action for test purpose
-		setValue("number", "77");
-		execute("CRUD.search");
-		assertValue("description", "ANATHEMA");
-		assertEditable("description"); // well: on-change for make this not editable not throw
-	}
-	
-	public void testDescriptionsListWithHiddenKeyThrowsChanged() throws Exception {
-		execute("CRUD.new");
-		execute("Products3.showDescription"); // description is hide in a init action for test purpose
+
+	public void testSetToNullADescriptionsListWithHiddenKey() throws Exception {
+		// Creating new one
+		execute("CRUD.new");		
+		setValue("number", "66");
+		setValue("description", "JUNIT PRODUCT");
+		setValue("family.oid", "1037101896763");		
+		execute("CRUD.save");
 		assertNoErrors();
-		assertValue("comments", "");
-		setValue("family.oid", "1037101892379");
-		assertValue("comments", "Family changed");
-	}
-	
-	public void testSetValueNotifyingOnReferenceWithHiddenKeyNotResetGroup() throws Exception {
-		execute("CRUD.new");
-		execute("Products3.showDescription"); // description is hide in a init action for test purpose
-		setValue("description", "HOLA");
-		execute("Products3.changeFamily");
-		assertValue("description", "HOLA");
+		assertValue("description", "");
+				
+		// Search it
+		setValue("number", "66");
+		execute("CRUD.search");
+		assertValue("number", "66");
+		assertValue("description", "JUNIT PRODUCT");
+		assertValue("family.oid", "1037101896763");
+		assertDescriptionValue("family.oid", "HARDWARE");
+		
+		// Reset the family reference
+		setValue("family.oid", "");
+		execute("CRUD.save");
+		assertNoErrors();
+		
+		// Verifying that change is done
+		setValue("number", "66");
+		execute("CRUD.search");
+		assertValue("number", "66");
+		assertValue("description", "JUNIT PRODUCT");
+		assertValue("family.oid", "");
+		assertDescriptionValue("family.oid", "");
+		
+		// Deleting
+		execute("CRUD.delete");			
+		assertMessage("Product deleted successfully");		
 	}
 						
 }

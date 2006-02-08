@@ -13,7 +13,10 @@ Store oid of family and not the code
 			size="10" required="true"/>    
 		<property name="description" type="String"
 			size="40" required="true"/>
+		<reference name="family" model="Family"/>
+		<!-- tmp
 		<reference name="family" model="Family" required="true"/>
+		 -->
 		<property name="comments" stereotype="MEMO"/>
 		<reference name="subfamily1" model="SubfamilyInfo" required="true"/>
 		<reference name="subfamily2" model="SubfamilyInfo" required="true"/>
@@ -34,8 +37,22 @@ Store oid of family and not the code
 			comments;
 		</members>
 	</view>
-			
+	
 	<view name="WithDescriptionsList">
+		<reference-view reference="family">
+			<descriptions-list/>
+		</reference-view>
+		<members>
+			number; 
+			family;
+			description;			
+			subfamily1;
+			subfamily2;
+			comments;
+		</members>
+	</view>	
+			
+	<view name="WithGroup">
 		
 		<reference-view reference="family">
 			<descriptions-list/>
