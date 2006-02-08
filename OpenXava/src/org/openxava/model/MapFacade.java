@@ -387,6 +387,7 @@ public class MapFacade {
 		throws ObjectNotFoundException, FinderException, ValidationException,
 				XavaException,  RemoteException 
 	{		
+		System.out.println("[MapFacade.setValues] values="+values); //  tmp
 		Assert.arg(modelName, keyValues, values);				
 		try {
 			getImpl(modelName).setValues(Users.getCurrent(), modelName, keyValues, values);								
