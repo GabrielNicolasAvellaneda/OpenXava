@@ -13,7 +13,7 @@ import org.openxava.util.meta.*;
 public class DefaultValueCalculatorsListener implements PreInsertEventListener {
 
 	public boolean onPreInsert(PreInsertEvent ev) {
-		String modelName = "unknow"; 
+		String modelName = "unknow"; 		
 		try {
 			IModel model = (IModel) ev.getEntity();
 			MetaModel metaModel = model.getMetaModel();

@@ -59,20 +59,7 @@ public class DeliveryTypesTest extends ModuleTestBase {
 		setValue("description", "JUNIT");
 		execute("CRUD.save");
 		assertNoErrors();
-		
-		Delivery delivery = new Delivery();
-		Invoice invoice = new Invoice();
-		invoice.setYear(2002);
-		invoice.setNumber(1);
-		delivery.setInvoice(invoice);
-		DeliveryType deliveryType = new DeliveryType();
-		deliveryType.setNumber(66);
-		delivery.setType(deliveryType);
-		delivery.setNumber(66);
-		delivery.setDescription("JUNIT FOR DELIVERY TYPE");
-		XHibernate.getSession().save(delivery);
-		XHibernate.commit();
-		
+				
 		setValue("number", "66");
 		execute("CRUD.search");
 		assertValue("number", "66");
@@ -85,6 +72,19 @@ public class DeliveryTypesTest extends ModuleTestBase {
 		execute("CRUD.search");
 		assertValue("number", "66");
 		assertValue("description", "JUNIT MODIFIED"); // 'MODIFIED' is added in postmodify
+		
+		Delivery delivery = new Delivery();
+		Invoice invoice = new Invoice();
+		invoice.setYear(2002);
+		invoice.setNumber(1);
+		delivery.setInvoice(invoice);
+		DeliveryType deliveryType = new DeliveryType();
+		deliveryType.setNumber(66);
+		delivery.setType(deliveryType);
+		delivery.setNumber(66);
+		delivery.setDescription("JUNIT FOR DELIVERY TYPE");
+		XHibernate.getSession().save(delivery);
+		XHibernate.commit();		
 				
 		execute("CRUD.delete");		
 		assertError("Delivery type can not delete because it is used in deliveries");

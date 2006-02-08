@@ -85,7 +85,7 @@ public class XHibernate {
 	 * In most cases this method is called by OpenXava automatically, 
 	 * hence the programmer that uses hibernate APIs does not need to call it.
 	 */
-	public static void commit() {
+	public static void commit() {		
 		Session s = (Session) currentSession.get();
 		if (s == null) return;
 		if (s.isOpen()) {
@@ -96,7 +96,7 @@ public class XHibernate {
 		if (!s.isOpen()) {			
 			currentTransaction.set(null);
 			currentSession.set(null);			
-		}
+		}		
 	}
 	
 	/**
@@ -147,6 +147,14 @@ public class XHibernate {
 				preInsertListeners.add(new DefaultValueCalculatorsListener());
 			}
 			
+			if (MetaModel.someModelHasPostCreateCalculator()) {
+				preInsertListeners.add(CalculatorsListener.getInstance());
+			}
+			
+			if (MetaModel.someModelHasPostModifyCalculator()) {
+				preUpdateListeners.add(CalculatorsListener.getInstance());
+			} 
+			
 			if (!preInsertListeners.isEmpty()) {
 				PreInsertEventListener [] preInsertListenersArray = new PreInsertEventListener[preInsertListeners.size()];
 				preInsertListeners.toArray(preInsertListenersArray);
@@ -158,7 +166,7 @@ public class XHibernate {
 				preUpdateListeners.toArray(preUpdateListenersArray);			
 				configuration.getEventListeners().setPreUpdateEventListeners(preUpdateListenersArray);
 			}
-			
+						
 			return configuration.buildSessionFactory();
 		} 
 		catch (Exception ex) {
