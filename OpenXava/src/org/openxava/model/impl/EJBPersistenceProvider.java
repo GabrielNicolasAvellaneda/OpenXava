@@ -220,6 +220,8 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 			throw new RemoteException(XavaResources.getString("create_error", metaEjb.getJndi()));				
 		}
 	}
-	
 
+	public void flush() {
+	}
+	
 }

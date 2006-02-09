@@ -8,7 +8,6 @@ import javax.ejb.*;
 
 import org.openxava.calculators.*;
 import org.openxava.component.*;
-import org.openxava.hibernate.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
@@ -461,6 +460,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		throws CreateException, XavaException, ValidationException {
 		MetaEntityEjb metaEntity = (MetaEntityEjb) MetaComponent.get(modelName).getMetaEntity();
 		Object entity = create(persistenceProvider, metaEntity, values, null, null, 0);
+		persistenceProvider.flush(); // to execute calculators
 		return getValues(persistenceProvider, metaEntity, entity, values);
 	}
 		

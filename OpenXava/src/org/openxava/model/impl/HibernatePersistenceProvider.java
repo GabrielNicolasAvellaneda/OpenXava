@@ -76,8 +76,7 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 			PropertiesManager mp = new PropertiesManager(object);
 			mp.executeSets(values);		
 			Session session = XHibernate.getSession(); 
-			session.save(object);				
-			session.flush();
+			session.save(object);							
 			return object;
 		}
 		catch (Exception ex) {
@@ -102,9 +101,11 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 	public Object find(IMetaEjb metaEntidad, Object key) throws FinderException { 
 		return null; // tmp Eliminar
 	}
+	
+	
 
 	public void commit() {
-		XHibernate.getSession().flush(); 
+		flush(); 
 		XHibernate.commit();
 	}
 
@@ -130,6 +131,10 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 		String container = Strings.firstLower(metaModelContainer.getName());
 		values.put(container, containerModel);
 		return create(metaEjb, values);
+	}
+
+	public void flush() {
+		XHibernate.getSession().flush();		
 	}
 
 }
