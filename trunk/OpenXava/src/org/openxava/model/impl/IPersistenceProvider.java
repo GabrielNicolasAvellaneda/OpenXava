@@ -33,5 +33,6 @@ public interface IPersistenceProvider {
 	Object getKey(IMetaEjb metaModel, Map keyValues) throws XavaException;
 	void remove(MetaModel metaModel, Object modelObject) throws RemoveException, XavaException;
 	void commit();
+	void flush();
 	void rollback();	
 }
