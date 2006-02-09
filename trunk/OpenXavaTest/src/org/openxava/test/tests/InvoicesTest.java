@@ -7,6 +7,7 @@ import java.util.*;
 
 import javax.rmi.*;
 
+import org.openxava.hibernate.*;
 import org.openxava.test.calculators.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
@@ -19,7 +20,7 @@ import org.openxava.util.*;
 
 public class InvoicesTest extends ModuleTestBase {
 	
-	private InvoiceKey invoiceKey;
+	private IInvoice invoice;
 	private BigDecimal productUnitPriceDB;
 	private String productUnitPricePlus10;
 	private String productUnitPrice;
@@ -275,9 +276,9 @@ public class InvoicesTest extends ModuleTestBase {
 	}
 	
 	public void testFilterByBoolean() throws Exception {
-		int total = InvoiceUtil.getHome().findAll().size();
-		int paidOnes = InvoiceUtil.getHome().findPaidOnes().size();
-		int notPaidOnes = InvoiceUtil.getHome().findNotPaidOnes().size();
+		int total = Invoice.findAll().size();
+		int paidOnes = Invoice.findPaidOnes().size();
+		int notPaidOnes = Invoice.findNotPaidOnes().size();
 		assertTrue("It has to have invoices for run this test", total > 0);
 		assertTrue("It has to have paid invoices for run this test", paidOnes > 0);
 		assertTrue("It has to have not paid invoices for run this test", notPaidOnes > 0);
@@ -336,8 +337,8 @@ public class InvoicesTest extends ModuleTestBase {
 	
 	public void testDateFormatter() throws Exception {		
 		execute("CRUD.new");
-		setValue("year", String.valueOf(getInvoiceKey().getYear()));
-		setValue("number", String.valueOf(getInvoiceKey().getNumber()));
+		setValue("year", String.valueOf(getInvoice().getYear()));
+		setValue("number", String.valueOf(getInvoice().getNumber()));
 		execute("CRUD.search");
 		assertNoErrors();
 		String originalDate = getValue("date"); // For restore at end
@@ -345,8 +346,8 @@ public class InvoicesTest extends ModuleTestBase {
 		setValue("date", "1/1/2004");
 		execute("CRUD.save");
 		assertNoErrors();
-		setValue("year", String.valueOf(getInvoiceKey().getYear()));
-		setValue("number", String.valueOf(getInvoiceKey().getNumber()));
+		setValue("year", String.valueOf(getInvoice().getYear()));
+		setValue("number", String.valueOf(getInvoice().getNumber()));
 		execute("CRUD.search");
 		assertNoErrors();
 		assertValue("date", "01/01/2004");
@@ -354,8 +355,8 @@ public class InvoicesTest extends ModuleTestBase {
 		setValue("date", "02012004");
 		execute("CRUD.save");
 		assertNoErrors();
-		setValue("year", String.valueOf(getInvoiceKey().getYear()));
-		setValue("number", String.valueOf(getInvoiceKey().getNumber()));
+		setValue("year", String.valueOf(getInvoice().getYear()));
+		setValue("number", String.valueOf(getInvoice().getNumber()));
 		execute("CRUD.search");
 		assertNoErrors();
 		assertValue("date", "02/01/2004");
@@ -363,8 +364,8 @@ public class InvoicesTest extends ModuleTestBase {
 		setValue("date", "3.1.2004");
 		execute("CRUD.save");
 		assertNoErrors();
-		setValue("year", String.valueOf(getInvoiceKey().getYear()));
-		setValue("number", String.valueOf(getInvoiceKey().getNumber()));
+		setValue("year", String.valueOf(getInvoice().getYear()));
+		setValue("number", String.valueOf(getInvoice().getNumber()));
 		execute("CRUD.search");
 		assertNoErrors();
 		assertValue("date", "03/01/2004");
@@ -372,8 +373,8 @@ public class InvoicesTest extends ModuleTestBase {
 		setValue("date", "4-1-2004");
 		execute("CRUD.save");
 		assertNoErrors();
-		setValue("year", String.valueOf(getInvoiceKey().getYear()));
-		setValue("number", String.valueOf(getInvoiceKey().getNumber()));
+		setValue("year", String.valueOf(getInvoice().getYear()));
+		setValue("number", String.valueOf(getInvoice().getNumber()));
 		execute("CRUD.search");
 		assertNoErrors();
 		assertValue("date", "04/01/2004");
@@ -386,11 +387,11 @@ public class InvoicesTest extends ModuleTestBase {
 	
 	public void testReadOnlyCollectionWithPropertiesInDetailIncludedInListWithoutAction() throws Exception {
 		deleteInvoiceDeliveries();
-		IDelivery delivery = createDelivery();
+		createDelivery(); 
 		
 		execute("CRUD.new");
-		setValue("year", String.valueOf(getInvoiceKey().getYear()));
-		setValue("number", String.valueOf(getInvoiceKey().getNumber()));
+		setValue("year", String.valueOf(getInvoice().getYear()));
+		setValue("number", String.valueOf(getInvoice().getNumber()));
 		execute("CRUD.search");
 		assertNoErrors();
 		
@@ -839,10 +840,9 @@ public class InvoicesTest extends ModuleTestBase {
 			"Mode.list"						
 		};		
 		assertActions(initialActions);
-		
-		InvoiceKey key = getInvoiceKey();				
-		setValue("year", String.valueOf(key.getYear()));
-		setValue("number", String.valueOf(key.getNumber()));
+				
+		setValue("year", String.valueOf(getInvoice().getYear()));
+		setValue("number", String.valueOf(getInvoice().getNumber()));
 		execute("CRUD.search");
 		assertNoErrors();
 		
@@ -894,10 +894,9 @@ public class InvoicesTest extends ModuleTestBase {
 	
 	public void testDetailActionInCollection_overwriteEditAction_goAndReturnToAnotherXavaView() throws Exception {
 		assertNoListTitle();
-		execute("CRUD.new");		
-		InvoiceKey key = getInvoiceKey();				
-		setValue("year", String.valueOf(key.getYear()));
-		setValue("number", String.valueOf(key.getNumber()));
+		execute("CRUD.new");							
+		setValue("year", String.valueOf(getInvoice().getYear()));
+		setValue("number", String.valueOf(getInvoice().getNumber()));
 		execute("CRUD.search");
 		assertNoErrors();		
 		execute("Sections.change", "activeSection=1");		
@@ -922,18 +921,18 @@ public class InvoicesTest extends ModuleTestBase {
 		assertNoErrors();
 		assertAction("CRUD.new");
 		assertNoAction("ProductFromInvoice.return");
-		assertValue("year", String.valueOf(key.getYear()));
-		assertValue("number", String.valueOf(key.getNumber()));									
+		assertValue("year", String.valueOf(getInvoice().getYear()));
+		assertValue("number", String.valueOf(getInvoice().getNumber()));									
 	}
 	
 	
 	public void testViewCollectionElementWithKeyWithReference() throws Exception {
 		deleteInvoiceDeliveries();
-		IDelivery delivery = createDelivery();
+		createDelivery();
 		
 		execute("CRUD.new");
-		setValue("year", String.valueOf(getInvoiceKey().getYear()));
-		setValue("number", String.valueOf(getInvoiceKey().getNumber()));
+		setValue("year", String.valueOf(getInvoice().getYear()));
+		setValue("number", String.valueOf(getInvoice().getNumber()));
 		
 		execute("CRUD.search");
 		assertNoErrors();
@@ -984,24 +983,25 @@ public class InvoicesTest extends ModuleTestBase {
 	}
 		
 	private void deleteInvoiceDeliveries() throws Exception {
-		IInvoice invoice = InvoiceUtil.getHome().findByPrimaryKey(getInvoiceKey());
-		Iterator it = invoice.getDeliveries().iterator();
+		Iterator it = getInvoice().getDeliveries().iterator();
 		while (it.hasNext()) {
-			DeliveryRemote delivery = (DeliveryRemote) PortableRemoteObject.narrow(it.next(), DeliveryRemote.class);
-			delivery.remove();	
+			IDelivery delivery = (IDelivery) PortableRemoteObject.narrow(it.next(), IDelivery.class);
+			XHibernate.getSession().delete(delivery);	
 		}		
 	}
 
-	private IDelivery createDelivery() throws Exception {
-		DeliveryValue deliveryValue = new DeliveryValue();
-		deliveryValue.setInvoice_year(getInvoiceKey().getYear());
-		deliveryValue.setInvoice_number(getInvoiceKey().getNumber());
-		deliveryValue.setType_number(1); 		
-		deliveryValue.setNumber(666);
-		deliveryValue.setDate(Dates.create(22,2,2004));
-		deliveryValue.setDescription("Delivery JUNIT 666");
+	private void createDelivery() throws Exception {
+		Delivery delivery = new Delivery();
+		delivery.setInvoice(getInvoice());
+		DeliveryType type = new DeliveryType();
+		type.setNumber(1);
+		delivery.setType(type); 		
+		delivery.setNumber(666);
+		delivery.setDate(Dates.create(22,2,2004));
+		delivery.setDescription("Delivery JUNIT 666");
 				
-		return DeliveryUtil.getHome().create(deliveryValue);				
+		XHibernate.getSession().save(delivery);
+		XHibernate.commit();
 	}
 	
 	
@@ -1098,21 +1098,21 @@ public class InvoicesTest extends ModuleTestBase {
 		return bd.setScale(0, BigDecimal.ROUND_DOWN).toString();
 	}
 
-	private InvoiceKey getInvoiceKey() throws Exception {
-		if (invoiceKey == null) {		
-			Iterator it = InvoiceUtil.getHome().findAll().iterator();
+	private IInvoice getInvoice() throws Exception {
+		if (invoice == null) {		
+			Iterator it = Invoice.findAll().iterator();
 			while (it.hasNext()) {			
-				InvoiceRemote invoice = (InvoiceRemote) PortableRemoteObject.narrow(it.next(), InvoiceRemote.class);
-				if (invoice.getDetailsCount() > 0) {
-					invoiceKey = (InvoiceKey) invoice.getPrimaryKey();
+				IInvoice inv = (IInvoice) it.next();
+				if (inv.getDetailsCount() > 0) {
+					invoice = inv;
 					break;
 				}			
 			}
-			if (invoiceKey == null) {
+			if (invoice == null) {
 				fail("It must to exists at least one invoice with details for run this test");
 			}
 		}
-		return invoiceKey;
+		return invoice;
 	}
 	
 	private void assertDateInList(String date) throws Exception {

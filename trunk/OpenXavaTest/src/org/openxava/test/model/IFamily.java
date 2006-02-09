@@ -1,6 +1,10 @@
 package org.openxava.test.model;	
 
-public interface IFamily {
+import org.openxava.model.*;
+
+public interface IFamily extends IModel {
+	
+	
 	
   public java.lang.String getOid(  )
   	throws java.rmi.RemoteException;
