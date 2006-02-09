@@ -6,6 +6,7 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.*;
 
 import org.openxava.actions.*;
+import org.openxava.hibernate.*;
 import org.openxava.model.*;
 import org.openxava.test.model.*;
 import org.openxava.util.*;
@@ -42,7 +43,7 @@ public class FamilyProductsReportAction extends JasperReportBaseAction {
 	private ISubfamily2 getSubfamily() throws Exception {
 		if (subfamily == null) {
 			int subfamilyNumber = getView().getValueInt("subfamily.number");
-			subfamily = Subfamily2Util.getHome().findByPrimaryKey(new Subfamily2Key(subfamilyNumber));
+			subfamily = (ISubfamily2) XHibernate.getSession().get(Subfamily2.class, new Integer(subfamilyNumber));
 		}
 		return subfamily;
 	}

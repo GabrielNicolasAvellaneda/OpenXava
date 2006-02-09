@@ -21,7 +21,10 @@ not save hence the oid don't disturb.
 			size="40" required="true"/>
 		<property name="remarks" stereotype="MEMO"
 			size="400"/>
-		<!-- Return a collection of ProductValue (not remote objects) -->	
+		<!-- 
+		In a EJB version this method can be useful for return a collection of ProductValue (not remote objects) 
+		Nonetheless, in the current version (that uses POJO as default) returns a collection of POJOs.
+		-->	
 		<method name="getProductsValues" type="java.util.Collection">
 			<calculator class="org.openxava.test.calculators.ProductsValuesOfSubfamilyCalculator">
 				<set property="subfamilyNumber" from="number"/>

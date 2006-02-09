@@ -8,6 +8,7 @@ import javax.naming.*;
 import javax.sql.*;
 
 import org.openxava.component.*;
+import org.openxava.hibernate.*;
 
 /**
  * Adapter from JNDI DataSource interface to IConnectionProvider interface.
@@ -91,8 +92,9 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 			}
 		}
 		catch (NamingException ex) {
-			ex.printStackTrace();
-			throw new SQLException(ex.getLocalizedMessage());
+			// In case of working outside an application server (for example inside junit)
+			System.out.println(XavaResources.getString("no_datasource_found_using_hibernate_connection_warning", dataSourceJNDI));
+			return XHibernate.getSession().connection();
 		}
 	}
 	
