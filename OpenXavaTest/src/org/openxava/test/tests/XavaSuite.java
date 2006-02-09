@@ -1,6 +1,7 @@
 package org.openxava.test.tests;
 
 import org.openxava.tests.*;
+import org.openxava.util.*;
 
 import junit.framework.*;
 
@@ -45,7 +46,9 @@ public class XavaSuite extends TestSuite {
 		if (ModuleTestBase.isJetspeed2Enabled()) {
 			suite.addTest(new TestSuite(DescriptionTest.class));
 		}
-		suite.addTest(new TestSuite(EJBTest.class));
+		if (XavaPreferences.getInstance().isEJB2Persistence()) {
+			suite.addTest(new TestSuite(EJBTest.class));
+		}
 		suite.addTest(new TestSuite(FamiliesTest.class));
 		suite.addTest(new TestSuite(FamiliesWithInheritanceControllerTest.class));
 		suite.addTest(new TestSuite(FamilyProductsReportTest.class));
