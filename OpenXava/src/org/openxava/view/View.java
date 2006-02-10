@@ -95,8 +95,6 @@ public class View implements java.io.Serializable {
 
 	private Collection metaMembersIncludingHiddenKey;
 
-	private String propertyPrefix;
-
 	private Map labels;
 
 	private Collection executedActions;	
@@ -528,6 +526,7 @@ public class View implements java.io.Serializable {
 			newView.setModelName(getModelName());			 
 			MetaView metaView = ((MetaGroup) member).getMetaView();
 			newView.setMetaView(metaView);
+			newView.setMemberName(getMemberName()); 
 			newView.setGroup(true);
 			newView.setEditable(isEditable()); 
 			getGroupsViews().put(member.getName(), newView);						
@@ -707,7 +706,7 @@ public class View implements java.io.Serializable {
 		Iterator it = getGroupsViews().values().iterator();
 		while (it.hasNext()) {
 			View subview = (View) it.next();			
-			boolean attempt = subview.trySetValue(name, value);			
+			subview.trySetValue(name, value);			
 		}				
 	}
 	
@@ -887,8 +886,7 @@ public class View implements java.io.Serializable {
 		if (!isRepresentsCollection()) return Collections.EMPTY_LIST;
 		if (collectionValues == null) {
 			Map membersNames = new HashMap();
-			membersNames.put(getMemberName(), getCollectionMemberNames());
-			View root = getRoot();			
+			membersNames.put(getMemberName(), getCollectionMemberNames());		
 			try {							
 				Map values = MapFacade.getValues(getParent().getModelName(), getParent().getKeyValues(), membersNames);
 				collectionValues = (List) values.get(getMemberName());				
@@ -1336,7 +1334,6 @@ public class View implements java.io.Serializable {
 	}
 	
 	private void resetMembers() { 
-		propertyPrefix = null;
 		viewName = null;
 		membersNames = null;
 		collectionMemberNames = null;
@@ -1774,9 +1771,9 @@ public class View implements java.io.Serializable {
 		}		
 	}
 
-	private boolean hasDependentsProperties(MetaProperty p) {
+	private boolean hasDependentsProperties(MetaProperty p) {		
 		try {			
-			// In this view						
+			// In this view								
 			for (Iterator it = getMetaPropertiesQualified().iterator(); it.hasNext();) {
 				Object element = (Object) it.next();				
 				if (element instanceof MetaProperty && !PropertiesSeparator.INSTANCE.equals(element)) {
@@ -1785,23 +1782,26 @@ public class View implements java.io.Serializable {
 						return true;
 					}
 				}
-			}			
+			}						
 			
 			if (isRepresentsAggregate() || isRepresentsEntityReference()) {
 				p = p.cloneMetaProperty();
 				p.setName(getMemberName() + "." + p.getName());
 			}
 						
-			// From the root
+			// From the root			
 			for (Iterator it = getRoot().getMetaPropertiesQualified().iterator(); it.hasNext();) {
 				Object element = (Object) it.next();
 				if (element instanceof MetaProperty && !PropertiesSeparator.INSTANCE.equals(element)) {
 					MetaProperty pro = (MetaProperty) element;					
+					if (pro.getPropertyNamesThatIDepend().contains(p.getName())) {
+						return true;
+					}										
 					if (WebEditors.depends(pro, p)) {				
 						return true;
 					}
 				}
-			}
+			}			
 			
 			// In descriptionList of reference			
 			for (Iterator it=getMetaView().getMetaDescriptionsLists().iterator(); it.hasNext();) {
@@ -1809,7 +1809,8 @@ public class View implements java.io.Serializable {
 				if (descriptionList.dependsOn(p)) {
 					return true;
 				}
-			}				
+			}			
+						
 			return false;
 		}	
 		catch (Exception ex) {
@@ -1950,7 +1951,7 @@ public class View implements java.io.Serializable {
 				MetaProperty pr= getMetaModel().getMetaProperty((String) it.next());
 				if (!pr.isHidden()) {
 					MetaProperty prList = pr.cloneMetaProperty();					
-					metaPropertiesList.add(pr);
+					metaPropertiesList.add(prList);
 				}
 			}
 			setLabelsIdForMetaPropertiesList();

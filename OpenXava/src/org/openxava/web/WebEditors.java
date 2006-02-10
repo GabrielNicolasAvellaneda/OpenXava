@@ -117,7 +117,7 @@ public class WebEditors {
 	/** 
 	 * If a depends on b
 	 */
-	public static boolean depends(MetaProperty a, MetaProperty b) {
+	public static boolean depends(MetaProperty a, MetaProperty b) {		
 		try {			
 			if (a.depends(b)) return true;
 			return MetaWebEditors.getMetaEditorFor(a).depends(b);

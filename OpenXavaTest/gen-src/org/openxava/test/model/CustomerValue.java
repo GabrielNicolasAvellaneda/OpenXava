@@ -26,6 +26,8 @@ public class CustomerValue
    private boolean photoHasBeenSet = false;
    private java.lang.String name;
    private boolean nameHasBeenSet = false;
+   private java.lang.String city;
+   private boolean cityHasBeenSet = false;
    private int number;
    private boolean numberHasBeenSet = false;
    private int seller_number;
@@ -56,6 +58,8 @@ public class CustomerValue
 	  photoHasBeenSet = true;
 	  this.name = otherValue.name;
 	  nameHasBeenSet = true;
+	  this.city = otherValue.city;
+	  cityHasBeenSet = true;
 	  this.number = otherValue.number;
 	  numberHasBeenSet = true;
 	  this.seller_number = otherValue.seller_number;
@@ -152,6 +156,20 @@ public class CustomerValue
    public boolean nameHasBeenSet(){
 	  return nameHasBeenSet;
    }
+   public java.lang.String getCity()
+   {
+	  return this.city;
+   }
+
+   public void setCity( java.lang.String city )
+   {
+	  this.city = city;
+	  cityHasBeenSet = true;
+   }
+
+   public boolean cityHasBeenSet(){
+	  return cityHasBeenSet;
+   }
    public int getNumber()
    {
 	  return this.number;
@@ -227,7 +245,7 @@ public class CustomerValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("local=" + isLocal() + " " + "type=" + getType() + " " + "remarks=" + getRemarks() + " " + "relationWithSeller=" + getRelationWithSeller() + " " + "photo=" + getPhoto() + " " + "name=" + getName() + " " + "number=" + getNumber() + " " + "seller_number=" + getSeller_number() + " " + "alternateSeller_number=" + getAlternateSeller_number() + " " + "address=" + getAddress() + " " + "address_state_id=" + getAddress_state_id());
+	  str.append("local=" + isLocal() + " " + "type=" + getType() + " " + "remarks=" + getRemarks() + " " + "relationWithSeller=" + getRelationWithSeller() + " " + "photo=" + getPhoto() + " " + "name=" + getName() + " " + "city=" + getCity() + " " + "number=" + getNumber() + " " + "seller_number=" + getSeller_number() + " " + "alternateSeller_number=" + getAlternateSeller_number() + " " + "address=" + getAddress() + " " + "address_state_id=" + getAddress_state_id());
 	  str.append('}');
 
 	  return(str.toString());
@@ -300,6 +318,14 @@ public class CustomerValue
 		 {
 			lEquals = lEquals && this.name.equals( that.name );
 		 }
+		 if( this.city == null )
+		 {
+			lEquals = lEquals && ( that.city == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.city.equals( that.city );
+		 }
 		 lEquals = lEquals && this.seller_number == that.seller_number;
 		 lEquals = lEquals && this.alternateSeller_number == that.alternateSeller_number;
 		 if( this.address == null )
@@ -346,6 +372,8 @@ public class CustomerValue
       }
 
       result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);
+
+      result = 37*result + ((this.city != null) ? this.city.hashCode() : 0);
 
       result = 37*result + (int) number;
 

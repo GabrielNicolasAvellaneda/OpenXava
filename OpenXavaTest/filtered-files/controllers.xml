@@ -1,0 +1,444 @@
+<?xml version = "1.0" encoding = "ISO-8859-1"?>
+
+<!DOCTYPE controllers SYSTEM "dtds/controllers.dtd"><!-- OpenXavaTest -->
+
+<controllers> 
+	
+	<object name="xavatest_defaultYear" class="java.lang.Integer" value="1999"/>		
+	<object name="xavatest_limitZone" class="java.lang.Integer" value="999"/>
+	<object name="xavatest_invoiceValues" class="java.util.Map"/>
+		
+	<!-- 
+		You can define attribute 'label' and 'description' for action, but
+		the resources in 'Labels.properties' or '${application}-labels.properties'
+		take preference over it.
+		That is to say, it is better specify the labels in resources files and not here.		
+	-->	
+	
+	<controller name="DeliveryTypes"> 
+		<extends controller="Typical"/>
+		<action name="saveNotReset" mode="detail"
+			class="org.openxava.actions.SaveAction"
+			image="images/save.gif"
+			keystroke="F3">			
+			<set property="resetAfter" value="false"/>
+			<use-object name="xava_view"/>
+		</action>
+	</controller>
+		
+	
+	<controller name="EditableOnOff">
+		<action name="setOn" mode="detail"
+			class="org.openxava.test.actions.SetEditableOnAction">
+			<use-object name="xava_view"/>
+		</action>
+		<action name="setOff" mode="detail"
+			class="org.openxava.test.actions.SetEditableOffAction">
+			<use-object name="xava_view"/>
+		</action>
+	</controller>
+		
+	<controller name="Deliveries">
+		<extends controller="EditableOnOff"/>
+		<action name="search" mode="detail"
+			by-default="if-possible" hidden="true"			
+			class="org.openxava.test.actions.SearchDeliveryAction"
+			keystroke="F8">									
+			<use-object name="xava_view"/>
+		</action>		
+		<action name="activateDeactivateSection" mode="detail"
+			class="org.openxava.test.actions.ActivateDeactivateSectionAction">					
+			<set property="section" value="remarks" />
+			<use-object name="xava_view"/>			
+		</action>	
+		<action name="generateNumber" hidden="true"
+			class="org.openxava.test.actions.GenerateDeliveryNumberAction">					
+			<use-object name="xava_view"/>			
+		</action>		
+		<action name="hideActions" mode="detail"
+			class="org.openxava.test.actions.HideDeliveryActionsAction"/>																			
+		<action name="viewCurrentYearInvoices" mode="detail"
+			class="org.openxava.test.actions.ViewCurrentYearInvoicesAction">	
+			<use-object name="xava_tab"/>
+		</action>
+	</controller>
+	
+	<controller name="Products">	
+		<extends controller="EditableOnOff"/>		
+		<action name="setLimitZoneTo1" class="org.openxava.test.actions.ChangeLimitZoneAction" mode="detail">			
+			<set property="newLimitZone" value="1"/>
+			<use-object name="xavatest_limitZone"/>
+		</action>		
+		<action name="setLimitZoneTo0" class="org.openxava.test.actions.ChangeLimitZoneAction" mode="detail">			
+			<set property="newLimitZone" value="0"/>
+			<use-object name="xavatest_limitZone"/>
+		</action>				
+		<action name="changeProductPrice" class="org.openxava.test.actions.ChangeProductPriceAction" mode="detail">					
+			<use-object name="xava_view"/> 
+		</action>
+	</controller>	
+	
+	<controller name="Products2">
+		<action name="deactivateType" class="org.openxava.test.actions.DeactivateReferenceAction" mode="detail">			
+			<set property="reference" value="family"/>
+			<use-object name="xava_view"/>
+		</action>		
+		<action name="changeLimitZone" class="org.openxava.test.actions.ChangeLimitZoneAction" mode="detail">			
+			<set property="newLimitZone" value="1"/>
+			<use-object name="xavatest_limitZone"/>
+		</action>				
+	</controller>
+	
+	<controller name="Products3">	
+		<action name="changeFamily" mode="detail" class="org.openxava.test.actions.SetPropertyValueNotifyingAction">				
+				<set property="property" value="family.oid"/>
+				<set property="value" value="1037101896763"/>
+				<use-object name="xava_view"/>
+		</action>					
+		
+		<action name="hideDescription" mode="detail" on-init="true" 
+			class="org.openxava.test.actions.HideShowGroupAction">								
+			<set property="group" value="description"/>	
+			<set property="hide" value="true"/>	
+			<use-object name="xava_view"/>
+		</action>				
+		
+		<action name="showDescription" mode="detail" 
+			class="org.openxava.test.actions.HideShowGroupAction">								
+			<set property="group" value="description"/>	
+			<set property="show" value="true"/>	
+			<use-object name="xava_view"/>
+		</action>				
+					
+	</controller>		
+	
+	
+	<controller name="Customers">
+		<extends controller="Typical"/>
+		<extends controller="EditableOnOff"/>
+		<action name="save" mode="detail"
+			class="org.openxava.actions.SaveAction"
+			image="images/save.gif"
+			keystroke="F3">			
+			<set property="resetAfter" value="false"/>
+			<use-object name="xava_view"/>
+		</action>				
+
+		<action name="hideSeller" mode="detail" 
+			class="org.openxava.test.actions.HideShowGroupAction">								
+			<set property="group" value="seller"/>	
+			<set property="hide" value="true"/>	
+			<use-object name="xava_view"/>
+		</action>				
+
+		<action name="showSeller" mode="detail" 
+			class="org.openxava.test.actions.HideShowGroupAction">								
+			<set property="group" value="seller"/>	
+			<set property="show" value="true"/>	
+			<use-object name="xava_view"/>
+		</action>
+		<action name="hideSellerInList" mode="list"
+			class="org.openxava.test.actions.HideListPropertyAction">								
+			<set property="property" value="seller.name"/>	
+			<use-object name="xava_tab"/>
+		</action>										
+		<action name="showSellerInList" mode="list"
+			class="org.openxava.test.actions.ShowListPropertyAction">								
+			<set property="property" value="seller.name"/>	
+			<set property="index" value="2"/>	
+			<use-object name="xava_tab"/>
+		</action>												
+		<action name="moveRelationWithSellerToRemarks" mode="detail"
+			class="org.openxava.test.actions.MoveRelationWithSellerToRemarksAction">
+			<use-object name="xava_view"/>
+		</action>
+		<action name="changeToSimpleView" mode="detail"
+			class="org.openxava.test.actions.ChangeViewAction">
+			<set property="newView" value="Simple"/>
+			<use-object name="xava_view"/>
+		</action>
+		<action name="changeNameLabel" mode="detail" class="org.openxava.test.actions.ChangeLabelAction">				
+			<set property="property" value="name"/>
+			<set property="label" value="Malnom"/>
+			<use-object name="xava_view"/>
+		</action>			
+	</controller>
+			
+	<controller name="CustomersNewOnInit">
+		<action name="new" 
+			class="org.openxava.actions.NewAction"
+			image="images/new.gif" on-init="true"
+			keystroke="F2">
+			<use-object name="xava_view"/>			
+		</action>			
+		<action name="getName" mode="detail"
+			class="org.openxava.test.actions.GetNameAction">
+			<use-object name="xava_view"/>
+		</action>		
+	</controller>
+		
+		
+	<controller name="Invoices">
+		<action name="searchFromDelivery" hidden="true"
+			class="org.openxava.test.actions.SearchInvoiceFromDeliveryAction">									
+			<use-object name="xava_view"/>
+		</action>		
+		<action name="listOfCustomer" hidden="true"
+			class="org.openxava.test.actions.ListCustomerInvoicesAction">
+			<use-object name="xava_tab"/>
+		</action>				
+		<action name="editDetail" hidden="true"
+			class="org.openxava.test.actions.EditInvoiceDetailAction">	
+			<use-object name="xava_view"/>
+		</action>			
+		<action name="viewDelivery" hidden="true"
+			class="org.openxava.test.actions.ViewDeliveryFromInvoiceAction">	
+			<use-object name="xava_view"/>
+		</action>					
+		<action name="viewProduct" hidden="true"
+			class="org.openxava.test.actions.ViewProductFromInvoiceDetailAction">	
+			<use-object name="xava_view"/>
+			<use-object name="xavatest_invoiceValues"/>
+		</action>	
+		<action name="removeViewDeliveryInInvoice"
+			class="org.openxava.test.actions.RemoveViewDeliveryInInvoiceAction">	
+			<use-object name="xava_view"/>
+		</action>	
+		<action name="addViewDeliveryInInvoice"
+			class="org.openxava.test.actions.AddViewDeliveryInInvoiceAction">	
+			<use-object name="xava_view"/>
+		</action>
+		<action name="changeTab" mode="list"
+			class="org.openxava.test.actions.ChangeInvoiceTabAction">	
+			<use-object name="xava_tab"/>
+		</action>					
+	</controller>
+	
+	<controller name="CustomerInvoices">
+		<action name="return" class="org.openxava.actions.ReturnPreviousModuleAction"/>
+	</controller>
+	
+	<controller name="ProductFromInvoice">
+		<action name="return" 
+			class="org.openxava.test.actions.ReturnToInvoiceAction">									
+			<use-object name="xava_view"/>
+			<use-object name="xavatest_invoiceValues"/>
+		</action>		
+	</controller>
+		
+	<controller name="Invoices2002">
+		<action name="init" on-init="true" hidden="true"
+			class="org.openxava.test.actions.InitDefaultYearTo2002Action">
+			<use-object name="xavatest_defaultYear"/>
+			<use-object name="xava_tab"/>
+		</action>
+		<action name="changeListTitle" mode="list"
+			class="org.openxava.test.actions.ChangeListTitleAction">
+			<set property="titleId" value="my_2002_invoices_title"/>			
+			<use-object name="xava_tab"/>
+		</action>
+	</controller>	
+		
+	<controller name="ChangeProductsPrice">			
+
+		<action name="init" hidden="true" on-init="true"
+			class="org.openxava.test.actions.InitChangeProductsPriceAction">
+			<use-object name="xava_view"/>
+		</action>
+						
+		<action name="save" mode="detail"
+			class="org.openxava.actions.SaveAction"
+			keystroke="F3">			
+			<use-object name="xava_view"/>
+		</action>
+						
+	</controller>
+	
+	<controller name="ChangeProductsPrice2">			
+
+		<action name="save" mode="detail"
+			class="org.openxava.actions.SaveAction"
+			keystroke="F3">			
+			<use-object name="xava_view"/>
+		</action>
+		
+		<action name="verifyEditables" mode="detail"
+			class="org.openxava.test.actions.VerifyEditablesProductAction">			
+			<use-object name="xava_view"/>
+		</action>		
+		
+	</controller>
+			
+					
+	<controller name="Warehouses">
+		
+		<action name="changeZone" mode="detail" class="org.openxava.test.actions.ChangeZoneAction"/>				
+		
+		<action name="toLowerCase" mode="list"
+			class="org.openxava.test.actions.ChangeToLowerCaseAction">
+			<use-object name="xava_tab"/>
+		</action>	
+		
+		<action name="changePageRowCount" mode="list"
+			class="org.openxava.test.actions.ChangePageRowCountAction">
+			<set property="rowCount" value="20"/>
+			<use-object name="xava_tab"/>
+		</action>
+	</controller>
+	
+	<controller name="MyReference">
+		<action name="search" hidden="true"
+			class="org.openxava.test.actions.MySearchAction"
+			image="images/search.gif">				
+			
+		</action>			
+		
+		<action name="yes" 
+			class="org.openxava.actions.ReferenceSearchAction">			
+			<set property="keyProperty" value="xava.Customer.seller.number"/>			
+			<set property="nextController" value="MyReferenceSearch"/>			
+			<use-object name="xava_view"/>
+			<use-object name="xava_referenceSubview"/>
+			<use-object name="xava_tab"/>
+			<use-object name="xava_currentReferenceLabel"/>
+		</action>			
+		
+		<action name="no" class="org.openxava.actions.CancelAction"/>
+		
+	</controller>
+
+	<controller name="MyReferenceSearch">
+		<extends controller="ReferenceSearch"/>			
+		<action name="resetPreviousControllers" on-init="true" hidden="true"
+			class="org.openxava.actions.ResetPreviousControllersAction">
+			<use-object name="xava_previousControllers"/>
+		</action>
+	</controller>
+		
+	<controller name="Families">
+		<extends controller="Typical"/>		
+		<action name="new" image="images/new.gif"
+			class="org.openxava.test.actions.CreateNewFamilyAction">					
+			<use-object name="xava_view"/>			
+		</action>			
+	</controller>
+	
+	<controller name="FamiliesHibernate"> 
+		<action name="search" image="images/search.gif" hidden="true"
+			class="org.openxava.test.actions.FamilyHibernateSearchAction">					
+			<use-object name="xava_view"/>			
+		</action>	
+				
+		<action name="save" mode="detail"
+			class="org.openxava.test.actions.FamilyHibernateSaveAction"
+			image="images/save.gif"
+			keystroke="F3">			
+			<use-object name="xava_view"/>
+		</action>
+		
+		<action name="delete" mode="detail"
+			class="org.openxava.test.actions.FamilyHibernateDeleteAction"
+			image="images/delete.gif"
+			keystroke="F4">
+			<use-object name="xava_view"/>
+		</action>
+		
+		<action name="new" 
+			class="org.openxava.actions.NewAction"
+			image="images/new.gif"
+			keystroke="F2">
+			<use-object name="xava_view"/>			
+		</action>
+			
+	</controller>
+	
+	<controller name="FamilyProductsReport">
+		<action name="generate" 
+			class="org.openxava.test.actions.FamilyProductsReportAction"
+			takes-long="true">
+			<use-object name="xava_view"/>			
+		</action>			
+	</controller>	
+
+	<controller name="StatesHibernate"> 
+		<action name="search" image="images/search.gif" mode="detail" 
+			class="org.openxava.test.actions.StateHibernateSearchAction">					
+			<use-object name="xava_view"/>			
+		</action>	
+				
+		<action name="save" mode="detail"
+			class="org.openxava.test.actions.StateHibernateSaveAction"
+			image="images/save.gif"
+			keystroke="F3">			
+			<use-object name="xava_view"/>
+		</action>
+		
+		<action name="delete" mode="detail"
+			class="org.openxava.test.actions.StateHibernateDeleteAction"
+			image="images/delete.gif"
+			keystroke="F4">
+			<use-object name="xava_view"/>
+		</action>
+		
+		<action name="new" 
+			class="org.openxava.actions.NewAction"
+			image="images/new.gif"
+			keystroke="F2">
+			<use-object name="xava_view"/>			
+		</action>
+			
+	</controller>
+	
+	<controller name="Remarks">
+		<action name="hideRemarks" 
+			class="org.openxava.test.actions.HideShowPropertyAction">					
+			<set property="property" value="remarks" />
+			<set property="hide" value="true" />
+			<use-object name="xava_view"/>			
+		</action>			
+		<action name="showRemarks" mode="detail"
+			class="org.openxava.test.actions.HideShowPropertyAction">					
+			<set property="property" value="remarks" />
+			<set property="hide" value="false" />
+			<use-object name="xava_view"/>			
+		</action>
+		<action name="setRemarks" mode="detail"
+			class="org.openxava.test.actions.SetPropertyValueAction">					
+			<set property="property" value="remarks" />
+			<set property="value" value="Hell in your eyes" />
+			<use-object name="xava_view"/>			
+		</action>							
+	</controller>
+	
+	<controller name="Carriers">
+		
+		<action name="translateName" hidden="true"
+			class="org.openxava.test.actions.TranslateCarrierNameAction">
+		</action>		
+		
+		<action name="deleteAll" class="org.openxava.test.actions.DeleteAllAction">
+			<set property="model" value="Carrier" />
+		</action>
+    	
+	</controller>	
+	
+	<!--
+	Because its name is WarehouseCreation (model name + Creation) it is used
+	by default for create from reference, instead of NewCreation.
+	Action 'new' is executed automatically.
+	-->
+	<controller name="WarehouseCreation">
+		<extends controller="NewCreation"/>
+		<action name="new" hidden="true"
+			class="org.openxava.test.actions.CreateNewWarehouseFromReferenceAction"
+			image="images/new.gif"
+			keystroke="F2">
+			<use-object name="xava_view"/>			
+		</action>						
+	</controller>
+
+	<controller name="Return">	
+		<action name="return" class="org.openxava.actions.CancelAction"/>		
+	</controller>
+			
+</controllers>

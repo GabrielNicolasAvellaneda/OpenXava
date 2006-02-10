@@ -84,7 +84,7 @@
 	
 	<target name="filterXavaFilesWithoutConfiguration" unless="configuration">
 		<!-- to replace within xava files -->
-		<copy todir="../${project.ejb}/${classes.dir}" overwrite="true">		
+		<copy todir="../${project.ejb}/filtered-files" overwrite="true">		
 			<fileset dir="../${project.ejb}/xava"/>
 	    	<filterset>	    	
 				<filter token="separator" value="${separator}"/>
@@ -92,7 +92,7 @@
 			</filterset> 			         
 		</copy>			
 		<!-- to replace within xava components -->
-		<copy todir="../${project.ejb}/${classes.dir}" overwrite="true">		
+		<copy todir="../${project.ejb}/filtered-files" overwrite="true">		
 			<fileset dir="../${project.ejb}/components"/>
 	    	<filterset>	    	
 				<filter token="separator" value="${separator}"/>
@@ -105,7 +105,7 @@
     	
 	<target name="filterXavaFilesWithConfiguration" if="configuration">
 		<!-- to replace within xava files -->
-		<copy todir="../${project.ejb}/${classes.dir}" overwrite="true">		
+		<copy todir="../${project.ejb}/filtered-files" overwrite="true">		
 			<fileset dir="../${project.ejb}/xava"/>
 	    	<filterset>	    	
 				<filtersfile file="${configuration}.properties"/>				
@@ -114,7 +114,7 @@
 			</filterset> 			         
 		</copy>			
 		<!-- to replace within xava components -->
-		<copy todir="../${project.ejb}/${classes.dir}" overwrite="true">		
+		<copy todir="../${project.ejb}/filtered-files" overwrite="true">		
 			<fileset dir="../${project.ejb}/components"/>
 	    	<filterset>	    	
 				<filtersfile file="${configuration}.properties"/>				
@@ -131,7 +131,7 @@
 	</target>
 	
 	<target name="filterHibernateFilesWithoutConfiguration" unless="configuration">
-		<copy todir="../${project.ejb}/${classes.dir}" failonerror="false" overwrite="true">		
+		<copy todir="../${project.ejb}/filtered-files" failonerror="false" overwrite="true">		
 			<fileset dir="../OpenXava/hibernate"/>
 			<fileset dir="../${project.ejb}/hibernate"/>			
 			<fileset dir="../${project.ejb}/build/hibernate"/>
@@ -148,7 +148,7 @@
 	</target>	
 	
 	<target name="filterHibernateFilesWithConfiguration" if="configuration">
-		<copy todir="../${project.ejb}/${classes.dir}" failonerror="false" overwrite="true">		
+		<copy todir="../${project.ejb}/filtered-files" failonerror="false" overwrite="true">		
 			<fileset dir="../OpenXava/hibernate"/>
 			<fileset dir="../${project.ejb}/hibernate"/>
 			<fileset dir="../${project.ejb}/build/hibernate"/>
@@ -350,7 +350,7 @@
 	   <echo>Generating classes</echo>    	
        <java 
        		classname="EJBCodeGenerator" 
-       		classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};${components.dir};../${project}/${classes.dir};${tracking.classes};${xava.generator.path}" 
+       		classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};../${project}/${classes.dir};${components.dir};${tracking.classes};${xava.generator.path}" 
        		fork="yes">
 			<arg value="${project}"/>        		
 	       	<arg value="${domain}"/>
@@ -366,7 +366,7 @@
     	<mkdir dir="../${project}/build/hibernate"/>
        <java 
        		classname="HCodeGenerator" 
-       		classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};${components.dir};../${project}/${classes.dir};${xava.generator.path}" 
+       		classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};../${project}/${classes.dir};${components.dir};${xava.generator.path}" 
        		fork="yes">
 			<arg value="${project}"/>        		
 	       	<arg value="${domain}"/>
@@ -550,15 +550,22 @@
 	</target>
 	
 	<target name="filterI18n" if="configuration">
-  		<copy todir="../${project}/${classes.dir}" overwrite="true">
-    		<fileset dir="../${project}/i18n"/>
+  		<copy todir="../${project}/filtered-files" overwrite="true">
+    		<fileset dir="../${project}/i18n" excludes="portlets, portlets/*"/>
 	    	<filterset>	    	
 				<filtersfile file="${configuration}.properties"/>				
 			</filterset> 			             		
   		</copy>			
+  		<copy todir="../${project}/${classes.dir}/portlets">
+    		<fileset dir="../${project}/i18n/portlets"/>
+  		</copy>					
 	</target>
 	
-	<target name="filter" depends="filterXavaFiles, filterHibernateFiles, filterI18n"/>
+	<target name="filter" depends="filterXavaFiles, filterHibernateFiles, filterI18n">
+		<copy todir="../${project}/${classes.dir}">
+			<fileset dir="../${project}/filtered-files"/>
+		</copy>
+	</target>
 				
 	<target name="prepareWar" depends="createDist, updateDataSourceInfo, configureJNDI">		
   		<copy todir="../${project}/web/xava" preservelastmodified="true">

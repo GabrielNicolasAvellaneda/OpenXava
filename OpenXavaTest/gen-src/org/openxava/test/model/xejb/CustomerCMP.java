@@ -114,6 +114,7 @@ public abstract class CustomerCMP
             CustomerValue.setRelationWithSeller( getRelationWithSeller() );
             CustomerValue.setPhoto( getPhoto() );
             CustomerValue.setName( getName() );
+            CustomerValue.setCity( getCity() );
             CustomerValue.setNumber( getNumber() );
             CustomerValue.setSeller_number( getSeller_number() );
             CustomerValue.setAlternateSeller_number( getAlternateSeller_number() );
@@ -140,6 +141,7 @@ public abstract class CustomerCMP
 		 setRelationWithSeller( valueHolder.getRelationWithSeller() );
 		 setPhoto( valueHolder.getPhoto() );
 		 setName( valueHolder.getName() );
+		 setCity( valueHolder.getCity() );
 		 setSeller_number( valueHolder.getSeller_number() );
 		 setAlternateSeller_number( valueHolder.getAlternateSeller_number() );
 		 setAddress( valueHolder.getAddress() );

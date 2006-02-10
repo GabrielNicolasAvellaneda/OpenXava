@@ -526,14 +526,14 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	
 	/**
 	 * 
-	 * @param other  Can be null, and in which case return false
+	 * @param other  Can be null, in which case return false
 	 */
 	public boolean depends(MetaProperty other) throws XavaException {
 		if (other == null) return false;
 		if (!other.hasDependentProperties()) return false;
 		return other.getDependentPropertiesNames().contains(getName());
 	}
-		
+	
 	public boolean hasMetaModel() {		
 		return getMetaModel() != null;
 	}
