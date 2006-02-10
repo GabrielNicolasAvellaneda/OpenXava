@@ -145,7 +145,8 @@ function throwPropertyChanged(formu, property) {
 function setFocus() {
 	element = document.<%=manager.getForm()%>.elements['<%=focusPropertyId%>'];
 	if (element != null && typeof element.disabled != "undefined" && !element.disabled) {
-		element.focus()
+		element.focus();
+		element.select();		
 	}
 }
 </script>

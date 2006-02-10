@@ -43,6 +43,9 @@ public interface CustomerRemote
    public void setName( java.lang.String newName )
       throws java.rmi.RemoteException;
 
+   public java.lang.String getCity(  )
+      throws java.rmi.RemoteException;
+
    public int getNumber(  )
       throws java.rmi.RemoteException;
 

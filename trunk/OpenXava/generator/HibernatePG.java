@@ -11,7 +11,7 @@ import org.openxava.util.XavaException;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Feb 02 09:57:26 CET 2006
+ * @version Fri Feb 10 11:13:03 CET 2006
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -381,7 +381,7 @@ public class HibernatePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Feb 02 09:57:27 CET 2006", // date this file was generated
+        { "Fri Feb 10 11:13:03 CET 2006", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/hibernate.xml", // input file
              "/home/javi/workspace/OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

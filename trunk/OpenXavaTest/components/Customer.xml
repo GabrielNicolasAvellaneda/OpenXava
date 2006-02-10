@@ -27,6 +27,15 @@
 				size="400"/>
 		  
 		<reference name="address" model="Address" required="true"/>
+		
+		<!-- tmp -->
+		<property name="city" type="String" size="40">
+			<calculator class="org.openxava.calculators.ConcatCalculator">
+				<set property="separator" value=" "/>
+				<set property="int1" from="address.zipCode"/>				
+				<set property="string2" from="address.city"/>
+			</calculator>
+		</property>
 
 		<reference name="seller" model="Seller"/>   
 
@@ -162,6 +171,7 @@
 			name; 
 			photo; 
 			address; 
+			city;
 			<group name="seller">
 				seller;
 				relationWithSeller; 
@@ -195,6 +205,7 @@
 				name; 
 				photo; 
 				address; 
+				city;
 				<group name="seller">
 					seller;
 					relationWithSeller; 

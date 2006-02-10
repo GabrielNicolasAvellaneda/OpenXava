@@ -4,7 +4,10 @@ import java.util.*;
 import javax.ejb.*;
 
 import org.openxava.calculators.*;
+import org.openxava.component.*;
+import org.openxava.model.meta.*;
 import org.openxava.test.model.*;
+import org.openxava.util.*;
 
 /**
  * @ejb:bean name="Family" type="CMP" jndi-name="OpenXavaTest/ejb/openxava.test/Family" view-type="remote"
@@ -23,7 +26,14 @@ abstract public class FamilyBean
 		
 	private UUIDCalculator oidCalculator = new UUIDCalculator();
 	
-	
+	private MetaModel metaModel;
+	public MetaModel getMetaModel() throws XavaException {
+		if (metaModel == null) {
+			metaModel = MetaComponent.get("Family").getMetaEntity(); 	
+		}
+		return metaModel;
+	}
+			
 	/**
 	  * @ejb:interface-method
 	  * @ejb:pk-field
