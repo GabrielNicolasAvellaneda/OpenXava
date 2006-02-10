@@ -1,7 +1,6 @@
 <%@ include file="imports.jsp"%>
 
 <%@ page import="org.openxava.view.meta.MetaView" %>
-<%@ page import="org.openxava.util.Is" %>
 
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
@@ -11,16 +10,8 @@ String viewObject = request.getParameter("viewObject");
 viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObject;
 org.openxava.view.View view = (org.openxava.view.View) context.get(request, viewObject);
 java.util.Collection sections = view.getSections();
-
-Object oactiveSection = context.get(request, "xava_activeSection");
-int activeSection = oactiveSection==null?0:((Integer) oactiveSection).intValue();
-if (activeSection >= sections.size()) {
-	activeSection = 0;
-	context.put(request, "xava_activeSection", new Integer(0));
-}
-view.setActiveSection(activeSection);
+int activeSection = view.getActiveSection(); 
 %>
-
 
 <table width='100%' cellspacing="0" border="0" cellpadding="0">
 	<tr><td>
@@ -53,7 +44,10 @@ view.setActiveSection(activeSection);
 			<td class=<%=style.getSectionTabLeftLow()%> nowrap="true">&nbsp;</td>
 			<% } %>
 			<td class=<%=style.getSectionTabMiddleLow()%> style="vertical-align: middle; text-align: center;" nowrap="true">
-				<xava:link action='Sections.change' argv='<%="activeSection="+i%>' cssClass='<%=style.getSectionLink()%>'>
+				<%
+				String viewObjectArgv = "xava_view".equals(viewObject)?"":",viewObject=" + viewObject;
+				%>
+				<xava:link action='Sections.change' argv='<%="activeSection=" + i + viewObjectArgv%>' cssClass='<%=style.getSectionLink()%>'>
 				<%=section.getLabel(request)%>
 				</xava:link>                  	
 			</td>
@@ -75,9 +69,11 @@ view.setActiveSection(activeSection);
 			String viewName = viewObject + "_section" + activeSection;
 			context.put(request, viewName, view.getSectionView(activeSection));			
 		%>	
+		<table width='100%' cellspacing="0" border="0" cellpadding="2"><tr><td>
 		<jsp:include page="detail.jsp"> 
 			<jsp:param name="viewObject" value="<%=viewName%>" />
 		</jsp:include>		
+		</td></tr></table>
 	</td></tr>	
 </table>
 <br>
