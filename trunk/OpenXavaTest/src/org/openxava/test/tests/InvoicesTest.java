@@ -1064,8 +1064,7 @@ public class InvoicesTest extends ModuleTestBase {
 	
 	private IProduct getProduct() throws Exception {
 		if (product == null) {
-			product = (IProduct) PortableRemoteObject.narrow(
-					ProductUtil.getHome().findByPrimaryKey(new ProductKey(2)), IProduct.class);
+			product = (IProduct) XHibernate.getSession().get(Product.class, new Long(2));
 		}
 		return product;
 	}

@@ -696,7 +696,7 @@ public class View implements java.io.Serializable {
 			Iterator it = getGroupsViews().values().iterator();		
 			while (it.hasNext()) {
 				View subview = (View) it.next();																
-				membersNamesInGroup.addAll(subview.getMembersNamesWithHidden().keySet());
+				membersNamesInGroup.addAll(subview.getMembersNamesWithHiddenImpl().keySet());
 			}		
 		}
 		return membersNamesInGroup;
@@ -801,17 +801,29 @@ public class View implements java.io.Serializable {
 			}		
 		}
 
-		return result;
+		return result; 
 	}
 	
 	public Map getMembersNamesWithHidden() throws XavaException {
+		// the public version create a new Map always
+		return createMembersNames(true);
+	}
+		
+	public Map getMembersNames() throws XavaException {
+		// the public version create a new Map always
+		return createMembersNames(false);
+	}	
+	
+	private Map getMembersNamesWithHiddenImpl() throws XavaException { 
+		// the private version make cache
 		if (membersNamesWithHidden == null) {
 			membersNamesWithHidden = createMembersNames(true);
 		}
 		return membersNamesWithHidden;		
 	}
 		
-	public Map getMembersNames() throws XavaException {
+	private Map getMembersNamesImpl() throws XavaException { 
+		// the private version make cache
 		if (membersNames == null) {
 			membersNames = createMembersNames(false);
 		}
@@ -879,14 +891,14 @@ public class View implements java.io.Serializable {
 				membersNames.putAll(getSectionView(i).createMembersNames(hiddenIncluded));
 			}
 		}			
-		return membersNames;	
+		return membersNames; 	
 	}
 	
 	public List getCollectionValues() throws XavaException { 
 		if (!isRepresentsCollection()) return Collections.EMPTY_LIST;
 		if (collectionValues == null) {
 			Map membersNames = new HashMap();
-			membersNames.put(getMemberName(), getCollectionMemberNames());		
+			membersNames.put(getMemberName(), new HashMap(getCollectionMemberNames()));		
 			try {							
 				Map values = MapFacade.getValues(getParent().getModelName(), getParent().getKeyValues(), membersNames);
 				collectionValues = (List) values.get(getMemberName());				
@@ -908,18 +920,19 @@ public class View implements java.io.Serializable {
 	}
 	
 	public boolean isDetailMemberInCollection() throws XavaException {
-		return getCollectionMemberNames().keySet().containsAll(getMembersNames().keySet());
+		return getCollectionMemberNames().keySet().containsAll(getMembersNamesImpl().keySet());
 	}
 	
 	private Map getCollectionMemberNames() throws XavaException {
 		if (collectionMemberNames == null) {   		
-			collectionMemberNames = new HashMap();
+			Map result = new HashMap();			
 			Iterator it = getMetaPropertiesList().iterator();
 			while (it.hasNext()) {
 				MetaProperty pr = (MetaProperty) it.next();
-				String propertyName = pr.getName();
-				addQualifiedMemberToMap(propertyName, collectionMemberNames);
-			}		
+				String propertyName = pr.getName();				
+				addQualifiedMemberToMap(propertyName, result);
+			}	
+			collectionMemberNames = Collections.unmodifiableMap(result); 
 		}	
 		return collectionMemberNames;
 	}
@@ -1023,11 +1036,11 @@ public class View implements java.io.Serializable {
 			Collection properties = new ArrayList(getMetaModel().getMetaPropertiesWithDefaultValueCalculator());			
 			properties.addAll(getMetaModel().getMetaPropertiesViewWithDefaultCalculator());			
 			if (!properties.isEmpty()) {		
-				Map membersNames = getMembersNames();				
+				Map membersNames = getMembersNamesImpl();				
 				Iterator it = properties.iterator();
 				Collection alreadyPut = new ArrayList();				
 				while (it.hasNext()) {
-					MetaProperty p = (MetaProperty) it.next();					
+					MetaProperty p = (MetaProperty) it.next();
 					if (membersNames.containsKey(p.getName())) {				
 						try {
 							if (!p.getMetaCalculatorDefaultValue().containsMetaSetsWithoutValue()) { // This way to avoid calculate the dependend ones
@@ -1095,7 +1108,7 @@ public class View implements java.io.Serializable {
 			// References
 			Collection references = getMetaModel().getMetaReferencesWithDefaultValueCalculator();					
 			if (!references.isEmpty()) {		
-				Map membersNames = getMembersNames();		
+				Map membersNames = getMembersNamesImpl();		
 				Iterator it = references.iterator();
 				Collection alreadyPut = new ArrayList();						
 				while (it.hasNext()) {
@@ -1718,7 +1731,7 @@ public class View implements java.io.Serializable {
 			clear(); 			
 		}
 		else {					
-			try {				
+			try {								
 				setValues(MapFacade.getValues(getModelName(), getKeyValues(), getMembersNamesWithHidden()));				
 			}
 			catch (ObjectNotFoundException ex) {						

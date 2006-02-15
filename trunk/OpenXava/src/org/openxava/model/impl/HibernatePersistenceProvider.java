@@ -11,6 +11,7 @@ import javax.ejb.ObjectNotFoundException;
 import org.hibernate.*;
 
 import org.openxava.hibernate.*;
+import org.openxava.hibernate.impl.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
@@ -48,7 +49,26 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 					XavaResources.getString("find_error", metaModel.getName()));
 		}
 	}
-
+	
+	public Object find(IMetaEjb metaModel, Object key) throws FinderException { 
+		try {											
+			Object result = XHibernate.getSession().get(metaModel.getPOJOClass(), (Serializable) key);
+			if (result == null) {
+				throw new ObjectNotFoundException(XavaResources.getString(
+						"object_with_key_not_found", metaModel.getName(), key));
+			}			
+			return result;
+		}
+		catch (FinderException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			throw new HibernateException( 
+					XavaResources.getString("find_error", metaModel.getName()));
+		}
+	}
+	
 	private void refreshKeyReference(IMetaEjb metaModel, Object key) throws XavaException, HibernateException, InvocationTargetException, PropertiesManagerException {
 		// Refresh references keys can be a little inefficient (a SELECT by reference)
 		// but it's needed in order to populate these references well, 
@@ -98,12 +118,7 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 		}
 	}
 
-	public Object find(IMetaEjb metaEntidad, Object key) throws FinderException { 
-		return null; // tmp Eliminar
-	}
-	
-	
-
+		
 	public void commit() {
 		flush(); 
 		XHibernate.commit();
@@ -130,6 +145,8 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 	public Object createAggregate(IMetaEjb metaEjb, Map values, MetaModel metaModelContainer, Object containerModel, int number) throws CreateException, ValidationException, RemoteException, XavaException {		
 		String container = Strings.firstLower(metaModelContainer.getName());
 		values.put(container, containerModel);
+		DefaultValueIdentifierGenerator.setCurrentContainerKey(containerModel);
+		DefaultValueIdentifierGenerator.setCurrentCounter(number);
 		return create(metaEjb, values);
 	}
 

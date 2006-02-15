@@ -9,11 +9,13 @@ import org.openxava.test.model.*;
  */
 public class InvoiceDetailOidCalculator implements IAggregateOidCalculator {
 	
-	private InvoiceKey invoiceKey;
+	private IInvoice invoice;
 	private int counter;
 
 	public void setContainerKey(Object containerKey) {
-		invoiceKey = (InvoiceKey) containerKey;
+		// In the case of POJO container key is the container POJO itself,
+		// in the case of EJB the container key is the EJB key
+		invoice = (IInvoice) containerKey;
 	}
 
 	public void setCounter(int counter) {
@@ -21,7 +23,7 @@ public class InvoiceDetailOidCalculator implements IAggregateOidCalculator {
 	}
 
 	public Object calculate() throws Exception {
-		return invoiceKey.year + ":" + invoiceKey.number + ":" + counter;
+		return invoice.getYear() + ":" + invoice.getNumber() + ":" + counter;
 	}
 
 }

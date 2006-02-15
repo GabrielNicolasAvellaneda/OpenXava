@@ -22,6 +22,13 @@ import org.openxava.util.meta.*;
 
 public class DefaultValueIdentifierGenerator implements IdentifierGenerator, Configurable {
 	
+	static class AggregateOidInfo {
+		public int counter;
+		public Object containerKey;
+	}
+	
+	private static ThreadLocal currentAggregateOidInfo = new ThreadLocal();
+	
 	private String property;
 
 	public Serializable generate(SessionImplementor implementor, Object object)	throws HibernateException {
@@ -45,12 +52,21 @@ public class DefaultValueIdentifierGenerator implements IdentifierGenerator, Con
 			if (calculator instanceof IEntityCalculator) {
 				((IEntityCalculator) calculator).setEntity(model);
 			}
+			if (calculator instanceof IAggregateOidCalculator) {
+				((IAggregateOidCalculator) calculator).setContainerKey(getCurrentContainerKey());
+				((IAggregateOidCalculator) calculator).setCounter(getCurrentCounter());
+			}
+			resetAggregateOidInfo();
 			return (Serializable) calculator.calculate();
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
 			throw new HibernateException(XavaResources.getString("entity_create_error", modelName, ex.getLocalizedMessage()));
 		}
+	}
+
+	private void resetAggregateOidInfo() {
+		currentAggregateOidInfo.set(null);		
 	}
 
 	public String getProperty() {
@@ -60,5 +76,35 @@ public class DefaultValueIdentifierGenerator implements IdentifierGenerator, Con
 	public void configure(Type type, Properties params, Dialect dialect) throws MappingException {
 		property = params.getProperty("property");	
 	}
-
+	
+	private static Object getCurrentContainerKey() {
+		AggregateOidInfo info = (AggregateOidInfo) currentAggregateOidInfo.get();
+		if (info == null) return null;
+		return info.containerKey;
+	}
+	
+	public static void setCurrentContainerKey(Object containerKey) {
+		AggregateOidInfo info = (AggregateOidInfo) currentAggregateOidInfo.get();
+		if (info == null) {
+			info = new AggregateOidInfo();			
+			currentAggregateOidInfo.set(info);
+		}
+		info.containerKey = containerKey;		
+	}
+	
+	private static int getCurrentCounter() {
+		AggregateOidInfo info = (AggregateOidInfo) currentAggregateOidInfo.get();
+		if (info == null) return 0;
+		return info.counter;
+	}
+	
+	public static void setCurrentCounter(int counter) {
+		AggregateOidInfo info = (AggregateOidInfo) currentAggregateOidInfo.get();
+		if (info == null) {
+			info = new AggregateOidInfo();			
+			currentAggregateOidInfo.set(info);
+		}
+		info.counter = counter;		
+	}
+	
 }
