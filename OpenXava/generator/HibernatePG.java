@@ -6,12 +6,11 @@ import java.util.*;
 import org.openxava.component.MetaComponent;
 import org.openxava.model.meta.*;
 import org.openxava.mapping.*;
-import org.openxava.util.Strings;
-import org.openxava.util.XavaException;
+import org.openxava.util.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Fri Feb 10 11:13:03 CET 2006
+ * @version Tue Feb 14 19:36:28 CET 2006
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -295,11 +294,15 @@ public class HibernatePG {
     	String roleName = col.getMetaReference().getRole();	 
     	ModelMapping referencedMapping = col.getMetaReference().getMetaModelReferenced().getMapping();
     	Collection columns = referencedMapping.getReferenceMapping(roleName).getColumns();
-    	Collection cKeys = col.getMetaReference().getMetaModelReferenced().getAllKeyPropertiesNames();
-    	StringBuffer nKeys = new StringBuffer();
-    	for (Iterator it = cKeys.iterator(); it.hasNext();) {
-    		nKeys.append(referencedMapping.getColumn((String) it.next()));
-    		if (it.hasNext()) nKeys.append(", ");
+    	String order = col.getSQLOrder();
+    	if (Is.emptyString(order)) {
+    		Collection cKeys = col.getMetaReference().getMetaModelReferenced().getAllKeyPropertiesNames();
+    		StringBuffer nKeys = new StringBuffer();
+    		for (Iterator it = cKeys.iterator(); it.hasNext();) {
+    			nKeys.append(referencedMapping.getColumn((String) it.next()));
+    			if (it.hasNext()) nKeys.append(", ");
+    		}
+    		order = nKeys.toString();
     	}
     	if (columns.size() == 1) {	
     		String column = (String) columns.iterator().next();
@@ -307,7 +310,7 @@ public class HibernatePG {
     out.print("  \n\t\t<set name=\"");
     out.print(col.getName());
     out.print("\" order-by=\"");
-    out.print(nKeys);
+    out.print(order);
     out.print("\" ");
     out.print(cascadeDelete);
     out.print(">\n\t\t\t<key column=\"");
@@ -322,7 +325,7 @@ public class HibernatePG {
     out.print(" \n\t\t<set name=\"");
     out.print(col.getName());
     out.print("\" order-by=\"");
-    out.print(nKeys);
+    out.print(order);
     out.print("\" ");
     out.print(cascadeDelete);
     out.print(">\n\t\t\t<key>");
@@ -381,9 +384,9 @@ public class HibernatePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Fri Feb 10 11:13:03 CET 2006", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/hibernate.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/HibernatePG.java" }, // output file
+        { "Tue Feb 14 19:36:28 CET 2006", // date this file was generated
+             "/home/javi/workspace2/OpenXava/generator/hibernate.xml", // input file
+             "/home/javi/workspace2/OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

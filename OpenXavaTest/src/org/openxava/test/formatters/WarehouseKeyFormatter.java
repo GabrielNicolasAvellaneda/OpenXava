@@ -17,7 +17,7 @@ import org.openxava.util.*;
 public class WarehouseKeyFormatter implements IFormatter {
 
 	private final static String BAD_STRING =
-		"String for create WarehouseKey must have format: 'Warehouse: zoneNumber/number'";
+		"String for create WarehouseKey must have format: '[.zoneNumber.number.]'";
 		
 
 	public String format(HttpServletRequest request,	Object object) {		
@@ -27,7 +27,7 @@ public class WarehouseKeyFormatter implements IFormatter {
 	public Object parse(HttpServletRequest request, String string) throws ParseException {
 		if (Is.emptyString(string) || "0".equals(string)) {
 			return null; 
-		}		
+		}				
 		StringTokenizer st = new StringTokenizer(string, "[.");
 		if (!st.hasMoreTokens()) {
 			throw new ParseException(BAD_STRING, 0);			
@@ -40,8 +40,8 @@ public class WarehouseKeyFormatter implements IFormatter {
 		
 		WarehouseKey key = new WarehouseKey();
 		try {
-			key.zoneNumber  = Integer.parseInt(szoneNumber);
-			key._Number = new Integer(snumber);
+			key.zoneNumber  = "null".equals(szoneNumber)?0:Integer.parseInt(szoneNumber); 
+			key._Number = "null".equals(snumber)?new Integer(0):new Integer(snumber); 
 		}
 		catch (NumberFormatException ex) {
 			throw new ParseException("Impossible to parse WarehouseKey: zoneNumber and number must be numerics", 0);			

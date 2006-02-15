@@ -657,7 +657,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		try {
 			if (modelObject == null)
 				return null;						
-			if (membersNames == null) return Collections.EMPTY_MAP;					
+			if (membersNames == null) return Collections.EMPTY_MAP;			 
 			IPropertiesContainer r = persistenceProvider.toPropertiesContainer(metaModel, modelObject);			
 			StringBuffer names = new StringBuffer();
 			addKey(metaModel, membersNames); // always return the key althought it don't is aunque no se solicit
@@ -704,7 +704,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	}
 		
 	private void addKey(MetaModel metaModel, Map memberNames) throws XavaException {
-		Iterator it = metaModel.getKeyPropertiesNames().iterator();
+		Iterator it = metaModel.getKeyPropertiesNames().iterator();		
 		while (it.hasNext()) {
 			String name = (String) it.next();
 			memberNames.put(name, null);
@@ -951,7 +951,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	}
 	
 	private void removeViewProperties(MetaModel metaModel, Map values)
-		throws XavaException {
+		throws XavaException {		
 		Iterator toRemove = metaModel.getViewPropertiesNames().iterator();
 		while (toRemove.hasNext()) {
 			values.remove(toRemove.next());
@@ -1113,46 +1113,46 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 				while (itSets.hasNext()) {
 					MetaSet set = (MetaSet) itSets.next();					
 					Object value = values.get(set.getPropertyNameFrom());
-					if (value == null && !values.containsKey(set.getPropertyNameFrom())) {
-						if (keyValues != null) { 
+					if (value == null && !values.containsKey(set.getPropertyNameFrom())) {						
+						if (keyValues != null) {							
 							Map memberName = new HashMap();
 							memberName.put(set.getPropertyNameFrom(), null);
 							Map memberValue = getValues(persistenceProvider, metaModel, keyValues, memberName);
 							value = memberValue.get(set.getPropertyNameFrom());
 						}											
-					}
-					if (set.getPropertyNameFrom().equals(containerReferenceName)) {
+					}					
+					if (set.getPropertyNameFrom().equals(containerReferenceName)) {					
 						if (containerKey == null) {							
 							Object object = findEntity(persistenceProvider, ((IMetaEjb)metaModel), keyValues);
 							value = Objects.execute(object, "get" + metaModel.getMetaModelContainer().getName());
 						}
-						else {
+						else {							
 							IMetaEjb containerReference = (IMetaEjb) metaModel.getMetaModelContainer();
 							try {							
-								value = persistenceProvider.find(containerReference, containerKey);
+								value = persistenceProvider.find(containerReference, containerKey);								
 							}
-							catch (ObjectNotFoundException ex) {
+							catch (ObjectNotFoundException ex) {								
 								value = null;
 							}			
 						}
 					}
-					else if (metaModel.containsMetaReference(set.getPropertyNameFrom())) {
+					else if (metaModel.containsMetaReference(set.getPropertyNameFrom())) {						
 						MetaReference ref = metaModel.getMetaReference(set.getPropertyNameFrom());
-						if (ref.isAggregate()) {
+						if (ref.isAggregate()) {							
 							value = mapToReferencedObject(persistenceProvider, metaModel, set.getPropertyNameFrom(), (Map) value);
 						}
-						else {
+						else {							
 							IMetaEjb referencedEntity = (IMetaEjb) ref.getMetaModelReferenced();
 							try {
-								value = findEntity(persistenceProvider, referencedEntity, (Map) value);
+								value = findEntity(persistenceProvider, referencedEntity, (Map) value);								
 							}
-							catch (ObjectNotFoundException ex) {
+							catch (ObjectNotFoundException ex) {								
 								value = null;
 							}																															
 						}						
-					}
+					}								
 					mp.executeSet(set.getPropertyName(), value);									
-				}			
+				}							
 				v.validate(errors);
 			}		
 		}
