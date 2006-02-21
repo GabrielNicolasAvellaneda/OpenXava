@@ -546,6 +546,7 @@
     </target>	
 	
 	<target name="updateDataSourceInfo">
+		<echo file="../${project.ejb}/filtered-files/datasource.properties">${domain}/${package}=${datasource.prefix}/${datasource}</echo>
 		<echo file="../${project.ejb}/${classes.dir}/datasource.properties">${domain}/${package}=${datasource.prefix}/${datasource}</echo>
 	</target>
 	

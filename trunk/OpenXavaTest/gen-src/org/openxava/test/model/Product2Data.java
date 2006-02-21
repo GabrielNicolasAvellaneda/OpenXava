@@ -10,6 +10,7 @@ public class Product2Data
    extends java.lang.Object
    implements java.io.Serializable
 {
+   private java.lang.String _Photos;
    private java.math.BigDecimal _UnitPrice;
    private java.lang.String _Description;
    private long number;
@@ -24,6 +25,7 @@ public class Product2Data
 
    public Product2Data( Product2Data otherData )
    {
+      set_Photos(otherData.get_Photos());
       set_UnitPrice(otherData.get_UnitPrice());
       set_Description(otherData.get_Description());
       setNumber(otherData.getNumber());
@@ -37,6 +39,15 @@ public class Product2Data
    public org.openxava.test.model.Product2Key getPrimaryKey() {
      org.openxava.test.model.Product2Key pk = new org.openxava.test.model.Product2Key(this.getNumber());
      return pk;
+   }
+
+   public java.lang.String get_Photos()
+   {
+      return this._Photos;
+   }
+   public void set_Photos( java.lang.String _Photos )
+   {
+      this._Photos = _Photos;
    }
 
    public java.math.BigDecimal get_UnitPrice()
@@ -106,7 +117,7 @@ public class Product2Data
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_UnitPrice=" + get_UnitPrice() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "_Warehouse_zoneNumber=" + get_Warehouse_zoneNumber() + " " + "_Warehouse_number=" + get_Warehouse_number() + " " + "_Family_number=" + get_Family_number() + " " + "_Subfamily_number=" + get_Subfamily_number());
+      str.append("_Photos=" + get_Photos() + " " + "_UnitPrice=" + get_UnitPrice() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "_Warehouse_zoneNumber=" + get_Warehouse_zoneNumber() + " " + "_Warehouse_number=" + get_Warehouse_number() + " " + "_Family_number=" + get_Family_number() + " " + "_Subfamily_number=" + get_Subfamily_number());
       str.append('}');
 
       return(str.toString());
@@ -119,6 +130,14 @@ public class Product2Data
          Product2Data lTest = (Product2Data) pOther;
          boolean lEquals = true;
 
+         if( this._Photos == null )
+         {
+            lEquals = lEquals && ( lTest._Photos == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Photos.equals( lTest._Photos );
+         }
          if( this._UnitPrice == null )
          {
             lEquals = lEquals && ( lTest._UnitPrice == null );
@@ -159,6 +178,8 @@ public class Product2Data
    public int hashCode()
    {
       int result = 17;
+
+      result = 37*result + ((this._Photos != null) ? this._Photos.hashCode() : 0);
 
       result = 37*result + ((this._UnitPrice != null) ? this._UnitPrice.hashCode() : 0);
 

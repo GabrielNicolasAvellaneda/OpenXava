@@ -21,7 +21,7 @@ public class CalculatorsListener implements PreInsertEventListener, PreUpdateEve
 	private CalculatorsListener() {		
 	}
 
-	public boolean onPreInsert(PreInsertEvent ev) {
+	public boolean onPreInsert(PreInsertEvent ev) {		
 		executeCalculators(ev.getEntity(), true);
 		return false;
 	}
@@ -32,6 +32,7 @@ public class CalculatorsListener implements PreInsertEventListener, PreUpdateEve
 	}
 	
 	private void executeCalculators(Object entity, boolean create) {
+		if (!(entity instanceof IModel)) return;
 		String modelName = "unknow";		
 		try {
 			IModel model = (IModel) entity;

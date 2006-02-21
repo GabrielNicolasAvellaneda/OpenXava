@@ -274,7 +274,7 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 		<java>	} // sets 
 		if (IAggregateOidCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
 		</java> 
-			<expr>property.getName()</expr>Calculator.setContainerKey(containerKey);
+			<expr>property.getName()</expr>Calculator.setContainer(container);
 			<expr>property.getName()</expr>Calculator.setCounter(counter);	
 		<java>	
 		} 
@@ -376,7 +376,8 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 		<java>	} // sets 
 		if (IAggregateOidCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
 		</java> 
-			<expr>property.getName()</expr>Calculator.setContainerKey(containerKey);
+			Object container = <expr>containerName</expr>Util.getHome().findByPrimaryKey(containerKey);
+			<expr>property.getName()</expr>Calculator.setContainer(container);
 			<expr>property.getName()</expr>Calculator.setCounter(counter);	
 		<java>	
 		} 
@@ -499,7 +500,7 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 		<java>	} // poners 
 		if (IAggregateOidCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
 		</java> 
-			<expr>property.getName()</expr>Calculator.setContainerKey(containerKey);
+			<expr>property.getName()</expr>Calculator.setContainer(container);
 			<expr>property.getName()</expr>Calculator.setCounter(counter);	
 		<java>	
 		}
@@ -613,7 +614,7 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 		<java>	} // sets 
 		if (IAggregateOidCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
 		</java> 
-			<expr>property.getName()</expr>Calculator.setContainerKey(containerKey);
+			<expr>property.getName()</expr>Calculator.setContainer(container);
 			<expr>property.getName()</expr>Calculator.setCounter(counter);	
 		<java>	
 		}
@@ -673,8 +674,7 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 		</java> 
 		set<expr>propertyName</expr>(value.get<expr>propertyName</expr>()); 
 		<java>
-		} 
-		
+		} 		
 		Iterator it = containerModel.getAllKeyPropertiesNames().iterator();
 		while (it.hasNext()) {
 			String propertyName = (String) it.next();
@@ -712,7 +712,8 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 		<java>	} // sets
 		if (IAggregateOidCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) {
 		</java> 
-			<expr>property.getName()</expr>Calculator.setContainerKey(containerKey);
+			Object container = <expr>containerName</expr>Util.getHome().findByPrimaryKey(containerKey);
+			<expr>property.getName()</expr>Calculator.setContainer(container);
 			<expr>property.getName()</expr>Calculator.setCounter(counter);
 		<java>
 		}

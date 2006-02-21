@@ -10,6 +10,12 @@ public interface Product2Remote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.IProduct2
 {
 
+   public java.lang.String getPhotos(  )
+      throws java.rmi.RemoteException;
+
+   public void setPhotos( java.lang.String newPhotos )
+      throws java.rmi.RemoteException;
+
    public java.math.BigDecimal getUnitPrice(  )
       throws java.rmi.RemoteException;
 

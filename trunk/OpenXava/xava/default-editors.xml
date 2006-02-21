@@ -61,5 +61,11 @@
 	<for-stereotype stereotype="ETIQUETA_NEGRITA"/>
     <for-stereotype stereotype="BOLD_LABEL"/>
   </editor>
+  
+  <editor url="galleryEditor.jsp">
+	<for-stereotype stereotype="IMAGES_GALLERY"/>
+	<for-stereotype stereotype="GALERIA_IMAGENES"/>
+  </editor>
+  
       
 </editors>

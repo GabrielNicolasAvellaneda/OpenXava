@@ -31,7 +31,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	private final static long serialVersionUID = 3206093459760846163L;
 	
 	public Object create(String user, String modelName, Map values)
-		throws CreateException, XavaException, ValidationException, RemoteException {
+		throws CreateException, XavaException, ValidationException, RemoteException {		
 		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {

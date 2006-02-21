@@ -19,4 +19,6 @@
 	<for stereotype="BOLD_LABEL" type="String"/>	
 	<for stereotype="DATETIME" type="java.sql.Timestamp"/>
 	<for stereotype="FECHAHORA" type="java.sql.Timestamp"/>
+	<for stereotype="IMAGES_GALLERY" type="String"/>
+	<for stereotype="GALERIA_IMAGENES" type="String"/>
 </stereotype-type-default>

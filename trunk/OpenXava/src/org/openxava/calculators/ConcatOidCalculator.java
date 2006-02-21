@@ -19,7 +19,7 @@ public class ConcatOidCalculator
 		setSeparator(":");
 	}
 
-	public void setContainerKey(Object contenedorKey) {
+	public void setContainer(Object contenedorKey) {
 	}
 
 	public void setCounter(int contador) {

@@ -125,6 +125,7 @@ public class MappingParser extends XmlElementsNames {
 		ReferenceMappingDetail p = new ReferenceMappingDetail();
 		p.setColumn(el.getAttribute(xtable_column[lang]));
 		p.setReferencedModelProperty(el.getAttribute(xreferenced_model_property[lang]));
+		p.setCmpTypeName(el.getAttribute(xcmp_type[lang]));
 		fillConverter(el, p, lang);
 		return p;
 	}

@@ -16,15 +16,15 @@ public class XavaResources {
 	private static final ResourceManagerI18n impl = new ResourceManagerI18n("XavaResources"); 
 		
 	public static String getString(String key) {	
-		return impl.getString(key);
+		return impl.getString(key); 
 	}
 	
 	public static String getString(String key, Object argv0) {
-		return impl.getString(key, argv0);
+		return impl.getString(key, argv0); 
 	}
 	
 	public static String getString(String key, Object argv0, Object argv1) {
-		return impl.getString(key, argv0, argv1);
+		return impl.getString(key, argv0, argv1); 
 	}
 	
 	public static String getString(String key, Object argv0, Object argv1, Object argv2) {

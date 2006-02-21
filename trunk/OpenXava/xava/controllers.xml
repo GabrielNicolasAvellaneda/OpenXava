@@ -8,7 +8,9 @@
 	<object name="xava_tab" class="org.openxava.tab.Tab"/>		
 	<object name="xava_mainTab" class="org.openxava.tab.Tab"/>			<object name="xava_row" class="java.lang.Integer" value="0"/>
 	<object name="xava_language" class="org.openxava.session.Language"/>		<object name="xava_newImageProperty" class="java.lang.String"/>	<object name="xava_currentReferenceLabel" class="java.lang.String"/>	<object name="xava_previousControllers" class="java.util.Stack"/>
-	<object name="xava_previousViews" class="java.util.Stack"/>					<controller name="Typical">		<extends controller="Print"/>				<extends controller="CRUD"/>	</controller>				<controller name="Void"/>	
+	<object name="xava_previousViews" class="java.util.Stack"/>
+	<object name="xava_previousCustomViews" class="java.util.Stack"/>
+	<object name="xava_gallery" class="org.openxava.session.Gallery"/>					<controller name="Typical">		<extends controller="Print"/>				<extends controller="CRUD"/>	</controller>				<controller name="Void"/>	
 		<controller name="CRUD">							<action name="new" 			class="org.openxava.actions.NewAction"			image="images/new.gif"			keystroke="F2">			<use-object name="xava_view"/>					</action>									<action name="save" mode="detail"			class="org.openxava.actions.SaveAction"			image="images/save.gif"			keystroke="F3">						<use-object name="xava_view"/>		</action>				<action name="delete" mode="detail" confirm="true"			class="org.openxava.actions.DeleteAction"			image="images/delete.gif"			keystroke="F4">			<use-object name="xava_view"/>
 			<use-object name="xava_tab"/>
 			<use-object name="xava_row"/>								</action>				<action name="search" mode="detail"			by-default="if-possible"						class="org.openxava.actions.SearchAction"			image="images/find.gif"			keystroke="F8">											</action>				<action name="searchByViewKey" hidden="true"			by-default="if-possible"						class="org.openxava.actions.SearchByViewKeyAction">			<use-object name="xava_view"/>		</action>		
@@ -107,7 +109,46 @@
 		<action name="cancel"
 			class="org.openxava.actions.CancelInListAction">
 		</action>		
-	</controller>			<controller name="Navigation">						<action name="previous" mode="detail"			image="images/previous.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="Control A">			<set property="increment" value="-1"/>			<use-object name="xava_row"/>			<use-object name="xava_tab"/>			<use-object name="xava_view"/>		</action>									<action name="first" mode="detail"			image="images/home.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="Control P">			<set property="goFirst" value="true"/>			<use-object name="xava_row"/>			<use-object name="xava_tab"/>			<use-object name="xava_view"/>					</action>									<action name="next" mode="detail"			image="images/next.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="Control S">			<set property="increment" value="1"/>						<use-object name="xava_row"/>			<use-object name="xava_tab"/>			<use-object name="xava_view"/>		</action>										</controller>						<controller name="Languages">		<action name="changeToValenciano" 			class="org.openxava.actions.ChangeLanguageAction">			<set property="idLanguage" value="ca"/>			<use-object name="xava_language"/>		</action>		<action name="changeToSpanish" 			class="org.openxava.actions.ChangeLanguageAction">			<set property="idLanguage" value="es"/>			<use-object name="xava_language"/>		</action>				</controller>		<controller name="ImageEditor">		<action name="changeImage"			class="org.openxava.actions.ChangeImageAction">						<use-object name="xava_newImageProperty"/>					</action>	</controller>		<controller name="LoadImage">		<action name="loadImage"			class="org.openxava.actions.LoadImageAction">						<use-object name="xava_view"/>			<use-object name="xava_newImageProperty"/>		</action>		</controller>		<controller name="Reference">		<action name="search"			class="org.openxava.actions.ReferenceSearchAction"			image="images/search.gif">			<use-object name="xava_view"/>			<use-object name="xava_referenceSubview"/>			<use-object name="xava_tab"/>			<use-object name="xava_currentReferenceLabel"/>		</action>		<action name="createNew" 
+	</controller>			<controller name="Navigation">						<action name="previous" mode="detail"			image="images/previous.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="Control A">			<set property="increment" value="-1"/>			<use-object name="xava_row"/>			<use-object name="xava_tab"/>			<use-object name="xava_view"/>		</action>									<action name="first" mode="detail"			image="images/home.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="Control P">			<set property="goFirst" value="true"/>			<use-object name="xava_row"/>			<use-object name="xava_tab"/>			<use-object name="xava_view"/>					</action>									<action name="next" mode="detail"			image="images/next.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="Control S">			<set property="increment" value="1"/>						<use-object name="xava_row"/>			<use-object name="xava_tab"/>			<use-object name="xava_view"/>		</action>										</controller>						<controller name="Languages">		<action name="changeToValenciano" 			class="org.openxava.actions.ChangeLanguageAction">			<set property="idLanguage" value="ca"/>			<use-object name="xava_language"/>		</action>		<action name="changeToSpanish" 			class="org.openxava.actions.ChangeLanguageAction">			<set property="idLanguage" value="es"/>			<use-object name="xava_language"/>		</action>				</controller>		<controller name="ImageEditor">		<action name="changeImage"			class="org.openxava.actions.ChangeImageAction">						<use-object name="xava_newImageProperty"/>					</action>	</controller>
+	
+	<controller name="Return">
+		<action name="return" image="images/back.gif"
+			class="org.openxava.actions.CancelAction"/>
+	</controller>
+	
+	
+	<controller name="Gallery">
+		<action name="edit" image="images/photo.gif" hidden="true"
+			class="org.openxava.actions.EditGalleryAction">			
+			<use-object name="xava_gallery"/>
+			<use-object name="xava_view"/>
+		</action>
+		<action name="return" image="images/back.gif"
+			class="org.openxava.actions.CancelAction"/>		
+		<action name="addImage"
+			class="org.openxava.actions.AddImageToGalleryAction"/>
+		<action name="maximizeImage" hidden="true" image="images/maximize.gif"
+			class="org.openxava.actions.MaximizeImageAction">
+			<use-object name="xava_gallery"/>
+		</action>
+		<action name="minimizeImage" hidden="true" image="images/minimize.gif"
+			class="org.openxava.actions.MinimizeImageAction">
+			<use-object name="xava_gallery"/>
+		</action>		
+		<action name="removeImage" hidden="true" image="images/remove.gif"
+			class="org.openxava.actions.RemoveImageFromGalleryAction">
+			<use-object name="xava_gallery"/>
+		</action>				
+	</controller>
+	
+	<controller name="LoadImageIntoGallery">
+		<action name="loadImage"
+			class="org.openxava.actions.LoadImageIntoGalleryAction">			
+			<use-object name="xava_gallery"/>
+		</action>	
+	</controller>
+	
+			<controller name="LoadImage">		<action name="loadImage"			class="org.openxava.actions.LoadImageAction">						<use-object name="xava_view"/>			<use-object name="xava_newImageProperty"/>		</action>		</controller>		<controller name="Reference">		<action name="search"			class="org.openxava.actions.ReferenceSearchAction"			image="images/search.gif">			<use-object name="xava_view"/>			<use-object name="xava_referenceSubview"/>			<use-object name="xava_tab"/>			<use-object name="xava_currentReferenceLabel"/>		</action>		<action name="createNew" 
 			class="org.openxava.actions.CreateNewFromReferenceAction"
 			image="images/create_new.gif">			<use-object name="xava_view"/>
 			<use-object name="xava_previousViews"/>		</action>	</controller>	

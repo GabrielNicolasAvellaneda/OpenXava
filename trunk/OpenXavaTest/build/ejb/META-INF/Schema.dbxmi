@@ -426,6 +426,8 @@
    <RDBSchema:RDBTable xmi:id="RDBTable_Product2" name="" primaryKey="Product2_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Product2_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Product2" constraint="Constraint_Product2_"/>
 
+      <columns xmi:id="Product2__Photos" name="_Photos">
+      </columns>
       <columns xmi:id="Product2__UnitPrice" name="_UnitPrice">
       </columns>
       <columns xmi:id="Product2__Description" name="_Description">

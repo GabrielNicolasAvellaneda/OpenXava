@@ -235,10 +235,14 @@
 				referenced-model-property="type"/> 
 			<reference-mapping-detail 
 				column="SHIPMENT_MODE" 
-				referenced-model-property="mode"/> 				
+				referenced-model-property="mode" cmp-type="Integer"> 				
+				<converter class="org.openxava.converters.IntegerNumberConverter"/>
+			</reference-mapping-detail>
 			<reference-mapping-detail 
 				column="SHIPMENT_NUMBER" 
-				referenced-model-property="number"/> 				
+				referenced-model-property="number" cmp-type="Integer"> 				
+				<converter class="org.openxava.converters.IntegerNumberConverter"/>
+			</reference-mapping-detail>
 		</reference-mapping>							
 			
 	</entity-mapping>

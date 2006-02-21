@@ -69,7 +69,7 @@ abstract public class ParserBase extends XmlElementsNames {
 			Enumeration resources = getClass().getClassLoader().getResources(xmlFileURL);
 			while (resources.hasMoreElements()) {
 				URL resource = (URL) resources.nextElement();
-				xmlFileCompleteURL = resource.toExternalForm();				
+				xmlFileCompleteURL = resource.toExternalForm();
 				_parse(xmlFileCompleteURL);				
 			}			
 		} 
@@ -91,7 +91,7 @@ abstract public class ParserBase extends XmlElementsNames {
 	
 	private void _parse(String xmlFileCompleteURL) throws XavaException {
 		try {						
-			Document doc = getDocumentBuilder().parse(xmlFileCompleteURL);
+			Document doc = getDocumentBuilder().parse(xmlFileCompleteURL);			
 			root = (Element) doc.getDocumentElement();
 			createObjects();
 		} 

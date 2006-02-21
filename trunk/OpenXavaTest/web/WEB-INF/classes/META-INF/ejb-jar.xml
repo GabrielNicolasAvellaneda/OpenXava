@@ -1810,6 +1810,10 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Product2</abstract-schema-name>
+         <cmp-field id="CmpAttribute_Product2__Photos">
+            <description><![CDATA[]]></description>
+            <field-name>_Photos</field-name>
+         </cmp-field>
          <cmp-field id="CmpAttribute_Product2__UnitPrice">
             <description><![CDATA[]]></description>
             <field-name>_UnitPrice</field-name>

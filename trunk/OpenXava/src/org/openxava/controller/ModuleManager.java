@@ -280,9 +280,13 @@ public class ModuleManager {
 			setFormUpload(false);						
 			if (action instanceof ICustomViewAction) {
 				ICustomViewAction customViewAction = (ICustomViewAction) action;
-				String newView = customViewAction.getCustomView();				
-				if (!Is.emptyString(newView)) {
-					setViewName(newView);
+				String newView = customViewAction.getCustomView();
+				if (ICustomViewAction.PREVIOUS_VIEW.equals(newView)) { 
+					restorePreviousCustomView();															
+				}													
+				else if (!Is.emptyString(newView)) {
+					memorizeCustomView(); 
+					setViewName(newView);					
 				}
 			}
 			if (action instanceof IChangeControllersAction) {
@@ -401,10 +405,25 @@ public class ModuleManager {
 		setControllersNames(controllers);		
 	}
 	
+	private void restorePreviousCustomView() throws XavaException { 
+		Stack previousCustomViews = (Stack) getObjectFromContext("xava_previousCustomViews");	
+		if (previousCustomViews.isEmpty()) {
+			setViewName(ICustomViewAction.DEFAULT_VIEW);
+			return;						
+		}		
+		String view = (String) previousCustomViews.pop();		
+		setViewName(view);		
+	}
+		
 	private void memorizeControllers() throws XavaException {
 		Stack previousControllers = (Stack) getObjectFromContext("xava_previousControllers");
 		previousControllers.push(this.controllersNames);
 	}
+	
+	private void memorizeCustomView() throws XavaException { 
+		Stack previousCustomViews = (Stack) getObjectFromContext("xava_previousCustomViews");
+		previousCustomViews.push(this.viewName);		
+	}	
 
 	private void setPropertyValues(IAction action, String propertyValues) throws Exception {
 		if (Is.emptyString(propertyValues)) return;

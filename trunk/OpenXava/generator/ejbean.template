@@ -273,7 +273,7 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 		# 	} // sets 
 		if (IAggregateOidCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
 		# 
-			#(property.getName())#Calculator.setContainerKey(containerKey);
+			#(property.getName())#Calculator.setContainer(container);
 			#(property.getName())#Calculator.setCounter(counter);	
 		# 	
 		} 
@@ -375,7 +375,8 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 		# 	} // sets 
 		if (IAggregateOidCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
 		# 
-			#(property.getName())#Calculator.setContainerKey(containerKey);
+			Object container = #(containerName)#Util.getHome().findByPrimaryKey(containerKey);
+			#(property.getName())#Calculator.setContainer(container);
 			#(property.getName())#Calculator.setCounter(counter);	
 		# 	
 		} 
@@ -498,7 +499,7 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 		# 	} // poners 
 		if (IAggregateOidCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
 		# 
-			#(property.getName())#Calculator.setContainerKey(containerKey);
+			#(property.getName())#Calculator.setContainer(container);
 			#(property.getName())#Calculator.setCounter(counter);	
 		# 	
 		}
@@ -612,7 +613,7 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 		# 	} // sets 
 		if (IAggregateOidCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
 		# 
-			#(property.getName())#Calculator.setContainerKey(containerKey);
+			#(property.getName())#Calculator.setContainer(container);
 			#(property.getName())#Calculator.setCounter(counter);	
 		# 	
 		}
@@ -672,8 +673,7 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 		# 
 		set#(propertyName)#(value.get#(propertyName)#()); 
 		# 
-		} 
-		
+		} 		
 		Iterator it = containerModel.getAllKeyPropertiesNames().iterator();
 		while (it.hasNext()) {
 			String propertyName = (String) it.next();
@@ -711,7 +711,8 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 		# 	} // sets
 		if (IAggregateOidCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) {
 		# 
-			#(property.getName())#Calculator.setContainerKey(containerKey);
+			Object container = #(containerName)#Util.getHome().findByPrimaryKey(containerKey);
+			#(property.getName())#Calculator.setContainer(container);
 			#(property.getName())#Calculator.setCounter(counter);
 		# 
 		}

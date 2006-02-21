@@ -16,14 +16,8 @@ public class ResourceManagerI18n {
 		this.resourcesFile = resourcesFile;
 	}
 	
-	public String getString(String key) {	
-		try {			
-			return ResourceBundle.getBundle(resourcesFile).getString(key);
-		}
-		catch (MissingResourceException e) {
-			System.err.println(XavaResources.getString("element_i18n_warning", key));			
-			return '[' + key + ']';
-		}
+	public String getString(String key) {
+		return getString(Locales.getCurrent(), key);
 	}
 	
 	public String getString(String key, Object argv0) {
@@ -44,7 +38,7 @@ public class ResourceManagerI18n {
 	
 	public String getString(String key, Object [] argv) {
 		MessageFormat formatter = new MessageFormat("");
-		formatter.setLocale(Locale.getDefault());
+		formatter.setLocale(Locales.getCurrent());
 		formatter.applyPattern(getString(key));
 		return formatter.format(argv);		
 	}

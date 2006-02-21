@@ -14,6 +14,8 @@ public class Product2Value
 
    private static final long serialVersionUID = 1L;
 
+   private java.lang.String photos;
+   private boolean photosHasBeenSet = false;
    private java.math.BigDecimal unitPrice;
    private boolean unitPriceHasBeenSet = false;
    private java.lang.String description;
@@ -38,6 +40,8 @@ public class Product2Value
    //TODO Cloneable is better than this !
    public Product2Value( Product2Value otherValue )
    {
+	  this.photos = otherValue.photos;
+	  photosHasBeenSet = true;
 	  this.unitPrice = otherValue.unitPrice;
 	  unitPriceHasBeenSet = true;
 	  this.description = otherValue.description;
@@ -56,6 +60,20 @@ public class Product2Value
 	  subfamily_numberHasBeenSet = true;
    }
 
+   public java.lang.String getPhotos()
+   {
+	  return this.photos;
+   }
+
+   public void setPhotos( java.lang.String photos )
+   {
+	  this.photos = photos;
+	  photosHasBeenSet = true;
+   }
+
+   public boolean photosHasBeenSet(){
+	  return photosHasBeenSet;
+   }
    public java.math.BigDecimal getUnitPrice()
    {
 	  return this.unitPrice;
@@ -173,7 +191,7 @@ public class Product2Value
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("unitPrice=" + getUnitPrice() + " " + "description=" + getDescription() + " " + "unitPriceInPesetas=" + getUnitPriceInPesetas() + " " + "number=" + getNumber() + " " + "warehouse_zoneNumber=" + getWarehouse_zoneNumber() + " " + "warehouse_number=" + getWarehouse_number() + " " + "family_number=" + getFamily_number() + " " + "subfamily_number=" + getSubfamily_number());
+	  str.append("photos=" + getPhotos() + " " + "unitPrice=" + getUnitPrice() + " " + "description=" + getDescription() + " " + "unitPriceInPesetas=" + getUnitPriceInPesetas() + " " + "number=" + getNumber() + " " + "warehouse_zoneNumber=" + getWarehouse_zoneNumber() + " " + "warehouse_number=" + getWarehouse_number() + " " + "family_number=" + getFamily_number() + " " + "subfamily_number=" + getSubfamily_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -219,6 +237,14 @@ public class Product2Value
 	  {
 		 Product2Value that = (Product2Value) other;
 		 boolean lEquals = true;
+		 if( this.photos == null )
+		 {
+			lEquals = lEquals && ( that.photos == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.photos.equals( that.photos );
+		 }
 		 if( this.unitPrice == null )
 		 {
 			lEquals = lEquals && ( that.unitPrice == null );
@@ -265,6 +291,8 @@ public class Product2Value
 
    public int hashCode(){
 	  int result = 17;
+      result = 37*result + ((this.photos != null) ? this.photos.hashCode() : 0);
+
       result = 37*result + ((this.unitPrice != null) ? this.unitPrice.hashCode() : 0);
 
       result = 37*result + ((this.description != null) ? this.description.hashCode() : 0);

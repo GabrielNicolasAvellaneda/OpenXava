@@ -23,6 +23,7 @@
 				<set property="string" value="COCHE"/>
 			</validator>								
 		</property>
+		<property name="photos" stereotype="IMAGES_GALLERY"/>
 		<reference name="family" model="Family2" required="true">
 			<default-value-calculator class="org.openxava.calculators.IntegerCalculator">
 				<set property="value" value="2"/>
@@ -101,6 +102,7 @@
 		<members>
 			number;
 			description;
+			photos;
 			family;
 			subfamily;
 			warehouse, zoneOne;
@@ -138,6 +140,8 @@
 			property="number" column="NUMBER"/>
 		<property-mapping 
 			property="description" column="DESCRIPTION"/>
+		<property-mapping 
+			property="photos" column="PHOTOS"/>			
 		<reference-mapping reference="family">
 			<reference-mapping-detail column="FAMILY" referenced-model-property="number"/>
 		</reference-mapping>	

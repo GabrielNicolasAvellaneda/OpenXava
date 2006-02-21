@@ -18,6 +18,7 @@ public abstract class Product2CMP
       {
          dataHolder = new org.openxava.test.model.Product2Data();
 
+         dataHolder.set_Photos( get_Photos() );
          dataHolder.set_UnitPrice( get_UnitPrice() );
          dataHolder.set_Description( get_Description() );
          dataHolder.setNumber( getNumber() );
@@ -39,6 +40,7 @@ public abstract class Product2CMP
    {
       try
       {
+         set_Photos( dataHolder.get_Photos() );
          set_UnitPrice( dataHolder.get_UnitPrice() );
          set_Description( dataHolder.get_Description() );
          set_Warehouse_zoneNumber( dataHolder.get_Warehouse_zoneNumber() );
@@ -98,6 +100,7 @@ public abstract class Product2CMP
       Product2Value = new org.openxava.test.model.Product2Value();
       try
          {
+            Product2Value.setPhotos( getPhotos() );
             Product2Value.setUnitPrice( getUnitPrice() );
             Product2Value.setDescription( getDescription() );
             Product2Value.setUnitPriceInPesetas( getUnitPriceInPesetas() );
@@ -121,6 +124,7 @@ public abstract class Product2CMP
 
 	  try
 	  {
+		 setPhotos( valueHolder.getPhotos() );
 		 setUnitPrice( valueHolder.getUnitPrice() );
 		 setDescription( valueHolder.getDescription() );
 		 setUnitPriceInPesetas( valueHolder.getUnitPriceInPesetas() );
@@ -137,6 +141,10 @@ public abstract class Product2CMP
    }
 
 /* Value Objects END */
+
+   public abstract java.lang.String get_Photos() ;
+
+   public abstract void set_Photos( java.lang.String _Photos ) ;
 
    public abstract java.math.BigDecimal get_UnitPrice() ;
 

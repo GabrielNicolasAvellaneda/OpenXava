@@ -86,7 +86,7 @@
 		<action name="changeLimitZone" class="org.openxava.test.actions.ChangeLimitZoneAction" mode="detail">			
 			<set property="newLimitZone" value="1"/>
 			<use-object name="xavatest_limitZone"/>
-		</action>				
+		</action>		
 	</controller>
 	
 	<controller name="Products3">	

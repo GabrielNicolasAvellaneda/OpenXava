@@ -355,4 +355,5 @@
 <!ATTLIST detalle-mapeo-referencia
  columna-tabla CDATA #REQUIRED
  propiedad-modelo-referenciado CDATA #REQUIRED 
+ tipo-cmp CDATA #IMPLIED  
 >
