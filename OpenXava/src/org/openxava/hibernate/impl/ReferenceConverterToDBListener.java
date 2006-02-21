@@ -12,7 +12,8 @@ import org.openxava.util.*;
 
 public class ReferenceConverterToDBListener implements PreInsertEventListener, PreUpdateEventListener {
 
-	public boolean onPreInsert(PreInsertEvent ev) {		
+	public boolean onPreInsert(PreInsertEvent ev) {
+		if (!(ev.getEntity() instanceof IModel)) return false;
 		applyConverter((IModel) ev.getEntity(), 
 				Arrays.asList(ev.getPersister().getPropertyNames()),
 				ev.getState());
@@ -20,6 +21,7 @@ public class ReferenceConverterToDBListener implements PreInsertEventListener, P
 	}
 
 	public boolean onPreUpdate(PreUpdateEvent ev) {
+		if (!(ev.getEntity() instanceof IModel)) return false;
 		applyConverter((IModel) ev.getEntity(), 
 				Arrays.asList(ev.getPersister().getPropertyNames()),
 				ev.getState());		

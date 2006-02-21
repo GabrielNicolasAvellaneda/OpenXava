@@ -95,9 +95,11 @@ public class EJBTest extends TestCase {
 		value.setCounter(0);
 		value.setSubfamily(1);
 		value.setType_number(2);
-		ServiceKey serviceKey = new ServiceKey();
-		serviceKey.setNumber(66);		
-		AdditionalDetailUtil.getHome().create(serviceKey, 0, value);
+		ServiceValue serviceValue = new ServiceValue();
+		serviceValue.setNumber(66);
+		serviceValue.setDescription("SERVICE FOR JUNIT TEST");
+		ServiceRemote service = ServiceUtil.getHome().create(serviceValue);
+		AdditionalDetailUtil.getHome().create(service, 0, value);
 		AdditionalDetailKey additionalDetailKey = new AdditionalDetailKey();
 		additionalDetailKey.set_Service_number(66);
 		additionalDetailKey.setCounter(0);
@@ -115,6 +117,7 @@ public class EJBTest extends TestCase {
 		assertEquals("service_number", 66, obtainedValue.getService_number());		
 		
 		d.remove();		
+		service.remove();
 	}
 	
 	

@@ -3,8 +3,7 @@
 import org.w3c.dom.*;
 import java.io.*;
 import java.util.*;
-import org.openxava.util.Strings;
-import org.openxava.util.XavaException;
+import org.openxava.util.*;
 import org.openxava.model.meta.*;
 import org.openxava.generators.*;
 import org.openxava.calculators.*;
@@ -13,7 +12,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Feb 14 19:36:22 CET 2006
+ * @version Tue Feb 21 12:28:35 CET 2006
  */
 public class EntityReferenceEJBPG {
     Properties properties = new Properties();
@@ -231,20 +230,22 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     		else {
     			type = property.getTypeName();
     		}	
-    		String column = modelMapping.getReferenceMapping(reference.getName()).getColumnForReferencedModelProperty(originalProperty.getName());			
+    		String column = referenceMapping.getColumnForReferencedModelProperty(originalProperty.getName());			
+    		String cmpType = referenceMapping.getCmpTypeNameForReferencedModelProperty(originalProperty.getName()); 
+    		if (Is.emptyString(cmpType)) cmpType = type;
     	
     out.print("\n\t/**\t\t\n\t * @ejb:persistent-field\n\t * ");
     out.print(pkField);
     out.print("\n\t * @jboss:column-name \"");
     out.print(column);
     out.print("\"\n\t */\n\tpublic abstract ");
-    out.print(type);
+    out.print(cmpType);
     out.print(" get_");
     out.print(propertyName);
     out.print("();\n\tpublic abstract void set_");
     out.print(propertyName);
     out.print("(");
-    out.print(type);
+    out.print(cmpType);
     out.print(" new");
     out.print(propertyName);
     out.print(");\n\n\t/**\t\t\n\t * @ejb:interface-method\n\t * @ejb.value-object match=\"persistentCalculatedAndAggregate\"\n\t */\n\tpublic ");
@@ -283,12 +284,13 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     out.print(") {");
     
     		if (referenceMapping.hasConverter(originalProperty.getName())) {			
-    			String sentence = property.getName() + "Converter.toDB(new" + propertyName + ")";							
+    			String argv = Generators.generatePrimitiveWrapper(type, "new" + propertyName);			
+    			String sentence = property.getName() + "Converter.toDB(" + argv + ")";
     		
     out.print(" \n\t\ttry {\n\t\t\tset_");
     out.print(propertyName);
     out.print("(");
-    out.print(Generators.generateCast(type, sentence));
+    out.print(Generators.generateCast(cmpType, sentence));
     out.print(");\n\t\t}\n\t\tcatch (org.openxava.converters.ConversionException ex) {\n\t\t\tex.printStackTrace();\n\t\t\tthrow new ");
     out.print(getExcepcion());
     out.print("(XavaResources.getString(\"generator.conversion_error\", \"");
@@ -383,9 +385,9 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Feb 14 19:36:23 CET 2006", // date this file was generated
-             "/home/javi/workspace2/OpenXava/generator/entityReferenceEJB.xml", // input file
-             "/home/javi/workspace2/OpenXava/generator/EntityReferenceEJBPG.java" }, // output file
+        { "Tue Feb 21 12:28:35 CET 2006", // date this file was generated
+             "/home/javi/workspace/OpenXava/generator/entityReferenceEJB.xml", // input file
+             "/home/javi/workspace/OpenXava/generator/EntityReferenceEJBPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

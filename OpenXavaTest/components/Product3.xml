@@ -14,9 +14,6 @@ Store oid of family and not the code
 		<property name="description" type="String"
 			size="40" required="true"/>
 		<reference name="family" model="Family"/>
-		<!-- tmp
-		<reference name="family" model="Family" required="true"/>
-		 -->
 		<property name="comments" stereotype="MEMO"/>
 		<reference name="subfamily1" model="SubfamilyInfo" required="true"/>
 		<reference name="subfamily2" model="SubfamilyInfo" required="true"/>

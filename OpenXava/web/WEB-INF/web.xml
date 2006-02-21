@@ -9,6 +9,10 @@
 		<servlet-class>org.openxava.web.servlets.ImagesServlet</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>gallery</servlet-name>
+		<servlet-class>org.openxava.web.servlets.GalleryServlet</servlet-class>
+	</servlet>	
+	<servlet>
 		<servlet-name>jasperReport</servlet-name>
 		<servlet-class>org.openxava.web.servlets.JasperReportServlet</servlet-class>
 	</servlet>	
@@ -27,6 +31,10 @@
 	<servlet-mapping>
 		<servlet-name>images</servlet-name>
 		<url-pattern>/ximage</url-pattern>
+	</servlet-mapping>	
+	<servlet-mapping>
+		<servlet-name>gallery</servlet-name>
+		<url-pattern>/xava/gallery</url-pattern>
 	</servlet-mapping>	
 	<servlet-mapping>
 		<servlet-name>jasperReport</servlet-name>

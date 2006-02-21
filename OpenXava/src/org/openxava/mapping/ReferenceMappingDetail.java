@@ -1,6 +1,5 @@
 package org.openxava.mapping;
 
-import java.util.*;
 import org.openxava.component.*;
 import org.openxava.converters.*;
 import org.openxava.util.*;
@@ -9,6 +8,8 @@ import org.openxava.util.meta.*;
 
 public class ReferenceMappingDetail extends MetaSetsContainer {
 	
+	private static boolean someMappingUsesConverters = false;
+	
 	private String column;
 	private String referencedModelProperty;
 	private ReferenceMapping container;
@@ -16,7 +17,8 @@ public class ReferenceMappingDetail extends MetaSetsContainer {
 	private String converterClassName;
 	private boolean converterCreated = false;
 	private IConverter converter;
-	private static boolean someMappingUsesConverters = false; 
+	private String cmpTypeName;
+	 
 	
 	public String getColumn() {
 		return column;
@@ -97,6 +99,17 @@ public class ReferenceMappingDetail extends MetaSetsContainer {
 	
 	public static boolean someMappingUsesConverters() {
 		return someMappingUsesConverters;
+	}
+	
+	public String getCmpTypeName() {
+		if ("String".equals(cmpTypeName)) return "java.lang.String";
+		if ("Integer".equals(cmpTypeName)) return "java.lang.Integer";
+		if ("Long".equals(cmpTypeName)) return "java.lang.Long";		
+		return cmpTypeName;
+	}
+	
+	public void setCmpTypeName(String cmpTypeName) {
+		this.cmpTypeName = cmpTypeName;
 	}
 }
 

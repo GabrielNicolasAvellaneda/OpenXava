@@ -28,7 +28,6 @@
 		  
 		<reference name="address" model="Address" required="true"/>
 		
-		<!-- tmp -->
 		<property name="city" type="String" size="40">
 			<calculator class="org.openxava.calculators.ConcatCalculator">
 				<set property="separator" value=" "/>

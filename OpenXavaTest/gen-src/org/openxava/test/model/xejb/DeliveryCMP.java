@@ -229,13 +229,13 @@ public abstract class DeliveryCMP
 
    public abstract void set_Shipment_type( java.lang.String _Shipment_type ) ;
 
-   public abstract int get_Shipment_mode() ;
+   public abstract java.lang.Integer get_Shipment_mode() ;
 
-   public abstract void set_Shipment_mode( int _Shipment_mode ) ;
+   public abstract void set_Shipment_mode( java.lang.Integer _Shipment_mode ) ;
 
-   public abstract int get_Shipment_number() ;
+   public abstract java.lang.Integer get_Shipment_number() ;
 
-   public abstract void set_Shipment_number( int _Shipment_number ) ;
+   public abstract void set_Shipment_number( java.lang.Integer _Shipment_number ) ;
 
    public abstract java.lang.Integer get_Carrier_number() ;
 

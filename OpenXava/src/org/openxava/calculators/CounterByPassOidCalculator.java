@@ -7,7 +7,7 @@ public class CounterByPassOidCalculator implements IAggregateOidCalculator {
 
 	private int counter;
 
-	public void setContainerKey(Object contenedorKey) {
+	public void setContainer(Object contenedorKey) {
 	}
 
 	public void setCounter(int counter) {

@@ -45,6 +45,14 @@ public class ReferenceMapping implements java.io.Serializable {
 		return ((ReferenceMappingDetail) result).getColumn();  
 	}
 	
+	public String getCmpTypeNameForReferencedModelProperty(String property) throws ElementNotFoundException, XavaException {
+		Object result = details.get(property);
+		if (result == null) {
+			throw new ElementNotFoundException("reference_mapping_property_not_found", property, referencedModelName, reference);
+		}
+		return ((ReferenceMappingDetail) result).getCmpTypeName();  
+	}
+	
 	/**
 	 * Column not qualified. <p>	 
 	 */

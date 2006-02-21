@@ -14,7 +14,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Feb 14 19:36:25 CET 2006
+ * @version Tue Feb 21 12:28:38 CET 2006
  */
 public class EJBeanPG {
     Properties properties = new Properties();
@@ -331,7 +331,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     		
     out.print(" \n\t\t\t");
     out.print(property.getName());
-    out.print("Calculator.setContainerKey(containerKey);\n\t\t\t");
+    out.print("Calculator.setContainer(container);\n\t\t\t");
     out.print(property.getName());
     out.print("Calculator.setCounter(counter);");
     	
@@ -446,9 +446,11 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     	} // sets 
     		if (IAggregateOidCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
     		
-    out.print(" \n\t\t\t");
+    out.print(" \n\t\t\tObject container = ");
+    out.print(containerName);
+    out.print("Util.getHome().findByPrimaryKey(containerKey);\n\t\t\t");
     out.print(property.getName());
-    out.print("Calculator.setContainerKey(containerKey);\n\t\t\t");
+    out.print("Calculator.setContainer(container);\n\t\t\t");
     out.print(property.getName());
     out.print("Calculator.setCounter(counter);");
     	
@@ -606,7 +608,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     		
     out.print(" \n\t\t\t");
     out.print(property.getName());
-    out.print("Calculator.setContainerKey(containerKey);\n\t\t\t");
+    out.print("Calculator.setContainer(container);\n\t\t\t");
     out.print(property.getName());
     out.print("Calculator.setCounter(counter);");
     	
@@ -762,7 +764,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     		
     out.print(" \n\t\t\t");
     out.print(property.getName());
-    out.print("Calculator.setContainerKey(containerKey);\n\t\t\t");
+    out.print("Calculator.setContainer(container);\n\t\t\t");
     out.print(property.getName());
     out.print("Calculator.setCounter(counter);");
     	
@@ -837,8 +839,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print(propertyName);
     out.print("());");
     
-    		} 
-    		
+    		} 		
     		Iterator it = containerModel.getAllKeyPropertiesNames().iterator();
     		while (it.hasNext()) {
     			String propertyName = (String) it.next();
@@ -895,9 +896,11 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     	} // sets
     		if (IAggregateOidCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) {
     		
-    out.print(" \n\t\t\t");
+    out.print(" \n\t\t\tObject container = ");
+    out.print(containerName);
+    out.print("Util.getHome().findByPrimaryKey(containerKey);\n\t\t\t");
     out.print(property.getName());
-    out.print("Calculator.setContainerKey(containerKey);\n\t\t\t");
+    out.print("Calculator.setContainer(container);\n\t\t\t");
     out.print(property.getName());
     out.print("Calculator.setCounter(counter);");
     
@@ -1200,9 +1203,9 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Feb 14 19:36:25 CET 2006", // date this file was generated
-             "/home/javi/workspace2/OpenXava/generator/ejbean.xml", // input file
-             "/home/javi/workspace2/OpenXava/generator/EJBeanPG.java" }, // output file
+        { "Tue Feb 21 12:28:39 CET 2006", // date this file was generated
+             "/home/javi/workspace/OpenXava/generator/ejbean.xml", // input file
+             "/home/javi/workspace/OpenXava/generator/EJBeanPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

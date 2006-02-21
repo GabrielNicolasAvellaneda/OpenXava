@@ -129,6 +129,18 @@ public class JetSpeed2Style extends Style {
 	
 	public String getSectionTabRightLow() {
 		return "LTabRightLow";
-	}	
+	}
+	
+	public String getRestoreImage() {
+		return "decorations/images/restore.gif";
+	}
 		
+	public String getMaximizeImage() {
+		return "decorations/images/maximized.gif";
+	}
+	
+	public String getRemoveImage() {
+		return "decorations/layout/images/close.gif";
+	}
+			
 }

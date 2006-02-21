@@ -3,6 +3,7 @@ package org.openxava.actions;
 import java.util.*;
 
 import org.apache.commons.fileupload.*;
+import org.openxava.util.*;
 import org.openxava.view.*;
 
 /**
@@ -20,7 +21,7 @@ public class LoadImageAction extends BaseAction implements INavigationAction, IP
 		while (i.hasNext()) {
 			FileItem fi = (FileItem)i.next();
 			String fileName = fi.getName();			
-			if (fileName != null) {
+			if (!Is.emptyString(fileName)) {
 				getView().setValue(getNewImageProperty(), fi.get());
 			}			
 		}		

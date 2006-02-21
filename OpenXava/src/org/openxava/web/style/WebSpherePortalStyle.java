@@ -197,5 +197,20 @@ public class WebSpherePortalStyle extends Style {
 	public String getCollectionListActions() {
 		return "wpsTableNrmRow";
 	}
+	
+	public String getRestoreImage() {
+		return "/wps/themes/html/title_alt_restore.gif";
+	}
 		
+	public String getMaximizeImage() {
+		return "/wps/themes/html/title_alt_maximize.gif";
+	}
+	
+	public String getRemoveImage() {
+		return "/wps/images/icons/Delete.gif";
+	}
+	
+	public String getActionsInFrame() {
+		return "wpsPortletTitleIconBackground";
+	}
 }

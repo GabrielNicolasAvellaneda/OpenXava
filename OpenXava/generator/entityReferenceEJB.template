@@ -1,5 +1,4 @@
-#declare import="org.openxava.util.Strings"#
-#declare import="org.openxava.util.XavaException"#
+#declare import="org.openxava.util.*"#
 #declare import="org.openxava.model.meta.*"#
 #declare import="org.openxava.generators.*"#
 #declare import="org.openxava.calculators.*"#
@@ -195,15 +194,17 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 		else {
 			type = property.getTypeName();
 		}	
-		String column = modelMapping.getReferenceMapping(reference.getName()).getColumnForReferencedModelProperty(originalProperty.getName());			
+		String column = referenceMapping.getColumnForReferencedModelProperty(originalProperty.getName());			
+		String cmpType = referenceMapping.getCmpTypeNameForReferencedModelProperty(originalProperty.getName()); 
+		if (Is.emptyString(cmpType)) cmpType = type;
 	#
 	/**		
 	 * @ejb:persistent-field
 	 * #(pkField)#
 	 * @jboss:column-name "#(column)#"
 	 */
-	public abstract #(type)# get_#(propertyName)#();
-	public abstract void set_#(propertyName)#(#(type)# new#(propertyName)#);
+	public abstract #(cmpType)# get_#(propertyName)#();
+	public abstract void set_#(propertyName)#(#(cmpType)# new#(propertyName)#);
 
 	/**		
 	 * @ejb:interface-method
@@ -228,10 +229,11 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 	public void set#(propertyName)#(#(type)# new#(propertyName)#) {
 		# 
 		if (referenceMapping.hasConverter(originalProperty.getName())) {			
-			String sentence = property.getName() + "Converter.toDB(new" + propertyName + ")";							
+			String argv = Generators.generatePrimitiveWrapper(type, "new" + propertyName);			
+			String sentence = property.getName() + "Converter.toDB(" + argv + ")";
 		# 
 		try {
-			set_#(propertyName)#(#(Generators.generateCast(type, sentence))#);
+			set_#(propertyName)#(#(Generators.generateCast(cmpType, sentence))#);
 		}
 		catch (org.openxava.converters.ConversionException ex) {
 			ex.printStackTrace();

@@ -16,6 +16,113 @@ public class Products2Test extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Products2");		
 	}
 	
+	public void testImagesGallery() throws Exception {
+		// Verifying product 1 has no images
+		assertTrue("At least 2 products are required to run this test", getListRowCount() >= 2);
+		execute("Mode.detailAndFirst");
+		assertValue("number", "1");		
+		execute("Gallery.edit", "galleryProperty=photos");
+		assertNoErrors();
+		assertMessage("No images");
+		assertNoAction("Gallery.maximizeImage");
+		assertNoAction("Gallery.minimizeImage");
+		assertNoAction("Gallery.removeImage");
+		assertEquals("Images count does not match", 0, getForm().getParameterValues("xava.GALLERY.images").length);
+		
+		// Adding one image		
+		execute("Gallery.addImage");
+		assertNoErrors();
+		String imageUrl = System.getProperty("user.dir") + "/test-images/foto_javi.jpg";
+		setFileValue("newImage", imageUrl);
+		execute("LoadImageIntoGallery.loadImage");
+		assertNoErrors();
+		assertAction("Gallery.maximizeImage");
+		assertNoAction("Gallery.minimizeImage");
+		assertAction("Gallery.removeImage");
+		assertEquals("Images count does not match", 1, getForm().getParameterValues("xava.GALLERY.images").length);		
+		
+		// Saving the main entity
+		execute("Gallery.return");
+		execute("CRUD.save");
+		assertNoErrors();
+		
+		// Verifying that product 2 has no images
+		execute("Navigation.next");
+		assertValue("number", "2");
+		execute("Gallery.edit", "galleryProperty=photos");
+		assertNoErrors();
+		assertMessage("No images");
+		assertNoAction("Gallery.maximizeImage");
+		assertNoAction("Gallery.minimizeImage");
+		assertNoAction("Gallery.removeImage");
+		assertEquals("Images count does not match", 0, getForm().getParameterValues("xava.GALLERY.images").length);		
+		execute("Gallery.return");
+		
+		// Verifying that product 1 has the added image
+		execute("CRUD.new");
+		setValue("number", "1");
+		execute("CRUD.search");
+		assertNoErrors();
+		execute("Gallery.edit", "galleryProperty=photos");
+		assertNoErrors();
+		assertNoMessages();
+		assertAction("Gallery.maximizeImage");
+		assertNoAction("Gallery.minimizeImage");
+		assertAction("Gallery.removeImage");
+		assertEquals("Images count does not match", 1, getForm().getParameterValues("xava.GALLERY.images").length);
+		String imageOid = getForm().getParameterValues("xava.GALLERY.images")[0];
+		
+		// Maximizing the image
+		execute("Gallery.maximizeImage", "oid="+imageOid);
+		assertNoErrors();
+		assertNoAction("Gallery.maximizeImage");
+		assertAction("Gallery.minimizeImage");
+		assertNoAction("Gallery.removeImage");		
+		
+		// Minimizing the image
+		execute("Gallery.minimizeImage");
+		assertNoErrors();
+		assertAction("Gallery.maximizeImage");
+		assertNoAction("Gallery.minimizeImage");
+		assertAction("Gallery.removeImage");
+		assertEquals("Images count does not match", 1, getForm().getParameterValues("xava.GALLERY.images").length);
+		
+		// Verifying read-only
+		execute("Gallery.return");
+		execute("EditableOnOff.setOff");
+		execute("Gallery.edit", "galleryProperty=photos");
+		assertNoErrors();
+		assertNoMessages();
+		assertNoAction("Gallery.addImage");
+		assertAction("Gallery.maximizeImage");
+		assertNoAction("Gallery.minimizeImage");
+		assertNoAction("Gallery.removeImage");
+		assertEquals("Images count does not match", 1, getForm().getParameterValues("xava.GALLERY.images").length);
+		execute("Return.return");
+		execute("EditableOnOff.setOn");
+		
+		// Removing the image
+		execute("Gallery.edit", "galleryProperty=photos");
+		assertEquals("Images count does not match", 1, getForm().getParameterValues("xava.GALLERY.images").length);
+		execute("Gallery.removeImage", "oid="+imageOid);
+		assertNoErrors();
+		assertNoAction("Gallery.maximizeImage");
+		assertNoAction("Gallery.minimizeImage");
+		assertNoAction("Gallery.removeImage");
+		assertEquals("Images count does not match", 0, getForm().getParameterValues("xava.GALLERY.images").length);
+		
+		// Verifying that product 1 has no images
+		execute("Gallery.return");
+		execute("CRUD.new");
+		setValue("number", "1");
+		execute("CRUD.search");
+		assertNoErrors();
+		execute("Gallery.edit", "galleryProperty=photos");
+		assertNoErrors();
+		assertMessage("No images");
+		assertEquals("Images count does not match", 0, getForm().getParameterValues("xava.GALLERY.images").length);
+	}
+	
 	public void testReferencesAsDescriptionListUsesFilterOfDefaultTab() throws Exception {
 		execute("CRUD.new");
 		execute("Products2.changeLimitZone");

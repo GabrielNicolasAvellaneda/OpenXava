@@ -220,4 +220,20 @@ public class Style {
 		return "";
 	}
 	
+	public String getRestoreImage() {
+		return "images/restore.gif";
+	}
+	
+	public String getMaximizeImage() {
+		return "images/maximize.gif";
+	}
+	
+	public String getRemoveImage() {
+		return "images/remove.gif";
+	}
+	
+	public String getActionsInFrame() {
+		return "";
+	}
+	
 }

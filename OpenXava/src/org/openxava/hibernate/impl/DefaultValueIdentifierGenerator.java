@@ -53,7 +53,7 @@ public class DefaultValueIdentifierGenerator implements IdentifierGenerator, Con
 				((IEntityCalculator) calculator).setEntity(model);
 			}
 			if (calculator instanceof IAggregateOidCalculator) {
-				((IAggregateOidCalculator) calculator).setContainerKey(getCurrentContainerKey());
+				((IAggregateOidCalculator) calculator).setContainer(getCurrentContainerKey());
 				((IAggregateOidCalculator) calculator).setCounter(getCurrentCounter());
 			}
 			resetAggregateOidInfo();

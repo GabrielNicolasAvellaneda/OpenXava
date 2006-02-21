@@ -311,7 +311,7 @@ public class ModuleTestBase extends TestCase {
 	 * Current HTML code.
 	 * <p>
 	 * It is not very advisable because this will cause dependency
-	 * to HTML and it will be difficult migrate to another presentation tecnology.
+	 * to HTML and it will be difficult migrate to another presentation technology.
 	 */
 	protected String getHtml() throws IOException {
 		return response.getText();
@@ -990,7 +990,15 @@ public class ModuleTestBase extends TestCase {
 		parameters = Arrays.asList(form.getParameterNames());
 	}
 	
-	private WebForm getForm() {
+	
+	/**
+	 * Current WebForm (of httpunit). <p>
+	 * 
+	 * This allow you to access directly to html form elements, but
+	 * it is not very advisable because this will cause dependency
+	 * to HTML and it will be difficult migrate to another presentation technology.
+	 */	
+	protected WebForm getForm() {
 		return form;	
 	}	
 	

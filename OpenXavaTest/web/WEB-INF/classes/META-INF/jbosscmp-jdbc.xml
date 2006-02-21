@@ -1409,6 +1409,11 @@
          <table-name>XAVATEST_PRODUCT</table-name>
 
          <cmp-field>
+            <field-name>_Photos</field-name>
+            <column-name>PHOTOS</column-name>
+
+        </cmp-field>
+         <cmp-field>
             <field-name>_UnitPrice</field-name>
             <column-name>UNITPRICE</column-name>
 

@@ -23,8 +23,8 @@ public class DeliveryData
    private int number;
    private int _Type_number;
    private java.lang.String _Shipment_type;
-   private int _Shipment_mode;
-   private int _Shipment_number;
+   private java.lang.Integer _Shipment_mode;
+   private java.lang.Integer _Shipment_number;
    private java.lang.Integer _Carrier_number;
    private int _Invoice_year;
    private int _Invoice_number;
@@ -178,20 +178,20 @@ public class DeliveryData
       this._Shipment_type = _Shipment_type;
    }
 
-   public int get_Shipment_mode()
+   public java.lang.Integer get_Shipment_mode()
    {
       return this._Shipment_mode;
    }
-   public void set_Shipment_mode( int _Shipment_mode )
+   public void set_Shipment_mode( java.lang.Integer _Shipment_mode )
    {
       this._Shipment_mode = _Shipment_mode;
    }
 
-   public int get_Shipment_number()
+   public java.lang.Integer get_Shipment_number()
    {
       return this._Shipment_number;
    }
-   public void set_Shipment_number( int _Shipment_number )
+   public void set_Shipment_number( java.lang.Integer _Shipment_number )
    {
       this._Shipment_number = _Shipment_number;
    }
@@ -309,8 +309,22 @@ public class DeliveryData
          {
             lEquals = lEquals && this._Shipment_type.equals( lTest._Shipment_type );
          }
-         lEquals = lEquals && this._Shipment_mode == lTest._Shipment_mode;
-         lEquals = lEquals && this._Shipment_number == lTest._Shipment_number;
+         if( this._Shipment_mode == null )
+         {
+            lEquals = lEquals && ( lTest._Shipment_mode == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Shipment_mode.equals( lTest._Shipment_mode );
+         }
+         if( this._Shipment_number == null )
+         {
+            lEquals = lEquals && ( lTest._Shipment_number == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Shipment_number.equals( lTest._Shipment_number );
+         }
          if( this._Carrier_number == null )
          {
             lEquals = lEquals && ( lTest._Carrier_number == null );
@@ -360,9 +374,9 @@ public class DeliveryData
 
       result = 37*result + ((this._Shipment_type != null) ? this._Shipment_type.hashCode() : 0);
 
-      result = 37*result + (int) _Shipment_mode;
+      result = 37*result + ((this._Shipment_mode != null) ? this._Shipment_mode.hashCode() : 0);
 
-      result = 37*result + (int) _Shipment_number;
+      result = 37*result + ((this._Shipment_number != null) ? this._Shipment_number.hashCode() : 0);
 
       result = 37*result + ((this._Carrier_number != null) ? this._Carrier_number.hashCode() : 0);
 
