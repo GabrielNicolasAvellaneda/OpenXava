@@ -10,7 +10,7 @@ import org.openxava.util.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Feb 21 12:28:43 CET 2006
+ * @version Wed Feb 22 16:39:17 CET 2006
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -105,7 +105,7 @@ public class HibernatePG {
     
     out.print(" \n\t\t\t<!-- Reference: ");
     out.print(key.getName());
-    out.print(" : Overlapped references still not supported -->");
+    out.print(" : Overlapped references in key still not supported -->");
     			
     			}
     			else {
@@ -198,14 +198,9 @@ public class HibernatePG {
     			MetaReference ref = (MetaReference) itAggregateReferences.next();
     			String refName = reference.getName() + "_" + ref.getName();
     			Collection columns = mapping.getReferenceMapping(reference.getName() + "_" + ref.getName()).getColumns();   
-    			if (mapping.isReferenceOverlappingWithSomeProperty(reference.getName() + "_" + ref.getName())) {
-    
-    out.print(" \n\t\t\t<!-- Reference: ");
-    out.print(ref.getName());
-    out.print(" : Overlapped references still not supported -->");
-    			
-    			}
-    			else if (columns.size() == 1) {	
+    			boolean overlapped = mapping.isReferenceOverlappingWithSomeProperty(reference.getName() + "_" + ref.getName());
+    			String insertUpdate = overlapped?"insert='false' update='false'":"";
+    			if (columns.size() == 1) {	
     				String column = (String) columns.iterator().next();
     
     out.print(" \n\t\t<many-to-one name=\"");
@@ -214,7 +209,9 @@ public class HibernatePG {
     out.print(column);
     out.print("\" class=\"");
     out.print(ref.getMetaModelReferenced().getPOJOClassName());
-    out.print("\" not-found=\"ignore\"/>");
+    out.print("\" not-found=\"ignore\" ");
+    out.print(insertUpdate);
+    out.print("/>");
     
     			}
     			else { 
@@ -223,7 +220,9 @@ public class HibernatePG {
     out.print(refName);
     out.print("\" class=\"");
     out.print(ref.getMetaModelReferenced().getPOJOClassName());
-    out.print("\" not-found=\"ignore\">");
+    out.print("\" not-found=\"ignore\" ");
+    out.print(insertUpdate);
+    out.print(">");
     
     			for (Iterator itC = columns.iterator(); itC.hasNext();) {
     				String col = (String) itC.next();
@@ -237,18 +236,31 @@ public class HibernatePG {
     out.print(" \n\t\t</many-to-one>");
     
     			}         
+    			if (overlapped) {
+    				for (Iterator itDetails = mapping.getReferenceMapping(reference.getName() + "_" + ref.getName()).getDetails().iterator(); itDetails.hasNext(); ) {
+    					ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
+    					if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName() + "_" + ref.getName(), detail.getReferencedModelProperty())) {
+    
+    out.print(" \n\t\t<property name=\"");
+    out.print(reference.getName());
+    out.print("_");
+    out.print(ref.getName());
+    out.print("_");
+    out.print(detail.getReferencedModelProperty());
+    out.print("\" column=\"");
+    out.print(detail.getColumn());
+    out.print("\" access=\"field\"/>");
+    			
+    					}
+    				}		
+    			}
     		}
     	} 
     	else { // reference to entity or persistent aggregate 
     		Collection columns = mapping.getReferenceMapping(reference.getName()).getColumns();   
-    		if (mapping.isReferenceOverlappingWithSomeProperty(reference.getName())) {
-    
-    out.print(" \t\t\t\n\t\t\t<!-- Reference: ");
-    out.print(reference.getName());
-    out.print(" Overlapped references still not supported -->");
-    
-    		}		
-      		else if (columns.size() == 1) {	
+    		boolean overlapped = mapping.isReferenceOverlappingWithSomeProperty(reference.getName());
+    		String insertUpdate = overlapped?"insert='false' update='false'":"";		
+    		if (columns.size() == 1) {	
     			String column = (String) columns.iterator().next();
     
     out.print(" \n\t\t<many-to-one name=\"");
@@ -257,7 +269,9 @@ public class HibernatePG {
     out.print(column);
     out.print("\" class=\"");
     out.print(reference.getMetaModelReferenced().getPOJOClassName());
-    out.print("\" not-found=\"ignore\"/>");
+    out.print("\" not-found=\"ignore\" ");
+    out.print(insertUpdate);
+    out.print("/>");
     
     		}
     		else { 
@@ -266,7 +280,9 @@ public class HibernatePG {
     out.print(reference.getName());
     out.print("\" class=\"");
     out.print(reference.getMetaModelReferenced().getPOJOClassName());
-    out.print("\" not-found=\"ignore\">");
+    out.print("\" not-found=\"ignore\" ");
+    out.print(insertUpdate);
+    out.print(">");
     
     			for (Iterator itC = columns.iterator(); itC.hasNext();) {
     				String col = (String) itC.next();
@@ -279,6 +295,22 @@ public class HibernatePG {
     
     out.print(" \n\t\t</many-to-one>");
     			
+    		}
+    		if (overlapped) {
+    			for (Iterator itDetails = mapping.getReferenceMapping(reference.getName()).getDetails().iterator(); itDetails.hasNext(); ) {
+    				ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
+    				if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName(), detail.getReferencedModelProperty())) {
+    
+    out.print(" \n\t\t<property name=\"");
+    out.print(reference.getName());
+    out.print("_");
+    out.print(detail.getReferencedModelProperty());
+    out.print("\" column=\"");
+    out.print(detail.getColumn());
+    out.print("\" access=\"field\"/>");
+    			
+    				}
+    			}		
     		}
     	}
     } 
@@ -384,7 +416,7 @@ public class HibernatePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Feb 21 12:28:44 CET 2006", // date this file was generated
+        { "Wed Feb 22 16:39:17 CET 2006", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/hibernate.xml", // input file
              "/home/javi/workspace/OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

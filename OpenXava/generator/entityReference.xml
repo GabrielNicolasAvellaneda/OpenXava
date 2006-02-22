@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <tl><declare import="org.openxava.model.meta.*"/>
+<declare import="org.openxava.mapping.*"/>
 <declare import="org.openxava.util.*"/>
+<declare import="org.openxava.generators.*"/>
 
 <declarations>
 
@@ -20,14 +22,50 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
 <java>
 String refName = Strings.firstUpper(reference.getName());
 </java> 
+
 	private <expr>reference.getMetaModelReferenced().getInterfaceName()</expr> <expr>reference.getName()</expr>;
+<java>	
+ModelMapping mapping = null;
+if (reference.getMetaModel() instanceof MetaAggregateBean) {
+	mapping = reference.getMetaModel().getMetaModelContainer().getMapping();
+}
+else {
+	mapping = reference.getMetaModel().getMapping();
+}
+boolean overlapped = mapping.isReferenceOverlappingWithSomeProperty(reference.getName());
+String setException = overlapped?"throws RemoteException":"";
+MetaModel referencedModel = (MetaModel) reference.getMetaModelReferenced();
+if (overlapped) {
+	for (Iterator itDetails = mapping.getReferenceMapping(reference.getName()).getDetails().iterator(); itDetails.hasNext(); ) {
+		ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
+		if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName(), detail.getReferencedModelProperty())) {
+			Class type = referencedModel.getMetaProperty(detail.getReferencedModelProperty()).getType();
+			String typeName = Primitives.toWrapperClass(type).getName();
+</java> 
+	private <expr>typeName</expr> <expr>reference.getName()</expr>_<expr>detail.getReferencedModelProperty()</expr>;
+<java>
+		}
+	}
+}
+</java> 	
 	public <expr>reference.getMetaModelReferenced().getInterfaceName()</expr> get<expr>refName</expr>() {
 		return <expr>reference.getName()</expr>;
 	}
-	public void set<expr>refName</expr>(<expr>reference.getMetaModelReferenced().getInterfaceName()</expr> new<expr>reference.getReferencedModelName()</expr>) {
+	public void set<expr>refName</expr>(<expr>reference.getMetaModelReferenced().getInterfaceName()</expr> new<expr>reference.getReferencedModelName()</expr>) <expr>setException</expr>{
 		this.<expr>reference.getName()</expr> = new<expr>reference.getReferencedModelName()</expr>;
+<java>
+if (overlapped) {
+	for (Iterator itDetails = mapping.getReferenceMapping(reference.getName()).getDetails().iterator(); itDetails.hasNext(); ) {
+		ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
+		if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName(), detail.getReferencedModelProperty())) {
+			String sentence = "new" + reference.getReferencedModelName() + ".get" + Strings.firstUpper(detail.getReferencedModelProperty()) + "()";
+			String type = referencedModel.getMetaProperty(detail.getReferencedModelProperty()).getType().getName();
+</java> 
+		this.<expr>reference.getName()</expr>_<expr>detail.getReferencedModelProperty()</expr> = new<expr>reference.getReferencedModelName()</expr> == null?null:<expr>Generators.generatePrimitiveWrapper(type, sentence)</expr>;
+<java>
+		}
+	}
+}
+</java> 
 	}	
-	
-
-	
 	</tl>

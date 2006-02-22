@@ -4,11 +4,13 @@ import org.w3c.dom.*;
 import java.io.*;
 import java.util.*;
 import org.openxava.model.meta.*;
+import org.openxava.mapping.*;
 import org.openxava.util.*;
+import org.openxava.generators.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Feb 21 12:28:34 CET 2006
+ * @version Wed Feb 22 16:39:10 CET 2006
  */
 public class EntityReferencePG {
     Properties properties = new Properties();
@@ -33,11 +35,42 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
         try {    
     String refName = Strings.firstUpper(reference.getName());
     
-    out.print(" \n\tprivate ");
+    out.print(" \n\n\tprivate ");
     out.print(reference.getMetaModelReferenced().getInterfaceName());
     out.print(" ");
     out.print(reference.getName());
-    out.print(";\n\tpublic ");
+    out.print(";");
+    	
+    ModelMapping mapping = null;
+    if (reference.getMetaModel() instanceof MetaAggregateBean) {
+    	mapping = reference.getMetaModel().getMetaModelContainer().getMapping();
+    }
+    else {
+    	mapping = reference.getMetaModel().getMapping();
+    }
+    boolean overlapped = mapping.isReferenceOverlappingWithSomeProperty(reference.getName());
+    String setException = overlapped?"throws RemoteException":"";
+    MetaModel referencedModel = (MetaModel) reference.getMetaModelReferenced();
+    if (overlapped) {
+    	for (Iterator itDetails = mapping.getReferenceMapping(reference.getName()).getDetails().iterator(); itDetails.hasNext(); ) {
+    		ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
+    		if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName(), detail.getReferencedModelProperty())) {
+    			Class type = referencedModel.getMetaProperty(detail.getReferencedModelProperty()).getType();
+    			String typeName = Primitives.toWrapperClass(type).getName();
+    
+    out.print(" \n\tprivate ");
+    out.print(typeName);
+    out.print(" ");
+    out.print(reference.getName());
+    out.print("_");
+    out.print(detail.getReferencedModelProperty());
+    out.print(";");
+    
+    		}
+    	}
+    }
+    
+    out.print(" \t\n\tpublic ");
     out.print(reference.getMetaModelReferenced().getInterfaceName());
     out.print(" get");
     out.print(refName);
@@ -49,11 +82,36 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     out.print(reference.getMetaModelReferenced().getInterfaceName());
     out.print(" new");
     out.print(reference.getReferencedModelName());
-    out.print(") {\n\t\tthis.");
+    out.print(") ");
+    out.print(setException);
+    out.print("{\n\t\tthis.");
     out.print(reference.getName());
     out.print(" = new");
     out.print(reference.getReferencedModelName());
-    out.print(";\n\t}");
+    out.print(";");
+    
+    if (overlapped) {
+    	for (Iterator itDetails = mapping.getReferenceMapping(reference.getName()).getDetails().iterator(); itDetails.hasNext(); ) {
+    		ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
+    		if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName(), detail.getReferencedModelProperty())) {
+    			String sentence = "new" + reference.getReferencedModelName() + ".get" + Strings.firstUpper(detail.getReferencedModelProperty()) + "()";
+    			String type = referencedModel.getMetaProperty(detail.getReferencedModelProperty()).getType().getName();
+    
+    out.print(" \n\t\tthis.");
+    out.print(reference.getName());
+    out.print("_");
+    out.print(detail.getReferencedModelProperty());
+    out.print(" = new");
+    out.print(reference.getReferencedModelName());
+    out.print(" == null?null:");
+    out.print(Generators.generatePrimitiveWrapper(type, sentence));
+    out.print(";");
+    
+    		}
+    	}
+    }
+    
+    out.print(" \n\t}");
     
         } catch (Exception e) {
             System.out.println("Exception: "+e.getMessage());
@@ -88,7 +146,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Feb 21 12:28:34 CET 2006", // date this file was generated
+        { "Wed Feb 22 16:39:10 CET 2006", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/entityReference.xml", // input file
              "/home/javi/workspace/OpenXava/generator/EntityReferencePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
