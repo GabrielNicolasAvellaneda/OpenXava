@@ -9,7 +9,7 @@ import org.openxava.component.MetaComponent;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Feb 21 12:28:41 CET 2006
+ * @version Wed Feb 22 16:39:15 CET 2006
  */
 public class BeanPG {
     Properties properties = new Properties();
@@ -156,7 +156,7 @@ public class BeanPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Feb 21 12:28:41 CET 2006", // date this file was generated
+        { "Wed Feb 22 16:39:15 CET 2006", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/bean.xml", // input file
              "/home/javi/workspace/OpenXava/generator/BeanPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
