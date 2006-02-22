@@ -39,7 +39,7 @@ public class MetaAggregateBean extends MetaAggregate {
 		}
 	}
 
-	public ModelMapping getMapping() throws XavaException {
+	public ModelMapping getMapping() throws XavaException { 
 		throw new XavaException("aggregate_bean_no_mapping", getName(), getMetaComponent().getName());
 	}
 		

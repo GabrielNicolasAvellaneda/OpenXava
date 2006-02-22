@@ -2,6 +2,7 @@ package org.openxava.test.tests;
 
 import java.math.*;
 
+import org.openxava.hibernate.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
@@ -175,7 +176,7 @@ public class Products2Test extends ModuleTestBase {
 		assertNoEditable("family");		
 	}
 	
-	public void testOnChageDescriptionsListReferenceMultipleKey() throws Exception {
+	public void testOnChangeDescriptionsListReferenceMultipleKey() throws Exception {
 		execute("CRUD.new");
 		assertNotExists("zoneOne");
 		
@@ -389,21 +390,29 @@ public class Products2Test extends ModuleTestBase {
 	}
 	
 	private void createProduct(int number, String description, int zone) throws Exception {
-		Product2Value v = new Product2Value();
-		v.setNumber(number);
-		v.setDescription(description);
-		v.setFamily_number(1);
-		v.setSubfamily_number(1);
-		v.setWarehouse_number(new Integer(1));
-		v.setWarehouse_zoneNumber(zone);
-		v.setUnitPrice(new BigDecimal("1.00"));
-		Product2Util.getHome().create(v);		
+		Product2 p = new Product2();
+		p.setNumber(number);
+		p.setDescription(description);
+		Family2 f = new Family2();
+		f.setNumber(1);
+		p.setFamily(f);
+		Subfamily2 sf = new Subfamily2();
+		sf.setNumber(1);
+		p.setSubfamily(sf);
+		Warehouse w = new Warehouse();
+		w.setNumber(1);
+		w.setZoneNumber(zone);
+		p.setWarehouse(w);
+		p.setUnitPrice(new BigDecimal("1.00"));
+		XHibernate.getSession().save(p);
+		XHibernate.commit();
 	}
 			
 	private void deleteProduct(int number) throws Exception {
-		Product2Key k = new Product2Key();
+		Product2 k = new Product2();
 		k.setNumber(number);
-		Product2Util.getHome().remove(k);		
+		XHibernate.getSession().delete(k);
+		XHibernate.commit();
 	}
 					
 }

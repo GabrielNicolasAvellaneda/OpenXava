@@ -143,7 +143,6 @@ public class PropertiesManager implements java.io.Serializable {
 				value = mapToObject(pd.getPropertyType(), (Map) value);
 			}
 			Object[] arg = { value };
-
 			met.invoke(object, arg);
 		}
 		catch (PropertiesManagerException ex) {

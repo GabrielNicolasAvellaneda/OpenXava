@@ -541,7 +541,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		Object containerKey,
 		int number)
 		throws CreateException, ValidationException, XavaException {						
-		try {
+		try {			
 			if (!(metaModel instanceof IMetaEjb)) {
 				throw new IllegalArgumentException(XavaResources.getString("argument_type_error", "metaEjb", "MapFacadeBean.createEjb", "IMetaEjb"));
 			}
@@ -888,7 +888,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		MetaModel metaModel,
 		String memberName,
 		Map values)
-		throws ValidationException, XavaException {
+		throws ValidationException, XavaException {		
 		MetaReference r = null;
 		try {
 			if (Maps.isEmpty(values)) return null;			
@@ -898,7 +898,11 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			} else {
 				return findAssociatedEntity(persistenceProvider, (MetaEntity) r.getMetaModelReferenced(), values);
 			}
-		} catch (FinderException ex) {
+		}
+		catch (ObjectNotFoundException ex) {
+			return null; 
+		} 
+		catch (FinderException ex) {
 			ex.printStackTrace();
 			throw new EJBException(XavaResources.getString("map_to_reference_error",
 					r.getName(),					
@@ -911,10 +915,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 
 	private Object findAssociatedEntity(IPersistenceProvider persistenceProvider, MetaEntity metaEntity, Map values)
 		throws FinderException, XavaException {
-		Map keyValues = extractKeyValues(metaEntity, values);
+		Map keyValues = extractKeyValues(metaEntity, values);		
 		return findEntity(persistenceProvider, metaEntity.getName(), keyValues);
 	}
-
 
 	private Map extractKeyValues(MetaEntity metaEntity, Map values)
 		throws XavaException {
@@ -1268,7 +1271,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	}
 	
 	private Map convertSubmapsInObject(IPersistenceProvider persistenceProvider, MetaModel metaModel, Map values,
-			boolean referencesAsKey) throws ValidationException, XavaException {
+			boolean referencesAsKey) throws ValidationException, XavaException {		
 		Map result = new HashMap();
 		Iterator it = values.entrySet().iterator();
 		while (it.hasNext()) {
