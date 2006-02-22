@@ -18,7 +18,7 @@ public interface IAggregateOidCalculator extends ICalculator {
 	/**
 	 * A number that can be used to create the oid. <p>
 	 * 
-	 * Usually this is a secuential number
+	 * Usually this is a sequential number
 	 */
 	void setCounter(int counter);
 
