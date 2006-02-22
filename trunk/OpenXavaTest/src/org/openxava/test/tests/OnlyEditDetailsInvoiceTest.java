@@ -32,9 +32,9 @@ public class OnlyEditDetailsInvoiceTest extends ModuleTestBase {
 		};		
 		assertActions(initActions);
 		
-		InvoiceKey key = getInvoiceKey();				
-		setValue("year", String.valueOf(key.getYear()));
-		setValue("number", String.valueOf(key.getNumber()));
+		IInvoice invoice = getInvoice();				
+		setValue("year", String.valueOf(invoice.getYear()));
+		setValue("number", String.valueOf(invoice.getNumber()));
 		execute("CRUD.search");
 		assertNoErrors();
 
@@ -73,12 +73,12 @@ public class OnlyEditDetailsInvoiceTest extends ModuleTestBase {
 		assertEditable("details.serviceType");						
 	}
 
-	private InvoiceKey getInvoiceKey() throws Exception {
-		Iterator it = InvoiceUtil.getHome().findAll().iterator();
+	private IInvoice getInvoice() throws Exception {
+		Iterator it = Invoice.findAll().iterator();
 		while (it.hasNext()) {			
-			InvoiceRemote invoice = (InvoiceRemote) PortableRemoteObject.narrow(it.next(), InvoiceRemote.class);
+			Invoice invoice = (Invoice) PortableRemoteObject.narrow(it.next(), Invoice.class);
 			if (invoice.getDetailsCount() > 0) {
-				return (InvoiceKey) invoice.getPrimaryKey(); 
+				return invoice; 
 			}			
 		}
 		fail("It must to exist at least one invoice with details to run this test");

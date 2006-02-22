@@ -1,5 +1,7 @@
 #declare import="org.openxava.model.meta.*"#
+#declare import="org.openxava.mapping.*"#
 #declare import="org.openxava.util.*"#
+#declare import="org.openxava.generators.*"#
 
 #declarations
 
@@ -19,14 +21,50 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
 # 
 String refName = Strings.firstUpper(reference.getName());
 # 
+
 	private #(reference.getMetaModelReferenced().getInterfaceName())# #(reference.getName())#;
+# 	
+ModelMapping mapping = null;
+if (reference.getMetaModel() instanceof MetaAggregateBean) {
+	mapping = reference.getMetaModel().getMetaModelContainer().getMapping();
+}
+else {
+	mapping = reference.getMetaModel().getMapping();
+}
+boolean overlapped = mapping.isReferenceOverlappingWithSomeProperty(reference.getName());
+String setException = overlapped?"throws RemoteException":"";
+MetaModel referencedModel = (MetaModel) reference.getMetaModelReferenced();
+if (overlapped) {
+	for (Iterator itDetails = mapping.getReferenceMapping(reference.getName()).getDetails().iterator(); itDetails.hasNext(); ) {
+		ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
+		if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName(), detail.getReferencedModelProperty())) {
+			Class type = referencedModel.getMetaProperty(detail.getReferencedModelProperty()).getType();
+			String typeName = Primitives.toWrapperClass(type).getName();
+# 
+	private #(typeName)# #(reference.getName())#_#(detail.getReferencedModelProperty())#;
+# 
+		}
+	}
+}
+# 	
 	public #(reference.getMetaModelReferenced().getInterfaceName())# get#(refName)#() {
 		return #(reference.getName())#;
 	}
-	public void set#(refName)#(#(reference.getMetaModelReferenced().getInterfaceName())# new#(reference.getReferencedModelName())#) {
+	public void set#(refName)#(#(reference.getMetaModelReferenced().getInterfaceName())# new#(reference.getReferencedModelName())#) #(setException)#{
 		this.#(reference.getName())# = new#(reference.getReferencedModelName())#;
+# 
+if (overlapped) {
+	for (Iterator itDetails = mapping.getReferenceMapping(reference.getName()).getDetails().iterator(); itDetails.hasNext(); ) {
+		ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
+		if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName(), detail.getReferencedModelProperty())) {
+			String sentence = "new" + reference.getReferencedModelName() + ".get" + Strings.firstUpper(detail.getReferencedModelProperty()) + "()";
+			String type = referencedModel.getMetaProperty(detail.getReferencedModelProperty()).getType().getName();
+# 
+		this.#(reference.getName())#_#(detail.getReferencedModelProperty())# = new#(reference.getReferencedModelName())# == null?null:#(Generators.generatePrimitiveWrapper(type, sentence))#;
+# 
+		}
+	}
+}
+# 
 	}	
-	
-
-	
 	

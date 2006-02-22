@@ -3,6 +3,7 @@ package org.openxava.test.tests;
 import java.util.*;
 import javax.rmi.*;
 
+import org.openxava.hibernate.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
@@ -32,9 +33,9 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 		};		
 		assertActions(initActions);
 		
-		InvoiceKey key = getInvoiceKey();	
-		setValue("year", String.valueOf(key.getYear()));
-		setValue("number", String.valueOf(key.getNumber()));
+		IInvoice invoice = getInvoice();	
+		setValue("year", String.valueOf(invoice.getYear()));
+		setValue("number", String.valueOf(invoice.getNumber()));
 		execute("CRUD.search");
 		assertNoErrors();
 
@@ -86,19 +87,19 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 		assertTrue("It's required a invoice with seller level for run this test", row >= 0);
 		String year = getValueInList(row, "year");
 		String number = getValueInList(row, "number");
-		InvoiceKey key = new InvoiceKey();
+		Invoice key = new Invoice();
 		key.setYear(Integer.parseInt(year));
 		key.setNumber(Integer.parseInt(number));
-		IInvoice invoice = InvoiceUtil.getHome().findByPrimaryKey(key);		
+		IInvoice invoice = (IInvoice) XHibernate.getSession().get(Invoice.class, key);		
 		assertValueInList(row, "customer.seller.level.description", invoice.getCustomer().getSeller().getLevel().getDescription());		
 	}
 
-	private InvoiceKey getInvoiceKey() throws Exception {
-		Iterator it = InvoiceUtil.getHome().findAll().iterator();
+	private Invoice getInvoice() throws Exception {
+		Iterator it = Invoice.findAll().iterator();
 		while (it.hasNext()) {			
-			InvoiceRemote invoice = (InvoiceRemote) PortableRemoteObject.narrow(it.next(), InvoiceRemote.class);
+			Invoice invoice = (Invoice) it.next();
 			if (invoice.getDetailsCount() > 0) {
-				return (InvoiceKey) invoice.getPrimaryKey(); 
+				return invoice; 
 			}			
 		}
 		fail("It must to exist at least one invoice with details for run this test");

@@ -73,7 +73,7 @@ else {
 		if (key instanceof MetaReference) {
 			if (mapping.isReferenceOverlappingWithSomeProperty(key.getName())) {
 # 
-			<!-- Reference: #(key.getName())# : Overlapped references still not supported -->
+			<!-- Reference: #(key.getName())# : Overlapped references in key still not supported -->
 # 			
 			}
 			else {
@@ -140,20 +140,17 @@ while (itReferences.hasNext()) {
 			MetaReference ref = (MetaReference) itAggregateReferences.next();
 			String refName = reference.getName() + "_" + ref.getName();
 			Collection columns = mapping.getReferenceMapping(reference.getName() + "_" + ref.getName()).getColumns();   
-			if (mapping.isReferenceOverlappingWithSomeProperty(reference.getName() + "_" + ref.getName())) {
-# 
-			<!-- Reference: #(ref.getName())# : Overlapped references still not supported -->
-# 			
-			}
-			else if (columns.size() == 1) {	
+			boolean overlapped = mapping.isReferenceOverlappingWithSomeProperty(reference.getName() + "_" + ref.getName());
+			String insertUpdate = overlapped?"insert='false' update='false'":"";
+			if (columns.size() == 1) {	
 				String column = (String) columns.iterator().next();
 # 
-		<many-to-one name="#(refName)#" column="#(column)#" class="#(ref.getMetaModelReferenced().getPOJOClassName())#" not-found="ignore"/>
+		<many-to-one name="#(refName)#" column="#(column)#" class="#(ref.getMetaModelReferenced().getPOJOClassName())#" not-found="ignore" #(insertUpdate)#/>
 # 
 			}
 			else { 
 # 
-		<many-to-one name="#(refName)#" class="#(ref.getMetaModelReferenced().getPOJOClassName())#" not-found="ignore"> 
+		<many-to-one name="#(refName)#" class="#(ref.getMetaModelReferenced().getPOJOClassName())#" not-found="ignore" #(insertUpdate)#> 
 # 
 			for (Iterator itC = columns.iterator(); itC.hasNext();) {
 				String col = (String) itC.next();
@@ -165,24 +162,31 @@ while (itReferences.hasNext()) {
 		</many-to-one>
 # 
 			}         
+			if (overlapped) {
+				for (Iterator itDetails = mapping.getReferenceMapping(reference.getName() + "_" + ref.getName()).getDetails().iterator(); itDetails.hasNext(); ) {
+					ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
+					if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName() + "_" + ref.getName(), detail.getReferencedModelProperty())) {
+# 
+		<property name="#(reference.getName())#_#(ref.getName())#_#(detail.getReferencedModelProperty())#" column="#(detail.getColumn())#" access="field"/>
+# 			
+					}
+				}		
+			}
 		}
 	} 
 	else { // reference to entity or persistent aggregate 
 		Collection columns = mapping.getReferenceMapping(reference.getName()).getColumns();   
-		if (mapping.isReferenceOverlappingWithSomeProperty(reference.getName())) {
-# 			
-			<!-- Reference: #(reference.getName())# Overlapped references still not supported -->
-# 
-		}		
-  		else if (columns.size() == 1) {	
+		boolean overlapped = mapping.isReferenceOverlappingWithSomeProperty(reference.getName());
+		String insertUpdate = overlapped?"insert='false' update='false'":"";		
+		if (columns.size() == 1) {	
 			String column = (String) columns.iterator().next();
 # 
-		<many-to-one name="#(reference.getName())#" column="#(column)#" class="#(reference.getMetaModelReferenced().getPOJOClassName())#" not-found="ignore"/>
+		<many-to-one name="#(reference.getName())#" column="#(column)#" class="#(reference.getMetaModelReferenced().getPOJOClassName())#" not-found="ignore" #(insertUpdate)#/>
 # 
 		}
 		else { 
 # 
-		<many-to-one name="#(reference.getName())#" class="#(reference.getMetaModelReferenced().getPOJOClassName())#" not-found="ignore"> 
+		<many-to-one name="#(reference.getName())#" class="#(reference.getMetaModelReferenced().getPOJOClassName())#" not-found="ignore" #(insertUpdate)#> 
 # 
 			for (Iterator itC = columns.iterator(); itC.hasNext();) {
 				String col = (String) itC.next();
@@ -193,6 +197,16 @@ while (itReferences.hasNext()) {
 # 
 		</many-to-one>
 # 			
+		}
+		if (overlapped) {
+			for (Iterator itDetails = mapping.getReferenceMapping(reference.getName()).getDetails().iterator(); itDetails.hasNext(); ) {
+				ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
+				if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName(), detail.getReferencedModelProperty())) {
+# 
+		<property name="#(reference.getName())#_#(detail.getReferencedModelProperty())#" column="#(detail.getColumn())#" access="field"/>
+# 			
+				}
+			}		
 		}
 	}
 } 
