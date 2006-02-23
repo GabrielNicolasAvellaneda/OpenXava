@@ -2533,6 +2533,13 @@ public class View implements java.io.Serializable {
 		focusPropertyId = string;
 	}
 
+    /**
+     * Sets the focus in the provided property
+     */
+    public void setFocus(String newFocusProperty) {
+        focusPropertyId = "xava." + getModelName() + "." + newFocusProperty;
+    }
+
 	public String getEditCollectionElementAction() {
 		return Is.emptyString(editCollectionElementAction)?"Collection.edit":editCollectionElementAction;
 	}
