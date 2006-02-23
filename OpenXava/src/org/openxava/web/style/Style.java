@@ -236,4 +236,13 @@ public class Style {
 		return "";
 	}
 	
+	/**
+	 * If <code>true</code< the header in list is aligned as data displayed in its column. <p>
+	 * 
+	 * By default is <code>false</code> and it's used the portal default alignament for headers.
+	 */
+	public boolean isAlignHeaderAsData() {
+		return false;
+	}
+	
 }
