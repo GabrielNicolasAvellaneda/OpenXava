@@ -87,9 +87,22 @@ public class MetaController extends MetaElement {
 	public String getId() {
 		return getName();
 	}
-	public Collection getMetaActionsOnInit() {
-		Iterator it = metaActions.iterator();
+	
+	/**
+	 * Fathers actions are included. <p> 
+	 */
+	public Collection getMetaActionsOnInit() throws XavaException {
 		Collection result = new ArrayList();
+		
+		// Adding parents
+		Iterator itParents = getParents().iterator();
+		while (itParents.hasNext()) {
+			MetaController parent = (MetaController) itParents.next();
+			result.addAll(parent.getMetaActionsOnInit());
+		}
+
+		// Mines
+		Iterator it = metaActions.iterator();		
 		while (it.hasNext()) {
 			MetaAction metaAction = (MetaAction) it.next();			
 			if (metaAction.isOnInit()) {

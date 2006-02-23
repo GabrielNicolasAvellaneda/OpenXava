@@ -176,8 +176,11 @@
 			<use-object name="xava_view"/>
 		</action>		
 	</controller>
-		
-		
+	
+	<controller name="CustomersNewOnInitInherited">
+		<extends controller="CustomersNewOnInit"/>
+	</controller>
+				
 	<controller name="Invoices">
 		<action name="searchFromDelivery" hidden="true"
 			class="org.openxava.test.actions.SearchInvoiceFromDeliveryAction">									
