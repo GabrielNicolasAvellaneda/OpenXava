@@ -6,6 +6,11 @@
 Now if you want to change the active section you must to call to method <code>setActiveSection</code>
 of the desired view (<code>org.openxava.view.View</code>).
 
+<h4>IAggragetOidCalculator</h4>
+The <code>setContainerKey</code> method is renamed to <code>setContainer</code>. 
+And its semantic changes too. Now the container object is received instead of the key. 
+In this way this calculator is consistent in EJB2 and POJO (without key classes) versions.
+
 <h2>Migration from OpenXava 1.2 to OpenXava 1.2.1</h2>
 
 <h4>Hibernate generation</h4>

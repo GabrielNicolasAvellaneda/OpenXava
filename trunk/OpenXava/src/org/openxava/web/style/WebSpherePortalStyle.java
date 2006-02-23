@@ -213,4 +213,9 @@ public class WebSpherePortalStyle extends Style {
 	public String getActionsInFrame() {
 		return "wpsPortletTitleIconBackground";
 	}
+	
+	public boolean isAlignHeaderAsData() {
+		return true;
+	}
+	
 }
