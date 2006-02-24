@@ -47,6 +47,7 @@ public class CustomersWithSectionTest extends CustomersTest {
 	
 	public void testChangeReferenceLabel() throws Exception {
 		execute("CRUD.new");
+		
 		assertLabel("alternateSeller", "Alternate seller");
 		execute("Customers.changeAlternateSellerLabel");
 		assertLabel("alternateSeller", "Secondary seller");
