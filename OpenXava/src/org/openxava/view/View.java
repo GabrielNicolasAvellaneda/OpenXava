@@ -2578,7 +2578,7 @@ public class View implements java.io.Serializable {
 		this.readOnly = onlyRead;
 	}
 	
-	public String getLabelForProperty(MetaProperty p) throws XavaException {
+	public String getLabelFor(MetaMember p) throws XavaException {
 		if (getLabels() != null) {
 			String idLabel = (String) getLabels().get(p.getName());
 			if (idLabel != null) {
