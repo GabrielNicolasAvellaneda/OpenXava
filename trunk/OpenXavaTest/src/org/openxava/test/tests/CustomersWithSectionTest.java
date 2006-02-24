@@ -45,6 +45,13 @@ public class CustomersWithSectionTest extends CustomersTest {
 		super(testName, "CustomersWithSection", true);		
 	}
 	
+	public void testChangeReferenceLabel() throws Exception {
+		execute("CRUD.new");
+		assertLabel("alternateSeller", "Alternate seller");
+		execute("Customers.changeAlternateSellerLabel");
+		assertLabel("alternateSeller", "Secondary seller");
+	}
+	
 	public void testCustomizeList_moveAndRemove() throws Exception {
 		assertActions(listActions);
 		execute("List.customize");		
