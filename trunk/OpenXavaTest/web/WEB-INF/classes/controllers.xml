@@ -162,6 +162,11 @@
 			<set property="label" value="Malnom"/>
 			<use-object name="xava_view"/>
 		</action>			
+		<action name="changeAlternateSellerLabel" mode="detail" class="org.openxava.test.actions.ChangeLabelAction">				
+			<set property="property" value="alternateSeller"/>
+			<set property="label" value="Secondary seller"/>
+			<use-object name="xava_view"/>
+		</action>					
 	</controller>
 			
 	<controller name="CustomersNewOnInit">
