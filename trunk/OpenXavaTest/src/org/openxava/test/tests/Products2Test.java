@@ -378,7 +378,9 @@ public class Products2Test extends ModuleTestBase {
 		assertValidValues("family.number", familyValuesUpdated);
 		
 		// Delete it
-		Family2Util.getHome().remove(new Family2Key(66));
+		Family2 f = new Family2();
+		f.setNumber(66);
+		XHibernate.getSession().delete(f);		
 	}
 	
 	public void testDescriptionsListReferenceValidation() throws Exception {						

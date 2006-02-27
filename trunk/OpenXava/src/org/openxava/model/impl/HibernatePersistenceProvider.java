@@ -89,14 +89,24 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 	}
 
 	public Object create(IMetaEjb metaEjb, Map values)
-			throws CreateException, ValidationException, XavaException {
-		Object object = null;
+			throws CreateException, ValidationException, XavaException {		
 		try {
-			object = metaEjb.getPOJOClass().newInstance();
+			find(metaEjb, values);			
+			throw new DuplicateKeyException(XavaResources.getString("no_create_exists", metaEjb.getName())); 
+		}
+		catch (DuplicateKeyException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {			
+			ex.printStackTrace();
+			// If it does not exist then continue
+		}
+		Serializable object = null;
+		try {
+			object = (Serializable) metaEjb.getPOJOClass().newInstance();
 			PropertiesManager mp = new PropertiesManager(object);
-			mp.executeSets(values);		
-			Session session = XHibernate.getSession(); 
-			session.save(object);							
+			mp.executeSets(values);					
+			XHibernate.getSession().save(object);			
 			return object;
 		}
 		catch (Exception ex) {

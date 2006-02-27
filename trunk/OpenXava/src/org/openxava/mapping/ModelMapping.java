@@ -508,6 +508,20 @@ abstract public class ModelMapping implements java.io.Serializable {
 		return propertyMappings.values();
 	}
 	
+	public Collection getPropertyMappingsNotInModel() throws XavaException { 
+		Collection names = new ArrayList(getModelProperties());
+		names.removeAll(getMetaModel().getPropertiesNames());
+		if (names.isEmpty()) return Collections.EMPTY_LIST;
+		Collection result = new ArrayList();
+		for (Iterator it = names.iterator(); it.hasNext(); ) {
+			String name = (String) it.next();
+			if (name.indexOf('_') < 0) {
+				result.add(getPropertyMapping(name));
+			}
+		}
+		return result;
+	}
+	
 	private Collection getReferenceMappings() { 
 		return referenceMappings==null?Collections.EMPTY_LIST:referenceMappings.values();
 	}

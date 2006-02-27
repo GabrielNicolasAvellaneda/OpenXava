@@ -2,6 +2,7 @@ package org.openxava.test.tests;
 
 import java.rmi.*;
 
+import org.openxava.hibernate.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
@@ -12,10 +13,8 @@ import org.openxava.tests.*;
 
 public class SellersTest extends ModuleTestBase {
 	
-	private CustomerRemote customer2;
-	private CustomerRemote customer1;
-	private CustomerValue customerValue1;
-	private CustomerValue customerValue2;
+	private Customer customer2;
+	private Customer customer1;
 
 	public SellersTest(String testName) {
 		super(testName, "OpenXavaTest", "Sellers");		
@@ -113,7 +112,7 @@ public class SellersTest extends ModuleTestBase {
 		assertNoEditable("customers.name");
 		setValue("customers.number", getCustomerNumber1());
 		// Comparing name with ignore case because a formatter in customer name
-		assertValueIgnoringCase("customers.name", getCustomerValue1().getName()); 
+		assertValueIgnoringCase("customers.name", getCustomer1().getName()); 
 		assertCollectionRowCount("customers", 0);
 		execute("Collection.save", "viewObject=xava_view_customers");
 		assertCollectionRowCount("customers", 1);
@@ -122,20 +121,20 @@ public class SellersTest extends ModuleTestBase {
 		assertEditable("customers.number");
 		assertNoEditable("customers.name");
 		setValue("customers.number", getCustomerNumber2());		
-		assertValueIgnoringCase("customers.name", getCustomerValue2().getName());
+		assertValueIgnoringCase("customers.name", getCustomer2().getName());
 		execute("Collection.save", "viewObject=xava_view_customers");
 		assertCollectionRowCount("customers",2);
 		
 		assertValueInCollection("customers", 0, 0, getCustomerNumber1());
-		assertValueInCollectionIgnoringCase("customers", 0, 1, getCustomerValue1().getName());
-		assertValueInCollection("customers", 0, 2, getCustomerValue1().getRemarks());
-		assertValueInCollection("customers", 0, 3, getCustomerValue1().getRelationWithSeller());
+		assertValueInCollectionIgnoringCase("customers", 0, 1, getCustomer1().getName());
+		assertValueInCollection("customers", 0, 2, getCustomer1().getRemarks());
+		assertValueInCollection("customers", 0, 3, getCustomer1().getRelationWithSeller());
 		assertValueInCollection("customers", 0, 4, getCustomer1().getSeller().getLevel().getDescription());
 		
 		assertValueInCollection("customers", 1, 0, getCustomerNumber2());
-		assertValueInCollectionIgnoringCase("customers", 1, 1, getCustomerValue2().getName());
-		assertValueInCollection("customers", 1, 2, getCustomerValue2().getRemarks());
-		assertValueInCollection("customers", 1, 3, getCustomerValue2().getRelationWithSeller());
+		assertValueInCollectionIgnoringCase("customers", 1, 1, getCustomer2().getName());
+		assertValueInCollection("customers", 1, 2, getCustomer2().getRemarks());
+		assertValueInCollection("customers", 1, 3, getCustomer2().getRelationWithSeller());
 		assertValueInCollection("customers", 1, 4, getCustomer2().getSeller().getLevel().getDescription());
 	}
 	
@@ -148,15 +147,15 @@ public class SellersTest extends ModuleTestBase {
 		assertEditable("customers.number");
 		assertNoEditable("customers.name");
 		setValue("customers.number", getCustomerNumber2());
-		assertValueIgnoringCase("customers.name", getCustomerValue2().getName());
+		assertValueIgnoringCase("customers.name", getCustomer2().getName());
 		assertCollectionRowCount("customers",0);
 		execute("Collection.save", "viewObject=xava_view_customers");
 		assertCollectionRowCount("customers",1);
 		
 		assertValueInCollection("customers", 0, 0, getCustomerNumber2());
-		assertValueInCollectionIgnoringCase("customers", 0, 1, getCustomerValue2().getName());
-		assertValueInCollection("customers", 0, 2, getCustomerValue2().getRemarks());
-		assertValueInCollection("customers", 0, 3, getCustomerValue2().getRelationWithSeller());
+		assertValueInCollectionIgnoringCase("customers", 0, 1, getCustomer2().getName());
+		assertValueInCollection("customers", 0, 2, getCustomer2().getRemarks());
+		assertValueInCollection("customers", 0, 3, getCustomer2().getRelationWithSeller());
 		assertValueInCollection("customers", 0, 4, getCustomer2().getSeller().getLevel().getDescription());
 	}
 	
@@ -167,9 +166,9 @@ public class SellersTest extends ModuleTestBase {
 		assertNoErrors();
 		assertCollectionRowCount("customers", 1);
 		assertValueInCollection("customers", 0, 0, getCustomerNumber1());
-		assertValueInCollectionIgnoringCase("customers", 0, 1, getCustomerValue1().getName());
-		assertValueInCollection("customers", 0, 2, getCustomerValue1().getRemarks());
-		assertValueInCollection("customers", 0, 3, getCustomerValue1().getRelationWithSeller());
+		assertValueInCollectionIgnoringCase("customers", 0, 1, getCustomer1().getName());
+		assertValueInCollection("customers", 0, 2, getCustomer1().getRemarks());
+		assertValueInCollection("customers", 0, 3, getCustomer1().getRelationWithSeller());
 		assertValueInCollection("customers", 0, 4, getCustomer1().getSeller().getLevel().getDescription());
 		
 		execute("Collection.edit", "row=0,viewObject=xava_view_customers");
@@ -191,62 +190,50 @@ public class SellersTest extends ModuleTestBase {
 	}
 	
 	private void deleteCustomers() throws RemoteException, Exception {
-		getCustomer1().remove();
-		getCustomer2().remove();		
+		XHibernate.getSession().delete(getCustomer1());
+		XHibernate.getSession().delete(getCustomer2());
+		XHibernate.commit();
 	}
 
 	
 	
-	private CustomerValue getCustomerValue1() throws Exception {
-		if (customerValue1 == null) {
-			createCustomers();
-		}
-		return customerValue1;
-	}
-	
-	private CustomerValue getCustomerValue2() throws Exception {
-		if (customerValue2 == null) {
-			createCustomers();
-		}
-		return customerValue2;
-	}
-	
-	private CustomerRemote getCustomer1() throws Exception {
+	private ICustomer getCustomer1() throws Exception {
 		if (customer1 == null) {
 			createCustomers();
 		}
 		return customer1;
 	}
-		
-	private CustomerRemote getCustomer2() throws Exception {
+	
+	private ICustomer getCustomer2() throws Exception {
 		if (customer2 == null) {
 			createCustomers();
 		}
 		return customer2;
 	}
-
+	
+		
 	private void createCustomers() throws Exception {
-		customerValue1 = new CustomerValue();
-		customerValue1.setNumber(66);
-		customerValue1.setName("CUSTOMER JUNIT 66");
-		customerValue1.setRemarks("REMARKS JUNIT 66");
-		customerValue1.setRelationWithSeller("RELATION JUNIT 66");		
-		customer1= CustomerUtil.getHome().create(customerValue1);
+		customer1 = new Customer();
+		customer1.setNumber(66);
+		customer1.setName("CUSTOMER JUNIT 66");
+		customer1.setRemarks("REMARKS JUNIT 66");
+		customer1.setRelationWithSeller("RELATION JUNIT 66");
+		XHibernate.getSession().save(customer1);		
 
-		customerValue2 = new CustomerValue();
-		customerValue2.setNumber(67);
-		customerValue2.setName("CUSTOMER JUNIT 67");
-		customerValue2.setRemarks("REMARKS JUNIT 67");
-		customerValue2.setRelationWithSeller("RELATION JUNIT 67");		
-		customer2= CustomerUtil.getHome().create(customerValue2);		
+		customer2 = new Customer();
+		customer2.setNumber(67);
+		customer2.setName("CUSTOMER JUNIT 67");
+		customer2.setRemarks("REMARKS JUNIT 67");
+		customer2.setRelationWithSeller("RELATION JUNIT 67");
+		XHibernate.getSession().save(customer2);				
 	}
 	
 	private String getCustomerNumber1() throws Exception {
-		return String.valueOf(getCustomerValue1().getNumber());
+		return String.valueOf(getCustomer1().getNumber());
 	}
 	
 	private String getCustomerNumber2() throws Exception {
-		return String.valueOf(getCustomerValue2().getNumber());
+		return String.valueOf(getCustomer2().getNumber());
 	}
 			
 }
