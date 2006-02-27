@@ -262,7 +262,15 @@ while (itCollections.hasNext()) {
 
 }
 
+
+
+for (Iterator it=mapping.getPropertyMappingsNotInModel().iterator(); it.hasNext(); ) {
+	PropertyMapping pm = (PropertyMapping) it.next();
 # 	
+		<property name="#(pm.getProperty())#" access="field" column="#(pm.getColumn())#"/>
+# 
+}
+# 
   </class>
 
 </hibernate-mapping>

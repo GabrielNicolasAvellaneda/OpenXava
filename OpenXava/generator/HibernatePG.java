@@ -10,7 +10,7 @@ import org.openxava.util.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Wed Feb 22 16:39:17 CET 2006
+ * @version Mon Feb 27 19:02:21 CET 2006
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -381,7 +381,19 @@ public class HibernatePG {
     }
     
     
-    out.print(" \t\n  </class>\n\n</hibernate-mapping>");
+    
+    for (Iterator it=mapping.getPropertyMappingsNotInModel().iterator(); it.hasNext(); ) {
+    	PropertyMapping pm = (PropertyMapping) it.next();
+    
+    out.print(" \t\n\t\t<property name=\"");
+    out.print(pm.getProperty());
+    out.print("\" access=\"field\" column=\"");
+    out.print(pm.getColumn());
+    out.print("\"/>");
+    
+    }
+    
+    out.print(" \n  </class>\n\n</hibernate-mapping>");
     
         } catch (Exception e) {
             System.out.println("Exception: "+e.getMessage());
@@ -416,9 +428,9 @@ public class HibernatePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Wed Feb 22 16:39:17 CET 2006", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/hibernate.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/HibernatePG.java" }, // output file
+        { "Mon Feb 27 19:02:22 CET 2006", // date this file was generated
+             "/home/javi/workspace2/OpenXava/generator/hibernate.xml", // input file
+             "/home/javi/workspace2/OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
