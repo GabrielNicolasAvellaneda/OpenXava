@@ -38,6 +38,7 @@ public class ModuleManager {
 	private Collection metaActions;
 	private String applicationName;
 	private String moduleName;
+	private Set hiddenActions;
 	
 	private String modeControllerName = "Mode";
 	private Collection metaControllers;
@@ -84,9 +85,10 @@ public class ModuleManager {
 				Iterator it = getMetaControllers().iterator();
 				metaActions = new ArrayList();
 				while (it.hasNext()) {
-					MetaController contr = (MetaController) it.next();										
+					MetaController contr = (MetaController) it.next();					
 					metaActions.addAll(contr.getMetaActionsForMode(getModeName()));									
 				} 										
+				removeHiddenActions();
 			}
 			catch (Exception ex) {
 				ex.printStackTrace();
@@ -306,6 +308,38 @@ public class ModuleManager {
 					}
 				}
 			}			
+			if (action instanceof IHideActionAction) {
+				String actionToHide = ((IHideActionAction) action).getActionToHide();
+				if (actionToHide != null) {
+					addToHiddenActions(actionToHide);
+				}
+			}
+			if (action instanceof IHideActionsAction) {
+				String [] actionsToHide = ((IHideActionsAction) action).getActionsToHide();
+				if (actionsToHide != null) {
+					for (int i = 0; i < actionsToHide.length; i++) {
+						if (actionsToHide[i] != null) {
+							addToHiddenActions(actionsToHide[i]);
+						}
+					}					
+				}
+			}
+			if (action instanceof IShowActionAction) {
+				String actionToShow = ((IShowActionAction) action).getActionToShow();
+				if (actionToShow != null) {
+					removeFromHiddenActions(actionToShow);
+				}
+			}
+			if (action instanceof IShowActionsAction) {
+				String [] actionsToShow = ((IShowActionsAction) action).getActionsToShow();
+				if (actionsToShow != null) {
+					for (int i = 0; i < actionsToShow.length; i++) {
+						if (actionsToShow[i] != null) {
+							removeFromHiddenActions(actionsToShow[i]);
+						}
+					}					
+				}
+			}						
 			if (action instanceof ILoadFileAction) {					
 				setFormUpload(((ILoadFileAction) action).isLoadFile());
 			}			
@@ -706,6 +740,28 @@ public class ModuleManager {
 	}
 	public void setNextModule(String nextModule) {
 		this.nextModule = nextModule;
+	}
+	
+	private void addToHiddenActions(String action) {
+		if (hiddenActions == null) hiddenActions = new HashSet();
+		hiddenActions.add(action);
+		metaActions = null;
+	}
+	
+	private void removeFromHiddenActions(String action) {
+		if (hiddenActions == null) return;
+		hiddenActions.remove(action);
+		metaActions = null;		
+	}
+	
+	private void removeHiddenActions() {
+		if (hiddenActions == null) return;		
+		for (Iterator it = metaActions.iterator(); it.hasNext(); ) {
+			MetaAction action = (MetaAction) it.next();
+			if (hiddenActions.contains(action.getQualifiedName())) {
+				it.remove();
+			}
+		}
 	}
 	
 }
