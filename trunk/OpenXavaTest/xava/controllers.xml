@@ -448,5 +448,12 @@
 	<controller name="Return">	
 		<action name="return" class="org.openxava.actions.CancelAction"/>		
 	</controller>
+		
+	<controller name="HideShowCRUDActions">
+		<action name="hideDelete" class="org.openxava.test.actions.HideDeleteAction" mode="detail"/>
+		<action name="showDelete" class="org.openxava.test.actions.ShowDeleteAction" mode="detail"/>
+		<action name="hideSaveDelete" class="org.openxava.test.actions.HideSaveDeleteAction" mode="detail"/>
+		<action name="showSaveDelete" class="org.openxava.test.actions.ShowSaveDeleteAction" mode="detail"/>		
+	</controller>
 			
 </controllers>
