@@ -124,6 +124,9 @@ public class SellersTest extends ModuleTestBase {
 		assertValueIgnoringCase("customers.name", getCustomer2().getName());
 		execute("Collection.save", "viewObject=xava_view_customers");
 		assertCollectionRowCount("customers",2);
+				
+		XHibernate.getSession().refresh(getCustomer1());
+		XHibernate.getSession().refresh(getCustomer2());		
 		
 		assertValueInCollection("customers", 0, 0, getCustomerNumber1());
 		assertValueInCollectionIgnoringCase("customers", 0, 1, getCustomer1().getName());
@@ -151,6 +154,8 @@ public class SellersTest extends ModuleTestBase {
 		assertCollectionRowCount("customers",0);
 		execute("Collection.save", "viewObject=xava_view_customers");
 		assertCollectionRowCount("customers",1);
+		
+		XHibernate.getSession().refresh(getCustomer2());
 		
 		assertValueInCollection("customers", 0, 0, getCustomerNumber2());
 		assertValueInCollectionIgnoringCase("customers", 0, 1, getCustomer2().getName());
@@ -225,7 +230,9 @@ public class SellersTest extends ModuleTestBase {
 		customer2.setName("CUSTOMER JUNIT 67");
 		customer2.setRemarks("REMARKS JUNIT 67");
 		customer2.setRelationWithSeller("RELATION JUNIT 67");
-		XHibernate.getSession().save(customer2);				
+		XHibernate.getSession().save(customer2);
+		
+		XHibernate.getSession().flush();
 	}
 	
 	private String getCustomerNumber1() throws Exception {
