@@ -257,6 +257,10 @@
 		 <arg value="${generator.dir}${file.separator}methods.template"/> 
 		 <arg value="${generator.dir}${file.separator}methods.xml"/>         
 		</java>	
+		<java classname="Simple2XML" classpath="${tl.lib}">
+		 <arg value="${generator.dir}${file.separator}initMembers.template"/> 
+		 <arg value="${generator.dir}${file.separator}initMembers.xml"/>         
+		</java>			
        	<java classname="Simple2XML" classpath="${tl.lib}">
         	<arg value="${generator.dir}${file.separator}ejbean.template"/> 
          	<arg value="${generator.dir}${file.separator}ejbean.xml"/>         
@@ -311,6 +315,10 @@
 			<arg value="${generator.dir}${file.separator}methods.xml"/> 
 			<arg value="${generator.dir}${file.separator}MethodsPG.java"/>         
 		</java>  	
+		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
+			<arg value="${generator.dir}${file.separator}initMembers.xml"/> 
+			<arg value="${generator.dir}${file.separator}InitMembersPG.java"/>         
+		</java>  			
        <java classname="TL2Java" classpath="${tl.lib}" fork="yes">
          <arg value="${generator.dir}${file.separator}ejbean.xml"/> 
          <arg value="${generator.dir}${file.separator}EJBeanPG.java"/>         

@@ -15,7 +15,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Feb 27 19:02:19 CET 2006
+ * @version Tue Feb 28 13:12:15 CET 2006
  */
 public class PojoPG {
     Properties properties = new Properties();
@@ -64,7 +64,11 @@ public class PojoPG {
     out.print(name);
     out.print(" implements java.io.Serializable, ");
     out.print(metaModel.getInterfaceName());
-    out.print(" {\t\n\t\n\t// Properties/Propiedades");
+    out.print(" {\t\n\n\t// Constructor\n\tpublic ");
+    out.print(name);
+    out.print("() {\n\t\tinitMembers();\n\t}");
+    InitMembersPG.generate(context, out, metaModel, false); 
+    out.print(" \n\t\n\t// Properties/Propiedades");
     
     Iterator itProperties = metaModel.getMetaProperties().iterator();	
     while (itProperties.hasNext()) {	
@@ -277,7 +281,7 @@ public class PojoPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Feb 27 19:02:20 CET 2006", // date this file was generated
+        { "Tue Feb 28 13:12:16 CET 2006", // date this file was generated
              "/home/javi/workspace2/OpenXava/generator/pojo.xml", // input file
              "/home/javi/workspace2/OpenXava/generator/PojoPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

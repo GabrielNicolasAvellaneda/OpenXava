@@ -183,7 +183,7 @@ public class EJBTest extends TestCase {
 			if (invoice.getDetailsCount() > 0) break;
 			invoice = null;
 		}
-		assertNotNull("At least ones invoice is required for run this test", invoice);
+		assertNotNull("At least one invoice with details is required for run this test", invoice);
 		invoice.setComment(" INVOICE WITH SPACES ");
 		InvoiceDetailRemote detail = (InvoiceDetailRemote) PortableRemoteObject.narrow(
 				invoice.getDetails().iterator().next(), InvoiceDetailRemote.class);

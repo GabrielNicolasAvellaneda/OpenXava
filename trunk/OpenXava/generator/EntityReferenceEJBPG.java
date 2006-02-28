@@ -12,7 +12,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Feb 27 19:02:16 CET 2006
+ * @version Tue Feb 28 13:12:11 CET 2006
  */
 public class EntityReferenceEJBPG {
     Properties properties = new Properties();
@@ -385,7 +385,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Feb 27 19:02:16 CET 2006", // date this file was generated
+        { "Tue Feb 28 13:12:12 CET 2006", // date this file was generated
              "/home/javi/workspace2/OpenXava/generator/entityReferenceEJB.xml", // input file
              "/home/javi/workspace2/OpenXava/generator/EntityReferenceEJBPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

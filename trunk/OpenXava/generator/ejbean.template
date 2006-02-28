@@ -972,39 +972,5 @@ while (itReferences.hasNext()) {
 		super.unsetEntityContext();
 	}
 	
-	private void initMembers() {
-		# 
-		Iterator itPropertiesToInit = metaModel.getMetaPropertiesPersistents().iterator();
-		while (itPropertiesToInit.hasNext()) {
-			MetaProperty p = (MetaProperty) itPropertiesToInit.next();
-			String propertyName = Strings.firstUpper(p.getName());
-			if (!p.getType().isPrimitive()) {				
-		# 
-		set#(propertyName)#(null);
-		# 
-			}
-			else if (p.isNumber()) {
-		# 
-		set#(propertyName)#(0);
-		# 	
-			}
-			else if (p.getType().getName().equals("boolean")) {
-		# 
-		set#(propertyName)#(false);
-		# 
-			}
-		}
-		# 
-		
-		# 
-		for (Iterator it = metaModel.getMetaReferencesWithMapping().iterator(); it.hasNext(); ) {
-			MetaReference ref = (MetaReference) it.next();
-			String refName = Strings.firstUpper(ref.getName());
-		# 
-		set#(refName)#Key(null);
-		# 
-		}
-		# 	
-	}
-		
+	# InitMembersPG.generate(context, out, metaModel, true); # 		
 }
