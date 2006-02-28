@@ -52,7 +52,7 @@
 	<target name="deploy" depends="touchHistory">
 		<ant antfile="../OpenXava/build.xml" target="deploy"/>
 	</target>
-	
+		
 	<target name="regenerateWebsphereMapping">
 		<ant antfile="../OpenXava/build.xml" target="regenerateWebsphereMapping"/>
 	</target>
