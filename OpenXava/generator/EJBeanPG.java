@@ -14,7 +14,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Feb 27 19:02:18 CET 2006
+ * @version Tue Feb 28 13:12:14 CET 2006
  */
 public class EJBeanPG {
     Properties properties = new Properties();
@@ -1128,47 +1128,9 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print(packageName);
     out.print(".");
     out.print(name);
-    out.print("Value value);\n\t\n\tpublic void setEntityContext(javax.ejb.EntityContext ctx) {\n\t\tsuper.setEntityContext(ctx);\n\t}\n\tpublic void unsetEntityContext() {\n\t\tsuper.unsetEntityContext();\n\t}\n\t\n\tprivate void initMembers() {");
-    
-    		Iterator itPropertiesToInit = metaModel.getMetaPropertiesPersistents().iterator();
-    		while (itPropertiesToInit.hasNext()) {
-    			MetaProperty p = (MetaProperty) itPropertiesToInit.next();
-    			String propertyName = Strings.firstUpper(p.getName());
-    			if (!p.getType().isPrimitive()) {				
-    		
-    out.print(" \n\t\tset");
-    out.print(propertyName);
-    out.print("(null);");
-    
-    			}
-    			else if (p.isNumber()) {
-    		
-    out.print(" \n\t\tset");
-    out.print(propertyName);
-    out.print("(0);");
-    	
-    			}
-    			else if (p.getType().getName().equals("boolean")) {
-    		
-    out.print(" \n\t\tset");
-    out.print(propertyName);
-    out.print("(false);");
-    
-    			}
-    		}
-    		
-    
-    		for (Iterator it = metaModel.getMetaReferencesWithMapping().iterator(); it.hasNext(); ) {
-    			MetaReference ref = (MetaReference) it.next();
-    			String refName = Strings.firstUpper(ref.getName());
-    		
-    out.print(" \n\t\tset");
-    out.print(refName);
-    out.print("Key(null);");
-    
-    		}
-    		
-    out.print(" \t\n\t}\n\t\t\n}");
+    out.print("Value value);\n\t\n\tpublic void setEntityContext(javax.ejb.EntityContext ctx) {\n\t\tsuper.setEntityContext(ctx);\n\t}\n\tpublic void unsetEntityContext() {\n\t\tsuper.unsetEntityContext();\n\t}");
+    InitMembersPG.generate(context, out, metaModel, true); 
+    out.print(" \t\t\n}");
     
         } catch (Exception e) {
             System.out.println("Exception: "+e.getMessage());
@@ -1203,7 +1165,7 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Feb 27 19:02:19 CET 2006", // date this file was generated
+        { "Tue Feb 28 13:12:15 CET 2006", // date this file was generated
              "/home/javi/workspace2/OpenXava/generator/ejbean.xml", // input file
              "/home/javi/workspace2/OpenXava/generator/EJBeanPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

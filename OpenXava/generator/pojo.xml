@@ -57,6 +57,13 @@ import org.openxava.util.*;
  * @author MCarmen Gimeno
  */
 public class <expr>name</expr> implements java.io.Serializable, <expr>metaModel.getInterfaceName()</expr> {	
+
+	// Constructor
+	public <expr>name</expr>() {
+		initMembers();
+	}
+	
+	<java>InitMembersPG.generate(context, out, metaModel, false); </java> 
 	
 	// Properties/Propiedades
 	

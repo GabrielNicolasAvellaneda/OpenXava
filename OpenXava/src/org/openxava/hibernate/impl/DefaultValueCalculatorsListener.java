@@ -20,7 +20,7 @@ public class DefaultValueCalculatorsListener implements PreInsertEventListener {
 			if (!metaModel.hasDefaultCalculatorOnCreateInNotKey()) return false;
 			modelName = metaModel.getName();
 			PropertiesManager pm = new PropertiesManager(model);
-			List propertyNames = Arrays.asList(ev.getPersister().getPropertyNames());
+			List propertyNames = Arrays.asList(ev.getPersister().getPropertyNames());			
 			Object [] state = ev.getState();			
 			for (Iterator itProperties=metaModel.getMetaPropertiesWithDefaultValueOnCreate().iterator(); itProperties.hasNext();) {
 				MetaProperty pr = (MetaProperty) itProperties.next();
