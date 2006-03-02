@@ -10,7 +10,7 @@ import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
 
-public class CalculatorsListener implements PreInsertEventListener, PreUpdateEventListener {
+public class CalculatorsListener implements PreInsertEventListener, PreUpdateEventListener, PreDeleteEventListener, PostLoadEventListener {
 	
 	private static CalculatorsListener instance = new CalculatorsListener();
 	
@@ -20,51 +20,87 @@ public class CalculatorsListener implements PreInsertEventListener, PreUpdateEve
 	
 	private CalculatorsListener() {		
 	}
-
-	public boolean onPreInsert(PreInsertEvent ev) {		
-		executeCalculators(ev.getEntity(), true);
-		return false;
-	}
-
-	public boolean onPreUpdate(PreUpdateEvent ev) {
-		executeCalculators(ev.getEntity(), false);
-		return false;
-	}
 	
-	private void executeCalculators(Object entity, boolean create) {
-		if (!(entity instanceof IModel)) return;
-		String modelName = "unknow";		
+	public void onPostLoad(PostLoadEvent ev) {
+		String modelName = "unknow";
 		try {
+			Object entity = ev.getEntity();
+			if (!(entity instanceof IModel)) return;
 			IModel model = (IModel) entity;
-			MetaModel metaModel = model.getMetaModel();
-			Collection calculators = create?metaModel.getMetaCalculatorsPostCreate():metaModel.getMetaCalculatorsPostModify();
-			if (calculators.isEmpty()) return;
-			modelName = metaModel.getName();
-			PropertiesManager pm = new PropertiesManager(model);			 
-			for (Iterator it = calculators.iterator(); it.hasNext();) {
-				MetaCalculator metaCalculator = (MetaCalculator) it.next();
-				ICalculator calculator = metaCalculator.createCalculator();
-				PropertiesManager pmCalculator = new PropertiesManager(calculator);
-				for (Iterator itSets=metaCalculator.getMetaSetsWithoutValue().iterator(); itSets.hasNext();) {
-					MetaSet set = (MetaSet) itSets.next();
-					pmCalculator.executeSet(set.getPropertyName(), pm.executeGet(set.getPropertyNameFrom()));
-				}
-				if (calculator instanceof IJDBCCalculator) {
-					((IJDBCCalculator) calculator).setConnectionProvider(DataSourceConnectionProvider.getByComponent(metaModel.getMetaComponent().getName()));
-				}
-				if (calculator instanceof IEntityCalculator) {
-					((IEntityCalculator) calculator).setEntity(model);
-				}				 
-				calculator.calculate();				 								
-			}			
+			executeCalculators(model, model.getMetaModel().getMetaCalculatorsPostLoad());
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
-			String message = create?"entity_create_error":"entity_modify_error";
-			throw new HibernateException(XavaResources.getString(message, modelName, ex.getLocalizedMessage()));
+			ex.printStackTrace();			
+			throw new HibernateException(XavaResources.getString("entity_load_error", modelName, ex.getLocalizedMessage()));
+		}						
+	}
+
+	public boolean onPreInsert(PreInsertEvent ev) {
+		String modelName = "unknow";
+		try {
+			Object entity = ev.getEntity();
+			if (!(entity instanceof IModel)) return false;
+			IModel model = (IModel) entity;
+			executeCalculators(model, model.getMetaModel().getMetaCalculatorsPostCreate());
+			return false;
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();			
+			throw new HibernateException(XavaResources.getString("entity_create_error", modelName, ex.getLocalizedMessage()));
 		}				
 	}
 
+	public boolean onPreUpdate(PreUpdateEvent ev) {
+		String modelName = "unknow";
+		try {
+			Object entity = ev.getEntity();
+			if (!(entity instanceof IModel)) return false;
+			IModel model = (IModel) entity;
+			executeCalculators(model, model.getMetaModel().getMetaCalculatorsPostModify());
+			return false;
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();			
+			throw new HibernateException(XavaResources.getString("entity_modify_error", modelName, ex.getLocalizedMessage()));
+		}				
+	}
+	
+	public boolean onPreDelete(PreDeleteEvent ev) {
+		String modelName = "unknow";
+		try {
+			Object entity = ev.getEntity();
+			if (!(entity instanceof IModel)) return false;
+			IModel model = (IModel) entity;
+			executeCalculators(model, model.getMetaModel().getMetaCalculatorsPreRemove());
+			return false;
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();			
+			throw new HibernateException(XavaResources.getString("entity_remove_error", modelName, ex.getLocalizedMessage()));
+		}				
+	}
+	
+	private void executeCalculators(IModel model, Collection calculators) throws Exception {		
+		MetaModel metaModel = model.getMetaModel();
+		if (calculators.isEmpty()) return;
+		PropertiesManager pm = new PropertiesManager(model);			 
+		for (Iterator it = calculators.iterator(); it.hasNext();) {
+			MetaCalculator metaCalculator = (MetaCalculator) it.next();				
+			ICalculator calculator = metaCalculator.createCalculator();
+			PropertiesManager pmCalculator = new PropertiesManager(calculator);
+			for (Iterator itSets=metaCalculator.getMetaSetsWithoutValue().iterator(); itSets.hasNext();) {
+				MetaSet set = (MetaSet) itSets.next();
+				pmCalculator.executeSet(set.getPropertyName(), pm.executeGet(set.getPropertyNameFrom()));
+			}
+			if (calculator instanceof IJDBCCalculator) {
+				((IJDBCCalculator) calculator).setConnectionProvider(DataSourceConnectionProvider.getByComponent(metaModel.getMetaComponent().getName()));
+			}
+			if (calculator instanceof IEntityCalculator) {
+				((IEntityCalculator) calculator).setEntity(model);
+			}				 
+			calculator.calculate();				 								
+		}			
+	}
 
 }
 
