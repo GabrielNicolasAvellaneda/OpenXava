@@ -43,8 +43,12 @@ java.util.Iterator it = properties.iterator();
 int columnIndex = 0;
 while (it.hasNext()) {
 	MetaProperty property = (MetaProperty) it.next();
+	String align = "";
+	if (style.isAlignHeaderAsData()) {
+		align =property.isNumber() && !property.hasValidValues()?"style='vertical-align: middle;text-align: right'":"style='vertical-align: middle;'";
+	}
 %>
-<th class=<%=style.getListHeader()%>>
+<th class=<%=style.getListHeader()%> <%=align%>>
 <% if (tab.isCustomize()) { %><xava:image action="List.moveColumnToLeft" argv='<%="columnIndex="+columnIndex%>'/><% } %>
 <%
 	if (property.isCalculated()) {		

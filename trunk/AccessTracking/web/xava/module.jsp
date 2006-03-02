@@ -1,5 +1,6 @@
 <%@ page import="org.openxava.util.Is" %>
 <%@ page import="org.openxava.util.Users" %>
+<%@ page import="org.openxava.util.Locales" %>
 <%@ page import="org.openxava.util.XavaResources" %>
 
 <%@ include file="script.jsp" %>
@@ -11,6 +12,7 @@
 
 <%
 Users.setCurrent(request);
+Locales.setCurrent(request);
 boolean isPortlet = (request.getAttribute("xava.portlet.renderURL") != null);
 boolean messagesOnTop = !"false".equalsIgnoreCase(request.getParameter("messagesOnTop"));
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
@@ -145,7 +147,8 @@ function throwPropertyChanged(formu, property) {
 function setFocus() {
 	element = document.<%=manager.getForm()%>.elements['<%=focusPropertyId%>'];
 	if (element != null && typeof element.disabled != "undefined" && !element.disabled) {
-		element.focus()
+		element.focus();
+		element.select();		
 	}
 }
 </script>

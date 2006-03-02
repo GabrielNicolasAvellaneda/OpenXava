@@ -332,4 +332,5 @@
 <!ATTLIST reference-mapping-detail
  column CDATA #REQUIRED
  referenced-model-property CDATA #REQUIRED 
+ cmp-type CDATA #IMPLIED 
 >
