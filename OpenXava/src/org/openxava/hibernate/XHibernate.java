@@ -132,9 +132,11 @@ public class XHibernate {
 					System.err.println(XavaResources.getString("hibernate_mapping_not_loaded_warning", model.getName())); 
 				}
 			}
-			
+						
 			Collection preInsertListeners = new ArrayList();
 			Collection preUpdateListeners = new ArrayList();
+			Collection preDeleteListeners = new ArrayList();
+			Collection postLoadListeners = new ArrayList();
 			
 			if (ReferenceMappingDetail.someMappingUsesConverters()) {				
 				// toJava conversion is not enabled because in references it's useless thus we avoid an unnecessary overload
@@ -151,9 +153,18 @@ public class XHibernate {
 				preInsertListeners.add(CalculatorsListener.getInstance());
 			}
 			
-			if (MetaModel.someModelHasPostModifyCalculator()) {
+			if (MetaModel.someModelHasPostModifyCalculator()) {				
 				preUpdateListeners.add(CalculatorsListener.getInstance());
 			} 
+			
+			if (MetaModel.someModelHasPreRemoveCalculator()) {				
+				preDeleteListeners.add(CalculatorsListener.getInstance());
+			}
+			
+			if (MetaModel.someModelHasPostLoadCalculator()) {				
+				postLoadListeners.add(CalculatorsListener.getInstance());
+			}
+			
 			
 			if (!preInsertListeners.isEmpty()) {
 				PreInsertEventListener [] preInsertListenersArray = new PreInsertEventListener[preInsertListeners.size()];
@@ -166,7 +177,19 @@ public class XHibernate {
 				preUpdateListeners.toArray(preUpdateListenersArray);			
 				configuration.getEventListeners().setPreUpdateEventListeners(preUpdateListenersArray);
 			}
-						
+			
+			if (!preDeleteListeners.isEmpty()) {
+				PreDeleteEventListener [] preDeleteListenersArray = new PreDeleteEventListener[preDeleteListeners.size()];
+				preDeleteListeners.toArray(preDeleteListenersArray);			
+				configuration.getEventListeners().setPreDeleteEventListeners(preDeleteListenersArray);
+			}
+			
+			if (!postLoadListeners.isEmpty()) {
+				PostLoadEventListener [] postLoadListenersArray = new PostLoadEventListener[postLoadListeners.size()];
+				postLoadListeners.toArray(postLoadListenersArray);			
+				configuration.getEventListeners().setPostLoadEventListeners(postLoadListenersArray);
+			}			
+									
 			return configuration.buildSessionFactory();
 		} 
 		catch (Exception ex) {

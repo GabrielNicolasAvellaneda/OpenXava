@@ -21,6 +21,8 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	private static boolean someModelHasDefaultCalculatorOnCreateInNotKey = false;
 	private static boolean someModelHasPostCreateCalculator = false;
 	private static boolean someModelHasPostModifyCalculator = false;
+	private static boolean someModelHasPreRemoveCalculator = false;
+	private static boolean someModelHasPostLoadCalculator = false;
 	private Class pojoClass;
 	private Collection allKeyPropertiesNames;
 	private List metaCalculatorsPostCreate;
@@ -128,6 +130,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	public void addMetaCalculatorPostLoad(MetaCalculator metaCalculator) {		
 		if (metaCalculatorsPostLoad == null) metaCalculatorsPostLoad = new ArrayList();		
 		metaCalculatorsPostLoad.add(metaCalculator);
+		someModelHasPostLoadCalculator = true;
 	}
 		
 	public void addMetaCalculatorPostModify(MetaCalculator metaCalculator) {		
@@ -139,6 +142,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	public void addMetaCalculatorPreRemove(MetaCalculator metaCalculator) {		
 		if (metaCalculatorsPreRemove == null) metaCalculatorsPreRemove = new ArrayList();		
 		metaCalculatorsPreRemove.add(metaCalculator);
+		someModelHasPreRemoveCalculator = true;
 	}
 				
 	public void addMetaValidator(MetaValidator metaValidator) {
@@ -1313,7 +1317,14 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	
 	public static boolean someModelHasPostModifyCalculator() {		
 		return someModelHasPostModifyCalculator;
+	}
+	
+	public static boolean someModelHasPreRemoveCalculator() {		
+		return someModelHasPreRemoveCalculator;
 	}	
 	
+	public static boolean someModelHasPostLoadCalculator() {		
+		return someModelHasPostLoadCalculator;
+	}		
 	
 }

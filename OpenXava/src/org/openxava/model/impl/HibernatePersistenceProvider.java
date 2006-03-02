@@ -32,8 +32,8 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 			else {
 				key = getKey(metaModel, keyValues);
 				refreshKeyReference(metaModel, key);
-			}		
-			Object result = XHibernate.getSession().get(metaModel.getPOJOClass(), (Serializable) key);
+			}					
+			Object result = XHibernate.getSession().get(metaModel.getPOJOClass(), (Serializable) key);			
 			if (result == null) {
 				throw new ObjectNotFoundException(XavaResources.getString(
 						"object_with_key_not_found", metaModel.getName(), keyValues));
@@ -51,8 +51,8 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 	}
 	
 	public Object find(IMetaEjb metaModel, Object key) throws FinderException { 
-		try {											
-			Object result = XHibernate.getSession().get(metaModel.getPOJOClass(), (Serializable) key);
+		try {														
+			Object result = XHibernate.getSession().get(metaModel.getPOJOClass(), (Serializable) key);			
 			if (result == null) {
 				throw new ObjectNotFoundException(XavaResources.getString(
 						"object_with_key_not_found", metaModel.getName(), key));
