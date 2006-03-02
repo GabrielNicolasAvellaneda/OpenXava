@@ -8,7 +8,6 @@ import org.hibernate.*;
 import org.openxava.calculators.*;
 import org.openxava.hibernate.XHibernate;
 import org.openxava.model.*;
-import org.openxava.model.impl.*;
 import org.openxava.model.meta.*;
 import org.openxava.tracking.model.*;
 import org.openxava.util.*;
@@ -33,13 +32,15 @@ public class AccessTrackingCalculator implements IEntityCalculator {
 	private IModel entity;
 	private String accessType;	
 
-	public Object calculate() throws Exception {
+	public Object calculate() throws Exception {		
 		Session session = null;
 		try {
 			Access access = newAccess();
 			session = XHibernate.createSession();
+			Transaction tx = session.beginTransaction(); // tmp
 			session.save(access);
 			session.flush();			
+			tx.commit(); // tmp
 			session.close();
 		}							
 		catch (Exception ex) {
