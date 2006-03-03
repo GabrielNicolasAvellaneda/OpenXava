@@ -46,10 +46,12 @@
 	</target>
 					
 	<target name="deployWar" depends="touchHistory">
+		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
 		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
 	</target>
 	
 	<target name="deploy" depends="touchHistory">
+		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
 		<ant antfile="../OpenXava/build.xml" target="deploy"/>
 	</target>
 		
