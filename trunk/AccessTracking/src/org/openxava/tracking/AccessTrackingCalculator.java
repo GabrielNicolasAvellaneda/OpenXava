@@ -37,10 +37,15 @@ public class AccessTrackingCalculator implements IEntityCalculator {
 		try {
 			Access access = newAccess();
 			session = XHibernate.createSession();
-			Transaction tx = session.beginTransaction(); // tmp
+			Transaction tx = session.beginTransaction(); 
 			session.save(access);
-			session.flush();			
-			tx.commit(); // tmp
+			session.flush();
+			try {
+				tx.commit();
+			}
+			catch (Exception ex) {
+				// Possibly inside of an EJB with CMT
+			}			
 			session.close();
 		}							
 		catch (Exception ex) {

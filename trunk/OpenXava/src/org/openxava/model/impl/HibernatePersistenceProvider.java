@@ -97,8 +97,7 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 		catch (DuplicateKeyException ex) {
 			throw ex;
 		}
-		catch (Exception ex) {			
-			ex.printStackTrace();
+		catch (Exception ex) {						
 			// If it does not exist then continue
 		}
 		Serializable object = null;
