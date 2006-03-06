@@ -73,9 +73,14 @@ else {
 		}
 		if (key instanceof MetaReference) {
 			if (mapping.isReferenceOverlappingWithSomeProperty(key.getName())) {
+				for (Iterator itDetails = mapping.getReferenceMapping(key.getName()).getDetails().iterator(); itDetails.hasNext(); ) {
+					ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
+					if (!mapping.isReferenceOverlappingWithSomeProperty(key.getName(), detail.getReferencedModelProperty())) {
 </java> 
-			&lt;!-- Reference: <expr>key.getName()</expr> : Overlapped references in key still not supported --&gt;
+			&lt;key-property name="<expr>key.getName()</expr>_<expr>detail.getReferencedModelProperty()</expr>" column="<expr>detail.getColumn()</expr>" access="field"/&gt;
 <java>			
+					}
+				}		
 			}
 			else {
 				ReferenceMapping pMapping = mapping.getReferenceMapping(key.getName());
@@ -126,7 +131,7 @@ else {
 Iterator itReferences = metaModel.getMetaReferences().iterator();	
 while (itReferences.hasNext()) {	
 	MetaReference reference = (MetaReference) itReferences.next();
-	if (reference.isKey()) continue;
+	if (reference.isKey() &amp;&amp; !mapping.isReferenceOverlappingWithSomeProperty(reference.getName())) continue;
 	if (reference.getMetaModelReferenced() instanceof MetaAggregateBean) {	
 		for (Iterator itAggregateProperties = reference.getMetaModelReferenced().getMetaPropertiesPersistentsFromReference(reference.getName()).iterator(); itAggregateProperties.hasNext();) {	
 			MetaProperty property = (MetaProperty) itAggregateProperties.next();
@@ -178,7 +183,7 @@ while (itReferences.hasNext()) {
 	else { // reference to entity or persistent aggregate 
 		Collection columns = mapping.getReferenceMapping(reference.getName()).getColumns();   
 		boolean overlapped = mapping.isReferenceOverlappingWithSomeProperty(reference.getName());
-		String insertUpdate = overlapped?"insert='false' update='false'":"";		
+		String insertUpdate = overlapped || reference.isKey()?"insert='false' update='false'":"";		
 		if (columns.size() == 1) {	
 			String column = (String) columns.iterator().next();
 </java> 
@@ -199,7 +204,7 @@ while (itReferences.hasNext()) {
 		&lt;/many-to-one&gt;
 <java>			
 		}
-		if (overlapped) {
+		if (overlapped &amp;&amp; !reference.isKey()) {
 			for (Iterator itDetails = mapping.getReferenceMapping(reference.getName()).getDetails().iterator(); itDetails.hasNext(); ) {
 				ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
 				if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName(), detail.getReferencedModelProperty())) {

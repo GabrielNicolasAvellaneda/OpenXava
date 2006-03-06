@@ -10,7 +10,7 @@ import org.openxava.util.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Fri Mar 03 16:35:13 CET 2006
+ * @version Mon Mar 06 13:57:14 CET 2006
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -102,11 +102,20 @@ public class HibernatePG {
     		}
     		if (key instanceof MetaReference) {
     			if (mapping.isReferenceOverlappingWithSomeProperty(key.getName())) {
+    				for (Iterator itDetails = mapping.getReferenceMapping(key.getName()).getDetails().iterator(); itDetails.hasNext(); ) {
+    					ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
+    					if (!mapping.isReferenceOverlappingWithSomeProperty(key.getName(), detail.getReferencedModelProperty())) {
     
-    out.print(" \n\t\t\t<!-- Reference: ");
+    out.print(" \n\t\t\t<key-property name=\"");
     out.print(key.getName());
-    out.print(" : Overlapped references in key still not supported -->");
+    out.print("_");
+    out.print(detail.getReferencedModelProperty());
+    out.print("\" column=\"");
+    out.print(detail.getColumn());
+    out.print("\" access=\"field\"/>");
     			
+    					}
+    				}		
     			}
     			else {
     				ReferenceMapping pMapping = mapping.getReferenceMapping(key.getName());
@@ -177,7 +186,7 @@ public class HibernatePG {
     Iterator itReferences = metaModel.getMetaReferences().iterator();	
     while (itReferences.hasNext()) {	
     	MetaReference reference = (MetaReference) itReferences.next();
-    	if (reference.isKey()) continue;
+    	if (reference.isKey() && !mapping.isReferenceOverlappingWithSomeProperty(reference.getName())) continue;
     	if (reference.getMetaModelReferenced() instanceof MetaAggregateBean) {	
     		for (Iterator itAggregateProperties = reference.getMetaModelReferenced().getMetaPropertiesPersistentsFromReference(reference.getName()).iterator(); itAggregateProperties.hasNext();) {	
     			MetaProperty property = (MetaProperty) itAggregateProperties.next();
@@ -259,7 +268,7 @@ public class HibernatePG {
     	else { // reference to entity or persistent aggregate 
     		Collection columns = mapping.getReferenceMapping(reference.getName()).getColumns();   
     		boolean overlapped = mapping.isReferenceOverlappingWithSomeProperty(reference.getName());
-    		String insertUpdate = overlapped?"insert='false' update='false'":"";		
+    		String insertUpdate = overlapped || reference.isKey()?"insert='false' update='false'":"";		
     		if (columns.size() == 1) {	
     			String column = (String) columns.iterator().next();
     
@@ -296,7 +305,7 @@ public class HibernatePG {
     out.print(" \n\t\t</many-to-one>");
     			
     		}
-    		if (overlapped) {
+    		if (overlapped && !reference.isKey()) {
     			for (Iterator itDetails = mapping.getReferenceMapping(reference.getName()).getDetails().iterator(); itDetails.hasNext(); ) {
     				ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
     				if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName(), detail.getReferencedModelProperty())) {
@@ -428,7 +437,7 @@ public class HibernatePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Fri Mar 03 16:35:14 CET 2006", // date this file was generated
+        { "Mon Mar 06 13:57:15 CET 2006", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/hibernate.xml", // input file
              "/home/javi/workspace/OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
