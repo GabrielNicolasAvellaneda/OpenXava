@@ -15,6 +15,7 @@ public class FellowCarriersCalculator implements IEntityCalculator {
 	private ICarrier carrier;
 
 	public Object calculate() throws Exception {
+		
 		int warehouseZoneNumber = carrier.getWarehouse().getZoneNumber();
 		int warehouseNumber = carrier.getWarehouse().getNumber();
 		Session session = XHibernate.getSession();		
@@ -25,7 +26,7 @@ public class FellowCarriersCalculator implements IEntityCalculator {
 		query.setInteger("warehouseZone", warehouseZoneNumber);
 		query.setInteger("warehouseNumber", warehouseNumber);
 		query.setInteger("number", carrier.getNumber());
-		return query.list();		
+		return query.list();
 	}
 
 	public void setEntity(Object entity) throws RemoteException {

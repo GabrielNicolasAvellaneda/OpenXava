@@ -203,7 +203,7 @@ while (itCollections.hasNext()) {
 # 
 
 
-	private MetaModel metaModel;
+	private static MetaModel metaModel;
 	public MetaModel getMetaModel() throws XavaException {
 		if (metaModel == null) {
 		# if (aggregateName == null) { #

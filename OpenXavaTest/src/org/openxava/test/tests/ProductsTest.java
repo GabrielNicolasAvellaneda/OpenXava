@@ -23,7 +23,8 @@ public class ProductsTest extends ModuleTestBase {
 		"Mode.list",
 		"Products.setLimitZoneTo1",
 		"Products.setLimitZoneTo0",
-		"Products.changeProductPrice"
+		"Products.changeProductPrice",
+		"Gallery.edit"
 	};
 	
 	private String [] listActions = {
@@ -51,23 +52,26 @@ public class ProductsTest extends ModuleTestBase {
 		execute("List.customize");
 		execute("List.addColumns");
 		
-		assertCollectionRowCount("xavaPropertiesList", 4);
-		assertValueInCollection("xavaPropertiesList",  0, 1, "familyNumber");
-		assertValueInCollection("xavaPropertiesList",  1, 1, "subfamilyNumber");
-		assertValueInCollection("xavaPropertiesList",  2, 1, "warehouseKey");
-		assertValueInCollection("xavaPropertiesList",  3, 1, "remarks");
+		assertCollectionRowCount("xavaPropertiesList", 5);
+		assertValueInCollection("xavaPropertiesList",  0, 1, "photos");
+		assertValueInCollection("xavaPropertiesList",  1, 1, "familyNumber");
+		assertValueInCollection("xavaPropertiesList",  2, 1, "subfamilyNumber");
+		assertValueInCollection("xavaPropertiesList",  3, 1, "warehouseKey");
+		assertValueInCollection("xavaPropertiesList",  4, 1, "remarks");
 		 
 		execute("AddColumns.sort");						
 		assertValueInCollection("xavaPropertiesList",  0, 1, "familyNumber");
-		assertValueInCollection("xavaPropertiesList",  1, 1, "remarks");
-		assertValueInCollection("xavaPropertiesList",  2, 1, "subfamilyNumber");
-		assertValueInCollection("xavaPropertiesList",  3, 1, "warehouseKey");
+		assertValueInCollection("xavaPropertiesList",  1, 1, "photos");
+		assertValueInCollection("xavaPropertiesList",  2, 1, "remarks");
+		assertValueInCollection("xavaPropertiesList",  3, 1, "subfamilyNumber");
+		assertValueInCollection("xavaPropertiesList",  4, 1, "warehouseKey");
 		
 		execute("AddColumns.sort"); // A second time, unsort it
-		assertValueInCollection("xavaPropertiesList",  0, 1, "familyNumber");
-		assertValueInCollection("xavaPropertiesList",  1, 1, "subfamilyNumber");
-		assertValueInCollection("xavaPropertiesList",  2, 1, "warehouseKey");
-		assertValueInCollection("xavaPropertiesList",  3, 1, "remarks");		
+		assertValueInCollection("xavaPropertiesList",  0, 1, "photos");
+		assertValueInCollection("xavaPropertiesList",  1, 1, "familyNumber");
+		assertValueInCollection("xavaPropertiesList",  2, 1, "subfamilyNumber");
+		assertValueInCollection("xavaPropertiesList",  3, 1, "warehouseKey");
+		assertValueInCollection("xavaPropertiesList",  4, 1, "remarks");
 	}
 		
 	public void testFiltersInDescriptionsEditor() throws Exception {
@@ -336,7 +340,8 @@ public class ProductsTest extends ModuleTestBase {
 	public void testGoFromListToDetailAlwaysSetDefaultController_editableWellOnSearch() throws Exception {
 		String [] changeProductPriceActions = {
 			"Mode.list",
-			"ChangeProductsPrice.save"	
+			"ChangeProductsPrice.save",
+			"Gallery.edit"
 		};
 		
 		assertActions(listActions);

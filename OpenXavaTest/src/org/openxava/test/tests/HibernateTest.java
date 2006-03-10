@@ -1,10 +1,13 @@
 package org.openxava.test.tests;
 
 import java.math.*;
+import java.sql.*;
 import java.util.*;
 
 import org.hibernate.*;
 import org.openxava.hibernate.*;
+import org.openxava.mapping.*;
+import org.openxava.model.meta.*;
 import org.openxava.test.model.*;
 
 import junit.framework.*;
@@ -26,14 +29,14 @@ public class HibernateTest extends TestCase {
 	protected void tearDown() throws Exception {
 		XHibernate.commit();
 	}
-	
+		
 	public void testOrderBy() throws Exception {
 		Collection customers = Customer.findByNameLike("%");		
 		String previous = "{}";
 		for (Iterator it = customers.iterator(); it.hasNext();) {
 			Customer customer = (Customer) it.next();
 			String name = customer.getName();			
-			if (name.compareTo(previous) > 0) {				
+			if (name.compareToIgnoreCase(previous) > 0) {				
 				fail("The names must to be ordered");
 			}
 			previous = name;

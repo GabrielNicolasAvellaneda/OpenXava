@@ -64,10 +64,10 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			String modelName,
 			Map keyValues,
 			Map membersNames)
-			throws FinderException, XavaException, RemoteException {
+			throws FinderException, XavaException, RemoteException {		
 		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
-		try {							
+		try {			
 			Map result = getValuesImpl(persistenceProvider, modelName, keyValues, membersNames);
 			persistenceProvider.commit();
 			return result;

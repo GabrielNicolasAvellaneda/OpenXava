@@ -62,6 +62,7 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 			"CRUD.save",
 			"CRUD.delete",
 			"CRUD.search",			
+			"Gallery.edit",
 			"Mode.list",						
 			"Collection.view",
 			"Collection.hiddenDetail"

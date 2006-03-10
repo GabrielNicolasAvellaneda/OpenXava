@@ -42,6 +42,7 @@ public class XHibernate {
 	private static String configurationFile = "/hibernate.cfg.xml";	
 	private static ThreadLocal currentSession = new ThreadLocal();	
 	private static ThreadLocal currentTransaction = new ThreadLocal();
+	private static ThreadLocal currentCmt = new ThreadLocal(); 
 
 
 	/**
@@ -73,7 +74,9 @@ public class XHibernate {
 				
 	private static Session openSession() {
 		Session s = getSessionFactory().openSession();
-		currentTransaction.set(s.beginTransaction());
+		if (!isCmt()) {
+			currentTransaction.set(s.beginTransaction());
+		}
 		currentSession.set(s);
 		return s;
 	}
@@ -90,13 +93,12 @@ public class XHibernate {
 		if (s == null) return;
 		if (s.isOpen()) {
 			Transaction t = (Transaction) currentTransaction.get();
-			t.commit();
+			if (t != null) t.commit();
 			s.close();
 		}
-		if (!s.isOpen()) {			
-			currentTransaction.set(null);
-			currentSession.set(null);			
-		}		
+					
+		currentTransaction.set(null);
+		currentSession.set(null);							
 	}
 	
 	/**
@@ -109,13 +111,12 @@ public class XHibernate {
 		if (s == null) return;
 		if (s.isOpen()) {
 			Transaction t = (Transaction) currentTransaction.get();
-			t.rollback();
+			if (t != null) t.rollback();
 			s.close();
 		}
-		if (!s.isOpen()) {			
-			currentTransaction.set(null);
-			currentSession.set(null);			
-		}
+				
+		currentTransaction.set(null);
+		currentSession.set(null);					
 	}	
 	
 	private static SessionFactory createSessionFactory(String hibernateCfg) throws HibernateException {
@@ -145,7 +146,7 @@ public class XHibernate {
 				preUpdateListeners.add(referenceConverterToDBListener); 
 			}
 			
-			if (MetaModel.someModelHasDefaultCalculatorOnCreateInNotKey()) {
+			if (MetaModel.someModelHasDefaultCalculatorOnCreate()) {
 				preInsertListeners.add(new DefaultValueCalculatorsListener());
 			}
 			
@@ -221,6 +222,23 @@ public class XHibernate {
 	 */	
 	public static void setConfigurationFile(String configurationFile) {
 		XHibernate.configurationFile = configurationFile;
+	}
+	
+	/**
+	 * Indicate that the current thread is executing inside a CMT context. <p>
+	 * 
+	 * CMT is Container Managed Transaction. The usual inside EJB.
+	 */
+	public static void setCmt(boolean cmt) { 
+		currentCmt.set(cmt?"":null);
+	}
+	/**
+	 * Indicate that the current thread is executing inside a CMT context. <p>
+	 * 
+	 * CMT is Container Managed Transaction. The usual inside EJB.
+	 */	
+	public static boolean isCmt() { 
+		return currentCmt.get() != null;
 	}
 	
 }

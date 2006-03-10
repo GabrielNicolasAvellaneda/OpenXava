@@ -22,7 +22,7 @@
 		<members>number; description</members>
 	</view>
 	
-	<entity-mapping table="XAVATEST_DELIVERYTYPE">
+	<entity-mapping table="XAVATEST.DELIVERYTYPE">
 		<property-mapping property="number" column="NUMBER"/>		
 		<property-mapping property="description" column="DESCRIPTION" />		
 	</entity-mapping>

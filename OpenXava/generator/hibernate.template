@@ -223,8 +223,10 @@ while (itCollections.hasNext()) {
 		continue;
 	}
 	boolean isAggregate = col.getMetaReference().getMetaModelReferenced() instanceof MetaAggregate;
-	String cascadeDelete = isAggregate?"cascade='delete'":"";
 	String roleName = col.getMetaReference().getRole();	 
+	boolean inverseReferenceIsKey = col.getMetaReference().getMetaModelReferenced().getMetaReference(roleName).isKey();
+	String cascadeDelete = isAggregate?"cascade='delete'":"";
+	String inverse = isAggregate || inverseReferenceIsKey?"inverse='true'":"";	
 	ModelMapping referencedMapping = col.getMetaReference().getMetaModelReferenced().getMapping();
 	Collection columns = referencedMapping.getReferenceMapping(roleName).getColumns();
 	String order = col.getSQLOrder();
@@ -240,7 +242,7 @@ while (itCollections.hasNext()) {
 	if (columns.size() == 1) {	
 		String column = (String) columns.iterator().next();
 #  
-		<set name="#(col.getName())#" order-by="#(order)#" #(cascadeDelete)#>
+		<set name="#(col.getName())#" order-by="#(order)#" #(cascadeDelete)# #(inverse)#>
 			<key column="#(column)#"/>
 			<one-to-many class="#(col.getMetaReference().getMetaModelReferenced().getName())#"/>
 		</set>	
@@ -248,7 +250,7 @@ while (itCollections.hasNext()) {
 	}	
 	else { 
 # 
-		<set name="#(col.getName())#" order-by="#(order)#" #(cascadeDelete)#>
+		<set name="#(col.getName())#" order-by="#(order)#" #(cascadeDelete)# #(inverse)#>
 			<key>
 # 
 		Iterator itCol = columns.iterator();	

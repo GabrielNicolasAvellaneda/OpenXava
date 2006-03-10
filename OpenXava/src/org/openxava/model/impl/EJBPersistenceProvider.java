@@ -16,7 +16,7 @@ import org.openxava.validators.*;
  * @author Mª Carmen Gimeno Alabau
  */
 public class EJBPersistenceProvider implements IPersistenceProvider {
-
+	
 	public Object find(IMetaEjb metaEntity, Map keyValues)
 			throws FinderException, XavaException {
 		Object key = metaEntity.obtainPrimaryKeyFromKey(keyValues);

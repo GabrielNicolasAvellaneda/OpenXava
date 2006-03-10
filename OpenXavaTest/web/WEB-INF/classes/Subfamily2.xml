@@ -42,7 +42,7 @@ not save hence the oid don't disturb.
 		<properties>number, description, remarks, family.number, family.description</properties>
 	</tab>
 					
-	<entity-mapping table="XAVATEST_SUBFAMILY2">
+	<entity-mapping table="XAVATEST.SUBFAMILY2">
 		<property-mapping 
 			property="number" column="NUMBER"/>
 		<reference-mapping reference="family">

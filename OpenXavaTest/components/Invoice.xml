@@ -102,6 +102,7 @@
 		<finder name="notPaidOnes" arguments="" collection="true">
 			<condition>${paid} &lt;&gt; 'S'</condition>
 		</finder>
+		
 	</entity>	
 		
 	<aggregate name="InvoiceDetail">

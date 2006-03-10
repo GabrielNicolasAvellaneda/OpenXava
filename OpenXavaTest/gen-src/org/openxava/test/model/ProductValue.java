@@ -14,6 +14,8 @@ public class ProductValue
 
    private static final long serialVersionUID = 1L;
 
+   private java.lang.String photos;
+   private boolean photosHasBeenSet = false;
    private int familyNumber;
    private boolean familyNumberHasBeenSet = false;
    private java.math.BigDecimal unitPrice;
@@ -36,6 +38,8 @@ public class ProductValue
    //TODO Cloneable is better than this !
    public ProductValue( ProductValue otherValue )
    {
+	  this.photos = otherValue.photos;
+	  photosHasBeenSet = true;
 	  this.familyNumber = otherValue.familyNumber;
 	  familyNumberHasBeenSet = true;
 	  this.unitPrice = otherValue.unitPrice;
@@ -52,6 +56,20 @@ public class ProductValue
 	  numberHasBeenSet = true;
    }
 
+   public java.lang.String getPhotos()
+   {
+	  return this.photos;
+   }
+
+   public void setPhotos( java.lang.String photos )
+   {
+	  this.photos = photos;
+	  photosHasBeenSet = true;
+   }
+
+   public boolean photosHasBeenSet(){
+	  return photosHasBeenSet;
+   }
    public int getFamilyNumber()
    {
 	  return this.familyNumber;
@@ -155,7 +173,7 @@ public class ProductValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("familyNumber=" + getFamilyNumber() + " " + "unitPrice=" + getUnitPrice() + " " + "subfamilyNumber=" + getSubfamilyNumber() + " " + "remarks=" + getRemarks() + " " + "description=" + getDescription() + " " + "unitPriceInPesetas=" + getUnitPriceInPesetas() + " " + "number=" + getNumber());
+	  str.append("photos=" + getPhotos() + " " + "familyNumber=" + getFamilyNumber() + " " + "unitPrice=" + getUnitPrice() + " " + "subfamilyNumber=" + getSubfamilyNumber() + " " + "remarks=" + getRemarks() + " " + "description=" + getDescription() + " " + "unitPriceInPesetas=" + getUnitPriceInPesetas() + " " + "number=" + getNumber());
 	  str.append('}');
 
 	  return(str.toString());
@@ -201,6 +219,14 @@ public class ProductValue
 	  {
 		 ProductValue that = (ProductValue) other;
 		 boolean lEquals = true;
+		 if( this.photos == null )
+		 {
+			lEquals = lEquals && ( that.photos == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.photos.equals( that.photos );
+		 }
 		 lEquals = lEquals && this.familyNumber == that.familyNumber;
 		 if( this.unitPrice == null )
 		 {
@@ -246,6 +272,8 @@ public class ProductValue
 
    public int hashCode(){
 	  int result = 17;
+      result = 37*result + ((this.photos != null) ? this.photos.hashCode() : 0);
+
       result = 37*result + (int) familyNumber;
 
       result = 37*result + ((this.unitPrice != null) ? this.unitPrice.hashCode() : 0);

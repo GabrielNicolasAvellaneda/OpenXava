@@ -10,7 +10,7 @@ import org.openxava.util.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Mar 06 13:57:14 CET 2006
+ * @version Fri Mar 10 17:46:19 CET 2006
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -331,8 +331,10 @@ public class HibernatePG {
     		continue;
     	}
     	boolean isAggregate = col.getMetaReference().getMetaModelReferenced() instanceof MetaAggregate;
-    	String cascadeDelete = isAggregate?"cascade='delete'":"";
     	String roleName = col.getMetaReference().getRole();	 
+    	boolean inverseReferenceIsKey = col.getMetaReference().getMetaModelReferenced().getMetaReference(roleName).isKey();
+    	String cascadeDelete = isAggregate?"cascade='delete'":"";
+    	String inverse = isAggregate || inverseReferenceIsKey?"inverse='true'":"";	
     	ModelMapping referencedMapping = col.getMetaReference().getMetaModelReferenced().getMapping();
     	Collection columns = referencedMapping.getReferenceMapping(roleName).getColumns();
     	String order = col.getSQLOrder();
@@ -354,6 +356,8 @@ public class HibernatePG {
     out.print(order);
     out.print("\" ");
     out.print(cascadeDelete);
+    out.print(" ");
+    out.print(inverse);
     out.print(">\n\t\t\t<key column=\"");
     out.print(column);
     out.print("\"/>\n\t\t\t<one-to-many class=\"");
@@ -369,6 +373,8 @@ public class HibernatePG {
     out.print(order);
     out.print("\" ");
     out.print(cascadeDelete);
+    out.print(" ");
+    out.print(inverse);
     out.print(">\n\t\t\t<key>");
     
     		Iterator itCol = columns.iterator();	
@@ -437,7 +443,7 @@ public class HibernatePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Mar 06 13:57:15 CET 2006", // date this file was generated
+        { "Fri Mar 10 17:46:19 CET 2006", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/hibernate.xml", // input file
              "/home/javi/workspace/OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

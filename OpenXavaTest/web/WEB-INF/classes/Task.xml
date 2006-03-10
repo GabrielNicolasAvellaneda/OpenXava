@@ -28,7 +28,7 @@
 		<base-condition>${user} = ?</base-condition>
 	</tab>
 					
-	<entity-mapping table="XAVATEST_TASK">
+	<entity-mapping table="XAVATEST.TASK">
 		<property-mapping property="oid" column="ID"/>
 		<property-mapping property="user" column="USERNAME"/>
 		<property-mapping property="date" column="DATE"/>

@@ -135,7 +135,7 @@
 	</tab>
 
 		
-	<entity-mapping table="XAVATEST_PRODUCT">
+	<entity-mapping table="XAVATEST.PRODUCT">
 		<property-mapping 
 			property="number" column="NUMBER"/>
 		<property-mapping 

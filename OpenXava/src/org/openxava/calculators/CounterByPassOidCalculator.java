@@ -15,7 +15,7 @@ public class CounterByPassOidCalculator implements IAggregateOidCalculator {
 	}
 
 	public Object calculate() throws Exception { 
-		return new Integer(counter);
+		return new Integer(counter);		
 	}
 
 }

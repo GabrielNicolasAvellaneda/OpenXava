@@ -50,6 +50,7 @@ public class ModuleTestBase extends TestCase {
 	
 	static {
 		XHibernate.setConfigurationFile("/hibernate-junit.cfg.xml");
+		DataSourceConnectionProvider.setUseHibernateConnection(true);
 	}
 	
 	public ModuleTestBase(String nameTest, String application, String modul) {

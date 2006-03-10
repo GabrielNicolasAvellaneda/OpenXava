@@ -11,7 +11,7 @@ import org.openxava.generators.Generators;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Mar 06 13:57:10 CET 2006
+ * @version Fri Mar 10 17:46:13 CET 2006
  */
 public class MethodsPG {
     Properties properties = new Properties();
@@ -69,8 +69,13 @@ private static void generate(XPathContext context, ProgramWriter out, IMetaModel
     out.print(throwSentence);
     out.print(" {\n\t\ttry {");
     
-    			MetaCalculator calculator = method.getMetaCalculator();
-    			String calculatorClass = calculator.getClassName();
+    	if (ejb) {
+    
+    out.print(" \n\t\t\torg.openxava.hibernate.XHibernate.setCmt(true);");
+    	
+    	} 
+    	MetaCalculator calculator = method.getMetaCalculator();
+    	String calculatorClass = calculator.getClassName();
     			
     out.print(" \t\t\n\t\t\t");
     out.print(calculatorClass);
@@ -82,44 +87,44 @@ private static void generate(XPathContext context, ProgramWriter out, IMetaModel
     out.print(method.getName());
     out.print("\").getMetaCalculator().createCalculator();");
     	
-    			Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
-    			while (itSets.hasNext()) {
-    				MetaSet set = (MetaSet) itSets.next();
-    				String propertyNameInCalculator = Strings.firstUpper(set.getPropertyName());
-    				String propertyNameFrom = set.getPropertyNameFrom();
-    				if (propertyNameFrom .indexOf('.') >= 0) {
-    					MetaProperty p = metaModel.getMetaProperty(propertyNameFrom);
-    					StringTokenizer st = new StringTokenizer(propertyNameFrom, ".");
-    					boolean moreThan2Levels = st.countTokens() > 2;
-    					StringBuffer propertyNameFromInJava = new StringBuffer();
-    					boolean isEmbededKey = ejb && ((p.isKey() && !moreThan2Levels) || (p.getMetaModel() instanceof MetaAggregate));
-    					while (st.hasMoreTokens()) {
-    						String token = st.nextToken();
-    						if (propertyNameFromInJava.length() > 0) {
-    							if (isEmbededKey && !st.hasMoreTokens()) {
-    								propertyNameFromInJava.append("_");
-    							}
-    							else {
-    								if (isEmbededKey) {
-    									propertyNameFromInJava.append("Remote");
-    								}	
-    								propertyNameFromInJava.append("().get");						
-    							}						
-    						}
-    						if (isEmbededKey && !st.hasMoreTokens()) {
-    							propertyNameFromInJava.append(token);
-    						}
-    						else {
-    							propertyNameFromInJava.append(Strings.firstUpper(token));	
-    						}
-    					}			
-    					propertyNameFrom = propertyNameFromInJava.toString();
+    	Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
+    	while (itSets.hasNext()) {
+    		MetaSet set = (MetaSet) itSets.next();
+    		String propertyNameInCalculator = Strings.firstUpper(set.getPropertyName());
+    		String propertyNameFrom = set.getPropertyNameFrom();
+    		if (propertyNameFrom .indexOf('.') >= 0) {
+    			MetaProperty p = metaModel.getMetaProperty(propertyNameFrom);
+    			StringTokenizer st = new StringTokenizer(propertyNameFrom, ".");
+    			boolean moreThan2Levels = st.countTokens() > 2;
+    			StringBuffer propertyNameFromInJava = new StringBuffer();
+    			boolean isEmbededKey = ejb && ((p.isKey() && !moreThan2Levels) || (p.getMetaModel() instanceof MetaAggregate));
+    			while (st.hasMoreTokens()) {
+    				String token = st.nextToken();
+    				if (propertyNameFromInJava.length() > 0) {
+    					if (isEmbededKey && !st.hasMoreTokens()) {
+    						propertyNameFromInJava.append("_");
+    					}
+    					else {
+    						if (isEmbededKey) {
+    							propertyNameFromInJava.append("Remote");
+    						}	
+    						propertyNameFromInJava.append("().get");						
+    					}						
+    				}
+    				if (isEmbededKey && !st.hasMoreTokens()) {
+    					propertyNameFromInJava.append(token);
     				}
     				else {
-    					propertyNameFrom  = Strings.firstUpper(propertyNameFrom );
+    					propertyNameFromInJava.append(Strings.firstUpper(token));	
     				}
-    				String value = set.getValue();
-    				if (set.hasValue()) {
+    			}			
+    			propertyNameFrom = propertyNameFromInJava.toString();
+    		}
+    		else {
+    			propertyNameFrom  = Strings.firstUpper(propertyNameFrom );
+    		}
+    		String value = set.getValue();
+    		if (set.hasValue()) {
     			
     out.print(" \n\t\t\t");
     out.print(method.getName());
@@ -129,7 +134,7 @@ private static void generate(XPathContext context, ProgramWriter out, IMetaModel
     out.print(value);
     out.print("\");");
     
-    			} else {	
+    		} else {	
     			
     out.print("  \t\n\t\t\t");
     out.print(method.getName());
@@ -139,14 +144,14 @@ private static void generate(XPathContext context, ProgramWriter out, IMetaModel
     out.print(propertyNameFrom);
     out.print("());");
     	}} // else/poners 	 
-    			if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+    		if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
     			
     out.print(" \n\t\t\t\t");
     out.print(method.getName());
     out.print("Calculator.setEntity(this);");
     } 
-    			if (IJDBCCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
-    				String connectionProvider = ejb?"getPortableContext()":"DataSourceConnectionProvider.getByComponent(\"" + metaModel.getMetaComponent().getName() + "\")";
+    		if (IJDBCCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+    			String connectionProvider = ejb?"getPortableContext()":"DataSourceConnectionProvider.getByComponent(\"" + metaModel.getMetaComponent().getName() + "\")";
     			
     out.print(" \n\t\t\t\t");
     out.print(method.getName());
@@ -154,14 +159,14 @@ private static void generate(XPathContext context, ProgramWriter out, IMetaModel
     out.print(connectionProvider);
     out.print(");");
     			
-    			}  
-    			if (method.hasArguments()) {
-    				StringTokenizer st = new StringTokenizer(method.getArguments(), ",");
-    				while (st.hasMoreTokens()) {
-    					StringTokenizer stArgument = new StringTokenizer(st.nextToken());
-    					stArgument.nextToken();
-    					String argumentName = stArgument.nextToken().trim();
-    					String argumentProperty = Strings.firstUpper(argumentName);
+    		}  
+    		if (method.hasArguments()) {
+    			StringTokenizer st = new StringTokenizer(method.getArguments(), ",");
+    			while (st.hasMoreTokens()) {
+    				StringTokenizer stArgument = new StringTokenizer(st.nextToken());
+    				stArgument.nextToken();
+    				String argumentName = stArgument.nextToken().trim();
+    				String argumentProperty = Strings.firstUpper(argumentName);
     			
     out.print(" \t\t\n\t\t\t");
     out.print(method.getName());
@@ -171,26 +176,26 @@ private static void generate(XPathContext context, ProgramWriter out, IMetaModel
     out.print(argumentName);
     out.print(");");
     
-    				}
     			}
-    			String calculateValueSentence = method.getName() + "Calculator.calculate()";
-    			if ("void".equals(method.getTypeName())) {
+    		}
+    		String calculateValueSentence = method.getName() + "Calculator.calculate()";
+    		if ("void".equals(method.getTypeName())) {
     			
     out.print(" \n\t\t\t");
     out.print(calculateValueSentence);
     out.print(";");
     
-    			} else {
+    		} else {
     			
     out.print(" \n\t\t\treturn ");
     out.print(Generators.generateCast(method.getTypeName(), calculateValueSentence));
     out.print(";");
     
-    			}
-    			if (method.hasExceptions()) {
-    				StringTokenizer st = new StringTokenizer(method.getExceptions(), ",");
-    				while (st.hasMoreTokens()) {
-    					String exception = st.nextToken().trim();
+    		}
+    		if (method.hasExceptions()) {
+    			StringTokenizer st = new StringTokenizer(method.getExceptions(), ",");
+    			while (st.hasMoreTokens()) {
+    				String exception = st.nextToken().trim();
     			
     out.print(" \n\t\t}\n\t\tcatch (");
     out.print(exception);
@@ -205,7 +210,15 @@ private static void generate(XPathContext context, ProgramWriter out, IMetaModel
     out.print(method.getName());
     out.print("\", \"");
     out.print(metaModel.getName());
-    out.print("\"));\n\t\t}\n\t}");
+    out.print("\"));\n\t\t}");
+    
+    	if (ejb) {
+    
+    out.print(" \n\t\tfinally {\n\t\t\torg.openxava.hibernate.XHibernate.setCmt(false);\n\t\t}");
+    	
+    	} 
+    
+    out.print(" \n\t\t\n\t}");
     		
     }
     
@@ -243,7 +256,7 @@ private static void generate(XPathContext context, ProgramWriter out, IMetaModel
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Mar 06 13:57:10 CET 2006", // date this file was generated
+        { "Fri Mar 10 17:46:13 CET 2006", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/methods.xml", // input file
              "/home/javi/workspace/OpenXava/generator/MethodsPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

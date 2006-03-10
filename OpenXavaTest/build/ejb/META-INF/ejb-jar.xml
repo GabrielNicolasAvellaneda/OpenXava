@@ -71,6 +71,10 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Product</abstract-schema-name>
+         <cmp-field id="CmpAttribute_Product__Photos">
+            <description><![CDATA[]]></description>
+            <field-name>_Photos</field-name>
+         </cmp-field>
          <cmp-field id="CmpAttribute_Product__FamilyNumber">
             <description><![CDATA[]]></description>
             <field-name>_FamilyNumber</field-name>

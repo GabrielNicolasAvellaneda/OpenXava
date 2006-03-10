@@ -883,6 +883,7 @@ public class InvoicesTest extends ModuleTestBase {
 			"Sections.change",			
 			"Reference.createNew",
 			"Reference.search",
+			"Gallery.edit",
 			"Invoices.editDetail", // because it is overwrite, otherwise 'Collection.edit'
 			"Collection.save",
 			"Collection.remove",

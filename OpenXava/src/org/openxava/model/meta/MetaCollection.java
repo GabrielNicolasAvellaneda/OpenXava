@@ -172,7 +172,7 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 	
 	public String getSQLOrder() throws XavaException {
 		if (Is.emptyString(getOrder())) return "";
-		return getMetaReference().getMetaModelReferenced().getMapping().changePropertiesByColumns(getOrder());
+		return getMetaReference().getMetaModelReferenced().getMapping().changePropertiesByNotQualifiedColumns(getOrder());
 	}
 	
 	public boolean hasCondition() {

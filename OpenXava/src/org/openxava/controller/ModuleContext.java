@@ -2,7 +2,6 @@ package org.openxava.controller;
 
 import java.util.*;
 
-import javax.servlet.*;
 import javax.servlet.http.*;
 
 import org.openxava.controller.meta.*;
@@ -14,7 +13,7 @@ import org.openxava.util.*;
  * @author Javier Paniza
  */
 
-public class ModuleContext {
+public class ModuleContext { 
 	
 	static {
 		MetaControllers.setContext(MetaControllers.WEB);		

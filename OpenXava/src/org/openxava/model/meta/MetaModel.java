@@ -18,7 +18,7 @@ import org.openxava.view.meta.*;
  */
 abstract public class MetaModel extends MetaElement implements IMetaModel {
 
-	private static boolean someModelHasDefaultCalculatorOnCreateInNotKey = false;
+	private static boolean someModelHasDefaultCalculatorOnCreate = false;
 	private static boolean someModelHasPostCreateCalculator = false;
 	private static boolean someModelHasPostModifyCalculator = false;
 	private static boolean someModelHasPreRemoveCalculator = false;
@@ -62,7 +62,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	private Collection recursiveQualifiedPropertiesNames;
 	private Collection metaReferencesWithDefaultValueCalculator;
 	private String qualifiedName;
-	private boolean hasDefaultCalculatorOnCreateInNotKey = false;
+	private boolean hasDefaultCalculatorOnCreate = false;
 	
 	/**
 	 * All models (Entities and Aggregates) with a mapping associated.
@@ -197,14 +197,14 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		newMetaProperty.setMetaModel(this);
 		propertiesNames = null;
 		recursiveQualifiedPropertiesNames = null;
-		if (newMetaProperty.hasCalculatorDefaultValueOnCreate() && !newMetaProperty.isKey()) {
-			someModelHasDefaultCalculatorOnCreateInNotKey = true;
-			hasDefaultCalculatorOnCreateInNotKey = true;
+		if (newMetaProperty.hasCalculatorDefaultValueOnCreate()) {
+			someModelHasDefaultCalculatorOnCreate = true;
+			hasDefaultCalculatorOnCreate = true;
 		}
 	}
 	
-	public boolean hasDefaultCalculatorOnCreateInNotKey() {
-		return hasDefaultCalculatorOnCreateInNotKey ;
+	public boolean hasDefaultCalculatorOnCreate() {
+		return hasDefaultCalculatorOnCreate;
 	}
 	
 	/**
@@ -1307,8 +1307,8 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 			
 	}
 
-	public static boolean someModelHasDefaultCalculatorOnCreateInNotKey() {		
-		return someModelHasDefaultCalculatorOnCreateInNotKey ;
+	public static boolean someModelHasDefaultCalculatorOnCreate() {		
+		return someModelHasDefaultCalculatorOnCreate;
 	}
 	
 	public static boolean someModelHasPostCreateCalculator() {		

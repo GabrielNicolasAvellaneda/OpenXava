@@ -23,7 +23,7 @@
 		<properties>delivery.invoice.year, delivery.invoice.number, delivery.number, delivery.distance, amount</properties>	
 	</tab>
 	
-	<entity-mapping table="XAVATEST_TRANSPORTCHARGE">
+	<entity-mapping table="XAVATEST.TRANSPORTCHARGE">
 		<reference-mapping reference="delivery">
 			<reference-mapping-detail 
 				column="DELIVERY_INVOICE_YEAR" 

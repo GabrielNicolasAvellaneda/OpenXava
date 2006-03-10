@@ -93,9 +93,14 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 	 * <expr>tagValueObject</expr>
 	 * <expr>tagInterfaceMethod</expr>
 	 */
-	public <expr>type</expr> <expr>get</expr><expr>propertyName</expr>() {
+	public <expr>type</expr> <expr>get</expr><expr>propertyName</expr>() {	
 		try {
-			<java>
+<java>
+		if (ejb) {
+</java> 
+			org.openxava.hibernate.XHibernate.setCmt(true);
+<java>	
+		} 
 			MetaCalculator calculator = property.getMetaCalculator();
 			String calculatorClass = calculator.getClassName();
 			String qualifiedPropertyName = Strings.change(property.getName(), "_", "."); // for aggregate member case
@@ -190,6 +195,15 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 			ex.printStackTrace();
 			throw new <expr>getException()</expr>(XavaResources.getString("generator.calculate_value_error", "<expr>propertyName</expr>", "<expr>metaModel.getName()</expr>", ex.getLocalizedMessage()));
 		}
+<java>
+		if (ejb) {
+</java> 
+		finally {
+			org.openxava.hibernate.XHibernate.setCmt(false);
+		}
+<java>	
+		} 
+</java> 		
 	}
 	public void set<expr>propertyName</expr>(<expr>type</expr> new<expr>propertyName</expr>) {
 		// for it is in value object
@@ -212,7 +226,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 			String converterClass = propertyMapping.hasConverter()?"org.openxava.converters.IConverter":propertyMapping.getMultipleConverterClassName();		
 			String multiple = propertyMapping.hasMultipleConverter()?"Multiple":"";
 			</java> 
-	private <expr>converterClass</expr> <expr>property.getName()</expr>Converter;
+	private static <expr>converterClass</expr> <expr>property.getName()</expr>Converter;
 	private <expr>converterClass</expr> get<expr>propertyName</expr>Converter() {
 		if (<expr>property.getName()</expr>Converter == null) {
 			try {

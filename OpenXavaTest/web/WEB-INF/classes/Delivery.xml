@@ -186,7 +186,7 @@
 		<properties>invoice.year, invoice.number, type.number, type.description, number, date, description, distance, dateAsLabel, invoice.sellerDiscount</properties>
 	</tab>
 	
-	<entity-mapping table="XAVATEST_DELIVERY">
+	<entity-mapping table="XAVATEST.DELIVERY">
 		<reference-mapping reference="invoice">
 			<reference-mapping-detail 
 				column="INVOICE_YEAR" 
@@ -247,7 +247,7 @@
 			
 	</entity-mapping>
 	
-	<aggregate-mapping aggregate="DeliveryDetail" table="XAVATEST_DELIVERYDETAIL">
+	<aggregate-mapping aggregate="DeliveryDetail" table="XAVATEST.DELIVERYDETAIL">
 		<reference-mapping reference="delivery">
 			<reference-mapping-detail referenced-model-property="invoice.year" column="DELIVERY_INVOICE_YEAR"/>
 			<reference-mapping-detail referenced-model-property="invoice.number" column="DELIVERY_INVOICE_NUMBER"/>			
