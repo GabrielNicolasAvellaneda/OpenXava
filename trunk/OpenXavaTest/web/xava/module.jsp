@@ -13,6 +13,7 @@
 <%
 Users.setCurrent(request);
 Locales.setCurrent(request);
+org.openxava.hibernate.XHibernate.setCmt(false); // tmp
 boolean isPortlet = (request.getAttribute("xava.portlet.renderURL") != null);
 boolean messagesOnTop = !"false".equalsIgnoreCase(request.getParameter("messagesOnTop"));
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");

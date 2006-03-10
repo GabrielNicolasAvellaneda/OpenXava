@@ -18,6 +18,7 @@ public abstract class ProductCMP
       {
          dataHolder = new org.openxava.test.model.ProductData();
 
+         dataHolder.set_Photos( get_Photos() );
          dataHolder.set_FamilyNumber( get_FamilyNumber() );
          dataHolder.set_UnitPrice( get_UnitPrice() );
          dataHolder.setWarehouseZoneNumber( getWarehouseZoneNumber() );
@@ -40,6 +41,7 @@ public abstract class ProductCMP
    {
       try
       {
+         set_Photos( dataHolder.get_Photos() );
          set_FamilyNumber( dataHolder.get_FamilyNumber() );
          set_UnitPrice( dataHolder.get_UnitPrice() );
          setWarehouseZoneNumber( dataHolder.getWarehouseZoneNumber() );
@@ -100,6 +102,7 @@ public abstract class ProductCMP
       ProductValue = new org.openxava.test.model.ProductValue();
       try
          {
+            ProductValue.setPhotos( getPhotos() );
             ProductValue.setFamilyNumber( getFamilyNumber() );
             ProductValue.setUnitPrice( getUnitPrice() );
             ProductValue.setSubfamilyNumber( getSubfamilyNumber() );
@@ -122,6 +125,7 @@ public abstract class ProductCMP
 
 	  try
 	  {
+		 setPhotos( valueHolder.getPhotos() );
 		 setFamilyNumber( valueHolder.getFamilyNumber() );
 		 setUnitPrice( valueHolder.getUnitPrice() );
 		 setSubfamilyNumber( valueHolder.getSubfamilyNumber() );
@@ -137,6 +141,10 @@ public abstract class ProductCMP
    }
 
 /* Value Objects END */
+
+   public abstract java.lang.String get_Photos() ;
+
+   public abstract void set_Photos( java.lang.String _Photos ) ;
 
    public abstract java.lang.Integer get_FamilyNumber() ;
 

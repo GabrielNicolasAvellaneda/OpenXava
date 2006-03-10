@@ -25,6 +25,7 @@ therefore it's show some features more advances of stereotypes.
 				<set property="string" value="CUATRE"/>
 			</validator>											
 		</property>
+		<property name="photos" stereotype="IMAGES_GALLERY"/>
 		<property name="familyNumber"
 			stereotype="FAMILY" required="true"/>
 		<property name="subfamilyNumber"
@@ -96,6 +97,7 @@ therefore it's show some features more advances of stereotypes.
 			number;
 			<section name="data">
 				description;
+				photos;
 				familyNumber;
 				subfamilyNumber;
 				warehouseKey;
@@ -130,6 +132,8 @@ therefore it's show some features more advances of stereotypes.
 			property="number" column="NUMBER"/>
 		<property-mapping 
 			property="description" column="DESCRIPTION"/>
+		<property-mapping 
+			property="photos" column="PHOTOS"/>						
 		<property-mapping
 			property="familyNumber" column="FAMILY"/>			
 		<property-mapping

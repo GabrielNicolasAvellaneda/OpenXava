@@ -33,6 +33,7 @@ public void setError(String error) {
 	int count = calculators.size();
 	if (count &gt; 0) {
 	</java> 
+		org.openxava.hibernate.XHibernate.setCmt(true);
 		try {
 	<java>
 	} 
@@ -91,6 +92,9 @@ public void setError(String error) {
 		catch (Exception ex) {
 			ex.printStackTrace();
 			throw new EJBException(XavaResources.getString("<expr>error</expr>", "<expr>name</expr>", ex.getLocalizedMessage()));
+		}
+		finally {
+			org.openxava.hibernate.XHibernate.setCmt(false);
 		}
 	<java>
 	}

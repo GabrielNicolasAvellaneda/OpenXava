@@ -919,7 +919,7 @@ while (itReferences.hasNext()) {
 	MethodsPG.generateEJB(context, out, metaModel); 
 </java> 
 
-	private MetaModel metaModel;
+	private static MetaModel metaModel;
 	public MetaModel getMetaModel() throws XavaException {
 		if (metaModel == null) {
 		<java>if (aggregateName == null) { </java>

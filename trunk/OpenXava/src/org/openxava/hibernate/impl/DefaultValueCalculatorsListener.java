@@ -12,19 +12,22 @@ import org.openxava.util.meta.*;
 
 public class DefaultValueCalculatorsListener implements PreInsertEventListener {
 
-	public boolean onPreInsert(PreInsertEvent ev) {
+	public boolean onPreInsert(PreInsertEvent ev) {		
 		String modelName = "unknow"; 		
 		try {
-			IModel model = (IModel) ev.getEntity();
+			Object entity = ev.getEntity();
+			if (!(entity instanceof IModel)) return false;
+			IModel model = (IModel) entity;
 			MetaModel metaModel = model.getMetaModel();
-			if (!metaModel.hasDefaultCalculatorOnCreateInNotKey()) return false;
+			if (!metaModel.hasDefaultCalculatorOnCreate()) return false;
+			boolean multipleKey = metaModel.getAllKeyPropertiesNames().size() > 1;			
 			modelName = metaModel.getName();
 			PropertiesManager pm = new PropertiesManager(model);
 			List propertyNames = Arrays.asList(ev.getPersister().getPropertyNames());			
 			Object [] state = ev.getState();			
 			for (Iterator itProperties=metaModel.getMetaPropertiesWithDefaultValueOnCreate().iterator(); itProperties.hasNext();) {
 				MetaProperty pr = (MetaProperty) itProperties.next();
-				if (pr.isKey()) continue; // made by id generator
+				if (pr.isKey() && !multipleKey) continue; // made by id generator				
 				MetaCalculator metaCalculator = pr.getMetaCalculatorDefaultValue();
 				ICalculator calculator = metaCalculator.createCalculator();
 				PropertiesManager pmCalculator = new PropertiesManager(calculator);
@@ -38,10 +41,17 @@ public class DefaultValueCalculatorsListener implements PreInsertEventListener {
 				if (calculator instanceof IEntityCalculator) {
 					((IEntityCalculator) calculator).setEntity(model);
 				}
-				Object value = calculator.calculate();
-				pm.executeSet(pr.getName(), value);
-				int i = propertyNames.indexOf(pr.getName());
-				state[i]=value;								
+				
+				if (calculator instanceof IAggregateOidCalculator) {
+					((IAggregateOidCalculator) calculator).setContainer(DefaultValueIdentifierGenerator.getCurrentContainerKey());
+					((IAggregateOidCalculator) calculator).setCounter(DefaultValueIdentifierGenerator.getCurrentCounter());
+				}
+				DefaultValueIdentifierGenerator.resetAggregateOidInfo();
+				
+				Object value = calculator.calculate();				
+				pm.executeSet(pr.getName(), value);				
+				int i = propertyNames.indexOf(pr.getName());				
+				if (i >= 0)	state[i]=value;				
 			}				
 		}
 		catch (Exception ex) {

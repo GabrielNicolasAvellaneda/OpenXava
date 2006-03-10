@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="hibernate"/>
 	<classpathentry kind="src" path="properties"/>
 	<classpathentry kind="src" path="reports"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
@@ -11,5 +12,7 @@
 	<classpathentry kind="lib" path="lib/jbossall-client.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/AccessTracking"/>
 	<classpathentry kind="src" path="filtered-files"/>
+	<classpathentry kind="lib" path="/java/jtopen_5_0/lib/jt400.jar"/>
+	<classpathentry kind="lib" path="/java/websphere-5.1bi/installedApps/javi/OpenXavaTest.ear/OpenXavaTest.jar"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>

@@ -13,7 +13,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Mar 06 13:57:07 CET 2006
+ * @version Fri Mar 10 17:46:10 CET 2006
  */
 public class PropertyPG {
     Properties properties = new Properties();
@@ -113,8 +113,13 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     out.print(" ");
     out.print(get);
     out.print(propertyName);
-    out.print("() {\n\t\ttry {");
+    out.print("() {\t\n\t\ttry {");
     
+    		if (ejb) {
+    
+    out.print(" \n\t\t\torg.openxava.hibernate.XHibernate.setCmt(true);");
+    	
+    		} 
     			MetaCalculator calculator = property.getMetaCalculator();
     			String calculatorClass = calculator.getClassName();
     			String qualifiedPropertyName = Strings.change(property.getName(), "_", "."); // for aggregate member case
@@ -235,7 +240,15 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     out.print(propertyName);
     out.print("\", \"");
     out.print(metaModel.getName());
-    out.print("\", ex.getLocalizedMessage()));\n\t\t}\n\t}\n\tpublic void set");
+    out.print("\", ex.getLocalizedMessage()));\n\t\t}");
+    
+    		if (ejb) {
+    
+    out.print(" \n\t\tfinally {\n\t\t\torg.openxava.hibernate.XHibernate.setCmt(false);\n\t\t}");
+    	
+    		} 
+    
+    out.print(" \t\t\n\t}\n\tpublic void set");
     out.print(propertyName);
     out.print("(");
     out.print(type);
@@ -259,7 +272,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     			String converterClass = propertyMapping.hasConverter()?"org.openxava.converters.IConverter":propertyMapping.getMultipleConverterClassName();		
     			String multiple = propertyMapping.hasMultipleConverter()?"Multiple":"";
     			
-    out.print(" \n\tprivate ");
+    out.print(" \n\tprivate static ");
     out.print(converterClass);
     out.print(" ");
     out.print(property.getName());
@@ -618,7 +631,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Mar 06 13:57:07 CET 2006", // date this file was generated
+        { "Fri Mar 10 17:46:11 CET 2006", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/property.xml", // input file
              "/home/javi/workspace/OpenXava/generator/PropertyPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

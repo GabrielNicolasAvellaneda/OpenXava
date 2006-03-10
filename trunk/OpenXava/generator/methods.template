@@ -49,94 +49,99 @@ while (itMethods.hasNext()) {
 	 */
 	public #(method.getTypeName())# #(method.getName())#(#(method.getArguments())#) #(throwSentence)# {
 		try {
-			# 
-			MetaCalculator calculator = method.getMetaCalculator();
-			String calculatorClass = calculator.getClassName();
+# 
+	if (ejb) {
+# 
+			org.openxava.hibernate.XHibernate.setCmt(true);
+# 	
+	} 
+	MetaCalculator calculator = method.getMetaCalculator();
+	String calculatorClass = calculator.getClassName();
 			# 		
 			#(calculatorClass)# #(method.getName())#Calculator = (#(calculatorClass)#)
 				getMetaModel().getMetaMethod("#(method.getName())#").getMetaCalculator().createCalculator();
 			# 	
-			Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
-			while (itSets.hasNext()) {
-				MetaSet set = (MetaSet) itSets.next();
-				String propertyNameInCalculator = Strings.firstUpper(set.getPropertyName());
-				String propertyNameFrom = set.getPropertyNameFrom();
-				if (propertyNameFrom .indexOf('.') >= 0) {
-					MetaProperty p = metaModel.getMetaProperty(propertyNameFrom);
-					StringTokenizer st = new StringTokenizer(propertyNameFrom, ".");
-					boolean moreThan2Levels = st.countTokens() > 2;
-					StringBuffer propertyNameFromInJava = new StringBuffer();
-					boolean isEmbededKey = ejb && ((p.isKey() && !moreThan2Levels) || (p.getMetaModel() instanceof MetaAggregate));
-					while (st.hasMoreTokens()) {
-						String token = st.nextToken();
-						if (propertyNameFromInJava.length() > 0) {
-							if (isEmbededKey && !st.hasMoreTokens()) {
-								propertyNameFromInJava.append("_");
-							}
-							else {
-								if (isEmbededKey) {
-									propertyNameFromInJava.append("Remote");
-								}	
-								propertyNameFromInJava.append("().get");						
-							}						
-						}
-						if (isEmbededKey && !st.hasMoreTokens()) {
-							propertyNameFromInJava.append(token);
-						}
-						else {
-							propertyNameFromInJava.append(Strings.firstUpper(token));	
-						}
-					}			
-					propertyNameFrom = propertyNameFromInJava.toString();
+	Iterator itSets = calculator.getMetaSetsWithoutValue().iterator();
+	while (itSets.hasNext()) {
+		MetaSet set = (MetaSet) itSets.next();
+		String propertyNameInCalculator = Strings.firstUpper(set.getPropertyName());
+		String propertyNameFrom = set.getPropertyNameFrom();
+		if (propertyNameFrom .indexOf('.') >= 0) {
+			MetaProperty p = metaModel.getMetaProperty(propertyNameFrom);
+			StringTokenizer st = new StringTokenizer(propertyNameFrom, ".");
+			boolean moreThan2Levels = st.countTokens() > 2;
+			StringBuffer propertyNameFromInJava = new StringBuffer();
+			boolean isEmbededKey = ejb && ((p.isKey() && !moreThan2Levels) || (p.getMetaModel() instanceof MetaAggregate));
+			while (st.hasMoreTokens()) {
+				String token = st.nextToken();
+				if (propertyNameFromInJava.length() > 0) {
+					if (isEmbededKey && !st.hasMoreTokens()) {
+						propertyNameFromInJava.append("_");
+					}
+					else {
+						if (isEmbededKey) {
+							propertyNameFromInJava.append("Remote");
+						}	
+						propertyNameFromInJava.append("().get");						
+					}						
+				}
+				if (isEmbededKey && !st.hasMoreTokens()) {
+					propertyNameFromInJava.append(token);
 				}
 				else {
-					propertyNameFrom  = Strings.firstUpper(propertyNameFrom );
+					propertyNameFromInJava.append(Strings.firstUpper(token));	
 				}
-				String value = set.getValue();
-				if (set.hasValue()) {
+			}			
+			propertyNameFrom = propertyNameFromInJava.toString();
+		}
+		else {
+			propertyNameFrom  = Strings.firstUpper(propertyNameFrom );
+		}
+		String value = set.getValue();
+		if (set.hasValue()) {
 			# 
 			#(method.getName())#Calculator.set#(propertyNameInCalculator)#("#(value)#");
 			# 
-			} else {	
+		} else {	
 			#  	
 			#(method.getName())#Calculator.set#(propertyNameInCalculator)#(get#(propertyNameFrom)#());
 			# 	}} // else/poners 	 
-			if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+		if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
 			# 
 				#(method.getName())#Calculator.setEntity(this);
 			# } 
-			if (IJDBCCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
-				String connectionProvider = ejb?"getPortableContext()":"DataSourceConnectionProvider.getByComponent(\"" + metaModel.getMetaComponent().getName() + "\")";
+		if (IJDBCCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+			String connectionProvider = ejb?"getPortableContext()":"DataSourceConnectionProvider.getByComponent(\"" + metaModel.getMetaComponent().getName() + "\")";
 			# 
 				#(method.getName())#Calculator.setConnectionProvider(#(connectionProvider)#);
 			# 			
-			}  
-			if (method.hasArguments()) {
-				StringTokenizer st = new StringTokenizer(method.getArguments(), ",");
-				while (st.hasMoreTokens()) {
-					StringTokenizer stArgument = new StringTokenizer(st.nextToken());
-					stArgument.nextToken();
-					String argumentName = stArgument.nextToken().trim();
-					String argumentProperty = Strings.firstUpper(argumentName);
+		}  
+		if (method.hasArguments()) {
+			StringTokenizer st = new StringTokenizer(method.getArguments(), ",");
+			while (st.hasMoreTokens()) {
+				StringTokenizer stArgument = new StringTokenizer(st.nextToken());
+				stArgument.nextToken();
+				String argumentName = stArgument.nextToken().trim();
+				String argumentProperty = Strings.firstUpper(argumentName);
 			# 		
 			#(method.getName())#Calculator.set#(argumentProperty)#(#(argumentName)#);
 			# 
-				}
 			}
-			String calculateValueSentence = method.getName() + "Calculator.calculate()";
-			if ("void".equals(method.getTypeName())) {
+		}
+		String calculateValueSentence = method.getName() + "Calculator.calculate()";
+		if ("void".equals(method.getTypeName())) {
 			# 
 			#(calculateValueSentence)#;
 			# 
-			} else {
+		} else {
 			# 
 			return #(Generators.generateCast(method.getTypeName(), calculateValueSentence))#;			
 			# 
-			}
-			if (method.hasExceptions()) {
-				StringTokenizer st = new StringTokenizer(method.getExceptions(), ",");
-				while (st.hasMoreTokens()) {
-					String exception = st.nextToken().trim();
+		}
+		if (method.hasExceptions()) {
+			StringTokenizer st = new StringTokenizer(method.getExceptions(), ",");
+			while (st.hasMoreTokens()) {
+				String exception = st.nextToken().trim();
 			# 
 		}
 		catch (#(exception)# ex) {
@@ -150,6 +155,16 @@ while (itMethods.hasNext()) {
 			ex.printStackTrace();
 			throw new #(getException())#(XavaResources.getString("method_execution_error", "#(method.getName())#", "#(metaModel.getName())#"));
 		}
+# 
+	if (ejb) {
+# 
+		finally {
+			org.openxava.hibernate.XHibernate.setCmt(false);
+		}
+# 	
+	} 
+# 
+		
 	}
 
 # 		

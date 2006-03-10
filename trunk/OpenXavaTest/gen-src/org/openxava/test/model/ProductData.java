@@ -10,6 +10,7 @@ public class ProductData
    extends java.lang.Object
    implements java.io.Serializable
 {
+   private java.lang.String _Photos;
    private java.lang.Integer _FamilyNumber;
    private java.math.BigDecimal _UnitPrice;
    private int warehouseZoneNumber;
@@ -25,6 +26,7 @@ public class ProductData
 
    public ProductData( ProductData otherData )
    {
+      set_Photos(otherData.get_Photos());
       set_FamilyNumber(otherData.get_FamilyNumber());
       set_UnitPrice(otherData.get_UnitPrice());
       setWarehouseZoneNumber(otherData.getWarehouseZoneNumber());
@@ -39,6 +41,15 @@ public class ProductData
    public org.openxava.test.model.ProductKey getPrimaryKey() {
      org.openxava.test.model.ProductKey pk = new org.openxava.test.model.ProductKey(this.getNumber());
      return pk;
+   }
+
+   public java.lang.String get_Photos()
+   {
+      return this._Photos;
+   }
+   public void set_Photos( java.lang.String _Photos )
+   {
+      this._Photos = _Photos;
    }
 
    public java.lang.Integer get_FamilyNumber()
@@ -117,7 +128,7 @@ public class ProductData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_FamilyNumber=" + get_FamilyNumber() + " " + "_UnitPrice=" + get_UnitPrice() + " " + "warehouseZoneNumber=" + getWarehouseZoneNumber() + " " + "warehouseNumber=" + getWarehouseNumber() + " " + "_SubfamilyNumber=" + get_SubfamilyNumber() + " " + "_Remarks=" + get_Remarks() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber());
+      str.append("_Photos=" + get_Photos() + " " + "_FamilyNumber=" + get_FamilyNumber() + " " + "_UnitPrice=" + get_UnitPrice() + " " + "warehouseZoneNumber=" + getWarehouseZoneNumber() + " " + "warehouseNumber=" + getWarehouseNumber() + " " + "_SubfamilyNumber=" + get_SubfamilyNumber() + " " + "_Remarks=" + get_Remarks() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber());
       str.append('}');
 
       return(str.toString());
@@ -130,6 +141,14 @@ public class ProductData
          ProductData lTest = (ProductData) pOther;
          boolean lEquals = true;
 
+         if( this._Photos == null )
+         {
+            lEquals = lEquals && ( lTest._Photos == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Photos.equals( lTest._Photos );
+         }
          if( this._FamilyNumber == null )
          {
             lEquals = lEquals && ( lTest._FamilyNumber == null );
@@ -192,6 +211,8 @@ public class ProductData
    public int hashCode()
    {
       int result = 17;
+
+      result = 37*result + ((this._Photos != null) ? this._Photos.hashCode() : 0);
 
       result = 37*result + ((this._FamilyNumber != null) ? this._FamilyNumber.hashCode() : 0);
 

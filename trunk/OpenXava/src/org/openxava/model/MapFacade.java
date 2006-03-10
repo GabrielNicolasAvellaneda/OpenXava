@@ -262,7 +262,7 @@ public class MapFacade {
 		if (keyValues.isEmpty()) {
 			throw new ObjectNotFoundException(XavaResources.getString("empty_key_object_not_found", modelName));						
 		}
-		try {					
+		try {
 			return getImpl(modelName).getValues(Users.getCurrent(), modelName, keyValues, memberNames);
 		}
 		catch (RemoteException ex) {
@@ -387,7 +387,6 @@ public class MapFacade {
 		throws ObjectNotFoundException, FinderException, ValidationException,
 				XavaException,  RemoteException 
 	{		
-		System.out.println("[MapFacade.setValues] values="+values); //  tmp
 		Assert.arg(modelName, keyValues, values);				
 		try {
 			getImpl(modelName).setValues(Users.getCurrent(), modelName, keyValues, values);								

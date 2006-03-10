@@ -17,14 +17,16 @@ import org.openxava.hibernate.*;
  */
 public class DataSourceConnectionProvider implements IConnectionProvider, Serializable {
 	
-	private static Properties datasourcesJNDIByPackage;	
+	private static Properties datasourcesJNDIByPackage;
+	private static Map providers;
+	private static boolean useHibernateConnection = false; 
+
 	
 	private DataSource dataSource;
 	private String dataSourceJNDI;	
 	private String user;
 	private String password;
 
-	private static Map providers;
 	
 	public static IConnectionProvider createByComponent(String componentName) throws XavaException {
 		String packageName = MetaComponent.get(componentName).getPackageNameWithSlashWithoutModel();		
@@ -52,7 +54,7 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 	 * @throws NamingException
 	 */	
 	public DataSource getDataSource() throws NamingException {
-		if (dataSource == null) {
+		if (dataSource == null) {			
 			Context ctx = new InitialContext();
 			dataSource = (DataSource) ctx.lookup(getDataSourceJNDI());						
 		}
@@ -83,6 +85,9 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 	}
 	
 	public Connection getConnection() throws SQLException {
+		if (isUseHibernateConnection()) {		
+			return XHibernate.getSession().connection();
+		}		
 		try {
 			if (Is.emptyString(getUser())) {
 				return getDataSource().getConnection();
@@ -92,13 +97,11 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 			}
 		}
 		catch (NamingException ex) {
-			// In case of working outside an application server (for example inside junit)
-			System.out.println(XavaResources.getString("no_datasource_found_using_hibernate_connection_warning", dataSourceJNDI));
-			return XHibernate.getSession().connection();
+			throw new SQLException(ex.getLocalizedMessage());			
 		}
 	}
 	
-	public Connection getConnection(String nombreDataSource) throws SQLException {
+	public Connection getConnection(String dataSourceName) throws SQLException {
 		return getConnection();
 	}
 	public void setPassword(String password) {
@@ -129,6 +132,28 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 			}
 		}		
 		return datasourcesJNDIByPackage;
+	}
+
+	/**
+	 * If <code>true</code> then all intances use hibernate connection for obtain 
+	 * connection, instead of data source connection pool. <p>
+	 * 
+	 * Useful for using outside an application server, for example, in a
+	 * junit test. 
+	 */	
+	public static boolean isUseHibernateConnection() {
+		return useHibernateConnection;
+	}
+
+	/**
+	 * If <code>true</code> then all intances use hibernate connection for obtain 
+	 * connection, instead of data source connection pool. <p>
+	 * 
+	 * Useful for using outside an application server, for example, in a
+	 * junit test. 
+	 */
+	public static void setUseHibernateConnection(boolean useHibernateConnection) {
+		DataSourceConnectionProvider.useHibernateConnection = useHibernateConnection;
 	}
 	
 }

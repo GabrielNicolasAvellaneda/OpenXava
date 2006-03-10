@@ -65,8 +65,8 @@ public class DefaultValueIdentifierGenerator implements IdentifierGenerator, Con
 		}
 	}
 
-	private void resetAggregateOidInfo() {
-		currentAggregateOidInfo.set(null);		
+	static void resetAggregateOidInfo() { 	
+		currentAggregateOidInfo.set(null);				
 	}
 
 	public String getProperty() {
@@ -77,7 +77,7 @@ public class DefaultValueIdentifierGenerator implements IdentifierGenerator, Con
 		property = params.getProperty("property");	
 	}
 	
-	private static Object getCurrentContainerKey() {
+	static Object getCurrentContainerKey() { 
 		AggregateOidInfo info = (AggregateOidInfo) currentAggregateOidInfo.get();
 		if (info == null) return null;
 		return info.containerKey;
@@ -92,7 +92,7 @@ public class DefaultValueIdentifierGenerator implements IdentifierGenerator, Con
 		info.containerKey = containerKey;		
 	}
 	
-	private static int getCurrentCounter() {
+	static int getCurrentCounter() {
 		AggregateOidInfo info = (AggregateOidInfo) currentAggregateOidInfo.get();
 		if (info == null) return 0;
 		return info.counter;

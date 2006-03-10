@@ -7,6 +7,8 @@
    <RDBSchema:RDBTable xmi:id="RDBTable_Product" name="" primaryKey="Product_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Product_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Product" constraint="Constraint_Product_"/>
 
+      <columns xmi:id="Product__Photos" name="_Photos">
+      </columns>
       <columns xmi:id="Product__FamilyNumber" name="_FamilyNumber">
       </columns>
       <columns xmi:id="Product__UnitPrice" name="_UnitPrice">

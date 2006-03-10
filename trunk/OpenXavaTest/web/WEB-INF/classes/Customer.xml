@@ -93,7 +93,7 @@
 		</finder>
 		
 		<finder name="all" arguments="" collection="true"/>
-															
+		
 	</entity>
 
 	<aggregate name="Address">		
@@ -300,7 +300,7 @@
 		<properties>name, type, seller.number, alternateSeller.number</properties>	
 	</tab>
 			
-	<entity-mapping table="XAVATEST_CUSTOMER">
+	<entity-mapping table="XAVATEST.CUSTOMER">
 		<property-mapping
 			property="number" column="NUMBER"/>
 		<property-mapping
@@ -336,7 +336,7 @@
 		</reference-mapping>
 	</entity-mapping> 	
 	
-	<aggregate-mapping aggregate="DeliveryPlace" table="XAVATEST_DELIVERYPLACE">
+	<aggregate-mapping aggregate="DeliveryPlace" table="XAVATEST.DELIVERYPLACE">
 		<reference-mapping reference="customer">
 			<reference-mapping-detail 
 				column="CUSTOMER" 
@@ -356,7 +356,7 @@
 		</reference-mapping>						
 	</aggregate-mapping>
 	
-	<aggregate-mapping aggregate="Receptionist" table="XAVATEST_RECEPTIONIST">
+	<aggregate-mapping aggregate="Receptionist" table="XAVATEST.RECEPTIONIST">
 		<reference-mapping reference="deliveryPlace">
 			<reference-mapping-detail 
 				column="DELIVERYPLACE" 

@@ -42,7 +42,7 @@
 		<properties>zoneNumber, number, name, mainWarehouse.name, officeManager.name, defaultCarrier.name</properties>
 	</tab>
 						
-	<entity-mapping table="XAVATEST_OFFICE">
+	<entity-mapping table="XAVATEST.OFFICE">
 		<property-mapping 
 			property="zoneNumber" column="ZONE"/>	
 		<property-mapping 

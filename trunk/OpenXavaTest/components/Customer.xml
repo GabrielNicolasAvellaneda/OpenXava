@@ -93,7 +93,7 @@
 		</finder>
 		
 		<finder name="all" arguments="" collection="true"/>
-															
+		
 	</entity>
 
 	<aggregate name="Address">		

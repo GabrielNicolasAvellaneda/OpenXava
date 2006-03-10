@@ -204,7 +204,7 @@ while (itCollections.hasNext()) {
 </java> 
 
 
-	private MetaModel metaModel;
+	private static MetaModel metaModel;
 	public MetaModel getMetaModel() throws XavaException {
 		if (metaModel == null) {
 		<java>if (aggregateName == null) { </java>

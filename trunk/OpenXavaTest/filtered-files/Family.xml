@@ -34,7 +34,7 @@
 		<default-order>${number} asc</default-order>
 	</tab>	
 	
-	<entity-mapping table="XAVATEST_FAMILY">
+	<entity-mapping table="XAVATEST.FAMILY">
 		<property-mapping 
 			property="oid" column="OID"/>	
 		<property-mapping 

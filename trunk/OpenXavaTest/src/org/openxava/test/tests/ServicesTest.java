@@ -24,13 +24,17 @@ public class ServicesTest extends ModuleTestBase {
 		setValue("additionalDetails.subfamily", "1");
 		setValue("additionalDetails.type.number", "2");
 		execute("Collection.save", "viewObject=xava_view_additionalDetails");
+		execute("Collection.new", "viewObject=xava_view_additionalDetails");
+		setValue("additionalDetails.subfamily", "1");
+		setValue("additionalDetails.type.number", "2");
+		execute("Collection.save", "viewObject=xava_view_additionalDetails");		
 		assertNoErrors();
 		
-		assertCollectionRowCount("additionalDetails", 1);
+		assertCollectionRowCount("additionalDetails", 2);
 		execute("Collection.edit", "row=0,viewObject=xava_view_additionalDetails");
 		execute("Collection.remove", "viewObject=xava_view_additionalDetails");		
 		assertNoErrors();
-		assertCollectionRowCount("additionalDetails", 0);
+		assertCollectionRowCount("additionalDetails", 1);
 		
 		// Delete it
 		execute("CRUD.delete");														

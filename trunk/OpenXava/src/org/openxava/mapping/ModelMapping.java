@@ -297,7 +297,25 @@ abstract public class ModelMapping implements java.io.Serializable {
 	}
 
 	/**
-	 * Change the properties inside ${ } by the database columns. <p>
+	 * Change the properties inside ${ } by the database qualified(schema + table) columns. <p>
+	 * For example, it would change:
+	 * <pre>
+	 * select ${number}, ${name}
+	 * </pre>
+	 * by
+	 * <pre>
+	 * select G4GENBD.GENTGER.TGRCOD, G4GENBD.GENTGER.TGRDEN
+	 * </pre>
+	 */
+	public String changePropertiesByColumns(String source)
+		throws XavaException {
+		return changePropertiesByColumns(source, true);
+	}
+	
+	/**
+	 * Change the properties inside ${ } by the database columns without table
+	 * and schema as prefix. <p>
+	 * 
 	 * For example, it would change:
 	 * <pre>
 	 * select ${number}, ${name}
@@ -307,7 +325,12 @@ abstract public class ModelMapping implements java.io.Serializable {
 	 * select TGRCOD, TGRDEN
 	 * </pre>
 	 */
-	public String changePropertiesByColumns(String source)
+	public String changePropertiesByNotQualifiedColumns(String source)
+		throws XavaException {
+		return changePropertiesByColumns(source, false);
+	}
+		
+	private String changePropertiesByColumns(String source, boolean qualified)
 		throws XavaException {
 		StringBuffer r = new StringBuffer(source);
 		int i = r.toString().indexOf("${");
@@ -319,13 +342,14 @@ abstract public class ModelMapping implements java.io.Serializable {
 			String property = r.substring(i + 2, f);
 			String column = "0"; // thus it remained if it is calculated
 			if (!getMetaModel().isCalculated(property)) {				
-				column = getQualifiedColumn(property);				
+				column = qualified?getQualifiedColumn(property):getColumn(property);				
 			}
 			r.replace(i, f + 1, column);
 			i = r.toString().indexOf("${");
 		}
 		return r.toString();
 	}
+	
 
 	public String changePropertiesByCMPAttributes(String source)
 		throws XavaException {

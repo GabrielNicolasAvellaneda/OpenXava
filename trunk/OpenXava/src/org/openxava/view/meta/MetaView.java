@@ -92,7 +92,7 @@ public class MetaView extends MetaElement implements Cloneable {
 	
 	private MetaProperty getMetaProperty(String name, boolean searchInGroups) throws XavaException {
 		try {
-			return getMetaPropiedadVista(name);			
+			return getMetaViewProperty(name);			
 		}
 		catch (ElementNotFoundException ex) {
 			if (metaProperties == null) {
@@ -148,7 +148,7 @@ public class MetaView extends MetaElement implements Cloneable {
 	/**
 	 * Property only of the view, not in model	 
 	 */
-	private MetaProperty getMetaPropiedadVista(String name) throws XavaException {
+	private MetaProperty getMetaViewProperty(String name) throws XavaException {
 		if (metaViewProperties == null) 
 			throw new ElementNotFoundException("view_property_not_found", name, getName(), getModelName());
 		MetaProperty p = (MetaProperty) metaViewProperties.get(name);
@@ -180,7 +180,7 @@ public class MetaView extends MetaElement implements Cloneable {
 						member = getMetaModel().getMetaMember(name);
 					}
 					catch (ElementNotFoundException ex) {
-						member = getMetaPropiedadVista(name);
+						member = getMetaViewProperty(name);
 					}
 					if (!member.isHidden()) {
 						member = modify(member);
