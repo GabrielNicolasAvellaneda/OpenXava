@@ -511,21 +511,7 @@ public class Tab {
 	public void deselectAll() {
 		selected = new int[0];
 	}
-	
-	
-	
-	private String toString(int[] values) {
-		if (values == null) return "[EMPTY]";
-		StringBuffer sb = new StringBuffer("[");
-		for (int i = 0; i < values.length; i++) {
-			sb.append(values[i]);
-			sb.append(", ");
-		}
-		sb.append("]");
-		return sb.toString();
-	}
-
-
+		
 	public boolean isSelected(int row) {
 		if (selected == null || selected.length == 0) return false;
 		return Arrays.binarySearch(selected, row) >= 0;
@@ -937,8 +923,7 @@ public class Tab {
 	private String getStyle(Locale locale, MetaRowStyle rowStyle, int row) {
 		try {
 			int column = getMetaTab().getPropertiesNames().indexOf(rowStyle.getProperty());			
-			if (column < 0) return null;
-			MetaProperty p = getMetaProperty(column);
+			if (column < 0) return null;			
 			Object value = getTableModel().getValueAt(row, column);
 			if (Is.equalAsString(value, rowStyle.getValue())) {
 				return rowStyle.getStyle();

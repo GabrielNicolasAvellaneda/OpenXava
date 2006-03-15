@@ -24,7 +24,7 @@
 		<property name="receptionist" stereotype="RECEPTIONIST"/>
 	</entity>
 	
-	<entity-mapping table="XAVATEST.OFFICE2">
+	<entity-mapping table="XAVATEST_OFFICE2">
 		<property-mapping 
 			property="zoneNumber" column="ZONE"/>	
 		<property-mapping 

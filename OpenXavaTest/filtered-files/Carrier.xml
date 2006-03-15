@@ -72,7 +72,7 @@
 		<properties>calculated, number, name</properties>
 	</tab>
 				
-	<entity-mapping table="XAVATEST.CARRIER">
+	<entity-mapping table="XAVATEST_CARRIER">
 		<property-mapping
 			property="number" column="NUMBER"  cmp-type="Integer">
 			<converter class="org.openxava.converters.IntegerNumberConverter"/>			

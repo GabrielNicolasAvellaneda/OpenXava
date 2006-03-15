@@ -1,5 +1,19 @@
 <h2>Para migrar de OpenXava 1.2.1 a OpenXava 2.0</h2>
 
+<h4>Hibernate: Referencias con columnas no nula como clave for&aacute;nea</h4>
+
+En la versi&oacute;n EJB si tenemos una referencia a otra entidad cuya clave est&aacute;
+compuesta por tipos primitivos, el c&oacute;digo se genera de tal forma que no
+se graban nulos en la base de datos, aunque asignemos un nulo a la referencia.<br>
+En la versi&oacute;n Hibernate si asignamos nulo a una referencia, se graban valores
+nulos en la base de datos.<br>
+Por supuesto, el comportamiento de la versi&oacute;n Hibernate es m&aacute;s correcto, pero
+podemos hacer que en Hibernate se eviten los nulos en la base de dato, simplemente
+usando conversores en el mapeo de referencia (ver secci&oacute;n 6.3 de la gu&iacute;a de referencia).<br>
+Es decir, quiz&aacute;s necesitemos a&ntilde;adir algunos conversores a nuestra referencias para
+migrar nuestras aplicaciones de EJB2 a Hibernate.<br>
+
+
 <h4>Cambiar la secci&oacute;n activa</h4>
 
 <code>xava_activeSection</code> ya no se usa para cambiar la secci&oacute;n activa.
@@ -93,8 +107,8 @@ de no serlo cambiarlo por <code>CustomeRemote</code>.
 <ul>
 <li> Al borrar un objeto en a mantenimiento ahora OpenXava muestra una ventana javascript
 	para confirmar, en vez de cambiar a otro controlador. Por lo tanto en tus pruebas
-	para borrar un objeto en un módulo de mantenimiento solo necesitas usar execute("CRUD.delete"). 
-	En este caso 'Sí' como respuesta de confirmación.
+	para borrar un objeto en un m&oacute;dulo de mantenimiento solo necesitas usar execute("CRUD.delete"). 
+	En este caso 'S&iacute;' como respuesta de confirmaci&oacute;n.
 </ul>
 
 

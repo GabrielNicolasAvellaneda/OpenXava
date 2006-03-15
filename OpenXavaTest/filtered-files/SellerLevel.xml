@@ -11,7 +11,7 @@
 			size="50" required="true"/>
 	</entity>
 	
-	<entity-mapping table="XAVATEST.SELLERLEVEL">
+	<entity-mapping table="XAVATEST_SELLERLEVEL">
 		<property-mapping 
 			property="id" column="ID"/>
 		<property-mapping

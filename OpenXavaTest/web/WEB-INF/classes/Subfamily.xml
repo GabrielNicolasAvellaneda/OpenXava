@@ -42,13 +42,13 @@
 	<tab name="CompleteSelect">
 		<properties>number, description, family</properties>
 		<base-condition>
-				select ${number}, ${description}, XAVATEST.FAMILY.DESCRIPTION
-				from   XAVATEST.SUBFAMILY, XAVATEST.FAMILY
-				where  XAVATEST.SUBFAMILY.FAMILY = XAVATEST.FAMILY.NUMBER
+				select ${number}, ${description}, XAVATEST_FAMILY.DESCRIPTION
+				from   XAVATEST_SUBFAMILY, XAVATEST_FAMILY
+				where  XAVATEST_SUBFAMILY.FAMILY = XAVATEST_FAMILY.NUMBER
 		</base-condition>
 	</tab>	
 						
-	<entity-mapping table="XAVATEST.SUBFAMILY">
+	<entity-mapping table="XAVATEST_SUBFAMILY">
 		<property-mapping property="oid" column="OID"/>	
 		<property-mapping 
 			property="number" column="NUMBER"/>

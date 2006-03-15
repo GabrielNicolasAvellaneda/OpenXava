@@ -135,21 +135,21 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 		Object modelObject,
 		MetaCollection metaCollection)
 		throws XavaException, FinderException, ValidationException, RemoveException, RemoteException {
-		Enumeration enum = null;	
+		Enumeration enumeration = null;	
 		Object existing =
 			executeGetXX(metaModel, modelObject, metaCollection.getName());								
 		if (existing instanceof Enumeration) {
-			enum = (Enumeration) existing;
+			enumeration = (Enumeration) existing;
 		}
 		else if (existing instanceof Collection) {
-			enum = Collections.enumeration((Collection) existing);
+			enumeration = Collections.enumeration((Collection) existing);
 		}
 		else {
 			throw new XavaException("collection_type_not_supported");
 		}									
 		MetaModel metaModelAggregate = metaCollection.getMetaReference().getMetaModelReferenced();
-		while (enum.hasMoreElements()) {
-			remove(metaModelAggregate, enum.nextElement());
+		while (enumeration.hasMoreElements()) {
+			remove(metaModelAggregate, enumeration.nextElement());
 		}
 	}
 	

@@ -16,7 +16,7 @@ like the typical number/description table.
 			size="40" required="true"/>
 	</entity>
 					
-	<entity-mapping table="XAVATEST.FAMILY2">
+	<entity-mapping table="XAVATEST_FAMILY2">
 		<property-mapping 
 			property="number" column="NUMBER"/>
 		<property-mapping

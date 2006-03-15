@@ -198,6 +198,8 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 </tr>
 <%
 }
+
+manager.commit(); // because of hibernate or ejb3 or ... can be used in calculated properties of list
 }
 else {
 %>

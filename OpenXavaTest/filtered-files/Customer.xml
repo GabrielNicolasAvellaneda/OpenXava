@@ -300,7 +300,7 @@
 		<properties>name, type, seller.number, alternateSeller.number</properties>	
 	</tab>
 			
-	<entity-mapping table="XAVATEST.CUSTOMER">
+	<entity-mapping table="XAVATEST_CUSTOMER">
 		<property-mapping
 			property="number" column="NUMBER"/>
 		<property-mapping
@@ -336,7 +336,7 @@
 		</reference-mapping>
 	</entity-mapping> 	
 	
-	<aggregate-mapping aggregate="DeliveryPlace" table="XAVATEST.DELIVERYPLACE">
+	<aggregate-mapping aggregate="DeliveryPlace" table="XAVATEST_DELIVERYPLACE">
 		<reference-mapping reference="customer">
 			<reference-mapping-detail 
 				column="CUSTOMER" 
@@ -356,7 +356,7 @@
 		</reference-mapping>						
 	</aggregate-mapping>
 	
-	<aggregate-mapping aggregate="Receptionist" table="XAVATEST.RECEPTIONIST">
+	<aggregate-mapping aggregate="Receptionist" table="XAVATEST_RECEPTIONIST">
 		<reference-mapping reference="deliveryPlace">
 			<reference-mapping-detail 
 				column="DELIVERYPLACE" 

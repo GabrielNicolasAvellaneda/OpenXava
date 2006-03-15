@@ -72,8 +72,8 @@ public class XHibernate {
 		return getSessionFactory().openSession();
 	}
 				
-	private static Session openSession() {
-		Session s = getSessionFactory().openSession();
+	private static Session openSession() {		
+		Session s = getSessionFactory().openSession();		
 		if (!isCmt()) {
 			currentTransaction.set(s.beginTransaction());
 		}
@@ -93,12 +93,12 @@ public class XHibernate {
 		if (s == null) return;
 		if (s.isOpen()) {
 			Transaction t = (Transaction) currentTransaction.get();
-			if (t != null) t.commit();
+			if (t != null) t.commit();			
 			s.close();
 		}
 					
 		currentTransaction.set(null);
-		currentSession.set(null);							
+		currentSession.set(null);				
 	}
 	
 	/**

@@ -127,7 +127,7 @@ therefore it's show some features more advances of stereotypes.
 		<properties>number, description, unitPrice, unitPriceInPesetas</properties>	
 	</tab>
 		
-	<entity-mapping table="XAVATEST.PRODUCT">
+	<entity-mapping table="XAVATEST_PRODUCT">
 		<property-mapping 
 			property="number" column="NUMBER"/>
 		<property-mapping 
