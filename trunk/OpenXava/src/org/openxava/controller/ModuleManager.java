@@ -379,7 +379,7 @@ public class ModuleManager {
 					}
 					request.setAttribute("xava.sendParametersToTab", "false");
 				}
-			}			
+			}						
 			XHibernate.commit(); // after executing action
 		}
 		catch (ValidationException ex) {
@@ -400,7 +400,7 @@ public class ModuleManager {
 	}
 	
 	public void commit() { // Usually after render page
-		try {
+		try {			
 			XHibernate.commit();
 		}
 		catch (Exception ex) {

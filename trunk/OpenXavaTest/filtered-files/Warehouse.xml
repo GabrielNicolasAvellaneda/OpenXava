@@ -18,7 +18,7 @@
 		<base-condition>${zoneNumber} &lt;= ?</base-condition>
 	</tab>		
 								
-	<entity-mapping table="XAVATEST.WAREHOUSE">
+	<entity-mapping table="XAVATEST_WAREHOUSE">
 		<property-mapping 
 			property="zoneNumber" column="ZONE"/>	
 		<property-mapping 

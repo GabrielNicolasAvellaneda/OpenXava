@@ -14,7 +14,7 @@
 			
 	</entity>
 	
-	<entity-mapping table="XAVATEST.DRIVINGLICENCE">
+	<entity-mapping table="XAVATEST_DRIVINGLICENCE">
 		<property-mapping property="type" column="TYPE"/>
 		<property-mapping property="level" column="LEVEL"/>
 		<property-mapping property="description" column="DESCRIPTION"/>

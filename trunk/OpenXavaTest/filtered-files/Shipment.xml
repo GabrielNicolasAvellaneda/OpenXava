@@ -27,7 +27,7 @@
 		<finder name="all" arguments="" collection="true"/>
 	</entity>		
 	
-	<entity-mapping table="XAVATEST.SHIPMENT">
+	<entity-mapping table="XAVATEST_SHIPMENT">
 		<property-mapping
 			property="type" column="TYPE" cmp-type="String">
 			<converter class="org.openxava.converters.ValidValuesLetterConverter">

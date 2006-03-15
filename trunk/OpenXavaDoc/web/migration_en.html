@@ -1,5 +1,19 @@
 <h2>Migration from OpenXava 1.2.1 to OpenXava 2</h2>
 
+<h4>Hibernate: References with not null columns as foreign key</h4>
+
+In EJB version if you have a reference to another entity that has primitive
+types as key, the code is generated in a way that no null is saved to database,
+even if you assign null to your reference.<br>
+In hibernate version if you assign null to the reference, null values are saved
+in database.<br>
+Of course, the behaviour of hibernate version is more correct, but you can in
+hibernate avoid null in database just using a converter in the reference mapping
+(see section 6.3 of Reference Guide).<br>
+That is, maybe you need to add some converters to your references in order
+to migrate your application from EJB2 to Hibernate.<br>
+
+
 <h4>Changing the active section</h4>
 
 <code>xava_activeSection</code> is not longer used for changing the active section.

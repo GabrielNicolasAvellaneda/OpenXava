@@ -24,8 +24,6 @@ public class InvoicesTest extends ModuleTestBase {
 	private BigDecimal productUnitPriceDB;
 	private String productUnitPricePlus10;
 	private String productUnitPrice;
-	private String sellerNumber;
-	private ISeller seller;
 	private String productUnitPriceInPesetas;
 	private String productDescription;
 	private String productNumber;
@@ -411,8 +409,7 @@ public class InvoicesTest extends ModuleTestBase {
 	}
 	
 	public void testValidateExistsRequiredReference() throws Exception {
-		execute("CRUD.new");
-		String year = getValue("year");		
+		execute("CRUD.new");		
 		setValue("number", "66");
 		execute("Sections.change", "activeSection=2");
 		setValue("vatPercentage", "24");		
@@ -701,8 +698,7 @@ public class InvoicesTest extends ModuleTestBase {
 		// Create
 		execute("CRUD.new");
 		execute("Sections.change", "activeSection=0");				
-		
-		String year = getValue("year");		
+						
 		setValue("number", "66");
 		setValue("paid", "true");
 		setValue("customer.number", "1");
@@ -738,8 +734,7 @@ public class InvoicesTest extends ModuleTestBase {
 		execute("Sections.change", "activeSection=0");				
 		assertExists("customer.number");
 		assertNotExists("vatPercentage");
-		
-		String year = getValue("year");		
+				
 		setValue("number", "66");
 		
 		setValue("customer.number", "1");
@@ -1021,15 +1016,7 @@ public class InvoicesTest extends ModuleTestBase {
 		}
 		return productDescription;
 	}
-	
-	private String getSellerNumber() throws Exception {
-		if (sellerNumber == null) {
-			sellerNumber = String.valueOf(getSeller().getNumber());
-		}
-		return sellerNumber;
-	}
-	
-	
+		
 	private String getProductUnitPriceInPesetas() throws Exception {
 		if (productUnitPriceInPesetas == null) {			
 			productUnitPriceInPesetas = DecimalFormat.getInstance().format(getProduct().getUnitPriceInPesetas());
@@ -1069,19 +1056,7 @@ public class InvoicesTest extends ModuleTestBase {
 		}
 		return product;
 	}
-	
-	private ISeller getSeller() throws Exception {
-		if (seller == null) {
-			Collection sellers = SellerUtil.getHome().findAll();
-			if (sellers.isEmpty()) {
-				fail("It must to have sellers to run this test");
-			}
-			seller = (ISeller) PortableRemoteObject.narrow(sellers.iterator().next(), ISeller.class);
-		}
-		return seller;
-	}
-	
-	
+		
 	private String getCurrentDate() {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		return df.format(new java.util.Date());

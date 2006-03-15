@@ -6,7 +6,7 @@
 
   <class 
   	name="Family"
-  	table="XAVATEST.FAMILY">
+  	table="XAVATEST_FAMILY">
   
     <id name="oid" column="OID" access="field">
 			<generator class="uuid"/>
