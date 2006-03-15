@@ -131,14 +131,14 @@ public class View implements java.io.Serializable {
 		Collection metaMembers = new ArrayList(getMetaView().getMetaMembers());			
 		if (isRepresentsAggregate()) {
 			// This is for eluding recursive references				
-			String parentName = getMetaModel().getMetaModelContainer().getName();
+			String parentName = Strings.firstLower(getMetaModel().getMetaModelContainer().getName());
 			Collection filtered = new ArrayList();
 			Iterator it = metaMembers.iterator();
 			while (it.hasNext()) {
 				MetaMember m = (MetaMember) it.next();
 				if (m instanceof MetaReference) {						
-					MetaReference ref = (MetaReference) m;
-					if (!parentName.equals(ref.getReferencedModelName())) {
+					MetaReference ref = (MetaReference) m;				
+					if (!parentName.equals(ref.getName())) {
 						filtered.add(m);						
 					}
 				}
