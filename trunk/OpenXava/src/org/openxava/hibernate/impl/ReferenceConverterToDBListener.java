@@ -57,8 +57,12 @@ public class ReferenceConverterToDBListener implements PreInsertEventListener, P
 						pm2.executeSet(referenceMappingDetail.getReferencedModelProperty(),conv.toDB(propertyValue));
 					}
 				}
-				int i = propertyNames.indexOf(metaReference.getName()); 
-				state[i]=referencedObject;
+                int i;
+                if(metaReference.getMetaModel() instanceof MetaAggregate)
+                    i = propertyNames.indexOf(referenceMapping.getReference());
+                else
+                    i = propertyNames.indexOf(currentReference);
+                state[i]=referencedObject;
 			}
 		} 
 		catch(Exception e){ 
