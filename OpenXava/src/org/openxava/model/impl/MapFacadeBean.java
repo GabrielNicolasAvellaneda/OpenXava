@@ -301,7 +301,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		String modelName,
 		Object modelObject,
 		Map memberNames) throws XavaException, RemoteException  
-		 {		
+		 {				
 		Users.setCurrent(user);
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {								

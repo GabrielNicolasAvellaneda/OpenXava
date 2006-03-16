@@ -580,10 +580,10 @@ public class View implements java.io.Serializable {
 		else {
 			MetaReferenceView metaReferenceView = getMetaView().getMetaReferenceView(ref);
 			if (metaReferenceView != null) {
-				newView.setReadOnly(metaReferenceView.isReadOnly());
-			}
+				newView.setReadOnly(metaReferenceView.isReadOnly());				
+			}			
 		}
-		newView.setMemberName(member.getName());		
+		newView.setMemberName(member.getName());				
 		subviews.put(member.getName(), newView);
 	} 
 	 
@@ -993,7 +993,7 @@ public class View implements java.io.Serializable {
 	/**
 	 * Clear all displayed data. 
 	 */
-	public void clear() throws XavaException {		
+	public void clear() throws XavaException {			
 		setIdFocusProperty(null);
 		setCollectionDetailVisible(false);
 		if (values == null) return;		
@@ -1637,7 +1637,7 @@ public class View implements java.io.Serializable {
 		}		 		 		
 	}
 	
-	private void tryPropertyChanged(MetaProperty changedProperty, String changedPropertyQualifiedName) throws Exception {
+	private void tryPropertyChanged(MetaProperty changedProperty, String changedPropertyQualifiedName) throws Exception {		
 		if (!isOnlyThrowsOnChange()) {					
 			Iterator it = getMetaPropertiesIncludingGroups().iterator();			
 			while (it.hasNext()) {
@@ -1651,12 +1651,13 @@ public class View implements java.io.Serializable {
 					}					
 				}
 			}				
-			if (hasToSearchOnChangeIfSubview && isSubview() && !isGroup() && 
+					
+			if (hasToSearchOnChangeIfSubview && isSubview() && !isGroup() &&  
 					( 
 					(getLastPropertyKeyName().equals(changedProperty.getName()) && metaPropertiesContains(changedProperty)) || // visible keys
-					(!hasKeyProperties() && changedProperty.isKey() && changedProperty.isHidden()) // hidden keys
+					(!hasKeyProperties() && changedProperty.isKey() && changedProperty.isHidden() && changedProperty.getMetaModel() == getMetaModel()) // hidden keys
 					)
-				) {	
+				) {				
 				if (!searchingObject) { // To avoid recursive infinites loops				
 					try {
 						searchingObject = true;					
@@ -1727,8 +1728,8 @@ public class View implements java.io.Serializable {
 	}
 
 	public void findObject() throws Exception {
-		if (getKeyValuesWithValue().isEmpty()) {			
-			clear(); 			
+		if (getKeyValuesWithValue().isEmpty()) {	
+			clear();
 		}
 		else {					
 			try {								
@@ -2647,5 +2648,5 @@ public class View implements java.io.Serializable {
 	private void setCollectionEditableFixed(boolean collectionEditableFixed) {
 		this.collectionEditableFixed = collectionEditableFixed;
 	}
-	
+
 }
