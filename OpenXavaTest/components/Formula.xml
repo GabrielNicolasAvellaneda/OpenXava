@@ -19,8 +19,10 @@
 		<property name="oid" type="String" key="true" hidden="true">
 			<default-value-calculator class="org.openxava.calculators.UUIDCalculator"/>
 		</property>
+		
 		<reference name="ingredient" model="Ingredient"/>
 		<reference name="accentuate" model="Ingredient"/>
+		<reference name="anotherFormula" model="Formula"/>
 	</aggregate>
 	
 	<view model="FormulaIngredient">
@@ -29,6 +31,9 @@
 		</reference-view>
 		<reference-view reference="accentuate" >
 			<descriptions-list condition="${partOf.oid} = ?" depends="this.ingredient"/>
+		</reference-view>		
+		<reference-view reference="anotherFormula">
+			<descriptions-list/>
 		</reference-view>		
 	</view>
 							
@@ -43,13 +48,16 @@
 		<property-mapping
 			property="oid" column="ID"/>
 		<reference-mapping reference="formula">
-			<reference-mapping-detail column="FORMULA" referenced-model-property="id"/>
+			<reference-mapping-detail column="FORMULA" referenced-model-property="oid"/>
 		</reference-mapping>	
 		<reference-mapping reference="ingredient">
 			<reference-mapping-detail column="INGREDIENT" referenced-model-property="oid"/>
 		</reference-mapping>	
 		<reference-mapping reference="accentuate">
 			<reference-mapping-detail column="ACCENTUATE" referenced-model-property="oid"/>
+		</reference-mapping>			
+		<reference-mapping reference="anotherFormula">
+			<reference-mapping-detail column="ANOTHERFORMULA" referenced-model-property="oid"/>
 		</reference-mapping>			
 	</aggregate-mapping> 
 					
