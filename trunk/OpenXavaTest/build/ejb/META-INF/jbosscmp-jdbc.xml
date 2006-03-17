@@ -498,6 +498,82 @@
       </entity>
 
       <entity>
+         <ejb-name>FormulaIngredient</ejb-name>
+
+         <table-name>XAVATEST_FORMULAINGREDIENT</table-name>
+
+         <cmp-field>
+            <field-name>oid</field-name>
+            <column-name>ID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Ingredient_oid</field-name>
+            <column-name>INGREDIENT</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Accentuate_oid</field-name>
+            <column-name>ACCENTUATE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_AnotherFormula_oid</field-name>
+            <column-name>ANOTHERFORMULA</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Formula_oid</field-name>
+            <column-name>FORMULA</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByIngredient</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM FormulaIngredient o WHERE o._Ingredient_oid = ?1 ]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByAccentuate</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM FormulaIngredient o WHERE o._Accentuate_oid = ?1 ]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByAnotherFormula</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM FormulaIngredient o WHERE o._AnotherFormula_oid = ?1 ]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByFormula</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM FormulaIngredient o WHERE o._Formula_oid = ?1 ]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
          <ejb-name>FilterBySubfamily</ejb-name>
 
          <table-name>XAVATEST_MOCKTABLE</table-name>
@@ -536,6 +612,42 @@
                </method-params>
             </query-method>
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o._Subfamily_number = ?1 ]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Ingredient</ejb-name>
+
+         <table-name>XAVATEST_INGREDIENT</table-name>
+
+         <cmp-field>
+            <field-name>oid</field-name>
+            <column-name>ID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Name</field-name>
+            <column-name>NAME</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_PartOf_oid</field-name>
+            <column-name>PARTOF</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByPartOf</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Ingredient o WHERE o._PartOf_oid = ?1 ]]></jboss-ql>
 
 	     </query>
 
@@ -817,6 +929,26 @@
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Subfamily2 o WHERE o._Family_number = ?1 ]]></jboss-ql>
 
 	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Formula</ejb-name>
+
+         <table-name>XAVATEST_FORMULA</table-name>
+
+         <cmp-field>
+            <field-name>oid</field-name>
+            <column-name>ID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Name</field-name>
+            <column-name>NAME</column-name>
+
+        </cmp-field>
 
 <!-- jboss 3.2 features -->
 <!-- optimistic locking does not express the exclusions needed -->

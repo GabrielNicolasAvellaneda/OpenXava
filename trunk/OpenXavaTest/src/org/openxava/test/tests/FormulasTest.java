@@ -14,9 +14,11 @@ public class FormulasTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Formulas");		
 	}
 	
-	public void testDependentReferencesAsDescriptionsListWithHiddenKeyInCollection() throws Exception {
-		execute("CRUD.new");
+	public void testDependentReferencesAsDescriptionsListWithHiddenKeyInCollection_aggregateCanHasReferenceToModelOfContainerType() throws Exception {
+		execute("CRUD.new");		
 		execute("Collection.new", "viewObject=xava_view_ingredients");
+		assertExists("ingredients.anotherFormula.oid"); // Reference to a model of 'Formula' type, the same of the container
+		
 		String [][] ingredients = {
 			{ "", "" },
 			{ "03C5C64CC0A80116000000009590B64C", "AZUCAR" },

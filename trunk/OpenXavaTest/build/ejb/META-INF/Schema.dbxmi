@@ -127,6 +127,21 @@
       </columns>
 
    </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_FormulaIngredient" name="" primaryKey="FormulaIngredient_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="FormulaIngredient_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_FormulaIngredient" constraint="Constraint_FormulaIngredient_"/>
+
+      <columns xmi:id="FormulaIngredient_oid" name="oid">
+      </columns>
+      <columns xmi:id="FormulaIngredient__Ingredient_oid" name="_Ingredient_oid">
+      </columns>
+      <columns xmi:id="FormulaIngredient__Accentuate_oid" name="_Accentuate_oid">
+      </columns>
+      <columns xmi:id="FormulaIngredient__AnotherFormula_oid" name="_AnotherFormula_oid">
+      </columns>
+      <columns xmi:id="FormulaIngredient__Formula_oid" name="_Formula_oid">
+      </columns>
+
+   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_FilterBySubfamily" name="" primaryKey="FilterBySubfamily_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="FilterBySubfamily_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_FilterBySubfamily" constraint="Constraint_FilterBySubfamily_"/>
 
@@ -135,6 +150,17 @@
       <columns xmi:id="FilterBySubfamily__SubfamilyTo_number" name="_SubfamilyTo_number">
       </columns>
       <columns xmi:id="FilterBySubfamily__Subfamily_number" name="_Subfamily_number">
+      </columns>
+
+   </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Ingredient" name="" primaryKey="Ingredient_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Ingredient_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Ingredient" constraint="Constraint_Ingredient_"/>
+
+      <columns xmi:id="Ingredient_oid" name="oid">
+      </columns>
+      <columns xmi:id="Ingredient__Name" name="_Name">
+      </columns>
+      <columns xmi:id="Ingredient__PartOf_oid" name="_PartOf_oid">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -223,6 +249,15 @@
       <columns xmi:id="Subfamily2_number" name="number">
       </columns>
       <columns xmi:id="Subfamily2__Family_number" name="_Family_number">
+      </columns>
+
+   </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Formula" name="" primaryKey="Formula_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Formula_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Formula" constraint="Constraint_Formula_"/>
+
+      <columns xmi:id="Formula_oid" name="oid">
+      </columns>
+      <columns xmi:id="Formula__Name" name="_Name">
       </columns>
 
    </RDBSchema:RDBTable>
