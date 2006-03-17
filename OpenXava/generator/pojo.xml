@@ -178,7 +178,7 @@ while (itCollections.hasNext()) {
  	public static <expr>type</expr> find<expr>finderName</expr>(<expr>arguments</expr>) {
  		org.hibernate.Query query = org.openxava.hibernate.XHibernate.getSession().createQuery("<expr>finder.getHQLCondition()</expr>");
  		<java>if (finder.isCollection()) { </java> 
- 		org.hibernate.Query sizeQuery = org.openxava.hibernate.XHibernate.getSession().createQuery("select count(*) <expr>finder.getHQLCondition()</expr>");
+ 		org.hibernate.Query sizeQuery = org.openxava.hibernate.XHibernate.getSession().createQuery("<expr>finder.getHQLCountSentence()</expr>");
  		<java>} </java>
 <java>
 		int i=0;

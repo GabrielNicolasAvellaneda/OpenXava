@@ -177,7 +177,7 @@ while (itCollections.hasNext()) {
  	public static #(type)# find#(finderName)#(#(arguments)#) {
  		org.hibernate.Query query = org.openxava.hibernate.XHibernate.getSession().createQuery("#(finder.getHQLCondition())#");
  		# if (finder.isCollection()) { # 
- 		org.hibernate.Query sizeQuery = org.openxava.hibernate.XHibernate.getSession().createQuery("select count(*) #(finder.getHQLCondition())#");
+ 		org.hibernate.Query sizeQuery = org.openxava.hibernate.XHibernate.getSession().createQuery("#(finder.getHQLCountSentence())#");
  		# } #
 # 
 		int i=0;

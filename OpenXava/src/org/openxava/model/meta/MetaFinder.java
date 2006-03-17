@@ -93,6 +93,10 @@ public class MetaFinder implements Serializable {
 	}
 	
 	public String getHQLCondition() throws XavaException {		
+		return getHQLCondition(true);
+	}
+	
+	private String getHQLCondition(boolean order) throws XavaException {		
 		StringBuffer sb = new StringBuffer("from ");
 		sb.append(getMetaModel().getName());
 		sb.append(" as o");
@@ -101,10 +105,17 @@ public class MetaFinder implements Serializable {
 			String condition = Strings.change(getCondition(), getArgumentsToHQL());			
 			sb.append(Strings.change(condition, getTokensToChangeDollarsAndNL()));
 		}
-		if (!Is.emptyString(this.order)) { 		
+		if (order && !Is.emptyString(this.order)) { 		
 			sb.append(" order by ");
 			sb.append(Strings.change(this.order, getTokensToChangeDollarsAndNL()));
 		}
+		return sb.toString();
+	}
+	
+	
+	public String getHQLCountSentence() throws XavaException {
+		StringBuffer sb = new StringBuffer("select count(*) ");
+		sb.append(getHQLCondition(false));
 		return sb.toString();
 	}
 	
