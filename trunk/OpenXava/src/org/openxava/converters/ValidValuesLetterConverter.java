@@ -13,7 +13,7 @@ public class ValidValuesLetterConverter implements IConverter {
 
 	private String letters;
 
-	public Object toDB(Object o) throws ConversionException {
+	public Object toDB(Object o) throws ConversionException {		
 		if (o == null) return "";
 		if (!(o instanceof Integer)) {		
 			throw new ConversionException("conversion_db_integer_excepted");

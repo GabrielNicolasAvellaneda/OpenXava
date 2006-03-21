@@ -106,20 +106,21 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 	public #(referencedKeyClass)# get#(referenceName)#Key() {				
 		#(referencedKeyClass)# key = new #(referencedKeyClass)#();
 		# 
-		String prefixGet = "get" + referenceName + "_";
 		Iterator itKeys = referencedModel.getAllKeyPropertiesNames().iterator();
 		while (itKeys.hasNext()) {
 			String property = (String) itKeys.next();
 			String key = Strings.change(property, ".", "_"); 
 			String keyAttribute = null;
+			String underline = "";
 			if (referencedMapping.hasConverter(key) || property.indexOf('.') >= 0) { 
 				keyAttribute = "_" + Strings.firstUpper(key);
+				underline = "_";
 			}
 			else {
 				keyAttribute = key;
 			}
 		# 
-		key.#(keyAttribute)# = #(prefixGet)##(key)#();			
+		key.#(keyAttribute)# = get#(underline)##(referenceName)#_#(key)#();			
 		# } #		
 		return key;
 	}	
@@ -133,9 +134,7 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 # } # 		
 		if (key == null) {
 			key = new #(referencedKeyClass)#();
-		}
 		# 
-		String prefixSet = "set" + referenceName + "_";
 		itKeys = referencedModel.getAllKeyPropertiesNames().iterator();		
 		while (itKeys.hasNext()) {
 		    String property = (String) itKeys.next(); 
@@ -148,9 +147,28 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 				keyAttribute = key;
 			}
 		# 
-		#(prefixSet)##(key)#(key.#(keyAttribute)#);
+			set#(referenceName)#_#(key)#(key.#(keyAttribute)#);
+		# } #					
+		}
+		else {
+		# 		
+		itKeys = referencedModel.getAllKeyPropertiesNames().iterator();		
+		while (itKeys.hasNext()) {
+		    String property = (String) itKeys.next(); 
+			String key = Strings.change(property, ".", "_");
+			String keyAttribute=null;
+			String underline = "";
+			if (referencedMapping.hasConverter(key) || property.indexOf('.') >= 0) {
+				keyAttribute = "_" + Strings.firstUpper(key);
+				underline = "_";
+			}
+			else {
+				keyAttribute = key;
+			}
+		# 
+			set#(underline)##(referenceName)#_#(key)#(key.#(keyAttribute)#);
 		# } #		
-		
+		}
 	}	
 	
 	# 

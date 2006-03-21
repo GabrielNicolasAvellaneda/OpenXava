@@ -1246,6 +1246,16 @@
 
          <query>
             <query-method>
+               <method-name>findByMode</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Shipment o WHERE o.mode = ?1]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
                <method-name>findAll</method-name>
                <method-params>
                </method-params>
@@ -1318,6 +1328,54 @@
                </method-params>
             </query-method>
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryPlace o WHERE o._PreferredWarehouse_number = ?1 AND o._PreferredWarehouse_zoneNumber = ?2 ]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>ShipmentCharge</ejb-name>
+
+         <table-name>XAVATEST_SHIPMENTCHARGE</table-name>
+
+         <cmp-field>
+            <field-name>_Amount</field-name>
+            <column-name>AMOUNT</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>oid</field-name>
+            <column-name>ID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Mode</field-name>
+            <column-name>MODE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Shipment_type</field-name>
+            <column-name>SHIPMENT_TYPE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Shipment_number</field-name>
+            <column-name>SHIPMENT_NUMBER</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByShipment</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM ShipmentCharge o WHERE o._Shipment_type = ?1 AND o._Mode = ?2 AND o._Shipment_number = ?3 ]]></jboss-ql>
 
 	     </query>
 

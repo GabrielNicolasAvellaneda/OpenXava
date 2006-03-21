@@ -15,11 +15,17 @@
 		<model name="Formula"/>
 		<controller name="Typical"/>
 	</module>	
-	
+			
 	<module name="Ingredients">
 		<model name="Ingredient"/>
 		<controller name="Typical"/>
 	</module>	
+	
+	<module name="ShipmentCharges">
+		<model name="ShipmentCharge"/>
+		<controller name="Typical"/>
+	</module>	
+	
 		
 	<module name="Carriers">
 		<model name="Carrier"/>

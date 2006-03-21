@@ -107,20 +107,21 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 	public <expr>referencedKeyClass</expr> get<expr>referenceName</expr>Key() {				
 		<expr>referencedKeyClass</expr> key = new <expr>referencedKeyClass</expr>();
 		<java>
-		String prefixGet = "get" + referenceName + "_";
 		Iterator itKeys = referencedModel.getAllKeyPropertiesNames().iterator();
 		while (itKeys.hasNext()) {
 			String property = (String) itKeys.next();
 			String key = Strings.change(property, ".", "_"); 
 			String keyAttribute = null;
+			String underline = "";
 			if (referencedMapping.hasConverter(key) || property.indexOf('.') &gt;= 0) { 
 				keyAttribute = "_" + Strings.firstUpper(key);
+				underline = "_";
 			}
 			else {
 				keyAttribute = key;
 			}
 		</java> 
-		key.<expr>keyAttribute</expr> = <expr>prefixGet</expr><expr>key</expr>();			
+		key.<expr>keyAttribute</expr> = get<expr>underline</expr><expr>referenceName</expr>_<expr>key</expr>();			
 		<java>} </java>		
 		return key;
 	}	
@@ -134,9 +135,7 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 <java>} </java> 		
 		if (key == null) {
 			key = new <expr>referencedKeyClass</expr>();
-		}
 		<java>
-		String prefixSet = "set" + referenceName + "_";
 		itKeys = referencedModel.getAllKeyPropertiesNames().iterator();		
 		while (itKeys.hasNext()) {
 		    String property = (String) itKeys.next(); 
@@ -149,9 +148,28 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 				keyAttribute = key;
 			}
 		</java> 
-		<expr>prefixSet</expr><expr>key</expr>(key.<expr>keyAttribute</expr>);
+			set<expr>referenceName</expr>_<expr>key</expr>(key.<expr>keyAttribute</expr>);
+		<java>} </java>					
+		}
+		else {
+		<java>		
+		itKeys = referencedModel.getAllKeyPropertiesNames().iterator();		
+		while (itKeys.hasNext()) {
+		    String property = (String) itKeys.next(); 
+			String key = Strings.change(property, ".", "_");
+			String keyAttribute=null;
+			String underline = "";
+			if (referencedMapping.hasConverter(key) || property.indexOf('.') &gt;= 0) {
+				keyAttribute = "_" + Strings.firstUpper(key);
+				underline = "_";
+			}
+			else {
+				keyAttribute = key;
+			}
+		</java> 
+			set<expr>underline</expr><expr>referenceName</expr>_<expr>key</expr>(key.<expr>keyAttribute</expr>);
 		<java>} </java>		
-		
+		}
 	}	
 	
 	<java>

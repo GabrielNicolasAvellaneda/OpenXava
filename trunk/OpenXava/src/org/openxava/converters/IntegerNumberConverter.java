@@ -16,7 +16,7 @@ public class IntegerNumberConverter implements IConverter {
 	}
 	
 	public Object toJava(Object o) throws ConversionException {
-		if (o == null) return new Integer(0);				
+		if (o == null) return CERO;				
 		if (!(o instanceof Number)) {		
 			throw new ConversionException("conversion_java_number_expected");
 		}

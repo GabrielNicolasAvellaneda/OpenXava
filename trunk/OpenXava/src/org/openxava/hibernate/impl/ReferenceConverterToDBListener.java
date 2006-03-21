@@ -12,15 +12,15 @@ import org.openxava.util.*;
 
 public class ReferenceConverterToDBListener implements PreInsertEventListener, PreUpdateEventListener {
 
-	public boolean onPreInsert(PreInsertEvent ev) {
+	public boolean onPreInsert(PreInsertEvent ev) {		
 		if (!(ev.getEntity() instanceof IModel)) return false;
 		applyConverter((IModel) ev.getEntity(), 
 				Arrays.asList(ev.getPersister().getPropertyNames()),
-				ev.getState());
+				ev.getState());		
 		return false;
 	}
 
-	public boolean onPreUpdate(PreUpdateEvent ev) {
+	public boolean onPreUpdate(PreUpdateEvent ev) {		
 		if (!(ev.getEntity() instanceof IModel)) return false;
 		applyConverter((IModel) ev.getEntity(), 
 				Arrays.asList(ev.getPersister().getPropertyNames()),
@@ -38,6 +38,7 @@ public class ReferenceConverterToDBListener implements PreInsertEventListener, P
 			Iterator it = referenceMappings.iterator();
 			while (it.hasNext()) {
 				ReferenceMapping referenceMapping = (ReferenceMapping) it.next();
+				if (mapping.isReferenceOverlappingWithSomeProperty(referenceMapping.getReference())) continue;
 				PropertiesManager pm = new PropertiesManager(model);
 				Object referencedObject = pm.executeGet(referenceMapping.getReference());
 				MetaReference metaReference = metaModel.getMetaReference(referenceMapping.getReference());

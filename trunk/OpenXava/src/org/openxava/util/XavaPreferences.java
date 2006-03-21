@@ -38,23 +38,23 @@ public class XavaPreferences {
 	}
 
 	public boolean isReadOnlyAsLabel() {
-		return "true".equalsIgnoreCase(getProperties().getProperty("readOnlyAsLabel", "false"));
+		return "true".equalsIgnoreCase(getProperties().getProperty("readOnlyAsLabel", "false").trim());
 	}
 	
 	public boolean isButtonBarOnTop() {
-		return "true".equalsIgnoreCase(getProperties().getProperty("buttonBarOnTop", "true"));
+		return "true".equalsIgnoreCase(getProperties().getProperty("buttonBarOnTop", "true").trim());
 	}
 	
 	public boolean isButtonBarOnBottom() {
-		return "true".equalsIgnoreCase(getProperties().getProperty("buttonBarOnBottom", "true"));
+		return "true".equalsIgnoreCase(getProperties().getProperty("buttonBarOnBottom", "true").trim());
 	}
 	
 	public boolean isTabAsEJB() {
-		return "true".equalsIgnoreCase(getProperties().getProperty("tabAsEJB", "false"));
+		return "true".equalsIgnoreCase(getProperties().getProperty("tabAsEJB", "false").trim());
 	}
 	
 	public boolean isShowCountInList() {
-		return "true".equalsIgnoreCase(getProperties().getProperty("showCountInList", "true"));
+		return "true".equalsIgnoreCase(getProperties().getProperty("showCountInList", "true").trim());
 	}
 		
 	public String getFormLineSpacing() {
@@ -66,7 +66,7 @@ public class XavaPreferences {
 	}
 	
 	public boolean isMapFacadeAsEJB() {
-		return "true".equalsIgnoreCase(getProperties().getProperty("mapFacadeAsEJB", "true"));
+		return "true".equalsIgnoreCase(getProperties().getProperty("mapFacadeAsEJB", "true").trim());
 	}
 
 	public boolean isEJB2Persistence() {

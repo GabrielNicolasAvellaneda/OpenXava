@@ -46,9 +46,8 @@ public class WarehouseKeyFormatter implements IFormatter {
 		catch (NumberFormatException ex) {
 			throw new ParseException("Impossible to parse WarehouseKey: zoneNumber and number must be numerics", 0);			
 		}		
-				
-		return key;
 		
+		return key;		
 	}
 
 }

@@ -12,7 +12,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Fri Mar 17 12:53:53 CET 2006
+ * @version Tue Mar 21 16:29:43 CET 2006
  */
 public class EntityReferenceEJBPG {
     Properties properties = new Properties();
@@ -130,14 +130,15 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     out.print(referencedKeyClass);
     out.print("();");
     
-    		String prefixGet = "get" + referenceName + "_";
     		Iterator itKeys = referencedModel.getAllKeyPropertiesNames().iterator();
     		while (itKeys.hasNext()) {
     			String property = (String) itKeys.next();
     			String key = Strings.change(property, ".", "_"); 
     			String keyAttribute = null;
+    			String underline = "";
     			if (referencedMapping.hasConverter(key) || property.indexOf('.') >= 0) { 
     				keyAttribute = "_" + Strings.firstUpper(key);
+    				underline = "_";
     			}
     			else {
     				keyAttribute = key;
@@ -145,8 +146,10 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     		
     out.print(" \n\t\tkey.");
     out.print(keyAttribute);
-    out.print(" = ");
-    out.print(prefixGet);
+    out.print(" = get");
+    out.print(underline);
+    out.print(referenceName);
+    out.print("_");
     out.print(key);
     out.print("();");
     } 
@@ -162,9 +165,8 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     } 
     out.print(" \t\t\n\t\tif (key == null) {\n\t\t\tkey = new ");
     out.print(referencedKeyClass);
-    out.print("();\n\t\t}");
+    out.print("();");
     
-    		String prefixSet = "set" + referenceName + "_";
     		itKeys = referencedModel.getAllKeyPropertiesNames().iterator();		
     		while (itKeys.hasNext()) {
     		    String property = (String) itKeys.next(); 
@@ -177,14 +179,40 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     				keyAttribute = key;
     			}
     		
-    out.print(" \n\t\t");
-    out.print(prefixSet);
+    out.print(" \n\t\t\tset");
+    out.print(referenceName);
+    out.print("_");
     out.print(key);
     out.print("(key.");
     out.print(keyAttribute);
     out.print(");");
     } 
-    out.print("\t\t\n\t\t\n\t}");
+    out.print("\t\t\t\t\t\n\t\t}\n\t\telse {");
+    		
+    		itKeys = referencedModel.getAllKeyPropertiesNames().iterator();		
+    		while (itKeys.hasNext()) {
+    		    String property = (String) itKeys.next(); 
+    			String key = Strings.change(property, ".", "_");
+    			String keyAttribute=null;
+    			String underline = "";
+    			if (referencedMapping.hasConverter(key) || property.indexOf('.') >= 0) {
+    				keyAttribute = "_" + Strings.firstUpper(key);
+    				underline = "_";
+    			}
+    			else {
+    				keyAttribute = key;
+    			}
+    		
+    out.print(" \n\t\t\tset");
+    out.print(underline);
+    out.print(referenceName);
+    out.print("_");
+    out.print(key);
+    out.print("(key.");
+    out.print(keyAttribute);
+    out.print(");");
+    } 
+    out.print("\t\t\n\t\t}\n\t}");
     
     	Iterator itEntityReferenceKeyProperties = referencedModel.getAllMetaPropertiesKey().iterator();	
     	while (itEntityReferenceKeyProperties.hasNext()) {		
@@ -385,7 +413,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Fri Mar 17 12:53:53 CET 2006", // date this file was generated
+        { "Tue Mar 21 16:29:44 CET 2006", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/entityReferenceEJB.xml", // input file
              "/home/javi/workspace/OpenXava/generator/EntityReferenceEJBPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

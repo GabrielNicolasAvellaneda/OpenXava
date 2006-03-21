@@ -392,6 +392,21 @@
       </columns>
 
    </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_ShipmentCharge" name="" primaryKey="ShipmentCharge_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="ShipmentCharge_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_ShipmentCharge" constraint="Constraint_ShipmentCharge_"/>
+
+      <columns xmi:id="ShipmentCharge__Amount" name="_Amount">
+      </columns>
+      <columns xmi:id="ShipmentCharge_oid" name="oid">
+      </columns>
+      <columns xmi:id="ShipmentCharge__Mode" name="_Mode">
+      </columns>
+      <columns xmi:id="ShipmentCharge__Shipment_type" name="_Shipment_type">
+      </columns>
+      <columns xmi:id="ShipmentCharge__Shipment_number" name="_Shipment_number">
+      </columns>
+
+   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_TransportCharge" name="" primaryKey="TransportCharge_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="TransportCharge_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_TransportCharge" constraint="Constraint_TransportCharge_"/>
 

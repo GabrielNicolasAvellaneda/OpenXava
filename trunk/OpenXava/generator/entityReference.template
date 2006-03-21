@@ -31,18 +31,46 @@ if (reference.getMetaModel() instanceof MetaAggregateBean) {
 else {
 	mapping = reference.getMetaModel().getMapping();
 }
+ReferenceMapping referenceMapping = mapping.getReferenceMapping(reference.getName());
 boolean overlapped = mapping.isReferenceOverlappingWithSomeProperty(reference.getName());
 String setException = overlapped?"throws RemoteException":"";
 MetaModel referencedModel = (MetaModel) reference.getMetaModelReferenced();
 if (overlapped) {
-	for (Iterator itDetails = mapping.getReferenceMapping(reference.getName()).getDetails().iterator(); itDetails.hasNext(); ) {
+	for (Iterator itDetails = referenceMapping.getDetails().iterator(); itDetails.hasNext(); ) {
 		ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
 		if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName(), detail.getReferencedModelProperty())) {
-			Class type = referencedModel.getMetaProperty(detail.getReferencedModelProperty()).getType();
+			String cmpTypeName = detail.getCmpTypeName();
+			Class type = null;
+			if (Is.emptyString(cmpTypeName)) {
+				type = referencedModel.getMetaProperty(detail.getReferencedModelProperty()).getType();
+			}
+			else {
+				type = Class.forName(cmpTypeName);
+			}
 			String typeName = Primitives.toWrapperClass(type).getName();
 # 
 	private #(typeName)# #(reference.getName())#_#(detail.getReferencedModelProperty())#;
 # 
+			if (detail.hasConverter()) {
+				String converterAttribute = reference.getName() + "_" + detail.getReferencedModelProperty() + "Converter";
+# 
+	private static org.openxava.converters.IConverter #(converterAttribute)#;
+	private org.openxava.converters.IConverter get#(Strings.firstUpper(converterAttribute))#() {
+		if (#(converterAttribute)# == null) {
+			try {
+				#(converterAttribute)# = (org.openxava.converters.IConverter) 
+					getMetaModel().getMapping().getReferenceMapping("#(reference.getName())#").getConverterForReferencedModelProperty("#(detail.getReferencedModelProperty())#");
+			}
+			catch (Exception ex) {
+				ex.printStackTrace();
+				throw new RuntimeException(XavaResources.getString("generator.create_converter_error", "#(reference.getName())#.#(detail.getReferencedModelProperty())#"));
+			}
+			
+		}	
+		return #(converterAttribute)#;
+	} 
+# 
+			}
 		}
 	}
 }
@@ -54,14 +82,29 @@ if (overlapped) {
 		this.#(reference.getName())# = new#(reference.getReferencedModelName())#;
 # 
 if (overlapped) {
-	for (Iterator itDetails = mapping.getReferenceMapping(reference.getName()).getDetails().iterator(); itDetails.hasNext(); ) {
+	for (Iterator itDetails = referenceMapping.getDetails().iterator(); itDetails.hasNext(); ) {
 		ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
 		if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName(), detail.getReferencedModelProperty())) {
-			String sentence = "new" + reference.getReferencedModelName() + ".get" + Strings.firstUpper(detail.getReferencedModelProperty()) + "()";
+			String sentence = "new" + reference.getReferencedModelName() + ".get" + Strings.firstUpper(detail.getReferencedModelProperty()) + "()";						
 			String type = referencedModel.getMetaProperty(detail.getReferencedModelProperty()).getType().getName();
+			String cmpType = detail.getCmpTypeName() == null?type:detail.getCmpTypeName();
+			if (detail.hasConverter()) {
+				String converterGet = "get" + Strings.firstUpper(reference.getName()) + "_" + detail.getReferencedModelProperty() + "Converter()";
+# 
+		try {
+			#(reference.getName())#_#(detail.getReferencedModelProperty())# = (#(cmpType)#) #(converterGet)#.toDB(new#(reference.getReferencedModelName())#==null?null:#(Generators.generatePrimitiveWrapper(type, sentence))#);
+		}
+		catch (org.openxava.converters.ConversionException ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(XavaResources.getString("generator.conversion_error", "#(reference.getName())#.#(detail.getReferencedModelProperty())#", "#(reference.getMetaModel().getName())#", "#(type)#"));
+		}		
+# 			
+			}
+			else {
 # 
 		this.#(reference.getName())#_#(detail.getReferencedModelProperty())# = new#(reference.getReferencedModelName())# == null?null:#(Generators.generatePrimitiveWrapper(type, sentence))#;
 # 
+			}
 		}
 	}
 }
