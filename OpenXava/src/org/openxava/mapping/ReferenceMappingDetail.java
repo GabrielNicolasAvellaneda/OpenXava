@@ -72,7 +72,7 @@ public class ReferenceMappingDetail extends MetaSetsContainer {
 	
 	public  IConverter getConverter() throws XavaException {  
 		if (!converterCreated) {
-			converter = createConverter();
+			converter = createConverter();					
 			converterCreated = true;
 		}
 		return converter;

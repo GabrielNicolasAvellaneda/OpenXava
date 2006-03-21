@@ -32,18 +32,46 @@ if (reference.getMetaModel() instanceof MetaAggregateBean) {
 else {
 	mapping = reference.getMetaModel().getMapping();
 }
+ReferenceMapping referenceMapping = mapping.getReferenceMapping(reference.getName());
 boolean overlapped = mapping.isReferenceOverlappingWithSomeProperty(reference.getName());
 String setException = overlapped?"throws RemoteException":"";
 MetaModel referencedModel = (MetaModel) reference.getMetaModelReferenced();
 if (overlapped) {
-	for (Iterator itDetails = mapping.getReferenceMapping(reference.getName()).getDetails().iterator(); itDetails.hasNext(); ) {
+	for (Iterator itDetails = referenceMapping.getDetails().iterator(); itDetails.hasNext(); ) {
 		ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
 		if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName(), detail.getReferencedModelProperty())) {
-			Class type = referencedModel.getMetaProperty(detail.getReferencedModelProperty()).getType();
+			String cmpTypeName = detail.getCmpTypeName();
+			Class type = null;
+			if (Is.emptyString(cmpTypeName)) {
+				type = referencedModel.getMetaProperty(detail.getReferencedModelProperty()).getType();
+			}
+			else {
+				type = Class.forName(cmpTypeName);
+			}
 			String typeName = Primitives.toWrapperClass(type).getName();
 </java> 
 	private <expr>typeName</expr> <expr>reference.getName()</expr>_<expr>detail.getReferencedModelProperty()</expr>;
 <java>
+			if (detail.hasConverter()) {
+				String converterAttribute = reference.getName() + "_" + detail.getReferencedModelProperty() + "Converter";
+</java> 
+	private static org.openxava.converters.IConverter <expr>converterAttribute</expr>;
+	private org.openxava.converters.IConverter get<expr>Strings.firstUpper(converterAttribute)</expr>() {
+		if (<expr>converterAttribute</expr> == null) {
+			try {
+				<expr>converterAttribute</expr> = (org.openxava.converters.IConverter) 
+					getMetaModel().getMapping().getReferenceMapping("<expr>reference.getName()</expr>").getConverterForReferencedModelProperty("<expr>detail.getReferencedModelProperty()</expr>");
+			}
+			catch (Exception ex) {
+				ex.printStackTrace();
+				throw new RuntimeException(XavaResources.getString("generator.create_converter_error", "<expr>reference.getName()</expr>.<expr>detail.getReferencedModelProperty()</expr>"));
+			}
+			
+		}	
+		return <expr>converterAttribute</expr>;
+	} 
+<java>
+			}
 		}
 	}
 }
@@ -55,14 +83,29 @@ if (overlapped) {
 		this.<expr>reference.getName()</expr> = new<expr>reference.getReferencedModelName()</expr>;
 <java>
 if (overlapped) {
-	for (Iterator itDetails = mapping.getReferenceMapping(reference.getName()).getDetails().iterator(); itDetails.hasNext(); ) {
+	for (Iterator itDetails = referenceMapping.getDetails().iterator(); itDetails.hasNext(); ) {
 		ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
 		if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName(), detail.getReferencedModelProperty())) {
-			String sentence = "new" + reference.getReferencedModelName() + ".get" + Strings.firstUpper(detail.getReferencedModelProperty()) + "()";
+			String sentence = "new" + reference.getReferencedModelName() + ".get" + Strings.firstUpper(detail.getReferencedModelProperty()) + "()";						
 			String type = referencedModel.getMetaProperty(detail.getReferencedModelProperty()).getType().getName();
+			String cmpType = detail.getCmpTypeName() == null?type:detail.getCmpTypeName();
+			if (detail.hasConverter()) {
+				String converterGet = "get" + Strings.firstUpper(reference.getName()) + "_" + detail.getReferencedModelProperty() + "Converter()";
+</java> 
+		try {
+			<expr>reference.getName()</expr>_<expr>detail.getReferencedModelProperty()</expr> = (<expr>cmpType</expr>) <expr>converterGet</expr>.toDB(new<expr>reference.getReferencedModelName()</expr>==null?null:<expr>Generators.generatePrimitiveWrapper(type, sentence)</expr>);
+		}
+		catch (org.openxava.converters.ConversionException ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(XavaResources.getString("generator.conversion_error", "<expr>reference.getName()</expr>.<expr>detail.getReferencedModelProperty()</expr>", "<expr>reference.getMetaModel().getName()</expr>", "<expr>type</expr>"));
+		}		
+<java>			
+			}
+			else {
 </java> 
 		this.<expr>reference.getName()</expr>_<expr>detail.getReferencedModelProperty()</expr> = new<expr>reference.getReferencedModelName()</expr> == null?null:<expr>Generators.generatePrimitiveWrapper(type, sentence)</expr>;
 <java>
+			}
 		}
 	}
 }

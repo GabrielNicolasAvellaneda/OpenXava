@@ -7,8 +7,7 @@
 <code-generators>
 	
 	<for-stereotype name="WAREHOUSE" model-type="ejb"
-		class="org.openxava.test.generators.WarehouseEJBGenerator"
-		/>
+		class="org.openxava.test.generators.WarehouseEJBGenerator"/>
 		
 	<for-stereotype name="WAREHOUSE" model-type="pojo"
 		class="org.openxava.test.generators.WarehousePOJOGenerator"/> 

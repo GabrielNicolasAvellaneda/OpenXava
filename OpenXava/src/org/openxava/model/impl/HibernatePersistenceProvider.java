@@ -32,7 +32,11 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 			else {
 				key = getKey(metaModel, keyValues);
 				refreshKeyReference(metaModel, key);
-			}					
+			}			
+			if (key == null) {
+				throw new ObjectNotFoundException(XavaResources.getString(
+						"object_with_key_not_found", metaModel.getName(), keyValues));
+			}						
 			Object result = XHibernate.getSession().get(metaModel.getPOJOClass(), (Serializable) key);			
 			if (result == null) {
 				throw new ObjectNotFoundException(XavaResources.getString(

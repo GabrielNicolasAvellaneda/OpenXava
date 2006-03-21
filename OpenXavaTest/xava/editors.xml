@@ -68,7 +68,7 @@
 		<for-stereotype stereotype="SUBFAMILY_DEPENDS_REFERENCE"/>
   </editor>
   
-  <editor	url="descriptionsEditor.jsp" frame="true">
+  <editor url="descriptionsEditor.jsp" frame="true">
   	<property name="model" value="Warehouse"/>
   	<property name="keyProperties" value="zoneNumber, number"/>
 		<property name="descriptionProperty" value="name"/>

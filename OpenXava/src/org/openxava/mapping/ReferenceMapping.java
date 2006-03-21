@@ -4,6 +4,7 @@ package org.openxava.mapping;
 import java.util.*;
 
 import org.openxava.component.*;
+import org.openxava.converters.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 
@@ -53,6 +54,14 @@ public class ReferenceMapping implements java.io.Serializable {
 		return ((ReferenceMappingDetail) result).getCmpTypeName();  
 	}
 	
+	public IConverter getConverterForReferencedModelProperty(String property) throws ElementNotFoundException, XavaException { 
+		Object result = details.get(property);
+		if (result == null) {
+			throw new ElementNotFoundException("reference_mapping_property_not_found", property, referencedModelName, reference);
+		}
+		return ((ReferenceMappingDetail) result).getConverter();  
+	}
+		
 	/**
 	 * Column not qualified. <p>	 
 	 */

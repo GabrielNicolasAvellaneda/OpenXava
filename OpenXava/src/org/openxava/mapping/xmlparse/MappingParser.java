@@ -94,7 +94,7 @@ public class MappingParser extends XmlElementsNames {
 			throw new XavaException("only_1_converter");
 		}
 		container.setConverterClassName(getConverterClassName(l.item(0), lang));
-		// fillSet((Element)l.item(0), container, lang);				
+		fillSet((Element)l.item(0), container, lang);				
 	}
 	
 	
