@@ -115,7 +115,9 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 			String underline = "";
 			if (referencedMapping.hasConverter(key) || property.indexOf('.') &gt;= 0) { 
 				keyAttribute = "_" + Strings.firstUpper(key);
-				underline = "_";
+				if (!modelMapping.isReferenceOverlappingWithSomeProperty(reference.getName(), property)) {
+					underline = "_";
+				}
 			}
 			else {
 				keyAttribute = key;
@@ -161,7 +163,9 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 			String underline = "";
 			if (referencedMapping.hasConverter(key) || property.indexOf('.') &gt;= 0) {
 				keyAttribute = "_" + Strings.firstUpper(key);
-				underline = "_";
+				if (!modelMapping.isReferenceOverlappingWithSomeProperty(reference.getName(), property)) {
+					underline = "_";
+				}
 			}
 			else {
 				keyAttribute = key;

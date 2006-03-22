@@ -48,8 +48,9 @@ if (overlapped) {
 				type = Class.forName(cmpTypeName);
 			}
 			String typeName = Primitives.toWrapperClass(type).getName();
+			String referencedModelProperty = Strings.change(detail.getReferencedModelProperty(), ".", "_");
 # 
-	private #(typeName)# #(reference.getName())#_#(detail.getReferencedModelProperty())#;
+	private #(typeName)# #(reference.getName())#_#(referencedModelProperty)#; 
 # 
 			if (detail.hasConverter()) {
 				String converterAttribute = reference.getName() + "_" + detail.getReferencedModelProperty() + "Converter";
@@ -85,14 +86,15 @@ if (overlapped) {
 	for (Iterator itDetails = referenceMapping.getDetails().iterator(); itDetails.hasNext(); ) {
 		ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
 		if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName(), detail.getReferencedModelProperty())) {
-			String sentence = "new" + reference.getReferencedModelName() + ".get" + Strings.firstUpper(detail.getReferencedModelProperty()) + "()";						
+			String sentence = "new" + reference.getReferencedModelName() + detail.getReferenceModelPropertyAsJavaMethodCall();						
 			String type = referencedModel.getMetaProperty(detail.getReferencedModelProperty()).getType().getName();
 			String cmpType = detail.getCmpTypeName() == null?type:detail.getCmpTypeName();
+			String referencedModelProperty = Strings.change(detail.getReferencedModelProperty(), ".", "_");
 			if (detail.hasConverter()) {
 				String converterGet = "get" + Strings.firstUpper(reference.getName()) + "_" + detail.getReferencedModelProperty() + "Converter()";
 # 
 		try {
-			#(reference.getName())#_#(detail.getReferencedModelProperty())# = (#(cmpType)#) #(converterGet)#.toDB(new#(reference.getReferencedModelName())#==null?null:#(Generators.generatePrimitiveWrapper(type, sentence))#);
+			#(reference.getName())#_#(referencedModelProperty)# = (#(cmpType)#) #(converterGet)#.toDB(new#(reference.getReferencedModelName())#==null?null:#(Generators.generatePrimitiveWrapper(type, sentence))#);
 		}
 		catch (org.openxava.converters.ConversionException ex) {
 			ex.printStackTrace();
@@ -102,7 +104,7 @@ if (overlapped) {
 			}
 			else {
 # 
-		this.#(reference.getName())#_#(detail.getReferencedModelProperty())# = new#(reference.getReferencedModelName())# == null?null:#(Generators.generatePrimitiveWrapper(type, sentence))#;
+		this.#(reference.getName())#_#(referencedModelProperty)# = new#(reference.getReferencedModelName())# == null?null:#(Generators.generatePrimitiveWrapper(type, sentence))#;
 # 
 			}
 		}

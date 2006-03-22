@@ -3,9 +3,6 @@ package org.openxava.test.tests;
 import java.math.*;
 import java.util.*;
 
-import javax.rmi.*;
-
-import org.hibernate.*;
 import org.openxava.hibernate.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;

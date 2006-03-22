@@ -49,8 +49,9 @@ if (overlapped) {
 				type = Class.forName(cmpTypeName);
 			}
 			String typeName = Primitives.toWrapperClass(type).getName();
+			String referencedModelProperty = Strings.change(detail.getReferencedModelProperty(), ".", "_");
 </java> 
-	private <expr>typeName</expr> <expr>reference.getName()</expr>_<expr>detail.getReferencedModelProperty()</expr>;
+	private <expr>typeName</expr> <expr>reference.getName()</expr>_<expr>referencedModelProperty</expr>; 
 <java>
 			if (detail.hasConverter()) {
 				String converterAttribute = reference.getName() + "_" + detail.getReferencedModelProperty() + "Converter";
@@ -86,14 +87,15 @@ if (overlapped) {
 	for (Iterator itDetails = referenceMapping.getDetails().iterator(); itDetails.hasNext(); ) {
 		ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
 		if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName(), detail.getReferencedModelProperty())) {
-			String sentence = "new" + reference.getReferencedModelName() + ".get" + Strings.firstUpper(detail.getReferencedModelProperty()) + "()";						
+			String sentence = "new" + reference.getReferencedModelName() + detail.getReferenceModelPropertyAsJavaMethodCall();						
 			String type = referencedModel.getMetaProperty(detail.getReferencedModelProperty()).getType().getName();
 			String cmpType = detail.getCmpTypeName() == null?type:detail.getCmpTypeName();
+			String referencedModelProperty = Strings.change(detail.getReferencedModelProperty(), ".", "_");
 			if (detail.hasConverter()) {
 				String converterGet = "get" + Strings.firstUpper(reference.getName()) + "_" + detail.getReferencedModelProperty() + "Converter()";
 </java> 
 		try {
-			<expr>reference.getName()</expr>_<expr>detail.getReferencedModelProperty()</expr> = (<expr>cmpType</expr>) <expr>converterGet</expr>.toDB(new<expr>reference.getReferencedModelName()</expr>==null?null:<expr>Generators.generatePrimitiveWrapper(type, sentence)</expr>);
+			<expr>reference.getName()</expr>_<expr>referencedModelProperty</expr> = (<expr>cmpType</expr>) <expr>converterGet</expr>.toDB(new<expr>reference.getReferencedModelName()</expr>==null?null:<expr>Generators.generatePrimitiveWrapper(type, sentence)</expr>);
 		}
 		catch (org.openxava.converters.ConversionException ex) {
 			ex.printStackTrace();
@@ -103,7 +105,7 @@ if (overlapped) {
 			}
 			else {
 </java> 
-		this.<expr>reference.getName()</expr>_<expr>detail.getReferencedModelProperty()</expr> = new<expr>reference.getReferencedModelName()</expr> == null?null:<expr>Generators.generatePrimitiveWrapper(type, sentence)</expr>;
+		this.<expr>reference.getName()</expr>_<expr>referencedModelProperty</expr> = new<expr>reference.getReferencedModelName()</expr> == null?null:<expr>Generators.generatePrimitiveWrapper(type, sentence)</expr>;
 <java>
 			}
 		}
