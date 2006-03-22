@@ -10,7 +10,7 @@ import org.openxava.generators.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Mar 21 16:29:43 CET 2006
+ * @version Wed Mar 22 13:32:10 CET 2006
  */
 public class EntityReferencePG {
     Properties properties = new Properties();
@@ -65,13 +65,14 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     				type = Class.forName(cmpTypeName);
     			}
     			String typeName = Primitives.toWrapperClass(type).getName();
+    			String referencedModelProperty = Strings.change(detail.getReferencedModelProperty(), ".", "_");
     
     out.print(" \n\tprivate ");
     out.print(typeName);
     out.print(" ");
     out.print(reference.getName());
     out.print("_");
-    out.print(detail.getReferencedModelProperty());
+    out.print(referencedModelProperty);
     out.print(";");
     
     			if (detail.hasConverter()) {
@@ -126,16 +127,17 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     	for (Iterator itDetails = referenceMapping.getDetails().iterator(); itDetails.hasNext(); ) {
     		ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
     		if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName(), detail.getReferencedModelProperty())) {
-    			String sentence = "new" + reference.getReferencedModelName() + ".get" + Strings.firstUpper(detail.getReferencedModelProperty()) + "()";						
+    			String sentence = "new" + reference.getReferencedModelName() + detail.getReferenceModelPropertyAsJavaMethodCall();						
     			String type = referencedModel.getMetaProperty(detail.getReferencedModelProperty()).getType().getName();
     			String cmpType = detail.getCmpTypeName() == null?type:detail.getCmpTypeName();
+    			String referencedModelProperty = Strings.change(detail.getReferencedModelProperty(), ".", "_");
     			if (detail.hasConverter()) {
     				String converterGet = "get" + Strings.firstUpper(reference.getName()) + "_" + detail.getReferencedModelProperty() + "Converter()";
     
     out.print(" \n\t\ttry {\n\t\t\t");
     out.print(reference.getName());
     out.print("_");
-    out.print(detail.getReferencedModelProperty());
+    out.print(referencedModelProperty);
     out.print(" = (");
     out.print(cmpType);
     out.print(") ");
@@ -160,7 +162,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     out.print(" \n\t\tthis.");
     out.print(reference.getName());
     out.print("_");
-    out.print(detail.getReferencedModelProperty());
+    out.print(referencedModelProperty);
     out.print(" = new");
     out.print(reference.getReferencedModelName());
     out.print(" == null?null:");
@@ -207,7 +209,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Mar 21 16:29:43 CET 2006", // date this file was generated
+        { "Wed Mar 22 13:32:10 CET 2006", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/entityReference.xml", // input file
              "/home/javi/workspace/OpenXava/generator/EntityReferencePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

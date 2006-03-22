@@ -1,5 +1,7 @@
 package org.openxava.mapping;
 
+import java.util.*;
+
 import org.openxava.component.*;
 import org.openxava.converters.*;
 import org.openxava.util.*;
@@ -32,6 +34,20 @@ public class ReferenceMappingDetail extends MetaSetsContainer {
 	}
 	public void setReferencedModelProperty(String referencedModelProperty) {
 		this.referencedModelProperty = referencedModelProperty;
+	}
+	
+	/**
+	 * From a 'invoice.delivery.shipment.number' returns '.getInvoice().getDelivery().getShipment().getNumber()' 
+	 */
+	public String getReferenceModelPropertyAsJavaMethodCall() {
+		StringBuffer result = new StringBuffer();
+		StringTokenizer st = new StringTokenizer(getReferencedModelProperty(), ".");
+		while (st.hasMoreTokens()) {
+			result.append(".get");
+			result.append(Strings.firstUpper(st.nextToken()));
+			result.append("()");
+		}
+		return result.toString();
 	}
 	
 	public String getQualifiedColumnOfReferencedTable() throws XavaException {

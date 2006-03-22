@@ -10,7 +10,7 @@ import org.openxava.util.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Tue Mar 21 16:29:50 CET 2006
+ * @version Wed Mar 22 13:32:16 CET 2006
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -109,7 +109,7 @@ public class HibernatePG {
     out.print(" \n\t\t\t<key-property name=\"");
     out.print(key.getName());
     out.print("_");
-    out.print(detail.getReferencedModelProperty());
+    out.print(Strings.change(detail.getReferencedModelProperty(), ".", "_"));
     out.print("\" column=\"");
     out.print(detail.getColumn());
     out.print("\" access=\"field\"/>");
@@ -255,7 +255,7 @@ public class HibernatePG {
     out.print("_");
     out.print(ref.getName());
     out.print("_");
-    out.print(detail.getReferencedModelProperty());
+    out.print(Strings.change(detail.getReferencedModelProperty(), ".", "_"));
     out.print("\" column=\"");
     out.print(detail.getColumn());
     out.print("\" access=\"field\"/>");
@@ -313,7 +313,7 @@ public class HibernatePG {
     out.print(" \n\t\t<property name=\"");
     out.print(reference.getName());
     out.print("_");
-    out.print(detail.getReferencedModelProperty());
+    out.print(Strings.change(detail.getReferencedModelProperty(), ".", "_"));
     out.print("\" column=\"");
     out.print(detail.getColumn());
     out.print("\" access=\"field\"/>");
@@ -443,7 +443,7 @@ public class HibernatePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Tue Mar 21 16:29:50 CET 2006", // date this file was generated
+        { "Wed Mar 22 13:32:17 CET 2006", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/hibernate.xml", // input file
              "/home/javi/workspace/OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

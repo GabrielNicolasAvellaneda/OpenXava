@@ -276,6 +276,21 @@
       </columns>
 
    </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_TransportCharge2" name="" primaryKey="TransportCharge2_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="TransportCharge2_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_TransportCharge2" constraint="Constraint_TransportCharge2_"/>
+
+      <columns xmi:id="TransportCharge2__Amount" name="_Amount">
+      </columns>
+      <columns xmi:id="TransportCharge2_year" name="year">
+      </columns>
+      <columns xmi:id="TransportCharge2__Delivery_number" name="_Delivery_number">
+      </columns>
+      <columns xmi:id="TransportCharge2__Delivery_type_number" name="_Delivery_type_number">
+      </columns>
+      <columns xmi:id="TransportCharge2__Delivery_invoice_number" name="_Delivery_invoice_number">
+      </columns>
+
+   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_Clerk" name="" primaryKey="Clerk_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Clerk_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Clerk" constraint="Constraint_Clerk_"/>
 

@@ -990,6 +990,64 @@
       </entity>
 
       <entity>
+         <ejb-name>TransportCharge2</ejb-name>
+
+         <table-name>XAVATEST_TRANSPORTCHARGE2</table-name>
+
+         <cmp-field>
+            <field-name>_Amount</field-name>
+            <column-name>AMOUNT</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>year</field-name>
+            <column-name>YEAR</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Delivery_number</field-name>
+            <column-name>DELIVERY_NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Delivery_type_number</field-name>
+            <column-name>DELIVERY_TYPE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Delivery_invoice_number</field-name>
+            <column-name>DELIVERY_INVOICE_NUMBER</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByDelivery</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM TransportCharge2 o WHERE o._Delivery_number = ?1 AND o._Delivery_type_number = ?2 AND o.year = ?3 AND o._Delivery_invoice_number = ?4 ]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findAll</method-name>
+               <method-params>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM TransportCharge2 o]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
          <ejb-name>Clerk</ejb-name>
 
          <table-name>XAVATEST_CLERK</table-name>

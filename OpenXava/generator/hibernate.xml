@@ -77,7 +77,7 @@ else {
 					ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
 					if (!mapping.isReferenceOverlappingWithSomeProperty(key.getName(), detail.getReferencedModelProperty())) {
 </java> 
-			&lt;key-property name="<expr>key.getName()</expr>_<expr>detail.getReferencedModelProperty()</expr>" column="<expr>detail.getColumn()</expr>" access="field"/&gt;
+			&lt;key-property name="<expr>key.getName()</expr>_<expr>Strings.change(detail.getReferencedModelProperty(), ".", "_")</expr>" column="<expr>detail.getColumn()</expr>" access="field"/&gt;
 <java>			
 					}
 				}		
@@ -173,7 +173,7 @@ while (itReferences.hasNext()) {
 					ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
 					if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName() + "_" + ref.getName(), detail.getReferencedModelProperty())) {
 </java> 
-		&lt;property name="<expr>reference.getName()</expr>_<expr>ref.getName()</expr>_<expr>detail.getReferencedModelProperty()</expr>" column="<expr>detail.getColumn()</expr>" access="field"/&gt;
+		&lt;property name="<expr>reference.getName()</expr>_<expr>ref.getName()</expr>_<expr>Strings.change(detail.getReferencedModelProperty(), ".", "_")</expr>" column="<expr>detail.getColumn()</expr>" access="field"/&gt;
 <java>			
 					}
 				}		
@@ -209,7 +209,7 @@ while (itReferences.hasNext()) {
 				ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
 				if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName(), detail.getReferencedModelProperty())) {
 </java> 
-		&lt;property name="<expr>reference.getName()</expr>_<expr>detail.getReferencedModelProperty()</expr>" column="<expr>detail.getColumn()</expr>" access="field"/&gt;
+		&lt;property name="<expr>reference.getName()</expr>_<expr>Strings.change(detail.getReferencedModelProperty(), ".", "_")</expr>" column="<expr>detail.getColumn()</expr>" access="field"/&gt;
 <java>			
 				}
 			}		
