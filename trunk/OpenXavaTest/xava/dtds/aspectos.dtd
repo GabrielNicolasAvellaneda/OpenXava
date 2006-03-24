@@ -32,3 +32,10 @@
 <!ATTLIST calculador-preborrar
  clase CDATA #REQUIRED
 >
+
+<!ELEMENT poner EMPTY>
+<!ATTLIST poner
+ propiedad CDATA #REQUIRED
+ desde CDATA #IMPLIED
+ valor CDATA #IMPLIED 
+>

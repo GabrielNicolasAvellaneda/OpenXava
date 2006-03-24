@@ -1,10 +1,6 @@
 package org.openxava.test.tests;
 
-import java.math.*;
-import java.util.*;
-
 import org.openxava.hibernate.*;
-import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
 
@@ -14,10 +10,7 @@ import org.openxava.util.*;
  */
 
 public class TransportCharges2Test extends ModuleTestBase {
-	
-	private TransportCharge charge1;
-	private TransportCharge charge2;
-		
+			
 	public TransportCharges2Test(String testName) {
 		super(testName, "OpenXavaTest", "TransportCharges2");		
 	}

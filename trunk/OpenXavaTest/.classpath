@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="hibernate"/>
+	<classpathentry kind="src" path="filtered-files"/>
 	<classpathentry kind="src" path="properties"/>
 	<classpathentry kind="src" path="reports"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="gen-src"/>
 	<classpathentry kind="src" path="gen-src-xava"/>
-	<classpathentry kind="src" path="/OpenXava"/>
+	<classpathentry exported="true" kind="src" path="/OpenXava"/>
 	<classpathentry kind="lib" path="lib/hsqldb.jar"/>
 	<classpathentry kind="lib" path="lib/jbossall-client.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v5.5"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JRockit 1.5.0_02"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/AccessTracking"/>
-	<classpathentry kind="src" path="filtered-files"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>

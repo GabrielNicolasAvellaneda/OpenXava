@@ -82,7 +82,13 @@ public class InvoicesTest extends ModuleTestBase {
 		assertMessage("Invoice deleted successfully");				
 	}
 	
-	public void testCustomizeList_addColumns() throws Exception {
+	public void testCustomizeList() throws Exception {
+		doTestCustomizeList_addColumns();
+		tearDown(); setUp();
+		doTestCustomizeList_storePreferences();
+	}
+	
+	private void doTestCustomizeList_addColumns() throws Exception {
 		assertListColumnCount(8);
 		assertLabelInList(0, "Year");
 		assertLabelInList(1, "Number");
@@ -196,7 +202,7 @@ public class InvoicesTest extends ModuleTestBase {
 		assertLabelInList(9, "City");		
 	}
 	
-	public void testCustomizeList_storePreferences() throws Exception {
+	private void doTestCustomizeList_storePreferences() throws Exception {
 		// This test trusts that 'testCustomizeList_addColumns' is executed before
 		assertListColumnCount(10);
 		assertLabelInList(0, "Year");
