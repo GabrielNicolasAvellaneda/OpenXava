@@ -21,7 +21,7 @@
 			
 		<!-- Others carriers of same warehouse -->	
 		<collection name="fellowCarriers"> 			
-			<reference model="Carrier"/>			
+			<reference model="Carrier" />			
 			<condition>
 				${warehouse.zoneNumber} = ${this.warehouse.zoneNumber} AND 
 				${warehouse.number} = ${this.warehouse.number} AND 
