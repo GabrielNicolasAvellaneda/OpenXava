@@ -170,7 +170,7 @@ public class MetaComponent implements Serializable {
 			Object element = it.next();			
 			if (!(element instanceof MetaAggregateBean)) continue;			
 			MetaAggregateBean aggregate = (MetaAggregateBean) element;
-			if (aggregate.isGenerate()) {				
+			if (aggregate.isPojoGenerated()) {				
 				result.add(aggregate);
 			}			
 		}		
@@ -190,7 +190,7 @@ public class MetaComponent implements Serializable {
 			Object element = it.next();
 			if (!(element instanceof MetaAggregateEjb)) continue;
 			MetaAggregateEjb aggregate = (MetaAggregateEjb) element;
-			if (aggregate.isGenerate()) {
+			if (aggregate.isEjbGenerated()) {
 				result.add(aggregate);
 			}
 		}

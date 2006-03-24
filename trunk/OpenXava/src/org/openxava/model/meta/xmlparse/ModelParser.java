@@ -20,14 +20,18 @@ public class ModelParser extends XmlElementsNames {
 		e.setLabel(el.getAttribute(xlabel[lang]));
 		if (hasEjb(el, lang)) {							
 			fillEjbInfo(el, e, lang);
-			e.setGenerate(false);
+			e.setEjbGenerated(false);
 		}
 		else {			
-			e.setGenerate(true);
+			e.setEjbGenerated(true);
 		}
 		if (hasBean(el, lang)) {
 			e.setBeanClassName(getBeanClass(el, lang));
+			e.setPojoGenerated(false);
 		}				
+		else {
+			e.setPojoGenerated(true);
+		}
 
 		fillMembers(el, e, lang);								
 		return e;
@@ -37,24 +41,26 @@ public class ModelParser extends XmlElementsNames {
 		Element el = (Element) n;
 		if (hasEjb(el, lang)) {
 			MetaAggregateEjb r = createAggregateEjb(n, container, lang);
-			r.setGenerate(false);
+			r.setEjbGenerated(false);
 			return r;			
 		}
 		else if (hasBean(el, lang)) {
 			MetaAggregateBean r = createAggregateBean(n, container, lang);
-			r.setGenerate(false);
+			r.setPojoGenerated(false);
 			return r;
 		}
 		else {
 			String name = el.getAttribute(xname[lang]);
 			if (container.containsMetaReferenceWithModel(name)) {
 				MetaAggregateBean r = createAggregateBean(n, container, lang);
-				r.setGenerate(true);
+				r.setEjbGenerated(true);
+				r.setPojoGenerated(true);
 				return r;
 			}
 			else {
 				MetaAggregateEjb r = createAggregateEjb(n, container, lang);
-				r.setGenerate(true);
+				r.setEjbGenerated(true);
+				r.setPojoGenerated(true);
 				return r;
 			}
 		}		

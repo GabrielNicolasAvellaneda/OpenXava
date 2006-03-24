@@ -10,7 +10,7 @@ import org.openxava.util.*;
  */
 public interface IMetaModel {
 	String getName(); 
-	Class getPOJOClass() throws XavaException, ClassNotFoundException;   
+	Class getPOJOClass() throws XavaException;   
 	String getInterfaceName() throws XavaException;
 	Collection getMetaFinders();	
 	MetaProperty getMetaProperty(String name) throws ElementNotFoundException, XavaException;
@@ -50,4 +50,6 @@ public interface IMetaModel {
 	Collection getRecursiveQualifiedPropertiesNames() throws XavaException;
 	Collection getMetaReferencesKey() throws XavaException;
 	Collection getMetaMembersKey() throws XavaException;
+	Object toPOJO(Map values) throws XavaException;
+	Map toMap(Object modelObject) throws XavaException;
 }

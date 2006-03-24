@@ -94,12 +94,9 @@ public class DescriptionsCalculator implements ICalculator {
 				if (isNull) { 
 					el.setKey(null);
 				}
-				else if(isUseConvertersInKeys()) {
-					el.setKey(getMetaModel().obtainPrimaryKeyFromKey(key));			
-				} 
 				else {
-					el.setKey(getMetaModel().obtainPrimaryKeyFromKeyWithoutConversors(key));			
-				}				
+					el.setKey(getMetaModel().toPOJO(key));
+				}
 			}
 			else {
 				el.setKey(table.getValueAt(i, iKey++));

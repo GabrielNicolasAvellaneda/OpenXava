@@ -40,6 +40,10 @@ public class MetaAggregateEjb extends MetaAggregate implements IMetaEjb {
 	public java.lang.String getPrimaryKey() throws XavaException {
 		return impl.getPrimaryKey();
 	}
+	public boolean isPrimaryKeyClassAvailable() { 
+		return impl.isPrimaryKeyClassAvailable();
+	}
+
 	
 	public void setPrimaryKey(java.lang.String newPrimaryKey) {
 		impl.setPrimaryKey(newPrimaryKey);

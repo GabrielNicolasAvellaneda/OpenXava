@@ -342,13 +342,13 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		return validValues;
 	}
 	
-	public boolean isKey() {
+	public boolean isKey() {		
 		if (!isKeySet) {			
 			try {
 				if (!(getMetaModel() instanceof MetaEntity)) {								
 					key= false;
 				}
-				else if (getMetaModel().isGenerate()) {						
+				else if (getMetaModel().isPojoGenerated() || getMetaModel().isEjbGenerated()) {						
 					key = false;						
 				}
 				else {				
@@ -361,13 +361,13 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				return false;
 			}
 			isKeySet = true;
-		}
+		}		
 		return key;
 	}
 	
 	public void setKey(boolean key) {		
 		this.key = key;
-		isKeySet = true;
+		isKeySet = true;		
 	}
 	
 	
@@ -462,7 +462,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	private boolean calculateIfReadOnly() { 
 		try {			
 			if (getMetaModel() == null) return false;
-			if (getMetaModel().isGenerate()) return false;
+			if (getMetaModel().isPojoGenerated() || getMetaModel().isEjbGenerated()) return false;
 			PropertiesManager man = new PropertiesManager(
 				getMetaModel().getPropertiesClass());
 			return !man.hasSetter(getName());
@@ -777,5 +777,5 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		MetaProperty other = (MetaProperty) o;
 		return getQualifiedName().equals(other.getQualifiedName());
 	}
-
+	
 }

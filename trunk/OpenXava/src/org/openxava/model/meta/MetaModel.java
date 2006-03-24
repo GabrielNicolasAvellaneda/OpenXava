@@ -4,6 +4,7 @@ package org.openxava.model.meta;
 import java.beans.*;
 import java.util.*;
 
+
 import org.openxava.component.*;
 import org.openxava.mapping.*;
 import org.openxava.util.*;
@@ -46,7 +47,8 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	private Collection membersNames = new ArrayList();
 	private Collection calculatedPropertiesNames;
 	private MetaView metaViewByDefault;
-	private boolean generate;
+	private boolean ejbGenerated;
+	private boolean pojoGenerated;
 	
 	
 	private Collection metaPropertiesWithDefaultValueCalculator;
@@ -85,23 +87,23 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	}
 	
 	/**
-	 * All models (Entities and Aggregates) where its java code is generated.
+	 * All models (Entities and Aggregates) where its EJB code is generated.
+	 * 
 	 * @return of type MetaModel
-	 * @throws XavaException
 	 */
-	public static Collection getAllGenerated() throws XavaException { 
+	public static Collection getAllEjbGenerated() throws XavaException { 
 		Collection r = new HashSet();
 		for (Iterator it = MetaComponent.getAll().iterator(); it.hasNext();) {
 			MetaComponent comp = (MetaComponent) it.next();
 			MetaEntity en = comp.getMetaEntity();
-			if (en.isGenerate()) { // At momment, pojo and hibernate will be treated
+			if (en.isEjbGenerated()) { 
 				r.add(en);
 			}
 									
 			for (Iterator itAggregates = comp.getMetaAggregates().iterator(); itAggregates.hasNext();) {
 				MetaAggregate ag = (MetaAggregate) itAggregates.next();
-				if (ag instanceof MetaAggregateEjb) { // At momment, pojo and hibernate will be treated
-					if (ag.isGenerate()) {
+				if (ag instanceof MetaAggregateEjb) { 
+					if (ag.isEjbGenerated()) {
 						r.add(ag);
 					}
 				}
@@ -109,6 +111,33 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		}		
 		return r;
 	}
+	
+	/**
+	 * All models (Entities and Aggregates) where its POJO code and Hiberante mapping is generated.
+	 * 
+	 * @return of type MetaModel 
+	 */
+	public static Collection getAllPojoGenerated() throws XavaException { 
+		Collection r = new HashSet();
+		for (Iterator it = MetaComponent.getAll().iterator(); it.hasNext();) {
+			MetaComponent comp = (MetaComponent) it.next();
+			MetaEntity en = comp.getMetaEntity();
+			if (en.isPojoGenerated()) { 
+				r.add(en);
+			}
+									
+			for (Iterator itAggregates = comp.getMetaAggregates().iterator(); itAggregates.hasNext();) {
+				MetaAggregate ag = (MetaAggregate) itAggregates.next();
+				if (ag instanceof MetaAggregateEjb) { 
+					if (ag.isPojoGenerated()) {
+						r.add(ag);
+					}
+				}
+			}
+		}		
+		return r;
+	}
+	
 	
 	public void addMetaFinder(MetaFinder metaFinder) {
 		if (metaFinders == null) metaFinders = new ArrayList();
@@ -1001,15 +1030,22 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		return getName();
 	}
 		
-	public boolean isGenerate() {
-		return generate;
+	public boolean isEjbGenerated() {
+		return ejbGenerated;
 	}
 
-	public void setGenerate(boolean generate) {		
-		this.generate = generate;
+	public void setEjbGenerated(boolean generated) {		
+		this.ejbGenerated = generated;
 	}
 	
-	
+	public boolean isPojoGenerated() {
+		return pojoGenerated;
+	}
+
+	public void setPojoGenerated(boolean generated) {		
+		this.pojoGenerated = generated;
+	}
+		
 	abstract public ModelMapping getMapping() throws XavaException;
 	
 	public boolean containsMetaReferenceWithModel(String name) {
@@ -1163,6 +1199,77 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		}
 		return mapMetaPropertiesView;
 	}
+	
+	/**
+	 * Create a POJO corresponding to this model, and populate it with
+	 * the values sended in map format. <p>
+	 * 
+	 * @param values  Values to populate the pojo. Can contains nested maps. Cannot be null 
+	 */
+	public Object toPOJO(Map values) throws XavaException {
+		try {
+			Object pojo = getPOJOClass().newInstance();
+			PropertiesManager pm = new PropertiesManager(pojo);			
+			for (Iterator it=values.entrySet().iterator(); it.hasNext();) {
+				Map.Entry en = (Map.Entry) it.next();
+				if (en.getValue() instanceof Map) {
+					MetaModel referencedModel = getMetaReference((String)en.getKey()).getMetaModelReferenced();
+					pm.executeSet((String)en.getKey(), referencedModel.toPOJO((Map) en.getValue()));
+				}
+				else {
+					MetaProperty property = getMetaProperty((String)en.getKey());					
+					Object value = en.getValue();
+					try {
+						pm.executeSet((String)en.getKey(), en.getValue());
+					}
+					catch (IllegalArgumentException ex) {
+						if (property.hasValidValues() && value instanceof String) {								
+							value = new Integer(property.getValidValueIndex(value));
+							pm.executeSet((String)en.getKey(), value);
+						}
+						else {
+							throw ex;
+						}							
+					}
+				}
+			}
+			return pojo;
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			throw new XavaException("to_pojo_error", getName());
+		}		
+	}
+	
+	/**
+	 * Convert a object of this model in a map of values. <p>
+	 * 
+	 * The model object must implement the interface of this model,
+	 * that is, IInvoice, ICustomer, ISeller, etc. Hence you can use
+	 * POJOs or EJB2 CMP beans, or whatever object that implements the
+	 * interface.<br> 
+	 * 
+	 * @param modelObject  Cannot be null.
+	 */
+	public Map toMap(Object modelObject) throws XavaException { 
+		try {
+			PropertiesManager pm = new PropertiesManager(modelObject);
+			Map values = new HashMap();
+			for (Iterator it = getPropertiesNames().iterator(); it.hasNext();) {
+				String property = (String) it.next();
+				values.put(property, pm.executeGet(property));
+			}
+			for (Iterator it = getMetaReferences().iterator(); it.hasNext();) {
+				MetaReference reference = (MetaReference) it.next();
+				values.put(reference.getName(), reference.getMetaModelReferenced().toMap(pm.executeGet(reference.getName())));
+			}					
+			return values;
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			throw new XavaException("to_map_error");
+		}		
+	}
 
 	public Collection getViewPropertiesNames() {
 		return Collections.unmodifiableCollection(getMapMetaPropertiesView().keySet());
@@ -1299,9 +1406,15 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		return getMetaComponent().getPackageName() + "." + getName();
 	}
 	
-	public Class getPOJOClass() throws XavaException, ClassNotFoundException { 
+	public Class getPOJOClass() throws XavaException { 
 		if (pojoClass==null){
-			pojoClass =  Class.forName(getPOJOClassName());
+			try {
+				pojoClass =  Class.forName(getPOJOClassName());
+			} 
+			catch (Exception ex) {
+				ex.printStackTrace();
+				throw new XavaException("create_class_error", getPOJOClassName());
+			}
 		}
 		return pojoClass;
 			

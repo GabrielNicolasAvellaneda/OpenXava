@@ -1105,7 +1105,7 @@ public class View implements java.io.Serializable {
 				}	
 			}			
 			
-			// References
+			// References			
 			Collection references = getMetaModel().getMetaReferencesWithDefaultValueCalculator();					
 			if (!references.isEmpty()) {		
 				Map membersNames = getMembersNamesImpl();		
@@ -1114,11 +1114,16 @@ public class View implements java.io.Serializable {
 				while (it.hasNext()) {
 					MetaReference ref = (MetaReference) it.next();
 					if (membersNames.containsKey(ref.getName())) {
-						try {
+						try {							
 							if (!ref.getMetaCalculatorDefaultValue().containsMetaSetsWithoutValue()) { // This way to avoid calculated dependend ones
 								Object value = ref.getDefaultValueCalculator().calculate();
-								IMetaEjb referencedModel = (IMetaEjb) ref.getMetaModelReferenced();	
-								if (referencedModel.getPrimaryKeyClass().isInstance(value)) {
+								IMetaEjb referencedModel = (IMetaEjb) ref.getMetaModelReferenced();								
+								if (referencedModel.getPOJOClass().isInstance(value)) { 																								
+									Map values = referencedModel.toMap(value);
+									setValue(ref.getName(), values);
+									alreadyPut.addAll(referencedModel.getAllKeyPropertiesNames());									
+								}
+								else if (referencedModel.isPrimaryKeyClassAvailable() && referencedModel.getPrimaryKeyClass().isInstance(value)) { 
 									Map values = referencedModel.obtainMapFromPrimaryKey(value);
 									setValue(ref.getName(), values);
 									alreadyPut.addAll(referencedModel.getAllKeyPropertiesNames());
@@ -1390,7 +1395,7 @@ public class View implements java.io.Serializable {
 						String propertyKey= "xava." + qualifier + "." + p.getName();						
 						String valueKey = propertyKey + ".value";
 						String [] results = getRequest().getParameterValues(propertyKey);
-						Object value = WebEditors.parse(getRequest(), p, results, getErrors());
+						Object value = WebEditors.parse(getRequest(), p, results, getErrors());						
 						boolean isHiddenKeyWithoutValue = p.isHidden() && (results == null); // for not reset hidden values
 						if (!isHiddenKeyWithoutValue && WebEditors.mustToFormat(p)) { 
 							getRequest().setAttribute(valueKey, value);
@@ -1473,18 +1478,18 @@ public class View implements java.io.Serializable {
 
 	private void assignReferenceValue(String qualifier, MetaReference ref, String value) throws XavaException {		
 		IMetaEjb metaModel = (IMetaEjb) ref.getMetaModelReferenced(); 
-		Class keyClass = metaModel.getPrimaryKeyClass();
-		Field [] fields = keyClass.getFields();
+		Class keyClass = metaModel.getPOJOClass(); 
+		Field [] fields = keyClass.getDeclaredFields();
 		Arrays.sort(fields, FieldComparator.getInstance());
 		if (!value.startsWith("[")) value = "";
 		StringTokenizer st = new StringTokenizer(Strings.change(value, "..", ". ."), "[.]");		
 		for (int i = 0; i < fields.length; i++) {
-			String propertyName = fields[i].getName();			
-			boolean hasConverter = propertyName.startsWith("_"); 
-			if (hasConverter) propertyName = Strings.firstLower(propertyName.substring(1));						
+			String propertyName = fields[i].getName();
+			if (!metaModel.isKey(propertyName)) continue;			
 			MetaProperty p = metaModel.getMetaProperty(propertyName);
+			boolean hasConverter = p.getMapping().hasConverter(); 															
 			Object propertyValue = null;
-			if (st.hasMoreTokens()) { // if not then null is assumed. This is a case of empty vale
+			if (st.hasMoreTokens()) { // if not then null is assumed. This is a case of empty value
 				String stringPropertyValue = st.nextToken();
 				if (hasConverter) { 
 					try {
@@ -1501,11 +1506,11 @@ public class View implements java.io.Serializable {
 				}								
 			}			
 			String valueKey = qualifier + "." + ref.getName() + "." + propertyName + ".value";			 
-			if (WebEditors.mustToFormat(p)) {
+			if (WebEditors.mustToFormat(p)) {				
 				getRequest().setAttribute(valueKey, propertyValue);
 				setValue(ref.getName() + "." + p.getName(), propertyValue);
 			}									
-		}				
+		}						
 	}
 		
 	public boolean throwsPropertyChanged(MetaProperty p) {		
