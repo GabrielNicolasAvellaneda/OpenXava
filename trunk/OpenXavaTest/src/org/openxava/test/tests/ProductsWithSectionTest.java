@@ -17,15 +17,15 @@ public class ProductsWithSectionTest extends ProductsTest {
 		execute("CRUD.new");
 		execute("Products.setLimitZoneTo1"); 
 		
-		WarehouseKey key1 = new WarehouseKey();
+		Warehouse key1 = new Warehouse();
 		key1.setZoneNumber(1);
-		key1.set_Number(new Integer(1));
-		WarehouseKey key2 = new WarehouseKey();
+		key1.setNumber(1);
+		Warehouse key2 = new Warehouse();
 		key2.setZoneNumber(1);
-		key2.set_Number(new Integer(2));
-		WarehouseKey key3 = new WarehouseKey();
+		key2.setNumber(2);
+		Warehouse key3 = new Warehouse();
 		key3.setZoneNumber(1);
-		key3.set_Number(new Integer(3));		
+		key3.setNumber(3);		
 		
 		String [][] zone1WarehouseValues = new String [][] {
 			{ "", "" },

@@ -14,17 +14,17 @@ import org.openxava.util.*;
  * @author Javier Paniza
  */
 
-public class WarehouseKeyFormatter implements IFormatter {
+public class WarehouseFormatter implements IFormatter {
 
 	private final static String BAD_STRING =
-		"String for create WarehouseKey must have format: '[.zoneNumber.number.]'";
+		"String for create Warehouse must have format: '[.zoneNumber.number.]'"; 
 		
 
 	public String format(HttpServletRequest request,	Object object) {		
 		return object==null?"":object.toString();
 	}
 	
-	public Object parse(HttpServletRequest request, String string) throws ParseException {
+	public Object parse(HttpServletRequest request, String string) throws ParseException {		
 		if (Is.emptyString(string) || "0".equals(string)) {
 			return null; 
 		}				
@@ -38,16 +38,17 @@ public class WarehouseKeyFormatter implements IFormatter {
 		}
 		String snumber = st.nextToken().trim();
 		
-		WarehouseKey key = new WarehouseKey();
+		Warehouse warehouse = new Warehouse();
 		try {
-			key.zoneNumber  = "null".equals(szoneNumber)?0:Integer.parseInt(szoneNumber); 
-			key._Number = "null".equals(snumber)?new Integer(0):new Integer(snumber); 
+			warehouse.setZoneNumber("null".equals(szoneNumber)?0:Integer.parseInt(szoneNumber)); 
+			warehouse.setNumber("null".equals(snumber)?0:Integer.parseInt(snumber)); 
 		}
 		catch (NumberFormatException ex) {
 			throw new ParseException("Impossible to parse WarehouseKey: zoneNumber and number must be numerics", 0);			
 		}		
 		
-		return key;		
+		return warehouse;
+		
 	}
 
 }
