@@ -52,7 +52,15 @@ public class CustomersWithSectionTest extends CustomersTest {
 		assertLabel("alternateSeller", "Secondary seller");
 	}
 	
-	public void testCustomizeList_moveAndRemove() throws Exception {
+	public void testCustomizeList() throws Exception { 
+		doTestCustomizeList_moveAndRemove();
+		tearDown();	setUp();
+		doTestCustomizeList_generatePDF();
+		tearDown();	setUp();
+		doTestRestoreColumns_addRemoveTabColumnsDynamically();
+	}
+	
+	private void doTestCustomizeList_moveAndRemove() throws Exception {
 		assertActions(listActions);
 		execute("List.customize");		
 		assertActions(listCustomizeActions);
@@ -159,7 +167,7 @@ public class CustomersWithSectionTest extends CustomersTest {
 		assertActions(listActions);
 	}
 	
-	public void testCustomizeList_generatePDF() throws Exception {
+	private void doTestCustomizeList_generatePDF() throws Exception {
 		// Trusts in that testCustomizeList_moveAndRemove is executed before
 		execute("List.customize");
 		assertListColumnCount(5);
@@ -171,7 +179,7 @@ public class CustomersWithSectionTest extends CustomersTest {
 		
 	}
 		
-	public void testRestoreColumns_addRemoveTabColumnsDynamically() throws Exception {
+	private void doTestRestoreColumns_addRemoveTabColumnsDynamically() throws Exception { 
 		// Restoring initial tab setup
 		execute("List.customize");
 		execute("List.addColumns");							
@@ -224,7 +232,7 @@ public class CustomersWithSectionTest extends CustomersTest {
 		assertValueInList(0, 5, state); 
 	}
 	
-	public void testCustomizeList_addAndResetModule() throws Exception {
+	public void testCustomizeList_addAndResetModule() throws Exception { 
 		assertListColumnCount(6);
 		String value = getValueInList(0, 0);
 		execute("List.customize");

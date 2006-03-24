@@ -1,10 +1,7 @@
 package org.openxava.test.tests;
 
-import java.io.*;
 import java.text.*;
 import java.util.*;
-
-import javax.ejb.*;
 
 import org.hibernate.*;
 import org.openxava.hibernate.*;

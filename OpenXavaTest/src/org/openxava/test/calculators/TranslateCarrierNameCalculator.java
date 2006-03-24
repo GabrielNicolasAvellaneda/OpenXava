@@ -13,7 +13,7 @@ public class TranslateCarrierNameCalculator implements IEntityCalculator {
 	
 	private ICarrier carrier;	
 
-	public Object calculate() throws Exception {		
+	public Object calculate() throws Exception {				
 		String name = carrier.getName();
 		String translated = name;
 		if ("UNO".equals(name)) translated = "ONE";
