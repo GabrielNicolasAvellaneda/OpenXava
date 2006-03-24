@@ -165,7 +165,7 @@
 		<reference-view reference="alternateSeller" view="DecorateName" create="false"/>
 		 
 		<members>
-			number; 
+			number;
 			type; 
 			name; 
 			photo; 
