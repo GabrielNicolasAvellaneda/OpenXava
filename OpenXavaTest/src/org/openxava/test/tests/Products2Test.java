@@ -128,15 +128,15 @@ public class Products2Test extends ModuleTestBase {
 		execute("CRUD.new");
 		execute("Products2.changeLimitZone");
 		
-		WarehouseKey key1 = new WarehouseKey();
+		Warehouse key1 = new Warehouse();
 		key1.setZoneNumber(1);
-		key1.set_Number(new Integer(1));
-		WarehouseKey key2 = new WarehouseKey();
+		key1.setNumber(1);
+		Warehouse key2 = new Warehouse();
 		key2.setZoneNumber(1);
-		key2.set_Number(new Integer(2));
-		WarehouseKey key3 = new WarehouseKey();
+		key2.setNumber(2);
+		Warehouse key3 = new Warehouse();
 		key3.setZoneNumber(1);
-		key3.set_Number(new Integer(3));
+		key3.setNumber(3);
 		
 		String [][] warehouses = {
 				{ "", "" },
@@ -180,14 +180,14 @@ public class Products2Test extends ModuleTestBase {
 		execute("CRUD.new");
 		assertNotExists("zoneOne");
 		
-		WarehouseKey warehouseKeyZone1 = new WarehouseKey();
-		warehouseKeyZone1.set_Number(new Integer(1));
+		Warehouse warehouseKeyZone1 = new Warehouse();
+		warehouseKeyZone1.setNumber(1);
 		warehouseKeyZone1.setZoneNumber(1); 
 		setValue("warehouse.KEY", warehouseKeyZone1.toString());
 		assertExists("zoneOne");
 		
-		WarehouseKey warehouseKeyZone2 = new WarehouseKey();
-		warehouseKeyZone2.set_Number(new Integer(1));
+		Warehouse warehouseKeyZone2 = new Warehouse();
+		warehouseKeyZone2.setNumber(1);
 		warehouseKeyZone2.setZoneNumber(2); 
 		setValue("warehouse.KEY", warehouseKeyZone2.toString());
 		assertNotExists("zoneOne");
@@ -287,8 +287,8 @@ public class Products2Test extends ModuleTestBase {
 		setValue("family.number", "2");
 		assertNoErrors();
 		setValue("subfamily.number", "12");
-		WarehouseKey warehouseKey = new WarehouseKey();
-		warehouseKey.set_Number(new Integer(1));
+		Warehouse warehouseKey = new Warehouse();
+		warehouseKey.setNumber(1);
 		warehouseKey.setZoneNumber(2); 
 		setValue("warehouse.KEY", warehouseKey.toString());
 		setValue("unitPrice", "125.66");

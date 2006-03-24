@@ -135,7 +135,7 @@ public class CarriersTest extends ModuleTestBase {
 	
 	public void testPropertyDependsDescriptionsListReference_multipleKeyWithSpaces() throws Exception {
 		execute("CRUD.new");		
-		DrivingLicenceKey key = new DrivingLicenceKey();
+		DrivingLicence key = new DrivingLicence();
 		key.setType("C ");
 		key.setLevel(1);
 		assertValue("remarks","");			
