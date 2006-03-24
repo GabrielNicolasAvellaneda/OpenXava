@@ -20,7 +20,7 @@ public class EJBCodeGenerator extends CodeGenerator{
 		File fModelXEjbPath = new File(modelXEjbPath);
 		fModelXEjbPath.mkdirs();			
 		// Main entity			
-		if (component.getMetaEntity().isGenerate()) {			
+		if (component.getMetaEntity().isEjbGenerated()) {			
 			System.out.println(XavaResources.getString("generating_xdoclet_code", component.getName()));			
 			String [] argv = {				
 				componentsPath  + "/" + file,				

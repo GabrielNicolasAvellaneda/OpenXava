@@ -39,7 +39,7 @@ public class HCodeGenerator extends CodeGenerator {
 		File fModelPath = new File(modelPath);
 		fModelPath.mkdirs();
 		
-		if (component.getMetaEntity().isGenerate()) { 
+		if (component.getMetaEntity().isPojoGenerated()) { 
 			// Main entity			
 			System.out.println(XavaResources.getString("generating_pojo_code", component.getName()));			
 			String [] argv = {				
