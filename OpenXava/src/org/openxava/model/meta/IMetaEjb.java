@@ -25,6 +25,7 @@ public interface IMetaEjb extends IMetaModel {
 	void setJndi(java.lang.String newJndi);	
 	Class getHomeClass() throws XavaException;	
 	Class getPrimaryKeyClass() throws XavaException;
+	boolean isPrimaryKeyClassAvailable();
 	
 	/**
 	 * For use inside EJB. <p>

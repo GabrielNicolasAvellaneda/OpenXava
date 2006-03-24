@@ -77,6 +77,16 @@ public class MetaEjbImpl implements Serializable {
 		primaryKey = newPrimaryKey;
 	}
 	
+	public boolean isPrimaryKeyClassAvailable() { 
+		try {
+			Class.forName(getPrimaryKey());
+			return true;
+		} 
+		catch (Exception ex) {
+			return false;
+		}
+	}
+	
 	public java.lang.String getRemote() throws XavaException {
 		if (Is.emptyString(remote)) {
 			remote = getPackageName() + "." + getModelName() + "Remote";
@@ -368,7 +378,7 @@ public class MetaEjbImpl implements Serializable {
 		}
 
 	}
-	
+		
 	private boolean assignFromValidValues(Object key, String propertyName, Field f, String value) throws ElementNotFoundException, XavaException, IllegalArgumentException, IllegalAccessException {
 		MetaProperty pr = metaModel.getMetaProperty(propertyName);			
 		if (pr.hasValidValues()) {

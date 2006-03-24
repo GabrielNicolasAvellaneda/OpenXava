@@ -123,7 +123,7 @@ public class XHibernate {
 		try {
 			Configuration configuration = new Configuration().configure(hibernateCfg);			
 			
-			for (Iterator it = MetaModel.getAllGenerated().iterator(); it.hasNext();) {
+			for (Iterator it = MetaModel.getAllPojoGenerated().iterator(); it.hasNext();) {
 				MetaModel model = (MetaModel) it.next();
 				try {
 					configuration.addResource(model.getName() + ".hbm.xml");

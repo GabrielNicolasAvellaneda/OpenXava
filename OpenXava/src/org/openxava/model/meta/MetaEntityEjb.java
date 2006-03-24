@@ -37,6 +37,9 @@ public class MetaEntityEjb extends MetaEntity implements IMetaEjb {
 	public java.lang.String getPrimaryKey() throws XavaException {
 		return impl.getPrimaryKey();
 	}
+	public boolean isPrimaryKeyClassAvailable() { 
+		return impl.isPrimaryKeyClassAvailable();
+	}
 	public void setPrimaryKey(java.lang.String newPrimaryKey) {
 		impl.setPrimaryKey(newPrimaryKey);
 	}	
@@ -59,7 +62,7 @@ public class MetaEntityEjb extends MetaEntity implements IMetaEjb {
 	public Collection getKeyFields() throws XavaException {
 		if (keyFields == null) {
 			keyFields = new ArrayList();	
-			if (isGenerate()) {
+			if (isEjbGenerated()) {
 				keyFields.addAll(getAllKeyPropertiesNames());
 			}
 			else {		
