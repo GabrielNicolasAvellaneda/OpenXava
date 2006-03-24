@@ -71,11 +71,11 @@
 		
     <target name="copyDTDs">     
     
-		<copy todir="../${project}/xava/dtds" overwrite="true">
+		<copy todir="../${project}/xava/dtds" overwrite="false">
 			<fileset dir="../OpenXava/xava/dtds" excludes="componente.dtd,component.dtd"/>
 		</copy>
 		
-		<copy todir="../${project}/components/dtds" overwrite="true">
+		<copy todir="../${project}/components/dtds" overwrite="false">
 			<fileset dir="../OpenXava/xava/dtds" includes="componente.dtd,component.dtd"/>
 		</copy>
 		    
@@ -83,7 +83,7 @@
 	
 	<target name="filterXavaFilesWithoutConfiguration" unless="configuration">
 		<!-- to replace within xava files -->
-		<copy todir="../${project.ejb}/filtered-files" overwrite="true">		
+		<copy todir="../${project.ejb}/filtered-files" overwrite="false">		
 			<fileset dir="../${project.ejb}/xava"/>
 	    	<filterset>	    	
 				<filter token="separator" value="${separator}"/>
@@ -91,7 +91,7 @@
 			</filterset> 			         
 		</copy>			
 		<!-- to replace within xava components -->
-		<copy todir="../${project.ejb}/filtered-files" overwrite="true">		
+		<copy todir="../${project.ejb}/filtered-files" overwrite="false">		
 			<fileset dir="../${project.ejb}/components"/>
 	    	<filterset>	    	
 				<filter token="separator" value="${separator}"/>
@@ -104,7 +104,7 @@
     	
 	<target name="filterXavaFilesWithConfiguration" if="configuration">
 		<!-- to replace within xava files -->
-		<copy todir="../${project.ejb}/filtered-files" overwrite="true">		
+		<copy todir="../${project.ejb}/filtered-files" overwrite="false">		
 			<fileset dir="../${project.ejb}/xava"/>
 	    	<filterset>	    	
 				<filtersfile file="${configuration}.properties"/>				
@@ -113,7 +113,11 @@
 			</filterset> 			         
 		</copy>			
 		<!-- to replace within xava components -->
-		<copy todir="../${project.ejb}/filtered-files" overwrite="true">		
+		<antcall target="filterXavaComponents"/>
+	</target>
+	
+	<target name="filterXavaComponents">
+		<copy todir="../${project.ejb}/filtered-files" overwrite="false">		
 			<fileset dir="../${project.ejb}/components"/>
 	    	<filterset>	    	
 				<filtersfile file="${configuration}.properties"/>				
@@ -121,7 +125,7 @@
 				<filter token="collection" value="${collection}"/>
 	    		<filter token="access.table" value="${access.table}"/>	    		
 			</filterset> 			         
-		</copy>				
+		</copy>						
 	</target>
 	
 	<target name="filterXavaFiles" depends="copyDTDs">
@@ -130,7 +134,7 @@
 	</target>
 	
 	<target name="filterHibernateFilesWithoutConfiguration" unless="configuration">
-		<copy todir="../${project.ejb}/filtered-files" failonerror="false" overwrite="true">		
+		<copy todir="../${project.ejb}/filtered-files" failonerror="false" overwrite="false">		
 			<fileset dir="../OpenXava/hibernate"/>
 			<fileset dir="../${project.ejb}/hibernate"/>			
 			<fileset dir="../${project.ejb}/build/hibernate"/>
@@ -147,7 +151,7 @@
 	</target>	
 	
 	<target name="filterHibernateFilesWithConfiguration" if="configuration">
-		<copy todir="../${project.ejb}/filtered-files" failonerror="false" overwrite="true">		
+		<copy todir="../${project.ejb}/filtered-files" failonerror="false" overwrite="false">		
 			<fileset dir="../OpenXava/hibernate"/>
 			<fileset dir="../${project.ejb}/hibernate"/>
 			<fileset dir="../${project.ejb}/build/hibernate"/>
@@ -366,7 +370,7 @@
 		</java>
     </target>
 	
-    <target name="generateHibernate" depends="filter">     
+    <target name="generateHibernate" depends="filterXavaComponents">     
     	
 	   <echo>Generating classes</echo>
     	<delete file="../${project}/gen-src-xava/dnas.properties"/>
@@ -387,7 +391,7 @@
     	<ant antfile="../OpenXava/xdoclet/build.xml"/>    			
 	</target>
 	        
-    <target name="generateEJB" depends="filter, generateXDoclet, generateHibernate">         	
+    <target name="generateEJB" depends="filterXavaComponents, generateXDoclet, generateHibernate">         	
     	<antcall target="runXDoclet"/>
     </target>
 		
@@ -558,7 +562,7 @@
 	</target>
 	
 	<target name="filterI18n" if="configuration">
-  		<copy todir="../${project}/filtered-files" overwrite="true">
+  		<copy todir="../${project}/filtered-files" overwrite="false">
     		<fileset dir="../${project}/i18n" excludes="portlets, portlets/*"/>
 	    	<filterset>	    	
 				<filtersfile file="${configuration}.properties"/>				
@@ -569,7 +573,17 @@
   		</copy>					
 	</target>
 	
-	<target name="filter" depends="filterXavaFiles, filterHibernateFiles, filterI18n">
+	<target name="filterRequired">
+		<uptodate property="filterRequired" targetfile="../${project}/build.xml" >
+			<srcfiles dir= "../${project}/filtered-files" includes="**/*"/>
+		</uptodate>
+	</target>
+	
+	<target name="deleteFilteredFiles" if="filterRequired">
+		<delete dir="../${project}/filtered-files"/>
+	</target>
+	
+	<target name="filter" depends="filterRequired, deleteFilteredFiles, filterXavaFiles, filterHibernateFiles, filterI18n, updateDataSourceInfo">
 		<copy todir="../${project}/${classes.dir}">
 			<fileset dir="../${project}/filtered-files"/>
 		</copy>
