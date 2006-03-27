@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="components"/>
-	<classpathentry kind="src" path="i18n"/>
-	<classpathentry kind="src" path="xava"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="gen-src"/>
 	<classpathentry kind="src" path="gen-src-xava"/>
 	<classpathentry kind="src" path="properties"/>
 	<classpathentry kind="src" path="/OpenXava"/>
+	<classpathentry kind="src" path="filtered-files"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>
