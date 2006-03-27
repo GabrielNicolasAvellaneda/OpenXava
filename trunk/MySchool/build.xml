@@ -1,36 +1,36 @@
 <?xml version="1.0"?>
 
-<project name="MySchool" default="deploy" basedir=".">
+<project name="MySchool" default="deployWar" basedir=".">
 
 	<property name="project" value="MySchool" />
 	<property name="package" value="school"/>
-	<property name="configuration" value="jboss-hypersonic" />		
+	<property name="configuration" value="tomcat-hypersonic" />		
+	<!-- property name="configuration" value="jboss-hypersonic" /-->		
 	<!-- property name="configuration" value="websphere-as400" /-->	
 	<property file="../openxava.properties"/>
 	<property file="${configuration}.properties"/>
 	<property name="datasource" value="MySchoolDS"/>
 	<property name="separator" value="_"/>
 		
-	<target name="generateEJB">
-		<ant antfile="../OpenXava/build.xml" target="generateEJB"/>		
+	<target name="generateCode">
+		<ant antfile="../OpenXava/build.xml" target="generateHibernate"/>		
 	</target>
 	
-	<target name="regenerateEJB">
-		<ant antfile="../OpenXava/build.xml" target="regenerateEJB"/>		
-	</target>
-		       
-	<target name="createEJBJar">
-        <ant antfile = "../OpenXava/build.xml" target="createEJBJar"/>      		
-	</target>
-		
-	<target name="deployEJB" depends ="createEJBJar">		
-		<ant antfile="../OpenXava/build.xml" target="deployEJB"/>
-	</target>
-		
 	<target name="deployWar">
 		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
 	</target>
 	
+	<target name="rebuild">
+		<ant antfile="../OpenXava/build.xml" target="prepareWar"/>
+	</target>
+	
+	<!--
+	If you work with Eclipse add this target to the builder for this project
+	-->
+	<target name="buildForEclipse">		
+		<ant antfile="../OpenXava/build.xml" target="buildForEclipse"/>
+	</target>	
+		
 	<target name="redeployPortlets"> 
 		<touch file="../${project}/xava/application.xml"/>
 		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
@@ -40,14 +40,4 @@
 		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
 	</target>	
 	
-	<target name="deploy">
-		<ant antfile="../OpenXava/build.xml" target="deploy"/>
-	</target>	
-	
-	<target name="createWebsphereEar">
-		<ant antfile="../OpenXava/build.xml" target="generateWebsphereMapping"/>
-		<antcall target="createEJBJar"/>
-		<ant antfile="../OpenXava/build.xml" target="createWebsphereEar"/>
-	</target>
-							
 </project>
