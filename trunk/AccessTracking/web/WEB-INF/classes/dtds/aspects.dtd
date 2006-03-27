@@ -31,3 +31,10 @@
 <!ATTLIST preremove-calculator
  class CDATA #REQUIRED
 >
+
+<!ELEMENT set EMPTY>
+<!ATTLIST set
+ property CDATA #REQUIRED
+ from CDATA #IMPLIED
+ value CDATA #IMPLIED 
+>
