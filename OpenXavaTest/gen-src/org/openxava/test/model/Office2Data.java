@@ -10,6 +10,8 @@ public class Office2Data
    extends java.lang.Object
    implements java.io.Serializable
 {
+
+   private static final long serialVersionUID = 1L;
    private java.lang.Integer _Receptionist;
    private java.lang.String _Name;
    private int zoneNumber;

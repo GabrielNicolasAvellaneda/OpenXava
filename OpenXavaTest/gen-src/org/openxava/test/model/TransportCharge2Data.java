@@ -10,6 +10,8 @@ public class TransportCharge2Data
    extends java.lang.Object
    implements java.io.Serializable
 {
+
+   private static final long serialVersionUID = 1L;
    private java.math.BigDecimal _Amount;
    private int year;
    private int _Delivery_number;

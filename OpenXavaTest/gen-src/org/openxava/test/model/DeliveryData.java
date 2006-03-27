@@ -10,6 +10,8 @@ public class DeliveryData
    extends java.lang.Object
    implements java.io.Serializable
 {
+
+   private static final long serialVersionUID = 1L;
    private java.lang.String _Distance;
    private java.lang.String _Incidents;
    private java.lang.String _DriverType;

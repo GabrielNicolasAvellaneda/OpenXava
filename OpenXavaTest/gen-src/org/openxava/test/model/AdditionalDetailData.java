@@ -10,6 +10,8 @@ public class AdditionalDetailData
    extends java.lang.Object
    implements java.io.Serializable
 {
+
+   private static final long serialVersionUID = 1L;
    private int counter;
    private java.lang.Integer _Subfamily;
    private int _Service_number;

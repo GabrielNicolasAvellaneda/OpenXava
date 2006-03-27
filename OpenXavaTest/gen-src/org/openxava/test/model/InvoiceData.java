@@ -10,6 +10,8 @@ public class InvoiceData
    extends java.lang.Object
    implements java.io.Serializable
 {
+
+   private static final long serialVersionUID = 1L;
    private java.lang.String _Comment;
    private java.sql.Date _Date;
    private java.lang.String _Paid;

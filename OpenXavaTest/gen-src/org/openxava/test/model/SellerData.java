@@ -10,6 +10,8 @@ public class SellerData
    extends java.lang.Object
    implements java.io.Serializable
 {
+
+   private static final long serialVersionUID = 1L;
    private java.lang.String _Name;
    private java.lang.String _Regions;
    private int number;

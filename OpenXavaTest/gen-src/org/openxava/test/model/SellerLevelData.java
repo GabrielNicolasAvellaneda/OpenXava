@@ -10,6 +10,8 @@ public class SellerLevelData
    extends java.lang.Object
    implements java.io.Serializable
 {
+
+   private static final long serialVersionUID = 1L;
    private java.lang.String _Description;
    private java.lang.String id;
 

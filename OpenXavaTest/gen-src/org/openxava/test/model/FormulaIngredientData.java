@@ -10,6 +10,8 @@ public class FormulaIngredientData
    extends java.lang.Object
    implements java.io.Serializable
 {
+
+   private static final long serialVersionUID = 1L;
    private java.lang.String oid;
    private java.lang.String _Ingredient_oid;
    private java.lang.String _Accentuate_oid;

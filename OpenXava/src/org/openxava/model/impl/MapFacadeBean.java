@@ -92,7 +92,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	public void delete(String user, String modelName, Map keyValues)
 		throws RemoveException, ValidationException, XavaException, RemoteException 
 	{		
-		Users.setCurrent(user);
+		Users.setCurrent(user);		
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {
 			MetaModel metaModel = getMetaModel(modelName);					
@@ -149,7 +149,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	public Object findEntity(String user, String modelName, Map keyValues)
 		throws FinderException, RemoteException {
 		Users.setCurrent(user);
-		IPersistenceProvider persistenceProvider = createPersistenceProvider();							
+		IPersistenceProvider persistenceProvider = createPersistenceProvider();		
 		return findEntity(persistenceProvider, modelName, keyValues);
 	}
 	
@@ -184,7 +184,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	public Map createReturningKey(String user, String modelName, Map values) 
 		throws CreateException, XavaException, ValidationException, RemoteException {
 		Users.setCurrent(user);
-		IPersistenceProvider persistenceProvider = createPersistenceProvider();
+		IPersistenceProvider persistenceProvider = createPersistenceProvider();		
 		try {							
 			Map result = createReturningKey(persistenceProvider, modelName, values);
 			persistenceProvider.commit();
@@ -242,7 +242,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		throws CreateException,ValidationException, XavaException, RemoteException
 	{		
 		Users.setCurrent(user);
-		IPersistenceProvider persistenceProvider = createPersistenceProvider();
+		IPersistenceProvider persistenceProvider = createPersistenceProvider();		
 		try {								
 			Object result = createAggregate(persistenceProvider, modelName, container, counter, values);
 			persistenceProvider.commit();
@@ -302,7 +302,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		Object modelObject,
 		Map memberNames) throws XavaException, RemoteException  
 		 {				
-		Users.setCurrent(user);
+		Users.setCurrent(user);		
 		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		try {								
 			Map result = getValues(persistenceProvider, modelName, modelObject, memberNames);
@@ -323,7 +323,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 
 	public Messages validate(String user, String modelName, Map values) throws XavaException, RemoteException {
 		Users.setCurrent(user);
-		IPersistenceProvider persistenceProvider = createPersistenceProvider();
+		IPersistenceProvider persistenceProvider = createPersistenceProvider();		
 		try {					
 			Messages result = validate(persistenceProvider, modelName, values, false);
 			persistenceProvider.commit();
@@ -477,7 +477,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 					persistenceProvider, 
 					metaModel,
 					findEntity(persistenceProvider, modelName, keyValues),
-					membersNames);						
+					new HashMap(membersNames)); 						
 			return result;
 		} catch (XavaException ex) {
 			ex.printStackTrace();
@@ -545,6 +545,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			if (!(metaModel instanceof IMetaEjb)) {
 				throw new IllegalArgumentException(XavaResources.getString("argument_type_error", "metaEjb", "MapFacadeBean.createEjb", "IMetaEjb"));
 			}
+			values = new HashMap(values); 
 			//removeReadOnlyFields(metaEjb, values); // not remove the read only fields because it maybe needed initialized on create
 			removeCalculatedFields(metaModel, values); 			
 			Messages validationErrors = new Messages(); 
@@ -1013,7 +1014,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		
 	private void setValues(IPersistenceProvider persistenceProvider, MetaModel metaModel, Map keyValues, Map values)
 		throws FinderException, ValidationException, XavaException {		
-		try {						
+		try {			
+			values = new HashMap(values); 
 			removeKeyFields(metaModel, values);			
 			removeReadOnlyFields(metaModel, values);
 			removeViewProperties(metaModel, values);			

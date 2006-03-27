@@ -10,6 +10,8 @@ public class ShipmentData
    extends java.lang.Object
    implements java.io.Serializable
 {
+
+   private static final long serialVersionUID = 1L;
    private java.lang.String _Type;
    private java.lang.String _Description;
    private int mode;

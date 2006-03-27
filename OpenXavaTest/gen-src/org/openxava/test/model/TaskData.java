@@ -10,6 +10,8 @@ public class TaskData
    extends java.lang.Object
    implements java.io.Serializable
 {
+
+   private static final long serialVersionUID = 1L;
    private java.lang.String _Comments;
    private java.lang.String _Summary;
    private java.lang.String _User;
