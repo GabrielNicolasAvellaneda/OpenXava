@@ -10,6 +10,8 @@ public class ProductData
    extends java.lang.Object
    implements java.io.Serializable
 {
+
+   private static final long serialVersionUID = 1L;
    private java.lang.String _Photos;
    private java.lang.Integer _FamilyNumber;
    private java.math.BigDecimal _UnitPrice;

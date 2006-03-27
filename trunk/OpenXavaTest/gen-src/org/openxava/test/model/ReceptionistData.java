@@ -10,6 +10,8 @@ public class ReceptionistData
    extends java.lang.Object
    implements java.io.Serializable
 {
+
+   private static final long serialVersionUID = 1L;
    private int oid;
    private java.lang.String _Name;
    private java.lang.String _DeliveryPlace_oid;

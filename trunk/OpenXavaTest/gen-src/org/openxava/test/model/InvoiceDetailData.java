@@ -10,6 +10,8 @@ public class InvoiceDetailData
    extends java.lang.Object
    implements java.io.Serializable
 {
+
+   private static final long serialVersionUID = 1L;
    private java.math.BigDecimal _UnitPrice;
    private java.lang.String oid;
    private java.lang.String _Remarks;

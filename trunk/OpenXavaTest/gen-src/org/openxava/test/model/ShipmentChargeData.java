@@ -10,6 +10,8 @@ public class ShipmentChargeData
    extends java.lang.Object
    implements java.io.Serializable
 {
+
+   private static final long serialVersionUID = 1L;
    private java.math.BigDecimal _Amount;
    private java.lang.String oid;
    private java.lang.Integer _Mode;

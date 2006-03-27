@@ -10,6 +10,8 @@ public class ServiceData
    extends java.lang.Object
    implements java.io.Serializable
 {
+
+   private static final long serialVersionUID = 1L;
    private java.lang.Integer _Family;
    private java.lang.String _Description;
    private int number;
