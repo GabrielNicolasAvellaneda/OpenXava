@@ -68,13 +68,13 @@
 		<for-stereotype stereotype="SUBFAMILY_DEPENDS_REFERENCE"/>
   </editor>
   
-  <editor url="descriptionsEditor.jsp" frame="true">
+  <editor	url="descriptionsEditor.jsp" frame="true">
   	<property name="model" value="Warehouse"/>
   	<property name="keyProperties" value="zoneNumber, number"/>
 		<property name="descriptionProperty" value="name"/>
 		<property name="filter" value="org.openxava.test.filters.LimitZoneFilter"/>
 		<property name="condition" value="${zoneNumber} &lt;= ?"/>
-  	<formatter class="org.openxava.test.formatters.WarehouseKeyFormatter"/>	
+  	<formatter class="org.openxava.test.formatters.WarehouseFormatter"/>	
     <for-stereotype stereotype="WAREHOUSE"/>
   </editor>
 	

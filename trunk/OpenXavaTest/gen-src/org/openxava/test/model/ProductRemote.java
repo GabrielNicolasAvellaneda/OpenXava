@@ -28,10 +28,10 @@ public interface ProductRemote
    public void setUnitPrice( java.math.BigDecimal newUnitPrice )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.model.WarehouseKey getWarehouseKey(  )
+   public org.openxava.test.model.Warehouse getWarehouseKey(  )
       throws java.rmi.RemoteException;
 
-   public void setWarehouseKey( org.openxava.test.model.WarehouseKey warehouseKey )
+   public void setWarehouseKey( org.openxava.test.model.Warehouse warehouseKey )
       throws java.rmi.RemoteException;
 
    public int getSubfamilyNumber(  )
