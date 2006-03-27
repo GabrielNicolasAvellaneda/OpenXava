@@ -577,7 +577,7 @@
 				<filtersfile file="${configuration}.properties"/>				
 			</filterset> 			             		
   		</copy>			
-  		<copy todir="../${project}/${classes.dir}/portlets">
+  		<copy todir="../${project}/${classes.dir}/portlets" failonerror="false">
     		<fileset dir="../${project}/i18n/portlets"/>
   		</copy>					
 	</target>
