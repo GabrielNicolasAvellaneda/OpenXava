@@ -3,7 +3,6 @@
 <%@ page import="java.util.Collection" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="org.openxava.model.meta.MetaReference" %>
-<%@ page import="org.openxava.model.meta.IMetaEjb" %>
 <%@ page import="org.openxava.view.meta.MetaPropertyView" %>
 
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
@@ -85,7 +84,7 @@ else {
 			sb.append(',');
 		}
 	}	
-	Object key = ((IMetaEjb) ref.getMetaModelReferenced()).obtainPrimaryKeyFromKey(values);	
+	Object key = ref.getMetaModelReferenced().toPOJO(values);	
 	String fvalue = key==null?"0":key.toString();
 	request.setAttribute(propertyKey + ".fvalue", fvalue);
 	keyProperties = sb.toString();

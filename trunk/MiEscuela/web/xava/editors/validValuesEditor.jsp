@@ -1,5 +1,3 @@
-<%@ page import="org.openxava.util.KeyAndDescription" %>
-<%@ page import="org.openxava.util.Is" %>
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
 
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>

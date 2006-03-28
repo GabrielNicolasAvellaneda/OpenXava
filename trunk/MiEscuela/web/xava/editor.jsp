@@ -34,7 +34,7 @@ String editableKey = propertyKey + "_EDITABLE_";
 String labelKey = propertyKey + "_LABEL_";
 
 int labelFormat = view.getLabelFormatForProperty(p);
-String label = view.getLabelForProperty(p);
+String label = view.getLabelFor(p);
 %>
 
 <%@ include file="htmlTagsEditor.jsp"%>
