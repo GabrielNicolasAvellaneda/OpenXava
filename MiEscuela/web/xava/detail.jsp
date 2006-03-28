@@ -89,9 +89,11 @@ while (it.hasNext()) {
 	<%	
 				}
 				if (withFrame) { 
+					String labelKey = propertyPrefix + ref.getName() + "_LABEL_";
+					String label = view.getLabelFor(ref);
 	%>				
 		<table class=<%=style.getFrame()%> width='100%' <%=style.getFrameSpacing()%>>
-		<tr class=<%=style.getFrameTitle()%>><th align='left' class=<%=style.getFrameTitleLabel()%>><%=ref.getLabel(request)%></th></tr>
+		<tr class=<%=style.getFrameTitle()%>><th align='left' class=<%=style.getFrameTitleLabel()%> id=<%=labelKey%>><%=label%></th></tr>
 		<tr><td class=<%=style.getFrameContent()%>>
 	<%
 				} // withFrame

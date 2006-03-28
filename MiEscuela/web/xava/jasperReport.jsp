@@ -16,6 +16,24 @@
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
 
 <%!
+private void tightenWidths(int [] widths) {	
+	int max = 190;
+	int littleOnesTotal = 0;
+	int littleOnesCount = 0;
+	for (int i=0; i<widths.length; i++) {
+		if (widths[i] <= 20) {
+			littleOnesTotal+=widths[i];
+			littleOnesCount++;
+		}
+	}	
+	int spaceForBigOnes = max - littleOnesTotal;
+	int widthForBig = spaceForBigOnes / (widths.length - littleOnesCount);
+	if (widthForBig < 20) widthForBig = 20;
+	for (int i=0; i<widths.length; i++) {
+		if (widths[i] > 20 && widths[i] > widthForBig) widths[i] = widths[i] = widthForBig;
+	}		
+}
+
 private String getType(MetaProperty p) throws Exception {
 	if (p.hasValidValues() || 
 		p.getType().equals(boolean.class) ||
@@ -58,7 +76,7 @@ int i=0;
 while (it.hasNext()) {
 	MetaProperty p = (MetaProperty) it.next();
 	String label = p.getLabel(locale);
-	widths[i]=Math.min(Math.max(p.getSize(), label.length()), 50);
+	widths[i]=Math.max(p.getSize(), label.length());
 	totalWidth+=widths[i];
 	i++;
 }
@@ -71,6 +89,7 @@ int columnWidth;
 String orientation = null;
 
 if (totalWidth > 120) {
+	tightenWidths(widths);
 	orientation="Landscape";
 	letterWidth = 4;
 	letterSize = 7;
