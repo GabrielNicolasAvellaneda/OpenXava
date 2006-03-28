@@ -104,7 +104,9 @@ public class Maps {
 	
 	/**
 	 * It's empty if is null, without elements, with null elements or
-	 * elements with neutral value (zeroes, empty strings).
+	 * elements with neutral value (empty strings, collections, nulls). <p>
+	 * 
+	 * Numeric values with value 0 not are considered empty. <br>
 	 * 
 	 * @param values Can be null.
 	 */
@@ -116,9 +118,6 @@ public class Maps {
 			Object value = it.next();					
 			if (value instanceof String) {
 				 if (!((String) value).trim().equals("")) return false;
-			}
-			else if (value instanceof Number) {
-				 if (((Number) value).intValue() != 0) return false;
 			}
 			else if (value instanceof Map) {				
 				if (!isEmpty((Map) value)) return false;				

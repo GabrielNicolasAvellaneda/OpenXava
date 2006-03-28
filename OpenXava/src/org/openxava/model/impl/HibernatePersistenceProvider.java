@@ -83,7 +83,15 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 		PropertiesManager pm = new PropertiesManager(key);
 		for (Iterator it=metaModel.getMetaReferencesKey().iterator(); it.hasNext();) {
 			MetaReference ref = (MetaReference) it.next();
-			XHibernate.getSession().refresh(pm.executeGet(ref.getName()));
+			Object referencedObject = pm.executeGet(ref.getName());
+			if (referencedObject != null) {
+				try {
+					XHibernate.getSession().refresh(referencedObject);
+				}
+				catch (UnresolvableObjectException ex) {
+					// References as key that point to a non-existent object are supported
+				}
+			}
 		}
 	}
 
@@ -94,7 +102,7 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 
 	public Object create(IMetaEjb metaEjb, Map values)
 			throws CreateException, ValidationException, XavaException {		
-		try {
+		try {			
 			find(metaEjb, values);			
 			throw new DuplicateKeyException(XavaResources.getString("no_create_exists", metaEjb.getName())); 
 		}
