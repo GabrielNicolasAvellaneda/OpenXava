@@ -32,6 +32,55 @@ public class DeliveriesTest extends ModuleTestBase {
 	public DeliveriesTest(String testName) {
 		super(testName, "OpenXavaTest", "Deliveries");		
 	}
+	
+	public void testNonExistentReferenceUsedAsKey() throws Exception {
+		createDeliveryType(0, "JUNIT DELIVERY TYPE 0");
+		execute("CRUD.new");
+		setValue("invoice.year", "2002");
+		setValue("invoice.number", "1");
+		assertValue("invoice.date", "01/01/2002");						
+		setValue("type.number", "0");
+		setValue("number", "66");
+		setValue("description", "JUNIT");		
+		execute("CRUD.save");
+		assertNoErrors();
+		
+		setValue("invoice.year", "2002");
+		setValue("invoice.number", "1");							
+		setValue("type.number", "0");
+		setValue("number", "66");
+		execute("CRUD.search");
+		assertNoErrors();
+		assertValue("description", "JUNIT");
+		
+		execute("CRUD.search");
+		assertNoErrors();
+		assertValue("description", "JUNIT");
+
+		deleteDeliveryType(0);
+		execute("CRUD.search");
+		assertNoErrors();
+		assertValue("description", "JUNIT");
+
+		execute("CRUD.delete");
+		assertMessage("Delivery deleted successfully");
+	}
+
+	private void createDeliveryType(int number, String description) {
+		DeliveryType type = new DeliveryType();
+		type.setNumber(number);
+		type.setDescription(description);		
+		XHibernate.getSession().save(type);
+		XHibernate.commit();
+	}
+	
+	private void deleteDeliveryType(int number) {
+		DeliveryType type = new DeliveryType();
+		type.setNumber(number);		
+		XHibernate.getSession().delete(type);
+		XHibernate.commit();
+	}
+	
 		
 	public void testDateCalendarEditor() throws Exception {
 		execute("CRUD.new");
