@@ -2456,7 +2456,7 @@ public class View implements java.io.Serializable {
 		}
 	}
 	
-	private String calculateFocusPropertyId() throws XavaException {		
+	private String calculateFocusPropertyId() throws XavaException {
 		String prefix = Is.emptyString(getMemberName())?
 			"xava." + getModelName() + ".":
 			"xava." + getModelName() + "." + getMemberName() + ".";
@@ -2468,7 +2468,7 @@ public class View implements java.io.Serializable {
 			String focusPropertyName = focusPropertyId.substring(prefix.length());			
 			int idx = focusPropertyName.indexOf('.'); 
 			if (idx < 0) {			
-				String name = getNextFocusPropertyName(focusPropertyName);
+				String name = getNextFocusPropertyName(focusPropertyName);				
 				return name==null?getFirsEditablePropertyId(prefix):prefix + name;
 			}
 			else {
@@ -2476,7 +2476,7 @@ public class View implements java.io.Serializable {
 				String member = focusPropertyName.substring(idx + 1);
 				View subview = getSubview(subviewName);				
 				String name = subview.getNextFocusPropertyName(member);				
-				if (name != null) return prefix + name;				
+				if (name != null) return prefix + subviewName + "." + name;				
 				name = getNextFocusPropertyName(subviewName);				
 				return name==null?getFirsEditablePropertyId(prefix):prefix + name;				  
 			}
@@ -2518,14 +2518,19 @@ public class View implements java.io.Serializable {
 			}
 			if (m instanceof MetaReference &&				 
 				isEditable((MetaReference) m)) {
-				MetaReference ref = (MetaReference) m;
-				Collection keys = ref.getMetaModelReferenced().getKeyPropertiesNames();
-				if (keys.size() == 1) {
-					String key = (String) keys.iterator().next();
-					return m.getName() + "." + key;
+				if (displayAsDescriptionsList((MetaReference) m)) {
+					MetaReference ref = (MetaReference) m;
+					Collection keys = ref.getMetaModelReferenced().getKeyPropertiesNames();
+					if (keys.size() == 1) {
+						String key = (String) keys.iterator().next();
+						return m.getName() + "." + key;
+					}
+					else {
+						return m.getName();
+					}
 				}
-				else {
-					return m.getName();
+				else {				
+					return getSubview(m.getName()).getFirsEditablePropertyId(m.getName() + ".");
 				}
 			}			
 		}
