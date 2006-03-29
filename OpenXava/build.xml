@@ -379,7 +379,7 @@
 		</java>
     </target>
 	
-    <target name="generateHibernate" depends="filterXavaComponents">     
+    <target name="generateHibernate" depends="filter">     
     	
 	   <echo>Generating classes</echo>
     	<delete file="../${project}/gen-src-xava/dnas.properties"/>
@@ -400,7 +400,7 @@
     	<ant antfile="../OpenXava/xdoclet/build.xml"/>    			
 	</target>
 	        
-    <target name="generateEJB" depends="filterXavaComponents, generateXDoclet, generateHibernate">         	
+    <target name="generateEJB" depends="filter, generateXDoclet, generateHibernate">         	
     	<antcall target="runXDoclet"/>
     </target>
 		

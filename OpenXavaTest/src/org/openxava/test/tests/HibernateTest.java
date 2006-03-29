@@ -1,13 +1,10 @@
 package org.openxava.test.tests;
 
 import java.math.*;
-import java.sql.*;
 import java.util.*;
 
 import org.hibernate.*;
 import org.openxava.hibernate.*;
-import org.openxava.mapping.*;
-import org.openxava.model.meta.*;
 import org.openxava.test.model.*;
 
 import junit.framework.*;

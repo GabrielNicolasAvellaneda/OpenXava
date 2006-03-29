@@ -2,6 +2,7 @@ package org.openxava.test.tests;
 
 import java.util.*;
 
+import org.openxava.hibernate.*;
 import org.openxava.model.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
@@ -12,10 +13,26 @@ import junit.framework.*;
  * @author Javier Paniza
  */
 public class MapFacadeTest extends TestCase {
+	
+	static {
+		XHibernate.setConfigurationFile("hibernate-junit.cfg.xml");
+	}
 
 	public MapFacadeTest(String name) {
 		super(name);
 		Locale.setDefault(Locale.ENGLISH);
+	}
+	
+	public void testMapArgumentByValue() throws Exception {
+		Map key = new HashMap();
+		key.put("number", new Integer("4"));
+		Map newValues = new HashMap();
+		newValues.put("number", new Integer("4"));
+		newValues.put("name", "Cuatrero");
+		assertEquals(2, newValues.size());
+		MapFacade.setValues("Customer", key, newValues);
+		assertEquals("Map mustn't be changed by MapFacade", 2, newValues.size());
+		
 	}
 	
 	public void testAccumulateExistsPropertiesAndRequiredPropertiesOnCreate() throws Exception {

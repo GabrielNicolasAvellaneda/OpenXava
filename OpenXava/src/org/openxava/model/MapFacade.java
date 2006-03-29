@@ -55,7 +55,7 @@ public class MapFacade {
 	 * Creates a new entity from a map with its initial values. <p> 
 	 * 
 	 * @param modelName  OpenXava model name. Not null
-	 * @param values  Initial values for create the entity. Not null
+	 * @param values  Initial values for create the entity. Not null. <i>By value</i> semantics.
 	 * @return Created entity, not a map it's the created object
 	 *          (EntityBean, POJO object o the form used in the underlying model). Not null.
 	 * @exception CreateException  Logic problem on creation.
@@ -82,10 +82,10 @@ public class MapFacade {
 	 * Creates a new aggregate from a map with its initial values. <p>	 
 	 * 
 	 * @param modelName  OpenXava model name. Not null
-	 * @param containerKey  Key of entity or aggregate that contains this aggregate
+	 * @param containerKey  Key of entity or aggregate that contains this aggregate. <i>By value</i> semantics.
 	 * @param counter Counter used to generate the aggregate key, indicates the
 	 * 		order number. The aggregate implementation can ignorate it.  
-	 * @param values  Initial values for create the aggregate. Not null.
+	 * @param values  Initial values for create the aggregate. Not null. <i>By value</i> semantics.
 	 * @return Aggregate created, not a map but the create object
 	 *          (EntityBean, POJO object o the form used in the underlying model). Not null.
 	 * @exception CreateException  Logic problem on creation.
@@ -116,7 +116,7 @@ public class MapFacade {
 	 * 		the aggregate.
 	 * @param counter Counter used to generate the aggregate key, indicates the
 	 * 		order number. The aggregate implementation can ignorate it.  
-	 * @param values  Initial values for create the aggregate. Not null.
+	 * @param values  Initial values for create the aggregate. Not null. <i>By value</i> semantics.
 	 * @return Aggregate created, not a map but the create object
 	 *          (EntityBean, POJO object o the form used in the underlying model). Not null.
 	 * @exception CreateException  Logic problem on creation.
@@ -144,7 +144,7 @@ public class MapFacade {
 	 * return a map with the values of created entity. <p>
 	 *  
 	 * @param modelName  OpenXava model name. Not null
-	 * @param values  Initial values to create entity. Not null
+	 * @param values  Initial values to create entity. Not null. <i>By value</i> semantics.
 	 * @return A map with the created object values. The properties are the
 	 * 		sent ones on create. 
 	 * @exception CreateException  Logic problem on creation.
@@ -174,7 +174,7 @@ public class MapFacade {
 	 * return a map with the key values of the created entity. <p>
 	 *
 	 * @param modelName  OpenXava model name. Not null
-	 * @param values  Initial values to create the entity. Not null
+	 * @param values  Initial values to create the entity. Not null. <i>By value</i> semantics.
 	 * @return A map with key value of created object
 	 * @exception CreateException  Logic problem on creation.
 	 * @exception ValidationException  Data validation problems.
@@ -201,10 +201,10 @@ public class MapFacade {
 	 * and return a map with the key. <p>  	 
 	 * 
 	 * @param modelName  OpenXava model name. Not null
-	 * @param containerKey  Key of entity or aggregate that contains this aggregate	
+	 * @param containerKey  Key of entity or aggregate that contains this aggregate. <i>By value</i> semantics.	
  	 * @param counter Counter used to generate the aggregate key, indicates the
 	 * 		order number. The aggregate implementation can ignorate it.  
-	 * @param values  Initial values for create the aggregate. Not null.
+	 * @param values  Initial values for create the aggregate. Not null. <i>By value</i> semantics.
 	 * @return Key values of created aggregate.
 	 * @exception CreateException  Logic problem on creation.
 	 * @exception ValidationException  Data validation problems.
@@ -244,8 +244,8 @@ public class MapFacade {
 	 * </pre>
 	 * 
 	 * @param modelName  OpenXava model name. Not null.
-	 * @param keyValues  Key values of object to find. Not null.
-	 * @param memberNames Member names to obtain its values. Not null  
+	 * @param keyValues  Key values of object to find. Not null. <i>By value</i> semantics.
+	 * @param memberNames Member names to obtain its values. Not null. <i>By value</i> semantics.  
 	 * @return Map with entity values. Not null.
 	 * @exception ObjectNotFoundException  If object with this key does not exist 
 	 * @exception FinderException  Logic problem on find.	
@@ -288,7 +288,7 @@ public class MapFacade {
 	 * 
 	 * @param modelName  OpenXava model name. Not null.
 	 * @param entity  Object to obtain values from it. Not null.
-	 * @param memberNames Member names to obtain its values. Not null  
+	 * @param memberNames Member names to obtain its values. Not null. <i>By value</i> semantics.  
 	 * @return Map with entity values. Not null.
 	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
 	 * @exception RemoteException  System problem. Rollback transaction.
@@ -328,7 +328,7 @@ public class MapFacade {
 	 * Obtain the entity/aggregate from a map with key values. <p>
 	 * 
 	 * @param modelName  OpenXava model name. Not null
-	 * @param keyValues  Key values of entity to find. Not null
+	 * @param keyValues  Key values of entity to find. Not null. <i>By value</i> semantics.
  	 * @return The entity or aggregate. Not null
 	 * @exception ObjectNotFoundException  If object with this key does not exist 
 	 * @exception FinderException  Logic problem on find.	
@@ -352,7 +352,7 @@ public class MapFacade {
 	 * Remove the entity/aggregate from a map with its key. <p> 
 	 * 
 	 * @param modelName  OpenXava model name. No puede ser nulo.
-	 * @param keyValues  Valores con la clave de la entidad a borrar. Nunca nulo.
+	 * @param keyValues  Valores con la clave de la entidad a borrar. Nunca nulo. <i>By value</i> semantics.
 	 * @exception RemoveException  Logic problem on remove.
 	 * @exception ValidationException  Data validation problems.
 	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
@@ -375,8 +375,8 @@ public class MapFacade {
 	 * Set new values to a entity/aggregate that is found from its key values. <p>
 	 * 
 	 * @param modelName  OpenXava model name. Not null.
-	 * @param keyValues  Key values of object. Not null.
-	 * @param values  New values to set. Not null.
+	 * @param keyValues  Key values of object. Not null. <i>By value</i> semantics.
+	 * @param values  New values to set. Not null. <i>By value</i> semantics.
 	 * @exception ObjectNotFoundException  If object with this key does not exist 
 	 * @exception FinderException  Logic problem on find.	
 	 * @exception ValidationException  Data validation problems.	 * 
@@ -404,7 +404,7 @@ public class MapFacade {
 	 * to create a new object.<br> 
 	 * 
 	 * @param modelName  OpenXava model name. Not null.
-	 * @param values  Values to validate. Not null.
+	 * @param values  Values to validate. Not null. <i>By value</i> semantics.
 	 * @return Message list with validation errors. Not null.
 	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
 	 * @exception RemoteException  System problem. Rollback transaction.
@@ -496,9 +496,9 @@ public class MapFacade {
 	 * thus the needed logic for remove a element from a collection is executed.<br>   
 	 * 
 	 * @param modelName  OpenXava model name. Not null.
-	 * @param keyValues  Key value of the container of the collection. Not null.
+	 * @param keyValues  Key value of the container of the collection. Not null. <i>By value</i> semantics.
 	 * @param collectionName  Collection name of the container collection of element to remove. Not null.
-	 * @param collectionElementKeyValues  Key value of element to remove. Not null.
+	 * @param collectionElementKeyValues  Key value of element to remove. Not null. <i>By value</i> semantics.
 	 * @exception ObjectNotFoundException  If object with this key does not exist 
 	 * @exception FinderException  Logic problem on find.	
 	 * @exception ValidationException  Data validation problems.
