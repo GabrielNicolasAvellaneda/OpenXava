@@ -22,6 +22,8 @@ public class ServiceValue
    private boolean numberHasBeenSet = false;
    private org.openxava.test.model.Detail detail;
    private boolean detailHasBeenSet = false;
+   private int detail_typeRef_number;
+   private boolean detail_typeRef_numberHasBeenSet = false;
 
    public ServiceValue()
    {
@@ -38,6 +40,8 @@ public class ServiceValue
 	  numberHasBeenSet = true;
 	  this.detail = otherValue.detail;
 	  detailHasBeenSet = true;
+	  this.detail_typeRef_number = otherValue.detail_typeRef_number;
+	  detail_typeRef_numberHasBeenSet = true;
    }
 
    public int getFamily()
@@ -96,12 +100,26 @@ public class ServiceValue
    public boolean detailHasBeenSet(){
 	  return detailHasBeenSet;
    }
+   public int getDetail_typeRef_number()
+   {
+	  return this.detail_typeRef_number;
+   }
+
+   public void setDetail_typeRef_number( int detail_typeRef_number )
+   {
+	  this.detail_typeRef_number = detail_typeRef_number;
+	  detail_typeRef_numberHasBeenSet = true;
+   }
+
+   public boolean detail_typeRef_numberHasBeenSet(){
+	  return detail_typeRef_numberHasBeenSet;
+   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("family=" + getFamily() + " " + "description=" + getDescription() + " " + "number=" + getNumber() + " " + "detail=" + getDetail());
+	  str.append("family=" + getFamily() + " " + "description=" + getDescription() + " " + "number=" + getNumber() + " " + "detail=" + getDetail() + " " + "detail_typeRef_number=" + getDetail_typeRef_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -164,6 +182,7 @@ public class ServiceValue
 		 {
 			lEquals = lEquals && this.detail.equals( that.detail );
 		 }
+		 lEquals = lEquals && this.detail_typeRef_number == that.detail_typeRef_number;
 
 		 return lEquals;
 	  }
@@ -182,6 +201,8 @@ public class ServiceValue
       result = 37*result + (int) number;
 
       result = 37*result + ((this.detail != null) ? this.detail.hashCode() : 0);
+
+      result = 37*result + (int) detail_typeRef_number;
 
 	  return result;
    }
