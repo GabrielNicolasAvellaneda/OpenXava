@@ -13,6 +13,14 @@ public class ServicesTest extends ModuleTestBase {
 		super(nombreTest, "OpenXavaTest", "Services");		
 	}
 	
+	public void testFocusOnDescriptionsListInsideAggregate() throws Exception {
+		execute("CRUD.new");
+		setValue("family", "1");
+		assertFocusOn("detail.subfamily");
+		setValue("detail.subfamily", "1");
+		assertFocusOn("detail.type");		
+	}
+	
 	public void testRemoveAggregateFromCollectionWithReferenceToParentAsKey() throws Exception {
 		execute("CRUD.new");
 		execute("Collection.new", "viewObject=xava_view_additionalDetails");
