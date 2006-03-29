@@ -72,7 +72,7 @@ for (Iterator itReferences = referencedModel.getMetaReferences().iterator(); itR
 	 * @ejb:interface-method
 	 */
 <java>} </java> 	 
-	public void set<expr>referenceName</expr>(<expr>referencedModelClass</expr> new<expr>referenceName</expr>) { 
+	public void set<expr>referenceName</expr>(<expr>referencedModelClass</expr> new<expr>referenceName</expr>) throws java.rmi.RemoteException { 
 <java>if (ejb) { </java> 
 		this.modified = true;
 <java>} </java> 	

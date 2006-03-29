@@ -100,6 +100,7 @@ public abstract class ServiceCMP
             ServiceValue.setDescription( getDescription() );
             ServiceValue.setNumber( getNumber() );
             ServiceValue.setDetail( getDetail() );
+            ServiceValue.setDetail_typeRef_number( getDetail_typeRef_number() );
 
          }
          catch (Exception e)
@@ -118,6 +119,7 @@ public abstract class ServiceCMP
 		 setFamily( valueHolder.getFamily() );
 		 setDescription( valueHolder.getDescription() );
 		 setDetail( valueHolder.getDetail() );
+		 setDetail_typeRef_number( valueHolder.getDetail_typeRef_number() );
 
 	  }
 	  catch (Exception e)

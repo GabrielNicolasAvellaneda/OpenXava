@@ -34,6 +34,24 @@ public interface ServiceRemote
    public void setDetail( org.openxava.test.model.Detail newDetail )
       throws java.rmi.RemoteException;
 
+   public org.openxava.test.model.IServiceType getDetail_typeRef(  )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.ServiceTypeRemote getDetail_typeRefRemote(  )
+      throws java.rmi.RemoteException;
+
+   public void setDetail_typeRef( org.openxava.test.model.IServiceType newDetail_typeRef )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.ServiceTypeKey getDetail_typeRefKey(  )
+      throws java.rmi.RemoteException;
+
+   public void setDetail_typeRefKey( org.openxava.test.model.ServiceTypeKey key )
+      throws java.rmi.RemoteException;
+
+   public int getDetail_typeRef_number(  )
+      throws java.rmi.RemoteException;
+
    public org.openxava.test.model.ServiceData getData(  )
       throws java.rmi.RemoteException;
 
