@@ -1218,6 +1218,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	 */
 	public Object toPOJO(Map values) throws XavaException {
 		try {
+			values = Maps.plainToTree(values); 
 			Object pojo = getPOJOClass().newInstance();
 			PropertiesManager pm = new PropertiesManager(pojo);			
 			for (Iterator it=values.entrySet().iterator(); it.hasNext();) {
