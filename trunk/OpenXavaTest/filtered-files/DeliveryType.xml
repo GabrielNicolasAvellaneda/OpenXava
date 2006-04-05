@@ -19,7 +19,13 @@
 	</entity>
 	
 	<view>
-		<members>number; description</members>
+		<!-- 
+		comboDeliveries: For testing description lists which keys
+			are references to other entities.
+		-->
+		<property name="comboDeliveries" stereotype="DELIVERIES"/> 
+	
+		<members>number; description; comboDeliveries</members>
 	</view>
 	
 	<entity-mapping table="XAVATEST_DELIVERYTYPE">

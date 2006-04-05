@@ -142,10 +142,10 @@ public class Maps {
 	 * {invoice={year=2006, number=1}, number=3}
 	 * </pre>
 	 *  
-	 * @param plainMap This argument is not changed. The keys must be strings.
+	 * @param plainMap This argument is not changed. The keys must be strings. Mustn't be null
 	 * @return A map with the data in tree format.
 	 */
-	public static Map plainToTree(Map plainMap) {
+	public static Map plainToTree(Map plainMap) {		
 		Map result = new HashMap();
 		for (Iterator it = plainMap.keySet().iterator(); it.hasNext();) {
 			String key = (String) it.next();
