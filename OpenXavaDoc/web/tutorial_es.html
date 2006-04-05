@@ -4,15 +4,18 @@ Estas instrucciones suponen que has descargado, instalado y arrancado
 openxava.<br>
 Esto es lo que vamos a hacer para empezar a xavear:<br>
 <ul>
-  <li><a href="portal/tutorial.psml#Ejecutar_aplicacion_ejemplo_MiEscuela">Ejecutar
+  <li><a
+ href="portal/tutorial.psml#Ejecutar_aplicacion_ejemplo_MiEscuela">Ejecutar
 aplicaci&oacute;n ejemplo MiEscuela.</a></li>
-  <li><a href="portal/tutorial.psml#Modificar_aplicacion_ejemplo_MiEscuela">Modificar
+  <li><a
+ href="portal/tutorial.psml#Modificar_aplicacion_ejemplo_MiEscuela">Modificar
 aplicaci&oacute;n ejemplo MiEscuela.</a></li>
   <li><a href="portal/tutorial.psml#Ejecutar_prueba_junit_de_aplicacion">Ejecutar
 pruebas
 junit de la aplicaci&oacute;n MiEscuela.</a><br>
-  </li>  
-  <li><a href="portal/tutorial.psml#deploy_in_portal">Desplegar MiEscuela en el Portal.</a></li>  
+  </li>
+  <li><a href="portal/tutorial.psml#deploy_in_portal">Desplegar
+MiEscuela en el Portal.</a></li>
   <li><a href="portal/tutorial.psml#Ayuda">Ayuda</a><br>
   </li>
 </ul>
@@ -21,20 +24,20 @@ aplicaci&oacute;n ejemplo MiEscuela</h4>
 La distribuci&oacute;n de OpenXava viene con una aplicaci&oacute;n de
 ejemplo llamada <span style="font-style: italic;">MiEscuela</span>,
 para ejecutar sigue los siguientes pasos, usando tareas ant. Las tareas
-ant est&aacute;n ya definidas en Eclipse, por lo tanto solo es necesario
-hacer click en la <span id="transl1">flechita del bot&oacute;n External Tools</span> <span style="color: rgb(255, 0, 0);"></span><img
+ant est&aacute;n ya definidas en Eclipse, por lo tanto solo es
+necesario
+hacer click en la <span id="transl1">flechita del bot&oacute;n
+External Tools</span> <span style="color: rgb(255, 0, 0);"></span><img
  style="width: 16px; height: 16px;" alt="external tools"
  src="../../../../../OpenXavaDoc/images/external_tools.gif"><br>
 <ul>
   <li>Ejecutar tarea ant <span style="font-style: italic;">MiEscuela.desplegarWar</span></li>
-  <li>Esperar a ver en la consola de JBoss <span
- style="font-family: monospace;">deploy, ctxPath=/MiEscuela, warUrl=.../deploy/MiEscuela.war/</span></li>
   <li>Ir a <a
- href="http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&module=Profesores" target="_blank">http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Profesores</a></li>
+ href="http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Profesores"
+ target="_blank">http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Profesores</a></li>
   <li>Y a jugar...<br>
   </li>
 </ul>
-
 <h4><a name="Modificar_aplicacion_ejemplo_MiEscuela"></a>Modificar
 aplicaci&oacute;n ejemplo MiEscuela</h4>
 <h5>A&ntilde;adir otro
@@ -205,21 +208,11 @@ en el bot&oacute;n para lanzar herramientas externas <span
  style="width: 16px; height: 16px;" alt="external tools"
  src="../../../../../OpenXavaDoc/images/external_tools.gif"><br>
 <ul>
-  <li>Ejecutamos la tarea ant <span style="font-style: italic;">MiEscuela.generarEJB</span></li>
-  <li>Pulsamos el bot&oacute;n <span style="font-style: italic;">Build
-All</span> <img style="width: 16px; height: 16px;" alt="Build All"
- src="/OpenXavaDoc/images/builder.gif"><br>
-  </li>
-  <li>Ejecutamos la tarea ant <span style="font-style: italic;">MiEscuela.desplegarEJB</span></li>
-  <li>Esperamos
-a que en la consola
-de jboss aparezca <span style="font-family: monospace;">Started J2EE
-application: ... MiEscuela.ear</span></li>
+  <li>Ejecutamos la tarea ant <span style="font-style: italic;">MiEscuela.generarCodigo</span></li>
   <li>Ejecutamos la tarea ant <span style="font-style: italic;">MiEscuela.desplegarWar</span></li>
-  <li>Esperar a ver en la consola de JBoss <span
- style="font-family: monospace;">deploy, ctxPath=/MiEscuela, warUrl=.../deploy/MiEscuela.war/</span></li>
   <li>Ve a <a
- href="http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&module=Alumnos" target="_blank">http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Alumnos</a></li>
+ href="http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Alumnos"
+ target="_blank">http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Alumnos</a></li>
   <li>Y a jugar...<br>
   </li>
 </ul>
@@ -312,14 +305,11 @@ columna-tabla="TEACHER" propiedad-modelo-referenciado="codigo"/&gt;</span><br
 <br style="font-family: monospace;">
 Y ahora lo probamos:<br>
 <ul>
-  <li>Ejecutamos la tarea ant <span style="font-style: italic;">MiEscuela.generarEJB</span></li>
-  <li>Pulsar el bot&oacute;n <span style="font-style: italic;">Build
-All</span> <img style="width: 16px; height: 16px;" alt="Build All"
- src="/OpenXavaDoc/images/builder.gif"></li>
-  <li>Ejecutamos la tarea ant <span style="font-style: italic;">MiEscuela.desplegarEJB</span></li>
+  <li>Ejecutamos la tarea ant <span style="font-style: italic;">MiEscuela.generarCodigo</span></li>
   <li>Ejecutamos la tarea ant <span style="font-style: italic;">MiEscuela.desplegarWar</span></li>
   <li>Ve a <a
- href="http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&module=Alumnos" target="_blank">http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Alumnos</a></li>
+ href="http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Alumnos"
+ target="_blank">http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Alumnos</a></li>
 </ul>
 Como se ve, harto sencillo.<br>
 Si queremos que la referencia se visualice en formato combo hemos de
@@ -432,13 +422,11 @@ propiedad-modelo-referenciado="codigo"/&gt;</span><br
 <br style="font-family: monospace;">
 </span>Y desplegar:<br>
 <ul>
-  <li>Pulsar el bot&oacute;n <span style="font-style: italic;">Build
-All</span> <img style="width: 16px; height: 16px;" alt="Build All"
- src="/OpenXavaDoc/images/builder.gif"></li>
   <li>Ejecutamos la tarea <span style="font-style: italic;">ant
 MiEscuela.desplegarWar</span></li>
   <li>Ve a <a
- href="http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&module=Alumnos" target="_blank">http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&module=Alumnos</a></li>
+ href="http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Alumnos"
+ target="_blank">http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Alumnos</a></li>
 </ul>
 Y ahora vamos a poner una colecci&oacute;n de alumnos en el
 profesor. Tocamos <span style="font-family: monospace;">Profesor.xml</span>
@@ -521,17 +509,13 @@ propiedad-modelo="nombre" columna-tabla="NAME"/&gt;</span><br
 <br style="font-family: monospace;">
 </span>Volvemos a desplegar:<br>
 <ul>
-  <li>Ejecutamos la tarea ant <span style="font-style: italic;">MiEscuela.generarEJB</span><br>
+  <li>Ejecutamos la tarea ant <span style="font-style: italic;">MiEscuela.generarCodigo</span><br>
   </li>
-  <li>Pulsar el bot&oacute;n <span style="font-style: italic;">Build
-All</span> <img style="width: 16px; height: 16px;" alt="Build All"
- src="/OpenXavaDoc/images/builder.gif"></li>
-  <li>Ejecutamos la tarea ant <span style="font-style: italic;">MiEscuela.desplegarEJB</span></li>
   <li>Ejecutamos la tarea ant <span style="font-style: italic;">MiEscuela.desplegarWar</span></li>
   <li>Ve a <a
- href="http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&module=Profesores" target="_blank">http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Profesores</a></li>
+ href="http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Profesores"
+ target="_blank">http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Profesores</a></li>
 </ul>
-
 <h4><a name="Ejecutar_prueba_junit_de_aplicacion"></a>Ejecutar
 prueba
 junit de aplicaci&oacute;n MiEscuela</h4>
@@ -554,17 +538,13 @@ una idea de como se hace una prueba junit para OpenXava. Si queremos
 hacer
 aplicaciones de calidad es imprescindible que nos aficionemos a las
 pruebas junit.<br>
-
 <h4><a name="deploy_in_portal"></a>Desplegar MiEscuela en el Portal</h4>
-Una vez la aplicaci&oacute;n funciona bien, podemos desplegarla en un portal Java:
+Una vez la aplicaci&oacute;n funciona bien, podemos desplegarla en un
+portal Java:
 <ul>
   <li>Ejecutar la tarea ant <span style="font-style: italic;">MiEscuela.desplegarPortlets</span></li>
-  <li>Esperar hasta que en la consola de JBoss aparezca <span style="font-family: monospace;">started Portlet
-Application at: MiEscuela</span></li>  
-  <li>Ir a <a
- href="http://localhost:8080/openxava/portal/MiEscuela">http://localhost:8080/openxava/portal/MiEscuela</a></li>
+  <li>Ir a <a href="http://localhost:8080/openxava/portal/MiEscuela">http://localhost:8080/openxava/portal/MiEscuela</a></li>
 </ul>
-
 Y eso es todo amigos.<br>
 Con este ejemplo se ve como cambios peque&ntilde;os se efectuan con
 poco esfuerzo y el efecto se ve de forma instantanea.<br>
