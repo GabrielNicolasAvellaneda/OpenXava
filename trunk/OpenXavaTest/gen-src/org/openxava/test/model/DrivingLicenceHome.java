@@ -21,6 +21,9 @@ public interface DrivingLicenceHome
    public org.openxava.test.model.DrivingLicenceRemote create(org.openxava.test.model.DrivingLicenceValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
+   public org.openxava.test.model.DrivingLicenceRemote findByTypeLevel(java.lang.String type,int level)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public org.openxava.test.model.DrivingLicenceRemote findByPrimaryKey(org.openxava.test.model.DrivingLicenceKey pk)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

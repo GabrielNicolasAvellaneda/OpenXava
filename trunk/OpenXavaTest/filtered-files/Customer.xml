@@ -215,8 +215,7 @@
 			</section>
 		</members>
 						
-	</view>
-		
+	</view>		
 		
 	<view name="Simple" members="number; type; name; address"/>
 	

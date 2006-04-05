@@ -10,7 +10,7 @@ import org.openxava.actions.*;
  */
 public class ViewProductFromInvoiceDetailAction
 	extends CollectionElementViewBaseAction 
-	implements INavigationAction { // tmp: ¿Navigations? Si cambiamos cambiar guia referencia
+	implements INavigationAction { 
 
 	private Map invoiceValues;
 

@@ -15,7 +15,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Wed Mar 29 13:14:10 CEST 2006
+ * @version Fri Mar 31 16:20:01 CEST 2006
  */
 public class PojoPG {
     Properties properties = new Properties();
@@ -188,7 +188,7 @@ public class PojoPG {
      	String arguments = finder.getArguments();
      	String condition = finder.getEJBQLCondition(); 	
      	String type = finder.isCollection()?"Collection":name;
-     	String result = finder.isCollection()?"new org.openxava.hibernate.impl.FastSizeList(query, sizeQuery)":"(" + name + ") query.uniqueResult()";
+     	String exception = finder.isCollection()?"":"throws javax.ejb.ObjectNotFoundException";
     
     out.print(" \t\n \tpublic static ");
     out.print(type);
@@ -196,7 +196,9 @@ public class PojoPG {
     out.print(finderName);
     out.print("(");
     out.print(arguments);
-    out.print(") {\n \t\torg.hibernate.Query query = org.openxava.hibernate.XHibernate.getSession().createQuery(\"");
+    out.print(") ");
+    out.print(exception);
+    out.print(" {\n \t\torg.hibernate.Query query = org.openxava.hibernate.XHibernate.getSession().createQuery(\"");
     out.print(finder.getHQLCondition());
     out.print("\");");
     if (finder.isCollection()) { 
@@ -228,9 +230,18 @@ public class PojoPG {
     
     		}
     
-    out.print(" \n \t\treturn ");
-    out.print(result);
-    out.print(";\n \t}");
+    if (finder.isCollection()) { 
+    out.print(" \n \t\treturn new org.openxava.hibernate.impl.FastSizeList(query, sizeQuery);");
+    } else { 
+    out.print(" \n\t\t");
+    out.print(name);
+    out.print(" r = (");
+    out.print(name);
+    out.print(") query.uniqueResult();\n\t\tif (r == null) {\n\t\t\tthrow new javax.ejb.ObjectNotFoundException(XavaResources.getString(\"object_not_found\", \"");
+    out.print(name);
+    out.print("\"));\n\t\t}\n\t\treturn r;");
+    } 
+    out.print(" \n \t}");
     
      }
     
@@ -281,7 +292,7 @@ public class PojoPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Wed Mar 29 13:14:10 CEST 2006", // date this file was generated
+        { "Fri Mar 31 16:20:01 CEST 2006", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/pojo.xml", // input file
              "/home/javi/workspace/OpenXava/generator/PojoPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

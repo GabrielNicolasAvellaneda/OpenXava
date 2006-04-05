@@ -91,9 +91,15 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 		try {	
 			if (new<expr>referenceName</expr> == null) set<expr>referenceName</expr>Key(null);
 			else {
+				if (new<expr>referenceName</expr> instanceof <expr>referencedModel.getPOJOClass().getName()</expr>) {
+					throw new IllegalArgumentException(XavaResources.getString("pojo_to_ejb_illegal"));
+				}
 				<expr>referencedModel.getRemote()</expr> remote = (<expr>referencedModel.getRemote()</expr>) new<expr>referenceName</expr>;
 				set<expr>referenceName</expr>Key((<expr>referencedKeyClass</expr>) remote.getPrimaryKey());
 			}	
+		}
+		catch (IllegalArgumentException ex) {
+			throw ex;
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();

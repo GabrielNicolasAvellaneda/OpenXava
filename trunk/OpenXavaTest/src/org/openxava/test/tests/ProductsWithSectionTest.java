@@ -13,6 +13,12 @@ public class ProductsWithSectionTest extends ProductsTest {
 		super(testName, "ProductsWithSection");		
 	}
 	
+	public void testNextFocusToGroup() throws Exception {
+		execute("CRUD.new");
+		setValue("warehouseKey", "[.1.1.]");
+		assertFocusOn("unitPrice");
+	}
+	
 	public void testEmptyCombosUsingComposeKeys() throws Exception {
 		execute("CRUD.new");
 		execute("Products.setLimitZoneTo1"); 

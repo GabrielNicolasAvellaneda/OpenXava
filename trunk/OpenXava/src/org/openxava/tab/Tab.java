@@ -575,7 +575,7 @@ public class Tab {
 			return getTableModel().getTotalSize(); 			
 		}
 		catch (Throwable ex) {
-			ex.printStackTrace();
+			ex.printStackTrace();			
 			System.err.println(XavaResources.getString("tab_size_warning"));
 			return -1;
 		}

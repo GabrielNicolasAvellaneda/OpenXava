@@ -8,7 +8,7 @@ import org.openxava.actions.*;
  */
 public class ActivateDeactivateSectionAction extends ViewBaseAction {
 
-	private String section;
+	private String section; 
 
 	public void execute() throws Exception {
 		boolean currentState = getView().isSectionEditable(section);

@@ -24,6 +24,9 @@ public interface Product3Home
    public java.util.Collection findByFamily(java.lang.String oid)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
+   public org.openxava.test.model.Product3Remote findByNumber(long number)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public org.openxava.test.model.Product3Remote findByPrimaryKey(org.openxava.test.model.Product3Key pk)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

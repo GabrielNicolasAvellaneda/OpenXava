@@ -21,6 +21,9 @@ public interface SubfamilyHome
    public org.openxava.test.model.SubfamilyRemote create(org.openxava.test.model.SubfamilyValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
+   public org.openxava.test.model.SubfamilyRemote findByOid(java.lang.String oid)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public org.openxava.test.model.SubfamilyRemote findByPrimaryKey(org.openxava.test.model.SubfamilyKey pk)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

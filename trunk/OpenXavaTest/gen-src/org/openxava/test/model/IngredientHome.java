@@ -24,6 +24,9 @@ public interface IngredientHome
    public java.util.Collection findByPartOf(java.lang.String oid)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
+   public org.openxava.test.model.IngredientRemote findByOid(java.lang.String oid)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public org.openxava.test.model.IngredientRemote findByPrimaryKey(org.openxava.test.model.IngredientKey pk)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

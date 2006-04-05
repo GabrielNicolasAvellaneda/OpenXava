@@ -21,7 +21,7 @@ public interface Product2Home
    public org.openxava.test.model.Product2Remote create(org.openxava.test.model.Product2Value value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
-   public java.util.Collection findByWarehouse(java.lang.Integer number, int zoneNumber)
+   public java.util.Collection findByWarehouse(int zoneNumber, java.lang.Integer number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
    public java.util.Collection findByFamily(int number)
@@ -31,6 +31,9 @@ public interface Product2Home
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
    public java.util.Collection findAll()
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
+   public org.openxava.test.model.Product2Remote findByNumber(long number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
    public org.openxava.test.model.Product2Remote findByPrimaryKey(org.openxava.test.model.Product2Key pk)

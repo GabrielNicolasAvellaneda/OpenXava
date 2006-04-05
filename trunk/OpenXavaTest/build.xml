@@ -28,9 +28,8 @@
 	<!--
 	If you work with Eclipse add this target to the builder for this project
 	-->
-	<target name="buildForEclipse" depends="touchHistory">		
-		<ant antfile="../OpenXava/build.xml" target="filterXavaComponents"/>
-		<touch file="../OpenXavaTest/web/WEB-INF/lib/openxava.jar"/>		
+	<target name="wtpBuild" depends="touchHistory">		
+		<ant antfile="../OpenXava/build.xml" target="wtpBuild"/>
 	</target>
 	
 	<target name="rebuild">

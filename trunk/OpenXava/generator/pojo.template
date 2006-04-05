@@ -172,9 +172,9 @@ while (itCollections.hasNext()) {
  	String arguments = finder.getArguments();
  	String condition = finder.getEJBQLCondition(); 	
  	String type = finder.isCollection()?"Collection":name;
- 	String result = finder.isCollection()?"new org.openxava.hibernate.impl.FastSizeList(query, sizeQuery)":"(" + name + ") query.uniqueResult()";
+ 	String exception = finder.isCollection()?"":"throws javax.ejb.ObjectNotFoundException";
 # 	
- 	public static #(type)# find#(finderName)#(#(arguments)#) {
+ 	public static #(type)# find#(finderName)#(#(arguments)#) #(exception)# {
  		org.hibernate.Query query = org.openxava.hibernate.XHibernate.getSession().createQuery("#(finder.getHQLCondition())#");
  		# if (finder.isCollection()) { # 
  		org.hibernate.Query sizeQuery = org.openxava.hibernate.XHibernate.getSession().createQuery("#(finder.getHQLCountSentence())#");
@@ -195,7 +195,15 @@ while (itCollections.hasNext()) {
 # 
 		}
 # 
- 		return #(result)#;
+ 		# if (finder.isCollection()) { # 
+ 		return new org.openxava.hibernate.impl.FastSizeList(query, sizeQuery);
+ 		# } else { # 
+		#(name)# r = (#(name)#) query.uniqueResult();
+		if (r == null) {
+			throw new javax.ejb.ObjectNotFoundException(XavaResources.getString("object_not_found", "#(name)#"));
+		}
+		return r;
+ 		# } # 
  	}
  	
 # 

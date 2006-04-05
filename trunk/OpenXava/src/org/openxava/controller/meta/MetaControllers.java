@@ -22,7 +22,13 @@ public class MetaControllers {
 		if (metaControllers == null) {
 			throw new XavaException("only_from_parse", "MetaControllers._addMetaController");
 		}
-		metaControllers.put(newController.getName(), newController);
+		if (!metaControllers.containsKey(newController.getName())) {
+			metaControllers.put(newController.getName(), newController);
+			
+		}
+		else {
+			System.err.println(XavaResources.getString("trying_to_load_controller_twice_warning", newController.getName())); 
+		}
 	}
 	
 	private static void setup() throws XavaException {

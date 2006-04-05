@@ -21,6 +21,9 @@ public interface SellerLevelHome
    public org.openxava.test.model.SellerLevelRemote create(org.openxava.test.model.SellerLevelValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
+   public org.openxava.test.model.SellerLevelRemote findById(java.lang.String id)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public org.openxava.test.model.SellerLevelRemote findByPrimaryKey(org.openxava.test.model.SellerLevelKey pk)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

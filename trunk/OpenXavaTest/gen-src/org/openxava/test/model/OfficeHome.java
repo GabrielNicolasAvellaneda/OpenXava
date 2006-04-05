@@ -21,13 +21,16 @@ public interface OfficeHome
    public org.openxava.test.model.OfficeRemote create(org.openxava.test.model.OfficeValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
-   public java.util.Collection findByOfficeManager(int officeNumber, int number, int zoneNumber)
+   public java.util.Collection findByOfficeManager(int zoneNumber, int officeNumber, int number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
    public java.util.Collection findByDefaultCarrier(java.lang.Integer number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
-   public java.util.Collection findByMainWarehouse(java.lang.Integer number, int zoneNumber)
+   public java.util.Collection findByMainWarehouse(int zoneNumber, java.lang.Integer number)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
+   public org.openxava.test.model.OfficeRemote findByNumber(int number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
    public org.openxava.test.model.OfficeRemote findByPrimaryKey(org.openxava.test.model.OfficeKey pk)

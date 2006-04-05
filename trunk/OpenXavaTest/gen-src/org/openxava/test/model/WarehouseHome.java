@@ -21,6 +21,9 @@ public interface WarehouseHome
    public org.openxava.test.model.WarehouseRemote create(org.openxava.test.model.WarehouseValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
+   public org.openxava.test.model.WarehouseRemote findByZoneNumberNumber(int zoneNumber,java.lang.Integer number)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public org.openxava.test.model.WarehouseRemote findByPrimaryKey(org.openxava.test.model.WarehouseKey pk)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

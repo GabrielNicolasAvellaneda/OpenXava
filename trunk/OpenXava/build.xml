@@ -83,7 +83,7 @@
 	
 	<target name="filterXavaFilesWithoutConfiguration" unless="configuration">
 		<!-- to replace within xava files -->
-		<copy todir="../${project.ejb}/filtered-files" overwrite="true">		
+		<copy todir="../${project.ejb}/filtered-files" overwrite="${overwrite.xava.files}">
 			<fileset dir="../${project.ejb}/xava"/>
 	    	<filterset>	    	
 				<filter token="separator" value="${separator}"/>
@@ -91,7 +91,7 @@
 			</filterset> 			         
 		</copy>			
 		<!-- to replace within xava components -->
-		<copy todir="../${project.ejb}/filtered-files" overwrite="true">		
+		<copy todir="../${project.ejb}/filtered-files" overwrite="${overwrite.xava.files}">
 			<fileset dir="../${project.ejb}/components"/>
 	    	<filterset>	    	
 				<filter token="separator" value="${separator}"/>
@@ -104,16 +104,16 @@
     	
 	<target name="filterXavaFilesWithConfiguration" if="configuration">
 		<!-- to replace within xava files -->
-		<copy todir="../${project.ejb}/filtered-files" overwrite="true">		
+		<copy todir="../${project.ejb}/filtered-files" overwrite="${overwrite.xava.files}">
 			<fileset dir="../${project.ejb}/xava"/>
-	    	<filterset>	    	
-				<filtersfile file="${configuration}.properties"/>				
+	    	<filterset>
+				<filtersfile file="${configuration}.properties"/>
 				<filter token="separator" value="${separator}"/>
-				<filter token="collection" value="${collection}"/>	    		
-			</filterset> 			         
-		</copy>			
+				<filter token="collection" value="${collection}"/>
+			</filterset>
+		</copy>
 		<!-- to replace within xava components -->
-		<copy todir="../${project.ejb}/filtered-files" overwrite="true">		
+		<copy todir="../${project.ejb}/filtered-files" overwrite="${overwrite.xava.files}">		
 			<fileset dir="../${project.ejb}/components"/>
 	    	<filterset>	    	
 				<filtersfile file="${configuration}.properties"/>				
@@ -124,24 +124,30 @@
 		</copy>						
 	</target>
 	
-	<!-- This filter only xava components, and only the change ones -->
-	<target name="filterXavaComponents">
-		<copy todir="../${project.ejb}/filtered-files" overwrite="false">		
-			<fileset dir="../${project.ejb}/components"/>
-	    	<filterset>	    	
-				<filtersfile file="${configuration}.properties"/>				
-				<filter token="separator" value="${separator}"/>
-				<filter token="collection" value="${collection}"/>
-	    		<filter token="access.table" value="${access.table}"/>	    		
-			</filterset> 			         
-		</copy>						
+	
+	<target name="wtpBuild">
+		<antcall target="filterChangedXavaFiles"/>					
+		<touch file="../${project}/web/WEB-INF/lib/openxava.jar"/>
 	</target>
 	
 	<target name="filterXavaFiles" depends="copyDTDs">
-		<antcall target="filterXavaFilesWithConfiguration"/>
-		<antcall target="filterXavaFilesWithoutConfiguration"/>
+		<antcall target="filterXavaFilesWithConfiguration">
+			<param name="${xava.files.overwrite}" value="true"/>
+		</antcall>
+		<antcall target="filterXavaFilesWithoutConfiguration">
+			<param name="${xava.files.overwrite}" value="true"/>
+		</antcall>
 	</target>
 	
+	<target name="filterChangedXavaFiles" depends="copyDTDs">
+		<antcall target="filterXavaFilesWithConfiguration">
+			<param name="${xava.files.overwrite}" value="false"/>
+		</antcall>
+		<antcall target="filterXavaFilesWithoutConfiguration">
+			<param name="${xava.files.overwrite}" value="false"/>
+		</antcall>
+	</target>
+		
 	<target name="filterHibernateFilesWithoutConfiguration" unless="configuration">
 		<copy todir="../${project.ejb}/filtered-files" failonerror="false" overwrite="true">		
 			<fileset dir="../OpenXava/hibernate"/>
@@ -379,28 +385,27 @@
 		</java>
     </target>
 	
-    <target name="generateHibernate" depends="filter">     
-    	
-	   <echo>Generating classes</echo>
+    <target name="generateHibernate" depends="filterChangedXavaFiles">     
     	<delete file="../${project}/gen-src-xava/dnas.properties"/>
     	<mkdir dir="../${project}/build/hibernate"/>
-       <java 
-       		classname="HCodeGenerator" 
-       		classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};../${project}/${classes.dir};${xava.generator.path}" 
+		<echo>Generating classes</echo>
+		<java 
+			classname="HCodeGenerator" 
+			classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};../${project}/${classes.dir};${xava.generator.path}" 
        		fork="yes">
 			<arg value="${project}"/>        		
 	       	<arg value="${domain}"/>
        		<arg value="${package}"/>
 	       	<arg value="${model.package}"/>       	
 		</java>
-    	
+    	<antcall target="filterHibernateFiles"/>    	
     </target>
 		
 	<target name="runXDoclet">
     	<ant antfile="../OpenXava/xdoclet/build.xml"/>    			
 	</target>
 	        
-    <target name="generateEJB" depends="filter, generateXDoclet, generateHibernate">         	
+    <target name="generateEJB" depends="filterChangedXavaFiles, generateXDoclet, generateHibernate">         	    	
     	<antcall target="runXDoclet"/>
     </target>
 		

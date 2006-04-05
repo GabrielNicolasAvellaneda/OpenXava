@@ -2456,7 +2456,7 @@ public class View implements java.io.Serializable {
 		}
 	}
 	
-	private String calculateFocusPropertyId() throws XavaException {
+	private String calculateFocusPropertyId() throws XavaException { 
 		String prefix = Is.emptyString(getMemberName())?
 			"xava." + getModelName() + ".":
 			"xava." + getModelName() + "." + getMemberName() + ".";
@@ -2502,8 +2502,8 @@ public class View implements java.io.Serializable {
 		boolean found = false;		
 		while (it.hasNext()) {
 			MetaMember m = (MetaMember) it.next();			
-			if (m instanceof MetaGroup) {
-				String name = getGroupView(m.getName()).getNextFocusPropertyName(memberName);				
+			if (m instanceof MetaGroup) {								
+				String name = getGroupView(m.getName()).getFirsEditablePropertyId("");
 				if (name != null) return name;
 			}			
 			if (m.getName().equals(memberName)) {				

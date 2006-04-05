@@ -48,7 +48,9 @@ public class ResourceManagerI18n {
 			return ResourceBundle.getBundle(resourcesFile, locale).getString(key);
 		}
 		catch (MissingResourceException e) {
-			System.err.println(XavaResources.getString("element_i18n_warning", key));			
+			if (XavaPreferences.getInstance().isI18nWarnings()) {
+				System.err.println(XavaResources.getString("element_i18n_warning", key));
+			}
 			return '[' + key + ']';
 		}
 	}
@@ -73,7 +75,9 @@ public class ResourceManagerI18n {
 			return s.charAt(0);			
 		}
 		catch (MissingResourceException e) {
-			System.err.println(XavaResources.getString("char_i18n_warning", key));
+			if (XavaPreferences.getInstance().isI18nWarnings()) {
+				System.err.println(XavaResources.getString("char_i18n_warning", key));
+			}
 			return ' ';
 		}
 	}	

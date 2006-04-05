@@ -21,6 +21,9 @@ public interface StateHome
    public org.openxava.test.model.StateRemote create(org.openxava.test.model.StateValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
+   public org.openxava.test.model.StateRemote findById(java.lang.String id)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public org.openxava.test.model.StateRemote findByPrimaryKey(org.openxava.test.model.StateKey pk)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

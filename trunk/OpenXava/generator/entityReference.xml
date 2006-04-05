@@ -81,6 +81,9 @@ if (overlapped) {
 		return <expr>reference.getName()</expr>;
 	}
 	public void set<expr>refName</expr>(<expr>reference.getMetaModelReferenced().getInterfaceName()</expr> new<expr>reference.getReferencedModelName()</expr>) <expr>setException</expr>{
+		if (new<expr>reference.getReferencedModelName()</expr> != null &amp;&amp; !(new<expr>reference.getReferencedModelName()</expr> instanceof <expr>reference.getMetaModelReferenced().getPOJOClassName()</expr>)) {
+			throw new IllegalArgumentException(XavaResources.getString("ejb_to_pojo_illegal")); 
+		}
 		this.<expr>reference.getName()</expr> = new<expr>reference.getReferencedModelName()</expr>;
 <java>
 if (overlapped) {

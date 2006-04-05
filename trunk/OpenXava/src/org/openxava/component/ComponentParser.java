@@ -1,6 +1,9 @@
 package org.openxava.component;
 
+import java.util.*;
+
 import org.openxava.mapping.xmlparse.*;
+import org.openxava.model.meta.*;
 import org.openxava.model.meta.xmlparse.*;
 import org.openxava.tab.meta.xmlparse.*;
 import org.openxava.util.*;
@@ -79,6 +82,10 @@ class ComponentParser extends ParserBase {
 	}
 	
 	protected void createObjects() throws XavaException {
+		if (this.component != null) {
+			System.err.println(XavaResources.getString("trying_to_load_component_twice_warning", this.component.getName()));
+			return;
+		}
 		lang = "componente".equals(getRoot().getNodeName())?ESPANOL:ENGLISH;
 		createComponent();
 		createEntity();
@@ -87,7 +94,44 @@ class ComponentParser extends ParserBase {
 		createTabs();
 		createEntityMapping();
 		createAggregateMappings();
+		fillDefaultFinders();
 	}
+	
+	/**
+	 * Add finder for the fields of primary key
+	 * @throws XavaException
+	 */
+	private void fillDefaultFinders()	throws XavaException {
+		MetaModel model = component.getMetaEntity();
+		if (!model.getMetaReferencesKey().isEmpty()) return;
+		StringBuffer finderName = new StringBuffer("by");
+		StringBuffer arguments = new StringBuffer(); 
+		StringBuffer condition = new StringBuffer();
+		
+		int i = 0;
+		for (Iterator it = model.getMetaPropertiesKey().iterator(); it.hasNext(); i++) {
+			MetaProperty property = (MetaProperty) it.next(); 
+			finderName.append(Strings.firstUpper(property.getName()));			
+			arguments.append(property.getCMPTypeName());
+			arguments.append(' ');
+			arguments.append(property.getName());
+			if (it.hasNext()) arguments.append(',');
+			condition.append("${");
+			condition.append(property.getName());
+			condition.append("} = {");
+			condition.append(i);
+			condition.append("}");
+			if (it.hasNext()) condition.append(" and ");
+		}
+		MetaFinder finder = new MetaFinder();
+		finder.setMetaModel(model);
+		finder.setName(finderName.toString());
+		if (model.getMetaFinders().contains(finder)) return;
+		finder.setArguments(arguments.toString());
+		finder.setCondition(condition.toString());
+		model.addMetaFinder(finder);
+	}
+	
 	
 	private void createComponent() throws XavaException {
 		this.component = new MetaComponent();

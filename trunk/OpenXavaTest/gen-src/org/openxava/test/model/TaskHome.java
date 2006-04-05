@@ -21,6 +21,9 @@ public interface TaskHome
    public org.openxava.test.model.TaskRemote create(org.openxava.test.model.TaskValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
+   public org.openxava.test.model.TaskRemote findByOid(java.lang.String oid)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public org.openxava.test.model.TaskRemote findByPrimaryKey(org.openxava.test.model.TaskKey pk)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

@@ -110,8 +110,10 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		try {											
 			return Labels.get(id, locale);
 		}
-		catch (Exception ex) {			
-			System.err.println(XavaResources.getString("label_i18n_warning", id)); 				
+		catch (Exception ex) {		
+			if (XavaPreferences.getInstance().isI18nWarnings()) {
+				System.err.println(XavaResources.getString("label_i18n_warning", id));
+			}
 			return Strings.firstUpper(value.toString());
 		}		
 	}

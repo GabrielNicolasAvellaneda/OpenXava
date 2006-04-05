@@ -27,7 +27,7 @@ public interface DeliveryDetailHome
    public org.openxava.test.model.DeliveryDetailRemote create(org.openxava.test.model.DeliveryKey containerKey , int counter , org.openxava.test.model.DeliveryDetailValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
-   public java.util.Collection findByDelivery(int number, int type_number, int invoice_year, int invoice_number)
+   public java.util.Collection findByDelivery(int invoice_year, int invoice_number, int type_number, int number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
    public org.openxava.test.model.DeliveryDetailRemote findByPrimaryKey(org.openxava.test.model.DeliveryDetailKey pk)

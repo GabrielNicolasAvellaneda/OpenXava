@@ -24,6 +24,9 @@ public interface ShipmentChargeHome
    public java.util.Collection findByShipment(java.lang.String type, int mode, int number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
+   public org.openxava.test.model.ShipmentChargeRemote findByOid(java.lang.String oid)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public org.openxava.test.model.ShipmentChargeRemote findByPrimaryKey(org.openxava.test.model.ShipmentChargeKey pk)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

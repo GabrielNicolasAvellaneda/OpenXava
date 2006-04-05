@@ -30,6 +30,9 @@ public interface SellerHome
    public java.util.Collection findAll()
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
+   public org.openxava.test.model.SellerRemote findByNumber(int number)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public org.openxava.test.model.SellerRemote findByPrimaryKey(org.openxava.test.model.SellerKey pk)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

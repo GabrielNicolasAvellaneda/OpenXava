@@ -30,7 +30,7 @@ public interface DeliveryPlaceHome
    public java.util.Collection findByCustomer(int number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
-   public java.util.Collection findByPreferredWarehouse(java.lang.Integer number, int zoneNumber)
+   public java.util.Collection findByPreferredWarehouse(int zoneNumber, java.lang.Integer number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
    public org.openxava.test.model.DeliveryPlaceRemote findByPrimaryKey(org.openxava.test.model.DeliveryPlaceKey pk)

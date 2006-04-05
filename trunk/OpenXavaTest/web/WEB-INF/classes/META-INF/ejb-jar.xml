@@ -129,6 +129,16 @@
             <result-type-mapping>Remote</result-type-mapping>
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product o WHERE 1 = 1]]></ejb-ql>
          </query>
+         <query>
+            <query-method>
+               <method-name>findByNumber</method-name>
+               <method-params>
+                  <method-param>long</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product o WHERE o.number = ?1]]></ejb-ql>
+         </query>
 	  <!-- Write a file named ejb-finders-ProductBean.xml if you want to define extra finders. -->
 
       </entity>
@@ -172,6 +182,17 @@
             <res-auth>Container</res-auth>
          </resource-ref>
 
+         <query>
+            <query-method>
+               <method-name>findByTypeLevel</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM DrivingLicence o WHERE o.type = ?1 and o.level = ?2]]></ejb-ql>
+         </query>
 	  <!-- Write a file named ejb-finders-DrivingLicenceBean.xml if you want to define extra finders. -->
 
       </entity>
@@ -241,7 +262,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office2 o WHERE o.number = ?1 AND o._OfficeManager_number = ?2 AND o.zoneNumber = ?3 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office2 o WHERE o.zoneNumber = ?1 AND o.number = ?2 AND o._OfficeManager_number = ?3 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -257,12 +278,12 @@
             <query-method>
                <method-name>findByMainWarehouse</method-name>
                <method-params>
-                  <method-param>java.lang.Integer</method-param>
                   <method-param>int</method-param>
+                  <method-param>java.lang.Integer</method-param>
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office2 o WHERE o._MainWarehouse_number = ?1 AND o.zoneNumber = ?2 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office2 o WHERE o.zoneNumber = ?1 AND o._MainWarehouse_number = ?2 ]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-Office2Bean.xml if you want to define extra finders. -->
 
@@ -740,6 +761,16 @@
             <result-type-mapping>Remote</result-type-mapping>
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o._Subfamily_number = ?1 ]]></ejb-ql>
          </query>
+         <query>
+            <query-method>
+               <method-name>findByOid</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o.oid = ?1]]></ejb-ql>
+         </query>
 	  <!-- Write a file named ejb-finders-FilterBySubfamilyBean.xml if you want to define extra finders. -->
 
       </entity>
@@ -793,6 +824,16 @@
             <result-type-mapping>Remote</result-type-mapping>
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Ingredient o WHERE o._PartOf_oid = ?1 ]]></ejb-ql>
          </query>
+         <query>
+            <query-method>
+               <method-name>findByOid</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Ingredient o WHERE o.oid = ?1]]></ejb-ql>
+         </query>
 	  <!-- Write a file named ejb-finders-IngredientBean.xml if you want to define extra finders. -->
 
       </entity>
@@ -832,6 +873,16 @@
             <res-auth>Container</res-auth>
          </resource-ref>
 
+         <query>
+            <query-method>
+               <method-name>findById</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM SellerLevel o WHERE o.id = ?1]]></ejb-ql>
+         </query>
 	  <!-- Write a file named ejb-finders-SellerLevelBean.xml if you want to define extra finders. -->
 
       </entity>
@@ -928,6 +979,17 @@
             <result-type-mapping>Remote</result-type-mapping>
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Invoice o WHERE o._Paid <> 'S']]></ejb-ql>
          </query>
+         <query>
+            <query-method>
+               <method-name>findByYearNumber</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Invoice o WHERE o.year = ?1 and o.number = ?2]]></ejb-ql>
+         </query>
 	  <!-- Write a file named ejb-finders-InvoiceBean.xml if you want to define extra finders. -->
 
       </entity>
@@ -994,7 +1056,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryDetail o WHERE o._Delivery_number = ?1 AND o._Delivery_type_number = ?2 AND o._Delivery_invoice_year = ?3 AND o._Delivery_invoice_number = ?4 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryDetail o WHERE o._Delivery_invoice_year = ?1 AND o._Delivery_invoice_number = ?2 AND o._Delivery_type_number = ?3 AND o._Delivery_number = ?4 ]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-DeliveryDetailBean.xml if you want to define extra finders. -->
 
@@ -1069,6 +1131,16 @@
             <result-type-mapping>Remote</result-type-mapping>
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product3 o WHERE o._Family_oid = ?1 ]]></ejb-ql>
          </query>
+         <query>
+            <query-method>
+               <method-name>findByNumber</method-name>
+               <method-params>
+                  <method-param>long</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product3 o WHERE o.number = ?1]]></ejb-ql>
+         </query>
 	  <!-- Write a file named ejb-finders-Product3Bean.xml if you want to define extra finders. -->
 
       </entity>
@@ -1108,6 +1180,16 @@
             <res-auth>Container</res-auth>
          </resource-ref>
 
+         <query>
+            <query-method>
+               <method-name>findById</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM State o WHERE o.id = ?1]]></ejb-ql>
+         </query>
 	  <!-- Write a file named ejb-finders-StateBean.xml if you want to define extra finders. -->
 
       </entity>
@@ -1165,6 +1247,16 @@
             <result-type-mapping>Remote</result-type-mapping>
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Subfamily2 o WHERE o._Family_number = ?1 ]]></ejb-ql>
          </query>
+         <query>
+            <query-method>
+               <method-name>findByNumber</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Subfamily2 o WHERE o.number = ?1]]></ejb-ql>
+         </query>
 	  <!-- Write a file named ejb-finders-Subfamily2Bean.xml if you want to define extra finders. -->
 
       </entity>
@@ -1204,6 +1296,16 @@
             <res-auth>Container</res-auth>
          </resource-ref>
 
+         <query>
+            <query-method>
+               <method-name>findByOid</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Formula o WHERE o.oid = ?1]]></ejb-ql>
+         </query>
 	  <!-- Write a file named ejb-finders-FormulaBean.xml if you want to define extra finders. -->
 
       </entity>
@@ -1255,6 +1357,16 @@
             <res-auth>Container</res-auth>
          </resource-ref>
 
+         <query>
+            <query-method>
+               <method-name>findByOid</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Subfamily o WHERE o.oid = ?1]]></ejb-ql>
+         </query>
 	  <!-- Write a file named ejb-finders-SubfamilyBean.xml if you want to define extra finders. -->
 
       </entity>
@@ -1317,7 +1429,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM TransportCharge2 o WHERE o._Delivery_number = ?1 AND o._Delivery_type_number = ?2 AND o.year = ?3 AND o._Delivery_invoice_number = ?4 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM TransportCharge2 o WHERE o.year = ?1 AND o._Delivery_invoice_number = ?2 AND o._Delivery_type_number = ?3 AND o._Delivery_number = ?4 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1375,6 +1487,18 @@
             <res-auth>Container</res-auth>
          </resource-ref>
 
+         <query>
+            <query-method>
+               <method-name>findByZoneNumberOfficeNumberNumber</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Clerk o WHERE o.zoneNumber = ?1 and o.officeNumber = ?2 and o.number = ?3]]></ejb-ql>
+         </query>
 	  <!-- Write a file named ejb-finders-ClerkBean.xml if you want to define extra finders. -->
 
       </entity>
@@ -1418,6 +1542,17 @@
             <res-auth>Container</res-auth>
          </resource-ref>
 
+         <query>
+            <query-method>
+               <method-name>findByZoneNumberNumber</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>java.lang.Integer</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Warehouse o WHERE o.zoneNumber = ?1 and o._Number = ?2]]></ejb-ql>
+         </query>
 	  <!-- Write a file named ejb-finders-WarehouseBean.xml if you want to define extra finders. -->
 
       </entity>
@@ -1469,6 +1604,16 @@
             <res-auth>Container</res-auth>
          </resource-ref>
 
+         <query>
+            <query-method>
+               <method-name>findByOid</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Task o WHERE o.oid = ?1]]></ejb-ql>
+         </query>
 	  <!-- Write a file named ejb-finders-TaskBean.xml if you want to define extra finders. -->
 
       </entity>
@@ -1538,7 +1683,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.number = ?1 AND o._OfficeManager_number = ?2 AND o._ZoneNumber = ?3 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o._ZoneNumber = ?1 AND o.number = ?2 AND o._OfficeManager_number = ?3 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1554,12 +1699,22 @@
             <query-method>
                <method-name>findByMainWarehouse</method-name>
                <method-params>
+                  <method-param>int</method-param>
                   <method-param>java.lang.Integer</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o._ZoneNumber = ?1 AND o._MainWarehouse_number = ?2 ]]></ejb-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByNumber</method-name>
+               <method-params>
                   <method-param>int</method-param>
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o._MainWarehouse_number = ?1 AND o._ZoneNumber = ?2 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Office o WHERE o.number = ?1]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-OfficeBean.xml if you want to define extra finders. -->
 
@@ -1600,6 +1755,16 @@
             <res-auth>Container</res-auth>
          </resource-ref>
 
+         <query>
+            <query-method>
+               <method-name>findByNumber</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Family2 o WHERE o.number = ?1]]></ejb-ql>
+         </query>
 	  <!-- Write a file named ejb-finders-Family2Bean.xml if you want to define extra finders. -->
 
       </entity>
@@ -1655,6 +1820,16 @@
             <res-auth>Container</res-auth>
          </resource-ref>
 
+         <query>
+            <query-method>
+               <method-name>findByNumber</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Service o WHERE o.number = ?1]]></ejb-ql>
+         </query>
 	  <!-- Write a file named ejb-finders-ServiceBean.xml if you want to define extra finders. -->
 
       </entity>
@@ -1720,6 +1895,18 @@
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Shipment o]]></ejb-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByTypeModeNumber</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Shipment o WHERE o._Type = ?1 and o.mode = ?2 and o.number = ?3]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-ShipmentBean.xml if you want to define extra finders. -->
 
@@ -1794,12 +1981,12 @@
             <query-method>
                <method-name>findByPreferredWarehouse</method-name>
                <method-params>
-                  <method-param>java.lang.Integer</method-param>
                   <method-param>int</method-param>
+                  <method-param>java.lang.Integer</method-param>
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryPlace o WHERE o._PreferredWarehouse_number = ?1 AND o._PreferredWarehouse_zoneNumber = ?2 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryPlace o WHERE o._PreferredWarehouse_zoneNumber = ?1 AND o._PreferredWarehouse_number = ?2 ]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-DeliveryPlaceBean.xml if you want to define extra finders. -->
 
@@ -1864,6 +2051,16 @@
             <result-type-mapping>Remote</result-type-mapping>
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM ShipmentCharge o WHERE o._Shipment_type = ?1 AND o._Mode = ?2 AND o._Shipment_number = ?3 ]]></ejb-ql>
          </query>
+         <query>
+            <query-method>
+               <method-name>findByOid</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM ShipmentCharge o WHERE o.oid = ?1]]></ejb-ql>
+         </query>
 	  <!-- Write a file named ejb-finders-ShipmentChargeBean.xml if you want to define extra finders. -->
 
       </entity>
@@ -1926,7 +2123,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM TransportCharge o WHERE o._Delivery_number = ?1 AND o._Delivery_type_number = ?2 AND o._Delivery_invoice_year = ?3 AND o._Delivery_invoice_number = ?4 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM TransportCharge o WHERE o._Delivery_invoice_year = ?1 AND o._Delivery_invoice_number = ?2 AND o._Delivery_type_number = ?3 AND o._Delivery_number = ?4 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -1984,6 +2181,16 @@
             <res-auth>Container</res-auth>
          </resource-ref>
 
+         <query>
+            <query-method>
+               <method-name>findByNumber</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM ServiceType o WHERE o.number = ?1]]></ejb-ql>
+         </query>
 	  <!-- Write a file named ejb-finders-ServiceTypeBean.xml if you want to define extra finders. -->
 
       </entity>
@@ -2192,12 +2399,12 @@
             <query-method>
                <method-name>findByWarehouse</method-name>
                <method-params>
-                  <method-param>java.lang.Integer</method-param>
                   <method-param>int</method-param>
+                  <method-param>java.lang.Integer</method-param>
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o._Warehouse_number = ?1 AND o._Warehouse_zoneNumber = ?2 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o._Warehouse_zoneNumber = ?1 AND o._Warehouse_number = ?2 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -2227,6 +2434,16 @@
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE 1 = 1]]></ejb-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByNumber</method-name>
+               <method-params>
+                  <method-param>long</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o.number = ?1]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-Product2Bean.xml if you want to define extra finders. -->
 
@@ -2353,23 +2570,23 @@
             <query-method>
                <method-name>findByWarehouse</method-name>
                <method-params>
-                  <method-param>java.lang.Integer</method-param>
                   <method-param>int</method-param>
+                  <method-param>java.lang.Integer</method-param>
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Carrier o WHERE o._Warehouse_number = ?1 AND o._Warehouse_zoneNumber = ?2 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Carrier o WHERE o._Warehouse_zoneNumber = ?1 AND o._Warehouse_number = ?2 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
                <method-name>findByDrivingLicence</method-name>
                <method-params>
-                  <method-param>int</method-param>
                   <method-param>java.lang.String</method-param>
+                  <method-param>int</method-param>
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Carrier o WHERE o._DrivingLicence_level = ?1 AND o._DrivingLicence_type = ?2 ]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Carrier o WHERE o._DrivingLicence_type = ?1 AND o._DrivingLicence_level = ?2 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -2391,6 +2608,16 @@
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Carrier o]]></ejb-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByNumber</method-name>
+               <method-params>
+                  <method-param>java.lang.Integer</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Carrier o WHERE o._Number = ?1]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-CarrierBean.xml if you want to define extra finders. -->
 
@@ -2431,6 +2658,16 @@
             <res-auth>Container</res-auth>
          </resource-ref>
 
+         <query>
+            <query-method>
+               <method-name>findByNumber</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryType o WHERE o.number = ?1]]></ejb-ql>
+         </query>
 	  <!-- Write a file named ejb-finders-DeliveryTypeBean.xml if you want to define extra finders. -->
 
       </entity>
@@ -2577,6 +2814,16 @@
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE 1 = 1]]></ejb-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByNumber</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE o.number = ?1]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-SellerBean.xml if you want to define extra finders. -->
 
