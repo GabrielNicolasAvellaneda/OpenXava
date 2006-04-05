@@ -27,6 +27,9 @@ public interface FilterBySubfamilyHome
    public java.util.Collection findBySubfamily(int number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
+   public org.openxava.test.model.FilterBySubfamilyRemote findByOid(java.lang.String oid)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public org.openxava.test.model.FilterBySubfamilyRemote findByPrimaryKey(org.openxava.test.model.FilterBySubfamilyKey pk)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

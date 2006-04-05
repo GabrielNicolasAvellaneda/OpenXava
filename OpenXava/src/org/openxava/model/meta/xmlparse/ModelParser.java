@@ -1,5 +1,7 @@
 package org.openxava.model.meta.xmlparse;
 
+import java.util.*;
+
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
@@ -33,7 +35,7 @@ public class ModelParser extends XmlElementsNames {
 			e.setPojoGenerated(true);
 		}
 
-		fillMembers(el, e, lang);								
+		fillMembers(el, e, lang);
 		return e;
 	}
 		
@@ -150,7 +152,7 @@ public class ModelParser extends XmlElementsNames {
 		}		
 		Aspects.fillImplicitCalculators(container);
 	}
-	
+			
 	private static void fillValidator(Element el, MetaProperty container, int lang)
 		throws XavaException {
 		NodeList l = el.getChildNodes();

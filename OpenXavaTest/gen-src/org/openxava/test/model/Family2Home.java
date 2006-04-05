@@ -21,6 +21,9 @@ public interface Family2Home
    public org.openxava.test.model.Family2Remote create(org.openxava.test.model.Family2Value value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
+   public org.openxava.test.model.Family2Remote findByNumber(int number)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public org.openxava.test.model.Family2Remote findByPrimaryKey(org.openxava.test.model.Family2Key pk)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

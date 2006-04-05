@@ -451,7 +451,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	
 	
 	/**
-	 * Order like xml file.
+	 * Ordered as in component definition file.
 	 * @return Not null, read only and serializable
 	 */
 	public Collection getMembersNames() {
@@ -460,7 +460,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	}
 
 	/**
-	 * Order like xml files.
+	 * Ordered as in component definition.
 	 * @return Not null, read only and serializable
 	 */
 	public List getPropertiesNames() {
@@ -607,19 +607,27 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	/**
 	 * Includes qualified properties in case of key references. <p>
 	 * 
+	 * They are ordered as declared in component definition. <br>
+	 * 
 	 * @return Collection of <tt>String</tt>, not null and read only 
 	 */
 	public Collection getAllKeyPropertiesNames() throws XavaException {  
 		if (allKeyPropertiesNames==null) {
-			ArrayList result = new ArrayList(getKeyPropertiesNames());
-			Iterator itRef = getMetaReferencesKey().iterator(); 
+			ArrayList result = new ArrayList();
+			Iterator itRef = getMetaMembersKey().iterator(); 
 			while (itRef.hasNext()) {
-				MetaReference ref = (MetaReference) itRef.next();
-				Iterator itProperties = ref.getMetaModelReferenced().getAllKeyPropertiesNames().iterator();
-				while (itProperties.hasNext()) {
-					result.add(ref.getName() + "." + itProperties.next());
+				MetaMember member = (MetaMember) itRef.next();
+				if (member instanceof MetaProperty) {
+					result.add(member.getName());
 				}
-			}		
+				else { // must be MetaReference
+					MetaReference ref = (MetaReference) member; 
+					Iterator itProperties = ref.getMetaModelReferenced().getAllKeyPropertiesNames().iterator();
+					while (itProperties.hasNext()) {
+						result.add(ref.getName() + "." + itProperties.next());
+					}
+				}
+			}				
 			allKeyPropertiesNames = Collections.unmodifiableCollection(result);
 		}
 		return allKeyPropertiesNames;
@@ -627,7 +635,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	
 	
 	/**
-	 * Order like xml file.
+	 * Ordered as in component definition.
 	 * 
 	 * @return Collection of <tt>String</tt>, not null and read only
 	 */
@@ -667,6 +675,8 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	}
 	
 	/**
+	 * Key members ordered as in component definition.
+	 * 
 	 * @return Collection of <tt>MetaMember</tt>, not null and read only
 	 */
 	public Collection getMetaMembersKey() throws XavaException {
@@ -814,7 +824,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	
 	
 	/**
-	 * Order like xml files.
+	 * Ordered as in component definition.
 	 */
 	public Collection getMetaPropertiesPersistents() throws XavaException {
 		if (metaPropertiesPersistents == null) {
@@ -834,7 +844,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	}
 	
 	/**
-	 * Order like xml files.
+	 * Ordered as in component definition.
 	 */
 	public Collection getMetaPropertiesPersistentsFromReference(String referenceName) throws XavaException {
 		Iterator it = getMembersNames().iterator(); // memberNames to keep order
@@ -853,7 +863,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	
 	
 	/**
-	 * Order like xml files
+	 * Ordered as in component definition.
 	 */
 	public Collection getPersistentPropertiesNames() throws XavaException {
 		if (persistentPropertiesNames == null) {

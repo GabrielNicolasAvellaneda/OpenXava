@@ -12,7 +12,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Wed Mar 29 13:14:06 CEST 2006
+ * @version Fri Mar 31 16:19:57 CEST 2006
  */
 public class EntityReferenceEJBPG {
     Properties properties = new Properties();
@@ -106,7 +106,11 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     out.print(referenceName);
     out.print(" == null) set");
     out.print(referenceName);
-    out.print("Key(null);\n\t\t\telse {\n\t\t\t\t");
+    out.print("Key(null);\n\t\t\telse {\n\t\t\t\tif (new");
+    out.print(referenceName);
+    out.print(" instanceof ");
+    out.print(referencedModel.getPOJOClass().getName());
+    out.print(") {\n\t\t\t\t\tthrow new IllegalArgumentException(XavaResources.getString(\"pojo_to_ejb_illegal\"));\n\t\t\t\t}\n\t\t\t\t");
     out.print(referencedModel.getRemote());
     out.print(" remote = (");
     out.print(referencedModel.getRemote());
@@ -116,7 +120,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     out.print(referenceName);
     out.print("Key((");
     out.print(referencedKeyClass);
-    out.print(") remote.getPrimaryKey());\n\t\t\t}\t\n\t\t}\n\t\tcatch (Exception ex) {\n\t\t\tex.printStackTrace();\n\t\t\tthrow new EJBException(XavaResources.getString(\"set_reference_error\", \"");
+    out.print(") remote.getPrimaryKey());\n\t\t\t}\t\n\t\t}\n\t\tcatch (IllegalArgumentException ex) {\n\t\t\tthrow ex;\n\t\t}\n\t\tcatch (Exception ex) {\n\t\t\tex.printStackTrace();\n\t\t\tthrow new EJBException(XavaResources.getString(\"set_reference_error\", \"");
     out.print(referenceName);
     out.print("\", \"");
     out.print(metaModel.getName());
@@ -417,7 +421,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Wed Mar 29 13:14:06 CEST 2006", // date this file was generated
+        { "Fri Mar 31 16:19:57 CEST 2006", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/entityReferenceEJB.xml", // input file
              "/home/javi/workspace/OpenXava/generator/EntityReferenceEJBPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

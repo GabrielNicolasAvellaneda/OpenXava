@@ -80,14 +80,15 @@
 		<property-mapping
 			property="name" column="NAME"/>
 		<reference-mapping reference="drivingLicence">
+			<!-- Not in the same order that in DrivingLicence, to test that OpenXava order they -->
+			<reference-mapping-detail 
+				column="DRIVINGLICENCE_LEVEL" 
+				referenced-model-property="level"/> 																
 			<reference-mapping-detail 
 				column="DRIVINGLICENCE_TYPE" 
 				referenced-model-property="type">
 				<converter class="org.openxava.converters.NotNullStringConverter"/>
 			</reference-mapping-detail>	
-			<reference-mapping-detail 
-				column="DRIVINGLICENCE_LEVEL" 
-				referenced-model-property="level"/> 				
 		</reference-mapping>				
 		<reference-mapping reference="warehouse">
 			<reference-mapping-detail 

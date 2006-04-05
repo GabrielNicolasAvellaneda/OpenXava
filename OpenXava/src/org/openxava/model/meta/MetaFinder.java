@@ -101,18 +101,62 @@ public class MetaFinder implements Serializable {
 		sb.append(getMetaModel().getName());
 		sb.append(" as o");
 		if (!Is.emptyString(this.condition)) {			
-			sb.append(" where ");			
-			String condition = Strings.change(getCondition(), getArgumentsToHQL());			
+			sb.append(" where ");
+			String condition = transformAggregateProperties(getCondition()); 
+			condition = Strings.change(condition, getArgumentsToHQL());						
 			sb.append(Strings.change(condition, getTokensToChangeDollarsAndNL()));
 		}
 		if (order && !Is.emptyString(this.order)) { 		
 			sb.append(" order by ");
 			sb.append(Strings.change(this.order, getTokensToChangeDollarsAndNL()));
 		}
-		return sb.toString();
+		return  sb.toString();
 	}
 	
-	
+	/**
+	 * Transforms ${address.street} in ${address_street} if address if an aggregate
+	 * of container model.
+	 * @param condition
+	 * @return
+	 */
+	private String transformAggregateProperties(String condition) {		
+		int i = condition.indexOf("${");
+		if (i < 0) return condition;
+		StringBuffer result = new StringBuffer(condition.substring(0, i + 2));
+		while (i >= 0) {
+			int f = condition.indexOf("}", i);			
+			String property = condition.substring(i + 2, f); 			
+			String transformedProperty = transformAgregateProperty(property);
+			result.append(transformedProperty);
+			i = condition.indexOf("${", f);
+			if (i >= 0) result.append(condition.substring(f, i));			
+			else result.append(condition.substring(f));			
+		}		
+		return result.toString();
+	}
+
+	private String transformAgregateProperty(String property) {
+		StringBuffer result = new StringBuffer();
+		StringTokenizer st = new StringTokenizer(property, ".");
+		String member = "";
+		while (st.hasMoreTokens()) {
+			String token = st.nextToken();
+			result.append(token);
+			if (!st.hasMoreTokens()) break;
+			member =  member + token;
+			try {
+				MetaReference ref = getMetaModel().getMetaReference(member);
+				if (ref.isAggregate()) result.append('_');
+				else result.append('.');				
+			}
+			catch (XavaException ex) {
+				result.append('.');
+			}
+			member = member + ".";
+		}
+		return result.toString();
+	}
+
 	public String getHQLCountSentence() throws XavaException {
 		StringBuffer sb = new StringBuffer("select count(*) ");
 		sb.append(getHQLCondition(false));
@@ -170,6 +214,14 @@ public class MetaFinder implements Serializable {
 		}
 		return tokensToChangeDollarsAndNL;
 	}
+
+	public boolean equals(Object other) {
+		if (!(other instanceof MetaFinder)) return false;
+		return toString().equals(other.toString());
+	}
 	
+	public String toString() {
+		return "Finder: " + getMetaModel().getName() + "." + getName();
+	}
 	
 }

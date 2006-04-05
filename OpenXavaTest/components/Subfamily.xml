@@ -27,7 +27,7 @@
 		</property>									
 	</entity>
 	
-	<view>
+	<view>		
 		<members>
 			number
 			<section name="data">

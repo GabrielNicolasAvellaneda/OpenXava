@@ -16,12 +16,11 @@ public class ReferenceMapping implements java.io.Serializable {
 	private ModelMapping referencedMapping;
 	private Map details = new HashMap();
 	private String referencedModelName;
-	private Collection columns = new ArrayList();
+	private Collection columns = null; 
 
 	public void addDetail(ReferenceMappingDetail detail) {
 		details.put(detail.getReferencedModelProperty(), detail);
-		detail.setContainer(this);
-		columns.add(detail.getColumn()); // To keep order 
+		detail.setContainer(this); 
 	}
 	
 	String getReferencedModelName() throws XavaException {
@@ -99,7 +98,14 @@ public class ReferenceMapping implements java.io.Serializable {
 		this.reference = reference;
 	}
 	
-	public Collection getColumns() {
+	public Collection getColumns() throws XavaException {
+		if (columns == null) {
+			columns = new ArrayList();			
+			Collection keyProperties = getContainer().getMetaModel().getMetaReference(getReference()).getMetaModelReferenced().getAllKeyPropertiesNames();
+			for (Iterator it = keyProperties.iterator(); it.hasNext();) {
+				columns.add(getColumnForReferencedModelProperty((String) it.next()));
+			}
+		}
 		return columns;
 	}
 	

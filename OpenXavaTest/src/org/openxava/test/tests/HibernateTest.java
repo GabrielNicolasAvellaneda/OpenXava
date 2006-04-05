@@ -6,6 +6,7 @@ import java.util.*;
 import org.hibernate.*;
 import org.openxava.hibernate.*;
 import org.openxava.test.model.*;
+import org.openxava.util.*;
 
 import junit.framework.*;
 
@@ -17,6 +18,7 @@ public class HibernateTest extends TestCase {
 	
 	static {
 		XHibernate.setConfigurationFile("hibernate-junit.cfg.xml");
+		DataSourceConnectionProvider.setUseHibernateConnection(true);
 	}
 	
 	public HibernateTest(String name) {
@@ -25,6 +27,23 @@ public class HibernateTest extends TestCase {
 	
 	protected void tearDown() throws Exception {
 		XHibernate.commit();
+	}
+	
+	public void testFinderByAggregateProperty() throws Exception {
+		Collection customers = Customer.findByStreet("XXX");
+		for (Iterator it = customers.iterator(); it.hasNext(); ); // This mustn't fail 
+	}
+	
+	public void testFinderThrowsObjectNotFound() throws Exception {
+		// Finders in POJOs has the semantics of EJB CMP2 
+		// in order to help in translation from EJB2 to POJO+Hibernate
+		try {
+			Customer.findByNumber(66); // 66 doesn't exist
+			fail("ObjectNotFoundException expected");
+		}
+		catch (javax.ejb.ObjectNotFoundException ex) {
+			// All fine
+		}
 	}
 		
 	public void testOrderBy() throws Exception {

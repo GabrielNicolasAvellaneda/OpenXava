@@ -27,6 +27,9 @@ public interface ShipmentHome
    public java.util.Collection findAll()
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
+   public org.openxava.test.model.ShipmentRemote findByTypeModeNumber(java.lang.String type,int mode,int number)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public org.openxava.test.model.ShipmentRemote findByPrimaryKey(org.openxava.test.model.ShipmentKey pk)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

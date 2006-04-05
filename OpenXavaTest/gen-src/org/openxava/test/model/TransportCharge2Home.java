@@ -21,7 +21,7 @@ public interface TransportCharge2Home
    public org.openxava.test.model.TransportCharge2Remote create(org.openxava.test.model.TransportCharge2Value value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
-   public java.util.Collection findByDelivery(int number, int type_number, int invoice_year, int invoice_number)
+   public java.util.Collection findByDelivery(int invoice_year, int invoice_number, int type_number, int number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
    public java.util.Collection findAll()

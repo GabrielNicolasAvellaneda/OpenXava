@@ -10,7 +10,7 @@ import org.openxava.generators.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Wed Mar 29 13:14:05 CEST 2006
+ * @version Fri Mar 31 16:19:56 CEST 2006
  */
 public class EntityReferencePG {
     Properties properties = new Properties();
@@ -117,7 +117,13 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     out.print(reference.getReferencedModelName());
     out.print(") ");
     out.print(setException);
-    out.print("{\n\t\tthis.");
+    out.print("{\n\t\tif (new");
+    out.print(reference.getReferencedModelName());
+    out.print(" != null && !(new");
+    out.print(reference.getReferencedModelName());
+    out.print(" instanceof ");
+    out.print(reference.getMetaModelReferenced().getPOJOClassName());
+    out.print(")) {\n\t\t\tthrow new IllegalArgumentException(XavaResources.getString(\"ejb_to_pojo_illegal\")); \n\t\t}\n\t\tthis.");
     out.print(reference.getName());
     out.print(" = new");
     out.print(reference.getReferencedModelName());
@@ -209,7 +215,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Wed Mar 29 13:14:06 CEST 2006", // date this file was generated
+        { "Fri Mar 31 16:19:57 CEST 2006", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/entityReference.xml", // input file
              "/home/javi/workspace/OpenXava/generator/EntityReferencePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

@@ -21,6 +21,9 @@ public interface ServiceTypeHome
    public org.openxava.test.model.ServiceTypeRemote create(org.openxava.test.model.ServiceTypeValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
+   public org.openxava.test.model.ServiceTypeRemote findByNumber(int number)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public org.openxava.test.model.ServiceTypeRemote findByPrimaryKey(org.openxava.test.model.ServiceTypeKey pk)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

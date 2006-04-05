@@ -33,6 +33,9 @@ public interface InvoiceHome
    public java.util.Collection findNotPaidOnes()
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
+   public org.openxava.test.model.InvoiceRemote findByYearNumber(int year,int number)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public org.openxava.test.model.InvoiceRemote findByPrimaryKey(org.openxava.test.model.InvoiceKey pk)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

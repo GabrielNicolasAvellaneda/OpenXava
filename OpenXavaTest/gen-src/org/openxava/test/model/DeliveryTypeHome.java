@@ -21,6 +21,9 @@ public interface DeliveryTypeHome
    public org.openxava.test.model.DeliveryTypeRemote create(org.openxava.test.model.DeliveryTypeValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
+   public org.openxava.test.model.DeliveryTypeRemote findByNumber(int number)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public org.openxava.test.model.DeliveryTypeRemote findByPrimaryKey(org.openxava.test.model.DeliveryTypeKey pk)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

@@ -93,6 +93,11 @@ therefore it's show some features more advances of stereotypes.
 		<property-view property="unitPrice">
 			<on-change class="org.openxava.test.actions.OnChangeProductUnitPriceAction"/>
 		</property-view>
+		
+		<property-view property="warehouseKey"> 
+			<on-change class="org.openxava.test.actions.OnChangeVoidAction"/>
+		</property-view>
+		
 		<members>
 			number;
 			<section name="data">

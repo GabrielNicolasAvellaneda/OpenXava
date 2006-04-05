@@ -66,7 +66,9 @@ public class MetaConsult extends MetaElement {
 			}
 			catch (XavaException ex) {
 				ex.printStackTrace();
-				System.err.println(XavaResources.getString("label_i18n_warning", getId()));
+				if (XavaPreferences.getInstance().isI18nWarnings()) {
+					System.err.println(XavaResources.getString("label_i18n_warning", getId()));
+				}
 			}
 		}
 		return label;

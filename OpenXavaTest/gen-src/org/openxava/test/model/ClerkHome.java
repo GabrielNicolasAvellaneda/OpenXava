@@ -21,6 +21,9 @@ public interface ClerkHome
    public org.openxava.test.model.ClerkRemote create(org.openxava.test.model.ClerkValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
+   public org.openxava.test.model.ClerkRemote findByZoneNumberOfficeNumberNumber(int zoneNumber,int officeNumber,int number)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public org.openxava.test.model.ClerkRemote findByPrimaryKey(org.openxava.test.model.ClerkKey pk)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

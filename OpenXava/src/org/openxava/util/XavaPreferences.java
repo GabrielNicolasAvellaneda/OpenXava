@@ -76,4 +76,9 @@ public class XavaPreferences {
 		}	
 		return ejb2Persistence;
 	}
+
+
+	public boolean isI18nWarnings() {
+		return "true".equalsIgnoreCase(getProperties().getProperty("i18nWarnings", "true").trim());		
+	}
 }

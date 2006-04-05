@@ -203,8 +203,12 @@ manager.commit(); // because of hibernate or ejb3 or ... can be used in calculat
 }
 else {
 %>
-<tr><td class=<%=style.getMessages()%>>
+<tr><td class=<%=totalSize==0?style.getMessages():style.getErrors()%>>
+<% if (totalSize == 0) { %>
 <b><fmt:message key="no_objects"/></b>
+<% } else { %>
+<b><fmt:message key="list_error"/></b>
+<% } %>
 </td></tr>
 <%
 }

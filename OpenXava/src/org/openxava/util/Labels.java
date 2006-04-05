@@ -63,7 +63,9 @@ public class Labels {
 			return null;
 		}
 		catch (Exception ex) {
-			System.err.println(XavaResources.getString("label_i18n_warning", id));
+			if (XavaPreferences.getInstance().isI18nWarnings()) {
+				System.err.println(XavaResources.getString("label_i18n_warning", id));
+			}
 			return null;
 		}
 	}	

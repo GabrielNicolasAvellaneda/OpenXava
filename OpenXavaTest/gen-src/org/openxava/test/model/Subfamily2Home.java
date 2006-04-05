@@ -24,6 +24,9 @@ public interface Subfamily2Home
    public java.util.Collection findByFamily(int number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
+   public org.openxava.test.model.Subfamily2Remote findByNumber(int number)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public org.openxava.test.model.Subfamily2Remote findByPrimaryKey(org.openxava.test.model.Subfamily2Key pk)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

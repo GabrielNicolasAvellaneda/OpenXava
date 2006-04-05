@@ -47,7 +47,9 @@ public class Messages implements java.io.Serializable {
 				return format(m, translate(argv, locale), locale);
 			}
 			catch (Exception ex) {
-				System.err.println(XavaResources.getString("label_i18n_warning", id));
+				if (XavaPreferences.getInstance().isI18nWarnings()) {
+					System.err.println(XavaResources.getString("label_i18n_warning", id));
+				}
 				return id;
 			}
 		}

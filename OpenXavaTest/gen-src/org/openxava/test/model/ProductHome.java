@@ -24,6 +24,9 @@ public interface ProductHome
    public java.util.Collection findAll()
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
+   public org.openxava.test.model.ProductRemote findByNumber(long number)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public org.openxava.test.model.ProductRemote findByPrimaryKey(org.openxava.test.model.ProductKey pk)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

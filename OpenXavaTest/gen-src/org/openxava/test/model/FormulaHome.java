@@ -21,6 +21,9 @@ public interface FormulaHome
    public org.openxava.test.model.FormulaRemote create(org.openxava.test.model.FormulaValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
+   public org.openxava.test.model.FormulaRemote findByOid(java.lang.String oid)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public org.openxava.test.model.FormulaRemote findByPrimaryKey(org.openxava.test.model.FormulaKey pk)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
