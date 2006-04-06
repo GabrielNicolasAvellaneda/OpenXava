@@ -386,6 +386,10 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		return mapMetaViews;
 	}
 	
+	/**
+	 * 
+	 * @param name May be qualified, that is myreference.mynestedreference
+	 */	
 	public MetaReference getMetaReference(String name) throws ElementNotFoundException, XavaException {
 		if (name == null) {
 			throw new ElementNotFoundException("reference_not_found", name, getName());
@@ -425,10 +429,22 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		return mapMetaReferences;
 	}
 		
-	public MetaCollection getMetaCollection(String name) throws XavaException {
+	/**
+	 * 
+	 * @param name May be qualified, that is mycollection.mynestedcollection
+	 */
+	public MetaCollection getMetaCollection(String name) throws ElementNotFoundException, XavaException {
 		MetaCollection r = (MetaCollection) getMapMetaColections().get(name);
-		if (r == null) {
-			throw new ElementNotFoundException("collection_not_found", name, getName());
+		if (r == null) {			
+			int idx = name.indexOf('.');
+			if (idx >= 0) {
+				String collection = name.substring(0, idx);			
+				String nestedCollection = name.substring(idx + 1);
+				return getMetaCollection(collection).getMetaReference().getMetaModelReferenced().getMetaCollection(nestedCollection);
+			}
+			else {
+				throw new ElementNotFoundException("collection_not_found", name, getName());
+			}
 		}
 		return r;
 	}
