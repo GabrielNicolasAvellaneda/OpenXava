@@ -31,9 +31,9 @@
     <property name="server.properties.tmp.dir" value="${user.home}/tmpServerProperties"/>        
 	<property name="model.package" value="model"/>
 	<property name="build.compiler" value="javac1.3"/>
-	<property name="deploy.portlets.dir" value="${deploy.dir}/openxava.war/WEB-INF/deploy"/>
+	<property name="deploy.portlets.dir" value="${deploy.dir}/openxava${war.dir.suffix}/WEB-INF/deploy"/>
 	<property name="generate.jetspeed2.files" value="true"/>
-	<property name="jetspeed2.pages.dir" value="${deploy.dir}/openxava.war/WEB-INF/pages"/>
+	<property name="jetspeed2.pages.dir" value="${deploy.dir}/openxava${war.dir.suffix}/WEB-INF/pages"/>
 	<property name="portlets.default.locale" value="${user.language}"/>
 			
    <!-- Set up java.class.path -->
@@ -125,31 +125,30 @@
 	</target>
 	
 	
-	<target name="wtpBuild">
-		<antcall target="filterChangedXavaFiles"/>					
+	<target name="wtpBuild" depends="filterChangedXavaFiles, filterChangedHibernateFiles">
 		<touch file="../${project}/web/WEB-INF/lib/openxava.jar"/>
 	</target>
 	
 	<target name="filterXavaFiles" depends="copyDTDs">
 		<antcall target="filterXavaFilesWithConfiguration">
-			<param name="${xava.files.overwrite}" value="true"/>
+			<param name="overwrite.xava.files" value="true"/>
 		</antcall>
 		<antcall target="filterXavaFilesWithoutConfiguration">
-			<param name="${xava.files.overwrite}" value="true"/>
+			<param name="overwrite.xava.files" value="true"/>
 		</antcall>
 	</target>
 	
 	<target name="filterChangedXavaFiles" depends="copyDTDs">
 		<antcall target="filterXavaFilesWithConfiguration">
-			<param name="${xava.files.overwrite}" value="false"/>
+			<param name="overwrite.xava.files" value="false"/>
 		</antcall>
 		<antcall target="filterXavaFilesWithoutConfiguration">
-			<param name="${xava.files.overwrite}" value="false"/>
+			<param name="overwrite.xava.files" value="false"/>
 		</antcall>
 	</target>
 		
 	<target name="filterHibernateFilesWithoutConfiguration" unless="configuration">
-		<copy todir="../${project.ejb}/filtered-files" failonerror="false" overwrite="true">		
+		<copy todir="../${project.ejb}/filtered-files" failonerror="false" overwrite="${overwrite.hibernate.files}">		
 			<fileset dir="../OpenXava/hibernate"/>
 			<fileset dir="../${project.ejb}/hibernate"/>			
 			<fileset dir="../${project.ejb}/build/hibernate"/>
@@ -166,7 +165,7 @@
 	</target>	
 	
 	<target name="filterHibernateFilesWithConfiguration" if="configuration">
-		<copy todir="../${project.ejb}/filtered-files" failonerror="false" overwrite="true">		
+		<copy todir="../${project.ejb}/filtered-files" failonerror="false" overwrite="${overwrite.hibernate.files}">		
 			<fileset dir="../OpenXava/hibernate"/>
 			<fileset dir="../${project.ejb}/hibernate"/>
 			<fileset dir="../${project.ejb}/build/hibernate"/>
@@ -184,9 +183,23 @@
 	</target>
 		
 	<target name="filterHibernateFiles" depends="copyDTDs">
-		<antcall target="filterHibernateFilesWithConfiguration"/>
-		<antcall target="filterHibernateFilesWithoutConfiguration"/>
+		<antcall target="filterHibernateFilesWithConfiguration">
+			<param name="overwrite.hibernate.files" value="true"/>
+		</antcall>
+		<antcall target="filterHibernateFilesWithoutConfiguration">
+			<param name="overwrite.hibernate.files" value="true"/>
+		</antcall>
 	</target>
+	
+	<target name="filterChangedHibernateFiles" depends="copyDTDs">
+		<antcall target="filterHibernateFilesWithConfiguration">
+			<param name="overwrite.hibernate.files" value="false"/>
+		</antcall>
+		<antcall target="filterHibernateFilesWithoutConfiguration">
+			<param name="overwrite.hibernate.files" value="false"/>
+		</antcall>
+	</target>
+	
 			
 	<target name="regenerateWebsphereMapping">
 		<echo>Generating xml template for Websphere Mapping</echo>
@@ -376,7 +389,7 @@
 	   <echo>Generating classes</echo>    	
        <java 
        		classname="EJBCodeGenerator" 
-       		classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};../${project}/${classes.dir};${tracking.classes};${xava.generator.path}" 
+       		classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};../${project}/filtered-files;../${project}/${classes.dir};${tracking.classes};${xava.generator.path}" 
        		fork="yes">
 			<arg value="${project}"/>        		
 	       	<arg value="${domain}"/>
@@ -385,13 +398,13 @@
 		</java>
     </target>
 	
-    <target name="generateHibernate" depends="filterChangedXavaFiles">     
+    <target name="generateHibernate" depends="filterXavaFiles">     
     	<delete file="../${project}/gen-src-xava/dnas.properties"/>
     	<mkdir dir="../${project}/build/hibernate"/>
 		<echo>Generating classes</echo>
 		<java 
 			classname="HCodeGenerator" 
-			classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};../${project}/${classes.dir};${xava.generator.path}" 
+			classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};../${project}/filtered-files;../${project}/${classes.dir};${xava.generator.path}" 
        		fork="yes">
 			<arg value="${project}"/>        		
 	       	<arg value="${domain}"/>
@@ -405,7 +418,7 @@
     	<ant antfile="../OpenXava/xdoclet/build.xml"/>    			
 	</target>
 	        
-    <target name="generateEJB" depends="filterChangedXavaFiles, generateXDoclet, generateHibernate">         	    	
+    <target name="generateEJB" depends="filterXavaFiles, generateXDoclet, generateHibernate">         	    	
     	<antcall target="runXDoclet"/>
     </target>
 		
