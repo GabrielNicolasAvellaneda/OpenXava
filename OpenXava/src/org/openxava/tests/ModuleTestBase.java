@@ -517,9 +517,9 @@ public class ModuleTestBase extends TestCase {
 	
 	protected String getValueInCollection(String collection, int row, String name) throws Exception {		
 		MetaCollectionView metaCollectionView = getMetaView().getMetaCollectionView(collection);
-		List propertiesList = metaCollectionView.getPropertiesListNames();
-		if (propertiesList.isEmpty()) propertiesList = getMetaModel().getPropertiesNames();
-		int column = propertiesList.indexOf(name);
+		List propertiesList = metaCollectionView==null?null:metaCollectionView.getPropertiesListNames();
+		if (propertiesList == null || propertiesList.isEmpty()) propertiesList = getMetaModel().getMetaCollection(collection).getMetaReference().getMetaModelReferenced().getPropertiesNamesWithoutHidden();		
+		int column = propertiesList.indexOf(name);		
 		return getValueInCollection(collection, row, column);
 	}
 	

@@ -505,12 +505,12 @@ public class CustomersTest extends ModuleTestBase {
 		assertValueInCollection("deliveryPlaces", 1, 1, "STREET JUNIT 2");
 
 		execute("Collection.edit", "row=0,viewObject=xava_view" + getSection() + "_deliveryPlaces");
-		assertValueInCollection("deliveryPlaces.receptionists", 0, 0, "RECEPTIONISTS JUNIT 1 - 1");
-		assertValueInCollection("deliveryPlaces.receptionists", 1, 0, "RECEPTIONISTS JUNIT 1 - 2");
+		assertValueInCollection("deliveryPlaces.receptionists", 0, "name", "RECEPTIONISTS JUNIT 1 - 1");
+		assertValueInCollection("deliveryPlaces.receptionists", 1, "name", "RECEPTIONISTS JUNIT 1 - 2");
 		
 		execute("Collection.edit", "row=1,viewObject=xava_view" + getSection() + "_deliveryPlaces");
-		assertValueInCollection("deliveryPlaces.receptionists", 0, 0, "RECEPTIONISTS JUNIT 2 - 1");
-		assertValueInCollection("deliveryPlaces.receptionists", 1, 0, "RECEPTIONISTS JUNIT 2 - 2");
+		assertValueInCollection("deliveryPlaces.receptionists", 0, "name", "RECEPTIONISTS JUNIT 2 - 1");
+		assertValueInCollection("deliveryPlaces.receptionists", 1, "name", "RECEPTIONISTS JUNIT 2 - 2");
 		
 		// Delete
 		execute("CRUD.delete");												
