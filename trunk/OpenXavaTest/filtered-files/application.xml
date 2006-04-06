@@ -21,12 +21,6 @@
 		<controller name="Typical"/>
 	</module>	
 	
-	<module name="ShipmentCharges">
-		<model name="ShipmentCharge"/>
-		<controller name="Typical"/>
-	</module>	
-	
-		
 	<module name="Carriers">
 		<model name="Carrier"/>
 		<controller name="Typical"/>
@@ -40,8 +34,13 @@
 		<model name="Delivery"/>
 		<view name="GroupsInSections"/>
 		<controller name="Typical"/>
-	</module>			<module name="Warehouses" folder="warehousing">		<model name="Warehouse"/>		<controller name="Typical"/>		<controller name="Warehouses"/>	</module>	 		<module name="TransportCharges">		<model name="TransportCharge"/>		<controller name="Typical"/>	</module>	 
+	</module>			<module name="Warehouses" folder="warehousing">		<model name="Warehouse"/>		<controller name="Typical"/>		<controller name="Warehouses"/>	</module>	 		<module name="TransportCharges" folder="warehousing">		<model name="TransportCharge"/>		<controller name="Typical"/>	</module>	 
 	
+	<module name="ShipmentCharges" folder="warehousing">
+		<model name="ShipmentCharge"/>
+		<controller name="Typical"/>
+	</module>	
+		
 	<module name="TransportChargesWithDistance" folder="invoicing.variations">
 		<model name="TransportCharge"/>
 		<tab name="WithDistance"/>		

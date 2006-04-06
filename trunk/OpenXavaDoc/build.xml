@@ -2,11 +2,11 @@
 
 <project name="OpenXavaDoc" default="deploy" basedir=".">
 
-	<property name="xava.version" value="1.2.1"/>
+	<property name="xava.version" value="2.0beta"/>
 	<property name="xava.workspace" value="/home/javi/workspace"/>
 	<property file="../openxava.properties"/>	
 
-	<property name="deploy.portlets.dir" value="${deploy.dir}/openxava.war/WEB-INF/deploy"/>
+	<property name="deploy.portlets.dir" value="${deploy.dir}/openxava${war.dir.suffix}/WEB-INF/deploy"/>
 
 	<target name="apidoc">
 		<javadoc
