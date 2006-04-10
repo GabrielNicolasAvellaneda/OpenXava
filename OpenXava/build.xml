@@ -62,8 +62,7 @@
 			<srcfiles file="../${project.ejb}/xava/aplicacion.xml"/>			
 		</uptodate>
 	</target>
-	
-	
+		
 	<target name="createDist">
 		<mkdir dir="${dist.dir}"/>
 		<mkdir dir="${dist.dir}/lib"/>
@@ -633,7 +632,9 @@
 			tofile="../${project}/${classes.dir}/Etiquetas${project}.properties"
 			failonerror="false"/>
 		<jar jarfile="../${project}/web/WEB-INF/lib/openxava.jar" basedir="../OpenXava/bin"/>
+		<!--
 		<copy file="${jboss.dir}/client/jboss-client.jar" todir="../${project}/web/WEB-INF/lib" preservelastmodified="true"/>
+		-->
 	</target>
 	
 	<target name="createWar" depends="prepareWar">
@@ -644,8 +645,10 @@
 		<copy file="${dist.dir}/${name.war}.war" todir="${deploy.dir}" overwrite="true"/>
 	</target>
 
-	<target name="deploy" depends="prepareWar">		
+	<target name="deploy" depends="prepareWar">	
+		<!-- Commented in roder to run Tutorial fine
 		<delete file="${deploy.dir}/${name.war}.war" failonerror="false"/>
+		-->
 		<mkdir dir="${deploy.dir}/${name.war}${war.dir.suffix}"/>
 		<copy todir="${deploy.dir}/${name.war}${war.dir.suffix}" preservelastmodified="true">
 			<fileset dir="../${project}/web"/>
@@ -733,6 +736,7 @@
 		<copy todir="${dist.portlets.dir}/xava" file="web/xava/jasperReport.jsp"/>
 		<jar jarfile="${dist.dir}/${name.war}.war" basedir="${dist.portlets.dir}"/>
 		<delete dir="${deploy.dir}/${name.war}${war.dir.suffix}" failonerror="true"/>
+		<delete file="${deploy.dir}/${name.war}.war" failonerror="false"/>
 		<copy file="${dist.dir}/${name.war}.war" todir="${deploy.portlets.dir}" overwrite="true"/>		
 	</target>
 	

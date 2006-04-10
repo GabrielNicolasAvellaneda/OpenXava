@@ -542,7 +542,11 @@ pruebas junit.<br>
 Una vez la aplicaci&oacute;n funciona bien, podemos desplegarla en un
 portal Java:
 <ul>
+  <li>Parar el Portal Jetspeed</li>
   <li>Ejecutar la tarea ant <span style="font-style: italic;">MiEscuela.desplegarPortlets</span></li>
+  <li>Arrancar el Portal Jetspeed</li>
+  <li>Esperar hasta ver en el log (logs/catalina.out o la consola): <i>Server startup in 16672 ms</i></li>
+  <li>Seguir esperando hasta ver en el log: <i>initialization done for Portlet Application at: MiEscuela</i></li>  
   <li>Ir a <a href="http://localhost:8080/openxava/portal/MiEscuela">http://localhost:8080/openxava/portal/MiEscuela</a></li>
 </ul>
 Y eso es todo amigos.<br>

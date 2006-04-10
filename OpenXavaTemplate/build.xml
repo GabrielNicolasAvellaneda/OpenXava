@@ -17,7 +17,7 @@
 	</target>
 			
 	<target name="deployWar">
-		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
+		<ant antfile="../OpenXava/build.xml" target="deploy"/>
 	</target>		
 	
 	<target name="rebuild">
@@ -27,8 +27,8 @@
 	<!--
 	If you work with Eclipse WTP add this target to the builder for this project
 	-->
-	<target name="buildForEclipse">		
-		<ant antfile="../OpenXava/build.xml" target="buildForEclipse"/>
+	<target name="wtpBuild">		
+		<ant antfile="../OpenXava/build.xml" target="wtpBuild"/>
 	</target>	
 		
 	<target name="redeployPortlets"> 

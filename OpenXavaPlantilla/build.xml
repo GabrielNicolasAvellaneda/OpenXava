@@ -18,7 +18,7 @@
 	</target>	
 		
 	<target name="desplegarWar">
-		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
+		<ant antfile="../OpenXava/build.xml" target="deploy"/>
 	</target>				
 	
 	<target name="reconstruir">
@@ -28,8 +28,8 @@
 	<!--
 	Si trabajas con Eclipse WTP añade esta tarea al constructor (builder) para este proyecto
 	-->
-	<target name="construirParaEclipse">		
-		<ant antfile="../OpenXava/build.xml" target="buildForEclipse"/>
+	<target name="wtpBuild">		
+		<ant antfile="../OpenXava/build.xml" target="wtpBuild"/>
 	</target>		
 	
 	<target name="redesplegarPortlets"> 
