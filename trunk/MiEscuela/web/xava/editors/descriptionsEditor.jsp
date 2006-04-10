@@ -190,7 +190,7 @@ if (editable) {
 		type="text" 
 		title="<%=title%>"
 		maxlength="<%=description.toString().length()%>" 
-		size="<%=description.toString().length()%>" 
+		size="<%=description.toString().length() + 5%>" 
 		value="<%=description%>"
 		disabled
 	/>

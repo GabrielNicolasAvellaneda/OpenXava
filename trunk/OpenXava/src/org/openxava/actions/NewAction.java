@@ -1,5 +1,7 @@
 package org.openxava.actions;
 
+import java.io.*;
+
 /**
  * @author Javier Paniza
  */

@@ -562,7 +562,11 @@ become fond</span><span id="transl1"> to junit test.</span><br>
 <h4><a name="deploy_in_portal"></a>Deploy MySchool in the portal</h4>
 After your application works fine, you can deploy it in a Java portal:
 <ul>
+  <li>Stop your Jetspeed Portal</li>
   <li>Execute ant target <span style="font-style: italic;">MySchool.deployPortlets</span></li>
+  <li>Start your Jetspeed Portal</li>
+  <li>Wait until you see in the log (logs/catalina.out or console): <i>Server startup in 16672 ms</i></li>
+  <li>Continue waiting until you see in the log: <i>initialization done for Portlet Application at: MySchool</i></li>
   <li>Go to <a href="http://localhost:8080/openxava/portal/MySchool">http://localhost:8080/openxava/portal/MySchool</a></li>
 </ul>
 That's all, folks<br>
