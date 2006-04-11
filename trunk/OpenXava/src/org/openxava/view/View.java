@@ -6,6 +6,7 @@ import java.util.*;
 import javax.ejb.*;
 import javax.servlet.http.*;
 
+import org.hibernate.connection.*;
 import org.openxava.actions.*;
 import org.openxava.calculators.*;
 import org.openxava.component.*;
@@ -1044,7 +1045,11 @@ public class View implements java.io.Serializable {
 					if (membersNames.containsKey(p.getName())) {				
 						try {
 							if (!p.getMetaCalculatorDefaultValue().containsMetaSetsWithoutValue()) { // This way to avoid calculate the dependend ones
-								setValue(p.getName(), p.createDefaultValueCalculator().calculate());
+								ICalculator calculator = p.createDefaultValueCalculator();
+								if (calculator instanceof IJDBCCalculator) {
+									((IJDBCCalculator) calculator).setConnectionProvider(DataSourceConnectionProvider.getByComponent(getModelName()));
+								}
+								setValue(p.getName(), calculator.calculate());
 								alreadyPut.add(p.getName());
 							}					
 						}

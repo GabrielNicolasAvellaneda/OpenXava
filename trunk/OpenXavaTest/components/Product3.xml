@@ -10,7 +10,12 @@ Store oid of family and not the code
 
 	<entity>		
 		<property name="number" key="true" type="long"
-			size="10" required="true"/>    
+			size="10" required="true">    
+			<default-value-calculator class="org.openxava.calculators.NextIntegerCalculator">
+				<set property="model" value="Product3"/>				
+				<set property="property" value="number"/>				
+			</default-value-calculator>
+		</property>
 		<property name="description" type="String"
 			size="40" required="true"/>
 		<reference name="family" model="Family"/>
