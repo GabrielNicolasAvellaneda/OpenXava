@@ -52,7 +52,7 @@ public class MetaComponent implements Serializable {
 				throw new ElementNotFoundException("component_not_found", name);
 			}
 			r.validate();						
-			Object previous = components.put(name, r);
+			Object previous = components.put(name, r);			
 			if (previous != null) {
 				throw new XavaException("duplicate_component", name);
 			}

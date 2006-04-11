@@ -13,7 +13,9 @@ public class XavaPreferences {
 	private Properties properties;
 	private static XavaPreferences instance;
 	private boolean ejb2PersistenceLoaded=false;
-  private boolean ejb2Persistence=false;
+	private boolean ejb2Persistence=false;
+	private boolean duplicateComponentWarningsLoaded=false;
+	private boolean duplicateComponentWarnings=false;	
   
 	public static XavaPreferences getInstance() {
 		if (instance == null) {
@@ -81,4 +83,19 @@ public class XavaPreferences {
 	public boolean isI18nWarnings() {
 		return "true".equalsIgnoreCase(getProperties().getProperty("i18nWarnings", "true").trim());		
 	}
+
+
+	public boolean isDuplicateComponentWarnings() {
+		if (!duplicateComponentWarningsLoaded) { 
+			duplicateComponentWarnings = "true".equalsIgnoreCase(getProperties().getProperty("duplicateComponentWarnings", "true").trim());
+			duplicateComponentWarningsLoaded = true;
+		}
+		return duplicateComponentWarnings;
+	}
+	
+	public void setDuplicateComponentWarnings(boolean duplicateComponentWarnings) {
+		this.duplicateComponentWarnings = duplicateComponentWarnings;
+		duplicateComponentWarningsLoaded = true;
+	}
+	
 }
