@@ -107,7 +107,8 @@ abstract public class CodeGenerator {
 	}
 	
 	protected void run() throws Exception {		 
-		try {															
+		try {	
+			XavaPreferences.getInstance().setDuplicateComponentWarnings(false);
 			String componentsPath = "../" + getProject() + "/components";			
 			File dirComponents = new File(componentsPath);			
 			String [] components = dirComponents.list();

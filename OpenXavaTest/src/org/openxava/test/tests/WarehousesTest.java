@@ -19,6 +19,15 @@ public class WarehousesTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Warehouses");		
 	}
 	
+	public void testPage7InList() throws Exception {
+		execute("List.goPage", "page=6");
+		execute("List.goPage", "page=7");
+		assertListRowCount(3);
+		execute("CRUD.new");
+		execute("Mode.list");
+		assertListRowCount(3);
+	}
+	
 	public void testChangePageRowCountInTab() throws Exception {
 		assertListRowCount(10);
 		execute("Warehouses.changePageRowCount");

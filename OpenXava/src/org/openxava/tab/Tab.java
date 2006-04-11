@@ -214,8 +214,13 @@ public class Tab {
 		IXTableModel tableModel = null;
 		IEntityTab tab = EntityTabFactory.create(getMetaTab());
 		tab.search(getCondition(), getKey());
-		tableModel = tab.getTable();	
-		tableModel.getValueAt(0,0); // To load data, thus it's posible go directly to other page than first
+		tableModel = tab.getTable();
+		
+		// To load data, thus it's possible go directly to other page than first				
+		int limit = getPage() * getPageRowCount();
+		for (int row=0; row < limit; row += getPageRowCount() ) {
+			tableModel.getValueAt(row,0);
+		}
 		return tableModel;
 	}
 	

@@ -83,7 +83,9 @@ class ComponentParser extends ParserBase {
 	
 	protected void createObjects() throws XavaException {
 		if (this.component != null) {
-			System.err.println(XavaResources.getString("trying_to_load_component_twice_warning", this.component.getName()));
+			if (XavaPreferences.getInstance().isDuplicateComponentWarnings()) {
+				System.err.println(XavaResources.getString("trying_to_load_component_twice_warning", this.component.getName()));
+			}
 			return;
 		}
 		lang = "componente".equals(getRoot().getNodeName())?ESPANOL:ENGLISH;
