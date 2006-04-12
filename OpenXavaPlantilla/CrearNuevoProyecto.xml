@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<!--
+	Este ant permite crear un nuevo proyecto OpenXava de forma sencilla.
+	Simplemente pon valor a las propiedades y ejecuta la tarea crearNuevoProyecto.
+-->
+
+<project name="CrearNuevoProject" default="crearNuevoProyecto" basedir=".">
+
+	<!-- Cambia el valor de las siguientes propiedades -->
+	<property name="proyecto" value="MiProyecto" />
+	<property name="paquete" value="mipaquete" />
+	<property name="componente" value="MiComponente" />
+	<property name="modulo" value="MiModulo" />
+	<property name="fuentedatos" value="MiFuenteDatos" />
+	
+	
+	<target name="crearNuevoProyecto">		
+		<mkdir dir="../${proyecto}"/>
+		<copy todir="../${proyecto}">
+			<fileset dir="." excludes="CrearNuevoProject.xml" />
+	    	<filterset>	    	
+				<filter token="proyecto" value="${proyecto}"/>
+	    		<filter token="paquete" value="${paquete}"/>
+	    		<filter token="componente" value="${componente}"/>
+	    		<filter token="modulo" value="${modulo}"/>
+	    		<filter token="fuentedatos" value="${fuentedatos}"/>
+			</filterset> 			         
+		</copy>						
+		<move file="../${proyecto}/components/MiComponente.xml" 
+			tofile="../${proyecto}/components/${componente}.xml" />
+	</target>
+					
+</project>
