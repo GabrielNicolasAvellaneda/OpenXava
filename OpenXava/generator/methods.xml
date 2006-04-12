@@ -107,6 +107,10 @@ while (itMethods.hasNext()) {
 			</java>  	
 			<expr>method.getName()</expr>Calculator.set<expr>propertyNameInCalculator</expr>(get<expr>propertyNameFrom</expr>());
 			<java>	}} // else/poners 	 
+		if (IModelCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+			</java> 
+				<expr>method.getName()</expr>Calculator.setModel(this);
+			<java>} 
 		if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
 			</java> 
 				<expr>method.getName()</expr>Calculator.setEntity(this);

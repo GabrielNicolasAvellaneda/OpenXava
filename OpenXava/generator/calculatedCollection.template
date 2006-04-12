@@ -92,6 +92,10 @@ String collectionName = Strings.firstUpper(collection.getName());
 			#  	
 			#(collection.getName())#Calculator.set#(propertyNameInCalculator)#(#(getPropertyFrom)##(propertyNameFrom)#());
 			# 	}} // else/sets 	 
+			if (IModelCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+			# 
+				#(collection.getName())#Calculator.setModel(this);
+			# } 
 			if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
 			# 
 				#(collection.getName())#Calculator.setEntity(this);

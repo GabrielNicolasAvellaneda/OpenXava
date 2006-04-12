@@ -11,7 +11,7 @@ import org.openxava.generators.Generators;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Apr 10 19:34:56 CEST 2006
+ * @version Wed Apr 12 19:55:54 CEST 2006
  */
 public class MethodsPG {
     Properties properties = new Properties();
@@ -144,6 +144,12 @@ private static void generate(XPathContext context, ProgramWriter out, IMetaModel
     out.print(propertyNameFrom);
     out.print("());");
     	}} // else/poners 	 
+    		if (IModelCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+    			
+    out.print(" \n\t\t\t\t");
+    out.print(method.getName());
+    out.print("Calculator.setModel(this);");
+    } 
     		if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
     			
     out.print(" \n\t\t\t\t");
@@ -256,9 +262,9 @@ private static void generate(XPathContext context, ProgramWriter out, IMetaModel
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Apr 10 19:34:56 CEST 2006", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/methods.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/MethodsPG.java" }, // output file
+        { "Wed Apr 12 19:55:54 CEST 2006", // date this file was generated
+             "/home/javi/workspace2/OpenXava/generator/methods.xml", // input file
+             "/home/javi/workspace2/OpenXava/generator/MethodsPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

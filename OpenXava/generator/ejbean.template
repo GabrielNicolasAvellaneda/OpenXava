@@ -279,6 +279,11 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 			#(property.getName())#Calculator.setConnectionProvider(getPortableContext());
 		# 
 		}
+		else if (IModelCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+		# 
+			#(property.getName())#Calculator.setModel(this);
+		#  		
+		}		
 		else if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
 		# 
 			#(property.getName())#Calculator.setEntity(this);
@@ -382,6 +387,11 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 			#(property.getName())#Calculator.setConnectionProvider(getPortableContext());
 		# 
 		}
+		else if (IModelCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+		# 
+			#(property.getName())#Calculator.setModel(this);
+		#  		
+		}		
 		else if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
 		# 
 			#(property.getName())#Calculator.setEntity(this);
@@ -505,6 +515,11 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 			#(property.getName())#Calculator.setConnectionProvider(getPortableContext());
 		# 		
 		}
+		else if (IModelCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+		# 
+			#(property.getName())#Calculator.setModel(this);
+		#  				
+		}		
 		else if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
 		# 
 			#(property.getName())#Calculator.setEntity(this);
@@ -619,6 +634,11 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 			#(property.getName())#Calculator.setConnectionProvider(getPortableContext());
 		# 		
 		}
+		else if (IModelCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+		# 
+			#(property.getName())#Calculator.setModel(this);
+		#  				
+		}
 		else if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
 		# 
 			#(property.getName())#Calculator.setEntity(this);
@@ -717,6 +737,11 @@ abstract public class #(name)#Bean extends EJBReplicableBase
 		# 
 			#(property.getName())#Calculator.setConnectionProvider(getPortableContext());
 		# 
+		}
+		else if (IModelCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+		# 
+			#(property.getName())#Calculator.setModel(this);
+		#  				
 		}
 		else if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
 		# 

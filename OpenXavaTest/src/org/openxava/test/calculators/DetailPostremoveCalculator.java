@@ -8,7 +8,7 @@ import org.openxava.test.model.*;
 /**
  * @author Javier Paniza
  */
-public class DetailPostremoveCalculator implements IEntityCalculator {
+public class DetailPostremoveCalculator implements IModelCalculator {
 	
 	private IInvoice invoice;
 
@@ -17,7 +17,7 @@ public class DetailPostremoveCalculator implements IEntityCalculator {
 		return null;
 	}
 
-	public void setEntity(Object entity) throws RemoteException {
+	public void setModel(Object entity) throws RemoteException {
 		this.invoice = (IInvoice) entity;
 	}
 

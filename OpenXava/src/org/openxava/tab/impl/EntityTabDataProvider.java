@@ -118,10 +118,14 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 					}
 				}
 				ICalculator calculator = tabCalculator.getCalculator();
+				if (calculator instanceof IModelCalculator) {
+					if (entity == null) entity = getEntity(modelName, row, keyIndexes); 
+					((IModelCalculator) calculator).setModel(entity);
+				}
 				if (calculator instanceof IEntityCalculator) {
 					if (entity == null) entity = getEntity(modelName, row, keyIndexes); 
 					((IEntityCalculator) calculator).setEntity(entity);
-				}
+				}				
 				if (calculator instanceof IJDBCCalculator) {
 					((IJDBCCalculator) calculator).setConnectionProvider(getConnectionProvider());
 				}

@@ -106,6 +106,10 @@ while (itMethods.hasNext()) {
 			#  	
 			#(method.getName())#Calculator.set#(propertyNameInCalculator)#(get#(propertyNameFrom)#());
 			# 	}} // else/poners 	 
+		if (IModelCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+			# 
+				#(method.getName())#Calculator.setModel(this);
+			# } 
 		if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
 			# 
 				#(method.getName())#Calculator.setEntity(this);

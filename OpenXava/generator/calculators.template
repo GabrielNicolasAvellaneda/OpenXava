@@ -72,6 +72,10 @@ public void setError(String error) {
 		# 
 			calculator#(i)#.set#(propertyNameInCalculator)#(get#(propertyNameFrom)#());
 		# 	}} // else/poners
+		if (IModelCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) {
+		# 
+			calculator#(i)#.setModel(this);
+		# }		
 		if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) {
 		# 
 			calculator#(i)#.setEntity(this);

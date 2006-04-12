@@ -160,6 +160,10 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 			#(property.getName())#Calculator.set#(propertyNameInCalculator)#(#(getPropertyFrom)##(propertyNameFrom)#());
 			
 			# 	}} // else/sets 	 
+			if (IModelCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+			# 
+				#(property.getName())#Calculator.setModel(this);
+			# } 
 			if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
 			# 
 				#(property.getName())#Calculator.setEntity(this);

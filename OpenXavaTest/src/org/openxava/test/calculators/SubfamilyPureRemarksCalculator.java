@@ -7,11 +7,11 @@ import org.openxava.calculators.*;
 /**
  * @author Javier Paniza
  */
-public class SubfamilyPureRemarksCalculator implements IEntityCalculator {
+public class SubfamilyPureRemarksCalculator implements IModelCalculator {
 	
 	// tmp private SubfamilyBean subfamily;
 
-	public void setEntity(Object entity) throws RemoteException {
+	public void setModel(Object entity) throws RemoteException {
 		// tmp this.subfamily = (SubfamilyBean) entity;		
 	}
 
