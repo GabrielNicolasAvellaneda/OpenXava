@@ -10,7 +10,7 @@ import org.openxava.test.model.*;
 /**
  * @author Javier Paniza
  */
-public class FellowCarriersCalculator implements IEntityCalculator {
+public class FellowCarriersCalculator implements IModelCalculator {
 
 	private ICarrier carrier;
 
@@ -29,7 +29,7 @@ public class FellowCarriersCalculator implements IEntityCalculator {
 		return query.list();
 	}
 
-	public void setEntity(Object entity) throws RemoteException {
+	public void setModel(Object entity) throws RemoteException {
 		carrier = (ICarrier) entity;		
 	}
 

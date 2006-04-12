@@ -9,7 +9,7 @@ import org.openxava.test.model.*;
 /**
  * @author Javier Paniza
  */
-public class IncreasePriceCalculator implements IEntityCalculator {
+public class IncreasePriceCalculator implements IModelCalculator {
 	
 	private IProduct product;
 
@@ -18,7 +18,7 @@ public class IncreasePriceCalculator implements IEntityCalculator {
 		return null;				
 	}
 
-	public void setEntity(Object entity) throws RemoteException {
+	public void setModel(Object entity) throws RemoteException {
 		this.product = (IProduct) entity;
 	}
 

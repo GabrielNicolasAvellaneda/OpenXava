@@ -6,7 +6,7 @@
 
 	<class 
   		name="GalleryImage"
-  		table="XAVATEST_IMAGES">
+  		table="@images.table@">
   
 		<id name="oid" column="ID" access="field">
 			<generator class="uuid"/>

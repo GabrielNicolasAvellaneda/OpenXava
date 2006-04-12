@@ -95,9 +95,12 @@ public class CalculatorsListener implements PreInsertEventListener, PreUpdateEve
 			if (calculator instanceof IJDBCCalculator) {
 				((IJDBCCalculator) calculator).setConnectionProvider(DataSourceConnectionProvider.getByComponent(metaModel.getMetaComponent().getName()));
 			}
+			if (calculator instanceof IModelCalculator) {
+				((IModelCalculator) calculator).setModel(model);
+			}
 			if (calculator instanceof IEntityCalculator) {
 				((IEntityCalculator) calculator).setEntity(model);
-			}				 
+			}				 			
 			calculator.calculate();				 								
 		}			
 	}

@@ -280,6 +280,11 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 			<expr>property.getName()</expr>Calculator.setConnectionProvider(getPortableContext());
 		<java>
 		}
+		else if (IModelCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+		</java> 
+			<expr>property.getName()</expr>Calculator.setModel(this);
+		<java> 		
+		}		
 		else if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
 		</java> 
 			<expr>property.getName()</expr>Calculator.setEntity(this);
@@ -383,6 +388,11 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 			<expr>property.getName()</expr>Calculator.setConnectionProvider(getPortableContext());
 		<java>
 		}
+		else if (IModelCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+		</java> 
+			<expr>property.getName()</expr>Calculator.setModel(this);
+		<java> 		
+		}		
 		else if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
 		</java> 
 			<expr>property.getName()</expr>Calculator.setEntity(this);
@@ -506,6 +516,11 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 			<expr>property.getName()</expr>Calculator.setConnectionProvider(getPortableContext());
 		<java>		
 		}
+		else if (IModelCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+		</java> 
+			<expr>property.getName()</expr>Calculator.setModel(this);
+		<java> 				
+		}		
 		else if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
 		</java> 
 			<expr>property.getName()</expr>Calculator.setEntity(this);
@@ -620,6 +635,11 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 			<expr>property.getName()</expr>Calculator.setConnectionProvider(getPortableContext());
 		<java>		
 		}
+		else if (IModelCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+		</java> 
+			<expr>property.getName()</expr>Calculator.setModel(this);
+		<java> 				
+		}
 		else if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
 		</java> 
 			<expr>property.getName()</expr>Calculator.setEntity(this);
@@ -718,6 +738,11 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 		</java> 
 			<expr>property.getName()</expr>Calculator.setConnectionProvider(getPortableContext());
 		<java>
+		}
+		else if (IModelCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+		</java> 
+			<expr>property.getName()</expr>Calculator.setModel(this);
+		<java> 				
 		}
 		else if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
 		</java> 

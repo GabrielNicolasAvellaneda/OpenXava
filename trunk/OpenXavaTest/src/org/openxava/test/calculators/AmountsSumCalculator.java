@@ -13,7 +13,7 @@ import org.openxava.test.model.*;
  * @author Javier Paniza
  */
 
-public class AmountsSumCalculator implements IEntityCalculator {
+public class AmountsSumCalculator implements IModelCalculator {
 	
 	private IInvoice invoice;
 
@@ -27,7 +27,7 @@ public class AmountsSumCalculator implements IEntityCalculator {
 		return result;
 	}
 
-	public void setEntity(Object entity) throws RemoteException {		
+	public void setModel(Object entity) throws RemoteException {		
 		invoice = (IInvoice) PortableRemoteObject.narrow(entity, IInvoice.class);		
 	}
 

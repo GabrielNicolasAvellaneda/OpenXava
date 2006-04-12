@@ -1267,6 +1267,17 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 				}
 			}			
 			
+			if (calculator instanceof IModelCalculator) {
+				Object entity = findEntity(persistenceProvider, (IMetaEjb) metaModel, keyValues);
+				try {
+					((IModelCalculator) calculator).setModel(entity);
+				}
+				catch (Exception ex) {
+					ex.printStackTrace();
+					throw new XavaException("assign_entity_to_calculator_error", metaModel.getName(), keyValues);
+				}									
+				
+			}
 			if (calculator instanceof IEntityCalculator) {
 				Object entity = findEntity(persistenceProvider, (IMetaEjb) metaModel, keyValues);
 				try {
@@ -1278,6 +1289,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 				}									
 				
 			}
+			
 			try {
 				calculator.calculate();
 			}

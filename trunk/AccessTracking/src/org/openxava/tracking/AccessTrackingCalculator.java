@@ -25,11 +25,11 @@ import org.openxava.util.*;
  * 
  * @author Javier Paniza
  */
-public class AccessTrackingCalculator implements IEntityCalculator {
+public class AccessTrackingCalculator implements IModelCalculator {
 	
 	private static DateFormat timeFormat = new SimpleDateFormat("HH:mm");	
 		
-	private IModel entity;
+	private IModel model;
 	private String accessType;	
 
 	public Object calculate() throws Exception {		
@@ -55,7 +55,7 @@ public class AccessTrackingCalculator implements IEntityCalculator {
 	}
 	
 	private Access newAccess() throws Exception {
-		MetaModel metaModel = entity.getMetaModel();
+		MetaModel metaModel = model.getMetaModel();
 		Access access = new Access();
 		access.setApplication(getApplicationName(metaModel));
 		access.setModel(metaModel.getName());
@@ -70,7 +70,7 @@ public class AccessTrackingCalculator implements IEntityCalculator {
 		}
 		access.setType(type);
 		access.setAuthorized(true);
-		String key = MapFacade.getKeyValues(metaModel.getName(), entity).toString();
+		String key = MapFacade.getKeyValues(metaModel.getName(), model).toString();
 		access.setRecordId(key);
 		return access;
 	}	
@@ -84,8 +84,8 @@ public class AccessTrackingCalculator implements IEntityCalculator {
 		return user==null?"nobody":user;
 	}
 	
-	public void setEntity(Object entity) throws RemoteException {
-		this.entity = (IModel) entity;
+	public void setModel(Object model) throws RemoteException {
+		this.model = (IModel) model;
 	}	
 	
 	public String getAccessType() {

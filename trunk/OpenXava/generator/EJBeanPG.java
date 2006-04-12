@@ -14,7 +14,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Apr 10 19:34:57 CEST 2006
+ * @version Wed Apr 12 19:55:55 CEST 2006
  */
 public class EJBeanPG {
     Properties properties = new Properties();
@@ -339,6 +339,13 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print("Calculator.setConnectionProvider(getPortableContext());");
     
     		}
+    		else if (IModelCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+    		
+    out.print(" \n\t\t\t");
+    out.print(property.getName());
+    out.print("Calculator.setModel(this);");
+     		
+    		}		
     		else if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
     		
     out.print(" \n\t\t\t");
@@ -458,6 +465,13 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print("Calculator.setConnectionProvider(getPortableContext());");
     
     		}
+    		else if (IModelCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+    		
+    out.print(" \n\t\t\t");
+    out.print(property.getName());
+    out.print("Calculator.setModel(this);");
+     		
+    		}		
     		else if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
     		
     out.print(" \n\t\t\t");
@@ -616,6 +630,13 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print("Calculator.setConnectionProvider(getPortableContext());");
     		
     		}
+    		else if (IModelCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+    		
+    out.print(" \n\t\t\t");
+    out.print(property.getName());
+    out.print("Calculator.setModel(this);");
+     				
+    		}		
     		else if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
     		
     out.print(" \n\t\t\t");
@@ -772,6 +793,13 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print("Calculator.setConnectionProvider(getPortableContext());");
     		
     		}
+    		else if (IModelCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+    		
+    out.print(" \n\t\t\t");
+    out.print(property.getName());
+    out.print("Calculator.setModel(this);");
+     				
+    		}
     		else if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
     		
     out.print(" \n\t\t\t");
@@ -907,6 +935,13 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
     out.print(property.getName());
     out.print("Calculator.setConnectionProvider(getPortableContext());");
     
+    		}
+    		else if (IModelCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
+    		
+    out.print(" \n\t\t\t");
+    out.print(property.getName());
+    out.print("Calculator.setModel(this);");
+     				
     		}
     		else if (IEntityCalculator.class.isAssignableFrom(Class.forName(calculatorClass))) { 
     		
@@ -1158,9 +1193,9 @@ private String generateEJBQLforReference(IMetaModel model, String referenceName)
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Apr 10 19:34:58 CEST 2006", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/ejbean.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/EJBeanPG.java" }, // output file
+        { "Wed Apr 12 19:55:56 CEST 2006", // date this file was generated
+             "/home/javi/workspace2/OpenXava/generator/ejbean.xml", // input file
+             "/home/javi/workspace2/OpenXava/generator/EJBeanPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

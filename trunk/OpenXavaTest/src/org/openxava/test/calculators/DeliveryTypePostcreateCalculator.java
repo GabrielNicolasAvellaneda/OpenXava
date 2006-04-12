@@ -8,7 +8,7 @@ import org.openxava.test.model.*;
 /**
  * @author Javier Paniza
  */
-public class DeliveryTypePostcreateCalculator implements IEntityCalculator {
+public class DeliveryTypePostcreateCalculator implements IModelCalculator {
 	
 	private IDeliveryType deliveryType;
 	private String suffix;
@@ -19,7 +19,7 @@ public class DeliveryTypePostcreateCalculator implements IEntityCalculator {
 		return null;
 	}
 
-	public void setEntity(Object entity) throws RemoteException {
+	public void setModel(Object entity) throws RemoteException {
 		deliveryType = (IDeliveryType) entity;		
 	}
 

@@ -11,16 +11,16 @@ import org.openxava.util.*;
  * 
  * @author Javier Paniza
  */
-public class UUIDCalculator implements IEntityCalculator {
+public class UUIDCalculator implements IModelCalculator {
 	
-	private Object entity;
+	private Object model;
 	private boolean lowerCase = false;
 
 	public Object calculate() throws Exception {		
 		InetAddress inet = InetAddress.getLocalHost();
 		byte [] bytes = inet.getAddress();
 		String hexInetAddress = hexFormat(bytes);
-		String thisHashCode = hexFormat(System.identityHashCode(entity));
+		String thisHashCode = hexFormat(System.identityHashCode(model));
 		String mid = hexInetAddress + thisHashCode;
 		SecureRandom seeder = new SecureRandom();
 	 	int node = seeder.nextInt();	 	
@@ -43,12 +43,8 @@ public class UUIDCalculator implements IEntityCalculator {
 		return result.toString();
 	}
 
-	public Object getEntity() {
-		return entity;
-	}
-
-	public void setEntity(Object object) {
-		entity = object;
+	public void setModel(Object object) {
+		model = object;
 	}
 	
 	public boolean isLowerCase() {
