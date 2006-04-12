@@ -2,7 +2,7 @@
 
 <!DOCTYPE component SYSTEM "dtds/component.dtd">
 
-<component name="MyComponent">
+<component name="@component@">
 
 	<entity>
 		<property name="number" type="String" key="true"

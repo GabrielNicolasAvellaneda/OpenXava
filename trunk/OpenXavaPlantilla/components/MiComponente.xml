@@ -2,7 +2,7 @@
 
 <!DOCTYPE componente SYSTEM "dtds/componente.dtd">
 
-<componente nombre="MiComponente">
+<componente nombre="@componente@">
 
 	<entidad>
 		<propiedad nombre="codigo" tipo="String" clave="true"

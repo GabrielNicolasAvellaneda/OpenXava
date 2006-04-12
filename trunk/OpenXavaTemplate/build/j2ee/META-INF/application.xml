@@ -3,10 +3,10 @@
 
 <application>
 	
-	<display-name>MyApplication</display-name>
+	<display-name>@project@</display-name>
 
 	<module>
-		<ejb>MyApplication.jar</ejb>
+		<ejb>@project@.jar</ejb>
 	</module>
 
 </application>
