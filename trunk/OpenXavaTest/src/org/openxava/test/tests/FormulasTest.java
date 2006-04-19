@@ -16,7 +16,7 @@ public class FormulasTest extends ModuleTestBase {
 	
 	public void testDependentReferencesAsDescriptionsListWithHiddenKeyInCollection_aggregateCanHasReferenceToModelOfContainerType() throws Exception {
 		execute("CRUD.new");		
-		execute("Collection.new", "viewObject=xava_view_ingredients");
+		execute("Collection.new", "viewObject=xava_view_section0_ingredients");
 		assertExists("ingredients.anotherFormula.oid"); // Reference to a model of 'Formula' type, the same of the container
 		
 		String [][] ingredients = {

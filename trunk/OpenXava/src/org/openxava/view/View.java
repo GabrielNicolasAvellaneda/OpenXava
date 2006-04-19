@@ -93,13 +93,9 @@ public class View implements java.io.Serializable {
 
 	private Collection metaPropertiesIncludingSections;
 	private Collection metaPropertiesIncludingGroups;
-
 	private Collection metaMembersIncludingHiddenKey;
-
 	private Map labels;
-
 	private Collection executedActions;	
-
 	private boolean registeringExecutedActions = false;
 		
 	public View() {
@@ -128,7 +124,7 @@ public class View implements java.io.Serializable {
 		return metaMembersIncludingHiddenKey;		
 	}	
 			
-	private Collection createMetaMembers(boolean hiddenIncluded) throws XavaException {		 
+	private Collection createMetaMembers(boolean hiddenIncluded) throws XavaException {
 		Collection metaMembers = new ArrayList(getMetaView().getMetaMembers());			
 		if (isRepresentsAggregate()) {
 			// This is for eluding recursive references				
@@ -451,15 +447,15 @@ public class View implements java.io.Serializable {
 	
 	public View getSubview(String name) throws XavaException {		
 		View subview = (View) getSubviews().get(name);		
-		if (subview == null) {
-			subview = findSubviewInSection(name);
-			if (subview == null) {
+		if (subview == null) {			
+			subview = findSubviewInSection(name);			
+			if (subview == null) {			
 				subview = findSubviewInGroup(name);
 				if (subview == null) {					
 					throw new ElementNotFoundException("subview_not_found", name, getModelName());
 				}							
-			}			
-		}				
+			}	
+		}						
 		return subview;
 	}
 	
@@ -510,11 +506,11 @@ public class View implements java.io.Serializable {
 	
 
 	private void createAndAddSubview(MetaMember member) throws XavaException {
-		if (!(member instanceof MetaReference || member instanceof MetaCollection || member instanceof MetaGroup)) return;				
+		if (!(member instanceof MetaReference || member instanceof MetaCollection || member instanceof MetaGroup)) return;
+		
 		View newView = new View();
 		newView.setSubview(true);
 		newView.setParent(this);
-		
 		MetaReference ref = null;
 		if (member instanceof MetaReference) {
 			ref = (MetaReference) member;
@@ -581,10 +577,10 @@ public class View implements java.io.Serializable {
 		else {
 			MetaReferenceView metaReferenceView = getMetaView().getMetaReferenceView(ref);
 			if (metaReferenceView != null) {
-				newView.setReadOnly(metaReferenceView.isReadOnly());				
+				newView.setReadOnly(metaReferenceView.isReadOnly());
 			}			
 		}
-		newView.setMemberName(member.getName());				
+		newView.setMemberName(member.getName());
 		subviews.put(member.getName(), newView);
 	} 
 	 
@@ -622,7 +618,7 @@ public class View implements java.io.Serializable {
 	}
 	
 	private Map getSubviews() throws XavaException {
-		if (getModelName() == null) return Collections.EMPTY_MAP;
+		if (getModelName() == null) return Collections.EMPTY_MAP;		
 		if (subviews == null) {  
 			subviews = new HashMap();					
 			Iterator it = getMetaMembers().iterator();
@@ -876,8 +872,8 @@ public class View implements java.io.Serializable {
 			if (m instanceof MetaProperty && !m.equals(PropertiesSeparator.INSTANCE)) {										
 				membersNames.put(m.getName(), null);
 			}
-			else if (m instanceof MetaReference) {  
-				membersNames.put(m.getName(), getSubview(m.getName()).createMembersNames(hiddenIncluded));									
+			else if (m instanceof MetaReference) {
+				membersNames.put(m.getName(), getSubview(m.getName()).createMembersNames(hiddenIncluded));
 			}
 			else if (m instanceof MetaCollection) { 					
 				// The collections are obtained from the collection view, this allows to load collections on demmand.
@@ -1385,15 +1381,15 @@ public class View implements java.io.Serializable {
 		assignValuesToWebView(getModelName());
 	}
 		
-	public void assignValuesToWebView(String qualifier) {
+	public void assignValuesToWebView(String qualifier) {		
 		try {												
 			focusForward = "true".equalsIgnoreCase(getRequest().getParameter("focus_forward"));
 			setIdFocusProperty(getRequest().getParameter("focus_property"));			
-			Iterator it = isSubview()?getMetaMembersIncludingHiddenKey().iterator():getMetaMembers().iterator();			
+			Iterator it = isSubview()?getMetaMembersIncludingHiddenKey().iterator():getMetaMembers().iterator();
 			if (isRepresentsCollection()) fillListSelected(qualifier);
 			
 			while (it.hasNext()) {
-				Object m = it.next();				
+				Object m = it.next();							
 				if (m instanceof MetaProperty) {						
 					MetaProperty p = (MetaProperty) m;										
 					if (!PropertiesSeparator.INSTANCE.equals(m)) { 
@@ -1410,7 +1406,7 @@ public class View implements java.io.Serializable {
 				}
 				else if (m instanceof MetaReference) {					
 					MetaReference ref = (MetaReference) m;					
-					String key = "xava." + qualifier + "." + ref.getName() + ".KEY";					
+					String key = "xava." + qualifier + "." + ref.getName() + ".KEY";
 					String value = getRequest().getParameter(key);
 					if (value == null) {
 						View subview = getSubview(ref.getName());
@@ -1421,9 +1417,9 @@ public class View implements java.io.Serializable {
 					}
 				}
 				else if (m instanceof MetaCollection) {
-					MetaCollection collec = (MetaCollection) m;	
-					View subview = getSubview(collec.getName());
-					subview.assignValuesToWebView(qualifier + "." + collec.getName()); 
+					MetaCollection collec = (MetaCollection) m;						
+					View subview = getSubview(collec.getName());					
+					subview.assignValuesToWebView(qualifier + "." + collec.getName());					
 				}
 				else if (m instanceof MetaGroup) {					
 					MetaGroup grupo = (MetaGroup) m;					
@@ -1432,7 +1428,7 @@ public class View implements java.io.Serializable {
 				}
 			}
 						
-			if (hasSections()) {				
+			if (hasSections()) { 								
 				View section = getSectionView(getActiveSection());
 				section.assignValuesToWebView(qualifier);
 			}			
@@ -2121,7 +2117,7 @@ public class View implements java.io.Serializable {
 	}
 	
 	public HttpServletRequest getRequest() {
-		if (request == null) return getParent().getRequest();
+		if (request == null) return parent.getRequest();
 		return request;
 	}
 
@@ -2307,7 +2303,10 @@ public class View implements java.io.Serializable {
 	}
 		
 	public View getParent() { 
-		if (parent != null && parent.isSection()) return parent.getParent(); 
+		if (parent != null && parent.isSection()) {
+			View result = parent.getParent();
+			parent = result;
+		}
 		return parent;
 	}
 	
@@ -2322,10 +2321,24 @@ public class View implements java.io.Serializable {
 	}
 	
 	public boolean hasSections() throws XavaException {		
-		if (getModelName() == null) return false; 
+		if (getModelName() == null) return false;
+		if (displayAsDescriptionsList()) return false; 						
 		return getMetaView().hasSections();
 	}
 	
+	private boolean displayAsDescriptionsList() {
+		if (getMemberName() == null) return false;
+		if (!isRepresentsEntityReference()) return false;
+		try {
+			MetaReference ref = getParent().getMetaModel().getMetaReference(getMemberName());
+			return getParent().displayAsDescriptionsList(ref);
+		}
+		catch (XavaException ex) {
+			System.err.println("[View.displayAsDescriptionsList] " + XavaResources.getString("display_as_description_warning", getMemberName()));  
+			return false;
+		}				
+	}
+
 	public List getSections() throws XavaException {
 		return getMetaView().getSections();
 	}
