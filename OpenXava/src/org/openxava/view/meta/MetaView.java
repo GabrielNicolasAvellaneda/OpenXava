@@ -481,7 +481,7 @@ public class MetaView extends MetaElement implements Cloneable {
 		section.setLabel(label);
 		section.setMembersNames(members);
 		promote(section);		
-		sections.add(section);
+		sections.add(section);		
 		return section; 
 	}
 	
@@ -529,7 +529,7 @@ public class MetaView extends MetaElement implements Cloneable {
 	}
 	
 	public boolean hasSections() {
-		return sections != null;
+		return sections != null;		
 	}
 		
 	public void clearSections() {

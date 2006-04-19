@@ -25,17 +25,32 @@
 		<reference name="anotherFormula" model="Formula"/>
 	</aggregate>
 	
+	<view>
+		<members>
+			name;
+			<section name="ingredients">
+				ingredients
+			</section>
+		</members>		
+	</view>
+	
+
 	<view model="FormulaIngredient">
+
 		<reference-view reference="ingredient">
 			<descriptions-list/>
 		</reference-view>
+
 		<reference-view reference="accentuate" >
 			<descriptions-list condition="${partOf.oid} = ?" depends="this.ingredient"/>
 		</reference-view>		
+		
 		<reference-view reference="anotherFormula">
 			<descriptions-list/>
 		</reference-view>		
+		
 	</view>
+
 							
 	<entity-mapping table="XAVATEST_FORMULA">
 		<property-mapping
