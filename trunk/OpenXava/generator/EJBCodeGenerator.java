@@ -82,6 +82,11 @@ public class EJBCodeGenerator extends CodeGenerator{
 		}		
 	}
 	
+	protected String getDNAFile() {
+		return "dnas-ejb.properties";
+	}
+
+	
 	public static void main(String [] argv) {
 		if (argv.length != 4) {
 			System.err.println(XavaResources.getString("generator_argv_required"));

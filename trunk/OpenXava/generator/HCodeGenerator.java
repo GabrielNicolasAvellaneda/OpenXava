@@ -34,7 +34,7 @@ public class HCodeGenerator extends CodeGenerator {
 		
 	protected void generate(MetaComponent component, String componentsPath, String file) throws Exception {
 		String dirPackage = toDirPackage(getPackageName());		
-		String modelPath = "../" + getProject() + "/gen-src-xava/" + dirPackage; //tmp ¿una sola vez?		
+		String modelPath = "../" + getProject() + "/gen-src-xava/" + dirPackage; 		
 		// Creataing directories
 		File fModelPath = new File(modelPath);
 		fModelPath.mkdirs();
@@ -75,7 +75,7 @@ public class HCodeGenerator extends CodeGenerator {
 			}
 			
 			// Hibernate mapping
-			String mappingPath = "../" + getProject() + "/build/hibernate/"; //tmp ¿una sola vez?
+			String mappingPath = "../" + getProject() + "/build/hibernate/"; 
 			System.out.println(XavaResources.getString("generating_hibernate_mapping", component.getName()));			
 			String [] argvMap = {				
 				componentsPath  + "/" + file,				
@@ -114,7 +114,7 @@ public class HCodeGenerator extends CodeGenerator {
 			InterfacePG.main(argvInterface);					
 			
 			//	Hibernate mapping
-			String mappingPath = "../" + getProject() + "/build/hibernate/"; //tmp ¿una sola vez?
+			String mappingPath = "../" + getProject() + "/build/hibernate/"; 
 			System.out.println(XavaResources.getString("generating_hibernate_mapping", aggregateName));			
 			String [] argvMap = {				
 				componentsPath  + "/" + file,				
@@ -126,6 +126,10 @@ public class HCodeGenerator extends CodeGenerator {
 			HibernatePG.main(argvMap);
 			
 		}						
+	}
+	
+	protected String getDNAFile() {
+		return "dnas-pojo.properties";
 	}
 		
 }
