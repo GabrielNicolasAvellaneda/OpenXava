@@ -44,6 +44,10 @@
 		<ant antfile="../OpenXava/build.xml" target="generateHibernate"/>		
 	</target>
 	
+	<target name="regenerateHibernate">	
+		<ant antfile="../OpenXava/build.xml" target="regenerateHibernate"/>		
+	</target>
+		
 	<target name="regenerateEJB">
 		<ant antfile="../OpenXava/build.xml" target="regenerateEJB"/>		
 	</target>		

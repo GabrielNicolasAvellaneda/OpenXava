@@ -60,6 +60,10 @@ abstract public class CodeGenerator {
 		return "packages.properties";
 	}
 	
+	protected String getDNAFile() {
+		return "dnas.properties";
+	}
+	
 	public String getProject() {
 		return project;
 	}
@@ -158,7 +162,7 @@ abstract public class CodeGenerator {
 		if (dnas == null) {
 			dnas = new Properties();
 			try {				
-				File file = new File("../" + getProject() + "/gen-src-xava/dnas.properties");
+				File file = new File("../" + getProject() + "/gen-src-xava/" + getDNAFile());
 				if (file.exists()) {				
 					FileInputStream is = new FileInputStream(file);					
 					dnas.load(is);					
@@ -174,7 +178,7 @@ abstract public class CodeGenerator {
 	private void saveDNAs() {
 		if (!dnasChanged) return;
 		try {
-			FileOutputStream os = new FileOutputStream("../" + getProject() + "/gen-src-xava/dnas.properties");
+			FileOutputStream os = new FileOutputStream("../" + getProject() + "/gen-src-xava/" + getDNAFile());
 			getDNAs().store(os, "");
 		}
 		catch (Exception ex) {
@@ -197,8 +201,8 @@ abstract public class CodeGenerator {
 	
 	private int getCurrentDNA(MetaComponent component) {
 		try {
-			String componentPath = "../../" + getProject() + "/components/" + component.getName() + ".xml";		
-			String xmlText = Resources.loadAsString(getClass(), componentPath);
+			String componentPath = "../" + getProject() + "/components/" + component.getName() + ".xml";		
+			String xmlText = Resources.loadAsString(componentPath);
 			boolean spanish = xmlText.indexOf("<!DOCTYPE componente") >= 0;
 			String entity = spanish?"<entidad":"<entity";
 			String view = spanish?"<vista":"<view";

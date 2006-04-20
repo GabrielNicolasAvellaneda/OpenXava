@@ -382,10 +382,12 @@
     	/>	 	    		
 		
 		<delete file="../${project}/gen-src-xava/dnas.properties"/>
+		<delete file="../${project}/gen-src-xava/dnas-ejb.properties"/>
+		<delete file="../${project}/gen-src-xava/dnas-pojo.properties"/>
     </target>        
 	
     <target name="generateXDoclet">         	
-	   <echo>Generating classes</echo>    	
+	   <echo>Generating EJB classes</echo>    	
        <java 
        		classname="EJBCodeGenerator" 
        		classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};../${project}/filtered-files;../${project}/${classes.dir};${tracking.classes};${xava.generator.path}" 
@@ -397,10 +399,14 @@
 		</java>
     </target>
 	
-    <target name="generateHibernate" depends="filterXavaFiles">     
-    	<delete file="../${project}/gen-src-xava/dnas.properties"/>
+	<target name="regenerateHibernate">
+		<delete file="../${project}/gen-src-xava/dnas-pojo.properties"/>
+		<antcall target="generateHibernate"/>
+	</target>
+	
+    <target name="generateHibernate" depends="filterXavaFiles">   
     	<mkdir dir="../${project}/build/hibernate"/>
-		<echo>Generating classes</echo>
+		<echo>Generating POJOs/Hibernate</echo>
 		<java 
 			classname="HCodeGenerator" 
 			classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};../${project}/filtered-files;../${project}/${classes.dir};${xava.generator.path}" 
@@ -417,16 +423,21 @@
     	<ant antfile="../OpenXava/xdoclet/build.xml"/>    			
 	</target>
 	        
-    <target name="generateEJB" depends="filterXavaFiles, generateXDoclet, generateHibernate">         	    	
+    <target name="generateEJB" depends="filterXavaFiles, generateHibernate, generateXDoclet">         	    	
     	<antcall target="runXDoclet"/>
     </target>
-		
-    <target name="regenerateEJB">    
+	
+	<target name="clearGeneratedCode">
     	<delete>
    			<fileset dir="../${project}/gen-src"/>
    			<fileset dir="../${project}/gen-src-xava"/>
     		<fileset dir="../${project}/${meta-inf.dir}" excludes="MANIFEST.MF"/>
-   		</delete>
+   		</delete>		
+	</target>
+		
+    <target name="regenerateEJB">    
+    	<delete file="../${project}/gen-src-xava/dnas-ejb.properties"/>
+    	<delete file="../${project}/gen-src-xava/dnas-pojo.properties"/>
 		<antcall target="generateEJB"/>
     </target>
 		

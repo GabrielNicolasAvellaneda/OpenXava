@@ -11,11 +11,22 @@
 	<property file="../openxava.properties"/>	
 	<property name="datasource" value="@datasource@"/>
 	<property name="separator" value="_"/>	
-	
+
+	<!-- Incremental code generation -->
 	<target name="generateCode">
 		<ant antfile="../OpenXava/build.xml" target="generateHibernate"/>		
 	</target>
-			
+	
+	<!-- Generates all code -->
+	<target name="regenerateCode">
+		<ant antfile="../OpenXava/build.xml" target="regenerateHibernate"/>		
+	</target>
+	
+	<!-- Useful if you rename some compoment in order to remove old code -->
+	<target name="clearGeneratedCode">
+		<ant antfile="../OpenXava/build.xml" target="clearGeneratedCode"/>		
+	</target>
+				
 	<target name="deployWar">
 		<ant antfile="../OpenXava/build.xml" target="deploy"/>
 	</target>		

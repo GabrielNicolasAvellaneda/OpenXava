@@ -13,10 +13,21 @@
 	<property name="datasource" value="@fuentedatos@"/>
 	<property name="separator" value="_"/>
 				
+	<!-- Generación incremental -->
 	<target name="generarCodigo">
 		<ant antfile="../OpenXava/build.xml" target="generateHibernate"/>		
 	</target>	
-		
+	
+	<!-- Genera todo el codigo -->
+	<target name="regenerateCode">
+		<ant antfile="../OpenXava/build.xml" target="regenerateHibernate"/>		
+	</target>
+	
+	<!-- Útil si renombramos algún componente para borrar todo el código antiguo -->
+	<target name="clearGeneratedCode">
+		<ant antfile="../OpenXava/build.xml" target="clearGeneratedCode"/>		
+	</target>
+			
 	<target name="desplegarWar">
 		<ant antfile="../OpenXava/build.xml" target="deploy"/>
 	</target>				
