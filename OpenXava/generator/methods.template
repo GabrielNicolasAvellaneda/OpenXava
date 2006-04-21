@@ -10,8 +10,8 @@ private String getException() {
 	return ejb?"EJBException":"RuntimeException";
 }
 
-private IMetaModel metaModel=null;
-public void setMetaModel(IMetaModel metaModel) {
+private MetaModel metaModel=null;
+public void setMetaModel(MetaModel metaModel) {
 	this.metaModel = metaModel;
 }
 
@@ -20,15 +20,15 @@ public void setEjb(boolean ejb) {
 	this.ejb = ejb;
 }
 
-public static void generate(XPathContext context, ProgramWriter out, IMetaModel metaModel) throws XavaException {
+public static void generate(XPathContext context, ProgramWriter out, MetaModel metaModel) throws XavaException {
 	generate(context, out, metaModel, false);
 }
 
-public static void generateEJB(XPathContext context, ProgramWriter out, IMetaModel metaModel) throws XavaException {
+public static void generateEJB(XPathContext context, ProgramWriter out, MetaModel metaModel) throws XavaException {
 	generate(context, out, metaModel, true);
 }
 
-private static void generate(XPathContext context, ProgramWriter out, IMetaModel metaModel, boolean isEjb) throws XavaException {
+private static void generate(XPathContext context, ProgramWriter out, MetaModel metaModel, boolean isEjb) throws XavaException {
 	MethodsPG pg = new MethodsPG();
 	pg.setMetaModel(metaModel);
 	pg.setEjb(isEjb);

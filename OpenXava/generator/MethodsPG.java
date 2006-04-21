@@ -11,7 +11,7 @@ import org.openxava.generators.Generators;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Apr 20 13:38:21 CEST 2006
+ * @version Thu Apr 20 19:07:31 CEST 2006
  */
 public class MethodsPG {
     Properties properties = new Properties();
@@ -21,8 +21,8 @@ private String getException() {
 	return ejb?"EJBException":"RuntimeException";
 }
 
-private IMetaModel metaModel=null;
-public void setMetaModel(IMetaModel metaModel) {
+private MetaModel metaModel=null;
+public void setMetaModel(MetaModel metaModel) {
 	this.metaModel = metaModel;
 }
 
@@ -31,15 +31,15 @@ public void setEjb(boolean ejb) {
 	this.ejb = ejb;
 }
 
-public static void generate(XPathContext context, ProgramWriter out, IMetaModel metaModel) throws XavaException {
+public static void generate(XPathContext context, ProgramWriter out, MetaModel metaModel) throws XavaException {
 	generate(context, out, metaModel, false);
 }
 
-public static void generateEJB(XPathContext context, ProgramWriter out, IMetaModel metaModel) throws XavaException {
+public static void generateEJB(XPathContext context, ProgramWriter out, MetaModel metaModel) throws XavaException {
 	generate(context, out, metaModel, true);
 }
 
-private static void generate(XPathContext context, ProgramWriter out, IMetaModel metaModel, boolean isEjb) throws XavaException {
+private static void generate(XPathContext context, ProgramWriter out, MetaModel metaModel, boolean isEjb) throws XavaException {
 	MethodsPG pg = new MethodsPG();
 	pg.setMetaModel(metaModel);
 	pg.setEjb(isEjb);
@@ -262,9 +262,9 @@ private static void generate(XPathContext context, ProgramWriter out, IMetaModel
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Apr 20 13:38:21 CEST 2006", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/methods.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/MethodsPG.java" }, // output file
+        { "Thu Apr 20 19:07:32 CEST 2006", // date this file was generated
+             "/home/javi/workspace2/OpenXava/generator/methods.xml", // input file
+             "/home/javi/workspace2/OpenXava/generator/MethodsPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

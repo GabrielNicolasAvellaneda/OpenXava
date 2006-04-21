@@ -32,7 +32,7 @@ public class MetaConsult extends MetaElement {
 		parameter.setMetaConsult(this);
 	}
 	
-	IMetaModel getMetaModel() throws XavaException {
+	MetaModel getMetaModel() throws XavaException {
 		if (metaTab == null) {
 			throw new XavaException("tab_consult_required");
 		}		

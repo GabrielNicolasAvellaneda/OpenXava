@@ -17,13 +17,11 @@ import org.openxava.util.*;
 import org.openxava.validators.*;
 
 /**
- * tmp: Si no tiene estado ¿crear solo una vez? Comprobar transacciones y sesión
- * tmp: quitar todas las referencias e ejb (incluido IMetaEjb)
  * @author Mª Carmen Gimeno Alabau
  */
 public class HibernatePersistenceProvider implements IPersistenceProvider {
 
-	public Object find(IMetaEjb metaModel, Map keyValues) throws FinderException {
+	public Object find(MetaModel metaModel, Map keyValues) throws FinderException {
 		try {						
 			Object key = null;						
 			if (metaModel.getAllKeyPropertiesNames().size() == 1) {
@@ -54,7 +52,7 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 		}
 	}
 	
-	public Object find(IMetaEjb metaModel, Object key) throws FinderException { 
+	public Object find(MetaModel metaModel, Object key) throws FinderException { 
 		try {														
 			Object result = XHibernate.getSession().get(metaModel.getPOJOClass(), (Serializable) key);			
 			if (result == null) {
@@ -73,7 +71,7 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 		}
 	}
 	
-	private void refreshKeyReference(IMetaEjb metaModel, Object key) throws XavaException, HibernateException, InvocationTargetException, PropertiesManagerException {
+	private void refreshKeyReference(MetaModel metaModel, Object key) throws XavaException, HibernateException, InvocationTargetException, PropertiesManagerException {
 		// Refresh references keys can be a little inefficient (a SELECT by reference)
 		// but it's needed in order to populate these references well, 
 		// because these reference already have values in its keys thus 
@@ -100,11 +98,11 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 		return new POJOPropertiesContainerAdapter(o);
 	}
 
-	public Object create(IMetaEjb metaEjb, Map values)
+	public Object create(MetaModel metaModel, Map values)
 			throws CreateException, ValidationException, XavaException {		
 		try {			
-			find(metaEjb, values);			
-			throw new DuplicateKeyException(XavaResources.getString("no_create_exists", metaEjb.getName())); 
+			find(metaModel, values);			
+			throw new DuplicateKeyException(XavaResources.getString("no_create_exists", metaModel.getName())); 
 		}
 		catch (DuplicateKeyException ex) {
 			throw ex;
@@ -114,7 +112,7 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 		}
 		Serializable object = null;
 		try {
-			object = (Serializable) metaEjb.getPOJOClass().newInstance();
+			object = (Serializable) metaModel.getPOJOClass().newInstance();
 			PropertiesManager mp = new PropertiesManager(object);
 			mp.executeSets(values);					
 			XHibernate.getSession().save(object);			
@@ -123,7 +121,7 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 		catch (Exception ex) {
 			ex.printStackTrace();
 			throw new CreateException(XavaResources.getString(
-					"create_persistent_error", metaEjb.getName(), ex.getMessage()));
+					"create_persistent_error", metaModel.getName(), ex.getMessage()));
 		}
 	}
 
@@ -149,7 +147,7 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 		XHibernate.rollback();
 	}
 
-	public Object getKey(IMetaEjb metaModel, Map keyValues) throws XavaException {
+	public Object getKey(MetaModel metaModel, Map keyValues) throws XavaException {
 		try {
 			Class modelClass = metaModel.getPOJOClass();
 			Object key = modelClass.newInstance();
@@ -163,12 +161,12 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 		}
 	}
 
-	public Object createAggregate(IMetaEjb metaEjb, Map values, MetaModel metaModelContainer, Object containerModel, int number) throws CreateException, ValidationException, RemoteException, XavaException {		
+	public Object createAggregate(MetaModel metaModel, Map values, MetaModel metaModelContainer, Object containerModel, int number) throws CreateException, ValidationException, RemoteException, XavaException {		
 		String container = Strings.firstLower(metaModelContainer.getName());
 		values.put(container, containerModel);
 		DefaultValueIdentifierGenerator.setCurrentContainerKey(containerModel);
 		DefaultValueIdentifierGenerator.setCurrentCounter(number);
-		return create(metaEjb, values);
+		return create(metaModel, values);
 	}
 
 	public void flush() {

@@ -35,7 +35,7 @@ public class DefaultValueIdentifierGenerator implements IdentifierGenerator, Con
 		String modelName = "unknow";
 		try {			
 			IModel model = (IModel) object;
-			IMetaModel metaModel = model.getMetaModel();
+			MetaModel metaModel = model.getMetaModel();
 			modelName = metaModel.getName();
 			MetaProperty pr = (MetaProperty) metaModel.getMetaProperty(getProperty()); 
 			PropertiesManager pm = new PropertiesManager(model);

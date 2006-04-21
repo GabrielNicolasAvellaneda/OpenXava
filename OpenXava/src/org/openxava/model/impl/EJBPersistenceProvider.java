@@ -17,23 +17,23 @@ import org.openxava.validators.*;
  */
 public class EJBPersistenceProvider implements IPersistenceProvider {
 	
-	public Object find(IMetaEjb metaEntity, Map keyValues)
+	public Object find(MetaModel metaModel, Map keyValues)
 			throws FinderException, XavaException {
-		Object key = metaEntity.obtainPrimaryKeyFromKey(keyValues);
-		return find(metaEntity, key);
+		Object key = metaModel.getMetaEJB().obtainPrimaryKeyFromKey(keyValues);
+		return find(metaModel, key);
 	}
 
-	public Object find(IMetaEjb metaEntity, Object key) throws FinderException {
+	public Object find(MetaModel metaModel, Object key) throws FinderException {
 		Class claseHome = null;
 		Class clasePK = null;
 		try {
-			clasePK = metaEntity.getPrimaryKeyClass();
+			clasePK = metaModel.getMetaEJB().getPrimaryKeyClass();
 			Class[] classArg = {
 				clasePK
 			};
-			claseHome = metaEntity.getHomeClass();
+			claseHome = metaModel.getMetaEJB().getHomeClass();
 			Method m = claseHome.getMethod("findByPrimaryKey", classArg);
-			Object home = metaEntity.obtainHome();
+			Object home = metaModel.getMetaEJB().obtainHome();
 			Object[] arg = {
 				key
 			};
@@ -51,19 +51,19 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 			else {
 				th.printStackTrace();
 				throw new EJBException(XavaResources.getString("find_error",
-						metaEntity.getName()));
+						metaModel.getName()));
 			}
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			throw new EJBException(XavaResources.getString("find_error", metaEntity
+			throw new EJBException(XavaResources.getString("find_error", metaModel
 					.getName()));
 		}
 	}
 
 	public IPropertiesContainer toPropertiesContainer(MetaModel metaModel,
 			Object o) throws XavaException {
-		if (!(metaModel instanceof IMetaEjb)) {
+		if (metaModel.getMetaEJB() == null) {
 			throw new XavaException("only_ejb_error");
 		}
 		try { 
@@ -76,15 +76,15 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 		}
 	}
 
-	public Object create(IMetaEjb metaEjb, Map values)
+	public Object create(MetaModel metaModel, Map values)
 			throws CreateException, ValidationException, XavaException {
 		try {
-			return EJBFactory.create(metaEjb.obtainHome(), metaEjb.getHomeClass(),
+			return EJBFactory.create(metaModel.getMetaEJB().obtainHome(), metaModel.getMetaEJB().getHomeClass(),
 					values);
 		}
 		catch (NoSuchMethodException ex) {
 			ex.printStackTrace();
-			throw new XavaException("ejb_create_map_required", metaEjb.getJndi()); 
+			throw new XavaException("ejb_create_map_required", metaModel.getMetaEJB().getJndi()); 
 		}
 		catch (ValidationException ex) {
 			throw ex;
@@ -92,7 +92,7 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 		catch (RemoteException ex) {
 			ex.printStackTrace();
 			throw new EJBException(XavaResources.getString("create_persistent_error",
-					metaEjb.getName(),
+					metaModel.getName(),
 					ex.getLocalizedMessage()));
 		}
 	}
@@ -162,11 +162,11 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 		try {
 			return Objects.execute(modelObject, method);
 		} catch (NoSuchMethodException ex) {
-			throw new XavaException("method_expected", metaModel.getClassName(), method);
+			throw new XavaException("method_expected", modelObject.getClass(), method);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new XavaException("method_execution_error",
-					metaModel.getClassName(),					
+					modelObject.getClass(),					
 					method,					
 					ex.getLocalizedMessage());
 		}
@@ -178,12 +178,12 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 	public void rollback() {
 	}
 
-	public Object getKey(IMetaEjb metaModel, Map keyValues) throws XavaException {
-		return metaModel.obtainPrimaryKeyFromKey(keyValues);
+	public Object getKey(MetaModel metaModel, Map keyValues) throws XavaException {
+		return metaModel.getMetaEJB().obtainPrimaryKeyFromKey(keyValues);
 	}
 	
 	public Object createAggregate( 
-		IMetaEjb metaEjb,
+		MetaModel metaModel,
 		Map values,
 		MetaModel metaModelContainer,
 		Object containerModel, // can be key
@@ -191,15 +191,15 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 		throws CreateException, ValidationException, RemoteException, XavaException {
 		Class containerClass = containerModel.getClass();
 		try {
-			IMetaEjb ejbContainer = (IMetaEjb) metaModelContainer; 
-			if (!containerClass.equals(ejbContainer.getPrimaryKeyClass())) {
-				containerClass = ejbContainer.getRemoteClass();
+			MetaModel ejbContainer = (MetaModel) metaModelContainer; 
+			if (!containerClass.equals(ejbContainer.getMetaEJB().getPrimaryKeyClass())) {
+				containerClass = ejbContainer.getMetaEJB().getRemoteClass();
 			}									 
-			Class aggregateHomeClass = metaEjb.getHomeClass();
+			Class aggregateHomeClass = metaModel.getMetaEJB().getHomeClass();
 			Class[] argClass = { containerClass, int.class, java.util.Map.class };
 			Method m = aggregateHomeClass.getDeclaredMethod("create", argClass);
 			Object[] args = { containerModel, new Integer(number), values };
-			return m.invoke(metaEjb.obtainHome(), args);
+			return m.invoke(metaModel.getMetaEJB().obtainHome(), args);
 		} catch (InvocationTargetException ex) {
 			Throwable th = ex.getTargetException();
 			try {
@@ -214,10 +214,10 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 				throw new RemoteException(ex2.getLocalizedMessage(), ex2);
 			}
 		} catch (NoSuchMethodException ex) {
-			throw new XavaException("ejb_create_map3_required", metaEjb.getJndi(), containerClass);  
+			throw new XavaException("ejb_create_map3_required", metaModel.getMetaEJB().getJndi(), containerClass);  
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			throw new RemoteException(XavaResources.getString("create_error", metaEjb.getJndi()));				
+			throw new RemoteException(XavaResources.getString("create_error", metaModel.getMetaEJB().getJndi()));				
 		}
 	}
 

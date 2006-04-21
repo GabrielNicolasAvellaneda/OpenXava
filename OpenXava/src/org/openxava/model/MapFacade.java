@@ -453,8 +453,12 @@ public class MapFacade {
 	 */		
 	public static Object toPrimaryKey(String entityName, Map keyValues) throws XavaException {
 		try {
-			MetaEntityEjb m = (MetaEntityEjb) MetaComponent.get(entityName).getMetaEntity();
-			return m.obtainPrimaryKeyFromKey(keyValues);
+			MetaEntity m = (MetaEntity) MetaComponent.get(entityName).getMetaEntity();
+			return getLocalImpl().getKey(m, keyValues);
+		}
+		catch (RemoteException ex) { 
+			ex.printStackTrace();
+			throw new XavaException(ex.getMessage());
 		}
 		catch (ClassCastException ex) {
 			ex.printStackTrace();

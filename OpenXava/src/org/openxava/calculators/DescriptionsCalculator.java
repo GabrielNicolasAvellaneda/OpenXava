@@ -32,7 +32,7 @@ public class DescriptionsCalculator implements ICalculator {
 	private String model;
 	private String componentName;
 	private String aggregateName;
-	private transient IMetaEjb metaModel;
+	private transient MetaModel metaModel;
 	private transient Map cache;
 	private boolean orderByKey = false;
 	private boolean useCache = true;
@@ -113,13 +113,13 @@ public class DescriptionsCalculator implements ICalculator {
 		return result;
 	}	
 	
-	private IMetaEjb getMetaModel() throws XavaException {
+	private MetaModel getMetaModel() throws XavaException {
 		if (metaModel == null) {
 			if (isAggregate()) {
-				metaModel = (IMetaEjb) MetaComponent.get(getComponentName()).getMetaAggregate(getAggregateName());
+				metaModel = MetaComponent.get(getComponentName()).getMetaAggregate(getAggregateName());
 			}	
 			else {		
-				metaModel = (IMetaEjb) MetaComponent.get(getComponentName()).getMetaEntity();
+				metaModel = MetaComponent.get(getComponentName()).getMetaEntity();
 			}
 		}
 		return metaModel;

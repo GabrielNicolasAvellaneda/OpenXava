@@ -5,8 +5,8 @@
 
 #declarations
 
-private IMetaEjb metaModel=null;
-public void setMetaModel(IMetaEjb metaModel) {
+private MetaModel metaModel=null;
+public void setMetaModel(MetaModel metaModel) {
 	this.metaModel = metaModel;
 }
 

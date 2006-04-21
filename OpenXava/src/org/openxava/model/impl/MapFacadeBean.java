@@ -21,41 +21,38 @@ import org.openxava.validators.meta.*;
  * @author Javier Paniza
  */
 
-// tmp: Quitar IMetaEjb (si hay)
-// tmp: Quitar EJBException
-
 public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	
 	
 	private javax.ejb.SessionContext sessionContext = null;
 	private final static long serialVersionUID = 3206093459760846163L;
+	private static IPersistenceProvider persistenceProvider;
 	
 	public Object create(String user, String modelName, Map values)
 		throws CreateException, XavaException, ValidationException, RemoteException {		
 		Users.setCurrent(user);
-		values = Maps.recursiveClone(values); 
-		IPersistenceProvider persistenceProvider = createPersistenceProvider();
+		values = Maps.recursiveClone(values); 		
 		try {
 			MetaModel metaModel = getMetaModel(modelName);					
-			Object result = create(persistenceProvider, metaModel, values, null, null, 0);
-			persistenceProvider.commit();
+			Object result = create(metaModel, values, null, null, 0);
+			getPersistenceProvider().commit();
 			return result;
 		} 
 		catch (CreateException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (ValidationException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (XavaException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			rollback(persistenceProvider);
+			rollback();
 			throw new RemoteException(ex.getMessage());
 		}
 	}
@@ -68,26 +65,25 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			throws FinderException, XavaException, RemoteException {		
 		Users.setCurrent(user);
 		keyValues = Maps.recursiveClone(keyValues); 
-		membersNames = Maps.recursiveClone(membersNames); 
-		IPersistenceProvider persistenceProvider = createPersistenceProvider();
+		membersNames = Maps.recursiveClone(membersNames); 		
 		try {			
-			Map result = getValuesImpl(persistenceProvider, modelName, keyValues, membersNames);
-			persistenceProvider.commit();
+			Map result = getValuesImpl(modelName, keyValues, membersNames);
+			getPersistenceProvider().commit();
 			return result;
 		} 
 		catch (FinderException ex) {
 			ex.printStackTrace();
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (XavaException ex) {
 			ex.printStackTrace();
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			rollback(persistenceProvider);
+			rollback();
 			throw new RemoteException(ex.getMessage());
 		}
 	}
@@ -96,27 +92,26 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		throws RemoveException, ValidationException, XavaException, RemoteException 
 	{		
 		Users.setCurrent(user);
-		keyValues = Maps.recursiveClone(keyValues); 
-		IPersistenceProvider persistenceProvider = createPersistenceProvider();
+		keyValues = Maps.recursiveClone(keyValues); 		
 		try {
 			MetaModel metaModel = getMetaModel(modelName);					
-			remove(persistenceProvider, metaModel, keyValues);
-			persistenceProvider.commit();
+			remove(metaModel, keyValues);
+			getPersistenceProvider().commit();
 		}
 		catch (RemoveException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (ValidationException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (XavaException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (Exception ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw new RemoteException(ex.getMessage());
 		}
 	}
@@ -126,28 +121,27 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	{						
 		Users.setCurrent(user);
 		keyValues = Maps.recursiveClone(keyValues); 
-		values = Maps.recursiveClone(values); 
-		IPersistenceProvider persistenceProvider = createPersistenceProvider();
+		values = Maps.recursiveClone(values); 		
 		try {
 			MetaModel metaModel = getMetaModel(modelName);					
-			setValues(persistenceProvider, metaModel, keyValues, values);			
-			persistenceProvider.commit();
+			setValues(metaModel, keyValues, values);			
+			getPersistenceProvider().commit();
 		}
 		catch (FinderException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (ValidationException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (XavaException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			rollback(persistenceProvider);
+			rollback();
 			throw new RemoteException(ex.getMessage());
 		}
 	}
@@ -155,36 +149,34 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	public Object findEntity(String user, String modelName, Map keyValues)
 		throws FinderException, RemoteException {
 		Users.setCurrent(user);
-		keyValues = Maps.recursiveClone(keyValues); 
-		IPersistenceProvider persistenceProvider = createPersistenceProvider();		
-		return findEntity(persistenceProvider, modelName, keyValues);
+		keyValues = Maps.recursiveClone(keyValues); 			
+		return findEntity(modelName, keyValues);
 	}
 	
 	public Map createReturningValues(String user, String modelName, Map values) 
 		throws CreateException, XavaException, ValidationException, RemoteException {
 		Users.setCurrent(user);
-		values = Maps.recursiveClone(values); 
-		IPersistenceProvider persistenceProvider = createPersistenceProvider();
+		values = Maps.recursiveClone(values); 		
 		try {
-			Map result = createReturningValues(persistenceProvider, modelName, values);
-			persistenceProvider.commit();
+			Map result = createReturningValues(modelName, values);
+			getPersistenceProvider().commit();
 			return result;
 		}	
 		catch (CreateException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (ValidationException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (XavaException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			rollback(persistenceProvider);
+			rollback();
 			throw new RemoteException(ex.getMessage());
 		}		
 	}
@@ -192,28 +184,27 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	public Map createReturningKey(String user, String modelName, Map values) 
 		throws CreateException, XavaException, ValidationException, RemoteException {
 		Users.setCurrent(user);
-		values = Maps.recursiveClone(values); 
-		IPersistenceProvider persistenceProvider = createPersistenceProvider();		
+		values = Maps.recursiveClone(values); 			
 		try {							
-			Map result = createReturningKey(persistenceProvider, modelName, values);
-			persistenceProvider.commit();
+			Map result = createReturningKey(modelName, values);
+			getPersistenceProvider().commit();
 			return result;
 		}	
 		catch (CreateException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (ValidationException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (XavaException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			rollback(persistenceProvider);
+			rollback();
 			throw new RemoteException(ex.getMessage());
 		}
 	}
@@ -223,28 +214,27 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	{		
 		Users.setCurrent(user);
 		containerKeyValues = Maps.recursiveClone(containerKeyValues); 
-		values = Maps.recursiveClone(values); 
-		IPersistenceProvider persistenceProvider = createPersistenceProvider();
+		values = Maps.recursiveClone(values); 		
 		try {								
-			Object result = createAggregate(persistenceProvider, modelName, containerKeyValues, counter, values);
-			persistenceProvider.commit();
+			Object result = createAggregate(modelName, containerKeyValues, counter, values);
+			getPersistenceProvider().commit();
 			return result;
 		}	
 		catch (CreateException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (ValidationException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (XavaException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			rollback(persistenceProvider);
+			rollback();
 			throw new RemoteException(ex.getMessage());
 		}
 	}
@@ -253,28 +243,27 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		throws CreateException,ValidationException, XavaException, RemoteException
 	{		
 		Users.setCurrent(user);
-		values = Maps.recursiveClone(values); 
-		IPersistenceProvider persistenceProvider = createPersistenceProvider();		
+		values = Maps.recursiveClone(values); 			
 		try {								
-			Object result = createAggregate(persistenceProvider, modelName, container, counter, values);
-			persistenceProvider.commit();
+			Object result = createAggregate(modelName, container, counter, values);
+			getPersistenceProvider().commit();
 			return result;
 		}	
 		catch (CreateException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (ValidationException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (XavaException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			rollback(persistenceProvider);
+			rollback();
 			throw new RemoteException(ex.getMessage());
 		}
 	}
@@ -284,28 +273,27 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	{		
 		Users.setCurrent(user);
 		containerKeyValues = Maps.recursiveClone(containerKeyValues); 
-		values = Maps.recursiveClone(values); 
-		IPersistenceProvider persistenceProvider = createPersistenceProvider();
+		values = Maps.recursiveClone(values); 		
 		try {					
-			Map result = createAggregateReturningKey(persistenceProvider, modelName, containerKeyValues, counter, values);
-			persistenceProvider.commit();
+			Map result = createAggregateReturningKey(modelName, containerKeyValues, counter, values);
+			getPersistenceProvider().commit();
 			return result;
 		}	
 		catch (CreateException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (ValidationException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (XavaException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			rollback(persistenceProvider);
+			rollback();
 			throw new RemoteException(ex.getMessage());
 		}
 	}
@@ -317,20 +305,19 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		Map memberNames) throws XavaException, RemoteException  
 		 {				
 		Users.setCurrent(user);
-		memberNames = Maps.recursiveClone(memberNames); 
-		IPersistenceProvider persistenceProvider = createPersistenceProvider();
+		memberNames = Maps.recursiveClone(memberNames); 		
 		try {								
-			Map result = getValues(persistenceProvider, modelName, modelObject, memberNames);
-			persistenceProvider.commit();
+			Map result = getValues(modelName, modelObject, memberNames);
+			getPersistenceProvider().commit();
 			return result;
 		}	
 		catch (XavaException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			rollback(persistenceProvider);
+			rollback();
 			throw new RemoteException(ex.getMessage());
 		}
 	}
@@ -338,20 +325,19 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 
 	public Messages validate(String user, String modelName, Map values) throws XavaException, RemoteException {
 		Users.setCurrent(user);
-		values = Maps.recursiveClone(values); 
-		IPersistenceProvider persistenceProvider = createPersistenceProvider();		
+		values = Maps.recursiveClone(values); 				
 		try {					
-			Messages result = validate(persistenceProvider, modelName, values, false);
-			persistenceProvider.commit();
+			Messages result = validate(modelName, values, false);
+			getPersistenceProvider().commit();
 			return result;
 		}	
 		catch (XavaException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			rollback(persistenceProvider);
+			rollback();
 			throw new RemoteException(ex.getMessage());
 		}
 	}
@@ -361,69 +347,67 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	{
 		Users.setCurrent(user);
 		keyValues = Maps.recursiveClone(keyValues); 
-		collectionElementKeyValues = Maps.recursiveClone(collectionElementKeyValues); 
-		IPersistenceProvider persistenceProvider = createPersistenceProvider();
+		collectionElementKeyValues = Maps.recursiveClone(collectionElementKeyValues); 		
 		try {					
-			removeCollectionElement(persistenceProvider, modelName, keyValues, collectionName, collectionElementKeyValues);
-			persistenceProvider.commit();
+			removeCollectionElement(modelName, keyValues, collectionName, collectionElementKeyValues);
+			getPersistenceProvider().commit();
 		} 
 		catch (FinderException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (ValidationException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (RemoveException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (XavaException ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw ex;
 		}
 		catch (Exception ex) {
-			rollback(persistenceProvider);
+			rollback();
 			throw new RemoteException(ex.getMessage());
 		}						
 	}
 		
-	private void removeCollectionElement(IPersistenceProvider persistenceProvider, String modelName, Map keyValues, String collectionName, Map collectionElementKeyValues) 
+	private void removeCollectionElement(String modelName, Map keyValues, String collectionName, Map collectionElementKeyValues) 
 		throws FinderException,	ValidationException, XavaException, RemoveException, RemoteException 
 	{
 		MetaModel metaModel = getMetaModel(modelName);
 		MetaCollection metaCollection = metaModel.getMetaCollection(collectionName);
 		MetaModel metaModelReferenced = metaCollection.getMetaReference().getMetaModelReferenced();
 		if (metaCollection.isAggregate()) {						
-			remove(persistenceProvider, metaModelReferenced, collectionElementKeyValues);
+			remove(metaModelReferenced, collectionElementKeyValues);
 		}
 		else {
 			Map nullParentKey = new HashMap();
 			nullParentKey.put(Strings.firstLower(modelName), null);						
-			setValues(persistenceProvider, metaModelReferenced, collectionElementKeyValues, nullParentKey);					
+			setValues(metaModelReferenced, collectionElementKeyValues, nullParentKey);					
 		}												
 		if (metaCollection.hasPostRemoveCalculators()) {
-			executePostremoveCollectionElement(persistenceProvider, metaModel, keyValues, metaCollection);			
+			executePostremoveCollectionElement(metaModel, keyValues, metaCollection);			
 		}						
 	}
 	
-	private Messages validate(IPersistenceProvider persistenceProvider, String modelName, Map values, boolean creating) throws XavaException { 			
-		MetaEntityEjb metaEntity = (MetaEntityEjb) MetaComponent.get(modelName).getMetaEntity();		
+	private Messages validate(String modelName, Map values, boolean creating) throws XavaException, RemoteException { 			
+		MetaEntity metaEntity = (MetaEntity) MetaComponent.get(modelName).getMetaEntity();		
 		Messages validationErrors = new Messages(); 				
-		validate(persistenceProvider, validationErrors, metaEntity, values, null, null, creating);
+		validate(validationErrors, metaEntity, values, null, null, creating);
 		return validationErrors;
 	}
 	
-	private Map getValues(
-		IPersistenceProvider persistenceProvider, 	
+	private Map getValues(		 	
 		String modelName,
 		Object modelObject,
-		Map memberNames) throws XavaException
+		Map memberNames) throws XavaException, RemoteException
 		 {		
 		try {			
 			MetaModel metaModel = getMetaModel(modelName);
-			Map result = getValues(persistenceProvider, metaModel, modelObject, memberNames);						
+			Map result = getValues(metaModel, modelObject, memberNames);						
 			return result;
 		} catch (XavaException ex) {
 			ex.printStackTrace();
@@ -431,70 +415,68 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	private Map createAggregateReturningKey(IPersistenceProvider persistenceProvider, String modelName, Map containerKeyValues, int counter, Map values) 
-		throws CreateException,ValidationException, XavaException 
+	private Map createAggregateReturningKey(String modelName, Map containerKeyValues, int counter, Map values) 
+		throws CreateException,ValidationException, XavaException, RemoteException 
 	{		
 		MetaModel metaModel = getMetaModel(modelName);
 		MetaModel metaModelContainer = metaModel.getMetaModelContainer();
 		try {								
-			Object containerKey = persistenceProvider.getKey((IMetaEjb) metaModelContainer, containerKeyValues);
-			Object aggregate = createAggregate(persistenceProvider, metaModel, containerKey, counter, values);						
-			return getValues(persistenceProvider, metaModel, aggregate, getKeyNames(metaModel));			
+			Object containerKey = getPersistenceProvider().getKey(metaModelContainer, containerKeyValues);
+			Object aggregate = createAggregate(metaModel, containerKey, counter, values);						
+			return getValues(metaModel, aggregate, getKeyNames(metaModel));			
 		}
 		catch (ClassCastException ex) {
 			throw new XavaException("aggregate_must_be_persistent_for_create", metaModelContainer.getName());					
 		}
 	}
 	
-	private Object createAggregate(IPersistenceProvider persistenceProvider, String modelName, Object container, int counter, Map values) 
-		throws CreateException,ValidationException, XavaException
+	private Object createAggregate(String modelName, Object container, int counter, Map values) 
+		throws CreateException,ValidationException, XavaException, RemoteException
 	{		
 		MetaModel metaModel = getMetaModel(modelName);		
-		return createAggregate(persistenceProvider, metaModel, container, counter, values);
+		return createAggregate(metaModel, container, counter, values);
 	}
 	
-	private Object createAggregate(IPersistenceProvider persistenceProvider, String modelName, Map containerKeyValues, int counter, Map values) 
-		throws CreateException,ValidationException, XavaException 
+	private Object createAggregate(String modelName, Map containerKeyValues, int counter, Map values) 
+		throws CreateException,ValidationException, XavaException, RemoteException 
 	{		
 		MetaModel metaModel = getMetaModel(modelName);
 		MetaModel metaModelContainer = metaModel.getMetaModelContainer();
 		try {					
-			Object containerKey = persistenceProvider.getKey((IMetaEjb) metaModelContainer, containerKeyValues);
-			return createAggregate(persistenceProvider, metaModel, containerKey, counter, values);
+			Object containerKey = getPersistenceProvider().getKey(metaModelContainer, containerKeyValues);
+			return createAggregate(metaModel, containerKey, counter, values);
 		}
 		catch (ClassCastException ex) {
 			throw new XavaException("aggregate_must_be_persistent_for_create", metaModelContainer.getName());					
 		}
 	}
 	
-	private Map createReturningKey(IPersistenceProvider persistenceProvider, String modelName, Map values)
-		throws CreateException, XavaException, ValidationException {
-		MetaEntityEjb metaEntity = (MetaEntityEjb) MetaComponent.get(modelName).getMetaEntity();
-		Object entity = create(persistenceProvider, metaEntity, values, null, null, 0);
-		return getValues(persistenceProvider, metaEntity, entity, getKeyNames(metaEntity));
+	private Map createReturningKey(String modelName, Map values)
+		throws CreateException, XavaException, ValidationException, RemoteException {
+		MetaEntity metaEntity = (MetaEntity) MetaComponent.get(modelName).getMetaEntity();
+		Object entity = create(metaEntity, values, null, null, 0);
+		return getValues(metaEntity, entity, getKeyNames(metaEntity));
 	}
 	
-	private Map createReturningValues(IPersistenceProvider persistenceProvider, String modelName, Map values)
-		throws CreateException, XavaException, ValidationException {
-		MetaEntityEjb metaEntity = (MetaEntityEjb) MetaComponent.get(modelName).getMetaEntity();
-		Object entity = create(persistenceProvider, metaEntity, values, null, null, 0);
-		persistenceProvider.flush(); // to execute calculators
-		return getValues(persistenceProvider, metaEntity, entity, values);
+	private Map createReturningValues(String modelName, Map values)
+		throws CreateException, XavaException, ValidationException, RemoteException {
+		MetaEntity metaEntity = (MetaEntity) MetaComponent.get(modelName).getMetaEntity();
+		Object entity = create(metaEntity, values, null, null, 0);
+		getPersistenceProvider().flush(); // to execute calculators
+		return getValues(metaEntity, entity, values);
 	}
 		
-	private Map getValuesImpl(
-		IPersistenceProvider	persistenceProvider,	
+	private Map getValuesImpl(	
 		String modelName,
 		Map keyValues,
 		Map membersNames)
-		throws FinderException, XavaException {		
+		throws FinderException, XavaException, RemoteException {		
 		try {			
 			MetaModel metaModel = getMetaModel(modelName);						 
 			Map result =
-				getValues(
-					persistenceProvider, 
+				getValues(					 
 					metaModel,
-					findEntity(persistenceProvider, modelName, keyValues),
+					findEntity(modelName, keyValues),
 					membersNames); 						
 			return result;
 		} catch (XavaException ex) {
@@ -517,15 +499,15 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		return names;
 	}
 	
-	private Object createAggregate(IPersistenceProvider persistenceProvider, MetaModel metaModel, Object container, int counter, Map values) 
-		throws CreateException,ValidationException, XavaException 
+	private Object createAggregate(MetaModel metaModel, Object container, int counter, Map values) 
+		throws CreateException,ValidationException, XavaException, RemoteException 
 	{				
 		MetaModel metaModelContainer = metaModel.getMetaModelContainer();								
 		int attempts = 0;
 		// Loop with 10 attempts, because the counter can be repeated because deleted objects
 		do {				 
 			try {
-				return create(persistenceProvider, metaModel, values, metaModelContainer, container, counter);
+				return create(metaModel, values, metaModelContainer, container, counter);
 			}
 			catch (DuplicateKeyException ex) {
 				if (attempts > 10) throw ex;
@@ -551,34 +533,30 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	 * @param number  Only if object to create is a aggregate. It's a secuential number.
 	 * @return The created entity.
 	 */
-	private Object create(
-		IPersistenceProvider persistenceProvider,	
+	private Object create(	
 		MetaModel metaModel,
 		Map values,
 		MetaModel metaModelContainer,
 		Object containerKey,
 		int number)
-		throws CreateException, ValidationException, XavaException {						
+		throws CreateException, ValidationException, XavaException, RemoteException {						
 		try {			
-			if (!(metaModel instanceof IMetaEjb)) {
-				throw new IllegalArgumentException(XavaResources.getString("argument_type_error", "metaEjb", "MapFacadeBean.createEjb", "IMetaEjb"));
-			}			 
 			//removeReadOnlyFields(metaEjb, values); // not remove the read only fields because it maybe needed initialized on create
 			removeCalculatedFields(metaModel, values); 			
 			Messages validationErrors = new Messages(); 
 			validateExistRequired(validationErrors, metaModel, values);						
-			validate(persistenceProvider, validationErrors, metaModel, values, null, containerKey, true);
+			validate(validationErrors, metaModel, values, null, containerKey, true);
 			removeViewProperties(metaModel, values); 
 			if (validationErrors.contains()) {
 				throw new ValidationException(validationErrors);			
 			}
-			Map convertedValues = convertSubmapsInObject(persistenceProvider, metaModel, values, XavaPreferences.getInstance().isEJB2Persistence());
+			Map convertedValues = convertSubmapsInObject(metaModel, values, XavaPreferences.getInstance().isEJB2Persistence());
 			Object newObject = null;
 			if (metaModelContainer == null) {
-				newObject = persistenceProvider.create((IMetaEjb)metaModel, convertedValues);
+				newObject = getPersistenceProvider().create(metaModel, convertedValues);
 			} else {				
-				newObject = persistenceProvider.createAggregate(					
-						(IMetaEjb) metaModel,
+				newObject = getPersistenceProvider().createAggregate(					
+						metaModel,
 						convertedValues,
 						metaModelContainer,
 						containerKey,
@@ -594,9 +572,11 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 				XavaResources.getString("no_create_exists", metaModel.getName()));	
 		} catch (CreateException ex) {
 			ex.printStackTrace();
-			throw new CreateException(XavaResources.getString("create_error", metaModel.getName()));		} catch (RemoteException ex) {
+			throw new CreateException(XavaResources.getString("create_error", metaModel.getName()));		
+		} catch (RemoteException ex) {
 			ex.printStackTrace();
-			throw new EJBException(XavaResources.getString("create_error", metaModel.getName()));
+			rollback();
+			throw new RemoteException(XavaResources.getString("create_error", metaModel.getName()));
 		} catch (XavaException ex) {
 			ex.printStackTrace();
 			throw new XavaException("create_error", metaModel.getName());
@@ -613,7 +593,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	public void ejbRemove() throws java.rmi.RemoteException {
 	}
 
-	private Object getReferencedObject(Object container, String memberName) {
+	private Object getReferencedObject(Object container, String memberName) throws XavaException, RemoteException {
 		try {
 			PropertiesManager man =
 				new PropertiesManager(container);
@@ -621,11 +601,13 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			return result;
 		} catch (PropertiesManagerException ex) {
 			ex.printStackTrace();
-			throw new EJBException(XavaResources.getString("get_property_error", memberName));
+			rollback();
+			throw new RemoteException(XavaResources.getString("get_property_error", memberName));
 		} catch (InvocationTargetException ex) {
 			Throwable th = ex.getTargetException();
 			th.printStackTrace();
-			throw new EJBException(XavaResources.getString("get_property_error", memberName));
+			rollback();
+			throw new RemoteException(XavaResources.getString("get_property_error", memberName));
 		}
 	}
 
@@ -634,18 +616,16 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	}
 
 	
-	private Map getValues( 
-		IPersistenceProvider persistenceProvider,	
+	private Map getValues( 	
 		MetaModel metaModel,
 		Map keyValues,
 		Map memberNames)
-		throws FinderException, XavaException { 
+		throws FinderException, XavaException, RemoteException { 
 		try {									 
 			Map result =
-				getValues(
-					persistenceProvider,	
+				getValues(	
 					metaModel,
-					findEntity(persistenceProvider, (IMetaEjb)metaModel, keyValues),
+					findEntity(metaModel, keyValues),
 					memberNames);			
 			return result;
 		} catch (XavaException ex) {
@@ -667,16 +647,15 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 
-	private Map getValues(
-		IPersistenceProvider persistenceProvider,		
+	private Map getValues(		
 		MetaModel metaModel, 
 		Object modelObject,
-		Map membersNames) throws XavaException {
+		Map membersNames) throws XavaException, RemoteException {
 		try {
 			if (modelObject == null)
 				return null;						
 			if (membersNames == null) return Collections.EMPTY_MAP;			 
-			IPropertiesContainer r = persistenceProvider.toPropertiesContainer(metaModel, modelObject);			
+			IPropertiesContainer r = getPersistenceProvider().toPropertiesContainer(metaModel, modelObject);			
 			StringBuffer names = new StringBuffer();
 			addKey(metaModel, membersNames); // always return the key althought it don't is aunque no se solicit
 			removeViewProperties(metaModel, membersNames);			
@@ -694,12 +673,12 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 					if (metaModel.containsMetaReference(memberName)) {						
 						result.put(
 							memberName,
-							getReferenceValues(persistenceProvider, metaModel, modelObject, memberName, submemberNames));
+							getReferenceValues(metaModel, modelObject, memberName, submemberNames));
 					}
 					else if (metaModel.containsMetaCollection(memberName)) {						
 						result.put(
 							memberName,
-							getCollectionValues(persistenceProvider, metaModel, modelObject, memberName, submemberNames));
+							getCollectionValues(metaModel, modelObject, memberName, submemberNames));
 					} 
 					else {
 						throw new XavaException("member_not_found", memberName, metaModel.getName());
@@ -708,17 +687,17 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			}			
 			result.putAll(r.executeGets(names.toString()));			
 			return result;
-		} catch (RemoteException ex) {
+		} catch (RemoteException ex) {			
 			ex.printStackTrace();
-			throw new EJBException(XavaResources.getString("get_values_error", metaModel.getName()));
+			rollback();
+			throw new RemoteException(XavaResources.getString("get_values_error", metaModel.getName()));
 		}
 	}
 	
 	public Map getKeyValues(String user, String modelName, Object entity) throws RemoteException, XavaException {
 		Users.setCurrent(user);
-		IPersistenceProvider persistenceProvider = createPersistenceProvider();
 		MetaModel metaModel = getMetaModel(modelName);
-		return getValues(persistenceProvider, metaModel, entity, getKeyNames(metaModel));
+		return getValues(metaModel, entity, getKeyNames(metaModel));
 	}
 		
 	private void addKey(MetaModel metaModel, Map memberNames) throws XavaException {
@@ -742,8 +721,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	
 	/**
 	 * If we send null as <tt>nombresPropiedades</tt> it return a empty Map. <p>
+	 * @throws RemoteException 
 	 */
-	private Map getAggregateValues(IPersistenceProvider persistenceProvider, MetaAggregate metaAggregate, Object aggregate, Map memberNames) throws XavaException {
+	private Map getAggregateValues(MetaAggregate metaAggregate, Object aggregate, Map memberNames) throws XavaException, RemoteException {
 		if (memberNames == null) return Collections.EMPTY_MAP;
 		PropertiesManager man = new PropertiesManager(aggregate);
 		StringBuffer names = new StringBuffer();
@@ -769,7 +749,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 					Map submemberNames = (Map) memberNames.get(memberName);
 					result.put(
 						memberName,
-						getReferenceValues(persistenceProvider, metaAggregate, aggregate, memberName, submemberNames));
+						getReferenceValues(metaAggregate, aggregate, memberName, submemberNames));
 				} else {
 					throw new XavaException("member_not_found", memberName, metaAggregate.getName());
 				}
@@ -778,11 +758,13 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			result.putAll(man.executeGets(names.toString()));
 		} catch (PropertiesManagerException ex) {
 			ex.printStackTrace();
-			throw new EJBException(XavaResources.getString("get_values_error", metaAggregate.getName()));
+			rollback();
+			throw new RemoteException(XavaResources.getString("get_values_error", metaAggregate.getName()));
 		} catch (InvocationTargetException ex) {
 			Throwable th = ex.getTargetException();
 			th.printStackTrace();
-			throw new EJBException(XavaResources.getString("get_values_error", metaAggregate.getName()));
+			rollback();
+			throw new RemoteException(XavaResources.getString("get_values_error", metaAggregate.getName()));
 		}
 		return result;
 	}
@@ -790,27 +772,27 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 
 	/**
 	 * If <tt>memberNames</tt> is null then return a empty map.
+	 * @throws RemoteException 
 	 */
-	private Map getAssociatedEntityValues(IPersistenceProvider persistenceProvider, MetaEntity metaEntity, Object modelObject, Map memberNames) throws XavaException {
+	private Map getAssociatedEntityValues(MetaEntity metaEntity, Object modelObject, Map memberNames) throws XavaException, RemoteException {
 		if (memberNames == null) return Collections.EMPTY_MAP;
-		Map result = getValues(persistenceProvider, metaEntity, modelObject, memberNames);
+		Map result = getValues(metaEntity, modelObject, memberNames);
 		return result;
 	}
 
-	private Map getReferenceValues(
-		IPersistenceProvider persistenceProvider,	
+	private Map getReferenceValues(	
 		MetaModel metaModel,
 		Object model,
 		String memberName,
-		Map submembersNames) throws XavaException {
+		Map submembersNames) throws XavaException, RemoteException {
 		try {			
 			MetaReference r = metaModel.getMetaReference(memberName);
 			Object object = getReferencedObject(model, memberName);
 			if (r.isAggregate()) {
-				return getAggregateValues(persistenceProvider, (MetaAggregate) r.getMetaModelReferenced(), object, submembersNames);
+				return getAggregateValues((MetaAggregate) r.getMetaModelReferenced(), object, submembersNames);
 			} 
 			else {				
-				return getAssociatedEntityValues(persistenceProvider, (MetaEntity) r.getMetaModelReferenced(), object, submembersNames);
+				return getAssociatedEntityValues((MetaEntity) r.getMetaModelReferenced(), object, submembersNames);
 			}
 		} catch (XavaException ex) {
 			ex.printStackTrace();
@@ -818,16 +800,15 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	private Collection getCollectionValues(
-		IPersistenceProvider persistenceProvider,	
+	private Collection getCollectionValues(	
 		MetaModel metaModel,
 		Object modelObject,
 		String memberName,
-		Map memberNames) throws XavaException {
+		Map memberNames) throws XavaException, RemoteException {
 		try {
 			MetaCollection c = metaModel.getMetaCollection(memberName);
 			Object object = getReferencedObject(modelObject, memberName);
-			return getCollectionValues( persistenceProvider,
+			return getCollectionValues( 
 					c.getMetaReference().getMetaModelReferenced(),
 					c.isAggregate(),	object, memberNames);
 		} catch (XavaException ex) {
@@ -836,11 +817,10 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	private Collection getCollectionValues(
-		IPersistenceProvider persistenceProvider,	
+	private Collection getCollectionValues(	
 		MetaModel metaModel,
 		boolean aggregate,
-		Object elements, Map memberNames) throws XavaException {
+		Object elements, Map memberNames) throws XavaException, RemoteException {
 		Collection result = new ArrayList();
 		Enumeration enumeration = null;
 		if (elements instanceof Enumeration) {
@@ -855,66 +835,70 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}		
 		while (enumeration.hasMoreElements()) {
 			Object object = enumeration.nextElement();			
-			result.add(getValues(persistenceProvider, metaModel, object, memberNames));
+			result.add(getValues(metaModel, object, memberNames));
 		}
 		return result;
 	}
 
 
-	private Object instanceAggregate(IPersistenceProvider persistenceProvider, MetaAggregateBean metaAggregate, Map values)
-		throws ValidationException, XavaException {
+	private Object instanceAggregate(MetaAggregateForReference metaAggregate, Map values)
+		throws ValidationException, XavaException, RemoteException {
 		try {
 			Object object = Class.forName(metaAggregate.getBeanClass()).newInstance();
 			PropertiesManager man = new PropertiesManager(object);			
 			removeViewProperties(metaAggregate, values);
-			values = convertSubmapsInObject(persistenceProvider, metaAggregate, values, false);
+			values = convertSubmapsInObject(metaAggregate, values, false);
 			man.executeSets(values);
 			return object;
 		} catch (ClassNotFoundException ex) {
 			ex.printStackTrace();
-			throw new EJBException(XavaResources.getString("instantiate_error", metaAggregate.getBeanClass()));
-		} catch (IllegalAccessException ex) {
+			rollback();
+			throw new RemoteException(XavaResources.getString("instantiate_error", metaAggregate.getBeanClass()));
+		} catch (IllegalAccessException ex) {			
 			ex.printStackTrace();
-			throw new EJBException(XavaResources.getString("instantiate_error", metaAggregate.getBeanClass()));
+			rollback();
+			throw new RemoteException(XavaResources.getString("instantiate_error", metaAggregate.getBeanClass()));
 		} catch (InstantiationException ex) {
 			ex.printStackTrace();
-			throw new EJBException(XavaResources.getString("instantiate_error", metaAggregate.getBeanClass()));
+			rollback();
+			throw new RemoteException(XavaResources.getString("instantiate_error", metaAggregate.getBeanClass()));
 		} catch (InvocationTargetException ex) {
-			throwsValicationException(
-				ex, XavaResources.getString("assign_values_error", metaAggregate.getBeanClass(), ex.getLocalizedMessage())); 				
-			throw new EJBException(); // Never
+			throwsValidationException(
+				ex, XavaResources.getString("assign_values_error", metaAggregate.getBeanClass(), ex.getLocalizedMessage()));
+			rollback();
+			throw new RemoteException(); // Never
 		} catch (PropertiesManagerException ex) {
 			ex.printStackTrace();
-			throw new EJBException(XavaResources.getString("assign_values_error", metaAggregate.getBeanClass(), ex.getLocalizedMessage()));
+			rollback();
+			throw new RemoteException(XavaResources.getString("assign_values_error", metaAggregate.getBeanClass(), ex.getLocalizedMessage()));
 		}
 	}
 
-	private void throwsValicationException(
+	private void throwsValidationException(
 		InvocationTargetException ex,
 		String ejbmessage)
-		throws ValidationException {
+		throws ValidationException, RemoteException {
 		Throwable th = ex.getTargetException();
 		if (th instanceof ValidationException) {
 			throw (ValidationException) th;
 		}
 		th.printStackTrace();
-		throw new EJBException(ejbmessage);
+		throw new RemoteException(ejbmessage);
 	}
 
-	private Object mapToReferencedObject(
-		IPersistenceProvider persistenceProvider,	
+	private Object mapToReferencedObject(	
 		MetaModel metaModel,
 		String memberName,
 		Map values)
-		throws ValidationException, XavaException {		
+		throws ValidationException, XavaException, RemoteException {		
 		MetaReference r = null;
 		try {
 			if (Maps.isEmpty(values)) return null;			
 			r = metaModel.getMetaReference(memberName);
 			if (r.isAggregate()) {
-				return instanceAggregate(persistenceProvider, (MetaAggregateBean) r.getMetaModelReferenced(), values);
+				return instanceAggregate((MetaAggregateForReference) r.getMetaModelReferenced(), values);
 			} else {
-				return findAssociatedEntity(persistenceProvider, (MetaEntity) r.getMetaModelReferenced(), values);
+				return findAssociatedEntity((MetaEntity) r.getMetaModelReferenced(), values);
 			}
 		}
 		catch (ObjectNotFoundException ex) {
@@ -922,7 +906,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		} 
 		catch (FinderException ex) {
 			ex.printStackTrace();
-			throw new EJBException(XavaResources.getString("map_to_reference_error",
+			rollback();
+			throw new RemoteException(XavaResources.getString("map_to_reference_error",
 					r.getName(),					
 					metaModel.getName(),					
 					memberName));
@@ -931,10 +916,10 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 
-	private Object findAssociatedEntity(IPersistenceProvider persistenceProvider, MetaEntity metaEntity, Map values)
-		throws FinderException, XavaException {
+	private Object findAssociatedEntity(MetaEntity metaEntity, Map values)
+		throws FinderException, XavaException, RemoteException {
 		Map keyValues = extractKeyValues(metaEntity, values);		
-		return findEntity(persistenceProvider, metaEntity.getName(), keyValues);
+		return findEntity(metaEntity.getName(), keyValues);
 	}
 
 	private Map extractKeyValues(MetaEntity metaEntity, Map values)
@@ -979,11 +964,11 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}	
 		
-	private void remove(IPersistenceProvider persistenceProvider, MetaModel metaModel, Map keyValues)
-		throws RemoveException, ValidationException, XavaException {
+	private void remove(MetaModel metaModel, Map keyValues)
+		throws RemoveException, ValidationException, XavaException, RemoteException {
 		try {			
-			Object object = findEntity(persistenceProvider, (IMetaEjb)metaModel, keyValues);
-			remove(persistenceProvider, metaModel, object);
+			Object object = findEntity(metaModel, keyValues);
+			remove(metaModel, object);
 		} catch (FinderException ex) {
 			ex.printStackTrace();
 			throw new RemoveException(XavaResources.getString("remove_error",
@@ -991,15 +976,15 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}		
 	}
 		
-	private void remove(IPersistenceProvider persistenceProvider, MetaModel metaModel, Object modelObject)
-		throws RemoveException, ValidationException, XavaException {
+	private void remove(MetaModel metaModel, Object modelObject)
+		throws RemoveException, ValidationException, XavaException, RemoteException {
 		try {
 			Messages errors = validateOnRemove(metaModel, modelObject);
 			if (!errors.isEmpty()) {
 				throw new ValidationException(errors);
 			}			
 			// removing collections are resposibility of persistence provider
-			persistenceProvider.remove(metaModel, modelObject);			
+			getPersistenceProvider().remove(metaModel, modelObject);			
 		} catch (ValidationException ex) {
 			throw ex;					
 		} catch (XavaException ex) {
@@ -1007,7 +992,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			throw new XavaException("remove_error", metaModel.getName(), ex.getLocalizedMessage());				
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			throw new EJBException(XavaResources.getString("remove_error",
+			rollback();
+			throw new RemoteException(XavaResources.getString("remove_error",
 				metaModel.getName(), ex.getLocalizedMessage()));
 		}
 	}
@@ -1029,16 +1015,16 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		sessionContext = ctx;
 	}
 		
-	private void setValues(IPersistenceProvider persistenceProvider, MetaModel metaModel, Map keyValues, Map values)
+	private void setValues(MetaModel metaModel, Map keyValues, Map values)
 		throws FinderException, ValidationException, XavaException {		
 		try {						 
 			removeKeyFields(metaModel, values);			
 			removeReadOnlyFields(metaModel, values);
 			removeViewProperties(metaModel, values);			
-			validate(persistenceProvider, metaModel, values, keyValues, null, false);			
-			Object entity = findEntity(persistenceProvider, (IMetaEjb) metaModel, keyValues);			
-			IPropertiesContainer r = persistenceProvider.toPropertiesContainer(metaModel, entity);			
-			r.executeSets(convertSubmapsInObject(persistenceProvider, metaModel, values, XavaPreferences.getInstance().isEJB2Persistence()));			
+			validate(metaModel, values, keyValues, null, false);			
+			Object entity = findEntity(metaModel, keyValues);			
+			IPropertiesContainer r = getPersistenceProvider().toPropertiesContainer(metaModel, entity);			
+			r.executeSets(convertSubmapsInObject(metaModel, values, XavaPreferences.getInstance().isEJB2Persistence()));			
 			// Collections are not managed			
 		} 
 		catch (FinderException ex) { 
@@ -1053,13 +1039,12 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	private void validate(
-		IPersistenceProvider persistenceProvider,	
+	private void validate(	
 		Messages errors,
 		MetaModel metaModel,
 		String memberName,
 		Object values,
-		boolean creating) throws XavaException {			
+		boolean creating) throws XavaException, RemoteException {			
 		try {			
 			if (metaModel.containsMetaProperty(memberName)) {
 				metaModel.getMetaProperty(memberName).validate(errors, values, creating); 
@@ -1069,7 +1054,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 					MetaModel referencedModel = ref.getMetaModelReferenced();
 					Map mapValues = (Map) values;					
 					if (hasValue(mapValues)) {
-						if (ref.isAggregate()) validate(persistenceProvider, errors, referencedModel, mapValues, mapValues, null, creating);
+						if (ref.isAggregate()) validate(errors, referencedModel, mapValues, mapValues, null, creating);
 					} else
 						if (metaModel
 							.getMetaReference(memberName)
@@ -1090,7 +1075,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			throw new XavaException("validate_error", memberName, metaModel.getName());
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			throw new EJBException(XavaResources.getString("validate_error", memberName, metaModel.getName()));				
+			rollback();
+			throw new RemoteException(XavaResources.getString("validate_error", memberName, metaModel.getName()));				
 		}
 	}
 	
@@ -1107,21 +1093,21 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		return false;
 	}
 	
-	private void validate(IPersistenceProvider persistenceProvider, Messages errors, MetaModel metaModel, Map values, Map keyValues, Object containerKey, boolean creating)	  
-		throws XavaException {		
+	private void validate(Messages errors, MetaModel metaModel, Map values, Map keyValues, Object containerKey, boolean creating)	  
+		throws XavaException, RemoteException {		
 		Iterator it = values.entrySet().iterator();		
 		while (it.hasNext()) {
 			Map.Entry en = (Map.Entry) it.next();
 			String name = (String) en.getKey();
 			Object value = en.getValue();
-			validate(persistenceProvider, errors, metaModel, name, value, creating);
+			validate(errors, metaModel, name, value, creating);
 		}
 		if (metaModel.containsValidadors()) {
-			validateWithModelValidator(persistenceProvider, errors, metaModel, values, keyValues, containerKey, creating);			
+			validateWithModelValidator(errors, metaModel, values, keyValues, containerKey, creating);			
 		}
 	}
 	
-	private void validateWithModelValidator(IPersistenceProvider persistenceProvider, Messages errors, MetaModel metaModel, Map values, Map keyValues, Object containerKey, boolean creating) throws XavaException {				
+	private void validateWithModelValidator(Messages errors, MetaModel metaModel, Map values, Map keyValues, Object containerKey, boolean creating) throws XavaException {				
 		try {
 			String containerReferenceName = Strings.firstLower(metaModel.getMetaModelContainer().getName());
 			Iterator itValidators = metaModel.getMetaValidators().iterator();
@@ -1138,19 +1124,19 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 						if (keyValues != null) {							
 							Map memberName = new HashMap();
 							memberName.put(set.getPropertyNameFrom(), null);
-							Map memberValue = getValues(persistenceProvider, metaModel, keyValues, memberName);
+							Map memberValue = getValues(metaModel, keyValues, memberName);
 							value = memberValue.get(set.getPropertyNameFrom());
 						}											
 					}					
 					if (set.getPropertyNameFrom().equals(containerReferenceName)) {					
 						if (containerKey == null) {							
-							Object object = findEntity(persistenceProvider, ((IMetaEjb)metaModel), keyValues);
+							Object object = findEntity(metaModel, keyValues);
 							value = Objects.execute(object, "get" + metaModel.getMetaModelContainer().getName());
 						}
 						else {							
-							IMetaEjb containerReference = (IMetaEjb) metaModel.getMetaModelContainer();
+							MetaModel containerReference = metaModel.getMetaModelContainer();
 							try {							
-								value = persistenceProvider.find(containerReference, containerKey);								
+								value = getPersistenceProvider().find(containerReference, containerKey);								
 							}
 							catch (ObjectNotFoundException ex) {								
 								value = null;
@@ -1160,12 +1146,12 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 					else if (metaModel.containsMetaReference(set.getPropertyNameFrom())) {						
 						MetaReference ref = metaModel.getMetaReference(set.getPropertyNameFrom());
 						if (ref.isAggregate()) {							
-							value = mapToReferencedObject(persistenceProvider, metaModel, set.getPropertyNameFrom(), (Map) value);
+							value = mapToReferencedObject(metaModel, set.getPropertyNameFrom(), (Map) value);
 						}
 						else {							
-							IMetaEjb referencedEntity = (IMetaEjb) ref.getMetaModelReferenced();
+							MetaModel referencedEntity = ref.getMetaModelReferenced();
 							try {
-								value = findEntity(persistenceProvider, referencedEntity, (Map) value);								
+								value = findEntity(referencedEntity, (Map) value);								
 							}
 							catch (ObjectNotFoundException ex) {								
 								value = null;
@@ -1183,10 +1169,10 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	private void validate(IPersistenceProvider persistenceProvider, MetaModel metaModel, Map values, Map keyValues, Object containerKey, boolean creating)
+	private void validate(MetaModel metaModel, Map values, Map keyValues, Object containerKey, boolean creating)
 		throws ValidationException, XavaException, RemoteException {
 		Messages errors = new Messages();		
-		validate(persistenceProvider, errors, metaModel, values, keyValues, containerKey, creating);		
+		validate(errors, metaModel, values, keyValues, containerKey, creating);		
 		if (errors.contains()) {
 			throw new ValidationException(errors);
 		}
@@ -1203,16 +1189,16 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 				
-	private Object findEntity(IPersistenceProvider persistenceProvider, IMetaEjb metaEntity, Map keyValues)	throws FinderException, XavaException {
-		return persistenceProvider.find(metaEntity, keyValues);
+	private Object findEntity(MetaModel metaModel, Map keyValues) throws FinderException, XavaException, RemoteException {
+		return getPersistenceProvider().find(metaModel, keyValues);
 	}
 	
-	private void rollback (IPersistenceProvider pp) {
+	private void rollback () throws RemoteException {
 		if (getSessionContext() != null) getSessionContext().setRollbackOnly();
-		pp.rollback();
+		getPersistenceProvider().rollback();
 	}
 		
-	private void executePostremoveCollectionElement(IPersistenceProvider persistenceProvider, MetaModel metaModel, Map keyValues, MetaCollection metaCollection) throws FinderException, ValidationException, XavaException {
+	private void executePostremoveCollectionElement(MetaModel metaModel, Map keyValues, MetaCollection metaCollection) throws FinderException, ValidationException, XavaException, RemoteException {
 		Iterator itCalculators = metaCollection.getMetaCalculatorsPostRemove().iterator();
 		while (itCalculators.hasNext()) {
 			MetaCalculator metaCalculator = (MetaCalculator) itCalculators.next();			
@@ -1226,7 +1212,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 					MetaSet set = (MetaSet) itSets.next();
 					neededPropertyNames.put(set.getPropertyNameFrom(), null);
 				}												
-				Map values = getValues(persistenceProvider, metaModel, keyValues, neededPropertyNames);
+				Map values = getValues(metaModel, keyValues, neededPropertyNames);
 				
 				itSets = sets.iterator();											
 				while (itSets.hasNext()) {
@@ -1236,7 +1222,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 						if (keyValues != null) { 
 							Map memberName = new HashMap();
 							memberName.put(set.getPropertyNameFrom(), null);
-							Map memberValue = getValues(persistenceProvider, metaModel, keyValues, memberName);
+							Map memberValue = getValues(metaModel, keyValues, memberName);
 							value = memberValue.get(set.getPropertyNameFrom());
 						}											
 					}
@@ -1244,12 +1230,12 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 					if (metaModel.containsMetaReference(set.getPropertyNameFrom())) {
 						MetaReference ref = metaModel.getMetaReference(set.getPropertyNameFrom());
 						if (ref.isAggregate()) {
-							value = mapToReferencedObject(persistenceProvider, metaModel, set.getPropertyNameFrom(), (Map) value);
+							value = mapToReferencedObject(metaModel, set.getPropertyNameFrom(), (Map) value);
 						}
 						else {
-							IMetaEjb referencedEntity = (IMetaEjb) ref.getMetaModelReferenced();
+							MetaModel referencedEntity = ref.getMetaModelReferenced();
 							try {
-								value = findEntity(persistenceProvider, referencedEntity, (Map) value);
+								value = findEntity(referencedEntity, (Map) value);
 							}
 							catch (ObjectNotFoundException ex) {
 								value = null;
@@ -1268,7 +1254,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			}			
 			
 			if (calculator instanceof IModelCalculator) {
-				Object entity = findEntity(persistenceProvider, (IMetaEjb) metaModel, keyValues);
+				Object entity = findEntity(metaModel, keyValues);
 				try {
 					((IModelCalculator) calculator).setModel(entity);
 				}
@@ -1279,7 +1265,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 				
 			}
 			if (calculator instanceof IEntityCalculator) {
-				Object entity = findEntity(persistenceProvider, (IMetaEjb) metaModel, keyValues);
+				Object entity = findEntity( metaModel, keyValues);
 				try {
 					((IEntityCalculator) calculator).setEntity(entity);
 				}
@@ -1295,13 +1281,14 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			}
 			catch (Exception ex) {
 				ex.printStackTrace();
-				throw new EJBException(XavaResources.getString("postremove_error", metaModel.getName(), keyValues));
+				rollback();
+				throw new RemoteException(XavaResources.getString("postremove_error", metaModel.getName(), keyValues));
 			}
 		}				
 	}
 	
-	private Map convertSubmapsInObject(IPersistenceProvider persistenceProvider, MetaModel metaModel, Map values,
-			boolean referencesAsKey) throws ValidationException, XavaException {		
+	private Map convertSubmapsInObject(MetaModel metaModel, Map values,
+			boolean referencesAsKey) throws ValidationException, XavaException, RemoteException {		
 		Map result = new HashMap();
 		Iterator it = values.entrySet().iterator();
 		while (it.hasNext()) {
@@ -1314,14 +1301,14 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			else if (metaModel.containsMetaReference(memberName)) {
 				MetaReference ref = metaModel.getMetaReference(memberName);
 				if (!referencesAsKey || ref.isAggregate()) { 
-					value = mapToReferencedObject(persistenceProvider, metaModel, memberName, (Map) en
+					value = mapToReferencedObject(metaModel, memberName, (Map) en
 							.getValue());
 				}
 				else {
-					MetaEntityEjb referencedEntity = (MetaEntityEjb) ref
+					MetaEntity referencedEntity = (MetaEntity) ref
 							.getMetaModelReferenced();
 					memberName = memberName + "Key";
-					value = referencedEntity.obtainPrimaryKeyFromKey((Map) en.getValue());
+					value = referencedEntity.getMetaEJB().obtainPrimaryKeyFromKey((Map) en.getValue());
 				}
 			}
 			else if (metaModel.getMapping().hasPropertyMapping(memberName)) {
@@ -1336,28 +1323,37 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		return result;
 	}
 	
-	private Object findEntity(IPersistenceProvider persistenceProvider,	String modelName, Map keyValues)
-		throws FinderException {
+	private Object findEntity(String modelName, Map keyValues)
+		throws FinderException, RemoteException {
 		try {
-			return findEntity(persistenceProvider, (IMetaEjb) getMetaModel(modelName), keyValues);			
+			return findEntity(getMetaModel(modelName), keyValues);			
 		} catch (FinderException ex) {
 			throw ex;
 		} catch (ElementNotFoundException ex) {
-			throw new EJBException(XavaResources.getString("model_not_found", modelName));
+			rollback();
+			throw new RemoteException(XavaResources.getString("model_not_found", modelName));
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			throw new EJBException(XavaResources.getString("find_error", modelName));
+			rollback();
+			throw new RemoteException(XavaResources.getString("find_error", modelName));
 		}
 	}
+	
+	public Object getKey(MetaModel metaModel, Map keyValues) throws XavaException, RemoteException {
+		return getPersistenceProvider().getKey(metaModel, keyValues);
+	}
 
-	private IPersistenceProvider createPersistenceProvider() throws RemoteException {
-		try {
-			return (IPersistenceProvider) Class.forName(XavaPreferences.getInstance().getPersistenceProviderClass()).newInstance();
+	private static IPersistenceProvider getPersistenceProvider() throws RemoteException {
+		if (persistenceProvider == null) {
+			try {
+				persistenceProvider = (IPersistenceProvider) Class.forName(XavaPreferences.getInstance().getPersistenceProviderClass()).newInstance();
+			}
+			catch (Exception ex) {
+				ex.printStackTrace();
+				throw new RemoteException(XavaResources.getString("persistence_provider_creation_error"));
+			}
 		}
-		catch (Exception ex) {
-			ex.printStackTrace();
-			throw new RemoteException(XavaResources.getString("persistence_provider_creation_error"));
-		}
+		return persistenceProvider;
 	}
 
 }

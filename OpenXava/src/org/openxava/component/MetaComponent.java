@@ -168,8 +168,8 @@ public class MetaComponent implements Serializable {
 		Collection result = new ArrayList();
 		while (it.hasNext()) {
 			Object element = it.next();			
-			if (!(element instanceof MetaAggregateBean)) continue;			
-			MetaAggregateBean aggregate = (MetaAggregateBean) element;
+			if (!(element instanceof MetaAggregateForReference)) continue;			
+			MetaAggregateForReference aggregate = (MetaAggregateForReference) element;
 			if (aggregate.isPojoGenerated()) {				
 				result.add(aggregate);
 			}			
@@ -179,23 +179,40 @@ public class MetaComponent implements Serializable {
 	
 	/**
 	 *
-	 * @return Elements <tt>instanceof MetaAggregateEjb</tt> and 
-	 * 			<tt>generateXDocLet	 == true</tt>. Not null.
-	 * @exception XavaException Any other problem.
+	 * @return Elements <tt>instanceof MetaAggregateForCollection</tt> and 
+	 * 			<tt>ejbGenerated == true</tt>. Not null.
+	 * @exception XavaException Any problem.
 	 */
-	public Collection getMetaAggregatesEjbGenerate() throws  XavaException {
+	public Collection getMetaAggregatesForCollectionEjbGenerated() throws  XavaException {
+		return getMetaAggregatesForCollectionGenerated(true);
+	}
+
+	/**
+	 *
+	 * @return Elements <tt>instanceof MetaAggregateForCollection</tt> and 
+	 * 			<tt>pojoGenerated == true</tt>. Not null.
+	 * @exception XavaException Any problem.
+	 */	
+	public Collection getMetaAggregatesForCollectionPojoGenerated() throws  XavaException {
+		return getMetaAggregatesForCollectionGenerated(false);
+	}
+	
+	private Collection getMetaAggregatesForCollectionGenerated(boolean ejb) throws  XavaException {
 		Iterator it = getMetaAggregates().iterator();
 		Collection result = new ArrayList();
 		while (it.hasNext()) {
 			Object element = it.next();
-			if (!(element instanceof MetaAggregateEjb)) continue;
-			MetaAggregateEjb aggregate = (MetaAggregateEjb) element;
-			if (aggregate.isEjbGenerated()) {
+			if (!(element instanceof MetaAggregateForCollection)) continue;
+			MetaAggregateForCollection aggregate = (MetaAggregateForCollection) element;
+			boolean generated = ejb?aggregate.isEjbGenerated():aggregate.isPojoGenerated();
+			if (generated) {
 				result.add(aggregate);
 			}
 		}
 		return result;
 	}	
+	
+	
 
 	/**
 	 * @param metaAggregate  Not null.

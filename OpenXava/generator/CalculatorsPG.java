@@ -10,14 +10,14 @@ import org.openxava.util.meta.MetaSet;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Apr 20 13:38:17 CEST 2006
+ * @version Thu Apr 20 19:07:26 CEST 2006
  */
 public class CalculatorsPG {
     Properties properties = new Properties();
 
 
-private IMetaEjb metaModel=null;
-public void setMetaModel(IMetaEjb metaModel) {
+private MetaModel metaModel=null;
+public void setMetaModel(MetaModel metaModel) {
 	this.metaModel = metaModel;
 }
 
@@ -176,9 +176,9 @@ public void setError(String error) {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Apr 20 13:38:17 CEST 2006", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/calculators.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/CalculatorsPG.java" }, // output file
+        { "Thu Apr 20 19:07:26 CEST 2006", // date this file was generated
+             "/home/javi/workspace2/OpenXava/generator/calculators.xml", // input file
+             "/home/javi/workspace2/OpenXava/generator/CalculatorsPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

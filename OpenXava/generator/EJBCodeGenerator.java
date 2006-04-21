@@ -41,7 +41,7 @@ public class EJBCodeGenerator extends CodeGenerator{
 		// Aggregates in bean format
 		Iterator itAggregatesBean = component.getMetaAggregatesBeanGenerated().iterator();
 		while (itAggregatesBean.hasNext()) {
-			MetaAggregateBean aggregate = (MetaAggregateBean) itAggregatesBean.next();
+			MetaAggregateForReference aggregate = (MetaAggregateForReference) itAggregatesBean.next();
 			String aggregateName = aggregate.getName();
 			String [] argv = {				
 				componentsPath  + "/" + file,
@@ -54,9 +54,9 @@ public class EJBCodeGenerator extends CodeGenerator{
 			BeanPG.main(argv);
 		}			
 		// Agreggates in EJB format		
-		Iterator itAggregatesEjb = component.getMetaAggregatesEjbGenerate().iterator();
+		Iterator itAggregatesEjb = component.getMetaAggregatesForCollectionEjbGenerated().iterator();
 		while (itAggregatesEjb.hasNext()) {
-			MetaAggregateEjb aggregate = (MetaAggregateEjb) itAggregatesEjb.next();
+			MetaAggregateForCollection aggregate = (MetaAggregateForCollection) itAggregatesEjb.next();
 			String aggregateName = aggregate.getName();
 			
 			System.out.println(XavaResources.getString("generating_aggregate_xdoclet_code", aggregateName));

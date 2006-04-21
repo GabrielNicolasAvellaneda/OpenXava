@@ -61,7 +61,7 @@ public class HCodeGenerator extends CodeGenerator {
 			//	 Aggregates in bean format
 			Iterator itAggregatesBean = component.getMetaAggregatesBeanGenerated().iterator();
 			while (itAggregatesBean.hasNext()) {
-				MetaAggregateBean aggregate = (MetaAggregateBean) itAggregatesBean.next();
+				MetaAggregateForReference aggregate = (MetaAggregateForReference) itAggregatesBean.next();
 				String aggregateName = aggregate.getName();
 				String [] argvAg = {				
 					componentsPath  + "/" + file,
@@ -87,9 +87,9 @@ public class HCodeGenerator extends CodeGenerator {
 		}
 		
 		//	Agreggates as persistent objects		
-		Iterator itPersistentAggregates = component.getMetaAggregatesEjbGenerate().iterator();
+		Iterator itPersistentAggregates = component.getMetaAggregatesForCollectionPojoGenerated().iterator();
 		while (itPersistentAggregates.hasNext()) {
-			MetaAggregateEjb aggregate = (MetaAggregateEjb) itPersistentAggregates.next();
+			MetaAggregateForCollection  aggregate = (MetaAggregateForCollection) itPersistentAggregates.next();
 			String aggregateName = aggregate.getName();
 			
 			System.out.println(XavaResources.getString("generating_pojo_code", aggregateName));

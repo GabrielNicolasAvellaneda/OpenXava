@@ -12,8 +12,8 @@ private String getException() {
 	return ejb?"EJBException":"RuntimeException";
 }
 
-private IMetaModel metaModel=null;
-public void setMetaModel(IMetaModel metaModel) throws XavaException {
+private MetaModel metaModel=null;
+public void setMetaModel(MetaModel metaModel) throws XavaException {
 	this.metaModel = metaModel;
 }
 

@@ -18,7 +18,7 @@ import org.openxava.util.*;
  * 
  * @author Javier Paniza
  */
-public class MetaEjbImpl implements Serializable {
+public class MetaEJB implements Serializable {
 	
 	private java.lang.String remote;
 	private java.lang.String home;
@@ -28,13 +28,13 @@ public class MetaEjbImpl implements Serializable {
 	private Class homeClass;
 	private EJBHome ejbHome;
 	private java.lang.String primaryKey;	
-	private IMetaModel metaModel;
+	private MetaModel metaModel;
 		
-	public MetaEjbImpl(IMetaModel metaModel) {
-		this.metaModel = metaModel;		
+	public void setMetaModel(MetaModel metaModel) {
+		this.metaModel = metaModel;
 	}
 	
-	private String getPackageName() throws XavaException {
+	private String getPackageName() throws XavaException {		
 		return metaModel.getMetaComponent().getPackageName();
 	}
 	

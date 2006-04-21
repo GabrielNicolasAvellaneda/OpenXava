@@ -11,7 +11,7 @@ import org.openxava.util.*;
  * @author: Javier Paniza
  */
 
-public class MetaAggregateBean extends MetaAggregate {
+public class MetaAggregateForReference extends MetaAggregate {
 	
 	private java.lang.String beanClass;
 	
@@ -83,10 +83,5 @@ public class MetaAggregateBean extends MetaAggregate {
 		}
 		return result;
 	}
-
-	public String getClassName() throws XavaException {
-		return getBeanClass();
-	}	
-
 	
 }

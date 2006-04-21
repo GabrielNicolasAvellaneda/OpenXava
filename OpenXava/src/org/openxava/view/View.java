@@ -1118,21 +1118,21 @@ public class View implements java.io.Serializable {
 						try {							
 							if (!ref.getMetaCalculatorDefaultValue().containsMetaSetsWithoutValue()) { // This way to avoid calculated dependend ones
 								Object value = ref.getDefaultValueCalculator().calculate();
-								IMetaEjb referencedModel = (IMetaEjb) ref.getMetaModelReferenced();								
+								MetaModel referencedModel = ref.getMetaModelReferenced();								
 								if (referencedModel.getPOJOClass().isInstance(value)) { 																								
 									Map values = referencedModel.toMap(value);
 									setValue(ref.getName(), values);
 									alreadyPut.addAll(referencedModel.getAllKeyPropertiesNames());									
 								}
-								else if (referencedModel.isPrimaryKeyClassAvailable() && referencedModel.getPrimaryKeyClass().isInstance(value)) { 
-									Map values = referencedModel.obtainMapFromPrimaryKey(value);
+								else if (referencedModel.getMetaEJB() != null && referencedModel.getMetaEJB().isPrimaryKeyClassAvailable() && referencedModel.getMetaEJB().getPrimaryKeyClass().isInstance(value)) { 
+									Map values = referencedModel.getMetaEJB().obtainMapFromPrimaryKey(value);
 									setValue(ref.getName(), values);
 									alreadyPut.addAll(referencedModel.getAllKeyPropertiesNames());
 								}		
 								else {
 									Collection keys = referencedModel.getAllKeyPropertiesNames();
 									if (keys.size() != 1) {
-										throw new XavaException("reference_calculator_with_multiple_key_requires_key_class", ref.getName(), referencedModel.getPrimaryKey());
+										throw new XavaException("reference_calculator_with_multiple_key_requires_key_class", ref.getName(), referencedModel.getPOJOClass());
 									}
 									String propertyKeyName = ref.getName() + "." + (String) keys.iterator().next();
 									setValue(propertyKeyName, value);
@@ -1478,7 +1478,7 @@ public class View implements java.io.Serializable {
 	}
 
 	private void assignReferenceValue(String qualifier, MetaReference ref, String value) throws XavaException {		
-		IMetaEjb metaModel = (IMetaEjb) ref.getMetaModelReferenced(); 
+		MetaModel metaModel = ref.getMetaModelReferenced(); 
 		Class keyClass = metaModel.getPOJOClass(); 
 		Field [] fields = keyClass.getDeclaredFields();
 		Arrays.sort(fields, FieldComparator.getInstance());

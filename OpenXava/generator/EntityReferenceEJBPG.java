@@ -12,7 +12,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Apr 20 13:38:19 CEST 2006
+ * @version Thu Apr 20 19:07:29 CEST 2006
  */
 public class EntityReferenceEJBPG {
     Properties properties = new Properties();
@@ -49,7 +49,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
         try {    
     MetaModel metaModel = reference.getMetaModel();
     ModelMapping modelMapping = null;
-    if (metaModel instanceof MetaAggregateBean) {
+    if (metaModel instanceof MetaAggregateForReference) {
     	modelMapping = metaModel.getMetaComponent().getEntityMapping();
     }
     else {
@@ -57,12 +57,12 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     }	
     String referenceName = Strings.firstUpper(reference.getName());
     ReferenceMapping referenceMapping = modelMapping.getReferenceMapping(reference.getName());
-    IMetaEjb referencedModel = (IMetaEjb) reference.getMetaModelReferenced();
+    MetaModel referencedModel = reference.getMetaModelReferenced();
     ModelMapping referencedMapping = referencedModel.getMapping();
     String referencedModelClass = referencedModel.getInterfaceName();
-    String referencedJNDI = referencedModel.getJndi();
-    String referencedKeyClass = referencedModel.getPrimaryKey();
-    String homeClass = referencedModel.getHome();		
+    String referencedJNDI = referencedModel.getMetaEJB().getJndi();
+    String referencedKeyClass = referencedModel.getMetaEJB().getPrimaryKey();
+    String homeClass = referencedModel.getMetaEJB().getHome();		
     String homeAttribute = Strings.firstLower(referenceName) + "Home";
     String getHome = "get" + Strings.firstUpper(homeAttribute);		
     String interfaceMethodSet = reference.isKey()?"":"@ejb:interface-method";
@@ -83,11 +83,11 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     out.print("\", \"");
     out.print(metaModel.getName());
     out.print("\"));\n\t\t}\t\t\n\t}\t\n\t\n\t\n\t/**\n\t * @ejb:interface-method\n\t */\n\tpublic ");
-    out.print(referencedModel.getRemote());
+    out.print(referencedModel.getMetaEJB().getRemote());
     out.print(" get");
     out.print(referenceName);
     out.print("Remote() {\n\t\treturn (");
-    out.print(referencedModel.getRemote());
+    out.print(referencedModel.getMetaEJB().getRemote());
     out.print(") get");
     out.print(referenceName);
     out.print("();\n\t}\n\t\n\t/**\n\t * ");
@@ -111,9 +111,9 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     out.print(" instanceof ");
     out.print(referencedModel.getPOJOClass().getName());
     out.print(") {\n\t\t\t\t\tthrow new IllegalArgumentException(XavaResources.getString(\"pojo_to_ejb_illegal\"));\n\t\t\t\t}\n\t\t\t\t");
-    out.print(referencedModel.getRemote());
+    out.print(referencedModel.getMetaEJB().getRemote());
     out.print(" remote = (");
-    out.print(referencedModel.getRemote());
+    out.print(referencedModel.getMetaEJB().getRemote());
     out.print(") new");
     out.print(referenceName);
     out.print(";\n\t\t\t\tset");
@@ -421,9 +421,9 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Apr 20 13:38:20 CEST 2006", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/entityReferenceEJB.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/EntityReferenceEJBPG.java" }, // output file
+        { "Thu Apr 20 19:07:29 CEST 2006", // date this file was generated
+             "/home/javi/workspace2/OpenXava/generator/entityReferenceEJB.xml", // input file
+             "/home/javi/workspace2/OpenXava/generator/EntityReferenceEJBPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

@@ -5,8 +5,8 @@
 <declarations>
 
 
-private IMetaModel metaModel=null;
-public void setMetaModel(IMetaModel metaModel) {
+private MetaModel metaModel=null;
+public void setMetaModel(MetaModel metaModel) {
 	this.metaModel = metaModel;
 }
 
@@ -15,7 +15,7 @@ public void setEjb(boolean ejb) {
 	this.ejb = ejb;
 }
 
-public static void generate(XPathContext context, ProgramWriter out, IMetaModel metaModel, boolean ejb) throws XavaException {
+public static void generate(XPathContext context, ProgramWriter out, MetaModel metaModel, boolean ejb) throws XavaException {
 	InitMembersPG pg = new InitMembersPG();
 	pg.setMetaModel(metaModel);
 	pg.setEjb(ejb);

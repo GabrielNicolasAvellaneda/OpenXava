@@ -13,14 +13,14 @@ String aggregateName = properties.getProperty("arg5");
 MetaComponent component = MetaComponent.get(componentName);
 
 String name=null;
-IMetaModel metaModel=null;
+MetaModel metaModel=null;
 if (aggregateName == null) {
 	name=componentName;	
-	metaModel = (IMetaModel) component.getMetaEntity();
+	metaModel = component.getMetaEntity();
 }
 else {
 	name=aggregateName;	
-	metaModel =  (IMetaEjb)component.getMetaAggregate(aggregateName);
+	metaModel = component.getMetaAggregate(aggregateName);
 }
 ModelMapping mapping = metaModel.getMapping();
 </java>
@@ -132,7 +132,7 @@ Iterator itReferences = metaModel.getMetaReferences().iterator();
 while (itReferences.hasNext()) {	
 	MetaReference reference = (MetaReference) itReferences.next();
 	if (reference.isKey() &amp;&amp; !mapping.isReferenceOverlappingWithSomeProperty(reference.getName())) continue;
-	if (reference.getMetaModelReferenced() instanceof MetaAggregateBean) {	
+	if (reference.getMetaModelReferenced() instanceof MetaAggregateForReference) {	
 		for (Iterator itAggregateProperties = reference.getMetaModelReferenced().getMetaPropertiesPersistentsFromReference(reference.getName()).iterator(); itAggregateProperties.hasNext();) {	
 			MetaProperty property = (MetaProperty) itAggregateProperties.next();
 			String propertyName = reference.getName() + "_" + property.getName();

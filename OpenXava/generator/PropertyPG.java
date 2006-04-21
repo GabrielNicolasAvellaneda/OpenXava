@@ -13,7 +13,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Apr 20 13:38:18 CEST 2006
+ * @version Thu Apr 20 19:07:27 CEST 2006
  */
 public class PropertyPG {
     Properties properties = new Properties();
@@ -33,11 +33,11 @@ public void setEjb(boolean ejb) {
 	this.ejb = ejb;
 }
 
-private IMetaModel metaModel=null;
+private MetaModel metaModel=null;
 private ModelMapping modelMapping=null;
-public void setMetaModel(IMetaModel metaModel) throws XavaException {
+public void setMetaModel(MetaModel metaModel) throws XavaException {
 	this.metaModel = metaModel;
-	if (metaModel instanceof MetaAggregateBean) {
+	if (metaModel instanceof MetaAggregateForReference) {
 		this.modelMapping = metaModel.getMetaComponent().getEntityMapping();
 	}
 	else {
@@ -637,9 +637,9 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Apr 20 13:38:18 CEST 2006", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/property.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/PropertyPG.java" }, // output file
+        { "Thu Apr 20 19:07:27 CEST 2006", // date this file was generated
+             "/home/javi/workspace2/OpenXava/generator/property.xml", // input file
+             "/home/javi/workspace2/OpenXava/generator/PropertyPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
