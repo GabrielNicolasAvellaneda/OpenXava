@@ -34,7 +34,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	private Collection entityReferencesMappings;	
 	private Collection tableColumns;
 	private String modelName; 
-	private IMetaModel metaModel;
+	private MetaModel metaModel;
 	private boolean excludeAll = false;
 	private boolean excludeByKey = false;
 	private MetaFilter metaFilter;
@@ -63,10 +63,10 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		}
 	}
 	
-	public IMetaModel getMetaModel() throws XavaException {
+	public MetaModel getMetaModel() throws XavaException {
 		return metaModel;
 	}
-	public void setMetaModel(IMetaModel metaModel) {
+	public void setMetaModel(MetaModel metaModel) {
 		this.metaModel = metaModel;
 		this.metaComponent = metaModel.getMetaComponent();
 		this.modelName = metaModel.getName();

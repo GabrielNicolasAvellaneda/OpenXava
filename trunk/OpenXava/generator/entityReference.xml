@@ -26,7 +26,7 @@ String refName = Strings.firstUpper(reference.getName());
 	private <expr>reference.getMetaModelReferenced().getInterfaceName()</expr> <expr>reference.getName()</expr>;
 <java>	
 ModelMapping mapping = null;
-if (reference.getMetaModel() instanceof MetaAggregateBean) {
+if (reference.getMetaModel() instanceof MetaAggregateForReference) {
 	mapping = reference.getMetaModel().getMetaModelContainer().getMapping();
 }
 else {

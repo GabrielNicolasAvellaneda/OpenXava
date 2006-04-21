@@ -37,7 +37,7 @@ public class EntityTab implements IEntityTabImpl {
 	private TableModelBean table;
 	private MetaTab metaTab;
 	private String modelName;
-	private transient IMetaModel metaModel = null;
+	private transient MetaModel metaModel = null;
 	private transient ModelMapping mapping = null;
 	private int[] indexesPK = null;	
 	private List propertiesNames;
@@ -430,7 +430,7 @@ public class EntityTab implements IEntityTabImpl {
 		return getMetaModel().getAllKeyPropertiesNames();
 	}
 	
-	private IMetaModel getMetaModel() throws XavaException {
+	private MetaModel getMetaModel() throws XavaException {
 		if (metaModel == null) {
 			metaModel = MetaModel.get(this.modelName);
 		}

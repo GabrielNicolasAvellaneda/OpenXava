@@ -17,7 +17,7 @@ import org.openxava.view.meta.*;
  * 
  * @author Javier Paniza
  */
-abstract public class MetaModel extends MetaElement implements IMetaModel {
+abstract public class MetaModel extends MetaElement {
 
 	private static boolean someModelHasDefaultCalculatorOnCreate = false;
 	private static boolean someModelHasPostCreateCalculator = false;
@@ -65,6 +65,8 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	private Collection metaReferencesWithDefaultValueCalculator;
 	private String qualifiedName;
 	private boolean hasDefaultCalculatorOnCreate = false;
+	private MetaEJB metaEJB;
+	private String pojoClassName;
 	
 	/**
 	 * All models (Entities and Aggregates) with a mapping associated.
@@ -78,7 +80,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 			r.add(comp.getMetaEntity());						
 			for (Iterator itAggregates = comp.getMetaAggregates().iterator(); itAggregates.hasNext();) {
 				MetaAggregate ag = (MetaAggregate) itAggregates.next();
-				if (ag instanceof MetaAggregateEjb) {
+				if (ag instanceof MetaAggregateForCollection) {
 					r.add(ag);
 				}
 			}
@@ -102,7 +104,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 									
 			for (Iterator itAggregates = comp.getMetaAggregates().iterator(); itAggregates.hasNext();) {
 				MetaAggregate ag = (MetaAggregate) itAggregates.next();
-				if (ag instanceof MetaAggregateEjb) { 
+				if (ag instanceof MetaAggregateForCollection) { 
 					if (ag.isEjbGenerated()) {
 						r.add(ag);
 					}
@@ -128,7 +130,7 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 									
 			for (Iterator itAggregates = comp.getMetaAggregates().iterator(); itAggregates.hasNext();) {
 				MetaAggregate ag = (MetaAggregate) itAggregates.next();
-				if (ag instanceof MetaAggregateEjb) { 
+				if (ag instanceof MetaAggregateForCollection) { 
 					if (ag.isPojoGenerated()) {
 						r.add(ag);
 					}
@@ -183,8 +185,6 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		if (metaValidatorsRemove == null) metaValidatorsRemove = new ArrayList();
 		metaValidatorsRemove.add(metaValidator);				
 	}	
-	
-	abstract public String getClassName() throws XavaException;
 	
 	/**
 	 * If entity the name of component, if aggregate the name of component + the name of
@@ -1430,7 +1430,11 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 	}
 	
 	public String getPOJOClassName()  throws XavaException {
+		if (pojoClassName != null) return pojoClassName; 
 		return getMetaComponent().getPackageName() + "." + getName();
+	}
+	public void setPOJOClassName(String pojoClassName)  throws XavaException {
+		this.pojoClassName = pojoClassName;
 	}
 	
 	public Class getPOJOClass() throws XavaException { 
@@ -1445,6 +1449,14 @@ abstract public class MetaModel extends MetaElement implements IMetaModel {
 		}
 		return pojoClass;
 			
+	}
+	
+	public MetaEJB getMetaEJB() {
+		return metaEJB;
+	}
+	public void setMetaEJB(MetaEJB metaEJB) {
+		this.metaEJB = metaEJB;
+		this.metaEJB.setMetaModel(this);
 	}
 
 	public static boolean someModelHasDefaultCalculatorOnCreate() {		

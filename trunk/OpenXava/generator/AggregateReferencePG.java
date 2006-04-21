@@ -13,7 +13,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Apr 20 13:38:20 CEST 2006
+ * @version Thu Apr 20 19:07:30 CEST 2006
  */
 public class AggregateReferencePG {
     Properties properties = new Properties();
@@ -51,7 +51,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     public boolean generate(XPathContext context, ProgramWriter out) {
         try {     
     String referenceName = Strings.firstUpper(reference.getName());
-    MetaAggregateBean referencedModel = (MetaAggregateBean) reference.getMetaModelReferenced();
+    MetaAggregateForReference referencedModel = (MetaAggregateForReference) reference.getMetaModelReferenced();
     String referencedModelClass = referencedModel.getBeanClass();
     
     out.print("  \t\n\t// ");
@@ -161,7 +161,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     for (Iterator itReferences = referencedModel.getMetaReferences().iterator(); itReferences.hasNext();) {	
     	MetaReference originalReference = (MetaReference) itReferences.next();
     	MetaReference ref = originalReference.cloneMetaReference();	
-    	boolean isAggregate = ref.getMetaModelReferenced() instanceof MetaAggregateBean;
+    	boolean isAggregate = ref.getMetaModelReferenced() instanceof MetaAggregateForReference;
     	ref.setName(reference.getName() + "_" + ref.getName());	
     	if (isAggregate) {	
     		AggregateReferencePG.generate(context, out, ref);
@@ -210,9 +210,9 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Apr 20 13:38:20 CEST 2006", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/aggregateReference.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/AggregateReferencePG.java" }, // output file
+        { "Thu Apr 20 19:07:31 CEST 2006", // date this file was generated
+             "/home/javi/workspace2/OpenXava/generator/aggregateReference.xml", // input file
+             "/home/javi/workspace2/OpenXava/generator/AggregateReferencePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

@@ -34,7 +34,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
 # 
 MetaModel metaModel = reference.getMetaModel();
 ModelMapping modelMapping = null;
-if (metaModel instanceof MetaAggregateBean) {
+if (metaModel instanceof MetaAggregateForReference) {
 	modelMapping = metaModel.getMetaComponent().getEntityMapping();
 }
 else {
@@ -42,12 +42,12 @@ else {
 }	
 String referenceName = Strings.firstUpper(reference.getName());
 ReferenceMapping referenceMapping = modelMapping.getReferenceMapping(reference.getName());
-IMetaEjb referencedModel = (IMetaEjb) reference.getMetaModelReferenced();
+MetaModel referencedModel = reference.getMetaModelReferenced();
 ModelMapping referencedMapping = referencedModel.getMapping();
 String referencedModelClass = referencedModel.getInterfaceName();
-String referencedJNDI = referencedModel.getJndi();
-String referencedKeyClass = referencedModel.getPrimaryKey();
-String homeClass = referencedModel.getHome();		
+String referencedJNDI = referencedModel.getMetaEJB().getJndi();
+String referencedKeyClass = referencedModel.getMetaEJB().getPrimaryKey();
+String homeClass = referencedModel.getMetaEJB().getHome();		
 String homeAttribute = Strings.firstLower(referenceName) + "Home";
 String getHome = "get" + Strings.firstUpper(homeAttribute);		
 String interfaceMethodSet = reference.isKey()?"":"@ejb:interface-method";
@@ -76,8 +76,8 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 	/**
 	 * @ejb:interface-method
 	 */
-	public #(referencedModel.getRemote())# get#(referenceName)#Remote() {
-		return (#(referencedModel.getRemote())#) get#(referenceName)#();
+	public #(referencedModel.getMetaEJB().getRemote())# get#(referenceName)#Remote() {
+		return (#(referencedModel.getMetaEJB().getRemote())#) get#(referenceName)#();
 	}
 	
 	/**
@@ -93,7 +93,7 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 				if (new#(referenceName)# instanceof #(referencedModel.getPOJOClass().getName())#) {
 					throw new IllegalArgumentException(XavaResources.getString("pojo_to_ejb_illegal"));
 				}
-				#(referencedModel.getRemote())# remote = (#(referencedModel.getRemote())#) new#(referenceName)#;
+				#(referencedModel.getMetaEJB().getRemote())# remote = (#(referencedModel.getMetaEJB().getRemote())#) new#(referenceName)#;
 				set#(referenceName)#Key((#(referencedKeyClass)#) remote.getPrimaryKey());
 			}	
 		}

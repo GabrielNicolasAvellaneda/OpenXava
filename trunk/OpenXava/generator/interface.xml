@@ -15,17 +15,17 @@ String aggregateName = properties.getProperty("arg5");
 MetaComponent component = MetaComponent.get(componentName);
 
 String name=null;
-IMetaEjb metaModel=null;
+MetaModel metaModel=null;
 ModelMapping modelMapping=null;
 
 if (aggregateName == null) {
 	name=componentName;	
-	metaModel = (IMetaEjb) component.getMetaEntity();
+	metaModel = component.getMetaEntity();
 	modelMapping = component.getEntityMapping();
 }
 else {
 	name=aggregateName;	
-	metaModel =  (IMetaEjb)component.getMetaAggregate(aggregateName);
+	metaModel = component.getMetaAggregate(aggregateName);
 	modelMapping = component.getAggregateMapping(aggregateName);	
 }
 String interfaces = metaModel.getInterfacesNames().isEmpty()?"":" extends " + metaModel.getImplements();
@@ -82,7 +82,7 @@ while (itCollections.hasNext()) {
 	MetaCollection collection = (MetaCollection) itCollections.next();
 	String collectionName = Strings.firstUpper(collection.getName());
 	MetaReference reference = collection.getMetaReference();	
-	IMetaEjb referencedModel = (IMetaEjb) reference.getMetaModelReferenced();
+	MetaModel referencedModel = reference.getMetaModelReferenced();
 	String referencedModelName = reference.getReferencedModelName();
 	String referencedModelClass = referencedModel.getInterfaceName();	
 	
@@ -108,8 +108,8 @@ Iterator itReferences = metaModel.getMetaReferences().iterator();
 while (itReferences.hasNext()) {	
 	MetaReference reference = (MetaReference) itReferences.next();
 	String referenceName = Strings.firstUpper(reference.getName());	
-	if (reference.getMetaModelReferenced() instanceof MetaAggregateBean) {	
-		MetaAggregateBean referencedModel = (MetaAggregateBean) reference.getMetaModelReferenced();
+	if (reference.getMetaModelReferenced() instanceof MetaAggregateForReference) {	
+		MetaAggregateForReference referencedModel = (MetaAggregateForReference) reference.getMetaModelReferenced();
 		String referencedModelClass = referencedModel.getBeanClass();					
 </java>  	
 	// <expr>referenceName</expr> : Aggregate 
@@ -119,7 +119,7 @@ while (itReferences.hasNext()) {
 	
 
 <java>} else { // reference to entity or EJB aggregate
-		IMetaEjb referencedModel = (IMetaEjb) reference.getMetaModelReferenced();
+		MetaModel referencedModel = reference.getMetaModelReferenced();
 		String referencedModelClass = referencedModel.getInterfaceName();
 		
 </java> 

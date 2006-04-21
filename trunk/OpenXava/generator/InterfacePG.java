@@ -14,7 +14,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Apr 20 13:38:25 CEST 2006
+ * @version Thu Apr 20 19:07:38 CEST 2006
  */
 public class InterfacePG {
     Properties properties = new Properties();
@@ -30,17 +30,17 @@ public class InterfacePG {
     MetaComponent component = MetaComponent.get(componentName);
     
     String name=null;
-    IMetaEjb metaModel=null;
+    MetaModel metaModel=null;
     ModelMapping modelMapping=null;
     
     if (aggregateName == null) {
     	name=componentName;	
-    	metaModel = (IMetaEjb) component.getMetaEntity();
+    	metaModel = component.getMetaEntity();
     	modelMapping = component.getEntityMapping();
     }
     else {
     	name=aggregateName;	
-    	metaModel =  (IMetaEjb)component.getMetaAggregate(aggregateName);
+    	metaModel = component.getMetaAggregate(aggregateName);
     	modelMapping = component.getAggregateMapping(aggregateName);	
     }
     String interfaces = metaModel.getInterfacesNames().isEmpty()?"":" extends " + metaModel.getImplements();
@@ -111,7 +111,7 @@ public class InterfacePG {
     	MetaCollection collection = (MetaCollection) itCollections.next();
     	String collectionName = Strings.firstUpper(collection.getName());
     	MetaReference reference = collection.getMetaReference();	
-    	IMetaEjb referencedModel = (IMetaEjb) reference.getMetaModelReferenced();
+    	MetaModel referencedModel = reference.getMetaModelReferenced();
     	String referencedModelName = reference.getReferencedModelName();
     	String referencedModelClass = referencedModel.getInterfaceName();	
     	
@@ -140,8 +140,8 @@ public class InterfacePG {
     while (itReferences.hasNext()) {	
     	MetaReference reference = (MetaReference) itReferences.next();
     	String referenceName = Strings.firstUpper(reference.getName());	
-    	if (reference.getMetaModelReferenced() instanceof MetaAggregateBean) {	
-    		MetaAggregateBean referencedModel = (MetaAggregateBean) reference.getMetaModelReferenced();
+    	if (reference.getMetaModelReferenced() instanceof MetaAggregateForReference) {	
+    		MetaAggregateForReference referencedModel = (MetaAggregateForReference) reference.getMetaModelReferenced();
     		String referencedModelClass = referencedModel.getBeanClass();					
     
     out.print("  \t\n\t// ");
@@ -158,7 +158,7 @@ public class InterfacePG {
     out.print(referenceName);
     out.print(") throws RemoteException;");
     } else { // reference to entity or EJB aggregate
-    		IMetaEjb referencedModel = (IMetaEjb) reference.getMetaModelReferenced();
+    		MetaModel referencedModel = reference.getMetaModelReferenced();
     		String referencedModelClass = referencedModel.getInterfaceName();
     		
     
@@ -231,9 +231,9 @@ public class InterfacePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Apr 20 13:38:25 CEST 2006", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/interface.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/InterfacePG.java" }, // output file
+        { "Thu Apr 20 19:07:38 CEST 2006", // date this file was generated
+             "/home/javi/workspace2/OpenXava/generator/interface.xml", // input file
+             "/home/javi/workspace2/OpenXava/generator/InterfacePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

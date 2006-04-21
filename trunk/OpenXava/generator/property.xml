@@ -23,11 +23,11 @@ public void setEjb(boolean ejb) {
 	this.ejb = ejb;
 }
 
-private IMetaModel metaModel=null;
+private MetaModel metaModel=null;
 private ModelMapping modelMapping=null;
-public void setMetaModel(IMetaModel metaModel) throws XavaException {
+public void setMetaModel(MetaModel metaModel) throws XavaException {
 	this.metaModel = metaModel;
-	if (metaModel instanceof MetaAggregateBean) {
+	if (metaModel instanceof MetaAggregateForReference) {
 		this.modelMapping = metaModel.getMetaComponent().getEntityMapping();
 	}
 	else {

@@ -6,6 +6,7 @@ import java.util.*;
 
 import javax.ejb.*;
 
+import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
 
@@ -54,5 +55,6 @@ public interface IMapFacadeImpl {
 		
 	void removeCollectionElement(String user, String modelName, Map keyValues, String collectionName, Map collectionElementKeyValue) 
 		throws RemoveException, FinderException, ValidationException, XavaException,  RemoteException; 
-		 							
+		 			
+	Object getKey(MetaModel metaModel, Map keyValues) throws XavaException, RemoteException;
 }

@@ -36,7 +36,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
 
 #  
 String referenceName = Strings.firstUpper(reference.getName());
-MetaAggregateBean referencedModel = (MetaAggregateBean) reference.getMetaModelReferenced();
+MetaAggregateForReference referencedModel = (MetaAggregateForReference) reference.getMetaModelReferenced();
 String referencedModelClass = referencedModel.getBeanClass();
 #  	
 	// #(referenceName)# : Aggregate/Agregado 
@@ -104,7 +104,7 @@ for (Iterator itAggregateProperties = referencedModel.getMetaProperties().iterat
 for (Iterator itReferences = referencedModel.getMetaReferences().iterator(); itReferences.hasNext();) {	
 	MetaReference originalReference = (MetaReference) itReferences.next();
 	MetaReference ref = originalReference.cloneMetaReference();	
-	boolean isAggregate = ref.getMetaModelReferenced() instanceof MetaAggregateBean;
+	boolean isAggregate = ref.getMetaModelReferenced() instanceof MetaAggregateForReference;
 	ref.setName(reference.getName() + "_" + ref.getName());	
 	if (isAggregate) {	
 		AggregateReferencePG.generate(context, out, ref);

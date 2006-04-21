@@ -8,15 +8,15 @@ import org.openxava.util.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Apr 20 13:38:21 CEST 2006
+ * @version Thu Apr 20 19:07:32 CEST 2006
  */
 public class InitMembersPG {
     Properties properties = new Properties();
 
 
 
-private IMetaModel metaModel=null;
-public void setMetaModel(IMetaModel metaModel) {
+private MetaModel metaModel=null;
+public void setMetaModel(MetaModel metaModel) {
 	this.metaModel = metaModel;
 }
 
@@ -25,7 +25,7 @@ public void setEjb(boolean ejb) {
 	this.ejb = ejb;
 }
 
-public static void generate(XPathContext context, ProgramWriter out, IMetaModel metaModel, boolean ejb) throws XavaException {
+public static void generate(XPathContext context, ProgramWriter out, MetaModel metaModel, boolean ejb) throws XavaException {
 	InitMembersPG pg = new InitMembersPG();
 	pg.setMetaModel(metaModel);
 	pg.setEjb(ejb);
@@ -115,9 +115,9 @@ public static void generate(XPathContext context, ProgramWriter out, IMetaModel 
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Apr 20 13:38:21 CEST 2006", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/initMembers.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/InitMembersPG.java" }, // output file
+        { "Thu Apr 20 19:07:32 CEST 2006", // date this file was generated
+             "/home/javi/workspace2/OpenXava/generator/initMembers.xml", // input file
+             "/home/javi/workspace2/OpenXava/generator/InitMembersPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

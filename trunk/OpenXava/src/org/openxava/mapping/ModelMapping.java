@@ -28,23 +28,23 @@ abstract public class ModelMapping implements java.io.Serializable {
 	 * properties that are not in model, only
 	 * in mapping.
 	 */
-	public Class getType(String nombrePropiedad) throws XavaException {
+	public Class getType(String propertyName) throws XavaException {
 		try {
-			return getMetaModel().getMetaProperty(nombrePropiedad).getType();
+			return getMetaModel().getMetaProperty(propertyName).getType();
 		}
 		catch (ElementNotFoundException ex) {
 			// Try to obtain it from primary key
-			if (!(getMetaModel() instanceof MetaEntityEjb))
+			if (!(getMetaModel() instanceof MetaEntity))
 				return java.lang.Object.class;
-			MetaEntityEjb metaEntidad = (MetaEntityEjb) getMetaModel();
-			Class clase = metaEntidad.getPrimaryKeyClass();
+			MetaEntity metaEntity = (MetaEntity) getMetaModel();
+			Class keyClass = metaEntity.getMetaEJB().getPrimaryKeyClass();
 			try {
-				return clase.getField(nombrePropiedad).getType();
+				return keyClass.getField(propertyName).getType();
 			}
 			catch (NoSuchFieldException ex2) {
 				System.err.println(
 						XavaResources.getString("property_type_from_mapping_warning", 
-								nombrePropiedad, getMetaComponent().getName()));
+								propertyName, getMetaComponent().getName()));
 				// If we does not obtain type return a default value
 				return java.lang.Object.class;
 			}

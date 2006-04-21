@@ -35,7 +35,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
 <java>
 MetaModel metaModel = reference.getMetaModel();
 ModelMapping modelMapping = null;
-if (metaModel instanceof MetaAggregateBean) {
+if (metaModel instanceof MetaAggregateForReference) {
 	modelMapping = metaModel.getMetaComponent().getEntityMapping();
 }
 else {
@@ -43,12 +43,12 @@ else {
 }	
 String referenceName = Strings.firstUpper(reference.getName());
 ReferenceMapping referenceMapping = modelMapping.getReferenceMapping(reference.getName());
-IMetaEjb referencedModel = (IMetaEjb) reference.getMetaModelReferenced();
+MetaModel referencedModel = reference.getMetaModelReferenced();
 ModelMapping referencedMapping = referencedModel.getMapping();
 String referencedModelClass = referencedModel.getInterfaceName();
-String referencedJNDI = referencedModel.getJndi();
-String referencedKeyClass = referencedModel.getPrimaryKey();
-String homeClass = referencedModel.getHome();		
+String referencedJNDI = referencedModel.getMetaEJB().getJndi();
+String referencedKeyClass = referencedModel.getMetaEJB().getPrimaryKey();
+String homeClass = referencedModel.getMetaEJB().getHome();		
 String homeAttribute = Strings.firstLower(referenceName) + "Home";
 String getHome = "get" + Strings.firstUpper(homeAttribute);		
 String interfaceMethodSet = reference.isKey()?"":"@ejb:interface-method";
@@ -77,8 +77,8 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 	/**
 	 * @ejb:interface-method
 	 */
-	public <expr>referencedModel.getRemote()</expr> get<expr>referenceName</expr>Remote() {
-		return (<expr>referencedModel.getRemote()</expr>) get<expr>referenceName</expr>();
+	public <expr>referencedModel.getMetaEJB().getRemote()</expr> get<expr>referenceName</expr>Remote() {
+		return (<expr>referencedModel.getMetaEJB().getRemote()</expr>) get<expr>referenceName</expr>();
 	}
 	
 	/**
@@ -94,7 +94,7 @@ String pkField = reference.isKey()?"@ejb:pk-field":"";
 				if (new<expr>referenceName</expr> instanceof <expr>referencedModel.getPOJOClass().getName()</expr>) {
 					throw new IllegalArgumentException(XavaResources.getString("pojo_to_ejb_illegal"));
 				}
-				<expr>referencedModel.getRemote()</expr> remote = (<expr>referencedModel.getRemote()</expr>) new<expr>referenceName</expr>;
+				<expr>referencedModel.getMetaEJB().getRemote()</expr> remote = (<expr>referencedModel.getMetaEJB().getRemote()</expr>) new<expr>referenceName</expr>;
 				set<expr>referenceName</expr>Key((<expr>referencedKeyClass</expr>) remote.getPrimaryKey());
 			}	
 		}
