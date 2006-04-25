@@ -46,6 +46,9 @@ public interface InvoiceRemote
    public java.lang.String getImportance(  )
       throws java.rmi.RemoteException;
 
+   public java.math.BigDecimal getTotal(  )
+      throws java.rmi.RemoteException;
+
    public int getYear(  )
       throws java.rmi.RemoteException;
 
