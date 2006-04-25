@@ -106,6 +106,7 @@ public abstract class InvoiceCMP
             InvoiceValue.setSellerDiscount( getSellerDiscount() );
             InvoiceValue.setAmountsSum( getAmountsSum() );
             InvoiceValue.setImportance( getImportance() );
+            InvoiceValue.setTotal( getTotal() );
             InvoiceValue.setYear( getYear() );
             InvoiceValue.setCustomerDiscount( getCustomerDiscount() );
             InvoiceValue.setVatPercentage( getVatPercentage() );
@@ -137,6 +138,7 @@ public abstract class InvoiceCMP
 		 setSellerDiscount( valueHolder.getSellerDiscount() );
 		 setAmountsSum( valueHolder.getAmountsSum() );
 		 setImportance( valueHolder.getImportance() );
+		 setTotal( valueHolder.getTotal() );
 		 setCustomerDiscount( valueHolder.getCustomerDiscount() );
 		 setVatPercentage( valueHolder.getVatPercentage() );
 		 setCustomerTypeDiscount( valueHolder.getCustomerTypeDiscount() );

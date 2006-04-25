@@ -37,7 +37,7 @@ public class FamilyProductsReportAction extends JasperReportBaseAction {
 	}
 	
 	protected String getJRXML() {
-		return "products.jrxml";
+		return "Products.jrxml";
 	}
 	
 	private ISubfamily2 getSubfamily() throws Exception {

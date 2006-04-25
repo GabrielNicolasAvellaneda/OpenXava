@@ -78,6 +78,13 @@
 				<set property="year"/>
 			</calculator>
 		</property>
+		
+		<property name="total" stereotype="MONEY">
+			<calculator class="org.openxava.test.calculators.TotalInvoiceCalculator">
+				<set property="vat"/>
+				<set property="amountsSum"/>
+			</calculator>
+		</property>
 				
 		<reference model="Customer" required="true"/>
 		
