@@ -137,14 +137,23 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 		}
 	}
 
+	public void begin() {
+		XHibernate.setCmt(XavaPreferences.getInstance().isMapFacadeAsEJB()); 
+	}
 		
 	public void commit() {
 		flush(); 
 		XHibernate.commit();
+		XHibernate.setCmt(false); 				
 	}
 
 	public void rollback() {	
 		XHibernate.rollback();
+		XHibernate.setCmt(false); 
+	}
+	
+	public void reassociate(Object entity) {
+		XHibernate.getSession().lock(entity, LockMode.NONE);  		
 	}
 
 	public Object getKey(MetaModel metaModel, Map keyValues) throws XavaException {

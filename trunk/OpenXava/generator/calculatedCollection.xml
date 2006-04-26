@@ -54,7 +54,14 @@ String collectionName = Strings.firstUpper(collection.getName());
 	 * @ejb:interface-method
 	 */
 	<java>} </java> 
-	public java.util.Collection get<expr>collectionName</expr>() {		
+	public java.util.Collection get<expr>collectionName</expr>() {				
+		<java>if (ejb) { </java> 
+		boolean cmtActivated = false;
+		if (!org.openxava.hibernate.XHibernate.isCmt()) {
+			org.openxava.hibernate.XHibernate.setCmt(true);
+			cmtActivated = true;
+		} 			
+		<java>} </java> 
 		try {
 			<java>
 			MetaCalculator calculator = collection.getMetaCalculator();
@@ -114,5 +121,12 @@ String collectionName = Strings.firstUpper(collection.getName());
 			ex.printStackTrace();
 			throw new <expr>getException()</expr>(XavaResources.getString("generator.calculate_value_error", "<expr>collection.getName()</expr>", "<expr>metaModel.getName()</expr>", ex.getLocalizedMessage()));
 		}
+		<java>if (ejb) { </java> 
+		finally {
+			if (cmtActivated) {
+				org.openxava.hibernate.XHibernate.setCmt(false);
+			}
+		}
+		<java>} </java> 				
 	}
 </tl>

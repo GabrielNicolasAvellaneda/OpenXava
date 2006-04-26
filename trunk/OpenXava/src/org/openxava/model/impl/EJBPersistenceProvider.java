@@ -8,6 +8,7 @@ import javax.ejb.*;
 import javax.rmi.*;
 
 import org.openxava.ejbx.*;
+import org.openxava.hibernate.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
@@ -171,11 +172,23 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 					ex.getLocalizedMessage());
 		}
 	}	
-
-	public void commit() {
+	
+	
+	public void begin() {
+		XHibernate.setCmt(true); 
 	}
 
-	public void rollback() {
+	public void commit() {		
+		XHibernate.commit(); 
+		XHibernate.setCmt(false); 
+	}
+
+	public void rollback() {		
+		XHibernate.rollback(); 
+		XHibernate.setCmt(false); 
+	}
+	
+	public void reassociate(Object entity) { 
 	}
 
 	public Object getKey(MetaModel metaModel, Map keyValues) throws XavaException {

@@ -13,7 +13,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Fri Apr 21 10:32:23 CEST 2006
+ * @version Wed Apr 26 11:35:06 CEST 2006
  */
 public class PropertyPG {
     Properties properties = new Properties();
@@ -113,18 +113,18 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     out.print(" ");
     out.print(get);
     out.print(propertyName);
-    out.print("() {\t\n\t\ttry {");
+    out.print("() {");
     
     		if (ejb) {
     
-    out.print(" \n\t\t\torg.openxava.hibernate.XHibernate.setCmt(true);");
+    out.print(" \n\t\tboolean cmtActivated = false;\n\t\tif (!org.openxava.hibernate.XHibernate.isCmt()) {\n\t\t\torg.openxava.hibernate.XHibernate.setCmt(true);\n\t\t\tcmtActivated = true;\n\t\t}");
     	
     		} 
     			MetaCalculator calculator = property.getMetaCalculator();
     			String calculatorClass = calculator.getClassName();
     			String qualifiedPropertyName = Strings.change(property.getName(), "_", "."); // for aggregate member case
     			
-    out.print(" \t\t\n\t\t\t");
+    out.print(" \t\t\n\t\ttry {\t\t\t\n\t\t\t");
     out.print(calculatorClass);
     out.print(" ");
     out.print(property.getName());
@@ -250,7 +250,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     
     		if (ejb) {
     
-    out.print(" \n\t\tfinally {\n\t\t\torg.openxava.hibernate.XHibernate.setCmt(false);\n\t\t}");
+    out.print(" \n\t\tfinally {\n\t\t\tif (cmtActivated) {\n\t\t\t\torg.openxava.hibernate.XHibernate.setCmt(false);\n\t\t\t}\n\t\t}");
     	
     		} 
     
@@ -637,7 +637,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Fri Apr 21 10:32:23 CEST 2006", // date this file was generated
+        { "Wed Apr 26 11:35:06 CEST 2006", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/property.xml", // input file
              "/home/javi/workspace/OpenXava/generator/PropertyPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

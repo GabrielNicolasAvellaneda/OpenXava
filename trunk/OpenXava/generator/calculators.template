@@ -32,7 +32,11 @@ public void setError(String error) {
 	int count = calculators.size();
 	if (count > 0) {
 	# 
-		org.openxava.hibernate.XHibernate.setCmt(true);
+		boolean cmtActivated = false;
+		if (!org.openxava.hibernate.XHibernate.isCmt()) {
+			org.openxava.hibernate.XHibernate.setCmt(true);
+			cmtActivated = true;
+		}
 		try {
 	# 
 	} 
@@ -97,7 +101,9 @@ public void setError(String error) {
 			throw new EJBException(XavaResources.getString("#(error)#", "#(name)#", ex.getLocalizedMessage()));
 		}
 		finally {
-			org.openxava.hibernate.XHibernate.setCmt(false);
+			if (cmtActivated) {
+				org.openxava.hibernate.XHibernate.setCmt(false);
+			}
 		}
 	# 
 	}

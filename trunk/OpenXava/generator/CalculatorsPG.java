@@ -10,7 +10,7 @@ import org.openxava.util.meta.MetaSet;
 
 /**
  * Program Generator created by TL2Java
- * @version Fri Apr 21 10:32:22 CEST 2006
+ * @version Wed Apr 26 11:35:05 CEST 2006
  */
 public class CalculatorsPG {
     Properties properties = new Properties();
@@ -47,7 +47,7 @@ public void setError(String error) {
     	int count = calculators.size();
     	if (count > 0) {
     	
-    out.print(" \n\t\torg.openxava.hibernate.XHibernate.setCmt(true);\n\t\ttry {");
+    out.print(" \n\t\tboolean cmtActivated = false;\n\t\tif (!org.openxava.hibernate.XHibernate.isCmt()) {\n\t\t\torg.openxava.hibernate.XHibernate.setCmt(true);\n\t\t\tcmtActivated = true;\n\t\t}\n\t\ttry {");
     
     	} 
     	for (int i=0; i<count; i++) {	 
@@ -138,7 +138,7 @@ public void setError(String error) {
     out.print(error);
     out.print("\", \"");
     out.print(name);
-    out.print("\", ex.getLocalizedMessage()));\n\t\t}\n\t\tfinally {\n\t\t\torg.openxava.hibernate.XHibernate.setCmt(false);\n\t\t}");
+    out.print("\", ex.getLocalizedMessage()));\n\t\t}\n\t\tfinally {\n\t\t\tif (cmtActivated) {\n\t\t\t\torg.openxava.hibernate.XHibernate.setCmt(false);\n\t\t\t}\n\t\t}");
     
     	}
     	
@@ -176,7 +176,7 @@ public void setError(String error) {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Fri Apr 21 10:32:22 CEST 2006", // date this file was generated
+        { "Wed Apr 26 11:35:05 CEST 2006", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/calculators.xml", // input file
              "/home/javi/workspace/OpenXava/generator/CalculatorsPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

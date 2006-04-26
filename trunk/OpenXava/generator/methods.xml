@@ -49,16 +49,20 @@ while (itMethods.hasNext()) {
 	 * @ejb:interface-method
 	 */
 	public <expr>method.getTypeName()</expr> <expr>method.getName()</expr>(<expr>method.getArguments()</expr>) <expr>throwSentence</expr> {
-		try {
 <java>
 	if (ejb) {
 </java> 
+		boolean cmtActivated = false;
+		if (!org.openxava.hibernate.XHibernate.isCmt()) {
 			org.openxava.hibernate.XHibernate.setCmt(true);
+			cmtActivated = true;
+		}
 <java>	
 	} 
 	MetaCalculator calculator = method.getMetaCalculator();
 	String calculatorClass = calculator.getClassName();
 			</java> 		
+		try {			
 			<expr>calculatorClass</expr> <expr>method.getName()</expr>Calculator = (<expr>calculatorClass</expr>)
 				getMetaModel().getMetaMethod("<expr>method.getName()</expr>").getMetaCalculator().createCalculator();
 			<java>	
@@ -164,7 +168,9 @@ while (itMethods.hasNext()) {
 	if (ejb) {
 </java> 
 		finally {
-			org.openxava.hibernate.XHibernate.setCmt(false);
+			if (cmtActivated) {
+				org.openxava.hibernate.XHibernate.setCmt(false);
+			}
 		}
 <java>	
 	} 
