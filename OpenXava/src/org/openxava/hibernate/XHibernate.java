@@ -52,7 +52,7 @@ public class XHibernate {
 	 *
 	 * @return Not null
 	 */
-	public static Session getSession() {
+	public static Session getSession() {		
 		Session s = (Session) currentSession.get();
 		if (s == null || !s.isOpen()) {
 			s = openSession();
@@ -72,11 +72,9 @@ public class XHibernate {
 		return getSessionFactory().openSession();
 	}
 				
-	private static Session openSession() {		
-		Session s = getSessionFactory().openSession();		
-		if (!isCmt()) {
-			currentTransaction.set(s.beginTransaction());
-		}
+	private static Session openSession() {
+		Session s = getSessionFactory().openSession();
+		currentTransaction.set(isCmt()?null:s.beginTransaction());
 		currentSession.set(s);
 		return s;
 	}
@@ -91,9 +89,10 @@ public class XHibernate {
 	public static void commit() {		
 		Session s = (Session) currentSession.get();
 		if (s == null) return;
-		if (s.isOpen()) {
-			Transaction t = (Transaction) currentTransaction.get();
-			if (t != null) t.commit();			
+		if (s.isOpen()) {			
+			Transaction t = (Transaction) currentTransaction.get();			
+			if (t != null) t.commit();
+			else s.flush(); 
 			s.close();
 		}
 					
@@ -229,7 +228,7 @@ public class XHibernate {
 	 * 
 	 * CMT is Container Managed Transaction. The usual inside EJB.
 	 */
-	public static void setCmt(boolean cmt) { 
+	public static void setCmt(boolean cmt) {
 		currentCmt.set(cmt?"":null);
 	}
 	/**

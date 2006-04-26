@@ -48,16 +48,20 @@ while (itMethods.hasNext()) {
 	 * @ejb:interface-method
 	 */
 	public #(method.getTypeName())# #(method.getName())#(#(method.getArguments())#) #(throwSentence)# {
-		try {
 # 
 	if (ejb) {
 # 
+		boolean cmtActivated = false;
+		if (!org.openxava.hibernate.XHibernate.isCmt()) {
 			org.openxava.hibernate.XHibernate.setCmt(true);
+			cmtActivated = true;
+		}
 # 	
 	} 
 	MetaCalculator calculator = method.getMetaCalculator();
 	String calculatorClass = calculator.getClassName();
 			# 		
+		try {			
 			#(calculatorClass)# #(method.getName())#Calculator = (#(calculatorClass)#)
 				getMetaModel().getMetaMethod("#(method.getName())#").getMetaCalculator().createCalculator();
 			# 	
@@ -163,7 +167,9 @@ while (itMethods.hasNext()) {
 	if (ejb) {
 # 
 		finally {
-			org.openxava.hibernate.XHibernate.setCmt(false);
+			if (cmtActivated) {
+				org.openxava.hibernate.XHibernate.setCmt(false);
+			}
 		}
 # 	
 	} 

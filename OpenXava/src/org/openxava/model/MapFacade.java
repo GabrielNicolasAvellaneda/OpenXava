@@ -339,14 +339,28 @@ public class MapFacade {
 	{	
 		if (keyValues==null) return null;
 		Assert.arg(modelName, keyValues);
+		Object entity = null;
 		try {
-			return getImpl(modelName).findEntity(Users.getCurrent(), modelName, keyValues);
+			entity = getImpl(modelName).findEntity(Users.getCurrent(), modelName, keyValues);
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			return getImpl(modelName).findEntity(Users.getCurrent(), modelName, keyValues);
+			entity = getImpl(modelName).findEntity(Users.getCurrent(), modelName, keyValues);
 		}					
+		reassociate(entity);		
+		return entity;
 	}	
+
+	/**
+	 * Reassociate the entity to its persistent storage. <p>
+	 * 
+	 * It's called when an object is receive from the an EJB server.
+	 */
+	private static void reassociate(Object entity) throws RemoteException {
+		if (XavaPreferences.getInstance().isMapFacadeAsEJB()) {			
+			getLocalImpl().reassociate(entity);
+		}
+	}
 
 	/**
 	 * Remove the entity/aggregate from a map with its key. <p> 

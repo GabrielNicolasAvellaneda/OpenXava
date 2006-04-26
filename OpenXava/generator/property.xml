@@ -94,17 +94,22 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 	 * <expr>tagInterfaceMethod</expr>
 	 */
 	public <expr>type</expr> <expr>get</expr><expr>propertyName</expr>() {	
-		try {
+
 <java>
 		if (ejb) {
 </java> 
+		boolean cmtActivated = false;
+		if (!org.openxava.hibernate.XHibernate.isCmt()) {
 			org.openxava.hibernate.XHibernate.setCmt(true);
+			cmtActivated = true;
+		}
 <java>	
 		} 
 			MetaCalculator calculator = property.getMetaCalculator();
 			String calculatorClass = calculator.getClassName();
 			String qualifiedPropertyName = Strings.change(property.getName(), "_", "."); // for aggregate member case
 			</java> 		
+		try {			
 			<expr>calculatorClass</expr> <expr>property.getName()</expr>Calculator= (<expr>calculatorClass</expr>)
 				getMetaModel().getMetaProperty("<expr>qualifiedPropertyName</expr>").getMetaCalculator().createCalculator();
 			<java>	
@@ -203,7 +208,9 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 		if (ejb) {
 </java> 
 		finally {
-			org.openxava.hibernate.XHibernate.setCmt(false);
+			if (cmtActivated) {
+				org.openxava.hibernate.XHibernate.setCmt(false);
+			}
 		}
 <java>	
 		} 

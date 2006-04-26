@@ -57,4 +57,6 @@ public interface IMapFacadeImpl {
 		throws RemoveException, FinderException, ValidationException, XavaException,  RemoteException; 
 		 			
 	Object getKey(MetaModel metaModel, Map keyValues) throws XavaException, RemoteException;
+	
+	void reassociate(Object entity) throws RemoteException;
 }

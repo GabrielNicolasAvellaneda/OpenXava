@@ -33,7 +33,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		Users.setCurrent(user);
 		values = Maps.recursiveClone(values); 		
 		try {
-			MetaModel metaModel = getMetaModel(modelName);					
+			MetaModel metaModel = getMetaModel(modelName);	
+			getPersistenceProvider().begin(); 
 			Object result = create(metaModel, values, null, null, 0);
 			getPersistenceProvider().commit();
 			return result;
@@ -67,6 +68,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		keyValues = Maps.recursiveClone(keyValues); 
 		membersNames = Maps.recursiveClone(membersNames); 		
 		try {			
+			getPersistenceProvider().begin();
 			Map result = getValuesImpl(modelName, keyValues, membersNames);
 			getPersistenceProvider().commit();
 			return result;
@@ -94,7 +96,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		Users.setCurrent(user);
 		keyValues = Maps.recursiveClone(keyValues); 		
 		try {
-			MetaModel metaModel = getMetaModel(modelName);					
+			MetaModel metaModel = getMetaModel(modelName);	
+			getPersistenceProvider().begin();
 			remove(metaModel, keyValues);
 			getPersistenceProvider().commit();
 		}
@@ -123,7 +126,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		keyValues = Maps.recursiveClone(keyValues); 
 		values = Maps.recursiveClone(values); 		
 		try {
-			MetaModel metaModel = getMetaModel(modelName);					
+			MetaModel metaModel = getMetaModel(modelName);
+			getPersistenceProvider().begin();
 			setValues(metaModel, keyValues, values);			
 			getPersistenceProvider().commit();
 		}
@@ -158,6 +162,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		Users.setCurrent(user);
 		values = Maps.recursiveClone(values); 		
 		try {
+			getPersistenceProvider().begin();
 			Map result = createReturningValues(modelName, values);
 			getPersistenceProvider().commit();
 			return result;
@@ -185,7 +190,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		throws CreateException, XavaException, ValidationException, RemoteException {
 		Users.setCurrent(user);
 		values = Maps.recursiveClone(values); 			
-		try {							
+		try {				
+			getPersistenceProvider().begin();
 			Map result = createReturningKey(modelName, values);
 			getPersistenceProvider().commit();
 			return result;
@@ -215,7 +221,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		Users.setCurrent(user);
 		containerKeyValues = Maps.recursiveClone(containerKeyValues); 
 		values = Maps.recursiveClone(values); 		
-		try {								
+		try {		
+			getPersistenceProvider().begin(); 
 			Object result = createAggregate(modelName, containerKeyValues, counter, values);
 			getPersistenceProvider().commit();
 			return result;
@@ -244,7 +251,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	{		
 		Users.setCurrent(user);
 		values = Maps.recursiveClone(values); 			
-		try {								
+		try {		
+			getPersistenceProvider().begin();
 			Object result = createAggregate(modelName, container, counter, values);
 			getPersistenceProvider().commit();
 			return result;
@@ -274,7 +282,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		Users.setCurrent(user);
 		containerKeyValues = Maps.recursiveClone(containerKeyValues); 
 		values = Maps.recursiveClone(values); 		
-		try {					
+		try {			
+			getPersistenceProvider().begin();
 			Map result = createAggregateReturningKey(modelName, containerKeyValues, counter, values);
 			getPersistenceProvider().commit();
 			return result;
@@ -306,7 +315,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		 {				
 		Users.setCurrent(user);
 		memberNames = Maps.recursiveClone(memberNames); 		
-		try {								
+		try {	
+			getPersistenceProvider().begin();
 			Map result = getValues(modelName, modelObject, memberNames);
 			getPersistenceProvider().commit();
 			return result;
@@ -326,7 +336,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	public Messages validate(String user, String modelName, Map values) throws XavaException, RemoteException {
 		Users.setCurrent(user);
 		values = Maps.recursiveClone(values); 				
-		try {					
+		try {			
+			getPersistenceProvider().begin();
 			Messages result = validate(modelName, values, false);
 			getPersistenceProvider().commit();
 			return result;
@@ -348,7 +359,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		Users.setCurrent(user);
 		keyValues = Maps.recursiveClone(keyValues); 
 		collectionElementKeyValues = Maps.recursiveClone(collectionElementKeyValues); 		
-		try {					
+		try {		
+			getPersistenceProvider().begin();
 			removeCollectionElement(modelName, keyValues, collectionName, collectionElementKeyValues);
 			getPersistenceProvider().commit();
 		} 
@@ -1342,6 +1354,10 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	public Object getKey(MetaModel metaModel, Map keyValues) throws XavaException, RemoteException {
 		return getPersistenceProvider().getKey(metaModel, keyValues);
 	}
+	
+	public void reassociate(Object entity) throws RemoteException {
+		getPersistenceProvider().reassociate(entity); 
+	}
 
 	private static IPersistenceProvider getPersistenceProvider() throws RemoteException {
 		if (persistenceProvider == null) {
@@ -1352,7 +1368,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 				ex.printStackTrace();
 				throw new RemoteException(XavaResources.getString("persistence_provider_creation_error"));
 			}
-		}
+		}		
 		return persistenceProvider;
 	}
 

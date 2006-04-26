@@ -11,7 +11,7 @@ import org.openxava.generators.Generators;
 
 /**
  * Program Generator created by TL2Java
- * @version Fri Apr 21 10:32:26 CEST 2006
+ * @version Wed Apr 26 11:35:10 CEST 2006
  */
 public class MethodsPG {
     Properties properties = new Properties();
@@ -67,17 +67,17 @@ private static void generate(XPathContext context, ProgramWriter out, MetaModel 
     out.print(method.getArguments());
     out.print(") ");
     out.print(throwSentence);
-    out.print(" {\n\t\ttry {");
+    out.print(" {");
     
     	if (ejb) {
     
-    out.print(" \n\t\t\torg.openxava.hibernate.XHibernate.setCmt(true);");
+    out.print(" \n\t\tboolean cmtActivated = false;\n\t\tif (!org.openxava.hibernate.XHibernate.isCmt()) {\n\t\t\torg.openxava.hibernate.XHibernate.setCmt(true);\n\t\t\tcmtActivated = true;\n\t\t}");
     	
     	} 
     	MetaCalculator calculator = method.getMetaCalculator();
     	String calculatorClass = calculator.getClassName();
     			
-    out.print(" \t\t\n\t\t\t");
+    out.print(" \t\t\n\t\ttry {\t\t\t\n\t\t\t");
     out.print(calculatorClass);
     out.print(" ");
     out.print(method.getName());
@@ -220,7 +220,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaModel 
     
     	if (ejb) {
     
-    out.print(" \n\t\tfinally {\n\t\t\torg.openxava.hibernate.XHibernate.setCmt(false);\n\t\t}");
+    out.print(" \n\t\tfinally {\n\t\t\tif (cmtActivated) {\n\t\t\t\torg.openxava.hibernate.XHibernate.setCmt(false);\n\t\t\t}\n\t\t}");
     	
     	} 
     
@@ -262,7 +262,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaModel 
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Fri Apr 21 10:32:26 CEST 2006", // date this file was generated
+        { "Wed Apr 26 11:35:10 CEST 2006", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/methods.xml", // input file
              "/home/javi/workspace/OpenXava/generator/MethodsPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

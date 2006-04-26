@@ -74,6 +74,13 @@ public interface IPersistenceProvider {
 	void remove(MetaModel metaModel, Object modelObject) throws RemoveException, XavaException;
 	
 	/**
+	 * Mark the starting of the unit of work associated to this thread. <p> 
+	 *
+	 * This method may be empty (for example in case of using CMT).
+	 */
+	void begin();
+	
+	/**
 	 * Commit the work made by this persistent provider. <p>
 	 * 
 	 * This method may be empty (for example in case of using CMT).	 
@@ -93,5 +100,14 @@ public interface IPersistenceProvider {
 	 * This method may be empty, because in some technologies has no sense.<br>	 
 	 */
 	void flush();	
+	
+	/**
+	 * Reassociates a detached object to its persistent storage. <p>
+	 * 
+	 * This is for use when an object is serialized using RMI/IIOP, and
+	 * need to reassociato to its persistent storage.<br>
+	 * This method may be empty, because in some technologies has no sense.<br>
+	 */
+	void reassociate(Object entity); 
 	
 }
