@@ -16,7 +16,8 @@ import org.openxava.util.*;
 abstract public class BaseContextFilter implements IRequestFilter {
 
 	private HttpServletRequest request;	
-	private ModuleContext context;	
+	private ModuleContext context;
+	private Environment environment;	
 
 	public void setRequest(HttpServletRequest request) {
 		this.request = request;		
@@ -45,6 +46,18 @@ abstract public class BaseContextFilter implements IRequestFilter {
 
 	protected Long getLong(String name) throws XavaException {
 		return (Long) get(name);
+	}
+	
+	/**
+	 * Environment allows you access to the environment variables for the current module. <p>
+	 * @return
+	 */
+	protected Environment getEnvironment() throws XavaException {
+		if (environment == null) {
+			ModuleManager manager = (ModuleManager) get("manager");
+			environment = manager.getEnvironment();
+		}
+		return environment;
 	}
 	
 }

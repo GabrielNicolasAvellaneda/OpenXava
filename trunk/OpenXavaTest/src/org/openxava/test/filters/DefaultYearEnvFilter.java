@@ -5,12 +5,12 @@ import java.util.*;
 import org.openxava.filters.*;
 
 /**
- * Default year is obtained from a session object. <p>
+ * Default year is obtained from a environment variable. <p>
  * 
  * @author Javier Paniza
  */
 
-public class DefaultYearFilter extends BaseContextFilter {
+public class DefaultYearEnvFilter extends BaseContextFilter {
 
 	public Object filter(Object o) throws FilterException {		
 		if (o == null) {
@@ -28,11 +28,11 @@ public class DefaultYearFilter extends BaseContextFilter {
 
 	private Integer getDefaultYear() throws FilterException {
 		try {
-			return getInteger("xavatest_defaultYear");			
+			return new Integer(getEnvironment().getValue("XAVATEST_DEFAULT_YEAR"));			
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			throw new FilterException("Impossible to obtain default year associated with the session");
+			throw new FilterException("Impossible to obtain default year for this module");
 		}
 	}
 	
