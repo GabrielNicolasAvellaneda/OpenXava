@@ -233,5 +233,23 @@
 		</supports>
 		<resource-bundle>Update</resource-bundle>		
 	</portlet> 
+	
+	<portlet id="WTP">
+		<description>WTP</description>    
+		<portlet-name>WTP</portlet-name>
+		<display-name>WTP</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>wtp</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<resource-bundle>WTP</resource-bundle>		
+	</portlet> 
+	
 								
 </portlet-app>
