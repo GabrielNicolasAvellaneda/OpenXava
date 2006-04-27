@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>Web Tools Platform for OpenXava</title>
+</head>
+<body>
+This is a guide to configure WTP in order to execute and debug OpenXava
+applications inside Eclipse.<br>
+Eclipse Web Tool Platform (<a href="http://www.eclipse.org/webtools/">WTP</a>)
+help you develop J2EE application with Eclipse.<br>
+In the case of OpenXava you can use WTP to start Tomcat (or your
+favorite Application Server) inside Eclipse, thus you can see the
+effects of the changes without redeploy and you can debug your code.<br>
+Inside your Eclipse you need to follow the next steps in order you run
+your OpenXava application with WTP:<br>
+<h4>Add Tomcat to your Eclipse</h4>
+You need to add&nbsp;Tomcat to your Eclipse:<br>
+<ul>
+  <li>Go to Windows &gt; Preferences &gt; Server &gt; Installed
+Runtimes.</li>
+  <li>Click on 'Add'.</li>
+  <li>Choose Apache &gt; Apache Tomcat 5.5</li>
+  <li>Click on 'Next'.</li>
+  <li>Fill&nbsp;</li>
+  <ul>
+    <li>Name: Apache Tomcat v5.5</li>
+    <li>Tomcat installation directory: The path of your Tomcat 5.5.</li>
+    <li>JRE:&nbsp;choose a Java 5.</li>
+  </ul>
+  <li>Click on 'Finish'.</li>
+  <li>Click on 'OK' in Preferences Dialog to close it.</li>
+</ul>
+<h4>Create a Tomcat Server</h4>
+<ul>
+  <li>Go to Server tab. If it does not exist, add it (Windows &gt; Show
+view &gt; Other &gt; Server &gt; Servers).</li>
+  <li>In tab Server click Right Button &gt; New &gt; Server</li>
+  <li>Select in&nbsp;Server runtime: 'Apache Tomcat v5.5'</li>
+  <li>Click on 'Next'</li>
+  <li>Add your project to Configured projects.</li>
+  <li>Click on 'Finish'</li>
+</ul>
+<h4>Define your DataSources</h4>
+Now you have in your workspace a project named 'Servers'. Inside this
+project you have a folder named ''Tomcat v5.5 Server @
+localhost-config". Put a file name context.xml with the next content:<br>
+&lt;!-- The contents of this file will be loaded for each web
+application --&gt;<br>
+&lt;Context&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp; &lt;!-- Default set of monitored resources --&gt;<br>
+&nbsp;&nbsp;&nbsp;
+&lt;WatchedResource&gt;WEB-INF/web.xml&lt;/WatchedResource&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp; &lt;!-- Uncomment this to disable session
+persistence across Tomcat restarts --&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;Manager pathname="" /&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp; &lt;Resource name="jdbc/OpenXavaDS" auth="Container"
+type="javax.sql.DataSource"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; maxActive="20" maxIdle="5"
+maxWait="10000"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; username="sa" password=""
+driverClassName="org.hsqldb.jdbcDriver"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; url="jdbc:hsqldb:file:<span
+ style="font-weight: bold;">/java/openxava-2.0</span>/jetspeed-2.0/data/openxava-db"/&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp; &lt;Resource name="jdbc/MySchoolDS" auth="Container"
+type="javax.sql.DataSource"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; maxActive="20" maxIdle="5"
+maxWait="10000"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; username="sa" password=""
+driverClassName="org.hsqldb.jdbcDriver"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; url="jdbc:hsqldb:file:<span
+ style="font-weight: bold;">/java/openxava-2.0</span>/jetspeed-2.0/data/my-school-db"/&gt;<br>
+<br>
+&lt;/Context&gt;<br>
+<h4>Add your application to the Server</h4>
+<ul>
+  <li>Go to server tab.</li>
+  <li>Click on Right Button on Tomcat v5.5 Server &gt; Add and Remove
+Projects</li>
+  <li>Add the proyect 'MySchool'.</li>
+  <li>Click on 'Finish'.</li>
+  <li>Click on Right Button in your project (in this case in MySchool)
+&gt; Properties &gt; Builders</li>
+  <li>Check MySchool.wtpBuild</li>
+  <li>Click on 'OK'</li>
+  <li>Click on Build All</li>
+</ul>
+<h4>Start the server and test your application</h4>
+<ul>
+  <li>Stop your jetspeed portal if it's started.</li>
+  <li>Go to server tab.</li>
+  <li>Click on Right Button on Tomcat v5.5 Server &gt; Start</li>
+  <li>Wait until Tomcat is started.</li>
+  <li>Open an internet browser and go to
+http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Teachers.</li>
+</ul>
+<h4>Developing using WTP</h4>
+After the above steps you only need to touch your code, click on Build
+All (or Cntrl-b) and go to your browser to see your updated
+application. Furthermore, you can start your Tomcat in debug mode and
+using the Eclipse debugger.<br>
+</body>
+</html>

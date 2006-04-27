@@ -60,8 +60,8 @@ public class Invoices2002Test extends ModuleTestBase {
 	public void testOnInitAction_IRequestFilter_BaseContextFilter() throws Exception {
 		assertActions(listActions);		
 		assertListTitle("Invoices report of year 2,002");
-		int cantidad = getListRowCount();
-		for (int i = 0; i < cantidad; i++) {
+		int count = getListRowCount();
+		for (int i = 0; i < count; i++) {
 			assertValueInList(i, "year", "2002");	
 		}		
 	}
