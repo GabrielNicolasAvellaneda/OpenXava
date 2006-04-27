@@ -1,108 +1,154 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-  <meta content="text/html; charset=ISO-8859-1"
- http-equiv="content-type">
-  <title>Web Tools Platform for OpenXava</title>
-</head>
-<body>
 This is a guide to configure WTP in order to execute and debug OpenXava
 applications inside Eclipse.<br>
 Eclipse Web Tool Platform (<a href="http://www.eclipse.org/webtools/">WTP</a>)
 help you develop J2EE application with Eclipse.<br>
 In the case of OpenXava you can use WTP to start Tomcat (or your
 favorite Application Server) inside Eclipse, thus you can see the
-effects of the changes without redeploy and you can debug your code.<br>
-Inside your Eclipse you need to follow the next steps in order you run
-your OpenXava application with WTP:<br>
-<h4>Add Tomcat to your Eclipse</h4>
-You need to add&nbsp;Tomcat to your Eclipse:<br>
+effects of the changes without redeploy and also you can debug your
+code.<br>
+This document guide you to use WTP for executing the <span
+ style="font-style: italic;">MySchool</span> demo application that
+comes with OpenXava. <br>
+Follow the next steps:<br>
 <ul>
-  <li>Go to Windows &gt; Preferences &gt; Server &gt; Installed
-Runtimes.</li>
-  <li>Click on 'Add'.</li>
-  <li>Choose Apache &gt; Apache Tomcat 5.5</li>
-  <li>Click on 'Next'.</li>
-  <li>Fill&nbsp;</li>
+  <li><a href="#Add_Tomcat_to_your_Eclipse">Add Tomcat to your Eclipse.</a></li>
+  <li><a href="#Create_a_Tomcat_server">Create a Tomcat server.</a></li>
+  <li><a href="#Define_your_data_sources">Define your data sources.</a></li>
+  <li><a href="#Configure_your_OpenXava_application">Configure your
+OpenXava application.</a></li>
+  <li><a href="#Start_the_server_and_test_your">Start the server and
+test your application.</a></li>
+  <li><a href="#Developing_using_WTP">Developing using WTP.</a></li>
+</ul>
+<h4><a name="Add_Tomcat_to_your_Eclipse"></a>Add Tomcat to your Eclipse</h4>
+<ul>
+  <li>Go to <span style="font-style: italic;">Windows &gt; Preferences
+&gt; Server &gt; Installed
+Runtimes</span>.</li>
+  <li>Click on&nbsp;<span style="font-style: italic;">Add</span>.</li>
+  <li>Choose <span style="font-style: italic;">Apache &gt; Apache
+Tomcat 5.5</span>.</li>
+  <li>Click on&nbsp;<span style="font-style: italic;">Next</span>.</li>
+  <li>Fill:&nbsp;</li>
   <ul>
-    <li>Name: Apache Tomcat v5.5</li>
-    <li>Tomcat installation directory: The path of your Tomcat 5.5.</li>
-    <li>JRE:&nbsp;choose a Java 5.</li>
+    <li><span style="font-style: italic;">Name</span>: <span
+ style="font-family: monospace;">Apache Tomcat v5.5</span></li>
+    <li><span style="font-style: italic;">Tomcat installation directory</span>:
+The path of your Tomcat (you can use the OpenXava Tomcat in <span
+ style="font-family: monospace;">openxava-2.0/jetspeed-2.0</span>
+folder)</li>
+    <li><span style="font-style: italic;">JRE</span>: Choose a Java 5.</li>
   </ul>
-  <li>Click on 'Finish'.</li>
-  <li>Click on 'OK' in Preferences Dialog to close it.</li>
+  <li>Click on&nbsp;<span style="font-style: italic;">Finish</span>.</li>
+  <li>Click on&nbsp;<span style="font-style: italic;">OK</span> in <span
+ style="font-style: italic;">Preferences Dialog</span> to close it.</li>
 </ul>
-<h4>Create a Tomcat Server</h4>
+<h4><a name="Create_a_Tomcat_server"></a>Create a Tomcat server</h4>
 <ul>
-  <li>Go to Server tab. If it does not exist, add it (Windows &gt; Show
-view &gt; Other &gt; Server &gt; Servers).</li>
-  <li>In tab Server click Right Button &gt; New &gt; Server</li>
-  <li>Select in&nbsp;Server runtime: 'Apache Tomcat v5.5'</li>
-  <li>Click on 'Next'</li>
-  <li>Add your project to Configured projects.</li>
-  <li>Click on 'Finish'</li>
+  <li>Go to <span style="font-style: italic;">Server</span> tab. If it
+does not exist, add it (<span style="font-style: italic;">Windows &gt;
+Show
+view &gt; Other &gt; Server &gt; Servers</span>).</li>
+  <li>In tab <span style="font-style: italic;">Server</span> click <span
+ style="font-style: italic;">Right Button &gt; New &gt; Server.</span></li>
+  <li>Select in&nbsp;<span style="font-style: italic;">Server runtime</span>:&nbsp;Apache
+Tomcat v5.5.</li>
+  <li>Click on&nbsp;<span style="font-style: italic;">Next</span>.</li>
+  <li>Add&nbsp;<span style="font-style: italic;">MySchool</span> to <span
+ style="font-style: italic;">Configured projects</span>.</li>
+  <li>Click on&nbsp;<span style="font-style: italic;">Finish</span>.</li>
 </ul>
-<h4>Define your DataSources</h4>
-Now you have in your workspace a project named 'Servers'. Inside this
-project you have a folder named ''Tomcat v5.5 Server @
-localhost-config". Put a file name context.xml with the next content:<br>
-&lt;!-- The contents of this file will be loaded for each web
-application --&gt;<br>
-&lt;Context&gt;<br>
+<h4><a name="Define_your_data_sources"></a>Define your data sources</h4>
+Now you have in your workspace a project named&nbsp;<span
+ style="font-style: italic;">Servers</span>. Inside this
+project you have a folder named&nbsp;<span style="font-style: italic;">Tomcat
+v5.5 Server @
+localhost-config</span>. Put there a file named <span
+ style="font-family: monospace;">context.xml</span> with the next
+content:<br>
+<span style="font-family: monospace;">&lt;!-- The contents of this file
+will be loaded for each web
+application --&gt;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;Context&gt;</span><br
+ style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; &lt;!--
+Default set of monitored resources --&gt;</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;WatchedResource&gt;WEB-INF/web.xml&lt;/WatchedResource&gt;</span><br
+ style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; &lt;!--
+Uncomment this to disable session
+persistence across Tomcat restarts --&gt;</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; &lt;Manager
+pathname="" /&gt;</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; &lt;Resource
+name="jdbc/OpenXavaDS" auth="Container"
+type="javax.sql.DataSource"</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+maxActive="20" maxIdle="5"
+maxWait="10000"</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+username="sa" password=""
+driverClassName="org.hsqldb.jdbcDriver"</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+url="jdbc:hsqldb:file:</span><span
+ style="font-weight: bold; font-family: monospace; color: rgb(51, 51, 255);">/java/openxava-2.0</span><span
+ style="font-family: monospace;">/jetspeed-2.0/data/openxava-db"/&gt;</span><br
+ style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; &lt;Resource
+name="jdbc/MySchoolDS" auth="Container"
+type="javax.sql.DataSource"</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+maxActive="20" maxIdle="5"
+maxWait="10000"</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+username="sa" password=""
+driverClassName="org.hsqldb.jdbcDriver"</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+url="jdbc:hsqldb:file:</span><span
+ style="font-weight: bold; font-family: monospace; color: rgb(51, 102, 255);">/java/openxava-2.0</span><span
+ style="font-family: monospace;">/jetspeed-2.0/data/my-school-db"/&gt;</span><br
+ style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;/Context&gt;</span><br
+ style="font-family: monospace;">
 <br>
-&nbsp;&nbsp;&nbsp; &lt;!-- Default set of monitored resources --&gt;<br>
-&nbsp;&nbsp;&nbsp;
-&lt;WatchedResource&gt;WEB-INF/web.xml&lt;/WatchedResource&gt;<br>
-<br>
-&nbsp;&nbsp;&nbsp; &lt;!-- Uncomment this to disable session
-persistence across Tomcat restarts --&gt;<br>
-&nbsp;&nbsp;&nbsp; &lt;Manager pathname="" /&gt;<br>
-<br>
-&nbsp;&nbsp;&nbsp; &lt;Resource name="jdbc/OpenXavaDS" auth="Container"
-type="javax.sql.DataSource"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; maxActive="20" maxIdle="5"
-maxWait="10000"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; username="sa" password=""
-driverClassName="org.hsqldb.jdbcDriver"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; url="jdbc:hsqldb:file:<span
- style="font-weight: bold;">/java/openxava-2.0</span>/jetspeed-2.0/data/openxava-db"/&gt;<br>
-<br>
-&nbsp;&nbsp;&nbsp; &lt;Resource name="jdbc/MySchoolDS" auth="Container"
-type="javax.sql.DataSource"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; maxActive="20" maxIdle="5"
-maxWait="10000"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; username="sa" password=""
-driverClassName="org.hsqldb.jdbcDriver"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; url="jdbc:hsqldb:file:<span
- style="font-weight: bold;">/java/openxava-2.0</span>/jetspeed-2.0/data/my-school-db"/&gt;<br>
-<br>
-&lt;/Context&gt;<br>
-<h4>Add your application to the Server</h4>
+Remember to change <span style="color: rgb(51, 51, 255);">/java/openxava-2.0</span>
+by the path where your have OpenXava installed.
+<h4><a name="Configure_your_OpenXava_application"></a>Configure your
+OpenXava application</h4>
 <ul>
-  <li>Go to server tab.</li>
-  <li>Click on Right Button on Tomcat v5.5 Server &gt; Add and Remove
-Projects</li>
-  <li>Add the proyect 'MySchool'.</li>
-  <li>Click on 'Finish'.</li>
-  <li>Click on Right Button in your project (in this case in MySchool)
-&gt; Properties &gt; Builders</li>
-  <li>Check MySchool.wtpBuild</li>
-  <li>Click on 'OK'</li>
-  <li>Click on Build All</li>
+  <li>Click on <span style="font-style: italic;">Right Button</span>
+on your project (in this case in <span style="font-style: italic;">MySchool</span>)
+    <span style="font-style: italic;">&gt; Properties &gt; Builders</span>.</li>
+  <li>Check <span style="font-style: italic;">MySchool.wtpBuild</span>.</li>
+  <li>Click on&nbsp;<span style="font-style: italic;">OK</span>.</li>
+  <li>Click on <span style="font-style: italic;">Build All</span>.</li>
 </ul>
-<h4>Start the server and test your application</h4>
+<h4><a name="Start_the_server_and_test_your"></a>Start the server and
+test your application</h4>
 <ul>
-  <li>Stop your jetspeed portal if it's started.</li>
-  <li>Go to server tab.</li>
-  <li>Click on Right Button on Tomcat v5.5 Server &gt; Start</li>
+  <li>Stop your Jetspeed Portal if it's started.</li>
+  <li>Go to <span style="font-style: italic;">Server</span> tab.</li>
+  <li>Click on <span style="font-style: italic;">Right Button on
+Tomcat v5.5 Server &gt; Start</span></li>
   <li>Wait until Tomcat is started.</li>
   <li>Open an internet browser and go to
-http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Teachers.</li>
+    <a
+ href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Teachers">http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Teachers</a>.</li>
 </ul>
-<h4>Developing using WTP</h4>
-After the above steps you only need to touch your code, click on Build
-All (or Cntrl-b) and go to your browser to see your updated
+<h4><a name="Developing_using_WTP"></a>Developing using WTP</h4>
+After the above steps you only need to touch your code, click on <span
+ style="font-style: italic;">Build
+All</span> (or <span style="font-style: italic;">Ctrl-B</span>) and go
+to your browser to see your updated
 application. Furthermore, you can start your Tomcat in debug mode and
 using the Eclipse debugger.<br>
-</body>
-</html>
