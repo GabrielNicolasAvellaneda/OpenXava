@@ -58,9 +58,11 @@
 		<reference-view reference="drivingLicence">
 			<descriptions-list/>
 		</reference-view>
-		<collection-view collection="fellowCarriers" view="Simple">
+		
+		<collection-view collection="fellowCarriers" view="Simple" edit-only="true">
 			<list-action action="Carriers.translateName"/>
-		</collection-view>
+		</collection-view>		
+		
 		<collection-view collection="fellowCarriersCalculated" view="Simple"/>		
 	</view>
 	

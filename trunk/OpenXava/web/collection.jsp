@@ -160,17 +160,17 @@ while (itDetailActions.hasNext()) {
 <tr class=<%=style.getCollectionListActions()%>><td colspan="<%=subview.getMetaPropertiesList().size()+1%>" class=<%=style.getCollectionListActions()%>>
 <% if (collectionEditable) { %>
 <xava:link action="Collection.new" argv='<%="viewObject="+viewName%>'/>
-
-		<% 
-		Iterator itListActions = subview.getActionsNamesList().iterator();
-		while (itListActions.hasNext()) {
-		%>
-&nbsp;<xava:link action="<%=itListActions.next().toString()%>" argv='<%="viewObject="+viewName%>'/>
-		<%	
-		} // while list actions
-		%>
-
 <% } %>
+<% 
+Iterator itListActions = subview.getActionsNamesList().iterator();
+while (itListActions.hasNext()) {
+%>
+&nbsp;<xava:link action="<%=itListActions.next().toString()%>" argv='<%="viewObject="+viewName%>'/>
+<%	
+} // while list actions
+%>
+
+
 </td></tr>
 <%	
 	}
