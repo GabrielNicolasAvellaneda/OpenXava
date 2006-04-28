@@ -14,10 +14,15 @@ public class Invoices2004Test extends ModuleTestBase {
 	
 		
 	public void testFilterUsingEnvironmentVariable() throws Exception {
-		int cantidad = getListRowCount();
-		for (int i = 0; i < cantidad; i++) {
+		int count = getListRowCount();
+		for (int i = 0; i < count; i++) {
 			assertValueInList(i, "year", "2004");	
 		}		
+		changeModule("Invoices2002Env");
+		count = getListRowCount();
+		for (int i = 0; i < count; i++) {
+			assertValueInList(i, "year", "2002");	
+		}				
 	}
 	
 }
