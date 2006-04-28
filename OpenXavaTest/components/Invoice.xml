@@ -160,7 +160,7 @@
 	</view>	
 	
 	<view>
-		
+	
 		<reference-view reference="customer" view="Simple"/>
 		
 		<collection-view collection="details">
