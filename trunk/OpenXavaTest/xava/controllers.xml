@@ -300,32 +300,16 @@
 	</controller>
 	
 	<controller name="MyReference">
+	
 		<action name="search" hidden="true"
 			class="org.openxava.test.actions.MySearchAction"
 			image="images/search.gif">				
-			
-		</action>			
-		
-		<action name="yes" 
-			class="org.openxava.actions.ReferenceSearchAction">			
-			<set property="keyProperty" value="xava.Customer.seller.number"/>			
-			<set property="nextController" value="MyReferenceSearch"/>			
 			<use-object name="xava_view"/>
 			<use-object name="xava_referenceSubview"/>
 			<use-object name="xava_tab"/>
-			<use-object name="xava_currentReferenceLabel"/>
+			<use-object name="xava_currentReferenceLabel"/>			
 		</action>			
-		
-		<action name="no" class="org.openxava.actions.CancelAction"/>
-		
-	</controller>
-
-	<controller name="MyReferenceSearch">
-		<extends controller="ReferenceSearch"/>			
-		<action name="resetPreviousControllers" on-init="true" hidden="true"
-			class="org.openxava.actions.ResetPreviousControllersAction">
-			<use-object name="xava_previousControllers"/>
-		</action>
+				
 	</controller>
 		
 	<controller name="Families">

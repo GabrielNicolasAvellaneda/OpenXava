@@ -180,13 +180,11 @@ public class CustomersTest extends ModuleTestBase {
 	public void testSearchReferenceWithAListInAGroup() throws Exception {
 		execute("CRUD.new");		
 		assertValue("seller.name", "");
-		execute("MyReference.search", "keyProperty=xava.Customer.seller.number");
-		execute("MyReference.yes");
+		execute("MyReference.search", "keyProperty=xava.Customer.seller.number");		
 		String sellerName = getValueInList(0, 1);
 		execute("ReferenceSearch.choose", "row=0");
 		assertTrue("The name of first seller can't be empty string", sellerName.trim().length() > 0);		
-		assertValue("seller.name", sellerName);
-		assertNoAction("MyReference.yes"); // to sure that not returns to MyReference controller
+		assertValue("seller.name", sellerName);		
 	}
 
 	public void testValidValues() throws Exception {   				
@@ -348,6 +346,8 @@ public class CustomersTest extends ModuleTestBase {
 		String html = getHtml();
 		assertTrue("Search of 'seller' should be 'MyReference.search'", html.indexOf("'MyReference.search', 'keyProperty=xava.Customer.seller.number'") > 0);
 		assertTrue("Search 'alternateSeller' should be 'Reference.search'", html.indexOf("'Reference.search', 'keyProperty=xava.Customer.alternateSeller.number'") > 0);
+		execute("MyReference.search", "keyProperty=xava.Customer.seller.number");
+		assertListRowCount(2); // Because custome searh action filter
 	}
 	
 	public void testReferencesIfBlankKeyOrNotExists() throws Exception {

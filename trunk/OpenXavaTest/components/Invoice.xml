@@ -151,7 +151,7 @@
 		
 	</aggregate>		
 	
-	<view name="Simple">
+	<view name="Simple">			
 		
 		<members>
 			year, number, date, yearDiscount;
@@ -160,6 +160,7 @@
 	</view>	
 	
 	<view>
+		
 		<reference-view reference="customer" view="Simple"/>
 		
 		<collection-view collection="details">
