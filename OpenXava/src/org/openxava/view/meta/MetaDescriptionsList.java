@@ -67,7 +67,7 @@ public class MetaDescriptionsList implements java.io.Serializable {
 		if (dependsNames == null) {
 			if (Is.emptyString(getDepends())) return Collections.EMPTY_LIST;
 			dependsNames = new ArrayList();
-			StringTokenizer st = new StringTokenizer(getDepends(), ",");
+			StringTokenizer st = new StringTokenizer(getDepends(), ",;");
 			while (st.hasMoreTokens()) {
 				String name = st.nextToken().trim();
 				dependsNames.add(name);

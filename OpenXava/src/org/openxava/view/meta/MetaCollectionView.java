@@ -68,7 +68,7 @@ public class MetaCollectionView implements Serializable {
 	public void _setPropertiesList(String listProperties) {				 		
 		if (!Is.emptyString(listProperties)) {
 			propertiesListNames = new ArrayList();
-			StringTokenizer st = new StringTokenizer(listProperties, ",");
+			StringTokenizer st = new StringTokenizer(listProperties, ",;");
 			while (st.hasMoreTokens()) {
 				String propiedad = st.nextToken().trim();
 				propertiesListNames.add(propiedad); 

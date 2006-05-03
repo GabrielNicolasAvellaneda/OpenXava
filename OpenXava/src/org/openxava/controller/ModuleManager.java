@@ -25,12 +25,13 @@ public class ModuleManager {
 		MetaControllers.setContext(MetaControllers.WEB);		
 	}
 	
-	private Collection metaActionsOnInit;
-	private boolean moduleInitiated;
-	private String form;
 	private static int nextOid = 0; 
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;
 		
+	private String user; 
+	private Collection metaActionsOnInit;
+	private boolean moduleInitiated;
+	private String form;	
 	private int oid;	
 	private String defaultActionQualifiedName;
 	private MetaModule metaModule;
@@ -38,8 +39,7 @@ public class ModuleManager {
 	private Collection metaActions;
 	private String applicationName;
 	private String moduleName;
-	private Set hiddenActions;
-	
+	private Set hiddenActions;	
 	private String modeControllerName = "Mode";
 	private Collection metaControllers;
 	private MetaController metaControllerSections;
@@ -708,6 +708,10 @@ public class ModuleManager {
 	}
 	
 	public void initModule(HttpServletRequest request, Messages errors, Messages messages) {
+		if (!Is.equal(Users.getCurrent(), user)) {
+			user = Users.getCurrent();
+			moduleInitiated = false;			
+		}
 		if (!moduleInitiated) {
 			modeName = getMetaActionsSections().isEmpty()?IChangeModeAction.DETAIL:null;
 			moduleInitiated = true;

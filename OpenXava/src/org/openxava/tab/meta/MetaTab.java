@@ -322,7 +322,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 
 	// assert(!areAllProperties());
 	private List createPropertiesNames() {
-		StringTokenizer st = new StringTokenizer(properties, ",");
+		StringTokenizer st = new StringTokenizer(properties, ",;");
 		List result = new ArrayList();
 		while (st.hasMoreTokens()) {
 			result.add(st.nextToken().trim());
