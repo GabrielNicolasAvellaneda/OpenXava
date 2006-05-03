@@ -5,10 +5,8 @@ import java.util.*;
 
 import javax.portlet.*;
 
-import org.apache.commons.fileupload.*;
 import org.apache.commons.fileupload.disk.*;
 import org.apache.commons.fileupload.portlet.*;
-import org.openxava.controller.*;
 import org.openxava.web.style.*;
 
 /**

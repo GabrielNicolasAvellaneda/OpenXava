@@ -21,5 +21,19 @@ public class TasksTest extends ModuleTestBase {
 		assertValue("user", "junit");
 		logout();
 	}
+	
+	public void testLogoutResetPortletState() throws Exception {
+		login("junit", "junit");
+		assertAction("Mode.detailAndFirst");
+		assertNoAction("Mode.list");
+		execute("CRUD.new");
+		assertNoAction("Mode.detailAndFirst");
+		assertAction("Mode.list");
+		logout();
+		login("junit2", "junit2");
+		assertAction("Mode.detailAndFirst");
+		assertNoAction("Mode.list");
+		logout();
+	}
 			
 }

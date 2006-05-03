@@ -176,7 +176,7 @@ public class DescriptionsCalculator implements ICalculator {
 		if (keyPropertiesCollection == null) {
 			keyPropertiesCollection = new ArrayList();
 			String source = Is.emptyString(keyProperty)?keyProperties:keyProperty;
-			StringTokenizer st = new StringTokenizer(source, ",");
+			StringTokenizer st = new StringTokenizer(source, ",;");
 			while (st.hasMoreElements()) {
 				keyPropertiesCollection.add(st.nextToken().trim());
 			}
