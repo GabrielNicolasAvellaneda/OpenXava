@@ -45,6 +45,22 @@ public class CustomersWithSectionTest extends CustomersTest {
 		super(testName, "CustomersWithSection", true);		
 	}
 	
+	public void testManyToManyCollection() throws Exception {
+		execute("Mode.detailAndFirst");
+		execute("Sections.change", "activeSection=1");
+		assertCollectionRowCount("states", 0);
+		execute("Collection.new", "viewObject=xava_view_section1_states");
+		setValue("states.state.id", "CA");
+		assertValue("states.state.name", "CALIFORNIA");
+		execute("Collection.save", "viewObject=xava_view_section1_states");
+		assertCollectionRowCount("states", 1);
+		assertValueInCollection("states", 0, "state.id", "CA");
+		assertValueInCollection("states", 0, "state.name", "CALIFORNIA");
+		execute("Collection.edit", "row=0,viewObject=xava_view_section1_states");
+		execute("Collection.remove", "viewObject=xava_view_section1_states");
+		assertCollectionRowCount("states", 0);
+	}
+	
 	public void testChangeReferenceLabel() throws Exception {
 		execute("CRUD.new");
 		assertLabel("alternateSeller", "Alternate seller");
