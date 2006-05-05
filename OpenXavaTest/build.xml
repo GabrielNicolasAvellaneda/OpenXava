@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="OpenXavaTest" default="deployWar" basedir=".">
+<project name="OpenXavaTest" default="all" basedir=".">
 
 	<property name="project" value="OpenXavaTest" />
 	<property name="package" value="test"/>
@@ -93,5 +93,11 @@
 	<target name="deployPortlets"> 
 		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
 	</target>
-					
+		
+	<target name="all">
+		<ant antfile="../OpenXava/build.xml" target="generateHibernate"/>
+		<ant antfile="../OpenXava/build.xml" target="compile"/>
+		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
+	</target>
+						
 </project>

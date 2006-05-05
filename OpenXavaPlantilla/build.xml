@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="@proyecto@" default="desplegarWar" basedir=".">
+<project name="@proyecto@" default="todo" basedir=".">
 
 	<property name="project" value="@proyecto@" />
 	<property name="package" value="@paquete@"/>
@@ -46,10 +46,16 @@
 	<target name="redesplegarPortlets"> 
 		<touch file="../${project}/xava/aplicacion.xml"/>
 		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
-	</target>
+	</target>	
 		
 	<target name="desplegarPortlets"> 
 		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
-	</target>		
-			
+	</target>
+	
+	<target name="todo">
+		<ant antfile="../OpenXava/build.xml" target="generateHibernate"/>
+		<ant antfile="../OpenXava/build.xml" target="compile"/>
+		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
+	</target>
+				
 </project>
