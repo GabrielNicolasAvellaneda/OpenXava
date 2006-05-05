@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="@project@" default="deployWar" basedir=".">
+<project name="@project@" default="all" basedir=".">
 
 	<property name="project" value="@project@" />
 	<property name="package" value="@package@"/>
@@ -50,5 +50,11 @@
 	<target name="deployPortlets"> 
 		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
 	</target>
-			
+	
+	<target name="all">
+		<ant antfile="../OpenXava/build.xml" target="generateHibernate"/>
+		<ant antfile="../OpenXava/build.xml" target="compile"/>
+		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
+	</target>
+				
 </project>
