@@ -549,6 +549,20 @@
 			tofile="../${project.ejb}/${classes.dir}/jndi.properties" overwrite="true"/>		
 	</target>
 	
+	<target name="compile"> 
+		<javac destdir="../${project}/web/WEB-INF/classes"> 
+			<src path="../${project}/src"/> 
+			<src path="../${project}/gen-src"/> 
+			<src path="../${project}/gen-src-xava"/> 
+			<classpath> 
+				<fileset dir="web/WEB-INF/lib"> 
+					<include name="**/*.jar"/> 
+				</fileset> 
+				<pathelement path="../OpenXava/lib/j2ee.jar;${xava.compiler.path}"/> 
+			</classpath> 
+		</javac>  
+	</target> 
+		
 	<target name="createEJBJar" 
 		depends="createDist, updateDataSourceInfo, filterWithConfiguration, filterWithoutConfiguration, filter, configureJNDI">
 		<jar jarfile="${dist.dir}/${name.jar}.jar" 
