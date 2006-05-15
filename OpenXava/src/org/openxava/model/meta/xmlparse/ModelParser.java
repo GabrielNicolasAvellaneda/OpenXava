@@ -1,7 +1,5 @@
 package org.openxava.model.meta.xmlparse;
 
-import java.util.*;
-
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;

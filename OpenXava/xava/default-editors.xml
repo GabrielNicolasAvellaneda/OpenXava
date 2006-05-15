@@ -11,6 +11,7 @@
   <editor url="textEditor.jsp"> 
     <for-type type="java.lang.String"/>
     <for-type type="java.math.BigDecimal"/>
+    <for-type type="java.math.BigInteger"/>
     <for-type type="int"/>
     <for-type type="java.lang.Integer"/>    
     <for-type type="long"/>

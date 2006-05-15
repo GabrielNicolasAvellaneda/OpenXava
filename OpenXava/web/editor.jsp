@@ -1,6 +1,7 @@
 <%@ include file="imports.jsp"%>
 
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
+<%-- ¿Context y estilo son necesarios?--%>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
@@ -17,20 +18,20 @@ String propertyKey = request.getParameter("propertyKey");
 MetaProperty p = (MetaProperty) request.getAttribute(propertyKey);
 
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
-String formName = manager.getForm();	
-boolean throwsChanged=view.throwsPropertyChanged(p);
-String scriptFoco = "onfocus=focus_property.value='" + propertyKey + "'";
-String script = throwsChanged?
-	"onchange='throwPropertyChanged(document." + formName + ", \"" + propertyKey + "\")' ":"";
-script = script + scriptFoco;
-Object value = request.getAttribute(propertyKey + ".value");
+// tmp String formName = manager.getForm();	
+// tmp boolean throwsChanged=view.throwsPropertyChanged(p);
+// tmp String scriptFoco = "onfocus=focus_property.value='" + propertyKey + "'";
+// tmp String script = throwsChanged?
+// tmp 	"onchange='throwPropertyChanged(document." + formName + ", \"" + propertyKey + "\")' ":"";
+// tmp script = script + scriptFoco;
 
-if (WebEditors.mustToFormat(p)) {
-	Object fvalue = WebEditors.formatToStringOrArray(request, p, value, errors);
-	request.setAttribute(propertyKey + ".fvalue", fvalue);
-}
+// tmp Object value = request.getAttribute(propertyKey + ".value");
+// tmp if (WebEditors.mustToFormat(p)) {
+// tmp 	Object fvalue = WebEditors.formatToStringOrArray(request, p, value, errors);
+// tmp 	request.setAttribute(propertyKey + ".fvalue", fvalue);
+// tmp }
 boolean editable = view.isEditable(p);
-String editableKey = propertyKey + "_EDITABLE_";
+// tmp String editableKey = propertyKey + "_EDITABLE_";
 String labelKey = propertyKey + "_LABEL_";
 
 int labelFormat = view.getLabelFormatForProperty(p);
@@ -39,7 +40,9 @@ String label = view.getLabelFor(p);
 
 <%@ include file="htmlTagsEditor.jsp"%>
 
+<%-- tmp 
 <input type="hidden" name="<%=editableKey%>" value="<%=editable%>">
+--%>
 
 <%=preLabel%>
 <% if (labelFormat == MetaPropertyView.NORMAL_LABEL) { %>
@@ -66,11 +69,14 @@ String label = view.getLabelFor(p);
 <tr><td style='vertical-align: middle'>
 <% } %>
 <%
-String editorURL = WebEditors.getUrl(p);
-char nexus = editorURL.indexOf('?') < 0?'?':'&';
-editorURL = editorURL + nexus + "script="+script+"&editable="+editable;
+// tmp String editorURL = WebEditors.getUrl(p);
+// tmp char nexus = editorURL.indexOf('?') < 0?'?':'&';
+// tmp editorURL = editorURL + nexus + "script="+script+"&editable="+editable;
 %>
-<jsp:include page="<%=editorURL%>"/>
+<%--tmp 
+<xava:include page="<%=editorURL%>"/>
+--%>
+<xava:editor property="<%=p.getName()%>"/>
 <% 
 if ((editable && view.isRepresentsEntityReference() && view.isLastKeyProperty(p)) || // with key visible
 	(view.isRepresentsEntityReference() && view.isFirstPropertyAndViewHasNoKeys(p) && view.isKeyEditable())) // with key hidden

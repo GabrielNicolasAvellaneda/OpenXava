@@ -30,7 +30,6 @@ public class POJOPropertiesContainerAdapter implements IPropertiesContainer {
 
 	public void executeSets(Map properties) throws ValidationException, RemoteException {
 		try {
-			System.out.println("[POJOPropertiesContainerAdapter.executeSets] properties =" + properties); //  tmp
 			propertiesManager.executeSets(properties);	
 		}
 		catch (InvocationTargetException ex) {

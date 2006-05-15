@@ -703,6 +703,11 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			}
 			if (Boolean.class.isAssignableFrom(type) || boolean.class.isAssignableFrom(type)) {							
 				return Boolean.valueOf(value);
+			}
+			if (BigInteger.class.isAssignableFrom(type)) {
+				if (emptyString) return BigInteger.ZERO;				
+				Number n = NumberFormat.getNumberInstance(locale).parse(value);
+				return new BigInteger(n.toString());
 			}			
 		}
 		catch (Exception ex) {
@@ -757,6 +762,11 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			if (Double.class.isAssignableFrom(type) || double.class.isAssignableFrom(type)) {
 				return NumberFormat.getNumberInstance(locale).format(value);
 			}
+			if (BigInteger.class.isAssignableFrom(type)) {
+				NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
+				numberFormat.setMaximumFractionDigits(0);
+				return numberFormat.format(value);				
+			}			
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();

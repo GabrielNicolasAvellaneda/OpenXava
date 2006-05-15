@@ -127,8 +127,7 @@ public class PropertiesManager implements java.io.Serializable {
 	public void executeSet(String propertyName, Object value)
 		throws InvocationTargetException, PropertiesManagerException {
 		Method met = null;
-		PropertyDescriptor pd = null;
-		Object tmp = value == null?null:value.getClass(); 
+		PropertyDescriptor pd = null;		 
 		try {
 			pd = getPropertyDescriptor(propertyName);
 			met = pd.getWriteMethod();
