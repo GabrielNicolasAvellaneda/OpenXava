@@ -16,7 +16,7 @@
 	
 	<target name="createNewProject">		
 		<mkdir dir="../${project}"/>
-		<copy todir="../${project}">
+		<copy todir="../${project}" overwrite="true">
 			<fileset dir="." excludes="CreateNewProject.xml" />
 	    	<filterset>	    	
 				<filter token="project" value="${project}"/>
@@ -26,8 +26,14 @@
 	    		<filter token="datasource" value="${datasource}"/>
 			</filterset> 			         
 		</copy>						
-		<move file="../${project}/components/MyComponent.xml" 
+		<move file="../${project}/components/MyComponent.xml.template" 
 			tofile="../${project}/components/${component}.xml" />
+		<move file="../${project}/.externalToolBuilders/MyProject.wtpBuild.launch" 
+			tofile="../${project}/.externalToolBuilders/${project}.wtpBuild.launch" />
+		<move file="../${project}/.project.template" 
+			tofile="../${project}/.project" />		
+		<move file="../${project}/xava/application.xml.template" 
+			tofile="../${project}/xava/application.xml" />				
 	</target>
 					
 </project>

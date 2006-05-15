@@ -28,10 +28,12 @@
 		<ant antfile="../OpenXava/build.xml" target="clearGeneratedCode"/>		
 	</target>
 			
+	<!-- Construye y despliega la aplicación en formate .war -->
 	<target name="desplegarWar">
 		<ant antfile="../OpenXava/build.xml" target="deploy"/>
 	</target>				
-	
+
+	<!-- Reconstruye la aplicación, después de esto todo el contenido de 'web' esta listo para ser desplegado -->
 	<target name="reconstruir">
 		<ant antfile="../OpenXava/build.xml" target="prepareWar"/>
 	</target>
@@ -43,15 +45,27 @@
 		<ant antfile="../OpenXava/build.xml" target="wtpBuild"/>
 	</target>		
 	
+	<!--
+	Construye la aplicación y la despliega en formato portlets. 
+	Regenera todos los archivos PSML (para JetSpeed2)
+	-->	
 	<target name="redesplegarPortlets"> 
 		<touch file="../${project}/xava/aplicacion.xml"/>
 		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
 	</target>	
 		
+	<!-- 
+	Construye la aplicación y la despliega en formato portlets. 
+	Regenera los archivos PSML (para JetSpeed2) solo si aplicacion.xml ha cambiado
+	-->		
 	<target name="desplegarPortlets"> 
 		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
 	</target>
 	
+	<!-- 
+	Ejecuta todos los procesos para ver nuestra aplicación en marcha.
+	Pensada para ser usada desde línea de órdenes.
+	-->	
 	<target name="todo">
 		<ant antfile="../OpenXava/build.xml" target="generateHibernate"/>
 		<ant antfile="../OpenXava/build.xml" target="compile"/>
