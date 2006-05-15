@@ -1381,7 +1381,7 @@ public class View implements java.io.Serializable {
 		assignValuesToWebView(getModelName());
 	}
 		
-	public void assignValuesToWebView(String qualifier) {		
+	public void assignValuesToWebView(String qualifier) {
 		try {												
 			focusForward = "true".equalsIgnoreCase(getRequest().getParameter("focus_forward"));
 			setIdFocusProperty(getRequest().getParameter("focus_property"));			

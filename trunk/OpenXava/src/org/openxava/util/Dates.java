@@ -196,14 +196,16 @@ public class Dates {
 		int initDay = fmin.get(Calendar.DATE);
 		int initMonth = fmin.get(Calendar.MONTH);
 		int initYear = fmin.get(Calendar.YEAR);
+		int endDay = fmax.get(Calendar.DATE);
 		int endMonth = fmax.get(Calendar.MONTH);
 		int endYear = fmax.get(Calendar.YEAR);
+		int initLimit = fmin.getActualMaximum(Calendar.DATE);
 		int finalLimit = fmax.getActualMaximum(Calendar.DATE);
 		int initPeak = 0;
 		int finalPeak = 0;
         
 		if (initMonth == endMonth && initYear == endYear) {
-			while ( fmin.getTime().before(fmax.getTime()) ) {
+			while (!fmin.getTime().equals(fmax.getTime())) {
 				fmin.add(Calendar.DATE, 1);
 				df.days++;
 			}
@@ -235,7 +237,7 @@ public class Dates {
 			}
 		}
         
-		while ( fmin.getTime().before(fmax.getTime()) ) {
+		while (!fmin.getTime().equals(fmax.getTime())) {
 			fmin.add(Calendar.DATE, 1);
 			finalPeak++;
 		}

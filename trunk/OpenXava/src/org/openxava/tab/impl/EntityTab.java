@@ -55,10 +55,10 @@ public class EntityTab implements IEntityTabImpl {
 	}
 	
 	public void search(String condition, Object key) throws FinderException, RemoteException {
-		try {			
-			StringBuffer select = new StringBuffer(getSelectBase().toUpperCase());			
+		try {						
+			StringBuffer select = new StringBuffer(getSelectBase());
 			if (!Is.emptyString(condition)) {
-				if (select.toString().indexOf("WHERE") < 0) select.append(" WHERE "); 
+				if (select.toString().toUpperCase().indexOf("WHERE") < 0) select.append(" WHERE "); 
 				else select.append(" AND "); 				
 				select.append(condition);				
 			}															
@@ -238,8 +238,9 @@ public class EntityTab implements IEntityTabImpl {
 	}
 	
 	private String insertKeyFields(String select) throws XavaException {				
-		String s = select.trim().toUpperCase();
-		if (!(s.startsWith("SELECT ") || (s.startsWith("SELECT\t")))) return select;				
+		String s = select.trim(); 
+		String sUpperCase = s.toUpperCase(); 
+		if (!(sUpperCase.startsWith("SELECT ") || (sUpperCase.startsWith("SELECT\t")))) return select;				
 		StringBuffer result = new StringBuffer("SELECT ");		
 		Iterator itKeyNames = getKeyNames().iterator();
 		while (itKeyNames.hasNext()) {

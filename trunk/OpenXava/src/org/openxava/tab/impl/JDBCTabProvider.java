@@ -48,11 +48,11 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 	public void search(String condition, Object key) throws FinderException, RemoteException {				
 		current = 0;
 		eof = false;
-		this.key = toArray(key);			
-		condition = condition == null ? "" : condition.trim().toUpperCase();		
+		this.key = toArray(key);					
+		condition = condition == null ? "" : condition.trim(); 
 		if (condition.equals(""))
 			select = generateSelect(); // for all
-		else if (condition.startsWith("SELECT"))
+		else if (condition.toUpperCase().startsWith("SELECT")) 
 			select = condition;
 		else
 			select = generateSelect() + " WHERE " + condition;					
@@ -332,10 +332,10 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 	}
 	
 	private String createSizeSelect(String select) {
-		if (select == null) return null;
-		select = select.toUpperCase();		
-		int iniFrom = select.indexOf("FROM ");
-		int end = select.indexOf("ORDER BY ");
+		if (select == null) return null;		
+		String selectUpperCase = select.toUpperCase();
+		int iniFrom = selectUpperCase.indexOf("FROM ");
+		int end = selectUpperCase.indexOf("ORDER BY ");
 		StringBuffer sb = new StringBuffer("SELECT COUNT(*) ");
 		if (end < 0) sb.append(select.substring(iniFrom));
 		else sb.append(select.substring(iniFrom, end - 1));

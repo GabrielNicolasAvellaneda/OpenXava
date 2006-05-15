@@ -3,7 +3,8 @@ package org.openxava.converters;
 import java.math.*;
 
 /**
- * In java long and in database Number of any type.
+ * In Java <code>java.math.BigDecimal</code> and in database <code>Number</code> 
+ * of any type.
  * 
  * @author Javier Paniza
  */
