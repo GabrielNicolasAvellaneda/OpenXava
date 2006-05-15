@@ -47,6 +47,7 @@ public class ModuleManager {
 	private String viewName = null;
 	private String modeName;	
 	private String nextModule;
+	private String defaultView = null; 
 	
 	private boolean formUpload = false;
 
@@ -571,14 +572,14 @@ public class ModuleManager {
 			return "xava/list";
 		}		
 		if (viewName == null) {			
-				viewName = "xava/detail"; 
+			viewName = "xava/detail"; 
 		}		
 		return viewName;		
 	}
 
 	private void setViewName(String newView) throws XavaException {
 		if (ICustomViewAction.DEFAULT_VIEW.equals(newView)) {					
-			viewName = null; 
+			viewName = defaultView;  
 		}
 		else {		
 			viewName = newView;
@@ -623,8 +624,8 @@ public class ModuleManager {
 			modeName = null;						
 		}
 		if (!Is.emptyString(getMetaModule().getWebViewURL())) {
-			setViewName(getMetaModule().getWebViewURL());
-			
+			defaultView = getMetaModule().getWebViewURL();
+			setViewName(defaultView);			
 		}		
 		return true; 		
 	}
@@ -694,9 +695,9 @@ public class ModuleManager {
 	public boolean isXavaView() throws XavaException{
 		// For that a upload form does not delete the view data.
 		// It's a ad hoc solution. It can be improved 
-		if (isFormUpload()) return false; 
-											
-		return "xava/detail".equals(getViewName());
+		if (isFormUpload()) return false; 							
+		return "xava/detail".equals(getViewName()) ||
+				(getViewName().equals(defaultView)); // Because a custom JSP page can use xava_view too
 	}
 
 	public String getXavaViewName() throws XavaException {
