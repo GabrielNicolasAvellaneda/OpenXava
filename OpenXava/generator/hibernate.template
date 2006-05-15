@@ -150,12 +150,12 @@ while (itReferences.hasNext()) {
 			if (columns.size() == 1) {	
 				String column = (String) columns.iterator().next();
 # 
-		<many-to-one name="#(refName)#" column="#(column)#" class="#(ref.getMetaModelReferenced().getPOJOClassName())#" not-found="ignore" #(insertUpdate)#/>
+		<many-to-one name="#(refName)#" column="#(column)#" class="#(ref.getMetaModelReferenced().getPOJOClassName())#" #(insertUpdate)# access="field" />
 # 
 			}
 			else { 
 # 
-		<many-to-one name="#(refName)#" class="#(ref.getMetaModelReferenced().getPOJOClassName())#" not-found="ignore" #(insertUpdate)#> 
+		<many-to-one name="#(refName)#" class="#(ref.getMetaModelReferenced().getPOJOClassName())#" #(insertUpdate)# access="field"> 
 # 
 			for (Iterator itC = columns.iterator(); itC.hasNext();) {
 				String col = (String) itC.next();
@@ -186,12 +186,12 @@ while (itReferences.hasNext()) {
 		if (columns.size() == 1) {	
 			String column = (String) columns.iterator().next();
 # 
-		<many-to-one name="#(reference.getName())#" column="#(column)#" class="#(reference.getMetaModelReferenced().getPOJOClassName())#" not-found="ignore" #(insertUpdate)#/>
+		<many-to-one name="#(reference.getName())#" column="#(column)#" class="#(reference.getMetaModelReferenced().getPOJOClassName())#" #(insertUpdate)# access="field"/>
 # 
 		}
 		else { 
 # 
-		<many-to-one name="#(reference.getName())#" class="#(reference.getMetaModelReferenced().getPOJOClassName())#" not-found="ignore" #(insertUpdate)#> 
+		<many-to-one name="#(reference.getName())#" class="#(reference.getMetaModelReferenced().getPOJOClassName())#" #(insertUpdate)# access="field"> 
 # 
 			for (Iterator itC = columns.iterator(); itC.hasNext();) {
 				String col = (String) itC.next();

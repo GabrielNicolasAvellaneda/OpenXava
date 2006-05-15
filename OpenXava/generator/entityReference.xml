@@ -78,6 +78,18 @@ if (overlapped) {
 }
 </java> 	
 	public <expr>reference.getMetaModelReferenced().getInterfaceName()</expr> get<expr>refName</expr>() {
+		if (<expr>reference.getName()</expr> != null) {
+			// Because not-found='ignore' annul lazy initialization, we simulate it
+			try {
+				<expr>reference.getName()</expr>.toString();
+			}
+			catch (org.hibernate.ObjectNotFoundException ex) {
+				return null;
+			}
+			catch (NullPointerException ex) {
+				return null;
+			}			
+		}	
 		return <expr>reference.getName()</expr>;
 	}
 	public void set<expr>refName</expr>(<expr>reference.getMetaModelReferenced().getInterfaceName()</expr> new<expr>reference.getReferencedModelName()</expr>) <expr>setException</expr>{
