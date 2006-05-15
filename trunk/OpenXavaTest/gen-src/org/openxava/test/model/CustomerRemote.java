@@ -49,6 +49,9 @@ public interface CustomerRemote
    public int getNumber(  )
       throws java.rmi.RemoteException;
 
+   public java.util.Collection getStates(  )
+      throws java.rmi.RemoteException;
+
    public java.util.Collection getDeliveryPlaces(  )
       throws java.rmi.RemoteException;
 

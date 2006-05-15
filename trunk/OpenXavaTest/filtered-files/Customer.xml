@@ -58,6 +58,10 @@
 			</calculator>
 		</property>
 		
+		<collection name="states">
+			<reference model="CustomerState"/>
+		</collection>
+		
 		<method name="calculateShippingAndHandling">
 			<calculator class="org.openxava.test.calculators.ShippingAndHandlingCalculator">
 				<set property="stateId" from="address.state.id"/>
@@ -142,6 +146,11 @@
 		<property name="name" type="String" size="30" required="true"/>
 		<finder name="all" arguments="" collection="true"/>
 	</aggregate>	
+		
+	<aggregate name="CustomerState">
+		<reference name="customer" key="true"/>
+		<reference name="state" key="true"/>
+	</aggregate>
 	
 	<view>
 		<!-- 
@@ -196,7 +205,11 @@
 		</reference-view>			
 		
 		<reference-view reference="alternateSeller" view="DecorateName"/>
-
+		
+		<collection-view collection="states">
+			<list-properties>state.id, state.name</list-properties>
+		</collection-view>
+		
 		<members>
 			number; 
 			<section name="customer">
@@ -211,7 +224,10 @@
 				</group>
 				alternateSeller; 
 				deliveryPlaces; 
-				remarks
+				remarks;				
+			</section>
+			<section name="states"> 
+				states
 			</section>
 		</members>
 						
@@ -282,6 +298,10 @@
 		<property-view property="preferredWarehouse.number">
 			<on-change class="org.openxava.test.actions.OnChangePreferredWarehouseAction"/>
 		</property-view>
+	</view>
+	
+	<view model="CustomerState">
+		<reference-view reference="state" frame="false"/>
 	</view>
 	
 	<tab>
@@ -364,5 +384,18 @@
 		<property-mapping property="oid" column="OID"/>
 		<property-mapping property="name" column="NAME"/>
 	</aggregate-mapping>	
-						
+	
+	<aggregate-mapping aggregate="CustomerState" table="XAVATEST_CUSTOMER_STATE">
+		<reference-mapping reference="customer">
+			<reference-mapping-detail 
+				column="CUSTOMER" 
+				referenced-model-property="number"/> 
+		</reference-mapping>				
+		<reference-mapping reference="state">
+			<reference-mapping-detail 
+				column="STATE" 
+				referenced-model-property="id"/> 
+		</reference-mapping>						
+	</aggregate-mapping>	
+							
 </component>
