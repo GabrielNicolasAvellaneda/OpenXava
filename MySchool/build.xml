@@ -12,14 +12,17 @@
 	<property name="datasource" value="MySchoolDS"/>
 	<property name="separator" value="_"/>
 		
+	<!-- Incremental code generation -->
 	<target name="generateCode">
 		<ant antfile="../OpenXava/build.xml" target="generateHibernate"/>		
 	</target>
 	
+	<!-- Build and deploy the application in .war file format -->
 	<target name="deployWar">
 		<ant antfile="../OpenXava/build.xml" target="deploy"/>
 	</target>
 	
+	<!-- Rebuild all application, after this all the content of 'web' is ready to be deployed -->
 	<target name="rebuild">
 		<ant antfile="../OpenXava/build.xml" target="prepareWar"/>
 	</target>
@@ -30,16 +33,28 @@
 	<target name="wtpBuild">		
 		<ant antfile="../OpenXava/build.xml" target="wtpBuild"/>
 	</target>	
-		
+
+	<!-- 
+	Build all application and deploy it in portlet format. 
+	Regenerate all PSML (for jetspeed2) files
+	-->	
 	<target name="redeployPortlets"> 
 		<touch file="../${project}/xava/application.xml"/>
 		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
 	</target>	
 	
+	<!-- 
+	Build all application and deploy it in portlet format. 
+	Regenerate PSML (for jetspeed2) files only if application.xml is changed
+	-->		
 	<target name="deployPortlets"> 
 		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
 	</target>	
 	
+	<!-- 
+	Run all process to see your application working.
+	Thinked to be used from command line.
+	-->	
 	<target name="all">
 		<ant antfile="../OpenXava/build.xml" target="generateHibernate"/>
 		<ant antfile="../OpenXava/build.xml" target="compile"/>
