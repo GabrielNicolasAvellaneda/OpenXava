@@ -552,7 +552,9 @@
 	<target name="compile"> 
 		<javac destdir="../${project}/web/WEB-INF/classes"> 
 			<src path="../${project}/src"/> 
+			<!-- Only need if you uses XDoclet generated code
 			<src path="../${project}/gen-src"/> 
+			-->
 			<src path="../${project}/gen-src-xava"/> 
 			<classpath> 
 				<fileset dir="web/WEB-INF/lib"> 
@@ -561,6 +563,9 @@
 				<pathelement path="../OpenXava/lib/j2ee.jar;${xava.compiler.path}"/> 
 			</classpath> 
 		</javac>  
+		<copy todir="../${project}/web/WEB-INF/classes">
+			<fileset dir="../${project}/gen-src-xava" excludes="**/*.java"/>
+		</copy>		
 	</target> 
 		
 	<target name="createEJBJar" 
