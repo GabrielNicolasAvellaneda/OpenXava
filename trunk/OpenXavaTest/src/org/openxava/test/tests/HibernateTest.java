@@ -5,6 +5,7 @@ import java.util.*;
 
 import org.hibernate.*;
 import org.openxava.hibernate.*;
+import org.openxava.model.*;
 import org.openxava.test.model.*;
 import org.openxava.util.*;
 
@@ -28,7 +29,7 @@ public class HibernateTest extends TestCase {
 	protected void tearDown() throws Exception {
 		XHibernate.commit();
 	}
-		
+					
 	public void testFinderByAggregateProperty() throws Exception {
 		Collection customers = Customer.findByStreet("XXX");
 		for (Iterator it = customers.iterator(); it.hasNext(); ); // This mustn't fail 
