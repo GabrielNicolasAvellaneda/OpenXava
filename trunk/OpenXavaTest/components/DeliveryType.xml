@@ -28,8 +28,8 @@
 		<members>number; description; comboDeliveries</members>
 	</view>
 	
-	<entity-mapping table="XAVATEST@separator@DELIVERYTYPE">
-		<property-mapping property="number" column="NUMBER"/>		
+	<entity-mapping table="XAVATEST@separator@DeliveryType">
+		<property-mapping property="number" column="number"/>		
 		<property-mapping property="description" column="DESCRIPTION" />		
 	</entity-mapping>
 
