@@ -10,7 +10,7 @@ import org.openxava.generators.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Wed Apr 26 11:35:07 CEST 2006
+ * @version Tue May 09 10:21:42 CEST 2006
  */
 public class EntityReferencePG {
     Properties properties = new Properties();
@@ -107,7 +107,11 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     out.print(reference.getMetaModelReferenced().getInterfaceName());
     out.print(" get");
     out.print(refName);
-    out.print("() {\n\t\treturn ");
+    out.print("() {\n\t\tif (");
+    out.print(reference.getName());
+    out.print(" != null) {\n\t\t\t// Because not-found='ignore' annul lazy initialization, we simulate it\n\t\t\ttry {\n\t\t\t\t");
+    out.print(reference.getName());
+    out.print(".toString();\n\t\t\t}\n\t\t\tcatch (org.hibernate.ObjectNotFoundException ex) {\n\t\t\t\treturn null;\n\t\t\t}\n\t\t\tcatch (NullPointerException ex) {\n\t\t\t\treturn null;\n\t\t\t}\t\t\t\n\t\t}\t\n\t\treturn ");
     out.print(reference.getName());
     out.print(";\n\t}\n\tpublic void set");
     out.print(refName);
@@ -215,7 +219,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Wed Apr 26 11:35:07 CEST 2006", // date this file was generated
+        { "Tue May 09 10:21:42 CEST 2006", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/entityReference.xml", // input file
              "/home/javi/workspace/OpenXava/generator/EntityReferencePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

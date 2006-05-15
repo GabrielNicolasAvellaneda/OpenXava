@@ -188,7 +188,7 @@ public class XHibernate {
 				PostLoadEventListener [] postLoadListenersArray = new PostLoadEventListener[postLoadListeners.size()];
 				postLoadListeners.toArray(postLoadListenersArray);			
 				configuration.getEventListeners().setPostLoadEventListeners(postLoadListenersArray);
-			}			
+			}		
 									
 			return configuration.buildSessionFactory();
 		} 
