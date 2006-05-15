@@ -14,11 +14,10 @@
 	<property name="modulo" value="MiModulo" />
 	<property name="fuentedatos" value="MiFuenteDatos" />
 	
-	
 	<target name="crearNuevoProyecto">		
 		<mkdir dir="../${proyecto}"/>
-		<copy todir="../${proyecto}">
-			<fileset dir="." excludes="CrearNuevoProject.xml" />
+		<copy todir="../${proyecto}" overwrite="true">
+			<fileset dir="." excludes="CrearNuevoProyecto.xml" />
 	    	<filterset>	    	
 				<filter token="proyecto" value="${proyecto}"/>
 	    		<filter token="paquete" value="${paquete}"/>
@@ -27,8 +26,14 @@
 	    		<filter token="fuentedatos" value="${fuentedatos}"/>
 			</filterset> 			         
 		</copy>						
-		<move file="../${proyecto}/components/MiComponente.xml" 
+		<move file="../${proyecto}/components/MiComponente.xml.plantilla" 
 			tofile="../${proyecto}/components/${componente}.xml" />
+		<move file="../${proyecto}/.externalToolBuilders/MiProyecto.wtpBuild.launch" 
+			tofile="../${proyecto}/.externalToolBuilders/${proyecto}.wtpBuild.launch" />
+		<move file="../${proyecto}/.project.template" 
+			tofile="../${proyecto}/.project" />			
+		<move file="../${proyecto}/xava/aplicacion.xml.plantilla" 
+			tofile="../${proyecto}/xava/aplicacion.xml" />						
 	</target>
 					
 </project>
