@@ -192,6 +192,15 @@
       </columns>
 
    </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_CustomerState" name="" primaryKey="CustomerState_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="CustomerState_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_CustomerState" constraint="Constraint_CustomerState_"/>
+
+      <columns xmi:id="CustomerState__State_id" name="_State_id">
+      </columns>
+      <columns xmi:id="CustomerState__Customer_number" name="_Customer_number">
+      </columns>
+
+   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_DeliveryDetail" name="" primaryKey="DeliveryDetail_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="DeliveryDetail_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_DeliveryDetail" constraint="Constraint_DeliveryDetail_"/>
 

@@ -823,6 +823,47 @@
       </entity>
 
       <entity>
+         <ejb-name>CustomerState</ejb-name>
+
+         <table-name>XAVATEST_CUSTOMER_STATE</table-name>
+
+         <cmp-field>
+            <field-name>_State_id</field-name>
+            <column-name>STATE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Customer_number</field-name>
+            <column-name>CUSTOMER</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByState</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM CustomerState o WHERE o._State_id = ?1 ]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByCustomer</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM CustomerState o WHERE o._Customer_number = ?1 ]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
          <ejb-name>DeliveryDetail</ejb-name>
 
          <table-name>XAVATEST_DELIVERYDETAIL</table-name>
