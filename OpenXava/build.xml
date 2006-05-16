@@ -552,7 +552,7 @@
 	<target name="compile"> 
 		<javac destdir="../${project}/web/WEB-INF/classes"> 
 			<src path="../${project}/src"/> 
-			<!-- Only need if you uses XDoclet generated code
+			<!-- Only needed if you uses XDoclet generated code
 			<src path="../${project}/gen-src"/> 
 			-->
 			<src path="../${project}/gen-src-xava"/> 
