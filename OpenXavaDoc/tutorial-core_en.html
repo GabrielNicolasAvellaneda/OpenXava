@@ -1,0 +1,631 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+  <title>OpenXava Tutorial for core distribution</title>
+</head>
+<body>
+<h2>OpenXava&nbsp;Tutorial for core distribution</h2>
+The <span style="font-weight: bold;">core</span> distribution has the
+complete OpenXava framework plus tests and examples. It's thought to be
+used by <span style="font-weight: bold;">advanced OpenXava users</span>
+in order to update their version of OpenXava to the last one, or simply
+that they prefer to configure its own portal or application server.<br>
+<span style="font-style: italic;">If you are <span
+ style="font-weight: bold;">new to OpenXava</span> is far <span
+ style="font-weight: bold;">better</span> to use the <span
+ style="font-weight: bold;">openxava-x.x.x-jetspeed2</span>
+distribution that comes with a Tomcat + Jetspeed + Eclipse Workspace
+all configured and ready to use, plus a local OpenXava Portal with
+documentation, reference guides, populated databases, etc.</span><br
+ style="font-style: italic;">
+Although if you know well Java, Ant and Tomcat you can follow this
+Tutorial and taste OpenXava.<br>
+These instructions suposses&nbsp;that you have:<br>
+<ul>
+  <li>Java JDK&nbsp;5 or JDK 1.4.2.</li>
+  <li>Tomcat 5.5 or 5.0 installed and ready to work.</li>
+  <li>Ant 1.6.x.</li>
+</ul>
+Here are the steps to begin xaving:<br>
+<ul>
+  <li><a href="#Configure_databases_in_Tomcat">Configure&nbsp;databases
+in&nbsp;Tomcat.</a></li>
+  <li><a
+ href="portal/tutorial.psml#Ejecutar_aplicacion_ejemplo_MiEscuela">Execute
+example application MySchool.</a></li>
+  <li><a
+ href="portal/tutorial.psml#Modificar_aplicacion_ejemplo_MiEscuela">Modify
+example application MySchool.</a></li>
+  <li><a href="portal/tutorial.psml#Ayuda">Help</a><br>
+  </li>
+</ul>
+<h4><a name="Configure_databases_in_Tomcat"></a>Configure databases
+in&nbsp;Tomcat</h4>
+The first step is creating and configure databases for running the demo
+applicacion:<br>
+<ul>
+  <li>Create a folder called <span style="font-family: monospace;">data</span>
+inside your Tomcat.</li>
+  <li>Copy from <span style="font-family: monospace;">OpenXava/data</span>
+the&nbsp;<span style="font-family: monospace;">openxava-db.script</span>
+and <span style="font-family: monospace;">openxava-db.properties</span>
+files to the <span style="font-family: monospace;">data</span> folder
+of Tomcat.</li>
+  <li>Copy from <span style="font-family: monospace;">MySchool/data</span>
+the&nbsp;<span style="font-family: monospace;">my-school-db.script</span>
+and&nbsp;<span style="font-family: monospace;">my-school-</span><span
+ style="font-family: monospace;">db.properties</span> files to the <span
+ style="font-family: monospace;">data</span> folder of Tomcat.</li>
+</ul>
+Edit the&nbsp;<span style="font-family: monospace;">conf/context.xml</span>
+file of your Tomcat to declare the datasources, and add the next two:<br>
+<span style="font-family: monospace;"></span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;Context&gt;</span><span
+ style="font-family: monospace;"><br>
+&nbsp;&nbsp;&nbsp; ...<br>
+&nbsp;&nbsp;&nbsp; &lt;Resource name="jdbc/OpenXavaDS" auth="Container"
+type="javax.sql.DataSource"</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+maxActive="20" maxIdle="5" maxWait="10000"</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+username="sa" password="" driverClassName="org.hsqldb.jdbcDriver"</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+url="jdbc:hsqldb:file:../data/openxava-db"/&gt;</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;"></span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp; &lt;Resource
+name="jdbc/MySchoolDS" auth="Container" type="javax.sql.DataSource"</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+maxActive="20" maxIdle="5" maxWait="10000"</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+username="sa" password="" driverClassName="org.hsqldb.jdbcDriver"</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+url="jdbc:hsqldb:file:../data/my-school-db"/&gt;</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;"></span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;/Context&gt;</span><br>
+<br>
+Now copy&nbsp;the&nbsp;<span style="font-family: monospace;">OpenXavaTest/lib/hsqldb.jar</span>
+file to <span style="font-family: monospace;">common/lib</span> folder
+of your Tomcat.<br>
+The database is ready to run.<br>
+<h4><a name="Ejecutar_aplicacion_ejemplo_MiEscuela"></a>Execute
+example application
+MySchool</h4>
+First, you need to edit the <span style="font-family: monospace;">openxava.properties</span>
+file (in root folder of
+openxava) and put in the <span style="font-family: monospace;">tomcat.dir</span>
+property the path of your Tomcat.<br>
+OpenXava distribution comes with an example application called <span
+ style="font-style: italic;">MySchool</span>, in order to execute it
+follow the next steps, using Ant from command line:<br>
+<ul>
+  <li style="font-family: monospace;">cd MySchool</li>
+  <li><span style="font-family: monospace;">ant</span></li>
+  <li>Start your Tomcat.</li>
+  <li>Go to <a
+ href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Teachers"
+ target="_blank">http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Teachers</a></li>
+  <li>And let's play...<br>
+  </li>
+</ul>
+<h4><a name="Modificar_aplicacion_ejemplo_MiEscuela"></a>Modify
+example
+application MySchool</h4>
+<h5>Add other component and its
+module</h5>
+Copy and paste <span style="font-family: monospace;">components/Teacher.xml</span>
+file with the new name <span style="font-family: monospace;">Pupil.xml</span>.<br>
+Change <span style="font-family: monospace;">Pupil.xml</span>
+until it
+remains:<br>
+<br>
+<span style="font-family: monospace;">&lt;?xml
+version="1.0"
+encoding="ISO-8859-1"?&gt;
+</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;!DOCTYPE component SYSTEM
+"dtds/component.dtd"&gt;
+</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;component
+name="</span><span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">Pupil</span><span
+ style="font-family: monospace;">"&gt;
+</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;entity&gt;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;property name="</span><span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">number</span><span
+ style="font-family: monospace;">" type="</span><span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">int</span><span
+ style="font-family: monospace;">" key="true"
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; size="</span><span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">2</span><span
+ style="font-family: monospace;">"
+required="true"/&gt;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;property name="name"
+type="String" </span>
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; size="40"
+required="true"/&gt;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp; </span>
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;/entity&gt;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </span>
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;entity-mapping table="MYSCHOOL@separator@</span><span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">PUPIL</span><span
+ style="font-family: monospace;">"&gt;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;property-mapping
+property="</span><span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">number</span><span
+ style="font-family: monospace;">" column="</span><span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">NUMBER</span><span
+ style="font-family: monospace;">"/&gt;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;property-mapping
+property="name"
+column="NAME"/&gt;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;/</span><span style="font-family: monospace;">entity-mapping</span><span
+ style="font-family: monospace;">&gt; </span>
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; </span>
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;/</span><span
+ style="font-family: monospace;">component</span><span
+ style="font-family: monospace;">&gt;<br>
+<br style="font-family: monospace;">
+</span>Elements in <span
+ style="color: rgb(51, 102, 255); font-weight: bold;">blue</span>
+are
+the changed ones.<br>
+We have also to edit <span style="font-family: monospace;">xava/application.xml</span>,
+and add a new module:<br>
+<br>
+<span style="font-family: monospace;">&lt;?xml
+version = "1.0" encoding
+= "ISO-8859-1"?&gt;
+</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;!DOCTYPE
+application SYSTEM
+"dtds/application.dtd"&gt;
+</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;application
+name="MySchool"&gt; </span>
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;module
+name="Teachers"&gt;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;model name="Teacher"/&gt;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;controller
+name="Typical"/&gt;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;/module&gt;&nbsp;&nbsp;&nbsp; &nbsp;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+</span><br style="font-family: monospace;">
+<span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;module name="Pupils"&gt;
+</span><br
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">
+<span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;model name="Pupil"/&gt;
+</span><br
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">
+<span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;controller
+name="Typical"/&gt;
+</span><br
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">
+<span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;/module&gt;&nbsp;&nbsp;&nbsp; &nbsp;
+</span><br
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; </span>
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;/application&gt;</span><br
+ style="font-family: monospace;">
+<br>
+The <span style="color: rgb(51, 102, 255); font-weight: bold;">blue</span>
+things are the added ones.<br>
+Let's test our new module:<br>
+<ul>
+  <li style="font-family: monospace;">ant</li>
+  <li>Go to <a
+ href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils"
+ target="_blank">http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils</a></li>
+  <li>And let's play...<br>
+  </li>
+</ul>
+<h5>That pupils know about his
+teachers</h5>
+It is easy to make a pupil to have a reference to a teacher. Modify <span
+ style="font-family: monospace;">Pupil.xml</span>
+:<br>
+<br>
+<span style="font-family: monospace;">&lt;?xml
+version="1.0"
+encoding="ISO-8859-1"?&gt;</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;!DOCTYPE component SYSTEM
+"dtds/</span><span style="font-family: monospace;">component</span><span
+ style="font-family: monospace;">.dtd"&gt;</span><br
+ style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;component
+name="Pupil"&gt;</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;entity&gt;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;property name="number"
+type="int" key="true"</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; size="2"
+required="true"/&gt;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;property name="name"
+type="String" </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; size="40"
+required="true"/&gt;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp; </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; </span><span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&lt;reference
+name="teacher"/&gt;</span><span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;/entity&gt;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;entity-mapping
+table="MYSCHOOL@separator@PUPIL"&gt;</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;property-mapping
+property="number" column="NUMBER"/&gt;</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;</span><span style="font-family: monospace;">property-mapping</span><span
+ style="font-family: monospace;">
+property="name" column="NAME"/&gt;</span><br
+ style="font-family: monospace;">
+<span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;reference-mapping
+reference="teacher"&gt;</span><br
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">
+<span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&lt;reference-mapping-detail column="TEACHER"
+referenced-model-property="id"/&gt;</span><br
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">
+<span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;/</span><span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">reference-mapping</span><span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&gt;</span><br
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;/</span><span style="font-family: monospace;">entity-mapping</span><span
+ style="font-family: monospace;">&gt; </span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;/</span><span
+ style="font-family: monospace;">component</span><span
+ style="font-family: monospace;">&gt;</span><br
+ style="font-family: monospace;">
+<br style="font-family: monospace;">
+And now to test it:<br>
+<ul>
+  <li style="font-family: monospace;">ant</li>
+  <li>Go to <a
+ href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils"
+ target="_blank">http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils</a></li>
+</ul>
+As you see, plain vanilla.<br>
+If you want the reference to be displayed in combo format, you
+should change <span style="font-family: monospace;">Pupil.xml</span>
+:<br>
+<br>
+<span style="font-family: monospace;">&lt;?xml
+version="1.0"
+encoding="ISO-8859-1"?&gt;</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;!DOCTYPE component SYSTEM
+"dtds/component.dtd"&gt;</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;</span><span
+ style="font-family: monospace;">component</span><span
+ style="font-family: monospace;">
+name="Pupil"&gt;</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;entity&gt;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;property name="number"
+type="int" key="true"</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; size="2"
+required="true"/&gt;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;property name="name"
+type="String" </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; size="40"
+required="true"/&gt;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp; </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;reference
+name="teacher"/&gt;&nbsp;&nbsp;&nbsp; </span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;/entity&gt;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+</span><br style="font-family: monospace;">
+<span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&lt;view&gt;</span><br
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">
+<span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;reference-view
+reference="teacher"&gt;</span><br
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">
+<span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&lt;descriptions-list/&gt;</span><br
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">
+<span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;/</span><span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">reference-view</span><span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&gt;</span><br
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">
+<span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&lt;/view&gt;</span><br
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;entity-mapping
+table="MYSCHOOL@separator@PUPIL"&gt;</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;property-mapping property="number" column="NUMBER"/&gt;</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;</span><span style="font-family: monospace;">property-mapping</span><span
+ style="font-family: monospace;">
+property="name" column="NAME"/&gt;</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;reference-mapping
+reference="teacher"&gt;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;</span><span style="font-family: monospace;">reference-mapping-detail</span><span
+ style="font-family: monospace;"> column="TEACHER"
+referenced-model-property="id"/&gt;</span><span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;"></span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;/</span><span style="font-family: monospace;">reference-mapping</span><span
+ style="font-family: monospace;">&gt;</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;/</span><span style="font-family: monospace;">entity-mapping</span><span
+ style="font-family: monospace;">&gt; </span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;/</span><span
+ style="font-family: monospace;">component</span><span
+ style="font-family: monospace;">&gt;<br>
+<br style="font-family: monospace;">
+</span>And to deploy:<br>
+<ul>
+  <li><span style="font-family: monospace;">ant</span><span
+ style="font-style: italic;"></span></li>
+  <li>Go to <a
+ href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils"
+ target="_blank">http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils</a></li>
+</ul>
+And now let's go to put a pupils collection in teacher. Touch <span
+ style="font-family: monospace;">Teacher.xml</span>
+and leave it this
+way:<br>
+<br>
+<span style="font-family: monospace;">&lt;?xml
+version="1.0"
+encoding="ISO-8859-1"?&gt;</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;!DOCTYPE component SYSTEM
+"dtds/</span><span style="font-family: monospace;">component</span><span
+ style="font-family: monospace;">.dtd"&gt;</span><br
+ style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;</span><span
+ style="font-family: monospace;">component</span><span
+ style="font-family: monospace;">
+name="Teacher"&gt;</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;entity&gt;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;property name="id"
+type="String" key="true"</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; size="5"
+required="true"/&gt;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;property name="name"
+type="String" </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; size="40"
+required="true"/&gt;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp; </span><br style="font-family: monospace;">
+<span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;collection
+name="pupils"&gt;</span><br
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">
+<span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&lt;reference
+model="Pupil"/&gt;</span><br
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">
+<span
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;/collection&gt;</span><br
+ style="font-family: monospace; color: rgb(51, 102, 255); font-weight: bold;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;/entity&gt;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;entity-mapping
+table="MYSCHOOL@separator@TEACHER"&gt;</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;property-mapping
+property="id" column="ID"/&gt;</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;</span><span style="font-family: monospace;">property-mapping</span><span
+ style="font-family: monospace;">
+property="name" column="NAME"/&gt;</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;/</span><span style="font-family: monospace;">entity-mapping</span><span
+ style="font-family: monospace;">&gt; </span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; </span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;/</span><span
+ style="font-family: monospace;"></span><span
+ style="font-family: monospace;">component</span><span
+ style="font-family: monospace;"></span><span
+ style="font-family: monospace;">&gt;<br>
+<br style="font-family: monospace;">
+</span>And deploy again:<br>
+<ul>
+  <li><span style="font-family: monospace;">ant</span></li>
+  <li>Go to <a
+ href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Teachers"
+ target="_blank">http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Teachers</a></li>
+</ul>
+That's all, folks<br>
+In this example you can see that little changes imply little effort and
+the effect is seen on instantaneous form.<br>
+<h4><a name="Ayuda"></a>Help</h4>
+If you wish to have an idea of all OpenXava features, that surpass what
+you
+see
+in this naive example, you need to take a look to OpenXavaTest
+project.<br>
+<br>
+You can obtain help for executing this tutorial or for any other
+problem
+with OpenXava in:<br>
+<a href="http://sourceforge.net/forum/forum.php?forum_id=419690">http://sourceforge.net/forum/forum.php?forum_id=419690</a><br>
+<br>
+You can learn more things about OpenXava reading its <a
+ href="/OpenXavaDoc/openxava-2.0beta-reference-guide.pdf">Reference
+Guide</a>.<br>
+</body>
+</html>
