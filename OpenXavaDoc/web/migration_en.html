@@ -1,5 +1,23 @@
 <h2>Migration from OpenXava 1.2.1 to OpenXava 2</h2>
 
+<h4>Setting value for references (in combos) with compose key in JUnit tests</h4>
+So far, to set the value to a reference displayed as <code>description-list</code>
+(as combo), and mapped in database using multiple columns, you write:
+<pre>
+DrivingLicenceKey key = new DrivingLicenceKey();
+key.setType("C ");
+key.setLevel(1);
+setValue("drivingLicence.KEY", key.toString());		
+</pre>
+But, if you uses a pure POJOs version, without Key classes, you have to write:
+<pre>
+DrivingLicence key = new DrivingLicence();
+key.setType("C ");
+key.setLevel(1);
+setValue("drivingLicence.KEY", key.toString());		
+</pre>
+It's better to use the last way, because it's valid for POJOs and EJBs.
+
 <h4>Hibernate: References with not null columns as foreign key</h4>
 
 In EJB version if you have a reference to another entity that has primitive

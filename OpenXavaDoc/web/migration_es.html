@@ -1,5 +1,24 @@
 <h2>Para migrar de OpenXava 1.2.1 a OpenXava 2.0</h2>
 
+<h4>Establece valor para referenc&iacute;as (en combos) con clave m&uacute;ltiple en las pruebas JUnit</h4>
+Hasta ahora, para establecer valor a una referenc&iacute;a visualizada como 
+<code>lista-descripciones</code> (como combo), y mapeada a la base de datos usando
+varias columnas, escribiamos:
+<pre>
+PermisoConduccionKey clave = new PermisoConduccionKey();
+clave.setType("C ");
+clave.setLevel(1);
+setValue("drivingLicence.KEY", clave.toString());		
+</pre>
+Pero, si usamos solo POJOs, sin clases 'Key', hemos de escribir:
+<pre>
+PermisoConduccion clave = new PermisoConduccion();
+clave.setType("C ");
+clave.setLevel(1);
+setValue("drivingLicence.KEY", clave.toString());		
+</pre>
+Es mejor usar la &uacute;ltima forma, porque funciona con POJOs y EJBs.
+
 <h4>Hibernate: Referencias con columnas no nula como clave for&aacute;nea</h4>
 
 En la versi&oacute;n EJB si tenemos una referencia a otra entidad cuya clave est&aacute;
