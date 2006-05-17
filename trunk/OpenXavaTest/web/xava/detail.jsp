@@ -35,10 +35,7 @@ while (it.hasNext()) {
 			boolean hasFrame = WebEditors.hasFrame(p);		
 			lastWasEditor = !hasFrame;
 			String propertyKey= propertyPrefix + p.getName();
-			System.out.println("[detail.jsp] propertyKey=" + propertyKey);
-			String valueKey = propertyKey + ".value";
 			request.setAttribute(propertyKey, p);
-			request.setAttribute(valueKey, view.getValue(p.getName()));
 			String urlEditor = "editor.jsp" // in this way because websphere 6 has problems with jsp:param
 				+ "?propertyKey=" + propertyKey
 				+ "&first=" + first

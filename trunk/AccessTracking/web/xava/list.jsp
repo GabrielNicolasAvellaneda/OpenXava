@@ -93,7 +93,19 @@ while (it.hasNext()) {
 <th class=<%=style.getListSubheader()%> style="text-align: center" width="60">
 <xava:button action="List.filter"/>
 </th>
-<th class=<%=style.getListSubheader()%> width="5"></th>
+<th class=<%=style.getListSubheader()%> width="5">
+	<script>
+	function clearConditionValues() {
+		for (i=0; i<document.<%=manager.getForm()%>.conditionValues.length; i++) {
+			document.<%=manager.getForm()%>.conditionValues[i].value = '';
+	  	}
+	}
+	</script>
+	<a title='<fmt:message key="clear_condition_values"/>' href="javascript:void(0)">
+		<img src='<%=request.getContextPath()%>/xava/images/clear-right.gif'
+			border='0' align='middle' onclick="clearConditionValues()"/>
+	</a>
+</th>
 <%
 it = properties.iterator();
 String [] conditionValues = tab.getConditionValues();
