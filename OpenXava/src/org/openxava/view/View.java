@@ -1939,6 +1939,10 @@ public class View implements java.io.Serializable {
 		return metaProperties;		
 	}
 	
+	public MetaProperty getMetaProperty(String name) throws XavaException { 
+		return getMetaView().getMetaProperty(name);
+	}
+	
 	private Collection getMetaPropertiesIncludingSections() throws XavaException {
 		if (!hasSections()) return getMetaProperties();
 		if (metaPropertiesIncludingSections == null) { 

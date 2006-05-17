@@ -45,6 +45,16 @@ function selected(cal, date) {
 // destroying it.
 function closeHandler(cal) {
   cal.hide();                        // hide the calendar
+  if (_dynarch_popupCalendar.dateClicked) {
+    if ( _dynarch_popupCalendar.sel.fireEvent ) { // IE
+  	  _dynarch_popupCalendar.sel.fireEvent("onChange");
+    }
+    else { // Others: Firefox, Safari
+      var ev = document.createEvent("HTMLEvents");
+      ev.initEvent("change", true, true);
+      _dynarch_popupCalendar.sel.dispatchEvent(ev);
+    }
+  }
 //  cal.destroy();
   _dynarch_popupCalendar = null;
 }

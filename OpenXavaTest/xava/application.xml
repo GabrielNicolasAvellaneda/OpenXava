@@ -121,10 +121,9 @@
 			<module name="Clerks">		<model name="Clerk"/>		<controller name="Typical"/>	</module>					<module name="Subfamilies" folder="warehousing">		<model name="Subfamily"/>		<controller name="Typical"/>			</module>		<module name="Subfamilies2" folder="warehousing/variations">		<model name="Subfamily2"/>		<controller name="Typical"/>			</module>			<module name="SubfamiliesSelect" folder="warehousing/variations">		<model name="Subfamily" />				<tab name="CompleteSelect"/>		<controller name="Typical"/>			</module>
 			<module name="Shipments">		<model name="Shipment"/>		<controller name="Typical"/>	</module>			<module name="DeliveryTypes" folder="invoicing">		<model name="DeliveryType"/>		<controller name="DeliveryTypes"/>	</module>
 	
-	<!-- tmp -->
 	<module name="DeliveryTypesJSP" folder="invoicing/variations">
 		<model name="DeliveryType"/>
-		<web-view url="deliveryType.jsp"/>
+		<web-view url="custom-jsp/deliveryType.jsp"/>
 		<controller name="Typical"/>
 	</module>			<module name="Services" folder="invoicing">		<model name="Service"/>		<controller name="Typical"/>		</module>		<module name="ServiceTypes" folder="invoicing">		<model name="ServiceType"/>		<controller name="Typical"/>		</module>				<module name="FamilyProductsReport" folder="warehousing">		<model name="FilterBySubfamily"/>		<view name="WithSubfamilyForm"/>
 		<mode-controller name="Void"/>	</module>				<module name="FamilyRangeProductsReport" folder="warehousing">		<model name="FilterBySubfamily"/>		<view name="Range"/>		<mode-controller name="Void"/>	</module>		

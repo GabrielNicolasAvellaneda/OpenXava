@@ -2163,7 +2163,7 @@
       <entity>
          <ejb-name>DeliveryType</ejb-name>
 
-         <table-name>XAVATEST_DELIVERYTYPE</table-name>
+         <table-name>XAVATEST_DeliveryType</table-name>
 
          <cmp-field>
             <field-name>_Description</field-name>
@@ -2172,7 +2172,7 @@
         </cmp-field>
          <cmp-field>
             <field-name>number</field-name>
-            <column-name>NUMBER</column-name>
+            <column-name>number</column-name>
 
         </cmp-field>
 

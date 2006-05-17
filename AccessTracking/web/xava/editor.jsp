@@ -7,7 +7,6 @@
 
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
 <%@ page import="org.openxava.view.meta.MetaPropertyView" %>
-<%@ page import="org.openxava.web.WebEditors" %>
 
 <%
 String viewObject = request.getParameter("viewObject");
@@ -16,21 +15,7 @@ org.openxava.view.View view = (org.openxava.view.View) context.get(request, view
 String propertyKey = request.getParameter("propertyKey");
 MetaProperty p = (MetaProperty) request.getAttribute(propertyKey);
 
-org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
-String formName = manager.getForm();	
-boolean throwsChanged=view.throwsPropertyChanged(p);
-String scriptFoco = "onfocus=focus_property.value='" + propertyKey + "'";
-String script = throwsChanged?
-	"onchange='throwPropertyChanged(document." + formName + ", \"" + propertyKey + "\")' ":"";
-script = script + scriptFoco;
-Object value = request.getAttribute(propertyKey + ".value");
-
-if (WebEditors.mustToFormat(p)) {
-	Object fvalue = WebEditors.formatToStringOrArray(request, p, value, errors);
-	request.setAttribute(propertyKey + ".fvalue", fvalue);
-}
 boolean editable = view.isEditable(p);
-String editableKey = propertyKey + "_EDITABLE_";
 String labelKey = propertyKey + "_LABEL_";
 
 int labelFormat = view.getLabelFormatForProperty(p);
@@ -38,8 +23,6 @@ String label = view.getLabelFor(p);
 %>
 
 <%@ include file="htmlTagsEditor.jsp"%>
-
-<input type="hidden" name="<%=editableKey%>" value="<%=editable%>">
 
 <%=preLabel%>
 <% if (labelFormat == MetaPropertyView.NORMAL_LABEL) { %>
@@ -65,12 +48,7 @@ String label = view.getLabelFor(p);
 </td></tr>
 <tr><td style='vertical-align: middle'>
 <% } %>
-<%
-String editorURL = WebEditors.getUrl(p);
-char nexus = editorURL.indexOf('?') < 0?'?':'&';
-editorURL = editorURL + nexus + "script="+script+"&editable="+editable;
-%>
-<jsp:include page="<%=editorURL%>"/>
+<xava:editor property="<%=p.getName()%>"/>
 <% 
 if ((editable && view.isRepresentsEntityReference() && view.isLastKeyProperty(p)) || // with key visible
 	(view.isRepresentsEntityReference() && view.isFirstPropertyAndViewHasNoKeys(p) && view.isKeyEditable())) // with key hidden

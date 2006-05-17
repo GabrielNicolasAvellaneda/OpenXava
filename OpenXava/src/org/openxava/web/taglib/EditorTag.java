@@ -4,7 +4,6 @@ import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 import javax.servlet.jsp.tagext.*;
 
-import org.openxava.component.*;
 import org.openxava.controller.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -24,12 +23,12 @@ public class EditorTag extends TagSupport {
 			HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
 			ModuleContext context = (ModuleContext) request.getSession().getAttribute("context");
 			org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
-			// detail.jsp						 						
+									
 			String viewObject = request.getParameter("viewObject");
 			viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObject;
 			View view = (View) context.get(request, viewObject);
 
-			MetaProperty metaProperty = getMetaProperty(manager); 
+			MetaProperty metaProperty = view.getMetaProperty(property); 
 
 			String propertyPrefix = request.getParameter("propertyPrefix");
 			propertyPrefix = (propertyPrefix == null || propertyPrefix.equals(""))?"xava." + view.getModelName() + ".":propertyPrefix;
@@ -37,8 +36,7 @@ public class EditorTag extends TagSupport {
 			String valueKey = propertyKey + ".value";
 			request.setAttribute(propertyKey, metaProperty);
 			request.setAttribute(valueKey, view.getValue(metaProperty.getName()));
-
-			// editor.jsp			
+						
 			Messages errors = (Messages) request.getAttribute("errors"); 									
 			String formName = manager.getForm();	
 			boolean throwsChanged=view.throwsPropertyChanged(metaProperty);
@@ -49,7 +47,7 @@ public class EditorTag extends TagSupport {
 
 			boolean editable = view.isEditable(metaProperty);
 
-			String editorURL = "/xava/" + org.openxava.web.WebEditors.getUrl(metaProperty);
+			String editorURL = "../xava/" + org.openxava.web.WebEditors.getUrl(metaProperty);
 			char nexus = editorURL.indexOf('?') < 0?'?':'&';
 			editorURL = editorURL + nexus + "script="+script+"&editable="+editable+"&propertyKey="+propertyKey;
 
@@ -69,7 +67,7 @@ public class EditorTag extends TagSupport {
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			throw new JspException(XavaResources.getString("action_tag_error")); // tmp i18n
+			throw new JspException(XavaResources.getString("editor_tag_error", property));
 		}	
 		return SKIP_BODY;
 	}
@@ -79,16 +77,7 @@ public class EditorTag extends TagSupport {
 	}
 
 	public void setProperty(String property) {
-		this.property = property;
+		this.property = property;		
 	}
 	
-	private MetaProperty getMetaProperty(ModuleManager manager) throws ElementNotFoundException, XavaException {
-		try {
-			return MetaComponent.get(manager.getModelName()).getMetaEntity().getMetaProperty(getProperty());
-		}
-		catch (ElementNotFoundException ex) {
-			return MetaComponent.get(manager.getModelName()).getMetaEntity().getMetaPropertyView(getProperty());
-		}
-	}
-
 }
