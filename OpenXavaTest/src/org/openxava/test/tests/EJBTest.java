@@ -24,8 +24,7 @@ public class EJBTest extends TestCase {
 		super(name);
 	}
 	
-	public void testMixPOJOAndEJBNotAllowed_defaultKeyFinder() throws Exception {
-		// tmp
+	public void testMixPOJOAndEJBNotAllowed_defaultKeyFinder() throws Exception { 
 		CustomerRemote customerEJB = CustomerUtil.getHome().findByNumber(2);
 		assertEquals("Juanillo", customerEJB.getName());
 		Customer customerPOJO = Customer.findByNumber(2);

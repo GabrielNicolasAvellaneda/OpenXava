@@ -136,9 +136,9 @@ public abstract class DeliveryPlaceCMP
 
 /* Value Objects END */
 
-   public abstract java.lang.String getOid() ;
+   public abstract int getOid() ;
 
-   public abstract void setOid( java.lang.String oid ) ;
+   public abstract void setOid( int oid ) ;
 
    public abstract java.lang.String get_Remarks() ;
 

@@ -117,10 +117,13 @@
 	</aggregate>	
 	
 	<aggregate name="DeliveryPlace">		
-		<property name="oid" type="String" key="true" hidden="true">
+		<property name="oid" type="int" key="true" hidden="true">
 			<default-value-calculator 
-				class="org.openxava.calculators.UUIDCalculator"
-				on-create="true"/>
+				class="org.openxava.calculators.NextIntegerCalculator"
+				on-create="true">
+				<set property="model" value="Customer.DeliveryPlace"/>
+				<set property="property" value="oid"/>
+			</default-value-calculator>
 		</property>		
 		<property name="name" type="String" 
 			size="30" required="true"/> 

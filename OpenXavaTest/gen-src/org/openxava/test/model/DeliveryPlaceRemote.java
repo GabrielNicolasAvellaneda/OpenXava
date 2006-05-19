@@ -10,7 +10,7 @@ public interface DeliveryPlaceRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.IDeliveryPlace
 {
 
-   public java.lang.String getOid(  )
+   public int getOid(  )
       throws java.rmi.RemoteException;
 
    public java.lang.String getRemarks(  )

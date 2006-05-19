@@ -12,7 +12,7 @@ public class DeliveryPlaceData
 {
 
    private static final long serialVersionUID = 1L;
-   private java.lang.String oid;
+   private int oid;
    private java.lang.String _Remarks;
    private java.lang.String _Address;
    private java.lang.String _Name;
@@ -41,11 +41,11 @@ public class DeliveryPlaceData
      return pk;
    }
 
-   public java.lang.String getOid()
+   public int getOid()
    {
       return this.oid;
    }
-   public void setOid( java.lang.String oid )
+   public void setOid( int oid )
    {
       this.oid = oid;
    }
@@ -121,14 +121,7 @@ public class DeliveryPlaceData
          DeliveryPlaceData lTest = (DeliveryPlaceData) pOther;
          boolean lEquals = true;
 
-         if( this.oid == null )
-         {
-            lEquals = lEquals && ( lTest.oid == null );
-         }
-         else
-         {
-            lEquals = lEquals && this.oid.equals( lTest.oid );
-         }
+         lEquals = lEquals && this.oid == lTest.oid;
          if( this._Remarks == null )
          {
             lEquals = lEquals && ( lTest._Remarks == null );
@@ -176,7 +169,7 @@ public class DeliveryPlaceData
    {
       int result = 17;
 
-      result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
+      result = 37*result + (int) oid;
 
       result = 37*result + ((this._Remarks != null) ? this._Remarks.hashCode() : 0);
 

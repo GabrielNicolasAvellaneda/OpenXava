@@ -14,7 +14,7 @@ public class DeliveryPlaceValue
 
    private static final long serialVersionUID = 1L;
 
-   private java.lang.String oid;
+   private int oid;
    private boolean oidHasBeenSet = false;
    private java.lang.String remarks;
    private boolean remarksHasBeenSet = false;
@@ -52,12 +52,12 @@ public class DeliveryPlaceValue
 	  preferredWarehouse_numberHasBeenSet = true;
    }
 
-   public java.lang.String getOid()
+   public int getOid()
    {
 	  return this.oid;
    }
 
-   public void setOid( java.lang.String oid )
+   public void setOid( int oid )
    {
 	  this.oid = oid;
 	  oidHasBeenSet = true;
@@ -183,14 +183,7 @@ public class DeliveryPlaceValue
 		 DeliveryPlaceValue that = (DeliveryPlaceValue) other;
 		 if ( ! that.hasIdentity() ) return false;
 		 boolean lEquals = true;
-		 if( this.oid == null )
-		 {
-			lEquals = lEquals && ( that.oid == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.oid.equals( that.oid );
-		 }
+		 lEquals = lEquals && this.oid == that.oid;
 
 		 lEquals = lEquals && isIdentical(that);
 
@@ -253,7 +246,7 @@ public class DeliveryPlaceValue
 
    public int hashCode(){
 	  int result = 17;
-      result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
+      result = 37*result + (int) oid;
 
       result = 37*result + ((this.remarks != null) ? this.remarks.hashCode() : 0);
 

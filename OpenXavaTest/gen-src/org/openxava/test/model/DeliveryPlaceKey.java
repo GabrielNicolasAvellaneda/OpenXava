@@ -17,23 +17,23 @@ public class DeliveryPlaceKey
 
    private static final long serialVersionUID = 1L;
 
-   public java.lang.String oid;
+   public int oid;
 
    public DeliveryPlaceKey()
    {
    }
 
-   public DeliveryPlaceKey( java.lang.String oid )
+   public DeliveryPlaceKey( int oid )
    {
       this.oid = oid;
    }
 
-   public java.lang.String getOid()
+   public int getOid()
    {
       return oid;
    }
 
-   public void setOid(java.lang.String oid)
+   public void setOid(int oid)
    {
       this.oid = oid;
    }
@@ -41,7 +41,7 @@ public class DeliveryPlaceKey
    public int hashCode()
    {
       int _hashCode = 0;
-         if (this.oid != null) _hashCode += this.oid.hashCode();
+         _hashCode += (int)this.oid;
 
       return _hashCode;
    }
@@ -60,14 +60,7 @@ public class DeliveryPlaceKey
       }
       else
       {
-         if( this.oid != null )
-         {
-            eq = eq && this.oid.equals( pk.getOid() );
-         }
-         else  // this.oid == null
-         {
-            eq = eq && ( pk.getOid() == null );
-         }
+         eq = eq && this.oid == pk.oid;
       }
 
       return eq;
