@@ -61,7 +61,7 @@
 		<ant antfile="../OpenXava/build.xml" target="deployEJB"/>
 	</target>
 					
-	<target name="deployWar" depends="touchHistory">
+	<target name="deployWar" depends="touchHistory">		
 		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
 		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
 	</target>
@@ -76,8 +76,9 @@
 	</target>
 	
 	<target name="createWebsphereEar">
-		<ant antfile="../OpenXava/build.xml" target="generateWebsphereMapping"/>
+		<ant antfile="../OpenXava/build.xml" target="generateWebsphereMapping"/>     		
 		<antcall target="createEJBJars"/>		
+		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
 		<ant antfile="../OpenXava/build.xml" target="createWebsphereEar"/>
 	</target>
 

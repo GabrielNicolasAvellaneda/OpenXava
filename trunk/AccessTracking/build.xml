@@ -40,7 +40,7 @@
 	</target>
 		
 	<target name="generateHibernate" depends="replaceTable">
-		<ant antfile="../OpenXava/build.xml" target="generateHibernate"/>		
+		<ant antfile="../OpenXava/build.xml" target="regenerateHibernate"/>		
 	</target>
 						
 	<target name="deployWar">

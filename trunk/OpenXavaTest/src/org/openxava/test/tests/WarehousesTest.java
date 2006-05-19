@@ -60,7 +60,8 @@ public class WarehousesTest extends ModuleTestBase {
 		setValue("zoneNumber", "66");
 		setValue("number", "666");
 		setValue("name", "WAREHOUSE JUNIT");
-		execute("CRUD.save");		
+		execute("CRUD.save");
+		assertNoErrors();
 		
 		// Verifying form is clean
 		assertValue("zoneNumber", "");

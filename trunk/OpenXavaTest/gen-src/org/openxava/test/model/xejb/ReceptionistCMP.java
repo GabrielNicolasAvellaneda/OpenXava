@@ -128,8 +128,8 @@ public abstract class ReceptionistCMP
 
    public abstract void set_Name( java.lang.String _Name ) ;
 
-   public abstract java.lang.String get_DeliveryPlace_oid() ;
+   public abstract int get_DeliveryPlace_oid() ;
 
-   public abstract void set_DeliveryPlace_oid( java.lang.String _DeliveryPlace_oid ) ;
+   public abstract void set_DeliveryPlace_oid( int _DeliveryPlace_oid ) ;
 
 }

@@ -27,7 +27,7 @@ public interface ReceptionistHome
    public org.openxava.test.model.ReceptionistRemote create(org.openxava.test.model.DeliveryPlaceKey containerKey , int counter , org.openxava.test.model.ReceptionistValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
-   public java.util.Collection findByDeliveryPlace(java.lang.String oid)
+   public java.util.Collection findByDeliveryPlace(int oid)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
    public java.util.Collection findAll()

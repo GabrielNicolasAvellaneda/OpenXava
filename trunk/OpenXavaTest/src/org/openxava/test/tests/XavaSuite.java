@@ -30,6 +30,7 @@ public class XavaSuite extends TestSuite {
 	public static Test suite() {
 		TestSuite suite = new TestSuite();
 		
+		suite.addTest(new TestSuite(WarehousesTest.class));	
 		suite.addTest(new TestSuite(CarriersTest.class));
 		suite.addTest(new TestSuite(ChangeProductsPrice2Test.class));
 		suite.addTest(new TestSuite(ChangeProductsPriceTest.class));
@@ -96,8 +97,7 @@ public class XavaSuite extends TestSuite {
 		}
 		suite.addTest(new TestSuite(TransportCharges2Test.class));		
 		suite.addTest(new TestSuite(TransportChargesTest.class));
-		suite.addTest(new TestSuite(TransportChargesWithDistanceTest.class));
-		suite.addTest(new TestSuite(WarehousesTest.class));						
+		suite.addTest(new TestSuite(TransportChargesWithDistanceTest.class));							
 			
 		return suite;
 	}

@@ -14,7 +14,7 @@ public class ReceptionistData
    private static final long serialVersionUID = 1L;
    private int oid;
    private java.lang.String _Name;
-   private java.lang.String _DeliveryPlace_oid;
+   private int _DeliveryPlace_oid;
 
    public ReceptionistData()
    {
@@ -51,11 +51,11 @@ public class ReceptionistData
       this._Name = _Name;
    }
 
-   public java.lang.String get_DeliveryPlace_oid()
+   public int get_DeliveryPlace_oid()
    {
       return this._DeliveryPlace_oid;
    }
-   public void set_DeliveryPlace_oid( java.lang.String _DeliveryPlace_oid )
+   public void set_DeliveryPlace_oid( int _DeliveryPlace_oid )
    {
       this._DeliveryPlace_oid = _DeliveryPlace_oid;
    }
@@ -86,14 +86,7 @@ public class ReceptionistData
          {
             lEquals = lEquals && this._Name.equals( lTest._Name );
          }
-         if( this._DeliveryPlace_oid == null )
-         {
-            lEquals = lEquals && ( lTest._DeliveryPlace_oid == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._DeliveryPlace_oid.equals( lTest._DeliveryPlace_oid );
-         }
+         lEquals = lEquals && this._DeliveryPlace_oid == lTest._DeliveryPlace_oid;
 
          return lEquals;
       }
@@ -111,7 +104,7 @@ public class ReceptionistData
 
       result = 37*result + ((this._Name != null) ? this._Name.hashCode() : 0);
 
-      result = 37*result + ((this._DeliveryPlace_oid != null) ? this._DeliveryPlace_oid.hashCode() : 0);
+      result = 37*result + (int) _DeliveryPlace_oid;
 
       return result;
    }

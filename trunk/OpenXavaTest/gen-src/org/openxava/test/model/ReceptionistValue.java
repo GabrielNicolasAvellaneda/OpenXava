@@ -18,7 +18,7 @@ public class ReceptionistValue
    private boolean oidHasBeenSet = false;
    private java.lang.String name;
    private boolean nameHasBeenSet = false;
-   private java.lang.String deliveryPlace_oid;
+   private int deliveryPlace_oid;
    private boolean deliveryPlace_oidHasBeenSet = false;
 
    public ReceptionistValue()
@@ -64,12 +64,12 @@ public class ReceptionistValue
    public boolean nameHasBeenSet(){
 	  return nameHasBeenSet;
    }
-   public java.lang.String getDeliveryPlace_oid()
+   public int getDeliveryPlace_oid()
    {
 	  return this.deliveryPlace_oid;
    }
 
-   public void setDeliveryPlace_oid( java.lang.String deliveryPlace_oid )
+   public void setDeliveryPlace_oid( int deliveryPlace_oid )
    {
 	  this.deliveryPlace_oid = deliveryPlace_oid;
 	  deliveryPlace_oidHasBeenSet = true;
@@ -137,14 +137,7 @@ public class ReceptionistValue
 		 {
 			lEquals = lEquals && this.name.equals( that.name );
 		 }
-		 if( this.deliveryPlace_oid == null )
-		 {
-			lEquals = lEquals && ( that.deliveryPlace_oid == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.deliveryPlace_oid.equals( that.deliveryPlace_oid );
-		 }
+		 lEquals = lEquals && this.deliveryPlace_oid == that.deliveryPlace_oid;
 
 		 return lEquals;
 	  }
@@ -160,7 +153,7 @@ public class ReceptionistValue
 
       result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);
 
-      result = 37*result + ((this.deliveryPlace_oid != null) ? this.deliveryPlace_oid.hashCode() : 0);
+      result = 37*result + (int) deliveryPlace_oid;
 
 	  return result;
    }

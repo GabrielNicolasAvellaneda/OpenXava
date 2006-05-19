@@ -34,7 +34,7 @@ public interface ReceptionistRemote
    public void setDeliveryPlaceKey( org.openxava.test.model.DeliveryPlaceKey key )
       throws java.rmi.RemoteException;
 
-   public java.lang.String getDeliveryPlace_oid(  )
+   public int getDeliveryPlace_oid(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.ReceptionistData getData(  )
