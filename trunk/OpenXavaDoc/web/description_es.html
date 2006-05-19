@@ -1,78 +1,138 @@
-OpenXava es un marco de trabajo para desarrollar f&aacute;cilmente aplicaciones
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+</head>
+<body>
+OpenXava es un marco de trabajo para desarrollar f&aacute;cilmente
+aplicaciones
 de gesti&oacute;n con XML y Java.<br>
 <br>
-Su principal virtud reside en el hecho de que el coraz&oacute;n de nuestras aplicaciones
+Su principal virtud reside en el hecho de que el coraz&oacute;n de
+nuestras aplicaciones
 es XML en vez de Java.<br>
 Por ejemplo, si quieres una aplicaci&oacute;n J2EE para trabajar con <i>Profesores</i>
 solo necesitas escribir este sencillo archivo XML:
-<p>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080">&lt;?</FONT><FONT COLOR="#3f7f7f">xml
-</FONT><FONT COLOR="#7f007f">version</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;1.0&quot;
-</FONT><FONT COLOR="#7f007f">encoding</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;ISO-8859-1&quot;</FONT><FONT COLOR="#008080">?&gt;</FONT></FONT></FONT></SPAN><BR>
-<BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080">&lt;!</FONT><FONT COLOR="#3f7f7f">DOCTYPE
-</FONT><FONT COLOR="#000080">componente </FONT><FONT COLOR="#808080">SYSTEM
-</FONT><FONT COLOR="#3f7f5f">&quot;dtds/componente.dtd&quot;</FONT><FONT COLOR="#008080">&gt;</FONT></FONT></FONT></SPAN><BR>
-<BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080">&lt;</FONT><FONT COLOR="#3f7f7f">componente
-</FONT><FONT COLOR="#7f007f">nombre</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;Profesor&quot;</FONT><FONT COLOR="#008080">&gt;</FONT></FONT></FONT></SPAN><BR>
-<BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;</FONT>&lt;</FONT><FONT COLOR="#3f7f7f">entidad</FONT><FONT COLOR="#008080">&gt;</FONT></FONT></FONT></SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</FONT>&lt;</FONT><FONT COLOR="#3f7f7f">propiedad
-</FONT><FONT COLOR="#7f007f">nombre</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;codigo&quot;
-</FONT><FONT COLOR="#7f007f">tipo</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;String&quot;
-</FONT></FONT></FONT>
-</SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#7f007f"><FONT COLOR="#2a00ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</FONT>clave</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;true&quot;
-</FONT><FONT COLOR="#7f007f">longitud</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;5&quot;
-</FONT><FONT COLOR="#7f007f">requerido</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;true&quot;</FONT><FONT COLOR="#008080">/&gt;</FONT></FONT></FONT></SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</FONT>&lt;</FONT><FONT COLOR="#3f7f7f">propiedad
-</FONT><FONT COLOR="#7f007f">nombre</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;nombre&quot;
-</FONT><FONT COLOR="#7f007f">tipo</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;String&quot;
-</FONT></FONT></FONT>
-</SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#7f007f"><FONT COLOR="#2a00ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</FONT>longitud</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;40&quot;
-</FONT><FONT COLOR="#7f007f">requerido</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;true&quot;</FONT><FONT COLOR="#008080">/&gt;</FONT><FONT COLOR="#000000">			
- </FONT></FONT></FONT>
-</SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;</FONT>&lt;/</FONT><FONT COLOR="#3f7f7f">entidad</FONT><FONT COLOR="#008080">&gt;</FONT></FONT></FONT></SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"><FONT FACE="Monospace"><FONT SIZE=2>						</FONT></FONT></FONT></SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;</FONT>&lt;</FONT><FONT COLOR="#3f7f7f">mapeo-entidad
-</FONT><FONT COLOR="#7f007f">tabla</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;MYSCHOOL@separator@TEACHER&quot;</FONT><FONT COLOR="#008080">&gt;</FONT></FONT></FONT></SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</FONT>&lt;</FONT><FONT COLOR="#3f7f7f">mapeo-propiedad
-</FONT></FONT></FONT>
-</SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#7f007f"><FONT COLOR="#3f7f7f">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</FONT>propiedad-modelo</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;codigo&quot;
-</FONT><FONT COLOR="#7f007f">columna-tabla</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;ID&quot;</FONT><FONT COLOR="#008080">/&gt;</FONT></FONT></FONT></SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</FONT>&lt;</FONT><FONT COLOR="#3f7f7f">mapeo-propiedad
-</FONT></FONT></FONT>
-</SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#7f007f"><FONT COLOR="#3f7f7f">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</FONT>propiedad-modelo</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;nombre&quot;
-</FONT><FONT COLOR="#7f007f">columna-tabla</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;NAME&quot;</FONT><FONT COLOR="#008080">/&gt;</FONT></FONT></FONT></SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;</FONT>&lt;/</FONT><FONT COLOR="#3f7f7f">mapeo-entidad</FONT><FONT COLOR="#008080">&gt;</FONT><FONT COLOR="#000000">
-</FONT></FONT></FONT>
-</SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"><FONT FACE="Monospace"><FONT SIZE=2>				</FONT></FONT></FONT></SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT SIZE=2><FONT FACE="Monospace"><FONT COLOR="#008080">&lt;/</FONT><FONT COLOR="#3f7f7f">componente</FONT><FONT COLOR="#008080">&gt;</FONT></FONT></FONT></SPAN><BR>
+<p><span style="margin-bottom: 0cm;"><font face="Monospace"><font
+ size="2"><font color="#008080">&lt;?</font><font color="#3f7f7f">xml
+</font><font color="#7f007f">version</font><font color="#000000">=</font><font
+ color="#2a00ff">"1.0"
+</font><font color="#7f007f">encoding</font><font color="#000000">=</font><font
+ color="#2a00ff">"ISO-8859-1"</font><font color="#008080">?&gt;</font></font></font></span><br>
+<br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#008080">&lt;!</font><font color="#3f7f7f">DOCTYPE
+</font><font color="#000080">componente </font><font color="#808080">SYSTEM
+</font><font color="#3f7f5f">"dtds/componente.dtd"</font><font
+ color="#008080">&gt;</font></font></font></span><br>
+<br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#008080">&lt;</font><font color="#3f7f7f">componente
+</font><font color="#7f007f">nombre</font><font color="#000000">=</font><font
+ color="#2a00ff">"Profesor"</font><font color="#008080">&gt;</font></font></font></span><br>
+<br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#008080"><font color="#000000">&nbsp;&nbsp;</font>&lt;</font><font
+ color="#3f7f7f">entidad</font><font color="#008080">&gt;</font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#008080"><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font>&lt;</font><font
+ color="#3f7f7f">propiedad
+</font><font color="#7f007f">nombre</font><font color="#000000">=</font><font
+ color="#2a00ff">"codigo"
+</font><font color="#7f007f">tipo</font><font color="#000000">=</font><font
+ color="#2a00ff">"String"
+</font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#7f007f"><font color="#2a00ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font>clave</font><font
+ color="#000000">=</font><font color="#2a00ff">"true"
+</font><font color="#7f007f">longitud</font><font color="#000000">=</font><font
+ color="#2a00ff">"5"
+</font><font color="#7f007f">requerido</font><font color="#000000">=</font><font
+ color="#2a00ff">"true"</font><font color="#008080">/&gt;</font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#008080"><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font>&lt;</font><font
+ color="#3f7f7f">propiedad
+</font><font color="#7f007f">nombre</font><font color="#000000">=</font><font
+ color="#2a00ff">"nombre"
+</font><font color="#7f007f">tipo</font><font color="#000000">=</font><font
+ color="#2a00ff">"String"
+</font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#7f007f"><font color="#2a00ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font>longitud</font><font
+ color="#000000">=</font><font color="#2a00ff">"40"
+</font><font color="#7f007f">requerido</font><font color="#000000">=</font><font
+ color="#2a00ff">"true"</font><font color="#008080">/&gt;</font><font
+ color="#000000"> </font></font></font>
+</span><br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#008080"><font color="#000000">&nbsp;&nbsp;</font>&lt;/</font><font
+ color="#3f7f7f">entidad</font><font color="#008080">&gt;</font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font color="#000000"><font
+ face="Monospace"><font size="2"> </font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#008080"><font color="#000000">&nbsp;&nbsp;</font>&lt;</font><font
+ color="#3f7f7f">mapeo-entidad
+</font><font color="#7f007f">tabla</font><font color="#000000">=</font><font
+ color="#2a00ff">"MYSCHOOL@separator@TEACHER"</font><font
+ color="#008080">&gt;</font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#008080"><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font>&lt;</font><font
+ color="#3f7f7f">mapeo-propiedad
+</font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#7f007f"><font color="#3f7f7f">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font>propiedad-modelo</font><font
+ color="#000000">=</font><font color="#2a00ff">"codigo"
+</font><font color="#7f007f">columna-tabla</font><font color="#000000">=</font><font
+ color="#2a00ff">"ID"</font><font color="#008080">/&gt;</font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#008080"><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font>&lt;</font><font
+ color="#3f7f7f">mapeo-propiedad
+</font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#7f007f"><font color="#3f7f7f">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font>propiedad-modelo</font><font
+ color="#000000">=</font><font color="#2a00ff">"nombre"
+</font><font color="#7f007f">columna-tabla</font><font color="#000000">=</font><font
+ color="#2a00ff">"NAME"</font><font color="#008080">/&gt;</font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#008080"><font color="#000000">&nbsp;&nbsp;</font>&lt;/</font><font
+ color="#3f7f7f">mapeo-entidad</font><font color="#008080">&gt;</font><font
+ color="#000000">
+</font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font color="#000000"><font
+ face="Monospace"><font size="2"> </font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font size="2"><font face="Monospace"><font
+ color="#008080">&lt;/</font><font color="#3f7f7f">componente</font><font
+ color="#008080">&gt;</font></font></font></span><br>
 </p>
-Y nada m&aacute;s. Nada de clases Java, archivos XML para el mapeo, o dibujar
+Y nada m&aacute;s. Nada de clases Java, archivos XML para el mapeo, o
+dibujar
 p&aacute;ginas JSP o JSF, simplemente nada m&aacute;s.<br>
-OpenXava genera para t&iacute; una aplicaci&oacute;n J2EE completa (con EJB CMP o Hibernate
-para la persistencia) como <a href="/openxava/portal/MiEscuela">&eacute;sta</a>, y con una interfaz de usuario para gestionar
+OpenXava genera para t&iacute; una aplicaci&oacute;n J2EE completa
+(con&nbsp;Hibernate o&nbsp;EJB
+para la persistencia) como <a href="/openxava/portal/MiEscuela">&eacute;sta</a>,
+y con una interfaz de usuario para gestionar
 tus <i>Profesores</i>.
-La aplicaci&oacute;n resultante te permite hacer manteniento, b&uacute;squedas, filtros, ordenaciones,
+La aplicaci&oacute;n resultante te permite hacer manteniento,
+b&uacute;squedas, filtros, ordenaciones,
 generar informes en formato PDF, exporta a Excel, etc.<br>
-A pesar de su facilidad para desarrollo r&aacute;pido, OpenXava es suficientemente
-flexible como para que puedas poner tu propio c&oacute;digo en cualquier parte de
+A pesar de su facilidad para desarrollo r&aacute;pido, OpenXava es
+suficientemente
+flexible como para que puedas poner tu propio c&oacute;digo en
+cualquier parte de
 la aplicaci&oacute;n.<br>
-Con solo simples XMLs y c&oacute;digo Java en formato JavaBean (clases de Java realmente 
-reutilizables) puedes construir cualquier aplicaci&oacute;n de gesti&oacute;n J2EE de una manera
+Con solo simples XMLs y c&oacute;digo Java en formato JavaBean (clases
+de Java realmente reutilizables) puedes construir cualquier
+aplicaci&oacute;n de gesti&oacute;n J2EE de una manera
 muy productiva.
-De hecho, muchas aplicaciones cr&iacute;ticas de gesti&oacute;n, en producci&oacute;n actualmente, han sido
+De hecho, muchas aplicaciones cr&iacute;ticas de gesti&oacute;n, en
+producci&oacute;n actualmente, han sido
 desarrolladas con OpenXava.<br>
 <br>
-Para aprender m&aacute;s sobre OpenXava lo mejor es <a href="http://sourceforge.net/project/showfiles.php?group_id=123187">descargarlo</a>
+Para aprender m&aacute;s sobre OpenXava lo mejor es <a
+ href="http://sourceforge.net/project/showfiles.php?group_id=123187">descargarlo</a>
 y seguir el <a href="portal/tutorial.psml">tutorial</a>.<br>
-Si quieres conocer todas las posibilidades de OpenXava echale un vistazo a su
-<a href="/OpenXavaDoc/openxava-2.0beta-guia-referencia.pdf">Gu&iacute;a de Referencia</a>.
-
+Si quieres conocer todas las posibilidades de OpenXava echale un
+vistazo a su
+<a href="/OpenXavaDoc/openxava-2.0beta-guia-referencia.pdf">Gu&iacute;a
+de Referencia</a>.
+</body>
+</html>

@@ -1,75 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+</head>
+<body>
 OpenXava is a framework to develop easily business applications
 with XML and Java.<br>
 <br>
-Its virtue resides in the fact that the heart of our applications is XML instead
+Its virtue resides in the fact that the heart of our applications is
+XML instead
 of Java.<br>
-For example, if you want a J2EE application that works with <i>Teachers</i> 
+For example, if you want a J2EE application that works with <i>Teachers</i>
 you only need to write this simple XML code:
-<p>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080">&lt;?</FONT><FONT COLOR="#3f7f7f">xml
-</FONT><FONT COLOR="#7f007f">version</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;1.0&quot;
-</FONT><FONT COLOR="#7f007f">encoding</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;ISO-8859-1&quot;</FONT><FONT COLOR="#008080">?&gt;</FONT></FONT></FONT></SPAN><BR>
-<BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080">&lt;!</FONT><FONT COLOR="#3f7f7f">DOCTYPE
-</FONT><FONT COLOR="#000080">component </FONT><FONT COLOR="#808080">SYSTEM
-</FONT><FONT COLOR="#3f7f5f">&quot;dtds/component.dtd&quot;</FONT><FONT COLOR="#008080">&gt;</FONT></FONT></FONT></SPAN><BR>
-<BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080">&lt;</FONT><FONT COLOR="#3f7f7f">component
-</FONT><FONT COLOR="#7f007f">name</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;Teacher&quot;</FONT><FONT COLOR="#008080">&gt;</FONT></FONT></FONT></SPAN><BR>
-<BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;</FONT>&lt;</FONT><FONT COLOR="#3f7f7f">entity</FONT><FONT COLOR="#008080">&gt;</FONT></FONT></FONT></SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</FONT>&lt;</FONT><FONT COLOR="#3f7f7f">property
-</FONT><FONT COLOR="#7f007f">name</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;id&quot;
-</FONT><FONT COLOR="#7f007f">type</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;String&quot;
-</FONT></FONT></FONT>
-</SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#7f007f">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;true&quot;
-</FONT><FONT COLOR="#7f007f">size</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;5&quot;
-</FONT><FONT COLOR="#7f007f">required</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;true&quot;</FONT><FONT COLOR="#008080">/&gt;</FONT></FONT></FONT></SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</FONT>&lt;</FONT><FONT COLOR="#3f7f7f">property
-</FONT><FONT COLOR="#7f007f">name</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;name&quot;
-</FONT><FONT COLOR="#7f007f">type</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;String&quot;
-</FONT></FONT></FONT>
-</SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#7f007f"><FONT COLOR="#2a00ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</FONT>size</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;40&quot;
-</FONT><FONT COLOR="#7f007f">required</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;true&quot;</FONT><FONT COLOR="#008080">/&gt;</FONT><FONT COLOR="#000000">
- </FONT></FONT></FONT>
-</SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;</FONT>&lt;/</FONT><FONT COLOR="#3f7f7f">entity</FONT><FONT COLOR="#008080">&gt;</FONT></FONT></FONT></SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"><FONT FACE="Monospace"><FONT SIZE=2>						</FONT></FONT></FONT></SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;</FONT>&lt;</FONT><FONT COLOR="#3f7f7f">entity-mapping
-</FONT><FONT COLOR="#7f007f">table</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;MYSCHOOL.TEACHER&quot;</FONT><FONT COLOR="#008080">&gt;</FONT></FONT></FONT></SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</FONT>&lt;</FONT><FONT COLOR="#3f7f7f">property-mapping
-</FONT></FONT></FONT>
-</SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#7f007f"><FONT COLOR="#2a00ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT COLOR="#7f007f">property</FONT><FONT COLOR="#000000">=</FONT>&quot;id&quot;
-</FONT>column</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;ID&quot;</FONT><FONT COLOR="#008080">/&gt;</FONT></FONT></FONT></SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</FONT>&lt;</FONT><FONT COLOR="#3f7f7f">property-mapping
-</FONT></FONT></FONT>
-</SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#7f007f"><FONT COLOR="#3f7f7f">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</FONT>property</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;name&quot;
-</FONT><FONT COLOR="#7f007f">column</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;NAME&quot;</FONT><FONT COLOR="#008080">/&gt;</FONT></FONT></FONT></SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT FACE="Monospace"><FONT SIZE=2><FONT COLOR="#008080"><FONT COLOR="#000000">&nbsp;&nbsp;</FONT>&lt;/</FONT><FONT COLOR="#3f7f7f">entity-mapping</FONT><FONT COLOR="#008080">&gt;</FONT><FONT COLOR="#000000">
-</FONT></FONT></FONT>
-</SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"><FONT FACE="Monospace"><FONT SIZE=2>				</FONT></FONT></FONT></SPAN><BR>
-<SPAN STYLE="margin-bottom: 0cm"><FONT SIZE=2><FONT FACE="Monospace"><FONT COLOR="#008080">&lt;/</FONT><FONT COLOR="#3f7f7f">component</FONT><FONT COLOR="#008080">&gt;</FONT></FONT></FONT></SPAN><BR>
+<p><span style="margin-bottom: 0cm;"><font face="Monospace"><font
+ size="2"><font color="#008080">&lt;?</font><font color="#3f7f7f">xml
+</font><font color="#7f007f">version</font><font color="#000000">=</font><font
+ color="#2a00ff">"1.0"
+</font><font color="#7f007f">encoding</font><font color="#000000">=</font><font
+ color="#2a00ff">"ISO-8859-1"</font><font color="#008080">?&gt;</font></font></font></span><br>
+<br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#008080">&lt;!</font><font color="#3f7f7f">DOCTYPE
+</font><font color="#000080">component </font><font color="#808080">SYSTEM
+</font><font color="#3f7f5f">"dtds/component.dtd"</font><font
+ color="#008080">&gt;</font></font></font></span><br>
+<br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#008080">&lt;</font><font color="#3f7f7f">component
+</font><font color="#7f007f">name</font><font color="#000000">=</font><font
+ color="#2a00ff">"Teacher"</font><font color="#008080">&gt;</font></font></font></span><br>
+<br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#008080"><font color="#000000">&nbsp;&nbsp;</font>&lt;</font><font
+ color="#3f7f7f">entity</font><font color="#008080">&gt;</font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#008080"><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font>&lt;</font><font
+ color="#3f7f7f">property
+</font><font color="#7f007f">name</font><font color="#000000">=</font><font
+ color="#2a00ff">"id"
+</font><font color="#7f007f">type</font><font color="#000000">=</font><font
+ color="#2a00ff">"String"
+</font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#7f007f">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key</font><font
+ color="#000000">=</font><font color="#2a00ff">"true"
+</font><font color="#7f007f">size</font><font color="#000000">=</font><font
+ color="#2a00ff">"5"
+</font><font color="#7f007f">required</font><font color="#000000">=</font><font
+ color="#2a00ff">"true"</font><font color="#008080">/&gt;</font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#008080"><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font>&lt;</font><font
+ color="#3f7f7f">property
+</font><font color="#7f007f">name</font><font color="#000000">=</font><font
+ color="#2a00ff">"name"
+</font><font color="#7f007f">type</font><font color="#000000">=</font><font
+ color="#2a00ff">"String"
+</font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#7f007f"><font color="#2a00ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font>size</font><font
+ color="#000000">=</font><font color="#2a00ff">"40"
+</font><font color="#7f007f">required</font><font color="#000000">=</font><font
+ color="#2a00ff">"true"</font><font color="#008080">/&gt;</font><font
+ color="#000000"> </font></font></font>
+</span><br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#008080"><font color="#000000">&nbsp;&nbsp;</font>&lt;/</font><font
+ color="#3f7f7f">entity</font><font color="#008080">&gt;</font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font color="#000000"><font
+ face="Monospace"><font size="2"> </font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#008080"><font color="#000000">&nbsp;&nbsp;</font>&lt;</font><font
+ color="#3f7f7f">entity-mapping
+</font><font color="#7f007f">table</font><font color="#000000">=</font><font
+ color="#2a00ff">"MYSCHOOL.TEACHER"</font><font color="#008080">&gt;</font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#008080"><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font>&lt;</font><font
+ color="#3f7f7f">property-mapping
+</font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#7f007f"><font color="#2a00ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font
+ color="#7f007f">property</font><font color="#000000">=</font>"id"
+</font>column</font><font color="#000000">=</font><font color="#2a00ff">"ID"</font><font
+ color="#008080">/&gt;</font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#008080"><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font>&lt;</font><font
+ color="#3f7f7f">property-mapping
+</font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#7f007f"><font color="#3f7f7f">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font>property</font><font
+ color="#000000">=</font><font color="#2a00ff">"name"
+</font><font color="#7f007f">column</font><font color="#000000">=</font><font
+ color="#2a00ff">"NAME"</font><font color="#008080">/&gt;</font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
+ color="#008080"><font color="#000000">&nbsp;&nbsp;</font>&lt;/</font><font
+ color="#3f7f7f">entity-mapping</font><font color="#008080">&gt;</font><font
+ color="#000000">
+</font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font color="#000000"><font
+ face="Monospace"><font size="2"> </font></font></font></span><br>
+<span style="margin-bottom: 0cm;"><font size="2"><font face="Monospace"><font
+ color="#008080">&lt;/</font><font color="#3f7f7f">component</font><font
+ color="#008080">&gt;</font></font></font></span><br>
 </p>
-
-And no more. No Java classes, no XML files for mapping objects, no design
+And no more. No Java classes, no XML files for mapping objects, no
+design
 of JSP or JSF pages, simply no more.<br>
-OpenXava generates for you a complete J2EE application (with CMP EJB or Hibernate
-for persistence) like <a href="/openxava/portal/MySchool">this</a>, and with a suitable User Interface for manage your <i>Teachers</i>.<br>
-The resulting application allows you make CRUD operations, searching, filtering, ordering,
+OpenXava generates for you a complete J2EE application (with Hibernate
+or EJB
+for persistence) like <a href="/openxava/portal/MySchool">this</a>,
+and with a suitable User Interface for manage your <i>Teachers</i>.<br>
+The resulting application allows you make CRUD operations, searching,
+filtering, ordering,
 generating reports in PDF format, exporting to Excel, etc.<br>
-In spite of its rapid development features, OpenXava is flexible enough 
-to allow you to put your custom code in any part of the application.<br> 
-With only simple XMLs and Java code in JavaBean format (really reusable Java classes) 
-you can construct any J2EE business application in a very productive way.
-In fact, a lot of critical business application, now in production, have been
+In spite of its rapid development features, OpenXava is flexible enough
+to allow you to put your custom code in any part of the application.<br>
+With only simple XMLs and Java code in JavaBean format (really reusable
+Java classes) you can construct any J2EE business application in a very
+productive way.
+In fact, a lot of critical business application, now in production,
+have been
 developed with OpenXava.<br>
 <br>
-In order to learn more about OpenXava the better way is to <a href="http://sourceforge.net/project/showfiles.php?group_id=123187">download</a>
+In order to learn more about OpenXava the better way is to <a
+ href="http://sourceforge.net/project/showfiles.php?group_id=123187">download</a>
 it and to follow the <a href="portal/tutorial.psml">tutorial</a>.<br>
-If you want to know all possibilities of OpenXava see its <a href="/OpenXavaDoc/openxava-2.0beta-reference-guide.pdf">Reference Guide</a>.
-
+If you want to know all possibilities of OpenXava see its <a
+ href="/OpenXavaDoc/openxava-2.0beta-reference-guide.pdf">Reference
+Guide</a>.
+</body>
+</html>
