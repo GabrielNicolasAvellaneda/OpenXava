@@ -97,14 +97,21 @@ url="jdbc:hsqldb:file:../data/my-school-db"/&gt;<br>
 Ahora falta copiar el archivo&nbsp;<span style="font-family: monospace;">OpenXavaTest/lib/hsqldb.jar</span>
 a la carpeta <span style="font-family: monospace;">common/lib</span>
 del Tomcat.<br>
-La base de datos ya est&aacute; lista.
+La base de datos ya est&aacute; lista.<br>
+Adem&aacute;s necesitas:<br>
+<ul>
+  <li>Copiar todos los archivos desde la carpeta <span
+ style="font-family: monospace;">lib</span> de la distrubuci&oacute;n
+openxava a la carpeta <span style="font-family: monospace;">common/lib</span>
+del Tomcat.</li>
+  <li>Editar el archivo <span style="font-family: monospace;">openxava.properties</span>&nbsp;(en
+la
+carpeta raiz de
+openxava) y poner en la propiedad <span style="font-family: monospace;">tomcat.dir</span>&nbsp;la
+ruta de tu Tomcat.</li>
+</ul>
 <h4><a name="Ejecutar_aplicacion_ejemplo_MiEscuela"></a>Ejecutar
 aplicaci&oacute;n ejemplo MiEscuela</h4>
-Primero, necesitas editar el archivo <span
- style="font-family: monospace;">openxava.properties</span>&nbsp;(en la
-carpeta raiz de
-openxava) y poner en la propiedad <span style="font-family: monospace;">tomcat.dir</span>
-la ruta de tu Tomcat.<br>
 La distribuci&oacute;n de OpenXava viene con una aplicaci&oacute;n de
 ejemplo llamada <span style="font-style: italic;">MiEscuela</span>,
 para ejecutar sigue los siguientes pasos, usando Ant desde la
