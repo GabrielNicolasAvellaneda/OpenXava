@@ -76,5 +76,17 @@
        <rtexprvalue>true</rtexprvalue>
     </attribute>    
   </tag>         
-      
+  
+  <tag>
+    <name>editor</name>
+    <tagclass>org.openxava.web.taglib.EditorTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>Display the appropriate editor for the specified property</info>
+    <attribute>
+       <name>property</name>
+       <required>true</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>         
+        
 </taglib>
