@@ -69,7 +69,11 @@
 	<target name="todo">
 		<ant antfile="../OpenXava/build.xml" target="generateHibernate"/>
 		<ant antfile="../OpenXava/build.xml" target="compile"/>
+		<!-- 'deploy' para desplegar en un directorio (descomprimido) -->
+		<ant antfile="../OpenXava/build.xml" target="deploy"/>
+		<!-- 'deployWar' para desplegar como un archivo .war 
 		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
+		-->
 	</target>
 				
 </project>
