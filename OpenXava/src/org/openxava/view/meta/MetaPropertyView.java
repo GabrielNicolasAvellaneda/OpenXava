@@ -8,7 +8,7 @@ import org.openxava.util.*;
 /**
  * @author Javier Paniza
  */
-public class MetaPropertyView implements java.io.Serializable {
+public class MetaPropertyView extends MetaMemberView implements java.io.Serializable {
 	
 	public final static int NORMAL_LABEL = 0;
 	public final static int SMALL_LABEL = 1;
@@ -17,18 +17,9 @@ public class MetaPropertyView implements java.io.Serializable {
 	private String propertyName;
 	private String label;
 	private boolean readOnly;
-	private String onChangeActionClassName;
-	private Collection actionsNames;
+	private String onChangeActionClassName;	
 	private int labelFormat;
-	
-	public void addActionName(String actionName) {
-		if (actionsNames == null) actionsNames = new ArrayList();
-		actionsNames.add(actionName);
-	}
-	public Collection getActionsNames() {		
-		return actionsNames==null?Collections.EMPTY_LIST:actionsNames;
-	}
-			
+				
 	public String getPropertyName() {
 		return propertyName==null?"":propertyName.trim();
 	}

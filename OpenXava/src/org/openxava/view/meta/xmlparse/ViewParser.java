@@ -177,6 +177,7 @@ public class ViewParser extends XmlElementsNames {
 		}		
 		fillMetaSearchAction(el, a, lang);
 		fillMetaDescriptionsList(el, a, lang);
+		fillActions(el, a, lang);
 		return a;
 	}
 	
@@ -279,7 +280,7 @@ public class ViewParser extends XmlElementsNames {
 		}
 	}
 		
-	private static void fillActions(Element el, MetaPropertyView container, int lang)
+	private static void fillActions(Element el, MetaMemberView container, int lang)
 		throws XavaException {
 		NodeList l = el.getElementsByTagName(xaction[lang]);
 		int c = l.getLength();
@@ -287,8 +288,8 @@ public class ViewParser extends XmlElementsNames {
 			String action = ((Element) l.item(i)).getAttribute(xaction[lang]);		
 			container.addActionName(action);
 		}
-	}	
-		
+	}
+	
 	private static void fillMetaDescriptionsList(Element el, MetaReferenceView container, int lang)
 		throws XavaException {
 		NodeList l = el.getElementsByTagName(xdescriptions_list[lang]);

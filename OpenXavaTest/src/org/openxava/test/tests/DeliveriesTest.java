@@ -256,8 +256,10 @@ public class DeliveriesTest extends ModuleTestBase {
 			"CRUD.search",						
 			"Mode.list",
 			"Reference.search",
-			"Reference.createNew",
+			"Reference.createNew",			
 			"Sections.change",
+			"Deliveries.setDefaultInvoice",
+			"Deliveries.setDefaultType",
 			"Deliveries.generateNumber",
 			"Deliveries.activateDeactivateSection",
 			"Deliveries.hideActions",
@@ -278,6 +280,8 @@ public class DeliveriesTest extends ModuleTestBase {
 			"Reference.search",
 			"Reference.createNew",
 			"Sections.change",
+			"Deliveries.setDefaultInvoice",
+			"Deliveries.setDefaultType",			
 			"Deliveries.generateNumber"
 		};
 		
@@ -300,17 +304,30 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertActions(minimumActions);	
 	}
 	
-	public void testPropertyAction() throws Exception {
+	public void testPropertyAndReferenceActions() throws Exception {
 		execute("Mode.detailAndFirst");
 		assertNoErrors();
-		assertNoAction("Deliveries.generateNumber");
+		assertNoAction("Deliveries.generateNumber"); // of property
+		assertNoAction("Deliveries.setDefaultType"); // of reference as descriptions-list
+		assertNoAction("Deliveries.setDefaultInvoice"); // of reference 
 		execute("CRUD.new");
 		assertAction("Deliveries.generateNumber");
+		assertAction("Deliveries.setDefaultType");
+		assertAction("Deliveries.setDefaultInvoice");
 		assertValue("number", "");
+		assertValue("type.number", "");
+		assertValue("invoice.year", "");
+		assertValue("invoice.number", "");
 		execute("Deliveries.generateNumber");
 		assertValue("number", "77");
+		execute("Deliveries.setDefaultType");
+		assertValue("type.number", "1");
+		execute("Deliveries.setDefaultInvoice");
+		assertValue("invoice.year", "2002");
+		assertValue("invoice.number", "1");
+		assertValue("invoice.date", "01/01/2002");		
 	}
-	
+				
 	public void testActivateDeactivateSection() throws Exception {
 		execute("CRUD.new");
 		assertEditable("advice");
