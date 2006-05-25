@@ -1,9 +1,11 @@
 package org.openxava.view.meta;
 
+import java.util.*;
+
 /**
  * @author Javier Paniza
  */
-public class MetaReferenceView implements java.io.Serializable {
+public class MetaReferenceView extends MetaMemberView implements java.io.Serializable {
 	
 	private String referenceName;
 	private String viewName;

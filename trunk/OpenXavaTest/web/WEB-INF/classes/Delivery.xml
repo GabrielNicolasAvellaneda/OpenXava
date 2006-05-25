@@ -105,9 +105,14 @@
 			<on-change class="org.openxava.test.actions.OnChangeCarrierInDeliveryAction"/>
 		</property-view>
 		
-		<reference-view reference="invoice" view="Simple"/>	
+		<reference-view reference="invoice" view="Simple">	
+			<!-- tmp -->			
+			<action action="Deliveries.setDefaultInvoice"/>
+		</reference-view>
 		<reference-view reference="type">	
 			<descriptions-list/>
+			<!-- tmp -->			
+			<action action="Deliveries.setDefaultType"/>
 		</reference-view>
 		<reference-view reference="carrier">
 			<descriptions-list/>

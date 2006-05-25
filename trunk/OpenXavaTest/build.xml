@@ -33,6 +33,7 @@
 	</target>
 	
 	<target name="rebuild">
+		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
 		<ant antfile="../OpenXava/build.xml" target="prepareWar"/>
 	</target>		
 	

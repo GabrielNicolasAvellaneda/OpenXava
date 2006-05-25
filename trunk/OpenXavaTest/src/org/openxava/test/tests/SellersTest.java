@@ -232,7 +232,7 @@ public class SellersTest extends ModuleTestBase {
 		customer2.setRelationWithSeller("RELATION JUNIT 67");
 		XHibernate.getSession().save(customer2);
 		
-		XHibernate.commit(); // tmp
+		XHibernate.commit();
 	}
 	
 	private String getCustomerNumber1() throws Exception {

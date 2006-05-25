@@ -61,6 +61,15 @@ if ((editable && view.isRepresentsEntityReference() && view.isLastKeyProperty(p)
 	<% if (view.isCreateNew()) {%>
 <xava:action action='Reference.createNew' argv='<%="model="+referencedModel + ",keyProperty=" + propertyKey%>'/>
 	<% } %>
+	<%
+	java.util.Iterator itActions = view.getActionsNamesForReference().iterator();
+	while (itActions.hasNext()) {
+		String action = (String) itActions.next();
+	%>
+<xava:action action="<%=action%>"/>
+	<%
+	}
+	%>	
 <% } %>
 <%
 if (editable || p.isReadOnly()) {

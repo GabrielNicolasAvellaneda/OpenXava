@@ -2453,6 +2453,30 @@ public class View implements java.io.Serializable {
 		return getMetaView().getActionsNamesForProperty(p);
 	}
 	
+	public Collection getActionsNamesForReference(MetaReference ref) throws XavaException {
+		return getMetaView().getActionsNamesForReference(ref);
+	}
+	
+	/**
+	 * If this is a view that represents a reference
+	 */
+	public Collection getActionsNamesForReference() throws XavaException { 
+		if (!isRepresentsEntityReference()) return Collections.EMPTY_LIST;
+		if (isGroup()) return getParent().getActionsNamesForReference(); 
+		View parent = getParent();
+		if (parent == null) return Collections.EMPTY_LIST; // Impossible?
+		MetaReference ref = null;
+		try {
+			ref = parent.getMetaModel().getMetaReference(getMemberName());
+		}
+		catch (ElementNotFoundException ex) {
+			ref = parent.getMetaModel().getMetaCollection(getMemberName()).getMetaReference();
+		}
+		return parent.getActionsNamesForReference(ref);
+	}
+	
+	
+	
 	public int getLabelFormatForProperty(MetaProperty p) throws XavaException {
 		return getMetaView().getLabelFormatForProperty(p);
 	}
