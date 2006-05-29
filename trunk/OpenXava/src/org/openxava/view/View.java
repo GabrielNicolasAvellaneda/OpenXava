@@ -6,7 +6,6 @@ import java.util.*;
 import javax.ejb.*;
 import javax.servlet.http.*;
 
-import org.hibernate.connection.*;
 import org.openxava.actions.*;
 import org.openxava.calculators.*;
 import org.openxava.component.*;
@@ -426,7 +425,7 @@ public class View implements java.io.Serializable {
 		} 
 		else {						
 			String subview = name.substring(0, idx);			
-			String member = name.substring(idx+1);			
+			String member = name.substring(idx+1);
 			return getSubview(subview).getValue(member, recalculatingValues);
 		}		
 	}
@@ -505,7 +504,7 @@ public class View implements java.io.Serializable {
 	}
 	
 
-	private void createAndAddSubview(MetaMember member) throws XavaException {
+	private void createAndAddSubview(MetaMember member) throws XavaException { 
 		if (!(member instanceof MetaReference || member instanceof MetaCollection || member instanceof MetaGroup)) return;
 		
 		View newView = new View();
@@ -1228,7 +1227,7 @@ public class View implements java.io.Serializable {
 			if (metaProperty.isReadOnly()) return false;
 			if (metaProperty.isKey()) return isKeyEditable();
 			if (!isEditable()) return false;			
-			return isMarkAsEditable(metaProperty.getName());
+			return isMarkedAsEditable(metaProperty.getName());
 		}
 		catch (Exception ex) {
 			System.err.println(XavaResources.getString("readonly_not_know_warning", metaProperty));
@@ -1245,7 +1244,7 @@ public class View implements java.io.Serializable {
 			if (metaReferenceView != null && metaReferenceView.isReadOnly()) return false;
 			if (metaReference.isKey()) return isKeyEditable();
 			if (!isEditable()) return false;			
-			return isMarkAsEditable(metaReference.getName());
+			return isMarkedAsEditable(metaReference.getName());
 		}
 		catch (Exception ex) {
 			System.err.println(XavaResources.getString("readonly_not_know_warning", metaReference));
@@ -1253,11 +1252,25 @@ public class View implements java.io.Serializable {
 		}		
 	}
 
-	public boolean isEditable(String member) throws XavaException {				
+	public boolean isEditable(String member) throws XavaException {
+		int idx = member.indexOf('.'); 
+		if (idx >= 0) {
+			String reference = member.substring(0, idx);
+			String submember = member.substring(idx + 1);
+			try {
+				return getSubview(reference).isEditable(submember);
+			}
+			catch (ElementNotFoundException ex) {
+				// Maybe a custom JSP view wants access to a property not showed in default view
+				MetaModel referencedModel = getMetaModel().getMetaReference(reference).getMetaModelReferenced(); 				
+				return (referencedModel instanceof MetaAggregate) ||
+					referencedModel.isKey(submember);
+			}			
+		}	
 		return isEditable(getMetaView().getMetaProperty(member));
 	}
 	
-	private boolean isMarkAsEditable(String name) {
+	private boolean isMarkedAsEditable(String name) {
 		if (noEditablesMemberNames == null) return true;
 		return !getNoEditablesMembersNames().contains(name);
 	}
@@ -1527,6 +1540,24 @@ public class View implements java.io.Serializable {
 			return false;
 		}		 		 				
 	}
+	
+	public boolean throwsPropertyChanged(String propertyName) throws XavaException { 		
+		int idx = propertyName.indexOf('.'); 
+		if (idx >= 0) {
+			String reference = propertyName.substring(0, idx);
+			String member = propertyName.substring(idx + 1); 
+			try {
+				return getSubview(reference).throwsPropertyChanged(member);
+			}
+			catch (ElementNotFoundException ex) {
+				// Maybe a custom JSP view wants access to a property not showed in default view
+				MetaModel referencedModel = getMetaModel().getMetaReference(reference).getMetaModelReferenced(); 				
+				return (referencedModel instanceof MetaEntity) &&
+					referencedModel.isKey(member);
+			}			
+		}				
+		return throwsPropertyChanged(getMetaView().getMetaProperty(propertyName));
+	}	
 	
 	public boolean isLastKeyProperty(MetaProperty p) throws XavaException {
 		return p.isKey() && p.getName().equals(getLastPropertyKeyName());
@@ -1939,7 +1970,19 @@ public class View implements java.io.Serializable {
 		return metaProperties;		
 	}
 	
-	public MetaProperty getMetaProperty(String name) throws XavaException { 
+	public MetaProperty getMetaProperty(String name) throws XavaException {		
+		int idx = name.indexOf('.');
+		if (idx >= 0) {
+			String reference = name.substring(0, idx);
+			String member = name.substring(idx + 1);
+			try {
+				return getSubview(reference).getMetaProperty(member);
+			}
+			catch (ElementNotFoundException ex) {
+				// Maybe a custom JSP view wants access to a property not showed in default view
+				return getMetaModel().getMetaReference(reference).getMetaModelReferenced().getMetaProperty(member); 
+			}
+		}				
 		return getMetaView().getMetaProperty(name);
 	}
 	

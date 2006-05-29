@@ -13,7 +13,7 @@ public class DeliveryTypesJSPTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "DeliveryTypesJSP");		
 	}
 	
-	public void testHandmadeWebView() throws Exception {
+	public void testHandmadeWebViewNotLost() throws Exception {
 		String number = getValueInList(0, "number");
 		String description = getValueInList(0, "description");
 
@@ -31,28 +31,7 @@ public class DeliveryTypesJSPTest extends ModuleTestBase {
 		execute("Mode.detailAndFirst");
 		assertExists("number");
 		assertExists("description");
-		assertNotExists("comboDeliveries");		
-		
-		// Asserting the values are accepted
-		execute("CRUD.new");
-		assertValue("number", "");
-		assertValue("description", "");
-		assertEditable("number");
-		assertEditable("description");		
-		setValue("number", "66");
-		setValue("description", "JUNIT");
-		execute("CRUD.save");
-		assertNoErrors();
-		assertValue("number", "");
-		assertValue("description", "");
-		setValue("number", "66");
-		execute("CRUD.search");
-		assertValue("description", "JUNIT CREATED");
-		assertNoEditable("number");
-		assertEditable("description");
-				
-		execute("CRUD.delete");
-		assertMessage("Delivery type deleted successfully");
+		assertNotExists("comboDeliveries");				
 	}
 			
 }
