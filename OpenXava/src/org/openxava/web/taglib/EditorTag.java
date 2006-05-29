@@ -32,26 +32,26 @@ public class EditorTag extends TagSupport {
 
 			String propertyPrefix = request.getParameter("propertyPrefix");
 			propertyPrefix = (propertyPrefix == null || propertyPrefix.equals(""))?"xava." + view.getModelName() + ".":propertyPrefix;
-			String propertyKey= propertyPrefix + metaProperty.getName();
+			String propertyKey= propertyPrefix + property; 
 			String valueKey = propertyKey + ".value";
 			request.setAttribute(propertyKey, metaProperty);
-			request.setAttribute(valueKey, view.getValue(metaProperty.getName()));
+			Object value = view.getValue(property);
+			request.setAttribute(valueKey, value);
 						
 			Messages errors = (Messages) request.getAttribute("errors"); 									
 			String formName = manager.getForm();	
-			boolean throwsChanged=view.throwsPropertyChanged(metaProperty);
+			boolean throwsChanged=view.throwsPropertyChanged(property); 
 			String scriptFoco = "onfocus=focus_property.value='" + propertyKey + "'";
 			String script = throwsChanged?
 				"onchange='throwPropertyChanged(document." + formName + ", \"" + propertyKey + "\")' ":"";
 			script = script + scriptFoco;
 
-			boolean editable = view.isEditable(metaProperty);
+			boolean editable = view.isEditable(property); 
 
 			String editorURL = "../xava/" + org.openxava.web.WebEditors.getUrl(metaProperty);
 			char nexus = editorURL.indexOf('?') < 0?'?':'&';
 			editorURL = editorURL + nexus + "script="+script+"&editable="+editable+"&propertyKey="+propertyKey;
-
-			Object value = request.getAttribute(propertyKey + ".value");
+			
 			if (org.openxava.web.WebEditors.mustToFormat(metaProperty)) {
 				Object fvalue = org.openxava.web.WebEditors.formatToStringOrArray(request, metaProperty, value, errors);
 				request.setAttribute(propertyKey + ".fvalue", fvalue);

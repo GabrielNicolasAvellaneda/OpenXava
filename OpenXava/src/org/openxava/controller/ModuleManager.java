@@ -701,7 +701,7 @@ public class ModuleManager {
 	}
 
 	public String getXavaViewName() throws XavaException {
-		return getMetaModule().getViewName();
+		return getMetaModule().getViewName();		
 	}
 	
 	public String toString() {		

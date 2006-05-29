@@ -19,9 +19,11 @@
 			<condition>1 = 1</condition>
 		</finder>
 	</entity>
-	
+		
 	<view members="number; name"/>
-	
+		
+	<view name="ForCustomJSP" members="number; name; level"/>
+	 
 	<view name="DecorateName">
 		<property-view property="number">
 			<on-change class="org.openxava.test.actions.DecorateNameAction"/>

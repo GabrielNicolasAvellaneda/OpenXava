@@ -55,14 +55,12 @@
 			class="org.openxava.test.actions.GenerateDeliveryNumberAction">					
 			<use-object name="xava_view"/>			
 		</action>		
-		<!-- tmp -->
 		<action name="setDefaultType" hidden="true"
 			class="org.openxava.test.actions.SetPropertyValueAction">					
 			<set property="property" value="type.number"/>
 			<set property="value" value="1"/>
 			<use-object name="xava_view"/>			
 		</action>				
-		<!-- tmp -->
 		<action name="setDefaultInvoice" hidden="true"
 			class="org.openxava.test.actions.SetDefaultInvoiceAction">					
 			<use-object name="xava_view"/>			
