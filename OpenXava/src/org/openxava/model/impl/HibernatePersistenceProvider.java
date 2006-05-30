@@ -25,7 +25,11 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 		try {						
 			Object key = null;						
 			if (metaModel.getAllKeyPropertiesNames().size() == 1) {
-				key = keyValues.get(metaModel.getKeyPropertiesNames().iterator().next());
+				String keyPropertyName = (String) metaModel.getKeyPropertiesNames().iterator().next();
+				key = keyValues.get(keyPropertyName);
+				if (key instanceof Number) { // Numbers can produces conversion problems. For example, NUMERIC to java.lang.Integer
+					key = convertSingleKeyType(metaModel, keyPropertyName, key);
+				}
 			}
 			else {
 				key = getKey(metaModel, keyValues);
@@ -34,7 +38,7 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 			if (key == null) {
 				throw new ObjectNotFoundException(XavaResources.getString(
 						"object_with_key_not_found", metaModel.getName(), keyValues));
-			}						
+			}	
 			Object result = XHibernate.getSession().get(metaModel.getPOJOClass(), (Serializable) key);			
 			if (result == null) {
 				throw new ObjectNotFoundException(XavaResources.getString(
@@ -167,6 +171,21 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 		catch (Exception ex) {
 			ex.printStackTrace();
 			throw new XavaException("key_for_pojo_error");
+		}
+	}
+	
+	private Object convertSingleKeyType(MetaModel metaModel, String property, Object value) {
+		try {
+			Class modelClass = metaModel.getPOJOClass();
+			Object key = modelClass.newInstance();
+			PropertiesManager pm = new PropertiesManager(key);
+			pm.executeSet(property, value);
+			return pm.executeGet(property);
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			System.err.println(XavaResources.getString("key_type_conversion_warning", property, value, metaModel.getName()));
+			return value;			
 		}
 	}
 
