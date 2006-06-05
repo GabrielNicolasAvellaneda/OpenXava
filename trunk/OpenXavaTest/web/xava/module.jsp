@@ -1,3 +1,8 @@
+<%@ page import="java.awt.event.InputEvent" %>
+<%@ page import="java.util.Collection" %>
+<%@ page import="javax.swing.KeyStroke" %>
+<%@ page import="org.apache.commons.collections.CollectionUtils" %>
+<%@ page import="org.openxava.controller.meta.MetaAction" %>
 <%@ page import="org.openxava.util.Is" %>
 <%@ page import="org.openxava.util.Users" %>
 <%@ page import="org.openxava.util.Locales" %>
@@ -152,8 +157,41 @@ function setFocus() {
 		element.select();		
 	}
 }
-</script>
 
+function processKey(event) {
+	if (!event) event = window.event;
+<%
+Collection actions = CollectionUtils.union(manager.getMetaActions(), manager.getMetaActionsMode());
+java.util.Iterator it = actions.iterator();
+boolean hasActionsWithKeystrokes = false;
+while (it.hasNext()) {
+	MetaAction action = (MetaAction) it.next();
+	if (!action.hasKeystroke()) continue;	
+
+	KeyStroke key = KeyStroke.getKeyStroke(action.getKeystroke());
+	if (key == null) {
+		continue;
+	}
+	hasActionsWithKeystrokes = true;
+	int keyCode = key.getKeyCode();
+	String ctrl = (key.getModifiers() & InputEvent.CTRL_DOWN_MASK) > 0?" && event.ctrlKey":""; 
+	String alt = (key.getModifiers() & InputEvent.ALT_DOWN_MASK) > 0?" && event.altKey":""; 	
+	String shift = (key.getModifiers() & InputEvent.SHIFT_DOWN_MASK) > 0?" && event.shiftKey":"";
+%>
+	if (event.keyCode == <%=keyCode%> <%=ctrl%> <%=alt%> <%=shift%>) {
+		executeXavaAction(<%=action.isConfirm()%>, <%=action.isTakesLong()%>, document.<%=manager.getForm()%>, '<%=action.getQualifiedName()%>');		
+		event.returnValue = false;
+		event.preventDefault();
+		return;
+	}
+<%	
+}
+%>	
+}
+<% if (hasActionsWithKeystrokes) { %>	
+document.onkeydown = processKey;
+<% } %>
+</script>
 
 
 

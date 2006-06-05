@@ -32,7 +32,7 @@ public class ButtonTag extends TagSupport {
 			pageContext.getOut().print(getAction());
 			pageContext.getOut().println("'");
 			pageContext.getOut().print(" title='");
-			pageContext.getOut().print(metaAction.getDescription(request));
+			pageContext.getOut().print(metaAction.getKeystroke() + " - " + metaAction.getDescription(request));
 			pageContext.getOut().print("'");
 			pageContext.getOut().print(" class=");
 			Style style = (Style) request.getAttribute("style");

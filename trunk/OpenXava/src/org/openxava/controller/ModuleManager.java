@@ -42,7 +42,7 @@ public class ModuleManager {
 	private Set hiddenActions;	
 	private String modeControllerName = "Mode";
 	private Collection metaControllers;
-	private MetaController metaControllerSections;
+	private MetaController metaControllerMode;
 	private HttpSession session;
 	private String viewName = null;
 	private String modeName;	
@@ -120,9 +120,9 @@ public class ModuleManager {
 	}
 	
 	
-	public Collection getMetaActionsSections() {
+	public Collection getMetaActionsMode() {
 		try {			
-			return getMetaControllerSections().getMetaActions();						
+			return getMetaControllerMode().getMetaActions();						
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
@@ -132,11 +132,11 @@ public class ModuleManager {
 	}
 	
 	
-	private MetaController getMetaControllerSections() throws XavaException {
-		if (metaControllerSections == null) {
-			metaControllerSections = MetaControllers.getMetaController(getModeControllerName());
+	private MetaController getMetaControllerMode() throws XavaException {
+		if (metaControllerMode == null) {
+			metaControllerMode = MetaControllers.getMetaController(getModeControllerName());
 		}
-		return metaControllerSections;
+		return metaControllerMode;
 	}
 	
 	
@@ -163,7 +163,7 @@ public class ModuleManager {
 	}
 	
 	private void setModeControllerName(String controllerName) {
-		metaControllerSections = null;
+		metaControllerMode = null;
 		this.modeControllerName = controllerName;
 	}
 	
@@ -614,7 +614,7 @@ public class ModuleManager {
 		moduleInitiated = false;
 		moduleName = newModule;
 		metaControllers = null;
-		metaControllerSections = null;
+		metaControllerMode = null;
 		metaActions = null;
 		defaultActionQualifiedName = null;
 		metaModule = null;		
@@ -714,7 +714,7 @@ public class ModuleManager {
 			moduleInitiated = false;			
 		}
 		if (!moduleInitiated) {
-			modeName = getMetaActionsSections().isEmpty()?IChangeModeAction.DETAIL:null;
+			modeName = getMetaActionsMode().isEmpty()?IChangeModeAction.DETAIL:null;
 			moduleInitiated = true;
 			executeInitAction(request, errors, messages);
 		}

@@ -20,7 +20,7 @@
 		<action name="saveNotReset" mode="detail"
 			class="org.openxava.actions.SaveAction"
 			image="images/save.gif"
-			keystroke="F3">			
+			keystroke="control alt S">			
 			<set property="resetAfter" value="false"/>
 			<use-object name="xava_view"/>
 		</action>

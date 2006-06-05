@@ -14,7 +14,8 @@ public class MetaAction extends MetaElement {
 	public static final int IF_POSSIBLE = 1;
 	public static final int ALMOST_ALWAYS = 2;
 	public static final int ALWAYS = 4;
-
+	
+	private static Map tokensForKeystroke;
 	private boolean hidden = false;
 	private Collection metaSets;
 	private String qualifiedName;
@@ -54,7 +55,15 @@ public class MetaAction extends MetaElement {
 		return keystroke;
 	}
 	public void setKeystroke(String keystroke) {
-		this.keystroke = keystroke;
+		if (!Is.emptyString(keystroke)) {
+			this.keystroke = Strings.change(keystroke.toUpperCase(), getTokensForKeystroke());
+		}		
+		else {
+			this.keystroke = keystroke;
+		}
+	}
+	public boolean hasKeystroke() {
+		return !Is.emptyString(keystroke);
 	}
 
 	public String getImage() {
@@ -221,4 +230,17 @@ public class MetaAction extends MetaElement {
 	public void setConfirm(boolean confirm) {
 		this.confirm = confirm;
 	}
+	
+	private static Map getTokensForKeystroke() { 		
+		if (tokensForKeystroke == null) {
+			tokensForKeystroke = new HashMap();
+			tokensForKeystroke.put("CONTROL", "control");
+			tokensForKeystroke.put("ALT", "alt");
+			tokensForKeystroke.put("SHIFT", "shift");
+			tokensForKeystroke.put("CTRL", "control");
+			tokensForKeystroke.put("CNTRL", "control");
+		}
+		return tokensForKeystroke;
+	}
+		
 }

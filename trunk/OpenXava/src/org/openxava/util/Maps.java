@@ -166,7 +166,7 @@ public class Maps {
 		}
 		
 		// Next level
-		for (Iterator it = plainMap.entrySet().iterator(); it.hasNext();) {
+		for (Iterator it = result.entrySet().iterator(); it.hasNext();) {
 			Map.Entry en = (Map.Entry) it.next();
 			if (en.getValue() instanceof Map) {
 				result.put(en.getKey(), plainToTree((Map) en.getValue()));

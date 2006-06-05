@@ -8,7 +8,6 @@ import org.openxava.application.meta.*;
 import org.openxava.component.*;
 import org.openxava.controller.meta.*;
 import org.openxava.hibernate.XHibernate;
-import org.openxava.model.impl.*;
 import org.openxava.model.meta.*;
 import org.openxava.tab.meta.*;
 import org.openxava.util.*;
