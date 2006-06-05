@@ -41,7 +41,7 @@ while (it.hasNext()) {
 
 <td align="right" style='vertical-align: middle' class=<%=style.getMode(onBottom)%>>
 <%
-java.util.Iterator itSections = manager.getMetaActionsSections().iterator();
+java.util.Iterator itSections = manager.getMetaActionsMode().iterator();
 boolean firstTime = true;
 while (itSections.hasNext()) {
 	MetaAction action = (MetaAction) itSections.next();

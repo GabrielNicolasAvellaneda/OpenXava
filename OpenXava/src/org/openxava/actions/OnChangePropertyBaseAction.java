@@ -22,6 +22,15 @@ abstract public class OnChangePropertyBaseAction
 		return changedProperty;
 	}
 
+	/**
+	 * The view where the on-change is declared. <p>
+	 * 
+	 * This may be the main view or the module (if property-view : on-change
+	 * is declared in main view) or an subview (if it's declared inside a
+	 * aggregate view, for example). 
+	 * 
+	 * @return
+	 */
 	public View getView() {
 		return view;
 	}

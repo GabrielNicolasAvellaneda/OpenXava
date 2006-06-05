@@ -430,15 +430,27 @@ public class View implements java.io.Serializable {
 		}		
 	}
 	
+	/**
+	 * 
+	 * @param name  Qualified properties are allowed
+	 */	
 	public Object getValue(String name) throws XavaException {
 		return getValue(name, true);
 	}
-	
+
+	/**
+	 * 
+	 * @param name  Qualified properties are allowed
+	 */		
 	public int getValueInt(String name) throws XavaException {
 		Number v = (Number) getValue(name);			
 		return v==null?0:v.intValue();
 	}
 	
+	/**
+	 * 
+	 * @param name  Qualified properties are allowed
+	 */		
 	public String getValueString(String name) throws XavaException {
 		Object v = getValue(name);
 		return v == null?"":v.toString();						
@@ -899,7 +911,7 @@ public class View implements java.io.Serializable {
 				Map values = MapFacade.getValues(getParent().getModelName(), getParent().getKeyValues(), membersNames);
 				collectionValues = (List) values.get(getMemberName());				
 			}
-			catch (ObjectNotFoundException ex) { // New one is creating				
+			catch (ObjectNotFoundException ex) { // New one is creating
 				collectionValues = Collections.EMPTY_LIST; 								
 			}
 			catch (Exception ex) {

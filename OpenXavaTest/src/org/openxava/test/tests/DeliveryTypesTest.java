@@ -39,7 +39,7 @@ public class DeliveryTypesTest extends ModuleTestBase {
 		assertNoErrors();
 		assertMessage("Delivery type deleted successfully");				 				
 	}
-	
+		
 	public void testPostmodifiyCalculatorNotOnRead() throws Exception {
 		assertListNotEmpty();
 		execute("Mode.detailAndFirst");

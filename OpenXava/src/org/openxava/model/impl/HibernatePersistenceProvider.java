@@ -27,7 +27,7 @@ public class HibernatePersistenceProvider implements IPersistenceProvider {
 			if (metaModel.getAllKeyPropertiesNames().size() == 1) {
 				String keyPropertyName = (String) metaModel.getKeyPropertiesNames().iterator().next();
 				key = keyValues.get(keyPropertyName);
-				if (key instanceof Number) { // Numbers can produces conversion problems. For example, NUMERIC to java.lang.Integer
+				if (key instanceof Number) { // Numbers can produce conversion problems. For example, NUMERIC to java.lang.Integer
 					key = convertSingleKeyType(metaModel, keyPropertyName, key);
 				}
 			}

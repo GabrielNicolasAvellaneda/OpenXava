@@ -34,7 +34,7 @@ public class ImageTag extends TagSupport implements IActionTag {
 			pageContext.getOut().print(getAction());
 			pageContext.getOut().println("'");			
 			pageContext.getOut().print(" title='");
-			pageContext.getOut().print(metaAction.getDescription(request));
+			pageContext.getOut().print(metaAction.getKeystroke() + " - " +  metaAction.getDescription(request));
 			pageContext.getOut().print("'");			
 			pageContext.getOut().print(" href=\"javascript:executeXavaAction(");
 			pageContext.getOut().print(metaAction.isConfirm());
@@ -53,7 +53,7 @@ public class ImageTag extends TagSupport implements IActionTag {
 			pageContext.getOut().print(request.getContextPath() + "/xava/" + metaAction.getImage());
 			pageContext.getOut().println("'");
 			pageContext.getOut().print("\talt='");
-			pageContext.getOut().print(metaAction.getDescription(request));
+			pageContext.getOut().print(metaAction.getKeystroke() + " - " +  metaAction.getDescription(request));
 			pageContext.getOut().println("'");
 			pageContext.getOut().println("\tborder='0' align='middle'/></a>");
 		}

@@ -47,7 +47,7 @@ public class LinkTag extends TagSupport implements IActionTag {
 				pageContext.getOut().print("'");	
 			}
 			pageContext.getOut().print(" title='");
-			pageContext.getOut().print(metaAction.getDescription(request));
+			pageContext.getOut().print(metaAction.getKeystroke() + " - " +  metaAction.getDescription(request));
 			pageContext.getOut().print("'");
 			
 			pageContext.getOut().print(" href=\"javascript:executeXavaAction(");
