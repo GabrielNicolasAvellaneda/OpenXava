@@ -46,6 +46,7 @@ public class ModuleTestBase extends TestCase {
 	private WebConversation conversation; 
 	private WebResponse response; 
 	private WebForm form;
+	private String allowDuplicateSubmit; 
 	
 	static {
 		XHibernate.setConfigurationFile("/hibernate-junit.cfg.xml");
@@ -60,6 +61,7 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected void setUp() throws Exception {
+		allowDuplicateSubmit = "";
 		resetModule();	
 	}
 	
@@ -103,7 +105,7 @@ public class ModuleTestBase extends TestCase {
 			login(getJetspeed2UserName(), getJetspeed2Password());
 		}		
 		else {
-			response = conversation.getResponse(getModuleURL());
+			response = conversation.getResponse(getModuleURL() + allowDuplicateSubmit);			
 			resetForm();
 		}		
 		propertyPrefix = null;		
@@ -155,17 +157,34 @@ public class ModuleTestBase extends TestCase {
 	protected void setModelToModuleSetting() {
 		propertyPrefix = null;
 	}
+	
+	/**
+	 * Disable duplicate submit support on OpenXava module. <p>
+	 *
+	 * You must call this method if you want to use <code>click()</code>
+	 * which does not work with duplicate submit control activate (an httpunit issue). 
+	 */
+	protected void allowDuplicateSubmit() throws Exception {
+		allowDuplicateSubmit = "&xava_allow_duplicate_submit=true";
+		resetModule();
+	}
 
 	/**
 	 * Simulate the a link o button click.
 	 * <p>
-	 * For some this is necessary, because execute does not
+	 * For some cases  it's necessary, because 'execute' does not
 	 * throw all possible events. But it does not work in
 	 * all cases (sometimes it seems like if user click 2 times)
 	 * hence execute is still the favorite. 
+	 * <p>
+	 * <b>It's mandatory to call <code>allowDuplicateSubmit()</code> before
+	 * call this method.<b>
 	 */	
-	protected void click(String action) throws Exception { 
-		Button b = getForm().getButtonWithID(action);
+	protected void click(String action) throws Exception {		
+		if (Is.emptyString(allowDuplicateSubmit)) {
+			throw new IllegalStateException(XavaResources.getString("allowDuplicateSubmit_before_click"));
+		}		
+		Button b = getForm().getButtonWithID(action);		
 		if (b != null) {
 			b.click();
 			response = conversation.getCurrentPage();

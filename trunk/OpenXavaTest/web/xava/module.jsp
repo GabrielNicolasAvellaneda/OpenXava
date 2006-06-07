@@ -60,13 +60,14 @@ if (manager.isListMode()) {
 		tab.setTabName(manager.getTabName());
 	}
 }
+boolean hasProcessRequest = manager.hasProcessRequest(request); 
 if (manager.isXavaView()) { // here and after action execution
-	if (manager.actionOfThisModule(request)) {	
+	if (hasProcessRequest) {	
 		view.assignValuesToWebView();
 	}
 }
 manager.initModule(request, errors, messages);
-if (manager.actionOfThisModule(request)) {
+if (hasProcessRequest) {
 	manager.execute(request, errors, messages);	
 	if (manager.isListMode()) { // here and before execute the action
 		tab.setModelName(manager.getModelName());	
@@ -224,6 +225,7 @@ document.onkeydown = processKey;
 <form name='<%=manager.getForm()%>' 
 	method='POST' <%=manager.getEnctype()%> 
 	<%=manager.getFormAction(request)%>>
+<INPUT type="hidden" name="xava_page_id" value="<%=manager.getPageId()%>"/>
 <INPUT type="hidden" name="xava_action" value=""/>
 <INPUT type="hidden" name="xava_action_argv" value=""/>
 <INPUT type="hidden" name="xava_action_application" value="<%=request.getParameter("application")%>"/>
