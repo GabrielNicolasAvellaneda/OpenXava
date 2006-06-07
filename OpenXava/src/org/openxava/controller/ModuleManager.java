@@ -27,6 +27,7 @@ public class ModuleManager {
 	
 	private static int nextOid = 0; 
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;
+	private static int nextPageId = 0; 
 		
 	private String user; 
 	private Collection metaActionsOnInit;
@@ -50,6 +51,7 @@ public class ModuleManager {
 	private String defaultView = null; 
 	
 	private boolean formUpload = false;
+	private String lastPageId; 	
 
 	public ModuleManager() {
 		oid = nextOid++;
@@ -167,33 +169,41 @@ public class ModuleManager {
 		this.modeControllerName = controllerName;
 	}
 	
-	public boolean actionOfThisModule(HttpServletRequest request) {
-		return isFormUpload() || // May be that in this way upload forms does not work well in multimodule 
-			( 
-				Is.equal(request.getParameter("xava_action_module"),getModuleName()) &&
-				Is.equal(request.getParameter("xava_action_application"),getApplicationName())
-			);				
+	public boolean hasProcessRequest(HttpServletRequest request) {
+		if (duplicateRequest(request)) return false; 
+		return isFormUpload() || // May be that in this way upload forms does not work well in multimodule 			 
+			actionOfThisModule(request);				
+	}
+
+	private boolean actionOfThisModule(HttpServletRequest request) {
+		return Is.equal(request.getParameter("xava_action_module"),getModuleName()) &&
+			Is.equal(request.getParameter("xava_action_application"),getApplicationName());
 	}
 	
-	public void execute(HttpServletRequest request, Messages errors, Messages messages) {
+	private boolean duplicateRequest(HttpServletRequest request) {
+		if (request.getParameter("xava_allow_duplicate_submit") != null) return false; 		
+		String pageId = request.getParameter("xava_page_id");
+		if (pageId == null) return false;
+		if (pageId.equals(lastPageId)) return true;		
+		lastPageId = pageId;
+		return false;
+	}	
+	
+	public void execute(HttpServletRequest request, Messages errors, Messages messages) {		
 		try {									
 			if (errors.isEmpty()) { // Only it's executed the action if there aren't errors
-				// The next condition is for avoid to execute a action of another module
-				// displayed in the same web page (for example inside a portal)
-				if (actionOfThisModule(request)) {
-					String xavaAction = request.getParameter("xava_action");					
-					if (isFormUpload()) {
-						xavaAction = getDefaultActionQualifiedName(); // In upload form we execute the default action						
-					}																				
-					if (!Is.emptyString(xavaAction)) {						
-						String actionValue = request.getParameter("xava_action_argv");
-						if ("undefined".equals(actionValue)) actionValue = null;						
-						MetaAction a = MetaControllers.getMetaAction(xavaAction);						
-						long ini = System.currentTimeMillis();
-						executeAction(a, errors, messages, actionValue, request);
-						long time = System.currentTimeMillis() - ini;
-						System.out.println("[ModuleManager.execute] " + xavaAction + "=" + time + " ms");						
-					}
+				String xavaAction = request.getParameter("xava_action");								
+				if (isFormUpload()) {
+					xavaAction = getDefaultActionQualifiedName(); // In upload form we execute the default action						
+				}																				
+				if (!Is.emptyString(xavaAction)) {						
+					String actionValue = request.getParameter("xava_action_argv");
+					if ("undefined".equals(actionValue)) actionValue = null;						
+					MetaAction a = MetaControllers.getMetaAction(xavaAction);						
+					long ini = System.currentTimeMillis();
+					executeAction(a, errors, messages, actionValue, request);
+					long time = System.currentTimeMillis() - ini;
+					System.out.println("[ModuleManager.execute] " + xavaAction + "=" + time + " ms");						
 				}									
 			}			
 		}
@@ -703,6 +713,11 @@ public class ModuleManager {
 	public String getXavaViewName() throws XavaException {
 		return getMetaModule().getViewName();		
 	}
+	
+	public String getPageId() {
+		return String.valueOf(nextPageId++);
+	}
+		
 	
 	public String toString() {		
 		return "ModuleManager:" + oid;

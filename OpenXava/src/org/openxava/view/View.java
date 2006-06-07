@@ -1725,8 +1725,8 @@ public class View implements java.io.Serializable {
 				while (viewOfAction.isGroup()) viewOfAction = viewOfAction.getParent();
 				action.setView(viewOfAction);
 				action.setChangedProperty(changedPropertyQualifiedName); 
-				action.setNewValue(getValue(changedPropertyQualifiedName));								
-				getModuleManager(getRequest()).executeAction(action, getErrors(), getMessages(), getRequest());
+				action.setNewValue(getValue(changedPropertyQualifiedName));				
+				getModuleManager(getRequest()).executeAction(action, getErrors(), getMessages(), getRequest());				
 				registerExecutedAction(changedPropertyQualifiedName, action);
 			}
 		} 		

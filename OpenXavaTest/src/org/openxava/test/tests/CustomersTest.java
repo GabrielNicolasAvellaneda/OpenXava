@@ -408,12 +408,17 @@ public class CustomersTest extends ModuleTestBase {
 	}
 	
 	public void testIfKeyNotExistsInReferenceNotExecuteAction() throws Exception {
-		execute("CRUD.new");
-		setValue("relationWithSeller", "HOLA");
+		if (isJetspeed2Enabled()) {
+			System.err.println("WARNING! testIfKeyNotExistsInReferenceNotExecuteAction() is not executed: click + no duplicate submit not testable inside portal");
+			return;
+		}
+		allowDuplicateSubmit(); // In order to can use 'click()'
+		execute("CRUD.new");		
+		setValue("relationWithSeller", "HOLA");		
 		setValueNotNotify("seller.number", "53"); // We suposse that not exists		
-		click("CRUD.new");
+		click("CRUD.new");		
 		assertError("Seller with key {number=53} not found");
-		assertValue("relationWithSeller", "HOLA"); // That implies that 'new' not was executed
+		assertValue("relationWithSeller", "HOLA"); // That implies that 'new' not was executed		
 	}
 	
 	public void testPropertiesOfEntityReferenceAndAggregateInList() throws Exception {
