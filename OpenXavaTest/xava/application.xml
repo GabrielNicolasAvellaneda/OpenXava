@@ -11,6 +11,13 @@
 	  <controller name="Print"/>
 	</module>
 	
+	<module name="StatesJPA" folder="variations">
+		<env-var name="XAVA_SEARCH_ACTION" value="StatesJPA.search"/>		
+		<model name="State"/>
+		<controller name="StatesJPA"/>
+	  <controller name="Print"/>
+	</module>	
+	
 	<module name="Formulas">
 		<model name="Formula"/>
 		<controller name="Typical"/>
