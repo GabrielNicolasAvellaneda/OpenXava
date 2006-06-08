@@ -12,6 +12,7 @@ import org.openxava.actions.*;
 import org.openxava.application.meta.*;
 import org.openxava.controller.meta.*;
 import org.openxava.hibernate.*;
+import org.openxava.jpa.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
 
@@ -391,10 +392,12 @@ public class ModuleManager {
 					request.setAttribute("xava.sendParametersToTab", "false");
 				}
 			}						
+			XPersistence.commit(); // after executing action
 			XHibernate.commit(); // after executing action
 		}
 		catch (ValidationException ex) {
 			errors.add(ex.getErrors());
+			XPersistence.rollback();
 			XHibernate.rollback();
 		}
 		catch (Exception ex) {			
@@ -405,6 +408,7 @@ public class ModuleManager {
 			else {
 				errors.add("no_execute_action");
 			}
+			XPersistence.rollback();
 			XHibernate.rollback();
 		}				
 		
@@ -412,10 +416,12 @@ public class ModuleManager {
 	
 	public void commit() { // Usually after render page
 		try {			
+			XPersistence.commit();
 			XHibernate.commit();
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
+			XPersistence.rollback();
 			XHibernate.rollback();
 		}
 	}
