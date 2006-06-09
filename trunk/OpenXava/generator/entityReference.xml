@@ -83,12 +83,9 @@ if (overlapped) {
 			try {
 				<expr>reference.getName()</expr>.toString();
 			}
-			catch (org.hibernate.ObjectNotFoundException ex) {
+			catch (Exception ex) {
 				return null;
 			}
-			catch (NullPointerException ex) {
-				return null;
-			}			
 		}	
 		return <expr>reference.getName()</expr>;
 	}

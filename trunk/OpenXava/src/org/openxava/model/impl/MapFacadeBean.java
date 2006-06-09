@@ -73,7 +73,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			getPersistenceProvider().commit();
 			return result;
 		} 
-		catch (ObjectNotFoundException ex) { 
+		catch (ObjectNotFoundException ex) {
 			getPersistenceProvider().commit();
 			throw ex;
 		}

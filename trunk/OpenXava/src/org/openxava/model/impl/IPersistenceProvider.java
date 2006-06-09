@@ -13,10 +13,11 @@ import org.openxava.validators.*;
  * Provides the implementation of the persistence services
  * used in {@link MapFacadeBean}. <p>
  * 
- * For all methods you can use RuntimeException as system exception
+ * For all methods you can use any RuntimeException as system exception
  * (this exception always abort the operation and rollback the transaction).
- * You these cases you can throw JDOException, HibernateException, EJBException
- * or whatever RuntimeException your want.<br>  
+ * You can use PersistenceProviderException as RuntimeException, but this is
+ * not mandatory. You can throw PersistenceException, JDOException, HibernateException, 
+ * EJBException or whatever RuntimeException your want.<br>  
  * 
  * @author Mª Carmen Gimeno Alabau
  */

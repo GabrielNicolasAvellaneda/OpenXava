@@ -15,7 +15,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Wed May 17 18:00:31 CEST 2006
+ * @version Thu Jun 08 19:16:55 CEST 2006
  */
 public class PojoPG {
     Properties properties = new Properties();
@@ -121,7 +121,13 @@ public class PojoPG {
     
     out.print(" \n\tpublic java.util.Collection get");
     out.print(colName);
-    out.print("() throws RemoteException {\n\t\torg.hibernate.Query query = org.openxava.hibernate.XHibernate.getSession().createQuery(\"");
+    out.print("() throws RemoteException {\n\t\tif (XavaPreferences.getInstance().isJPAPersistence()) return get");
+    out.print(colName);
+    out.print("_jpa();\n\t\telse return get");
+    out.print(colName);
+    out.print("_hibernate();\n\t}\n\t\n\tprivate java.util.Collection get");
+    out.print(colName);
+    out.print("_hibernate() throws RemoteException {\n\t\torg.hibernate.Query query = org.openxava.hibernate.XHibernate.getSession().createQuery(\"");
     out.print(col.getHQLCondition());
     out.print("\");");
     
@@ -141,7 +147,29 @@ public class PojoPG {
     		
     		}
     
-    out.print(" \n\t\treturn query.list();\n\t}");
+    out.print(" \t \n\t\treturn query.list();\n\t}\t\n\n\tprivate java.util.Collection get");
+    out.print(colName);
+    out.print("_jpa() throws RemoteException {\n\t\tjavax.persistence.Query query = org.openxava.jpa.XPersistence.getManager().createQuery(\"");
+    out.print(col.getJPACondition());
+    out.print("\");");
+    
+    		i=0;
+    		for (Iterator it = col.getMetaPropertiesFinderArguments(true).iterator(); it.hasNext(); i++) {
+    			MetaProperty parameter = (MetaProperty) it.next();
+    			String argument = Generators.convertPropertyNameInPropertyCall(parameter.getName());
+    			if (parameter.getType().isPrimitive()) {
+    				argument = Generators.generatePrimitiveWrapper(parameter.getTypeName(), argument);
+    			}
+    
+    out.print("\n\t\tquery.setParameter(");
+    out.print(i);
+    out.print(", ");
+    out.print(argument);
+    out.print(");");
+    		
+    		}
+    
+    out.print(" \n\t\treturn query.getResultList();\n\t}");
     
     	}
     	else if (col.hasCalculator()) {
@@ -292,7 +320,7 @@ public class PojoPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Wed May 17 18:00:32 CEST 2006", // date this file was generated
+        { "Thu Jun 08 19:16:55 CEST 2006", // date this file was generated
              "/home/javi/workspace2/OpenXava/generator/pojo.xml", // input file
              "/home/javi/workspace2/OpenXava/generator/PojoPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
