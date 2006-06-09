@@ -113,6 +113,11 @@ while (itCollections.hasNext()) {
 	if (col.hasCondition()) {
 # 
 	public java.util.Collection get#(colName)#() throws RemoteException {
+		if (XavaPreferences.getInstance().isJPAPersistence()) return get#(colName)#_jpa();
+		else return get#(colName)#_hibernate();
+	}
+	
+	private java.util.Collection get#(colName)#_hibernate() throws RemoteException {
 		org.hibernate.Query query = org.openxava.hibernate.XHibernate.getSession().createQuery("#(col.getHQLCondition())#");		
 # 
 		int i=0;
@@ -126,8 +131,26 @@ while (itCollections.hasNext()) {
 		query.setParameter(#(i)#, #(argument)#);
 # 		
 		}
-# 
+# 	 
 		return query.list();
+	}	
+
+	private java.util.Collection get#(colName)#_jpa() throws RemoteException {
+		javax.persistence.Query query = org.openxava.jpa.XPersistence.getManager().createQuery("#(col.getJPACondition())#");		
+# 
+		i=0;
+		for (Iterator it = col.getMetaPropertiesFinderArguments(true).iterator(); it.hasNext(); i++) {
+			MetaProperty parameter = (MetaProperty) it.next();
+			String argument = Generators.convertPropertyNameInPropertyCall(parameter.getName());
+			if (parameter.getType().isPrimitive()) {
+				argument = Generators.generatePrimitiveWrapper(parameter.getTypeName(), argument);
+			}
+#
+		query.setParameter(#(i)#, #(argument)#);
+# 		
+		}
+# 
+		return query.getResultList();
 	}	
 # 
 	}

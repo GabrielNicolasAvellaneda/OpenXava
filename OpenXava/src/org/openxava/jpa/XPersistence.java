@@ -1,5 +1,7 @@
 package org.openxava.jpa;
 
+import java.util.*;
+
 import javax.persistence.*;
 
 /**
@@ -80,13 +82,19 @@ public class XPersistence {
 		EntityManager m = (EntityManager) currentManager.get();
 		if (m == null) return;
 		if (m.isOpen()) {			
-			EntityTransaction t = (EntityTransaction) m.getTransaction();			
-			if (t != null) t.commit();
-			else m.flush(); 
-			m.close();
+			EntityTransaction t = (EntityTransaction) m.getTransaction();
+			try {
+				if (t != null) t.commit();
+				else m.flush();
+			}
+			finally {
+				currentManager.set(null);
+				m.close();				
+			}
 		}
-							
-		currentManager.set(null);				
+		else {					
+			currentManager.set(null);
+		}
 	}
 	
 	/**
@@ -100,14 +108,21 @@ public class XPersistence {
 		if (m == null) return;
 		if (m.isOpen()) {
 			EntityTransaction t = (EntityTransaction) m.getTransaction();
-			if (t != null) t.rollback(); // tmp: ¿in this way?
-			m.close();
-		}						
-		currentManager.set(null);					
+			try {
+				if (t != null) t.rollback(); // tmp: ¿in this way?
+			}
+			finally {
+				currentManager.set(null);
+				m.close();
+			}
+		}					
+		else {
+			currentManager.set(null);
+		}
 	}	
 	
 	private static EntityManagerFactory getEntityManagerFactory() {
-		if (entityManagerFactory == null) {
+		if (entityManagerFactory == null) {			
 			entityManagerFactory = Persistence.createEntityManagerFactory(getPersistenceUnitName());
 		}
 		return entityManagerFactory; 

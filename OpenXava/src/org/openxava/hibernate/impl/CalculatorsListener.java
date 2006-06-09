@@ -18,7 +18,7 @@ public class CalculatorsListener implements PreInsertEventListener, PreUpdateEve
 		return instance;
 	}
 	
-	private CalculatorsListener() {		
+	public CalculatorsListener() { 		
 	}
 	
 	public void onPostLoad(PostLoadEvent ev) {

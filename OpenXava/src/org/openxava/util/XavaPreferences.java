@@ -14,6 +14,8 @@ public class XavaPreferences {
 	private static XavaPreferences instance;
 	private boolean ejb2PersistenceLoaded=false;
 	private boolean ejb2Persistence=false;
+	private boolean jpaPersistenceLoaded=false;
+	private boolean jpaPersistence=false;	
 	private boolean duplicateComponentWarningsLoaded=false;
 	private boolean duplicateComponentWarnings=false;	
   
@@ -78,7 +80,15 @@ public class XavaPreferences {
 		}	
 		return ejb2Persistence;
 	}
-
+	
+	public boolean isJPAPersistence() {
+		if (!jpaPersistenceLoaded) {
+			jpaPersistenceLoaded = true;
+			jpaPersistence = getPersistenceProviderClass().toUpperCase().indexOf("JPA") >= 0;
+		}	
+		return jpaPersistence;
+	}
+	
 
 	public boolean isI18nWarnings() {
 		return "true".equalsIgnoreCase(getProperties().getProperty("i18nWarnings", "true").trim());		

@@ -90,14 +90,21 @@ public class XHibernate {
 		Session s = (Session) currentSession.get();
 		if (s == null) return;
 		if (s.isOpen()) {			
-			Transaction t = (Transaction) currentTransaction.get();			
-			if (t != null) t.commit();
-			else s.flush(); 
-			s.close();
+			Transaction t = (Transaction) currentTransaction.get();
+			try {
+				if (t != null) t.commit();
+				else s.flush();
+			}
+			finally {
+				currentTransaction.set(null);
+				currentSession.set(null);												
+				s.close();
+			}
 		}
-					
-		currentTransaction.set(null);
-		currentSession.set(null);				
+		else {			
+			currentTransaction.set(null);
+			currentSession.set(null);
+		}
 	}
 	
 	/**
@@ -110,15 +117,30 @@ public class XHibernate {
 		if (s == null) return;
 		if (s.isOpen()) {
 			Transaction t = (Transaction) currentTransaction.get();
-			if (t != null) t.rollback();
-			s.close();
+			try {
+				if (t != null) t.rollback();
+			}
+			finally {				
+				currentTransaction.set(null);
+				currentSession.set(null);
+				s.close();
+			}			
 		}
-				
-		currentTransaction.set(null);
-		currentSession.set(null);					
+		else {		
+			currentTransaction.set(null);
+			currentSession.set(null);
+		}
 	}	
 	
 	private static SessionFactory createSessionFactory(String hibernateCfg) throws HibernateException {
+		// tmp ini
+		/* 
+		// We annul hibernate in order to test EJB3 JPA 
+		if ("/hibernate.cfg.xml".equals(hibernateCfg)) {
+			throw new RuntimeException("Pillín, pillín, solo EJB3 aquí");
+		}
+		*/
+		// tmp fin
 		try {
 			Configuration configuration = new Configuration().configure(hibernateCfg);			
 			

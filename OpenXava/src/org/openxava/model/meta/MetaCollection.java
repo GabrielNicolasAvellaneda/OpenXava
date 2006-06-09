@@ -15,7 +15,8 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 	
 	private final static int SQL = 0;
 	private final static int EJB2QL = 1;
-	private final static int JBOSSQL = 2;	
+	private final static int JBOSSQL = 2;
+	private final static int JPA = 3;
 		
 	private int minimum;
 	private String condition;
@@ -131,13 +132,21 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 	}
 	
 	public String getHQLCondition() throws XavaException {
+		return getPOJOCondition(SQL);
+	}
+	
+	public String getJPACondition() throws XavaException {
+		return getPOJOCondition(JPA);
+	}	
+	
+	private String getPOJOCondition(int qlType) throws XavaException {
 		MetaModel metaModel = getMetaReference().getMetaModelReferenced(); 
 		StringBuffer sb = new StringBuffer("from ");
 		sb.append(metaModel.getName());
 		sb.append(" as o");
 		if (!Is.emptyString(this.condition)) {			
 			sb.append(" where ");			
-			String condition = changePropertiesThisByArguments(getCondition(), SQL);			
+			String condition = changePropertiesThisByArguments(getCondition(), qlType);			
 			sb.append(Strings.change(condition, MetaFinder.getTokensToChangeDollarsAndNL()));
 		}
 		if (!Is.emptyString(this.order)) { 		
@@ -149,8 +158,7 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 	
 	
 	private String changePropertiesThisByArguments(String source, int qlType) throws XavaException {			
-		StringBuffer r = new StringBuffer(source);
-		Collection properties = new ArrayList();
+		StringBuffer r = new StringBuffer(source);		
 		int i = r.toString().indexOf("${this.");
 		int f = 0;			
 		int c = 0;
@@ -160,6 +168,7 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 			String argument = null;
 			switch (qlType) {
 				case SQL: argument = "?"; break;
+				case JPA: argument = "?" + (c++); break;
 				case EJB2QL: argument = "?" + (++c); break;
 				case JBOSSQL: argument = "{" + (c++) + "}"; break;				
 			}			 
