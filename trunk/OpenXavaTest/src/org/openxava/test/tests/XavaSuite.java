@@ -90,7 +90,11 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(ShipmentChargesTest.class));
 		suite.addTest(new TestSuite(ShipmentsTest.class));
 		suite.addTest(new TestSuite(StateHibernateTest.class));
-		suite.addTest(new TestSuite(StateJPATest.class));
+		if (XavaPreferences.getInstance().isJPAPersistence()) {
+			// This test can work with any persistence provider, because it uses direct JPA APIs,
+			// but asking 'isJPAPersistence' we are sure that Java 5 is used in server
+			suite.addTest(new TestSuite(StateJPATest.class));
+		}
 		suite.addTest(new TestSuite(Subfamilies2Test.class));
 		suite.addTest(new TestSuite(SubfamiliesSelectTest.class));
 		suite.addTest(new TestSuite(SubfamiliesTest.class));
