@@ -78,8 +78,12 @@ public class XPersistence {
 	 * In most cases this method is called by OpenXava automatically, 
 	 * hence the programmer that uses JPA APIs does not need to call it.
 	 */
-	public static void commit() {		
-		EntityManager m = (EntityManager) currentManager.get();
+	public static void commit() {
+		// If manager does not exist then we do not cast to EntityManager,
+		// in this way in order to support jdk1.3 when ejb3 is not used.
+		Object o = currentManager.get(); 
+		if (o == null) return;
+		EntityManager m = (EntityManager) o;
 		if (m == null) return;
 		if (m.isOpen()) {			
 			EntityTransaction t = (EntityTransaction) m.getTransaction();
@@ -104,8 +108,11 @@ public class XPersistence {
 	 * If no manager or it is closed this method does nothing.<br>
 	 */
 	public static void rollback() {
-		EntityManager m = (EntityManager) currentManager.get();
-		if (m == null) return;
+		// If manager does not exist then we do not cast to EntityManager,
+		// in this way in order to support jdk1.3 when ejb3 is not used.
+		Object o = currentManager.get(); 
+		if (o == null) return;
+		EntityManager m = (EntityManager) o;
 		if (m.isOpen()) {
 			EntityTransaction t = (EntityTransaction) m.getTransaction();
 			try {
