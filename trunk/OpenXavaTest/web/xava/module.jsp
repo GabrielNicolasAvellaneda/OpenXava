@@ -1,7 +1,8 @@
 <%@ page import="java.awt.event.InputEvent" %>
 <%@ page import="java.util.Collection" %>
+<%@ page import="java.util.Iterator" %>
 <%@ page import="javax.swing.KeyStroke" %>
-<%@ page import="org.apache.commons.collections.CollectionUtils" %>
+<%@ page import="org.apache.commons.collections.IteratorUtils" %>
 <%@ page import="org.openxava.controller.meta.MetaAction" %>
 <%@ page import="org.openxava.util.Is" %>
 <%@ page import="org.openxava.util.Users" %>
@@ -162,9 +163,12 @@ function setFocus() {
 function processKey(event) {
 	if (!event) event = window.event;
 <%
-Collection actions = CollectionUtils.union(manager.getMetaActions(), manager.getMetaActionsMode());
-java.util.Iterator it = actions.iterator();
-boolean hasActionsWithKeystrokes = false;
+java.util.Iterator it = IteratorUtils.chainedIterator(
+		new Iterator[] {
+			manager.getMetaActions().iterator(), 
+			manager.getMetaActionsMode().iterator()
+		}
+);
 while (it.hasNext()) {
 	MetaAction action = (MetaAction) it.next();
 	if (!action.hasKeystroke()) continue;	
@@ -172,8 +176,7 @@ while (it.hasNext()) {
 	KeyStroke key = KeyStroke.getKeyStroke(action.getKeystroke());
 	if (key == null) {
 		continue;
-	}
-	hasActionsWithKeystrokes = true;
+	}	
 	int keyCode = key.getKeyCode();
 	String ctrl = (key.getModifiers() & InputEvent.CTRL_DOWN_MASK) > 0?" && event.ctrlKey":""; 
 	String alt = (key.getModifiers() & InputEvent.ALT_DOWN_MASK) > 0?" && event.altKey":""; 	
@@ -187,11 +190,16 @@ while (it.hasNext()) {
 	}
 <%	
 }
-%>	
+%>
+	if (event.keyCode >= 49 && event.keyCode <= 57 && event.ctrlKey) {
+		executeXavaAction(false, false, document.<%=manager.getForm()%>, "Sections.change", "activeSection=" + (event.keyCode - 49));		
+		event.returnValue = false;
+		event.preventDefault();
+		return;
+	}	
 }
-<% if (hasActionsWithKeystrokes) { %>	
+
 document.onkeydown = processKey;
-<% } %>
 </script>
 
 
