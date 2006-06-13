@@ -134,7 +134,6 @@ public class ModuleManager {
 		}			
 	}
 	
-	
 	private MetaController getMetaControllerMode() throws XavaException {
 		if (metaControllerMode == null) {
 			metaControllerMode = MetaControllers.getMetaController(getModeControllerName());
