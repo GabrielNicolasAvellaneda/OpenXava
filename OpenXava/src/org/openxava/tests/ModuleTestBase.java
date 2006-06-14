@@ -8,6 +8,7 @@ import org.openxava.application.meta.*;
 import org.openxava.component.*;
 import org.openxava.controller.meta.*;
 import org.openxava.hibernate.XHibernate;
+import org.openxava.jpa.*;
 import org.openxava.model.meta.*;
 import org.openxava.tab.meta.*;
 import org.openxava.util.*;
@@ -48,8 +49,9 @@ public class ModuleTestBase extends TestCase {
 	private WebForm form;
 	private String allowDuplicateSubmit; 
 	
-	static {
+	static {		
 		XHibernate.setConfigurationFile("/hibernate-junit.cfg.xml");
+		XPersistence.setPersistenceUnit("hibernate-junit");
 		DataSourceConnectionProvider.setUseHibernateConnection(true);
 	}
 	
@@ -70,6 +72,7 @@ public class ModuleTestBase extends TestCase {
 			logout();			
 		}
 		XHibernate.commit();
+		XPersistence.commit();
 	}
 
 	protected void login(String user, String password) throws Exception {

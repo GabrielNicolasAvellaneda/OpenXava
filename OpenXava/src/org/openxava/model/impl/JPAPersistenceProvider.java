@@ -20,15 +20,23 @@ public class JPAPersistenceProvider extends BasePOJOPersistenceProvider {
 		return XPersistence.getManager().find(pojoClass, key);
 	}
 
-	protected void refresh(Object object) {		
-		try {			
-			XPersistence.getManager().refresh(object);			
-		}
-		catch (EntityNotFoundException ex) {
-			ex.printStackTrace();
-			// References as key that point to a non-existent object are supported
-		}		
+	protected void refresh(Object object) {				
+		if (!isEmpty(object)) { // In this way because EntityNotFoundException rollback transaction
+			XPersistence.getManager().refresh(object);		
+		}				
 	}
+	
+	private boolean isEmpty(Object object) {
+		try {
+			Object emptyObject = object.getClass().newInstance();
+			return object.equals(emptyObject);
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			throw new PersistenceProviderException(XavaResources.getString("is_empty_error", object));
+		}
+	}
+
 	
 	protected void persist(Object object) {
 		XPersistence.getManager().persist(object);		

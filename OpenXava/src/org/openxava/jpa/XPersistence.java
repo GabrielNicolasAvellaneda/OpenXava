@@ -33,7 +33,7 @@ import javax.persistence.*;
 public class XPersistence {
 
 	private static EntityManagerFactory entityManagerFactory; 
-	private static String persistenceUnitName = "hibernate";	
+	private static String persistenceUnit = "hibernate";	
 	private static ThreadLocal currentManager = new ThreadLocal();		 
 
 	/**
@@ -130,27 +130,31 @@ public class XPersistence {
 	
 	private static EntityManagerFactory getEntityManagerFactory() {
 		if (entityManagerFactory == null) {			
-			entityManagerFactory = Persistence.createEntityManagerFactory(getPersistenceUnitName());
+			entityManagerFactory = Persistence.createEntityManagerFactory(getPersistenceUnit());
 		}
 		return entityManagerFactory; 
 	}
 
 	/**
-	 * By default is <code>hibernate</code>. <p>
+	 * The name of persistence unit in persistence.xml file. <p>
+	 * 
+	 * By default is <code>hibernate</code>. <br>
 	 * 
 	 * You must set value to this property before use any othe method of this class. 
 	 */
-	public static String getPersistenceUnitName() {
-		return persistenceUnitName;
+	public static String getPersistenceUnit() {
+		return persistenceUnit;
 	}
 
 	/**
-	 * By default is <code>hibernate</code>. <p>
+	 * The name of persistence unit in persistence.xml file. <p>
+	 * 
+	 * By default is <code>hibernate</code>. <br>
 	 * 
 	 * You must set value to this property before use any othe method of this class. 
 	 */	
-	public static void setPersistenceUnitName(String configurationFile) {
-		XPersistence.persistenceUnitName = configurationFile;
+	public static void setPersistenceUnit(String persistenceUnitName) {
+		XPersistence.persistenceUnit = persistenceUnitName;
 	}
 		
 }
