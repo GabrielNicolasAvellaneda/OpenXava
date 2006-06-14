@@ -25,7 +25,7 @@ abstract public class BasePOJOPersistenceProvider implements IPersistenceProvide
 	abstract protected Object find(Class pojoClass, Serializable key);
 	
 	/**
-	 * Refresh the object. If fails to do it, it does not throw exception.
+	 * Refresh the object. If object does not exist, then NO exception is thrown.
 	 */
 	abstract protected void refresh(Object object);
 	
@@ -47,7 +47,7 @@ abstract public class BasePOJOPersistenceProvider implements IPersistenceProvide
 			}
 			else {
 				key = getKey(metaModel, keyValues);
-				refreshKeyReference(metaModel, key); // tmp: still not definitive
+				refreshKeyReference(metaModel, key); 
 			}			
 			if (key == null) {
 				throw new ObjectNotFoundException(XavaResources.getString(
@@ -58,11 +58,6 @@ abstract public class BasePOJOPersistenceProvider implements IPersistenceProvide
 				throw new ObjectNotFoundException(XavaResources.getString(
 						"object_with_key_not_found", metaModel.getName(), keyValues));
 			}
-			/* tmp: still not definitive
-			if (multipleKey) { 
-				refreshKeyReference(metaModel, key);
-			}
-			*/
 			return result;
 		}
 		catch (FinderException ex) {
@@ -94,7 +89,7 @@ abstract public class BasePOJOPersistenceProvider implements IPersistenceProvide
 		}
 	}
 	
-	private void refreshKeyReference(MetaModel metaModel, Object key) throws XavaException, InvocationTargetException, PropertiesManagerException {
+	private void refreshKeyReference(MetaModel metaModel, Object key) throws XavaException, InvocationTargetException, PropertiesManagerException { 
 		// Refresh references keys can be a little inefficient (a SELECT by reference)
 		// but it's needed in order to populate these references well, 
 		// because these reference already have values in its keys thus 

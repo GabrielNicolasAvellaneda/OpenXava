@@ -3,6 +3,7 @@ package org.openxava.test.tests;
 import java.util.*;
 
 import org.openxava.hibernate.*;
+import org.openxava.jpa.*;
 import org.openxava.model.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
@@ -16,11 +17,17 @@ public class MapFacadeTest extends TestCase {
 	
 	static {
 		XHibernate.setConfigurationFile("hibernate-junit.cfg.xml");
+		XPersistence.setPersistenceUnit("hibernate-junit");
 	}
 
 	public MapFacadeTest(String name) {
 		super(name);
 		Locale.setDefault(Locale.ENGLISH);
+	}
+	
+	protected void tearDown() throws Exception {
+		XHibernate.commit();
+		XPersistence.commit();
 	}
 	
 	public void testMapArgumentByValue() throws Exception {

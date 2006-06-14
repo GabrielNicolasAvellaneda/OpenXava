@@ -69,8 +69,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		membersNames = Maps.recursiveClone(membersNames); 		
 		try {			
 			getPersistenceProvider().begin();
-			Map result = getValuesImpl(modelName, keyValues, membersNames);
-			getPersistenceProvider().commit();
+			Map result = getValuesImpl(modelName, keyValues, membersNames);			
+			getPersistenceProvider().commit();			
 			return result;
 		} 
 		catch (ObjectNotFoundException ex) {

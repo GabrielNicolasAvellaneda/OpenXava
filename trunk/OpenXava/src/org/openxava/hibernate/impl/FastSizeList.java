@@ -24,7 +24,7 @@ public class FastSizeList implements List {
 	public int size() {
 		if (original != null) return original.size();
 		if (size == -1) {
-			size = ((Integer) sizeQuery.uniqueResult()).intValue();
+			size = ((Number) sizeQuery.uniqueResult()).intValue();
 		}
 		return size;
 	}

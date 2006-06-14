@@ -133,14 +133,6 @@ public class XHibernate {
 	}	
 	
 	private static SessionFactory createSessionFactory(String hibernateCfg) throws HibernateException {
-		// tmp ini
-		/* 
-		// We annul hibernate in order to test EJB3 JPA 
-		if ("/hibernate.cfg.xml".equals(hibernateCfg)) {
-			throw new RuntimeException("Pillín, pillín, solo EJB3 aquí");
-		}
-		*/
-		// tmp fin
 		try {
 			Configuration configuration = new Configuration().configure(hibernateCfg);			
 			

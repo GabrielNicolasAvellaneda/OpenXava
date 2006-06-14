@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/hibernate3.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="filtered-files"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/ehcache.jar"/>
 	<classpathentry kind="src" path="properties"/>
 	<classpathentry kind="src" path="reports"/>
 	<classpathentry kind="src" path="gen-src"/>
@@ -12,5 +14,8 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/AccessTracking"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="src" path="/OpenXava"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/hibernate-annotations.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/hibernate-entitymanager.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/javassist.jar"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>
