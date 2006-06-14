@@ -210,7 +210,7 @@ public class ModuleTestBase extends TestCase {
 	 */
 	protected void execute(String action) throws Exception {
 		assertAction(action);		
-		response.getScriptableObject().setLocation("javascript:executeXavaAction(false, false, document.forms[" + getFormIndex() + "], '" + action + "')");
+		response.getScriptableObject().setLocation("javascript:executeXavaAction('', false, document.forms[" + getFormIndex() + "], '" + action + "')");
 		response = conversation.getCurrentPage();
 		if ("text/html".equals(response.getContentType())) {
 			resetForm();
@@ -224,7 +224,7 @@ public class ModuleTestBase extends TestCase {
 	
 	protected void execute(String action, String arguments) throws Exception {
 		assertAction(action); 
-		response.getScriptableObject().setLocation("javascript:executeXavaAction(false, false, document.forms[" + getFormIndex() + "], '" + action + "', '" + arguments+ "')");
+		response.getScriptableObject().setLocation("javascript:executeXavaAction('', false, document.forms[" + getFormIndex() + "], '" + action + "', '" + arguments+ "')");
 		response = conversation.getCurrentPage();
 		resetForm();
 	}
