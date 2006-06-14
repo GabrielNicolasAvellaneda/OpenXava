@@ -38,7 +38,9 @@ public class ButtonTag extends TagSupport {
 			Style style = (Style) request.getAttribute("style");
 			pageContext.getOut().print(style.getButton());
 			pageContext.getOut().print("\tonclick='executeXavaAction(");
-			pageContext.getOut().print(metaAction.isConfirm());
+			pageContext.getOut().print('"');				
+			pageContext.getOut().print(metaAction.getConfirmMessage(request));
+			pageContext.getOut().print('"');
 			pageContext.getOut().print(", ");
 			pageContext.getOut().print(metaAction.isTakesLong());
 			pageContext.getOut().print(", document.");

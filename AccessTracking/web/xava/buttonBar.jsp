@@ -17,7 +17,7 @@ boolean onBottom = Boolean.valueOf(request.getParameter("onBottom")).booleanValu
 <td style='vertical-align: middle' class=<%=style.getButtonBarMiddle(onBottom)%>>
 
 <button name="xava.DEFAULT_ACTION" 
-	onclick="executeXavaAction(false, false, <%=manager.getForm()%>, '<%=manager.getDefaultActionQualifiedName()%>')"
+	onclick="executeXavaAction('', false, <%=manager.getForm()%>, '<%=manager.getDefaultActionQualifiedName()%>')"
 	style="padding: 0; border: none; background-color:transparent">
 </button>
 

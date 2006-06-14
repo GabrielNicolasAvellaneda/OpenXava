@@ -3,6 +3,8 @@ package org.openxava.controller.meta;
 
 import java.util.*;
 
+import javax.servlet.*;
+
 import org.openxava.actions.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
@@ -225,6 +227,21 @@ public class MetaAction extends MetaElement {
 
 	public boolean isConfirm() {
 		return confirm;
+	}
+	
+	public String getConfirmMessage() {
+		return getConfirmMessage(Locale.getDefault());
+	}
+	
+	public String getConfirmMessage(Locale locale) {
+		if (!isConfirm()) return "";
+		String description = getDescription(locale);
+		if (Is.emptyString(description)) return XavaResources.getString(locale, "are_you_sure"); 
+		return XavaResources.getString(locale, "are_you_sure_action", description);
+	}	
+	
+	public String getConfirmMessage(ServletRequest request) {
+		return getConfirmMessage(getLocale(request));
 	}
 
 	public void setConfirm(boolean confirm) {

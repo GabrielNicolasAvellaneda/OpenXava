@@ -124,18 +124,11 @@ else { // All else
 
 
 <script>
-function executeXavaAction(isConfirm, takesLong, formu, action) {
-	if (isConfirm && !confirm('<%=XavaResources.getString(request, "are_you_sure")%>')) return;
-	if (takesLong) {
-		document.getElementById('processingLayer').style.display='block';
-		setTimeout('document.images["processingImage"].src = "<%=request.getContextPath()%>/xava/images/processing.gif"', 1);		
-	}
-	formu.focus_forward.value = "false";
-	formu.xava_action.value=action;	
-	formu.submit();	
+function executeXavaAction(confirmMessage, takesLong, formu, action) {
+	executeXavaAction(confirmMessage, takesLong, formu, action, null);
 }
-function executeXavaAction(isConfirm, takesLong, formu, action, argv) {	
-	if (isConfirm && !confirm('<%=XavaResources.getString(request, "are_you_sure")%>')) return;
+function executeXavaAction(confirmMessage, takesLong, formu, action, argv) {	
+	if (confirmMessage != "" && !confirm(confirmMessage)) return;
 	if (takesLong) {
 		document.getElementById('processingLayer').style.display='block';
 		setTimeout('document.images["processingImage"].src = "<%=request.getContextPath()%>/xava/images/processing.gif"', 1);
@@ -183,7 +176,7 @@ while (it.hasNext()) {
 	String shift = (key.getModifiers() & InputEvent.SHIFT_DOWN_MASK) > 0?" && event.shiftKey":"";
 %>
 	if (event.keyCode == <%=keyCode%> <%=ctrl%> <%=alt%> <%=shift%>) {
-		executeXavaAction(<%=action.isConfirm()%>, <%=action.isTakesLong()%>, document.<%=manager.getForm()%>, '<%=action.getQualifiedName()%>');		
+		executeXavaAction('<%=action.getConfirmMessage(request)%>', <%=action.isTakesLong()%>, document.<%=manager.getForm()%>, '<%=action.getQualifiedName()%>');		
 		event.returnValue = false;
 		event.preventDefault();
 		return;
@@ -192,7 +185,7 @@ while (it.hasNext()) {
 }
 %>
 	if (event.keyCode >= 49 && event.keyCode <= 57 && event.ctrlKey) {
-		executeXavaAction(false, false, document.<%=manager.getForm()%>, "Sections.change", "activeSection=" + (event.keyCode - 49));		
+		executeXavaAction("", false, document.<%=manager.getForm()%>, "Sections.change", "activeSection=" + (event.keyCode - 49));		
 		event.returnValue = false;
 		event.preventDefault();
 		return;
