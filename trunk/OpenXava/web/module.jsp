@@ -142,7 +142,7 @@ function throwPropertyChanged(formu, property) {
 	formu.focus_forward.value = "true";
 	formu.focus_property.value=property;	
 	formu.changed_property.value=property;	
-	formu.submit();
+	formu.submit();	
 }
 <% String focusPropertyId = view.getFocusPropertyId(); %>
 function setFocus() {

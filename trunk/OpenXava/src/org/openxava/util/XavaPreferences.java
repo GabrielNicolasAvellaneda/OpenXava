@@ -89,6 +89,22 @@ public class XavaPreferences {
 		return jpaPersistence;
 	}
 	
+	/**
+	 * Useful when you want to force some code (as finders) to not use JPA implementation. <p>
+	 * 
+	 * Warning! This does not change the value of persistenceProviderClass,
+	 * only change the behaviour of code that call to isJPAPersistence.<br>
+	 * Usually you use this method inside of test code to force to use hibernate
+	 * or jpa implementation when work with POJOs.
+	 * 
+	 * For example, if you call <code>setJPAPersistence(false)</code> 
+	 * then you force to the POJO finder to use hibernate always, instead of JPA.
+	 */
+	public void setJPAPersistence(boolean jpaPersistence) {
+		this.jpaPersistence = jpaPersistence;
+		this.jpaPersistenceLoaded = true;
+	}
+	
 
 	public boolean isI18nWarnings() {
 		return "true".equalsIgnoreCase(getProperties().getProperty("i18nWarnings", "true").trim());		

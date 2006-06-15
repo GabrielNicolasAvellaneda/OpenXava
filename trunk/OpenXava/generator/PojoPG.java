@@ -15,7 +15,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Jun 12 10:04:25 CEST 2006
+ * @version Thu Jun 15 18:36:09 CEST 2006
  */
 public class PojoPG {
     Properties properties = new Properties();
@@ -226,14 +226,9 @@ public class PojoPG {
     out.print(arguments);
     out.print(") ");
     out.print(exception);
-    out.print(" {\n \t\torg.hibernate.Query query = org.openxava.hibernate.XHibernate.getSession().createQuery(\"");
+    out.print(" {\n \t\tif (XavaPreferences.getInstance().isJPAPersistence()) {\n \t\t\tjavax.persistence.Query query = org.openxava.jpa.XPersistence.getManager().createQuery(\"");
     out.print(finder.getHQLCondition());
     out.print("\");");
-    if (finder.isCollection()) { 
-    out.print(" \n \t\torg.hibernate.Query sizeQuery = org.openxava.hibernate.XHibernate.getSession().createQuery(\"");
-    out.print(finder.getHQLCountSentence());
-    out.print("\");");
-    } 
     
     		int i=0;
     		for (Iterator it = finder.getMetaPropertiesArguments().iterator(); it.hasNext(); i++) {
@@ -243,13 +238,47 @@ public class PojoPG {
     				argument = Generators.generatePrimitiveWrapper(parameter.getTypeName(), argument);
     			}
     
-    out.print(" \n\t\tquery.setParameter(\"arg");
+    out.print(" \n\t\t\tquery.setParameter(\"arg");
+    out.print(i);
+    out.print("\", ");
+    out.print(argument);
+    out.print(");");
+    
+    		}
+    
+    if (finder.isCollection()) { 
+    out.print(" \n \t\t\treturn query.getResultList();");
+    } else { 
+    out.print(" \n \t\t\ttry {\n\t\t\t\treturn (");
+    out.print(name);
+    out.print(") query.getSingleResult();\n\t\t\t}\n\t\t\tcatch (Exception ex) {\n\t\t\t\t// In this way in order to work with Java pre 5 \n\t\t\t\tif (ex.getClass().getName().equals(\"javax.persistence.NoResultException\")) {\n\t\t\t\t\tthrow new javax.ejb.ObjectNotFoundException(XavaResources.getString(\"object_not_found\", \"");
+    out.print(name);
+    out.print("\"));\n\t\t\t\t}\n\t\t\t\telse {\n\t\t\t\t\tex.printStackTrace();\n\t\t\t\t\tthrow new RuntimeException(ex.getMessage());\n\t\t\t\t}\n\t\t\t}");
+    } 
+    out.print(" \n \t\t}\n \t\telse {\n \t\t\torg.hibernate.Query query = org.openxava.hibernate.XHibernate.getSession().createQuery(\"");
+    out.print(finder.getHQLCondition());
+    out.print("\");");
+    if (finder.isCollection()) { 
+    out.print(" \n \t\t\torg.hibernate.Query sizeQuery = org.openxava.hibernate.XHibernate.getSession().createQuery(\"");
+    out.print(finder.getHQLCountSentence());
+    out.print("\");");
+    } 
+    
+    		i=0;
+    		for (Iterator it = finder.getMetaPropertiesArguments().iterator(); it.hasNext(); i++) {
+    			MetaProperty parameter = (MetaProperty) it.next();
+    			String argument = parameter.getName();
+    			if (parameter.getType().isPrimitive()) {
+    				argument = Generators.generatePrimitiveWrapper(parameter.getTypeName(), argument);
+    			}
+    
+    out.print(" \n\t\t\tquery.setParameter(\"arg");
     out.print(i);
     out.print("\", ");
     out.print(argument);
     out.print(");");
     if (finder.isCollection()) { 
-    out.print(" \n\t\tsizeQuery.setParameter(\"arg");
+    out.print(" \n\t\t\tsizeQuery.setParameter(\"arg");
     out.print(i);
     out.print("\", ");
     out.print(argument);
@@ -259,17 +288,17 @@ public class PojoPG {
     		}
     
     if (finder.isCollection()) { 
-    out.print(" \n \t\treturn new org.openxava.hibernate.impl.FastSizeList(query, sizeQuery);");
+    out.print(" \n \t\t\treturn new org.openxava.hibernate.impl.FastSizeList(query, sizeQuery);");
     } else { 
-    out.print(" \n\t\t");
+    out.print(" \n\t\t\t");
     out.print(name);
     out.print(" r = (");
     out.print(name);
-    out.print(") query.uniqueResult();\n\t\tif (r == null) {\n\t\t\tthrow new javax.ejb.ObjectNotFoundException(XavaResources.getString(\"object_not_found\", \"");
+    out.print(") query.uniqueResult();\n\t\t\tif (r == null) {\n\t\t\t\tthrow new javax.ejb.ObjectNotFoundException(XavaResources.getString(\"object_not_found\", \"");
     out.print(name);
-    out.print("\"));\n\t\t}\n\t\treturn r;");
+    out.print("\"));\n\t\t\t}\n\t\t\treturn r;");
     } 
-    out.print(" \n \t}");
+    out.print(" \n \t\t}\n \t}");
     
      }
     
@@ -320,7 +349,7 @@ public class PojoPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Jun 12 10:04:25 CEST 2006", // date this file was generated
+        { "Thu Jun 15 18:36:09 CEST 2006", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/pojo.xml", // input file
              "/home/javi/workspace/OpenXava/generator/PojoPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

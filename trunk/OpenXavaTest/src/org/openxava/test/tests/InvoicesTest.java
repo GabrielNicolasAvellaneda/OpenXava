@@ -28,6 +28,11 @@ public class InvoicesTest extends ModuleTestBase {
 	private String productDescription;
 	private String productNumber;
 	private IProduct product;
+	
+	static {
+		// To force to finder of the pojo to use hibernate, although jpa is configured
+		XavaPreferences.getInstance().setJPAPersistence(false);
+	}
 
 	public InvoicesTest(String testName) {
 		super(testName, "OpenXavaTest", "Invoices");		
