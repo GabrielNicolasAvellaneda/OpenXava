@@ -420,7 +420,7 @@ public class CustomersTest extends ModuleTestBase {
 		assertError("Seller with key {number=53} not found");
 		assertValue("relationWithSeller", "HOLA"); // That implies that 'new' not was executed		
 	}
-	
+		
 	public void testPropertiesOfEntityReferenceAndAggregateInList() throws Exception {
 		setConditionValues(new String [] { "JAVI", "" });
 		execute("List.filter");

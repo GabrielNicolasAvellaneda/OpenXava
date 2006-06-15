@@ -1,6 +1,10 @@
 package org.openxava.test.tests;
 
+import java.math.*;
+import java.util.*;
+
 import org.openxava.hibernate.*;
+import org.openxava.jpa.*;
 import org.openxava.test.model.*;
 import org.openxava.util.*;
 
@@ -11,36 +15,36 @@ import junit.framework.*;
  * @author Javier Paniza
  */
 
-public class HibernateTest extends TestCase {
+public class JPATest extends TestCase {
 	
 	static {
-		XHibernate.setConfigurationFile("hibernate-junit.cfg.xml");
+		XPersistence.setPersistenceUnit("hibernate-junit");
 		DataSourceConnectionProvider.setUseHibernateConnection(true);
 	}
 	
-	public HibernateTest(String name) {
+	public JPATest(String name) {
 		super(name);
 	}
 	
 	protected void tearDown() throws Exception {
-		XHibernate.commit();		
+		XPersistence.commit();
 	}
 					
-	public void testConvertersAllPropertiesOnCreate() throws Exception { // One way to avoid nulls	
+	public void testConvertersAllPropertiesOnCreate() throws Exception { // One way to avoid nulls
 		Subfamily sf = new Subfamily();
 		sf.setNumber(77);
 		sf.setDescription("PROVA JUNIT 77");
-		XHibernate.getSession().save(sf);
-		XHibernate.getSession().flush();
+		XPersistence.getManager().persist(sf);
+		XPersistence.getManager().flush();
 		
-		org.hibernate.Query query = XHibernate.getSession().createQuery(
+		javax.persistence.Query query = XPersistence.getManager().createQuery(
 				"select sf.remarks from Subfamily sf where sf.number = 77");
 		
-		String remarks = (String) query.uniqueResult();
+		String remarks = (String) query.getSingleResult();
 				
 		assertEquals("", remarks);
 		
-		XHibernate.getSession().delete(sf);
+		XPersistence.getManager().remove(sf);
 	}
 	
 }

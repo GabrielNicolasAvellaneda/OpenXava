@@ -27,7 +27,7 @@ public class XavaSuite extends TestSuite {
 	public XavaSuite(String name) {
 		super(name);
 	}
-	public static Test suite() {
+	public static Test suite() {		
 		TestSuite suite = new TestSuite();
 		
 		suite.addTest(new TestSuite(WarehousesTest.class));	
@@ -57,7 +57,7 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(FamilyProductsReportTest.class));
 		suite.addTest(new TestSuite(FamilyRangeProductsReportTest.class));
 		suite.addTest(new TestSuite(FamilyXProductsReportTest.class));
-		suite.addTest(new TestSuite(FormulasTest.class));
+		suite.addTest(new TestSuite(FormulasTest.class));		
 		suite.addTest(new TestSuite(HibernateTest.class));
 		suite.addTest(new TestSuite(Invoice20020001Test.class));
 		suite.addTest(new TestSuite(Invoices2002Test.class));
@@ -67,13 +67,17 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(InvoicesFromDeliveriesTest.class));
 		suite.addTest(new TestSuite(InvoicesNestedSectionsTest.class));
 		suite.addTest(new TestSuite(InvoicesNoListTest.class));
-		suite.addTest(new TestSuite(InvoicesTest.class));		
+		suite.addTest(new TestSuite(InvoicesTest.class));
+		if (isJava5()) {
+			suite.addTest(new TestSuite(JPATest.class));
+		}
 		suite.addTest(new TestSuite(MapFacadeTest.class));
 		suite.addTest(new TestSuite(NotZeroValidatorTest.class));
 		suite.addTest(new TestSuite(Offices2Test.class));
 		suite.addTest(new TestSuite(OfficesTest.class));
 		suite.addTest(new TestSuite(OnlyEditDetailsInvoiceTest.class));
 		suite.addTest(new TestSuite(OnlyReadDetailsInvoiceTest.class));
+		suite.addTest(new TestSuite(POJOTest.class));
 		suite.addTest(new TestSuite(PositiveValidatorTest.class));
 		suite.addTest(new TestSuite(Products2ReferenceAndStereotype.class));
 		suite.addTest(new TestSuite(Products2Test.class));
@@ -107,5 +111,10 @@ public class XavaSuite extends TestSuite {
 			
 		return suite;
 	}
+	
+	private static boolean isJava5() {
+		return "1.5".equals(System.getProperty("java.specification.version"));
+	}
+
 	
 }

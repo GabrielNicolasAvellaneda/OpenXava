@@ -199,10 +199,8 @@ while (itCollections.hasNext()) {
  	String exception = finder.isCollection()?"":"throws javax.ejb.ObjectNotFoundException";
 </java> 	
  	public static <expr>type</expr> find<expr>finderName</expr>(<expr>arguments</expr>) <expr>exception</expr> {
- 		org.hibernate.Query query = org.openxava.hibernate.XHibernate.getSession().createQuery("<expr>finder.getHQLCondition()</expr>");
- 		<java>if (finder.isCollection()) { </java> 
- 		org.hibernate.Query sizeQuery = org.openxava.hibernate.XHibernate.getSession().createQuery("<expr>finder.getHQLCountSentence()</expr>");
- 		<java>} </java>
+ 		if (XavaPreferences.getInstance().isJPAPersistence()) {
+ 			javax.persistence.Query query = org.openxava.jpa.XPersistence.getManager().createQuery("<expr>finder.getHQLCondition()</expr>");
 <java>
 		int i=0;
 		for (Iterator it = finder.getMetaPropertiesArguments().iterator(); it.hasNext(); i++) {
@@ -212,22 +210,59 @@ while (itCollections.hasNext()) {
 				argument = Generators.generatePrimitiveWrapper(parameter.getTypeName(), argument);
 			}
 </java> 
-		query.setParameter("arg<expr>i</expr>", <expr>argument</expr>);
+			query.setParameter("arg<expr>i</expr>", <expr>argument</expr>);
+<java>
+		}
+</java> 
+ 		<java>if (finder.isCollection()) { </java> 
+ 			return query.getResultList();
+ 		<java>} else { </java> 
+ 			try {
+				return (<expr>name</expr>) query.getSingleResult();
+			}
+			catch (Exception ex) {
+				// In this way in order to work with Java pre 5 
+				if (ex.getClass().getName().equals("javax.persistence.NoResultException")) {
+					throw new javax.ejb.ObjectNotFoundException(XavaResources.getString("object_not_found", "<expr>name</expr>"));
+				}
+				else {
+					ex.printStackTrace();
+					throw new RuntimeException(ex.getMessage());
+				}
+			}
+ 		<java>} </java> 
+ 		}
+ 		else {
+ 			org.hibernate.Query query = org.openxava.hibernate.XHibernate.getSession().createQuery("<expr>finder.getHQLCondition()</expr>");
+ 		<java>if (finder.isCollection()) { </java> 
+ 			org.hibernate.Query sizeQuery = org.openxava.hibernate.XHibernate.getSession().createQuery("<expr>finder.getHQLCountSentence()</expr>");
+ 		<java>} </java>
+<java>
+		i=0;
+		for (Iterator it = finder.getMetaPropertiesArguments().iterator(); it.hasNext(); i++) {
+			MetaProperty parameter = (MetaProperty) it.next();
+			String argument = parameter.getName();
+			if (parameter.getType().isPrimitive()) {
+				argument = Generators.generatePrimitiveWrapper(parameter.getTypeName(), argument);
+			}
+</java> 
+			query.setParameter("arg<expr>i</expr>", <expr>argument</expr>);
 			<java>if (finder.isCollection()) { </java> 
-		sizeQuery.setParameter("arg<expr>i</expr>", <expr>argument</expr>);
+			sizeQuery.setParameter("arg<expr>i</expr>", <expr>argument</expr>);
 			<java>} </java> 
 <java>
 		}
 </java> 
  		<java>if (finder.isCollection()) { </java> 
- 		return new org.openxava.hibernate.impl.FastSizeList(query, sizeQuery);
+ 			return new org.openxava.hibernate.impl.FastSizeList(query, sizeQuery);
  		<java>} else { </java> 
-		<expr>name</expr> r = (<expr>name</expr>) query.uniqueResult();
-		if (r == null) {
-			throw new javax.ejb.ObjectNotFoundException(XavaResources.getString("object_not_found", "<expr>name</expr>"));
-		}
-		return r;
+			<expr>name</expr> r = (<expr>name</expr>) query.uniqueResult();
+			if (r == null) {
+				throw new javax.ejb.ObjectNotFoundException(XavaResources.getString("object_not_found", "<expr>name</expr>"));
+			}
+			return r;
  		<java>} </java> 
+ 		}
  	}
  	
 <java>

@@ -198,10 +198,8 @@ while (itCollections.hasNext()) {
  	String exception = finder.isCollection()?"":"throws javax.ejb.ObjectNotFoundException";
 # 	
  	public static #(type)# find#(finderName)#(#(arguments)#) #(exception)# {
- 		org.hibernate.Query query = org.openxava.hibernate.XHibernate.getSession().createQuery("#(finder.getHQLCondition())#");
- 		# if (finder.isCollection()) { # 
- 		org.hibernate.Query sizeQuery = org.openxava.hibernate.XHibernate.getSession().createQuery("#(finder.getHQLCountSentence())#");
- 		# } #
+ 		if (XavaPreferences.getInstance().isJPAPersistence()) {
+ 			javax.persistence.Query query = org.openxava.jpa.XPersistence.getManager().createQuery("#(finder.getHQLCondition())#");
 # 
 		int i=0;
 		for (Iterator it = finder.getMetaPropertiesArguments().iterator(); it.hasNext(); i++) {
@@ -211,22 +209,59 @@ while (itCollections.hasNext()) {
 				argument = Generators.generatePrimitiveWrapper(parameter.getTypeName(), argument);
 			}
 # 
-		query.setParameter("arg#(i)#", #(argument)#);
+			query.setParameter("arg#(i)#", #(argument)#);
+# 
+		}
+# 
+ 		# if (finder.isCollection()) { # 
+ 			return query.getResultList();
+ 		# } else { # 
+ 			try {
+				return (#(name)#) query.getSingleResult();
+			}
+			catch (Exception ex) {
+				// In this way in order to work with Java pre 5 
+				if (ex.getClass().getName().equals("javax.persistence.NoResultException")) {
+					throw new javax.ejb.ObjectNotFoundException(XavaResources.getString("object_not_found", "#(name)#"));
+				}
+				else {
+					ex.printStackTrace();
+					throw new RuntimeException(ex.getMessage());
+				}
+			}
+ 		# } # 
+ 		}
+ 		else {
+ 			org.hibernate.Query query = org.openxava.hibernate.XHibernate.getSession().createQuery("#(finder.getHQLCondition())#");
+ 		# if (finder.isCollection()) { # 
+ 			org.hibernate.Query sizeQuery = org.openxava.hibernate.XHibernate.getSession().createQuery("#(finder.getHQLCountSentence())#");
+ 		# } #
+# 
+		i=0;
+		for (Iterator it = finder.getMetaPropertiesArguments().iterator(); it.hasNext(); i++) {
+			MetaProperty parameter = (MetaProperty) it.next();
+			String argument = parameter.getName();
+			if (parameter.getType().isPrimitive()) {
+				argument = Generators.generatePrimitiveWrapper(parameter.getTypeName(), argument);
+			}
+# 
+			query.setParameter("arg#(i)#", #(argument)#);
 			# if (finder.isCollection()) { # 
-		sizeQuery.setParameter("arg#(i)#", #(argument)#);
+			sizeQuery.setParameter("arg#(i)#", #(argument)#);
 			# } # 
 # 
 		}
 # 
  		# if (finder.isCollection()) { # 
- 		return new org.openxava.hibernate.impl.FastSizeList(query, sizeQuery);
+ 			return new org.openxava.hibernate.impl.FastSizeList(query, sizeQuery);
  		# } else { # 
-		#(name)# r = (#(name)#) query.uniqueResult();
-		if (r == null) {
-			throw new javax.ejb.ObjectNotFoundException(XavaResources.getString("object_not_found", "#(name)#"));
-		}
-		return r;
+			#(name)# r = (#(name)#) query.uniqueResult();
+			if (r == null) {
+				throw new javax.ejb.ObjectNotFoundException(XavaResources.getString("object_not_found", "#(name)#"));
+			}
+			return r;
  		# } # 
+ 		}
  	}
  	
 # 
