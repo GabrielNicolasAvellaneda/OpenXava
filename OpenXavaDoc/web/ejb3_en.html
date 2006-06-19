@@ -1,0 +1,33 @@
+OpenXava has, since the version 2.0.1, support for EJB3. At the moment
+this support&nbsp;is complete, but still it's in a <span
+ style="font-weight: bold; color: rgb(255, 0, 0);">beta stage</span>.
+EJB3 persistence will be officially supported in OpenXava 2.1.<br>
+Here, you have the instructions to&nbsp;work in your OpenXava
+applications using EJB3 JPA as
+persistence engine, instead of Hibernate.<br>
+<h4>Configure your application to work with EJB3</h4>
+Copy the jars in <span style="font-family: monospace;">ejb3-lib</span>
+of OpenXava distribution to <span style="font-family: monospace;">web/WEB-INF/lib</span>
+of your project.<br>
+Edit the file <span style="font-family: monospace;">properties/xava.properties</span>
+of your project, and left it in this way:<br>
+<pre># EJB3 Java Persistence API</pre>
+<pre>persistenceProviderClass=org.openxava.model.impl.JPAPersistenceProvider</pre>
+<pre>mapFacadeAsEJB=false</pre>
+From now on, your application will use EJB3 JPA instead of Hibernate to
+manage object persistence.<br>
+<h4>Using EJB3 JPA in your code</h4>
+Now, you can use JPA in your own code (actions, calculators,
+validators, etc). In order to help you in this task OpenXava provides
+you&nbsp;<span style="font-family: monospace;">XPersistence</span>
+class (that works as <span style="font-family: monospace;">XHibernate</span>
+class).<br>
+That is, you can write code as this one, in any part of your OpenXava
+application:<br>
+<br>
+<pre>Invoice invoice = new Invoice();</pre>
+<pre>...</pre>
+<pre>XPersistence.getManager().persist(invoice);</pre>
+<br>
+OpenXava will commit the transaction and close the manager for you.<br>
+<br>
