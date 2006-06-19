@@ -1,0 +1,36 @@
+OpenXava tiene, desde la versi&oacute;n 2.0.1, soporte para EJB3. De
+momento este soporte es completo, pero todav&iacute;a est&aacute; en un
+estado <span style="font-weight: bold; color: rgb(255, 0, 0);">beta</span>.
+La persistencia EJB3 estar&aacute; oficialmente soportada
+en&nbsp;OpenXava 2.1.<br>
+Aqu&iacute;, tenemos las instrucciones para trabajar con EJB3 JPA como
+gestor de persistencia, en lugar de Hibernate, en nuestras aplicaciones
+OpenXava.<br>
+<h4>Configurar nuestra aplicacion para que funcione con EJB3</h4>
+Hemos de copiar los&nbsp;jars en <span style="font-family: monospace;">ejb3-lib</span>
+de la distribuci&oacute;n OpenXava a <span
+ style="font-family: monospace;">web/WEB-INF/lib</span>
+de nuestro proyecto.<br>
+Editamos el archivo <span style="font-family: monospace;">properties/xava.properties</span>
+de nuestro proyecto, y lo dejamos as&iacute;:<br>
+<pre># EJB3 Java Persistence API</pre>
+<pre>persistenceProviderClass=org.openxava.model.impl.JPAPersistenceProvider</pre>
+<pre>mapFacadeAsEJB=false</pre>
+A partir de ahora, nuestra aplicaci&oacute;n usar&aacute; EJB3 JPA en
+lugar de Hibernate para manejar la persistencia de los objetos.<br>
+<h4>Usando EJB3 JPA en nuestro c&oacute;digo</h4>
+Ahora, podemos usar JPA en nuestro propio c&oacute;digo (acciones,
+calculadores,
+validadores, etc). Para ayudar en esta tarea OpenXava ofrece la
+clase&nbsp;<span style="font-family: monospace;">XPersistence</span>
+(que funciona como <span style="font-family: monospace;">XHibernate</span>).<br>
+Es decir, podemos escribir un c&oacute;digo como el siguiente, en
+cualquier parte de nuestra aplicaci&oacute;n OpenXava:<br>
+<br>
+<pre>Factura factura = new Factura();</pre>
+<pre>...</pre>
+<pre>XPersistence.getManager().persist(factura);</pre>
+<br>
+OpenXava confirmar&aacute; la transacci&oacute;n y cerrar&aacute; el <span
+ style="font-style: italic;">manager</span> por nosotros.<br>
+<br>

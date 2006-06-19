@@ -234,5 +234,23 @@
 		<resource-bundle>WTP</resource-bundle>		
 	</portlet> 
 	
+	<portlet id="EJB3">
+		<description>EJB3</description>    
+		<portlet-name>EJB3</portlet-name>
+		<display-name>EJB3</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>ejb3</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<resource-bundle>EJB3</resource-bundle>		
+	</portlet> 
+	
+	
 								
 </portlet-app>
