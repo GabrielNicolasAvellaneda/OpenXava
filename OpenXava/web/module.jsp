@@ -296,5 +296,11 @@ document.onkeydown = processKey;
 %>
 
 <%
-manager.commit(); // If hibernate, ejb3, etc is used to render some value here is commit
+if (!manager.commit()) { // If hibernate, ejb3, etc is used to render some value here is commit
+%>
+<div class='<%=style.getErrors()%>'>
+<%=XavaResources.getString(request, "commit_error")%>
+</div>
+<%
+}
 %>

@@ -396,8 +396,12 @@ public class ModuleManager {
 		}
 		catch (ValidationException ex) {
 			errors.add(ex.getErrors());
-			XPersistence.rollback();
-			XHibernate.rollback();
+			// tmp XPersistence.rollback();
+			// tmp XHibernate.rollback();
+			// tmp ini
+			XPersistence.flush();
+			XHibernate.flush();			
+			// tmp fin
 		}
 		catch (Exception ex) {			
 			ex.printStackTrace();
@@ -413,15 +417,22 @@ public class ModuleManager {
 		
 	}
 	
-	public void commit() { // Usually after render page
+	/**
+	 * Commit the current JPA manager and Hibernate session, if they exist. <p>
+	 * 
+	 * @return <code>true</code> if commit is successful
+	 */
+	public boolean commit() { // Usually after render page
 		try {			
 			XPersistence.commit();
 			XHibernate.commit();
+			return true;
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
 			XPersistence.rollback();
 			XHibernate.rollback();
+			return false;
 		}
 	}
 
