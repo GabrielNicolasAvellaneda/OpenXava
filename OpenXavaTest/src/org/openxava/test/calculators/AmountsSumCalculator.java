@@ -17,7 +17,7 @@ public class AmountsSumCalculator implements IModelCalculator {
 	
 	private IInvoice invoice;
 
-	public Object calculate() throws Exception {			
+	public Object calculate() throws Exception {
 		Iterator itDetails = invoice.getDetails().iterator();
 		BigDecimal result = new BigDecimal(0);
 		while (itDetails.hasNext()) {

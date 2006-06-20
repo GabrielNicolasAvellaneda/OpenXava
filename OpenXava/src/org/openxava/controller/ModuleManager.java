@@ -396,12 +396,8 @@ public class ModuleManager {
 		}
 		catch (ValidationException ex) {
 			errors.add(ex.getErrors());
-			// tmp XPersistence.rollback();
-			// tmp XHibernate.rollback();
-			// tmp ini
-			XPersistence.flush();
-			XHibernate.flush();			
-			// tmp fin
+			XPersistence.rollback();
+			XHibernate.rollback();
 		}
 		catch (Exception ex) {			
 			ex.printStackTrace();
@@ -422,17 +418,15 @@ public class ModuleManager {
 	 * 
 	 * @return <code>true</code> if commit is successful
 	 */
-	public boolean commit() { // Usually after render page
+	public void commit() { // Usually after render page
 		try {			
 			XPersistence.commit();
 			XHibernate.commit();
-			return true;
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
 			XPersistence.rollback();
 			XHibernate.rollback();
-			return false;
 		}
 	}
 

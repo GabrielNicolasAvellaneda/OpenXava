@@ -17,14 +17,14 @@ public class ChooseReferenceAction extends ViewBaseAction implements INavigation
 	
 	public void execute() throws Exception {						
 		int [] selectedOnes = tab.getSelected();
-		Map clave = null;
+		Map key = null;
 		if (row >= 0) {
-			clave = (Map) getTab().getTableModel().getObjectAt(row);
+			key = (Map) getTab().getTableModel().getObjectAt(row);
 		}				
 		else if (selectedOnes != null && selectedOnes.length > 0) {			
-			clave = (Map) getTab().getTableModel().getObjectAt(selectedOnes[0]);
+			key = (Map) getTab().getTableModel().getObjectAt(selectedOnes[0]);
 		}		
-		getReferenceSubview().setValuesNotifying(clave);
+		getReferenceSubview().setValuesNotifying(key);
 		getReferenceSubview().findObject();
 		getTab().setModelName(getView().getModelName());
 	}
@@ -41,8 +41,8 @@ public class ChooseReferenceAction extends ViewBaseAction implements INavigation
 		return referenceSubview;
 	}
 
-	public void setReferenceSubview(View vista) {
-		referenceSubview = vista;
+	public void setReferenceSubview(View view) {
+		referenceSubview = view;
 	}
 
 	public String[] getNextControllers() {		
