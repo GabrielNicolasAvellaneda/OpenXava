@@ -1,14 +1,17 @@
 package org.openxava.util;
 
 import java.io.*;
+import java.net.*;
 import java.sql.*;
 import java.util.*;
 
 import javax.naming.*;
 import javax.sql.*;
+import javax.xml.parsers.*;
 
 import org.openxava.component.*;
 import org.openxava.hibernate.*;
+import org.w3c.dom.*;
 
 /**
  * Adapter from JNDI DataSource interface to IConnectionProvider interface.
@@ -30,7 +33,13 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 	
 	public static IConnectionProvider createByComponent(String componentName) throws XavaException {
 		String packageName = MetaComponent.get(componentName).getPackageNameWithSlashWithoutModel();		
-		String jndi = getDatasourcesJNDIByPackage().getProperty(packageName);
+		String jndi = null; 
+		if (packageName == null) { 
+			jndi = getJPADataSource();
+		}
+		else {
+			jndi = getDatasourcesJNDIByPackage().getProperty(packageName);
+		}
 		
 		if (Is.emptyString(jndi)) {
 			throw new XavaException("no_data_source_for_component", componentName);
@@ -40,6 +49,38 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 		return provider;
 	}
 	
+	/**
+	 * Extract the JNDI of data source from JPA persistence.xml file.
+	 */
+	private static String getJPADataSource() { 
+		try {
+			URL url = DataSourceConnectionProvider.class.getClassLoader().getResource("META-INF/persistence.xml");
+			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			Document doc = builder.parse(url.toExternalForm());
+			NodeList nodes = doc.getElementsByTagName("non-jta-data-source");
+			int length = nodes.getLength();
+			for (int i=0; i < length; i++) {
+				String datasource = nodes.item(i).getTextContent();
+				if (!Is.emptyString(datasource)) {
+					return datasource;
+				}
+			}
+			nodes = doc.getElementsByTagName("jta-data-source");
+			length = nodes.getLength();
+			for (int i=0; i < length; i++) {
+				String datasource = nodes.item(i).getTextContent();
+				if (!Is.emptyString(datasource)) {
+					return datasource;
+				}
+			}			
+			return null;
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+	}
+
 	public static IConnectionProvider getByComponent(String componentName) throws XavaException {
 		if (providers == null) providers = new HashMap();
 		IConnectionProvider provider = (IConnectionProvider) providers.get(componentName);

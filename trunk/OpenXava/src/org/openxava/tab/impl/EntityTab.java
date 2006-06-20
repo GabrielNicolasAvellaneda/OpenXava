@@ -483,13 +483,13 @@ public class EntityTab implements IEntityTabImpl {
 	}
 	
 	
-	private static IEntityTabDataProvider getDataProvider(String componentName) throws RemoteException {		
+	private static IEntityTabDataProvider getDataProvider(String componentName) throws RemoteException {
 		try {
-			String paquete = MetaComponent.get(componentName).getPackageNameWithSlashWithoutModel();			
-			IEntityTabDataProvider dataProvider = (IEntityTabDataProvider) getDataProviders().get(paquete);
+			String packageName = MetaComponent.get(componentName).getPackageNameWithSlashWithoutModel();			
+			IEntityTabDataProvider dataProvider = (IEntityTabDataProvider) getDataProviders().get(packageName);
 			if (dataProvider == null) {
 				if (XavaPreferences.getInstance().isTabAsEJB()) { 
-					Object ohome = BeansContext.get().lookup("ejb/"+paquete+"/EntityTab");
+					Object ohome = BeansContext.get().lookup("ejb/"+packageName+"/EntityTab");
 					EntityTabHome home = (EntityTabHome) PortableRemoteObject.narrow(ohome, EntityTabHome.class);
 					dataProvider = home.create();
 				}
@@ -498,14 +498,14 @@ public class EntityTab implements IEntityTabImpl {
 					dp.setComponentName(componentName);
 					dataProvider = dp;
 				}
-				getDataProviders().put(paquete, dataProvider);				
+				getDataProviders().put(packageName, dataProvider);				
 			}		
 			return dataProvider;
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
 			throw new RemoteException("tab_remote_error");
-		}				
+		}						
 	}
 		
 	private static Map getDataProviders() {
