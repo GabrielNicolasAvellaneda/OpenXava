@@ -1,7 +1,5 @@
 package org.openxava.jpa;
 
-import java.util.*;
-
 import javax.persistence.*;
 
 /**
@@ -69,31 +67,7 @@ public class XPersistence {
 		currentManager.set(m);
 		return m;
 	}
-	
-	/**
-	 * Does flush. <p>
-	 * 
-	 * If there isn't current manager, then it does nothing. <br>
-	 * That is, this code:
-	 * <pre>
-	 * XPersistence.getManager().flush();
-	 * </pre>
-	 * Does a flush on current manager, but if current manager does not exist
-	 * create a new one in order to do the flush.
-	 * And  this code:
-	 * <pre>
-	 * XPersistence.flush();
-	 * </pre>
-	 * Does a flush on current manager, but if current manager does not exist
-	 * simply do nothing.	 
-	 */
-	public static void flush() {
-		Object o = currentManager.get(); 
-		if (o == null) return;
-		EntityManager m = (EntityManager) o;
-		m.flush();
-	}
-	
+		
 	/**
 	 * Commits changes and closes the <code>EntityManager</code> associated to 
 	 * the current thread. <p>

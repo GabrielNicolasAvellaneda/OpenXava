@@ -2,8 +2,6 @@ package org.openxava.hibernate;
 
 import java.util.*;
 
-import javax.persistence.*;
-
 import org.hibernate.*;
 import org.hibernate.cfg.*;
 import org.hibernate.event.*;
@@ -80,31 +78,7 @@ public class XHibernate {
 		currentSession.set(s);
 		return s;
 	}
-	
-	/**
-	 * Does flush. <p>
-	 * 
-	 * If there isn't current session, then it does nothing. <br>
-	 * That is, this code:
-	 * <pre>
-	 * XHibernate.getSession().flush();
-	 * </pre>
-	 * Does a flush on current session, but if current session does not exist
-	 * create a new one in order to do the flush.
-	 * And  this code:
-	 * <pre>
-	 * XHibernate.flush();
-	 * </pre>
-	 * Does a flush on current session, but if current manager does not exist
-	 * simply do nothing.	 
-	 */
-	public static void flush() {
-		Session s = (Session) currentSession.get();
-		if (s == null) return;
-		s.flush();
-	}
-	
-	
+			
 	/**
 	 * Commits changes and closes the session associated to current thread. <p>
 	 * 
