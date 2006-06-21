@@ -3,22 +3,24 @@ package org.openxava.util;
 import java.io.*;
 import java.lang.reflect.*;
 /**
- * Clase de utilidad genérica para trabajar con objetos java. <p>
+ * Utility class to work with objects. <p>
  * 
  * @author: Javier Paniza
  */
+
 public class Objects {
 
   private static final Class [] arg0 = { };	
-/**
- * Clona el objeto enviado. <p>
- *
- * La clonación la hace usando el método <tt>clone()</tt> del objeto
- * enviado si éste implementa <tt>Cloneable</tt>.<br>
- *
- * @exception CloneNotSupportedException Si no el objeto no es <tt>Cloneable</tt>.<br>
- */
-public static Object clone(Object o) throws CloneNotSupportedException {
+
+  /**
+   * Clone the sent object. <p>
+   * 
+   * The clone is done using the method <code>clone()</tt> of the 
+   * sent object if this implements <code>Cloneable</code>
+   *
+   * @exception CloneNotSupportedException If the object is not <tt>Cloneable</tt>.<br>
+   */
+  public static Object clone(Object o) throws CloneNotSupportedException {
 	try {
 		if (o == null)  return null;
 		if (o instanceof Cloneable) {
@@ -34,31 +36,32 @@ public static Object clone(Object o) throws CloneNotSupportedException {
 	catch (CloneNotSupportedException ex) {
 		throw ex;
 	}
-	catch (Exception ex) { // Muy pocas veces irá por aquí
+	catch (Exception ex) { // Not very often
 		ex.printStackTrace();
 		throw new CloneNotSupportedException(XavaResources.getString("clone_error", o));
 	}
-}
-/**
- * Hace un clon profundo del objeto enviado. <p>
- *
- * Si el argumento es nulo se devuelve nulo.<br>
- *
- * @param origen  Ha de ser serializable. No es necesario que implementa <tt>Cloneable</tt>.
- * @return Clon del objeto enviado. Hace un clon de todos los niveles, completo, profundo.
- * @exception ClonException  Algún problema al clonar.
- */
-public static Object deepClone(Object origen) throws CloneException {
+  }
+  
+  /**
+   * Does an deep clone of the sent object. <p>
+   * 
+   * If the argument is null, then returns null.<br>
+   * 
+   * @param source  Must be serializable. It's not necessary that it implements <code>Cloneable</code>.
+   * @return Clone of the sent object. Does an clon of all levels, complete, deep.
+   * @exception CloneException  Any problem on cloning.
+   */
+  public static Object deepClone(Object source) throws CloneException {
 	try {
-		if (origen == null) return null;
-		// leemos
+		if (source == null) return null;
+		// reading
 		ByteArrayOutputStream byteout = new ByteArrayOutputStream();
 		ObjectOutputStream out = new ObjectOutputStream(byteout);		
-		out.writeObject(origen);
+		out.writeObject(source);
 		byte [] buffer = byteout.toByteArray();
 		byteout.close();
 		out.close();
-		// grabamos
+		// saving
 		ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer));
 		Object result = in.readObject();
 		in.close();
@@ -66,23 +69,23 @@ public static Object deepClone(Object origen) throws CloneException {
 	}
 	catch (Exception ex) {
 		ex.printStackTrace();
-		throw new CloneException(XavaResources.getString("deep_clone_error", origen));
+		throw new CloneException(XavaResources.getString("deep_clone_error", source));
 	}
-}
+  }
 
-/**
- * Permite ejecutar de forma dinámica (como con SmallTalk) un método en un objeto. <p>
- * 
- * @param o Objeto sobre el que se ejecuta el método. No puede ser nulo.
- * @param nombreMetodo Nombre del método a ejecutar.
- * @return  Resultado de la ejecución del método.
- * @exception Exception  Cualquier problema, incluyendo excepciones originales que lance el método.
- * @exception NoSuchMethodException  Si el método no existe en el objeto destino.
- */
-public static Object execute(Object o, String nombreMetodo) throws Exception {
+  /**
+   * Allows to execute dinamically (as in SmallTalk) an method of an object. <p> 
+   * 
+   * @param o  Object where the method will be executed. It cannot be null.
+   * @param methodName  Name of the method to execute.
+   * @return  Result of method execution.
+   * @exception Exception  Any problem, including exceptions from target method.
+   * @exception NoSuchMethodException  If the method does not exist in target object.
+   */
+  public static Object execute(Object o, String methodName) throws Exception {
 	try {
-		Assert.arg(o);
-		Method m = o.getClass().getMethod(nombreMetodo, arg0);
+		Assert.arg(o);		
+		Method m = o.getClass().getMethod(methodName, arg0);
 		Object[] args = { };
 		return m.invoke(o, args);
 	} catch (InvocationTargetException ex) {
@@ -96,20 +99,20 @@ public static Object execute(Object o, String nombreMetodo) throws Exception {
 	} catch (NoSuchMethodException ex) {
 		throw ex;
 	}
-}
+  }
 
-/**
- * Permite ejecutar de forma dinámica (como con SmallTalk) un método en un objeto con un argumento. <p>
- * 
- * @param o Objeto sobre el que se ejecuta el método. No puede ser nulo.
- * @param methodName Nombre del método a ejecutar. No puede ser nulo.
- * @param argumentClass No nulo.
- * @param arg Valor del argumento. Puede ser nulo.
- * @return  Resultado de la ejecución del método.
- * @exception Exception  Cualquier problema, incluyendo excepciones originales que lance el método.
- * @exception NoSuchMethodException  Si el método no existe en el objeto destino.
- */
-public static Object execute(Object o, String methodName, Class argumentClass, Object arg) throws Exception {
+  /**
+   * Allows to execute dinamically (as in SmallTalk) an method of an object. <p> 
+   * 
+   * @param o  Object where the method will be executed. It cannot be null.
+   * @param methodName  Name of the method to execute.
+   * @param argumentClass Not null.
+   * @param arg Argument value. It can be null.
+   * @return  Result of method execution.
+   * @exception Exception  Any problem, including exceptions from target method.
+   * @exception NoSuchMethodException  If the method does not exist in target object.
+   */  
+  public static Object execute(Object o, String methodName, Class argumentClass, Object arg) throws Exception {
 	try {
 		Assert.arg(o, methodName, argumentClass);
 		Class [] clArg = { argumentClass }; 
@@ -127,17 +130,17 @@ public static Object execute(Object o, String methodName, Class argumentClass, O
 	} catch (NoSuchMethodException ex) {
 		throw ex;
 	}
-}
+  }
 
-/**
- * Intenta clonar el objeto enviado. <p>
- *
- * Si no lo consigue devuelve el elemento original.<br>
- *
- * La clonación la hace usando el método <tt>clone()</tt> del objeto
- * enviado si este implementa <tt>Cloneable</tt>.<br>
- */
-public static Object tryClone(Object o) {
+  /**
+   * Try to clone the sent object. <p> 
+   *
+   * If it does not win it, then return the original element.<br>
+   * 
+   * The clone is done using the method <code>clone()</code> of the
+   * sent object, if it implements <code>Cloneable</code>.<br>
+   */
+  public static Object tryClone(Object o) {
 	try {
 		if (o == null)  return null;
 		if (o instanceof Cloneable) {
@@ -146,12 +149,13 @@ public static Object tryClone(Object o) {
 		return o;
 	}
 	catch (NoSuchMethodException ex) {
-		throw new IllegalArgumentException("clone_required");
+		throw new IllegalArgumentException(XavaResources.getString("clone_required"));
 	}
 	catch (Exception ex) {
 		ex.printStackTrace();
-		System.err.println("ADVERTENCIA: Imposible clonar " + o + " por " + ex.getMessage() + "Se devuelve elemento original");
+		System.err.println("WARNING!: Impossible to clone " + o + " because " + ex.getMessage() + " The original element is returned");
 		return o;
 	}
-}
+  }
+  
 }

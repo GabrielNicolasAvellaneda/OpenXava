@@ -25,9 +25,33 @@ class ComponentParser extends ParserBase {
 	synchronized public static MetaComponent parse(String name) throws XavaException {		
 		ComponentParser parser = new ComponentParser(name);				
 		parser.parse();		
-		return parser.getComponent();
+		MetaComponent r = parser.getComponent();
+		if (r == null) {
+			r = parseAnnotatedClass(name);
+		}
+		return r;
 	}
 	
+	private static MetaComponent parseAnnotatedClass(String name) throws XavaException {
+		Object parser = null;
+		try {
+			// At the momment, annotated EJB is parsed only if parser is available in classpath
+			parser = Class.forName("org.openxava.ox3.AnnotatedClassParser").newInstance();						
+		}
+		catch (Exception ex) {
+			System.err.println(XavaResources.getString("annotated_parser_not_found_warning", name));
+			return null;
+		}		
+		
+		try {
+			return (MetaComponent) Objects.execute(parser, "parse", String.class, name);			
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			throw new XavaException("ejb3_annotations_parse_error", name);
+		}		
+	}
+
 	private void createAggregate() throws XavaException {
 		NodeList l = getRoot().getElementsByTagName(xaggregate[lang]);
 		int c = l.getLength();
