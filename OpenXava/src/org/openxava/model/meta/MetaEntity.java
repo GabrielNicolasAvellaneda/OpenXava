@@ -15,6 +15,7 @@ public class MetaEntity extends MetaModel {
 	
 	private Collection keyFields;
 	private MetaEJB metaEJB;
+	private boolean annotatedEJB3; 
 		
 	/**
 	 * @return The names of key fields. Of <tt>String</tt>.
@@ -22,7 +23,7 @@ public class MetaEntity extends MetaModel {
 	public Collection getKeyFields() throws XavaException {
 		if (keyFields == null) {
 			keyFields = new ArrayList();	
-			if (isEjbGenerated()) {
+			if (isEjbGenerated() || isAnnotatedEJB3()) {
 				keyFields.addAll(getAllKeyPropertiesNames());
 			}
 			else {		
@@ -38,6 +39,11 @@ public class MetaEntity extends MetaModel {
 	public boolean isKey(String propertyName) throws XavaException {	
 		if ((isPojoGenerated() || isEjbGenerated()) &&  super.isKey(propertyName)) return true; 	
 		return getKeyFields().contains(propertyName);		
+	}
+	
+	public Class getPropertiesClass() throws XavaException {
+		if (isAnnotatedEJB3()) return getPOJOClass();
+		return super.getPropertiesClass();
 	}
 	
 	/**
@@ -70,6 +76,14 @@ public class MetaEntity extends MetaModel {
 			}
 		}
 		return metaEJB;
+	}
+
+	public boolean isAnnotatedEJB3() {
+		return annotatedEJB3;
+	}
+
+	public void setAnnotatedEJB3(boolean annotatedEJB3) {
+		this.annotatedEJB3 = annotatedEJB3;
 	}
 		
 }

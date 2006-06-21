@@ -81,7 +81,7 @@ public class MetaComponent implements Serializable {
 	public String getName() {
 		return name;
 	}
-	void setName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	
@@ -95,7 +95,7 @@ public class MetaComponent implements Serializable {
 	/**
 	 * @param metaEntity Not null
 	 */
-	void setMetaEntity(MetaEntity metaEntity) throws XavaException {
+	public void setMetaEntity(MetaEntity metaEntity) throws XavaException {
 		if (this.metaEntity != null) {
 			throw new XavaException("component_only_1_entity", getName());
 		}
@@ -298,7 +298,7 @@ public class MetaComponent implements Serializable {
 		return entityMapping;
 	}
 	
-	void setEntityMapping(EntityMapping mapping) throws XavaException {
+	public void setEntityMapping(EntityMapping mapping) throws XavaException {
 		if (mapping != null) {
 			mapping.setMetaComponent(this);
 		}
