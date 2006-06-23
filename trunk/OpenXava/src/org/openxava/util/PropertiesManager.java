@@ -44,20 +44,23 @@ public class PropertiesManager implements java.io.Serializable {
 	/**
 	 * Gets the value of the indicated property. <p>
 	 *
-	 * <p>Precondition</b>
-	 * <ul>
-	 * <li> <tt>this.object != null</tt>
-	 * <li> <tt>this.hasGetter(propertyName)</tt>
-	 * </ul>
-	 *
-	 * @param propertyName  Property name to obtain its value
+	 * @param propertyName  Property name to obtain its value, 
+	 * 		can be qualified (that is: 'customer.address.street' for example)
 	 * @return Value of the property
 	 * @exception InvocationTargetException  Excepción originated by the original access method
 	 * @exception PropertiesManagerException  Some unexpected problem
 	 */
 	public Object executeGet(String propertyName)
-		throws InvocationTargetException, PropertiesManagerException {
+		throws InvocationTargetException, PropertiesManagerException {		
 		try {
+			int idx = propertyName.indexOf('.'); 
+			if (idx >= 0) {
+				String refName = propertyName.substring(0, idx);
+				String submember  = propertyName.substring(idx + 1);
+				Object ref =  executeGet(refName);
+				PropertiesManager refManager = new PropertiesManager(ref);
+				return refManager.executeGet(submember);
+			}
 			PropertyDescriptor pd = getPropertyDescriptor(propertyName);
 			Method met = pd.getReadMethod();
 			if (met == null) {

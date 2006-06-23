@@ -81,6 +81,16 @@ public class DeliveriesTest extends ModuleTestBase {
 		XHibernate.commit();
 	}
 	
+	public void testSearchingByAnyProperty() throws Exception {
+		execute("CRUD.new");
+		assertValue("number", "");
+		assertValue("description", "");
+		setValue("description", "%SEARCHING");
+		execute("CRUD.search");
+		assertNoErrors();
+		assertValue("number", "777");
+		assertValue("description", "FOR TEST SEARCHING BY DESCRIPTION");		
+	}	
 		
 	public void testDateCalendarEditor() throws Exception {
 		execute("CRUD.new");
@@ -429,7 +439,7 @@ public class DeliveriesTest extends ModuleTestBase {
 	public void testDeleteSelectedOnesAndOrderBy() throws Exception { 
 		// Creating new
 		execute("CRUD.new");
-		setValue("invoice.year", "2002");
+		setValue("invoice.year", "2009");
 		setValue("invoice.number", "1");						
 		setValue("type.number", "1");
 		setValue("number", "1");
@@ -440,11 +450,12 @@ public class DeliveriesTest extends ModuleTestBase {
 		// To list mode and order
 		execute("Mode.list");
 		assertActions(listActions);
-		execute("List.orderBy", "property=invoice.year");
+		execute("List.orderBy", "property=invoice.year"); // ascending
+		execute("List.orderBy", "property=invoice.year"); // descending
 		assertNoErrors();
 		
 		// Delete					
-		assertValueInList(0, "invoice.year", "2002");
+		assertValueInList(0, "invoice.year", "2009");
 		assertValueInList(0, "invoice.number", "1");
 		assertValueInList(0, "type.number", "1");
 		assertValueInList(0, "number", "1");
@@ -456,7 +467,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		
 		// Verifying that it is deleted
 		Query query = XHibernate.getSession().createQuery("from Delivery where "
-				+ "invoice.year=2002 and invoice.number=1 and type.number=1 and number=1");		
+				+ "invoice.year=2009 and invoice.number=1 and type.number=1 and number=1");		
 		if (!query.list().isEmpty()) {
 			fail("Delivery would be deleted and it is not the case");
 		}

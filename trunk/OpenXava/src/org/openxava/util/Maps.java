@@ -111,6 +111,22 @@ public class Maps {
 	 * @param values Can be null.
 	 */
 	public static boolean isEmpty(Map values) {
+		return isEmpty(values, false);
+	}
+	
+	/**
+	 * It's empty if is null, without elements, with null elements or
+	 * elements with neutral value (empty strings, collections, nulls or <b>zeroes</b>). <p>
+	 * 
+	 * Numeric values with value 0 are considered empty. <br>
+	 * 
+	 * @param values Can be null.
+	 */
+	public static boolean isEmptyOrZero(Map values) { 
+		return isEmpty(values, true);
+	}
+	
+	private static boolean isEmpty(Map values, boolean zeroIsEmpty) { 
 		if (values == null) return true;
 		if (values.size() == 0) return true;
 		Iterator it = values.values().iterator();
@@ -119,11 +135,14 @@ public class Maps {
 			if (value instanceof String) {
 				 if (!((String) value).trim().equals("")) return false;
 			}
+			else if (zeroIsEmpty && value instanceof Number) {
+				if (((Number) value).intValue() != 0) return false;
+			}
 			else if (value instanceof Map) {				
-				if (!isEmpty((Map) value)) return false;				
+				if (!isEmpty((Map) value, zeroIsEmpty)) return false;				
 			}
 			else if (value instanceof Collection) {
-				 if (((Collection) value).size() > 0) return false;			
+				if (((Collection) value).size() > 0) return false;			
 			}
 			else if (value != null) return false;			 			
 		}		

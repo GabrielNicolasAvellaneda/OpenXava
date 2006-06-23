@@ -236,5 +236,21 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 
 	public void flush() {
 	}
+
+	public Object findByAnyProperty(MetaModel metaModel, Map searchingValues) throws ObjectNotFoundException, FinderException, XavaException {
+		// Hibernate is used to implement the searching, although an EJB2 entity is returned
+		// This is because EJB2 does not support dynamic queries, and hibernate and POJOs are always presents.
+		HibernatePersistenceProvider hib = new HibernatePersistenceProvider();
+		Object pojo = hib.findByAnyProperty(metaModel, searchingValues);		
+		IPropertiesContainer pc = hib.toPropertiesContainer(metaModel, pojo);
+		try {
+			Map key = pc.executeGets(Strings.toString(metaModel.getAllKeyPropertiesNames(), ":"));				
+			return find(metaModel, key);
+		}
+		catch (RemoteException ex) { 
+			ex.printStackTrace();
+			throw new PersistenceProviderException(ex.getLocalizedMessage());
+		}		
+	}
 	
 }

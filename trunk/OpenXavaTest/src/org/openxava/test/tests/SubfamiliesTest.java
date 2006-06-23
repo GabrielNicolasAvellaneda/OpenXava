@@ -12,14 +12,14 @@ public class SubfamiliesTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Subfamilies");		
 	}
 	
+	
 	public void testSaveHiddenKeyWithSections() throws Exception {
 		assertTrue("For this test is required al least 2 families", getListColumnCount() >= 2);
 		execute("Mode.detailAndFirst");
 		assertNoErrors();
 		execute("CRUD.save");
 		assertNoErrors();
-	}
-	
+	}	
 	
 	public void testNavigateHiddenKeyWithSections() throws Exception {
 		assertTrue("For this test is required al least 2 families", getListColumnCount() >= 2);

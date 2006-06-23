@@ -94,6 +94,43 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
+	public Map getValuesByAnyProperty( 
+			String user, 
+			String modelName,
+			Map searchingValues,
+			Map membersNames)
+			throws FinderException, XavaException, RemoteException {		
+		Users.setCurrent(user);
+		searchingValues = Maps.recursiveClone(searchingValues); 
+		membersNames = Maps.recursiveClone(membersNames); 		
+		try {			
+			getPersistenceProvider().begin();
+			Map result = getValuesByAnyPropertyImpl(modelName, searchingValues, membersNames);			
+			getPersistenceProvider().commit();			
+			return result;
+		} 
+		catch (ObjectNotFoundException ex) {
+			getPersistenceProvider().commit();
+			throw ex;
+		}
+		catch (FinderException ex) {
+			ex.printStackTrace();
+			rollback();
+			throw ex;
+		}
+		catch (XavaException ex) {
+			ex.printStackTrace();
+			rollback();
+			throw ex;
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			rollback();
+			throw new RemoteException(ex.getMessage());
+		}
+	}
+	
+	
 	public void delete(String user, String modelName, Map keyValues)
 		throws RemoveException, ValidationException, XavaException, RemoteException 
 	{		
@@ -500,6 +537,26 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			throw new XavaException("get_values_error", modelName);
 		}
 	}
+	
+	private Map getValuesByAnyPropertyImpl( 	
+		String modelName,
+		Map keyValues,
+		Map membersNames)
+		throws FinderException, XavaException, RemoteException {		
+		try {
+			MetaModel metaModel = getMetaModel(modelName);						 
+			Map result =
+				getValues(					 
+					metaModel,
+					findEntityByAnyProperty(modelName, keyValues),
+					membersNames); 						
+			return result;
+		} catch (XavaException ex) {
+			ex.printStackTrace();
+			throw new XavaException("get_values_error", modelName);
+		}
+	}
+	
 		
 	private Map getKeyNames(MetaModel metaModel) throws XavaException {
 		Iterator itProperties = metaModel.getKeyPropertiesNames().iterator();
@@ -1209,6 +1266,11 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		return getPersistenceProvider().find(metaModel, keyValues);
 	}
 	
+	private Object findEntityByAnyProperty(MetaModel metaModel, Map keyValues) throws FinderException, XavaException, RemoteException { 
+		return getPersistenceProvider().findByAnyProperty(metaModel, keyValues);
+	}
+	
+	
 	private void rollback () throws RemoteException {
 		if (getSessionContext() != null) getSessionContext().setRollbackOnly();
 		getPersistenceProvider().rollback();
@@ -1354,6 +1416,22 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			throw new RemoteException(XavaResources.getString("find_error", modelName));
 		}
 	}
+	
+	private Object findEntityByAnyProperty(String modelName, Map keyValues) 
+		throws FinderException, RemoteException {
+		try {
+			return findEntityByAnyProperty(getMetaModel(modelName), keyValues);			
+		} catch (FinderException ex) {
+			throw ex;
+		} catch (ElementNotFoundException ex) {
+			rollback();
+			throw new RemoteException(XavaResources.getString("model_not_found", modelName));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			rollback();
+			throw new RemoteException(XavaResources.getString("find_error", modelName));
+		}
+	}	
 	
 	public Object getKey(MetaModel metaModel, Map keyValues) throws XavaException, RemoteException {
 		return getPersistenceProvider().getKey(metaModel, keyValues);

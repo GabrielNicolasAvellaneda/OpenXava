@@ -1,10 +1,13 @@
 package org.openxava.model.impl;
 
 import java.io.*;
+import java.util.*;
 
 import javax.ejb.*;
 import javax.persistence.*;
 
+import org.hibernate.*;
+import org.openxava.hibernate.*;
 import org.openxava.jpa.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -73,6 +76,23 @@ public class JPAPersistenceProvider extends BasePOJOPersistenceProvider {
 	
 	public void flush() {
 		XPersistence.getManager().flush();		
+	}
+
+	protected Object createQuery(String query) { 		
+		return XPersistence.getManager().createQuery(query);
+	}
+
+	protected void setParameterToQuery(Object query, String name, Object value) {
+		((javax.persistence.Query) query).setParameter(name, value);
+	}
+
+	protected Object getUniqueResult(Object query) {
+		try {
+			return ((javax.persistence.Query) query).getSingleResult();
+		}
+		catch (javax.persistence.NoResultException ex) {
+			return null;
+		}		
 	}
 
 }
