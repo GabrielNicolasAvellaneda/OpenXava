@@ -1,5 +1,7 @@
 package org.openxava.jpa;
 
+import java.util.*;
+
 import javax.persistence.*;
 
 /**
@@ -32,7 +34,7 @@ public class XPersistence {
 
 	private static EntityManagerFactory entityManagerFactory; 
 	private static String persistenceUnit = "hibernate";	
-	private static ThreadLocal currentManager = new ThreadLocal();		 
+	private static ThreadLocal currentManager = new ThreadLocal();			 
 
 	/**
 	 * <code>EntityManager</code> associated to current thread. <p>
@@ -126,12 +128,14 @@ public class XPersistence {
 		}
 	}	
 	
-	private static EntityManagerFactory getEntityManagerFactory() {
+	private static EntityManagerFactory getEntityManagerFactory() { 
 		if (entityManagerFactory == null) {			
 			entityManagerFactory = Persistence.createEntityManagerFactory(getPersistenceUnit());
 		}
 		return entityManagerFactory; 
 	}
+	
+	
 
 	/**
 	 * The name of persistence unit in persistence.xml file. <p>
