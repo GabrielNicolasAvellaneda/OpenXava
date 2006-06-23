@@ -1,5 +1,7 @@
 package org.openxava.util;
 
+import java.util.*;
+
 /**
  * Utility class to reduce the ifs size. <p>
  * 
@@ -25,9 +27,22 @@ package org.openxava.util;
  */
 
 public class Is {
+	
+	/**
+	 * Verifies if the sent object is <code>null</code> or empty string 
+	 * (if it's string) or 0 (if it's number) or empty Map. <p>
+	 *   
+	 */
+	public final static boolean empty(Object object) {
+		if (object == null) return true;
+		if (object instanceof String) return ((String) object).trim().equals("");
+		if (object instanceof Number) return ((Number) object).intValue() == 0;
+		if (object instanceof Map) return Maps.isEmptyOrZero((Map) object);
+		return false;
+	}
 
   /**
-   * Verifies is the sent string is <code>null</code> or emptry string. <p>
+   * Verifies if the sent string is <code>null</code> or empty string. <p>
    */
   public final static boolean emptyString(String string) {
   	return string == null || string.trim().equals("");

@@ -24,7 +24,16 @@ import org.openxava.validators.*;
 public interface IPersistenceProvider {
 	
 	/**
-	 * Find a object from its key in map format. <p>
+	 * Find an object by any property (or properties). <p>
+	 *  
+	 * Returns the first object that match with the sent arguments (<code>searchingValues</code>). 
+	 * 
+	 * @return Never null.
+	 */	
+	Object findByAnyProperty(MetaModel metaModel, Map searchingValues) throws ObjectNotFoundException, FinderException, XavaException;
+	
+	/**
+	 * Find an object from its key in map format. <p>
 	 * 
 	 * @return Never null.
 	 */

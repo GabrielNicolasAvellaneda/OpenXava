@@ -1,8 +1,10 @@
 package org.openxava.model.impl;
 
 import java.io.*;
+import java.util.*;
 
 import javax.ejb.*;
+import javax.ejb.ObjectNotFoundException;
 
 import org.hibernate.*;
 
@@ -62,10 +64,21 @@ public class HibernatePersistenceProvider extends BasePOJOPersistenceProvider {
 	public void reassociate(Object entity) {
 		XHibernate.getSession().lock(entity, LockMode.NONE);  		
 	}
-
 	
 	public void flush() {
 		XHibernate.getSession().flush();		
+	}
+
+	protected Object createQuery(String query) { 
+		return XHibernate.getSession().createQuery(query);
+	}
+
+	protected void setParameterToQuery(Object query, String name, Object value) {
+		((Query) query).setParameter(name, value);
+	}
+
+	protected Object getUniqueResult(Object query) {
+		return ((Query) query).uniqueResult();
 	}
 
 }

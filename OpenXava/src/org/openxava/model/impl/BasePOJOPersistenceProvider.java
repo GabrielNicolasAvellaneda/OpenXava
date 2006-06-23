@@ -33,6 +33,26 @@ abstract public class BasePOJOPersistenceProvider implements IPersistenceProvide
 	 * Marks the object as persistent. <p> 
 	 */
 	abstract protected void persist(Object object);
+	
+	/**
+	 * Creates a query, it can be Hibernate query or JPA query. <p>
+	 */
+	abstract protected Object createQuery(String query);
+	
+	/**
+	 * Sets the parameter to the indicated query. <p>
+	 * 
+	 * The query is of the type returned by <code>createQuery</code> method.<br>
+	 */
+	abstract protected void setParameterToQuery(Object query, String name, Object value);
+	
+	/**
+	 * Returns the unique result of the sent query. <p>
+	 *  
+	 * @param query  Of the type returned by <code>createQuery</code> method.
+	 * @return Null if not result.
+	 */
+	abstract protected Object getUniqueResult(Object query);
 
 	public Object find(MetaModel metaModel, Map keyValues) throws FinderException {
 		try {						
@@ -176,6 +196,56 @@ abstract public class BasePOJOPersistenceProvider implements IPersistenceProvide
 		org.openxava.hibernate.impl.DefaultValueIdentifierGenerator.setCurrentContainerKey(containerModel);
 		org.openxava.hibernate.impl.DefaultValueIdentifierGenerator.setCurrentCounter(number);
 		return create(metaModel, values);
+	}
+	
+	public Object findByAnyProperty(MetaModel metaModel, Map keyValues) throws ObjectNotFoundException, FinderException, XavaException { 
+		StringBuffer queryString = new StringBuffer();
+		queryString.append("from ");
+		queryString.append(metaModel.getName());
+		boolean hasCondition = false;	
+		Collection values = new ArrayList();
+		for (Iterator it=keyValues.entrySet().iterator(); it.hasNext(); it.hasNext()) {
+			Map.Entry en = (Map.Entry) it.next();
+			if (!Is.empty(en.getValue())) {
+				if (hasToIncludePropertyInCondition(metaModel, (String) en.getKey())) continue;
+				if (!hasCondition) {
+					queryString.append(" where ");
+					hasCondition = true;
+				}
+				else {
+					queryString.append(" and ");
+				}			
+				queryString.append(en.getKey());
+				queryString.append(en.getValue() instanceof String?" like ":" = ");
+				queryString.append(":");
+				queryString.append(en.getKey());
+				values.add(en);
+			}
+		}
+		if (!hasCondition) { 
+			throw new ObjectNotFoundException(XavaResources.getString("object_by_any_property_not_found", values));
+		}
+								
+		Object query = createQuery(queryString.toString());
+		for (Iterator it=values.iterator(); it.hasNext(); it.hasNext()) {
+			Map.Entry en = (Map.Entry) it.next();
+			Object value = en.getValue() instanceof String?en.getValue() + "%":en.getValue();			
+			setParameterToQuery(query, (String) en.getKey(), value);
+		}
+		Object result = getUniqueResult(query);
+		if (result == null) {
+			throw new ObjectNotFoundException(XavaResources.getString("object_by_any_property_not_found", values));
+		}		
+		return result;
+	}
+	
+	private boolean hasToIncludePropertyInCondition(MetaModel metaModel, String property) throws XavaException {
+		try {
+			return metaModel.getMapping().getPropertyMapping(property).hasMultipleConverter();
+		}
+		catch (ElementNotFoundException ex) {			
+			return true; // Maybe a view property 
+		}
 	}
 
 }

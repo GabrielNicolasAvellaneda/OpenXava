@@ -270,7 +270,72 @@ public class MapFacade {
 			return getImpl(modelName).getValues(Users.getCurrent(), modelName, keyValues, memberNames);
 		}		
 	}
-		
+
+	/**
+	 * Obtain the specified values from entity/aggregate searching it by any property. <p>
+	 * 
+	 * The <code>memberNames</tt> parameter is a map to use a treelike structure.<br>
+	 * The property names are in key part. If it's a simple property the value
+	 * is null, otherwise it has a map with the same structure.<br>
+	 * For example, if we have a <code>Customer</tt> that references
+	 * to a <code>Seller</code>,
+	 * we can send a map with the next values:
+	 * <pre> 
+	 * { "number", null }
+	 * { "name", null }
+	 * { "seller", { {"number", null}, {"name", null} } }
+	 * </pre>
+	 * 
+	 * The <code>searchingValues</code> parameters are the values used to search. 
+	 * For example, if you can search by <i>name</i> and <i>surname</i> you can 
+	 * send to <code>searchingValues</code> a map with the next values: 	 
+	 * <pre> 
+	 * { "name", "JUAN" }
+	 * { "surname", "PEREZ" }
+	 * </pre>
+	 * In this case it returns the map with the value of the first "JUAN PEREZ" of database.<p>
+	 * 
+	 * If you use:
+	 * <pre>
+	 * { "name", "J" }
+	 * </pre> 
+	 * Then it returns the values for the first object of which <i>name</i> starts with 'J'.<p>
+	 * 
+	 * If you use:
+	 * <pre>
+	 * { "description", "%BIG" }
+	 * </pre>  
+	 * Then it returns the values for the first object of which <i>description</i> contains
+	 * "BIG".
+	 * 
+	 * @param modelName  OpenXava model name. Not null.
+	 * @param searchingValues  Values used for search the object. Not null. <i>By value</i> semantics.
+	 * @param memberNames Member names to obtain its values. Not null. <i>By value</i> semantics.  
+	 * @return Map with entity values. Not null.
+	 * @exception ObjectNotFoundException  If object with this key does not exist 
+	 * @exception FinderException  Logic problem on find.	
+	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
+	 * @exception RemoteException  System problem. Rollback transaction.
+	 */		
+	public static Map getValuesByAnyProperty(  
+		String modelName,
+		Map searchingValues,
+		Map memberNames)
+		throws FinderException, XavaException, RemoteException 
+	{						
+		Assert.arg(modelName, searchingValues, memberNames);		
+		if (searchingValues.isEmpty()) {
+			throw new ObjectNotFoundException(XavaResources.getString("empty_key_object_not_found", modelName));						
+		}
+		try {
+			return getImpl(modelName).getValuesByAnyProperty(Users.getCurrent(), modelName, searchingValues, memberNames);
+		}
+		catch (RemoteException ex) {
+			annulImpl(modelName);
+			return getImpl(modelName).getValuesByAnyProperty(Users.getCurrent(), modelName, searchingValues, memberNames);
+		}					
+	}
+			
 	/**
 	 * Obtain the values of the entity/aggregate from the own entity. <p> 
 	 * 
