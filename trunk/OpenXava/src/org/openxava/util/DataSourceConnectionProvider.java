@@ -60,7 +60,7 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 			NodeList nodes = doc.getElementsByTagName("non-jta-data-source");
 			int length = nodes.getLength();
 			for (int i=0; i < length; i++) {
-				String datasource = nodes.item(i).getNodeValue();
+				String datasource = nodes.item(i).getFirstChild().getNodeValue();
 				if (!Is.emptyString(datasource)) {
 					return datasource;
 				}
@@ -68,7 +68,7 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 			nodes = doc.getElementsByTagName("jta-data-source");
 			length = nodes.getLength();
 			for (int i=0; i < length; i++) {
-				String datasource = nodes.item(i).getNodeValue();
+				String datasource = nodes.item(i).getFirstChild().getNodeValue();
 				if (!Is.emptyString(datasource)) {
 					return datasource;
 				}
