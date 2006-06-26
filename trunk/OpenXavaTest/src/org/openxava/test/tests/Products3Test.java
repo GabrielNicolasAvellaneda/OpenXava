@@ -12,6 +12,14 @@ public class Products3Test extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Products3");		
 	}
 	
+	public void testSearchingReferenceWithHiddenKeyTypingValue() throws Exception {
+		execute("CRUD.new");
+		assertEditable("family.number");
+		assertValue("family.description", "");
+		setValue("family.number", "1");
+		assertValue("family.description", "SOFTWARE");
+	}
+	
 	public void testReferenceWithHiddenKey_defaultValueCalculatorOnCreateWithJDBC() throws Exception {
 		execute("CRUD.new");		
 		assertValue("number", "78"); // to test default-value-calculator
