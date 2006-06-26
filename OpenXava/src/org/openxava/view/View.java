@@ -1576,6 +1576,7 @@ public class View implements java.io.Serializable {
 	}
 	
 	public boolean isFirstPropertyAndViewHasNoKeys(MetaProperty pr) throws XavaException {
+		if (pr == null) return false; 
 		if (isGroup()) return getParent().isFirstPropertyAndViewHasNoKeys(pr); 
 		if (!pr.hasMetaModel()) return false; // maybe a view property
 		if (getMetaProperties().isEmpty()) return false;
@@ -1700,17 +1701,18 @@ public class View implements java.io.Serializable {
 					}					
 				}
 			}				
-					
+			
 			if (hasToSearchOnChangeIfSubview && isSubview() && !isGroup() &&  
-					( 
+					( 	
 					(getLastPropertyKeyName().equals(changedProperty.getName()) && metaPropertiesContains(changedProperty)) || // visible keys
-					(!hasKeyProperties() && changedProperty.isKey() && changedProperty.isHidden() && changedProperty.getMetaModel() == getMetaModel()) // hidden keys
+					(!hasKeyProperties() && changedProperty.isKey() && changedProperty.isHidden() && changedProperty.getMetaModel() == getMetaModel()) || // hidden keys
+					(isRepresentsEntityReference() && isFirstPropertyAndViewHasNoKeys(changedProperty) && isKeyEditable()) // A searching value that is not key 
 					)
 				) {				
 				if (!searchingObject) { // To avoid recursive infinites loops				
 					try {
 						searchingObject = true;					
-						findObject();						
+						findObject(changedProperty); // tmp						
 					}
 					finally {
 						searchingObject = false;				 
@@ -1777,20 +1779,32 @@ public class View implements java.io.Serializable {
 	}
 
 	public void findObject() throws Exception {
-		if (getKeyValuesWithValue().isEmpty()) {	
-			clear();
-		}
-		else {					
-			try {								
-				setValues(MapFacade.getValues(getModelName(), getKeyValues(), getMembersNamesWithHidden()));				
-			}
-			catch (ObjectNotFoundException ex) {						
-				getErrors().add("object_with_key_not_found", getModelName(), getKeyValues());
-				clear(); 								
-			}
-		}							
+		findObject(null);
 	}
-
+	
+	private void findObject(MetaProperty changedProperty) throws Exception {	
+		Map key = getKeyValues();
+		try {
+			if (Maps.isEmptyOrZero(key)) {
+				if (isRepresentsEntityReference() && isFirstPropertyAndViewHasNoKeys(changedProperty) && isKeyEditable()) {
+					key = getValues();
+					setValues(MapFacade.getValuesByAnyProperty(getModelName(), key, getMembersNamesWithHidden()));
+				}
+				else {
+					clear();
+				}
+			}
+			else {
+				setValues(MapFacade.getValues(getModelName(), key, getMembersNamesWithHidden()));				
+			}
+		}
+		catch (ObjectNotFoundException ex) {						
+			getErrors().add("object_with_key_not_found", getModelName(), key);
+			clear(); 								
+		}
+			
+	}
+	
 	private String removeNamePrefix(String name) {
 		if (Is.emptyString(name)) return "";		
 		StringTokenizer st = new StringTokenizer(name, ".");

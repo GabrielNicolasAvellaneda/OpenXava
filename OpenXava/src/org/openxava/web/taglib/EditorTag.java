@@ -17,6 +17,10 @@ import org.openxava.view.*;
 public class EditorTag extends TagSupport {
 	
 	private String property;		
+	private boolean editable; 
+	private boolean explicitEditable = false; 
+	private boolean throwPropertyChanged; 
+	private boolean explicitThrowPropertyChanged; 
 	
 	public int doStartTag() throws JspException {
 		try {
@@ -40,13 +44,13 @@ public class EditorTag extends TagSupport {
 						
 			Messages errors = (Messages) request.getAttribute("errors"); 									
 			String formName = manager.getForm();	
-			boolean throwsChanged=view.throwsPropertyChanged(property); 
+			boolean throwsChanged=explicitThrowPropertyChanged?this.throwPropertyChanged:view.throwsPropertyChanged(property); 
 			String scriptFoco = "onfocus=focus_property.value='" + propertyKey + "'";
 			String script = throwsChanged?
 				"onchange='throwPropertyChanged(document." + formName + ", \"" + propertyKey + "\")' ":"";
 			script = script + scriptFoco;
 
-			boolean editable = view.isEditable(property); 
+			boolean editable = explicitEditable?this.editable:view.isEditable(property);  
 
 			String editorURL = "../xava/" + org.openxava.web.WebEditors.getUrl(metaProperty);
 			char nexus = editorURL.indexOf('?') < 0?'?':'&';
@@ -79,5 +83,24 @@ public class EditorTag extends TagSupport {
 	public void setProperty(String property) {
 		this.property = property;		
 	}
+
+	public boolean isEditable() {
+		return editable;
+	}
+
+	public void setEditable(boolean editable) {
+		this.editable = editable;
+		this.explicitEditable = true;
+	}
+
+	public boolean isThrowPropertyChanged() {
+		return throwPropertyChanged;
+	}
+
+	public void setThrowPropertyChanged(boolean throwPropertyChanged) {
+		this.throwPropertyChanged = throwPropertyChanged;
+		this.explicitThrowPropertyChanged = true;
+	}
+
 	
 }
