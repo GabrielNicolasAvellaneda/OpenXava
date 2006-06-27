@@ -9,6 +9,7 @@ import javax.servlet.*;
 
 import org.openxava.calculators.*;
 import org.openxava.mapping.*;
+import org.openxava.model.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
 import org.openxava.validators.*;
@@ -709,6 +710,9 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				Number n = NumberFormat.getNumberInstance(locale).parse(value);
 				return new BigInteger(n.toString());
 			}			
+			if (IModel.class.isAssignableFrom(type)) { 
+				return parseModelObject(type, value);
+			}
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
@@ -717,6 +721,36 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		throw new ParseException(XavaResources.getString("from_string_on_property_not_supported", type), -1);
 	}
 	
+	
+	private Object parseModelObject(Class modelClass, String string) throws Exception {
+		if (Is.emptyString(string)) return null;
+		IModel model = (IModel) modelClass.newInstance();
+		StringTokenizer stringValues = new StringTokenizer(string, "[.]");
+		parseModelObject(model, stringValues, "");
+		return model;
+	}
+	
+	private void parseModelObject(IModel model, StringTokenizer stringValues, String prefix) throws Exception { 
+		java.lang.reflect.Field [] fields = model.getClass().getDeclaredFields();
+		Arrays.sort(fields, FieldComparator.getInstance());
+		MetaModel metaModel = model.getMetaModel();
+		PropertiesManager pm = new PropertiesManager(model);
+		for (int i=0; i < fields.length; i++) {			
+			if (metaModel.isKey(fields[i].getName())) {
+				if (metaModel.containsMetaReference(fields[i].getName())) {
+					IModel ref = (IModel) pm.executeGet(fields[i].getName());
+					if (ref == null) {
+						ref = (IModel) metaModel.getMetaReference(fields[i].getName()).getMetaModelReferenced().getPOJOClass().newInstance();
+						pm.executeSet(fields[i].getName(), ref);
+					}
+					parseModelObject(ref, stringValues, prefix + fields[i].getName() + ".");
+				}
+				else {
+					pm.executeSetFromString(fields[i].getName(), stringValues.nextToken());
+				}
+			}
+		}		
+	}
 	
 	/**
 	 * Convert a valid value for this property in a String
@@ -767,6 +801,10 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				numberFormat.setMaximumFractionDigits(0);
 				return numberFormat.format(value);				
 			}			
+			if (IModel.class.isAssignableFrom(type)) { 
+				return value.toString();
+			}
+
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
