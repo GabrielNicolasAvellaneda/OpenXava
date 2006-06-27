@@ -16,6 +16,16 @@ public class DeliveryTypesTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "DeliveryTypes");		
 	}
 	
+	public void testParseObjectWithMultipleKeyThatAreReferenceInStereotypes() throws Exception {
+		execute("CRUD.new");
+		Delivery delivery = findDelivery();
+		setValue("comboDeliveries", delivery.toString());
+		execute("DeliveryTypes.assertComboDeliveries");
+		assertNoErrors();
+		assertMessage("comboDeliveries=" + delivery.toString());
+		assertValue("comboDeliveries", delivery.toString());
+	}
+		
 	public void testSaveActionNotResetRefreshData() throws Exception {
 		execute("CRUD.new");
 		setValue("number", "66");
@@ -98,5 +108,9 @@ public class DeliveryTypesTest extends ModuleTestBase {
 		assertMessage("Delivery type deleted successfully");				 		
 	}
 	
-			
+	private Delivery findDelivery() {
+		return (Delivery) Delivery.findAll().iterator().next();
+	}
+
+					
 }

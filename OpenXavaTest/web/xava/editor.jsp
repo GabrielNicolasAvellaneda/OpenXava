@@ -18,10 +18,10 @@ MetaProperty p = (MetaProperty) request.getAttribute(propertyKey);
 boolean editable = view.isEditable(p);
 boolean searchingKey = (editable && view.isRepresentsEntityReference() && view.isLastKeyProperty(p)) || // with key visible
 	(view.isRepresentsEntityReference() && view.isFirstPropertyAndViewHasNoKeys(p) && view.isKeyEditable()); // with key hidden
-boolean throwPropertyChanged = view.throwsPropertyChanged(p); // tmp
+boolean throwPropertyChanged = view.throwsPropertyChanged(p); 
 if (searchingKey) {
-	editable = true; // tmp
-	throwPropertyChanged = true; // tmp
+	editable = true;
+	throwPropertyChanged = true; 
 }
 	
 String labelKey = propertyKey + "_LABEL_";

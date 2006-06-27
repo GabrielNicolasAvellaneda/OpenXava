@@ -24,6 +24,10 @@
 			<set property="resetAfter" value="false"/>
 			<use-object name="xava_view"/>
 		</action>
+		<action name="assertComboDeliveries" mode="detail"
+			class="org.openxava.test.actions.AssertComboDeliveriesAction">			
+			<use-object name="xava_view"/>
+		</action>		
 	</controller>
 		
 	

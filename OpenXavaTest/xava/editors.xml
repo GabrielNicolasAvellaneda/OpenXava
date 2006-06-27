@@ -82,7 +82,6 @@
   	<property name="model" value="Delivery"/>
   	<property name="keyProperties" value="invoice.year, invoice.number, type.number, number"/>
   	<property name="descriptionProperty" value="description"/>
-  	<formatter class="org.openxava.test.formatters.DeliveryFormatter"/>	
     <for-stereotype stereotype="DELIVERIES"/>
   </editor>
   	

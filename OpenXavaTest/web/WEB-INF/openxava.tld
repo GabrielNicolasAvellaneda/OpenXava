@@ -88,12 +88,12 @@
        <rtexprvalue>true</rtexprvalue>
     </attribute>
     <attribute>
-       <name>editable</name> <!-- tmp falta actualizar guía de usuario -->
+       <name>editable</name>
        <required>false</required>
        <rtexprvalue>true</rtexprvalue>
     </attribute>    
     <attribute>
-       <name>throwPropertyChanged</name> <!-- tmp falta actualizar guía de usuario -->
+       <name>throwPropertyChanged</name>
        <required>false</required>
        <rtexprvalue>true</rtexprvalue>
     </attribute>        
