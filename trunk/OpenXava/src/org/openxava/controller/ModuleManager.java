@@ -391,13 +391,11 @@ public class ModuleManager {
 					request.setAttribute("xava.sendParametersToTab", "false");
 				}
 			}						
-			XPersistence.commit(); // after executing action
-			XHibernate.commit(); // after executing action
+			doCommit(); // after executing action
 		}
 		catch (ValidationException ex) {
 			errors.add(ex.getErrors());
-			XPersistence.rollback();
-			XHibernate.rollback();
+			doRollback();
 		}
 		catch (Exception ex) {			
 			ex.printStackTrace();
@@ -407,8 +405,7 @@ public class ModuleManager {
 			else {
 				errors.add("no_execute_action");
 			}
-			XPersistence.rollback();
-			XHibernate.rollback();
+			doRollback();
 		}				
 		
 	}
@@ -420,15 +417,23 @@ public class ModuleManager {
 	 */
 	public void commit() { // Usually after render page
 		try {			
-			XPersistence.commit();
-			XHibernate.commit();
+			doCommit();
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			XPersistence.rollback();
-			XHibernate.rollback();
+			doRollback();
 		}
 	}
+	
+	private void doCommit() {
+		if (XSystem.isJava5OrBetter()) XPersistence.commit(); // tmp
+		XHibernate.commit();		
+	}
+	
+	private void doRollback() {
+		if (XSystem.isJava5OrBetter()) XPersistence.rollback(); // tmp
+		XHibernate.rollback();		
+	}		
 
 	private List parseMultipartRequest(HttpServletRequest request) throws FileUploadException {
 		DiskFileItemFactory factory = new DiskFileItemFactory();
