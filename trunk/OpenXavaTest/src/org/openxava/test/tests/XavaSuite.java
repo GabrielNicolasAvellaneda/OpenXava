@@ -93,6 +93,7 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(ServicesTest.class));
 		suite.addTest(new TestSuite(ShipmentChargesTest.class));
 		suite.addTest(new TestSuite(ShipmentsTest.class));
+		suite.addTest(new TestSuite(SizesTest.class));
 		suite.addTest(new TestSuite(StateHibernateTest.class));
 		if (XavaPreferences.getInstance().isJPAPersistence()) {
 			// This test can work with any persistence provider, because it uses direct JPA APIs,

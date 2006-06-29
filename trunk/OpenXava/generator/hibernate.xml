@@ -48,9 +48,13 @@ else if (keyProperties.size() == 1 &amp;&amp;  keyMembers.size() == 1) {
 </java> 	
 		&lt;id name="<expr>propertyName</expr>" column="<expr>pMapping.getColumn()</expr>" access="field" <expr>type</expr>&gt;
 		<java>if (key.hasCalculatorDefaultValueOnCreate()) { </java> 
+			<java>if (key.isDefaultCalculatorHibernateIdGenerator()) { </java> 
+			<expr>key.getHbmGeneratorCode()</expr> 
+			<java>} else { </java> 
 			&lt;generator class="org.openxava.hibernate.impl.DefaultValueIdentifierGenerator"&gt;
 				&lt;param name="property"&gt;<expr>propertyName</expr>&lt;/param&gt;
-			&lt;/generator&gt;								
+			&lt;/generator&gt;
+			<java>} </java> 
 		<java>} else { </java> 
 			&lt;generator class="<expr>generator</expr>"/&gt;
 		<java>} </java> 

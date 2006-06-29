@@ -40,6 +40,28 @@ public class MetaCalculator extends MetaSetsContainer implements Serializable {
 		}
 	}
 	
+	/**
+	 * Create a <code>IHibernateIdGeneratorCalculator</code> whenever this method is called, 
+	 * congured with values assigned in xml. <p> 
+	 */
+	public IHibernateIdGeneratorCalculator createHibernateIdGeneratorCalculator() throws XavaException { 		
+		try {
+			Object o = Class.forName(getClassName()).newInstance();
+			IHibernateIdGeneratorCalculator calculator = (IHibernateIdGeneratorCalculator) o;
+			if (containsMetaSets()) {
+				assignPropertiesValues(calculator);
+			}									
+			return calculator;
+		}
+		catch (XavaException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			throw new XavaException("create_calculator_error", getClassName(), ex.getLocalizedMessage()); 
+		}
+	}
+		
 	public String getClassName() {
 		return className;
 	}
