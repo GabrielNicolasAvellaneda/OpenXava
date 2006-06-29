@@ -16,6 +16,7 @@ org.openxava.generators
 org.openxava.generators.xmlparse
 org.openxava.hibernate
 org.openxava.hibernate.impl
+org.openxava.jpa
 org.openxava.mapping
 org.openxava.mapping.xmlparse
 org.openxava.model
