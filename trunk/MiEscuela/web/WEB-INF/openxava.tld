@@ -87,6 +87,16 @@
        <required>true</required>
        <rtexprvalue>true</rtexprvalue>
     </attribute>
+    <attribute>
+       <name>editable</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>    
+    <attribute>
+       <name>throwPropertyChanged</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>        
   </tag>         
         
 </taglib>

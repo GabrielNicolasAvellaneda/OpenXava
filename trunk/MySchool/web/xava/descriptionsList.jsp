@@ -141,6 +141,17 @@ if (editable && view.isCreateNewForReference(ref)) {
 }
 %>
 
+<%
+if (editable) {
+	java.util.Iterator itActions = view.getActionsNamesForReference(ref).iterator();
+	while (itActions.hasNext()) {
+		String action = (String) itActions.next();
+%>
+<xava:action action="<%=action%>"/>
+<%
+	}
+}
+%>
 <%=postEditor%>
 <% if (labelFormat == MetaPropertyView.SMALL_LABEL) { %>
 </td></tr>

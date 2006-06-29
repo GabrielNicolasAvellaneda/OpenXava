@@ -196,7 +196,7 @@ else {
 			}
 		}
 		else {
-			script = "onblur='executeXavaAction(" + formName + ", \"Collection.save\", \"" + argv + "\")'";
+			script = "onblur='executeXavaAction('', false, " + formName + ", \"Collection.save\", \"" + argv + "\")'";
 		}
 		Object value = request.getAttribute(propertyKey + ".value");
 		if (WebEditors.mustToFormat(p)) {

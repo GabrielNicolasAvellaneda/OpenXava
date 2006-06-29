@@ -16,6 +16,14 @@ String propertyKey = request.getParameter("propertyKey");
 MetaProperty p = (MetaProperty) request.getAttribute(propertyKey);
 
 boolean editable = view.isEditable(p);
+boolean searchingKey = (editable && view.isRepresentsEntityReference() && view.isLastKeyProperty(p)) || // with key visible
+	(view.isRepresentsEntityReference() && view.isFirstPropertyAndViewHasNoKeys(p) && view.isKeyEditable()); // with key hidden
+boolean throwPropertyChanged = view.throwsPropertyChanged(p); 
+if (searchingKey) {
+	editable = true;
+	throwPropertyChanged = true; 
+}
+	
 String labelKey = propertyKey + "_LABEL_";
 
 int labelFormat = view.getLabelFormatForProperty(p);
@@ -48,11 +56,9 @@ String label = view.getLabelFor(p);
 </td></tr>
 <tr><td style='vertical-align: middle'>
 <% } %>
-<xava:editor property="<%=p.getName()%>"/>
+<xava:editor property="<%=p.getName()%>" editable="<%=editable%>" throwPropertyChanged="<%=throwPropertyChanged%>"/>
 <% 
-if ((editable && view.isRepresentsEntityReference() && view.isLastKeyProperty(p)) || // with key visible
-	(view.isRepresentsEntityReference() && view.isFirstPropertyAndViewHasNoKeys(p) && view.isKeyEditable())) // with key hidden
-	{
+if (searchingKey) {
 	String referencedModel = p.getMetaModel().getName();
 %>
 	<% if (view.isSearch()) {%>
@@ -61,6 +67,15 @@ if ((editable && view.isRepresentsEntityReference() && view.isLastKeyProperty(p)
 	<% if (view.isCreateNew()) {%>
 <xava:action action='Reference.createNew' argv='<%="model="+referencedModel + ",keyProperty=" + propertyKey%>'/>
 	<% } %>
+	<%
+	java.util.Iterator itActions = view.getActionsNamesForReference().iterator();
+	while (itActions.hasNext()) {
+		String action = (String) itActions.next();
+	%>
+<xava:action action="<%=action%>"/>
+	<%
+	}
+	%>	
 <% } %>
 <%
 if (editable || p.isReadOnly()) {
