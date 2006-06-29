@@ -53,7 +53,7 @@
 
 
 
-<!ELEMENT reference-view (search-action?|descriptions-list?)>
+<!ELEMENT reference-view ((search-action?|descriptions-list?), action*)>
 <!ATTLIST reference-view
   reference CDATA #REQUIRED
   view CDATA #IMPLIED

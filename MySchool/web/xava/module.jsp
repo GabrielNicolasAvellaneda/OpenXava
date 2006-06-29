@@ -1,3 +1,9 @@
+<%@ page import="java.awt.event.InputEvent" %>
+<%@ page import="java.util.Collection" %>
+<%@ page import="java.util.Iterator" %>
+<%@ page import="javax.swing.KeyStroke" %>
+<%@ page import="org.apache.commons.collections.IteratorUtils" %>
+<%@ page import="org.openxava.controller.meta.MetaAction" %>
 <%@ page import="org.openxava.util.Is" %>
 <%@ page import="org.openxava.util.Users" %>
 <%@ page import="org.openxava.util.Locales" %>
@@ -55,13 +61,14 @@ if (manager.isListMode()) {
 		tab.setTabName(manager.getTabName());
 	}
 }
+boolean hasProcessRequest = manager.hasProcessRequest(request); 
 if (manager.isXavaView()) { // here and after action execution
-	if (manager.actionOfThisModule(request)) {	
+	if (hasProcessRequest) {	
 		view.assignValuesToWebView();
 	}
 }
 manager.initModule(request, errors, messages);
-if (manager.actionOfThisModule(request)) {
+if (hasProcessRequest) {
 	manager.execute(request, errors, messages);	
 	if (manager.isListMode()) { // here and before execute the action
 		tab.setModelName(manager.getModelName());	
@@ -117,18 +124,11 @@ else { // All else
 
 
 <script>
-function executeXavaAction(isConfirm, takesLong, formu, action) {
-	if (isConfirm && !confirm('<%=XavaResources.getString(request, "are_you_sure")%>')) return;
-	if (takesLong) {
-		document.getElementById('processingLayer').style.display='block';
-		setTimeout('document.images["processingImage"].src = "<%=request.getContextPath()%>/xava/images/processing.gif"', 1);		
-	}
-	formu.focus_forward.value = "false";
-	formu.xava_action.value=action;	
-	formu.submit();	
+function executeXavaAction(confirmMessage, takesLong, formu, action) {
+	executeXavaAction(confirmMessage, takesLong, formu, action, null);
 }
-function executeXavaAction(isConfirm, takesLong, formu, action, argv) {	
-	if (isConfirm && !confirm('<%=XavaResources.getString(request, "are_you_sure")%>')) return;
+function executeXavaAction(confirmMessage, takesLong, formu, action, argv) {	
+	if (confirmMessage != "" && !confirm(confirmMessage)) return;
 	if (takesLong) {
 		document.getElementById('processingLayer').style.display='block';
 		setTimeout('document.images["processingImage"].src = "<%=request.getContextPath()%>/xava/images/processing.gif"', 1);
@@ -142,7 +142,7 @@ function throwPropertyChanged(formu, property) {
 	formu.focus_forward.value = "true";
 	formu.focus_property.value=property;	
 	formu.changed_property.value=property;	
-	formu.submit();
+	formu.submit();	
 }
 <% String focusPropertyId = view.getFocusPropertyId(); %>
 function setFocus() {
@@ -152,8 +152,48 @@ function setFocus() {
 		element.select();		
 	}
 }
-</script>
 
+function processKey(event) {
+	if (!event) event = window.event;
+<%
+java.util.Iterator it = IteratorUtils.chainedIterator(
+		new Iterator[] {
+			manager.getMetaActions().iterator(), 
+			manager.getMetaActionsMode().iterator()
+		}
+);
+while (it.hasNext()) {
+	MetaAction action = (MetaAction) it.next();
+	if (!action.hasKeystroke()) continue;	
+
+	KeyStroke key = KeyStroke.getKeyStroke(action.getKeystroke());
+	if (key == null) {
+		continue;
+	}	
+	int keyCode = key.getKeyCode();
+	String ctrl = (key.getModifiers() & InputEvent.CTRL_DOWN_MASK) > 0?" && event.ctrlKey":""; 
+	String alt = (key.getModifiers() & InputEvent.ALT_DOWN_MASK) > 0?" && event.altKey":""; 	
+	String shift = (key.getModifiers() & InputEvent.SHIFT_DOWN_MASK) > 0?" && event.shiftKey":"";
+%>
+	if (event.keyCode == <%=keyCode%> <%=ctrl%> <%=alt%> <%=shift%>) {
+		executeXavaAction('<%=action.getConfirmMessage(request)%>', <%=action.isTakesLong()%>, document.<%=manager.getForm()%>, '<%=action.getQualifiedName()%>');		
+		event.returnValue = false;
+		event.preventDefault();
+		return;
+	}
+<%	
+}
+%>
+	if (event.keyCode >= 49 && event.keyCode <= 57 && event.ctrlKey) {
+		executeXavaAction("", false, document.<%=manager.getForm()%>, "Sections.change", "activeSection=" + (event.keyCode - 49));		
+		event.returnValue = false;
+		event.preventDefault();
+		return;
+	}	
+}
+
+document.onkeydown = processKey;
+</script>
 
 
 
@@ -186,6 +226,7 @@ function setFocus() {
 <form name='<%=manager.getForm()%>' 
 	method='POST' <%=manager.getEnctype()%> 
 	<%=manager.getFormAction(request)%>>
+<INPUT type="hidden" name="xava_page_id" value="<%=manager.getPageId()%>"/>
 <INPUT type="hidden" name="xava_action" value=""/>
 <INPUT type="hidden" name="xava_action_argv" value=""/>
 <INPUT type="hidden" name="xava_action_application" value="<%=request.getParameter("application")%>"/>

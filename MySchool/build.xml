@@ -17,6 +17,11 @@
 		<ant antfile="../OpenXava/build.xml" target="generateHibernate"/>		
 	</target>
 	
+	<!-- Generates all code -->
+	<target name="regenerateCode">
+		<ant antfile="../OpenXava/build.xml" target="regenerateHibernate"/>		
+	</target>
+		
 	<!-- Build and deploy the application in .war file format -->
 	<target name="deployWar">
 		<ant antfile="../OpenXava/build.xml" target="deploy"/>

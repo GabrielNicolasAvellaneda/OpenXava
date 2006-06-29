@@ -21,6 +21,11 @@
 	<target name="generarCodigo">
 		<ant antfile="../OpenXava/build.xml" target="generateHibernate"/>		
 	</target>	
+	
+	<!-- Genera todo el codigo -->
+	<target name="regenerateCode">
+		<ant antfile="../OpenXava/build.xml" target="regenerateHibernate"/>		
+	</target>	
 		
 	<!-- Construye y despliega la aplicación en formate .war -->	
 	<target name="desplegarWar">

@@ -56,7 +56,7 @@
   etiqueta CDATA #IMPLIED
 >
 
-<!ELEMENT vista-referencia (accion-buscar?|lista-descripciones?)>
+<!ELEMENT vista-referencia ((accion-buscar?|lista-descripciones?), accion*)>
 <!ATTLIST vista-referencia
   referencia CDATA #REQUIRED
   vista CDATA #IMPLIED

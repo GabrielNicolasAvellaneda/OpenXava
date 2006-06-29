@@ -19,7 +19,7 @@ public class SizesTest extends ModuleTestBase {
 		execute("List.orderBy", "property=id");
 		String last = getValueInList(0, "id");	
 		execute("CRUD.new");
-		setValue("name", "JUNIT COLOR " + (int) (Math.random() * 200));
+		setValue("name", "JUNIT SIZE " + (int) (Math.random() * 200));
 		execute("CRUD.save");
 		assertNoErrors();		
 		execute("Mode.list");
