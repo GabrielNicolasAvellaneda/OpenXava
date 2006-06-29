@@ -1789,6 +1789,37 @@
       </entity>
 
       <entity>
+         <ejb-name>Size</ejb-name>
+
+         <table-name>XAVATEST_SIZE</table-name>
+
+         <cmp-field>
+            <field-name>_Name</field-name>
+            <column-name>NAME</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>id</field-name>
+            <column-name>ID</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findById</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Size o WHERE o.id = ?1]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
          <ejb-name>Family</ejb-name>
 
          <table-name>XAVATEST@separator@FAMILY</table-name>

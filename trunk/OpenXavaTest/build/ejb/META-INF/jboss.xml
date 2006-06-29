@@ -379,6 +379,18 @@
 
       </entity>
       <entity>
+         <ejb-name>Size</ejb-name>
+         <jndi-name>@subcontext@/ejb/org.openxava.test.model/Size</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
          <ejb-name>Family</ejb-name>
          <jndi-name>OpenXavaTest/ejb/openxava.test/Family</jndi-name>
 

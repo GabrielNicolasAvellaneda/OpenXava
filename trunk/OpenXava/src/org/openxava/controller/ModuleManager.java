@@ -426,12 +426,12 @@ public class ModuleManager {
 	}
 	
 	private void doCommit() {
-		if (XSystem.isJava5OrBetter()) XPersistence.commit(); // tmp
+		if (XSystem.isJava5OrBetter()) XPersistence.commit(); 
 		XHibernate.commit();		
 	}
 	
 	private void doRollback() {
-		if (XSystem.isJava5OrBetter()) XPersistence.rollback(); // tmp
+		if (XSystem.isJava5OrBetter()) XPersistence.rollback(); 
 		XHibernate.rollback();		
 	}		
 

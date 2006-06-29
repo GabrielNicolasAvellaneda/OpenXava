@@ -459,6 +459,15 @@
       </columns>
 
    </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Size" name="" primaryKey="Size_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Size_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Size" constraint="Constraint_Size_"/>
+
+      <columns xmi:id="Size__Name" name="_Name">
+      </columns>
+      <columns xmi:id="Size_id" name="id">
+      </columns>
+
+   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_Family" name="" primaryKey="Family_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Family_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Family" constraint="Constraint_Family_"/>
 
