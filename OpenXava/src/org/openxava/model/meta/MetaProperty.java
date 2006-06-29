@@ -306,10 +306,16 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		return metaCalculator.createCalculator();
 	}
 	
-	public boolean isDefaultCalculatorHibernateIdGenerator() throws ClassNotFoundException {
-		if (!hasCalculatorDefaultValueOnCreate()) return false;		
-		Class calculatorClass = Class.forName(getMetaCalculatorDefaultValue().getClassName()); 
-		return IHibernateIdGeneratorCalculator.class.isAssignableFrom(calculatorClass); 
+	public boolean isDefaultCalculatorHibernateIdGenerator() throws XavaException {
+		try {
+			if (!hasCalculatorDefaultValueOnCreate()) return false;		
+			Class calculatorClass = Class.forName(getMetaCalculatorDefaultValue().getClassName()); 
+			return IHibernateIdGeneratorCalculator.class.isAssignableFrom(calculatorClass);
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			throw new XavaException("is_default_calculator_hibernate_id_generator_error", getName());
+		}
 	}	
 	
 	/**

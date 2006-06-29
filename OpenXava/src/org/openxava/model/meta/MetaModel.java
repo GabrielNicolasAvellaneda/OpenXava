@@ -901,15 +901,17 @@ abstract public class MetaModel extends MetaElement {
 	
 	
 	/**
+	 * Excludes calculator that implements <code>IHibernateIdGeneratorCalculator</code>. <p>
+	 * 
 	 * @return Collection of <tt>String</tt>, not null and read only
 	 */
-	public Collection getMetaPropertiesWithDefaultValueOnCreate() {
+	public Collection getMetaPropertiesWithDefaultValueOnCreate() throws XavaException{
 		if (metaPropertiesWithDefaultValueCalcultaorOnCreate == null) {
 			Iterator it = getMetaProperties().iterator();
 			ArrayList result = new ArrayList();
 			while (it.hasNext()) {
 				MetaProperty p = (MetaProperty) it.next();
-				if (p.hasCalculatorDefaultValueOnCreate()) {
+				if (p.hasCalculatorDefaultValueOnCreate() && !p.isDefaultCalculatorHibernateIdGenerator()) {
 					result.add(p);
 				}
 			}
