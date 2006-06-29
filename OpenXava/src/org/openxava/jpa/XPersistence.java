@@ -1,6 +1,5 @@
 package org.openxava.jpa;
 
-import java.util.*;
 
 import javax.persistence.*;
 
@@ -32,9 +31,9 @@ import javax.persistence.*;
 
 public class XPersistence {
 
-	private static EntityManagerFactory entityManagerFactory; 
+	private static EntityManagerFactory entityManagerFactory; 	
 	private static String persistenceUnit = "hibernate";	
-	private static ThreadLocal currentManager = new ThreadLocal();			 
+	private static ThreadLocal currentManager = new ThreadLocal();
 
 	/**
 	 * <code>EntityManager</code> associated to current thread. <p>
@@ -43,11 +42,11 @@ public class XPersistence {
 	 *
 	 * @return Not null
 	 */
-	public static EntityManager getManager() {		
+	public static EntityManager getManager() {	
 		EntityManager s = (EntityManager) currentManager.get();
 		if (s == null || !s.isOpen()) {
 			s = openManager();
-		}		
+		}				
 		return s;
 	}
 	
@@ -60,7 +59,7 @@ public class XPersistence {
 	 * @return Not null
 	 */
 	public static EntityManager createManager() {
-		return getEntityManagerFactory().createEntityManager();
+		return getEntityManagerFactory().createEntityManager();		
 	}
 				
 	private static EntityManager openManager() {
@@ -81,7 +80,7 @@ public class XPersistence {
 	public static void commit() {
 		// If manager does not exist then we do not cast to EntityManager,
 		// in this way in order to support jdk1.3 when ejb3 is not used.
-		Object o = currentManager.get(); 
+		Object o = currentManager.get();
 		if (o == null) return;
 		EntityManager m = (EntityManager) o;
 		if (m == null) return;
@@ -128,11 +127,11 @@ public class XPersistence {
 		}
 	}	
 	
-	private static EntityManagerFactory getEntityManagerFactory() { 
+	private static EntityManagerFactory getEntityManagerFactory() {
 		if (entityManagerFactory == null) {			
 			entityManagerFactory = Persistence.createEntityManagerFactory(getPersistenceUnit());
 		}
-		return entityManagerFactory; 
+		return entityManagerFactory;
 	}
 	
 	
