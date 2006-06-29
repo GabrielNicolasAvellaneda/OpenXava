@@ -1,9 +1,5 @@
 package org.openxava.test.tests;
 
-import java.math.*;
-import java.util.*;
-
-import org.openxava.hibernate.*;
 import org.openxava.jpa.*;
 import org.openxava.test.model.*;
 import org.openxava.util.*;

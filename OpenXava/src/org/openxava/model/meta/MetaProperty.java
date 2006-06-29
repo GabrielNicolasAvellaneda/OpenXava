@@ -306,6 +306,19 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		return metaCalculator.createCalculator();
 	}
 	
+	public boolean isDefaultCalculatorHibernateIdGenerator() throws ClassNotFoundException {
+		if (!hasCalculatorDefaultValueOnCreate()) return false;		
+		Class calculatorClass = Class.forName(getMetaCalculatorDefaultValue().getClassName()); 
+		return IHibernateIdGeneratorCalculator.class.isAssignableFrom(calculatorClass); 
+	}	
+	
+	/**
+	 * 	 
+	 * @precondition  isDefaultCalculatorHibernateIdGenerator() == true
+	 */
+	public String getHbmGeneratorCode() throws XavaException {		
+		return metaCalculatorDefaultValue.createHibernateIdGeneratorCalculator().hbmGeneratorCode();
+	}
 	
 	/**
 	 * @return of IPropertyValidator
