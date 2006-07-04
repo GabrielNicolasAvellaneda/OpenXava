@@ -14,7 +14,7 @@ import junit.framework.*;
 public class JPATest extends TestCase {
 	
 	static {
-		XPersistence.setPersistenceUnit("hibernate-junit");
+		XPersistence.setPersistenceUnit("junit");
 		DataSourceConnectionProvider.setUseHibernateConnection(true);
 	}
 	

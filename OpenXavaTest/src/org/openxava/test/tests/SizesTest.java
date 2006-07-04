@@ -11,7 +11,7 @@ import org.openxava.tests.*;
 public class SizesTest extends ModuleTestBase {
 	
 	public SizesTest(String testName) {
-		super(testName, "OpenXavaTest", "Sizes");		
+		super(testName, "Sizes");		
 	}
 	
 	public void testSequence() throws Exception {
