@@ -51,16 +51,30 @@ public class ModuleTestBase extends TestCase {
 	
 	static {		
 		XHibernate.setConfigurationFile("/hibernate-junit.cfg.xml");
-		XPersistence.setPersistenceUnit("hibernate-junit");
+		XPersistence.setPersistenceUnit("junit");
 		DataSourceConnectionProvider.setUseHibernateConnection(true);
 	}
 	
-	public ModuleTestBase(String nameTest, String application, String modul) {
+	/**
+	 * To test the specified module of the specified application 
+	 */
+	public ModuleTestBase(String nameTest, String application, String module) {
 		super(nameTest);
 		MetaControllers.setContext(MetaControllers.WEB);
 		this.application = application;
-		this.module = modul;
+		this.module = module;
 	}
+
+	/**
+	 * To test the specified module of the default application. <p>
+	 * 
+	 * In this case the application is obtained from the <code>application</code>
+	 * property in <code>xava-junit.properties</code> file.
+	 */	
+	public ModuleTestBase(String nameTest, String module) {
+		this(nameTest, getXavaJunitProperties().getProperty("application"), module);
+	}
+	
 	
 	protected void setUp() throws Exception {
 		allowDuplicateSubmit = "";
