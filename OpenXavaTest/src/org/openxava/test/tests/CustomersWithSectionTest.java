@@ -45,6 +45,14 @@ public class CustomersWithSectionTest extends CustomersTest {
 		super(testName, "CustomersWithSection", true);		
 	}
 	
+	public void testPropertyAction() throws Exception { 
+		execute("CRUD.new");
+		setValue("address.street", "DOCTOR PESSET");
+		assertValue("address.street", "DOCTOR PESSET");
+		execute("Customers.prefixStreet", "xava.keyProperty=xava.Customer.address.street");
+		assertValue("address.street", "C/ DOCTOR PESSET");
+	}
+	
 	public void testManyToManyCollection() throws Exception {
 		execute("Mode.detailAndFirst");
 		execute("Sections.change", "activeSection=1");

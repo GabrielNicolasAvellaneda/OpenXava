@@ -9,12 +9,14 @@ import org.apache.commons.fileupload.*;
 import org.apache.commons.fileupload.disk.*;
 import org.apache.commons.fileupload.servlet.*;
 import org.openxava.actions.*;
+import org.openxava.actions.ReferenceSearchAction.*;
 import org.openxava.application.meta.*;
 import org.openxava.controller.meta.*;
 import org.openxava.hibernate.*;
 import org.openxava.jpa.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
+import org.openxava.view.*;
 
 /**
  * @author Javier Paniza
@@ -240,7 +242,7 @@ public class ModuleManager {
 			if (metaAction != null) {
 				setObjectsInAction(action, metaAction);
 			}
-			setPropertyValues(action, propertyValues);
+			Map xavaValues = setPropertyValues(action, propertyValues);
 			if (action instanceof IModuleContextAction) {
 				((IModuleContextAction) action).setContext(getContext());
 			}						
@@ -254,6 +256,19 @@ public class ModuleManager {
 			if (action instanceof IJDBCAction) {
 				((IJDBCAction) action).setConnectionProvider(DataSourceConnectionProvider.getByComponent(getModelName()));
 			}		
+			
+			if (action instanceof IPropertyAction) {
+				String keyProperty = (String) xavaValues.get("xava.keyProperty");
+				if (Is.emptyString(keyProperty)) {
+					throw new XavaException("property_action_error", action.getClass()); 
+				}								
+				int idx = keyProperty.lastIndexOf('.');
+				String subviewName =  keyProperty.substring(0, idx);
+				String propertyName = keyProperty.substring(idx + 1);
+				((IPropertyAction) action).setProperty(propertyName); 
+				View view = (View) getContext().get(request, "xava_view");
+				((IPropertyAction) action).setView(getSubview(view, subviewName)); 				
+			}			
 			
 			if (action instanceof IProcessLoadedFileAction) {
 				List fileItems = (List) request.getAttribute("xava.upload.fileitems");
@@ -410,6 +425,21 @@ public class ModuleManager {
 		
 	}
 	
+	private View getSubview(View view, String memberName) throws XavaException { 
+		if (memberName.startsWith("xava.")) {
+			String prefix = "xava." + view.getModelName() + ".";		
+			memberName = memberName.substring(prefix.length());				
+		}
+		if (memberName.indexOf('.') < 0) {
+			return view.getSubview(memberName); 
+		}
+		StringTokenizer st = new StringTokenizer(memberName, ".");
+		String subviewName = st.nextToken();
+		String nextMember = st.nextToken(); 
+		return getSubview(view.getSubview(subviewName), nextMember);
+	}
+
+	
 	/**
 	 * Commit the current JPA manager and Hibernate session, if they exist. <p>
 	 * 
@@ -485,10 +515,15 @@ public class ModuleManager {
 		previousCustomViews.push(this.viewName);		
 	}	
 
-	private void setPropertyValues(IAction action, String propertyValues) throws Exception {
-		if (Is.emptyString(propertyValues)) return;
+	/**
+	 * Returs all propeties with the 'xava.' prefix, these properties are not assigned
+	 * to the action and they will be used internally ModuleManager.
+	 */
+	private Map setPropertyValues(IAction action, String propertyValues) throws Exception { 
+		if (Is.emptyString(propertyValues)) return Collections.EMPTY_MAP;
 		StringTokenizer st = new StringTokenizer(propertyValues, ",");
-		Map values = new HashMap();		
+		Map values = new HashMap();
+		Map xavaValues = null;
 		while (st.hasMoreTokens()) {
 			String propertyValue = st.nextToken();
 			StringTokenizer st2 = new StringTokenizer(propertyValue, "()=");
@@ -502,10 +537,17 @@ public class ModuleManager {
 				break;
 			}
 			String value = st2.nextToken().trim();
-			values.put(name, value);			
+			if (!name.startsWith("xava.")) { 
+				values.put(name, value);		
+			}
+			else { 
+				if (xavaValues == null) xavaValues = new HashMap();
+				xavaValues.put(name, value);
+			}
 		}		
 		PropertiesManager mp = new PropertiesManager(action);
-		mp.executeSetsFromStrings(values);				
+		mp.executeSetsFromStrings(values);
+		return xavaValues == null?Collections.EMPTY_MAP:xavaValues; 
 	}
 
 	private void getObjectFromAction(IAction action, MetaAction metaAction) throws XavaException {

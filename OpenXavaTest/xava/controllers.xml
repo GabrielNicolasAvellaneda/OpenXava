@@ -180,7 +180,13 @@
 			<set property="property" value="alternateSeller"/>
 			<set property="label" value="Secondary seller"/>
 			<use-object name="xava_view"/>
-		</action>					
+		</action>				
+		
+		<action name="prefixStreet" class="org.openxava.test.actions.PrefixAction" hidden="true">
+			<!-- This is an IPropertyAction hence xava_view is not injected -->
+			<set property="prefix" value="C/ "/>
+		</action>
+		
 	</controller>
 			
 	<controller name="CustomersNewOnInit">
