@@ -17,7 +17,7 @@ public class MapFacadeTest extends TestCase {
 	
 	static {
 		XHibernate.setConfigurationFile("hibernate-junit.cfg.xml");
-		XPersistence.setPersistenceUnit("hibernate-junit");
+		XPersistence.setPersistenceUnit("junit");
 	}
 
 	public MapFacadeTest(String name) {
