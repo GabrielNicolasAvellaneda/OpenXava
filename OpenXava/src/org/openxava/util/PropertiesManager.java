@@ -58,6 +58,7 @@ public class PropertiesManager implements java.io.Serializable {
 				String refName = propertyName.substring(0, idx);
 				String submember  = propertyName.substring(idx + 1);
 				Object ref =  executeGet(refName);
+				if (ref == null) return null;
 				PropertiesManager refManager = new PropertiesManager(ref);
 				return refManager.executeGet(submember);
 			}
