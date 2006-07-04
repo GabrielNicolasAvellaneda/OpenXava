@@ -106,7 +106,7 @@ public class MetaComponent implements Serializable {
 	/**
 	 * @param metaView Not null.
 	 */	
-	void addMetaView(MetaView metaView) throws XavaException {
+	public void addMetaView(MetaView metaView) throws XavaException {
 		if (Is.emptyString(metaView.getModelName())) {
 			getMetaEntity().addMetaView(metaView);
 		}
