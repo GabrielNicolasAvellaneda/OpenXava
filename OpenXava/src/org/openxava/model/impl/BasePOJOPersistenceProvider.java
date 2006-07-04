@@ -143,9 +143,9 @@ abstract public class BasePOJOPersistenceProvider implements IPersistenceProvide
 		catch (Exception ex) {						
 			// If it does not exist then continue
 		}
-		Serializable object = null;
+		Object object = null;
 		try {
-			object = (Serializable) metaModel.getPOJOClass().newInstance();
+			object = metaModel.getPOJOClass().newInstance();
 			PropertiesManager mp = new PropertiesManager(object);
 			mp.executeSets(values);					
 			persist(object);			

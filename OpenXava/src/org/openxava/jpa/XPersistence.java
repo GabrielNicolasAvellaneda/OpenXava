@@ -32,7 +32,7 @@ import javax.persistence.*;
 public class XPersistence {
 
 	private static EntityManagerFactory entityManagerFactory; 	
-	private static String persistenceUnit = "hibernate";	
+	private static String persistenceUnit = "default";	
 	private static ThreadLocal currentManager = new ThreadLocal();
 
 	/**

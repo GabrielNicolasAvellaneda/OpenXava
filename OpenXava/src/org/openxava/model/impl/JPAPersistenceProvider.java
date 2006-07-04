@@ -75,7 +75,7 @@ public class JPAPersistenceProvider extends BasePOJOPersistenceProvider {
 
 	
 	public void flush() {
-		XPersistence.getManager().flush();		
+		XPersistence.getManager().flush();
 	}
 
 	protected Object createQuery(String query) { 		

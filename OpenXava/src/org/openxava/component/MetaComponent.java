@@ -270,7 +270,7 @@ public class MetaComponent implements Serializable {
 		this.metaTab = metaTab;
 	}
 		
-	void addMetaTab(MetaTab metaTab) throws XavaException {
+	public void addMetaTab(MetaTab metaTab) throws XavaException {
 		metaTab.setMetaComponent(this);
 		metaTab.addDefaultMetaConsults();		
 		String name = metaTab.getName();
