@@ -110,8 +110,10 @@ public class Messages implements java.io.Serializable {
 	
 	private Collection messages = new ArrayList();
 	private Collection members;
+	private boolean closed = false;
 		
 	public void add(String idMessage) {
+		if (closed) return;
 		messages.add(new Message(idMessage));		
 	}
 	
@@ -127,7 +129,20 @@ public class Messages implements java.io.Serializable {
 		if (members != null) members.clear();
 	}
 	
-	public void add(String idMessage, Object [] ids) {		
+	/**
+	 * Clear all error message and does not accept any more messages. <p>
+	 * 
+	 * If you  call to <code>add</code> after call to this method then 
+	 * no exception will throw but the message will not be added.<br>
+	 *
+	 */
+	public void clearAndClose() {
+		removeAll();
+		closed = true;
+	}
+	
+	public void add(String idMessage, Object [] ids) {
+		if (closed) return;
 		if (ids != null) {
 			if (ids.length == 1) addMember(ids[0]);
 			else if (ids.length > 1) {
@@ -152,11 +167,11 @@ public class Messages implements java.io.Serializable {
 		}				
 	}
 
-	public void add(String idMessage, Object id0) {
+	public void add(String idMessage, Object id0) {		
 		add(idMessage, new Object [] { id0 });
 	}
 	
-	public void add(String idMessage, Object id0, Object id1) {
+	public void add(String idMessage, Object id0, Object id1) {		
 		add(idMessage, new Object [] { id0, id1 });
 	}
 	
@@ -194,7 +209,8 @@ public class Messages implements java.io.Serializable {
 		return r.toString();
 	}
 	
-	public void add(Messages messages) {		
+	public void add(Messages messages) {	
+		if (closed) return;
 		this.messages.addAll(messages.messages);		
 		if (messages.members != null) {
 			if (this.members == null) this.members = new ArrayList();

@@ -51,6 +51,7 @@ public class DeleteAction extends ViewDetailAction {
 				getView().setEditable(false);
 			}
 		}
+		getErrors().clearAndClose(); // If removal is done, any additional error message may be confused
 	}
 
 	private void removeSelected() {
