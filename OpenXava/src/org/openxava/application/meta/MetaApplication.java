@@ -27,16 +27,8 @@ public class MetaApplication extends MetaElement implements java.io.Serializable
 	}
 	
 	public String getFolderLabel(Locale locale, String folder) {
-		folder = Strings.change(folder, "/", ".");
-		try {					
-			return Labels.get(folder, locale);
-		}
-		catch (Exception ex) {
-			if (XavaPreferences.getInstance().isI18nWarnings()) {
-				System.err.println(XavaResources.getString("element_i18n_warning", folder));
-			}
-			return firstUpper(folder); 			
-		}				
+		folder = Strings.change(folder, "/", ".");					
+		return Labels.get(folder, locale);
 	}
 	
 	public String getFolderLabel(String folder) {

@@ -12,8 +12,52 @@ import org.openxava.application.meta.*;
  */
 
 public class Labels {
+
+	/**
+	 * On any error returns the sent <code>id</code> with the first letter in uppercase.
+	 */
+	public static String get(String id, Locale locale) {
+		try {
+			return getImpl(id, locale);
+		}
+		catch (MissingResourceException ex) {
+			if (XavaPreferences.getInstance().isI18nWarnings()) {
+				System.err.println(XavaResources.getString("element_i18n_warning", id));
+			}			
+			return Strings.firstUpper(id);
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			if (XavaPreferences.getInstance().isI18nWarnings()) {
+				System.err.println(XavaResources.getString("element_i18n_warning", id));
+			}
+			return Strings.firstUpper(id);
+		}		
+	}
 	
-	public static String get(String id, Locale locale) throws MissingResourceException, XavaException {
+	/**
+	 * If <code>id</code> is not found, or other error returns <code>defaultValue</code>
+	 */
+	public static String get(String id, Locale locale, String defaultValue) {
+		try {
+			return getImpl(id, locale);
+		}
+		catch (MissingResourceException ex) {
+			if (XavaPreferences.getInstance().isI18nWarnings()) {
+				System.err.println(XavaResources.getString("element_i18n_warning", id));
+			}			
+			return defaultValue;
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			if (XavaPreferences.getInstance().isI18nWarnings()) {
+				System.err.println(XavaResources.getString("element_i18n_warning", id));
+			}
+			return defaultValue;
+		}		
+	}		
+		
+	private static String getImpl(String id, Locale locale) throws MissingResourceException, XavaException {
 		if (id == null) return "";
 		try {			
 			return getResource(id, locale);
@@ -26,6 +70,8 @@ public class Labels {
 			return get(id.substring(idxPunto + 1), locale);
 		}
 	} 
+	
+	
 	
 	/**
 	 * @return null if not contains view or tab
@@ -70,11 +116,11 @@ public class Labels {
 		}
 	}	
 	
-	public static boolean exists(String id) throws XavaException {
+	public static boolean exists(String id) {
 		return exists(id, Locale.getDefault());
 	}
 	
-	public static boolean exists(String id, Locale locale) throws XavaException {
+	public static boolean exists(String id, Locale locale) {
 		if (id == null) return false;
 		try {
 			getResource(id, locale);
@@ -85,6 +131,10 @@ public class Labels {
 			if (idx < 0) return false;
 			return exists(id.substring(idx + 1));
 		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}				
 	}
 	
 	public static boolean existsExact(String id, Locale locale) throws XavaException {

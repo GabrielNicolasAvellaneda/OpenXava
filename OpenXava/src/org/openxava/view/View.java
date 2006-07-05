@@ -2708,12 +2708,7 @@ public class View implements java.io.Serializable {
 		if (getLabels() != null) {
 			String idLabel = (String) getLabels().get(p.getName());
 			if (idLabel != null) {
-				try {
-					return Labels.get(idLabel, getRequest().getLocale());
-				}
-				catch (Exception ex) {
-					return idLabel;
-				}
+				return Labels.get(idLabel, getRequest().getLocale());
 			}
 		}		
 		if (!Is.emptyString(getMemberName())) {

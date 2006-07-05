@@ -107,16 +107,8 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	}
 	
 	private String obtainValidValueLabel(Locale locale, Object value) { 
-		String id = getId() + "." + value;
-		try {											
-			return Labels.get(id, locale);
-		}
-		catch (Exception ex) {		
-			if (XavaPreferences.getInstance().isI18nWarnings()) {
-				System.err.println(XavaResources.getString("label_i18n_warning", id));
-			}
-			return Strings.firstUpper(value.toString());
-		}		
+		String id = getId() + "." + value;											
+		return Labels.get(id, locale, Strings.firstUpper(value.toString()));
 	}
 		
 	private IPropertyValidator createRequiredValidator() throws XavaException {
