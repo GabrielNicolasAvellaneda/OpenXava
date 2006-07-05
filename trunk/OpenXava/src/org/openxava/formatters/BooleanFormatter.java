@@ -12,19 +12,13 @@ import org.openxava.util.*;
 public class BooleanFormatter implements IFormatter {
 	
 	public String format(HttpServletRequest request, Object booleanValue) {
-		try {
-			if (booleanValue == null) {
-				return Labels.get("no", request.getLocale());
-			}
-			else {
-				boolean r = ((Boolean) booleanValue).booleanValue();
-				return r?Labels.get("yes", request.getLocale()):Labels.get("no", request.getLocale());
-			}		
+		if (booleanValue == null) {
+			return Labels.get("no", request.getLocale());
 		}
-		catch (XavaException ex) {
-			ex.printStackTrace();
-			return "?";
-		}
+		else {
+			boolean r = ((Boolean) booleanValue).booleanValue();
+			return r?Labels.get("yes", request.getLocale()):Labels.get("no", request.getLocale());
+		}		
 	}
 	
 	public Object parse(HttpServletRequest request, String string) {

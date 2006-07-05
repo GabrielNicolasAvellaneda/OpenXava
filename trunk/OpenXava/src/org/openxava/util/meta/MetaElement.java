@@ -15,22 +15,7 @@ abstract public class MetaElement implements java.io.Serializable {
 	private String label;
 
 	protected boolean has18nLabel() {		
-		String id = getId();
-		if (id == null) return false;
-		try {					
-			Labels.get(id, Locale.getDefault()); 
-			return true;
-		}
-		catch (MissingResourceException ex) {
-			return false;
-		}					
-		catch (Exception ex) {
-			ex.printStackTrace();
-			if (XavaPreferences.getInstance().isI18nWarnings()) {
-				System.err.println(XavaResources.getString("element_i18n_warning", id));
-			}
-			return false;
-		}
+		return Labels.exists(getId());
 	}
 	
 	protected boolean hasName() {
@@ -63,17 +48,8 @@ abstract public class MetaElement implements java.io.Serializable {
 	 */
 	protected String getLabel(Locale locale, String id) {
 		if (id == null) return "";
-		try {				
-			return Labels.get(id, locale);
-		}
-		catch (Exception ex) {		
-			if (XavaPreferences.getInstance().isI18nWarnings()) {
-				System.err.println(XavaResources.getString("element_i18n_warning", id));
-			}
-			if (Is.emptyString(label))
-				label = firstUpper(getName());
-			return label;
-		}		
+		if (Is.emptyString(label)) label = firstUpper(getName());			
+		return Labels.get(id, locale, label);
 	}
 	
 		
@@ -114,10 +90,11 @@ abstract public class MetaElement implements java.io.Serializable {
 	public String getDescription(Locale locale) {
 		String id = getId();
 		if (id == null) return "";
-		try {			
-			return Labels.get(id + "[description]", locale);
+		String descriptionId = id + "[description]"; 
+		if (Labels.exists(descriptionId)) {
+			return Labels.get(descriptionId, locale);
 		}
-		catch (Exception ex) {
+		else {
 			if (has18nLabel()) return getLabel(locale); 
 			return Is.emptyString(description)?getLabel(locale):description;
 		}		
