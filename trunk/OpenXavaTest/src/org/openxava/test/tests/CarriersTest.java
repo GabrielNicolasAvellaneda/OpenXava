@@ -219,6 +219,7 @@ public class CarriersTest extends ModuleTestBase {
 		assertCarriersCount(1);
 		execute("CRUD.delete");		
 		assertMessage("Carrier deleted successfully");
+		assertNoErrors(); // If removal is done, any additional error message may be confused		
 		assertValue("number", "");
 		assertValue("name", "");
 		// The last ramain without edit
