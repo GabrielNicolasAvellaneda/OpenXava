@@ -16,12 +16,18 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 	public void execute() throws Exception {
 		try {			
 			Map memberNames = getView().getMembersNamesWithHidden();
-			Map keys = getView().getKeyValuesWithValue();
+			Map keys = getView().getKeyValues();
 			Map values = null;
-			if (Maps.isEmptyOrZero(keys)) {
-				values = MapFacade.getValuesByAnyProperty(getModelName(), getView().getValues(), memberNames);
+			if (Maps.isEmptyOrZero(keys)) { 
+				try {
+					values = MapFacade.getValuesByAnyProperty(getModelName(), getView().getValues(), memberNames);
+				}
+				catch (ObjectNotFoundException ex) {
+					// This is for the case of key with 0 as valid value
+					values = MapFacade.getValues(getModelName(), keys, memberNames);
+				}
 			}
-			else {
+			else {				
 				values = MapFacade.getValues(getModelName(), keys, memberNames);
 			}
 			getView().setEditable(true);	

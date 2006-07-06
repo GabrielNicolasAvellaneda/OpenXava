@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE component SYSTEM "dtds/component.dtd">
+
+<!-- 
+Number (the key) can be 0
+ -->
+
+<component name="Color">
+
+	<entity>
+		<property name="number" type="int" key="true" size="5" required="false"/>
+		<property name="name" type="String"	size="20" required="true"/>			  								
+	</entity>
+	
+	<entity-mapping table="XAVATEST@separator@COLOR">
+		<property-mapping
+			property="number" column="NUMBER"/>
+		<property-mapping
+			property="name" column="NAME"/>
+	</entity-mapping> 
+				
+</component>

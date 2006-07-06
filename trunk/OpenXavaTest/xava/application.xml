@@ -38,7 +38,12 @@
 		<model name="Size"/>
 		<controller name="Typical"/>
 	</module>
-					
+	
+	<module name="Colors">
+		<model name="Color"/>
+		<controller name="Typical"/>
+	</module>
+						
 	<module name="Deliveries" folder="invoicing">		<env-var name="XAVA_SEARCH_ACTION" value="Deliveries.search"/>				<model name="Delivery"/>		<controller name="Typical"/>		<controller name="Remarks"/>		<controller name="Deliveries"/>			</module>
 	
 	<module name="DeliveriesGroupsInSections" folder="invoicing.variations">
