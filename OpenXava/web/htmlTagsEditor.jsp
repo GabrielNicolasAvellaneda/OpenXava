@@ -21,7 +21,7 @@ if (hasFrame) {
 	postEditor="</td></tr></table>";
 }
 else if (first) {
-	preLabel="<th style='vertical-align: middle;text-align: left' class=" + style.getLabel() + " id=" + labelKey + " >";
+	preLabel="<th style='vertical-align: middle;text-align: left;white-space: nowrap' class=" + style.getLabel() + " id=" + labelKey + " width='1'>";
 	postLabel="</th>";
 	preIcons="<td style='vertical-align: middle'>";
 	postIcons="</td>";
@@ -29,7 +29,7 @@ else if (first) {
 	postEditor="</td>";
 }
 else {
-	preLabel="<th style='vertical-align: middle;text-align: left' class=" + style.getLabel() + " id=" + labelKey + " >&nbsp;&nbsp;";
+	preLabel="<th style='vertical-align: middle;text-align: left;white-space: nowrap' class=" + style.getLabel() + " id=" + labelKey + " width='1'>&nbsp;&nbsp;";
 	postLabel="</th>";
 	preIcons="<td style='vertical-align: middle'>";
 	postIcons="</td>";
