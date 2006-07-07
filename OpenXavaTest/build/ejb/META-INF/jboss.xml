@@ -103,6 +103,18 @@
 
       </entity>
       <entity>
+         <ejb-name>Color</ejb-name>
+         <jndi-name>@subcontext@/ejb/org.openxava.test.model/Color</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
          <ejb-name>FilterBySubfamily</ejb-name>
          <jndi-name>@subcontext@/ejb/org.openxava.test.model/FilterBySubfamily</jndi-name>
          <resource-ref>
@@ -447,6 +459,18 @@
 
       </entity>
       <entity>
+         <ejb-name>Seller</ejb-name>
+         <jndi-name>@subcontext@/ejb/org.openxava.test.model/Seller</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
          <ejb-name>DeliveryType</ejb-name>
          <jndi-name>@subcontext@/ejb/org.openxava.test.model/DeliveryType</jndi-name>
          <resource-ref>
@@ -461,18 +485,6 @@
       <entity>
          <ejb-name>AdditionalDetail</ejb-name>
          <jndi-name>@subcontext@/ejb/org.openxava.test.model/AdditionalDetail</jndi-name>
-         <resource-ref>
-            <res-ref-name>jdbc/DataSource</res-ref-name>
-            <resource-name>jdbc/DataSource</resource-name>
-         </resource-ref>
-
-        <method-attributes>
-        </method-attributes>
-
-      </entity>
-      <entity>
-         <ejb-name>Seller</ejb-name>
-         <jndi-name>@subcontext@/ejb/org.openxava.test.model/Seller</jndi-name>
          <resource-ref>
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <resource-name>jdbc/DataSource</resource-name>

@@ -124,9 +124,8 @@
 			<use-object name="xava_view"/>
 		</action>				
 					
-	</controller>		
-	
-	
+	</controller>
+		
 	<controller name="Customers">
 		<extends controller="Typical"/>
 		<extends controller="EditableOnOff"/>

@@ -596,6 +596,37 @@
       </entity>
 
       <entity>
+         <ejb-name>Color</ejb-name>
+
+         <table-name>XAVATEST_COLOR</table-name>
+
+         <cmp-field>
+            <field-name>_Name</field-name>
+            <column-name>NAME</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>number</field-name>
+            <column-name>NUMBER</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByNumber</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Color o WHERE o.number = ?1]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
          <ejb-name>FilterBySubfamily</ejb-name>
 
          <table-name>XAVATEST_MOCKTABLE</table-name>
@@ -2192,6 +2223,81 @@
       </entity>
 
       <entity>
+         <ejb-name>Seller</ejb-name>
+
+         <table-name>XAVATEST_SELLER</table-name>
+
+         <cmp-field>
+            <field-name>_Name</field-name>
+            <column-name>NAME</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Regions</field-name>
+            <column-name>REGIONS</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>number</field-name>
+            <column-name>NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Level_id</field-name>
+            <column-name>LEVEL</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Boss_number</field-name>
+            <column-name>BOSS</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByLevel</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE o._Level_id = ?1 ORDER BY o.number]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByBoss</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE o._Boss_number = ?1 ORDER BY o.number]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findAll</method-name>
+               <method-params>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE 1 = 1]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByNumber</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE o.number = ?1]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
          <ejb-name>DeliveryType</ejb-name>
 
          <table-name>XAVATEST_DeliveryType</table-name>
@@ -2266,81 +2372,6 @@
                </method-params>
             </query-method>
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM AdditionalDetail o WHERE o._Type_number = ?1 ORDER BY o.counter]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>Seller</ejb-name>
-
-         <table-name>XAVATEST_SELLER</table-name>
-
-         <cmp-field>
-            <field-name>_Name</field-name>
-            <column-name>NAME</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Regions</field-name>
-            <column-name>REGIONS</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>number</field-name>
-            <column-name>NUMBER</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Level_id</field-name>
-            <column-name>LEVEL</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Boss_number</field-name>
-            <column-name>BOSS</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByLevel</method-name>
-               <method-params>
-                  <method-param>java.lang.String</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE o._Level_id = ?1 ORDER BY o.number]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findByBoss</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE o._Boss_number = ?1 ORDER BY o.number]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findAll</method-name>
-               <method-params>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE 1 = 1]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findByNumber</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE o.number = ?1]]></jboss-ql>
 
 	     </query>
 

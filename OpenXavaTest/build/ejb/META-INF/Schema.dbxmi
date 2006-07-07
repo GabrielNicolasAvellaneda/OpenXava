@@ -142,6 +142,15 @@
       </columns>
 
    </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Color" name="" primaryKey="Color_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Color_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Color" constraint="Constraint_Color_"/>
+
+      <columns xmi:id="Color__Name" name="_Name">
+      </columns>
+      <columns xmi:id="Color_number" name="number">
+      </columns>
+
+   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_FilterBySubfamily" name="" primaryKey="FilterBySubfamily_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="FilterBySubfamily_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_FilterBySubfamily" constraint="Constraint_FilterBySubfamily_"/>
 
@@ -559,6 +568,21 @@
       </columns>
 
    </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Seller" name="" primaryKey="Seller_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Seller_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Seller" constraint="Constraint_Seller_"/>
+
+      <columns xmi:id="Seller__Name" name="_Name">
+      </columns>
+      <columns xmi:id="Seller__Regions" name="_Regions">
+      </columns>
+      <columns xmi:id="Seller_number" name="number">
+      </columns>
+      <columns xmi:id="Seller__Level_id" name="_Level_id">
+      </columns>
+      <columns xmi:id="Seller__Boss_number" name="_Boss_number">
+      </columns>
+
+   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_DeliveryType" name="" primaryKey="DeliveryType_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="DeliveryType_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_DeliveryType" constraint="Constraint_DeliveryType_"/>
 
@@ -578,21 +602,6 @@
       <columns xmi:id="AdditionalDetail__Service_number" name="_Service_number">
       </columns>
       <columns xmi:id="AdditionalDetail__Type_number" name="_Type_number">
-      </columns>
-
-   </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_Seller" name="" primaryKey="Seller_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Seller_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Seller" constraint="Constraint_Seller_"/>
-
-      <columns xmi:id="Seller__Name" name="_Name">
-      </columns>
-      <columns xmi:id="Seller__Regions" name="_Regions">
-      </columns>
-      <columns xmi:id="Seller_number" name="number">
-      </columns>
-      <columns xmi:id="Seller__Level_id" name="_Level_id">
-      </columns>
-      <columns xmi:id="Seller__Boss_number" name="_Boss_number">
       </columns>
 
    </RDBSchema:RDBTable>
