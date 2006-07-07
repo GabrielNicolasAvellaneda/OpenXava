@@ -3,7 +3,7 @@
 <!DOCTYPE component SYSTEM "dtds/component.dtd">
 
 <!-- 
-Number can be 0
+Number (the key) can be 0
  -->
 
 <component name="Color">
