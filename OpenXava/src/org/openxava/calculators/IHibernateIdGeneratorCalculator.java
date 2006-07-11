@@ -13,7 +13,7 @@ package org.openxava.calculators;
  * @author Javier Paniza
  */
 
-public interface IHibernateIdGeneratorCalculator {
+public interface IHibernateIdGeneratorCalculator extends ICalculator {
 	
 	/**
 	 * Returns the xml code to insert inside 'id' element in .hbml file.

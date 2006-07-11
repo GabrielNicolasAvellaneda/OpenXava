@@ -17,7 +17,7 @@ package org.openxava.calculators;
  * @author Javier Paniza
  */
 
-public class SequenceCalculator implements IHibernateIdGeneratorCalculator {
+public class SequenceCalculator implements IHibernateIdGeneratorCalculator, ICalculator {
 	
 	private String sequence;
 
@@ -37,6 +37,10 @@ public class SequenceCalculator implements IHibernateIdGeneratorCalculator {
 
 	public void setSequence(String sequence) {
 		this.sequence = sequence;
+	}
+
+	public Object calculate() throws Exception { 
+		return null;
 	}
 
 }

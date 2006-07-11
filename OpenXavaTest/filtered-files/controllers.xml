@@ -29,8 +29,18 @@
 			<use-object name="xava_view"/>
 		</action>		
 	</controller>
-		
 	
+	<controller name="TypicalNotResetOnSave">
+		<extends controller="Typical"/>
+		<action name="save" mode="detail"
+			class="org.openxava.actions.SaveAction"
+			image="images/save.gif"
+			keystroke="F3">			
+			<set property="resetAfter" value="false"/>
+			<use-object name="xava_view"/>
+		</action>				
+	</controller>	
+			
 	<controller name="EditableOnOff">
 		<action name="setOn" mode="detail"
 			class="org.openxava.test.actions.SetEditableOnAction">

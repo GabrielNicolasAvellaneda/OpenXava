@@ -17,7 +17,9 @@ public class XavaPreferences {
 	private boolean jpaPersistenceLoaded=false;
 	private boolean jpaPersistence=false;	
 	private boolean duplicateComponentWarningsLoaded=false;
-	private boolean duplicateComponentWarnings=false;	
+	private boolean duplicateComponentWarnings=false;
+
+	private int maxSizeForTextEditor;	
   
 	public static XavaPreferences getInstance() {
 		if (instance == null) {
@@ -118,6 +120,13 @@ public class XavaPreferences {
 		}
 		return duplicateComponentWarnings;
 	}
+	
+	public int getMaxSizeForTextEditor() {
+		if (maxSizeForTextEditor == 0) { 
+			maxSizeForTextEditor = Integer.parseInt(getProperties().getProperty("maxSizeForTextEditor", "100"));
+		}
+		return maxSizeForTextEditor;
+	}	
 	
 	public void setDuplicateComponentWarnings(boolean duplicateComponentWarnings) {
 		this.duplicateComponentWarnings = duplicateComponentWarnings;

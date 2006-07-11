@@ -177,7 +177,7 @@ public class MetaEJB implements Serializable {
 		return obtainPrimaryKeyFromKey(keyValues, getPrimaryKeyClass(), true);
 	}
 	
-	public Object obtainPrimaryKeyAFromKeyWithoutConversors(Map keyValues) throws XavaException {
+	public Object obtainPrimaryKeyFromKeyWithoutConversors(Map keyValues) throws XavaException {
 		return obtainPrimaryKeyFromKey(keyValues, getPrimaryKeyClass(), false);
 	}
 		
