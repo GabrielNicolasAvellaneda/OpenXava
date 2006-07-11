@@ -14,7 +14,7 @@ public class SizesTest extends ModuleTestBase {
 		super(testName, "Sizes");		
 	}
 	
-	public void testSequence() throws Exception {
+	public void testSequenceCalculator() throws Exception {
 		execute("List.orderBy", "property=id");
 		execute("List.orderBy", "property=id");
 		String last = getValueInList(0, "id");	

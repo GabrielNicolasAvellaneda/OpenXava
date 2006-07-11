@@ -9,7 +9,9 @@ Number (the key) can be 0
 <component name="Color">
 
 	<entity>
-		<property name="number" type="int" key="true" size="5" required="false"/>
+		<property name="number" type="int" key="true" size="5" required="false">
+			<default-value-calculator class="org.openxava.calculators.IdentityCalculator" on-create="true"/>
+		</property>
 		<property name="name" type="String"	size="20" required="true"/>			  								
 	</entity>
 	

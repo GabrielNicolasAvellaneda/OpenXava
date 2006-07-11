@@ -41,7 +41,7 @@
 	
 	<module name="Colors">
 		<model name="Color"/>
-		<controller name="Typical"/>
+		<controller name="TypicalNotResetOnSave"/> 
 	</module>
 						
 	<module name="Deliveries" folder="invoicing">		<env-var name="XAVA_SEARCH_ACTION" value="Deliveries.search"/>				<model name="Delivery"/>		<controller name="Typical"/>		<controller name="Remarks"/>		<controller name="Deliveries"/>			</module>
