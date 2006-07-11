@@ -63,7 +63,7 @@ public class HtmlPortlet extends GenericPortlet {
 	 */
 	public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
 		PortletContext context = getPortletContext();
-		String language = request.getLocale().getLanguage();
+		String language = Locales.getCurrent().getLanguage();
 		language = languages.indexOf(language) < 0?defaultLanguage:"_" + language;
 		String url = page + language + ".html";
 		PortletRequestDispatcher rd = context.getRequestDispatcher(url);						

@@ -70,7 +70,7 @@ public class XavaResources {
 	public static Locale getLocale(ServletRequest request) {
 		Object o = request.getAttribute("xava.locale");		
 		if (o == null) {
-			return request.getLocale();	
+			return Locales.getCurrent();	
 		}
 		else {
 			if (o instanceof Locale) {
@@ -78,7 +78,7 @@ public class XavaResources {
 			}
 			else {
 				System.err.println(XavaResources.getString("xava_locale_warning"));
-				return request.getLocale();
+				return Locales.getCurrent();
 			}
 		}		
 	}
