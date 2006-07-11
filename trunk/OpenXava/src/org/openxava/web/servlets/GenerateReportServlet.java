@@ -171,7 +171,7 @@ public class GenerateReportServlet extends HttpServlet {
 		suri.append("?model=");
 		suri.append(tab.getModelName());
 		suri.append("&language=");		
-		suri.append(request.getLocale().getLanguage());
+		suri.append(Locales.getCurrent().getLanguage());
 		suri.append("&tab=");
 		suri.append(tab.getTabName());
 		suri.append("&properties=");
@@ -184,7 +184,7 @@ public class GenerateReportServlet extends HttpServlet {
 	}		  	
 	
 	private TableModel getTableModel(Tab tab, ServletRequest request, boolean labelAsHeader) throws Exception {
-		return new TableModelDecorator(tab.getAllDataTableModel(), tab.getMetaProperties(), request.getLocale(), labelAsHeader);
+		return new TableModelDecorator(tab.getAllDataTableModel(), tab.getMetaProperties(), Locales.getCurrent(), labelAsHeader);
 	}
 	
 }

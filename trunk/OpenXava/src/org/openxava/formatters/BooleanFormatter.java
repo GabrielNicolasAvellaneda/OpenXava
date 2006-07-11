@@ -13,11 +13,11 @@ public class BooleanFormatter implements IFormatter {
 	
 	public String format(HttpServletRequest request, Object booleanValue) {
 		if (booleanValue == null) {
-			return Labels.get("no", request.getLocale());
+			return Labels.get("no", Locales.getCurrent());
 		}
 		else {
 			boolean r = ((Boolean) booleanValue).booleanValue();
-			return r?Labels.get("yes", request.getLocale()):Labels.get("no", request.getLocale());
+			return r?Labels.get("yes", Locales.getCurrent()):Labels.get("no", Locales.getCurrent());
 		}		
 	}
 	

@@ -2707,19 +2707,19 @@ public class View implements java.io.Serializable {
 	public String getLabelFor(MetaMember p) throws XavaException {
 		if (getLabels() != null) {
 			String idLabel = (String) getLabels().get(p.getName());
-			if (idLabel != null) {
-				return Labels.get(idLabel, getRequest().getLocale());
+			if (idLabel != null) { 
+				return Labels.get(idLabel, Locales.getCurrent());
 			}
 		}		
 		if (!Is.emptyString(getMemberName())) {
 			int idx = p.getId().lastIndexOf('.');
 			String id = p.getId().substring(0, idx) + "." + getMemberName() + p.getId().substring(idx);
-			if (Labels.existsExact(id, getRequest().getLocale())) {								
-				return Labels.get(id, getRequest().getLocale());
+			if (Labels.existsExact(id, Locales.getCurrent())) {								
+				return Labels.get(id, Locales.getCurrent());
 			}
 			id = getMemberName() + p.getId().substring(idx);
-			if (Labels.existsExact(id, getRequest().getLocale())) {				
-				return Labels.get(id, getRequest().getLocale());
+			if (Labels.existsExact(id, Locales.getCurrent())) {				
+				return Labels.get(id, Locales.getCurrent());
 			}			
 		}
 		return p.getLabel(getRequest());

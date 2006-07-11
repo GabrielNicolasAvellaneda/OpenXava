@@ -87,7 +87,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	 * A string with the localized labels separate with '|'.
 	 */
 	public String getValidValuesLabels(ServletRequest request) {
-		return getValidValuesLabels(request.getLocale());
+		return getValidValuesLabels(Locales.getCurrent());
 	}
 	
 	/**

@@ -41,7 +41,7 @@ public class WebEditors {
 					return edType.getMultipleValuesFormatter().parse(request, strings);
 				} 
 			}
-			return p.parse(string, request.getLocale());
+			return p.parse(string, Locales.getCurrent());
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
@@ -93,7 +93,7 @@ public class WebEditors {
 					return edType.getMultipleValuesFormatter().format(request, object);
 				}
 			}			
-			return p.format(object, request.getLocale());									
+			return p.format(object, Locales.getCurrent());									
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();			
