@@ -101,5 +101,23 @@
 		<ant antfile="../OpenXava/build.xml" target="compile"/>
 		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
 	</target>
+	
+	<target name="schemaupdate">
+	    <taskdef name="schemaupdate"
+	        classname="org.hibernate.tool.hbm2ddl.SchemaUpdateTask"
+	    	classpath="web/WEB-INF/lib/hibernate3.jar;web/WEB-INF/lib/cglib.jar;web/WEB-INF/lib/dom4j.jar;../OpenXava/lib/commons-logging.jar;../OpenXavaTest/lib/hsqldb.jar;web/WEB-INF/lib/commons-collections.jar;../OpenXava/bin;web/WEB-INF/classes;../OpenXava/lib/j2ee.jar"/>
+	    
+	    <schemaupdate
+	    	config="filtered-files/hibernate-jpa-junit.cfg.xml"
+	    	text="no"
+	        quiet="no">
+	    	
+	        <fileset dir="filtered-files">
+	            <include name="**/*.hbm.xml"/>
+	        </fileset>
+	    	
+	    </schemaupdate>
+	</target>	
+	
 						
 </project>

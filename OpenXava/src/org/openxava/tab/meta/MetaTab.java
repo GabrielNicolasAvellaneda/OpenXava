@@ -421,8 +421,8 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 				ReferenceMapping referenceMapping = (ReferenceMapping) itReferencesMappings.next();				
 				select.append(" left join ");						
 				select.append(referenceMapping.getReferencedTable());
-				select.append(" as ");
-				select.append("T_");				
+				// select.append(" as "); // it does not work in Oracle
+				select.append(" T_");				
 				String reference = referenceMapping.getReference();
 				int idx = reference.lastIndexOf('_'); 
 				if (idx >= 0) {
