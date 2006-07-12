@@ -15,9 +15,12 @@ import org.openxava.util.meta.*;
  */
 public class MetaView extends MetaElement implements Cloneable {
 	
-	// WARNING!: If you add properties you must to see if is needed to make a clon of they
+	// WARNING!: If you add properties you must see if is needed to make a clon of they
 	
 	private final static String NAME_SEPARATOR = "\n";
+	
+	private static int nextOid = 13; // tmp
+	private int oid = ++nextOid; // tmp
 	
 	private boolean section = false;
 	private MetaView parent; // in section case
@@ -435,9 +438,7 @@ public class MetaView extends MetaElement implements Cloneable {
 	}
 
 	private boolean hasMetaReferenceViewFor(MetaReference r) {				
-		if (metaViewsReferences == null) {
-			return false;
-		}		
+		if (metaViewsReferences == null) return false;		
 		return metaViewsReferences.containsKey(r.getName());
 	}
 	

@@ -455,8 +455,11 @@ abstract public class MetaModel extends MetaElement {
 			throw new ElementNotFoundException("view_not_found_in_model", name, getName());
 		}
 		return r;		
-
 	}	
+	
+	public Collection getMetaViews() throws XavaException {
+		return getMapMetaViews().values();
+	}
 		
 	private Map getMapMetaColections() {
 		if (mapMetaColections == null) {

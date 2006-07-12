@@ -28,11 +28,11 @@ public class MetaDescriptionsList implements java.io.Serializable {
 	}
 
 	public String getCondition() {
-		return condition;
+		return condition==null?"":condition;
 	}
 
 	public String getDepends() {
-		return depends;
+		return depends==null?"":depends;
 	}
 
 	public void setCondition(String string) {
@@ -77,7 +77,7 @@ public class MetaDescriptionsList implements java.io.Serializable {
 	}
 
 	public String getOrder() {
-		return order;
+		return order==null?"":order;
 	}
 
 	public void setOrder(String order) {
