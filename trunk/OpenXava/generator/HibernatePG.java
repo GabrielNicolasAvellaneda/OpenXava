@@ -10,7 +10,7 @@ import org.openxava.util.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Jun 29 11:21:28 CEST 2006
+ * @version Wed Jul 12 11:09:09 CEST 2006
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -67,7 +67,9 @@ public class HibernatePG {
     out.print(pMapping.getColumn());
     out.print("\" access=\"field\" ");
     out.print(type);
-    out.print(">");
+    out.print(" length=\"");
+    out.print(key.getSize());
+    out.print("\">");
     if (key.hasCalculatorDefaultValueOnCreate()) { 
     if (key.isDefaultCalculatorHibernateIdGenerator()) { 
     out.print(" \n\t\t\t");
@@ -102,7 +104,9 @@ public class HibernatePG {
     out.print(pMapping.getColumn());
     out.print("\" access=\"field\" ");
     out.print(type);
-    out.print("/>");
+    out.print(" length=\"");
+    out.print(((MetaProperty)key).getSize());
+    out.print("\"/>");
     
     		}
     		if (key instanceof MetaReference) {
@@ -110,6 +114,7 @@ public class HibernatePG {
     				for (Iterator itDetails = mapping.getReferenceMapping(key.getName()).getDetails().iterator(); itDetails.hasNext(); ) {
     					ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
     					if (!mapping.isReferenceOverlappingWithSomeProperty(key.getName(), detail.getReferencedModelProperty())) {
+    					MetaProperty metaPropertyInReferencedModel = (MetaProperty) ((MetaReference) key).getMetaModelReferenced().getMetaProperty(detail.getReferencedModelProperty());
     
     out.print(" \n\t\t\t<key-property name=\"");
     out.print(key.getName());
@@ -117,7 +122,9 @@ public class HibernatePG {
     out.print(Strings.change(detail.getReferencedModelProperty(), ".", "_"));
     out.print("\" column=\"");
     out.print(detail.getColumn());
-    out.print("\" access=\"field\"/>");
+    out.print("\" access=\"field\" length=\"");
+    out.print(metaPropertyInReferencedModel.getSize());
+    out.print("\"/>");
     			
     					}
     				}		
@@ -182,7 +189,9 @@ public class HibernatePG {
     out.print(pMapping.getColumn());
     out.print("\" access=\"field\" ");
     out.print(type);
-    out.print("/>");
+    out.print(" length=\"");
+    out.print(prop.getSize());
+    out.print("\"/>");
     
     			} 	
     		} 
@@ -205,7 +214,9 @@ public class HibernatePG {
     out.print(column);
     out.print("\" access=\"field\" ");
     out.print(type);
-    out.print("/>");
+    out.print(" length=\"");
+    out.print(property.getSize());
+    out.print("\"/>");
     
     		} 
     		for (Iterator itAggregateReferences = reference.getMetaModelReferenced().getMetaReferences().iterator(); itAggregateReferences.hasNext();) {	
@@ -254,6 +265,7 @@ public class HibernatePG {
     				for (Iterator itDetails = mapping.getReferenceMapping(reference.getName() + "_" + ref.getName()).getDetails().iterator(); itDetails.hasNext(); ) {
     					ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
     					if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName() + "_" + ref.getName(), detail.getReferencedModelProperty())) {
+    					MetaProperty metaPropertyInReferencedModel = (MetaProperty) ref.getMetaModelReferenced().getMetaProperty(detail.getReferencedModelProperty());
     
     out.print(" \n\t\t<property name=\"");
     out.print(reference.getName());
@@ -263,7 +275,9 @@ public class HibernatePG {
     out.print(Strings.change(detail.getReferencedModelProperty(), ".", "_"));
     out.print("\" column=\"");
     out.print(detail.getColumn());
-    out.print("\" access=\"field\"/>");
+    out.print("\" access=\"field\" length=\"");
+    out.print(metaPropertyInReferencedModel.getSize());
+    out.print("\"/>");
     			
     					}
     				}		
@@ -314,6 +328,7 @@ public class HibernatePG {
     			for (Iterator itDetails = mapping.getReferenceMapping(reference.getName()).getDetails().iterator(); itDetails.hasNext(); ) {
     				ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
     				if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName(), detail.getReferencedModelProperty())) {
+    				MetaProperty metaPropertyInReferencedModel = (MetaProperty) reference.getMetaModelReferenced().getMetaProperty(detail.getReferencedModelProperty());
     
     out.print(" \n\t\t<property name=\"");
     out.print(reference.getName());
@@ -321,7 +336,9 @@ public class HibernatePG {
     out.print(Strings.change(detail.getReferencedModelProperty(), ".", "_"));
     out.print("\" column=\"");
     out.print(detail.getColumn());
-    out.print("\" access=\"field\"/>");
+    out.print("\" access=\"field\" length=\"");
+    out.print(metaPropertyInReferencedModel.getSize());
+    out.print("\"/>");
     			
     				}
     			}		
@@ -448,7 +465,7 @@ public class HibernatePG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Jun 29 11:21:28 CEST 2006", // date this file was generated
+        { "Wed Jul 12 11:09:10 CEST 2006", // date this file was generated
              "/home/javi/workspace/OpenXava/generator/hibernate.xml", // input file
              "/home/javi/workspace/OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

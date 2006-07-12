@@ -46,7 +46,7 @@ else if (keyProperties.size() == 1 &amp;&amp;  keyMembers.size() == 1) {
 		String generator = key.isHidden() &amp;&amp; !key.hasCalculatorDefaultValueOnCreate()?"native":"assigned";
 		String type = pMapping.getCmpType().isArray()?"":"type='" + pMapping.getCmpTypeName() + "'";
 </java> 	
-		&lt;id name="<expr>propertyName</expr>" column="<expr>pMapping.getColumn()</expr>" access="field" <expr>type</expr>&gt;
+		&lt;id name="<expr>propertyName</expr>" column="<expr>pMapping.getColumn()</expr>" access="field" <expr>type</expr> length="<expr>key.getSize()</expr>"&gt;
 		<java>if (key.hasCalculatorDefaultValueOnCreate()) { </java> 
 			<java>if (key.isDefaultCalculatorHibernateIdGenerator()) { </java> 
 			<expr>key.getHbmGeneratorCode()</expr> 
@@ -72,7 +72,7 @@ else {
 			String propertyName = key.getName();			
 			String type = pMapping.getCmpType().isArray()?"":"type='" + pMapping.getCmpTypeName() + "'";			
 </java> 	
-			&lt;key-property name="<expr>propertyName</expr>" column="<expr>pMapping.getColumn()</expr>" access="field" <expr>type</expr>/&gt;
+			&lt;key-property name="<expr>propertyName</expr>" column="<expr>pMapping.getColumn()</expr>" access="field" <expr>type</expr> length="<expr>((MetaProperty)key).getSize()</expr>"/&gt;
 <java>
 		}
 		if (key instanceof MetaReference) {
@@ -80,8 +80,9 @@ else {
 				for (Iterator itDetails = mapping.getReferenceMapping(key.getName()).getDetails().iterator(); itDetails.hasNext(); ) {
 					ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
 					if (!mapping.isReferenceOverlappingWithSomeProperty(key.getName(), detail.getReferencedModelProperty())) {
+					MetaProperty metaPropertyInReferencedModel = (MetaProperty) ((MetaReference) key).getMetaModelReferenced().getMetaProperty(detail.getReferencedModelProperty());
 </java> 
-			&lt;key-property name="<expr>key.getName()</expr>_<expr>Strings.change(detail.getReferencedModelProperty(), ".", "_")</expr>" column="<expr>detail.getColumn()</expr>" access="field"/&gt;
+			&lt;key-property name="<expr>key.getName()</expr>_<expr>Strings.change(detail.getReferencedModelProperty(), ".", "_")</expr>" column="<expr>detail.getColumn()</expr>" access="field" length="<expr>metaPropertyInReferencedModel.getSize()</expr>"/&gt;
 <java>			
 					}
 				}		
@@ -126,7 +127,7 @@ else {
 			else {
 				String type = pMapping.getCmpType().isArray()?"":"type='" + pMapping.getCmpTypeName() + "'";
 </java> 	
-		&lt;property name="<expr>propertyName</expr>" column="<expr>pMapping.getColumn()</expr>" access="field" <expr>type</expr>/&gt;
+		&lt;property name="<expr>propertyName</expr>" column="<expr>pMapping.getColumn()</expr>" access="field" <expr>type</expr> length="<expr>prop.getSize()</expr>"/&gt;
 <java>
 			} 	
 		} 
@@ -143,7 +144,7 @@ while (itReferences.hasNext()) {
 			String column = mapping.getColumn(reference.getName() + "_" + property.getName()); 
 			String type = property.getMapping().getCmpType().isArray()?"":"type='" + property.getMapping().getCmpTypeName() + "'";			
 </java> 
-		&lt;property name="<expr>propertyName</expr>" column="<expr>column</expr>" access="field" <expr>type</expr>/&gt;
+		&lt;property name="<expr>propertyName</expr>" column="<expr>column</expr>" access="field" <expr>type</expr> length="<expr>property.getSize()</expr>"/&gt;
 <java>
 		} 
 		for (Iterator itAggregateReferences = reference.getMetaModelReferenced().getMetaReferences().iterator(); itAggregateReferences.hasNext();) {	
@@ -176,8 +177,9 @@ while (itReferences.hasNext()) {
 				for (Iterator itDetails = mapping.getReferenceMapping(reference.getName() + "_" + ref.getName()).getDetails().iterator(); itDetails.hasNext(); ) {
 					ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
 					if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName() + "_" + ref.getName(), detail.getReferencedModelProperty())) {
+					MetaProperty metaPropertyInReferencedModel = (MetaProperty) ref.getMetaModelReferenced().getMetaProperty(detail.getReferencedModelProperty());
 </java> 
-		&lt;property name="<expr>reference.getName()</expr>_<expr>ref.getName()</expr>_<expr>Strings.change(detail.getReferencedModelProperty(), ".", "_")</expr>" column="<expr>detail.getColumn()</expr>" access="field"/&gt;
+		&lt;property name="<expr>reference.getName()</expr>_<expr>ref.getName()</expr>_<expr>Strings.change(detail.getReferencedModelProperty(), ".", "_")</expr>" column="<expr>detail.getColumn()</expr>" access="field" length="<expr>metaPropertyInReferencedModel.getSize()</expr>"/&gt;
 <java>			
 					}
 				}		
@@ -212,8 +214,9 @@ while (itReferences.hasNext()) {
 			for (Iterator itDetails = mapping.getReferenceMapping(reference.getName()).getDetails().iterator(); itDetails.hasNext(); ) {
 				ReferenceMappingDetail detail = (ReferenceMappingDetail) itDetails.next();
 				if (!mapping.isReferenceOverlappingWithSomeProperty(reference.getName(), detail.getReferencedModelProperty())) {
+				MetaProperty metaPropertyInReferencedModel = (MetaProperty) reference.getMetaModelReferenced().getMetaProperty(detail.getReferencedModelProperty());
 </java> 
-		&lt;property name="<expr>reference.getName()</expr>_<expr>Strings.change(detail.getReferencedModelProperty(), ".", "_")</expr>" column="<expr>detail.getColumn()</expr>" access="field"/&gt;
+		&lt;property name="<expr>reference.getName()</expr>_<expr>Strings.change(detail.getReferencedModelProperty(), ".", "_")</expr>" column="<expr>detail.getColumn()</expr>" access="field" length="<expr>metaPropertyInReferencedModel.getSize()</expr>"/&gt;
 <java>			
 				}
 			}		
