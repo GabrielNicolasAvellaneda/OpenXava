@@ -767,4 +767,44 @@
 		<copy file="${dist.dir}/${name.war}.war" todir="${deploy.portlets.dir}" overwrite="true"/>		
 	</target>
 	
+	<target name="exportSchema">
+	    <taskdef name="schemaexport"
+	        classname="org.hibernate.tool.hbm2ddl.SchemaExportTask"
+	    	classpath="../${project}/web/WEB-INF/classes;../OpenXava/web/WEB-INF/lib/hibernate3.jar;../OpenXava/web/WEB-INF/lib/cglib.jar;../OpenXava/web/WEB-INF/lib/dom4j.jar;../OpenXava/lib/commons-logging.jar;../OpenXava/web/WEB-INF/lib/commons-collections.jar;../OpenXava/bin;../OpenXava/lib/j2ee.jar;${schema.path}"/>
+
+	    <schemaexport
+	    	config="${schema.config.file}"
+	        quiet="no"
+	        text="no"
+	        drop="no"
+	        delimiter=";"
+	    	output="../${project}/data/schema-export.sql"
+	    	>
+	    	
+	        <fileset dir="../${project}/filtered-files">
+	            <include name="**/*.hbm.xml"/>
+	        </fileset>
+	    	
+		</schemaexport>
+	</target>
+	
+	<target name="updateSchema">
+	    <taskdef name="schemaupdate"
+	        classname="org.hibernate.tool.hbm2ddl.SchemaUpdateTask"
+	    	classpath="../${project}/web/WEB-INF/classes;../OpenXava/web/WEB-INF/lib/hibernate3.jar;../OpenXava/web/WEB-INF/lib/cglib.jar;../OpenXava/web/WEB-INF/lib/dom4j.jar;../OpenXava/lib/commons-logging.jar;../OpenXava/web/WEB-INF/lib/commons-collections.jar;../OpenXava/bin;../OpenXava/lib/j2ee.jar;${schema.path}"/>
+	    
+	    <schemaupdate
+	    	config="${schema.config.file}"
+	    	text="no"
+	        quiet="no">
+	    	
+	        <fileset dir="../${project}/filtered-files">
+	            <include name="**/*.hbm.xml"/>
+	        </fileset>
+	    	
+	    </schemaupdate>
+	</target>	
+	
+	
+		
 </project>

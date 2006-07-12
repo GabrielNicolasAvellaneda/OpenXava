@@ -74,5 +74,31 @@
 		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
 		-->
 	</target>
+
+	<!--
+	Connects to your database and updates your schema in order to match to your current application.
+	Remember to give value to schema.path property.
+	(Also you can use directly the hibernate 'schemaupdate' ant task)
+	-->
+	<target name="updateSchema">
+		<ant antfile="../OpenXava/build.xml" target="updateSchema">			
+			<property name="schema.config.file" value="hibernate/hibernate-junit.cfg.xml"/>
+			<property name="schema.path" value="[PUT HERE THE PATH OF YOUR JDBC DRIVER]"/>
+		</ant>
+	</target>	
+
+	<!--
+	Creates a sql file (in data/schema-export.sql) that you can use to create the database
+	for run your application. 
+	Remember to give value to schema.path property.
+	(Also you can use directly the hibernate 'schemaupdate' ant task)
+	-->	
+	<target name="exportSchema">
+		<ant antfile="../OpenXava/build.xml" target="exportSchema">
+			<property name="schema.config.file" value="hibernate/hibernate-junit.cfg.xml"/>
+			<property name="schema.path" value="[PUT HERE THE PATH OF YOUR JDBC DRIVER]"/>			
+		</ant>
+	</target>	
+	
 				
 </project>
