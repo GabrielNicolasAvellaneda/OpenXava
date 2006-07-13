@@ -90,14 +90,18 @@ abstract public class MetaElement implements java.io.Serializable {
 	public String getDescription(Locale locale) {
 		String id = getId();
 		if (id == null) return "";
-		String descriptionId = id + "[description]"; 
+		String descriptionId = id + "[description]";
+		String result = "";
 		if (Labels.exists(descriptionId)) {
-			return Labels.get(descriptionId, locale);
+			result = Labels.get(descriptionId, locale);
 		}
 		else {
-			if (has18nLabel()) return getLabel(locale); 
-			return Is.emptyString(description)?getLabel(locale):description;
+			if (has18nLabel()) result = getLabel(locale);
+			else result = Is.emptyString(description)?getLabel(locale):description;
 		}		
+		result = Strings.change(result, "''", "´");
+		result = Strings.change(result, "'", "´");
+		return result;
 	}
 	
 	public String getDescription(ServletRequest request) {
