@@ -107,6 +107,23 @@
 			<property name="schema.config.file" value="hibernate/hibernate-jpa-junit.cfg.xml"/>
 			<property name="schema.path" value="lib/hsqldb.jar"/>
 		</ant>
+		<!-- Below some foreign keys is dropped.
+			This is for testing cases when 0 is use for "no-value" without FK, or so on.
+			As in many legate databases designed by COBOL/RPG programmers -->
+		<sql classpath="lib/hsqldb.jar"
+		    driver="org.hsqldb.jdbcDriver"
+		    url="jdbc:hsqldb:hsql://localhost:1666"
+		    userid="sa"
+		    password=""
+		>
+			alter table XAVATEST_DELIVERYPLACE drop constraint FKCE0B26DACAFD6A75;
+			alter table XAVATEST_SERVICE drop constraint FK7A72253C2B3FD94E;
+			alter table XAVATEST_OFFICE2 drop constraint FKA7DEF79D1E087E6D;
+			alter table XAVATEST_OFFICE drop constraint FK57FEEF351E087E6D;
+			alter table XAVATEST_OFFICE drop constraint FK57FEEF35CB7CAA79;
+			alter table XAVATEST_OFFICE drop constraint FK57FEEF3588875DAA;
+			alter table XAVATEST_PRODUCT3 drop constraint FK45C9437DDFA9523;
+		</sql>
 	</target>	
 	
 	<target name="exportSchema">

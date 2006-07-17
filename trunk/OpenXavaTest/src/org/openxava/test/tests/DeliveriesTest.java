@@ -33,6 +33,13 @@ public class DeliveriesTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Deliveries");		
 	}
 	
+	public void testFocusWhenSectionsAndGroupsInHeader() throws Exception {
+		execute("CRUD.new");
+		setValue("shortcut", "DY");
+		assertValue("remarks", "Delayed");
+		assertFocusOn("remarks");
+	}
+	
 	public void testNonExistentReferenceUsedAsKey() throws Exception {
 		createDeliveryType(0, "JUNIT DELIVERY TYPE 0");
 		execute("CRUD.new");

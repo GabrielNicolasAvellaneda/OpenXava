@@ -170,11 +170,13 @@
 		</collection-view>
 		
 		<collection-view collection="deliveries" view="InInvoice" read-only="true"/>
-						
+				
 		<members>
 			year, number, date, paid;
-			customerDiscount, customerTypeDiscount, yearDiscount;
-			comment;
+			<group name="discounts">
+				customerDiscount, customerTypeDiscount, yearDiscount;
+			</group>;	
+			comment;			
 			<section name="customer">customer</section>
 			<section name="details">details</section>			
 			<section name="amounts">amountsSum; vatPercentage; vat</section>

@@ -34,6 +34,9 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(CarriersTest.class));
 		suite.addTest(new TestSuite(ChangeProductsPrice2Test.class));
 		suite.addTest(new TestSuite(ChangeProductsPriceTest.class));
+		if (!XavaPreferences.getInstance().isEJB2Persistence()) {			
+			suite.addTest(new TestSuite(ColorsOnlyPOJOTest.class));
+		}
 		suite.addTest(new TestSuite(ColorsTest.class));
 		suite.addTest(new TestSuite(CustomersNewOnInitInheritedTest.class));
 		suite.addTest(new TestSuite(CustomersNewOnInitTest.class));

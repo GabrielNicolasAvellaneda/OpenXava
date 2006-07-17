@@ -997,6 +997,8 @@ public class InvoicesTest extends ModuleTestBase {
 	}
 		
 	private void deleteInvoiceDeliveries() throws Exception {
+		// Also delete transport charge, because they can reference to some delivery
+		XHibernate.getSession().createQuery("delete from TransportCharge").executeUpdate();
 		Iterator it = getInvoice().getDeliveries().iterator();
 		while (it.hasNext()) {
 			IDelivery delivery = (IDelivery) PortableRemoteObject.narrow(it.next(), IDelivery.class);
