@@ -1712,7 +1712,7 @@ public class View implements java.io.Serializable {
 				if (!searchingObject) { // To avoid recursive infinites loops				
 					try {
 						searchingObject = true;					
-						findObject(changedProperty); // tmp						
+						findObject(changedProperty); 						
 					}
 					finally {
 						searchingObject = false;				 
@@ -1815,6 +1815,11 @@ public class View implements java.io.Serializable {
 		String compo = st.nextToken();		
 		return name.substring(compo.length() + "xava".length() + 2);
 	}
+	
+	private View getParentIfGroup() { 
+		if (isGroup()) return getParent();
+		return this;
+	}
 
 	private void calculateValue(MetaProperty metaProperty, MetaCalculator metaCalculator, ICalculator calculator, Messages errors, Messages messages) {		
 		try {					
@@ -1826,8 +1831,8 @@ public class View implements java.io.Serializable {
 				if (set.hasValue()) {					
 					value = set.getValue();
 				}
-				else {
-					value = getValue(set.getPropertyNameFrom());					
+				else {					
+					value = getParentIfGroup().getValue(set.getPropertyNameFrom());
 				}
 				mp.executeSet(set.getPropertyName(), value);				
 			}			
@@ -2617,15 +2622,20 @@ public class View implements java.io.Serializable {
 		boolean found = false;		
 		while (it.hasNext()) {
 			MetaMember m = (MetaMember) it.next();			
-			if (m instanceof MetaGroup) {								
-				String name = getGroupView(m.getName()).getFirsEditablePropertyId("");
+			if (m instanceof MetaGroup) {												
+				String name = getGroupView(m.getName()).getNextFocusPropertyName(memberName); 
 				if (name != null) return name;
-			}			
+			}
+						
 			if (m.getName().equals(memberName)) {				
 				found = true;
 				continue;
 			}
-			if (!found) continue;			
+			if (!found) continue;
+			if (m instanceof MetaGroup) {								
+				String name = getGroupView(m.getName()).getFirsEditablePropertyId("");				
+				if (name != null) return name;
+			}			
 			if (m instanceof MetaProperty &&
 				!(m instanceof PropertiesSeparator) && 
 				isEditable((MetaProperty) m)) {	

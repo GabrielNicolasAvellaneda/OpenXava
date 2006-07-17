@@ -85,8 +85,9 @@ public class EJBTest extends TestCase {
 		InvoiceValue value = new InvoiceValue();
 		value.setYear(2005);
 		value.setNumber(66);
+		value.setCustomer_number(1); 
 		InvoiceRemote invoice = InvoiceUtil.getHome().create(value);		
-		assertEquals(null,  invoice.getSellerDiscount());
+		assertEquals(new BigDecimal("20.00"),  invoice.getSellerDiscount());
 		invoice.remove();
 	}
 	
@@ -133,7 +134,7 @@ public class EJBTest extends TestCase {
 		value.setType_number(2);
 		ServiceValue serviceValue = new ServiceValue();
 		serviceValue.setNumber(66);
-		serviceValue.setDescription("SERVICE FOR JUNIT TEST");
+		serviceValue.setDescription("SERVICE FOR JUNIT TEST");		
 		ServiceRemote service = ServiceUtil.getHome().create(serviceValue);
 		AdditionalDetailUtil.getHome().create(service, 0, value);
 		AdditionalDetailKey additionalDetailKey = new AdditionalDetailKey();
@@ -159,24 +160,24 @@ public class EJBTest extends TestCase {
 	
 	public void testKeyReferences() throws Exception {
 		DeliveryValue value = new DeliveryValue();
-		value.setInvoice_year(2099);
-		value.setInvoice_number(99);
+		value.setInvoice_year(2002);
+		value.setInvoice_number(1);
 		value.setNumber(66);
 		value.setDescription("JUNIT EJB");
 		DeliveryUtil.getHome().create(value);
 		DeliveryKey key = new DeliveryKey();
-		key.set_Invoice_year(2099);
-		key.set_Invoice_number(99);
+		key.set_Invoice_year(2002);
+		key.set_Invoice_number(1);
 		key.setNumber(66);
 		DeliveryRemote delivery = DeliveryUtil.getHome().findByPrimaryKey(key);
 		InvoiceKey invoiceKey = delivery.getInvoiceKey();
-		assertEquals("invoice_year", 2099, invoiceKey.getYear());
-		assertEquals("invoice_number", 99, invoiceKey.getNumber());
+		assertEquals("invoice_year", 2002, invoiceKey.getYear());
+		assertEquals("invoice_number", 1, invoiceKey.getNumber());
 		assertEquals("number", 66, delivery.getNumber());
 		assertEquals("description", "JUNIT EJB", delivery.getDescription());
 		DeliveryValue deliveryValue = delivery.getDeliveryValue();
-		assertEquals("value.invoice_year", 2099, deliveryValue.getInvoice_year());
-		assertEquals("value.invoice_number", 99, deliveryValue.getInvoice_number());
+		assertEquals("value.invoice_year", 2002, deliveryValue.getInvoice_year());
+		assertEquals("value.invoice_number", 1, deliveryValue.getInvoice_number());
 		assertEquals("value.number", 66, deliveryValue.getNumber());
 		assertEquals("value.description", "JUNIT EJB", deliveryValue.getDescription());		
 		delivery.remove(); 

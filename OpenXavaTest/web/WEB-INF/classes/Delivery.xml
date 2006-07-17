@@ -80,6 +80,12 @@
 			<default-value-calculator class="org.openxava.test.calculators.AdviceCalculator"/>
 		</property>	
 		
+		<property name="shortcut" type="String" size="2"/>
+				
+		<property-view property="shortcut">
+			<on-change class="org.openxava.test.actions.OnChangeShortcutAction"/>
+		</property-view>
+		
 		<property-view property="number">
 			<action action="Deliveries.generateNumber"/>		
 		</property-view>
@@ -138,7 +144,7 @@
 					employee;			
 				</group>
 			</group>
-			<section name="remarks">advice; remarks</section>
+			<section name="remarks">advice, shortcut; remarks</section>
 			<section name="incidents">incidents</section>
 			<section name="details">details</section>
 		</members>
