@@ -389,47 +389,10 @@ abstract public class ModelMapping implements java.io.Serializable {
 		Iterator it = propertyMappings.values().iterator();
 		while (it.hasNext()) {
 			PropertyMapping propertyMapping = (PropertyMapping) it.next();
-			setDefaultConverter(propertyMapping);
+			propertyMapping.setDefaultConverter();
 		}
 	}
 		 
-	private void setDefaultConverter(PropertyMapping propertyMapping)
-		throws XavaException {
-		if (propertyMapping.hasConverter() || propertyMapping.hasMultipleConverter()) 
-			return;
-		MetaProperty p = null;
-		try {
-			p =
-				getMetaModel().getMetaProperty(
-					Strings.change(propertyMapping.getProperty(), "_", "."));
-		}
-		catch (ElementNotFoundException ex) {			
-			return;
-		}
-		
-		// Converters in keys are troublesome for programmer and
-		// usually disadvantages.
-		// If you need a converter in key then you can put it explicitly.
-	
-		// And in the case of code not generated, the conversion is
-		// responsability of the programmer that write the bean (in get and set).		
-		if (p.isKey() || !getMetaModel().isEjbGenerated() || !getMetaModel().isPojoGenerated()) 
-			return;
-		
-		propertyMapping.setConverterClassName(Converters.getConverterClassNameFor(p));
-		propertyMapping.setCmpTypeName(Converters.getCmpTypeFor(p));
-		
-		if (!propertyMapping.hasConverter()) {
-			// In this way every no key property will have a converter
-			// this is util because in code generated for properties with converter
-			// there are things needed for every property (at least in ejb implementation)
-			propertyMapping.setConverterClassName(NoConversionConverter.class.getName());
-			String cmpType = p.getType().isPrimitive()?Primitives.toWrapperClass(p.getType()).getName():p.getType().getName();
-			if ("[B".equals(cmpType)) cmpType = "byte []";
-			propertyMapping.setCmpTypeName(cmpType);
-		}					
-	}
-
 	public boolean hasReferenceMapping(MetaReference metaReference) {
 		if (referenceMappings == null)
 			return false;

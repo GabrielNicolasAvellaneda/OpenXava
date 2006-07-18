@@ -174,5 +174,36 @@ public class PropertyMapping extends MetaSetsContainer {
 		String property = Strings.change(getProperty(), "_", ".");
 		return modelMapping.getMetaModel().getMetaProperty(property);
 	}
-
+	
+	public void setDefaultConverter() throws XavaException {
+		if (hasConverter() || hasMultipleConverter()) return;
+		MetaProperty p = null;
+		
+		try {
+			p =	modelMapping.getMetaModel().getMetaProperty(
+					Strings.change(getProperty(), "_", "."));
+		}
+		catch (ElementNotFoundException ex) {			
+			return;
+		}
+		
+		// Converters in keys are troublesome for programmer and
+		// usually disadvantages.
+		// If you need a converter in key then you can put it explicitly.
+		if (p.isKey()) return;
+		
+		setConverterClassName(Converters.getConverterClassNameFor(p));
+		setCmpTypeName(Converters.getCmpTypeFor(p));
+		
+		if (!hasConverter()) {
+			// In this way every no key property will have a converter
+			// this is util because in code generated for properties with converter
+			// there are things needed for every property (at least in ejb implementation)
+			setConverterClassName(NoConversionConverter.class.getName());
+			String cmpType = p.getType().isPrimitive()?Primitives.toWrapperClass(p.getType()).getName():p.getType().getName();
+			if ("[B".equals(cmpType)) cmpType = "byte []";
+			setCmpTypeName(cmpType);
+		}					
+	}
+	
 }

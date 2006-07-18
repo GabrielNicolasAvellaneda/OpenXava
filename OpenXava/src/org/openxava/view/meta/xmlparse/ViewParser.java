@@ -193,7 +193,7 @@ public class ViewParser extends XmlElementsNames {
 		}
 		a.setCreateReference(ParserUtil.getAttributeBoolean(el, xcreate_reference[lang]));
 		fillMediator(el, a, lang);
-		a._setPropertiesList(ParserUtil.getString(el, xlist_properties[lang]));
+		a.setPropertiesList(ParserUtil.getString(el, xlist_properties[lang]));
 		fillEditAction(el, a, lang);
 		fillViewAction(el, a, lang);
 		fillDetailActions(el, a, lang); 		
