@@ -89,7 +89,8 @@
 		<model name="Seller"/>
 		<view name="CannotCreateCustomer"/>
 		<controller name="Typical"/>		
-	</module>			<module name="Customers" folder="invoicing">			<model name="Customer"/>		<controller name="Customers"/>	</module>
+	</module>			<module name="Customers" folder="invoicing">			<model name="Customer"/>
+		<controller name="Customers"/>	</module>
 	
 	<module name="CustomersSimple" folder="invoicing.variations">	
 		<model name="Customer"/>

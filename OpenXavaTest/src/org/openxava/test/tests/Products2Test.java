@@ -30,10 +30,22 @@ public class Products2Test extends ModuleTestBase {
 		assertNoAction("Gallery.removeImage");
 		assertEquals("Images count does not match", 0, getForm().getParameterValues("xava.GALLERY.images").length);
 		
-		// Adding one image		
+		// Canceling the adding of and image
 		execute("Gallery.addImage");
 		assertNoErrors();
 		String imageUrl = System.getProperty("user.dir") + "/test-images/foto_javi.jpg";
+		setFileValue("newImage", imageUrl);
+		execute("LoadImageIntoGallery.cancel");
+		assertNoErrors();
+		assertNoAction("Gallery.maximizeImage");
+		assertNoAction("Gallery.minimizeImage");
+		assertNoAction("Gallery.removeImage");
+		assertEquals("Images count does not match", 0, getForm().getParameterValues("xava.GALLERY.images").length);
+		
+		// Adding one image		
+		execute("Gallery.addImage");
+		assertNoErrors();
+		imageUrl = System.getProperty("user.dir") + "/test-images/foto_javi.jpg";
 		setFileValue("newImage", imageUrl);
 		execute("LoadImageIntoGallery.loadImage");
 		assertNoErrors();

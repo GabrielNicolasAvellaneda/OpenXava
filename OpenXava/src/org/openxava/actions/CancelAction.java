@@ -32,11 +32,11 @@ public class CancelAction extends ViewBaseAction implements INavigationAction, I
 	}
 	
 	public String [] getNextControllers() {
-		return PREVIOUS_CONTROLLERS;
+		return PREVIOUS_CONTROLLERS;		
 	}
 	
 	public String getCustomView() {
-		return "xava/detail";
+		return PREVIOUS_VIEW; 
 	}
 
 	public Stack getPreviousViews() {

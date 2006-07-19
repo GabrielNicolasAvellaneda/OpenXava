@@ -10,8 +10,6 @@ import org.openxava.tab.*;
 
 public class CancelReferenceSearchAction extends ViewBaseAction implements INavigationAction {
 	
-	private boolean keyEditable = false;
-	private boolean editable = true;
 	private Tab tab;
 		 	
 	public void execute() throws Exception {		
@@ -23,7 +21,7 @@ public class CancelReferenceSearchAction extends ViewBaseAction implements INavi
 	}
 	
 	public String getCustomView() {
-		return "xava/detail";
+		return PREVIOUS_VIEW; 
 	}
 
 	public Tab getTab() {

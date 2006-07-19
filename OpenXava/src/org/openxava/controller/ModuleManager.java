@@ -9,7 +9,6 @@ import org.apache.commons.fileupload.*;
 import org.apache.commons.fileupload.disk.*;
 import org.apache.commons.fileupload.servlet.*;
 import org.openxava.actions.*;
-import org.openxava.actions.ReferenceSearchAction.*;
 import org.openxava.application.meta.*;
 import org.openxava.controller.meta.*;
 import org.openxava.hibernate.*;
@@ -192,12 +191,12 @@ public class ModuleManager {
 	}	
 	
 	public void execute(HttpServletRequest request, Messages errors, Messages messages) {		
-		try {									
+		try {								
 			if (errors.isEmpty()) { // Only it's executed the action if there aren't errors
-				String xavaAction = request.getParameter("xava_action");								
 				if (isFormUpload()) {
-					xavaAction = getDefaultActionQualifiedName(); // In upload form we execute the default action						
-				}																				
+					parseMultipartRequest(request);
+				}
+				String xavaAction = getParameter(request, "xava_action");								
 				if (!Is.emptyString(xavaAction)) {						
 					String actionValue = request.getParameter("xava_action_argv");
 					if ("undefined".equals(actionValue)) actionValue = null;						
@@ -215,6 +214,20 @@ public class ModuleManager {
 		}
 	}
 	
+	private String getParameter(HttpServletRequest request, String parameter) throws FileUploadException {
+		if (isFormUpload()) {
+			List items = (List) request.getAttribute("xava.upload.fileitems");
+			for (Iterator it = items.iterator(); it.hasNext(); ) {
+				FileItem item = (FileItem) it.next();
+				if (parameter.equals(item.getFieldName())) return item.getString();								
+			}						
+			return null;    
+		}
+		else {
+			return request.getParameter(parameter);
+		}
+	}
+
 	private void executeAction(MetaAction metaAction, Messages errors, Messages message, HttpServletRequest request) {
 		executeAction(metaAction, errors, message, null, request);
 	}
@@ -274,7 +287,6 @@ public class ModuleManager {
 				List fileItems = (List) request.getAttribute("xava.upload.fileitems");
 				String error = (String) request.getAttribute("xava.upload.error");
 				if (!Is.emptyString(error))	errors.add(error);
-				if (fileItems == null && Is.emptyString(error)) fileItems = parseMultipartRequest(request);
 				((IProcessLoadedFileAction) action).setFileItems(fileItems==null?Collections.EMPTY_LIST:fileItems);
 			}
 						
@@ -465,11 +477,13 @@ public class ModuleManager {
 		XHibernate.rollback();		
 	}		
 
-	private List parseMultipartRequest(HttpServletRequest request) throws FileUploadException {
+	private void parseMultipartRequest(HttpServletRequest request) throws FileUploadException { 
+		List fileItems = (List) request.getAttribute("xava.upload.fileitems");		
+		if (fileItems != null) return;		
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		factory.setSizeThreshold(1000000);		
 		ServletFileUpload upload = new ServletFileUpload(factory);
-		return upload.parseRequest(request);						
+		request.setAttribute("xava.upload.fileitems", upload.parseRequest(request)); 
 	}
 
 	public Environment getEnvironment() throws XavaException {		
