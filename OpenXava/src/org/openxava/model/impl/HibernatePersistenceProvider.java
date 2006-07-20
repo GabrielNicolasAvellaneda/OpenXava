@@ -1,6 +1,7 @@
 package org.openxava.model.impl;
 
 import java.io.*;
+import java.util.*;
 
 import javax.ejb.*;
 
