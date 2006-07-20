@@ -7,7 +7,6 @@ import java.util.*;
 
 import javax.ejb.*;
 
-import org.openxava.converters.*;
 import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -234,8 +233,7 @@ abstract public class BasePOJOPersistenceProvider implements IPersistenceProvide
 		for (Iterator it=values.iterator(); it.hasNext(); it.hasNext()) {
 			Map.Entry en = (Map.Entry) it.next();
 			String name = (String) en.getKey();
-			Object value = convert(metaModel, name, en.getValue());
-			System.out.println("[BasePOJOPersistenceProvider.findByAnyProperty] " + name + "=" + value); //  tmp
+			Object value = convert(metaModel, name, en.getValue());			
 			setParameterToQuery(query, name, value);
 		}
 		Object result = getUniqueResult(query);
