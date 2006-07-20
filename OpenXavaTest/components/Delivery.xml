@@ -146,7 +146,11 @@
 			</group>
 			<section name="remarks">advice, shortcut; remarks</section>
 			<section name="incidents">incidents</section>
-			<section name="details">details</section>
+			<section name="details">
+				<group name="details">
+					details
+				</group>
+			</section>
 		</members>
 	</view>
 			

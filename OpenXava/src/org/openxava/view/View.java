@@ -2381,7 +2381,7 @@ public class View implements java.io.Serializable {
 	}
 		
 	public View getParent() { 
-		if (parent != null && parent.isSection()) {
+		if (parent != null && (parent.isSection() || parent.isGroup())) { 
 			View result = parent.getParent();
 			parent = result;
 		}

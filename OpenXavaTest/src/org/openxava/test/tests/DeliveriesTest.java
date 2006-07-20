@@ -120,7 +120,7 @@ public class DeliveriesTest extends ModuleTestBase {
 	public void testAggregateInCollectionWithVisibleKeyDoesNotTryToSearchOnChangeKey() throws Exception {
 		execute("CRUD.new");
 		execute("Sections.change", "activeSection=2");
-		execute("Collection.new", "viewObject=xava_view_section2_details");
+		execute("Collection.new", "viewObject=xava_view_section2_details_details");
 		setValue("details.number", "66");
 		assertNoErrors();
 	}
@@ -134,15 +134,15 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertListNotEmpty();
 		execute("Mode.detailAndFirst");
 		execute("Sections.change", "activeSection=2");
-		execute("Collection.new", "viewObject=xava_view_section2_details");
+		execute("Collection.new", "viewObject=xava_view_section2_details_details");
 		setValue("details.number", "66");
 		setValue("details.description", "JUNIT DELIVERY DETAIL");
-		execute("Collection.save", "viewObject=xava_view_section2_details");
+		execute("Collection.save", "viewObject=xava_view_section2_details_details");
 		assertNoErrors();				
 		
-		execute("Collection.edit", "row=0,viewObject=xava_view_section2_details");
+		execute("Collection.edit", "row=0,viewObject=xava_view_section2_details_details");
 		assertValue("details.number", "66");
-		execute("Collection.remove", "viewObject=xava_view_section2_details");
+		execute("Collection.remove", "viewObject=xava_view_section2_details_details");
 		assertNoErrors();
 	}
 	
