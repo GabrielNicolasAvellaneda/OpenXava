@@ -164,7 +164,7 @@ abstract public class BasePOJOPersistenceProvider implements IPersistenceProvide
 			
 	public Object getKey(MetaModel metaModel, Map keyValues) throws XavaException {
 		try {
-			Class modelClass = metaModel.getPOJOClass();
+			Class modelClass = metaModel.getPOJOKeyClass();
 			Object key = modelClass.newInstance();
 			PropertiesManager pm = new PropertiesManager(key);
 			pm.executeSets(Maps.plainToTree(keyValues));

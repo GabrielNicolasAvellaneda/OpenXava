@@ -25,6 +25,7 @@ abstract public class MetaModel extends MetaElement {
 	private static boolean someModelHasPreRemoveCalculator = false;
 	private static boolean someModelHasPostLoadCalculator = false;
 	private Class pojoClass;
+	private Class pojoKeyClass;
 	private Collection allKeyPropertiesNames;
 	private List metaCalculatorsPostCreate;
 	private List metaCalculatorsPostLoad;
@@ -66,7 +67,7 @@ abstract public class MetaModel extends MetaElement {
 	private String qualifiedName;
 	private boolean hasDefaultCalculatorOnCreate = false;
 	private MetaEJB metaEJB;
-	private String pojoClassName;
+	private String pojoClassName;	
 	
 	/**
 	 * All models (Entities and Aggregates) with a mapping associated.
@@ -1455,6 +1456,15 @@ abstract public class MetaModel extends MetaElement {
 		return pojoClass;
 			
 	}
+		
+	public Class getPOJOKeyClass() throws XavaException {  
+		if (pojoKeyClass==null) return getPOJOClass(); // POJO is used as key too
+		return pojoKeyClass;			
+	}
+	public void setPOJOKeyClass(Class pojoKeyClass) {
+		this.pojoKeyClass = pojoKeyClass;
+	}
+	
 	
 	public MetaEJB getMetaEJB() {
 		return metaEJB;

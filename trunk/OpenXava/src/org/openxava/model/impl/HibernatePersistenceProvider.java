@@ -1,7 +1,6 @@
 package org.openxava.model.impl;
 
 import java.io.*;
-import java.util.*;
 
 import javax.ejb.*;
 
@@ -17,7 +16,7 @@ import org.openxava.util.*;
 public class HibernatePersistenceProvider extends BasePOJOPersistenceProvider {
 	
 	protected Object find(Class pojoClass, Serializable key) {
-		return XHibernate.getSession().get(pojoClass, key);
+		return XHibernate.getSession().get(pojoClass, (Serializable) key);
 	}
 
 	protected void refresh(Object object) {
