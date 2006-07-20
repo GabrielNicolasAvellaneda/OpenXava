@@ -89,6 +89,7 @@ public class DeliveriesTest extends ModuleTestBase {
 	}
 	
 	public void testSearchingByAnyProperty() throws Exception {
+		// One result
 		execute("CRUD.new");
 		assertValue("number", "");
 		assertValue("description", "");
@@ -96,7 +97,17 @@ public class DeliveriesTest extends ModuleTestBase {
 		execute("CRUD.search");
 		assertNoErrors();
 		assertValue("number", "777");
-		assertValue("description", "FOR TEST SEARCHING BY DESCRIPTION");		
+		assertValue("description", "FOR TEST SEARCHING BY DESCRIPTION");
+		
+		// There are more than one match, returns the first
+		execute("CRUD.new");
+		assertValue("number", "");
+		assertValue("description", "");
+		setValue("driverType", "");
+		setValue("description", "DEL");
+		execute("CRUD.search");
+		assertNoErrors();
+		assertValue("description", "DELIVERY JUNIT 666");				
 	}	
 		
 	public void testDateCalendarEditor() throws Exception {

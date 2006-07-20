@@ -7,7 +7,6 @@ import javax.ejb.*;
 import javax.persistence.*;
 
 import org.hibernate.*;
-import org.openxava.hibernate.*;
 import org.openxava.jpa.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -87,12 +86,9 @@ public class JPAPersistenceProvider extends BasePOJOPersistenceProvider {
 	}
 
 	protected Object getUniqueResult(Object query) {
-		try {
-			return ((javax.persistence.Query) query).getSingleResult();
-		}
-		catch (javax.persistence.NoResultException ex) {
-			return null;
-		}		
+		Iterator it = ((javax.persistence.Query) query).getResultList().iterator();
+		if (!it.hasNext()) return null;
+		return it.next();
 	}
 
 }

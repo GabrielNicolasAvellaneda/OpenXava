@@ -6,8 +6,9 @@ import java.rmi.*;
 import java.util.*;
 
 import javax.ejb.*;
-import javax.ejb.ObjectNotFoundException;
 
+import org.openxava.converters.*;
+import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
@@ -48,6 +49,9 @@ abstract public class BasePOJOPersistenceProvider implements IPersistenceProvide
 	
 	/**
 	 * Returns the unique result of the sent query. <p>
+	 * 
+	 * It does not fail if there more than one match, in this case must returns
+	 * the first one.<br>
 	 *  
 	 * @param query  Of the type returned by <code>createQuery</code> method.
 	 * @return Null if not result.
@@ -229,8 +233,10 @@ abstract public class BasePOJOPersistenceProvider implements IPersistenceProvide
 		Object query = createQuery(queryString.toString());
 		for (Iterator it=values.iterator(); it.hasNext(); it.hasNext()) {
 			Map.Entry en = (Map.Entry) it.next();
-			Object value = en.getValue() instanceof String?en.getValue() + "%":en.getValue();			
-			setParameterToQuery(query, (String) en.getKey(), value);
+			String name = (String) en.getKey();
+			Object value = convert(metaModel, name, en.getValue());
+			System.out.println("[BasePOJOPersistenceProvider.findByAnyProperty] " + name + "=" + value); //  tmp
+			setParameterToQuery(query, name, value);
 		}
 		Object result = getUniqueResult(query);
 		if (result == null) {
@@ -239,6 +245,15 @@ abstract public class BasePOJOPersistenceProvider implements IPersistenceProvide
 		return result;
 	}
 	
+	private Object convert(MetaModel metaModel, String name, Object value) throws XavaException {		
+		PropertyMapping mapping = metaModel.getMetaProperty(name).getMapping();
+		Object result = value instanceof String?value + "%":value;
+		if (mapping != null && mapping.hasConverter()) {
+			result = mapping.getConverter().toDB(result);
+		}
+		return result;
+	}
+
 	private boolean hasToIncludePropertyInCondition(MetaModel metaModel, String property) throws XavaException {
 		try {
 			return metaModel.getMapping().getPropertyMapping(property).hasMultipleConverter();

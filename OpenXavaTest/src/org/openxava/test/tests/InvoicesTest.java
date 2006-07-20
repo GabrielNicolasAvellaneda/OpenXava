@@ -38,6 +38,15 @@ public class InvoicesTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Invoices");		
 	}
 	
+	public void testSearchByPropertyWithConverterInDetailMode() throws Exception {
+		execute("CRUD.new");
+		setValue("year", "");
+		setValue("date", "");
+		setValue("paid", "true"); 
+		execute("CRUD.search");
+		assertNoErrors();
+	}
+	
 	public void testI18nOfLabelOfAConcreteView() throws Exception {
 		execute("CRUD.new");
 		assertLabel("customer.number", "Little code");
