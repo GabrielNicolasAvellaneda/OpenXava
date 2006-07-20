@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.*;
 
 import javax.ejb.*;
-import javax.ejb.ObjectNotFoundException;
 
 import org.hibernate.*;
 
@@ -78,7 +77,9 @@ public class HibernatePersistenceProvider extends BasePOJOPersistenceProvider {
 	}
 
 	protected Object getUniqueResult(Object query) {
-		return ((Query) query).uniqueResult();
+		Iterator it = ((Query) query).list().iterator();
+		if (!it.hasNext()) return null;
+		return it.next();
 	}
 
 }
