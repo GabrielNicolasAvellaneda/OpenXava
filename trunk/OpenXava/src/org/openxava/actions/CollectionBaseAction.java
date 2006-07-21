@@ -42,10 +42,10 @@ abstract public class CollectionBaseAction extends CollectionElementViewBaseActi
 	protected List getObjects() throws RemoteException, FinderException, XavaException {
 		if (objects == null) {
 			objects = new ArrayList();
-			Iterator it = getMapsSelectedValues().iterator();
+			Iterator it = getMapValues().iterator();
 			while (it.hasNext()) {
-				Map clave = (Map) it.next();
-				objects.add(MapFacade.findEntity(getCollectionElementView().getModelName(), clave));
+				Map key = (Map) it.next();
+				objects.add(MapFacade.findEntity(getCollectionElementView().getModelName(), key));
 			}
 		}
 		return objects;

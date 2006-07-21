@@ -472,6 +472,18 @@
 			class="org.openxava.test.actions.TranslateCarrierNameAction">
 		</action>		
 		
+		<action name="allToEnglish" hidden="true"
+			class="org.openxava.test.actions.TranslateCarrierNameAction">
+			<set property="targetLanguage" value="EN"/>
+			<set property="all" value="true"/>
+		</action>		
+		
+		<action name="todosAEspanol" hidden="true"
+			class="org.openxava.test.actions.TranslateCarrierNameAction">
+			<set property="targetLanguage" value="ES"/>
+			<set property="all" value="true"/>
+		</action>		
+		
 		<action name="deleteAll" class="org.openxava.test.actions.DeleteAllAction">
 			<set property="model" value="Carrier" />
 		</action>

@@ -76,7 +76,13 @@ public interface CarrierRemote
    public int getDrivingLicence_level(  )
       throws java.rmi.RemoteException;
 
+   public void translateToEnglish(  )
+      throws java.rmi.RemoteException;
+
    public void translate(  )
+      throws java.rmi.RemoteException;
+
+   public void translateToSpanish(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.CarrierData getData(  )

@@ -46,6 +46,18 @@
 		<method name="translate">		
 			<calculator class="org.openxava.test.calculators.TranslateCarrierNameCalculator"/>
 		</method>						
+		
+		<method name="translateToEnglish">		
+			<calculator class="org.openxava.test.calculators.TranslateCarrierNameCalculator">
+				<set property="targetLanguage" value="EN"/>
+			</calculator>
+		</method>						
+		
+		<method name="translateToSpanish">		
+			<calculator class="org.openxava.test.calculators.TranslateCarrierNameCalculator">
+				<set property="targetLanguage" value="ES"/>
+			</calculator>
+		</method>						
 								
 		<finder name="all" arguments="" collection="true"/>
 						
@@ -61,6 +73,7 @@
 		
 		<collection-view collection="fellowCarriers" view="Simple" edit-only="true">
 			<list-action action="Carriers.translateName"/>
+			<list-action action="Carriers.allToEnglish"/> 
 		</collection-view>		
 		
 		<collection-view collection="fellowCarriersCalculated" view="Simple"/>		

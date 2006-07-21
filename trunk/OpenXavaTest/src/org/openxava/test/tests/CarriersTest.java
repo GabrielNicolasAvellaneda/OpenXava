@@ -69,7 +69,7 @@ public class CarriersTest extends ModuleTestBase {
 		XHibernate.getSession().createQuery("delete from Carrier").executeUpdate();
 		XHibernate.commit();
 	}
-		
+	
 	public void testHideShowRows() throws Exception {
 		assertListRowCount(5);
 		assertAction("List.hideRows");
@@ -322,7 +322,15 @@ public class CarriersTest extends ModuleTestBase {
 		assertNoErrors();
 		assertValueInCollection("fellowCarriers", 0, "name", "DOS");
 		assertValueInCollection("fellowCarriers", 1, "name", "THREE");
-		assertValueInCollection("fellowCarriers", 2, "name", "FOUR");		
+		assertValueInCollection("fellowCarriers", 2, "name", "FOUR");
+		
+		// Testing add/remove properties programatically
+		assertAction("Carriers.allToEnglish");
+		assertNoAction("Carriers.todosAEspanol");		
+		execute("Carriers.allToEnglish", "viewObject=xava_view_fellowCarriers");
+		assertNoAction("Carriers.allToEnglish");
+		assertAction("Carriers.todosAEspanol");		
+		
 	}
 	
 	private void assertCarriersCount(int c) throws Exception {

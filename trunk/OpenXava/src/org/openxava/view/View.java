@@ -2512,13 +2512,53 @@ public class View implements java.io.Serializable {
 		actionsNamesDetail = collection;
 	}
 	
+	/**
+	 * Has sense if the subview represents a collection, although always works.
+	 * 
+	 * @param qualifiedActionName  Qualified name (controller.action) as in controllers.xml 	 
+	 */	
+	public void addDetailAction(String qualifiedActionName) {
+		if (actionsNamesDetail == null) actionsNamesDetail = new ArrayList();
+		actionsNamesDetail.add(qualifiedActionName);
+	}
+
+	/**
+	 * Has sense if the subview represents a collection, although always works.
+	 * 
+	 * @param qualifiedActionName  Qualified name (controller.action) as in controllers.xml 	 
+	 */	
+	public void removeDetailAction(String qualifiedActionName) {
+		if (actionsNamesDetail == null) return;
+		actionsNamesDetail.remove(qualifiedActionName);		
+	}
+	
+	/**
+	 * Has sense if the subview represents a collection, although always works.
+	 * 
+	 * @param qualifiedActionName  Qualified name (controller.action) as in controllers.xml 	 
+	 */	
+	public void addListAction(String qualifiedActionName) {
+		if (actionsNamesList == null) actionsNamesList = new ArrayList();
+		actionsNamesList.add(qualifiedActionName);
+	}
+
+	/**
+	 * Has sense if the subview represents a collection, although always works.
+	 * 
+	 * @param qualifiedActionName  Qualified name (controller.action) as in controllers.xml 	 
+	 */	
+	public void removeListAction(String qualifiedActionName) {
+		if (actionsNamesList == null) return;
+		actionsNamesList.remove(qualifiedActionName);		
+	}
+		
 	public Collection getActionsNamesList() {
 		return actionsNamesList==null?Collections.EMPTY_LIST:actionsNamesList;
 	}
 	public boolean hasListActions() {		
 		return !getActionsNamesList().isEmpty();
 	}
-
+	
 	public void setActionsNamesList(Collection collection) {
 		actionsNamesList = collection;
 	}	
