@@ -1019,13 +1019,12 @@ abstract public class MetaModel extends MetaElement {
 			metaViewByDefault.setModelName(this.getName());
 			metaViewByDefault.setMetaModel(this);
 			metaViewByDefault.setMembersNames("*");			
-			metaViewByDefault.setLabel(getLabel());		
+			metaViewByDefault.setLabel(getLabel());
+			getMapMetaViews().put("", metaViewByDefault);  
 		}
 		return metaViewByDefault;
 	}
 	
-	
-				
 	/**
 	 * Container component of model. <p>
 	 *
