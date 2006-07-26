@@ -57,10 +57,12 @@ public class EntityTab implements IEntityTabImpl {
 	public void search(String condition, Object key) throws FinderException, RemoteException {
 		try {						
 			StringBuffer select = new StringBuffer(getSelectBase());
-			if (!Is.emptyString(condition)) {
-				if (select.toString().toUpperCase().indexOf("WHERE") < 0) select.append(" WHERE "); 
-				else select.append(" AND "); 				
-				select.append(condition);				
+			if (!Is.emptyString(condition)) {				
+				if (!condition.toUpperCase().trim().startsWith("ORDER BY")) {
+					if (select.toString().toUpperCase().indexOf("WHERE") < 0) select.append(" WHERE "); 
+					else select.append(" AND "); 				
+					select.append(condition);				
+				}
 			}															
 			tabProvider.search(select.toString(), key);
 		}

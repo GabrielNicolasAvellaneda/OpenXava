@@ -115,7 +115,8 @@
 		</reference-view>
 		
 		<reference-view reference="type">	
-			<descriptions-list/>
+			<!-- tmp -->
+			<descriptions-list order="${number} desc"/>
 			<action action="Deliveries.setDefaultType"/>
 		</reference-view>
 		
