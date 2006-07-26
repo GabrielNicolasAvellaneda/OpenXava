@@ -5,7 +5,7 @@
  name ID #REQUIRED
 >
 
-<!ELEMENT entity (ejb?, bean?, implements*, (property|reference|collection)*, method*, finder*, postcreate-calculator*, postload-calculator*, postmodify-calculator*, preremove-calculator*, validator*, remove-validator*)>
+<!ELEMENT entity (ejb?, bean?, implements*, (property|reference|collection)*, (method|finder|postcreate-calculator|postload-calculator|postmodify-calculator|preremove-calculator|validator|remove-validator)*)>
 <!ATTLIST entity
  label CDATA #IMPLIED
 >
@@ -17,7 +17,7 @@
 	collection (true|false) "false" 
 >
 
-<!ELEMENT aggregate   ((bean|ejb)?, implements*, (property|reference|collection)*, method*, finder*, postcreate-calculator*, postload-calculator*, postmodify-calculator*, preremove-calculator*, validator*, remove-validator*)>
+<!ELEMENT aggregate   ((bean|ejb)?, implements*, (property|reference|collection)*, (method|finder|postcreate-calculator|postload-calculator|postmodify-calculator|preremove-calculator|validator|remove-validator)*)>
 <!ATTLIST aggregate
  name ID #REQUIRED
  label CDATA #IMPLIED
@@ -88,7 +88,7 @@
 >
 
 
-<!ELEMENT collection-view  (list-properties?, edit-action?, view-action?, list-action*, detail-action*)>
+<!ELEMENT collection-view  (list-properties?, edit-action?, view-action?, new-action?, save-action?, hide-detail-action?, remove-action?, list-action*, detail-action*)>
 <!ATTLIST collection-view
   collection CDATA #REQUIRED
   view CDATA #IMPLIED
@@ -114,6 +114,25 @@
   action CDATA #IMPLIED
 >
 
+<!ELEMENT new-action EMPTY>
+<!ATTLIST new-action
+  action CDATA #IMPLIED
+>
+
+<!ELEMENT save-action EMPTY>
+<!ATTLIST save-action
+  action CDATA #IMPLIED
+>
+
+<!ELEMENT hide-detail-action EMPTY>
+<!ATTLIST hide-detail-action
+  action CDATA #IMPLIED
+>
+
+<!ELEMENT remove-action EMPTY>
+<!ATTLIST remove-action
+  action CDATA #IMPLIED
+>
 
 <!ELEMENT detail-action EMPTY>
 <!ATTLIST detail-action
