@@ -13,6 +13,10 @@ public class MetaCollectionView implements Serializable {
 	
 	private String editActionName;
 	private String viewActionName; 
+	private String newActionName;
+	private String saveActionName;
+	private String hideActionName;
+	private String removeActionName;
 	private Collection actionsDetailNames;
 	private Collection actionsListNames;
 	private List propertiesListNames;
@@ -121,5 +125,37 @@ public class MetaCollectionView implements Serializable {
 
 	public void setViewActionName(String viewActionName) {
 		this.viewActionName = viewActionName;
+	}
+
+	public String getHideActionName() {
+		return hideActionName;
+	}
+
+	public void setHideActionName(String hideActionName) {
+		this.hideActionName = hideActionName;
+	}
+
+	public String getNewActionName() {
+		return newActionName;
+	}
+
+	public void setNewActionName(String newActionName) {
+		this.newActionName = newActionName;
+	}
+
+	public String getRemoveActionName() {
+		return removeActionName;
+	}
+
+	public void setRemoveActionName(String removeActionName) {
+		this.removeActionName = removeActionName;
+	}
+
+	public String getSaveActionName() {
+		return saveActionName;
+	}
+
+	public void setSaveActionName(String saveActionName) {
+		this.saveActionName = saveActionName;
 	}
 }

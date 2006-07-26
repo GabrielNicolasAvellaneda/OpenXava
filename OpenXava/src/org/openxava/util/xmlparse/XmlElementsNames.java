@@ -159,5 +159,9 @@ public class XmlElementsNames {
 	protected final static String [] xexcept_for_models = { "except-for-models", "excepto-para-modelos" };
 	protected final static String [] xaspect = { "aspect", "aspecto" };
 	protected final static String [] xapply = { "apply", "aplicar" };
+	protected final static String [] xnew_action = { "new-action", "accion-nuevo" }; 
+	protected final static String [] xsave_action = { "save-action", "accion-grabar" };
+	protected final static String [] xhide_detail_action = { "hide-detail-action", "accion-ocultar-detalle" };
+	protected final static String [] xremove_action = { "remove-action", "accion-quitar" };
 		
 }

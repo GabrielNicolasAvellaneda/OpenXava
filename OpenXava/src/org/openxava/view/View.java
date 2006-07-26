@@ -33,6 +33,11 @@ public class View implements java.io.Serializable {
 	
 	private String editCollectionElementAction;
 	private String viewCollectionElementAction;
+	private String newCollectionElementAction;
+	private String saveCollectionElementAction;
+	private String hideCollectionElementAction;
+	private String removeCollectionElementAction;
+	
 	private boolean focusForward;
 	private String focusPropertyId;
 	private Map membersNamesWithHidden;
@@ -561,14 +566,19 @@ public class View implements java.io.Serializable {
 				}
 				Collection actionsDetailNames = metaCollectionView.getActionsDetailNames();
 				if (!actionsDetailNames.isEmpty()) {
-					newView.setActionsNamesDetail(actionsDetailNames);
+					newView.setActionsNamesDetail(new ArrayList(actionsDetailNames));
 				}
 				Collection actionsListNames = metaCollectionView.getActionsListNames();
 				if (!actionsListNames.isEmpty()) {
-					newView.setActionsNamesList(actionsListNames);
+					newView.setActionsNamesList(new ArrayList(actionsListNames)); 
 				}
+				
 				newView.setEditCollectionElementAction(metaCollectionView.getEditActionName());
 				newView.setViewCollectionElementAction(metaCollectionView.getViewActionName());
+				newView.setNewCollectionElementAction(metaCollectionView.getNewActionName());
+				newView.setSaveCollectionElementAction(metaCollectionView.getSaveActionName());
+				newView.setHideCollectionElementAction(metaCollectionView.getHideActionName());
+				newView.setRemoveCollectionElementAction(metaCollectionView.getRemoveActionName());
 				newView.setKeyEditable(!metaCollectionView.isReadOnly());
 				newView.setEditable(!metaCollectionView.isReadOnly());				
 				newView.setCollectionEditable(!metaCollectionView.isReadOnly() && !metaCollectionView.isEditOnly());
@@ -2817,6 +2827,39 @@ public class View implements java.io.Serializable {
 
 	private void setCollectionEditableFixed(boolean collectionEditableFixed) {
 		this.collectionEditableFixed = collectionEditableFixed;
+	}
+
+	public String getHideCollectionElementAction() {
+		return Is.emptyString(hideCollectionElementAction)?"Collection.hideDetail":hideCollectionElementAction; 
+	}
+
+	public void setHideCollectionElementAction(String hideCollectionElementAction) {
+		this.hideCollectionElementAction = hideCollectionElementAction;
+	}
+
+	public String getNewCollectionElementAction() {
+		return Is.emptyString(newCollectionElementAction)?"Collection.new":newCollectionElementAction;
+	}
+
+	public void setNewCollectionElementAction(String newCollectionElementAction) {
+		this.newCollectionElementAction = newCollectionElementAction;
+	}
+
+	public String getRemoveCollectionElementAction() {
+		return Is.emptyString(removeCollectionElementAction)?"Collection.remove":removeCollectionElementAction;
+	}
+
+	public void setRemoveCollectionElementAction(
+			String removeCollectionElementAction) {
+		this.removeCollectionElementAction = removeCollectionElementAction;
+	}
+
+	public String getSaveCollectionElementAction() {
+		return Is.empty(saveCollectionElementAction)?"Collection.save":saveCollectionElementAction;
+	}
+
+	public void setSaveCollectionElementAction(String saveCollectionElementAction) {
+		this.saveCollectionElementAction = saveCollectionElementAction;
 	}
 
 }

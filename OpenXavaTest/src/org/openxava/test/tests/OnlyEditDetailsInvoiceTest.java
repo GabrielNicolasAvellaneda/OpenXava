@@ -67,7 +67,7 @@ public class OnlyEditDetailsInvoiceTest extends ModuleTestBase {
 			"Gallery.edit",
 			"Collection.edit",
 			"Collection.save",
-			"Collection.hiddenDetail"
+			"Collection.hideDetail"
 		};		
 		assertActions(aggregateDetailActions);
 		

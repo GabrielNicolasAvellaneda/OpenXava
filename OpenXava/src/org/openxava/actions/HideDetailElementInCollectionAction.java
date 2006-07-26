@@ -4,7 +4,7 @@ package org.openxava.actions;
  * @author Javier Paniza
  */
 
-public class HiddenDetailElementInCollectionAction extends CollectionElementViewBaseAction {
+public class HideDetailElementInCollectionAction extends CollectionElementViewBaseAction {
 	
 	public void execute() throws Exception {							
 		getCollectionElementView().setCollectionDetailVisible(false);

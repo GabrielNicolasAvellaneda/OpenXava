@@ -101,8 +101,7 @@
 		<property-view property="vehicle">
 			<on-change class="org.openxava.test.actions.OnChangeVehicleAction"/>
 		</property-view>
-		
-		
+				
 		<property-view property="invoice.number">
 			<on-change class="org.openxava.test.actions.OnChangeInvoiceNumberInDeliveryAction"/>
 		</property-view>
@@ -127,6 +126,13 @@
 		<reference-view reference="shipment">	
 			<descriptions-list/>
 		</reference-view>
+		
+		<collection-view collection="details">
+			<new-action action="DeliveryDetails.new"/>
+			<save-action action="DeliveryDetails.save"/>
+			<hide-detail-action action="DeliveryDetails.hideDetail"/>
+			<remove-action action="DeliveryDetails.remove"/>
+		</collection-view>
 
 		<members>
 			invoice;			
