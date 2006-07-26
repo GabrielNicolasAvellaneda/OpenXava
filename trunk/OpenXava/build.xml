@@ -15,7 +15,7 @@
 	<property name="xava.lib" value="../OpenXava/bin"/>	
 	<property name="j2ee.lib" location="../OpenXava/lib/j2ee.jar"/>
 	<property name="tl.lib" location="../OpenXava/lib/tl.jar"/>
-	<property name="generator.dir" value="${workspace.dir}${file.separator}OpenXava${file.separator}generator"/>
+	<property name="generator.dir" value="..${file.separator}OpenXava${file.separator}generator"/>
 	<property name="tracking.classes" value="../AccessTracking/web/WEB-INF/classes;../OpenXava/web/WEB-INF/lib/hibernate3.jar"/>
 	<property name="subcontext" value="${project}"/>				
 	<property name="classes.dir" value="web/WEB-INF/classes"/>
