@@ -5,7 +5,7 @@
  nombre ID #REQUIRED
 >
 
-<!ELEMENT entidad (ejb?, bean?, implementa*, (propiedad|referencia|coleccion)*, metodo*, buscador*, calculador-poscrear*, calculador-poscargar*, calculador-posmodificar*, calculador-preborrar*, validador*, validador-borrar*)>
+<!ELEMENT entidad (ejb?, bean?, implementa*, (propiedad|referencia|coleccion)*, (metodo|buscador|calculador-poscrear|calculador-poscargar|calculador-posmodificar|calculador-preborrar|validador|validador-borrar)*)>
 <!ATTLIST entidad
  etiqueta CDATA #IMPLIED
 >
@@ -17,7 +17,7 @@
 	coleccion (true|false) "false" 
 >
 
-<!ELEMENT agregado   ((bean|ejb)?, implementa*, (propiedad|referencia|coleccion)*, metodo*, buscador*, calculador-poscrear*, calculador-poscargar*, calculador-posmodificar*, calculador-preborrar*, validador*, validador-borrar*)>
+<!ELEMENT agregado   ((bean|ejb)?, implementa*, (propiedad|referencia|coleccion)*, (metodo|buscador|calculador-poscrear|calculador-poscargar|calculador-posmodificar|calculador-preborrar|validador|validador-borrar)*)>
 <!ATTLIST agregado
  nombre ID #REQUIRED
  etiqueta CDATA #IMPLIED
@@ -91,7 +91,7 @@
 >
 
 
-<!ELEMENT vista-coleccion (mediador?, propiedades-lista?, accion-editar?, accion-ver?, accion-lista*, accion-detalle*)>
+<!ELEMENT vista-coleccion (mediador?, propiedades-lista?, accion-editar?, accion-ver?, accion-nuevo?, accion-grabar?, accion-ocultar-detalle?, accion-quitar?, accion-lista*, accion-detalle*)>
 <!ATTLIST vista-coleccion
   coleccion CDATA #REQUIRED
   vista CDATA #IMPLIED
@@ -118,6 +118,25 @@
   accion CDATA #IMPLIED
 >
 
+<!ELEMENT accion-nuevo EMPTY>
+<!ATTLIST accion-nuevo
+  accion CDATA #IMPLIED
+>
+
+<!ELEMENT accion-grabar EMPTY>
+<!ATTLIST accion-grabar
+  accion CDATA #IMPLIED
+>
+
+<!ELEMENT accion-ocultar-detalle EMPTY>
+<!ATTLIST accion-ocultar-detalle
+  accion CDATA #IMPLIED
+>
+
+<!ELEMENT accion-quitar EMPTY>
+<!ATTLIST accion-quitar
+  accion CDATA #IMPLIED
+>
 
 <!ELEMENT accion-detalle EMPTY>
 <!ATTLIST accion-detalle

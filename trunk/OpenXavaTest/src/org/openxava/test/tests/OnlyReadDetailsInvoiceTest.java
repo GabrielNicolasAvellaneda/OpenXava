@@ -65,7 +65,7 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 			"Gallery.edit",
 			"Mode.list",						
 			"Collection.view",
-			"Collection.hiddenDetail"
+			"Collection.hideDetail"
 		};		
 		assertActions(aggregateDetailActions);
 		

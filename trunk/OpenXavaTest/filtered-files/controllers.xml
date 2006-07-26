@@ -87,6 +87,23 @@
 		</action>
 	</controller>
 	
+	<controller name="DeliveryDetails">
+		<action name="new"
+			class="org.openxava.test.actions.NewDeliveryDetailAction">			
+		</action>					
+		<action name="hideDetail"
+			class="org.openxava.test.actions.HideDeliveryDetailAction">			
+		</action>							
+		<action name="save"
+			class="org.openxava.test.actions.SaveDeliveryDetailAction">			
+			<use-object name="xava_view"/>
+		</action>			
+		<action name="remove" 
+			class="org.openxava.test.actions.RemoveDeliveryDetailAction">			
+			<use-object name="xava_view"/>
+		</action>					
+	</controller>	
+	
 	<controller name="Products">	
 		<extends controller="EditableOnOff"/>		
 		<action name="setLimitZoneTo1" class="org.openxava.test.actions.ChangeLimitZoneAction" mode="detail">			

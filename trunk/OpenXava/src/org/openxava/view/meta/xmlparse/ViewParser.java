@@ -194,8 +194,12 @@ public class ViewParser extends XmlElementsNames {
 		a.setCreateReference(ParserUtil.getAttributeBoolean(el, xcreate_reference[lang]));
 		fillMediator(el, a, lang);
 		a.setPropertiesList(ParserUtil.getString(el, xlist_properties[lang]));
-		fillEditAction(el, a, lang);
-		fillViewAction(el, a, lang);
+		a.setEditActionName(getAction(el, xedit_action[lang], lang));
+		a.setViewActionName(getAction(el, xview_action[lang], lang));
+		a.setNewActionName(getAction(el, xnew_action[lang], lang));
+		a.setSaveActionName(getAction(el, xsave_action[lang], lang));
+		a.setHideActionName(getAction(el, xhide_detail_action[lang], lang));
+		a.setRemoveActionName(getAction(el, xremove_action[lang], lang));
 		fillDetailActions(el, a, lang); 		
 		fillListActions(el, a, lang);
 		return a;
@@ -240,26 +244,14 @@ public class ViewParser extends XmlElementsNames {
 		container.setMetaSearchAction(createMetaSearchAction(l.item(0), lang));
 	}
 
-	private static void fillEditAction(Element el, MetaCollectionView container, int lang)
-		throws XavaException {
-		NodeList l = el.getElementsByTagName(xedit_action[lang]);
+	private static String getAction(Element el, String elementName, int lang) throws XavaException {
+		NodeList l = el.getElementsByTagName(elementName);
 		int c = l.getLength();
-		if (c==0) return;
-		if (c>1) throw new XavaException("no_more_1_edit_action_in_collection_view");
-		String action = ((Element) l.item(0)).getAttribute(xaction[lang]);		
-		container.setEditActionName(action);		
+		if (c==0) return null;
+		if (c>1) throw new XavaException("no_more_1_x_action_in_collection_view", elementName);
+		return ((Element) l.item(0)).getAttribute(xaction[lang]);						
 	}
-	
-	private static void fillViewAction(Element el, MetaCollectionView container, int lang)
-		throws XavaException {
-		NodeList l = el.getElementsByTagName(xview_action[lang]);
-		int c = l.getLength();
-		if (c==0) return;
-		if (c>1) throw new XavaException("no_more_1_view_action_in_collection_view");
-		String action = ((Element) l.item(0)).getAttribute(xaction[lang]);		
-		container.setViewActionName(action);		
-	}	
-	
+		
 	private static void fillDetailActions(Element el, MetaCollectionView container, int lang)
 		throws XavaException {
 		NodeList l = el.getElementsByTagName(xdetail_action[lang]);

@@ -907,7 +907,7 @@ public class InvoicesTest extends ModuleTestBase {
 			"Invoices.editDetail", // because it is overwrite, otherwise 'Collection.edit'
 			"Collection.save",
 			"Collection.remove",
-			"Collection.hiddenDetail",
+			"Collection.hideDetail",
 			"Invoices.viewProduct"
 		};		
 		assertActions(aggregateDetailActions);
