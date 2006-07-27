@@ -17,6 +17,7 @@ String referenceLabel = (String) context.get(request, "xava_currentReferenceLabe
 
 <jsp:include page="list.jsp">
 	<jsp:param name="rowAction" value="ReferenceSearch.choose"/>
+	<jsp:param name="singleSelection" value="true"/>
 </jsp:include>
 
 	</td></tr>

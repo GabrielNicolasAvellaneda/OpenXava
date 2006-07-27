@@ -20,6 +20,7 @@ action=action==null?manager.getEnvironment().getValue("XAVA_LIST_ACTION"):action
 String sfilter = request.getParameter("filter");
 boolean filter = !"false".equals(sfilter);
 String lastRow = request.getParameter("lastRow");
+boolean singleSelection="true".equalsIgnoreCase(request.getParameter("singleSelection"));
 %>
 
 <% if (tab.isTitleVisible()) { %>
@@ -185,7 +186,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 <xava:link action='<%=action%>' argv='<%="row="+f%>'/>
 	</td>
 	<td class=<%=cssClass%>>
-	<INPUT type="CHECKBOX" name="selected" value="<%=f%>" <%=checked%>/>
+	<INPUT type="<%=singleSelection?"RADIO":"CHECKBOX"%>" name="selected" value="<%=f%>" <%=checked%>/>
 	</td>	
 <%
 	for (int c=0; c<model.getColumnCount(); c++) {
