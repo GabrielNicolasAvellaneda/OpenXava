@@ -19,5 +19,12 @@ public class SellersCannotCreateCustomerTest extends ModuleTestBase {
 		execute("Collection.new", "viewObject=xava_view_customers");
 		assertNoAction("Reference.createNew");
 	}
+	
+	public void testMembersOfReferenceToEntityNotEditableInSection() throws Exception {
+		execute("Mode.detailAndFirst");
+		execute("Collection.edit", "row=0,viewObject=xava_view_section0_customers");
+		assertEditable("customers.number");
+		assertNoEditable("customers.name");
+	}
 			
 }

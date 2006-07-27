@@ -20,6 +20,14 @@ public class SellersTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Sellers");		
 	}
 	
+	public void testMembersOfReferenceToEntityNotEditable() throws Exception {
+		execute("Mode.detailAndFirst");
+		execute("Collection.edit", "row=0,viewObject=xava_view_customers");
+		assertEditable("customers.number");
+		assertNoEditable("customers.name");
+	}
+	
+	
 	public void testCustomEditorWithMultipleValuesFormatter() throws Exception {
 		String [] emptyRegions = {};
 		String [] regions = { "1", "3" };
