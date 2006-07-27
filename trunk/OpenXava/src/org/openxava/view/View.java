@@ -1841,8 +1841,8 @@ public class View implements java.io.Serializable {
 				if (set.hasValue()) {					
 					value = set.getValue();
 				}
-				else {					
-					value = getParentIfGroup().getValue(set.getPropertyNameFrom());
+				else {													
+					value = getParentIfGroup().getValue(set.getPropertyNameFrom());					
 				}
 				mp.executeSet(set.getPropertyName(), value);				
 			}			

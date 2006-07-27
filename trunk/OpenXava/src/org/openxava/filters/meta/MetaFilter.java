@@ -14,15 +14,13 @@ public class MetaFilter implements Serializable {
 	
 	private IFilter filter;
 	private String className;
-	private Collection metaSets;
-	private Collection propertiesSetNames;
+	private Collection metaSets;	
 	
 	public void _addMetaSet(MetaSet metaSet) {
 		if (metaSets == null) {
 			metaSets = new ArrayList();
 		}
-		metaSets.add(metaSet);
-		propertiesSetNames = null;
+		metaSets.add(metaSet);		
 	}
 	
 	public IFilter createFilter() throws XavaException {
