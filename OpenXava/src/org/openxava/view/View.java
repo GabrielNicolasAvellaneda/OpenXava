@@ -579,13 +579,19 @@ public class View implements java.io.Serializable {
 				newView.setSaveCollectionElementAction(metaCollectionView.getSaveActionName());
 				newView.setHideCollectionElementAction(metaCollectionView.getHideActionName());
 				newView.setRemoveCollectionElementAction(metaCollectionView.getRemoveActionName());
-				newView.setKeyEditable(!metaCollectionView.isReadOnly());
-				newView.setEditable(!metaCollectionView.isReadOnly());				
+				boolean editable = false;
+				boolean keyEditable = false;
+				if (!metaCollectionView.isReadOnly()) {
+					keyEditable = isEditable();
+					if (newView.isRepresentsAggregate()) editable = isEditable();					
+				}				
 				newView.setCollectionEditable(!metaCollectionView.isReadOnly() && !metaCollectionView.isEditOnly());
 				if (!newView.isCollectionEditable()) {
 					newView.setCollectionEditableFixed(true);
 				}
-				newView.setCollectionMembersEditables(newView.isEditable() || metaCollectionView.isEditOnly()); 				 				
+				newView.setCollectionMembersEditables(keyEditable || metaCollectionView.isEditOnly());								
+				newView.setEditable(editable);
+				newView.setKeyEditable(keyEditable);										
 				newView.setViewName(metaCollectionView.getViewName()); 								
 			}
 			else {
@@ -2484,6 +2490,7 @@ public class View implements java.io.Serializable {
 
 	public boolean isCollectionMembersEditables() {
 		return collectionMembersEditables;
+		
 	}
 
 	public void setCollectionMembersEditables(boolean b) {
@@ -2734,16 +2741,13 @@ public class View implements java.io.Serializable {
 		return Is.emptyString(viewCollectionElementAction)?"Collection.view":viewCollectionElementAction;
 	}
 		
-	public void setEditCollectionElementAction(
-			String editCollectionElementAction) {
+	public void setEditCollectionElementAction(String editCollectionElementAction) {
 		this.editCollectionElementAction = editCollectionElementAction;
 	}
 	
-	public void setViewCollectionElementAction(
-			String viewCollectionElementAction) {
+	public void setViewCollectionElementAction(String viewCollectionElementAction) {
 		this.viewCollectionElementAction = viewCollectionElementAction;
-	}
-	
+	}	
 
 	public void recalculateProperties() {
 		try {												

@@ -40,7 +40,7 @@
 		</property-view>
 		<collection-view collection="customers" view="SimpleWithDeliveryPlaces">
 			<list-properties>number, name, remarks, relationWithSeller, seller.level.description</list-properties>
-		</collection-view>		
+		</collection-view>
 	
 		 <members>number; name; level; regions; customers</members>
 	</view>
@@ -50,7 +50,10 @@
 			create-reference="false">
 			<list-properties>number, name, remarks, relationWithSeller, seller.level.description</list-properties>
 		</collection-view>		
-		<members>number; name; customers</members>	
+		<members>
+			number; name; 
+			<section name="customers">customers</section>
+		</members>	
 	</view>
 	
 	<tab>
