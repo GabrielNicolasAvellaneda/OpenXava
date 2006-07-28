@@ -192,6 +192,7 @@ public class ViewParser extends XmlElementsNames {
 			throw new XavaException("collection_onlyread_onlyedit_incompatible");
 		}
 		a.setCreateReference(ParserUtil.getAttributeBoolean(el, xcreate_reference[lang]));
+		a.setAsAggregate(ParserUtil.getAttributeBoolean(el, xas_aggregate[lang]));
 		fillMediator(el, a, lang);
 		a.setPropertiesList(ParserUtil.getString(el, xlist_properties[lang]));
 		a.setEditActionName(getAction(el, xedit_action[lang], lang));

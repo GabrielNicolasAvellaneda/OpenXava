@@ -69,6 +69,7 @@ public class DeliveryTypesTest extends ModuleTestBase {
 		setValue("description", "JUNIT");
 		execute("CRUD.save");
 		assertNoErrors();
+		assertMessage("Delivery type created successfully");
 				
 		setValue("number", "66");
 		execute("CRUD.search");
@@ -77,6 +78,7 @@ public class DeliveryTypesTest extends ModuleTestBase {
 		setValue("description", "JUNIT");
 		execute("CRUD.save");
 		assertNoErrors();
+		assertMessage("Delivery type modified successfully");
 		
 		setValue("number", "66");
 		execute("CRUD.search");

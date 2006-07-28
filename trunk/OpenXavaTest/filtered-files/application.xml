@@ -89,7 +89,14 @@
 		<model name="Seller"/>
 		<view name="CannotCreateCustomer"/>
 		<controller name="Typical"/>		
-	</module>			<module name="Customers" folder="invoicing">			<model name="Customer"/>
+	</module>	
+	
+	<module name="SellersWithCustomersAsAggregate" folder="invoicing.variations">
+		<model name="Seller"/>
+		<view name="CustomersAsAggregate"/>
+		<controller name="Typical"/>		
+	</module>	
+			<module name="Customers" folder="invoicing">			<model name="Customer"/>
 		<controller name="Customers"/>	</module>
 	
 	<module name="CustomersSimple" folder="invoicing.variations">	

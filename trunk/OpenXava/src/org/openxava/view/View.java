@@ -545,7 +545,7 @@ public class View implements java.io.Serializable {
 			getGroupsViews().put(member.getName(), newView);						
 			return;			
 		}		
-		if (ref.isAggregate()) {
+		if (ref.isAggregate()) {		
 			newView.setModelName(getModelName() + "." + ref.getReferencedModelName());
 			newView.setRepresentsAggregate(true);
 			newView.setEditable(isEditable()); 
@@ -557,9 +557,12 @@ public class View implements java.io.Serializable {
 			newView.setEditable(false);	
 		}
 		newView.setMetaView(getMetaView().getMetaView(ref));
-		if (newView.isRepresentsCollection()) {			
+		if (newView.isRepresentsCollection()) {					
 			MetaCollectionView metaCollectionView = getMetaView().getMetaCollectionView(member.getName());
 			if (metaCollectionView != null) {
+				if (metaCollectionView.isAsAggregate()) {
+					newView.setRepresentsAggregate(true); 
+				}
 				Collection propertiesListNames = metaCollectionView.getPropertiesListNames();
 				if (!propertiesListNames.isEmpty()) {
 					newView.setMetaPropertiesList(namesToMetaProperties(newView, propertiesListNames));
@@ -583,15 +586,15 @@ public class View implements java.io.Serializable {
 				boolean keyEditable = false;
 				if (!metaCollectionView.isReadOnly()) {
 					keyEditable = isEditable();
-					if (newView.isRepresentsAggregate()) editable = isEditable();					
+					if (newView.isRepresentsAggregate()) editable = isEditable();															
 				}				
 				newView.setCollectionEditable(!metaCollectionView.isReadOnly() && !metaCollectionView.isEditOnly());
 				if (!newView.isCollectionEditable()) {
 					newView.setCollectionEditableFixed(true);
 				}
 				newView.setCollectionMembersEditables(keyEditable || metaCollectionView.isEditOnly());								
-				newView.setEditable(editable);
-				newView.setKeyEditable(keyEditable);										
+				newView.setEditable(editable);				
+				newView.setKeyEditable(keyEditable);				
 				newView.setViewName(metaCollectionView.getViewName()); 								
 			}
 			else {
@@ -1340,7 +1343,7 @@ public class View implements java.io.Serializable {
 						continue;
 					}					
 				}
-				if (subview.isRepresentsEntityReference()) {
+				if (subview.isRepresentsEntityReference()) {				
 					subview.setKeyEditable(b); 
 					subview.setEditable(false); 					
 				}
@@ -1362,7 +1365,7 @@ public class View implements java.io.Serializable {
 						continue;
 					}					
 				}
-				if (subview.isRepresentsEntityReference()) {
+				if (subview.isRepresentsEntityReference()) {				
 					subview.setKeyEditable(b); 
 					subview.setEditable(false); 					
 				}
@@ -2143,6 +2146,7 @@ public class View implements java.io.Serializable {
 
 	public void setRepresentsAggregate(boolean b) {
 		representsAggregate = b;
+		representsEntityReference = !representsAggregate;
 	}
 			
 	public String getSearchAction() throws XavaException {		
@@ -2180,7 +2184,7 @@ public class View implements java.io.Serializable {
 	public boolean isCollectionDetailVisible() {
 		return collectionDetailVisible;
 	}
-
+	
 	public void setCollectionDetailVisible(boolean b) {
 		collectionDetailVisible = b;
 	}
@@ -2428,7 +2432,7 @@ public class View implements java.io.Serializable {
 			return getParent().displayAsDescriptionsList(ref);
 		}
 		catch (XavaException ex) {
-			System.err.println("[View.displayAsDescriptionsList] " + XavaResources.getString("display_as_description_warning", getMemberName()));  
+			// System.err.println("[View.displayAsDescriptionsList] " + XavaResources.getString("display_as_description_warning", getMemberName()));  
 			return false;
 		}				
 	}
@@ -2513,6 +2517,7 @@ public class View implements java.io.Serializable {
 
 	public void setRepresentsEntityReference(boolean b) {
 		representsEntityReference = b;
+		representsAggregate = !representsEntityReference;
 	}
 
 	/**

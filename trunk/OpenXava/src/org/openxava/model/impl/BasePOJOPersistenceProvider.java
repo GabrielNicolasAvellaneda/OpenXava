@@ -135,7 +135,7 @@ abstract public class BasePOJOPersistenceProvider implements IPersistenceProvide
 	}
 
 	public Object create(MetaModel metaModel, Map values)
-			throws CreateException, ValidationException, XavaException {		
+			throws CreateException, ValidationException, XavaException {
 		try {			
 			find(metaModel, values);			
 			throw new DuplicateKeyException(XavaResources.getString("no_create_exists", metaModel.getName())); 

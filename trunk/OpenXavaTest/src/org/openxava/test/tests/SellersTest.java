@@ -123,6 +123,7 @@ public class SellersTest extends ModuleTestBase {
 		assertValueIgnoringCase("customers.name", getCustomer1().getName()); 
 		assertCollectionRowCount("customers", 0);
 		execute("Collection.save", "viewObject=xava_view_customers");
+		assertMessage("Customer associated to Seller");
 		assertCollectionRowCount("customers", 1);
 		
 		execute("Collection.new", "viewObject=xava_view_customers");
@@ -186,6 +187,7 @@ public class SellersTest extends ModuleTestBase {
 		
 		execute("Collection.edit", "row=0,viewObject=xava_view_customers");
 		execute("Collection.remove", "viewObject=xava_view_customers");
+		assertMessage("Association between Customer and Seller has been removed, but Customer is still in database");
 		assertNoErrors();
 		assertCollectionRowCount("customers", 0);		
 	}

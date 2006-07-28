@@ -6,12 +6,8 @@ package org.openxava.actions;
 
 public class CreateNewElementInCollectionAction extends CollectionElementViewBaseAction {
 	
-	public void execute() throws Exception {									
-		if (isEntityReferencesCollection()) { 
-			getCollectionElementView().setEditable(false);
-			getCollectionElementView().setKeyEditable(true);			
-		}
-		else {
+	public void execute() throws Exception {
+		if (!isEntityReferencesCollection()) { 
 			getCollectionElementView().reset();				
 		}
 		getCollectionElementView().setCollectionDetailVisible(true);

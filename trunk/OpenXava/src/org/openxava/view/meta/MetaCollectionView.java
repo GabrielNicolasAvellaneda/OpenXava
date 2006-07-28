@@ -26,6 +26,7 @@ public class MetaCollectionView implements Serializable {
 	private boolean readOnly;
 	private boolean editOnly; 
 	private boolean createReference;
+	private boolean asAggregate;
 	
 	public void addActionDetailName(String actionName) {
 		if (actionsDetailNames == null) actionsDetailNames = new ArrayList();
@@ -157,5 +158,13 @@ public class MetaCollectionView implements Serializable {
 
 	public void setSaveActionName(String saveActionName) {
 		this.saveActionName = saveActionName;
+	}
+
+	public boolean isAsAggregate() {
+		return asAggregate;
+	}
+
+	public void setAsAggregate(boolean asAggregate) {
+		this.asAggregate = asAggregate;
 	}
 }

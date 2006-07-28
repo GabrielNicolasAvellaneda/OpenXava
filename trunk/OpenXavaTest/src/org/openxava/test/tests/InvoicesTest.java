@@ -496,6 +496,7 @@ public class InvoicesTest extends ModuleTestBase {
 		setValue("details.deliveryDate", "18/03/2004"); // Testing multiple-mapping in aggregate
 		setValue("details.soldBy.number", getProductNumber());
 		execute("Collection.save", "viewObject=xava_view_section1_details");
+		assertMessage("Invoice detail created successfully");
 		assertNoErrors();		
 		assertNotExists("details.serviceType"); // Testing hide detail on save
 		assertCollectionRowCount("details", 1);
@@ -612,6 +613,7 @@ public class InvoicesTest extends ModuleTestBase {
 		setValue("details.quantity", "234");
 		setValue("details.deliveryDate", "23/04/2004");
 		execute("Collection.save", "viewObject=xava_view_section1_details");
+		assertMessage("Invoice detail modified successfully");
 		assertNoErrors();
 		assertValueInCollection("details", 1, 3, "234");		
 		assertNotExists("details.product.description");
@@ -665,6 +667,7 @@ public class InvoicesTest extends ModuleTestBase {
 		// Remove a row from collection
 		assertCollectionRowCount("details", 3);
 		execute("Collection.remove", "viewObject=xava_view_section1_details");
+		assertMessage("Invoice detail deleted from database");
 		assertCollectionRowCount("details", 2);
 		assertValueInCollection("details", 0, 0, "Urgent");
 		assertValueInCollection("details", 0, 1, getProductDescription());
