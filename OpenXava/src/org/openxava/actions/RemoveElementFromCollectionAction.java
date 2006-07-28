@@ -13,7 +13,13 @@ public class RemoveElementFromCollectionAction extends CollectionElementViewBase
 		try {											
 			if (!getCollectionElementView().getKeyValuesWithValue().isEmpty()) {				
 				MapFacade.removeCollectionElement(getCollectionElementView().getParent().getModelName(), getCollectionElementView().getParent().getKeyValues(), getCollectionElementView().getMemberName(), getCollectionElementView().getKeyValues());
-			}
+				if (isEntityReferencesCollection()) {
+					addMessage("association_removed", getCollectionElementView().getModelName(), getCollectionElementView().getParent().getModelName());
+				}
+				else {
+					addMessage("aggregate_removed", getCollectionElementView().getModelName());
+				}
+			}			
 			getCollectionElementView().setCollectionEditingRow(-1);
 			getCollectionElementView().clear();
 			getView().recalculateProperties();

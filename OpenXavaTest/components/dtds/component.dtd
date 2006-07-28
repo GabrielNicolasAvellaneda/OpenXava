@@ -95,6 +95,7 @@
   read-only (true|false) "false"
   edit-only (true|false) "false"
   create-reference (true|false) "true"
+  as-aggregate (true|false) "false"
 >
 
 <!ELEMENT list-properties (#PCDATA)>

@@ -56,6 +56,17 @@
 		</members>	
 	</view>
 	
+	<view name="CustomersAsAggregate">
+		<reference-view reference="level">
+			<descriptions-list/>
+		</reference-view>
+		<collection-view collection="customers" view="Simple" as-aggregate="true">
+			<list-properties>number, name, remarks, relationWithSeller, seller.level.description</list-properties>
+		</collection-view>
+	
+		 <members>number; name; level; customers</members>
+	</view>
+		
 	<tab>
 		<filter class="org.openxava.test.filters.NumbersToLettersFilter"/>
 	</tab>

@@ -28,9 +28,9 @@ abstract public class CollectionElementViewBaseAction extends ViewBaseAction imp
 	}
 	
 	protected boolean isEntityReferencesCollection() throws XavaException {
-		return getCollectionElementView().getMetaModel() instanceof MetaEntity;
+		return getCollectionElementView().getMetaModel() instanceof MetaEntity;		
 	}
-	
+		
 	public ModuleContext getContext() {
 		return context;
 	}
