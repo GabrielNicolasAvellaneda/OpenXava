@@ -109,5 +109,12 @@
 		<property name="descriptionProperty" value="name"/>
     <for-stereotype stereotype="RECEPTIONIST"/>
   </editor>
+  
+   <editor url="textEditor.jsp"> 
+   	<property name="fillWithZeros" value="true"/>
+	<for-stereotype stereotype="FILLED_WITH_ZEROS"/>
+	<for-stereotype stereotype="RELLENADO_CON_CEROS"/>
+  </editor>
+  
 	        
 </editors>

@@ -20,6 +20,19 @@ else {
 	maxSize = org.openxava.util.XavaPreferences.getInstance().getMaxSizeForTextEditor();
 }
 int size = p.getSize() > maxSize?maxSize:p.getSize(); 
+
+boolean fillWithZeros = "true".equals(request.getParameter("fillWithZeros"));
+if (fillWithZeros && fvalue.length() > 0) {	
+	int numZeros = size - (fvalue.length());
+	String filler = "";
+	for (int i = 0; i < numZeros; i++) {
+		filler = "0" + filler;
+	}
+	
+	fvalue = filler + fvalue;
+}
+
+
 if (editable || !label) {
 %>
 <input name="<%=propertyKey%>" class=<%=style.getEditor()%>

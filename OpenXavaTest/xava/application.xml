@@ -34,6 +34,14 @@
 		<controller name="Carriers"/>
 	</module>
 	
+	<module name="CarriersWithSpecialSearch">
+		<env-var name="XAVA_SEARCH_ACTION" value="Carriers.search"/>			
+		<model name="Carrier"/>
+		<view name="Simple"/>
+		<controller name="Typical"/>
+		<controller name="Carriers"/>		
+	</module>
+		
 	<module name="Sizes">
 		<model name="Size"/>
 		<controller name="Typical"/>

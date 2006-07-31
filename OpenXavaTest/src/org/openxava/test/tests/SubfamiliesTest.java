@@ -21,6 +21,18 @@ public class SubfamiliesTest extends ModuleTestBase {
 		assertNoErrors();
 	}	
 	
+	public void testFilledWithZeros() throws Exception {
+		String FORMATED_NUMBER = "002";		
+		String[] condition = {"2"};
+		setConditionValues(condition);
+		execute("List.filter");
+		assertListRowCount(1);
+		assertNoErrors();
+		execute("List.viewDetail", "row=0");
+		assertValue("number", FORMATED_NUMBER);
+		assertNoErrors();
+	}
+	
 	public void testNavigateHiddenKeyWithSections() throws Exception {
 		assertTrue("For this test is required al least 2 families", getListColumnCount() >= 2);
 		execute("Mode.detailAndFirst");
