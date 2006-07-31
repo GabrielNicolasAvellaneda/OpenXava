@@ -109,5 +109,5 @@
 		<property name="descriptionProperty" value="name"/>
     <for-stereotype stereotype="RECEPTIONIST"/>
   </editor>
-	        
+  	        
 </editors>
