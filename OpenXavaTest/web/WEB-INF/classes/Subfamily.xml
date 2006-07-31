@@ -14,7 +14,7 @@
 				class="org.openxava.calculators.UUIDCalculator"
 				on-create="true"/>
 		</property>
-		<property name="number" type="int" size="3" required="true"  stereotype="FILLED_WITH_ZEROS"/>
+		<property name="number" type="int" size="3" required="true"  stereotype="ZEROS_FILLED"/>
 		<property name="familyNumber" stereotype="FAMILY" required="true"/>   			
 		<property name="family" type="String" size="40" hidden="true">
 			<!-- Only for column description in tab -->			

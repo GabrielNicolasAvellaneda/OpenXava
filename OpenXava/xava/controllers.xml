@@ -156,7 +156,8 @@
 			<controller name="LoadImage">		<action name="loadImage"			class="org.openxava.actions.LoadImageAction">						<use-object name="xava_view"/>			<use-object name="xava_newImageProperty"/>		</action>		</controller>		<controller name="Reference">		<action name="search"			class="org.openxava.actions.ReferenceSearchAction"			image="images/search.gif">			<use-object name="xava_view"/>			<use-object name="xava_referenceSubview"/>			<use-object name="xava_tab"/>			<use-object name="xava_currentReferenceLabel"/>		</action>		<action name="createNew" 
 			class="org.openxava.actions.CreateNewFromReferenceAction"
 			image="images/create_new.gif">			<use-object name="xava_view"/>
-			<use-object name="xava_previousViews"/>		</action>	</controller>	
+			<use-object name="xava_previousViews"/>
+			<use-object name="xava_referenceSubview"/>		</action>	</controller>	
 	<!--
 		This controller is using when create a new entity from a reference.
 		If you need to overwrite, you can create your own controller
@@ -167,8 +168,9 @@
 			class="org.openxava.actions.NewAction"
 			keystroke="F2">
 			<use-object name="xava_view"/>			
-		</action>					<action name="saveNew"			class="org.openxava.actions.SaveNewAction">						<use-object name="xava_view"/>
-			<use-object name="xava_previousViews"/>		</action>					<action name="cancel"			class="org.openxava.actions.CancelAction">			
+		</action>					<action name="saveNew" by-default="almost-always"			class="org.openxava.actions.SaveNewAction">						<use-object name="xava_view"/>
+			<use-object name="xava_previousViews"/> 
+			<use-object name="xava_referenceSubview"/>					</action>					<action name="cancel"			class="org.openxava.actions.CancelAction">			
 			<use-object name="xava_previousViews"/>
 			<use-object name="xava_view"/>
 		</action>				</controller>				<controller name="ReferenceSearch">		<action name="choose"			class="org.openxava.actions.ChooseReferenceAction">						<use-object name="xava_referenceSubview"/>

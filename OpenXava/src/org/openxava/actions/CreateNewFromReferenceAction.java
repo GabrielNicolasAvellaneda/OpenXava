@@ -13,17 +13,16 @@ import org.openxava.view.*;
  * @author Javier Paniza
  */
 
-public class CreateNewFromReferenceAction extends BaseAction implements INavigationAction, IRequestAction, IChainAction {
+public class CreateNewFromReferenceAction extends ReferenceBaseAction implements INavigationAction, IRequestAction, IChainAction {
 		
 	private String model;
 	private final static String DEFAULT_CREATION_CONTROLLER = "NewCreation";
 	private String controller;
 	private HttpServletRequest request;	
-	private View view;
 	private Stack previousViews;
-	private String keyProperty;
 	
 	public void execute() throws Exception {
+		super.execute();
 		View viewReference = new View();		
 		viewReference.setModelName(getModel());
 		viewReference.setRequest(request);
@@ -42,14 +41,6 @@ public class CreateNewFromReferenceAction extends BaseAction implements INavigat
 		return SAME_VIEW;
 	}
 	
-	public View getView() {
-		return view;
-	}
-
-	public void setView(View view) {
-		this.view = view;
-	}
-
 	public String getModel() {
 		return model;
 	}
@@ -60,14 +51,6 @@ public class CreateNewFromReferenceAction extends BaseAction implements INavigat
 
 	public void setRequest(HttpServletRequest request) {
 		this.request = request;		
-	}
-
-	public String getKeyProperty() {
-		return keyProperty;
-	}
-
-	public void setKeyProperty(String string) {
-		keyProperty = string;
 	}
 
 	public String getController() throws XavaException {

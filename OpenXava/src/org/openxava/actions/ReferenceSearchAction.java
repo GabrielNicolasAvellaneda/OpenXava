@@ -12,39 +12,24 @@ import org.openxava.view.*;
  * @author Javier Paniza
  */
 
-public class ReferenceSearchAction extends ViewBaseAction implements INavigationAction {
+public class ReferenceSearchAction extends ReferenceBaseAction implements INavigationAction {
 	
-	private class ViewInfo {
-		
-		View view;		
-		String memberName;
-		View parent;
-		
-		ViewInfo(View view, String memberName, View parent) {
-			this.view = view;
-			this.memberName = memberName;
-			this.parent = parent;
-		}
-		
-	}
-	
-	private String keyProperty;
-	private View referenceSubview;		
+			
 	private Tab tab;	
 	private String tabName = "";
 	private String currentReferenceLabel;
 	private String nextController = "ReferenceSearch"; // If you change the default value change setter and getter doc too
 	
 	public void execute() throws Exception {		
+		super.execute();
 		Tab tab = new Tab();
 		tab.setRequest(getTab().getRequest());
 		setTab(tab);
-		
-		ViewInfo viewInfo = getSubview(getView(), createMemberName());
-		View subview = viewInfo.view;
-		MetaModel metaRootModel = viewInfo.parent.getMetaModel();		
+				
+		View subview = getViewInfo().getView();
+		MetaModel metaRootModel = getViewInfo().getParent().getMetaModel();		
 		getTab().setModelName(subview.getModelName());
-		MetaReference ref = getMetaReference(metaRootModel, viewInfo.memberName);
+		MetaReference ref = getMetaReference(metaRootModel, getViewInfo().getMemberName());
 		tab.setTabName(tabName);
 		
 		ModelMapping rootMapping = null;
@@ -74,8 +59,7 @@ public class ReferenceSearchAction extends ViewBaseAction implements INavigation
 		else {
 			getTab().setBaseCondition(null);
 		}
-		
-		setReferenceSubview(subview);			
+					
 		setCurrentReferenceLabel(ref.getLabel());	 
 	}
 
@@ -88,32 +72,6 @@ public class ReferenceSearchAction extends ViewBaseAction implements INavigation
 		}		
 	}
 	
-	private ViewInfo getSubview(View view, String memberName) throws XavaException {
-		if (memberName.indexOf('.') < 0) {
-			return new ViewInfo(view.getSubview(memberName), memberName, view); 
-		}
-		StringTokenizer st = new StringTokenizer(memberName, ".");
-		String subviewName = st.nextToken();
-		String nextMember = st.nextToken(); 
-		return getSubview(view.getSubview(subviewName), nextMember);
-	}
-	
-	private String createMemberName() {		
-		String prefix = "xava." + getModelName() + ".";		
-		String propertyName = keyProperty.substring(prefix.length());				
-		int idx = propertyName.lastIndexOf(".");		
-		if (idx >= 0) return propertyName.substring(0, idx); 	
-		return propertyName;
-	}
-
-	public String getKeyProperty() {
-		return keyProperty;
-	}
-
-	public void setKeyProperty(String string) {
-		keyProperty = string;		
-	}
-
 	public String[] getNextControllers() {		
 		return new String[]{ getNextController() }; 
 	}
@@ -128,14 +86,6 @@ public class ReferenceSearchAction extends ViewBaseAction implements INavigation
 
 	public void setTab(Tab tab) {
 		this.tab = tab;
-	}
-
-	public View getReferenceSubview() {
-		return referenceSubview;
-	}
-
-	public void setReferenceSubview(View view) {
-		referenceSubview = view;
 	}
 
 	public String getCurrentReferenceLabel() {

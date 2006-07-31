@@ -1,0 +1,85 @@
+package org.openxava.actions;
+
+import java.util.*;
+
+import org.openxava.util.*;
+import org.openxava.view.*;
+
+/**
+ * @author Javier Paniza
+ */
+
+public class ReferenceBaseAction extends ViewBaseAction {
+	
+	protected class ViewInfo {
+		
+		private View view;		
+		private String memberName;
+		private View parent;
+		
+		ViewInfo(View view, String memberName, View parent) {
+			this.view = view;
+			this.memberName = memberName;
+			this.parent = parent;
+		}
+		
+		public View getView() {
+			return view;
+		}
+		public String getMemberName() {
+			return memberName;
+		}
+		public View getParent() {
+			return parent;
+		}
+		
+	}
+	
+	private ViewInfo viewInfo;	
+	private String keyProperty;
+	private View referenceSubview;		
+	
+	public void execute() throws Exception {		
+		this.viewInfo = createSubview(getView(), createMemberName());
+		setReferenceSubview(viewInfo.getView());				 
+	}
+	
+	protected ViewInfo getViewInfo() {
+		return viewInfo;
+	}
+
+	private ViewInfo createSubview(View view, String memberName) throws XavaException {
+		if (memberName.indexOf('.') < 0) {
+			return new ViewInfo(view.getSubview(memberName), memberName, view); 
+		}
+		StringTokenizer st = new StringTokenizer(memberName, ".");
+		String subviewName = st.nextToken();
+		String nextMember = st.nextToken(); 
+		return createSubview(view.getSubview(subviewName), nextMember);
+	}
+	
+	private String createMemberName() {		
+		String prefix = "xava." + getModelName() + ".";		
+		String propertyName = keyProperty.substring(prefix.length());				
+		int idx = propertyName.lastIndexOf(".");		
+		if (idx >= 0) return propertyName.substring(0, idx); 	
+		return propertyName;
+	}
+
+	public String getKeyProperty() {
+		return keyProperty;
+	}
+
+	public void setKeyProperty(String string) {
+		keyProperty = string;		
+	}
+
+	public View getReferenceSubview() {
+		return referenceSubview;
+	}
+
+	public void setReferenceSubview(View view) {
+		referenceSubview = view;
+	}
+
+}

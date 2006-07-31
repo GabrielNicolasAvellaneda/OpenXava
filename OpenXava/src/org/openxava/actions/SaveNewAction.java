@@ -19,6 +19,7 @@ public class SaveNewAction extends BaseAction implements INavigationAction {
 	private String [] nextControllers = null;
 	private String nextView = null;
 	private Stack previousViews;
+	private View referenceSubview;
 	
 	public void execute() throws Exception {
 		nextView = SAME_VIEW;		
@@ -27,8 +28,14 @@ public class SaveNewAction extends BaseAction implements INavigationAction {
 			MapFacade.create(view.getModelName(), getValuesToSave());
 			nextControllers = PREVIOUS_CONTROLLERS;
 			nextView = DEFAULT_VIEW;				
-			if (!getPreviousViews().empty()) {
-				setView((View) getPreviousViews().pop());
+			if (!getPreviousViews().empty()) {				
+				if (getReferenceSubview() == null) {
+					throw new XavaException("inject_xava_previousViews_need", getClass().getName());
+				}
+				getReferenceSubview().setValuesNotifying(getView().getKeyValues());
+				getReferenceSubview().findObject();	
+				View previousView = (View) getPreviousViews().pop();
+				setView(previousView);
 			}
 			resetDescriptionsCache();
 		}
@@ -66,4 +73,13 @@ public class SaveNewAction extends BaseAction implements INavigationAction {
 	public void setPreviousViews(Stack previousViews) {
 		this.previousViews = previousViews;
 	}
+
+	public View getReferenceSubview() {
+		return referenceSubview;
+	}
+
+	public void setReferenceSubview(View referenceSubview) {		
+		this.referenceSubview = referenceSubview;
+	}
+	
 }

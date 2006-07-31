@@ -1,5 +1,8 @@
 package org.openxava.test.tests;
 
+import org.openxava.hibernate.*;
+import org.openxava.test.model.*;
+
 /**
  * @author Javier Paniza
  */
@@ -45,6 +48,22 @@ public class CustomersWithSectionTest extends CustomersTest {
 		super(testName, "CustomersWithSection", true);		
 	}
 	
+	public void testCreatedFromReferenceIsChosen() throws Exception {
+		execute("CRUD.new");
+		execute("Reference.createNew", "model=Seller,keyProperty=xava.Customer.seller.number");
+		setValue("Seller", "number", "66");
+		setValue("Seller", "name", "SELLER JUNIT 66");
+		execute("NewCreation.saveNew");
+		assertNoErrors();
+		assertValue("seller.number", "66");
+		assertValue("seller.name", "SELLER JUNIT 66");
+		deleteSeller(66);
+	}
+	
+	private void deleteSeller(int number) throws Exception {
+		XHibernate.getSession().delete(Seller.findByNumber(number));		
+	}
+
 	public void testPropertyAction() throws Exception { 
 		execute("CRUD.new");
 		setValue("address.street", "DOCTOR PESSET");
@@ -292,5 +311,7 @@ public class CustomersWithSectionTest extends CustomersTest {
 			fail("It is required at least one Customer of 'Steady' type for run this test");
 		}
 	}
+	
+	
 	
 }

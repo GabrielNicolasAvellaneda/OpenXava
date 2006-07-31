@@ -388,6 +388,7 @@ public class Products2Test extends ModuleTestBase {
 			{ "66", "JUNIT TEST" }
 		};				
 		assertValidValues("family.number", familyValuesUpdated);
+		assertValue("family.number", "66"); // The just created family is automatically selected
 		
 		// Delete it
 		Family2 f = new Family2();
