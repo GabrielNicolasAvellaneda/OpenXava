@@ -22,14 +22,14 @@ public class SubfamiliesTest extends ModuleTestBase {
 	}	
 	
 	public void testFilledWithZeros() throws Exception {
-		String FORMATED_NUMBER = "002";		
+		String formattedNumber = "002";		
 		String[] condition = {"2"};
 		setConditionValues(condition);
 		execute("List.filter");
 		assertListRowCount(1);
 		assertNoErrors();
 		execute("List.viewDetail", "row=0");
-		assertValue("number", FORMATED_NUMBER);
+		assertValue("number", formattedNumber);
 		assertNoErrors();
 	}
 	
