@@ -68,5 +68,12 @@
 	<for-stereotype stereotype="GALERIA_IMAGENES"/>
   </editor>
   
-      
+   <editor url="textEditor.jsp"> 
+   	<property name="fillWithZeros" value="true"/>
+	<for-stereotype stereotype="ZEROS_FILLED"/>
+	<for-stereotype stereotype="RELLENADO_CON_CEROS"/>
+  </editor>
+    
+    
+  
 </editors>

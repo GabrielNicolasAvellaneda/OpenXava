@@ -20,7 +20,7 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 			Map values = null;
 			if (Maps.isEmptyOrZero(keys)) { 
 				try {
-					values = MapFacade.getValuesByAnyProperty(getModelName(), getView().getValues(), memberNames);
+					values = MapFacade.getValuesByAnyProperty(getModelName(), getCriteriaSearchValues(), memberNames);
 				}
 				catch (ObjectNotFoundException ex) {
 					// This is for the case of key with 0 as valid value
@@ -47,5 +47,16 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 	protected void setValuesToView(Map values) throws Exception {
 		getView().setValues(values);
 	}
+	
+	/**
+	 * The values used in order to prepare the searh condition. <p>
+	 * 
+	 * Blank and zeroes are ignored.<br>
+	 * By default assumed all data currently displayed to the user.<br>
+	 */
+	protected Map getCriteriaSearchValues() throws Exception {
+		return getView().getValues();
+	}
+
 				
 }
