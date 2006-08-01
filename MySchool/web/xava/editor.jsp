@@ -72,7 +72,7 @@ if (searchingKey) {
 	while (itActions.hasNext()) {
 		String action = (String) itActions.next();
 	%>
-<xava:action action="<%=action%>"/>
+<xava:action action="<%=action%>"/> 
 	<%
 	}
 	%>	
@@ -83,7 +83,7 @@ if (editable || p.isReadOnly()) {
 	while (itActions.hasNext()) {
 		String action = (String) itActions.next();
 %>
-<xava:action action="<%=action%>"/>
+<xava:action action="<%=action%>" argv='<%="xava.keyProperty="+propertyKey%>'/>
 <%
 	}
 }

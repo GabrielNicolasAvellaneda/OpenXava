@@ -137,11 +137,11 @@ if (view.displayDetailInCollection(collectionName)) {
 </td></tr>
 <tr><td>
 <% if (collectionEditable || collectionMembersEditables) { %>
-<xava:link action="Collection.save" argv='<%="viewObject="+viewName%>'/>
+<xava:link action="<%=subview.getSaveCollectionElementAction()%>" argv='<%="viewObject="+viewName%>'/>
 <% } %>
-&nbsp;<xava:link action="Collection.hiddenDetail" argv='<%="viewObject="+viewName%>'/>
+&nbsp;<xava:link action="<%=subview.getHideCollectionElementAction()%>" argv='<%="viewObject="+viewName%>'/>
 <% if (collectionEditable) { %>
-&nbsp;<xava:link action="Collection.remove" argv='<%="viewObject="+viewName%>'/>
+&nbsp;<xava:link action="<%=subview.getRemoveCollectionElementAction()%>" argv='<%="viewObject="+viewName%>'/>
 <% } %>
 <% 
 Iterator itDetailActions = subview.getActionsNamesDetail().iterator();
@@ -159,7 +159,7 @@ while (itDetailActions.hasNext()) {
 %>
 <tr class=<%=style.getCollectionListActions()%>><td colspan="<%=subview.getMetaPropertiesList().size()+1%>" class=<%=style.getCollectionListActions()%>>
 <% if (collectionEditable) { %>
-<xava:link action="Collection.new" argv='<%="viewObject="+viewName%>'/>
+<xava:link action="<%=subview.getNewCollectionElementAction()%>" argv='<%="viewObject="+viewName%>'/>
 <% } %>
 <% 
 Iterator itListActions = subview.getActionsNamesList().iterator();
@@ -196,7 +196,7 @@ else {
 			}
 		}
 		else {
-			script = "onblur='executeXavaAction('', false, " + formName + ", \"Collection.save\", \"" + argv + "\")'";
+			script = "onblur='executeXavaAction('', false, " + formName + ", \"" + subview.getSaveCollectionElementAction() + "\", \"" + argv + "\")'";
 		}
 		Object value = request.getAttribute(propertyKey + ".value");
 		if (WebEditors.mustToFormat(p)) {

@@ -98,6 +98,7 @@
   solo-lectura (true|false) "false"
   solo-edicion (true|false) "false"
   crear-referencia (true|false) "true"  
+  como-agregado (true|false) "true"    
 >
 
 <!ELEMENT propiedades-lista (#PCDATA)>
