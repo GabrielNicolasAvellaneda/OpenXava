@@ -783,6 +783,8 @@
 	    	
 	        <fileset dir="../${project}/filtered-files">
 	            <include name="**/*.hbm.xml"/>
+	        	<exclude name="GalleryImage.hbm.xml"/>
+	        	<exclude name="TabUserPreferences.hbm.xml"/>	        	
 	        </fileset>
 	    	
 		</schemaexport>
@@ -800,6 +802,8 @@
 	    	
 	        <fileset dir="../${project}/filtered-files">
 	            <include name="**/*.hbm.xml"/>
+	        	<exclude name="GalleryImage.hbm.xml"/>
+	        	<exclude name="TabUserPreferences.hbm.xml"/>
 	        </fileset>
 	    	
 	    </schemaupdate>

@@ -16,7 +16,7 @@ public interface ColorRemote
    public void setName( java.lang.String newName )
       throws java.rmi.RemoteException;
 
-   public int getNumber(  )
+   public java.lang.Integer getNumber(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.ColorData getData(  )

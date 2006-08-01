@@ -1,5 +1,7 @@
 package org.openxava.test.tests;
 
+import org.openxava.jpa.*;
+import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
 
@@ -16,7 +18,7 @@ public class ColorsOnlyPOJOTest extends ModuleTestBase {
 	public ColorsOnlyPOJOTest(String testName) {
 		super(testName, "OpenXavaTest", "Colors");		
 	}
-	
+		
 	public void testIdentityCalculator() throws Exception {
 		execute("List.orderBy", "property=number");
 		execute("List.orderBy", "property=number");

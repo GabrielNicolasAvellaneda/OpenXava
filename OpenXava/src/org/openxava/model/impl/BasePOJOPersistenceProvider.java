@@ -150,6 +150,7 @@ abstract public class BasePOJOPersistenceProvider implements IPersistenceProvide
 		try {
 			object = metaModel.getPOJOClass().newInstance();
 			PropertiesManager mp = new PropertiesManager(object);
+			removeCalculatedOnCreateValues(metaModel, values); 
 			mp.executeSets(values);					
 			persist(object);			
 			return object;
@@ -160,8 +161,16 @@ abstract public class BasePOJOPersistenceProvider implements IPersistenceProvide
 					"create_persistent_error", metaModel.getName(), ex.getMessage()));
 		}
 	}
-
 			
+	private void removeCalculatedOnCreateValues(MetaModel metaModel, Map values) throws XavaException { 
+		for (Iterator it = metaModel.getMetaPropertiesKey().iterator(); it.hasNext();) {
+			MetaProperty p = (MetaProperty) it.next();
+			if (p.hasCalculatorDefaultValueOnCreate()) {
+				values.remove(p.getName());
+			}
+		}		
+	}
+
 	public Object getKey(MetaModel metaModel, Map keyValues) throws XavaException {
 		try {
 			Class modelClass = metaModel.getPOJOKeyClass();

@@ -85,7 +85,7 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 		if (getView() == view) {
 			if (view.isKeyEditable()) {				
 				Map key = MapFacade.createReturningKey(getModelName(), view.getValues());
-				addMessage("entity_created");
+				addMessage("entity_created", getModelName());
 				view.addValues(key);
 				view.setKeyEditable(false);								
 				return key;								
@@ -101,7 +101,7 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 					view.getModelName(),
 					parentKey, 0,					
 					view.getValues() );
-				addMessage("aggregate_created");
+				addMessage("aggregate_created", view.getModelName());
 				view.addValues(key);									
 				return key;										
 			}

@@ -741,7 +741,7 @@
             <query-method>
                <method-name>findByNumber</method-name>
                <method-params>
-                  <method-param>int</method-param>
+                  <method-param>java.lang.Integer</method-param>
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
