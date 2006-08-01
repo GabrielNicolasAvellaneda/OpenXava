@@ -615,7 +615,7 @@
             <query-method>
                <method-name>findByNumber</method-name>
                <method-params>
-                  <method-param>int</method-param>
+                  <method-param>java.lang.Integer</method-param>
                </method-params>
             </query-method>
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Color o WHERE o.number = ?1]]></jboss-ql>

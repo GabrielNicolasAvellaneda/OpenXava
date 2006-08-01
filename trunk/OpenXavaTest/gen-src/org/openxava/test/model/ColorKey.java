@@ -17,23 +17,23 @@ public class ColorKey
 
    private static final long serialVersionUID = 1L;
 
-   public int number;
+   public java.lang.Integer number;
 
    public ColorKey()
    {
    }
 
-   public ColorKey( int number )
+   public ColorKey( java.lang.Integer number )
    {
       this.number = number;
    }
 
-   public int getNumber()
+   public java.lang.Integer getNumber()
    {
       return number;
    }
 
-   public void setNumber(int number)
+   public void setNumber(java.lang.Integer number)
    {
       this.number = number;
    }
@@ -41,7 +41,7 @@ public class ColorKey
    public int hashCode()
    {
       int _hashCode = 0;
-         _hashCode += (int)this.number;
+         if (this.number != null) _hashCode += this.number.hashCode();
 
       return _hashCode;
    }
@@ -60,7 +60,14 @@ public class ColorKey
       }
       else
       {
-         eq = eq && this.number == pk.number;
+         if( this.number != null )
+         {
+            eq = eq && this.number.equals( pk.getNumber() );
+         }
+         else  // this.number == null
+         {
+            eq = eq && ( pk.getNumber() == null );
+         }
       }
 
       return eq;

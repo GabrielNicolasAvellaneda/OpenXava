@@ -120,8 +120,8 @@ public abstract class ColorCMP
 
    public abstract void set_Name( java.lang.String _Name ) ;
 
-   public abstract int getNumber() ;
+   public abstract java.lang.Integer getNumber() ;
 
-   public abstract void setNumber( int number ) ;
+   public abstract void setNumber( java.lang.Integer number ) ;
 
 }

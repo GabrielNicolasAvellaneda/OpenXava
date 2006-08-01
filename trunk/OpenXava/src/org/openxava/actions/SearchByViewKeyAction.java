@@ -8,6 +8,15 @@ import org.openxava.model.MapFacade;
 import org.openxava.util.Maps;
 
 /**
+ * Search using as key the data displayed in the view. <p>
+ * 
+ * First try to use the key value, if they are filled, 
+ * otherwise uses the values of any properties filled for searching
+ * the data, and return the first matched object.<p>
+ * 
+ * You can refine the behaviour of this action extending it and overwrite
+ * its protected methods.<p>
+ * 
  * @author Javier Paniza
  */
 
@@ -45,20 +54,29 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 		}						
 	}
 	
+	/**
+	 * Executed after searching is done, in order to assign the searched
+	 * values to the view. <p>
+	 * 
+	 * @param values The values to assign to the view
+	 * @throws Exception If some is wrong.
+	 */
 	protected void setValuesToView(Map values) throws Exception {
 		getView().setValues(values);
 	}
 
 	/** 
-	 * Allows to refine the members that will be including for the search of the object 
+	 * Names of the members to be retrieve from object model (at the end from database). <p>
+	 * 
+	 * By default, they are the members shown by the view.  
 	 */
 	protected Map getMemberNames() throws Exception{
 		return getView().getMembersNamesWithHidden();
 	}
 	
 	/**
-	 * Allows to refine the values received from the view, in order to prepare the searh condition<br>
-	 * Blank and zeroes are ignored.<br>
+	 * Values obtained from the view, used to do a search by any filled value. <p>
+	 * 
 	 * By default assumed all data currently displayed to the user.<br>
 	 */
 	protected Map getValuesFromView() throws Exception {
@@ -66,11 +84,12 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 	}
 
 	/**
-	 * Allows to refine the key values received from the view<br> 
+	 * Key values obtained from the view, used to do a search by key. <p>
+	 * 
+	 * By default assumed key data in the view.<br> 
 	 */
 	protected Map getKeyValuesFromView() throws Exception {
 		return getView().getKeyValues();
 	}
 
-				
 }

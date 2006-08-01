@@ -13,7 +13,7 @@ public class ColorData
 
    private static final long serialVersionUID = 1L;
    private java.lang.String _Name;
-   private int number;
+   private java.lang.Integer number;
 
    public ColorData()
    {
@@ -40,11 +40,11 @@ public class ColorData
       this._Name = _Name;
    }
 
-   public int getNumber()
+   public java.lang.Integer getNumber()
    {
       return this.number;
    }
-   public void setNumber( int number )
+   public void setNumber( java.lang.Integer number )
    {
       this.number = number;
    }
@@ -74,7 +74,14 @@ public class ColorData
          {
             lEquals = lEquals && this._Name.equals( lTest._Name );
          }
-         lEquals = lEquals && this.number == lTest.number;
+         if( this.number == null )
+         {
+            lEquals = lEquals && ( lTest.number == null );
+         }
+         else
+         {
+            lEquals = lEquals && this.number.equals( lTest.number );
+         }
 
          return lEquals;
       }
@@ -90,7 +97,7 @@ public class ColorData
 
       result = 37*result + ((this._Name != null) ? this._Name.hashCode() : 0);
 
-      result = 37*result + (int) number;
+      result = 37*result + ((this.number != null) ? this.number.hashCode() : 0);
 
       return result;
    }

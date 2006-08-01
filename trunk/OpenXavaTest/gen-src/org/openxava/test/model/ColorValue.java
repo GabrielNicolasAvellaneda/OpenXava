@@ -16,7 +16,7 @@ public class ColorValue
 
    private java.lang.String name;
    private boolean nameHasBeenSet = false;
-   private int number;
+   private java.lang.Integer number;
    private boolean numberHasBeenSet = false;
 
    public ColorValue()
@@ -46,12 +46,12 @@ public class ColorValue
    public boolean nameHasBeenSet(){
 	  return nameHasBeenSet;
    }
-   public int getNumber()
+   public java.lang.Integer getNumber()
    {
 	  return this.number;
    }
 
-   public void setNumber( int number )
+   public void setNumber( java.lang.Integer number )
    {
 	  this.number = number;
 	  numberHasBeenSet = true;
@@ -93,7 +93,14 @@ public class ColorValue
 		 ColorValue that = (ColorValue) other;
 		 if ( ! that.hasIdentity() ) return false;
 		 boolean lEquals = true;
-		 lEquals = lEquals && this.number == that.number;
+		 if( this.number == null )
+		 {
+			lEquals = lEquals && ( that.number == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.number.equals( that.number );
+		 }
 
 		 lEquals = lEquals && isIdentical(that);
 
@@ -132,7 +139,7 @@ public class ColorValue
 	  int result = 17;
       result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);
 
-      result = 37*result + (int) number;
+      result = 37*result + ((this.number != null) ? this.number.hashCode() : 0);
 
 	  return result;
    }

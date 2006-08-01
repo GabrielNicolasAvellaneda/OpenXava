@@ -19,7 +19,7 @@ public class POJOTest extends TestCase {
 	
 	static {
 		XHibernate.setConfigurationFile("hibernate-junit.cfg.xml");
-		XPersistence.setPersistenceUnit("hibernate-junit");
+		XPersistence.setPersistenceUnit("junit");
 		DataSourceConnectionProvider.setUseHibernateConnection(true);
 	}
 	
