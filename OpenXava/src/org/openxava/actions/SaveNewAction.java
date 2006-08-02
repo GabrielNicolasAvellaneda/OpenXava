@@ -30,7 +30,7 @@ public class SaveNewAction extends BaseAction implements INavigationAction {
 			nextView = DEFAULT_VIEW;				
 			if (!getPreviousViews().empty()) {				
 				if (getReferenceSubview() == null) {
-					throw new XavaException("inject_xava_previousViews_need", getClass().getName());
+					throw new XavaException("inject_xava_referenceSubview_need", getClass().getName());
 				}
 				getReferenceSubview().setValuesNotifying(getView().getKeyValues());
 				getReferenceSubview().findObject();	
