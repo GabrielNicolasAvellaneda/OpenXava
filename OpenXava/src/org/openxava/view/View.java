@@ -1531,24 +1531,11 @@ public class View implements java.io.Serializable {
 		for (int i = 0; i < fields.length; i++) {
 			String propertyName = fields[i].getName();
 			if (!metaModel.isKey(propertyName)) continue;			
-			MetaProperty p = metaModel.getMetaProperty(propertyName);
-			boolean hasConverter = p.getMapping().hasConverter(); 															
+			MetaProperty p = metaModel.getMetaProperty(propertyName);			 													
 			Object propertyValue = null;
 			if (st.hasMoreTokens()) { // if not then null is assumed. This is a case of empty value
 				String stringPropertyValue = st.nextToken();
-				if (hasConverter) { 
-					try {
-						Object parsedValue = Strings.toObject(p.getMapping().getCmpType(), stringPropertyValue);
-						propertyValue = p.getMapping().getConverter().toJava(parsedValue);
-					}
-					catch (Exception ex) {
-						ex.printStackTrace();
-						throw new XavaException("html_to_java_reference_conversion_error");
-					}
-				}
-				else {
-					propertyValue = WebEditors.parse(getRequest(), p, stringPropertyValue, getErrors());	
-				}								
+				propertyValue = WebEditors.parse(getRequest(), p, stringPropertyValue, getErrors());									
 			}			
 			String valueKey = qualifier + "." + ref.getName() + "." + propertyName + ".value";			 
 			if (WebEditors.mustToFormat(p)) {				

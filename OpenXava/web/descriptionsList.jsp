@@ -84,8 +84,8 @@ else {
 			sb.append(',');
 		}
 	}	
-	Object key = ref.getMetaModelReferenced().toPOJO(values);	
-	String fvalue = key==null?"0":key.toString();
+	String key = ref.getMetaModelReferenced().toString(values); 
+	String fvalue = key==null?"0":key;
 	request.setAttribute(propertyKey + ".fvalue", fvalue);
 	keyProperties = sb.toString();
 }
