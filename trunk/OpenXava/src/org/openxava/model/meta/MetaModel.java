@@ -1302,6 +1302,45 @@ abstract public class MetaModel extends MetaElement {
 			throw new XavaException("to_map_error");
 		}		
 	}
+	
+	/**
+	 * The string representation of models represented by this meta model, from
+	 * a map with its values. <p> 
+	 * 
+	 * @return null if the sent map is null
+	 */
+	public String toString(Map key) throws XavaException { 
+		if (key == null) return null;
+		return toString(toPOJO(key));
+	}
+
+	/**
+	 * The string representation of models represented by this meta model, from
+	 * a pojo object. <p> 
+	 * 
+	 * @return null if the sent object is null
+	 */	
+	public String toString(Object pojo) { 
+		if (pojo == null) return null;
+		StringBuffer toStringValue = new StringBuffer("[.");
+		java.lang.reflect.Field [] fields = pojo.getClass().getDeclaredFields();
+		Arrays.sort(fields, FieldComparator.getInstance());
+		PropertiesManager pm = new PropertiesManager(pojo);
+		for (int i=0; i < fields.length; i++) {
+			try {
+				if (isKey(fields[i].getName())) {
+					toStringValue.append(pm.executeGet(fields[i].getName())).append('.');
+				}
+			}
+			catch (Exception ex) {
+				ex.printStackTrace();
+				toStringValue.append(" ").append('.');
+			}
+		}
+		toStringValue.append(']');
+		return toStringValue.toString();
+	}	
+	
 
 	public Collection getViewPropertiesNames() {
 		return Collections.unmodifiableCollection(getMapMetaPropertiesView().keySet());

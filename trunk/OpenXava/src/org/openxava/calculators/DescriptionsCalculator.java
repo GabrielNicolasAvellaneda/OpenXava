@@ -93,9 +93,9 @@ public class DescriptionsCalculator implements ICalculator {
 				}		
 				if (isNull) { 
 					el.setKey(null);
-				}
-				else {
-					el.setKey(getMetaModel().toPOJO(key));
+				}				
+				else { 
+					el.setKey(getMetaModel().toString(key));
 				}
 			}
 			else {
@@ -113,6 +113,7 @@ public class DescriptionsCalculator implements ICalculator {
 		return result;
 	}	
 	
+
 	private MetaModel getMetaModel() throws XavaException {
 		if (metaModel == null) {
 			if (isAggregate()) {

@@ -15,7 +15,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Fri Jul 14 13:14:08 CEST 2006
+ * @version Thu Aug 03 17:13:35 CEST 2006
  */
 public class PojoPG {
     Properties properties = new Properties();
@@ -314,7 +314,9 @@ public class PojoPG {
     out.print(aggregateName);
     out.print("\");");
     } 
-    out.print(" \t\n\t\t}\n\t\treturn metaModel;\n\t}\n\t\n\tpublic String toString() {\t\t\n\t\tStringBuffer toStringValue = new StringBuffer(\"[.\");\n\t\tjava.lang.reflect.Field [] fields = getClass().getDeclaredFields();\n\t\tArrays.sort(fields, FieldComparator.getInstance());\n\t\tfor (int i=0; i < fields.length; i++) {\n\t\t\ttry {\n\t\t\t\tif (getMetaModel().isKey(fields[i].getName())) {\n\t\t\t\t\ttoStringValue.append(fields[i].get(this)).append('.');\n\t\t\t\t}\n\t\t\t}\n\t\t\tcatch (Exception ex) {\n\t\t\t\tex.printStackTrace();\n\t\t\t\ttoStringValue.append(\" \").append('.');\n\t\t\t}\n\t\t}\n\t\ttoStringValue.append(']');\n\t\treturn toStringValue.toString();\n\t}\n\n\tpublic boolean equals(Object other) {\t\t\n\t\tif (other == null) return false;\n\t\treturn toString().equals(other.toString());\n\t}\n\t\n\tpublic int hashCode() {\t\t\n\t\treturn toString().hashCode();\n\t}\n\t\n}");
+    out.print(" \t\n\t\t}\n\t\treturn metaModel;\n\t}\n\t\n\tpublic String toString() {\t\t\n\t\ttry {\n\t\t\treturn getMetaModel().toString(this);\n\t\t}\n\t\tcatch (XavaException ex) {\n\t\t\tSystem.err.println(XavaResources.getString(\"toString_warning\", \"");
+    out.print(name);
+    out.print("\"));\n\t\t\treturn super.toString();\n\t\t}\t\t\n\t}\n\n\tpublic boolean equals(Object other) {\t\t\n\t\tif (other == null) return false;\n\t\treturn toString().equals(other.toString());\n\t}\n\t\n\tpublic int hashCode() {\t\t\n\t\treturn toString().hashCode();\n\t}\n\t\n}");
     
         } catch (Exception e) {
             System.out.println("Exception: "+e.getMessage());
@@ -349,9 +351,9 @@ public class PojoPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Fri Jul 14 13:14:08 CEST 2006", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/pojo.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/PojoPG.java" }, // output file
+        { "Thu Aug 03 17:13:35 CEST 2006", // date this file was generated
+             "../OpenXava/generator/pojo.xml", // input file
+             "../OpenXava/generator/PojoPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
