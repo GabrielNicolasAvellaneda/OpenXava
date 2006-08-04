@@ -37,15 +37,15 @@
   members CDATA "*"
 >
 
-<!ELEMENT members (#PCDATA|group|section)*>
+<!ELEMENT members (#PCDATA|group|section|action)*>
 
-<!ELEMENT section (#PCDATA|section|group)*>
+<!ELEMENT section (#PCDATA|section|group|action)*>
 <!ATTLIST section
   name CDATA #IMPLIED
   label CDATA #IMPLIED
 >
 
-<!ELEMENT group (#PCDATA|group)*>
+<!ELEMENT group (#PCDATA|group|action)*>
 <!ATTLIST group
   name CDATA #IMPLIED
   label CDATA #IMPLIED

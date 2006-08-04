@@ -174,7 +174,17 @@ public class MetaView extends MetaElement implements Cloneable {
 					String groupName = name.substring("__GROUP__".length());					
 					metaMembers.add(getMetaGroup(groupName));					
 				}
-				else if (name.equals(NAME_SEPARATOR)) {
+				else if (name.startsWith("__ACTION__")) {
+					String actionName = name.substring("__ACTION__".length());
+					MetaViewAction action = new MetaViewAction(actionName);
+					metaMembers.add(action);	
+					MetaPropertyView vp = new MetaPropertyView();
+					vp.setPropertyName(action.getName());
+					vp.setLabelFormat(MetaPropertyView.NO_LABEL);
+					addMetaViewProperty(vp);
+					
+				}
+				else if (name.equals(NAME_SEPARATOR)) {					
 					metaMembers.add(PropertiesSeparator.INSTANCE);
 				}				
 				else {

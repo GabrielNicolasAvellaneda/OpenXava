@@ -156,6 +156,11 @@ while (it.hasNext()) {
 		</table>		
 	<%
 		}
+		else if (m instanceof org.openxava.view.meta.MetaViewAction) {
+			%>	
+				HOLA
+			<%
+		}
 	} // if is not MetaProperty
 }
 %>

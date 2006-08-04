@@ -869,7 +869,7 @@ public class View implements java.io.Serializable {
 		Iterator it = createMetaMembers(false).iterator();
 		while (it.hasNext()) {
 			MetaMember m = (MetaMember) it.next();								
-			if (m instanceof MetaProperty && !m.equals(PropertiesSeparator.INSTANCE)) {
+			if (isMetaProperty(m)) {
 				if (((MetaProperty)m).isCalculated()) {
 					memberNames.put(m.getName(), null);
 				}
@@ -899,7 +899,7 @@ public class View implements java.io.Serializable {
 		Iterator it = createMetaMembers(hiddenIncluded).iterator();
 		while (it.hasNext()) {
 			MetaMember m = (MetaMember) it.next();								
-			if (m instanceof MetaProperty && !m.equals(PropertiesSeparator.INSTANCE)) {										
+			if (isMetaProperty(m)) {										
 				membersNames.put(m.getName(), null);
 			}
 			else if (m instanceof MetaReference) {
@@ -992,7 +992,7 @@ public class View implements java.io.Serializable {
 			memberNamesWithoutSeccions = new ArrayList();
 			while (it.hasNext()) {
 				MetaMember m = (MetaMember) it.next();
-				if (m instanceof MetaProperty && !m.equals(PropertiesSeparator.INSTANCE)) {					
+				if (isMetaProperty(m)) {					
 					memberNamesWithoutSeccions.add(m.getName());
 				}
 				else if (m instanceof MetaReference) {										
@@ -1434,19 +1434,17 @@ public class View implements java.io.Serializable {
 			
 			while (it.hasNext()) {
 				Object m = it.next();							
-				if (m instanceof MetaProperty) {						
-					MetaProperty p = (MetaProperty) m;										
-					if (!PropertiesSeparator.INSTANCE.equals(m)) { 
-						String propertyKey= "xava." + qualifier + "." + p.getName();						
-						String valueKey = propertyKey + ".value";
-						String [] results = getRequest().getParameterValues(propertyKey);
-						Object value = WebEditors.parse(getRequest(), p, results, getErrors());						
-						boolean isHiddenKeyWithoutValue = p.isHidden() && (results == null); // for not reset hidden values
-						if (!isHiddenKeyWithoutValue && WebEditors.mustToFormat(p)) { 
-							getRequest().setAttribute(valueKey, value);
-							setValue(p.getName(), getRequest().getAttribute(valueKey));																					
-						}						
-					}
+				if (isMetaProperty(m)) {
+					MetaProperty p = (MetaProperty) m;
+					String propertyKey= "xava." + qualifier + "." + p.getName();						
+					String valueKey = propertyKey + ".value";
+					String [] results = getRequest().getParameterValues(propertyKey);
+					Object value = WebEditors.parse(getRequest(), p, results, getErrors());						
+					boolean isHiddenKeyWithoutValue = p.isHidden() && (results == null); // for not reset hidden values
+					if (!isHiddenKeyWithoutValue && WebEditors.mustToFormat(p)) { 
+						getRequest().setAttribute(valueKey, value);
+						setValue(p.getName(), getRequest().getAttribute(valueKey));																					
+					}											
 				}
 				else if (m instanceof MetaReference) {					
 					MetaReference ref = (MetaReference) m;					
@@ -1864,7 +1862,7 @@ public class View implements java.io.Serializable {
 			// In this view								
 			for (Iterator it = getMetaPropertiesQualified().iterator(); it.hasNext();) {
 				Object element = (Object) it.next();				
-				if (element instanceof MetaProperty && !PropertiesSeparator.INSTANCE.equals(element)) {
+				if (isMetaProperty(element)) {
 					MetaProperty pro = (MetaProperty) element;					
 					if (WebEditors.depends(pro, p)) {				
 						return true;
@@ -1880,7 +1878,7 @@ public class View implements java.io.Serializable {
 			// From the root			
 			for (Iterator it = getRoot().getMetaPropertiesQualified().iterator(); it.hasNext();) {
 				Object element = (Object) it.next();
-				if (element instanceof MetaProperty && !PropertiesSeparator.INSTANCE.equals(element)) {
+				if (isMetaProperty(element)) {
 					MetaProperty pro = (MetaProperty) element;					
 					if (pro.getPropertyNamesThatIDepend().contains(p.getName())) {
 						return true;
@@ -1926,7 +1924,7 @@ public class View implements java.io.Serializable {
 		Iterator it = view.getMetaMembers().iterator(); 		
 		while (it.hasNext()) {
 			Object element = (Object) it.next();
-			if (element instanceof MetaProperty && !PropertiesSeparator.INSTANCE.equals(element)) {
+			if (isMetaProperty(element)) {
 				MetaProperty pro = (MetaProperty) element;
 				if (prefix == null) properties.add(pro);
 				else {
@@ -1999,7 +1997,7 @@ public class View implements java.io.Serializable {
 			metaProperties = new ArrayList();
 			while (it.hasNext()) {
 				Object element = (Object) it.next();
-				if (element instanceof MetaProperty && !PropertiesSeparator.INSTANCE.equals(element)) {
+				if (isMetaProperty(element)) {
 					metaProperties.add(element);					
 				}
 			}			
@@ -2800,6 +2798,10 @@ public class View implements java.io.Serializable {
 		else {
 			root.setLabels(labels);
 		}
+	}
+	
+	private boolean isMetaProperty(Object member) { 
+		return member instanceof MetaProperty && !member.equals(PropertiesSeparator.INSTANCE) && !(member instanceof MetaViewAction);
 	}
 	
 	private boolean isGroup() {
