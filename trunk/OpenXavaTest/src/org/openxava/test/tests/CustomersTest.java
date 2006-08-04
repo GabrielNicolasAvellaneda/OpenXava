@@ -225,7 +225,8 @@ public class CustomersTest extends ModuleTestBase {
 		setValue("seller.number", "1");
 		setValue("relationWithSeller", "A RELATION");
 		setValue("alternateSeller.number", "2");		
-		execute("Customers.save");  		
+		execute("Customers.save");
+		assertValue("seller.name", "MANUEL CHAVARRI");
 		assertNoErrors();
 
 		assertNoEditable("number");
@@ -273,7 +274,7 @@ public class CustomersTest extends ModuleTestBase {
 		
 		// Modify
 		setValue("seller.number", "2");
-		execute("Customers.save");
+		execute("Customers.save");			
 		assertNoErrors();
 		execute("CRUD.new");
 		assertValue("number", "");
