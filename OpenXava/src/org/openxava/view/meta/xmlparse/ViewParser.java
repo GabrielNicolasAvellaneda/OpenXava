@@ -57,6 +57,12 @@ public class ViewParser extends XmlElementsNames {
 				r.append(groupName);
 				r.append(',');
 			}
+			else if (xaction[lang].equals(node.getNodeName())) {
+				String action = ((Element) node).getAttribute(xaction[lang]);
+				r.append("__ACTION__");
+				r.append(action);
+				r.append(',');
+			}
 			else {
 				String nodeValue = node.getNodeValue();
 				if (nodeValue != null) r.append(nodeValue);

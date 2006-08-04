@@ -74,6 +74,12 @@
 	<for-stereotype stereotype="RELLENADO_CON_CEROS"/>
   </editor>
     
-    
-  
+  <!-- 
+  This steroetype is not for be assigned directly to a property, 
+  but it's used internally by OpenXava to render actions inside views.
+  -->  
+  <editor url="actionEditor.jsp"> 
+	<for-stereotype stereotype="__ACTION__"/>
+  </editor>
+      
 </editors>

@@ -197,7 +197,8 @@
 			<set property="newView" value="Simple"/>
 			<use-object name="xava_view"/>
 		</action>
-		<action name="changeNameLabel" mode="detail" class="org.openxava.test.actions.ChangeLabelAction">				
+		<!-- tmp -->
+		<action name="changeNameLabel" mode="detail" class="org.openxava.test.actions.ChangeLabelAction" hidden="true">				
 			<set property="property" value="name"/>
 			<set property="label" value="Malnom"/>
 			<use-object name="xava_view"/>
