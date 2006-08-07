@@ -19,6 +19,9 @@ public class ControllersParser extends ParserBase {
 	}
 	
 	public static void configureControllers(String context) throws XavaException {
+		ControllersParser defaultParser = new ControllersParser("default-controllers.xml", ENGLISH);
+		defaultParser.setContext(context);
+		defaultParser.parse();
 		ControllersParser enParser = new ControllersParser("controllers.xml", ENGLISH);
 		enParser.setContext(context);
 		enParser.parse();		

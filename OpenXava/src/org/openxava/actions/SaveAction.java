@@ -44,7 +44,8 @@ public class SaveAction extends ViewBaseAction {
 			}
 			else {
 				getView().setKeyEditable(false);
-				getView().setValues(values);                
+				getView().setValuesExecutingOnChangeActions(values);
+				//getView().setValues(values);                
 			}			
 			resetDescriptionsCache();
 		}
