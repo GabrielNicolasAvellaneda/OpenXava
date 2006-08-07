@@ -194,8 +194,8 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		Iterator it = getValidValues().iterator();
 		int t = 0;
 		while (it.hasNext()) {
-			String value = (String) it.next();			
-			if (value != null && value.length() > t) t = value.length();
+			Object value = it.next();			 
+			if (value != null && value.toString().length() > t) t = value.toString().length();
 		}
 		return t;
 	}

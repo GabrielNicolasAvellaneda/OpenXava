@@ -15,11 +15,21 @@ public class WebEditors {
 	final private static String PREFIX = "editors/";
 	
 	public static boolean mustToFormat(MetaProperty p) throws XavaException {
-		return MetaWebEditors.getMetaEditorFor(p).isFormat();		
+		try {
+			return MetaWebEditors.getMetaEditorFor(p).isFormat();
+		}
+		catch (ElementNotFoundException ex) {
+			return true; 
+		}
 	}
 	
 	public static boolean hasFrame(MetaProperty p) throws XavaException {
-		return MetaWebEditors.getMetaEditorFor(p).isFrame();		
+		try {
+			return MetaWebEditors.getMetaEditorFor(p).isFrame();
+		}
+		catch (ElementNotFoundException ex) {
+			return false; 
+		}
 	}	
 	
 	public static Object parse(HttpServletRequest request, MetaProperty p, String [] strings, Messages errors) throws XavaException { 

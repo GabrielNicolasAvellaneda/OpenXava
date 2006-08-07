@@ -152,10 +152,11 @@ public class PropertiesManager implements java.io.Serializable {
 		catch (PropertiesManagerException ex) {
 			throw ex;
 		}
-		catch (IllegalArgumentException ex) {			
-			Object number = tryConvertInNumber(pd.getPropertyType(), value);  			
-			if (number != null) {
-				Object [] arg = { number };
+		catch (IllegalArgumentException ex) {
+			if (value instanceof Number) value = tryConvertInEnum(pd.getPropertyType(), (Number) value);
+			else value = tryConvertInNumber(pd.getPropertyType(), value);  			
+			if (value != null) {
+				Object [] arg = { value };
 				try {
 					met.invoke(object, arg);
 				}
@@ -177,6 +178,27 @@ public class PropertiesManager implements java.io.Serializable {
 			throw new PropertiesManagerException(
 					XavaResources.getString("set_property_error", propertyName));
 		}
+	}
+
+	private Object tryConvertInEnum(Class propertyType, Number value) { 		
+		try {
+			int ivalue = value.intValue();
+			// We use instrospection in order to allow this code compile in Java 1.4 and working in Java 5
+			Object [] enumConstants = (Object []) Objects.execute(propertyType, "getEnumConstants");
+			for (int i=0; i<enumConstants.length; i++) {
+				int ordinal = ((Integer) Objects.execute(enumConstants[i], "ordinal")).intValue();
+				if (ordinal == ivalue) return enumConstants[i];
+			}
+			return null;
+		}
+		catch (NoSuchMethodException ex) {
+			// not Java 5
+			return null;
+		}		
+		catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}				
 	}
 
 	private Object mapToObject(Class propertyType, Map values) throws ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, PropertiesManagerException {
