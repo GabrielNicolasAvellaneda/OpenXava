@@ -108,13 +108,13 @@ public class MetaComponent implements Serializable {
 	 */	
 	public void addMetaView(MetaView metaView) throws XavaException {		
 		if (Is.emptyString(metaView.getModelName())) {
-			getMetaEntity().addMetaView(metaView);
+			getMetaEntity().addMetaView(metaView);			
 		}
 		else if (getName().equals(metaView.getModelName())) {
-			getMetaEntity().addMetaView(metaView);
+			getMetaEntity().addMetaView(metaView);			
 		}
 		else {
-			getMetaAggregate(metaView.getModelName()).addMetaView(metaView);
+			getMetaAggregate(metaView.getModelName()).addMetaView(metaView);			
 		}
 	}
 			
@@ -125,10 +125,14 @@ public class MetaComponent implements Serializable {
 	 * @exception XavaException Any other problem.
 	 */
 	public MetaAggregate getMetaAggregate(String name) throws  XavaException {
-		if (metaAggregates == null || !metaAggregates.containsKey(name)) {
+		if (!hasMetaAggregate(name)) {
 			throw new ElementNotFoundException("aggregate_not_found", name, getName());
 		}
 		return (MetaAggregate) metaAggregates.get(name);
+	}
+	
+	public boolean hasMetaAggregate(String name) {		
+		return metaAggregates != null && metaAggregates.containsKey(name);
 	}
 	
 	/**
@@ -217,7 +221,7 @@ public class MetaComponent implements Serializable {
 	/**
 	 * @param metaAggregate  Not null.
 	 */
-	void addMetaAggregate(MetaAggregate metaAggregate) {
+	public void addMetaAggregate(MetaAggregate metaAggregate) {		
 		if (metaAggregates == null) metaAggregates = new HashMap();
 		metaAggregates.put(metaAggregate.getName(), metaAggregate);
 		metaAggregate.setMetaComponent(this);
