@@ -295,8 +295,7 @@ abstract public class MetaModel extends MetaElement {
 			return Class.forName(getInterfaceName());
 		} 
 		catch (ClassNotFoundException ex) {
-			ex.printStackTrace();
-			throw new XavaException("no_class_for_model", getInterfaceName(), getName());
+			return getPOJOClass();
 		}
 	}
 	
@@ -1374,6 +1373,9 @@ abstract public class MetaModel extends MetaElement {
 			
 	public void setContainerModelName(String modelName) {
 		this.containerModelName = modelName;
+	}
+	public String getContainerModelName() { 
+		return containerModelName;
 	}
 	
 	public Collection getMetaCollectionsWithConditionInOthersModels() throws XavaException {
