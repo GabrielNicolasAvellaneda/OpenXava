@@ -96,6 +96,10 @@
 			<condition>${address.street} = {0}</condition>
 		</finder>
 		
+		<finder name="orderedByState" arguments="" collection="true">
+			<order>${address.state.name}</order>
+		</finder>
+		
 		<finder name="all" arguments="" collection="true"/>
 		
 	</entity>

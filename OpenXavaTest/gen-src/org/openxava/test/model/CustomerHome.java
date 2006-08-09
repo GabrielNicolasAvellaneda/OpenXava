@@ -45,6 +45,9 @@ public interface CustomerHome
    public java.util.Collection findByStreet(java.lang.String street)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
+   public java.util.Collection findOrderedByState()
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public java.util.Collection findAll()
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
