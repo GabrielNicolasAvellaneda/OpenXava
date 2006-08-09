@@ -238,7 +238,14 @@
 						
 	</view>		
 		
-	<view name="Simple" members="number; type; name; address"/>
+	<view name="Simple">
+		<members>
+			number; 
+			type; 
+			name, <action action="Customers.changeNameLabel" always-enabled="true"/>;
+			address;
+		</members>
+	</view>
 	
 	<view name="SimpleWithDeliveryPlaces" members="number; type; name; address; deliveryPlaces"/>
 	
@@ -277,7 +284,7 @@
 		
 		 <!-- By default is NORMAL, hence 'label-format' in the next line is optional -->
 		<property-view property="street" label-format="NORMAL">
-			<action action="Customers.prefixStreet"/> 
+			<action action="Customers.prefixStreet" always-enabled="true"/> 
 		</property-view>
 				
 		<property-view property="zipCode" label-format="SMALL"/>

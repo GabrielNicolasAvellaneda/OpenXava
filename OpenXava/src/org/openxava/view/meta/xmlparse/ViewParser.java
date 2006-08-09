@@ -6,6 +6,8 @@ import org.openxava.util.xmlparse.*;
 import org.openxava.view.meta.*;
 import org.w3c.dom.*;
 
+import sun.security.action.*;
+
 
 /**
  * @author: Javier Paniza
@@ -60,6 +62,9 @@ public class ViewParser extends XmlElementsNames {
 			else if (xaction[lang].equals(node.getNodeName())) {
 				String action = ((Element) node).getAttribute(xaction[lang]);
 				r.append("__ACTION__");
+				if (ParserUtil.getAttributeBoolean(((Element) node), xalways_enabled[lang])) {
+					r.append("AE__"); 
+				}
 				r.append(action);
 				r.append(',');
 			}
@@ -286,6 +291,9 @@ public class ViewParser extends XmlElementsNames {
 		for (int i=0; i<c; i++) {
 			String action = ((Element) l.item(i)).getAttribute(xaction[lang]);		
 			container.addActionName(action);
+			if (ParserUtil.getAttributeBoolean((Element) l.item(i), xalways_enabled[lang])) {
+				container.addAlwaysEnabledActionName(action);
+			}
 		}
 	}
 	

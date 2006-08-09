@@ -15,6 +15,32 @@
 		That is to say, it is better specify the labels in resources files and not here.		
 	-->	
 	
+	<controller name="Collection">
+		<action name="new"
+			class="org.openxava.actions.CreateNewElementInCollectionAction">			
+		</action>					
+		<action name="hideDetail"
+			class="org.openxava.test.actions.HideDetailElementInCollectionWithMessageAction">
+		</action>							
+		<action name="save"
+			class="org.openxava.actions.SaveElementInCollectionAction">			
+			<use-object name="xava_view"/>
+		</action>			
+		<action name="remove"
+			class="org.openxava.actions.RemoveElementFromCollectionAction">			
+			<use-object name="xava_view"/>
+		</action>					
+		<action name="edit"
+			class="org.openxava.actions.EditElementInCollectionAction">			
+			<use-object name="xava_view"/>
+		</action>							
+		<action name="view"
+			class="org.openxava.actions.EditElementInCollectionAction">			
+			<use-object name="xava_view"/>
+		</action>									
+	</controller>
+	
+	
 	<controller name="DeliveryTypes"> 
 		<extends controller="Typical"/>
 		<action name="saveNotReset" mode="detail"

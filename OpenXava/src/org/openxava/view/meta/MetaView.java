@@ -18,10 +18,7 @@ public class MetaView extends MetaElement implements Cloneable {
 	// WARNING!: If you add properties you must see if is needed to make a clon of they
 	
 	private final static String NAME_SEPARATOR = "\n";
-	
-	private static int nextOid = 13; // tmp
-	private int oid = ++nextOid; // tmp
-	
+		
 	private boolean section = false;
 	private MetaView parent; // in section case
 	private String parentName = null; // at momment for use in section
@@ -175,14 +172,15 @@ public class MetaView extends MetaElement implements Cloneable {
 					metaMembers.add(getMetaGroup(groupName));					
 				}
 				else if (name.startsWith("__ACTION__")) {
-					String actionName = name.substring("__ACTION__".length());
+					boolean alwaysEnabled = name.startsWith("__ACTION__AE__");					
+					String actionName = name.substring((alwaysEnabled?"__ACTION__AE__":"__ACTION__").length());					
 					MetaViewAction action = new MetaViewAction(actionName);
-					metaMembers.add(action);	
-					MetaPropertyView vp = new MetaPropertyView();
+					action.setAlwaysEnabled(alwaysEnabled);
+					metaMembers.add(action);					
+					MetaPropertyView vp = new MetaPropertyView();					
 					vp.setPropertyName(action.getName());
 					vp.setLabelFormat(MetaPropertyView.NO_LABEL);
 					addMetaViewProperty(vp);
-					
 				}
 				else if (name.equals(NAME_SEPARATOR)) {					
 					metaMembers.add(PropertiesSeparator.INSTANCE);
@@ -633,16 +631,16 @@ public class MetaView extends MetaElement implements Cloneable {
 		return clon;
 	}
 
-	public Collection getActionsNamesForProperty(MetaProperty p) {
+	public Collection getActionsNamesForProperty(MetaProperty p, boolean editable) {
 		MetaPropertyView metaPropertyView = getMetaPropertyViewFor(p.getName());
 		if (metaPropertyView == null) return Collections.EMPTY_LIST;
-		return metaPropertyView.getActionsNames();
+		return editable?metaPropertyView.getActionsNames():metaPropertyView.getAlwaysEnabledActionsNames();
 	}
-	
-	public Collection getActionsNamesForReference(MetaReference ref) {
+			
+	public Collection getActionsNamesForReference(MetaReference ref, boolean editable) {
 		MetaReferenceView metaReferenceView = getMetaReferenceViewFor(ref.getName());
 		if (metaReferenceView == null) return Collections.EMPTY_LIST;
-		return metaReferenceView.getActionsNames();
+		return editable?metaReferenceView.getActionsNames():metaReferenceView.getAlwaysEnabledActionsNames();
 	}
 	
 

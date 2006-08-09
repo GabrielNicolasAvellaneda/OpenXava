@@ -3,8 +3,8 @@
 <!DOCTYPE editors SYSTEM "dtds/editors.dtd">
 
 <!--
-	In your project use the name 'editors.xml' or 'editores.xml'
-	-->
+In your project use the name 'editors.xml' or 'editores.xml'
+-->
 
 <editors>
 

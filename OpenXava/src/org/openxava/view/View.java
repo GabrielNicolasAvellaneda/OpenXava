@@ -2570,20 +2570,20 @@ public class View implements java.io.Serializable {
 		actionsNamesList = collection;
 	}	
 	
-	public Collection getActionsNamesForProperty(MetaProperty p) throws XavaException {
-		return getMetaView().getActionsNamesForProperty(p);
+	public Collection getActionsNamesForProperty(MetaProperty p, boolean editable) throws XavaException {
+		return getMetaView().getActionsNamesForProperty(p, editable);
 	}
 	
-	public Collection getActionsNamesForReference(MetaReference ref) throws XavaException {
-		return getMetaView().getActionsNamesForReference(ref);
+	public Collection getActionsNamesForReference(MetaReference ref, boolean editable) throws XavaException {
+		return getMetaView().getActionsNamesForReference(ref, editable);
 	}
 	
 	/**
 	 * If this is a view that represents a reference
 	 */
-	public Collection getActionsNamesForReference() throws XavaException { 
+	public Collection getActionsNamesForReference(boolean editable) throws XavaException { 
 		if (!isRepresentsEntityReference()) return Collections.EMPTY_LIST;
-		if (isGroup()) return getParent().getActionsNamesForReference(); 
+		if (isGroup()) return getParent().getActionsNamesForReference(editable); 
 		View parent = getParent();
 		if (parent == null) return Collections.EMPTY_LIST; // Impossible?
 		MetaReference ref = null;
@@ -2593,9 +2593,8 @@ public class View implements java.io.Serializable {
 		catch (ElementNotFoundException ex) {
 			ref = parent.getMetaModel().getMetaCollection(getMemberName()).getMetaReference();
 		}
-		return parent.getActionsNamesForReference(ref);
-	}
-	
+		return parent.getActionsNamesForReference(ref, editable);
+	}	
 	
 	
 	public int getLabelFormatForProperty(MetaProperty p) throws XavaException {
@@ -2767,6 +2766,7 @@ public class View implements java.io.Serializable {
 		}		
 		if (!Is.emptyString(getMemberName())) {
 			int idx = p.getId().lastIndexOf('.');
+			if (idx < 0) idx = 0; 
 			String id = p.getId().substring(0, idx) + "." + getMemberName() + p.getId().substring(idx);
 			if (Labels.existsExact(id, Locales.getCurrent())) {								
 				return Labels.get(id, Locales.getCurrent());

@@ -1,6 +1,14 @@
 <?xml version = "1.0" encoding = "ISO-8859-1"?>
 
-<!DOCTYPE controllers SYSTEM "dtds/controllers.dtd"><!-- OpenXava core controllers -->
+<!DOCTYPE controllers SYSTEM "dtds/controllers.dtd"><!-- 
+default-controllers.xml: OpenXava core controllers 
+
+In your project use the name 'controllers.xml' or 'controladores.xml'
+
+If you have to override some of this controller for you application, you only
+need to create a controller in your application with the same name of the controller
+here that you want to override.
+-->
 
 <controllers>
 

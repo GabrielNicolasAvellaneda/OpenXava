@@ -12,6 +12,7 @@ import java.util.*;
 public class MetaMemberView {
 	
 	private Collection actionsNames;
+	private Collection alwaysEnabledActionsNames; 
 	
 	public void addActionName(String actionName) {
 		if (actionsNames == null) actionsNames = new ArrayList();
@@ -19,6 +20,14 @@ public class MetaMemberView {
 	}
 	public Collection getActionsNames() {		
 		return actionsNames==null?Collections.EMPTY_LIST:actionsNames;
+	}
+	
+	public void addAlwaysEnabledActionName(String actionName) {
+		if (alwaysEnabledActionsNames == null) alwaysEnabledActionsNames = new ArrayList();
+		alwaysEnabledActionsNames.add(actionName);
+	}
+	public Collection getAlwaysEnabledActionsNames() {		
+		return alwaysEnabledActionsNames==null?Collections.EMPTY_LIST:alwaysEnabledActionsNames;
 	}		
-
+	
 }

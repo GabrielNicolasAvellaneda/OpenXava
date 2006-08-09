@@ -832,13 +832,13 @@ public class ModuleTestBase extends TestCase {
 	
 	
 	protected void assertNoErrors() throws Exception {
-		assertNoMensajes("errors", "Error");		
+		assertNoMessages("errors", "Error");		
 	}
 	protected void assertNoMessages() throws Exception {
-		assertNoMensajes("messages", "Mensaje");		
+		assertNoMessages("messages", "Mensaje");		
 	}
 	
-	private void assertNoMensajes(String id, String label) throws Exception {		
+	private void assertNoMessages(String id, String label) throws Exception {		
 		WebTable table = response.getTableWithID(id);
 		if (table == null) {			
 			return;

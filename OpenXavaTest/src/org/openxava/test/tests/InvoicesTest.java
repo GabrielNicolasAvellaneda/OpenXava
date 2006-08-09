@@ -47,9 +47,11 @@ public class InvoicesTest extends ModuleTestBase {
 		assertNoErrors();
 	}
 	
-	public void testI18nOfLabelOfAConcreteView() throws Exception {
+	public void testI18nOfLabelOfAConcreteView_alwaysEnabledActions() throws Exception {
 		execute("CRUD.new");
 		assertLabel("customer.number", "Little code");
+		assertAction("Customers.changeNameLabel");
+		assertAction("Customers.prefixStreet");
 	}
 	
 	public void testTestingCheckBox() throws Exception {
@@ -858,6 +860,8 @@ public class InvoicesTest extends ModuleTestBase {
 			"Invoices.removeViewDeliveryInInvoice",
 			"Invoices.addViewDeliveryInInvoice",			
 			"Sections.change",
+			"Customers.changeNameLabel",
+			"Customers.prefixStreet",
 			"Reference.search",
 			"Reference.createNew",			
 			"Mode.list"						
