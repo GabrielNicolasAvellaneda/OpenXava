@@ -164,5 +164,7 @@ public class XmlElementsNames {
 	protected final static String [] xhide_detail_action = { "hide-detail-action", "accion-ocultar-detalle" };
 	protected final static String [] xremove_action = { "remove-action", "accion-quitar" };
 	protected final static String [] xas_aggregate = { "as-aggregate", "como-agregado" };
+	protected final static String [] xalways_enabled = { "always-enabled", "siempre-activa" };
+	
 		
 }

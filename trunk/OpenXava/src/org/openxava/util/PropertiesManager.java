@@ -154,14 +154,14 @@ public class PropertiesManager implements java.io.Serializable {
 		}
 		catch (IllegalArgumentException ex) {
 			if (value instanceof Number) value = tryConvertInEnum(pd.getPropertyType(), (Number) value);
-			else value = tryConvertInNumber(pd.getPropertyType(), value);  			
+			value = tryConvertInNumber(pd.getPropertyType(), value);  			
 			if (value != null) {
 				Object [] arg = { value };
 				try {
 					met.invoke(object, arg);
 				}
 				catch (Exception ex2) {
-					ex.printStackTrace();
+					ex2.printStackTrace();
 					throw new PropertiesManagerException(
 							XavaResources.getString("set_property_error", propertyName));
 				}				
@@ -185,6 +185,7 @@ public class PropertiesManager implements java.io.Serializable {
 			int ivalue = value.intValue();
 			// We use instrospection in order to allow this code compile in Java 1.4 and working in Java 5
 			Object [] enumConstants = (Object []) Objects.execute(propertyType, "getEnumConstants");
+			if (enumConstants == null) return value;
 			for (int i=0; i<enumConstants.length; i++) {
 				int ordinal = ((Integer) Objects.execute(enumConstants[i], "ordinal")).intValue();
 				if (ordinal == ivalue) return enumConstants[i];
@@ -193,11 +194,11 @@ public class PropertiesManager implements java.io.Serializable {
 		}
 		catch (NoSuchMethodException ex) {
 			// not Java 5
-			return null;
+			return value;
 		}		
 		catch (Exception ex) {
 			ex.printStackTrace();
-			return null;
+			return value;
 		}				
 	}
 

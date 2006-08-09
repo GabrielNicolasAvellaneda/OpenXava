@@ -6,8 +6,16 @@
 String propertyKey = request.getParameter("propertyKey");
 String script = request.getParameter("script");
 MetaProperty p = (MetaProperty) request.getAttribute(propertyKey);
-Integer ivalue = (Integer) request.getAttribute(propertyKey + ".value");
-int value = ivalue==null?0:ivalue.intValue();
+Object ovalue = request.getAttribute(propertyKey + ".value");
+int value = 0;
+if (ovalue != null) {
+	if (ovalue instanceof Integer) value = ((Integer) ovalue).intValue();
+	else {
+		// We assume that if it isn't Integer is an Enum of Java 5, we use instropection
+		// to allow this code run in a Java 1.4 servlet container.
+		value = ((Integer) org.openxava.util.Objects.execute(ovalue, "ordinal")).intValue();
+	}
+}
 boolean editable = "true".equals(request.getParameter("editable"));
 boolean label = org.openxava.util.XavaPreferences.getInstance().isReadOnlyAsLabel();
 if (editable) { 

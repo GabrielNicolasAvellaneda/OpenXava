@@ -1,7 +1,6 @@
 package org.openxava.util.xmlparse;
 
 
-import java.io.*;
 import java.net.*;
 import java.util.*;
 

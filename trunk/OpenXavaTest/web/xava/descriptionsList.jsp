@@ -142,14 +142,12 @@ if (editable && view.isCreateNewForReference(ref)) {
 %>
 
 <%
-if (editable) {
-	java.util.Iterator itActions = view.getActionsNamesForReference(ref).iterator();
-	while (itActions.hasNext()) {
-		String action = (String) itActions.next();
+java.util.Iterator itActions = view.getActionsNamesForReference(ref, editable).iterator();
+while (itActions.hasNext()) {
+	String action = (String) itActions.next();
 %>
 <xava:action action="<%=action%>"/>
 <%
-	}
 }
 %>
 <%=postEditor%>

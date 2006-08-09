@@ -153,6 +153,7 @@
 <!ELEMENT accion EMPTY>
 <!ATTLIST accion
   accion CDATA #IMPLIED
+  siempre-activa (true|false) "false"
 >
 
 

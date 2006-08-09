@@ -149,6 +149,7 @@
 <!ELEMENT action EMPTY>
 <!ATTLIST action
   action CDATA #IMPLIED
+  always-enabled (true|false) "false"
 >
 
 

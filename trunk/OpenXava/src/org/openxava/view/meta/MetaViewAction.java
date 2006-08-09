@@ -14,6 +14,7 @@ import org.openxava.util.*;
 public class MetaViewAction extends MetaProperty {
 
 	private String action;
+	private boolean alwaysEnabled;
 	
 	public MetaViewAction(String action) throws XavaException {
 		this.action = action;
@@ -24,6 +25,14 @@ public class MetaViewAction extends MetaProperty {
 	
 	public String getAction() {
 		return action;
+	}
+
+	public boolean isAlwaysEnabled() {
+		return alwaysEnabled;
+	}
+
+	public void setAlwaysEnabled(boolean alwaysEnabled) {
+		this.alwaysEnabled = alwaysEnabled;
 	}
 
 }

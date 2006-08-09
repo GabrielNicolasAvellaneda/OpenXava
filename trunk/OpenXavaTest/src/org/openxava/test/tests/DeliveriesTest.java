@@ -680,17 +680,17 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertActions(listActions);
 		assertNoErrors();
 		int quantity = getListRowCount();
-		boolean encontrado = false;
+		boolean found = false;
 		int i = 0;
 		for (i = 0; i < quantity; i++) {
-			String numero = getValueInList(i, "number");						
-			if ("66".equals(numero)) {				
+			String number = getValueInList(i, "number");						
+			if ("66".equals(number)) {				
 				assertValueInList(i, "date", "22/02/1997");
-				encontrado = true;
+				found = true;
 				break;
 			}			
 		}
-		if (!encontrado) {
+		if (!found) {
 			fail("It is necessary that exists delivery 66 in list and there are al least 11 deliveries");		
 		}
 				
