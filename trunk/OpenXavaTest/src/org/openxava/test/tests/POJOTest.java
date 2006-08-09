@@ -34,8 +34,14 @@ public class POJOTest extends TestCase {
 					
 	public void testFinderByAggregateProperty() throws Exception {
 		Collection customers = Customer.findByStreet("XXX");
-		for (Iterator it = customers.iterator(); it.hasNext(); ); // This mustn't fail 
+		for (Iterator it = customers.iterator(); it.hasNext(); it.next()); // This mustn't fail 
 	}
+	
+	public void testFinderOrderedByReferencePropertyInAnAggregate() throws Exception {
+		Collection customers = Customer.findOrderedByState();
+		for (Iterator it = customers.iterator(); it.hasNext(); it.next()); // This mustn't fail
+	}
+	
 	
 	public void testFinderThrowsObjectNotFound() throws Exception {
 		// Finders in POJOs has the semantics of EJB CMP2 

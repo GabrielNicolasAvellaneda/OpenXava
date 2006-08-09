@@ -15,6 +15,13 @@
 		That is to say, it is better specify the labels in resources files and not here.		
 	-->	
 	
+	
+	<!-- 
+	This 'Collection' controllers override the default 'Collection' controller
+	of OpenXava. Because it has the same name.
+	In OpenXavaTest application this controller and not the one in default-controllers.xml
+	is used to manage collections.
+	 -->
 	<controller name="Collection">
 		<action name="new"
 			class="org.openxava.actions.CreateNewElementInCollectionAction">			

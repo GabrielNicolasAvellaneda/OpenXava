@@ -107,8 +107,8 @@ public class MetaFinder implements Serializable {
 			sb.append(Strings.change(condition, getTokensToChangeDollarsAndNL()));
 		}
 		if (order && !Is.emptyString(this.order)) { 		
-			sb.append(" order by ");
-			sb.append(Strings.change(this.order, getTokensToChangeDollarsAndNL()));
+			sb.append(" order by ");			
+			sb.append(Strings.change(transformAggregateProperties(this.order), getTokensToChangeDollarsAndNL()));
 		}
 		return  sb.toString();
 	}

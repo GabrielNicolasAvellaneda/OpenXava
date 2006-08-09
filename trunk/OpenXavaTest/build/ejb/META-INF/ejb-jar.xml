@@ -445,6 +445,15 @@
          </query>
          <query>
             <query-method>
+               <method-name>findOrderedByState</method-name>
+               <method-params>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Customer o ORDER BY o._Address_state_name]]></ejb-ql>
+         </query>
+         <query>
+            <query-method>
                <method-name>findAll</method-name>
                <method-params>
                </method-params>
