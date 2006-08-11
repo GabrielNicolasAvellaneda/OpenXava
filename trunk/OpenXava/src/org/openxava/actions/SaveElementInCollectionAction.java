@@ -5,6 +5,7 @@ import java.util.*;
 import javax.ejb.*;
 
 import org.openxava.model.*;
+import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
 import org.openxava.view.*;
@@ -32,8 +33,10 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	
 	private void saveEntity(Map containerKey) throws Exception {
 		if (getCollectionElementView().isEditable()) {
+			// Entity reference used as aggregate
 			Map parentKey = new HashMap();
-			parentKey.put(Strings.firstLower(getCollectionElementView().getParent().getModelName()), containerKey);
+			MetaCollection metaCollection = getCollectionElementView().getParent().getMetaModel().getMetaCollection(getCollectionElementView().getMemberName());
+			parentKey.put(metaCollection.getMetaReference().getRole(), containerKey);
 			Map values = getCollectionElementView().getValues();
 			values.putAll(parentKey);
 			try {
@@ -46,9 +49,12 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 			}						
 		}
 		else {
-			Map parentKey = new HashMap();
-			parentKey.put(Strings.firstLower(getCollectionElementView().getParent().getModelName()), containerKey);		
-			MapFacade.setValues(getCollectionElementView().getModelName(), getCollectionElementView().getKeyValues(), parentKey);
+			// Entity reference used in the standard way
+			MapFacade.addCollectionElement(
+					getCollectionElementView().getParent().getMetaModel().getName(),
+					getCollectionElementView().getParent().getKeyValues(),
+					getCollectionElementView().getMemberName(),  
+					getCollectionElementView().getKeyValues());
 			addMessage("entity_associated" , getCollectionElementView().getModelName(), getCollectionElementView().getParent().getModelName()); 
 		}
 	}
