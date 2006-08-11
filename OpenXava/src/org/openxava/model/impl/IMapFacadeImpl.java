@@ -55,7 +55,10 @@ public interface IMapFacadeImpl {
 		 
 	Map createReturningKey(String user, String modelName, Map values)		 
 		throws CreateException, XavaException, ValidationException, RemoteException;
-		
+
+	void addCollectionElement(String user, String modelName, Map keyValues, String collectionName, Map collectionElementKeyValue) 
+		throws FinderException, ValidationException, XavaException,  RemoteException; 
+	
 	void removeCollectionElement(String user, String modelName, Map keyValues, String collectionName, Map collectionElementKeyValue) 
 		throws RemoveException, FinderException, ValidationException, XavaException,  RemoteException; 
 		 			

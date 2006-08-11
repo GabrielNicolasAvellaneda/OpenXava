@@ -1,5 +1,6 @@
 package org.openxava.model;
 
+import java.lang.reflect.*;
 import java.rmi.*;
 import java.util.*;
 
@@ -570,7 +571,7 @@ public class MapFacade {
 
 
 	/**
-	 * Removes a elemente from a collection. <p>
+	 * Removes an elemente from a collection. <p>
 	 * 
 	 * If it's a aggregate remove the aggregate, and if it's a entity reference
 	 * make the left to point to the parent object, hence left the collection.<br>
@@ -601,7 +602,38 @@ public class MapFacade {
 			annulImpl(modelName);
 			getImpl(modelName).removeCollectionElement(Users.getCurrent(), modelName, keyValues, collectionName, collectionElementKeyValues);
 		}
+	}
+	
+	/** 
+	 * Add an element to a collection. <p>
+	 * 
+	 * It does not create the element, only adds it to the collection, therefore
+	 * for aggregate collections it's not useful using this method, it's better to create
+	 * the aggregate using <code>createAggregate</code> methods.
+	 * 
+	 * @param modelName  OpenXava model name. Not null.
+	 * @param keyValues  Key value of the container of the collection. Not null. <i>By value</i> semantics.
+	 * @param collectionName  Collection name of the container collection of element to add. Not null.
+	 * @param collectionElementKeyValues  Key value of element to add. Not null. <i>By value</i> semantics.
+	 * @exception ObjectNotFoundException  If object with this key does not exist 
+	 * @exception FinderException  Logic problem on find.	
+	 * @exception ValidationException  Data validation problems. 
+	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
+	 * @exception RemoteException  System problem. Rollback transaction.
+	 */	
+	public static void addCollectionElement(String modelName, Map keyValues, String collectionName, Map collectionElementKeyValues) 
+		throws ObjectNotFoundException, FinderException, ValidationException, XavaException,  RemoteException 
+	{
+		Assert.arg(modelName, keyValues, collectionName, collectionElementKeyValues);
+		try {
+			getImpl(modelName).addCollectionElement(Users.getCurrent(), modelName, keyValues, collectionName, collectionElementKeyValues);
+		}
+		catch (RemoteException ex) {
+			annulImpl(modelName);
+			getImpl(modelName).addCollectionElement(Users.getCurrent(), modelName, keyValues, collectionName, collectionElementKeyValues);
+		}		
 	}	
+	
 
 	private static boolean usesEJB() {
 		if (!usesEJBObtained) {

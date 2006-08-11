@@ -425,27 +425,92 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			rollback();
 			throw new RemoteException(ex.getMessage());
 		}						
-	}
+	}	
 		
 	private void removeCollectionElement(String modelName, Map keyValues, String collectionName, Map collectionElementKeyValues) 
-		throws FinderException,	ValidationException, XavaException, RemoveException, RemoteException 
+		throws FinderException,	ValidationException, XavaException, RemoveException, RemoteException, InvocationTargetException, PropertiesManagerException 
 	{
-		MetaModel metaModel = getMetaModel(modelName);
-		MetaCollection metaCollection = metaModel.getMetaCollection(collectionName);
-		MetaModel metaModelReferenced = metaCollection.getMetaReference().getMetaModelReferenced();
+		MetaModel parentMetaModel = getMetaModel(modelName);
+		MetaCollection metaCollection = parentMetaModel.getMetaCollection(collectionName);
+		MetaModel childMetaModel = metaCollection.getMetaReference().getMetaModelReferenced();
 		if (metaCollection.isAggregate()) {						
-			remove(metaModelReferenced, collectionElementKeyValues);
+			remove(childMetaModel, collectionElementKeyValues);
 		}
 		else {
-			Map nullParentKey = new HashMap();
-			nullParentKey.put(Strings.firstLower(modelName), null);						
-			setValues(metaModelReferenced, collectionElementKeyValues, nullParentKey);					
+			String refToParent = metaCollection.getMetaReference().getRole();
+			if (childMetaModel.containsMetaReference(refToParent)) {
+				// If the child contains the reference to its parent we simply update this reference
+				Map nullParentKey = new HashMap();
+				nullParentKey.put(Strings.firstLower(modelName), null);						
+				setValues(childMetaModel, collectionElementKeyValues, nullParentKey);
+			}
+			else {
+				// If not (as in ManyToMany relationship), we update the collection in parent
+				Object parent = findEntity(parentMetaModel, keyValues);
+				Object child = findEntity(childMetaModel, collectionElementKeyValues);
+				PropertiesManager pm = new PropertiesManager(parent);
+				Collection collection = (Collection) pm.executeGet(collectionName);
+				collection.remove(child);
+			}					
 		}												
 		if (metaCollection.hasPostRemoveCalculators()) {
-			executePostremoveCollectionElement(metaModel, keyValues, metaCollection);			
+			executePostremoveCollectionElement(parentMetaModel, keyValues, metaCollection);			
 		}						
 	}
 	
+	public void addCollectionElement(String user, String modelName, Map keyValues, String collectionName, Map collectionElementKeyValues)   
+		throws FinderException,	ValidationException, XavaException, RemoteException 
+	{
+		Users.setCurrent(user);
+		keyValues = Maps.recursiveClone(keyValues); 
+		collectionElementKeyValues = Maps.recursiveClone(collectionElementKeyValues); 		
+		try {		
+			getPersistenceProvider().begin();
+			addCollectionElement(modelName, keyValues, collectionName, collectionElementKeyValues);
+			getPersistenceProvider().commit();
+		} 
+		catch (FinderException ex) {
+			rollback();
+			throw ex;
+		}
+		catch (ValidationException ex) {
+			rollback();
+			throw ex;
+		}
+		catch (XavaException ex) {
+			rollback();
+			throw ex;
+		}
+		catch (Exception ex) {
+			rollback();
+			throw new RemoteException(ex.getMessage());
+		}						
+	}	
+		
+	private void addCollectionElement(String modelName, Map keyValues, String collectionName, Map collectionElementKeyValues) 
+		throws FinderException,	ValidationException, XavaException, RemoteException, InvocationTargetException, PropertiesManagerException 
+	{
+		MetaModel parentMetaModel = MetaComponent.get(modelName).getMetaEntity();
+		MetaCollection metaCollection = parentMetaModel.getMetaCollection(collectionName);		
+		String refToParent = metaCollection.getMetaReference().getRole();
+		MetaModel childMetaModel = metaCollection.getMetaReference().getMetaModelReferenced();
+		
+		if (childMetaModel.containsMetaReference(refToParent)) {
+			// If the child contains the reference to its parent we simply update this reference
+			Map parentKey = new HashMap();
+			parentKey.put(refToParent, keyValues);		
+			setValues(childMetaModel, collectionElementKeyValues, keyValues);								
+		}
+		else {
+			// If not (as in ManyToMany relationship), we update the collection in parent
+			Object parent = findEntity(parentMetaModel, keyValues);
+			Object child = findEntity(childMetaModel, collectionElementKeyValues);
+			PropertiesManager pm = new PropertiesManager(parent);
+			Collection collection = (Collection) pm.executeGet(collectionName);
+			collection.add(child);
+		}		
+	}
+		
 	private Messages validate(String modelName, Map values, boolean creating) throws XavaException, RemoteException { 			
 		MetaEntity metaEntity = (MetaEntity) MetaComponent.get(modelName).getMetaEntity();		
 		Messages validationErrors = new Messages(); 				
@@ -1392,9 +1457,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			else if (metaModel.getMapping().hasPropertyMapping(memberName)) {
 				value = en.getValue();
 			}
-			else {
-				throw new XavaException("member_not_found", memberName, metaModel
-						.getName());
+			else {				
+				throw new XavaException("member_not_found", memberName, metaModel.getName());
 			}
 			result.put(memberName, value);
 		}
