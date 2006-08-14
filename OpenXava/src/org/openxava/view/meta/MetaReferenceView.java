@@ -1,7 +1,5 @@
 package org.openxava.view.meta;
 
-import java.util.*;
-
 /**
  * @author Javier Paniza
  */
@@ -15,6 +13,7 @@ public class MetaReferenceView extends MetaMemberView implements java.io.Seriali
 	private boolean create;
 	private boolean search;
 	private boolean readOnly;
+	private boolean asAggregate; 
 	
 	public String getReferenceName() {
 		return referenceName==null?"":referenceName.trim();
@@ -73,6 +72,14 @@ public class MetaReferenceView extends MetaMemberView implements java.io.Seriali
 	}
 	public void setReadOnly(boolean readOnly) {
 		this.readOnly = readOnly;
+	}
+
+	public boolean isAsAggregate() {
+		return asAggregate;
+	}
+
+	public void setAsAggregate(boolean asAggregate) {
+		this.asAggregate = asAggregate;
 	}
 	
 }

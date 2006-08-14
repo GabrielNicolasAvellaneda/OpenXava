@@ -51,6 +51,35 @@ public class Maps {
 		if (subtree == null) return null;
 		return  getValueFromQualifiedName(subtree, qualifiedName.substring(idx + 1));		
 	}
+	
+	/** 
+	 * Put a value in a map with nested maps from a qualified name.
+	 * 
+	 * For example:
+	 * <code>(((Map) mymap.get("a")).get("b")).put("c", value)</code>
+	 * is equal to:
+	 * <code>Maps.putValueFromQualifiedName(mymap, "a.b.c", value)</code> 
+	 * 
+	 * @param tree  Map with map in some values, hence in tree-form.
+	 * @param qualifiedName  Name in form a.b.c. 
+	 * @param value  Value to put 
+	 */
+	public static void putValueFromQualifiedName(Map tree, String qualifiedName, Object value) {
+		int idx = qualifiedName.indexOf('.'); 
+		if (idx < 0) {
+			tree.put(qualifiedName, value);
+			return;
+		}
+		Map subtree = (Map) tree.get(qualifiedName.substring(0, idx));
+		if (subtree == null) {
+			subtree = new HashMap();
+			tree.put(qualifiedName.substring(0, idx), subtree);
+		}
+		putValueFromQualifiedName(subtree, qualifiedName.substring(idx + 1), value);		
+	}
+	
+	
+	
 		
 	/**
 	 * Makes a clone of map manually. <p>  

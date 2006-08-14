@@ -112,7 +112,13 @@
 		<view name="SimpleStateAsForm"/>
 		<controller name="Typical"/>
 	</module>
-			<module name="CustomersWithSection" folder="invoicing.variations">			<model name="Customer"/>		<view name="WithSection"/>		<controller name="Customers"/>			</module>		<module name="CustomersNewOnInit" folder="invoicing.variations">			<model name="Customer"/>		<view name="SectionGroup"/>		<controller name="CustomersNewOnInit"/>			</module>
+			<module name="CustomersWithSection" folder="invoicing.variations">			<model name="Customer"/>		<view name="WithSection"/>		<controller name="Customers"/>			</module>
+	
+	<module name="CustomersSellerAsAggregate" folder="invoicing.variations">	
+		<model name="Customer"/>
+		<view name="SellerAsAggregate"/>
+		<controller name="Typical"/>		
+	</module>			<module name="CustomersNewOnInit" folder="invoicing.variations">			<model name="Customer"/>		<view name="SectionGroup"/>		<controller name="CustomersNewOnInit"/>			</module>
 	
 	<module name="CustomersNewOnInitInherited" folder="invoicing.variations">	
 		<model name="Customer"/>

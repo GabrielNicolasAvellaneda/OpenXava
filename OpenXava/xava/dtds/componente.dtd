@@ -64,6 +64,7 @@
   marco (true|false) "true"
   crear (true|false) "true"
   buscar (true|false) "true"
+  como-agregado (true|false) "false"    
 >
 
 <!ELEMENT lista-descripciones EMPTY>

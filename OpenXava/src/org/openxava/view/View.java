@@ -26,7 +26,7 @@ import org.openxava.web.*;
  */
 
 public class View implements java.io.Serializable {
-	
+		
 	private static final long serialVersionUID = -7582669617830655121L;
 
 	private final static int [] EMPTY_SELECTED = new int[0];
@@ -64,7 +64,7 @@ public class View implements java.io.Serializable {
 	private Map membersNames;
 	private MetaModel metaModel;
 	private Collection metaMembers;
-	private Map values;  
+	private Map values; 
 	private MetaView metaView;
 	private boolean keyEditable = true;
 	private boolean editable = true;
@@ -268,7 +268,7 @@ public class View implements java.io.Serializable {
 					values.put(en.getKey(), v.getValues(all));					
 				}
 				else {					
-					values.put(en.getKey(), v.getKeyValues());
+					values.put(en.getKey(), v.getKeyValues());					
 				}				
 			}
 		}
@@ -284,12 +284,12 @@ public class View implements java.io.Serializable {
 		if (hasSections()) {
 			int count = getSections().size();
 			for (int i=0; i<count; i++) {												
-				values.putAll(getSectionView(i).getValues(all));
+				values.putAll(getSectionView(i).getValues(all));				
 			}
 		}									
 		
 		if (hiddenKey != null) {
-			values.putAll(hiddenKey);
+			values.putAll(hiddenKey);			
 		}
 		
 		return values;
@@ -342,8 +342,8 @@ public class View implements java.io.Serializable {
 	
 	public void setValues(Map map) throws XavaException {		
 		if (values == null) values = new HashMap();
-		else values.clear();				
-		addValues(map);								
+		else values.clear();
+		addValues(map);		
 	}
 	
 
@@ -435,6 +435,7 @@ public class View implements java.io.Serializable {
 		}		
 	}
 	
+
 	/**
 	 * 
 	 * @param name  Qualified properties are allowed
@@ -542,7 +543,7 @@ public class View implements java.io.Serializable {
 			newView.setMemberName(getMemberName()); 
 			newView.setGroup(true);
 			newView.setEditable(isEditable()); 
-			getGroupsViews().put(member.getName(), newView);						
+			getGroupsViews().put(member.getName(), newView);			
 			return;			
 		}		
 		if (ref.isAggregate()) {		
@@ -608,6 +609,12 @@ public class View implements java.io.Serializable {
 			MetaReferenceView metaReferenceView = getMetaView().getMetaReferenceView(ref);
 			if (metaReferenceView != null) {
 				newView.setReadOnly(metaReferenceView.isReadOnly());
+				if (newView.isRepresentsEntityReference()) {
+					newView.setRepresentsAggregate(metaReferenceView.isAsAggregate());					
+					if (newView.isRepresentsAggregate()) {
+						newView.setEditable(isEditable());
+					}
+				}
 			}			
 		}
 		newView.setMemberName(member.getName());
@@ -821,7 +828,7 @@ public class View implements java.io.Serializable {
 					while (itProperties.hasNext()) {
 						String property = (String) itProperties.next();						
 						String overlappedProperty = mapping.getOverlappingPropertyForReference(getMemberName(), property);						
-						result.put(property, getParent().getValue(overlappedProperty, false));						
+						Maps.putValueFromQualifiedName(result, property, getParent().getValue(overlappedProperty, false));
 					}
 					
 				}								
@@ -978,7 +985,7 @@ public class View implements java.io.Serializable {
 				collectionMemberNames.put(referenceName, ref);
 			}
 			if (referencePropertyName.indexOf('.') < 0) {
-				ref.put(referencePropertyName, null);
+				ref.put(referencePropertyName, null);				
 			}
 			else {
 				addQualifiedMemberToMap(referencePropertyName, ref);
@@ -1422,7 +1429,7 @@ public class View implements java.io.Serializable {
 	}
 	
 	public void assignValuesToWebView() {
-		assignValuesToWebView(getModelName());
+		assignValuesToWebView(getModelName());		
 	}
 		
 	public void assignValuesToWebView(String qualifier) {
