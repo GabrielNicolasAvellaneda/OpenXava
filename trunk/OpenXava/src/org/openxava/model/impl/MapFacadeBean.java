@@ -499,7 +499,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			// If the child contains the reference to its parent we simply update this reference
 			Map parentKey = new HashMap();
 			parentKey.put(refToParent, keyValues);		
-			setValues(childMetaModel, collectionElementKeyValues, keyValues);								
+			setValues(childMetaModel, collectionElementKeyValues, parentKey);								
 		}
 		else {
 			// If not (as in ManyToMany relationship), we update the collection in parent
@@ -688,6 +688,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			if (validationErrors.contains()) {
 				throw new ValidationException(validationErrors);			
 			}
+			updateReferencedEntities(metaModel, values); 
 			Map convertedValues = convertSubmapsInObject(metaModel, values, XavaPreferences.getInstance().isEJB2Persistence());
 			Object newObject = null;
 			if (metaModelContainer == null) {
@@ -718,6 +719,21 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		} catch (XavaException ex) {
 			ex.printStackTrace();
 			throw new XavaException("create_error", metaModel.getName());
+		}
+	}
+
+	private void updateReferencedEntities(MetaModel metaModel, Map values) throws XavaException, RemoteException, CreateException, ValidationException {
+		for (Iterator it = metaModel.getMetaReferencesWithMapping().iterator(); it.hasNext(); ) {
+			MetaReference ref = (MetaReference) it.next();
+			Map referenceValues = (Map) values.get(ref.getName());
+			if (referenceValues != null && referenceValues.size() > ref.getMetaModelReferenced().getMetaMembersKey().size()) {
+				try {									
+					setValues(ref.getMetaModelReferenced(), new HashMap(referenceValues), new HashMap(referenceValues));
+				}
+				catch (FinderException ex) {
+					create(ref.getMetaModelReferenced(), new HashMap(referenceValues), null, null, 0);
+				}
+			}			
 		}
 	}
 
@@ -1155,7 +1171,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		
 	private void setValues(MetaModel metaModel, Map keyValues, Map values)
 		throws FinderException, ValidationException, XavaException {		
-		try {						 
+		try {			
+			updateReferencedEntities(metaModel, values);
 			removeKeyFields(metaModel, values);			
 			removeReadOnlyFields(metaModel, values);
 			removeViewProperties(metaModel, values);			

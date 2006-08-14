@@ -6,7 +6,6 @@ import javax.ejb.*;
 
 import org.openxava.model.*;
 import org.openxava.model.meta.*;
-import org.openxava.util.*;
 import org.openxava.validators.*;
 import org.openxava.view.*;
 
@@ -17,7 +16,7 @@ import org.openxava.view.*;
 public class SaveElementInCollectionAction extends CollectionElementViewBaseAction {
 	
 	public void execute() throws Exception {		
-		try {								
+		try {				
 			Map containerKey = saveIfNotExists(getCollectionElementView().getParent());
 			if (isEntityReferencesCollection()) saveEntity(containerKey);
 			else saveAggregate(containerKey); 			

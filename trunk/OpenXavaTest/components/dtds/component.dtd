@@ -61,6 +61,7 @@
   frame (true|false) "true"
   create (true|false) "true"
   search (true|false) "true"
+  as-aggregate (true|false) "false"
 >
 
 <!ELEMENT descriptions-list EMPTY>

@@ -6,8 +6,6 @@ import org.openxava.util.xmlparse.*;
 import org.openxava.view.meta.*;
 import org.w3c.dom.*;
 
-import sun.security.action.*;
-
 
 /**
  * @author: Javier Paniza
@@ -177,6 +175,7 @@ public class ViewParser extends XmlElementsNames {
 		a.setReferenceName(el.getAttribute(xreference[lang]));
 		a.setViewName(el.getAttribute(xview[lang]));
 		a.setReadOnly(ParserUtil.getAttributeBoolean(el, xread_only[lang]));
+		a.setAsAggregate(ParserUtil.getAttributeBoolean(el, xas_aggregate[lang]));
 		if (!Is.emptyString(el.getAttribute(xframe[lang]))) {
 			a.setFrame(ParserUtil.getAttributeBoolean(el, xframe[lang]));
 		}
