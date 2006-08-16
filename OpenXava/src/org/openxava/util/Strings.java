@@ -536,5 +536,4 @@ public class Strings {
 		return "";
 	}
 	
-    
 }
