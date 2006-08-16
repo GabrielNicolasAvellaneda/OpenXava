@@ -354,15 +354,6 @@
 	     </query>
          <query>
             <query-method>
-               <method-name>findOrderedByState</method-name>
-               <method-params>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o ORDER BY o._Address_state_name]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
                <method-name>findAll</method-name>
                <method-params>
                </method-params>

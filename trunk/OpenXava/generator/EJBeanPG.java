@@ -5,6 +5,7 @@ import java.io.*;
 import java.util.*;
 import org.openxava.util.Strings;
 import org.openxava.util.XavaException;
+import org.openxava.util.XavaResources;
 import org.openxava.util.meta.MetaSet;
 import org.openxava.component.MetaComponent;
 import org.openxava.model.meta.*;
@@ -14,7 +15,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Fri Aug 04 11:18:34 CEST 2006
+ * @version Mon Aug 14 13:45:49 CEST 2006
  */
 public class EJBeanPG {
     Properties properties = new Properties();
@@ -204,6 +205,10 @@ private String generateEJBQLforReference(MetaModel model, String referenceName) 
      Iterator itFinders = metaModel.getMetaFinders().iterator();
      while (itFinders.hasNext()) {
      	MetaFinder finder = (MetaFinder) itFinders.next();
+     	if (!finder.isSupportedForEJB2()) {
+     		System.err.println(XavaResources.getString("ejb2_not_supported_finder_warning", finder.getName(), name)); 
+     		continue;
+     	}
      	String finderName = Strings.firstUpper(finder.getName());
      	String arguments = finder.getArguments();
      	String condition = finder.getEJBQLCondition(); 	
@@ -1192,7 +1197,7 @@ private String generateEJBQLforReference(MetaModel model, String referenceName) 
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Fri Aug 04 11:18:34 CEST 2006", // date this file was generated
+        { "Mon Aug 14 13:45:50 CEST 2006", // date this file was generated
              "../OpenXava/generator/ejbean.xml", // input file
              "../OpenXava/generator/EJBeanPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

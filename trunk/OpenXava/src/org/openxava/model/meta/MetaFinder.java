@@ -76,6 +76,35 @@ public class MetaFinder implements Serializable {
 		return getMetaModel().getMapping().changePropertiesByColumns(this.condition);
 	}
 	
+	public boolean isSupportedForEJB2() throws XavaException {
+		return !hasSome3LevelProperty(getCondition()) && 
+			!hasSome3LevelProperty(getOrder());
+	}
+	
+	private boolean hasSome3LevelProperty(String sentence) throws XavaException {
+		if (sentence == null) return false;
+		int i = sentence.indexOf("${");
+		int f = 0;
+		while (i >= 0) {
+			f = sentence.indexOf("}", i + 2);
+			if (f < 0) break;
+			String property = sentence.substring(i + 2, f);			
+			StringTokenizer st = new StringTokenizer(property, ".");
+			if (st.countTokens() > 3) {
+				System.err.println(XavaResources.getString("property_3_level_in_ejb2_finder", property, getName()));
+				return true;
+			}
+			if (st.countTokens() == 3) {
+				if (!getMetaModel().getMetaProperty(property).isKey()) {
+					System.err.println(XavaResources.getString("property_3_level_in_ejb2_finder", property, getName()));
+					return true;
+				}
+			}
+			i = sentence.indexOf("${", i + 1);
+		}
+		return false;
+	}
+
 	public String getEJBQLCondition() throws XavaException {
 		StringBuffer sb = new StringBuffer("SELECT OBJECT(o) FROM ");
 		sb.append(getMetaModel().getName());
