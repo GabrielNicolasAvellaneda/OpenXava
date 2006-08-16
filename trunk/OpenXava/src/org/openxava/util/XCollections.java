@@ -8,6 +8,16 @@ import java.util.*;
  * @author Javier Paniza
  */
 public class XCollections {
+	
+
+	/**
+	 * Returns the last element of sent collection. <p>
+	 * @param collection  Cannot be null
+	 */
+	public static Object last(Collection collection) {
+		List list = collection instanceof List?(List) collection:new ArrayList(collection);
+		return list.get(list.size() - 1);
+	}
 
 
 	/**
