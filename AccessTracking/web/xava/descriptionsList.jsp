@@ -84,8 +84,8 @@ else {
 			sb.append(',');
 		}
 	}	
-	Object key = ref.getMetaModelReferenced().toPOJO(values);	
-	String fvalue = key==null?"0":key.toString();
+	String key = ref.getMetaModelReferenced().toString(values); 
+	String fvalue = key==null?"0":key;
 	request.setAttribute(propertyKey + ".fvalue", fvalue);
 	keyProperties = sb.toString();
 }
@@ -142,14 +142,12 @@ if (editable && view.isCreateNewForReference(ref)) {
 %>
 
 <%
-if (editable) {
-	java.util.Iterator itActions = view.getActionsNamesForReference(ref).iterator();
-	while (itActions.hasNext()) {
-		String action = (String) itActions.next();
+java.util.Iterator itActions = view.getActionsNamesForReference(ref, editable).iterator();
+while (itActions.hasNext()) {
+	String action = (String) itActions.next();
 %>
 <xava:action action="<%=action%>"/>
 <%
-	}
 }
 %>
 <%=postEditor%>

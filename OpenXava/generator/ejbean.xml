@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <tl><declare import="org.openxava.util.Strings"/>
 <declare import="org.openxava.util.XavaException"/>
+<declare import="org.openxava.util.XavaResources"/>
 <declare import="org.openxava.util.meta.MetaSet"/>
 <declare import="org.openxava.component.MetaComponent"/>
 <declare import="org.openxava.model.meta.*"/>
@@ -177,6 +178,10 @@ import <expr>packageName</expr>.*;
  Iterator itFinders = metaModel.getMetaFinders().iterator();
  while (itFinders.hasNext()) {
  	MetaFinder finder = (MetaFinder) itFinders.next();
+ 	if (!finder.isSupportedForEJB2()) {
+ 		System.err.println(XavaResources.getString("ejb2_not_supported_finder_warning", finder.getName(), name)); 
+ 		continue;
+ 	}
  	String finderName = Strings.firstUpper(finder.getName());
  	String arguments = finder.getArguments();
  	String condition = finder.getEJBQLCondition(); 	

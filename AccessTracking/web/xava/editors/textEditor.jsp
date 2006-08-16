@@ -1,4 +1,6 @@
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
+<%@ page import="org.openxava.util.Strings" %>
+<%@ page import="org.openxava.util.Align" %>
 
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
@@ -23,15 +25,8 @@ int size = p.getSize() > maxSize?maxSize:p.getSize();
 
 boolean fillWithZeros = "true".equals(request.getParameter("fillWithZeros"));
 if (fillWithZeros && fvalue.length() > 0) {	
-	int numZeros = size - (fvalue.length());
-	String filler = "";
-	for (int i = 0; i < numZeros; i++) {
-		filler = "0" + filler;
-	}
-	
-	fvalue = filler + fvalue;
+	fvalue = Strings.fix(fvalue, size, Align.RIGHT, '0');
 }
-
 
 if (editable || !label) {
 %>
