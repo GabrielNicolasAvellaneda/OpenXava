@@ -200,7 +200,7 @@ public class Tab {
 	public IXTableModel getTableModel() throws Exception {		
 		if (tableModel == null) {
 			try {
-				tableModel = createTableModel();
+				tableModel = createTableModel();			
 			}
 			catch (Exception ex) {
 				restoreDefaultProperties(); // if fails because user customized list uses properties no longer existing 
@@ -289,7 +289,7 @@ public class Tab {
 					sb.append(convertComparator(this.conditionComparators[i]));
 					sb.append(" ? ");
 					if (metaPropertiesKey == null) metaPropertiesKey = new ArrayList(); 
-					metaPropertiesKey.add(p);
+					metaPropertiesKey.add(p);					
 				}
 			}		
 			if (pOrder != null) {				
@@ -421,7 +421,7 @@ public class Tab {
 			for (int i = indexIncrement; i < key.length; i++) {
 				MetaProperty p = (MetaProperty) metaPropertiesKey.get(i - indexIncrement);
 				// If has a converter, apply
-				
+												
 				if (p.getMapping().hasConverter()) {
 					try {	
 						key[i] = p.getMapping().getConverter().toDB(key[i]);
@@ -588,7 +588,7 @@ public class Tab {
 	
 	public void setConditionValues(String [] values) throws XavaException {
 	  if (Arrays.equals(this.conditionValues, values)) return;
-		if (getMetaPropertiesNotCalculated().size() != values.length) return; // to avoid problems on changing module
+	  if (getMetaPropertiesNotCalculated().size() != values.length) return; // to avoid problems on changing module	  
 	  this.conditionValues = values;
 	  goPage(1);
 	  rowsHidden = false;

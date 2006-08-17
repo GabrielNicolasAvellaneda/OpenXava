@@ -19,7 +19,7 @@ import org.openxava.validators.meta.*;
  * @author Javier Paniza
  */
 public class MetaProperty extends MetaMember implements Cloneable {
-
+	
 	private Collection propertyNamesThatIDepend;
 	private Collection metaValidators;	
 	private Collection validators;
@@ -495,6 +495,12 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			// the cloned metaproperty can be desconected from model 
 			clon.isReadOnly(); 
 			clon.getType();
+			
+			// Sometimes it isn't possible to calculate mapping from the original property , 
+			// but it will be possible in the cloned one. 
+			// The next code is for leaving it the chance to try
+			if (clon.mapping == null) clon.mappingSet = false; 
+
 			return clon;
 		}
 		catch (XavaException ex) {
@@ -620,10 +626,10 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	/**
 	 * Can be null
 	 */
-	public PropertyMapping getMapping() throws XavaException {	
+	public PropertyMapping getMapping() throws XavaException {
 		if (!mappingSet) {
 			mappingSet = true;
-			if (getMetaModel() == null) {							
+			if (getMetaModel() == null) {
 				mapping = null;
 				return null;
 			}
@@ -635,22 +641,22 @@ public class MetaProperty extends MetaMember implements Cloneable {
 					modelMapping = getMetaModel().getMetaComponent().getEntityMapping();
 				}
 				else {
-					mapping = null;
+					mapping = null;					
 					return null;
 				}
 			}
 			if (propertyName == null) propertyName = getName();
 			if (modelMapping == null) modelMapping = getMetaModel().getMapping();									
-			if (modelMapping == null) mapping = null;
+			if (modelMapping == null) mapping = null;			
 			else {
 				try {
 					mapping = modelMapping.getPropertyMapping(propertyName);
 				}
-				catch (ElementNotFoundException ex) {								
+				catch (ElementNotFoundException ex) {
 					mapping = null;
 				}
 			}
-		}		
+		}	
 		return mapping;
 	}
 
@@ -829,7 +835,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		metaValidators.add(metaValidator);		
 	}
 	
-	public String toString() {
+	public String toString() {		
 		return "MetaProperty:" + getId();
 	}
 	
