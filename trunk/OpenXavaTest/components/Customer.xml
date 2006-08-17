@@ -139,6 +139,10 @@
 		<collection name="receptionists">
 			<reference model="Receptionist"/>			
 		</collection>	
+		
+		<validator class="org.openxava.test.validators.DeliveryPlaceValidator">
+			<set property="customer"/>
+		</validator>
 	</aggregate>	
 
 	<aggregate name="Receptionist">
