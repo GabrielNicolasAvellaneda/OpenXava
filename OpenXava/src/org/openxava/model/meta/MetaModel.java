@@ -1273,16 +1273,19 @@ abstract public class MetaModel extends MetaElement {
 	}
 	
 	/**
-	 * Convert a object of this model in a map of values. <p>
+	 * Convert an object of this model in a map of values. <p>
 	 * 
 	 * The model object must implement the interface of this model,
 	 * that is, IInvoice, ICustomer, ISeller, etc. Hence you can use
 	 * POJOs or EJB2 CMP beans, or whatever object that implements the
 	 * interface.<br> 
 	 * 
-	 * @param modelObject  Cannot be null.
+	 * @param modelObject  
+	 * @return if modelObject is null returns an empty map
 	 */
-	public Map toMap(Object modelObject) throws XavaException { 
+	public Map toMap(Object modelObject) throws XavaException {
+		if (modelObject == null) return new HashMap(); 
+		
 		try {
 			PropertiesManager pm = new PropertiesManager(modelObject);
 			Map values = new HashMap();
@@ -1293,7 +1296,7 @@ abstract public class MetaModel extends MetaElement {
 			for (Iterator it = getMetaReferences().iterator(); it.hasNext();) {
 				MetaReference reference = (MetaReference) it.next();
 				values.put(reference.getName(), reference.getMetaModelReferenced().toMap(pm.executeGet(reference.getName())));
-			}					
+			}	
 			return values;
 		}
 		catch (Exception ex) {
