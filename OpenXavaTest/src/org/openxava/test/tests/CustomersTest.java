@@ -41,7 +41,7 @@ public class CustomersTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", moduleName);		
 		this.section = section?"_section0":"";		
 	}
-		
+			
 	public void testObtainAggregateValues() throws Exception {
 		String city = getValueInList(0, "address.city");
 		assertTrue("Value for city in first customer is required for run this test", !Is.emptyString(city));
@@ -66,10 +66,26 @@ public class CustomersTest extends ModuleTestBase {
 	}
 		
 	public void testFilterByMemberOfAggregate() throws Exception {
-		String [] totalCondition = { "", "", "", "V" };		
+		assertListRowCount(4);
+		String [] totalCondition = { " ", "", "", "V" };		
 		setConditionValues(totalCondition);		
 		execute("List.filter");
-		assertNoErrors(); // At momment only testing if crash
+		assertNoErrors(); 
+		assertListRowCount(2); // We rely in that there are two customer of Valencia
+		
+		// To sure that it works after customizing list
+		execute("List.customize");
+		execute("List.removeColumn", "columnIndex=5");
+
+		setConditionValues(totalCondition);		
+		execute("List.filter");
+		assertNoErrors(); 
+		assertListRowCount(2); // We rely in that there are two customer of Valencia
+
+		// Restoring the list
+		execute("List.addColumns");
+		execute("AddColumns.restoreDefault");
+		assertNoErrors();
 	}
 	
 	public void testChangeView() throws Exception {
