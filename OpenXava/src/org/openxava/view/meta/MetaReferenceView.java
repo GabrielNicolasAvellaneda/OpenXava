@@ -10,10 +10,10 @@ public class MetaReferenceView extends MetaMemberView implements java.io.Seriali
 	private MetaSearchAction metaSearchAction;
 	private MetaDescriptionsList metaDescriptionsList;
 	private boolean frame = true;
-	private boolean create;
-	private boolean search;
-	private boolean readOnly;
-	private boolean asAggregate; 
+	private boolean create = true;
+	private boolean search = true;
+	private boolean readOnly = false;
+	private boolean asAggregate = false; 
 	
 	public String getReferenceName() {
 		return referenceName==null?"":referenceName.trim();
