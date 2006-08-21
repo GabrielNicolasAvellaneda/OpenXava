@@ -26,6 +26,12 @@ public class FamiliesTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Families");		
 	}
 	
+	// This test depends on a HTML generated UI
+	public void testOverrideI18nMessage() throws Exception {		
+		assertTrue("list_count is not override and it should", getHtml().indexOf("objets in list") < 0);
+		assertTrue("list_count is not override and it should", getHtml().indexOf("records in list") >= 0);
+	}
+	
 	public void testCreateReadUpdateDelete() throws Exception {
 		assertListRowCount(3);
 		// Create

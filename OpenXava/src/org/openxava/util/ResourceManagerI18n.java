@@ -3,6 +3,8 @@ package org.openxava.util;
 import java.text.*;
 import java.util.*;
 
+import org.openxava.application.meta.*;
+
 /**
  * @author Javier Paniza
  */
@@ -10,11 +12,21 @@ import java.util.*;
 public class ResourceManagerI18n {
 	
 	private String resourcesFile;
+	private String englishPrefix;
+	private String spanishPrefix;
 		
 	public ResourceManagerI18n(String resourcesFile) {
 		Assert.assertNotNull("Resource file is required", resourcesFile); // this message cannot be i18n
 		this.resourcesFile = resourcesFile;
 	}
+	
+	public ResourceManagerI18n(String resourcesFile, String englishPrefix, String spanishPrefix) {
+		Assert.assertNotNull("Resource file is required", resourcesFile); // this message cannot be i18n
+		this.resourcesFile = resourcesFile;
+		this.englishPrefix = englishPrefix;
+		this.spanishPrefix = spanishPrefix;
+	}
+	
 	
 	public String getString(String key) {
 		return getString(Locales.getCurrent(), key);
@@ -43,15 +55,41 @@ public class ResourceManagerI18n {
 		return formatter.format(argv);		
 	}
 	
-	public String getString(Locale locale, String key) {	
-		try {			
-			return ResourceBundle.getBundle(resourcesFile, locale).getString(key);
+	public String getString(Locale locale, String key) {
+		try {
+			Iterator it = MetaApplications.getApplicationsNames().iterator();
+			while (it.hasNext()) {
+				String name = (String) it.next();
+				if (englishPrefix != null) {
+					try {
+						ResourceBundle rb = ResourceBundle.getBundle(name + englishPrefix, locale);
+						return rb.getString(key);
+					}
+					catch (MissingResourceException ex) {
+					}							
+				}
+				if (spanishPrefix != null) {
+					try {
+						ResourceBundle rb = ResourceBundle.getBundle(spanishPrefix + name, locale);
+						return rb.getString(key);
+					}
+					catch (MissingResourceException ex) {
+					}			
+				}
+			}	
+		}
+		catch (Exception ex) {
+			System.err.println("Resource " + key + " cannot be translated using application specific resources. We use only " + resourcesFile);
+		}
+		try {
+			ResourceBundle rb = ResourceBundle.getBundle(resourcesFile, locale);
+			return rb.getString(key);
 		}
 		catch (MissingResourceException e) {
 			if (XavaPreferences.getInstance().isI18nWarnings()) {
 				System.err.println(XavaResources.getString("element_i18n_warning", key));
 			}
-			return '[' + key + ']';
+			return key;
 		}
 	}
 	

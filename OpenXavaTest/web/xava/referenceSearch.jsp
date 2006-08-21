@@ -9,9 +9,7 @@ String referenceLabel = (String) context.get(request, "xava_currentReferenceLabe
 
 <table class=<%=style.getFrame()%> width='100%' <%=style.getFrameSpacing()%>>
 	<tr class=<%=style.getFrameTitle()%>><th class=<%=style.getFrameTitleLabel()%> align='left'> 
-		<fmt:message key="choose_reference_prompt">
-			<fmt:param><%=referenceLabel%></fmt:param> 
-		</fmt:message>		
+		<xava:message key="choose_reference_prompt" param="<%=referenceLabel%>"/>
 	</th></tr>
 	<tr><td class=<%=style.getFrameContent()%>>
 

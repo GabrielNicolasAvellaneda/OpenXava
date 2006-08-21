@@ -5,14 +5,16 @@ import java.util.*;
 
 import javax.servlet.*;
 
-import org.openxava.application.meta.*;
 import org.openxava.model.meta.*;
 
 
 /**
  * Set of messages. <p>
  * 
+ * Uses {@link XavaResources} for doing i18n.
+ * 
  * @author Javier Paniza
+ * @see XavaResources
  */
 
 public class Messages implements java.io.Serializable {
@@ -60,11 +62,11 @@ public class Messages implements java.io.Serializable {
 				Object v = argv[i];
 				if (v instanceof String) {
 					try {
-						try {
-							result[i] = getMessage((String) v, locale);
+						try {							
+							result[i] = Labels.removeUnderlined(Labels.get((String)v, locale));
 						}
 						catch (MissingResourceException ex) {						
-							result[i] = Labels.removeUnderlined(Labels.get((String)v, locale)); 
+							result[i] = getMessage((String) v, locale); 
 						}
 					}
 					catch (Exception ex) {
@@ -79,24 +81,7 @@ public class Messages implements java.io.Serializable {
 		}
 
 		private String getMessage(String id, Locale locale) throws MissingResourceException, XavaException {
-			Iterator it = MetaApplications.getApplicationsNames().iterator();
-			while (it.hasNext()) {
-				String name = (String) it.next();
-				try {
-					ResourceBundle rb = ResourceBundle.getBundle(name + "-messages", locale);
-					return rb.getString(id);
-				}
-				catch (MissingResourceException ex) {
-				}							
-				try {
-					ResourceBundle rb = ResourceBundle.getBundle("Mensajes" + name, locale);
-					return rb.getString(id);
-				}
-				catch (MissingResourceException ex) {
-				}			
-			}		
-			ResourceBundle rb = ResourceBundle.getBundle("Messages", locale);
-			return rb.getString(id);
+			return XavaResources.getString(locale, id);
 		}
 		
 		private String format(String message, Object [] argv, Locale locale) {
