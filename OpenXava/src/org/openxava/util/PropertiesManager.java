@@ -154,7 +154,7 @@ public class PropertiesManager implements java.io.Serializable {
 		}
 		catch (IllegalArgumentException ex) {
 			if (value instanceof Number) value = tryConvertInEnum(pd.getPropertyType(), (Number) value);
-			value = tryConvertInNumber(pd.getPropertyType(), value);  			
+			else value = tryConvertInNumber(pd.getPropertyType(), value);  			
 			if (value != null) {
 				Object [] arg = { value };
 				try {
@@ -167,6 +167,7 @@ public class PropertiesManager implements java.io.Serializable {
 				}				
 			}
 			else {
+				System.err.println(XavaResources.getString("set_property_error", propertyName));
 				throw ex;
 			} 			
 		}
