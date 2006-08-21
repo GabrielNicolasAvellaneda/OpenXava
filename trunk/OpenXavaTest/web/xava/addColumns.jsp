@@ -11,13 +11,13 @@ tabObject = (tabObject == null || tabObject.equals(""))?"xava_tab":tabObject;
 org.openxava.tab.Tab tab = (org.openxava.tab.Tab) context.get(request, tabObject);
 %>
 <div class="portlet-form-label">
-<fmt:message key="choose_property_add_list_prompt"/>
+<xava:message key="choose_property_add_list_prompt"/>
 </div>
 
 <table id="xavaPropertiesList" class='<%=style.getList()%>' width="100%">
 <tr>
 	<th class=<%=style.getList()%> width="5"></th>
-	<th class=<%=style.getList()%>><fmt:message key="property"/></th>
+	<th class=<%=style.getList()%>><xava:message key="property"/></th>
 </tr>
 <%
 int f=0;

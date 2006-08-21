@@ -647,8 +647,6 @@
 			tofile="../OpenXava/bin/Messages.properties"/>
 		<copy file="../OpenXava/bin/Labels_${default.language}.properties" 
 			tofile="../OpenXava/bin/Labels.properties"/>		
-		<copy file="../OpenXava/bin/XavaResources_${default.language}.properties" 
-			tofile="../OpenXava/bin/XavaResources.properties"/>				
 		<copy file="../${project}/${classes.dir}/${project}-messages_${default.language}.properties" 
 			tofile="../${project}/${classes.dir}/${project}-messages.properties"
 			failonerror="false"/>

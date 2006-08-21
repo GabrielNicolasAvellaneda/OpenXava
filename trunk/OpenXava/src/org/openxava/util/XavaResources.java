@@ -8,12 +8,26 @@ import javax.servlet.http.*;
 
 
 /**
+ * To obtain i18n values from OpenXava resource files. <p>
+ * 
+ * Search resources in the next files and order:
+ * <ul>
+ * <li><i>[MyProject]-message.properties</i> in the folder <i>xava</i> of your project.</li>
+ * <li><i>Mensajes[MiProyecto].properties</i> in the folder <i>xava</i> of your project</li>
+ * <li><i>Messages.properties</i> in <i>OpenXava/xava</i></li>
+ * </ul>
+ * [MyProject] is the concrete name of your project.<br>
+ * 
+ * In this way your i18n translations have preferences over the standard ones of OpenXava.<br> 
+ *   
  * @author Javier Paniza
+ * @see Labels
+ * @see Messages
  */
 
 public class XavaResources {
 	
-	private static final ResourceManagerI18n impl = new ResourceManagerI18n("XavaResources"); 
+	private static final ResourceManagerI18n impl = new ResourceManagerI18n("Messages", "-messages", "Mensajes"); 
 		
 	public static String getString(String key) {	
 		return impl.getString(key); 

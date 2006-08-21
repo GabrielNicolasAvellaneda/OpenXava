@@ -11,7 +11,7 @@ String different = "ne".equals(comparator)?"selected='selected'":"";
 <input type="hidden" name="conditionValues" value="true">
 <select name="conditionComparators" class=<%=style.getEditor()%>>
 	<option value=""></option>
-	<option value="eq" <%=equal%>><fmt:message key="yes"/></option>
-	<option value="ne" <%=different%>><fmt:message key="no"/></option>
+	<option value="eq" <%=equal%>><xava:message key="yes"/></option>
+	<option value="ne" <%=different%>><xava:message key="no"/></option>
 </select>	
 	
