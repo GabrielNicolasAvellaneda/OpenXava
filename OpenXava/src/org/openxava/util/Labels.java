@@ -157,7 +157,17 @@ public class Labels {
 				return getExactResource(Strings.firstUpper(id), locale);
 			}
 			catch (MissingResourceException ex2) {
-				return getExactResource(Strings.firstLower(id), locale);
+				try {
+					return getExactResource(Strings.firstLower(id), locale);
+				}
+				catch (MissingResourceException ex3) {
+					try {
+						return getExactResource(id.toUpperCase(), locale);
+					}
+					catch (MissingResourceException ex4) {
+						return getExactResource(id.toLowerCase(), locale);
+					}
+				}
 			}
 		}
 	}	
