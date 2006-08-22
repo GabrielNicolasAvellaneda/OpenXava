@@ -261,7 +261,7 @@ if (!tab.isLastPage()) {
 </td>
 <td style='text-align: right; vertical-align: middle' class='<%=style.getListInfoDetail()%>'>
 <% if (XavaPreferences.getInstance().isShowCountInList()) { %>
-<xava:message key="list_count" param="<%=totalSize%>"/>
+<xava:message key="list_count" intParam="<%=totalSize%>"/>
 <% } %>
 (<xava:link action="List.hideRows"/>)
 </td>

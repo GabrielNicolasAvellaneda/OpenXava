@@ -114,6 +114,11 @@
        <required>false</required>
        <rtexprvalue>true</rtexprvalue>
     </attribute>    
+    <attribute>
+       <name>intParam</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>        
   </tag>         
   
         

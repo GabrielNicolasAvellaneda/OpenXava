@@ -1,6 +1,6 @@
 package org.openxava.test.validators;
 
-import org.openxava.test.model.Customer;
+import org.openxava.test.model.*;
 import org.openxava.util.Messages;
 import org.openxava.validators.IValidator;
 
@@ -10,17 +10,18 @@ import org.openxava.validators.IValidator;
  */
 
 public class DeliveryPlaceValidator implements IValidator {
-	private Customer customer;
+	
+	private ICustomer customer;
 	
 	public void validate(Messages errors) throws Exception {
 	
 	}
 
-	public Customer getCustomer() {
+	public ICustomer getCustomer() {
 		return customer;
 	}
 
-	public void setCustomer(Customer customer) {
+	public void setCustomer(ICustomer customer) {
 		this.customer = customer;
 	}
 
