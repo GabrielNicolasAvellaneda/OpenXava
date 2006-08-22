@@ -103,7 +103,7 @@
     <name>message</name>
     <tagclass>org.openxava.web.taglib.MessageTag</tagclass>
     <bodycontent>empty</bodycontent>
-    <info>Shows the message from key using XavaResources class for obtain translation</info>
+    <info>Shows the message from key using XavaResources class for obtaining translation</info>
     <attribute>
        <name>key</name>
        <required>true</required>
@@ -114,6 +114,11 @@
        <required>false</required>
        <rtexprvalue>true</rtexprvalue>
     </attribute>    
+    <attribute>
+       <name>intParam</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>        
   </tag>         
   
         
