@@ -1291,7 +1291,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 						else {							
 							MetaModel containerReference = metaModel.getMetaModelContainer();
 							try {
-								Map containerKeyMap = containerReference.toMap(containerKey);
+								Map containerKeyMap = getPersistenceProvider().keyToMap(containerReference, containerKey); 
 								value = getPersistenceProvider().find(containerReference, containerKeyMap);								
 							}
 							catch (ObjectNotFoundException ex) {								
