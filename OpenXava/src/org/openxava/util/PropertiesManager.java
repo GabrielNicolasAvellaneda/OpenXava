@@ -153,8 +153,15 @@ public class PropertiesManager implements java.io.Serializable {
 			throw ex;
 		}
 		catch (IllegalArgumentException ex) {
-			if (value instanceof Number) value = tryConvertInEnum(pd.getPropertyType(), (Number) value);
-			else value = tryConvertInNumber(pd.getPropertyType(), value);  			
+			if (value instanceof Number) {
+				value = tryConvertInEnum(pd.getPropertyType(), (Number) value);
+				if (value instanceof Number) { // not converted to Enum
+					value = tryConvertInNumber(pd.getPropertyType(), value);
+				}
+			}			
+			else {
+				value = tryConvertInNumber(pd.getPropertyType(), value);
+			}
 			if (value != null) {
 				Object [] arg = { value };
 				try {
@@ -200,7 +207,7 @@ public class PropertiesManager implements java.io.Serializable {
 		catch (Exception ex) {
 			ex.printStackTrace();
 			return value;
-		}				
+		}
 	}
 
 	private Object mapToObject(Class propertyType, Map values) throws ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, PropertiesManagerException {

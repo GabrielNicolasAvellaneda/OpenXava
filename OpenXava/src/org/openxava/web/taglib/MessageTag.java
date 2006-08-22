@@ -14,11 +14,21 @@ public class MessageTag extends TagSupport {
 	
 	private String key;
 	private Object param;
+	private int intParam = Integer.MIN_VALUE; // because java 1.4 haven't autoboxing
 
 	public int doStartTag() throws JspException {
 		try {
 			HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
-			String string = Is.empty(getParam())?XavaResources.getString(request, getKey()):XavaResources.getString(request, getKey(), getParam());
+			String string = null;
+			if (getIntParam() > Integer.MIN_VALUE) {
+				string = XavaResources.getString(request, getKey(), new Integer(getIntParam())); 
+			}
+			else if (!Is.empty(getParam())) {
+				string = XavaResources.getString(request, getKey(), getParam()); 
+			}
+			else {
+				string = XavaResources.getString(request, getKey()); 
+			}			
 			pageContext.getOut().print(string);
 		}
 		catch (Exception ex) {
@@ -42,6 +52,14 @@ public class MessageTag extends TagSupport {
 
 	public void setParam(Object param) {
 		this.param = param;
+	}
+
+	public int getIntParam() {
+		return intParam;
+	}
+
+	public void setIntParam(int intParam) {
+		this.intParam = intParam;
 	}
 
 }

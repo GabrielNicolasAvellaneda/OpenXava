@@ -56,6 +56,7 @@ abstract public class BasePOJOPersistenceProvider implements IPersistenceProvide
 	 * @return Null if not result.
 	 */
 	abstract protected Object getUniqueResult(Object query);
+		
 
 	public Object find(MetaModel metaModel, Map keyValues) throws FinderException {
 		try {						
@@ -185,6 +186,10 @@ abstract public class BasePOJOPersistenceProvider implements IPersistenceProvide
 		}
 	}
 	
+	public Map keyToMap(MetaModel metaModel, Object key) throws XavaException {
+		return metaModel.toMap(key);
+	}
+	
 	private Object convertSingleKeyType(MetaModel metaModel, String property, Object value) {
 		try {
 			Class modelClass = metaModel.getPOJOClass();
@@ -269,5 +274,7 @@ abstract public class BasePOJOPersistenceProvider implements IPersistenceProvide
 			return true; // Maybe a view property 
 		}
 	}
+	
+	
 
 }

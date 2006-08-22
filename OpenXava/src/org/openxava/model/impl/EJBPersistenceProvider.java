@@ -195,6 +195,10 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 		return metaModel.getMetaEJB().obtainPrimaryKeyFromKey(keyValues);
 	}
 	
+	public Map keyToMap(MetaModel metaModel, Object key) throws XavaException {
+		return metaModel.getMetaEJB().obtainMapFromPrimaryKey(key); 
+	}
+	
 	public Object createAggregate( 
 		MetaModel metaModel,
 		Map values,

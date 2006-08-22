@@ -79,6 +79,14 @@ public interface IPersistenceProvider {
 	Object getKey(MetaModel metaModel, Map keyValues) throws XavaException;
 	
 	/**
+	 * Returns a map that contains the value of primary key sent as object. <p>
+	 * 
+	 * The map must contain at least the primary key value, but it can contains
+	 * more, the rest is ignored. 
+	 */
+	Map keyToMap(MetaModel metaModel, Object key) throws XavaException;
+	
+	/**
 	 * Remove the object from persistent storage.
 	 */
 	void remove(MetaModel metaModel, Object modelObject) throws RemoveException, XavaException;
