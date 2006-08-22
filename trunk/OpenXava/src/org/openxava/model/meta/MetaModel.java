@@ -67,7 +67,8 @@ abstract public class MetaModel extends MetaElement {
 	private String qualifiedName;
 	private boolean hasDefaultCalculatorOnCreate = false;
 	private MetaEJB metaEJB;
-	private String pojoClassName;	
+	private String pojoClassName;
+	private Collection metaReferencesToEntity;	
 	
 	/**
 	 * All models (Entities and Aggregates) with a mapping associated.
@@ -967,6 +968,23 @@ abstract public class MetaModel extends MetaElement {
 			}
 		}
 		return result;
+	}
+	
+	/**
+	 * @return Collection of <tt>MetaReference</tt>, not null and read only
+	 */
+	public Collection getMetaReferencesToEntity() throws XavaException {
+		if (metaReferencesToEntity == null) {
+			metaReferencesToEntity = new ArrayList();
+			Iterator it = getMapMetaReferences().values().iterator();
+			while (it.hasNext()) {
+				MetaReference metaReference = (MetaReference) it.next();
+				if (!metaReference.isAggregate()) {
+					metaReferencesToEntity.add(metaReference);
+				}
+			}
+		}
+		return metaReferencesToEntity;		
 	}
 	
 	
