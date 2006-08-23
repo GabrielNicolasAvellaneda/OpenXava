@@ -187,7 +187,7 @@ abstract public class BasePOJOPersistenceProvider implements IPersistenceProvide
 	}
 	
 	public Map keyToMap(MetaModel metaModel, Object key) throws XavaException {
-		return metaModel.toMap(key);
+		return metaModel.toKeyMap(key);
 	}
 	
 	private Object convertSingleKeyType(MetaModel metaModel, String property, Object value) {
