@@ -1293,27 +1293,52 @@ abstract public class MetaModel extends MetaElement {
 	/**
 	 * Convert an object of this model in a map of values. <p>
 	 * 
-	 * The model object must implement the interface of this model,
-	 * that is, IInvoice, ICustomer, ISeller, etc. Hence you can use
-	 * POJOs or EJB2 CMP beans, or whatever object that implements the
-	 * interface.<br> 
+	 * The model object can be a POJO (of class in {@link #getPOJOClass()}) 
+	 * or any object that implements the interface of this model, 
+	 * that is, IInvoice, ICustomer, ISeller, etc.
+	 * Hence you can use POJOs or EJB2 CMP beans, 
+	 * or whatever object that implements the interface.<br> 
 	 * 
 	 * @param modelObject  
 	 * @return if modelObject is null returns an empty map
 	 */
 	public Map toMap(Object modelObject) throws XavaException {
+		return toMap(modelObject, false);
+	}
+	
+	/**
+	 * Convert an object of this model in a map of values with its key values. <p>
+	 * 
+	 * The model object can be a POJO (of class in {@link #getPOJOClass()}) 
+	 * or any object that implements the interface of this model, 
+	 * that is, IInvoice, ICustomer, ISeller, etc.
+	 * Hence you can use POJOs or EJB2 CMP beans, 
+	 * or whatever object that implements the interface.<br> 
+	 * 
+	 * @param modelObject  
+	 * @return if modelObject is null returns an empty map
+	 */
+	public Map toKeyMap(Object modelObject) throws XavaException { 
+		return toMap(modelObject, true);
+	}
+		
+	private Map toMap(Object modelObject, boolean onlyKey) throws XavaException { 
 		if (modelObject == null) return new HashMap(); 
 		
 		try {
 			PropertiesManager pm = new PropertiesManager(modelObject);
 			Map values = new HashMap();
-			for (Iterator it = getPropertiesNames().iterator(); it.hasNext();) {
-				String property = (String) it.next();
-				values.put(property, pm.executeGet(property));
+			for (Iterator it = getMetaProperties().iterator(); it.hasNext();) {
+				MetaProperty property = (MetaProperty) it.next();
+				if (!onlyKey || property.isKey()) {
+					values.put(property.getName(), pm.executeGet(property.getName()));
+				}
 			}
 			for (Iterator it = getMetaReferences().iterator(); it.hasNext();) {
 				MetaReference reference = (MetaReference) it.next();
-				values.put(reference.getName(), reference.getMetaModelReferenced().toMap(pm.executeGet(reference.getName())));
+				if (!onlyKey || reference.isKey()) {
+					values.put(reference.getName(), reference.getMetaModelReferenced().toMap(pm.executeGet(reference.getName())));
+				}
 			}	
 			return values;
 		}
@@ -1322,6 +1347,7 @@ abstract public class MetaModel extends MetaElement {
 			throw new XavaException("to_map_error");
 		}		
 	}
+	
 	
 	/**
 	 * The string representation of models represented by this meta model, from
