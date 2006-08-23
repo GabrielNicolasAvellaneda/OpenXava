@@ -27,9 +27,9 @@
 		<ant antfile="../OpenXava/build.xml" target="regenerateHibernate"/>		
 	</target>	
 		
-	<!-- Construye y despliega la aplicación en formate .war -->	
+	<!-- Construye y despliega la aplicación en formato .war -->	
 	<target name="desplegarWar">
-		<ant antfile="../OpenXava/build.xml" target="deploy"/>
+		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
 	</target>				
 	
 	<!-- Reconstruye la aplicación, después de esto todo el contenido de 'web' esta listo para ser desplegado -->
