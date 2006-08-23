@@ -108,7 +108,7 @@ public class View implements java.io.Serializable {
 	
 	public Collection getMetaMembers() throws XavaException {
 		if (metaMembers == null) {
-			metaMembers = createMetaMembers(false); 
+			metaMembers = createMetaMembers(false);			
 		}				
 		return metaMembers;		
 	}
@@ -593,10 +593,13 @@ public class View implements java.io.Serializable {
 				if (!newView.isCollectionEditable()) {
 					newView.setCollectionEditableFixed(true);
 				}
+				else {
+					newView.setCollectionEditable(isEditable());
+				}
 				newView.setCollectionMembersEditables(keyEditable || metaCollectionView.isEditOnly());								
 				newView.setEditable(editable);				
 				newView.setKeyEditable(keyEditable);				
-				newView.setViewName(metaCollectionView.getViewName()); 								
+				newView.setViewName(metaCollectionView.getViewName());								
 			}
 			else {
 				newView.setKeyEditable(isEditable()); 
