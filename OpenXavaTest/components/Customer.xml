@@ -220,8 +220,6 @@
 		<collection-view collection="states">
 			<list-properties>state.id, state.name</list-properties>
 		</collection-view>
-			
-		
 		
 		<members>
 			number; 
