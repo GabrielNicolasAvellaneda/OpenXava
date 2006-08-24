@@ -33,7 +33,7 @@ public class CustomersTest extends ModuleTestBase {
 	
 	
 	public CustomersTest(String testName) {
-		super(testName, "OpenXavaTest", "Customers");
+		super(testName, "Customers");
 		section = "";				
 	}
 	
