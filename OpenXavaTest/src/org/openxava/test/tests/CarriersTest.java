@@ -13,7 +13,7 @@ import org.openxava.tests.*;
 public class CarriersTest extends ModuleTestBase {
 	
 	public CarriersTest(String testName) {
-		super(testName, "OpenXavaTest", "Carriers");		
+		super(testName, "Carriers");		
 	}
 	
 	protected void setUp() throws Exception {
