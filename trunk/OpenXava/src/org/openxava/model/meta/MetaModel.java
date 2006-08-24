@@ -1266,9 +1266,10 @@ abstract public class MetaModel extends MetaElement {
 					pm.executeSet((String)en.getKey(), referencedModel.toPOJO((Map) en.getValue()));
 				}
 				else {
-					MetaProperty property = getMetaProperty((String)en.getKey());					
+					MetaProperty property = getMetaProperty((String)en.getKey());
+					if (property.isReadOnly()) continue; 
 					Object value = en.getValue();
-					try {
+					try {						
 						pm.executeSet((String)en.getKey(), en.getValue());
 					}
 					catch (IllegalArgumentException ex) {

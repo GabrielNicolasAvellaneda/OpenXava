@@ -1849,7 +1849,15 @@ public class View implements java.io.Serializable {
 					value = getParentIfGroup().getValue(set.getPropertyNameFrom());					
 				}
 				mp.executeSet(set.getPropertyName(), value);				
-			}			
+			}		
+			
+			if (calculator instanceof IModelCalculator) { 
+				((IModelCalculator) calculator).setModel(metaProperty.getMetaModel().toPOJO(getAllValues()));
+			}
+			if (calculator instanceof IEntityCalculator) { 
+				((IEntityCalculator) calculator).setEntity(metaProperty.getMetaModel().toPOJO(getAllValues()));
+			}
+			
 			Object newValue = calculator.calculate();			
 			if (calculator instanceof IOptionalCalculator) {
 				if (!((IOptionalCalculator) calculator).isCalculate()) {
