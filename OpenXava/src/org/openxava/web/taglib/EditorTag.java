@@ -52,7 +52,7 @@ public class EditorTag extends TagSupport {
 
 			boolean editable = explicitEditable?this.editable:view.isEditable(property);  
 
-			String editorURL = "../xava/" + org.openxava.web.WebEditors.getUrl(metaProperty);
+			String editorURL = org.openxava.web.WebEditors.getUrl(metaProperty);
 			char nexus = editorURL.indexOf('?') < 0?'?':'&';
 			editorURL = editorURL + nexus + "script="+script+"&editable="+editable+"&propertyKey="+propertyKey;
 			
@@ -67,7 +67,14 @@ public class EditorTag extends TagSupport {
 			pageContext.getOut().print("' value='");
 			pageContext.getOut().print(editable);
 			pageContext.getOut().println("'>");
-			pageContext.include(editorURL);			
+			try {
+				// If the JSP that uses this tag is in a subfolder
+				pageContext.include("../xava/" + editorURL);
+			}
+			catch (Exception ex) {
+				// If the JSP that uses this tag is in root folder
+				pageContext.include("xava/" + editorURL);
+			}
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
