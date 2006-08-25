@@ -166,7 +166,7 @@ String urlComparatorsCombo = "comparatorsCombo.jsp" // in this way because websp
 int totalSize = 0;
 if (tab.isRowsHidden()) {
 %>
-	<tr><td align="center">
+	<tr id="nodata"><td align="center">
 	<xava:link action="List.showRows"/>
 	</td></tr>
 <%
@@ -216,7 +216,7 @@ manager.commit(); // because of hibernate or ejb3 or ... can be used in calculat
 }
 else {
 %>
-<tr><td class=<%=totalSize==0?style.getMessages():style.getErrors()%>>
+<tr id="nodata"><td class=<%=totalSize==0?style.getMessages():style.getErrors()%>>
 <% if (totalSize == 0) { %>
 <b><xava:message key="no_objects"/></b>
 <% } else { %>

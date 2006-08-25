@@ -597,7 +597,11 @@ public class ModuleTestBase extends TestCase {
 		WebTable table = response.getTableWithID("list");
 		if (table == null) {
 			fail(XavaResources.getString("list_not_displayed"));			
-		}		
+		}
+		if ("nodata".equals(table.getRows()[2].getID())) { 
+			return 0;
+		}
+		
 		return table.getRowCount() - 2;		
 	}
 	

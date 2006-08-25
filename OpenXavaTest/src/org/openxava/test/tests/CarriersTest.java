@@ -70,13 +70,13 @@ public class CarriersTest extends ModuleTestBase {
 		XHibernate.commit();
 	}
 	
-	public void testHideShowRows() throws Exception {
+	public void testHideShowRows() throws Exception {		
 		assertListRowCount(5);
 		assertAction("List.hideRows");
 		assertNoAction("List.showRows");
 		
 		execute("List.hideRows");		
-		assertListRowCount(1);
+		assertListRowCount(0);
 		assertNoAction("List.hideRows");
 		assertAction("List.showRows");
 		
@@ -86,7 +86,7 @@ public class CarriersTest extends ModuleTestBase {
 		assertNoAction("List.showRows");
 
 		resetModule();
-		assertListRowCount(1);
+		assertListRowCount(0);
 		assertNoAction("List.hideRows");
 		assertAction("List.showRows");
 
@@ -105,7 +105,7 @@ public class CarriersTest extends ModuleTestBase {
 		assertListRowCount(5); 		
 		execute("Carriers.deleteAll");
 		assertNoErrors();
-		assertListRowCount(1);
+		assertListRowCount(0);
 	}
 	
 	public void testResetSelectedOnReturnToList() throws Exception {
