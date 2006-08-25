@@ -313,7 +313,7 @@ public class MetaView extends MetaElement implements Cloneable {
 		this.allMetaMembers = null;
 		metaProperties = null;
 		propertiesNamesThrowOnChange = null;	
-		sections = null;
+		// tmp sections = null;
 		metaMembers = null;		
 	}
 
@@ -537,7 +537,7 @@ public class MetaView extends MetaElement implements Cloneable {
 		view.metaGroups = this.metaGroups; 
 	}
 	
-	public boolean hasSections() {
+	public boolean hasSections() {		
 		return sections != null;		
 	}
 		
