@@ -321,7 +321,7 @@ public class MetaView extends MetaElement implements Cloneable {
 	}
 	
 	
-	private void init(boolean resetSections) {
+	private void init(boolean resetSections ) {
 		this._membersNames.clear();
 		this.allMetaMembers = null;
 		metaProperties = null;
