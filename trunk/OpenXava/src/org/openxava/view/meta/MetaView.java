@@ -281,36 +281,36 @@ public class MetaView extends MetaElement implements Cloneable {
 	}
 	
 	/**
-	 * 
+	 *
 	 * @param membersNames  Names separated by commas or spaces.
 	 */
 	public void setMembersNames(String membersNames) throws XavaException {
 		setMembersNames(membersNames, true);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param membersNames  Names separated by commas or spaces.
 	 */
 	public void setMembersNamesNotResetSections(String membersNames) throws XavaException {
 		setMembersNames(membersNames, false);
-	}	
-	
+	}
+
 	private void setMembersNames(String membersNames, boolean resetSection) throws XavaException {			
 		init(resetSection);				
 		if (membersNames == null) membersNames = "";
 		if (membersNames.trim().equals("*")) {
-			setAllMembers(true);			
+			setAllMembers(true);
 		} else {
-			setAllMembers(false);			
+			setAllMembers(false);
 			StringTokenizer lines = new StringTokenizer(membersNames, ";");
 			while (lines.hasMoreTokens()) {
 				String line = lines.nextToken();
 				StringTokenizer names = new StringTokenizer(line, ",");
-				while (names.hasMoreTokens()) {	
+				while (names.hasMoreTokens()) {
 					String memberName = names.nextToken().trim();
 					if (!memberName.equals("")) {
-						addMemberName(memberName);					
+						addMemberName(memberName);
 					}
 				}
 				if (lines.hasMoreTokens()) {
@@ -320,13 +320,12 @@ public class MetaView extends MetaElement implements Cloneable {
 		}
 	}
 	
-	
 	private void init(boolean resetSections ) {
 		this._membersNames.clear();
 		this.allMetaMembers = null;
 		metaProperties = null;
 		propertiesNamesThrowOnChange = null;	
-		if (resetSections) sections = null;
+		if (resetSections) sections = null;  
 		metaMembers = null;		
 	}
 
@@ -389,16 +388,26 @@ public class MetaView extends MetaElement implements Cloneable {
 		if (Is.emptyString(metaDescriptionsList.getDescriptionPropertyName()) &&
 				Is.emptyString(metaDescriptionsList.getDescriptionPropertiesNames())
 				) {			
-			Collection properties = r.getMetaModelReferenced().getPropertiesNames();
-			if (properties.contains("descripcion")) metaDescriptionsList.setDescriptionPropertyName("descripcion");
-			else if (properties.contains("description")) metaDescriptionsList.setDescriptionPropertyName("description");
-			else if (properties.contains("nombre")) metaDescriptionsList.setDescriptionPropertyName("nombre");
-			else if (properties.contains("name")) metaDescriptionsList.setDescriptionPropertyName("name");
-			else throw new XavaException("description_property_required");  
+			calculateDefaultValuesForDescriptionsList(r, metaDescriptionsList);  
 		}
 		return metaDescriptionsList;
 	}
+
+	private void calculateDefaultValuesForDescriptionsList(MetaReference r, MetaDescriptionsList metaDescriptionsList) throws XavaException {
+		Collection properties = r.getMetaModelReferenced().getPropertiesNames();
+		if (properties.contains("descripcion")) metaDescriptionsList.setDescriptionPropertyName("descripcion");
+		else if (properties.contains("description")) metaDescriptionsList.setDescriptionPropertyName("description");
+		else if (properties.contains("nombre")) metaDescriptionsList.setDescriptionPropertyName("nombre");
+		else if (properties.contains("name")) metaDescriptionsList.setDescriptionPropertyName("name");
+		else throw new XavaException("description_property_required");
+	}
 	
+	public MetaDescriptionsList createMetaDescriptionList(MetaReference r) throws XavaException {
+		MetaDescriptionsList metaDescriptionsList = new MetaDescriptionsList();
+		calculateDefaultValuesForDescriptionsList(r, metaDescriptionsList);  
+		return metaDescriptionsList;
+	}
+		
 	/**
 	 * @return of type <tt>MetaDescriptionsList</tt>
 	 */
