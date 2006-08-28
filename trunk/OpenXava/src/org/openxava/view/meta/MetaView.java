@@ -284,8 +284,20 @@ public class MetaView extends MetaElement implements Cloneable {
 	 * 
 	 * @param membersNames  Names separated by commas or spaces.
 	 */
-	public void setMembersNames(String membersNames) throws XavaException {			
-		init();				
+	public void setMembersNames(String membersNames) throws XavaException {
+		setMembersNames(membersNames, true);
+	}
+	
+	/**
+	 * 
+	 * @param membersNames  Names separated by commas or spaces.
+	 */
+	public void setMembersNamesNotResetSections(String membersNames) throws XavaException {
+		setMembersNames(membersNames, false);
+	}	
+	
+	private void setMembersNames(String membersNames, boolean resetSection) throws XavaException {			
+		init(resetSection);				
 		if (membersNames == null) membersNames = "";
 		if (membersNames.trim().equals("*")) {
 			setAllMembers(true);			
@@ -308,12 +320,13 @@ public class MetaView extends MetaElement implements Cloneable {
 		}
 	}
 	
-	private void init() {
+	
+	private void init(boolean resetSections) {
 		this._membersNames.clear();
 		this.allMetaMembers = null;
 		metaProperties = null;
 		propertiesNamesThrowOnChange = null;	
-		// tmp sections = null;
+		if (resetSections) sections = null;
 		metaMembers = null;		
 	}
 
