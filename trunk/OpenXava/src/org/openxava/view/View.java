@@ -1850,7 +1850,7 @@ public class View implements java.io.Serializable {
 				}
 				mp.executeSet(set.getPropertyName(), value);				
 			}		
-			
+						
 			if (calculator instanceof IModelCalculator) { 
 				((IModelCalculator) calculator).setModel(metaProperty.getMetaModel().toPOJO(getAllValues()));
 			}
@@ -2039,6 +2039,16 @@ public class View implements java.io.Serializable {
 		return getMetaView().getMetaProperty(name);
 	}
 	
+	public MetaReference getMetaReference(String name) throws XavaException { 		
+		int idx = name.indexOf('.');
+		if (idx >= 0) {
+			String reference = name.substring(0, idx);
+			String member = name.substring(idx + 1);
+			return getSubview(reference).getMetaReference(member);
+		}				
+		return getMetaModel().getMetaReference(name);
+	}
+		
 	private Collection getMetaPropertiesIncludingSections() throws XavaException {
 		if (!hasSections()) return getMetaProperties();
 		if (metaPropertiesIncludingSections == null) { 
@@ -2231,11 +2241,15 @@ public class View implements java.io.Serializable {
 	}
 	
 	public String getDescriptionPropertyInDescriptionsList(MetaReference ref) throws XavaException {		
-		return getMetaView().getMetaDescriptionList(ref).getDescriptionPropertyName();
+		MetaDescriptionsList metaDescriptionList = getMetaView().getMetaDescriptionList(ref);
+		if (metaDescriptionList != null) return metaDescriptionList.getDescriptionPropertyName();
+		return getMetaView().createMetaDescriptionList(ref).getDescriptionPropertyName(); 		
 	}
 	
-	public String getDescriptionPropertiesInDescriptionsList(MetaReference ref) throws XavaException {		
-		return getMetaView().getMetaDescriptionList(ref).getDescriptionPropertiesNames();
+	public String getDescriptionPropertiesInDescriptionsList(MetaReference ref) throws XavaException {
+		MetaDescriptionsList metaDescriptionList = getMetaView().getMetaDescriptionList(ref);
+		if (metaDescriptionList != null) return metaDescriptionList.getDescriptionPropertiesNames();
+		return getMetaView().createMetaDescriptionList(ref).getDescriptionPropertiesNames();			
 	}	
 	
 	public boolean throwsReferenceChanged(MetaReference ref) throws XavaException {		
