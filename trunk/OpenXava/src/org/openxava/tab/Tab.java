@@ -930,7 +930,7 @@ public class Tab {
 			int column = getMetaTab().getPropertiesNames().indexOf(rowStyle.getProperty());			
 			if (column < 0) return null;			
 			Object value = getTableModel().getValueAt(row, column);
-			if (Is.equalAsString(value, rowStyle.getValue())) {
+			if (Is.equalAsStringIgnoreCase(value, rowStyle.getValue())) {
 				return rowStyle.getStyle();
 			}
 			return null;
