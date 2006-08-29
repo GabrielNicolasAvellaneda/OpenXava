@@ -75,7 +75,7 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(InvoicesNestedSectionsTest.class));
 		suite.addTest(new TestSuite(InvoicesNoListTest.class));
 		suite.addTest(new TestSuite(InvoicesTest.class));
-		if (XSystem.isJava5OrBetter()) {
+		if (XavaPreferences.getInstance().isJPAPersistence()) {
 			suite.addTest(new TestSuite(JPATest.class));
 		}
 		suite.addTest(new TestSuite(MapFacadeTest.class));
@@ -98,6 +98,7 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(SellersJSPTest.class));
 		suite.addTest(new TestSuite(SellersTest.class));
 		suite.addTest(new TestSuite(SellersWithCustomersAsAggregateTest.class));
+		suite.addTest(new TestSuite(SellersWithDescriptionsListJSPTest.class));
 		suite.addTest(new TestSuite(ServicesTest.class));
 		suite.addTest(new TestSuite(ShipmentChargesTest.class));
 		suite.addTest(new TestSuite(ShipmentsTest.class));

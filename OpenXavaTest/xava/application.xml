@@ -93,6 +93,13 @@
 		<controller name="Typical"/>		
 	</module>	
 	
+	<module name="SellersWithDescriptionsListJSP" folder="invoicing.variations">
+		<model name="Seller"/>
+		<view name="ForCustomJSP"/> 
+		<web-view url="custom-jsp/sellerWithDescriptionsList.jsp"/>
+		<controller name="Typical"/>		
+	</module>	
+		
 	<module name="SellersCannotCreateCustomer" folder="invoicing.variations">
 		<model name="Seller"/>
 		<view name="CannotCreateCustomer"/>
@@ -126,7 +133,9 @@
 		<model name="Customer"/>
 		<view name="SellerAsAggregate"/>
 		<controller name="Typical"/>		
-	</module>			<module name="CustomersNewOnInit" folder="invoicing.variations">			<model name="Customer"/>		<view name="SectionGroup"/>		<controller name="CustomersNewOnInit"/>			</module>
+	</module>			<module name="CustomersNewOnInit" folder="invoicing.variations">			<model name="Customer"/>		<view name="SectionGroup"/>
+		<controller name="CustomersNewOnInit"/>		
+	</module>
 	
 	<module name="CustomersNewOnInitInherited" folder="invoicing.variations">	
 		<model name="Customer"/>

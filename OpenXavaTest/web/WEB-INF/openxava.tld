@@ -120,6 +120,18 @@
        <rtexprvalue>true</rtexprvalue>
     </attribute>        
   </tag>         
+
+  <tag>
+    <name>descriptionsList</name>
+    <tagclass>org.openxava.web.taglib.DescriptionsListTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>Display a reference in descriptions list (combo) format</info>
+    <attribute>
+       <name>reference</name>
+       <required>true</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>         
   
         
 </taglib>
