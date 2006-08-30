@@ -343,9 +343,43 @@ public class View implements java.io.Serializable {
 	public void setValues(Map map) throws XavaException {		
 		if (values == null) values = new HashMap();
 		else values.clear();
+		closeChildCollectionDetails();
 		addValues(map);		
 	}
 	
+
+	private void closeChildCollectionDetails() throws XavaException {		
+		if (hasSubviews()) { 
+			Iterator it = getSubviews().values().iterator();
+			
+			while (it.hasNext()) {				
+				View subview = (View) it.next();
+				subview.setCollectionDetailVisible(false);
+				subview.setCollectionEditingRow(-1);
+				subview.closeChildCollectionDetails();										
+			}
+		}
+				
+		if (hasGroups()) { 
+			Iterator it = getGroupsViews().values().iterator();
+			while (it.hasNext()) {				
+				View subview = (View) it.next();
+				subview.setCollectionDetailVisible(false);
+				subview.setCollectionEditingRow(-1);				
+				subview.closeChildCollectionDetails();
+			}
+		}
+				
+		if (hasSections()) {
+			int count = getSections().size();
+			for (int i = 0; i < count; i++) {
+				View subview = getSectionView(i); 
+				subview.setCollectionDetailVisible(false);
+				subview.setCollectionEditingRow(-1);
+				subview.closeChildCollectionDetails();
+			}	
+		}						
+	}
 
 	/**
 	 * Set the values and execute the on-change actions associated to
