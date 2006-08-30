@@ -885,7 +885,6 @@ public class ModuleTestBase extends TestCase {
 		return metaModule;
 	}
 
-	
 	protected void assertValidValues(String name, String [][] values) throws Exception {
 		String [] descriptions = getForm().getOptions(getPropertyPrefix() + name);		
 		String [] keys = getForm().getOptionValues(getPropertyPrefix() + name);

@@ -23,10 +23,10 @@ public class MetaCollectionView implements Serializable {
 	private String collectionName;
 	private String mediatorClassName;
 	private String viewName;
-	private boolean readOnly;
-	private boolean editOnly; 
-	private boolean createReference;
-	private boolean asAggregate;
+	private boolean readOnly = false;
+	private boolean editOnly = false; 
+	private boolean createReference = true;
+	private boolean asAggregate = false;
 	
 	public void addActionDetailName(String actionName) {
 		if (actionsDetailNames == null) actionsDetailNames = new ArrayList();
