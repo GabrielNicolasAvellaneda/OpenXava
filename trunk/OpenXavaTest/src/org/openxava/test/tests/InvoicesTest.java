@@ -38,11 +38,34 @@ public class InvoicesTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Invoices");		
 	}
 	
+	public void testCollectionElementHiddenOnChangeObject() throws Exception {
+		execute("Mode.detailAndFirst");
+		execute("Sections.change", "activeSection=1");
+		
+		// Verifying that detail is closed
+		assertAction("Collection.new");
+		assertNoAction("Collection.save");
+		
+		// Editing the first detail
+		execute("Invoices.editDetail", "row=0,viewObject=xava_view_section1_details");
+		
+		// Verifying that detail is opened
+		assertNoAction("Collection.new");
+		assertAction("Collection.save");
+		
+		// Go to next invoice
+		execute("Navigation.next");
+		
+		// Verifying that detail is closed
+		assertAction("Collection.new");
+		assertNoAction("Collection.save");		
+	}
+	
 	public void testSearchByPropertyWithConverterInDetailMode() throws Exception {
 		execute("CRUD.new");
 		setValue("year", "");
 		setValue("date", "");
-		setValue("paid", "true"); 
+		setValue("paid", "true");
 		execute("CRUD.search");
 		assertNoErrors();
 	}
