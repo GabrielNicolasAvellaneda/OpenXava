@@ -637,7 +637,7 @@ public class View implements java.io.Serializable {
 			}
 			else {
 				newView.setKeyEditable(isEditable()); 
-				newView.setEditable(isEditable()); 
+				newView.setEditable(newView.isRepresentsAggregate()?isEditable():false);
 				newView.setCollectionEditable(isEditable()); 				
 				newView.setCollectionMembersEditables(true);
 			}
