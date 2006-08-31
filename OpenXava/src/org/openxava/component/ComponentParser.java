@@ -25,9 +25,12 @@ class ComponentParser extends ParserBase {
 	synchronized public static MetaComponent parse(String name) throws XavaException {		
 		ComponentParser parser = new ComponentParser(name);				
 		parser.parse();		
-		MetaComponent r = parser.getComponent();
+		MetaComponent r = parser.getComponent();		
 		if (r == null) {
 			r = parseAnnotatedClass(name);
+		}
+		else if (!r.getName().equals(name)) {
+			throw new XavaException("component_file_not_match", name, r.getName());
 		}
 		return r;
 	}
