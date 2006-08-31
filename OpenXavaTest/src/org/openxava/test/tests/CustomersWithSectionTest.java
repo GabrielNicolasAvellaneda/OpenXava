@@ -77,12 +77,13 @@ public class CustomersWithSectionTest extends CustomersTest {
 		execute("Sections.change", "activeSection=1");
 		assertCollectionRowCount("states", 0);
 		execute("Collection.new", "viewObject=xava_view_section1_states");
-		setValue("states.state.id", "CA");
-		assertValue("states.state.name", "CALIFORNIA");
+		String statePrefix = "OpenXavaEJB3Test".equals(getProperty("application"))?"":"state.";
+		setValue("states." + statePrefix + "id", "CA");
+		assertValue("states." + statePrefix + "name", "CALIFORNIA");
 		execute("Collection.save", "viewObject=xava_view_section1_states");
 		assertCollectionRowCount("states", 1);
-		assertValueInCollection("states", 0, "state.id", "CA");
-		assertValueInCollection("states", 0, "state.name", "CALIFORNIA");
+		assertValueInCollection("states", 0, 0, "CA");
+		assertValueInCollection("states", 0, 1, "CALIFORNIA");
 		execute("Collection.edit", "row=0,viewObject=xava_view_section1_states");
 		execute("Collection.remove", "viewObject=xava_view_section1_states");
 		assertCollectionRowCount("states", 0);

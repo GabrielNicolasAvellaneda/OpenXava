@@ -38,7 +38,7 @@ public class CustomersTest extends ModuleTestBase {
 	}
 	
 	public CustomersTest(String testName, String moduleName, boolean section) {
-		super(testName, "OpenXavaTest", moduleName);		
+		super(testName, moduleName);		
 		this.section = section?"_section0":"";		
 	}
 			
