@@ -3,10 +3,13 @@ package org.openxava.validators.meta;
 import org.openxava.util.*;
 
 /**
+ * A validator associated to a type or stereotype. <p>
+ * 
+ * Used for validator for required and for default validators.<br>
  * 
  * @author Javier Paniza
  */
-public class MetaValidatorRequired {
+public class MetaValidatorFor {
 	
 	private java.lang.String forType;
 	private String forStereotype;
