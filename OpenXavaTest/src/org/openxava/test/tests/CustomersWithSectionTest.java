@@ -48,6 +48,16 @@ public class CustomersWithSectionTest extends CustomersTest {
 		super(testName, "CustomersWithSection", true);		
 	}
 	
+	public void testDefaultValidator() throws Exception {
+		execute("CRUD.new");
+		setValue("name", "x");
+		execute("Customers.save");
+		assertNoError("Person name MAKARIO is not allowed for Name in Customer");
+		setValue("name", "MAKARIO");
+		execute("Customers.save");
+		assertError("Person name MAKARIO is not allowed for Name in Customer");
+	}
+	
 	public void testCreatedFromReferenceIsChosen() throws Exception {
 		execute("CRUD.new");
 		execute("Reference.createNew", "model=Seller,keyProperty=xava.Customer.seller.number");

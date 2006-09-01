@@ -114,7 +114,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	private IPropertyValidator createRequiredValidator() throws XavaException {
 		String validatorClass = null;
 		try {
-			MetaValidatorRequired vr = null;
+			MetaValidatorFor vr = null;
 			if (!Is.emptyString(getStereotype())) {
 				vr = MetaValidators.getMetaValidatorRequiredFor(getStereotype());
 			}
@@ -135,6 +135,29 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			throw new XavaException("create_validator_error", getName(), ex.getLocalizedMessage());
 		}
 	}
+	
+	private IPropertyValidator createDefaultValidator() throws XavaException {
+		String validatorClass = null;
+		try {
+			MetaValidatorFor vr = null;
+			if (!Is.emptyString(getStereotype())) {
+				vr = MetaValidators.getMetaValidatorDefaultFor(getStereotype());
+			}
+			if (vr == null) {
+				vr = MetaValidators.getMetaValidatorDefaultFor(getType().getName());	
+			}
+			if (vr == null) return null; 
+			validatorClass = vr.getValidatorClass();
+			return (IPropertyValidator) Class.forName(validatorClass).newInstance();
+		} catch (ClassCastException ex) {
+			ex.printStackTrace();
+			throw new XavaException("property_validator_invalid_class", validatorClass); 
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new XavaException("create_validator_error", getName(), ex.getLocalizedMessage());
+		}
+	}
+	
 	
 	public java.lang.String getStereotype() {
 		return stereotype;
@@ -340,6 +363,8 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			if (isRequired()) {
 				validators.add(createRequiredValidator());
 			}
+			IPropertyValidator defaultValidator = createDefaultValidator();
+			if (defaultValidator != null) validators.add(defaultValidator);
 		}
 		return validators;
 	}

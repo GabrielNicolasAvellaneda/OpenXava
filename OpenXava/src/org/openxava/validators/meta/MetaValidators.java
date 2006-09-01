@@ -14,6 +14,7 @@ public class MetaValidators {
 	private static Collection primitiveTypes;
 	private static Map metaValidators;
 	private static Map metaValidatorsRequired;
+	private static Map metaValidatorsDefault;
 	
 	public static void _addMetaValidator(MetaValidator newMetaValidator) throws XavaException {
 		if (metaValidators == null) {
@@ -22,7 +23,7 @@ public class MetaValidators {
 		metaValidators.put(newMetaValidator.getName(), newMetaValidator);
 	}
 	
-	public static void _addMetaValidatorRequired(MetaValidatorRequired newMetaValidator) throws XavaException {
+	public static void _addMetaValidatorRequired(MetaValidatorFor newMetaValidator) throws XavaException {
 		if (metaValidatorsRequired == null) {
 			throw new XavaException("only_from_parse", "MetaValidators._addMetaValidatorRequired");
 		}
@@ -37,11 +38,27 @@ public class MetaValidators {
 		}
 	}
 	
+	public static void _addMetaValidatorDefault(MetaValidatorFor newMetaValidator) throws XavaException {
+		if (metaValidatorsDefault == null) {
+			throw new XavaException("only_from_parse", "MetaValidators._addMetaValidatorDefault");
+		}
+		if (!Is.emptyString(newMetaValidator.getForType())) {
+			metaValidatorsDefault.put(newMetaValidator.getForType(), newMetaValidator);
+		}
+		else if (!Is.emptyString(newMetaValidator.getForStereotype())) {
+			metaValidatorsDefault.put(newMetaValidator.getForStereotype(), newMetaValidator);
+		}		
+		else {
+			throw new XavaException("default_validator_type_or_stereotype_required");
+		}
+	}
+	
+	
 	/**
 	 * 
 	 * @return Null if not found
 	 */
-	private static MetaValidatorRequired findFromParent(String forType)
+	private static MetaValidatorFor findFromParent(Map metaValidatorsFor, String forType)
 		throws XavaException {
 		try {
 			if (isStereotype(forType)) return null;
@@ -49,8 +66,8 @@ public class MetaValidators {
 				return null;
 			while (!forType.equals("java.lang.Object")) {
 				forType = Class.forName(forType).getSuperclass().getName();
-				MetaValidatorRequired v =
-					(MetaValidatorRequired) metaValidatorsRequired.get(forType);
+				MetaValidatorFor v =
+					(MetaValidatorFor) metaValidatorsFor.get(forType);
 				if (v != null)
 					return v;
 			}
@@ -92,6 +109,7 @@ public class MetaValidators {
 		if (metaValidators == null) {
 			metaValidators = new HashMap();
 			metaValidatorsRequired = new HashMap();
+			metaValidatorsDefault = new HashMap();
 			ValidatorsParser.configureValidators();
 		}
 		MetaValidator v = (MetaValidator) metaValidators.get(name);
@@ -104,17 +122,18 @@ public class MetaValidators {
 	/**
 	 * @return Null if a validator for the clase is not found.
 	 */
-	public static MetaValidatorRequired getMetaValidatorRequiredFor(String typeOrStereotype)
+	public static MetaValidatorFor getMetaValidatorRequiredFor(String typeOrStereotype)
 		throws XavaException {
 		if (metaValidatorsRequired == null) {
 			metaValidators = new HashMap();
 			metaValidatorsRequired = new HashMap();
+			metaValidatorsDefault = new HashMap();
 			ValidatorsParser.configureValidators();
 		}
-		MetaValidatorRequired v =
-			(MetaValidatorRequired) metaValidatorsRequired.get(typeOrStereotype);
+		MetaValidatorFor v =
+			(MetaValidatorFor) metaValidatorsRequired.get(typeOrStereotype);
 		if (v == null) {
-			v = findFromParent(typeOrStereotype);
+			v = findFromParent(metaValidatorsRequired, typeOrStereotype);
 			if (v != null) {
 				metaValidatorsRequired.put(typeOrStereotype, v);
 			}
@@ -122,4 +141,26 @@ public class MetaValidators {
 		return v;
 	}
 	
+	/**
+	 * @return Null if a validator for the clase is not found.
+	 */
+	public static MetaValidatorFor getMetaValidatorDefaultFor(String typeOrStereotype)
+		throws XavaException {
+		if (metaValidatorsDefault == null) {
+			metaValidators = new HashMap();
+			metaValidatorsRequired = new HashMap();
+			metaValidatorsDefault = new HashMap();
+			ValidatorsParser.configureValidators();
+		}
+		MetaValidatorFor v =
+			(MetaValidatorFor) metaValidatorsDefault.get(typeOrStereotype);
+		if (v == null) {
+			v = findFromParent(metaValidatorsDefault, typeOrStereotype);
+			if (v != null) {
+				metaValidatorsDefault.put(typeOrStereotype, v);
+			}
+		}
+		return v;
+	}
+		
 }

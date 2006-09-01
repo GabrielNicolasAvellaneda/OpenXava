@@ -49,7 +49,7 @@
 	<required-validator> 
 		<validator-class class="org.openxava.validators.NotBlankCharacterValidator"/>
 		<for-type type= "char"/>		
-	</required-validator> 
-
+	</required-validator>
+	
 </validators>
   

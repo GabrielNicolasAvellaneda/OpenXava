@@ -15,7 +15,12 @@
 		<validator-name name="NOT_NULL"/>
 		<for-stereotype stereotype="FAMILY"/>		
 		<for-stereotype stereotype="SUBFAMILY"/>
-	</required-validator> 	
+	</required-validator> 
+	
+	<default-validator>
+		<validator-class class="org.openxava.test.validators.PersonNameValidator"/>
+		<for-stereotype stereotype="PERSON_NAME"/>
+	</default-validator>	
 	
 </validators>
   
