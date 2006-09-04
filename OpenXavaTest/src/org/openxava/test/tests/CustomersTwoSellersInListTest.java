@@ -10,7 +10,7 @@ public class CustomersTwoSellersInListTest extends ModuleTestBase {
 
 	
 	public CustomersTwoSellersInListTest(String testName) {
-		super(testName, "OpenXavaTest", "CustomersTwoSellersInList");				
+		super(testName, "CustomersTwoSellersInList");				
 	}
 	
 	public void test2ReferenceToSameModelInList() throws Exception {

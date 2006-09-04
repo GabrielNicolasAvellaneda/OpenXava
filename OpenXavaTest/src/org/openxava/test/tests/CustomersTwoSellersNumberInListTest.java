@@ -1,7 +1,5 @@
 package org.openxava.test.tests;
 
-import org.hibernate.*;
-import org.openxava.hibernate.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
@@ -13,7 +11,7 @@ public class CustomersTwoSellersNumberInListTest extends ModuleTestBase {
 
 	
 	public CustomersTwoSellersNumberInListTest(String testName) {
-		super(testName, "OpenXavaTest", "CustomersTwoSellersNumberInList");				
+		super(testName, "CustomersTwoSellersNumberInList");				
 	}
 	
 	public void testTwoReferencesToSameComponentButOnlyShowingKeyOfEach() throws Exception {		

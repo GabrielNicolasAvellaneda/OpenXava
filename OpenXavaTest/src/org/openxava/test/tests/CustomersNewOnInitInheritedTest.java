@@ -9,7 +9,7 @@ import org.openxava.tests.*;
 public class CustomersNewOnInitInheritedTest extends ModuleTestBase {
 
 	public CustomersNewOnInitInheritedTest(String testName) {
-		super(testName, "OpenXavaTest", "CustomersNewOnInitInherited");		
+		super(testName, "CustomersNewOnInitInherited");		
 	}
 	
 	public void testNewOnInit() throws Exception {
