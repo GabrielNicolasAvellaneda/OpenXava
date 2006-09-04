@@ -13,7 +13,7 @@ import org.openxava.tests.*;
 public class CustomersSellerAsAggregateTest extends ModuleTestBase {
 	
 	public CustomersSellerAsAggregateTest(String testName) {
-		super(testName, "OpenXavaTest", "CustomersSellerAsAggregate");				
+		super(testName, "CustomersSellerAsAggregate");				
 	}
 	
 
