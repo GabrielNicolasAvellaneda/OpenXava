@@ -19,6 +19,7 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 	private final static int JPA = 3;
 		
 	private int minimum;
+	private int maximum; 
 	private String condition;
 	private String order;
 	
@@ -268,6 +269,14 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 	
 	public boolean hasCalculator() {
 		return metaCalculator != null;
+	}
+
+	public int getMaximum() {
+		return maximum;
+	}
+
+	public void setMaximum(int maximum) {
+		this.maximum = maximum;
 	}
 	
 }

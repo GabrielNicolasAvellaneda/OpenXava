@@ -33,6 +33,28 @@ public class DeliveriesTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Deliveries");		
 	}
 	
+	public void testMinimunInCollection() throws Exception {
+		execute("CRUD.new");
+		setValue("invoice.year", "2004");
+		setValue("invoice.number", "2");
+		setValue("type.number", "1");
+		setValue("number", "666");
+		execute("CRUD.search");
+		assertNoErrors();
+		assertValue("description", "DELIVERY JUNIT 666");
+		
+		execute("Sections.change", "activeSection=2");
+		assertCollectionRowCount("details", 3);
+		
+		execute("DeliveryDetails.new", "viewObject=xava_view_section2_details_details");
+		setValue("details.number", "14");
+		setValue("details.description", "JUNIT DETAIL 14");
+		execute("DeliveryDetails.save", "viewObject=xava_view_section2_details_details");
+		
+		assertError("More than 3 items in Details of Delivery are not allowed");
+		assertCollectionRowCount("details", 3);
+	}
+	
 	public void testFocusWhenSectionsAndGroupsInHeader() throws Exception {
 		execute("CRUD.new");
 		setValue("shortcut", "DY");

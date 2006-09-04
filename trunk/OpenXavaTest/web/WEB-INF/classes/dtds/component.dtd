@@ -194,6 +194,7 @@
  name CDATA #REQUIRED
  label CDATA #IMPLIED
  minimum CDATA #IMPLIED 
+ maximum CDATA #IMPLIED
 >
 
 <!ELEMENT method (calculator)>

@@ -17,7 +17,6 @@
 		<for-stereotype stereotype="SUBFAMILY"/>
 	</required-validator> 
 	
-	<!-- tmp -->
 	<default-validator>
 		<validator-class class="org.openxava.test.validators.PersonNameValidator"/>
 		<for-stereotype stereotype="PERSON_NAME"/>
