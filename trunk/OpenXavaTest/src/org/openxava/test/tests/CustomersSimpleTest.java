@@ -10,7 +10,7 @@ public class CustomersSimpleTest extends ModuleTestBase {
 	
 	
 	public CustomersSimpleTest(String testName) {
-		super(testName, "OpenXavaTest", "CustomersSimple");		
+		super(testName, "CustomersSimple");		
 	}
 	
 	public void testSearchReferenceInsideAggregate() throws Exception {
