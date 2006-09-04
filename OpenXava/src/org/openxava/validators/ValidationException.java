@@ -32,6 +32,10 @@ public class ValidationException extends Exception {
 
 	
 	public Messages getErrors() {
+		if (errors == null) {			
+			errors = new Messages();
+			errors.add(super.getMessage());			
+		}
 		return errors;
 	}
 	

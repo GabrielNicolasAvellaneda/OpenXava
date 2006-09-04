@@ -1,6 +1,5 @@
 package org.openxava.model;
 
-import java.lang.reflect.*;
 import java.rmi.*;
 import java.util.*;
 

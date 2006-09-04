@@ -6,6 +6,7 @@ import javax.ejb.*;
 
 import org.openxava.model.*;
 import org.openxava.model.meta.*;
+import org.openxava.util.*;
 import org.openxava.validators.*;
 import org.openxava.view.*;
 
@@ -17,6 +18,7 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	
 	public void execute() throws Exception {		
 		try {				
+			validateMaximum();
 			Map containerKey = saveIfNotExists(getCollectionElementView().getParent());
 			if (isEntityReferencesCollection()) saveEntity(containerKey);
 			else saveAggregate(containerKey); 			
@@ -30,11 +32,23 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 		}		
 	}
 	
+	private void validateMaximum() throws ValidationException, XavaException {
+		MetaCollection metaCollection = getMetaCollection();
+		int maximum = metaCollection.getMaximum(); 
+		if (maximum > 0) {
+			if (getCollectionElementView().getCollectionValues().size() >= maximum) {
+				Messages errors = new Messages();
+				errors.add("maximum_elements", new Integer(maximum), metaCollection.getName(), metaCollection.getMetaModel().getName());
+				throw new ValidationException(errors);
+			}
+		}		
+	}
+
 	private void saveEntity(Map containerKey) throws Exception {
 		if (getCollectionElementView().isEditable()) {
 			// Entity reference used as aggregate
 			Map parentKey = new HashMap();
-			MetaCollection metaCollection = getCollectionElementView().getParent().getMetaModel().getMetaCollection(getCollectionElementView().getMemberName());
+			MetaCollection metaCollection = getMetaCollection();
 			parentKey.put(metaCollection.getMetaReference().getRole(), containerKey);
 			Map values = getCollectionElementView().getValues();
 			values.putAll(parentKey);
@@ -56,6 +70,10 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 					getCollectionElementView().getKeyValues());
 			addMessage("entity_associated" , getCollectionElementView().getModelName(), getCollectionElementView().getParent().getModelName()); 
 		}
+	}
+
+	private MetaCollection getMetaCollection() throws ElementNotFoundException, XavaException {
+		return getCollectionElementView().getParent().getMetaModel().getMetaCollection(getCollectionElementView().getMemberName());
 	}
 
 	private void saveAggregate(Map containerKey) throws Exception{

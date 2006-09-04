@@ -43,7 +43,7 @@
 		<property name="remarks" stereotype="MEMO" size="500"/>
 		<property name="incidents" stereotype="MEMO" size="500"/>
 		
-		<collection name="details">
+		<collection name="details" maximum="3">
 			<reference model="DeliveryDetail"/>
 		</collection>
 		

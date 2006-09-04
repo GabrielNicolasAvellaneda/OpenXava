@@ -489,7 +489,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		
 	private void addCollectionElement(String modelName, Map keyValues, String collectionName, Map collectionElementKeyValues) 
 		throws FinderException,	ValidationException, XavaException, RemoteException, InvocationTargetException, PropertiesManagerException 
-	{
+	{		
 		MetaModel parentMetaModel = MetaComponent.get(modelName).getMetaEntity();
 		MetaCollection metaCollection = parentMetaModel.getMetaCollection(collectionName);		
 		String refToParent = metaCollection.getMetaReference().getRole();

@@ -87,6 +87,7 @@ public class XmlElementsNames {
 	protected final static String [] xdefault_value_calculator = { "default-value-calculator", "calculador-valor-defecto" };
 	protected final static String [] xrole = { "role", "cometido-destino" };
 	protected final static String [] xminimum = { "minimum", "minimo" };
+	protected final static String [] xmaximum = { "maximum", "maximo" };
 	protected final static String [] xaggregate_mapping = { "aggregate-mapping", "mapeo-agregado" };
 	protected final static String [] xtable = { "table", "tabla" };
 	protected final static String [] xmodel_property = { "property", "propiedad-modelo" };

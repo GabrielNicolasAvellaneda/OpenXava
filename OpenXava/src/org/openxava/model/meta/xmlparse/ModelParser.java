@@ -342,6 +342,7 @@ public class ModelParser extends XmlElementsNames {
 		c.setName(el.getAttribute(xname[lang]));
 		c.setLabel(el.getAttribute(xlabel[lang]));				
 		c.setMinimum(ParserUtil.getAttributeInt(el, xminimum[lang]));
+		c.setMaximum(ParserUtil.getAttributeInt(el, xmaximum[lang]));
 		c.setCondition(ParserUtil.getString(el, xcondition[lang]));
 		c.setOrder(ParserUtil.getString(el, xorder[lang]));
 		c.setMetaReference(createReference(ParserUtil.getElement(el, xreference[lang]), lang));
