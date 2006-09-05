@@ -18,6 +18,7 @@
 String collectionName = request.getParameter("collectionName");
 String viewObject = request.getParameter("viewObject");
 View view = (View) context.get(request, viewObject);
+View collectionView = view.getSubview(collectionName);
 View subview = view.getSubview(collectionName);
 MetaReference ref = view.getMetaModel().getMetaCollection(collectionName).getMetaReference();
 String viewName = viewObject + "_" + collectionName;
@@ -52,7 +53,7 @@ String propertyPrefix = Is.emptyString(propertyPrefixAccumulated)?"xava." + view
 	<% if (lineAction != null) { %>	
 	<th class=<%=style.getListHeader()%>>
 	<% } %>
-	<% if (hasListActions) { %>	
+	<% if (hasListActions  && !collectionView.isCollectionDetailVisible()) { %>	
 	<th class=<%=style.getListHeader()%>>
 	<% } %>
 
@@ -89,7 +90,7 @@ while (itAggregates.hasNext()) {
 <xava:link action="<%=lineAction%>" argv='<%="row="+f + ",viewObject="+viewName%>'/>
 </td>
 <% } %>
-<% if (hasListActions) { %>
+<% if (hasListActions  && !collectionView.isCollectionDetailVisible()) { %>
 <td class=<%=cssClass%>>
 <input type="CHECKBOX" name="<%=propertyPrefix%>__SELECTED__" value="<%=f%>"/>
 </td>
@@ -122,7 +123,6 @@ while (itAggregates.hasNext()) {
 }
 // New
 if (view.displayDetailInCollection(collectionName)) {
-	View collectionView = view.getSubview(collectionName);
 	context.put(request, viewName, collectionView);
 	if (collectionView.isCollectionDetailVisible()) {
 %>	
@@ -160,6 +160,7 @@ while (itDetailActions.hasNext()) {
 <tr class=<%=style.getCollectionListActions()%>><td colspan="<%=subview.getMetaPropertiesList().size()+1%>" class=<%=style.getCollectionListActions()%>>
 <% if (collectionEditable) { %>
 <xava:link action="<%=subview.getNewCollectionElementAction()%>" argv='<%="viewObject="+viewName%>'/>
+<xava:link action="<%=subview.getRemoveSelectedInCollectionAction()%>" argv='<%="viewObject="+viewName%>'/>
 <% } %>
 <% 
 Iterator itListActions = subview.getActionsNamesList().iterator();

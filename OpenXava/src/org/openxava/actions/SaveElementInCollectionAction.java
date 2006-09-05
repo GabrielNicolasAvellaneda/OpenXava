@@ -18,7 +18,6 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	
 	public void execute() throws Exception {		
 		try {				
-			validateMaximum();
 			Map containerKey = saveIfNotExists(getCollectionElementView().getParent());
 			if (isEntityReferencesCollection()) saveEntity(containerKey);
 			else saveAggregate(containerKey); 			
@@ -57,12 +56,14 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 				addMessage("entity_modified", getCollectionElementView().getModelName());
 			}
 			catch (ObjectNotFoundException ex) {
+				validateMaximum();
 				MapFacade.create(getCollectionElementView().getModelName(), values);
 				addMessage("entity_created_and_associated", getCollectionElementView().getModelName(), getCollectionElementView().getParent().getModelName()); 
 			}						
 		}
 		else {
 			// Entity reference used in the standard way
+			validateMaximum();
 			MapFacade.addCollectionElement(
 					getCollectionElementView().getParent().getMetaModel().getName(),
 					getCollectionElementView().getParent().getKeyValues(),
@@ -93,6 +94,7 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	}
 	
 	private void createAggregate(Map containerKey) throws Exception {
+		validateMaximum();
 		int row = getCollectionElementView().getCollectionValues().size();
 		MapFacade.createAggregate(
 			getCollectionElementView().getModelName(),						
