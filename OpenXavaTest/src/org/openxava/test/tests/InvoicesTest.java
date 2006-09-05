@@ -912,7 +912,8 @@ public class InvoicesTest extends ModuleTestBase {
 			"Mode.list",
 			"Sections.change",
 			"Invoices.editDetail", // because it is overwrite, otherwise 'Collection.edit'
-			"Collection.new"			
+			"Collection.new",
+			"Collection.removeSelected"
 		};		
 		assertActions(aggregateListActions);
 		
