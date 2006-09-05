@@ -53,6 +53,25 @@ public class DeliveriesTest extends ModuleTestBase {
 		
 		assertError("More than 3 items in Details of Delivery are not allowed");
 		assertCollectionRowCount("details", 3);
+		
+		execute("DeliveryDetails.hideDetail", "viewObject=xava_view_section2_details_details");
+		checkRowCollection("details", 2);
+		execute("Collection.removeSelected", "viewObject=xava_view_section2_details_details");
+		assertNoErrors();
+		assertMessage("DeliveryDetail deleted from database");
+		assertCollectionRowCount("details", 2);
+		
+		execute("DeliveryDetails.new", "viewObject=xava_view_section2_details_details");
+		setValue("details.number", "13");
+		setValue("details.description", "DETAIL 13");
+		execute("DeliveryDetails.save", "viewObject=xava_view_section2_details_details");
+		assertNoErrors();
+		assertMessage("The action Save for delivery detail executed");
+		assertCollectionRowCount("details", 3);
+		
+		execute("Collection.edit", "row=2,viewObject=xava_view_section2_details_details");
+		execute("DeliveryDetails.save", "viewObject=xava_view_section2_details_details");
+		assertNoErrors();
 	}
 	
 	public void testFocusWhenSectionsAndGroupsInHeader() throws Exception {
