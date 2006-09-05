@@ -2629,7 +2629,8 @@ public class View implements java.io.Serializable {
 		return actionsNamesList==null?Collections.EMPTY_LIST:actionsNamesList;
 	}
 	public boolean hasListActions() {		
-		return !getActionsNamesList().isEmpty();
+		// return !getActionsNamesList().isEmpty();
+		return true;	// because RemoveSelectedInCollectionAction is always present (at the moment)
 	}
 	
 	public void setActionsNamesList(Collection collection) {
@@ -2925,5 +2926,12 @@ public class View implements java.io.Serializable {
 	public void setSaveCollectionElementAction(String saveCollectionElementAction) {
 		this.saveCollectionElementAction = saveCollectionElementAction;
 	}
-
+	
+	/* 
+	 * Now the action name is hard coded, maybe in the future this action will can override 
+	 * by openxava developer 
+	 */ 
+	public String getRemoveSelectedInCollectionAction() {
+		return "Collection.removeSelected";
+	}
 }
