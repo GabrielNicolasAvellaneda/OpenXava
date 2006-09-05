@@ -9,7 +9,7 @@ import org.openxava.tests.*;
 public class CustomersSomeMembersReadOnlyTest extends ModuleTestBase {
 		
 	public CustomersSomeMembersReadOnlyTest(String testName) {
-		super(testName, "OpenXavaTest", "CustomersSomeMembersReadOnly");
+		super(testName, "CustomersSomeMembersReadOnly");
 	}
 	
 	public void testReadOnly() throws Exception {
