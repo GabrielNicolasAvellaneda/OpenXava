@@ -11,19 +11,26 @@ compatible.<br>
 This document guide you to use WTP for executing the <span
  style="font-style: italic;">MySchool</span> demo application that
 comes with OpenXava. <br>
-<b><i>Important!</i></b> Before starting with this tutorial is important that 
-you <b><i>Refresh</i></b> all projects in your <b><i>workspace</i></b> in Eclipse
+<b><i>Important!</i></b> Before starting with this tutorial is
+important that you <b><i>Refresh</i></b> all projects in your <b><i>workspace</i></b>
+in Eclipse
 (select all projects and press F5).<br>
 Follow the next steps:<br>
 <ul>
-  <li><a href="portal/wtp.psml#Add_Tomcat_to_your_Eclipse">Add Tomcat to your Eclipse.</a></li>
-  <li><a href="portal/wtp.psml#Create_a_Tomcat_server">Create a Tomcat server.</a></li>
-  <li><a href="portal/wtp.psml#Define_your_data_sources">Define your data sources.</a></li>
-  <li><a href="portal/wtp.psml#Configure_your_OpenXava_application">Configure your
+  <li><a href="portal/wtp.psml#Add_Tomcat_to_your_Eclipse">Add Tomcat
+to your Eclipse.</a></li>
+  <li><a href="portal/wtp.psml#Create_a_Tomcat_server">Create a Tomcat
+server.</a></li>
+  <li><a href="portal/wtp.psml#Define_your_data_sources">Define your
+data sources.</a></li>
+  <li><a href="portal/wtp.psml#Configure_your_OpenXava_application">Configure
+your
 OpenXava application.</a></li>
-  <li><a href="portal/wtp.psml#Start_the_server_and_test_your">Start the server and
+  <li><a href="portal/wtp.psml#Start_the_server_and_test_your">Start
+the server and
 test your application.</a></li>
-  <li><a href="portal/wtp.psml#Developing_using_WTP">Developing using WTP.</a></li>
+  <li><a href="portal/wtp.psml#Developing_using_WTP">Developing using
+WTP.</a></li>
 </ul>
 <h4><a name="Add_Tomcat_to_your_Eclipse"></a>Add Tomcat to your Eclipse</h4>
 <ul>
@@ -48,6 +55,15 @@ folder)</li>
   <li>Click on&nbsp;<span style="font-style: italic;">OK</span> in <span
  style="font-style: italic;">Preferences Dialog</span> to close it.</li>
 </ul>
+<span style="font-style: italic;"><span style="font-weight: bold;">Warning!</span>
+</span>If &nbsp;you use a Tomcat other than one that comes with
+OpenXava
+distribution then you must copy <span
+ style="font-weight: bold; font-style: italic;">jta.jar </span>and <span
+ style="font-weight: bold; font-style: italic;">ejb.jar</span> from
+openxava-x.x.x/jetspeed-2.0/common/lib to the folder <span
+ style="font-weight: bold; font-style: italic;">common/lib</span> of
+your Tomcat.
 <h4><a name="Create_a_Tomcat_server"></a>Create a Tomcat server</h4>
 <ul>
   <li>Go to <span style="font-style: italic;">Server</span> tab. If it
@@ -137,6 +153,8 @@ on your project (in this case in <span style="font-style: italic;">MySchool</spa
   <li>Check <span style="font-style: italic;">MySchool.wtpBuild</span>.</li>
   <li>Click on&nbsp;<span style="font-style: italic;">OK</span>.</li>
   <li>Click on <span style="font-style: italic;">Build All</span>.</li>
+  <li>Execute ant target <span style="font-style: italic;">rebuild</span>
+and refresh (F5) your project.</li>
 </ul>
 <h4><a name="Start_the_server_and_test_your"></a>Start the server and
 test your application</h4>
