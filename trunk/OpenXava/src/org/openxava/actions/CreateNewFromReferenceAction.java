@@ -26,6 +26,8 @@ public class CreateNewFromReferenceAction extends ReferenceBaseAction implements
 		View viewReference = new View();		
 		viewReference.setModelName(getModel());
 		viewReference.setRequest(request);
+		viewReference.setErrors(getErrors()); 
+		viewReference.setMessages(getMessages()); 
 		getPreviousViews().push(getView());
 		setView(viewReference);
 		

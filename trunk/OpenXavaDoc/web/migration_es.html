@@ -1,4 +1,15 @@
 <h2>Para migrar de OpenXava 2.0.2 a OpenXava 2.0.3</h2>
+
+<h4>No se lanzan eventos al-cambiar cuando se busca</h4>
+La gu&iacute;a de referenc&iacute;a (en la secci&oacute;n 7.5) dice que  
+CRUD.searchByViewKey no lanza ning&uacute;n evento al-cambiar, y CRUD.searchExecutingOnChange 
+lanza todos los eventos al-cambiar. Pero por causa de un bug en ox2.0.2 (y anteriores)
+CRUD.searchByViewKey lanzaba al-cambiar de las claves en las referencias, y 
+CRUD.searchExecutingOnChange no lanzaba al-cambiar de las claves en las referencias.
+Este problema ha sido resuelto, por la tanto si tienes c&oacute;digo que conf&iacute;a en este 
+comportamiento erroneo deber&aacute;s adaptarlo.
+
+<h4>Establece valor para referenc&iacute;as (en combos) con clave m&uacute;ltiple en las pruebas JUnit</h4>
 Establece valor para referenc&iacute;as (en combos) con clave m&uacute;ltiple en las pruebas JUnit
 tiene que hacerse usando POJOs, el uso de claves primarias EJB2 no est&aacute; soportado.<br>
 Ver documentaci&oacute;n en <i>Para migrar de OpenXava 1.2.1 a OpenXava 2.0</i> below.

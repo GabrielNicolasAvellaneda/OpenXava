@@ -285,7 +285,7 @@ public class CustomersTest extends ModuleTestBase {
 		assertValue("seller.name", "MANUEL CHAVARRI");
 		assertValue("relationWithSeller", "A RELATION");
 		assertValue("alternateSeller.number", "2");
-		assertValue("alternateSeller.name", "DON JUANVI LLAVADOR"); // the DON by a on-change
+		assertValue("alternateSeller.name", "JUANVI LLAVADOR"); 
 		
 		// Modify
 		setValue("seller.number", "2");
@@ -329,7 +329,9 @@ public class CustomersTest extends ModuleTestBase {
 		setValue("alternateSeller.number", "2");
 		assertValue("alternateSeller.number", "2");
 		assertValue("alternateSeller.name", "DON JUANVI LLAVADOR");
-		assertNoErrors();						
+		assertNoErrors();
+		assertMessage("OnChangeVoidAction executed");
+		assertMessagesCount(1);								
 	}
 	
 	public void testSearchReferenceWithListAndOnChangeActionInSubview() throws Exception {
@@ -342,12 +344,16 @@ public class CustomersTest extends ModuleTestBase {
 		execute("ReferenceSearch.choose");
 		assertValue("alternateSeller.number", "1");
 		assertValue("alternateSeller.name", "DON MANUEL CHAVARRI");
+		assertMessage("OnChangeVoidAction executed");
+		assertMessagesCount(1);								
 				
 		// Choose using link		
 		execute("Reference.search", "keyProperty=xava.Customer.alternateSeller.number");
 		execute("ReferenceSearch.choose", "row=1");
 		assertValue("alternateSeller.number", "2");
 		assertValue("alternateSeller.name", "DON JUANVI LLAVADOR");
+		assertMessage("OnChangeVoidAction executed");
+		assertMessagesCount(1);								
 		
 		// Canceling
 		execute("Reference.search", "keyProperty=xava.Customer.alternateSeller.number");
@@ -539,8 +545,9 @@ public class CustomersTest extends ModuleTestBase {
 		assertMessage("Customer deleted successfully");
 	}
 
-	public void testSetEditableOfReferences() throws Exception {
+	public void testSetEditableOfReferences_notOnChangeActionsOfReferences() throws Exception {
 		execute("Mode.detailAndFirst");
+		assertNoMessage("OnChangeVoidAction executed"); 
 		assertEditable("address.street");
 		assertEditable("seller.number");
 		assertNoEditable("seller.name");

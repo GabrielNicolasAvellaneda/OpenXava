@@ -8,7 +8,7 @@ import java.util.*;
 public class SearchExecutingOnChangeAction extends SearchByViewKeyAction {
 	
 	protected void setValuesToView(Map values) throws Exception {
-		getView().setValuesExecutingOnChangeActions(values);
+		getView().setValuesExecutingOnChangeActions(values);		
 	}
 
 }
