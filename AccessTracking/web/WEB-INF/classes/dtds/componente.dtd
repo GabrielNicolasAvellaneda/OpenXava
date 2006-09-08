@@ -198,6 +198,7 @@
  nombre CDATA #REQUIRED
  etiqueta CDATA #IMPLIED
  minimo CDATA #IMPLIED 
+ maximo CDATA #IMPLIED 
 >
 
 <!ELEMENT metodo (calculador)>
