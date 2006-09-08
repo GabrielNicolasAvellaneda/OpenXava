@@ -24,8 +24,7 @@ public class ChooseReferenceAction extends ViewBaseAction implements INavigation
 		else if (selectedOnes != null && selectedOnes.length > 0) {			
 			key = (Map) getTab().getTableModel().getObjectAt(selectedOnes[0]);
 		}		
-		getReferenceSubview().setValuesNotifying(key);
-		getReferenceSubview().findObject();
+		getReferenceSubview().setValuesNotifying(key); 
 		getTab().setModelName(getView().getModelName());
 	}
 

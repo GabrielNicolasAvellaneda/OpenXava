@@ -224,4 +224,37 @@ public class Maps {
 		return result;
 	}
 	
+	/**
+	 * Converts a tree map in a plain map (without levels). <p>
+	 * 
+	 * That is, convert:
+	 * <pre>
+	 * {invoice={year=2006, number=1}, number=3}
+	 * </pre>
+	 * in
+	 * <pre>
+	 * {invoice.year=2006, invoice.number=1, number=3}
+	 * </pre>
+	 *  
+	 * @param treeMap This argument is not changed. The keys must be strings. Mustn't be null
+	 * @return A map with the data in plain format.
+	 */
+	public static Map treeToPlain(Map treeMap) {		
+		Map result = new HashMap();
+		fillPlain(result, treeMap, "");
+		return result;
+	}
+
+	private static void fillPlain(Map result, Map treeMap, String prefix) { 
+		for (Iterator it = treeMap.entrySet().iterator(); it.hasNext();) {
+			Map.Entry en = (Map.Entry) it.next();
+			if (en.getValue() instanceof Map) {
+				fillPlain(result, (Map) en.getValue(), en.getKey() + ".");
+			}
+			else {
+				result.put(prefix + en.getKey(), en.getValue());
+			}
+		}
+	}
+		
 }

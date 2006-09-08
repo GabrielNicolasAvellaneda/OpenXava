@@ -793,17 +793,26 @@ public class ModuleTestBase extends TestCase {
 		assertEquals(XavaResources.getString("messages_count_unexpected"), expectedCount, table.getRowCount());
 	}
 			
-	protected void assertNoError(String message) throws Exception {		
-		WebTable table = response.getTableWithID("errors");
+	protected void assertNoError(String message) throws Exception {
+		assertNoMessage(message, "errors", "error_found");
+	}
+	
+	protected void assertNoMessage(String message) throws Exception {
+		assertNoMessage(message, "messages", "message_found"); 
+	}
+		
+	private void assertNoMessage(String message, String id, String notFoundErrorId) throws Exception {		
+		WebTable table = response.getTableWithID(id);
 		if (table == null) {			
 			return;
 		}
 		int rc = table.getRowCount();				
 		for (int i = 0; i < rc; i++) {
 			String error = table.getCellAsText(i, 0).trim();
-			if (error.equals(message)) fail(XavaResources.getString("error_found", message));
+			if (error.equals(message)) fail(XavaResources.getString(notFoundErrorId, message));
 		}
 	}
+	
 	
 	/**
 	 * The first message

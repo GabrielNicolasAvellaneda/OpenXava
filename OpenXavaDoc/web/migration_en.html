@@ -1,4 +1,15 @@
 <h2>Migration from OpenXava 2.0.2 to OpenXava 2.0.3</h2>
+
+<h4>No events on-change when searching are thrown</h4>
+OpenXava Reference Guide (in the section 7.5) says that CRUD.searchByViewKey
+does not throw any on-change event, and CRUD.searchExecutingOnChange throw
+all on-change events. But because of a bug in ox2.0.2 (and previous) the CRUD.searchByViewKey
+threw on-change events of keys in the references, and CRUD.searchExecutingOnChange does
+not threw CRUD.searchExecutingOnChange of key in the references.
+This issue is fixed, therefore if your code rely in this erroneus behaviour you will
+need to adapt it.
+
+<h4>Setting value for references (in combos) with compose key in JUnit tests</h4>
 Setting value for references (in combos) with compose key in JUnit tests must
 be done using POJOs, now the use of EJB2 primary key is not supported.<br>
 See documentation in <i>Migration from OpenXava 1.2.1 to OpenXava 2</i> below.

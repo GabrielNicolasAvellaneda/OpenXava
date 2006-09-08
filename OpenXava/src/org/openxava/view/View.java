@@ -103,7 +103,7 @@ public class View implements java.io.Serializable {
 	private boolean registeringExecutedActions = false;
 		
 	public View() {
-		oid = nextOid++;
+		oid = nextOid++;		
 	}
 	
 	public Collection getMetaMembers() throws XavaException {
@@ -317,7 +317,7 @@ public class View implements java.io.Serializable {
 		while (it.hasNext()) {
 			Map.Entry en = (Map.Entry) it.next(); 
 			String key = (String) en.getKey();
-			Object value = en.getValue();
+			Object value = en.getValue();			
 			int idx = key.indexOf('.');
 			if (idx < 0) {
 				setValue(key, value);
@@ -328,16 +328,7 @@ public class View implements java.io.Serializable {
 				getSubview(subviewName).setValue(member, value); 					
 			}
 		}							
-						
-		if (isSubview() && !isRepresentsAggregate()) { // to throwing code change on search in subview						
-			try {				
-				searchingObject = true; // to avoid the searching
-				propertyChanged(getLastPropertyKeyName());				
-			}
-			finally {				
-				searchingObject = false;
-			}
-		}					
+		
 	}
 	
 	public void setValues(Map map) throws XavaException {		
@@ -386,28 +377,32 @@ public class View implements java.io.Serializable {
 	 * the assigned properties. <p>
 	 */
 	public void setValuesExecutingOnChangeActions(Map values) throws XavaException {
-		if (getParent() == null) {
-			getRoot().registeringExecutedActions = true;
-		}		
 		setOnlyThrowsOnChange(true);
 		try {
 			setValuesNotifying(values);
 		}
 		finally {
 			setOnlyThrowsOnChange(false);
-			if (getParent() == null) {
-				getRoot().registeringExecutedActions = false;		
-				resetExecutedActions();
-			}			
 		}
 	}
 	
 	/**
 	 * Set the values and throws are events associated to the changed values. 
 	 */
-	public void setValuesNotifying(Map values) throws XavaException {		
-		setValues(values); 
-		Iterator it = values.keySet().iterator();
+	public void setValuesNotifying(Map values) throws XavaException {				
+		getRoot().registeringExecutedActions = true;			
+		try {
+			setValues(values); 
+			notifying(values);
+		}
+		finally {
+			getRoot().registeringExecutedActions = false;		
+			resetExecutedActions();			
+		}		
+	}
+
+	private void notifying(Map values) throws XavaException {
+		Iterator it = Maps.treeToPlain(values).keySet().iterator(); 
 		String key = null;
 		String qualifier = null;
 		if (isSubview()) {
@@ -434,7 +429,7 @@ public class View implements java.io.Serializable {
 			else {
 				getParent().propertyChanged(qualifier + key);
 			}							
-		}		
+		}
 	}
 	
 	/**
@@ -1249,15 +1244,15 @@ public class View implements java.io.Serializable {
 		if (getRoot().executedActions != null) getRoot().executedActions.clear();		
 	}
 	
-	private void registerExecutedAction(String name, Object action) {
+	private void registerExecutedAction(String name, Object action) {		
 		if (!getRoot().registeringExecutedActions) return;		
 		if (getRoot().executedActions == null) getRoot().executedActions = new HashSet();
-		getRoot().executedActions.add(name + "::" + action.getClass());
+		getRoot().executedActions.add(name + "::" + action.getClass());		
 	}
 	
 	private boolean actionRegisteredAsExecuted(String name, Object action) {
-		if (!getRoot().registeringExecutedActions) return false;		
-		if (getRoot().executedActions == null) return false;
+		if (!getRoot().registeringExecutedActions) return false;				
+		if (getRoot().executedActions == null) return false;		
 		return getRoot().executedActions.contains(name + "::" + action.getClass());
 	}
 
@@ -1656,7 +1651,7 @@ public class View implements java.io.Serializable {
 		return lastPropertyKeyName;		
 	}
 
-	private void propertyChanged(String propertyId) {		
+	private void propertyChanged(String propertyId) {
 		try {														
 			String name = removeNamePrefix(propertyId);
 			if (name.endsWith(".KEY")) {
@@ -1842,15 +1837,14 @@ public class View implements java.io.Serializable {
 					clear();
 				}
 			}
-			else {
+			else {				
 				setValues(MapFacade.getValues(getModelName(), key, getMembersNamesWithHidden()));				
 			}
 		}
 		catch (ObjectNotFoundException ex) {						
 			getErrors().add("object_with_key_not_found", getModelName(), key);
 			clear(); 								
-		}
-			
+		}			
 	}
 	
 	private String removeNamePrefix(String name) {
@@ -2237,7 +2231,7 @@ public class View implements java.io.Serializable {
 	}
 
 	public Messages getErrors() {
-		if (getParent() != null) return getParent().getErrors();
+		if (getParent() != null) return getParent().getErrors();				
 		return errors;
 	}
 
@@ -2246,7 +2240,7 @@ public class View implements java.io.Serializable {
 		return messages;
 	}
 
-	public void setErrors(Messages messages) {	
+	public void setErrors(Messages messages) {		
 		errors = messages;
 	}
 

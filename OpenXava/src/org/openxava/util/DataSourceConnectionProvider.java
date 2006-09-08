@@ -55,6 +55,9 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 	private static String getJPADataSource() { 
 		try {
 			URL url = DataSourceConnectionProvider.class.getClassLoader().getResource("META-INF/persistence.xml");
+			if (url == null) {
+				throw new XavaException("persistence_xml_not_found");
+			}
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Document doc = builder.parse(url.toExternalForm());
 			NodeList nodes = doc.getElementsByTagName("non-jta-data-source");
