@@ -10,6 +10,7 @@
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%
+boolean onlyEditor = "true".equalsIgnoreCase(request.getParameter("onlyEditor"));
 String viewObject = request.getParameter("viewObject");
 viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObject;
 org.openxava.view.View view = (org.openxava.view.View) context.get(request, viewObject);
@@ -27,7 +28,7 @@ int labelFormat = view.getLabelFormatForReference(ref);
 String label = ref.getLabel(request);
 %>
 <input type="hidden" name="<%=editableKey%>" value="<%=editable%>">
-
+<% if (!onlyEditor) { %>
 <%=preLabel%>
 <% if (labelFormat == MetaPropertyView.NORMAL_LABEL) { %>
 <%=label%>
@@ -52,6 +53,8 @@ String label = ref.getLabel(request);
 </td></tr>
 <tr><td style='vertical-align: middle'>
 <% } %>
+
+<% } // !onlyEditor %>
 <%
 Collection keys = ref.getMetaModelReferenced().getKeyPropertiesNames();
 String keyProperty = "";
@@ -151,7 +154,7 @@ while (itActions.hasNext()) {
 }
 %>
 <%=postEditor%>
-<% if (labelFormat == MetaPropertyView.SMALL_LABEL) { %>
+<% if (!onlyEditor && labelFormat == MetaPropertyView.SMALL_LABEL) { %>
 </td></tr>
 </table>
 <% } %>
