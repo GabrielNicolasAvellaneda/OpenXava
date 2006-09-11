@@ -46,5 +46,12 @@ public class FormulasTest extends ModuleTestBase {
 		assertValidValues("ingredients.ingredient.oid", ingredients);
 		assertValidValues("ingredients.accentuate.oid", cafeConLeche);
 	}
+	
+	public void testHtmlTextStereotype() throws Exception {
+		execute("Mode.detailAndFirst");
+		assertValue("name", "HTML TEST");
+		execute("Sections.change", "activeSection=1");
+		assertTrue("Expected HTML token not found", getHtml().indexOf("Y largo</strong>,<span style=\"background-color: rgb(153, 204, 0);\"> verde </span>y <font color=\"#993300\"><strong>marr&oacute;n</strong></font> como los <em>ojitos</em> del <font size=\"5\">mundo</font>.<br />") >= 0);
+	}
 		
 }

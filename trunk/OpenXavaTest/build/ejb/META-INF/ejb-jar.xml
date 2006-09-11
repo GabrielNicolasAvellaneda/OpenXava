@@ -1387,6 +1387,10 @@
             <description><![CDATA[]]></description>
             <field-name>oid</field-name>
          </cmp-field>
+         <cmp-field id="CmpAttribute_Formula__Recipe">
+            <description><![CDATA[]]></description>
+            <field-name>_Recipe</field-name>
+         </cmp-field>
          <cmp-field id="CmpAttribute_Formula__Name">
             <description><![CDATA[]]></description>
             <field-name>_Name</field-name>

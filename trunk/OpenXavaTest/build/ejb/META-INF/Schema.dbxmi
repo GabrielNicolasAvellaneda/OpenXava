@@ -275,6 +275,8 @@
 
       <columns xmi:id="Formula_oid" name="oid">
       </columns>
+      <columns xmi:id="Formula__Recipe" name="_Recipe">
+      </columns>
       <columns xmi:id="Formula__Name" name="_Name">
       </columns>
 

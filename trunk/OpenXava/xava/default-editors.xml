@@ -81,5 +81,10 @@ In your project use the name 'editors.xml' or 'editores.xml'
   <editor url="actionEditor.jsp"> 
 	<for-stereotype stereotype="__ACTION__"/>
   </editor>
-      
+  
+  <editor url="htmlEditor.jsp" frame="true">
+    <for-stereotype stereotype="HTML_TEXT"/>
+    <for-stereotype stereotype="TEXTO_HTML"/>
+  </editor>
+        
 </editors>

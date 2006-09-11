@@ -21,4 +21,7 @@
 	<for stereotype="FECHAHORA" type="java.sql.Timestamp"/>
 	<for stereotype="IMAGES_GALLERY" type="String"/>
 	<for stereotype="GALERIA_IMAGENES" type="String"/>
+	<for stereotype="HTML_TEXT" type="java.lang.String"/>
+	<for stereotype="TEXTO_HTML" type="java.lang.String"/>
+		
 </stereotype-type-default>

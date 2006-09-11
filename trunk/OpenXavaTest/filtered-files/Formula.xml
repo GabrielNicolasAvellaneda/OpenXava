@@ -6,13 +6,14 @@
 
 	<entity>
 		<property name="oid" type="String" key="true" hidden="true">
-			<default-value-calculator class="org.openxava.calculators.UUIDCalculator"/>
+			<default-value-calculator class="org.openxava.calculators.UUIDCalculator" on-create="true"/>
 		</property>
 		<property name="name" type="String"
 			size="40" required="true"/>			  			
 		<collection name="ingredients">
 			<reference model="FormulaIngredient"/>
-		</collection>						
+		</collection>	
+		<property name="recipe" stereotype="HTML_TEXT"/>
 	</entity>
 	
 	<aggregate name="FormulaIngredient">
@@ -31,6 +32,10 @@
 			<section name="ingredients">
 				ingredients
 			</section>
+			<section name="recipe">
+				recipe
+			</section>
+			
 		</members>		
 	</view>
 	
@@ -57,6 +62,8 @@
 			property="oid" column="ID"/>
 		<property-mapping
 			property="name" column="NAME"/>
+		<property-mapping
+			property="recipe" column="RECIPE"/>
 	</entity-mapping> 
 	
 	<aggregate-mapping aggregate="FormulaIngredient" table="XAVATEST_FORMULAINGREDIENT">
