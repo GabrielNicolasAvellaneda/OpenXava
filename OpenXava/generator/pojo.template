@@ -1,7 +1,5 @@
 
-#declare import="org.openxava.util.Primitives"#
-#declare import="org.openxava.util.Strings"#
-#declare import="org.openxava.util.XavaException"#
+#declare import="org.openxava.util.*"#
 #declare import="org.openxava.util.meta.MetaSet"#
 #declare import="org.openxava.component.MetaComponent"#
 #declare import="org.openxava.model.meta.*"#
@@ -136,6 +134,14 @@ while (itCollections.hasNext()) {
 	}	
 
 	private java.util.Collection get#(colName)#_jpa() throws RemoteException {
+		# if (!XavaPreferences.getInstance().isJPACodeInPOJOs()) { # 
+		throw new RuntimeException(XavaResources.getString("jpa_code_not_generated"));
+		/*
+		// The next code is commented in order to compile this code in Java 1.4
+		// If you want to use JPA put in xava.properties:
+		// jpaCodeInPOJOs=true
+		// and regenerate code		
+		# } #
 		javax.persistence.Query query = org.openxava.jpa.XPersistence.getManager().createQuery("#(col.getJPACondition())#");		
 # 
 		i=0;
@@ -151,6 +157,9 @@ while (itCollections.hasNext()) {
 		}
 # 
 		return query.getResultList();
+		# if (!XavaPreferences.getInstance().isJPACodeInPOJOs()) { # 
+		*/
+		# } # 
 	}	
 # 
 	}
@@ -199,6 +208,14 @@ while (itCollections.hasNext()) {
 # 	
  	public static #(type)# find#(finderName)#(#(arguments)#) #(exception)# {
  		if (XavaPreferences.getInstance().isJPAPersistence()) {
+ 			# if (!XavaPreferences.getInstance().isJPACodeInPOJOs()) { # 
+			throw new RuntimeException(XavaResources.getString("jpa_code_not_generated"));
+			/*
+			// The next code is commented in order to compile this code in Java 1.4
+			// If you want to use JPA put in xava.properties:
+			// jpaCodeInPOJOs=true
+			// and regenerate code		
+			# } # 			
  			javax.persistence.Query query = org.openxava.jpa.XPersistence.getManager().createQuery("#(finder.getHQLCondition())#");
 # 
 		int i=0;
@@ -230,6 +247,9 @@ while (itCollections.hasNext()) {
 				}
 			}
  		# } # 
+ 		# if (!XavaPreferences.getInstance().isJPACodeInPOJOs()) { # 
+			*/
+		# } #  		
  		}
  		else {
  			org.hibernate.Query query = org.openxava.hibernate.XHibernate.getSession().createQuery("#(finder.getHQLCondition())#");

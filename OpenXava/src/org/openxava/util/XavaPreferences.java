@@ -9,17 +9,20 @@ import java.util.*;
 public class XavaPreferences {
 	
 	private final static String FILE_PROPERTIES="xava.properties";
-		
-	private Properties properties;
+	
 	private static XavaPreferences instance;
+	
+	private Properties properties;
+	
 	private boolean ejb2PersistenceLoaded=false;
 	private boolean ejb2Persistence=false;
 	private boolean jpaPersistenceLoaded=false;
 	private boolean jpaPersistence=false;	
 	private boolean duplicateComponentWarningsLoaded=false;
 	private boolean duplicateComponentWarnings=false;
-
-	private int maxSizeForTextEditor;	
+	private int maxSizeForTextEditor;
+	private boolean jpaCodeInPOJOs = false;
+	private boolean jpaCodeInPOJOsLoaded = false;	
   
 	public static XavaPreferences getInstance() {
 		if (instance == null) {
@@ -89,6 +92,14 @@ public class XavaPreferences {
 			jpaPersistence = getPersistenceProviderClass().toUpperCase().indexOf("JPA") >= 0;
 		}	
 		return jpaPersistence;
+	}
+	
+	public boolean isJPACodeInPOJOs() {
+		if (!jpaCodeInPOJOsLoaded) {			
+			jpaCodeInPOJOs = "true".equalsIgnoreCase(getProperties().getProperty("jpaCodeInPOJOs", Boolean.toString(isJPAPersistence()) ).trim());
+			jpaCodeInPOJOsLoaded = true;
+		}	
+		return jpaCodeInPOJOs;		
 	}
 	
 	/**

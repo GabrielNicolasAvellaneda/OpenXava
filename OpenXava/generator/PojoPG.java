@@ -3,9 +3,7 @@
 import org.w3c.dom.*;
 import java.io.*;
 import java.util.*;
-import org.openxava.util.Primitives;
-import org.openxava.util.Strings;
-import org.openxava.util.XavaException;
+import org.openxava.util.*;
 import org.openxava.util.meta.MetaSet;
 import org.openxava.component.MetaComponent;
 import org.openxava.model.meta.*;
@@ -15,7 +13,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Aug 14 13:45:52 CEST 2006
+ * @version Mon Sep 11 17:39:20 CEST 2006
  */
 public class PojoPG {
     Properties properties = new Properties();
@@ -149,7 +147,11 @@ public class PojoPG {
     
     out.print(" \t \n\t\treturn query.list();\n\t}\t\n\n\tprivate java.util.Collection get");
     out.print(colName);
-    out.print("_jpa() throws RemoteException {\n\t\tjavax.persistence.Query query = org.openxava.jpa.XPersistence.getManager().createQuery(\"");
+    out.print("_jpa() throws RemoteException {");
+    if (!XavaPreferences.getInstance().isJPACodeInPOJOs()) { 
+    out.print(" \n\t\tthrow new RuntimeException(XavaResources.getString(\"jpa_code_not_generated\"));\n\t\t/*\n\t\t// The next code is commented in order to compile this code in Java 1.4\n\t\t// If you want to use JPA put in xava.properties:\n\t\t// jpaCodeInPOJOs=true\n\t\t// and regenerate code");
+    } 
+    out.print("\n\t\tjavax.persistence.Query query = org.openxava.jpa.XPersistence.getManager().createQuery(\"");
     out.print(col.getJPACondition());
     out.print("\");");
     
@@ -169,7 +171,11 @@ public class PojoPG {
     		
     		}
     
-    out.print(" \n\t\treturn query.getResultList();\n\t}");
+    out.print(" \n\t\treturn query.getResultList();");
+    if (!XavaPreferences.getInstance().isJPACodeInPOJOs()) { 
+    out.print(" \n\t\t*/");
+    } 
+    out.print(" \n\t}");
     
     	}
     	else if (col.hasCalculator()) {
@@ -226,7 +232,11 @@ public class PojoPG {
     out.print(arguments);
     out.print(") ");
     out.print(exception);
-    out.print(" {\n \t\tif (XavaPreferences.getInstance().isJPAPersistence()) {\n \t\t\tjavax.persistence.Query query = org.openxava.jpa.XPersistence.getManager().createQuery(\"");
+    out.print(" {\n \t\tif (XavaPreferences.getInstance().isJPAPersistence()) {");
+    if (!XavaPreferences.getInstance().isJPACodeInPOJOs()) { 
+    out.print(" \n\t\t\tthrow new RuntimeException(XavaResources.getString(\"jpa_code_not_generated\"));\n\t\t\t/*\n\t\t\t// The next code is commented in order to compile this code in Java 1.4\n\t\t\t// If you want to use JPA put in xava.properties:\n\t\t\t// jpaCodeInPOJOs=true\n\t\t\t// and regenerate code");
+    } 
+    out.print(" \t\t\t\n \t\t\tjavax.persistence.Query query = org.openxava.jpa.XPersistence.getManager().createQuery(\"");
     out.print(finder.getHQLCondition());
     out.print("\");");
     
@@ -255,7 +265,10 @@ public class PojoPG {
     out.print(name);
     out.print("\"));\n\t\t\t\t}\n\t\t\t\telse {\n\t\t\t\t\tex.printStackTrace();\n\t\t\t\t\tthrow new RuntimeException(ex.getMessage());\n\t\t\t\t}\n\t\t\t}");
     } 
-    out.print(" \n \t\t}\n \t\telse {\n \t\t\torg.hibernate.Query query = org.openxava.hibernate.XHibernate.getSession().createQuery(\"");
+    if (!XavaPreferences.getInstance().isJPACodeInPOJOs()) { 
+    out.print(" \n\t\t\t*/");
+    } 
+    out.print("  \t\t\n \t\t}\n \t\telse {\n \t\t\torg.hibernate.Query query = org.openxava.hibernate.XHibernate.getSession().createQuery(\"");
     out.print(finder.getHQLCondition());
     out.print("\");");
     if (finder.isCollection()) { 
@@ -351,7 +364,7 @@ public class PojoPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Aug 14 13:45:52 CEST 2006", // date this file was generated
+        { "Mon Sep 11 17:39:20 CEST 2006", // date this file was generated
              "../OpenXava/generator/pojo.xml", // input file
              "../OpenXava/generator/PojoPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
