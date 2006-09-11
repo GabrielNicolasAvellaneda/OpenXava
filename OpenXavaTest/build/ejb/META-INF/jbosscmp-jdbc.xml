@@ -1112,6 +1112,11 @@
 
         </cmp-field>
          <cmp-field>
+            <field-name>_Recipe</field-name>
+            <column-name>RECIPE</column-name>
+
+        </cmp-field>
+         <cmp-field>
             <field-name>_Name</field-name>
             <column-name>NAME</column-name>
 
