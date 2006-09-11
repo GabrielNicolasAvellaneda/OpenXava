@@ -16,7 +16,7 @@ public class WarehousesTest extends ModuleTestBase {
 	
 		
 	public WarehousesTest(String testName) {
-		super(testName, "OpenXavaTest", "Warehouses");		
+		super(testName, "Warehouses");		
 	}
 	
 	public void testPage7InList() throws Exception {
