@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
 <tl>
-<declare import="org.openxava.util.Primitives"/>
-<declare import="org.openxava.util.Strings"/>
-<declare import="org.openxava.util.XavaException"/>
+<declare import="org.openxava.util.*"/>
 <declare import="org.openxava.util.meta.MetaSet"/>
 <declare import="org.openxava.component.MetaComponent"/>
 <declare import="org.openxava.model.meta.*"/>
@@ -137,6 +135,14 @@ while (itCollections.hasNext()) {
 	}	
 
 	private java.util.Collection get<expr>colName</expr>_jpa() throws RemoteException {
+		<java>if (!XavaPreferences.getInstance().isJPACodeInPOJOs()) { </java> 
+		throw new RuntimeException(XavaResources.getString("jpa_code_not_generated"));
+		/*
+		// The next code is commented in order to compile this code in Java 1.4
+		// If you want to use JPA put in xava.properties:
+		// jpaCodeInPOJOs=true
+		// and regenerate code		
+		<java>} </java>
 		javax.persistence.Query query = org.openxava.jpa.XPersistence.getManager().createQuery("<expr>col.getJPACondition()</expr>");		
 <java>
 		i=0;
@@ -152,6 +158,9 @@ while (itCollections.hasNext()) {
 		}
 </java> 
 		return query.getResultList();
+		<java>if (!XavaPreferences.getInstance().isJPACodeInPOJOs()) { </java> 
+		*/
+		<java>} </java> 
 	}	
 <java>
 	}
@@ -200,6 +209,14 @@ while (itCollections.hasNext()) {
 </java> 	
  	public static <expr>type</expr> find<expr>finderName</expr>(<expr>arguments</expr>) <expr>exception</expr> {
  		if (XavaPreferences.getInstance().isJPAPersistence()) {
+ 			<java>if (!XavaPreferences.getInstance().isJPACodeInPOJOs()) { </java> 
+			throw new RuntimeException(XavaResources.getString("jpa_code_not_generated"));
+			/*
+			// The next code is commented in order to compile this code in Java 1.4
+			// If you want to use JPA put in xava.properties:
+			// jpaCodeInPOJOs=true
+			// and regenerate code		
+			<java>} </java> 			
  			javax.persistence.Query query = org.openxava.jpa.XPersistence.getManager().createQuery("<expr>finder.getHQLCondition()</expr>");
 <java>
 		int i=0;
@@ -231,6 +248,9 @@ while (itCollections.hasNext()) {
 				}
 			}
  		<java>} </java> 
+ 		<java>if (!XavaPreferences.getInstance().isJPACodeInPOJOs()) { </java> 
+			*/
+		<java>} </java>  		
  		}
  		else {
  			org.hibernate.Query query = org.openxava.hibernate.XHibernate.getSession().createQuery("<expr>finder.getHQLCondition()</expr>");
