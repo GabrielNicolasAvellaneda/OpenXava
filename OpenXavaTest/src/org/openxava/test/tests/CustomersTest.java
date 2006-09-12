@@ -150,7 +150,7 @@ public class CustomersTest extends ModuleTestBase {
 		
 	public void testImageEditor() throws Exception { 		
 		execute("CRUD.new");
-		execute("ImageEditor.changeImage", "newImageProperty=foto");
+		execute("ImageEditor.changeImage", "newImageProperty=photo");
 		assertNoErrors();
 		assertAction("LoadImage.loadImage");		
 		String imageUrl = System.getProperty("user.dir") + "/test-images/foto_javi.jpg";
@@ -172,7 +172,8 @@ public class CustomersTest extends ModuleTestBase {
 			imageURL = urlPrefix + urlBase + image.getSource();
 		}		
 		response = getConversation().getResponse(imageURL);
-		assertEquals("Image not obtained", 0, response.getContentLength());		
+		assertTrue("Image not obtained", response.getContentLength() != 0);
+		assertEquals("Result is not an image", "image", response.getContentType());
 	}
 			
 	public void testHideShowGroup() throws Exception {		

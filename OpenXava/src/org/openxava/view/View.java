@@ -320,12 +320,12 @@ public class View implements java.io.Serializable {
 			Object value = en.getValue();			
 			int idx = key.indexOf('.');
 			if (idx < 0) {
-				setValue(key, value);
+				trySetValue(key, value); 
 			}
 			else {
 				String subviewName = key.substring(0, idx);
-				String member = key.substring(idx+1);				
-				getSubview(subviewName).setValue(member, value); 					
+				String member = key.substring(idx+1);								 				
+				getSubview(subviewName).trySetValue(member, value);
 			}
 		}							
 		
@@ -710,16 +710,27 @@ public class View implements java.io.Serializable {
 	}
 	
 	/**
+	 * Set the value to the indicated member. <p>
+	 * 
+	 * If member is not displayed in this view an exception is thrown.
 	 * 
 	 * @param name Can be qualified	 
+	 * @exception XavaException  If name is not a displayed member of this view.
 	 */
 	public void setValue(String name, Object value) throws XavaException {
-		trySetValue(name, value);		
+		if (!trySetValue(name, value)) {
+			String viewName = getViewName() == null?"":"'" + getViewName() + "'";
+			throw new XavaException("member_not_found_in_view", "'" + name + "'", viewName, "'" + getModelName() + "'");
+		}		
 	}	
 				
 	/**
+	 * Try to set the value to the indicated member. <p>
 	 * 
-	 * @param name Can be qualified	 
+	 * If member does not exist in view, returns false, but it does not throw exception.<br>
+	 * 
+	 * @param name Can be qualified
+	 * @return <code>true</code> if member exists and it's updated, <code>false</code> otherwise.	 
 	 */
 	public boolean trySetValue(String name, Object value) throws XavaException {
 		int idx = name.indexOf('.');		
@@ -751,7 +762,7 @@ public class View implements java.io.Serializable {
 		else {			
 			String subview = name.substring(0, idx);
 			String member = name.substring(idx+1);
-			getSubview(subview).setValue(member, value);		
+			getSubview(subview).trySetValue(member, value);
 		}		
 		return true;
 	}
@@ -1113,8 +1124,8 @@ public class View implements java.io.Serializable {
 								ICalculator calculator = p.createDefaultValueCalculator();
 								if (calculator instanceof IJDBCCalculator) {
 									((IJDBCCalculator) calculator).setConnectionProvider(DataSourceConnectionProvider.getByComponent(getModelName()));
-								}
-								setValue(p.getName(), calculator.calculate());
+								}								
+								trySetValue(p.getName(), calculator.calculate()); 
 								alreadyPut.add(p.getName());
 							}					
 						}
@@ -1190,12 +1201,12 @@ public class View implements java.io.Serializable {
 								MetaModel referencedModel = ref.getMetaModelReferenced();								
 								if (referencedModel.getPOJOClass().isInstance(value)) { 																								
 									Map values = referencedModel.toMap(value);
-									setValue(ref.getName(), values);
+									trySetValue(ref.getName(), values); 
 									alreadyPut.addAll(referencedModel.getAllKeyPropertiesNames());									
 								}
 								else if (referencedModel.getMetaEJB() != null && referencedModel.getMetaEJB().isPrimaryKeyClassAvailable() && referencedModel.getMetaEJB().getPrimaryKeyClass().isInstance(value)) { 
 									Map values = referencedModel.getMetaEJB().obtainMapFromPrimaryKey(value);
-									setValue(ref.getName(), values);
+									trySetValue(ref.getName(), values); 
 									alreadyPut.addAll(referencedModel.getAllKeyPropertiesNames());
 								}		
 								else {
@@ -1204,7 +1215,7 @@ public class View implements java.io.Serializable {
 										throw new XavaException("reference_calculator_with_multiple_key_requires_key_class", ref.getName(), referencedModel.getPOJOClass());
 									}
 									String propertyKeyName = ref.getName() + "." + (String) keys.iterator().next();
-									setValue(propertyKeyName, value);
+									trySetValue(propertyKeyName, value); 
 									alreadyPut.add(propertyKeyName);
 								}
 							}					
@@ -1481,8 +1492,8 @@ public class View implements java.io.Serializable {
 					Object value = WebEditors.parse(getRequest(), p, results, getErrors());						
 					boolean isHiddenKeyWithoutValue = p.isHidden() && (results == null); // for not reset hidden values
 					if (!isHiddenKeyWithoutValue && WebEditors.mustToFormat(p)) { 
-						getRequest().setAttribute(valueKey, value);
-						setValue(p.getName(), getRequest().getAttribute(valueKey));																					
+						getRequest().setAttribute(valueKey, value);																				
+						trySetValue(p.getName(), getRequest().getAttribute(valueKey));
 					}											
 				}
 				else if (m instanceof MetaReference) {					
@@ -1577,7 +1588,7 @@ public class View implements java.io.Serializable {
 			String valueKey = qualifier + "." + ref.getName() + "." + propertyName + ".value";			 
 			if (WebEditors.mustToFormat(p)) {				
 				getRequest().setAttribute(valueKey, propertyValue);
-				setValue(ref.getName() + "." + p.getName(), propertyValue);
+				trySetValue(ref.getName() + "." + p.getName(), propertyValue);
 			}									
 		}						
 	}

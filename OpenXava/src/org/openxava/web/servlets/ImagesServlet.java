@@ -18,14 +18,15 @@ public class ImagesServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		try {			
-			ModuleContext context = (ModuleContext) request.getSession().getAttribute("context");
+			ModuleContext context = (ModuleContext) request.getSession().getAttribute("context");			
 			View view = (View) context.get(request, "xava_view");
 			String property=request.getParameter("property");
 			if (property == null) {
 				throw new Exception(XavaResources.getString("image_property_required"));
 			}
 			byte [] image = (byte []) view.getValue(property); 
-			if (image != null) {					
+			if (image != null) {
+				response.setContentType("image");
 				response.getOutputStream().write(image);
 			}
 		}

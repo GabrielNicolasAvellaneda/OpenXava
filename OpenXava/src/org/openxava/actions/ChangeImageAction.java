@@ -28,7 +28,7 @@ public class ChangeImageAction extends BaseAction implements ILoadFileAction {
 	}
 
 	public void setNewImageProperty(String string) {
-		newImageProperty = string;
+		newImageProperty = string;		
 	}
 
 }
