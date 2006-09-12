@@ -11,7 +11,7 @@ public class SellersCannotCreateCustomerTest extends ModuleTestBase {
 	
 
 	public SellersCannotCreateCustomerTest(String testName) {
-		super(testName, "OpenXavaTest", "SellersCannotCreateCustomer");		
+		super(testName, "SellersCannotCreateCustomer");		
 	}
 
 	public void testNotCreateNewReferenceFromCollection() throws Exception {

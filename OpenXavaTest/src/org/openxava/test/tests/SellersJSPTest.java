@@ -10,7 +10,7 @@ import org.openxava.tests.*;
 public class SellersJSPTest extends ModuleTestBase {
 	
 	public SellersJSPTest(String testName) {
-		super(testName, "OpenXavaTest", "SellersJSP");		
+		super(testName, "SellersJSP");		
 	}
 	
 	public void testHandmadeWebView() throws Exception {
