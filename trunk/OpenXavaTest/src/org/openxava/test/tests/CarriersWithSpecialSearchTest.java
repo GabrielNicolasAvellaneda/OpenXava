@@ -7,7 +7,7 @@ import org.openxava.test.model.*;
 
 public class CarriersWithSpecialSearchTest extends ModuleTestBase {
 	public CarriersWithSpecialSearchTest(String testName) {
-		super(testName, "OpenXavaTest", "CarriersWithSpecialSearch");		
+		super(testName, "CarriersWithSpecialSearch");		
 	}
 	
 	protected void setUp() throws Exception {
