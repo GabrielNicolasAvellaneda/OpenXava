@@ -1,6 +1,5 @@
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
 <%@ page import="org.openxava.util.Labels" %>
-<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 <jsp:useBean id="xava_language" class="org.openxava.session.Language" scope="session"/>
 <SCRIPT LANGUAGE="JavaScript">
 <!--
