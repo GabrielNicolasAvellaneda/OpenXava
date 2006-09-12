@@ -14,7 +14,7 @@ import org.openxava.tests.*;
 public class SellersWithCustomersAsAggregateTest extends ModuleTestBase {
 	
 	public SellersWithCustomersAsAggregateTest(String testName) {
-		super(testName, "OpenXavaTest", "SellersWithCustomersAsAggregate");		
+		super(testName, "SellersWithCustomersAsAggregate");		
 	}
 	
 	public void testEntityCollectionAsAggregate() throws Exception {
