@@ -942,7 +942,6 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		try {					
 			MetaReference r = metaModel.getMetaReference(memberName);
 			Object object = getReferencedObject(model, memberName);
-			if (object == null) return Collections.EMPTY_MAP;
 			if (r.isAggregate()) {
 				return getAggregateValues((MetaAggregate) r.getMetaModelReferenced(), object, submembersNames);
 			} 
