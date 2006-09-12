@@ -17,7 +17,7 @@ public class SellersTest extends ModuleTestBase {
 	private Customer customer1;
 
 	public SellersTest(String testName) {
-		super(testName, "OpenXavaTest", "Sellers");		
+		super(testName, "Sellers");		
 	}
 	
 	public void testMembersOfReferenceToEntityNotEditable() throws Exception {
@@ -99,9 +99,9 @@ public class SellersTest extends ModuleTestBase {
 		createSeller66();
 		createSeller67();
 		verifySeller66();
+		deleteCustomers(); 
 		deleteSeller("66");
-		deleteSeller("67");		
-		deleteCustomers();						
+		deleteSeller("67");					
 	}
 	
 	public void testSearchElementInReferencesCollectionUsingList() throws Exception {
@@ -130,7 +130,7 @@ public class SellersTest extends ModuleTestBase {
 		assertEditable("customers.number");
 		assertNoEditable("customers.name");
 		setValue("customers.number", getCustomerNumber1());
-		// Comparing name with ignore case because a formatter in customer name
+		// Comparing name with ignore case because a formatter in customer name		
 		assertValueIgnoringCase("customers.name", getCustomer1().getName()); 
 		assertCollectionRowCount("customers", 0);
 		execute("Collection.save", "viewObject=xava_view_customers");
@@ -242,6 +242,7 @@ public class SellersTest extends ModuleTestBase {
 		customer1 = new Customer();
 		customer1.setNumber(66);
 		customer1.setName("CUSTOMER JUNIT 66");
+		customer1.setAddress(createAddress());
 		customer1.setRemarks("REMARKS JUNIT 66");
 		customer1.setRelationWithSeller("RELATION JUNIT 66");
 		XHibernate.getSession().save(customer1);		
@@ -249,6 +250,7 @@ public class SellersTest extends ModuleTestBase {
 		customer2 = new Customer();
 		customer2.setNumber(67);
 		customer2.setName("CUSTOMER JUNIT 67");
+		customer2.setAddress(createAddress());
 		customer2.setRemarks("REMARKS JUNIT 67");
 		customer2.setRelationWithSeller("RELATION JUNIT 67");
 		XHibernate.getSession().save(customer2);
@@ -256,6 +258,17 @@ public class SellersTest extends ModuleTestBase {
 		XHibernate.commit();
 	}
 	
+	private Address createAddress() { 
+		Address address = new Address();
+		address.setCity("EL PUIG");
+		address.setStreet("MI CALLE");
+		address.setZipCode(46540);
+		State state = new State();
+		state.setId("CA");
+		address.setState(state);
+		return address;
+	}
+
 	private String getCustomerNumber1() throws Exception {
 		return String.valueOf(getCustomer1().getNumber());
 	}
