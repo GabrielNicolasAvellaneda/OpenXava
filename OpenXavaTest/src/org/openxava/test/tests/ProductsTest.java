@@ -41,11 +41,11 @@ public class ProductsTest extends ModuleTestBase {
 	};
 		
 	public ProductsTest(String testName) {
-		super(testName, "OpenXavaTest", "Products");		
+		super(testName, "Products");		
 	}
 	
 	public ProductsTest(String testName, String module) {
-		super(testName, "OpenXavaTest", module);		
+		super(testName, module);		
 	}
 	
 	public void testCustomizeList_sortProperties() throws Exception {
@@ -56,8 +56,9 @@ public class ProductsTest extends ModuleTestBase {
 		assertValueInCollection("xavaPropertiesList",  0, 1, "photos");
 		assertValueInCollection("xavaPropertiesList",  1, 1, "familyNumber");
 		assertValueInCollection("xavaPropertiesList",  2, 1, "subfamilyNumber");
-		assertValueInCollection("xavaPropertiesList",  3, 1, "warehouseKey");
-		assertValueInCollection("xavaPropertiesList",  4, 1, "remarks");
+		assertValueInCollection("xavaPropertiesList",  3, 1, "remarks");
+		assertValueInCollection("xavaPropertiesList",  4, 1, "warehouseKey");
+		
 		 
 		execute("AddColumns.sort");						
 		assertValueInCollection("xavaPropertiesList",  0, 1, "familyNumber");
@@ -70,8 +71,9 @@ public class ProductsTest extends ModuleTestBase {
 		assertValueInCollection("xavaPropertiesList",  0, 1, "photos");
 		assertValueInCollection("xavaPropertiesList",  1, 1, "familyNumber");
 		assertValueInCollection("xavaPropertiesList",  2, 1, "subfamilyNumber");
-		assertValueInCollection("xavaPropertiesList",  3, 1, "warehouseKey");
-		assertValueInCollection("xavaPropertiesList",  4, 1, "remarks");
+		assertValueInCollection("xavaPropertiesList",  3, 1, "remarks");
+		assertValueInCollection("xavaPropertiesList",  4, 1, "warehouseKey");
+		
 	}
 		
 	public void testFiltersInDescriptionsEditor() throws Exception {
