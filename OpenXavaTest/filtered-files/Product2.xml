@@ -35,6 +35,8 @@
 			<default-value-calculator class="org.openxava.test.calculators.DefaultWarehouseCalculator"/>
 		</reference>
 		
+		<reference name="formula"/>
+		
 		<property name="unitPrice"
 			stereotype="MONEY" required="true">
 			<default-value-calculator class="org.openxava.test.calculators.DefaultProductPriceCalculator">
@@ -127,6 +129,33 @@
 
 	</view>
 	
+	<view name="WithFormula">
+	
+		<reference-view reference="family">
+			<descriptions-list order-by-key="true"/>												
+		</reference-view>
+		
+		<reference-view reference="subfamily" create="false">
+			<descriptions-list  
+				description-property="description" 
+				depends="family"
+				condition="${family.number} = ?"/>			  																	
+		</reference-view>
+		
+		<reference-view reference="formula" view="Simple" as-aggregate="true"/>
+	
+		<members>
+			number;
+			description;
+			family;
+			subfamily;
+			formula;
+			unitPrice, unitPriceInPesetas;
+		</members>		
+				
+	</view>
+	
+	
 			
 	<tab>			
 
@@ -159,7 +188,13 @@
 			/>			
 		</reference-mapping>							
 		<property-mapping
-			property="unitPrice" column="UNITPRICE"/>
+			property="unitPrice" column="UNITPRICE"/>	
+		<reference-mapping reference="formula">
+			<reference-mapping-detail 
+				referenced-model-property="oid"
+				column="FORMULAR_OID" 
+			/>
+		</reference-mapping>			
 	</entity-mapping> 
 
 			

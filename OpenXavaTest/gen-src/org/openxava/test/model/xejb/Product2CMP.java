@@ -26,6 +26,7 @@ public abstract class Product2CMP
          dataHolder.set_Warehouse_number( get_Warehouse_number() );
          dataHolder.set_Family_number( get_Family_number() );
          dataHolder.set_Subfamily_number( get_Subfamily_number() );
+         dataHolder.set_Formula_oid( get_Formula_oid() );
 
       }
       catch (RuntimeException e)
@@ -47,6 +48,7 @@ public abstract class Product2CMP
          set_Warehouse_number( dataHolder.get_Warehouse_number() );
          set_Family_number( dataHolder.get_Family_number() );
          set_Subfamily_number( dataHolder.get_Subfamily_number() );
+         set_Formula_oid( dataHolder.get_Formula_oid() );
 
       }
       catch (Exception e)
@@ -109,6 +111,7 @@ public abstract class Product2CMP
             Product2Value.setWarehouse_number( getWarehouse_number() );
             Product2Value.setFamily_number( getFamily_number() );
             Product2Value.setSubfamily_number( getSubfamily_number() );
+            Product2Value.setFormula_oid( getFormula_oid() );
 
          }
          catch (Exception e)
@@ -132,6 +135,7 @@ public abstract class Product2CMP
 		 setWarehouse_number( valueHolder.getWarehouse_number() );
 		 setFamily_number( valueHolder.getFamily_number() );
 		 setSubfamily_number( valueHolder.getSubfamily_number() );
+		 setFormula_oid( valueHolder.getFormula_oid() );
 
 	  }
 	  catch (Exception e)
@@ -173,5 +177,9 @@ public abstract class Product2CMP
    public abstract int get_Subfamily_number() ;
 
    public abstract void set_Subfamily_number( int _Subfamily_number ) ;
+
+   public abstract java.lang.String get_Formula_oid() ;
+
+   public abstract void set_Formula_oid( java.lang.String _Formula_oid ) ;
 
 }

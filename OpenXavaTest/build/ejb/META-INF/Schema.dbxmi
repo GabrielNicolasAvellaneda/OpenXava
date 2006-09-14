@@ -538,6 +538,8 @@
       </columns>
       <columns xmi:id="Product2__Subfamily_number" name="_Subfamily_number">
       </columns>
+      <columns xmi:id="Product2__Formula_oid" name="_Formula_oid">
+      </columns>
 
    </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_Receptionist" name="" primaryKey="Receptionist_PRIMARYKEY" database="RDBDatabase_1">

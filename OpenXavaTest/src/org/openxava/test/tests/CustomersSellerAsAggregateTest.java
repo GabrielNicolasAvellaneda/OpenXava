@@ -78,7 +78,7 @@ public class CustomersSellerAsAggregateTest extends ModuleTestBase {
 
 	private void assertSellerExist(int number) {
 		try {
-			Seller.findByNumber(66);
+			Seller.findByNumber(number);
 		}
 		catch (ObjectNotFoundException ex) {
 			fail("Seller " + number + " does not exist, and it should");

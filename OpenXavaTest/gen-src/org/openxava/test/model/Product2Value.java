@@ -32,6 +32,8 @@ public class Product2Value
    private boolean family_numberHasBeenSet = false;
    private int subfamily_number;
    private boolean subfamily_numberHasBeenSet = false;
+   private java.lang.String formula_oid;
+   private boolean formula_oidHasBeenSet = false;
 
    public Product2Value()
    {
@@ -58,6 +60,8 @@ public class Product2Value
 	  family_numberHasBeenSet = true;
 	  this.subfamily_number = otherValue.subfamily_number;
 	  subfamily_numberHasBeenSet = true;
+	  this.formula_oid = otherValue.formula_oid;
+	  formula_oidHasBeenSet = true;
    }
 
    public java.lang.String getPhotos()
@@ -186,12 +190,26 @@ public class Product2Value
    public boolean subfamily_numberHasBeenSet(){
 	  return subfamily_numberHasBeenSet;
    }
+   public java.lang.String getFormula_oid()
+   {
+	  return this.formula_oid;
+   }
+
+   public void setFormula_oid( java.lang.String formula_oid )
+   {
+	  this.formula_oid = formula_oid;
+	  formula_oidHasBeenSet = true;
+   }
+
+   public boolean formula_oidHasBeenSet(){
+	  return formula_oidHasBeenSet;
+   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("photos=" + getPhotos() + " " + "unitPrice=" + getUnitPrice() + " " + "description=" + getDescription() + " " + "unitPriceInPesetas=" + getUnitPriceInPesetas() + " " + "number=" + getNumber() + " " + "warehouse_zoneNumber=" + getWarehouse_zoneNumber() + " " + "warehouse_number=" + getWarehouse_number() + " " + "family_number=" + getFamily_number() + " " + "subfamily_number=" + getSubfamily_number());
+	  str.append("photos=" + getPhotos() + " " + "unitPrice=" + getUnitPrice() + " " + "description=" + getDescription() + " " + "unitPriceInPesetas=" + getUnitPriceInPesetas() + " " + "number=" + getNumber() + " " + "warehouse_zoneNumber=" + getWarehouse_zoneNumber() + " " + "warehouse_number=" + getWarehouse_number() + " " + "family_number=" + getFamily_number() + " " + "subfamily_number=" + getSubfamily_number() + " " + "formula_oid=" + getFormula_oid());
 	  str.append('}');
 
 	  return(str.toString());
@@ -280,6 +298,14 @@ public class Product2Value
 		 }
 		 lEquals = lEquals && this.family_number == that.family_number;
 		 lEquals = lEquals && this.subfamily_number == that.subfamily_number;
+		 if( this.formula_oid == null )
+		 {
+			lEquals = lEquals && ( that.formula_oid == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.formula_oid.equals( that.formula_oid );
+		 }
 
 		 return lEquals;
 	  }
@@ -308,6 +334,8 @@ public class Product2Value
       result = 37*result + (int) family_number;
 
       result = 37*result + (int) subfamily_number;
+
+      result = 37*result + ((this.formula_oid != null) ? this.formula_oid.hashCode() : 0);
 
 	  return result;
    }

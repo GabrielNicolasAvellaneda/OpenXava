@@ -724,17 +724,34 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 
 	private void updateReferencedEntities(MetaModel metaModel, Map values) throws XavaException, RemoteException, CreateException, ValidationException {
 		for (Iterator it = metaModel.getMetaReferencesToEntity().iterator(); it.hasNext(); ) {
-			MetaReference ref = (MetaReference) it.next();
-			Map referenceValues = (Map) values.get(ref.getName());
-			if (referenceValues != null && referenceValues.size() > ref.getMetaModelReferenced().getMetaMembersKey().size()) {
-				try {									
-					setValues(ref.getMetaModelReferenced(), new HashMap(referenceValues), new HashMap(referenceValues));
-				}
-				catch (FinderException ex) {
-					create(ref.getMetaModelReferenced(), new HashMap(referenceValues), null, null, 0);
-				}
+			MetaReference ref = (MetaReference) it.next();			
+			Map referenceValues = (Map) values.get(ref.getName());			
+			if (referenceValues != null) {
+				int hiddenKeyNotPresent = getHiddenKeyNotPressent(ref, referenceValues);
+				if (referenceValues.size() + hiddenKeyNotPresent > ref.getMetaModelReferenced().getMetaMembersKey().size()) {
+					try {									
+						setValues(ref.getMetaModelReferenced(), new HashMap(referenceValues), new HashMap(referenceValues));
+					}
+					catch (FinderException ex) {
+						referenceValues = createReturningValues(ref.getMetaModelReferenced().getName(), new HashMap(referenceValues));
+						values.put(ref.getName(), referenceValues);
+					}
+				}					
 			}			
 		}
+	}
+
+	private int getHiddenKeyNotPressent(MetaReference ref, Map referenceValues) throws XavaException {
+		int hiddenKeyNotPresent = 0;
+		for (Iterator itKeys = ref.getMetaModelReferenced().getMetaMembersKey().iterator(); itKeys.hasNext(); ) {
+			MetaMember key = (MetaMember) itKeys.next();					
+			if (key.isHidden()) {
+				if (!referenceValues.containsKey(key.getName())) {
+					hiddenKeyNotPresent++;
+				}
+			}
+		}
+		return hiddenKeyNotPresent;
 	}
 
 	public void ejbActivate() throws java.rmi.RemoteException {
