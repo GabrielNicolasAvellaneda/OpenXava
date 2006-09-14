@@ -38,9 +38,10 @@ public class DeliveryTypesTest extends ModuleTestBase {
 		assertNoEditable("number");
 		assertEditable("description");
 		
+		setValue("description", "JUNIT M CREATED"); // We modify because if it is not modified it is not saved hence calculators are not executed
 		execute("DeliveryTypes.saveNotReset");
 		assertValue("number", "66");		
-		assertValue("description", "JUNIT CREATED MODIFIED"); // 'MODIFIED' is added in postcreate
+		assertValue("description", "JUNIT M CREATED MODIFIED"); // 'MODIFIED' is added in postcreate
 		assertNoEditable("number");
 		assertEditable("description");
 		
