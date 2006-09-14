@@ -556,6 +556,7 @@ public class MetaView extends MetaElement implements Cloneable {
 		}
 		view.metaViewsCollections = this.metaViewsCollections;
 		view.metaViewProperties = this.metaViewProperties;
+		if (metaGroups == null) metaGroups = new HashMap(); 
 		view.metaGroups = this.metaGroups; 
 	}
 	
