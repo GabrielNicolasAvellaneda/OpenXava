@@ -21,12 +21,14 @@ public class SaveAction extends ViewBaseAction {
 			if (getView().isKeyEditable()) {
 				// Create
 				if (isResetAfter()) {
-					MapFacade.create(getModelName(), getValuesToSave());					
+					MapFacade.create(getModelName(), getValuesToSave());
+					addMessage("entity_created", getModelName());
 				}
 				else {			
-					values = MapFacade.createReturningValues(getModelName(), getValuesToSave());					
+					Map keyValues = MapFacade.createReturningKey(getModelName(), getValuesToSave());					
+					addMessage("entity_created", getModelName());
+					values = MapFacade.getValues(getModelName(), keyValues, getView().getMembersNamesWithHidden());
 				}
-				addMessage("entity_created", getModelName()); 
 			}
 			else {
 				// Modify				
@@ -43,7 +45,7 @@ public class SaveAction extends ViewBaseAction {
 				getView().reset();				
 			}
 			else {
-				getView().setKeyEditable(false);
+				getView().setKeyEditable(false);				
 				getView().setValues(values);                
 			}			
 			resetDescriptionsCache();
