@@ -1662,7 +1662,7 @@ public class View implements java.io.Serializable {
 		return lastPropertyKeyName;		
 	}
 
-	private void propertyChanged(String propertyId) {
+	private void propertyChanged(String propertyId) {		
 		try {														
 			String name = removeNamePrefix(propertyId);
 			if (name.endsWith(".KEY")) {
