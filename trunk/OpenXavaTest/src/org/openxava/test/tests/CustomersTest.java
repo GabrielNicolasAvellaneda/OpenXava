@@ -240,7 +240,7 @@ public class CustomersTest extends ModuleTestBase {
 		setValue("address.city", "POBLE JUNIT PER A J");
 		setValue("address.state.id", "NY");
 		setValue("seller.number", "1");
-		assertValue("seller.name", "MANUEL CHAVARRI"); // tmp
+		assertValue("seller.name", "MANUEL CHAVARRI"); 
 		setValue("relationWithSeller", "A RELATION");
 		setValue("alternateSeller.number", "2");		
 		execute("Customers.save");  		
@@ -256,7 +256,7 @@ public class CustomersTest extends ModuleTestBase {
 		assertValue("address.city", "POBLE JUNIT PER A J");
 		assertValue("address.state.id", "NY");
 		assertValue("seller.number", "1");
-		assertValue("seller.name", "MANUEL CHAVARRI"); // tmp
+		assertValue("seller.name", "MANUEL CHAVARRI"); 
 		assertValue("relationWithSeller", "A RELATION");
 		assertValue("alternateSeller.number", "2");						
 

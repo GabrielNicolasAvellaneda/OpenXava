@@ -33,7 +33,8 @@ public class DeliveriesTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Deliveries");		
 	}
 	
-	public void testMinimunInCollection() throws Exception {
+	public void testMinimunInCollection_checkboxNotInCollectionWhenNotEditable() throws Exception {
+		// minimunCollection
 		execute("CRUD.new");
 		setValue("invoice.year", "2004");
 		setValue("invoice.number", "2");
@@ -72,6 +73,11 @@ public class DeliveriesTest extends ModuleTestBase {
 		execute("Collection.edit", "row=2,viewObject=xava_view_section2_details_details");
 		execute("DeliveryDetails.save", "viewObject=xava_view_section2_details_details");
 		assertNoErrors();
+		
+		// checkboxNotInCollectionWhenNotEditable, this test only work in a HTML UI
+		assertTrue("Check box must be present", getHtml().indexOf("xava.Delivery.details.__SELECTED__") >= 0);
+		execute("EditableOnOff.setOff");
+		assertTrue("Check box must not be present", getHtml().indexOf("xava.Delivery.details.__SELECTED__") < 0);
 	}
 	
 	public void testFocusWhenSectionsAndGroupsInHeader() throws Exception {
