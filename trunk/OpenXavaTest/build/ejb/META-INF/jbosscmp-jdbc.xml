@@ -1124,6 +1124,16 @@
 
          <query>
             <query-method>
+               <method-name>findByName</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Formula o WHERE o._Name = ?1]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
                <method-name>findByOid</method-name>
                <method-params>
                   <method-param>java.lang.String</method-param>
@@ -2027,6 +2037,11 @@
             <column-name>SUBFAMILY</column-name>
 
         </cmp-field>
+         <cmp-field>
+            <field-name>_Formula_oid</field-name>
+            <column-name>FORMULAR_OID</column-name>
+
+        </cmp-field>
 
          <query>
             <query-method>
@@ -2057,6 +2072,16 @@
                </method-params>
             </query-method>
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o._Subfamily_number = ?1 ]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByFormula</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o._Formula_oid = ?1 ]]></jboss-ql>
 
 	     </query>
          <query>

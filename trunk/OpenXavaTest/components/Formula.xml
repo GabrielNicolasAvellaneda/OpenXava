@@ -14,6 +14,9 @@
 			<reference model="FormulaIngredient"/>
 		</collection>	
 		<property name="recipe" stereotype="HTML_TEXT"/>
+		<finder name="byName" arguments="String name">
+			<condition>${name} = {0}</condition>
+		</finder>
 	</entity>
 	
 	<aggregate name="FormulaIngredient">
@@ -56,6 +59,7 @@
 		
 	</view>
 
+	<view name="Simple" members="name"/> 
 							
 	<entity-mapping table="XAVATEST@separator@FORMULA">
 		<property-mapping

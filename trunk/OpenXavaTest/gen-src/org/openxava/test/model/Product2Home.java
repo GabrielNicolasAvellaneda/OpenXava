@@ -30,6 +30,9 @@ public interface Product2Home
    public java.util.Collection findBySubfamily(int number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
+   public java.util.Collection findByFormula(java.lang.String oid)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public java.util.Collection findAll()
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

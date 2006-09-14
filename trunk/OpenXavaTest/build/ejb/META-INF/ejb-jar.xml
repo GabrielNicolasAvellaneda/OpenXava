@@ -1410,6 +1410,16 @@
 
          <query>
             <query-method>
+               <method-name>findByName</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Formula o WHERE o._Name = ?1]]></ejb-ql>
+         </query>
+         <query>
+            <query-method>
                <method-name>findByOid</method-name>
                <method-params>
                   <method-param>java.lang.String</method-param>
@@ -2543,6 +2553,10 @@
             <description><![CDATA[]]></description>
             <field-name>_Subfamily_number</field-name>
          </cmp-field>
+         <cmp-field id="CmpAttribute_Product2__Formula_oid">
+            <description><![CDATA[]]></description>
+            <field-name>_Formula_oid</field-name>
+         </cmp-field>
 
          <env-entry>
             <env-entry-name>DATA_SOURCE</env-entry-name>
@@ -2586,6 +2600,16 @@
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o._Subfamily_number = ?1 ]]></ejb-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByFormula</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o._Formula_oid = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>

@@ -68,7 +68,7 @@ abstract public class MetaModel extends MetaElement {
 	private boolean hasDefaultCalculatorOnCreate = false;
 	private MetaEJB metaEJB;
 	private String pojoClassName;
-	private Collection metaReferencesToEntity;	
+	private Collection metaReferencesToEntity;
 	
 	/**
 	 * All models (Entities and Aggregates) with a mapping associated.
@@ -478,7 +478,12 @@ abstract public class MetaModel extends MetaElement {
 		return Collections.unmodifiableCollection(membersNames);
 		// It is not obtained from map to keep order
 	}
-
+	
+	/**
+	 * The number of members that are key and hidden. <p>
+	 * @return
+	 * @throws XavaException 
+	 */
 	/**
 	 * Ordered as in component definition.
 	 * @return Not null, read only and serializable

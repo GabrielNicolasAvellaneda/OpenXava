@@ -91,6 +91,24 @@ public interface Product2Remote
    public int getSubfamily_number(  )
       throws java.rmi.RemoteException;
 
+   public org.openxava.test.model.IFormula getFormula(  )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.FormulaRemote getFormulaRemote(  )
+      throws java.rmi.RemoteException;
+
+   public void setFormula( org.openxava.test.model.IFormula newFormula )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.FormulaKey getFormulaKey(  )
+      throws java.rmi.RemoteException;
+
+   public void setFormulaKey( org.openxava.test.model.FormulaKey key )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getFormula_oid(  )
+      throws java.rmi.RemoteException;
+
    public org.openxava.test.model.Product2Data getData(  )
       throws java.rmi.RemoteException;
 

@@ -88,6 +88,7 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(PositiveValidatorTest.class));
 		suite.addTest(new TestSuite(Products2ReferenceAndStereotype.class));
 		suite.addTest(new TestSuite(Products2Test.class));
+		suite.addTest(new TestSuite(Products2WithFormulaTest.class));
 		suite.addTest(new TestSuite(Products3ChangeActionsOnSearchTest.class));
 		suite.addTest(new TestSuite(Products3Test.class));
 		suite.addTest(new TestSuite(Products3WithDescriptionsListTest.class));
