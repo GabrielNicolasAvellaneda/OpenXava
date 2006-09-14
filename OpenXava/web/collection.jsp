@@ -53,7 +53,7 @@ String propertyPrefix = Is.emptyString(propertyPrefixAccumulated)?"xava." + view
 	<% if (lineAction != null) { %>	
 	<th class=<%=style.getListHeader()%>>
 	<% } %>
-	<% if (hasListActions  && !collectionView.isCollectionDetailVisible() && collectionEditable) { %>	
+	<% if (hasListActions  && !collectionView.isCollectionDetailVisible() && (collectionEditable || !subview.getActionsNamesList().isEmpty())) {  %>	
 	<th class=<%=style.getListHeader()%>>
 	<% } %>
 
@@ -90,7 +90,7 @@ while (itAggregates.hasNext()) {
 <xava:link action="<%=lineAction%>" argv='<%="row="+f + ",viewObject="+viewName%>'/>
 </td>
 <% } %>
-<% if (hasListActions  && !collectionView.isCollectionDetailVisible() && collectionEditable) { %>
+<% if (hasListActions  && !collectionView.isCollectionDetailVisible() && (collectionEditable || !subview.getActionsNamesList().isEmpty())) { %>
 <td class=<%=cssClass%>>
 <input type="CHECKBOX" name="<%=propertyPrefix%>__SELECTED__" value="<%=f%>"/>
 </td>
