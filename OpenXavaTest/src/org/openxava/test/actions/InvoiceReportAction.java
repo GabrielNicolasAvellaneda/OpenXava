@@ -40,7 +40,8 @@ public class InvoiceReportAction extends JasperReportBaseAction {
 	}
 	
 	protected String getJRXML() {
-		return "Invoice.jrxml";
+		return "Invoice.jrxml"; // In this way it's readed from classpath
+		// return "/home/javi/temporal/Invoice.jrxml"; // In this way it's readed from file system
 	}
 	
 	private IInvoice getInvoice() throws Exception {
