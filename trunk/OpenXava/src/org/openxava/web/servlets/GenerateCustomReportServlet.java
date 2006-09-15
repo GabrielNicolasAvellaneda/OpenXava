@@ -30,8 +30,14 @@ public class GenerateCustomReportServlet extends HttpServlet {
 				application.getRealPath("/WEB-INF/classes/")
 			);
 			
-			Map parameters = (Map) request.getSession().getAttribute("xava.report.parameters");						
-			InputStream xmlDesign = GenerateCustomReportServlet.class.getResourceAsStream("/" + design); 
+			Map parameters = (Map) request.getSession().getAttribute("xava.report.parameters");
+			InputStream xmlDesign = null;
+			if (design.startsWith("/")) {
+				xmlDesign = new FileInputStream(design);
+			}
+			else {
+				xmlDesign = GenerateCustomReportServlet.class.getResourceAsStream("/" + design);
+			} 
 			if (xmlDesign == null) throw new MalformedURLException("design_not_found"); 
 			JasperReport report = JasperCompileManager.compileReport(xmlDesign);
 			JRDataSource ds = (JRDataSource) request.getSession().getAttribute("xava.report.datasource");
