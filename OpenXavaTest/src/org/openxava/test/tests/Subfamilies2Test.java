@@ -9,7 +9,7 @@ import org.openxava.tests.*;
 public class Subfamilies2Test extends ModuleTestBase {
 	
 	public Subfamilies2Test(String testName) {
-		super(testName, "OpenXavaTest", "Subfamilies2");		
+		super(testName, "Subfamilies2");		
 	}
 	
 	public void testDescriptionsListWithMultipleDescription() throws Exception {

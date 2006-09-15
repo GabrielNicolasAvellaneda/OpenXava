@@ -9,7 +9,7 @@ import org.openxava.tests.*;
 public class SubfamiliesSelectTest extends ModuleTestBase {
 	
 	public SubfamiliesSelectTest(String testName) {
-		super(testName, "OpenXavaTest", "SubfamiliesSelect");		
+		super(testName, "SubfamiliesSelect");		
 	}
 	
 	public void testTabWithSelect() throws Exception {

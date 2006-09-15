@@ -9,7 +9,7 @@ import org.openxava.tests.*;
 public class Products2ReferenceAndStereotype extends ModuleTestBase {
 	
 	public Products2ReferenceAndStereotype(String testName) {
-		super(testName, "OpenXavaTest", "Products2ReferenceAndStereotype");		
+		super(testName, "Products2ReferenceAndStereotype");		
 	}
 	
 	public void testStereotypeInViewDepedensOnReference() throws Exception {

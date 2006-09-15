@@ -14,7 +14,7 @@ import org.openxava.tests.*;
 public class Products2Test extends ModuleTestBase {
 	
 	public Products2Test(String testName) {
-		super(testName, "OpenXavaTest", "Products2");		
+		super(testName, "Products2");		
 	}
 	
 	public void testImagesGallery() throws Exception {
@@ -201,6 +201,7 @@ public class Products2Test extends ModuleTestBase {
 		Warehouse warehouseKeyZone2 = new Warehouse();
 		warehouseKeyZone2.setNumber(1);
 		warehouseKeyZone2.setZoneNumber(2); 
+		System.out.println("[Products2Test.testOnChangeDescriptionsListReferenceMultipleKey] warehouseKeyZone2=" + warehouseKeyZone2); //  tmp
 		setValue("warehouse.KEY", warehouseKeyZone2.toString());
 		assertNotExists("zoneOne");
 		
