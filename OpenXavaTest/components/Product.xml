@@ -30,6 +30,7 @@ therefore it's show some features more advances of stereotypes.
 			stereotype="FAMILY" required="true"/>
 		<property name="subfamilyNumber"
 			stereotype="SUBFAMILY" required="true"/>    			
+		<property name="remarks" stereotype="MEMO"/>			
 		<property name="warehouseKey"
 			stereotype="WAREHOUSE" required="true">    							
 		</property>
@@ -46,7 +47,7 @@ therefore it's show some features more advances of stereotypes.
 			</calculator>		
 		</property>		
 		
-		<property name="remarks" stereotype="MEMO"/>
+		
 		
 		<method name="increasePrice">
 			<calculator class="org.openxava.test.calculators.IncreasePriceCalculator"/>

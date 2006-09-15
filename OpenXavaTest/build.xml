@@ -123,6 +123,8 @@
 			alter table XAVATEST_OFFICE drop constraint FK57FEEF35CB7CAA79;
 			alter table XAVATEST_OFFICE drop constraint FK57FEEF3588875DAA;
 			alter table XAVATEST_PRODUCT3 drop constraint FK45C9437DDFA9523;
+			alter table XAVATEST_CUSTOMER drop constraint FKA5BEF2178427EFA9;
+			alter table XAVATEST_CUSTOMER drop constraint FKA5BEF217A34119E3;
 		</sql>
 	</target>	
 	
