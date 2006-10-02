@@ -11,7 +11,7 @@ import org.openxava.generators.Generators;
 
 /**
  * Program Generator created by TL2Java
- * @version Fri Sep 15 12:43:58 CEST 2006
+ * @version Mon Oct 02 09:13:23 CEST 2006
  */
 public class MethodsPG {
     Properties properties = new Properties();
@@ -262,7 +262,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaModel 
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Fri Sep 15 12:43:58 CEST 2006", // date this file was generated
+        { "Mon Oct 02 09:13:23 CEST 2006", // date this file was generated
              "../OpenXava/generator/methods.xml", // input file
              "../OpenXava/generator/MethodsPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

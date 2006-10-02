@@ -8,7 +8,7 @@ import org.openxava.util.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Fri Sep 15 12:43:59 CEST 2006
+ * @version Mon Oct 02 09:13:24 CEST 2006
  */
 public class InitMembersPG {
     Properties properties = new Properties();
@@ -115,7 +115,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaModel m
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Fri Sep 15 12:43:59 CEST 2006", // date this file was generated
+        { "Mon Oct 02 09:13:24 CEST 2006", // date this file was generated
              "../OpenXava/generator/initMembers.xml", // input file
              "../OpenXava/generator/InitMembersPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
