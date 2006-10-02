@@ -37,15 +37,15 @@
   members CDATA "*"
 >
 
-<!ELEMENT members (#PCDATA|group|section)*>
+<!ELEMENT members (#PCDATA|group|section|action)*>
 
-<!ELEMENT section (#PCDATA|section|group)*>
+<!ELEMENT section (#PCDATA|section|group|action)*>
 <!ATTLIST section
   name CDATA #IMPLIED
   label CDATA #IMPLIED
 >
 
-<!ELEMENT group (#PCDATA|group)*>
+<!ELEMENT group (#PCDATA|group|action)*>
 <!ATTLIST group
   name CDATA #IMPLIED
   label CDATA #IMPLIED
@@ -61,6 +61,7 @@
   frame (true|false) "true"
   create (true|false) "true"
   search (true|false) "true"
+  as-aggregate (true|false) "false"
 >
 
 <!ELEMENT descriptions-list EMPTY>
@@ -149,6 +150,7 @@
 <!ELEMENT action EMPTY>
 <!ATTLIST action
   action CDATA #IMPLIED
+  always-enabled (true|false) "false"
 >
 
 
@@ -192,6 +194,7 @@
  name CDATA #REQUIRED
  label CDATA #IMPLIED
  minimum CDATA #IMPLIED 
+ maximum CDATA #IMPLIED
 >
 
 <!ELEMENT method (calculator)>

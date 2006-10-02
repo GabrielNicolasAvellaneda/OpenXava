@@ -4,7 +4,7 @@
 
 <table>
 <th align='left' class=<%=style.getLabel()%>>
-<fmt:message key="enter_new_image"/>
+<xava:message key="enter_new_image"/>
 </th>
 <td>
 <input name = "newImage" class=<%=style.getEditor()%> type="file" size='60'/>
