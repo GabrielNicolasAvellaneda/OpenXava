@@ -102,7 +102,7 @@ while (it.hasNext()) {
 	  	}
 	}
 	</script>
-	<a title='<fmt:message key="clear_condition_values"/>' href="javascript:void(0)">
+	<a title='<xava:message key="clear_condition_values"/>' href="javascript:void(0)">
 		<img src='<%=request.getContextPath()%>/xava/images/clear-right.gif'
 			border='0' align='middle' onclick="clearConditionValues()"/>
 	</a>
@@ -166,7 +166,7 @@ String urlComparatorsCombo = "comparatorsCombo.jsp" // in this way because websp
 int totalSize = 0;
 if (tab.isRowsHidden()) {
 %>
-	<tr><td align="center">
+	<tr id="nodata"><td align="center">
 	<xava:link action="List.showRows"/>
 	</td></tr>
 <%
@@ -216,11 +216,11 @@ manager.commit(); // because of hibernate or ejb3 or ... can be used in calculat
 }
 else {
 %>
-<tr><td class=<%=totalSize==0?style.getMessages():style.getErrors()%>>
+<tr id="nodata"><td class=<%=totalSize==0?style.getMessages():style.getErrors()%>>
 <% if (totalSize == 0) { %>
-<b><fmt:message key="no_objects"/></b>
+<b><xava:message key="no_objects"/></b>
 <% } else { %>
-<b><fmt:message key="list_error"/></b>
+<b><xava:message key="list_error"/></b>
 <% } %>
 </td></tr>
 <%
@@ -261,9 +261,7 @@ if (!tab.isLastPage()) {
 </td>
 <td style='text-align: right; vertical-align: middle' class='<%=style.getListInfoDetail()%>'>
 <% if (XavaPreferences.getInstance().isShowCountInList()) { %>
-<fmt:message key="list_count">
-	<fmt:param><%=totalSize%></fmt:param> 
-</fmt:message>
+<xava:message key="list_count" intParam="<%=totalSize%>"/>
 <% } %>
 (<xava:link action="List.hideRows"/>)
 </td>

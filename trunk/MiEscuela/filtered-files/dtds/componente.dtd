@@ -42,15 +42,15 @@
  clase ID #REQUIRED
 >
 
-<!ELEMENT miembros (#PCDATA|grupo|seccion)*>
+<!ELEMENT miembros (#PCDATA|grupo|seccion|accion)*>
 
-<!ELEMENT seccion (#PCDATA|seccion|grupo)*>
+<!ELEMENT seccion (#PCDATA|seccion|grupo|accion)*>
 <!ATTLIST seccion
   nombre CDATA #IMPLIED
   etiqueta CDATA #IMPLIED
 >
 
-<!ELEMENT grupo (#PCDATA|grupo)*>
+<!ELEMENT grupo (#PCDATA|grupo|accion)*>
 <!ATTLIST grupo
   nombre CDATA #IMPLIED
   etiqueta CDATA #IMPLIED
@@ -64,6 +64,7 @@
   marco (true|false) "true"
   crear (true|false) "true"
   buscar (true|false) "true"
+  como-agregado (true|false) "false"    
 >
 
 <!ELEMENT lista-descripciones EMPTY>
@@ -153,6 +154,7 @@
 <!ELEMENT accion EMPTY>
 <!ATTLIST accion
   accion CDATA #IMPLIED
+  siempre-activa (true|false) "false"
 >
 
 
@@ -196,6 +198,7 @@
  nombre CDATA #REQUIRED
  etiqueta CDATA #IMPLIED
  minimo CDATA #IMPLIED 
+ maximo CDATA #IMPLIED 
 >
 
 <!ELEMENT metodo (calculador)>

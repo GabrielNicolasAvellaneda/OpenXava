@@ -22,8 +22,8 @@ String month = "month_comparator".equals(comparator)?"selected='selected'":"";
 	<%
 	if (isString) {
 	%>						
-	<option value="starts_comparator" <%=startsWith%>><fmt:message key="starts_comparator"/></option>
-	<option value="contains_comparator" <%=contains%>><fmt:message key="contains_comparator"/></option>
+	<option value="starts_comparator" <%=startsWith%>><xava:message key="starts_comparator"/></option>
+	<option value="contains_comparator" <%=contains%>><xava:message key="contains_comparator"/></option>
 	<%
 	}
 	%>
@@ -36,8 +36,8 @@ String month = "month_comparator".equals(comparator)?"selected='selected'":"";
 	<%
 	if (isDate) {
 	%>
-	<option value="year_comparator" <%=year%>><fmt:message key="year_comparator"/></option>
-	<option value="month_comparator" <%=month%>><fmt:message key="month_comparator"/></option>
+	<option value="year_comparator" <%=year%>><xava:message key="year_comparator"/></option>
+	<option value="month_comparator" <%=month%>><xava:message key="month_comparator"/></option>
 	<%
 	}	
 	%>
