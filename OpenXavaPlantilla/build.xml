@@ -28,9 +28,13 @@
 		<ant antfile="../OpenXava/build.xml" target="clearGeneratedCode"/>		
 	</target>
 			
-	<!-- Construye y despliega la aplicación en formate .war -->
+	<!-- Construye y despliega la aplicación en format .war -->
 	<target name="desplegarWar">
-		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
+		<!-- En formato directorio -->
+		<ant antfile="../OpenXava/build.xml" target="deploy"/>
+		<!-- En formato archivo (no funciona muy bien en windows + tomcat)
+		<ant antfile="../OpenXava/build.xml" target="deployWar"/>		
+		-->
 	</target>				
 
 	<!-- Reconstruye la aplicación, después de esto todo el contenido de 'web' esta listo para ser desplegado -->
