@@ -24,7 +24,11 @@
 		
 	<!-- Build and deploy the application in .war file format -->
 	<target name="deployWar">
+		<!-- In folder format -->
+		<ant antfile="../OpenXava/build.xml" target="deploy"/>
+		<!-- In file format (it does not work fine on windows + tomcat)
 		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
+		-->
 	</target>
 	
 	<!-- Rebuild all application, after this all the content of 'web' is ready to be deployed -->
