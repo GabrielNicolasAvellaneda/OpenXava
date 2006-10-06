@@ -166,6 +166,6 @@ public class XmlElementsNames {
 	protected final static String [] xremove_action = { "remove-action", "accion-quitar" };
 	protected final static String [] xas_aggregate = { "as-aggregate", "como-agregado" };
 	protected final static String [] xalways_enabled = { "always-enabled", "siempre-activa" };
-	
+	protected final static String [] aligned_by_columns = { "aligned-by-columns", "alineado-por-columnas" };	
 		
 }

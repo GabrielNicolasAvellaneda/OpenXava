@@ -48,12 +48,14 @@
 <!ATTLIST seccion
   nombre CDATA #IMPLIED
   etiqueta CDATA #IMPLIED
+  alineado-por-columnas (true|false) "false"
 >
 
 <!ELEMENT grupo (#PCDATA|grupo|accion)*>
 <!ATTLIST grupo
   nombre CDATA #IMPLIED
   etiqueta CDATA #IMPLIED
+  alineado-por-columnas (true|false) "false"
 >
 
 <!ELEMENT vista-referencia ((accion-buscar?|lista-descripciones?), accion*)>
