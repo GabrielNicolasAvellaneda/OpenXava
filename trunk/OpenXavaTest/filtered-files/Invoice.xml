@@ -249,6 +249,16 @@
 			deliveries
 		</members>						
 	</view>
+	
+	<view name="Amounts">
+		<members>
+			year, number;
+			<group name="amounts" aligned-by-columns="false"> 
+				customerDiscount, customerTypeDiscount, yearDiscount;
+				amountsSum, vatPercentage, vat;
+			</group>			
+		</members>
+	</view>
 		
 	<tab>
 		<properties>year, number, date, amountsSum, vat, detailsCount, paid, importance</properties>

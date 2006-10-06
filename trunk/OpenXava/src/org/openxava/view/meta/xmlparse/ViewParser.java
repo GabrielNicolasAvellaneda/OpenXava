@@ -93,9 +93,10 @@ public class ViewParser extends XmlElementsNames {
 			String label = s.getAttribute(xlabel[lang]);
 			if (Is.emptyStringAll(name, label)) {
 				throw new XavaException("section_name_or_label_required");			
-			}			
+			}						
 			String members = getMembers(s, lang);
-			MetaView newSection = v.addSection(name, label, members);
+			boolean alignedByColumns = ParserUtil.getAttributeBoolean(s, aligned_by_columns[lang]);
+			MetaView newSection = v.addSection(name, label, members, alignedByColumns);
 			fillSectionsImpl(s, newSection, lang);
 		}
 	}
@@ -107,8 +108,9 @@ public class ViewParser extends XmlElementsNames {
 			Element n = (Element) l.item(i);
 			String name = n.getAttribute(xname[lang]);
 			String label = n.getAttribute(xlabel[lang]);
-			String members = getMembers(n, lang); 
-			v.addMetaGroup(name, label, members);
+			String members = getMembers(n, lang);
+			boolean alignedByColumns = ParserUtil.getAttributeBoolean(n, aligned_by_columns[lang]);  
+			v.addMetaGroup(name, label, members, alignedByColumns);
 		}
 	}
 	

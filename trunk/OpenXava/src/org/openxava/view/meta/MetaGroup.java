@@ -1,7 +1,5 @@
 package org.openxava.view.meta;
 
-import java.util.*;
-
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 
@@ -11,11 +9,10 @@ import org.openxava.util.*;
 public class MetaGroup extends MetaMember {
 	
 	private String membersNames;
-
+	private boolean alignedByColumns = false;
 	private MetaView metaView;
 	private MetaView metaViewParent;
-	
-	
+		
 	public MetaGroup(MetaView parent) {
 		this.metaViewParent = parent;
 	}
@@ -24,6 +21,7 @@ public class MetaGroup extends MetaMember {
 		if (metaView == null) {
 			try {
 				metaView = (MetaView) metaViewParent.clone();
+				metaView.setAlignedByColumns(isAlignedByColumns()); 
 				metaView.setMembersNames(membersNames);				
 			} 
 			catch (CloneNotSupportedException e) {
@@ -35,6 +33,14 @@ public class MetaGroup extends MetaMember {
 
 	public void setMembersNames(String members) {
 		this.membersNames = members;		
+	}
+
+	public boolean isAlignedByColumns() {
+		return alignedByColumns;
+	}
+
+	public void setAlignedByColumns(boolean alignedByColumns) {
+		this.alignedByColumns = alignedByColumns;
 	}
 		
 }

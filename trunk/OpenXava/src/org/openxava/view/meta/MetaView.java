@@ -40,8 +40,8 @@ public class MetaView extends MetaElement implements Cloneable {
 	private boolean allMembers;
 	private boolean membersNamesByDefaultCreated = false;
 	private boolean frame = true;
-	
-	
+	private boolean alignedByColumns = false; 
+		
 	private String mediatorClassName;
 	
 	private void addMemberName(String memberName) {
@@ -502,7 +502,7 @@ public class MetaView extends MetaElement implements Cloneable {
 	 * 
 	 * @return The added section
 	 */
-	public MetaView addSection(String name, String label, String members) throws XavaException {
+	public MetaView addSection(String name, String label, String members, boolean alignedByColumns) throws XavaException {
 		if (sections == null) sections = new ArrayList();		
 		MetaView section = new MetaView();
 		section.setSection(true);
@@ -511,17 +511,19 @@ public class MetaView extends MetaElement implements Cloneable {
 		section.parentName = getName();
 		section.setLabel(label);
 		section.setMembersNames(members);
+		section.setAlignedByColumns(alignedByColumns);
 		promote(section);		
 		sections.add(section);		
 		return section; 
 	}
 	
-	public void addMetaGroup(String name, String label, String members) throws XavaException {
+	public void addMetaGroup(String name, String label, String members, boolean alignedByColumns) throws XavaException {
 		if (metaGroups == null) metaGroups = new HashMap();
 		MetaGroup metaGroup = new MetaGroup(this);
 		metaGroup.setName(name); 		
 		metaGroup.setLabel(label);
-		metaGroup.setMembersNames(members);				
+		metaGroup.setMembersNames(members);
+		metaGroup.setAlignedByColumns(alignedByColumns);
 		metaGroups.put(name, metaGroup);		
 	}
 		
@@ -693,5 +695,13 @@ public class MetaView extends MetaElement implements Cloneable {
 	}
 	private void setParent(MetaView parent) {
 		this.parent = parent;
+	}
+
+	public boolean isAlignedByColumns() {
+		return alignedByColumns;
+	}
+
+	public void setAlignedByColumns(boolean alignedByColumns) {
+		this.alignedByColumns = alignedByColumns;
 	}
 }

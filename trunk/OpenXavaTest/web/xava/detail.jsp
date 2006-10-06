@@ -47,7 +47,7 @@ while (it.hasNext()) {
 		}
 		else { 
 			first = true;						
-			if (lastWasEditor) { 
+			if (lastWasEditor && !view.isAlignedByColumns()) { 	
 			%>
 			</tr></table>			
 			<% 
@@ -155,11 +155,6 @@ while (it.hasNext()) {
 		</td></tr>
 		</table>		
 	<%
-		}
-		else if (m instanceof org.openxava.view.meta.MetaViewAction) {
-			%>	
-				HOLA
-			<%
 		}
 	} // if is not MetaProperty
 }

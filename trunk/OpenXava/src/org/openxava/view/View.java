@@ -94,13 +94,12 @@ public class View implements java.io.Serializable {
 	private int [] listSelected;
 	private boolean readOnly; // Always not editable, marked from xml
 	private boolean onlyThrowsOnChange; 
-
 	private Collection metaPropertiesIncludingSections;
 	private Collection metaPropertiesIncludingGroups;
 	private Collection metaMembersIncludingHiddenKey;
 	private Map labels;
 	private Collection executedActions;	
-	private boolean registeringExecutedActions = false;
+	private boolean registeringExecutedActions = false;	
 		
 	public View() {
 		oid = nextOid++;		
@@ -2939,4 +2938,9 @@ public class View implements java.io.Serializable {
 	public String getRemoveSelectedInCollectionAction() {
 		return "Collection.removeSelected";
 	}
+
+	public boolean isAlignedByColumns() throws XavaException {
+		return getMetaView().isAlignedByColumns();
+	}
+
 }

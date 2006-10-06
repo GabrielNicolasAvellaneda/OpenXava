@@ -20,7 +20,7 @@
 	
 	<entity-mapping table="XAVATEST@separator@STATE">
 		<property-mapping property="id" column="ID"/>
-		<property-mapping	property="name" column="NAME"/>
+		<property-mapping property="name" column="NAME"/>
 	</entity-mapping> 
 				
 </component>

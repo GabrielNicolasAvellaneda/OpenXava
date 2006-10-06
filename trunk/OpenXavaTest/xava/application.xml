@@ -163,7 +163,13 @@
 		<view name="NestedSections"/>
 		<controller name="Typical"/>	
 	</module>
-		
+	
+	<module name="InvoicesAmounts" folder="invoicing.variations">
+		<model name="Invoice"/>
+		<view name="Amounts"/>
+		<controller name="Typical"/>	
+	</module>
+			
 	<module name="InvoicesDeliveries" folder="invoicing.variations">
 		<model name="Invoice"/>
 		<view name="Deliveries"/>
