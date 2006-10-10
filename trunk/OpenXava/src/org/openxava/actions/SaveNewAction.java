@@ -25,14 +25,14 @@ public class SaveNewAction extends BaseAction implements INavigationAction {
 		nextView = SAME_VIEW;		
 		try {					
 			// Create
-			MapFacade.create(view.getModelName(), getValuesToSave());
+			Map key = MapFacade.createReturningKey(view.getModelName(), getValuesToSave());
 			nextControllers = PREVIOUS_CONTROLLERS;
 			nextView = DEFAULT_VIEW;				
 			if (!getPreviousViews().empty()) {				
 				if (getReferenceSubview() == null) {
 					throw new XavaException("inject_xava_referenceSubview_need", getClass().getName());
-				}
-				getReferenceSubview().setValuesNotifying(getView().getKeyValues());
+				}				
+				getReferenceSubview().setValuesNotifying(key); 
 				getReferenceSubview().findObject();	
 				View previousView = (View) getPreviousViews().pop();
 				setView(previousView);
