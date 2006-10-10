@@ -9,7 +9,7 @@ public class IsLocalCustomerCalculator implements ICalculator {
 
 	public Object calculate() throws Exception {
 		// do nothing: Only for testing set properties from a reference to entity
-		//	inside an aggregate
+		//	inside an aggregate		
 		return Boolean.FALSE;
 	}
 

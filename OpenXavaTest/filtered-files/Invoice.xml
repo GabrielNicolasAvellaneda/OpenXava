@@ -253,7 +253,7 @@
 	<view name="Amounts">
 		<members>
 			year, number;
-			<group name="amounts" aligned-by-columns="false"> 
+			<group name="amounts" aligned-by-columns="true"> 
 				customerDiscount, customerTypeDiscount, yearDiscount;
 				amountsSum, vatPercentage, vat;
 			</group>			
