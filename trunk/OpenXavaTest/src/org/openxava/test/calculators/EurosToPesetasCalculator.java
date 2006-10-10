@@ -10,6 +10,7 @@ import org.openxava.calculators.*;
 public class EurosToPesetasCalculator implements ICalculator {
 	
 	private BigDecimal euros;
+	private BigDecimal rate = new BigDecimal("166.386"); 
 
 	public EurosToPesetasCalculator() {
 		super();
@@ -17,7 +18,7 @@ public class EurosToPesetasCalculator implements ICalculator {
 
 	public Object calculate() throws Exception {
 		if (euros == null) return null;
-		return euros.multiply(new BigDecimal("166.386")).setScale(0, BigDecimal.ROUND_HALF_UP);
+		return euros.multiply(rate).setScale(0, BigDecimal.ROUND_HALF_UP);
 	}
 
 	public BigDecimal getEuros() {
@@ -26,6 +27,14 @@ public class EurosToPesetasCalculator implements ICalculator {
 
 	public void setEuros(BigDecimal euros) {
 		this.euros = euros;
+	}
+
+	public BigDecimal getRate() {
+		return rate;
+	}
+
+	public void setRate(BigDecimal rate) {
+		this.rate = rate;
 	}
 
 }

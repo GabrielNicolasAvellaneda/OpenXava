@@ -1879,14 +1879,10 @@ public class View implements java.io.Serializable {
 			Iterator it = metaCalculator.getMetaSets().iterator();
 			while (it.hasNext()) {
 				MetaSet set = (MetaSet) it.next();				
-				Object value = null;
-				if (set.hasValue()) {					
-					value = set.getValue();
-				}
-				else {													
-					value = getParentIfGroup().getValue(set.getPropertyNameFrom());					
-				}
-				mp.executeSet(set.getPropertyName(), value);				
+				if (!set.hasValue()) {					
+					Object value = getParentIfGroup().getValue(set.getPropertyNameFrom());
+					mp.executeSet(set.getPropertyName(), value); 
+				}											
 			}		
 						
 			if (calculator instanceof IModelCalculator) { 
