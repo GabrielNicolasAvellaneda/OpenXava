@@ -54,6 +54,7 @@ In your project use the name 'editors.xml' or 'editores.xml'
       
   <editor url="dateTimeCalendarEditor.jsp">
 	<formatter class="org.openxava.formatters.DateTimeFormatter"/>
+	<for-type type="java.sql.Timestamp"/> 
     <for-stereotype stereotype="DATETIME"/>
     <for-stereotype stereotype="FECHAHORA"/>
   </editor>    

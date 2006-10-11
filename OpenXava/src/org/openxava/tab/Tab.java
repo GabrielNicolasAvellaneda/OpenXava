@@ -1,5 +1,6 @@
 package org.openxava.tab;
 
+import java.sql.*;
 import java.text.*;
 import java.util.*;
 
@@ -286,7 +287,7 @@ public class Tab {
 					String column = mapping.getQualifiedColumn(p.getQualifiedName());					
 					sb.append(decorateColumn(p, column, i));
 					sb.append(' ');
-					sb.append(convertComparator(this.conditionComparators[i]));
+					sb.append(convertComparator(p, this.conditionComparators[i]));
 					sb.append(" ? ");
 					if (metaPropertiesKey == null) metaPropertiesKey = new ArrayList(); 
 					metaPropertiesKey.add(p);					
@@ -328,12 +329,19 @@ public class Tab {
 	}
 
 
-	private Object convertComparator(String comparator) {
+	private Object convertComparator(MetaProperty p, String comparator) throws XavaException {
 		if (STARTS_COMPARATOR.equals(comparator)) return "like";
 		if (CONTAINS_COMPARATOR.equals(comparator)) return "like";
 		if (YEAR_COMPARATOR.equals(comparator)) return "=";
 		if (MONTH_COMPARATOR.equals(comparator)) return "=";		
-		if ("eq".equals(comparator)) return "=";
+		if ("eq".equals(comparator)) {
+			if (p.getType().equals(Timestamp.class)) {
+				return "between ? and ";
+			}
+			else {
+				return "=";
+			}
+		}
 		if ("ne".equals(comparator)) return "<>";
 		if ("ge".equals(comparator)) return ">=";
 		if ("le".equals(comparator)) return "<=";
@@ -389,7 +397,7 @@ public class Tab {
 		return filterKey(key.toArray());
 	}
 	
-	private Object[] filterKey(Object[] key) throws XavaException {		
+	private Object[] filterKey(Object[] key) throws XavaException {
 		// first, for references
 		if (baseConditionValuesForReference != null && baseConditionValuesForReference.length > 0) {
 			if (key==null) key=new Object[0];
@@ -437,7 +445,37 @@ public class Tab {
 			}									
 		}
 		
+		// Split Timestamp arguments
+		if (hasTimestamp(key)) {
+			key = filterTimestampInKey(key);
+		}
+		
 		return key;
+	}
+
+	private Object[] filterTimestampInKey(Object[] key) {
+		Collection result = new ArrayList();
+		for (int i=0; i<key.length; i++) {
+			if (key[i] instanceof java.sql.Timestamp) {				
+				result.add(Dates.cloneWithoutTime((java.sql.Timestamp) key[i]));
+				result.add(Dates.cloneWith2359((java.sql.Timestamp) key[i]));
+			}
+			else {
+				result.add(key[i]);
+			}
+		}
+		
+		return result.toArray();
+	}
+
+	private boolean hasTimestamp(Object[] key) {
+		if (key == null) return false;
+		for (int i=0; i<key.length; i++) {
+			if (key[i] instanceof java.sql.Timestamp) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void reset() {

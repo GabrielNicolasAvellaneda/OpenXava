@@ -55,7 +55,7 @@ public class DateTimeFormatter implements IMultipleValuesFormatter {
 		
 		for (int i=0; i < dateFormats.length; i++) {
 			try {
-				java.util.Date result =  (java.util.Date) dateFormats[i].parseObject(string);
+				java.util.Date result =  (java.util.Date) dateFormats[i].parseObject(string);				
 				return new java.sql.Timestamp( result.getTime() );
 			}
 			catch (ParseException ex) {

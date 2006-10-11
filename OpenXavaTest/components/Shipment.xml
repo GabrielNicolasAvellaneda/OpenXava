@@ -24,11 +24,16 @@
 		</property>		
 		<property name="number" type="int" key="true" size="5" required="true"/>
 		<property name="description" type="String" size="50" required="true"/>
+		<property name="time" type="java.sql.Timestamp"/>
 		<finder name="byMode" arguments="int mode" collection="true">
 			<condition>${mode} = {0}</condition>
 		</finder>
 		<finder name="all" arguments="" collection="true"/>
 	</entity>		
+	
+	<tab>
+		<properties>number, description, time</properties>
+	</tab>
 	
 	<entity-mapping table="XAVATEST@separator@SHIPMENT">
 		<property-mapping
@@ -43,6 +48,8 @@
 			property="number" column="NUMBER"/>
 		<property-mapping
 			property="description" column="DESCRIPTION"/>			
+		<property-mapping
+			property="time" column="TIME"/>						
 	</entity-mapping>
 	
 </component>

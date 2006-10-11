@@ -112,5 +112,13 @@ public class ShipmentsTest extends ModuleTestBase {
 		}
 		assertTrue("Objet found in list", !found);				
 	}
+	
+	public void testFilterByTimestamp() throws Exception {
+		assertListRowCount(3);
+		setConditionValues( new String [] { "", "", "11/10/2006"} );
+		execute("List.filter");
+		assertListRowCount(1);
+		assertValueInList(0, "description", "CINC");
+	}
 		
 }
