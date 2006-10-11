@@ -226,6 +226,12 @@ document.onkeydown = processKey;
 <form name='<%=manager.getForm()%>' 
 	method='POST' <%=manager.getEnctype()%> 
 	<%=manager.getFormAction(request)%>>
+
+<button name="xava.DEFAULT_ACTION" 
+	onclick="executeXavaAction('', false, <%=manager.getForm()%>, '<%=manager.getDefaultActionQualifiedName()%>')"
+	style="padding: 0; border: none; background-color:transparent">
+</button>
+	
 <INPUT type="hidden" name="xava_page_id" value="<%=manager.getPageId()%>"/>
 <INPUT type="hidden" name="xava_action" value=""/>
 <INPUT type="hidden" name="xava_action_argv" value=""/>
@@ -237,15 +243,14 @@ document.onkeydown = processKey;
 <INPUT type="hidden" name="focus_property_id" value="<%=focusPropertyId%>"/>
 
 <jsp:include page="languages.jsp"/>
+
 <table <%=style.getModuleSpacing()%>>
   <tbody>
-  	<% if (org.openxava.util.XavaPreferences.getInstance().isButtonBarOnTop()) { %>
     <tr>
       <td class='<%=style.getButtonBar()%>'>
       	<jsp:include page="buttonBar.jsp"/>
       </td>
     </tr>
-    <% } %>
     <% if (messagesOnTop && (errors.contains() || messages.contains())) {  %>
     <tr>
       <td class=<%=style.getMessagesWrapper()%>>
@@ -263,13 +268,11 @@ document.onkeydown = processKey;
 		<jsp:include page='<%=manager.getViewURL()%>'/>
 		</td>
     </tr>
-  	<% if (org.openxava.util.XavaPreferences.getInstance().isButtonBarOnBottom()) { %>    
     <tr>
-      <td class="<%=style.getButtonBar()%>">
-		<jsp:include page="buttonBar.jsp?onBottom=true"/>
+      <td <%=style.getBottomButtonsStyle()%>>	
+		<jsp:include page="bottomButtons.jsp"/>
       </td>
     </tr>
-  	<% } %>    
     <% if (!messagesOnTop) { %>
     <tr>
       <td class=<%=style.getMessagesWrapper()%>>

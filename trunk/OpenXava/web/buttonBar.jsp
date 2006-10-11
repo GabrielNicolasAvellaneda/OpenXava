@@ -8,7 +8,7 @@
 <%
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
 manager.setSession(session);
-boolean onBottom = Boolean.valueOf(request.getParameter("onBottom")).booleanValue();
+boolean onBottom = false;
 %>
 
 <table width="100%" <%=style.getButtonBarSpacing()%>>
@@ -16,25 +16,16 @@ boolean onBottom = Boolean.valueOf(request.getParameter("onBottom")).booleanValu
 <td class=<%=style.getButtonBarStart(onBottom)%> size=1>&nbsp;</td>
 <td style='vertical-align: middle' class=<%=style.getButtonBarMiddle(onBottom)%>>
 
-<button name="xava.DEFAULT_ACTION" 
-	onclick="executeXavaAction('', false, <%=manager.getForm()%>, '<%=manager.getDefaultActionQualifiedName()%>')"
-	style="padding: 0; border: none; background-color:transparent">
-</button>
-
 <%
 java.util.Iterator it = manager.getMetaActions().iterator();
 while (it.hasNext()) {
 	MetaAction action = (MetaAction) it.next();
 	if (action.isHidden()) continue;
-	if (action.hasImage()) {
+	if (action.hasImage()) { 
 	%>
 	<xava:image action="<%=action.getQualifiedName()%>"/>
 	<%
-	} else {	
-	%>
-	<xava:button action="<%=action.getQualifiedName()%>"/>
-	<%
-	}
+	} 
 }
 %>
 </td>
