@@ -20,23 +20,24 @@ public class LiferayStyle extends Style {
 	}
 		
 	public String getModule() {
-		return "portlet-font";
+		//return "portlet-font"; No, because usually link style is ugly, and not coherent with portal
+		return ""; // The portal default style is used
 	}
 	
 	public String getModuleSpacing() {
-		return "cellpadding=2 cellspacing=2 border=0 width='100%'";
+		return "border=0 cellpadding=0 cellspacing=2 width='100%'";
 	}
 		
 	public String getButtonBar() {
-		return "beta-gradient";
+		return "portlet-header-bar"; 
 	}
 	
 	public String getButtonBarSpacing() {
-		return "";
+		return "cellpadding=0 cellspacing=0";
 	}	
 	
 	public String getButtonBarStart(boolean onBottom) {
-		return "";
+		return "portlet-header-left";
 	}
 	
 	public String getButtonBarMiddle(boolean onBottom) {
@@ -44,7 +45,7 @@ public class LiferayStyle extends Style {
 	}
 		
 	public String getButtonBarEnd(boolean onBottom) {
-		return "";
+		return "portlet-header-right";
 	}
 	
 	

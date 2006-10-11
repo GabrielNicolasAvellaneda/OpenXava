@@ -34,7 +34,10 @@ here that you want to override.
 			class="org.openxava.actions.SearchReadOnlyAction">
 			<use-object name="xava_view"/>
 		</action>		
-												<action name="deleteSelected" mode="list" confirm="true"			class="org.openxava.actions.DeleteSelectedAction"			keystroke="Control D">			<use-object name="xava_tab"/>		</action>										</controller>		<controller name="Print">										<action name="generatePdf" mode="list"			class="org.openxava.actions.GenerateReportAction"			image="images/pdf.gif"			keystroke="Control Alt P">			<set property="type" value="pdf"/>			<use-object name="xava_tab"/>					</action>				<action name="generateExcel" mode="list"			class="org.openxava.actions.GenerateReportAction"			image="images/excel.gif"			keystroke="Control Alt X">			<set property="type" value="csv"/>			<use-object name="xava_tab"/>					</action>							</controller>		<controller name="Mode">		<action name="detailAndFirst"			class="org.openxava.actions.GoDetailAction"			keystroke="F8">			<set property="nextAction" value="Navigation.first"/>			<use-object name="xava_tab"/>		</action>		<action name="list"			class="org.openxava.actions.GoListAction"			keystroke="F9">			<use-object name="xava_view"/>			<use-object name="xava_tab"/>
+												<action name="deleteSelected" mode="list" confirm="true"			class="org.openxava.actions.DeleteSelectedAction"			keystroke="Control D">			<use-object name="xava_tab"/>		</action>										</controller>		<controller name="Print">										<action name="generatePdf" mode="list"			class="org.openxava.actions.GenerateReportAction"			image="images/pdf.gif"			keystroke="Control Alt P">			<set property="type" value="pdf"/>			<use-object name="xava_tab"/>					</action>
+
+		<action name="generateExcel" mode="list"			class="org.openxava.actions.GenerateReportAction"			image="images/excel.gif"			keystroke="Control Alt X">			<set property="type" value="csv"/>			<use-object name="xava_tab"/>					</action>
+							</controller>		<controller name="Mode">		<action name="detailAndFirst"			class="org.openxava.actions.GoDetailAction"			keystroke="F8">			<set property="nextAction" value="Navigation.first"/>			<use-object name="xava_tab"/>		</action>		<action name="list"			class="org.openxava.actions.GoListAction"			keystroke="F9">			<use-object name="xava_view"/>			<use-object name="xava_tab"/>
 			<use-object name="xava_mainTab"/>
 			<use-object name="xava_previousViews"/>		</action>		<action name="detail"			hidden="true"			class="org.openxava.actions.GoDetailAction">			<use-object name="xava_tab"/>		</action>	</controller>		<controller name="List">		
 		<action name="init" on-init="true"
@@ -43,7 +46,8 @@ here that you want to override.
 			<use-object name="xava_tab"/>
 			<use-object name="xava_mainTab"/>
 		</action>									<action name="viewDetail"			class="org.openxava.actions.ViewDetailAction"			keystroke="F7"			hidden="true"
-			mode="list">			<set property="nextAction" value="Mode.detail"/>			<use-object name="xava_tab"/>			<use-object name="xava_view"/>			<use-object name="xava_row"/>
+			mode="list"
+			image="images/edit.gif">			<set property="nextAction" value="Mode.detail"/>			<use-object name="xava_tab"/>			<use-object name="xava_view"/>			<use-object name="xava_row"/>
 		</action>							<action name="goPreviousPage"			class="org.openxava.actions.GoPreviousPageAction"			keystroke="Control A"			hidden="true"
 			mode="list"			image="images/previous_page.gif">			<use-object name="xava_tab"/>							</action>		<action name="goPage"			class="org.openxava.actions.GoPageAction"			keystroke="Control I"			hidden="true"
 			mode="list">			<use-object name="xava_tab"/>				</action>																	<action name="goNextPage"			class="org.openxava.actions.GoNextPageAction"			keystroke="Control S"			hidden="true"

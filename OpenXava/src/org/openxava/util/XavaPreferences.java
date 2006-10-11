@@ -50,14 +50,6 @@ public class XavaPreferences {
 		return "true".equalsIgnoreCase(getProperties().getProperty("readOnlyAsLabel", "false").trim());
 	}
 	
-	public boolean isButtonBarOnTop() {
-		return "true".equalsIgnoreCase(getProperties().getProperty("buttonBarOnTop", "true").trim());
-	}
-	
-	public boolean isButtonBarOnBottom() {
-		return "true".equalsIgnoreCase(getProperties().getProperty("buttonBarOnBottom", "true").trim());
-	}
-	
 	public boolean isTabAsEJB() {
 		return "true".equalsIgnoreCase(getProperties().getProperty("tabAsEJB", "false").trim());
 	}

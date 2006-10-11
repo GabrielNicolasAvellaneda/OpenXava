@@ -245,4 +245,8 @@ public class Style {
 		return false;
 	}
 	
+	public String getBottomButtonsStyle() {
+		return "";
+	}
+	
 }

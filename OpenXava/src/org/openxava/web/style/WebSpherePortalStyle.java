@@ -218,4 +218,8 @@ public class WebSpherePortalStyle extends Style {
 		return true;
 	}
 	
+	public String getBottomButtonsStyle() {
+		return "style='padding-top: 4px'";
+	}
+
 }
