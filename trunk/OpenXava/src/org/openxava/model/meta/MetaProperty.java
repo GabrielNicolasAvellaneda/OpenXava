@@ -2,6 +2,7 @@ package org.openxava.model.meta;
 
 import java.math.*;
 import java.rmi.*;
+import java.sql.*;
 import java.text.*;
 import java.util.*;
 
@@ -725,6 +726,11 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				Number n = NumberFormat.getNumberInstance(locale).parse(value);
 				return new BigDecimal(n.toString());
 			}
+			if (java.sql.Timestamp.class.isAssignableFrom(type)) {
+				if (emptyString) return null;
+				java.util.Date date = DateFormat.getDateInstance(DateFormat.SHORT, locale).parse(value);
+				return new Timestamp(date.getTime());
+			}			
 			if (java.util.Date.class.isAssignableFrom(type)) {
 				return emptyString?null:DateFormat.getDateInstance(DateFormat.SHORT, locale).parse(value);
 			}

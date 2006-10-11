@@ -73,30 +73,49 @@ public class Dates {
 	 * @return The same date sent as argument (a new date is not created). If null
 	 * 			if sent a null is returned.
 	 */
-	public static Date removeTime(Date fecha) {
-		if (fecha == null) return null;
+	public static Date removeTime(Date date) {
+		if (date == null) return null;
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(fecha);
+		cal.setTime(date);
 		cal.set(Calendar.HOUR_OF_DAY, 0); 
 		cal.set(Calendar.MINUTE, 0);		
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);
-		fecha.setTime(cal.getTime().getTime());
-		return fecha;
+		date.setTime(cal.getTime().getTime());
+		return date;
 	}
 	
 	/**
 	 * Returns a clone but without hours, minutes, seconds and milliseconds. <p>
 	 * 
-	 * @return The same date sent as argument (a new date is not created). If null
-	 * 			if sent a null is returned.
+	 * @return If null if sent a null is returned.
 	 */
-	public static Date clonWithoutTime(Date date) {
+	public static Date cloneWithoutTime(Date date) { 
 		if (date == null) return null;
 		Date result = (Date) date.clone();
 		removeTime(result);
 		return result;
 	}
+	
+	/**
+	 * Returns a clone but with 23:59:59:999 for hours, minutes, seconds and milliseconds. <p>
+	 * 
+	 * @return The same date sent as argument (a new date is not created). If null
+	 * 			if sent a null is returned.
+	 */
+	public static Date cloneWith2359(Date date) { 
+		if (date == null) return null;
+		Date result = (Date) date.clone();		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(result);
+		cal.set(Calendar.HOUR_OF_DAY, 23); 
+		cal.set(Calendar.MINUTE, 59);		
+		cal.set(Calendar.SECOND, 59);
+		cal.set(Calendar.MILLISECOND, 999);
+		result.setTime(cal.getTime().getTime());
+		return result;
+	}
+	
 		
 	/**
 	 * Creates a java.sql.Date from a java.util.Date. <p>
