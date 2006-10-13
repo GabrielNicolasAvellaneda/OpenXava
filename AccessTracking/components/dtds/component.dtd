@@ -43,15 +43,15 @@
 <!ATTLIST section
   name CDATA #IMPLIED
   label CDATA #IMPLIED
+  aligned-by-columns (true|false) "false"
 >
 
 <!ELEMENT group (#PCDATA|group|action)*>
 <!ATTLIST group
   name CDATA #IMPLIED
   label CDATA #IMPLIED
+  aligned-by-columns (true|false) "false"
 >
-
-
 
 <!ELEMENT reference-view ((search-action?|descriptions-list?), action*)>
 <!ATTLIST reference-view

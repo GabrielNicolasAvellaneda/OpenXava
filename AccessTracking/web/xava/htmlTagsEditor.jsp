@@ -20,14 +20,14 @@ if (hasFrame) {
 	preEditor="</th></tr><tr><td class=" + style.getFrameContent() + ">";
 	postEditor="</td></tr></table>";
 }
-else if (first) {
+else if (first && !view.isAlignedByColumns()) { 
 	preLabel="<th style='vertical-align: middle;text-align: left' class=" + style.getLabel() + " id=" + labelKey + " >";
 	postLabel="</th>";
 	preIcons="<td style='vertical-align: middle'>";
 	postIcons="</td>";
-	preEditor="<td style='vertical-align: middle'><table border='0' cellpadding='" + org.openxava.util.XavaPreferences.getInstance().getFormLineSpacing() + "' cellspacing='0'><tr><td style='vertical-align: middle'>";
+	preEditor="<td style='vertical-align: middle'><table border='0' cellpadding='" + org.openxava.util.XavaPreferences.getInstance().getFormLineSpacing() + "' cellspacing='0'><tr><td style='vertical-align: middle'>";		
 	postEditor="</td>";
-}
+} 
 else {
 	preLabel="<th style='vertical-align: middle;text-align: left' class=" + style.getLabel() + " id=" + labelKey + " >&nbsp;&nbsp;";
 	postLabel="</th>";
