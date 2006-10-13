@@ -1,6 +1,9 @@
 package org.openxava.actions;
 
+import java.util.*;
+
 import org.openxava.calculators.*;
+import org.openxava.model.meta.*;
 import org.openxava.session.*;
 import org.openxava.util.*;
 
@@ -22,14 +25,48 @@ public class EditGalleryAction extends ViewBaseAction implements INavigationActi
 			getView().setValue(galleryProperty, oid);
 		}
 		gallery.setOid(oid);
-		gallery.loadAllImages();
+		gallery.loadAllImages();		
 		gallery.setTitle(XavaResources.getString("gallery_title", 
 				Labels.get(galleryProperty, Locales.getCurrent()), 
-				Labels.get(getModelName(), Locales.getCurrent())));				
+				Labels.get(getModelName(), Locales.getCurrent()),
+				getObjectDescription()));				
 		if (gallery.isEmpty()) {
 			addMessage("no_images");
 		}
 		gallery.setReadOnly(!isEditable());
+	}
+
+	private String getObjectDescription() {
+		try {
+			StringBuffer result = new StringBuffer();
+			for (Iterator it=getView().getMetaModel().getMetaPropertiesKey().iterator(); it.hasNext();) {
+				MetaProperty p = (MetaProperty) it.next();
+				if (!p.isHidden()) {
+					Object value = getView().getValue(p.getName());
+					if (value != null) {
+						if (result.length() > 0) result.append('/');
+						result.append(value);
+					}
+				}
+			}
+
+			String [] descriptionProperties = { "name", "nombre", "description", "descripcion" };
+			for (int i = 0; i < descriptionProperties.length; i++) {
+				String des = (String) getView().getValue(descriptionProperties[i]);
+				if (!Is.emptyString(des)) {
+					if (result.length() > 0) result.append(" - ");
+					result.append(des);
+					break;
+				}				
+			}
+			
+			return result.toString();
+		}
+		catch (Exception ex) { 
+			System.err.println("[EditGalleryAction.getObjectDescription] " + XavaResources.getString("object_description_warning")); 
+			ex.printStackTrace(); 
+			return XavaResources.getString("object_description_warning");
+		}		
 	}
 
 	private boolean isEditable() throws XavaException {
