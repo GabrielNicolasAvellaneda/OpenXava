@@ -19,6 +19,7 @@ public abstract class ShipmentCMP
          dataHolder = new org.openxava.test.model.ShipmentData();
 
          dataHolder.set_Type( get_Type() );
+         dataHolder.set_Time( get_Time() );
          dataHolder.set_Description( get_Description() );
          dataHolder.setMode( getMode() );
          dataHolder.setNumber( getNumber() );
@@ -36,6 +37,7 @@ public abstract class ShipmentCMP
    {
       try
       {
+         set_Time( dataHolder.get_Time() );
          set_Description( dataHolder.get_Description() );
 
       }
@@ -91,6 +93,7 @@ public abstract class ShipmentCMP
       try
          {
             ShipmentValue.setType( getType() );
+            ShipmentValue.setTime( getTime() );
             ShipmentValue.setDescription( getDescription() );
             ShipmentValue.setMode( getMode() );
             ShipmentValue.setNumber( getNumber() );
@@ -110,6 +113,7 @@ public abstract class ShipmentCMP
 	  try
 	  {
 		 setType( valueHolder.getType() );
+		 setTime( valueHolder.getTime() );
 		 setDescription( valueHolder.getDescription() );
 
 	  }
@@ -124,6 +128,10 @@ public abstract class ShipmentCMP
    public abstract java.lang.String get_Type() ;
 
    public abstract void set_Type( java.lang.String _Type ) ;
+
+   public abstract java.sql.Timestamp get_Time() ;
+
+   public abstract void set_Time( java.sql.Timestamp _Time ) ;
 
    public abstract java.lang.String get_Description() ;
 

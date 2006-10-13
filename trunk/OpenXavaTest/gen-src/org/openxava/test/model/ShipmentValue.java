@@ -16,6 +16,8 @@ public class ShipmentValue
 
    private int type;
    private boolean typeHasBeenSet = false;
+   private java.sql.Timestamp time;
+   private boolean timeHasBeenSet = false;
    private java.lang.String description;
    private boolean descriptionHasBeenSet = false;
    private int mode;
@@ -32,6 +34,8 @@ public class ShipmentValue
    {
 	  this.type = otherValue.type;
 	  typeHasBeenSet = true;
+	  this.time = otherValue.time;
+	  timeHasBeenSet = true;
 	  this.description = otherValue.description;
 	  descriptionHasBeenSet = true;
 	  this.mode = otherValue.mode;
@@ -53,6 +57,20 @@ public class ShipmentValue
 
    public boolean typeHasBeenSet(){
 	  return typeHasBeenSet;
+   }
+   public java.sql.Timestamp getTime()
+   {
+	  return this.time;
+   }
+
+   public void setTime( java.sql.Timestamp time )
+   {
+	  this.time = time;
+	  timeHasBeenSet = true;
+   }
+
+   public boolean timeHasBeenSet(){
+	  return timeHasBeenSet;
    }
    public java.lang.String getDescription()
    {
@@ -101,7 +119,7 @@ public class ShipmentValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("type=" + getType() + " " + "description=" + getDescription() + " " + "mode=" + getMode() + " " + "number=" + getNumber());
+	  str.append("type=" + getType() + " " + "time=" + getTime() + " " + "description=" + getDescription() + " " + "mode=" + getMode() + " " + "number=" + getNumber());
 	  str.append('}');
 
 	  return(str.toString());
@@ -150,6 +168,14 @@ public class ShipmentValue
 		 ShipmentValue that = (ShipmentValue) other;
 		 boolean lEquals = true;
 		 lEquals = lEquals && this.type == that.type;
+		 if( this.time == null )
+		 {
+			lEquals = lEquals && ( that.time == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.time.equals( that.time );
+		 }
 		 if( this.description == null )
 		 {
 			lEquals = lEquals && ( that.description == null );
@@ -170,6 +196,8 @@ public class ShipmentValue
    public int hashCode(){
 	  int result = 17;
       result = 37*result + (int) type;
+
+      result = 37*result + ((this.time != null) ? this.time.hashCode() : 0);
 
       result = 37*result + ((this.description != null) ? this.description.hashCode() : 0);
 

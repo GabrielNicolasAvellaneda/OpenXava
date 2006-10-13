@@ -13,6 +13,7 @@ public class ShipmentData
 
    private static final long serialVersionUID = 1L;
    private java.lang.String _Type;
+   private java.sql.Timestamp _Time;
    private java.lang.String _Description;
    private int mode;
    private int number;
@@ -24,6 +25,7 @@ public class ShipmentData
    public ShipmentData( ShipmentData otherData )
    {
       set_Type(otherData.get_Type());
+      set_Time(otherData.get_Time());
       set_Description(otherData.get_Description());
       setMode(otherData.getMode());
       setNumber(otherData.getNumber());
@@ -42,6 +44,15 @@ public class ShipmentData
    public void set_Type( java.lang.String _Type )
    {
       this._Type = _Type;
+   }
+
+   public java.sql.Timestamp get_Time()
+   {
+      return this._Time;
+   }
+   public void set_Time( java.sql.Timestamp _Time )
+   {
+      this._Time = _Time;
    }
 
    public java.lang.String get_Description()
@@ -75,7 +86,7 @@ public class ShipmentData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Type=" + get_Type() + " " + "_Description=" + get_Description() + " " + "mode=" + getMode() + " " + "number=" + getNumber());
+      str.append("_Type=" + get_Type() + " " + "_Time=" + get_Time() + " " + "_Description=" + get_Description() + " " + "mode=" + getMode() + " " + "number=" + getNumber());
       str.append('}');
 
       return(str.toString());
@@ -95,6 +106,14 @@ public class ShipmentData
          else
          {
             lEquals = lEquals && this._Type.equals( lTest._Type );
+         }
+         if( this._Time == null )
+         {
+            lEquals = lEquals && ( lTest._Time == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Time.equals( lTest._Time );
          }
          if( this._Description == null )
          {
@@ -120,6 +139,8 @@ public class ShipmentData
       int result = 17;
 
       result = 37*result + ((this._Type != null) ? this._Type.hashCode() : 0);
+
+      result = 37*result + ((this._Time != null) ? this._Time.hashCode() : 0);
 
       result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
 
