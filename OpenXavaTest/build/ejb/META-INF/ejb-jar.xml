@@ -1974,6 +1974,10 @@
             <description><![CDATA[]]></description>
             <field-name>_Type</field-name>
          </cmp-field>
+         <cmp-field id="CmpAttribute_Shipment__Time">
+            <description><![CDATA[]]></description>
+            <field-name>_Time</field-name>
+         </cmp-field>
          <cmp-field id="CmpAttribute_Shipment__Description">
             <description><![CDATA[]]></description>
             <field-name>_Description</field-name>

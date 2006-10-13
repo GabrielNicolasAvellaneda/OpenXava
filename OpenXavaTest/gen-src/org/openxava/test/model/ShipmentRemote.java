@@ -13,6 +13,12 @@ public interface ShipmentRemote
    public int getType(  )
       throws java.rmi.RemoteException;
 
+   public java.sql.Timestamp getTime(  )
+      throws java.rmi.RemoteException;
+
+   public void setTime( java.sql.Timestamp newTime )
+      throws java.rmi.RemoteException;
+
    public java.lang.String getDescription(  )
       throws java.rmi.RemoteException;
 

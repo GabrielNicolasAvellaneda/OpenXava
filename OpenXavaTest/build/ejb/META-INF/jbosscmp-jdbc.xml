@@ -1559,6 +1559,11 @@
 
         </cmp-field>
          <cmp-field>
+            <field-name>_Time</field-name>
+            <column-name>TIME</column-name>
+
+        </cmp-field>
+         <cmp-field>
             <field-name>_Description</field-name>
             <column-name>DESCRIPTION</column-name>
 
