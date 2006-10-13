@@ -183,7 +183,9 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 %>
 <tr class=<%=cssClass%>>
 	<td class=<%=cssClass%> style='vertical-align: middle;text-align: center'>
-<xava:link action='<%=action%>' argv='<%="row="+f%>'/>
+<% if (!org.openxava.util.Is.emptyString(action)) { %>
+<xava:action action='<%=action%>' argv='<%="row="+f%>'/>
+<% } %>
 	</td>
 	<td class=<%=cssClass%>>
 	<INPUT type="<%=singleSelection?"RADIO":"CHECKBOX"%>" name="selected" value="<%=f%>" <%=checked%>/>

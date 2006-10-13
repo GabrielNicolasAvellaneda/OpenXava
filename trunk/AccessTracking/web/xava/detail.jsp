@@ -47,7 +47,7 @@ while (it.hasNext()) {
 		}
 		else { 
 			first = true;						
-			if (lastWasEditor) { 
+			if (lastWasEditor && !view.isAlignedByColumns()) { 	
 			%>
 			</tr></table>			
 			<% 

@@ -59,6 +59,7 @@ public class XavaSuite extends TestSuite {
 		if (XavaPreferences.getInstance().isEJB2Persistence()) {
 			suite.addTest(new TestSuite(EJBTest.class));
 		}
+		suite.addTest(new TestSuite(FamiliesListOnlyTest.class));
 		suite.addTest(new TestSuite(FamiliesTest.class));
 		suite.addTest(new TestSuite(FamiliesWithInheritanceControllerTest.class));
 		suite.addTest(new TestSuite(FamilyProductsReportTest.class));
