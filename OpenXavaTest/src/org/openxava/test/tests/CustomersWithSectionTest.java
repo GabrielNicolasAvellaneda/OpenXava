@@ -48,6 +48,16 @@ public class CustomersWithSectionTest extends CustomersTest {
 		super(testName, "CustomersWithSection", true);		
 	}
 	
+	public void testCustomizeReferenceListDoesNotReturnToListModeOfModule() throws Exception {
+		execute("CRUD.new");
+		execute("Reference.search", "keyProperty=xava.Customer.alternateSeller.number");
+		assertListColumnCount(3);
+		execute("List.customize");
+		execute("List.addColumns");
+		execute("AddColumns.restoreDefault");
+		assertListColumnCount(3); // To test that it's still is the tab of sellers, not the customer's one
+	}
+	
 	public void testDefaultValidator() throws Exception {
 		execute("CRUD.new");
 		setValue("name", "x");
