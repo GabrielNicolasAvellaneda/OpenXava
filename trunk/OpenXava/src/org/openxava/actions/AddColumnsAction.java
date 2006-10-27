@@ -32,14 +32,14 @@ public class AddColumnsAction extends BaseAction implements IRequestAction, INav
 	}
 
 	public String[] getNextControllers() throws Exception {
-		return DEFAULT_CONTROLLERS;
+		return PREVIOUS_CONTROLLERS;
 	}
 
 	public String getCustomView() throws Exception {
-		return DEFAULT_VIEW;
+		return PREVIOUS_VIEW;
 	}
 
 	public String getNextMode() {
-		return LIST;
+		return PREVIOUS_MODE;
 	}
 }

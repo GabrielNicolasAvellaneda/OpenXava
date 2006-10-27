@@ -4,7 +4,7 @@ package org.openxava.actions;
  * @author Javier Paniza
  */
 
-public class NavigationAction extends BaseAction implements INavigationAction, IChangeModeAction {
+public class NavigationAction extends BaseAction implements INavigationAction , IChangeModeAction {
 	
 	private String nextController;
 	private String customView;
@@ -32,7 +32,7 @@ public class NavigationAction extends BaseAction implements INavigationAction, I
 	}
 
 	public String getNextMode() {
-		return DETAIL;
+		return DETAIL;		
 	}
 		
 }

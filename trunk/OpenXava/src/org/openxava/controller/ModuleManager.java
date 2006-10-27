@@ -53,7 +53,8 @@ public class ModuleManager {
 	private String defaultView = null; 
 	
 	private boolean formUpload = false;
-	private String lastPageId; 	
+	private String lastPageId;
+	private String previousMode; 	
 
 	public ModuleManager() {
 		oid = nextOid++;
@@ -310,12 +311,14 @@ public class ModuleManager {
 			}
 			if (action instanceof IChangeModeAction) {
 				IChangeModeAction modeChange = (IChangeModeAction) action;
-				String nextMode = modeChange.getNextMode();				
-				if (!Is.emptyString(nextMode)) {					
-					if (!nextMode.equals(getModeName())) {											
-						setModeName(nextMode);
-					}
-				}																
+				String nextMode = modeChange.getNextMode();
+				if (IChangeModeAction.PREVIOUS_MODE.equals(nextMode)) { 
+					restorePreviousMode();															
+				}													
+				else if (!Is.emptyString(nextMode)) {
+					memorizePreviousMode(); 
+					setModeName(nextMode);					
+				}				
 			}
 			setFormUpload(false);						
 			if (action instanceof ICustomViewAction) {
@@ -437,6 +440,16 @@ public class ModuleManager {
 		
 	}
 	
+	private void memorizePreviousMode() {
+		// At the moment we only memorize the last one 
+		previousMode = modeName==null?DEFAULT_MODE:modeName; 		
+	}
+
+	private void restorePreviousMode() {
+		// At the moment we only have memorized the last one
+		if (previousMode != null) setModeName(previousMode);				
+	}
+
 	private View getSubview(View view, String memberName) throws XavaException { 
 		if (memberName.startsWith("xava.")) {
 			String prefix = "xava." + view.getModelName() + ".";		
@@ -660,7 +673,7 @@ public class ModuleManager {
 
 	private void setViewName(String newView) throws XavaException {
 		if (ICustomViewAction.DEFAULT_VIEW.equals(newView)) {					
-			viewName = defaultView;  
+			viewName = defaultView;
 		}
 		else {		
 			viewName = newView;
@@ -751,7 +764,7 @@ public class ModuleManager {
 		return modeName==null?DEFAULT_MODE:modeName;
 	}
 
-	private void setModeName(String newModelName) {
+	private void setModeName(String newModelName) {		
 		if (Is.equal(modeName, newModelName)) return;
 		modeName = newModelName;
 		metaActions = null;
