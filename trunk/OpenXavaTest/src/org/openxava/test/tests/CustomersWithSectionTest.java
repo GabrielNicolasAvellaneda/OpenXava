@@ -48,6 +48,14 @@ public class CustomersWithSectionTest extends CustomersTest {
 		super(testName, "CustomersWithSection", true);		
 	}
 	
+	public void testChooseInReferenceWithoutSelecting() throws Exception {
+		execute("CRUD.new");
+		execute("Reference.search", "keyProperty=xava.Customer.alternateSeller.number");
+		execute("ReferenceSearch.choose");
+		assertNoErrors();
+		assertAction("ReferenceSearch.choose"); // Because no row is selected we keep in searching list
+	}
+	
 	public void testCustomizeReferenceListDoesNotReturnToListModeOfModule() throws Exception {
 		execute("CRUD.new");
 		execute("Reference.search", "keyProperty=xava.Customer.alternateSeller.number");

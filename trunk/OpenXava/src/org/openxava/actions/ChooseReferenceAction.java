@@ -13,7 +13,8 @@ public class ChooseReferenceAction extends ViewBaseAction implements INavigation
 	 	
 	private Tab tab;
 	private View referenceSubview;
-	private int row = -1;	
+	private int row = -1;
+	private boolean	chosen = true;
 	
 	public void execute() throws Exception {						
 		int [] selectedOnes = tab.getSelected();
@@ -24,6 +25,10 @@ public class ChooseReferenceAction extends ViewBaseAction implements INavigation
 		else if (selectedOnes != null && selectedOnes.length > 0) {			
 			key = (Map) getTab().getTableModel().getObjectAt(selectedOnes[0]);
 		}		
+		if (key == null) {
+			chosen = false;
+			return;
+		}
 		getReferenceSubview().setValuesNotifying(key); 
 		getTab().setModelName(getView().getModelName());
 	}
@@ -45,11 +50,11 @@ public class ChooseReferenceAction extends ViewBaseAction implements INavigation
 	}
 
 	public String[] getNextControllers() {		
-		return PREVIOUS_CONTROLLERS;
+		return chosen?PREVIOUS_CONTROLLERS:SAME_CONTROLLERS;
 	}
 
 	public String getCustomView() {		
-		return DEFAULT_VIEW;
+		return chosen?DEFAULT_VIEW:SAME_VIEW;
 	}
 
 	public int getRow() {
