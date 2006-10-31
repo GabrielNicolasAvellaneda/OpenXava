@@ -737,9 +737,22 @@ public class InvoicesTest extends ModuleTestBase {
 		assertValueInCollection("details", 1, 5, getProductUnitPriceMultiplyBy("20"));
 		
 		assertValue("comment", "DETAIL DELETED"); // verifying postdelete-calculator in collection
+		
+		
+		// Testing if recalculate dependent properties on remove using chechbox in collection
+		execute("Sections.change", "activeSection=2");		
+		assertValue("amountsSum", getSumOf2ProductsUnitPriceMultiplyBy("2", "20")); 		
+		execute("Sections.change", "activeSection=1");
+		checkRowCollection("details", 0);
+		checkRowCollection("details", 1);
+		execute("Collection.removeSelected", "viewObject=xava_view_section1_details");
+		assertNoErrors();
+		execute("Sections.change", "activeSection=2");		
+		assertValue("amountsSum", "0"); 		
+		// end of recalculate testing		
 								
 		// Delete		
-		execute("CRUD.delete");		
+		execute("CRUD.delete");
 		assertMessage("Invoice deleted successfully");
 	}
 	
@@ -1104,9 +1117,16 @@ public class InvoicesTest extends ModuleTestBase {
 		return productUnitPricePlus10;		
 	}
 	
-	private String getProductUnitPriceMultiplyBy(String cantidad) throws Exception {
-		return DecimalFormat.getInstance().format(getProductUnitPriceDB().multiply(new BigDecimal(cantidad)));
+	private String getProductUnitPriceMultiplyBy(String quantity) throws Exception {
+		return DecimalFormat.getInstance().format(getProductUnitPriceDB().multiply(new BigDecimal(quantity)));
 	}
+	
+	
+	private String getSumOf2ProductsUnitPriceMultiplyBy(String quantity1, String quantity2) throws Exception { 
+		BigDecimal sum = getProductUnitPriceDB().multiply(new BigDecimal(quantity1)).add(getProductUnitPriceDB().multiply(new BigDecimal(quantity2)));		
+		return DecimalFormat.getInstance().format(sum);
+	}
+	
 	
 	private IProduct getProduct() throws Exception {
 		if (product == null) {
