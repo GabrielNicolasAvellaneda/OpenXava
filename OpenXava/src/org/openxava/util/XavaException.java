@@ -10,6 +10,7 @@ public class XavaException extends Exception {
 	private Object argv1;
 	private Object argv2;
 	private Object argv3;
+	private Object argv4;
 
 	public XavaException() {
 		super();
@@ -49,14 +50,23 @@ public class XavaException extends Exception {
 		this.argv3 = argv3;
 	}
 	
-	
-	
+	public XavaException(String idOrMessage, Object argv0, Object argv1, Object argv2, Object argv3, Object argv4) { 
+		super(idOrMessage);
+		this.argv0 = argv0;
+		this.argv1 = argv1;
+		this.argv2 = argv2;
+		this.argv3 = argv3;
+		this.argv4 = argv4;
+	}	
 	
 	public String getMessage() {
 		return getLocalizedMessage();
 	}
 	
 	public String getLocalizedMessage() {
+		if (argv4 != null) {
+			return XavaResources.getString(super.getMessage(), argv0, argv1, argv2, argv3, argv4);
+		}				
 		if (argv3 != null) {
 			return XavaResources.getString(super.getMessage(), argv0, argv1, argv2, argv3);
 		}				

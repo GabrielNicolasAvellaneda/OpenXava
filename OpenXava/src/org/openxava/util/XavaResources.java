@@ -47,7 +47,12 @@ public class XavaResources {
 	
 	public static String getString(String key, Object argv0, Object argv1, Object argv2, Object argv3) {
 		return impl.getString(key, argv0, argv1, argv2, argv3);
+	}
+	
+	public static String getString(String key, Object argv0, Object argv1, Object argv2, Object argv3, Object argv4) { 
+		return impl.getString(key, argv0, argv1, argv2, argv3, argv4);
 	}	
+
 			
 	public static String getString(String key, Object [] argv) {
 		return impl.getString(key, argv);

@@ -46,8 +46,12 @@ public class ResourceManagerI18n {
 	
 	public String getString(String key, Object argv0, Object argv1, Object argv2, Object argv3) {
 		return getString(key, new Object [] { argv0, argv1, argv2, argv3 });
-	}	
+	}
 	
+	public String getString(String key, Object argv0, Object argv1, Object argv2, Object argv3, Object argv4) { 
+		return getString(key, new Object [] { argv0, argv1, argv2, argv3, argv4 });
+	}	
+		
 	public String getString(String key, Object [] argv) {
 		MessageFormat formatter = new MessageFormat("");
 		formatter.setLocale(Locales.getCurrent());
