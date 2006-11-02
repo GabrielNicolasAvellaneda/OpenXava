@@ -100,7 +100,7 @@ public class DeliveryTypesTest extends ModuleTestBase {
 		XHibernate.commit();		
 				
 		execute("CRUD.delete");		
-		assertError("Delivery type can not delete because it is used in deliveries");
+		assertError("Delivery type 66 can not delete because it is used in deliveries");
 		assertEditable("description"); // because return to main view (and controllers)
 		
 		XHibernate.getSession().delete(delivery);

@@ -1173,8 +1173,26 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		Messages errors = new Messages();
 		Iterator it = metaModel.getMetaValidatorsRemove().iterator();
 		while (it.hasNext()) {
-			MetaValidator metaValidator = (MetaValidator) it.next(); 
-			IRemoveValidator validator = metaValidator.getRemoveValidator();
+			MetaValidator metaValidator = (MetaValidator) it.next();
+			IRemoveValidator validator = null;
+			if (metaValidator.containsMetaSetsWithoutValue()) {
+				validator = metaValidator.createRemoveValidator();
+				PropertiesManager pmValidator = new PropertiesManager(validator);
+				PropertiesManager pmModelObject = new PropertiesManager(modelObject);
+				for (Iterator itSets=metaValidator.getMetaSetsWithoutValue().iterator(); itSets.hasNext();) {
+					MetaSet metaSet = (MetaSet) itSets.next();
+					try {
+						pmValidator.executeSet(metaSet.getPropertyName(), pmModelObject.executeGet(metaSet.getPropertyNameFrom()));
+					}
+					catch (Exception ex) {
+						ex.printStackTrace();
+						throw new XavaException("validator_set_property_error", metaSet.getPropertyName(), validator.getClass(), metaSet.getPropertyNameFrom(), modelObject.getClass(), ex.getMessage());
+					}
+				}
+			}
+			else {
+				validator = metaValidator.getRemoveValidator();
+			}
 			validator.setEntity(modelObject);
 			validator.validate(errors);			
 		}				 		

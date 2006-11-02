@@ -15,7 +15,10 @@
 			<set property="suffix" value="CREATED"/>
 		</postcreate-calculator>
 		<postmodify-calculator class="org.openxava.test.calculators.DeliveryTypePostmodifyCalculator"/>						
-		<remove-validator class="org.openxava.test.validators.DeliveryTypeRemoveValidator"/>									
+		<remove-validator class="org.openxava.test.validators.DeliveryTypeRemoveValidator">
+			<set property="number"/>
+		</remove-validator>
+		
 	</entity>
 	
 	<view>
