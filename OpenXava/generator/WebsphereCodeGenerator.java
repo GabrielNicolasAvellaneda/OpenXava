@@ -40,7 +40,7 @@ public class WebsphereCodeGenerator extends CodeGenerator {
  
 		// Generate dbxmi
 		String [] argv = {				
-			"../OpenXava/xava/controllers.xml", // A XML file is required, but it's not used
+			"../OpenXava/xava/default-controllers.xml", // A XML file is required, but it's not used
 			backendPath + "/DB.dbxmi",			
 		};
 		WebsphereDbxmiPG.main(argv);
@@ -49,7 +49,7 @@ public class WebsphereCodeGenerator extends CodeGenerator {
 		for (Iterator it=Mapping.getSchemas().iterator(); it.hasNext();) {
 			String schema = (String) it.next();
 			String [] argvSch = {				
-				"../OpenXava/xava/controllers.xml", // A XML file is required, but it's not used
+				"../OpenXava/xava/default-controllers.xml", // A XML file is required, but it's not used
 				backendPath + "/" + schema +".schxmi",
 				schema
 			};
@@ -59,7 +59,7 @@ public class WebsphereCodeGenerator extends CodeGenerator {
 		
 		// Generate mapxmi
 		String [] argvMap = {				
-			"../OpenXava/xava/controllers.xml", // A XML file is required, but it's not used				
+			"../OpenXava/xava/default-controllers.xml", // A XML file is required, but it's not used				
 			backendPath + "/Map.mapxmi"								
 		};
 		WebsphereMapxmiPG.main(argvMap);
