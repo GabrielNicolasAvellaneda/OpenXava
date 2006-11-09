@@ -31,6 +31,10 @@ public class Style {
 		return "button-bar";
 	}
 	
+	public String getButtonBar2() {
+		return "";
+	}
+		
 	public String getButtonBarSpacing() {
 		return "";
 	}	
@@ -116,6 +120,14 @@ public class Style {
 		return getFrameTitle();
 	}
 	
+	public String getFrameTitleStartDecoration() {
+		return "";
+	}
+	
+	public String getFrameTitleEndDecoration() {
+		return "";
+	}
+		
 	public String getFrameContent() {
 		return getFrame();
 	}
@@ -129,7 +141,7 @@ public class Style {
 	}
 	
 	public String getLabel() { 
-		return "label";
+		return "portlet-form-field-label";
 	}
 	
 	public String getSmallLabel() {
@@ -173,6 +185,10 @@ public class Style {
 		return "Jetspeed";
 	}
 	
+	public String getSectionTableAttributes() {
+		return "border='0' cellpadding='0' cellspacing='0'";
+	}
+	
 	public String getSectionActive() {
 		return "activeSection";
 	}	
@@ -181,41 +197,30 @@ public class Style {
 		return null;
 	}
 	
-	public String getSectionBarLeftDecoration() {
+	public String getSectionBarStartDecoration() {
 		return "";
 	}
 	
-	/**
-	 * If Middle and Right decoration is used
-	 */
-	public boolean sectionTabHasDecoration() {
-		return true;
+	public String getSectionBarEndDecoration() {
+		return "";
+	}
+			
+	public String getActiveSectionTabStartDecoration() {
+		return "<td class='TabLeft' nowrap='true'>&nbsp;</td><td class='TabMiddle' style='vertical-align: middle; text-align: center;' nowrap='true'>";
 	}
 	
-	public String getSectionTabLeft() {
-		return "TabLeft";
+	public String getActiveSectionTabEndDecoration() {
+		return "</td><td class='TabRight' nowrap='true'>&nbsp;</td>";		
 	}
 	
-	public String getSectionTabMiddle() {
-		return "TabMiddle";
-	}
-
-	public String getSectionTabRight() {
-		return "TabRight";
+	public String getSectionTabStartDecoration() {
+		return "<td class='TabLeftLow' nowrap='true'>&nbsp;</td><td class='TabMiddleLow' style='vertical-align: middle; text-align: center;' nowrap='true'>";
 	}
 	
-	public String getSectionTabLeftLow() {
-		return "TabLeftLow";
-	}
-
-	public String getSectionTabMiddleLow() {
-		return "TabMiddleLow";
-	}
-	
-	public String getSectionTabRightLow() {
-		return "TabRightLow";
-	}
-	
+	public String getSectionTabEndDecoration() {
+		return "</td><td class='TabRightLow' nowrap='true'>&nbsp;</td>";		
+	}		
+		
 	public String getCollectionListActions() {
 		return "";
 	}

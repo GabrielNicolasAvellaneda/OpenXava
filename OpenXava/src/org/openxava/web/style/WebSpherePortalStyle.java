@@ -96,10 +96,6 @@ public class WebSpherePortalStyle extends Style {
 		return "portlet-form-input-field";
 	}
 	
-	public String getLabel() { 
-		return "portlet-form-field-label";
-	}
-	
 	public String getSmallLabel() {
 		return "small-label";
 	}
@@ -161,39 +157,27 @@ public class WebSpherePortalStyle extends Style {
 		return "wpsUnSelectedPageLink";
 	}
 	
-	public String getSectionBarLeftDecoration() {
+	public String getSectionBarStartDecoration() {
 		return "<td class='wpsPageBar3dShadow'><img width='10' height='16' border='0' src='/wps/images/dot.gif' alt=''></td>";
 	}
 	
 	
-	public boolean sectionTabHasDecoration() {
-		return false;
+	public String getActiveSectionTabStartDecoration() {
+		return "<td class='wpsSelectedPage' style='vertical-align: middle; text-align: center;' nowrap='true'>";
 	}
 	
-	public String getSectionTabLeft() {
-		return "wpsSelectedPage";
+	public String getActiveSectionTabEndDecoration() {
+		return "</td>";		
 	}
 	
-	public String getSectionTabMiddle() {
-		return "wpsSelectedPage"; 
-	}
-
-	public String getSectionTabRight() {
-		return "wpsSelectedPage";
+	public String getSectionTabStartDecoration() {
+		return "<td class='wpsUnSelectedPage' style='vertical-align: middle; text-align: center;' nowrap='true'>";
 	}
 	
-	public String getSectionTabLeftLow() {
-		return "wpsUnSelectedPage";
-	}
-
-	public String getSectionTabMiddleLow() {
-		return "wpsUnSelectedPage";
-	}
-	
-	public String getSectionTabRightLow() {
-		return "wpsUnSelectedPage";
-	}	
-	
+	public String getSectionTabEndDecoration() {
+		return "</td>";		
+	}		
+		
 	public String getCollectionListActions() {
 		return "wpsTableNrmRow";
 	}

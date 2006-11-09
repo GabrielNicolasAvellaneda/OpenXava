@@ -67,7 +67,7 @@ public class XavaPortlet extends GenericPortlet {
 	 * @throws PortletException
 	 * @throws IOException
 	 */
-	public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {		
+	public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
 		Object style = getStyle(request);		
 		request.setAttribute("style", style);
 		
@@ -109,7 +109,7 @@ public class XavaPortlet extends GenericPortlet {
 		
 	private Style getStyle(RenderRequest request) {
 		if (style == null) {
-			String portal = request.getPortalContext().getPortalInfo().toLowerCase();			
+			String portal = request.getPortalContext().getPortalInfo().toLowerCase();
 			if (portal.indexOf("jetspeed") >= 0) style = JetSpeed2Style.getInstance();
 			else if (portal.indexOf("websphere") >= 0) style = WebSpherePortalStyle.getInstance();
 			else if (portal.indexOf("liferay") >= 0) style = LiferayStyle.getInstance();
