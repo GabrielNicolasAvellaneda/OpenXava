@@ -281,6 +281,15 @@
       </columns>
 
    </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_CustomerContactPerson" name="" primaryKey="CustomerContactPerson_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="CustomerContactPerson_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_CustomerContactPerson" constraint="Constraint_CustomerContactPerson_"/>
+
+      <columns xmi:id="CustomerContactPerson__Name" name="_Name">
+      </columns>
+      <columns xmi:id="CustomerContactPerson__Customer_number" name="_Customer_number">
+      </columns>
+
+   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_Subfamily" name="" primaryKey="Subfamily_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Subfamily_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Subfamily" constraint="Constraint_Subfamily_"/>
 

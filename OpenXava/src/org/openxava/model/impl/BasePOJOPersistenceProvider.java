@@ -61,7 +61,10 @@ abstract public class BasePOJOPersistenceProvider implements IPersistenceProvide
 	public Object find(MetaModel metaModel, Map keyValues) throws FinderException {
 		try {						
 			Object key = null;		
-			boolean multipleKey = metaModel.getAllKeyPropertiesNames().size() > 1;  
+			// The second question (metaModel.getMetaPropertiesKey().isEmpty())  
+			// is for the case of one key reference with only one column in it, 
+			// this case must be treated as multiple key
+			boolean multipleKey = metaModel.getAllKeyPropertiesNames().size() > 1 || metaModel.getMetaPropertiesKey().isEmpty(); 
 			if (!multipleKey) {
 				String keyPropertyName = (String) metaModel.getKeyPropertiesNames().iterator().next();
 				key = keyValues.get(keyPropertyName);

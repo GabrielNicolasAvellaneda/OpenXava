@@ -1432,6 +1432,55 @@
 
       </entity>
 
+      <entity id="ContainerManagedEntity_CustomerContactPerson">
+         <description><![CDATA[]]></description>
+
+         <ejb-name>CustomerContactPerson</ejb-name>
+
+         <home>org.openxava.test.model.CustomerContactPersonHome</home>
+         <remote>org.openxava.test.model.CustomerContactPersonRemote</remote>
+
+         <ejb-class>org.openxava.test.model.xejb.CustomerContactPersonCMP</ejb-class>
+         <persistence-type>Container</persistence-type>
+         <prim-key-class>org.openxava.test.model.CustomerContactPersonKey</prim-key-class>
+         <reentrant>false</reentrant>
+         <cmp-version>2.x</cmp-version>
+         <abstract-schema-name>CustomerContactPerson</abstract-schema-name>
+         <cmp-field id="CmpAttribute_CustomerContactPerson__Name">
+            <description><![CDATA[]]></description>
+            <field-name>_Name</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_CustomerContactPerson__Customer_number">
+            <description><![CDATA[]]></description>
+            <field-name>_Customer_number</field-name>
+         </cmp-field>
+
+         <env-entry>
+            <env-entry-name>DATA_SOURCE</env-entry-name>
+            <env-entry-type>java.lang.String</env-entry-type>
+            <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
+         </env-entry>
+
+         <resource-ref id="ResRef_18">
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <res-type>javax.sql.DataSource</res-type>
+            <res-auth>Container</res-auth>
+         </resource-ref>
+
+         <query>
+            <query-method>
+               <method-name>findByCustomer</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM CustomerContactPerson o WHERE o._Customer_number = ?1 ]]></ejb-ql>
+         </query>
+	  <!-- Write a file named ejb-finders-CustomerContactPersonBean.xml if you want to define extra finders. -->
+
+      </entity>
+
       <entity id="ContainerManagedEntity_Subfamily">
          <description><![CDATA[]]></description>
 
@@ -1473,7 +1522,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_18">
+         <resource-ref id="ResRef_19">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -1534,7 +1583,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_19">
+         <resource-ref id="ResRef_20">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -1603,7 +1652,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_20">
+         <resource-ref id="ResRef_21">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -1658,7 +1707,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_21">
+         <resource-ref id="ResRef_22">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -1720,7 +1769,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_22">
+         <resource-ref id="ResRef_23">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -1789,7 +1838,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_23">
+         <resource-ref id="ResRef_24">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -1871,7 +1920,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_24">
+         <resource-ref id="ResRef_25">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -1936,7 +1985,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_25">
+         <resource-ref id="ResRef_26">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -1997,7 +2046,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_26">
+         <resource-ref id="ResRef_27">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -2087,7 +2136,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_27">
+         <resource-ref id="ResRef_28">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -2159,7 +2208,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_28">
+         <resource-ref id="ResRef_29">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -2232,7 +2281,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_29">
+         <resource-ref id="ResRef_30">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -2301,7 +2350,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_30">
+         <resource-ref id="ResRef_31">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -2350,7 +2399,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_31">
+         <resource-ref id="ResRef_32">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -2470,7 +2519,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_32">
+         <resource-ref id="ResRef_33">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -2568,7 +2617,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_33">
+         <resource-ref id="ResRef_34">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -2671,7 +2720,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_34">
+         <resource-ref id="ResRef_35">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -2749,7 +2798,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_35">
+         <resource-ref id="ResRef_36">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -2853,7 +2902,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_36">
+         <resource-ref id="ResRef_37">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -2931,7 +2980,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_37">
+         <resource-ref id="ResRef_38">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -2988,7 +3037,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_38">
+         <resource-ref id="ResRef_39">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>

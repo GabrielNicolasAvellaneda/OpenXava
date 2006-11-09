@@ -1148,6 +1148,37 @@
       </entity>
 
       <entity>
+         <ejb-name>CustomerContactPerson</ejb-name>
+
+         <table-name>XAVATEST_CUSTOMERCONTACTPERSON</table-name>
+
+         <cmp-field>
+            <field-name>_Name</field-name>
+            <column-name>NAME</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Customer_number</field-name>
+            <column-name>CUSTOMER_NUMBER</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByCustomer</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM CustomerContactPerson o WHERE o._Customer_number = ?1 ]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
          <ejb-name>Subfamily</ejb-name>
 
          <table-name>XAVATEST_SUBFAMILY</table-name>
