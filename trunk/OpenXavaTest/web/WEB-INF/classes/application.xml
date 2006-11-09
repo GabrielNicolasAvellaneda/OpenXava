@@ -4,6 +4,12 @@
 		<doc url="doc/description" languages="en,es"/>
 	</module>
 	
+	<!-- tmp -->
+	<module name="CustomerContactPersons">
+		<model name="CustomerContactPerson"/>
+		<controller name="Typical"/>
+	</module>
+	
 	<module name="StatesHibernate">
 		<env-var name="XAVA_SEARCH_ACTION" value="StatesHibernate.search"/>		
 		<model name="State"/>
