@@ -7,7 +7,7 @@
 for (int i=0; i<10; i++) {
 %>
 <tr>
-	<th align='left' class=<%=style.getLabel()%>>
+	<th align='left' class="<%=style.getLabel()%>">
 		<xava:message key="enter_new_image"/>
 	</th>
 	<td>

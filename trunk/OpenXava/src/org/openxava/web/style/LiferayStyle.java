@@ -9,7 +9,7 @@ public class LiferayStyle extends Style {
 	
 	private static LiferayStyle instance = null;
 
-	protected LiferayStyle() {		
+	protected LiferayStyle() {
 	}
 	
 	public static Style getInstance() {
@@ -20,7 +20,7 @@ public class LiferayStyle extends Style {
 	}
 		
 	public String getModule() {
-		//return "portlet-font"; No, because usually link style is ugly, and not coherent with portal
+		//return "portlet-font"; No, because usually link style is ugly, and not coherent with the portal
 		return ""; // The portal default style is used
 	}
 	
@@ -29,7 +29,11 @@ public class LiferayStyle extends Style {
 	}
 		
 	public String getButtonBar() {
-		return "portlet-header-bar"; 
+		return "liferay-xava-frame-header"; 
+	}
+	
+	public String getButtonBar2() {
+		return "portlet-header-bar";
 	}
 	
 	public String getButtonBarSpacing() {
@@ -41,7 +45,7 @@ public class LiferayStyle extends Style {
 	}
 	
 	public String getButtonBarMiddle(boolean onBottom) {
-		return "";
+		return ""; 
 	}
 		
 	public String getButtonBarEnd(boolean onBottom) {
@@ -101,35 +105,39 @@ public class LiferayStyle extends Style {
 	
 		
 	public String getFrame() {
-		return "frame";
+		return "portlet-container";
 	}
 	
-	public String getFrameTitle() { 
-		return getFrame();
+	public String getFrameTitle() {
+		return "";
 	}
 	
 	public String getFrameTitleLabel() {
-		return getFrameTitle();
+		return "liferay-xava-frame-header";
 	}
 	
+	public String getFrameTitleStartDecoration() {
+		return "<table class='portlet-header-bar' cellpadding=0 cellspacing=0 width=100%><tr><td class='portlet-header-left' width=1>&nbsp;</td><td>";
+	}
+	
+	public String getFrameTitleEndDecoration() {
+		return "</td><td class='portlet-header-right' width=1>&nbsp;</td></tr></table>";
+	}
+
 	public String getFrameContent() {
-		return getFrame();
+		return "liferay-xava-frame-core"; 
 	}
 	
 	public String getFrameSpacing() {
-		return "";
+		return "cellpadding='0' cellspacing='0'";
 	}
 		
 	public String getEditor() { 
-		return "portlet-dlg-icon-label";
-	}
-	
-	public String getLabel() { 
-		return "portlet-dlg-icon-label";
+		return "form-text";
 	}
 	
 	public String getSmallLabel() {
-		return "portlet-dlg-icon-label";
+		return "''";
 	}
 	
 	public String getErrors() { 
@@ -169,49 +177,41 @@ public class LiferayStyle extends Style {
 		return "";
 	}
 	
+	public String getSectionTableAttributes() {		
+		return "border='0' cellpadding='0' cellspacing='0' width='100%'";
+	}
+	
 	public String getSectionActive() {
 		return "";
 	}	
 	
 	public String getSectionLink() {
-		return null;
-	}
-	
-	public String getSectionBarLeftDecoration() {
 		return "";
 	}
 	
-	/**
-	 * If Middle and Right decoration is used
-	 */
-	public boolean sectionTabHasDecoration() {
-		return false;
+	public String getSectionBarStartDecoration() {
+		return "<td><ul class='gamma-tab'>";
+	}
+	public String getSectionBarEndDecoration() {	
+		return "</ul></td>";
+	}
+		
+	public String getActiveSectionTabStartDecoration() {
+		return "<li class='current'>";
 	}
 	
-	public String getSectionTabLeft() {
-		return "layout-tab-selected";
+	public String getActiveSectionTabEndDecoration() {
+		return "</li>";		
 	}
 	
-	public String getSectionTabMiddle() {
-		return "layout-tab-selected";
-	}
-
-	public String getSectionTabRight() {
-		return "layout-tab-selected";
+	public String getSectionTabStartDecoration() {
+		return "<li>";
 	}
 	
-	public String getSectionTabLeftLow() {
-		return "layout-tab";
-	}
-
-	public String getSectionTabMiddleLow() {
-		return "layout-tab";
-	}
-	
-	public String getSectionTabRightLow() {
-		return "layout-tab";
-	}
-	
+	public String getSectionTabEndDecoration() {
+		return "</li>";		
+	}	
+		
 	public String getCollectionListActions() {
 		return "";
 	}

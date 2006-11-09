@@ -71,10 +71,6 @@ public class JetSpeed2Style extends Style {
 		return "portlet-form-input-field";
 	}
 	
-	public String getLabel() { 
-		return "portlet-form-field-label";
-	}
-	
 	public String getSmallLabel() {
 		return "small-label";
 	}
@@ -106,31 +102,23 @@ public class JetSpeed2Style extends Style {
 	public String getSectionActive() {
 		return "";
 	}	
-	
-	public String getSectionTabLeft() {
-		return "LTabLeft";
+		
+	public String getActiveSectionTabStartDecoration() {
+		return "<td class='LTabLeft' nowrap='true'>&nbsp;</td><td class='LTab' style='vertical-align: middle; text-align: center;' nowrap='true'>";
 	}
 	
-	public String getSectionTabMiddle() {
-		return "LTab"; 
-	}
-
-	public String getSectionTabRight() {
-		return "LTabRight";
+	public String getActiveSectionTabEndDecoration() {
+		return "</td><td class='LTabRight' nowrap='true'>&nbsp;</td>";		
 	}
 	
-	public String getSectionTabLeftLow() {
-		return "LTabLeftLow";
-	}
-
-	public String getSectionTabMiddleLow() {
-		return "LTabLow";
+	public String getSectionTabStartDecoration() {
+		return "<td class='LTabLeftLow' nowrap='true'>&nbsp;</td><td class='LTabLow' style='vertical-align: middle; text-align: center;' nowrap='true'>";
 	}
 	
-	public String getSectionTabRightLow() {
-		return "LTabRightLow";
-	}
-	
+	public String getSectionTabEndDecoration() {
+		return "</td><td class='LTabRightLow' nowrap='true'>&nbsp;</td>";		
+	}		
+		
 	public String getRestoreImage() {
 		return "decorations/images/restore.gif";
 	}
