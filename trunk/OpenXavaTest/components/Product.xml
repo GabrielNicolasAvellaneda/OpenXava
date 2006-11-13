@@ -78,8 +78,7 @@ therefore it's show some features more advances of stereotypes.
 		<validator class="org.openxava.test.validators.ForbiddenPriceValidator" only-on-create="true">
 			<set property="forbiddenPrice" value="555"/>
 			<set property="unitPrice"/>
-		</validator>						
-								
+		</validator>										
 	</entity> 
 	
 	<view>

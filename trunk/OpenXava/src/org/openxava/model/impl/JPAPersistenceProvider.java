@@ -16,7 +16,7 @@ import org.openxava.util.*;
  * 
  * @author Javier Paniza
  */
-public class JPAPersistenceProvider extends BasePOJOPersistenceProvider {
+public class JPAPersistenceProvider extends POJOPersistenceProviderBase {
 	
 	protected Object find(Class pojoClass, Serializable key) {
 		try {

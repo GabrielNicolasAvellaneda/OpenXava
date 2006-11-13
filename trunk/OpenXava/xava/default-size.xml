@@ -8,7 +8,8 @@
 	<for-stereotype name="MEMO" size="500"/>
 	<for-stereotype name="TEXT_AREA" size="500"/>
 	<for-stereotype name="HORA" size="5"/>	
-	<for-stereotype name="TIME" size="5"/>	<for-type class="java.util.Date" size="10"/>
+	<for-stereotype name="TIME" size="5"/>
+	<for-type class="java.sql.Time" size="5"/>	<for-type class="java.util.Date" size="10"/>
 	<for-type class="java.sql.Timestamp" size="10"/>	<for-type class="java.lang.String"  size="50"/>
 	<for-type class="boolean"  size="1"/>
 	<for-type class="int"  size="9"/>

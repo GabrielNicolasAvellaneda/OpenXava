@@ -14,7 +14,7 @@ import org.openxava.util.*;
 /**
  * @author Mª Carmen Gimeno Alabau
  */
-public class HibernatePersistenceProvider extends BasePOJOPersistenceProvider {
+public class HibernatePersistenceProvider extends POJOPersistenceProviderBase {
 	
 	protected Object find(Class pojoClass, Serializable key) {
 		return XHibernate.getSession().get(pojoClass, (Serializable) key);

@@ -91,63 +91,72 @@ while (it.hasNext()) {
 					String label = view.getLabelFor(ref);
 	%>				
 		<table class=<%=style.getFrame()%> width='100%' <%=style.getFrameSpacing()%>>
-		<tr class=<%=style.getFrameTitle()%>><th align='left' class=<%=style.getFrameTitleLabel()%> id=<%=labelKey%>><%=label%></th></tr>
+		<tr class=<%=style.getFrameTitle()%>><th align='left' class=<%=style.getFrameTitleLabel()%> id=<%=labelKey%>>
+			<%=style.getFrameTitleStartDecoration()%>
+			<%=label%>
+			<%=style.getFrameTitleEndDecoration()%>
+		</th></tr>
 		<tr><td class=<%=style.getFrameContent()%>>
-	<%
-				} // withFrame
-	%>	
+	<%				} // withFrame
+		%>	
 		<jsp:include page="detail.jsp"> 
 			<jsp:param name="viewObject" value="<%=viewName%>" />
 			<jsp:param name="propertyPrefix" value="<%=propertyInReferencePrefix%>" />
 		</jsp:include>	
-	<%
-				if (withFrame) {
-	%>				
+	<%				if (withFrame) {
+		%>				
 		</td></tr>
 		</table>		
-	<%	
+		<%
 				} // withFrame
 			}
 		} else if (m instanceof MetaCollection) {
 			MetaCollection collection = (MetaCollection) m;
 			String urlCollection = "collection.jsp";
 			boolean withFrame = !view.isSection() || view.getMetaMembers().size() > 1;
-	%>
+		%>
 		<tr><td colspan="4">		
-	<%
-			if (withFrame) {
-	%>	
+	<%			if (withFrame) {
+		%>	
 		<table class=<%=style.getFrame()%> width='100%' <%=style.getFrameSpacing()%>>
-		<tr class=<%=style.getFrameTitle()%>><th align='left' class=<%=style.getFrameTitleLabel()%>><%=collection.getLabel(request)%></th></tr>
+		<tr class=<%=style.getFrameTitle()%>><th align='left' class=<%=style.getFrameTitleLabel()%>>
+			<%=style.getFrameTitleStartDecoration()%>
+			<%=collection.getLabel(request)%>
+			<%=style.getFrameTitleEndDecoration()%>
+		</th></tr>
 		<tr><td class=<%=style.getFrameContent()%>>		
-	<%
-			} // withFrame
-	%>	
+	<%			} // withFrame
+		%>	
 		<jsp:include page="<%=urlCollection%>"> 
 			<jsp:param name="collectionName" value="<%=collection.getName()%>"/>
 			<jsp:param name="viewObject" value="<%=viewObject%>"/>			
 		</jsp:include>
-	<%
-			if (withFrame) {
-	%>			
+	<%			if (withFrame) {
+		%>			
 		</td></tr>
 		</table>		
-	<%
-			} // withFrame
+	<%			} // withFrame
 		} else if (m instanceof MetaGroup) {
 			MetaGroup group = (MetaGroup) m;
 			String viewName = viewObject + "_" + group.getName();
 			View subview = view.getGroupView(group.getName());
 			context.put(request, viewName, subview);
-	%>
-		<% 
+		%>
+		<%
 		if (first) { 
 			first = false;
 		%>
 		<tr><td colspan="4">
-		<% } %>
-		<table class=<%=style.getFrame()%> style="float:left; margin-right:4px" <%=style.getFrameSpacing()%>>
-		<tr class=<%=style.getFrameTitle()%>><th align='left' class=<%=style.getFrameTitleLabel()%>><%=group.getLabel(request)%></th></tr>
+		<% }  %>
+		<table class="<%=style.getFrame()%>" style="float:left; margin-right:4px" <%=style.getFrameSpacing()%>>
+		<tr class=<%=style.getFrameTitle()%>>
+		<th align='left' class="<%=style.getFrameTitleLabel()%>">
+		<%=style.getFrameTitleStartDecoration()%>
+		<%=group.getLabel(request)%>
+		<%=style.getFrameTitleEndDecoration()%>
+		</th>
+		</tr>
+				
 		<tr><td class=<%=style.getFrameContent()%>>
 		<jsp:include page="detail.jsp">
 			<jsp:param name="viewObject" value="<%=viewName%>" />

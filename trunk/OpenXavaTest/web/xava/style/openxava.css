@@ -152,3 +152,10 @@ TD.list-title {
 .websphere-frame-title-label {
     font-weight: normal;    
 }
+
+.liferay-xava-frame-core {
+	border: 1px solid #CCCCCC;
+	border-top: 0px;
+	padding: 2px;
+}
+

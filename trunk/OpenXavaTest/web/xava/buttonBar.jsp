@@ -11,10 +11,10 @@ manager.setSession(session);
 boolean onBottom = false;
 %>
 
-<table width="100%" <%=style.getButtonBarSpacing()%>>
+<table width="100%" <%=style.getButtonBarSpacing()%> class="<%=style.getButtonBar2()%>">
 <tr>
-<td class=<%=style.getButtonBarStart(onBottom)%> size=1>&nbsp;</td>
-<td style='vertical-align: middle' class=<%=style.getButtonBarMiddle(onBottom)%>>
+<td class=<%=style.getButtonBarStart(onBottom)%> width=1>&nbsp;</td>
+<td style='vertical-align: middle' class="<%=style.getButtonBarMiddle(onBottom)%>">
 
 <%
 java.util.Iterator it = manager.getMetaActions().iterator();
@@ -30,7 +30,7 @@ while (it.hasNext()) {
 %>
 </td>
 
-<td align="right" style='vertical-align: middle' class=<%=style.getMode(onBottom)%>>
+<td align="right" style='vertical-align: middle' class="<%=style.getMode(onBottom)%>">
 <%
 java.util.Iterator itSections = manager.getMetaActionsMode().iterator();
 boolean firstTime = true;
@@ -59,6 +59,6 @@ while (itSections.hasNext()) {
 }
 	%>
 </td>
-<td class=<%=style.getButtonBarEnd(onBottom)%> size=2>&nbsp;</td>
+<td class="<%=style.getButtonBarEnd(onBottom)%>" width=1>&nbsp;</td>
 </tr>
 </table>
