@@ -13,6 +13,10 @@
 			size="3" required="true" type="int"/>   												
 		<property name="name" type="String"
 			size="40" required="true"/>
+		<!--  We test the two: java.sql.Time and TIME stereotype -->	
+		<property name="arrivalTime" type="java.sql.Time"/> 
+		<property name="endingTime" stereotype="TIME"/> 
+				
 	</entity>
 	
 	<entity-mapping table="XAVATEST@separator@CLERK">
@@ -24,6 +28,10 @@
 			property="number" column="NUMBER"/>
 		<property-mapping
 			property="name" column="NAME"/>
+		<property-mapping
+			property="arrivalTime" column="ARRIVALTIME"/>
+		<property-mapping
+			property="endingTime" column="ENDINGTIME"/>			
 	</entity-mapping>
 	
 </component>

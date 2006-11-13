@@ -4,7 +4,6 @@
 		<doc url="doc/description" languages="en,es"/>
 	</module>
 	
-	<!-- tmp -->
 	<module name="CustomerContactPersons">
 		<model name="CustomerContactPerson"/>
 		<controller name="Typical"/>

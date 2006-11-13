@@ -1288,6 +1288,16 @@
          <table-name>XAVATEST_CLERK</table-name>
 
          <cmp-field>
+            <field-name>_EndingTime</field-name>
+            <column-name>ENDINGTIME</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_ArrivalTime</field-name>
+            <column-name>ARRIVALTIME</column-name>
+
+        </cmp-field>
+         <cmp-field>
             <field-name>_Name</field-name>
             <column-name>NAME</column-name>
 

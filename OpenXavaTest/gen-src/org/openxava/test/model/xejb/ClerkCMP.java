@@ -18,6 +18,8 @@ public abstract class ClerkCMP
       {
          dataHolder = new org.openxava.test.model.ClerkData();
 
+         dataHolder.set_EndingTime( get_EndingTime() );
+         dataHolder.set_ArrivalTime( get_ArrivalTime() );
          dataHolder.set_Name( get_Name() );
          dataHolder.setOfficeNumber( getOfficeNumber() );
          dataHolder.setNumber( getNumber() );
@@ -36,6 +38,8 @@ public abstract class ClerkCMP
    {
       try
       {
+         set_EndingTime( dataHolder.get_EndingTime() );
+         set_ArrivalTime( dataHolder.get_ArrivalTime() );
          set_Name( dataHolder.get_Name() );
 
       }
@@ -90,6 +94,8 @@ public abstract class ClerkCMP
       ClerkValue = new org.openxava.test.model.ClerkValue();
       try
          {
+            ClerkValue.setEndingTime( getEndingTime() );
+            ClerkValue.setArrivalTime( getArrivalTime() );
             ClerkValue.setName( getName() );
             ClerkValue.setOfficeNumber( getOfficeNumber() );
             ClerkValue.setNumber( getNumber() );
@@ -109,6 +115,8 @@ public abstract class ClerkCMP
 
 	  try
 	  {
+		 setEndingTime( valueHolder.getEndingTime() );
+		 setArrivalTime( valueHolder.getArrivalTime() );
 		 setName( valueHolder.getName() );
 
 	  }
@@ -119,6 +127,14 @@ public abstract class ClerkCMP
    }
 
 /* Value Objects END */
+
+   public abstract java.lang.String get_EndingTime() ;
+
+   public abstract void set_EndingTime( java.lang.String _EndingTime ) ;
+
+   public abstract java.sql.Time get_ArrivalTime() ;
+
+   public abstract void set_ArrivalTime( java.sql.Time _ArrivalTime ) ;
 
    public abstract java.lang.String get_Name() ;
 

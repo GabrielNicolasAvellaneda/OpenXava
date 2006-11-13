@@ -711,7 +711,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	 * 
 	 * @return Can be null 
 	 */
-	public Object parse(String value, Locale locale) throws ParseException, XavaException {
+	public Object parse(String value, Locale locale) throws ParseException, XavaException {		
 		if (value == null) return null;		
 		boolean emptyString = value.equals("");
 		Class type = getType();
@@ -722,7 +722,8 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				return emptyString?new Integer(0):new Integer(value);
 			}
 			if (BigDecimal.class.isAssignableFrom(type)) {
-				if (emptyString) return new BigDecimal("0.00");				
+				if (emptyString) return new BigDecimal("0.00");		
+				value = Strings.change(value, " ", ""); // In order to work with Polish
 				Number n = NumberFormat.getNumberInstance(locale).parse(value);
 				return new BigDecimal(n.toString());
 			}
@@ -742,11 +743,13 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			}
 			if (Float.class.isAssignableFrom(type) || float.class.isAssignableFrom(type)) {
 				if (emptyString) return new Float(0);
+				value = Strings.change(value, " ", ""); // In order to work with Polish
 				Number n = NumberFormat.getNumberInstance(locale).parse(value);
 				return new Float(n.floatValue());
 			}
 			if (Double.class.isAssignableFrom(type) || double.class.isAssignableFrom(type)) {
 				if (emptyString) return new Double(0);
+				value = Strings.change(value, " ", ""); // In order to work with Polish
 				Number n = NumberFormat.getNumberInstance(locale).parse(value);
 				return new Double(n.doubleValue());
 			}
@@ -754,7 +757,8 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				return Boolean.valueOf(value);
 			}
 			if (BigInteger.class.isAssignableFrom(type)) {
-				if (emptyString) return BigInteger.ZERO;				
+				if (emptyString) return BigInteger.ZERO;
+				value = Strings.change(value, " ", ""); // In order to work with Polish
 				Number n = NumberFormat.getNumberInstance(locale).parse(value);
 				return new BigInteger(n.toString());
 			}			

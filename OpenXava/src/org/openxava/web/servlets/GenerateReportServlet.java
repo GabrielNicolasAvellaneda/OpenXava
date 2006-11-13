@@ -89,6 +89,11 @@ public class GenerateReportServlet extends HttpServlet {
 					return p.getValidValueLabel(locale, original.getValueAt(row, column));
 				}
 			}
+			
+			if (r instanceof Time) {
+				return DateFormat.getTimeInstance(DateFormat.SHORT, locale).format(r);
+			}
+			
 			if (r instanceof Timestamp){
 				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 				return dateFormat.format( r );

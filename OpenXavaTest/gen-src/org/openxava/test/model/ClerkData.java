@@ -12,6 +12,8 @@ public class ClerkData
 {
 
    private static final long serialVersionUID = 1L;
+   private java.lang.String _EndingTime;
+   private java.sql.Time _ArrivalTime;
    private java.lang.String _Name;
    private int officeNumber;
    private int number;
@@ -23,6 +25,8 @@ public class ClerkData
 
    public ClerkData( ClerkData otherData )
    {
+      set_EndingTime(otherData.get_EndingTime());
+      set_ArrivalTime(otherData.get_ArrivalTime());
       set_Name(otherData.get_Name());
       setOfficeNumber(otherData.getOfficeNumber());
       setNumber(otherData.getNumber());
@@ -33,6 +37,24 @@ public class ClerkData
    public org.openxava.test.model.ClerkKey getPrimaryKey() {
      org.openxava.test.model.ClerkKey pk = new org.openxava.test.model.ClerkKey(this.getOfficeNumber(),this.getNumber(),this.getZoneNumber());
      return pk;
+   }
+
+   public java.lang.String get_EndingTime()
+   {
+      return this._EndingTime;
+   }
+   public void set_EndingTime( java.lang.String _EndingTime )
+   {
+      this._EndingTime = _EndingTime;
+   }
+
+   public java.sql.Time get_ArrivalTime()
+   {
+      return this._ArrivalTime;
+   }
+   public void set_ArrivalTime( java.sql.Time _ArrivalTime )
+   {
+      this._ArrivalTime = _ArrivalTime;
    }
 
    public java.lang.String get_Name()
@@ -75,7 +97,7 @@ public class ClerkData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Name=" + get_Name() + " " + "officeNumber=" + getOfficeNumber() + " " + "number=" + getNumber() + " " + "zoneNumber=" + getZoneNumber());
+      str.append("_EndingTime=" + get_EndingTime() + " " + "_ArrivalTime=" + get_ArrivalTime() + " " + "_Name=" + get_Name() + " " + "officeNumber=" + getOfficeNumber() + " " + "number=" + getNumber() + " " + "zoneNumber=" + getZoneNumber());
       str.append('}');
 
       return(str.toString());
@@ -88,6 +110,22 @@ public class ClerkData
          ClerkData lTest = (ClerkData) pOther;
          boolean lEquals = true;
 
+         if( this._EndingTime == null )
+         {
+            lEquals = lEquals && ( lTest._EndingTime == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._EndingTime.equals( lTest._EndingTime );
+         }
+         if( this._ArrivalTime == null )
+         {
+            lEquals = lEquals && ( lTest._ArrivalTime == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._ArrivalTime.equals( lTest._ArrivalTime );
+         }
          if( this._Name == null )
          {
             lEquals = lEquals && ( lTest._Name == null );
@@ -111,6 +149,10 @@ public class ClerkData
    public int hashCode()
    {
       int result = 17;
+
+      result = 37*result + ((this._EndingTime != null) ? this._EndingTime.hashCode() : 0);
+
+      result = 37*result + ((this._ArrivalTime != null) ? this._ArrivalTime.hashCode() : 0);
 
       result = 37*result + ((this._Name != null) ? this._Name.hashCode() : 0);
 

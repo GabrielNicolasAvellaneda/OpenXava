@@ -39,6 +39,7 @@ public class XavaSuite extends TestSuite {
 			suite.addTest(new TestSuite(ColorsOnlyPOJOTest.class));
 		}
 		suite.addTest(new TestSuite(ColorsTest.class));
+		suite.addTest(new TestSuite(ClerksTest.class));
 		suite.addTest(new TestSuite(CustomerContactPersonsTest.class));
 		suite.addTest(new TestSuite(CustomersNewOnInitInheritedTest.class));
 		suite.addTest(new TestSuite(CustomersNewOnInitTest.class));

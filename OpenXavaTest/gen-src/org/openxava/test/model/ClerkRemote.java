@@ -10,6 +10,18 @@ public interface ClerkRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.IClerk
 {
 
+   public java.lang.String getEndingTime(  )
+      throws java.rmi.RemoteException;
+
+   public void setEndingTime( java.lang.String newEndingTime )
+      throws java.rmi.RemoteException;
+
+   public java.sql.Time getArrivalTime(  )
+      throws java.rmi.RemoteException;
+
+   public void setArrivalTime( java.sql.Time newArrivalTime )
+      throws java.rmi.RemoteException;
+
    public java.lang.String getName(  )
       throws java.rmi.RemoteException;
 

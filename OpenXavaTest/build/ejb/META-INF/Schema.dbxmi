@@ -323,6 +323,10 @@
    <RDBSchema:RDBTable xmi:id="RDBTable_Clerk" name="" primaryKey="Clerk_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Clerk_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Clerk" constraint="Constraint_Clerk_"/>
 
+      <columns xmi:id="Clerk__EndingTime" name="_EndingTime">
+      </columns>
+      <columns xmi:id="Clerk__ArrivalTime" name="_ArrivalTime">
+      </columns>
       <columns xmi:id="Clerk__Name" name="_Name">
       </columns>
       <columns xmi:id="Clerk_officeNumber" name="officeNumber">

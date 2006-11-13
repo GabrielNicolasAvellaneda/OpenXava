@@ -14,6 +14,10 @@ public class ClerkValue
 
    private static final long serialVersionUID = 1L;
 
+   private java.lang.String endingTime;
+   private boolean endingTimeHasBeenSet = false;
+   private java.sql.Time arrivalTime;
+   private boolean arrivalTimeHasBeenSet = false;
    private java.lang.String name;
    private boolean nameHasBeenSet = false;
    private int officeNumber;
@@ -30,6 +34,10 @@ public class ClerkValue
    //TODO Cloneable is better than this !
    public ClerkValue( ClerkValue otherValue )
    {
+	  this.endingTime = otherValue.endingTime;
+	  endingTimeHasBeenSet = true;
+	  this.arrivalTime = otherValue.arrivalTime;
+	  arrivalTimeHasBeenSet = true;
 	  this.name = otherValue.name;
 	  nameHasBeenSet = true;
 	  this.officeNumber = otherValue.officeNumber;
@@ -40,6 +48,34 @@ public class ClerkValue
 	  zoneNumberHasBeenSet = true;
    }
 
+   public java.lang.String getEndingTime()
+   {
+	  return this.endingTime;
+   }
+
+   public void setEndingTime( java.lang.String endingTime )
+   {
+	  this.endingTime = endingTime;
+	  endingTimeHasBeenSet = true;
+   }
+
+   public boolean endingTimeHasBeenSet(){
+	  return endingTimeHasBeenSet;
+   }
+   public java.sql.Time getArrivalTime()
+   {
+	  return this.arrivalTime;
+   }
+
+   public void setArrivalTime( java.sql.Time arrivalTime )
+   {
+	  this.arrivalTime = arrivalTime;
+	  arrivalTimeHasBeenSet = true;
+   }
+
+   public boolean arrivalTimeHasBeenSet(){
+	  return arrivalTimeHasBeenSet;
+   }
    public java.lang.String getName()
    {
 	  return this.name;
@@ -101,7 +137,7 @@ public class ClerkValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("name=" + getName() + " " + "officeNumber=" + getOfficeNumber() + " " + "number=" + getNumber() + " " + "zoneNumber=" + getZoneNumber());
+	  str.append("endingTime=" + getEndingTime() + " " + "arrivalTime=" + getArrivalTime() + " " + "name=" + getName() + " " + "officeNumber=" + getOfficeNumber() + " " + "number=" + getNumber() + " " + "zoneNumber=" + getZoneNumber());
 	  str.append('}');
 
 	  return(str.toString());
@@ -151,6 +187,22 @@ public class ClerkValue
 	  {
 		 ClerkValue that = (ClerkValue) other;
 		 boolean lEquals = true;
+		 if( this.endingTime == null )
+		 {
+			lEquals = lEquals && ( that.endingTime == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.endingTime.equals( that.endingTime );
+		 }
+		 if( this.arrivalTime == null )
+		 {
+			lEquals = lEquals && ( that.arrivalTime == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.arrivalTime.equals( that.arrivalTime );
+		 }
 		 if( this.name == null )
 		 {
 			lEquals = lEquals && ( that.name == null );
@@ -170,6 +222,10 @@ public class ClerkValue
 
    public int hashCode(){
 	  int result = 17;
+      result = 37*result + ((this.endingTime != null) ? this.endingTime.hashCode() : 0);
+
+      result = 37*result + ((this.arrivalTime != null) ? this.arrivalTime.hashCode() : 0);
+
       result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);
 
       result = 37*result + (int) officeNumber;

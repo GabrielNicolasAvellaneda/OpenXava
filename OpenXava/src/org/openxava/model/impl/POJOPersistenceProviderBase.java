@@ -17,7 +17,7 @@ import org.openxava.validators.*;
  * 
  * @author Javier Paniza
  */
-abstract public class BasePOJOPersistenceProvider implements IPersistenceProvider {
+abstract public class POJOPersistenceProviderBase implements IPersistenceProvider {
 	
 	/**
 	 * Return the object associated to the sent key.

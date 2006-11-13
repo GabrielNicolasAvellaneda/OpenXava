@@ -19,7 +19,7 @@ public class NotNullDateConverter implements IConverter{
 		if (!(o instanceof Date)) {		
 			throw new ConversionException("conversion_java_utildate_expected");
 		}
-		Date date = new Date(((java.sql.Date) o).getTime());
+		Date date = new Date(((java.util.Date) o).getTime());
 		return (date.compareTo(NULL_DATE) == 0) ? null : date;
 	}
 

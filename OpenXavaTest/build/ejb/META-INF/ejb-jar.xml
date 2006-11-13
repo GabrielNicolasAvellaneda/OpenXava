@@ -1629,6 +1629,14 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Clerk</abstract-schema-name>
+         <cmp-field id="CmpAttribute_Clerk__EndingTime">
+            <description><![CDATA[]]></description>
+            <field-name>_EndingTime</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_Clerk__ArrivalTime">
+            <description><![CDATA[]]></description>
+            <field-name>_ArrivalTime</field-name>
+         </cmp-field>
          <cmp-field id="CmpAttribute_Clerk__Name">
             <description><![CDATA[]]></description>
             <field-name>_Name</field-name>
