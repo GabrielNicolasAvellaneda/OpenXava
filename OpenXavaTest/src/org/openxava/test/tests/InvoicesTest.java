@@ -319,7 +319,21 @@ public class InvoicesTest extends ModuleTestBase {
 		String [] condition2004 = { " ", " ", "2004", "true" }; // We supussed that there are invoices in 2004
 		setConditionValues(condition2004);
 		execute("List.filter");
-		assertYearInList("2004");		
+		assertYearInList("2004");
+		
+		String [] monthComparators = { "=", "=", "month_comparator", ""};
+		setConditionComparators(monthComparators);		
+		String [] conditionMonth1 = { " ", " ", "1", "true" }; 
+		setConditionValues(conditionMonth1);
+		execute("List.filter");
+		assertListRowCount(3); // We supussed that there are 3 invoices of month 1
+		
+		String [] yearMonthComparators = { "=", "=", "year_month_comparator", ""};
+		setConditionComparators(yearMonthComparators);		
+		String [] conditionYear2004Month1 = { " ", " ", "2004/1", "true" }; 
+		setConditionValues(conditionYear2004Month1);
+		execute("List.filter");
+		assertListRowCount(2); // We supussed that there are 2 invoices of month 1 of year 2004				
 	}
 	
 	public void testFilterByBoolean() throws Exception {

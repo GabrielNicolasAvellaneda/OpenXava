@@ -16,6 +16,7 @@ String startsWith = "starts_comparator".equals(comparator)?"selected='selected'"
 String contains = "contains_comparator".equals(comparator)?"selected='selected'":"";
 String year = "year_comparator".equals(comparator)?"selected='selected'":"";
 String month = "month_comparator".equals(comparator)?"selected='selected'":"";
+String yearMonth = "year_month_comparator".equals(comparator)?"selected='selected'":""; // tmp
 %>
 
 <select name="conditionComparators" class=<%=style.getEditor()%>>
@@ -38,6 +39,8 @@ String month = "month_comparator".equals(comparator)?"selected='selected'":"";
 	%>
 	<option value="year_comparator" <%=year%>><xava:message key="year_comparator"/></option>
 	<option value="month_comparator" <%=month%>><xava:message key="month_comparator"/></option>
+	<%-- tmp --%>
+	<option value="year_month_comparator" <%=yearMonth%>><xava:message key="year_month_comparator"/></option>
 	<%
 	}	
 	%>
