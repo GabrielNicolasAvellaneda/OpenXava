@@ -32,6 +32,7 @@ public class Tab {
 	private final static String CONTAINS_COMPARATOR = "contains_comparator";
 	private final static String YEAR_COMPARATOR = "year_comparator";
 	private final static String MONTH_COMPARATOR = "month_comparator";
+	private final static String YEAR_MONTH_COMPARATOR = "year_month_comparator"; 
 	
 	private int pageRowCount = DEFAULT_PAGE_ROW_COUNT;
 	private TabUserPreferences userPreferences;
@@ -280,7 +281,7 @@ public class Tab {
 				if (Is.emptyString(this.conditionComparators[i])) {
 					this.conditionValues[i] = ""; 
 				}
-				if (!Is.emptyString(this.conditionValues[i])) {												
+				if (!Is.emptyString(this.conditionValues[i])) {					
 					if (firstCondition) firstCondition = false;
 					else sb.append(" and ");
 					ModelMapping mapping = getMetaTab().getMetaModel().getMapping();					
@@ -289,8 +290,14 @@ public class Tab {
 					sb.append(' ');
 					sb.append(convertComparator(p, this.conditionComparators[i]));
 					sb.append(" ? ");
-					if (metaPropertiesKey == null) metaPropertiesKey = new ArrayList(); 
-					metaPropertiesKey.add(p);					
+					if (metaPropertiesKey == null) metaPropertiesKey = new ArrayList();
+					if (YEAR_MONTH_COMPARATOR.equals(this.conditionComparators[i])) { 
+						metaPropertiesKey.add(null);
+						metaPropertiesKey.add(null);
+					}
+					else {
+						metaPropertiesKey.add(p);
+					}
 				}
 			}		
 			if (pOrder != null) {				
@@ -311,7 +318,7 @@ public class Tab {
 			if (sb.length() == 0) sb.append(" 1=1 ");
 			sb.append(" order by ");						
 			sb.append(getMetaTab().getSQLDefaultOrder());									
-		}				
+		}						
 		return sb.toString();
 	}
 
@@ -321,7 +328,10 @@ public class Tab {
 		}
 		if ("month_comparator".equals(this.conditionComparators[i])) {
 			return "month(" + column + ")";
-		}		
+		}
+		if ("year_month_comparator".equals(this.conditionComparators[i])) { 
+			return "year(" + column + ") = ? and month("  + column + ")";
+		}				
 		if (java.lang.String.class.equals(p.getType())) {
 			return "upper(" + column + ")";
 		}
@@ -333,7 +343,8 @@ public class Tab {
 		if (STARTS_COMPARATOR.equals(comparator)) return "like";
 		if (CONTAINS_COMPARATOR.equals(comparator)) return "like";
 		if (YEAR_COMPARATOR.equals(comparator)) return "=";
-		if (MONTH_COMPARATOR.equals(comparator)) return "=";		
+		if (MONTH_COMPARATOR.equals(comparator)) return "=";
+		if (YEAR_MONTH_COMPARATOR.equals(comparator)) return "="; 
 		if ("eq".equals(comparator)) {
 			if (p.getType().equals(Timestamp.class)) {
 				return "between ? and ";
@@ -378,6 +389,21 @@ public class Tab {
 						System.err.println(XavaResources.getString("tab_key_value_warning"));
 						key.add(null);
 					}										
+				}
+				else if (YEAR_MONTH_COMPARATOR.equals(this.conditionComparators[i])) { 
+					try {				
+						StringTokenizer st = new StringTokenizer(value, "/ ,:;");
+						if (st.hasMoreTokens()) key.add(new Integer(st.nextToken()));
+						else key.add(null);
+						if (st.hasMoreTokens()) key.add(new Integer(st.nextToken()));
+						else key.add(null);
+					}
+					catch (Exception ex) {
+						ex.printStackTrace();
+						System.err.println(XavaResources.getString("tab_key_value_warning"));
+						key.add(null);
+						key.add(null);
+					}															
 				}
 				else {
 					value = value.trim().toUpperCase();
@@ -430,7 +456,7 @@ public class Tab {
 				MetaProperty p = (MetaProperty) metaPropertiesKey.get(i - indexIncrement);
 				// If has a converter, apply
 												
-				if (p.getMapping().hasConverter()) {
+				if (p != null && p.getMapping().hasConverter()) { 
 					try {	
 						key[i] = p.getMapping().getConverter().toDB(key[i]);
 					}
@@ -624,7 +650,7 @@ public class Tab {
 		}
 	}
 	
-	public void setConditionValues(String [] values) throws XavaException {
+	public void setConditionValues(String [] values) throws XavaException {		
 	  if (Arrays.equals(this.conditionValues, values)) return;
 	  if (getMetaPropertiesNotCalculated().size() != values.length) return; // to avoid problems on changing module	  
 	  this.conditionValues = values;
@@ -637,7 +663,7 @@ public class Tab {
 		return conditionValues; 
 	}
 	
-	public void setConditionComparators(String [] comparators) throws XavaException {
+	public void setConditionComparators(String [] comparators) throws XavaException {		
 		if (Arrays.equals(this.conditionComparators, comparators)) return; 		
 		if (getMetaPropertiesNotCalculated().size() != comparators.length) return;		
 		this.conditionComparators = comparators;
