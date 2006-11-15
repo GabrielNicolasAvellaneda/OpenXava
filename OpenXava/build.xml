@@ -428,7 +428,7 @@
     </target>
 	
 	<target name="clearGeneratedCode">
-    	<delete>
+    	<delete failonerror="false">
    			<fileset dir="../${project}/gen-src"/>
    			<fileset dir="../${project}/gen-src-xava"/>
     		<fileset dir="../${project}/${meta-inf.dir}" excludes="MANIFEST.MF"/>
