@@ -181,8 +181,7 @@ here that you want to override.
 			keystroke="F2">
 			<use-object name="xava_view"/>			
 		</action>					<action name="saveNew" by-default="almost-always"			class="org.openxava.actions.SaveNewAction">						<use-object name="xava_view"/>
-			<use-object name="xava_previousViews"/> 
-			<use-object name="xava_referenceSubview"/>					</action>					<action name="cancel"			class="org.openxava.actions.CancelAction">			
+			<use-object name="xava_previousViews"/> 				</action>					<action name="cancel"			class="org.openxava.actions.CancelAction">			
 			<use-object name="xava_previousViews"/>
 			<use-object name="xava_view"/>
 		</action>				</controller>				<controller name="ReferenceSearch">		<action name="choose"			class="org.openxava.actions.ChooseReferenceAction">						<use-object name="xava_referenceSubview"/>

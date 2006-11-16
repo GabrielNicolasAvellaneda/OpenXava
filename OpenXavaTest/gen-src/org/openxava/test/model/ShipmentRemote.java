@@ -31,6 +31,24 @@ public interface ShipmentRemote
    public int getNumber(  )
       throws java.rmi.RemoteException;
 
+   public org.openxava.test.model.ICustomerContactPerson getCustomerContactPerson(  )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.CustomerContactPersonRemote getCustomerContactPersonRemote(  )
+      throws java.rmi.RemoteException;
+
+   public void setCustomerContactPerson( org.openxava.test.model.ICustomerContactPerson newCustomerContactPerson )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.CustomerContactPersonKey getCustomerContactPersonKey(  )
+      throws java.rmi.RemoteException;
+
+   public void setCustomerContactPersonKey( org.openxava.test.model.CustomerContactPersonKey key )
+      throws java.rmi.RemoteException;
+
+   public int getCustomerContactPerson_customer_number(  )
+      throws java.rmi.RemoteException;
+
    public org.openxava.test.model.ShipmentData getData(  )
       throws java.rmi.RemoteException;
 

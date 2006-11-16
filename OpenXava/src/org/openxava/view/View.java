@@ -31,6 +31,8 @@ public class View implements java.io.Serializable {
 
 	private final static int [] EMPTY_SELECTED = new int[0];
 	
+	private Map objects = null; 
+	
 	private String editCollectionElementAction;
 	private String viewCollectionElementAction;
 	private String newCollectionElementAction;
@@ -1836,7 +1838,7 @@ public class View implements java.io.Serializable {
 	}
 	
 	private void findObject(MetaProperty changedProperty) throws Exception {	
-		Map key = getKeyValues();
+		Map key = getKeyValues();		
 		try {
 			if (Maps.isEmptyOrZero(key)) {
 				if (isRepresentsEntityReference() && isFirstPropertyAndViewHasNoKeys(changedProperty) && isKeyEditable()) {
@@ -2938,5 +2940,41 @@ public class View implements java.io.Serializable {
 	public boolean isAlignedByColumns() throws XavaException {
 		return getMetaView().isAlignedByColumns();
 	}
-
+	
+	/**
+	 * Associates an arbitrary object to this view. <p>
+	 * 
+	 * This object is not used by the view for any purpose,
+	 * this is only a convenience method for developer.<br>
+	 * 
+	 * @param name The id to retrieve the object later.
+	 * @param object The object to associate.
+	 */
+	public void putObject(String name, Object object) { 
+		if (objects == null) objects = new HashMap();
+		objects.put(name, object);
+	}
+	
+	/**
+	 * Retrieve an object associated to this view. <p>
+	 * 
+	 * The object have to be associated to this view using @link #putObject(String, Object)
+	 * 
+	 * @param name Name of the object to retrieve.
+	 * @return The object, or null if it is not found.
+	 */
+	public Object getObject(String name) { 
+		if (objects == null) return null;
+		return objects.get(name);
+	}
+	
+	/**
+	 * Remove from this view an object previously associated with @link #putObject(String, Object)
+	 * @param name Name of the object to remove.
+	 */
+	public void removeObject(String name) {
+		if (objects == null) return;
+		objects.remove(name);
+	}
+	
 }

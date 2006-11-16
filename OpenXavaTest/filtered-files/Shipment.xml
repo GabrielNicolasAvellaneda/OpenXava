@@ -25,11 +25,16 @@
 		<property name="number" type="int" key="true" size="5" required="true"/>
 		<property name="description" type="String" size="50" required="true"/>
 		<property name="time" type="java.sql.Timestamp"/>
+		<reference name="customerContactPerson"/>
 		<finder name="byMode" arguments="int mode" collection="true">
 			<condition>${mode} = {0}</condition>
 		</finder>
 		<finder name="all" arguments="" collection="true"/>
 	</entity>		
+	
+	<view>
+		<reference-view reference="customerContactPerson" view="Simple"/>
+	</view>
 	
 	<tab>
 		<properties>number, description, time</properties>
@@ -50,6 +55,11 @@
 			property="description" column="DESCRIPTION"/>			
 		<property-mapping
 			property="time" column="TIME"/>						
+		<reference-mapping reference="customerContactPerson">
+			<reference-mapping-detail 
+				column="CUSTOMERCONTACT" 
+				referenced-model-property="customer.number"/>
+		</reference-mapping>
 	</entity-mapping>
 	
 </component>

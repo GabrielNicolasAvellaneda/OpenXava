@@ -1,5 +1,7 @@
 package org.openxava.test.tests;
 
+import org.openxava.hibernate.*;
+import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
 
@@ -11,6 +13,30 @@ public class ShipmentsTest extends ModuleTestBase {
 	
 	public ShipmentsTest(String testName) {
 		super(testName, "OpenXavaTest", "Shipments");		
+	}
+	
+	public void testCreateReferenceFromCreatingReference() throws Exception {
+		execute("CRUD.new");
+		execute("Reference.createNew", "model=CustomerContactPerson,keyProperty=xava.Shipment.customerContactPerson.name");
+		execute("Reference.createNew", "model=Customer,keyProperty=xava.CustomerContactPerson.customer.number");
+		
+		setValue("Customer", "number", "66");
+		setValue("Customer", "type", "1");
+		setValue("Customer", "name", "Customer Junit From Shipment");
+		setValue("Customer", "address.street", "JUNIT STREET");
+		setValue("Customer", "address.zipCode", "55555");
+		setValue("Customer", "address.city", "JUNIT CITY");
+		setValue("Customer", "address.state.id", "CA");
+		execute("NewCreation.saveNew");
+		assertNoErrors();
+		setValue("CustomerContactPerson", "name", "JUNIT CONTACT PERSON FROM SHIPMENTS");
+		execute("NewCreation.saveNew");
+		assertNoErrors();
+		assertValue("customerContactPerson.name", "Junit Contact Person From Shipments");
+		assertValue("customerContactPerson.customer.number", "66");
+		assertValue("customerContactPerson.customer.name", "Customer Junit From Shipment");
+		
+		deleteCustomerAndContactPerson(66);
 	}
 		
 	public void testCreateReadDeleteWithConverterInKey() throws Exception {
@@ -120,5 +146,15 @@ public class ShipmentsTest extends ModuleTestBase {
 		assertListRowCount(1);
 		assertValueInList(0, "description", "CINC");
 	}
-		
+	
+	private void deleteCustomerAndContactPerson(int number) {
+		Customer customer = (Customer) XHibernate.getSession().get(Customer.class, new Integer(number));
+		if (customer == null) return;
+		CustomerContactPerson contact = new CustomerContactPerson();
+		contact.setCustomer(customer);
+		XHibernate.getSession().delete(contact);
+		XHibernate.getSession().delete(customer);
+		XHibernate.commit();
+	}
+			
 }

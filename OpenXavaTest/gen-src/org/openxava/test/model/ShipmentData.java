@@ -17,6 +17,7 @@ public class ShipmentData
    private java.lang.String _Description;
    private int mode;
    private int number;
+   private int _CustomerContactPerson_customer_number;
 
    public ShipmentData()
    {
@@ -29,6 +30,7 @@ public class ShipmentData
       set_Description(otherData.get_Description());
       setMode(otherData.getMode());
       setNumber(otherData.getNumber());
+      set_CustomerContactPerson_customer_number(otherData.get_CustomerContactPerson_customer_number());
 
    }
 
@@ -82,11 +84,20 @@ public class ShipmentData
       this.number = number;
    }
 
+   public int get_CustomerContactPerson_customer_number()
+   {
+      return this._CustomerContactPerson_customer_number;
+   }
+   public void set_CustomerContactPerson_customer_number( int _CustomerContactPerson_customer_number )
+   {
+      this._CustomerContactPerson_customer_number = _CustomerContactPerson_customer_number;
+   }
+
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Type=" + get_Type() + " " + "_Time=" + get_Time() + " " + "_Description=" + get_Description() + " " + "mode=" + getMode() + " " + "number=" + getNumber());
+      str.append("_Type=" + get_Type() + " " + "_Time=" + get_Time() + " " + "_Description=" + get_Description() + " " + "mode=" + getMode() + " " + "number=" + getNumber() + " " + "_CustomerContactPerson_customer_number=" + get_CustomerContactPerson_customer_number());
       str.append('}');
 
       return(str.toString());
@@ -125,6 +136,7 @@ public class ShipmentData
          }
          lEquals = lEquals && this.mode == lTest.mode;
          lEquals = lEquals && this.number == lTest.number;
+         lEquals = lEquals && this._CustomerContactPerson_customer_number == lTest._CustomerContactPerson_customer_number;
 
          return lEquals;
       }
@@ -147,6 +159,8 @@ public class ShipmentData
       result = 37*result + (int) mode;
 
       result = 37*result + (int) number;
+
+      result = 37*result + (int) _CustomerContactPerson_customer_number;
 
       return result;
    }

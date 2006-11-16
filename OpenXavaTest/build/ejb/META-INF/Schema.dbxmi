@@ -421,6 +421,8 @@
       </columns>
       <columns xmi:id="Shipment_number" name="number">
       </columns>
+      <columns xmi:id="Shipment__CustomerContactPerson_customer_number" name="_CustomerContactPerson_customer_number">
+      </columns>
 
    </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_DeliveryPlace" name="" primaryKey="DeliveryPlace_PRIMARYKEY" database="RDBDatabase_1">
