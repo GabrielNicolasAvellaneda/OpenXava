@@ -23,6 +23,7 @@ public abstract class ShipmentCMP
          dataHolder.set_Description( get_Description() );
          dataHolder.setMode( getMode() );
          dataHolder.setNumber( getNumber() );
+         dataHolder.set_CustomerContactPerson_customer_number( get_CustomerContactPerson_customer_number() );
 
       }
       catch (RuntimeException e)
@@ -39,6 +40,7 @@ public abstract class ShipmentCMP
       {
          set_Time( dataHolder.get_Time() );
          set_Description( dataHolder.get_Description() );
+         set_CustomerContactPerson_customer_number( dataHolder.get_CustomerContactPerson_customer_number() );
 
       }
       catch (Exception e)
@@ -97,6 +99,7 @@ public abstract class ShipmentCMP
             ShipmentValue.setDescription( getDescription() );
             ShipmentValue.setMode( getMode() );
             ShipmentValue.setNumber( getNumber() );
+            ShipmentValue.setCustomerContactPerson_customer_number( getCustomerContactPerson_customer_number() );
 
          }
          catch (Exception e)
@@ -115,6 +118,7 @@ public abstract class ShipmentCMP
 		 setType( valueHolder.getType() );
 		 setTime( valueHolder.getTime() );
 		 setDescription( valueHolder.getDescription() );
+		 setCustomerContactPerson_customer_number( valueHolder.getCustomerContactPerson_customer_number() );
 
 	  }
 	  catch (Exception e)
@@ -144,5 +148,9 @@ public abstract class ShipmentCMP
    public abstract int getNumber() ;
 
    public abstract void setNumber( int number ) ;
+
+   public abstract int get_CustomerContactPerson_customer_number() ;
+
+   public abstract void set_CustomerContactPerson_customer_number( int _CustomerContactPerson_customer_number ) ;
 
 }

@@ -1619,7 +1619,22 @@
             <column-name>NUMBER</column-name>
 
         </cmp-field>
+         <cmp-field>
+            <field-name>_CustomerContactPerson_customer_number</field-name>
+            <column-name>CUSTOMERCONTACT</column-name>
 
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByCustomerContactPerson</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Shipment o WHERE o._CustomerContactPerson_customer_number = ?1 ORDER BY o._Type, o.mode, o.number]]></jboss-ql>
+
+	     </query>
          <query>
             <query-method>
                <method-name>findByMode</method-name>

@@ -17,6 +17,14 @@ but remember this is not an example of good OO modeling.
 	<view>
 		<reference-view reference="customer" view="Simple"/>
 	</view>
+	
+	<view name="Simple">
+		<reference-view reference="customer" view="Simplest"/>
+		<members>
+			name;
+			customer
+		</members>
+	</view>
 			
 	<entity-mapping table="XAVATEST_CUSTOMERCONTACTPERSON">
 		<reference-mapping reference="customer">

@@ -391,24 +391,24 @@ public class ModuleTestBase extends TestCase {
 		getForm().setParameter(getPropertyPrefix() + name, value);
 	}
 	
-	protected void setValue(String name, String value) throws Exception {
+	private void setValueWithPrefix(String propertyPrefix, String name, String value) throws Exception {
 		boolean checkbox = false;
 		if ("true".equals(value) || "false".equals(value)) { // maybe a checkbox
 			try {
-				getForm().setCheckbox(getPropertyPrefix() + name, "true".equals(value));
+				getForm().setCheckbox(propertyPrefix + name, "true".equals(value));
 				checkbox = true;
 			}
 			catch (IllegalArgumentException ex) {
 				// Not a checkbox
-				getForm().setParameter(getPropertyPrefix() + name, value);
+				getForm().setParameter(propertyPrefix + name, value);
 			}
 		}
 		else {
-			getForm().setParameter(getPropertyPrefix() + name, value);			
+			getForm().setParameter(propertyPrefix + name, value);			
 		}
 		
 		// If onchange then reload the page, because onchange do submit
-		HTMLElement el = response.getElementsWithName(getPropertyPrefix() +  name)[0];
+		HTMLElement el = response.getElementsWithName(propertyPrefix +  name)[0];
 		String onchange = el.getAttribute("onchange");	
 		if (!Is.emptyString(onchange)) {
 			if (checkbox) { // in checkbox case is needed throw onchange event
@@ -419,6 +419,11 @@ public class ModuleTestBase extends TestCase {
 		}
 		
 	}
+	
+	protected void setValue(String name, String value) throws Exception {
+		setValueWithPrefix(getPropertyPrefix(), name, value);
+	}
+	
 	
 	/**
 	 * For multiple values properties
@@ -446,8 +451,8 @@ public class ModuleTestBase extends TestCase {
 	/**
 	 * In case we do not work with main view. <p>
 	 */
-	protected void setValue(String model, String name, String value) throws Exception {		
-		getForm().setParameter("xava." + model + "." + name, value);
+	protected void setValue(String model, String name, String value) throws Exception { 
+		setValueWithPrefix("xava." + model + ".", name, value); 
 	}
 	
 	protected void assertLabel(String name, String expectedLabel) throws Exception {		

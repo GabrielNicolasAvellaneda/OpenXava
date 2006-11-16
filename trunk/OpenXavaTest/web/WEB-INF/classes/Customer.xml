@@ -243,6 +243,8 @@
 		</members>
 						
 	</view>		
+	
+	<view name="Simplest" members="number; name"/>
 		
 	<view name="Simple">
 		<members>

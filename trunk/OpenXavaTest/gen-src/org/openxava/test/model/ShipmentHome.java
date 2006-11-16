@@ -21,6 +21,9 @@ public interface ShipmentHome
    public org.openxava.test.model.ShipmentRemote create(org.openxava.test.model.ShipmentValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
+   public java.util.Collection findByCustomerContactPerson(int customer_number)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public java.util.Collection findByMode(int mode)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

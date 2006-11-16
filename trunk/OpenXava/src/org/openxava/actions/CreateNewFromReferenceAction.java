@@ -27,7 +27,8 @@ public class CreateNewFromReferenceAction extends ReferenceBaseAction implements
 		viewReference.setModelName(getModel());
 		viewReference.setRequest(request);
 		viewReference.setErrors(getErrors()); 
-		viewReference.setMessages(getMessages()); 
+		viewReference.setMessages(getMessages());
+		viewReference.putObject("xava.referenceSubview", getReferenceSubview());
 		getPreviousViews().push(getView());
 		setView(viewReference);
 		

@@ -24,6 +24,8 @@ public class ShipmentValue
    private boolean modeHasBeenSet = false;
    private int number;
    private boolean numberHasBeenSet = false;
+   private int customerContactPerson_customer_number;
+   private boolean customerContactPerson_customer_numberHasBeenSet = false;
 
    public ShipmentValue()
    {
@@ -42,6 +44,8 @@ public class ShipmentValue
 	  modeHasBeenSet = true;
 	  this.number = otherValue.number;
 	  numberHasBeenSet = true;
+	  this.customerContactPerson_customer_number = otherValue.customerContactPerson_customer_number;
+	  customerContactPerson_customer_numberHasBeenSet = true;
    }
 
    public int getType()
@@ -114,12 +118,26 @@ public class ShipmentValue
    public boolean numberHasBeenSet(){
 	  return numberHasBeenSet;
    }
+   public int getCustomerContactPerson_customer_number()
+   {
+	  return this.customerContactPerson_customer_number;
+   }
+
+   public void setCustomerContactPerson_customer_number( int customerContactPerson_customer_number )
+   {
+	  this.customerContactPerson_customer_number = customerContactPerson_customer_number;
+	  customerContactPerson_customer_numberHasBeenSet = true;
+   }
+
+   public boolean customerContactPerson_customer_numberHasBeenSet(){
+	  return customerContactPerson_customer_numberHasBeenSet;
+   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("type=" + getType() + " " + "time=" + getTime() + " " + "description=" + getDescription() + " " + "mode=" + getMode() + " " + "number=" + getNumber());
+	  str.append("type=" + getType() + " " + "time=" + getTime() + " " + "description=" + getDescription() + " " + "mode=" + getMode() + " " + "number=" + getNumber() + " " + "customerContactPerson_customer_number=" + getCustomerContactPerson_customer_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -184,6 +202,7 @@ public class ShipmentValue
 		 {
 			lEquals = lEquals && this.description.equals( that.description );
 		 }
+		 lEquals = lEquals && this.customerContactPerson_customer_number == that.customerContactPerson_customer_number;
 
 		 return lEquals;
 	  }
@@ -204,6 +223,8 @@ public class ShipmentValue
       result = 37*result + (int) mode;
 
       result = 37*result + (int) number;
+
+      result = 37*result + (int) customerContactPerson_customer_number;
 
 	  return result;
    }
