@@ -133,11 +133,11 @@ public class GenerateReportServlet extends HttpServlet {
 			}						
 			request.getParameter("application"); // for a bug in websphere 5.1 
 			request.getParameter("module"); // for a bug in websphere 5.1		
-			Tab tab = (Tab) request.getSession().getAttribute("xava_reportTab");			
+			Tab tab = (Tab) request.getSession().getAttribute("xava_reportTab");
+			tab.setRequest(request); 
 			String uri = request.getRequestURI();
 			if (uri.endsWith(".pdf")) {
-				Map parameters = new HashMap();
-				tab.setRequest(request);				
+				Map parameters = new HashMap();								
 				parameters.put("Title", tab.getTitle());				
 				parameters.put("Organization", getOrganization(request, tab));
 				InputStream is  = getReport(request, response, tab);															

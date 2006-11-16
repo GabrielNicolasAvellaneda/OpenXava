@@ -32,6 +32,11 @@ public class Invoices2002Test extends ModuleTestBase {
 		assertContentTypeForPopup("application/pdf");		
 	}
 	
+	public void testGenerateExcelWithFilter() throws Exception {
+		execute("Print.generateExcel");		
+		assertContentTypeForPopup("text/x-csv");		
+	}	
+	
 	public void testChangeTabTitle() throws Exception {
 		assertListTitle("Invoices report of year 2,002");
 		execute("Invoices2002.changeListTitle");
