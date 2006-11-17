@@ -100,7 +100,7 @@ public class WarehousesTest extends ModuleTestBase {
 		setValue("zoneNumber", "66");
 		setValue("number", "666");				
 		execute("CRUD.search");		
-		assertError("Object not found");
+		assertError("Object of type Warehouse does not exists with that key");
 		assertErrorsCount(1);
 		
 		// Date, time and table
@@ -297,7 +297,7 @@ public class WarehousesTest extends ModuleTestBase {
 		setValue("zoneNumber", "66");
 		setValue("number", "666");				
 		execute("CRUD.search");		
-		assertError("Object not found");							
+		assertError("Object of type Warehouse does not exists with that key");							
 	}
 				
 	public void testClickOneInListMode() throws Exception {

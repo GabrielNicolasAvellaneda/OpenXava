@@ -49,6 +49,7 @@ public class Products2Test extends ModuleTestBase {
 		setFileValue("newImage", imageUrl);
 		execute("LoadImageIntoGallery.loadImage");
 		assertNoErrors();
+		assertMessage("Image added to the gallery");
 		assertAction("Gallery.maximizeImage");
 		assertNoAction("Gallery.minimizeImage");
 		assertAction("Gallery.removeImage");
