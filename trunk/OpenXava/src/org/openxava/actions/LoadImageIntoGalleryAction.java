@@ -17,12 +17,16 @@ public class LoadImageIntoGalleryAction extends BaseAction implements INavigatio
 
 	public void execute() throws Exception {		
 		Iterator i = getFileItems().iterator();
+		int c = 0;
 		while (i.hasNext()) {
 			FileItem fi = (FileItem)i.next();					
 			if (!Is.emptyString(fi.getName())) {
 				getGallery().addImage(fi.get());
+				c++;
 			}			
 		}		
+		if (c == 1)	addMessage("image_added_to_gallery");
+		else if (c > 1) addMessage("images_added_to_gallery", new Integer(c));
 	}
 
 	public String[] getNextControllers() {		

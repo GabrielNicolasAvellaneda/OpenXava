@@ -16,10 +16,10 @@ int activeSection = view.getActiveSection();
 <table width='100%' cellspacing="0" border="0" cellpadding="0">
 	<tr><td>
 
-<div class=<%=style.getSection()%>>
-	<table border="0" cellpadding="0" cellspacing="0">
+<div class="<%=style.getSection()%>">
+	<table <%=style.getSectionTableAttributes()%>>
     	<tr>
-    		<%=style.getSectionBarLeftDecoration()%>    		
+    		<%=style.getSectionBarStartDecoration()%>    		
 	<% 
 	java.util.Iterator itSections = sections.iterator();
 	int i=0;
@@ -27,44 +27,33 @@ int activeSection = view.getActiveSection();
 		MetaView section = (MetaView) itSections.next();
 		if (activeSection == i) {
 	%>        
-			<% if (style.sectionTabHasDecoration()) { %>
-			<td class=<%=style.getSectionTabLeft()%> nowrap="true">&nbsp;</td>
-			<% } %>
-			<td class=<%=style.getSectionTabMiddle()%> style="vertical-align: middle; text-align: center;" nowrap="true">
+			<%=style.getActiveSectionTabStartDecoration()%>
 			<%=section.getLabel(request)%>
-			</td>
-			<% if (style.sectionTabHasDecoration()) { %>
-			<td class=<%=style.getSectionTabRight()%> nowrap="true">&nbsp;</td>    	
-			<% } %>
+			<%=style.getActiveSectionTabEndDecoration()%>
     <%
 		}
 		else {
     %>
-    		<% if (style.sectionTabHasDecoration()) { %>
-			<td class=<%=style.getSectionTabLeftLow()%> nowrap="true">&nbsp;</td>
-			<% } %>
-			<td class=<%=style.getSectionTabMiddleLow()%> style="vertical-align: middle; text-align: center;" nowrap="true">
+    		<%=style.getSectionTabStartDecoration()%>
 				<%
 				String viewObjectArgv = "xava_view".equals(viewObject)?"":",viewObject=" + viewObject;
 				%>
 				<xava:link action='Sections.change' argv='<%="activeSection=" + i + viewObjectArgv%>' cssClass='<%=style.getSectionLink()%>'>
 				<%=section.getLabel(request)%>
-				</xava:link>                  	
-			</td>
-			<% if (style.sectionTabHasDecoration()) { %>
-			<td class=<%=style.getSectionTabRightLow()%> nowrap="true">&nbsp;</td>          
-			<% } %>
+				</xava:link>      
+			<%=style.getSectionTabEndDecoration()%>	
   	<%   	
 		}
 		i++;
   	} 
   	%>                
+  			<%=style.getSectionBarEndDecoration()%>  	
 	</tr>
   </table>
-</div>                  
+</div>      
 	
 	</td></tr>
-	<tr><td class=<%=style.getSectionActive()%>>
+	<tr><td class="<%=style.getSectionActive()%>">
 		<%
 			String viewName = viewObject + "_section" + activeSection;
 			context.put(request, viewName, view.getSectionView(activeSection));			

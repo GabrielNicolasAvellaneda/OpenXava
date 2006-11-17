@@ -84,9 +84,9 @@ public class MetaControllers {
 		if (metaControllers == null) {
 			setup();
 		}						
-		if (mapMetaObjects == null) throw new ElementNotFoundException("object_not_found", name);
+		if (mapMetaObjects == null) throw new ElementNotFoundException("session_object_not_found_in_controllers", name);
 		MetaObject a = (MetaObject) mapMetaObjects.get(name);
-		if (a == null) throw new ElementNotFoundException("object_not_found", name);		
+		if (a == null) throw new ElementNotFoundException("session_object_not_found_in_controllers", name);		
 		return a; 
 	}	
 	

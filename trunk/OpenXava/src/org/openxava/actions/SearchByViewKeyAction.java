@@ -46,7 +46,7 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 		}
 		catch (ObjectNotFoundException ex) {
 			getView().clear();
-			addError("object_not_found");			
+			addError("object_not_found", getModelName());			
 		}						
 		catch (Exception ex) {
 			ex.printStackTrace();
