@@ -9,6 +9,9 @@ org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleM
 manager.setSession(session);
 %>
 
+<button name="xava.DEFAULT_ACTION" 
+	onclick="executeXavaAction('', false, <%=manager.getForm()%>, '<%=manager.getDefaultActionQualifiedName()%>')"
+	style="padding: 0; border: none; background-color:transparent; size: 0"></button>
 
 <%
 java.util.Iterator it = manager.getMetaActions().iterator();
