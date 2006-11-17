@@ -205,7 +205,7 @@ document.onkeydown = processKey;
 <link href="<%=request.getContextPath()%>/xava/style/default.css" rel="stylesheet" type="text/css">
 </head>
 
-<body bgcolor="#ffffff" onload="setFocus()">
+<body bgcolor="#ffffff">
 <% } %>
 
 <link href="<%=request.getContextPath()%>/xava/style/openxava.css" rel="stylesheet" type="text/css">
@@ -296,3 +296,5 @@ document.onkeydown = processKey;
 <%
 manager.commit(); // If hibernate, ejb3, etc is used to render some value here is commit
 %>
+
+<script>setFocus()</script>
