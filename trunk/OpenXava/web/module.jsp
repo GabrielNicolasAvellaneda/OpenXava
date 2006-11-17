@@ -9,12 +9,12 @@
 <%@ page import="org.openxava.util.Locales" %>
 <%@ page import="org.openxava.util.XavaResources" %>
 
-<%@ include file="script.jsp" %>
-
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="messages" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
+
+<%@ include file="script.jsp" %>
 
 <%
 Users.setCurrent(request);
