@@ -205,6 +205,7 @@ public class Tab {
 				tableModel = createTableModel();			
 			}
 			catch (Exception ex) {
+				ex.printStackTrace();
 				restoreDefaultProperties(); // if fails because user customized list uses properties no longer existing 
 				tableModel = createTableModel();
 			}
@@ -291,7 +292,8 @@ public class Tab {
 					sb.append(convertComparator(p, this.conditionComparators[i]));
 					sb.append(" ? ");
 					if (metaPropertiesKey == null) metaPropertiesKey = new ArrayList();
-					if (YEAR_MONTH_COMPARATOR.equals(this.conditionComparators[i])) { 
+					if (YEAR_MONTH_COMPARATOR.equals(this.conditionComparators[i]) ||
+						Timestamp.class.equals(p.getType()) && "eq".equals(this.conditionComparators[i])) {  
 						metaPropertiesKey.add(null);
 						metaPropertiesKey.add(null);
 					}
@@ -408,8 +410,15 @@ public class Tab {
 				else {
 					value = value.trim().toUpperCase();
 					MetaProperty p = (MetaProperty) getMetaPropertiesNotCalculated().get(i);
-					try {					
-						key.add(p.parse(value));
+					try {				
+						Object v = p.parse(value);
+						if (v instanceof Timestamp && "eq".equals(this.conditionComparators[i])) { 
+							key.add(Dates.cloneWithoutTime((Timestamp) v));
+							key.add(Dates.cloneWith2359((Timestamp) v));												
+						}
+						else {						
+							key.add(v);
+						}
 					}
 					catch (Exception ex) {
 						ex.printStackTrace();
@@ -471,37 +480,7 @@ public class Tab {
 			}									
 		}
 		
-		// Split Timestamp arguments
-		if (hasTimestamp(key)) {
-			key = filterTimestampInKey(key);
-		}
-		
 		return key;
-	}
-
-	private Object[] filterTimestampInKey(Object[] key) {
-		Collection result = new ArrayList();
-		for (int i=0; i<key.length; i++) {
-			if (key[i] instanceof java.sql.Timestamp) {				
-				result.add(Dates.cloneWithoutTime((java.sql.Timestamp) key[i]));
-				result.add(Dates.cloneWith2359((java.sql.Timestamp) key[i]));
-			}
-			else {
-				result.add(key[i]);
-			}
-		}
-		
-		return result.toArray();
-	}
-
-	private boolean hasTimestamp(Object[] key) {
-		if (key == null) return false;
-		for (int i=0; i<key.length; i++) {
-			if (key[i] instanceof java.sql.Timestamp) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public void reset() {
