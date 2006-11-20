@@ -27,7 +27,6 @@ boolean editable = view.isEditable(ref);
 int labelFormat = view.getLabelFormatForReference(ref);
 String label = ref.getLabel(request);
 %>
-<input type="hidden" name="<%=editableKey%>" value="<%=editable%>">
 <% if (!onlyEditor) { %>
 <%=preLabel%>
 <% if (labelFormat == MetaPropertyView.NORMAL_LABEL) { %>
@@ -134,6 +133,7 @@ String urlDescriptionEditor = "editors/descriptionsEditor.jsp" // in this way be
 	+ "&order=" + order
 	+ filterArg;
 %>
+<input type="hidden" name="<%=editableKey%>" value="<%=editable%>"/>
 <jsp:include page="<%=urlDescriptionEditor%>" />
 
 <%
