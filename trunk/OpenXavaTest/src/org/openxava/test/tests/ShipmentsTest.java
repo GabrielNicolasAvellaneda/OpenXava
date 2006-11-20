@@ -151,6 +151,11 @@ public class ShipmentsTest extends ModuleTestBase {
 		assertListRowCount(1);
 		assertValueInList(0, "description", "CINC");
 		
+		setConditionValues( new String [] { "", "", "2006"} );
+		setConditionComparators(new String [] { "=", "=", "year_comparator"}); 
+		execute("List.filter");
+		assertListRowCount(1);
+		assertValueInList(0, "description", "CINC");		
 	}
 	
 	private void deleteCustomerAndContactPerson(int number) {

@@ -118,7 +118,8 @@ while (it.hasNext()) {
 		boolean isValidValues = property.hasValidValues();
 		boolean isString = "java.lang.String".equals(property.getType().getName());
 		boolean isBoolean = "boolean".equals(property.getType().getName()) || "java.lang.Boolean".equals(property.getType().getName());
-		boolean isDate = "java.util.Date".equals(property.getType().getName());
+		// tmp boolean isDate = "java.util.Date".equals(property.getType().getName());
+		boolean isDate = java.util.Date.class.isAssignableFrom(property.getType()); // tmp
 		int maxLength = property.getSize();
 		int length = Math.min(isString?property.getSize()/2:property.getSize(), 20);
 		String value= conditionValues==null?"":conditionValues[iConditionValues];
