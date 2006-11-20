@@ -145,6 +145,12 @@ public class ShipmentsTest extends ModuleTestBase {
 		execute("List.filter");
 		assertListRowCount(1);
 		assertValueInList(0, "description", "CINC");
+		
+		setConditionComparators(new String [] { "=", "=", ">="});
+		execute("List.filter");
+		assertListRowCount(1);
+		assertValueInList(0, "description", "CINC");
+		
 	}
 	
 	private void deleteCustomerAndContactPerson(int number) {
