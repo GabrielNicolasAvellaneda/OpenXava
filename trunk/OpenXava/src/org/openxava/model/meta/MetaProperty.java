@@ -726,12 +726,17 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				value = Strings.change(value, " ", ""); // In order to work with Polish
 				Number n = NumberFormat.getNumberInstance(locale).parse(value);
 				return new BigDecimal(n.toString());
-			}
+			}			
 			if (java.sql.Timestamp.class.isAssignableFrom(type)) {
 				if (emptyString) return null;
 				java.util.Date date = DateFormat.getDateInstance(DateFormat.SHORT, locale).parse(value);
 				return new Timestamp(date.getTime());
 			}			
+			if (java.sql.Time.class.isAssignableFrom(type)) { 
+				if (emptyString) return null;
+				java.util.Date date = DateFormat.getTimeInstance(DateFormat.SHORT, locale).parse(value);
+				return new Time(date.getTime());
+			}						
 			if (java.util.Date.class.isAssignableFrom(type)) {
 				return emptyString?null:DateFormat.getDateInstance(DateFormat.SHORT, locale).parse(value);
 			}
@@ -833,6 +838,9 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				numberFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
 				return numberFormat.format(value);				
 			}
+			if (java.sql.Time.class.isAssignableFrom(type)) { 
+				return DateFormat.getTimeInstance(DateFormat.SHORT, locale).format(value);
+			}			
 			if (java.util.Date.class.isAssignableFrom(type)) {
 				return DateFormat.getDateInstance(DateFormat.SHORT, locale).format(value);
 			}
