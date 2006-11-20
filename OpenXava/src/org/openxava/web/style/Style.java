@@ -43,6 +43,7 @@ public class Style {
 		return "";
 	}
 	
+	
 	public String getButtonBarMiddle(boolean onBottom) {
 		return "";
 	}
@@ -50,6 +51,26 @@ public class Style {
 	public String getButtonBarEnd(boolean onBottom) {
 		return "";
 	}
+	
+	public String getButtonBarStyle() {
+		return "";
+	}
+	
+	public String getButtonBarStartStyle() {
+		return "";
+	}
+	
+	public String getButtonBarMiddleStyle() {
+		return "";
+	}
+	
+	public String getButtonBarEndStyle() {
+		return "";
+	}
+
+
+
+
 	
 	
 	public String getMode(boolean onButton) { 

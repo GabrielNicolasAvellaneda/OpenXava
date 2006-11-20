@@ -52,7 +52,23 @@ public class LiferayStyle extends Style {
 		return "portlet-header-right";
 	}
 	
+	public String getButtonBarStyle() {
+		return "style='position: static'";
+	}
 	
+	public String getButtonBarStartStyle() {
+		return "style='position: static'";
+	}
+	
+	public String getButtonBarMiddleStyle() {
+		return "style='position: static'";
+	}
+	
+	public String getButtonBarEndStyle() {
+		return "style='position: static'";
+	}
+
+		
 	public String getMode(boolean onButton) { 
 		return "list-info";
 	}
@@ -105,7 +121,7 @@ public class LiferayStyle extends Style {
 	
 		
 	public String getFrame() {
-		return "portlet-container";
+		return ""; 
 	}
 	
 	public String getFrameTitle() {
@@ -117,11 +133,11 @@ public class LiferayStyle extends Style {
 	}
 	
 	public String getFrameTitleStartDecoration() {
-		return "<table class='portlet-header-bar' cellpadding=0 cellspacing=0 width=100%><tr><td class='portlet-header-left' width=1>&nbsp;</td><td>";
+		return "<table class='portlet-header-bar' style='position: static' cellpadding=0 cellspacing=0 width=100%><tr><td class='portlet-header-left' style='position: static' width=1>&nbsp;</td><td>";
 	}
 	
 	public String getFrameTitleEndDecoration() {
-		return "</td><td class='portlet-header-right' width=1>&nbsp;</td></tr></table>";
+		return "</td><td class='portlet-header-right' style='position: static' width=1>&nbsp;</td></tr></table>";
 	}
 
 	public String getFrameContent() {
