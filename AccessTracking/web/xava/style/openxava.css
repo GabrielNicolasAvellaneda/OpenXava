@@ -120,11 +120,6 @@ TD.list-title {
 	color: black;
 }
 
-.portlet-section-header A:link {
-	color: white;	
-	text-decoration: underline;
-}
-
 .section {
 	border-collapse: collapse;
 	padding: 0 0 0 0;

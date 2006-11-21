@@ -9,12 +9,12 @@
 <%@ page import="org.openxava.util.Locales" %>
 <%@ page import="org.openxava.util.XavaResources" %>
 
-<%@ include file="script.jsp" %>
-
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="messages" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
+
+<%@ include file="script.jsp" %>
 
 <%
 Users.setCurrent(request);
@@ -205,7 +205,7 @@ document.onkeydown = processKey;
 <link href="<%=request.getContextPath()%>/xava/style/default.css" rel="stylesheet" type="text/css">
 </head>
 
-<body bgcolor="#ffffff" onload="setFocus()">
+<body bgcolor="#ffffff">
 <% } %>
 
 <link href="<%=request.getContextPath()%>/xava/style/openxava.css" rel="stylesheet" type="text/css">
@@ -259,8 +259,8 @@ document.onkeydown = processKey;
     </tr>            
     <% } %>
     <tr>      		
-		<td <%=manager.isListMode()?"":("class=" + style.getDetail())%>>
-		<jsp:include page='<%=manager.getViewURL()%>'/>
+		<td <%=manager.isListMode()?"":("class='" + style.getDetail() + "'")%>>
+		<jsp:include page='<%=manager.getViewURL()%>'/>		
 		</td>
     </tr>
     <tr>
@@ -296,3 +296,5 @@ document.onkeydown = processKey;
 <%
 manager.commit(); // If hibernate, ejb3, etc is used to render some value here is commit
 %>
+
+<script>setFocus()</script>

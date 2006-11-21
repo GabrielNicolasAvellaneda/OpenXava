@@ -526,8 +526,12 @@ public class View implements java.io.Serializable {
 			View sectionView = getSectionView(i); 
 			View subview = (View) sectionView.getSubviews().get(name);
 			if (subview == null) {
+				subview = sectionView.findSubviewInSection(name);
+				if (subview != null) return subview;
+			} 
+			if (subview == null) {
 				subview = sectionView.findSubviewInGroup(name);
-				if (subview != null)	return subview;
+				if (subview != null) return subview;
 			} 
 			else {
 				return subview;

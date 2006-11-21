@@ -2,11 +2,15 @@
 
 <!-- Loading Theme file(s) -->
 <link rel="stylesheet" type="text/css" media="all" href="<%=request.getContextPath()%>/xava/editors/calendar/skins/aqua/theme.css" title="Aqua" />
+
+<% if (!(style instanceof org.openxava.web.style.LiferayStyle)) { // Because Liferay has its own calenar.js %>
 <!-- import the calendar script -->
 <script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/calendar.js"></script>
 
 <!-- import the language module -->
 <script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/lang/calendar-<%=request.getLocale().getLanguage()%>.js"></script>
+
+<% } %>
 
 <!-- other languages might be available in the lang directory; please check
 your distribution archive. -->

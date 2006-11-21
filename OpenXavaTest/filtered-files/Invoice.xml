@@ -189,7 +189,7 @@
 		<reference-view reference="customer" view="Simple"/>
 		
 		<members>
-			year, number
+			year, number, date;
 			<section name="customer">customer</section>
 			<section name="data">				 
 				<section name="details">details</section>
