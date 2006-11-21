@@ -259,8 +259,8 @@ document.onkeydown = processKey;
     </tr>            
     <% } %>
     <tr>      		
-		<td <%=manager.isListMode()?"":("class=" + style.getDetail())%>>
-		<jsp:include page='<%=manager.getViewURL()%>'/>
+		<td <%=manager.isListMode()?"":("class='" + style.getDetail() + "'")%>>
+		<jsp:include page='<%=manager.getViewURL()%>'/>		
 		</td>
     </tr>
     <tr>

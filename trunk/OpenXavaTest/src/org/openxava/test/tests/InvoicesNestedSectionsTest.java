@@ -40,5 +40,18 @@ public class InvoicesNestedSectionsTest extends ModuleTestBase {
 		assertNotExists("vat");
 		assertExists("amountsSum");
 	}
+	
+	public void testReferenceActionsInNestedSections() throws Exception {
+		execute("CRUD.new");
+		execute("Sections.change", "activeSection=1");
+		execute("Collection.new", "viewObject=xava_view_section1_section0_details");
+		setValue("details.product.number", "1");
+		assertValue("details.product.description", "MULTAS DE TRAFICO");
+		execute("Reference.search", "keyProperty=xava.Invoice.details.product.number");
+		assertNoErrors();
+		execute("ReferenceSearch.cancel");
+		execute("Reference.createNew", "keyProperty=xava.Invoice.details.product.number");
+		assertNoErrors();
+	}
 									
 }
