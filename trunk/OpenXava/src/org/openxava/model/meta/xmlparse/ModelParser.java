@@ -8,7 +8,7 @@ import org.openxava.validators.meta.*;
 import org.w3c.dom.*;
 
 /**
- * @author Javier Paniza
+ * @author Javier Paniza; modified by Radoslaw Ostrzycki, Newitech
  */
 public class ModelParser extends XmlElementsNames {
 				
@@ -209,6 +209,7 @@ public class ModelParser extends XmlElementsNames {
 		p.setStereotype(el.getAttribute(xstereotype[lang]));
 		p.setTypeName(el.getAttribute(xtype[lang]));
 		p.setSize(ParserUtil.getAttributeInt(el, xsize[lang]));
+		p.setScale(ParserUtil.getAttributeInt(el, xscale[lang]));
 		p.setHidden(ParserUtil.getAttributeBoolean(el, xhidden[lang]));
 		boolean key = ParserUtil.getAttributeBoolean(el, xkey[lang]);
 		if (key) p.setKey(key);

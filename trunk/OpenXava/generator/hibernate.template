@@ -8,7 +8,7 @@
 
 private String getSizeAttributes(MetaProperty property) throws XavaException {
 	if (property.isNumber() && !property.isKey()) {
-		int scale = "java.math.BigDecimal".equals(property.getTypeName())?2:0;
+		int scale = property.getScale();
 		return "precision='" + property.getSize() + "' scale='" + scale + "'";
 	}
 	else {

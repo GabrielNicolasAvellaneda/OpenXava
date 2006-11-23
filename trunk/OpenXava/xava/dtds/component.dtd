@@ -177,6 +177,7 @@
  required (true|false) "false" 
  key (true|false) "false"
  hidden (true|false) "false"
+ scale CDATA #IMPLIED
 >
 
 <!ELEMENT reference (default-value-calculator?)>
