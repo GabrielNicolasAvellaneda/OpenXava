@@ -32,6 +32,17 @@ public class DefaultSizeParser extends ParserBase {
 		catch (NumberFormatException ex) {			
 			throw new XavaException("default_size_number", "estereotipo", name);
 		}
+		
+		try {
+			String sscale = el.getAttribute(xscale[lang]);
+			if(sscale != null && sscale.length() > 0) {
+				int scale = Integer.parseInt(sscale);
+				DefaultSize._addScaleForStereotype(name, scale);
+			}
+		}
+		catch (NumberFormatException ex) {			
+			throw new XavaException("default_size_number", "estereotipo", name); // TODO
+		}		
 	}
 	
 	private void createForType(Node n) throws XavaException {
@@ -40,11 +51,23 @@ public class DefaultSizeParser extends ParserBase {
 		try {
 			String ssize = el.getAttribute(xsize[lang]);
 			int size = Integer.parseInt(ssize);
-			DefaultSize._addForType(className, size);
+			DefaultSize._addForType(className, size);			
 		}
 		catch (NumberFormatException ex) {			
 			throw new XavaException("default_size_number", "tipo", className);
 		}
+
+		try {
+			String sscale = el.getAttribute(xscale[lang]);
+			if(sscale != null && sscale.length() > 0) {
+				int scale = Integer.parseInt(sscale);
+				DefaultSize._addScaleForType(className, scale);
+			}
+		}
+		catch (NumberFormatException ex) {			
+			throw new XavaException("default_size_number", "tipo", className); // TODO
+		}
+		
 	}
 		
 	private void createForStereotypes() throws XavaException {

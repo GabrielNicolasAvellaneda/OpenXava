@@ -22,6 +22,7 @@ public class XmlElementsNames {
 	protected final static String [] xfrom = { "from", "desde" };
 	protected final static String [] xaction = { "action", "accion" };
 	protected final static String [] xsize = { "size", "longitud" }; 
+	protected final static String [] xscale = { "scale", "scale" }; // TODO add spanish translation of "scale"	
 	protected final static String [] xfor_stereotype = { "for-stereotype", "para-estereotipo" };
 	protected final static String [] xfor_type = { "for-type", "para-tipo" };
 	protected final static String [] xstereotype = { "stereotype", "estereotipo" };

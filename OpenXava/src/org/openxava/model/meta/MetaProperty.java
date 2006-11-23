@@ -17,7 +17,7 @@ import org.openxava.validators.*;
 import org.openxava.validators.meta.*;
 
 /**
- * @author Javier Paniza
+ * @author Javier Paniza; modified by Radoslaw OStrzycki, Newitech Sp. z o.o.
  */
 public class MetaProperty extends MetaMember implements Cloneable {
 	
@@ -27,6 +27,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	private Collection onlyOnCreateValidators;
 	private Class type;
 	private int size;
+	private int scale = 0;	
 	private boolean required;
 	private boolean hidden;
 	private java.lang.String stereotype;
@@ -213,6 +214,41 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		}
 		return size;
 	}
+	
+	
+	/**
+	 * 
+	 * @return scale param
+	 * @throws XavaException
+	 * @author Radoslaw Ostrzycki, Newitech Sp. z o.o. ; based on Javier's code for size
+	 */
+	public int getScale() throws XavaException {
+		if (scale == 0) {
+			if (!Is.emptyString(getStereotype())) {				
+				try {					
+					scale = DefaultSize.scaleForStereotype(getStereotype());					
+					return scale;
+				}
+				catch (ElementNotFoundException ex) {
+					// left that get size from type
+				}
+			}
+						
+			if (hasValidValues()) {
+				scale = 0;
+			}
+			else {
+				try {
+					scale = DefaultSize.scaleForType(getType());
+				}
+				catch (ElementNotFoundException ex) {
+					scale = 0; // default scale is 0
+				}
+			}
+		}		
+		return scale;		
+	}
+	
 
 	private int createLengthFromValidValues() {		
 		Iterator it = getValidValues().iterator();
@@ -434,6 +470,10 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	public void setSize(int newSize) {
 		size = newSize;
 	}
+	
+	public void setScale(int newScale) {
+		scale = newScale;
+	}	
 	
 	public boolean hasValidValues() {
 		if (validValues == null) return false;
@@ -690,7 +730,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	/**
 	 * Convert the argument in a object of type valid
 	 * for assign to this property. <p>
-	 * Convierte el argumento enviado en un objeto de tipo válido
+	 * Convierte el argumento enviado en un objeto de tipo vï¿½lido
 	 * para asignar a esta propiedad. <p>
 	 * 
 	 * If argument is primitive return the match wrapper.
@@ -704,7 +744,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	/**
 	 * Convert the argument in a object of type valid
 	 * for assign to this property. <p>
-	 * Convierte el argumento enviado en un objeto de tipo válido
+	 * Convierte el argumento enviado en un objeto de tipo vï¿½lido
 	 * para asignar a esta propiedad. <p>
 	 * 
 	 * If argument is primitive return the match wrapper.
