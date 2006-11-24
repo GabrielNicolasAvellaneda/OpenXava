@@ -55,7 +55,7 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(DeliveriesTest.class));
 		suite.addTest(new TestSuite(DeliveryTypesJSPTest.class));
 		suite.addTest(new TestSuite(DeliveryTypesTest.class));
-		if (ModuleTestBase.isJetspeed2Enabled()) {
+		if (ModuleTestBase.isPortalEnabled()) {
 			suite.addTest(new TestSuite(DescriptionTest.class));
 		}
 		if (XavaPreferences.getInstance().isEJB2Persistence()) {
@@ -119,7 +119,7 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(Subfamilies2Test.class));
 		suite.addTest(new TestSuite(SubfamiliesSelectTest.class));
 		suite.addTest(new TestSuite(SubfamiliesTest.class));
-		if (ModuleTestBase.isJetspeed2Enabled()) {
+		if (ModuleTestBase.isPortalEnabled()) {
 			suite.addTest(new TestSuite(TasksTest.class));
 		}
 		suite.addTest(new TestSuite(TransportCharges2Test.class));		
