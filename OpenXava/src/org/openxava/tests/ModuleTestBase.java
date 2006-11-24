@@ -33,6 +33,7 @@ public class ModuleTestBase extends TestCase {
 	private static String jetspeed2URL;
 	private static String jetspeed2UserName;
 	private static String jetspeed2Password;
+	private static String liferayURL;
 	private static int loginFormIndex = -1;
 	private static String host;
 	private static String port;
@@ -47,12 +48,14 @@ public class ModuleTestBase extends TestCase {
 	private WebConversation conversation; 
 	private WebResponse response; 
 	private WebForm form;
-	private String allowDuplicateSubmit; 
+	private String allowDuplicateSubmit;
+	private int formIndex;
 	
 	static {		
 		XHibernate.setConfigurationFile("/hibernate-junit.cfg.xml");
 		XPersistence.setPersistenceUnit("junit");
 		DataSourceConnectionProvider.setUseHibernateConnection(true);
+		HttpUnitOptions.setExceptionsThrownOnScriptError(false); // In order to run in Liferay
 	}
 	
 	/**
@@ -63,6 +66,7 @@ public class ModuleTestBase extends TestCase {
 		MetaControllers.setContext(MetaControllers.WEB);
 		this.application = application;
 		this.module = module;
+		this.formIndex = isLiferayEnabled()?1:0;
 	}
 
 	/**
@@ -90,23 +94,58 @@ public class ModuleTestBase extends TestCase {
 	}
 
 	protected void login(String user, String password) throws Exception {
-		response = conversation.getResponse("http://" + getHost() + ":" + getPort() + "/" + getJetspeed2URL() + "/portal/");
-		resetLoginForm();			
-		getForm().setParameter("org.apache.jetspeed.login.username", user);
-		getForm().setParameter("org.apache.jetspeed.login.password", password);
-		getForm().submit();
-		response = conversation.getResponse(getModuleURL());
-		resetForm();
+		if (isLiferayEnabled()) {
+			// Liferay
+			response = conversation.getResponse("http://" + getHost() + ":" + getPort() + "/c/portal/login");
+			resetLoginForm();			
+			getForm().setParameter("login", user);		
+			getForm().setParameter(getPasswordFieldInLiferay(), password);					
+			response = getForm().submit();
+			WebForm form = response.getFormWithName("fm"); 
+			response =  form.submit();
+			formIndex = 2;
+			resetForm();
+		}
+		else {
+			// JetSpeed 2
+			response = conversation.getResponse("http://" + getHost() + ":" + getPort() + "/" + getJetspeed2URL() + "/portal/");
+			resetLoginForm();			
+			getForm().setParameter("org.apache.jetspeed.login.username", user);
+			getForm().setParameter("org.apache.jetspeed.login.password", password);
+			getForm().submit();
+			response = conversation.getResponse(getModuleURL());
+			resetForm();
+		}
+	}
+
+	private String getPasswordFieldInLiferay() {
+		String [] parameterNames = getForm().getParameterNames();
+		String passwordTextField = "";
+		for (int i=0; i<parameterNames.length; i++) {
+			if (parameterNames[i].endsWith("_password")) {
+				passwordTextField = parameterNames[i]; 
+				break;
+			}
+		}
+		return passwordTextField;
 	}
 	
 	
 	/**
 	 * User logout. <p>
 	 * 
-	 * At the moment only works against JetSpeed2.
+	 * At the moment only works against Liferay and JetSpeed2.
 	 */
 	protected void logout() throws Exception {
-		response = conversation.getResponse("http://" + getHost() + ":" + getPort() + "/" + getJetspeed2URL() + "/login/logout");
+		if (isLiferayEnabled()) {
+			// Liferay 
+			response = conversation.getResponse("http://" + getHost() + ":" + getPort() + "/c/portal/logout?referer=/c");
+			formIndex = 1;
+		}
+		else { 
+			// Jetspeed 2
+			response = conversation.getResponse("http://" + getHost() + ":" + getPort() + "/" + getJetspeed2URL() + "/login/logout");
+		}
 	}
 	
 	/**
@@ -118,7 +157,7 @@ public class ModuleTestBase extends TestCase {
 			conversation.setHeaderField("Accept-Language", getLocale());
 			Locale.setDefault(new Locale(getLocale(), ""));
 		}
-		if (isJetspeed2Enabled() && isJetspeed2UserPresent()) {
+		if (isJetspeed2Enabled() && isJetspeed2UserPresent()) {		
 			login(getJetspeed2UserName(), getJetspeed2Password());
 		}		
 		else {
@@ -145,14 +184,17 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	
-	private String getModuleURL() throws XavaException {
-		if (isJetspeed2Enabled()) {
+	private String getModuleURL() throws XavaException {		
+		if (isLiferayEnabled()) {
+			return "http://" + getHost() + ":" + getPort() + "/" + getLiferayURL() + "/" + application + "/" + module;
+		}
+		else if (isJetspeed2Enabled()) {
 			String folder = Is.emptyString(getMetaModule().getFolder())?"":Strings.change(getMetaModule().getFolder(), ".", "/") + "/";
 			return "http://" + getHost() + ":" + getPort() + "/" + getJetspeed2URL() + "/portal/" + application + "/" + folder + module + ".psml";
 		}
 		else {
 			return"http://" + getHost() + ":" + getPort() + "/" + application + "/xava/module.jsp?application="+application+"&module=" + module;
-		}		
+		}
 	}
 	
 	/**
@@ -976,10 +1018,21 @@ public class ModuleTestBase extends TestCase {
 		return locale;
 	}
 	
-	public static boolean isJetspeed2Enabled() {
+	protected static boolean isJetspeed2Enabled() {
 		return !Is.emptyString(getJetspeed2URL());
 	}
 	
+	protected static boolean isLiferayEnabled() {
+		return !Is.emptyString(getLiferayURL());
+	}
+	
+	/**
+	 * Jetspeed2 or Liferay
+	 */
+	public static boolean isPortalEnabled() {
+		return isLiferayEnabled() || isJetspeed2Enabled();
+	}
+		
 	private static boolean isJetspeed2UserPresent() {
 		return !Is.emptyString(getJetspeed2UserName());
 	}
@@ -992,6 +1045,13 @@ public class ModuleTestBase extends TestCase {
 		return jetspeed2URL;				
 	}
 	
+	private static String getLiferayURL() {
+		if (liferayURL == null) {
+			liferayURL = getXavaJunitProperties().getProperty("liferay.url");
+		}
+		return liferayURL;				
+	}
+		
 	private static String getJetspeed2UserName() {
 		if (jetspeed2UserName == null) {
 			jetspeed2UserName = getXavaJunitProperties().getProperty("jetspeed2.username");
@@ -1035,7 +1095,7 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	private void resetLoginForm() throws Exception {
-		setForm(response.getForms()[getLoginFormIndex()]);
+		setForm(response.getForms()[getLoginFormIndex()]);		
 	}
 		
 	private void setForm(WebForm form) {
@@ -1055,20 +1115,27 @@ public class ModuleTestBase extends TestCase {
 		return form;	
 	}	
 	
-	private int getFormIndex() throws Exception {
-		return 0; 
+	private int getFormIndex() throws Exception {		
+		return formIndex;
 	}
 	
 	private int getLoginFormIndex() throws Exception {
 		if (loginFormIndex == -1) {
-			WebForm [] forms = response.getForms(); 
-			for (int i = 0; i < forms.length; i++) {
-				if (forms[i].hasParameterNamed("org.apache.jetspeed.login.username")) {					
-					loginFormIndex = i;
-					return loginFormIndex;
-				}
+			if (isLiferayEnabled()) {
+				// Liferay
+				loginFormIndex = 1;
 			}
-			loginFormIndex = 0;
+			else {
+				// JetSpeed 2
+				WebForm [] forms = response.getForms(); 
+				for (int i = 0; i < forms.length; i++) {
+					if (forms[i].hasParameterNamed("org.apache.jetspeed.login.username")) {					
+						loginFormIndex = i;
+						return loginFormIndex;
+					}
+				}
+				loginFormIndex = 0;
+			}
 		}
 		return loginFormIndex;
 	}	

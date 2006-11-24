@@ -13,9 +13,9 @@ public class StateHibernateTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "StatesHibernate");		
 	}
 
-	public void testCreateReadUpdateDeleteWithHandmadeHibernate() throws Exception {
+	public void testCreateReadUpdateDeleteWithHandmadeHibernate() throws Exception {		
 		assertListNotEmpty();
-		// Create		
+		// Create				
 		execute ("StatesHibernate.new");
 		setValue("id","66");
 		setValue("name","State JUnit");
