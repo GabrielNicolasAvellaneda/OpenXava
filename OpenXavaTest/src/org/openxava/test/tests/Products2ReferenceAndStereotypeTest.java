@@ -6,9 +6,9 @@ import org.openxava.tests.*;
  * @author Javier Paniza
  */
 
-public class Products2ReferenceAndStereotype extends ModuleTestBase {
+public class Products2ReferenceAndStereotypeTest extends ModuleTestBase {
 	
-	public Products2ReferenceAndStereotype(String testName) {
+	public Products2ReferenceAndStereotypeTest(String testName) {
 		super(testName, "Products2ReferenceAndStereotype");		
 	}
 	
