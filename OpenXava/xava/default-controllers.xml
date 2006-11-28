@@ -169,7 +169,14 @@ here that you want to override.
 			class="org.openxava.actions.CreateNewFromReferenceAction"
 			image="images/create_new.gif">			<use-object name="xava_view"/>
 			<use-object name="xava_previousViews"/>
-			<use-object name="xava_referenceSubview"/>		</action>	</controller>	
+			<use-object name="xava_referenceSubview"/>		</action>
+		<action name="modify" 
+			class="org.openxava.actions.ModifyFromReferenceAction"
+			image="images/edit.gif">
+			<use-object name="xava_view"/>
+			<use-object name="xava_previousViews"/>
+			<use-object name="xava_referenceSubview"/>
+		</action>			</controller>	
 	<!--
 		This controller is using when create a new entity from a reference.
 		If you need to overwrite, you can create your own controller
@@ -184,10 +191,35 @@ here that you want to override.
 			<use-object name="xava_previousViews"/> 				</action>					<action name="cancel"			class="org.openxava.actions.CancelAction">			
 			<use-object name="xava_previousViews"/>
 			<use-object name="xava_view"/>
-		</action>				</controller>				<controller name="ReferenceSearch">		<action name="choose"			class="org.openxava.actions.ChooseReferenceAction">						<use-object name="xava_referenceSubview"/>
-			<use-object name="xava_view"/>			<use-object name="xava_tab"/>					</action>					<action name="cancel"			class="org.openxava.actions.CancelReferenceSearchAction">			
+		</action>				</controller>
+	
+	<!--
+		This controller is using when modifying an entity from a reference.
+		If you need to overwrite, you can create your own controller
+		with the name {MyEntity}Modification. For example PersonModification for create Person.
+		-->
+	<controller name="Modification">
+		<!-- The action 'search' is execute automatically -->
+		<action name="search" hidden="true"
+			class="org.openxava.actions.SearchByViewKeyAction"
+			keystroke="F2">
+			<use-object name="xava_view"/>			
+		</action>			
+		<action name="update" by-default="almost-always"
+			class="org.openxava.actions.UpdateAction">			
 			<use-object name="xava_view"/>
-			<use-object name="xava_tab"/>		</action>						</controller>		<controller name="Collection">		<action name="new"			class="org.openxava.actions.CreateNewElementInCollectionAction">					</action>				
+			<use-object name="xava_previousViews"/> 		
+		</action>			
+		<action name="cancel"
+			class="org.openxava.actions.CancelAction">			
+			<use-object name="xava_previousViews"/>
+			<use-object name="xava_view"/>
+		</action>			
+	</controller>
+					<controller name="ReferenceSearch">		<action name="choose"			class="org.openxava.actions.ChooseReferenceAction">			<use-object name="xava_referenceSubview"/>
+			<use-object name="xava_view"/>			<use-object name="xava_tab"/>					</action>		<action name="cancel"			class="org.openxava.actions.CancelReferenceSearchAction">
+			<use-object name="xava_view"/>
+			<use-object name="xava_tab"/>		</action>	</controller>		<controller name="Collection">		<action name="new"			class="org.openxava.actions.CreateNewElementInCollectionAction">					</action>				
 		<action name="hideDetail"			class="org.openxava.actions.HideDetailElementInCollectionAction">					</action>							
 		<action name="save"			class="org.openxava.actions.SaveElementInCollectionAction">						<use-object name="xava_view"/>		</action>					<action name="remove"			class="org.openxava.actions.RemoveElementFromCollectionAction">						<use-object name="xava_view"/>		</action>							<action name="edit"			class="org.openxava.actions.EditElementInCollectionAction">						<use-object name="xava_view"/>		</action>									<action name="view"			class="org.openxava.actions.EditElementInCollectionAction">						<use-object name="xava_view"/>		</action>
 		

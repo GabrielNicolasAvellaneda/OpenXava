@@ -95,7 +95,7 @@ public class ViewParser extends XmlElementsNames {
 				throw new XavaException("section_name_or_label_required");			
 			}						
 			String members = getMembers(s, lang);
-			boolean alignedByColumns = ParserUtil.getAttributeBoolean(s, aligned_by_columns[lang]);
+			boolean alignedByColumns = ParserUtil.getAttributeBoolean(s, xaligned_by_columns[lang]);
 			MetaView newSection = v.addSection(name, label, members, alignedByColumns);
 			fillSectionsImpl(s, newSection, lang);
 		}
@@ -109,7 +109,7 @@ public class ViewParser extends XmlElementsNames {
 			String name = n.getAttribute(xname[lang]);
 			String label = n.getAttribute(xlabel[lang]);
 			String members = getMembers(n, lang);
-			boolean alignedByColumns = ParserUtil.getAttributeBoolean(n, aligned_by_columns[lang]);  
+			boolean alignedByColumns = ParserUtil.getAttributeBoolean(n, xaligned_by_columns[lang]);  
 			v.addMetaGroup(name, label, members, alignedByColumns);
 		}
 	}
@@ -184,6 +184,9 @@ public class ViewParser extends XmlElementsNames {
 		if (!Is.emptyString(el.getAttribute(xcreate[lang]))) {
 			a.setCreate(ParserUtil.getAttributeBoolean(el, xcreate[lang]) );
 		}
+		if (!Is.emptyString(el.getAttribute(xmodify[lang]))) {
+			a.setModify(ParserUtil.getAttributeBoolean(el, xmodify[lang]) );
+		}		
 		if (!Is.emptyString(el.getAttribute(xsearch[lang]))) {
 			a.setSearch(ParserUtil.getAttributeBoolean(el, xsearch[lang]) );
 		}		
@@ -204,6 +207,7 @@ public class ViewParser extends XmlElementsNames {
 			throw new XavaException("collection_onlyread_onlyedit_incompatible");
 		}
 		a.setCreateReference(ParserUtil.getAttributeBoolean(el, xcreate_reference[lang]));
+		a.setModifyReference(ParserUtil.getAttributeBoolean(el, xmodify_reference[lang]));
 		a.setAsAggregate(ParserUtil.getAttributeBoolean(el, xas_aggregate[lang]));
 		fillMediator(el, a, lang);
 		a.setPropertiesList(ParserUtil.getString(el, xlist_properties[lang]));

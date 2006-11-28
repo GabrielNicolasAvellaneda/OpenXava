@@ -13,9 +13,10 @@ public class FamilyProductsReportTest extends ModuleTestBase {
 		super(nombreTest, "OpenXavaTest", "FamilyProductsReport");		
 	}
 	
-	public void testReferenceWithNoSearch() throws Exception {
+	public void testReferenceWithNoSearchAndNoModify() throws Exception {
 		assertNoAction("Reference.search");
 		assertAction("Reference.createNew");
+		assertNoAction("Reference.modify");
 	}
 	
 }

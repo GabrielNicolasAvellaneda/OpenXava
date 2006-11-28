@@ -16,8 +16,10 @@ public class SellersCannotCreateCustomerTest extends ModuleTestBase {
 
 	public void testNotCreateNewReferenceFromCollection() throws Exception {
 		execute("CRUD.new");
-		execute("Collection.new", "viewObject=xava_view_customers");
+		execute("Collection.new", "viewObject=xava_view_section0_customers");
+		assertExists("customers.number"); // to verify that collection element view is opened
 		assertNoAction("Reference.createNew");
+		assertNoAction("Reference.modify");
 	}
 	
 	public void testMembersOfReferenceToEntityNotEditableInSection() throws Exception {

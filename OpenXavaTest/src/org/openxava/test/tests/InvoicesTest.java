@@ -914,6 +914,7 @@ public class InvoicesTest extends ModuleTestBase {
 			"Customers.prefixStreet",
 			"Reference.search",
 			"Reference.createNew",			
+			"Reference.modify",
 			"Mode.list"						
 		};		
 		assertActions(initialActions);
@@ -961,6 +962,7 @@ public class InvoicesTest extends ModuleTestBase {
 			"Sections.change",			
 			"Reference.createNew",
 			"Reference.search",
+			"Reference.modify",
 			"Gallery.edit",
 			"Invoices.editDetail", // because it is overwrite, otherwise 'Collection.edit'
 			"Collection.save",

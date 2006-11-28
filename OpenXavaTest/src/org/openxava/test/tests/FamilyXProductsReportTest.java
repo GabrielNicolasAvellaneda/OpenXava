@@ -21,6 +21,7 @@ public class FamilyXProductsReportTest extends ModuleTestBase {
 			{ "1", "DESARROLLO"}
 		};		
 		assertValidValues("subfamily.number", subfamiliesFamily1);
+		assertAction("Reference.modify"); // To test that modify action is shown in descriptions list
 		changeModule("Family2ProductsReport");
 		String [][] subfamiliesFamily2 = {
 			{ "", ""},
@@ -29,6 +30,7 @@ public class FamilyXProductsReportTest extends ModuleTestBase {
 			{ "11", "SERVIDORES"}						
 		};		
 		assertValidValues("subfamily.number", subfamiliesFamily2);
+		assertNoAction("Reference.modify"); // To test modify="false" in reference as descriptions list
 	}
 	
 	public void testJasperReportBaseActionTest() throws Exception {
