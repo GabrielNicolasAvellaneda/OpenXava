@@ -23,7 +23,7 @@ public class NextIntegerCalculator implements IJDBCCalculator {
 		this.provider = provider;
 	}
 
-	public Object calculate() throws Exception {					
+	public Object calculate() throws Exception {
 		return new Integer(calculateNextInteger());
 	}
 

@@ -10,42 +10,67 @@ import org.openxava.test.model.*;
 public class CustomersWithSectionTest extends CustomersTest {
 
 	private String [] listActions = {
-			"Print.generatePdf",
-			"Print.generateExcel",
-			"CRUD.new",
-			"CRUD.deleteSelected",
-			"Mode.detailAndFirst",
-			"List.filter",
-			"List.orderBy",
-			"List.viewDetail",
-			"List.customize",
-			"List.hideRows",
-			"Customers.hideSellerInList",
-			"Customers.showSellerInList"
-		};
+		"Print.generatePdf",
+		"Print.generateExcel",
+		"CRUD.new",
+		"CRUD.deleteSelected",
+		"Mode.detailAndFirst",
+		"List.filter",
+		"List.orderBy",
+		"List.viewDetail",
+		"List.customize",
+		"List.hideRows",
+		"Customers.hideSellerInList",
+		"Customers.showSellerInList"
+	};
 
 	private String [] listCustomizeActions = {
-			"Print.generatePdf",
-			"Print.generateExcel",
-			"CRUD.new",
-			"CRUD.deleteSelected",
-			"Mode.detailAndFirst",
-			"List.filter",
-			"List.orderBy",
-			"List.viewDetail",
-			"List.customize",
-			"List.addColumns",
-			"List.moveColumnToLeft",
-			"List.moveColumnToRight",
-			"List.removeColumn",
-			"List.hideRows",
-			"Customers.hideSellerInList",
-			"Customers.showSellerInList"
-		};
+		"Print.generatePdf",
+		"Print.generateExcel",
+		"CRUD.new",
+		"CRUD.deleteSelected",
+		"Mode.detailAndFirst",
+		"List.filter",
+		"List.orderBy",
+		"List.viewDetail",
+		"List.customize",
+		"List.addColumns",
+		"List.moveColumnToLeft",
+		"List.moveColumnToRight",
+		"List.removeColumn",
+		"List.hideRows",
+		"Customers.hideSellerInList",
+		"Customers.showSellerInList"
+	};
 	
 
 	public CustomersWithSectionTest(String testName) {
 		super(testName, "CustomersWithSection", true);		
+	}
+	
+	public void testModifyFromReference() throws Exception {
+		execute("CRUD.new");
+		execute("Reference.modify", "model=Seller,keyProperty=xava.Customer.seller.number");
+		assertError("Impossible to modify an empty reference");
+		setValue("number", "1");
+		execute("CRUD.search");		
+		assertValue("name", "Javi");
+		assertValue("seller.name", "MANUEL CHAVARRI");
+		execute("Reference.modify", "model=Seller,keyProperty=xava.Customer.seller.number");		
+		assertValue("Seller", "number", "1");
+		assertValue("Seller", "name", "MANUEL CHAVARRI");
+		execute("Modification.cancel");
+		assertValue("seller.name", "MANUEL CHAVARRI");
+		execute("Reference.modify", "model=Seller,keyProperty=xava.Customer.seller.number");
+		assertValue("Seller", "number", "1");
+		assertValue("Seller", "name", "MANUEL CHAVARRI");
+		setValue("Seller", "name", "MANOLO");
+		execute("Modification.update");
+		assertValue("seller.name", "MANOLO");
+		execute("Reference.modify", "model=Seller,keyProperty=xava.Customer.seller.number");
+		setValue("Seller", "name", "MANUEL CHAVARRI");
+		execute("Modification.update");
+		assertValue("seller.name", "MANUEL CHAVARRI");
 	}
 	
 	public void testChooseInReferenceWithoutSelecting() throws Exception {

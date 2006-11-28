@@ -553,18 +553,30 @@
 	
 	<!--
 	Because its name is WarehouseCreation (model name + Creation) it is used
-	by default for create from reference, instead of NewCreation.
-	Action 'new' is executed automatically.
+	by default for creating from reference, instead of NewCreation.
+	The action 'new' is executed automatically.
 	-->
 	<controller name="WarehouseCreation">
 		<extends controller="NewCreation"/>
 		<action name="new" hidden="true"
-			class="org.openxava.test.actions.CreateNewWarehouseFromReferenceAction"
-			image="images/new.gif"
-			keystroke="F2">
+			class="org.openxava.test.actions.CreateNewWarehouseFromReferenceAction">
 			<use-object name="xava_view"/>			
 		</action>						
 	</controller>
+	
+	<!-- 
+	Because its name is WarehouseModification (model name + Modification) it is used
+	by default for modifying from reference, instead of Modification.
+	The action 'search' is executed automatically.
+	-->
+	<controller name="WarehouseModification">
+		<extends controller="Modification"/>
+		<action name="search" hidden="true"
+			class="org.openxava.test.actions.ModifyWarehouseFromReferenceAction">
+			<use-object name="xava_view"/>			
+		</action>						
+	</controller>
+	
 
 	<controller name="HideShowCRUDActions">
 		<action name="hideDelete" class="org.openxava.test.actions.HideDeleteAction" mode="detail"/>

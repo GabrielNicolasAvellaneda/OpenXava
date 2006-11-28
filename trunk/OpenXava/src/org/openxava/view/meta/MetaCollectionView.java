@@ -26,6 +26,7 @@ public class MetaCollectionView implements Serializable {
 	private boolean readOnly = false;
 	private boolean editOnly = false; 
 	private boolean createReference = true;
+	private boolean modifyReference = true; 
 	private boolean asAggregate = false;
 	
 	public void addActionDetailName(String actionName) {
@@ -166,5 +167,13 @@ public class MetaCollectionView implements Serializable {
 
 	public void setAsAggregate(boolean asAggregate) {
 		this.asAggregate = asAggregate;
+	}
+
+	public boolean isModifyReference() {
+		return modifyReference;		
+	}
+
+	public void setModifyReference(boolean modifyReference) {
+		this.modifyReference = modifyReference;
 	}
 }

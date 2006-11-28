@@ -2389,6 +2389,12 @@ public class View implements java.io.Serializable {
 		return viewRef.isCreate();
 	}
 	
+	public boolean isModifyForReference(MetaReference ref) throws XavaException {
+		MetaReferenceView viewRef = getMetaView().getMetaReferenceView(ref);		
+		if (viewRef == null) return true;
+		return viewRef.isModify();
+	}
+	
 	public boolean isSearchForReference(MetaReference ref) throws XavaException {
 		MetaReferenceView viewRef = getMetaView().getMetaReferenceView(ref);		
 		if (viewRef == null) return true;
@@ -2408,6 +2414,19 @@ public class View implements java.io.Serializable {
 		}
 	}
 	
+	public boolean isModify() throws XavaException { 
+		try {			
+			MetaReference ref = getParent().getMetaModel().getMetaReference(getMemberName());			
+			return getParent().isModifyForReference(ref);
+		}
+		catch (ElementNotFoundException ex) {			
+			if (!getParent().getMetaModel().containsMetaCollection(getMemberName())) return false;
+			MetaCollectionView collectionView = getParent().getMetaView().getMetaCollectionView(getMemberName());
+			if (collectionView == null) return true;
+			return collectionView.isModifyReference(); 
+		}
+	}
+		
 	public boolean isSearch() throws XavaException {
 		if (isGroup()) return getParent().isSearch(); 
 		try {			

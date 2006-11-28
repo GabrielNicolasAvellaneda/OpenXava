@@ -10,7 +10,7 @@ import org.openxava.util.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Nov 06 10:00:32 CET 2006
+ * @version Tue Nov 28 10:56:45 CET 2006
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -18,7 +18,7 @@ public class HibernatePG {
 
 private String getSizeAttributes(MetaProperty property) throws XavaException {
 	if (property.isNumber() && !property.isKey()) {
-		int scale = "java.math.BigDecimal".equals(property.getTypeName())?2:0;
+		int scale = property.getScale();
 		return "precision='" + property.getSize() + "' scale='" + scale + "'";
 	}
 	else {
@@ -478,7 +478,7 @@ private String getSizeAttributes(MetaProperty property) throws XavaException {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Nov 06 10:00:32 CET 2006", // date this file was generated
+        { "Tue Nov 28 10:56:46 CET 2006", // date this file was generated
              "../OpenXava/generator/hibernate.xml", // input file
              "../OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

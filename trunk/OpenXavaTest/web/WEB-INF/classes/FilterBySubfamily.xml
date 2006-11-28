@@ -30,14 +30,14 @@
 	</view>
 	
 	<view name="Family2">
-		<reference-view reference="subfamily" create="false">
+		<reference-view reference="subfamily" create="false" modify="false">
 			<descriptions-list condition="${family.number} = 2"/>
 		</reference-view>
 		<members>subfamily</members>
 	</view>
 
 	<view name="WithSubfamilyForm">	
-		<reference-view reference="subfamily" search="false"/>
+		<reference-view reference="subfamily" search="false" modify="false"/>
 		<members>subfamily</members>
 	</view>
 	

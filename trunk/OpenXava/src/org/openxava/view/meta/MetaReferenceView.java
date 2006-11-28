@@ -11,6 +11,7 @@ public class MetaReferenceView extends MetaMemberView implements java.io.Seriali
 	private MetaDescriptionsList metaDescriptionsList;
 	private boolean frame = true;
 	private boolean create = true;
+	private boolean modify = true; 
 	private boolean search = true;
 	private boolean readOnly = false;
 	private boolean asAggregate = false; 
@@ -80,6 +81,14 @@ public class MetaReferenceView extends MetaMemberView implements java.io.Seriali
 
 	public void setAsAggregate(boolean asAggregate) {
 		this.asAggregate = asAggregate;
+	}
+
+	public boolean isModify() {
+		return modify;		
+	}
+
+	public void setModify(boolean modify) {
+		this.modify = modify;
 	}
 	
 }

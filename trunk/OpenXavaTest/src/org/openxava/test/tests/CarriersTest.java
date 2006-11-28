@@ -145,14 +145,25 @@ public class CarriersTest extends ModuleTestBase {
 		assertValue("remarks", "He can drive trucks");
 	}
 	
-	public void testCreateFromReferenceWithOwnController() throws Exception {
-		execute("CRUD.new");		
+	
+	public void testOwnControllerForCreatingAndModifyingFromReference() throws Exception { // TMP
+		execute("Mode.detailAndFirst");		
+		// Modifying
+		execute("Reference.modify", "model=Warehouse,keyProperty=xava.Carrier.warehouse.number");		
+		assertNoErrors();
+		assertAction("Modification.update");
+		assertAction("Modification.cancel");
+		assertValue("Warehouse", "name", "MODIFIED WAREHOUSE");
+		execute("Modification.cancel");
+		
+		// Creating
 		execute("Reference.createNew", "model=Warehouse,keyProperty=xava.Carrier.warehouse.number");		
 		assertNoErrors();
 		assertAction("NewCreation.saveNew");
 		assertAction("NewCreation.cancel");
-		assertValue("Warehouse", "name", "NEW WAREHOUSE");
+		assertValue("Warehouse", "name", "NEW WAREHOUSE");		
 	}
+	
 	
 	public void testDeleteUsingBeforeReferenceSearch() throws Exception {
 		assertListNotEmpty();
