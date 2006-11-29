@@ -1,6 +1,7 @@
 package org.openxava.test.tests;
 
 import org.openxava.tests.*;
+import org.openxava.util.*;
 
 /**
  * @author Javier Paniza
@@ -10,6 +11,19 @@ public class Products3Test extends ModuleTestBase {
 	
 	public Products3Test(String testName) {
 		super(testName, "OpenXavaTest", "Products3");		
+	}
+	
+	public void testSearchingByAnyReference() throws Exception { 
+		execute("CRUD.new");
+		setValue("number", "");
+		String description = getValue("description");
+		assertTrue("description must be empty", Is.emptyString(description));
+		setValue("family.number", "1");
+		execute("CRUD.search");
+		// We assume that exists products of family 1
+		assertNoErrors();
+		description = getValue("description");		
+		assertTrue("description must have value", !Is.emptyString(description));
 	}
 	
 	public void testSearchingReferenceWithHiddenKeyTypingValue() throws Exception {

@@ -218,7 +218,8 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		return create(metaModel, values);
 	}
 	
-	public Object findByAnyProperty(MetaModel metaModel, Map keyValues) throws ObjectNotFoundException, FinderException, XavaException { 
+	public Object findByAnyProperty(MetaModel metaModel, Map keyValues) throws ObjectNotFoundException, FinderException, XavaException {		
+		keyValues = Maps.treeToPlain(keyValues); 		
 		StringBuffer queryString = new StringBuffer();
 		queryString.append("from ");
 		queryString.append(metaModel.getName());
@@ -227,7 +228,7 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		for (Iterator it=keyValues.entrySet().iterator(); it.hasNext(); it.hasNext()) {
 			Map.Entry en = (Map.Entry) it.next();
 			if (!Is.empty(en.getValue())) {
-				if (hasToIncludePropertyInCondition(metaModel, (String) en.getKey())) continue;
+				if (!hasToIncludePropertyInCondition(metaModel, (String) en.getKey())) continue;
 				if (!hasCondition) {
 					queryString.append(" where ");
 					hasCondition = true;
@@ -238,10 +239,11 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 				queryString.append(en.getKey());
 				queryString.append(en.getValue() instanceof String?" like ":" = ");
 				queryString.append(":");
-				queryString.append(en.getKey());
+				queryString.append(Strings.change((String)en.getKey(), ".", "_")); 
 				values.add(en);
 			}
 		}
+		
 		if (!hasCondition) { 
 			throw new ObjectNotFoundException(XavaResources.getString("object_by_any_property_not_found", values));
 		}
@@ -251,7 +253,7 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 			Map.Entry en = (Map.Entry) it.next();
 			String name = (String) en.getKey();
 			Object value = convert(metaModel, name, en.getValue());			
-			setParameterToQuery(query, name, value);
+			setParameterToQuery(query, Strings.change(name, ".", "_"), value);
 		}
 		Object result = getUniqueResult(query);
 		if (result == null) {
@@ -271,10 +273,11 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 
 	private boolean hasToIncludePropertyInCondition(MetaModel metaModel, String property) throws XavaException {
 		try {
-			return metaModel.getMapping().getPropertyMapping(property).hasMultipleConverter();
+			if (property.indexOf('.') >= 0) return true; // We include all properties reference. They should be only key properties
+			return !metaModel.getMapping().getPropertyMapping(property).hasMultipleConverter();
 		}
 		catch (ElementNotFoundException ex) {			
-			return true; // Maybe a view property 
+			return false; // Maybe a view property  
 		}
 	}
 	

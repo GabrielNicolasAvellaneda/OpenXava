@@ -1524,7 +1524,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			return findEntity(getMetaModel(modelName), keyValues);			
 		} catch (FinderException ex) {
 			throw ex;
-		} catch (ElementNotFoundException ex) {
+		} catch (ElementNotFoundException ex) {			
 			rollback();
 			throw new RemoteException(XavaResources.getString("model_not_found", modelName));
 		} catch (Exception ex) {
