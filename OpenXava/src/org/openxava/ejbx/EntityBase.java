@@ -4,6 +4,9 @@ import java.rmi.*;
 
 import javax.ejb.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * Base class for <i>EntityBeans</i>. <p>
  *
@@ -13,6 +16,7 @@ import javax.ejb.*;
 public class EntityBase extends EJBBase implements EntityBean {
 
   private EntityContext context;
+  private Log log = LogFactory.getLog(EntityBase.class);
 
   public void ejbActivate() throws RemoteException {
   }

@@ -1,5 +1,8 @@
 package org.openxava.calculators;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * String concatenation. <p>
  * 
@@ -12,6 +15,7 @@ public class ConcatCalculator implements ICalculator {
 	private Object string2="";
 	private Object string3=null;
 	private Object string4=null;
+	private Log log = LogFactory.getLog(ConcatCalculator.class);
 	
 	public Object calculate() throws Exception {		
 		StringBuffer r = new StringBuffer(string1==null?"":string1.toString());

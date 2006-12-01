@@ -6,6 +6,8 @@ import java.util.*;
 import javax.ejb.*;
 import javax.rmi.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 import org.openxava.validators.*;
 
@@ -23,6 +25,7 @@ public class EJBFactory {
   private static Class [] detailsClass0 = { };
   private static Class [] detailsClass1 = { java.lang.Object.class };
   private static Class [] detailsClass2 = { java.util.Map.class };
+  private Log log = LogFactory.getLog(EJBFactory.class);
 
   /**
    * Create a EJB from a <i>home</i>. <p> 

@@ -2,6 +2,8 @@ package org.openxava.web;
 
 import javax.servlet.http.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.web.meta.*;
@@ -13,6 +15,8 @@ import org.openxava.web.meta.*;
 public class WebEditors { 	
 
 	final private static String PREFIX = "editors/";
+	
+	private static Log log = LogFactory.getLog(WebEditors.class);
 	
 	public static boolean mustToFormat(MetaProperty p) throws XavaException {
 		try {
@@ -54,7 +58,7 @@ public class WebEditors {
 			return p.parse(string, Locales.getCurrent());
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			String messageId = p.isNumber()?"numeric":"no_expected_type";
 			errors.add(messageId, p.getName(), p.getMetaModel().getName());
 			return null;
@@ -106,7 +110,7 @@ public class WebEditors {
 			return p.format(object, Locales.getCurrent());									
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();			
+			log.error(ex.getMessage(), ex);			
 			errors.add("no_convert_to_string", p.getName(), p.getMetaModel().getName());
 			return "";
 		}
@@ -119,7 +123,7 @@ public class WebEditors {
 			return PREFIX + MetaWebEditors.getMetaEditorFor(p).getUrl();
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			return PREFIX + "notAvailableEditor.jsp";
 		}
 	}
@@ -136,8 +140,7 @@ public class WebEditors {
 			return false;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
-			System.err.println(XavaResources.getString("a_depends_b_warning", a, b));
+			log.error(XavaResources.getString("a_depends_b_warning", a, b), ex);
 			return false;
 		}
 	}

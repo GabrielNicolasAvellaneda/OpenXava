@@ -2,6 +2,8 @@ package org.openxava.hibernate.impl;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.*;
 import org.hibernate.event.*;
 import org.openxava.calculators.*;
@@ -12,6 +14,8 @@ import org.openxava.util.meta.*;
 
 public class DefaultValueCalculatorsListener implements PreInsertEventListener {
 
+	private Log log = LogFactory.getLog(DefaultValueCalculatorsListener.class);
+	
 	public boolean onPreInsert(PreInsertEvent ev) {		
 		String modelName = "unknow"; 		
 		try {
@@ -58,7 +62,7 @@ public class DefaultValueCalculatorsListener implements PreInsertEventListener {
 			}				
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new HibernateException(XavaResources.getString("entity_create_error", modelName, ex.getLocalizedMessage()));
 		}
 		return false;

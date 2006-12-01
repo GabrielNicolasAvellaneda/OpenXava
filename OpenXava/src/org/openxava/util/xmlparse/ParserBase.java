@@ -6,6 +6,8 @@ import java.util.*;
 
 import javax.xml.parsers.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 import org.w3c.dom.*;
 
@@ -21,6 +23,8 @@ abstract public class ParserBase extends XmlElementsNames {
 	private Element root;
 	private static DocumentBuilder documentBuilder;	
 	private String xmlFileURL;
+	
+	private Log log = LogFactory.getLog(ParserBase.class);
 	
 	public ParserBase(String xmlFileURL) {
 		// assert(xmlFileURL)
@@ -77,7 +81,7 @@ abstract public class ParserBase extends XmlElementsNames {
 			throw ex;
 		} 
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("xml_loading_error", xmlFileCompleteURL);
 		}
 	}
@@ -96,7 +100,7 @@ abstract public class ParserBase extends XmlElementsNames {
 			createObjects();
 		} 
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("xml_loading_error", xmlFileCompleteURL);
 		}		
 	}

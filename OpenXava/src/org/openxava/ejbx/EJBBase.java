@@ -8,6 +8,8 @@ import java.util.*;
 import javax.ejb.*;
 import javax.naming.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 
 
@@ -36,7 +38,8 @@ public class EJBBase implements Serializable {
   private EJBContext ejbContext; // Of EJB
   private IEJBContext portableContext; // Of OpenXava (portable)
   private transient IContext context; // For look up other EJBs
-	private Map booleanVars;  
+  private Map booleanVars;
+  private Log log = LogFactory.getLog(EJBBase.class);
 
   public EJBBase() {
   }
@@ -87,7 +90,7 @@ public class EJBBase implements Serializable {
   			context = BeansContext.get();
   		}
   		catch (NamingException ex) {
-  			ex.printStackTrace();
+  			log.error(ex.getMessage(), ex);
   			throw new EJBException(ex.getMessage());
   		}
   	}
@@ -105,7 +108,7 @@ public class EJBBase implements Serializable {
   			portableContext = EJBContextFactory.create(ejbContext);
   		}
   		catch (Exception ex) {
-  			ex.printStackTrace();
+  			log.error(ex.getMessage(), ex);
   			throw new EJBException(XavaResources.getString("create_context_error"));
   		}
   	}

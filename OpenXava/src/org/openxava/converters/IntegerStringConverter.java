@@ -1,5 +1,9 @@
 package org.openxava.converters;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openxava.util.XavaResources;
+
 /**
  * In java an int and in database a String.
  * 
@@ -8,6 +12,7 @@ package org.openxava.converters;
 public class IntegerStringConverter implements IConverter {
 	
 	private final static Integer CERO = new Integer(0);
+	private Log log = LogFactory.getLog(IntegerStringConverter.class);
 
 	public Object toDB(Object o) throws ConversionException {
 		return o==null?"0":o.toString();
@@ -22,7 +27,7 @@ public class IntegerStringConverter implements IConverter {
 			return new Integer((String) o);
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();			
+			log.error(ex.getMessage(), ex);			
 			throw new ConversionException("conversion_error");
 		}
 	}

@@ -1,5 +1,8 @@
 package org.openxava.web.style;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * 
  * @author José Luis Santiago
@@ -9,6 +12,8 @@ public class LiferayStyle extends Style {
 	
 	private static LiferayStyle instance = null;
 
+	private Log log = LogFactory.getLog(LiferayStyle.class);
+	
 	protected LiferayStyle() {
 	}
 	

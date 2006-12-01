@@ -2,6 +2,9 @@ package org.openxava.converters;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 /**
  * In java a <tt>java.util.Date</tt> and in database a
@@ -11,6 +14,8 @@ import java.util.*;
  */
 public class DateUtilSQLConverter implements IConverter {
 
+	private Log log = LogFactory.getLog(DateUtilSQLConverter.class);
+	
 	public Object toDB(Object o) throws ConversionException {
 		if (o == null) return null;		
 		if (!(o instanceof java.util.Date)) {		

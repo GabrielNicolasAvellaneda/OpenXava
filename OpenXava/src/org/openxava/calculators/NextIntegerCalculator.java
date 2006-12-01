@@ -2,6 +2,8 @@ package org.openxava.calculators;
 
 import java.sql.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.component.*;
 import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
@@ -16,6 +18,7 @@ public class NextIntegerCalculator implements IJDBCCalculator {
 	private IConnectionProvider provider;
 	private String model;
 	private String property;
+	private Log log = LogFactory.getLog(NextIntegerCalculator.class);
 
 	private String select;
 
@@ -48,8 +51,7 @@ public class NextIntegerCalculator implements IJDBCCalculator {
 			return nr+1;			
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
-			System.err.println(XavaResources.getString("next_integer_calculator_warning"));
+			log.error(XavaResources.getString("next_integer_calculator_warning"),ex);
 			return 1;
 		}
 		finally {

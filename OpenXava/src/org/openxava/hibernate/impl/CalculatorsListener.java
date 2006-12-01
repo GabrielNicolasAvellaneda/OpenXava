@@ -2,9 +2,12 @@ package org.openxava.hibernate.impl;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.*;
 import org.hibernate.event.*;
 import org.openxava.calculators.*;
+import org.openxava.hibernate.XHibernate;
 import org.openxava.model.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -13,6 +16,7 @@ import org.openxava.util.meta.*;
 public class CalculatorsListener implements PreInsertEventListener, PreUpdateEventListener, PreDeleteEventListener, PostLoadEventListener {
 	
 	private static CalculatorsListener instance = new CalculatorsListener();
+	private Log log = LogFactory.getLog(CalculatorsListener.class);
 	
 	public static CalculatorsListener getInstance() {
 		return instance;
@@ -30,7 +34,7 @@ public class CalculatorsListener implements PreInsertEventListener, PreUpdateEve
 			executeCalculators(model, model.getMetaModel().getMetaCalculatorsPostLoad());
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();			
+			log.error(ex.getMessage(), ex);			
 			throw new HibernateException(XavaResources.getString("entity_load_error", modelName, ex.getLocalizedMessage()));
 		}						
 	}
@@ -45,7 +49,7 @@ public class CalculatorsListener implements PreInsertEventListener, PreUpdateEve
 			return false;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();			
+			log.error(ex.getMessage(), ex);			
 			throw new HibernateException(XavaResources.getString("entity_create_error", modelName, ex.getLocalizedMessage()));
 		}				
 	}
@@ -60,7 +64,7 @@ public class CalculatorsListener implements PreInsertEventListener, PreUpdateEve
 			return false;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();			
+			log.error(ex.getMessage(), ex);			
 			throw new HibernateException(XavaResources.getString("entity_modify_error", modelName, ex.getLocalizedMessage()));
 		}				
 	}
@@ -75,7 +79,7 @@ public class CalculatorsListener implements PreInsertEventListener, PreUpdateEve
 			return false;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();			
+			log.error(ex.getMessage(), ex);			
 			throw new HibernateException(XavaResources.getString("entity_remove_error", modelName, ex.getLocalizedMessage()));
 		}				
 	}

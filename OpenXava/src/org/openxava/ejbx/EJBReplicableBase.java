@@ -5,6 +5,8 @@ import java.util.*;
 
 import javax.ejb.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 import org.openxava.validators.*;
 
@@ -52,6 +54,7 @@ import org.openxava.validators.*;
 public class EJBReplicableBase extends EntityBase implements IPropertiesContainer {
 
   private PropertiesManager propertiesManager = new PropertiesManager(this);
+  private Log log = LogFactory.getLog(EJBReplicableBase.class);
 
 
 	public Map executeGets(String propertiesToReplicate) {
@@ -62,7 +65,7 @@ public class EJBReplicableBase extends EntityBase implements IPropertiesContaine
 			throw new EJBException(ex.getMessage());
 		}
 		catch (InvocationTargetException ex) {
-			ex.getTargetException().printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new EJBException(XavaResources.getString("get_properties_error", ex.getTargetException().getMessage()));
 		}
 	}    
@@ -80,7 +83,7 @@ public class EJBReplicableBase extends EntityBase implements IPropertiesContaine
 				throw (ValidationException) cause;
 			}
 			else {
-				cause.printStackTrace();
+				log.error(ex.getMessage(), ex);
 				throw new EJBException(XavaResources.getString("set_properties_error", ex.getTargetException().getMessage()));
 			}
 		}	  	

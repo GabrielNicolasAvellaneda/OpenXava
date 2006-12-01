@@ -1,10 +1,12 @@
 package org.openxava.actions;
 
-import java.util.*;
+import java.util.Arrays;
 
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
 
-import org.openxava.tab.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openxava.tab.Tab;
 
 /**
  * @author Javier Paniza
@@ -13,7 +15,8 @@ public class AddColumnsAction extends BaseAction implements IRequestAction, INav
 	
 	private HttpServletRequest request;
 	private Tab tab;
-
+	private Log log = LogFactory.getLog(AddColumnsAction.class);
+	
 	public void execute() throws Exception {
 		String [] values = request.getParameterValues("selectedProperties");		
 		getTab().addProperties(Arrays.asList(values));

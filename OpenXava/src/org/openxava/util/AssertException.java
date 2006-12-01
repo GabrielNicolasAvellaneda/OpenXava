@@ -14,7 +14,7 @@ package org.openxava.util;
  * @author: Javier Paniza
  */
 public class AssertException extends RuntimeException {
-	
+			
 	public AssertException() {
 		super(XavaResources.getString("assert_exception"));
 	}

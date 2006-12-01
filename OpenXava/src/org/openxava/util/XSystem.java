@@ -1,5 +1,8 @@
 package org.openxava.util;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * Global utilities about the system. <p>
  * 
@@ -10,7 +13,7 @@ public class XSystem {
 
 	private static boolean onServer = false;
 	private static boolean java5OrBetter;
-	private static boolean java5calculated = false;
+	private static boolean java5calculated = false;	
 	
 	/**
 	 * Does that {@link #onServer} returns <tt>true</tt>.

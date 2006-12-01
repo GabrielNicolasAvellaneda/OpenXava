@@ -1,5 +1,8 @@
 package org.openxava.calculators;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 /**
  * It create a strint that concat string1:string2[:string3]:counter. <p>
@@ -14,6 +17,7 @@ public class ConcatOidCalculator
 	implements IAggregateOidCalculator {
 		
 	private int contador;
+	private Log log = LogFactory.getLog(ConcatOidCalculator.class);
 	
 	public ConcatOidCalculator() {
 		setSeparator(":");

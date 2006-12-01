@@ -2,6 +2,9 @@ package org.openxava.ejbx;
 
 import javax.naming.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openxava.converters.ValidValuesStringConverter;
 import org.openxava.util.*;
 
 /**
@@ -17,6 +20,7 @@ import org.openxava.util.*;
 public class BeansContext {
 
   private static IContextProvider provider;
+  private static Log log = LogFactory.getLog(BeansContext.class);
 
   /**
    * Context to lookup EJBs. <p>
@@ -35,7 +39,7 @@ public class BeansContext {
   			provider = BeansContextProviderFactory.create();
   		}
   		catch (InitException ex) {
-  			ex.printStackTrace();
+  			log.error(ex.getMessage(), ex);
   			throw new NamingException(XavaResources.getString("create_error", IContextProvider.class.getName()));
   		}
   	}

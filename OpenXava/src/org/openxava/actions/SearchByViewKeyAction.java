@@ -4,6 +4,8 @@ import java.util.Map;
 
 import javax.ejb.ObjectNotFoundException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.model.MapFacade;
 import org.openxava.util.Maps;
 
@@ -23,6 +25,7 @@ import org.openxava.util.Maps;
 public class SearchByViewKeyAction extends ViewBaseAction {
 	
 	private static final long serialVersionUID = 1L;
+	private Log log = LogFactory.getLog(SearchByViewKeyAction.class);
 
 	public void execute() throws Exception {
 		try {						
@@ -49,7 +52,7 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 			addError("object_not_found", getModelName());			
 		}						
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(),ex);
 			addError("system_error");			
 		}						
 	}

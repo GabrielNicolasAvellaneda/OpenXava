@@ -2,6 +2,8 @@ package org.openxava.model.meta;
 
 import java.io.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.calculators.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
@@ -14,6 +16,7 @@ public class MetaCalculator extends MetaSetsContainer implements Serializable {
 	
 	private String className;	
 	private boolean onCreate;
+	private Log log = LogFactory.getLog(MetaCalculator.class);
 		
 	/**
 	 * Create a calculator whenever this method is called,
@@ -35,7 +38,7 @@ public class MetaCalculator extends MetaSetsContainer implements Serializable {
 			throw ex;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("create_calculator_error", getClassName(), ex.getLocalizedMessage());
 		}
 	}
@@ -57,7 +60,7 @@ public class MetaCalculator extends MetaSetsContainer implements Serializable {
 			throw ex;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("create_calculator_error", getClassName(), ex.getLocalizedMessage()); 
 		}
 	}

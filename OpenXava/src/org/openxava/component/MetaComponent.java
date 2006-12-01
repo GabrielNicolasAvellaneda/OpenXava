@@ -3,6 +3,8 @@ package org.openxava.component;
 import java.io.*;
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
 import org.openxava.tab.meta.*;
@@ -37,6 +39,7 @@ public class MetaComponent implements Serializable {
 	private Map metaTabs;
 	private EntityMapping entityMapping;
 	private String packageName;
+	private static Log log = LogFactory.getLog(MetaComponent.class);
 		
 	
 	/**
@@ -327,7 +330,7 @@ public class MetaComponent implements Serializable {
 				packageName = getPackages().getProperty(getName());
 			}
 			catch (Exception ex) {
-				ex.printStackTrace();
+				log.error(ex.getMessage(),ex);
 				throw new XavaException("component_package_error", getName());
 			}
 		}		
@@ -358,7 +361,7 @@ public class MetaComponent implements Serializable {
 			return domain	 + "/" + unqualifiedPackage;
 		}
 		catch (Exception ex) {			
-			ex.printStackTrace();
+			log.error(ex.getMessage(),ex);
 			throw new XavaException("read_packages_error");						
 		}
 	}
@@ -390,7 +393,7 @@ public class MetaComponent implements Serializable {
 				allComponentsLoaded = true;
 			}
 			catch (IOException ex) {
-				ex.printStackTrace();
+				log.error(ex.getMessage(),ex);
 				throw new XavaException("loading_components_error");
 			}
 		}

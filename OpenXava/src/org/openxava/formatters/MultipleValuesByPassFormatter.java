@@ -2,6 +2,9 @@ package org.openxava.formatters;
 
 import javax.servlet.http.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * Simply by pass the values from property to html and viceversa. <p>
  * 
@@ -13,6 +16,8 @@ import javax.servlet.http.*;
 
 public class MultipleValuesByPassFormatter implements IMultipleValuesFormatter {
 
+	private Log log = LogFactory.getLog(MultipleValuesByPassFormatter.class);
+	
 	public String [] format(HttpServletRequest request, Object object) throws Exception {	
 		return (String []) object;
 	}

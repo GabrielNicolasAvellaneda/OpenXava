@@ -3,6 +3,8 @@ package org.openxava.util.meta;
 import java.io.*;
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 
 
@@ -12,6 +14,8 @@ import org.openxava.util.*;
 public class MetaSetsContainer implements Serializable {
 		
 	private Collection metaSets;
+	
+	private Log log = LogFactory.getLog(MetaSetsContainer.class);
 		
 	public void addMetaSet(MetaSet metaSet) {
 		if (metaSets == null) {

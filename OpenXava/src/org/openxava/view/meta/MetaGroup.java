@@ -1,5 +1,7 @@
 package org.openxava.view.meta;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 
@@ -12,6 +14,8 @@ public class MetaGroup extends MetaMember {
 	private boolean alignedByColumns = false;
 	private MetaView metaView;
 	private MetaView metaViewParent;
+	
+	private Log log = LogFactory.getLog(MetaGroup.class);
 		
 	public MetaGroup(MetaView parent) {
 		this.metaViewParent = parent;

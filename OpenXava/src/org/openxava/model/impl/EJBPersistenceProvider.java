@@ -7,6 +7,8 @@ import java.util.*;
 import javax.ejb.*;
 import javax.rmi.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.ejbx.*;
 import org.openxava.hibernate.*;
 import org.openxava.model.meta.*;
@@ -17,6 +19,8 @@ import org.openxava.validators.*;
  * @author Mª Carmen Gimeno Alabau
  */
 public class EJBPersistenceProvider implements IPersistenceProvider {
+	
+	private Log log = LogFactory.getLog(EJBPersistenceProvider.class);
 	
 	public Object find(MetaModel metaModel, Map keyValues)
 			throws FinderException, XavaException {
@@ -50,13 +54,13 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 				throw (FinderException) th;
 			}
 			else {
-				th.printStackTrace();
+				log.error(ex.getMessage(), ex);
 				throw new EJBException(XavaResources.getString("find_error",
 						metaModel.getName()));
 			}
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new EJBException(XavaResources.getString("find_error", metaModel
 					.getName()));
 		}
@@ -84,14 +88,14 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 					values);
 		}
 		catch (NoSuchMethodException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("ejb_create_map_required", metaModel.getMetaEJB().getJndi()); 
 		}
 		catch (ValidationException ex) {
 			throw ex;
 		}
 		catch (RemoteException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new EJBException(XavaResources.getString("create_persistent_error",
 					metaModel.getName(),
 					ex.getLocalizedMessage()));
@@ -115,7 +119,7 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 			throw ex;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new EJBException(XavaResources.getString("remove_error",
 					metaModel.getName(),
 					ex.getLocalizedMessage()));
@@ -165,7 +169,7 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 		} catch (NoSuchMethodException ex) {
 			throw new XavaException("method_expected", modelObject.getClass(), method);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("method_execution_error",
 					modelObject.getClass(),					
 					method,					
@@ -233,7 +237,7 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 		} catch (NoSuchMethodException ex) {
 			throw new XavaException("ejb_create_map3_required", metaModel.getMetaEJB().getJndi(), containerClass);  
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new RemoteException(XavaResources.getString("create_error", metaModel.getMetaEJB().getJndi()));				
 		}
 	}
@@ -252,7 +256,7 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 			return find(metaModel, key);
 		}
 		catch (RemoteException ex) { 
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new PersistenceProviderException(ex.getLocalizedMessage());
 		}		
 	}

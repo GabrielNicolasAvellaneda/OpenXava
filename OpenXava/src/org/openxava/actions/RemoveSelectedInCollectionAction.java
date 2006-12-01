@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.model.MapFacade;
 import org.openxava.validators.ValidationException;
 
@@ -14,6 +16,8 @@ import org.openxava.validators.ValidationException;
 
 public class RemoveSelectedInCollectionAction extends CollectionBaseAction {
 
+	private Log log = LogFactory.getLog(RemoveSelectedInCollectionAction.class);
+	
 	public void execute() throws Exception {
 		try{
 			Collection seleccionados = getMapsSelectedValues();	

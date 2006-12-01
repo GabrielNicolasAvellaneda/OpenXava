@@ -1,5 +1,7 @@
 package org.openxava.view.meta;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.model.meta.*;
 
 /**
@@ -15,6 +17,8 @@ import org.openxava.model.meta.*;
 public class PropertiesSeparator extends MetaProperty {
 	
 	public static final PropertiesSeparator INSTANCE = new PropertiesSeparator(); 
+	
+	private Log log = LogFactory.getLog(PropertiesSeparator.class);
 	
 	private PropertiesSeparator() {
 	}

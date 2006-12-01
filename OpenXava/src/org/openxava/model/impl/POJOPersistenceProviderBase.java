@@ -7,6 +7,8 @@ import java.util.*;
 
 import javax.ejb.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -19,6 +21,8 @@ import org.openxava.validators.*;
  */
 abstract public class POJOPersistenceProviderBase implements IPersistenceProvider {
 	
+	
+	private Log log = LogFactory.getLog(POJOPersistenceProviderBase.class);
 	/**
 	 * Return the object associated to the sent key.
 	 */
@@ -91,7 +95,7 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 			throw ex;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new PersistenceProviderException( 
 					XavaResources.getString("find_error", metaModel.getName()));
 		}
@@ -110,7 +114,7 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 			throw ex;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new PersistenceProviderException( 
 					XavaResources.getString("find_error", metaModel.getName()));
 		}
@@ -160,7 +164,7 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 			return object;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new CreateException(XavaResources.getString(
 					"create_persistent_error", metaModel.getName(), ex.getMessage()));
 		}
@@ -184,7 +188,7 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 			return key;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("key_for_pojo_error");
 		}
 	}
@@ -202,8 +206,7 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 			return pm.executeGet(property);
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
-			System.err.println(XavaResources.getString("key_type_conversion_warning", property, value, metaModel.getName()));
+			log.error(XavaResources.getString("key_type_conversion_warning", property, value, metaModel.getName()), ex);
 			return value;			
 		}
 	}

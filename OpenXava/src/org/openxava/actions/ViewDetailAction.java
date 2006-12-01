@@ -2,6 +2,8 @@ package org.openxava.actions;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.tab.*;
 import org.openxava.util.*;
 
@@ -19,7 +21,8 @@ public class ViewDetailAction extends ViewBaseAction implements IChainAction, IM
 	private String nextAction;
 	private boolean atListBegin;
 	private boolean noElementsInList;
-	private String model;	
+	private String model;
+	private Log log = LogFactory.getLog(ViewDetailAction.class);
 	
 	public void execute() throws Exception {		
 		getView().setModelName(model); 

@@ -1,5 +1,8 @@
 package org.openxava.converters;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 
 /**
@@ -10,6 +13,7 @@ package org.openxava.converters;
 public class IntegerNumberConverter implements IConverter {
 	
 	private final static Integer CERO = new Integer(0);
+	private Log log = LogFactory.getLog(IntegerNumberConverter.class);
 
 	public Object toDB(Object o) throws ConversionException {
 		return o==null?CERO:o;

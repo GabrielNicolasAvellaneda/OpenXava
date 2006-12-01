@@ -6,6 +6,8 @@ import java.util.*;
 import javax.ejb.*;
 import javax.servlet.http.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.actions.*;
 import org.openxava.calculators.*;
 import org.openxava.component.*;
@@ -102,6 +104,8 @@ public class View implements java.io.Serializable {
 	private Map labels;
 	private Collection executedActions;	
 	private boolean registeringExecutedActions = false;	
+	
+	private Log log = LogFactory.getLog(View.class);
 		
 	public View() {
 		oid = nextOid++;		
@@ -989,7 +993,7 @@ public class View implements java.io.Serializable {
 				collectionValues = Collections.EMPTY_LIST; 								
 			}
 			catch (Exception ex) {
-				ex.printStackTrace();
+				log.error(ex.getMessage(), ex);
 				getErrors().add("collection_error", getMemberName());
 				return Collections.EMPTY_LIST;
 			}
@@ -1135,7 +1139,7 @@ public class View implements java.io.Serializable {
 							}					
 						}
 						catch (Exception ex) {
-							ex.printStackTrace();
+							log.error(ex.getMessage(), ex);
 							getErrors().add("calculate_default_value_error", p.getName());
 						}				 
 					}
@@ -1226,7 +1230,7 @@ public class View implements java.io.Serializable {
 							}					
 						}
 						catch (Exception ex) {
-							ex.printStackTrace();
+							log.error(ex.getMessage(), ex);
 							getErrors().add("calculate_default_value_error", ref.getName());
 						}				 
 					}
@@ -1316,7 +1320,7 @@ public class View implements java.io.Serializable {
 			return isMarkedAsEditable(metaProperty.getName());
 		}
 		catch (Exception ex) {
-			System.err.println(XavaResources.getString("readonly_not_know_warning", metaProperty));
+			log.warn(XavaResources.getString("readonly_not_know_warning", metaProperty),ex);
 			return false;
 		}		
 	}
@@ -1333,7 +1337,7 @@ public class View implements java.io.Serializable {
 			return isMarkedAsEditable(metaReference.getName());
 		}
 		catch (Exception ex) {
-			System.err.println(XavaResources.getString("readonly_not_know_warning", metaReference));
+			log.warn(XavaResources.getString("readonly_not_know_warning", metaReference),ex);
 			return false;
 		}		
 	}
@@ -1549,7 +1553,7 @@ public class View implements java.io.Serializable {
 			}						
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			getErrors().add("system_error");
 		}						
 	}
@@ -1606,8 +1610,7 @@ public class View implements java.io.Serializable {
 			return isRepresentsEntityReference() && getLastPropertyKeyName().equals(p.getName());
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
-			System.err.println(XavaResources.getString("property_changed_not_know_warning", p.getName()));
+			log.warn(XavaResources.getString("property_changed_not_know_warning", p.getName()), ex);
 			return false;
 		}		 		 				
 	}
@@ -1729,8 +1732,7 @@ public class View implements java.io.Serializable {
 			// So that sections that do not have all the properties do not throw exceptions
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
-			System.err.println(XavaResources.getString("property_changed_warning", propertyId));
+			log.warn(XavaResources.getString("property_changed_warning", propertyId),ex);
 			getErrors().add("change_property_error");
 		}				 		 		
 	}
@@ -1740,8 +1742,7 @@ public class View implements java.io.Serializable {
 			tryPropertyChanged(changedProperty, changedPropertyQualifiedName);
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
-			System.err.println(XavaResources.getString("property_changed_warning", changedProperty));
+			log.warn(XavaResources.getString("property_changed_warning", changedProperty),ex);
 			getErrors().add("change_property_error");			
 		}		 		 		
 	}
@@ -1910,8 +1911,7 @@ public class View implements java.io.Serializable {
 			}			
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
-			System.err.println(XavaResources.getString("value_calculate_warning", metaProperty));
+			log.warn(XavaResources.getString("value_calculate_warning", metaProperty),ex);
 		}		
 	}
 
@@ -1958,8 +1958,7 @@ public class View implements java.io.Serializable {
 			return false;
 		}	
 		catch (Exception ex) {
-			ex.printStackTrace();
-			System.err.println(XavaResources.getString("dependents_properties_warning", p));
+			log.warn(XavaResources.getString("dependents_properties_warning", p),ex);
 			return false;
 		}	
 	}
@@ -2019,7 +2018,7 @@ public class View implements java.io.Serializable {
 				r.add(property);
 			}
 			else {
-				System.err.println(XavaResources.getString("property_for_stereotype_warning", stereotype));
+				log.warn(XavaResources.getString("property_for_stereotype_warning", stereotype));
 				r.add(null);
 			}
 		} 				
@@ -2041,8 +2040,7 @@ public class View implements java.io.Serializable {
 			}
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
-			System.err.println(XavaResources.getString("property_for_stereotype_warning", stereotype)); 
+			log.warn(XavaResources.getString("property_for_stereotype_warning", stereotype),ex); 
 		}
 		return null;
 	}
@@ -2508,7 +2506,7 @@ public class View implements java.io.Serializable {
 			return getParent().displayAsDescriptionsList(ref);
 		}
 		catch (XavaException ex) {
-			// System.err.println("[View.displayAsDescriptionsList] " + XavaResources.getString("display_as_description_warning", getMemberName()));  
+			// log.warn(XavaResources.getString("display_as_description_warning", getMemberName()));  
 			return false;
 		}				
 	}
@@ -2708,8 +2706,7 @@ public class View implements java.io.Serializable {
 			return calculateFocusPropertyId();
 		}
 		catch (Exception ex) { 
-			ex.printStackTrace();
-			System.err.println(XavaResources.getString("focus_warning"));
+			log.warn(XavaResources.getString("focus_warning"),ex);
 			return "";			
 		}
 	}

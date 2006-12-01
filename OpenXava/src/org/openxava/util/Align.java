@@ -1,5 +1,8 @@
 package org.openxava.util;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * Represents a text (or another element) align. <p>
  *
@@ -10,6 +13,9 @@ package org.openxava.util;
  */
  
 public class Align implements java.io.Serializable {
+	
+	private Log log = LogFactory.getLog(Align.class);
+	
 	private int code;
 	private String description;
 	private final static int DEFAULT_CODE = 0;

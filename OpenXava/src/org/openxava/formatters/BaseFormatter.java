@@ -2,8 +2,11 @@ package org.openxava.formatters;
 
 import javax.servlet.http.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.controller.*;
 import org.openxava.util.*;
+import org.openxava.util.xmlparse.XmlElementsNames;
 
 
 /**
@@ -14,6 +17,8 @@ import org.openxava.util.*;
  */
 
 abstract public class BaseFormatter implements IFormatter {
+	
+	private Log log = LogFactory.getLog(BaseFormatter.class);
 	
 	private ModuleContext getContext(HttpServletRequest request) {
 		ModuleContext context = (ModuleContext) request.getSession().getAttribute("context");

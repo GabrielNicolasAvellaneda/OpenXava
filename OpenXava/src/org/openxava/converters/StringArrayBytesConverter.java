@@ -6,6 +6,8 @@
  */
 package org.openxava.converters;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.XavaResources;
 
 /**
@@ -15,9 +17,12 @@ import org.openxava.util.XavaResources;
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class StringArrayBytesConverter implements IConverter {
-    public Object toJava(Object o) throws ConversionException {	    
+    
+	private Log log = LogFactory.getLog(StringArrayBytesConverter.class);
+	
+	public Object toJava(Object o) throws ConversionException {	    
     	if (o == null) return "";
-    	System.out.println("[StringBlobConverter.toJava:] o.getClass():" + o.getClass().getName());
+    	log.info("toJava: o.getClass():" + o.getClass().getName());
 	    if (!(o instanceof byte[])) {		
 			throw new ConversionException("conversion_java_blob_expected");
 		}
@@ -25,8 +30,7 @@ public class StringArrayBytesConverter implements IConverter {
 		try {
 			return new String(b);
 		}catch (Exception e){
-		    e.printStackTrace();
-			System.err.println(XavaResources.getString("blob_to_array_warning"));
+			log.error(XavaResources.getString("blob_to_array_warning"), e);
 			return "";
 		}
 		

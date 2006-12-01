@@ -4,6 +4,8 @@ import java.text.*;
 
 import javax.servlet.http.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 
 /**
@@ -13,6 +15,7 @@ import org.openxava.util.*;
 public class DateFormatter implements IFormatter {
 	
 	private static DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	private Log log = LogFactory.getLog(DateFormatter.class);
 	
 	private static DateFormat [] dateFormats = {
 		dateFormat,

@@ -2,6 +2,8 @@ package org.openxava.actions;
 
 import javax.servlet.http.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.tab.*;
 import org.openxava.util.*;
 
@@ -14,6 +16,7 @@ public class GenerateReportAction extends BaseAction implements IRequestAction, 
 	private HttpServletRequest request;
 	private Tab tab;
 	private String type;
+	private Log log = LogFactory.getLog(GenerateReportAction.class);
 
 	public void execute() throws Exception {
 		if (!("pdf".equals(getType()) || "csv".equals(getType()))) {

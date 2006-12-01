@@ -6,6 +6,8 @@ import java.util.*;
 
 import javax.servlet.http.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.*;
 import org.hibernate.cfg.*;
 
@@ -67,6 +69,8 @@ public class Tab {
 	private boolean sortRemainingProperties;
 	private boolean rowsHidden;
 	
+	private Log log = LogFactory.getLog(Tab.class);
+	
 	public List getMetaProperties() {
 		if (metaProperties == null) {
 			if (Is.emptyString(getModelName())) return Collections.EMPTY_LIST;
@@ -74,8 +78,7 @@ public class Tab {
 				metaProperties = getMetaTab().getMetaProperties();
 			}
 			catch (Exception ex) {
-				ex.printStackTrace();
-				System.err.println(XavaResources.getString("tab_metaproperties_warning"));
+				log.error(XavaResources.getString("tab_metaproperties_warning"), ex);
 			}
 		}		
 		return metaProperties;
@@ -205,7 +208,7 @@ public class Tab {
 				tableModel = createTableModel();			
 			}
 			catch (Exception ex) {
-				ex.printStackTrace();
+				log.error(ex.getMessage(), ex);
 				restoreDefaultProperties(); // if fails because user customized list uses properties no longer existing 
 				tableModel = createTableModel();
 			}
@@ -249,8 +252,7 @@ public class Tab {
 				condition = createCondition();
 			}
 			catch (Exception ex) {
-				ex.printStackTrace();
-				System.err.println(XavaResources.getString("tab_condition_warning"));
+				log.error(XavaResources.getString("tab_condition_warning"),ex);
 				condition = "";
 				conditionValues = null;				
 				conditionComparators = null;					
@@ -387,8 +389,7 @@ public class Tab {
 						key.add(new Integer(value));
 					}
 					catch (Exception ex) {
-						ex.printStackTrace();
-						System.err.println(XavaResources.getString("tab_key_value_warning"));
+						log.warn(XavaResources.getString("tab_key_value_warning"),ex);
 						key.add(null);
 					}										
 				}
@@ -401,8 +402,7 @@ public class Tab {
 						else key.add(null);
 					}
 					catch (Exception ex) {
-						ex.printStackTrace();
-						System.err.println(XavaResources.getString("tab_key_value_warning"));
+						log.warn(XavaResources.getString("tab_key_value_warning"),ex);
 						key.add(null);
 						key.add(null);
 					}															
@@ -421,8 +421,7 @@ public class Tab {
 						}
 					}
 					catch (Exception ex) {
-						ex.printStackTrace();
-						System.err.println(XavaResources.getString("tab_key_value_warning"));
+						log.warn(XavaResources.getString("tab_key_value_warning"),ex);
 						key.add(null);
 					}					
 				}
@@ -623,8 +622,7 @@ public class Tab {
 			return getTableModel().getTotalSize(); 			
 		}
 		catch (Throwable ex) {
-			ex.printStackTrace();			
-			System.err.println(XavaResources.getString("tab_size_warning"));
+			log.warn(XavaResources.getString("tab_size_warning"),ex);
 			return -1;
 		}
 	}
@@ -890,8 +888,7 @@ public class Tab {
 			session.close();			
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
-			System.err.println(XavaResources.getString("warning_load_preferences_tab"));
+			log.warn(XavaResources.getString("warning_load_preferences_tab"),ex);
 		}			
 	}
 	
@@ -921,8 +918,7 @@ public class Tab {
 			session.close();
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
-			System.err.println(XavaResources.getString("warning_save_preferences_tab"));
+			log.warn(XavaResources.getString("warning_save_preferences_tab"),ex);
 		}	
 	}
 	
@@ -938,8 +934,7 @@ public class Tab {
 			session.close();
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
-			System.err.println(XavaResources.getString("warning_save_preferences_tab"));
+			log.warn(XavaResources.getString("warning_save_preferences_tab"),ex);
 		}				
 	}
 	
@@ -962,7 +957,7 @@ public class Tab {
 			return null;
 		}
 		catch (Exception ex) {
-			System.err.println("[Tab.getStyle] " + XavaResources.getString("warning_row_style"));
+			log.warn(XavaResources.getString("warning_row_style"),ex);
 			return null;
 		}
 	}
@@ -979,7 +974,7 @@ public class Tab {
 			return null;
 		}
 		catch (Exception ex) {			
-			System.err.println("[Tab.getStyle] " + XavaResources.getString("warning_row_style"));
+			log.warn(XavaResources.getString("warning_row_style"));
 			return null;
 		}
 	}
@@ -1000,7 +995,7 @@ public class Tab {
 			}
 			catch (Exception ex) {
 				keys[i] = Collections.EMPTY_MAP;
-				System.err.println(XavaResources.getString("tab_row_key_warning", new Integer(i)));
+				log.warn(XavaResources.getString("tab_row_key_warning", new Integer(i)),ex);
 			}
 		}
 		return keys;

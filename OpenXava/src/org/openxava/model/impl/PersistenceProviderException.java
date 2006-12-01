@@ -1,5 +1,8 @@
 package org.openxava.model.impl;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * Runtime exception to be thrown by a <code>IPersistenceProvider</code>
  * when a system level error is produced. <p>
@@ -13,6 +16,8 @@ package org.openxava.model.impl;
 
 public class PersistenceProviderException extends RuntimeException {
 
+	private Log log = LogFactory.getLog(PersistenceProviderException.class);
+	
 	public PersistenceProviderException() {
 		super();
 	}

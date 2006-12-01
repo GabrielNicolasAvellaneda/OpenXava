@@ -1,5 +1,7 @@
 package org.openxava.validators.meta;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
 import org.openxava.validators.*;
@@ -16,7 +18,8 @@ public class MetaValidator extends MetaSetsContainer {
 	private IValidator validator;
 	private java.lang.String name;
 	private boolean onlyOnCreate;	
-	private java.lang.String className;	
+	private java.lang.String className;
+	private Log log = LogFactory.getLog(MetaValidator.class);
 
 	public MetaValidator() {
 		super();
@@ -61,7 +64,7 @@ public class MetaValidator extends MetaSetsContainer {
 			throw ex;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("create_validator_error", getClassName(), ex.getLocalizedMessage());
 		}
 	}
@@ -96,7 +99,7 @@ public class MetaValidator extends MetaSetsContainer {
 			throw ex;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("create_validator_error", getClassName(), ex.getLocalizedMessage());
 		}
 	}
@@ -131,7 +134,7 @@ public class MetaValidator extends MetaSetsContainer {
 			throw ex;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("create_validator_error", getClassName(), ex.getLocalizedMessage());
 		}
 	}

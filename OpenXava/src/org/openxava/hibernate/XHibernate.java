@@ -2,9 +2,12 @@ package org.openxava.hibernate;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.*;
 import org.hibernate.cfg.*;
 import org.hibernate.event.*;
+import org.openxava.generators.xmlparse.GeneratorsParser;
 import org.openxava.hibernate.impl.*;
 import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
@@ -43,7 +46,7 @@ public class XHibernate {
 	private static ThreadLocal currentSession = new ThreadLocal();	
 	private static ThreadLocal currentTransaction = new ThreadLocal();
 	private static ThreadLocal currentCmt = new ThreadLocal(); 
-
+	private static Log log = LogFactory.getLog(XHibernate.class);
 
 	/**
 	 * Session associated to current thread. <p>
@@ -142,8 +145,7 @@ public class XHibernate {
 					configuration.addResource(model.getName() + ".hbm.xml");
 				}
 				catch (Exception ex) {
-					ex.printStackTrace();
-					System.err.println(XavaResources.getString("hibernate_mapping_not_loaded_warning", model.getName())); 
+					log.error(XavaResources.getString("hibernate_mapping_not_loaded_warning", model.getName()), ex); 
 				}
 			}
 						
@@ -207,7 +209,7 @@ public class XHibernate {
 			return configuration.buildSessionFactory();
 		} 
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new HibernateException(XavaResources.getString("hibernate_session_factory_creation_error"));
 		}
 	}

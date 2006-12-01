@@ -4,6 +4,8 @@ import java.lang.reflect.*;
 import java.rmi.*;
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 import org.openxava.validators.*;
 
@@ -13,6 +15,7 @@ import org.openxava.validators.*;
 public class POJOPropertiesContainerAdapter implements IPropertiesContainer {
 	
 	private PropertiesManager propertiesManager;
+	private Log log = LogFactory.getLog(POJOPropertiesContainerAdapter.class);
 	
 	public POJOPropertiesContainerAdapter(Object object) {
 		propertiesManager = new PropertiesManager(object);
@@ -23,7 +26,7 @@ public class POJOPropertiesContainerAdapter implements IPropertiesContainer {
 			return propertiesManager.executeGets(properties);	
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new RemoteException(XavaResources.getString("get_properties_error", ex.getLocalizedMessage()));
 		}
 	}
@@ -36,11 +39,11 @@ public class POJOPropertiesContainerAdapter implements IPropertiesContainer {
 			if (ex.getTargetException() instanceof ValidationException) {
 				throw (ValidationException) ex.getTargetException(); 
 			}
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new RemoteException(XavaResources.getString("set_properties_error", ex.getLocalizedMessage()));			
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new RemoteException(XavaResources.getString("set_properties_error", ex.getLocalizedMessage()));
 		}		
 	}

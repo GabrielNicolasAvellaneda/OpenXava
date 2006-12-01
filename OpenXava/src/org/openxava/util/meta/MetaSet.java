@@ -2,6 +2,8 @@ package org.openxava.util.meta;
 
 import java.io.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 
 
@@ -13,6 +15,8 @@ public class MetaSet implements Serializable {
 	private String propertyName;
 	private String propertyNameFrom;
 	private String value;
+	
+	private Log log = LogFactory.getLog(MetaSet.class);
 
 	public String getPropertyName() {
 		return propertyName;

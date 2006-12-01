@@ -8,6 +8,8 @@ import javax.servlet.http.*;
 import org.apache.commons.fileupload.*;
 import org.apache.commons.fileupload.disk.*;
 import org.apache.commons.fileupload.servlet.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.actions.*;
 import org.openxava.application.meta.*;
 import org.openxava.controller.meta.*;
@@ -54,7 +56,9 @@ public class ModuleManager {
 	
 	private boolean formUpload = false;
 	private String lastPageId;
-	private String previousMode; 	
+	private String previousMode; 
+	
+	private Log log = LogFactory.getLog(ModuleManager.class);
 
 	public ModuleManager() {
 		oid = nextOid++;
@@ -97,8 +101,7 @@ public class ModuleManager {
 				removeHiddenActions();
 			}
 			catch (Exception ex) {
-				ex.printStackTrace();
-				System.err.println(XavaResources.getString("controller_actions_error"));
+				log.error(XavaResources.getString("controller_actions_error"),ex);
 				return new ArrayList();
 			}	
 		}
@@ -116,8 +119,7 @@ public class ModuleManager {
 				} 										
 			}
 			catch (Exception ex) {
-				ex.printStackTrace();
-				System.err.println(XavaResources.getString("controller_init_action_error"));
+				log.error(XavaResources.getString("controller_init_action_error"),ex);
 				return Collections.EMPTY_LIST;
 			}	
 		}
@@ -130,8 +132,7 @@ public class ModuleManager {
 			return getMetaControllerMode().getMetaActions();						
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
-			System.err.println(XavaResources.getString("controllers_actions_error", getModeControllerName()));
+			log.error(XavaResources.getString("controllers_actions_error", getModeControllerName()),ex);
 			return new ArrayList();
 		}			
 	}
@@ -205,12 +206,12 @@ public class ModuleManager {
 					long ini = System.currentTimeMillis();
 					executeAction(a, errors, messages, actionValue, request);
 					long time = System.currentTimeMillis() - ini;
-					System.out.println("[ModuleManager.execute] " + xavaAction + "=" + time + " ms");						
+					log.info("Execute " + xavaAction + "=" + time + " ms");						
 				}									
 			}			
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			errors.add("no_execute_action");
 		}
 	}
@@ -239,7 +240,7 @@ public class ModuleManager {
 			executeAction(action, metaAction, errors, message, propertyValues, request);
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			errors.add("no_execute_action", metaAction.getId());			
 		}							
 	}
@@ -428,7 +429,7 @@ public class ModuleManager {
 			doRollback();
 		}
 		catch (Exception ex) {			
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			if (metaAction != null) {
 				errors.add("no_execute_action", metaAction.getId());
 			}
@@ -475,7 +476,7 @@ public class ModuleManager {
 			doCommit();
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			doRollback();
 		}
 	}
@@ -555,12 +556,12 @@ public class ModuleManager {
 			String propertyValue = st.nextToken();
 			StringTokenizer st2 = new StringTokenizer(propertyValue, "()=");
 			if (!st2.hasMoreTokens()) {
-				System.err.println(XavaResources.getString("action_property_warning"));
+				log.warn(XavaResources.getString("action_property_warning"));
 				break;
 			}
 			String name = st2.nextToken().trim();
 			if (!st2.hasMoreTokens()) {
-				System.err.println(XavaResources.getString("action_property_warning"));
+				log.warn(XavaResources.getString("action_property_warning"));
 				break;
 			}
 			String value = st2.nextToken().trim();
@@ -589,7 +590,7 @@ public class ModuleManager {
 				value = mp.executeGet(property);
 			}
 			catch (Exception ex) {
-				ex.printStackTrace();
+				log.error(ex.getMessage(), ex);
 				throw new XavaException("get_property_action_value_error", property, metaAction.getName());
 			}
 			if (value != null) {
@@ -620,7 +621,7 @@ public class ModuleManager {
 				mp.executeSet(property, value);
 			}
 			catch (Exception ex) {
-				ex.printStackTrace();
+				log.error(ex.getMessage(), ex);
 				throw new XavaException("set_property_action_value_error", property, metaAction.getName());
 			}
 			getSession().setAttribute(objectName, value);

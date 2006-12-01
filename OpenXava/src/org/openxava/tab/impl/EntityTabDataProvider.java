@@ -6,6 +6,8 @@ import java.util.*;
 
 import javax.ejb.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.calculators.*;
 import org.openxava.converters.*;
 import org.openxava.mapping.*;
@@ -22,6 +24,8 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 	
 	private String componentName;
 	private IConnectionProvider connectionProvider;
+	
+	private Log log = LogFactory.getLog(EntityTabDataProvider.class);
 		
 	public DataChunk nextChunk(ITabProvider tabProvider, String modelName, List propertiesNames, Collection tabCalculators, Map keyIndexes, Collection tabConverters) throws RemoteException {		
 		if (tabProvider instanceof JDBCTabProvider) {
@@ -32,7 +36,7 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 			tv = tabProvider.nextChunk();
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new RemoteException(XavaResources.getString("tab_next_chunk_error"));
 		}
 		
@@ -48,7 +52,7 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 			}
 		}
 		catch (XavaException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new RemoteException(XavaResources.getString("tab_conversion_error"));
 		}
 				
@@ -61,7 +65,7 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 			}
 		}
 		catch (XavaException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new RemoteException(XavaResources.getString("tab_calculate_properties_error"));
 		}
 							
@@ -75,7 +79,7 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 				connectionProvider = DataSourceConnectionProvider.createByComponent(getComponentName());
 			}
 			catch (Exception ex) {
-				ex.printStackTrace();
+				log.error(ex.getMessage(), ex);
 				throw new RemoteException(XavaResources.getString("error_obtaining_connection_provider"));
 			}
 		}
@@ -132,9 +136,7 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 				row[tabCalculator.getIndex()] = calculator.calculate();
 			}
 			catch (Exception ex) {
-				ex.printStackTrace();
-				System.err.println(
-						XavaResources.getString("tab_calculate_property_warning", tabCalculator.getPropertyName()));
+				log.error(XavaResources.getString("tab_calculate_property_warning", tabCalculator.getPropertyName()), ex);
 				row[tabCalculator.getIndex()] = "ERROR";
 			}
 		}
@@ -186,9 +188,7 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 				}
 			}
 			catch (Exception ex) {
-				ex.printStackTrace();
-				System.err.println(
-					XavaResources.getString("tab_conversion_property_warning", tabConverter.getPropertyName()));	
+				log.error(XavaResources.getString("tab_conversion_property_warning", tabConverter.getPropertyName()),ex);
 				row[tabConverter.getIndex()] = "ERROR";
 			}
 		}
@@ -208,7 +208,7 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 			return tabProvider.getResultSize();
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new EJBException(XavaResources.getString("tab_result_size_error"));
 		}
 	}	

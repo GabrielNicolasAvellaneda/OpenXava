@@ -2,6 +2,9 @@ package org.openxava.util;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * @author Javier Paniza
  */
@@ -11,6 +14,8 @@ public class KeyAndDescriptionComparator implements Comparator {
 	private static final KeyAndDescriptionComparator porClave = new KeyAndDescriptionComparator(true);
 	
 	private boolean orderByKey;
+	
+	private Log log = LogFactory.getLog(KeyAndDescriptionComparator.class);
 	
 	private KeyAndDescriptionComparator(boolean ordenadoPorClave) {
 		this.orderByKey = ordenadoPorClave;

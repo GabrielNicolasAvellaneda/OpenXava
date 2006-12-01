@@ -2,6 +2,8 @@ package org.openxava.tab.impl;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.converters.*;
 import org.openxava.mapping.*;
 import org.openxava.util.*;
@@ -17,6 +19,7 @@ class TabConverter implements java.io.Serializable {
 	private String propertyName;
 	private IConverter converter;
 	private IMultipleConverter multipleConverter;
+	private Log log = LogFactory.getLog(TabConverter.class);
 
 	public TabConverter(String nombrePropiedad, int indice, IConverter conversor)
 		throws XavaException {

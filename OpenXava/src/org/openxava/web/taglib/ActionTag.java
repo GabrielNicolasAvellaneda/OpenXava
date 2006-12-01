@@ -3,6 +3,8 @@ package org.openxava.web.taglib;
 import javax.servlet.jsp.*;
 import javax.servlet.jsp.tagext.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
 
@@ -16,6 +18,7 @@ public class ActionTag extends TagSupport {
 	private IActionTag actionTag;
 	private String action;
 	private String argv;
+	private Log log = LogFactory.getLog(ActionTag.class);
 	
 
 	public int doStartTag() throws JspException {
@@ -28,7 +31,7 @@ public class ActionTag extends TagSupport {
 			return actionTag.doStartTag();			
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new JspException(XavaResources.getString("action_tag_error", getAction()));
 		}		
 	}

@@ -1,5 +1,7 @@
 package org.openxava.converters;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 
 
@@ -14,7 +16,8 @@ import org.openxava.util.*;
  */
 public class ArrayBytesPhotoConverter implements IConverter {
 
-
+	private Log log = LogFactory.getLog(ArrayBytesPhotoConverter.class);
+	
 	public Object toDB(Object o) throws ConversionException {
 		if (o == null) return null;
 		if (!(o instanceof byte [])) {		

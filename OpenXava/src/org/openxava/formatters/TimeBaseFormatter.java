@@ -4,6 +4,8 @@ import java.text.ParseException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.formatters.IFormatter;
 import org.openxava.util.Align;
 import org.openxava.util.Is;
@@ -14,6 +16,8 @@ import org.openxava.util.Strings;
  */
 
 public class TimeBaseFormatter implements IFormatter {
+	
+	private Log log = LogFactory.getLog(TimeBaseFormatter.class);
 	
 	public String format(HttpServletRequest request, Object time) {
 		return time==null?"":time.toString();
@@ -99,7 +103,7 @@ public class TimeBaseFormatter implements IFormatter {
 		        }
             }
 		} catch (Exception ex) {
-		    ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 		}
 		throw new ParseException("bad_time_format",-1);
 	}

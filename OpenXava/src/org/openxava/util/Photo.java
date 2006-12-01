@@ -1,5 +1,8 @@
 package org.openxava.util;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * Wraps a byte array to allow store photos in
  * a database with no support to <code>byte []</code> o
@@ -13,6 +16,8 @@ package org.openxava.util;
 public class Photo implements java.io.Serializable {
 
 	public byte[] data;
+	
+	private Log log = LogFactory.getLog(Photo.class);
 
 	public Photo(byte[] data) {
 		this.data = data;

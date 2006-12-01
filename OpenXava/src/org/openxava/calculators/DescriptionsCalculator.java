@@ -4,6 +4,8 @@ import java.util.*;
 
 import javax.swing.table.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.component.*;
 import org.openxava.filters.*;
 import org.openxava.mapping.*;
@@ -38,7 +40,8 @@ public class DescriptionsCalculator implements ICalculator {
 	private boolean useCache = true;
 	private boolean useConvertersInKeys = false;
 	private Collection keyPropertiesCollection;
-	private MetaTab metaTab;	
+	private MetaTab metaTab;
+	private Log log = LogFactory.getLog(DescriptionsCalculator.class);
 	
 	
 	/**

@@ -1,6 +1,8 @@
 package org.openxava.web.meta.xmlparse;
 
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
 import org.openxava.util.xmlparse.*;
@@ -11,7 +13,9 @@ import org.w3c.dom.*;
  * @author: Javier Paniza
  */
 public class EditorsParser extends ParserBase {
-			
+	
+	private Log log = LogFactory.getLog(EditorsParser.class);
+	
 	public EditorsParser(String xmlFileURL, int language) {
 		super(xmlFileURL, language);
 	}

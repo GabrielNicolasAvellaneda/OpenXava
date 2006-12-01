@@ -4,6 +4,8 @@ import java.rmi.*;
 
 import javax.ejb.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.tab.meta.*;
 import org.openxava.util.*;
 
@@ -13,7 +15,9 @@ import org.openxava.util.*;
  */
 
 public class EntityTabFactory {
-			
+	
+	private static Log log = LogFactory.getLog(EntityTabFactory.class);
+	
 	public static IEntityTab create(String componentName) throws CreateException, RemoteException {
 		EntityTab tab = new EntityTab();
 		tab.setComponentName(componentName);
@@ -21,7 +25,7 @@ public class EntityTabFactory {
 			tab.init();
 		}
 		catch (InitException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new CreateException(XavaResources.getString("tab_create_default_error", componentName));
 		}		
 		return tab; 
@@ -35,7 +39,7 @@ public class EntityTabFactory {
 			tab.init();
 		}
 		catch (InitException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new CreateException(XavaResources.getString("tab_create_error", tabName, componentName));
 		}		
 		return tab; 		
@@ -64,7 +68,7 @@ public class EntityTabFactory {
 			tab.init();
 		}
 		catch (InitException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new CreateException(XavaResources.getString("tab_create_error", metaTab.getName(), tab.getComponentName()));
 		}		
 		return tab; 		

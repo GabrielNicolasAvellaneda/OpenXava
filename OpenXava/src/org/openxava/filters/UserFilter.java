@@ -2,6 +2,8 @@ package org.openxava.filters;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 
 /**
@@ -11,6 +13,8 @@ import org.openxava.util.*;
  */
 
 public class UserFilter implements IFilter {
+	
+	private Log log = LogFactory.getLog(UserFilter.class);
 	
 	public Object filter(Object o) throws FilterException {
 		if (o == null) {
@@ -28,7 +32,7 @@ public class UserFilter implements IFilter {
 
 	private String getUser() {		
 		String user = Users.getCurrent();
-		System.out.println("[UserFilter.getUser] Users.getCurrent()=" + user); //  tmp
+		log.info("Users.getCurrent()=" + user); //  tmp
 		return user;
 	}
 

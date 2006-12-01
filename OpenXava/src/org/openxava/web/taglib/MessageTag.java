@@ -4,6 +4,8 @@ import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 import javax.servlet.jsp.tagext.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 
 /**
@@ -15,6 +17,8 @@ public class MessageTag extends TagSupport {
 	private String key;
 	private Object param;
 	private int intParam = Integer.MIN_VALUE; // because java 1.4 haven't autoboxing
+	
+	private Log log = LogFactory.getLog(MessageTag.class);
 
 	public int doStartTag() throws JspException {
 		try {
@@ -32,7 +36,7 @@ public class MessageTag extends TagSupport {
 			pageContext.getOut().print(string);
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new JspException(XavaResources.getString("message_tag_error", getKey()));				
 		}
 		return SKIP_BODY;

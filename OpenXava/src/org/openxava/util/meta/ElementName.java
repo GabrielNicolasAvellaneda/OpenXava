@@ -1,5 +1,8 @@
 package org.openxava.util.meta;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * It is not used to define a name, but as utility to
  * break down. <p> 
@@ -14,6 +17,8 @@ public class ElementName {
 	private String containerName;	
 	private String unqualifiedName;
 
+	private Log log = LogFactory.getLog(ElementName.class);
+	
 	public ElementName(String name) {
 		this.name = name==null?"":name;
 	}

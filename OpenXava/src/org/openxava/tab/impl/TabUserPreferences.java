@@ -1,5 +1,8 @@
 package org.openxava.tab.impl;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * @author Javier Paniza
  */
@@ -9,7 +12,9 @@ public class TabUserPreferences implements java.io.Serializable {
 	private String user;
 	private String tab; // The name of tab in this format: 'Component.tabName'
 	private String propertiesNames;
-	private boolean rowsHidden; 
+	private boolean rowsHidden;
+	
+	private Log log = LogFactory.getLog(TabUserPreferences.class);
 
 	public String getPropertiesNames() {
 		return propertiesNames;

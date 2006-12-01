@@ -1,5 +1,7 @@
 package org.openxava.actions;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.tab.*;
 
 /**
@@ -10,6 +12,7 @@ public class MoveColumnToLeftAction extends BaseAction {
 	
 	private Tab tab;
 	private int columnIndex;
+	private Log log = LogFactory.getLog(MoveColumnToLeftAction.class);
 
 	public void execute() throws Exception {
 		getTab().movePropertyToLeft(columnIndex);

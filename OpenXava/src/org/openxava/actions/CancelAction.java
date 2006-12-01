@@ -4,6 +4,8 @@ import java.util.*;
 
 import javax.servlet.http.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.view.*;
 
 /**
@@ -17,7 +19,8 @@ public class CancelAction extends ViewBaseAction implements INavigationAction, I
 	private Stack previousViews;
 	private boolean restoreEditable = false;
 	private HttpServletRequest request;
-		 	
+	private Log log = LogFactory.getLog(CancelAction.class);
+	
 	public void execute() throws Exception {
 		 
 		if (getPreviousViews() != null && !getPreviousViews().empty()) {

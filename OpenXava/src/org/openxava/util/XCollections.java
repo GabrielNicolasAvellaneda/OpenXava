@@ -2,6 +2,9 @@ package org.openxava.util;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * Utilities to work with collections, enumerations and iterators. <p> 
  * 
@@ -10,6 +13,7 @@ import java.util.*;
 public class XCollections {
 	
 
+	private static Log log = LogFactory.getLog(XCollections.class);
 	/**
 	 * Returns the last element of sent collection. <p>
 	 * @param collection  Cannot be null
@@ -54,7 +58,7 @@ public class XCollections {
 	public static void println(Iterator it) {
 		if (it == null) return;
 		while (it.hasNext()) {
-			System.out.println(" - " + it.next());
+			log.info(" - " + it.next());
 		}
 	}
 	

@@ -1,5 +1,8 @@
 package org.openxava.filters;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 /**
  * Convert all <code>java.util.Date</code> arguments in <code>java.sql.Date</code>. <p> 
@@ -8,6 +11,7 @@ package org.openxava.filters;
  */
 public class DateToSqlDateFilter implements IFilter {
 
+	private Log log = LogFactory.getLog(DateToSqlDateFilter.class);
 
 	/**
 	 * @see org.openxava.filters.IFilter#filter(Object)

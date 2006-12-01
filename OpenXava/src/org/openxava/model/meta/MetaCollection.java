@@ -3,6 +3,8 @@ package org.openxava.model.meta;
 import java.rmi.*;
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 import org.openxava.validators.*;
 
@@ -26,6 +28,8 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 	private MetaReference metaReference;
 	private Collection metaCalculatorsPostRemove;
 	private MetaCalculator metaCalculator;
+	
+	private Log log = LogFactory.getLog(MetaCollection.class);
 	
 	public void addMetaCalculatorPostRemove(MetaCalculator metaCalculator) {
 		if (metaCalculatorsPostRemove == null) {

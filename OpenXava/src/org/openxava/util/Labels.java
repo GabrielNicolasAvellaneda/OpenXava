@@ -2,6 +2,8 @@ package org.openxava.util;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.application.meta.*;
 
 
@@ -13,6 +15,8 @@ import org.openxava.application.meta.*;
 
 public class Labels {
 
+	private static Log log = LogFactory.getLog(Labels.class);
+	
 	/**
 	 * On any error returns the sent <code>id</code> with the first letter in uppercase.
 	 */
@@ -22,15 +26,17 @@ public class Labels {
 		}
 		catch (MissingResourceException ex) {
 			if (XavaPreferences.getInstance().isI18nWarnings()) {
-				System.err.println(XavaResources.getString("element_i18n_warning", id));
+				log.warn(XavaResources.getString("element_i18n_warning", id),ex);
 			}			
 			return Strings.firstUpper(id);
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			
 			if (XavaPreferences.getInstance().isI18nWarnings()) {
-				System.err.println(XavaResources.getString("element_i18n_warning", id));
-			}
+				log.warn(XavaResources.getString("element_i18n_warning", id),ex);
+			} else
+				log.warn(ex, ex);	
+			
 			return Strings.firstUpper(id);
 		}		
 	}
@@ -44,15 +50,15 @@ public class Labels {
 		}
 		catch (MissingResourceException ex) {
 			if (XavaPreferences.getInstance().isI18nWarnings()) {
-				System.err.println(XavaResources.getString("element_i18n_warning", id));
+				log.warn(XavaResources.getString("element_i18n_warning", id),ex);
 			}			
 			return defaultValue;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
 			if (XavaPreferences.getInstance().isI18nWarnings()) {
-				System.err.println(XavaResources.getString("element_i18n_warning", id));
-			}
+				log.warn(XavaResources.getString("element_i18n_warning", id),ex);
+			} else
+				log.warn(ex.getMessage(), ex);
 			return defaultValue;
 		}		
 	}		
@@ -110,7 +116,7 @@ public class Labels {
 		}
 		catch (Exception ex) {
 			if (XavaPreferences.getInstance().isI18nWarnings()) {
-				System.err.println(XavaResources.getString("label_i18n_warning", id));
+				log.warn(XavaResources.getString("label_i18n_warning", id),ex);
 			}
 			return null;
 		}
@@ -132,7 +138,7 @@ public class Labels {
 			return exists(id.substring(idx + 1));
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			return false;
 		}				
 	}

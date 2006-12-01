@@ -2,6 +2,9 @@ package org.openxava.mapping;
 
 import java.io.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * @author Javier Paniza
  */
@@ -10,7 +13,8 @@ public class CmpField implements Serializable {
 	private String converterPropertyName;
 	private String column;
 	private String cmpPropertyName; 
-	private String cmpTypeName; 
+	private String cmpTypeName;
+	private Log log = LogFactory.getLog(CmpField.class);
 
 	public String getColumn() {
 		return column;

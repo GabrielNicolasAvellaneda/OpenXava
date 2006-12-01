@@ -1,5 +1,7 @@
 package org.openxava.generators.xmlparse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.generators.*;
 import org.openxava.util.*;
 import org.openxava.util.xmlparse.*;
@@ -10,6 +12,8 @@ import org.w3c.dom.*;
  */
 public class GeneratorsParser extends ParserBase {
 
+	private Log log = LogFactory.getLog(GeneratorsParser.class);
+	
 	public GeneratorsParser(String urlXmlFile, int language) {
 		super(urlXmlFile, language);
 	}

@@ -2,6 +2,8 @@ package org.openxava.hibernate.impl;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.*;
 import org.hibernate.event.*;
 import org.openxava.converters.*;
@@ -12,6 +14,8 @@ import org.openxava.util.*;
 
 public class ReferenceConverterToDBListener implements PreInsertEventListener, PreUpdateEventListener {
 
+	private Log log = LogFactory.getLog(ReferenceConverterToDBListener.class);
+	
 	public boolean onPreInsert(PreInsertEvent ev) {		
 		if (!(ev.getEntity() instanceof IModel)) return false;
 		applyConverter((IModel) ev.getEntity(), 
@@ -66,8 +70,8 @@ public class ReferenceConverterToDBListener implements PreInsertEventListener, P
                 state[i]=referencedObject;
 			}
 		} 
-		catch(Exception e){ 
-			e.printStackTrace();
+		catch(Exception ex){ 
+			log.error(ex.getMessage(), ex);
 			throw new HibernateException(XavaResources.getString("generator.conversion_error", currentReference, model.getClass(), ""));
 		}
 	}

@@ -5,6 +5,8 @@ import java.util.*;
 
 import javax.rmi.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.actions.*;
 import org.openxava.calculators.*;
 import org.openxava.component.*;
@@ -23,6 +25,8 @@ import org.openxava.util.impl.*;
 public class Server {
 	
 	private static Map remotes;
+	
+	private static Log log = LogFactory.getLog(Server.class);
 
 	public static Object calculate(ICalculator calculator, String packageName) throws Exception {
 		try {
@@ -74,7 +78,7 @@ public class Server {
 			return remote;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new RemoteException(XavaResources.getString("server_remote_exception"));
 		}		
 	}

@@ -4,6 +4,8 @@ import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 import javax.servlet.jsp.tagext.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.controller.*;
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
@@ -17,6 +19,8 @@ public class ImageTag extends TagSupport implements IActionTag {
 	
 	private String action;
 	private String argv;
+	
+	private Log log = LogFactory.getLog(ImageTag.class);
 
 	public int doStartTag() throws JspException {
 		try {									
@@ -60,7 +64,7 @@ public class ImageTag extends TagSupport implements IActionTag {
 			pageContext.getOut().println("\tborder='0' align='middle'/></a>");
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new JspException(XavaResources.getString("image_tag_error"));				
 		}
 		return SKIP_BODY;

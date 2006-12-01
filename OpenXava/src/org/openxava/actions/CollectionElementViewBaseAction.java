@@ -2,6 +2,8 @@ package org.openxava.actions;
 
 import javax.servlet.http.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.controller.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -17,6 +19,7 @@ abstract public class CollectionElementViewBaseAction extends ViewBaseAction imp
 	private String viewObject;
 	private ModuleContext context;	
 	private HttpServletRequest request;
+	private Log log = LogFactory.getLog(CollectionElementViewBaseAction.class);
 
 	abstract public void execute() throws Exception;
 	

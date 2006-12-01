@@ -4,6 +4,8 @@ import java.util.*;
 
 import javax.ejb.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.model.*;
 import org.openxava.validators.*;
 import org.openxava.view.*;
@@ -21,6 +23,7 @@ public abstract class UpdateReferenceBaseAction extends BaseAction implements IN
 	private String [] nextControllers = null;
 	private String nextView = SAME_VIEW;
 	private Stack previousViews;
+	private Log log = LogFactory.getLog(UpdateReferenceBaseAction.class);
 	
 	protected void returnsToPreviousViewUpdatingReferenceView(Map key) throws Exception {
 		nextControllers = PREVIOUS_CONTROLLERS;

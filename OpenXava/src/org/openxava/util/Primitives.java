@@ -1,5 +1,8 @@
 package org.openxava.util;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * Utilities to work with Java primitive data. <p> 
  * 
@@ -9,6 +12,8 @@ package org.openxava.util;
  * @author Javier Paniza
  */
 public class Primitives {
+	
+	private Log log = LogFactory.getLog(Primitives.class);
 	
 	/**
 	 * Wrapper class corresponding to class of primitive sent. <p>

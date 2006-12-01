@@ -3,6 +3,9 @@ import java.io.*;
 import java.math.*;
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * Utilities to work with <code>String</code>. <p>
  *
@@ -10,6 +13,8 @@ import java.util.*;
  */
 
 public class Strings {
+	
+	private static Log log = LogFactory.getLog(Strings.class);
 	
 	/**
 	 * Translate to the charset specified. <p>
@@ -321,7 +326,7 @@ public class Strings {
 		  		return new Integer(string.trim());
 	  		}
 	  		catch (NumberFormatException ex) {	  			
-	  			System.err.println(XavaResources.getString("string_convesion_zero_assumed_warning", string, type));				  			
+	  			log.warn(XavaResources.getString("string_convesion_zero_assumed_warning", string, type),ex);				  			
 	  			return new Integer(0);
 	  		}
 	  	}
@@ -332,7 +337,7 @@ public class Strings {
 		  		return new BigDecimal(string.trim());
 	  		}
 	  		catch (NumberFormatException ex) {
-	  			System.err.println(XavaResources.getString("string_convesion_zero_assumed_warning", string, type));				  			
+	  			log.warn(XavaResources.getString("string_convesion_zero_assumed_warning", string, type),ex);				  			
 	  			return new BigDecimal("0.00");
 	  		}		  		
 	  	}
@@ -343,7 +348,7 @@ public class Strings {
 		  		return new Double(string.trim());
 	  		}
 	  		catch (NumberFormatException ex) {
-	  			System.err.println(XavaResources.getString("string_convesion_zero_assumed_warning", string, type));				  			
+	  			log.warn(XavaResources.getString("string_convesion_zero_assumed_warning", string, type),ex);				  			
 	  			return new Double(0);
 	  		}		  				  		
 	  	}
@@ -354,7 +359,7 @@ public class Strings {
 		  		return new Long(string.trim());
 	  		}
 	  		catch (NumberFormatException ex) {
-	  			System.err.println(XavaResources.getString("string_convesion_zero_assumed_warning", string, type));				  			
+	  			log.warn(XavaResources.getString("string_convesion_zero_assumed_warning", string, type),ex);				  			
 	  			return new Long(0);
 	  		}		  				  		
 	  	}
@@ -365,7 +370,7 @@ public class Strings {
 		  		return new Float(string.trim());
 	  		}
 	  		catch (NumberFormatException ex) {
-	  			System.err.println(XavaResources.getString("string_convesion_zero_assumed_warning", string, type));				  			
+	  			log.warn(XavaResources.getString("string_convesion_zero_assumed_warning", string, type),ex);				  			
 	  			return new Float(0);
 	  		}		  				  		
 	  	}
@@ -376,7 +381,7 @@ public class Strings {
 		  		return new Short(string.trim());
 	  		}
 	  		catch (NumberFormatException ex) {
-	  			System.err.println(XavaResources.getString("string_convesion_zero_assumed_warning", string, type));				  			
+	  			log.warn(XavaResources.getString("string_convesion_zero_assumed_warning", string, type),ex);				  			
 	  			return new Short((short)0);
 	  		}		  				  		
 	  	}
@@ -387,7 +392,7 @@ public class Strings {
 		  		return new Byte(string.trim());
 	  		}
 	  		catch (NumberFormatException ex) {
-	  			System.err.println(XavaResources.getString("string_convesion_zero_assumed_warning", string, type));				  			
+	  			log.warn(XavaResources.getString("string_convesion_zero_assumed_warning", string, type),ex);				  			
 	  			return new Byte((byte)0);
 	  		}		  				  		
 	  	}
@@ -403,8 +408,7 @@ public class Strings {
         
   	}
   	catch (Exception ex) {
-  		ex.printStackTrace();
-  		System.err.println(XavaResources.getString("string_convesion_warning", string, type));
+  		log.error(XavaResources.getString("string_convesion_warning", string, type), ex);
   	}  	
   	return null;
   }

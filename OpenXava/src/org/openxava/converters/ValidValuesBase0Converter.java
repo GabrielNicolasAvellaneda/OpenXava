@@ -1,5 +1,8 @@
 package org.openxava.converters;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 /**
  * In java valid-values and in database a integer number 
@@ -9,6 +12,8 @@ package org.openxava.converters;
  */
 public class ValidValuesBase0Converter implements IConverter {
 
+	private Log log = LogFactory.getLog(ValidValuesBase0Converter.class);
+	
 	public Object toDB(Object o) throws ConversionException {
 		if (o == null) return new Integer(-1);
 		if (!(o instanceof Integer)) {		

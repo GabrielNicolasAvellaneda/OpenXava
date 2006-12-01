@@ -6,6 +6,8 @@ import java.util.*;
 
 import javax.ejb.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.calculators.*;
 import org.openxava.component.*;
 import org.openxava.model.meta.*;
@@ -27,6 +29,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	private javax.ejb.SessionContext sessionContext = null;
 	private final static long serialVersionUID = 3206093459760846163L;
 	private static IPersistenceProvider persistenceProvider;
+	private static Log log = LogFactory.getLog(MapFacadeBean.class);
 	
 	public Object create(String user, String modelName, Map values)
 		throws CreateException, XavaException, ValidationException, RemoteException {		
@@ -52,7 +55,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			throw ex;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(ex.getMessage());
 		}
@@ -78,17 +81,17 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			throw ex;
 		}
 		catch (FinderException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw ex;
 		}
 		catch (XavaException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw ex;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(ex.getMessage());
 		}
@@ -114,17 +117,17 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			throw ex;
 		}
 		catch (FinderException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw ex;
 		}
 		catch (XavaException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw ex;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(ex.getMessage());
 		}
@@ -185,7 +188,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			throw ex;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(ex.getMessage());
 		}
@@ -221,7 +224,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			throw ex;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(ex.getMessage());
 		}		
@@ -250,7 +253,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			throw ex;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(ex.getMessage());
 		}
@@ -281,7 +284,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			throw ex;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(ex.getMessage());
 		}
@@ -311,7 +314,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			throw ex;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(ex.getMessage());
 		}
@@ -342,7 +345,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			throw ex;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(ex.getMessage());
 		}
@@ -367,7 +370,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			throw ex;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(ex.getMessage());
 		}
@@ -388,7 +391,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			throw ex;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(ex.getMessage());
 		}
@@ -528,7 +531,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			Map result = getValues(metaModel, modelObject, memberNames);						
 			return result;
 		} catch (XavaException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("get_values_error", modelName);
 		}
 	}
@@ -598,7 +601,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 					membersNames); 						
 			return result;
 		} catch (XavaException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("get_values_error", modelName);
 		}
 	}
@@ -617,7 +620,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 					membersNames); 						
 			return result;
 		} catch (XavaException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("get_values_error", modelName);
 		}
 	}
@@ -706,18 +709,18 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		} catch (ValidationException ex) {
 			throw ex;
 		} catch (DuplicateKeyException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new DuplicateKeyException(
 				XavaResources.getString("no_create_exists", metaModel.getName()));	
 		} catch (CreateException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new CreateException(XavaResources.getString("create_error", metaModel.getName()));		
 		} catch (RemoteException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(XavaResources.getString("create_error", metaModel.getName()));
 		} catch (XavaException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("create_error", metaModel.getName());
 		}
 	}
@@ -771,12 +774,12 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			Object result = man.executeGet(memberName);
 			return result;
 		} catch (PropertiesManagerException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(XavaResources.getString("get_property_error", memberName));
 		} catch (InvocationTargetException ex) {
 			Throwable th = ex.getTargetException();
-			th.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(XavaResources.getString("get_property_error", memberName));
 		}
@@ -800,7 +803,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 					memberNames);			
 			return result;
 		} catch (XavaException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("get_values_error", metaModel.getName());
 		}
 	}
@@ -859,7 +862,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			result.putAll(r.executeGets(names.toString()));			
 			return result;
 		} catch (RemoteException ex) {			
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(XavaResources.getString("get_values_error", metaModel.getName()));
 		}
@@ -928,12 +931,12 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		try {
 			result.putAll(man.executeGets(names.toString()));
 		} catch (PropertiesManagerException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(XavaResources.getString("get_values_error", metaAggregate.getName()));
 		} catch (InvocationTargetException ex) {
 			Throwable th = ex.getTargetException();
-			th.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(XavaResources.getString("get_values_error", metaAggregate.getName()));
 		}
@@ -966,7 +969,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 				return getAssociatedEntityValues((MetaEntity) r.getMetaModelReferenced(), object, submembersNames);
 			}
 		} catch (XavaException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("get_reference_error", memberName, metaModel.getName());
 		}
 	}
@@ -983,7 +986,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 					c.getMetaReference().getMetaModelReferenced(),
 					c.isAggregate(),	object, memberNames);
 		} catch (XavaException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("get_collection_elements_error", memberName, metaModel.getName());
 		}
 	}
@@ -1022,15 +1025,15 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			man.executeSets(values);
 			return object;
 		} catch (ClassNotFoundException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(XavaResources.getString("instantiate_error", metaAggregate.getBeanClass()));
 		} catch (IllegalAccessException ex) {			
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(XavaResources.getString("instantiate_error", metaAggregate.getBeanClass()));
 		} catch (InstantiationException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(XavaResources.getString("instantiate_error", metaAggregate.getBeanClass()));
 		} catch (InvocationTargetException ex) {
@@ -1039,7 +1042,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			rollback();
 			throw new RemoteException(); // Never
 		} catch (PropertiesManagerException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(XavaResources.getString("assign_values_error", metaAggregate.getBeanClass(), ex.getLocalizedMessage()));
 		}
@@ -1053,7 +1056,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		if (th instanceof ValidationException) {
 			throw (ValidationException) th;
 		}
-		th.printStackTrace();
+		log.error(ex.getMessage(), ex);
 		throw new RemoteException(ejbmessage);
 	}
 
@@ -1076,7 +1079,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			return null; 
 		} 
 		catch (FinderException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(XavaResources.getString("map_to_reference_error",
 					r.getName(),					
@@ -1141,7 +1144,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			Object object = findEntity(metaModel, keyValues);
 			remove(metaModel, object);
 		} catch (FinderException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new RemoveException(XavaResources.getString("remove_error",
 				metaModel.getName(), ex.getLocalizedMessage()));
 		}		
@@ -1159,10 +1162,10 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		} catch (ValidationException ex) {
 			throw ex;					
 		} catch (XavaException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("remove_error", metaModel.getName(), ex.getLocalizedMessage());				
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(XavaResources.getString("remove_error",
 				metaModel.getName(), ex.getLocalizedMessage()));
@@ -1185,7 +1188,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 						pmValidator.executeSet(metaSet.getPropertyName(), pmModelObject.executeGet(metaSet.getPropertyNameFrom()));
 					}
 					catch (Exception ex) {
-						ex.printStackTrace();
+						log.error(ex.getMessage(), ex);
 						throw new XavaException("validator_set_property_error", metaSet.getPropertyName(), validator.getClass(), metaSet.getPropertyNameFrom(), modelObject.getClass(), ex.getMessage());
 					}
 				}
@@ -1224,7 +1227,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			throw ex;
 		} 
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("assign_values_error", metaModel.getName(), ex.getLocalizedMessage()); 
 		}
 	}
@@ -1258,13 +1261,13 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 				} else if (metaModel.containsMetaPropertyView(memberName)) { 										
 					metaModel.getMetaPropertyView(memberName).validate(errors, values, creating);									
 				} else {					
-					System.err.println(XavaResources.getString("not_validate_member_warning", memberName, metaModel.getName()));
+					log.warn(XavaResources.getString("not_validate_member_warning", memberName, metaModel.getName()));
 				}
 		} catch (XavaException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("validate_error", memberName, metaModel.getName());
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(XavaResources.getString("validate_error", memberName, metaModel.getName()));				
 		}
@@ -1355,7 +1358,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			}		
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("validate_model_error", metaModel.getName());
 		}
 	}
@@ -1443,7 +1446,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 						mp.executeSet(set.getPropertyName(), value);
 					}
 					catch (Exception ex) {
-						ex.printStackTrace();
+						log.error(ex.getMessage(), ex);
 						throw new XavaException("calculator_property_error", value, set.getPropertyName());
 					}									
 				}
@@ -1455,7 +1458,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 					((IModelCalculator) calculator).setModel(entity);
 				}
 				catch (Exception ex) {
-					ex.printStackTrace();
+					log.error(ex.getMessage(), ex);
 					throw new XavaException("assign_entity_to_calculator_error", metaModel.getName(), keyValues);
 				}									
 				
@@ -1466,7 +1469,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 					((IEntityCalculator) calculator).setEntity(entity);
 				}
 				catch (Exception ex) {
-					ex.printStackTrace();
+					log.error(ex.getMessage(), ex);
 					throw new XavaException("assign_entity_to_calculator_error", metaModel.getName(), keyValues);
 				}									
 				
@@ -1476,7 +1479,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 				calculator.calculate();
 			}
 			catch (Exception ex) {
-				ex.printStackTrace();
+				log.error(ex.getMessage(), ex);
 				rollback();
 				throw new RemoteException(XavaResources.getString("postremove_error", metaModel.getName(), keyValues));
 			}
@@ -1528,7 +1531,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			rollback();
 			throw new RemoteException(XavaResources.getString("model_not_found", modelName));
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(XavaResources.getString("find_error", modelName));
 		}
@@ -1544,7 +1547,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			rollback();
 			throw new RemoteException(XavaResources.getString("model_not_found", modelName));
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			rollback();
 			throw new RemoteException(XavaResources.getString("find_error", modelName));
 		}
@@ -1564,7 +1567,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 				persistenceProvider = (IPersistenceProvider) Class.forName(XavaPreferences.getInstance().getPersistenceProviderClass()).newInstance();
 			}
 			catch (Exception ex) {
-				ex.printStackTrace();
+				log.error(ex.getMessage(), ex);
 				throw new RemoteException(XavaResources.getString("persistence_provider_creation_error"));
 			}
 		}		

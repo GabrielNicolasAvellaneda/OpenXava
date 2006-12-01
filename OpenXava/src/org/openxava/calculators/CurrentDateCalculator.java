@@ -1,5 +1,8 @@
 package org.openxava.calculators;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 
 /**
@@ -7,6 +10,8 @@ package org.openxava.calculators;
  */
 public class CurrentDateCalculator implements ICalculator {
 
+	private Log log = LogFactory.getLog(CurrentDateCalculator.class);
+	
 	public Object calculate() throws Exception {
 		return new java.util.Date();
 	}

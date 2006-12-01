@@ -1,5 +1,7 @@
 package org.openxava.util.xmlparse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 import org.w3c.dom.*;
 
@@ -9,6 +11,8 @@ import org.w3c.dom.*;
  */
 
 public class ParserUtil {
+	
+	private static Log log = LogFactory.getLog(ParserUtil.class);
 	
 	public static Element getElement(Element el, String label) {
 		NodeList l = el.getElementsByTagName(label);
@@ -36,7 +40,7 @@ public class ParserUtil {
 			return Integer.parseInt(s);
 		} 
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("element_or_attribute_to_integer_error", label);
 		}
 	}
@@ -48,7 +52,7 @@ public class ParserUtil {
 			return Integer.parseInt(s);
 		} 
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("element_or_attribute_to_integer_error", label + " [" + s + "]");
 		}
 	}

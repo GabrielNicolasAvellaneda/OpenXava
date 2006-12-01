@@ -1,5 +1,8 @@
 package org.openxava.converters;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 
 /**
@@ -10,6 +13,8 @@ package org.openxava.converters;
  */
 public class Boolean01Converter implements IConverter {
 
+	private Log log = LogFactory.getLog(Boolean01Converter.class);
+	
 	public Object toDB(Object o) throws ConversionException {
 		if (!(o instanceof Boolean)) {		
 			throw new ConversionException("conversion_db_boolean_expected");

@@ -6,6 +6,9 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * Utilities to work with servlets. <p>
  * 
@@ -13,6 +16,8 @@ import javax.servlet.http.*;
  */
 
 public class Servlets {
+	
+	private Log log = LogFactory.getLog(Servlets.class);
 	
 	/**
 	 * From a uri return the resource (dynamic or static) in InputStream format. <p>

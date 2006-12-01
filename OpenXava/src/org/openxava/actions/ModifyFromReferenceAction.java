@@ -2,6 +2,8 @@ package org.openxava.actions;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.view.*;
 
 
@@ -13,6 +15,7 @@ import org.openxava.view.*;
 public class ModifyFromReferenceAction extends NavigationFromReferenceBaseAction  {
 	
 	private boolean exists = true;
+	private Log log = LogFactory.getLog(ModifyFromReferenceAction.class);
 	
 	public void execute() throws Exception {
 		super.execute();

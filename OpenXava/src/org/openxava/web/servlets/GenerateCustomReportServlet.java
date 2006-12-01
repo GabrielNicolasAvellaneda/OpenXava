@@ -10,6 +10,8 @@ import javax.servlet.http.*;
 
 import net.sf.jasperreports.engine.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 
 /**
@@ -20,6 +22,8 @@ import org.openxava.util.*;
 
 public class GenerateCustomReportServlet extends HttpServlet { 	
 
+	private Log log = LogFactory.getLog(GenerateCustomReportServlet.class);
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String design = (String) request.getSession().getAttribute("xava.report.design");
 		try {
@@ -63,12 +67,12 @@ public class GenerateCustomReportServlet extends HttpServlet {
 				throw new ServletException(XavaResources.getString("jasper_report_design_not_found", design));
 			}
 			else {
-				ex.printStackTrace();
+				log.error(ex.getMessage(), ex);
 				throw new ServletException(XavaResources.getString("report_error"));				
 			}
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new ServletException(XavaResources.getString("report_error"));
 		}		
 	}

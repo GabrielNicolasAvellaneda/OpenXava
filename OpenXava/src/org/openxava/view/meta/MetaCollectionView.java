@@ -3,6 +3,8 @@ package org.openxava.view.meta;
 import java.io.*;
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 
 
@@ -28,6 +30,8 @@ public class MetaCollectionView implements Serializable {
 	private boolean createReference = true;
 	private boolean modifyReference = true; 
 	private boolean asAggregate = false;
+	
+	private Log log = LogFactory.getLog(MetaCollectionView.class);
 	
 	public void addActionDetailName(String actionName) {
 		if (actionsDetailNames == null) actionsDetailNames = new ArrayList();

@@ -3,6 +3,8 @@ package org.openxava.mapping;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.component.*;
 import org.openxava.converters.*;
 import org.openxava.model.meta.*;
@@ -16,7 +18,8 @@ public class ReferenceMapping implements java.io.Serializable {
 	private ModelMapping referencedMapping;
 	private Map details = new HashMap();
 	private String referencedModelName;
-	private Collection columns = null; 
+	private Collection columns = null;
+	private Log log = LogFactory.getLog(ReferenceMapping.class);
 
 	public void addDetail(ReferenceMappingDetail detail) {
 		details.put(detail.getReferencedModelProperty(), detail);

@@ -3,6 +3,8 @@ package org.openxava.tab.impl;
 import java.rmi.*;
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.ejbx.*;
 
 /**
@@ -12,7 +14,9 @@ import org.openxava.ejbx.*;
 public class EntityTabBean extends SessionBase implements IEntityTabDataProvider {
 	
 	private EntityTabDataProvider dataProvider = new EntityTabDataProvider();
-		
+	
+	private Log log = LogFactory.getLog(EntityTabBean.class);
+	
 	public void ejbCreate() {		
 	}
 	

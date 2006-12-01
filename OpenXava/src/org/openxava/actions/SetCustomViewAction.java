@@ -1,5 +1,8 @@
 package org.openxava.actions;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * @author Javier Paniza
  */
@@ -7,7 +10,8 @@ package org.openxava.actions;
 public class SetCustomViewAction extends BaseAction implements ICustomViewAction {
 	
 	private String customView;
-
+	private Log log = LogFactory.getLog(SetCustomViewAction.class);
+	
 	public void execute() throws Exception {
 	}
 

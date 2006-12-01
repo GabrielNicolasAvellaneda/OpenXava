@@ -3,6 +3,8 @@ package org.openxava.controller.meta;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.controller.meta.xmlparse.*;
 import org.openxava.util.*;
 
@@ -17,6 +19,7 @@ public class MetaControllers {
 	private static Map metaControllers;
 	private static Map mapMetaObjects;
 	private static String context = SWING;
+	private static Log log = LogFactory.getLog(MetaControllers.class);
 	
 	public static void _addMetaController(MetaController newController) throws XavaException {
 		if (metaControllers == null) {
@@ -25,7 +28,7 @@ public class MetaControllers {
 		
 		
 		if (metaControllers.containsKey(newController.getName())) {
-			System.err.println(XavaResources.getString("trying_to_load_controller_twice_warning", newController.getName()));
+			log.warn(XavaResources.getString("trying_to_load_controller_twice_warning", newController.getName()));
 		}
 		
 		metaControllers.put(newController.getName(), newController);

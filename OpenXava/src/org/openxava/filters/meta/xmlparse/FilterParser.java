@@ -1,5 +1,7 @@
 package org.openxava.filters.meta.xmlparse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.filters.meta.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
@@ -12,6 +14,8 @@ import org.w3c.dom.*;
  */
 public class FilterParser extends XmlElementsNames {
 
+	private Log log = LogFactory.getLog(XmlElementsNames.class);
+	
 	public static MetaFilter parseFilter(Node n, int lang) throws XavaException {
 		Element el = (Element) n;
 		MetaFilter e = new MetaFilter();

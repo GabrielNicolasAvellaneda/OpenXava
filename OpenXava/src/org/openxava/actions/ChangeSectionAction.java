@@ -2,6 +2,8 @@ package org.openxava.actions;
 
 import javax.servlet.http.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.controller.*;
 import org.openxava.util.*;
 import org.openxava.view.*;
@@ -16,7 +18,8 @@ public class ChangeSectionAction extends BaseAction implements IModuleContextAct
 	private String viewObject;
 	private ModuleContext context;
 	private HttpServletRequest request;
-
+	private Log log = LogFactory.getLog(ChangeSectionAction.class);
+	
 	public void execute() throws Exception {
 		getView().setActiveSection(getActiveSection());
 	}

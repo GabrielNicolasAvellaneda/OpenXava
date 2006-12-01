@@ -2,6 +2,9 @@ package org.openxava.util;
 
 import java.io.*;
 import java.lang.reflect.*;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * Utility class to work with objects. <p>
  * 
@@ -11,6 +14,8 @@ import java.lang.reflect.*;
 public class Objects {
 
   private static final Class [] arg0 = { };	
+  
+  private static Log log = LogFactory.getLog(Objects.class);
 
   /**
    * Clone the sent object. <p>
@@ -37,7 +42,7 @@ public class Objects {
 		throw ex;
 	}
 	catch (Exception ex) { // Not very often
-		ex.printStackTrace();
+		log.error(ex.getMessage(), ex);
 		throw new CloneNotSupportedException(XavaResources.getString("clone_error", o));
 	}
   }
@@ -68,7 +73,7 @@ public class Objects {
 		return result;
 	}
 	catch (Exception ex) {
-		ex.printStackTrace();
+		log.error(ex.getMessage(), ex);
 		throw new CloneException(XavaResources.getString("deep_clone_error", source));
 	}
   }
@@ -152,8 +157,7 @@ public class Objects {
 		throw new IllegalArgumentException(XavaResources.getString("clone_required"));
 	}
 	catch (Exception ex) {
-		ex.printStackTrace();
-		System.err.println("WARNING!: Impossible to clone " + o + " because " + ex.getMessage() + " The original element is returned");
+		log.warn("Impossible to clone " + o + " because " + ex.getMessage() + " The original element is returned", ex);
 		return o;
 	}
   }
