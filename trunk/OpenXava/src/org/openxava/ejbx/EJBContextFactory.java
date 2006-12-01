@@ -2,6 +2,8 @@ package org.openxava.ejbx;
 
 import javax.ejb.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 
 
@@ -14,7 +16,7 @@ import org.openxava.util.*;
 
 public class EJBContextFactory {
 
-
+	private Log log = LogFactory.getLog(EJBContextFactory.class);
 
   /**
    * It create a <code>IEJBContext</code> used for implementing the <code>EJBContext</code> indicated. <br> 

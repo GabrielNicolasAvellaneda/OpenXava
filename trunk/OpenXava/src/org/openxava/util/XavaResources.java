@@ -5,6 +5,9 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 
 /**
@@ -28,7 +31,9 @@ import javax.servlet.http.*;
 public class XavaResources {
 	
 	private static final ResourceManagerI18n impl = new ResourceManagerI18n("Messages", "-messages", "Mensajes"); 
-		
+	
+	private static Log log = LogFactory.getLog(XavaResources.class);
+	
 	public static String getString(String key) {	
 		return impl.getString(key); 
 	}
@@ -96,7 +101,7 @@ public class XavaResources {
 				return (Locale) o;
 			}
 			else {
-				System.err.println(XavaResources.getString("xava_locale_warning"));
+				log.warn(XavaResources.getString("xava_locale_warning"));
 				return Locales.getCurrent();
 			}
 		}		

@@ -8,6 +8,8 @@ import java.util.*;
 import javax.ejb.*;
 import javax.rmi.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.converters.*;
 import org.openxava.ejbx.*;
 import org.openxava.mapping.*;
@@ -29,7 +31,9 @@ public class MetaEJB implements Serializable {
 	private EJBHome ejbHome;
 	private java.lang.String primaryKey;	
 	private MetaModel metaModel;
-		
+	
+	private Log log = LogFactory.getLog(MetaEJB.class);
+	
 	public void setMetaModel(MetaModel metaModel) {
 		this.metaModel = metaModel;
 	}
@@ -48,7 +52,7 @@ public class MetaEJB implements Serializable {
 				remoteClass = Class.forName(getRemote());
 			} 
 			catch (Exception ex) {
-				ex.printStackTrace();
+				log.error(ex.getMessage(), ex);
 				throw new XavaException("create_class_error", getRemote());
 			}
 		}
@@ -112,7 +116,7 @@ public class MetaEJB implements Serializable {
 				homeClass = Class.forName(getHome());
 			} 
 			catch (Exception ex) {
-				ex.printStackTrace();
+				log.error(ex.getMessage(), ex);
 				throw new XavaException("create_class_error", getHome());
 			}
 		}
@@ -125,7 +129,7 @@ public class MetaEJB implements Serializable {
 				primaryKeyClass = Class.forName(getPrimaryKey());
 			} 
 			catch (Exception ex) {
-				ex.printStackTrace();
+				log.error(ex.getMessage(), ex);
 				throw new XavaException("create_class_error", getPrimaryKey());
 			}
 		}
@@ -140,7 +144,7 @@ public class MetaEJB implements Serializable {
 				ejbHome = (EJBHome) PortableRemoteObject.narrow(o, getHomeClass());
 			} 
 			catch (Exception ex) {
-				ex.printStackTrace();
+				log.error(ex.getMessage(), ex);
 				throw new EJBException(
 						XavaResources.getString("ejbhome_error") + ". JNDI: " + getJndi());
 			}
@@ -162,7 +166,7 @@ public class MetaEJB implements Serializable {
 			return result;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("primary_key_to_map_error", (primaryKey==null?null:primaryKey.getClass()));
 		}
 	}
@@ -251,7 +255,7 @@ public class MetaEJB implements Serializable {
 			return key;
 		} 
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("primary_key_error", getModelName());
 		}
 	}
@@ -373,7 +377,7 @@ public class MetaEJB implements Serializable {
 			f.set(o, value);
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("value_to_member_error", propertyName,  o.getClass().getName(), ex.getLocalizedMessage());
 		}
 

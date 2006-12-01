@@ -6,6 +6,8 @@ import java.util.*;
 import javax.ejb.*;
 import javax.persistence.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.validator.*;
 import org.openxava.jpa.*;
 import org.openxava.model.meta.*;
@@ -17,6 +19,8 @@ import org.openxava.util.*;
  * @author Javier Paniza
  */
 public class JPAPersistenceProvider extends POJOPersistenceProviderBase {
+	
+	private Log log = LogFactory.getLog(JPAPersistenceProvider.class);
 	
 	protected Object find(Class pojoClass, Serializable key) {
 		try {
@@ -41,7 +45,7 @@ public class JPAPersistenceProvider extends POJOPersistenceProviderBase {
 			return object.equals(emptyObject);
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new PersistenceProviderException(XavaResources.getString("is_empty_error", object));
 		}
 	}
@@ -57,7 +61,7 @@ public class JPAPersistenceProvider extends POJOPersistenceProviderBase {
 			XPersistence.getManager().remove(model);
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new RemoveException(XavaResources.getString("remove_error",
 					metaModel.getName(), ex.getMessage()));
 		}
@@ -85,13 +89,13 @@ public class JPAPersistenceProvider extends POJOPersistenceProviderBase {
 			XPersistence.getManager().flush();
 		}
 		catch (InvalidStateException ex) {
-			System.out.println("[JPAPersistenceProvider.flush] Validation message=" + ex.getLocalizedMessage());
+			log.info("Validation message=" + ex.getLocalizedMessage());
 			InvalidValue [] invalidValues = ex.getInvalidValues();
 			for (int i=0; i < invalidValues.length; i++) {
-				System.out.println("[JPAPersistenceProvider.flush] BeanClass=" + invalidValues[i].getBeanClass()); //  tmp
-				System.out.println("[JPAPersistenceProvider.flush] PropertyName=" + invalidValues[i].getPropertyName() ); //  tmp
-				System.out.println("[JPAPersistenceProvider.flush] Message=" + invalidValues[i].getMessage()); //  tmp
-				System.out.println("[JPAPersistenceProvider.flush] Value=" + invalidValues[i].getValue()); //  tmp
+				log.info("BeanClass=" + invalidValues[i].getBeanClass()); //  tmp
+				log.info("PropertyName=" + invalidValues[i].getPropertyName() ); //  tmp
+				log.info("Message=" + invalidValues[i].getMessage()); //  tmp
+				log.info("Value=" + invalidValues[i].getValue()); //  tmp
 			}
 		}
 		

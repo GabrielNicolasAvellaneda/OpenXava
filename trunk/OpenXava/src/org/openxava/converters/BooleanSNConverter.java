@@ -1,5 +1,8 @@
 package org.openxava.converters;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 /**
  * In java a boolean and in database String that
@@ -9,6 +12,8 @@ package org.openxava.converters;
  */
 public class BooleanSNConverter implements IConverter {
 
+	private Log log = LogFactory.getLog(BooleanSNConverter.class);
+	
 	public Object toDB(Object o) throws ConversionException {
 		if (!(o instanceof Boolean)) {		
 			throw new ConversionException("conversion_db_boolean_expected");

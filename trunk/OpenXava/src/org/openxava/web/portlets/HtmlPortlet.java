@@ -4,6 +4,8 @@ import java.io.*;
 
 import javax.portlet.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 
 /**
@@ -46,6 +48,8 @@ public class HtmlPortlet extends GenericPortlet {
 	private String page;
 	private String languages;
 	private String defaultLanguage;
+	
+	private Log log = LogFactory.getLog(HtmlPortlet.class);
 	
 	public void init(PortletConfig config) throws PortletException {
 		super.init(config);		

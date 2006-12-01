@@ -4,6 +4,8 @@ import java.util.*;
 
 import javax.ejb.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.model.*;
 import org.openxava.validators.*;
 
@@ -12,6 +14,8 @@ import org.openxava.validators.*;
  */
 
 public class SaveNewAction extends UpdateReferenceBaseAction {
+	
+	private Log log = LogFactory.getLog(SaveNewAction.class);
 	
 	public void execute() throws Exception {		
 		try {					

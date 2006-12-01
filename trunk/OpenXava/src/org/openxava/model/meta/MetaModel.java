@@ -5,6 +5,8 @@ import java.beans.*;
 import java.util.*;
 
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.component.*;
 import org.openxava.mapping.*;
 import org.openxava.util.*;
@@ -69,6 +71,8 @@ abstract public class MetaModel extends MetaElement {
 	private MetaEJB metaEJB;
 	private String pojoClassName;
 	private Collection metaReferencesToEntity;
+	
+	private Log log = LogFactory.getLog(MetaModel.class);
 	
 	/**
 	 * All models (Entities and Aggregates) with a mapping associated.
@@ -342,7 +346,7 @@ abstract public class MetaModel extends MetaElement {
 				}
 			} 
 			catch (Exception ex) {
-				ex.printStackTrace();
+				log.error(ex.getMessage(), ex);
 				throw new XavaException("property_descriptors_error", getPropertiesClass());
 			}
 		}
@@ -1291,7 +1295,7 @@ abstract public class MetaModel extends MetaElement {
 			return pojo;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("to_pojo_error", getName());
 		}		
 	}
@@ -1349,7 +1353,7 @@ abstract public class MetaModel extends MetaElement {
 			return values;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("to_map_error");
 		}		
 	}
@@ -1385,7 +1389,7 @@ abstract public class MetaModel extends MetaElement {
 				}
 			}
 			catch (Exception ex) {
-				ex.printStackTrace();
+				log.error(ex.getMessage(), ex);
 				toStringValue.append(" ").append('.');
 			}
 		}
@@ -1542,7 +1546,7 @@ abstract public class MetaModel extends MetaElement {
 				pojoClass =  Class.forName(getPOJOClassName());
 			} 
 			catch (Exception ex) {
-				ex.printStackTrace();
+				log.error(ex.getMessage(), ex);
 				throw new XavaException("create_class_error", getPOJOClassName());
 			}
 		}

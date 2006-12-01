@@ -5,6 +5,9 @@ import java.io.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 /**
  * The main difference within this class and swing <code>AbstractTableModel</code>
@@ -20,6 +23,8 @@ public abstract class TableModelBase implements TableModel, Serializable
 {
 	transient private EventListenerList listenerList;
 
+	private Log log = LogFactory.getLog(TableModelBase.class);
+	
 	public void addTableModelListener(TableModelListener l) {
 		getListenerList().add(TableModelListener.class, l);
 	}

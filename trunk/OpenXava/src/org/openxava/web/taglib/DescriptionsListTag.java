@@ -4,6 +4,8 @@ import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 import javax.servlet.jsp.tagext.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.controller.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -16,7 +18,8 @@ import org.openxava.view.*;
 
 public class DescriptionsListTag extends TagSupport {
 	
-	private String reference;		
+	private String reference;
+	private Log log = LogFactory.getLog(DescriptionsListTag.class);
 	
 	public int doStartTag() throws JspException {
 		try {
@@ -43,7 +46,7 @@ public class DescriptionsListTag extends TagSupport {
 			}			
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new JspException(XavaResources.getString("descriptionsList_tag_error", reference));
 		}	
 		return SKIP_BODY;

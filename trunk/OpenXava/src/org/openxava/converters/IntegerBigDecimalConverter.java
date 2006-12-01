@@ -2,6 +2,9 @@ package org.openxava.converters;
 
 import java.math.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 /**
  * In java a int and in database a BigDecimal. <p>
@@ -10,6 +13,8 @@ import java.math.*;
  */
 public class IntegerBigDecimalConverter implements IConverter {
 
+	private Log log = LogFactory.getLog(IntegerBigDecimalConverter.class);
+	
 	public Object toDB(Object o) throws ConversionException {
 		if (!(o instanceof Integer)) {		
 			throw new ConversionException("conversion_db_integer_excepted");

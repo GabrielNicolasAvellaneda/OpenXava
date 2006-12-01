@@ -2,6 +2,9 @@ package org.openxava.ejbx;
 
 import javax.naming.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 /**
  * Provides a {@link IContext} that look up in JNDI space. <p>
@@ -15,6 +18,7 @@ import javax.naming.*;
 
 public class JndiContextProvider implements IContextProvider {
 
+  private Log log = LogFactory.getLog(JndiContextProvider.class);
   
   public IContext getContext() throws NamingException {
   	return new JndiContext(new InitialContext());

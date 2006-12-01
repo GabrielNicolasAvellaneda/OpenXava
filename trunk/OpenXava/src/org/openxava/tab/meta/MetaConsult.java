@@ -3,6 +3,8 @@ package org.openxava.tab.meta;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.filters.*;
 import org.openxava.filters.meta.*;
 import org.openxava.model.meta.*;
@@ -26,6 +28,8 @@ public class MetaConsult extends MetaElement {
 	private MetaFilter metaFilter;
 	private IFilter filter;
 	private String label;
+	
+	private Log log = LogFactory.getLog(MetaConsult.class);
 				
 	public void addMetaParameter(MetaParameter parameter) {
 		metaParameters.add(parameter);
@@ -65,10 +69,11 @@ public class MetaConsult extends MetaElement {
 				label = createDefaultLabel();
 			}
 			catch (XavaException ex) {
-				ex.printStackTrace();
 				if (XavaPreferences.getInstance().isI18nWarnings()) {
-					System.err.println(XavaResources.getString("label_i18n_warning", getId()));
-				}
+					log.warn(XavaResources.getString("label_i18n_warning", getId()),ex);
+				} else
+					log.warn(ex.getMessage(), ex);
+					
 			}
 		}
 		return label;

@@ -2,6 +2,9 @@ package org.openxava.util;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * Utilities to work with maps. <p> 
  * 
@@ -9,6 +12,8 @@ import java.util.*;
  */
 public class Maps {
 
+	private static Log log = LogFactory.getLog(Maps.class);
+	
 	/**
 	 * Create a clone. <p>
 	 *
@@ -94,7 +99,7 @@ public class Maps {
 			return result;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new IllegalArgumentException(XavaResources.getString("clone_map_require_default_constructor"));
 		}
 	}
@@ -125,7 +130,7 @@ public class Maps {
 			return result;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new IllegalArgumentException(XavaResources.getString("clone_map_require_default_constructor"));
 		}
 	}

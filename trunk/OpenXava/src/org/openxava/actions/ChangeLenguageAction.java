@@ -1,5 +1,7 @@
 package org.openxava.actions;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.session.*;
 
 /**
@@ -10,7 +12,8 @@ public class ChangeLenguageAction extends BaseAction {
 	
 	private String languageId;
 	private Language language;
-
+	private Log log = LogFactory.getLog(ChangeLenguageAction.class);
+	
 	public void execute() throws Exception {
 		language.setId(languageId);
 	}

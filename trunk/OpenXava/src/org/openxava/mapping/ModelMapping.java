@@ -2,6 +2,8 @@ package org.openxava.mapping;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.component.*;
 import org.openxava.converters.*;
 import org.openxava.model.meta.*;
@@ -12,6 +14,7 @@ import org.openxava.util.*;
  */
 abstract public class ModelMapping implements java.io.Serializable {
 
+	private Log log = LogFactory.getLog(ModelMapping.class);
 	private MetaComponent metaComponent;
 	private String table;
 	private Map propertyMappings = new HashMap();
@@ -42,9 +45,9 @@ abstract public class ModelMapping implements java.io.Serializable {
 				return keyClass.getField(propertyName).getType();
 			}
 			catch (NoSuchFieldException ex2) {
-				System.err.println(
+				log.warn(
 						XavaResources.getString("property_type_from_mapping_warning", 
-								propertyName, getMetaComponent().getName()));
+								propertyName, getMetaComponent().getName()),ex2);
 				// If we does not obtain type return a default value
 				return java.lang.Object.class;
 			}

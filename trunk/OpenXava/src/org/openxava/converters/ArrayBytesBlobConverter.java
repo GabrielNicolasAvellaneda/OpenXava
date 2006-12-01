@@ -2,6 +2,9 @@ package org.openxava.converters;
 
 import java.sql.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openxava.controller.meta.MetaUseObject;
 import org.openxava.util.*;
 
 
@@ -17,6 +20,7 @@ import org.openxava.util.*;
  */
 public class ArrayBytesBlobConverter implements IConverter {
 
+	private Log log = LogFactory.getLog(ArrayBytesBlobConverter.class);
 	
 	public Object toDB(Object o) throws ConversionException {
 		if (o == null) return null;
@@ -36,8 +40,7 @@ public class ArrayBytesBlobConverter implements IConverter {
 			return b.getBytes(1l, (int) b.length());
 		}
 		catch (SQLException e) {
-			e.printStackTrace();
-			System.err.println(XavaResources.getString("blob_to_array_warning"));
+			log.error(XavaResources.getString("blob_to_array_warning"), e);
 			return null;
 		}
 	}

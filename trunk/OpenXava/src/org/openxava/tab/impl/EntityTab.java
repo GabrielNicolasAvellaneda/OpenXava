@@ -6,6 +6,8 @@ import java.util.*;
 import javax.ejb.*;
 import javax.rmi.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.component.*;
 import org.openxava.converters.*;
 import org.openxava.ejbx.*;
@@ -49,6 +51,8 @@ public class EntityTab implements IEntityTabImpl {
 	private boolean	knowIfHasPropertiesWithValidValues = false;
 	private boolean _hasPropertiesWithValidValues;
 	
+	private static Log log = LogFactory.getLog(EntityTab.class);
+	
 	public void search(int index, Object key)
 		throws FinderException, RemoteException {
 		tabProvider.search(index, key);
@@ -67,7 +71,7 @@ public class EntityTab implements IEntityTabImpl {
 			tabProvider.search(select.toString(), key);
 		}
 		catch (XavaException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new RemoteException(XavaResources.getString("tab_search_error", ex.getLocalizedMessage()));
 		}		
 	}
@@ -93,7 +97,7 @@ public class EntityTab implements IEntityTabImpl {
 			return result;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new RemoteException(
 				XavaResources.getString("tab_entity_find_error"));
 		}
@@ -166,7 +170,7 @@ public class EntityTab implements IEntityTabImpl {
 			return new HiddenXTableModel(table, getIndexesPK()); 
 		}
 		catch (XavaException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new RemoteException(XavaResources.getString("tab_tablemodel_error", ex.getLocalizedMessage()));
 		}   
 	}
@@ -197,7 +201,7 @@ public class EntityTab implements IEntityTabImpl {
 			//tabProvider.invariant(); // It is not possible because still lacks connectionProvider
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new InitException("tab_init_error", modelName);
 		}
 	}
@@ -233,7 +237,7 @@ public class EntityTab implements IEntityTabImpl {
 			return conditions;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new RemoteException(
 					XavaResources.getString("tab_conditions_error", this.modelName));
 		}
@@ -284,7 +288,7 @@ public class EntityTab implements IEntityTabImpl {
 			if (tabConverters.isEmpty()) tabConverters = null;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new RemoteException(XavaResources.getString("tab_next_chunk_error"));
 		}
 		DataChunk tv = null; 		
@@ -308,7 +312,7 @@ public class EntityTab implements IEntityTabImpl {
 			}
 		}
 		catch (XavaException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new RemoteException(XavaResources.getString("tab_valid_values_error"));
 		}
 		return tv;		
@@ -505,7 +509,7 @@ public class EntityTab implements IEntityTabImpl {
 			return dataProvider;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new RemoteException("tab_remote_error");
 		}						
 	}
@@ -523,8 +527,7 @@ public class EntityTab implements IEntityTabImpl {
 			getDataProviders().remove(packageName);			
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
-			System.err.println(XavaResources.getString("warning_cancel_data_provider"));
+			log.warn(XavaResources.getString("warning_cancel_data_provider"),ex);
 		}		
 	}	
 	

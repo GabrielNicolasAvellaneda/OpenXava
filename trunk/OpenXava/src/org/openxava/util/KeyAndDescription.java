@@ -2,6 +2,9 @@ package org.openxava.util;
 
 import java.io.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * A class with a key and a description. <p>
  * 
@@ -11,6 +14,7 @@ public class KeyAndDescription implements Serializable {
 	boolean showCode=false;
 	private Object key;
 	private Object description;
+	private Log log = LogFactory.getLog(KeyAndDescription.class);
 	
 	public KeyAndDescription() {
 	}

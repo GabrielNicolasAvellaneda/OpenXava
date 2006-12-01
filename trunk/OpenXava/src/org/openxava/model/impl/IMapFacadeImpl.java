@@ -6,13 +6,15 @@ import java.util.*;
 
 import javax.ejb.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
 
 
 public interface IMapFacadeImpl {
-
+	
 	Object create(String user, String modelName, Map values)
 		throws 
 			CreateException, ValidationException, 

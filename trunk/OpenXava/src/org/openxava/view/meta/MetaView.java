@@ -3,6 +3,8 @@ package org.openxava.view.meta;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.actions.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -43,6 +45,8 @@ public class MetaView extends MetaElement implements Cloneable {
 	private boolean alignedByColumns = false; 
 		
 	private String mediatorClassName;
+	
+	private Log log = LogFactory.getLog(MetaView.class);
 	
 	private void addMemberName(String memberName) {
 		_membersNames.add(memberName);

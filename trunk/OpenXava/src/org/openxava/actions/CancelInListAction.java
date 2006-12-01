@@ -1,5 +1,8 @@
 package org.openxava.actions;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 /**
  * In list mode return to initial state (if we have navigated). <p>
@@ -12,7 +15,9 @@ package org.openxava.actions;
  */
 
 public class CancelInListAction extends BaseAction implements IChangeModeAction, INavigationAction {
-		
+	
+	private Log log = LogFactory.getLog(CancelInListAction.class);
+	
 	public String getNextMode() {
 		// PREVIOUS_MODE (instead of LIST) in order to work also in list for searching references
 		return IChangeModeAction.PREVIOUS_MODE;

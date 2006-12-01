@@ -2,6 +2,8 @@ package org.openxava.mapping;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.converters.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -20,6 +22,7 @@ public class PropertyMapping extends MetaSetsContainer {
 	private boolean multpleConverterCreated = false;
 	private String cmpTypeName;
 	private ModelMapping modelMapping;
+	private Log log = LogFactory.getLog(PropertyMapping.class);
 	
 	public PropertyMapping(ModelMapping parent) {
 		this.modelMapping = parent;
@@ -108,11 +111,11 @@ public class PropertyMapping extends MetaSetsContainer {
 			return conversor;
 		}
 		catch (ClassCastException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("create_converter_classcast_error", getProperty(), converterClassName, "IConverter");
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("create_converter_error", getProperty(), ex.getLocalizedMessage());
 		}
 	}
@@ -127,11 +130,11 @@ public class PropertyMapping extends MetaSetsContainer {
 			return conversor;
 		}
 		catch (ClassCastException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("create_converter_classcast_error", getProperty(), converterClassName, "IMultipleConverter");
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("create_converter_error", getProperty(), ex.getLocalizedMessage());
 		}
 	}

@@ -3,6 +3,8 @@ package org.openxava.controller.meta;
 import java.lang.reflect.*;
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 
 /**
@@ -16,6 +18,7 @@ public class MetaObject {
 	private String name;
 	private String className;
 	private String value;
+	private Log log = LogFactory.getLog(MetaObject.class);
 	
 	public String getClassName() {
 		return className;
@@ -64,7 +67,7 @@ public class MetaObject {
 			throw new XavaException("session_object_value_invalid", name, value, this.className, this.className);
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(),ex);
 			throw new XavaException("create_error", name);
 		}
 	}

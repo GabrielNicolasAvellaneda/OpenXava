@@ -2,6 +2,8 @@ package org.openxava.mapping;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.mapping.xmlparse.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -17,6 +19,7 @@ public class Converters {
 	private static Map stereotypeCmpTypes;
 	private static Map typeConverters;
 	private static Map typeCmpTypes;
+	private Log log = LogFactory.getLog(Converters.class);
 	
 	public static void _addForStereotype(String name, String converterClass, String cmpType) throws XavaException {
 		if (stereotypeConverters == null) {

@@ -1,11 +1,16 @@
 package org.openxava.converters;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * In java a String a a Blog in database. <p>
  * 
  * @author Javier Paniza
  */
 public class StringBlobConverter implements IConverter {
+	
+	private Log log = LogFactory.getLog(StringBlobConverter.class);
 	
 	public class StringValue implements java.io.Serializable {
     	
@@ -22,7 +27,7 @@ public class StringBlobConverter implements IConverter {
 			return o==null?"":((StringValue)o).data;
 		}
 		catch (Exception ex){
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			return "";
 		}
 	}

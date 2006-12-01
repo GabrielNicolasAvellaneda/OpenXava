@@ -1,5 +1,8 @@
 package org.openxava.calculators;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 /**
  * @author Javier Paniza
@@ -7,7 +10,8 @@ package org.openxava.calculators;
 public class IntegerCalculator implements ICalculator {
 
 	private int value;
-
+	private Log log = LogFactory.getLog(IntegerCalculator.class);
+	
 	public Object calculate() throws Exception {		
 		return new Integer(value);
 	}

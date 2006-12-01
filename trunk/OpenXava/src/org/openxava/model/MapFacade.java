@@ -6,8 +6,11 @@ import java.util.*;
 import javax.ejb.*;
 import javax.rmi.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.component.*;
 import org.openxava.ejbx.*;
+import org.openxava.mapping.xmlparse.MappingParser;
 import org.openxava.model.impl.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -50,6 +53,7 @@ public class MapFacade {
 	private static boolean usesEJBObtained;
 	private static boolean usesEJB;
 	private static IMapFacadeImpl localImpl;
+	private static Log log = LogFactory.getLog(MapFacade.class);
 
 	/**
 	 * Creates a new entity from a map with its initial values. <p> 
@@ -522,7 +526,7 @@ public class MapFacade {
 			return remote;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new RemoteException(XavaResources.getString("facade_remote", modelName));
 		}		
 	}
@@ -536,11 +540,11 @@ public class MapFacade {
 			return getLocalImpl().getKey(m, keyValues);
 		}
 		catch (RemoteException ex) { 
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException(ex.getMessage());
 		}
 		catch (ClassCastException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("no_entity_bean", entityName);
 		}
 	}
@@ -563,8 +567,7 @@ public class MapFacade {
 			getRemotes().remove(paquete);			
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();			
-			System.err.println(XavaResources.getString("cache_facade_remote_warning"));
+			log.error(XavaResources.getString("cache_facade_remote_warning"), ex);		
 		}		
 	}
 

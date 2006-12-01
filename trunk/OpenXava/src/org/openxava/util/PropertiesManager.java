@@ -4,6 +4,9 @@ import java.beans.*;
 import java.lang.reflect.*;
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * Manages with reflection the properties of a object. <p> 
  *
@@ -18,6 +21,8 @@ public class PropertiesManager implements java.io.Serializable {
 	private transient Map propertyDescriptors;
 	private Object object;
 	private Class theClass;
+	
+	private Log log = LogFactory.getLog(PropertiesManager.class);
 
 	public PropertiesManager() {
 	}
@@ -77,7 +82,7 @@ public class PropertiesManager implements java.io.Serializable {
 			throw ex;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new PropertiesManagerException(
 					XavaResources.getString("get_property_error", propertyName));
 		}
@@ -168,13 +173,13 @@ public class PropertiesManager implements java.io.Serializable {
 					met.invoke(object, arg);
 				}
 				catch (Exception ex2) {
-					ex2.printStackTrace();
+					log.error(ex2.getMessage(), ex2);
 					throw new PropertiesManagerException(
 							XavaResources.getString("set_property_error", propertyName));
 				}				
 			}
 			else {
-				System.err.println(XavaResources.getString("set_property_error", propertyName));
+				log.error(XavaResources.getString("set_property_error", propertyName),ex);
 				throw ex;
 			} 			
 		}
@@ -182,7 +187,7 @@ public class PropertiesManager implements java.io.Serializable {
 			throw ex; 
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new PropertiesManagerException(
 					XavaResources.getString("set_property_error", propertyName));
 		}
@@ -205,7 +210,7 @@ public class PropertiesManager implements java.io.Serializable {
 			return value;
 		}		
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			return value;
 		}
 	}
@@ -267,7 +272,7 @@ public class PropertiesManager implements java.io.Serializable {
 			throw ex;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new PropertiesManagerException(
 					XavaResources.getString("set_property_error", propertyName));
 		}
@@ -461,7 +466,7 @@ public class PropertiesManager implements java.io.Serializable {
 				}
 			}
 			catch (Exception ex) {
-				ex.printStackTrace();
+				log.error(ex.getMessage(), ex);
 				throw new PropertiesManagerException(XavaResources.getString("properties_manager_properties_error"));
 			}
 		}

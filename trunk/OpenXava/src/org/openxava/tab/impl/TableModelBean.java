@@ -7,6 +7,8 @@ import java.util.*;
 import javax.ejb.*;
 import javax.swing.event.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 
 /**
@@ -38,6 +40,8 @@ public class TableModelBean implements IXTableModel, java.io.Serializable {
 	private int rowCount;
 	private boolean translateHeading = true;
 
+	private Log log = LogFactory.getLog(TableModelBean.class);
+	
 	public TableModelBean() {
 		refresh();
 	}
@@ -74,8 +78,7 @@ public class TableModelBean implements IXTableModel, java.io.Serializable {
 				rs = Class.forName(columnsClasses[columnIndex]);
 			}
 			catch (ClassNotFoundException ex) {
-				ex.printStackTrace();
-				System.err.println(XavaResources.getString("class_not_found_for_column_warning", new Integer(columnIndex)));
+				log.error(XavaResources.getString("class_not_found_for_column_warning", new Integer(columnIndex)), ex);
 			}
 			catch (IndexOutOfBoundsException ex) {
 			}
@@ -98,7 +101,7 @@ public class TableModelBean implements IXTableModel, java.io.Serializable {
 			return ResourceBundle.getBundle(bundle).getString(id); 
 		}
 		catch (MissingResourceException ex) {		
-			System.err.println(XavaResources.getString("resource_not_found_in_bundle", id, bundle));
+			log.error(XavaResources.getString("resource_not_found_in_bundle", id, bundle),ex);
 			return label;
 		}
 	}
@@ -116,9 +119,7 @@ public class TableModelBean implements IXTableModel, java.io.Serializable {
 			DataChunk sig = entityTab.nextChunk();
 			long timeNextChunk =
 				System.currentTimeMillis() - iniNextChunk;
-			System.out.println(
-				"[TableModelBean.getRow] nextChunk="
-					+ timeNextChunk);
+			log.info("nextChunk=" + timeNextChunk);
 			List newData = sig.getData();
 			Iterator it = newData.iterator();
 			while (it.hasNext()) {
@@ -172,7 +173,7 @@ public class TableModelBean implements IXTableModel, java.io.Serializable {
 			return convert(row[columnIndex], columnIndex);
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			return "ERROR!";
 		}
 	}
@@ -220,9 +221,8 @@ public class TableModelBean implements IXTableModel, java.io.Serializable {
 				entityTab.reset();
 			}
 		}
-		catch (Exception e) {			
-			e.printStackTrace();
-			System.out.println(XavaResources.getString("tab_reset_warning"));
+		catch (Exception ex) {			
+			log.warn(XavaResources.getString("tab_reset_warning"), ex);
 		}
 		fireModelChanged();
 	}

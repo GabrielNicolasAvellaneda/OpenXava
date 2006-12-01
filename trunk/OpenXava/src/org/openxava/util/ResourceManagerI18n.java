@@ -3,6 +3,8 @@ package org.openxava.util;
 import java.text.*;
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.application.meta.*;
 
 /**
@@ -14,6 +16,8 @@ public class ResourceManagerI18n {
 	private String resourcesFile;
 	private String englishPrefix;
 	private String spanishPrefix;
+	
+	private Log log = LogFactory.getLog(ResourceManagerI18n.class);
 		
 	public ResourceManagerI18n(String resourcesFile) {
 		Assert.assertNotNull("Resource file is required", resourcesFile); // this message cannot be i18n
@@ -83,15 +87,15 @@ public class ResourceManagerI18n {
 			}	
 		}
 		catch (Exception ex) {
-			System.err.println("Resource " + key + " cannot be translated using application specific resources. We use only " + resourcesFile);
+			log.error("Resource " + key + " cannot be translated using application specific resources. We use only " + resourcesFile,ex);
 		}
 		try {
 			ResourceBundle rb = ResourceBundle.getBundle(resourcesFile, locale);
 			return rb.getString(key);
 		}
-		catch (MissingResourceException e) {
+		catch (MissingResourceException ex) {
 			if (XavaPreferences.getInstance().isI18nWarnings()) {
-				System.err.println(XavaResources.getString("element_i18n_warning", key));
+				log.warn(XavaResources.getString("element_i18n_warning", key),ex);
 			}
 			return key;
 		}
@@ -116,9 +120,9 @@ public class ResourceManagerI18n {
 			if (s.length() == 0) return ' ';
 			return s.charAt(0);			
 		}
-		catch (MissingResourceException e) {
+		catch (MissingResourceException ex) {
 			if (XavaPreferences.getInstance().isI18nWarnings()) {
-				System.err.println(XavaResources.getString("char_i18n_warning", key));
+				log.warn(XavaResources.getString("char_i18n_warning", key),ex);
 			}
 			return ' ';
 		}

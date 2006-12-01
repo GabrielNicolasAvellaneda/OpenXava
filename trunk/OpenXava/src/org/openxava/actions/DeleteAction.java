@@ -2,6 +2,8 @@ package org.openxava.actions;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.model.*;
 import org.openxava.validators.*;
 
@@ -10,7 +12,9 @@ import org.openxava.validators.*;
  */
 
 public class DeleteAction extends ViewDetailAction {
-		
+	
+	private Log log = LogFactory.getLog(DeleteAction.class);
+	
 	public DeleteAction() {
 		setIncrement(0);
 	}

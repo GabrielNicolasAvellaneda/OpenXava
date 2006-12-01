@@ -4,6 +4,8 @@ import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 import javax.servlet.jsp.tagext.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.controller.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -21,6 +23,7 @@ public class EditorTag extends TagSupport {
 	private boolean explicitEditable = false; 
 	private boolean throwPropertyChanged; 
 	private boolean explicitThrowPropertyChanged; 
+	private Log log = LogFactory.getLog(EditorTag.class);
 	
 	public int doStartTag() throws JspException {
 		try {
@@ -77,7 +80,7 @@ public class EditorTag extends TagSupport {
 			}
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new JspException(XavaResources.getString("editor_tag_error", property));
 		}	
 		return SKIP_BODY;

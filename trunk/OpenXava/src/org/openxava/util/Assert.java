@@ -1,5 +1,8 @@
 package org.openxava.util;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 /**
  * Utility to make asserts. <p>
@@ -26,6 +29,8 @@ package org.openxava.util;
 
 public class Assert {
 
+  private static Log log = LogFactory.getLog(Assert.class);
+	
   /**
    * Verify argument. <br>
    *
@@ -243,7 +248,7 @@ public class Assert {
 		  throw ex;
 		}
 		catch (RuntimeException ex2) {
-		  ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 		  throw ex2;
 		}
   }

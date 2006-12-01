@@ -5,6 +5,8 @@ import java.util.*;
 
 import javax.ejb.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.*;
 
 import org.openxava.hibernate.*;
@@ -15,6 +17,8 @@ import org.openxava.util.*;
  * @author Mª Carmen Gimeno Alabau
  */
 public class HibernatePersistenceProvider extends POJOPersistenceProviderBase {
+	
+	private Log log = LogFactory.getLog(HibernatePersistenceProvider.class);
 	
 	protected Object find(Class pojoClass, Serializable key) {
 		return XHibernate.getSession().get(pojoClass, (Serializable) key);
@@ -39,7 +43,7 @@ public class HibernatePersistenceProvider extends POJOPersistenceProviderBase {
 			XHibernate.getSession().delete(model);
 		}
 		catch (HibernateException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new RemoveException(XavaResources.getString("remove_error",
 					metaModel.getName(), ex.getMessage()));
 		}

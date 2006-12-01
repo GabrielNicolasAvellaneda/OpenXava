@@ -5,6 +5,8 @@ import java.rmi.*;
 import javax.ejb.*;
 import javax.swing.event.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 
 
@@ -21,6 +23,8 @@ public class XTableModelDecoratorBase
 	implements IXTableModel, java.io.Serializable {
 
 	private IXTableModel impl;
+	
+	private Log log = LogFactory.getLog(XTableModelDecoratorBase.class);
 
 	/**
 	 * @param toDecorate <tt>IXTableModel</tt> to decorate.

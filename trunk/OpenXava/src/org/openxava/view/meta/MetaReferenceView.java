@@ -1,5 +1,8 @@
 package org.openxava.view.meta;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * @author Javier Paniza
  */
@@ -15,6 +18,8 @@ public class MetaReferenceView extends MetaMemberView implements java.io.Seriali
 	private boolean search = true;
 	private boolean readOnly = false;
 	private boolean asAggregate = false; 
+	
+	private Log log = LogFactory.getLog(MetaReferenceView.class);
 	
 	public String getReferenceName() {
 		return referenceName==null?"":referenceName.trim();

@@ -6,6 +6,8 @@ import java.util.*;
 
 import javax.ejb.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 
 /**
@@ -33,6 +35,7 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 	private int chunkSize = DEFAULT_CHUNK_SIZE;
 	private int current;  
 	private boolean eof = true;
+	private Log log = LogFactory.getLog(JDBCTabProvider.class);
 	
 	public void search(int index, Object key)
 		throws FinderException, RemoteException {
@@ -223,7 +226,7 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 			if (i < key.length - 1)
 				message.append(", ");
 		}
-		System.out.println(message);
+		log.info(message);
 		
 		ResultSet rs = ps.executeQuery();
 		position(rs);
@@ -260,8 +263,7 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 			return new DataChunk(data, true, current);
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
-			System.err.println("[JDBCTabProvider.nextBlock] " + XavaResources.getString("select_error", select));
+			log.error(XavaResources.getString("select_error", select), ex);
 			throw new RemoteException(XavaResources.getString("select_error", select));
 		}
 		finally {
@@ -317,7 +319,7 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 			return size;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new RemoteException(XavaResources.getString("tab_result_size_error"));
 		}
 		finally {
@@ -325,8 +327,7 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 				con.close();
 			}
 			catch (Exception ex) {
-				ex.printStackTrace();
-				System.err.println(XavaResources.getString("close_connection_warning"));
+				log.error(XavaResources.getString("close_connection_warning"), ex);
 			}
 		}						
 	}

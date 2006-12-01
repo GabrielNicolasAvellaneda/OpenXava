@@ -2,6 +2,8 @@ package org.openxava.view.meta;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.actions.*;
 import org.openxava.util.*;
 
@@ -20,6 +22,8 @@ public class MetaPropertyView extends MetaMemberView implements java.io.Serializ
 	private String onChangeActionClassName;	
 	private int labelFormat;
 				
+	private Log log = LogFactory.getLog(MetaPropertyView.class);
+	
 	public String getPropertyName() {
 		return propertyName==null?"":propertyName.trim();
 	}
@@ -61,7 +65,7 @@ public class MetaPropertyView extends MetaMemberView implements java.io.Serializ
 			throw ex;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("create_error", getOnChangeActionClassName());
 		}		
 	}

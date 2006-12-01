@@ -1,5 +1,7 @@
 package org.openxava.actions;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.tab.*;
 
 /**
@@ -8,6 +10,7 @@ import org.openxava.tab.*;
 public class SortColumnsAction extends BaseAction {
 	
 	private Tab tab;
+	private Log log = LogFactory.getLog(SortColumnsAction.class);
 
 	public void execute() throws Exception {
 		// In reality, sort and unsort

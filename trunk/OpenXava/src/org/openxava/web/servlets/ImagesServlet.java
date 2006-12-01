@@ -5,6 +5,8 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.controller.*;
 import org.openxava.util.*;
 import org.openxava.view.*;
@@ -16,6 +18,8 @@ import org.openxava.view.*;
 
 public class ImagesServlet extends HttpServlet {
 
+	private Log log = LogFactory.getLog(ImagesServlet.class);
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		try {			
 			ModuleContext context = (ModuleContext) request.getSession().getAttribute("context");			
@@ -31,7 +35,7 @@ public class ImagesServlet extends HttpServlet {
 			}
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new ServletException(XavaResources.getString("image_error"));
 		}		
 	}

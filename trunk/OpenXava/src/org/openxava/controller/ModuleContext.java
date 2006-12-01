@@ -4,6 +4,8 @@ import java.util.*;
 
 import javax.servlet.http.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
 
@@ -21,6 +23,7 @@ public class ModuleContext {
 	
 	
 	private Map contexts = new HashMap();
+	private Log log = LogFactory.getLog(ModuleContext.class);
 
 	/**
 	 * Return a object asociate to the specified module
@@ -72,7 +75,7 @@ public class ModuleContext {
 			return Class.forName(className).newInstance();
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(),ex);
 			throw new XavaException("create_error", className);
 		}
 	}

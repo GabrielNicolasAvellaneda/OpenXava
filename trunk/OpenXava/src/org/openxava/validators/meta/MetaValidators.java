@@ -2,6 +2,8 @@ package org.openxava.validators.meta;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 import org.openxava.validators.meta.xmlparse.*;
 
@@ -15,6 +17,8 @@ public class MetaValidators {
 	private static Map metaValidators;
 	private static Map metaValidatorsRequired;
 	private static Map metaValidatorsDefault;
+	
+	private static Log log = LogFactory.getLog(MetaValidators.class);
 	
 	public static void _addMetaValidator(MetaValidator newMetaValidator) throws XavaException {
 		if (metaValidators == null) {
@@ -74,7 +78,7 @@ public class MetaValidators {
 			return null;
 		} 
 		catch (ClassNotFoundException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("class_not_found_searching_validator", forType, ex.getMessage());
 		}
 	}

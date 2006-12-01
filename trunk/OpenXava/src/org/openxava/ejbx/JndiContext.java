@@ -2,6 +2,8 @@ package org.openxava.ejbx;
 
 import javax.naming.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 
 
@@ -16,6 +18,7 @@ import org.openxava.util.*;
 public class JndiContext implements IContext {
 
   private Context ctx;
+  private Log log = LogFactory.getLog(JndiContext.class);
 
   /**
    * It's created from JNDI context that it wants wrap.

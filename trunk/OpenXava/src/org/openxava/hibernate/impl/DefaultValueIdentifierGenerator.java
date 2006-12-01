@@ -3,6 +3,8 @@ package org.openxava.hibernate.impl;
 import java.io.*;
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.*;
 import org.hibernate.dialect.*;
 import org.hibernate.engine.*;
@@ -21,6 +23,8 @@ import org.openxava.util.meta.*;
  */
 
 public class DefaultValueIdentifierGenerator implements IdentifierGenerator, Configurable {
+	
+	private Log log = LogFactory.getLog(DefaultValueIdentifierGenerator.class);
 	
 	static class AggregateOidInfo {
 		public int counter;
@@ -63,7 +67,7 @@ public class DefaultValueIdentifierGenerator implements IdentifierGenerator, Con
 			return (Serializable) calculator.calculate();
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new HibernateException(XavaResources.getString("entity_create_error", modelName, ex.getLocalizedMessage()));
 		}
 	}

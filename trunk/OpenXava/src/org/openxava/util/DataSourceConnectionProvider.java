@@ -9,6 +9,8 @@ import javax.naming.*;
 import javax.sql.*;
 import javax.xml.parsers.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.component.*;
 import org.openxava.hibernate.*;
 import org.w3c.dom.*;
@@ -29,6 +31,8 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 	private String dataSourceJNDI;	
 	private String user;
 	private String password;
+	
+	private static Log log = LogFactory.getLog(DataSourceConnectionProvider.class);
 
 	
 	public static IConnectionProvider createByComponent(String componentName) throws XavaException {
@@ -79,7 +83,7 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 			return null;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			return null;
 		}
 	}
@@ -171,7 +175,7 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 				datasourcesJNDIByPackage = reader.get();				
 			}
 			catch (IOException ex) {
-				ex.printStackTrace();
+				log.error(ex.getMessage(), ex);
 				throw new XavaException(ex.getLocalizedMessage());
 			}
 		}		

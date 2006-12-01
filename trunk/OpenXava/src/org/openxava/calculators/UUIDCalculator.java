@@ -3,6 +3,8 @@ package org.openxava.calculators;
 import java.net.*;
 import java.security.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 
 
@@ -15,6 +17,7 @@ public class UUIDCalculator implements IModelCalculator {
 	
 	private Object model;
 	private boolean lowerCase = false;
+	private Log log = LogFactory.getLog(UUIDCalculator.class);
 
 	public Object calculate() throws Exception {		
 		InetAddress inet = InetAddress.getLocalHost();

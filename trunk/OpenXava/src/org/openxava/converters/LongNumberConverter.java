@@ -1,5 +1,8 @@
 package org.openxava.converters;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 /**
  * In java a long and in database a Number of any type.
@@ -8,7 +11,8 @@ package org.openxava.converters;
  */
 public class LongNumberConverter implements IConverter {
 	
-	private final static Long CERO = new Long(0);	
+	private final static Long CERO = new Long(0);
+	private Log log = LogFactory.getLog(LongNumberConverter.class);
 
 	public Object toDB(Object o) throws ConversionException {
 		return o==null?CERO:o;

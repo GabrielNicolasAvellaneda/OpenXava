@@ -2,6 +2,9 @@ package org.openxava.component;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openxava.application.meta.xmlparse.ApplicationParser;
 import org.openxava.mapping.xmlparse.*;
 import org.openxava.model.meta.*;
 import org.openxava.model.meta.xmlparse.*;
@@ -17,6 +20,7 @@ import org.w3c.dom.*;
 class ComponentParser extends ParserBase {
 	
 	private MetaComponent component;
+	private static Log log = LogFactory.getLog(ComponentParser.class);
 
 	private ComponentParser(String name) {
 		super(name + ".xml");		
@@ -42,7 +46,7 @@ class ComponentParser extends ParserBase {
 			parser = Class.forName("org.openxava.ox3.AnnotatedClassParser").newInstance();						
 		}
 		catch (Exception ex) {
-			System.err.println(XavaResources.getString("annotated_parser_not_found_warning", name));
+			log.warn(XavaResources.getString("annotated_parser_not_found_warning", name),ex);
 			return null;
 		}		
 		
@@ -50,7 +54,7 @@ class ComponentParser extends ParserBase {
 			return (MetaComponent) Objects.execute(parser, "parse", String.class, name);			
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("ejb3_annotations_parse_error", name);
 		}		
 	}
@@ -111,7 +115,7 @@ class ComponentParser extends ParserBase {
 	protected void createObjects() throws XavaException {
 		if (this.component != null) {
 			if (XavaPreferences.getInstance().isDuplicateComponentWarnings()) {
-				System.err.println(XavaResources.getString("trying_to_load_component_twice_warning", this.component.getName()));
+				log.warn(XavaResources.getString("trying_to_load_component_twice_warning", this.component.getName()));
 			}
 			return;
 		}

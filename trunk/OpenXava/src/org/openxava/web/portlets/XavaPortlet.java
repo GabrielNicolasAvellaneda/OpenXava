@@ -7,6 +7,8 @@ import javax.portlet.*;
 
 import org.apache.commons.fileupload.disk.*;
 import org.apache.commons.fileupload.portlet.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.web.style.*;
 
 /**
@@ -51,7 +53,8 @@ public class XavaPortlet extends GenericPortlet {
 	
 	private static Style style;
 	private String moduleURL;
-		
+	
+	private Log log = LogFactory.getLog(XavaPortlet.class);
 	
 	public void init(PortletConfig config) throws PortletException {
 		super.init(config);		
@@ -100,7 +103,7 @@ public class XavaPortlet extends GenericPortlet {
 				request.getPortletSession().removeAttribute("xava.upload.error"); 
 			}
 			catch (Exception ex) {
-				ex.printStackTrace();
+				log.error(ex.getMessage(), ex);
 				request.getPortletSession().removeAttribute("xava.upload.fileitems");
 				request.getPortletSession().setAttribute("xava.upload.error", "upload_error");				
 			}				

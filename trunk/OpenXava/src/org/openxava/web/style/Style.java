@@ -1,5 +1,8 @@
 package org.openxava.web.style;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * 
  * @author Javier Paniza
@@ -8,6 +11,8 @@ package org.openxava.web.style;
 public class Style {
 	
 	private static Style instance = null;
+	
+	private Log log = LogFactory.getLog(Style.class);
 
 	public Style() {		
 	}

@@ -2,6 +2,8 @@ package org.openxava.session;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.*;
 import org.openxava.hibernate.*;
 
@@ -21,6 +23,8 @@ public class Gallery {
 	private String maximizedOid;
 	private String title;
 	private boolean readOnly = false;
+
+	private Log log = LogFactory.getLog(Gallery.class);
 	
 	public void loadAllImages() {
 		if (images != null) images.clear();

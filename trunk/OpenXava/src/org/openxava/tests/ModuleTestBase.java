@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.application.meta.*;
 import org.openxava.component.*;
 import org.openxava.controller.meta.*;
@@ -50,6 +52,8 @@ public class ModuleTestBase extends TestCase {
 	private WebForm form;
 	private String allowDuplicateSubmit;
 	private int formIndex;
+	
+	private static Log log = LogFactory.getLog(ModuleTestBase.class);
 	
 	static {		
 		XHibernate.setConfigurationFile("/hibernate-junit.cfg.xml");
@@ -344,7 +348,7 @@ public class ModuleTestBase extends TestCase {
 	 * Only for debug.
 	 */
 	protected void printHtml() throws Exception {
-		System.out.println(response.getText());
+		log.info(response.getText());
 	}
 	
 	/**
@@ -818,7 +822,7 @@ public class ModuleTestBase extends TestCase {
 			errors.append('\n');			
 			if (error.equals(message)) return;
 		}
-		System.out.println(XavaResources.getString("errors_produced", errors));
+		log.error(XavaResources.getString("errors_produced", errors));
 		fail(XavaResources.getString("error_not_found", message));
 	}
 	
@@ -886,7 +890,7 @@ public class ModuleTestBase extends TestCase {
 			messages.append(m);
 			messages.append('\n');												
 		}
-		System.out.println(XavaResources.getString("messages_produced", messages));
+		log.error(XavaResources.getString("messages_produced", messages));
 		fail(XavaResources.getString("message_not_found", message));
 	}
 	
@@ -907,7 +911,7 @@ public class ModuleTestBase extends TestCase {
 		if (rc > 0) {
 			for (int i = 0; i < rc; i++) {
 				String message = table.getCellAsText(i, 0).trim();
-				System.err.println(XavaResources.getString("unexpected_message", label, message));							
+				log.error(XavaResources.getString("unexpected_message", label, message));							
 			}			
 			fail(XavaResources.getString("unexpected_messages", id));
 		}
@@ -1083,7 +1087,7 @@ public class ModuleTestBase extends TestCase {
 				}
 			}
 			catch (IOException ex) {					
-				System.err.println(XavaResources.getString("xavajunit_properties_file_warning"));
+				log.warn(XavaResources.getString("xavajunit_properties_file_warning"),ex);
 			}							
 		}
 		return xavaJunitProperties;

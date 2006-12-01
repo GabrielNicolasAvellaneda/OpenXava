@@ -2,6 +2,8 @@ package org.openxava.mapping;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.component.*;
 import org.openxava.converters.*;
 import org.openxava.util.*;
@@ -20,6 +22,7 @@ public class ReferenceMappingDetail extends MetaSetsContainer {
 	private boolean converterCreated = false;
 	private IConverter converter;
 	private String cmpTypeName;
+	private Log log = LogFactory.getLog(ReferenceMappingDetail.class);
 	 
 	
 	public String getColumn() {
@@ -104,11 +107,11 @@ public class ReferenceMappingDetail extends MetaSetsContainer {
 			return converter;
 		}
 		catch (ClassCastException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("create_converter_classcast_error",  converterClassName, "IConverter");
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("create_converter_error", ex.getLocalizedMessage());
 		}
 	}

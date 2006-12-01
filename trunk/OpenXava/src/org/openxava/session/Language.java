@@ -2,6 +2,8 @@ package org.openxava.session;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
 
@@ -17,6 +19,8 @@ public class Language {
 	private String id;
 	private Locale locale; 
 	private Locale defaultLocale;
+	
+	private Log log = LogFactory.getLog(Language.class);
 	
 	/**
 	 * Language identifier, for example: es, ca, en, etc.
@@ -49,13 +53,13 @@ public class Language {
 				if ("ca".equals(this.id)) return getChangeToSpainAction();
 			}
 			catch (XavaException ex) {
-				System.err.println(XavaResources.getString("to_spanish_warning"));
+				log.warn(XavaResources.getString("to_spanish_warning"),ex);
 				return  getChangeToValencianoAction();
 			}
 			return  getChangeToValencianoAction();
 		}
 		catch (XavaException ex) {
-			System.err.println(XavaResources.getString("change_language_create_action_warning"));
+			log.warn(XavaResources.getString("change_language_create_action_warning"),ex);
 			return new MetaAction();
 		}
 	}

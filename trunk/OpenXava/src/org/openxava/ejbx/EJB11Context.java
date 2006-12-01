@@ -9,6 +9,8 @@ import javax.ejb.*;
 import javax.naming.*;
 import javax.sql.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 
 
@@ -39,6 +41,7 @@ public class EJB11Context implements IEJBContextInit, Serializable {
 	private String defaultDataSource;
 	private String user;
 	private String password;
+	private Log log = LogFactory.getLog(EJB11Context.class);
 
 	private void assertEJBContext() throws IllegalStateException {
 		if (ejbContext == null) {
@@ -98,7 +101,7 @@ public class EJB11Context implements IEJBContextInit, Serializable {
 		} catch (NamingException ex) {
 			throw new SQLException(XavaResources.getString("datasource_not_found", name));
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new SQLException(XavaResources.getString("datasource_not_found", name));									
 		}
 
@@ -119,7 +122,7 @@ public class EJB11Context implements IEJBContextInit, Serializable {
 		try {
 			rs = getJndiContext().lookup(PRE_PRO + name);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			// returning null
 		}
 		if (rs == null)

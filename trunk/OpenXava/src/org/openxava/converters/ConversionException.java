@@ -1,5 +1,7 @@
 package org.openxava.converters;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 
 /**
@@ -8,6 +10,8 @@ import org.openxava.util.*;
 
 public class ConversionException extends XavaException {
 
+	private Log log = LogFactory.getLog(ConversionException.class);
+	
 	public ConversionException() {		
 		super("conversion_error");
 	}

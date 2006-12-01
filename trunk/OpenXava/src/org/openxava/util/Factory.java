@@ -4,6 +4,9 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * Generic class to implement object factories. <p>
  *
@@ -44,6 +47,8 @@ public class Factory {
 
   private Hashtable classes = new Hashtable(); // of Class
   private Properties properties;
+  
+  private Log log = LogFactory.getLog(Factory.class);
 
   /**
    * Creates a objects factory from a properties files. <p>
@@ -118,7 +123,7 @@ public class Factory {
 		  throw ex;
 		}
 		catch (Exception ex) {
-		  ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 		  throw new InitException("factory_create_error", name);
 		}
   }
@@ -159,7 +164,7 @@ public class Factory {
   				}
   		}
   		catch (IOException ex) {
-  			ex.printStackTrace();
+  			log.error(ex.getMessage(), ex);
   			throw new InitException("properties_file_read_error");
   		}
   	}

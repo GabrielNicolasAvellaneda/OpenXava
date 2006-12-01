@@ -1,5 +1,8 @@
 package org.openxava.actions;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * @author Javier Paniza
  */
@@ -8,6 +11,7 @@ public class NavigationAction extends BaseAction implements INavigationAction , 
 	
 	private String nextController;
 	private String customView;
+	private Log log = LogFactory.getLog(NavigationAction.class);
 
 	public void execute() throws Exception {
 	}

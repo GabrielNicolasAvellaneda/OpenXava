@@ -1,5 +1,7 @@
 package org.openxava.actions;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.tab.*;
 
 /**
@@ -10,6 +12,7 @@ public class GoPageAction extends BaseAction {
 	
 	private Tab tab;
 	private int page;
+	private Log log = LogFactory.getLog(GoPageAction.class);
 
 	public void execute() throws Exception {
 		tab.goPage(page);

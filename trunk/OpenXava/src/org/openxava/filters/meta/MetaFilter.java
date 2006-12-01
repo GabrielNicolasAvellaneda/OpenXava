@@ -3,6 +3,8 @@ package org.openxava.filters.meta;
 import java.io.*;
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.filters.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
@@ -14,7 +16,8 @@ public class MetaFilter implements Serializable {
 	
 	private IFilter filter;
 	private String className;
-	private Collection metaSets;	
+	private Collection metaSets;
+	private Log log = LogFactory.getLog(MetaFilter.class);
 	
 	public void _addMetaSet(MetaSet metaSet) {
 		if (metaSets == null) {
@@ -39,7 +42,7 @@ public class MetaFilter implements Serializable {
 			throw ex;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("create_filter_error", getClassName());
 		}
 	}

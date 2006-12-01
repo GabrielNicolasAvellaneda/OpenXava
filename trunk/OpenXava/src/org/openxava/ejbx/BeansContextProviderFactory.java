@@ -2,6 +2,8 @@ package org.openxava.ejbx;
 
 import javax.naming.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 
 import java.util.*;
@@ -54,6 +56,8 @@ public class BeansContextProviderFactory {
 //    BeansContextProviderFactory.class.getResource(PROPERTIES_FILE));
 
 
+  private static Log log = LogFactory.getLog(BeansContextProviderFactory.class);
+  
   /**
    * Create a context provider to lookup EJBs by default. <p>
    *
@@ -96,10 +100,10 @@ public class BeansContextProviderFactory {
 				if (Is.emptyString(subcontext)) subcontext = pro.getProperty(SUBCONTEXT_PROPERTY_ES);
 				if (Is.emptyString(subcontext)) subcontext = null;
 				subcontextReaded = true;
-				System.out.println("[BeansContextProviderFactory] subcontext=" + subcontext);
+				log.info("subcontext=" + subcontext);
 			}
 			catch (Exception ex) {
-				ex.printStackTrace();
+				log.error(ex.getMessage(), ex);
 				throw new NamingException(XavaResources.getString("subcontext_error", ex.getLocalizedMessage()));
 			}
 		}

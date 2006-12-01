@@ -4,6 +4,8 @@ import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 import javax.servlet.jsp.tagext.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.controller.*;
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
@@ -16,6 +18,7 @@ import org.openxava.web.style.*;
 public class ButtonTag extends TagSupport {
 	
 	private String action;
+	private Log log = LogFactory.getLog(ButtonTag.class);
 
 	public int doStartTag() throws JspException {
 		try {									
@@ -53,7 +56,7 @@ public class ButtonTag extends TagSupport {
 			pageContext.getOut().println("</button>");
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new JspException(XavaResources.getString("button_tag_error"));				
 		}
 		return SKIP_BODY;

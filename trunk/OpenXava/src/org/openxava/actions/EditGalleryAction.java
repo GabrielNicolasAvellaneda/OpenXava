@@ -2,6 +2,8 @@ package org.openxava.actions;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.calculators.*;
 import org.openxava.model.meta.*;
 import org.openxava.session.*;
@@ -16,7 +18,8 @@ public class EditGalleryAction extends ViewBaseAction implements INavigationActi
 	
 	private String galleryProperty;
 	private Gallery gallery;	
-
+	private Log log = LogFactory.getLog(EditGalleryAction.class);
+	
 	public void execute() throws Exception {
 		String oid = getView().getValueString(galleryProperty);
 		if (Is.emptyString(oid)) {
@@ -63,8 +66,7 @@ public class EditGalleryAction extends ViewBaseAction implements INavigationActi
 			return result.toString();
 		}
 		catch (Exception ex) { 
-			System.err.println("[EditGalleryAction.getObjectDescription] " + XavaResources.getString("object_description_warning")); 
-			ex.printStackTrace(); 
+			log.error("[EditGalleryAction.getObjectDescription] " + XavaResources.getString("object_description_warning"),ex);  
 			return XavaResources.getString("object_description_warning");
 		}		
 	}

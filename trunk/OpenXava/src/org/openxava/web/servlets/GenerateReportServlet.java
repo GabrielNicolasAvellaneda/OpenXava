@@ -13,6 +13,8 @@ import javax.swing.table.*;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.model.meta.*;
 import org.openxava.tab.*;
 import org.openxava.util.*;
@@ -26,6 +28,8 @@ import org.openxava.util.*;
  */
 
 public class GenerateReportServlet extends HttpServlet {
+	
+	private Log log = LogFactory.getLog(GenerateReportServlet.class);
 	
 	public static class TableModelDecorator implements TableModel {
 							 
@@ -155,7 +159,7 @@ public class GenerateReportServlet extends HttpServlet {
 			}
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new ServletException(XavaResources.getString("report_error"));
 		}		
 	}

@@ -8,6 +8,8 @@ import javax.servlet.http.*;
 
 import net.sf.jasperreports.engine.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 
 /**
@@ -16,6 +18,8 @@ import org.openxava.util.*;
 
 public class JasperReportServlet extends HttpServlet {
 
+	private Log log = LogFactory.getLog(JasperReportServlet.class);
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		try {
 			String model = request.getParameter("model");
@@ -33,7 +37,7 @@ public class JasperReportServlet extends HttpServlet {
 			JasperCompileManager.compileReportToStream(getReportStream(request, response, model, language, tab, properties), response.getOutputStream());
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new ServletException(XavaResources.getString("jasper_error"));
 		}		
 	}

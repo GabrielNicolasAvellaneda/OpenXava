@@ -3,6 +3,9 @@ package org.openxava.util;
 import java.io.*;
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * @author Javier Paniza
  */
@@ -24,6 +27,8 @@ public class XavaPreferences {
 	private boolean jpaCodeInPOJOs = false;
 	private boolean jpaCodeInPOJOsLoaded = false;	
   
+	private Log log = LogFactory.getLog(XavaPreferences.class);
+	
 	public static XavaPreferences getInstance() {
 		if (instance == null) {
 			instance = new XavaPreferences();
@@ -38,8 +43,8 @@ public class XavaPreferences {
 			try {
 				properties = reader.get();
 			} 
-			catch (IOException e) {			
-				System.err.println(XavaResources.getString("properties_file_error", FILE_PROPERTIES));
+			catch (IOException ex) {			
+				log.error(XavaResources.getString("properties_file_error", FILE_PROPERTIES),ex);
 				properties = new Properties();
 			}
 		}

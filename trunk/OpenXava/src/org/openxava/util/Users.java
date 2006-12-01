@@ -2,6 +2,9 @@ package org.openxava.util;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * Utilities to work with users. <p>
  * 
@@ -11,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 public class Users {
 	
 	private static ThreadLocal current = new ThreadLocal();
+	
+	private static Log log = LogFactory.getLog(Users.class);
 	
 	/**
 	 * The user name associated to the current thread. <p>
@@ -47,8 +52,7 @@ public class Users {
 				user = (String) pmUser.executeGet("userName");
 			}
 			catch (Exception ex) {				
-				ex.printStackTrace(); 
-				System.err.println(XavaResources.getString("warning_get_user"));
+				log.warn(XavaResources.getString("warning_get_user"),ex);
 				user = null;
 			}			
 		}

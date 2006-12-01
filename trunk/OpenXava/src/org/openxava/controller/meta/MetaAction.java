@@ -5,7 +5,10 @@ import java.util.*;
 
 import javax.servlet.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.actions.*;
+import org.openxava.controller.ModuleManager;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
 
@@ -32,6 +35,8 @@ public class MetaAction extends MetaElement {
 	private boolean onInit;
 	private boolean takesLong;
 	private boolean confirm;
+	
+	private Log log = LogFactory.getLog(MetaAction.class);
 	
 	public MetaAction() {
 	}
@@ -164,7 +169,7 @@ public class MetaAction extends MetaElement {
 			throw ex;
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(),ex);
 			throw new XavaException("create_action_error", getClassName());
 		}
 	}

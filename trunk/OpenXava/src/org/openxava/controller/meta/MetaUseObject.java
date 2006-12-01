@@ -1,5 +1,7 @@
 package org.openxava.controller.meta;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 
 /**
@@ -10,6 +12,7 @@ public class MetaUseObject {
 	
 	private String name;
 	private String actionProperty;
+	private Log log = LogFactory.getLog(MetaUseObject.class);
 	
 	public String getName() {
 		return name;

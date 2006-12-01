@@ -1,5 +1,7 @@
 package org.openxava.filters;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 
 
@@ -8,6 +10,8 @@ import org.openxava.util.*;
  */
 public class FilterException extends XavaException {
 
+	private Log log = LogFactory.getLog(FilterException.class);
+	
 	public FilterException() {
 		super("filter_error");
 	}

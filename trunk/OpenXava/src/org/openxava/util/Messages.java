@@ -5,6 +5,8 @@ import java.util.*;
 
 import javax.servlet.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.model.meta.*;
 
 
@@ -18,7 +20,9 @@ import org.openxava.model.meta.*;
  */
 
 public class Messages implements java.io.Serializable {
-		
+	
+	private Log log = LogFactory.getLog(Messages.class);
+	
 	class Message implements java.io.Serializable {
 		private String id;
 		private Object [] argv;
@@ -50,7 +54,7 @@ public class Messages implements java.io.Serializable {
 			}
 			catch (Exception ex) {
 				if (XavaPreferences.getInstance().isI18nWarnings()) {
-					System.err.println(XavaResources.getString("label_i18n_warning", id));
+					log.warn(XavaResources.getString("label_i18n_warning", id),ex);
 				}
 				return id;
 			}
@@ -95,8 +99,8 @@ public class Messages implements java.io.Serializable {
 	
 	private Collection messages = new ArrayList();
 	private Collection members;
-	private boolean closed = false;
-		
+	private boolean closed = false;	
+	
 	public void add(String idMessage) {
 		if (closed) return;
 		messages.add(new Message(idMessage));		

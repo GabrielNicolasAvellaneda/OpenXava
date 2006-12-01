@@ -2,6 +2,9 @@ package org.openxava.tab.meta;
 
 import java.io.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * @author Javier Paniza
  */
@@ -10,6 +13,8 @@ public class MetaRowStyle implements Serializable{
 	private String style;
 	private String property;
 	private String value;
+	
+	private Log log = LogFactory.getLog(MetaRowStyle.class);
 
 	public String getProperty() {
 		return property;

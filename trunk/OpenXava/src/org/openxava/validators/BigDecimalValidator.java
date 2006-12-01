@@ -3,6 +3,8 @@ package org.openxava.validators;
 import java.math.BigDecimal;
 import java.util.StringTokenizer;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.util.Messages;
 import org.openxava.util.Strings;
 
@@ -14,6 +16,8 @@ import org.openxava.util.Strings;
 public class BigDecimalValidator implements IPropertyValidator {
     private int maximumIntegerDigits = 15;
     private int maximumFractionDigits = 2;
+    
+    private Log log = LogFactory.getLog(BigDecimalValidator.class);
 
     public void validate(Messages errors, Object value, String propertyName, String modelName) throws Exception {
         BigDecimal bigDecimal = (BigDecimal) value;

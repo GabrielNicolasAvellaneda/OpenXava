@@ -8,6 +8,8 @@ import java.util.*;
 
 import javax.servlet.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.calculators.*;
 import org.openxava.mapping.*;
 import org.openxava.model.*;
@@ -42,6 +44,8 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	private boolean isKeySet;
 	private boolean mappingSet;
 	private PropertyMapping mapping;
+	
+	private Log log = LogFactory.getLog(MetaProperty.class);
 		
 	public void addValidValue(Object validValue) {
 		getValidValues().add(validValue);
@@ -56,8 +60,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			return getValidValues().get(i-1);
 		}
 		catch (IndexOutOfBoundsException ex) {
-			ex.printStackTrace();
-			System.err.println("[MetaProperty.getValidValue] " + XavaResources.getString("valid_value_not_found_for_index_warning")); 			
+			log.error(XavaResources.getString("valid_value_not_found_for_index_warning"), ex); 			
 			return "[" + i  + "]"; 
 		}
 	}
@@ -124,16 +127,16 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				vr = MetaValidators.getMetaValidatorRequiredFor(getType().getName());	
 			}
 			if (vr == null) {
-				System.err.println(XavaResources.getString("required_validator_not_found_for_type", getType()));
+				log.error(XavaResources.getString("required_validator_not_found_for_type", getType()));
 				return new TolerantValidator();
 			}
 			validatorClass = vr.getValidatorClass();
 			return (IPropertyValidator) Class.forName(validatorClass).newInstance();
 		} catch (ClassCastException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("property_validator_invalid_class", validatorClass); 
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("create_validator_error", getName(), ex.getLocalizedMessage());
 		}
 	}
@@ -152,10 +155,10 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			validatorClass = vr.getValidatorClass();
 			return (IPropertyValidator) Class.forName(validatorClass).newInstance();
 		} catch (ClassCastException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("property_validator_invalid_class", validatorClass); 
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("create_validator_error", getName(), ex.getLocalizedMessage());
 		}
 	}
@@ -311,7 +314,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 					setTypeName(t);
 				}
 				catch (ElementNotFoundException ex) {					
-					System.err.println(XavaResources.getString("type_from_stereotype_warning", getStereotype()));
+					log.warn(XavaResources.getString("type_from_stereotype_warning", getStereotype()));
 				}
 			}
 		}
@@ -365,7 +368,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			return IHibernateIdGeneratorCalculator.class.isAssignableFrom(calculatorClass);
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("is_default_calculator_hibernate_id_generator_error", getName());
 		}
 	}	
@@ -433,7 +436,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			}
 			catch (XavaException ex) {  
 				// false is assumed, but isKeySet is not changed, for retry in future 
-				System.err.println(XavaResources.getString("is_key_warning", getName()));
+				log.warn(XavaResources.getString("is_key_warning", getName()),ex);
 				return false;
 			}
 			isKeySet = true;
@@ -485,7 +488,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			validate(errors, object, getValidators());
 		} 
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new RemoteException(
 					XavaResources.getString("validate_error", getName(), getMetaModel().getName()));					
 		}
@@ -497,7 +500,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			if (creating) validate(errors, object, getOnlyOnCreateValidators());
 		} 
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new RemoteException(
 					XavaResources.getString("validate_error", getName(), getMetaModel().getName()));					
 		}
@@ -548,8 +551,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			return !man.hasSetter(getName());
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
-			System.err.println("[MetaProperty.calculateIfReadOnly] " + XavaResources.getString("read_only_property_warning", getName(), getMetaModel().getName()));
+			log.error(XavaResources.getString("read_only_property_warning", getName(), getMetaModel().getName()), ex);
 			return true;			
 		}
 	}
@@ -570,11 +572,11 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			return clon;
 		}
 		catch (XavaException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("property_clone_error", getName(), ex.getLocalizedMessage());	
 		}
 		catch (CloneNotSupportedException ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new RuntimeException(XavaResources.getString("property_implements_cloneable"));
 		}
 	}
@@ -812,7 +814,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			}
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new ParseException(XavaResources.getString("from_string_on_property_error", value, type.getName(), getName()), -1);
 		}
 		throw new ParseException(XavaResources.getString("from_string_on_property_not_supported", type), -1);
@@ -907,7 +909,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 
 		}
 		catch (Exception ex) {
-			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 			throw new XavaException("to_string_on_property_error", value, type.getName(), getName());
 		}
 		throw new XavaException("to_string_on_property_not_supported", type);

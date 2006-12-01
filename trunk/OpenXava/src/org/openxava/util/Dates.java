@@ -3,6 +3,9 @@ package org.openxava.util;
 import java.text.DateFormat;
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * Utilities to working with dates (<tt>java.util.Date</tt>). <p>  
  * 
@@ -11,6 +14,8 @@ import java.util.*;
 public class Dates {
 	
 	private static DateFormat dateFormat;
+	
+	private Log log = LogFactory.getLog(Dates.class);
 	
 	/**
 	 * With hour to 0.

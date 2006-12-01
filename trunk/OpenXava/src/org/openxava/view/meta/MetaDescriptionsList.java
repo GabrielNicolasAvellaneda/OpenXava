@@ -2,6 +2,8 @@ package org.openxava.view.meta;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 
@@ -18,6 +20,8 @@ public class MetaDescriptionsList implements java.io.Serializable {
 	private boolean orderByKey;
 	private Collection dependsNames;
 	private int labelFormat;
+	
+	private Log log = LogFactory.getLog(MetaDescriptionsList.class);
 		
 	public String getDescriptionPropertyName() {
 		return descriptionPropertyName;

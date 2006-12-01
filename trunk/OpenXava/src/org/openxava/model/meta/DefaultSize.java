@@ -2,6 +2,8 @@ package org.openxava.model.meta;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.model.meta.xmlparse.*;
 import org.openxava.util.*;
 
@@ -18,6 +20,7 @@ public class DefaultSize {
 	private static Map scaleStereotypes;
 	private static Map scaleTypes;
 	
+	private Log log = LogFactory.getLog(DefaultSize.class);
 	
 	public static void _addForStereotype(String name, int length) throws XavaException {
 		if (stereotypes == null) {

@@ -2,6 +2,9 @@ package org.openxava.converters;
 
 import java.math.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 /**
  * In java a long and in database a BigDecimal.
@@ -10,6 +13,8 @@ import java.math.*;
  */
 public class LongBigDecimalConverter implements IConverter {
 
+	private Log log = LogFactory.getLog(LongBigDecimalConverter.class);
+	
 	public Object toDB(Object o) throws ConversionException {
 		if (!(o instanceof Long)) {		
 			throw new ConversionException("conversion_db_long_expected");
