@@ -45,7 +45,7 @@ public class PercentageCalculator implements ICalculator {
 		}		
 	}
 
-	public void setValue(Number value) {
+	public void setValue(Number value) {		
 		if (value instanceof BigDecimal) {
 			this.value = (BigDecimal) value;
 		}
@@ -57,7 +57,7 @@ public class PercentageCalculator implements ICalculator {
 		}
 	}
 	
-	public Object calculate() throws Exception {			
+	public Object calculate() throws Exception {		
 		return getValueAsBigDecimal().multiply(getPercentageAsBigDecimal()).divide(HUNDRED, getScale(), getRounding());
 	}
 

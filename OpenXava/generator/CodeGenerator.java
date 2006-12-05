@@ -41,7 +41,7 @@ abstract public class CodeGenerator {
 				}
 				catch (Exception ex) {					
 					ex.printStackTrace();
-					log.error(XavaResources.getString("generation_xdoclet_code_error", file),ex);
+					System.out.println(XavaResources.getString("generation_xdoclet_code_error", file));
 				}
 			}								
 		}		

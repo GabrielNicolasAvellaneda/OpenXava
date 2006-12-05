@@ -14,6 +14,17 @@ public class InvoicesNestedSectionsTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "InvoicesNestedSections");		
 	}
 	
+	
+	public void testCalculatedPropertiesDependingFromPropertiesInOtherSections() throws Exception {
+		execute("Mode.detailAndFirst");
+		execute("Sections.change", "activeSection=1");		
+		execute("Sections.change", "activeSection=1,viewObject=xava_view_section1");
+		assertValue("vatPercentage", "16"); // We rely on first invoice has this value 
+		assertValue("vat", "400"); // We rely on first invoice has this value
+		setValue("vatPercentage", "17");
+		assertValue("vat", "425");
+	}
+		
 	public void testNestedSections() throws Exception {
 		// Level 0: Section 0
 		execute("CRUD.new");
@@ -52,6 +63,6 @@ public class InvoicesNestedSectionsTest extends ModuleTestBase {
 		execute("ReferenceSearch.cancel");
 		execute("Reference.createNew", "keyProperty=xava.Invoice.details.product.number");
 		assertNoErrors();
-	}
+	}	
 									
 }

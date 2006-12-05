@@ -1535,7 +1535,7 @@ public class View implements java.io.Serializable {
 			}			
 						
 			if (!isSubview() && !isSection()) {			
-			  String changedProperty = getRequest().getParameter("changed_property");			  
+				String changedProperty = getRequest().getParameter("changed_property");			  
 				if (!Is.emptyString(changedProperty)) {
 					if (getParent() == null) {
 						getRoot().registeringExecutedActions = true;
@@ -1875,8 +1875,8 @@ public class View implements java.io.Serializable {
 		return name.substring(compo.length() + "xava".length() + 2);
 	}
 	
-	private View getParentIfGroup() { 
-		if (isGroup()) return getParent();
+	private View getParentIfSectionOrGroup() { 
+		if (isSection() || isGroup()) return getParent().getParentIfSectionOrGroup();
 		return this;
 	}
 
@@ -1886,8 +1886,8 @@ public class View implements java.io.Serializable {
 			Iterator it = metaCalculator.getMetaSets().iterator();
 			while (it.hasNext()) {
 				MetaSet set = (MetaSet) it.next();				
-				if (!set.hasValue()) {					
-					Object value = getParentIfGroup().getValue(set.getPropertyNameFrom());
+				if (!set.hasValue()) {
+					Object value = getParentIfSectionOrGroup().getValue(set.getPropertyNameFrom());
 					mp.executeSet(set.getPropertyName(), value); 
 				}											
 			}		

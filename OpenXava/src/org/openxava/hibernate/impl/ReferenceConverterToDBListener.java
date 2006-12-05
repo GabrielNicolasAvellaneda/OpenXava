@@ -12,7 +12,7 @@ import org.openxava.model.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 
-public class ReferenceConverterToDBListener implements PreInsertEventListener, PreUpdateEventListener {
+public class ReferenceConverterToDBListener implements PreInsertEventListener, PreUpdateEventListener {	
 
 	private Log log = LogFactory.getLog(ReferenceConverterToDBListener.class);
 	

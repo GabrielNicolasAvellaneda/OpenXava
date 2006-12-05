@@ -16,6 +16,7 @@ import org.openxava.util.meta.*;
 public class CalculatorsListener implements PreInsertEventListener, PreUpdateEventListener, PreDeleteEventListener, PostLoadEventListener {
 	
 	private static CalculatorsListener instance = new CalculatorsListener();
+	private static ThreadLocal setOffForCurrentThread = new ThreadLocal();
 	private Log log = LogFactory.getLog(CalculatorsListener.class);
 	
 	public static CalculatorsListener getInstance() {
@@ -26,6 +27,7 @@ public class CalculatorsListener implements PreInsertEventListener, PreUpdateEve
 	}
 	
 	public void onPostLoad(PostLoadEvent ev) {
+		if (isOff()) return;
 		String modelName = "unknow";
 		try {
 			Object entity = ev.getEntity();
@@ -39,7 +41,7 @@ public class CalculatorsListener implements PreInsertEventListener, PreUpdateEve
 		}						
 	}
 
-	public boolean onPreInsert(PreInsertEvent ev) {
+	public boolean onPreInsert(PreInsertEvent ev) {		
 		String modelName = "unknow";
 		try {
 			Object entity = ev.getEntity();
@@ -54,7 +56,7 @@ public class CalculatorsListener implements PreInsertEventListener, PreUpdateEve
 		}				
 	}
 
-	public boolean onPreUpdate(PreUpdateEvent ev) {
+	public boolean onPreUpdate(PreUpdateEvent ev) {		
 		String modelName = "unknow";
 		try {
 			Object entity = ev.getEntity();
@@ -69,7 +71,7 @@ public class CalculatorsListener implements PreInsertEventListener, PreUpdateEve
 		}				
 	}
 	
-	public boolean onPreDelete(PreDeleteEvent ev) {
+	public boolean onPreDelete(PreDeleteEvent ev) {		
 		String modelName = "unknow";
 		try {
 			Object entity = ev.getEntity();
@@ -84,7 +86,8 @@ public class CalculatorsListener implements PreInsertEventListener, PreUpdateEve
 		}				
 	}
 	
-	private void executeCalculators(IModel model, Collection calculators) throws Exception {		
+	private void executeCalculators(IModel model, Collection calculators) throws Exception {
+		if (isOff()) return;
 		MetaModel metaModel = model.getMetaModel();
 		if (calculators.isEmpty()) return;
 		PropertiesManager pm = new PropertiesManager(model);			 
@@ -107,6 +110,18 @@ public class CalculatorsListener implements PreInsertEventListener, PreUpdateEve
 			}				 			
 			calculator.calculate();				 								
 		}			
+	}
+	
+	public static void setOffForCurrentThread() {
+		setOffForCurrentThread.set(new Boolean(true));
+	}
+	
+	public static void setOnForCurrentThread() {
+		setOffForCurrentThread.set(null);
+	}
+	
+	private static boolean isOff() {
+		return setOffForCurrentThread.get() != null;
 	}
 
 }

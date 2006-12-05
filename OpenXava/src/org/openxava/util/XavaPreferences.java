@@ -12,6 +12,7 @@ import org.apache.commons.logging.LogFactory;
 public class XavaPreferences {
 	
 	private final static String FILE_PROPERTIES="xava.properties";
+	private Log log = LogFactory.getLog(XavaPreferences.class);
 	
 	private static XavaPreferences instance;
 	
@@ -25,9 +26,9 @@ public class XavaPreferences {
 	private boolean duplicateComponentWarnings=false;
 	private int maxSizeForTextEditor;
 	private boolean jpaCodeInPOJOs = false;
-	private boolean jpaCodeInPOJOsLoaded = false;	
-  
-	private Log log = LogFactory.getLog(XavaPreferences.class);
+	private boolean jpaCodeInPOJOsLoaded = false;
+
+		
 	
 	public static XavaPreferences getInstance() {
 		if (instance == null) {

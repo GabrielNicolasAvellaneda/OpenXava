@@ -15,6 +15,7 @@
 	<property name="xava.lib" value="../OpenXava/bin"/>	
 	<property name="j2ee.lib" location="../OpenXava/lib/j2ee.jar"/>
 	<property name="tl.lib" location="../OpenXava/lib/tl.jar"/>
+	<property name="logging.lib" location="../OpenXava/lib/commons-logging.jar"/>
 	<property name="generator.dir" value="..${file.separator}OpenXava${file.separator}generator"/>
 	<property name="tracking.classes" value="../AccessTracking/web/WEB-INF/classes;../OpenXava/web/WEB-INF/lib/hibernate3.jar"/>
 	<property name="subcontext" value="${project}"/>				
@@ -249,7 +250,7 @@
 		<echo>Generating Websphere Mapping</echo>		
 		<java 
 			classname="WebsphereCodeGenerator" 
-			classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};../${project}/${classes.dir};${xava.generator.path}" 
+			classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};${logging.lib};../${project}/${classes.dir};${xava.generator.path}" 
 			fork="yes">
 			<arg value="${project}"/>        		
 	       	<arg value="${domain}"/>
@@ -390,7 +391,7 @@
 	   <echo>Generating EJB classes</echo>    	
        <java 
        		classname="EJBCodeGenerator" 
-       		classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};../${project}/filtered-files;../${project}/${classes.dir};${tracking.classes};${xava.generator.path}" 
+       		classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};${logging.lib};../${project}/filtered-files;../${project}/${classes.dir};${tracking.classes};${xava.generator.path}" 
        		fork="yes">
 			<arg value="${project}"/>        		
 	       	<arg value="${domain}"/>
@@ -409,7 +410,7 @@
 		<echo>Generating POJOs/Hibernate</echo>
 		<java 
 			classname="HCodeGenerator" 
-			classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};../${project}/filtered-files;../${project}/${classes.dir};${xava.generator.path}" 
+			classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};${logging.lib};../${project}/filtered-files;../${project}/${classes.dir};${xava.generator.path}" 
        		fork="yes">
 			<arg value="${project}"/>        		
 	       	<arg value="${domain}"/>
@@ -730,7 +731,7 @@
 		<!-- PortletCodeGenerator can generate portlets.xml, .psml and other jetspeed2 files -->
 		<java 
 			classname="PortletCodeGenerator" 
-			classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};../${project}/${classes.dir};${xava.generator.path}" 
+			classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};${logging.lib};../${project}/${classes.dir};${xava.generator.path}" 
 			fork="yes">
 			<arg value="${project}"/>
 			<arg value="${jetspeed2.pages.dir}"/>
