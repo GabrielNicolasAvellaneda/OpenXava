@@ -18,16 +18,16 @@ public class SaveAction extends ViewBaseAction {
 	private boolean resetAfter = true;
 	private Log log = LogFactory.getLog(SaveAction.class);
     
-	public void execute() throws Exception {
+	public void execute() throws Exception {		
 		try {
 			Map values = null;
 			if (getView().isKeyEditable()) {
 				// Create
-				if (isResetAfter()) {
+				if (isResetAfter()) {					
 					MapFacade.create(getModelName(), getValuesToSave());
 					addMessage("entity_created", getModelName());
 				}
-				else {			
+				else {								
 					Map keyValues = MapFacade.createReturningKey(getModelName(), getValuesToSave());					
 					addMessage("entity_created", getModelName());
 					values = MapFacade.getValues(getModelName(), keyValues, getView().getMembersNamesWithHidden());
@@ -35,7 +35,7 @@ public class SaveAction extends ViewBaseAction {
 			}
 			else {
 				// Modify				
-				Map keyValues = getView().getKeyValues();
+				Map keyValues = getView().getKeyValues();				
 				MapFacade.setValues(getModelName(), keyValues, getValuesToSave());
 				addMessage("entity_modified", getModelName());
 				if (!isResetAfter()) {					

@@ -394,7 +394,7 @@ public class InvoicesTest extends ModuleTestBase {
 		execute("Invoices.changeTab");
 		assertNoErrors();
 		assertListColumnCount(3);
-	}
+	}	
 	
 	public void testDateFormatter() throws Exception {		
 		execute("CRUD.new");
@@ -445,7 +445,7 @@ public class InvoicesTest extends ModuleTestBase {
 		execute("CRUD.save");
 		assertNoErrors();		 				
 	}
-	
+		
 	public void testReadOnlyCollectionWithPropertiesInDetailIncludedInListWithoutAction() throws Exception {
 		deleteInvoiceDeliveries();
 		createDelivery(); 
@@ -1057,7 +1057,7 @@ public class InvoicesTest extends ModuleTestBase {
 		nf.setMaximumFractionDigits(2);
 		String svat = nf.format(vat);
 		assertValue("vat", svat);
-	}			
+	}		
 	
 	private BigDecimal stringToBigDecimal(String s) throws ParseException {
 		NumberFormat nf = NumberFormat.getInstance();

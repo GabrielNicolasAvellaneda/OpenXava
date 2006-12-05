@@ -108,7 +108,7 @@ public class MetaView extends MetaElement implements Cloneable {
 						metaProperties.put(((MetaProperty) m).getName(), m);
 					}
 				}
-			}
+			}			
 			MetaProperty p = (MetaProperty) metaProperties.get(name);
 			if (searchInGroups && p == null) {
 				p = getMetaPropertyInGroup(name);
@@ -143,8 +143,8 @@ public class MetaView extends MetaElement implements Cloneable {
 			Iterator it = getSections().iterator();
 			while (it.hasNext()) {
 				MetaView section = (MetaView) it.next();
-				allMetaMembers.addAll(section.getMetaMembers());
-			}
+				allMetaMembers.addAll(section.getAllMetaMembers());
+			}			
 		}
 		return allMetaMembers;
 	}

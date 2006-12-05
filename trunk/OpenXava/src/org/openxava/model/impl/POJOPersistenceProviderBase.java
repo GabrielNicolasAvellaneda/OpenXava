@@ -7,6 +7,7 @@ import java.util.*;
 
 import javax.ejb.*;
 
+import org.openxava.hibernate.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openxava.mapping.*;
@@ -63,7 +64,7 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		
 
 	public Object find(MetaModel metaModel, Map keyValues) throws FinderException {
-		try {						
+		try {							
 			Object key = null;		
 			// The second question (metaModel.getMetaPropertiesKey().isEmpty())  
 			// is for the case of one key reference with only one column in it, 
@@ -78,13 +79,15 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 			}
 			else {
 				key = getKey(metaModel, keyValues);
-				refreshKeyReference(metaModel, key); 
+				refreshKeyReference(metaModel, key);
 			}			
+			
 			if (key == null) {
 				throw new ObjectNotFoundException(XavaResources.getString(
 						"object_with_key_not_found", metaModel.getName(), keyValues));
-			}	
-			Object result = find(metaModel.getPOJOClass(), (Serializable) key);			
+			}				
+			Object result = find(metaModel.getPOJOClass(), (Serializable) key);
+			
 			if (result == null) {
 				throw new ObjectNotFoundException(XavaResources.getString(
 						"object_with_key_not_found", metaModel.getName(), keyValues));
@@ -221,8 +224,8 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		return create(metaModel, values);
 	}
 	
-	public Object findByAnyProperty(MetaModel metaModel, Map keyValues) throws ObjectNotFoundException, FinderException, XavaException {		
-		keyValues = Maps.treeToPlain(keyValues); 		
+	public Object findByAnyProperty(MetaModel metaModel, Map keyValues) throws ObjectNotFoundException, FinderException, XavaException {
+		keyValues = Maps.treeToPlain(keyValues); 				
 		StringBuffer queryString = new StringBuffer();
 		queryString.append("from ");
 		queryString.append(metaModel.getName());
@@ -251,20 +254,20 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 			throw new ObjectNotFoundException(XavaResources.getString("object_by_any_property_not_found", values));
 		}
 								
-		Object query = createQuery(queryString.toString());
+		Object query = createQuery(queryString.toString());		
 		for (Iterator it=values.iterator(); it.hasNext(); it.hasNext()) {
 			Map.Entry en = (Map.Entry) it.next();
 			String name = (String) en.getKey();
-			Object value = convert(metaModel, name, en.getValue());			
+			Object value = convert(metaModel, name, en.getValue());
 			setParameterToQuery(query, Strings.change(name, ".", "_"), value);
-		}
-		Object result = getUniqueResult(query);
+		}		
+		Object result = getUniqueResult(query);		
 		if (result == null) {
 			throw new ObjectNotFoundException(XavaResources.getString("object_by_any_property_not_found", values));
-		}		
+		}				
 		return result;
 	}
-	
+		
 	private Object convert(MetaModel metaModel, String name, Object value) throws XavaException {		
 		PropertyMapping mapping = metaModel.getMetaProperty(name).getMapping();
 		Object result = value instanceof String?value + "%":value;

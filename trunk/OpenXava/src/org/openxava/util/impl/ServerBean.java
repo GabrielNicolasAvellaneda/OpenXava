@@ -33,6 +33,7 @@ public class ServerBean extends SessionBase {
 		if (calculator instanceof IJDBCCalculator) {			
 			((IJDBCCalculator) calculator).setConnectionProvider(getPortableContext());
 		}
+		boolean alreadyCMT = XHibernate.isCmt(); 
 		try {
 			if (cmt) XHibernate.setCmt(true);
 			return calculator.calculate();
@@ -42,7 +43,7 @@ public class ServerBean extends SessionBase {
 			throw ex;
 		}
 		finally {
-			if (cmt) XHibernate.setCmt(false);
+			if (!alreadyCMT && cmt) XHibernate.setCmt(false);
 		}
 	}	
 

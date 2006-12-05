@@ -27,7 +27,7 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 	private static final long serialVersionUID = 1L;
 	private Log log = LogFactory.getLog(SearchByViewKeyAction.class);
 
-	public void execute() throws Exception {
+	public void execute() throws Exception {				
 		try {						
 			Map keys = getView().getKeyValues();
 			Map values = null;

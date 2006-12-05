@@ -1,6 +1,7 @@
 package org.openxava.model.impl;
 
 import java.io.*;
+import java.lang.reflect.*;
 import java.util.*;
 
 import javax.ejb.*;
@@ -10,6 +11,8 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.*;
 
 import org.openxava.hibernate.*;
+import org.openxava.hibernate.impl.*;
+import org.openxava.model.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 
@@ -21,15 +24,25 @@ public class HibernatePersistenceProvider extends POJOPersistenceProviderBase {
 	private Log log = LogFactory.getLog(HibernatePersistenceProvider.class);
 	
 	protected Object find(Class pojoClass, Serializable key) {
-		return XHibernate.getSession().get(pojoClass, (Serializable) key);
+		Object result = XHibernate.getSession().get(pojoClass, (Serializable) key);
+		if (key instanceof IModel && result != null) { // if it has multiple key
+			// Sometime Hibernate (at least until Hibernate 3.2.1) does not get 
+			// the object well if the key is multiple. It's needed to refresh
+			refresh(result);  			
+		}
+		return result;
 	}
 
 	protected void refresh(Object object) {
+		CalculatorsListener.setOffForCurrentThread(); // In order to reduce postload-calculator calling frequency
 		try {
-			XHibernate.getSession().refresh(object);
+			XHibernate.getSession().refresh(object);			
 		}
 		catch (UnresolvableObjectException ex) {
 			// References as key that point to a non-existent object are supported
+		}
+		finally { 
+			CalculatorsListener.setOnForCurrentThread();
 		}
 	}
 	
