@@ -16,7 +16,7 @@ abstract public class OnChangePropertyBaseAction
 	private Object newValue;
 	private View view;	
 
-	private Log log = LogFactory.getLog(OnChangePropertyBaseAction.class);
+	private static Log log = LogFactory.getLog(OnChangePropertyBaseAction.class);
 	
 	public Object getNewValue() {
 		return newValue;

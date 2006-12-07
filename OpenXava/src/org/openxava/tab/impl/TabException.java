@@ -17,7 +17,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class TabException extends Exception {
 
-  private Log log = LogFactory.getLog(TabException.class);	
+  private static Log log = LogFactory.getLog(TabException.class);	
 	
   public TabException(String message) {
   	super(message);

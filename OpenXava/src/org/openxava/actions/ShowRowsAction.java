@@ -7,7 +7,7 @@ import org.openxava.tab.*;
 public class ShowRowsAction extends BaseAction {
 	
 	private Tab tab;
-	private Log log = LogFactory.getLog(ShowRowsAction.class);
+	private static Log log = LogFactory.getLog(ShowRowsAction.class);
 
 	public void execute() throws Exception {
 		getTab().showRows();		

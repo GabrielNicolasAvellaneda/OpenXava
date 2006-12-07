@@ -48,7 +48,7 @@ public class Factory {
   private Hashtable classes = new Hashtable(); // of Class
   private Properties properties;
   
-  private Log log = LogFactory.getLog(Factory.class);
+  private static Log log = LogFactory.getLog(Factory.class);
 
   /**
    * Creates a objects factory from a properties files. <p>

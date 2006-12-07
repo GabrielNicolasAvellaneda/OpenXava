@@ -14,7 +14,7 @@ import org.w3c.dom.*;
  */
 public class ModelParser extends XmlElementsNames {
 	
-	private Log log = LogFactory.getLog(XmlElementsNames.class);
+	private static Log log = LogFactory.getLog(XmlElementsNames.class);
 	
 	public static MetaEntity parseEntity(Node n, String name, int lang) throws XavaException {
 		Element el = (Element) n;

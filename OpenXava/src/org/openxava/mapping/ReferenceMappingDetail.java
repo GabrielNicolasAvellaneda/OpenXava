@@ -22,7 +22,7 @@ public class ReferenceMappingDetail extends MetaSetsContainer {
 	private boolean converterCreated = false;
 	private IConverter converter;
 	private String cmpTypeName;
-	private Log log = LogFactory.getLog(ReferenceMappingDetail.class);
+	private static Log log = LogFactory.getLog(ReferenceMappingDetail.class);
 	 
 	
 	public String getColumn() {

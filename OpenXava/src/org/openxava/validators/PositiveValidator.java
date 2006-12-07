@@ -17,7 +17,7 @@ public class PositiveValidator implements IPropertyValidator {
 	private static Double CERO_DOUBLE = new Double("0");
 	private static Float CERO_FLOAT = new Float("0");	
 	
-	private Log log = LogFactory.getLog(PositiveValidator.class);
+	private static Log log = LogFactory.getLog(PositiveValidator.class);
 
 	public void validate(
 		Messages errors,

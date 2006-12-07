@@ -49,7 +49,7 @@ public class HtmlPortlet extends GenericPortlet {
 	private String languages;
 	private String defaultLanguage;
 	
-	private Log log = LogFactory.getLog(HtmlPortlet.class);
+	private static Log log = LogFactory.getLog(HtmlPortlet.class);
 	
 	public void init(PortletConfig config) throws PortletException {
 		super.init(config);		

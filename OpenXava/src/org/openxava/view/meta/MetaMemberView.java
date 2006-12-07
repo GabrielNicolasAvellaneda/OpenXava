@@ -17,7 +17,7 @@ public class MetaMemberView {
 	private Collection actionsNames;
 	private Collection alwaysEnabledActionsNames; 
 	
-	private Log log = LogFactory.getLog(MetaMemberView.class);
+	private static Log log = LogFactory.getLog(MetaMemberView.class);
 	
 	public void addActionName(String actionName) {
 		if (actionsNames == null) actionsNames = new ArrayList();

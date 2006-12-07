@@ -20,7 +20,7 @@ public class GalleryImage implements Serializable {
 	private String galleryOid;
 	private byte [] image;
 	
-	private Log log = LogFactory.getLog(GalleryImage.class);
+	private static Log log = LogFactory.getLog(GalleryImage.class);
 	
 	public String getOid() {
 		return oid;

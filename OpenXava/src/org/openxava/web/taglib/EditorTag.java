@@ -23,7 +23,7 @@ public class EditorTag extends TagSupport {
 	private boolean explicitEditable = false; 
 	private boolean throwPropertyChanged; 
 	private boolean explicitThrowPropertyChanged; 
-	private Log log = LogFactory.getLog(EditorTag.class);
+	private static Log log = LogFactory.getLog(EditorTag.class);
 	
 	public int doStartTag() throws JspException {
 		try {

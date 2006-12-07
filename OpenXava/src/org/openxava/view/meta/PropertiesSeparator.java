@@ -18,7 +18,7 @@ public class PropertiesSeparator extends MetaProperty {
 	
 	public static final PropertiesSeparator INSTANCE = new PropertiesSeparator(); 
 	
-	private Log log = LogFactory.getLog(PropertiesSeparator.class);
+	private static Log log = LogFactory.getLog(PropertiesSeparator.class);
 	
 	private PropertiesSeparator() {
 	}

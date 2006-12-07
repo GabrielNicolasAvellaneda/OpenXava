@@ -15,7 +15,7 @@ import org.openxava.view.*;
 public class ModifyFromReferenceAction extends NavigationFromReferenceBaseAction  {
 	
 	private boolean exists = true;
-	private Log log = LogFactory.getLog(ModifyFromReferenceAction.class);
+	private static Log log = LogFactory.getLog(ModifyFromReferenceAction.class);
 	
 	public void execute() throws Exception {
 		super.execute();

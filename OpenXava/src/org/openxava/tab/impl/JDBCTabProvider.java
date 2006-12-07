@@ -35,7 +35,7 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 	private int chunkSize = DEFAULT_CHUNK_SIZE;
 	private int current;  
 	private boolean eof = true;
-	private Log log = LogFactory.getLog(JDBCTabProvider.class);
+	private static Log log = LogFactory.getLog(JDBCTabProvider.class);
 	
 	public void search(int index, Object key)
 		throws FinderException, RemoteException {

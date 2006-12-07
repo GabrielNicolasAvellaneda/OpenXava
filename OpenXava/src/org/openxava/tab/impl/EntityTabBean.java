@@ -15,7 +15,7 @@ public class EntityTabBean extends SessionBase implements IEntityTabDataProvider
 	
 	private EntityTabDataProvider dataProvider = new EntityTabDataProvider();
 	
-	private Log log = LogFactory.getLog(EntityTabBean.class);
+	private static Log log = LogFactory.getLog(EntityTabBean.class);
 	
 	public void ejbCreate() {		
 	}

@@ -23,7 +23,7 @@ public class DataChunk implements java.io.Serializable {
 	private boolean last;
 	private int indexNext;
 	
-	private Log log = LogFactory.getLog(DataChunk.class);
+	private static Log log = LogFactory.getLog(DataChunk.class);
 
 	public DataChunk(List data, boolean last, int indexNext) {
 		Assert.arg(data);

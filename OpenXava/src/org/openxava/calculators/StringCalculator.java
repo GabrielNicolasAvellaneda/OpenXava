@@ -10,7 +10,7 @@ import org.apache.commons.logging.LogFactory;
 public class StringCalculator implements ICalculator {
 	
 	private String string;
-	private Log log = LogFactory.getLog(StringCalculator.class);
+	private static Log log = LogFactory.getLog(StringCalculator.class);
 
 	public Object calculate() throws Exception {
 		return string;

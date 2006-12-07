@@ -11,7 +11,7 @@ import org.openxava.util.*;
  */
 abstract public class MetaAggregate extends MetaModel {
 	
-	private Log log = LogFactory.getLog(MetaAggregate.class);
+	private static Log log = LogFactory.getLog(MetaAggregate.class);
 	
 	static MetaAggregate getAggregate(String name) throws ElementNotFoundException, XavaException {
 		int idx = name.indexOf('.');

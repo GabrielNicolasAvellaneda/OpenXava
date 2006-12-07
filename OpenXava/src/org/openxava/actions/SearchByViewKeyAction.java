@@ -25,7 +25,7 @@ import org.openxava.util.Maps;
 public class SearchByViewKeyAction extends ViewBaseAction {
 	
 	private static final long serialVersionUID = 1L;
-	private Log log = LogFactory.getLog(SearchByViewKeyAction.class);
+	private static Log log = LogFactory.getLog(SearchByViewKeyAction.class);
 
 	public void execute() throws Exception {				
 		try {						

@@ -21,7 +21,7 @@ import org.openxava.model.meta.*;
 
 public class Messages implements java.io.Serializable {
 	
-	private Log log = LogFactory.getLog(Messages.class);
+	private static Log log = LogFactory.getLog(Messages.class);
 	
 	class Message implements java.io.Serializable {
 		private String id;

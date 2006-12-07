@@ -10,7 +10,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class CurrentYearCalculator implements ICalculator {
 
-	private Log log = LogFactory.getLog(CurrentYearCalculator.class);
+	private static Log log = LogFactory.getLog(CurrentYearCalculator.class);
 	
 	public Object calculate() throws Exception {
 		Calendar cal = Calendar.getInstance();

@@ -19,7 +19,7 @@ class TabConverter implements java.io.Serializable {
 	private String propertyName;
 	private IConverter converter;
 	private IMultipleConverter multipleConverter;
-	private Log log = LogFactory.getLog(TabConverter.class);
+	private static Log log = LogFactory.getLog(TabConverter.class);
 
 	public TabConverter(String nombrePropiedad, int indice, IConverter conversor)
 		throws XavaException {

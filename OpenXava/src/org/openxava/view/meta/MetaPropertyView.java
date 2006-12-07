@@ -22,7 +22,7 @@ public class MetaPropertyView extends MetaMemberView implements java.io.Serializ
 	private String onChangeActionClassName;	
 	private int labelFormat;
 				
-	private Log log = LogFactory.getLog(MetaPropertyView.class);
+	private static Log log = LogFactory.getLog(MetaPropertyView.class);
 	
 	public String getPropertyName() {
 		return propertyName==null?"":propertyName.trim();

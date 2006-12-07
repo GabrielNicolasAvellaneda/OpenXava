@@ -26,7 +26,7 @@ abstract public class NavigationFromReferenceBaseAction extends ReferenceBaseAct
 	abstract protected String getCustomController();
 	abstract protected String getDefaultController();
 	
-	private Log log = LogFactory.getLog(NavigationFromReferenceBaseAction.class);
+	private static Log log = LogFactory.getLog(NavigationFromReferenceBaseAction.class);
 	
 	public void execute() throws Exception {
 		super.execute();

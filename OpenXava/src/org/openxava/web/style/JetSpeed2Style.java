@@ -7,7 +7,7 @@ public class JetSpeed2Style extends Style {
 	
 	private static JetSpeed2Style instance = null;
 
-	private Log log = LogFactory.getLog(JetSpeed2Style.class);
+	private static Log log = LogFactory.getLog(JetSpeed2Style.class);
 	
 	protected JetSpeed2Style() {		
 	}

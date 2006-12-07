@@ -45,7 +45,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	private boolean mappingSet;
 	private PropertyMapping mapping;
 	
-	private Log log = LogFactory.getLog(MetaProperty.class);
+	private static Log log = LogFactory.getLog(MetaProperty.class);
 		
 	public void addValidValue(Object validValue) {
 		getValidValues().add(validValue);

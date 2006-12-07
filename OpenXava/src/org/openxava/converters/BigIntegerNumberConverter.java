@@ -13,7 +13,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class BigIntegerNumberConverter implements IConverter {		
 
-	private Log log = LogFactory.getLog(BigIntegerNumberConverter.class);
+	private static Log log = LogFactory.getLog(BigIntegerNumberConverter.class);
 	
 	public Object toDB(Object o) throws ConversionException {
 		return o==null?BigInteger.ZERO:o;

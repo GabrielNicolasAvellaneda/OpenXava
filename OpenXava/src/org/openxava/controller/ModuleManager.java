@@ -58,7 +58,7 @@ public class ModuleManager {
 	private String lastPageId;
 	private String previousMode; 
 	
-	private Log log = LogFactory.getLog(ModuleManager.class);
+	private static Log log = LogFactory.getLog(ModuleManager.class);
 
 	public ModuleManager() {
 		oid = nextOid++;

@@ -16,7 +16,7 @@ public class GenerateReportAction extends BaseAction implements IRequestAction, 
 	private HttpServletRequest request;
 	private Tab tab;
 	private String type;
-	private Log log = LogFactory.getLog(GenerateReportAction.class);
+	private static Log log = LogFactory.getLog(GenerateReportAction.class);
 
 	public void execute() throws Exception {
 		if (!("pdf".equals(getType()) || "csv".equals(getType()))) {

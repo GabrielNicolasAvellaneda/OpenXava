@@ -16,7 +16,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class CancelInListAction extends BaseAction implements IChangeModeAction, INavigationAction {
 	
-	private Log log = LogFactory.getLog(CancelInListAction.class);
+	private static Log log = LogFactory.getLog(CancelInListAction.class);
 	
 	public String getNextMode() {
 		// PREVIOUS_MODE (instead of LIST) in order to work also in list for searching references

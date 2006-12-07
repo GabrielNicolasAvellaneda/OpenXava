@@ -16,7 +16,7 @@ abstract public class MetaElement implements java.io.Serializable {
 	private java.lang.String name;
 	private String label;
 	
-	private Log log = LogFactory.getLog(MetaElement.class);
+	private static Log log = LogFactory.getLog(MetaElement.class);
 
 	protected boolean has18nLabel() {		
 		return Labels.exists(getId());

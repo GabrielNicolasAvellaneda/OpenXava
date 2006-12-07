@@ -60,6 +60,7 @@
   read-only (true|false) "false"
   frame (true|false) "true"
   create (true|false) "true"
+  modify (true|false) "true"
   search (true|false) "true"
   as-aggregate (true|false) "false"
 >
@@ -96,6 +97,7 @@
   read-only (true|false) "false"
   edit-only (true|false) "false"
   create-reference (true|false) "true"
+  modify-reference (true|false) "true"
   as-aggregate (true|false) "false"
 >
 
@@ -174,6 +176,7 @@
  stereotype CDATA #IMPLIED
  type CDATA #IMPLIED
  size CDATA #IMPLIED
+ scale CDATA #IMPLIED
  required (true|false) "false" 
  key (true|false) "false"
  hidden (true|false) "false"

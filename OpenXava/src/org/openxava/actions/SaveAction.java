@@ -16,7 +16,7 @@ import org.openxava.validators.*;
 public class SaveAction extends ViewBaseAction {
 		
 	private boolean resetAfter = true;
-	private Log log = LogFactory.getLog(SaveAction.class);
+	private static Log log = LogFactory.getLog(SaveAction.class);
     
 	public void execute() throws Exception {		
 		try {

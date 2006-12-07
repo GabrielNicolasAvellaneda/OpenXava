@@ -22,7 +22,7 @@ public class HiddenXTableModel extends XTableModelDecoratorBase {
 
   private int [] indexes;
   private int columnCount;
-  private Log log = LogFactory.getLog(HiddenXTableModel.class);
+  private static Log log = LogFactory.getLog(HiddenXTableModel.class);
 
   /**
    * @param toDecorate  <tt>TableModel</tt> to decorate hidden columns

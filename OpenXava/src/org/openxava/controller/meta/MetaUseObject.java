@@ -12,7 +12,7 @@ public class MetaUseObject {
 	
 	private String name;
 	private String actionProperty;
-	private Log log = LogFactory.getLog(MetaUseObject.class);
+	private static Log log = LogFactory.getLog(MetaUseObject.class);
 	
 	public String getName() {
 		return name;

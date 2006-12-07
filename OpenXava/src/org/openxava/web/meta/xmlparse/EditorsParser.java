@@ -14,7 +14,7 @@ import org.w3c.dom.*;
  */
 public class EditorsParser extends ParserBase {
 	
-	private Log log = LogFactory.getLog(EditorsParser.class);
+	private static Log log = LogFactory.getLog(EditorsParser.class);
 	
 	public EditorsParser(String xmlFileURL, int language) {
 		super(xmlFileURL, language);

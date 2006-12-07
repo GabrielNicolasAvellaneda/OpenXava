@@ -17,7 +17,7 @@ import org.w3c.dom.*;
  */
 public class TabParser extends XmlElementsNames {
 
-	private Log log = LogFactory.getLog(XmlElementsNames.class);
+	private static Log log = LogFactory.getLog(XmlElementsNames.class);
 	
 	public static MetaTab parseTab(Node n, int lang) throws XavaException {
 		Element el = (Element) n;

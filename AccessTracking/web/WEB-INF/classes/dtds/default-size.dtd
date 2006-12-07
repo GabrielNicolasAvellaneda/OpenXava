@@ -4,10 +4,12 @@
 <!ATTLIST for-stereotype
  name CDATA #REQUIRED
  size CDATA #REQUIRED
+ scale CDATA #IMPLIED
 >
 
 <!ELEMENT for-type EMPTY>
 <!ATTLIST for-type
  class CDATA #REQUIRED
  size CDATA #REQUIRED
+ scale CDATA #IMPLIED
 >

@@ -12,7 +12,7 @@ public class LiferayStyle extends Style {
 	
 	private static LiferayStyle instance = null;
 
-	private Log log = LogFactory.getLog(LiferayStyle.class);
+	private static Log log = LogFactory.getLog(LiferayStyle.class);
 	
 	protected LiferayStyle() {
 	}

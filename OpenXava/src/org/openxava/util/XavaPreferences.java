@@ -12,7 +12,7 @@ import org.apache.commons.logging.LogFactory;
 public class XavaPreferences {
 	
 	private final static String FILE_PROPERTIES="xava.properties";
-	private Log log = LogFactory.getLog(XavaPreferences.class);
+	private static Log log = LogFactory.getLog(XavaPreferences.class);
 	
 	private static XavaPreferences instance;
 	

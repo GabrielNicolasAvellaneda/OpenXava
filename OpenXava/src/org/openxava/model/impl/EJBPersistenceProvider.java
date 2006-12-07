@@ -20,7 +20,7 @@ import org.openxava.validators.*;
  */
 public class EJBPersistenceProvider implements IPersistenceProvider {
 	
-	private Log log = LogFactory.getLog(EJBPersistenceProvider.class);
+	private static Log log = LogFactory.getLog(EJBPersistenceProvider.class);
 	
 	public Object find(MetaModel metaModel, Map keyValues)
 			throws FinderException, XavaException {

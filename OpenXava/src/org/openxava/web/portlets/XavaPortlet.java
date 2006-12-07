@@ -54,7 +54,7 @@ public class XavaPortlet extends GenericPortlet {
 	private static Style style;
 	private String moduleURL;
 	
-	private Log log = LogFactory.getLog(XavaPortlet.class);
+	private static Log log = LogFactory.getLog(XavaPortlet.class);
 	
 	public void init(PortletConfig config) throws PortletException {
 		super.init(config);		

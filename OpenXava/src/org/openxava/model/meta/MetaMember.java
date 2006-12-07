@@ -14,7 +14,7 @@ abstract public class MetaMember extends MetaElement {
 	private String labelId;
 	private String qualifiedName;
 	
-	private Log log = LogFactory.getLog(MetaMember.class);
+	private static Log log = LogFactory.getLog(MetaMember.class);
 
 	public MetaModel getMetaModel() {		
 		return metaModel;

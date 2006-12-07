@@ -11,7 +11,7 @@ public class ChangeModuleAction extends BaseAction implements IChangeModuleActio
 	
 	private String nextModule;
 	private boolean reinit;
-	private Log log = LogFactory.getLog(ChangeModuleAction.class);
+	private static Log log = LogFactory.getLog(ChangeModuleAction.class);
 	
 	public void execute() throws Exception {
 	}

@@ -12,7 +12,7 @@ public class OrderByAction extends BaseAction {
 	
 	private Tab tab;
 	private String property;
-	private Log log = LogFactory.getLog(OrderByAction.class);
+	private static Log log = LogFactory.getLog(OrderByAction.class);
 	
 	public void execute() throws Exception {
 		tab.orderBy(property);

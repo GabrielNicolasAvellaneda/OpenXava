@@ -23,7 +23,7 @@ public abstract class TableModelBase implements TableModel, Serializable
 {
 	transient private EventListenerList listenerList;
 
-	private Log log = LogFactory.getLog(TableModelBase.class);
+	private static Log log = LogFactory.getLog(TableModelBase.class);
 	
 	public void addTableModelListener(TableModelListener l) {
 		getListenerList().add(TableModelListener.class, l);

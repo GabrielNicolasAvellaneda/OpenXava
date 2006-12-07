@@ -13,7 +13,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class Boolean01Converter implements IConverter {
 
-	private Log log = LogFactory.getLog(Boolean01Converter.class);
+	private static Log log = LogFactory.getLog(Boolean01Converter.class);
 	
 	public Object toDB(Object o) throws ConversionException {
 		if (!(o instanceof Boolean)) {		

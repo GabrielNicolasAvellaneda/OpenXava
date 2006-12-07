@@ -14,7 +14,7 @@ import org.openxava.util.*;
  */
 abstract public class Mapping {
 
-	private Log log = LogFactory.getLog(Mapping.class);
+	private static Log log = LogFactory.getLog(Mapping.class);
 	
 	public static Collection getSchemas() throws XavaException {			
 		Collection r = new HashSet();

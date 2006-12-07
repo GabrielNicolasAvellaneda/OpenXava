@@ -25,7 +25,7 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 	private String componentName;
 	private IConnectionProvider connectionProvider;
 	
-	private Log log = LogFactory.getLog(EntityTabDataProvider.class);
+	private static Log log = LogFactory.getLog(EntityTabDataProvider.class);
 		
 	public DataChunk nextChunk(ITabProvider tabProvider, String modelName, List propertiesNames, Collection tabCalculators, Map keyIndexes, Collection tabConverters) throws RemoteException {		
 		if (tabProvider instanceof JDBCTabProvider) {

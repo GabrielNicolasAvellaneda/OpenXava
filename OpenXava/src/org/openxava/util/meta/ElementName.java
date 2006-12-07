@@ -17,7 +17,7 @@ public class ElementName {
 	private String containerName;	
 	private String unqualifiedName;
 
-	private Log log = LogFactory.getLog(ElementName.class);
+	private static Log log = LogFactory.getLog(ElementName.class);
 	
 	public ElementName(String name) {
 		this.name = name==null?"":name;

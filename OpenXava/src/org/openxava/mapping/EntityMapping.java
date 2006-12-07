@@ -12,7 +12,7 @@ import org.openxava.util.*;
 
 public class EntityMapping extends ModelMapping {
 	
-	private Log log = LogFactory.getLog(EntityMapping.class);
+	private static Log log = LogFactory.getLog(EntityMapping.class);
 	
 	public String getModelName() throws XavaException {
 		return getMetaModel().getName();

@@ -18,7 +18,7 @@ import org.openxava.util.*;
 public class JndiContext implements IContext {
 
   private Context ctx;
-  private Log log = LogFactory.getLog(JndiContext.class);
+  private static Log log = LogFactory.getLog(JndiContext.class);
 
   /**
    * It's created from JNDI context that it wants wrap.

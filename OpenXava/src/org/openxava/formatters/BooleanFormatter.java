@@ -13,7 +13,7 @@ import org.openxava.util.*;
 
 public class BooleanFormatter implements IFormatter {
 	
-	private Log log = LogFactory.getLog(BooleanFormatter.class);
+	private static Log log = LogFactory.getLog(BooleanFormatter.class);
 	
 	public String format(HttpServletRequest request, Object booleanValue) {
 		if (booleanValue == null) {

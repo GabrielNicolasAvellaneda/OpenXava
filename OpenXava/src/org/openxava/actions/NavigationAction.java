@@ -11,7 +11,7 @@ public class NavigationAction extends BaseAction implements INavigationAction , 
 	
 	private String nextController;
 	private String customView;
-	private Log log = LogFactory.getLog(NavigationAction.class);
+	private static Log log = LogFactory.getLog(NavigationAction.class);
 
 	public void execute() throws Exception {
 	}

@@ -18,7 +18,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class JndiContextProvider implements IContextProvider {
 
-  private Log log = LogFactory.getLog(JndiContextProvider.class);
+  private static Log log = LogFactory.getLog(JndiContextProvider.class);
   
   public IContext getContext() throws NamingException {
   	return new JndiContext(new InitialContext());

@@ -12,7 +12,7 @@ public class CustomizeListAction extends BaseAction {
 	
 	private Tab tab;
 
-	private Log log = LogFactory.getLog(CustomizeListAction.class);
+	private static Log log = LogFactory.getLog(CustomizeListAction.class);
 	
 	public void execute() throws Exception {
 		getTab().setCustomize(!getTab().isCustomize());

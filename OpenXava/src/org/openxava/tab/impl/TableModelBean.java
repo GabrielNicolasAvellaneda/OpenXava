@@ -40,7 +40,7 @@ public class TableModelBean implements IXTableModel, java.io.Serializable {
 	private int rowCount;
 	private boolean translateHeading = true;
 
-	private Log log = LogFactory.getLog(TableModelBean.class);
+	private static Log log = LogFactory.getLog(TableModelBean.class);
 	
 	public TableModelBean() {
 		refresh();

@@ -16,7 +16,7 @@ public class TypeStereotypeDefault {
 		
 	private static Map stereotypes;
 	
-	private Log log = LogFactory.getLog(TypeStereotypeDefault.class);
+	private static Log log = LogFactory.getLog(TypeStereotypeDefault.class);
 	
 	public static void _addForStereotype(String name, String type) throws XavaException {
 		if (stereotypes == null) {

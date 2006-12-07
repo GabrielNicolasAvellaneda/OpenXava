@@ -18,7 +18,7 @@ public class AspectsParser extends ParserBase {
 	private static Map models;
 	private static Map exceptModels;
 	private boolean applyParsing;
-	private Log log = LogFactory.getLog(AspectsParser.class);
+	private static Log log = LogFactory.getLog(AspectsParser.class);
 
 
 	public AspectsParser(String xmlFileURL, int language) {

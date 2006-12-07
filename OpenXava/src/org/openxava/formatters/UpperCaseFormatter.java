@@ -11,7 +11,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class UpperCaseFormatter implements IFormatter {
 	
-	private Log log = LogFactory.getLog(UpperCaseFormatter.class);
+	private static Log log = LogFactory.getLog(UpperCaseFormatter.class);
 	
 	public String format(HttpServletRequest request, Object string) {		
 		return string==null?"":string.toString().toUpperCase();			

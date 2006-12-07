@@ -18,7 +18,7 @@ public class PropertiesReader {
 	private String propertiesFileURL;
 	private Properties properties;
 	
-	private Log log = LogFactory.getLog(PropertiesReader.class);
+	private static Log log = LogFactory.getLog(PropertiesReader.class);
 	
 	/**
 	 * @param propertiesFileURL  Cannot be null

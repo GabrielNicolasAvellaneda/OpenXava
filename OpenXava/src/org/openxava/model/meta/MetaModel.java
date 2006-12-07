@@ -72,7 +72,7 @@ abstract public class MetaModel extends MetaElement {
 	private String pojoClassName;
 	private Collection metaReferencesToEntity;
 	
-	private Log log = LogFactory.getLog(MetaModel.class);
+	private static Log log = LogFactory.getLog(MetaModel.class);
 	
 	/**
 	 * All models (Entities and Aggregates) with a mapping associated.

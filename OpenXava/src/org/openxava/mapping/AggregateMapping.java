@@ -12,7 +12,7 @@ import org.openxava.util.*;
 public class AggregateMapping extends ModelMapping {
 
 	private String modelName;
-	private Log log = LogFactory.getLog(AggregateMapping.class);
+	private static Log log = LogFactory.getLog(AggregateMapping.class);
 		
 	public void addReferenceMapping(ReferenceMapping referenceMapping) throws XavaException { 		
 		super.addReferenceMapping(referenceMapping);

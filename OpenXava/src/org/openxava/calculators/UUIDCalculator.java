@@ -17,7 +17,7 @@ public class UUIDCalculator implements IModelCalculator {
 	
 	private Object model;
 	private boolean lowerCase = false;
-	private Log log = LogFactory.getLog(UUIDCalculator.class);
+	private static Log log = LogFactory.getLog(UUIDCalculator.class);
 
 	public Object calculate() throws Exception {		
 		InetAddress inet = InetAddress.getLocalHost();

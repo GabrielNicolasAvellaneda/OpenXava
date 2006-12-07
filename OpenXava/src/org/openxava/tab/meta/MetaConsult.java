@@ -29,7 +29,7 @@ public class MetaConsult extends MetaElement {
 	private IFilter filter;
 	private String label;
 	
-	private Log log = LogFactory.getLog(MetaConsult.class);
+	private static Log log = LogFactory.getLog(MetaConsult.class);
 				
 	public void addMetaParameter(MetaParameter parameter) {
 		metaParameters.add(parameter);

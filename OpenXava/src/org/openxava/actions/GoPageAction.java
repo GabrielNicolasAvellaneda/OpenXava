@@ -12,7 +12,7 @@ public class GoPageAction extends BaseAction {
 	
 	private Tab tab;
 	private int page;
-	private Log log = LogFactory.getLog(GoPageAction.class);
+	private static Log log = LogFactory.getLog(GoPageAction.class);
 
 	public void execute() throws Exception {
 		tab.goPage(page);

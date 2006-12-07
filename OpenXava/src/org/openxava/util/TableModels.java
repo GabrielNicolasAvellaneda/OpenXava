@@ -14,7 +14,7 @@ public class TableModels {
 	
 	private final static char SEPARATOR = ';';
 	
-	private Log log = LogFactory.getLog(TableModels.class);
+	private static Log log = LogFactory.getLog(TableModels.class);
 	
 	public static String toCSV(TableModel table) {
 		if (table == null) return "";

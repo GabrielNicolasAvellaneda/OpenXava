@@ -16,7 +16,7 @@ import org.openxava.util.*;
 
 public class EJBContextFactory {
 
-	private Log log = LogFactory.getLog(EJBContextFactory.class);
+	private static Log log = LogFactory.getLog(EJBContextFactory.class);
 
   /**
    * It create a <code>IEJBContext</code> used for implementing the <code>EJBContext</code> indicated. <br> 

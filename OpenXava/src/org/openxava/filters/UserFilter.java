@@ -14,7 +14,7 @@ import org.openxava.util.*;
 
 public class UserFilter implements IFilter {
 	
-	private Log log = LogFactory.getLog(UserFilter.class);
+	private static Log log = LogFactory.getLog(UserFilter.class);
 	
 	public Object filter(Object o) throws FilterException {
 		if (o == null) {

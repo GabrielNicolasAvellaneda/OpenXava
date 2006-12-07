@@ -21,7 +21,7 @@ public class MetaDescriptionsList implements java.io.Serializable {
 	private Collection dependsNames;
 	private int labelFormat;
 	
-	private Log log = LogFactory.getLog(MetaDescriptionsList.class);
+	private static Log log = LogFactory.getLog(MetaDescriptionsList.class);
 		
 	public String getDescriptionPropertyName() {
 		return descriptionPropertyName;

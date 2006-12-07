@@ -11,7 +11,7 @@ import org.openxava.tab.*;
 public class RestoreDefaultColumnsAction extends BaseAction implements INavigationAction, IChangeModeAction  {
 
 	private Tab tab;
-	private Log log = LogFactory.getLog(RestoreDefaultColumnsAction.class);
+	private static Log log = LogFactory.getLog(RestoreDefaultColumnsAction.class);
 
 	public void execute() throws Exception {		
 		getTab().restoreDefaultProperties();		

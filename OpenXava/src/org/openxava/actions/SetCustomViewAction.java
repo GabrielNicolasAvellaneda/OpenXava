@@ -10,7 +10,7 @@ import org.apache.commons.logging.LogFactory;
 public class SetCustomViewAction extends BaseAction implements ICustomViewAction {
 	
 	private String customView;
-	private Log log = LogFactory.getLog(SetCustomViewAction.class);
+	private static Log log = LogFactory.getLog(SetCustomViewAction.class);
 	
 	public void execute() throws Exception {
 	}

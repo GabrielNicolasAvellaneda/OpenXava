@@ -21,7 +21,7 @@ import org.openxava.util.*;
  */
 public class HibernatePersistenceProvider extends POJOPersistenceProviderBase {
 	
-	private Log log = LogFactory.getLog(HibernatePersistenceProvider.class);
+	private static Log log = LogFactory.getLog(HibernatePersistenceProvider.class);
 	
 	protected Object find(Class pojoClass, Serializable key) {
 		Object result = XHibernate.getSession().get(pojoClass, (Serializable) key);

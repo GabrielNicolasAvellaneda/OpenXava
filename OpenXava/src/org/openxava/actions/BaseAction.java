@@ -19,7 +19,7 @@ abstract public class BaseAction implements IAction, IRequestAction, java.io.Ser
 	private Messages messages;
 	private Environment environment;
 	private transient HttpServletRequest request;	
-	private Log log = LogFactory.getLog(BaseAction.class);
+	private static Log log = LogFactory.getLog(BaseAction.class);
 	
 	public Messages getErrors() {
 		return errors;

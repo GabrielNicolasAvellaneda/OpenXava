@@ -9,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class SearchReadOnlyAction extends SearchByViewKeyAction {
 	
-	private Log log = LogFactory.getLog(SearchReadOnlyAction.class);
+	private static Log log = LogFactory.getLog(SearchReadOnlyAction.class);
 	
 	public void execute() throws Exception {
 		super.execute();

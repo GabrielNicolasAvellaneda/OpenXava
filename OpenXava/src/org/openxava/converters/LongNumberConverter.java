@@ -12,7 +12,7 @@ import org.apache.commons.logging.LogFactory;
 public class LongNumberConverter implements IConverter {
 	
 	private final static Long CERO = new Long(0);
-	private Log log = LogFactory.getLog(LongNumberConverter.class);
+	private static Log log = LogFactory.getLog(LongNumberConverter.class);
 
 	public Object toDB(Object o) throws ConversionException {
 		return o==null?CERO:o;

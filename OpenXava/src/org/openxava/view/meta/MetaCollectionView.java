@@ -31,7 +31,7 @@ public class MetaCollectionView implements Serializable {
 	private boolean modifyReference = true; 
 	private boolean asAggregate = false;
 	
-	private Log log = LogFactory.getLog(MetaCollectionView.class);
+	private static Log log = LogFactory.getLog(MetaCollectionView.class);
 	
 	public void addActionDetailName(String actionName) {
 		if (actionsDetailNames == null) actionsDetailNames = new ArrayList();

@@ -18,7 +18,7 @@ import org.openxava.util.xmlparse.XmlElementsNames;
 
 abstract public class BaseFormatter implements IFormatter {
 	
-	private Log log = LogFactory.getLog(BaseFormatter.class);
+	private static Log log = LogFactory.getLog(BaseFormatter.class);
 	
 	private ModuleContext getContext(HttpServletRequest request) {
 		ModuleContext context = (ModuleContext) request.getSession().getAttribute("context");

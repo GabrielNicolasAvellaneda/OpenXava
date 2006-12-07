@@ -18,7 +18,7 @@ public class MetaViewAction extends MetaProperty {
 	private String action;
 	private boolean alwaysEnabled;
 	
-	private Log log = LogFactory.getLog(MetaViewAction.class);
+	private static Log log = LogFactory.getLog(MetaViewAction.class);
 	
 	public MetaViewAction(String action) throws XavaException {
 		this.action = action;

@@ -11,7 +11,7 @@ import org.openxava.util.*;
  */
 public class TolerantValidator implements IPropertyValidator {
 
-	private Log log = LogFactory.getLog(TolerantValidator.class);
+	private static Log log = LogFactory.getLog(TolerantValidator.class);
 	
 	public void validate(
 		Messages errors,

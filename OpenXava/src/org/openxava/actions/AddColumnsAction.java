@@ -15,7 +15,7 @@ public class AddColumnsAction extends BaseAction implements IRequestAction, INav
 	
 	private HttpServletRequest request;
 	private Tab tab;
-	private Log log = LogFactory.getLog(AddColumnsAction.class);
+	private static Log log = LogFactory.getLog(AddColumnsAction.class);
 	
 	public void execute() throws Exception {
 		String [] values = request.getParameterValues("selectedProperties");		

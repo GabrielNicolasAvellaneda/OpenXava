@@ -10,7 +10,7 @@ import org.apache.commons.logging.LogFactory;
 public class LongCalculator implements ICalculator {
 
 	private long value;
-	private Log log = LogFactory.getLog(LongCalculator.class);
+	private static Log log = LogFactory.getLog(LongCalculator.class);
 
 	public Object calculate() throws Exception {
 		return new Long(value);

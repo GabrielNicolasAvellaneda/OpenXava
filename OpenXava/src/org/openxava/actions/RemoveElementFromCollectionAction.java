@@ -11,7 +11,7 @@ import org.openxava.validators.*;
 
 public class RemoveElementFromCollectionAction extends CollectionElementViewBaseAction {
 	
-	private Log log = LogFactory.getLog(RemoveElementFromCollectionAction.class);
+	private static Log log = LogFactory.getLog(RemoveElementFromCollectionAction.class);
 	
 	public void execute() throws Exception {
 		try {											

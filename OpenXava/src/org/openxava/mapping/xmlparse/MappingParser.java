@@ -14,7 +14,7 @@ import org.w3c.dom.*;
  */
 public class MappingParser extends XmlElementsNames {
 
-	private Log log = LogFactory.getLog(MappingParser.class);
+	private static Log log = LogFactory.getLog(MappingParser.class);
 	
 	public static EntityMapping parseEntityMapping(Node n, int lang) throws XavaException {		
 		Element el = (Element) n;

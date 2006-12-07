@@ -13,7 +13,7 @@ import org.openxava.validators.*;
 
 public class DeleteAction extends ViewDetailAction {
 	
-	private Log log = LogFactory.getLog(DeleteAction.class);
+	private static Log log = LogFactory.getLog(DeleteAction.class);
 	
 	public DeleteAction() {
 		setIncrement(0);

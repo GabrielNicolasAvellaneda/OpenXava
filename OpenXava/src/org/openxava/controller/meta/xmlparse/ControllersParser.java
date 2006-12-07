@@ -15,7 +15,7 @@ import org.w3c.dom.*;
 public class ControllersParser extends ParserBase {
 	
 	private String context; // only for spanish version (with swing and web)
-	private Log log = LogFactory.getLog(ControllersParser.class);
+	private static Log log = LogFactory.getLog(ControllersParser.class);
 	
 	public ControllersParser(String xmlFileURL, int language) {
 		super(xmlFileURL, language);

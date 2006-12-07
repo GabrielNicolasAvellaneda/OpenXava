@@ -12,7 +12,7 @@ import org.openxava.util.XavaResources;
 public class IntegerStringConverter implements IConverter {
 	
 	private final static Integer CERO = new Integer(0);
-	private Log log = LogFactory.getLog(IntegerStringConverter.class);
+	private static Log log = LogFactory.getLog(IntegerStringConverter.class);
 
 	public Object toDB(Object o) throws ConversionException {
 		return o==null?"0":o.toString();

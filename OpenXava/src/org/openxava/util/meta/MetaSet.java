@@ -16,7 +16,7 @@ public class MetaSet implements Serializable {
 	private String propertyNameFrom;
 	private String value;
 	
-	private Log log = LogFactory.getLog(MetaSet.class);
+	private static Log log = LogFactory.getLog(MetaSet.class);
 
 	public String getPropertyName() {
 		return propertyName;

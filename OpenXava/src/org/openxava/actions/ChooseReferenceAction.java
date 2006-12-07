@@ -17,7 +17,7 @@ public class ChooseReferenceAction extends ViewBaseAction implements INavigation
 	private View referenceSubview;
 	private int row = -1;
 	private boolean	chosen = true;
-	private Log log = LogFactory.getLog(ChooseReferenceAction.class);
+	private static Log log = LogFactory.getLog(ChooseReferenceAction.class);
 	
 	public void execute() throws Exception {						
 		int [] selectedOnes = tab.getSelected();

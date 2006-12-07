@@ -22,7 +22,7 @@ public class PropertyMapping extends MetaSetsContainer {
 	private boolean multpleConverterCreated = false;
 	private String cmpTypeName;
 	private ModelMapping modelMapping;
-	private Log log = LogFactory.getLog(PropertyMapping.class);
+	private static Log log = LogFactory.getLog(PropertyMapping.class);
 	
 	public PropertyMapping(ModelMapping parent) {
 		this.modelMapping = parent;

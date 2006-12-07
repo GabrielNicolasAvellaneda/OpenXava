@@ -18,7 +18,7 @@ public class MetaApplication extends MetaElement implements java.io.Serializable
 	private Map metaModules = new HashMap();
 	private Collection modulesNames = new ArrayList(); // to preserve the order
 	private Collection folders;
-	private Log log = LogFactory.getLog(MetaApplication.class);
+	private static Log log = LogFactory.getLog(MetaApplication.class);
 	
 	/**
 	 * 

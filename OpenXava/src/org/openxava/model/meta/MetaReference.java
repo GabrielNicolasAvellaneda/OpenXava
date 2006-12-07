@@ -24,7 +24,7 @@ public class MetaReference extends MetaMember implements Cloneable {
 	private MetaCalculator metaCalculatorDefaultValue;
 	private ICalculator defaultValueCalculator;
 	
-	private Log log = LogFactory.getLog(MetaReference.class);
+	private static Log log = LogFactory.getLog(MetaReference.class);
 	
 	public MetaCollection getMetaCollectionFromReferencedModel() throws XavaException { 				
 		Iterator it = getMetaModelReferenced().getMetaCollections().iterator();

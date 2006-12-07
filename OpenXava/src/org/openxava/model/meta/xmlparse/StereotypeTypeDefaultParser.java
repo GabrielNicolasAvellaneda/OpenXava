@@ -12,7 +12,7 @@ import org.w3c.dom.*;
  */
 public class StereotypeTypeDefaultParser extends ParserBase {	
 
-	private Log log = LogFactory.getLog(StereotypeTypeDefaultParser.class);
+	private static Log log = LogFactory.getLog(StereotypeTypeDefaultParser.class);
 	
 	public StereotypeTypeDefaultParser(String xmlFileURL, int language) {
 		super(xmlFileURL, language);

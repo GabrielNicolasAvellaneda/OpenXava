@@ -18,7 +18,7 @@ public class ChangeSectionAction extends BaseAction implements IModuleContextAct
 	private String viewObject;
 	private ModuleContext context;
 	private HttpServletRequest request;
-	private Log log = LogFactory.getLog(ChangeSectionAction.class);
+	private static Log log = LogFactory.getLog(ChangeSectionAction.class);
 	
 	public void execute() throws Exception {
 		getView().setActiveSection(getActiveSection());

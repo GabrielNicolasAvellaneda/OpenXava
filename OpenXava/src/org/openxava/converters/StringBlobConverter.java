@@ -10,7 +10,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class StringBlobConverter implements IConverter {
 	
-	private Log log = LogFactory.getLog(StringBlobConverter.class);
+	private static Log log = LogFactory.getLog(StringBlobConverter.class);
 	
 	public class StringValue implements java.io.Serializable {
     	

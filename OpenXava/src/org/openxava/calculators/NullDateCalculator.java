@@ -11,7 +11,7 @@ import org.openxava.util.*;
 public class NullDateCalculator implements ICalculator {
 
 	private final static java.util.Date NULL_DATE = Dates.create(1, 1, 1); 	
-	private Log log = LogFactory.getLog(NullDateCalculator.class);
+	private static Log log = LogFactory.getLog(NullDateCalculator.class);
 
 	/**
 	 * @see org.openxava.calculators.ICalculator#calculate()

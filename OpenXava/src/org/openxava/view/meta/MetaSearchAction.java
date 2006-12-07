@@ -16,7 +16,7 @@ public class MetaSearchAction implements Serializable, Cloneable {
 	private Map propertiesValues;
 	private String actionName;
 	
-	private Log log = LogFactory.getLog(MetaSearchAction.class);
+	private static Log log = LogFactory.getLog(MetaSearchAction.class);
 		
 
 	/**

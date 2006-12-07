@@ -9,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class SearchAction extends BaseAction implements IChainAction {
 
-	private Log log = LogFactory.getLog(SearchAction.class);
+	private static Log log = LogFactory.getLog(SearchAction.class);
 	
 	public void execute() throws Exception {
 	}

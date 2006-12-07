@@ -19,7 +19,7 @@ import org.apache.commons.logging.LogFactory;
 public class ResetPreviousControllersAction extends BaseAction {
 	
 	private Stack previousControllers;
-	private Log log = LogFactory.getLog(ResetPreviousControllersAction.class);
+	private static Log log = LogFactory.getLog(ResetPreviousControllersAction.class);
 	
 	public void execute() throws Exception {
 		previousControllers.clear();

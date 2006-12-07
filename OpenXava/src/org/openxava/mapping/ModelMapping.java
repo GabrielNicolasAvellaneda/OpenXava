@@ -14,7 +14,7 @@ import org.openxava.util.*;
  */
 abstract public class ModelMapping implements java.io.Serializable {
 
-	private Log log = LogFactory.getLog(ModelMapping.class);
+	private static Log log = LogFactory.getLog(ModelMapping.class);
 	private MetaComponent metaComponent;
 	private String table;
 	private Map propertyMappings = new HashMap();

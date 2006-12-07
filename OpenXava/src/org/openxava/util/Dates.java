@@ -15,7 +15,7 @@ public class Dates {
 	
 	private static DateFormat dateFormat;
 	
-	private Log log = LogFactory.getLog(Dates.class);
+	private static Log log = LogFactory.getLog(Dates.class);
 	
 	/**
 	 * With hour to 0.

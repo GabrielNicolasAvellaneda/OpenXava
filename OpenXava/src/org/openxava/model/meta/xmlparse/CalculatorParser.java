@@ -14,7 +14,7 @@ import org.w3c.dom.*;
  */
 public class CalculatorParser extends XmlElementsNames {
 
-	private Log log = LogFactory.getLog(CalculatorParser.class);
+	private static Log log = LogFactory.getLog(CalculatorParser.class);
 	
 	public static MetaCalculator parseCalculator(Node n, int lang) throws XavaException {
 		Element el = (Element) n;

@@ -11,7 +11,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class Resources {
 	
-	private Log log = LogFactory.getLog(Resources.class);
+	private static Log log = LogFactory.getLog(Resources.class);
 	
 	/**
 	 * Load a resource from the classpath and return it in String format. <p>

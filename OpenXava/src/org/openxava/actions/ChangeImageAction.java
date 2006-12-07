@@ -11,7 +11,7 @@ public class ChangeImageAction extends BaseAction implements ILoadFileAction {
 		
 	private String newImageProperty;	
 
-	private Log log = LogFactory.getLog(ChangeImageAction.class);
+	private static Log log = LogFactory.getLog(ChangeImageAction.class);
 	
 	public void execute() throws Exception {		
 	}

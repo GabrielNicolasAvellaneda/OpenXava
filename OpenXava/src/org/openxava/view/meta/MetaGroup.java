@@ -15,7 +15,7 @@ public class MetaGroup extends MetaMember {
 	private MetaView metaView;
 	private MetaView metaViewParent;
 	
-	private Log log = LogFactory.getLog(MetaGroup.class);
+	private static Log log = LogFactory.getLog(MetaGroup.class);
 		
 	public MetaGroup(MetaView parent) {
 		this.metaViewParent = parent;

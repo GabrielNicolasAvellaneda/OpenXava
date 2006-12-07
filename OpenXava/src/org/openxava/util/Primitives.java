@@ -13,7 +13,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class Primitives {
 	
-	private Log log = LogFactory.getLog(Primitives.class);
+	private static Log log = LogFactory.getLog(Primitives.class);
 	
 	/**
 	 * Wrapper class corresponding to class of primitive sent. <p>

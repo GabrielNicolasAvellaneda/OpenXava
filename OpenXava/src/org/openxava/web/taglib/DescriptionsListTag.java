@@ -19,7 +19,7 @@ import org.openxava.view.*;
 public class DescriptionsListTag extends TagSupport {
 	
 	private String reference;
-	private Log log = LogFactory.getLog(DescriptionsListTag.class);
+	private static Log log = LogFactory.getLog(DescriptionsListTag.class);
 	
 	public int doStartTag() throws JspException {
 		try {

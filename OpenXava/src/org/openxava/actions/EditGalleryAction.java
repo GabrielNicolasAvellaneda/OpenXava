@@ -18,7 +18,7 @@ public class EditGalleryAction extends ViewBaseAction implements INavigationActi
 	
 	private String galleryProperty;
 	private Gallery gallery;	
-	private Log log = LogFactory.getLog(EditGalleryAction.class);
+	private static Log log = LogFactory.getLog(EditGalleryAction.class);
 	
 	public void execute() throws Exception {
 		String oid = getView().getValueString(galleryProperty);

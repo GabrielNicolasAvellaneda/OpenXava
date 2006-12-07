@@ -22,7 +22,7 @@ import org.openxava.util.*;
 
 public class GenerateCustomReportServlet extends HttpServlet { 	
 
-	private Log log = LogFactory.getLog(GenerateCustomReportServlet.class);
+	private static Log log = LogFactory.getLog(GenerateCustomReportServlet.class);
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String design = (String) request.getSession().getAttribute("xava.report.design");

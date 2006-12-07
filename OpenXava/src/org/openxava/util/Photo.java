@@ -17,7 +17,7 @@ public class Photo implements java.io.Serializable {
 
 	public byte[] data;
 	
-	private Log log = LogFactory.getLog(Photo.class);
+	private static Log log = LogFactory.getLog(Photo.class);
 
 	public Photo(byte[] data) {
 		this.data = data;

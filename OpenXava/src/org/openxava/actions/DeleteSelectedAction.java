@@ -16,7 +16,7 @@ public class DeleteSelectedAction extends BaseAction implements IModelAction {
 	
 	private Tab tab;
 	private String model;
-	private Log log = LogFactory.getLog(DeleteSelectedAction.class);
+	private static Log log = LogFactory.getLog(DeleteSelectedAction.class);
 	
 	public void execute() throws Exception {				
 		int [] selectedOnes = tab.getSelected();

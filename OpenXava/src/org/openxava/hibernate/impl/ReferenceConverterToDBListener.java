@@ -14,7 +14,7 @@ import org.openxava.util.*;
 
 public class ReferenceConverterToDBListener implements PreInsertEventListener, PreUpdateEventListener {	
 
-	private Log log = LogFactory.getLog(ReferenceConverterToDBListener.class);
+	private static Log log = LogFactory.getLog(ReferenceConverterToDBListener.class);
 	
 	public boolean onPreInsert(PreInsertEvent ev) {		
 		if (!(ev.getEntity() instanceof IModel)) return false;

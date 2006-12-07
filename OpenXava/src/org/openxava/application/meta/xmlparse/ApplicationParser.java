@@ -14,7 +14,7 @@ import org.w3c.dom.*;
  */
 public class ApplicationParser extends ParserBase {
 	
-	private Log log = LogFactory.getLog(ApplicationParser.class);
+	private static Log log = LogFactory.getLog(ApplicationParser.class);
 	
 	private ApplicationParser(String xmlFileURL, int language) {
 		super(xmlFileURL, language);		

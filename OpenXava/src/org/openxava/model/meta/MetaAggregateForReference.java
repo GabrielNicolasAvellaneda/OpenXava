@@ -19,7 +19,7 @@ public class MetaAggregateForReference extends MetaAggregate {
 	
 	private Map persistentPropertiesReferencesMap;
 	
-	private Log log = LogFactory.getLog(MetaAggregateForReference.class);
+	private static Log log = LogFactory.getLog(MetaAggregateForReference.class);
 	
 	public java.lang.String getBeanClass() throws XavaException {
 		if (Is.emptyString(beanClass)) {

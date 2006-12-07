@@ -8,7 +8,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class TrimStringConverter implements IConverter {
 
-	private Log log = LogFactory.getLog(TrimStringConverter.class);
+	private static Log log = LogFactory.getLog(TrimStringConverter.class);
 	
 	public Object toJava(Object o) throws ConversionException {
 		return trim(o);

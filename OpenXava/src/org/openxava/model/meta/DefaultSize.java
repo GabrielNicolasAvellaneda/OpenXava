@@ -20,7 +20,7 @@ public class DefaultSize {
 	private static Map scaleStereotypes;
 	private static Map scaleTypes;
 	
-	private Log log = LogFactory.getLog(DefaultSize.class);
+	private static Log log = LogFactory.getLog(DefaultSize.class);
 	
 	public static void _addForStereotype(String name, int length) throws XavaException {
 		if (stereotypes == null) {

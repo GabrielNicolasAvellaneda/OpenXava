@@ -19,7 +19,7 @@ public class MetaReferenceView extends MetaMemberView implements java.io.Seriali
 	private boolean readOnly = false;
 	private boolean asAggregate = false; 
 	
-	private Log log = LogFactory.getLog(MetaReferenceView.class);
+	private static Log log = LogFactory.getLog(MetaReferenceView.class);
 	
 	public String getReferenceName() {
 		return referenceName==null?"":referenceName.trim();

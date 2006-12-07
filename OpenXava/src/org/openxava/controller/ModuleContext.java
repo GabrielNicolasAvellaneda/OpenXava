@@ -23,7 +23,7 @@ public class ModuleContext {
 	
 	
 	private Map contexts = new HashMap();
-	private Log log = LogFactory.getLog(ModuleContext.class);
+	private static Log log = LogFactory.getLog(ModuleContext.class);
 
 	/**
 	 * Return a object asociate to the specified module

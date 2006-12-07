@@ -19,7 +19,7 @@ public class MetaValidator extends MetaSetsContainer {
 	private java.lang.String name;
 	private boolean onlyOnCreate;	
 	private java.lang.String className;
-	private Log log = LogFactory.getLog(MetaValidator.class);
+	private static Log log = LogFactory.getLog(MetaValidator.class);
 
 	public MetaValidator() {
 		super();

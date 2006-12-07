@@ -36,7 +36,7 @@ public class MetaAction extends MetaElement {
 	private boolean takesLong;
 	private boolean confirm;
 	
-	private Log log = LogFactory.getLog(MetaAction.class);
+	private static Log log = LogFactory.getLog(MetaAction.class);
 	
 	public MetaAction() {
 	}

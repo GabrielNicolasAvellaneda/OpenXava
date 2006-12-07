@@ -16,7 +16,7 @@ import org.apache.commons.logging.LogFactory;
 public class SessionBase extends EJBBase implements SessionBean {
 
   private SessionContext context;
-  private Log log = LogFactory.getLog(SessionBase.class);
+  private static Log log = LogFactory.getLog(SessionBase.class);
 
   public void ejbActivate() throws RemoteException {
   }

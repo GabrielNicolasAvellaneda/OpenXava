@@ -14,7 +14,7 @@ import org.w3c.dom.*;
  */
 public class ViewParser extends XmlElementsNames {
 	
-	private Log log = LogFactory.getLog(ViewParser.class);
+	private static Log log = LogFactory.getLog(ViewParser.class);
 	
 	public static MetaView parseView(Node n, int lang) throws XavaException {
 		Element el = (Element) n;

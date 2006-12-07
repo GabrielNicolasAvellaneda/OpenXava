@@ -17,7 +17,7 @@ public class GeneratorFactory {
 	
 	private static Map ejbClasses;
 	private static Map pojoClasses;
-	private Log log = LogFactory.getLog(GeneratorFactory.class);
+	private static Log log = LogFactory.getLog(GeneratorFactory.class);
 	
 	public static IPropertyCodeGenerator create(MetaProperty metaProperty, boolean ejb) throws Exception {
 		if (!has(metaProperty, ejb)) return null;

@@ -19,7 +19,7 @@ public class MetaEntity extends MetaModel {
 	private MetaEJB metaEJB;
 	private boolean annotatedEJB3;
 	
-	private Log log = LogFactory.getLog(MetaEntity.class);
+	private static Log log = LogFactory.getLog(MetaEntity.class);
 		
 	/**
 	 * @return The names of key fields. Of <tt>String</tt>.

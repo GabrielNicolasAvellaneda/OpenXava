@@ -16,7 +16,7 @@ import org.openxava.util.*;
  */
 public class ArrayBytesPhotoConverter implements IConverter {
 
-	private Log log = LogFactory.getLog(ArrayBytesPhotoConverter.class);
+	private static Log log = LogFactory.getLog(ArrayBytesPhotoConverter.class);
 	
 	public Object toDB(Object o) throws ConversionException {
 		if (o == null) return null;
