@@ -22,7 +22,7 @@ public class ViewDetailAction extends ViewBaseAction implements IChainAction, IM
 	private boolean atListBegin;
 	private boolean noElementsInList;
 	private String model;
-	private Log log = LogFactory.getLog(ViewDetailAction.class);
+	private static Log log = LogFactory.getLog(ViewDetailAction.class);
 	
 	public void execute() throws Exception {		
 		getView().setModelName(model); 

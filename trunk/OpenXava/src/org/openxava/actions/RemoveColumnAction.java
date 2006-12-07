@@ -12,7 +12,7 @@ public class RemoveColumnAction extends BaseAction {
 	
 	private Tab tab;
 	private int columnIndex;
-	private Log log = LogFactory.getLog(RemoveColumnAction.class);
+	private static Log log = LogFactory.getLog(RemoveColumnAction.class);
 
 	public void execute() throws Exception {
 		getTab().removeProperty(columnIndex);

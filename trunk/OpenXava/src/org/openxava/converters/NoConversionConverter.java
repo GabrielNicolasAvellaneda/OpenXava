@@ -9,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class NoConversionConverter implements IConverter{
 
-	private Log log = LogFactory.getLog(NoConversionConverter.class);
+	private static Log log = LogFactory.getLog(NoConversionConverter.class);
 	
 	public Object toJava(Object o) throws ConversionException {
 		return o;

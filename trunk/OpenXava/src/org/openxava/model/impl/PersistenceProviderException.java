@@ -16,7 +16,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class PersistenceProviderException extends RuntimeException {
 
-	private Log log = LogFactory.getLog(PersistenceProviderException.class);
+	private static Log log = LogFactory.getLog(PersistenceProviderException.class);
 	
 	public PersistenceProviderException() {
 		super();

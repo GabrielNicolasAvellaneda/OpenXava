@@ -16,7 +16,7 @@ public class LoadImageIntoGalleryAction extends BaseAction implements INavigatio
 
 	private List fileItems;
 	private Gallery gallery;
-	private Log log = LogFactory.getLog(LoadImageIntoGalleryAction.class);
+	private static Log log = LogFactory.getLog(LoadImageIntoGalleryAction.class);
 
 	public void execute() throws Exception {		
 		Iterator i = getFileItems().iterator();

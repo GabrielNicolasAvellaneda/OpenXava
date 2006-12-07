@@ -6,7 +6,7 @@ import org.openxava.util.*;
 
 public class CurrentUserCalculator implements ICalculator {
 
-	private Log log = LogFactory.getLog(CurrentUserCalculator.class);
+	private static Log log = LogFactory.getLog(CurrentUserCalculator.class);
 	
 	public Object calculate() throws Exception {		
 		return Users.getCurrent();

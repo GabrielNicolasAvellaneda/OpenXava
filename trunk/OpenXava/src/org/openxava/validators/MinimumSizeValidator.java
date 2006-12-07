@@ -13,7 +13,7 @@ public class MinimumSizeValidator implements IPropertyValidator {
 	
 	private int size;
 	
-	private Log log = LogFactory.getLog(MinimumSizeValidator.class);
+	private static Log log = LogFactory.getLog(MinimumSizeValidator.class);
 
 	public void validate(Messages errors, Object value, String propertyName, String modelName) throws Exception {
 		if (size == 0) return;

@@ -14,7 +14,7 @@ public class CancelReferenceSearchAction extends ViewBaseAction implements INavi
 	
 	private Tab tab;
 	
-	private Log log = LogFactory.getLog(CancelReferenceSearchAction.class);
+	private static Log log = LogFactory.getLog(CancelReferenceSearchAction.class);
 	
 	public void execute() throws Exception {		
 		getTab().setModelName(getView().getModelName());		

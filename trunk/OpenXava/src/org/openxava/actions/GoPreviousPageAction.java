@@ -11,7 +11,7 @@ import org.openxava.tab.*;
 public class GoPreviousPageAction extends BaseAction {
 	
 	private Tab tab;
-	private Log log = LogFactory.getLog(GoPreviousPageAction.class);
+	private static Log log = LogFactory.getLog(GoPreviousPageAction.class);
 
 	public void execute() throws Exception {
 		tab.pageBack();

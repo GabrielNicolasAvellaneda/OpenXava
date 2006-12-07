@@ -12,7 +12,7 @@ public class MetaReport implements Serializable {
 	
 	private String modelName;
 	private String tabName;
-	private Log log = LogFactory.getLog(MetaReport.class);
+	private static Log log = LogFactory.getLog(MetaReport.class);
 	
 	public String getModelName() {
 		return modelName;

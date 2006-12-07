@@ -18,7 +18,7 @@ public class MetaApplications {
 
 	private static Map metaAplicacions;
 	
-	private Log log = LogFactory.getLog(MetaApplications.class);
+	private static Log log = LogFactory.getLog(MetaApplications.class);
 	
 	/**
 	 * Only call this from parser.

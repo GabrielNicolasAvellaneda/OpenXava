@@ -14,7 +14,7 @@ public class GoDetailAction extends BaseAction implements IChangeModeAction, ICh
 	private String nextSection;
 	private String nextAction;
 	private Tab tab;
-	private Log log = LogFactory.getLog(GoDetailAction.class);
+	private static Log log = LogFactory.getLog(GoDetailAction.class);
 
 	public String getNextMode() {		
 		return nextSection;

@@ -11,7 +11,7 @@ import org.openxava.view.*;
 abstract public class ViewBaseAction extends BaseAction  {
 	
 	private View view;
-	private Log log = LogFactory.getLog(ViewBaseAction.class);
+	private static Log log = LogFactory.getLog(ViewBaseAction.class);
 	
 		
 	public View getView() {

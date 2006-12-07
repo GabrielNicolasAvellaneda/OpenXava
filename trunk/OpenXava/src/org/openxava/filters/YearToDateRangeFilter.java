@@ -14,7 +14,7 @@ import org.openxava.util.*;
  */
 public class YearToDateRangeFilter implements IFilter {
 
-	private Log log = LogFactory.getLog(YearToDateRangeFilter.class);
+	private static Log log = LogFactory.getLog(YearToDateRangeFilter.class);
 	
 	/**
 	 * @see org.openxava.filters.IFilter#filter(java.lang.Object)

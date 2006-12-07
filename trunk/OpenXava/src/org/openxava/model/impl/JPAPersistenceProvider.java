@@ -20,7 +20,7 @@ import org.openxava.util.*;
  */
 public class JPAPersistenceProvider extends POJOPersistenceProviderBase {
 	
-	private Log log = LogFactory.getLog(JPAPersistenceProvider.class);
+	private static Log log = LogFactory.getLog(JPAPersistenceProvider.class);
 	
 	protected Object find(Class pojoClass, Serializable key) {
 		try {

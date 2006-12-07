@@ -21,7 +21,7 @@ public class MetaParameter extends MetaElement {
 	private boolean like=false;
 	private MetaFilter metaFilter;
 	
-	private Log log = LogFactory.getLog(MetaParameter.class);
+	private static Log log = LogFactory.getLog(MetaParameter.class);
 	
 	public MetaProperty getMetaProperty() throws XavaException {
 		if (metaConsult == null) {

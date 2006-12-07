@@ -17,8 +17,7 @@ public class ReferenceBaseAction extends ViewBaseAction {
 		
 		private View view;		
 		private String memberName;
-		private View parent;
-		private Log log = LogFactory.getLog(ReferenceBaseAction.class);
+		private View parent;		
 		
 		ViewInfo(View view, String memberName, View parent) {
 			this.view = view;
@@ -38,6 +37,7 @@ public class ReferenceBaseAction extends ViewBaseAction {
 		
 	}
 	
+	private static Log log = LogFactory.getLog(ReferenceBaseAction.class);
 	private ViewInfo viewInfo;	
 	private String keyProperty;
 	private View referenceSubview;		

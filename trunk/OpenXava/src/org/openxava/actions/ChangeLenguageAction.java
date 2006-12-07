@@ -12,7 +12,7 @@ public class ChangeLenguageAction extends BaseAction {
 	
 	private String languageId;
 	private Language language;
-	private Log log = LogFactory.getLog(ChangeLenguageAction.class);
+	private static Log log = LogFactory.getLog(ChangeLenguageAction.class);
 	
 	public void execute() throws Exception {
 		language.setId(languageId);

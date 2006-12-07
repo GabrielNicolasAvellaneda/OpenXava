@@ -12,7 +12,7 @@ import org.openxava.util.*;
  */
 public class NotNullValidator implements IPropertyValidator {
 
-	private Log log = LogFactory.getLog(NotNullValidator.class);
+	private static Log log = LogFactory.getLog(NotNullValidator.class);
 	
 	public void validate(
 		Messages errors,

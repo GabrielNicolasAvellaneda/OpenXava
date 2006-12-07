@@ -16,7 +16,7 @@ public class MetaController extends MetaElement {
 	private Collection parentsNames = new ArrayList();
 	private Collection parents = new ArrayList();
 	private Map mapMetaActions = new HashMap();
-	private Log log = LogFactory.getLog(MetaController.class);
+	private static Log log = LogFactory.getLog(MetaController.class);
 		
 	/**
 	 * Only for spanish/swing version

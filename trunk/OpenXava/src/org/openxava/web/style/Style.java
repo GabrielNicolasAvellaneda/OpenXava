@@ -12,7 +12,7 @@ public class Style {
 	
 	private static Style instance = null;
 	
-	private Log log = LogFactory.getLog(Style.class);
+	private static Log log = LogFactory.getLog(Style.class);
 
 	public Style() {		
 	}

@@ -12,7 +12,7 @@ import org.openxava.util.*;
  */
 public class NotBlankCharacterValidator implements IPropertyValidator {
 
-	private Log log = LogFactory.getLog(NotBlankCharacterValidator.class);
+	private static Log log = LogFactory.getLog(NotBlankCharacterValidator.class);
 	
 	public void validate(
 		Messages errors,

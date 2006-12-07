@@ -24,7 +24,7 @@ import org.openxava.util.meta.*;
 
 public class DefaultValueIdentifierGenerator implements IdentifierGenerator, Configurable {
 	
-	private Log log = LogFactory.getLog(DefaultValueIdentifierGenerator.class);
+	private static Log log = LogFactory.getLog(DefaultValueIdentifierGenerator.class);
 	
 	static class AggregateOidInfo {
 		public int counter;

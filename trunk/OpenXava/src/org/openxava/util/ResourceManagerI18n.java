@@ -17,7 +17,7 @@ public class ResourceManagerI18n {
 	private String englishPrefix;
 	private String spanishPrefix;
 	
-	private Log log = LogFactory.getLog(ResourceManagerI18n.class);
+	private static Log log = LogFactory.getLog(ResourceManagerI18n.class);
 		
 	public ResourceManagerI18n(String resourcesFile) {
 		Assert.assertNotNull("Resource file is required", resourcesFile); // this message cannot be i18n

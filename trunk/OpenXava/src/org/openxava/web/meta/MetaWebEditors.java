@@ -18,7 +18,7 @@ public class MetaWebEditors {
 	private static Map editorsByStereotype;
 	private static Map editorsByModelProperty;
 	
-	private Log log = LogFactory.getLog(MetaWebEditors.class);
+	private static Log log = LogFactory.getLog(MetaWebEditors.class);
 
 	public static void addMetaEditorForType(String type, MetaEditor editor) throws XavaException {
 		if (editorsByType == null) {

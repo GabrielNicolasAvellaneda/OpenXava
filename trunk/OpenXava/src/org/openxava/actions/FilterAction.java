@@ -7,7 +7,7 @@ import org.openxava.tab.*;
 public class FilterAction extends BaseAction {
 	
 	private Tab tab;
-	private Log log = LogFactory.getLog(FilterAction.class);
+	private static Log log = LogFactory.getLog(FilterAction.class);
 	
 	public void execute() throws Exception {
 		getTab().setRowsHidden(false);

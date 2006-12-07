@@ -18,7 +18,7 @@ public class ActionTag extends TagSupport {
 	private IActionTag actionTag;
 	private String action;
 	private String argv;
-	private Log log = LogFactory.getLog(ActionTag.class);
+	private static Log log = LogFactory.getLog(ActionTag.class);
 	
 
 	public int doStartTag() throws JspException {

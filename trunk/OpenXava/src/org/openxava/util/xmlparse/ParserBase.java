@@ -24,7 +24,7 @@ abstract public class ParserBase extends XmlElementsNames {
 	private static DocumentBuilder documentBuilder;	
 	private String xmlFileURL;
 	
-	private Log log = LogFactory.getLog(ParserBase.class);
+	private static Log log = LogFactory.getLog(ParserBase.class);
 	
 	public ParserBase(String xmlFileURL) {
 		// assert(xmlFileURL)

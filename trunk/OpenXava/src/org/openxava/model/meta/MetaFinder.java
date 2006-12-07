@@ -23,7 +23,7 @@ public class MetaFinder implements Serializable {
 	private String order;
 	private MetaModel metaModel;
 	
-	private Log log = LogFactory.getLog(MetaFinder.class);
+	private static Log log = LogFactory.getLog(MetaFinder.class);
 	
 	public String getArguments() {
 		arguments = Strings.change(arguments, "String", "java.lang.String");

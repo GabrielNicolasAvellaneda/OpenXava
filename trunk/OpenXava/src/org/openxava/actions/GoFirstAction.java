@@ -14,7 +14,7 @@ public class GoFirstAction extends BaseAction {
 			
 	private Map key;
 	private transient Tab tab;
-	private Log log = LogFactory.getLog(GoFirstAction.class);
+	private static Log log = LogFactory.getLog(GoFirstAction.class);
 	
 	public void executeBefore() throws Exception {
 		key = (Map) tab.getTableModel().getObjectAt(0);

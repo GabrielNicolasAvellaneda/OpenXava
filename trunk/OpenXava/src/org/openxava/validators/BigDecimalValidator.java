@@ -17,7 +17,7 @@ public class BigDecimalValidator implements IPropertyValidator {
     private int maximumIntegerDigits = 15;
     private int maximumFractionDigits = 2;
     
-    private Log log = LogFactory.getLog(BigDecimalValidator.class);
+    private static Log log = LogFactory.getLog(BigDecimalValidator.class);
 
     public void validate(Messages errors, Object value, String propertyName, String modelName) throws Exception {
         BigDecimal bigDecimal = (BigDecimal) value;

@@ -37,7 +37,7 @@ public class XPersistence {
 	private static EntityManagerFactory entityManagerFactory; 	
 	private static String persistenceUnit = "default";	
 	private static ThreadLocal currentManager = new ThreadLocal();
-	private Log log = LogFactory.getLog(XPersistence.class);
+	private static Log log = LogFactory.getLog(XPersistence.class);
 
 	/**
 	 * <code>EntityManager</code> associated to current thread. <p>

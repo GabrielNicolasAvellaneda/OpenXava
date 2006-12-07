@@ -15,7 +15,7 @@ public class FieldComparator implements Comparator {
 	
 	final private static FieldComparator instance = new FieldComparator();
 	
-	private Log log = LogFactory.getLog(FieldComparator.class);
+	private static Log log = LogFactory.getLog(FieldComparator.class);
 	
 	// Use getInstance
 	private FieldComparator() {		

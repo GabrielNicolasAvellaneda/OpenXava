@@ -12,7 +12,7 @@ import org.w3c.dom.*;
  */
 public class GeneratorsParser extends ParserBase {
 
-	private Log log = LogFactory.getLog(GeneratorsParser.class);
+	private static Log log = LogFactory.getLog(GeneratorsParser.class);
 	
 	public GeneratorsParser(String urlXmlFile, int language) {
 		super(urlXmlFile, language);

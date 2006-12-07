@@ -17,7 +17,7 @@ public class ConcatOidCalculator
 	implements IAggregateOidCalculator {
 		
 	private int contador;
-	private Log log = LogFactory.getLog(ConcatOidCalculator.class);
+	private static Log log = LogFactory.getLog(ConcatOidCalculator.class);
 	
 	public ConcatOidCalculator() {
 		setSeparator(":");

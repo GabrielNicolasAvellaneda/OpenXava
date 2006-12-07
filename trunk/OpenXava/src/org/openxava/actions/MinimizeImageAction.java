@@ -12,7 +12,7 @@ import org.openxava.session.*;
 public class MinimizeImageAction extends BaseAction {
 	
 	private Gallery gallery;
-	private Log log = LogFactory.getLog(MinimizeImageAction.class);
+	private static Log log = LogFactory.getLog(MinimizeImageAction.class);
 
 	public void execute() throws Exception {
 		gallery.setMaximized(false);

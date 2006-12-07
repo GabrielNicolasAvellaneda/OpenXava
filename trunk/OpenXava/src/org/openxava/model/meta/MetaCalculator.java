@@ -16,7 +16,7 @@ public class MetaCalculator extends MetaSetsContainer implements Serializable {
 	
 	private String className;	
 	private boolean onCreate;
-	private Log log = LogFactory.getLog(MetaCalculator.class);
+	private static Log log = LogFactory.getLog(MetaCalculator.class);
 		
 	/**
 	 * Create a calculator whenever this method is called,

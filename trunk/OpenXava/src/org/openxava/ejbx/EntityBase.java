@@ -16,7 +16,7 @@ import org.apache.commons.logging.LogFactory;
 public class EntityBase extends EJBBase implements EntityBean {
 
   private EntityContext context;
-  private Log log = LogFactory.getLog(EntityBase.class);
+  private static Log log = LogFactory.getLog(EntityBase.class);
 
   public void ejbActivate() throws RemoteException {
   }

@@ -18,7 +18,7 @@ public class ComparatorValidator implements IValidator {
 	private String name1;
 	private String name2;
 	
-	private Log log = LogFactory.getLog(ComparatorValidator.class);
+	private static Log log = LogFactory.getLog(ComparatorValidator.class);
 	
 	public void validate(Messages errors) throws Exception { 
 		if (operator == null) operator = "=";

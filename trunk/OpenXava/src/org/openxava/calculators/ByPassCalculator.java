@@ -9,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
 public class ByPassCalculator implements ICalculator {
 	
 	private Object source;
-	private Log log = LogFactory.getLog(ByPassCalculator.class);
+	private static Log log = LogFactory.getLog(ByPassCalculator.class);
 
 	public Object calculate() throws Exception {
 		return source;

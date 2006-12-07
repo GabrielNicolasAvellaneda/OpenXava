@@ -15,7 +15,7 @@ public class BigDecimalNumberConverter implements IConverter {
 	
 	private final static BigDecimal ZERO = new BigDecimal("0");	
 
-	private Log log = LogFactory.getLog(BigDecimalNumberConverter.class);
+	private static Log log = LogFactory.getLog(BigDecimalNumberConverter.class);
 	
 	public Object toDB(Object o) throws ConversionException {
 		return o==null?ZERO:o;

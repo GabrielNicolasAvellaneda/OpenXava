@@ -143,6 +143,14 @@ if (editable && view.isCreateNewForReference(ref)) {
 <%
 }
 %>
+<%
+if (editable && view.isModifyForReference(ref)) {
+%>
+<xava:action action='Reference.modify' argv='<%="model="+ref.getReferencedModelName() + ",keyProperty=" + propertyKey%>'/>
+<%
+}
+%>
+
 
 <%
 java.util.Iterator itActions = view.getActionsNamesForReference(ref, editable).iterator();

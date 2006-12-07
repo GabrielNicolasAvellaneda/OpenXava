@@ -32,7 +32,7 @@ public class MetaEJB implements Serializable {
 	private java.lang.String primaryKey;	
 	private MetaModel metaModel;
 	
-	private Log log = LogFactory.getLog(MetaEJB.class);
+	private static Log log = LogFactory.getLog(MetaEJB.class);
 	
 	public void setMetaModel(MetaModel metaModel) {
 		this.metaModel = metaModel;

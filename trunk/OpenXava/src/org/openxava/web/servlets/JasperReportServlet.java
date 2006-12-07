@@ -18,7 +18,7 @@ import org.openxava.util.*;
 
 public class JasperReportServlet extends HttpServlet {
 
-	private Log log = LogFactory.getLog(JasperReportServlet.class);
+	private static Log log = LogFactory.getLog(JasperReportServlet.class);
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		try {

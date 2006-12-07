@@ -12,7 +12,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class SQLTimeFormatter extends TimeBaseFormatter {
 	
-	private Log log = LogFactory.getLog(SQLTimeFormatter.class);
+	private static Log log = LogFactory.getLog(SQLTimeFormatter.class);
 	
 	public Object parse(HttpServletRequest request, String string) throws ParseException {
 		TimeData timeData = (TimeData)super.parse(request, string);

@@ -12,7 +12,7 @@ import org.w3c.dom.*;
  */
 public class DefaultSizeParser extends ParserBase {
 
-	private Log log = LogFactory.getLog(DefaultSizeParser.class);
+	private static Log log = LogFactory.getLog(DefaultSizeParser.class);
 	
 	public DefaultSizeParser(String xmlFileURL, int language) {
 		super(xmlFileURL, language);

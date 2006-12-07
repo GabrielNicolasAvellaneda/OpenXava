@@ -18,7 +18,7 @@ import org.openxava.view.*;
 
 public class ImagesServlet extends HttpServlet {
 
-	private Log log = LogFactory.getLog(ImagesServlet.class);
+	private static Log log = LogFactory.getLog(ImagesServlet.class);
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		try {			

@@ -20,7 +20,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class IdentityCalculator implements IHibernateIdGeneratorCalculator { 
 	
-	private Log log = LogFactory.getLog(IdentityCalculator.class);
+	private static Log log = LogFactory.getLog(IdentityCalculator.class);
 	
 	public String hbmGeneratorCode() {		
 		return "<generator class='identity'/>";

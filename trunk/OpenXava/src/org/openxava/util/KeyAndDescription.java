@@ -14,7 +14,7 @@ public class KeyAndDescription implements Serializable {
 	boolean showCode=false;
 	private Object key;
 	private Object description;
-	private Log log = LogFactory.getLog(KeyAndDescription.class);
+	private static Log log = LogFactory.getLog(KeyAndDescription.class);
 	
 	public KeyAndDescription() {
 	}

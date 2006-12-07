@@ -28,7 +28,7 @@ public class MetaEditor {
 	private boolean format = true;
 	private boolean frame = false;
 	
-	private Log log = LogFactory.getLog(MetaEditor.class);
+	private static Log log = LogFactory.getLog(MetaEditor.class);
 	
 	public void _addFormatterMetaSet(MetaSet metaSet) {
 		if (formatterMetaSets == null) formatterMetaSets = new ArrayList();

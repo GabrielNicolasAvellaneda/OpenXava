@@ -15,7 +15,7 @@ public class KeyAndDescriptionComparator implements Comparator {
 	
 	private boolean orderByKey;
 	
-	private Log log = LogFactory.getLog(KeyAndDescriptionComparator.class);
+	private static Log log = LogFactory.getLog(KeyAndDescriptionComparator.class);
 	
 	private KeyAndDescriptionComparator(boolean ordenadoPorClave) {
 		this.orderByKey = ordenadoPorClave;

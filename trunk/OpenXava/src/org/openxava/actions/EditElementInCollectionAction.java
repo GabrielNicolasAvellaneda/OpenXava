@@ -15,7 +15,7 @@ import org.openxava.util.*;
 public class EditElementInCollectionAction extends CollectionElementViewBaseAction  {
 	
 	private int row;
-	private Log log = LogFactory.getLog(EditElementInCollectionAction.class);
+	private static Log log = LogFactory.getLog(EditElementInCollectionAction.class);
 	
 	public void execute() throws Exception {
 		getCollectionElementView().setCollectionDetailVisible(true);		

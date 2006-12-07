@@ -14,7 +14,7 @@ public class CmpField implements Serializable {
 	private String column;
 	private String cmpPropertyName; 
 	private String cmpTypeName;
-	private Log log = LogFactory.getLog(CmpField.class);
+	private static Log log = LogFactory.getLog(CmpField.class);
 
 	public String getColumn() {
 		return column;

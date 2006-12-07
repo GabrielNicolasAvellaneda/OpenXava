@@ -17,7 +17,7 @@ public class MetaMethod implements Serializable {
 	private String exceptions;
 	private MetaCalculator metaCalculator;
 	
-	private Log log = LogFactory.getLog(MetaMethod.class);
+	private static Log log = LogFactory.getLog(MetaMethod.class);
 	
 	public String getName() {
 		return name;

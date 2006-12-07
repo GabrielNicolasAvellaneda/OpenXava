@@ -14,7 +14,7 @@ import org.apache.commons.logging.LogFactory;
  
 public class Align implements java.io.Serializable {
 	
-	private Log log = LogFactory.getLog(Align.class);
+	private static Log log = LogFactory.getLog(Align.class);
 	
 	private int code;
 	private String description;

@@ -14,7 +14,7 @@ public class MetaRowStyle implements Serializable{
 	private String property;
 	private String value;
 	
-	private Log log = LogFactory.getLog(MetaRowStyle.class);
+	private static Log log = LogFactory.getLog(MetaRowStyle.class);
 
 	public String getProperty() {
 		return property;

@@ -9,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class HideDetailElementInCollectionAction extends CollectionElementViewBaseAction {
 	
-	private Log log = LogFactory.getLog(HideDetailElementInCollectionAction.class);
+	private static Log log = LogFactory.getLog(HideDetailElementInCollectionAction.class);
 	
 	public void execute() throws Exception {							
 		getCollectionElementView().setCollectionDetailVisible(false);

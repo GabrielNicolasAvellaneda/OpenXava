@@ -13,7 +13,7 @@ public class ValidationException extends Exception {
 	
 	private Messages errors;
 	
-	private Log log = LogFactory.getLog(ValidationException.class);
+	private static Log log = LogFactory.getLog(ValidationException.class);
 	
 	public ValidationException() {		
 	}

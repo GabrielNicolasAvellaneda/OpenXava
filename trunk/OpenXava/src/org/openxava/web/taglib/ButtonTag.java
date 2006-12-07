@@ -18,7 +18,7 @@ import org.openxava.web.style.*;
 public class ButtonTag extends TagSupport {
 	
 	private String action;
-	private Log log = LogFactory.getLog(ButtonTag.class);
+	private static Log log = LogFactory.getLog(ButtonTag.class);
 
 	public int doStartTag() throws JspException {
 		try {									

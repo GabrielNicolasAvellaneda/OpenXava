@@ -20,7 +20,7 @@ public class ImageTag extends TagSupport implements IActionTag {
 	private String action;
 	private String argv;
 	
-	private Log log = LogFactory.getLog(ImageTag.class);
+	private static Log log = LogFactory.getLog(ImageTag.class);
 
 	public int doStartTag() throws JspException {
 		try {									

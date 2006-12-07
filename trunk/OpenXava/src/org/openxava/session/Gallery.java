@@ -24,7 +24,7 @@ public class Gallery {
 	private String title;
 	private boolean readOnly = false;
 
-	private Log log = LogFactory.getLog(Gallery.class);
+	private static Log log = LogFactory.getLog(Gallery.class);
 	
 	public void loadAllImages() {
 		if (images != null) images.clear();

@@ -17,7 +17,7 @@ public class Locales {
 	
 	private static ThreadLocal current = new ThreadLocal();
 	
-	private Log log = LogFactory.getLog(Locales.class);
+	private static Log log = LogFactory.getLog(Locales.class);
 	
 	/**
 	 * The Locale associated to the current thread. <p>

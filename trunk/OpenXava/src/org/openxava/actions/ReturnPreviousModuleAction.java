@@ -9,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class ReturnPreviousModuleAction extends BaseAction implements IChangeModuleAction {
 
-	private Log log = LogFactory.getLog(ReturnPreviousModuleAction.class);
+	private static Log log = LogFactory.getLog(ReturnPreviousModuleAction.class);
 	
 	public void execute() throws Exception {
 	}

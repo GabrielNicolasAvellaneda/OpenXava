@@ -17,7 +17,7 @@ public class DateTimeFormatter implements IMultipleValuesFormatter {
 	private static DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	private static DateFormat dateOnlyFormat = new SimpleDateFormat("dd/MM/yyyy");
 	private static DateFormat timeOnlyFormat = new SimpleDateFormat("HH:mm:ss");
-	private Log log = LogFactory.getLog(DateTimeFormatter.class);
+	private static Log log = LogFactory.getLog(DateTimeFormatter.class);
 	
 	private static DateFormat [] dateFormats = {
 		dateFormat,

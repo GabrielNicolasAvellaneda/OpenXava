@@ -19,7 +19,7 @@ public class ReferenceMapping implements java.io.Serializable {
 	private Map details = new HashMap();
 	private String referencedModelName;
 	private Collection columns = null;
-	private Log log = LogFactory.getLog(ReferenceMapping.class);
+	private static Log log = LogFactory.getLog(ReferenceMapping.class);
 
 	public void addDetail(ReferenceMappingDetail detail) {
 		details.put(detail.getReferencedModelProperty(), detail);

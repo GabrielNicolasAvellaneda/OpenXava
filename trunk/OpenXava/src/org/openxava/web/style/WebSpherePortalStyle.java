@@ -7,7 +7,7 @@ public class WebSpherePortalStyle extends Style {
 	
 	private static WebSpherePortalStyle instance = null;
 
-	private Log log = LogFactory.getLog(WebSpherePortalStyle.class);
+	private static Log log = LogFactory.getLog(WebSpherePortalStyle.class);
 	
 	protected WebSpherePortalStyle() {		
 	}

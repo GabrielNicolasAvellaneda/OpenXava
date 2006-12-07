@@ -12,7 +12,7 @@ public class MoveColumnToLeftAction extends BaseAction {
 	
 	private Tab tab;
 	private int columnIndex;
-	private Log log = LogFactory.getLog(MoveColumnToLeftAction.class);
+	private static Log log = LogFactory.getLog(MoveColumnToLeftAction.class);
 
 	public void execute() throws Exception {
 		getTab().movePropertyToLeft(columnIndex);

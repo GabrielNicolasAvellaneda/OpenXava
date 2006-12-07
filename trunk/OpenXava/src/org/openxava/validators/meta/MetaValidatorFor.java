@@ -18,7 +18,7 @@ public class MetaValidatorFor {
 	private java.lang.String validatorName;
 	public java.lang.String validatorClass;
 	
-	private Log log = LogFactory.getLog(MetaValidatorFor.class);
+	private static Log log = LogFactory.getLog(MetaValidatorFor.class);
 	
 	public java.lang.String getValidatorClass() throws XavaException {
 		if (validatorClass == null) {

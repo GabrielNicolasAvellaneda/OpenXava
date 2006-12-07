@@ -18,7 +18,7 @@ public class NextIntegerCalculator implements IJDBCCalculator {
 	private IConnectionProvider provider;
 	private String model;
 	private String property;
-	private Log log = LogFactory.getLog(NextIntegerCalculator.class);
+	private static Log log = LogFactory.getLog(NextIntegerCalculator.class);
 
 	private String select;
 

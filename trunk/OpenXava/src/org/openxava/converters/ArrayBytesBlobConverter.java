@@ -20,7 +20,7 @@ import org.openxava.util.*;
  */
 public class ArrayBytesBlobConverter implements IConverter {
 
-	private Log log = LogFactory.getLog(ArrayBytesBlobConverter.class);
+	private static Log log = LogFactory.getLog(ArrayBytesBlobConverter.class);
 	
 	public Object toDB(Object o) throws ConversionException {
 		if (o == null) return null;

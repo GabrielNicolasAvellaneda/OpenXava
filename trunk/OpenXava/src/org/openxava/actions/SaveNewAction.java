@@ -15,7 +15,7 @@ import org.openxava.validators.*;
 
 public class SaveNewAction extends UpdateReferenceBaseAction {
 	
-	private Log log = LogFactory.getLog(SaveNewAction.class);
+	private static Log log = LogFactory.getLog(SaveNewAction.class);
 	
 	public void execute() throws Exception {		
 		try {					

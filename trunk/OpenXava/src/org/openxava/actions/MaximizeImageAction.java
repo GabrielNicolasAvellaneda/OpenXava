@@ -13,7 +13,7 @@ public class MaximizeImageAction extends BaseAction {
 	
 	private Gallery gallery;
 	private String oid;
-	private Log log = LogFactory.getLog(MaximizeImageAction.class);
+	private static Log log = LogFactory.getLog(MaximizeImageAction.class);
 	
 	public void execute() throws Exception {
 		gallery.setMaximized(true);

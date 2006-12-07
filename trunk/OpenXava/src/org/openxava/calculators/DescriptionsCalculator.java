@@ -41,7 +41,7 @@ public class DescriptionsCalculator implements ICalculator {
 	private boolean useConvertersInKeys = false;
 	private Collection keyPropertiesCollection;
 	private MetaTab metaTab;
-	private Log log = LogFactory.getLog(DescriptionsCalculator.class);
+	private static Log log = LogFactory.getLog(DescriptionsCalculator.class);
 	
 	
 	/**

@@ -9,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class CreateNewElementInCollectionAction extends CollectionElementViewBaseAction {
 	
-	private Log log = LogFactory.getLog(CreateNewElementInCollectionAction.class);
+	private static Log log = LogFactory.getLog(CreateNewElementInCollectionAction.class);
 	
 	public void execute() throws Exception {
 		if (getCollectionElementView().isRepresentsAggregate()) {

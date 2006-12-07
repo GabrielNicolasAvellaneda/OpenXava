@@ -10,7 +10,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class TotalLikeFilter implements IFilter {
 	
-	private Log log = LogFactory.getLog(TotalLikeFilter.class);
+	private static Log log = LogFactory.getLog(TotalLikeFilter.class);
 	
 	/**
 	 * @see org.openxava.filters.IFilter#filter(java.lang.Object)

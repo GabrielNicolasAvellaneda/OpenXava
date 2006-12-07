@@ -29,7 +29,7 @@ import org.openxava.util.*;
 
 public class GenerateReportServlet extends HttpServlet {
 	
-	private Log log = LogFactory.getLog(GenerateReportServlet.class);
+	private static Log log = LogFactory.getLog(GenerateReportServlet.class);
 	
 	public static class TableModelDecorator implements TableModel {
 							 

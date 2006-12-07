@@ -25,7 +25,7 @@ public class Aspects {
 	private static Map [] postModifys;		
 	private static Map [] preRemoves;
 	
-	private Log log = LogFactory.getLog(Aspects.class);
+	private static Log log = LogFactory.getLog(Aspects.class);
 		
 	public static void fillImplicitCalculators(MetaModel container) throws XavaException {
 		if (!parsed) {

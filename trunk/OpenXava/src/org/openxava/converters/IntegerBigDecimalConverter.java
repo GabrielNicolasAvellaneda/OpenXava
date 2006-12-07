@@ -13,7 +13,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class IntegerBigDecimalConverter implements IConverter {
 
-	private Log log = LogFactory.getLog(IntegerBigDecimalConverter.class);
+	private static Log log = LogFactory.getLog(IntegerBigDecimalConverter.class);
 	
 	public Object toDB(Object o) throws ConversionException {
 		if (!(o instanceof Integer)) {		

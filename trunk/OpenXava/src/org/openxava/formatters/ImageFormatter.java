@@ -15,7 +15,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class ImageFormatter implements IFormatter {
 		
-	private Log log = LogFactory.getLog(ImageFormatter.class);
+	private static Log log = LogFactory.getLog(ImageFormatter.class);
 	
 	public String format(HttpServletRequest request, Object booleanValue) {		
 		return "<img src='images/photo.gif'/>";		

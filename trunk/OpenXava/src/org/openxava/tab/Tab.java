@@ -69,7 +69,7 @@ public class Tab {
 	private boolean sortRemainingProperties;
 	private boolean rowsHidden;
 	
-	private Log log = LogFactory.getLog(Tab.class);
+	private static Log log = LogFactory.getLog(Tab.class);
 	
 	public List getMetaProperties() {
 		if (metaProperties == null) {

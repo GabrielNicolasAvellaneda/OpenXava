@@ -21,7 +21,7 @@ public class ReferenceSearchAction extends ReferenceBaseAction implements INavig
 	private String tabName = "";
 	private String currentReferenceLabel;
 	private String nextController = "ReferenceSearch"; // If you change the default value change setter and getter doc too
-	private Log log = LogFactory.getLog(ReferenceSearchAction.class);
+	private static Log log = LogFactory.getLog(ReferenceSearchAction.class);
 	
 	public void execute() throws Exception {		
 		super.execute();

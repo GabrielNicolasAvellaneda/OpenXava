@@ -15,7 +15,7 @@ import org.openxava.util.*;
 public class MetaAggregateForCollection extends MetaAggregate {
 	
 	private MetaEJB metaEJB = null;
-	private Log log = LogFactory.getLog(MetaAggregateForCollection.class);
+	private static Log log = LogFactory.getLog(MetaAggregateForCollection.class);
 		
 	public ModelMapping getMapping() throws XavaException {
 		return getMetaComponent().getAggregateMapping(getName());

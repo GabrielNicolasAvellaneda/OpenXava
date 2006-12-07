@@ -11,7 +11,7 @@ import org.openxava.tab.*;
 public class DeselectRowsAction extends BaseAction implements IAction {
 
 	private Tab tab;
-	private Log log = LogFactory.getLog(DeselectRowsAction.class);
+	private static Log log = LogFactory.getLog(DeselectRowsAction.class);
 
 	public void execute() throws Exception {
 		tab.deselectAll();

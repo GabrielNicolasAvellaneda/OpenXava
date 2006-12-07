@@ -17,7 +17,7 @@ public class MetaFilter implements Serializable {
 	private IFilter filter;
 	private String className;
 	private Collection metaSets;
-	private Log log = LogFactory.getLog(MetaFilter.class);
+	private static Log log = LogFactory.getLog(MetaFilter.class);
 	
 	public void _addMetaSet(MetaSet metaSet) {
 		if (metaSets == null) {

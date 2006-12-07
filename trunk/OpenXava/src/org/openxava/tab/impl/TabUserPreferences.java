@@ -14,7 +14,7 @@ public class TabUserPreferences implements java.io.Serializable {
 	private String propertiesNames;
 	private boolean rowsHidden;
 	
-	private Log log = LogFactory.getLog(TabUserPreferences.class);
+	private static Log log = LogFactory.getLog(TabUserPreferences.class);
 
 	public String getPropertiesNames() {
 		return propertiesNames;

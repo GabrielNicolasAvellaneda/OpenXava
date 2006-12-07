@@ -8,7 +8,7 @@ public class HideRowsAction extends BaseAction {
 	
 	private Tab tab;
 
-	private Log log = LogFactory.getLog(HideRowsAction.class);
+	private static Log log = LogFactory.getLog(HideRowsAction.class);
 	
 	public void execute() throws Exception {
 		getTab().hideRows();		

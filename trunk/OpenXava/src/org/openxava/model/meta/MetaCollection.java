@@ -29,7 +29,7 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 	private Collection metaCalculatorsPostRemove;
 	private MetaCalculator metaCalculator;
 	
-	private Log log = LogFactory.getLog(MetaCollection.class);
+	private static Log log = LogFactory.getLog(MetaCollection.class);
 	
 	public void addMetaCalculatorPostRemove(MetaCalculator metaCalculator) {
 		if (metaCalculatorsPostRemove == null) {

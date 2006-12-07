@@ -10,7 +10,7 @@ import org.openxava.util.*;
 
 public class ConversionException extends XavaException {
 
-	private Log log = LogFactory.getLog(ConversionException.class);
+	private static Log log = LogFactory.getLog(ConversionException.class);
 	
 	public ConversionException() {		
 		super("conversion_error");

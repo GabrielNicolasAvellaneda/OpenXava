@@ -13,7 +13,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class Files {
 	
-	private Log log = LogFactory.getLog(Files.class);
+	private static Log log = LogFactory.getLog(Files.class);
 	
 	public static boolean deleteDir(String dirURL) {
         return deleteDir(new File(dirURL));

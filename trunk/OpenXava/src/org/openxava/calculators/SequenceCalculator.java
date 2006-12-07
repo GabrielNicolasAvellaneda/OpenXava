@@ -23,7 +23,7 @@ import org.apache.commons.logging.LogFactory;
 public class SequenceCalculator implements IHibernateIdGeneratorCalculator, ICalculator {
 	
 	private String sequence;
-	private Log log = LogFactory.getLog(SequenceCalculator.class);
+	private static Log log = LogFactory.getLog(SequenceCalculator.class);
 
 	public String hbmGeneratorCode() {		
 		StringBuffer code = new StringBuffer();

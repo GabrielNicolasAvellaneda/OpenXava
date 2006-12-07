@@ -46,7 +46,7 @@ public class MetaView extends MetaElement implements Cloneable {
 		
 	private String mediatorClassName;
 	
-	private Log log = LogFactory.getLog(MetaView.class);
+	private static Log log = LogFactory.getLog(MetaView.class);
 	
 	private void addMemberName(String memberName) {
 		_membersNames.add(memberName);

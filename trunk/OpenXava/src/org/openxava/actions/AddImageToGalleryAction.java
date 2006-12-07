@@ -8,7 +8,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class AddImageToGalleryAction extends BaseAction implements ILoadFileAction {
 
-	private Log log = LogFactory.getLog(AddImageToGalleryAction.class);
+	private static Log log = LogFactory.getLog(AddImageToGalleryAction.class);
 	
 	public void execute() throws Exception {
 		

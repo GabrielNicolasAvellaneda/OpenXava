@@ -24,7 +24,7 @@ public class XTableModelDecoratorBase
 
 	private IXTableModel impl;
 	
-	private Log log = LogFactory.getLog(XTableModelDecoratorBase.class);
+	private static Log log = LogFactory.getLog(XTableModelDecoratorBase.class);
 
 	/**
 	 * @param toDecorate <tt>IXTableModel</tt> to decorate.

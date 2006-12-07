@@ -23,7 +23,7 @@ import org.openxava.validators.*;
 abstract public class POJOPersistenceProviderBase implements IPersistenceProvider {
 	
 	
-	private Log log = LogFactory.getLog(POJOPersistenceProviderBase.class);
+	private static Log log = LogFactory.getLog(POJOPersistenceProviderBase.class);
 	/**
 	 * Return the object associated to the sent key.
 	 */

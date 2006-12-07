@@ -27,7 +27,7 @@ public class MetaModule extends MetaElement implements java.io.Serializable {
 	private Collection controllersNames = new ArrayList();
 	private String modeControllerName;	
 	private MetaReport metaReport;
-	private Log log = LogFactory.getLog(MetaModule.class);
+	private static Log log = LogFactory.getLog(MetaModule.class);
 
 	public String getModelName() {
 		return modelName;

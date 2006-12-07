@@ -10,7 +10,7 @@ import org.openxava.util.*;
  */
 public class FilterException extends XavaException {
 
-	private Log log = LogFactory.getLog(FilterException.class);
+	private static Log log = LogFactory.getLog(FilterException.class);
 	
 	public FilterException() {
 		super("filter_error");

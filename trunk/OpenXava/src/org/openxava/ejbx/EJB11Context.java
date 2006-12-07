@@ -41,7 +41,7 @@ public class EJB11Context implements IEJBContextInit, Serializable {
 	private String defaultDataSource;
 	private String user;
 	private String password;
-	private Log log = LogFactory.getLog(EJB11Context.class);
+	private static Log log = LogFactory.getLog(EJB11Context.class);
 
 	private void assertEJBContext() throws IllegalStateException {
 		if (ejbContext == null) {

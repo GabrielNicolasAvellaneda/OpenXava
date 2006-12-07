@@ -22,7 +22,7 @@ public class PropertiesManager implements java.io.Serializable {
 	private Object object;
 	private Class theClass;
 	
-	private Log log = LogFactory.getLog(PropertiesManager.class);
+	private static Log log = LogFactory.getLog(PropertiesManager.class);
 
 	public PropertiesManager() {
 	}

@@ -9,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class TrueCalculator implements ICalculator{
 
-	private Log log = LogFactory.getLog(TrueCalculator.class);
+	private static Log log = LogFactory.getLog(TrueCalculator.class);
 	
 	public Object calculate() throws Exception {		
 		return Boolean.TRUE;

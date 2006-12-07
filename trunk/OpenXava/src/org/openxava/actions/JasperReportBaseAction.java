@@ -21,7 +21,7 @@ abstract public class JasperReportBaseAction extends BaseAction implements IForw
 	private HttpServletRequest request;
 	private View view;
 	private String modelName;
-	private Log log = LogFactory.getLog(JasperReportBaseAction.class);
+	private static Log log = LogFactory.getLog(JasperReportBaseAction.class);
 	
 	/**
 	 * Data to print. <p>

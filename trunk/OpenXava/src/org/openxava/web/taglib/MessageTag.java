@@ -18,7 +18,7 @@ public class MessageTag extends TagSupport {
 	private Object param;
 	private int intParam = Integer.MIN_VALUE; // because java 1.4 haven't autoboxing
 	
-	private Log log = LogFactory.getLog(MessageTag.class);
+	private static Log log = LogFactory.getLog(MessageTag.class);
 
 	public int doStartTag() throws JspException {
 		try {

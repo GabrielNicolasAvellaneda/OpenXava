@@ -17,7 +17,7 @@ public class NotNegativeValidator implements IPropertyValidator {
 	private static Double ZERO_DOUBLE = new Double("0");
 	private static Float ZERO_FLOAT = new Float("0");
 	
-	private Log log = LogFactory.getLog(NotNegativeValidator.class);
+	private static Log log = LogFactory.getLog(NotNegativeValidator.class);
 
 	public void validate(
 		Messages errors,

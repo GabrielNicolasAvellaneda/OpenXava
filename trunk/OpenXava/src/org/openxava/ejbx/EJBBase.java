@@ -39,7 +39,7 @@ public class EJBBase implements Serializable {
   private IEJBContext portableContext; // Of OpenXava (portable)
   private transient IContext context; // For look up other EJBs
   private Map booleanVars;
-  private Log log = LogFactory.getLog(EJBBase.class);
+  private static Log log = LogFactory.getLog(EJBBase.class);
 
   public EJBBase() {
   }

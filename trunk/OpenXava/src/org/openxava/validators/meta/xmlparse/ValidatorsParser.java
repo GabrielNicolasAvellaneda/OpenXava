@@ -19,7 +19,7 @@ public class ValidatorsParser extends ParserBase {
 	private final String [] xrequired_validator = { "required-validator", "validador-requerido" };
 	private final String [] xdefault_validator = { "default-validator", "validador-defecto" };
 
-	private Log log = LogFactory.getLog(ValidatorsParser.class);
+	private static Log log = LogFactory.getLog(ValidatorsParser.class);
 	
 	public ValidatorsParser(String urlArchivoXml, int language) {
 		super(urlArchivoXml, language);

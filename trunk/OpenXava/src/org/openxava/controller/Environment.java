@@ -18,7 +18,7 @@ import org.openxava.util.*;
 public class Environment implements java.io.Serializable {
 	
 	private Map localVariables;
-	private Log log = LogFactory.getLog(Environment.class);
+	private static Log log = LogFactory.getLog(Environment.class);
 	
 	public Environment(Map localVariables) {
 		this.localVariables = localVariables;

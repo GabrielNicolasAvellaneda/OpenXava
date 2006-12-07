@@ -13,7 +13,7 @@ public class RemoveImageFromGalleryAction extends BaseAction {
 	
 	private Gallery gallery;
 	private String oid;
-	private Log log = LogFactory.getLog(RemoveImageFromGalleryAction.class);
+	private static Log log = LogFactory.getLog(RemoveImageFromGalleryAction.class);
 	
 	public void execute() throws Exception {
 		gallery.removeImage(oid);

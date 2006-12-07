@@ -15,7 +15,7 @@ public class MetaSetsContainer implements Serializable {
 		
 	private Collection metaSets;
 	
-	private Log log = LogFactory.getLog(MetaSetsContainer.class);
+	private static Log log = LogFactory.getLog(MetaSetsContainer.class);
 		
 	public void addMetaSet(MetaSet metaSet) {
 		if (metaSets == null) {

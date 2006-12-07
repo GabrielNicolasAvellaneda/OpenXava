@@ -14,7 +14,7 @@ import org.openxava.util.meta.*;
 
 public class DefaultValueCalculatorsListener implements PreInsertEventListener {
 
-	private Log log = LogFactory.getLog(DefaultValueCalculatorsListener.class);
+	private static Log log = LogFactory.getLog(DefaultValueCalculatorsListener.class);
 	
 	public boolean onPreInsert(PreInsertEvent ev) {		
 		String modelName = "unknow"; 		

@@ -9,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class CreateNewFromReferenceAction extends NavigationFromReferenceBaseAction implements INavigationAction, IRequestAction, IChainAction {
 
-	private Log log = LogFactory.getLog(CreateNewFromReferenceAction.class);
+	private static Log log = LogFactory.getLog(CreateNewFromReferenceAction.class);
 	
 	public String getCustomController() {	
 		return getModel() + "Creation";

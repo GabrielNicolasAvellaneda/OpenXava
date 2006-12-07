@@ -22,7 +22,7 @@ public class LinkTag extends TagSupport implements IActionTag {
 	private String cssClass;
 	private boolean hasBody;
 
-	private Log log = LogFactory.getLog(LinkTag.class);
+	private static Log log = LogFactory.getLog(LinkTag.class);
 	
 	public int doStartTag() throws JspException {		
 		try {

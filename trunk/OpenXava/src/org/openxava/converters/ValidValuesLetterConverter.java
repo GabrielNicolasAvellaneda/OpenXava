@@ -14,7 +14,7 @@ import org.openxava.util.*;
 public class ValidValuesLetterConverter implements IConverter {
 
 	private String letters;
-	private Log log = LogFactory.getLog(ValidValuesLetterConverter.class);
+	private static Log log = LogFactory.getLog(ValidValuesLetterConverter.class);
 
 	public Object toDB(Object o) throws ConversionException {		
 		if (o == null) return "";

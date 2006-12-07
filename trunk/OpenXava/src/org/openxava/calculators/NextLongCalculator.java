@@ -18,7 +18,7 @@ public class NextLongCalculator implements IJDBCCalculator {
 	private IConnectionProvider provider;
 	private String model;
 	private String property;
-	private Log log = LogFactory.getLog(NextLongCalculator.class);
+	private static Log log = LogFactory.getLog(NextLongCalculator.class);
 
 	private String select;
 

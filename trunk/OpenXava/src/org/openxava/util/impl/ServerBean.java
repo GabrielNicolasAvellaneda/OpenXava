@@ -13,7 +13,7 @@ import org.openxava.util.*;
 
 public class ServerBean extends SessionBase {
 	
-	private Log log = LogFactory.getLog(ServerBean.class);
+	private static Log log = LogFactory.getLog(ServerBean.class);
 	
 	public void ejbCreate() throws CreateException {
 	}

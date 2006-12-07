@@ -8,7 +8,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class NotNullStringConverter implements IConverter {
 
-	private Log log = LogFactory.getLog(NotNullStringConverter.class);
+	private static Log log = LogFactory.getLog(NotNullStringConverter.class);
 	
 	public Object toJava(Object o) throws ConversionException {
 		return notNull(o);

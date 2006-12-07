@@ -16,7 +16,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class MultipleValuesByPassFormatter implements IMultipleValuesFormatter {
 
-	private Log log = LogFactory.getLog(MultipleValuesByPassFormatter.class);
+	private static Log log = LogFactory.getLog(MultipleValuesByPassFormatter.class);
 	
 	public String [] format(HttpServletRequest request, Object object) throws Exception {	
 		return (String []) object;

@@ -15,7 +15,7 @@ import org.openxava.validators.*;
 public class POJOPropertiesContainerAdapter implements IPropertiesContainer {
 	
 	private PropertiesManager propertiesManager;
-	private Log log = LogFactory.getLog(POJOPropertiesContainerAdapter.class);
+	private static Log log = LogFactory.getLog(POJOPropertiesContainerAdapter.class);
 	
 	public POJOPropertiesContainerAdapter(Object object) {
 		propertiesManager = new PropertiesManager(object);

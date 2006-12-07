@@ -105,7 +105,7 @@ public class View implements java.io.Serializable {
 	private Collection executedActions;	
 	private boolean registeringExecutedActions = false;	
 	
-	private Log log = LogFactory.getLog(View.class);
+	private static Log log = LogFactory.getLog(View.class);
 		
 	public View() {
 		oid = nextOid++;		

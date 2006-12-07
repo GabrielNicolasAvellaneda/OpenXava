@@ -20,7 +20,7 @@ public class Language {
 	private Locale locale; 
 	private Locale defaultLocale;
 	
-	private Log log = LogFactory.getLog(Language.class);
+	private static Log log = LogFactory.getLog(Language.class);
 	
 	/**
 	 * Language identifier, for example: es, ca, en, etc.

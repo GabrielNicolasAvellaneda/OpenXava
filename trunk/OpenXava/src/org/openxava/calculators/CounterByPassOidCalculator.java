@@ -9,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
 public class CounterByPassOidCalculator implements IAggregateOidCalculator {
 
 	private int counter;
-	private Log log = LogFactory.getLog(CounterByPassOidCalculator.class);
+	private static Log log = LogFactory.getLog(CounterByPassOidCalculator.class);
 
 	public void setContainer(Object contenedorKey) {
 	}

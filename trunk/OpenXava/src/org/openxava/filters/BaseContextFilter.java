@@ -20,7 +20,7 @@ abstract public class BaseContextFilter implements IRequestFilter {
 
 	private HttpServletRequest request;	
 	private ModuleContext context;
-	private Log log = LogFactory.getLog(BaseContextFilter.class);
+	private static Log log = LogFactory.getLog(BaseContextFilter.class);
 
 	public void setRequest(HttpServletRequest request) {
 		this.request = request;		

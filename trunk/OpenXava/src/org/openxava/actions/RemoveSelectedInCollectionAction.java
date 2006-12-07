@@ -16,7 +16,7 @@ import org.openxava.validators.ValidationException;
 
 public class RemoveSelectedInCollectionAction extends CollectionBaseAction {
 
-	private Log log = LogFactory.getLog(RemoveSelectedInCollectionAction.class);
+	private static Log log = LogFactory.getLog(RemoveSelectedInCollectionAction.class);
 	
 	public void execute() throws Exception {
 		try{

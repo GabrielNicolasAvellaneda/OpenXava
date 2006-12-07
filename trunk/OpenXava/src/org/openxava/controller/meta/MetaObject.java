@@ -18,7 +18,7 @@ public class MetaObject {
 	private String name;
 	private String className;
 	private String value;
-	private Log log = LogFactory.getLog(MetaObject.class);
+	private static Log log = LogFactory.getLog(MetaObject.class);
 	
 	public String getClassName() {
 		return className;

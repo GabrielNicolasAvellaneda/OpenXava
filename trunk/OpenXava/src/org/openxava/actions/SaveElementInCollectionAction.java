@@ -18,7 +18,7 @@ import org.openxava.view.*;
 
 public class SaveElementInCollectionAction extends CollectionElementViewBaseAction {
 	
-	private Log log = LogFactory.getLog(SaveElementInCollectionAction.class);
+	private static Log log = LogFactory.getLog(SaveElementInCollectionAction.class);
 	
 	public void execute() throws Exception {		
 		try {				

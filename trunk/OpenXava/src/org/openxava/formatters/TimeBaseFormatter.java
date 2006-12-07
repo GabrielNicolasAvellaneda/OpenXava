@@ -17,7 +17,7 @@ import org.openxava.util.Strings;
 
 public class TimeBaseFormatter implements IFormatter {
 	
-	private Log log = LogFactory.getLog(TimeBaseFormatter.class);
+	private static Log log = LogFactory.getLog(TimeBaseFormatter.class);
 	
 	public String format(HttpServletRequest request, Object time) {
 		return time==null?"":time.toString();

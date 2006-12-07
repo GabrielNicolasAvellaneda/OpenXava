@@ -18,7 +18,7 @@ public class GoListAction extends BaseAction implements IChangeModeAction, INavi
 	private Tab tab;
 	private Tab mainTab;
 	private Stack previousViews;
-	private Log log = LogFactory.getLog(GoListAction.class);
+	private static Log log = LogFactory.getLog(GoListAction.class);
 		
 	public String getNextMode() {		
 		return IChangeModeAction.LIST;

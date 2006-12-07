@@ -19,7 +19,7 @@ abstract public class CollectionElementViewBaseAction extends ViewBaseAction imp
 	private String viewObject;
 	private ModuleContext context;	
 	private HttpServletRequest request;
-	private Log log = LogFactory.getLog(CollectionElementViewBaseAction.class);
+	private static Log log = LogFactory.getLog(CollectionElementViewBaseAction.class);
 
 	abstract public void execute() throws Exception;
 	

@@ -14,7 +14,7 @@ import org.w3c.dom.*;
  */
 public class FilterParser extends XmlElementsNames {
 
-	private Log log = LogFactory.getLog(XmlElementsNames.class);
+	private static Log log = LogFactory.getLog(XmlElementsNames.class);
 	
 	public static MetaFilter parseFilter(Node n, int lang) throws XavaException {
 		Element el = (Element) n;

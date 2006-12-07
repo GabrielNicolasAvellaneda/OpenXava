@@ -9,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class NewAction extends ViewBaseAction implements IChangeModeAction {
 	
-	private Log log = LogFactory.getLog(NewAction.class);
+	private static Log log = LogFactory.getLog(NewAction.class);
 	
 	public void execute() throws Exception {
 		getView().setKeyEditable(true);

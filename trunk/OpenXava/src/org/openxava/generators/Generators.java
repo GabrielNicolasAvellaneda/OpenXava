@@ -14,7 +14,7 @@ import org.openxava.util.*;
  */
 public class Generators {
 
-	private Log log = LogFactory.getLog(Generators.class);
+	private static Log log = LogFactory.getLog(Generators.class);
 	
 	public static String generateCast(String type, String sentence) throws XavaException {
 		if (type == null) {

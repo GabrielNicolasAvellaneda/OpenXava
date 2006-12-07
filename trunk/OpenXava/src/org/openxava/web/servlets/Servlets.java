@@ -17,7 +17,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class Servlets {
 	
-	private Log log = LogFactory.getLog(Servlets.class);
+	private static Log log = LogFactory.getLog(Servlets.class);
 	
 	/**
 	 * From a uri return the resource (dynamic or static) in InputStream format. <p>

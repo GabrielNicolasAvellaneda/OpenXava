@@ -18,7 +18,7 @@ import org.openxava.util.XavaResources;
  */
 public class StringArrayBytesConverter implements IConverter {
     
-	private Log log = LogFactory.getLog(StringArrayBytesConverter.class);
+	private static Log log = LogFactory.getLog(StringArrayBytesConverter.class);
 	
 	public Object toJava(Object o) throws ConversionException {	    
     	if (o == null) return "";

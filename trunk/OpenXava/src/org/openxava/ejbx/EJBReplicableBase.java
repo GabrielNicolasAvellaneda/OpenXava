@@ -54,7 +54,7 @@ import org.openxava.validators.*;
 public class EJBReplicableBase extends EntityBase implements IPropertiesContainer {
 
   private PropertiesManager propertiesManager = new PropertiesManager(this);
-  private Log log = LogFactory.getLog(EJBReplicableBase.class);
+  private static Log log = LogFactory.getLog(EJBReplicableBase.class);
 
 
 	public Map executeGets(String propertiesToReplicate) {

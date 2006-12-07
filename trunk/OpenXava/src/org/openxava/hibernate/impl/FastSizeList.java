@@ -17,7 +17,7 @@ public class FastSizeList implements List {
 	private Query query;
 	private Query sizeQuery;
 	private int size = -1;
-	private Log log = LogFactory.getLog(FastSizeList.class);
+	private static Log log = LogFactory.getLog(FastSizeList.class);
 	
 	public FastSizeList(Query query, Query sizeQuery) {
 		this.query = query;
