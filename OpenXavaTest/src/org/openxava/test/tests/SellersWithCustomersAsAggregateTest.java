@@ -28,6 +28,8 @@ public class SellersWithCustomersAsAggregateTest extends ModuleTestBase {
 		execute("Collection.new", "viewObject=xava_view_customers");
 		assertEditable("customers.number");
 		assertEditable("customers.name");
+		assertValue("customers.number", ""); // Test if clear the fields
+		assertValue("customers.type", "1"); // Test if execute default value calculators
 		
 		// Creating
 		setValue("customers.number", "66");

@@ -12,7 +12,7 @@ public class CreateNewElementInCollectionAction extends CollectionElementViewBas
 	private Log log = LogFactory.getLog(CreateNewElementInCollectionAction.class);
 	
 	public void execute() throws Exception {
-		if (!isEntityReferencesCollection()) { 
+		if (getCollectionElementView().isRepresentsAggregate()) {
 			getCollectionElementView().reset();				
 		}
 		getCollectionElementView().setCollectionDetailVisible(true);
