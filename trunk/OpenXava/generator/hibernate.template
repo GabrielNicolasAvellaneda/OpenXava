@@ -57,7 +57,7 @@ else if (keyProperties.size() == 1 &&  keyMembers.size() == 1) {
 		PropertyMapping pMapping = key.getMapping();
 		String propertyName = key.getName();	
 		String generator = key.isHidden() && !key.hasCalculatorDefaultValueOnCreate()?"native":"assigned";
-		String type = pMapping.getCmpType().isArray()?"":"type='" + pMapping.getCmpTypeName() + "'";
+		String type = "type='" + pMapping.getCmpTypeName() + "'";
 # 	
 		<id name="#(propertyName)#" column="#(pMapping.getColumn())#" access="field" #(type)# #(getSizeAttributes(key))#>
 		# if (key.hasCalculatorDefaultValueOnCreate()) { # 
@@ -83,7 +83,7 @@ else {
     	if (key instanceof MetaProperty) {
 			PropertyMapping pMapping = ((MetaProperty) key).getMapping();
 			String propertyName = key.getName();			
-			String type = pMapping.getCmpType().isArray()?"":"type='" + pMapping.getCmpTypeName() + "'";			
+			String type = "type='" + pMapping.getCmpTypeName() + "'";			
 # 	
 			<key-property name="#(propertyName)#" column="#(pMapping.getColumn())#" access="field" #(type)# #(getSizeAttributes((MetaProperty)key))#/>
 # 
@@ -138,7 +138,7 @@ else {
 				}
 			}
 			else {
-				String type = pMapping.getCmpType().isArray()?"":"type='" + pMapping.getCmpTypeName() + "'";
+				String type = "type='" + pMapping.getCmpTypeName() + "'"; 
 # 	
 		<property name="#(propertyName)#" column="#(pMapping.getColumn())#" access="field" #(type)# #(getSizeAttributes(prop))#/>
 # 
@@ -155,7 +155,7 @@ while (itReferences.hasNext()) {
 			MetaProperty property = (MetaProperty) itAggregateProperties.next();
 			String propertyName = reference.getName() + "_" + property.getName();
 			String column = mapping.getColumn(reference.getName() + "_" + property.getName()); 
-			String type = property.getMapping().getCmpType().isArray()?"":"type='" + property.getMapping().getCmpTypeName() + "'";			
+			String type = "type='" + property.getMapping().getCmpTypeName() + "'";			
 # 
 		<property name="#(propertyName)#" column="#(column)#" access="field" #(type)# #(getSizeAttributes(property))#/>
 # 

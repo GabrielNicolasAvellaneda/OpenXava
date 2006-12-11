@@ -454,12 +454,13 @@ public class Strings {
 	/**
 	 * Change in <code>string</tt> <code>original</code> by <code>newString</code>. <p>
 	 * 
-	 * @param string  String in which we make the changes. Not null
+	 * @param string  String in which we make the changes. Can be null
 	 * @param original  String to search. Not null
 	 * @param newString  New value to put in place of original. Not null
-	 * @return String
+	 * @return The changed string, if the sent string is null a null is returned 
 	 */
-	public static String change(String string, String original, String newString) {				
+	public static String change(String string, String original, String newString) {
+		if (string == null) return null; 
 		int i = string.indexOf(original);
 		if (i < 0) return string; 
 		StringBuffer sb = new StringBuffer(string);		

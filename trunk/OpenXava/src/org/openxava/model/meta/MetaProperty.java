@@ -316,8 +316,8 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				catch (ElementNotFoundException ex) {					
 					log.warn(XavaResources.getString("type_from_stereotype_warning", getStereotype()));
 				}
-			}
-		}
+			}			
+		}		
 		return typeName;
 	}
 	

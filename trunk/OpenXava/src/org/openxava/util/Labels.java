@@ -26,14 +26,14 @@ public class Labels {
 		}
 		catch (MissingResourceException ex) {
 			if (XavaPreferences.getInstance().isI18nWarnings()) {
-				log.warn(XavaResources.getString("element_i18n_warning", id),ex);
+				log.warn(XavaResources.getString("element_i18n_warning", id));
 			}			
 			return Strings.firstUpper(id);
 		}
 		catch (Exception ex) {
 			
 			if (XavaPreferences.getInstance().isI18nWarnings()) {
-				log.warn(XavaResources.getString("element_i18n_warning", id),ex);
+				log.warn(XavaResources.getString("element_i18n_warning", id));
 			} else
 				log.warn(ex, ex);	
 			

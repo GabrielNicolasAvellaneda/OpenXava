@@ -10,7 +10,7 @@ import org.openxava.util.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Dec 07 11:34:36 CET 2006
+ * @version Mon Dec 11 13:28:51 CET 2006
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -72,7 +72,7 @@ private String getSizeAttributes(MetaProperty property) throws XavaException {
     		PropertyMapping pMapping = key.getMapping();
     		String propertyName = key.getName();	
     		String generator = key.isHidden() && !key.hasCalculatorDefaultValueOnCreate()?"native":"assigned";
-    		String type = pMapping.getCmpType().isArray()?"":"type='" + pMapping.getCmpTypeName() + "'";
+    		String type = "type='" + pMapping.getCmpTypeName() + "'";
     
     out.print(" \t\n\t\t<id name=\"");
     out.print(propertyName);
@@ -109,7 +109,7 @@ private String getSizeAttributes(MetaProperty property) throws XavaException {
         	if (key instanceof MetaProperty) {
     			PropertyMapping pMapping = ((MetaProperty) key).getMapping();
     			String propertyName = key.getName();			
-    			String type = pMapping.getCmpType().isArray()?"":"type='" + pMapping.getCmpTypeName() + "'";			
+    			String type = "type='" + pMapping.getCmpTypeName() + "'";			
     
     out.print(" \t\n\t\t\t<key-property name=\"");
     out.print(propertyName);
@@ -194,7 +194,7 @@ private String getSizeAttributes(MetaProperty property) throws XavaException {
     				}
     			}
     			else {
-    				String type = pMapping.getCmpType().isArray()?"":"type='" + pMapping.getCmpTypeName() + "'";
+    				String type = "type='" + pMapping.getCmpTypeName() + "'"; 
     
     out.print(" \t\n\t\t<property name=\"");
     out.print(propertyName);
@@ -219,7 +219,7 @@ private String getSizeAttributes(MetaProperty property) throws XavaException {
     			MetaProperty property = (MetaProperty) itAggregateProperties.next();
     			String propertyName = reference.getName() + "_" + property.getName();
     			String column = mapping.getColumn(reference.getName() + "_" + property.getName()); 
-    			String type = property.getMapping().getCmpType().isArray()?"":"type='" + property.getMapping().getCmpTypeName() + "'";			
+    			String type = "type='" + property.getMapping().getCmpTypeName() + "'";			
     
     out.print(" \n\t\t<property name=\"");
     out.print(propertyName);
@@ -478,7 +478,7 @@ private String getSizeAttributes(MetaProperty property) throws XavaException {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Dec 07 11:34:37 CET 2006", // date this file was generated
+        { "Mon Dec 11 13:28:51 CET 2006", // date this file was generated
              "../OpenXava/generator/hibernate.xml", // input file
              "../OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

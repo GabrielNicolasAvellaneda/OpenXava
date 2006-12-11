@@ -17,17 +17,19 @@ public class ClerksTest extends ModuleTestBase {
 		super(testName, "Clerks");		
 	}
 	
-	public void testTimeStereotypeAndSqlTime() throws Exception {
+	public void testTimeStereotypeAndSqlTimeAndStringAsByteArrayInDB() throws Exception {
 		assertListNotEmpty();
 		execute("Mode.detailAndFirst");
 		String time = getCurrentTime();
 		setValue("arrivalTime", time);
 		setValue("endingTime", time);
+		setValue("comments", "Created at " + time);
 		execute("CRUD.save");
 		assertNoErrors();
 		execute("Mode.list");
 		assertValueInList(0, "arrivalTime", time + ":00");
 		assertValueInList(0, "endingTime", time + ":00");
+		assertValueInList(0, "comments", "Created at " + time);
 		
 		setConditionValues(new String [] { "", "", "", "", time });
 		execute("List.filter");
