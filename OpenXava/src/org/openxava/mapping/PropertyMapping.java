@@ -151,8 +151,8 @@ public class PropertyMapping extends MetaSetsContainer {
 		return Primitives.classForName(getCmpTypeName());
 	}
 
-	public void setCmpTypeName(String cmpTypeName) {
-		this.cmpTypeName = cmpTypeName;
+	public void setCmpTypeName(String cmpTypeName) {				
+		this.cmpTypeName = Strings.change(cmpTypeName, " ", ""); 
 	}
 
 	public String getConverterClassName() {
@@ -204,7 +204,7 @@ public class PropertyMapping extends MetaSetsContainer {
 			// there are things needed for every property (at least in ejb implementation)
 			setConverterClassName(NoConversionConverter.class.getName());
 			String cmpType = p.getType().isPrimitive()?Primitives.toWrapperClass(p.getType()).getName():p.getType().getName();
-			if ("[B".equals(cmpType)) cmpType = "byte []";
+			if ("[B".equals(cmpType)) cmpType = "byte[]";
 			setCmpTypeName(cmpType);
 		}					
 	}
