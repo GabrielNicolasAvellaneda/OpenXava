@@ -4,21 +4,23 @@ import java.text.*;
 
 import javax.servlet.http.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.openxava.util.*;
 
 /**
+ * Date formatter with multilocale support. <p>
+ * 
+ * Although it does some refinement in Spanish case, it support formatting
+ * on locale basis.<br>
+ *  
  * @author Javier Paniza
  */
 
 public class DateFormatter implements IFormatter {
 	
-	private static DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	private static Log log = LogFactory.getLog(DateFormatter.class);
+	private static DateFormat spanishDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	
-	private static DateFormat [] dateFormats = {
-		dateFormat,
+	private static DateFormat [] spanishDateFormats = {
+		spanishDateFormat,
 		new SimpleDateFormat("ddMMyyyy"),
 		new SimpleDateFormat("dd.MM.yyyy"),		
 	};	
@@ -26,14 +28,15 @@ public class DateFormatter implements IFormatter {
 	public String format(HttpServletRequest request, Object date) {
 		if (date == null) return "";
 		if (Dates.getYear((java.util.Date)date) < 2) return "";
-		return dateFormat.format(date);
+		return getDateFormat(request).format(date);
 	}
 		
 	public Object parse(HttpServletRequest request, String string) throws ParseException {
 		if (Is.emptyString(string)) return null;
 		if (string.indexOf('-') >= 0) { // SimpleDateFormat does not work well with -
 			string = Strings.change(string, "-", "/");
-		}
+		}		
+		DateFormat [] dateFormats = getDateFormats(request); 
 		for (int i=0; i<dateFormats.length; i++) {
 			try {
 				return dateFormats[i].parseObject(string);
@@ -44,4 +47,14 @@ public class DateFormatter implements IFormatter {
 		throw new ParseException(XavaResources.getString("bad_date_format",string),-1);
 	}
 	
+	private DateFormat getDateFormat(HttpServletRequest request) {
+		if ("es".equals(request.getLocale().getLanguage())) return spanishDateFormat;
+		return DateFormat.getDateInstance(DateFormat.SHORT, request.getLocale());		
+	}
+	
+	private DateFormat[] getDateFormats(HttpServletRequest request) {
+		if ("es".equals(request.getLocale().getLanguage())) return spanishDateFormats;
+		return new DateFormat [] { getDateFormat(request) };
+	}
+		
 }

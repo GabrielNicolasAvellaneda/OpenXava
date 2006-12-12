@@ -314,12 +314,12 @@ public class InvoicesTest extends ModuleTestBase {
 		String [] condition2002 = { " ", " ", "2002", "true" }; // We supussed that there are invoices in 2002
 		setConditionValues(condition2002);
 		execute("List.filter");
-		assertYearInList("2002");
+		assertYearInList("02");
 
 		String [] condition2004 = { " ", " ", "2004", "true" }; // We supussed that there are invoices in 2004
 		setConditionValues(condition2004);
 		execute("List.filter");
-		assertYearInList("2004");
+		assertYearInList("04");
 		
 		String [] monthComparators = { "=", "=", "month_comparator", ""};
 		setConditionComparators(monthComparators);		
@@ -396,7 +396,8 @@ public class InvoicesTest extends ModuleTestBase {
 		assertListColumnCount(3);
 	}	
 	
-	public void testDateFormatter() throws Exception {		
+	public void testDateFormatter() throws Exception {
+		setLocale("es");
 		execute("CRUD.new");
 		setValue("year", String.valueOf(getInvoice().getYear()));
 		setValue("number", String.valueOf(getInvoice().getNumber()));
@@ -556,7 +557,7 @@ public class InvoicesTest extends ModuleTestBase {
 		assertValue("details.amount", getProductUnitPriceMultiplyBy("200"));
 		setValue("details.product.number", getProductNumber());
 		assertValue("details.product.description", getProductDescription());
-		setValue("details.deliveryDate", "19/03/2004"); // Testing multiple-mapping in aggregate
+		setValue("details.deliveryDate", "3/19/04"); // Testing multiple-mapping in aggregate
 		setValue("details.soldBy.number", getProductNumber());
 		execute("Collection.save", "viewObject=xava_view_section1_details");
 		assertCollectionRowCount("details", 2);
@@ -568,7 +569,7 @@ public class InvoicesTest extends ModuleTestBase {
 		assertValue("details.amount", getProductUnitPriceMultiplyBy("2"));
 		setValue("details.product.number", getProductNumber());
 		assertValue("details.product.description", getProductDescription());
-		setValue("details.deliveryDate", "20/03/2004"); // Testing multiple-mapping in aggregate		
+		setValue("details.deliveryDate", "3/20/04"); // Testing multiple-mapping in aggregate		
 		execute("Collection.save", "viewObject=xava_view_section1_details");
 		assertCollectionRowCount("details", 3);
 				
@@ -648,9 +649,9 @@ public class InvoicesTest extends ModuleTestBase {
 		execute("Invoices.editDetail", "row=1,viewObject=xava_view_section1_details");
 		assertValue("details.product.description", getProductDescription());
 		assertValue("details.quantity", "200");
-		assertValue("details.deliveryDate", "19/03/2004");
+		assertValue("details.deliveryDate", "3/19/04");
 		setValue("details.quantity", "234");
-		setValue("details.deliveryDate", "23/04/2004");
+		setValue("details.deliveryDate", "4/23/04");
 		execute("Collection.save", "viewObject=xava_view_section1_details");
 		assertMessage("Invoice detail modified successfully");
 		assertNoErrors();
@@ -661,7 +662,7 @@ public class InvoicesTest extends ModuleTestBase {
 		execute("Invoices.editDetail", "row=1,viewObject=xava_view_section1_details");
 		assertValue("details.product.description", getProductDescription());
 		assertValue("details.quantity", "234");
-		assertValue("details.deliveryDate", "23/04/2004");
+		assertValue("details.deliveryDate", "4/23/04");
 		
 		// Return to save and consult for see if the line is edited
 		execute("CRUD.save");
@@ -683,7 +684,7 @@ public class InvoicesTest extends ModuleTestBase {
 		execute("Invoices.editDetail", "row=1,viewObject=xava_view_section1_details");
 		assertValue("details.product.description", getProductDescription());
 		assertValue("details.quantity", "234");
-		assertValue("details.deliveryDate", "23/04/2004");
+		assertValue("details.deliveryDate", "4/23/04");
 		
 		// Verifying that it do not delete member in collection that not are in list
 		execute("CRUD.new");
@@ -701,7 +702,7 @@ public class InvoicesTest extends ModuleTestBase {
 		execute("Invoices.editDetail", "row=1,viewObject=xava_view_section1_details");
 		assertValue("details.product.description", getProductDescription());
 		assertValue("details.quantity", "234");
-		assertValue("details.deliveryDate", "23/04/2004");
+		assertValue("details.deliveryDate", "4/23/04");
 		
 		// Remove a row from collection
 		assertCollectionRowCount("details", 3);
@@ -1028,7 +1029,7 @@ public class InvoicesTest extends ModuleTestBase {
 		assertNotExists("deliveries.description");
 		execute("Collection.view", "row=0,viewObject=xava_view_section3_deliveries");
 		assertValue("deliveries.number", "666");		
-		assertValue("deliveries.date", "22/02/2004");		
+		assertValue("deliveries.date", "2/22/04");		
 		assertValue("deliveries.description", "DELIVERY JUNIT 666");
 		assertNoEditable("deliveries.number"); 
 		assertNoEditable("deliveries.date"); 		
@@ -1152,7 +1153,7 @@ public class InvoicesTest extends ModuleTestBase {
 	}
 		
 	private String getCurrentDate() {
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
 		return df.format(new java.util.Date());
 	}
 	

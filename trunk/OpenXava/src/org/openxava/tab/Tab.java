@@ -411,7 +411,7 @@ public class Tab {
 					value = value.trim().toUpperCase();
 					MetaProperty p = (MetaProperty) getMetaPropertiesNotCalculated().get(i);
 					try {				
-						Object v = p.parse(value);
+						Object v = p.parse(value, getLocale());
 						if (v instanceof Timestamp && "eq".equals(this.conditionComparators[i])) { 
 							key.add(Dates.cloneWithoutTime((Timestamp) v));
 							key.add(Dates.cloneWith2359((Timestamp) v));												
@@ -431,6 +431,10 @@ public class Tab {
 		return filterKey(key.toArray());
 	}
 	
+	private Locale getLocale() {
+		return request==null?Locale.getDefault():request.getLocale();
+	}
+
 	private Object[] filterKey(Object[] key) throws XavaException {
 		// first, for references
 		if (baseConditionValuesForReference != null && baseConditionValuesForReference.length > 0) {

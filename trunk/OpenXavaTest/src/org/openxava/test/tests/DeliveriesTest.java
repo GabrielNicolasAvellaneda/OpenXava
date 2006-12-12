@@ -92,7 +92,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		execute("CRUD.new");
 		setValue("invoice.year", "2002");
 		setValue("invoice.number", "1");
-		assertValue("invoice.date", "01/01/2002");						
+		assertValue("invoice.date", "1/1/02");						
 		setValue("type.number", "0");
 		setValue("number", "66");
 		setValue("description", "JUNIT");		
@@ -282,7 +282,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		execute("CRUD.new");
 		setValue("invoice.year", "2002");
 		setValue("invoice.number", "1");
-		assertValue("invoice.date", "01/01/2002");						
+		assertValue("invoice.date", "1/1/02");						
 		setValue("type.number", "1");
 		setValue("number", "66");
 		setValue("description", "JUNIT");
@@ -309,7 +309,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertNoErrors();
 		assertValue("invoice.year", "2002");
 		assertValue("invoice.number", "1");				
-		assertValue("invoice.date", "01/01/2002");		
+		assertValue("invoice.date", "1/1/02");		
 		assertValue("type.number", "1");
 		assertValue("number", "66");		
 		assertValue("description", "JUNIT");				
@@ -409,7 +409,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		execute("Deliveries.setDefaultInvoice");
 		assertValue("invoice.year", "2002");
 		assertValue("invoice.number", "1");
-		assertValue("invoice.date", "01/01/2002");		
+		assertValue("invoice.date", "1/1/02");		
 	}
 				
 	public void testActivateDeactivateSection() throws Exception {
@@ -429,7 +429,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		execute("CRUD.new");
 		setValue("invoice.year", "2002");
 		setValue("invoice.number", "1");
-		assertValue("invoice.date", "01/01/2002");						
+		assertValue("invoice.date", "1/1/02");						
 		setValue("type.number", "1");
 		setValue("number", "66");
 		setValue("description", "JUNIT");
@@ -449,7 +449,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertNoErrors();
 		assertValue("invoice.year", "2002");
 		assertValue("invoice.number", "1");				
-		assertValue("invoice.date", "01/01/2002");		
+		assertValue("invoice.date", "1/1/02");		
 		assertValue("type.number", "1");
 		assertValue("number", "66");		
 		assertValue("description", "JUNIT");				
@@ -698,7 +698,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		setValue("invoice.number", "1");						
 		setValue("type.number", "1");
 		setValue("number", "66");
-		setValue("date", "22/02/1997");
+		setValue("date", "2/22/97");
 		setValue("description", "JUNIT");
 		execute("CRUD.save");
 		assertNoErrors();
@@ -719,7 +719,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertValue("invoice.number", "1");						
 		assertValue("type.number", "1");
 		assertValue("number", "66");			
-		assertValue("date", "22/02/1997");
+		assertValue("date", "2/22/97");
 		assertValue("description", "JUNIT");		
 		assertNoErrors();
 
@@ -734,7 +734,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		for (i = 0; i < quantity; i++) {
 			String number = getValueInList(i, "number");						
 			if ("66".equals(number)) {				
-				assertValueInList(i, "date", "22/02/1997");
+				assertValueInList(i, "date", "2/22/97");
 				found = true;
 				break;
 			}			
@@ -898,7 +898,7 @@ public class DeliveriesTest extends ModuleTestBase {
 	}
 		
 	private String getCurrentDate() {
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
 		return df.format(new java.util.Date());
 	}
 		

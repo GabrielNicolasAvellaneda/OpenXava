@@ -98,10 +98,12 @@
 	</target>
 	
 	<target name="redeployPortlets"> 
+		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
 		<ant antfile="../OpenXava/build.xml" target="redeployPortlets"/>
 	</target>
 	
 	<target name="deployPortlets"> 
+		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
 		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
 	</target>
 		

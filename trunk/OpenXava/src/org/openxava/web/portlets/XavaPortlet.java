@@ -58,9 +58,10 @@ public class XavaPortlet extends GenericPortlet {
 	
 	public void init(PortletConfig config) throws PortletException {
 		super.init(config);		
-		this.moduleURL = "/WEB-INF/jsp/xava/module.jsp?application=" +
-			config.getInitParameter(PARAM_APPLICATION) + "&module=" +			
-			config.getInitParameter(PARAM_MODULE);
+		// Calling directly to module.jsp does not work well in Liferay (see portlet.jsp doc)
+		this.moduleURL = "/WEB-INF/jsp/xava/portlet.jsp?xava.portlet.application=" +
+			config.getInitParameter(PARAM_APPLICATION) + "&xava.portlet.module=" +			
+			config.getInitParameter(PARAM_MODULE);;		
 	}
 
 	/**

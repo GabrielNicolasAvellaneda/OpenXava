@@ -30,8 +30,8 @@ public class ModuleTestBase extends TestCase {
 	private final static String ACTION_PREFIX = "xava.action";
 	
 	private static Properties xavaJunitProperties;
-	private static boolean isLocaleSet = false;
-	private static String locale;
+	private static boolean isDefaultLocaleSet = false;
+	private static String defaultLocale;
 	private static String jetspeed2URL;
 	private static String jetspeed2UserName;
 	private static String jetspeed2Password;
@@ -39,6 +39,7 @@ public class ModuleTestBase extends TestCase {
 	private static int loginFormIndex = -1;
 	private static String host;
 	private static String port;
+	private String locale;
 	private List parameters;
 	private MetaModule metaModule;
 	private MetaModel metaModel;
@@ -86,6 +87,7 @@ public class ModuleTestBase extends TestCase {
 	
 	protected void setUp() throws Exception {
 		allowDuplicateSubmit = "";
+		locale = null;
 		resetModule();	
 	}
 	
@@ -1011,16 +1013,19 @@ public class ModuleTestBase extends TestCase {
 		return host;		
 	}	
 	
-	private static String getLocale() {
-		if (!isLocaleSet) {
-			locale = getXavaJunitProperties().getProperty("locale");
-			if (Is.emptyString(locale)) {
-				locale = null;
+		
+	private static String getDefaultLocale() {
+		if (!isDefaultLocaleSet) {
+			defaultLocale = getXavaJunitProperties().getProperty("locale");
+			if (Is.emptyString(defaultLocale)) {
+				defaultLocale = null;
 			}
-			isLocaleSet = true;
+			isDefaultLocaleSet = true;
 		}
-		return locale;
+		return defaultLocale;
 	}
+	
+	
 	
 	protected static boolean isJetspeed2Enabled() {
 		return !Is.emptyString(getJetspeed2URL());
@@ -1154,6 +1159,15 @@ public class ModuleTestBase extends TestCase {
 	 */
 	protected WebConversation getConversation() {
 		return conversation; 
+	}
+
+	protected String getLocale() { 
+		return locale == null?getDefaultLocale():locale;
+	}
+
+	protected void setLocale(String locale) throws Exception {
+		this.locale = locale;
+		resetModule();
 	}		
  			
 }
