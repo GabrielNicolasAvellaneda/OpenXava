@@ -141,7 +141,7 @@ public class ShipmentsTest extends ModuleTestBase {
 	
 	public void testFilterByTimestamp() throws Exception {
 		assertListRowCount(3);
-		setConditionValues( new String [] { "", "", "11/10/2006"} );
+		setConditionValues( new String [] { "", "", "12/25/06"} ); // 2006-12-25
 		execute("List.filter");
 		assertListRowCount(1);
 		assertValueInList(0, "description", "CINC");
@@ -155,7 +155,8 @@ public class ShipmentsTest extends ModuleTestBase {
 		setConditionComparators(new String [] { "=", "=", "year_comparator"}); 
 		execute("List.filter");
 		assertListRowCount(1);
-		assertValueInList(0, "description", "CINC");		
+		assertValueInList(0, "description", "CINC");	
+		assertValueInList(0, "time", "12/25/06/11:33 AM"); 
 	}
 	
 	private void deleteCustomerAndContactPerson(int number) {

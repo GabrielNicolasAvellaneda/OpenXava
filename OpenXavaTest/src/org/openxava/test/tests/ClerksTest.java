@@ -43,6 +43,6 @@ public class ClerksTest extends ModuleTestBase {
 	}
 
 	private String getCurrentTime() {
-		return new SimpleDateFormat("hh:mm").format(new Date());
+		return new SimpleDateFormat("HH:mm").format(new Date());
 	}
 }

@@ -44,6 +44,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	private boolean isKeySet;
 	private boolean mappingSet;
 	private PropertyMapping mapping;
+	private DateFormat timeFormat = new SimpleDateFormat("HH:mm"); // 24 hours for all locales
 	
 	private static Log log = LogFactory.getLog(MetaProperty.class);
 		
@@ -316,8 +317,8 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				catch (ElementNotFoundException ex) {					
 					log.warn(XavaResources.getString("type_from_stereotype_warning", getStereotype()));
 				}
-			}			
-		}		
+			}
+		}
 		return typeName;
 	}
 	
@@ -776,7 +777,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			}			
 			if (java.sql.Time.class.isAssignableFrom(type)) { 
 				if (emptyString) return null;
-				java.util.Date date = DateFormat.getTimeInstance(DateFormat.SHORT, locale).parse(value);
+				java.util.Date date = timeFormat.parse(value);
 				return new Time(date.getTime());
 			}						
 			if (java.util.Date.class.isAssignableFrom(type)) {
@@ -819,7 +820,6 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		}
 		throw new ParseException(XavaResources.getString("from_string_on_property_not_supported", type), -1);
 	}
-	
 	
 	private Object parseModelObject(Class modelClass, String string) throws Exception {
 		if (Is.emptyString(string)) return null;
@@ -881,7 +881,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				return numberFormat.format(value);				
 			}
 			if (java.sql.Time.class.isAssignableFrom(type)) { 
-				return DateFormat.getTimeInstance(DateFormat.SHORT, locale).format(value);
+				return timeFormat.format(value);
 			}			
 			if (java.util.Date.class.isAssignableFrom(type)) {
 				return DateFormat.getDateInstance(DateFormat.SHORT, locale).format(value);

@@ -401,7 +401,7 @@ public class CustomersTest extends ModuleTestBase {
 		setValue("address.zipCode", "66666");
 		setValue("address.city", "POBLE JUNIT PER A J");
 		setValue("address.state.id", "NY");
-		execute("Customers.save");
+		execute("Customers.save");		
 		assertNoErrors();
 		
 		// Verifying that it is in the list althought it has not seller
@@ -433,7 +433,7 @@ public class CustomersTest extends ModuleTestBase {
 	}
 	
 	public void testIfKeyNotExistsInReferenceNotExecuteAction() throws Exception {
-		if (isJetspeed2Enabled()) {
+		if (isPortalEnabled()) {
 			System.err.println("WARNING! testIfKeyNotExistsInReferenceNotExecuteAction() is not executed: click + no duplicate submit not testable inside portal");
 			return;
 		}

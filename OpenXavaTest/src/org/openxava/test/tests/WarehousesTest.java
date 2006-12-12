@@ -108,7 +108,7 @@ public class WarehousesTest extends ModuleTestBase {
 		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
 		String time = timeFormat.format(new Date());
 		
-		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
 		String date = dateFormat.format(new Date());
 		
 		String table = MetaModel.get("Warehouse").getMapping().getTable();
