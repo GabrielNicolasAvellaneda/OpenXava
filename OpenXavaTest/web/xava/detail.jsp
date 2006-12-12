@@ -91,9 +91,9 @@ while (it.hasNext()) {
 					String label = view.getLabelFor(ref);
 	%>				
 		<table class=<%=style.getFrame()%> width='100%' <%=style.getFrameSpacing()%>>
-		<tr class=<%=style.getFrameTitle()%>><th align='left' class=<%=style.getFrameTitleLabel()%> id=<%=labelKey%>>
+		<tr class=<%=style.getFrameTitle()%>><th align='left' class=<%=style.getFrameTitleLabel()%>>
 			<%=style.getFrameTitleStartDecoration()%>
-			<%=label%>
+			<span id="<%=labelKey%>"><%=label%></span>
 			<%=style.getFrameTitleEndDecoration()%>
 		</th></tr>
 		<tr><td class=<%=style.getFrameContent()%>>
