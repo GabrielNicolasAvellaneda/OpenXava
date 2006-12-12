@@ -740,10 +740,16 @@
 		</java>		
 	</target>	
 	
+	<target name="redeployPortlets">
+		<touch file="../${project}/xava/application.xml"/>
+		<delete dir="${dist.portlets.dir}"/>
+		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
+	</target>
+	
 	<!-- Although generates Jetspeed2 files it maybe used for websphere portal or another standard JSR-168 portal too -->
 	<target name="deployPortlets" depends="initPortlets, generatePortletXml">		
 		<antcall target="prepareWar"/>
-		<mkdir dir="${dist.portlets.dir}"/>
+		<mkdir dir="${dist.portlets.dir}"/>		
 		<copy todir="${dist.portlets.dir}/WEB-INF">
 			<fileset dir="web/WEB-INF"/>
 		</copy>
