@@ -18,6 +18,9 @@ public class Products2Test extends ModuleTestBase {
 	}
 	
 	public void testImagesGallery() throws Exception {
+		// We remove oid from product 1 in order to test that images gallery works well in the first attemp.
+		Product2.findByNumber(1).setPhotos("");
+		XHibernate.commit();
 		// Verifying product 1 has no images
 		assertTrue("At least 2 products are required to run this test", getListRowCount() >= 2);
 		execute("Mode.detailAndFirst");
@@ -55,9 +58,9 @@ public class Products2Test extends ModuleTestBase {
 		assertAction("Gallery.removeImage");
 		assertEquals("Images count does not match", 1, getForm().getParameterValues("xava.GALLERY.images").length);		
 		
-		// Saving the main entity
+		// Returning to the main entity
 		execute("Gallery.return");
-		execute("CRUD.save");
+		//execute("CRUD.save"); It's not needed explicit saving of the main entity
 		assertNoErrors();
 		
 		// Verifying that product 2 has no images
