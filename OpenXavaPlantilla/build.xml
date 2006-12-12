@@ -54,8 +54,7 @@
 	Regenera todos los archivos PSML (para JetSpeed2)
 	-->	
 	<target name="redesplegarPortlets"> 
-		<touch file="../${project}/xava/aplicacion.xml"/>
-		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
+		<ant antfile="../OpenXava/build.xml" target="redeployPortlets"/>
 	</target>	
 		
 	<!-- 
