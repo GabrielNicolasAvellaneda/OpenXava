@@ -1078,9 +1078,17 @@ public class ModuleTestBase extends TestCase {
 	/**
 	 * From file xava-junit.properties 
 	 */
-	protected String getProperty(String id) {
+	static public String getProperty(String id) {
 		return getXavaJunitProperties().getProperty(id);
 	}
+	
+	/**
+	 * From file xava-junit.properties 
+	 */	
+	static public String getProperty(String id, String defaultValue) {
+		return getXavaJunitProperties().getProperty(id, defaultValue);
+	}
+	
 	
 	private static Properties getXavaJunitProperties() {
 		if (xavaJunitProperties == null) {

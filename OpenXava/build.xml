@@ -763,8 +763,11 @@
 			<fileset dir="web/xava/editors/calendar"/>
 		</copy>						
 		<copy todir="${dist.portlets.dir}/WEB-INF/jsp" >
-			<fileset dir="web" excludes="WEB-INF/**, xava/images/**, xava/style/**, xava/editors/calendar/**, xava/jasperReport.jsp"/>
+			<fileset dir="web" excludes="WEB-INF/**, xava/images/**, xava/style/**, xava/editors/calendar/**, xava/jasperReport.jsp public/**"/>
 		</copy>
+		<copy todir="${dist.portlets.dir}/public" >
+			<fileset dir="web/public"/>
+		</copy>		
 		<copy todir="${dist.portlets.dir}/xava" file="web/xava/jasperReport.jsp"/>
 		<jar jarfile="${dist.dir}/${name.war}.war" basedir="${dist.portlets.dir}"/>
 		<delete dir="${deploy.dir}/${name.war}${war.dir.suffix}" failonerror="true"/>
