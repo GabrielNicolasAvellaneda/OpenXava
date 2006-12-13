@@ -1,17 +1,6 @@
 package org.openxava.test.tests;
 
-import java.rmi.*;
-import java.util.*;
-
-import javax.ejb.*;
-import javax.naming.*;
-import javax.rmi.*;
-
-import org.hibernate.*;
-import org.openxava.model.impl.*;
-import org.openxava.test.model.*;
 import org.openxava.tests.*;
-import org.openxava.validators.*;
 
 
 
