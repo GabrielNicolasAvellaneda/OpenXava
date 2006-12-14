@@ -761,55 +761,79 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		if (String.class.isAssignableFrom(type)) return value;
 		value = value.trim();
 		try { 
-			if (Integer.class.isAssignableFrom(type) || int.class.isAssignableFrom(type)) {
-				return emptyString?new Integer(0):new Integer(value);
+			if (Integer.class.isAssignableFrom(type) && !type.isPrimitive()) { 
+				return emptyString? null : new Integer(value); // we needed null
 			}
+			else if(int.class.isAssignableFrom(type)) {
+				return emptyString? new Integer(0) : new Integer(value);
+			}
+			
 			if (BigDecimal.class.isAssignableFrom(type)) {
-				if (emptyString) return new BigDecimal("0.00");		
+				if (emptyString) 
+					return type.isPrimitive() ? BigDecimal.ZERO : null; // was: new BigDecimal("0.00"); and this was changing data
 				value = Strings.change(value, " ", ""); // In order to work with Polish
 				Number n = NumberFormat.getNumberInstance(locale).parse(value);
 				return new BigDecimal(n.toString());
-			}			
+			}
+			
 			if (java.sql.Timestamp.class.isAssignableFrom(type)) {
 				if (emptyString) return null;
 				java.util.Date date = DateFormat.getDateInstance(DateFormat.SHORT, locale).parse(value);
 				return new Timestamp(date.getTime());
-			}			
+			}		
+			
 			if (java.sql.Time.class.isAssignableFrom(type)) { 
 				if (emptyString) return null;
 				java.util.Date date = timeFormat.parse(value);
 				return new Time(date.getTime());
-			}						
+			}
+			
 			if (java.util.Date.class.isAssignableFrom(type)) {
 				return emptyString?null:DateFormat.getDateInstance(DateFormat.SHORT, locale).parse(value);
 			}
-			if (Long.class.isAssignableFrom(type) || long.class.isAssignableFrom(type)) {
-				return emptyString?new Long(0l):new Long(value);
+			
+			if (Long.class.isAssignableFrom(type) && !type.isPrimitive()) {
+				return emptyString ? null : new Long(value);
 			}
-			if (Short.class.isAssignableFrom(type) || short.class.isAssignableFrom(type)) {
-				return emptyString?new Short((short)0):new Short(value);
+			else if(long.class.isAssignableFrom(type)) {
+				return emptyString ? new Long(0l) : new Long(value);
 			}
+			
+			if (Short.class.isAssignableFrom(type) && !type.isPrimitive()) {
+				return emptyString ? null : new Short(value);
+			}
+			else if(short.class.isAssignableFrom(type)) {
+				return emptyString ? new Short((short)0) : new Short(value);
+			}
+			
 			if (Float.class.isAssignableFrom(type) || float.class.isAssignableFrom(type)) {
-				if (emptyString) return new Float(0);
+				if (emptyString) 
+					return type.isPrimitive() ? new Float(0) : null;
 				value = Strings.change(value, " ", ""); // In order to work with Polish
 				Number n = NumberFormat.getNumberInstance(locale).parse(value);
 				return new Float(n.floatValue());
 			}
+			
 			if (Double.class.isAssignableFrom(type) || double.class.isAssignableFrom(type)) {
-				if (emptyString) return new Double(0);
-				value = Strings.change(value, " ", ""); // In order to work with Polish
+				if (emptyString) 
+					return type.isPrimitive() ? new Double(0) : null;
+				value = Strings.change(value, " ", ""); // In order to work with Polish					
 				Number n = NumberFormat.getNumberInstance(locale).parse(value);
 				return new Double(n.doubleValue());
 			}
+			
 			if (Boolean.class.isAssignableFrom(type) || boolean.class.isAssignableFrom(type)) {							
-				return Boolean.valueOf(value);
+				return (!type.isPrimitive() && emptyString) ? null : Boolean.valueOf(value);
 			}
+			
 			if (BigInteger.class.isAssignableFrom(type)) {
-				if (emptyString) return BigInteger.ZERO;
-				value = Strings.change(value, " ", ""); // In order to work with Polish
+				if (emptyString) 
+					return type.isPrimitive() ? BigInteger.ZERO : null;		
+				value = Strings.change(value, " ", ""); // In order to work with Polish				
 				Number n = NumberFormat.getNumberInstance(locale).parse(value);
 				return new BigInteger(n.toString());
-			}			
+			}	
+			
 			if (IModel.class.isAssignableFrom(type)) { 
 				return parseModelObject(type, value);
 			}
