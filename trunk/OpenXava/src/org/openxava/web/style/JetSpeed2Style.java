@@ -28,6 +28,10 @@ public class JetSpeed2Style extends Style {
 		return "portlet-section-header";
 	}
 	
+	public String getListOrderBy() {
+		return "jetspeed2-list-order-by";
+	}	
+	
 	public String getListSubheader() {
 		return "portlet-section-subheader";
 	}
