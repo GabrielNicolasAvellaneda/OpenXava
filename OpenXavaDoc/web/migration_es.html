@@ -1,5 +1,23 @@
 <h2>Para migrar de OpenXava 2.0.3 a OpenXava 2.0.4</h2>
 
+<h4>Parse de valores num&eacute;ricos</h4>
+Ahora los datos de tipo Number (Integer, BigDecimal, Short, etc) y Boolean 
+(no boolean) son interpretados como nulo si en la interfaz de usuario est&aacute;n en blanco.
+Antes los campos num&eacute;rico en blanco se interpretaban como 0.
+
+Este cambio no produce grandes incompatibilidades porque default-converters
+
+This change does not produce big incompatibility problems because default-converters.xml
+define las conversiones reales antes de grabar en la base de datos (que es lo que de verdad importa).
+
+Es decir, este cambio afecta solo a la visualizaci&oacute;n. Tus asuntos de incompatibilidad pueden ser:
+<ul>
+<li> La interfaz gr&aacute;fica de la aplicaci&oacute;n visualizar campos vac&iacute;os
+en vez de 0, cuando el formulario se reinicie.</li>
+<li> En el test junit puede ser que recibas un blanco donde antes recib&iacute;as un 0</li>
+<li> Si usas View.getValue() para un Number puede valer null</li>
+</ul>
+
 <h4>Cambios en las API</h4>
 <ul>
 <li><code>Dates.clonWithoutTime()</code> se ha renombrado a <code>Dates.cloneWithoutTime()</code></li>
