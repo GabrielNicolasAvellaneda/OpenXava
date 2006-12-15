@@ -1,5 +1,21 @@
 <h2>Migration from OpenXava 2.0.3 to OpenXava 2.0.4</h2>
 
+<h4>Parse of numeric values</h4>
+Now data values of type Number (Integer, BigDecimal, Short, etc) and Boolean 
+(not boolean) are parsed as null if in the User Interface are in blank.
+Before numeric blank field was parsed as 0.
+
+This change does not produce big incompatibility problems because default-converters.xml
+defines the real conversion before to store in database (the real important matter).
+
+That is, this change affects only displaying. You incompatibility issues maybe the next one:
+<ul>
+<li> The user interface application will display clear fields instead of 0, when
+	the form is reset</li>
+<li> In junit test maybe you receive a blank when before it was a 0</li>
+<li> If you use View.getValue() for a Number it can be null</li>
+</ul>
+
 <h4>API changes</h4>
 <ul>
 <li><code>Dates.clonWithoutTime()</code> is renamed to <code>Dates.cloneWithoutTime()</code></li>
