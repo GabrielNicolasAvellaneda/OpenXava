@@ -102,6 +102,10 @@ public class Style {
 		return "list-subheader";
 	}	
 	
+	public String getListOrderBy() {
+		return "";
+	}
+	
 	public String getListPair() { 
 		return "list-pair";
 	}

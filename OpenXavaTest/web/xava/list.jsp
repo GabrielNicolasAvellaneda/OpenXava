@@ -49,7 +49,7 @@ while (it.hasNext()) {
 		align =property.isNumber() && !property.hasValidValues()?"style='vertical-align: middle;text-align: right'":"style='vertical-align: middle;'";
 	}
 %>
-<th class=<%=style.getListHeader()%> <%=align%>>
+<th class="<%=style.getListHeader()%>" <%=align%>>
 <% if (tab.isCustomize()) { %><xava:image action="List.moveColumnToLeft" argv='<%="columnIndex="+columnIndex%>'/><% } %>
 <%
 	if (property.isCalculated()) {		
@@ -58,7 +58,10 @@ while (it.hasNext()) {
 <%
 	} else {
 %>
+<%-- tmp el span --%>
+<span class="<%=style.getListOrderBy()%>">
 <xava:link action='List.orderBy' argv='<%="property="+property.getQualifiedName()%>'><%=property.getLabel(request)%></xava:link>&nbsp;
+</span>
 <%
 		if (tab.isOrderAscending(property.getQualifiedName())) {
 %>
