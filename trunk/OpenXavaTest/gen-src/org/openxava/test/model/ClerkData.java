@@ -12,6 +12,7 @@ public class ClerkData
 {
 
    private static final long serialVersionUID = 1L;
+   private byte[] _Comments;
    private java.lang.String _EndingTime;
    private java.sql.Time _ArrivalTime;
    private java.lang.String _Name;
@@ -25,6 +26,7 @@ public class ClerkData
 
    public ClerkData( ClerkData otherData )
    {
+      set_Comments(otherData.get_Comments());
       set_EndingTime(otherData.get_EndingTime());
       set_ArrivalTime(otherData.get_ArrivalTime());
       set_Name(otherData.get_Name());
@@ -37,6 +39,15 @@ public class ClerkData
    public org.openxava.test.model.ClerkKey getPrimaryKey() {
      org.openxava.test.model.ClerkKey pk = new org.openxava.test.model.ClerkKey(this.getOfficeNumber(),this.getNumber(),this.getZoneNumber());
      return pk;
+   }
+
+   public byte[] get_Comments()
+   {
+      return this._Comments;
+   }
+   public void set_Comments( byte[] _Comments )
+   {
+      this._Comments = _Comments;
    }
 
    public java.lang.String get_EndingTime()
@@ -97,7 +108,7 @@ public class ClerkData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_EndingTime=" + get_EndingTime() + " " + "_ArrivalTime=" + get_ArrivalTime() + " " + "_Name=" + get_Name() + " " + "officeNumber=" + getOfficeNumber() + " " + "number=" + getNumber() + " " + "zoneNumber=" + getZoneNumber());
+      str.append("_Comments=" + get_Comments() + " " + "_EndingTime=" + get_EndingTime() + " " + "_ArrivalTime=" + get_ArrivalTime() + " " + "_Name=" + get_Name() + " " + "officeNumber=" + getOfficeNumber() + " " + "number=" + getNumber() + " " + "zoneNumber=" + getZoneNumber());
       str.append('}');
 
       return(str.toString());
@@ -110,6 +121,7 @@ public class ClerkData
          ClerkData lTest = (ClerkData) pOther;
          boolean lEquals = true;
 
+         lEquals = lEquals && this._Comments == lTest._Comments;
          if( this._EndingTime == null )
          {
             lEquals = lEquals && ( lTest._EndingTime == null );
@@ -149,6 +161,14 @@ public class ClerkData
    public int hashCode()
    {
       int result = 17;
+
+      if (_Comments != null) {
+        for (int i=0; i<_Comments.length; i++)
+        {
+          long l = _Comments[i];
+          result = 37*result + (int)(l^(l>>>32));
+        }
+      }
 
       result = 37*result + ((this._EndingTime != null) ? this._EndingTime.hashCode() : 0);
 

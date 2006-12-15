@@ -118,7 +118,19 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
 				MetaSet set = (MetaSet) itSets.next();
 				String propertyNameInCalculator = Strings.firstUpper(set.getPropertyName());
 				String propertyNameFrom = set.getPropertyNameFrom();
-				MetaProperty p = metaModel.getMetaProperty(propertyNameFrom);				
+				MetaProperty p = null;
+				try {
+					p = metaModel.getMetaProperty(propertyNameFrom);
+				}
+				catch (org.openxava.util.ElementNotFoundException ex) {
+					// Trying if it's referencing to its parent
+					String parentPrefix = Strings.firstLower(metaModel.getContainerModelName()) + ".";
+					if (propertyNameFrom.startsWith(parentPrefix)) {
+						String propertyInParent = propertyNameFrom.substring(parentPrefix.length());
+						p = metaModel.getMetaModelContainer().getMetaProperty(propertyInParent);
+					}
+					else throw ex;
+				}
 				if (propertyNameFrom.indexOf('.') &gt;= 0) {
 					StringTokenizer st = new StringTokenizer(propertyNameFrom, ".");
 					boolean moreThan2Levels = st.countTokens() &gt; 2;

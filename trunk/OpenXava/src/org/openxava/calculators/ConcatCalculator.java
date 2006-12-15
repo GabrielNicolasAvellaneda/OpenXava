@@ -3,7 +3,7 @@ package org.openxava.calculators;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-/**
+/** 
  * String concatenation. <p>
  * 
  * @author Javier Paniza
@@ -15,6 +15,7 @@ public class ConcatCalculator implements ICalculator {
 	private Object string2="";
 	private Object string3=null;
 	private Object string4=null;
+	private Object string5=null;
 	private static Log log = LogFactory.getLog(ConcatCalculator.class);
 	
 	public Object calculate() throws Exception {		
@@ -29,6 +30,10 @@ public class ConcatCalculator implements ICalculator {
 			r.append(separator);
 			r.append(string4);
 		}
+		if (string5 != null) {
+			r.append(separator);
+			r.append(string5);
+		}		
 		return r.toString();
 	}
 
@@ -71,7 +76,16 @@ public class ConcatCalculator implements ICalculator {
 	public void setString4(Object string4) {
 		this.string4 = string4;
 	}
+	
 
+	public Object getString5() {
+		return string5;
+	}
+
+	public void setString5(Object string5) {
+		this.string5 = string5;
+	}
+	
 	public int getInt1() {
 		return Integer.parseInt((String)string1);
 	}
@@ -104,4 +118,12 @@ public class ConcatCalculator implements ICalculator {
 		this.string4 = String.valueOf(int4);
 	}
 	
+	public int getInt5() {
+		return Integer.parseInt((String)string5);
+	}
+	
+	public void setInt5(int int5) {
+		this.string5 = String.valueOf(int5);
+	}
+		
 }

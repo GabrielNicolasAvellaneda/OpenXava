@@ -92,6 +92,23 @@ for (Iterator itReferences = referencedModel.getMetaReferences().iterator(); itR
 # } #			
 	}
 	
+	// For acceding to properties of this from calculators inside aggregates
+# if (ejb) { 
+	for (Iterator it = reference.getMetaModel().getMetaPropertiesKey().iterator(); it.hasNext();) {
+		MetaProperty p = (MetaProperty) it.next();
+# 	
+	private #(p.getTypeName())# get#(referenceName)#_#(Strings.firstLower(reference.getMetaModel().getName()))#_#(p.getName())#() {
+		return get#(Strings.firstUpper(p.getName()))#();
+	}
+# 		
+	}
+# 
+
+# } else { # 	
+	private #(reference.getMetaModel().getName())# get#(referenceName)#_#(Strings.firstLower(reference.getMetaModel().getName()))#() {
+		return this;
+	}
+# } # 
 # 	
 for (Iterator itAggregateProperties = referencedModel.getMetaProperties().iterator(); itAggregateProperties.hasNext();) {	
 	MetaProperty originalProperty = (MetaProperty) itAggregateProperties.next();

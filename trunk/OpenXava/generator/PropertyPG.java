@@ -13,7 +13,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Dec 11 13:28:43 CET 2006
+ * @version Thu Dec 14 18:26:57 CET 2006
  */
 public class PropertyPG {
     Properties properties = new Properties();
@@ -139,7 +139,19 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
     				MetaSet set = (MetaSet) itSets.next();
     				String propertyNameInCalculator = Strings.firstUpper(set.getPropertyName());
     				String propertyNameFrom = set.getPropertyNameFrom();
-    				MetaProperty p = metaModel.getMetaProperty(propertyNameFrom);				
+    				MetaProperty p = null;
+    				try {
+    					p = metaModel.getMetaProperty(propertyNameFrom);
+    				}
+    				catch (org.openxava.util.ElementNotFoundException ex) {
+    					// Trying if it's referencing to its parent
+    					String parentPrefix = Strings.firstLower(metaModel.getContainerModelName()) + ".";
+    					if (propertyNameFrom.startsWith(parentPrefix)) {
+    						String propertyInParent = propertyNameFrom.substring(parentPrefix.length());
+    						p = metaModel.getMetaModelContainer().getMetaProperty(propertyInParent);
+    					}
+    					else throw ex;
+    				}
     				if (propertyNameFrom.indexOf('.') >= 0) {
     					StringTokenizer st = new StringTokenizer(propertyNameFrom, ".");
     					boolean moreThan2Levels = st.countTokens() > 2;
@@ -637,7 +649,7 @@ private static void generate(XPathContext context, ProgramWriter out, MetaProper
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Dec 11 13:28:43 CET 2006", // date this file was generated
+        { "Thu Dec 14 18:26:58 CET 2006", // date this file was generated
              "../OpenXava/generator/property.xml", // input file
              "../OpenXava/generator/PropertyPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

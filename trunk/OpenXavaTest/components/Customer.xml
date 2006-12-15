@@ -116,6 +116,7 @@
 				<set property="int2" from="zipCode"/>
 				<set property="string3" from="city"/>
 				<set property="string4" from="state.name"/>
+				<set property="int5" from="customer.number"/>
 			</calculator>
 		</property>
 	</aggregate>	

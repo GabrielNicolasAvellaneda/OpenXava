@@ -747,7 +747,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	/**
 	 * Convert the argument in a object of type valid
 	 * for assign to this property. <p>
-	 * Convierte el argumento enviado en un objeto de tipo vï¿½lido
+	 * Convierte el argumento enviado en un objeto de tipo válido
 	 * para asignar a esta propiedad. <p>
 	 * 
 	 * If argument is primitive return the match wrapper.
@@ -761,16 +761,15 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		if (String.class.isAssignableFrom(type)) return value;
 		value = value.trim();
 		try { 
-			if (Integer.class.isAssignableFrom(type) && !type.isPrimitive()) { 
+			if (Integer.class.isAssignableFrom(type)) { 
 				return emptyString? null : new Integer(value); // we needed null
 			}
-			else if(int.class.isAssignableFrom(type)) {
+			else if (int.class.isAssignableFrom(type)) {
 				return emptyString? new Integer(0) : new Integer(value);
 			}
 			
 			if (BigDecimal.class.isAssignableFrom(type)) {
-				if (emptyString) 
-					return type.isPrimitive() ? BigDecimal.ZERO : null; // was: new BigDecimal("0.00"); and this was changing data
+				if (emptyString) return null; // was: new BigDecimal("0.00"); and this was changing data. You can change this behaviour with a formatter in editor.xml
 				value = Strings.change(value, " ", ""); // In order to work with Polish
 				Number n = NumberFormat.getNumberInstance(locale).parse(value);
 				return new BigDecimal(n.toString());
@@ -792,14 +791,14 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				return emptyString?null:DateFormat.getDateInstance(DateFormat.SHORT, locale).parse(value);
 			}
 			
-			if (Long.class.isAssignableFrom(type) && !type.isPrimitive()) {
+			if (Long.class.isAssignableFrom(type)) {
 				return emptyString ? null : new Long(value);
 			}
 			else if(long.class.isAssignableFrom(type)) {
 				return emptyString ? new Long(0l) : new Long(value);
 			}
 			
-			if (Short.class.isAssignableFrom(type) && !type.isPrimitive()) {
+			if (Short.class.isAssignableFrom(type)) {
 				return emptyString ? null : new Short(value);
 			}
 			else if(short.class.isAssignableFrom(type)) {
@@ -827,8 +826,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			}
 			
 			if (BigInteger.class.isAssignableFrom(type)) {
-				if (emptyString) 
-					return type.isPrimitive() ? BigInteger.ZERO : null;		
+				if (emptyString) return null;		
 				value = Strings.change(value, " ", ""); // In order to work with Polish				
 				Number n = NumberFormat.getNumberInstance(locale).parse(value);
 				return new BigInteger(n.toString());
