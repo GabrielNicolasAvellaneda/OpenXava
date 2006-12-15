@@ -14,6 +14,8 @@ public class ClerkValue
 
    private static final long serialVersionUID = 1L;
 
+   private java.lang.String comments;
+   private boolean commentsHasBeenSet = false;
    private java.lang.String endingTime;
    private boolean endingTimeHasBeenSet = false;
    private java.sql.Time arrivalTime;
@@ -34,6 +36,8 @@ public class ClerkValue
    //TODO Cloneable is better than this !
    public ClerkValue( ClerkValue otherValue )
    {
+	  this.comments = otherValue.comments;
+	  commentsHasBeenSet = true;
 	  this.endingTime = otherValue.endingTime;
 	  endingTimeHasBeenSet = true;
 	  this.arrivalTime = otherValue.arrivalTime;
@@ -48,6 +52,20 @@ public class ClerkValue
 	  zoneNumberHasBeenSet = true;
    }
 
+   public java.lang.String getComments()
+   {
+	  return this.comments;
+   }
+
+   public void setComments( java.lang.String comments )
+   {
+	  this.comments = comments;
+	  commentsHasBeenSet = true;
+   }
+
+   public boolean commentsHasBeenSet(){
+	  return commentsHasBeenSet;
+   }
    public java.lang.String getEndingTime()
    {
 	  return this.endingTime;
@@ -137,7 +155,7 @@ public class ClerkValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("endingTime=" + getEndingTime() + " " + "arrivalTime=" + getArrivalTime() + " " + "name=" + getName() + " " + "officeNumber=" + getOfficeNumber() + " " + "number=" + getNumber() + " " + "zoneNumber=" + getZoneNumber());
+	  str.append("comments=" + getComments() + " " + "endingTime=" + getEndingTime() + " " + "arrivalTime=" + getArrivalTime() + " " + "name=" + getName() + " " + "officeNumber=" + getOfficeNumber() + " " + "number=" + getNumber() + " " + "zoneNumber=" + getZoneNumber());
 	  str.append('}');
 
 	  return(str.toString());
@@ -187,6 +205,14 @@ public class ClerkValue
 	  {
 		 ClerkValue that = (ClerkValue) other;
 		 boolean lEquals = true;
+		 if( this.comments == null )
+		 {
+			lEquals = lEquals && ( that.comments == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.comments.equals( that.comments );
+		 }
 		 if( this.endingTime == null )
 		 {
 			lEquals = lEquals && ( that.endingTime == null );
@@ -222,6 +248,8 @@ public class ClerkValue
 
    public int hashCode(){
 	  int result = 17;
+      result = 37*result + ((this.comments != null) ? this.comments.hashCode() : 0);
+
       result = 37*result + ((this.endingTime != null) ? this.endingTime.hashCode() : 0);
 
       result = 37*result + ((this.arrivalTime != null) ? this.arrivalTime.hashCode() : 0);

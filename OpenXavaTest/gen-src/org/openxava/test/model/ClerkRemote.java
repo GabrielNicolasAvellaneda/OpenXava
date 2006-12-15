@@ -10,6 +10,12 @@ public interface ClerkRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.IClerk
 {
 
+   public java.lang.String getComments(  )
+      throws java.rmi.RemoteException;
+
+   public void setComments( java.lang.String newComments )
+      throws java.rmi.RemoteException;
+
    public java.lang.String getEndingTime(  )
       throws java.rmi.RemoteException;
 

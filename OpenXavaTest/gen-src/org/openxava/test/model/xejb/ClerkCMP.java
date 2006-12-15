@@ -18,6 +18,7 @@ public abstract class ClerkCMP
       {
          dataHolder = new org.openxava.test.model.ClerkData();
 
+         dataHolder.set_Comments( get_Comments() );
          dataHolder.set_EndingTime( get_EndingTime() );
          dataHolder.set_ArrivalTime( get_ArrivalTime() );
          dataHolder.set_Name( get_Name() );
@@ -38,6 +39,7 @@ public abstract class ClerkCMP
    {
       try
       {
+         set_Comments( dataHolder.get_Comments() );
          set_EndingTime( dataHolder.get_EndingTime() );
          set_ArrivalTime( dataHolder.get_ArrivalTime() );
          set_Name( dataHolder.get_Name() );
@@ -94,6 +96,7 @@ public abstract class ClerkCMP
       ClerkValue = new org.openxava.test.model.ClerkValue();
       try
          {
+            ClerkValue.setComments( getComments() );
             ClerkValue.setEndingTime( getEndingTime() );
             ClerkValue.setArrivalTime( getArrivalTime() );
             ClerkValue.setName( getName() );
@@ -115,6 +118,7 @@ public abstract class ClerkCMP
 
 	  try
 	  {
+		 setComments( valueHolder.getComments() );
 		 setEndingTime( valueHolder.getEndingTime() );
 		 setArrivalTime( valueHolder.getArrivalTime() );
 		 setName( valueHolder.getName() );
@@ -127,6 +131,10 @@ public abstract class ClerkCMP
    }
 
 /* Value Objects END */
+
+   public abstract byte[] get_Comments() ;
+
+   public abstract void set_Comments( byte[] _Comments ) ;
 
    public abstract java.lang.String get_EndingTime() ;
 

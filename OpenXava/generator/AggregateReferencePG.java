@@ -13,7 +13,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Dec 11 13:28:45 CET 2006
+ * @version Thu Dec 14 18:27:00 CET 2006
  */
 public class AggregateReferencePG {
     Properties properties = new Properties();
@@ -148,7 +148,34 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
     out.print(refName);
     out.print("());");
     } 
-    out.print("\t\t\t\n\t}");
+    out.print("\t\t\t\n\t}\n\t\n\t// For acceding to properties of this from calculators inside aggregates");
+    if (ejb) { 
+    	for (Iterator it = reference.getMetaModel().getMetaPropertiesKey().iterator(); it.hasNext();) {
+    		MetaProperty p = (MetaProperty) it.next();
+    
+    out.print(" \t\n\tprivate ");
+    out.print(p.getTypeName());
+    out.print(" get");
+    out.print(referenceName);
+    out.print("_");
+    out.print(Strings.firstLower(reference.getMetaModel().getName()));
+    out.print("_");
+    out.print(p.getName());
+    out.print("() {\n\t\treturn get");
+    out.print(Strings.firstUpper(p.getName()));
+    out.print("();\n\t}");
+    		
+    	}
+    
+    } else { 
+    out.print(" \t\n\tprivate ");
+    out.print(reference.getMetaModel().getName());
+    out.print(" get");
+    out.print(referenceName);
+    out.print("_");
+    out.print(Strings.firstLower(reference.getMetaModel().getName()));
+    out.print("() {\n\t\treturn this;\n\t}");
+    } 
     	
     for (Iterator itAggregateProperties = referencedModel.getMetaProperties().iterator(); itAggregateProperties.hasNext();) {	
     	MetaProperty originalProperty = (MetaProperty) itAggregateProperties.next();
@@ -210,7 +237,7 @@ public static void generate(XPathContext context, ProgramWriter out, MetaReferen
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Dec 11 13:28:45 CET 2006", // date this file was generated
+        { "Thu Dec 14 18:27:00 CET 2006", // date this file was generated
              "../OpenXava/generator/aggregateReference.xml", // input file
              "../OpenXava/generator/AggregateReferencePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

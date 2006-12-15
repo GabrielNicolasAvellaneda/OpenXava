@@ -245,11 +245,12 @@ abstract public class MetaModel extends MetaElement {
 	/**
 	 * 
 	 * @param newMetaReference  not null
+	 * @throws XavaException 
 	 */
-	public void addMetaReference(MetaReference newMetaReference) {
+	public void addMetaReference(MetaReference newMetaReference) throws XavaException {
 		getMapMetaReferences().put(newMetaReference.getName(), newMetaReference);
 		membersNames.add(newMetaReference.getName());
-		newMetaReference.setMetaModel(this);		
+		newMetaReference.setMetaModel(this);
 	}
 	
 	public void addMetaView(MetaView newMetaView) throws XavaException {		

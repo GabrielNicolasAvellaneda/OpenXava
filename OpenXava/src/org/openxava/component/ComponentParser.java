@@ -128,8 +128,30 @@ class ComponentParser extends ParserBase {
 		createEntityMapping();
 		createAggregateMappings();
 		fillDefaultFinders();
+		setContainerModelToAggregateReference(); 
 	}
 	
+	private void setContainerModelToAggregateReference() throws XavaException { 
+		setContainerModelToAggregateReference(component.getMetaEntity());		
+		for (Iterator it = component.getMetaAggregates().iterator(); it.hasNext(); ) {
+			setContainerModelToAggregateReference((MetaModel) it.next());
+		}
+	}
+
+	private void setContainerModelToAggregateReference(MetaModel metaModel) throws XavaException { 
+		Collection references = metaModel.getMetaReferences();
+		if (references.isEmpty()) return;		
+		for (Iterator it = references.iterator(); it.hasNext();) {
+			MetaReference ref = (MetaReference) it.next();
+			if (component.hasMetaAggregate(ref.getReferencedModelName())) {
+				MetaModel referencedModel = ref.getMetaModelReferenced();
+				if (referencedModel instanceof MetaAggregateForReference) {
+					referencedModel.setContainerModelName(metaModel.getName());					
+				}
+			}
+		}
+	}
+
 	/**
 	 * Add finder for the fields of primary key
 	 * @throws XavaException

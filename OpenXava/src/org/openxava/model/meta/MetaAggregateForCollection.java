@@ -16,7 +16,7 @@ public class MetaAggregateForCollection extends MetaAggregate {
 	
 	private MetaEJB metaEJB = null;
 	private static Log log = LogFactory.getLog(MetaAggregateForCollection.class);
-		
+	
 	public ModelMapping getMapping() throws XavaException {
 		return getMetaComponent().getAggregateMapping(getName());
 	}

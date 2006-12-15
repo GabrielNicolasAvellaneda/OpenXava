@@ -870,8 +870,8 @@ public class InvoicesTest extends ModuleTestBase {
 	public void testCalculatedValuesFromSubviewToUpperView() throws Exception {
 		execute("CRUD.new");
 		execute("Sections.change", "activeSection=0");
-		assertValue("customerDiscount", "0");
-		assertValue("customerTypeDiscount", "0");
+		assertValue("customerDiscount", "");
+		assertValue("customerTypeDiscount", "");
 		assertValue("customer.number", "0");
 		assertValue("customer.name", "");
 		setValue("customer.number", "1");
@@ -892,7 +892,7 @@ public class InvoicesTest extends ModuleTestBase {
 	public void testCalculatedValueOnChangeBoolean() throws Exception {
 		execute("CRUD.new");
 		execute("Sections.change", "activeSection=0");
-		assertValue("customerDiscount", "0");
+		assertValue("customerDiscount", "");
 		setValue("paid", "true");
 		assertValue("customerDiscount", "77");				
 	}

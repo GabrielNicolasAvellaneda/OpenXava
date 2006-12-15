@@ -24,6 +24,11 @@ public class EJBTest extends TestCase {
 		super(name);
 	}
 	
+	public void testCalculatedPropertyOnAggregateDependsOnPropertyOfContainerModel() throws Exception {
+		CustomerRemote c = CustomerUtil.getHome().findByNumber(1);
+		assertEquals("DOCTOR PESSET46540EL PUIGNew York1", c.getAddress().getAsString());
+	}
+
 	public void testMixPOJOAndEJBNotAllowed_defaultKeyFinder() throws Exception { 
 		CustomerRemote customerEJB = CustomerUtil.getHome().findByNumber(2);
 		assertEquals("Juanillo", customerEJB.getName());

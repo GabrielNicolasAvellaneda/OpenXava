@@ -44,25 +44,25 @@ public class ModelParser extends XmlElementsNames {
 	public static MetaAggregate parseAggregate(Node n, MetaModel container, int lang) throws XavaException {
 		Element el = (Element) n;
 		if (hasEjb(el, lang)) {
-			MetaAggregateForCollection r = createAggregateEjb(n, container, lang);
+			MetaAggregateForCollection r = createAggregateForCollection(n, container, lang);
 			r.setEjbGenerated(false);
 			return r;			
 		}
 		else if (hasBean(el, lang)) {
-			MetaAggregateForReference r = createAggregateBean(n, container, lang);
+			MetaAggregateForReference r = createAggregateForReference(n, container, lang);
 			r.setPojoGenerated(false);
 			return r;
 		}
 		else {
 			String name = el.getAttribute(xname[lang]);
 			if (container.containsMetaReferenceWithModel(name)) {
-				MetaAggregateForReference r = createAggregateBean(n, container, lang);
+				MetaAggregateForReference r = createAggregateForReference(n, container, lang);
 				r.setEjbGenerated(true);
 				r.setPojoGenerated(true);
 				return r;
 			}
 			else {
-				MetaAggregateForCollection r = createAggregateEjb(n, container, lang);
+				MetaAggregateForCollection r = createAggregateForCollection(n, container, lang);
 				r.setEjbGenerated(true);
 				r.setPojoGenerated(true);
 				return r;
@@ -70,7 +70,7 @@ public class ModelParser extends XmlElementsNames {
 		}		
 	}
 
-	private static MetaAggregateForReference createAggregateBean(Node n, MetaModel container, int lang) throws XavaException {	
+	private static MetaAggregateForReference createAggregateForReference(Node n, MetaModel container, int lang) throws XavaException {	
 		Element el = (Element) n;
 		MetaAggregateForReference a = new MetaAggregateForReference();
 		a.setName(el.getAttribute(xname[lang]));
@@ -83,7 +83,7 @@ public class ModelParser extends XmlElementsNames {
 		return a;
 	}
 	
-	private static MetaAggregateForCollection createAggregateEjb(Node n, MetaModel container, int lang) throws XavaException {	
+	private static MetaAggregateForCollection createAggregateForCollection(Node n, MetaModel container, int lang) throws XavaException {	
 		Element el = (Element) n;		
 		MetaAggregateForCollection a = new MetaAggregateForCollection();
 		a.setName(el.getAttribute(xname[lang]));

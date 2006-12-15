@@ -1288,6 +1288,11 @@
          <table-name>XAVATEST_CLERK</table-name>
 
          <cmp-field>
+            <field-name>_Comments</field-name>
+            <column-name>COMMENTS</column-name>
+
+        </cmp-field>
+         <cmp-field>
             <field-name>_EndingTime</field-name>
             <column-name>ENDINGTIME</column-name>
 
