@@ -58,7 +58,6 @@ while (it.hasNext()) {
 <%
 	} else {
 %>
-<%-- tmp el span --%>
 <span class="<%=style.getListOrderBy()%>">
 <xava:link action='List.orderBy' argv='<%="property="+property.getQualifiedName()%>'><%=property.getLabel(request)%></xava:link>&nbsp;
 </span>
