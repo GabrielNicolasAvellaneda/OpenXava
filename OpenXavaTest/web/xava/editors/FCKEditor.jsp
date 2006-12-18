@@ -8,6 +8,7 @@
 		<meta name="robots" content="noindex, nofollow">
 <% 
 String nproperty=request.getParameter("nproperty");
+String form=request.getParameter("form");
 String body="onLoad='updateThis();'";
 String flag=request.getParameter("flag");
 String vproperty="";
@@ -43,11 +44,11 @@ out.println( oFCKeditor.create() ) ;
 		<!--
 		
 		function updateThis(){
-			document.fEditor.Editor.value=opener.document.forms[0].elements["<%=nproperty%>"].value;
+			document.fEditor.Editor.value=opener.document.<%=form%>.elements["<%=nproperty%>"].value;
 		}
 		
 		function updateParent() {
-		    opener.document.forms[0].elements["<%=nproperty%>"].value = document.fEditor.Editor.value;
+		    opener.document.<%=form%>.elements["<%=nproperty%>"].value = document.fEditor.Editor.value;
 		    opener.showValue(document.fEditor.Editor.value);
 		    self.close();
 		    return false;
