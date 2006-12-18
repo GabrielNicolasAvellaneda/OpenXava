@@ -7,9 +7,8 @@ import java.util.*;
 
 import javax.ejb.*;
 
-import org.openxava.hibernate.*;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
+
 import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -22,8 +21,8 @@ import org.openxava.validators.*;
  */
 abstract public class POJOPersistenceProviderBase implements IPersistenceProvider {
 	
-	
 	private static Log log = LogFactory.getLog(POJOPersistenceProviderBase.class);
+	
 	/**
 	 * Return the object associated to the sent key.
 	 */

@@ -1,7 +1,7 @@
 package org.openxava.actions;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 
 /**
@@ -10,7 +10,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class EmptyAction extends BaseAction {
 
-	private static Log log = LogFactory.getLog(EmptyAction.class);
+	
 	
 	public void execute() throws Exception {		
 	}

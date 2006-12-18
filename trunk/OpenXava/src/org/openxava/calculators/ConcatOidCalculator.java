@@ -1,7 +1,7 @@
 package org.openxava.calculators;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 
 /**
@@ -17,7 +17,7 @@ public class ConcatOidCalculator
 	implements IAggregateOidCalculator {
 		
 	private int contador;
-	private static Log log = LogFactory.getLog(ConcatOidCalculator.class);
+	
 	
 	public ConcatOidCalculator() {
 		setSeparator(":");

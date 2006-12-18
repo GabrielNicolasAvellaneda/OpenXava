@@ -1,13 +1,13 @@
 package org.openxava.web.style;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 public class WebSpherePortalStyle extends Style {
 	
 	private static WebSpherePortalStyle instance = null;
 
-	private static Log log = LogFactory.getLog(WebSpherePortalStyle.class);
+	
 	
 	protected WebSpherePortalStyle() {		
 	}

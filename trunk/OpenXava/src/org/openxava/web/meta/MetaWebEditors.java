@@ -2,8 +2,8 @@ package org.openxava.web.meta;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.web.meta.xmlparse.*;
@@ -18,7 +18,7 @@ public class MetaWebEditors {
 	private static Map editorsByStereotype;
 	private static Map editorsByModelProperty;
 	
-	private static Log log = LogFactory.getLog(MetaWebEditors.class);
+	
 
 	public static void addMetaEditorForType(String type, MetaEditor editor) throws XavaException {
 		if (editorsByType == null) {

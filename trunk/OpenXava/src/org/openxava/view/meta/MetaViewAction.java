@@ -1,7 +1,7 @@
 package org.openxava.view.meta;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 
@@ -18,7 +18,7 @@ public class MetaViewAction extends MetaProperty {
 	private String action;
 	private boolean alwaysEnabled;
 	
-	private static Log log = LogFactory.getLog(MetaViewAction.class);
+	
 	
 	public MetaViewAction(String action) throws XavaException {
 		this.action = action;

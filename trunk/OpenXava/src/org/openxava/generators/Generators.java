@@ -3,8 +3,8 @@ package org.openxava.generators;
 import java.io.*;
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.util.*;
 
 /**
@@ -14,7 +14,7 @@ import org.openxava.util.*;
  */
 public class Generators {
 
-	private static Log log = LogFactory.getLog(Generators.class);
+	
 	
 	public static String generateCast(String type, String sentence) throws XavaException {
 		if (type == null) {

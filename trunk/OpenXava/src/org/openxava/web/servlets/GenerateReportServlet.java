@@ -13,8 +13,7 @@ import javax.swing.table.*;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.openxava.model.meta.*;
 import org.openxava.tab.*;
 import org.openxava.util.*;

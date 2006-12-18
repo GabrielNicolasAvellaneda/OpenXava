@@ -2,8 +2,8 @@ package org.openxava.application.meta;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.controller.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
@@ -27,7 +27,7 @@ public class MetaModule extends MetaElement implements java.io.Serializable {
 	private Collection controllersNames = new ArrayList();
 	private String modeControllerName;	
 	private MetaReport metaReport;
-	private static Log log = LogFactory.getLog(MetaModule.class);
+	
 
 	public String getModelName() {
 		return modelName;

@@ -2,8 +2,8 @@ package org.openxava.filters;
 
 import javax.servlet.http.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.controller.*;
 import org.openxava.ejbx.SessionBase;
 import org.openxava.util.*;
@@ -20,7 +20,7 @@ abstract public class BaseContextFilter implements IRequestFilter {
 
 	private HttpServletRequest request;	
 	private ModuleContext context;
-	private static Log log = LogFactory.getLog(BaseContextFilter.class);
+	
 
 	public void setRequest(HttpServletRequest request) {
 		this.request = request;		

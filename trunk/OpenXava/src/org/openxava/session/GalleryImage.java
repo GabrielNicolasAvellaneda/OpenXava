@@ -2,8 +2,8 @@ package org.openxava.session;
 
 import java.io.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 
 /**
@@ -20,7 +20,7 @@ public class GalleryImage implements Serializable {
 	private String galleryOid;
 	private byte [] image;
 	
-	private static Log log = LogFactory.getLog(GalleryImage.class);
+	
 	
 	public String getOid() {
 		return oid;

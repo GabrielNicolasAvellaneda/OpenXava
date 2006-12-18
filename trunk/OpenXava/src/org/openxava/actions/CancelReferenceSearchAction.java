@@ -1,7 +1,7 @@
 package org.openxava.actions;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.tab.*;
 
 
@@ -14,7 +14,7 @@ public class CancelReferenceSearchAction extends ViewBaseAction implements INavi
 	
 	private Tab tab;
 	
-	private static Log log = LogFactory.getLog(CancelReferenceSearchAction.class);
+	
 	
 	public void execute() throws Exception {		
 		getTab().setModelName(getView().getModelName());		

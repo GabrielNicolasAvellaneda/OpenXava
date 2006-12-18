@@ -7,8 +7,8 @@ import javax.portlet.*;
 
 import org.apache.commons.fileupload.disk.*;
 import org.apache.commons.fileupload.portlet.*;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
+
 import org.openxava.web.style.*;
 
 /**
@@ -39,6 +39,8 @@ import org.openxava.web.style.*;
  */
 
 public class XavaPortlet extends GenericPortlet {
+	
+	private static Log log = LogFactory.getLog(XavaPortlet.class);
 
 	/**
 	 * Name of portlet preference for OpenXava application. 
@@ -54,7 +56,7 @@ public class XavaPortlet extends GenericPortlet {
 	private static Style style;
 	private String moduleURL;
 	
-	private static Log log = LogFactory.getLog(XavaPortlet.class);
+	
 	
 	public void init(PortletConfig config) throws PortletException {
 		super.init(config);		

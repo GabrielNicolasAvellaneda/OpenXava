@@ -2,8 +2,8 @@ package org.openxava.actions;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.model.*;
 import org.openxava.tab.*;
 import org.openxava.validators.*;
@@ -16,7 +16,7 @@ public class DeleteSelectedAction extends BaseAction implements IModelAction {
 	
 	private Tab tab;
 	private String model;
-	private static Log log = LogFactory.getLog(DeleteSelectedAction.class);
+	
 	
 	public void execute() throws Exception {				
 		int [] selectedOnes = tab.getSelected();

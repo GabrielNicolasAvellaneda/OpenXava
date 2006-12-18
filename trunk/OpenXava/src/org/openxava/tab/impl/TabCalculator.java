@@ -1,7 +1,7 @@
 package org.openxava.tab.impl;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.calculators.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -17,7 +17,7 @@ public class TabCalculator implements java.io.Serializable {
 	private MetaCalculator metaCalculator;
 	private ICalculator calculator;
 	private PropertiesManager propertiesManager;
-	private static Log log = LogFactory.getLog(TabCalculator.class);
+	
 
 	public TabCalculator(MetaProperty metaProperty, int propertyIndex)
 		throws XavaException {

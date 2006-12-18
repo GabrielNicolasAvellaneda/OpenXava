@@ -2,8 +2,8 @@ package org.openxava.actions;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.model.*;
 import org.openxava.util.*;
 
@@ -15,7 +15,7 @@ import org.openxava.util.*;
 public class EditElementInCollectionAction extends CollectionElementViewBaseAction  {
 	
 	private int row;
-	private static Log log = LogFactory.getLog(EditElementInCollectionAction.class);
+	
 	
 	public void execute() throws Exception {
 		getCollectionElementView().setCollectionDetailVisible(true);		

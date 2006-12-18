@@ -3,8 +3,8 @@ package org.openxava.actions;
 import java.util.*;
 import javax.servlet.http.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.view.*;
 import net.sf.jasperreports.engine.*;
 
@@ -21,7 +21,7 @@ abstract public class JasperReportBaseAction extends BaseAction implements IForw
 	private HttpServletRequest request;
 	private View view;
 	private String modelName;
-	private static Log log = LogFactory.getLog(JasperReportBaseAction.class);
+	
 	
 	/**
 	 * Data to print. <p>

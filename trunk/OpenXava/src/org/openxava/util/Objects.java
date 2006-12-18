@@ -3,8 +3,8 @@ package org.openxava.util;
 import java.io.*;
 import java.lang.reflect.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
+
 /**
  * Utility class to work with objects. <p>
  * 
@@ -13,9 +13,9 @@ import org.apache.commons.logging.LogFactory;
 
 public class Objects {
 
-  private static final Class [] arg0 = { };	
-  
   private static Log log = LogFactory.getLog(Objects.class);
+	
+  private static final Class [] arg0 = { };	  
 
   /**
    * Clone the sent object. <p>

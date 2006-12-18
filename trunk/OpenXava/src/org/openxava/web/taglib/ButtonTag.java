@@ -4,8 +4,7 @@ import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 import javax.servlet.jsp.tagext.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.openxava.controller.*;
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
@@ -17,9 +16,10 @@ import org.openxava.web.style.*;
 
 public class ButtonTag extends TagSupport {
 	
-	private String action;
 	private static Log log = LogFactory.getLog(ButtonTag.class);
-
+	
+	private String action;
+	
 	public int doStartTag() throws JspException {
 		try {									
 			ModuleContext context = (ModuleContext) pageContext.getSession().getAttribute("context");

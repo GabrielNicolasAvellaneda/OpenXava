@@ -1,7 +1,7 @@
 package org.openxava.calculators;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * To use identity database id generation. <p>
@@ -20,7 +20,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class IdentityCalculator implements IHibernateIdGeneratorCalculator { 
 	
-	private static Log log = LogFactory.getLog(IdentityCalculator.class);
+	
 	
 	public String hbmGeneratorCode() {		
 		return "<generator class='identity'/>";

@@ -2,8 +2,8 @@ package org.openxava.converters;
 
 import java.math.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * In Java <code>java.math.BigInteger</code> and in database <code>Number</code>
@@ -13,7 +13,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class BigIntegerNumberConverter implements IConverter {		
 
-	private static Log log = LogFactory.getLog(BigIntegerNumberConverter.class);
+	
 	
 	public Object toDB(Object o) throws ConversionException {
 		return o==null?BigInteger.ZERO:o;

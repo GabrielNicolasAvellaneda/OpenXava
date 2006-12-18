@@ -2,8 +2,8 @@ package org.openxava.model.meta;
 
 import java.io.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.util.*;
 
 /**
@@ -17,7 +17,7 @@ public class MetaMethod implements Serializable {
 	private String exceptions;
 	private MetaCalculator metaCalculator;
 	
-	private static Log log = LogFactory.getLog(MetaMethod.class);
+	
 	
 	public String getName() {
 		return name;

@@ -5,10 +5,7 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-
+import org.apache.commons.logging.*;
 
 /**
  * To obtain i18n values from OpenXava resource files. <p>
@@ -31,9 +28,8 @@ import org.apache.commons.logging.LogFactory;
 public class XavaResources {
 	
 	private static final ResourceManagerI18n impl = new ResourceManagerI18n("Messages", "-messages", "Mensajes"); 
-	
 	private static Log log = LogFactory.getLog(XavaResources.class);
-	
+		
 	public static String getString(String key) {	
 		return impl.getString(key); 
 	}

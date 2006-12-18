@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.tab.Tab;
 
 /**
@@ -15,7 +15,7 @@ public class AddColumnsAction extends BaseAction implements IRequestAction, INav
 	
 	private HttpServletRequest request;
 	private Tab tab;
-	private static Log log = LogFactory.getLog(AddColumnsAction.class);
+	
 	
 	public void execute() throws Exception {
 		String [] values = request.getParameterValues("selectedProperties");		

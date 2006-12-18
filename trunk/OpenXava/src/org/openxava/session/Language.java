@@ -2,8 +2,9 @@ package org.openxava.session;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
 
@@ -14,13 +15,14 @@ import org.openxava.util.*;
 
 public class Language {
 
+	private static Log log = LogFactory.getLog(Language.class);
 	private static MetaAction changeToSpainAction;
 	private static MetaAction changeToValencianoAction;
 	private String id;
 	private Locale locale; 
 	private Locale defaultLocale;
 	
-	private static Log log = LogFactory.getLog(Language.class);
+	
 	
 	/**
 	 * Language identifier, for example: es, ca, en, etc.

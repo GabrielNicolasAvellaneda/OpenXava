@@ -1,7 +1,7 @@
 package org.openxava.actions;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * @author Javier Paniza
@@ -9,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class ReturnPreviousModuleAction extends BaseAction implements IChangeModuleAction {
 
-	private static Log log = LogFactory.getLog(ReturnPreviousModuleAction.class);
+	
 	
 	public void execute() throws Exception {
 	}

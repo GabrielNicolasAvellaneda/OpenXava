@@ -3,8 +3,7 @@ import java.io.*;
 import java.math.*;
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 
 /**
  * Utilities to work with <code>String</code>. <p>

@@ -7,8 +7,7 @@ import java.util.*;
 import javax.ejb.*;
 import javax.swing.event.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.openxava.util.*;
 
 /**
@@ -22,6 +21,8 @@ import org.openxava.util.*;
  */
 
 public class TableModelBean implements IXTableModel, java.io.Serializable {
+	
+	private static Log log = LogFactory.getLog(TableModelBean.class);
 	
 	private final static int STILL_NO_OBTAINED = -1;
 	private int totalSize = STILL_NO_OBTAINED;
@@ -40,7 +41,7 @@ public class TableModelBean implements IXTableModel, java.io.Serializable {
 	private int rowCount;
 	private boolean translateHeading = true;
 
-	private static Log log = LogFactory.getLog(TableModelBean.class);
+	
 	
 	public TableModelBean() {
 		refresh();

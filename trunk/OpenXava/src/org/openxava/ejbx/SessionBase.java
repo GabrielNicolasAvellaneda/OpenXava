@@ -4,8 +4,8 @@ import java.rmi.*;
 
 import javax.ejb.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * Base class for help in the creation of a <i>SessionBean</i>. <p>
@@ -16,7 +16,7 @@ import org.apache.commons.logging.LogFactory;
 public class SessionBase extends EJBBase implements SessionBean {
 
   private SessionContext context;
-  private static Log log = LogFactory.getLog(SessionBase.class);
+  
 
   public void ejbActivate() throws RemoteException {
   }

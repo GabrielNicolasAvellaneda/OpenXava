@@ -2,8 +2,9 @@ package org.openxava.mapping;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.openxava.component.*;
 import org.openxava.converters.*;
 import org.openxava.util.*;
@@ -12,6 +13,7 @@ import org.openxava.util.meta.*;
 
 public class ReferenceMappingDetail extends MetaSetsContainer {
 	
+	private static Log log = LogFactory.getLog(ReferenceMappingDetail.class);
 	private static boolean someMappingUsesConverters = false;
 	
 	private String column;
@@ -22,7 +24,7 @@ public class ReferenceMappingDetail extends MetaSetsContainer {
 	private boolean converterCreated = false;
 	private IConverter converter;
 	private String cmpTypeName;
-	private static Log log = LogFactory.getLog(ReferenceMappingDetail.class);
+	
 	 
 	
 	public String getColumn() {

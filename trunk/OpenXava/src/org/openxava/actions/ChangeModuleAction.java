@@ -1,7 +1,7 @@
 package org.openxava.actions;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * @author Javier Paniza
@@ -11,7 +11,7 @@ public class ChangeModuleAction extends BaseAction implements IChangeModuleActio
 	
 	private String nextModule;
 	private boolean reinit;
-	private static Log log = LogFactory.getLog(ChangeModuleAction.class);
+	
 	
 	public void execute() throws Exception {
 	}

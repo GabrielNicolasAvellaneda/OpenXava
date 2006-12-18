@@ -2,8 +2,8 @@ package org.openxava.actions;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.tab.*;
 import org.openxava.view.*;
 
@@ -18,7 +18,7 @@ public class GoListAction extends BaseAction implements IChangeModeAction, INavi
 	private Tab tab;
 	private Tab mainTab;
 	private Stack previousViews;
-	private static Log log = LogFactory.getLog(GoListAction.class);
+	
 		
 	public String getNextMode() {		
 		return IChangeModeAction.LIST;

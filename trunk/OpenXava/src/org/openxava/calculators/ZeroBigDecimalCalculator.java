@@ -1,7 +1,7 @@
 package org.openxava.calculators;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 
 /**
@@ -10,7 +10,7 @@ import org.apache.commons.logging.LogFactory;
 public class ZeroBigDecimalCalculator implements ICalculator {
 	
 	private static final java.math.BigDecimal ZERO = new java.math.BigDecimal("0");
-	private static Log log = LogFactory.getLog(ZeroBigDecimalCalculator.class);
+	
 
 	public Object calculate() throws Exception {
 		return ZERO;

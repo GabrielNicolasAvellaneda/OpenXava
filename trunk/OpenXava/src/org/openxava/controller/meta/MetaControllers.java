@@ -3,12 +3,15 @@ package org.openxava.controller.meta;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.openxava.controller.meta.xmlparse.*;
 import org.openxava.util.*;
 
 public class MetaControllers {
+	
+	private static Log log = LogFactory.getLog(MetaControllers.class);
 		
 	/** For context property */
 	public final static String SWING="swing";
@@ -19,7 +22,7 @@ public class MetaControllers {
 	private static Map metaControllers;
 	private static Map mapMetaObjects;
 	private static String context = SWING;
-	private static Log log = LogFactory.getLog(MetaControllers.class);
+	
 	
 	public static void _addMetaController(MetaController newController) throws XavaException {
 		if (metaControllers == null) {

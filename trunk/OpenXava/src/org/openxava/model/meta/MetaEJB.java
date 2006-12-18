@@ -8,8 +8,9 @@ import java.util.*;
 import javax.ejb.*;
 import javax.rmi.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.openxava.converters.*;
 import org.openxava.ejbx.*;
 import org.openxava.mapping.*;
@@ -22,6 +23,8 @@ import org.openxava.util.*;
  */
 public class MetaEJB implements Serializable {
 	
+	private static Log log = LogFactory.getLog(MetaEJB.class);
+	
 	private java.lang.String remote;
 	private java.lang.String home;
 	private java.lang.String jndi;
@@ -32,7 +35,7 @@ public class MetaEJB implements Serializable {
 	private java.lang.String primaryKey;	
 	private MetaModel metaModel;
 	
-	private static Log log = LogFactory.getLog(MetaEJB.class);
+	
 	
 	public void setMetaModel(MetaModel metaModel) {
 		this.metaModel = metaModel;

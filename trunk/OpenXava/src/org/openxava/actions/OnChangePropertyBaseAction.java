@@ -1,7 +1,7 @@
 package org.openxava.actions;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.view.*;
 
 /**
@@ -16,7 +16,7 @@ abstract public class OnChangePropertyBaseAction
 	private Object newValue;
 	private View view;	
 
-	private static Log log = LogFactory.getLog(OnChangePropertyBaseAction.class);
+	
 	
 	public Object getNewValue() {
 		return newValue;

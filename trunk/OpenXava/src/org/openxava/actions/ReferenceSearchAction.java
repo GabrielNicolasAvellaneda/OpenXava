@@ -2,8 +2,8 @@ package org.openxava.actions;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
 import org.openxava.tab.*;
@@ -21,7 +21,7 @@ public class ReferenceSearchAction extends ReferenceBaseAction implements INavig
 	private String tabName = "";
 	private String currentReferenceLabel;
 	private String nextController = "ReferenceSearch"; // If you change the default value change setter and getter doc too
-	private static Log log = LogFactory.getLog(ReferenceSearchAction.class);
+	
 	
 	public void execute() throws Exception {		
 		super.execute();

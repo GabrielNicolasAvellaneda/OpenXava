@@ -6,8 +6,9 @@ import java.util.*;
 
 import javax.servlet.http.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.hibernate.*;
 import org.hibernate.cfg.*;
 
@@ -29,6 +30,8 @@ import org.openxava.util.*;
 
 public class Tab {
 
+	private static Log log = LogFactory.getLog(Tab.class);
+	
 	private final static int DEFAULT_PAGE_ROW_COUNT = 10;	
 	private final static String STARTS_COMPARATOR = "starts_comparator";
 	private final static String CONTAINS_COMPARATOR = "contains_comparator";
@@ -69,7 +72,7 @@ public class Tab {
 	private boolean sortRemainingProperties;
 	private boolean rowsHidden;
 	
-	private static Log log = LogFactory.getLog(Tab.class);
+	
 	
 	public List getMetaProperties() {
 		if (metaProperties == null) {

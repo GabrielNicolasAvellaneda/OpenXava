@@ -3,8 +3,8 @@ package org.openxava.actions;
 import java.util.*;
 
 import org.apache.commons.fileupload.*;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.session.*;
 import org.openxava.util.*;
 
@@ -16,7 +16,7 @@ public class LoadImageIntoGalleryAction extends BaseAction implements INavigatio
 
 	private List fileItems;
 	private Gallery gallery;
-	private static Log log = LogFactory.getLog(LoadImageIntoGalleryAction.class);
+	
 
 	public void execute() throws Exception {		
 		Iterator i = getFileItems().iterator();

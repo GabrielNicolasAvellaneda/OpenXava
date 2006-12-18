@@ -2,8 +2,8 @@ package org.openxava.validators;
 
 import java.math.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.util.*;
 
 /**
@@ -17,7 +17,7 @@ public class PositiveValidator implements IPropertyValidator {
 	private static Double CERO_DOUBLE = new Double("0");
 	private static Float CERO_FLOAT = new Float("0");	
 	
-	private static Log log = LogFactory.getLog(PositiveValidator.class);
+	
 
 	public void validate(
 		Messages errors,

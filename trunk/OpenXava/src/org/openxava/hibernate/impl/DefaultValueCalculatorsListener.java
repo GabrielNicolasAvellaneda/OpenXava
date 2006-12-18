@@ -2,8 +2,9 @@ package org.openxava.hibernate.impl;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.hibernate.*;
 import org.hibernate.event.*;
 import org.openxava.calculators.*;

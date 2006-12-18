@@ -3,8 +3,7 @@ package org.openxava.util;
 import java.text.*;
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.openxava.application.meta.*;
 
 /**
@@ -13,12 +12,12 @@ import org.openxava.application.meta.*;
 
 public class ResourceManagerI18n {
 	
+	private static Log log = LogFactory.getLog(ResourceManagerI18n.class);
+	
 	private String resourcesFile;
 	private String englishPrefix;
 	private String spanishPrefix;
 	
-	private static Log log = LogFactory.getLog(ResourceManagerI18n.class);
-		
 	public ResourceManagerI18n(String resourcesFile) {
 		Assert.assertNotNull("Resource file is required", resourcesFile); // this message cannot be i18n
 		this.resourcesFile = resourcesFile;

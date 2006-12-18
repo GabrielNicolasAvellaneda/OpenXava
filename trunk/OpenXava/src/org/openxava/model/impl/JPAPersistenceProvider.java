@@ -6,8 +6,7 @@ import java.util.*;
 import javax.ejb.*;
 import javax.persistence.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.hibernate.validator.*;
 import org.openxava.jpa.*;
 import org.openxava.model.meta.*;

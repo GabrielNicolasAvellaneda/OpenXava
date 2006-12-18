@@ -2,8 +2,8 @@ package org.openxava.converters;
 
 import java.math.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 
 /**
@@ -13,7 +13,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class LongBigDecimalConverter implements IConverter {
 
-	private static Log log = LogFactory.getLog(LongBigDecimalConverter.class);
+	
 	
 	public Object toDB(Object o) throws ConversionException {
 		if (!(o instanceof Long)) {		

@@ -3,8 +3,8 @@ package org.openxava.jpa;
 
 import javax.persistence.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * Allows to work easily with EJB3 JPA inside OpenXava applications. <p>
@@ -37,7 +37,7 @@ public class XPersistence {
 	private static EntityManagerFactory entityManagerFactory; 	
 	private static String persistenceUnit = "default";	
 	private static ThreadLocal currentManager = new ThreadLocal();
-	private static Log log = LogFactory.getLog(XPersistence.class);
+	
 
 	/**
 	 * <code>EntityManager</code> associated to current thread. <p>

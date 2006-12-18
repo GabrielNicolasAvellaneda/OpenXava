@@ -2,8 +2,8 @@ package org.openxava.tab.meta;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.component.*;
 import org.openxava.filters.*;
 import org.openxava.filters.meta.*;
@@ -49,7 +49,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	private String defaultPropertiesNames;
 	private Map entityReferencesReferenceNames;
 	
-	private static Log log = LogFactory.getLog(MetaTab.class);
+	
 	
 	public static String getTitleI18n(Locale locale, String modelName, String tabName) throws XavaException {
 		String id = null;

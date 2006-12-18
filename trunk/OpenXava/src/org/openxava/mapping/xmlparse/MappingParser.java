@@ -1,7 +1,7 @@
 package org.openxava.mapping.xmlparse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.component.*;
 import org.openxava.mapping.*;
 import org.openxava.util.*;
@@ -14,7 +14,7 @@ import org.w3c.dom.*;
  */
 public class MappingParser extends XmlElementsNames {
 
-	private static Log log = LogFactory.getLog(MappingParser.class);
+	
 	
 	public static EntityMapping parseEntityMapping(Node n, int lang) throws XavaException {		
 		Element el = (Element) n;

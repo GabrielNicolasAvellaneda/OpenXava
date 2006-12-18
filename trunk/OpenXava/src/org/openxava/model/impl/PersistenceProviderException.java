@@ -1,7 +1,7 @@
 package org.openxava.model.impl;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * Runtime exception to be thrown by a <code>IPersistenceProvider</code>
@@ -16,7 +16,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class PersistenceProviderException extends RuntimeException {
 
-	private static Log log = LogFactory.getLog(PersistenceProviderException.class);
+	
 	
 	public PersistenceProviderException() {
 		super();

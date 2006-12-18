@@ -4,8 +4,7 @@ import java.beans.*;
 import java.lang.reflect.*;
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 
 /**
  * Manages with reflection the properties of a object. <p> 
@@ -17,12 +16,14 @@ import org.apache.commons.logging.LogFactory;
  */
 
 public class PropertiesManager implements java.io.Serializable {
+	
+	private static Log log = LogFactory.getLog(PropertiesManager.class);
 
 	private transient Map propertyDescriptors;
 	private Object object;
 	private Class theClass;
 	
-	private static Log log = LogFactory.getLog(PropertiesManager.class);
+	
 
 	public PropertiesManager() {
 	}

@@ -4,8 +4,7 @@ import java.text.ParseException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.openxava.formatters.IFormatter;
 import org.openxava.util.Align;
 import org.openxava.util.Is;

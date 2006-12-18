@@ -1,7 +1,7 @@
 package org.openxava.util;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * Wraps a byte array to allow store photos in
@@ -17,7 +17,7 @@ public class Photo implements java.io.Serializable {
 
 	public byte[] data;
 	
-	private static Log log = LogFactory.getLog(Photo.class);
+	
 
 	public Photo(byte[] data) {
 		this.data = data;

@@ -1,8 +1,8 @@
 package org.openxava.controller.meta.xmlparse;
 
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
@@ -15,7 +15,7 @@ import org.w3c.dom.*;
 public class ControllersParser extends ParserBase {
 	
 	private String context; // only for spanish version (with swing and web)
-	private static Log log = LogFactory.getLog(ControllersParser.class);
+	
 	
 	public ControllersParser(String xmlFileURL, int language) {
 		super(xmlFileURL, language);

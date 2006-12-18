@@ -3,8 +3,8 @@ package org.openxava.application.meta;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.application.meta.xmlparse.*;
 import org.openxava.util.*;
 
@@ -18,7 +18,7 @@ public class MetaApplications {
 
 	private static Map metaAplicacions;
 	
-	private static Log log = LogFactory.getLog(MetaApplications.class);
+	
 	
 	/**
 	 * Only call this from parser.

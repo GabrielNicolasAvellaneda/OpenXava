@@ -1,7 +1,7 @@
 package org.openxava.tab.meta;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.filters.meta.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -21,7 +21,7 @@ public class MetaParameter extends MetaElement {
 	private boolean like=false;
 	private MetaFilter metaFilter;
 	
-	private static Log log = LogFactory.getLog(MetaParameter.class);
+	
 	
 	public MetaProperty getMetaProperty() throws XavaException {
 		if (metaConsult == null) {

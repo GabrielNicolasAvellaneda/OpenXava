@@ -1,7 +1,7 @@
 package org.openxava.model.meta.xmlparse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.util.xmlparse.*;
@@ -12,7 +12,7 @@ import org.w3c.dom.*;
  */
 public class StereotypeTypeDefaultParser extends ParserBase {	
 
-	private static Log log = LogFactory.getLog(StereotypeTypeDefaultParser.class);
+	
 	
 	public StereotypeTypeDefaultParser(String xmlFileURL, int language) {
 		super(xmlFileURL, language);

@@ -3,8 +3,8 @@ package org.openxava.view.meta;
 import java.io.*;
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * @author Javier Paniza
@@ -16,7 +16,7 @@ public class MetaSearchAction implements Serializable, Cloneable {
 	private Map propertiesValues;
 	private String actionName;
 	
-	private static Log log = LogFactory.getLog(MetaSearchAction.class);
+	
 		
 
 	/**

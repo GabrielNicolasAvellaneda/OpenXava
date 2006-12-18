@@ -3,8 +3,8 @@ package org.openxava.model.meta;
 import java.lang.reflect.*;
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.mapping.*;
 import org.openxava.util.*;
 
@@ -19,7 +19,7 @@ public class MetaEntity extends MetaModel {
 	private MetaEJB metaEJB;
 	private boolean annotatedEJB3;
 	
-	private static Log log = LogFactory.getLog(MetaEntity.class);
+	
 		
 	/**
 	 * @return The names of key fields. Of <tt>String</tt>.

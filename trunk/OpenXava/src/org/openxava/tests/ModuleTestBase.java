@@ -4,8 +4,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.openxava.application.meta.*;
 import org.openxava.component.*;
 import org.openxava.controller.meta.*;
@@ -28,6 +27,8 @@ public class ModuleTestBase extends TestCase {
 	
 	private final static String EDITABLE_SUFIX = "_EDITABLE_";
 	private final static String ACTION_PREFIX = "xava.action";
+	
+	private static Log log = LogFactory.getLog(ModuleTestBase.class);
 	
 	private static Properties xavaJunitProperties;
 	private static boolean isDefaultLocaleSet = false;
@@ -52,9 +53,7 @@ public class ModuleTestBase extends TestCase {
 	private WebResponse response; 
 	private WebForm form;
 	private String allowDuplicateSubmit;
-	private int formIndex;
-	
-	private static Log log = LogFactory.getLog(ModuleTestBase.class);
+	private int formIndex;		
 	
 	static {		
 		XHibernate.setConfigurationFile("/hibernate-junit.cfg.xml");

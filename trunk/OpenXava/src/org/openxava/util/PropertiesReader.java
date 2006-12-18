@@ -4,8 +4,8 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * Reads properties files. <p>
@@ -18,7 +18,7 @@ public class PropertiesReader {
 	private String propertiesFileURL;
 	private Properties properties;
 	
-	private static Log log = LogFactory.getLog(PropertiesReader.class);
+	
 	
 	/**
 	 * @param propertiesFileURL  Cannot be null

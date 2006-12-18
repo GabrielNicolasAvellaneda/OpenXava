@@ -1,7 +1,7 @@
 package org.openxava.validators;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.util.*;
 
 
@@ -13,7 +13,7 @@ public class ValidationException extends Exception {
 	
 	private Messages errors;
 	
-	private static Log log = LogFactory.getLog(ValidationException.class);
+	
 	
 	public ValidationException() {		
 	}

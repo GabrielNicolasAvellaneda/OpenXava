@@ -1,7 +1,6 @@
 package org.openxava.util.xmlparse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.openxava.util.*;
 import org.w3c.dom.*;
 

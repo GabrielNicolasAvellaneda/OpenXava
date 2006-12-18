@@ -3,8 +3,9 @@ package org.openxava.controller.meta;
 import java.lang.reflect.*;
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.openxava.util.*;
 
 /**
@@ -13,12 +14,13 @@ import org.openxava.util.*;
 
 public class MetaObject {
 	
+	private static Log log = LogFactory.getLog(MetaObject.class);
 	private final static Class [] PARAMETER_TYPES = { java.lang.String.class }; 
 	
 	private String name;
 	private String className;
 	private String value;
-	private static Log log = LogFactory.getLog(MetaObject.class);
+	
 	
 	public String getClassName() {
 		return className;

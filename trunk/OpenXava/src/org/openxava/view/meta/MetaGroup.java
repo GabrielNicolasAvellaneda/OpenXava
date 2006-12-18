@@ -1,7 +1,7 @@
 package org.openxava.view.meta;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 
@@ -15,7 +15,7 @@ public class MetaGroup extends MetaMember {
 	private MetaView metaView;
 	private MetaView metaViewParent;
 	
-	private static Log log = LogFactory.getLog(MetaGroup.class);
+	
 		
 	public MetaGroup(MetaView parent) {
 		this.metaViewParent = parent;

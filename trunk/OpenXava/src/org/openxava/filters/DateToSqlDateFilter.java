@@ -1,7 +1,7 @@
 package org.openxava.filters;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 
 /**
@@ -11,7 +11,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class DateToSqlDateFilter implements IFilter {
 
-	private static Log log = LogFactory.getLog(DateToSqlDateFilter.class);
+	
 
 	/**
 	 * @see org.openxava.filters.IFilter#filter(Object)

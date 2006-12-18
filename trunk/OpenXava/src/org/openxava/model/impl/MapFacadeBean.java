@@ -6,8 +6,9 @@ import java.util.*;
 
 import javax.ejb.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.openxava.calculators.*;
 import org.openxava.component.*;
 import org.openxava.model.meta.*;
@@ -25,11 +26,11 @@ import org.openxava.validators.meta.*;
 
 public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	
-	
+	private static Log log = LogFactory.getLog(MapFacadeBean.class);
 	private javax.ejb.SessionContext sessionContext = null;
 	private final static long serialVersionUID = 3206093459760846163L;
 	private static IPersistenceProvider persistenceProvider;
-	private static Log log = LogFactory.getLog(MapFacadeBean.class);
+	
 	
 	public Object create(String user, String modelName, Map values)
 		throws CreateException, XavaException, ValidationException, RemoteException {		

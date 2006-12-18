@@ -1,7 +1,7 @@
 package org.openxava.validators;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.util.*;
 
 /**
@@ -13,7 +13,7 @@ public class MinimumSizeValidator implements IPropertyValidator {
 	
 	private int size;
 	
-	private static Log log = LogFactory.getLog(MinimumSizeValidator.class);
+	
 
 	public void validate(Messages errors, Object value, String propertyName, String modelName) throws Exception {
 		if (size == 0) return;

@@ -3,8 +3,7 @@ package org.openxava.tab.meta;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.openxava.filters.*;
 import org.openxava.filters.meta.*;
 import org.openxava.model.meta.*;
@@ -21,6 +20,8 @@ import org.openxava.util.meta.*;
 
 public class MetaConsult extends MetaElement {
 	
+	private static Log log = LogFactory.getLog(MetaConsult.class);
+	
 	private Collection metaParameters = new ArrayList();
 	private String condition;
 	private String conditionSQL;
@@ -29,7 +30,7 @@ public class MetaConsult extends MetaElement {
 	private IFilter filter;
 	private String label;
 	
-	private static Log log = LogFactory.getLog(MetaConsult.class);
+	
 				
 	public void addMetaParameter(MetaParameter parameter) {
 		metaParameters.add(parameter);

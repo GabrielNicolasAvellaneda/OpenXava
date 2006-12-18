@@ -1,8 +1,8 @@
 package org.openxava.tab.meta.xmlparse;
 
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.filters.meta.*;
 import org.openxava.filters.meta.xmlparse.*;
 import org.openxava.model.meta.xmlparse.*;
@@ -17,7 +17,7 @@ import org.w3c.dom.*;
  */
 public class TabParser extends XmlElementsNames {
 
-	private static Log log = LogFactory.getLog(XmlElementsNames.class);
+	
 	
 	public static MetaTab parseTab(Node n, int lang) throws XavaException {
 		Element el = (Element) n;

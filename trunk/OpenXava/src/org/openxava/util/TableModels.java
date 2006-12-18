@@ -4,8 +4,8 @@ import java.io.*;
 
 import javax.swing.table.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * @author Javier Paniza
@@ -14,7 +14,7 @@ public class TableModels {
 	
 	private final static char SEPARATOR = ';';
 	
-	private static Log log = LogFactory.getLog(TableModels.class);
+	
 	
 	public static String toCSV(TableModel table) {
 		if (table == null) return "";

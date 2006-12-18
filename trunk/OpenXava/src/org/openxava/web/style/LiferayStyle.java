@@ -1,7 +1,7 @@
 package org.openxava.web.style;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * 
@@ -12,7 +12,7 @@ public class LiferayStyle extends Style {
 	
 	private static LiferayStyle instance = null;
 
-	private static Log log = LogFactory.getLog(LiferayStyle.class);
+	
 	
 	protected LiferayStyle() {
 	}

@@ -2,10 +2,8 @@ package org.openxava.ejbx;
 
 import javax.naming.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.openxava.util.*;
-
 import java.util.*;
 
 /**
@@ -41,6 +39,8 @@ import java.util.*;
  */
 
 public class BeansContextProviderFactory {
+	
+  private static Log log = LogFactory.getLog(BeansContextProviderFactory.class);	
 
   // If final variable are changed change the doc of heading and create() too. 	
   private final static String PROPERTIES_FILE = "BeansContext.properties";
@@ -56,7 +56,7 @@ public class BeansContextProviderFactory {
 //    BeansContextProviderFactory.class.getResource(PROPERTIES_FILE));
 
 
-  private static Log log = LogFactory.getLog(BeansContextProviderFactory.class);
+  
   
   /**
    * Create a context provider to lookup EJBs by default. <p>

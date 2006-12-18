@@ -1,7 +1,7 @@
 package org.openxava.util;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * Global utilities about the system. <p>

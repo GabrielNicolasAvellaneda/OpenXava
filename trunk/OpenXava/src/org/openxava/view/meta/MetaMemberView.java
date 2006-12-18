@@ -2,8 +2,8 @@ package org.openxava.view.meta;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * A little minimum common denominator for 
@@ -17,7 +17,7 @@ public class MetaMemberView {
 	private Collection actionsNames;
 	private Collection alwaysEnabledActionsNames; 
 	
-	private static Log log = LogFactory.getLog(MetaMemberView.class);
+	
 	
 	public void addActionName(String actionName) {
 		if (actionsNames == null) actionsNames = new ArrayList();

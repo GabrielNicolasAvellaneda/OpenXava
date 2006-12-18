@@ -2,10 +2,10 @@ package org.openxava.util;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.openxava.application.meta.*;
 
+
+import org.apache.commons.logging.*;
+import org.openxava.application.meta.*;
 
 /**
  * Utility class for obtain the i18n of the labels. <p>

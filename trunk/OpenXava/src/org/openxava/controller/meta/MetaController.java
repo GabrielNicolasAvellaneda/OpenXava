@@ -3,8 +3,8 @@ package org.openxava.controller.meta;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
 
@@ -16,7 +16,7 @@ public class MetaController extends MetaElement {
 	private Collection parentsNames = new ArrayList();
 	private Collection parents = new ArrayList();
 	private Map mapMetaActions = new HashMap();
-	private static Log log = LogFactory.getLog(MetaController.class);
+	
 		
 	/**
 	 * Only for spanish/swing version

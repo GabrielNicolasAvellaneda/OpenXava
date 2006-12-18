@@ -2,8 +2,8 @@ package org.openxava.converters;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.util.*;
 
 
@@ -15,7 +15,7 @@ import org.openxava.util.*;
 public class NotNullDateConverter implements IConverter{
 	
 	private static final Date NULL_DATE = Dates.create(1,1,1);
-	private static Log log = LogFactory.getLog(NotNullDateConverter.class);
+	
 	
 	public Object toJava(Object o) throws ConversionException {
 		if(o == null) return null;

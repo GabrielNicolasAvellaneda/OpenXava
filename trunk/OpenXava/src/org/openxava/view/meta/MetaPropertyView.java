@@ -1,9 +1,6 @@
 package org.openxava.view.meta;
 
-import java.util.*;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.openxava.actions.*;
 import org.openxava.util.*;
 
@@ -15,6 +12,8 @@ public class MetaPropertyView extends MetaMemberView implements java.io.Serializ
 	public final static int NORMAL_LABEL = 0;
 	public final static int SMALL_LABEL = 1;
 	public final static int NO_LABEL = 2;
+	
+	private static Log log = LogFactory.getLog(MetaPropertyView.class);
 		
 	private String propertyName;
 	private String label;
@@ -22,7 +21,7 @@ public class MetaPropertyView extends MetaMemberView implements java.io.Serializ
 	private String onChangeActionClassName;	
 	private int labelFormat;
 				
-	private static Log log = LogFactory.getLog(MetaPropertyView.class);
+	
 	
 	public String getPropertyName() {
 		return propertyName==null?"":propertyName.trim();
