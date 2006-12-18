@@ -2,8 +2,8 @@ package org.openxava.hibernate.impl;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.hibernate.*;
 
 /**
@@ -17,7 +17,7 @@ public class FastSizeList implements List {
 	private Query query;
 	private Query sizeQuery;
 	private int size = -1;
-	private static Log log = LogFactory.getLog(FastSizeList.class);
+	
 	
 	public FastSizeList(Query query, Query sizeQuery) {
 		this.query = query;

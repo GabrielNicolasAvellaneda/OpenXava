@@ -9,8 +9,7 @@ import javax.naming.*;
 import javax.sql.*;
 import javax.xml.parsers.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.openxava.component.*;
 import org.openxava.hibernate.*;
 import org.w3c.dom.*;
@@ -22,6 +21,8 @@ import org.w3c.dom.*;
  */
 public class DataSourceConnectionProvider implements IConnectionProvider, Serializable {
 	
+	private static Log log = LogFactory.getLog(DataSourceConnectionProvider.class);
+	
 	private static Properties datasourcesJNDIByPackage;
 	private static Map providers;
 	private static boolean useHibernateConnection = false; 
@@ -32,7 +33,7 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 	private String user;
 	private String password;
 	
-	private static Log log = LogFactory.getLog(DataSourceConnectionProvider.class);
+	
 
 	
 	public static IConnectionProvider createByComponent(String componentName) throws XavaException {

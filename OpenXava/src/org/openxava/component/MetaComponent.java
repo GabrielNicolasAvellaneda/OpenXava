@@ -3,8 +3,9 @@ package org.openxava.component;
 import java.io.*;
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
 import org.openxava.tab.meta.*;
@@ -26,6 +27,7 @@ import org.openxava.view.meta.*;
 
 public class MetaComponent implements Serializable {
 	
+	private static Log log = LogFactory.getLog(MetaComponent.class);
 	private static Map components = new HashMap();
 	private static Properties packages;
 	private static boolean allComponentsLoaded = false;
@@ -39,7 +41,7 @@ public class MetaComponent implements Serializable {
 	private Map metaTabs;
 	private EntityMapping entityMapping;
 	private String packageName;
-	private static Log log = LogFactory.getLog(MetaComponent.class);
+	
 		
 	
 	/**

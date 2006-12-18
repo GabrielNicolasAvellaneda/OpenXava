@@ -2,8 +2,8 @@ package org.openxava.model.meta.xmlparse;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.util.*;
 import org.openxava.util.xmlparse.*;
 import org.w3c.dom.*;
@@ -18,7 +18,7 @@ public class AspectsParser extends ParserBase {
 	private static Map models;
 	private static Map exceptModels;
 	private boolean applyParsing;
-	private static Log log = LogFactory.getLog(AspectsParser.class);
+	
 
 
 	public AspectsParser(String xmlFileURL, int language) {

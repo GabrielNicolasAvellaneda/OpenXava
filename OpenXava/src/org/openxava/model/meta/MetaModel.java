@@ -5,8 +5,9 @@ import java.beans.*;
 import java.util.*;
 
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.openxava.component.*;
 import org.openxava.mapping.*;
 import org.openxava.util.*;
@@ -21,6 +22,8 @@ import org.openxava.view.meta.*;
  */
 abstract public class MetaModel extends MetaElement {
 
+	private static Log log = LogFactory.getLog(MetaModel.class);
+	
 	private static boolean someModelHasDefaultCalculatorOnCreate = false;
 	private static boolean someModelHasPostCreateCalculator = false;
 	private static boolean someModelHasPostModifyCalculator = false;
@@ -72,7 +75,7 @@ abstract public class MetaModel extends MetaElement {
 	private String pojoClassName;
 	private Collection metaReferencesToEntity;
 	
-	private static Log log = LogFactory.getLog(MetaModel.class);
+	
 	
 	/**
 	 * All models (Entities and Aggregates) with a mapping associated.

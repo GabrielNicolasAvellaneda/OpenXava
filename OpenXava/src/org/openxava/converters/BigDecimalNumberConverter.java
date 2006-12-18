@@ -2,8 +2,8 @@ package org.openxava.converters;
 
 import java.math.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * In Java <code>java.math.BigDecimal</code> and in database <code>Number</code> 
@@ -15,7 +15,7 @@ public class BigDecimalNumberConverter implements IConverter {
 	
 	private final static BigDecimal ZERO = new BigDecimal("0");	
 
-	private static Log log = LogFactory.getLog(BigDecimalNumberConverter.class);
+	
 	
 	public Object toDB(Object o) throws ConversionException {
 		return o==null?ZERO:o;

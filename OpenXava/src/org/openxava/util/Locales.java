@@ -4,8 +4,8 @@ import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * Access to the locale associated to the current thread. <p> 
@@ -17,7 +17,7 @@ public class Locales {
 	
 	private static ThreadLocal current = new ThreadLocal();
 	
-	private static Log log = LogFactory.getLog(Locales.class);
+	
 	
 	/**
 	 * The Locale associated to the current thread. <p>

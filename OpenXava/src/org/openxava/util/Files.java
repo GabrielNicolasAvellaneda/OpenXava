@@ -2,8 +2,8 @@ package org.openxava.util;
 
 import java.io.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * Some utilities for work with files and directories. <p>
@@ -13,7 +13,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class Files {
 	
-	private static Log log = LogFactory.getLog(Files.class);
+	
 	
 	public static boolean deleteDir(String dirURL) {
         return deleteDir(new File(dirURL));

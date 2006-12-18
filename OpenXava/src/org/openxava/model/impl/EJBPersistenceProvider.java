@@ -7,8 +7,9 @@ import java.util.*;
 import javax.ejb.*;
 import javax.rmi.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.openxava.ejbx.*;
 import org.openxava.hibernate.*;
 import org.openxava.model.meta.*;

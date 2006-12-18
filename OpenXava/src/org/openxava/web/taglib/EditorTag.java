@@ -4,8 +4,7 @@ import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 import javax.servlet.jsp.tagext.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.openxava.controller.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -18,12 +17,14 @@ import org.openxava.view.*;
 
 public class EditorTag extends TagSupport {
 	
+	private static Log log = LogFactory.getLog(EditorTag.class);
+	
 	private String property;		
 	private boolean editable; 
 	private boolean explicitEditable = false; 
 	private boolean throwPropertyChanged; 
 	private boolean explicitThrowPropertyChanged; 
-	private static Log log = LogFactory.getLog(EditorTag.class);
+	
 	
 	public int doStartTag() throws JspException {
 		try {

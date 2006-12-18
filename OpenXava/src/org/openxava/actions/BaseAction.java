@@ -4,8 +4,8 @@ import java.util.*;
 
 import javax.servlet.http.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.controller.*;
 import org.openxava.util.*;
 
@@ -19,7 +19,7 @@ abstract public class BaseAction implements IAction, IRequestAction, java.io.Ser
 	private Messages messages;
 	private Environment environment;
 	private transient HttpServletRequest request;	
-	private static Log log = LogFactory.getLog(BaseAction.class);
+	
 	
 	public Messages getErrors() {
 		return errors;

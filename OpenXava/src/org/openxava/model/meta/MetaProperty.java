@@ -8,8 +8,9 @@ import java.util.*;
 
 import javax.servlet.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.openxava.calculators.*;
 import org.openxava.mapping.*;
 import org.openxava.model.*;
@@ -22,6 +23,8 @@ import org.openxava.validators.meta.*;
  * @author Javier Paniza; modified by Radoslaw OStrzycki, Newitech Sp. z o.o.
  */
 public class MetaProperty extends MetaMember implements Cloneable {
+	
+	private static Log log = LogFactory.getLog(MetaProperty.class);
 	
 	private Collection propertyNamesThatIDepend;
 	private Collection metaValidators;	
@@ -46,7 +49,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	private PropertyMapping mapping;
 	private DateFormat timeFormat = new SimpleDateFormat("HH:mm"); // 24 hours for all locales
 	
-	private static Log log = LogFactory.getLog(MetaProperty.class);
+	
 		
 	public void addValidValue(Object validValue) {
 		getValidValues().add(validValue);

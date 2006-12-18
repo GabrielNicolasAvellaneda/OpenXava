@@ -2,8 +2,8 @@ package org.openxava.model.meta.xmlparse;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 
@@ -25,7 +25,7 @@ public class Aspects {
 	private static Map [] postModifys;		
 	private static Map [] preRemoves;
 	
-	private static Log log = LogFactory.getLog(Aspects.class);
+	
 		
 	public static void fillImplicitCalculators(MetaModel container) throws XavaException {
 		if (!parsed) {

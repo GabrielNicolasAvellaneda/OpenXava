@@ -4,8 +4,7 @@ import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 import javax.servlet.jsp.tagext.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.openxava.util.*;
 
 /**
@@ -14,11 +13,13 @@ import org.openxava.util.*;
 
 public class MessageTag extends TagSupport {
 	
+	private static Log log = LogFactory.getLog(MessageTag.class);
+	
 	private String key;
 	private Object param;
 	private int intParam = Integer.MIN_VALUE; // because java 1.4 haven't autoboxing
 	
-	private static Log log = LogFactory.getLog(MessageTag.class);
+	
 
 	public int doStartTag() throws JspException {
 		try {

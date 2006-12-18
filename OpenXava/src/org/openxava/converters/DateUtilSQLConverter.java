@@ -2,8 +2,8 @@ package org.openxava.converters;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 
 /**
@@ -14,7 +14,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class DateUtilSQLConverter implements IConverter {
 
-	private static Log log = LogFactory.getLog(DateUtilSQLConverter.class);
+	
 	
 	public Object toDB(Object o) throws ConversionException {
 		if (o == null) return null;		

@@ -2,8 +2,9 @@ package org.openxava.web;
 
 import javax.servlet.http.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.web.meta.*;
@@ -14,9 +15,8 @@ import org.openxava.web.meta.*;
 
 public class WebEditors { 	
 
-	final private static String PREFIX = "editors/";
-	
 	private static Log log = LogFactory.getLog(WebEditors.class);
+	final private static String PREFIX = "editors/";
 	
 	public static boolean mustToFormat(MetaProperty p) throws XavaException {
 		try {

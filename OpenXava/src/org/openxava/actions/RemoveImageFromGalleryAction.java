@@ -1,7 +1,7 @@
 package org.openxava.actions;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.session.*;
 
 /**
@@ -13,7 +13,7 @@ public class RemoveImageFromGalleryAction extends BaseAction {
 	
 	private Gallery gallery;
 	private String oid;
-	private static Log log = LogFactory.getLog(RemoveImageFromGalleryAction.class);
+	
 	
 	public void execute() throws Exception {
 		gallery.removeImage(oid);

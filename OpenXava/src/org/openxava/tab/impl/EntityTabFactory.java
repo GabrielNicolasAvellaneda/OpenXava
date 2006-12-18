@@ -4,8 +4,9 @@ import java.rmi.*;
 
 import javax.ejb.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.openxava.tab.meta.*;
 import org.openxava.util.*;
 
@@ -17,7 +18,7 @@ import org.openxava.util.*;
 public class EntityTabFactory {
 	
 	private static Log log = LogFactory.getLog(EntityTabFactory.class);
-	
+			
 	public static IEntityTab create(String componentName) throws CreateException, RemoteException {
 		EntityTab tab = new EntityTab();
 		tab.setComponentName(componentName);

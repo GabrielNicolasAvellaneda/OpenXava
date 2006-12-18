@@ -1,7 +1,7 @@
 package org.openxava.validators;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.util.*;
 
 /**
@@ -18,7 +18,7 @@ public class ComparatorValidator implements IValidator {
 	private String name1;
 	private String name2;
 	
-	private static Log log = LogFactory.getLog(ComparatorValidator.class);
+	
 	
 	public void validate(Messages errors) throws Exception { 
 		if (operator == null) operator = "=";

@@ -2,8 +2,9 @@ package org.openxava.validators.meta;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.openxava.util.*;
 import org.openxava.validators.meta.xmlparse.*;
 
@@ -13,12 +14,12 @@ import org.openxava.validators.meta.xmlparse.*;
  */
 public class MetaValidators {
 
+	private static Log log = LogFactory.getLog(MetaValidators.class);
+	
 	private static Collection primitiveTypes;
 	private static Map metaValidators;
 	private static Map metaValidatorsRequired;
 	private static Map metaValidatorsDefault;
-	
-	private static Log log = LogFactory.getLog(MetaValidators.class);
 	
 	public static void _addMetaValidator(MetaValidator newMetaValidator) throws XavaException {
 		if (metaValidators == null) {

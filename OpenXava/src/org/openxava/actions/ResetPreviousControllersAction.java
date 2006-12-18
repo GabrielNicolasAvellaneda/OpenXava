@@ -2,8 +2,8 @@ package org.openxava.actions;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * Delete the stack of all visited controllers. <p>
@@ -19,7 +19,7 @@ import org.apache.commons.logging.LogFactory;
 public class ResetPreviousControllersAction extends BaseAction {
 	
 	private Stack previousControllers;
-	private static Log log = LogFactory.getLog(ResetPreviousControllersAction.class);
+	
 	
 	public void execute() throws Exception {
 		previousControllers.clear();

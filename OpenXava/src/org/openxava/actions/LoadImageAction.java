@@ -3,8 +3,8 @@ package org.openxava.actions;
 import java.util.*;
 
 import org.apache.commons.fileupload.*;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.util.*;
 import org.openxava.view.*;
 
@@ -17,7 +17,7 @@ public class LoadImageAction extends BaseAction implements INavigationAction, IP
 	private List fileItems;
 	private View view;
 	private String newImageProperty;
-	private static Log log = LogFactory.getLog(LoadImageAction.class);
+	
 
 	public void execute() throws Exception {		
 		Iterator i = getFileItems().iterator();

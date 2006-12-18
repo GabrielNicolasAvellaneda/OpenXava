@@ -2,8 +2,8 @@ package org.openxava.calculators;
 
 import java.math.BigDecimal;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.application.meta.xmlparse.ApplicationParser;
 
 
@@ -13,7 +13,7 @@ import org.openxava.application.meta.xmlparse.ApplicationParser;
 public class BigDecimalCalculator implements ICalculator {
 
 	private Object value;
-	private static Log log = LogFactory.getLog(BigDecimalCalculator.class);
+	
 
 	public Object calculate() throws Exception {		
 	    if (getValue()==null) return new BigDecimal(0);

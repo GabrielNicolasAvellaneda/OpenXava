@@ -1,7 +1,7 @@
 package org.openxava.mapping;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 
@@ -12,7 +12,7 @@ import org.openxava.util.*;
 
 public class EntityMapping extends ModelMapping {
 	
-	private static Log log = LogFactory.getLog(EntityMapping.class);
+	
 	
 	public String getModelName() throws XavaException {
 		return getMetaModel().getName();

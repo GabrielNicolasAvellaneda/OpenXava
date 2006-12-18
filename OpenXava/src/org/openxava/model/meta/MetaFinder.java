@@ -3,14 +3,17 @@ package org.openxava.model.meta;
 import java.io.*;
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.openxava.util.*;
 
 /**
  * @author Javier Paniza
  */
 public class MetaFinder implements Serializable {
+	
+	private static Log log = LogFactory.getLog(MetaFinder.class);
 	
 	private static Map argumentsJBoss11ToEJBQL;
 	private static Map argumentsToHQL;
@@ -23,7 +26,7 @@ public class MetaFinder implements Serializable {
 	private String order;
 	private MetaModel metaModel;
 	
-	private static Log log = LogFactory.getLog(MetaFinder.class);
+	
 	
 	public String getArguments() {
 		arguments = Strings.change(arguments, "String", "java.lang.String");

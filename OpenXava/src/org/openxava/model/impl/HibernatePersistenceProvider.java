@@ -1,13 +1,10 @@
 package org.openxava.model.impl;
 
 import java.io.*;
-import java.lang.reflect.*;
 import java.util.*;
-
 import javax.ejb.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.hibernate.*;
 
 import org.openxava.hibernate.*;

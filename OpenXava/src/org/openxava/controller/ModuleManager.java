@@ -8,8 +8,9 @@ import javax.servlet.http.*;
 import org.apache.commons.fileupload.*;
 import org.apache.commons.fileupload.disk.*;
 import org.apache.commons.fileupload.servlet.*;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
+
+
 import org.openxava.actions.*;
 import org.openxava.application.meta.*;
 import org.openxava.controller.meta.*;
@@ -24,6 +25,8 @@ import org.openxava.view.*;
  */
 
 public class ModuleManager {
+	
+	private static Log log = LogFactory.getLog(ModuleManager.class);
 	
 	static {
 		MetaControllers.setContext(MetaControllers.WEB);		
@@ -58,7 +61,7 @@ public class ModuleManager {
 	private String lastPageId;
 	private String previousMode; 
 	
-	private static Log log = LogFactory.getLog(ModuleManager.class);
+	
 
 	public ModuleManager() {
 		oid = nextOid++;

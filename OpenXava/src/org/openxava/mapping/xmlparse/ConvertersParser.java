@@ -1,7 +1,7 @@
 package org.openxava.mapping.xmlparse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.mapping.*;
 import org.openxava.util.*;
 import org.openxava.util.xmlparse.*;
@@ -12,7 +12,7 @@ import org.w3c.dom.*;
  */
 public class ConvertersParser extends ParserBase {
 
-	private static Log log = LogFactory.getLog(ConvertersParser.class);
+	
 	
 	public ConvertersParser(String urlArchivoXml, int language) {
 		super(urlArchivoXml, language);

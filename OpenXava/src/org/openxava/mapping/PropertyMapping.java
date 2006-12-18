@@ -2,14 +2,17 @@ package org.openxava.mapping;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.openxava.converters.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
 
 public class PropertyMapping extends MetaSetsContainer {
+	
+	private static Log log = LogFactory.getLog(PropertyMapping.class);
 	
 	private ArrayList cmpFields;
 	private String property;
@@ -22,7 +25,7 @@ public class PropertyMapping extends MetaSetsContainer {
 	private boolean multpleConverterCreated = false;
 	private String cmpTypeName;
 	private ModelMapping modelMapping;
-	private static Log log = LogFactory.getLog(PropertyMapping.class);
+	
 	
 	public PropertyMapping(ModelMapping parent) {
 		this.modelMapping = parent;

@@ -5,8 +5,8 @@ import java.util.*;
 
 import javax.ejb.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.model.*;
 import org.openxava.util.*;
 
@@ -20,7 +20,7 @@ abstract public class CollectionBaseAction extends CollectionElementViewBaseActi
 	private List mapsSelectedValues;
 	private List objects;
 	private List selectedObjects;
-	private static Log log = LogFactory.getLog(CollectionBaseAction.class);
+	
 
 	protected List getMapValues() throws XavaException {
 		if (mapValues == null) {

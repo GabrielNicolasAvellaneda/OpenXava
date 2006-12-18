@@ -1,14 +1,14 @@
 package org.openxava.converters;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * @author Javier Paniza
  */
 public class StringNotNullConverter implements IConverter {
 
-	private static Log log = LogFactory.getLog(StringNotNullConverter.class);
+	
 	
 	public Object toJava(Object o) throws ConversionException {
 	    if (o == null) return "";

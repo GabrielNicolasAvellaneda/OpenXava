@@ -4,8 +4,8 @@ import java.text.*;
 
 import javax.servlet.http.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * A simple implementation: Only it shows a icon to indicate that it's a image/photo. <p> 
@@ -15,7 +15,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class ImageFormatter implements IFormatter {
 		
-	private static Log log = LogFactory.getLog(ImageFormatter.class);
+	
 	
 	public String format(HttpServletRequest request, Object booleanValue) {		
 		return "<img src='images/photo.gif'/>";		

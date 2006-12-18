@@ -6,8 +6,9 @@ import java.util.*;
 import javax.ejb.*;
 import javax.rmi.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.openxava.component.*;
 import org.openxava.converters.*;
 import org.openxava.ejbx.*;
@@ -27,6 +28,7 @@ import org.openxava.util.*;
  */
 public class EntityTab implements IEntityTabImpl {
 	
+	private static Log log = LogFactory.getLog(EntityTab.class);
 	private static final int DEFAULT_CHUNK_SIZE = 50;
 	
 	private int chunkSize = DEFAULT_CHUNK_SIZE;
@@ -51,7 +53,7 @@ public class EntityTab implements IEntityTabImpl {
 	private boolean	knowIfHasPropertiesWithValidValues = false;
 	private boolean _hasPropertiesWithValidValues;
 	
-	private static Log log = LogFactory.getLog(EntityTab.class);
+	
 	
 	public void search(int index, Object key)
 		throws FinderException, RemoteException {

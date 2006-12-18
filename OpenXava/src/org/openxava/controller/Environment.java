@@ -2,8 +2,8 @@ package org.openxava.controller;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.component.MetaComponent;
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
@@ -18,7 +18,7 @@ import org.openxava.util.*;
 public class Environment implements java.io.Serializable {
 	
 	private Map localVariables;
-	private static Log log = LogFactory.getLog(Environment.class);
+	
 	
 	public Environment(Map localVariables) {
 		this.localVariables = localVariables;

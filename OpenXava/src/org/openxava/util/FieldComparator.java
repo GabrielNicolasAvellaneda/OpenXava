@@ -3,8 +3,8 @@ package org.openxava.util;
 import java.lang.reflect.*;
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * Compare <code>java.lang.reflect.Field</code> by name 
@@ -15,7 +15,7 @@ public class FieldComparator implements Comparator {
 	
 	final private static FieldComparator instance = new FieldComparator();
 	
-	private static Log log = LogFactory.getLog(FieldComparator.class);
+	
 	
 	// Use getInstance
 	private FieldComparator() {		

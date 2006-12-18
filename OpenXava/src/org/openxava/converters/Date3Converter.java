@@ -2,8 +2,8 @@ package org.openxava.converters;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.util.*;
 
 
@@ -18,7 +18,7 @@ public class Date3Converter implements IMultipleConverter {
 	private int day;
 	private int month;
 	private int year;
-	private static Log log = LogFactory.getLog(Date3Converter.class);
+	
 	
 
 	public Object toJava() throws ConversionException {		

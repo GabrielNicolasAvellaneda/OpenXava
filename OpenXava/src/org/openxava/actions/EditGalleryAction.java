@@ -1,18 +1,15 @@
 package org.openxava.actions;
 
-import java.rmi.*;
 import java.util.*;
 
-import javax.ejb.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+import org.apache.commons.logging.*;
 import org.openxava.calculators.*;
 import org.openxava.model.*;
 import org.openxava.model.meta.*;
 import org.openxava.session.*;
 import org.openxava.util.*;
-import org.openxava.validators.*;
 
 /**
  * 
@@ -20,10 +17,12 @@ import org.openxava.validators.*;
  */
 
 public class EditGalleryAction extends ViewBaseAction implements INavigationAction {
+		
+	private static Log log = LogFactory.getLog(EditGalleryAction.class);
 	
 	private String galleryProperty;
 	private Gallery gallery;	
-	private static Log log = LogFactory.getLog(EditGalleryAction.class);
+	
 	
 	public void execute() throws Exception {
 		String oid = getView().getValueString(galleryProperty);

@@ -5,15 +5,15 @@ import java.util.*;
 
 import javax.servlet.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.openxava.actions.*;
-import org.openxava.controller.ModuleManager;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
 
 
 public class MetaAction extends MetaElement {
+	
+	private static Log log = LogFactory.getLog(MetaAction.class);
 	
 	public static final int NEVER = 0;
 	public static final int IF_POSSIBLE = 1;
@@ -36,7 +36,7 @@ public class MetaAction extends MetaElement {
 	private boolean takesLong;
 	private boolean confirm;
 	
-	private static Log log = LogFactory.getLog(MetaAction.class);
+	
 	
 	public MetaAction() {
 	}

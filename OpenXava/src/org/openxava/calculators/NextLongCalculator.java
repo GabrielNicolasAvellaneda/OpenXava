@@ -2,8 +2,9 @@ package org.openxava.calculators;
 
 import java.sql.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.openxava.component.*;
 import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
@@ -14,11 +15,13 @@ import org.openxava.util.*;
  */
 public class NextLongCalculator implements IJDBCCalculator {
 	
+	private static Log log = LogFactory.getLog(NextLongCalculator.class);
+	
 	private String packageName;
 	private IConnectionProvider provider;
 	private String model;
 	private String property;
-	private static Log log = LogFactory.getLog(NextLongCalculator.class);
+	
 
 	private String select;
 

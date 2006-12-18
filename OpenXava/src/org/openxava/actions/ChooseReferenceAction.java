@@ -2,8 +2,8 @@ package org.openxava.actions;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.tab.*;
 import org.openxava.view.*;
 
@@ -17,7 +17,7 @@ public class ChooseReferenceAction extends ViewBaseAction implements INavigation
 	private View referenceSubview;
 	private int row = -1;
 	private boolean	chosen = true;
-	private static Log log = LogFactory.getLog(ChooseReferenceAction.class);
+	
 	
 	public void execute() throws Exception {						
 		int [] selectedOnes = tab.getSelected();

@@ -2,8 +2,8 @@ package org.openxava.ejbx;
 
 import javax.naming.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 
 /**
@@ -18,7 +18,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class JndiContextProvider implements IContextProvider {
 
-  private static Log log = LogFactory.getLog(JndiContextProvider.class);
+  
   
   public IContext getContext() throws NamingException {
   	return new JndiContext(new InitialContext());

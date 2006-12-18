@@ -4,8 +4,7 @@ import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 import javax.servlet.jsp.tagext.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.openxava.controller.*;
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
@@ -17,13 +16,13 @@ import org.openxava.util.*;
 
 public class LinkTag extends TagSupport implements IActionTag {
 
+	private static Log log = LogFactory.getLog(LinkTag.class);
+	
 	private String action;
 	private String argv;
 	private String cssClass;
 	private boolean hasBody;
-
-	private static Log log = LogFactory.getLog(LinkTag.class);
-	
+		
 	public int doStartTag() throws JspException {		
 		try {
 			hasBody=false;

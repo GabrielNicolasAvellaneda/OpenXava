@@ -2,8 +2,8 @@ package org.openxava.tab.impl;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * Decorate an {@link IXTableModel} to hidden columns. <p>
@@ -22,7 +22,7 @@ public class HiddenXTableModel extends XTableModelDecoratorBase {
 
   private int [] indexes;
   private int columnCount;
-  private static Log log = LogFactory.getLog(HiddenXTableModel.class);
+  
 
   /**
    * @param toDecorate  <tt>TableModel</tt> to decorate hidden columns

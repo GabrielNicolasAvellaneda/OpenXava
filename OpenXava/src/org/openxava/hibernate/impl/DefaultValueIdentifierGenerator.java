@@ -3,8 +3,7 @@ package org.openxava.hibernate.impl;
 import java.io.*;
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.hibernate.*;
 import org.hibernate.dialect.*;
 import org.hibernate.engine.*;

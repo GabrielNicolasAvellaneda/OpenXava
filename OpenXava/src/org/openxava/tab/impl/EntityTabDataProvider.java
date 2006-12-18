@@ -6,8 +6,7 @@ import java.util.*;
 
 import javax.ejb.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.openxava.calculators.*;
 import org.openxava.converters.*;
 import org.openxava.mapping.*;
@@ -22,10 +21,10 @@ import org.openxava.util.meta.*;
  */
 public class EntityTabDataProvider implements IEntityTabDataProvider, Serializable {
 	
-	private String componentName;
-	private IConnectionProvider connectionProvider;
-	
 	private static Log log = LogFactory.getLog(EntityTabDataProvider.class);
+	
+	private String componentName;
+	private IConnectionProvider connectionProvider;	
 		
 	public DataChunk nextChunk(ITabProvider tabProvider, String modelName, List propertiesNames, Collection tabCalculators, Map keyIndexes, Collection tabConverters) throws RemoteException {		
 		if (tabProvider instanceof JDBCTabProvider) {

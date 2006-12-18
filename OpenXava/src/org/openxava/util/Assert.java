@@ -1,8 +1,6 @@
 package org.openxava.util;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
+import org.apache.commons.logging.*;
 
 /**
  * Utility to make asserts. <p>

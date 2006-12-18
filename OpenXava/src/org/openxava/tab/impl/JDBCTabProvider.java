@@ -6,8 +6,9 @@ import java.util.*;
 
 import javax.ejb.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.openxava.util.*;
 
 /**
@@ -23,6 +24,7 @@ import org.openxava.util.*;
 
 public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 
+	private static Log log = LogFactory.getLog(JDBCTabProvider.class);
 	private static final int DEFAULT_CHUNK_SIZE = 50;
 
 	private String select; // Select ... from ...
@@ -35,7 +37,7 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 	private int chunkSize = DEFAULT_CHUNK_SIZE;
 	private int current;  
 	private boolean eof = true;
-	private static Log log = LogFactory.getLog(JDBCTabProvider.class);
+	
 	
 	public void search(int index, Object key)
 		throws FinderException, RemoteException {

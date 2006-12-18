@@ -1,7 +1,7 @@
 package org.openxava.converters;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * 
@@ -9,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class NoConversionConverter implements IConverter{
 
-	private static Log log = LogFactory.getLog(NoConversionConverter.class);
+	
 	
 	public Object toJava(Object o) throws ConversionException {
 		return o;

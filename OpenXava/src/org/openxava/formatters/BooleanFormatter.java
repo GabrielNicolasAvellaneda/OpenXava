@@ -2,8 +2,8 @@ package org.openxava.formatters;
 
 import javax.servlet.http.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.util.*;
 
 
@@ -13,7 +13,7 @@ import org.openxava.util.*;
 
 public class BooleanFormatter implements IFormatter {
 	
-	private static Log log = LogFactory.getLog(BooleanFormatter.class);
+	
 	
 	public String format(HttpServletRequest request, Object booleanValue) {
 		if (booleanValue == null) {

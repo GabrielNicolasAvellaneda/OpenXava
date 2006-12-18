@@ -3,15 +3,15 @@ package org.openxava.util;
 import java.io.*;
 import java.net.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * @author Javier Paniza
  */
 public class Resources {
 	
-	private static Log log = LogFactory.getLog(Resources.class);
+	
 	
 	/**
 	 * Load a resource from the classpath and return it in String format. <p>

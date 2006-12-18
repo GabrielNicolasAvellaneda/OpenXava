@@ -9,8 +9,7 @@ import javax.ejb.*;
 import javax.naming.*;
 import javax.sql.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.openxava.util.*;
 
 
@@ -30,6 +29,8 @@ import org.openxava.util.*;
 
 public class EJB11Context implements IEJBContextInit, Serializable {
 
+	private static Log log = LogFactory.getLog(EJB11Context.class);
+	
 	// If changed, change heading doc, getConnection() doc and IEJBContext doc 
 	private final static String DATASOURCE_DEFAULT_PROPERTY = "DATA_SOURCE";
 
@@ -41,7 +42,7 @@ public class EJB11Context implements IEJBContextInit, Serializable {
 	private String defaultDataSource;
 	private String user;
 	private String password;
-	private static Log log = LogFactory.getLog(EJB11Context.class);
+	
 
 	private void assertEJBContext() throws IllegalStateException {
 		if (ejbContext == null) {

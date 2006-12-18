@@ -4,8 +4,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 
 /**
  * Generic class to implement object factories. <p>
@@ -41,6 +40,8 @@ public class Factory {
   private final static String DEFAULT_ENTRY_ES = "_defecto";
   private final static String DEFAULT_ENTRY_EN = "_default";
 
+  private static Log log = LogFactory.getLog(Factory.class);
+  
   private URL propertiesFile;
   private String defaultEntry = null; // entry that indicate what entry is by default
   private String theDefault; // name of default entry, is obtained from defaultEntry
@@ -48,7 +49,7 @@ public class Factory {
   private Hashtable classes = new Hashtable(); // of Class
   private Properties properties;
   
-  private static Log log = LogFactory.getLog(Factory.class);
+  
 
   /**
    * Creates a objects factory from a properties files. <p>

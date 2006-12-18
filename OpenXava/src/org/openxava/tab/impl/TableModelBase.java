@@ -5,8 +5,8 @@ import java.io.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 
 /**
@@ -23,7 +23,7 @@ public abstract class TableModelBase implements TableModel, Serializable
 {
 	transient private EventListenerList listenerList;
 
-	private static Log log = LogFactory.getLog(TableModelBase.class);
+	
 	
 	public void addTableModelListener(TableModelListener l) {
 		getListenerList().add(TableModelListener.class, l);

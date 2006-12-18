@@ -2,12 +2,10 @@ package org.openxava.hibernate.impl;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.hibernate.*;
 import org.hibernate.event.*;
 import org.openxava.calculators.*;
-import org.openxava.hibernate.XHibernate;
 import org.openxava.model.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -15,10 +13,10 @@ import org.openxava.util.meta.*;
 
 public class CalculatorsListener implements PreInsertEventListener, PreUpdateEventListener, PreDeleteEventListener, PostLoadEventListener {
 	
+	private static Log log = LogFactory.getLog(CalculatorsListener.class);
 	private static CalculatorsListener instance = new CalculatorsListener();
 	private static ThreadLocal setOffForCurrentThread = new ThreadLocal();
-	private static Log log = LogFactory.getLog(CalculatorsListener.class);
-	
+		
 	public static CalculatorsListener getInstance() {
 		return instance;
 	}

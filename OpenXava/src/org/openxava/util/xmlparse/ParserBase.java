@@ -6,8 +6,7 @@ import java.util.*;
 
 import javax.xml.parsers.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.openxava.util.*;
 import org.w3c.dom.*;
 
@@ -15,6 +14,8 @@ import org.w3c.dom.*;
  * @author: Javier Paniza
  */
 abstract public class ParserBase extends XmlElementsNames {
+	
+	private static Log log = LogFactory.getLog(ParserBase.class);
 
 	protected final static int ENGLISH = 0;
 	protected final static int ESPANOL = 1;
@@ -24,7 +25,7 @@ abstract public class ParserBase extends XmlElementsNames {
 	private static DocumentBuilder documentBuilder;	
 	private String xmlFileURL;
 	
-	private static Log log = LogFactory.getLog(ParserBase.class);
+	
 	
 	public ParserBase(String xmlFileURL) {
 		// assert(xmlFileURL)

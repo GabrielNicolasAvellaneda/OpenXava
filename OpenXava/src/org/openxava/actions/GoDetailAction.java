@@ -1,7 +1,7 @@
 package org.openxava.actions;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.tab.*;
 import org.openxava.util.*;
 
@@ -14,7 +14,7 @@ public class GoDetailAction extends BaseAction implements IChangeModeAction, ICh
 	private String nextSection;
 	private String nextAction;
 	private Tab tab;
-	private static Log log = LogFactory.getLog(GoDetailAction.class);
+	
 
 	public String getNextMode() {		
 		return nextSection;

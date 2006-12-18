@@ -2,9 +2,7 @@ package org.openxava.component;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.openxava.application.meta.xmlparse.ApplicationParser;
+import org.apache.commons.logging.*;
 import org.openxava.mapping.xmlparse.*;
 import org.openxava.model.meta.*;
 import org.openxava.model.meta.xmlparse.*;
@@ -19,8 +17,9 @@ import org.w3c.dom.*;
  */
 class ComponentParser extends ParserBase {
 	
-	private MetaComponent component;
 	private static Log log = LogFactory.getLog(ComponentParser.class);
+	
+	private MetaComponent component;	
 
 	private ComponentParser(String name) {
 		super(name + ".xml");		

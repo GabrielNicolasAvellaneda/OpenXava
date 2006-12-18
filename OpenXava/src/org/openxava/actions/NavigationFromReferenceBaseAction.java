@@ -5,8 +5,8 @@ import java.util.*;
 
 import javax.servlet.http.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
 import org.openxava.view.*;
@@ -26,7 +26,7 @@ abstract public class NavigationFromReferenceBaseAction extends ReferenceBaseAct
 	abstract protected String getCustomController();
 	abstract protected String getDefaultController();
 	
-	private static Log log = LogFactory.getLog(NavigationFromReferenceBaseAction.class);
+	
 	
 	public void execute() throws Exception {
 		super.execute();

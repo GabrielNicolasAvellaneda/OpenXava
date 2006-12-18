@@ -1,7 +1,7 @@
 package org.openxava.converters;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 
 /**
@@ -12,7 +12,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class BooleanSNConverter implements IConverter {
 
-	private static Log log = LogFactory.getLog(BooleanSNConverter.class);
+	
 	
 	public Object toDB(Object o) throws ConversionException {
 		if (!(o instanceof Boolean)) {		

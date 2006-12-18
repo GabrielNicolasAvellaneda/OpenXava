@@ -1,7 +1,7 @@
 package org.openxava.actions;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * @author Javier Paniza
@@ -9,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class CreateNewElementInCollectionAction extends CollectionElementViewBaseAction {
 	
-	private static Log log = LogFactory.getLog(CreateNewElementInCollectionAction.class);
+	
 	
 	public void execute() throws Exception {
 		if (getCollectionElementView().isRepresentsAggregate()) {

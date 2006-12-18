@@ -2,8 +2,8 @@ package org.openxava.mapping;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.component.*;
 import org.openxava.util.*;
 
@@ -14,7 +14,7 @@ import org.openxava.util.*;
  */
 abstract public class Mapping {
 
-	private static Log log = LogFactory.getLog(Mapping.class);
+	
 	
 	public static Collection getSchemas() throws XavaException {			
 		Collection r = new HashSet();

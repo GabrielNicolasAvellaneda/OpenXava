@@ -2,12 +2,12 @@ package org.openxava.hibernate;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.hibernate.*;
 import org.hibernate.cfg.*;
 import org.hibernate.event.*;
-import org.openxava.generators.xmlparse.GeneratorsParser;
 import org.openxava.hibernate.impl.*;
 import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
@@ -41,12 +41,13 @@ import org.openxava.util.*;
 
 public class XHibernate {
 
+	private static Log log = LogFactory.getLog(XHibernate.class);
 	private static SessionFactory sessionFactory;	
 	private static String configurationFile = "/hibernate.cfg.xml";	
 	private static ThreadLocal currentSession = new ThreadLocal();	
 	private static ThreadLocal currentTransaction = new ThreadLocal();
 	private static ThreadLocal currentCmt = new ThreadLocal(); 
-	private static Log log = LogFactory.getLog(XHibernate.class);
+	
 
 	/**
 	 * Session associated to current thread. <p>

@@ -1,7 +1,7 @@
 package org.openxava.calculators;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * To use sequence database id generation. <p>
@@ -23,7 +23,7 @@ import org.apache.commons.logging.LogFactory;
 public class SequenceCalculator implements IHibernateIdGeneratorCalculator, ICalculator {
 	
 	private String sequence;
-	private static Log log = LogFactory.getLog(SequenceCalculator.class);
+	
 
 	public String hbmGeneratorCode() {		
 		StringBuffer code = new StringBuffer();

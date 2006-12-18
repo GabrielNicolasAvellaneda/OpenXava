@@ -1,7 +1,7 @@
 package org.openxava.actions;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * @author Javier Paniza
@@ -9,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class HideDetailElementInCollectionAction extends CollectionElementViewBaseAction {
 	
-	private static Log log = LogFactory.getLog(HideDetailElementInCollectionAction.class);
+	
 	
 	public void execute() throws Exception {							
 		getCollectionElementView().setCollectionDetailVisible(false);

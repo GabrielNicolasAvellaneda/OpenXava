@@ -3,8 +3,8 @@ package org.openxava.util.meta;
 import java.util.*;
 import javax.servlet.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.util.*;
 
 
@@ -16,7 +16,7 @@ abstract public class MetaElement implements java.io.Serializable {
 	private java.lang.String name;
 	private String label;
 	
-	private static Log log = LogFactory.getLog(MetaElement.class);
+	
 
 	protected boolean has18nLabel() {		
 		return Labels.exists(getId());

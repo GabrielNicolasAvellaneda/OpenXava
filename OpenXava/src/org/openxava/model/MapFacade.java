@@ -6,8 +6,9 @@ import java.util.*;
 import javax.ejb.*;
 import javax.rmi.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.openxava.component.*;
 import org.openxava.ejbx.*;
 import org.openxava.mapping.xmlparse.MappingParser;
@@ -49,11 +50,12 @@ import org.openxava.validators.*;
 
 public class MapFacade {
 	
+	private static Log log = LogFactory.getLog(MapFacade.class);
 	private static Map remotes;
 	private static boolean usesEJBObtained;
 	private static boolean usesEJB;
 	private static IMapFacadeImpl localImpl;
-	private static Log log = LogFactory.getLog(MapFacade.class);
+	
 
 	/**
 	 * Creates a new entity from a map with its initial values. <p> 

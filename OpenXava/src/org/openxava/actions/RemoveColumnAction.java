@@ -1,7 +1,7 @@
 package org.openxava.actions;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.tab.*;
 
 /**
@@ -12,7 +12,7 @@ public class RemoveColumnAction extends BaseAction {
 	
 	private Tab tab;
 	private int columnIndex;
-	private static Log log = LogFactory.getLog(RemoveColumnAction.class);
+	
 
 	public void execute() throws Exception {
 		getTab().removeProperty(columnIndex);

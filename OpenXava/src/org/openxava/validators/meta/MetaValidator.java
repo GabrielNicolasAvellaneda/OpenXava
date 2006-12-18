@@ -1,11 +1,9 @@
 package org.openxava.validators.meta;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
 import org.openxava.validators.*;
-
 
 /**
  * 
@@ -13,13 +11,15 @@ import org.openxava.validators.*;
  */
 public class MetaValidator extends MetaSetsContainer {
 	
+	private static Log log = LogFactory.getLog(MetaValidator.class);
+	
 	private IRemoveValidator removeValidator;
 	private IPropertyValidator propertyValidator;
 	private IValidator validator;
 	private java.lang.String name;
 	private boolean onlyOnCreate;	
 	private java.lang.String className;
-	private static Log log = LogFactory.getLog(MetaValidator.class);
+	
 
 	public MetaValidator() {
 		super();

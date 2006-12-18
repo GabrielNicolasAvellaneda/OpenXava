@@ -4,8 +4,9 @@ import java.util.*;
 
 import javax.servlet.http.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
 
@@ -15,7 +16,9 @@ import org.openxava.util.*;
  * @author Javier Paniza
  */
 
-public class ModuleContext { 
+public class ModuleContext {
+	
+	private static Log log = LogFactory.getLog(ModuleContext.class);
 	
 	static {
 		MetaControllers.setContext(MetaControllers.WEB);		
@@ -23,7 +26,7 @@ public class ModuleContext {
 	
 	
 	private Map contexts = new HashMap();
-	private static Log log = LogFactory.getLog(ModuleContext.class);
+	
 
 	/**
 	 * Return a object asociate to the specified module

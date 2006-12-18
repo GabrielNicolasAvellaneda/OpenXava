@@ -1,7 +1,7 @@
 package org.openxava.model.meta;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
 
@@ -14,7 +14,7 @@ abstract public class MetaMember extends MetaElement {
 	private String labelId;
 	private String qualifiedName;
 	
-	private static Log log = LogFactory.getLog(MetaMember.class);
+	
 
 	public MetaModel getMetaModel() {		
 		return metaModel;

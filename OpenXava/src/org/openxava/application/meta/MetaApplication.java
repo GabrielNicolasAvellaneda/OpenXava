@@ -3,8 +3,8 @@ package org.openxava.application.meta;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.actions.ViewDetailAction;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
@@ -18,7 +18,7 @@ public class MetaApplication extends MetaElement implements java.io.Serializable
 	private Map metaModules = new HashMap();
 	private Collection modulesNames = new ArrayList(); // to preserve the order
 	private Collection folders;
-	private static Log log = LogFactory.getLog(MetaApplication.class);
+	
 	
 	/**
 	 * 

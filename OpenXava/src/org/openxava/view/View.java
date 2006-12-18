@@ -6,8 +6,7 @@ import java.util.*;
 import javax.ejb.*;
 import javax.servlet.http.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.openxava.actions.*;
 import org.openxava.calculators.*;
 import org.openxava.component.*;
@@ -29,8 +28,8 @@ import org.openxava.web.*;
 
 public class View implements java.io.Serializable {
 		
+	private static Log log = LogFactory.getLog(View.class);
 	private static final long serialVersionUID = -7582669617830655121L;
-
 	private final static int [] EMPTY_SELECTED = new int[0];
 	
 	private Map objects = null; 
@@ -105,7 +104,7 @@ public class View implements java.io.Serializable {
 	private Collection executedActions;	
 	private boolean registeringExecutedActions = false;	
 	
-	private static Log log = LogFactory.getLog(View.class);
+	
 		
 	public View() {
 		oid = nextOid++;		

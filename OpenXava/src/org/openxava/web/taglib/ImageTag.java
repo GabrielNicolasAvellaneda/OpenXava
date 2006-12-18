@@ -4,8 +4,7 @@ import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 import javax.servlet.jsp.tagext.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.openxava.controller.*;
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
@@ -17,11 +16,11 @@ import org.openxava.util.*;
 
 public class ImageTag extends TagSupport implements IActionTag {
 	
+	private static Log log = LogFactory.getLog(ImageTag.class);
+	
 	private String action;
 	private String argv;
 	
-	private static Log log = LogFactory.getLog(ImageTag.class);
-
 	public int doStartTag() throws JspException {
 		try {									
 			ModuleContext context = (ModuleContext) pageContext.getSession().getAttribute("context");

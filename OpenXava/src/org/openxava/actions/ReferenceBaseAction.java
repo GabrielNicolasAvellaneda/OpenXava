@@ -2,8 +2,8 @@ package org.openxava.actions;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.util.*;
 import org.openxava.view.*;
 
@@ -37,7 +37,7 @@ public class ReferenceBaseAction extends ViewBaseAction {
 		
 	}
 	
-	private static Log log = LogFactory.getLog(ReferenceBaseAction.class);
+	
 	private ViewInfo viewInfo;	
 	private String keyProperty;
 	private View referenceSubview;		

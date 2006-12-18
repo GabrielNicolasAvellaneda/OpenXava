@@ -2,8 +2,9 @@ package org.openxava.web.meta;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.openxava.formatters.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -16,6 +17,8 @@ import org.openxava.util.meta.*;
  */
 public class MetaEditor {
 	
+	private static Log log = LogFactory.getLog(MetaEditor.class);
+	
 	private boolean formatterFromType;
 	private Object formatter; 
 	private String propertiesURL;
@@ -27,8 +30,6 @@ public class MetaEditor {
 	private Collection formatterMetaSets;
 	private boolean format = true;
 	private boolean frame = false;
-	
-	private static Log log = LogFactory.getLog(MetaEditor.class);
 	
 	public void _addFormatterMetaSet(MetaSet metaSet) {
 		if (formatterMetaSets == null) formatterMetaSets = new ArrayList();

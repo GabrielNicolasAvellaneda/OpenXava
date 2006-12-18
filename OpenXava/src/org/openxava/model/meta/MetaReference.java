@@ -2,8 +2,9 @@ package org.openxava.model.meta;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.openxava.calculators.*;
 import org.openxava.component.*;
 import org.openxava.util.*;
@@ -16,6 +17,8 @@ import org.openxava.util.meta.*;
 
 public class MetaReference extends MetaMember implements Cloneable {
 
+	private static Log log = LogFactory.getLog(MetaReference.class);
+		
 	private MetaModel metaModelReferenced;
 	private String referencedModelName;
 	private String role;
@@ -24,7 +27,7 @@ public class MetaReference extends MetaMember implements Cloneable {
 	private MetaCalculator metaCalculatorDefaultValue;
 	private ICalculator defaultValueCalculator;
 	
-	private static Log log = LogFactory.getLog(MetaReference.class);
+	
 	
 	public MetaCollection getMetaCollectionFromReferencedModel() throws XavaException { 				
 		Iterator it = getMetaModelReferenced().getMetaCollections().iterator();

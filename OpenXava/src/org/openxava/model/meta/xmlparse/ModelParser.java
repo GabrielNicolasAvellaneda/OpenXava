@@ -1,7 +1,7 @@
 package org.openxava.model.meta.xmlparse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
@@ -14,7 +14,7 @@ import org.w3c.dom.*;
  */
 public class ModelParser extends XmlElementsNames {
 	
-	private static Log log = LogFactory.getLog(XmlElementsNames.class);
+	
 	
 	public static MetaEntity parseEntity(Node n, String name, int lang) throws XavaException {
 		Element el = (Element) n;

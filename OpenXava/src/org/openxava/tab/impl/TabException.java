@@ -1,7 +1,7 @@
 package org.openxava.tab.impl;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 /**
  * Exception throwed by some classes of this package. <p>
@@ -17,7 +17,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class TabException extends Exception {
 
-  private static Log log = LogFactory.getLog(TabException.class);	
+  	
 	
   public TabException(String message) {
   	super(message);

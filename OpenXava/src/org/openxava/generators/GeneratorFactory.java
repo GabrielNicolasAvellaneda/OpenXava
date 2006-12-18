@@ -2,8 +2,8 @@ package org.openxava.generators;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.formatters.UpperCaseFormatter;
 import org.openxava.generators.xmlparse.*;
 import org.openxava.model.meta.*;
@@ -17,7 +17,7 @@ public class GeneratorFactory {
 	
 	private static Map ejbClasses;
 	private static Map pojoClasses;
-	private static Log log = LogFactory.getLog(GeneratorFactory.class);
+	
 	
 	public static IPropertyCodeGenerator create(MetaProperty metaProperty, boolean ejb) throws Exception {
 		if (!has(metaProperty, ejb)) return null;

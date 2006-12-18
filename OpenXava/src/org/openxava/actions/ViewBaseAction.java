@@ -1,7 +1,7 @@
 package org.openxava.actions;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.view.*;
 
 /**
@@ -11,7 +11,7 @@ import org.openxava.view.*;
 abstract public class ViewBaseAction extends BaseAction  {
 	
 	private View view;
-	private static Log log = LogFactory.getLog(ViewBaseAction.class);
+	
 	
 		
 	public View getView() {

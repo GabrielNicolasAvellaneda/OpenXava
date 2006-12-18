@@ -4,8 +4,9 @@ import java.lang.reflect.*;
 import java.rmi.*;
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+import org.apache.commons.logging.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
 
@@ -14,8 +15,8 @@ import org.openxava.validators.*;
  */
 public class POJOPropertiesContainerAdapter implements IPropertiesContainer {
 	
-	private PropertiesManager propertiesManager;
 	private static Log log = LogFactory.getLog(POJOPropertiesContainerAdapter.class);
+	private PropertiesManager propertiesManager;	
 	
 	public POJOPropertiesContainerAdapter(Object object) {
 		propertiesManager = new PropertiesManager(object);

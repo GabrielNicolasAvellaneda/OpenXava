@@ -1,7 +1,7 @@
 package org.openxava.validators.meta;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.util.*;
 
 /**
@@ -18,7 +18,7 @@ public class MetaValidatorFor {
 	private java.lang.String validatorName;
 	public java.lang.String validatorClass;
 	
-	private static Log log = LogFactory.getLog(MetaValidatorFor.class);
+	
 	
 	public java.lang.String getValidatorClass() throws XavaException {
 		if (validatorClass == null) {

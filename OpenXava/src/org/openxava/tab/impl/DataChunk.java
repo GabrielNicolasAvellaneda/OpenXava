@@ -2,8 +2,8 @@ package org.openxava.tab.impl;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.util.*;
 
 /**
@@ -23,7 +23,7 @@ public class DataChunk implements java.io.Serializable {
 	private boolean last;
 	private int indexNext;
 	
-	private static Log log = LogFactory.getLog(DataChunk.class);
+	
 
 	public DataChunk(List data, boolean last, int indexNext) {
 		Assert.arg(data);

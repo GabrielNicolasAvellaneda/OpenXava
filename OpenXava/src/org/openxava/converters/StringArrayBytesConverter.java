@@ -6,17 +6,17 @@
  */
 package org.openxava.converters;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+import org.apache.commons.logging.*;
 import org.openxava.util.XavaResources;
 
 /**
  * @author Luis Miguel
  */
 public class StringArrayBytesConverter implements IConverter {
-    
-	private static Log log = LogFactory.getLog(StringArrayBytesConverter.class);
 	
+	private static Log log = LogFactory.getLog(StringArrayBytesConverter.class);
+    	
 	public Object toJava(Object o) throws ConversionException {	    
     	if (o == null) return "";    	
 	    if (!(o instanceof byte[])) {			    	

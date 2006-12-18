@@ -1,7 +1,7 @@
 package org.openxava.actions;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.tab.*;
 
 /**
@@ -11,7 +11,7 @@ import org.openxava.tab.*;
 public class DeselectRowsAction extends BaseAction implements IAction {
 
 	private Tab tab;
-	private static Log log = LogFactory.getLog(DeselectRowsAction.class);
+	
 
 	public void execute() throws Exception {
 		tab.deselectAll();

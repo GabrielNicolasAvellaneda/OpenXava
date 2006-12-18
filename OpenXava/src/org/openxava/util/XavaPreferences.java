@@ -3,8 +3,7 @@ package org.openxava.util;
 import java.io.*;
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 
 /**
  * @author Javier Paniza
@@ -13,7 +12,7 @@ public class XavaPreferences {
 	
 	private final static String FILE_PROPERTIES="xava.properties";
 	private static Log log = LogFactory.getLog(XavaPreferences.class);
-	
+		
 	private static XavaPreferences instance;
 	
 	private Properties properties;

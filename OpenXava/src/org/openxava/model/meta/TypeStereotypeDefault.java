@@ -2,8 +2,8 @@ package org.openxava.model.meta;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 import org.openxava.model.meta.xmlparse.*;
 import org.openxava.util.*;
 
@@ -16,7 +16,7 @@ public class TypeStereotypeDefault {
 		
 	private static Map stereotypes;
 	
-	private static Log log = LogFactory.getLog(TypeStereotypeDefault.class);
+	
 	
 	public static void _addForStereotype(String name, String type) throws XavaException {
 		if (stereotypes == null) {

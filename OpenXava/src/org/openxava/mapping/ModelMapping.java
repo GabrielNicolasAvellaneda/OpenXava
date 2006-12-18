@@ -2,8 +2,7 @@ package org.openxava.mapping;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.openxava.component.*;
 import org.openxava.converters.*;
 import org.openxava.model.meta.*;
@@ -15,6 +14,7 @@ import org.openxava.util.*;
 abstract public class ModelMapping implements java.io.Serializable {
 
 	private static Log log = LogFactory.getLog(ModelMapping.class);
+	
 	private MetaComponent metaComponent;
 	private String table;
 	private Map propertyMappings = new HashMap();

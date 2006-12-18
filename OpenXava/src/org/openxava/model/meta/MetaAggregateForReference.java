@@ -2,8 +2,7 @@ package org.openxava.model.meta;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.*;
 import org.openxava.mapping.*;
 import org.openxava.util.*;
 
@@ -15,12 +14,11 @@ import org.openxava.util.*;
 
 public class MetaAggregateForReference extends MetaAggregate {
 	
-	private java.lang.String beanClass;
-	
-	private Map persistentPropertiesReferencesMap;
-	
 	private static Log log = LogFactory.getLog(MetaAggregateForReference.class);
 	
+	private java.lang.String beanClass;	
+	private Map persistentPropertiesReferencesMap;
+		
 	public java.lang.String getBeanClass() throws XavaException {
 		if (Is.emptyString(beanClass)) {
 			String packageName = getMetaComponent().getPackageName();

@@ -1,13 +1,13 @@
 package org.openxava.web.style;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
 
 public class JetSpeed2Style extends Style {
 	
 	private static JetSpeed2Style instance = null;
 
-	private static Log log = LogFactory.getLog(JetSpeed2Style.class);
+	
 	
 	protected JetSpeed2Style() {		
 	}
