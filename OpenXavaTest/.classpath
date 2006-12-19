@@ -21,6 +21,5 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/cglib.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/ejb3-persistence.jar"/>
 	<classpathentry exported="true" kind="src" path="/OpenXava"/>
-	<classpathentry kind="lib" path="/java/jtopen_5_1_1/lib/jt400.jar"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>
