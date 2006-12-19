@@ -28,14 +28,14 @@ public class ClerksTest extends ModuleTestBase {
 		assertNoErrors();
 		execute("Mode.list");
 		assertValueInList(0, "arrivalTime", time + ":00");
-		assertValueInList(0, "endingTime", time + ":00");
+		assertValueInList(0, "endingTime", time);
 		assertValueInList(0, "comments", "Created at " + time);
 		
 		setConditionValues(new String [] { "", "", "", "", time });
 		execute("List.filter");
 		assertListRowCount(1);
 		assertValueInList(0, "arrivalTime", time + ":00");
-		assertValueInList(0, "endingTime", time + ":00");
+		assertValueInList(0, "endingTime", time);
 		
 		// Asserting that java.sql.Time works in JasperReport
 		execute("Print.generatePdf"); 
