@@ -769,7 +769,7 @@
 		<copy todir="${dist.portlets.dir}/WEB-INF/jsp" >
 			<fileset dir="web" excludes="WEB-INF/**, xava/images/**, xava/style/**, xava/editors/calendar/**, xava/editors/FCKeditor/**, xava/editors/FCKEditor.jsp, xava/jasperReport.jsp public/**"/>
 		</copy>
-		<copy todir="${dist.portlets.dir}/public" >
+		<copy todir="${dist.portlets.dir}/public" failonerror="false">
 			<fileset dir="web/public"/>
 		</copy>		
 		<copy todir="${dist.portlets.dir}/xava" file="web/xava/jasperReport.jsp"/>

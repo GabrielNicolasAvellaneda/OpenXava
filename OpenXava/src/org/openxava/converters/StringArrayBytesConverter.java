@@ -7,10 +7,14 @@
 package org.openxava.converters;
 
 
+import java.sql.*;
+
 import org.apache.commons.logging.*;
 import org.openxava.util.XavaResources;
 
 /**
+ * Supports Blob (and also other types for byte []) in as column type in DB. <p>
+ * 
  * @author Luis Miguel
  */
 public class StringArrayBytesConverter implements IConverter {
@@ -18,12 +22,20 @@ public class StringArrayBytesConverter implements IConverter {
 	private static Log log = LogFactory.getLog(StringArrayBytesConverter.class);
     	
 	public Object toJava(Object o) throws ConversionException {	    
-    	if (o == null) return "";    	
-	    if (!(o instanceof byte[])) {			    	
-			throw new ConversionException("conversion_java_byte_array_expected");
-		}
-		byte[] b = (byte[]) o;
-		try {
+    	if (o == null) return "";    
+    	System.out.println("[StringArrayBytesConverter.toJava] o.getClass()=" + o.getClass()); //  tmp    	
+    	try {
+    		byte[] b = null;
+	    	if (o instanceof Blob) {
+	    		Blob blob = (Blob) o;
+	    		b = blob.getBytes(1l, (int)blob.length());
+	    	}
+	    	else if (o instanceof byte[]) {
+	    		b = (byte[]) o;			
+			}
+	    	else {
+	    		throw new ConversionException("conversion_java_byte_array_expected");
+	    	}		
 			return new String(b);
 		}
 		catch (Exception e){

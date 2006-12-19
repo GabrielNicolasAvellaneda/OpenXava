@@ -16,7 +16,7 @@ public class StringTimeFormatter extends TimeBaseFormatter {
 	
 	public Object parse(HttpServletRequest request, String string) throws ParseException {
 		TimeData timeData = (TimeData)super.parse(request, string);
-		return sqlTimeFormat(timeData);
+		return sqlTimeFormat5(timeData);
 	}
 
 }
