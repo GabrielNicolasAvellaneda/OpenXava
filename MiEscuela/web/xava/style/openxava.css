@@ -98,6 +98,13 @@ TD.frame {
 	font-size: x-small;
 }
 
+.jetspeed2-list-order-by A:link {
+	color: white;	
+	text-decoration: underline;
+}
+
+
+
 .websphere-list-title {
 	font-weight: bold;	
 }
@@ -118,11 +125,6 @@ TD.list-title {
 
 .PTitleContent {
 	color: black;
-}
-
-.portlet-section-header A:link {
-	color: white;	
-	text-decoration: underline;
 }
 
 .section {
@@ -152,3 +154,10 @@ TD.list-title {
 .websphere-frame-title-label {
     font-weight: normal;    
 }
+
+.liferay-xava-frame-core {
+	border: 1px solid #CCCCCC;
+	border-top: 0px;
+	padding: 2px;
+}
+

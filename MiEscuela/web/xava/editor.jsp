@@ -67,6 +67,9 @@ if (searchingKey) {
 	<% if (view.isCreateNew()) {%>
 <xava:action action='Reference.createNew' argv='<%="model="+referencedModel + ",keyProperty=" + propertyKey%>'/>
 	<% } %>
+	<% if (view.isModify()) {%>
+<xava:action action='Reference.modify' argv='<%="model="+referencedModel + ",keyProperty=" + propertyKey%>'/>	
+	<% } %>
 <% } %>
 <%
 for (java.util.Iterator itActions = view.getActionsNamesForReference(searchingKey).iterator(); itActions.hasNext();) {

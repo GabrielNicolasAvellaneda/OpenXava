@@ -49,7 +49,7 @@ while (it.hasNext()) {
 		align =property.isNumber() && !property.hasValidValues()?"style='vertical-align: middle;text-align: right'":"style='vertical-align: middle;'";
 	}
 %>
-<th class=<%=style.getListHeader()%> <%=align%>>
+<th class="<%=style.getListHeader()%>" <%=align%>>
 <% if (tab.isCustomize()) { %><xava:image action="List.moveColumnToLeft" argv='<%="columnIndex="+columnIndex%>'/><% } %>
 <%
 	if (property.isCalculated()) {		
@@ -58,7 +58,9 @@ while (it.hasNext()) {
 <%
 	} else {
 %>
+<span class="<%=style.getListOrderBy()%>">
 <xava:link action='List.orderBy' argv='<%="property="+property.getQualifiedName()%>'><%=property.getLabel(request)%></xava:link>&nbsp;
+</span>
 <%
 		if (tab.isOrderAscending(property.getQualifiedName())) {
 %>
@@ -118,7 +120,7 @@ while (it.hasNext()) {
 		boolean isValidValues = property.hasValidValues();
 		boolean isString = "java.lang.String".equals(property.getType().getName());
 		boolean isBoolean = "boolean".equals(property.getType().getName()) || "java.lang.Boolean".equals(property.getType().getName());
-		boolean isDate = "java.util.Date".equals(property.getType().getName());
+		boolean isDate = java.util.Date.class.isAssignableFrom(property.getType()) && !property.getType().equals(java.sql.Time.class);
 		int maxLength = property.getSize();
 		int length = Math.min(isString?property.getSize()/2:property.getSize(), 20);
 		String value= conditionValues==null?"":conditionValues[iConditionValues];
@@ -183,7 +185,9 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 %>
 <tr class=<%=cssClass%>>
 	<td class=<%=cssClass%> style='vertical-align: middle;text-align: center'>
-<xava:link action='<%=action%>' argv='<%="row="+f%>'/>
+<% if (!org.openxava.util.Is.emptyString(action)) { %>
+<xava:action action='<%=action%>' argv='<%="row="+f%>'/>
+<% } %>
 	</td>
 	<td class=<%=cssClass%>>
 	<INPUT type="<%=singleSelection?"RADIO":"CHECKBOX"%>" name="selected" value="<%=f%>" <%=checked%>/>

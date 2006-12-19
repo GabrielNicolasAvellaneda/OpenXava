@@ -3,7 +3,7 @@
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <table>
-<th align='left' class=<%=style.getLabel()%>>
+<th align='left' class="<%=style.getLabel()%>">
 <xava:message key="enter_new_image"/>
 </th>
 <td>
