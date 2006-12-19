@@ -9,12 +9,12 @@
 <%@ page import="org.openxava.util.Locales" %>
 <%@ page import="org.openxava.util.XavaResources" %>
 
-<%@ include file="script.jsp" %>
-
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="messages" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
+
+<%@ include file="script.jsp" %>
 
 <%
 Users.setCurrent(request);
@@ -205,7 +205,7 @@ document.onkeydown = processKey;
 <link href="<%=request.getContextPath()%>/xava/style/default.css" rel="stylesheet" type="text/css">
 </head>
 
-<body bgcolor="#ffffff" onload="setFocus()">
+<body bgcolor="#ffffff">
 <% } %>
 
 <link href="<%=request.getContextPath()%>/xava/style/openxava.css" rel="stylesheet" type="text/css">
@@ -226,6 +226,7 @@ document.onkeydown = processKey;
 <form name='<%=manager.getForm()%>' 
 	method='POST' <%=manager.getEnctype()%> 
 	<%=manager.getFormAction(request)%>>
+
 <INPUT type="hidden" name="xava_page_id" value="<%=manager.getPageId()%>"/>
 <INPUT type="hidden" name="xava_action" value=""/>
 <INPUT type="hidden" name="xava_action_argv" value=""/>
@@ -237,15 +238,14 @@ document.onkeydown = processKey;
 <INPUT type="hidden" name="focus_property_id" value="<%=focusPropertyId%>"/>
 
 <jsp:include page="languages.jsp"/>
+
 <table <%=style.getModuleSpacing()%>>
   <tbody>
-  	<% if (org.openxava.util.XavaPreferences.getInstance().isButtonBarOnTop()) { %>
     <tr>
       <td class='<%=style.getButtonBar()%>'>
       	<jsp:include page="buttonBar.jsp"/>
       </td>
     </tr>
-    <% } %>
     <% if (messagesOnTop && (errors.contains() || messages.contains())) {  %>
     <tr>
       <td class=<%=style.getMessagesWrapper()%>>
@@ -259,17 +259,15 @@ document.onkeydown = processKey;
     </tr>            
     <% } %>
     <tr>      		
-		<td <%=manager.isListMode()?"":("class=" + style.getDetail())%>>
-		<jsp:include page='<%=manager.getViewURL()%>'/>
+		<td <%=manager.isListMode()?"":("class='" + style.getDetail() + "'")%>>
+		<jsp:include page='<%=manager.getViewURL()%>'/>		
 		</td>
     </tr>
-  	<% if (org.openxava.util.XavaPreferences.getInstance().isButtonBarOnBottom()) { %>    
     <tr>
-      <td class="<%=style.getButtonBar()%>">
-		<jsp:include page="buttonBar.jsp?onBottom=true"/>
+      <td <%=style.getBottomButtonsStyle()%>>	
+		<jsp:include page="bottomButtons.jsp"/>
       </td>
     </tr>
-  	<% } %>    
     <% if (!messagesOnTop) { %>
     <tr>
       <td class=<%=style.getMessagesWrapper()%>>
@@ -298,3 +296,5 @@ document.onkeydown = processKey;
 <%
 manager.commit(); // If hibernate, ejb3, etc is used to render some value here is commit
 %>
+
+<script>setFocus()</script>

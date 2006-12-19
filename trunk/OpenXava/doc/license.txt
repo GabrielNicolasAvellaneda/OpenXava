@@ -2,6 +2,7 @@ OpenXava  -  Java/XML Framework to generate java/j2ee business application
 
 Copyright (C) 2001 Javier Paniza Lucas
 Copyright (C) 2005 Gestión Cuatrocientos, S.L.
+Copyright (C) 2006 Contributors (see credits in www.openxava.org)
 
 This library is free software; you can redistribute it and/or modify it under 
 the terms of the GNU Lesser General Public License as published by the 
