@@ -98,6 +98,13 @@ TD.frame {
 	font-size: x-small;
 }
 
+.jetspeed2-list-order-by A:link {
+	color: white;	
+	text-decoration: underline;
+}
+
+
+
 .websphere-list-title {
 	font-weight: bold;	
 }
