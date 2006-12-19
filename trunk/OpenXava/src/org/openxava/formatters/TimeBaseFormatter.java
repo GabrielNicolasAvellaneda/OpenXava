@@ -35,7 +35,7 @@ public class TimeBaseFormatter implements IFormatter {
 		
 	}
 	
-	public String sqlTimeFormat(TimeData timeData) {
+	protected String sqlTimeFormat(TimeData timeData) {
 		if (timeData == null) return "00:00:00";
 		StringBuffer sb = new StringBuffer();
 		sb.append(Strings.fix(String.valueOf(timeData.hours),2,Align.RIGHT,'0'));
@@ -46,6 +46,14 @@ public class TimeBaseFormatter implements IFormatter {
 		return sb.toString();
 	}
 
+	protected String sqlTimeFormat5(TimeData timeData) {
+		if (timeData == null) return "00:00";
+		StringBuffer sb = new StringBuffer();
+		sb.append(Strings.fix(String.valueOf(timeData.hours),2,Align.RIGHT,'0'));
+		sb.append(":");
+		sb.append(Strings.fix(String.valueOf(timeData.minutes),2,Align.RIGHT,'0'));
+		return sb.toString();
+	}
 		
 	public Object parse(HttpServletRequest request, String string) throws ParseException {
 		

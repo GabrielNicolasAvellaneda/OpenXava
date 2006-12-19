@@ -10,7 +10,7 @@ import org.openxava.util.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu Dec 14 18:27:05 CET 2006
+ * @version Mon Dec 18 13:23:52 CET 2006
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -23,6 +23,26 @@ private String getSizeAttributes(MetaProperty property) throws XavaException {
 	}
 	else {
 		return "length='" + property.getSize() + "'";
+	}
+}
+
+/**
+ * This method adds database check constraint to column which given valid values.
+ * @author Radoslaw Ostrzycki, Newitech Sp. z o.o.
+ * @param property the property
+ */
+private String getCheck(MetaProperty property) throws XavaException {
+	if (property.isNumber() && !property.isKey() && property.hasValidValues()) {
+		int startsWith = (property.isRequired()) ? 1 : 0;
+		int endsWith = 0;
+		for(Iterator i=property.validValues(); i.hasNext(); i.next()) {
+			endsWith++;
+		}
+			
+		return " check='" + property.getMapping().getColumn() + " between " + startsWith + " and " + endsWith + "'";
+	}
+	else {
+		return "";
 	}
 }
 
@@ -198,13 +218,15 @@ private String getSizeAttributes(MetaProperty property) throws XavaException {
     
     out.print(" \t\n\t\t<property name=\"");
     out.print(propertyName);
-    out.print("\" column=\"");
-    out.print(pMapping.getColumn());
     out.print("\" access=\"field\" ");
     out.print(type);
     out.print(" ");
     out.print(getSizeAttributes(prop));
-    out.print("/>");
+    out.print(">\n\t\t \t<column name=\"");
+    out.print(pMapping.getColumn());
+    out.print("\" ");
+    out.print(getCheck(prop));
+    out.print(" />\n\t\t</property>");
     
     			} 	
     		} 
@@ -223,13 +245,15 @@ private String getSizeAttributes(MetaProperty property) throws XavaException {
     
     out.print(" \n\t\t<property name=\"");
     out.print(propertyName);
-    out.print("\" column=\"");
-    out.print(column);
     out.print("\" access=\"field\" ");
     out.print(type);
     out.print(" ");
     out.print(getSizeAttributes(property));
-    out.print("/>");
+    out.print(">\n\t\t \t<column name=\"");
+    out.print(column);
+    out.print("\" ");
+    out.print(getCheck(property));
+    out.print(" />\n\t\t</property>");
     
     		} 
     		for (Iterator itAggregateReferences = reference.getMetaModelReferenced().getMetaReferences().iterator(); itAggregateReferences.hasNext();) {	
@@ -478,7 +502,7 @@ private String getSizeAttributes(MetaProperty property) throws XavaException {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu Dec 14 18:27:05 CET 2006", // date this file was generated
+        { "Mon Dec 18 13:23:52 CET 2006", // date this file was generated
              "../OpenXava/generator/hibernate.xml", // input file
              "../OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
