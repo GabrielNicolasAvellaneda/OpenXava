@@ -13,6 +13,11 @@
 	<property file="${configuration}.properties"/>
 	<property name="datasource" value="OpenXavaTestDS"/>
 	<property name="portlets.default.locale" value="en"/>
+	
+	<!-- portlet.encoding is by default it's UTF-8, but UTF-8 fails 
+		generating portlet.xml with Á(A with acute) and Í(I with acute) 
+		in some windows system -->
+	<property name="portlet.encoding" value="ISO-8859-1"/> 
 
 	<target name="touchHistory">
 		<tstamp>
