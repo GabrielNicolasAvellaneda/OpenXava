@@ -45,7 +45,7 @@ class ComponentParser extends ParserBase {
 			parser = Class.forName("org.openxava.ox3.AnnotatedClassParser").newInstance();						
 		}
 		catch (Exception ex) {
-			log.warn(XavaResources.getString("annotated_parser_not_found_warning", name),ex);
+			log.warn(XavaResources.getString("annotated_parser_not_found_warning", name));
 			return null;
 		}		
 		
