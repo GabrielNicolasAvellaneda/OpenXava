@@ -23,6 +23,7 @@ public class PortletCodeGenerator {
 	private String project;
 	private String pagesDir;
 	private boolean generateJetspeed2Files;
+	private String encoding;
 		
 	
 	public String getProject() {
@@ -49,6 +50,14 @@ public class PortletCodeGenerator {
 		this.generateJetspeed2Files = generateJetspeed2Files;
 	}
 	
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
+	}
+	
+	public String getEncoding() {
+		return encoding;
+	}	
+	
 	public void setDefaultLocale(String locale) {
 		if (!Is.emptyString(locale)) {
 			defaultLocale = new Locale(locale);
@@ -63,7 +72,8 @@ public class PortletCodeGenerator {
 			String [] argvPortlet = {
 				"../OpenXava/xava/default-size.xml", // some valid xml is required by TL, not used
 				"../" + project + "/web/WEB-INF/portlet.xml",
-				project
+				project, 
+				encoding
 			};
 			PortletXmlPG.main(argvPortlet);
 			
@@ -163,7 +173,7 @@ public class PortletCodeGenerator {
 	}
 	
 	public static void main(String [] argv) {
-		if (argv.length < 2 || argv.length > 4) {
+		if (argv.length < 2 || argv.length > 5) {
 			System.err.println(XavaResources.getString("jetspeed2_generator_argv_required")); 
 			System.exit(1);			
 		}
@@ -172,8 +182,9 @@ public class PortletCodeGenerator {
 			g.setProject(argv[0]);			
 			g.setPagesDir(argv[1]);
 			g.setGenerateJetspeed2Files(Boolean.valueOf(argv[2]).booleanValue()); // optional
-			if (argv.length > 3) {
-				g.setDefaultLocale(argv[3]);
+			g.setEncoding(argv[3]);
+			if (argv.length > 4) {
+				g.setDefaultLocale(argv[4]);
 			}
 			g.run();			
 		}	

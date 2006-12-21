@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<tl>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+<tl>&lt;?xml version="1.0" encoding="<expr>properties.getProperty("arg4")</expr>"?&gt;
 <declare import="java.util.*"/>
 <declare import="org.openxava.application.meta.*"/>
 <declare import="org.openxava.generators.Generators"/>
@@ -10,6 +10,7 @@
 <java>
 String applicationName = properties.getProperty("arg3");
 MetaApplication application = MetaApplications.getMetaApplication(applicationName);
+String encoding = properties.getProperty("arg4");
 
 Collection locales = Generators.getAvailableLocales("../" + applicationName + "/i18n");
 </java> 
@@ -25,19 +26,19 @@ Collection locales = Generators.getAvailableLocales("../" + applicationName + "/
 for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
 	MetaModule module = (MetaModule) it.next();
 </java> 
-	&lt;portlet id="<expr>Strings.toCharSet(module.getName(), "UTF-8")</expr>"&gt;
-		&lt;description&gt;<expr>Strings.toCharSet(application.getLabel(), "UTF-8")</expr> - <expr>Strings.toCharSet(module.getDescription(), "UTF-8")</expr>&lt;/description&gt;
+	&lt;portlet id="<expr>Strings.toCharSet(module.getName(), encoding)</expr>"&gt;
+		&lt;description&gt;<expr>Strings.toCharSet(application.getLabel(), encoding)</expr> - <expr>Strings.toCharSet(module.getDescription(), encoding)</expr>&lt;/description&gt;
     <java>for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
     	Locale locale = (Locale) itLocales.next();
     </java>    
-		&lt;description xml:lang="<expr>locale</expr>"&gt;<expr>Strings.toCharSet(application.getLabel(locale), "UTF-8")</expr> - <expr>Strings.toCharSet(module.getDescription(locale), "UTF-8")</expr>&lt;/description&gt;
+		&lt;description xml:lang="<expr>locale</expr>"&gt;<expr>Strings.toCharSet(application.getLabel(locale), encoding)</expr> - <expr>Strings.toCharSet(module.getDescription(locale), encoding)</expr>&lt;/description&gt;
 	<java>} </java>       
-		&lt;portlet-name&gt;<expr>Strings.toCharSet(module.getName(), "UTF-8")</expr>&lt;/portlet-name&gt;
-		&lt;display-name&gt;<expr>Strings.toCharSet(application.getLabel(), "UTF-8")</expr> - <expr>Strings.toCharSet(module.getLabel(), "UTF-8")</expr>&lt;/display-name&gt;
+		&lt;portlet-name&gt;<expr>Strings.toCharSet(module.getName(), encoding)</expr>&lt;/portlet-name&gt;
+		&lt;display-name&gt;<expr>Strings.toCharSet(application.getLabel(), encoding)</expr> - <expr>Strings.toCharSet(module.getLabel(), encoding)</expr>&lt;/display-name&gt;
     <java>for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { 
     	Locale locale = (Locale) itLocales.next();
     </java>    
-		&lt;display-name xml:lang="<expr>locale</expr>"&gt;<expr>Strings.toCharSet(application.getLabel(locale), "UTF-8")</expr> - <expr>Strings.toCharSet(module.getLabel(locale), "UTF-8")</expr>&lt;/display-name&gt;
+		&lt;display-name xml:lang="<expr>locale</expr>"&gt;<expr>Strings.toCharSet(application.getLabel(locale), encoding)</expr> - <expr>Strings.toCharSet(module.getLabel(locale), encoding)</expr>&lt;/display-name&gt;
     <java>} </java> 
     <java>if (module.isDoc()) { </java> 
 		&lt;portlet-class&gt;org.openxava.web.portlets.HtmlPortlet&lt;/portlet-class&gt;
@@ -53,11 +54,11 @@ for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
 		&lt;portlet-class&gt;org.openxava.web.portlets.XavaPortlet&lt;/portlet-class&gt;
 		&lt;init-param&gt;
 			&lt;name&gt;Application&lt;/name&gt;
-			&lt;value&gt;<expr>Strings.toCharSet(applicationName, "UTF-8")</expr>&lt;/value&gt;
+			&lt;value&gt;<expr>Strings.toCharSet(applicationName, encoding)</expr>&lt;/value&gt;
 		&lt;/init-param&gt;
 		&lt;init-param&gt;
 			&lt;name&gt;Module&lt;/name&gt;
-			&lt;value&gt;<expr>Strings.toCharSet(module.getName(), "UTF-8")</expr>&lt;/value&gt;
+			&lt;value&gt;<expr>Strings.toCharSet(module.getName(), encoding)</expr>&lt;/value&gt;
 		&lt;/init-param&gt;			
 	<java>} </java> 
 		&lt;expiration-cache&gt;-1&lt;/expiration-cache&gt;
@@ -68,7 +69,7 @@ for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
     <java>for (Iterator itLocales=locales.iterator(); itLocales.hasNext(); ) { </java>
 		&lt;supported-locale&gt;<expr>itLocales.next()</expr>&lt;/supported-locale&gt;
     <java>} </java> 
-    	&lt;resource-bundle&gt;portlets/<expr>Strings.toCharSet(module.getName(), "UTF-8")</expr>&lt;/resource-bundle&gt;
+    	&lt;resource-bundle&gt;portlets/<expr>Strings.toCharSet(module.getName(), encoding)</expr>&lt;/resource-bundle&gt;
 	&lt;/portlet&gt;
 <java>
 }
