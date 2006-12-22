@@ -1,5 +1,7 @@
 package org.openxava.actions;
 
+import org.openxava.util.*;
+
 
 
 
@@ -8,8 +10,6 @@ package org.openxava.actions;
  */
 
 public class NewAction extends ViewBaseAction implements IChangeModeAction {
-	
-	
 	
 	public void execute() throws Exception {
 		getView().setKeyEditable(true);
