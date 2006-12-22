@@ -34,13 +34,15 @@ public class PropertiesReader {
   // Only adds still not existing properties in p
   private void add(Properties p, URL url) throws IOException {
 		// assert(p, url);
+	    // We give priority to WEB-INF/classes, we do not trust in the classloader configuration of the application server 
+	  	boolean priority = Strings.noLastToken(url.toExternalForm(), "/").endsWith("/WEB-INF/classes/");	  	
 		InputStream is = url.openStream();
 		Properties properties = new Properties();
 		properties.load(is);
 		Enumeration keys = properties.keys();
 		while (keys.hasMoreElements()) {
 		  Object k = keys.nextElement();
-		  if (!p.containsKey(k)) {
+		  if (priority || !p.containsKey(k)) {
 			p.put(k, properties.get(k));
 		  }
 		}
@@ -61,8 +63,8 @@ public class PropertiesReader {
 			Enumeration e = theClass.getClassLoader().getResources(propertiesFileURL);
 			properties = new Properties();		
 			while (e.hasMoreElements()) {
-				URL url = (URL) e.nextElement();			
-			  add(properties, url);
+				URL url = (URL) e.nextElement();				
+				add(properties, url);
 			}		
 		}
 		return properties;
