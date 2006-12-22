@@ -37,7 +37,7 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 
 	
 	public static IConnectionProvider createByComponent(String componentName) throws XavaException {
-		String packageName = MetaComponent.get(componentName).getPackageNameWithSlashWithoutModel();
+		String packageName = MetaComponent.get(componentName).getPackageNameWithSlashWithoutModel();		
 		String jndi = null; 
 		if (packageName == null) { 
 			jndi = getJPADataSource();			
@@ -59,9 +59,10 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 	 */
 	private static String getJPADataSource() { 
 		try {
-			URL url = DataSourceConnectionProvider.class.getClassLoader().getResource("META-INF/persistence.xml");
-			if (url == null) {
-				throw new XavaException("persistence_xml_not_found");
+			URL url = DataSourceConnectionProvider.class.getClassLoader().getResource("META-INF/persistence.xml");			
+			if (url == null) { 
+				log.warn(XavaResources.getString("persistence_xml_not_found"));
+				return null;
 			}
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Document doc = builder.parse(url.toExternalForm());
