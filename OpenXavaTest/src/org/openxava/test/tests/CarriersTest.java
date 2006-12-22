@@ -17,11 +17,11 @@ public class CarriersTest extends ModuleTestBase {
 	}
 	
 	protected void setUp() throws Exception {
-		deleteCarriers();
+		deleteCarriers();		
 		createCarriers();  		
 		super.setUp();
 	}
-	
+		
 	private void createCarriers() throws Exception {
 		Warehouse wh = new Warehouse();
 		wh.setNumber(1);

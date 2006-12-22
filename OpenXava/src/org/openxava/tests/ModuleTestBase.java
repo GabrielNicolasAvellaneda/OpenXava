@@ -995,7 +995,7 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected void assertListNotEmpty() throws Exception {
-		assertTrue(XavaResources.getString("minimum_2_elements_in_list"), getListRowCount() > 1);
+		assertTrue(XavaResources.getString("minimum_1_elements_in_list"), getListRowCount() > 0);
 	}
 		
 	private static String getPort() {
