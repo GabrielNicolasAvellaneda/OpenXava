@@ -70,7 +70,9 @@ public class MetaValidators {
 			if (isPrimitiveType(forType))
 				return null;
 			while (!forType.equals("java.lang.Object")) {
-				forType = Class.forName(forType).getSuperclass().getName();
+				Class superClass = Class.forName(forType).getSuperclass();
+				if (superClass == null) return null; // An interface without parent
+				forType = superClass.getName();
 				MetaValidatorFor v =
 					(MetaValidatorFor) metaValidatorsFor.get(forType);
 				if (v != null)
@@ -167,5 +169,5 @@ public class MetaValidators {
 		}
 		return v;
 	}
-		
+			
 }
