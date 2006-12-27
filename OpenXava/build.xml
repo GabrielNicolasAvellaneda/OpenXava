@@ -72,11 +72,11 @@
 		
     <target name="copyDTDs">     
     
-		<copy todir="../${project}/xava/dtds" overwrite="false">
+		<copy todir="../${project}/xava/dtds" overwrite="true">
 			<fileset dir="../OpenXava/xava/dtds" excludes="componente.dtd,component.dtd"/>
 		</copy>
 		
-		<copy todir="../${project}/components/dtds" overwrite="false">
+		<copy todir="../${project}/components/dtds" overwrite="true">
 			<fileset dir="../OpenXava/xava/dtds" includes="componente.dtd,component.dtd"/>
 		</copy>
 		    

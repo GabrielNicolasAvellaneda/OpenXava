@@ -221,6 +221,7 @@ public class ViewParser extends XmlElementsNames {
 		a.setSaveActionName(getAction(el, xsave_action[lang], lang));
 		a.setHideActionName(getAction(el, xhide_detail_action[lang], lang));
 		a.setRemoveActionName(getAction(el, xremove_action[lang], lang));
+		a.setRemoveSelectedActionName(getAction(el, xremove_selected_action[lang], lang));
 		fillDetailActions(el, a, lang); 		
 		fillListActions(el, a, lang);
 		return a;

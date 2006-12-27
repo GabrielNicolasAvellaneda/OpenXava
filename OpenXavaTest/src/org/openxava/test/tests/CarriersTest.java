@@ -146,7 +146,7 @@ public class CarriersTest extends ModuleTestBase {
 	}
 	
 	
-	public void testOwnControllerForCreatingAndModifyingFromReference() throws Exception { // TMP
+	public void testOwnControllerForCreatingAndModifyingFromReference() throws Exception {
 		execute("Mode.detailAndFirst");		
 		// Modifying
 		execute("Reference.modify", "model=Warehouse,keyProperty=xava.Carrier.warehouse.number");		

@@ -40,6 +40,7 @@ public class View implements java.io.Serializable {
 	private String saveCollectionElementAction;
 	private String hideCollectionElementAction;
 	private String removeCollectionElementAction;
+	private String removeSelectedCollectionElementsAction;
 	
 	private boolean focusForward;
 	private String focusPropertyId;
@@ -620,6 +621,7 @@ public class View implements java.io.Serializable {
 				newView.setSaveCollectionElementAction(metaCollectionView.getSaveActionName());
 				newView.setHideCollectionElementAction(metaCollectionView.getHideActionName());
 				newView.setRemoveCollectionElementAction(metaCollectionView.getRemoveActionName());
+				newView.setRemoveSelectedCollectionElementsAction(metaCollectionView.getRemoveSelectedActionName());
 				boolean editable = false;
 				boolean keyEditable = false;
 				if (!metaCollectionView.isReadOnly()) {
@@ -2939,7 +2941,16 @@ public class View implements java.io.Serializable {
 			String removeCollectionElementAction) {
 		this.removeCollectionElementAction = removeCollectionElementAction;
 	}
+	
+	public String getRemoveSelectedCollectionElementsAction() {
+		return Is.emptyString(removeSelectedCollectionElementsAction)?"Collection.removeSelected":removeSelectedCollectionElementsAction;
+	}
 
+	public void setRemoveSelectedCollectionElementsAction(
+			String removeSelectedCollectionElementAction) {
+		this.removeSelectedCollectionElementsAction = removeSelectedCollectionElementAction;
+	}
+	
 	public String getSaveCollectionElementAction() {
 		return Is.empty(saveCollectionElementAction)?"Collection.save":saveCollectionElementAction;
 	}
@@ -2948,14 +2959,6 @@ public class View implements java.io.Serializable {
 		this.saveCollectionElementAction = saveCollectionElementAction;
 	}
 	
-	/* 
-	 * Now the action name is hard coded, maybe in the future this action will can override 
-	 * by openxava developer 
-	 */ 
-	public String getRemoveSelectedInCollectionAction() {
-		return "Collection.removeSelected";
-	}
-
 	public boolean isAlignedByColumns() throws XavaException {
 		return getMetaView().isAlignedByColumns();
 	}
