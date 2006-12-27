@@ -641,7 +641,7 @@
 		<copy todir="../${project}/web/xava" overwrite="true">
     		<fileset dir="../OpenXava/web" excludes="WEB-INF/**"/>
   		</copy>		
-  		<copy todir="../${project}/web/WEB-INF" overwrite="true">
+  		<copy todir="../${project}/web/WEB-INF">
     		<fileset dir="../OpenXava/web/WEB-INF"/>
   		</copy>		
 		<antcall target="filter"/>
