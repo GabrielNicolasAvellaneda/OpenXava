@@ -20,13 +20,13 @@ public class RemoveSelectedInCollectionAction extends CollectionBaseAction {
 	
 	public void execute() throws Exception {
 		try{
-			Collection seleccionados = getMapsSelectedValues();	
+			Collection selectedOnes = getMapsSelectedValues();	
 			
-			if (!seleccionados.isEmpty()){
-				Iterator it = seleccionados.iterator();
+			if (!selectedOnes.isEmpty()){
+				Iterator it = selectedOnes.iterator();
 				while(it.hasNext()){
-					Map valores = (Map) it.next();
-					MapFacade.remove(getCollectionElementView().getModelName(), valores);
+					Map values = (Map) it.next();
+					removeElement(values);
 				}
 				
 				if (isEntityReferencesCollection()) {
@@ -42,6 +42,14 @@ public class RemoveSelectedInCollectionAction extends CollectionBaseAction {
 		catch (ValidationException ex) {			
 			addErrors(ex.getErrors());
 		}
+	}
+	
+	/**
+	 * Is called for each selected row with the values that includes the key
+	 * values. <p>
+	 */
+	protected void removeElement(Map values) throws Exception {
+		MapFacade.remove(getCollectionElementView().getModelName(), values);
 	}
 
 }

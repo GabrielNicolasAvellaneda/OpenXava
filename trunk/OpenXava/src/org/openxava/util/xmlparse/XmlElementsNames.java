@@ -170,5 +170,6 @@ public class XmlElementsNames {
 	protected final static String [] xaligned_by_columns = { "aligned-by-columns", "alineado-por-columnas" };
 	protected final static String [] xmodify = { "modify", "modificar" };
 	protected final static String [] xmodify_reference = { "modify-reference", "modificar-referencia" };
+	protected final static String [] xremove_selected_action = { "remove-selected-action", "accion-quitar-seleccionados" };
 		
 }

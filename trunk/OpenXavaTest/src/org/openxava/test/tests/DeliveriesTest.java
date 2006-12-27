@@ -33,7 +33,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Deliveries");		
 	}
 	
-	public void testMinimunInCollection_checkboxNotInCollectionWhenNotEditable() throws Exception {
+	public void testMinimunInCollection_checkboxNotInCollectionWhenNotEditable_overrideCollectionActions() throws Exception {
 		// minimunCollection
 		execute("CRUD.new");
 		setValue("invoice.year", "2004");
@@ -57,9 +57,10 @@ public class DeliveriesTest extends ModuleTestBase {
 		
 		execute("DeliveryDetails.hideDetail", "viewObject=xava_view_section2_details_details");
 		checkRowCollection("details", 2);
-		execute("Collection.removeSelected", "viewObject=xava_view_section2_details_details");
+		execute("DeliveryDetails.removeSelected", "viewObject=xava_view_section2_details_details");
 		assertNoErrors();
 		assertMessage("DeliveryDetail deleted from database");
+		assertMessage("Delivery detail 13 deleted successfully"); // This message is by the override action for removeSelected		
 		assertCollectionRowCount("details", 2);
 		
 		execute("DeliveryDetails.new", "viewObject=xava_view_section2_details_details");

@@ -19,6 +19,7 @@ public class MetaCollectionView implements Serializable {
 	private String saveActionName;
 	private String hideActionName;
 	private String removeActionName;
+	private String removeSelectedActionName;
 	private Collection actionsDetailNames;
 	private Collection actionsListNames;
 	private List propertiesListNames;
@@ -179,5 +180,13 @@ public class MetaCollectionView implements Serializable {
 
 	public void setModifyReference(boolean modifyReference) {
 		this.modifyReference = modifyReference;
+	}
+
+	public String getRemoveSelectedActionName() {
+		return removeSelectedActionName;
+	}
+
+	public void setRemoveSelectedActionName(String removeSelectedActionName) {
+		this.removeSelectedActionName = removeSelectedActionName;
 	}
 }
