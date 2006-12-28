@@ -140,7 +140,6 @@
 			class="org.openxava.test.actions.RemoveDeliveryDetailAction">			
 			<use-object name="xava_view"/>
 		</action>					
-		<!-- tmp -->
 		<action name="removeSelected" confirm="true"
 			class="org.openxava.test.actions.RemoveSelectedDeliveryDetailsAction">
 			<use-object name="xava_view"/>

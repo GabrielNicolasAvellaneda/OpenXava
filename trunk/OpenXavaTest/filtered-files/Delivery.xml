@@ -132,7 +132,7 @@
 			<save-action action="DeliveryDetails.save"/>
 			<hide-detail-action action="DeliveryDetails.hideDetail"/>
 			<remove-action action="DeliveryDetails.remove"/>
-			<remove-selected-action action="DeliveryDetails.removeSelected"/> <!-- tmp -->
+			<remove-selected-action action="DeliveryDetails.removeSelected"/> 
 		</collection-view>
 
 		<members>

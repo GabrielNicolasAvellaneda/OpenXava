@@ -47,7 +47,7 @@ public class XavaPreferences {
 				log.error(XavaResources.getString("properties_file_error", FILE_PROPERTIES),ex);
 				properties = new Properties();
 			}
-		}
+		}		
 		return properties;
 	}
 
