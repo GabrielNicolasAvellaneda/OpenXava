@@ -32,6 +32,8 @@ public class Products3Test extends ModuleTestBase {
 		assertValue("family.description", "");
 		setValue("family.number", "1");
 		assertValue("family.description", "SOFTWARE");
+		setValue("family.number", "2");
+		assertValue("family.description", "HARDWARE");
 	}
 	
 	public void testReferenceWithHiddenKey_defaultValueCalculatorOnCreateWithJDBC() throws Exception {

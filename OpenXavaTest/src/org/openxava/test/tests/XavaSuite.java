@@ -29,7 +29,7 @@ public class XavaSuite extends TestSuite {
 	}
 	public static Test suite() {		
 		TestSuite suite = new TestSuite();
-				
+		
 		suite.addTest(new TestSuite(WarehousesTest.class));	
 		suite.addTest(new TestSuite(CarriersTest.class));
 		suite.addTest(new TestSuite(CarriersWithSpecialSearchTest.class));		

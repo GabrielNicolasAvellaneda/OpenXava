@@ -31,21 +31,12 @@ public class PropertiesReader {
 	}
 	
   // Adds properties in url to p.
-  // Only adds still not existing properties in p
   private void add(Properties p, URL url) throws IOException {
-		// assert(p, url);
-	    // We give priority to WEB-INF/classes, we do not trust in the classloader configuration of the application server 
-	  	boolean priority = Strings.noLastToken(url.toExternalForm(), "/").endsWith("/WEB-INF/classes/");	  	
+		// assert(p, url);	     	  	
 		InputStream is = url.openStream();
 		Properties properties = new Properties();
 		properties.load(is);
-		Enumeration keys = properties.keys();
-		while (keys.hasMoreElements()) {
-		  Object k = keys.nextElement();
-		  if (priority || !p.containsKey(k)) {
-			p.put(k, properties.get(k));
-		  }
-		}
+		p.putAll(properties);
 		try { is.close(); } catch (IOException ex) {}
   }
   
@@ -61,11 +52,26 @@ public class PropertiesReader {
   public Properties get() throws IOException {
 	  if (properties == null) {		
 			Enumeration e = theClass.getClassLoader().getResources(propertiesFileURL);
-			properties = new Properties();		
+			properties = new Properties();
+			List urls = new ArrayList();
+			List priorityURLs = new ArrayList();
 			while (e.hasMoreElements()) {
-				URL url = (URL) e.nextElement();				
-				add(properties, url);
+				URL url = (URL) e.nextElement();
+				// We give priority to WEB-INF/classes, we do not trust in the classloader configuration of the application server
+				boolean priority = Strings.noLastToken(url.toExternalForm(), "/").endsWith("/WEB-INF/classes/");
+				if (priority) priorityURLs.add(url);
+				else urls.add(url);
 			}		
+			
+			Collections.reverse(urls);
+			Collections.reverse(priorityURLs);
+			urls.addAll(priorityURLs);
+			
+			for (Iterator it = urls.iterator(); it.hasNext(); ) {
+				URL url = (URL) it.next();
+				add(properties, url);
+			}
+			
 		}
 		return properties;
   }          
