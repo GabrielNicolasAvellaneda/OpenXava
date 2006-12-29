@@ -29,24 +29,7 @@
 	<target name="regenerateGenerator">
 		<ant antfile="../OpenXava/build.xml" target="regenerateGenerator"/>
 	</target >
-	
-	<!--
-	If you work with Eclipse WTP add this target to the builder for this project
-	As alternative you can use deployWTP
-	-->
-	<target name="wtpBuild" depends="touchHistory">		
-		<ant antfile="../OpenXava/build.xml" target="wtpBuild"/>
-	</target>
-	
-	<!--
-	You can do not add 'wtpBuild' to the builder for this project and call
-	manually to 'deployWTP' when a change in some file in components or xava
-	folders is done. 
-	-->
-	<target name="deployWTP" depends="wtpBuild">
-		<touch file="web/WEB-INF/web.xml"/>
-	</target>
-	
+		
 	<target name="rebuild">
 		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
 		<ant antfile="../OpenXava/build.xml" target="prepareWar"/>
