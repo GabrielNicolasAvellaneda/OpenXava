@@ -1,3 +1,13 @@
+<h2>Para migrar de OpenXava 2.0.4 a OpenXava 2.1</h2>
+
+<ul>
+<li> La tarea ant wtpBuild ha sido quitada de OX; podemos usar la tarea 'reconstuir' en su lugar. 
+Llamar autom&aacute;ticamente a una tarea ant desde el Builder de Eclipse es lento, por tanto
+puede ser preferible llamar manualmente a la tarea ant 'reconstruir' bajo demanda
+(cuando el c&oacute;digo XML de nuestra aplicaci&oacute;n cambie).
+</li>
+</ul>
+
 <h2>Para migrar de OpenXava 2.0.3 a OpenXava 2.0.4</h2>
 
 <h4>Parse de valores num&eacute;ricos</h4>

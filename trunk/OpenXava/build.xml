@@ -124,12 +124,7 @@
 			</filterset> 			         
 		</copy>						
 	</target>
-	
-	
-	<target name="wtpBuild" depends="filterChangedXavaFiles, filterChangedHibernateFiles">
-		<touch file="../${project}/web/WEB-INF/lib/openxava.jar"/>
-	</target>
-	
+		
 	<target name="filterXavaFiles" depends="copyDTDs">
 		<antcall target="filterXavaFilesWithConfiguration">
 			<param name="overwrite.xava.files" value="true"/>

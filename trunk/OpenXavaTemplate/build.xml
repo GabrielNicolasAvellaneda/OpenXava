@@ -41,13 +41,6 @@
 		<ant antfile="../OpenXava/build.xml" target="prepareWar"/>
 	</target>
 	
-	<!--
-	If you work with Eclipse WTP add this target to the builder for this project
-	-->
-	<target name="wtpBuild">		
-		<ant antfile="../OpenXava/build.xml" target="wtpBuild"/>
-	</target>	
-
 	<!-- 
 	Build all application and deploy it in portlet format. 
 	Regenerate all PSML (for jetspeed2) files

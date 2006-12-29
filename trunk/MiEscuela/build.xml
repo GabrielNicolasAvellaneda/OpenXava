@@ -42,13 +42,6 @@
 	</target>
 	
 	<!--
-	Si trabajas con Eclipse WTP añade esta tarea al constructor (builder) para este proyecto
-	-->
-	<target name="wtpBuild">		
-		<ant antfile="../OpenXava/build.xml" target="wtpBuild"/>
-	</target>		
-	
-	<!--
 	Construye la aplicación y la despliega en formato portlets. 
 	Regenera todos los archivos PSML (para JetSpeed2)
 	-->		

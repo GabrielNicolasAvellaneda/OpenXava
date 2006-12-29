@@ -86,7 +86,7 @@ while (itAggregates.hasNext()) {
 %>
 <tr class=<%=cssClass%>>
 <% if (lineAction != null) { %>
-<td class=<%=cssClass%> style='vertical-align: middle;text-align: center'>
+<td class=<%=cssClass%> style='vertical-align: middle;text-align: center;padding-right: 2px'>
 <xava:link action="<%=lineAction%>" argv='<%="row="+f + ",viewObject="+viewName%>'/>
 </td>
 <% } %>
@@ -128,7 +128,11 @@ if (view.displayDetailInCollection(collectionName)) {
 %>	
 <tr><td colspan="<%=subview.getMetaPropertiesList().size()+1%>">		
 <table class=<%=style.getFrame()%> width='100%' <%=style.getFrameSpacing()%>>
-<tr class=<%=style.getFrameTitle()%>><th class=<%=style.getFrameTitleLabel()%> align='left'><%=ref.getLabel(request)%></th></tr>
+<tr class=<%=style.getFrameTitle()%>><th align='left' class=<%=style.getFrameTitleLabel()%>>
+	<%=style.getFrameTitleStartDecoration()%>
+	<%=ref.getLabel(request)%>
+	<%=style.getFrameTitleEndDecoration()%>
+</th></tr>
 <tr><td class=<%=style.getFrameContent()%>>
 <jsp:include page="detail.jsp"> 
 	<jsp:param name="viewObject" value="<%=viewName%>" />
