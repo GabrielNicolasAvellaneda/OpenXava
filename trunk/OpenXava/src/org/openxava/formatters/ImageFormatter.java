@@ -18,7 +18,7 @@ public class ImageFormatter implements IFormatter {
 	
 	
 	public String format(HttpServletRequest request, Object booleanValue) {		
-		return "<img src='images/photo.gif'/>";		
+		return "<img src='" + request.getContextPath() + "/xava/images/photo.gif'/>";		
 	}
 	
 	public Object parse(HttpServletRequest request, String string) throws ParseException {
