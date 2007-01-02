@@ -48,12 +48,14 @@ public class DateFormatter implements IFormatter {
 	}
 	
 	private DateFormat getDateFormat(HttpServletRequest request) {
-		if ("es".equals(request.getLocale().getLanguage())) return spanishDateFormat;
+		if ("es".equals(request.getLocale().getLanguage()) ||
+				"pl".equals(request.getLocale().getLanguage())) return spanishDateFormat;
 		return DateFormat.getDateInstance(DateFormat.SHORT, request.getLocale());		
 	}
 	
 	private DateFormat[] getDateFormats(HttpServletRequest request) {
-		if ("es".equals(request.getLocale().getLanguage())) return spanishDateFormats;
+		if ("es".equals(request.getLocale().getLanguage()) ||
+				"pl".equals(request.getLocale().getLanguage())) return spanishDateFormats;
 		return new DateFormat [] { getDateFormat(request) };
 	}
 		
