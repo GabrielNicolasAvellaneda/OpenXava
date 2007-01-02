@@ -12,7 +12,7 @@ import org.openxava.util.*;
  * Although it does some refinement in Spanish case, it support formatting
  * on locale basis.<br>
  * 
- * @author José Luis Santiago
+ * @author Josï¿½ Luis Santiago
  * @author Javier Paniza
  */
 
@@ -69,12 +69,14 @@ public class DateTimeFormatter implements IMultipleValuesFormatter {
 	}
 	
 	private DateFormat getDateFormat(HttpServletRequest request) {
-		if ("es".equals(request.getLocale().getLanguage())) return spanishDateFormat;
+		if ("es".equals(request.getLocale().getLanguage()) || 
+				"pl".equals(request.getLocale().getLanguage())) return spanishDateFormat;
 		return DateFormat.getDateInstance(DateFormat.SHORT, request.getLocale());		
 	}
 	
 	private DateFormat[] getDateTimeFormats(HttpServletRequest request) {
-		if ("es".equals(request.getLocale().getLanguage())) return spanishDateTimeFormats;
+		if ("es".equals(request.getLocale().getLanguage()) || 
+				"pl".equals(request.getLocale().getLanguage())) return spanishDateTimeFormats;
 		return new DateFormat [] { DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, request.getLocale() ) };
 	}
 	

@@ -349,7 +349,7 @@ public class ModuleTestBase extends TestCase {
 	 * Only for debug.
 	 */
 	protected void printHtml() throws Exception {
-		log.info(response.getText());
+		log.debug(response.getText());
 	}
 	
 	/**

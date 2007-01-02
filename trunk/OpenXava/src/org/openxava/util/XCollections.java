@@ -60,7 +60,7 @@ public class XCollections {
 	public static void println(Iterator it) {
 		if (it == null) return;
 		while (it.hasNext()) {
-			log.info(" - " + it.next());
+			log.debug(" - " + it.next());
 		}
 	}
 	

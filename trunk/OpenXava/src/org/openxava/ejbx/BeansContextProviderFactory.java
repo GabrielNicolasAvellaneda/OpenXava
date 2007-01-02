@@ -100,7 +100,7 @@ public class BeansContextProviderFactory {
 				if (Is.emptyString(subcontext)) subcontext = pro.getProperty(SUBCONTEXT_PROPERTY_ES);
 				if (Is.emptyString(subcontext)) subcontext = null;
 				subcontextReaded = true;
-				log.info("subcontext=" + subcontext);
+				log.debug("subcontext=" + subcontext);
 			}
 			catch (Exception ex) {
 				log.error(ex.getMessage(), ex);
