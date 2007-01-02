@@ -31,7 +31,7 @@ public class UserFilter implements IFilter {
 
 	private String getUser() {		
 		String user = Users.getCurrent();
-		log.info("Users.getCurrent()=" + user); //  tmp
+		log.debug("Users.getCurrent()=" + user); //  tmp
 		return user;
 	}
 

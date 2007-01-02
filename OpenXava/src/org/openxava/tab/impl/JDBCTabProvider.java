@@ -228,7 +228,7 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 			if (i < key.length - 1)
 				message.append(", ");
 		}
-		log.info(message);
+		log.debug(message);
 		
 		ResultSet rs = ps.executeQuery();
 		position(rs);

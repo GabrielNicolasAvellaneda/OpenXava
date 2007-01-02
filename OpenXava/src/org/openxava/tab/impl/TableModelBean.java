@@ -120,7 +120,7 @@ public class TableModelBean implements IXTableModel, java.io.Serializable {
 			DataChunk sig = entityTab.nextChunk();
 			long timeNextChunk =
 				System.currentTimeMillis() - iniNextChunk;
-			log.info("nextChunk=" + timeNextChunk);
+			log.debug("nextChunk=" + timeNextChunk);
 			List newData = sig.getData();
 			Iterator it = newData.iterator();
 			while (it.hasNext()) {

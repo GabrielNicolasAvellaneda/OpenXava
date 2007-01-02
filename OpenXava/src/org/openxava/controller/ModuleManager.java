@@ -209,7 +209,7 @@ public class ModuleManager {
 					long ini = System.currentTimeMillis();
 					executeAction(a, errors, messages, actionValue, request);
 					long time = System.currentTimeMillis() - ini;
-					log.info("Execute " + xavaAction + "=" + time + " ms");						
+					log.debug("Execute " + xavaAction + "=" + time + " ms");						
 				}									
 			}			
 		}
