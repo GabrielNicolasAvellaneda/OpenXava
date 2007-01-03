@@ -308,3 +308,13 @@ limitations under the License.
     background-color: yellow;
     font-style: italic;
 }
+
+/* rost: experimental disabled style*/
+
+INPUT:disabled, INPUT[disabled], INPUT[type=checkbox][disabled], TEXTAREAINPUT:disabled, TEXTAREAINPUT[disabled]  {
+	color: #555555;
+	background-color: transparent;
+	border-width: thin;
+	border-style: solid;
+	border-color: graytext;
+}
