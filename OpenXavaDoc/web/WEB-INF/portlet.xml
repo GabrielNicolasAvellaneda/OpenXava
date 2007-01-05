@@ -268,6 +268,38 @@
 		<resource-bundle>EJB3</resource-bundle>		
 	</portlet> 
 	
+	<portlet id="Documentation">
+		<description>Documentation</description>    
+		<portlet-name>Documentation</portlet-name>
+		<display-name>Documentation</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>documentation</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<resource-bundle>Documentation</resource-bundle>		
+	</portlet> 
 	
-								
+	<portlet id="ReferenceGuide">
+		<description>ReferenceGuide</description>    
+		<portlet-name>ReferenceGuide</portlet-name>
+		<display-name>ReferenceGuide</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>reference-guide</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<resource-bundle>ReferenceGuide</resource-bundle>		
+	</portlet> 
+	
 </portlet-app>
