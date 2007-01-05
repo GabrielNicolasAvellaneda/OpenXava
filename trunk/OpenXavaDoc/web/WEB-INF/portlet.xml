@@ -43,21 +43,21 @@
 		<resource-bundle>Features</resource-bundle>		
 	</portlet> 	
 	
-	<portlet id="New">
-		<description>New</description>    
-		<portlet-name>New</portlet-name>
-		<display-name>New</display-name>    
+	<portlet id="News">
+		<description>News</description>    
+		<portlet-name>News</portlet-name>
+		<display-name>News</display-name>    
 		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
 		<init-param>
 			<name>Page</name>
-			<value>new</value>
+			<value>news</value>
 		</init-param>
 		<expiration-cache>-1</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>
 			<portlet-mode>VIEW</portlet-mode>
 		</supports>
-		<resource-bundle>New</resource-bundle>		
+		<resource-bundle>News</resource-bundle>		
 	</portlet> 
 			
 	<portlet id="Tutorial">
@@ -77,6 +77,23 @@
 		<resource-bundle>Tutorial</resource-bundle>		
 	</portlet> 
 	
+	<portlet id="Demos">
+		<description>Demos</description>    
+		<portlet-name>Demos</portlet-name>
+		<display-name>Demos</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>demos</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<resource-bundle>Demos</resource-bundle>		
+	</portlet> 
+		
 	<portlet id="FAQ">
 		<description>FAQ</description>    
 		<portlet-name>FAQ</portlet-name>

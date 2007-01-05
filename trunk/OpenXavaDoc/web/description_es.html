@@ -1,131 +1,29 @@
-OpenXava es un marco de trabajo para desarrollar f&aacute;cilmente
-aplicaciones
-de gesti&oacute;n con XML y Java.<br>
+OpenXava es un marco de trabajo para desarrollar aplicaciones web
+basadas en bases de datos, como <span style="font-style: italic;">Ruby
+on Rails</span>, pero OpenXava produce aplicaciones J2EE / JavaEE
+est&aacute;ndars que pueden ser desplegadas en cualquier servidor de
+aplicaciones Java est&aacute;ndar (o portal Java est&aacute;ndar).<br>
+Lo que hace a OpenXava diferente de otros marcos es:<br>
+<ul>
+  <li>Es realmente r&aacute;pido y f&aacute;cil para desarrollar
+aplicaciones orientadas a bases de datos.</li>
+  <li>Est&aacute; orientado a componentes de negocio en vez de MVC (ver
+en&nbsp;<a
+ href="http://es.wikipedia.org/wiki/Openxava#Componente_de_negocio_frente_a_MVC">wikipedia</a>).&nbsp;</li>
+  <li>Genera autom&aacute;ticamente la interfaz de usuario desde la
+definici&oacute;n de los componentes de negocio.</li>
+</ul>
+OpenXava ha sido creado por programadores Java (que necesitan
+desarrollar aplicaciones Java cr&iacute;ticas de una manera productiva)
+para su propio uso; por ende es potente, extensible y divertido para un
+experto.<br>
+Por otra parte OpenXava permite a un programador Java novato empezar
+r&aacute;pidamente a ser productivo, por lo tanto tambi&eacute;n. es
+una experiencia agradable para los que empiezan.<br>
 <br>
-Su principal virtud reside en el hecho de que el coraz&oacute;n de
-nuestras aplicaciones
-es XML en vez de Java.<br>
-Por ejemplo, si quieres una aplicaci&oacute;n J2EE para trabajar con <i>Profesores</i>
-solo necesitas escribir este sencillo archivo XML:
-<p><span style="margin-bottom: 0cm;"><font face="Monospace"><font
- size="2"><font color="#008080">&lt;?</font><font color="#3f7f7f">xml
-</font><font color="#7f007f">version</font><font color="#000000">=</font><font
- color="#2a00ff">"1.0"
-</font><font color="#7f007f">encoding</font><font color="#000000">=</font><font
- color="#2a00ff">"ISO-8859-1"</font><font color="#008080">?&gt;</font></font></font></span><br>
+La mejor forma de aprender sobre OpenXava es descargarlo, y seguir su
+tutorial.<br>
 <br>
-<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
- color="#008080">&lt;!</font><font color="#3f7f7f">DOCTYPE
-</font><font color="#000080">componente </font><font color="#808080">SYSTEM
-</font><font color="#3f7f5f">"dtds/componente.dtd"</font><font
- color="#008080">&gt;</font></font></font></span><br>
-<br>
-<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
- color="#008080">&lt;</font><font color="#3f7f7f">componente
-</font><font color="#7f007f">nombre</font><font color="#000000">=</font><font
- color="#2a00ff">"Profesor"</font><font color="#008080">&gt;</font></font></font></span><br>
-<br>
-<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
- color="#008080"><font color="#000000">&nbsp;&nbsp;</font>&lt;</font><font
- color="#3f7f7f">entidad</font><font color="#008080">&gt;</font></font></font></span><br>
-<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
- color="#008080"><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font>&lt;</font><font
- color="#3f7f7f">propiedad
-</font><font color="#7f007f">nombre</font><font color="#000000">=</font><font
- color="#2a00ff">"codigo"
-</font><font color="#7f007f">tipo</font><font color="#000000">=</font><font
- color="#2a00ff">"String"
-</font></font></font></span><br>
-<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
- color="#7f007f"><font color="#2a00ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font>clave</font><font
- color="#000000">=</font><font color="#2a00ff">"true"
-</font><font color="#7f007f">longitud</font><font color="#000000">=</font><font
- color="#2a00ff">"5"
-</font><font color="#7f007f">requerido</font><font color="#000000">=</font><font
- color="#2a00ff">"true"</font><font color="#008080">/&gt;</font></font></font></span><br>
-<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
- color="#008080"><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font>&lt;</font><font
- color="#3f7f7f">propiedad
-</font><font color="#7f007f">nombre</font><font color="#000000">=</font><font
- color="#2a00ff">"nombre"
-</font><font color="#7f007f">tipo</font><font color="#000000">=</font><font
- color="#2a00ff">"String"
-</font></font></font></span><br>
-<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
- color="#7f007f"><font color="#2a00ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font>longitud</font><font
- color="#000000">=</font><font color="#2a00ff">"40"
-</font><font color="#7f007f">requerido</font><font color="#000000">=</font><font
- color="#2a00ff">"true"</font><font color="#008080">/&gt;</font><font
- color="#000000"> </font></font></font>
-</span><br>
-<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
- color="#008080"><font color="#000000">&nbsp;&nbsp;</font>&lt;/</font><font
- color="#3f7f7f">entidad</font><font color="#008080">&gt;</font></font></font></span><br>
-<span style="margin-bottom: 0cm;"><font color="#000000"><font
- face="Monospace"><font size="2"> </font></font></font></span><br>
-<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
- color="#008080"><font color="#000000">&nbsp;&nbsp;</font>&lt;</font><font
- color="#3f7f7f">mapeo-entidad
-</font><font color="#7f007f">tabla</font><font color="#000000">=</font><font
- color="#2a00ff">"MYSCHOOL@separator@TEACHER"</font><font
- color="#008080">&gt;</font></font></font></span><br>
-<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
- color="#008080"><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font>&lt;</font><font
- color="#3f7f7f">mapeo-propiedad
-</font></font></font></span><br>
-<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
- color="#7f007f"><font color="#3f7f7f">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font>propiedad-modelo</font><font
- color="#000000">=</font><font color="#2a00ff">"codigo"
-</font><font color="#7f007f">columna-tabla</font><font color="#000000">=</font><font
- color="#2a00ff">"ID"</font><font color="#008080">/&gt;</font></font></font></span><br>
-<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
- color="#008080"><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font>&lt;</font><font
- color="#3f7f7f">mapeo-propiedad
-</font></font></font></span><br>
-<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
- color="#7f007f"><font color="#3f7f7f">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font>propiedad-modelo</font><font
- color="#000000">=</font><font color="#2a00ff">"nombre"
-</font><font color="#7f007f">columna-tabla</font><font color="#000000">=</font><font
- color="#2a00ff">"NAME"</font><font color="#008080">/&gt;</font></font></font></span><br>
-<span style="margin-bottom: 0cm;"><font face="Monospace"><font size="2"><font
- color="#008080"><font color="#000000">&nbsp;&nbsp;</font>&lt;/</font><font
- color="#3f7f7f">mapeo-entidad</font><font color="#008080">&gt;</font><font
- color="#000000">
-</font></font></font></span><br>
-<span style="margin-bottom: 0cm;"><font color="#000000"><font
- face="Monospace"><font size="2"> </font></font></font></span><br>
-<span style="margin-bottom: 0cm;"><font size="2"><font face="Monospace"><font
- color="#008080">&lt;/</font><font color="#3f7f7f">componente</font><font
- color="#008080">&gt;</font></font></font></span><br>
-</p>
-Y nada m&aacute;s. Nada de clases Java, archivos XML para el mapeo, o
-dibujar
-p&aacute;ginas JSP o JSF, simplemente nada m&aacute;s.<br>
-OpenXava genera para t&iacute; una aplicaci&oacute;n J2EE completa
-(con&nbsp;Hibernate o&nbsp;EJB
-para la persistencia) como <a href="/openxava/portal/MiEscuela">&eacute;sta</a>,
-y con una interfaz de usuario para gestionar
-tus <i>Profesores</i>.
-La aplicaci&oacute;n resultante te permite hacer manteniento,
-b&uacute;squedas, filtros, ordenaciones,
-generar informes en formato PDF, exporta a Excel, etc.<br>
-A pesar de su facilidad para desarrollo r&aacute;pido, OpenXava es
-suficientemente
-flexible como para que puedas poner tu propio c&oacute;digo en
-cualquier parte de
-la aplicaci&oacute;n.<br>
-Con solo simples XMLs y c&oacute;digo Java en formato JavaBean (clases
-de Java realmente reutilizables) puedes construir cualquier
-aplicaci&oacute;n de gesti&oacute;n J2EE de una manera
-muy productiva.
-De hecho, muchas aplicaciones cr&iacute;ticas de gesti&oacute;n, en
-producci&oacute;n actualmente, han sido
-desarrolladas con OpenXava.<br>
-<br>
-Para aprender m&aacute;s sobre OpenXava lo mejor es <a
- href="http://sourceforge.net/project/showfiles.php?group_id=123187">descargarlo</a>
-y seguir el <a href="portal/tutorial.psml">tutorial</a>.<br>
-Si quieres conocer todas las posibilidades de OpenXava echale un
-vistazo a su
-<a href="/OpenXavaDoc/openxava-2.0.4-guia-referencia.pdf">Gu&iacute;a
-de Referencia</a>.
+No dudes en preguntar en el <a
+ href="http://sourceforge.net/forum/forum.php?forum_id=437015">foro</a>
+de la comunidad cualquier preguntas que tengas.
