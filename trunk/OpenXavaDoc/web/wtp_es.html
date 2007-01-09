@@ -4,7 +4,7 @@ Eclipse Web Tool Platform (<a href="http://www.eclipse.org/webtools/">WTP</a>)
 nos ayuda a desarrollar aplicaciones J2EE con Eclipse.<br>
 En el caso de OpenXava podemos usar WTP para arrancar el Tomcat (o tu
 servidor de aplicaciones preferido) dentro de Eclipse, de esta forma
-podemos ver los efecto de los camibos sin redesplegar y tambi&eacute;n
+podemos ver los efecto de los cambios sin redesplegar y tambi&eacute;n
 podemos depurar.<br>
 Todas las aplicaciones OpenXava creadas desde OpenXavaPlantilla son
 compatibles con WTP.<br>
@@ -17,20 +17,16 @@ en Eclipse
 (seleccionando todos los proyectos y pulsando F5).<br>
 Hemos de seguir los siguientes pasos:<br>
 <ul>
-  <li><a href="portal/wtp.psml#Add_Tomcat_to_your_Eclipse">A&ntilde;adir&nbsp;Tomcat
+  <li><a href="#Add_Tomcat_to_your_Eclipse">A&ntilde;adir&nbsp;Tomcat
 a
 nuestro&nbsp;Eclipse.</a></li>
-  <li><a href="portal/wtp.psml#Create_a_Tomcat_server">Crear un
+  <li><a href="#Create_a_Tomcat_server">Crear un
 servidor Tomcat.</a></li>
-  <li><a href="portal/wtp.psml#Define_your_data_sources">Definir las
+  <li><a href="#Define_your_data_sources">Definir las
 fuentes de datos.</a></li>
-  <li><a href="portal/wtp.psml#Configure_your_OpenXava_application">Configurar
-nuestra
-aplicaci&oacute;n
-OpenXava.</a></li>
-  <li><a href="portal/wtp.psml#Start_the_server_and_test_your">Arrancar
+  <li><a href="#Start_the_server_and_test_your">Arrancar
 el&nbsp;servidor y probar la aplicaci&oacute;n.</a></li>
-  <li><a href="portal/wtp.psml#Developing_using_WTP">Desarrollando con
+  <li><a href="#Developing_using_WTP">Desarrollando con
 WTP.</a></li>
 </ul>
 <h4><a name="Add_Tomcat_to_your_Eclipse"></a>A&ntilde;adir Tomcat a
@@ -147,19 +143,6 @@ url="jdbc:hsqldb:file:</span><span
 <br>
 Hemos de cambiar <span style="color: rgb(51, 51, 255);">/java/openxava-2.0</span>
 por la ruta donde tengamos el OpenXava instalado.
-<h4><a name="Configure_your_OpenXava_application"></a>Configurar
-nuestra aplicaci&oacute;n&nbsp;OpenXava</h4>
-<ul>
-  <li>Pulsa en&nbsp;<span style="font-style: italic;">Bot&oacute;n
-Derecho</span> sobre el&nbsp;proyecto (en este caso sobre <span
- style="font-style: italic;">MiEscuela</span>) <span
- style="font-style: italic;">&gt; Properties &gt; Builders</span>.</li>
-  <li>Marca <span style="font-style: italic;">MiEscuela.wtpBuild</span>.</li>
-  <li>Pulsa en&nbsp;<span style="font-style: italic;">OK</span>.</li>
-  <li>Pulsa en <span style="font-style: italic;">Build All</span>.</li>
-  <li>Ejecuta la tarea ant <span style="font-style: italic;">reconstruir</span>
-y refresca (F5) tu proyecto.</li>
-</ul>
 <h4><a name="Start_the_server_and_test_your"></a>Arrancar el servidor y
 probar la aplicaci&oacute;n</h4>
 <ul>
@@ -173,9 +156,13 @@ Tomcat v5.5 Server &gt; Start</span></li>
  href="http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Profesores">http://localhost:8080/MiEscuela/xava/module.jsp?application=MiEscuela&amp;module=Profesores</a>.</li>
 </ul>
 <h4><a name="Developing_using_WTP"></a>Desarrollando con WTP</h4>
-Despu&eacute;s de seguir estos pasos ya solo necesitamos tocar nuestro
-c&oacute;digo, pulsa en <span style="font-style: italic;">Build
+Despu&eacute;s de seguir estos pasos si cambiamos el c&oacute;digo Java
+solo necesitamos pulsar en <span style="font-style: italic;">Build
 All</span> (o <span style="font-style: italic;">Ctrl-B</span>) e ir a
-ver en nuestro navegador para ver nuestra aplicaci&oacute;n
-actualizada. Adem&aacute;s, podemos arrancar el Tomcat en modo
+nuestro navegador para ver la aplicaci&oacute;n actualizada. Si tocamos
+un archivo XML tendremos que ejecutar la tarea ant <span
+ style="font-style: italic;">reconstruir</span>, refrescar nuestro
+proyecto y usar nuestro navegador para ver el resultado.<br>
+<br>
+Adem&aacute;s, podemos arrancar el Tomcat en modo
 depuraci&oacute;n y as&iacute; usar el depurador del Eclipse.<br>

@@ -6,8 +6,8 @@ Suppose the business concept Invoice, all related information about one
 Invoice it's defined inside the Invoice.xml file. You define all
 validations, stored data, business logic, graphical interface, tabular
 data, mapping to databases, etc. </p>
-<p><br>
-Usually to develop J2EE applications the developers teams make a split
+<p>Usually to develop J2EE applications the developers teams make a
+split
 between different technical roles: graphical designer, business logic
 programmers, deployers (to configure the application), etc. Opposite to
 this point of view OpenXava propose a split based&nbsp;on the
@@ -15,7 +15,14 @@ functionality
 and OpenXava has to solve technical aspects (graphical interface, data
 access
 , etc. ) We have verified that this way to manage our teams are more
-efficient that the older ones furthermore when the team use CVS. </p>
-Because it's business component oriented the architecture for
-application developer is simple, like this:
-<img src="/OpenXavaDoc/images/openxava-architecture.jpg"><br>
+efficient that the older ones. </p>
+The Business Component approach is an alternative to the traditional
+MVC frameworks. In MVC the code is classified in the <span
+ style="font-weight: bold;">M</span>odel (the business logic), the <span
+ style="font-weight: bold;">V</span>iew (the User Interface) and the <span
+ style="font-weight: bold;">C</span>ontroller (the behaviour). In
+OpenXava the code is classified in Invoice, Delivery, Customer, etc.
+That is, it's classified using business concepts as base.<br>
+<br>
+You can see more about this issue in <a
+ href="http://en.wikipedia.org/wiki/Openxava#Business_Component_versus_MVC">Wikipedia</a>.<br>
