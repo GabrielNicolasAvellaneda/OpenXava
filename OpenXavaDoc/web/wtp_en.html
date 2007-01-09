@@ -17,19 +17,16 @@ in Eclipse
 (select all projects and press F5).<br>
 Follow the next steps:<br>
 <ul>
-  <li><a href="portal/wtp.psml#Add_Tomcat_to_your_Eclipse">Add Tomcat
+  <li><a href="#Add_Tomcat_to_your_Eclipse">Add Tomcat
 to your Eclipse.</a></li>
-  <li><a href="portal/wtp.psml#Create_a_Tomcat_server">Create a Tomcat
+  <li><a href="#Create_a_Tomcat_server">Create a Tomcat
 server.</a></li>
-  <li><a href="portal/wtp.psml#Define_your_data_sources">Define your
+  <li><a href="#Define_your_data_sources">Define your
 data sources.</a></li>
-  <li><a href="portal/wtp.psml#Configure_your_OpenXava_application">Configure
-your
-OpenXava application.</a></li>
-  <li><a href="portal/wtp.psml#Start_the_server_and_test_your">Start
+  <li><a href="#Start_the_server_and_test_your">Start
 the server and
 test your application.</a></li>
-  <li><a href="portal/wtp.psml#Developing_using_WTP">Developing using
+  <li><a href="#Developing_using_WTP">Developing using
 WTP.</a></li>
 </ul>
 <h4><a name="Add_Tomcat_to_your_Eclipse"></a>Add Tomcat to your Eclipse</h4>
@@ -144,18 +141,6 @@ url="jdbc:hsqldb:file:</span><span
 <br>
 Remember to change <span style="color: rgb(51, 51, 255);">/java/openxava-2.0</span>
 by the path where your have OpenXava installed.
-<h4><a name="Configure_your_OpenXava_application"></a>Configure your
-OpenXava application</h4>
-<ul>
-  <li>Click on <span style="font-style: italic;">Right Button</span>
-on your project (in this case in <span style="font-style: italic;">MySchool</span>)
-    <span style="font-style: italic;">&gt; Properties &gt; Builders</span>.</li>
-  <li>Check <span style="font-style: italic;">MySchool.wtpBuild</span>.</li>
-  <li>Click on&nbsp;<span style="font-style: italic;">OK</span>.</li>
-  <li>Click on <span style="font-style: italic;">Build All</span>.</li>
-  <li>Execute ant target <span style="font-style: italic;">rebuild</span>
-and refresh (F5) your project.</li>
-</ul>
 <h4><a name="Start_the_server_and_test_your"></a>Start the server and
 test your application</h4>
 <ul>
@@ -168,9 +153,13 @@ Tomcat v5.5 Server &gt; Start</span></li>
  href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Teachers">http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Teachers</a>.</li>
 </ul>
 <h4><a name="Developing_using_WTP"></a>Developing using WTP</h4>
-After the above steps you only need to touch your code, click on <span
- style="font-style: italic;">Build
+After the above steps if you change Java code then you only need to
+click on <span style="font-style: italic;">Build
 All</span> (or <span style="font-style: italic;">Ctrl-B</span>) and go
 to your browser to see your updated
-application. Furthermore, you can start your Tomcat in debug mode and
+application. If you touch some XML file you need to execute the <span
+ style="font-style: italic;">rebuild</span> ant target, refresh your
+project and go to the browser to see the result.<br>
+<br>
+Furthermore, you can start your Tomcat in debug mode and
 using the Eclipse debugger.<br>

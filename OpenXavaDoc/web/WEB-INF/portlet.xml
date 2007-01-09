@@ -128,6 +128,41 @@
 		<resource-bundle>WebSphere</resource-bundle>		
 	</portlet> 
 	
+	<portlet id="WebSphereEJB2">
+		<description>WebSphereEJB2</description>    
+		<portlet-name>WebSphereEJB2</portlet-name>
+		<display-name>WebSphereEJB2</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>websphere-ejb2</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<resource-bundle>WebSphereEJB2</resource-bundle>		
+	</portlet> 
+	
+	<portlet id="WebSpherePortalEJB2">
+		<description>WebSpherePortalEJB2</description>    
+		<portlet-name>WebSpherePortalEJB2</portlet-name>
+		<display-name>WebSpherePortalEJB2</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>websphere-portal-ejb2</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<resource-bundle>WebSpherePortalEJB2</resource-bundle>		
+	</portlet> 
+	
+	
 	<portlet id="CustomCode">
 		<description>CustomCode</description>    
 		<portlet-name>CustomCode</portlet-name>
@@ -199,24 +234,7 @@
 		</supports>
 		<resource-bundle>Credits</resource-bundle>		
 	</portlet> 
-	
-	<portlet id="WebSpherePortal">
-		<description>WebSpherePortal</description>    
-		<portlet-name>WebSpherePortal</portlet-name>
-		<display-name>WebSpherePortal</display-name>    
-		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
-		<init-param>
-			<name>Page</name>
-			<value>websphere-portal</value>
-		</init-param>
-		<expiration-cache>-1</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>VIEW</portlet-mode>
-		</supports>
-		<resource-bundle>WebSpherePortal</resource-bundle>		
-	</portlet> 
-	
+		
 	<portlet id="Security">
 		<description>Security</description>    
 		<portlet-name>Security</portlet-name>
