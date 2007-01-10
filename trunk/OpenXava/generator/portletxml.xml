@@ -61,7 +61,7 @@ for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
 			&lt;value&gt;<expr>Strings.toCharSet(module.getName(), encoding)</expr>&lt;/value&gt;
 		&lt;/init-param&gt;			
 	<java>} </java> 
-		&lt;expiration-cache&gt;-1&lt;/expiration-cache&gt;
+		&lt;expiration-cache&gt;0&lt;/expiration-cache&gt;
 		&lt;supports&gt;
 			&lt;mime-type&gt;text/html&lt;/mime-type&gt;
 			&lt;portlet-mode&gt;VIEW&lt;/portlet-mode&gt;

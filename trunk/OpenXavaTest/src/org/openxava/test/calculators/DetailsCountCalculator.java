@@ -2,6 +2,7 @@ package org.openxava.test.calculators;
 
 import java.sql.*;
 
+import org.apache.commons.logging.*;
 import org.openxava.calculators.*;
 import org.openxava.component.*;
 import org.openxava.util.*;
@@ -11,11 +12,12 @@ import org.openxava.util.*;
  */
 public class DetailsCountCalculator implements IJDBCCalculator {
 	
+	private static Log log = LogFactory.getLog(DetailsCountCalculator.class); // tmp
+	
 	private IConnectionProvider provider;
 	private int year;
 	private int number;
 	
-
 	public void setConnectionProvider(IConnectionProvider proveedor) {
 		this.provider = proveedor;
 	}

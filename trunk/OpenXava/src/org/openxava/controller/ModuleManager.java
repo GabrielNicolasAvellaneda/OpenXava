@@ -1,6 +1,7 @@
 package org.openxava.controller;
 
 import java.util.*;
+import java.util.logging.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -13,6 +14,7 @@ import org.apache.commons.logging.*;
 
 import org.openxava.actions.*;
 import org.openxava.application.meta.*;
+import org.openxava.component.*;
 import org.openxava.controller.meta.*;
 import org.openxava.hibernate.*;
 import org.openxava.jpa.*;
@@ -30,6 +32,7 @@ public class ModuleManager {
 	
 	static {
 		MetaControllers.setContext(MetaControllers.WEB);		
+		setLogLevel();
 	}
 	
 	private static int nextOid = 0; 
@@ -60,12 +63,32 @@ public class ModuleManager {
 	private boolean formUpload = false;
 	private String lastPageId;
 	private String previousMode; 
-	
-	
 
 	public ModuleManager() {
 		oid = nextOid++;
 	}
+	
+	private static void setLogLevel() {		
+		Logger rootLogger = Logger.getLogger("");
+		Handler [] rootHandler = rootLogger.getHandlers();		
+		for (int i=0; i<rootHandler.length; i++) {
+			if (rootHandler[i] instanceof ConsoleHandler)
+				rootHandler[i].setLevel(Level.ALL);
+		}		
+		Logger.getLogger("org.openxava").setLevel(XavaPreferences.getInstance().getJavaLoggingLevel());
+		try {
+			for (Iterator it = MetaComponent.getAllPackageNames().iterator(); it.hasNext(); ) {
+				String packageName = (String) it.next();
+				Logger.getLogger(packageName).setLevel(XavaPreferences.getInstance().getJavaLoggingLevel());
+			}			
+		}
+		catch (Exception ex) {
+			log.warn(XavaResources.getString("logging_level_not_set"));
+		}
+	}
+
+	
+
 	
 	/**
 	 * Html form name associated to this controller. 
@@ -195,7 +218,7 @@ public class ModuleManager {
 		return false;
 	}	
 	
-	public void execute(HttpServletRequest request, Messages errors, Messages messages) {		
+	public void execute(HttpServletRequest request, Messages errors, Messages messages) {
 		try {								
 			if (errors.isEmpty()) { // Only it's executed the action if there aren't errors
 				if (isFormUpload()) {
