@@ -14,7 +14,9 @@
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
+<% if (request.getParameter("parent") == null) { %>
 <%@ include file="script.jsp" %>
+<% } %>
 
 <%
 Users.setCurrent(request);
@@ -198,6 +200,7 @@ document.onkeydown = processKey;
 
 
 <% if (!isPortlet) { %>
+<%@ page pageEncoding="utf-8" %>
 <!DOCTYPE HTML PUBLIC "-//w3c//dtd html 4.0 transitional//en">
 <html>
 <head>
