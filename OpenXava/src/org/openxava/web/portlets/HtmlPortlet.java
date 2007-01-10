@@ -1,11 +1,7 @@
 package org.openxava.web.portlets;
 
 import java.io.*;
-
 import javax.portlet.*;
-
-
-
 import org.openxava.util.*;
 
 /**
@@ -38,7 +34,7 @@ import org.openxava.util.*;
  */
 
 public class HtmlPortlet extends GenericPortlet {
-
+	
 	/**
 	 * Name of HTML page to serve. 
 	 */
@@ -69,7 +65,7 @@ public class HtmlPortlet extends GenericPortlet {
 		PortletContext context = getPortletContext();
 		String language = request.getLocale().getLanguage();
 		language = languages.indexOf(language) < 0?defaultLanguage:"_" + language;
-		String url = page + language + ".html";		
+		String url = page + language + ".html";
 		PortletRequestDispatcher rd = context.getRequestDispatcher(url);						
 		rd.include(request, response);		
 	}

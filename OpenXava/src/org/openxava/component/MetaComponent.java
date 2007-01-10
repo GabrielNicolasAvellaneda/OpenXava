@@ -31,6 +31,7 @@ public class MetaComponent implements Serializable {
 	private static Map components = new HashMap();
 	private static Properties packages;
 	private static boolean allComponentsLoaded = false;
+	private static Set allPackageNames;
 	
 	private String packageNameWithSlashWithoutModel;
 	private String name;
@@ -344,12 +345,42 @@ public class MetaComponent implements Serializable {
 	}
 
 	
-	private static Properties getPackages() throws IOException {
+	private static Properties getPackages() throws IOException { 
 		if (packages == null) {
 			PropertiesReader reader = new PropertiesReader(MetaComponent.class, "packages.properties");
 			packages = reader.get();
 		}
 		return packages;
+	}
+	
+	/**
+	 * The names of all the root Java packages used by the components 
+	 * of all OpenXava application in the classpath. <p>
+	 * 
+	 * It's the root package for each application, that it returns
+	 * <code>com.gestion400.invoicing</code> and not 
+	 * <code>com.gestion400.invoicing.model</code>. 
+	 * 
+	 * @return Of <code>String</code>
+	 */
+	public static Set getAllPackageNames() throws XavaException { 
+		if (allPackageNames == null) {
+			allPackageNames = new HashSet();
+			try {
+				for (Iterator it = getPackages().values().iterator(); it.hasNext(); ) {
+					String name = (String) it.next();
+					int idx = name.lastIndexOf('.'); 
+					if (idx >= 0) {										
+						allPackageNames.add(name.substring(0, idx));
+					}
+				}
+			}
+			catch (Exception ex) {
+				log.error(XavaResources.getString("package_names_error"), ex);
+				throw new XavaException(XavaResources.getString("package_names_error"));
+			}
+		}
+		return allPackageNames;
 	}
 	
 			

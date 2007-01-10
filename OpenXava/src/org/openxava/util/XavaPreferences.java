@@ -2,6 +2,7 @@ package org.openxava.util;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.*;
 
 import org.apache.commons.logging.*;
 
@@ -11,6 +12,7 @@ import org.apache.commons.logging.*;
 public class XavaPreferences {
 	
 	private final static String FILE_PROPERTIES="xava.properties";
+	private final static String JAVA_LOGGING_LEVEL_DEFAULT_VALUE="INFO";
 	private static Log log = LogFactory.getLog(XavaPreferences.class);
 		
 	private static XavaPreferences instance;
@@ -26,6 +28,7 @@ public class XavaPreferences {
 	private int maxSizeForTextEditor;
 	private boolean jpaCodeInPOJOs = false;
 	private boolean jpaCodeInPOJOsLoaded = false;
+	private Level javaLoggingLevel;
 
 		
 	
@@ -139,6 +142,21 @@ public class XavaPreferences {
 	public void setDuplicateComponentWarnings(boolean duplicateComponentWarnings) {
 		this.duplicateComponentWarnings = duplicateComponentWarnings;
 		duplicateComponentWarningsLoaded = true;
+	}
+	
+	public Level getJavaLoggingLevel() {
+		if (javaLoggingLevel == null) {
+			String log = getProperties().getProperty("javaLoggingLevel", JAVA_LOGGING_LEVEL_DEFAULT_VALUE);
+			try {
+				javaLoggingLevel = Level.parse(log);
+			}
+			catch (Exception ex) {
+				// Because it's a log error, we don't use log, but direct System.err
+				javaLoggingLevel = Level.parse(JAVA_LOGGING_LEVEL_DEFAULT_VALUE);
+				System.err.println("[XavaPreferences.getLogLevel] " + XavaResources.getString("incorrect_log_level", log, JAVA_LOGGING_LEVEL_DEFAULT_VALUE));				
+			}
+		}
+		return javaLoggingLevel;
 	}
 	
 }

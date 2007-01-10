@@ -4,8 +4,8 @@
 <wb-resource deploy-path="/" source-path="/xava"/>
 <wb-resource deploy-path="/" source-path="/src"/>
 <wb-resource deploy-path="/" source-path="/i18n"/>
-<wb-resource deploy-path="/" source-path="/properties"/>
 <wb-resource deploy-path="/" source-path="/jpa"/>
 <wb-resource deploy-path="/" source-path="/ejb3-jpa"/>
+<wb-resource deploy-path="/" source-path="/properties"/>
 </wb-module>
 </project-modules>
