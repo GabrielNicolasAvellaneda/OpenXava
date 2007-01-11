@@ -23,6 +23,8 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>VIEW</portlet-mode>
 		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>
 		<resource-bundle>Description</resource-bundle>		
 	</portlet> 
 	
@@ -40,6 +42,8 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>VIEW</portlet-mode>
 		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>		
 		<resource-bundle>Features</resource-bundle>		
 	</portlet> 	
 	
@@ -57,6 +61,8 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>VIEW</portlet-mode>
 		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>				
 		<resource-bundle>News</resource-bundle>		
 	</portlet> 
 			
@@ -74,6 +80,8 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>VIEW</portlet-mode>
 		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>				
 		<resource-bundle>Tutorial</resource-bundle>		
 	</portlet> 
 	
@@ -91,6 +99,8 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>VIEW</portlet-mode>
 		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>				
 		<resource-bundle>Demos</resource-bundle>		
 	</portlet> 
 		
@@ -108,6 +118,8 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>VIEW</portlet-mode>
 		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>				
 		<resource-bundle>FAQ</resource-bundle>		
 	</portlet> 
 	
@@ -125,6 +137,8 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>VIEW</portlet-mode>
 		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>				
 		<resource-bundle>WebSphere</resource-bundle>		
 	</portlet> 
 	
@@ -142,6 +156,8 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>VIEW</portlet-mode>
 		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>				
 		<resource-bundle>WebSphereEJB2</resource-bundle>		
 	</portlet> 
 	
@@ -159,27 +175,11 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>VIEW</portlet-mode>
 		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>				
 		<resource-bundle>WebSpherePortalEJB2</resource-bundle>		
 	</portlet> 
 	
-	
-	<portlet id="CustomCode">
-		<description>CustomCode</description>    
-		<portlet-name>CustomCode</portlet-name>
-		<display-name>CustomCode</display-name>    
-		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
-		<init-param>
-			<name>Page</name>
-			<value>custom-code-strategy</value>
-		</init-param>
-		<expiration-cache>-1</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>VIEW</portlet-mode>
-		</supports>
-		<resource-bundle>CustomCode</resource-bundle>		
-	</portlet> 
-
 	<portlet id="BusinessComponent">
 		<description>BusinessComponent</description>    
 		<portlet-name>BusinessComponent</portlet-name>
@@ -198,6 +198,9 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>VIEW</portlet-mode>
 		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>				
+		<supported-locale>de</supported-locale>				
 		<resource-bundle>BusinessComponent</resource-bundle>		
 	</portlet> 
 	
@@ -215,6 +218,8 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>VIEW</portlet-mode>
 		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>				
 		<resource-bundle>Migration</resource-bundle>		
 	</portlet> 
 	
@@ -232,6 +237,8 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>VIEW</portlet-mode>
 		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>				
 		<resource-bundle>Credits</resource-bundle>		
 	</portlet> 
 		
@@ -249,6 +256,8 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>VIEW</portlet-mode>
 		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>				
 		<resource-bundle>Security</resource-bundle>		
 	</portlet> 
 		
@@ -266,6 +275,8 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>VIEW</portlet-mode>
 		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>				
 		<resource-bundle>WTP</resource-bundle>		
 	</portlet> 
 	
@@ -283,6 +294,8 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>VIEW</portlet-mode>
 		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>				
 		<resource-bundle>EJB3</resource-bundle>		
 	</portlet> 
 	
@@ -300,6 +313,8 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>VIEW</portlet-mode>
 		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>				
 		<resource-bundle>Documentation</resource-bundle>		
 	</portlet> 
 	
@@ -317,7 +332,66 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>VIEW</portlet-mode>
 		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>				
 		<resource-bundle>ReferenceGuide</resource-bundle>		
 	</portlet> 
 	
+	<portlet id="Community">
+		<description>Community</description>    
+		<portlet-name>Community</portlet-name>
+		<display-name>Community</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>community</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>				
+		<resource-bundle>Community</resource-bundle>		
+	</portlet> 
+	
+	<portlet id="Forums">
+		<description>Forums</description>    
+		<portlet-name>Forums</portlet-name>
+		<display-name>Forums</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>forums</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>				
+		<resource-bundle>Forums</resource-bundle>		
+	</portlet> 
+	
+	<portlet id="Tracking">
+		<description>Tracking</description>    
+		<portlet-name>Tracking</portlet-name>
+		<display-name>Tracking</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>tracking</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>				
+		<resource-bundle>Tracking</resource-bundle>		
+	</portlet> 
+				
 </portlet-app>
