@@ -7,17 +7,11 @@ package org.openxava.formatters;
 import java.text.ParseException;
 import javax.servlet.http.HttpServletRequest;
 
-
-
-
 public class SQLTimeFormatter extends TimeBaseFormatter {
 	
-	
-	
-	public Object parse(HttpServletRequest request, String string) throws ParseException {
+	public Object parse(HttpServletRequest request, String string) throws ParseException {		
 		TimeData timeData = (TimeData)super.parse(request, string);
-		String timeString = sqlTimeFormat(timeData); 
-		return java.sql.Time.valueOf(timeString);
+		return new java.sql.Time(timeData.millis());
 	}
 
 }
