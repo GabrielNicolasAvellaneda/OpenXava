@@ -1,31 +1,23 @@
 package org.openxava.formatters;
 
 import java.text.ParseException;
-
+import java.util.Calendar;
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.logging.*;
-import org.openxava.formatters.IFormatter;
-import org.openxava.util.Align;
 import org.openxava.util.Is;
-import org.openxava.util.Strings;
 
 /**
  * @author Ivan Martín
  */
 
-public class TimeBaseFormatter implements IFormatter {
-	
-	private static Log log = LogFactory.getLog(TimeBaseFormatter.class);
-	
+public class TimeBaseFormatter implements IFormatter {	
 	public String format(HttpServletRequest request, Object time) {
 		return time==null?"":time.toString();
 	}
 	
 	public class TimeData {
-		public int hours = 0;
-		public int minutes = 0;
-		public int seconds = 0;
+		private int hours = 0;
+		private int minutes = 0;
+		private int seconds = 0;
 		
 		public TimeData(int hours, int minutes, int seconds) {
 			this.hours = hours;
@@ -33,31 +25,22 @@ public class TimeBaseFormatter implements IFormatter {
 			this.seconds = seconds;
 		}
 		
+		public long millis() {
+			Calendar cal = Calendar.getInstance();
+			cal.set(1970, 1, 1, hours, minutes, seconds);
+			return cal.getTimeInMillis();
+		}
+		
+		public java.util.Date time() {
+			return new java.util.Date(millis());
+		}
+		
 	}
 	
-	protected String sqlTimeFormat(TimeData timeData) {
-		if (timeData == null) return "00:00:00";
-		StringBuffer sb = new StringBuffer();
-		sb.append(Strings.fix(String.valueOf(timeData.hours),2,Align.RIGHT,'0'));
-		sb.append(":");
-		sb.append(Strings.fix(String.valueOf(timeData.minutes),2,Align.RIGHT,'0'));
-		sb.append(":");
-		sb.append(Strings.fix(String.valueOf(timeData.seconds),2,Align.RIGHT,'0'));
-		return sb.toString();
-	}
-
-	protected String sqlTimeFormat5(TimeData timeData) {
-		if (timeData == null) return "00:00";
-		StringBuffer sb = new StringBuffer();
-		sb.append(Strings.fix(String.valueOf(timeData.hours),2,Align.RIGHT,'0'));
-		sb.append(":");
-		sb.append(Strings.fix(String.valueOf(timeData.minutes),2,Align.RIGHT,'0'));
-		return sb.toString();
-	}
 		
 	public Object parse(HttpServletRequest request, String string) throws ParseException {
 		
-		if(Is.emptyString(string)) return null;
+		if(Is.emptyString(string)) return new TimeData(0,0,0);
 		
 		try {
 		    if(string.matches("^([0-9]{1,2}):([0-9]{1,2})$")) {
@@ -110,7 +93,7 @@ public class TimeBaseFormatter implements IFormatter {
 		        }
             }
 		} catch (Exception ex) {
-			log.error(ex.getMessage(), ex);
+		    ex.printStackTrace();
 		}
 		throw new ParseException("bad_time_format",-1);
 	}
