@@ -171,5 +171,7 @@ public class XmlElementsNames {
 	protected final static String [] xmodify = { "modify", "modificar" };
 	protected final static String [] xmodify_reference = { "modify-reference", "modificar-referencia" };
 	protected final static String [] xremove_selected_action = { "remove-selected-action", "accion-quitar-seleccionados" };
+	protected final static String [] xscope = { "scope", "ambito" };
+	protected final static String [] xglobal = { "global", "global" };
 		
 }

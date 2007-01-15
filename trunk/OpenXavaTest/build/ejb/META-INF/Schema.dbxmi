@@ -142,6 +142,15 @@
       </columns>
 
    </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Year" name="" primaryKey="Year_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Year_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Year" constraint="Constraint_Year_"/>
+
+      <columns xmi:id="Year__Year" name="_Year">
+      </columns>
+      <columns xmi:id="Year_id" name="id">
+      </columns>
+
+   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_Color" name="" primaryKey="Color_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Color_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Color" constraint="Constraint_Color_"/>
 

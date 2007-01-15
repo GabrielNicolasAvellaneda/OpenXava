@@ -20,6 +20,7 @@ public class MetaObject {
 	private String name;
 	private String className;
 	private String value;
+	private boolean global = false;
 	
 	
 	public String getClassName() {
@@ -72,6 +73,14 @@ public class MetaObject {
 			log.error(ex.getMessage(),ex);
 			throw new XavaException("create_error", name);
 		}
+	}
+
+	public boolean isGlobal() {
+		return global;
+	}
+
+	public void setGlobal(boolean global) {
+		this.global = global;
 	}
 
 }
