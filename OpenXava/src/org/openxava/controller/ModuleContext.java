@@ -26,6 +26,7 @@ public class ModuleContext {
 	
 	
 	private Map contexts = new HashMap();
+	private Map globalContext = null;
 	
 
 	/**
@@ -62,7 +63,7 @@ public class ModuleContext {
 	
 	
 	public Object get(String application, String module, String objectName, String className) throws XavaException {
-		Map context = getContext(application, module); 
+		Map context = getContext(application, module, objectName); 
 		Object o = context.get(objectName);
 		if (o == null) {
 			o = createObjectFromClass(className);
@@ -87,7 +88,7 @@ public class ModuleContext {
 	 * If does not exist the it create one, as defined in controllers.xml. <p>
 	 */	
 	public Object get(String application, String module, String objectName) throws XavaException {
-		Map context = getContext(application, module); 
+		Map context = getContext(application, module, objectName); 
 		Object o = context.get(objectName);
 		if (o == null) {
 			o = createObject(objectName);
@@ -97,7 +98,7 @@ public class ModuleContext {
 	}
 	
 	public boolean exists(String application, String module, String objectName) throws XavaException {
-		Map context = getContext(application, module); 
+		Map context = getContext(application, module, objectName); 
 		return context.containsKey(objectName);
 	}
 	
@@ -123,12 +124,12 @@ public class ModuleContext {
 		if (Is.emptyString(module)) {
 			throw new XavaException("application_and_module_required_in_request");
 		}				
-		Map context = getContext(application, module); 
+		Map context = getContext(application, module, objectName); 
 		context.put(objectName, value);
 	}
 		
 	public void put(String application, String module, String objectName, Object value) throws XavaException {
-		Map context = getContext(application, module); 
+		Map context = getContext(application, module, objectName); 
 		context.put(objectName, value);
 	}
 	
@@ -136,7 +137,10 @@ public class ModuleContext {
 		return MetaControllers.getMetaObject(objectName).createObject();
 	}
 
-	private Map getContext(String application, String module) throws XavaException {
+	private Map getContext(String application, String module, String objectName) throws XavaException {
+		if (isGlobal(objectName)) {
+			return getGlobalContext();
+		}
 		String id = application + "/" + module;
 		Map context = (Map) contexts.get(id);
 		if (context == null) {
@@ -144,6 +148,25 @@ public class ModuleContext {
 			contexts.put(id, context);
 		}
 		return context;
+	}
+
+	private boolean isGlobal(String objectName) throws XavaException {
+		try {
+			return MetaControllers.getMetaObject(objectName).isGlobal();
+		}
+		catch (ElementNotFoundException ex) { 
+			return false;
+		}
+	}
+
+	/**
+	 * Used for application scope objects.
+	 */
+	private Map getGlobalContext() {
+		if (globalContext == null) {
+			globalContext = new HashMap();
+		}
+		return globalContext;
 	}
 
 }

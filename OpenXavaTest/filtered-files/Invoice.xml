@@ -305,6 +305,12 @@
 		<base-condition>${year} = ?</base-condition>
 	</tab>	
 	
+	<tab name="ActiveYear">
+		<filter class="org.openxava.test.filters.ActiveYearFilter"/>
+		<properties>year, number, customer.number, customer.name, amountsSum, vat, detailsCount, paid, importance</properties>
+		<base-condition>${year} = ?</base-condition>
+	</tab>		
+	
 	<tab name="Invoice20020001">
 		<filter class="org.openxava.test.filters.Invoice20020001Filter"/>
 		<properties>year, number, amountsSum, vat</properties>

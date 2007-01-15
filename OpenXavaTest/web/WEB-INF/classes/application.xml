@@ -167,7 +167,19 @@
 		<tab name="TwoSellersNumber"/>
 		<controller name="Typical"/>		
 	</module>
-			<module name="CustomersSomeMembersReadOnly" folder="invoicing.variations">			<model name="Customer"/>		<view name="SomeMembersReadOnly"/>		<controller name="Typical"/>			</module>				<module name="Invoices" folder="invoicing">		<model name="Invoice"/>		<controller name="Typical"/>			<controller name="Invoices"/>		</module>
+			<module name="CustomersSomeMembersReadOnly" folder="invoicing.variations">			<model name="Customer"/>		<view name="SomeMembersReadOnly"/>		<controller name="Typical"/>			</module>
+	
+	<module name="ChangeActiveYear">
+		<model name="Year"/>
+		<controller name="ChangeActiveYear"/>	
+		<mode-controller name="Void"/>	
+	</module>					<module name="Invoices" folder="invoicing">		<model name="Invoice"/>		<controller name="Typical"/>			<controller name="Invoices"/>		</module>
+	
+	<module name="InvoicesActiveYear" folder="invoicing.variations">
+		<model name="Invoice"/>
+		<tab name="ActiveYear"/>
+		<controller name="Typical"/>	
+	</module>	
 	
 	<module name="InvoicesNestedSections" folder="invoicing.variations">
 		<model name="Invoice"/>

@@ -146,6 +146,7 @@ public class ControllersParser extends ParserBase {
 		result.setName(el.getAttribute(xname[lang]));
 		result.setClassName(el.getAttribute(xclass[lang]));
 		result.setValue(el.getAttribute(xvalue[lang]));
+		result.setGlobal(el.getAttribute(xscope[lang]).equals(xglobal[lang]));
 		return result;
 	}
 	

@@ -9,6 +9,7 @@
  nombre CDATA #REQUIRED
  clase CDATA #REQUIRED
  valor CDATA #IMPLIED
+ ambito (modulo|global) "modulo"
 >
 
 <!ELEMENT accion (poner*, usa-objeto*)>

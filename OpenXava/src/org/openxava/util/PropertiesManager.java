@@ -180,7 +180,8 @@ public class PropertiesManager implements java.io.Serializable {
 				}				
 			}
 			else {
-				log.error(XavaResources.getString("set_property_error", propertyName),ex);
+				// Not logging exception because this exception usually is treated by the caller code
+				// log.error(XavaResources.getString("set_property_error", propertyName),ex);
 				throw ex;
 			} 			
 		}
