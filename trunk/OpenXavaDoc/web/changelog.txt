@@ -1,7 +1,8 @@
 Change Log for OpenXava project
 ===============================
-
+- Session objects declared in controllers.xml now can have global scope. A new scope attribute is added to <object/> element.
 - Hibernate Entity Manager and Hibernate Annotations updated to 3.2.1
+- DateTimeFormatter improved for Polish locale.
 
 OpenXava_20070110
 -----------------
