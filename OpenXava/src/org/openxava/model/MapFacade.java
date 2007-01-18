@@ -11,7 +11,6 @@ import javax.rmi.*;
 import org.apache.commons.logging.*;
 import org.openxava.component.*;
 import org.openxava.ejbx.*;
-import org.openxava.mapping.xmlparse.MappingParser;
 import org.openxava.model.impl.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -263,7 +262,7 @@ public class MapFacade {
 		Map keyValues,
 		Map memberNames)
 		throws FinderException, XavaException, RemoteException 
-	{						
+	{							
 		Assert.arg(modelName, keyValues, memberNames);		
 		if (keyValues.isEmpty()) {
 			throw new ObjectNotFoundException(XavaResources.getString("empty_key_object_not_found", modelName));						

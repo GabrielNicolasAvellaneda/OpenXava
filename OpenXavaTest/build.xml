@@ -34,9 +34,15 @@
 		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
 		<ant antfile="../OpenXava/build.xml" target="prepareWar"/>
 	</target>		
-	
+
+
 	<target name="generateEJB">
-		<ant antfile="../OpenXava/build.xml" target="generateEJB"/>		
+		<!-- Lo hacemos así para que no genere código POJO/Hiberante -->
+    	<delete file="gen-src-xava/dnas-ejb.properties"/>
+		<antcall target="generateEJB"/>
+		<ant antfile="../OpenXava/build.xml" target="filterXavaFiles"/>		
+		<ant antfile="../OpenXava/build.xml" target="generateXDoclet"/>
+		<ant antfile="../OpenXava/build.xml" target="runXDoclet"/>
 	</target>
 	
 	<target name="generateHibernate">	

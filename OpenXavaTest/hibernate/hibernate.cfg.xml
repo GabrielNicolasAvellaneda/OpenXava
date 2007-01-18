@@ -4,6 +4,8 @@
 		<property name="hibernate.jdbc.use_get_generated_keys">false</property>		
 		<property name="hibernate.show_sql">false</property>
 		
+		@hibernate.properties@
+		
 		<!-- GalleryImage is needed only if you uses IMAGES_GALLERY/GALERIA_IMAGENES stereotype -->
 		<mapping resource="GalleryImage.hbm.xml"/>
 		
