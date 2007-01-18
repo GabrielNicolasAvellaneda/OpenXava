@@ -200,7 +200,6 @@ document.onkeydown = processKey;
 
 
 <% if (!isPortlet) { %>
-<%@ page pageEncoding="utf-8" %>
 <!DOCTYPE HTML PUBLIC "-//w3c//dtd html 4.0 transitional//en">
 <html>
 <head>

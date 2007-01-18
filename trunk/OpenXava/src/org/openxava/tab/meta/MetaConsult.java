@@ -69,12 +69,11 @@ public class MetaConsult extends MetaElement {
 			try {
 				label = createDefaultLabel();
 			}
-			catch (XavaException ex) {
+			catch (XavaException ex) {				
 				if (XavaPreferences.getInstance().isI18nWarnings()) {
 					log.warn(XavaResources.getString("label_i18n_warning", getId()),ex);
-				} else
-					log.warn(ex.getMessage(), ex);
-					
+				}
+				label = getName();
 			}
 		}
 		return label;

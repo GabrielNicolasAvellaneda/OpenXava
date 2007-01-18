@@ -25,7 +25,7 @@ import org.openxava.util.*;
 public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 
 	private static Log log = LogFactory.getLog(JDBCTabProvider.class);
-	private static final int DEFAULT_CHUNK_SIZE = 50;
+	private static final int DEFAULT_CHUNK_SIZE = 50;	
 
 	private String select; // Select ... from ...
 	private String selectSize;
