@@ -1,5 +1,9 @@
 Change Log for OpenXava project
 ===============================
+
+
+- Removed pageEncoding="utf-8" from module.jsp.
+- Removed commit from list.jsp. Now in order to work with WebSphere you need to configure your hibernate.cfg.xml. Look at OpenXavaTest/hibernate.cfg.xml adn OpenXavaTest/websphere-as400.properties to see an example.
 - Session objects declared in controllers.xml now can have global scope. A new scope attribute is added to <object/> element.
 - Hibernate Entity Manager and Hibernate Annotations updated to 3.2.1
 - DateTimeFormatter improved for Polish locale.
