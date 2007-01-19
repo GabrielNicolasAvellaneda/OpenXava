@@ -1,7 +1,10 @@
 Change Log for OpenXava project
 ===============================
+- Logging of i18n problems is now low (only short warning messages). No exception is shown now.
+- Fix: In view: Layout a reference besides to the next reference does not work (the next one was placed below).
 
-
+OpenXava_20070118_v2_1beta
+--------------------------
 - Removed pageEncoding="utf-8" from module.jsp.
 - Removed commit from list.jsp. Now in order to work with WebSphere you need to configure your hibernate.cfg.xml. Look at OpenXavaTest/hibernate.cfg.xml adn OpenXavaTest/websphere-as400.properties to see an example.
 - Session objects declared in controllers.xml now can have global scope. A new scope attribute is added to <object/> element.
