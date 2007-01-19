@@ -34,9 +34,7 @@ public class Labels {
 			
 			if (XavaPreferences.getInstance().isI18nWarnings()) {
 				log.warn(XavaResources.getString("element_i18n_warning", id));
-			} else
-				log.warn(ex, ex);	
-			
+			} 
 			return Strings.firstUpper(id);
 		}		
 	}
@@ -50,15 +48,14 @@ public class Labels {
 		}
 		catch (MissingResourceException ex) {
 			if (XavaPreferences.getInstance().isI18nWarnings()) {
-				log.warn(XavaResources.getString("element_i18n_warning", id),ex);
+				log.warn(XavaResources.getString("element_i18n_warning", id));
 			}			
 			return defaultValue;
 		}
 		catch (Exception ex) {
 			if (XavaPreferences.getInstance().isI18nWarnings()) {
-				log.warn(XavaResources.getString("element_i18n_warning", id),ex);
-			} else
-				log.warn(ex.getMessage(), ex);
+				log.warn(XavaResources.getString("element_i18n_warning", id));
+			} 
 			return defaultValue;
 		}		
 	}		
@@ -116,7 +113,7 @@ public class Labels {
 		}
 		catch (Exception ex) {
 			if (XavaPreferences.getInstance().isI18nWarnings()) {
-				log.warn(XavaResources.getString("label_i18n_warning", id),ex);
+				log.warn(XavaResources.getString("label_i18n_warning", id));
 			}
 			return null;
 		}
@@ -138,7 +135,7 @@ public class Labels {
 			return exists(id.substring(idx + 1));
 		}
 		catch (Exception ex) {
-			log.error(ex.getMessage(), ex);
+			log.warn(ex.getMessage(), ex);
 			return false;
 		}				
 	}
