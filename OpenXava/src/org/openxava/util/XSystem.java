@@ -1,7 +1,10 @@
 package org.openxava.util;
 
+import java.util.*;
+import java.util.logging.*;
 
-
+import org.apache.commons.logging.*;
+import org.openxava.component.*;
 
 /**
  * Global utilities about the system. <p>
@@ -11,6 +14,8 @@ package org.openxava.util;
 
 public class XSystem {
 
+	private static Log log = LogFactory.getLog(XSystem.class);
+	
 	private static boolean onServer = false;
 	private static boolean java5OrBetter;
 	private static boolean java5calculated = false;	
@@ -46,6 +51,26 @@ public class XSystem {
 			java5calculated = true;
 		}
 		return java5OrBetter;
+	}
+
+	
+	public static void _setLogLevelFromJavaLoggingLevelOfXavaPreferences() {		
+		Logger rootLogger = Logger.getLogger("");
+		Handler [] rootHandler = rootLogger.getHandlers();		
+		for (int i=0; i<rootHandler.length; i++) {
+			if (rootHandler[i] instanceof ConsoleHandler)
+				rootHandler[i].setLevel(Level.ALL);
+		}		
+		Logger.getLogger("org.openxava").setLevel(XavaPreferences.getInstance().getJavaLoggingLevel());
+		try {
+			for (Iterator it = MetaComponent.getAllPackageNames().iterator(); it.hasNext(); ) {
+				String packageName = (String) it.next();
+				Logger.getLogger(packageName).setLevel(XavaPreferences.getInstance().getJavaLoggingLevel());
+			}			
+		}
+		catch (Exception ex) {
+			log.warn(XavaResources.getString("logging_level_not_set"));
+		}
 	}
 	
 }

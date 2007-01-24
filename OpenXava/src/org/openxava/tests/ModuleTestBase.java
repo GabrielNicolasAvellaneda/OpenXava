@@ -56,6 +56,7 @@ public class ModuleTestBase extends TestCase {
 	private int formIndex;		
 	
 	static {		
+		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
 		XHibernate.setConfigurationFile("/hibernate-junit.cfg.xml");
 		XPersistence.setPersistenceUnit("junit");
 		DataSourceConnectionProvider.setUseHibernateConnection(true);
