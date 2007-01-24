@@ -37,6 +37,7 @@ public class FamilyXProductsReportTest extends ModuleTestBase {
 		execute("FamilyProductsReport.generate");
 		// Next line: test that errors of a ValidationException thrown from a action are shown
 		assertError("Value for Subfamily in FilterBySubfamily is required"); 
+		assertNoPopup();
 		setValue("subfamily.number", "1");
 		execute("FamilyProductsReport.generate"); // takes-long is tested too (only testing that no crash)
 		assertContentTypeForPopup("application/pdf");
