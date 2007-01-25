@@ -146,7 +146,7 @@ public class XavaPreferences {
 	
 	public Level getJavaLoggingLevel() {
 		if (javaLoggingLevel == null) {
-			String log = getProperties().getProperty("javaLoggingLevel", JAVA_LOGGING_LEVEL_DEFAULT_VALUE);
+			String log = getProperties().getProperty("javaLoggingLevel", JAVA_LOGGING_LEVEL_DEFAULT_VALUE).trim();
 			try {
 				javaLoggingLevel = Level.parse(log);
 			}
