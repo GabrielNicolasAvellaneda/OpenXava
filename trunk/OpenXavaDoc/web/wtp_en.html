@@ -44,7 +44,7 @@ Tomcat 5.5</span>.</li>
  style="font-family: monospace;">Apache Tomcat v5.5</span></li>
     <li><span style="font-style: italic;">Tomcat installation directory</span>:
 The path of your Tomcat (you can use the OpenXava Tomcat in <span
- style="font-family: monospace;">openxava-2.0.4/jetspeed-2.0</span>
+ style="font-family: monospace;">openxava-2.1.x/portal</span>
 folder)</li>
     <li><span style="font-style: italic;">JRE</span>: Choose a Java 5.</li>
   </ul>
@@ -58,7 +58,7 @@ OpenXava
 distribution then you must copy <span
  style="font-weight: bold; font-style: italic;">jta.jar </span>and <span
  style="font-weight: bold; font-style: italic;">ejb.jar</span> from
-openxava-x.x.x/jetspeed-2.0/common/lib to the folder <span
+openxava-2.1.x/portal/common/lib to the folder <span
  style="font-weight: bold; font-style: italic;">common/lib</span> of
 your Tomcat.
 <h4><a name="Create_a_Tomcat_server"></a>Create a Tomcat server</h4>
@@ -116,7 +116,7 @@ driverClassName="org.hsqldb.jdbcDriver"</span><br
  style="font-family: monospace;">
 <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 url="jdbc:hsqldb:file:</span><span
- style="font-weight: bold; font-family: monospace; color: rgb(51, 51, 255);">/java/openxava-2.0</span><span
+ style="font-weight: bold; font-family: monospace; color: rgb(51, 51, 255);">/java/openxava-2.1</span><span
  style="font-family: monospace;">/jetspeed-2.0/data/openxava-db"/&gt;</span><br
  style="font-family: monospace;">
 <br style="font-family: monospace;">
@@ -132,19 +132,21 @@ driverClassName="org.hsqldb.jdbcDriver"</span><br
  style="font-family: monospace;">
 <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 url="jdbc:hsqldb:file:</span><span
- style="font-weight: bold; font-family: monospace; color: rgb(51, 102, 255);">/java/openxava-2.0</span><span
+ style="font-weight: bold; font-family: monospace; color: rgb(51, 102, 255);">/java/openxava-2.1</span><span
  style="font-family: monospace;">/jetspeed-2.0/data/my-school-db"/&gt;</span><br
  style="font-family: monospace;">
 <br style="font-family: monospace;">
 <span style="font-family: monospace;">&lt;/Context&gt;</span><br
  style="font-family: monospace;">
 <br>
-Remember to change <span style="color: rgb(51, 51, 255);">/java/openxava-2.0</span>
+Remember to change <span style="color: rgb(51, 51, 255);">/java/openxava-2.1</span>
 by the path where your have OpenXava installed.
 <h4><a name="Start_the_server_and_test_your"></a>Start the server and
 test your application</h4>
 <ul>
-  <li>Stop your Jetspeed Portal if it's started.</li>
+  <li>Stop your OpenXava Portal&nbsp;(<span
+ style="font-family: monospace;">stop-portal.sh/.bat</span>) if it's
+started.</li>
   <li>Go to <span style="font-style: italic;">Server</span> tab.</li>
   <li>Click on <span style="font-style: italic;">Right Button on
 Tomcat v5.5 Server &gt; Start</span></li>
