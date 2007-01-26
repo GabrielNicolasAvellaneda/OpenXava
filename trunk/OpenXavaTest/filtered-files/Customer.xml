@@ -300,6 +300,22 @@
 		
 	</view>
 	
+	<view name="SellerAsAggregate2Levels">
+	
+		<reference-view reference="seller" 
+			view="LevelNoDescriptionsList" 
+			as-aggregate="true"/>
+	
+		<members>
+			number; 
+			type; 
+			name;
+			address;
+			seller;
+		</members>
+		
+	</view>
+	
 				
 	<view model="Address">
 				

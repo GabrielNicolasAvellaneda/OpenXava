@@ -38,6 +38,7 @@
 	<property name="jetspeed2.pages.dir" value="${deploy.dir}/openxava${war.dir.suffix}/WEB-INF/pages"/>
 	<property name="portlets.default.locale" value="${user.language}"/>
 	<property name="hibernate.properties" value=""/>
+	
 			
    <!-- Set up java.class.path -->
    <path id="project.class.path">

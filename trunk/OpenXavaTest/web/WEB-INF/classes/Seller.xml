@@ -66,6 +66,10 @@
 	
 		 <members>number; name; level; customers</members>
 	</view>
+	
+	<view name="LevelNoDescriptionsList">
+		<members>number; name; level</members>
+	</view>
 		
 	<tab>
 		<filter class="org.openxava.test.filters.NumbersToLettersFilter"/>
