@@ -1,5 +1,11 @@
 Change Log for OpenXava project
 ===============================
+
+OpenXava_20070126
+-----------------
+- Fix: Action for references (search, create, modifying) did not support more than 2 nested level.
+- Fix: javaLoggingLevel property in xava.properties had no effect inside junit test. Also now trim() is done before parse its value.
+- Fix: Typing @ in a windows using a view with sections changes the current tab. This may affect to all AltGr characters.
 - Logging of i18n problems is now low (only short warning messages). No exception is shown now.
 - Fix: In view: Layout a reference besides to the next reference does not work (the next one was placed below).
 

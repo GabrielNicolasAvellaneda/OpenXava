@@ -1,17 +1,20 @@
 Bienvenido a este breve periplo de introducci&oacute;n en el mundo
 de OpenXava.<br>
-Estas instrucciones suponen que has descargado, instalado y arrancado
-openxava.<br>
-<b><i>&iexcl;Importante!</i></b> Antes de empezar con este tutorial es importante  
-<b><i>refrescar</i></b> todos los proyectos del <b><i>workspace</i></b> en Eclipse
+Estas instrucciones suponen que tenemos arrancado el portal
+openxava&nbsp;(<span style="font-family: monospace;">start-portal.sh</span>
+o <span style="font-family: monospace;">.bat</span> ha sido ejecutado)
+y que tenemos el Eclipse abierto contra el workspace incluido con la
+distrubuci&oacute;n de OpenXava.<br>
+<b><i>&iexcl;Importante!</i></b> Antes de empezar con este tutorial es
+importante <b><i>refrescar</i></b> todos los proyectos del <b><i>workspace</i></b>
+en Eclipse
 (seleccionando todos los proyectos y pulsando F5).<br>
+<br>
 Esto es lo que vamos a hacer para empezar a xavear:<br>
 <ul>
-  <li><a
- href="#Ejecutar_aplicacion_ejemplo_MiEscuela">Ejecutar
+  <li><a href="#Ejecutar_aplicacion_ejemplo_MiEscuela">Ejecutar
 aplicaci&oacute;n ejemplo MiEscuela.</a></li>
-  <li><a
- href="#Modificar_aplicacion_ejemplo_MiEscuela">Modificar
+  <li><a href="#Modificar_aplicacion_ejemplo_MiEscuela">Modificar
 aplicaci&oacute;n ejemplo MiEscuela.</a></li>
   <li><a href="#Ejecutar_prueba_junit_de_aplicacion">Ejecutar
 pruebas
@@ -542,15 +545,23 @@ hacer
 aplicaciones de calidad es imprescindible que nos aficionemos a las
 pruebas junit.<br>
 <h4><a name="deploy_in_portal"></a>Desplegar MiEscuela en el Portal</h4>
-Una vez la aplicaci&oacute;n funciona bien, podemos desplegarla en un
-portal Java:
+Ahora que nuestra aplicaci&oacute;n funciona bien podemos desplegarla
+en un portal como un portlet:
 <ul>
-  <li>Parar el Portal Jetspeed</li>
-  <li>Ejecutar la tarea ant <span style="font-style: italic;">MiEscuela.desplegarPortlets</span></li>
-  <li>Arrancar el Portal Jetspeed</li>
-  <li>Esperar hasta ver en el log (logs/catalina.out o la consola): <i>Server startup in 16672 ms</i></li>
-  <li>Seguir esperando hasta ver en el log: <i>initialization done for Portlet Application at: MiEscuela</i></li>  
-  <li>Ir a <a href="http://localhost:8080/openxava/portal/MiEscuela">http://localhost:8080/openxava/portal/MiEscuela</a></li>
+  <li>Ejecuta la tarea ant <span style="font-style: italic;">MiEscula.generarPortlets</span></li>
+  <li>Ve al portal, pulsa en 'Acceder', y accede como
+admin@openxava.org, contrase&ntilde;a: openxava</li>
+  <li>Ve a la pesta&ntilde;a 'Despliegue autom&aacute;tico'.</li>
+  <li>En la secci&oacute;n 'Caliente Despliegue' escoge el archivo <span
+ style="font-family: monospace;">openxava-2.x/workspace.dist/MySchool.dist/MySchool.war</span></li>
+  <li>Pulsa el bot&oacute;n 'Despliegue'.</li>
+  <li>Despu&eacute;s de que el mensaje de confirmaci&oacute;n se
+muestre espera unos segundos.</li>
+  <li>Pulsa en el v&iacute;nculo 'A&ntilde;adir contenido' (en la
+esquina superior derecha).</li>
+  <li>Escoge el portlet 'MiEscuela - Alumnos'. Est&aacute; dentro de la
+categoria 'Indefinido'.</li>
+  <li>Ahora ya podemos jugar con nuestro nuevo portlet.</li>
 </ul>
 Y eso es todo amigos.<br>
 Con este ejemplo se ve como cambios peque&ntilde;os se efectuan con
@@ -569,5 +580,6 @@ en:<br>
 <a href="http://sourceforge.net/forum/forum.php?forum_id=437013">http://sourceforge.net/forum/forum.php?forum_id=437013</a><br>
 <br>
 Puedes aprender m&aacute;s sobre OpenXava leyendo su <a
- href="/OpenXavaDoc/openxava-2.0.4-guia-referencia.pdf">gu&iacute;a de
+ href="/OpenXavaDoc/openxava-2.1beta-guia-referencia.pdf">gu&iacute;a
+de
 referencia</a>.<br>

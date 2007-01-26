@@ -1,17 +1,20 @@
 Welcome to this short <span id="transl1">voyage</span>
 to start to use OpenXava.<br>
-These instructions suposses&nbsp; that you have download, install and
-start openxava.<br>
-<b><i>Important!</i></b> Before starting with this tutorial is important that 
-you <b><i>Refresh</i></b> all projects in your <b><i>workspace</i></b> in Eclipse
+These instructions suposses&nbsp; that you have&nbsp;the openxava
+portal started (<span style="font-family: monospace;">start-portal.sh</span>
+o <span style="font-family: monospace;">.bat</span> has been executed)
+and you Eclipse is opened against the workspace included in OpenXava
+distribution.<br>
+<b><i>Important!</i></b> Before starting with this tutorial is
+important that you <b><i>Refresh</i></b> all projects in your <b><i>workspace</i></b>
+in Eclipse
 (select all projects and press F5).<br>
+<br>
 Here are the steps to begin xaving:<br>
 <ul>
-  <li><a
- href="#Ejecutar_aplicacion_ejemplo_MiEscuela">Execute
+  <li><a href="#Ejecutar_aplicacion_ejemplo_MiEscuela">Execute
 example application MySchool.</a></li>
-  <li><a
- href="#Modificar_aplicacion_ejemplo_MiEscuela">Modify
+  <li><a href="#Modificar_aplicacion_ejemplo_MiEscuela">Modify
 example application MySchool.</a></li>
   <li><a href="#Ejecutar_prueba_junit_de_aplicacion">Execute
 junit
@@ -563,14 +566,21 @@ applications is <span id="transl1">essential
 t</span><span id="transl1">o
 become fond</span><span id="transl1"> to junit test.</span><br>
 <h4><a name="deploy_in_portal"></a>Deploy MySchool in the portal</h4>
-After your application works fine, you can deploy it in a Java portal:
+After your application works fine, you can deploy it in the portal as a
+portlet:
 <ul>
-  <li>Stop your Jetspeed Portal</li>
-  <li>Execute ant target <span style="font-style: italic;">MySchool.deployPortlets</span></li>
-  <li>Start your Jetspeed Portal</li>
-  <li>Wait until you see in the log (logs/catalina.out or console): <i>Server startup in 16672 ms</i></li>
-  <li>Continue waiting until you see in the log: <i>initialization done for Portlet Application at: MySchool</i></li>
-  <li>Go to <a href="http://localhost:8080/openxava/portal/MySchool">http://localhost:8080/openxava/portal/MySchool</a></li>
+  <li>Execute ant target <span style="font-style: italic;">MySchool.generatePortlets</span></li>
+  <li>Go to portal, click on 'Sign in', and login as
+admin@openxava.org, password: openxava</li>
+  <li>Go to 'Auto Deploy' tab.</li>
+  <li>In the section 'Hot Deploy' choose the file <span
+ style="font-family: monospace;">openxava-2.x/workspace.dist/MySchool.dist/MySchool.war</span></li>
+  <li>Click on 'Deploy' button.</li>
+  <li>After the confirmation message is shown wait&nbsp;some seconds.</li>
+  <li>Click in 'Add Content' link (at top-right corner)</li>
+  <li>Select the portlet 'MySchool - Pupils'. It's inside the
+'Undefined' category.</li>
+  <li>Now you can play with you new portlet.</li>
 </ul>
 That's all, folks<br>
 In this example you can see that little changes imply little effort and
@@ -588,4 +598,5 @@ with OpenXava in:<br>
 <a href="http://sourceforge.net/forum/forum.php?forum_id=419690">http://sourceforge.net/forum/forum.php?forum_id=419690</a><br>
 <br>
 You can learn more things about OpenXava reading its <a
- href="/OpenXavaDoc/openxava-2.0.4-reference-guide.pdf">Reference Guide</a>.<br>
+ href="/OpenXavaDoc/openxava-2.1beta-reference-guide.pdf">Reference
+Guide</a>.<br>
