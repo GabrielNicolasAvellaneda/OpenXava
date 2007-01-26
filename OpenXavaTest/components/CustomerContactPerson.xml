@@ -25,6 +25,12 @@ but remember this is not an example of good OO modeling.
 			customer
 		</members>
 	</view>
+	
+	<view name="CustomerAsAggregate3Levels">
+		<reference-view reference="customer" 
+			view="SellerAsAggregate2Levels" 
+			as-aggregate="true"/>
+	</view>
 			
 	<entity-mapping table="XAVATEST@separator@CUSTOMERCONTACTPERSON">
 		<reference-mapping reference="customer">

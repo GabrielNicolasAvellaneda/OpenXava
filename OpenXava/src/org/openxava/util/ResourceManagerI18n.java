@@ -94,7 +94,7 @@ public class ResourceManagerI18n {
 		}
 		catch (MissingResourceException ex) {
 			if (XavaPreferences.getInstance().isI18nWarnings()) {
-				log.warn(XavaResources.getString("element_i18n_warning", key),ex);
+				log.warn(XavaResources.getString("element_i18n_warning", key));
 			}
 			return key;
 		}
@@ -121,7 +121,7 @@ public class ResourceManagerI18n {
 		}
 		catch (MissingResourceException ex) {
 			if (XavaPreferences.getInstance().isI18nWarnings()) {
-				log.warn(XavaResources.getString("char_i18n_warning", key),ex);
+				log.warn(XavaResources.getString("char_i18n_warning", key));
 			}
 			return ' ';
 		}

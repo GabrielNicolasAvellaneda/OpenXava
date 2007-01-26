@@ -1,9 +1,5 @@
 package org.openxava.actions;
 
-import java.util.*;
-
-
-
 import org.openxava.util.*;
 import org.openxava.view.*;
 
@@ -52,12 +48,12 @@ public class ReferenceBaseAction extends ViewBaseAction {
 	}
 
 	private ViewInfo createSubview(View view, String memberName) throws XavaException {
-		if (memberName.indexOf('.') < 0) {
+		int idx = memberName.indexOf('.'); 
+		if (idx < 0) {
 			return new ViewInfo(view.getSubview(memberName), memberName, view); 
 		}
-		StringTokenizer st = new StringTokenizer(memberName, ".");
-		String subviewName = st.nextToken();
-		String nextMember = st.nextToken(); 
+		String subviewName = memberName.substring(0, idx);
+		String nextMember = memberName.substring(idx + 1);		
 		return createSubview(view.getSubview(subviewName), nextMember);
 	}
 	

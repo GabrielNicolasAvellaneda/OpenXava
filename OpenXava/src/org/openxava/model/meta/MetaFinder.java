@@ -98,12 +98,12 @@ public class MetaFinder implements Serializable {
 			String property = sentence.substring(i + 2, f);			
 			StringTokenizer st = new StringTokenizer(property, ".");
 			if (st.countTokens() > 3) {
-				log.error(XavaResources.getString("property_3_level_in_ejb2_finder", property, getName()));
+				log.warn(XavaResources.getString("property_3_level_in_ejb2_finder", property, getName()));
 				return true;
 			}
 			if (st.countTokens() == 3) {
 				if (!getMetaModel().getMetaProperty(property).isKey()) {
-					log.error(XavaResources.getString("property_3_level_in_ejb2_finder", property, getName()));
+					log.warn(XavaResources.getString("property_3_level_in_ejb2_finder", property, getName()));
 					return true;
 				}
 			}

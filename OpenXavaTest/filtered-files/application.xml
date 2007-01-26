@@ -9,6 +9,12 @@
 		<controller name="Typical"/>
 	</module>
 	
+	<module name="CustomerContactPersonsAsAggregate3Levels">
+		<model name="CustomerContactPerson"/>
+		<view name="CustomerAsAggregate3Levels"/>
+		<controller name="Typical"/>
+	</module>
+		
 	<module name="StatesHibernate">
 		<env-var name="XAVA_SEARCH_ACTION" value="StatesHibernate.search"/>		
 		<model name="State"/>
