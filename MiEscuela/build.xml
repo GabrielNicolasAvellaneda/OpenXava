@@ -42,21 +42,12 @@
 	</target>
 	
 	<!--
-	Construye la aplicación y la despliega en formato portlets. 
-	Regenera todos los archivos PSML (para JetSpeed2)
+	Construye la aplicación en formato portlets. 
 	-->		
-	<target name="redesplegarPortlets"> 
-		<ant antfile="../OpenXava/build.xml" target="redeployPortlets"/>
+	<target name="generarPortlets"> 
+		<ant antfile="../OpenXava/build.xml" target="generarPortlets"/>
 	</target>
-		
-	<!-- 
-	Construye la aplicación y la despliega en formato portlets. 
-	Regenera los archivos PSML (para JetSpeed2) solo si aplicacion.xml ha cambiado
-	-->			
-	<target name="desplegarPortlets"> 
-		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
-	</target>		
-	
+			
 	<!-- 
 	Ejecuta todos los procesos para ver nuestra aplicación en marcha.
 	Pensada para ser usada desde línea de órdenes.

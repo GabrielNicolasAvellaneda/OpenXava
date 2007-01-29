@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- New ant target in OpenXava/build.xml 'generatePortlets' that generates a war file in portlet format but it does not copy it to deploy directory.
+
 OpenXava_20070126
 -----------------
 - Fix: Action for references (search, create, modifying) did not support more than 2 nested level.
