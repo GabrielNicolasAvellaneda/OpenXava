@@ -37,21 +37,12 @@
 	</target>
 	
 	<!-- 
-	Build all application and deploy it in portlet format. 
-	Regenerate all PSML (for jetspeed2) files
+	Build all application in portlet format. 
 	-->	
-	<target name="redeployPortlets"> 
-		<ant antfile="../OpenXava/build.xml" target="redeployPortlets"/>
+	<target name="generatePortlets"> 
+		<ant antfile="../OpenXava/build.xml" target="generatePortlets"/>
 	</target>	
-	
-	<!-- 
-	Build all application and deploy it in portlet format. 
-	Regenerate PSML (for jetspeed2) files only if application.xml is changed
-	-->		
-	<target name="deployPortlets"> 
-		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
-	</target>	
-	
+		
 	<!-- 
 	Run all process to see your application working.
 	Thinked to be used from command line.

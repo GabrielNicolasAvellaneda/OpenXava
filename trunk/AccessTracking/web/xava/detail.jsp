@@ -82,15 +82,18 @@ while (it.hasNext()) {
 				boolean withFrame = subview.isFrame() && 
 					(!view.isSection() || view.getMetaMembers().size() > 1);
 				if (withFrame || (view.isSection() && view.getMembersNames().size() ==1)) {
+					if (first) { 
+						first = false;
 	%>		
 		<tr><td colspan="4">
 	<%	
+					} 
 				}
 				if (withFrame) { 
 					String labelKey = propertyPrefix + ref.getName() + "_LABEL_";
 					String label = view.getLabelFor(ref);
 	%>				
-		<table class=<%=style.getFrame()%> width='100%' <%=style.getFrameSpacing()%>>
+		<table class=<%=style.getFrame()%> style="float:left; margin-right:4px" <%=style.getFrameSpacing()%>>
 		<tr class=<%=style.getFrameTitle()%>><th align='left' class=<%=style.getFrameTitleLabel()%>>
 			<%=style.getFrameTitleStartDecoration()%>
 			<span id="<%=labelKey%>"><%=label%></span>
