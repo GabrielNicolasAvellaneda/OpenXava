@@ -780,7 +780,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			throw new RemoteException(XavaResources.getString("get_property_error", memberName));
 		} catch (InvocationTargetException ex) {
 			Throwable th = ex.getTargetException();
-			log.error(ex.getMessage(), ex);
+			log.error(th.getMessage(), th);
 			rollback();
 			throw new RemoteException(XavaResources.getString("get_property_error", memberName));
 		}
@@ -937,7 +937,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			throw new RemoteException(XavaResources.getString("get_values_error", metaAggregate.getName()));
 		} catch (InvocationTargetException ex) {
 			Throwable th = ex.getTargetException();
-			log.error(ex.getMessage(), ex);
+			log.error(th.getMessage(), th);
 			rollback();
 			throw new RemoteException(XavaResources.getString("get_values_error", metaAggregate.getName()));
 		}
@@ -1139,29 +1139,17 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}	
 		
-	private void remove(MetaModel metaModel, Map keyValues)
-		throws RemoveException, ValidationException, XavaException, RemoteException {
-		try {			
-			Object object = findEntity(metaModel, keyValues);
-			remove(metaModel, object);
-		} catch (FinderException ex) {
-			log.error(ex.getMessage(), ex);
-			throw new RemoveException(XavaResources.getString("remove_error",
-				metaModel.getName(), ex.getLocalizedMessage()));
-		}		
-	}
-		
-	private void remove(MetaModel metaModel, Object modelObject)
+	private void remove(MetaModel metaModel, Map keyValues) 
 		throws RemoveException, ValidationException, XavaException, RemoteException {
 		try {
-			Messages errors = validateOnRemove(metaModel, modelObject);
+			Messages errors = validateOnRemove(metaModel, keyValues);			
 			if (!errors.isEmpty()) {
 				throw new ValidationException(errors);
 			}			
-			// removing collections are resposibility of persistence provider
-			getPersistenceProvider().remove(metaModel, modelObject);			
+			// removing collections are resposibility of persistence provider						
+			getPersistenceProvider().remove(metaModel, keyValues); 
 		} catch (ValidationException ex) {
-			throw ex;					
+			throw ex; 					
 		} catch (XavaException ex) {
 			log.error(ex.getMessage(), ex);
 			throw new XavaException("remove_error", metaModel.getName(), ex.getLocalizedMessage());				
@@ -1173,15 +1161,18 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	private Messages validateOnRemove(MetaModel metaModel, Object modelObject) throws Exception {		
+	private Messages validateOnRemove(MetaModel metaModel, Map keyValues) throws Exception {
 		Messages errors = new Messages();
-		Iterator it = metaModel.getMetaValidatorsRemove().iterator();
+		Collection validators = metaModel.getMetaValidatorsRemove();		
+		if (validators.isEmpty()) return errors;		
+		Iterator it = validators.iterator();
+		Object modelObject = findEntity(metaModel, keyValues);
 		while (it.hasNext()) {
 			MetaValidator metaValidator = (MetaValidator) it.next();
 			IRemoveValidator validator = null;
 			if (metaValidator.containsMetaSetsWithoutValue()) {
 				validator = metaValidator.createRemoveValidator();
-				PropertiesManager pmValidator = new PropertiesManager(validator);
+				PropertiesManager pmValidator = new PropertiesManager(validator);				
 				PropertiesManager pmModelObject = new PropertiesManager(modelObject);
 				for (Iterator itSets=metaValidator.getMetaSetsWithoutValue().iterator(); itSets.hasNext();) {
 					MetaSet metaSet = (MetaSet) itSets.next();
@@ -1301,7 +1292,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	private void validateWithModelValidator(Messages errors, MetaModel metaModel, Map values, Map keyValues, Object containerKey, boolean creating) throws XavaException {				
+	private void validateWithModelValidator(Messages errors, MetaModel metaModel, Map values, Map keyValues, Object containerKey, boolean creating) throws XavaException {
 		try {
 			String containerReferenceName = Strings.firstLower(metaModel.getMetaModelContainer().getName());
 			Iterator itValidators = metaModel.getMetaValidators().iterator();

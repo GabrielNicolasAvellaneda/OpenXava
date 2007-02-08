@@ -3,6 +3,8 @@ package org.openxava.jpa;
 
 import javax.persistence.*;
 
+import org.openxava.hibernate.*;
+
 
 
 
@@ -68,7 +70,7 @@ public class XPersistence {
 				
 	private static EntityManager openManager() {
 		EntityManager m = getEntityManagerFactory().createEntityManager();
-		m.getTransaction().begin();		
+		m.getTransaction().begin();
 		currentManager.set(m);
 		return m;
 	}
@@ -91,8 +93,7 @@ public class XPersistence {
 		if (m.isOpen()) {			
 			EntityTransaction t = (EntityTransaction) m.getTransaction();
 			try {
-				if (t != null) t.commit();
-				else m.flush();
+				t.commit(); 
 			}
 			finally {
 				currentManager.set(null);
@@ -119,7 +120,7 @@ public class XPersistence {
 		if (m.isOpen()) {
 			EntityTransaction t = (EntityTransaction) m.getTransaction();
 			try {
-				if (t != null) t.rollback(); // tmp: ¿in this way?
+				t.rollback();
 			}
 			finally {
 				currentManager.set(null);

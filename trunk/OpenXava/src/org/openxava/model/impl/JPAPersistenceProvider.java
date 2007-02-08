@@ -1,6 +1,7 @@
 package org.openxava.model.impl;
 
 import java.io.*;
+import java.lang.reflect.*;
 import java.util.*;
 
 import javax.ejb.*;
@@ -31,32 +32,15 @@ public class JPAPersistenceProvider extends POJOPersistenceProviderBase {
 			return null;
 		}
 	}
-
-	protected void refresh(Object object) {				
-		if (!isEmpty(object)) { // In this way because EntityNotFoundException rollback transaction
-			XPersistence.getManager().refresh(object);		
-		}				
-	}
-	
-	private boolean isEmpty(Object object) {
-		try {
-			Object emptyObject = object.getClass().newInstance();
-			return object.equals(emptyObject);
-		}
-		catch (Exception ex) {
-			log.error(ex.getMessage(), ex);
-			throw new PersistenceProviderException(XavaResources.getString("is_empty_error", object));
-		}
-	}
-
 	
 	protected void persist(Object object) {
 		XPersistence.getManager().persist(object);		
 	}
-	
-	public void remove(MetaModel metaModel, Object model)
+	 
+	public void remove(MetaModel metaModel, Map keyValues)
 			throws RemoveException, XavaException {
 		try {
+			Object model = find(metaModel, keyValues, false);  
 			XPersistence.getManager().remove(model);
 		}
 		catch (Exception ex) {
@@ -65,7 +49,7 @@ public class JPAPersistenceProvider extends POJOPersistenceProviderBase {
 					metaModel.getName(), ex.getMessage()));
 		}
 	}
-
+	
 	public void begin() {		 
 	}
 		

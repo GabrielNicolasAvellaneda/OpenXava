@@ -11,7 +11,7 @@ import org.openxava.mapping.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Thu May 11 11:55:16 CEST 2006
+ * @version Wed Feb 07 11:25:36 CET 2007
  */
 public class WebsphereMapxmiPG {
     Properties properties = new Properties();
@@ -109,9 +109,9 @@ private static long id = System.currentTimeMillis();
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Thu May 11 11:55:17 CEST 2006", // date this file was generated
-             "/home/javi/workspace/OpenXava/generator/websphereMapxmi.xml", // input file
-             "/home/javi/workspace/OpenXava/generator/WebsphereMapxmiPG.java" }, // output file
+        { "Wed Feb 07 11:25:36 CET 2007", // date this file was generated
+             "../OpenXava/generator/websphereMapxmi.xml", // input file
+             "../OpenXava/generator/WebsphereMapxmiPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:39:37 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
         {"Mon Apr 09 16:37:21 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
