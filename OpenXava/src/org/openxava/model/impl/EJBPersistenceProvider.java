@@ -102,10 +102,24 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 					ex.getLocalizedMessage()));
 		}
 	}
-
-	public void remove(MetaModel metaModel, Object object)
-			throws RemoveException, XavaException {
+	
+	public void remove(MetaModel metaModel, Map keyValues) throws RemoveException, XavaException {
 		try {
+			Object object = find(metaModel, keyValues);
+			remove(metaModel, object);
+		}
+		catch (FinderException ex) {
+			log.error(ex.getMessage(), ex);
+			throw new EJBException(XavaResources.getString("remove_error",
+					metaModel.getName(),
+					ex.getLocalizedMessage()));			
+		}
+	}
+	
+
+	private void remove(MetaModel metaModel, Object object)
+			throws RemoveException, XavaException {
+		try {			
 			if (!metaModel.getMetaCollectionsAgregate().isEmpty()) {
 				removeAllAggregateCollections(metaModel, object);
 			}
@@ -126,6 +140,8 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 					ex.getLocalizedMessage()));
 		}
 	}
+	
+	
 
 	private void removeAllAggregateCollections(MetaModel metaModel,	Object modelObject)	throws Exception {
 			Iterator it =

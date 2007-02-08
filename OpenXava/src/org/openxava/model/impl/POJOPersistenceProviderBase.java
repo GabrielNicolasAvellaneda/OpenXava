@@ -1,7 +1,6 @@
 package org.openxava.model.impl;
 
 import java.io.*;
-import java.lang.reflect.*;
 import java.rmi.*;
 import java.util.*;
 
@@ -27,12 +26,7 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 	 * Return the object associated to the sent key.
 	 */
 	abstract protected Object find(Class pojoClass, Serializable key);
-	
-	/**
-	 * Refresh the object. If object does not exist, then NO exception is thrown.
-	 */
-	abstract protected void refresh(Object object);
-	
+		
 	/**
 	 * Marks the object as persistent. <p> 
 	 */
@@ -63,6 +57,10 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		
 
 	public Object find(MetaModel metaModel, Map keyValues) throws FinderException {
+		return find(metaModel, keyValues, true);
+	}
+	
+	protected Object find(MetaModel metaModel, Map keyValues, boolean useQueryForFind) throws FinderException {
 		try {							
 			Object key = null;		
 			// The second question (metaModel.getMetaPropertiesKey().isEmpty())  
@@ -77,16 +75,18 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 				}
 			}
 			else {
-				key = getKey(metaModel, keyValues);
-				refreshKeyReference(metaModel, key);
-			}			
-			
+				if (useQueryForFind) {
+					return findByKeyUsingQuery(metaModel, keyValues);
+				}
+				else {
+					key = getKey(metaModel, keyValues);
+				}
+			}
 			if (key == null) {
 				throw new ObjectNotFoundException(XavaResources.getString(
 						"object_with_key_not_found", metaModel.getName(), keyValues));
 			}				
-			Object result = find(metaModel.getPOJOClass(), (Serializable) key);
-			
+			Object result = find(metaModel.getPOJOClass(), (Serializable) key);				
 			if (result == null) {
 				throw new ObjectNotFoundException(XavaResources.getString(
 						"object_with_key_not_found", metaModel.getName(), keyValues));
@@ -122,23 +122,6 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		}
 	}
 	
-	private void refreshKeyReference(MetaModel metaModel, Object key) throws XavaException, InvocationTargetException, PropertiesManagerException { 
-		// Refresh references keys can be a little inefficient (a SELECT by reference)
-		// but it's needed in order to populate these references well, 
-		// because these reference already have values in its keys thus 
-		// they are not loaded automatically from database
-		Collection references = metaModel.getMetaReferencesKey();
-		if (references.isEmpty()) return;
-		PropertiesManager pm = new PropertiesManager(key);
-		for (Iterator it=metaModel.getMetaReferencesKey().iterator(); it.hasNext();) {
-			MetaReference ref = (MetaReference) it.next();
-			Object referencedObject = pm.executeGet(ref.getName());
-			if (referencedObject != null) {
-				refresh(referencedObject);
-			}
-		}
-	}
-
 	public IPropertiesContainer toPropertiesContainer(MetaModel metaModel,
 			Object o) throws XavaException {
 		return new POJOPropertiesContainerAdapter(o);
@@ -224,23 +207,38 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 	}
 	
 	public Object findByAnyProperty(MetaModel metaModel, Map keyValues) throws ObjectNotFoundException, FinderException, XavaException {
-		keyValues = Maps.treeToPlain(keyValues); 				
+		return findUsingQuery(metaModel, Maps.treeToPlain(keyValues), false);
+	}
+	
+	public Object findByKeyUsingQuery(MetaModel metaModel, Map keyValues) throws ObjectNotFoundException, FinderException, XavaException {
+		Map allValues = Maps.treeToPlain(keyValues);
+		Map keys = new HashMap();		
+		for (Iterator it = metaModel.getAllKeyPropertiesNames().iterator(); it.hasNext(); ) {
+			String property = (String) it.next();
+			keys.put(property, allValues.get(property));
+		}
+		return findUsingQuery(metaModel, keys, true);
+	}
+	
+	private Object findUsingQuery(MetaModel metaModel, Map keyValues, boolean includeEmptyValues) throws ObjectNotFoundException, FinderException, XavaException {
 		StringBuffer queryString = new StringBuffer();
 		queryString.append("from ");
 		queryString.append(metaModel.getName());
+		queryString.append(" o");
 		boolean hasCondition = false;	
 		Collection values = new ArrayList();
 		for (Iterator it=keyValues.entrySet().iterator(); it.hasNext(); it.hasNext()) {
 			Map.Entry en = (Map.Entry) it.next();
-			if (!Is.empty(en.getValue())) {
+			if (includeEmptyValues || !Is.empty(en.getValue())) {
 				if (!hasToIncludePropertyInCondition(metaModel, (String) en.getKey())) continue;
 				if (!hasCondition) {
 					queryString.append(" where ");
 					hasCondition = true;
 				}
 				else {
-					queryString.append(" and ");
+					queryString.append(" and ");				
 				}			
+				queryString.append("o.");
 				queryString.append(en.getKey());
 				queryString.append(en.getValue() instanceof String?" like ":" = ");
 				queryString.append(":");
@@ -252,12 +250,12 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		if (!hasCondition) { 
 			throw new ObjectNotFoundException(XavaResources.getString("object_by_any_property_not_found", values));
 		}
-								
+										
 		Object query = createQuery(queryString.toString());		
 		for (Iterator it=values.iterator(); it.hasNext(); it.hasNext()) {
 			Map.Entry en = (Map.Entry) it.next();
 			String name = (String) en.getKey();
-			Object value = convert(metaModel, name, en.getValue());
+			Object value = convert(metaModel, name, en.getValue());			
 			setParameterToQuery(query, Strings.change(name, ".", "_"), value);
 		}		
 		Object result = getUniqueResult(query);		

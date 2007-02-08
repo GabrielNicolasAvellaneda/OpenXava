@@ -253,7 +253,7 @@ public class Maps {
 		for (Iterator it = treeMap.entrySet().iterator(); it.hasNext();) {
 			Map.Entry en = (Map.Entry) it.next();
 			if (en.getValue() instanceof Map) {
-				fillPlain(result, (Map) en.getValue(), en.getKey() + ".");
+				fillPlain(result, (Map) en.getValue(), prefix + en.getKey() + ".");
 			}
 			else {
 				result.put(prefix + en.getKey(), en.getValue());

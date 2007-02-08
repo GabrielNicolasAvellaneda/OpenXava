@@ -89,7 +89,7 @@ public interface IPersistenceProvider {
 	/**
 	 * Remove the object from persistent storage.
 	 */
-	void remove(MetaModel metaModel, Object modelObject) throws RemoveException, XavaException;
+	void remove(MetaModel metaModel, Map keyValues) throws RemoveException, XavaException;
 	
 	/**
 	 * Mark the starting of the unit of work associated to this thread. <p> 
