@@ -14,7 +14,7 @@ public class FormulasTest extends ModuleTestBase {
 		super(testName, "OpenXavaTest", "Formulas");		
 	}
 	
-	public void testDependentReferencesAsDescriptionsListWithHiddenKeyInCollection_aggregateCanHasReferenceToModelOfContainerType() throws Exception {
+	public void testDependentReferencesAsDescriptionsListWithHiddenKeyInCollection_aggregateCanHasReferenceToModelOfContainerType() throws Exception {		
 		execute("CRUD.new");		
 		execute("Collection.new", "viewObject=xava_view_section0_ingredients");
 		assertExists("ingredients.anotherFormula.oid"); // Reference to a model of 'Formula' type, the same of the container
@@ -47,7 +47,7 @@ public class FormulasTest extends ModuleTestBase {
 		assertValidValues("ingredients.accentuate.oid", cafeConLeche);
 	}
 	
-	public void testHtmlTextStereotype() throws Exception {
+	public void testHtmlTextStereotype() throws Exception {		
 		execute("Mode.detailAndFirst");
 		assertValue("name", "HTML TEST");
 		execute("Sections.change", "activeSection=1");

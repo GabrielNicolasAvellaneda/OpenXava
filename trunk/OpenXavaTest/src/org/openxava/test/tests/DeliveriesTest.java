@@ -182,6 +182,12 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertListNotEmpty();
 		execute("Mode.detailAndFirst");
 		execute("Sections.change", "activeSection=2");
+		
+		// The bucle is for choosing a delivery with less than 3 details
+		while (getCollectionRowCount("details") >= 3) {
+			execute("Navigation.next");
+		}
+		
 		execute("DeliveryDetails.new", "viewObject=xava_view_section2_details_details");
 		assertMessage("The action New for delivery detail executed");
 		setValue("details.number", "66");
