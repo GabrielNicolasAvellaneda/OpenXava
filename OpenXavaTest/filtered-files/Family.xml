@@ -21,8 +21,10 @@
 			jndi="ejb/openxava.test/Family"/>		
 		<bean class="org.openxava.test.model.Family"/>	
 		<property name="oid" type="String" hidden="true" key="true" required="false"/>
+		
 		<property name="number" size="3" required="true"/>   
 		<property name="description" size="40" required="true"/>
+
 	</entity>
 	
 	<view>
