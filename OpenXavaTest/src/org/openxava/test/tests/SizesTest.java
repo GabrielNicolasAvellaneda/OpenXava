@@ -14,7 +14,9 @@ public class SizesTest extends ModuleTestBase {
 		super(testName, "Sizes");		
 	}
 	
-	public void testSequenceCalculator() throws Exception {
+	// This test does not work in AS/400 because Hibernate does not support
+	// sequence for as400, at least for Hiberanate 3.2.1 and JTOpen 5.3 
+	public void testSequenceCalculator() throws Exception {		 
 		execute("List.orderBy", "property=id");
 		execute("List.orderBy", "property=id");
 		String last = getValueInList(0, "id");	

@@ -20,7 +20,9 @@ public class CustomerContactPersonsTest extends ModuleTestBase {
 		assertValue("customer.name", "Javi");
 		execute("CRUD.search");
 		assertNoErrors();
-		assertValue("name", "Pepe");		
+		assertValue("name", "Pepe");
+		assertValue("customer.number", "1");
+		assertValue("customer.name", "Javi");
 	}
 		
 }

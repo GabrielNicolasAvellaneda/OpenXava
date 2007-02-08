@@ -125,7 +125,7 @@ public class WarehousesTest extends ModuleTestBase {
 		assertValueInList(0, "time", time);
 		assertValueInList(0, "type", "Create");
 		assertValueInList(0, "authorized", "Yes");
-		assertValueInList(0, "recordId", "{zoneNumber=66, number=666}");
+		assertValueInList(0, "recordId", "{zoneNumber=66, number=666}");		
 		
 		assertValueInList(1, "application", "test");
 		assertValueInList(1, "model", "Warehouse");
@@ -135,7 +135,7 @@ public class WarehousesTest extends ModuleTestBase {
 		assertValueInList(1, "time", time);
 		assertValueInList(1, "type", "Read");
 		assertValueInList(1, "authorized", "Yes");
-		assertValueInList(1, "recordId", "{zoneNumber=66, number=666}");
+		assertValueInList(1, "recordId", "{zoneNumber=66, number=666}");		
 		
 		assertValueInList(2, "application", "test");
 		assertValueInList(2, "model", "Warehouse");
@@ -145,7 +145,7 @@ public class WarehousesTest extends ModuleTestBase {
 		assertValueInList(2, "time", time);
 		assertValueInList(2, "type", "Read");
 		assertValueInList(2, "authorized", "Yes");
-		assertValueInList(2, "recordId", "{zoneNumber=66, number=666}");		
+		assertValueInList(2, "recordId", "{zoneNumber=66, number=666}");				
 		
 		assertValueInList(3, "application", "test");
 		assertValueInList(3, "model", "Warehouse");
@@ -155,7 +155,7 @@ public class WarehousesTest extends ModuleTestBase {
 		assertValueInList(3, "time", time);
 		assertValueInList(3, "type", "Update");
 		assertValueInList(3, "authorized", "Yes");
-		assertValueInList(3, "recordId", "{zoneNumber=66, number=666}");
+		assertValueInList(3, "recordId", "{zoneNumber=66, number=666}");		
 		
 		assertValueInList(4, "application", "test");
 		assertValueInList(4, "model", "Warehouse");
@@ -165,7 +165,7 @@ public class WarehousesTest extends ModuleTestBase {
 		assertValueInList(4, "time", time);
 		assertValueInList(4, "type", "Read");
 		assertValueInList(4, "authorized", "Yes");
-		assertValueInList(4, "recordId", "{zoneNumber=66, number=666}");
+		assertValueInList(4, "recordId", "{zoneNumber=66, number=666}");		
 
 		assertValueInList(5, "application", "test");
 		assertValueInList(5, "model", "Warehouse");
@@ -175,7 +175,7 @@ public class WarehousesTest extends ModuleTestBase {
 		assertValueInList(5, "time", time);
 		assertValueInList(5, "type", "Read");
 		assertValueInList(5, "authorized", "Yes");
-		assertValueInList(5, "recordId", "{zoneNumber=66, number=666}");
+		assertValueInList(5, "recordId", "{zoneNumber=66, number=666}");		
 		
 		assertValueInList(6, "application", "test");
 		assertValueInList(6, "model", "Warehouse");
@@ -185,7 +185,7 @@ public class WarehousesTest extends ModuleTestBase {
 		assertValueInList(6, "time", time);
 		assertValueInList(6, "type", "Delete");
 		assertValueInList(6, "authorized", "Yes");
-		assertValueInList(6, "recordId", "{zoneNumber=66, number=666}");
+		assertValueInList(6, "recordId", "{zoneNumber=66, number=666}");		
 		
 		assertValueInList(7, "application", "test");
 		assertValueInList(7, "model", "Warehouse");
