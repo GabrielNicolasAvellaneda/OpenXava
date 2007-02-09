@@ -90,7 +90,7 @@
 >
 
 
-<!ELEMENT collection-view  (list-properties?, edit-action?, view-action?, new-action?, save-action?, hide-detail-action?, remove-action?, list-action*, detail-action*)>
+<!ELEMENT collection-view  (list-properties?, edit-action?, view-action?, new-action?, save-action?, hide-detail-action?, remove-action?, remove-selected-action?, list-action*, detail-action*)>
 <!ATTLIST collection-view
   collection CDATA #REQUIRED
   view CDATA #IMPLIED
@@ -135,6 +135,11 @@
 
 <!ELEMENT remove-action EMPTY>
 <!ATTLIST remove-action
+  action CDATA #IMPLIED
+>
+
+<!ELEMENT remove-selected-action EMPTY>
+<!ATTLIST remove-selected-action
   action CDATA #IMPLIED
 >
 
