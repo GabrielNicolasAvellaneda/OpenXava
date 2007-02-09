@@ -17,7 +17,11 @@
 		<servlet-class>org.openxava.web.servlets.JasperReportServlet</servlet-class>
 	</servlet>	
 	<servlet>
-		<servlet-name>generateReport</servlet-name>
+		<servlet-name>generatePDFReport</servlet-name>
+		<servlet-class>org.openxava.web.servlets.GenerateReportServlet</servlet-class>
+	</servlet>			
+	<servlet>
+		<servlet-name>generateExcelReport</servlet-name>
 		<servlet-class>org.openxava.web.servlets.GenerateReportServlet</servlet-class>
 	</servlet>		
 	<servlet>
@@ -41,11 +45,11 @@
 		<url-pattern>/xava/jasperReport</url-pattern>
 	</servlet-mapping>	
 	<servlet-mapping>
-		<servlet-name>generateReport</servlet-name>
+		<servlet-name>generatePDFReport</servlet-name>
 		<url-pattern>/xava/list.pdf</url-pattern>
 	</servlet-mapping>		
 	<servlet-mapping>
-		<servlet-name>generateReport</servlet-name>
+		<servlet-name>generateExcelReport</servlet-name>
 		<url-pattern>/xava/list.csv</url-pattern>
 	</servlet-mapping>			
 	<servlet-mapping>
