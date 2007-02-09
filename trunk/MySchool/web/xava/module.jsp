@@ -14,7 +14,9 @@
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
+<% if (request.getParameter("parent") == null) { %>
 <%@ include file="script.jsp" %>
+<% } %>
 
 <%
 Users.setCurrent(request);
@@ -46,7 +48,7 @@ if (manager.isListMode()) {
 manager.setApplicationName(request.getParameter("application"));
 boolean isNew = manager.setModuleName(request.getParameter("module"));
 org.openxava.view.View view = (org.openxava.view.View) context.get(request, "xava_view");
-if (isNew) { 
+if (isNew) {
 	view.setModelName(manager.getModelName());	
 	view.setViewName(manager.getXavaViewName());
 }
@@ -181,10 +183,10 @@ while (it.hasNext()) {
 		event.preventDefault();
 		return;
 	}
-<%	
+<%
 }
 %>
-	if (event.keyCode >= 49 && event.keyCode <= 57 && event.ctrlKey) {
+	if (event.keyCode >= 49 && event.keyCode <= 57 && event.ctrlKey && !event.altKey) {
 		executeXavaAction("", false, document.<%=manager.getForm()%>, "Sections.change", "activeSection=" + (event.keyCode - 49));		
 		event.returnValue = false;
 		event.preventDefault();

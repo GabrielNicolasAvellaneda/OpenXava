@@ -9,6 +9,7 @@
  name CDATA #REQUIRED
  class CDATA #REQUIRED
  value CDATA #IMPLIED
+ scope (module|global) "module"
 >
 
 <!ELEMENT action (set*, use-object*)>
