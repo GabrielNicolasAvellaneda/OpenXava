@@ -760,6 +760,63 @@
       </entity>
 
       <entity>
+         <ejb-name>Invoice2</ejb-name>
+
+         <table-name>XAVATEST_INVOICE</table-name>
+
+         <cmp-field>
+            <field-name>year</field-name>
+            <column-name>YEAR</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_VatPercentage</field-name>
+            <column-name>VATPERCENTAGE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Date</field-name>
+            <column-name>DATE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>number</field-name>
+            <column-name>NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Customer_number</field-name>
+            <column-name>CUSTOMER_NUMBER</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByCustomer</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Invoice2 o WHERE o._Customer_number = ?1 ORDER BY o.year, o.number]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByYearNumber</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Invoice2 o WHERE o.year = ?1 and o.number = ?2]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
          <ejb-name>SellerLevel</ejb-name>
 
          <table-name>XAVATEST_SELLERLEVEL</table-name>
@@ -926,60 +983,6 @@
       </entity>
 
       <entity>
-         <ejb-name>DeliveryDetail</ejb-name>
-
-         <table-name>XAVATEST_DELIVERYDETAIL</table-name>
-
-         <cmp-field>
-            <field-name>_Description</field-name>
-            <column-name>DESCRIPTION</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>number</field-name>
-            <column-name>NUMBER</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Delivery_number</field-name>
-            <column-name>DELIVERY_NUMBER</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Delivery_type_number</field-name>
-            <column-name>DELIVERY_TYPE_NUMBER</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Delivery_invoice_year</field-name>
-            <column-name>DELIVERY_INVOICE_YEAR</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Delivery_invoice_number</field-name>
-            <column-name>DELIVERY_INVOICE_NUMBER</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByDelivery</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-                  <method-param>int</method-param>
-                  <method-param>int</method-param>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryDetail o WHERE o._Delivery_invoice_year = ?1 AND o._Delivery_invoice_number = ?2 AND o._Delivery_type_number = ?3 AND o._Delivery_number = ?4 ORDER BY o.number]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
          <ejb-name>Product3</ejb-name>
 
          <table-name>XAVATEST_PRODUCT3</table-name>
@@ -1043,6 +1046,60 @@
                </method-params>
             </query-method>
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product3 o WHERE o.number = ?1]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>DeliveryDetail</ejb-name>
+
+         <table-name>XAVATEST_DELIVERYDETAIL</table-name>
+
+         <cmp-field>
+            <field-name>_Description</field-name>
+            <column-name>DESCRIPTION</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>number</field-name>
+            <column-name>NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Delivery_number</field-name>
+            <column-name>DELIVERY_NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Delivery_type_number</field-name>
+            <column-name>DELIVERY_TYPE_NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Delivery_invoice_year</field-name>
+            <column-name>DELIVERY_INVOICE_YEAR</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Delivery_invoice_number</field-name>
+            <column-name>DELIVERY_INVOICE_NUMBER</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByDelivery</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryDetail o WHERE o._Delivery_invoice_year = ?1 AND o._Delivery_invoice_number = ?2 AND o._Delivery_type_number = ?3 AND o._Delivery_number = ?4 ORDER BY o.number]]></jboss-ql>
 
 	     </query>
 
@@ -1767,6 +1824,68 @@
                </method-params>
             </query-method>
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryPlace o WHERE o._PreferredWarehouse_zoneNumber = ?1 AND o._PreferredWarehouse_number = ?2 ORDER BY o.oid]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>InvoiceDetail2</ejb-name>
+
+         <table-name>XAVATEST_INVOICEDETAIL</table-name>
+
+         <cmp-field>
+            <field-name>_UnitPrice</field-name>
+            <column-name>UNITPRICE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>oid</field-name>
+            <column-name>OID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Quantity</field-name>
+            <column-name>QUANTITY</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Product_number</field-name>
+            <column-name>PRODUCT_NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Invoice2_year</field-name>
+            <column-name>INVOICE_YEAR</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Invoice2_number</field-name>
+            <column-name>INVOICE_NUMBER</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByProduct</method-name>
+               <method-params>
+                  <method-param>long</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail2 o WHERE o._Product_number = ?1 ORDER BY o.oid]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByInvoice2</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail2 o WHERE o._Invoice2_year = ?1 AND o._Invoice2_number = ?2 ORDER BY o.oid]]></jboss-ql>
 
 	     </query>
 
