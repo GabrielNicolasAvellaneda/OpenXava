@@ -269,7 +269,7 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 			while (itSets.hasNext()) {
 				MetaSet set = (MetaSet) itSets.next();
 				String propertyNameInCalculator = Strings.firstUpper(set.getPropertyName());
-				String propertyNameFrom = Strings.firstUpper(set.getPropertyNameFrom());
+				String propertyNameFrom = Strings.change(Strings.firstUpper(set.getPropertyNameFrom()), ".", "_");
 		</java> 	
 			<expr>property.getName()</expr>Calculator.set<expr>propertyNameInCalculator</expr>(get<expr>propertyNameFrom</expr>());
 		<java>	} // sets 
@@ -376,7 +376,7 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 			while (itSets.hasNext()) {
 				MetaSet set = (MetaSet) itSets.next();
 				String propertyNameInCalculator = Strings.firstUpper(set.getPropertyName());
-				String propertyNameFrom = Strings.firstUpper(set.getPropertyNameFrom());
+				String propertyNameFrom = Strings.change(Strings.firstUpper(set.getPropertyNameFrom()), ".", "_");
 		</java> 	
 			<expr>property.getName()</expr>Calculator.set<expr>propertyNameInCalculator</expr>(get<expr>propertyNameFrom</expr>());
 		<java>	} // sets 
@@ -505,7 +505,7 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 			while (itSets.hasNext()) {
 				MetaSet set = (MetaSet) itSets.next();
 				String propertyNameInCalculator = Strings.firstUpper(set.getPropertyName());
-				String propertyNameFrom = Strings.firstUpper(set.getPropertyNameFrom());
+				String propertyNameFrom = Strings.change(Strings.firstUpper(set.getPropertyNameFrom()), ".", "_");
 		</java> 	
 			<expr>property.getName()</expr>Calculator.set<expr>propertyNameInCalculator</expr>(get<expr>propertyNameFrom</expr>());
 		<java>	} // poners 
@@ -624,7 +624,7 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 			while (itSets.hasNext()) {
 				MetaSet set = (MetaSet) itSets.next();
 				String propertyNameInCalculator = Strings.firstUpper(set.getPropertyName());
-				String propertyNameFrom = Strings.firstUpper(set.getPropertyNameFrom());
+				String propertyNameFrom = Strings.change(Strings.firstUpper(set.getPropertyNameFrom()), ".", "_");
 		</java> 	
 			<expr>property.getName()</expr>Calculator.set<expr>propertyNameInCalculator</expr>(get<expr>propertyNameFrom</expr>());
 		<java>	} // sets 
@@ -727,7 +727,7 @@ abstract public class <expr>name</expr>Bean extends EJBReplicableBase
 			while (itSets.hasNext()) {
 				MetaSet set = (MetaSet) itSets.next();
 				String propertyNameInCalculator = Strings.firstUpper(set.getPropertyName());
-				String propertyNameFrom = Strings.firstUpper(set.getPropertyNameFrom());
+				String propertyNameFrom = Strings.change(Strings.firstUpper(set.getPropertyNameFrom()), ".", "_");
 		</java> 
 			<expr>property.getName()</expr>Calculator.set<expr>propertyNameInCalculator</expr>(get<expr>propertyNameFrom</expr>());
 		<java>	} // sets
