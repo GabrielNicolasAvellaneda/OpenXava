@@ -22,16 +22,16 @@ public class DeleteSelectedAction extends BaseAction implements IModelAction {
 		int [] selectedOnes = tab.getSelected();
 		if (selectedOnes != null) {						
 			for (int i = 0; i < selectedOnes.length; i++) {				
-				Map clave = (Map) getTab().getTableModel().getObjectAt(selectedOnes[i]);
+				Map key = (Map) getTab().getTableModel().getObjectAt(selectedOnes[i]);
 				try {									
-					MapFacade.remove(model, clave);					
+					MapFacade.remove(model, key);					
 				}
 				catch (ValidationException ex) {
-					addError("no_delete_row", new Integer(i), clave);
+					addError("no_delete_row", new Integer(i), key);
 					addErrors(ex.getErrors());
 				}								
 				catch (Exception ex) {
-					addError("no_delete_row", new Integer(i), clave);
+					addError("no_delete_row", new Integer(i), key);
 				}				
 			}
 			getTab().deselectAll();
