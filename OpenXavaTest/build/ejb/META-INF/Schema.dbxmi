@@ -182,6 +182,21 @@
       </columns>
 
    </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Invoice2" name="" primaryKey="Invoice2_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Invoice2_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Invoice2" constraint="Constraint_Invoice2_"/>
+
+      <columns xmi:id="Invoice2_year" name="year">
+      </columns>
+      <columns xmi:id="Invoice2__VatPercentage" name="_VatPercentage">
+      </columns>
+      <columns xmi:id="Invoice2__Date" name="_Date">
+      </columns>
+      <columns xmi:id="Invoice2_number" name="number">
+      </columns>
+      <columns xmi:id="Invoice2__Customer_number" name="_Customer_number">
+      </columns>
+
+   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_SellerLevel" name="" primaryKey="SellerLevel_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="SellerLevel_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_SellerLevel" constraint="Constraint_SellerLevel_"/>
 
@@ -219,23 +234,6 @@
       </columns>
 
    </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_DeliveryDetail" name="" primaryKey="DeliveryDetail_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="DeliveryDetail_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_DeliveryDetail" constraint="Constraint_DeliveryDetail_"/>
-
-      <columns xmi:id="DeliveryDetail__Description" name="_Description">
-      </columns>
-      <columns xmi:id="DeliveryDetail_number" name="number">
-      </columns>
-      <columns xmi:id="DeliveryDetail__Delivery_number" name="_Delivery_number">
-      </columns>
-      <columns xmi:id="DeliveryDetail__Delivery_type_number" name="_Delivery_type_number">
-      </columns>
-      <columns xmi:id="DeliveryDetail__Delivery_invoice_year" name="_Delivery_invoice_year">
-      </columns>
-      <columns xmi:id="DeliveryDetail__Delivery_invoice_number" name="_Delivery_invoice_number">
-      </columns>
-
-   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_Product3" name="" primaryKey="Product3_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Product3_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Product3" constraint="Constraint_Product3_"/>
 
@@ -254,6 +252,23 @@
       <columns xmi:id="Product3__Subfamily2_family_number" name="_Subfamily2_family_number">
       </columns>
       <columns xmi:id="Product3__Subfamily2_subfamily_number" name="_Subfamily2_subfamily_number">
+      </columns>
+
+   </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_DeliveryDetail" name="" primaryKey="DeliveryDetail_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="DeliveryDetail_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_DeliveryDetail" constraint="Constraint_DeliveryDetail_"/>
+
+      <columns xmi:id="DeliveryDetail__Description" name="_Description">
+      </columns>
+      <columns xmi:id="DeliveryDetail_number" name="number">
+      </columns>
+      <columns xmi:id="DeliveryDetail__Delivery_number" name="_Delivery_number">
+      </columns>
+      <columns xmi:id="DeliveryDetail__Delivery_type_number" name="_Delivery_type_number">
+      </columns>
+      <columns xmi:id="DeliveryDetail__Delivery_invoice_year" name="_Delivery_invoice_year">
+      </columns>
+      <columns xmi:id="DeliveryDetail__Delivery_invoice_number" name="_Delivery_invoice_number">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -452,6 +467,23 @@
       <columns xmi:id="DeliveryPlace__PreferredWarehouse_zoneNumber" name="_PreferredWarehouse_zoneNumber">
       </columns>
       <columns xmi:id="DeliveryPlace__PreferredWarehouse_number" name="_PreferredWarehouse_number">
+      </columns>
+
+   </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_InvoiceDetail2" name="" primaryKey="InvoiceDetail2_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="InvoiceDetail2_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_InvoiceDetail2" constraint="Constraint_InvoiceDetail2_"/>
+
+      <columns xmi:id="InvoiceDetail2__UnitPrice" name="_UnitPrice">
+      </columns>
+      <columns xmi:id="InvoiceDetail2_oid" name="oid">
+      </columns>
+      <columns xmi:id="InvoiceDetail2__Quantity" name="_Quantity">
+      </columns>
+      <columns xmi:id="InvoiceDetail2__Product_number" name="_Product_number">
+      </columns>
+      <columns xmi:id="InvoiceDetail2__Invoice2_year" name="_Invoice2_year">
+      </columns>
+      <columns xmi:id="InvoiceDetail2__Invoice2_number" name="_Invoice2_number">
       </columns>
 
    </RDBSchema:RDBTable>

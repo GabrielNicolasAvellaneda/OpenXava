@@ -5,6 +5,8 @@ import org.openxava.test.model.*;
 
 
 /**
+ * The container is injected using setContainer method of IAggregateOidCalculator.
+ * 
  * @author Javier Paniza
  */
 public class InvoiceDetailOidCalculator implements IAggregateOidCalculator {
