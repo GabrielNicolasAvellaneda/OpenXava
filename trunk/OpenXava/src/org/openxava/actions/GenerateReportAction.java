@@ -48,7 +48,8 @@ public class GenerateReportAction extends BaseAction implements IRequestAction, 
 	public String getForwardURI() {		
 		return "/xava/list." + getType() + 
 			"?application=" + request.getParameter("application") +
-			"&module=" + request.getParameter("module");
+			"&module=" + request.getParameter("module") +
+			"&time=" + System.currentTimeMillis();
 	}
 
 	public String getType() {
