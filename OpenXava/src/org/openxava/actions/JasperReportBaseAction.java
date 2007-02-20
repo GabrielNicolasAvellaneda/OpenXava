@@ -50,7 +50,7 @@ abstract public class JasperReportBaseAction extends BaseAction implements IForw
 	}
 
 	public String getForwardURI() {		
-		return "/xava/report.pdf";
+		return "/xava/report.pdf?time="+System.currentTimeMillis();
 	}
 
 	public boolean inNewWindow() {
