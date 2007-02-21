@@ -26,7 +26,7 @@ public class ChangeProductsPriceTest extends ModuleTestBase {
 	};
 
 	public ChangeProductsPriceTest(String testName) {
-		super(testName, "OpenXavaTest", "ChangeProductsPrice");		
+		super(testName, "ChangeProductsPrice");		
 	}
 
 	

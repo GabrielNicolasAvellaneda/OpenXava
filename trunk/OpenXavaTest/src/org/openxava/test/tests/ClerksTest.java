@@ -3,7 +3,6 @@ package org.openxava.test.tests;
 import java.text.*;
 import java.util.*;
 
-import org.apache.commons.logging.*;
 import org.openxava.tests.*;
 
 

@@ -11,7 +11,7 @@ import org.openxava.tests.*;
 public class ColorsTest extends ModuleTestBase {
 	
 	public ColorsTest(String testName) {
-		super(testName, "OpenXavaTest", "Colors");		
+		super(testName, "Colors");		
 	}
 	
 	public void testKeysWithZeroValue() throws Exception {
