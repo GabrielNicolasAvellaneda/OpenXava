@@ -3,8 +3,6 @@ package org.openxava.jpa;
 
 import javax.persistence.*;
 
-import org.openxava.hibernate.*;
-
 
 
 

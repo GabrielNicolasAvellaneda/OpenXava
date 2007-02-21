@@ -22,8 +22,7 @@ public class StringArrayBytesConverter implements IConverter {
 	private static Log log = LogFactory.getLog(StringArrayBytesConverter.class);
     	
 	public Object toJava(Object o) throws ConversionException {	    
-    	if (o == null) return "";    
-    	System.out.println("[StringArrayBytesConverter.toJava] o.getClass()=" + o.getClass()); //  tmp    	
+    	if (o == null) return "";        	    
     	try {
     		byte[] b = null;
 	    	if (o instanceof Blob) {
