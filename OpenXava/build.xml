@@ -851,6 +851,22 @@
 	    </schemaupdate>
 	</target>	
 	
-	
-		
+	<!-- Warning: This target is still experimental -->
+	<target name="rebuildOX3">
+		<copy todir="../${project}/ejb3-jpa" failonerror="false" overwrite="true">		
+			<fileset dir="../OpenXava/hibernate"/>
+	    	<filterset>	    	
+				<filtersfile file="${configuration}.properties"/>				
+				<filter token="separator" value="${separator}"/>
+	    		<filter token="openxavads.separator" value="${openxavads.separator}"/>
+	    		<filter token="openxavads.hibernate.dialect" value="${openxavads.hibernate.dialect}"/>
+				<filter token="collection" value="${collection}"/>
+	    		<filter token="datasource" value="${datasource}"/>
+	    		<filter token="datasource.prefix" value="${datasource.prefix}"/>
+	    		<filter token="hibernate.dialect" value="${hibernate.dialect}"/>	    		
+	    		<filter token="hibernate.properties" value="${hibernate.properties}"/>
+			</filterset> 			         
+		</copy>					
+	</target>
+			
 </project>
