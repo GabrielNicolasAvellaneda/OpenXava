@@ -299,4 +299,4 @@ document.onkeydown = processKey;
 manager.commit(); // If hibernate, ejb3, etc is used to render some value here is commit
 %>
 
-<script>setFocus()</script>
+<script>setTimeout ('setFocus()', 10);</script>

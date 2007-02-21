@@ -1,8 +1,7 @@
 Change Log for OpenXava project
 ===============================
-
+- Fix: Focus is lost inside Liferay when a request is done.
 - Fix: Avoid browser cache of PDF OpenXava generated documents.
-
 - Using key properties of parent model in a 'from' attribute from an aggregate works. That is, to use from="invoice.year" from a InvoiceDetail aggregate is allowed.
 
 OpenXava 2.1 (2007-2-12)
