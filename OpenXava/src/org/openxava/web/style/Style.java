@@ -1,7 +1,6 @@
 package org.openxava.web.style;
 
-
-
+import org.openxava.util.*;
 
 /**
  * 
@@ -150,8 +149,15 @@ public class Style {
 		return getFrameTitle();
 	}
 	
+	public String getFrameTitleStartDecoration(Align align) {
+		return ""; 
+	}
+	
+	/**
+	 * Aligned to the left by default.
+	 */
 	public String getFrameTitleStartDecoration() {
-		return "";
+		return getFrameTitleStartDecoration(Align.LEFT);
 	}
 	
 	public String getFrameTitleEndDecoration() {
@@ -265,10 +271,6 @@ public class Style {
 	
 	public String getRemoveImage() {
 		return "images/remove.gif";
-	}
-	
-	public String getActionsInFrame() {
-		return "";
 	}
 	
 	/**

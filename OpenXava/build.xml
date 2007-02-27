@@ -550,13 +550,19 @@
 	</target>
 	
 	<target name="compile"> 
+		<!-- We create the 'lib' folder for it does not fails at the first time -->
+		<mkdir dir="web/WEB-INF/lib"/>
 		<javac destdir="../${project}/web/WEB-INF/classes"> 
 			<src path="../${project}/src"/> 
 			<!-- Only needed if you uses XDoclet generated code
 			<src path="../${project}/gen-src"/> 
 			-->
-			<src path="../${project}/gen-src-xava"/> 
+			<src path="../${project}/gen-src-xava"/>  
 			<classpath> 
+				<pathelement path="../OpenXava/bin"/>
+				<fileset dir="../OpenXava/web/WEB-INF/lib"> 
+					<include name="**/*.jar"/> 
+				</fileset> 
 				<fileset dir="web/WEB-INF/lib"> 
 					<include name="**/*.jar"/> 
 				</fileset> 

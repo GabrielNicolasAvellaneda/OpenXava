@@ -139,6 +139,18 @@ public class ModuleManager {
 		}			
 	}
 	
+	/**
+	 * An iterator over <code>getMetaActions()</code> and <code>getMetaActionsMode()</code>. <p>
+	 */
+	public Iterator getAllMetaActionsIterator() {
+		return org.apache.commons.collections.IteratorUtils.chainedIterator(
+				new Iterator[] {
+					getMetaActions().iterator(), 
+					getMetaActionsMode().iterator()
+				}
+		);				
+	}
+	
 	private MetaController getMetaControllerMode() throws XavaException {
 		if (metaControllerMode == null) {
 			metaControllerMode = MetaControllers.getMetaController(getModeControllerName());
