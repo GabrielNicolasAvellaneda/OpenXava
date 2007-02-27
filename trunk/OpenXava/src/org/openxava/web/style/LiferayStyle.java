@@ -1,5 +1,7 @@
 package org.openxava.web.style;
 
+import org.openxava.util.*;
+
 
 
 
@@ -137,8 +139,8 @@ public class LiferayStyle extends Style {
 		return "liferay-xava-frame-header";
 	}
 	
-	public String getFrameTitleStartDecoration() {
-		return "<table class='portlet-header-bar' style='position: static' cellpadding=0 cellspacing=0 width=100%><tr><td class='portlet-header-left' style='position: static' width=1>&nbsp;</td><td>";
+	public String getFrameTitleStartDecoration(Align align) {
+		return "<table class='portlet-header-bar' style='position: static' cellpadding=0 cellspacing=0 width=100%><tr><td class='portlet-header-left' style='position: static' width=1>&nbsp;</td><td align='" + align.getDescription() + "'>";
 	}
 	
 	public String getFrameTitleEndDecoration() {
@@ -236,5 +238,18 @@ public class LiferayStyle extends Style {
 	public String getCollectionListActions() {
 		return "";
 	}
+	
+	public String getRestoreImage() {
+		return "/html/themes/brochure/images/portlet/minimize.gif";
+	}
+	
+	public String getMaximizeImage() {
+		return "/html/themes/brochure/images/portlet/maximize.gif";
+	}
+	
+	public String getRemoveImage() {
+		return "/html/themes/brochure/images/portlet/close.gif";
+	}
+
 		
 }

@@ -199,10 +199,6 @@ public class WebSpherePortalStyle extends Style {
 		return "/wps/images/icons/Delete.gif";
 	}
 	
-	public String getActionsInFrame() {
-		return "wpsPortletTitleIconBackground";
-	}
-	
 	public boolean isAlignHeaderAsData() {
 		return true;
 	}
