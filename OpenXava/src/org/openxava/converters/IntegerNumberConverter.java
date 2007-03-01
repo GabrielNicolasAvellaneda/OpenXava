@@ -13,7 +13,14 @@ package org.openxava.converters;
 public class IntegerNumberConverter implements IConverter {
 	
 	private final static Integer CERO = new Integer(0);
+	private static IConverter instance;
 	
+	public static IConverter getInstance() {
+		if (instance == null) {
+			instance = new IntegerNumberConverter();
+		}
+		return instance;
+	}
 
 	public Object toDB(Object o) throws ConversionException {
 		return o==null?CERO:o;

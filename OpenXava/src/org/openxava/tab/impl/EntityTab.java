@@ -387,7 +387,8 @@ public class EntityTab implements IEntityTabImpl {
 			while (it.hasNext()) {
 				String propertyName = (String) it.next();
 				try {
-					PropertyMapping propertyMapping = getMetaModel().getMetaProperty(propertyName).getMapping();
+					MetaProperty property = getMetaModel().getMetaProperty(propertyName);
+					PropertyMapping propertyMapping = property.getMapping();
 					if (propertyMapping != null) {
 						IConverter converter = propertyMapping.getConverter();
 						if (converter != null) {
@@ -397,7 +398,20 @@ public class EntityTab implements IEntityTabImpl {
 							IMultipleConverter multipleConverter =  propertyMapping.getMultipleConverter();
 							if (multipleConverter != null) {							
 								tabConverters.add(new TabConverter(propertyName, i, multipleConverter, propertyMapping.getCmpFields(), getFields(), table));
-							}																							
+							}
+							else {
+								// This is the case of a key without converter of type int or long
+								// It's for suporting int and long as key and NUMERIC in database
+								// without to declare an explicit converter
+								if (property.isKey()) {
+									if (property.getType().equals(int.class) || property.getType().equals(Integer.class)) {
+										tabConverters.add(new TabConverter(propertyName, i,  IntegerNumberConverter.getInstance()));
+									}
+									else if (property.getType().equals(long.class) || property.getType().equals(Long.class)) {
+										tabConverters.add(new TabConverter(propertyName, i,  LongNumberConverter.getInstance()));
+									}
+								}
+							}	
 						}
 					}
 				}

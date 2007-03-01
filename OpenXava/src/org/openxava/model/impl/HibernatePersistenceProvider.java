@@ -71,7 +71,7 @@ public class HibernatePersistenceProvider extends POJOPersistenceProviderBase {
 		((Query) query).setParameter(name, value);
 	}
 
-	protected Object getUniqueResult(Object query) {
+	protected Object getUniqueResult(Object query) {		
 		Iterator it = ((Query) query).list().iterator();
 		if (!it.hasNext()) return null;
 		return it.next();

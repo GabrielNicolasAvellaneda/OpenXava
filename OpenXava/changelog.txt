@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Composite key with an int or long and NUMERIC in database fails searching in detail mode.
+- New methods setYear, setMonth and setDay added to Dates class.
 - Stereotype IMAGES_GALLERY/GALERIA_IMAGENES is shown nicely in Liferay Portal.
 - New method getAllMetaActionsIterator() added to ModuleManager to avoid using org.apache.commons.collections.IteratorUtils inside JSP (Eclipse WTP does not like it).
 - Ant target 'compile' in OpenXava/build.xml is refined in order to work fine even if it is the first ant target to be executed when a project is recently created.
