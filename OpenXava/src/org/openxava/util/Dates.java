@@ -73,6 +73,43 @@ public class Dates {
 	}	
 	
 	/**
+	 * Put the day to the date. <p>
+	 * 
+	 * If date is null it has no effect (but no exception is thrown)
+	 */
+	public static void setDay(Date date, int day) {
+		if (date == null) return;
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(Calendar.DAY_OF_MONTH, day);
+	}
+	
+	/**
+	 * Put the month (1 to 12) to the date. <p>
+	 * 
+	 * If date is null it has no effect (but no exception is thrown)
+	 */
+	public static void setMonth(Date date, int month) {
+		if (date == null) return;
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(Calendar.MONTH, month - 1);
+	}
+	
+	/**
+	 * Put the year to the date. <p>
+	 * 
+	 * If date is null it has no effect (but no exception is thrown)
+	 */
+	public static void setYear(Date date, int year) {
+		if (date == null) return;
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(Calendar.YEAR, year);
+	}
+	
+	
+	/**
 	 * Puts hours, minutes, seconds and milliseconds to zero. <p>
 	 * 
 	 * @return The same date sent as argument (a new date is not created). If null
