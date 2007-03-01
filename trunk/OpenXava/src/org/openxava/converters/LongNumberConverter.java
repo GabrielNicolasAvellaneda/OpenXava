@@ -13,6 +13,15 @@ public class LongNumberConverter implements IConverter {
 	
 	private final static Long CERO = new Long(0);
 	
+	private static IConverter instance;
+	
+	public static IConverter getInstance() {
+		if (instance == null) {
+			instance = new LongNumberConverter();
+		}
+		return instance;
+	}
+
 
 	public Object toDB(Object o) throws ConversionException {
 		return o==null?CERO:o;
