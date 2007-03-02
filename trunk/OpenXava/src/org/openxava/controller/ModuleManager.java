@@ -28,9 +28,10 @@ public class ModuleManager {
 	
 	private static Log log = LogFactory.getLog(ModuleManager.class);
 	
-	static {
+	static {		
 		MetaControllers.setContext(MetaControllers.WEB);		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
+		log.info("OpenXava 2.1.1 (2007-03-02)");
 	}
 	
 	private static int nextOid = 0; 
