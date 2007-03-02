@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- OpenXava number version is logged.
 - Fix: Composite key with an int or long and NUMERIC in database fails searching in detail mode.
 - New methods setYear, setMonth and setDay added to Dates class.
 - Stereotype IMAGES_GALLERY/GALERIA_IMAGENES is shown nicely in Liferay Portal.
