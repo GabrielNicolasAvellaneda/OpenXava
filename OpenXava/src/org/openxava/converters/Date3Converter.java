@@ -19,8 +19,6 @@ public class Date3Converter implements IMultipleConverter {
 	private int month;
 	private int year;
 	
-	
-
 	public Object toJava() throws ConversionException {		
 		return Dates.create(day, month, year);
 	}
