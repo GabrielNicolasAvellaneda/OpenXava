@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 2.1.1 (2007-3-2)
+-------------------------
 - OpenXava number version is logged.
 - Fix: Composite key with an int or long and NUMERIC in database fails searching in detail mode.
 - New methods setYear, setMonth and setDay added to Dates class.
