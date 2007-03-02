@@ -183,13 +183,11 @@
 		<mode-controller name="Void"/>	
 	</module>					<module name="Invoices" folder="invoicing">		<model name="Invoice"/>		<controller name="Typical"/>			<controller name="Invoices"/>		</module>
 	
-	<!-- tmp -->
 	<module name="Invoices2" folder="invoicing.variations">
 		<model name="Invoice2"/>
 		<controller name="Typical"/>	
 	</module>
-	
-	
+		
 	<module name="InvoicesActiveYear" folder="invoicing.variations">
 		<model name="Invoice"/>
 		<tab name="ActiveYear"/>
