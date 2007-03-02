@@ -1,6 +1,18 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 2.1.1 (2007-3-2)
+-------------------------
+- OpenXava number version is logged.
+- Fix: Composite key with an int or long and NUMERIC in database fails searching in detail mode.
+- New methods setYear, setMonth and setDay added to Dates class.
+- Stereotype IMAGES_GALLERY/GALERIA_IMAGENES is shown nicely in Liferay Portal.
+- New method getAllMetaActionsIterator() added to ModuleManager to avoid using org.apache.commons.collections.IteratorUtils inside JSP (Eclipse WTP does not like it).
+- Ant target 'compile' in OpenXava/build.xml is refined in order to work fine even if it is the first ant target to be executed when a project is recently created.
+- Fix: Focus is lost inside Liferay when a request is done.
+- Fix: Avoid browser cache of PDF OpenXava generated documents.
+- Using key properties of parent model in a 'from' attribute from an aggregate works. That is, to use from="invoice.year" from a InvoiceDetail aggregate is allowed.
+
 OpenXava 2.1 (2007-2-12)
 ------------------------
 MAIN FEATURES
