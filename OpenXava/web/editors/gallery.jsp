@@ -79,13 +79,11 @@ else {
 	} // for
 %>
 </tr>
-<%-- The next row is for giving enough width for showing the heading in one line --%>
-<tr><td><%=Strings.repeat(gallery.getTitle().length()*2+10, "&nbsp;")%></td></tr>
 </table>
 <%
 } // if maximized
 %>
-<%-- The next row is for giving enough width for showing the heading in one line (needed when maximized is on) --%>
+<%-- The next row is for giving enough width for showing the heading in one line --%>
 </td></tr>
 <tr><td><%=Strings.repeat(gallery.getTitle().length()*2+10, "&nbsp;")%></td></tr>
 </table>		

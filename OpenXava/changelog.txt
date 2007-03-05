@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Stereotype IMAGES_GALLERY/GALERIA_IMAGENES shows a gap between first and second image if you have more than seven.
+- New class ArrayOneRowResultSetAdapter for reading a object array as JDBC ResultSet.
+
 OpenXava 2.1.1 (2007-3-2)
 -------------------------
 - OpenXava number version is logged.
