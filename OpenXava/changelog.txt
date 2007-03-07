@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: ClassCastException when searching with MapFacade using BigDecimal as values for integer properties.
 - Fix: Stereotype IMAGES_GALLERY/GALERIA_IMAGENES shows a gap between first and second image if you have more than seven.
 - New class ArrayOneRowResultSetAdapter for reading a object array as JDBC ResultSet.
 
