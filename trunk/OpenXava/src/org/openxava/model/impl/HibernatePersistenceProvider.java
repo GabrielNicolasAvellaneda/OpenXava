@@ -67,7 +67,7 @@ public class HibernatePersistenceProvider extends POJOPersistenceProviderBase {
 		return XHibernate.getSession().createQuery(query);
 	}
 
-	protected void setParameterToQuery(Object query, String name, Object value) {
+	protected void setParameterToQuery(Object query, String name, Object value) {		 
 		((Query) query).setParameter(name, value);
 	}
 

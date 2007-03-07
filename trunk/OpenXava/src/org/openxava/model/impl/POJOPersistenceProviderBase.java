@@ -271,6 +271,22 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		if (mapping != null && mapping.hasConverter()) {
 			result = mapping.getConverter().toDB(result);
 		}
+		if (result instanceof java.math.BigDecimal) {
+			// Sometimes programmers send BigDecimal directly as arguments for searching
+			// even if the properties are int. Usually because they obtain data
+			// from raw JDBC and in the DB the column is NUMERIC or DECIMAL
+			// This code is for support this case
+			try {
+				if (int.class.isAssignableFrom(mapping.getCmpType())) {
+					result = new Integer(((Number) result).intValue());
+				}
+				else if (long.class.isAssignableFrom(mapping.getCmpType())) {
+					result = new Long(((Number) result).longValue());
+				} 
+			}
+			catch (ClassNotFoundException ex) {				
+			}
+		}
 		return result;
 	}
 

@@ -1,5 +1,6 @@
 package org.openxava.test.tests;
 
+import java.math.*;
 import java.util.*;
 
 import org.openxava.hibernate.*;
@@ -28,6 +29,20 @@ public class MapFacadeTest extends TestCase {
 	protected void tearDown() throws Exception {
 		XHibernate.commit();
 		XPersistence.commit();
+	}
+	
+	public void testBigDecimalKeyMapAlthoughPropertyIsInt() throws Exception {
+		Map deliveryKey = new HashMap();
+		Map invoiceKey = new HashMap();
+		invoiceKey.put("year", new BigDecimal("2002"));
+		invoiceKey.put("number", new BigDecimal("1"));
+		deliveryKey.put("invoice", invoiceKey);
+		Map deliveryTypeKey = new HashMap();
+		deliveryTypeKey.put("number", new BigDecimal("1"));
+		deliveryKey.put("type", deliveryTypeKey);
+		deliveryKey.put("number", new BigDecimal("666"));
+		
+		MapFacade.findEntity("Delivery", deliveryKey);
 	}
 	
 	public void testMapArgumentByValue() throws Exception {
