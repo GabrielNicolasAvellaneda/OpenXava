@@ -450,5 +450,24 @@
 		<supported-locale>es</supported-locale>				
 		<resource-bundle>Downloads</resource-bundle>		
 	</portlet> 
-							
+	
+	<portlet id="Training">
+		<description>Training</description>    
+		<portlet-name>Training</portlet-name>
+		<display-name>Training</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>training</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>				
+		<resource-bundle>Training</resource-bundle>		
+	</portlet> 
+								
 </portlet-app>
