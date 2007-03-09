@@ -127,15 +127,31 @@ public class CustomersTest extends ModuleTestBase {
 		assertTrue("It is required at least 10 customers to run this test", total < 10);
 		assertListRowCount(total);
 						
-		String [] normalCondition = { " ", "1", "", ""	};
-		setConditionValues(normalCondition);
+		if (isOX3()) {
+			// In OX3 (using EJB3 entities) we use Enum with null for no value, and 0 for first value
+			String [] normalCondition = { " ", "0", "", "" };		
+			setConditionValues(normalCondition);
+		}
+		else {
+			// In OX2 (using XML component) we use int with 0 for no value, and 1 for first value
+			String [] normalCondition = { " ", "1", "", "" };		
+			setConditionValues(normalCondition);			
+		}
 		execute("List.filter");
 		assertNoErrors();
 		
 		assertListRowCount(normalOnes);
 				
-		String [] steadyCondition = { " ", "2", "", "" };
-		setConditionValues(steadyCondition);		
+		if (isOX3()) {
+			// In OX3 (using EJB3 entities) we use Enum with null for no value, and 0 for first value
+			String [] steadyCondition = { " ", "1", "", "" }; 
+			setConditionValues(steadyCondition);
+		}
+		else {
+			// In OX2 (using XML component) we use int with 0 for no value, and 1 for first value
+			String [] steadyCondition = { " ", "2", "", "" }; 
+			setConditionValues(steadyCondition);			
+		}
 		execute("List.filter");
 		assertNoErrors();
 		assertListRowCount(steadyOnes);		
@@ -206,11 +222,13 @@ public class CustomersTest extends ModuleTestBase {
 
 	public void testValidValues() throws Exception {   				
 		execute("CRUD.new");
-		String [][] validValues = {
-			{ "0", "" },
-			{ "1", "Normal" },
-			{ "2", "Steady" },
-			{ "3", "Special" }	
+		// OX3 uses Java 5 enums, and enums have base 0. OX2 valid-value has base 1  
+		boolean base0 = isOX3();
+		String [][] validValues = { 
+			{ "", "" },
+			{ base0?"0":"1", "Normal" },
+			{ base0?"1":"2", "Steady" },
+			{ base0?"2":"3", "Special" }	
 		};
 		
 		assertValue("type", "1");		
