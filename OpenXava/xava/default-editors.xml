@@ -20,7 +20,15 @@ In your project use the name 'editors.xml' or 'editores.xml'
       <editor url="booleanEditor.jsp">
 		<formatter class="org.openxava.formatters.BooleanFormatter"/>      	    <for-type type="boolean"/>    <for-type type="java.lang.Boolean"/>  </editor>        <editor url="dateCalendarEditor.jsp">
 	<formatter class="org.openxava.formatters.DateFormatter"/>    <for-type type="java.util.Date"/>  </editor>    
-
+  
+  <editor url="validValuesEditor.jsp">
+  	<for-valid-values/>
+  </editor>
+  
+  <editor url="validValuesEditor.jsp">
+  	<for-type type="java.lang.Enum"/>
+  </editor>  
+    
   <editor url="textEditor.jsp">
 	<formatter class="org.openxava.formatters.StringTimeFormatter"/>
     <for-stereotype stereotype="HORA"/>

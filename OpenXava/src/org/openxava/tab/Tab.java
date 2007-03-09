@@ -640,7 +640,7 @@ public class Tab {
 	  this.conditionValues = values;
 	  goPage(1);
 	  rowsHidden = false;
-	  condition = null;	  
+	  condition = null;
 	}
 	
 	public String [] getConditionValues() {

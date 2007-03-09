@@ -14,7 +14,7 @@ import org.w3c.dom.*;
  */
 public class EditorsParser extends ParserBase {
 	
-	
+	public final static String VALID_VALUES_TYPE = "valid-values";
 	
 	public EditorsParser(String xmlFileURL, int language) {
 		super(xmlFileURL, language);
@@ -55,6 +55,7 @@ public class EditorsParser extends ParserBase {
 		addEditorsForType(editor, el);
 		addEditorsForStereotype(editor, el);
 		addEditorsForModelProperty(editor, el);
+		addEditorsForValidValues(editor, el);
 	}	
 
 	private void fillSets(Element el, MetaEditor container)	throws XavaException {
@@ -114,6 +115,15 @@ public class EditorsParser extends ParserBase {
 			MetaWebEditors.addMetaEditorForType(el.getAttribute(xtype[lang]), editor);
 		}		
 	}
+	
+	private void addEditorsForValidValues(MetaEditor editor, Element n) throws XavaException {		
+		NodeList l = n.getElementsByTagName(xfor_valid_values[lang]);
+		if (l.getLength() > 0) {
+			// we save using a special internal type 
+			MetaWebEditors.addMetaEditorForType(VALID_VALUES_TYPE, editor);
+		}		
+	}
+	
 	
 	private void addEditorsForStereotype(MetaEditor editor, Element n) throws XavaException {		
 		NodeList l = n.getElementsByTagName(xfor_stereotype[lang]);

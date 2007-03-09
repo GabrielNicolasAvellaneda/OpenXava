@@ -39,15 +39,15 @@ public class WebEditors {
 	public static Object parse(HttpServletRequest request, MetaProperty p, String [] strings, Messages errors) throws XavaException { 
 		try {
 			String string = strings == null?null:strings[0];			
-			MetaEditor ed = MetaWebEditors.getMetaEditorFor(p);	
+			MetaEditor ed = MetaWebEditors.getMetaEditorFor(p);			
 			if (ed.hasFormatter()) { 								
 				return ed.getFormatter().parse(request, string);
 			}
 			else if (ed.hasMultipleValuesFormatter()) {								
 				return ed.getMultipleValuesFormatter().parse(request, strings);
 			}
-			else if (ed.isFormatterFromType()){
-				MetaEditor edType = MetaWebEditors.getMetaEditorForType(p.getTypeName());
+			else if (ed.isFormatterFromType()){				
+				MetaEditor edType = MetaWebEditors.getMetaEditorForTypeOfProperty(p); 
 				if (edType != null && edType.hasFormatter()) {				
 					return edType.getFormatter().parse(request, string);
 				}
@@ -119,7 +119,6 @@ public class WebEditors {
 	
 	public static String getUrl(MetaProperty p) {
 		try {						
-			if (p.hasValidValues()) return PREFIX + "validValuesEditor.jsp";
 			return PREFIX + MetaWebEditors.getMetaEditorFor(p).getUrl();
 		}
 		catch (Exception ex) {

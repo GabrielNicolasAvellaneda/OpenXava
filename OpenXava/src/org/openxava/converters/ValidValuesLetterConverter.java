@@ -19,7 +19,7 @@ public class ValidValuesLetterConverter implements IConverter {
 	public Object toDB(Object o) throws ConversionException {		
 		if (o == null) return "";
 		if (!(o instanceof Integer)) {		
-			throw new ConversionException("conversion_db_integer_excepted");
+			throw new ConversionException("conversion_db_integer_expected");
 		}
 		assertLetters();
 		int value = ((Integer) o).intValue();

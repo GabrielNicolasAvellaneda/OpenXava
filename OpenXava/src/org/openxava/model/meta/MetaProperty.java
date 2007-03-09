@@ -59,7 +59,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	}
 	
 	public Object getValidValue(int i) {
-		try {		
+		try {				
 			if (i == 0) return "";
 			return getValidValues().get(i-1);
 		}
@@ -115,7 +115,8 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		return sb.toString();
 	}
 	
-	private String obtainValidValueLabel(Locale locale, Object value) { 
+	private String obtainValidValueLabel(Locale locale, Object value) {
+		if (value == null) return ""; 
 		String id = getId() + "." + value;											
 		return Labels.get(id, locale, Strings.firstUpper(value.toString()));
 	}
@@ -838,12 +839,30 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			if (IModel.class.isAssignableFrom(type)) { 
 				return parseModelObject(type, value);
 			}
+			
+			// This is for processing Java 5 enums, but the code compile and works with a Java 1.4
+			Class enumClass = getEnumClass(); 
+			if (enumClass != null && enumClass.isAssignableFrom(type)) {
+				// We parse as an int
+				if (Is.emptyString(value)) return null;
+				return new Integer(value);
+			}
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
 			throw new ParseException(XavaResources.getString("from_string_on_property_error", value, type.getName(), getName()), -1);
 		}
 		throw new ParseException(XavaResources.getString("from_string_on_property_not_supported", type), -1);
+	}
+	
+	private Class getEnumClass() { // Enum
+		try {
+			return Class.forName("java.lang.Enum");
+		} 
+		catch (ClassNotFoundException e) {
+			// Not Java 5
+			return null;
+		}		
 	}
 	
 	private Object parseModelObject(Class modelClass, String string) throws Exception {
@@ -931,7 +950,11 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			if (IModel.class.isAssignableFrom(type)) { 
 				return value.toString();
 			}
-
+			Class enumClass = getEnumClass(); 
+			if (enumClass != null && enumClass.isAssignableFrom(type)) {
+				if (value == null) return null;
+				return value.toString();
+			}
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);

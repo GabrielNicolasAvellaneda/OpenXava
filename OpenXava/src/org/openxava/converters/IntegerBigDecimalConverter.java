@@ -17,14 +17,14 @@ public class IntegerBigDecimalConverter implements IConverter {
 	
 	public Object toDB(Object o) throws ConversionException {
 		if (!(o instanceof Integer)) {		
-			throw new ConversionException("conversion_db_integer_excepted");
+			throw new ConversionException("conversion_db_integer_expected");
 		}				
 		return new BigDecimal(o.toString());
 	}
 	
 	public Object toJava(Object o) throws ConversionException {
 		if (!(o instanceof BigDecimal)) {		
-			throw new ConversionException("conversion_java_bigdecimal_excepted");
+			throw new ConversionException("conversion_java_bigdecimal_expected");
 		}
 		return new Integer(((BigDecimal) o).intValue());
 	}
