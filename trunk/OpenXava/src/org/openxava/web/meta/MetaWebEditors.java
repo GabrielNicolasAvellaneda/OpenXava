@@ -51,6 +51,26 @@ public class MetaWebEditors {
 	public static MetaEditor getMetaEditorForType(String type)	throws XavaException {
 		return (MetaEditor) getEditorsByType().get(type);
 	}
+	
+	/**
+	 * It's like getMetaEditorForType but extract the type of property. <p>
+	 * 
+	 * Also it considers valid-values and Enums. 
+	 * 
+	 * @return Null if no editor registered for the type of the specified property
+	 */
+	public static MetaEditor getMetaEditorForTypeOfProperty(MetaProperty p)	throws XavaException { 					
+		String typeName = p.getType().getName();
+		if (p.hasValidValues() && "int".equals(typeName)) typeName=EditorsParser.VALID_VALUES_TYPE;				
+		MetaEditor r = (MetaEditor) getMetaEditorForType(typeName);
+		if (r == null && p.hasValidValues()) {
+			// If it's a valid-values and the type is not int we assume that is a Java 5 Enum 
+			r = (MetaEditor) getMetaEditorForType("java.lang.Enum");
+			if (r == null) r = (MetaEditor) getMetaEditorForType("Enum");
+		}		
+		return r;
+	}
+	
 
 	/**
 	 * @return Null if no editor registered for the specified stereotype
@@ -113,8 +133,8 @@ public class MetaWebEditors {
 			if (r != null) {				
 				return r;
 			}
-		}				
-		MetaEditor r = (MetaEditor) getMetaEditorForType(p.getType().getName());		
+		}		
+		MetaEditor r = (MetaEditor) getMetaEditorForTypeOfProperty(p);
 		if (r == null) {
 			throw new ElementNotFoundException("editor_not_found", p.getId());
 		}		

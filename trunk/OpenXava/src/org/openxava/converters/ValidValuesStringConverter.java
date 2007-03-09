@@ -20,7 +20,7 @@ public class ValidValuesStringConverter implements IConverter {
 	public Object toDB(Object o) throws ConversionException {
 		if (o == null) return "";
 		if (!(o instanceof Integer)) {		
-			throw new ConversionException("conversion_db_integer_excepted");
+			throw new ConversionException("conversion_db_integer_expected");
 		}
 		assertWords();
 		int value = ((Integer) o).intValue();

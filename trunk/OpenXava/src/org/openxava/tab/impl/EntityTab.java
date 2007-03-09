@@ -343,10 +343,21 @@ public class EntityTab implements IEntityTabImpl {
 		int size = getPropertiesNames().size();
 		for (int i = indexesPK.length; i < size; i++) {			
 			String name = (String) getPropertiesNames().get(i);
-			MetaProperty metaProperty = getMetaModel().getMetaProperty(name);
-			if (metaProperty.hasValidValues()) {		
-				int validValue = ((Number) row[i]).intValue();
-				row[i] = metaProperty.getValidValue(validValue); 					
+			MetaProperty metaProperty = getMetaModel().getMetaProperty(name);			
+			if (metaProperty.hasValidValues()) {
+				if (row[i] == null) {
+					row[i] = null;
+				}
+				else if (Number.class.isAssignableFrom(metaProperty.getType())) {
+					Number value = (Number) row[i];
+					int validValue = value.intValue();
+					row[i] = metaProperty.getValidValue(validValue);
+				}
+				else { // It's Enum
+					Number value = (Number) row[i];
+					int validValue = value.intValue() + 1;
+					row[i] = metaProperty.getValidValue(validValue);					
+				}
 			}
 		}
 		return row;

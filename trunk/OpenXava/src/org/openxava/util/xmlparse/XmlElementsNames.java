@@ -173,5 +173,6 @@ public class XmlElementsNames {
 	protected final static String [] xremove_selected_action = { "remove-selected-action", "accion-quitar-seleccionados" };
 	protected final static String [] xscope = { "scope", "ambito" };
 	protected final static String [] xglobal = { "global", "global" };
+	protected final static String [] xfor_valid_values = { "for-valid-values", "para-valores-posibles" };
 		
 }

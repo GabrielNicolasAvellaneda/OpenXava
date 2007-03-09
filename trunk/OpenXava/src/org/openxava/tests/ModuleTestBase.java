@@ -123,6 +123,19 @@ public class ModuleTestBase extends TestCase {
 			resetForm();
 		}
 	}
+	
+	/**
+	 * Warning: Does not rely heavily in this method, it can change in the future.
+	 */
+	protected boolean isOX3() {
+		try {
+			Class.forName("org.openxava.ox3.AnnotatedClassParser");
+			return true;
+		}
+		catch (ClassNotFoundException ex) {
+			return false;
+		}
+	}
 
 	private String getPasswordFieldInLiferay() {
 		String [] parameterNames = getForm().getParameterNames();
