@@ -84,12 +84,14 @@
 			<order>${name} desc</order>
 		</finder>
 		
+		<!-- Because we use a converter normal has 0 value in DB (instead of 1) -->
 		<finder name="normalOnes" arguments="" collection="true">
-			<condition>${type} = 1</condition>
+			<condition>${type} = 0</condition>
 		</finder>
 						
+		<!-- Because we use a converter normal has 1 value in DB (instead of 2) -->				
 		<finder name="steadyOnes" arguments="" collection="true">
-			<condition>${type} = 2</condition>
+			<condition>${type} = 1</condition>
 		</finder>
 		
 		<finder name="byStreet" arguments="String street" collection="true">
