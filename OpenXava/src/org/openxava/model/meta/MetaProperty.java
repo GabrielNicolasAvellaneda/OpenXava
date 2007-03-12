@@ -58,10 +58,15 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		getValidValues().contains(value);
 	}
 	
-	public Object getValidValue(int i) {
-		try {				
-			if (i == 0) return "";
-			return getValidValues().get(i-1);
+	public Object getValidValue(int i) throws XavaException {
+		try {		
+			if (isNumber()) { // It's a classic valid-value of OX. Uses 0 as no value, and 1 as first value
+				if (i == 0) return "";
+				return getValidValues().get(i-1);
+			}
+			else { // It's a Java 5 enum. Uses null as no value, and 0 as first value
+				return getValidValues().get(i);
+			}
 		}
 		catch (IndexOutOfBoundsException ex) {
 			log.error(XavaResources.getString("valid_value_not_found_for_index_warning"), ex); 			
@@ -76,7 +81,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		return getValidValues().indexOf(value) + 1;
 	}
 	
-	public String getValidValueLabel(ServletRequest request, int i) { 	
+	public String getValidValueLabel(ServletRequest request, int i) throws XavaException { 	
 		return getValidValueLabel(XavaResources.getLocale(request), i);
 	}
 
@@ -88,7 +93,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		return obtainValidValueLabel(XavaResources.getLocale(request), value);
 	}
 		
-	public String getValidValueLabel(Locale locale, int i) { 
+	public String getValidValueLabel(Locale locale, int i) throws XavaException { 
 		return obtainValidValueLabel(locale, getValidValue(i));
 	}
 

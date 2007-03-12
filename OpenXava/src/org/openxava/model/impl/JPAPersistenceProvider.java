@@ -88,7 +88,7 @@ public class JPAPersistenceProvider extends POJOPersistenceProviderBase {
 		return XPersistence.getManager().createQuery(query);
 	}
 
-	protected void setParameterToQuery(Object query, String name, Object value) {		
+	protected void setParameterToQuery(Object query, String name, Object value) {
 		((javax.persistence.Query) query).setParameter(name, value);
 	}
 
