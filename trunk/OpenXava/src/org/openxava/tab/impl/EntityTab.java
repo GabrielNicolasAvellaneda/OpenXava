@@ -345,18 +345,13 @@ public class EntityTab implements IEntityTabImpl {
 			String name = (String) getPropertiesNames().get(i);
 			MetaProperty metaProperty = getMetaModel().getMetaProperty(name);			
 			if (metaProperty.hasValidValues()) {
-				if (row[i] == null) {
-					row[i] = null;
-				}
-				else if (Number.class.isAssignableFrom(metaProperty.getType())) {
+				if (row[i] instanceof Number) {
 					Number value = (Number) row[i];
 					int validValue = value.intValue();
-					row[i] = metaProperty.getValidValue(validValue);
-				}
-				else { // It's Enum
-					Number value = (Number) row[i];
-					int validValue = value.intValue() + 1;
 					row[i] = metaProperty.getValidValue(validValue);					
+				}
+				else {
+					row[i] = null;
 				}
 			}
 		}

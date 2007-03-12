@@ -34,11 +34,11 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 			Map keys = getView().getKeyValues();
 			Map values = null;
 			if (Maps.isEmptyOrZero(keys)) { 
-				try {
-					values = MapFacade.getValuesByAnyProperty(getModelName(), getValuesFromView(), getMemberNames());
+				try {					
+					values = MapFacade.getValuesByAnyProperty(getModelName(), getValuesFromView(), getMemberNames());					
 				}
 				catch (ObjectNotFoundException ex) {
-					// This is for the case of key with 0 as valid value
+					// This is for the case of key with 0 as valid value					
 					values = MapFacade.getValues(getModelName(), keys, getMemberNames());
 				}
 			}

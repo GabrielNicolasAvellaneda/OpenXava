@@ -265,12 +265,14 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		return result;
 	}
 		
-	private Object convert(MetaModel metaModel, String name, Object value) throws XavaException {		
+	private Object convert(MetaModel metaModel, String name, Object value) throws XavaException {
+		MetaProperty property = metaModel.getMetaProperty(name);
+		if (property.hasValidValues() && !property.isNumber()) {
+			return value==null?null:property.getValidValue(((Number) value).intValue()); 
+		}
+
 		PropertyMapping mapping = metaModel.getMetaProperty(name).getMapping();
 		Object result = value instanceof String?value + "%":value;
-		if (mapping != null && mapping.hasConverter()) {
-			result = mapping.getConverter().toDB(result);
-		}
 		if (result instanceof java.math.BigDecimal) {
 			// Sometimes programmers send BigDecimal directly as arguments for searching
 			// even if the properties are int. Usually because they obtain data
