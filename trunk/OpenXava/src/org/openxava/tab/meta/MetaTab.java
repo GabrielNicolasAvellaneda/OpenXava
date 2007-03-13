@@ -377,9 +377,8 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	}
 
 	public String getSelectSQL() throws XavaException {
-		if (selectSQL == null) {			
-			selectSQL = getMapping().changePropertiesByColumns(
-					getSelect());			
+		if (selectSQL == null) {	
+			selectSQL = getMapping().changePropertiesByColumns(getSelect());
 		}		
 		return selectSQL;
 	}
@@ -474,7 +473,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 			throws XavaException {
 		Collection cmpFieldsColumnsInMultipleProperties = new ArrayList();
 		Iterator it = getMetaProperties().iterator();
-		String table = getMapping().getTable();
+		String table = getMapping().getTableToQualifyColumn();
 		while (it.hasNext()) {
 			MetaProperty p = (MetaProperty) it.next();
 			PropertyMapping mapping = p.getMapping();

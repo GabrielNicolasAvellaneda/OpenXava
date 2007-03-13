@@ -21,25 +21,25 @@ class TabConverter implements java.io.Serializable {
 	private IMultipleConverter multipleConverter;
 	
 
-	public TabConverter(String nombrePropiedad, int indice, IConverter conversor)
+	public TabConverter(String propertyName, int index, IConverter converter)
 		throws XavaException {
-		this.index = indice;
-		this.propertyName = nombrePropiedad;
-		this.converter = conversor;
+		this.index = index;
+		this.propertyName = propertyName;
+		this.converter = converter;
 	}
 	
-	public TabConverter(String nombrePropiedad, int indice, IMultipleConverter conversor, Collection camposCmp, String [] columnas, String tabla)
+	public TabConverter(String propertyName, int index, IMultipleConverter converter, Collection cmpFields, String [] columns, String table)
 		throws XavaException {
-		this.index = indice;
-		this.propertyName = nombrePropiedad;
-		this.multipleConverter = conversor;
-		Iterator it = camposCmp.iterator();
+		this.index = index;
+		this.propertyName = propertyName;
+		this.multipleConverter = converter;
+		Iterator it = cmpFields.iterator();
 		this.cmpFields = new HashMap();
-		List listaColumnas = Arrays.asList(columnas);				
+		List columnsList = Arrays.asList(columns);				
 		while (it.hasNext()) {
-			CmpField campo =  (CmpField) it.next();
-			int indiceCmp = listaColumnas.indexOf(tabla + "." + campo.getColumn());
-			this.cmpFields.put(campo, new Integer(indiceCmp));
+			CmpField field =  (CmpField) it.next();
+			int cmpIndex = columnsList.indexOf(table + "." + field.getColumn());
+			this.cmpFields.put(field, new Integer(cmpIndex));
 		}		 
 	}
 		
@@ -47,15 +47,15 @@ class TabConverter implements java.io.Serializable {
 		return cmpFields == null?Collections.EMPTY_SET:cmpFields.keySet();	
 	}
 	
-	public int getIndex(CmpField campo) throws ElementNotFoundException {
+	public int getIndex(CmpField field) throws ElementNotFoundException {
 		if (this.cmpFields == null) {
-			throw new ElementNotFoundException("column_multiple_not_found", campo.getColumn()); 
+			throw new ElementNotFoundException("column_multiple_not_found", field.getColumn()); 
 		}
-		Integer indice = (Integer) this.cmpFields.get(campo);
-		if (indice == null) {
-			throw new ElementNotFoundException("column_multiple_not_found", campo.getColumn());
+		Integer index = (Integer) this.cmpFields.get(field);
+		if (index == null) {
+			throw new ElementNotFoundException("column_multiple_not_found", field.getColumn());
 		}
-		return indice.intValue();
+		return index.intValue();
 	}
 	
 	/**

@@ -220,7 +220,7 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		return findUsingQuery(metaModel, keys, true);
 	}
 	
-	private Object findUsingQuery(MetaModel metaModel, Map keyValues, boolean includeEmptyValues) throws ObjectNotFoundException, FinderException, XavaException {
+	private Object findUsingQuery(MetaModel metaModel, Map keyValues, boolean includeEmptyValues) throws ObjectNotFoundException, FinderException, XavaException {		
 		StringBuffer queryString = new StringBuffer();
 		queryString.append("from ");
 		queryString.append(metaModel.getName());
@@ -265,15 +265,19 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		return result;
 	}
 		
-	private Object convert(MetaModel metaModel, String name, Object value) throws XavaException {
+	private Object convert(MetaModel metaModel, String name, Object value) throws XavaException {		
 		MetaProperty property = metaModel.getMetaProperty(name);
-		if (property.hasValidValues() && !property.isNumber()) {
-			return value==null?null:property.getValidValue(((Number) value).intValue()); 
-		}
+		PropertyMapping mapping = property.getMapping();
+		if (property.hasValidValues() && !property.isNumber()) { // Java 5 enum
+			return value==null?null:property.getValidValue(((Number) value).intValue());			 
+		}				
+		
+		Object result = value;
 
-		PropertyMapping mapping = metaModel.getMetaProperty(name).getMapping();
-		Object result = value instanceof String?value + "%":value;
-		if (result instanceof java.math.BigDecimal) {
+		if (mapping != null && mapping.hasConverter()) {
+			result = mapping.getConverter().toDB(result);
+		}
+		else if (result instanceof java.math.BigDecimal) {
 			// Sometimes programmers send BigDecimal directly as arguments for searching
 			// even if the properties are int. Usually because they obtain data
 			// from raw JDBC and in the DB the column is NUMERIC or DECIMAL
@@ -289,6 +293,11 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 			catch (ClassNotFoundException ex) {				
 			}
 		}
+		
+		if (result instanceof String && String.class.isAssignableFrom(property.getType())) {
+			result = result + "%";
+		}
+		
 		return result;
 	}
 

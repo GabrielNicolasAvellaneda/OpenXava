@@ -3,15 +3,15 @@
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%
-int baseIndex = 1;
 String propertyKey = request.getParameter("propertyKey");
 String script = request.getParameter("script");
 MetaProperty p = (MetaProperty) request.getAttribute(propertyKey);
 Object ovalue = request.getAttribute(propertyKey + ".value");
+int baseIndex = 1;
 int value = 0;
-if (ovalue instanceof Integer) value = ((Integer) ovalue).intValue();
+if (p.isNumber()) value = ovalue==null?0:((Integer) ovalue).intValue();
 else {
-	// We assume that if it isn't Integer is an Enum of Java 5, we use instropection
+	// We assume that if it isn't Number then it's an Enum of Java 5, we use instropection
 	// to allow this code run in a Java 1.4 servlet container.
 	baseIndex = 0;
 	if (ovalue == null) {
