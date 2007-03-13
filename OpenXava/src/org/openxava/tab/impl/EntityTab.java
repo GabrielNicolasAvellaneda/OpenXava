@@ -389,7 +389,7 @@ public class EntityTab implements IEntityTabImpl {
 			tabConverters = new ArrayList();			
 			Iterator it = getPropertiesNames().iterator();
 			int i=0;
-			String table = getMapping().getTable();
+			String table = getMapping().getTableToQualifyColumn(); 
 			while (it.hasNext()) {
 				String propertyName = (String) it.next();
 				try {

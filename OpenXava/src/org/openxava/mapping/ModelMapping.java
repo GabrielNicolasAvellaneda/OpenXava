@@ -1,5 +1,6 @@
 package org.openxava.mapping;
 
+import java.sql.*;
 import java.util.*;
 
 import org.apache.commons.logging.*;
@@ -22,6 +23,9 @@ abstract public class ModelMapping implements java.io.Serializable {
 	private Collection modelProperties = new ArrayList(); // of String
 	private Collection tableColumns = new ArrayList(); // of String
 	private Collection referenceMappingsWithConverter; // of ReferenceMapping
+	private boolean supportsSchemasInDataManipulationObtained = false; 
+	private boolean supportsSchemasInDataManipulation = true; 
+	
 	abstract public String getModelName() throws XavaException;
 
 	abstract public MetaModel getMetaModel() throws XavaException;
@@ -73,7 +77,10 @@ abstract public class ModelMapping implements java.io.Serializable {
 		return table.substring(idx+1);
 	}
 	
-
+	public String getTableToQualifyColumn() {
+		return supportsSchemasInDataManipulation()?getTable():getUnqualifiedTable();
+	}
+		
 	public void addPropertyMapping(PropertyMapping propertyMapping)
 		throws XavaException {
 		propertyMappings.put(
@@ -154,6 +161,23 @@ abstract public class ModelMapping implements java.io.Serializable {
 		return r.toString().trim();
 	}
 	
+	private boolean supportsSchemasInDataManipulation() {
+		if (!supportsSchemasInDataManipulationObtained) {
+			String componentName = "UNKNOWN"; 
+			try {
+				componentName = getMetaComponent().getName();
+				Connection con = DataSourceConnectionProvider.getByComponent(componentName).getConnection();
+				supportsSchemasInDataManipulation = con.getMetaData().supportsSchemasInDataManipulation();
+				supportsSchemasInDataManipulationObtained = true;
+				con.close();				
+			}
+			catch (Exception ex) {
+				log.warn(XavaResources.getString("supports_schemas_in_data_manipulation_warning", componentName, new Boolean(supportsSchemasInDataManipulation)));
+			}
+		}
+		return supportsSchemasInDataManipulation;		
+	}
+	
 	
 	public String getQualifiedColumn(String modelProperty)
 		throws XavaException {		
@@ -164,7 +188,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 		
 		if (modelProperty.indexOf('.') >= 0) {			
 			if (tableColumn.indexOf('.') < 0) return tableColumn;			
-			if (tableColumn.startsWith(getTable() + ".")) return tableColumn;
+			if (tableColumn.startsWith(getTableToQualifyColumn() + ".")) return tableColumn; 
 			String reference = modelProperty.substring(0, modelProperty.lastIndexOf('.'));
 			// The next code uses the alias of the table instead of its name. In order to
 			// support multiple references to the same model
@@ -177,10 +201,10 @@ abstract public class ModelMapping implements java.io.Serializable {
 			return "T_" + reference + tableColumn.substring(tableColumn.lastIndexOf('.')) ;
 		}
 		else  {			
-			return getTable() + "." + tableColumn;
+			return getTableToQualifyColumn() + "." + tableColumn; 
 		}
 	}
-
+	
 	/**
 	 * Support the use of references with dots,
 	 * this is: myreference.myproperty.
@@ -227,7 +251,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 				if (referenceMapping
 					.hasColumnForReferencedModelProperty(propertyName)) {
 					if (qualifyReferenceMappingColumn) {
-						return getTable()
+						return getTableToQualifyColumn() 
 							+ "."
 							+ referenceMapping
 								.getColumnForReferencedModelProperty(
@@ -242,7 +266,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 				else {					
 					ModelMapping referencedMapping =
 						referenceMapping.getReferencedMapping();
-					String tableName = referencedMapping.getTable();
+					String tableName = referencedMapping.getTableToQualifyColumn();
 					boolean secondLevel = propertyName.indexOf('.') >= 0;
 					String columnName =
 						referencedMapping.getTableColumn(propertyName, secondLevel);

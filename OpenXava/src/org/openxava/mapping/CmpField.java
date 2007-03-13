@@ -46,4 +46,5 @@ public class CmpField implements Serializable {
 	public void setCmpPropertyName(String cmpPropertyName) {
 		this.cmpPropertyName = cmpPropertyName;
 	}
+	
 }

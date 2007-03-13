@@ -55,8 +55,8 @@ public class ReferenceMappingDetail extends MetaSetsContainer {
 		return result.toString();
 	}
 	
-	public String getQualifiedColumnOfReferencedTable() throws XavaException {
-		return getContainer().getReferencedTable() + "." + getReferencedTableColumn(); 
+	public String getQualifiedColumnOfReferencedTable() throws XavaException {		
+		return getContainer().getReferencedTable() + "." + getReferencedTableColumn(); 		
 	}
 	
 	public String getReferencedTableColumn() throws XavaException {
@@ -69,7 +69,7 @@ public class ReferenceMappingDetail extends MetaSetsContainer {
 	}
 	
 	public String getQualifiedColumn() throws XavaException {
-		return getContainer().getContainer().getTable() + "." +  getColumn();  
+		return getContainer().getContainer().getTableToQualifyColumn() + "." +  getColumn(); 
 	}
 	
 	public ReferenceMapping getContainer() {
