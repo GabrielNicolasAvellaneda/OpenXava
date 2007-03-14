@@ -498,7 +498,7 @@ public class InvoicesTest extends ModuleTestBase {
 		assertValue("customer.name", customerName);				
 	}
 	
-	public void testSections_aggregateCollection_orderedCollectionsInModel_posdeleteCollectionElement() throws Exception { 
+	public void testSections_aggregateCollection_orderedCollectionsInModel_posdeleteCollectionElement() throws Exception {  
 		
 		// Create
 		execute("CRUD.new");

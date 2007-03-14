@@ -225,7 +225,7 @@ public class CustomersTest extends ModuleTestBase {
 		// OX3 uses Java 5 enums, and enums have base 0. OX2 valid-value has base 1  
 		boolean base0 = isOX3();
 		String [][] validValues = { 
-			{ "", "" },
+			{ base0?"":"0", "" },
 			{ base0?"0":"1", "Normal" },
 			{ base0?"1":"2", "Steady" },
 			{ base0?"2":"3", "Special" }	
