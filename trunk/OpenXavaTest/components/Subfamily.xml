@@ -43,9 +43,9 @@
 	<tab name="CompleteSelect">
 		<properties>number, description, family</properties>
 		<base-condition>
-				select ${number}, ${description}, XAVATEST@separator@FAMILY.DESCRIPTION
-				from   XAVATEST@separator@SUBFAMILY, XAVATEST@separator@FAMILY
-				where  XAVATEST@separator@SUBFAMILY.FAMILY = XAVATEST@separator@FAMILY.NUMBER
+				select ${number}, ${description}, FAMILY.DESCRIPTION
+				from   XAVATEST@separator@SUBFAMILY, XAVATEST@separator@FAMILY as FAMILY
+				where  FAMILY = FAMILY.NUMBER
 		</base-condition>
 	</tab>	
 						

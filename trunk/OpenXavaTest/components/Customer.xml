@@ -381,7 +381,9 @@
 		<property-mapping
 			property="name" column="NAME"/>
 		<property-mapping
-			property="type" column="TYPE"/>
+			property="type" column="TYPE" cmp-type="java.lang.Integer">
+			<converter class="org.openxava.converters.ValidValuesBase0Converter"/>
+		</property-mapping>
 		<property-mapping
 			property="remarks" column="REMARKS"/>			
 		<property-mapping

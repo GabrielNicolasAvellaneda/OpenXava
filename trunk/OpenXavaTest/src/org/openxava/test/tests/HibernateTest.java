@@ -1,5 +1,7 @@
 package org.openxava.test.tests;
 
+import java.sql.*;
+
 import org.openxava.hibernate.*;
 import org.openxava.test.model.*;
 import org.openxava.util.*;
@@ -25,7 +27,7 @@ public class HibernateTest extends TestCase {
 	protected void tearDown() throws Exception {
 		XHibernate.commit();		
 	}
-					
+	
 	public void testConvertersAllPropertiesOnCreate() throws Exception { // One way to avoid nulls	
 		Subfamily sf = new Subfamily();
 		sf.setNumber(77);
