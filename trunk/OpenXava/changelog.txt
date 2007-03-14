@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Support for database with schema support but that they not allow to use schema in data manipulation. This allows use schemas in Hypersonic.
 - Editor for valid-value and Java 5 Enum is defined in default-editor.xml and can be defined in editors.xml/editores.xml. Now it's possible to customize the valid-values/enum editor.
 
 - Fix: ClassCastException when searching with MapFacade using BigDecimal as values for integer properties.
