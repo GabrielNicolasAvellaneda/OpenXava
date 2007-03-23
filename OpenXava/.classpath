@@ -29,5 +29,6 @@
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/hibernate3.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/hibernate-annotations.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/FCKeditor-2.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/hibernate-validator.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -40,8 +40,8 @@ public class MetaEntity extends MetaModel {
 		return keyFields;
 	}
 		
-	public boolean isKey(String propertyName) throws XavaException {	
-		if ((isPojoGenerated() || isEjbGenerated()) &&  super.isKey(propertyName)) return true; 	
+	public boolean isKey(String propertyName) throws XavaException {		 	
+		if ((isAnnotatedEJB3() || isPojoGenerated() || isEjbGenerated()) &&  super.isKey(propertyName)) return true;
 		return getKeyFields().contains(propertyName);		
 	}
 	

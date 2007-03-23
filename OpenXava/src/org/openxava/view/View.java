@@ -866,14 +866,14 @@ public class View implements java.io.Serializable {
 		Iterator it = values.keySet().iterator();
 		Map result = new HashMap();
 		while (it.hasNext()) {
-			String name = (String) it.next();		
+			String name = (String) it.next();			
 			if (getMetaModel().isKey(name)) {
 				result.put(name, values.get(name));
 			}			
 		}		
 
 		if (getParent() != null && !getParent().isRepresentsAggregate()) {			
-			// At momment reference to entity within aggregate can not be part of key
+			// At the moment reference to entity within aggregate can not be part of key
 			if (isRepresentsEntityReference() && !isRepresentsCollection()) {				
 				ModelMapping mapping = getParent().getMetaModel().getMapping();
 				if (mapping.isReferenceOverlappingWithSomeProperty(getMemberName())) {					
