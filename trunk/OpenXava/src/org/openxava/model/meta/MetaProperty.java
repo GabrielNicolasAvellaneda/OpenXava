@@ -435,13 +435,13 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		if (!isKeySet) {			
 			try {
 				if (!(getMetaModel() instanceof MetaEntity)) {								
-					key= false;
-				}
-				else if (getMetaModel().isPojoGenerated() || getMetaModel().isEjbGenerated()) {						
+					key = false;
+				}										
+				else if (((MetaEntity) getMetaModel()).isAnnotatedEJB3() || getMetaModel().isPojoGenerated() || getMetaModel().isEjbGenerated()) {
 					key = false;						
 				}
 				else {				
-					key= ((MetaEntity) getMetaModel()).isKey(getName());
+					key = ((MetaEntity) getMetaModel()).isKey(getName());
 				}
 			}
 			catch (XavaException ex) {  

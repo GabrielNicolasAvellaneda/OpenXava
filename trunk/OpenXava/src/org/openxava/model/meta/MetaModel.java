@@ -1139,7 +1139,7 @@ abstract public class MetaModel extends MetaElement {
 	
 	public boolean isKey(String name) throws XavaException {		
 		try { 					
-			return getMetaProperty(name).isKey();		
+			return getMetaProperty(name).isKey();
 		}
 		catch (ElementNotFoundException ex) {					
 			try {
