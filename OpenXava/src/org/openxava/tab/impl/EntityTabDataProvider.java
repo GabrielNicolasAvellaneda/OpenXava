@@ -92,7 +92,7 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 		Object entity = null;
 		Iterator itCalculators = tabCalculators.iterator();
 		while (itCalculators.hasNext()) {
-			TabCalculator tabCalculator = (TabCalculator) itCalculators.next();
+			TabCalculator tabCalculator = (TabCalculator) itCalculators.next();			
 			try {
 				PropertiesManager mpCalculator =
 					tabCalculator.getPropertiesManager();
@@ -100,7 +100,7 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 					tabCalculator.getMetaCalculator();	
 				if (metaCalculator.containsMetaSets()) {
 					Iterator itMetaSets =
-						metaCalculator.getMetaSetsWithoutValue().iterator();					
+						metaCalculator.getMetaSetsWithoutValue().iterator();							
 					int idx = tabCalculator.getPropertyName().indexOf('.');
 					String ref = "";
 					if (idx >= 0) {
@@ -122,12 +122,12 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 				}
 				ICalculator calculator = tabCalculator.getCalculator();
 				if (calculator instanceof IModelCalculator) {
-					if (entity == null) entity = getEntity(modelName, row, keyIndexes); 
-					((IModelCalculator) calculator).setModel(entity);
+					if (entity == null) entity = getEntity(modelName, row, keyIndexes);
+					((IModelCalculator) calculator).setModel(getEntityForCalculator(entity, tabCalculator));
 				}
 				if (calculator instanceof IEntityCalculator) {
 					if (entity == null) entity = getEntity(modelName, row, keyIndexes); 
-					((IEntityCalculator) calculator).setEntity(entity);
+					((IEntityCalculator) calculator).setEntity(getEntityForCalculator(entity, tabCalculator));
 				}				
 				if (calculator instanceof IJDBCCalculator) {
 					((IJDBCCalculator) calculator).setConnectionProvider(getConnectionProvider());
@@ -142,6 +142,15 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 		return row;		
 	}
 	
+	private Object getEntityForCalculator(Object entity, TabCalculator tabCalculator) throws Exception {
+		int idx = tabCalculator.getPropertyName().lastIndexOf('.');
+		if (idx < 0) return entity;
+		String ref = tabCalculator.getPropertyName().substring(0, idx);
+		PropertiesManager pm = new PropertiesManager(entity);
+		return pm.executeGet(ref);
+	}
+
+
 	/**
 	 * Return the entity associated to the sent row. <p>
 	 *
