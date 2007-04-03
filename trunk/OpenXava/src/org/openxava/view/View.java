@@ -135,9 +135,6 @@ public class View implements java.io.Serializable {
 			
 	private Collection createMetaMembers(boolean hiddenIncluded) throws XavaException {
 		Collection metaMembers = new ArrayList(getMetaView().getMetaMembers());
-		if ("Address".equals(getModelName())) {
-			System.out.println("[View.createMetaMembers] metaMembers=" + metaMembers); //  tmp
-		}
 		if (isRepresentsAggregate()) {
 			// This is for eluding recursive references				
 			String parentName = Strings.firstLower(getMetaModel().getMetaModelContainer().getName());

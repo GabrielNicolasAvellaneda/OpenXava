@@ -197,10 +197,8 @@ public class MetaView extends MetaElement implements Cloneable {
 					catch (ElementNotFoundException ex) {
 						member = getMetaViewProperty(name);
 					}
-					if (!member.isHidden()) {
-						member = modify(member);
-						metaMembers.add(member);
-					}					
+					member = modify(member);
+					metaMembers.add(member);					
 				}
 			}
 			metaMembers = Collections.unmodifiableCollection(metaMembers);						
@@ -338,9 +336,11 @@ public class MetaView extends MetaElement implements Cloneable {
 		if (metaModel != null) {
 			Iterator it = metaModel.getMembersNames().iterator();			
 			while (it.hasNext()) {
-				String memberName = (String) it.next();								
-				addMemberName(memberName);	
-				addMemberName(NAME_SEPARATOR);			
+				String memberName = (String) it.next();
+				if (!metaModel.getMetaMember(memberName).isHidden()) {
+					addMemberName(memberName);	
+					addMemberName(NAME_SEPARATOR);			
+				}
 			}
 		}
 		membersNamesByDefaultCreated = true;
