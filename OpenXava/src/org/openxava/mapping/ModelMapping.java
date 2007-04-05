@@ -6,6 +6,7 @@ import java.util.*;
 import org.apache.commons.logging.*;
 import org.openxava.component.*;
 import org.openxava.converters.*;
+import org.openxava.jpa.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 
@@ -59,6 +60,10 @@ abstract public class ModelMapping implements java.io.Serializable {
 	}
 
 	public String getTable() {
+		if (XavaPreferences.getInstance().isJPAPersistence() && 
+			getSchema() == null && !Is.emptyString(XPersistence.getDefaultSchema())) {
+			return  XPersistence.getDefaultSchema() + "." + table; 
+		}
 		return table;
 	}
 	public void setTable(String tabla) {

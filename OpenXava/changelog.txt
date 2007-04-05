@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- The keystrokes for record navigation now are control alt RIGHT, control alt LEFT and control alt HOME, because the old ones (control RIGHT, control LEFT, control HOME) had conflicts with text editor normal keystrokes.
+- Fix: If in list mode a property from a reference is shown (a qualified property), and the property is calculated using a IModelCalculator then it fails.
+- Hibernate update to 3.2.2, and Hibernate Persistence Manager and Hibernate Annotations update to 3.3.0.
 - Support for database with schema support but that they not allow to use schema in data manipulation. This allows use schemas in Hypersonic.
 - Editor for valid-value and Java 5 Enum is defined in default-editor.xml and can be defined in editors.xml/editores.xml. Now it's possible to customize the valid-values/enum editor.
 

@@ -649,7 +649,7 @@
 			<fileset dir="../${project}/filtered-files"/>
 		</copy>
 	</target>
-				
+					
 	<target name="prepareWar" depends="createDist, updateDataSourceInfo, configureJNDI">		
 		<copy todir="../${project}/web/xava" overwrite="true">
     		<fileset dir="../OpenXava/web" excludes="WEB-INF/**"/>

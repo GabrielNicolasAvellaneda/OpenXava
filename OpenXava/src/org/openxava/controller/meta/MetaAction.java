@@ -35,6 +35,7 @@ public class MetaAction extends MetaElement {
 	private boolean onInit;
 	private boolean takesLong;
 	private boolean confirm;
+	private boolean onEachRequest;
 	
 	
 	
@@ -263,6 +264,13 @@ public class MetaAction extends MetaElement {
 			tokensForKeystroke.put("CNTRL", "control");
 		}
 		return tokensForKeystroke;
+	}
+	
+	public boolean isOnEachRequest() {
+		return onEachRequest;
+	}
+	public void setOnEachRequest(boolean b) {
+		onEachRequest = b;
 	}
 		
 }
