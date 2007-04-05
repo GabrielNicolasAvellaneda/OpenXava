@@ -7,6 +7,7 @@ import java.util.*;
 import org.openxava.component.*;
 import org.openxava.filters.*;
 import org.openxava.filters.meta.*;
+import org.openxava.jpa.*;
 import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -48,6 +49,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	private Collection rowStyles;
 	private String defaultPropertiesNames;
 	private Map entityReferencesReferenceNames;
+	private String lastDefaultSchema;
 	
 	
 	
@@ -370,15 +372,26 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	}
 
 	public String getSelect() throws XavaException {
-		if (select == null) {
+		if (select == null || defaultSchemaChanged()) {  
 			select = createSelect();
+			saveDefaultSchema();
 		}
 		return select;
 	}
 
+	private boolean defaultSchemaChanged() {
+		if (!XavaPreferences.getInstance().isJPAPersistence()) return false;
+		return !Is.equal(lastDefaultSchema, XPersistence.getDefaultSchema());
+	}
+
+	private void saveDefaultSchema() {
+		if (!XavaPreferences.getInstance().isJPAPersistence()) return;
+		lastDefaultSchema = XPersistence.getDefaultSchema();
+	}
+
 	public String getSelectSQL() throws XavaException {
-		if (selectSQL == null) {	
-			selectSQL = getMapping().changePropertiesByColumns(getSelect());
+		if (selectSQL == null || defaultSchemaChanged()) { 	
+			selectSQL = getMapping().changePropertiesByColumns(getSelect());			
 		}		
 		return selectSQL;
 	}

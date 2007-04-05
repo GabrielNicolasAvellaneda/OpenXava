@@ -40,6 +40,7 @@ public class ModuleManager {
 		
 	private String user; 
 	private Collection metaActionsOnInit;
+	private Collection metaActionsOnEachRequest;
 	private boolean moduleInitiated;
 	private String form;	
 	private int oid;	
@@ -61,7 +62,8 @@ public class ModuleManager {
 	
 	private boolean formUpload = false;
 	private String lastPageId;
-	private String previousMode; 
+	private String previousMode;
+	 
 
 	public ModuleManager() {
 		oid = nextOid++;
@@ -221,7 +223,7 @@ public class ModuleManager {
 					long ini = System.currentTimeMillis();
 					executeAction(a, errors, messages, actionValue, request);
 					long time = System.currentTimeMillis() - ini;
-					log.debug("Execute " + xavaAction + "=" + time + " ms");						
+					log.debug("Execute " + xavaAction + "=" + time + " ms");					
 				}									
 			}			
 		}
@@ -488,7 +490,7 @@ public class ModuleManager {
 	 */
 	public void commit() { // Usually after render page
 		try {			
-			doCommit();
+			doCommit();			
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
@@ -823,7 +825,7 @@ public class ModuleManager {
 		return "ModuleManager:" + oid;
 	}
 	
-	public void initModule(HttpServletRequest request, Messages errors, Messages messages) {
+	public void initModule(HttpServletRequest request, Messages errors, Messages messages) {		
 		if (!Is.equal(Users.getCurrent(), user)) {
 			user = Users.getCurrent();
 			moduleInitiated = false;			
@@ -833,6 +835,7 @@ public class ModuleManager {
 			moduleInitiated = true;
 			executeInitAction(request, errors, messages);
 		}
+		executeOnEachRequestAction(request, errors, messages);		
 	}
 	
 	private void executeInitAction(HttpServletRequest request, Messages errors, Messages messages) {
@@ -841,6 +844,33 @@ public class ModuleManager {
 			MetaAction a = (MetaAction) it.next();			
 			executeAction(a, errors, messages, request); 
 		}		
+	}
+	
+	private void executeOnEachRequestAction(HttpServletRequest request, Messages errors, Messages messages) {
+		Iterator it = getMetaActionsOnEachRequest().iterator();
+		while (it.hasNext()) {
+			MetaAction a = (MetaAction) it.next();			
+			executeAction(a, errors, messages, request); 
+		}	
+	}
+	
+	public Collection getMetaActionsOnEachRequest() {
+		if (metaActionsOnEachRequest == null) {
+			try {			
+				Iterator it = getMetaControllers().iterator();
+				metaActionsOnEachRequest = new ArrayList();
+				while (it.hasNext()) {
+					MetaController contr = (MetaController) it.next();						
+					metaActionsOnEachRequest.addAll(contr.getMetaActionsOnEachRequest());
+				} 										
+			}
+			catch (Exception ex) {
+				ex.printStackTrace(); // tmp i18n and log
+				System.err.println(XavaResources.getString("controller_on-each-request_action_error"));
+				return Collections.EMPTY_LIST; // tmp
+			}	
+		}
+		return metaActionsOnEachRequest;		
 	}
 	
 	public String getEnctype() { 		

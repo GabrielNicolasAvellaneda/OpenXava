@@ -80,8 +80,9 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(InvoicesFromDeliveriesTest.class));
 		suite.addTest(new TestSuite(InvoicesNestedSectionsTest.class));
 		suite.addTest(new TestSuite(InvoicesNoListTest.class));
-		suite.addTest(new TestSuite(InvoicesTest.class));
+		suite.addTest(new TestSuite(InvoicesTest.class));		
 		if (XavaPreferences.getInstance().isJPAPersistence()) {
+			suite.addTest(new TestSuite(IssuesTest.class));
 			suite.addTest(new TestSuite(JPATest.class));
 		}
 		suite.addTest(new TestSuite(MapFacadeTest.class));

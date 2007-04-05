@@ -256,4 +256,10 @@
 	<module name="Tasks">
 		<model name="Task"/>
 		<controller name="Typical"/>
+	</module>
+		
+	<module name="Issues">
+		<model name="Issue"/>
+		<controller name="Typical"/>
+		<controller name="Issues"/>
 	</module>		</application>
