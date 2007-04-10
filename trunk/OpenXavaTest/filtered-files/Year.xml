@@ -12,7 +12,7 @@
 		<property name="year" type="int" size="4" required="true"/>			  
 	</entity>
 	
-	<entity-mapping table="XAVATEST_YEAR">
+	<entity-mapping table="XAVATEST.YEAR">
 		<property-mapping
 			property="id" column="ID"  cmp-type="Integer"/>
 		<property-mapping

@@ -12,7 +12,7 @@
 		<property name="subfamily" stereotype="SUBFAMILY" required="true"/>
 	</entity>
 	
-	<entity-mapping table="XAVATEST_SERVICETYPE">
+	<entity-mapping table="XAVATEST.SERVICETYPE">
 		<property-mapping property="number" column="NUMBER"/>
 		<property-mapping property="description" column="DESCRIPTION"/>
 		<property-mapping property="family" column="FAMILY"/>

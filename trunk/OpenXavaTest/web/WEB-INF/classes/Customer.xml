@@ -84,12 +84,14 @@
 			<order>${name} desc</order>
 		</finder>
 		
+		<!-- Because we use a converter normal has 0 value in DB (instead of 1) -->
 		<finder name="normalOnes" arguments="" collection="true">
-			<condition>${type} = 1</condition>
+			<condition>${type} = 0</condition>
 		</finder>
 						
+		<!-- Because we use a converter normal has 1 value in DB (instead of 2) -->				
 		<finder name="steadyOnes" arguments="" collection="true">
-			<condition>${type} = 2</condition>
+			<condition>${type} = 1</condition>
 		</finder>
 		
 		<finder name="byStreet" arguments="String street" collection="true">
@@ -373,13 +375,15 @@
 		<properties>name, type, seller.number, alternateSeller.number</properties>	
 	</tab>
 			
-	<entity-mapping table="XAVATEST_CUSTOMER">
+	<entity-mapping table="XAVATEST.CUSTOMER">
 		<property-mapping
 			property="number" column="NUMBER"/>
 		<property-mapping
 			property="name" column="NAME"/>
 		<property-mapping
-			property="type" column="TYPE"/>
+			property="type" column="TYPE" cmp-type="java.lang.Integer">
+			<converter class="org.openxava.converters.ValidValuesBase0Converter"/>
+		</property-mapping>
 		<property-mapping
 			property="remarks" column="REMARKS"/>			
 		<property-mapping
@@ -409,7 +413,7 @@
 		</reference-mapping>
 	</entity-mapping> 	
 	
-	<aggregate-mapping aggregate="DeliveryPlace" table="XAVATEST_DELIVERYPLACE">
+	<aggregate-mapping aggregate="DeliveryPlace" table="XAVATEST.DELIVERYPLACE">
 		<reference-mapping reference="customer">
 			<reference-mapping-detail 
 				column="CUSTOMER" 
@@ -429,7 +433,7 @@
 		</reference-mapping>						
 	</aggregate-mapping>
 	
-	<aggregate-mapping aggregate="Receptionist" table="XAVATEST_RECEPTIONIST">
+	<aggregate-mapping aggregate="Receptionist" table="XAVATEST.RECEPTIONIST">
 		<reference-mapping reference="deliveryPlace">
 			<reference-mapping-detail 
 				column="DELIVERYPLACE" 
@@ -439,7 +443,7 @@
 		<property-mapping property="name" column="NAME"/>
 	</aggregate-mapping>	
 	
-	<aggregate-mapping aggregate="CustomerState" table="XAVATEST_CUSTOMER_STATE">
+	<aggregate-mapping aggregate="CustomerState" table="XAVATEST.CUSTOMER_STATE">
 		<reference-mapping reference="customer">
 			<reference-mapping-detail 
 				column="CUSTOMER" 

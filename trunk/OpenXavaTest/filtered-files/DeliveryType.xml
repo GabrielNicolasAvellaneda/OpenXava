@@ -31,7 +31,7 @@
 		<members>number; description; comboDeliveries</members>
 	</view>
 	
-	<entity-mapping table="XAVATEST_DeliveryType">
+	<entity-mapping table="XAVATEST.DeliveryType">
 		<property-mapping property="number" column="number"/>		
 		<property-mapping property="description" column="DESCRIPTION" />		
 	</entity-mapping>

@@ -92,7 +92,7 @@ Store oid of family and not the code
 		
 	</view>
 					
-	<entity-mapping table="XAVATEST_PRODUCT3">
+	<entity-mapping table="XAVATEST.PRODUCT3">
 		<property-mapping 
 			property="number" column="NUMBER"/>
 		<property-mapping 

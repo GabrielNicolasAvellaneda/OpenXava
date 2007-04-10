@@ -47,7 +47,7 @@
 	
 
 	
-	<entity-mapping table="XAVATEST_SERVICE">
+	<entity-mapping table="XAVATEST.SERVICE">
 		<property-mapping property="number" column="NUMBER"/>
 		<property-mapping property="description" column="DESCRIPTION"/>
 		<property-mapping property="family" column="FAMILY"/>
@@ -59,7 +59,7 @@
 		<property-mapping property="detail_free" column="FREE"/>
 	</entity-mapping>
 	
-	<aggregate-mapping aggregate="AdditionalDetail" table="XAVATEST_SERVICEDETAIL">
+	<aggregate-mapping aggregate="AdditionalDetail" table="XAVATEST.SERVICEDETAIL">
 		<reference-mapping reference="service">
 			<reference-mapping-detail column="SERVICE" referenced-model-property="number"/>
 		</reference-mapping>

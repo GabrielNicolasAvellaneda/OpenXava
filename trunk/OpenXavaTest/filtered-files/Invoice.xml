@@ -286,9 +286,9 @@
 			select 
 				${year}, ${number}, ${amountsSum}, ${paid}, ${customer.name}
 			from
-				XAVATEST_FACTURA, XAVATEST_CLIENTE
+				XAVATEST.FACTURA, XAVATEST.CLIENTE
 			where 
-				XAVATEST_FACTURA.CLIENTE_CODIGO = XAVATEST_CLIENTE.CODIGO AND
+				XAVATEST.FACTURA.CLIENTE_CODIGO = XAVATEST.CLIENTE.CODIGO AND
 				${year} = ?				
 		</base-condition>
 	</tab>
@@ -319,7 +319,7 @@
 	
 	
 		
-	<entity-mapping table="XAVATEST_INVOICE">
+	<entity-mapping table="XAVATEST.INVOICE">
 		<property-mapping
 			property="year" column="YEAR"/>
 		<property-mapping
@@ -341,7 +341,7 @@
 		</reference-mapping>			
 	</entity-mapping>
 	
-	<aggregate-mapping aggregate="InvoiceDetail" table="XAVATEST_INVOICEDETAIL">
+	<aggregate-mapping aggregate="InvoiceDetail" table="XAVATEST.INVOICEDETAIL">
 		<reference-mapping reference="invoice">
 			<reference-mapping-detail 
 				column="INVOICE_YEAR" 

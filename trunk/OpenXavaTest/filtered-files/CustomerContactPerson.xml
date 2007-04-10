@@ -32,7 +32,7 @@ but remember this is not an example of good OO modeling.
 			as-aggregate="true"/>
 	</view>
 			
-	<entity-mapping table="XAVATEST_CUSTOMERCONTACTPERSON">
+	<entity-mapping table="XAVATEST.CUSTOMERCONTACTPERSON">
 		<reference-mapping reference="customer">
 			<reference-mapping-detail 
 				column="CUSTOMER_NUMBER" 				

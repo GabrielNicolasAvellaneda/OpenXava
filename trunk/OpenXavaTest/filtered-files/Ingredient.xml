@@ -19,7 +19,7 @@
 		</reference-view>
 	</view>
 		
-	<entity-mapping table="XAVATEST_INGREDIENT">
+	<entity-mapping table="XAVATEST.INGREDIENT">
 		<property-mapping
 			property="oid" column="ID"/>
 		<property-mapping
