@@ -18,7 +18,7 @@
 		</property>				  
 	</entity>
 	
-	<entity-mapping table="XAVATEST_STATE">
+	<entity-mapping table="XAVATEST.STATE">
 		<property-mapping property="id" column="ID"/>
 		<property-mapping property="name" column="NAME"/>
 	</entity-mapping> 

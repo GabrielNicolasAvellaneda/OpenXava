@@ -53,7 +53,6 @@
 		</action>								
 	</controller>
 	
-	<!-- tmp -->
 	<controller name="ChangeActiveYear">
 		<action name="showActiveYear" class="org.openxava.test.actions.ShowActiveYearAction"
 			on-init="true" hidden="true">
@@ -602,7 +601,6 @@
 		<action name="showSaveDelete" class="org.openxava.test.actions.ShowSaveDeleteAction" mode="detail"/>		
 	</controller>
 	
-	<!-- tmp Falsta i18n de las acciones-->
 	<controller name="Issues">
 		<extends controller="DefaultSchema"/>
 		<action name="changeToCompanyA" on-init="true"

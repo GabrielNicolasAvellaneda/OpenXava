@@ -17,7 +17,7 @@
 		<finder name="all" arguments="" collection="true"/>
 	</entity>
 
-	<entity-mapping table="XAVATEST_TRANSPORTCHARGE2">
+	<entity-mapping table="XAVATEST.TRANSPORTCHARGE2">
 		<property-mapping property="year" column="YEAR"/>
 		<reference-mapping reference="delivery">
 			<reference-mapping-detail 

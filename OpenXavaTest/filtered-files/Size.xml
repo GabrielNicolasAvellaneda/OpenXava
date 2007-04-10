@@ -7,7 +7,7 @@
 	<entity>  
 		<property name="id" key="true" type="int" hidden="true">
             <default-value-calculator class="org.openxava.calculators.SequenceCalculator" on-create="true">
-            	<set property="sequence" value="XAVATEST_SIZE_ID_SEQ"/>
+            	<set property="sequence" value="XAVATEST.SIZE_ID_SEQ"/>
             </default-value-calculator>            
 		</property>
 		<property name="name" type="String" size="20" required="true"/>
@@ -17,7 +17,7 @@
 		<properties>id, name</properties>
 	</tab>
 	
-	<entity-mapping table="XAVATEST_SIZE">
+	<entity-mapping table="XAVATEST.SIZE">
 		<property-mapping
 			property="id" column="ID"/>		
 		<property-mapping

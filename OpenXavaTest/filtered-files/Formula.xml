@@ -61,7 +61,7 @@
 
 	<view name="Simple" members="name"/> 
 							
-	<entity-mapping table="XAVATEST_FORMULA">
+	<entity-mapping table="XAVATEST.FORMULA">
 		<property-mapping
 			property="oid" column="ID"/>
 		<property-mapping
@@ -70,7 +70,7 @@
 			property="recipe" column="RECIPE"/>
 	</entity-mapping> 
 	
-	<aggregate-mapping aggregate="FormulaIngredient" table="XAVATEST_FORMULAINGREDIENT">
+	<aggregate-mapping aggregate="FormulaIngredient" table="XAVATEST.FORMULAINGREDIENT">
 		<property-mapping
 			property="oid" column="ID"/>
 		<reference-mapping reference="formula">

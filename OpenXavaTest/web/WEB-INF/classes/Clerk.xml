@@ -21,7 +21,7 @@
 				
 	</entity>
 	
-	<entity-mapping table="XAVATEST_CLERK">
+	<entity-mapping table="XAVATEST.CLERK">
 		<property-mapping
 			property="zoneNumber" column="ZONE"/>
 		<property-mapping

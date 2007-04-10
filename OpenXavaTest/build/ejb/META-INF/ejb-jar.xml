@@ -422,7 +422,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Type = 1]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Type = 0]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -431,7 +431,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Type = 2]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Type = 1]]></ejb-ql>
          </query>
          <query>
             <query-method>

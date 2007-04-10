@@ -25,8 +25,14 @@
 		</reference-view>
 	</view>
 
-	<entity-mapping table="XAVATEST_SHIPMENTCHARGE">
+	<entity-mapping table="XAVATEST.SHIPMENTCHARGE">
 		<property-mapping property="oid" column="ID"/>
+		<!-- We don't use converter for 'mode', in this way:
+			0 -> NO VALUE
+			1 -> slow
+			2 -> medium
+			3 -> fast
+		 -->				
 		<property-mapping property="mode" column="MODE"/>
 		<reference-mapping reference="shipment">
 			<reference-mapping-detail 
