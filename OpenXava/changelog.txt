@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- New controller 'DefaultSchema' that allows creating applications that change the default database schema in runtime for each user independently.
+- New methods setDefaultSchema and setPersistenceUnitProperties for XPersistence class. These methods allow change the JPA configuration in the current thread.
+- A little improvement in dateCalendar editor. It did fail when used without HTML tables, because a <br>
+- New attribute 'on-each-request' available for action element in controllers.xml. This allows that an action will be executed automatically in each user request.
 - The keystrokes for record navigation now are control alt RIGHT, control alt LEFT and control alt HOME, because the old ones (control RIGHT, control LEFT, control HOME) had conflicts with text editor normal keystrokes.
 - Fix: If in list mode a property from a reference is shown (a qualified property), and the property is calculated using a IModelCalculator then it fails.
 - Hibernate update to 3.2.2, and Hibernate Persistence Manager and Hibernate Annotations update to 3.3.0.

@@ -103,8 +103,7 @@ public class XPersistence {
 	}
 				
 	private static EntityManager openManager() {
-		EntityManager m = getEntityManagerFactory().createEntityManager();
-		System.out.println("[XPersistence(" + Thread.currentThread() + ").openManager] DefaultSchema=" + getDefaultSchema()); //  tmp
+		EntityManager m = getEntityManagerFactory().createEntityManager();		
 		m.getTransaction().begin();
 		currentManager.set(m);
 		return m;

@@ -865,9 +865,8 @@ public class ModuleManager {
 				} 										
 			}
 			catch (Exception ex) {
-				ex.printStackTrace(); // tmp i18n and log
-				System.err.println(XavaResources.getString("controller_on-each-request_action_error"));
-				return Collections.EMPTY_LIST; // tmp
+				log.error(XavaResources.getString("controller_on_each_request_action_error"), ex);
+				return Collections.EMPTY_LIST; 
 			}	
 		}
 		return metaActionsOnEachRequest;		

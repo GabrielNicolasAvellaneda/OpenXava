@@ -135,7 +135,6 @@ public class MetaController extends MetaElement {
 	}
 	
 	public Collection getMetaActionsOnEachRequest() throws XavaException {
-		// tmp ¿cache?
 		Collection result = new ArrayList();
 
 		Iterator itParents = getParents().iterator();
