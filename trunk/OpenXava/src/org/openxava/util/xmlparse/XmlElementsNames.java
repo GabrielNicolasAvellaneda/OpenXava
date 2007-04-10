@@ -174,5 +174,6 @@ public class XmlElementsNames {
 	protected final static String [] xscope = { "scope", "ambito" };
 	protected final static String [] xglobal = { "global", "global" };
 	protected final static String [] xfor_valid_values = { "for-valid-values", "para-valores-posibles" };
+	protected final static String [] xon_each_request = { "on-each-request", "en-cada-peticion" };
 		
 }
