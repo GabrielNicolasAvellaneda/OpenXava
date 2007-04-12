@@ -176,7 +176,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 				supportsSchemasInDataManipulationObtained = true;
 				con.close();				
 			}
-			catch (Exception ex) {
+			catch (Exception ex) {				
 				log.warn(XavaResources.getString("supports_schemas_in_data_manipulation_warning", componentName, new Boolean(supportsSchemasInDataManipulation)));
 			}
 		}
