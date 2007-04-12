@@ -193,7 +193,7 @@
     <ejbExtensions 
 		xmi:type="ejbext:EntityExtension" xmi:id="ContainerManagedEntity_ext_22">
       <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_22"/>
-      <structure xmi:id="TransportCharge2_BeanStructure" inheritenceRoot="false"/>
+      <structure xmi:id="Issue_BeanStructure" inheritenceRoot="false"/>
       <beanCache xmi:id="ContainerManagedEntity__BeanCache_22" activateAt="TRANSACTION" loadAt="TRANSACTION"/>
       <internationalization xmi:id="ContainerManagedEntity_BeanInternationalization_22" invocationLocale="CALLER"/>
       <localTran xmi:id="ContainerManagedEntity_LocalTran_22" boundary="BEAN_METHOD" unresolvedAction="ROLLBACK"/>
@@ -202,7 +202,7 @@
     <ejbExtensions 
 		xmi:type="ejbext:EntityExtension" xmi:id="ContainerManagedEntity_ext_23">
       <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_23"/>
-      <structure xmi:id="Clerk_BeanStructure" inheritenceRoot="false"/>
+      <structure xmi:id="TransportCharge2_BeanStructure" inheritenceRoot="false"/>
       <beanCache xmi:id="ContainerManagedEntity__BeanCache_23" activateAt="TRANSACTION" loadAt="TRANSACTION"/>
       <internationalization xmi:id="ContainerManagedEntity_BeanInternationalization_23" invocationLocale="CALLER"/>
       <localTran xmi:id="ContainerManagedEntity_LocalTran_23" boundary="BEAN_METHOD" unresolvedAction="ROLLBACK"/>
@@ -211,7 +211,7 @@
     <ejbExtensions 
 		xmi:type="ejbext:EntityExtension" xmi:id="ContainerManagedEntity_ext_24">
       <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_24"/>
-      <structure xmi:id="Warehouse_BeanStructure" inheritenceRoot="false"/>
+      <structure xmi:id="Clerk_BeanStructure" inheritenceRoot="false"/>
       <beanCache xmi:id="ContainerManagedEntity__BeanCache_24" activateAt="TRANSACTION" loadAt="TRANSACTION"/>
       <internationalization xmi:id="ContainerManagedEntity_BeanInternationalization_24" invocationLocale="CALLER"/>
       <localTran xmi:id="ContainerManagedEntity_LocalTran_24" boundary="BEAN_METHOD" unresolvedAction="ROLLBACK"/>
@@ -220,7 +220,7 @@
     <ejbExtensions 
 		xmi:type="ejbext:EntityExtension" xmi:id="ContainerManagedEntity_ext_25">
       <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_25"/>
-      <structure xmi:id="Task_BeanStructure" inheritenceRoot="false"/>
+      <structure xmi:id="Warehouse_BeanStructure" inheritenceRoot="false"/>
       <beanCache xmi:id="ContainerManagedEntity__BeanCache_25" activateAt="TRANSACTION" loadAt="TRANSACTION"/>
       <internationalization xmi:id="ContainerManagedEntity_BeanInternationalization_25" invocationLocale="CALLER"/>
       <localTran xmi:id="ContainerManagedEntity_LocalTran_25" boundary="BEAN_METHOD" unresolvedAction="ROLLBACK"/>
@@ -229,7 +229,7 @@
     <ejbExtensions 
 		xmi:type="ejbext:EntityExtension" xmi:id="ContainerManagedEntity_ext_26">
       <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_26"/>
-      <structure xmi:id="Office_BeanStructure" inheritenceRoot="false"/>
+      <structure xmi:id="Task_BeanStructure" inheritenceRoot="false"/>
       <beanCache xmi:id="ContainerManagedEntity__BeanCache_26" activateAt="TRANSACTION" loadAt="TRANSACTION"/>
       <internationalization xmi:id="ContainerManagedEntity_BeanInternationalization_26" invocationLocale="CALLER"/>
       <localTran xmi:id="ContainerManagedEntity_LocalTran_26" boundary="BEAN_METHOD" unresolvedAction="ROLLBACK"/>
@@ -238,7 +238,7 @@
     <ejbExtensions 
 		xmi:type="ejbext:EntityExtension" xmi:id="ContainerManagedEntity_ext_27">
       <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_27"/>
-      <structure xmi:id="Family2_BeanStructure" inheritenceRoot="false"/>
+      <structure xmi:id="Office_BeanStructure" inheritenceRoot="false"/>
       <beanCache xmi:id="ContainerManagedEntity__BeanCache_27" activateAt="TRANSACTION" loadAt="TRANSACTION"/>
       <internationalization xmi:id="ContainerManagedEntity_BeanInternationalization_27" invocationLocale="CALLER"/>
       <localTran xmi:id="ContainerManagedEntity_LocalTran_27" boundary="BEAN_METHOD" unresolvedAction="ROLLBACK"/>
@@ -247,7 +247,7 @@
     <ejbExtensions 
 		xmi:type="ejbext:EntityExtension" xmi:id="ContainerManagedEntity_ext_28">
       <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_28"/>
-      <structure xmi:id="Service_BeanStructure" inheritenceRoot="false"/>
+      <structure xmi:id="Family2_BeanStructure" inheritenceRoot="false"/>
       <beanCache xmi:id="ContainerManagedEntity__BeanCache_28" activateAt="TRANSACTION" loadAt="TRANSACTION"/>
       <internationalization xmi:id="ContainerManagedEntity_BeanInternationalization_28" invocationLocale="CALLER"/>
       <localTran xmi:id="ContainerManagedEntity_LocalTran_28" boundary="BEAN_METHOD" unresolvedAction="ROLLBACK"/>
@@ -256,7 +256,7 @@
     <ejbExtensions 
 		xmi:type="ejbext:EntityExtension" xmi:id="ContainerManagedEntity_ext_29">
       <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_29"/>
-      <structure xmi:id="Shipment_BeanStructure" inheritenceRoot="false"/>
+      <structure xmi:id="Service_BeanStructure" inheritenceRoot="false"/>
       <beanCache xmi:id="ContainerManagedEntity__BeanCache_29" activateAt="TRANSACTION" loadAt="TRANSACTION"/>
       <internationalization xmi:id="ContainerManagedEntity_BeanInternationalization_29" invocationLocale="CALLER"/>
       <localTran xmi:id="ContainerManagedEntity_LocalTran_29" boundary="BEAN_METHOD" unresolvedAction="ROLLBACK"/>
@@ -265,7 +265,7 @@
     <ejbExtensions 
 		xmi:type="ejbext:EntityExtension" xmi:id="ContainerManagedEntity_ext_30">
       <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_30"/>
-      <structure xmi:id="DeliveryPlace_BeanStructure" inheritenceRoot="false"/>
+      <structure xmi:id="Shipment_BeanStructure" inheritenceRoot="false"/>
       <beanCache xmi:id="ContainerManagedEntity__BeanCache_30" activateAt="TRANSACTION" loadAt="TRANSACTION"/>
       <internationalization xmi:id="ContainerManagedEntity_BeanInternationalization_30" invocationLocale="CALLER"/>
       <localTran xmi:id="ContainerManagedEntity_LocalTran_30" boundary="BEAN_METHOD" unresolvedAction="ROLLBACK"/>
@@ -274,7 +274,7 @@
     <ejbExtensions 
 		xmi:type="ejbext:EntityExtension" xmi:id="ContainerManagedEntity_ext_31">
       <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_31"/>
-      <structure xmi:id="InvoiceDetail2_BeanStructure" inheritenceRoot="false"/>
+      <structure xmi:id="DeliveryPlace_BeanStructure" inheritenceRoot="false"/>
       <beanCache xmi:id="ContainerManagedEntity__BeanCache_31" activateAt="TRANSACTION" loadAt="TRANSACTION"/>
       <internationalization xmi:id="ContainerManagedEntity_BeanInternationalization_31" invocationLocale="CALLER"/>
       <localTran xmi:id="ContainerManagedEntity_LocalTran_31" boundary="BEAN_METHOD" unresolvedAction="ROLLBACK"/>
@@ -283,7 +283,7 @@
     <ejbExtensions 
 		xmi:type="ejbext:EntityExtension" xmi:id="ContainerManagedEntity_ext_32">
       <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_32"/>
-      <structure xmi:id="ShipmentCharge_BeanStructure" inheritenceRoot="false"/>
+      <structure xmi:id="InvoiceDetail2_BeanStructure" inheritenceRoot="false"/>
       <beanCache xmi:id="ContainerManagedEntity__BeanCache_32" activateAt="TRANSACTION" loadAt="TRANSACTION"/>
       <internationalization xmi:id="ContainerManagedEntity_BeanInternationalization_32" invocationLocale="CALLER"/>
       <localTran xmi:id="ContainerManagedEntity_LocalTran_32" boundary="BEAN_METHOD" unresolvedAction="ROLLBACK"/>
@@ -292,7 +292,7 @@
     <ejbExtensions 
 		xmi:type="ejbext:EntityExtension" xmi:id="ContainerManagedEntity_ext_33">
       <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_33"/>
-      <structure xmi:id="TransportCharge_BeanStructure" inheritenceRoot="false"/>
+      <structure xmi:id="ShipmentCharge_BeanStructure" inheritenceRoot="false"/>
       <beanCache xmi:id="ContainerManagedEntity__BeanCache_33" activateAt="TRANSACTION" loadAt="TRANSACTION"/>
       <internationalization xmi:id="ContainerManagedEntity_BeanInternationalization_33" invocationLocale="CALLER"/>
       <localTran xmi:id="ContainerManagedEntity_LocalTran_33" boundary="BEAN_METHOD" unresolvedAction="ROLLBACK"/>
@@ -301,7 +301,7 @@
     <ejbExtensions 
 		xmi:type="ejbext:EntityExtension" xmi:id="ContainerManagedEntity_ext_34">
       <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_34"/>
-      <structure xmi:id="ServiceType_BeanStructure" inheritenceRoot="false"/>
+      <structure xmi:id="TransportCharge_BeanStructure" inheritenceRoot="false"/>
       <beanCache xmi:id="ContainerManagedEntity__BeanCache_34" activateAt="TRANSACTION" loadAt="TRANSACTION"/>
       <internationalization xmi:id="ContainerManagedEntity_BeanInternationalization_34" invocationLocale="CALLER"/>
       <localTran xmi:id="ContainerManagedEntity_LocalTran_34" boundary="BEAN_METHOD" unresolvedAction="ROLLBACK"/>
@@ -310,7 +310,7 @@
     <ejbExtensions 
 		xmi:type="ejbext:EntityExtension" xmi:id="ContainerManagedEntity_ext_35">
       <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_35"/>
-      <structure xmi:id="Size_BeanStructure" inheritenceRoot="false"/>
+      <structure xmi:id="ServiceType_BeanStructure" inheritenceRoot="false"/>
       <beanCache xmi:id="ContainerManagedEntity__BeanCache_35" activateAt="TRANSACTION" loadAt="TRANSACTION"/>
       <internationalization xmi:id="ContainerManagedEntity_BeanInternationalization_35" invocationLocale="CALLER"/>
       <localTran xmi:id="ContainerManagedEntity_LocalTran_35" boundary="BEAN_METHOD" unresolvedAction="ROLLBACK"/>
@@ -319,7 +319,7 @@
     <ejbExtensions 
 		xmi:type="ejbext:EntityExtension" xmi:id="ContainerManagedEntity_ext_36">
       <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_36"/>
-      <structure xmi:id="Family_BeanStructure" inheritenceRoot="false"/>
+      <structure xmi:id="Size_BeanStructure" inheritenceRoot="false"/>
       <beanCache xmi:id="ContainerManagedEntity__BeanCache_36" activateAt="TRANSACTION" loadAt="TRANSACTION"/>
       <internationalization xmi:id="ContainerManagedEntity_BeanInternationalization_36" invocationLocale="CALLER"/>
       <localTran xmi:id="ContainerManagedEntity_LocalTran_36" boundary="BEAN_METHOD" unresolvedAction="ROLLBACK"/>
@@ -328,7 +328,7 @@
     <ejbExtensions 
 		xmi:type="ejbext:EntityExtension" xmi:id="ContainerManagedEntity_ext_37">
       <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_37"/>
-      <structure xmi:id="InvoiceDetail_BeanStructure" inheritenceRoot="false"/>
+      <structure xmi:id="Product2_BeanStructure" inheritenceRoot="false"/>
       <beanCache xmi:id="ContainerManagedEntity__BeanCache_37" activateAt="TRANSACTION" loadAt="TRANSACTION"/>
       <internationalization xmi:id="ContainerManagedEntity_BeanInternationalization_37" invocationLocale="CALLER"/>
       <localTran xmi:id="ContainerManagedEntity_LocalTran_37" boundary="BEAN_METHOD" unresolvedAction="ROLLBACK"/>
@@ -337,7 +337,7 @@
     <ejbExtensions 
 		xmi:type="ejbext:EntityExtension" xmi:id="ContainerManagedEntity_ext_38">
       <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_38"/>
-      <structure xmi:id="Product2_BeanStructure" inheritenceRoot="false"/>
+      <structure xmi:id="Family_BeanStructure" inheritenceRoot="false"/>
       <beanCache xmi:id="ContainerManagedEntity__BeanCache_38" activateAt="TRANSACTION" loadAt="TRANSACTION"/>
       <internationalization xmi:id="ContainerManagedEntity_BeanInternationalization_38" invocationLocale="CALLER"/>
       <localTran xmi:id="ContainerManagedEntity_LocalTran_38" boundary="BEAN_METHOD" unresolvedAction="ROLLBACK"/>
@@ -346,7 +346,7 @@
     <ejbExtensions 
 		xmi:type="ejbext:EntityExtension" xmi:id="ContainerManagedEntity_ext_39">
       <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_39"/>
-      <structure xmi:id="Receptionist_BeanStructure" inheritenceRoot="false"/>
+      <structure xmi:id="InvoiceDetail_BeanStructure" inheritenceRoot="false"/>
       <beanCache xmi:id="ContainerManagedEntity__BeanCache_39" activateAt="TRANSACTION" loadAt="TRANSACTION"/>
       <internationalization xmi:id="ContainerManagedEntity_BeanInternationalization_39" invocationLocale="CALLER"/>
       <localTran xmi:id="ContainerManagedEntity_LocalTran_39" boundary="BEAN_METHOD" unresolvedAction="ROLLBACK"/>
@@ -355,7 +355,7 @@
     <ejbExtensions 
 		xmi:type="ejbext:EntityExtension" xmi:id="ContainerManagedEntity_ext_40">
       <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_40"/>
-      <structure xmi:id="Carrier_BeanStructure" inheritenceRoot="false"/>
+      <structure xmi:id="Receptionist_BeanStructure" inheritenceRoot="false"/>
       <beanCache xmi:id="ContainerManagedEntity__BeanCache_40" activateAt="TRANSACTION" loadAt="TRANSACTION"/>
       <internationalization xmi:id="ContainerManagedEntity_BeanInternationalization_40" invocationLocale="CALLER"/>
       <localTran xmi:id="ContainerManagedEntity_LocalTran_40" boundary="BEAN_METHOD" unresolvedAction="ROLLBACK"/>
@@ -364,7 +364,7 @@
     <ejbExtensions 
 		xmi:type="ejbext:EntityExtension" xmi:id="ContainerManagedEntity_ext_41">
       <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_41"/>
-      <structure xmi:id="Seller_BeanStructure" inheritenceRoot="false"/>
+      <structure xmi:id="Carrier_BeanStructure" inheritenceRoot="false"/>
       <beanCache xmi:id="ContainerManagedEntity__BeanCache_41" activateAt="TRANSACTION" loadAt="TRANSACTION"/>
       <internationalization xmi:id="ContainerManagedEntity_BeanInternationalization_41" invocationLocale="CALLER"/>
       <localTran xmi:id="ContainerManagedEntity_LocalTran_41" boundary="BEAN_METHOD" unresolvedAction="ROLLBACK"/>
@@ -373,7 +373,7 @@
     <ejbExtensions 
 		xmi:type="ejbext:EntityExtension" xmi:id="ContainerManagedEntity_ext_42">
       <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_42"/>
-      <structure xmi:id="DeliveryType_BeanStructure" inheritenceRoot="false"/>
+      <structure xmi:id="Seller_BeanStructure" inheritenceRoot="false"/>
       <beanCache xmi:id="ContainerManagedEntity__BeanCache_42" activateAt="TRANSACTION" loadAt="TRANSACTION"/>
       <internationalization xmi:id="ContainerManagedEntity_BeanInternationalization_42" invocationLocale="CALLER"/>
       <localTran xmi:id="ContainerManagedEntity_LocalTran_42" boundary="BEAN_METHOD" unresolvedAction="ROLLBACK"/>
@@ -382,10 +382,19 @@
     <ejbExtensions 
 		xmi:type="ejbext:EntityExtension" xmi:id="ContainerManagedEntity_ext_43">
       <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_43"/>
-      <structure xmi:id="AdditionalDetail_BeanStructure" inheritenceRoot="false"/>
+      <structure xmi:id="DeliveryType_BeanStructure" inheritenceRoot="false"/>
       <beanCache xmi:id="ContainerManagedEntity__BeanCache_43" activateAt="TRANSACTION" loadAt="TRANSACTION"/>
       <internationalization xmi:id="ContainerManagedEntity_BeanInternationalization_43" invocationLocale="CALLER"/>
       <localTran xmi:id="ContainerManagedEntity_LocalTran_43" boundary="BEAN_METHOD" unresolvedAction="ROLLBACK"/>
+
+    </ejbExtensions>
+    <ejbExtensions 
+		xmi:type="ejbext:EntityExtension" xmi:id="ContainerManagedEntity_ext_44">
+      <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_44"/>
+      <structure xmi:id="AdditionalDetail_BeanStructure" inheritenceRoot="false"/>
+      <beanCache xmi:id="ContainerManagedEntity__BeanCache_44" activateAt="TRANSACTION" loadAt="TRANSACTION"/>
+      <internationalization xmi:id="ContainerManagedEntity_BeanInternationalization_44" invocationLocale="CALLER"/>
+      <localTran xmi:id="ContainerManagedEntity_LocalTran_44" boundary="BEAN_METHOD" unresolvedAction="ROLLBACK"/>
 
     </ejbExtensions>
 </ejbext:EJBJarExtension>

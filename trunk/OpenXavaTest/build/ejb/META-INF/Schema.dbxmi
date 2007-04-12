@@ -329,6 +329,15 @@
       </columns>
 
    </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Issue" name="" primaryKey="Issue_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Issue_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Issue" constraint="Constraint_Issue_"/>
+
+      <columns xmi:id="Issue__Description" name="_Description">
+      </columns>
+      <columns xmi:id="Issue_id" name="id">
+      </columns>
+
+   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_TransportCharge2" name="" primaryKey="TransportCharge2_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="TransportCharge2_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_TransportCharge2" constraint="Constraint_TransportCharge2_"/>
 
@@ -539,6 +548,29 @@
       </columns>
 
    </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Product2" name="" primaryKey="Product2_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Product2_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Product2" constraint="Constraint_Product2_"/>
+
+      <columns xmi:id="Product2__Photos" name="_Photos">
+      </columns>
+      <columns xmi:id="Product2__UnitPrice" name="_UnitPrice">
+      </columns>
+      <columns xmi:id="Product2__Description" name="_Description">
+      </columns>
+      <columns xmi:id="Product2_number" name="number">
+      </columns>
+      <columns xmi:id="Product2__Warehouse_zoneNumber" name="_Warehouse_zoneNumber">
+      </columns>
+      <columns xmi:id="Product2__Warehouse_number" name="_Warehouse_number">
+      </columns>
+      <columns xmi:id="Product2__Family_number" name="_Family_number">
+      </columns>
+      <columns xmi:id="Product2__Subfamily_number" name="_Subfamily_number">
+      </columns>
+      <columns xmi:id="Product2__Formula_oid" name="_Formula_oid">
+      </columns>
+
+   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_Family" name="" primaryKey="Family_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Family_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Family" constraint="Constraint_Family_"/>
 
@@ -576,29 +608,6 @@
       <columns xmi:id="InvoiceDetail__Invoice_year" name="_Invoice_year">
       </columns>
       <columns xmi:id="InvoiceDetail__Invoice_number" name="_Invoice_number">
-      </columns>
-
-   </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_Product2" name="" primaryKey="Product2_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Product2_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Product2" constraint="Constraint_Product2_"/>
-
-      <columns xmi:id="Product2__Photos" name="_Photos">
-      </columns>
-      <columns xmi:id="Product2__UnitPrice" name="_UnitPrice">
-      </columns>
-      <columns xmi:id="Product2__Description" name="_Description">
-      </columns>
-      <columns xmi:id="Product2_number" name="number">
-      </columns>
-      <columns xmi:id="Product2__Warehouse_zoneNumber" name="_Warehouse_zoneNumber">
-      </columns>
-      <columns xmi:id="Product2__Warehouse_number" name="_Warehouse_number">
-      </columns>
-      <columns xmi:id="Product2__Family_number" name="_Family_number">
-      </columns>
-      <columns xmi:id="Product2__Subfamily_number" name="_Subfamily_number">
-      </columns>
-      <columns xmi:id="Product2__Formula_oid" name="_Formula_oid">
       </columns>
 
    </RDBSchema:RDBTable>
