@@ -1,8 +1,5 @@
 <h4>Integraci&oacute;n de portlets de&nbsp;OpenXava en Stringbeans
 Portal</h4>
-<p style="margin-bottom: 0cm;"><span style="font-style: italic;">por
-Jos&eacute;
-Enrique Romero Flores</span></p>
 <p style="font-style: italic;">At
 the moment this article is only in Spanish, if you want to contribute
 to OpenXava, we encourage you to translate it to English and contribute
@@ -32,15 +29,15 @@ como <span style="font-weight: bold;">crossContext="true"</span>
  style="text-decoration: underline;">server.xml</span><br>
 <br>
 </span>
-<pre>&lt;Context path="/stringbeans"<br>	docBase="stringbeans" crossContext="true" /&gt;<br>
-&lt;Context path="/misportlets"
-	docBase="misportlets" crossContext="true" /&gt;
+<pre>&lt;Host appBase="webapps" autoDeploy="true" name="localhost"<br>	unpackWARs="true" xmlNamespaceAware="false" xmlValidation="false"&gt;<br><br>	&lt;Context path="/stringbeans"<br>		docBase="stringbeans" crossContext="true" /&gt;<br>
+	&lt;Context path="/misportlets"
+		docBase="misportlets" crossContext="true" /&gt;
 </pre>
 &nbsp;<br>
 Vamos a aprovechar que estamos editando el fichero <span
  style="font-weight: bold;">server.xml</span>
 para incluir <span style="font-weight: bold;">emptySessionPath="true" </span>en
-la seccci&oacute;n del conector. Ejemplo:<br>
+la secci&oacute;n del conector. Ejemplo:<br>
 <span style="font-weight: bold;"><br>
 </span>
 <pre>&lt;Connector<br>	acceptCount="100" connectionTimeout="20000"<br>	disableUploadTimeout="true" enableLookups="false" maxSpareThreads="75"<br>	maxThreads="150" minSpareThreads="25" port="8080" redirectPort="8443"<br>	emptySessionPath="true"/&gt;<br></pre>
@@ -68,9 +65,10 @@ Stringbeans) al contexto de nuestra aplicaci&oacute;n:<br>
 <ul>
   <li><code>sb-portal.jar</code></li>
   <li><code>sb-common.jar</code></li>
+  <li><code>sb-portlet-common.jar (desde la versi&oacute;n 3.2)</code></li>
   <li><code></code><code>jaxb-api.jar</code></li>
   <li><code>jaxb-impl.jar</code></li>
-  <li><code>jaxb-libs</code>.jar</li>
+  <li><code>jaxb-libs.jar</code></li>
   <li><code>namespace.jar</code></li>
   <li><code>relaxngDatatype.jar</code></li>
   <li><code>jax-qname.jar</code></li>

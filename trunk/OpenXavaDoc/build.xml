@@ -2,7 +2,7 @@
 
 <project name="OpenXavaDoc" default="deploy" basedir=".">
 
-	<property name="xava.version" value="2.1.1"/>
+	<property name="xava.version" value="2.1.2"/>
 	<property name="xava.workspace" value=".."/>
 	<property file="../openxava.properties"/>	
 
