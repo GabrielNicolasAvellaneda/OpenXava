@@ -896,7 +896,7 @@ public class Tab {
 		}
 		catch (Exception ex) {
 			log.warn(XavaResources.getString("warning_load_preferences_tab"),ex);
-		}			
+		}
 	}
 	
 	private String getUserName() { 

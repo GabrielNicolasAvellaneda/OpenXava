@@ -95,6 +95,7 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 		IConnectionProvider provider = (IConnectionProvider) providers.get(componentName);
 		if (provider == null) {
 			provider = createByComponent(componentName);
+			providers.put(componentName, provider);
 		}		
 		return provider;
 	}
@@ -106,7 +107,7 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 	public DataSource getDataSource() throws NamingException {
 		if (dataSource == null) {			
 			Context ctx = new InitialContext();
-			dataSource = (DataSource) ctx.lookup(getDataSourceJNDI());						
+			dataSource = (DataSource) ctx.lookup(getDataSourceJNDI());			
 		}
 		return dataSource;
 	}

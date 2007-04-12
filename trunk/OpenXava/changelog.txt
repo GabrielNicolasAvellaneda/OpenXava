@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 2.1.2 (2007-4-12)
+--------------------------
+- Fix: Cache in DataSourceConnectionProvider by component did not work
 - New controller 'DefaultSchema' that allows creating applications that change the default database schema in runtime for each user independently.
 - New methods setDefaultSchema and setPersistenceUnitProperties for XPersistence class. These methods allow change the JPA configuration in the current thread.
 - A little improvement in dateCalendar editor. It did fail when used without HTML tables, because a <br>
@@ -10,7 +13,6 @@ Change Log for OpenXava project
 - Hibernate update to 3.2.2, and Hibernate Persistence Manager and Hibernate Annotations update to 3.3.0.
 - Support for database with schema support but that they not allow to use schema in data manipulation. This allows use schemas in Hypersonic.
 - Editor for valid-value and Java 5 Enum is defined in default-editor.xml and can be defined in editors.xml/editores.xml. Now it's possible to customize the valid-values/enum editor.
-
 - Fix: ClassCastException when searching with MapFacade using BigDecimal as values for integer properties.
 - Fix: Stereotype IMAGES_GALLERY/GALERIA_IMAGENES shows a gap between first and second image if you have more than seven.
 - New class ArrayOneRowResultSetAdapter for reading a object array as JDBC ResultSet.
