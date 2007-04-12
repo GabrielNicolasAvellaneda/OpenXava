@@ -24,7 +24,7 @@
 		<property name="recordId" type="String" size="100"/>
 	</entity>
 											
-	<entity-mapping table="TRACKING_ACCESS">
+	<entity-mapping table="TRACKING.ACCESS">
 		<property-mapping property="oid" column="OID"/>
 		<property-mapping property="application" column="APPLICATION"/>
 		<property-mapping property="model" column="MODEL"/>

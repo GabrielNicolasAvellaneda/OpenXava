@@ -1,6 +1,7 @@
 <%@ include file="../imports.jsp"%>
 
 <%@ page import="java.util.Iterator" %>
+<%@ page import="org.openxava.util.Strings" %>
 <%@ page import="org.openxava.session.GalleryImage" %>
 
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
@@ -15,16 +16,16 @@ String module = request.getParameter("module");
 long dif=System.currentTimeMillis(); // to avoid browser caching
 %>
 
-<table class=<%=style.getFrame()%> width='100%' <%=style.getFrameSpacing()%>>
+<table class=<%=style.getFrame()%> width='100%' style="float:left; margin-right:4px" <%=style.getFrameSpacing()%>>
 <tr class=<%=style.getFrameTitle()%>>
 <th align='left' class=<%=style.getFrameTitleLabel()%>>
+<%=style.getFrameTitleStartDecoration()%>
 <%=gallery.getTitle()%>
-</th>
 <% if (gallery.isMaximized()) { %>
-<th align='right' class="<%=style.getActionsInFrame()%>" width="12"> 
-<xava:link action='Gallery.minimizeImage'><img src='<%=style.getRestoreImage()%>' border='0' align="middle"/></xava:link>
-</th>
+<xava:link action='Gallery.minimizeImage'><img src='<%=style.getRestoreImage()%>' border='0' align="absmiddle"/></xava:link>
 <% } %>
+<%=style.getFrameTitleEndDecoration()%>
+</th>
 </tr>
 <tr>
 
@@ -55,23 +56,21 @@ else {
 <td>
 
 <table class=<%=style.getFrame()%> width='100%' <%=style.getFrameSpacing()%>>
-<tr class=<%=style.getFrameTitle()%>><th align='right' class=<%=style.getFrameTitleLabel()%>></th>
-	<td class="<%=style.getActionsInFrame()%>" width="12"> 
-	<xava:link action='Gallery.maximizeImage' argv='<%="oid=" + image.getOid()%>'><img src='<%=style.getMaximizeImage()%>' border='0' align="middle"/></xava:link>
-	</td>
+<tr class=<%=style.getFrameTitle()%>><th align='right' class=<%=style.getFrameTitleLabel()%>>
+	<%=style.getFrameTitleStartDecoration(org.openxava.util.Align.RIGHT)%>
+	<xava:link action='Gallery.maximizeImage' argv='<%="oid=" + image.getOid()%>'><img src='<%=style.getMaximizeImage()%>' border='0' align="absmiddle"/></xava:link>	
 	<% if (!gallery.isReadOnly()) { %>
-	<td class="<%=style.getActionsInFrame()%>" width="12"> 
-	<xava:link action='Gallery.removeImage' argv='<%="oid=" + image.getOid()%>'><img src='<%=style.getRemoveImage()%>' border='0' align="middle"/></xava:link>
-	</td>
-	<% } %>
-</tr>
+	<xava:link action='Gallery.removeImage' argv='<%="oid=" + image.getOid()%>'><img src='<%=style.getRemoveImage()%>' border='0' align="absmiddle"/></xava:link>
+	<% } %>	
+	<%=style.getFrameTitleEndDecoration()%>
+</th></tr>
 <tr><td class=<%=style.getFrameContent()%> colspan="<%=gallery.isReadOnly()?2:3%>">
 
 	<input type="hidden" name="xava.GALLERY.images" value="<%=image.getOid()%>">
 	<xava:link action='Gallery.maximizeImage' argv='<%="oid=" + image.getOid()%>'>
 	<img src='<%=request.getContextPath()%>/xava/gallery?application=<%=applicationName%>&module=<%=module%>&oid=<%=image.getOid()%>&dif=<%=dif%>'
 		width="<%=MINIMIZED_SIZE%>" height="<%=MINIMIZED_SIZE%>" border="0"/>
-	</xava:link>	
+	</xava:link>		
 </td></tr>
 </table>		
 
@@ -84,6 +83,7 @@ else {
 <%
 } // if maximized
 %>
-
+<%-- The next row is for giving enough width for showing the heading in one line --%>
 </td></tr>
+<tr><td><%=Strings.repeat(gallery.getTitle().length()*2+10, "&nbsp;")%></td></tr>
 </table>		

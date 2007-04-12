@@ -7,7 +7,9 @@
 <%
 String validValues = request.getParameter("validValues");
 String value = request.getParameter("value");
-int ivalue = 0;
+// base is 0 when we are working with Java 5 Enum, and 1 when I working with classic OX2 valid-values
+int base = "true".equals(request.getParameter("base0"))?0:1;
+int ivalue = -1;
 try {
 	ivalue = Integer.parseInt(value);
 }
@@ -21,13 +23,13 @@ catch (Exception ex) {
 	<option value=""></option>
 <%
 	StringTokenizer st = new StringTokenizer(validValues, "|");
-	int i = 0;
-	while (st.hasMoreTokens()) {
-		i++;
+	int i = base;
+	while (st.hasMoreTokens()) {		
 		String selected =  (i == ivalue)?"selected":"";
 %>
 	<option value="<%=i%>" <%=selected%>><%=st.nextToken()%></option>
 <%
+		i++;
 	} // while
 %>
 </select>
