@@ -37,7 +37,7 @@
 
 
 	<target name="generateEJB">
-		<!-- Lo hacemos así para que no genere código POJO/Hiberante -->
+		<!-- In this way for not generating POJO/Hibernate code -->
     	<delete file="gen-src-xava/dnas-ejb.properties"/>
 		<antcall target="generateEJB"/>
 		<ant antfile="../OpenXava/build.xml" target="filterXavaFiles"/>		
@@ -70,7 +70,7 @@
 		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
 		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
 	</target>
-	
+		
 	<target name="deploy" depends="touchHistory">
 		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
 		<ant antfile="../OpenXava/build.xml" target="deploy"/>

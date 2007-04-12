@@ -1663,6 +1663,55 @@
 
       </entity>
 
+      <entity id="ContainerManagedEntity_Issue">
+         <description><![CDATA[]]></description>
+
+         <ejb-name>Issue</ejb-name>
+
+         <home>org.openxava.test.model.IssueHome</home>
+         <remote>org.openxava.test.model.IssueRemote</remote>
+
+         <ejb-class>org.openxava.test.model.xejb.IssueCMP</ejb-class>
+         <persistence-type>Container</persistence-type>
+         <prim-key-class>org.openxava.test.model.IssueKey</prim-key-class>
+         <reentrant>false</reentrant>
+         <cmp-version>2.x</cmp-version>
+         <abstract-schema-name>Issue</abstract-schema-name>
+         <cmp-field id="CmpAttribute_Issue__Description">
+            <description><![CDATA[]]></description>
+            <field-name>_Description</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_Issue_id">
+            <description><![CDATA[]]></description>
+            <field-name>id</field-name>
+         </cmp-field>
+
+         <env-entry>
+            <env-entry-name>DATA_SOURCE</env-entry-name>
+            <env-entry-type>java.lang.String</env-entry-type>
+            <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
+         </env-entry>
+
+         <resource-ref id="ResRef_22">
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <res-type>javax.sql.DataSource</res-type>
+            <res-auth>Container</res-auth>
+         </resource-ref>
+
+         <query>
+            <query-method>
+               <method-name>findById</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Issue o WHERE o.id = ?1]]></ejb-ql>
+         </query>
+	  <!-- Write a file named ejb-finders-IssueBean.xml if you want to define extra finders. -->
+
+      </entity>
+
       <entity id="ContainerManagedEntity_TransportCharge2">
          <description><![CDATA[]]></description>
 
@@ -1704,7 +1753,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_22">
+         <resource-ref id="ResRef_23">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -1785,7 +1834,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_23">
+         <resource-ref id="ResRef_24">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -1840,7 +1889,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_24">
+         <resource-ref id="ResRef_25">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -1902,7 +1951,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_25">
+         <resource-ref id="ResRef_26">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -1971,7 +2020,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_26">
+         <resource-ref id="ResRef_27">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -2053,7 +2102,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_27">
+         <resource-ref id="ResRef_28">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -2118,7 +2167,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_28">
+         <resource-ref id="ResRef_29">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -2183,7 +2232,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_29">
+         <resource-ref id="ResRef_30">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -2283,7 +2332,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_30">
+         <resource-ref id="ResRef_31">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -2359,7 +2408,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_31">
+         <resource-ref id="ResRef_32">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -2431,7 +2480,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_32">
+         <resource-ref id="ResRef_33">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -2504,7 +2553,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_33">
+         <resource-ref id="ResRef_34">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -2573,7 +2622,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_34">
+         <resource-ref id="ResRef_35">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -2622,7 +2671,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_35">
+         <resource-ref id="ResRef_36">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -2639,147 +2688,6 @@
             <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Size o WHERE o.id = ?1]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-SizeBean.xml if you want to define extra finders. -->
-
-      </entity>
-
-      <entity id="ContainerManagedEntity_Family">
-         <description><![CDATA[]]></description>
-
-         <ejb-name>Family</ejb-name>
-
-         <home>org.openxava.test.model.FamilyHome</home>
-         <remote>org.openxava.test.model.FamilyRemote</remote>
-
-         <ejb-class>org.openxava.test.model.xejb.FamilyCMP</ejb-class>
-         <persistence-type>Container</persistence-type>
-         <prim-key-class>org.openxava.test.model.FamilyKey</prim-key-class>
-         <reentrant>False</reentrant>
-         <cmp-version>2.x</cmp-version>
-         <abstract-schema-name>Family</abstract-schema-name>
-         <cmp-field id="CmpAttribute_Family_oid">
-            <description><![CDATA[]]></description>
-            <field-name>oid</field-name>
-         </cmp-field>
-         <cmp-field id="CmpAttribute_Family_number">
-            <description><![CDATA[]]></description>
-            <field-name>number</field-name>
-         </cmp-field>
-         <cmp-field id="CmpAttribute_Family_description">
-            <description><![CDATA[]]></description>
-            <field-name>description</field-name>
-         </cmp-field>
-
-	  <!-- Write a file named ejb-finders-FamilyBean.xml if you want to define extra finders. -->
-
-      </entity>
-
-      <entity id="ContainerManagedEntity_InvoiceDetail">
-         <description><![CDATA[]]></description>
-
-         <ejb-name>InvoiceDetail</ejb-name>
-
-         <home>org.openxava.test.model.InvoiceDetailHome</home>
-         <remote>org.openxava.test.model.InvoiceDetailRemote</remote>
-
-         <ejb-class>org.openxava.test.model.xejb.InvoiceDetailCMP</ejb-class>
-         <persistence-type>Container</persistence-type>
-         <prim-key-class>org.openxava.test.model.InvoiceDetailKey</prim-key-class>
-         <reentrant>true</reentrant>
-         <cmp-version>2.x</cmp-version>
-         <abstract-schema-name>InvoiceDetail</abstract-schema-name>
-         <cmp-field id="CmpAttribute_InvoiceDetail__UnitPrice">
-            <description><![CDATA[]]></description>
-            <field-name>_UnitPrice</field-name>
-         </cmp-field>
-         <cmp-field id="CmpAttribute_InvoiceDetail_oid">
-            <description><![CDATA[]]></description>
-            <field-name>oid</field-name>
-         </cmp-field>
-         <cmp-field id="CmpAttribute_InvoiceDetail__Remarks">
-            <description><![CDATA[]]></description>
-            <field-name>_Remarks</field-name>
-         </cmp-field>
-         <cmp-field id="CmpAttribute_InvoiceDetail_deliveryDate_day">
-            <description><![CDATA[]]></description>
-            <field-name>deliveryDate_day</field-name>
-         </cmp-field>
-         <cmp-field id="CmpAttribute_InvoiceDetail_deliveryDate_month">
-            <description><![CDATA[]]></description>
-            <field-name>deliveryDate_month</field-name>
-         </cmp-field>
-         <cmp-field id="CmpAttribute_InvoiceDetail_deliveryDate_year">
-            <description><![CDATA[]]></description>
-            <field-name>deliveryDate_year</field-name>
-         </cmp-field>
-         <cmp-field id="CmpAttribute_InvoiceDetail__Quantity">
-            <description><![CDATA[]]></description>
-            <field-name>_Quantity</field-name>
-         </cmp-field>
-         <cmp-field id="CmpAttribute_InvoiceDetail__ServiceType">
-            <description><![CDATA[]]></description>
-            <field-name>_ServiceType</field-name>
-         </cmp-field>
-         <cmp-field id="CmpAttribute_InvoiceDetail__Product_number">
-            <description><![CDATA[]]></description>
-            <field-name>_Product_number</field-name>
-         </cmp-field>
-         <cmp-field id="CmpAttribute_InvoiceDetail__SoldBy_number">
-            <description><![CDATA[]]></description>
-            <field-name>_SoldBy_number</field-name>
-         </cmp-field>
-         <cmp-field id="CmpAttribute_InvoiceDetail__Invoice_year">
-            <description><![CDATA[]]></description>
-            <field-name>_Invoice_year</field-name>
-         </cmp-field>
-         <cmp-field id="CmpAttribute_InvoiceDetail__Invoice_number">
-            <description><![CDATA[]]></description>
-            <field-name>_Invoice_number</field-name>
-         </cmp-field>
-
-         <env-entry>
-            <env-entry-name>DATA_SOURCE</env-entry-name>
-            <env-entry-type>java.lang.String</env-entry-type>
-            <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
-         </env-entry>
-
-         <resource-ref id="ResRef_36">
-            <res-ref-name>jdbc/DataSource</res-ref-name>
-            <res-type>javax.sql.DataSource</res-type>
-            <res-auth>Container</res-auth>
-         </resource-ref>
-
-         <query>
-            <query-method>
-               <method-name>findByProduct</method-name>
-               <method-params>
-                  <method-param>long</method-param>
-               </method-params>
-            </query-method>
-            <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o._Product_number = ?1 ORDER BY o.oid]]></ejb-ql>
-         </query>
-         <query>
-            <query-method>
-               <method-name>findBySoldBy</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-            <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o._SoldBy_number = ?1 ORDER BY o.oid]]></ejb-ql>
-         </query>
-         <query>
-            <query-method>
-               <method-name>findByInvoice</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-            <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o._Invoice_year = ?1 AND o._Invoice_number = ?2 ORDER BY o._ServiceType desc]]></ejb-ql>
-         </query>
-	  <!-- Write a file named ejb-finders-InvoiceDetailBean.xml if you want to define extra finders. -->
 
       </entity>
 
@@ -2910,6 +2818,147 @@
 
       </entity>
 
+      <entity id="ContainerManagedEntity_Family">
+         <description><![CDATA[]]></description>
+
+         <ejb-name>Family</ejb-name>
+
+         <home>org.openxava.test.model.FamilyHome</home>
+         <remote>org.openxava.test.model.FamilyRemote</remote>
+
+         <ejb-class>org.openxava.test.model.xejb.FamilyCMP</ejb-class>
+         <persistence-type>Container</persistence-type>
+         <prim-key-class>org.openxava.test.model.FamilyKey</prim-key-class>
+         <reentrant>False</reentrant>
+         <cmp-version>2.x</cmp-version>
+         <abstract-schema-name>Family</abstract-schema-name>
+         <cmp-field id="CmpAttribute_Family_oid">
+            <description><![CDATA[]]></description>
+            <field-name>oid</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_Family_number">
+            <description><![CDATA[]]></description>
+            <field-name>number</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_Family_description">
+            <description><![CDATA[]]></description>
+            <field-name>description</field-name>
+         </cmp-field>
+
+	  <!-- Write a file named ejb-finders-FamilyBean.xml if you want to define extra finders. -->
+
+      </entity>
+
+      <entity id="ContainerManagedEntity_InvoiceDetail">
+         <description><![CDATA[]]></description>
+
+         <ejb-name>InvoiceDetail</ejb-name>
+
+         <home>org.openxava.test.model.InvoiceDetailHome</home>
+         <remote>org.openxava.test.model.InvoiceDetailRemote</remote>
+
+         <ejb-class>org.openxava.test.model.xejb.InvoiceDetailCMP</ejb-class>
+         <persistence-type>Container</persistence-type>
+         <prim-key-class>org.openxava.test.model.InvoiceDetailKey</prim-key-class>
+         <reentrant>true</reentrant>
+         <cmp-version>2.x</cmp-version>
+         <abstract-schema-name>InvoiceDetail</abstract-schema-name>
+         <cmp-field id="CmpAttribute_InvoiceDetail__UnitPrice">
+            <description><![CDATA[]]></description>
+            <field-name>_UnitPrice</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_InvoiceDetail_oid">
+            <description><![CDATA[]]></description>
+            <field-name>oid</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_InvoiceDetail__Remarks">
+            <description><![CDATA[]]></description>
+            <field-name>_Remarks</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_InvoiceDetail_deliveryDate_day">
+            <description><![CDATA[]]></description>
+            <field-name>deliveryDate_day</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_InvoiceDetail_deliveryDate_month">
+            <description><![CDATA[]]></description>
+            <field-name>deliveryDate_month</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_InvoiceDetail_deliveryDate_year">
+            <description><![CDATA[]]></description>
+            <field-name>deliveryDate_year</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_InvoiceDetail__Quantity">
+            <description><![CDATA[]]></description>
+            <field-name>_Quantity</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_InvoiceDetail__ServiceType">
+            <description><![CDATA[]]></description>
+            <field-name>_ServiceType</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_InvoiceDetail__Product_number">
+            <description><![CDATA[]]></description>
+            <field-name>_Product_number</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_InvoiceDetail__SoldBy_number">
+            <description><![CDATA[]]></description>
+            <field-name>_SoldBy_number</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_InvoiceDetail__Invoice_year">
+            <description><![CDATA[]]></description>
+            <field-name>_Invoice_year</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_InvoiceDetail__Invoice_number">
+            <description><![CDATA[]]></description>
+            <field-name>_Invoice_number</field-name>
+         </cmp-field>
+
+         <env-entry>
+            <env-entry-name>DATA_SOURCE</env-entry-name>
+            <env-entry-type>java.lang.String</env-entry-type>
+            <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
+         </env-entry>
+
+         <resource-ref id="ResRef_38">
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <res-type>javax.sql.DataSource</res-type>
+            <res-auth>Container</res-auth>
+         </resource-ref>
+
+         <query>
+            <query-method>
+               <method-name>findByProduct</method-name>
+               <method-params>
+                  <method-param>long</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o._Product_number = ?1 ORDER BY o.oid]]></ejb-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findBySoldBy</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o._SoldBy_number = ?1 ORDER BY o.oid]]></ejb-ql>
+         </query>
+         <query>
+            <query-method>
+               <method-name>findByInvoice</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o._Invoice_year = ?1 AND o._Invoice_number = ?2 ORDER BY o._ServiceType desc]]></ejb-ql>
+         </query>
+	  <!-- Write a file named ejb-finders-InvoiceDetailBean.xml if you want to define extra finders. -->
+
+      </entity>
+
       <entity id="ContainerManagedEntity_Receptionist">
          <description><![CDATA[]]></description>
 
@@ -2943,7 +2992,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_38">
+         <resource-ref id="ResRef_39">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -3021,7 +3070,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_39">
+         <resource-ref id="ResRef_40">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -3125,7 +3174,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_40">
+         <resource-ref id="ResRef_41">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -3203,7 +3252,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_41">
+         <resource-ref id="ResRef_42">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>
@@ -3260,7 +3309,7 @@
             <env-entry-value><![CDATA[jdbc/DataSource]]></env-entry-value>
          </env-entry>
 
-         <resource-ref id="ResRef_42">
+         <resource-ref id="ResRef_43">
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <res-type>javax.sql.DataSource</res-type>
             <res-auth>Container</res-auth>

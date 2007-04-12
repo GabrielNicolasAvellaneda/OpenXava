@@ -1313,6 +1313,37 @@
       </entity>
 
       <entity>
+         <ejb-name>Issue</ejb-name>
+
+         <table-name>ISSUE</table-name>
+
+         <cmp-field>
+            <field-name>_Description</field-name>
+            <column-name>DESCRIPTION</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>id</field-name>
+            <column-name>ID</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findById</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Issue o WHERE o.id = ?1]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
          <ejb-name>TransportCharge2</ejb-name>
 
          <table-name>XAVATEST.TRANSPORTCHARGE2</table-name>
@@ -2082,6 +2113,122 @@
       </entity>
 
       <entity>
+         <ejb-name>Product2</ejb-name>
+
+         <table-name>XAVATEST.PRODUCT</table-name>
+
+         <cmp-field>
+            <field-name>_Photos</field-name>
+            <column-name>PHOTOS</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_UnitPrice</field-name>
+            <column-name>UNITPRICE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Description</field-name>
+            <column-name>DESCRIPTION</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>number</field-name>
+            <column-name>NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Warehouse_zoneNumber</field-name>
+            <column-name>ZONE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Warehouse_number</field-name>
+            <column-name>WAREHOUSE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Family_number</field-name>
+            <column-name>FAMILY</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Subfamily_number</field-name>
+            <column-name>SUBFAMILY</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Formula_oid</field-name>
+            <column-name>FORMULAR_OID</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByWarehouse</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>java.lang.Integer</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o._Warehouse_zoneNumber = ?1 AND o._Warehouse_number = ?2 ]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByFamily</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o._Family_number = ?1 ]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findBySubfamily</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o._Subfamily_number = ?1 ]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByFormula</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o._Formula_oid = ?1 ]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findAll</method-name>
+               <method-params>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE 1 = 1]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByNumber</method-name>
+               <method-params>
+                  <method-param>long</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o.number = ?1]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
          <ejb-name>Family</ejb-name>
 
          <table-name>XAVATEST@separator@FAMILY</table-name>
@@ -2201,122 +2348,6 @@
                </method-params>
             </query-method>
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM InvoiceDetail o WHERE o._Invoice_year = ?1 AND o._Invoice_number = ?2 ORDER BY o._ServiceType desc]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>Product2</ejb-name>
-
-         <table-name>XAVATEST.PRODUCT</table-name>
-
-         <cmp-field>
-            <field-name>_Photos</field-name>
-            <column-name>PHOTOS</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_UnitPrice</field-name>
-            <column-name>UNITPRICE</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Description</field-name>
-            <column-name>DESCRIPTION</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>number</field-name>
-            <column-name>NUMBER</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Warehouse_zoneNumber</field-name>
-            <column-name>ZONE</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Warehouse_number</field-name>
-            <column-name>WAREHOUSE</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Family_number</field-name>
-            <column-name>FAMILY</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Subfamily_number</field-name>
-            <column-name>SUBFAMILY</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Formula_oid</field-name>
-            <column-name>FORMULAR_OID</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByWarehouse</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-                  <method-param>java.lang.Integer</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o._Warehouse_zoneNumber = ?1 AND o._Warehouse_number = ?2 ]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findByFamily</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o._Family_number = ?1 ]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findBySubfamily</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o._Subfamily_number = ?1 ]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findByFormula</method-name>
-               <method-params>
-                  <method-param>java.lang.String</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o._Formula_oid = ?1 ]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findAll</method-name>
-               <method-params>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE 1 = 1]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findByNumber</method-name>
-               <method-params>
-                  <method-param>long</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o.number = ?1]]></jboss-ql>
 
 	     </query>
 

@@ -283,6 +283,18 @@
 
       </entity>
       <entity>
+         <ejb-name>Issue</ejb-name>
+         <jndi-name>@subcontext@/ejb/org.openxava.test.model/Issue</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
          <ejb-name>TransportCharge2</ejb-name>
          <jndi-name>@subcontext@/ejb/org.openxava.test.model/TransportCharge2</jndi-name>
          <resource-ref>
@@ -451,16 +463,8 @@
 
       </entity>
       <entity>
-         <ejb-name>Family</ejb-name>
-         <jndi-name>OpenXavaTest/ejb/openxava.test/Family</jndi-name>
-
-        <method-attributes>
-        </method-attributes>
-
-      </entity>
-      <entity>
-         <ejb-name>InvoiceDetail</ejb-name>
-         <jndi-name>@subcontext@/ejb/org.openxava.test.model/InvoiceDetail</jndi-name>
+         <ejb-name>Product2</ejb-name>
+         <jndi-name>@subcontext@/ejb/org.openxava.test.model/Product2</jndi-name>
          <resource-ref>
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <resource-name>jdbc/DataSource</resource-name>
@@ -471,8 +475,16 @@
 
       </entity>
       <entity>
-         <ejb-name>Product2</ejb-name>
-         <jndi-name>@subcontext@/ejb/org.openxava.test.model/Product2</jndi-name>
+         <ejb-name>Family</ejb-name>
+         <jndi-name>OpenXavaTest/ejb/openxava.test/Family</jndi-name>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>InvoiceDetail</ejb-name>
+         <jndi-name>@subcontext@/ejb/org.openxava.test.model/InvoiceDetail</jndi-name>
          <resource-ref>
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <resource-name>jdbc/DataSource</resource-name>
