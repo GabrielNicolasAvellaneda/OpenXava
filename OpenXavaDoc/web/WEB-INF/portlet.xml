@@ -488,5 +488,23 @@
 		<resource-bundle>Stringbeans</resource-bundle>		
 	</portlet> 
 	
+	<portlet id="Multischema">
+		<description>Multischema</description>    
+		<portlet-name>Multischema</portlet-name>
+		<display-name>Multischema</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>multischema</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<supported-locale>es</supported-locale>
+		<resource-bundle>Multischema</resource-bundle>		
+	</portlet> 	
+	
 								
 </portlet-app>

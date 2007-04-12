@@ -1,0 +1,160 @@
+This document explains how to create multi-schema applications using
+OpenXava.<br>
+At the moment multi-schema applications only work using EJB3 JPA as
+persistence engine.<br>
+<h4>Multi-schema applications</h4>
+A multi-schema application allows you to replicate all table structure
+of you database in several database schemas. Then each user (or in each
+session) can work with a different schema, that is with different data.<br>
+For example, you can have the data of 3 different companies in the same
+database server. Your OpenXava application, that is deployed only once
+in an application sever, can be executed for employees of this 3
+companies, but each employee only can to access to the data of his
+company. A multi-schema application allows you to implement this.<br>
+Using several schema in the database is not only for security, but for
+avoiding to have huge database tables; because you can divide the data
+by companies, years, departaments, etc.<br>
+<h4>An example</h4>
+Let's see an example of an OpenXava module that uses multi-schema.<br>
+First, we need to have a OpenXava component, as this one:<br>
+<pre>&lt;component name="Issue"&gt;</pre>
+<pre><br>&nbsp;&nbsp;&nbsp; &lt;entity&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;property name="id" type="String" key="true" </pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; size="5" required="true"/&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;property name="description" type="String" </pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; size="40" required="true"/&gt;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </pre>
+<pre>&nbsp;&nbsp;&nbsp; &lt;/entity&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; </pre>
+<pre>&nbsp;&nbsp;&nbsp; &lt;entity-mapping table="<span
+ style="font-weight: bold; color: rgb(51, 102, 255);">ISSUE</span>"&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;property-mapping</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; property="id" column="ID"/&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;property-mapping</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; property="description" column="DESCRIPTION"/&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &lt;/entity-mapping&gt; </pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </pre>
+<pre>&lt;/component&gt;</pre>
+You can see how we map the component against the table ISSUE, but we
+don't specify the schema.<br>
+<br>
+Now, we can define the module in <span style="font-family: monospace;">application.xml</span>,
+as following:<br>
+<pre>&lt;module name="Issues"&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &lt;model name="Issue"/&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &lt;controller name="Typical"/&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &lt;controller name="Issues"/&gt;</pre>
+<pre>&lt;/module&gt;</pre>
+<br>
+Then, we define our custom controller <span
+ style="font-family: monospace;">Issues</span>, in the <span
+ style="font-family: monospace;">controllers.xml</span>, in this way:<br>
+<pre>&lt;controller name="Issues"&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; <span
+ style="font-weight: bold; color: rgb(51, 102, 255);">&lt;extends controller="DefaultSchema"/&gt;</span></pre>
+<pre>&nbsp;&nbsp;&nbsp; &lt;action name="changeToCompanyA" on-init="true"</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; class="org.openxava.actions.SetDefaultSchemaAction"&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;set property="newDefaultSchema" value="COMPANYA"/&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;use-object name="xava_defaultSchema"/&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &lt;/action&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &lt;action name="changeToCompanyB" </pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; class="org.openxava.actions.SetDefaultSchemaAction"&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;set property="newDefaultSchema" value="COMPANYB"/&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;use-object name="xava_defaultSchema"/&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &lt;/action&gt;</pre>
+<pre>&lt;/controller&gt;</pre>
+<pre><br></pre>
+And now we have a module that can work against the schema 'COMPANYA' or
+against the schema 'COMPANYB'. The user only have to click in the
+corresponding button in order to change <span
+ style="font-style: italic;">in hot</span> the source of the data.<br>
+<br>
+That's all.<br>
+<h4>How it works</h4>
+You can use these ready-to-use controllers and actions, but if you know
+how it works, you can do it yourself, and adapting it to your special
+requeriments if needed. The key is the class <a
+ href="/OpenXavaDoc/apidocs/org/openxava/jpa/XPersistence.html">XPersistence</a>,
+using this class it's possible to change the default schema in runtime:<br>
+<pre>XPersistence.setDefaultSchema("COMPANYA");</pre>
+This changes the default schema to 'COMPANYA', but only for the current
+execution thread.<br>
+Now, if you use a session object (see section 7.2 of Reference Guide)
+and use an action with <span style="font-family: monospace;">on-each-request="true"</span>
+to set the schema associated to the current user as the default schema
+for the thread of the request, you will have the problem solved.<br>
+<br>
+Let's try to do it.<br>
+Define a session object to store the current schema by user:<br>
+<pre>&lt;object name="xava_defaultSchema" class="java.lang.String"/&gt;</pre>
+This is defined in <span style="font-family: monospace;">OpenXava/xava/default-controllers.xml</span>,
+therefore it's available for you; although you can create your own
+session object in your own <span style="font-family: monospace;">controllers.xml</span>
+if you prefer so.<br>
+<br>
+Define an action (in your own controller) to be executed in each
+request, in <span style="font-family: monospace;">controllers.xml</span>:<br>
+<pre>&lt;controller ... &gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &lt;action name="setDefaultSchema" <span
+ style="font-weight: bold; color: rgb(51, 102, 255);">on-each-request="true"</span> hidden="true"</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; class="org.openxava.actions.SetDefaultSchemaAction"&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;use-object name="xava_defaultSchema"/&gt;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </pre>
+<pre>&nbsp;&nbsp;&nbsp; &lt;/action&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; ...</pre>
+<pre>&lt;/controller&gt;&nbsp;&nbsp;&nbsp; </pre>
+<br>
+(The <span style="font-family: monospace;">DefaultSchema</span>
+controller of OpenXava has this action included)<br>
+In this action you only need to have the session object (in this case <span
+ style="font-family: monospace;">xava_defaultSchema</span>) and put it
+as default schema using <span style="font-family: monospace;">XPersistence</span>:<br>
+<br>
+<pre>public class SetDefaultSchemaAction extends BaseAction {</pre>
+<pre>&nbsp;&nbsp;&nbsp; </pre>
+<pre>&nbsp;&nbsp;&nbsp; private String defaultSchema;</pre>
+<pre>&nbsp;&nbsp;&nbsp; private String newDefaultSchema;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </pre>
+<pre><br>&nbsp;&nbsp;&nbsp; public void execute() throws Exception {</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (newDefaultSchema != null)&nbsp;&nbsp;&nbsp; defaultSchema = newDefaultSchema;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; XPersistence.setDefaultSchema(defaultSchema);</pre>
+<pre>&nbsp;&nbsp;&nbsp; }</pre>
+<pre><br>&nbsp;&nbsp;&nbsp; /**</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;* The current default schema used by OpenXava and JPA.</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;*/</pre>
+<pre>&nbsp;&nbsp;&nbsp; public String getDefaultSchema() {</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return defaultSchema;</pre>
+<pre>&nbsp;&nbsp;&nbsp; }</pre>
+<pre><br>&nbsp;&nbsp;&nbsp; /**</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;* The current default schema used by OpenXava and JPA.</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;*/&nbsp;&nbsp;&nbsp; </pre>
+<pre>&nbsp;&nbsp;&nbsp; public void setDefaultSchema(String company) {</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; this.defaultSchema = company;</pre>
+<pre>&nbsp;&nbsp;&nbsp; }</pre>
+<pre><br>&nbsp;&nbsp;&nbsp; /**</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;* The new default schema for OpenXava and JPA. &lt;P&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;* </pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;* This value update the property 'defaultSchema'.</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;*/</pre>
+<pre>&nbsp;&nbsp;&nbsp; public String getNewDefaultSchema() {</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return newDefaultSchema;</pre>
+<pre>&nbsp;&nbsp;&nbsp; }</pre>
+<pre><br>&nbsp;&nbsp;&nbsp; /**</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;* The new default schema for OpenXava and JPA. &lt;P&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;* </pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;* This value update the property 'defaultSchema'.</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;*/&nbsp;&nbsp;&nbsp; </pre>
+<pre>&nbsp;&nbsp;&nbsp; public void setNewDefaultSchema(String newCompany) {</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; this.newDefaultSchema = newCompany;</pre>
+<pre>&nbsp;&nbsp;&nbsp; }</pre>
+<pre><br>}</pre>
+Because&nbsp;<span style="font-family: monospace;">defaultSchema</span>
+is injected using <span style="font-family: monospace;">&lt;use-object
+/&gt;</span> when we change <span style="font-family: monospace;">defaultSchema</span>
+property we also change the session object <span
+ style="font-family: monospace;">xava_defaultSchema</span>. <br>
+This action is part of OpenXava core (in <span
+ style="font-family: monospace;">org.openxava.actions</span>), you can
+use it as is, or create your own action using a similar technique.<br>
+<br>
+Now you can call to this action (or other alike) when you want to
+change the current schema for the user.<br>
+<br>
+<br>
