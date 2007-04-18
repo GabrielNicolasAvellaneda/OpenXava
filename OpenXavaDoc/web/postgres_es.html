@@ -1,0 +1,913 @@
+<p style="font-style: italic;">At
+the moment this article is only in Spanish, if you want to contribute
+to OpenXava, we encourage you to translate it to English and contribute
+the translation.</p>
+<a href="/OpenXavaDoc/openxava-postgres_es.pdf">Versi&oacute;n en PDF</a><br>
+<TABLE WIDTH=183 BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=69>
+	<COL WIDTH=96>
+	<TR VALIGN=TOP>
+		<TD WIDTH=69>
+			<P ALIGN=CENTER STYLE="font-weight: medium"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=2 STYLE="font-size: 10pt">Entrega:
+			</FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=96>
+			<P ALIGN=CENTER><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=2 STYLE="font-size: 10pt"><B>1</B></FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=69>
+			<P ALIGN=CENTER STYLE="font-weight: medium"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=2 STYLE="font-size: 10pt">Revisi&oacute;n:</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=96>
+			<P ALIGN=CENTER><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=2 STYLE="font-size: 10pt"><B>4</B></FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=69>
+			<P ALIGN=CENTER STYLE="font-weight: medium"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=2 STYLE="font-size: 10pt">Fecha:</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=96>
+			<P ALIGN=CENTER><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=2 STYLE="font-size: 10pt"><B>12
+			/ Abril / 2007</B></FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=69>
+			<P ALIGN=CENTER STYLE="font-weight: medium"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=2 STYLE="font-size: 10pt">Nivel:</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=96>
+			<P ALIGN=CENTER><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=2 STYLE="font-size: 10pt"><B>Principiante</B></FONT></FONT></P>
+		</TD>
+	</TR>
+</TABLE>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><FONT FACE="Arial, sans-serif"><FONT SIZE=5><U><B>Configurar
+OpenXava 2.1 para trabajar con  Postgres.</B></U></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<DIV ID="&Iacute;ndice de contenido1" DIR="LTR">
+	<DIV ID="&Iacute;ndice de contenido1_Head" DIR="LTR">
+		<P STYLE="margin-top: 0.42cm; page-break-after: avoid"><FONT FACE="Arial, sans-serif"><FONT SIZE=4 STYLE="font-size: 16pt"><B>&Iacute;ndice
+		de contenido</B></FONT></FONT></P>
+	</DIV>
+	<P STYLE="margin-bottom: 0cm">0: Pr&oacute;logo	1</P>
+	<P STYLE="margin-bottom: 0cm">1.- Nociones sobre lo que vamos a
+	hacer	1</P>
+	<P STYLE="margin-bottom: 0cm">2.- Comprobar el funcionamiento de la
+	BD Postgres.	2</P>
+	<P STYLE="margin-bottom: 0cm">3.- Realizar una copia de seguridad de
+	OpenXava	4</P>
+	<P STYLE="margin-bottom: 0cm">4.- Modificar el fichero &ldquo;build.xml&rdquo;
+	del proyecto OpenXavaPlantilla	4</P>
+	<P STYLE="margin-bottom: 0cm">5.- Crear el fichero de configuraci&oacute;n
+	&ldquo;tomcat-postgres.properties&rdquo; de la carpeta
+	OpenXavaPlantilla	5</P>
+	<P STYLE="margin-bottom: 0cm">6.- Modificar el fichero
+	&ldquo;hibernate/hibernate-cfg.xml&rdquo; de la carpeta
+	OpenXavaPlantilla 	5</P>
+	<P STYLE="margin-bottom: 0cm">7.- Copiar los drives JDBC (jar) de
+	Postgres.	6</P>
+	<P STYLE="margin-bottom: 0cm">8.- Generamos nuestro &ldquo;primer
+	proyecto&rdquo; seg&uacute;n la gu&iacute;a de referencia.	7</P>
+	<P STYLE="margin-bottom: 0cm">9.- Conclusi&oacute;n	9</P>
+</DIV>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Arial, sans-serif"><FONT SIZE=4><B>0:
+Pr&oacute;logo</B></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Espero
+que esta peque&ntilde;a gu&iacute;a sirva para los pobres
+principiantes y carrozas que nos atrevemos a meternos en proyectos
+que tenemos la intuici&oacute;n que son buenos, pero que nos suenan a
+&ldquo;chino&rdquo;. </FONT></FONT>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Est&aacute;
+pensada para todos los que venimos de entornos <I>RAD</I> (desarrollo
+r&aacute;pido de aplicaciones) y que nos cuesta cambiar el &ldquo;chip&rdquo;.
+</FONT></FONT>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Por
+desgracia, esta introducci&oacute;n est&aacute; realizada en entorno
+Windows XP, pido disculpas a los &ldquo;valientes&rdquo; que est&aacute;is
+en Linux.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Estamos
+ante una era de cambios constantes y profundos, y los proyectos de
+c&oacute;digo abierto son un tren donde hay una infinidad de
+locomotoras que tiramos de &eacute;l, y somos nosotros los que
+decidimos cuales van a ser sus derroteros. En el foro hay algunas
+cuestiones sobre la configuraci&oacute;n del <I>OpenXava</I> para
+otras bases de datos que no sean <I>HSQLD</I>B. Esta base de datos
+hasta ahora est&aacute; sirviendo para motivos acad&eacute;micos,
+pero no me extra&ntilde;ar&iacute;a que en pocos a&ntilde;os la
+tengamos como referencia.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>En
+el foro, surgen algunas preguntas sobre la configuraci&oacute;n de
+OpenXava sobre Postgres. Espero que esta peque&ntilde;a gu&iacute;a
+sirva para ayudaros un poco.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Arial, sans-serif"><FONT SIZE=4><B>1.-
+Nociones sobre lo que vamos a hacer</B></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Debemos
+tener una m&iacute;nima idea de Postgres. En concreto, debemos tener
+instalada y configurada dicha base de datos; tiene que estar
+accesible y debemos saber como conectar con ella (debemos saber su
+URL, usuario y contrase&ntilde;a). Debemos tener en cuenta que
+Postgres diferencia entre may&uacute;sculas y min&uacute;scula.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Tenemos
+que decidir si vamos a trabajar en Postgres de forma espor&aacute;dica
+o por el contrario vamos a trabajar siempre.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>La
+carpeta OpenXavaPlantilla, es como su nombre indica una plantilla,
+por tanto no es muy conveniente que toquemos cosas de dicha plantilla
+sin saberlo. Por tanto, si vamos a trabajar &ldquo;para siempre&rdquo;,
+con la BD Postgres, podemos hacer los siguientes cambios en dicho
+proyecto:</FONT></FONT></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Crear
+	un fichero de configuraci&oacute;n nuevo <FONT COLOR="#000000"><I>tomcat-postgres,.properties</I></FONT></FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><SPAN STYLE="font-style: normal">Modificar
+	el fichero </SPAN><I>hibernate/hibernate-cfg.xml </I><SPAN STYLE="font-style: normal">para
+	que apunte a nuestra BD Postgres</SPAN></FONT></FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+	<FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Modificar
+	el fichero build.xml para que apunte a nuestro fichero de
+	propiedades.</FONT></FONT></FONT></P>
+</UL>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Por
+tanto, cada vez que generemos un proyecto nuevo (Paso 8 i punto 2,1
+de la gu&iacute;a de referencia), ya habr&aacute;: </FONT></FONT>
+</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>creado
+	el build.xml de nuestro proyecto igual que el de la plantilla (por
+	tanto no hay que volver a hacer los cambios anteriores</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>tendremos
+	el fichero hibernate/hibernate-cfg.xml actualizado a nuestra
+	configuraci&oacute;n.</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>creado
+	el fichero tomcat-postgres.properties en nuestro proyecto (por tanto
+	no hay que crearlo)</FONT></FONT></P>
+</UL>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Si
+no se hubiera planteado hacer estos cambios en la plantilla
+(OpenXavaPlantilla), cada vez que gener&aacute;semos un proyecto,
+tendr&iacute;amos que hacer estos cambios a mano. Esta opci&oacute;n
+es interesante si no vamos a trabajar mucho con Postgres, o si vamos
+a realizar otros proyectos con acceso a otras bases de datos.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Tambi&eacute;n
+habr&aacute; que decirle al sistema donde est&aacute;n las librer&iacute;as
+de acceso a la base de datos JDBC, o sea &ldquo;los .jar&rdquo;. Una
+buena opci&oacute;n seria si vamos a trabajar mucho con Postgres el
+crear una carpeta <I>lib</I> en la capeta  <I>OpenXavaPlantilla</I> y
+meter los <I>jars</I> ah&iacute;, para que luego los copie. Si no,
+podemos crear la carpeta <I>lib</I> con los <I>jars</I> en nuestro
+proyecto</FONT></FONT></P>
+<P STYLE="margin-left: -1.25cm; margin-bottom: 0cm; font-weight: medium">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Bien
+vamos a realizar todos los pasos para que nuestro OpenXava pueda
+trabajar en Postgres como </FONT></FONT>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>base
+de datos predeterminada cuando generemos los proyectos.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Arial, sans-serif"><FONT SIZE=4><B>2.-
+Comprobar el funcionamiento de la BD Postgres.</B></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Hemos
+de comprobar que el gestor de bases de datos <I>Postgres</I> est&eacute;
+en marcha y que sea accesible desde nuestra m&aacute;quina. La mejor
+forma es entrar en el <I>pgAdmin</I>. Si no se tiene, es muy
+conveniente tenerlo instalado (se obtiene de la Web de <I>Postgres</I>)</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><IMG SRC="/OpenXavaDoc/images/postgres_html_m583e39fa.gif" NAME="gr&aacute;ficos1" ALIGN=LEFT WIDTH=433 HEIGHT=159 BORDER=0><BR CLEAR=LEFT><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Una
+vez abierto, se debe intentar conectar (si no nos deja entrar, ya no
+podemos seguir adelante).</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Para
+ello, con el bot&oacute;n derecho del rat&oacute;n sobre el servidor
+seleccionamos conectar.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><IMG SRC="/OpenXavaDoc/images/postgres_html_m330ff260.gif" NAME="gr&aacute;ficos2" ALIGN=LEFT WIDTH=457 HEIGHT=317 BORDER=0><BR CLEAR=LEFT><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>A
+continuaci&oacute;n le damos la contrase&ntilde;a que hayamos dado
+para el usuario &ldquo;<I>postgres</I>&rdquo;.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><IMG SRC="/OpenXavaDoc/images/postgres_html_m5c330aa8.png" NAME="gr&aacute;ficos3" ALIGN=LEFT WIDTH=313 HEIGHT=157 BORDER=0><BR CLEAR=LEFT><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Una
+vez dentro, podemos crear un nuevo esquema, d&aacute;ndole al bot&oacute;n
+derecho en la carpeta esquemas:</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><IMG SRC="/OpenXavaDoc/images/postgres_html_m12058e29.gif" NAME="gr&aacute;ficos4" ALIGN=LEFT WIDTH=407 HEIGHT=299 BORDER=0><BR CLEAR=LEFT><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Tengo
+previamente creada una base de datos llamada &ldquo;<I>GESTIO</I>&rdquo;
+que voy a aprovechar y sobre la cual creo un esquema que le llamo por
+ejemplo &ldquo;<I>esq_01</I>&rdquo;. Por tanto ahora tendr&eacute;
+los esquemas &ldquo;<I>public</I>&rdquo; y  &ldquo;esq<I>_01</I>&rdquo;.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP>
+			<P STYLE="margin-bottom: 0cm"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><B>Observaciones:</B></FONT></FONT></P>
+			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=3><B>NUNCA
+			deb&eacute;is poner en la base de datos Postgres los nombres de
+			esquemas o tablas en MAY&Uacute;SCULAS. Siempre en MIN&Uacute;SCULAS.!
+			ya que postgres sobre hibernate mapea los nombres de tablas y
+			esquemas en min&uacute;sculas.</B></FONT></FONT></P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Por
+tanto hemos salvado este primer requisito.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Arial, sans-serif"><FONT SIZE=4><B>3.-
+Realizar una copia de seguridad de OpenXava</B></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Vamos
+a hacer cambios profundos en la configuraci&oacute;n de <I>OpenXava</I>,
+y nunca debemos olvidar que algunos somos &ldquo;novatos&rdquo;.
+<U>Cualquier tiempo invertido en hacer copias de seguridad nunca es
+tiempo perdido!</U>. Por tanto debemos copiar en principio toda la
+carpeta <I><B>workSpace</B></I> que cuelga del directorio de
+instalaci&oacute;n de <I>Openxava.</I></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Tambi&eacute;n
+ten&eacute;is que demostrar que hab&eacute;is podido llegar hasta el
+punto 2.6 de la gu&iacute;a de referencia de OpenXava (y hab&eacute;is
+podido ejecutar la primera aplicaci&oacute;n).</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Por tanto sabemos
+que:</FONT></FONT></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+	<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Ten&eacute;is
+	<I>Postgres</I> trabajando correctamente.</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+	<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Sab&eacute;is
+	construir vuestro &ldquo;<I>primer proyecto OpenXava</I>&rdquo;.</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+	<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Hab&eacute;is hecho
+	una copia de seguridad de vuestro trabajo.</FONT></FONT></P>
+</UL>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><FONT SIZE=4><B>4.-
+Modificar el fichero &ldquo;build.xml&rdquo; del proyecto
+OpenXavaPlantilla</B></FONT></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Cambiamos
+la variable que apunta al fichero de configuraci&oacute;n del
+build.xml que hay en la carpeta  OpenXavaPlantilla. Buscamos una
+l&iacute;nea que tenga <I>tomcat-hypersonic</I> y la cambiamos por
+otra que hace referencia a un nuevo fichero de configuraci&oacute;n
+<I>tomcat-postgres</I> que crearemos en el siguiente apartado.</FONT></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP BGCOLOR="#ffffcc">
+			<P STYLE="margin-bottom: 0cm"><FONT COLOR="#800000">   <FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B>&lt;!--</B></FONT></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#800000">  
+			<FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B>&lt;property
+			name=&quot;configuration&quot; value=&quot;tomcat-hypersonic&quot;/&gt;</B></FONT></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#800000">  
+			<FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B>--&gt;</B></FONT></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"> 
+			</FONT><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#000080">&lt;property</FONT><FONT COLOR="#000000">
+			</FONT><FONT COLOR="#000080">name=</FONT><FONT COLOR="#008000">&quot;configuration&quot;</FONT><FONT COLOR="#000000">
+			</FONT><FONT COLOR="#000080">value=</FONT><FONT COLOR="#008000">&quot;tomcat-postgres&quot;</FONT><FONT COLOR="#000080">/&gt;</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT><BR>
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Guardamos
+los cambios.</FONT></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Por
+tanto un resumen de lo que se tiene hasta ahora:</FONT></FONT></FONT></P>
+<UL>
+	<LI VALUE=1><P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+	<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Ten&eacute;is
+	<I>Postgres</I> trabajando correctamente.</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+	<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Sab&eacute;is
+	construir vuestro &ldquo;<I>primer proyecto OpenXava</I>&rdquo;.</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+	<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Hab&eacute;is hecho
+	una copia de seguridad de vuestro trabajo.</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+	<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Hab&eacute;is
+	cambiado &ldquo;HSQL&rdquo; por &ldquo;Postgres&rdquo; en el
+	build.xml del proyecto workspace/Openxava</FONT></FONT></P>
+</UL>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT FACE="Arial, sans-serif"><FONT SIZE=4><B>5.-
+Crear el fichero de configuraci&oacute;n &ldquo;tomcat-postgres.properties&rdquo;
+de la carpeta OpenXavaPlantilla</B></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Copiamos el
+contenido del fichero <I>tomcat-hypersonic.properties  </I>en un
+nuevo fichero<I> tomcat-postgres.properties. </I>A continuaci&oacute;n
+cambiamos todo aquello que nos interesa. En este ejemplo 
+modificaremos el <B>separador </B>que lo cambiaremos de<B> &ldquo;_&rdquo;
+</B>a<B> &ldquo;.&rdquo;. OJO: No hay que poner las comillas (&ldquo;&rdquo;),
+debe quedar as&iacute;:. </B></FONT></FONT>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Tambi&eacute;n se
+modificar&aacute; el dialecto a <B>PostgreSQLDialect.</B></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP BGCOLOR="#ffffcc">
+			<P STYLE="margin-bottom: 0cm"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#000000">separator=</FONT><FONT COLOR="#2a00ff">.</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#000000">organization_es=</FONT><FONT COLOR="#2a00ff">Gesti&oacute;n</FONT><FONT COLOR="#000000">
+			</FONT><FONT COLOR="#2a00ff">cuatrocientos,</FONT><FONT COLOR="#000000">
+			</FONT><FONT COLOR="#2a00ff">s.l.</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#000000">organization_ca=</FONT><FONT COLOR="#2a00ff">Gesti&oacute;</FONT><FONT COLOR="#000000">
+			</FONT><FONT COLOR="#2a00ff">quatre-cents,</FONT><FONT COLOR="#000000">
+			</FONT><FONT COLOR="#2a00ff">s.l.</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#000000">organization_en=</FONT><FONT COLOR="#2a00ff">Management</FONT><FONT COLOR="#000000">
+			</FONT><FONT COLOR="#2a00ff">four</FONT><FONT COLOR="#000000">
+			</FONT><FONT COLOR="#2a00ff">hundred,</FONT><FONT COLOR="#000000">
+			</FONT><FONT COLOR="#2a00ff">limited</FONT><FONT COLOR="#000000"> </FONT></B></FONT></FONT>
+			</P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#000000">hibernate.dialect=</FONT><FONT COLOR="#2a00ff">org.hibernate.dialect.PostgreSQLDialect</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#000000">datasource.prefix=</FONT><FONT COLOR="#2a00ff">java</FONT><FONT COLOR="#000000">:</FONT><FONT COLOR="#2a00ff">comp/env/jdbc</FONT></B></FONT></FONT></P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Arial, sans-serif"><FONT SIZE=4><B>6.-
+Modificar el fichero &ldquo;hibernate/hibernate-cfg.xml&rdquo; de la
+carpeta OpenXavaPlantilla </B></FONT></FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium"><A NAME="DDE_LINK"></A>
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Esta es la segunda
+parte siniestra de nuestra introducci&oacute;n. Tenemos que comentar
+todo lo relativo a HSQLDB (que estaba etiquetado como Hypersonic) y
+crear nuevas definiciones para Postgres (que se ha etiquetado como
+Postgres), quedando:</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP BGCOLOR="#ffffcc">
+			<P STYLE="margin-bottom: 0cm"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#008080">&lt;</FONT><FONT COLOR="#3f7f7f">session-factory</FONT><FONT COLOR="#008080">&gt;</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#3f5fbf"> 
+			<FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B>&lt;!--
+			Hypersonic </B></FONT></FONT></FONT>
+			</P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#3f5fbf"> 
+			<FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B>&lt;property
+			name=&quot;hibernate.connection.driver_class&quot;&gt;org.hsqldb.jdbcDriver&lt;/property&gt;</B></FONT></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#3f5fbf"> 
+			<FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B>&lt;property
+			name=&quot;hibernate.dialect&quot;&gt;org.hibernate.dialect.HSQLDialect&lt;/property&gt;</B></FONT></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#3f5fbf"> 
+			<FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B>&lt;property
+			name=&quot;hibernate.connection.url&quot;&gt;jdbc:hsqldb:hsql://localhost:1666&lt;/property&gt;</B></FONT></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#3f5fbf"> 
+			<FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B>--&gt;</B></FONT></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B>		
+			</B></FONT></FONT></FONT>
+			</P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"> 
+			</FONT><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#3f5fbf">&lt;!--
+			Postgres--&gt;</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"> 
+			</FONT><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#008080">&lt;</FONT><FONT COLOR="#3f7f7f">property
+			</FONT><FONT COLOR="#7f007f">name</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;hibernate.connection.driver_class&quot;</FONT><FONT COLOR="#008080">&gt;</FONT><FONT COLOR="#000000">org.postgresql.Driver</FONT><FONT COLOR="#008080">&lt;/</FONT><FONT COLOR="#3f7f7f">property</FONT><FONT COLOR="#008080">&gt;</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#008080"> 
+			<FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B>&lt;</FONT><FONT COLOR="#3f7f7f">property
+			</FONT><FONT COLOR="#7f007f">name</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;hibernate.dialect&quot;</FONT><FONT COLOR="#008080">&gt;</FONT><FONT COLOR="#000000">org.hibernate.dialect.PostgreSQLDialect</FONT><FONT COLOR="#008080">&lt;/</FONT><FONT COLOR="#3f7f7f">property</FONT><FONT COLOR="#008080">&gt;</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT><FONT COLOR="#000000">  </FONT><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#008080">&lt;</FONT><FONT COLOR="#3f7f7f">property
+			</FONT><FONT COLOR="#7f007f">name</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;hibernate.connection.url&quot;</FONT><FONT COLOR="#008080">&gt;</FONT><FONT COLOR="#000000">jdbc:postgresql://localhost:5432/GESTIO</FONT><FONT COLOR="#008080">&lt;/</FONT><FONT COLOR="#3f7f7f">property</FONT><FONT COLOR="#008080">&gt;</FONT></B></FONT></FONT></P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Donde el servidor
+nuestro es /<I>/localhost</I> (pero vosotros ten&eacute;is que
+indicar el nombre de la m&aacute;quina donde reside el servidor
+Postgres o la direcci&oacute;n), <I>5432</I> es el puerto que
+normalmente est&aacute; asociado el servicio de BD Postgres y <I>GESTIO</I>
+es el nombre de nuestra base de datos (pero vosotros ten&eacute;is
+que indicar la vuestra).</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Adem&aacute;s hay
+que cambiar todo lo relativo a usuarios y contrase&ntilde;as. Tenemos
+que poner comentarios al famoso usuario &ldquo;SA&rdquo; sin
+contrase&ntilde;a, y meter el usuario &ldquo;<I>postgres</I>&rdquo;
+(o el que sea) con su contrase&ntilde;a &ldquo;<I>mi_password_de_postgres</I>&rdquo;
+(OJO: la que tu hayas definido o conozcas!)</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Adem&aacute;s
+debemos meter entre comentarios el acceso a Hypersonic que es lo que
+hab&iacute;a antes e introducir el nuevo Acceso Postgres lo que hemos
+a&ntilde;adido despu&eacute;s.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP BGCOLOR="#ffffcc">
+			<P STYLE="margin-bottom: 0cm"><FONT COLOR="#3f5fbf"><FONT COLOR="#008080">
+			</FONT><FONT COLOR="#008080"> </FONT><FONT FACE="Courier New, monospace"><FONT SIZE=2><B><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3>&lt;!--
+			Acceso Hypersonic</FONT></FONT></B></FONT></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#3f5fbf"> 
+			<FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B>&lt;property
+			name=&quot;hibernate.connection.username&quot;&gt;sa&lt;/property&gt;</B></FONT></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#3f5fbf"> 
+			<FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B>&lt;property
+			name=&quot;hibernate.connection.password&quot;&gt;&lt;/property&gt;</B></FONT></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#3f5fbf"> 
+			<FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B>&lt;property
+			name=&quot;hibernate.show_sql&quot;&gt;false&lt;/property&gt;</B></FONT></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#3f5fbf"> 
+			<FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B>--&gt;</B></FONT></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B>		
+			</B></FONT></FONT></FONT>
+			</P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"> 
+			</FONT><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#3f5fbf">&lt;!--
+			Acceso Postgres --&gt;</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"> 
+			</FONT><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#008080">&lt;</FONT><FONT COLOR="#3f7f7f">property
+			</FONT><FONT COLOR="#7f007f">name</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;hibernate.connection.username&quot;</FONT><FONT COLOR="#008080">&gt;</FONT><FONT COLOR="#000000">postgres</FONT><FONT COLOR="#008080">&lt;/</FONT><FONT COLOR="#3f7f7f">property</FONT><FONT COLOR="#008080">&gt;</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"> 
+			</FONT><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#008080">&lt;</FONT><FONT COLOR="#3f7f7f">property
+			</FONT><FONT COLOR="#7f007f">name</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;hibernate.connection.password&quot;</FONT><FONT COLOR="#008080">&gt;</FONT><FONT COLOR="#000000">mi_password_de_postgres</FONT><FONT COLOR="#008080">&lt;/</FONT><FONT COLOR="#3f7f7f">property</FONT><FONT COLOR="#008080">&gt;</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT><FONT COLOR="#000000">  </FONT><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#008080">&lt;</FONT><FONT COLOR="#3f7f7f">property
+			</FONT><FONT COLOR="#7f007f">name</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;hibernate.show_sql&quot;</FONT><FONT COLOR="#008080">&gt;</FONT><FONT COLOR="#000000">false</FONT><FONT COLOR="#008080">&lt;/</FONT><FONT COLOR="#3f7f7f">property</FONT><FONT COLOR="#008080">&gt;</FONT></B></FONT></FONT></P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Y ya hemos
+conseguido terminar la parte tenebrosa de nuestro proceso!</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT FACE="Arial, sans-serif"><FONT SIZE=4><B>7.-
+Copiar los drivers JDBC (jar) de Postgres.</B></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Hay que crear una
+carpeta <FONT FACE="Courier New, monospace"><FONT SIZE=2 STYLE="font-size: 10pt">lib
+</FONT></FONT>dentro de la carpeta OpenXavaPlantilla.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>En nuestro caso, los
+jdbc se llaman <FONT FACE="Courier New, monospace"><FONT SIZE=2><I>postgresql-8.2-504.jdbc3.jar</I></FONT></FONT><FONT FACE="Courier New, monospace"><FONT SIZE=2>.</FONT></FONT>
+Y los copiamos a las carpetas:</FONT></FONT></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+	<FONT FACE="Courier New, monospace"><FONT SIZE=2 STYLE="font-size: 10pt">portal/common/lib</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+	<FONT FACE="Courier New, monospace"><FONT SIZE=2 STYLE="font-size: 10pt">OpenXavaPlantilla/lib</FONT></FONT></P>
+</UL>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Por
+tanto un resumen de lo que se tiene hasta ahora:</FONT></FONT></FONT></P>
+<UL>
+	<LI VALUE=1><P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+	<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Ten&eacute;is
+	<I>Postgres</I> trabajando correctamente.</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+	<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Sab&eacute;is
+	construir vuestro &ldquo;<I>primer proyecto OpenXava</I>&rdquo;.</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+	<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Hab&eacute;is hecho
+	una copia de seguridad de vuestro trabajo.</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+	<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Hab&eacute;is
+	cambiado &ldquo;HSQL&rdquo; por &ldquo;Postgres&rdquo; en el
+	<I>build.xml</I> del proyecto workspace/Openxava</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+	<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Se ha creado el
+	fichero de configuraci&oacute;n <I>tomcat_postgres.properties</I> y
+	cambiado el separador &ldquo;<I>un gui&oacute;n subrayado</I>&rdquo;
+	por un &ldquo;<I>punto</I>&rdquo;.</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+	<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Hab&eacute;is
+	cambiado las definiciones de HSQLDB por las de Postgres en el
+	fichero<I> hibernate/hibernate-cfg.xml</I>&rdquo; del proyecto
+	<I>OpenXavaPlantilla</I>.</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+	<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Se han copiado los
+	ficheros &ldquo;<I>.jar</I>&rdquo; del JDBC de Postgres en sus
+	respectivas carpetas.</FONT></FONT></P>
+</UL>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Arial, sans-serif"><FONT SIZE=4><B>8.-
+Generamos nuestro &ldquo;primer proyecto&rdquo; seg&uacute;n la gu&iacute;a
+de referencia.</B></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Hay
+que conseguir la gu&iacute;a de referencia de la web de OpenXava,
+donde se explica muy claramente y con todo tipo de detalles como
+crear nuestro primer proyecto.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Seguimos
+como buenos alumnos el cap&iacute;tulo 2 de la gu&iacute;a de
+referencia. Hacemos <B>la parte 2.1</B> y creamos el proyecto
+(editando el archivo <I>CrearNuevoProyecto.xml </I><SPAN STYLE="font-style: normal">y
+posteriormente ejecut&aacute;ndolo como </SPAN><I>Ant Build</I><SPAN STYLE="font-style: normal">).
+</SPAN></FONT></FONT>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><SPAN STYLE="font-style: normal"><B>En
+el punto 2.2 de la gu&iacute;a</B></SPAN><SPAN STYLE="font-style: normal">,
+vamos a configurar el acceso a la base de datos. Para ello,
+modificamos el fichero </SPAN><FONT FACE="Courier New, monospace"><FONT SIZE=2 STYLE="font-size: 10pt"><SPAN STYLE="font-style: normal"><B>context.xml</B></SPAN></FONT></FONT><SPAN STYLE="font-style: normal">
+del directorio del Tomcat. Y le introducimos la siguiente
+informaci&oacute;n:</SPAN></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP BGCOLOR="#ffffcc">
+			<P STYLE="margin-bottom: 0cm"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#008080">&lt;</FONT><FONT COLOR="#3f7f7f">Resource
+			</FONT><FONT COLOR="#7f007f">name</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;jdbc/MiGestionDS&quot;
+			</FONT><FONT COLOR="#7f007f">auth</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;Container&quot;
+			</FONT><FONT COLOR="#7f007f">type</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;javax.sql.DataSource&quot;</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#2a00ff">   
+			   </FONT><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#7f007f">maxActive</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;20&quot;
+			</FONT><FONT COLOR="#7f007f">maxIdle</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;5&quot;
+			</FONT><FONT COLOR="#7f007f">maxWait</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;10000&quot;</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#2a00ff">   
+			   </FONT><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#7f007f">username</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;postgres&quot;
+			</FONT><FONT COLOR="#7f007f">password</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;mi_password_de_postgres&quot;</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#2a00ff">   
+			   </FONT><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#7f007f">driverClassName</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;org.postgresql.Driver&quot;</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT><FONT COLOR="#2a00ff">      
+			</FONT><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><FONT COLOR="#7f007f"><B>url</B></FONT><FONT COLOR="#000000"><B>=</B></FONT><FONT COLOR="#2a00ff"><B>&quot;jdbc:postgresql://localhost:5432/GESTIO&quot;</B></FONT><FONT COLOR="#008080"><B>/&gt;</B></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, monospace"><FONT SIZE=2>
+			  </FONT></FONT></FONT></FONT></FONT>
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Donde:</FONT></FONT></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+	 &ldquo;<FONT FACE="Times New Roman, serif"><FONT SIZE=3>mi_password_de_postgres&rdquo;
+	es la contrase&ntilde;a que tengamos de acceso a Postgres.</FONT></FONT></P>
+	<LI><P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+	<FONT FACE="Courier New, monospace"><FONT SIZE=2><FONT COLOR="#7f007f">url</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;jdbc:postgresql://localhost:5432/GESTIO&quot;
+	</FONT><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>es
+	donde definimos el acceso a la base de datos, siendo &ldquo;//localhost&rdquo;
+	la direcci&oacute;n IP o nombre del servidor donde resida e gestor
+	de base de datos y GESTIO es el nombre de nuestra base de datos que
+	hayamos creado en Postgres.</FONT></FONT></FONT></FONT></FONT></P>
+</UL>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP>
+			<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><B>Observaciones:</B></FONT></FONT></P>
+			<P STYLE="margin-bottom: 0cm"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: medium">Hay
+			que distinguir entre aquellos que trabajen arrancando el Tomcat
+			desde fuera del Eclipse (ejecutando start-portal desde el
+			directorio de instalaci&oacute;n del OpenXava) y los que arranquen
+			el Tomcat desde el Eclipse tal como se explica en 
+			</SPAN></SPAN></FONT></FONT><A HREF="http://www.gestion400.com/web/guest/wtp"></A><A HREF="http://www.gestion400.com/web/guest/wtp"></A><A HREF="http://www.gestion400.com/web/guest/wtp"><B>http:www.gestion400.com/web/guest/wtp</B></A><A HREF="http://www.gestion400.com/web/guest/wtp"></A><A HREF="http://www.gestion400.com/web/guest/wtp"></A></P>
+			<P STYLE="margin-bottom: 0cm"><BR>
+			</P>
+			<P STYLE="margin-bottom: 0cm">Para los primeros el fichero
+			<FONT FACE="Courier New, monospace"><FONT SIZE=2 STYLE="font-size: 10pt">context.xml</FONT></FONT>
+			est&aacute; en &ldquo;<FONT FACE="Courier New, monospace"><FONT SIZE=2 STYLE="font-size: 10pt"><B>portal/conf</B></FONT></FONT><FONT FACE="Courier New, monospace"><FONT SIZE=2 STYLE="font-size: 10pt">&rdquo;.</FONT></FONT></P>
+			<P STYLE="margin-bottom: 0cm"><FONT FACE="Courier New, monospace"><FONT SIZE=2 STYLE="font-size: 10pt"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Para
+			los segundos  en</FONT></FONT> &ldquo;<B>workspace\Servers\Tomcat
+			v5.5 Server @ localhost-config</B>&rdquo;</FONT></FONT></P>
+			<P STYLE="margin-bottom: 0cm"><BR>
+			</P>
+			<P><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Si el nivel os
+			lo permite, se aconseja trabajar dentro de Eclipse, ya que se
+			consigue una mayor velocidad y menor cambio de pantallas. Cuanto
+			m&aacute;s nos centremos en lo que hacemos, y menos cambios de
+			pantallas tengamos, reduciremos las probabilidades de tener
+			cometer errores!</FONT></FONT></P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Ahora realizamos <B>la
+parte 2.3 de la gu&iacute;a</B> y modificamos el componente
+<I>Almacen.xml</I> y lo dejamos as&iacute;:</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP BGCOLOR="#ffffcc">
+			<P STYLE="margin-bottom: 0cm"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#008080">&lt;!</FONT><FONT COLOR="#3f7f7f">DOCTYPE
+			</FONT><FONT COLOR="#000080">componente </FONT><FONT COLOR="#808080">SYSTEM
+			</FONT><FONT COLOR="#3f7f5f">&quot;dtds/componente.dtd&quot;</FONT><FONT COLOR="#008080">&gt;</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><BR>
+			</P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#008080">&lt;</FONT><FONT COLOR="#3f7f7f">componente
+			</FONT><FONT COLOR="#7f007f">nombre</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;Almacen&quot;</FONT><FONT COLOR="#008080">&gt;</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><BR>
+			</P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#000000">	</FONT><FONT COLOR="#008080">&lt;</FONT><FONT COLOR="#3f7f7f">entidad</FONT><FONT COLOR="#008080">&gt;</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#000000">		</FONT><FONT COLOR="#008080">&lt;</FONT><FONT COLOR="#3f7f7f">propiedad
+			</FONT><FONT COLOR="#7f007f">nombre</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;codigo&quot;
+			</FONT><FONT COLOR="#7f007f">tipo</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;String&quot;
+			</FONT><FONT COLOR="#7f007f">clave</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;true&quot;</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#2a00ff">			</FONT><FONT COLOR="#7f007f">longitud</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;5&quot;
+			</FONT><FONT COLOR="#7f007f">requerido</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;true&quot;</FONT><FONT COLOR="#008080">/&gt;</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#000000">		</FONT><FONT COLOR="#008080">&lt;</FONT><FONT COLOR="#3f7f7f">propiedad
+			</FONT><FONT COLOR="#7f007f">nombre</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;nombre&quot;
+			</FONT><FONT COLOR="#7f007f">tipo</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;String&quot;
+			</FONT></B></FONT></FONT>
+			</P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#2a00ff">			</FONT><FONT COLOR="#7f007f">longitud</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;40&quot;
+			</FONT><FONT COLOR="#7f007f">requerido</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;true&quot;</FONT><FONT COLOR="#008080">/&gt;</FONT><FONT COLOR="#000000">			
+			 </FONT></B></FONT></FONT>
+			</P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#000000">	</FONT><FONT COLOR="#008080">&lt;/</FONT><FONT COLOR="#3f7f7f">entidad</FONT><FONT COLOR="#008080">&gt;</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B>						</B></FONT></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#000000">	</FONT><FONT COLOR="#008080">&lt;</FONT><FONT COLOR="#3f7f7f">mapeo-entidad
+			</FONT><FONT COLOR="#7f007f">tabla</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;ESQ_01@separator@ALMACENES&quot;</FONT><FONT COLOR="#008080">&gt;</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#000000">		</FONT><FONT COLOR="#008080">&lt;</FONT><FONT COLOR="#3f7f7f">mapeo-propiedad
+			</FONT><FONT COLOR="#7f007f">propiedad-modelo</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;codigo&quot;
+			</FONT><FONT COLOR="#7f007f">columna-tabla</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;CODIGO&quot;</FONT><FONT COLOR="#008080">/&gt;</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#000000">		</FONT><FONT COLOR="#008080">&lt;</FONT><FONT COLOR="#3f7f7f">mapeo-propiedad
+			</FONT><FONT COLOR="#7f007f">propiedad-modelo</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;nombre&quot;
+			</FONT><FONT COLOR="#7f007f">columna-tabla</FONT><FONT COLOR="#000000">=</FONT><FONT COLOR="#2a00ff">&quot;NOMBRE&quot;</FONT><FONT COLOR="#008080">/&gt;</FONT></B></FONT></FONT></P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#000000">	</FONT><FONT COLOR="#008080">&lt;/</FONT><FONT COLOR="#3f7f7f">mapeo-entidad</FONT><FONT COLOR="#008080">&gt;</FONT><FONT COLOR="#000000">
+			</FONT></B></FONT></FONT>
+			</P>
+			<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B>				</B></FONT></FONT></FONT></P>
+			<P ALIGN=LEFT><FONT COLOR="#3f7f7f"><FONT FACE="Arial Narrow, sans-serif"><FONT SIZE=3><B><FONT COLOR="#008080">&lt;/</FONT>componente<FONT COLOR="#008080">&gt;</FONT></B></FONT></FONT></FONT></P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Donde &ldquo;<I>ESQ_01</I>&rdquo;
+es el esquema que hemos creado en la base de datos Postgres, y
+&ldquo;<I>ALMACENES</I>&rdquo; la tabla a crear. <B>OJO: Cuando
+hibernate haga el mapeo a Postgres los pasar&aacute; a MINUSCULAS!</B></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Le damos a las
+tareas ant &ldquo;<I>generarCodigo</I>&rdquo; (Nos situamos en
+eclipse sobre el fichero <I>build.xml</I> de nuestro proyecto, con el
+bot&oacute;n derecho del rat&oacute;n seleccionamos &ldquo;<B>Run As</B>&rdquo;
+- &ldquo;<B>3 Ant build ..</B>&rdquo; y deseleccionamos &ldquo;<B>todo</B>&rdquo;
+y seleccionamos &ldquo;generarCodigo&rdquo;. </FONT></FONT>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<IMG SRC="/OpenXavaDoc/images/postgres_html_mb63c50c.gif" NAME="gr&aacute;ficos5" ALIGN=LEFT WIDTH=444 HEIGHT=362 BORDER=0><BR CLEAR=LEFT><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Mas tarde nos
+colocamos sobre la carpeta del proyecto creado en Eclipse y le damos
+a la <B>tecla F5</B> para que refresque los ficheros generados. </FONT></FONT>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>No estar&iacute;a
+mal darle al icono 
+<IMG SRC="/OpenXavaDoc/images/postgres_html_4464c178.gif" NAME="gr&aacute;ficos6" ALIGN=BOTTOM WIDTH=14 HEIGHT=22 BORDER=0>&nbsp;para
+que compile nuestro proyecto cuando generamos o regeneramos c&oacute;digo.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>No estar&iacute;a
+mal comprobar que los cambios que hemos hecho en los ficheros de
+OpenXavaPlantilla, se han incorporado en nuestro proyecto, es decir:</FONT></FONT></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+	<FONT FACE="Times New Roman, serif"><FONT SIZE=3>build.xml</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+	<FONT FACE="Times New Roman, serif"><FONT SIZE=3>hibernate/hibernate-cfg.xlm</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><I>tomcat_postgres.properties</I></FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+	<FONT FACE="Times New Roman, serif"><FONT SIZE=3>carpeta <I>lib</I>
+	con el <I>jar</I> de Postgres.(librerias JDBC)</FONT></FONT></P>
+</UL>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Ya que estos cambios
+en nuestro proyecto son los que hacen funcionar sobre Postgres. Tal
+como ya se ha dicho, si se hubieran realizado estos cambios
+directamente sobre nuestro proyecto, no hubiera hecho falta tocar la
+carpeta OpenXavaPlantilla, pero nos interesa que Postgres sea nuestra
+BD.</FONT></FONT></P>
+<UL>
+	<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+	</P>
+</UL>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<P STYLE="font-style: normal; font-weight: medium"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Ahora
+tal como dice la gu&iacute;a de referencia en <B>el punto 2.5</B>:</FONT></FONT></P>
+<UL>
+	<LI><P><FONT FACE="Times New Roman, serif"><FONT SIZE=3><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: medium">editamos
+	el fichero &ldquo;Gestion/build.xml&rdquo; y buscamos la tara ant
+	</SPAN></SPAN><I><SPAN STYLE="font-weight: medium">actualizarEsquema.</SPAN></I></FONT></FONT></P>
+	<LI><P><FONT COLOR="#008000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><FONT COLOR="#000000"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: medium">Ponemos
+	el valor correcto para </SPAN></SPAN></FONT><FONT COLOR="#000000"><I><SPAN STYLE="font-weight: medium">schema.path</SPAN></I></FONT><I><SPAN STYLE="font-weight: medium">
+	&ldquo;</SPAN></I><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;./lib/postgresql-8.2-504.jdbc3.jar&quot;</FONT></FONT></FONT></FONT></FONT></P>
+	<LI><P><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Ejecutamos
+	la tarea ant <I>actualizarEsquema</I><SPAN STYLE="font-style: normal">
+	tal como hemos hecho en el apartado anterior</SPAN></FONT></FONT></FONT></P>
+	<LI><P STYLE="font-style: normal"><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Observamos
+	que est&aacute; creando nuestra tabla ALMACENES</FONT></FONT></FONT></P>
+	<LI><P STYLE="font-style: normal"><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Arrancamos
+	el Tomcat ( y para los que trabajen con el Tomcat desde Eclipse (en
+	la pesta&ntilde;a de servidores),  acordaros de a&ntilde;adir
+	vuestro proyecto al Tomcat ) y ya est&aacute; todo listo.</FONT></FONT></FONT></P>
+	<LI><P STYLE="font-style: normal"><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Abrimos
+	el navegador de internet y ejecutamos nuestra aplicaci&oacute;n tal
+	como dice la gu&iacute;a de referencia en el <B>punto 2.6</B>.</FONT></FONT></FONT></P>
+</UL>
+<P STYLE="font-style: normal"><BR><BR>
+</P>
+<P STYLE="font-style: normal"><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Parece
+ser que ya funciona todo a la perfecci&oacute;n!<SPAN STYLE="font-weight: medium">
+</SPAN></FONT></FONT></FONT>
+</P>
+<P STYLE="font-style: normal"><BR><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Arial, sans-serif"><FONT SIZE=4><B>9.-
+Conclusi&oacute;n</B></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Con esta peque&ntilde;a
+gu&iacute;a hemos configurado este entorno vivo de desarrollo de
+aplicaciones llamado OpenXava.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Espero que hay&aacute;is
+tenido &eacute;xito en la configuraci&oacute;n de OpenXava sobre
+Postgres y que nos veamos en pr&oacute;ximas gu&iacute;as que quiero
+seguir haciendo a medida que aprenda m&aacute;s.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; font-weight: medium">
+<BR>
+</P>
+<DIV TYPE=FOOTER>
+	<P STYLE="margin-top: 0.5cm; margin-bottom: 0cm"><SDFIELD TYPE=DATETIME SDVAL="39182,5466053241" SDNUM="1034;1034;DD/MM/AA">10/04/07</SDFIELD>	<SDFIELD TYPE=DATETIME SDVAL="39182,5468196759" SDNUM="1034;1034;HH:MM:SS">13:07:25</SDFIELD>	<SDFIELD TYPE=PAGE SUBTYPE=RANDOM FORMAT=PAGE>9</SDFIELD>
+	De <SDFIELD TYPE=DOCSTAT SUBTYPE=PAGE FORMAT=PAGE>9</SDFIELD></P>
+</DIV>
