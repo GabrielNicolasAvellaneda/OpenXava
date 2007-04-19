@@ -101,17 +101,17 @@ public class CustomersWithSectionTest extends CustomersTest {
 		assertError("Person name MAKARIO is not allowed for Name in Customer");
 	}
 	
-	public void testCreatedFromReferenceIsChosen() throws Exception {
+	public void testCreatedFromReferenceIsChosenAndThrowsOnChange() throws Exception {
 		execute("CRUD.new");
-		execute("Reference.createNew", "model=Seller,keyProperty=xava.Customer.seller.number");
+		execute("Reference.createNew", "model=Seller,keyProperty=xava.Customer.alternateSeller.number");
 		setValue("Seller", "number", "66");
 		setValue("Seller", "name", "SELLER JUNIT 66");
 		execute("NewCreation.saveNew");
 		assertNoErrors();
-		assertValue("seller.number", "66");
-		assertValue("seller.name", "SELLER JUNIT 66");
+		assertValue("alternateSeller.number", "66");
+		assertValue("alternateSeller.name", "DON SELLER JUNIT 66"); // The 'DON' is added by an on-change action
 		deleteSeller(66);
-	}
+	}	
 	
 	private void deleteSeller(int number) throws Exception {
 		XHibernate.getSession().delete(Seller.findByNumber(number));		

@@ -1647,7 +1647,7 @@ public class View implements java.io.Serializable {
 		return first.equals(pr) && !hasKeyProperties(); 
 	}
 	
-	private boolean hasKeyProperties() throws XavaException {
+	public boolean hasKeyProperties() throws XavaException { 
 		for (Iterator it=getMetaProperties().iterator(); it.hasNext();) {
 			MetaProperty pr = (MetaProperty) it.next();
 			if (pr.isKey()) {

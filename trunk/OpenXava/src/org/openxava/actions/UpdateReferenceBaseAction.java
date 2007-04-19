@@ -30,8 +30,10 @@ public abstract class UpdateReferenceBaseAction extends BaseAction implements IN
 		nextView = DEFAULT_VIEW;				
 		if (!getPreviousViews().empty()) {				
 			View referenceSubview = (View) getView().getObject("xava.referenceSubview");
-			referenceSubview.setValuesNotifying(key); 				
-			referenceSubview.findObject();	
+			referenceSubview.setValuesNotifying(key);
+			if (!referenceSubview.hasKeyProperties()) {
+				referenceSubview.findObject();
+			}
 			View previousView = (View) getPreviousViews().pop();
 			setView(previousView);
 		}
