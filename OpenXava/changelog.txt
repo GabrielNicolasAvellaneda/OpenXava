@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: When create a new object from a reference the on-change action associated to the key of the reference is not thrown.
+
 OpenXava 2.1.2 (2007-4-12)
 --------------------------
 - Fix: Cache in DataSourceConnectionProvider by component did not work
