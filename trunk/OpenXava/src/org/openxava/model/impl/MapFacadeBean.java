@@ -562,14 +562,13 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	private Object createAggregate(String modelName, Map containerKeyValues, int counter, Map values) 
 		throws CreateException,ValidationException, XavaException, RemoteException 
 	{		
-		MetaModel metaModel = getMetaModel(modelName);
-		MetaModel metaModelContainer = metaModel.getMetaModelContainer();
+		MetaModel metaModel = getMetaModel(modelName);		
 		try {					
-			Object containerKey = getPersistenceProvider().getKey(metaModelContainer, containerKeyValues);
+			Object containerKey = getPersistenceProvider().getContainer(metaModel, containerKeyValues);			
 			return createAggregate(metaModel, containerKey, counter, values);
 		}
 		catch (ClassCastException ex) {
-			throw new XavaException("aggregate_must_be_persistent_for_create", metaModelContainer.getName());					
+			throw new XavaException("aggregate_must_be_persistent_for_create", metaModel.getMetaModelContainer().getName());					
 		}
 	}
 	
@@ -643,7 +642,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	
 	private Object createAggregate(MetaModel metaModel, Object container, int counter, Map values) 
 		throws CreateException,ValidationException, XavaException, RemoteException 
-	{				
+	{						
 		MetaModel metaModelContainer = metaModel.getMetaModelContainer();								
 		int attempts = 0;
 		// Loop with 10 attempts, because the counter can be repeated because deleted objects
@@ -1238,7 +1237,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 					MetaReference ref = metaModel.getMetaReference(memberName); 
 					MetaModel referencedModel = ref.getMetaModelReferenced();
 					Map mapValues = (Map) values;					
-					if (hasValue(mapValues)) {
+					if (referenceHasValue(mapValues)) {
 						if (ref.isAggregate()) validate(errors, referencedModel, mapValues, mapValues, null, creating);
 					} else
 						if (metaModel
@@ -1265,14 +1264,14 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 	}
 	
-	private boolean hasValue(Map values) {
+	private boolean referenceHasValue(Map values) {
 		if (values == null) return false;
 		Iterator it = values.values().iterator();
 		while (it.hasNext()) {
 			Object v = it.next();
 			if (v == null) continue;
 			if (v instanceof String && ((String) v).trim().equals("")) continue;
-			if (v instanceof Number && ((Number)  v).intValue()==0) continue;
+			// 0 is not treated as no-value, because 0 can be a valid key for a reference 
 			return true;
 		}		
 		return false;

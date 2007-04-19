@@ -337,7 +337,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	}
 
 	private List createAllPropertiesNames() throws XavaException {
-		return getMetaEntity().getPropertiesNamesWithoutHidden();
+		return getMetaEntity().getPropertiesNamesWithoutHiddenNorTransient();
 	}
 	
 	public void setDefaultPropertiesNames(String properties) {

@@ -31,5 +31,8 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/FCKeditor-2.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/hibernate-validator.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/hibernate-commons-annotations.jar"/>
+	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/hibernate-entitymanager.jar"/>
+	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/jboss-archive-browsing.jar"/>
+	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/javassist.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

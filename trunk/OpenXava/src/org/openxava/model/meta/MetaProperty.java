@@ -48,6 +48,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	private boolean mappingSet;
 	private PropertyMapping mapping;
 	private DateFormat timeFormat = new SimpleDateFormat("HH:mm"); // 24 hours for all locales
+	private boolean _transient;
 	
 	
 		
@@ -842,15 +843,13 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			}	
 			
 			if (IModel.class.isAssignableFrom(type)) { 
-				return parseModelObject(type, value);
+				return parseModelObject(value);
 			}
 			
 			// This is for processing Java 5 enums, but the code compile and works with a Java 1.4
 			Class enumClass = getEnumClass(); 
 			if (enumClass != null && enumClass.isAssignableFrom(type)) {
-				// We parse as an int
-				if (Is.emptyString(value)) return null;
-				return new Integer(value);
+				return parseEnumAsInteger(value);				
 			}
 		}
 		catch (Exception ex) {
@@ -860,19 +859,23 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		throw new ParseException(XavaResources.getString("from_string_on_property_not_supported", type), -1);
 	}
 	
-	private Class getEnumClass() { // Enum
+	private Object parseEnumAsInteger(String value) throws Exception {
+		// We parse as an int
+		if (Is.emptyString(value)) return null;
 		try {
-			return Class.forName("java.lang.Enum");
-		} 
-		catch (ClassNotFoundException e) {
-			// Not Java 5
-			return null;
-		}		
+			return new Integer(value);
+		}
+		catch (NumberFormatException ex) {
+			// We try parse from the string representation of the enum
+			// We use introspection in order that this code compile and run in a Java 1.4
+			Object enumValue = Objects.execute(getEnumClass(), "valueOf", Class.class, getType(), String.class, value);
+			return Objects.execute(enumValue, "ordinal");
+		}
 	}
-	
-	private Object parseModelObject(Class modelClass, String string) throws Exception {
+		
+	private Object parseModelObject(String string) throws Exception {		
 		if (Is.emptyString(string)) return null;
-		IModel model = (IModel) modelClass.newInstance();
+		IModel model = (IModel) getType().newInstance();
 		StringTokenizer stringValues = new StringTokenizer(string, "[.]");
 		parseModelObject(model, stringValues, "");
 		return model;
@@ -982,5 +985,23 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		MetaProperty other = (MetaProperty) o;
 		return getQualifiedName().equals(other.getQualifiedName());
 	}
+	
+	public boolean isTransient() {
+		return _transient;
+	}
+	public void setTransient(boolean _transient) {
+		this._transient = _transient;
+	}
+	
+	private Class getEnumClass() { // Enum
+		try {
+			return Class.forName("java.lang.Enum");
+		} 
+		catch (ClassNotFoundException e) {
+			// Not Java 5
+			return null;
+		}		
+	}
+
 	
 }

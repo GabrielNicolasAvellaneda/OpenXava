@@ -126,6 +126,16 @@ public interface IPersistenceProvider {
 	 * need to reassociato to its persistent storage.<br>
 	 * This method may be empty, because in some technologies has no sense.<br>
 	 */
-	void reassociate(Object entity); 
+	void reassociate(Object entity);
+
+	/**
+	 * Return the object that represents the container object. <p>
+	 * 
+	 * The container object apply only to aggregates, and it's the
+	 * object that containt to the aggregate.
+	 * 
+	 * It can be a POJO or key class, depends on the implementation.<br> 
+	 */
+	Object getContainer(MetaModel metaModel, Map containerKeyValues) throws XavaException; 
 	
 }
