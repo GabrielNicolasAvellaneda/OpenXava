@@ -277,5 +277,9 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 			throw new PersistenceProviderException(ex.getLocalizedMessage());
 		}		
 	}
+
+	public Object getContainer(MetaModel metaModel, Map containerKeyValues) throws XavaException {
+		return getKey(metaModel.getMetaModelContainer(), containerKeyValues);
+	}
 	
 }

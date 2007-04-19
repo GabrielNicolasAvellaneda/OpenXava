@@ -5,6 +5,7 @@ import java.util.*;
 
 import org.hibernate.*;
 import org.openxava.hibernate.*;
+import org.openxava.model.meta.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
@@ -30,7 +31,7 @@ public class DeliveriesTest extends ModuleTestBase {
 	};
 		
 	public DeliveriesTest(String testName) {
-		super(testName, "OpenXavaTest", "Deliveries");		
+		super(testName, "Deliveries");		
 	}
 	
 	public void testMinimunInCollection_checkboxNotInCollectionWhenNotEditable_overrideCollectionActions() throws Exception {
@@ -207,16 +208,19 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertNoErrors();
 	}
 	
-	public void testReferenceAsDescriptionsListWithValidValuesInKey() throws Exception {
+	public void testReferenceAsDescriptionsListWithValidValuesInKey_validateViewPropertiesOnModify() throws Exception {
 		execute("Mode.detailAndFirst");
 		assertValue("shipment.KEY", "");
-		IShipment shipment = (IShipment) Shipment.findAll().iterator().next();		
-		setValue("shipment.KEY", shipment.toString());
+		IShipment shipment = (IShipment) Shipment.findAll().iterator().next();
+		setValue("shipment.KEY", toKeyString(shipment));
+		execute("CRUD.save");
+		assertError("Value for Advice in Delivery is required");
+		setValue("advice", "Modifying");
 		execute("CRUD.save");
 		assertNoErrors();
 		execute("Mode.list");
 		execute("Mode.detailAndFirst");
-		assertValue("shipment.KEY", shipment.toString()); 
+		assertValue("shipment.KEY", toKeyString(shipment)); 
 		assertDescriptionValue("shipment.KEY", shipment.getDescription());
 		// Restoring		
 		setValue("shipment.KEY", "");
@@ -927,5 +931,24 @@ public class DeliveriesTest extends ModuleTestBase {
 		String [] types = getKeysValidValues("type.number");		
 		assertTrue(type + " expected", Arrays.asList(types).contains(type));
 	}
+	
+	private String toKeyString(IShipment shipment) throws Exception {
+		if (isOX3()) {
+			StringTokenizer st = new StringTokenizer(shipment.toString(), "[.]");
+			StringBuffer sb = new StringBuffer("[.");
+			String mode = (String) shipment.getMetaModel().getMetaProperty("mode").getValidValue(Integer.parseInt(st.nextToken())); 
+			sb.append(mode.toUpperCase());
+			sb.append('.');
+			sb.append(st.nextToken());
+			sb.append('.');
+			String type = (String) shipment.getMetaModel().getMetaProperty("type").getValidValue(Integer.parseInt(st.nextToken()));
+			sb.append(type.toUpperCase());
+			sb.append(".]");				
+			return sb.toString();
+		}
+		else {
+			return shipment.toString();
+		}
+	}	
 
 }

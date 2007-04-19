@@ -88,22 +88,10 @@ public class Objects {
    * @exception NoSuchMethodException  If the method does not exist in target object.
    */
   public static Object execute(Object o, String methodName) throws Exception {
-	try {
-		Assert.arg(o);		
-		Method m = o.getClass().getMethod(methodName, arg0);
-		Object[] args = { };
-		return m.invoke(o, args);
-	} catch (InvocationTargetException ex) {
-		Throwable th = ex.getTargetException();
-		if (th instanceof Exception) {
-	        throw (Exception) th;
-		}
-		else {
-	        throw (Error) th;
-		}
-	} catch (NoSuchMethodException ex) {
-		throw ex;
-	}
+	  Assert.arg(o, methodName);  
+	  Class [] clArg = {  };
+	  Object[] args = {  };
+	  return execute(o.getClass(), o, methodName, clArg, args);
   }
 
   /**
@@ -118,23 +106,102 @@ public class Objects {
    * @exception NoSuchMethodException  If the method does not exist in target object.
    */  
   public static Object execute(Object o, String methodName, Class argumentClass, Object arg) throws Exception {
-	try {
-		Assert.arg(o, methodName, argumentClass);
-		Class [] clArg = { argumentClass }; 
-		Method m = o.getClass().getMethod(methodName, clArg);
-		Object[] args = { arg };
-		return m.invoke(o, args);
-	} catch (InvocationTargetException ex) {
-		Throwable th = ex.getTargetException();
-		if (th instanceof Exception) {
-	        throw (Exception) th;
+	  Assert.arg(o, methodName, argumentClass);  
+	  Class [] clArg = { argumentClass };
+	  Object[] args = { arg };
+	  return execute(o.getClass(), o, methodName, clArg, args);
+  }
+  
+  /**
+   * Allows to execute dinamically (as in SmallTalk) an method of an object. <p> 
+   * 
+   * @param o  Object where the method will be executed. It cannot be null.
+   * @param methodName  Name of the method to execute.
+   * @param argumentClass1 Not null.
+   * @param arg1 Argument value. It can be null.
+   * @param argumentClass2 Not null.
+   * @param arg2 Argument value. It can be null.
+   * @return  Result of method execution.
+   * @exception Exception  Any problem, including exceptions from target method.
+   * @exception NoSuchMethodException  If the method does not exist in target object.
+   */  
+  public static Object execute(Object o, String methodName, Class argumentClass1, Object arg1, Class argumentClass2, Object arg2) throws Exception {
+	  Assert.arg(o, methodName, argumentClass1, argumentClass2 );  
+	  Class [] clArg = { argumentClass1, argumentClass2 };
+	  Object[] args = { arg1, arg2 };
+	  return execute(o.getClass(), o, methodName, clArg, args);
+  }
+  
+  
+  /** 
+   * Allows to execute dinamically (as in SmallTalk) an static method of an class. <p> 
+   * 
+   * @param theClass  The class where the method will be executed. It cannot be null.
+   * @param methodName  Name of the method to execute.
+   * @param argumentClass1 Not null.
+   * @param arg1 Argument value. It can be null.
+   * @param argumentClass2 Not null.
+   * @param arg2 Argument value. It can be null.   * 
+   * @return  Result of method execution.
+   * @exception Exception  Any problem, including exceptions from target method.
+   * @exception NoSuchMethodException  If the method does not exist in target class.
+   */  
+  public static Object execute(Class theClass, String methodName, Class argumentClass1, Object arg1, Class argumentClass2, Object arg2) throws Exception {
+	  Assert.arg(theClass, methodName, argumentClass1, arg1, argumentClass2, arg2);
+	  Class [] clArg = { argumentClass1, argumentClass2 };
+	  Object[] args = { arg1, arg2 };
+	  return execute(theClass, null, methodName, clArg, args);
+  }
+  
+  /** 
+   * Allows to execute dinamically (as in SmallTalk) an static method of an class. <p> 
+   * 
+   * @param theClass  The class where the method will be executed. It cannot be null.
+   * @param methodName  Name of the method to execute.
+   * @param argumentClass Not null.
+   * @param arg Argument value. It can be null.
+   * @return  Result of method execution.
+   * @exception Exception  Any problem, including exceptions from target method.
+   * @exception NoSuchMethodException  If the method does not exist in target class.
+   */  
+  public static Object execute(Class theClass, String methodName, Class argumentClass, Object arg) throws Exception {
+	  Assert.arg(theClass, methodName, argumentClass, arg);
+	  Class [] clArg = { argumentClass };
+	  Object[] args = { arg };
+	  return execute(theClass, null, methodName, clArg, args);
+  }
+  
+  /** 
+   * Allows to execute dinamically (as in SmallTalk) an static method of an class. <p> 
+   * 
+   * @param theClass  The class where the method will be executed. It cannot be null.
+   * @param methodName  Name of the method to execute.
+   * @return  Result of method execution.
+   * @exception Exception  Any problem, including exceptions from target method.
+   * @exception NoSuchMethodException  If the method does not exist in target class.
+   */  
+  public static Object execute(Class theClass, String methodName) throws Exception {
+	  Assert.arg(theClass, methodName);
+	  Class [] clArg = {  };
+	  Object[] args = {  };
+	  return execute(theClass, null, methodName, clArg, args);
+  }  
+    
+  private static Object execute(Class theClass, Object o, String methodName, Class [] clArg, Object[] args) throws Exception {
+		try {			 
+			Method m = theClass.getMethod(methodName, clArg);
+			return m.invoke(o, args);
+		} catch (InvocationTargetException ex) {
+			Throwable th = ex.getTargetException();
+			if (th instanceof Exception) {
+		        throw (Exception) th;
+			}
+			else {
+		        throw (Error) th;
+			}
+		} catch (NoSuchMethodException ex) {
+			throw ex;
 		}
-		else {
-	        throw (Error) th;
-		}
-	} catch (NoSuchMethodException ex) {
-		throw ex;
-	}
   }
 
   /**

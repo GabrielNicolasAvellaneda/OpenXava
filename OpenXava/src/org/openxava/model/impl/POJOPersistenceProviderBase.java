@@ -128,7 +128,7 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 	}
 
 	public Object create(MetaModel metaModel, Map values)
-			throws CreateException, ValidationException, XavaException {
+			throws CreateException, ValidationException, XavaException {		
 		try {			
 			find(metaModel, values);			
 			throw new DuplicateKeyException(XavaResources.getString("no_create_exists", metaModel.getName())); 
@@ -143,7 +143,7 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		try {
 			object = metaModel.getPOJOClass().newInstance();
 			PropertiesManager mp = new PropertiesManager(object);
-			removeCalculatedOnCreateValues(metaModel, values); 
+			removeCalculatedOnCreateValues(metaModel, values);						
 			mp.executeSets(values);					
 			persist(object);			
 			return object;
@@ -165,19 +165,26 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 	}
 
 	public Object getKey(MetaModel metaModel, Map keyValues) throws XavaException {
+		return getObject(metaModel.getPOJOKeyClass(), keyValues, "key_for_pojo_error");
+	}
+	
+	public Object getContainer(MetaModel metaModel, Map containerKeyValues) throws XavaException {
+		return getObject(metaModel.getMetaModelContainer().getPOJOClass(), containerKeyValues, "container_for_pojo_error"); 
+	}
+	
+	private Object getObject(Class modelClass, Map values, String errorId) throws XavaException {
 		try {
-			Class modelClass = metaModel.getPOJOKeyClass();
 			Object key = modelClass.newInstance();
 			PropertiesManager pm = new PropertiesManager(key);
-			pm.executeSets(Maps.plainToTree(keyValues));
+			pm.executeSets(Maps.plainToTree(values));
 			return key;
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
-			throw new XavaException("key_for_pojo_error");
+			throw new XavaException(errorId);
 		}
 	}
-	
+		
 	public Map keyToMap(MetaModel metaModel, Object key) throws XavaException {
 		return metaModel.toKeyMap(key);
 	}
@@ -304,6 +311,8 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 	private boolean hasToIncludePropertyInCondition(MetaModel metaModel, String property) throws XavaException {
 		try {
 			if (property.indexOf('.') >= 0) return true; // We include all properties reference. They should be only key properties
+			MetaProperty metaProperty = metaModel.getMetaProperty(property);
+			if (metaProperty.isTransient()) return false;
 			return !metaModel.getMapping().getPropertyMapping(property).hasMultipleConverter();
 		}
 		catch (ElementNotFoundException ex) {			

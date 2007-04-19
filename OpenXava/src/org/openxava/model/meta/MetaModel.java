@@ -36,7 +36,7 @@ abstract public class MetaModel extends MetaElement {
 	private List metaCalculatorsPostLoad;
 	private List metaCalculatorsPostModify;
 	private List metaCalculatorsPreRemove;
-	private List propertiesNamesWithoutHidden;
+	private List propertiesNamesWithoutHiddenNorHidden;
 	private String containerModelName;
 	private MetaModel metaModelContainer;
 	private Map mapMetaPropertiesView;
@@ -668,25 +668,27 @@ abstract public class MetaModel extends MetaElement {
 	
 	
 	/**
-	 * Ordered as in component definition.
+	 * Ordered as in component definition. <p>
+	 * 
+	 * Calculated properties are included. <br>
 	 * 
 	 * @return Collection of <tt>String</tt>, not null and read only
 	 */
-	public List getPropertiesNamesWithoutHidden() throws XavaException {
+	public List getPropertiesNamesWithoutHiddenNorTransient() throws XavaException {
 		// We get it from memberNames to keep order
-		if (propertiesNamesWithoutHidden == null) {
+		if (propertiesNamesWithoutHiddenNorHidden == null) {
 			List result = new ArrayList();
 			Iterator it = getMembersNames().iterator();
 			while (it.hasNext()) {
 				Object name = it.next();				
 				MetaProperty p = (MetaProperty) getMapMetaProperties().get(name);
-				if (p != null && !p.isHidden()) {
+				if (p != null && !p.isHidden() && !p.isTransient()) {
 					result.add(name);  
 				}									
 			}		
-			propertiesNamesWithoutHidden = Collections.unmodifiableList(result);
+			propertiesNamesWithoutHiddenNorHidden = Collections.unmodifiableList(result);
 		}
-		return propertiesNamesWithoutHidden;
+		return propertiesNamesWithoutHiddenNorHidden;
 	}
 	
 	
@@ -1286,13 +1288,20 @@ abstract public class MetaModel extends MetaElement {
 						pm.executeSet((String)en.getKey(), en.getValue());
 					}
 					catch (IllegalArgumentException ex) {
-						if (property.hasValidValues() && value instanceof String) {								
-							value = new Integer(property.getValidValueIndex(value));
-							pm.executeSet((String)en.getKey(), value);
+						if (property.hasValidValues()) {
+							if (value instanceof String) {
+								value = new Integer(property.getValidValueIndex(value));
+								pm.executeSet((String)en.getKey(), value);
+							}
+							else if (value instanceof Number) {
+								value = property.getValidValue(((Number) value).intValue());
+								pm.executeSet((String)en.getKey(), value);								
+							}
+							else throw ex;
 						}
 						else {
 							throw ex;
-						}							
+						}
 					}
 				}
 			}
@@ -1370,7 +1379,7 @@ abstract public class MetaModel extends MetaElement {
 	 * @return null if the sent map is null
 	 */
 	public String toString(Map key) throws XavaException { 
-		if (key == null) return null;
+		if (key == null) return null;		
 		return toString(toPOJO(key));
 	}
 
@@ -1556,6 +1565,16 @@ abstract public class MetaModel extends MetaElement {
 		}
 		return pojoClass;
 			
+	}
+	
+	private Class getEnumClass() { // Enum
+		try {
+			return Class.forName("java.lang.Enum");
+		} 
+		catch (ClassNotFoundException e) {
+			// Not Java 5
+			return null;
+		}		
 	}
 		
 	public Class getPOJOKeyClass() throws XavaException {  

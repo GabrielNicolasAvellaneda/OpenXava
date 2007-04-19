@@ -73,6 +73,30 @@ public class Assert {
 	}
   }
   
+  /**
+   * Verify arguments. <br>
+   *
+   * @exception IllegalArgumentException If <tt>o1 == null || o2 == null || o3 == null || o4 == null || o5 == null</tt>.
+   */
+  public final static void arg(Object o1, Object o2, Object o3, Object o4, Object o5) {
+	if (o1 == null || o2 == null || o3 == null || o4 == null || o5 == null) {
+	  throwException(new IllegalArgumentException(XavaResources.getString("assert_no_null_argv")));
+	}
+  }
+  
+  /**
+   * Verify arguments. <br>
+   *
+   * @exception IllegalArgumentException If <tt>o1 == null || o2 == null || o3 == null || o4 == null || o5 == null || o6 == null</tt>.
+   */
+  public final static void arg(Object o1, Object o2, Object o3, Object o4, Object o5, Object o6) {
+	if (o1 == null || o2 == null || o3 == null || o4 == null || o5 == null || o6 == null) {
+	  throwException(new IllegalArgumentException(XavaResources.getString("assert_no_null_argv")));
+	}
+  }
+  
+  
+  
 	/**
 	 * Asserts that a condition is true. <p>
 	 *
