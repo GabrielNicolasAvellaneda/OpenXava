@@ -10,12 +10,5 @@
 		<propiedad nombre="nombre" tipo="String" 
 			longitud="40" requerido="true"/>			  
 	</entidad>
-						
-	<mapeo-entidad tabla="MYSCHOOL@separator@TEACHER">
-		<mapeo-propiedad 
-			propiedad-modelo="codigo" columna-tabla="ID"/>
-		<mapeo-propiedad 
-			propiedad-modelo="nombre" columna-tabla="NAME"/>
-	</mapeo-entidad> 
-				
+										
 </componente>

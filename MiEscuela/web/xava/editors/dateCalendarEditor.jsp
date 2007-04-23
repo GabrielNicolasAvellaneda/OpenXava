@@ -25,7 +25,7 @@ if (editable || !label) {
 	size="<%=p.getSize()%>"  
 	value="<%=fvalue%>" <%=disabled%>	<%=script%>><%if (editable) {%><input type="reset" value=" ... "
 	name="<%=propertyKey%>_CALENDAR_BUTTON_"
-	onclick="return showCalendar('<%=propertyKey%>', '%d/%m/%Y');"><br /><%} %>
+	onclick="return showCalendar('<%=propertyKey%>', '%d/%m/%Y');"><%} %>
 
 	
 <%

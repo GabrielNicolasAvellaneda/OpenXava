@@ -2,7 +2,6 @@
 <%@ page import="java.util.Collection" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="javax.swing.KeyStroke" %>
-<%@ page import="org.apache.commons.collections.IteratorUtils" %>
 <%@ page import="org.openxava.controller.meta.MetaAction" %>
 <%@ page import="org.openxava.util.Is" %>
 <%@ page import="org.openxava.util.Users" %>
@@ -22,6 +21,7 @@
 Users.setCurrent(request);
 Locales.setCurrent(request);
 org.openxava.hibernate.XHibernate.setCmt(false); 
+org.openxava.jpa.XPersistence.reset();
 boolean isPortlet = (request.getAttribute("xava.portlet.renderURL") != null);
 boolean messagesOnTop = !"false".equalsIgnoreCase(request.getParameter("messagesOnTop"));
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
@@ -158,12 +158,7 @@ function setFocus() {
 function processKey(event) {
 	if (!event) event = window.event;
 <%
-java.util.Iterator it = IteratorUtils.chainedIterator(
-		new Iterator[] {
-			manager.getMetaActions().iterator(), 
-			manager.getMetaActionsMode().iterator()
-		}
-);
+java.util.Iterator it = manager.getAllMetaActionsIterator();
 while (it.hasNext()) {
 	MetaAction action = (MetaAction) it.next();
 	if (!action.hasKeystroke()) continue;	
@@ -299,4 +294,4 @@ document.onkeydown = processKey;
 manager.commit(); // If hibernate, ejb3, etc is used to render some value here is commit
 %>
 
-<script>setFocus()</script>
+<script>setTimeout ('setFocus()', 10);</script>

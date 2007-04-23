@@ -1,6 +1,6 @@
 <?xml version = "1.0" encoding = "ISO-8859-1"?>
 
-<!ELEMENT componente (entidad, agregado*, vista*, tab*, mapeo-entidad, mapeo-agregado*)>
+<!ELEMENT componente (entidad, agregado*, vista*, tab*, ((mapeo-entidad, mapeo-agregado*)|transitorio)?)>
 <!ATTLIST componente
  nombre ID #REQUIRED
 >
