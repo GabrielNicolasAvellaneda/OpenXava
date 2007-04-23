@@ -132,6 +132,7 @@ while (it.hasNext()) {
 <jsp:include page="comparatorsValidValuesCombo.jsp">
 	<jsp:param name="validValues" value="<%=property.getValidValuesLabels(request)%>" />
 	<jsp:param name="value" value="<%=value%>" />
+	<jsp:param name="base0" value="<%=!property.isNumber()%>" />
 </jsp:include>		
 	<%	
 		}
