@@ -11,9 +11,4 @@
 			size="40" required="true"/>			  
 	</entity>
 						
-	<entity-mapping table="MYSCHOOL@separator@TEACHER">
-		<property-mapping property="id" column="ID"/>
-		<property-mapping property="name" column="NAME"/>
-	</entity-mapping> 
-				
 </component>
