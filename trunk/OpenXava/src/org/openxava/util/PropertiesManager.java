@@ -199,7 +199,7 @@ public class PropertiesManager implements java.io.Serializable {
 		try {
 			int ivalue = value.intValue();
 			// We use instrospection in order to allow this code compile in Java 1.4 and working in Java 5
-			Object [] enumConstants = (Object []) Objects.execute(propertyType, "getEnumConstants");
+			Object [] enumConstants = (Object []) Objects.execute(propertyType, "values");
 			if (enumConstants == null) return value;
 			for (int i=0; i<enumConstants.length; i++) {
 				int ordinal = ((Integer) Objects.execute(enumConstants[i], "ordinal")).intValue();

@@ -275,8 +275,12 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 	private Object convert(MetaModel metaModel, String name, Object value) throws XavaException {		
 		MetaProperty property = metaModel.getMetaProperty(name);
 		PropertyMapping mapping = property.getMapping();
-		if (property.hasValidValues() && !property.isNumber()) { // Java 5 enum
-			return value==null?null:property.getValidValue(((Number) value).intValue());			 
+		if (property.hasValidValues() && !property.isNumber()) { // Java 5 enum			
+			if (value instanceof Number) {
+				// We have the ordinal, then we transform it in an Enum object
+				value = property.getValidValue(((Number) value).intValue());
+			}
+			return value;
 		}				
 		
 		Object result = value;

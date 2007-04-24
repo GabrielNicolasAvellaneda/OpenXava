@@ -1865,11 +1865,6 @@ public class View implements java.io.Serializable {
 		}			
 	}		
 	
-	private Map getFirstPropertyValues() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	private String removeNamePrefix(String name) {
 		if (Is.emptyString(name)) return "";		
 		StringTokenizer st = new StringTokenizer(name, ".");
