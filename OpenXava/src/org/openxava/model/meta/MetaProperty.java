@@ -849,7 +849,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			// This is for processing Java 5 enums, but the code compile and works with a Java 1.4
 			Class enumClass = getEnumClass(); 
 			if (enumClass != null && enumClass.isAssignableFrom(type)) {
-				return parseEnumAsInteger(value);				
+				return parseEnum(value);				
 			}
 		}
 		catch (Exception ex) {
@@ -859,17 +859,17 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		throw new ParseException(XavaResources.getString("from_string_on_property_not_supported", type), -1);
 	}
 	
-	private Object parseEnumAsInteger(String value) throws Exception {
+	private Object parseEnum(String value) throws Exception { 
 		// We parse as an int
 		if (Is.emptyString(value)) return null;
 		try {
-			return new Integer(value);
+			Integer ordinal = new Integer(value);
+			return getValidValue(ordinal.intValue());			
 		}
 		catch (NumberFormatException ex) {
 			// We try parse from the string representation of the enum
 			// We use introspection in order that this code compile and run in a Java 1.4
-			Object enumValue = Objects.execute(getEnumClass(), "valueOf", Class.class, getType(), String.class, value);
-			return Objects.execute(enumValue, "ordinal");
+			return Objects.execute(getEnumClass(), "valueOf", Class.class, getType(), String.class, value);			
 		}
 	}
 		
