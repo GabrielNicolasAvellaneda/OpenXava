@@ -1496,10 +1496,10 @@ public class View implements java.io.Serializable {
 				Object m = it.next();							
 				if (isMetaProperty(m)) {
 					MetaProperty p = (MetaProperty) m;
-					String propertyKey= "xava." + qualifier + "." + p.getName();						
+					String propertyKey= "xava." + qualifier + "." + p.getName();					
 					String valueKey = propertyKey + ".value";
 					String [] results = getRequest().getParameterValues(propertyKey);
-					Object value = WebEditors.parse(getRequest(), p, results, getErrors());						
+					Object value = WebEditors.parse(getRequest(), p, results, getErrors());					
 					boolean isHiddenKeyWithoutValue = p.isHidden() && (results == null); // for not reset hidden values
 					if (!isHiddenKeyWithoutValue && WebEditors.mustToFormat(p)) { 
 						getRequest().setAttribute(valueKey, value);																				

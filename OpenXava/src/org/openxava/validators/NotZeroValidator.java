@@ -24,8 +24,9 @@ public class NotZeroValidator implements IPropertyValidator {
 		Object object,
 		String propertyName,
 		String modelName) {			
-		if (object == null) {
-			errors.add("numeric_not_null", propertyName, modelName);				
+		if (object == null) {				
+			errors.add("required", propertyName, modelName);
+			return;
 		}
 		Number n = null;
 		if (object instanceof Number) {

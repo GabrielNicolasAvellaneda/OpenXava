@@ -75,15 +75,17 @@ public class HCodeGenerator extends CodeGenerator {
 			}
 			
 			// Hibernate mapping
-			String mappingPath = "../" + getProject() + "/build/hibernate/"; 
-			System.out.println(XavaResources.getString("generating_hibernate_mapping", component.getName()));			
-			String [] argvMap = {				
-				componentsPath  + "/" + file,				
-				mappingPath + component.getName() + ".hbm.xml",
-				getJavaPackage(),
-				component.getName()								
-			};
-			HibernatePG.main(argvMap);
+			if (!component.isTransient()) {
+				String mappingPath = "../" + getProject() + "/build/hibernate/"; 
+				System.out.println(XavaResources.getString("generating_hibernate_mapping", component.getName()));			
+				String [] argvMap = {				
+					componentsPath  + "/" + file,				
+					mappingPath + component.getName() + ".hbm.xml",
+					getJavaPackage(),
+					component.getName()								
+				};
+				HibernatePG.main(argvMap);
+			}
 		}
 		
 		//	Agreggates as persistent objects		
@@ -114,17 +116,18 @@ public class HCodeGenerator extends CodeGenerator {
 			InterfacePG.main(argvInterface);					
 			
 			//	Hibernate mapping
-			String mappingPath = "../" + getProject() + "/build/hibernate/"; 
-			System.out.println(XavaResources.getString("generating_hibernate_mapping", aggregateName));			
-			String [] argvMap = {				
-				componentsPath  + "/" + file,				
-				mappingPath + aggregateName + ".hbm.xml",
-				getJavaPackage(),
-				component.getName(),
-				aggregateName								
-			};
-			HibernatePG.main(argvMap);
-			
+			if (!component.isTransient()) {
+				String mappingPath = "../" + getProject() + "/build/hibernate/"; 
+				System.out.println(XavaResources.getString("generating_hibernate_mapping", aggregateName));			
+				String [] argvMap = {				
+					componentsPath  + "/" + file,				
+					mappingPath + aggregateName + ".hbm.xml",
+					getJavaPackage(),
+					component.getName(),
+					aggregateName								
+				};
+				HibernatePG.main(argvMap);
+			}
 		}						
 	}
 	
