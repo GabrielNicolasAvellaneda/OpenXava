@@ -12,7 +12,6 @@ public class FilterBySubfamilyData
 {
 
    private static final long serialVersionUID = 1L;
-   private java.lang.String oid;
    private int _SubfamilyTo_number;
    private int _Subfamily_number;
 
@@ -22,24 +21,14 @@ public class FilterBySubfamilyData
 
    public FilterBySubfamilyData( FilterBySubfamilyData otherData )
    {
-      setOid(otherData.getOid());
       set_SubfamilyTo_number(otherData.get_SubfamilyTo_number());
       set_Subfamily_number(otherData.get_Subfamily_number());
 
    }
 
    public org.openxava.test.model.FilterBySubfamilyKey getPrimaryKey() {
-     org.openxava.test.model.FilterBySubfamilyKey pk = new org.openxava.test.model.FilterBySubfamilyKey(this.getOid());
+     org.openxava.test.model.FilterBySubfamilyKey pk = new org.openxava.test.model.FilterBySubfamilyKey();
      return pk;
-   }
-
-   public java.lang.String getOid()
-   {
-      return this.oid;
-   }
-   public void setOid( java.lang.String oid )
-   {
-      this.oid = oid;
    }
 
    public int get_SubfamilyTo_number()
@@ -64,7 +53,7 @@ public class FilterBySubfamilyData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("oid=" + getOid() + " " + "_SubfamilyTo_number=" + get_SubfamilyTo_number() + " " + "_Subfamily_number=" + get_Subfamily_number());
+      str.append("_SubfamilyTo_number=" + get_SubfamilyTo_number() + " " + "_Subfamily_number=" + get_Subfamily_number());
       str.append('}');
 
       return(str.toString());
@@ -77,14 +66,6 @@ public class FilterBySubfamilyData
          FilterBySubfamilyData lTest = (FilterBySubfamilyData) pOther;
          boolean lEquals = true;
 
-         if( this.oid == null )
-         {
-            lEquals = lEquals && ( lTest.oid == null );
-         }
-         else
-         {
-            lEquals = lEquals && this.oid.equals( lTest.oid );
-         }
          lEquals = lEquals && this._SubfamilyTo_number == lTest._SubfamilyTo_number;
          lEquals = lEquals && this._Subfamily_number == lTest._Subfamily_number;
 
@@ -99,8 +80,6 @@ public class FilterBySubfamilyData
    public int hashCode()
    {
       int result = 17;
-
-      result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
 
       result = 37*result + (int) _SubfamilyTo_number;
 

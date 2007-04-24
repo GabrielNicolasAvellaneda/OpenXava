@@ -24,7 +24,7 @@ public class FamilyProductsReportAction extends JasperReportBaseAction {
 	
 	private ISubfamily2 subfamily;
 
-	public Map getParameters() throws Exception  {
+	public Map getParameters() throws Exception  {		
 		Messages errors = MapFacade.validate("FilterBySubfamily", getView().getValues());
 		if (errors.contains()) throw new ValidationException(errors);
 		Map parameters = new HashMap();				

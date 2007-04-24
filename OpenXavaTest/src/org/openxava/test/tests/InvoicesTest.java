@@ -836,7 +836,7 @@ public class InvoicesTest extends ModuleTestBase {
 		setValue("details.quantity", "20");
 		setValue("details.unitPrice", getProductUnitPricePlus10());
 		assertValue("details.amount", "600");
-		assertValue("details.product.number", "0");
+		assertValue("details.product.number", "");
 		assertValue("details.product.description", "");
 		setValue("details.deliveryDate", "18/03/2004"); 
 		setValue("details.soldBy.number", getProductNumber());
@@ -872,7 +872,7 @@ public class InvoicesTest extends ModuleTestBase {
 		execute("Sections.change", "activeSection=0");
 		assertValue("customerDiscount", "");
 		assertValue("customerTypeDiscount", "");
-		assertValue("customer.number", "0");
+		assertValue("customer.number", "");
 		assertValue("customer.name", "");
 		setValue("customer.number", "1");
 		assertValue("customer.number", "1");

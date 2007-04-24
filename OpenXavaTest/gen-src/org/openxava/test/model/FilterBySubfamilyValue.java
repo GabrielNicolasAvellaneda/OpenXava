@@ -14,8 +14,6 @@ public class FilterBySubfamilyValue
 
    private static final long serialVersionUID = 1L;
 
-   private java.lang.String oid;
-   private boolean oidHasBeenSet = false;
    private int subfamilyTo_number;
    private boolean subfamilyTo_numberHasBeenSet = false;
    private int subfamily_number;
@@ -28,28 +26,12 @@ public class FilterBySubfamilyValue
    //TODO Cloneable is better than this !
    public FilterBySubfamilyValue( FilterBySubfamilyValue otherValue )
    {
-	  this.oid = otherValue.oid;
-	  oidHasBeenSet = true;
 	  this.subfamilyTo_number = otherValue.subfamilyTo_number;
 	  subfamilyTo_numberHasBeenSet = true;
 	  this.subfamily_number = otherValue.subfamily_number;
 	  subfamily_numberHasBeenSet = true;
    }
 
-   public java.lang.String getOid()
-   {
-	  return this.oid;
-   }
-
-   public void setOid( java.lang.String oid )
-   {
-	  this.oid = oid;
-	  oidHasBeenSet = true;
-   }
-
-   public boolean oidHasBeenSet(){
-	  return oidHasBeenSet;
-   }
    public int getSubfamilyTo_number()
    {
 	  return this.subfamilyTo_number;
@@ -83,7 +65,7 @@ public class FilterBySubfamilyValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("oid=" + getOid() + " " + "subfamilyTo_number=" + getSubfamilyTo_number() + " " + "subfamily_number=" + getSubfamily_number());
+	  str.append("subfamilyTo_number=" + getSubfamilyTo_number() + " " + "subfamily_number=" + getSubfamily_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -97,7 +79,6 @@ public class FilterBySubfamilyValue
    protected boolean hasIdentity()
    {
 	  boolean ret = true;
-	  ret = ret && oidHasBeenSet;
 	  return ret;
    }
 
@@ -111,14 +92,6 @@ public class FilterBySubfamilyValue
 		 FilterBySubfamilyValue that = (FilterBySubfamilyValue) other;
 		 if ( ! that.hasIdentity() ) return false;
 		 boolean lEquals = true;
-		 if( this.oid == null )
-		 {
-			lEquals = lEquals && ( that.oid == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.oid.equals( that.oid );
-		 }
 
 		 lEquals = lEquals && isIdentical(that);
 
@@ -149,8 +122,6 @@ public class FilterBySubfamilyValue
 
    public int hashCode(){
 	  int result = 17;
-      result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
-
       result = 37*result + (int) subfamilyTo_number;
 
       result = 37*result + (int) subfamily_number;

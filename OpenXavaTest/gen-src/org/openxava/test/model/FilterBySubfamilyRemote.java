@@ -10,9 +10,6 @@ public interface FilterBySubfamilyRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.IFilterBySubfamily
 {
 
-   public java.lang.String getOid(  )
-      throws java.rmi.RemoteException;
-
    public org.openxava.test.model.ISubfamily2 getSubfamilyTo(  )
       throws java.rmi.RemoteException;
 

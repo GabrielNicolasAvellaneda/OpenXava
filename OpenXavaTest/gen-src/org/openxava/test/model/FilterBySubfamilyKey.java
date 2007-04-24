@@ -17,31 +17,13 @@ public class FilterBySubfamilyKey
 
    private static final long serialVersionUID = 1L;
 
-   public java.lang.String oid;
-
    public FilterBySubfamilyKey()
    {
-   }
-
-   public FilterBySubfamilyKey( java.lang.String oid )
-   {
-      this.oid = oid;
-   }
-
-   public java.lang.String getOid()
-   {
-      return oid;
-   }
-
-   public void setOid(java.lang.String oid)
-   {
-      this.oid = oid;
    }
 
    public int hashCode()
    {
       int _hashCode = 0;
-         if (this.oid != null) _hashCode += this.oid.hashCode();
 
       return _hashCode;
    }
@@ -60,14 +42,6 @@ public class FilterBySubfamilyKey
       }
       else
       {
-         if( this.oid != null )
-         {
-            eq = eq && this.oid.equals( pk.getOid() );
-         }
-         else  // this.oid == null
-         {
-            eq = eq && ( pk.getOid() == null );
-         }
       }
 
       return eq;
