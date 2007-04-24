@@ -5,7 +5,6 @@ import java.util.*;
 
 import org.hibernate.*;
 import org.openxava.hibernate.*;
-import org.openxava.model.meta.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
@@ -224,7 +223,9 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertDescriptionValue("shipment.KEY", shipment.getDescription());
 		// Restoring		
 		setValue("shipment.KEY", "");
+		setValue("advice", "Restoring");
 		execute("CRUD.save");
+		assertNoErrors();
 	}
 	
 	public void testWhenStereotypeWithoutFormatterUseTypeFormatter() throws Exception {
@@ -284,6 +285,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertListNotEmpty();
 		execute("Mode.detailAndFirst");
 		assertNoErrors();
+		setValue("advice", "Validating");
 		execute("CRUD.save");
 		assertNoErrors();
 	}
@@ -484,7 +486,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		setValue("type.number", "1");
 		setValue("number", "66");
 		setValue("description", "JUNIT");
-		setValue("distance", "2"); // National, in database 'N'
+		setValue("distance", isOX3()?"1":"2"); // National, in database 'N'
 		execute("CRUD.save");
 		assertNoErrors();
 		assertValue("invoice.year", "");
@@ -492,7 +494,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertValue("type.number", "");	
 		assertValue("number", "");
 		assertValue("description", "");
-		assertValue("distance", "0");		
+		assertValue("distance", isOX3()?"":"0");		
 		// Search just created
 		setValue("invoice.year", "2002");
 		setValue("invoice.number", "1");						
@@ -505,7 +507,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertValue("type.number", "1");
 		assertValue("number", "66");		
 		assertValue("description", "JUNIT");		
-		assertValue("distance", "2");
+		assertValue("distance", isOX3()?"1":"2");
 		assertNoErrors();
 		
 		// Verifying database value
@@ -584,28 +586,28 @@ public class DeliveriesTest extends ModuleTestBase {
 	
 	public void testViewPropertyAndHideMembers() throws Exception { 
 		execute("CRUD.new");
-		assertValue("deliveredBy", "0");
+		assertValue("deliveredBy", isOX3()?"":"0");
 		assertNotExists("employee");
 		assertNotExists("carrier.number");
 		
-		setValue("deliveredBy", "1");
+		setValue("deliveredBy", isOX3()?"0":"1");
 		assertExists("employee");
 		assertNotExists("carrier.number");
 		
-		setValue("deliveredBy", "2");
+		setValue("deliveredBy", isOX3()?"1":"2");
 		assertNotExists("employee");		
 		assertExists("carrier.number");		
 		
-		setValue("deliveredBy", "0");
+		setValue("deliveredBy", isOX3()?"":"0");
 		assertNotExists("employee");
 		assertNotExists("carrier.number");
 		
-		setValue("deliveredBy", "2");
+		setValue("deliveredBy", isOX3()?"1":"2");
 		assertNotExists("employee");
 		assertExists("carrier.number");
 				
 		execute("CRUD.new");
-		assertValue("deliveredBy", "0");
+		assertValue("deliveredBy", isOX3()?"":"0");
 		assertNotExists("employee");
 		assertNotExists("carrier.number");			
 	}
@@ -629,7 +631,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		setValue("type.number", "1");
 		setValue("number", "62");
 		setValue("description", "JUNIT BY EMPLOYEE");
-		setValue("deliveredBy", "1");
+		setValue("deliveredBy", isOX3()?"0":"1");
 		setValue("employee", "JUNIT EMPLOYEE");		
 		execute("CRUD.save");
 		assertNoErrors();
@@ -640,7 +642,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		setValue("type.number", "1");
 		setValue("number", "63");
 		setValue("description", "JUNIT BY CARRIER");
-		setValue("deliveredBy", "2");
+		setValue("deliveredBy", isOX3()?"1":"2");
 		setValue("carrier.number", "1");		
 		execute("CRUD.save");
 		assertNoErrors();
@@ -764,21 +766,21 @@ public class DeliveriesTest extends ModuleTestBase {
 	
 	public void testCalculatedValueDependentOnChangePropertyOnChangeAndPropertyOnChangeDepedentOnPropertyOnChange() throws Exception { 
 		execute("CRUD.new");
-		assertValue("distance", "0");
+		assertValue("distance", isOX3()?"":"0");
 		assertValue("vehicle", "");
 		assertValue("transportMode", "");
-		setValue("distance", "1"); // Local
-		assertValue("distance", "1");
+		setValue("distance", isOX3()?"0":"1"); // Local
+		assertValue("distance", isOX3()?"0":"1");
 		assertValue("vehicle", "MOTORBIKE");
 		assertValue("transportMode", "STREET/ROAD");
 		assertValue("driverType", "ANY");
-		setValue("distance", "2"); // National
-		assertValue("distance", "2");
+		setValue("distance", isOX3()?"1":"2"); // National
+		assertValue("distance", isOX3()?"1":"2");
 		assertValue("vehicle", "CAR");
 		assertValue("transportMode", "HIGHWAY");
 		assertValue("driverType", "DRIVER");
-		setValue("distance", "0"); // Void
-		assertValue("distance", "0");
+		setValue("distance", isOX3()?"":"0"); // Void
+		assertValue("distance", isOX3()?"":"0");
 		assertValue("vehicle", "");
 		assertValue("transportMode", "");
 		assertValue("driverType", "DRIVERX");	
@@ -823,7 +825,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		execute("CRUD.new");
 		execute("Sections.change", "activeSection=0");
 		assertValue("remarks", "No remarks");
-		setValue("deliveredBy", "2");
+		setValue("deliveredBy", isOX3()?"1":"2");
 		assertNoMessages();
 		setValue("carrier.number", "3");
 		assertMessagesCount(1);
@@ -846,10 +848,10 @@ public class DeliveriesTest extends ModuleTestBase {
 	public void testI18nOfValidValues() throws Exception {
 		execute("CRUD.new");
 		String [][] distanceValues = {
-			{"0", ""},
-			{"1", "Lokal"},			
-			{"2", "Nachional"}, 
-			{"3", "Internachional"}
+			{isOX3()?"":"0", ""},
+			{isOX3()?"0":"1", "Lokal"},			
+			{isOX3()?"1":"2", "Nachional"}, 
+			{isOX3()?"2":"3", "Internachional"}
 		};
 		assertValidValues("distance", distanceValues);
 	}
