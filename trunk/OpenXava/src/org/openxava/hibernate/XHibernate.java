@@ -142,6 +142,7 @@ public class XHibernate {
 			
 			for (Iterator it = MetaModel.getAllPojoGenerated().iterator(); it.hasNext();) {
 				MetaModel model = (MetaModel) it.next();
+				if (model.getMetaComponent().isTransient()) continue;
 				try {
 					configuration.addResource(model.getName() + ".hbm.xml");
 				}

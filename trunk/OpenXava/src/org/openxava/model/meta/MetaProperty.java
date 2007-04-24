@@ -775,7 +775,13 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				return emptyString? null : new Integer(value); // we needed null
 			}
 			else if (int.class.isAssignableFrom(type)) {
-				return emptyString? new Integer(0) : new Integer(value);
+				// We return null for a int in key case, may this can cause 
+				// a IllegalArgumentException is some cases but we need 
+				// to distinguish between a non-reference and a reference of which key is 0
+				// If we change this we need to change also long and short				
+				if (isKey()) return emptyString? null : new Integer(value); 
+				else return emptyString? new Integer(0) : new Integer(value);
+				
 			}
 			
 			if (BigDecimal.class.isAssignableFrom(type)) {
@@ -805,14 +811,18 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				return emptyString ? null : new Long(value);
 			}
 			else if(long.class.isAssignableFrom(type)) {
-				return emptyString ? new Long(0l) : new Long(value);
+				// See comment in 'int' 
+				if (isKey()) return emptyString ? null : new Long(value);
+				else return emptyString ? new Long(0l) : new Long(value);
 			}
 			
 			if (Short.class.isAssignableFrom(type)) {
 				return emptyString ? null : new Short(value);
 			}
 			else if(short.class.isAssignableFrom(type)) {
-				return emptyString ? new Short((short)0) : new Short(value);
+				// See comment in 'int'
+				if (isKey()) return emptyString ? null : new Short(value);
+				else return emptyString ? new Short((short)0) : new Short(value);
 			}
 			
 			if (Float.class.isAssignableFrom(type) || float.class.isAssignableFrom(type)) {

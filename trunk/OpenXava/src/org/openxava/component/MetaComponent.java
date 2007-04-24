@@ -42,6 +42,7 @@ public class MetaComponent implements Serializable {
 	private Map metaTabs;
 	private EntityMapping entityMapping;
 	private String packageName;
+	private boolean _transient; 
 	
 		
 	
@@ -431,6 +432,16 @@ public class MetaComponent implements Serializable {
 			}
 		}
 		return getAllLoaded();
+	}
+
+
+	public boolean isTransient() {
+		return _transient;
+	}
+
+
+	public void setTransient(boolean _transient) {
+		this._transient = _transient;
 	}
 		
 }

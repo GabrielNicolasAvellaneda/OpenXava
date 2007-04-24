@@ -1204,8 +1204,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			updateReferencedEntities(metaModel, values);
 			removeKeyFields(metaModel, values);			
 			removeReadOnlyFields(metaModel, values);
-			removeViewProperties(metaModel, values);			
-			validate(metaModel, values, keyValues, null, false);			
+			validate(metaModel, values, keyValues, null, false);
+			removeViewProperties(metaModel, values);									
 			Object entity = findEntity(metaModel, keyValues);			
 			IPropertiesContainer r = getPersistenceProvider().toPropertiesContainer(metaModel, entity);			
 			r.executeSets(convertSubmapsInObject(metaModel, values, XavaPreferences.getInstance().isEJB2Persistence()));			
