@@ -660,21 +660,16 @@
       <entity>
          <ejb-name>FilterBySubfamily</ejb-name>
 
-         <table-name>XAVATEST.MOCKTABLE</table-name>
+         <table-name>FilterBySubfamily</table-name>
 
-         <cmp-field>
-            <field-name>oid</field-name>
-            <column-name>OID</column-name>
-
-        </cmp-field>
          <cmp-field>
             <field-name>_SubfamilyTo_number</field-name>
-            <column-name>SUBFAMILYTO</column-name>
+            <column-name>subfamilyTo_number</column-name>
 
         </cmp-field>
          <cmp-field>
             <field-name>_Subfamily_number</field-name>
-            <column-name>SUBFAMILY</column-name>
+            <column-name>subfamily_number</column-name>
 
         </cmp-field>
 
@@ -685,7 +680,7 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o._SubfamilyTo_number = ?1 ORDER BY o.oid]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o._SubfamilyTo_number = ?1 ]]></jboss-ql>
 
 	     </query>
          <query>
@@ -695,17 +690,16 @@
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o._Subfamily_number = ?1 ORDER BY o.oid]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o._Subfamily_number = ?1 ]]></jboss-ql>
 
 	     </query>
          <query>
             <query-method>
-               <method-name>findByOid</method-name>
+               <method-name>findBy</method-name>
                <method-params>
-                  <method-param>java.lang.String</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o.oid = ?1]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o]]></jboss-ql>
 
 	     </query>
 

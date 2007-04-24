@@ -814,10 +814,6 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>FilterBySubfamily</abstract-schema-name>
-         <cmp-field id="CmpAttribute_FilterBySubfamily_oid">
-            <description><![CDATA[]]></description>
-            <field-name>oid</field-name>
-         </cmp-field>
          <cmp-field id="CmpAttribute_FilterBySubfamily__SubfamilyTo_number">
             <description><![CDATA[]]></description>
             <field-name>_SubfamilyTo_number</field-name>
@@ -847,7 +843,7 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o._SubfamilyTo_number = ?1 ORDER BY o.oid]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o._SubfamilyTo_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
@@ -857,17 +853,16 @@
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o._Subfamily_number = ?1 ORDER BY o.oid]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o._Subfamily_number = ?1 ]]></ejb-ql>
          </query>
          <query>
             <query-method>
-               <method-name>findByOid</method-name>
+               <method-name>findBy</method-name>
                <method-params>
-                  <method-param>java.lang.String</method-param>
                </method-params>
             </query-method>
             <result-type-mapping>Remote</result-type-mapping>
-            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o.oid = ?1]]></ejb-ql>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o]]></ejb-ql>
          </query>
 	  <!-- Write a file named ejb-finders-FilterBySubfamilyBean.xml if you want to define extra finders. -->
 

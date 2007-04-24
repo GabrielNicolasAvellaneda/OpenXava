@@ -18,7 +18,6 @@ public abstract class FilterBySubfamilyCMP
       {
          dataHolder = new org.openxava.test.model.FilterBySubfamilyData();
 
-         dataHolder.setOid( getOid() );
          dataHolder.set_SubfamilyTo_number( get_SubfamilyTo_number() );
          dataHolder.set_Subfamily_number( get_Subfamily_number() );
 
@@ -90,7 +89,6 @@ public abstract class FilterBySubfamilyCMP
       FilterBySubfamilyValue = new org.openxava.test.model.FilterBySubfamilyValue();
       try
          {
-            FilterBySubfamilyValue.setOid( getOid() );
             FilterBySubfamilyValue.setSubfamilyTo_number( getSubfamilyTo_number() );
             FilterBySubfamilyValue.setSubfamily_number( getSubfamily_number() );
 
@@ -119,10 +117,6 @@ public abstract class FilterBySubfamilyCMP
    }
 
 /* Value Objects END */
-
-   public abstract java.lang.String getOid() ;
-
-   public abstract void setOid( java.lang.String oid ) ;
 
    public abstract int get_SubfamilyTo_number() ;
 

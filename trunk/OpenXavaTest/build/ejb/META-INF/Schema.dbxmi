@@ -163,8 +163,6 @@
    <RDBSchema:RDBTable xmi:id="RDBTable_FilterBySubfamily" name="" primaryKey="FilterBySubfamily_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="FilterBySubfamily_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_FilterBySubfamily" constraint="Constraint_FilterBySubfamily_"/>
 
-      <columns xmi:id="FilterBySubfamily_oid" name="oid">
-      </columns>
       <columns xmi:id="FilterBySubfamily__SubfamilyTo_number" name="_SubfamilyTo_number">
       </columns>
       <columns xmi:id="FilterBySubfamily__Subfamily_number" name="_Subfamily_number">

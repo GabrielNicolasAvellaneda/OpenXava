@@ -17,7 +17,10 @@ else {
 	if (ovalue == null) {
 		value = -1;	
 	}
-	else {
+	else if (ovalue instanceof Number) { // Directly the ordinal
+		value = ((Number) ovalue).intValue();
+	}
+	else { // An object of enum type
 		value = ((Integer) org.openxava.util.Objects.execute(ovalue, "ordinal")).intValue();
 	}
 }
