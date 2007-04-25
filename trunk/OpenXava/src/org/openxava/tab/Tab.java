@@ -875,9 +875,11 @@ public class Tab {
 	}
 	
 	private void loadUserPreferences() {
+		Session session = null;				
+		Transaction tx = null;		
 		try {			
-			Session session = getSessionFactory().openSession();				
-			Transaction tx = session.beginTransaction();
+			session = getSessionFactory().openSession();				
+			tx = session.beginTransaction();
 			
 			Query query = session.createQuery("from TabUserPreferences p where p.user = :user and p.tab = :tab");
 			query.setString("user", getUserName());
@@ -891,11 +893,18 @@ public class Tab {
 				rowsHidden = userPreferences.isRowsHidden(); 
 			}
 			
-			tx.commit();
-			session.close();			
 		}
 		catch (Exception ex) {
 			log.warn(XavaResources.getString("warning_load_preferences_tab"),ex);
+		}
+		finally {
+			try {
+				if (tx != null) tx.commit();
+				if (session != null) session.close();
+			}
+			catch (Exception ex) {
+				// We have the preference loaded. Fail here is not a big problem
+			}
 		}
 	}
 	
@@ -907,9 +916,11 @@ public class Tab {
 
 
 	private void saveUserPreferences() {
+		Session session = null;				
+		Transaction tx = null;		
 		try {
-			Session session = getSessionFactory().openSession();				
-			Transaction tx = session.beginTransaction();
+			session = getSessionFactory().openSession();				
+			tx = session.beginTransaction();
 			
 			if (userPreferences == null) {
 				userPreferences = new TabUserPreferences();
@@ -927,13 +938,24 @@ public class Tab {
 		catch (Exception ex) {
 			log.warn(XavaResources.getString("warning_save_preferences_tab"),ex);
 		}	
+		finally {
+			try {
+				if (tx != null) tx.commit();
+				if (session != null) session.close();
+			}
+			catch (Exception ex) {
+				log.warn(XavaResources.getString("warning_save_preferences_tab"),ex);
+			}
+		}
 	}
 	
 	private void removeUserPreferences() {
 		if (userPreferences == null) return;
+		Session session = null;				
+		Transaction tx = null;		
 		try {
-			Session session = getSessionFactory().openSession();				
-			Transaction tx = session.beginTransaction();
+			session = getSessionFactory().openSession();				
+			tx = session.beginTransaction();
 			
 			session.delete(userPreferences);
 			
@@ -942,6 +964,15 @@ public class Tab {
 		}
 		catch (Exception ex) {
 			log.warn(XavaResources.getString("warning_save_preferences_tab"),ex);
+		}		
+		finally {
+			try {
+				if (tx != null) tx.commit();
+				if (session != null) session.close();
+			}
+			catch (Exception ex) {
+				log.warn(XavaResources.getString("warning_save_preferences_tab"),ex);
+			}
 		}				
 	}
 	
