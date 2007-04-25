@@ -502,6 +502,7 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>VIEW</portlet-mode>
 		</supports>
+		<supported-locale>en</supported-locale>
 		<supported-locale>es</supported-locale>
 		<resource-bundle>Multischema</resource-bundle>		
 	</portlet> 	
@@ -523,5 +524,43 @@
 		<supported-locale>es</supported-locale>
 		<resource-bundle>Postgres</resource-bundle>		
 	</portlet> 	
-									
+	
+	<portlet id="NewForDevelopers">
+		<description>NewForDevelopers</description>    
+		<portlet-name>NewForDevelopers</portlet-name>
+		<display-name>NewForDevelopers</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>new-for-developers</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>		
+		<resource-bundle>NewForDevelopers</resource-bundle>		
+	</portlet> 	
+	
+	<portlet id="NewIn213">
+		<description>NewIn213</description>    
+		<portlet-name>NewIn213</portlet-name>
+		<display-name>NewIn213</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>new-2.1.3</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>		
+		<resource-bundle>NewIn213</resource-bundle>		
+	</portlet> 	
+											
 </portlet-app>

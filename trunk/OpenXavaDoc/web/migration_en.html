@@ -1,3 +1,13 @@
+<h2>Migration from OpenXava 2.1 to OpenXava 2.1.3</h2>
+<h4>JUnit test and key without value parsed as zero</h4>
+Since 2.1.3 if a key property of type int, long or short has no value
+in the view when it is parsed is parsed with null (without value), and
+not as zero. This has no effect in final user, but possibly you need to
+modify some JUnit test. For example if you have in a test case:<br>
+<br>
+<pre>public void testSomething() throws Exception {<br>  assertValue("number", "");<br>  execute("MyControllers.myAction"); // This does not change number value<br>  assertValue("number", "0"); // because OX parse empty string as 0 (until 2.1.2)<br>  ...<br>}<br></pre>
+You now have to write in this way:<br>
+<pre>public void testSomething() throws Exception {<br>  assertValue("number", "");<br>  execute("MyControllers.myAction"); // This does not change number value<br>  assertValue("number", ""); // because now (since 2.1.3) OX parse empty string as null<br>  ...<br>}<br></pre>
 <h2>Migration from OpenXava 2.0.4 to OpenXava 2.1</h2>
 <h4>WebSphere projects</h4>
 If you deploy your projects in WebSphere you need to do the next little
@@ -30,8 +40,7 @@ ant target instead. Calling automatically to an ant target from Eclipse
 Builder is slow, therefore maybe
 you prefer to call manually to 'rebuild' ant target on demmand (when
 the XML code of your
-OX application is changed).
-  </li>
+OX application is changed). </li>
 </ul>
 <h2>Migration from OpenXava 2.0.3 to OpenXava 2.0.4</h2>
 <h4>Parse of numeric values</h4>
@@ -129,11 +138,9 @@ executed too (although the hibernate version still does not work at
 Although you use only EJB version, you have to make this little
 adaptation in your project:
 <ul>
-  <li> Create the folder <code>hibernate</code> in your project.
-  </li>
+  <li> Create the folder <code>hibernate</code> in your project. </li>
   <li> Create the file <code>hibernate.cfg.xml</code> inside <code>hibernate</code>
-folder.
-  </li>
+folder. </li>
 </ul>
 The <code>hibernate.cfg.xml</code> have to be:
 <pre>&lt;!DOCTYPE hibernate-configuration PUBLIC<br>   "-//Hibernate/Hibernate Configuration DTD//EN"<br>   "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd"&gt;<br>  &lt;hibernate-configuration&gt;<br>   &lt;session-factory&gt;<br>       &lt;property name="hibernate.connection.datasource"&gt;@datasource.prefix@/@datasource@&lt;/property&gt;<br>       &lt;property name="hibernate.dialect"&gt;@hibernate.dialect@&lt;/property&gt;<br>       &lt;property name="hibernate.show_sql"&gt;false&lt;/property&gt;<br>   &lt;/session-factory&gt;<br>&lt;/hibernate-configuration&gt;<br></pre>
@@ -143,8 +150,7 @@ property in your configuration files:
 <h4>XML OpenXava syntax</h4>
 <ul>
   <li> In spanish versi&oacute;n PEQUE&Ntilde;A now is PEQUENA. This is
-for avoid problems with ISO-8859-1 versus UTF-8.
-  </li>
+for avoid problems with ISO-8859-1 versus UTF-8. </li>
 </ul>
 <h2>Migration from OpenXava 1.1 to OpenXava 1.2</h2>
 <h4>Generated code</h4>
@@ -160,14 +166,10 @@ Hibernate in the same project and at same time.<br>
 In order to adapt you code to this, you must:
 </p>
 <ul>
-  <li>Delete all generated code
-  </li>
-  <li>Regenerate all EJB code
-  </li>
-  <li>Build all
-  </li>
-  <li>Search and correct all syntax error
-  </li>
+  <li>Delete all generated code </li>
+  <li>Regenerate all EJB code </li>
+  <li>Build all </li>
+  <li>Search and correct all syntax error </li>
 </ul>
 For correct syntax error you can change code in this way:
 <pre><b>Customer</b> customer = CustomerUtil.getHome().findByName("PEPE");<br>String name = customer.getName();<br></pre>
@@ -186,30 +188,25 @@ possible, if not possible change <code>Customer</code> by <code>CustomerRemote</
 windows to confirm, instead of changing to another controller. Hence in
 your tests in order to remove an object from CRUD module you only need
 use execute("CRUD.delete"). In this case 'yes' is assumed as
-confirmation answer.
-  </li>
+confirmation answer. </li>
 </ul>
 <h4>Others</h4>
 <ul>
   <li> Change the name of packages-ejb.properties in gen-src-xava to
 packages.properties (or you can simply remove packages-ejb.properties
-and regenerate code).
-  </li>
+and regenerate code). </li>
 </ul>
 <h2>Migration from OpenXava 1.0 to OpenXava 1.1</h2>
 <h4>APIs</h4>
 <ul>
   <li>MetaView.getMetaViewCollection now is
-MetaView.getMetaCollectionView
-  </li>
+MetaView.getMetaCollectionView </li>
   <li>MetaView.getMetaViewReference now is
-MetaView.getMetaReferenceView
-  </li>
+MetaView.getMetaReferenceView </li>
 </ul>
 <h4>JUnit tests</h4>
 <ul>
   <li> Message 'Object deleted successfully' is change by '{0} deleted
 successfully'. Hence it's required to change the asserts of this
-messages.
-  </li>
+messages. </li>
 </ul>

@@ -1,3 +1,18 @@
+<h2>Para migrar de OpenXava 2.1 a OpenXava 2.1.3</h2>
+<h4>Pruebas JUnit y claves sin valor interpretadas como&nbsp;cero</h4>
+Desde 2.13 si una propieda clave de tipo int, long o short no tiene
+valor en la vista cuando es interpretada, es interpretada como nulo
+(sin valor), y no como cero. Esto no tiene efecto en el usuario final,
+pero posiblemente necesitemos cambiar algunas pruebas JUnit, por
+ejemplo <br>
+Since 2.1.3 if a property key of type int, long or short has no value
+in view when it is parsed is parsed with null (without value), and not
+as zero. This has no effect in final user, but possibly you need to
+modify some junit test. Por ejemplo si tenemos una prueba as&iacute;:<br>
+<br>
+<pre>public void testAlgo() throws Exception {<br>  assertValue("codigo", "");<br>  execute("MiControlador.miAccion"); // Esto no cambia el valor de 'codigo'<br>  assertValue("codigo", "0"); // porque OX interpreta una cadena vac&iacute;a como un 0 (hasta 2.1.2)<br>  ...<br>}<br></pre>
+Ahora hemos de escribirlo as&iacute;:<br>
+<pre>public void testAlgo() throws Exception {<br>  assertValue("codigo", "");<br>  execute("MiControlador.miAccion"); // Esto no cambia el valor de 'codigo'<br>  assertValue("codigo", ""); // porque ahora (desde 2.1.3) OX interpreta cadena vac&iacute;a como nulo<br>  ...<br>}</pre>
 <h2>Para migrar de OpenXava 2.0.4 a OpenXava 2.1</h2>
 <h4>Proyectos WebSphere</h4>
 Si despliegas tus proyectos en WebSphere necesitas hacer algunos
@@ -30,8 +45,7 @@ tarea 'reconstuir' en su lugar. Llamar autom&aacute;ticamente a una
 tarea ant desde el Builder de Eclipse es lento, por tanto
 puede ser preferible llamar manualmente a la tarea ant 'reconstruir'
 bajo demanda
-(cuando el c&oacute;digo XML de nuestra aplicaci&oacute;n cambie).
-  </li>
+(cuando el c&oacute;digo XML de nuestra aplicaci&oacute;n cambie). </li>
 </ul>
 <h2>Para migrar de OpenXava 2.0.3 a OpenXava 2.0.4</h2>
 <h4>Parse de valores num&eacute;ricos</h4>
@@ -140,11 +154,9 @@ Aunque uses solo la versi&oacute;n EJB necesitas hacer una
 peque&ntilde;a adaptaci&oacute;n
 en tu proyecto:
 <ul>
-  <li> Crea la carpeta <code>hibernate</code> en tu proyecto.
-  </li>
+  <li> Crea la carpeta <code>hibernate</code> en tu proyecto. </li>
   <li> Crea el archivo <code>hibernate.cfg.xml</code> dentro de la
-carpeta <code>hibernate</code>.
-  </li>
+carpeta <code>hibernate</code>. </li>
 </ul>
 El <code>hibernate.cfg.xml</code> ha de ser:
 <pre>&lt;!DOCTYPE hibernate-configuration PUBLIC<br>   "-//Hibernate/Hibernate Configuration DTD//EN"<br>   "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd"&gt;<br>  &lt;hibernate-configuration&gt;<br>   &lt;session-factory&gt;<br>       &lt;property name="hibernate.connection.datasource"&gt;@datasource.prefix@/@datasource@&lt;/property&gt;<br>       &lt;property name="hibernate.dialect"&gt;@hibernate.dialect@&lt;/property&gt;<br>       &lt;property name="hibernate.show_sql"&gt;false&lt;/property&gt;<br>   &lt;/session-factory&gt;<br>&lt;/hibernate-configuration&gt;<br></pre>
@@ -156,8 +168,7 @@ archivos de configuraci&oacute;n:
 <ul>
   <li> En espa&ntilde;ol PEQUE&Ntilde;A pasa a ser PEQUENA. Para evitar
 problemas con
-ISO-8859-1 y UTF-8.
-  </li>
+ISO-8859-1 y UTF-8. </li>
 </ul>
 <h2>Para migrar de OpenXava 1.1 a OpenXava 1.2</h2>
 <h4>C&oacute;digo generado</h4>
@@ -170,14 +181,10 @@ trabajar
 con EJB e Hibernate en el mismo projecto y a la vez.<br>
 Para adaptar el c&oacute;digo hay que:
 <ul>
-  <li>Borrar todo el c&oacute;digo generado
-  </li>
-  <li>Regenerar el c&oacute;digo EJB
-  </li>
-  <li>Compilar
-  </li>
-  <li>Buscar y corregir los errores de sintaxis
-  </li>
+  <li>Borrar todo el c&oacute;digo generado </li>
+  <li>Regenerar el c&oacute;digo EJB </li>
+  <li>Compilar </li>
+  <li>Buscar y corregir los errores de sintaxis </li>
 </ul>
 Para corregir los errores de sintaxis se tiene que hacer cambios como
 &eacute;ste:
@@ -200,30 +207,25 @@ una ventana javascript para confirmar, en vez de cambiar a otro
 controlador. Por lo tanto en tus pruebas para borrar un objeto en un
 m&oacute;dulo de mantenimiento solo necesitas usar
 execute("CRUD.delete"). En este caso 'S&iacute;' como respuesta de
-confirmaci&oacute;n.
-  </li>
+confirmaci&oacute;n. </li>
 </ul>
 <h4>Otros</h4>
 <ul>
   <li> Cambia el nombre packages-ejb.properties en gen-src-xava a
 packages.properties (o simplemente borrar packages-ejb.properties y
-regenera c&oacute;digo).
-  </li>
+regenera c&oacute;digo). </li>
 </ul>
 <h2>Para migrar de OpenXava 1.0 a OpenXava 1.1</h2>
 <h4>APIs</h4>
 <ul>
   <li>MetaView.getMetaViewCollection pasa a llamarse
-MetaView.getMetaCollectionView
-  </li>
+MetaView.getMetaCollectionView </li>
   <li>MetaView.getMetaViewReference pasa a llamarse
-MetaView.getMetaReferenceView
-  </li>
+MetaView.getMetaReferenceView </li>
 </ul>
 <h4>Pruebas junit</h4>
 <ul>
   <li> Se cambia el mensaje 'Objeto borrado satisfactoriamente' por
 '{0} borrado satisfactoriamente'. As&iacute; es necesario cambiar los
-asserts de este mensaje.
-  </li>
+asserts de este mensaje. </li>
 </ul>
