@@ -1,0 +1,45 @@
+<h4>Transient components</h4>
+<p>Until now, when you need to create a dialog (a view not linked to a
+database table) you have to create a component mapped to a fictitious
+table and with&nbsp;primary key. Now this is not necessary, you only
+need to declare the component as <span style="font-style: italic;">transient</span>,
+that is not persistent, without
+a database table associated to it. As following</p>
+<pre>&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;<br><br><br>&lt;!DOCTYPE component SYSTEM "dtds/component.dtd"&gt;<br><br><br>&lt;component name="FilterBySubfamilyDialog"&gt;<br><br>	&lt;entity&gt;<br><br>		&lt;reference name="subfamily" model="Subfamily" required="true"/&gt;<br><br>	&lt;/entity&gt;<br><br>	&lt;view name="Family1"&gt;<br><br>		&lt;reference-view reference="subfamily" create="false"&gt;<br><br>			&lt;descriptions-list condition="${family.number} = 1"/&gt;<br><br>		&lt;/reference-view&gt;<br><br>	&lt;/view&gt;<br><br>	&lt;view name="Family2"&gt;<br><br>		&lt;reference-view reference="subfamily" create="false"&gt;<br><br>			&lt;descriptions-list condition="${family.number} = 2"/&gt;<br><br>		&lt;/reference-view&gt;<br><br>	&lt;/view&gt;<br><br><br>	<span
+ style="font-weight: bold; color: rgb(51, 102, 255);">&lt;transient/&gt; </span><br><br>&lt;/component&gt;</pre>
+<p>For defining a component as transient you only need to put
+<code class="c&oacute;digo-western">&lt;transient/&gt;</code> at the
+end of the component definition, just in the part for the
+mappings. You mustn't put the mapping nor declare properties as key.</p>
+<h4>Default mapping</h4>
+<meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
+<title></title>
+<meta name="GENERATOR" content="OpenOffice.org 2.2  (Linux)">
+<meta name="CREATED" content="20050307;16505900">
+<meta name="CHANGEDBY" content="Javier Paniza">
+<meta name="CHANGED" content="20070425;10330600">
+<style type="text/css">
+	<!--
+		@page { size: 21cm 29.7cm; margin: 2cm }
+		P { margin-bottom: 0.21cm; text-align: justify }
+		P.c�digo-western { background: #e6e6e6; border: 1px solid #000000; padding: 0.25cm; font-family: "Courier", monospace; font-size: 9pt; font-weight: medium }
+		P.c�digo-cjk { background: #e6e6e6; border: 1px solid #000000; padding: 0.25cm; font-weight: medium }
+		P.c�digo-ctl { background: #e6e6e6; border: 1px solid #000000; padding: 0.25cm }
+		CODE.c�digo-western { font-size: 10pt; font-weight: medium; background: transparent }
+		CODE.c�digo-cjk { background: transparent; font-weight: medium }
+		CODE.c�digo-ctl { background: transparent; font-weight: medium }
+	-->
+	</style>
+<p>Since version 2.1.3 OpenXava allows to define components without
+mapping, and it assumed a default mapping for it. For example, you
+can write:</p>
+<pre>&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;<br><br>&lt;!DOCTYPE component SYSTEM "dtds/component.dtd"&gt;<br><br>&lt;component name="Pupil"&gt;<br><br>	&lt;entity&gt;<br>	<br>		&lt;property name="number" type="int" key="true"<br><br>			size="2" required="true"/&gt;<br><br>		&lt;property name="name" type="String"<br><br>			size="40" required="true"/&gt;<br><br>		&lt;reference name="teacher"/&gt;<br><br>	&lt;/entity&gt;<br><br>&lt;/component&gt;</pre>
+<p>This component is mapped to the table <code class="c&oacute;digo-western">Pupil</code>,
+and the properties <code class="c&oacute;digo-western">number</code>
+and <code class="c&oacute;digo-western">name</code> are mapped to the
+columns <code class="c&oacute;digo-western">number</code> and <code
+ class="c&oacute;digo-western">name</code>.
+The reference <code class="c&oacute;digo-western">teacher</code> is
+mapped to a column named <code class="c&oacute;digo-western">teacher_number</code>
+(if the key property of <code class="c&oacute;digo-western">Teacher</code>
+is named <code class="c&oacute;digo-western">number</code>).</p>
