@@ -10,7 +10,7 @@ public class DeliveriesGroupsInSectionsTest extends ModuleTestBase {
 	
 		
 	public DeliveriesGroupsInSectionsTest(String testName) {
-		super(testName, "OpenXavaTest", "DeliveriesGroupsInSections");		
+		super(testName, "DeliveriesGroupsInSections");		
 	}
 	
 	public void testOnChangeActionOnSearchNotMoreThanOneTime() throws Exception {
