@@ -2,6 +2,7 @@ package org.openxava.model.meta;
 
 
 import java.beans.*;
+import java.rmi.*;
 import java.util.*;
 
 
@@ -10,6 +11,7 @@ import java.util.*;
 import org.apache.commons.logging.*;
 import org.openxava.component.*;
 import org.openxava.mapping.*;
+import org.openxava.model.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
 import org.openxava.validators.meta.*;
@@ -1169,6 +1171,11 @@ abstract public class MetaModel extends MetaElement {
 		}				
 	}
 	
+	private boolean isReference(String name) throws XavaException { 
+		return getMapMetaReferences().containsKey(name);
+	}
+	
+	
 	public boolean containsValidadors() {
 		return metaValidators != null && !metaValidators.isEmpty();
 	}
@@ -1389,16 +1396,24 @@ abstract public class MetaModel extends MetaElement {
 	 * 
 	 * @return null if the sent object is null
 	 */	
-	public String toString(Object pojo) { 
+	public String toString(Object pojo) throws XavaException {  
 		if (pojo == null) return null;
 		StringBuffer toStringValue = new StringBuffer("[.");
-		java.lang.reflect.Field [] fields = pojo.getClass().getDeclaredFields();
+		// We don't use pojo.getClass(), because pojo can be a PROXY with no fields
+		java.lang.reflect.Field [] fields = getPOJOClass().getDeclaredFields();  
 		Arrays.sort(fields, FieldComparator.getInstance());
 		PropertiesManager pm = new PropertiesManager(pojo);
 		for (int i=0; i < fields.length; i++) {
 			try {
 				if (isKey(fields[i].getName())) {
-					toStringValue.append(pm.executeGet(fields[i].getName())).append('.');
+					if (isReference(fields[i].getName())) {
+						MetaModel refModel = getMetaReference(fields[i].getName()).getMetaModelReferenced();
+						toStringValue.append(refModel.toString(pm.executeGet(fields[i].getName())));
+					}
+					else {
+						toStringValue.append(pm.executeGet(fields[i].getName()));
+					}
+					toStringValue.append('.');
 				}
 			}
 			catch (Exception ex) {
@@ -1532,7 +1547,23 @@ abstract public class MetaModel extends MetaElement {
 		return result;		
 	}
 
-	public static MetaModel get(String modelName) throws XavaException { 
+	/**
+	 * Gets the MetaModel from its name. <p>
+	 * 
+	 * Qualified names are supported, that is you can use:
+	 * <pre>
+	 * MetaModel.get("Invoice.InvoceDetail");
+	 * </pre>
+	 * If InvoiceDetail is a aggregate of Invoice component.<p>
+	 * For obtaining the entity metamodel you can use the name of the component, in this way
+	 * <pre>
+	 * MetaModel.get("Invoice");
+	 * </pre>
+	 *
+	 * @throws ElementNotFoundException If the component does not have associated any MetaModel
+	 * @throws XavaException Any problem
+	 */	
+	public static MetaModel get(String modelName) throws ElementNotFoundException, XavaException { 
 		if (modelName.indexOf('.') < 0) {
 			return MetaComponent.get(modelName).getMetaEntity();
 		}
@@ -1540,6 +1571,57 @@ abstract public class MetaModel extends MetaElement {
 			return MetaAggregate.getAggregate(modelName);
 		}
 	}
+
+	/**
+	 * Gets the MetaModel for the pojo class specified. <p>
+	 * 
+	 * @throws ElementNotFoundException If the pojo does not have associated any MetaModel
+	 * @throws XavaException Any problem
+	 */	
+	public static MetaModel getForPOJO(Object pojo) throws ElementNotFoundException, XavaException {
+		if (pojo == null) {
+			throw new ElementNotFoundException("component_for_pojo_not_found", "null");
+		}
+		if (pojo instanceof IModel) {
+			try {
+				return ((IModel) pojo).getMetaModel();
+			} 
+			catch (RemoteException ex) {
+				throw new XavaException(ex.getMessage()); // Really difficult 
+			} 
+		}
+		return getForPOJOClass(pojo.getClass());
+	}
+	
+	/**
+	 * Gets the MetaModel for the pojo class specified. <p>
+	 * 
+	 * @throws ElementNotFoundException If the pojoClass does not have associated any MetaModel
+	 * @throws XavaException Any problem
+	 */
+	public static MetaModel getForPOJOClass(Class pojoClass) throws ElementNotFoundException, XavaException {
+		String componentName = Strings.lastToken(pojoClass.getName(), ".");
+		MetaModel metaModel = get(componentName);
+		if (!metaModel.getPOJOClass().equals(pojoClass)) {
+			throw new XavaException("component_for_pojo_not_found", pojoClass);
+		}
+		return metaModel;
+	}
+	
+	/**
+	 * To ask if the pojo class has an <code>MetaModel</code> associated.
+	 */
+	public static boolean existsForPOJOClass(Class pojoClass) throws Exception { 
+		try {
+			getForPOJOClass(pojoClass);
+			return true;
+		}
+		catch (ElementNotFoundException ex) {
+			return false;
+		}
+	}
+	
+	
 	
 	public String getInterfaceName()  throws XavaException {
 		return getMetaComponent().getPackageName() + ".I" + getName();
@@ -1567,16 +1649,6 @@ abstract public class MetaModel extends MetaElement {
 			
 	}
 	
-	private Class getEnumClass() { // Enum
-		try {
-			return Class.forName("java.lang.Enum");
-		} 
-		catch (ClassNotFoundException e) {
-			// Not Java 5
-			return null;
-		}		
-	}
-		
 	public Class getPOJOKeyClass() throws XavaException {  
 		if (pojoKeyClass==null) return getPOJOClass(); // POJO is used as key too
 		return pojoKeyClass;			

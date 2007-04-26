@@ -850,10 +850,6 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				value = Strings.change(value, " ", ""); // In order to work with Polish				
 				Number n = NumberFormat.getNumberInstance(locale).parse(value);
 				return new BigInteger(n.toString());
-			}	
-			
-			if (IModel.class.isAssignableFrom(type)) { 
-				return parseModelObject(value);
 			}
 			
 			// This is for processing Java 5 enums, but the code compile and works with a Java 1.4
@@ -861,6 +857,11 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			if (enumClass != null && enumClass.isAssignableFrom(type)) {
 				return parseEnum(value);				
 			}
+						
+			if (IModel.class.isAssignableFrom(type) || MetaModel.existsForPOJOClass(type)) { 
+				return parseModelObject(value);
+			}
+						
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
@@ -885,23 +886,23 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		
 	private Object parseModelObject(String string) throws Exception {		
 		if (Is.emptyString(string)) return null;
-		IModel model = (IModel) getType().newInstance();
+		Object model = getType().newInstance(); 
 		StringTokenizer stringValues = new StringTokenizer(string, "[.]");
 		parseModelObject(model, stringValues, "");
 		return model;
 	}
-	
-	private void parseModelObject(IModel model, StringTokenizer stringValues, String prefix) throws Exception { 
+	 
+	private void parseModelObject(Object model, StringTokenizer stringValues, String prefix) throws Exception {
 		java.lang.reflect.Field [] fields = model.getClass().getDeclaredFields();
 		Arrays.sort(fields, FieldComparator.getInstance());
-		MetaModel metaModel = model.getMetaModel();
+		MetaModel metaModel = MetaModel.getForPOJO(model);
 		PropertiesManager pm = new PropertiesManager(model);
 		for (int i=0; i < fields.length; i++) {			
 			if (metaModel.isKey(fields[i].getName())) {
 				if (metaModel.containsMetaReference(fields[i].getName())) {
-					IModel ref = (IModel) pm.executeGet(fields[i].getName());
+					Object ref = pm.executeGet(fields[i].getName());
 					if (ref == null) {
-						ref = (IModel) metaModel.getMetaReference(fields[i].getName()).getMetaModelReferenced().getPOJOClass().newInstance();
+						ref = metaModel.getMetaReference(fields[i].getName()).getMetaModelReferenced().getPOJOClass().newInstance();
 						pm.executeSet(fields[i].getName(), ref);
 					}
 					parseModelObject(ref, stringValues, prefix + fields[i].getName() + ".");
@@ -965,13 +966,16 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				numberFormat.setMaximumFractionDigits(0);
 				return numberFormat.format(value);				
 			}			
-			if (IModel.class.isAssignableFrom(type)) { 
-				return value.toString();
-			}
 			Class enumClass = getEnumClass(); 
 			if (enumClass != null && enumClass.isAssignableFrom(type)) {
 				if (value == null) return null;
 				return value.toString();
+			}
+			if (IModel.class.isAssignableFrom(type)) { 
+				return value.toString();
+			}			
+			if (MetaModel.existsForPOJOClass(type)) { 
+				return MetaModel.getForPOJO(value).toString(value);
 			}
 		}
 		catch (Exception ex) {
