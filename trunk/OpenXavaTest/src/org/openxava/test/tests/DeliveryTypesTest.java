@@ -1,6 +1,9 @@
 package org.openxava.test.tests;
 
+import java.util.*;
+
 import org.openxava.hibernate.*;
+import org.openxava.model.meta.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
@@ -13,7 +16,7 @@ import org.openxava.util.*;
 public class DeliveryTypesTest extends ModuleTestBase {
 	
 	public DeliveryTypesTest(String testName) {
-		super(testName, "OpenXavaTest", "DeliveryTypes");		
+		super(testName, "DeliveryTypes");		
 	}
 	
 	public void testParseObjectWithMultipleKeyThatAreReferenceInStereotypes() throws Exception {
@@ -25,7 +28,7 @@ public class DeliveryTypesTest extends ModuleTestBase {
 		assertMessage("comboDeliveries=" + delivery.toString());
 		assertValue("comboDeliveries", delivery.toString());
 	}
-		
+			
 	public void testSaveActionNotResetRefreshData() throws Exception {
 		execute("CRUD.new");
 		setValue("number", "66");

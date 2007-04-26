@@ -10,7 +10,7 @@ import org.openxava.tests.*;
 public class DeliveryTypesJSPTest extends ModuleTestBase {
 	
 	public DeliveryTypesJSPTest(String testName) {
-		super(testName, "OpenXavaTest", "DeliveryTypesJSP");		
+		super(testName, "DeliveryTypesJSP");		
 	}
 	
 	public void testHandmadeWebViewNotLost() throws Exception {
