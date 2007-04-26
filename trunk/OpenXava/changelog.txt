@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- CSS modified in order to make more visible disable editors.
 - Fix: It did not release transaction nor hibernate session when fail on loading and saving tab preferences.
 - NotZeroValidator (used by default for required="true") now shown a message '{0} is required' is the value is null. Before the message was 'It's not possible assign null to a int'.
 - Value of type int, long and short used as key are parsed as null (before as 0) if they are used as key, this is for better support of referenced using 0 as valid key.
