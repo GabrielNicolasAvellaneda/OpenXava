@@ -51,7 +51,7 @@ public class MetaComponent implements Serializable {
 	 * @exception ElementNotFoundException  If component does not exist.
 	 * @exception XavaException  Any other problem. 
 	 */
-	public static MetaComponent get(String name) throws XavaException {		
+	public static MetaComponent get(String name) throws ElementNotFoundException, XavaException {		
 		MetaComponent r = (MetaComponent) components.get(name);		
 		if (r == null) {			
 			r = ComponentParser.parse(name);		
@@ -66,8 +66,7 @@ public class MetaComponent implements Serializable {
 		}		
 		return r;
 	}
-	
-
+		
 	public static boolean exists(String name) throws XavaException {
 		try {
 			get(name);
