@@ -481,7 +481,14 @@ public class ModuleManager {
 		String nextMember = st.nextToken(); 
 		return getSubview(view.getSubview(subviewName), nextMember);
 	}
-
+	
+	/**
+	 * Init JPA and Hibernate in order to process the current request.
+	 */
+	public void resetPersistence() {
+		org.openxava.hibernate.XHibernate.setCmt(false); 
+		if (XSystem.isJava5OrBetter()) org.openxava.jpa.XPersistence.reset();		
+	}
 	
 	/**
 	 * Commit the current JPA manager and Hibernate session, if they exist. <p>

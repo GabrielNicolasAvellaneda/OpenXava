@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: NoClassDefFoundError on AS/400 + WebSphere 6 (bug introduced in OX2.1.2).
+- New static methods for MetaModel: getForPOJO(), getForPOJOClass() and existsForPOJOClass()
 - CSS modified in order to make more visible disable editors.
 - Fix: It did not release transaction nor hibernate session when fail on loading and saving tab preferences.
 - NotZeroValidator (used by default for required="true") now shown a message '{0} is required' is the value is null. Before the message was 'It's not possible assign null to a int'.
