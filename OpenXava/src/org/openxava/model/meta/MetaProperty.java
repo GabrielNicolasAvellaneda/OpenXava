@@ -70,7 +70,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			}
 		}
 		catch (IndexOutOfBoundsException ex) {
-			log.error(XavaResources.getString("valid_value_not_found_for_index_warning"), ex); 			
+			log.error(XavaResources.getString("valid_value_not_found_for_index_warning", new Integer(i)), ex); 			
 			return "[" + i  + "]"; 
 		}
 	}
