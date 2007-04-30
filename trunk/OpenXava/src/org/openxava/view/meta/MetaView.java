@@ -679,6 +679,16 @@ public class MetaView extends MetaElement implements Cloneable {
 		return metaPropertyView.getLabelFormat();
 	}
 	
+	/**
+	 * 
+	 * @return  Empty string if no editor is defined for this property
+	 */
+	public String getEditorForProperty(MetaProperty p) { 
+		MetaPropertyView metaPropertyView = getMetaPropertyViewFor(p.getName());
+		if (metaPropertyView == null) return "";
+		return metaPropertyView.getEditor();
+	}	
+	
 	public int getLabelFormatForReference(MetaReference ref) {
 		MetaReferenceView metaReferenceView = getMetaReferenceViewFor(ref.getName());
 		if (metaReferenceView == null) return MetaPropertyView.NORMAL_LABEL;

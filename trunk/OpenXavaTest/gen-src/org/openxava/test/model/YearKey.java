@@ -17,31 +17,13 @@ public class YearKey
 
    private static final long serialVersionUID = 1L;
 
-   public int id;
-
    public YearKey()
    {
-   }
-
-   public YearKey( int id )
-   {
-      this.id = id;
-   }
-
-   public int getId()
-   {
-      return id;
-   }
-
-   public void setId(int id)
-   {
-      this.id = id;
    }
 
    public int hashCode()
    {
       int _hashCode = 0;
-         _hashCode += (int)this.id;
 
       return _hashCode;
    }
@@ -60,7 +42,6 @@ public class YearKey
       }
       else
       {
-         eq = eq && this.id == pk.id;
       }
 
       return eq;

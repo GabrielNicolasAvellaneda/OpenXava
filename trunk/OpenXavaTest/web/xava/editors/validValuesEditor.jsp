@@ -44,7 +44,7 @@ if (editable) {
 </select>	
 <% 
 } else { 
-	Object description = p.getValidValueLabel(request, value);	
+	Object description = value == -1?"":p.getValidValueLabel(request, value);	
 	if (label) {
 %>
 	<%=description%>
@@ -61,5 +61,5 @@ if (editable) {
 	disabled
 	/>
 <%  } %>
-	<input type="hidden" name="<%=propertyKey%>" value="<%=value%>">	
+	<input type="hidden" name="<%=propertyKey%>" value="<%=value==-1?"":String.valueOf(value)%>">	
 <% } %>			

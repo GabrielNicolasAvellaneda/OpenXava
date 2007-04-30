@@ -22,6 +22,7 @@ public class MetaEditor {
 	private boolean formatterFromType;
 	private Object formatter; 
 	private String propertiesURL;
+	private String name; 
 	private java.lang.String url;	
 	private Map properties;
 	private Collection stereotypesIDepend;
@@ -178,6 +179,14 @@ public class MetaEditor {
 	}
 	public void setFormatterFromType(boolean formatterFromType) {
 		this.formatterFromType = formatterFromType;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	

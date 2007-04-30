@@ -21,7 +21,7 @@ public interface YearHome
    public org.openxava.test.model.YearRemote create(org.openxava.test.model.YearValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
-   public org.openxava.test.model.YearRemote findById(int id)
+   public org.openxava.test.model.YearRemote findBy()
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
    public org.openxava.test.model.YearRemote findByPrimaryKey(org.openxava.test.model.YearKey pk)

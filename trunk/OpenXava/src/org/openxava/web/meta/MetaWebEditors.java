@@ -14,6 +14,7 @@ import org.openxava.web.meta.xmlparse.*;
  */
 public class MetaWebEditors {
 		
+	private static Map editorsByName; 
 	private static Map editorsByType;
 	private static Map editorsByStereotype;
 	private static Map editorsByModelProperty;
@@ -24,22 +25,32 @@ public class MetaWebEditors {
 		if (editorsByType == null) {
 			throw new XavaException("only_from_parse", "MetaWebEditors.addMetaEditorForType");
 		}
-		editorsByType.put(type, editor);
+		editorsByType.put(type, editor);		
 	}
 	
 	public static void addMetaEditorForStereotype(String stereotype, MetaEditor editor) throws XavaException {		
 		if (editorsByStereotype == null) {
 			throw new XavaException("only_from_parse", "MetaWebEditors.addMetaEditorForStereotype");
 		}
-		editorsByStereotype.put(stereotype, editor);
+		editorsByStereotype.put(stereotype, editor);		
 	}
 	
 	public static void addMetaEditorForModelProperty(String property, String model, MetaEditor editor) throws XavaException {
 		if (editorsByModelProperty == null) {
 			throw new XavaException("only_from_parse", "MetaWebEditors.addMetaEditorForModelProperty");
 		}
-		editorsByModelProperty.put(createPropertyModelKey(property, model), editor);
+		editorsByModelProperty.put(createPropertyModelKey(property, model), editor);		
 	}
+	
+	public static void addMetaEditor(MetaEditor editor) throws XavaException {
+		if (editorsByModelProperty == null) {
+			throw new XavaException("only_from_parse", "MetaWebEditors.addMetaEditor");
+		}		
+		if (!Is.emptyString(editor.getName())) {
+			editorsByName.put(editor.getName(), editor);
+		}
+	}
+
 	
 	private static String createPropertyModelKey(String property, String model) {
 		return model + "::" + property;
@@ -79,12 +90,20 @@ public class MetaWebEditors {
 		return (MetaEditor) getEditorsByStereotype().get(stereotype);
 	}
 	
+	
 	/**
 	 * @return Null if no editor registered for the specified property/model
 	 */
 	public static MetaEditor getMetaEditorForModelProperty(String property, String model) throws XavaException {
 		return (MetaEditor) getEditorsByModelProperty().get(createPropertyModelKey(property, model));
 	}
+	
+	/**
+	 * @return Null if no editor registered with the name
+	 */
+	public static MetaEditor getMetaEditorByName(String name) throws XavaException {
+		return (MetaEditor) getEditorsByName().get(name);
+	}	
 		
 	private static Map getEditorsByType() throws XavaException {
 		if (editorsByType == null) {
@@ -109,11 +128,20 @@ public class MetaWebEditors {
 		}
 		return editorsByModelProperty;
 	}
+	
+	private static Map getEditorsByName() throws XavaException {
+		if (editorsByName == null) {
+			initMaps();
+			EditorsParser.setupEditors();
+		}
+		return editorsByName;
+	}	
 		
 	private static void initMaps() {
 		editorsByType = new HashMap();
 		editorsByStereotype = new HashMap();
-		editorsByModelProperty = new HashMap();		
+		editorsByModelProperty = new HashMap();
+		editorsByName = new HashMap(); 
 	}
 
 	
@@ -140,5 +168,5 @@ public class MetaWebEditors {
 		}		
 		return r;
 	}
-	
+
 }

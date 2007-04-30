@@ -598,27 +598,21 @@
       <entity>
          <ejb-name>Year</ejb-name>
 
-         <table-name>XAVATEST.YEAR</table-name>
+         <table-name>Year</table-name>
 
          <cmp-field>
             <field-name>_Year</field-name>
-            <column-name>YEAR</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>id</field-name>
-            <column-name>ID</column-name>
+            <column-name>year</column-name>
 
         </cmp-field>
 
          <query>
             <query-method>
-               <method-name>findById</method-name>
+               <method-name>findBy</method-name>
                <method-params>
-                  <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Year o WHERE o.id = ?1]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Year o]]></jboss-ql>
 
 	     </query>
 

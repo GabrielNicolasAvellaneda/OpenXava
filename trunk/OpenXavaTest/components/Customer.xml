@@ -318,6 +318,15 @@
 		
 	</view>
 	
+	<view name="TypeWithRadioButton">
+		<property-view property="type" editor="ValidValuesRadioButton"/>
+		<members>
+			number; 
+			type; 
+			name;
+			address;
+		</members>
+	</view>	
 				
 	<view model="Address">
 				

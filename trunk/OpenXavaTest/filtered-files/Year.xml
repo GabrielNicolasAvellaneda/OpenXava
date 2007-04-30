@@ -7,16 +7,9 @@
 <component name="Year">
 
 	<entity>
-		<property name="id" type="int" key="true" 
-			size="5" hidden="true"/>
 		<property name="year" type="int" size="4" required="true"/>			  
 	</entity>
-	
-	<entity-mapping table="XAVATEST.YEAR">
-		<property-mapping
-			property="id" column="ID"  cmp-type="Integer"/>
-		<property-mapping
-			property="year" column="YEAR"/>
-	</entity-mapping> 
+
+	<transient/>	
 				
 </component>

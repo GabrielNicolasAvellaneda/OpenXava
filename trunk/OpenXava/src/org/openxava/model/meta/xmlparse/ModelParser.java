@@ -231,7 +231,7 @@ public class ModelParser extends XmlElementsNames {
 		p.setMetaCalculatorDefaultValue(createDefaultValueCalculator(el, lang));
 		if (Is.emptyString(el.getAttribute(xrequired[lang]))) {
 			// Calculating a valid default value for required
-			p.setRequired(p.isKey() && !p.hasCalculatorDefaultValueOnCreate());
+			p.setRequired(p.isKey() && (!(p.hasCalculatorDefaultValueOnCreate() || p.isHidden())));
 		}
 		else {
 			p.setRequired(ParserUtil.getAttributeBoolean(el, xrequired[lang]));

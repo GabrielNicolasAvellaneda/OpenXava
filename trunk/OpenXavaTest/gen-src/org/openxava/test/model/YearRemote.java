@@ -16,9 +16,6 @@ public interface YearRemote
    public void setYear( int newYear )
       throws java.rmi.RemoteException;
 
-   public int getId(  )
-      throws java.rmi.RemoteException;
-
    public org.openxava.test.model.YearData getData(  )
       throws java.rmi.RemoteException;
 

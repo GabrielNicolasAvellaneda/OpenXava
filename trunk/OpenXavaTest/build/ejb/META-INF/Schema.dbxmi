@@ -147,8 +147,6 @@
 
       <columns xmi:id="Year__Year" name="_Year">
       </columns>
-      <columns xmi:id="Year_id" name="id">
-      </columns>
 
    </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_Color" name="" primaryKey="Color_PRIMARYKEY" database="RDBDatabase_1">

@@ -460,7 +460,7 @@ abstract public class MetaModel extends MetaElement {
 		return r;
 	}
 	
-	public MetaView getMetaView(String name) throws XavaException {		
+	public MetaView getMetaView(String name) throws ElementNotFoundException, XavaException {		
 		MetaView r = (MetaView) getMapMetaViews().get(name == null?"":name);
 		if (r == null) {			
 			throw new ElementNotFoundException("view_not_found_in_model", name, getName());

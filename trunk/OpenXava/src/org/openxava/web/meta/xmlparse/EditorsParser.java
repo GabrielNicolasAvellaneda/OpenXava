@@ -32,8 +32,9 @@ public class EditorsParser extends ParserBase {
 	private void addEditors(Element el) throws XavaException {
 		String url = el.getAttribute(xurl[lang]);		
 		if (Is.emptyString(url)) return;
-		MetaEditor editor = new MetaEditor();				
+		MetaEditor editor = new MetaEditor();		
 		editor.setUrl(url);
+		editor.setName(el.getAttribute(xname[lang])); 
 		editor.setFormat(getAttributeBoolean(el, xformat[lang]));
 		editor.setFrame(getAttributeBoolean(el, xwithframe[lang]));		
 		String dependsStereotypes = el.getAttribute(xdepends_stereotypes[lang]);
@@ -52,6 +53,7 @@ public class EditorsParser extends ParserBase {
 			throw new XavaException("formatter_class_and_from_type_not_compatible");
 		}
 		fillSets(el, editor);
+		MetaWebEditors.addMetaEditor(editor);
 		addEditorsForType(editor, el);
 		addEditorsForStereotype(editor, el);
 		addEditorsForModelProperty(editor, el);

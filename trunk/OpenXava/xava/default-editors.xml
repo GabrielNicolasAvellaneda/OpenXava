@@ -8,7 +8,7 @@ In your project use the name 'editors.xml' or 'editores.xml'
 
 <editors>
 
-  <editor url="textEditor.jsp"> 
+  <editor name="TextField" url="textEditor.jsp"> 
     <for-type type="java.lang.String"/>
     <for-type type="java.math.BigDecimal"/>
     <for-type type="java.math.BigInteger"/>
@@ -17,35 +17,37 @@ In your project use the name 'editors.xml' or 'editores.xml'
     <for-type type="long"/>
     <for-type type="java.lang.Long"/>    
   </editor>
-      <editor url="booleanEditor.jsp">
-		<formatter class="org.openxava.formatters.BooleanFormatter"/>      	    <for-type type="boolean"/>    <for-type type="java.lang.Boolean"/>  </editor>        <editor url="dateCalendarEditor.jsp">
+      <editor name="BooleanCheckBox" url="booleanEditor.jsp">
+	<formatter class="org.openxava.formatters.BooleanFormatter"/>      	    <for-type type="boolean"/>    <for-type type="java.lang.Boolean"/>  </editor>        <editor name="DateCalendar" url="dateCalendarEditor.jsp">
 	<formatter class="org.openxava.formatters.DateFormatter"/>    <for-type type="java.util.Date"/>  </editor>    
   
-  <editor url="validValuesEditor.jsp">
+  <editor name="ValidValuesCombo" url="validValuesEditor.jsp">
   	<for-valid-values/>
   </editor>
   
-  <editor url="validValuesEditor.jsp">
+  <editor name="ValidValuesRadioButton" url="radioButtonEditor.jsp"/>  
+  
+  <editor name="Enum" url="validValuesEditor.jsp">
   	<for-type type="java.lang.Enum"/>
   </editor>  
     
-  <editor url="textEditor.jsp">
+  <editor name="StringTime" url="textEditor.jsp">
 	<formatter class="org.openxava.formatters.StringTimeFormatter"/>
     <for-stereotype stereotype="HORA"/>
     <for-stereotype stereotype="TIME"/>		
   </editor>	
   
-  <editor url="textEditor.jsp">
+  <editor name="Timestamp" url="textEditor.jsp">
 	<formatter class="org.openxava.formatters.SQLTimeFormatter"/>
     <for-type type="java.sql.Time"/>
   </editor>	
   
-  <editor url="moneyEditor.jsp">		
+  <editor name="Money" url="moneyEditor.jsp">		
     <for-stereotype stereotype="DINERO"/>
 	<for-stereotype stereotype="MONEY"/>
   </editor>
     
-  <editor url="imageEditor.jsp" format="false">
+  <editor name="Image" url="imageEditor.jsp" format="false">
     <formatter class="org.openxava.formatters.ImageFormatter"/>
     <for-stereotype stereotype="FOTO"/>
 	<for-stereotype stereotype="PHOTO"/>		
@@ -53,36 +55,36 @@ In your project use the name 'editors.xml' or 'editores.xml'
     <for-stereotype stereotype="IMAGE"/>		
   </editor>
   
-  <editor url="textAreaEditor.jsp" frame="true">
+  <editor name="TextArea" url="textAreaEditor.jsp" frame="true">
     <for-stereotype stereotype="TEXTO_GRANDE"/>
-		<for-stereotype stereotype="MEMO"/>
-		<for-stereotype stereotype="TEXT_AREA"/>
+	<for-stereotype stereotype="MEMO"/>
+	<for-stereotype stereotype="TEXT_AREA"/>
   </editor>
   
-  <editor url="labelEditor.jsp">
-		<formatter from-type="true"/>		
+  <editor name="Label" url="labelEditor.jsp">
+	<formatter from-type="true"/>		
     <for-stereotype stereotype="ETIQUETA"/>
     <for-stereotype stereotype="LABEL"/>
   </editor>
       
-  <editor url="dateTimeCalendarEditor.jsp">
+  <editor name="DateTimeCalendar" url="dateTimeCalendarEditor.jsp">
 	<formatter class="org.openxava.formatters.DateTimeFormatter"/>
 	<for-type type="java.sql.Timestamp"/> 
     <for-stereotype stereotype="DATETIME"/>
     <for-stereotype stereotype="FECHAHORA"/>
   </editor>    
   
-  <editor url="boldLabelEditor.jsp">
+  <editor name="BoldLabel" url="boldLabelEditor.jsp">
 	<for-stereotype stereotype="ETIQUETA_NEGRITA"/>
     <for-stereotype stereotype="BOLD_LABEL"/>
   </editor>
   
-  <editor url="galleryEditor.jsp">
+  <editor name="Gallery" url="galleryEditor.jsp">
 	<for-stereotype stereotype="IMAGES_GALLERY"/>
 	<for-stereotype stereotype="GALERIA_IMAGENES"/>
   </editor>
   
-   <editor url="textEditor.jsp"> 
+   <editor name="ZeroFilled" url="textEditor.jsp"> 
    	<property name="fillWithZeros" value="true"/>
 	<for-stereotype stereotype="ZEROS_FILLED"/>
 	<for-stereotype stereotype="RELLENADO_CON_CEROS"/>
@@ -96,7 +98,7 @@ In your project use the name 'editors.xml' or 'editores.xml'
 	<for-stereotype stereotype="__ACTION__"/>
   </editor>
   
-  <editor url="htmlEditor.jsp" frame="true">
+  <editor name="HtmlText" url="htmlEditor.jsp" frame="true">
     <for-stereotype stereotype="HTML_TEXT"/>
     <for-stereotype stereotype="TEXTO_HTML"/>
   </editor>

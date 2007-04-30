@@ -16,8 +16,6 @@ public class YearValue
 
    private int year;
    private boolean yearHasBeenSet = false;
-   private int id;
-   private boolean idHasBeenSet = false;
 
    public YearValue()
    {
@@ -28,8 +26,6 @@ public class YearValue
    {
 	  this.year = otherValue.year;
 	  yearHasBeenSet = true;
-	  this.id = otherValue.id;
-	  idHasBeenSet = true;
    }
 
    public int getYear()
@@ -46,26 +42,12 @@ public class YearValue
    public boolean yearHasBeenSet(){
 	  return yearHasBeenSet;
    }
-   public int getId()
-   {
-	  return this.id;
-   }
-
-   public void setId( int id )
-   {
-	  this.id = id;
-	  idHasBeenSet = true;
-   }
-
-   public boolean idHasBeenSet(){
-	  return idHasBeenSet;
-   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("year=" + getYear() + " " + "id=" + getId());
+	  str.append("year=" + getYear());
 	  str.append('}');
 
 	  return(str.toString());
@@ -79,7 +61,6 @@ public class YearValue
    protected boolean hasIdentity()
    {
 	  boolean ret = true;
-	  ret = ret && idHasBeenSet;
 	  return ret;
    }
 
@@ -93,7 +74,6 @@ public class YearValue
 		 YearValue that = (YearValue) other;
 		 if ( ! that.hasIdentity() ) return false;
 		 boolean lEquals = true;
-		 lEquals = lEquals && this.id == that.id;
 
 		 lEquals = lEquals && isIdentical(that);
 
@@ -124,8 +104,6 @@ public class YearValue
    public int hashCode(){
 	  int result = 17;
       result = 37*result + (int) year;
-
-      result = 37*result + (int) id;
 
 	  return result;
    }

@@ -13,7 +13,6 @@ public class YearData
 
    private static final long serialVersionUID = 1L;
    private java.lang.Integer _Year;
-   private int id;
 
    public YearData()
    {
@@ -22,12 +21,11 @@ public class YearData
    public YearData( YearData otherData )
    {
       set_Year(otherData.get_Year());
-      setId(otherData.getId());
 
    }
 
    public org.openxava.test.model.YearKey getPrimaryKey() {
-     org.openxava.test.model.YearKey pk = new org.openxava.test.model.YearKey(this.getId());
+     org.openxava.test.model.YearKey pk = new org.openxava.test.model.YearKey();
      return pk;
    }
 
@@ -40,20 +38,11 @@ public class YearData
       this._Year = _Year;
    }
 
-   public int getId()
-   {
-      return this.id;
-   }
-   public void setId( int id )
-   {
-      this.id = id;
-   }
-
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Year=" + get_Year() + " " + "id=" + getId());
+      str.append("_Year=" + get_Year());
       str.append('}');
 
       return(str.toString());
@@ -74,7 +63,6 @@ public class YearData
          {
             lEquals = lEquals && this._Year.equals( lTest._Year );
          }
-         lEquals = lEquals && this.id == lTest.id;
 
          return lEquals;
       }
@@ -89,8 +77,6 @@ public class YearData
       int result = 17;
 
       result = 37*result + ((this._Year != null) ? this._Year.hashCode() : 0);
-
-      result = 37*result + (int) id;
 
       return result;
    }
