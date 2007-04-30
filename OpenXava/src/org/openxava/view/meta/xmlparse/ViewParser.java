@@ -233,6 +233,7 @@ public class ViewParser extends XmlElementsNames {
 		a.setPropertyName(el.getAttribute(xproperty[lang]));
 		a.setLabel(el.getAttribute(xlabel[lang]));	
 		a.setReadOnly(ParserUtil.getAttributeBoolean(el, xread_only[lang]));
+		a.setEditor(el.getAttribute(xeditor[lang])); 
 		String labelFormat = el.getAttribute(xlabel_format[lang]);
 		if (XNORMAL[lang].equals(labelFormat)) a.setLabelFormat(MetaPropertyView.NORMAL_LABEL);
 		else if (XSMALL[lang].equals(labelFormat)) a.setLabelFormat(MetaPropertyView.SMALL_LABEL);

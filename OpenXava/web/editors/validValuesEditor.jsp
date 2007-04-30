@@ -61,5 +61,5 @@ if (editable) {
 	disabled
 	/>
 <%  } %>
-	<input type="hidden" name="<%=propertyKey%>" value="<%=value==-1?"":value%>">	
+	<input type="hidden" name="<%=propertyKey%>" value="<%=value==-1?"":String.valueOf(value)%>">	
 <% } %>			

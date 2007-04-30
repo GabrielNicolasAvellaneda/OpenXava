@@ -19,7 +19,6 @@ public abstract class YearCMP
          dataHolder = new org.openxava.test.model.YearData();
 
          dataHolder.set_Year( get_Year() );
-         dataHolder.setId( getId() );
 
       }
       catch (RuntimeException e)
@@ -89,7 +88,6 @@ public abstract class YearCMP
       try
          {
             YearValue.setYear( getYear() );
-            YearValue.setId( getId() );
 
          }
          catch (Exception e)
@@ -119,9 +117,5 @@ public abstract class YearCMP
    public abstract java.lang.Integer get_Year() ;
 
    public abstract void set_Year( java.lang.Integer _Year ) ;
-
-   public abstract int getId() ;
-
-   public abstract void setId( int id ) ;
 
 }

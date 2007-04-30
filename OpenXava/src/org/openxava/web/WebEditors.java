@@ -7,6 +7,7 @@ import javax.servlet.http.*;
 import org.apache.commons.logging.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
+import org.openxava.view.meta.*;
 import org.openxava.web.meta.*;
 
 /**
@@ -126,6 +127,28 @@ public class WebEditors {
 			return PREFIX + "notAvailableEditor.jsp";
 		}
 	}
+	
+	public static String getUrl(MetaProperty p, String viewName) throws XavaException { 	
+		if (!Is.emptyString(viewName) && p.getMetaModel() != null) {
+			try {				
+				MetaView metaView = p.getMetaModel().getMetaView(viewName);
+				String editorName = metaView.getEditorForProperty(p);
+				if (!Is.emptyString(editorName)) {
+					MetaEditor metaEditor = MetaWebEditors.getMetaEditorByName(editorName);
+					if (metaEditor != null) {
+						return PREFIX + metaEditor.getUrl();
+					}
+					else {
+						log.warn(XavaResources.getString("editor_by_name_for_property_not_found", editorName, p.getName()));
+					}
+				}
+			}
+			catch (ElementNotFoundException ex) {
+				log.warn(XavaResources.getString("editor_for_property_problem", p.getName()));				
+			}
+		}
+		return getUrl(p);		
+	}	
 		
 	/** 
 	 * If a depends on b
