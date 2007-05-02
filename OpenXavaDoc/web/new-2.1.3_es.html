@@ -1,4 +1,40 @@
-<h4>Componentes transitorios</h4>
+Estas son alguna de la nuevas caracter&iacute;stica en OpenXava 2.1.3:<br>
+<ul>
+  <li><a href="#Escoger_un_editor_para_una_propiedad_en">Escoger un
+editor para una propiedad en una vista</a></li>
+  <li><a href="#Componentes_transitorios">Componentes transitorios</a></li>
+  <li><a href="#Mapeo_por_defecto">Mapeo por defecto</a></li>
+</ul>
+<h4><a name="Escoger_un_editor_para_una_propiedad_en"></a>Escoger un
+editor para una propiedad en una vista</h4>
+<p>OpenXava usa por defecto el editor asociado al estereotipo o
+tipo de la propiedad, pero podemos especificar un editor concreto
+para visualizar una propiedad en una vista.</p>
+<p>Por ejemplo, OpenXava usa un combo para editar las propiedades de
+tipo <code class="c&oacute;digo-western">valores-posibles</code>,
+pero si queremos visualizar una propiedad de este tipo en alguna
+vista concreta usando un <i>radio button</i> podemos definir esa
+vista de esta forma:</p>
+<pre>&lt;vista nombre="TipoConRadioButton"&gt;<br>	&lt;vista-propiedad propiedad="tipo" editor="ValidValuesRadioButton"/&gt;<br>	&lt;miembros&gt;codigo; tipo; nombre; direccion&lt;/miembros&gt;<br>&lt;/vista&gt;</pre>
+<p>En este caso para visualizar/editar se usar&aacute; el editor
+<code class="c&oacute;digo-western">ValidValuesRadioButton</code>, en
+lugar de del editor por defecto. <code class="c&oacute;digo-western">ValidValueRadioButton</code>
+est&aacute; definido en <i><span style=""><span
+ style="background: transparent none repeat scroll 0%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">OpenXava/xava/default-editors.xml</span></span></i>
+como sigue:</p>
+<pre>&lt;editor name="ValidValuesRadioButton" url="radioButtonEditor.jsp"/&gt;</pre>
+<p>Este editor est&aacute; incluido con OpenXava, pero nosotros
+podemos crear nuestro propios editores con nuestro propios JSPs y
+declararlos en el archivo <i><span style=""><span
+ style="background: transparent none repeat scroll 0%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">xava/editores.xml</span></span></i>
+de nuestro proyecto.</p>
+<p>Esta caracter&iacute;stica es para cambiar el editor solo en una
+vista. Si lo que se pretende es cambiar el editor para un
+estereotipo, tipo o una propiedad de un modelo a nivel de
+aplicaci&oacute;n
+entonces lo mejor es configurarlo usando el archivo <i><span style=""><span
+ style="background: transparent none repeat scroll 0%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">xava/editors.xml</span></span></i>.</p>
+<h4><a name="Componentes_transitorios"></a>Componentes transitorios</h4>
 <p>Hasta ahora, cuando necesitabamos crear un di&aacute;logo (una vista
 sin vinculaci&oacute;n a ninguna tabla de la base de datos)
 debiamos&nbsp;crear un componente mapeado a una tabla ficticia con
@@ -12,25 +48,7 @@ sigue: </p>
  style="font-family: monospace;">&lt;transitorio/&gt;</span> al final
 de la defnici&oacute;n del componente, justo en la parte del mapeo. No
 hemos de poner mapeo ni declarar ninguna propiedad como clave.</p>
-<h4>Default mapping</h4>
-<meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
-<title></title>
-<meta name="GENERATOR" content="OpenOffice.org 2.2  (Linux)">
-<meta name="CREATED" content="20050307;16505900">
-<meta name="CHANGEDBY" content="Javier Paniza">
-<meta name="CHANGED" content="20070425;10362900">
-<style type="text/css">
-	<!--
-		@page { size: 21cm 29.7cm; margin: 2cm }
-		P { margin-bottom: 0.21cm; text-align: justify }
-		P.c�digo-western { background: #e6e6e6; border: 1px solid #000000; padding: 0.25cm; font-family: "Courier", monospace; font-size: 9pt; font-weight: medium }
-		P.c�digo-cjk { background: #e6e6e6; border: 1px solid #000000; padding: 0.25cm; font-weight: medium }
-		P.c�digo-ctl { background: #e6e6e6; border: 1px solid #000000; padding: 0.25cm }
-		CODE.c�digo-western { font-size: 10pt; font-weight: medium; background: transparent }
-		CODE.c�digo-cjk { background: transparent; font-weight: medium }
-		CODE.c�digo-ctl { background: transparent; font-weight: medium }
-	-->
-	</style>
+<h4><a name="Mapeo_por_defecto"></a>Mapeo por defecto</h4>
 <p>Desde la versi&oacute;n 2.1.3 OpenXava permite definir componentes
 sin mapeo, y se asume un mapeo por defecto para &eacute;l. Por
 ejemplo, podemos escribir:</p>
