@@ -1,6 +1,23 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 2.1.3 (2007-5-2)
+-------------------------
+- New editor radionButton.jsp to display/edit valid-values in radio button format.
+- <property-view/> has the attribute editor to specify a editor to a property for use only in that view.
+- It's possible to give name to a edito in editors.xml
+- A key property marked as hidden="true" without required attribute assumes required="true".
+- Fix: NoClassDefFoundError on AS/400 + WebSphere 6 (bug introduced in OX2.1.2).
+- New static methods for MetaModel: getForPOJO(), getForPOJOClass() and existsForPOJOClass()
+- CSS modified in order to make more visible disable editors.
+- Fix: It did not release transaction nor hibernate session when fail on loading and saving tab preferences.
+- NotZeroValidator (used by default for required="true") now shown a message '{0} is required' is the value is null. Before the message was 'It's not possible assign null to a int'.
+- Value of type int, long and short used as key are parsed as null (before as 0) if they are used as key, this is for better support of referenced using 0 as valid key.
+- Default mapping: If mapping is not specified in a component definition a default one is assumed.
+- Support for Transient Components: Using the <transient/> instead of mappings on defining the component.
+- Fix: On modifying view properties was not validated.
+- Fix: When create a new object from a reference the on-change action associated to the key of the reference is not thrown.
+
 OpenXava 2.1.2 (2007-4-12)
 --------------------------
 - Fix: Cache in DataSourceConnectionProvider by component did not work
