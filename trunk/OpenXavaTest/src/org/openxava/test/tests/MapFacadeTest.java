@@ -6,6 +6,7 @@ import java.util.*;
 import org.openxava.hibernate.*;
 import org.openxava.jpa.*;
 import org.openxava.model.*;
+import org.openxava.test.model.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
 
@@ -29,6 +30,13 @@ public class MapFacadeTest extends TestCase {
 	protected void tearDown() throws Exception {
 		XHibernate.commit();
 		XPersistence.commit();
+	}
+	
+	public void testModelValidatorWithNullReference() throws Exception {
+		Map values = new HashMap();
+		values.put("oid", "2004:9:5"); // It must exist		
+		values.put("product", null);		
+		MapFacade.validate("Invoice.InvoiceDetail", values);		
 	}
 	
 	public void testBigDecimalKeyMapAlthoughPropertyIsInt() throws Exception {

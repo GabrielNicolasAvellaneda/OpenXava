@@ -515,10 +515,11 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}		
 	}
 		
-	private Messages validate(String modelName, Map values, boolean creating) throws XavaException, RemoteException { 			
-		MetaEntity metaEntity = (MetaEntity) MetaComponent.get(modelName).getMetaEntity();		
+	private Messages validate(String modelName, Map values, boolean creating) throws XavaException, RemoteException { 							
 		Messages validationErrors = new Messages(); 				
-		validate(validationErrors, metaEntity, values, null, null, creating);
+		MetaModel metaModel = getMetaModel(modelName);
+		Map key = metaModel.extractKeyValues(values);
+		validate(validationErrors, metaModel, values, key, null, creating); 
 		return validationErrors;
 	}
 	
@@ -1096,9 +1097,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		return findEntity(metaEntity.getName(), keyValues);
 	}
 
-	private Map extractKeyValues(MetaEntity metaEntity, Map values)
+	private Map extractKeyValues(MetaModel metaModel, Map values)
 		throws XavaException {
-		return metaEntity.extractKeyValues(values);
+		return metaModel.extractKeyValues(values);
 	}
 
 	private void removeKeyFields(MetaModel metaModel, Map values)
@@ -1313,7 +1314,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 						}											
 					}					
 					if (set.getPropertyNameFrom().equals(containerReferenceName)) {					
-						if (containerKey == null) {							
+						if (containerKey == null) {									
 							Object object = findEntity(metaModel, keyValues);
 							value = Objects.execute(object, "get" + metaModel.getMetaModelContainer().getName());
 						}
@@ -1336,7 +1337,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 						else {							
 							MetaModel referencedEntity = ref.getMetaModelReferenced();
 							try {
-								value = findEntity(referencedEntity, (Map) value);								
+								if (value != null) {
+									value = findEntity(referencedEntity, (Map) value);
+								}
 							}
 							catch (ObjectNotFoundException ex) {								
 								value = null;
