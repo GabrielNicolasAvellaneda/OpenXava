@@ -487,7 +487,7 @@ public class MapFacade {
 	 * Only validates the sent data, it does not certify that exist all needed data
 	 * to create a new object.<br> 
 	 * 
-	 * @param modelName  OpenXava model name. Not null.
+	 * @param modelName  OpenXava model name, can be an qualified aggregate. Not null.
 	 * @param values  Values to validate. Not null. <i>By value</i> semantics.
 	 * @return Message list with validation errors. Not null.
 	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
