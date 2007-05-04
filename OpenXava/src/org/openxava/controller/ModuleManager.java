@@ -31,7 +31,7 @@ public class ModuleManager {
 	static {		
 		MetaControllers.setContext(MetaControllers.WEB);		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
-		log.info("OpenXava 2.1.3 (2007-05-02)");
+		log.info("OpenXava 2.1.4 BETA (2007-05-xx)");
 	}
 	
 	private static int nextOid = 0; 

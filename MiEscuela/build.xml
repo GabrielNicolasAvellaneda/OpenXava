@@ -45,7 +45,7 @@
 	Construye la aplicación en formato portlets. 
 	-->		
 	<target name="generarPortlets"> 
-		<ant antfile="../OpenXava/build.xml" target="generarPortlets"/>
+		<ant antfile="../OpenXava/build.xml" target="generatePortlets"/>
 	</target>
 			
 	<!-- 

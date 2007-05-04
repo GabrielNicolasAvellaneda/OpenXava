@@ -786,23 +786,30 @@
 	</target>
 	
 	<target name="generatePortlets">
-		<touch file="../${project}/xava/application.xml"/>
+		<antcall target="touchApplicationXML"/>
 		<delete dir="${dist.portlets.dir}"/>		
 		<antcall target="createPortletsWar">
 			<param name="generate.jetspeed2.files" value="false"/>
 		</antcall>
 	</target>
 	
-	<target name="generarPortlets">
-		<touch file="../${project}/xava/aplicacion.xml"/>
-		<delete dir="${dist.portlets.dir}"/>		
-		<antcall target="createPortletsWar">
-			<param name="generate.jetspeed2.files" value="false"/>
-		</antcall>
+	<target name="touchApplicationXML">
+		<available file="../${project}/xava/application.xml" property="application.xml.available"/>
+		<available file="../${project}/xava/aplicacion.xml" property="aplicacion.xml.available"/>
+		<antcall target="touchApplicationXML_en"/>
+		<antcall target="touchApplicationXML_es"/>
 	</target>
 		
-	<target name="redeployPortlets">
+	<target name="touchApplicationXML_en" if="application.xml.available">
 		<touch file="../${project}/xava/application.xml"/>
+	</target>
+		
+	<target name="touchApplicationXML_es" if="aplicacion.xml.available">
+		<touch file="../${project}/xava/aplicacion.xml"/>
+	</target>
+				
+	<target name="redeployPortlets">
+		<antcall target="touchApplicationXML"/>
 		<delete dir="${dist.portlets.dir}"/>
 		<ant antfile="../OpenXava/build.xml" target="deployPortlets"/>
 	</target>	
