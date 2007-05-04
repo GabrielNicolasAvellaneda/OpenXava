@@ -127,7 +127,8 @@ public class XPersistence {
 		if (m.isOpen()) {			
 			EntityTransaction t = (EntityTransaction) m.getTransaction();
 			try {
-				t.commit(); 
+				if (t.isActive()) t.commit();
+				else m.flush();
 			}
 			finally {
 				currentManager.set(null);

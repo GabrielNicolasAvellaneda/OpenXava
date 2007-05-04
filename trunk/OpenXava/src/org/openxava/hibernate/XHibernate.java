@@ -96,7 +96,7 @@ public class XHibernate {
 		if (s.isOpen()) {			
 			Transaction t = (Transaction) currentTransaction.get();
 			try {
-				if (t != null) t.commit();
+				if (t != null && t.isActive()) t.commit();
 				else s.flush();
 			}
 			finally {
