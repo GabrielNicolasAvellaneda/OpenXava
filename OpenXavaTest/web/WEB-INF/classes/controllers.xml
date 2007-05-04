@@ -155,7 +155,7 @@
 		<action name="removeSelected" confirm="true"
 			class="org.openxava.test.actions.RemoveSelectedDeliveryDetailsAction">
 			<use-object name="xava_view"/>
-		</action>												
+		</action>				
 	</controller>	
 	
 	<controller name="Products">	
