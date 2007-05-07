@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Required icon in editors with frame was not nicely displayed inside Liferay Portal.
+- Fix: In websphere 6.0 using WebSphereTransactionManagerLookup a lot of warning messages is shown on commit transaction.
+
 - Fix: Ant targets 'generatePorlets' and 'redeployPortlets' touched application.xml although it did not exists. This created an empty application.xml file in Spanish projects.
 - Ant target 'generarPortlets' has been removed from OpenXava/build.xml, 'generatePortlets' can be used instead.
 - Fix: MapFacade.setValue and MapFacade.validate crash when a reference with null value used in a model validator is sent.
