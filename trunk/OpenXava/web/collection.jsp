@@ -106,8 +106,13 @@ while (itAggregates.hasNext()) {
 		String propertyName = p.getName();
 		value = Maps.getValueFromQualifiedName(row, propertyName);
 		if (p.hasValidValues()) {
-			Number validValue = (Number) value;			
-			fvalue = validValue == null?"":p.getValidValueLabel(request, validValue.intValue());
+			if (value instanceof Number) {
+				fvalue = p.getValidValueLabel(request, ((Number) value).intValue());
+			}
+			else {
+				// In this case value is a enum type
+				fvalue = p.getValidValueLabel(request, value);
+			}
 		}
 		else {
 			fvalue = WebEditors.format(request, p, value, errors);	

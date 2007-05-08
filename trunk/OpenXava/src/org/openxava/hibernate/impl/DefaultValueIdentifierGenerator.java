@@ -98,7 +98,7 @@ public class DefaultValueIdentifierGenerator implements IdentifierGenerator, Con
 		info.containerKey = containerKey;		
 	}
 	
-	static int getCurrentCounter() {
+	static int getCurrentCounter() {	
 		AggregateOidInfo info = (AggregateOidInfo) currentAggregateOidInfo.get();
 		if (info == null) return 0;
 		return info.counter;
