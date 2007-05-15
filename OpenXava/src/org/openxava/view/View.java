@@ -1,6 +1,7 @@
 package org.openxava.view;
 
 import java.lang.reflect.*;
+import java.rmi.*;
 import java.util.*;
 
 import javax.ejb.*;
@@ -11,6 +12,7 @@ import org.openxava.actions.*;
 import org.openxava.calculators.*;
 import org.openxava.component.*;
 import org.openxava.controller.*;
+import org.openxava.jpa.*;
 import org.openxava.mapping.*;
 import org.openxava.model.*;
 import org.openxava.model.meta.*;
@@ -1151,7 +1153,7 @@ public class View implements java.io.Serializable {
 					while (hasNext) {												 
 						String propertyName = (String) itAlreadyPut.next();						 
 						try {
-							hasToSearchOnChangeIfSubview = false;							
+							hasToSearchOnChangeIfSubview = false;
 							propertyChanged(propertyName);							
 						}
 						finally {
@@ -1242,8 +1244,8 @@ public class View implements java.io.Serializable {
 					while (hasNext) {
 						String propertyName = (String) itAlreadyPut.next();										
 						try {
-							hasToSearchOnChangeIfSubview = false;
-							propertyChanged(propertyName);
+							hasToSearchOnChangeIfSubview = false;							
+							propertyChanged(propertyName);							
 						}
 						finally {
 							hasToSearchOnChangeIfSubview = true;						
@@ -1722,8 +1724,8 @@ public class View implements java.io.Serializable {
 					changedProperty = getMetaModel().getMetaProperty(name);					
 					if (!(changedProperty.isKey() && changedProperty.isHidden())) throw ex;
 				}	
-				propertyChanged(changedProperty, name);
-				if (getParent() != null) {
+				propertyChanged(changedProperty, name);				
+				if (getParent() != null) {					
 					String qualifiedName = Is.emptyString(getMemberName())?name:(getMemberName() + "." + name);
 					getParent().propertyChanged(changedProperty, qualifiedName);
 				}
@@ -1754,8 +1756,8 @@ public class View implements java.io.Serializable {
 			while (it.hasNext()) {
 				MetaProperty pr = (MetaProperty) it.next();				
 				if (dependsOn(pr, changedProperty, changedPropertyQualifiedName)) {
-					if (pr.hasCalculator()) {
-						calculateValue(pr, pr.getMetaCalculator(), pr.getCalculator(), errors, messages);					
+					if (pr.hasCalculator()) {						
+						calculateValue(pr, pr.getMetaCalculator(), pr.getCalculator(), errors, messages);											
 					}
 					if (pr.hasDefaultValueCalculator() && isEmptyValue(getValue(pr.getName()))) {					
 						calculateValue(pr, pr.getMetaCalculatorDefaultValue(), pr.createDefaultValueCalculator(), errors, messages);					
@@ -1893,14 +1895,19 @@ public class View implements java.io.Serializable {
 				}											
 			}		
 						
-			if (calculator instanceof IModelCalculator) { 
-				((IModelCalculator) calculator).setModel(metaProperty.getMetaModel().toPOJO(getAllValues()));
+			Object pojo = null; 
+			if (calculator instanceof IModelCalculator) { 				
+				pojo = getPOJO();
+				((IModelCalculator) calculator).setModel(pojo);
 			}
-			if (calculator instanceof IEntityCalculator) { 
-				((IEntityCalculator) calculator).setEntity(metaProperty.getMetaModel().toPOJO(getAllValues()));
+			if (calculator instanceof IEntityCalculator) {
+				if (pojo == null) pojo = getPOJO();
+				((IEntityCalculator) calculator).setEntity(pojo); 
 			}
 			
-			Object newValue = calculator.calculate();			
+			Object newValue = calculator.calculate();
+			PersistenceFacade.refreshIfManaged(pojo); 
+			
 			if (calculator instanceof IOptionalCalculator) {
 				if (!((IOptionalCalculator) calculator).isCalculate()) {
 					return;
@@ -1914,6 +1921,17 @@ public class View implements java.io.Serializable {
 		catch (Exception ex) {
 			log.warn(XavaResources.getString("value_calculate_warning", metaProperty),ex);
 		}		
+	}
+
+	private Object getPOJO() throws XavaException, ObjectNotFoundException, RemoteException, FinderException {
+		if (isKeyEditable()) {		
+			return getMetaModel().toPOJO(getParentIfSectionOrGroup().getAllValues());		
+		}
+		else {
+			Object pojo = MapFacade.findEntity(getModelName(), getParentIfSectionOrGroup().getKeyValues());
+			getMetaModel().fillPOJO(pojo, getParentIfSectionOrGroup().getAllValues());			
+			return pojo;			
+		}
 	}
 
 	private boolean hasDependentsProperties(MetaProperty p) {		
@@ -2989,7 +3007,7 @@ public class View implements java.io.Serializable {
 		if (objects == null) return null;
 		return objects.get(name);
 	}
-	
+		
 	/**
 	 * Remove from this view an object previously associated with @link #putObject(String, Object)
 	 * @param name Name of the object to remove.

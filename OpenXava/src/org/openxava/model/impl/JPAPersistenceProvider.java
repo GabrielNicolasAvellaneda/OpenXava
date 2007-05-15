@@ -98,4 +98,10 @@ public class JPAPersistenceProvider extends POJOPersistenceProviderBase {
 		return it.next();
 	}
 
+	public void refreshIfManaged(Object object) {
+		if (XPersistence.getManager().contains(object)) {
+			XPersistence.getManager().refresh(object);		
+		}
+	}
+
 }

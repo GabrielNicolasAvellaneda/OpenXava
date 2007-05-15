@@ -29,7 +29,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	private static Log log = LogFactory.getLog(MapFacadeBean.class);
 	private javax.ejb.SessionContext sessionContext = null;
 	private final static long serialVersionUID = 3206093459760846163L;
-	private static IPersistenceProvider persistenceProvider;
+	
 	
 	
 	public Object create(String user, String modelName, Map values)
@@ -1555,18 +1555,10 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		getPersistenceProvider().reassociate(entity); 
 	}
 
-	private static IPersistenceProvider getPersistenceProvider() throws RemoteException {
-		if (persistenceProvider == null) {
-			try {
-				persistenceProvider = (IPersistenceProvider) Class.forName(XavaPreferences.getInstance().getPersistenceProviderClass()).newInstance();
-			}
-			catch (Exception ex) {
-				log.error(ex.getMessage(), ex);
-				throw new RemoteException(XavaResources.getString("persistence_provider_creation_error"));
-			}
-		}		
-		return persistenceProvider;
+	private IPersistenceProvider getPersistenceProvider() {
+		return PersistenceProviderFactory.getInstance();
 	}
+
 
 }
 
