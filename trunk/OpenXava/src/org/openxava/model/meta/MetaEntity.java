@@ -17,10 +17,6 @@ public class MetaEntity extends MetaModel {
 	
 	private Collection keyFields;
 	private MetaEJB metaEJB;
-	private boolean annotatedEJB3;
-	
-	
-		
 	/**
 	 * @return The names of key fields. Of <tt>String</tt>.
 	 */
@@ -80,14 +76,6 @@ public class MetaEntity extends MetaModel {
 			}
 		}
 		return metaEJB;
-	}
-
-	public boolean isAnnotatedEJB3() {
-		return annotatedEJB3;
-	}
-
-	public void setAnnotatedEJB3(boolean annotatedEJB3) {
-		this.annotatedEJB3 = annotatedEJB3;
 	}
 		
 }

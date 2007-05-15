@@ -213,7 +213,7 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		return create(metaModel, values);
 	}
 	
-	public Object findByAnyProperty(MetaModel metaModel, Map keyValues) throws ObjectNotFoundException, FinderException, XavaException {
+	public Object findByAnyProperty(MetaModel metaModel, Map keyValues) throws ObjectNotFoundException, FinderException, XavaException {		
 		return findUsingQuery(metaModel, Maps.treeToPlain(keyValues), false);
 	}
 	
@@ -257,11 +257,11 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		if (!hasCondition) { 
 			throw new ObjectNotFoundException(XavaResources.getString("object_by_any_property_not_found", values));
 		}
-										
+								
 		Object query = createQuery(queryString.toString());				
 		for (Iterator it=values.iterator(); it.hasNext(); it.hasNext()) {
 			Map.Entry en = (Map.Entry) it.next();
-			String name = (String) en.getKey();
+			String name = (String) en.getKey();			
 			Object value = convert(metaModel, name, en.getValue());			
 			setParameterToQuery(query, Strings.change(name, ".", "_"), value);
 		}		
@@ -285,7 +285,7 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		
 		Object result = value;
 
-		if (mapping != null && mapping.hasConverter()) {
+		if (mapping != null && mapping.hasConverter() && !metaModel.isAnnotatedEJB3()) {			
 			result = mapping.getConverter().toDB(result);
 		}
 		else if (result instanceof java.math.BigDecimal) {

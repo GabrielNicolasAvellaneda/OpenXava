@@ -281,5 +281,9 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 	public Object getContainer(MetaModel metaModel, Map containerKeyValues) throws XavaException {
 		return getKey(metaModel.getMetaModelContainer(), containerKeyValues);
 	}
+
+	public void refreshIfManaged(Object object) {
+		// An EJB Entity Bean always is fresh		
+	}
 	
 }

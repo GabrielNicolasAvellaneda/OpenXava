@@ -76,8 +76,8 @@ abstract public class MetaModel extends MetaElement {
 	private MetaEJB metaEJB;
 	private String pojoClassName;
 	private Collection metaReferencesToEntity;
-	
-	
+	private boolean annotatedEJB3;
+		
 	
 	/**
 	 * All models (Entities and Aggregates) with a mapping associated.
@@ -1269,23 +1269,46 @@ abstract public class MetaModel extends MetaElement {
 		}
 		return mapMetaPropertiesView;
 	}
-	
+		
 	/**
 	 * Create a POJO corresponding to this model, and populate it with
-	 * the values sended in map format. <p>
+	 * the sent values in map format. <p>
 	 * 
 	 * @param values  Values to populate the pojo. Can contains nested maps. Cannot be null 
 	 */
 	public Object toPOJO(Map values) throws XavaException {
-		try {
-			values = Maps.plainToTree(values); 
+		try {			 
 			Object pojo = getPOJOClass().newInstance();
+			fillPOJO(pojo, values);
+			return pojo;
+		}
+		catch (Exception ex) {
+			log.error(ex.getMessage(), ex);
+			throw new XavaException("to_pojo_error", getName());
+		}		
+	}
+	
+	/** 
+	 * Fill an already existing POJO corresponding to this model, and populate it with
+	 * the sent values in map format. <p>
+	 * 
+	 * @param values  Values to populate the pojo. Can contain nested maps. Cannot be null 
+	 */
+	public void fillPOJO(Object pojo, Map values) throws XavaException { 
+		try {
+			values = Maps.plainToTree(values); 			
 			PropertiesManager pm = new PropertiesManager(pojo);			
 			for (Iterator it=values.entrySet().iterator(); it.hasNext();) {
 				Map.Entry en = (Map.Entry) it.next();
 				if (en.getValue() instanceof Map) {
 					MetaModel referencedModel = getMetaReference((String)en.getKey()).getMetaModelReferenced();
-					pm.executeSet((String)en.getKey(), referencedModel.toPOJO((Map) en.getValue()));
+					Object referencedObject = pm.executeGet((String)en.getKey());
+					if (referencedObject == null) {
+						pm.executeSet((String)en.getKey(), referencedModel.toPOJO((Map) en.getValue()));
+					}
+					else {
+						referencedModel.fillPOJO(referencedObject, (Map) en.getValue());
+					}
 				}
 				else {
 					MetaProperty property = getMetaProperty((String)en.getKey());
@@ -1311,14 +1334,15 @@ abstract public class MetaModel extends MetaElement {
 						}
 					}
 				}
-			}
-			return pojo;
+			}			
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
-			throw new XavaException("to_pojo_error", getName());
+			throw new XavaException("to_pojo_error", getName()); 
 		}		
 	}
+	
+	
 	
 	/**
 	 * Convert an object of this model in a map of values. <p>
@@ -1517,6 +1541,9 @@ abstract public class MetaModel extends MetaElement {
 	}
 
 
+	/**
+	 * Does not include <i>Transient</i> properties
+	 */
 	public Collection getRecursiveQualifiedPropertiesNames() throws XavaException {
 		if (recursiveQualifiedPropertiesNames == null) {
 			Collection parents = new HashSet();
@@ -1531,6 +1558,7 @@ abstract public class MetaModel extends MetaElement {
 		for (Iterator it = getMembersNames().iterator(); it.hasNext();) {
 			Object name = it.next();
 			if (getMapMetaProperties().containsKey(name)) {
+				if (getMetaProperty((String)name).isTransient()) continue; 
 				if (Is.emptyString(prefix)) result.add(name);
 				else result.add(prefix + name);				
 			}
@@ -1664,6 +1692,14 @@ abstract public class MetaModel extends MetaElement {
 	public void setMetaEJB(MetaEJB metaEJB) {
 		this.metaEJB = metaEJB;
 		this.metaEJB.setMetaModel(this);
+	}
+
+	public boolean isAnnotatedEJB3() {
+		return annotatedEJB3;
+	}
+
+	public void setAnnotatedEJB3(boolean annotatedEJB3) {
+		this.annotatedEJB3 = annotatedEJB3;
 	}
 
 	public static boolean someModelHasDefaultCalculatorOnCreate() {		

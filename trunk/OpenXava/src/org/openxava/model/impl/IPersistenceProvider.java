@@ -136,6 +136,15 @@ public interface IPersistenceProvider {
 	 * 
 	 * It can be a POJO or key class, depends on the implementation.<br> 
 	 */
-	Object getContainer(MetaModel metaModel, Map containerKeyValues) throws XavaException; 
+	Object getContainer(MetaModel metaModel, Map containerKeyValues) throws XavaException;
+	
+	/**
+	 * Refresh the state of the instance from the database, 
+	 * overwriting changes made to the entity, if any.<p> 
+	 * If the object is null or it's not managed simply do nothing,
+	 * but not fails.<br>
+	 * This method may be empty, because in some technologies has no sense.<br>
+	 */
+	void refreshIfManaged(Object object);
 	
 }

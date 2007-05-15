@@ -77,4 +77,10 @@ public class HibernatePersistenceProvider extends POJOPersistenceProviderBase {
 		return it.next();
 	}
 
+	public void refreshIfManaged(Object object) {
+		if (XHibernate.getSession().contains(object)) {
+			XHibernate.getSession().refresh(object);		
+		}
+	}
+
 }
