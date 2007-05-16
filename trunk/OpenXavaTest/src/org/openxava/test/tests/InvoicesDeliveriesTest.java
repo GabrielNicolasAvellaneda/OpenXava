@@ -9,7 +9,7 @@ import org.openxava.tests.*;
 public class InvoicesDeliveriesTest extends ModuleTestBase {
 	
 	public InvoicesDeliveriesTest(String testName) {
-		super(testName, "OpenXavaTest", "InvoicesDeliveries");		
+		super(testName, "InvoicesDeliveries");		
 	}
 	
 	public void testOverwriteViewActionInCollection() throws Exception {

@@ -10,7 +10,7 @@ public class Invoice20020001Test extends ModuleTestBase {
 	
 	
 	public Invoice20020001Test(String testName) {
-		super(testName, "OpenXavaTest", "Invoice20020001");		
+		super(testName, "Invoice20020001");		
 	}
 
 	public void testFilterProduceMoreValuesThanPersistentPropertiesInList() throws Exception {

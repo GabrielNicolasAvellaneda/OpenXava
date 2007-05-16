@@ -9,7 +9,7 @@ import org.openxava.tests.*;
 public class InvoicesActiveYearTest extends ModuleTestBase {
 	
 	public InvoicesActiveYearTest(String testName) {
-		super(testName, "OpenXavaTest", "InvoicesActiveYear");		
+		super(testName, "InvoicesActiveYear");		
 	}
 	
 		

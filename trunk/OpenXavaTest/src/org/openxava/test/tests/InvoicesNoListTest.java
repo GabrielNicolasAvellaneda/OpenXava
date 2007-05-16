@@ -11,7 +11,7 @@ public class InvoicesNoListTest extends ModuleTestBase {
 	
 
 	public InvoicesNoListTest(String testName) {
-		super(testName, "OpenXavaTest", "InvoicesNoList");		
+		super(testName, "InvoicesNoList");		
 	}
 
 	public void testSearchReferenceWithListInANoListModule() throws Exception {

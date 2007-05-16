@@ -24,7 +24,7 @@ public class Invoices2002Test extends ModuleTestBase {
 	};
 
 	public Invoices2002Test(String testName) {
-		super(testName, "OpenXavaTest", "Invoices2002");		
+		super(testName, "Invoices2002");		
 	}
 	
 	public void testGeneratePdfWithFilter() throws Exception {

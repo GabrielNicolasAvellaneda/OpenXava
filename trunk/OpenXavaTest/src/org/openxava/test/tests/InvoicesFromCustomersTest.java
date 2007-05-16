@@ -19,7 +19,7 @@ public class InvoicesFromCustomersTest extends ModuleTestBase {
 	private Collection invoices;
 
 	public InvoicesFromCustomersTest(String testName) {
-		super(testName, "OpenXavaTest", "InvoicesFromCustomers");		
+		super(testName, "InvoicesFromCustomers");		
 	}
 	
 	public void testSelectedFromCalledModuleNotPropagateToCallerModule() throws Exception {

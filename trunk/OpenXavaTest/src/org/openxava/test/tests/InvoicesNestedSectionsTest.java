@@ -11,7 +11,7 @@ public class InvoicesNestedSectionsTest extends ModuleTestBase {
 	
 
 	public InvoicesNestedSectionsTest(String testName) {
-		super(testName, "OpenXavaTest", "InvoicesNestedSections");		
+		super(testName, "InvoicesNestedSections");		
 	}
 	
 	

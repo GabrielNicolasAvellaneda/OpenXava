@@ -15,7 +15,7 @@ import org.openxava.tests.*;
 public class OnlyEditDetailsInvoiceTest extends ModuleTestBase {
 	
 	public OnlyEditDetailsInvoiceTest(String testName) {
-		super(testName, "OpenXavaTest", "OnlyEditDetailsInvoice");		
+		super(testName, "OnlyEditDetailsInvoice");		
 	}
 	
 	public void testAggregatesCollectionEditOnly() throws Exception {
