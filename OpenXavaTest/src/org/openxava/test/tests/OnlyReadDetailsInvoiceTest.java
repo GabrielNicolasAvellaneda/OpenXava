@@ -1,7 +1,6 @@
 package org.openxava.test.tests;
 
 import java.util.*;
-import javax.rmi.*;
 
 import org.openxava.hibernate.*;
 import org.openxava.test.model.*;
@@ -16,7 +15,7 @@ import org.openxava.util.*;
 public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 	
 	public OnlyReadDetailsInvoiceTest(String testName) {
-		super(testName, "OpenXavaTest", "OnlyReadDetailsInvoice");		
+		super(testName, "OnlyReadDetailsInvoice");		
 	}
 	
 	public void testAggregatesCollectionReadOnly() throws Exception {
