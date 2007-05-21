@@ -257,7 +257,7 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		if (!hasCondition) { 
 			throw new ObjectNotFoundException(XavaResources.getString("object_by_any_property_not_found", values));
 		}
-								
+										
 		Object query = createQuery(queryString.toString());				
 		for (Iterator it=values.iterator(); it.hasNext(); it.hasNext()) {
 			Map.Entry en = (Map.Entry) it.next();

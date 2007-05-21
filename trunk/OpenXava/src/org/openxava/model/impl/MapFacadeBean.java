@@ -769,7 +769,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	}
 
 	private Object getReferencedObject(Object container, String memberName) throws XavaException, RemoteException {
-		try {
+		try {			
+			if (container == null) return null;
 			PropertiesManager man =
 				new PropertiesManager(container);
 			Object result = man.executeGet(memberName);
@@ -898,7 +899,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	 * If we send null as <tt>nombresPropiedades</tt> it return a empty Map. <p>
 	 * @throws RemoteException 
 	 */
-	private Map getAggregateValues(MetaAggregate metaAggregate, Object aggregate, Map memberNames) throws XavaException, RemoteException {
+	private Map getAggregateValues(MetaAggregate metaAggregate, Object aggregate, Map memberNames) throws XavaException, RemoteException {		
 		if (memberNames == null) return Collections.EMPTY_MAP;
 		PropertiesManager man = new PropertiesManager(aggregate);
 		StringBuffer names = new StringBuffer();
@@ -960,7 +961,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		Object model,
 		String memberName,
 		Map submembersNames) throws XavaException, RemoteException {		
-		try {					
+		try {								
 			MetaReference r = metaModel.getMetaReference(memberName);
 			Object object = getReferencedObject(model, memberName);
 			if (r.isAggregate()) {

@@ -724,7 +724,7 @@ public class View implements java.io.Serializable {
 	/**
 	 * Set the value to the indicated member. <p>
 	 * 
-	 * If member is not displayed in this view an exception is thrown.
+	 * If member is not of this view an exception is thrown.
 	 * 
 	 * @param name Can be qualified	 
 	 * @exception XavaException  If name is not a displayed member of this view.
@@ -750,7 +750,7 @@ public class View implements java.io.Serializable {
 			if (getMembersNamesInGroup().contains(name)) {
 				trySetValueInGroups(name, value);				
 			}																	
-			else if (!getMemberNamesWithoutSeccions().contains(name) && !getMetaModel().getKeyPropertiesNames().contains(name) && !getMetaModel().getKeyReferencesNames().contains(name)) {				
+			else if (!getMemberNamesWithoutSeccions().contains(name) && !getMetaModel().getKeyPropertiesNames().contains(name) && !getMetaModel().getKeyReferencesNames().contains(name)) {			
 				if (!setValueInSections(name, value)) { 
 					return false;
 				}
@@ -766,7 +766,7 @@ public class View implements java.io.Serializable {
 					}					
 				}
 				else { 										
-					if (values == null) values = new HashMap();
+					if (values == null) values = new HashMap();					
 					values.put(name, value);					
 				}				 							 								
 			} 
@@ -2464,6 +2464,9 @@ public class View implements java.io.Serializable {
 			if (!hidden) return;		
 			hiddenMembers = new HashSet();
 		}
+		// getSubview() is for starting the process that create subviews and groups
+		// before to hide any member
+		getSubviews(); 
 		if (hidden) hiddenMembers.add(name);
 		else hiddenMembers.remove(name); 		
 		metaMembers = null;
