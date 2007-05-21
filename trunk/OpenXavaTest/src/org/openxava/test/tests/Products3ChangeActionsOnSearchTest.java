@@ -9,7 +9,7 @@ import org.openxava.tests.*;
 public class Products3ChangeActionsOnSearchTest extends ModuleTestBase {
 	
 	public Products3ChangeActionsOnSearchTest(String testName) {
-		super(testName, "OpenXavaTest", "Products3ChangeActionsOnSearch");		
+		super(testName, "Products3ChangeActionsOnSearch");		
 	}
 	
 	public void testChangeActionWhenSearch() throws Exception {

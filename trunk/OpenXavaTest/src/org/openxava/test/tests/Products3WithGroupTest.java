@@ -9,11 +9,12 @@ import org.openxava.tests.*;
 public class Products3WithGroupTest extends ModuleTestBase {
 	
 	public Products3WithGroupTest(String testName) {
-		super(testName, "OpenXavaTest", "Products3WithGroup");		
+		super(testName, "Products3WithGroup");		
 	}
 	
 	public void testNotOnChangeActionWhenSearch() throws Exception {
 		execute("CRUD.new");
+		assertNoErrors();
 		execute("Products3.showDescription"); // description is hide in a init action for test purpose
 		setValue("number", "77");
 		execute("CRUD.search");
@@ -23,6 +24,7 @@ public class Products3WithGroupTest extends ModuleTestBase {
 	
 	public void testDescriptionsListWithHiddenKeyThrowsChanged() throws Exception {
 		execute("CRUD.new");
+		assertNoErrors();
 		execute("Products3.showDescription"); // description is hide in a init action for test purpose
 		assertNoErrors();
 		assertValue("comments", "");
@@ -32,6 +34,7 @@ public class Products3WithGroupTest extends ModuleTestBase {
 	
 	public void testSetValueNotifyingOnReferenceWithHiddenKeyNotResetGroup() throws Exception {
 		execute("CRUD.new");
+		assertNoErrors();
 		execute("Products3.showDescription"); // description is hide in a init action for test purpose
 		setValue("description", "HOLA");
 		execute("Products3.changeFamily");

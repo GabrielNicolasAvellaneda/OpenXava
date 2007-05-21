@@ -10,7 +10,7 @@ public class FamiliesListOnlyTest extends ModuleTestBase {
 	
 	
 	public FamiliesListOnlyTest(String testName) {
-		super(testName, "OpenXavaTest", "FamiliesListOnly");		
+		super(testName, "FamiliesListOnly");		
 	}	
 	
 	public void testWithoutXavaListAction() throws Exception {

@@ -9,7 +9,7 @@ import org.openxava.tests.*;
 public class Products3WithDescriptionsListTest extends ModuleTestBase {
 	
 	public Products3WithDescriptionsListTest(String testName) {
-		super(testName, "OpenXavaTest", "Products3WithDescriptionsList");		
+		super(testName, "Products3WithDescriptionsList");		
 	}
 
 	public void testSetToNullADescriptionsListWithHiddenKey() throws Exception {

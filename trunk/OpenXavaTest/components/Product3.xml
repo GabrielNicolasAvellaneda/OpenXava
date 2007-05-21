@@ -3,7 +3,7 @@
 <!DOCTYPE component SYSTEM "dtds/component.dtd">
 
 <!--
-Store oid of family and not the code
+Stores oid of family and not the code
 -->
 
 <component name="Product3">

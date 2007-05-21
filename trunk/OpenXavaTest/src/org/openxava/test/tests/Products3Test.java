@@ -10,7 +10,7 @@ import org.openxava.util.*;
 public class Products3Test extends ModuleTestBase {
 	
 	public Products3Test(String testName) {
-		super(testName, "OpenXavaTest", "Products3");		
+		super(testName, "Products3");		
 	}
 	
 	public void testSearchingByAnyReference() throws Exception { 
@@ -36,7 +36,7 @@ public class Products3Test extends ModuleTestBase {
 		assertValue("family.description", "HARDWARE");
 	}
 	
-	public void testReferenceWithHiddenKey_defaultValueCalculatorOnCreateWithJDBC() throws Exception {
+	public void testReferenceWithHiddenKey_defaultValueCalculatorWithJDBC() throws Exception {
 		execute("CRUD.new");		
 		assertValue("number", "78"); // to test default-value-calculator
 		setValue("number", "66");
