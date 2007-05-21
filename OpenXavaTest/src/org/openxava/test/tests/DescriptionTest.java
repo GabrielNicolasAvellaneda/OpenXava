@@ -12,7 +12,7 @@ public class DescriptionTest extends ModuleTestBase {
 	
 	
 	public DescriptionTest(String testName) {
-		super(testName, "OpenXavaTest", "Description");		
+		super(testName, "Description");		
 	}
 	
 	public void testDocModule() throws Exception {		

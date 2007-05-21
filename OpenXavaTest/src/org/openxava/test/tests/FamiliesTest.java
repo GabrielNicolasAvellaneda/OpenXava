@@ -23,7 +23,7 @@ public class FamiliesTest extends ModuleTestBase {
 	};
 
 	public FamiliesTest(String testName) {
-		super(testName, "OpenXavaTest", "Families");		
+		super(testName, "Families");		
 	}
 	
 	// This test depends on a HTML generated UI

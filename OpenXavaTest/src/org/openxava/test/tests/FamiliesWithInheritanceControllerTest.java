@@ -65,7 +65,7 @@ public class FamiliesWithInheritanceControllerTest extends ModuleTestBase {
 	};
 	
 	public FamiliesWithInheritanceControllerTest(String testName) {
-		super(testName, "OpenXavaTest", "FamiliesWithInheritanceController");		
+		super(testName, "FamiliesWithInheritanceController");		
 	}
 	
 	public void testOverwriteAction() throws Exception {
