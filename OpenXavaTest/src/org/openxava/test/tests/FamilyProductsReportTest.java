@@ -10,7 +10,7 @@ public class FamilyProductsReportTest extends ModuleTestBase {
 	
 		
 	public FamilyProductsReportTest(String nombreTest) {
-		super(nombreTest, "OpenXavaTest", "FamilyProductsReport");		
+		super(nombreTest, "FamilyProductsReport");		
 	}
 	
 	public void testReferenceWithNoSearchAndNoModify() throws Exception {
