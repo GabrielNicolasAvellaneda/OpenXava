@@ -193,5 +193,9 @@ public class MetaReference extends MetaMember implements Cloneable {
 	public boolean hasDefaultValueCalculator() {		
 		return metaCalculatorDefaultValue != null;
 	}
+	
+	public String toString() {		
+		return "MetaReference:" + getId();
+	}
 		
 }
