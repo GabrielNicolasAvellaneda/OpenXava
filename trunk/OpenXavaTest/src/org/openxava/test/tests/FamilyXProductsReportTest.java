@@ -10,7 +10,7 @@ public class FamilyXProductsReportTest extends ModuleTestBase {
 	
 		
 	public FamilyXProductsReportTest(String nombreTest) {
-		super(nombreTest, "OpenXavaTest", "Family1ProductsReport");		
+		super(nombreTest, "Family1ProductsReport");		
 	}
 	
 	public void testDescriptionsComboCacheNotSharedAndOrderInDescriptionList() throws Exception {

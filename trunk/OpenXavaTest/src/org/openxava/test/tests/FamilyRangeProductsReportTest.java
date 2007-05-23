@@ -9,7 +9,7 @@ public class FamilyRangeProductsReportTest extends ModuleTestBase {
 	
 	
 	public FamilyRangeProductsReportTest(String testName) {
-		super(testName, "OpenXavaTest", "FamilyRangeProductsReport");		
+		super(testName, "FamilyRangeProductsReport");		
 	}
 
 	public void testDifferentLabelsForReferenceMembers() throws Exception {

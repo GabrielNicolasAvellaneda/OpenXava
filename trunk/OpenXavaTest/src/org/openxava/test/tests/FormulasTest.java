@@ -11,7 +11,7 @@ import org.openxava.tests.*;
 public class FormulasTest extends ModuleTestBase {
 	
 	public FormulasTest(String testName) {
-		super(testName, "OpenXavaTest", "Formulas");		
+		super(testName, "Formulas");		
 	}
 	
 	public void testDependentReferencesAsDescriptionsListWithHiddenKeyInCollection_aggregateCanHasReferenceToModelOfContainerType() throws Exception {		
@@ -50,8 +50,7 @@ public class FormulasTest extends ModuleTestBase {
 	public void testHtmlTextStereotype() throws Exception {		
 		execute("Mode.detailAndFirst");
 		assertValue("name", "HTML TEST");
-		execute("Sections.change", "activeSection=1");
-		printHtml();
+		execute("Sections.change", "activeSection=1");		
 		assertTrue("Expected HTML token not found", getHtml().indexOf("Y largo</strong>,<span style=\"background-color: rgb(153, 204, 0);\"> verde </span>") >= 0);
 	}
 		
