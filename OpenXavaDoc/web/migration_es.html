@@ -1,3 +1,55 @@
+<h2>Para migrar de OpenXava 2.1.3 a OpenXava 2.1.4</h2>
+<h4>Nuevas acciones en colecciones (para pruebas junit)</h4>
+Las collecciones tienen nuevas acciones disponibles para los usuarios,
+por tanto si comprobamos todas las acciones presentes en nuestras
+pruebas junit hemos de modificar nuestras pruebas para que tengas en
+cuenta las nuevas acciones.<br>
+Es decir, si tenemos algo como esto en nuestro c&oacute;digo de prueba
+junit:<br>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; String [] acciones = {</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Navigation.previous",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Navigation.first",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Navigation.next",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "CRUD.new",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "CRUD.save",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "CRUD.delete",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "CRUD.search",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Collection.new",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Collection.removeSelected"</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; };&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; assertActions(acciones);</pre>
+hemos de cambiarlo por:<br>
+<pre>	String [] acciones = {</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Navigation.previous",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Navigation.first",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Navigation.next",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "CRUD.new",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "CRUD.save",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "CRUD.delete",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "CRUD.search",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Collection.new",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Collection.removeSelected",</pre>
+<pre style="font-weight: bold; color: rgb(51, 102, 255);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "List.filter", </pre>
+<pre style="font-weight: bold; color: rgb(51, 102, 255);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "List.orderBy", </pre>
+<pre style="font-weight: bold; color: rgb(51, 102, 255);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "List.customize", </pre>
+<pre style="font-weight: bold; color: rgb(51, 102, 255);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "List.hideRows"</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; };&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; assertActions(acciones);</pre>
+<h4>Tarea Ant generarPortlets eliminada</h4>
+La tarea ant <span style="font-family: monospace;">generarPorltets</span>
+ha sido quitada de&nbsp;OpenXava/build.xml porque ahora es exactamente
+igual que&nbsp;<span style="font-family: monospace;">generatePortlets</span>.
+Por lo tanto, si en tu build.xml tienes algo como esto:<br>
+<pre>&lt;target name="generarPortlets"&gt; </pre>
+<pre>    &lt;ant antfile="../OpenXava/build.xml" target="<span
+ style="color: rgb(51, 102, 255); font-weight: bold;">generarPortlets</span>"/&gt;</pre>
+<pre>&lt;/target&gt;</pre>
+Tienes que cambiarlo por:<br>
+<pre>&lt;target name="generarPortlets"&gt; </pre>
+<pre><br>    &lt;ant antfile="../OpenXava/build.xml" target="<span
+ style="color: rgb(51, 102, 255); font-weight: bold;">generatePortlets</span>"/&gt;</pre>
+<pre>&lt;/target&gt;</pre>
+<h2></h2>
 <h2>Para migrar de OpenXava 2.1 a OpenXava 2.1.3</h2>
 <h4>Pruebas JUnit y claves sin valor interpretadas como&nbsp;cero</h4>
 Desde 2.13 si una propieda clave de tipo int, long o short no tiene
