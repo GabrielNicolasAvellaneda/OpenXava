@@ -1,40 +1,43 @@
 package org.openxava.util;
 
 import java.io.*;
-
 import javax.swing.table.*;
-
-
-
 
 /**
  * @author Javier Paniza
  */
 public class TableModels {
 	
-	private final static char SEPARATOR = ';';
-	
-	
-	
 	public static String toCSV(TableModel table) {
 		if (table == null) return "";
+		String separator = XavaPreferences.getInstance().getCSVSeparator();
 		StringBuffer cvs = new StringBuffer();
 		int columns = table.getColumnCount(); 
 		for (int i=0; i<columns; i++) {
 			cvs.append(table.getColumnName(i));
-			if (i < columns - 1) cvs.append(SEPARATOR);
+			if (i < columns - 1) cvs.append(separator);
 		}
 		cvs.append('\n');
-		for (int fila=0; fila < table.getRowCount(); fila++) {
+		for (int row=0; row < table.getRowCount(); row++) {
 			for (int i=0; i<columns; i++) {
-				cvs.append(table.getValueAt(fila, i));
-				if (i < columns - 1) cvs.append(SEPARATOR);
+				cvs.append(convert(table.getValueAt(row, i)));
+				if (i < columns - 1) cvs.append(separator);
 			}
 			cvs.append('\n');			
 		}
 		cvs.append('\n');
 		return cvs.toString();
 	}
+
+	private static Object convert(Object valueAt) {		
+		if (!(valueAt instanceof String)) return valueAt;
+		return ((String) valueAt).
+			replaceAll("\n\r", " ").
+			replaceAll("\r\n", " ").
+			replace('\n', ' ').
+			replace('\r', ' ');
+	}
+
 
 	public static void saveCSV(TableModel table, String file) throws IOException {
 		FileOutputStream ostream = new FileOutputStream(file);				

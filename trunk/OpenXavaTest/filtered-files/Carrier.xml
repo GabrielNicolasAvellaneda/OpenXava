@@ -29,9 +29,7 @@
 			</condition>
 		</collection>
 		
-		<!--
-			The same that 'fellowCarriers' but implemented with a calculator
-			-->
+		<!-- The same that 'fellowCarriers' but implemented with a calculator -->
 		<collection name="fellowCarriersCalculated"> 			
 			<reference model="Carrier"/>			
 			<calculator class="org.openxava.test.calculators.FellowCarriersCalculator"/>
@@ -76,7 +74,10 @@
 			<list-action action="Carriers.allToEnglish"/> 
 		</collection-view>		
 		
-		<collection-view collection="fellowCarriersCalculated" view="Simple"/>		
+		<collection-view collection="fellowCarriersCalculated" view="Simple">		
+			<list-action action="Carriers.translateName"/>
+		</collection-view>
+		
 	</view>
 	
 	<view name="Simple">

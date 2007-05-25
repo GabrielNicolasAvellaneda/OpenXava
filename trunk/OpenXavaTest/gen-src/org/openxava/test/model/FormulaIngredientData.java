@@ -13,10 +13,10 @@ public class FormulaIngredientData
 
    private static final long serialVersionUID = 1L;
    private java.lang.String oid;
-   private java.lang.String _Ingredient_oid;
    private java.lang.String _Accentuate_oid;
-   private java.lang.String _AnotherFormula_oid;
+   private java.lang.String _Ingredient_oid;
    private java.lang.String _Formula_oid;
+   private java.lang.String _AnotherFormula_oid;
 
    public FormulaIngredientData()
    {
@@ -25,10 +25,10 @@ public class FormulaIngredientData
    public FormulaIngredientData( FormulaIngredientData otherData )
    {
       setOid(otherData.getOid());
-      set_Ingredient_oid(otherData.get_Ingredient_oid());
       set_Accentuate_oid(otherData.get_Accentuate_oid());
-      set_AnotherFormula_oid(otherData.get_AnotherFormula_oid());
+      set_Ingredient_oid(otherData.get_Ingredient_oid());
       set_Formula_oid(otherData.get_Formula_oid());
+      set_AnotherFormula_oid(otherData.get_AnotherFormula_oid());
 
    }
 
@@ -46,15 +46,6 @@ public class FormulaIngredientData
       this.oid = oid;
    }
 
-   public java.lang.String get_Ingredient_oid()
-   {
-      return this._Ingredient_oid;
-   }
-   public void set_Ingredient_oid( java.lang.String _Ingredient_oid )
-   {
-      this._Ingredient_oid = _Ingredient_oid;
-   }
-
    public java.lang.String get_Accentuate_oid()
    {
       return this._Accentuate_oid;
@@ -64,13 +55,13 @@ public class FormulaIngredientData
       this._Accentuate_oid = _Accentuate_oid;
    }
 
-   public java.lang.String get_AnotherFormula_oid()
+   public java.lang.String get_Ingredient_oid()
    {
-      return this._AnotherFormula_oid;
+      return this._Ingredient_oid;
    }
-   public void set_AnotherFormula_oid( java.lang.String _AnotherFormula_oid )
+   public void set_Ingredient_oid( java.lang.String _Ingredient_oid )
    {
-      this._AnotherFormula_oid = _AnotherFormula_oid;
+      this._Ingredient_oid = _Ingredient_oid;
    }
 
    public java.lang.String get_Formula_oid()
@@ -82,11 +73,20 @@ public class FormulaIngredientData
       this._Formula_oid = _Formula_oid;
    }
 
+   public java.lang.String get_AnotherFormula_oid()
+   {
+      return this._AnotherFormula_oid;
+   }
+   public void set_AnotherFormula_oid( java.lang.String _AnotherFormula_oid )
+   {
+      this._AnotherFormula_oid = _AnotherFormula_oid;
+   }
+
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("oid=" + getOid() + " " + "_Ingredient_oid=" + get_Ingredient_oid() + " " + "_Accentuate_oid=" + get_Accentuate_oid() + " " + "_AnotherFormula_oid=" + get_AnotherFormula_oid() + " " + "_Formula_oid=" + get_Formula_oid());
+      str.append("oid=" + getOid() + " " + "_Accentuate_oid=" + get_Accentuate_oid() + " " + "_Ingredient_oid=" + get_Ingredient_oid() + " " + "_Formula_oid=" + get_Formula_oid() + " " + "_AnotherFormula_oid=" + get_AnotherFormula_oid());
       str.append('}');
 
       return(str.toString());
@@ -107,14 +107,6 @@ public class FormulaIngredientData
          {
             lEquals = lEquals && this.oid.equals( lTest.oid );
          }
-         if( this._Ingredient_oid == null )
-         {
-            lEquals = lEquals && ( lTest._Ingredient_oid == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._Ingredient_oid.equals( lTest._Ingredient_oid );
-         }
          if( this._Accentuate_oid == null )
          {
             lEquals = lEquals && ( lTest._Accentuate_oid == null );
@@ -123,13 +115,13 @@ public class FormulaIngredientData
          {
             lEquals = lEquals && this._Accentuate_oid.equals( lTest._Accentuate_oid );
          }
-         if( this._AnotherFormula_oid == null )
+         if( this._Ingredient_oid == null )
          {
-            lEquals = lEquals && ( lTest._AnotherFormula_oid == null );
+            lEquals = lEquals && ( lTest._Ingredient_oid == null );
          }
          else
          {
-            lEquals = lEquals && this._AnotherFormula_oid.equals( lTest._AnotherFormula_oid );
+            lEquals = lEquals && this._Ingredient_oid.equals( lTest._Ingredient_oid );
          }
          if( this._Formula_oid == null )
          {
@@ -138,6 +130,14 @@ public class FormulaIngredientData
          else
          {
             lEquals = lEquals && this._Formula_oid.equals( lTest._Formula_oid );
+         }
+         if( this._AnotherFormula_oid == null )
+         {
+            lEquals = lEquals && ( lTest._AnotherFormula_oid == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._AnotherFormula_oid.equals( lTest._AnotherFormula_oid );
          }
 
          return lEquals;
@@ -154,13 +154,13 @@ public class FormulaIngredientData
 
       result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
 
-      result = 37*result + ((this._Ingredient_oid != null) ? this._Ingredient_oid.hashCode() : 0);
-
       result = 37*result + ((this._Accentuate_oid != null) ? this._Accentuate_oid.hashCode() : 0);
 
-      result = 37*result + ((this._AnotherFormula_oid != null) ? this._AnotherFormula_oid.hashCode() : 0);
+      result = 37*result + ((this._Ingredient_oid != null) ? this._Ingredient_oid.hashCode() : 0);
 
       result = 37*result + ((this._Formula_oid != null) ? this._Formula_oid.hashCode() : 0);
+
+      result = 37*result + ((this._AnotherFormula_oid != null) ? this._AnotherFormula_oid.hashCode() : 0);
 
       return result;
    }

@@ -10,12 +10,6 @@ public interface Product3Remote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.IProduct3
 {
 
-   public java.lang.String getComments(  )
-      throws java.rmi.RemoteException;
-
-   public void setComments( java.lang.String newComments )
-      throws java.rmi.RemoteException;
-
    public java.lang.String getDescription(  )
       throws java.rmi.RemoteException;
 
@@ -23,6 +17,30 @@ public interface Product3Remote
       throws java.rmi.RemoteException;
 
    public long getNumber(  )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getComments(  )
+      throws java.rmi.RemoteException;
+
+   public void setComments( java.lang.String newComments )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.IFamily getFamily(  )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.FamilyRemote getFamilyRemote(  )
+      throws java.rmi.RemoteException;
+
+   public void setFamily( org.openxava.test.model.IFamily newFamily )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.FamilyKey getFamilyKey(  )
+      throws java.rmi.RemoteException;
+
+   public void setFamilyKey( org.openxava.test.model.FamilyKey key )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getFamily_oid(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.SubfamilyInfo getSubfamily1(  )
@@ -65,24 +83,6 @@ public interface Product3Remote
       throws java.rmi.RemoteException;
 
    public int getSubfamily1_subfamily_number(  )
-      throws java.rmi.RemoteException;
-
-   public org.openxava.test.model.IFamily getFamily(  )
-      throws java.rmi.RemoteException;
-
-   public org.openxava.test.model.FamilyRemote getFamilyRemote(  )
-      throws java.rmi.RemoteException;
-
-   public void setFamily( org.openxava.test.model.IFamily newFamily )
-      throws java.rmi.RemoteException;
-
-   public org.openxava.test.model.FamilyKey getFamilyKey(  )
-      throws java.rmi.RemoteException;
-
-   public void setFamilyKey( org.openxava.test.model.FamilyKey key )
-      throws java.rmi.RemoteException;
-
-   public java.lang.String getFamily_oid(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.SubfamilyInfo getSubfamily2(  )

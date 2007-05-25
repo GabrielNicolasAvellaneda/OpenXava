@@ -13,13 +13,13 @@ public class Product2Data
 
    private static final long serialVersionUID = 1L;
    private java.lang.String _Photos;
-   private java.math.BigDecimal _UnitPrice;
    private java.lang.String _Description;
+   private java.math.BigDecimal _UnitPrice;
    private long number;
-   private int _Warehouse_zoneNumber;
-   private java.lang.Integer _Warehouse_number;
    private int _Family_number;
    private int _Subfamily_number;
+   private int _Warehouse_zoneNumber;
+   private java.lang.Integer _Warehouse_number;
    private java.lang.String _Formula_oid;
 
    public Product2Data()
@@ -29,13 +29,13 @@ public class Product2Data
    public Product2Data( Product2Data otherData )
    {
       set_Photos(otherData.get_Photos());
-      set_UnitPrice(otherData.get_UnitPrice());
       set_Description(otherData.get_Description());
+      set_UnitPrice(otherData.get_UnitPrice());
       setNumber(otherData.getNumber());
-      set_Warehouse_zoneNumber(otherData.get_Warehouse_zoneNumber());
-      set_Warehouse_number(otherData.get_Warehouse_number());
       set_Family_number(otherData.get_Family_number());
       set_Subfamily_number(otherData.get_Subfamily_number());
+      set_Warehouse_zoneNumber(otherData.get_Warehouse_zoneNumber());
+      set_Warehouse_number(otherData.get_Warehouse_number());
       set_Formula_oid(otherData.get_Formula_oid());
 
    }
@@ -54,15 +54,6 @@ public class Product2Data
       this._Photos = _Photos;
    }
 
-   public java.math.BigDecimal get_UnitPrice()
-   {
-      return this._UnitPrice;
-   }
-   public void set_UnitPrice( java.math.BigDecimal _UnitPrice )
-   {
-      this._UnitPrice = _UnitPrice;
-   }
-
    public java.lang.String get_Description()
    {
       return this._Description;
@@ -72,6 +63,15 @@ public class Product2Data
       this._Description = _Description;
    }
 
+   public java.math.BigDecimal get_UnitPrice()
+   {
+      return this._UnitPrice;
+   }
+   public void set_UnitPrice( java.math.BigDecimal _UnitPrice )
+   {
+      this._UnitPrice = _UnitPrice;
+   }
+
    public long getNumber()
    {
       return this.number;
@@ -79,24 +79,6 @@ public class Product2Data
    public void setNumber( long number )
    {
       this.number = number;
-   }
-
-   public int get_Warehouse_zoneNumber()
-   {
-      return this._Warehouse_zoneNumber;
-   }
-   public void set_Warehouse_zoneNumber( int _Warehouse_zoneNumber )
-   {
-      this._Warehouse_zoneNumber = _Warehouse_zoneNumber;
-   }
-
-   public java.lang.Integer get_Warehouse_number()
-   {
-      return this._Warehouse_number;
-   }
-   public void set_Warehouse_number( java.lang.Integer _Warehouse_number )
-   {
-      this._Warehouse_number = _Warehouse_number;
    }
 
    public int get_Family_number()
@@ -117,6 +99,24 @@ public class Product2Data
       this._Subfamily_number = _Subfamily_number;
    }
 
+   public int get_Warehouse_zoneNumber()
+   {
+      return this._Warehouse_zoneNumber;
+   }
+   public void set_Warehouse_zoneNumber( int _Warehouse_zoneNumber )
+   {
+      this._Warehouse_zoneNumber = _Warehouse_zoneNumber;
+   }
+
+   public java.lang.Integer get_Warehouse_number()
+   {
+      return this._Warehouse_number;
+   }
+   public void set_Warehouse_number( java.lang.Integer _Warehouse_number )
+   {
+      this._Warehouse_number = _Warehouse_number;
+   }
+
    public java.lang.String get_Formula_oid()
    {
       return this._Formula_oid;
@@ -130,7 +130,7 @@ public class Product2Data
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Photos=" + get_Photos() + " " + "_UnitPrice=" + get_UnitPrice() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "_Warehouse_zoneNumber=" + get_Warehouse_zoneNumber() + " " + "_Warehouse_number=" + get_Warehouse_number() + " " + "_Family_number=" + get_Family_number() + " " + "_Subfamily_number=" + get_Subfamily_number() + " " + "_Formula_oid=" + get_Formula_oid());
+      str.append("_Photos=" + get_Photos() + " " + "_Description=" + get_Description() + " " + "_UnitPrice=" + get_UnitPrice() + " " + "number=" + getNumber() + " " + "_Family_number=" + get_Family_number() + " " + "_Subfamily_number=" + get_Subfamily_number() + " " + "_Warehouse_zoneNumber=" + get_Warehouse_zoneNumber() + " " + "_Warehouse_number=" + get_Warehouse_number() + " " + "_Formula_oid=" + get_Formula_oid());
       str.append('}');
 
       return(str.toString());
@@ -151,14 +151,6 @@ public class Product2Data
          {
             lEquals = lEquals && this._Photos.equals( lTest._Photos );
          }
-         if( this._UnitPrice == null )
-         {
-            lEquals = lEquals && ( lTest._UnitPrice == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._UnitPrice.equals( lTest._UnitPrice );
-         }
          if( this._Description == null )
          {
             lEquals = lEquals && ( lTest._Description == null );
@@ -167,7 +159,17 @@ public class Product2Data
          {
             lEquals = lEquals && this._Description.equals( lTest._Description );
          }
+         if( this._UnitPrice == null )
+         {
+            lEquals = lEquals && ( lTest._UnitPrice == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._UnitPrice.equals( lTest._UnitPrice );
+         }
          lEquals = lEquals && this.number == lTest.number;
+         lEquals = lEquals && this._Family_number == lTest._Family_number;
+         lEquals = lEquals && this._Subfamily_number == lTest._Subfamily_number;
          lEquals = lEquals && this._Warehouse_zoneNumber == lTest._Warehouse_zoneNumber;
          if( this._Warehouse_number == null )
          {
@@ -177,8 +179,6 @@ public class Product2Data
          {
             lEquals = lEquals && this._Warehouse_number.equals( lTest._Warehouse_number );
          }
-         lEquals = lEquals && this._Family_number == lTest._Family_number;
-         lEquals = lEquals && this._Subfamily_number == lTest._Subfamily_number;
          if( this._Formula_oid == null )
          {
             lEquals = lEquals && ( lTest._Formula_oid == null );
@@ -202,19 +202,19 @@ public class Product2Data
 
       result = 37*result + ((this._Photos != null) ? this._Photos.hashCode() : 0);
 
-      result = 37*result + ((this._UnitPrice != null) ? this._UnitPrice.hashCode() : 0);
-
       result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
 
+      result = 37*result + ((this._UnitPrice != null) ? this._UnitPrice.hashCode() : 0);
+
       result = 37*result + (int)(number^(number>>>32));
-
-      result = 37*result + (int) _Warehouse_zoneNumber;
-
-      result = 37*result + ((this._Warehouse_number != null) ? this._Warehouse_number.hashCode() : 0);
 
       result = 37*result + (int) _Family_number;
 
       result = 37*result + (int) _Subfamily_number;
+
+      result = 37*result + (int) _Warehouse_zoneNumber;
+
+      result = 37*result + ((this._Warehouse_number != null) ? this._Warehouse_number.hashCode() : 0);
 
       result = 37*result + ((this._Formula_oid != null) ? this._Formula_oid.hashCode() : 0);
 

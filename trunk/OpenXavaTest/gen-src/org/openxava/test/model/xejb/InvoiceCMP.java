@@ -18,12 +18,12 @@ public abstract class InvoiceCMP
       {
          dataHolder = new org.openxava.test.model.InvoiceData();
 
-         dataHolder.set_Comment( get_Comment() );
+         dataHolder.set_VatPercentage( get_VatPercentage() );
+         dataHolder.setNumber( getNumber() );
          dataHolder.set_Date( get_Date() );
          dataHolder.set_Paid( get_Paid() );
          dataHolder.setYear( getYear() );
-         dataHolder.set_VatPercentage( get_VatPercentage() );
-         dataHolder.setNumber( getNumber() );
+         dataHolder.set_Comment( get_Comment() );
          dataHolder.set_Customer_number( get_Customer_number() );
 
       }
@@ -39,10 +39,10 @@ public abstract class InvoiceCMP
    {
       try
       {
-         set_Comment( dataHolder.get_Comment() );
+         set_VatPercentage( dataHolder.get_VatPercentage() );
          set_Date( dataHolder.get_Date() );
          set_Paid( dataHolder.get_Paid() );
-         set_VatPercentage( dataHolder.get_VatPercentage() );
+         set_Comment( dataHolder.get_Comment() );
          set_Customer_number( dataHolder.get_Customer_number() );
 
       }
@@ -97,22 +97,22 @@ public abstract class InvoiceCMP
       InvoiceValue = new org.openxava.test.model.InvoiceValue();
       try
          {
-            InvoiceValue.setComment( getComment() );
-            InvoiceValue.setDate( getDate() );
-            InvoiceValue.setPaid( isPaid() );
+            InvoiceValue.setTotal( getTotal() );
+            InvoiceValue.setVatPercentage( getVatPercentage() );
+            InvoiceValue.setConsiderable( isConsiderable() );
             InvoiceValue.setYearDiscount( getYearDiscount() );
             InvoiceValue.setDetailsCount( getDetailsCount() );
-            InvoiceValue.setConsiderable( isConsiderable() );
-            InvoiceValue.setSellerDiscount( getSellerDiscount() );
-            InvoiceValue.setAmountsSum( getAmountsSum() );
-            InvoiceValue.setImportance( getImportance() );
-            InvoiceValue.setTotal( getTotal() );
-            InvoiceValue.setYear( getYear() );
-            InvoiceValue.setCustomerDiscount( getCustomerDiscount() );
-            InvoiceValue.setVatPercentage( getVatPercentage() );
-            InvoiceValue.setCustomerTypeDiscount( getCustomerTypeDiscount() );
             InvoiceValue.setVat( getVat() );
             InvoiceValue.setNumber( getNumber() );
+            InvoiceValue.setDate( getDate() );
+            InvoiceValue.setAmountsSum( getAmountsSum() );
+            InvoiceValue.setCustomerDiscount( getCustomerDiscount() );
+            InvoiceValue.setPaid( isPaid() );
+            InvoiceValue.setImportance( getImportance() );
+            InvoiceValue.setYear( getYear() );
+            InvoiceValue.setCustomerTypeDiscount( getCustomerTypeDiscount() );
+            InvoiceValue.setComment( getComment() );
+            InvoiceValue.setSellerDiscount( getSellerDiscount() );
             InvoiceValue.setCustomer_number( getCustomer_number() );
 
          }
@@ -129,20 +129,20 @@ public abstract class InvoiceCMP
 
 	  try
 	  {
-		 setComment( valueHolder.getComment() );
-		 setDate( valueHolder.getDate() );
-		 setPaid( valueHolder.isPaid() );
+		 setTotal( valueHolder.getTotal() );
+		 setVatPercentage( valueHolder.getVatPercentage() );
+		 setConsiderable( valueHolder.isConsiderable() );
 		 setYearDiscount( valueHolder.getYearDiscount() );
 		 setDetailsCount( valueHolder.getDetailsCount() );
-		 setConsiderable( valueHolder.isConsiderable() );
-		 setSellerDiscount( valueHolder.getSellerDiscount() );
-		 setAmountsSum( valueHolder.getAmountsSum() );
-		 setImportance( valueHolder.getImportance() );
-		 setTotal( valueHolder.getTotal() );
-		 setCustomerDiscount( valueHolder.getCustomerDiscount() );
-		 setVatPercentage( valueHolder.getVatPercentage() );
-		 setCustomerTypeDiscount( valueHolder.getCustomerTypeDiscount() );
 		 setVat( valueHolder.getVat() );
+		 setDate( valueHolder.getDate() );
+		 setAmountsSum( valueHolder.getAmountsSum() );
+		 setCustomerDiscount( valueHolder.getCustomerDiscount() );
+		 setPaid( valueHolder.isPaid() );
+		 setImportance( valueHolder.getImportance() );
+		 setCustomerTypeDiscount( valueHolder.getCustomerTypeDiscount() );
+		 setComment( valueHolder.getComment() );
+		 setSellerDiscount( valueHolder.getSellerDiscount() );
 		 setCustomer_number( valueHolder.getCustomer_number() );
 
 	  }
@@ -154,9 +154,13 @@ public abstract class InvoiceCMP
 
 /* Value Objects END */
 
-   public abstract java.lang.String get_Comment() ;
+   public abstract java.math.BigDecimal get_VatPercentage() ;
 
-   public abstract void set_Comment( java.lang.String _Comment ) ;
+   public abstract void set_VatPercentage( java.math.BigDecimal _VatPercentage ) ;
+
+   public abstract int getNumber() ;
+
+   public abstract void setNumber( int number ) ;
 
    public abstract java.sql.Date get_Date() ;
 
@@ -170,13 +174,9 @@ public abstract class InvoiceCMP
 
    public abstract void setYear( int year ) ;
 
-   public abstract java.math.BigDecimal get_VatPercentage() ;
+   public abstract java.lang.String get_Comment() ;
 
-   public abstract void set_VatPercentage( java.math.BigDecimal _VatPercentage ) ;
-
-   public abstract int getNumber() ;
-
-   public abstract void setNumber( int number ) ;
+   public abstract void set_Comment( java.lang.String _Comment ) ;
 
    public abstract int get_Customer_number() ;
 

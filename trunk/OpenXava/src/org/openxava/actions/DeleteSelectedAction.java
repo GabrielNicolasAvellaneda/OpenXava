@@ -9,6 +9,8 @@ import org.openxava.tab.*;
 import org.openxava.validators.*;
 
 /**
+ * tmp: Al reescribir esta clase, modificar GUIA de REFERENCIA
+ * 
  * @author Javier Paniza
  */
 

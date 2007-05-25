@@ -14,10 +14,10 @@ public class IssueValue
 
    private static final long serialVersionUID = 1L;
 
-   private java.lang.String description;
-   private boolean descriptionHasBeenSet = false;
    private java.lang.String id;
    private boolean idHasBeenSet = false;
+   private java.lang.String description;
+   private boolean descriptionHasBeenSet = false;
 
    public IssueValue()
    {
@@ -26,26 +26,12 @@ public class IssueValue
    //TODO Cloneable is better than this !
    public IssueValue( IssueValue otherValue )
    {
-	  this.description = otherValue.description;
-	  descriptionHasBeenSet = true;
 	  this.id = otherValue.id;
 	  idHasBeenSet = true;
-   }
-
-   public java.lang.String getDescription()
-   {
-	  return this.description;
-   }
-
-   public void setDescription( java.lang.String description )
-   {
-	  this.description = description;
+	  this.description = otherValue.description;
 	  descriptionHasBeenSet = true;
    }
 
-   public boolean descriptionHasBeenSet(){
-	  return descriptionHasBeenSet;
-   }
    public java.lang.String getId()
    {
 	  return this.id;
@@ -60,12 +46,26 @@ public class IssueValue
    public boolean idHasBeenSet(){
 	  return idHasBeenSet;
    }
+   public java.lang.String getDescription()
+   {
+	  return this.description;
+   }
+
+   public void setDescription( java.lang.String description )
+   {
+	  this.description = description;
+	  descriptionHasBeenSet = true;
+   }
+
+   public boolean descriptionHasBeenSet(){
+	  return descriptionHasBeenSet;
+   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("description=" + getDescription() + " " + "id=" + getId());
+	  str.append("id=" + getId() + " " + "description=" + getDescription());
 	  str.append('}');
 
 	  return(str.toString());
@@ -137,9 +137,9 @@ public class IssueValue
 
    public int hashCode(){
 	  int result = 17;
-      result = 37*result + ((this.description != null) ? this.description.hashCode() : 0);
-
       result = 37*result + ((this.id != null) ? this.id.hashCode() : 0);
+
+      result = 37*result + ((this.description != null) ? this.description.hashCode() : 0);
 
 	  return result;
    }

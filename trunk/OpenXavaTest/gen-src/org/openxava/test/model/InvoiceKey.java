@@ -17,42 +17,42 @@ public class InvoiceKey
 
    private static final long serialVersionUID = 1L;
 
-   public int year;
    public int number;
+   public int year;
 
    public InvoiceKey()
    {
    }
 
-   public InvoiceKey( int year,int number )
+   public InvoiceKey( int number,int year )
    {
-      this.year = year;
       this.number = number;
+      this.year = year;
    }
 
-   public int getYear()
-   {
-      return year;
-   }
    public int getNumber()
    {
       return number;
    }
-
-   public void setYear(int year)
+   public int getYear()
    {
-      this.year = year;
+      return year;
    }
+
    public void setNumber(int number)
    {
       this.number = number;
+   }
+   public void setYear(int year)
+   {
+      this.year = year;
    }
 
    public int hashCode()
    {
       int _hashCode = 0;
-         _hashCode += (int)this.year;
          _hashCode += (int)this.number;
+         _hashCode += (int)this.year;
 
       return _hashCode;
    }
@@ -71,8 +71,8 @@ public class InvoiceKey
       }
       else
       {
-         eq = eq && this.year == pk.year;
          eq = eq && this.number == pk.number;
+         eq = eq && this.year == pk.year;
       }
 
       return eq;

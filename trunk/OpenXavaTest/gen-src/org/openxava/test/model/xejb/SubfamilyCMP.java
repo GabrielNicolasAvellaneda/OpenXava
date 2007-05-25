@@ -18,11 +18,11 @@ public abstract class SubfamilyCMP
       {
          dataHolder = new org.openxava.test.model.SubfamilyData();
 
-         dataHolder.set_FamilyNumber( get_FamilyNumber() );
+         dataHolder.set_Description( get_Description() );
          dataHolder.setOid( getOid() );
          dataHolder.set_Remarks( get_Remarks() );
-         dataHolder.set_Description( get_Description() );
          dataHolder.set_Number( get_Number() );
+         dataHolder.set_FamilyNumber( get_FamilyNumber() );
 
       }
       catch (RuntimeException e)
@@ -37,10 +37,10 @@ public abstract class SubfamilyCMP
    {
       try
       {
-         set_FamilyNumber( dataHolder.get_FamilyNumber() );
-         set_Remarks( dataHolder.get_Remarks() );
          set_Description( dataHolder.get_Description() );
+         set_Remarks( dataHolder.get_Remarks() );
          set_Number( dataHolder.get_Number() );
+         set_FamilyNumber( dataHolder.get_FamilyNumber() );
 
       }
       catch (Exception e)
@@ -94,13 +94,13 @@ public abstract class SubfamilyCMP
       SubfamilyValue = new org.openxava.test.model.SubfamilyValue();
       try
          {
+            SubfamilyValue.setDescription( getDescription() );
             SubfamilyValue.setFamily( getFamily() );
-            SubfamilyValue.setFamilyNumber( getFamilyNumber() );
             SubfamilyValue.setOid( getOid() );
             SubfamilyValue.setRemarks( getRemarks() );
-            SubfamilyValue.setDescription( getDescription() );
-            SubfamilyValue.setRemarksDB( getRemarksDB() );
             SubfamilyValue.setNumber( getNumber() );
+            SubfamilyValue.setRemarksDB( getRemarksDB() );
+            SubfamilyValue.setFamilyNumber( getFamilyNumber() );
 
          }
          catch (Exception e)
@@ -116,12 +116,12 @@ public abstract class SubfamilyCMP
 
 	  try
 	  {
-		 setFamily( valueHolder.getFamily() );
-		 setFamilyNumber( valueHolder.getFamilyNumber() );
-		 setRemarks( valueHolder.getRemarks() );
 		 setDescription( valueHolder.getDescription() );
-		 setRemarksDB( valueHolder.getRemarksDB() );
+		 setFamily( valueHolder.getFamily() );
+		 setRemarks( valueHolder.getRemarks() );
 		 setNumber( valueHolder.getNumber() );
+		 setRemarksDB( valueHolder.getRemarksDB() );
+		 setFamilyNumber( valueHolder.getFamilyNumber() );
 
 	  }
 	  catch (Exception e)
@@ -132,9 +132,9 @@ public abstract class SubfamilyCMP
 
 /* Value Objects END */
 
-   public abstract java.lang.Integer get_FamilyNumber() ;
+   public abstract java.lang.String get_Description() ;
 
-   public abstract void set_FamilyNumber( java.lang.Integer _FamilyNumber ) ;
+   public abstract void set_Description( java.lang.String _Description ) ;
 
    public abstract java.lang.String getOid() ;
 
@@ -144,12 +144,12 @@ public abstract class SubfamilyCMP
 
    public abstract void set_Remarks( java.lang.String _Remarks ) ;
 
-   public abstract java.lang.String get_Description() ;
-
-   public abstract void set_Description( java.lang.String _Description ) ;
-
    public abstract java.lang.Integer get_Number() ;
 
    public abstract void set_Number( java.lang.Integer _Number ) ;
+
+   public abstract java.lang.Integer get_FamilyNumber() ;
+
+   public abstract void set_FamilyNumber( java.lang.Integer _FamilyNumber ) ;
 
 }

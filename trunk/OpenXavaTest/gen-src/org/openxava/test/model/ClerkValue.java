@@ -14,12 +14,10 @@ public class ClerkValue
 
    private static final long serialVersionUID = 1L;
 
-   private java.lang.String comments;
-   private boolean commentsHasBeenSet = false;
-   private java.lang.String endingTime;
-   private boolean endingTimeHasBeenSet = false;
    private java.sql.Time arrivalTime;
    private boolean arrivalTimeHasBeenSet = false;
+   private java.lang.String endingTime;
+   private boolean endingTimeHasBeenSet = false;
    private java.lang.String name;
    private boolean nameHasBeenSet = false;
    private int officeNumber;
@@ -28,6 +26,8 @@ public class ClerkValue
    private boolean numberHasBeenSet = false;
    private int zoneNumber;
    private boolean zoneNumberHasBeenSet = false;
+   private java.lang.String comments;
+   private boolean commentsHasBeenSet = false;
 
    public ClerkValue()
    {
@@ -36,12 +36,10 @@ public class ClerkValue
    //TODO Cloneable is better than this !
    public ClerkValue( ClerkValue otherValue )
    {
-	  this.comments = otherValue.comments;
-	  commentsHasBeenSet = true;
-	  this.endingTime = otherValue.endingTime;
-	  endingTimeHasBeenSet = true;
 	  this.arrivalTime = otherValue.arrivalTime;
 	  arrivalTimeHasBeenSet = true;
+	  this.endingTime = otherValue.endingTime;
+	  endingTimeHasBeenSet = true;
 	  this.name = otherValue.name;
 	  nameHasBeenSet = true;
 	  this.officeNumber = otherValue.officeNumber;
@@ -50,21 +48,23 @@ public class ClerkValue
 	  numberHasBeenSet = true;
 	  this.zoneNumber = otherValue.zoneNumber;
 	  zoneNumberHasBeenSet = true;
-   }
-
-   public java.lang.String getComments()
-   {
-	  return this.comments;
-   }
-
-   public void setComments( java.lang.String comments )
-   {
-	  this.comments = comments;
+	  this.comments = otherValue.comments;
 	  commentsHasBeenSet = true;
    }
 
-   public boolean commentsHasBeenSet(){
-	  return commentsHasBeenSet;
+   public java.sql.Time getArrivalTime()
+   {
+	  return this.arrivalTime;
+   }
+
+   public void setArrivalTime( java.sql.Time arrivalTime )
+   {
+	  this.arrivalTime = arrivalTime;
+	  arrivalTimeHasBeenSet = true;
+   }
+
+   public boolean arrivalTimeHasBeenSet(){
+	  return arrivalTimeHasBeenSet;
    }
    public java.lang.String getEndingTime()
    {
@@ -79,20 +79,6 @@ public class ClerkValue
 
    public boolean endingTimeHasBeenSet(){
 	  return endingTimeHasBeenSet;
-   }
-   public java.sql.Time getArrivalTime()
-   {
-	  return this.arrivalTime;
-   }
-
-   public void setArrivalTime( java.sql.Time arrivalTime )
-   {
-	  this.arrivalTime = arrivalTime;
-	  arrivalTimeHasBeenSet = true;
-   }
-
-   public boolean arrivalTimeHasBeenSet(){
-	  return arrivalTimeHasBeenSet;
    }
    public java.lang.String getName()
    {
@@ -150,12 +136,26 @@ public class ClerkValue
    public boolean zoneNumberHasBeenSet(){
 	  return zoneNumberHasBeenSet;
    }
+   public java.lang.String getComments()
+   {
+	  return this.comments;
+   }
+
+   public void setComments( java.lang.String comments )
+   {
+	  this.comments = comments;
+	  commentsHasBeenSet = true;
+   }
+
+   public boolean commentsHasBeenSet(){
+	  return commentsHasBeenSet;
+   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("comments=" + getComments() + " " + "endingTime=" + getEndingTime() + " " + "arrivalTime=" + getArrivalTime() + " " + "name=" + getName() + " " + "officeNumber=" + getOfficeNumber() + " " + "number=" + getNumber() + " " + "zoneNumber=" + getZoneNumber());
+	  str.append("arrivalTime=" + getArrivalTime() + " " + "endingTime=" + getEndingTime() + " " + "name=" + getName() + " " + "officeNumber=" + getOfficeNumber() + " " + "number=" + getNumber() + " " + "zoneNumber=" + getZoneNumber() + " " + "comments=" + getComments());
 	  str.append('}');
 
 	  return(str.toString());
@@ -205,13 +205,13 @@ public class ClerkValue
 	  {
 		 ClerkValue that = (ClerkValue) other;
 		 boolean lEquals = true;
-		 if( this.comments == null )
+		 if( this.arrivalTime == null )
 		 {
-			lEquals = lEquals && ( that.comments == null );
+			lEquals = lEquals && ( that.arrivalTime == null );
 		 }
 		 else
 		 {
-			lEquals = lEquals && this.comments.equals( that.comments );
+			lEquals = lEquals && this.arrivalTime.equals( that.arrivalTime );
 		 }
 		 if( this.endingTime == null )
 		 {
@@ -221,14 +221,6 @@ public class ClerkValue
 		 {
 			lEquals = lEquals && this.endingTime.equals( that.endingTime );
 		 }
-		 if( this.arrivalTime == null )
-		 {
-			lEquals = lEquals && ( that.arrivalTime == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.arrivalTime.equals( that.arrivalTime );
-		 }
 		 if( this.name == null )
 		 {
 			lEquals = lEquals && ( that.name == null );
@@ -236,6 +228,14 @@ public class ClerkValue
 		 else
 		 {
 			lEquals = lEquals && this.name.equals( that.name );
+		 }
+		 if( this.comments == null )
+		 {
+			lEquals = lEquals && ( that.comments == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.comments.equals( that.comments );
 		 }
 
 		 return lEquals;
@@ -248,11 +248,9 @@ public class ClerkValue
 
    public int hashCode(){
 	  int result = 17;
-      result = 37*result + ((this.comments != null) ? this.comments.hashCode() : 0);
+      result = 37*result + ((this.arrivalTime != null) ? this.arrivalTime.hashCode() : 0);
 
       result = 37*result + ((this.endingTime != null) ? this.endingTime.hashCode() : 0);
-
-      result = 37*result + ((this.arrivalTime != null) ? this.arrivalTime.hashCode() : 0);
 
       result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);
 
@@ -261,6 +259,8 @@ public class ClerkValue
       result = 37*result + (int) number;
 
       result = 37*result + (int) zoneNumber;
+
+      result = 37*result + ((this.comments != null) ? this.comments.hashCode() : 0);
 
 	  return result;
    }

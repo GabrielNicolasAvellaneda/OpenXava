@@ -20,8 +20,8 @@ public abstract class OfficeCMP
 
          dataHolder.set_Receptionist( get_Receptionist() );
          dataHolder.set_Name( get_Name() );
-         dataHolder.set_ZoneNumber( get_ZoneNumber() );
          dataHolder.setNumber( getNumber() );
+         dataHolder.set_ZoneNumber( get_ZoneNumber() );
          dataHolder.set_OfficeManager_number( get_OfficeManager_number() );
          dataHolder.set_DefaultCarrier_number( get_DefaultCarrier_number() );
          dataHolder.set_MainWarehouse_number( get_MainWarehouse_number() );
@@ -100,8 +100,8 @@ public abstract class OfficeCMP
          {
             OfficeValue.setReceptionist( getReceptionist() );
             OfficeValue.setName( getName() );
-            OfficeValue.setZoneNumber( getZoneNumber() );
             OfficeValue.setNumber( getNumber() );
+            OfficeValue.setZoneNumber( getZoneNumber() );
             OfficeValue.setOfficeManager_zoneNumber( getOfficeManager_zoneNumber() );
             OfficeValue.setOfficeManager_officeNumber( getOfficeManager_officeNumber() );
             OfficeValue.setOfficeManager_number( getOfficeManager_number() );
@@ -150,13 +150,13 @@ public abstract class OfficeCMP
 
    public abstract void set_Name( java.lang.String _Name ) ;
 
-   public abstract java.lang.Integer get_ZoneNumber() ;
-
-   public abstract void set_ZoneNumber( java.lang.Integer _ZoneNumber ) ;
-
    public abstract int getNumber() ;
 
    public abstract void setNumber( int number ) ;
+
+   public abstract java.lang.Integer get_ZoneNumber() ;
+
+   public abstract void set_ZoneNumber( java.lang.Integer _ZoneNumber ) ;
 
    public abstract int get_OfficeManager_number() ;
 

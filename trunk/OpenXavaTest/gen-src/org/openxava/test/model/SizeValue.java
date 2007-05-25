@@ -14,10 +14,10 @@ public class SizeValue
 
    private static final long serialVersionUID = 1L;
 
-   private java.lang.String name;
-   private boolean nameHasBeenSet = false;
    private int id;
    private boolean idHasBeenSet = false;
+   private java.lang.String name;
+   private boolean nameHasBeenSet = false;
 
    public SizeValue()
    {
@@ -26,26 +26,12 @@ public class SizeValue
    //TODO Cloneable is better than this !
    public SizeValue( SizeValue otherValue )
    {
-	  this.name = otherValue.name;
-	  nameHasBeenSet = true;
 	  this.id = otherValue.id;
 	  idHasBeenSet = true;
-   }
-
-   public java.lang.String getName()
-   {
-	  return this.name;
-   }
-
-   public void setName( java.lang.String name )
-   {
-	  this.name = name;
+	  this.name = otherValue.name;
 	  nameHasBeenSet = true;
    }
 
-   public boolean nameHasBeenSet(){
-	  return nameHasBeenSet;
-   }
    public int getId()
    {
 	  return this.id;
@@ -60,12 +46,26 @@ public class SizeValue
    public boolean idHasBeenSet(){
 	  return idHasBeenSet;
    }
+   public java.lang.String getName()
+   {
+	  return this.name;
+   }
+
+   public void setName( java.lang.String name )
+   {
+	  this.name = name;
+	  nameHasBeenSet = true;
+   }
+
+   public boolean nameHasBeenSet(){
+	  return nameHasBeenSet;
+   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("name=" + getName() + " " + "id=" + getId());
+	  str.append("id=" + getId() + " " + "name=" + getName());
 	  str.append('}');
 
 	  return(str.toString());
@@ -130,9 +130,9 @@ public class SizeValue
 
    public int hashCode(){
 	  int result = 17;
-      result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);
-
       result = 37*result + (int) id;
+
+      result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);
 
 	  return result;
    }

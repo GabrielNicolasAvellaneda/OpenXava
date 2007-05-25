@@ -12,8 +12,8 @@ public class InvoiceDetail2Data
 {
 
    private static final long serialVersionUID = 1L;
-   private java.math.BigDecimal _UnitPrice;
    private java.lang.String oid;
+   private java.math.BigDecimal _UnitPrice;
    private java.lang.Integer _Quantity;
    private long _Product_number;
    private int _Invoice2_year;
@@ -25,8 +25,8 @@ public class InvoiceDetail2Data
 
    public InvoiceDetail2Data( InvoiceDetail2Data otherData )
    {
-      set_UnitPrice(otherData.get_UnitPrice());
       setOid(otherData.getOid());
+      set_UnitPrice(otherData.get_UnitPrice());
       set_Quantity(otherData.get_Quantity());
       set_Product_number(otherData.get_Product_number());
       set_Invoice2_year(otherData.get_Invoice2_year());
@@ -39,15 +39,6 @@ public class InvoiceDetail2Data
      return pk;
    }
 
-   public java.math.BigDecimal get_UnitPrice()
-   {
-      return this._UnitPrice;
-   }
-   public void set_UnitPrice( java.math.BigDecimal _UnitPrice )
-   {
-      this._UnitPrice = _UnitPrice;
-   }
-
    public java.lang.String getOid()
    {
       return this.oid;
@@ -55,6 +46,15 @@ public class InvoiceDetail2Data
    public void setOid( java.lang.String oid )
    {
       this.oid = oid;
+   }
+
+   public java.math.BigDecimal get_UnitPrice()
+   {
+      return this._UnitPrice;
+   }
+   public void set_UnitPrice( java.math.BigDecimal _UnitPrice )
+   {
+      this._UnitPrice = _UnitPrice;
    }
 
    public java.lang.Integer get_Quantity()
@@ -97,7 +97,7 @@ public class InvoiceDetail2Data
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_UnitPrice=" + get_UnitPrice() + " " + "oid=" + getOid() + " " + "_Quantity=" + get_Quantity() + " " + "_Product_number=" + get_Product_number() + " " + "_Invoice2_year=" + get_Invoice2_year() + " " + "_Invoice2_number=" + get_Invoice2_number());
+      str.append("oid=" + getOid() + " " + "_UnitPrice=" + get_UnitPrice() + " " + "_Quantity=" + get_Quantity() + " " + "_Product_number=" + get_Product_number() + " " + "_Invoice2_year=" + get_Invoice2_year() + " " + "_Invoice2_number=" + get_Invoice2_number());
       str.append('}');
 
       return(str.toString());
@@ -110,14 +110,6 @@ public class InvoiceDetail2Data
          InvoiceDetail2Data lTest = (InvoiceDetail2Data) pOther;
          boolean lEquals = true;
 
-         if( this._UnitPrice == null )
-         {
-            lEquals = lEquals && ( lTest._UnitPrice == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._UnitPrice.equals( lTest._UnitPrice );
-         }
          if( this.oid == null )
          {
             lEquals = lEquals && ( lTest.oid == null );
@@ -125,6 +117,14 @@ public class InvoiceDetail2Data
          else
          {
             lEquals = lEquals && this.oid.equals( lTest.oid );
+         }
+         if( this._UnitPrice == null )
+         {
+            lEquals = lEquals && ( lTest._UnitPrice == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._UnitPrice.equals( lTest._UnitPrice );
          }
          if( this._Quantity == null )
          {
@@ -150,9 +150,9 @@ public class InvoiceDetail2Data
    {
       int result = 17;
 
-      result = 37*result + ((this._UnitPrice != null) ? this._UnitPrice.hashCode() : 0);
-
       result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
+
+      result = 37*result + ((this._UnitPrice != null) ? this._UnitPrice.hashCode() : 0);
 
       result = 37*result + ((this._Quantity != null) ? this._Quantity.hashCode() : 0);
 

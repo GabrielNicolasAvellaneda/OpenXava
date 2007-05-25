@@ -21,10 +21,10 @@ public interface CarrierHome
    public org.openxava.test.model.CarrierRemote create(org.openxava.test.model.CarrierValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
-   public java.util.Collection findByWarehouse(int zoneNumber, java.lang.Integer number)
+   public java.util.Collection findByDrivingLicence(java.lang.String type, int level)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
-   public java.util.Collection findByDrivingLicence(java.lang.String type, int level)
+   public java.util.Collection findByWarehouse(int zoneNumber, java.lang.Integer number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
    public java.util.Collection findFellowCarriersOfCarrier(int warehouse_zoneNumber, java.lang.Integer warehouse_number, java.lang.Integer _Number)

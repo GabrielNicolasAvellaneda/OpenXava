@@ -16,10 +16,10 @@ public class DrivingLicenceValue
 
    private int level;
    private boolean levelHasBeenSet = false;
-   private java.lang.String type;
-   private boolean typeHasBeenSet = false;
    private java.lang.String description;
    private boolean descriptionHasBeenSet = false;
+   private java.lang.String type;
+   private boolean typeHasBeenSet = false;
 
    public DrivingLicenceValue()
    {
@@ -30,10 +30,10 @@ public class DrivingLicenceValue
    {
 	  this.level = otherValue.level;
 	  levelHasBeenSet = true;
-	  this.type = otherValue.type;
-	  typeHasBeenSet = true;
 	  this.description = otherValue.description;
 	  descriptionHasBeenSet = true;
+	  this.type = otherValue.type;
+	  typeHasBeenSet = true;
    }
 
    public int getLevel()
@@ -50,20 +50,6 @@ public class DrivingLicenceValue
    public boolean levelHasBeenSet(){
 	  return levelHasBeenSet;
    }
-   public java.lang.String getType()
-   {
-	  return this.type;
-   }
-
-   public void setType( java.lang.String type )
-   {
-	  this.type = type;
-	  typeHasBeenSet = true;
-   }
-
-   public boolean typeHasBeenSet(){
-	  return typeHasBeenSet;
-   }
    public java.lang.String getDescription()
    {
 	  return this.description;
@@ -78,12 +64,26 @@ public class DrivingLicenceValue
    public boolean descriptionHasBeenSet(){
 	  return descriptionHasBeenSet;
    }
+   public java.lang.String getType()
+   {
+	  return this.type;
+   }
+
+   public void setType( java.lang.String type )
+   {
+	  this.type = type;
+	  typeHasBeenSet = true;
+   }
+
+   public boolean typeHasBeenSet(){
+	  return typeHasBeenSet;
+   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("level=" + getLevel() + " " + "type=" + getType() + " " + "description=" + getDescription());
+	  str.append("level=" + getLevel() + " " + "description=" + getDescription() + " " + "type=" + getType());
 	  str.append('}');
 
 	  return(str.toString());
@@ -159,9 +159,9 @@ public class DrivingLicenceValue
 	  int result = 17;
       result = 37*result + (int) level;
 
-      result = 37*result + ((this.type != null) ? this.type.hashCode() : 0);
-
       result = 37*result + ((this.description != null) ? this.description.hashCode() : 0);
+
+      result = 37*result + ((this.type != null) ? this.type.hashCode() : 0);
 
 	  return result;
    }

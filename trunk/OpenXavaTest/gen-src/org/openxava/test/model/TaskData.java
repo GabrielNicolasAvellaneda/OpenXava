@@ -12,11 +12,11 @@ public class TaskData
 {
 
    private static final long serialVersionUID = 1L;
-   private java.lang.String _Comments;
    private java.lang.String _Summary;
-   private java.lang.String _User;
    private java.lang.String oid;
    private java.sql.Date _Date;
+   private java.lang.String _User;
+   private java.lang.String _Comments;
 
    public TaskData()
    {
@@ -24,26 +24,17 @@ public class TaskData
 
    public TaskData( TaskData otherData )
    {
-      set_Comments(otherData.get_Comments());
       set_Summary(otherData.get_Summary());
-      set_User(otherData.get_User());
       setOid(otherData.getOid());
       set_Date(otherData.get_Date());
+      set_User(otherData.get_User());
+      set_Comments(otherData.get_Comments());
 
    }
 
    public org.openxava.test.model.TaskKey getPrimaryKey() {
      org.openxava.test.model.TaskKey pk = new org.openxava.test.model.TaskKey(this.getOid());
      return pk;
-   }
-
-   public java.lang.String get_Comments()
-   {
-      return this._Comments;
-   }
-   public void set_Comments( java.lang.String _Comments )
-   {
-      this._Comments = _Comments;
    }
 
    public java.lang.String get_Summary()
@@ -53,15 +44,6 @@ public class TaskData
    public void set_Summary( java.lang.String _Summary )
    {
       this._Summary = _Summary;
-   }
-
-   public java.lang.String get_User()
-   {
-      return this._User;
-   }
-   public void set_User( java.lang.String _User )
-   {
-      this._User = _User;
    }
 
    public java.lang.String getOid()
@@ -82,11 +64,29 @@ public class TaskData
       this._Date = _Date;
    }
 
+   public java.lang.String get_User()
+   {
+      return this._User;
+   }
+   public void set_User( java.lang.String _User )
+   {
+      this._User = _User;
+   }
+
+   public java.lang.String get_Comments()
+   {
+      return this._Comments;
+   }
+   public void set_Comments( java.lang.String _Comments )
+   {
+      this._Comments = _Comments;
+   }
+
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Comments=" + get_Comments() + " " + "_Summary=" + get_Summary() + " " + "_User=" + get_User() + " " + "oid=" + getOid() + " " + "_Date=" + get_Date());
+      str.append("_Summary=" + get_Summary() + " " + "oid=" + getOid() + " " + "_Date=" + get_Date() + " " + "_User=" + get_User() + " " + "_Comments=" + get_Comments());
       str.append('}');
 
       return(str.toString());
@@ -99,14 +99,6 @@ public class TaskData
          TaskData lTest = (TaskData) pOther;
          boolean lEquals = true;
 
-         if( this._Comments == null )
-         {
-            lEquals = lEquals && ( lTest._Comments == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._Comments.equals( lTest._Comments );
-         }
          if( this._Summary == null )
          {
             lEquals = lEquals && ( lTest._Summary == null );
@@ -114,14 +106,6 @@ public class TaskData
          else
          {
             lEquals = lEquals && this._Summary.equals( lTest._Summary );
-         }
-         if( this._User == null )
-         {
-            lEquals = lEquals && ( lTest._User == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._User.equals( lTest._User );
          }
          if( this.oid == null )
          {
@@ -139,6 +123,22 @@ public class TaskData
          {
             lEquals = lEquals && this._Date.equals( lTest._Date );
          }
+         if( this._User == null )
+         {
+            lEquals = lEquals && ( lTest._User == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._User.equals( lTest._User );
+         }
+         if( this._Comments == null )
+         {
+            lEquals = lEquals && ( lTest._Comments == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Comments.equals( lTest._Comments );
+         }
 
          return lEquals;
       }
@@ -152,15 +152,15 @@ public class TaskData
    {
       int result = 17;
 
-      result = 37*result + ((this._Comments != null) ? this._Comments.hashCode() : 0);
-
       result = 37*result + ((this._Summary != null) ? this._Summary.hashCode() : 0);
-
-      result = 37*result + ((this._User != null) ? this._User.hashCode() : 0);
 
       result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
 
       result = 37*result + ((this._Date != null) ? this._Date.hashCode() : 0);
+
+      result = 37*result + ((this._User != null) ? this._User.hashCode() : 0);
+
+      result = 37*result + ((this._Comments != null) ? this._Comments.hashCode() : 0);
 
       return result;
    }

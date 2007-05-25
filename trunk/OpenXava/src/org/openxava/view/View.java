@@ -12,10 +12,11 @@ import org.openxava.actions.*;
 import org.openxava.calculators.*;
 import org.openxava.component.*;
 import org.openxava.controller.*;
-import org.openxava.jpa.*;
+import org.openxava.filters.*;
 import org.openxava.mapping.*;
 import org.openxava.model.*;
 import org.openxava.model.meta.*;
+import org.openxava.tab.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
 import org.openxava.view.meta.*;
@@ -31,8 +32,7 @@ import org.openxava.web.*;
 public class View implements java.io.Serializable {
 		
 	private static Log log = LogFactory.getLog(View.class);
-	private static final long serialVersionUID = -7582669617830655121L;
-	private final static int [] EMPTY_SELECTED = new int[0];
+	private static final long serialVersionUID = -7582669617830655121L;	
 	
 	private Map objects = null; 
 	
@@ -50,7 +50,6 @@ public class View implements java.io.Serializable {
 	private Map groupsViews;
 	private Collection membersNamesInGroup;
 	private Map collectionMemberNames;
-	private List collectionValues;
 	private static int nextOid = 0;	
 	private int collectionEditingRow = -1;
 	private boolean searchingObject;
@@ -105,7 +104,9 @@ public class View implements java.io.Serializable {
 	private Collection metaMembersIncludingHiddenKey;
 	private Map labels;
 	private Collection executedActions;	
-	private boolean registeringExecutedActions = false;	
+	private boolean registeringExecutedActions = false;
+	private Tab collectionTab; 	
+	private String propertiesListNames; 
 	
 	
 		
@@ -606,6 +607,7 @@ public class View implements java.io.Serializable {
 				}
 				Collection propertiesListNames = metaCollectionView.getPropertiesListNames();
 				if (!propertiesListNames.isEmpty()) {
+					newView.setPropertiesListNames(metaCollectionView.getPropertiesListNamesAsString());
 					newView.setMetaPropertiesList(namesToMetaProperties(newView, propertiesListNames));
 				}
 				Collection actionsDetailNames = metaCollectionView.getActionsDetailNames();
@@ -666,6 +668,10 @@ public class View implements java.io.Serializable {
 	} 
 	 
 		
+	private void setPropertiesListNames(String propertiesListNames) {
+		this.propertiesListNames = propertiesListNames; 		
+	}
+
 	private Map getGroupsViews() throws XavaException {
 		if (groupsViews == null) {
 			groupsViews = new HashMap();
@@ -982,30 +988,220 @@ public class View implements java.io.Serializable {
 		}			
 		return membersNames; 	
 	}
+
+	/**
+	 * <code>Tab</code> used for manage the data of this callection. <p>
+	 *
+	 * This view must represents a collection in order to call this method.<br>
+	 */
+	public Tab getCollectionTab() throws XavaException {
+		assertRepresentsCollection("getCollectionTab()");
+		if (collectionTab == null) {			
+			collectionTab = new Tab();			
+			collectionTab.setModelName(getModelName());
+			collectionTab.setTabName(Tab.COLLECTION_PREFIX + getMemberName());
+			if (propertiesListNames != null) {
+				collectionTab.setPropertiesNames(propertiesListNames);
+			}
+			MetaCollection metaCollection = getMetaCollection();
+			if (metaCollection.hasCondition()) {
+				collectionTab.setBaseCondition(metaCollection.getSQLCondition());
+				CollectionWithConditionInViewFilter filter = new CollectionWithConditionInViewFilter(); 
+				filter.setView(getParent());
+				filter.setConditionArgumentsPropertyNames(metaCollection.getConditionArgumentsPropertyNames());
+				collectionTab.setFilter(filter);
+			}
+			else {
+				collectionTab.setBaseCondition(createBaseConditionForCollectionTab());			
+				CollectionInViewFilter filter = new CollectionInViewFilter();
+				filter.setView(getParent());
+				collectionTab.setFilter(filter);
+			}
+			collectionTab.setDefaultOrder(getMetaCollection().getOrder());
+		}
+		return collectionTab;
+	}
 	
-	public List getCollectionValues() throws XavaException { 
-		if (!isRepresentsCollection()) return Collections.EMPTY_LIST;
-		if (collectionValues == null) {
+	private void assertRepresentsCollection(String method) {
+		if (!isRepresentsCollection()) {
+			throw new IllegalStateException(
+				XavaResources.getString("represents_collections_required_in_view", method));
+		}
+	}
+	
+	private String createBaseConditionForCollectionTab() throws XavaException {
+		String referenceToParent = getMetaCollection().getMetaReference().getRole();
+		Collection keyNames = getParent().getMetaModel().getAllKeyPropertiesNames();
+		StringBuffer condition = new StringBuffer();
+		for (Iterator it = keyNames.iterator(); it.hasNext();) {
+			condition.append("${");
+			condition.append(referenceToParent);
+			condition.append('.');
+			condition.append(it.next());
+			condition.append("} = ?");
+			if (it.hasNext()) {
+				condition.append(" and ");
+			}			
+		}				
+		return condition.toString();
+	}
+	
+	private MetaCollection getMetaCollection() throws XavaException {
+		return getParent().getMetaModel().getMetaCollection(getMemberName());
+	}
+
+
+	/**
+	 * A list of all collection element when each element is a map 
+	 * with the values of the collection element.<p>
+	 * 
+	 * In order to call this method <b>this</b> view must represents a collection</b>.<p>
+	 * 
+	 * The values only include the displayed data in the row.<br>
+	 * @return  Of type <tt>Map</tt>. Never null.
+	 */	
+	public List getCollectionValues() throws XavaException {
+		assertRepresentsCollection("getCollectionValues()");				
+		if (isCollectionCalculated()) {
+			// If calculated we obtain the data directly from the model object
 			Map membersNames = new HashMap();
 			membersNames.put(getMemberName(), new HashMap(getCollectionMemberNames()));		
 			try {							
-				Map values = MapFacade.getValues(getParent().getModelName(), getParent().getKeyValues(), membersNames);
-				collectionValues = (List) values.get(getMemberName());				
+				Map values = MapFacade.getValues(getParent().getModelName(), getParent().getKeyValues(), membersNames);				
+				return (List) values.get(getMemberName());				
 			}
 			catch (ObjectNotFoundException ex) { // New one is creating
-				collectionValues = Collections.EMPTY_LIST; 								
+				return Collections.EMPTY_LIST; 								
+			}
+			catch (Exception ex) {
+				log.error(ex.getMessage(), ex);
+				getErrors().add("collection_error", getMemberName()); 
+				throw new XavaException("collection_error", getMemberName()); 								
+			}			
+		}
+		else { 
+			// If not calculated we obtain the data from the Tab
+			return getCollectionValues(getCollectionTab().getAllKeys());
+		}
+		
+	}
+		
+	/**
+	 * A list of selected collection element when each element is a map 
+	 * with the values of the collection element.<p>
+	 * 
+	 * In order to call this method <b>this view must represents a collection</b>.<p>
+	 * 
+	 * The values only include the displayed data in the row.<br>
+	 * @return  Of type <tt>Map</tt>. Never null.
+	 */
+	public List getCollectionSelectedValues() throws XavaException {  
+		assertRepresentsCollection("getCollectionSelectedValues()");				
+		if (isCollectionCalculated()) {
+			// If calculated we obtain the data directly from the model object
+			if (listSelected == null) return Collections.EMPTY_LIST;
+			List result = new ArrayList();
+			List all = getCollectionValues();
+			for (int i=0; i<listSelected.length; i++) {
+				result.add(all.get(listSelected[i]));
+			}
+			return result;
+		}
+		else { 
+			// If not calculated we obtain the data from the Tab
+			return getCollectionValues(getCollectionTab().getSelectedKeys());
+		}
+	}
+
+	private List getCollectionValues(Map [] keys) throws XavaException { 
+		List result = new ArrayList();
+		Map memberNames = new HashMap(getCollectionMemberNames());
+		for (int i = 0; i < keys.length; i++) {			
+			try {
+				Map values = MapFacade.getValues(getModelName(), keys[i], memberNames);
+				result.add(values);				
 			}
 			catch (Exception ex) {
 				log.error(ex.getMessage(), ex);
 				getErrors().add("collection_error", getMemberName());
-				return Collections.EMPTY_LIST;
-			}
+				throw new XavaException("collection_error", getMemberName());	
+			}				
 		}
-		return collectionValues;
+		return result;
 	}
 	
-	public void resetCollectionValues() {
-		collectionValues = null;
+	/**
+	 * A list of all objects (POJOs or EntityBeans) in the collection.<p>
+	 * 
+	 * In order to call this method <b>this view must represents a collection</b>.<p>
+	 * 
+	 * Generally the objects are POJOs, although if you use EJBPersistenceProvider
+	 * the they will be EntityBeans (of EJB2).<br> 
+	 *  
+	 * @return  Never null.
+	 */		
+	public List getCollectionObjects() throws XavaException {  
+		assertRepresentsCollection("getCollectionObjects()");		
+		Map [] keys = null;
+		if (isCollectionCalculated()) {
+			Collection values = getCollectionValues();
+			keys = new Map[values.size()];
+			values.toArray(keys);
+		}
+		else {				
+			keys = getCollectionTab().getAllKeys(); 
+		}
+		return getCollectionObjects(keys);						
+	}
+	
+	/**
+	 * A list of selected objects (POJOs or EntityBeans) in the collection.<p>
+	 * 
+	 * In order to call this method <b>this view must represents a collection</b>.<p>
+	 * 
+	 * Generally the objects are POJOs, although if you use EJBPersistenceProvider
+	 * the they will be EntityBeans (of EJB2).<br> 
+	 *  
+	 * @return  Never null.
+	 */
+	public List getCollectionSelectedObjects() throws XavaException {  
+		assertRepresentsCollection("getCollectionSelectedObjects()");		
+		Map [] selectedKeys = null;
+		if (isCollectionCalculated()) {
+			Collection selectedValues = getCollectionSelectedValues();
+			selectedKeys = new Map[selectedValues.size()];
+			selectedValues.toArray(selectedKeys);
+		}
+		else {				
+			selectedKeys = getCollectionTab().getSelectedKeys();
+		}
+		return getCollectionObjects(selectedKeys);						
+	}
+
+	private List getCollectionObjects(Map[] keys) throws XavaException {
+		List result = new ArrayList();		
+		for (int i = 0; i < keys.length; i++) {			
+			try {
+				Object object = MapFacade.findEntity(getModelName(), keys[i]);
+				result.add(object);				
+			}
+			catch (Exception ex) {
+				log.error(ex.getMessage(), ex);
+				getErrors().add("collection_error", getMemberName()); 
+				throw new XavaException("collection_error", getMemberName()); 									
+			}			
+		}
+		return result;
+	}
+	
+	/**
+	 * If the collection represents by this view is calculated. <p>
+	 * 
+	 * In order to call this method <b>this view must represents a collection</b>.<p>
+	 */
+	public boolean isCollectionCalculated() throws XavaException { 
+		assertRepresentsCollection("isCollectionCalculated()");
+		return getMetaCollection().hasCalculator();
 	}
 	
 	public boolean isDetailMemberInCollection() throws XavaException {
@@ -1492,7 +1688,7 @@ public class View implements java.io.Serializable {
 			focusForward = "true".equalsIgnoreCase(getRequest().getParameter("focus_forward"));
 			setIdFocusProperty(getRequest().getParameter("focus_property"));			
 			Iterator it = isSubview()?getMetaMembersIncludingHiddenKey().iterator():getMetaMembers().iterator();
-			if (isRepresentsCollection()) fillListSelected(qualifier);
+			if (isRepresentsCollection()) fillCollectionInfo(qualifier);
 			
 			while (it.hasNext()) {
 				Object m = it.next();							
@@ -1510,15 +1706,15 @@ public class View implements java.io.Serializable {
 				}
 				else if (m instanceof MetaReference) {					
 					MetaReference ref = (MetaReference) m;					
-					String key = "xava." + qualifier + "." + ref.getName() + ".KEY";
-					String value = getRequest().getParameter(key);
-					if (value == null) {
+					String key = "xava." + qualifier + "." + ref.getName() + ".KEY";					
+					String value = getRequest().getParameter(key);					
+					if (value == null) {						
 						View subview = getSubview(ref.getName());
 						subview.assignValuesToWebView(qualifier + "." + ref.getName());					 																				
 					}
-					else { // References as combo (descriptions-list) and composite key
+					else { // References as combo (descriptions-list) and composite key						
 						assignReferenceValue(qualifier, ref, value);
-					}
+					}					
 				}
 				else if (m instanceof MetaCollection) {
 					MetaCollection collec = (MetaCollection) m;						
@@ -1561,7 +1757,13 @@ public class View implements java.io.Serializable {
 		}						
 	}
 	
-	private void fillListSelected(String qualifier) {
+	private void fillCollectionInfo(String qualifier) throws XavaException { 
+		String tabPrefix = Tab.COLLECTION_PREFIX + getMemberName() + "_";		
+		getCollectionTab().setSelected(getRequest().getParameterValues(tabPrefix + "selected"));
+		getCollectionTab().setConditionComparators(getRequest().getParameterValues(tabPrefix + "conditionComparators"));
+		getCollectionTab().setConditionValues(getRequest().getParameterValues(tabPrefix + "conditionValues"));
+		
+		// Fill selected
 		String id = "xava." + qualifier + ".__SELECTED__";
 		String [] sel = getRequest().getParameterValues(id);
 		if (sel == null || sel.length == 0) {
@@ -1574,13 +1776,6 @@ public class View implements java.io.Serializable {
 		}				
 	}
 	
-	/**
-	 * Indices of the selected rows in the list mode of a collection.  
-	 */
-	public int [] getListSelected() {
-		return listSelected==null?EMPTY_SELECTED:listSelected;
-	}
-
 	private void assignReferenceValue(String qualifier, MetaReference ref, String value) throws XavaException {		
 		MetaModel metaModel = ref.getMetaModelReferenced(); 
 		Class keyClass = metaModel.getPOJOClass(); 
@@ -3010,7 +3205,7 @@ public class View implements java.io.Serializable {
 		if (objects == null) return null;
 		return objects.get(name);
 	}
-		
+	
 	/**
 	 * Remove from this view an object previously associated with @link #putObject(String, Object)
 	 * @param name Name of the object to remove.

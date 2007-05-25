@@ -70,6 +70,10 @@ public class XavaPreferences {
 		return getProperties().getProperty("formLineSpacing", "1");
 	}
 	
+	public String getCSVSeparator() {
+		return getProperties().getProperty("csvSeparator", ";");
+	}	
+	
 	public String getPersistenceProviderClass() {
 		return getProperties().getProperty("persistenceProviderClass", "org.openxava.model.impl.HibernatePersistenceProvider").trim();
 	}

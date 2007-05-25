@@ -14,16 +14,16 @@ public class ShipmentValue
 
    private static final long serialVersionUID = 1L;
 
-   private int type;
-   private boolean typeHasBeenSet = false;
    private java.sql.Timestamp time;
    private boolean timeHasBeenSet = false;
    private java.lang.String description;
    private boolean descriptionHasBeenSet = false;
-   private int mode;
-   private boolean modeHasBeenSet = false;
    private int number;
    private boolean numberHasBeenSet = false;
+   private int type;
+   private boolean typeHasBeenSet = false;
+   private int mode;
+   private boolean modeHasBeenSet = false;
    private int customerContactPerson_customer_number;
    private boolean customerContactPerson_customer_numberHasBeenSet = false;
 
@@ -34,34 +34,20 @@ public class ShipmentValue
    //TODO Cloneable is better than this !
    public ShipmentValue( ShipmentValue otherValue )
    {
-	  this.type = otherValue.type;
-	  typeHasBeenSet = true;
 	  this.time = otherValue.time;
 	  timeHasBeenSet = true;
 	  this.description = otherValue.description;
 	  descriptionHasBeenSet = true;
-	  this.mode = otherValue.mode;
-	  modeHasBeenSet = true;
 	  this.number = otherValue.number;
 	  numberHasBeenSet = true;
+	  this.type = otherValue.type;
+	  typeHasBeenSet = true;
+	  this.mode = otherValue.mode;
+	  modeHasBeenSet = true;
 	  this.customerContactPerson_customer_number = otherValue.customerContactPerson_customer_number;
 	  customerContactPerson_customer_numberHasBeenSet = true;
    }
 
-   public int getType()
-   {
-	  return this.type;
-   }
-
-   public void setType( int type )
-   {
-	  this.type = type;
-	  typeHasBeenSet = true;
-   }
-
-   public boolean typeHasBeenSet(){
-	  return typeHasBeenSet;
-   }
    public java.sql.Timestamp getTime()
    {
 	  return this.time;
@@ -90,20 +76,6 @@ public class ShipmentValue
    public boolean descriptionHasBeenSet(){
 	  return descriptionHasBeenSet;
    }
-   public int getMode()
-   {
-	  return this.mode;
-   }
-
-   public void setMode( int mode )
-   {
-	  this.mode = mode;
-	  modeHasBeenSet = true;
-   }
-
-   public boolean modeHasBeenSet(){
-	  return modeHasBeenSet;
-   }
    public int getNumber()
    {
 	  return this.number;
@@ -117,6 +89,34 @@ public class ShipmentValue
 
    public boolean numberHasBeenSet(){
 	  return numberHasBeenSet;
+   }
+   public int getType()
+   {
+	  return this.type;
+   }
+
+   public void setType( int type )
+   {
+	  this.type = type;
+	  typeHasBeenSet = true;
+   }
+
+   public boolean typeHasBeenSet(){
+	  return typeHasBeenSet;
+   }
+   public int getMode()
+   {
+	  return this.mode;
+   }
+
+   public void setMode( int mode )
+   {
+	  this.mode = mode;
+	  modeHasBeenSet = true;
+   }
+
+   public boolean modeHasBeenSet(){
+	  return modeHasBeenSet;
    }
    public int getCustomerContactPerson_customer_number()
    {
@@ -137,7 +137,7 @@ public class ShipmentValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("type=" + getType() + " " + "time=" + getTime() + " " + "description=" + getDescription() + " " + "mode=" + getMode() + " " + "number=" + getNumber() + " " + "customerContactPerson_customer_number=" + getCustomerContactPerson_customer_number());
+	  str.append("time=" + getTime() + " " + "description=" + getDescription() + " " + "number=" + getNumber() + " " + "type=" + getType() + " " + "mode=" + getMode() + " " + "customerContactPerson_customer_number=" + getCustomerContactPerson_customer_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -151,8 +151,8 @@ public class ShipmentValue
    protected boolean hasIdentity()
    {
 	  boolean ret = true;
-	  ret = ret && modeHasBeenSet;
 	  ret = ret && numberHasBeenSet;
+	  ret = ret && modeHasBeenSet;
 	  return ret;
    }
 
@@ -166,8 +166,8 @@ public class ShipmentValue
 		 ShipmentValue that = (ShipmentValue) other;
 		 if ( ! that.hasIdentity() ) return false;
 		 boolean lEquals = true;
-		 lEquals = lEquals && this.mode == that.mode;
 		 lEquals = lEquals && this.number == that.number;
+		 lEquals = lEquals && this.mode == that.mode;
 
 		 lEquals = lEquals && isIdentical(that);
 
@@ -185,7 +185,6 @@ public class ShipmentValue
 	  {
 		 ShipmentValue that = (ShipmentValue) other;
 		 boolean lEquals = true;
-		 lEquals = lEquals && this.type == that.type;
 		 if( this.time == null )
 		 {
 			lEquals = lEquals && ( that.time == null );
@@ -202,6 +201,7 @@ public class ShipmentValue
 		 {
 			lEquals = lEquals && this.description.equals( that.description );
 		 }
+		 lEquals = lEquals && this.type == that.type;
 		 lEquals = lEquals && this.customerContactPerson_customer_number == that.customerContactPerson_customer_number;
 
 		 return lEquals;
@@ -214,15 +214,15 @@ public class ShipmentValue
 
    public int hashCode(){
 	  int result = 17;
-      result = 37*result + (int) type;
-
       result = 37*result + ((this.time != null) ? this.time.hashCode() : 0);
 
       result = 37*result + ((this.description != null) ? this.description.hashCode() : 0);
 
-      result = 37*result + (int) mode;
-
       result = 37*result + (int) number;
+
+      result = 37*result + (int) type;
+
+      result = 37*result + (int) mode;
 
       result = 37*result + (int) customerContactPerson_customer_number;
 

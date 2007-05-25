@@ -18,12 +18,12 @@ public abstract class Product3CMP
       {
          dataHolder = new org.openxava.test.model.Product3Data();
 
-         dataHolder.set_Comments( get_Comments() );
          dataHolder.set_Description( get_Description() );
          dataHolder.setNumber( getNumber() );
+         dataHolder.set_Comments( get_Comments() );
+         dataHolder.set_Family_oid( get_Family_oid() );
          dataHolder.set_Subfamily1_family_number( get_Subfamily1_family_number() );
          dataHolder.set_Subfamily1_subfamily_number( get_Subfamily1_subfamily_number() );
-         dataHolder.set_Family_oid( get_Family_oid() );
          dataHolder.set_Subfamily2_family_number( get_Subfamily2_family_number() );
          dataHolder.set_Subfamily2_subfamily_number( get_Subfamily2_subfamily_number() );
 
@@ -40,11 +40,11 @@ public abstract class Product3CMP
    {
       try
       {
-         set_Comments( dataHolder.get_Comments() );
          set_Description( dataHolder.get_Description() );
+         set_Comments( dataHolder.get_Comments() );
+         set_Family_oid( dataHolder.get_Family_oid() );
          set_Subfamily1_family_number( dataHolder.get_Subfamily1_family_number() );
          set_Subfamily1_subfamily_number( dataHolder.get_Subfamily1_subfamily_number() );
-         set_Family_oid( dataHolder.get_Family_oid() );
          set_Subfamily2_family_number( dataHolder.get_Subfamily2_family_number() );
          set_Subfamily2_subfamily_number( dataHolder.get_Subfamily2_subfamily_number() );
 
@@ -100,13 +100,13 @@ public abstract class Product3CMP
       Product3Value = new org.openxava.test.model.Product3Value();
       try
          {
-            Product3Value.setComments( getComments() );
             Product3Value.setDescription( getDescription() );
             Product3Value.setNumber( getNumber() );
+            Product3Value.setComments( getComments() );
+            Product3Value.setFamily_oid( getFamily_oid() );
             Product3Value.setSubfamily1( getSubfamily1() );
             Product3Value.setSubfamily1_family_number( getSubfamily1_family_number() );
             Product3Value.setSubfamily1_subfamily_number( getSubfamily1_subfamily_number() );
-            Product3Value.setFamily_oid( getFamily_oid() );
             Product3Value.setSubfamily2( getSubfamily2() );
             Product3Value.setSubfamily2_family_number( getSubfamily2_family_number() );
             Product3Value.setSubfamily2_subfamily_number( getSubfamily2_subfamily_number() );
@@ -125,12 +125,12 @@ public abstract class Product3CMP
 
 	  try
 	  {
-		 setComments( valueHolder.getComments() );
 		 setDescription( valueHolder.getDescription() );
+		 setComments( valueHolder.getComments() );
+		 setFamily_oid( valueHolder.getFamily_oid() );
 		 setSubfamily1( valueHolder.getSubfamily1() );
 		 setSubfamily1_family_number( valueHolder.getSubfamily1_family_number() );
 		 setSubfamily1_subfamily_number( valueHolder.getSubfamily1_subfamily_number() );
-		 setFamily_oid( valueHolder.getFamily_oid() );
 		 setSubfamily2( valueHolder.getSubfamily2() );
 		 setSubfamily2_family_number( valueHolder.getSubfamily2_family_number() );
 		 setSubfamily2_subfamily_number( valueHolder.getSubfamily2_subfamily_number() );
@@ -144,10 +144,6 @@ public abstract class Product3CMP
 
 /* Value Objects END */
 
-   public abstract java.lang.String get_Comments() ;
-
-   public abstract void set_Comments( java.lang.String _Comments ) ;
-
    public abstract java.lang.String get_Description() ;
 
    public abstract void set_Description( java.lang.String _Description ) ;
@@ -156,6 +152,14 @@ public abstract class Product3CMP
 
    public abstract void setNumber( long number ) ;
 
+   public abstract java.lang.String get_Comments() ;
+
+   public abstract void set_Comments( java.lang.String _Comments ) ;
+
+   public abstract java.lang.String get_Family_oid() ;
+
+   public abstract void set_Family_oid( java.lang.String _Family_oid ) ;
+
    public abstract int get_Subfamily1_family_number() ;
 
    public abstract void set_Subfamily1_family_number( int _Subfamily1_family_number ) ;
@@ -163,10 +167,6 @@ public abstract class Product3CMP
    public abstract int get_Subfamily1_subfamily_number() ;
 
    public abstract void set_Subfamily1_subfamily_number( int _Subfamily1_subfamily_number ) ;
-
-   public abstract java.lang.String get_Family_oid() ;
-
-   public abstract void set_Family_oid( java.lang.String _Family_oid ) ;
 
    public abstract int get_Subfamily2_family_number() ;
 

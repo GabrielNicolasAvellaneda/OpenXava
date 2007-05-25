@@ -18,10 +18,10 @@ public abstract class DeliveryPlaceCMP
       {
          dataHolder = new org.openxava.test.model.DeliveryPlaceData();
 
-         dataHolder.setOid( getOid() );
-         dataHolder.set_Remarks( get_Remarks() );
          dataHolder.set_Address( get_Address() );
+         dataHolder.setOid( getOid() );
          dataHolder.set_Name( get_Name() );
+         dataHolder.set_Remarks( get_Remarks() );
          dataHolder.set_Customer_number( get_Customer_number() );
          dataHolder.set_PreferredWarehouse_zoneNumber( get_PreferredWarehouse_zoneNumber() );
          dataHolder.set_PreferredWarehouse_number( get_PreferredWarehouse_number() );
@@ -39,9 +39,9 @@ public abstract class DeliveryPlaceCMP
    {
       try
       {
-         set_Remarks( dataHolder.get_Remarks() );
          set_Address( dataHolder.get_Address() );
          set_Name( dataHolder.get_Name() );
+         set_Remarks( dataHolder.get_Remarks() );
          set_Customer_number( dataHolder.get_Customer_number() );
          set_PreferredWarehouse_zoneNumber( dataHolder.get_PreferredWarehouse_zoneNumber() );
          set_PreferredWarehouse_number( dataHolder.get_PreferredWarehouse_number() );
@@ -98,10 +98,10 @@ public abstract class DeliveryPlaceCMP
       DeliveryPlaceValue = new org.openxava.test.model.DeliveryPlaceValue();
       try
          {
-            DeliveryPlaceValue.setOid( getOid() );
-            DeliveryPlaceValue.setRemarks( getRemarks() );
             DeliveryPlaceValue.setAddress( getAddress() );
+            DeliveryPlaceValue.setOid( getOid() );
             DeliveryPlaceValue.setName( getName() );
+            DeliveryPlaceValue.setRemarks( getRemarks() );
             DeliveryPlaceValue.setCustomer_number( getCustomer_number() );
             DeliveryPlaceValue.setPreferredWarehouse_zoneNumber( getPreferredWarehouse_zoneNumber() );
             DeliveryPlaceValue.setPreferredWarehouse_number( getPreferredWarehouse_number() );
@@ -120,9 +120,9 @@ public abstract class DeliveryPlaceCMP
 
 	  try
 	  {
-		 setRemarks( valueHolder.getRemarks() );
 		 setAddress( valueHolder.getAddress() );
 		 setName( valueHolder.getName() );
+		 setRemarks( valueHolder.getRemarks() );
 		 setCustomer_number( valueHolder.getCustomer_number() );
 		 setPreferredWarehouse_zoneNumber( valueHolder.getPreferredWarehouse_zoneNumber() );
 		 setPreferredWarehouse_number( valueHolder.getPreferredWarehouse_number() );
@@ -136,21 +136,21 @@ public abstract class DeliveryPlaceCMP
 
 /* Value Objects END */
 
-   public abstract int getOid() ;
-
-   public abstract void setOid( int oid ) ;
-
-   public abstract java.lang.String get_Remarks() ;
-
-   public abstract void set_Remarks( java.lang.String _Remarks ) ;
-
    public abstract java.lang.String get_Address() ;
 
    public abstract void set_Address( java.lang.String _Address ) ;
 
+   public abstract int getOid() ;
+
+   public abstract void setOid( int oid ) ;
+
    public abstract java.lang.String get_Name() ;
 
    public abstract void set_Name( java.lang.String _Name ) ;
+
+   public abstract java.lang.String get_Remarks() ;
+
+   public abstract void set_Remarks( java.lang.String _Remarks ) ;
 
    public abstract int get_Customer_number() ;
 

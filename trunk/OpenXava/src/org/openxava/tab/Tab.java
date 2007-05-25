@@ -6,8 +6,6 @@ import java.util.*;
 
 import javax.servlet.http.*;
 
-
-
 import org.apache.commons.logging.*;
 import org.hibernate.*;
 import org.hibernate.cfg.*;
@@ -29,7 +27,12 @@ import org.openxava.util.*;
  */
 
 public class Tab {
-
+	
+	/**
+	 * Prefix used for naming (in session) to the tab objects used for collections.
+	 */
+	public final static String COLLECTION_PREFIX = "xava_collectionTab_";
+	
 	private static Log log = LogFactory.getLog(Tab.class);
 	
 	private final static int DEFAULT_PAGE_ROW_COUNT = 10;	
@@ -71,8 +74,8 @@ public class Tab {
 	private boolean notResetPageNextTime;
 	private boolean sortRemainingProperties;
 	private boolean rowsHidden;
-	
-	
+	private IFilter filter; 
+	private Map styles; 
 	
 	public List getMetaProperties() {
 		if (metaProperties == null) {
@@ -83,7 +86,7 @@ public class Tab {
 			catch (Exception ex) {
 				log.error(XavaResources.getString("tab_metaproperties_warning"), ex);
 			}
-		}		
+		}				
 		return metaProperties;
 	}
 	
@@ -117,7 +120,7 @@ public class Tab {
 		return baseCondition;
 	}
 	
-	private String getSQLBaseCondition() throws XavaException { 		
+	private String getSQLBaseCondition() throws XavaException { 				
 		return getMetaTab().getMetaModel().getMapping().changePropertiesByColumns(getBaseCondition());
 	}
 	
@@ -176,7 +179,17 @@ public class Tab {
 		
 	private MetaTab getMetaTab() throws XavaException  {
 		if (metaTab == null) {				
-			metaTab = MetaComponent.get(getModelName()).getMetaTab(getTabName());			
+			try {
+				metaTab = MetaComponent.get(getModelName()).getMetaTab(getTabName());
+			}
+			catch (ElementNotFoundException ex) {
+				if (getModelName().indexOf('.') >= 0 || // It's an aggregate
+					getTabName().startsWith(COLLECTION_PREFIX) // Used for collection 
+				) { 
+					metaTab = MetaTab.createDefault(MetaModel.get(getModelName()));
+				}				
+				else throw ex;
+			}
 		}
 		return metaTab;
 	}
@@ -225,10 +238,12 @@ public class Tab {
 		tab.search(getCondition(), getKey());
 		tableModel = tab.getTable();
 		
-		// To load data, thus it's possible go directly to other page than first				
-		int limit = getPage() * getPageRowCount();
-		for (int row=0; row < limit; row += getPageRowCount() ) {
-			tableModel.getValueAt(row,0);
+		// To load data, thus it's possible go directly to other page than first
+		if (tableModel.getColumnCount() > 0) { // Maybe we have a table model without columns, rare but possible			
+			int limit = getPage() * getPageRowCount();
+			for (int row=0; row < limit; row += getPageRowCount() ) {
+				tableModel.getValueAt(row,0);
+			}
 		}
 		return tableModel;
 	}
@@ -275,7 +290,7 @@ public class Tab {
 		else if (!Is.emptyString(getBaseCondition())) {
 			sb.append(getSQLBaseCondition());
 			firstCondition = false;			
-		}		
+		}				
 		if (!(conditionValues == null || conditionValues.length == 0)) {
 			MetaProperty pOrder = null;
 								
@@ -325,7 +340,7 @@ public class Tab {
 			if (sb.length() == 0) sb.append(" 1=1 ");
 			sb.append(" order by ");						
 			sb.append(getMetaTab().getSQLDefaultOrder());									
-		}						
+		}								
 		return sb.toString();
 	}
 
@@ -455,15 +470,16 @@ public class Tab {
 		
 		// Filter of meta tabs
 		int indexIncrement = 0;
-		if (getMetaTab().hasFilter()) {
-			IFilter filter = getMetaTab().getMetaFilter().getFilter();
+
+		IFilter filter = getFilter();
+		if (filter != null) {			
 			if (filter instanceof IRequestFilter) {
 				((IRequestFilter) filter).setRequest(request);
 			}
-			int original = key == null?0:key.length;
+			int original = key == null?0:key.length;			
 			key = (Object[]) filter.filter(key);
 			indexIncrement = key == null?0:key.length - original;
-		}
+		}		
 		
 		// To db format		
 		if (key != null && metaPropertiesKey != null) {			
@@ -562,6 +578,18 @@ public class Tab {
 		}		
 	}
 	
+	/**
+	 * Same that {@link #setSelectec(int [] values)} but from String []. <p>
+	 */
+	public void setSelected(String [] values) {
+		if (values == null) return;
+		int [] intValues = new int[values.length];
+		for (int i=0; i<values.length; i++) {
+			intValues[i] = Integer.parseInt(values[i]);
+		}
+		setSelected(intValues);
+	}
+	
 	public void deselectAll() {
 		selected = new int[0];
 	}
@@ -648,7 +676,7 @@ public class Tab {
 	}
 	
 	public void setConditionComparators(String [] comparators) throws XavaException {		
-		if (Arrays.equals(this.conditionComparators, comparators)) return; 		
+		if (Arrays.equals(this.conditionComparators, comparators)) return;
 		if (getMetaPropertiesNotCalculated().size() != comparators.length) return;		
 		this.conditionComparators = comparators;
 		condition = null;						
@@ -709,7 +737,7 @@ public class Tab {
 	}
 	
 	public String getTabName() {
-		return tabName;
+		return tabName; 		
 	}
 
 	public void setTabName(String newTabName) {		
@@ -776,8 +804,7 @@ public class Tab {
 	public String getBaseConditionForReference() {
 		return baseConditionForReference;
 	}
-	public void setBaseConditionForReference(
-			String baseConditionForReference) {
+	public void setBaseConditionForReference(String baseConditionForReference) {
 		this.baseConditionForReference = baseConditionForReference;
 	}
 
@@ -882,14 +909,21 @@ public class Tab {
 			tx = session.beginTransaction();
 			
 			Query query = session.createQuery("from TabUserPreferences p where p.user = :user and p.tab = :tab");
-			query.setString("user", getUserName());
-			query.setString("tab", getMetaTab().getMetaModel().getName() + "." + getMetaTab().getName());
-			userPreferences = (TabUserPreferences) query.uniqueResult();
-		
+			query.setString("user", getUserName());						
+			query.setString("tab", getMetaTab().getMetaModel().getName() + "." + getTabName()); 			
+			
+			Iterator it = query.list().iterator();
+			// It takes the first one
+			userPreferences = it.hasNext()?(TabUserPreferences) it.next():null;
+			// The rest are deleted, although theorically there is only one TabUserPreferences
+			// by user and tab. But sometimes may occurs, for example, several users logged with
+			// the same user name in the same module.  
+			while (it.hasNext()) {
+				session.delete(it.next());
+			}
+							
 			if (userPreferences != null) {										
-				cloneMetaTab();
-				getMetaTab().setPropertiesNames(userPreferences.getPropertiesNames());		
-				resetAfterChangeProperties();
+				setPropertiesNames(userPreferences.getPropertiesNames());
 				rowsHidden = userPreferences.isRowsHidden(); 
 			}
 			
@@ -905,7 +939,7 @@ public class Tab {
 			catch (Exception ex) {
 				// We have the preference loaded. Fail here is not a big problem
 			}
-		}
+		}		
 	}
 	
 	private String getUserName() { 
@@ -915,25 +949,22 @@ public class Tab {
 	}
 
 
-	private void saveUserPreferences() {
+	private void saveUserPreferences() {		
 		Session session = null;				
 		Transaction tx = null;		
 		try {
 			session = getSessionFactory().openSession();				
 			tx = session.beginTransaction();
 			
-			if (userPreferences == null) {
+			if (userPreferences == null) {				
 				userPreferences = new TabUserPreferences();
-				userPreferences.setUser(getUserName());
-				userPreferences.setTab(getMetaTab().getMetaModel().getName() + "." + getMetaTab().getName());
+				userPreferences.setUser(getUserName());				
+				userPreferences.setTab(getMetaTab().getMetaModel().getName() + "." + getTabName());
 			}
 			
 			userPreferences.setPropertiesNames(getPropertiesNamesAsString());
 			userPreferences.setRowsHidden(rowsHidden); 
-			session.saveOrUpdate(userPreferences);
-			
-			tx.commit();
-			session.close();
+			session.saveOrUpdate(userPreferences);						
 		}
 		catch (Exception ex) {
 			log.warn(XavaResources.getString("warning_save_preferences_tab"),ex);
@@ -946,21 +977,18 @@ public class Tab {
 			catch (Exception ex) {
 				log.warn(XavaResources.getString("warning_save_preferences_tab"),ex);
 			}
-		}
+		}		
 	}
 	
-	private void removeUserPreferences() {
-		if (userPreferences == null) return;
+	private void removeUserPreferences() {		
+		if (userPreferences == null) return;		
 		Session session = null;				
 		Transaction tx = null;		
 		try {
 			session = getSessionFactory().openSession();				
-			tx = session.beginTransaction();
-			
+			tx = session.beginTransaction();			
 			session.delete(userPreferences);
-			
-			tx.commit();
-			session.close();
+			userPreferences = null; 						
 		}
 		catch (Exception ex) {
 			log.warn(XavaResources.getString("warning_save_preferences_tab"),ex);
@@ -973,7 +1001,7 @@ public class Tab {
 			catch (Exception ex) {
 				log.warn(XavaResources.getString("warning_save_preferences_tab"),ex);
 			}
-		}				
+		}						
 	}
 	
 	
@@ -983,13 +1011,22 @@ public class Tab {
 		}
 		return sessionFactory;		
 	}
-	
-	public String getStyle(Locale locale, int row) {
+		
+	/**
+	 * The CSS style associated to the specified row. <p>
+	 * 
+	 * @return A string with the CSS style suitable to use in a 'class' attribute in HTML. 
+	 */
+	public String getStyle(int row) { 
 		try {
+			if (styles != null && !styles.isEmpty()) {
+				String result = (String) styles.get(new Integer(row));
+				if (result != null) return result;
+			}
 			if (!getMetaTab().hasRowStyles()) return null;
 			for (Iterator it = getMetaTab().getMetaRowStyles().iterator(); it.hasNext();) {
 				MetaRowStyle rowStyle = (MetaRowStyle) it.next();
-				String result = getStyle(locale, rowStyle, row);
+				String result = getStyle(rowStyle, row);
 				if (result != null) return result;
 			}
 			return null;
@@ -999,9 +1036,27 @@ public class Tab {
 			return null;
 		}
 	}
+
+	/**
+	 * Set the CSS style associated to the specified row. <p>
+	 * 
+	 * @param  row   Row number affected by this style.
+	 * @param  style  A string with the CSS style suitable to use in a 'class' attribute in HTML. 
+	 */	
+	public void setStyle(int row, String style) {
+		if (styles == null) styles = new HashMap();
+		styles.put(new Integer(row), style);
+	}
 	
+	/**
+	 * Clear the effect of all calls to {@link #setStyle(int, String)}
+	 *
+	 */
+	public void clearStyle() {
+		if (styles != null) styles.clear();
+	}
 	
-	private String getStyle(Locale locale, MetaRowStyle rowStyle, int row) {
+	private String getStyle(MetaRowStyle rowStyle, int row) {
 		try {
 			int column = getMetaTab().getPropertiesNames().indexOf(rowStyle.getProperty());			
 			if (column < 0) return null;			
@@ -1024,7 +1079,13 @@ public class Tab {
 		this.sortRemainingProperties = sortRemainingProperties;
 	}
 	
-	public Map [] getSelectedKeys() {
+	/**
+	 * An array with the keys (in <code>Map</code> format) of the selected
+	 * rows. <p> 
+	 * 
+	 * @return Never null
+	 */
+	public Map [] getSelectedKeys() { 
 		if (selected == null) return new Map[0];
 		Map [] keys = new Map[selected.length];
 		for (int i = 0; i < keys.length; i++) {
@@ -1037,6 +1098,28 @@ public class Tab {
 			}
 		}
 		return keys;
+	}
+
+	/**
+	 * An array with the keys (in <code>Map</code> format) of the all
+	 * rows. <p> 
+	 * 
+	 * @return Never null
+	 */	
+	public Map [] getAllKeys() { 
+		Collection allKeys = new ArrayList();		
+		for (int i = 0; i < tableModel.getRowCount(); i++) {
+			try {
+				allKeys.add(tableModel.getObjectAt(i));
+			}
+			catch (Exception ex) {
+				allKeys.add(Collections.EMPTY_MAP);
+				log.warn(XavaResources.getString("tab_row_key_warning", new Integer(i)),ex);
+			}
+		}
+		Map [] keys = new Map[allKeys.size()];
+		allKeys.toArray(keys);
+		return keys;		
 	}
 
 
@@ -1068,5 +1151,55 @@ public class Tab {
 	public void setPageRowCount(int pageRowCount) {
 		this.pageRowCount = pageRowCount;
 	}
+
+	/**
+	 * Filter used currently by this tab. <p>
+	 * 
+	 * By default the filter is the defined one in the &lt;tab/&gt; of the 
+	 * component or using the filter attribute of @Tab annotation.<br>
+	 * But, it's possible to assign in runtime other filter using the
+	 * {@link #setFilter(IFilter)} method.<br>  
+	 * 
+	 * @return Can be null.
+	 */
+	public IFilter getFilter() throws XavaException { 
+		if (filter != null) return filter;
+		if (getMetaTab().hasFilter()) {
+			return getMetaTab().getMetaFilter().getFilter();
+		}		
+		return null;
+	}
+
+	/**
+	 * Sets the filter for this tab in runtime. <p>
+	 * 
+	 * This override the filter defined using &lt;tab&gt; or @Tab.<br>
+	 */
+	public void setFilter(IFilter filter) { 
+		this.filter = filter;
+	}
 	
+	
+	/**
+	 * Set the properties to be displayed by this <code>Tab</code> in runtime. <p>
+	 * 
+	 * This override the properties defined using &lt;tab&gt; or @Tab.<br>
+	 */
+	public void setPropertiesNames(String propertiesNames) throws XavaException { 
+		cloneMetaTab();
+		getMetaTab().setPropertiesNames(propertiesNames);		
+		resetAfterChangeProperties();				
+	}
+	
+	/**
+	 * Set the default order for this <code>Tab</code> in runtime. <p>
+	 * 
+	 * This override the default order defined using &lt;tab&gt; or @Tab.<br>
+	 */	
+	public void setDefaultOrder(String defaultOrder) throws XavaException {  
+		cloneMetaTab();
+		getMetaTab().setDefaultOrder(defaultOrder);		
+		resetAfterChangeProperties();				
+	}
+			
 }

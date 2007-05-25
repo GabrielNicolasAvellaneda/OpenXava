@@ -12,8 +12,8 @@ public class IssueData
 {
 
    private static final long serialVersionUID = 1L;
-   private java.lang.String _Description;
    private java.lang.String id;
+   private java.lang.String _Description;
 
    public IssueData()
    {
@@ -21,23 +21,14 @@ public class IssueData
 
    public IssueData( IssueData otherData )
    {
-      set_Description(otherData.get_Description());
       setId(otherData.getId());
+      set_Description(otherData.get_Description());
 
    }
 
    public org.openxava.test.model.IssueKey getPrimaryKey() {
      org.openxava.test.model.IssueKey pk = new org.openxava.test.model.IssueKey(this.getId());
      return pk;
-   }
-
-   public java.lang.String get_Description()
-   {
-      return this._Description;
-   }
-   public void set_Description( java.lang.String _Description )
-   {
-      this._Description = _Description;
    }
 
    public java.lang.String getId()
@@ -49,11 +40,20 @@ public class IssueData
       this.id = id;
    }
 
+   public java.lang.String get_Description()
+   {
+      return this._Description;
+   }
+   public void set_Description( java.lang.String _Description )
+   {
+      this._Description = _Description;
+   }
+
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Description=" + get_Description() + " " + "id=" + getId());
+      str.append("id=" + getId() + " " + "_Description=" + get_Description());
       str.append('}');
 
       return(str.toString());
@@ -66,14 +66,6 @@ public class IssueData
          IssueData lTest = (IssueData) pOther;
          boolean lEquals = true;
 
-         if( this._Description == null )
-         {
-            lEquals = lEquals && ( lTest._Description == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._Description.equals( lTest._Description );
-         }
          if( this.id == null )
          {
             lEquals = lEquals && ( lTest.id == null );
@@ -81,6 +73,14 @@ public class IssueData
          else
          {
             lEquals = lEquals && this.id.equals( lTest.id );
+         }
+         if( this._Description == null )
+         {
+            lEquals = lEquals && ( lTest._Description == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Description.equals( lTest._Description );
          }
 
          return lEquals;
@@ -95,9 +95,9 @@ public class IssueData
    {
       int result = 17;
 
-      result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
-
       result = 37*result + ((this.id != null) ? this.id.hashCode() : 0);
+
+      result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
 
       return result;
    }

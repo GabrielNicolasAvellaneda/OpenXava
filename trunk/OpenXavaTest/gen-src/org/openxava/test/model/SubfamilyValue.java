@@ -14,20 +14,20 @@ public class SubfamilyValue
 
    private static final long serialVersionUID = 1L;
 
+   private java.lang.String description;
+   private boolean descriptionHasBeenSet = false;
    private java.lang.String family;
    private boolean familyHasBeenSet = false;
-   private int familyNumber;
-   private boolean familyNumberHasBeenSet = false;
    private java.lang.String oid;
    private boolean oidHasBeenSet = false;
    private java.lang.String remarks;
    private boolean remarksHasBeenSet = false;
-   private java.lang.String description;
-   private boolean descriptionHasBeenSet = false;
-   private java.lang.String remarksDB;
-   private boolean remarksDBHasBeenSet = false;
    private int number;
    private boolean numberHasBeenSet = false;
+   private java.lang.String remarksDB;
+   private boolean remarksDBHasBeenSet = false;
+   private int familyNumber;
+   private boolean familyNumberHasBeenSet = false;
 
    public SubfamilyValue()
    {
@@ -36,22 +36,36 @@ public class SubfamilyValue
    //TODO Cloneable is better than this !
    public SubfamilyValue( SubfamilyValue otherValue )
    {
+	  this.description = otherValue.description;
+	  descriptionHasBeenSet = true;
 	  this.family = otherValue.family;
 	  familyHasBeenSet = true;
-	  this.familyNumber = otherValue.familyNumber;
-	  familyNumberHasBeenSet = true;
 	  this.oid = otherValue.oid;
 	  oidHasBeenSet = true;
 	  this.remarks = otherValue.remarks;
 	  remarksHasBeenSet = true;
-	  this.description = otherValue.description;
-	  descriptionHasBeenSet = true;
-	  this.remarksDB = otherValue.remarksDB;
-	  remarksDBHasBeenSet = true;
 	  this.number = otherValue.number;
 	  numberHasBeenSet = true;
+	  this.remarksDB = otherValue.remarksDB;
+	  remarksDBHasBeenSet = true;
+	  this.familyNumber = otherValue.familyNumber;
+	  familyNumberHasBeenSet = true;
    }
 
+   public java.lang.String getDescription()
+   {
+	  return this.description;
+   }
+
+   public void setDescription( java.lang.String description )
+   {
+	  this.description = description;
+	  descriptionHasBeenSet = true;
+   }
+
+   public boolean descriptionHasBeenSet(){
+	  return descriptionHasBeenSet;
+   }
    public java.lang.String getFamily()
    {
 	  return this.family;
@@ -65,20 +79,6 @@ public class SubfamilyValue
 
    public boolean familyHasBeenSet(){
 	  return familyHasBeenSet;
-   }
-   public int getFamilyNumber()
-   {
-	  return this.familyNumber;
-   }
-
-   public void setFamilyNumber( int familyNumber )
-   {
-	  this.familyNumber = familyNumber;
-	  familyNumberHasBeenSet = true;
-   }
-
-   public boolean familyNumberHasBeenSet(){
-	  return familyNumberHasBeenSet;
    }
    public java.lang.String getOid()
    {
@@ -108,19 +108,19 @@ public class SubfamilyValue
    public boolean remarksHasBeenSet(){
 	  return remarksHasBeenSet;
    }
-   public java.lang.String getDescription()
+   public int getNumber()
    {
-	  return this.description;
+	  return this.number;
    }
 
-   public void setDescription( java.lang.String description )
+   public void setNumber( int number )
    {
-	  this.description = description;
-	  descriptionHasBeenSet = true;
+	  this.number = number;
+	  numberHasBeenSet = true;
    }
 
-   public boolean descriptionHasBeenSet(){
-	  return descriptionHasBeenSet;
+   public boolean numberHasBeenSet(){
+	  return numberHasBeenSet;
    }
    public java.lang.String getRemarksDB()
    {
@@ -136,26 +136,26 @@ public class SubfamilyValue
    public boolean remarksDBHasBeenSet(){
 	  return remarksDBHasBeenSet;
    }
-   public int getNumber()
+   public int getFamilyNumber()
    {
-	  return this.number;
+	  return this.familyNumber;
    }
 
-   public void setNumber( int number )
+   public void setFamilyNumber( int familyNumber )
    {
-	  this.number = number;
-	  numberHasBeenSet = true;
+	  this.familyNumber = familyNumber;
+	  familyNumberHasBeenSet = true;
    }
 
-   public boolean numberHasBeenSet(){
-	  return numberHasBeenSet;
+   public boolean familyNumberHasBeenSet(){
+	  return familyNumberHasBeenSet;
    }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("family=" + getFamily() + " " + "familyNumber=" + getFamilyNumber() + " " + "oid=" + getOid() + " " + "remarks=" + getRemarks() + " " + "description=" + getDescription() + " " + "remarksDB=" + getRemarksDB() + " " + "number=" + getNumber());
+	  str.append("description=" + getDescription() + " " + "family=" + getFamily() + " " + "oid=" + getOid() + " " + "remarks=" + getRemarks() + " " + "number=" + getNumber() + " " + "remarksDB=" + getRemarksDB() + " " + "familyNumber=" + getFamilyNumber());
 	  str.append('}');
 
 	  return(str.toString());
@@ -208,23 +208,6 @@ public class SubfamilyValue
 	  {
 		 SubfamilyValue that = (SubfamilyValue) other;
 		 boolean lEquals = true;
-		 if( this.family == null )
-		 {
-			lEquals = lEquals && ( that.family == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.family.equals( that.family );
-		 }
-		 lEquals = lEquals && this.familyNumber == that.familyNumber;
-		 if( this.remarks == null )
-		 {
-			lEquals = lEquals && ( that.remarks == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.remarks.equals( that.remarks );
-		 }
 		 if( this.description == null )
 		 {
 			lEquals = lEquals && ( that.description == null );
@@ -233,6 +216,23 @@ public class SubfamilyValue
 		 {
 			lEquals = lEquals && this.description.equals( that.description );
 		 }
+		 if( this.family == null )
+		 {
+			lEquals = lEquals && ( that.family == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.family.equals( that.family );
+		 }
+		 if( this.remarks == null )
+		 {
+			lEquals = lEquals && ( that.remarks == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.remarks.equals( that.remarks );
+		 }
+		 lEquals = lEquals && this.number == that.number;
 		 if( this.remarksDB == null )
 		 {
 			lEquals = lEquals && ( that.remarksDB == null );
@@ -241,7 +241,7 @@ public class SubfamilyValue
 		 {
 			lEquals = lEquals && this.remarksDB.equals( that.remarksDB );
 		 }
-		 lEquals = lEquals && this.number == that.number;
+		 lEquals = lEquals && this.familyNumber == that.familyNumber;
 
 		 return lEquals;
 	  }
@@ -253,19 +253,19 @@ public class SubfamilyValue
 
    public int hashCode(){
 	  int result = 17;
-      result = 37*result + ((this.family != null) ? this.family.hashCode() : 0);
+      result = 37*result + ((this.description != null) ? this.description.hashCode() : 0);
 
-      result = 37*result + (int) familyNumber;
+      result = 37*result + ((this.family != null) ? this.family.hashCode() : 0);
 
       result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
 
       result = 37*result + ((this.remarks != null) ? this.remarks.hashCode() : 0);
 
-      result = 37*result + ((this.description != null) ? this.description.hashCode() : 0);
+      result = 37*result + (int) number;
 
       result = 37*result + ((this.remarksDB != null) ? this.remarksDB.hashCode() : 0);
 
-      result = 37*result + (int) number;
+      result = 37*result + (int) familyNumber;
 
 	  return result;
    }

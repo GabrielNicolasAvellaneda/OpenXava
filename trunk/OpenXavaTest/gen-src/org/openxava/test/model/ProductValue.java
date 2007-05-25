@@ -16,20 +16,20 @@ public class ProductValue
 
    private java.lang.String photos;
    private boolean photosHasBeenSet = false;
-   private int familyNumber;
-   private boolean familyNumberHasBeenSet = false;
-   private java.math.BigDecimal unitPrice;
-   private boolean unitPriceHasBeenSet = false;
    private int subfamilyNumber;
    private boolean subfamilyNumberHasBeenSet = false;
-   private java.lang.String remarks;
-   private boolean remarksHasBeenSet = false;
    private java.lang.String description;
    private boolean descriptionHasBeenSet = false;
    private java.math.BigDecimal unitPriceInPesetas;
    private boolean unitPriceInPesetasHasBeenSet = false;
+   private java.math.BigDecimal unitPrice;
+   private boolean unitPriceHasBeenSet = false;
+   private java.lang.String remarks;
+   private boolean remarksHasBeenSet = false;
    private long number;
    private boolean numberHasBeenSet = false;
+   private int familyNumber;
+   private boolean familyNumberHasBeenSet = false;
 
    public ProductValue()
    {
@@ -40,20 +40,20 @@ public class ProductValue
    {
 	  this.photos = otherValue.photos;
 	  photosHasBeenSet = true;
-	  this.familyNumber = otherValue.familyNumber;
-	  familyNumberHasBeenSet = true;
-	  this.unitPrice = otherValue.unitPrice;
-	  unitPriceHasBeenSet = true;
 	  this.subfamilyNumber = otherValue.subfamilyNumber;
 	  subfamilyNumberHasBeenSet = true;
-	  this.remarks = otherValue.remarks;
-	  remarksHasBeenSet = true;
 	  this.description = otherValue.description;
 	  descriptionHasBeenSet = true;
 	  this.unitPriceInPesetas = otherValue.unitPriceInPesetas;
 	  unitPriceInPesetasHasBeenSet = true;
+	  this.unitPrice = otherValue.unitPrice;
+	  unitPriceHasBeenSet = true;
+	  this.remarks = otherValue.remarks;
+	  remarksHasBeenSet = true;
 	  this.number = otherValue.number;
 	  numberHasBeenSet = true;
+	  this.familyNumber = otherValue.familyNumber;
+	  familyNumberHasBeenSet = true;
    }
 
    public java.lang.String getPhotos()
@@ -70,34 +70,6 @@ public class ProductValue
    public boolean photosHasBeenSet(){
 	  return photosHasBeenSet;
    }
-   public int getFamilyNumber()
-   {
-	  return this.familyNumber;
-   }
-
-   public void setFamilyNumber( int familyNumber )
-   {
-	  this.familyNumber = familyNumber;
-	  familyNumberHasBeenSet = true;
-   }
-
-   public boolean familyNumberHasBeenSet(){
-	  return familyNumberHasBeenSet;
-   }
-   public java.math.BigDecimal getUnitPrice()
-   {
-	  return this.unitPrice;
-   }
-
-   public void setUnitPrice( java.math.BigDecimal unitPrice )
-   {
-	  this.unitPrice = unitPrice;
-	  unitPriceHasBeenSet = true;
-   }
-
-   public boolean unitPriceHasBeenSet(){
-	  return unitPriceHasBeenSet;
-   }
    public int getSubfamilyNumber()
    {
 	  return this.subfamilyNumber;
@@ -111,20 +83,6 @@ public class ProductValue
 
    public boolean subfamilyNumberHasBeenSet(){
 	  return subfamilyNumberHasBeenSet;
-   }
-   public java.lang.String getRemarks()
-   {
-	  return this.remarks;
-   }
-
-   public void setRemarks( java.lang.String remarks )
-   {
-	  this.remarks = remarks;
-	  remarksHasBeenSet = true;
-   }
-
-   public boolean remarksHasBeenSet(){
-	  return remarksHasBeenSet;
    }
    public java.lang.String getDescription()
    {
@@ -154,6 +112,34 @@ public class ProductValue
    public boolean unitPriceInPesetasHasBeenSet(){
 	  return unitPriceInPesetasHasBeenSet;
    }
+   public java.math.BigDecimal getUnitPrice()
+   {
+	  return this.unitPrice;
+   }
+
+   public void setUnitPrice( java.math.BigDecimal unitPrice )
+   {
+	  this.unitPrice = unitPrice;
+	  unitPriceHasBeenSet = true;
+   }
+
+   public boolean unitPriceHasBeenSet(){
+	  return unitPriceHasBeenSet;
+   }
+   public java.lang.String getRemarks()
+   {
+	  return this.remarks;
+   }
+
+   public void setRemarks( java.lang.String remarks )
+   {
+	  this.remarks = remarks;
+	  remarksHasBeenSet = true;
+   }
+
+   public boolean remarksHasBeenSet(){
+	  return remarksHasBeenSet;
+   }
    public long getNumber()
    {
 	  return this.number;
@@ -168,12 +154,26 @@ public class ProductValue
    public boolean numberHasBeenSet(){
 	  return numberHasBeenSet;
    }
+   public int getFamilyNumber()
+   {
+	  return this.familyNumber;
+   }
+
+   public void setFamilyNumber( int familyNumber )
+   {
+	  this.familyNumber = familyNumber;
+	  familyNumberHasBeenSet = true;
+   }
+
+   public boolean familyNumberHasBeenSet(){
+	  return familyNumberHasBeenSet;
+   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("photos=" + getPhotos() + " " + "familyNumber=" + getFamilyNumber() + " " + "unitPrice=" + getUnitPrice() + " " + "subfamilyNumber=" + getSubfamilyNumber() + " " + "remarks=" + getRemarks() + " " + "description=" + getDescription() + " " + "unitPriceInPesetas=" + getUnitPriceInPesetas() + " " + "number=" + getNumber());
+	  str.append("photos=" + getPhotos() + " " + "subfamilyNumber=" + getSubfamilyNumber() + " " + "description=" + getDescription() + " " + "unitPriceInPesetas=" + getUnitPriceInPesetas() + " " + "unitPrice=" + getUnitPrice() + " " + "remarks=" + getRemarks() + " " + "number=" + getNumber() + " " + "familyNumber=" + getFamilyNumber());
 	  str.append('}');
 
 	  return(str.toString());
@@ -227,24 +227,7 @@ public class ProductValue
 		 {
 			lEquals = lEquals && this.photos.equals( that.photos );
 		 }
-		 lEquals = lEquals && this.familyNumber == that.familyNumber;
-		 if( this.unitPrice == null )
-		 {
-			lEquals = lEquals && ( that.unitPrice == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.unitPrice.equals( that.unitPrice );
-		 }
 		 lEquals = lEquals && this.subfamilyNumber == that.subfamilyNumber;
-		 if( this.remarks == null )
-		 {
-			lEquals = lEquals && ( that.remarks == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.remarks.equals( that.remarks );
-		 }
 		 if( this.description == null )
 		 {
 			lEquals = lEquals && ( that.description == null );
@@ -261,6 +244,23 @@ public class ProductValue
 		 {
 			lEquals = lEquals && this.unitPriceInPesetas.equals( that.unitPriceInPesetas );
 		 }
+		 if( this.unitPrice == null )
+		 {
+			lEquals = lEquals && ( that.unitPrice == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.unitPrice.equals( that.unitPrice );
+		 }
+		 if( this.remarks == null )
+		 {
+			lEquals = lEquals && ( that.remarks == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.remarks.equals( that.remarks );
+		 }
+		 lEquals = lEquals && this.familyNumber == that.familyNumber;
 
 		 return lEquals;
 	  }
@@ -274,19 +274,19 @@ public class ProductValue
 	  int result = 17;
       result = 37*result + ((this.photos != null) ? this.photos.hashCode() : 0);
 
-      result = 37*result + (int) familyNumber;
-
-      result = 37*result + ((this.unitPrice != null) ? this.unitPrice.hashCode() : 0);
-
       result = 37*result + (int) subfamilyNumber;
-
-      result = 37*result + ((this.remarks != null) ? this.remarks.hashCode() : 0);
 
       result = 37*result + ((this.description != null) ? this.description.hashCode() : 0);
 
       result = 37*result + ((this.unitPriceInPesetas != null) ? this.unitPriceInPesetas.hashCode() : 0);
 
+      result = 37*result + ((this.unitPrice != null) ? this.unitPrice.hashCode() : 0);
+
+      result = 37*result + ((this.remarks != null) ? this.remarks.hashCode() : 0);
+
       result = 37*result + (int)(number^(number>>>32));
+
+      result = 37*result + (int) familyNumber;
 
 	  return result;
    }

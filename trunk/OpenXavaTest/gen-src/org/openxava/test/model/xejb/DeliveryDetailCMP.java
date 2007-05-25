@@ -21,9 +21,9 @@ public abstract class DeliveryDetailCMP
          dataHolder.set_Description( get_Description() );
          dataHolder.setNumber( getNumber() );
          dataHolder.set_Delivery_number( get_Delivery_number() );
-         dataHolder.set_Delivery_type_number( get_Delivery_type_number() );
          dataHolder.set_Delivery_invoice_year( get_Delivery_invoice_year() );
          dataHolder.set_Delivery_invoice_number( get_Delivery_invoice_number() );
+         dataHolder.set_Delivery_type_number( get_Delivery_type_number() );
 
       }
       catch (RuntimeException e)
@@ -40,9 +40,9 @@ public abstract class DeliveryDetailCMP
       {
          set_Description( dataHolder.get_Description() );
          set_Delivery_number( dataHolder.get_Delivery_number() );
-         set_Delivery_type_number( dataHolder.get_Delivery_type_number() );
          set_Delivery_invoice_year( dataHolder.get_Delivery_invoice_year() );
          set_Delivery_invoice_number( dataHolder.get_Delivery_invoice_number() );
+         set_Delivery_type_number( dataHolder.get_Delivery_type_number() );
 
       }
       catch (Exception e)
@@ -99,9 +99,9 @@ public abstract class DeliveryDetailCMP
             DeliveryDetailValue.setDescription( getDescription() );
             DeliveryDetailValue.setNumber( getNumber() );
             DeliveryDetailValue.setDelivery_number( getDelivery_number() );
-            DeliveryDetailValue.setDelivery_type_number( getDelivery_type_number() );
             DeliveryDetailValue.setDelivery_invoice_year( getDelivery_invoice_year() );
             DeliveryDetailValue.setDelivery_invoice_number( getDelivery_invoice_number() );
+            DeliveryDetailValue.setDelivery_type_number( getDelivery_type_number() );
 
          }
          catch (Exception e)
@@ -119,9 +119,9 @@ public abstract class DeliveryDetailCMP
 	  {
 		 setDescription( valueHolder.getDescription() );
 		 setDelivery_number( valueHolder.getDelivery_number() );
-		 setDelivery_type_number( valueHolder.getDelivery_type_number() );
 		 setDelivery_invoice_year( valueHolder.getDelivery_invoice_year() );
 		 setDelivery_invoice_number( valueHolder.getDelivery_invoice_number() );
+		 setDelivery_type_number( valueHolder.getDelivery_type_number() );
 
 	  }
 	  catch (Exception e)
@@ -144,10 +144,6 @@ public abstract class DeliveryDetailCMP
 
    public abstract void set_Delivery_number( int _Delivery_number ) ;
 
-   public abstract int get_Delivery_type_number() ;
-
-   public abstract void set_Delivery_type_number( int _Delivery_type_number ) ;
-
    public abstract int get_Delivery_invoice_year() ;
 
    public abstract void set_Delivery_invoice_year( int _Delivery_invoice_year ) ;
@@ -155,5 +151,9 @@ public abstract class DeliveryDetailCMP
    public abstract int get_Delivery_invoice_number() ;
 
    public abstract void set_Delivery_invoice_number( int _Delivery_invoice_number ) ;
+
+   public abstract int get_Delivery_type_number() ;
+
+   public abstract void set_Delivery_type_number( int _Delivery_type_number ) ;
 
 }

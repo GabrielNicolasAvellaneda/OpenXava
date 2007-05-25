@@ -18,8 +18,8 @@ public abstract class SizeCMP
       {
          dataHolder = new org.openxava.test.model.SizeData();
 
-         dataHolder.set_Name( get_Name() );
          dataHolder.setId( getId() );
+         dataHolder.set_Name( get_Name() );
 
       }
       catch (RuntimeException e)
@@ -88,8 +88,8 @@ public abstract class SizeCMP
       SizeValue = new org.openxava.test.model.SizeValue();
       try
          {
-            SizeValue.setName( getName() );
             SizeValue.setId( getId() );
+            SizeValue.setName( getName() );
 
          }
          catch (Exception e)
@@ -116,12 +116,12 @@ public abstract class SizeCMP
 
 /* Value Objects END */
 
-   public abstract java.lang.String get_Name() ;
-
-   public abstract void set_Name( java.lang.String _Name ) ;
-
    public abstract int getId() ;
 
    public abstract void setId( int id ) ;
+
+   public abstract java.lang.String get_Name() ;
+
+   public abstract void set_Name( java.lang.String _Name ) ;
 
 }

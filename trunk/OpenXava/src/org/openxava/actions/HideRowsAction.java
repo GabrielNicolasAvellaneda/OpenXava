@@ -1,25 +1,14 @@
 package org.openxava.actions;
 
+/**
+ * 
+ * @author Javier Paniza
+ */
 
-
-import org.openxava.tab.*;
-
-public class HideRowsAction extends BaseAction {
-	
-	private Tab tab;
-
-	
+public class HideRowsAction extends TabBaseAction {
 	
 	public void execute() throws Exception {
 		getTab().hideRows();		
-	}
-
-	public Tab getTab() {
-		return tab;
-	}
-
-	public void setTab(Tab tab) {
-		this.tab = tab;
 	}
 
 }

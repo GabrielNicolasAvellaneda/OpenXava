@@ -16,22 +16,22 @@ public class Product2Value
 
    private java.lang.String photos;
    private boolean photosHasBeenSet = false;
-   private java.math.BigDecimal unitPrice;
-   private boolean unitPriceHasBeenSet = false;
    private java.lang.String description;
    private boolean descriptionHasBeenSet = false;
    private java.math.BigDecimal unitPriceInPesetas;
    private boolean unitPriceInPesetasHasBeenSet = false;
+   private java.math.BigDecimal unitPrice;
+   private boolean unitPriceHasBeenSet = false;
    private long number;
    private boolean numberHasBeenSet = false;
-   private int warehouse_zoneNumber;
-   private boolean warehouse_zoneNumberHasBeenSet = false;
-   private java.lang.Integer warehouse_number;
-   private boolean warehouse_numberHasBeenSet = false;
    private int family_number;
    private boolean family_numberHasBeenSet = false;
    private int subfamily_number;
    private boolean subfamily_numberHasBeenSet = false;
+   private int warehouse_zoneNumber;
+   private boolean warehouse_zoneNumberHasBeenSet = false;
+   private java.lang.Integer warehouse_number;
+   private boolean warehouse_numberHasBeenSet = false;
    private java.lang.String formula_oid;
    private boolean formula_oidHasBeenSet = false;
 
@@ -44,22 +44,22 @@ public class Product2Value
    {
 	  this.photos = otherValue.photos;
 	  photosHasBeenSet = true;
-	  this.unitPrice = otherValue.unitPrice;
-	  unitPriceHasBeenSet = true;
 	  this.description = otherValue.description;
 	  descriptionHasBeenSet = true;
 	  this.unitPriceInPesetas = otherValue.unitPriceInPesetas;
 	  unitPriceInPesetasHasBeenSet = true;
+	  this.unitPrice = otherValue.unitPrice;
+	  unitPriceHasBeenSet = true;
 	  this.number = otherValue.number;
 	  numberHasBeenSet = true;
-	  this.warehouse_zoneNumber = otherValue.warehouse_zoneNumber;
-	  warehouse_zoneNumberHasBeenSet = true;
-	  this.warehouse_number = otherValue.warehouse_number;
-	  warehouse_numberHasBeenSet = true;
 	  this.family_number = otherValue.family_number;
 	  family_numberHasBeenSet = true;
 	  this.subfamily_number = otherValue.subfamily_number;
 	  subfamily_numberHasBeenSet = true;
+	  this.warehouse_zoneNumber = otherValue.warehouse_zoneNumber;
+	  warehouse_zoneNumberHasBeenSet = true;
+	  this.warehouse_number = otherValue.warehouse_number;
+	  warehouse_numberHasBeenSet = true;
 	  this.formula_oid = otherValue.formula_oid;
 	  formula_oidHasBeenSet = true;
    }
@@ -77,20 +77,6 @@ public class Product2Value
 
    public boolean photosHasBeenSet(){
 	  return photosHasBeenSet;
-   }
-   public java.math.BigDecimal getUnitPrice()
-   {
-	  return this.unitPrice;
-   }
-
-   public void setUnitPrice( java.math.BigDecimal unitPrice )
-   {
-	  this.unitPrice = unitPrice;
-	  unitPriceHasBeenSet = true;
-   }
-
-   public boolean unitPriceHasBeenSet(){
-	  return unitPriceHasBeenSet;
    }
    public java.lang.String getDescription()
    {
@@ -120,6 +106,20 @@ public class Product2Value
    public boolean unitPriceInPesetasHasBeenSet(){
 	  return unitPriceInPesetasHasBeenSet;
    }
+   public java.math.BigDecimal getUnitPrice()
+   {
+	  return this.unitPrice;
+   }
+
+   public void setUnitPrice( java.math.BigDecimal unitPrice )
+   {
+	  this.unitPrice = unitPrice;
+	  unitPriceHasBeenSet = true;
+   }
+
+   public boolean unitPriceHasBeenSet(){
+	  return unitPriceHasBeenSet;
+   }
    public long getNumber()
    {
 	  return this.number;
@@ -133,34 +133,6 @@ public class Product2Value
 
    public boolean numberHasBeenSet(){
 	  return numberHasBeenSet;
-   }
-   public int getWarehouse_zoneNumber()
-   {
-	  return this.warehouse_zoneNumber;
-   }
-
-   public void setWarehouse_zoneNumber( int warehouse_zoneNumber )
-   {
-	  this.warehouse_zoneNumber = warehouse_zoneNumber;
-	  warehouse_zoneNumberHasBeenSet = true;
-   }
-
-   public boolean warehouse_zoneNumberHasBeenSet(){
-	  return warehouse_zoneNumberHasBeenSet;
-   }
-   public java.lang.Integer getWarehouse_number()
-   {
-	  return this.warehouse_number;
-   }
-
-   public void setWarehouse_number( java.lang.Integer warehouse_number )
-   {
-	  this.warehouse_number = warehouse_number;
-	  warehouse_numberHasBeenSet = true;
-   }
-
-   public boolean warehouse_numberHasBeenSet(){
-	  return warehouse_numberHasBeenSet;
    }
    public int getFamily_number()
    {
@@ -190,6 +162,34 @@ public class Product2Value
    public boolean subfamily_numberHasBeenSet(){
 	  return subfamily_numberHasBeenSet;
    }
+   public int getWarehouse_zoneNumber()
+   {
+	  return this.warehouse_zoneNumber;
+   }
+
+   public void setWarehouse_zoneNumber( int warehouse_zoneNumber )
+   {
+	  this.warehouse_zoneNumber = warehouse_zoneNumber;
+	  warehouse_zoneNumberHasBeenSet = true;
+   }
+
+   public boolean warehouse_zoneNumberHasBeenSet(){
+	  return warehouse_zoneNumberHasBeenSet;
+   }
+   public java.lang.Integer getWarehouse_number()
+   {
+	  return this.warehouse_number;
+   }
+
+   public void setWarehouse_number( java.lang.Integer warehouse_number )
+   {
+	  this.warehouse_number = warehouse_number;
+	  warehouse_numberHasBeenSet = true;
+   }
+
+   public boolean warehouse_numberHasBeenSet(){
+	  return warehouse_numberHasBeenSet;
+   }
    public java.lang.String getFormula_oid()
    {
 	  return this.formula_oid;
@@ -209,7 +209,7 @@ public class Product2Value
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("photos=" + getPhotos() + " " + "unitPrice=" + getUnitPrice() + " " + "description=" + getDescription() + " " + "unitPriceInPesetas=" + getUnitPriceInPesetas() + " " + "number=" + getNumber() + " " + "warehouse_zoneNumber=" + getWarehouse_zoneNumber() + " " + "warehouse_number=" + getWarehouse_number() + " " + "family_number=" + getFamily_number() + " " + "subfamily_number=" + getSubfamily_number() + " " + "formula_oid=" + getFormula_oid());
+	  str.append("photos=" + getPhotos() + " " + "description=" + getDescription() + " " + "unitPriceInPesetas=" + getUnitPriceInPesetas() + " " + "unitPrice=" + getUnitPrice() + " " + "number=" + getNumber() + " " + "family_number=" + getFamily_number() + " " + "subfamily_number=" + getSubfamily_number() + " " + "warehouse_zoneNumber=" + getWarehouse_zoneNumber() + " " + "warehouse_number=" + getWarehouse_number() + " " + "formula_oid=" + getFormula_oid());
 	  str.append('}');
 
 	  return(str.toString());
@@ -263,14 +263,6 @@ public class Product2Value
 		 {
 			lEquals = lEquals && this.photos.equals( that.photos );
 		 }
-		 if( this.unitPrice == null )
-		 {
-			lEquals = lEquals && ( that.unitPrice == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.unitPrice.equals( that.unitPrice );
-		 }
 		 if( this.description == null )
 		 {
 			lEquals = lEquals && ( that.description == null );
@@ -287,6 +279,16 @@ public class Product2Value
 		 {
 			lEquals = lEquals && this.unitPriceInPesetas.equals( that.unitPriceInPesetas );
 		 }
+		 if( this.unitPrice == null )
+		 {
+			lEquals = lEquals && ( that.unitPrice == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.unitPrice.equals( that.unitPrice );
+		 }
+		 lEquals = lEquals && this.family_number == that.family_number;
+		 lEquals = lEquals && this.subfamily_number == that.subfamily_number;
 		 lEquals = lEquals && this.warehouse_zoneNumber == that.warehouse_zoneNumber;
 		 if( this.warehouse_number == null )
 		 {
@@ -296,8 +298,6 @@ public class Product2Value
 		 {
 			lEquals = lEquals && this.warehouse_number.equals( that.warehouse_number );
 		 }
-		 lEquals = lEquals && this.family_number == that.family_number;
-		 lEquals = lEquals && this.subfamily_number == that.subfamily_number;
 		 if( this.formula_oid == null )
 		 {
 			lEquals = lEquals && ( that.formula_oid == null );
@@ -319,21 +319,21 @@ public class Product2Value
 	  int result = 17;
       result = 37*result + ((this.photos != null) ? this.photos.hashCode() : 0);
 
-      result = 37*result + ((this.unitPrice != null) ? this.unitPrice.hashCode() : 0);
-
       result = 37*result + ((this.description != null) ? this.description.hashCode() : 0);
 
       result = 37*result + ((this.unitPriceInPesetas != null) ? this.unitPriceInPesetas.hashCode() : 0);
 
+      result = 37*result + ((this.unitPrice != null) ? this.unitPrice.hashCode() : 0);
+
       result = 37*result + (int)(number^(number>>>32));
-
-      result = 37*result + (int) warehouse_zoneNumber;
-
-      result = 37*result + ((this.warehouse_number != null) ? this.warehouse_number.hashCode() : 0);
 
       result = 37*result + (int) family_number;
 
       result = 37*result + (int) subfamily_number;
+
+      result = 37*result + (int) warehouse_zoneNumber;
+
+      result = 37*result + ((this.warehouse_number != null) ? this.warehouse_number.hashCode() : 0);
 
       result = 37*result + ((this.formula_oid != null) ? this.formula_oid.hashCode() : 0);
 

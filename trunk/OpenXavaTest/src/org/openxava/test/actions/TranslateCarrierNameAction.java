@@ -20,7 +20,7 @@ public class TranslateCarrierNameAction extends CollectionBaseAction {
 	public void execute() throws Exception {
 		Iterator it = (all?getObjects():getSelectedObjects()).iterator();
 		while (it.hasNext()) {
-			ICarrier carrier = (ICarrier) it.next();
+			ICarrier carrier = (ICarrier) it.next();			
 			// An 'carrier.translate(targetLanguage)' is a good alterantive 
 			if ("ES".equalsIgnoreCase(targetLanguage)) carrier.translateToSpanish();
 			else if ("EN".equalsIgnoreCase(targetLanguage)) carrier.translateToEnglish();

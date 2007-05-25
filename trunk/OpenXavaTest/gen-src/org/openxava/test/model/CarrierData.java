@@ -12,13 +12,13 @@ public class CarrierData
 {
 
    private static final long serialVersionUID = 1L;
-   private java.lang.String _Remarks;
    private java.lang.String _Name;
+   private java.lang.String _Remarks;
    private java.lang.Integer _Number;
-   private int _Warehouse_zoneNumber;
-   private java.lang.Integer _Warehouse_number;
    private java.lang.String _DrivingLicence_type;
    private int _DrivingLicence_level;
+   private int _Warehouse_zoneNumber;
+   private java.lang.Integer _Warehouse_number;
 
    public CarrierData()
    {
@@ -26,28 +26,19 @@ public class CarrierData
 
    public CarrierData( CarrierData otherData )
    {
-      set_Remarks(otherData.get_Remarks());
       set_Name(otherData.get_Name());
+      set_Remarks(otherData.get_Remarks());
       set_Number(otherData.get_Number());
-      set_Warehouse_zoneNumber(otherData.get_Warehouse_zoneNumber());
-      set_Warehouse_number(otherData.get_Warehouse_number());
       set_DrivingLicence_type(otherData.get_DrivingLicence_type());
       set_DrivingLicence_level(otherData.get_DrivingLicence_level());
+      set_Warehouse_zoneNumber(otherData.get_Warehouse_zoneNumber());
+      set_Warehouse_number(otherData.get_Warehouse_number());
 
    }
 
    public org.openxava.test.model.CarrierKey getPrimaryKey() {
      org.openxava.test.model.CarrierKey pk = new org.openxava.test.model.CarrierKey(this.get_Number());
      return pk;
-   }
-
-   public java.lang.String get_Remarks()
-   {
-      return this._Remarks;
-   }
-   public void set_Remarks( java.lang.String _Remarks )
-   {
-      this._Remarks = _Remarks;
    }
 
    public java.lang.String get_Name()
@@ -59,6 +50,15 @@ public class CarrierData
       this._Name = _Name;
    }
 
+   public java.lang.String get_Remarks()
+   {
+      return this._Remarks;
+   }
+   public void set_Remarks( java.lang.String _Remarks )
+   {
+      this._Remarks = _Remarks;
+   }
+
    public java.lang.Integer get_Number()
    {
       return this._Number;
@@ -66,24 +66,6 @@ public class CarrierData
    public void set_Number( java.lang.Integer _Number )
    {
       this._Number = _Number;
-   }
-
-   public int get_Warehouse_zoneNumber()
-   {
-      return this._Warehouse_zoneNumber;
-   }
-   public void set_Warehouse_zoneNumber( int _Warehouse_zoneNumber )
-   {
-      this._Warehouse_zoneNumber = _Warehouse_zoneNumber;
-   }
-
-   public java.lang.Integer get_Warehouse_number()
-   {
-      return this._Warehouse_number;
-   }
-   public void set_Warehouse_number( java.lang.Integer _Warehouse_number )
-   {
-      this._Warehouse_number = _Warehouse_number;
    }
 
    public java.lang.String get_DrivingLicence_type()
@@ -104,11 +86,29 @@ public class CarrierData
       this._DrivingLicence_level = _DrivingLicence_level;
    }
 
+   public int get_Warehouse_zoneNumber()
+   {
+      return this._Warehouse_zoneNumber;
+   }
+   public void set_Warehouse_zoneNumber( int _Warehouse_zoneNumber )
+   {
+      this._Warehouse_zoneNumber = _Warehouse_zoneNumber;
+   }
+
+   public java.lang.Integer get_Warehouse_number()
+   {
+      return this._Warehouse_number;
+   }
+   public void set_Warehouse_number( java.lang.Integer _Warehouse_number )
+   {
+      this._Warehouse_number = _Warehouse_number;
+   }
+
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Remarks=" + get_Remarks() + " " + "_Name=" + get_Name() + " " + "_Number=" + get_Number() + " " + "_Warehouse_zoneNumber=" + get_Warehouse_zoneNumber() + " " + "_Warehouse_number=" + get_Warehouse_number() + " " + "_DrivingLicence_type=" + get_DrivingLicence_type() + " " + "_DrivingLicence_level=" + get_DrivingLicence_level());
+      str.append("_Name=" + get_Name() + " " + "_Remarks=" + get_Remarks() + " " + "_Number=" + get_Number() + " " + "_DrivingLicence_type=" + get_DrivingLicence_type() + " " + "_DrivingLicence_level=" + get_DrivingLicence_level() + " " + "_Warehouse_zoneNumber=" + get_Warehouse_zoneNumber() + " " + "_Warehouse_number=" + get_Warehouse_number());
       str.append('}');
 
       return(str.toString());
@@ -121,14 +121,6 @@ public class CarrierData
          CarrierData lTest = (CarrierData) pOther;
          boolean lEquals = true;
 
-         if( this._Remarks == null )
-         {
-            lEquals = lEquals && ( lTest._Remarks == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._Remarks.equals( lTest._Remarks );
-         }
          if( this._Name == null )
          {
             lEquals = lEquals && ( lTest._Name == null );
@@ -137,6 +129,14 @@ public class CarrierData
          {
             lEquals = lEquals && this._Name.equals( lTest._Name );
          }
+         if( this._Remarks == null )
+         {
+            lEquals = lEquals && ( lTest._Remarks == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Remarks.equals( lTest._Remarks );
+         }
          if( this._Number == null )
          {
             lEquals = lEquals && ( lTest._Number == null );
@@ -144,15 +144,6 @@ public class CarrierData
          else
          {
             lEquals = lEquals && this._Number.equals( lTest._Number );
-         }
-         lEquals = lEquals && this._Warehouse_zoneNumber == lTest._Warehouse_zoneNumber;
-         if( this._Warehouse_number == null )
-         {
-            lEquals = lEquals && ( lTest._Warehouse_number == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._Warehouse_number.equals( lTest._Warehouse_number );
          }
          if( this._DrivingLicence_type == null )
          {
@@ -163,6 +154,15 @@ public class CarrierData
             lEquals = lEquals && this._DrivingLicence_type.equals( lTest._DrivingLicence_type );
          }
          lEquals = lEquals && this._DrivingLicence_level == lTest._DrivingLicence_level;
+         lEquals = lEquals && this._Warehouse_zoneNumber == lTest._Warehouse_zoneNumber;
+         if( this._Warehouse_number == null )
+         {
+            lEquals = lEquals && ( lTest._Warehouse_number == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Warehouse_number.equals( lTest._Warehouse_number );
+         }
 
          return lEquals;
       }
@@ -176,19 +176,19 @@ public class CarrierData
    {
       int result = 17;
 
-      result = 37*result + ((this._Remarks != null) ? this._Remarks.hashCode() : 0);
-
       result = 37*result + ((this._Name != null) ? this._Name.hashCode() : 0);
 
+      result = 37*result + ((this._Remarks != null) ? this._Remarks.hashCode() : 0);
+
       result = 37*result + ((this._Number != null) ? this._Number.hashCode() : 0);
-
-      result = 37*result + (int) _Warehouse_zoneNumber;
-
-      result = 37*result + ((this._Warehouse_number != null) ? this._Warehouse_number.hashCode() : 0);
 
       result = 37*result + ((this._DrivingLicence_type != null) ? this._DrivingLicence_type.hashCode() : 0);
 
       result = 37*result + (int) _DrivingLicence_level;
+
+      result = 37*result + (int) _Warehouse_zoneNumber;
+
+      result = 37*result + ((this._Warehouse_number != null) ? this._Warehouse_number.hashCode() : 0);
 
       return result;
    }

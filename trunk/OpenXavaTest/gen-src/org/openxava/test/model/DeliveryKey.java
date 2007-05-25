@@ -18,29 +18,25 @@ public class DeliveryKey
    private static final long serialVersionUID = 1L;
 
    public int number;
-   public int _Type_number;
    public int _Invoice_year;
    public int _Invoice_number;
+   public int _Type_number;
 
    public DeliveryKey()
    {
    }
 
-   public DeliveryKey( int number,int _Type_number,int _Invoice_year,int _Invoice_number )
+   public DeliveryKey( int number,int _Invoice_year,int _Invoice_number,int _Type_number )
    {
       this.number = number;
-      this._Type_number = _Type_number;
       this._Invoice_year = _Invoice_year;
       this._Invoice_number = _Invoice_number;
+      this._Type_number = _Type_number;
    }
 
    public int getNumber()
    {
       return number;
-   }
-   public int get_Type_number()
-   {
-      return _Type_number;
    }
    public int get_Invoice_year()
    {
@@ -50,14 +46,14 @@ public class DeliveryKey
    {
       return _Invoice_number;
    }
+   public int get_Type_number()
+   {
+      return _Type_number;
+   }
 
    public void setNumber(int number)
    {
       this.number = number;
-   }
-   public void set_Type_number(int _Type_number)
-   {
-      this._Type_number = _Type_number;
    }
    public void set_Invoice_year(int _Invoice_year)
    {
@@ -67,14 +63,18 @@ public class DeliveryKey
    {
       this._Invoice_number = _Invoice_number;
    }
+   public void set_Type_number(int _Type_number)
+   {
+      this._Type_number = _Type_number;
+   }
 
    public int hashCode()
    {
       int _hashCode = 0;
          _hashCode += (int)this.number;
-         _hashCode += (int)this._Type_number;
          _hashCode += (int)this._Invoice_year;
          _hashCode += (int)this._Invoice_number;
+         _hashCode += (int)this._Type_number;
 
       return _hashCode;
    }
@@ -94,9 +94,9 @@ public class DeliveryKey
       else
       {
          eq = eq && this.number == pk.number;
-         eq = eq && this._Type_number == pk._Type_number;
          eq = eq && this._Invoice_year == pk._Invoice_year;
          eq = eq && this._Invoice_number == pk._Invoice_number;
+         eq = eq && this._Type_number == pk._Type_number;
       }
 
       return eq;

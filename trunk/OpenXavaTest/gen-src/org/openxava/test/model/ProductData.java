@@ -13,14 +13,14 @@ public class ProductData
 
    private static final long serialVersionUID = 1L;
    private java.lang.String _Photos;
-   private java.lang.Integer _FamilyNumber;
-   private java.math.BigDecimal _UnitPrice;
+   private java.lang.Integer _SubfamilyNumber;
    private int warehouseZoneNumber;
    private java.lang.Integer warehouseNumber;
-   private java.lang.Integer _SubfamilyNumber;
-   private java.lang.String _Remarks;
    private java.lang.String _Description;
+   private java.math.BigDecimal _UnitPrice;
+   private java.lang.String _Remarks;
    private long number;
+   private java.lang.Integer _FamilyNumber;
 
    public ProductData()
    {
@@ -29,14 +29,14 @@ public class ProductData
    public ProductData( ProductData otherData )
    {
       set_Photos(otherData.get_Photos());
-      set_FamilyNumber(otherData.get_FamilyNumber());
-      set_UnitPrice(otherData.get_UnitPrice());
+      set_SubfamilyNumber(otherData.get_SubfamilyNumber());
       setWarehouseZoneNumber(otherData.getWarehouseZoneNumber());
       setWarehouseNumber(otherData.getWarehouseNumber());
-      set_SubfamilyNumber(otherData.get_SubfamilyNumber());
-      set_Remarks(otherData.get_Remarks());
       set_Description(otherData.get_Description());
+      set_UnitPrice(otherData.get_UnitPrice());
+      set_Remarks(otherData.get_Remarks());
       setNumber(otherData.getNumber());
+      set_FamilyNumber(otherData.get_FamilyNumber());
 
    }
 
@@ -54,22 +54,13 @@ public class ProductData
       this._Photos = _Photos;
    }
 
-   public java.lang.Integer get_FamilyNumber()
+   public java.lang.Integer get_SubfamilyNumber()
    {
-      return this._FamilyNumber;
+      return this._SubfamilyNumber;
    }
-   public void set_FamilyNumber( java.lang.Integer _FamilyNumber )
+   public void set_SubfamilyNumber( java.lang.Integer _SubfamilyNumber )
    {
-      this._FamilyNumber = _FamilyNumber;
-   }
-
-   public java.math.BigDecimal get_UnitPrice()
-   {
-      return this._UnitPrice;
-   }
-   public void set_UnitPrice( java.math.BigDecimal _UnitPrice )
-   {
-      this._UnitPrice = _UnitPrice;
+      this._SubfamilyNumber = _SubfamilyNumber;
    }
 
    public int getWarehouseZoneNumber()
@@ -90,13 +81,22 @@ public class ProductData
       this.warehouseNumber = warehouseNumber;
    }
 
-   public java.lang.Integer get_SubfamilyNumber()
+   public java.lang.String get_Description()
    {
-      return this._SubfamilyNumber;
+      return this._Description;
    }
-   public void set_SubfamilyNumber( java.lang.Integer _SubfamilyNumber )
+   public void set_Description( java.lang.String _Description )
    {
-      this._SubfamilyNumber = _SubfamilyNumber;
+      this._Description = _Description;
+   }
+
+   public java.math.BigDecimal get_UnitPrice()
+   {
+      return this._UnitPrice;
+   }
+   public void set_UnitPrice( java.math.BigDecimal _UnitPrice )
+   {
+      this._UnitPrice = _UnitPrice;
    }
 
    public java.lang.String get_Remarks()
@@ -108,15 +108,6 @@ public class ProductData
       this._Remarks = _Remarks;
    }
 
-   public java.lang.String get_Description()
-   {
-      return this._Description;
-   }
-   public void set_Description( java.lang.String _Description )
-   {
-      this._Description = _Description;
-   }
-
    public long getNumber()
    {
       return this.number;
@@ -126,11 +117,20 @@ public class ProductData
       this.number = number;
    }
 
+   public java.lang.Integer get_FamilyNumber()
+   {
+      return this._FamilyNumber;
+   }
+   public void set_FamilyNumber( java.lang.Integer _FamilyNumber )
+   {
+      this._FamilyNumber = _FamilyNumber;
+   }
+
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Photos=" + get_Photos() + " " + "_FamilyNumber=" + get_FamilyNumber() + " " + "_UnitPrice=" + get_UnitPrice() + " " + "warehouseZoneNumber=" + getWarehouseZoneNumber() + " " + "warehouseNumber=" + getWarehouseNumber() + " " + "_SubfamilyNumber=" + get_SubfamilyNumber() + " " + "_Remarks=" + get_Remarks() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber());
+      str.append("_Photos=" + get_Photos() + " " + "_SubfamilyNumber=" + get_SubfamilyNumber() + " " + "warehouseZoneNumber=" + getWarehouseZoneNumber() + " " + "warehouseNumber=" + getWarehouseNumber() + " " + "_Description=" + get_Description() + " " + "_UnitPrice=" + get_UnitPrice() + " " + "_Remarks=" + get_Remarks() + " " + "number=" + getNumber() + " " + "_FamilyNumber=" + get_FamilyNumber());
       str.append('}');
 
       return(str.toString());
@@ -151,21 +151,13 @@ public class ProductData
          {
             lEquals = lEquals && this._Photos.equals( lTest._Photos );
          }
-         if( this._FamilyNumber == null )
+         if( this._SubfamilyNumber == null )
          {
-            lEquals = lEquals && ( lTest._FamilyNumber == null );
+            lEquals = lEquals && ( lTest._SubfamilyNumber == null );
          }
          else
          {
-            lEquals = lEquals && this._FamilyNumber.equals( lTest._FamilyNumber );
-         }
-         if( this._UnitPrice == null )
-         {
-            lEquals = lEquals && ( lTest._UnitPrice == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._UnitPrice.equals( lTest._UnitPrice );
+            lEquals = lEquals && this._SubfamilyNumber.equals( lTest._SubfamilyNumber );
          }
          lEquals = lEquals && this.warehouseZoneNumber == lTest.warehouseZoneNumber;
          if( this.warehouseNumber == null )
@@ -176,13 +168,21 @@ public class ProductData
          {
             lEquals = lEquals && this.warehouseNumber.equals( lTest.warehouseNumber );
          }
-         if( this._SubfamilyNumber == null )
+         if( this._Description == null )
          {
-            lEquals = lEquals && ( lTest._SubfamilyNumber == null );
+            lEquals = lEquals && ( lTest._Description == null );
          }
          else
          {
-            lEquals = lEquals && this._SubfamilyNumber.equals( lTest._SubfamilyNumber );
+            lEquals = lEquals && this._Description.equals( lTest._Description );
+         }
+         if( this._UnitPrice == null )
+         {
+            lEquals = lEquals && ( lTest._UnitPrice == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._UnitPrice.equals( lTest._UnitPrice );
          }
          if( this._Remarks == null )
          {
@@ -192,15 +192,15 @@ public class ProductData
          {
             lEquals = lEquals && this._Remarks.equals( lTest._Remarks );
          }
-         if( this._Description == null )
+         lEquals = lEquals && this.number == lTest.number;
+         if( this._FamilyNumber == null )
          {
-            lEquals = lEquals && ( lTest._Description == null );
+            lEquals = lEquals && ( lTest._FamilyNumber == null );
          }
          else
          {
-            lEquals = lEquals && this._Description.equals( lTest._Description );
+            lEquals = lEquals && this._FamilyNumber.equals( lTest._FamilyNumber );
          }
-         lEquals = lEquals && this.number == lTest.number;
 
          return lEquals;
       }
@@ -216,21 +216,21 @@ public class ProductData
 
       result = 37*result + ((this._Photos != null) ? this._Photos.hashCode() : 0);
 
-      result = 37*result + ((this._FamilyNumber != null) ? this._FamilyNumber.hashCode() : 0);
-
-      result = 37*result + ((this._UnitPrice != null) ? this._UnitPrice.hashCode() : 0);
+      result = 37*result + ((this._SubfamilyNumber != null) ? this._SubfamilyNumber.hashCode() : 0);
 
       result = 37*result + (int) warehouseZoneNumber;
 
       result = 37*result + ((this.warehouseNumber != null) ? this.warehouseNumber.hashCode() : 0);
 
-      result = 37*result + ((this._SubfamilyNumber != null) ? this._SubfamilyNumber.hashCode() : 0);
+      result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
+
+      result = 37*result + ((this._UnitPrice != null) ? this._UnitPrice.hashCode() : 0);
 
       result = 37*result + ((this._Remarks != null) ? this._Remarks.hashCode() : 0);
 
-      result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
-
       result = 37*result + (int)(number^(number>>>32));
+
+      result = 37*result + ((this._FamilyNumber != null) ? this._FamilyNumber.hashCode() : 0);
 
       return result;
    }

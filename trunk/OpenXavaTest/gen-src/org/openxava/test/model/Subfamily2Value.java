@@ -14,10 +14,10 @@ public class Subfamily2Value
 
    private static final long serialVersionUID = 1L;
 
-   private java.lang.String remarks;
-   private boolean remarksHasBeenSet = false;
    private java.lang.String description;
    private boolean descriptionHasBeenSet = false;
+   private java.lang.String remarks;
+   private boolean remarksHasBeenSet = false;
    private int number;
    private boolean numberHasBeenSet = false;
    private int family_number;
@@ -30,30 +30,16 @@ public class Subfamily2Value
    //TODO Cloneable is better than this !
    public Subfamily2Value( Subfamily2Value otherValue )
    {
-	  this.remarks = otherValue.remarks;
-	  remarksHasBeenSet = true;
 	  this.description = otherValue.description;
 	  descriptionHasBeenSet = true;
+	  this.remarks = otherValue.remarks;
+	  remarksHasBeenSet = true;
 	  this.number = otherValue.number;
 	  numberHasBeenSet = true;
 	  this.family_number = otherValue.family_number;
 	  family_numberHasBeenSet = true;
    }
 
-   public java.lang.String getRemarks()
-   {
-	  return this.remarks;
-   }
-
-   public void setRemarks( java.lang.String remarks )
-   {
-	  this.remarks = remarks;
-	  remarksHasBeenSet = true;
-   }
-
-   public boolean remarksHasBeenSet(){
-	  return remarksHasBeenSet;
-   }
    public java.lang.String getDescription()
    {
 	  return this.description;
@@ -67,6 +53,20 @@ public class Subfamily2Value
 
    public boolean descriptionHasBeenSet(){
 	  return descriptionHasBeenSet;
+   }
+   public java.lang.String getRemarks()
+   {
+	  return this.remarks;
+   }
+
+   public void setRemarks( java.lang.String remarks )
+   {
+	  this.remarks = remarks;
+	  remarksHasBeenSet = true;
+   }
+
+   public boolean remarksHasBeenSet(){
+	  return remarksHasBeenSet;
    }
    public int getNumber()
    {
@@ -101,7 +101,7 @@ public class Subfamily2Value
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("remarks=" + getRemarks() + " " + "description=" + getDescription() + " " + "number=" + getNumber() + " " + "family_number=" + getFamily_number());
+	  str.append("description=" + getDescription() + " " + "remarks=" + getRemarks() + " " + "number=" + getNumber() + " " + "family_number=" + getFamily_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -147,14 +147,6 @@ public class Subfamily2Value
 	  {
 		 Subfamily2Value that = (Subfamily2Value) other;
 		 boolean lEquals = true;
-		 if( this.remarks == null )
-		 {
-			lEquals = lEquals && ( that.remarks == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.remarks.equals( that.remarks );
-		 }
 		 if( this.description == null )
 		 {
 			lEquals = lEquals && ( that.description == null );
@@ -162,6 +154,14 @@ public class Subfamily2Value
 		 else
 		 {
 			lEquals = lEquals && this.description.equals( that.description );
+		 }
+		 if( this.remarks == null )
+		 {
+			lEquals = lEquals && ( that.remarks == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.remarks.equals( that.remarks );
 		 }
 		 lEquals = lEquals && this.family_number == that.family_number;
 
@@ -175,9 +175,9 @@ public class Subfamily2Value
 
    public int hashCode(){
 	  int result = 17;
-      result = 37*result + ((this.remarks != null) ? this.remarks.hashCode() : 0);
-
       result = 37*result + ((this.description != null) ? this.description.hashCode() : 0);
+
+      result = 37*result + ((this.remarks != null) ? this.remarks.hashCode() : 0);
 
       result = 37*result + (int) number;
 

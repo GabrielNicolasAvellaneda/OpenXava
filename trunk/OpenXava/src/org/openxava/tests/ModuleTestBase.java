@@ -11,6 +11,7 @@ import org.openxava.controller.meta.*;
 import org.openxava.hibernate.XHibernate;
 import org.openxava.jpa.*;
 import org.openxava.model.meta.*;
+import org.openxava.tab.*;
 import org.openxava.tab.meta.*;
 import org.openxava.util.*;
 import org.openxava.view.meta.*;
@@ -437,6 +438,15 @@ public class ModuleTestBase extends TestCase {
 		getForm().setParameter("conditionComparators", values);
 	}
 	
+	protected void setConditionValues(String collection, String [] values) throws Exception { 
+		getForm().setParameter(Tab.COLLECTION_PREFIX + collection + "_conditionValues", values);
+	}
+	
+	protected void setConditionComparators(String collection, String [] values) throws Exception { 
+		filterConditionComparators(values);
+		getForm().setParameter(Tab.COLLECTION_PREFIX + collection + "conditionComparators", values);
+	}	
+	
 	private void filterConditionComparators(String[] values) {
 		for (int i = 0; i < values.length; i++) {
 			if ("=".equals(values[i])) values[i] = "eq";
@@ -629,15 +639,21 @@ public class ModuleTestBase extends TestCase {
 		return getTableCellInCollection(collection, row, column).getText();
 	}
 	
-	private TableCell getTableCellInCollection(String collection, int row, int column) throws Exception {
+	private TableCell getTableCellInCollection(String collection, int row, int column) throws Exception {		
 		WebTable table = response.getTableWithID(collection);
 		if (table == null) {
 			fail(XavaResources.getString("collection_not_displayed", collection));			
 		}
-		int increment = table.getTableCell(row+1, 0).getLinks().length > 0?1:0;
-		String [] elements = table.getTableCell(row+1, increment).getElementNames();
-		if (elements != null && elements.length > 0 && elements[0].endsWith("__SELECTED__")) increment++;
-		return table.getTableCell(row+1, column+increment);		
+		
+		try { 
+			row = getMetaModel().getMetaCollection(collection).hasCalculator()?row + 1:row + 2;		
+		}
+		catch (ElementNotFoundException ex) {
+			// For JSP hand made like collection, but with not match in model (as 'xavaPropertiesList' case) 
+			row = row + 1; 
+		}
+		int increment = table.getTableCell(row, 0).getLinks().length > 0?2:1; 
+		return table.getTableCell(row, column + increment);		
 	}
 	
 	protected void assertRowStyleInList(int row, String expectedStyle) throws Exception {
@@ -654,21 +670,25 @@ public class ModuleTestBase extends TestCase {
 		fail(XavaResources.getString("row_style_not_excepted"));
 	}
 	
-	/**
-	 * Rows count displayed with data. <p>
-	 * 
-	 * Exclude heading and footing, and the not displayed data (maybe in cache).
-	 */
-	protected int getListRowCount() throws Exception {
-		WebTable table = response.getTableWithID("list");
+	private int getListRowCount(String tableId, String message) throws Exception {
+		WebTable table = response.getTableWithID(tableId);
 		if (table == null) {
-			fail(XavaResources.getString("list_not_displayed"));			
+			fail(message);
 		}
 		if ("nodata".equals(table.getRows()[2].getID())) { 
 			return 0;
 		}
 		
 		return table.getRowCount() - 2;		
+	}
+	
+	/**
+	 * Rows count displayed with data. <p>
+	 * 
+	 * Exclude heading and footing, and the not displayed data (maybe in cache).
+	 */
+	protected int getListRowCount() throws Exception {
+		return getListRowCount("list", XavaResources.getString("list_not_displayed"));
 	}
 	
 	protected int getListColumnCount() throws Exception {
@@ -684,19 +704,22 @@ public class ModuleTestBase extends TestCase {
 	 * Excludes heading and footing, and not displayed data (but cached). 
 	 */
 	protected int getCollectionRowCount(String collection) throws Exception {
-		WebTable table = response.getTableWithID(collection);
-		if (table == null) {
-			fail(XavaResources.getString("collection_not_displayed", collection));			
+		int rc = getListRowCount(collection, XavaResources.getString("collection_not_displayed", collection));
+		try {
+			return getMetaModel().getMetaCollection(collection).hasCalculator()?rc + 1:rc;
 		}
-		return table.getRowCount() - 2;		
+		catch (ElementNotFoundException ex) {
+			// For JSP hand made like collection, but with not match in model (as 'xavaPropertiesList' case) 
+			return rc; 
+		}
 	}
 	
 	/**
 	 * Row count displayed with data. <p>
 	 * Excludes heading and footing, and not displayed data (but cached). 
 	 */
-	protected void assertCollectionRowCount(String collection, int cantidadEsperada) throws Exception {
-		assertEquals(XavaResources.getString("collection_row_count", collection), cantidadEsperada, getCollectionRowCount(collection));
+	protected void assertCollectionRowCount(String collection, int expectedCount) throws Exception {
+		assertEquals(XavaResources.getString("collection_row_count", collection), expectedCount, getCollectionRowCount(collection));
 	}
 	
 	/**
@@ -734,14 +757,24 @@ public class ModuleTestBase extends TestCase {
 		assertTrue(XavaResources.getString("unexpected_value_in_collection", new Integer(column), new Integer(row), collection), value.equalsIgnoreCase(valueInCollection));
 	}
 	
+	protected void assertLabelInCollection(String collection, int column, String label) throws Exception {
+		assertLabelInList(collection, XavaResources.getString("collection_not_displayed", collection), column, label);
+	}
 	
 	protected void assertLabelInList(int column, String label) throws Exception {
-		WebTable table = response.getTableWithID("list");
+		assertLabelInList("list", XavaResources.getString("list_not_displayed"), column, label);
+	}
+
+
+	private void assertLabelInList(String tableId, String message, int column, String label) throws Exception {
+		WebTable table = response.getTableWithID(tableId);
 		if (table == null) {
-			fail(XavaResources.getString("list_not_displayed"));	
+			fail(message);	
 		}
 		assertEquals(XavaResources.getString("label_not_match", new Integer(column)), label, table.getCellAsText(0, column+2).trim());
-	}			
+	}	
+	
+	
 	
 	protected void checkRow(int row) throws Exception {
 		checkRow("selected", row);
@@ -752,7 +785,12 @@ public class ModuleTestBase extends TestCase {
 	}
 		
 	protected void checkRowCollection(String collection, int row) throws Exception {
-		checkRow(getPropertyPrefix() + collection + "." + "__SELECTED__", row);
+		if (getMetaModel().getMetaCollection(collection).hasCalculator()) {
+			checkRow(getPropertyPrefix() + collection + "." + "__SELECTED__", row);
+		}
+		else {
+			checkRow(Tab.COLLECTION_PREFIX + collection + "_selected", row);
+		}
 	}
 		
 	private void checkRow(String id, int row) throws Exception {		

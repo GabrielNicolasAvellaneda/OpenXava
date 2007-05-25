@@ -13,24 +13,6 @@ public interface FormulaIngredientRemote
    public java.lang.String getOid(  )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.model.IIngredient getIngredient(  )
-      throws java.rmi.RemoteException;
-
-   public org.openxava.test.model.IngredientRemote getIngredientRemote(  )
-      throws java.rmi.RemoteException;
-
-   public void setIngredient( org.openxava.test.model.IIngredient newIngredient )
-      throws java.rmi.RemoteException;
-
-   public org.openxava.test.model.IngredientKey getIngredientKey(  )
-      throws java.rmi.RemoteException;
-
-   public void setIngredientKey( org.openxava.test.model.IngredientKey key )
-      throws java.rmi.RemoteException;
-
-   public java.lang.String getIngredient_oid(  )
-      throws java.rmi.RemoteException;
-
    public org.openxava.test.model.IIngredient getAccentuate(  )
       throws java.rmi.RemoteException;
 
@@ -49,22 +31,22 @@ public interface FormulaIngredientRemote
    public java.lang.String getAccentuate_oid(  )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.model.IFormula getAnotherFormula(  )
+   public org.openxava.test.model.IIngredient getIngredient(  )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.model.FormulaRemote getAnotherFormulaRemote(  )
+   public org.openxava.test.model.IngredientRemote getIngredientRemote(  )
       throws java.rmi.RemoteException;
 
-   public void setAnotherFormula( org.openxava.test.model.IFormula newAnotherFormula )
+   public void setIngredient( org.openxava.test.model.IIngredient newIngredient )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.model.FormulaKey getAnotherFormulaKey(  )
+   public org.openxava.test.model.IngredientKey getIngredientKey(  )
       throws java.rmi.RemoteException;
 
-   public void setAnotherFormulaKey( org.openxava.test.model.FormulaKey key )
+   public void setIngredientKey( org.openxava.test.model.IngredientKey key )
       throws java.rmi.RemoteException;
 
-   public java.lang.String getAnotherFormula_oid(  )
+   public java.lang.String getIngredient_oid(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.IFormula getFormula(  )
@@ -83,6 +65,24 @@ public interface FormulaIngredientRemote
       throws java.rmi.RemoteException;
 
    public java.lang.String getFormula_oid(  )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.IFormula getAnotherFormula(  )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.FormulaRemote getAnotherFormulaRemote(  )
+      throws java.rmi.RemoteException;
+
+   public void setAnotherFormula( org.openxava.test.model.IFormula newAnotherFormula )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.FormulaKey getAnotherFormulaKey(  )
+      throws java.rmi.RemoteException;
+
+   public void setAnotherFormulaKey( org.openxava.test.model.FormulaKey key )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getAnotherFormula_oid(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.FormulaIngredientData getData(  )

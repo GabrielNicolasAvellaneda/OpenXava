@@ -16,14 +16,14 @@ public class FormulaIngredientValue
 
    private java.lang.String oid;
    private boolean oidHasBeenSet = false;
-   private java.lang.String ingredient_oid;
-   private boolean ingredient_oidHasBeenSet = false;
    private java.lang.String accentuate_oid;
    private boolean accentuate_oidHasBeenSet = false;
-   private java.lang.String anotherFormula_oid;
-   private boolean anotherFormula_oidHasBeenSet = false;
+   private java.lang.String ingredient_oid;
+   private boolean ingredient_oidHasBeenSet = false;
    private java.lang.String formula_oid;
    private boolean formula_oidHasBeenSet = false;
+   private java.lang.String anotherFormula_oid;
+   private boolean anotherFormula_oidHasBeenSet = false;
 
    public FormulaIngredientValue()
    {
@@ -34,14 +34,14 @@ public class FormulaIngredientValue
    {
 	  this.oid = otherValue.oid;
 	  oidHasBeenSet = true;
-	  this.ingredient_oid = otherValue.ingredient_oid;
-	  ingredient_oidHasBeenSet = true;
 	  this.accentuate_oid = otherValue.accentuate_oid;
 	  accentuate_oidHasBeenSet = true;
-	  this.anotherFormula_oid = otherValue.anotherFormula_oid;
-	  anotherFormula_oidHasBeenSet = true;
+	  this.ingredient_oid = otherValue.ingredient_oid;
+	  ingredient_oidHasBeenSet = true;
 	  this.formula_oid = otherValue.formula_oid;
 	  formula_oidHasBeenSet = true;
+	  this.anotherFormula_oid = otherValue.anotherFormula_oid;
+	  anotherFormula_oidHasBeenSet = true;
    }
 
    public java.lang.String getOid()
@@ -58,20 +58,6 @@ public class FormulaIngredientValue
    public boolean oidHasBeenSet(){
 	  return oidHasBeenSet;
    }
-   public java.lang.String getIngredient_oid()
-   {
-	  return this.ingredient_oid;
-   }
-
-   public void setIngredient_oid( java.lang.String ingredient_oid )
-   {
-	  this.ingredient_oid = ingredient_oid;
-	  ingredient_oidHasBeenSet = true;
-   }
-
-   public boolean ingredient_oidHasBeenSet(){
-	  return ingredient_oidHasBeenSet;
-   }
    public java.lang.String getAccentuate_oid()
    {
 	  return this.accentuate_oid;
@@ -86,19 +72,19 @@ public class FormulaIngredientValue
    public boolean accentuate_oidHasBeenSet(){
 	  return accentuate_oidHasBeenSet;
    }
-   public java.lang.String getAnotherFormula_oid()
+   public java.lang.String getIngredient_oid()
    {
-	  return this.anotherFormula_oid;
+	  return this.ingredient_oid;
    }
 
-   public void setAnotherFormula_oid( java.lang.String anotherFormula_oid )
+   public void setIngredient_oid( java.lang.String ingredient_oid )
    {
-	  this.anotherFormula_oid = anotherFormula_oid;
-	  anotherFormula_oidHasBeenSet = true;
+	  this.ingredient_oid = ingredient_oid;
+	  ingredient_oidHasBeenSet = true;
    }
 
-   public boolean anotherFormula_oidHasBeenSet(){
-	  return anotherFormula_oidHasBeenSet;
+   public boolean ingredient_oidHasBeenSet(){
+	  return ingredient_oidHasBeenSet;
    }
    public java.lang.String getFormula_oid()
    {
@@ -114,12 +100,26 @@ public class FormulaIngredientValue
    public boolean formula_oidHasBeenSet(){
 	  return formula_oidHasBeenSet;
    }
+   public java.lang.String getAnotherFormula_oid()
+   {
+	  return this.anotherFormula_oid;
+   }
+
+   public void setAnotherFormula_oid( java.lang.String anotherFormula_oid )
+   {
+	  this.anotherFormula_oid = anotherFormula_oid;
+	  anotherFormula_oidHasBeenSet = true;
+   }
+
+   public boolean anotherFormula_oidHasBeenSet(){
+	  return anotherFormula_oidHasBeenSet;
+   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("oid=" + getOid() + " " + "ingredient_oid=" + getIngredient_oid() + " " + "accentuate_oid=" + getAccentuate_oid() + " " + "anotherFormula_oid=" + getAnotherFormula_oid() + " " + "formula_oid=" + getFormula_oid());
+	  str.append("oid=" + getOid() + " " + "accentuate_oid=" + getAccentuate_oid() + " " + "ingredient_oid=" + getIngredient_oid() + " " + "formula_oid=" + getFormula_oid() + " " + "anotherFormula_oid=" + getAnotherFormula_oid());
 	  str.append('}');
 
 	  return(str.toString());
@@ -172,14 +172,6 @@ public class FormulaIngredientValue
 	  {
 		 FormulaIngredientValue that = (FormulaIngredientValue) other;
 		 boolean lEquals = true;
-		 if( this.ingredient_oid == null )
-		 {
-			lEquals = lEquals && ( that.ingredient_oid == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.ingredient_oid.equals( that.ingredient_oid );
-		 }
 		 if( this.accentuate_oid == null )
 		 {
 			lEquals = lEquals && ( that.accentuate_oid == null );
@@ -188,13 +180,13 @@ public class FormulaIngredientValue
 		 {
 			lEquals = lEquals && this.accentuate_oid.equals( that.accentuate_oid );
 		 }
-		 if( this.anotherFormula_oid == null )
+		 if( this.ingredient_oid == null )
 		 {
-			lEquals = lEquals && ( that.anotherFormula_oid == null );
+			lEquals = lEquals && ( that.ingredient_oid == null );
 		 }
 		 else
 		 {
-			lEquals = lEquals && this.anotherFormula_oid.equals( that.anotherFormula_oid );
+			lEquals = lEquals && this.ingredient_oid.equals( that.ingredient_oid );
 		 }
 		 if( this.formula_oid == null )
 		 {
@@ -203,6 +195,14 @@ public class FormulaIngredientValue
 		 else
 		 {
 			lEquals = lEquals && this.formula_oid.equals( that.formula_oid );
+		 }
+		 if( this.anotherFormula_oid == null )
+		 {
+			lEquals = lEquals && ( that.anotherFormula_oid == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.anotherFormula_oid.equals( that.anotherFormula_oid );
 		 }
 
 		 return lEquals;
@@ -217,13 +217,13 @@ public class FormulaIngredientValue
 	  int result = 17;
       result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
 
-      result = 37*result + ((this.ingredient_oid != null) ? this.ingredient_oid.hashCode() : 0);
-
       result = 37*result + ((this.accentuate_oid != null) ? this.accentuate_oid.hashCode() : 0);
 
-      result = 37*result + ((this.anotherFormula_oid != null) ? this.anotherFormula_oid.hashCode() : 0);
+      result = 37*result + ((this.ingredient_oid != null) ? this.ingredient_oid.hashCode() : 0);
 
       result = 37*result + ((this.formula_oid != null) ? this.formula_oid.hashCode() : 0);
+
+      result = 37*result + ((this.anotherFormula_oid != null) ? this.anotherFormula_oid.hashCode() : 0);
 
 	  return result;
    }

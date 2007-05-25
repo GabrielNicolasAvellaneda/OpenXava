@@ -4,13 +4,14 @@ import java.rmi.*;
 import java.util.*;
 
 import javax.ejb.*;
-
-
-
-import org.openxava.model.*;
 import org.openxava.util.*;
 
 /**
+ * Base class for creating actions to be used as list actions.<p>
+ * 
+ * That is in <list-action/> of <collection-view/> or
+ * in @ListAction annotation.<br>
+ * 
  * @author Javier Paniza
  */
 
@@ -22,6 +23,13 @@ abstract public class CollectionBaseAction extends CollectionElementViewBaseActi
 	private List selectedObjects;
 	
 
+	/**
+	 * A list of all collection element when each element is a map 
+	 * with the values of the collection element.<p>
+	 * 
+	 * The values only include the displayed data in the row.<br>
+	 * @return  Of type <tt>Map</tt>. Never null.
+	 */
 	protected List getMapValues() throws XavaException {
 		if (mapValues == null) {
 			mapValues = getCollectionElementView().getCollectionValues();
@@ -29,42 +37,49 @@ abstract public class CollectionBaseAction extends CollectionElementViewBaseActi
 		return mapValues;
 	}
 	
+	/**
+	 * A list of selected collection element when each element is a map 
+	 * with the values of the collection element.<p>
+	 * 
+	 * The values only include the displayed data in the row.<br>
+	 * @return  Of type <tt>Map</tt>. Never null.
+	 */
 	protected List getMapsSelectedValues() throws XavaException {
 		if (mapsSelectedValues == null) {
-			mapsSelectedValues = new ArrayList();
-			List values = getCollectionElementView().getCollectionValues();
-			int [] sel = getCollectionElementView().getListSelected();
-			for (int i=0; i<sel.length; i++) {
-				Map val = (Map) values.get(sel[i]);
-				mapsSelectedValues.add(val);
-			}		
+			mapsSelectedValues = getCollectionElementView().getCollectionSelectedValues();
 		}
 		return mapsSelectedValues;
 	}
 	
+	
+	/**
+	 * A list of all objects (POJOs or EntityBeans) in the collection.<p>
+	 * 
+	 * Generally the objects are POJOs, although if you use EJBPersistenceProvider
+	 * the they will be EntityBeans (of EJB2).<br> 
+	 *  
+	 * @return  Never null.
+	 */	
 	protected List getObjects() throws RemoteException, FinderException, XavaException {
 		if (objects == null) {
-			objects = new ArrayList();
-			Iterator it = getMapValues().iterator();
-			while (it.hasNext()) {
-				Map key = (Map) it.next();
-				objects.add(MapFacade.findEntity(getCollectionElementView().getModelName(), key));
-			}
+			objects = getCollectionElementView().getCollectionObjects(); 
 		}
 		return objects;
 	}
 	
+	/**
+	 * A list of selected objects (POJOs or EntityBeans) in the collection.<p>
+	 * 
+	 * Generally the objects are POJOs, although if you use EJBPersistenceProvider
+	 * the they will be EntityBeans (of EJB2).<br> 
+	 *  
+	 * @return  Never null.
+	 */	
 	protected List getSelectedObjects() throws RemoteException, FinderException, XavaException {
 		if (selectedObjects == null) {
-			selectedObjects = new ArrayList();
-			List values = getCollectionElementView().getCollectionValues();
-			int [] sel = getCollectionElementView().getListSelected();
-			for (int i=0; i<sel.length; i++) {
-				Map clave = (Map) values.get(sel[i]);
-				selectedObjects.add(MapFacade.findEntity(getCollectionElementView().getModelName(), clave));
-			}					
+			selectedObjects = getCollectionElementView().getCollectionSelectedObjects();							
 		}
-		return selectedObjects;
+		return selectedObjects;		
 	}
 	
 }

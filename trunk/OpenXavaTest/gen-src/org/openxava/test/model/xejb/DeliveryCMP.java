@@ -18,24 +18,24 @@ public abstract class DeliveryCMP
       {
          dataHolder = new org.openxava.test.model.DeliveryData();
 
-         dataHolder.set_Distance( get_Distance() );
          dataHolder.set_Incidents( get_Incidents() );
          dataHolder.set_DriverType( get_DriverType() );
-         dataHolder.set_Remarks( get_Remarks() );
-         dataHolder.set_Employee( get_Employee() );
+         dataHolder.set_Distance( get_Distance() );
          dataHolder.set_Description( get_Description() );
          dataHolder.set_Vehicle( get_Vehicle() );
+         dataHolder.set_Remarks( get_Remarks() );
+         dataHolder.setNumber( getNumber() );
+         dataHolder.set_Employee( get_Employee() );
          dataHolder.setDate_day( getDate_day() );
          dataHolder.setDate_month( getDate_month() );
          dataHolder.setDate_year( getDate_year() );
-         dataHolder.setNumber( getNumber() );
-         dataHolder.set_Type_number( get_Type_number() );
+         dataHolder.set_Invoice_year( get_Invoice_year() );
+         dataHolder.set_Invoice_number( get_Invoice_number() );
          dataHolder.set_Shipment_type( get_Shipment_type() );
          dataHolder.set_Shipment_mode( get_Shipment_mode() );
          dataHolder.set_Shipment_number( get_Shipment_number() );
          dataHolder.set_Carrier_number( get_Carrier_number() );
-         dataHolder.set_Invoice_year( get_Invoice_year() );
-         dataHolder.set_Invoice_number( get_Invoice_number() );
+         dataHolder.set_Type_number( get_Type_number() );
 
       }
       catch (RuntimeException e)
@@ -50,13 +50,13 @@ public abstract class DeliveryCMP
    {
       try
       {
-         set_Distance( dataHolder.get_Distance() );
          set_Incidents( dataHolder.get_Incidents() );
          set_DriverType( dataHolder.get_DriverType() );
-         set_Remarks( dataHolder.get_Remarks() );
-         set_Employee( dataHolder.get_Employee() );
+         set_Distance( dataHolder.get_Distance() );
          set_Description( dataHolder.get_Description() );
          set_Vehicle( dataHolder.get_Vehicle() );
+         set_Remarks( dataHolder.get_Remarks() );
+         set_Employee( dataHolder.get_Employee() );
          setDate_day( dataHolder.getDate_day() );
          setDate_month( dataHolder.getDate_month() );
          setDate_year( dataHolder.getDate_year() );
@@ -117,24 +117,24 @@ public abstract class DeliveryCMP
       DeliveryValue = new org.openxava.test.model.DeliveryValue();
       try
          {
-            DeliveryValue.setDateAsLabel( getDateAsLabel() );
-            DeliveryValue.setDistance( getDistance() );
             DeliveryValue.setIncidents( getIncidents() );
             DeliveryValue.setDriverType( getDriverType() );
-            DeliveryValue.setRemarks( getRemarks() );
-            DeliveryValue.setEmployee( getEmployee() );
+            DeliveryValue.setDistance( getDistance() );
             DeliveryValue.setDescription( getDescription() );
+            DeliveryValue.setDateAsLabel( getDateAsLabel() );
             DeliveryValue.setVehicle( getVehicle() );
-            DeliveryValue.setTransportMode( getTransportMode() );
-            DeliveryValue.setDate( getDate() );
+            DeliveryValue.setRemarks( getRemarks() );
             DeliveryValue.setNumber( getNumber() );
-            DeliveryValue.setType_number( getType_number() );
+            DeliveryValue.setTransportMode( getTransportMode() );
+            DeliveryValue.setEmployee( getEmployee() );
+            DeliveryValue.setDate( getDate() );
+            DeliveryValue.setInvoice_year( getInvoice_year() );
+            DeliveryValue.setInvoice_number( getInvoice_number() );
             DeliveryValue.setShipment_type( getShipment_type() );
             DeliveryValue.setShipment_mode( getShipment_mode() );
             DeliveryValue.setShipment_number( getShipment_number() );
             DeliveryValue.setCarrier_number( getCarrier_number() );
-            DeliveryValue.setInvoice_year( getInvoice_year() );
-            DeliveryValue.setInvoice_number( getInvoice_number() );
+            DeliveryValue.setType_number( getType_number() );
 
          }
          catch (Exception e)
@@ -150,23 +150,23 @@ public abstract class DeliveryCMP
 
 	  try
 	  {
-		 setDateAsLabel( valueHolder.getDateAsLabel() );
-		 setDistance( valueHolder.getDistance() );
 		 setIncidents( valueHolder.getIncidents() );
 		 setDriverType( valueHolder.getDriverType() );
-		 setRemarks( valueHolder.getRemarks() );
-		 setEmployee( valueHolder.getEmployee() );
+		 setDistance( valueHolder.getDistance() );
 		 setDescription( valueHolder.getDescription() );
+		 setDateAsLabel( valueHolder.getDateAsLabel() );
 		 setVehicle( valueHolder.getVehicle() );
+		 setRemarks( valueHolder.getRemarks() );
 		 setTransportMode( valueHolder.getTransportMode() );
+		 setEmployee( valueHolder.getEmployee() );
 		 setDate( valueHolder.getDate() );
-		 setType_number( valueHolder.getType_number() );
+		 setInvoice_year( valueHolder.getInvoice_year() );
+		 setInvoice_number( valueHolder.getInvoice_number() );
 		 setShipment_type( valueHolder.getShipment_type() );
 		 setShipment_mode( valueHolder.getShipment_mode() );
 		 setShipment_number( valueHolder.getShipment_number() );
 		 setCarrier_number( valueHolder.getCarrier_number() );
-		 setInvoice_year( valueHolder.getInvoice_year() );
-		 setInvoice_number( valueHolder.getInvoice_number() );
+		 setType_number( valueHolder.getType_number() );
 
 	  }
 	  catch (Exception e)
@@ -177,10 +177,6 @@ public abstract class DeliveryCMP
 
 /* Value Objects END */
 
-   public abstract java.lang.String get_Distance() ;
-
-   public abstract void set_Distance( java.lang.String _Distance ) ;
-
    public abstract java.lang.String get_Incidents() ;
 
    public abstract void set_Incidents( java.lang.String _Incidents ) ;
@@ -189,13 +185,9 @@ public abstract class DeliveryCMP
 
    public abstract void set_DriverType( java.lang.String _DriverType ) ;
 
-   public abstract java.lang.String get_Remarks() ;
+   public abstract java.lang.String get_Distance() ;
 
-   public abstract void set_Remarks( java.lang.String _Remarks ) ;
-
-   public abstract java.lang.String get_Employee() ;
-
-   public abstract void set_Employee( java.lang.String _Employee ) ;
+   public abstract void set_Distance( java.lang.String _Distance ) ;
 
    public abstract java.lang.String get_Description() ;
 
@@ -204,6 +196,18 @@ public abstract class DeliveryCMP
    public abstract java.lang.String get_Vehicle() ;
 
    public abstract void set_Vehicle( java.lang.String _Vehicle ) ;
+
+   public abstract java.lang.String get_Remarks() ;
+
+   public abstract void set_Remarks( java.lang.String _Remarks ) ;
+
+   public abstract int getNumber() ;
+
+   public abstract void setNumber( int number ) ;
+
+   public abstract java.lang.String get_Employee() ;
+
+   public abstract void set_Employee( java.lang.String _Employee ) ;
 
    public abstract int getDate_day() ;
 
@@ -217,13 +221,13 @@ public abstract class DeliveryCMP
 
    public abstract void setDate_year( int date_year ) ;
 
-   public abstract int getNumber() ;
+   public abstract int get_Invoice_year() ;
 
-   public abstract void setNumber( int number ) ;
+   public abstract void set_Invoice_year( int _Invoice_year ) ;
 
-   public abstract int get_Type_number() ;
+   public abstract int get_Invoice_number() ;
 
-   public abstract void set_Type_number( int _Type_number ) ;
+   public abstract void set_Invoice_number( int _Invoice_number ) ;
 
    public abstract java.lang.String get_Shipment_type() ;
 
@@ -241,12 +245,8 @@ public abstract class DeliveryCMP
 
    public abstract void set_Carrier_number( java.lang.Integer _Carrier_number ) ;
 
-   public abstract int get_Invoice_year() ;
+   public abstract int get_Type_number() ;
 
-   public abstract void set_Invoice_year( int _Invoice_year ) ;
-
-   public abstract int get_Invoice_number() ;
-
-   public abstract void set_Invoice_number( int _Invoice_number ) ;
+   public abstract void set_Type_number( int _Type_number ) ;
 
 }

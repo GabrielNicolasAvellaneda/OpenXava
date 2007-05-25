@@ -18,8 +18,8 @@ public abstract class IssueCMP
       {
          dataHolder = new org.openxava.test.model.IssueData();
 
-         dataHolder.set_Description( get_Description() );
          dataHolder.setId( getId() );
+         dataHolder.set_Description( get_Description() );
 
       }
       catch (RuntimeException e)
@@ -88,8 +88,8 @@ public abstract class IssueCMP
       IssueValue = new org.openxava.test.model.IssueValue();
       try
          {
-            IssueValue.setDescription( getDescription() );
             IssueValue.setId( getId() );
+            IssueValue.setDescription( getDescription() );
 
          }
          catch (Exception e)
@@ -116,12 +116,12 @@ public abstract class IssueCMP
 
 /* Value Objects END */
 
-   public abstract java.lang.String get_Description() ;
-
-   public abstract void set_Description( java.lang.String _Description ) ;
-
    public abstract java.lang.String getId() ;
 
    public abstract void setId( java.lang.String id ) ;
+
+   public abstract java.lang.String get_Description() ;
+
+   public abstract void set_Description( java.lang.String _Description ) ;
 
 }

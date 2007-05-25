@@ -18,11 +18,11 @@ public abstract class TaskCMP
       {
          dataHolder = new org.openxava.test.model.TaskData();
 
-         dataHolder.set_Comments( get_Comments() );
          dataHolder.set_Summary( get_Summary() );
-         dataHolder.set_User( get_User() );
          dataHolder.setOid( getOid() );
          dataHolder.set_Date( get_Date() );
+         dataHolder.set_User( get_User() );
+         dataHolder.set_Comments( get_Comments() );
 
       }
       catch (RuntimeException e)
@@ -37,10 +37,10 @@ public abstract class TaskCMP
    {
       try
       {
-         set_Comments( dataHolder.get_Comments() );
          set_Summary( dataHolder.get_Summary() );
-         set_User( dataHolder.get_User() );
          set_Date( dataHolder.get_Date() );
+         set_User( dataHolder.get_User() );
+         set_Comments( dataHolder.get_Comments() );
 
       }
       catch (Exception e)
@@ -94,11 +94,11 @@ public abstract class TaskCMP
       TaskValue = new org.openxava.test.model.TaskValue();
       try
          {
-            TaskValue.setComments( getComments() );
             TaskValue.setSummary( getSummary() );
-            TaskValue.setUser( getUser() );
             TaskValue.setOid( getOid() );
             TaskValue.setDate( getDate() );
+            TaskValue.setUser( getUser() );
+            TaskValue.setComments( getComments() );
 
          }
          catch (Exception e)
@@ -114,10 +114,10 @@ public abstract class TaskCMP
 
 	  try
 	  {
-		 setComments( valueHolder.getComments() );
 		 setSummary( valueHolder.getSummary() );
-		 setUser( valueHolder.getUser() );
 		 setDate( valueHolder.getDate() );
+		 setUser( valueHolder.getUser() );
+		 setComments( valueHolder.getComments() );
 
 	  }
 	  catch (Exception e)
@@ -128,17 +128,9 @@ public abstract class TaskCMP
 
 /* Value Objects END */
 
-   public abstract java.lang.String get_Comments() ;
-
-   public abstract void set_Comments( java.lang.String _Comments ) ;
-
    public abstract java.lang.String get_Summary() ;
 
    public abstract void set_Summary( java.lang.String _Summary ) ;
-
-   public abstract java.lang.String get_User() ;
-
-   public abstract void set_User( java.lang.String _User ) ;
 
    public abstract java.lang.String getOid() ;
 
@@ -147,5 +139,13 @@ public abstract class TaskCMP
    public abstract java.sql.Date get_Date() ;
 
    public abstract void set_Date( java.sql.Date _Date ) ;
+
+   public abstract java.lang.String get_User() ;
+
+   public abstract void set_User( java.lang.String _User ) ;
+
+   public abstract java.lang.String get_Comments() ;
+
+   public abstract void set_Comments( java.lang.String _Comments ) ;
 
 }

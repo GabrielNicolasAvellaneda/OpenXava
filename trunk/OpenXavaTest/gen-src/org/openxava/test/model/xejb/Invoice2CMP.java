@@ -18,10 +18,10 @@ public abstract class Invoice2CMP
       {
          dataHolder = new org.openxava.test.model.Invoice2Data();
 
-         dataHolder.setYear( getYear() );
          dataHolder.set_VatPercentage( get_VatPercentage() );
-         dataHolder.set_Date( get_Date() );
          dataHolder.setNumber( getNumber() );
+         dataHolder.setYear( getYear() );
+         dataHolder.set_Date( get_Date() );
          dataHolder.set_Customer_number( get_Customer_number() );
 
       }
@@ -93,10 +93,10 @@ public abstract class Invoice2CMP
       Invoice2Value = new org.openxava.test.model.Invoice2Value();
       try
          {
-            Invoice2Value.setYear( getYear() );
             Invoice2Value.setVatPercentage( getVatPercentage() );
-            Invoice2Value.setDate( getDate() );
             Invoice2Value.setNumber( getNumber() );
+            Invoice2Value.setYear( getYear() );
+            Invoice2Value.setDate( getDate() );
             Invoice2Value.setCustomer_number( getCustomer_number() );
 
          }
@@ -126,21 +126,21 @@ public abstract class Invoice2CMP
 
 /* Value Objects END */
 
-   public abstract int getYear() ;
-
-   public abstract void setYear( int year ) ;
-
    public abstract java.math.BigDecimal get_VatPercentage() ;
 
    public abstract void set_VatPercentage( java.math.BigDecimal _VatPercentage ) ;
 
-   public abstract java.sql.Date get_Date() ;
-
-   public abstract void set_Date( java.sql.Date _Date ) ;
-
    public abstract int getNumber() ;
 
    public abstract void setNumber( int number ) ;
+
+   public abstract int getYear() ;
+
+   public abstract void setYear( int year ) ;
+
+   public abstract java.sql.Date get_Date() ;
+
+   public abstract void set_Date( java.sql.Date _Date ) ;
 
    public abstract int get_Customer_number() ;
 

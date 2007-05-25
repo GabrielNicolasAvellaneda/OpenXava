@@ -12,18 +12,18 @@ public class CustomerData
 {
 
    private static final long serialVersionUID = 1L;
-   private java.lang.Integer _Type;
-   private java.lang.String _Remarks;
-   private java.lang.String _RelationWithSeller;
-   private byte[] _Photo;
    private java.lang.String _Name;
+   private java.lang.String _Remarks;
    private int number;
-   private int _Seller_number;
-   private int _AlternateSeller_number;
+   private java.lang.Integer _Type;
+   private byte[] _Photo;
+   private java.lang.String _RelationWithSeller;
    private java.lang.String _Address_zipCode;
    private java.lang.String _Address_street;
    private java.lang.String _Address_city;
    private java.lang.String _Address_state_id;
+   private int _AlternateSeller_number;
+   private int _Seller_number;
 
    public CustomerData()
    {
@@ -31,60 +31,24 @@ public class CustomerData
 
    public CustomerData( CustomerData otherData )
    {
-      set_Type(otherData.get_Type());
-      set_Remarks(otherData.get_Remarks());
-      set_RelationWithSeller(otherData.get_RelationWithSeller());
-      set_Photo(otherData.get_Photo());
       set_Name(otherData.get_Name());
+      set_Remarks(otherData.get_Remarks());
       setNumber(otherData.getNumber());
-      set_Seller_number(otherData.get_Seller_number());
-      set_AlternateSeller_number(otherData.get_AlternateSeller_number());
+      set_Type(otherData.get_Type());
+      set_Photo(otherData.get_Photo());
+      set_RelationWithSeller(otherData.get_RelationWithSeller());
       set_Address_zipCode(otherData.get_Address_zipCode());
       set_Address_street(otherData.get_Address_street());
       set_Address_city(otherData.get_Address_city());
       set_Address_state_id(otherData.get_Address_state_id());
+      set_AlternateSeller_number(otherData.get_AlternateSeller_number());
+      set_Seller_number(otherData.get_Seller_number());
 
    }
 
    public org.openxava.test.model.CustomerKey getPrimaryKey() {
      org.openxava.test.model.CustomerKey pk = new org.openxava.test.model.CustomerKey(this.getNumber());
      return pk;
-   }
-
-   public java.lang.Integer get_Type()
-   {
-      return this._Type;
-   }
-   public void set_Type( java.lang.Integer _Type )
-   {
-      this._Type = _Type;
-   }
-
-   public java.lang.String get_Remarks()
-   {
-      return this._Remarks;
-   }
-   public void set_Remarks( java.lang.String _Remarks )
-   {
-      this._Remarks = _Remarks;
-   }
-
-   public java.lang.String get_RelationWithSeller()
-   {
-      return this._RelationWithSeller;
-   }
-   public void set_RelationWithSeller( java.lang.String _RelationWithSeller )
-   {
-      this._RelationWithSeller = _RelationWithSeller;
-   }
-
-   public byte[] get_Photo()
-   {
-      return this._Photo;
-   }
-   public void set_Photo( byte[] _Photo )
-   {
-      this._Photo = _Photo;
    }
 
    public java.lang.String get_Name()
@@ -96,6 +60,15 @@ public class CustomerData
       this._Name = _Name;
    }
 
+   public java.lang.String get_Remarks()
+   {
+      return this._Remarks;
+   }
+   public void set_Remarks( java.lang.String _Remarks )
+   {
+      this._Remarks = _Remarks;
+   }
+
    public int getNumber()
    {
       return this.number;
@@ -105,22 +78,31 @@ public class CustomerData
       this.number = number;
    }
 
-   public int get_Seller_number()
+   public java.lang.Integer get_Type()
    {
-      return this._Seller_number;
+      return this._Type;
    }
-   public void set_Seller_number( int _Seller_number )
+   public void set_Type( java.lang.Integer _Type )
    {
-      this._Seller_number = _Seller_number;
+      this._Type = _Type;
    }
 
-   public int get_AlternateSeller_number()
+   public byte[] get_Photo()
    {
-      return this._AlternateSeller_number;
+      return this._Photo;
    }
-   public void set_AlternateSeller_number( int _AlternateSeller_number )
+   public void set_Photo( byte[] _Photo )
    {
-      this._AlternateSeller_number = _AlternateSeller_number;
+      this._Photo = _Photo;
+   }
+
+   public java.lang.String get_RelationWithSeller()
+   {
+      return this._RelationWithSeller;
+   }
+   public void set_RelationWithSeller( java.lang.String _RelationWithSeller )
+   {
+      this._RelationWithSeller = _RelationWithSeller;
    }
 
    public java.lang.String get_Address_zipCode()
@@ -159,11 +141,29 @@ public class CustomerData
       this._Address_state_id = _Address_state_id;
    }
 
+   public int get_AlternateSeller_number()
+   {
+      return this._AlternateSeller_number;
+   }
+   public void set_AlternateSeller_number( int _AlternateSeller_number )
+   {
+      this._AlternateSeller_number = _AlternateSeller_number;
+   }
+
+   public int get_Seller_number()
+   {
+      return this._Seller_number;
+   }
+   public void set_Seller_number( int _Seller_number )
+   {
+      this._Seller_number = _Seller_number;
+   }
+
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Type=" + get_Type() + " " + "_Remarks=" + get_Remarks() + " " + "_RelationWithSeller=" + get_RelationWithSeller() + " " + "_Photo=" + get_Photo() + " " + "_Name=" + get_Name() + " " + "number=" + getNumber() + " " + "_Seller_number=" + get_Seller_number() + " " + "_AlternateSeller_number=" + get_AlternateSeller_number() + " " + "_Address_zipCode=" + get_Address_zipCode() + " " + "_Address_street=" + get_Address_street() + " " + "_Address_city=" + get_Address_city() + " " + "_Address_state_id=" + get_Address_state_id());
+      str.append("_Name=" + get_Name() + " " + "_Remarks=" + get_Remarks() + " " + "number=" + getNumber() + " " + "_Type=" + get_Type() + " " + "_Photo=" + get_Photo() + " " + "_RelationWithSeller=" + get_RelationWithSeller() + " " + "_Address_zipCode=" + get_Address_zipCode() + " " + "_Address_street=" + get_Address_street() + " " + "_Address_city=" + get_Address_city() + " " + "_Address_state_id=" + get_Address_state_id() + " " + "_AlternateSeller_number=" + get_AlternateSeller_number() + " " + "_Seller_number=" + get_Seller_number());
       str.append('}');
 
       return(str.toString());
@@ -176,13 +176,13 @@ public class CustomerData
          CustomerData lTest = (CustomerData) pOther;
          boolean lEquals = true;
 
-         if( this._Type == null )
+         if( this._Name == null )
          {
-            lEquals = lEquals && ( lTest._Type == null );
+            lEquals = lEquals && ( lTest._Name == null );
          }
          else
          {
-            lEquals = lEquals && this._Type.equals( lTest._Type );
+            lEquals = lEquals && this._Name.equals( lTest._Name );
          }
          if( this._Remarks == null )
          {
@@ -192,6 +192,16 @@ public class CustomerData
          {
             lEquals = lEquals && this._Remarks.equals( lTest._Remarks );
          }
+         lEquals = lEquals && this.number == lTest.number;
+         if( this._Type == null )
+         {
+            lEquals = lEquals && ( lTest._Type == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Type.equals( lTest._Type );
+         }
+         lEquals = lEquals && this._Photo == lTest._Photo;
          if( this._RelationWithSeller == null )
          {
             lEquals = lEquals && ( lTest._RelationWithSeller == null );
@@ -200,18 +210,6 @@ public class CustomerData
          {
             lEquals = lEquals && this._RelationWithSeller.equals( lTest._RelationWithSeller );
          }
-         lEquals = lEquals && this._Photo == lTest._Photo;
-         if( this._Name == null )
-         {
-            lEquals = lEquals && ( lTest._Name == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._Name.equals( lTest._Name );
-         }
-         lEquals = lEquals && this.number == lTest.number;
-         lEquals = lEquals && this._Seller_number == lTest._Seller_number;
-         lEquals = lEquals && this._AlternateSeller_number == lTest._AlternateSeller_number;
          if( this._Address_zipCode == null )
          {
             lEquals = lEquals && ( lTest._Address_zipCode == null );
@@ -244,6 +242,8 @@ public class CustomerData
          {
             lEquals = lEquals && this._Address_state_id.equals( lTest._Address_state_id );
          }
+         lEquals = lEquals && this._AlternateSeller_number == lTest._AlternateSeller_number;
+         lEquals = lEquals && this._Seller_number == lTest._Seller_number;
 
          return lEquals;
       }
@@ -257,11 +257,13 @@ public class CustomerData
    {
       int result = 17;
 
-      result = 37*result + ((this._Type != null) ? this._Type.hashCode() : 0);
+      result = 37*result + ((this._Name != null) ? this._Name.hashCode() : 0);
 
       result = 37*result + ((this._Remarks != null) ? this._Remarks.hashCode() : 0);
 
-      result = 37*result + ((this._RelationWithSeller != null) ? this._RelationWithSeller.hashCode() : 0);
+      result = 37*result + (int) number;
+
+      result = 37*result + ((this._Type != null) ? this._Type.hashCode() : 0);
 
       if (_Photo != null) {
         for (int i=0; i<_Photo.length; i++)
@@ -271,13 +273,7 @@ public class CustomerData
         }
       }
 
-      result = 37*result + ((this._Name != null) ? this._Name.hashCode() : 0);
-
-      result = 37*result + (int) number;
-
-      result = 37*result + (int) _Seller_number;
-
-      result = 37*result + (int) _AlternateSeller_number;
+      result = 37*result + ((this._RelationWithSeller != null) ? this._RelationWithSeller.hashCode() : 0);
 
       result = 37*result + ((this._Address_zipCode != null) ? this._Address_zipCode.hashCode() : 0);
 
@@ -286,6 +282,10 @@ public class CustomerData
       result = 37*result + ((this._Address_city != null) ? this._Address_city.hashCode() : 0);
 
       result = 37*result + ((this._Address_state_id != null) ? this._Address_state_id.hashCode() : 0);
+
+      result = 37*result + (int) _AlternateSeller_number;
+
+      result = 37*result + (int) _Seller_number;
 
       return result;
    }

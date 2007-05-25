@@ -1,9 +1,25 @@
 Change Log for OpenXava project
 ===============================
 
+- All features of list mode are available also for collections. This includes ordering, searching, pagination, etc. 
+- New method Tab.setDefaultOrder() for setting the default order for the Tab in runtime.
+- New method Tab.setPropertiesNames() for setting the properties displayed by the Tab in runtime.
+- New method Tab.setFilter() for setting the filter of a Tab in runtime.
+- Fix: Fail in list mode: Calculated property of a reference that depends on a property of the same name of one of the main object.
+- Hibernate update to 3.2.4.sp1 and Hibernate EntityManager updated to 3.3.1.GA.
+- Fix: User preferences for tab was not loaded when duplicate rows was found.
+- Fix: View.setValue() threw exception if the member is hidden.
+- New methods in View: getCollectionSelectedValues(), getCollectionObjects() and getCollectionSelectedObjects()
+- PersistenceFacade added (in package org.openxava.model) for accessing some persistence services in an abstract way.
+- Fix: 'Transaction not successfully' message showed on saving tab preferences.
+- Button for filtering in list mode is replaced by an icon.
+- Class ArrayOneRowResultSetAdapter (from util) removed (really moved to org.openxava.converters.typeadapters).
+- Fix: When create a new object from a reference ant it has an  on-change action associated to the key some times a NullPointerException is thrown and the on-change action is not executed.
+- CSV Export (export to excel in list mode) change the 'new line' (\n or \r) by spaces in order to export nicely when multiline texts are present.
+- Property 'csvSeparator' can be used in xava.properties to indicate the column separator for CSV export.
+- New class SystemException for throwing from business method when a system level exception is produced.
 - Fix: Required icon in editors with frame was not nicely displayed inside Liferay Portal.
 - Fix: In websphere 6.0 using WebSphereTransactionManagerLookup a lot of warning messages is shown on commit transaction.
-
 - Fix: Ant targets 'generatePorlets' and 'redeployPortlets' touched application.xml although it did not exists. This created an empty application.xml file in Spanish projects.
 - Ant target 'generarPortlets' has been removed from OpenXava/build.xml, 'generatePortlets' can be used instead.
 - Fix: MapFacade.setValue and MapFacade.validate crash when a reference with null value used in a model validator is sent.
@@ -13,7 +29,7 @@ OpenXava 2.1.3 (2007-5-2)
 -------------------------
 - New editor radionButton.jsp to display/edit valid-values in radio button format.
 - <property-view/> has the attribute editor to specify a editor to a property for use only in that view.
-- It's possible to give name to a edito in editors.xml
+- It's possible to give name to a editor in editors.xml
 - A key property marked as hidden="true" without required attribute assumes required="true".
 - Fix: NoClassDefFoundError on AS/400 + WebSphere 6 (bug introduced in OX2.1.2).
 - New static methods for MetaModel: getForPOJO(), getForPOJOClass() and existsForPOJOClass()

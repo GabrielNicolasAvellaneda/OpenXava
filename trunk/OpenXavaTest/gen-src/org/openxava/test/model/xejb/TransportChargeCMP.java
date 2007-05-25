@@ -20,9 +20,9 @@ public abstract class TransportChargeCMP
 
          dataHolder.set_Amount( get_Amount() );
          dataHolder.set_Delivery_number( get_Delivery_number() );
-         dataHolder.set_Delivery_type_number( get_Delivery_type_number() );
          dataHolder.set_Delivery_invoice_year( get_Delivery_invoice_year() );
          dataHolder.set_Delivery_invoice_number( get_Delivery_invoice_number() );
+         dataHolder.set_Delivery_type_number( get_Delivery_type_number() );
 
       }
       catch (RuntimeException e)
@@ -93,9 +93,9 @@ public abstract class TransportChargeCMP
          {
             TransportChargeValue.setAmount( getAmount() );
             TransportChargeValue.setDelivery_number( getDelivery_number() );
-            TransportChargeValue.setDelivery_type_number( getDelivery_type_number() );
             TransportChargeValue.setDelivery_invoice_year( getDelivery_invoice_year() );
             TransportChargeValue.setDelivery_invoice_number( getDelivery_invoice_number() );
+            TransportChargeValue.setDelivery_type_number( getDelivery_type_number() );
 
          }
          catch (Exception e)
@@ -113,9 +113,9 @@ public abstract class TransportChargeCMP
 	  {
 		 setAmount( valueHolder.getAmount() );
 		 setDelivery_number( valueHolder.getDelivery_number() );
-		 setDelivery_type_number( valueHolder.getDelivery_type_number() );
 		 setDelivery_invoice_year( valueHolder.getDelivery_invoice_year() );
 		 setDelivery_invoice_number( valueHolder.getDelivery_invoice_number() );
+		 setDelivery_type_number( valueHolder.getDelivery_type_number() );
 
 	  }
 	  catch (Exception e)
@@ -134,10 +134,6 @@ public abstract class TransportChargeCMP
 
    public abstract void set_Delivery_number( int _Delivery_number ) ;
 
-   public abstract int get_Delivery_type_number() ;
-
-   public abstract void set_Delivery_type_number( int _Delivery_type_number ) ;
-
    public abstract int get_Delivery_invoice_year() ;
 
    public abstract void set_Delivery_invoice_year( int _Delivery_invoice_year ) ;
@@ -145,5 +141,9 @@ public abstract class TransportChargeCMP
    public abstract int get_Delivery_invoice_number() ;
 
    public abstract void set_Delivery_invoice_number( int _Delivery_invoice_number ) ;
+
+   public abstract int get_Delivery_type_number() ;
+
+   public abstract void set_Delivery_type_number( int _Delivery_type_number ) ;
 
 }
