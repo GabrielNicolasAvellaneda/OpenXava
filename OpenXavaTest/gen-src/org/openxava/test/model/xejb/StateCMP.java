@@ -18,8 +18,8 @@ public abstract class StateCMP
       {
          dataHolder = new org.openxava.test.model.StateData();
 
-         dataHolder.set_Name( get_Name() );
          dataHolder.setId( getId() );
+         dataHolder.set_Name( get_Name() );
 
       }
       catch (RuntimeException e)
@@ -88,9 +88,9 @@ public abstract class StateCMP
       StateValue = new org.openxava.test.model.StateValue();
       try
          {
-            StateValue.setFullName( getFullName() );
-            StateValue.setName( getName() );
             StateValue.setId( getId() );
+            StateValue.setName( getName() );
+            StateValue.setFullName( getFullName() );
 
          }
          catch (Exception e)
@@ -106,8 +106,8 @@ public abstract class StateCMP
 
 	  try
 	  {
-		 setFullName( valueHolder.getFullName() );
 		 setName( valueHolder.getName() );
+		 setFullName( valueHolder.getFullName() );
 
 	  }
 	  catch (Exception e)
@@ -118,12 +118,12 @@ public abstract class StateCMP
 
 /* Value Objects END */
 
-   public abstract java.lang.String get_Name() ;
-
-   public abstract void set_Name( java.lang.String _Name ) ;
-
    public abstract java.lang.String getId() ;
 
    public abstract void setId( java.lang.String id ) ;
+
+   public abstract java.lang.String get_Name() ;
+
+   public abstract void set_Name( java.lang.String _Name ) ;
 
 }

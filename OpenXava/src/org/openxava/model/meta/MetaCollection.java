@@ -114,8 +114,8 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 	}
 	
 	public String getSQLCondition() throws XavaException {
-		if (Is.emptyString(getCondition())) return "";
-		String condicion = changePropertiesThisByArguments(getCondition(), JBOSSQL);
+		if (Is.emptyString(getCondition())) return ""; 
+		String condicion = changePropertiesThisByArguments(getCondition(), SQL); 
 		return getMetaReference().getMetaModelReferenced().getMapping().changePropertiesByColumns(condicion);
 	}
 	
@@ -217,11 +217,35 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 		}
 		return arguments.toString();
 	}
-
+	
+	/**
+	 * These arguments can be used in a condition for extracting the values
+	 * of the collection from the total of the elements of the type. <p>
+	 * 
+	 * That is, if is a collection of line details of an invoice, this method
+	 * will return the key of the invoice inside the line detail.<br> 
+	 * Useful for creating a SQL condition for extracting the value of the
+	 * collection.<br> 
+	 * 
+	 * @return  Of type <code>String</code>. Never null.
+	 */
+	public Collection getConditionArgumentsPropertyNames() throws XavaException {  
+		Collection result = new ArrayList();
+		for (Iterator it = getMetaPropertiesFinderArguments(true, false).iterator(); it.hasNext(); ) {
+			MetaProperty p = (MetaProperty) it.next();
+			result.add(p.getName());			
+		}
+		return result;
+	}
+	
 	/**
 	 * Util to generate EJB code. 	 
 	 */	
 	public Collection getMetaPropertiesFinderArguments(boolean withDots) throws XavaException {
+		return getMetaPropertiesFinderArguments(withDots, true); 
+	}
+
+	private Collection getMetaPropertiesFinderArguments(boolean withDots, boolean withPropertyWithConverterUnderlined) throws XavaException {
 		Collection metaPropertiesFinderArguments = new ArrayList();
 		String condition = getCondition();
 		int i = condition.indexOf("${this.");
@@ -239,7 +263,7 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 			else {
 				pr.setName(propertyName);				
 			}
-			if (original.getMapping().hasConverter()) {
+			if (withPropertyWithConverterUnderlined && original.getMapping().hasConverter()) {
 				if (!isQualified) {
 					pr.setName("_" + Strings.firstUpper(pr.getName()));
 				}
@@ -282,6 +306,6 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 	public void setMaximum(int maximum) {
 		this.maximum = maximum;
 	}
-	
+
 }
 

@@ -28,7 +28,11 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 			"CRUD.save",
 			"CRUD.delete",
 			"CRUD.search",			
-			"Mode.list"						
+			"Mode.list",				
+			"List.filter", 
+			"List.orderBy", 
+			"List.customize", 
+			"List.hideRows"
 		};		
 		assertActions(initActions);
 		
@@ -47,7 +51,11 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 			"CRUD.delete",
 			"CRUD.search",						
 			"Mode.list",
-			"Collection.view"			
+			"Collection.view",
+			"List.filter", 
+			"List.orderBy", 
+			"List.customize", 
+			"List.hideRows"			
 		};		
 		assertActions(aggregatListActions);
 		
@@ -64,7 +72,11 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 			"Gallery.edit",
 			"Mode.list",						
 			"Collection.view",
-			"Collection.hideDetail"
+			"Collection.hideDetail",
+			"List.filter", 
+			"List.orderBy", 
+			"List.customize", 
+			"List.hideRows"			
 		};		
 		assertActions(aggregateDetailActions);
 		

@@ -185,8 +185,8 @@ abstract public class ModelMapping implements java.io.Serializable {
 	
 	
 	public String getQualifiedColumn(String modelProperty)
-		throws XavaException {		
-		String tableColumn = getTableColumn(modelProperty, true);						
+		throws XavaException {				
+		String tableColumn = getTableColumn(modelProperty, true);								
 		if (Is.emptyString(tableColumn))
 			return "'" + modelProperty + "'";
 		// for calculated fields or created by multiple converter
@@ -230,9 +230,10 @@ abstract public class ModelMapping implements java.io.Serializable {
 			if (idx >= 0) {
 				String referenceName = modelProperty.substring(0, idx);
 				String propertyName = modelProperty.substring(idx + 1);
-				if (getMetaModel()
-					.getMetaReference(referenceName)
-					.isAggregate()) {
+				
+				if (getMetaModel().getMetaReference(referenceName).isAggregate()  &&
+					!Strings.firstUpper(referenceName).equals(getMetaModel().getContainerModelName())  	
+				) {
 					propertyMapping =
 						(PropertyMapping) propertyMappings.get(
 							referenceName + "_" + propertyName);
@@ -340,8 +341,8 @@ abstract public class ModelMapping implements java.io.Serializable {
 	 * </pre>
 	 */
 	public String changePropertiesByColumns(String source)
-		throws XavaException {
-		return changePropertiesByColumns(source, true);
+		throws XavaException {		
+		return changePropertiesByColumns(source, true);		
 	}
 	
 	/**

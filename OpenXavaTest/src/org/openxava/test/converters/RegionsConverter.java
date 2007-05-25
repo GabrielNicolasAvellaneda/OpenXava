@@ -1,7 +1,6 @@
 package org.openxava.test.converters;
 
 import org.openxava.converters.*;
-import org.openxava.converters.typeadapters.*;
 
 /**
  * 

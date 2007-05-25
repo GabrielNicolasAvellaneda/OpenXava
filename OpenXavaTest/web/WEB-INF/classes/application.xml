@@ -72,6 +72,12 @@
 		<controller name="Typical"/>
 	</module>	
 	
+	<module name="DeliveriesRemarks2002" folder="invoicing.variations">
+		<model name="Delivery"/>
+		<tab name="Remarks2002"/>		
+		<controller name="Typical"/>
+	</module>	
+	
 	<module name="Warehouses" folder="warehousing">		<model name="Warehouse"/>		<controller name="Typical"/>		<controller name="Warehouses"/>	</module>	 		<module name="TransportCharges" folder="warehousing">		<model name="TransportCharge"/>		<controller name="Typical"/>	</module>	 
 	
 	<module name="ShipmentCharges" folder="warehousing">

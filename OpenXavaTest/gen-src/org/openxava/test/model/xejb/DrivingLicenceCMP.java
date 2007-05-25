@@ -19,8 +19,8 @@ public abstract class DrivingLicenceCMP
          dataHolder = new org.openxava.test.model.DrivingLicenceData();
 
          dataHolder.setLevel( getLevel() );
-         dataHolder.setType( getType() );
          dataHolder.set_Description( get_Description() );
+         dataHolder.setType( getType() );
 
       }
       catch (RuntimeException e)
@@ -90,8 +90,8 @@ public abstract class DrivingLicenceCMP
       try
          {
             DrivingLicenceValue.setLevel( getLevel() );
-            DrivingLicenceValue.setType( getType() );
             DrivingLicenceValue.setDescription( getDescription() );
+            DrivingLicenceValue.setType( getType() );
 
          }
          catch (Exception e)
@@ -122,12 +122,12 @@ public abstract class DrivingLicenceCMP
 
    public abstract void setLevel( int level ) ;
 
-   public abstract java.lang.String getType() ;
-
-   public abstract void setType( java.lang.String type ) ;
-
    public abstract java.lang.String get_Description() ;
 
    public abstract void set_Description( java.lang.String _Description ) ;
+
+   public abstract java.lang.String getType() ;
+
+   public abstract void setType( java.lang.String type ) ;
 
 }

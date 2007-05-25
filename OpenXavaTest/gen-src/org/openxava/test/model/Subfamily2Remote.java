@@ -10,16 +10,16 @@ public interface Subfamily2Remote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.ISubfamily2
 {
 
-   public java.lang.String getRemarks(  )
-      throws java.rmi.RemoteException;
-
-   public void setRemarks( java.lang.String newRemarks )
-      throws java.rmi.RemoteException;
-
    public java.lang.String getDescription(  )
       throws java.rmi.RemoteException;
 
    public void setDescription( java.lang.String newDescription )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getRemarks(  )
+      throws java.rmi.RemoteException;
+
+   public void setRemarks( java.lang.String newRemarks )
       throws java.rmi.RemoteException;
 
    public int getNumber(  )

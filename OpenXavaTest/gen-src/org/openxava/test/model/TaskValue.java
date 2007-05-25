@@ -14,16 +14,16 @@ public class TaskValue
 
    private static final long serialVersionUID = 1L;
 
-   private java.lang.String comments;
-   private boolean commentsHasBeenSet = false;
    private java.lang.String summary;
    private boolean summaryHasBeenSet = false;
-   private java.lang.String user;
-   private boolean userHasBeenSet = false;
    private java.lang.String oid;
    private boolean oidHasBeenSet = false;
    private java.util.Date date;
    private boolean dateHasBeenSet = false;
+   private java.lang.String user;
+   private boolean userHasBeenSet = false;
+   private java.lang.String comments;
+   private boolean commentsHasBeenSet = false;
 
    public TaskValue()
    {
@@ -32,32 +32,18 @@ public class TaskValue
    //TODO Cloneable is better than this !
    public TaskValue( TaskValue otherValue )
    {
-	  this.comments = otherValue.comments;
-	  commentsHasBeenSet = true;
 	  this.summary = otherValue.summary;
 	  summaryHasBeenSet = true;
-	  this.user = otherValue.user;
-	  userHasBeenSet = true;
 	  this.oid = otherValue.oid;
 	  oidHasBeenSet = true;
 	  this.date = otherValue.date;
 	  dateHasBeenSet = true;
-   }
-
-   public java.lang.String getComments()
-   {
-	  return this.comments;
-   }
-
-   public void setComments( java.lang.String comments )
-   {
-	  this.comments = comments;
+	  this.user = otherValue.user;
+	  userHasBeenSet = true;
+	  this.comments = otherValue.comments;
 	  commentsHasBeenSet = true;
    }
 
-   public boolean commentsHasBeenSet(){
-	  return commentsHasBeenSet;
-   }
    public java.lang.String getSummary()
    {
 	  return this.summary;
@@ -71,20 +57,6 @@ public class TaskValue
 
    public boolean summaryHasBeenSet(){
 	  return summaryHasBeenSet;
-   }
-   public java.lang.String getUser()
-   {
-	  return this.user;
-   }
-
-   public void setUser( java.lang.String user )
-   {
-	  this.user = user;
-	  userHasBeenSet = true;
-   }
-
-   public boolean userHasBeenSet(){
-	  return userHasBeenSet;
    }
    public java.lang.String getOid()
    {
@@ -114,12 +86,40 @@ public class TaskValue
    public boolean dateHasBeenSet(){
 	  return dateHasBeenSet;
    }
+   public java.lang.String getUser()
+   {
+	  return this.user;
+   }
+
+   public void setUser( java.lang.String user )
+   {
+	  this.user = user;
+	  userHasBeenSet = true;
+   }
+
+   public boolean userHasBeenSet(){
+	  return userHasBeenSet;
+   }
+   public java.lang.String getComments()
+   {
+	  return this.comments;
+   }
+
+   public void setComments( java.lang.String comments )
+   {
+	  this.comments = comments;
+	  commentsHasBeenSet = true;
+   }
+
+   public boolean commentsHasBeenSet(){
+	  return commentsHasBeenSet;
+   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("comments=" + getComments() + " " + "summary=" + getSummary() + " " + "user=" + getUser() + " " + "oid=" + getOid() + " " + "date=" + getDate());
+	  str.append("summary=" + getSummary() + " " + "oid=" + getOid() + " " + "date=" + getDate() + " " + "user=" + getUser() + " " + "comments=" + getComments());
 	  str.append('}');
 
 	  return(str.toString());
@@ -172,14 +172,6 @@ public class TaskValue
 	  {
 		 TaskValue that = (TaskValue) other;
 		 boolean lEquals = true;
-		 if( this.comments == null )
-		 {
-			lEquals = lEquals && ( that.comments == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.comments.equals( that.comments );
-		 }
 		 if( this.summary == null )
 		 {
 			lEquals = lEquals && ( that.summary == null );
@@ -187,6 +179,14 @@ public class TaskValue
 		 else
 		 {
 			lEquals = lEquals && this.summary.equals( that.summary );
+		 }
+		 if( this.date == null )
+		 {
+			lEquals = lEquals && ( that.date == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.date.equals( that.date );
 		 }
 		 if( this.user == null )
 		 {
@@ -196,13 +196,13 @@ public class TaskValue
 		 {
 			lEquals = lEquals && this.user.equals( that.user );
 		 }
-		 if( this.date == null )
+		 if( this.comments == null )
 		 {
-			lEquals = lEquals && ( that.date == null );
+			lEquals = lEquals && ( that.comments == null );
 		 }
 		 else
 		 {
-			lEquals = lEquals && this.date.equals( that.date );
+			lEquals = lEquals && this.comments.equals( that.comments );
 		 }
 
 		 return lEquals;
@@ -215,15 +215,15 @@ public class TaskValue
 
    public int hashCode(){
 	  int result = 17;
-      result = 37*result + ((this.comments != null) ? this.comments.hashCode() : 0);
-
       result = 37*result + ((this.summary != null) ? this.summary.hashCode() : 0);
-
-      result = 37*result + ((this.user != null) ? this.user.hashCode() : 0);
 
       result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
 
       result = 37*result + ((this.date != null) ? this.date.hashCode() : 0);
+
+      result = 37*result + ((this.user != null) ? this.user.hashCode() : 0);
+
+      result = 37*result + ((this.comments != null) ? this.comments.hashCode() : 0);
 
 	  return result;
    }

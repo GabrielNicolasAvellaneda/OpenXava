@@ -10,9 +10,6 @@ public interface ShipmentRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.IShipment
 {
 
-   public int getType(  )
-      throws java.rmi.RemoteException;
-
    public java.sql.Timestamp getTime(  )
       throws java.rmi.RemoteException;
 
@@ -25,10 +22,13 @@ public interface ShipmentRemote
    public void setDescription( java.lang.String newDescription )
       throws java.rmi.RemoteException;
 
-   public int getMode(  )
+   public int getNumber(  )
       throws java.rmi.RemoteException;
 
-   public int getNumber(  )
+   public int getType(  )
+      throws java.rmi.RemoteException;
+
+   public int getMode(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.ICustomerContactPerson getCustomerContactPerson(  )

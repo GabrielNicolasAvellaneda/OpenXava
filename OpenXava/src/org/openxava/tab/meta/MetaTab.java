@@ -97,6 +97,12 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		tab.addDefaultMetaConsults();
 		return tab;
 	}
+	
+	public static MetaTab createDefault(MetaModel metaModel) { 
+		MetaTab tab = new MetaTab();
+		tab.setMetaModel(metaModel);		
+		return tab;
+	}
 
 	/**
 	 * @return Not null, read only and of type <tt>MetaProperty</tt>.
@@ -124,7 +130,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 			String name = (String) it.next();
 			MetaProperty metaPropertyTab = null;
 			try {
-				MetaProperty metaProperty = getMetaEntity().getMetaProperty(
+				MetaProperty metaProperty = getMetaModel().getMetaProperty( 
 						name).cloneMetaProperty();
 				metaProperty.setQualifiedName(name);
 				String idEtiqueta = getId() + ".properties." + name;
@@ -305,20 +311,17 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 			while (itSets.hasNext()) {
 				MetaSet set = (MetaSet) itSets.next();
 				String propertyNameFrom = set.getPropertyNameFrom();
-				if (!Is.emptyString(propertyNameFrom)
-						&& !getPropertiesNames().contains(propertyNameFrom)) {
+				if (!Is.emptyString(propertyNameFrom)) {
 					String qualifiedName = metaProperty.getQualifiedName();
 					int idx = qualifiedName.indexOf('.');
-					if (idx < 0) {
-						result.add(propertyNameFrom);
-					}
-					else {
-						String ref = qualifiedName.substring(0, idx + 1);
-						result.add(ref + propertyNameFrom);
-					}
-				}
+					String ref = idx < 0?"":qualifiedName.substring(0, idx + 1);
+					String qualifiedPropertyNameFrom = ref + propertyNameFrom;
+					if (!getPropertiesNames().contains(qualifiedPropertyNameFrom)) {					
+						result.add(qualifiedPropertyNameFrom);
+					}					
+				}				
 			}
-		}
+		}		
 		return new ArrayList(result);
 	}
 
@@ -337,7 +340,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	}
 
 	private List createAllPropertiesNames() throws XavaException {
-		return getMetaEntity().getPropertiesNamesWithoutHiddenNorTransient();
+		return getMetaModel().getPropertiesNamesWithoutHiddenNorTransient(); 
 	}
 	
 	public void setDefaultPropertiesNames(String properties) {
@@ -367,7 +370,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		this.selectSQL = null; 
 	}
 
-	ModelMapping getMapping() throws XavaException {
+	ModelMapping getMapping() throws XavaException {		
 		return getMetaModel().getMapping();
 	}
 
@@ -390,7 +393,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	}
 
 	public String getSelectSQL() throws XavaException {
-		if (selectSQL == null || defaultSchemaChanged()) { 	
+		if (selectSQL == null || defaultSchemaChanged()) { 				
 			selectSQL = getMapping().changePropertiesByColumns(getSelect());			
 		}		
 		return selectSQL;
@@ -513,12 +516,12 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 			entityReferencesMappings = new ArrayList(); 
 			entityReferencesReferenceNames = new HashMap(); 
 			for (Iterator itProperties = getPropertiesNames().iterator(); itProperties.hasNext();) {
-				String property = (String) itProperties.next();
-				fillEntityReferencesMappings(entityReferencesMappings, property, getMetaComponent().getMetaEntity(), "", "");
+				String property = (String) itProperties.next();				
+				fillEntityReferencesMappings(entityReferencesMappings, property, getMetaModel(), "", ""); 
 			}
 			for (Iterator itProperties = getHiddenPropertiesNames().iterator(); itProperties.hasNext();) {
-				String property = (String) itProperties.next();
-				fillEntityReferencesMappings(entityReferencesMappings, property, getMetaComponent().getMetaEntity(), "", "");
+				String property = (String) itProperties.next();				
+				fillEntityReferencesMappings(entityReferencesMappings, property, getMetaModel(), "", ""); 
 			}						
 		}
 		return entityReferencesMappings;
@@ -527,7 +530,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	private void fillEntityReferencesMappings(Collection result, String property, MetaModel metaModel, String parentReference, String aggregatePrefix) throws XavaException {		
 		int idx = property.indexOf('.');				
 		if (idx >= 0) {
-			String referenceName = property.substring(0, idx);					
+			String referenceName = property.substring(0, idx);	
 			MetaReference ref = metaModel.getMetaReference(referenceName);
 			String memberName = property.substring(idx + 1);
 			boolean hasMoreLevels = memberName.indexOf('.') >= 0;
@@ -589,10 +592,6 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 			byKey.addMetaParameter(parameter);
 		}
 		metaConsults.add(0, byKey);
-	}
-
-	private MetaEntity getMetaEntity() throws XavaException {
-		return getMetaComponent().getMetaEntity();
 	}
 
 	public MetaComponent getMetaComponent() {

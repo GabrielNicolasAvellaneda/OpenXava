@@ -53,26 +53,26 @@ public class ProductsTest extends ModuleTestBase {
 		execute("List.addColumns");
 		
 		assertCollectionRowCount("xavaPropertiesList", 5);
-		assertValueInCollection("xavaPropertiesList",  0, 1, "photos");
-		assertValueInCollection("xavaPropertiesList",  1, 1, "familyNumber");
-		assertValueInCollection("xavaPropertiesList",  2, 1, "subfamilyNumber");
-		assertValueInCollection("xavaPropertiesList",  3, 1, "remarks");
-		assertValueInCollection("xavaPropertiesList",  4, 1, "warehouseKey");
+		assertValueInCollection("xavaPropertiesList",  0, 0, "photos");
+		assertValueInCollection("xavaPropertiesList",  1, 0, "familyNumber");
+		assertValueInCollection("xavaPropertiesList",  2, 0, "subfamilyNumber");
+		assertValueInCollection("xavaPropertiesList",  3, 0, "remarks");
+		assertValueInCollection("xavaPropertiesList",  4, 0, "warehouseKey");
 		
 		 
 		execute("AddColumns.sort");						
-		assertValueInCollection("xavaPropertiesList",  0, 1, "familyNumber");
-		assertValueInCollection("xavaPropertiesList",  1, 1, "photos");
-		assertValueInCollection("xavaPropertiesList",  2, 1, "remarks");
-		assertValueInCollection("xavaPropertiesList",  3, 1, "subfamilyNumber");
-		assertValueInCollection("xavaPropertiesList",  4, 1, "warehouseKey");
+		assertValueInCollection("xavaPropertiesList",  0, 0, "familyNumber");
+		assertValueInCollection("xavaPropertiesList",  1, 0, "photos");
+		assertValueInCollection("xavaPropertiesList",  2, 0, "remarks");
+		assertValueInCollection("xavaPropertiesList",  3, 0, "subfamilyNumber");
+		assertValueInCollection("xavaPropertiesList",  4, 0, "warehouseKey");
 		
 		execute("AddColumns.sort"); // A second time, unsort it
-		assertValueInCollection("xavaPropertiesList",  0, 1, "photos");
-		assertValueInCollection("xavaPropertiesList",  1, 1, "familyNumber");
-		assertValueInCollection("xavaPropertiesList",  2, 1, "subfamilyNumber");
-		assertValueInCollection("xavaPropertiesList",  3, 1, "remarks");
-		assertValueInCollection("xavaPropertiesList",  4, 1, "warehouseKey");
+		assertValueInCollection("xavaPropertiesList",  0, 0, "photos");
+		assertValueInCollection("xavaPropertiesList",  1, 0, "familyNumber");
+		assertValueInCollection("xavaPropertiesList",  2, 0, "subfamilyNumber");
+		assertValueInCollection("xavaPropertiesList",  3, 0, "remarks");
+		assertValueInCollection("xavaPropertiesList",  4, 0, "warehouseKey");
 		
 	}
 		

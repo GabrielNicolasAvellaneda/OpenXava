@@ -10,13 +10,13 @@ public interface SellerLevelRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.ISellerLevel
 {
 
+   public java.lang.String getId(  )
+      throws java.rmi.RemoteException;
+
    public java.lang.String getDescription(  )
       throws java.rmi.RemoteException;
 
    public void setDescription( java.lang.String newDescription )
-      throws java.rmi.RemoteException;
-
-   public java.lang.String getId(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.SellerLevelData getData(  )

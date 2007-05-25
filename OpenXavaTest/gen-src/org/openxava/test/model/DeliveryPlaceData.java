@@ -12,10 +12,10 @@ public class DeliveryPlaceData
 {
 
    private static final long serialVersionUID = 1L;
-   private int oid;
-   private java.lang.String _Remarks;
    private java.lang.String _Address;
+   private int oid;
    private java.lang.String _Name;
+   private java.lang.String _Remarks;
    private int _Customer_number;
    private int _PreferredWarehouse_zoneNumber;
    private java.lang.Integer _PreferredWarehouse_number;
@@ -26,10 +26,10 @@ public class DeliveryPlaceData
 
    public DeliveryPlaceData( DeliveryPlaceData otherData )
    {
-      setOid(otherData.getOid());
-      set_Remarks(otherData.get_Remarks());
       set_Address(otherData.get_Address());
+      setOid(otherData.getOid());
       set_Name(otherData.get_Name());
+      set_Remarks(otherData.get_Remarks());
       set_Customer_number(otherData.get_Customer_number());
       set_PreferredWarehouse_zoneNumber(otherData.get_PreferredWarehouse_zoneNumber());
       set_PreferredWarehouse_number(otherData.get_PreferredWarehouse_number());
@@ -41,24 +41,6 @@ public class DeliveryPlaceData
      return pk;
    }
 
-   public int getOid()
-   {
-      return this.oid;
-   }
-   public void setOid( int oid )
-   {
-      this.oid = oid;
-   }
-
-   public java.lang.String get_Remarks()
-   {
-      return this._Remarks;
-   }
-   public void set_Remarks( java.lang.String _Remarks )
-   {
-      this._Remarks = _Remarks;
-   }
-
    public java.lang.String get_Address()
    {
       return this._Address;
@@ -68,6 +50,15 @@ public class DeliveryPlaceData
       this._Address = _Address;
    }
 
+   public int getOid()
+   {
+      return this.oid;
+   }
+   public void setOid( int oid )
+   {
+      this.oid = oid;
+   }
+
    public java.lang.String get_Name()
    {
       return this._Name;
@@ -75,6 +66,15 @@ public class DeliveryPlaceData
    public void set_Name( java.lang.String _Name )
    {
       this._Name = _Name;
+   }
+
+   public java.lang.String get_Remarks()
+   {
+      return this._Remarks;
+   }
+   public void set_Remarks( java.lang.String _Remarks )
+   {
+      this._Remarks = _Remarks;
    }
 
    public int get_Customer_number()
@@ -108,7 +108,7 @@ public class DeliveryPlaceData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("oid=" + getOid() + " " + "_Remarks=" + get_Remarks() + " " + "_Address=" + get_Address() + " " + "_Name=" + get_Name() + " " + "_Customer_number=" + get_Customer_number() + " " + "_PreferredWarehouse_zoneNumber=" + get_PreferredWarehouse_zoneNumber() + " " + "_PreferredWarehouse_number=" + get_PreferredWarehouse_number());
+      str.append("_Address=" + get_Address() + " " + "oid=" + getOid() + " " + "_Name=" + get_Name() + " " + "_Remarks=" + get_Remarks() + " " + "_Customer_number=" + get_Customer_number() + " " + "_PreferredWarehouse_zoneNumber=" + get_PreferredWarehouse_zoneNumber() + " " + "_PreferredWarehouse_number=" + get_PreferredWarehouse_number());
       str.append('}');
 
       return(str.toString());
@@ -121,15 +121,6 @@ public class DeliveryPlaceData
          DeliveryPlaceData lTest = (DeliveryPlaceData) pOther;
          boolean lEquals = true;
 
-         lEquals = lEquals && this.oid == lTest.oid;
-         if( this._Remarks == null )
-         {
-            lEquals = lEquals && ( lTest._Remarks == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._Remarks.equals( lTest._Remarks );
-         }
          if( this._Address == null )
          {
             lEquals = lEquals && ( lTest._Address == null );
@@ -138,6 +129,7 @@ public class DeliveryPlaceData
          {
             lEquals = lEquals && this._Address.equals( lTest._Address );
          }
+         lEquals = lEquals && this.oid == lTest.oid;
          if( this._Name == null )
          {
             lEquals = lEquals && ( lTest._Name == null );
@@ -145,6 +137,14 @@ public class DeliveryPlaceData
          else
          {
             lEquals = lEquals && this._Name.equals( lTest._Name );
+         }
+         if( this._Remarks == null )
+         {
+            lEquals = lEquals && ( lTest._Remarks == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Remarks.equals( lTest._Remarks );
          }
          lEquals = lEquals && this._Customer_number == lTest._Customer_number;
          lEquals = lEquals && this._PreferredWarehouse_zoneNumber == lTest._PreferredWarehouse_zoneNumber;
@@ -169,13 +169,13 @@ public class DeliveryPlaceData
    {
       int result = 17;
 
-      result = 37*result + (int) oid;
-
-      result = 37*result + ((this._Remarks != null) ? this._Remarks.hashCode() : 0);
-
       result = 37*result + ((this._Address != null) ? this._Address.hashCode() : 0);
 
+      result = 37*result + (int) oid;
+
       result = 37*result + ((this._Name != null) ? this._Name.hashCode() : 0);
+
+      result = 37*result + ((this._Remarks != null) ? this._Remarks.hashCode() : 0);
 
       result = 37*result + (int) _Customer_number;
 

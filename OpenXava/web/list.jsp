@@ -12,11 +12,23 @@
 
 <%
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
+String collection = request.getParameter("collection"); 
+String id = "list";
+String collectionArgv = "";
+String prefix = "";
 String tabObject = request.getParameter("tabObject");
 tabObject = (tabObject == null || tabObject.equals(""))?"xava_tab":tabObject;
+if (collection != null && !collection.equals("")) {
+	id = collection;
+	collectionArgv=",collection="+collection;
+	prefix = tabObject + "_";
+}
+
 org.openxava.tab.Tab tab = (org.openxava.tab.Tab) context.get(request, tabObject);
 String action=request.getParameter("rowAction");
 action=action==null?manager.getEnvironment().getValue("XAVA_LIST_ACTION"):action;
+String viewObject = request.getParameter("viewObject");
+String actionArgv = viewObject != null && !viewObject.equals("")?",viewObject=" + viewObject:"";
 String sfilter = request.getParameter("filter");
 boolean filter = !"false".equals(sfilter);
 String lastRow = request.getParameter("lastRow");
@@ -31,7 +43,7 @@ boolean singleSelection="true".equalsIgnoreCase(request.getParameter("singleSele
 </table>
 <% } %>
 
-<table id="list" class=<%=style.getList()%> width="100%" <%=style.getListCellSpacing()%>>
+<table id="<%=id%>" class=<%=style.getList()%> width="100%" <%=style.getListCellSpacing()%>>
 <tr>
 <th class=<%=style.getListHeader()%> style="text-align: center" width="60"><xava:image action="List.customize"/></th>
 <th class=<%=style.getListHeader()%> width="5">
@@ -59,7 +71,7 @@ while (it.hasNext()) {
 	} else {
 %>
 <span class="<%=style.getListOrderBy()%>">
-<xava:link action='List.orderBy' argv='<%="property="+property.getQualifiedName()%>'><%=property.getLabel(request)%></xava:link>&nbsp;
+<xava:link action='List.orderBy' argv='<%="property="+property.getQualifiedName() + collectionArgv%>'><%=property.getLabel(request)%></xava:link>&nbsp;
 </span>
 <%
 		if (tab.isOrderAscending(property.getQualifiedName())) {
@@ -94,19 +106,19 @@ while (it.hasNext()) {
 <% if (filter) { %>
 <tr class=<%=style.getListSubheader()%>>
 <th class=<%=style.getListSubheader()%> style="text-align: center" width="60">
-<xava:button action="List.filter"/>
+<xava:action action="List.filter" argv="<%=collectionArgv%>"/>
 </th>
 <th class=<%=style.getListSubheader()%> width="5">
 	<script>
-	function clearConditionValues() {
-		for (i=0; i<document.<%=manager.getForm()%>.conditionValues.length; i++) {
-			document.<%=manager.getForm()%>.conditionValues[i].value = '';
+	function clear<%=prefix%>ConditionValues() {
+		for (i=0; i<document.<%=manager.getForm()%>.<%=prefix%>conditionValues.length; i++) {
+			document.<%=manager.getForm()%>.<%=prefix%>conditionValues[i].value = '';
 	  	}
 	}
 	</script>
 	<a title='<xava:message key="clear_condition_values"/>' href="javascript:void(0)">
 		<img src='<%=request.getContextPath()%>/xava/images/clear-right.gif'
-			border='0' align='middle' onclick="clearConditionValues()"/>
+			border='0' align='middle' onclick="clear<%=prefix%>ConditionValues()"/>
 	</a>
 </th>
 <%
@@ -133,6 +145,7 @@ while (it.hasNext()) {
 	<jsp:param name="validValues" value="<%=property.getValidValuesLabels(request)%>" />
 	<jsp:param name="value" value="<%=value%>" />
 	<jsp:param name="base0" value="<%=!property.isNumber()%>" />
+	<jsp:param name="prefix" value="<%=prefix%>"/>
 </jsp:include>		
 	<%	
 		}
@@ -141,6 +154,7 @@ while (it.hasNext()) {
 <th class=<%=style.getListSubheader()%> align="left">
 <jsp:include page="comparatorsBooleanCombo.jsp">
 	<jsp:param name="comparator" value="<%=comparator%>" />
+	<jsp:param name="prefix" value="<%=prefix%>"/>
 </jsp:include>
 	<% } else { // Not boolean %>
 <th class=<%=style.getListSubheader()%> align="left">
@@ -148,10 +162,11 @@ while (it.hasNext()) {
 String urlComparatorsCombo = "comparatorsCombo.jsp" // in this way because websphere 6 has problems with jsp:param
 	+ "?comparator=" + comparator
 	+ "&isString=" + isString
-	+ "&isDate=" + isDate;
+	+ "&isDate=" + isDate
+	+ "&prefix=" + prefix;
 %>
 <jsp:include page="<%=urlComparatorsCombo%>" />
-<input name="conditionValues" class=<%=style.getEditor()%> type="text" maxlength="<%=maxLength%>" size="<%=length%>" value="<%=value%>"/>
+<input name="<%=prefix%>conditionValues" class=<%=style.getEditor()%> type="text" maxlength="<%=maxLength%>" size="<%=length%>" value="<%=value%>"/>
 	<% } %>
 </th>
 <% 
@@ -170,7 +185,7 @@ int totalSize = 0;
 if (tab.isRowsHidden()) {
 %>
 	<tr id="nodata"><td align="center">
-	<xava:link action="List.showRows"/>
+	<xava:link action="List.showRows" argv="<%=collectionArgv%>"/>
 	</td></tr>
 <%
 }
@@ -182,16 +197,16 @@ if (totalSize > 0) {
 for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex(); f++) {
 	String checked=tab.isSelected(f)?"checked='true'":"";
 	String cssClass=f%2==0?style.getListPair():style.getListOdd();	
-	String cssStyle = tab.getStyle(request.getLocale(), f);
+	String cssStyle = tab.getStyle(f);
 %>
 <tr class=<%=cssClass%>>
 	<td class=<%=cssClass%> style='vertical-align: middle;text-align: center'>
 <% if (!org.openxava.util.Is.emptyString(action)) { %>
-<xava:action action='<%=action%>' argv='<%="row="+f%>'/>
+<xava:action action='<%=action%>' argv='<%="row=" + f + actionArgv%>'/>
 <% } %>
 	</td>
 	<td class=<%=cssClass%>>
-	<INPUT type="<%=singleSelection?"RADIO":"CHECKBOX"%>" name="selected" value="<%=f%>" <%=checked%>/>
+	<INPUT type="<%=singleSelection?"RADIO":"CHECKBOX"%>" name="<%=prefix + "selected"%>" value="<%=f%>" <%=checked%>/>
 	</td>	
 <%
 	for (int c=0; c<model.getColumnCount(); c++) {
@@ -267,7 +282,7 @@ if (!tab.isLastPage()) {
 <% if (XavaPreferences.getInstance().isShowCountInList()) { %>
 <xava:message key="list_count" intParam="<%=totalSize%>"/>
 <% } %>
-(<xava:link action="List.hideRows"/>)
+(<xava:link action="List.hideRows" argv="<%=collectionArgv%>"/>)
 </td>
 </tr>
 </table>

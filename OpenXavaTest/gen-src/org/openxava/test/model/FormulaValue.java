@@ -14,10 +14,10 @@ public class FormulaValue
 
    private static final long serialVersionUID = 1L;
 
-   private java.lang.String oid;
-   private boolean oidHasBeenSet = false;
    private java.lang.String recipe;
    private boolean recipeHasBeenSet = false;
+   private java.lang.String oid;
+   private boolean oidHasBeenSet = false;
    private java.lang.String name;
    private boolean nameHasBeenSet = false;
 
@@ -28,28 +28,14 @@ public class FormulaValue
    //TODO Cloneable is better than this !
    public FormulaValue( FormulaValue otherValue )
    {
-	  this.oid = otherValue.oid;
-	  oidHasBeenSet = true;
 	  this.recipe = otherValue.recipe;
 	  recipeHasBeenSet = true;
+	  this.oid = otherValue.oid;
+	  oidHasBeenSet = true;
 	  this.name = otherValue.name;
 	  nameHasBeenSet = true;
    }
 
-   public java.lang.String getOid()
-   {
-	  return this.oid;
-   }
-
-   public void setOid( java.lang.String oid )
-   {
-	  this.oid = oid;
-	  oidHasBeenSet = true;
-   }
-
-   public boolean oidHasBeenSet(){
-	  return oidHasBeenSet;
-   }
    public java.lang.String getRecipe()
    {
 	  return this.recipe;
@@ -63,6 +49,20 @@ public class FormulaValue
 
    public boolean recipeHasBeenSet(){
 	  return recipeHasBeenSet;
+   }
+   public java.lang.String getOid()
+   {
+	  return this.oid;
+   }
+
+   public void setOid( java.lang.String oid )
+   {
+	  this.oid = oid;
+	  oidHasBeenSet = true;
+   }
+
+   public boolean oidHasBeenSet(){
+	  return oidHasBeenSet;
    }
    public java.lang.String getName()
    {
@@ -83,7 +83,7 @@ public class FormulaValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("oid=" + getOid() + " " + "recipe=" + getRecipe() + " " + "name=" + getName());
+	  str.append("recipe=" + getRecipe() + " " + "oid=" + getOid() + " " + "name=" + getName());
 	  str.append('}');
 
 	  return(str.toString());
@@ -163,9 +163,9 @@ public class FormulaValue
 
    public int hashCode(){
 	  int result = 17;
-      result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
-
       result = 37*result + ((this.recipe != null) ? this.recipe.hashCode() : 0);
+
+      result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
 
       result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);
 

@@ -18,18 +18,18 @@ public abstract class InvoiceDetailCMP
       {
          dataHolder = new org.openxava.test.model.InvoiceDetailData();
 
-         dataHolder.set_UnitPrice( get_UnitPrice() );
          dataHolder.setOid( getOid() );
          dataHolder.set_Remarks( get_Remarks() );
          dataHolder.setDeliveryDate_day( getDeliveryDate_day() );
          dataHolder.setDeliveryDate_month( getDeliveryDate_month() );
          dataHolder.setDeliveryDate_year( getDeliveryDate_year() );
+         dataHolder.set_UnitPrice( get_UnitPrice() );
          dataHolder.set_Quantity( get_Quantity() );
          dataHolder.set_ServiceType( get_ServiceType() );
          dataHolder.set_Product_number( get_Product_number() );
-         dataHolder.set_SoldBy_number( get_SoldBy_number() );
          dataHolder.set_Invoice_year( get_Invoice_year() );
          dataHolder.set_Invoice_number( get_Invoice_number() );
+         dataHolder.set_SoldBy_number( get_SoldBy_number() );
 
       }
       catch (RuntimeException e)
@@ -44,17 +44,17 @@ public abstract class InvoiceDetailCMP
    {
       try
       {
-         set_UnitPrice( dataHolder.get_UnitPrice() );
          set_Remarks( dataHolder.get_Remarks() );
          setDeliveryDate_day( dataHolder.getDeliveryDate_day() );
          setDeliveryDate_month( dataHolder.getDeliveryDate_month() );
          setDeliveryDate_year( dataHolder.getDeliveryDate_year() );
+         set_UnitPrice( dataHolder.get_UnitPrice() );
          set_Quantity( dataHolder.get_Quantity() );
          set_ServiceType( dataHolder.get_ServiceType() );
          set_Product_number( dataHolder.get_Product_number() );
-         set_SoldBy_number( dataHolder.get_SoldBy_number() );
          set_Invoice_year( dataHolder.get_Invoice_year() );
          set_Invoice_number( dataHolder.get_Invoice_number() );
+         set_SoldBy_number( dataHolder.get_SoldBy_number() );
 
       }
       catch (Exception e)
@@ -109,16 +109,16 @@ public abstract class InvoiceDetailCMP
       try
          {
             InvoiceDetailValue.setAmount( getAmount() );
-            InvoiceDetailValue.setUnitPrice( getUnitPrice() );
             InvoiceDetailValue.setOid( getOid() );
             InvoiceDetailValue.setRemarks( getRemarks() );
             InvoiceDetailValue.setDeliveryDate( getDeliveryDate() );
+            InvoiceDetailValue.setUnitPrice( getUnitPrice() );
             InvoiceDetailValue.setQuantity( getQuantity() );
             InvoiceDetailValue.setServiceType( getServiceType() );
             InvoiceDetailValue.setProduct_number( getProduct_number() );
-            InvoiceDetailValue.setSoldBy_number( getSoldBy_number() );
             InvoiceDetailValue.setInvoice_year( getInvoice_year() );
             InvoiceDetailValue.setInvoice_number( getInvoice_number() );
+            InvoiceDetailValue.setSoldBy_number( getSoldBy_number() );
 
          }
          catch (Exception e)
@@ -135,15 +135,15 @@ public abstract class InvoiceDetailCMP
 	  try
 	  {
 		 setAmount( valueHolder.getAmount() );
-		 setUnitPrice( valueHolder.getUnitPrice() );
 		 setRemarks( valueHolder.getRemarks() );
 		 setDeliveryDate( valueHolder.getDeliveryDate() );
+		 setUnitPrice( valueHolder.getUnitPrice() );
 		 setQuantity( valueHolder.getQuantity() );
 		 setServiceType( valueHolder.getServiceType() );
 		 setProduct_number( valueHolder.getProduct_number() );
-		 setSoldBy_number( valueHolder.getSoldBy_number() );
 		 setInvoice_year( valueHolder.getInvoice_year() );
 		 setInvoice_number( valueHolder.getInvoice_number() );
+		 setSoldBy_number( valueHolder.getSoldBy_number() );
 
 	  }
 	  catch (Exception e)
@@ -153,10 +153,6 @@ public abstract class InvoiceDetailCMP
    }
 
 /* Value Objects END */
-
-   public abstract java.math.BigDecimal get_UnitPrice() ;
-
-   public abstract void set_UnitPrice( java.math.BigDecimal _UnitPrice ) ;
 
    public abstract java.lang.String getOid() ;
 
@@ -178,6 +174,10 @@ public abstract class InvoiceDetailCMP
 
    public abstract void setDeliveryDate_year( int deliveryDate_year ) ;
 
+   public abstract java.math.BigDecimal get_UnitPrice() ;
+
+   public abstract void set_UnitPrice( java.math.BigDecimal _UnitPrice ) ;
+
    public abstract java.lang.Integer get_Quantity() ;
 
    public abstract void set_Quantity( java.lang.Integer _Quantity ) ;
@@ -190,10 +190,6 @@ public abstract class InvoiceDetailCMP
 
    public abstract void set_Product_number( long _Product_number ) ;
 
-   public abstract int get_SoldBy_number() ;
-
-   public abstract void set_SoldBy_number( int _SoldBy_number ) ;
-
    public abstract int get_Invoice_year() ;
 
    public abstract void set_Invoice_year( int _Invoice_year ) ;
@@ -201,5 +197,9 @@ public abstract class InvoiceDetailCMP
    public abstract int get_Invoice_number() ;
 
    public abstract void set_Invoice_number( int _Invoice_number ) ;
+
+   public abstract int get_SoldBy_number() ;
+
+   public abstract void set_SoldBy_number( int _SoldBy_number ) ;
 
 }

@@ -1,24 +1,14 @@
 package org.openxava.actions;
 
+/**
+ * 
+ * @author Javier Paniza
+ */
 
-
-import org.openxava.tab.*;
-
-public class FilterAction extends BaseAction {
-	
-	private Tab tab;
-	
+public class FilterAction extends TabBaseAction {
 	
 	public void execute() throws Exception {
 		getTab().setRowsHidden(false);
-	}
-
-	public Tab getTab() {
-		return tab;
-	}
-
-	public void setTab(Tab tab) {
-		this.tab = tab;
 	}
 
 }

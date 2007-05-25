@@ -20,6 +20,74 @@ public class SellersTest extends ModuleTestBase {
 		super(testName, "Sellers");		
 	}
 	
+	public void testListFeaturesInCollection() throws Exception {
+		// The correct elements
+		execute("List.viewDetail", "row=1");
+		assertValue("number", "2");
+		assertValue("name", "JUANVI LLAVADOR");
+		assertCollectionRowCount("customers", 0);		
+		execute("Navigation.previous");
+		assertValue("number", "1");
+		assertValue("name", "MANUEL CHAVARRI");
+		assertCollectionRowCount("customers", 2);
+		
+		// The properties in list
+		assertLabelInCollection("customers", 0, "Number");
+		assertLabelInCollection("customers", 1, "Name");
+		assertLabelInCollection("customers", 2, "Remarks");
+		assertLabelInCollection("customers", 3, "Relation with seller");
+		assertLabelInCollection("customers", 4, "Seller level");
+		
+		// The values in collection
+		assertValueInCollection("customers", 0, "number", "1");
+		assertValueInCollection("customers", 0, "name", "Javi");
+		assertValueInCollection("customers", 0, "remarks", "");
+		assertValueInCollection("customers", 0, "relationWithSeller", "BUENA");
+		assertValueInCollection("customers", 0, "seller.level.description", "MANAGER");
+		
+		assertValueInCollection("customers", 1, "number", "2");
+		assertValueInCollection("customers", 1, "name", "Juanillo");
+		assertValueInCollection("customers", 1, "remarks", "");
+		assertValueInCollection("customers", 1, "relationWithSeller", "");
+		assertValueInCollection("customers", 1, "seller.level.description", "MANAGER");
+		
+		// Order by column, tmp en news-for-programmers
+		execute("List.orderBy", "property=number,collection=customers");
+		assertValueInCollection("customers", 0, "number", "1");
+		assertValueInCollection("customers", 1, "number", "2");
+		execute("List.orderBy", "property=number,collection=customers");
+		assertValueInCollection("customers", 0, "number", "2");
+		assertValueInCollection("customers", 1, "number", "1");
+		
+		// Hide rows
+		assertCollectionRowCount("customers", 2);
+		execute("List.hideRows", "collection=customers");
+		assertCollectionRowCount("customers", 0);
+		
+		// Filter tmp en news-for-programmers
+		String [] condition = { "1" };
+		setConditionValues("customers", condition);
+		execute("List.filter", "collection=customers"); 
+		assertCollectionRowCount("customers", 1);
+		assertValueInCollection("customers", 0, "number", "1");
+		assertValueInCollection("customers", 0, "name", "Javi");
+		
+		// Hide/Show rows
+		execute("List.hideRows", "collection=customers");
+		assertCollectionRowCount("customers", 0);
+		execute("List.showRows", "collection=customers");
+		assertCollectionRowCount("customers", 1);
+		
+		// tmp Faltan cosas
+		//  1. Paginación
+		//  2. Revisar todas las acciones de "List"
+		//  3. Icono para editar/ver
+	}
+	
+	public void testCustomizeCollection() throws Exception { // tmp
+		// tmp fail("Falta hacer");
+	}
+	
 	public void testMembersOfReferenceToEntityNotEditable() throws Exception {
 		execute("Mode.detailAndFirst");
 		execute("Collection.edit", "row=0,viewObject=xava_view_customers");

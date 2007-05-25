@@ -14,12 +14,12 @@ public class StateValue
 
    private static final long serialVersionUID = 1L;
 
-   private java.lang.String fullName;
-   private boolean fullNameHasBeenSet = false;
-   private java.lang.String name;
-   private boolean nameHasBeenSet = false;
    private java.lang.String id;
    private boolean idHasBeenSet = false;
+   private java.lang.String name;
+   private boolean nameHasBeenSet = false;
+   private java.lang.String fullName;
+   private boolean fullNameHasBeenSet = false;
 
    public StateValue()
    {
@@ -28,27 +28,27 @@ public class StateValue
    //TODO Cloneable is better than this !
    public StateValue( StateValue otherValue )
    {
-	  this.fullName = otherValue.fullName;
-	  fullNameHasBeenSet = true;
+	  this.id = otherValue.id;
+	  idHasBeenSet = true;
 	  this.name = otherValue.name;
 	  nameHasBeenSet = true;
-	  this.id = otherValue.id;
+	  this.fullName = otherValue.fullName;
+	  fullNameHasBeenSet = true;
+   }
+
+   public java.lang.String getId()
+   {
+	  return this.id;
+   }
+
+   public void setId( java.lang.String id )
+   {
+	  this.id = id;
 	  idHasBeenSet = true;
    }
 
-   public java.lang.String getFullName()
-   {
-	  return this.fullName;
-   }
-
-   public void setFullName( java.lang.String fullName )
-   {
-	  this.fullName = fullName;
-	  fullNameHasBeenSet = true;
-   }
-
-   public boolean fullNameHasBeenSet(){
-	  return fullNameHasBeenSet;
+   public boolean idHasBeenSet(){
+	  return idHasBeenSet;
    }
    public java.lang.String getName()
    {
@@ -64,26 +64,26 @@ public class StateValue
    public boolean nameHasBeenSet(){
 	  return nameHasBeenSet;
    }
-   public java.lang.String getId()
+   public java.lang.String getFullName()
    {
-	  return this.id;
+	  return this.fullName;
    }
 
-   public void setId( java.lang.String id )
+   public void setFullName( java.lang.String fullName )
    {
-	  this.id = id;
-	  idHasBeenSet = true;
+	  this.fullName = fullName;
+	  fullNameHasBeenSet = true;
    }
 
-   public boolean idHasBeenSet(){
-	  return idHasBeenSet;
+   public boolean fullNameHasBeenSet(){
+	  return fullNameHasBeenSet;
    }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("fullName=" + getFullName() + " " + "name=" + getName() + " " + "id=" + getId());
+	  str.append("id=" + getId() + " " + "name=" + getName() + " " + "fullName=" + getFullName());
 	  str.append('}');
 
 	  return(str.toString());
@@ -136,14 +136,6 @@ public class StateValue
 	  {
 		 StateValue that = (StateValue) other;
 		 boolean lEquals = true;
-		 if( this.fullName == null )
-		 {
-			lEquals = lEquals && ( that.fullName == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.fullName.equals( that.fullName );
-		 }
 		 if( this.name == null )
 		 {
 			lEquals = lEquals && ( that.name == null );
@@ -151,6 +143,14 @@ public class StateValue
 		 else
 		 {
 			lEquals = lEquals && this.name.equals( that.name );
+		 }
+		 if( this.fullName == null )
+		 {
+			lEquals = lEquals && ( that.fullName == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.fullName.equals( that.fullName );
 		 }
 
 		 return lEquals;
@@ -163,11 +163,11 @@ public class StateValue
 
    public int hashCode(){
 	  int result = 17;
-      result = 37*result + ((this.fullName != null) ? this.fullName.hashCode() : 0);
+      result = 37*result + ((this.id != null) ? this.id.hashCode() : 0);
 
       result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);
 
-      result = 37*result + ((this.id != null) ? this.id.hashCode() : 0);
+      result = 37*result + ((this.fullName != null) ? this.fullName.hashCode() : 0);
 
 	  return result;
    }

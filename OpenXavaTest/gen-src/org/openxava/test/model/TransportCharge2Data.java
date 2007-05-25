@@ -15,8 +15,8 @@ public class TransportCharge2Data
    private java.math.BigDecimal _Amount;
    private int year;
    private int _Delivery_number;
-   private int _Delivery_type_number;
    private int _Delivery_invoice_number;
+   private int _Delivery_type_number;
 
    public TransportCharge2Data()
    {
@@ -27,13 +27,13 @@ public class TransportCharge2Data
       set_Amount(otherData.get_Amount());
       setYear(otherData.getYear());
       set_Delivery_number(otherData.get_Delivery_number());
-      set_Delivery_type_number(otherData.get_Delivery_type_number());
       set_Delivery_invoice_number(otherData.get_Delivery_invoice_number());
+      set_Delivery_type_number(otherData.get_Delivery_type_number());
 
    }
 
    public org.openxava.test.model.TransportCharge2Key getPrimaryKey() {
-     org.openxava.test.model.TransportCharge2Key pk = new org.openxava.test.model.TransportCharge2Key(this.getYear(),this.get_Delivery_number(),this.get_Delivery_type_number(),this.get_Delivery_invoice_number());
+     org.openxava.test.model.TransportCharge2Key pk = new org.openxava.test.model.TransportCharge2Key(this.getYear(),this.get_Delivery_number(),this.get_Delivery_invoice_number(),this.get_Delivery_type_number());
      return pk;
    }
 
@@ -64,15 +64,6 @@ public class TransportCharge2Data
       this._Delivery_number = _Delivery_number;
    }
 
-   public int get_Delivery_type_number()
-   {
-      return this._Delivery_type_number;
-   }
-   public void set_Delivery_type_number( int _Delivery_type_number )
-   {
-      this._Delivery_type_number = _Delivery_type_number;
-   }
-
    public int get_Delivery_invoice_number()
    {
       return this._Delivery_invoice_number;
@@ -82,11 +73,20 @@ public class TransportCharge2Data
       this._Delivery_invoice_number = _Delivery_invoice_number;
    }
 
+   public int get_Delivery_type_number()
+   {
+      return this._Delivery_type_number;
+   }
+   public void set_Delivery_type_number( int _Delivery_type_number )
+   {
+      this._Delivery_type_number = _Delivery_type_number;
+   }
+
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Amount=" + get_Amount() + " " + "year=" + getYear() + " " + "_Delivery_number=" + get_Delivery_number() + " " + "_Delivery_type_number=" + get_Delivery_type_number() + " " + "_Delivery_invoice_number=" + get_Delivery_invoice_number());
+      str.append("_Amount=" + get_Amount() + " " + "year=" + getYear() + " " + "_Delivery_number=" + get_Delivery_number() + " " + "_Delivery_invoice_number=" + get_Delivery_invoice_number() + " " + "_Delivery_type_number=" + get_Delivery_type_number());
       str.append('}');
 
       return(str.toString());
@@ -109,8 +109,8 @@ public class TransportCharge2Data
          }
          lEquals = lEquals && this.year == lTest.year;
          lEquals = lEquals && this._Delivery_number == lTest._Delivery_number;
-         lEquals = lEquals && this._Delivery_type_number == lTest._Delivery_type_number;
          lEquals = lEquals && this._Delivery_invoice_number == lTest._Delivery_invoice_number;
+         lEquals = lEquals && this._Delivery_type_number == lTest._Delivery_type_number;
 
          return lEquals;
       }
@@ -130,9 +130,9 @@ public class TransportCharge2Data
 
       result = 37*result + (int) _Delivery_number;
 
-      result = 37*result + (int) _Delivery_type_number;
-
       result = 37*result + (int) _Delivery_invoice_number;
+
+      result = 37*result + (int) _Delivery_type_number;
 
       return result;
    }

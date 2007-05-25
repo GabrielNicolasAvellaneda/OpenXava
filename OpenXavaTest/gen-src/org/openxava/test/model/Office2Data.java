@@ -14,8 +14,8 @@ public class Office2Data
    private static final long serialVersionUID = 1L;
    private java.lang.Integer _Receptionist;
    private java.lang.String _Name;
-   private int zoneNumber;
    private int number;
+   private int zoneNumber;
    private int _OfficeManager_number;
    private java.lang.Integer _DefaultCarrier_number;
    private java.lang.Integer _MainWarehouse_number;
@@ -28,8 +28,8 @@ public class Office2Data
    {
       set_Receptionist(otherData.get_Receptionist());
       set_Name(otherData.get_Name());
-      setZoneNumber(otherData.getZoneNumber());
       setNumber(otherData.getNumber());
+      setZoneNumber(otherData.getZoneNumber());
       set_OfficeManager_number(otherData.get_OfficeManager_number());
       set_DefaultCarrier_number(otherData.get_DefaultCarrier_number());
       set_MainWarehouse_number(otherData.get_MainWarehouse_number());
@@ -37,7 +37,7 @@ public class Office2Data
    }
 
    public org.openxava.test.model.Office2Key getPrimaryKey() {
-     org.openxava.test.model.Office2Key pk = new org.openxava.test.model.Office2Key(this.getZoneNumber(),this.getNumber(),this.get_MainWarehouse_number());
+     org.openxava.test.model.Office2Key pk = new org.openxava.test.model.Office2Key(this.getNumber(),this.getZoneNumber(),this.get_MainWarehouse_number());
      return pk;
    }
 
@@ -59,15 +59,6 @@ public class Office2Data
       this._Name = _Name;
    }
 
-   public int getZoneNumber()
-   {
-      return this.zoneNumber;
-   }
-   public void setZoneNumber( int zoneNumber )
-   {
-      this.zoneNumber = zoneNumber;
-   }
-
    public int getNumber()
    {
       return this.number;
@@ -75,6 +66,15 @@ public class Office2Data
    public void setNumber( int number )
    {
       this.number = number;
+   }
+
+   public int getZoneNumber()
+   {
+      return this.zoneNumber;
+   }
+   public void setZoneNumber( int zoneNumber )
+   {
+      this.zoneNumber = zoneNumber;
    }
 
    public int get_OfficeManager_number()
@@ -108,7 +108,7 @@ public class Office2Data
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Receptionist=" + get_Receptionist() + " " + "_Name=" + get_Name() + " " + "zoneNumber=" + getZoneNumber() + " " + "number=" + getNumber() + " " + "_OfficeManager_number=" + get_OfficeManager_number() + " " + "_DefaultCarrier_number=" + get_DefaultCarrier_number() + " " + "_MainWarehouse_number=" + get_MainWarehouse_number());
+      str.append("_Receptionist=" + get_Receptionist() + " " + "_Name=" + get_Name() + " " + "number=" + getNumber() + " " + "zoneNumber=" + getZoneNumber() + " " + "_OfficeManager_number=" + get_OfficeManager_number() + " " + "_DefaultCarrier_number=" + get_DefaultCarrier_number() + " " + "_MainWarehouse_number=" + get_MainWarehouse_number());
       str.append('}');
 
       return(str.toString());
@@ -137,8 +137,8 @@ public class Office2Data
          {
             lEquals = lEquals && this._Name.equals( lTest._Name );
          }
-         lEquals = lEquals && this.zoneNumber == lTest.zoneNumber;
          lEquals = lEquals && this.number == lTest.number;
+         lEquals = lEquals && this.zoneNumber == lTest.zoneNumber;
          lEquals = lEquals && this._OfficeManager_number == lTest._OfficeManager_number;
          if( this._DefaultCarrier_number == null )
          {
@@ -173,9 +173,9 @@ public class Office2Data
 
       result = 37*result + ((this._Name != null) ? this._Name.hashCode() : 0);
 
-      result = 37*result + (int) zoneNumber;
-
       result = 37*result + (int) number;
+
+      result = 37*result + (int) zoneNumber;
 
       result = 37*result + (int) _OfficeManager_number;
 

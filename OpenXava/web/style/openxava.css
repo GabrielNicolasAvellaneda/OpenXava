@@ -18,23 +18,23 @@ TH.list {
 	font-weight: normal; 
 }
 
-TR.list-odd {
+.list-odd {
 	font-weight: normal; 
 	background: #eeeeee;
 }
 
-TR.list-pair {
+.list-pair {
 	font-weight: normal;
 	background: #cccccc; 
 }
 
-TR.list-odd-selected {
+.list-odd-selected {
 	font-weight: bold;
 	color: #3366ff;
 	background: #eeeeee;
 }
 
-TR.list-pair-selected {
+.list-pair-selected {
 	font-weight: bold;
 	color: #3366ff;
 	background: #cccccc;

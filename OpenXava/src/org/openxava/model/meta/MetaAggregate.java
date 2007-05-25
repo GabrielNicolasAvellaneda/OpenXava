@@ -19,7 +19,7 @@ abstract public class MetaAggregate extends MetaModel {
 			throw new ElementNotFoundException("aggregate_need_qualified", name);
 		}
 		String component = name.substring(0, idx);
-		String aggregate = name.substring(idx + 1);
+		String aggregate = name.substring(name.lastIndexOf('.') + 1);
 		return MetaComponent.get(component).getMetaAggregate(aggregate);
 	}
 	

@@ -14,22 +14,22 @@ public class CarrierValue
 
    private static final long serialVersionUID = 1L;
 
-   private java.lang.String remarks;
-   private boolean remarksHasBeenSet = false;
-   private java.lang.String calculated;
-   private boolean calculatedHasBeenSet = false;
    private java.lang.String name;
    private boolean nameHasBeenSet = false;
+   private java.lang.String remarks;
+   private boolean remarksHasBeenSet = false;
    private int number;
    private boolean numberHasBeenSet = false;
-   private int warehouse_zoneNumber;
-   private boolean warehouse_zoneNumberHasBeenSet = false;
-   private java.lang.Integer warehouse_number;
-   private boolean warehouse_numberHasBeenSet = false;
+   private java.lang.String calculated;
+   private boolean calculatedHasBeenSet = false;
    private java.lang.String drivingLicence_type;
    private boolean drivingLicence_typeHasBeenSet = false;
    private int drivingLicence_level;
    private boolean drivingLicence_levelHasBeenSet = false;
+   private int warehouse_zoneNumber;
+   private boolean warehouse_zoneNumberHasBeenSet = false;
+   private java.lang.Integer warehouse_number;
+   private boolean warehouse_numberHasBeenSet = false;
 
    public CarrierValue()
    {
@@ -38,52 +38,24 @@ public class CarrierValue
    //TODO Cloneable is better than this !
    public CarrierValue( CarrierValue otherValue )
    {
-	  this.remarks = otherValue.remarks;
-	  remarksHasBeenSet = true;
-	  this.calculated = otherValue.calculated;
-	  calculatedHasBeenSet = true;
 	  this.name = otherValue.name;
 	  nameHasBeenSet = true;
+	  this.remarks = otherValue.remarks;
+	  remarksHasBeenSet = true;
 	  this.number = otherValue.number;
 	  numberHasBeenSet = true;
-	  this.warehouse_zoneNumber = otherValue.warehouse_zoneNumber;
-	  warehouse_zoneNumberHasBeenSet = true;
-	  this.warehouse_number = otherValue.warehouse_number;
-	  warehouse_numberHasBeenSet = true;
+	  this.calculated = otherValue.calculated;
+	  calculatedHasBeenSet = true;
 	  this.drivingLicence_type = otherValue.drivingLicence_type;
 	  drivingLicence_typeHasBeenSet = true;
 	  this.drivingLicence_level = otherValue.drivingLicence_level;
 	  drivingLicence_levelHasBeenSet = true;
+	  this.warehouse_zoneNumber = otherValue.warehouse_zoneNumber;
+	  warehouse_zoneNumberHasBeenSet = true;
+	  this.warehouse_number = otherValue.warehouse_number;
+	  warehouse_numberHasBeenSet = true;
    }
 
-   public java.lang.String getRemarks()
-   {
-	  return this.remarks;
-   }
-
-   public void setRemarks( java.lang.String remarks )
-   {
-	  this.remarks = remarks;
-	  remarksHasBeenSet = true;
-   }
-
-   public boolean remarksHasBeenSet(){
-	  return remarksHasBeenSet;
-   }
-   public java.lang.String getCalculated()
-   {
-	  return this.calculated;
-   }
-
-   public void setCalculated( java.lang.String calculated )
-   {
-	  this.calculated = calculated;
-	  calculatedHasBeenSet = true;
-   }
-
-   public boolean calculatedHasBeenSet(){
-	  return calculatedHasBeenSet;
-   }
    public java.lang.String getName()
    {
 	  return this.name;
@@ -97,6 +69,20 @@ public class CarrierValue
 
    public boolean nameHasBeenSet(){
 	  return nameHasBeenSet;
+   }
+   public java.lang.String getRemarks()
+   {
+	  return this.remarks;
+   }
+
+   public void setRemarks( java.lang.String remarks )
+   {
+	  this.remarks = remarks;
+	  remarksHasBeenSet = true;
+   }
+
+   public boolean remarksHasBeenSet(){
+	  return remarksHasBeenSet;
    }
    public int getNumber()
    {
@@ -112,33 +98,19 @@ public class CarrierValue
    public boolean numberHasBeenSet(){
 	  return numberHasBeenSet;
    }
-   public int getWarehouse_zoneNumber()
+   public java.lang.String getCalculated()
    {
-	  return this.warehouse_zoneNumber;
+	  return this.calculated;
    }
 
-   public void setWarehouse_zoneNumber( int warehouse_zoneNumber )
+   public void setCalculated( java.lang.String calculated )
    {
-	  this.warehouse_zoneNumber = warehouse_zoneNumber;
-	  warehouse_zoneNumberHasBeenSet = true;
+	  this.calculated = calculated;
+	  calculatedHasBeenSet = true;
    }
 
-   public boolean warehouse_zoneNumberHasBeenSet(){
-	  return warehouse_zoneNumberHasBeenSet;
-   }
-   public java.lang.Integer getWarehouse_number()
-   {
-	  return this.warehouse_number;
-   }
-
-   public void setWarehouse_number( java.lang.Integer warehouse_number )
-   {
-	  this.warehouse_number = warehouse_number;
-	  warehouse_numberHasBeenSet = true;
-   }
-
-   public boolean warehouse_numberHasBeenSet(){
-	  return warehouse_numberHasBeenSet;
+   public boolean calculatedHasBeenSet(){
+	  return calculatedHasBeenSet;
    }
    public java.lang.String getDrivingLicence_type()
    {
@@ -168,12 +140,40 @@ public class CarrierValue
    public boolean drivingLicence_levelHasBeenSet(){
 	  return drivingLicence_levelHasBeenSet;
    }
+   public int getWarehouse_zoneNumber()
+   {
+	  return this.warehouse_zoneNumber;
+   }
+
+   public void setWarehouse_zoneNumber( int warehouse_zoneNumber )
+   {
+	  this.warehouse_zoneNumber = warehouse_zoneNumber;
+	  warehouse_zoneNumberHasBeenSet = true;
+   }
+
+   public boolean warehouse_zoneNumberHasBeenSet(){
+	  return warehouse_zoneNumberHasBeenSet;
+   }
+   public java.lang.Integer getWarehouse_number()
+   {
+	  return this.warehouse_number;
+   }
+
+   public void setWarehouse_number( java.lang.Integer warehouse_number )
+   {
+	  this.warehouse_number = warehouse_number;
+	  warehouse_numberHasBeenSet = true;
+   }
+
+   public boolean warehouse_numberHasBeenSet(){
+	  return warehouse_numberHasBeenSet;
+   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("remarks=" + getRemarks() + " " + "calculated=" + getCalculated() + " " + "name=" + getName() + " " + "number=" + getNumber() + " " + "warehouse_zoneNumber=" + getWarehouse_zoneNumber() + " " + "warehouse_number=" + getWarehouse_number() + " " + "drivingLicence_type=" + getDrivingLicence_type() + " " + "drivingLicence_level=" + getDrivingLicence_level());
+	  str.append("name=" + getName() + " " + "remarks=" + getRemarks() + " " + "number=" + getNumber() + " " + "calculated=" + getCalculated() + " " + "drivingLicence_type=" + getDrivingLicence_type() + " " + "drivingLicence_level=" + getDrivingLicence_level() + " " + "warehouse_zoneNumber=" + getWarehouse_zoneNumber() + " " + "warehouse_number=" + getWarehouse_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -217,22 +217,6 @@ public class CarrierValue
 	  {
 		 CarrierValue that = (CarrierValue) other;
 		 boolean lEquals = true;
-		 if( this.remarks == null )
-		 {
-			lEquals = lEquals && ( that.remarks == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.remarks.equals( that.remarks );
-		 }
-		 if( this.calculated == null )
-		 {
-			lEquals = lEquals && ( that.calculated == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.calculated.equals( that.calculated );
-		 }
 		 if( this.name == null )
 		 {
 			lEquals = lEquals && ( that.name == null );
@@ -241,15 +225,22 @@ public class CarrierValue
 		 {
 			lEquals = lEquals && this.name.equals( that.name );
 		 }
-		 lEquals = lEquals && this.number == that.number;
-		 lEquals = lEquals && this.warehouse_zoneNumber == that.warehouse_zoneNumber;
-		 if( this.warehouse_number == null )
+		 if( this.remarks == null )
 		 {
-			lEquals = lEquals && ( that.warehouse_number == null );
+			lEquals = lEquals && ( that.remarks == null );
 		 }
 		 else
 		 {
-			lEquals = lEquals && this.warehouse_number.equals( that.warehouse_number );
+			lEquals = lEquals && this.remarks.equals( that.remarks );
+		 }
+		 lEquals = lEquals && this.number == that.number;
+		 if( this.calculated == null )
+		 {
+			lEquals = lEquals && ( that.calculated == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.calculated.equals( that.calculated );
 		 }
 		 if( this.drivingLicence_type == null )
 		 {
@@ -260,6 +251,15 @@ public class CarrierValue
 			lEquals = lEquals && this.drivingLicence_type.equals( that.drivingLicence_type );
 		 }
 		 lEquals = lEquals && this.drivingLicence_level == that.drivingLicence_level;
+		 lEquals = lEquals && this.warehouse_zoneNumber == that.warehouse_zoneNumber;
+		 if( this.warehouse_number == null )
+		 {
+			lEquals = lEquals && ( that.warehouse_number == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.warehouse_number.equals( that.warehouse_number );
+		 }
 
 		 return lEquals;
 	  }
@@ -271,21 +271,21 @@ public class CarrierValue
 
    public int hashCode(){
 	  int result = 17;
-      result = 37*result + ((this.remarks != null) ? this.remarks.hashCode() : 0);
-
-      result = 37*result + ((this.calculated != null) ? this.calculated.hashCode() : 0);
-
       result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);
+
+      result = 37*result + ((this.remarks != null) ? this.remarks.hashCode() : 0);
 
       result = 37*result + (int) number;
 
-      result = 37*result + (int) warehouse_zoneNumber;
-
-      result = 37*result + ((this.warehouse_number != null) ? this.warehouse_number.hashCode() : 0);
+      result = 37*result + ((this.calculated != null) ? this.calculated.hashCode() : 0);
 
       result = 37*result + ((this.drivingLicence_type != null) ? this.drivingLicence_type.hashCode() : 0);
 
       result = 37*result + (int) drivingLicence_level;
+
+      result = 37*result + (int) warehouse_zoneNumber;
+
+      result = 37*result + ((this.warehouse_number != null) ? this.warehouse_number.hashCode() : 0);
 
 	  return result;
    }

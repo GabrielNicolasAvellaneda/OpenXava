@@ -33,7 +33,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		super(testName, "Deliveries");		
 	}
 	
-	public void testMinimunInCollection_checkboxNotInCollectionWhenNotEditable_overrideCollectionActions() throws Exception {
+	public void testMinimunInCollection_overrideCollectionActions() throws Exception {
 		// minimunCollection
 		execute("CRUD.new");
 		setValue("invoice.year", "2004");
@@ -76,9 +76,11 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertNoErrors();
 		
 		// checkboxNotInCollectionWhenNotEditable, this test only work in a HTML UI
+		/* Since v2.1.4 the check box is always present in all collections (because is implemented uses a Tab)
 		assertTrue("Check box must be present", getHtml().indexOf("xava.Delivery.details.__SELECTED__") >= 0);
 		execute("EditableOnOff.setOff");
 		assertTrue("Check box must not be present", getHtml().indexOf("xava.Delivery.details.__SELECTED__") < 0);
+		*/
 	}
 	
 	public void testFocusWhenSectionsAndGroupsInHeader() throws Exception {
@@ -207,7 +209,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertNoErrors();
 	}
 	
-	public void testReferenceAsDescriptionsListWithValidValuesInKey_validateViewPropertiesOnModify() throws Exception {
+	public void testReferenceAsDescriptionsListWithValidValuesInKey_validateViewPropertiesOnModify() throws Exception { 
 		execute("Mode.detailAndFirst");
 		assertValue("shipment.KEY", "");
 		IShipment shipment = (IShipment) Shipment.findAll().iterator().next();
@@ -856,7 +858,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertValidValues("distance", distanceValues);
 	}
 	
-	public void testViewPropertyInSectionDefaultCalcultarAndValidators() throws Exception {
+	public void testViewPropertyInSectionDefaultCalcultarAndValidators() throws Exception { 
 		execute("CRUD.new");
 		execute("Sections.change", "activeSection=0");
 		assertExists("advice");

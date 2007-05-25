@@ -21,7 +21,7 @@ public interface DeliveryHome
    public org.openxava.test.model.DeliveryRemote create(org.openxava.test.model.DeliveryValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
-   public java.util.Collection findByType(int number)
+   public java.util.Collection findByInvoice(int year, int number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
    public java.util.Collection findByShipment(java.lang.String type, int mode, int number)
@@ -30,7 +30,7 @@ public interface DeliveryHome
    public java.util.Collection findByCarrier(java.lang.Integer number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
-   public java.util.Collection findByInvoice(int year, int number)
+   public java.util.Collection findByType(int number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
    public java.util.Collection findAll()

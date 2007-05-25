@@ -18,13 +18,13 @@ public abstract class ClerkCMP
       {
          dataHolder = new org.openxava.test.model.ClerkData();
 
-         dataHolder.set_Comments( get_Comments() );
-         dataHolder.set_EndingTime( get_EndingTime() );
          dataHolder.set_ArrivalTime( get_ArrivalTime() );
+         dataHolder.set_EndingTime( get_EndingTime() );
          dataHolder.set_Name( get_Name() );
          dataHolder.setOfficeNumber( getOfficeNumber() );
          dataHolder.setNumber( getNumber() );
          dataHolder.setZoneNumber( getZoneNumber() );
+         dataHolder.set_Comments( get_Comments() );
 
       }
       catch (RuntimeException e)
@@ -39,10 +39,10 @@ public abstract class ClerkCMP
    {
       try
       {
-         set_Comments( dataHolder.get_Comments() );
-         set_EndingTime( dataHolder.get_EndingTime() );
          set_ArrivalTime( dataHolder.get_ArrivalTime() );
+         set_EndingTime( dataHolder.get_EndingTime() );
          set_Name( dataHolder.get_Name() );
+         set_Comments( dataHolder.get_Comments() );
 
       }
       catch (Exception e)
@@ -96,13 +96,13 @@ public abstract class ClerkCMP
       ClerkValue = new org.openxava.test.model.ClerkValue();
       try
          {
-            ClerkValue.setComments( getComments() );
-            ClerkValue.setEndingTime( getEndingTime() );
             ClerkValue.setArrivalTime( getArrivalTime() );
+            ClerkValue.setEndingTime( getEndingTime() );
             ClerkValue.setName( getName() );
             ClerkValue.setOfficeNumber( getOfficeNumber() );
             ClerkValue.setNumber( getNumber() );
             ClerkValue.setZoneNumber( getZoneNumber() );
+            ClerkValue.setComments( getComments() );
 
          }
          catch (Exception e)
@@ -118,10 +118,10 @@ public abstract class ClerkCMP
 
 	  try
 	  {
-		 setComments( valueHolder.getComments() );
-		 setEndingTime( valueHolder.getEndingTime() );
 		 setArrivalTime( valueHolder.getArrivalTime() );
+		 setEndingTime( valueHolder.getEndingTime() );
 		 setName( valueHolder.getName() );
+		 setComments( valueHolder.getComments() );
 
 	  }
 	  catch (Exception e)
@@ -132,17 +132,13 @@ public abstract class ClerkCMP
 
 /* Value Objects END */
 
-   public abstract byte[] get_Comments() ;
+   public abstract java.sql.Time get_ArrivalTime() ;
 
-   public abstract void set_Comments( byte[] _Comments ) ;
+   public abstract void set_ArrivalTime( java.sql.Time _ArrivalTime ) ;
 
    public abstract java.lang.String get_EndingTime() ;
 
    public abstract void set_EndingTime( java.lang.String _EndingTime ) ;
-
-   public abstract java.sql.Time get_ArrivalTime() ;
-
-   public abstract void set_ArrivalTime( java.sql.Time _ArrivalTime ) ;
 
    public abstract java.lang.String get_Name() ;
 
@@ -159,5 +155,9 @@ public abstract class ClerkCMP
    public abstract int getZoneNumber() ;
 
    public abstract void setZoneNumber( int zoneNumber ) ;
+
+   public abstract byte[] get_Comments() ;
+
+   public abstract void set_Comments( byte[] _Comments ) ;
 
 }

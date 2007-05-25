@@ -18,8 +18,8 @@ public abstract class FormulaCMP
       {
          dataHolder = new org.openxava.test.model.FormulaData();
 
-         dataHolder.setOid( getOid() );
          dataHolder.set_Recipe( get_Recipe() );
+         dataHolder.setOid( getOid() );
          dataHolder.set_Name( get_Name() );
 
       }
@@ -90,8 +90,8 @@ public abstract class FormulaCMP
       FormulaValue = new org.openxava.test.model.FormulaValue();
       try
          {
-            FormulaValue.setOid( getOid() );
             FormulaValue.setRecipe( getRecipe() );
+            FormulaValue.setOid( getOid() );
             FormulaValue.setName( getName() );
 
          }
@@ -120,13 +120,13 @@ public abstract class FormulaCMP
 
 /* Value Objects END */
 
-   public abstract java.lang.String getOid() ;
-
-   public abstract void setOid( java.lang.String oid ) ;
-
    public abstract java.lang.String get_Recipe() ;
 
    public abstract void set_Recipe( java.lang.String _Recipe ) ;
+
+   public abstract java.lang.String getOid() ;
+
+   public abstract void setOid( java.lang.String oid ) ;
 
    public abstract java.lang.String get_Name() ;
 

@@ -31,6 +31,7 @@ public class MetaCollectionView implements Serializable {
 	private boolean createReference = true;
 	private boolean modifyReference = true; 
 	private boolean asAggregate = false;
+	private String propertiesListNamesAsString; 
 	
 	
 	
@@ -75,9 +76,14 @@ public class MetaCollectionView implements Serializable {
 	public List getPropertiesListNames() {
 		return propertiesListNames == null?Collections.EMPTY_LIST:propertiesListNames;
 	}
+	
+	public String getPropertiesListNamesAsString() { 
+		return propertiesListNamesAsString;
+	}
 
 	public void setPropertiesList(String listProperties) {				 		
 		if (!Is.emptyString(listProperties)) {
+			propertiesListNamesAsString = listProperties;
 			propertiesListNames = new ArrayList();
 			StringTokenizer st = new StringTokenizer(listProperties, ",;");
 			while (st.hasMoreTokens()) {

@@ -306,8 +306,19 @@ public class CarriersTest extends ModuleTestBase {
 		assertValue("name", "UNO");
 		assertCollectionRowCount("fellowCarriersCalculated", 3);
 		assertValueInCollection("fellowCarriersCalculated", 0, "number", "2");
+		assertValueInCollection("fellowCarriersCalculated", 0, "name", "DOS");
 		assertValueInCollection("fellowCarriersCalculated", 1, "number", "3");
+		assertValueInCollection("fellowCarriersCalculated", 1, "name", "TRES");
 		assertValueInCollection("fellowCarriersCalculated", 2, "number", "4");
+		assertValueInCollection("fellowCarriersCalculated", 2, "name", "CUATRO");
+		
+		checkRowCollection("fellowCarriersCalculated", 1);
+		checkRowCollection("fellowCarriersCalculated", 2);
+		execute("Carriers.translateName", "viewObject=xava_view_fellowCarriersCalculated");
+		assertNoErrors();
+		assertValueInCollection("fellowCarriersCalculated", 0, "name", "DOS");
+		assertValueInCollection("fellowCarriersCalculated", 1, "name", "THREE");
+		assertValueInCollection("fellowCarriersCalculated", 2, "name", "FOUR");		
 	}
 	
 	
@@ -335,13 +346,21 @@ public class CarriersTest extends ModuleTestBase {
 		assertValueInCollection("fellowCarriers", 1, "name", "THREE");
 		assertValueInCollection("fellowCarriers", 2, "name", "FOUR");
 		
-		// Testing add/remove properties programatically
+		// Testing add/remove list actions programatically
 		assertAction("Carriers.allToEnglish");
 		assertNoAction("Carriers.todosAEspanol");		
 		execute("Carriers.allToEnglish", "viewObject=xava_view_fellowCarriers");
 		assertNoAction("Carriers.allToEnglish");
-		assertAction("Carriers.todosAEspanol");		
+		assertAction("Carriers.todosAEspanol");
 		
+		// After ordering
+		assertValueInCollection("fellowCarriers", 0, "name", "TWO");
+		execute("List.orderBy", "property=number,collection=fellowCarriers"); // Ascending
+		execute("List.orderBy", "property=number,collection=fellowCarriers"); // Descending
+		assertValueInCollection("fellowCarriers", 0, "name", "FOUR");
+		checkRowCollection("fellowCarriers", 0);
+		execute("Carriers.translateName", "viewObject=xava_view_fellowCarriers");
+		assertValueInCollection("fellowCarriers", 0, "name", "CUATRO");
 	}
 	
 	private void assertCarriersCount(int c) throws Exception {

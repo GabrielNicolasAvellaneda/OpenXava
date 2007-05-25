@@ -27,16 +27,16 @@ public interface FormulaIngredientHome
    public org.openxava.test.model.FormulaIngredientRemote create(org.openxava.test.model.FormulaKey containerKey , int counter , org.openxava.test.model.FormulaIngredientValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
-   public java.util.Collection findByIngredient(java.lang.String oid)
-      throws javax.ejb.FinderException,java.rmi.RemoteException;
-
    public java.util.Collection findByAccentuate(java.lang.String oid)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
-   public java.util.Collection findByAnotherFormula(java.lang.String oid)
+   public java.util.Collection findByIngredient(java.lang.String oid)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
    public java.util.Collection findByFormula(java.lang.String oid)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
+   public java.util.Collection findByAnotherFormula(java.lang.String oid)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
    public org.openxava.test.model.FormulaIngredientRemote findByPrimaryKey(org.openxava.test.model.FormulaIngredientKey pk)
