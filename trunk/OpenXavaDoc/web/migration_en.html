@@ -1,3 +1,53 @@
+<h2>Migration from OpenXava 2.1.3 to OpenXava 2.1.4</h2>
+<h4>New actions in collections (for junit tests)</h4>
+The collections have some new actions available for the users,
+therefore if you test for all presents actions in your junit tests, you
+need to modify it in order to take in account the new actions.<br>
+That is, if you have something as this in your junit test code:<br>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; String [] actions = {</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Navigation.previous",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Navigation.first",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Navigation.next",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "CRUD.new",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "CRUD.save",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "CRUD.delete",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "CRUD.search",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Collection.new",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Collection.removeSelected"</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; };&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; assertActions(actions);</pre>
+you must change it by:<br>
+<pre>	String [] actions = {</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Navigation.previous",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Navigation.first",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Navigation.next",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "CRUD.new",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "CRUD.save",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "CRUD.delete",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "CRUD.search",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Collection.new",</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Collection.removeSelected",</pre>
+<pre style="font-weight: bold; color: rgb(51, 102, 255);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "List.filter", </pre>
+<pre style="font-weight: bold; color: rgb(51, 102, 255);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "List.orderBy", </pre>
+<pre style="font-weight: bold; color: rgb(51, 102, 255);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "List.customize", </pre>
+<pre style="font-weight: bold; color: rgb(51, 102, 255);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "List.hideRows"</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; };&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; assertActions(actions);</pre>
+<h4>Ant target generarPortlets removed</h4>
+The ant target <span style="font-family: monospace;">generarPorltets</span>
+has been removed from OpenXava/build.xml because now it's exactly equal
+to <span style="font-family: monospace;">generatePortlets</span>.
+Therefore, if you have in your build.xml something like this:<br>
+<pre>&lt;target name="generarPortlets"&gt; </pre>
+<pre>    &lt;ant antfile="../OpenXava/build.xml" target="<span
+ style="color: rgb(51, 102, 255); font-weight: bold;">generarPortlets</span>"/&gt;</pre>
+<pre>&lt;/target&gt;</pre>
+Must change it by:<br>
+<pre>&lt;target name="generarPortlets"&gt; </pre>
+<pre><br>    &lt;ant antfile="../OpenXava/build.xml" target="<span
+ style="color: rgb(51, 102, 255); font-weight: bold;">generatePortlets</span>"/&gt;</pre>
+<pre>&lt;/target&gt;</pre>
+<br>
 <h2>Migration from OpenXava 2.1 to OpenXava 2.1.3</h2>
 <h4>JUnit test and key without value parsed as zero</h4>
 Since 2.1.3 if a key property of type int, long or short has no value
