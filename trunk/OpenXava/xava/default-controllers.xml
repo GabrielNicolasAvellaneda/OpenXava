@@ -14,7 +14,8 @@ here that you want to override.
 
 	<env-var name="XAVA_SEARCH_ACTION" value="CRUD.searchByViewKey"/>	<env-var name="XAVA_LIST_ACTION" value="List.viewDetail"/>		<object name="xava_view" class="org.openxava.view.View"/>		<object name="xava_referenceSubview" class="org.openxava.view.View"/>	
 	<object name="xava_tab" class="org.openxava.tab.Tab"/>		
-	<object name="xava_mainTab" class="org.openxava.tab.Tab"/>			<object name="xava_row" class="java.lang.Integer" value="0"/>
+	<object name="xava_mainTab" class="org.openxava.tab.Tab"/>		
+	<object name="xava_customizingTab" class="org.openxava.tab.Tab"/>	<object name="xava_row" class="java.lang.Integer" value="0"/>
 	<object name="xava_language" class="org.openxava.session.Language"/>		<object name="xava_newImageProperty" class="java.lang.String"/>	<object name="xava_currentReferenceLabel" class="java.lang.String"/>	<object name="xava_previousControllers" class="java.util.Stack"/>
 	<object name="xava_previousViews" class="java.util.Stack"/>
 	<object name="xava_previousCustomViews" class="java.util.Stack"/>
@@ -22,7 +23,6 @@ here that you want to override.
 	<object name="xava_defaultSchema" class="java.lang.String"/>
 						<controller name="Typical">		<extends controller="Print"/>				<extends controller="CRUD"/>	</controller>				<controller name="Void"/>	
 		<controller name="CRUD">							<action  name="new" 			class="org.openxava.actions.NewAction"			image="images/new.gif"			keystroke="Control N">			<use-object name="xava_view"/>					</action>									<action name="save" mode="detail"			class="org.openxava.actions.SaveAction"			image="images/save.gif"			keystroke="Control S">						<use-object name="xava_view"/>		</action>				<action name="delete" mode="detail" confirm="true"			class="org.openxava.actions.DeleteAction"			image="images/delete.gif"			keystroke="Control D">			<use-object name="xava_view"/>
-			<use-object name="xava_tab"/>
 			<use-object name="xava_row"/>								</action>				<action name="search" mode="detail"			by-default="if-possible"						class="org.openxava.actions.SearchAction"			image="images/find.gif"			keystroke="control B">											</action>				<action name="searchByViewKey" hidden="true"			by-default="if-possible"						class="org.openxava.actions.SearchByViewKeyAction">			<use-object name="xava_view"/>		</action>		
 		
 		<action name="searchExecutingOnChange" hidden="true"
@@ -36,112 +36,85 @@ here that you want to override.
 			class="org.openxava.actions.SearchReadOnlyAction">
 			<use-object name="xava_view"/>
 		</action>		
-												<action name="deleteSelected" mode="list" confirm="true"			class="org.openxava.actions.DeleteSelectedAction"			keystroke="Control D">			<use-object name="xava_tab"/>		</action>										</controller>		<controller name="Print">										<action name="generatePdf" mode="list"			class="org.openxava.actions.GenerateReportAction"			image="images/pdf.gif"			keystroke="Control Alt P">			<set property="type" value="pdf"/>			<use-object name="xava_tab"/>					</action>
+								<action name="deleteSelected" mode="list" confirm="true"			class="org.openxava.actions.DeleteSelectedAction"			keystroke="Control D">		</action>										</controller>		<controller name="Print">										<action name="generatePdf" mode="list"			class="org.openxava.actions.GenerateReportAction"			image="images/pdf.gif"			keystroke="Control Alt P">			<set property="type" value="pdf"/>		</action>
 
-		<action name="generateExcel" mode="list"			class="org.openxava.actions.GenerateReportAction"			image="images/excel.gif"			keystroke="Control Alt X">			<set property="type" value="csv"/>			<use-object name="xava_tab"/>					</action>
+		<action name="generateExcel" mode="list"			class="org.openxava.actions.GenerateReportAction"			image="images/excel.gif"			keystroke="Control Alt X">			<set property="type" value="csv"/>			</action>
 							</controller>		<controller name="Mode">		<action name="detailAndFirst"			class="org.openxava.actions.GoDetailAction"			keystroke="F8">			<set property="nextAction" value="Navigation.first"/>			<use-object name="xava_tab"/>		</action>		<action name="list"			class="org.openxava.actions.GoListAction"			keystroke="F9">			<use-object name="xava_view"/>			<use-object name="xava_tab"/>
 			<use-object name="xava_mainTab"/>
 			<use-object name="xava_previousViews"/>		</action>		<action name="detail"			hidden="true"			class="org.openxava.actions.GoDetailAction">			<use-object name="xava_tab"/>		</action>	</controller>		<controller name="List">		
+	
 		<action name="init" on-init="true"
 			class="org.openxava.actions.InitListAction"
 			hidden="true">
-			<use-object name="xava_tab"/>
 			<use-object name="xava_mainTab"/>
-		</action>									<action name="viewDetail"			class="org.openxava.actions.ViewDetailAction"			keystroke="F7"			hidden="true"
+		</action>	
+				<action name="viewDetail"			class="org.openxava.actions.ViewDetailAction"			keystroke="F7"			hidden="true"
 			mode="list"
-			image="images/edit.gif">			<set property="nextAction" value="Mode.detail"/>			<use-object name="xava_tab"/>			<use-object name="xava_view"/>			<use-object name="xava_row"/>
-		</action>							<action name="goPreviousPage"			class="org.openxava.actions.GoPreviousPageAction"			keystroke="Control A"			hidden="true"
-			mode="list"			image="images/previous_page.gif">			<use-object name="xava_tab"/>							</action>		<action name="goPage"			class="org.openxava.actions.GoPageAction"			keystroke="Control I"			hidden="true"
-			mode="list">			<use-object name="xava_tab"/>				</action>																	<action name="goNextPage"			class="org.openxava.actions.GoNextPageAction"			keystroke="Control S"			hidden="true"
-			mode="list"			image="images/next_page.gif">			<use-object name="xava_tab"/>				</action>											
+			image="images/edit.gif">			<set property="nextAction" value="Mode.detail"/>			<use-object name="xava_view"/>			<use-object name="xava_row"/>
+		</action>	
+				<action name="goPreviousPage"			class="org.openxava.actions.GoPreviousPageAction"			keystroke="Control A"			hidden="true"
+			mode="list"			image="images/previous_page.gif">							</action>
+				<action name="goPage"			class="org.openxava.actions.GoPageAction"			keystroke="Control I"			hidden="true"
+			mode="list">			</action>	
+				<action name="goNextPage"			class="org.openxava.actions.GoNextPageAction"			keystroke="Control S"			hidden="true"
+			mode="list"			image="images/next_page.gif">			</action>											
 		
-		<!-- tmp original		<action name="orderBy"			class="org.openxava.actions.OrderByAction"			hidden="true"
-			mode="list">			<use-object name="xava_tab"/>				</action>		
-		-->
-
-		<!-- tmp -->		
 		<action name="orderBy"
 			class="org.openxava.actions.OrderByAction"
 			hidden="true"
 			mode="list">
 		</action>		
-		
-					
-							<!-- tmp
-			Void action because the search is executed automatically
-			on tab properties setup		<action name="filter" by-default="almost-always"			class="org.openxava.actions.FilterAction"			hidden="true"
-			mode="list">
-			<use-object name="xava_tab"/>		</action>															
-		-->		
-		<!-- tmp -->
-		<action name="filter" by-default="almost-always"
+							<action name="filter" by-default="almost-always"
 			class="org.openxava.actions.FilterAction"
 			hidden="true"
 			mode="list"
 			image="images/filter.gif">
 		</action>															
-		
 				<action name="deselectRows"			class="org.openxava.actions.DeselectRowsAction"			hidden="true"
-			mode="list">						<use-object name="xava_tab"/>		</action>					
+			mode="list">					</action>	
+						
 		<action name="customize"
 			class="org.openxava.actions.CustomizeListAction"
 			hidden="true"
 			mode="list"
 			image="images/customize.gif">		
-			<use-object name="xava_tab"/>
 		</action>		
+		
 		<action name="moveColumnToLeft"
 			class="org.openxava.actions.MoveColumnToLeftAction"
 			hidden="true"
 			mode="list"
 			image="images/move-left.gif">	
-			<use-object name="xava_tab"/>					
-		</action>				
+		</action>	
+		
 		<action name="moveColumnToRight"
 			class="org.openxava.actions.MoveColumnToRightAction"
 			hidden="true"
 			mode="list"
 			image="images/move-right.gif">			
-			<use-object name="xava_tab"/>			
-		</action>						
+		</action>	
+		
 		<action name="removeColumn"
 			class="org.openxava.actions.RemoveColumnAction"
 			hidden="true"
 			mode="list"
 			image="images/remove.gif">		
-			<use-object name="xava_tab"/>
-		</action>								
+		</action>	
+		
 		<action name="addColumns"
-			class="org.openxava.actions.NavigationAction"
+			class="org.openxava.actions.GoAddColumnsAction"
 			hidden="true"
 			mode="list"
 			image="images/add.gif">		
-			<set property="nextController" value="AddColumns"/>
-			<set property="customView" value="xava/addColumns"/>
+			<use-object name="xava_customizingTab"/> 
 		</action>			
-		<!-- tmp original 
-		<action name="hideRows"
-			class="org.openxava.actions.HideRowsAction"
-			hidden="true"
-			mode="list">
-			<use-object name="xava_tab"/>
-		</action>
-		-->
-		<!-- tmp -->
+
 		<action name="hideRows"
 			class="org.openxava.actions.HideRowsAction"
 			hidden="true"
 			mode="list">
 		</action>
 		
-		<!-- tmp original 
-		<action name="showRows"
-			class="org.openxava.actions.ShowRowsAction"
-			hidden="true"
-			mode="list">
-			<use-object name="xava_tab"/>
-		</action>		
-		-->
 		<action name="showRows"
 			class="org.openxava.actions.ShowRowsAction"
 			hidden="true"
@@ -152,18 +125,18 @@ here that you want to override.
 	
 	<controller name="AddColumns">
 		<action name="sort" class="org.openxava.actions.SortColumnsAction" image="images/sort.gif">			
-			<use-object name="xava_tab"/>
+			<use-object name="xava_customizingTab" action-property="tab"/>
 		</action>					
 		<action name="addColumns" class="org.openxava.actions.AddColumnsAction">
-			<use-object name="xava_tab"/>			
+			<use-object name="xava_customizingTab" action-property="tab"/>
 		</action>	
 		<action name="restoreDefault" class="org.openxava.actions.RestoreDefaultColumnsAction">
-			<use-object name="xava_tab"/>			
+			<use-object name="xava_customizingTab" action-property="tab"/>			
 		</action>			
 		<action name="cancel"
 			class="org.openxava.actions.CancelInListAction">
 		</action>		
-	</controller>			<controller name="Navigation">						<action name="previous" mode="detail"			image="images/previous.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt LEFT">			<set property="increment" value="-1"/>			<use-object name="xava_row"/>			<use-object name="xava_tab"/>			<use-object name="xava_view"/>		</action>									<action name="first" mode="detail"			image="images/home.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt HOME">			<set property="goFirst" value="true"/>			<use-object name="xava_row"/>			<use-object name="xava_tab"/>			<use-object name="xava_view"/>					</action>									<action name="next" mode="detail"			image="images/next.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt RIGHT">			<set property="increment" value="1"/>						<use-object name="xava_row"/>			<use-object name="xava_tab"/>			<use-object name="xava_view"/>		</action>										</controller>						<controller name="Languages">		<action name="changeToValenciano" 			class="org.openxava.actions.ChangeLanguageAction">			<set property="idLanguage" value="ca"/>			<use-object name="xava_language"/>		</action>		<action name="changeToSpanish" 			class="org.openxava.actions.ChangeLanguageAction">			<set property="idLanguage" value="es"/>			<use-object name="xava_language"/>		</action>				</controller>		<controller name="ImageEditor">		<action name="changeImage"			class="org.openxava.actions.ChangeImageAction">						<use-object name="xava_newImageProperty"/>					</action>	</controller>
+	</controller>			<controller name="Navigation">						<action name="previous" mode="detail"			image="images/previous.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt LEFT">			<set property="increment" value="-1"/>			<use-object name="xava_row"/>			<use-object name="xava_view"/>		</action>									<action name="first" mode="detail"			image="images/home.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt HOME">			<set property="goFirst" value="true"/>			<use-object name="xava_row"/>			<use-object name="xava_view"/>					</action>								<action name="next" mode="detail"			image="images/next.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt RIGHT">			<set property="increment" value="1"/>						<use-object name="xava_row"/>			<use-object name="xava_view"/>		</action>										</controller>						<controller name="Languages">		<action name="changeToValenciano" 			class="org.openxava.actions.ChangeLanguageAction">			<set property="idLanguage" value="ca"/>			<use-object name="xava_language"/>		</action>		<action name="changeToSpanish" 			class="org.openxava.actions.ChangeLanguageAction">			<set property="idLanguage" value="es"/>			<use-object name="xava_language"/>		</action>				</controller>		<controller name="ImageEditor">		<action name="changeImage"			class="org.openxava.actions.ChangeImageAction">						<use-object name="xava_newImageProperty"/>					</action>	</controller>
 	
 	<controller name="Return">
 		<action name="return" image="images/back.gif"
@@ -263,7 +236,7 @@ here that you want to override.
 			<use-object name="xava_view"/>
 			<use-object name="xava_tab"/>		</action>	</controller>		<controller name="Collection">		<action name="new"			class="org.openxava.actions.CreateNewElementInCollectionAction">					</action>				
 		<action name="hideDetail"			class="org.openxava.actions.HideDetailElementInCollectionAction">					</action>							
-		<action name="save"			class="org.openxava.actions.SaveElementInCollectionAction">						<use-object name="xava_view"/>		</action>					<action name="remove"			class="org.openxava.actions.RemoveElementFromCollectionAction">						<use-object name="xava_view"/>		</action>							<action name="edit"			class="org.openxava.actions.EditElementInCollectionAction">						<use-object name="xava_view"/>		</action>									<action name="view"			class="org.openxava.actions.EditElementInCollectionAction">						<use-object name="xava_view"/>		</action>
+		<action name="save"			class="org.openxava.actions.SaveElementInCollectionAction">						<use-object name="xava_view"/>		</action>					<action name="remove"			class="org.openxava.actions.RemoveElementFromCollectionAction">						<use-object name="xava_view"/>		</action>							<action name="edit" image="images/edit.gif"			class="org.openxava.actions.EditElementInCollectionAction">						<use-object name="xava_view"/>		</action>									<action name="view" image="images/view.gif"			class="org.openxava.actions.EditElementInCollectionAction">						<use-object name="xava_view"/>		</action>
 		
 		<action name="removeSelected" confirm="true"
 			class="org.openxava.actions.RemoveSelectedInCollectionAction">

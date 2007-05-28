@@ -51,8 +51,6 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	private Map entityReferencesReferenceNames;
 	private String lastDefaultSchema;
 	
-	
-	
 	public static String getTitleI18n(Locale locale, String modelName, String tabName) throws XavaException {
 		String id = null;
 		if (Is.emptyString(tabName)) {
@@ -340,7 +338,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	}
 
 	private List createAllPropertiesNames() throws XavaException {
-		return getMetaModel().getPropertiesNamesWithoutHiddenNorTransient(); 
+		return new ArrayList(getMetaModel().getPropertiesNamesWithoutHiddenNorTransient()); 
 	}
 	
 	public void setDefaultPropertiesNames(String properties) {
@@ -816,7 +814,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	}
 
 	public MetaTab cloneMetaTab() {
-		try {
+		try {			
 			MetaTab r = (MetaTab) clone();
 			if (r.metaPropertiesHiddenCalculated != null) {
 				r.metaPropertiesHiddenCalculated = new ArrayList(
@@ -891,5 +889,6 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		this.metaModel = MetaModel.get(modelName);
 		this.metaComponent = this.metaModel.getMetaComponent();
 	}
+	
 }
 

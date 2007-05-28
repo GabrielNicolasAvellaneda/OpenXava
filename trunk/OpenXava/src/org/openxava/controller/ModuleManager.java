@@ -682,7 +682,7 @@ public class ModuleManager {
 		String r = null;
 		if (viewName.startsWith("xava/")) r = viewName.substring(5);
 		else r = "../" + viewName;
-		if (!r.endsWith(".jsp")) r = r + ".jsp";				
+		if (r.toLowerCase().indexOf(".jsp") < 0) r = r + ".jsp";				
 		return r;	
 	}
 

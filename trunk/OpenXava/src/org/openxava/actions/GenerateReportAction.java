@@ -1,22 +1,16 @@
 package org.openxava.actions;
 
 import javax.servlet.http.*;
-
-
-
-import org.openxava.tab.*;
 import org.openxava.util.*;
 
 /**
  * @author Javier Paniza
  */
 
-public class GenerateReportAction extends BaseAction implements IRequestAction, IForwardAction {
+public class GenerateReportAction extends TabBaseAction implements IForwardAction {
 	
 	private HttpServletRequest request;
-	private Tab tab;
-	private String type;
-	
+	private String type;	
 
 	public void execute() throws Exception {
 		if (!("pdf".equals(getType()) || "csv".equals(getType()))) {
@@ -34,15 +28,8 @@ public class GenerateReportAction extends BaseAction implements IRequestAction, 
 	}
 
 	public void setRequest(HttpServletRequest request) {
+		super.setRequest(request);
 		this.request = request;
-	}
-
-	public Tab getTab() {
-		return tab;
-	}
-
-	public void setTab(Tab tab) {
-		this.tab = tab;
 	}
 
 	public String getForwardURI() {		

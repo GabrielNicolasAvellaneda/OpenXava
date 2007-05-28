@@ -186,7 +186,7 @@ public class Tab {
 				if (getModelName().indexOf('.') >= 0 || // It's an aggregate
 					getTabName().startsWith(COLLECTION_PREFIX) // Used for collection 
 				) { 
-					metaTab = MetaTab.createDefault(MetaModel.get(getModelName()));
+					metaTab = MetaTab.createDefault(MetaModel.get(getModelName()));					
 				}				
 				else throw ex;
 			}
@@ -847,8 +847,8 @@ public class Tab {
 		saveUserPreferences();
 	}	
 	
-	public void movePropertyToRight(int index) throws XavaException {
-		cloneMetaTab();
+	public void movePropertyToRight(int index) throws XavaException {		
+		cloneMetaTab();		
 		getMetaTab().movePropertyToRight(index);		
 		resetAfterChangeProperties();
 		saveUserPreferences();
