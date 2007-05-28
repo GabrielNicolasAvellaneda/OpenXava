@@ -5,6 +5,7 @@ import java.util.*;
 
 
 import org.openxava.model.*;
+import org.openxava.util.*;
 import org.openxava.validators.*;
 
 /**
@@ -58,7 +59,7 @@ public class DeleteAction extends ViewDetailAction {
 		getErrors().clearAndClose(); // If removal is done, any additional error message may be confused
 	}
 
-	private void removeSelected() {
+	private void removeSelected() throws XavaException {
 		int row = getRow();		
 		int [] selectedOnes = getTab().getSelected();
 		if (Arrays.binarySearch(selectedOnes, row) < 0) return;		

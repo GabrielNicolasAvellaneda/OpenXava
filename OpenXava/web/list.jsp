@@ -45,9 +45,9 @@ boolean singleSelection="true".equalsIgnoreCase(request.getParameter("singleSele
 
 <table id="<%=id%>" class=<%=style.getList()%> width="100%" <%=style.getListCellSpacing()%>>
 <tr>
-<th class=<%=style.getListHeader()%> style="text-align: center" width="60"><xava:image action="List.customize"/></th>
+<th class=<%=style.getListHeader()%> style="text-align: center" width="60"><xava:image action="List.customize" argv="<%=collectionArgv%>"/></th>
 <th class=<%=style.getListHeader()%> width="5">
-<% if (tab.isCustomize()) { %><xava:image action="List.addColumns"/><% } %>
+<% if (tab.isCustomize()) { %><xava:image action="List.addColumns" argv="<%=collectionArgv%>"/><% } %>
 </th>
 <%
 tab.reset();
@@ -62,7 +62,7 @@ while (it.hasNext()) {
 	}
 %>
 <th class="<%=style.getListHeader()%>" <%=align%>>
-<% if (tab.isCustomize()) { %><xava:image action="List.moveColumnToLeft" argv='<%="columnIndex="+columnIndex%>'/><% } %>
+<% if (tab.isCustomize()) { %><xava:image action="List.moveColumnToLeft" argv='<%="columnIndex="+columnIndex+collectionArgv%>'/><% } %>
 <%
 	if (property.isCalculated()) {		
 %>
@@ -92,8 +92,8 @@ while (it.hasNext()) {
    }
    
    if (tab.isCustomize()) { %>
-	<xava:image action="List.moveColumnToRight" argv='<%="columnIndex="+columnIndex%>'/>
-	<xava:image action="List.removeColumn" argv='<%="columnIndex="+columnIndex%>'/>
+	<xava:image action="List.moveColumnToRight" argv='<%="columnIndex="+columnIndex+collectionArgv%>'/>
+	<xava:image action="List.removeColumn" argv='<%="columnIndex="+columnIndex+collectionArgv%>'/>
 <% }
  
 %>
@@ -264,18 +264,18 @@ int last=tab.getLastPage();
 int current=tab.getPage();
 if (current > 1) {
 %>
-<xava:image action='List.goPreviousPage'/>
+<xava:image action='List.goPreviousPage' argv='<%=collectionArgv%>'/>
 <% } 
 for (int i=1; i<=last; i++) {
 if (i == current) {
 %>	 
  <b><%=i%></b>
 <% } else { %>
- <xava:link action='List.goPage' argv='<%="page="+i%>'><%=i%></xava:link>
+ <xava:link action='List.goPage' argv='<%="page=" + i + collectionArgv%>'><%=i%></xava:link>
 <% }} 
 if (!tab.isLastPage()) {
 %>
- <xava:image action='List.goNextPage'/> 
+ <xava:image action='List.goNextPage' argv='<%=collectionArgv%>'/> 
 <% } %>	 
 </td>
 <td style='text-align: right; vertical-align: middle' class='<%=style.getListInfoDetail()%>'>

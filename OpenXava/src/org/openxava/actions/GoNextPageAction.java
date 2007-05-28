@@ -1,29 +1,14 @@
 package org.openxava.actions;
 
-
-
-import org.openxava.tab.*;
-
 /**
  * @author Javier Paniza
  */
 
-public class GoNextPageAction extends BaseAction {
+public class GoNextPageAction extends TabBaseAction {
 	
-	private Tab tab;
-	
-
 	public void execute() throws Exception {
-		tab.pageForward();
-		tab.setNotResetNextTime(true);		
-	}
-
-	public Tab getTab() {
-		return tab;
-	}
-
-	public void setTab(Tab web) {
-		tab = web;
+		getTab().pageForward();
+		getTab().setNotResetNextTime(true);		
 	}
 
 }

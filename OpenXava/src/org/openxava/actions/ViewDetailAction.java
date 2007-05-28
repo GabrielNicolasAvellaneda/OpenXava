@@ -1,28 +1,24 @@
 package org.openxava.actions;
 
 import java.util.*;
-
-
-
-import org.openxava.tab.*;
 import org.openxava.util.*;
+import org.openxava.view.*;
 
 /**
  * @author Javier Paniza
  */
 
-public class ViewDetailAction extends ViewBaseAction implements IChainAction, IModelAction {
+public class ViewDetailAction extends TabBaseAction implements IChainAction, IModelAction {
 	
 	private int row;
 	private int increment;
-	private Map key;
-	private transient Tab tab;
+	private Map key;	
 	private boolean goFirst = false;
 	private String nextAction;
 	private boolean atListBegin;
 	private boolean noElementsInList;
 	private String model;
-	
+	private View view;
 	
 	public void execute() throws Exception {		
 		getView().setModelName(model); 
@@ -35,7 +31,7 @@ public class ViewDetailAction extends ViewBaseAction implements IChainAction, IM
 		}		
 		int previous = row;
 		row = goFirst?0:row + increment;		
-		int [] selectedOnes = tab.getSelected();
+		int [] selectedOnes = getTab().getSelected();
 		boolean lastSelectedPassed = false;		
 		if (selectedOnes != null && selectedOnes.length > 0) {
 			if (increment >= 0) {				
@@ -61,7 +57,7 @@ public class ViewDetailAction extends ViewBaseAction implements IChainAction, IM
 			key = null;
 		}
 		else {
-			key = (Map) tab.getTableModel().getObjectAt(row);			
+			key = (Map) getTab().getTableModel().getObjectAt(row);			
 		}
 		if (key == null) {
 			setNoElementsInList(true);
@@ -80,14 +76,18 @@ public class ViewDetailAction extends ViewBaseAction implements IChainAction, IM
 	public void setRow(int i) {
 		row = i;		
 	}
-
-	public Tab getTab() {
-		return tab;
+	
+	public View getView() {
+		return view;
 	}
 
-	public void setTab(Tab web) {
-		tab = web;
+	public void setView(View view) {
+		this.view = view;
 	}
+			
+	protected String getModelName() {
+		return view.getModelName();
+	}	
 
 	public String getNextAction() throws XavaException {
 		if (Is.emptyString(nextAction)) {

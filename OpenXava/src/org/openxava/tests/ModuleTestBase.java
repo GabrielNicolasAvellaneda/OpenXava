@@ -692,12 +692,20 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected int getListColumnCount() throws Exception {
-		WebTable table = response.getTableWithID("list");
+		return getListColumnCount("list", XavaResources.getString("list_not_displayed"));
+	}
+	
+	protected int getCollectionColumnCount(String collection) throws Exception {
+		return getListColumnCount(collection, XavaResources.getString("collection_not_displayed", collection)); 
+	}
+	
+	private int getListColumnCount(String id, String message) throws Exception {
+		WebTable table = response.getTableWithID(id);
 		if (table == null) {
-			fail(XavaResources.getString("list_not_displayed"));			
+			fail(message);			
 		}
 		return table.getColumnCount() - 2;		
-	}
+	}	
 	
 	/**
 	 * Row count displayed with data. <p>
@@ -734,6 +742,10 @@ public class ModuleTestBase extends TestCase {
 	protected void assertListColumnCount(int expected) throws Exception {
 		assertEquals(XavaResources.getString("list_column_count"), expected, getListColumnCount());
 	}
+	
+	protected void assertCollectionColumnCount(String collection, int expected) throws Exception {
+		assertEquals(XavaResources.getString("collection_column_count", collection), expected, getCollectionColumnCount(collection)); 
+	}	
 	
 		
 	protected void assertValueInList(int row, String name, String value) throws Exception {
