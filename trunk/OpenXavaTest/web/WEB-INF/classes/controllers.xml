@@ -38,11 +38,11 @@
 			class="org.openxava.actions.RemoveElementFromCollectionAction">			
 			<use-object name="xava_view"/>
 		</action>					
-		<action name="edit"
+		<action name="edit" image="images/edit.gif"
 			class="org.openxava.actions.EditElementInCollectionAction">			
 			<use-object name="xava_view"/>
 		</action>							
-		<action name="view"
+		<action name="view" image="images/view.gif"
 			class="org.openxava.actions.EditElementInCollectionAction">			
 			<use-object name="xava_view"/>
 		</action>	
@@ -300,7 +300,8 @@
 			class="org.openxava.test.actions.ListCustomerInvoicesAction">
 			<use-object name="xava_tab"/>
 		</action>				
-		<action name="editDetail" hidden="true"
+		<action name="editDetail" hidden="true" 
+			image="images/edit.gif"
 			class="org.openxava.test.actions.EditInvoiceDetailAction">	
 			<use-object name="xava_view"/>
 		</action>			

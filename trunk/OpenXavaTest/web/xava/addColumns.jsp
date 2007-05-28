@@ -6,9 +6,7 @@
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%
-String tabObject = request.getParameter("tabObject");
-tabObject = (tabObject == null || tabObject.equals(""))?"xava_tab":tabObject;
-org.openxava.tab.Tab tab = (org.openxava.tab.Tab) context.get(request, tabObject);
+org.openxava.tab.Tab tab = (org.openxava.tab.Tab) context.get(request, "xava_customizingTab");
 %>
 <div class="portlet-form-label">
 <xava:message key="choose_property_add_list_prompt"/>

@@ -38,6 +38,26 @@ public class InvoicesTest extends ModuleTestBase {
 		super(testName, "Invoices");		
 	}
 	
+	public void testPaginationInCollections() throws Exception {
+		// The invoice 2007/14 has 14 detail lines
+		execute("CRUD.new");
+		setValue("year", "2007");
+		setValue("number", "14");
+		execute("CRUD.search");
+		assertNoErrors();		
+		assertValue("comment", "MORE THAN 10 LINES");
+		execute("Sections.change", "activeSection=1");
+		assertCollectionRowCount("details", 10);
+		execute("List.goNextPage", "collection=details");
+		assertCollectionRowCount("details", 4);
+		execute("List.goPreviousPage", "collection=details");
+		assertCollectionRowCount("details", 10);
+		execute("List.goPage", "page=2,collection=details");
+		assertCollectionRowCount("details", 4);
+		execute("List.goPage", "page=1,collection=details");
+		assertCollectionRowCount("details", 10);
+	}
+	
 	public void testCollectionElementHiddenOnChangeObject() throws Exception {
 		execute("Mode.detailAndFirst");
 		execute("Sections.change", "activeSection=1");
@@ -277,8 +297,7 @@ public class InvoicesTest extends ModuleTestBase {
 		assertLabelInList(5, "Details count");
 		assertLabelInList(6, "Paid");
 		assertLabelInList(7, "Importance");
-	}
-	
+	}	
 	
 	public void testGenerateExcel() throws Exception {
 		String year = getValueInList(0, 0);
