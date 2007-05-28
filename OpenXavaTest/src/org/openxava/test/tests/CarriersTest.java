@@ -70,6 +70,96 @@ public class CarriersTest extends ModuleTestBase {
 		XHibernate.commit();
 	}
 	
+	public void testCustomizeCollection() throws Exception { 
+		// Original status
+		assertListColumnCount(3);
+		assertLabelInList(0, "Calculated");
+		assertLabelInList(1, "Number");
+		assertLabelInList(2, "Name");
+		execute("Mode.detailAndFirst");
+		
+		assertCollectionColumnCount("fellowCarriers", 4);
+		assertLabelInCollection("fellowCarriers", 0, "Number");
+		assertLabelInCollection("fellowCarriers", 1, "Name");
+		assertLabelInCollection("fellowCarriers", 2, "Calculated");
+		assertLabelInCollection("fellowCarriers", 3, "Remarks");
+		
+		// Customize the collection
+		execute("List.customize", "collection=fellowCarriers");
+		execute("List.moveColumnToRight", "columnIndex=2,collection=fellowCarriers");
+		assertNoErrors();
+		
+		assertCollectionColumnCount("fellowCarriers", 4);
+		assertLabelInCollection("fellowCarriers", 0, "Number");
+		assertLabelInCollection("fellowCarriers", 1, "Name");
+		assertLabelInCollection("fellowCarriers", 2, "Remarks");		
+		assertLabelInCollection("fellowCarriers", 3, "Calculated");
+		
+		// The main list not modified
+		execute("Mode.list");
+		assertListColumnCount(3);
+		assertLabelInList(0, "Calculated");
+		assertLabelInList(1, "Number");
+		assertLabelInList(2, "Name");
+
+		// The collection continues modified
+		execute("Mode.detailAndFirst");
+		assertCollectionColumnCount("fellowCarriers", 4);
+		assertLabelInCollection("fellowCarriers", 0, "Number");
+		assertLabelInCollection("fellowCarriers", 1, "Name");
+		assertLabelInCollection("fellowCarriers", 2, "Remarks");		
+		assertLabelInCollection("fellowCarriers", 3, "Calculated");
+		
+		// Add columns
+		execute("List.addColumns", "collection=fellowCarriers");
+		assertCollectionRowCount("xavaPropertiesList", 6);
+		execute("AddColumns.sort");				
+		assertValueInCollection("xavaPropertiesList",  0, 0, "drivingLicence.description");
+		assertValueInCollection("xavaPropertiesList",  1, 0, "drivingLicence.level");
+		assertValueInCollection("xavaPropertiesList",  2, 0, "drivingLicence.type");
+		assertValueInCollection("xavaPropertiesList",  3, 0, "warehouse.name");
+		assertValueInCollection("xavaPropertiesList",  4, 0, "warehouse.number");
+		assertValueInCollection("xavaPropertiesList",  5, 0, "warehouse.zoneNumber");
+		checkRow("selectedProperties", "warehouse.name");
+ 		execute("AddColumns.addColumns");
+
+		assertCollectionColumnCount("fellowCarriers", 5);
+		assertLabelInCollection("fellowCarriers", 0, "Number");
+		assertLabelInCollection("fellowCarriers", 1, "Name");
+		assertLabelInCollection("fellowCarriers", 2, "Remarks");		
+		assertLabelInCollection("fellowCarriers", 3, "Calculated");
+		assertLabelInCollection("fellowCarriers", 4, "Name");
+ 		
+		// Other customizations
+		execute("List.moveColumnToLeft", "columnIndex=4,collection=fellowCarriers");
+		assertLabelInCollection("fellowCarriers", 0, "Number");
+		assertLabelInCollection("fellowCarriers", 1, "Name");
+		assertLabelInCollection("fellowCarriers", 2, "Remarks");
+		assertLabelInCollection("fellowCarriers", 3, "Name");
+		assertLabelInCollection("fellowCarriers", 4, "Calculated");
+		
+		execute("List.removeColumn", "columnIndex=4,collection=fellowCarriers");
+		assertCollectionColumnCount("fellowCarriers", 4);
+		assertLabelInCollection("fellowCarriers", 0, "Number");
+		assertLabelInCollection("fellowCarriers", 1, "Name");
+		assertLabelInCollection("fellowCarriers", 2, "Remarks");
+		assertLabelInCollection("fellowCarriers", 3, "Name");
+		
+		// Restoring		
+		execute("List.addColumns", "collection=fellowCarriers");
+		execute("AddColumns.restoreDefault");
+		assertCollectionColumnCount("fellowCarriers", 4);
+		assertLabelInCollection("fellowCarriers", 0, "Number");
+		assertLabelInCollection("fellowCarriers", 1, "Name");
+		assertLabelInCollection("fellowCarriers", 2, "Calculated");
+		assertLabelInCollection("fellowCarriers", 3, "Remarks");
+		
+		// Cancel in AddColumns returns to detail (not list mode)
+		execute("List.addColumns", "collection=fellowCarriers");
+		execute("AddColumns.cancel");
+		assertValue("name", "UNO"); // In detail mode
+	}
+		
 	public void testHideShowRows() throws Exception {		
 		assertListRowCount(5);
 		assertAction("List.hideRows");

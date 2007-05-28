@@ -51,7 +51,7 @@ public class SellersTest extends ModuleTestBase {
 		assertValueInCollection("customers", 1, "relationWithSeller", "");
 		assertValueInCollection("customers", 1, "seller.level.description", "MANAGER");
 		
-		// Order by column, tmp en news-for-programmers
+		// Order by column
 		execute("List.orderBy", "property=number,collection=customers");
 		assertValueInCollection("customers", 0, "number", "1");
 		assertValueInCollection("customers", 1, "number", "2");
@@ -64,7 +64,7 @@ public class SellersTest extends ModuleTestBase {
 		execute("List.hideRows", "collection=customers");
 		assertCollectionRowCount("customers", 0);
 		
-		// Filter tmp en news-for-programmers
+		// Filter 
 		String [] condition = { "1" };
 		setConditionValues("customers", condition);
 		execute("List.filter", "collection=customers"); 
@@ -77,15 +77,6 @@ public class SellersTest extends ModuleTestBase {
 		assertCollectionRowCount("customers", 0);
 		execute("List.showRows", "collection=customers");
 		assertCollectionRowCount("customers", 1);
-		
-		// tmp Faltan cosas
-		//  1. Paginación
-		//  2. Revisar todas las acciones de "List"
-		//  3. Icono para editar/ver
-	}
-	
-	public void testCustomizeCollection() throws Exception { // tmp
-		// tmp fail("Falta hacer");
 	}
 	
 	public void testMembersOfReferenceToEntityNotEditable() throws Exception {

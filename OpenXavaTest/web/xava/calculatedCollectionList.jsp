@@ -36,7 +36,7 @@ while (itAggregates.hasNext()) {
 <tr class=<%=cssClass%>>
 <% if (lineAction != null) { %>
 <td class=<%=cssClass%> style='vertical-align: middle;text-align: center;padding-right: 2px'>
-<xava:link action="<%=lineAction%>" argv='<%="row="+f + ",viewObject="+viewName%>'/>
+<xava:action action="<%=lineAction%>" argv='<%="row="+f + ",viewObject="+viewName%>'/>
 </td>
 <% } %>
 <% if (hasListActions  && !collectionView.isCollectionDetailVisible() && (collectionEditable || !subview.getActionsNamesList().isEmpty())) { %>

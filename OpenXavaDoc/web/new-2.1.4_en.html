@@ -1,0 +1,29 @@
+<h4>New actions in collections (for junit test)</h4>
+Now all the actions of list mode are also available in the collections.
+The user can filter, order, paging, etc in any collection. Therefore
+you can also test these actions in your junit test. It's easy.<br>
+For example, if you want to test the action for ordering, you can do
+the following in your junit test:<br>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // Order by column</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; execute("List.orderBy", "property=number,<span
+ style="font-weight: bold; color: rgb(51, 102, 255);">collection=customers</span>");</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; assertValueInCollection("customers", 0, "number", "1");</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; assertValueInCollection("customers", 1, "number", "2");</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; execute("List.orderBy", "property=number,<span
+ style="font-weight: bold; color: rgb(51, 102, 255);">collection=customers</span>");</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; assertValueInCollection("customers", 0, "number", "2");</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; assertValueInCollection("customers", 1, "number", "1");</pre>
+As you see, you only need to declare the argument <span
+ style="font-family: monospace;">collection</span>.<br>
+If you want to filter, you can write a test code as this one:<br>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // Filter&nbsp;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; String [] condition = { "1" };</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; setConditionValues(<span
+ style="font-weight: bold; color: rgb(51, 102, 255);">"customers"</span>, condition);</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; execute("List.filter", "collection=customers"); </pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; assertCollectionRowCount("customers", 1);</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; assertValueInCollection("customers", 0, "number", "1");</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; assertValueInCollection("customers", 0, "name", "Javi");</pre>
+As you see, the method <span style="font-family: monospace;">setConditionValues</span>
+allows you to indicate the collection name as first argument.<br>
+<br>
