@@ -111,7 +111,7 @@ while (itDetailActions.hasNext()) {
 Iterator itListActions = subview.getActionsNamesList().iterator();
 while (itListActions.hasNext()) {
 %>
-&nbsp;<xava:link action="<%=itListActions.next().toString()%>" argv='<%="viewObject="+viewName%>'/>
+&nbsp;<xava:action action="<%=itListActions.next().toString()%>" argv='<%="viewObject="+viewName%>'/>
 <%	
 } // while list actions
 %>

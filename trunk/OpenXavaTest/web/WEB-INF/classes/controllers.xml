@@ -45,12 +45,12 @@
 		<action name="view" image="images/view.gif"
 			class="org.openxava.actions.EditElementInCollectionAction">			
 			<use-object name="xava_view"/>
-		</action>	
-		
+		</action>			
 		<action name="removeSelected" confirm="true"
 			class="org.openxava.actions.RemoveSelectedInCollectionAction">
 			<use-object name="xava_view"/>
-		</action>								
+		</action>	
+											
 	</controller>
 	
 	<controller name="ChangeActiveYear">

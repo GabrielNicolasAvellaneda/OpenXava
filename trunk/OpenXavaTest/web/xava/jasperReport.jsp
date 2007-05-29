@@ -13,6 +13,7 @@
 <%@ page import="org.openxava.util.Is" %>
 <%@ page import="org.openxava.tab.meta.MetaTab" %>
 <%@ page import="org.openxava.component.MetaComponent" %>
+<%@ page import="org.openxava.model.meta.MetaModel" %>
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
 
 <%!
@@ -56,9 +57,17 @@ private String getAlign(MetaProperty p) throws Exception {
 
 <%
 String modelName = request.getParameter("model");
-MetaComponent component = MetaComponent.get(modelName);
-String nombreTab = request.getParameter("tab");
-MetaTab tab = component.getMetaTab(nombreTab);
+String reportName = Strings.change(modelName, ".", "_");
+MetaModel metaModel = MetaModel.get(modelName);
+String tabName = request.getParameter("tab");
+MetaTab tab = null;
+if (tabName.startsWith(org.openxava.tab.Tab.COLLECTION_PREFIX)) {
+	tab = MetaTab.createDefault(metaModel);
+}
+else {
+	MetaComponent component = metaModel.getMetaComponent();
+	tab = component.getMetaTab(tabName);
+}
 String propertiesNames = request.getParameter("properties");
 if (!Is.emptyString(propertiesNames)) {
 	tab = tab.cloneMetaTab();
@@ -129,7 +138,7 @@ else {
 
 %>
 <jasperReport
-		 name="<%=modelName%>"
+		 name="<%=reportName%>"
 		 columnCount="1"
 		 printOrder="Vertical"
 		 orientation="<%=orientation%>"

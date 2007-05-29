@@ -12,6 +12,7 @@ import org.openxava.actions.*;
 import org.openxava.calculators.*;
 import org.openxava.component.*;
 import org.openxava.controller.*;
+import org.openxava.controller.meta.*;
 import org.openxava.filters.*;
 import org.openxava.mapping.*;
 import org.openxava.model.*;
@@ -32,10 +33,10 @@ import org.openxava.web.*;
 public class View implements java.io.Serializable {
 		
 	private static Log log = LogFactory.getLog(View.class);
-	private static final long serialVersionUID = -7582669617830655121L;	
+	private static final long serialVersionUID = -7582669617830655121L;
+	private static Collection defaultListActionsForCollections;
 	
-	private Map objects = null; 
-	
+	private Map objects = null; 	
 	private String editCollectionElementAction;
 	private String viewCollectionElementAction;
 	private String newCollectionElementAction;
@@ -106,7 +107,8 @@ public class View implements java.io.Serializable {
 	private Collection executedActions;	
 	private boolean registeringExecutedActions = false;
 	private Tab collectionTab; 	
-	private String propertiesListNames; 
+	private String propertiesListNames;
+	 
 	
 	
 		
@@ -615,8 +617,10 @@ public class View implements java.io.Serializable {
 					newView.setActionsNamesDetail(new ArrayList(actionsDetailNames));
 				}
 				Collection actionsListNames = metaCollectionView.getActionsListNames();
-				if (!actionsListNames.isEmpty()) {
-					newView.setActionsNamesList(new ArrayList(actionsListNames)); 
+				if (!actionsListNames.isEmpty()) {					
+					Collection actions = new ArrayList(actionsListNames);
+					actions.addAll(getDefaultListActionsForCollections());
+					newView.setActionsNamesList(actions);
 				}
 				
 				newView.setEditCollectionElementAction(metaCollectionView.getEditActionName());
@@ -668,6 +672,27 @@ public class View implements java.io.Serializable {
 	} 
 	 
 		
+	private static Collection getDefaultListActionsForCollections() { 
+		if (defaultListActionsForCollections == null) {
+			try {
+				MetaController controller = MetaControllers.getMetaController("DefaultListActionsForCollections"); // Si no existe: ¿Advertencia?
+				Collection result = new ArrayList();
+				for (Iterator it = controller.getAllMetaActions().iterator(); it.hasNext();) {
+					MetaAction action = (MetaAction) it.next();
+					if (!action.isHidden()) {
+						result.add(action.getQualifiedName());
+					}
+				}				
+				defaultListActionsForCollections = Collections.unmodifiableCollection(result); 
+			}
+			catch (XavaException ex) {
+				log.warn(XavaResources.getString("default_list_action_controllers_warning"), ex);
+				return Collections.EMPTY_LIST;
+			}
+		}
+		return defaultListActionsForCollections;
+	}
+
 	private void setPropertiesListNames(String propertiesListNames) {
 		this.propertiesListNames = propertiesListNames; 		
 	}
@@ -2851,7 +2876,7 @@ public class View implements java.io.Serializable {
 	 * @param qualifiedActionName  Qualified name (controller.action) as in controllers.xml 	 
 	 */	
 	public void addListAction(String qualifiedActionName) {
-		if (actionsNamesList == null) actionsNamesList = new ArrayList();
+		if (actionsNamesList == null) actionsNamesList = new ArrayList(getDefaultListActionsForCollections()); 
 		actionsNamesList.add(qualifiedActionName);
 	}
 
@@ -2861,12 +2886,12 @@ public class View implements java.io.Serializable {
 	 * @param qualifiedActionName  Qualified name (controller.action) as in controllers.xml 	 
 	 */	
 	public void removeListAction(String qualifiedActionName) {
-		if (actionsNamesList == null) return;
+		if (actionsNamesList == null) actionsNamesList = new ArrayList(getDefaultListActionsForCollections()); 
 		actionsNamesList.remove(qualifiedActionName);		
 	}
 		
 	public Collection getActionsNamesList() {
-		return actionsNamesList==null?Collections.EMPTY_LIST:actionsNamesList;
+		return actionsNamesList==null?getDefaultListActionsForCollections():actionsNamesList;
 	}
 	public boolean hasListActions() {		
 		// return !getActionsNamesList().isEmpty();

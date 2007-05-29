@@ -785,7 +785,7 @@ public class Tab {
 		Locale locale = XavaResources.getLocale(request);		
 		String title = titleId==null?getTitleI18n(locale, modelName, tabName):Labels.get(titleId, locale);
 		if (title != null) return putTitleArguments(locale, title);
-		String modelLabel = MetaComponent.get(modelName).getMetaEntity().getLabel();
+		String modelLabel = MetaModel.get(modelName).getLabel(locale); 
 		return XavaResources.getString(request, "report_title", modelLabel);					
 	}
 	

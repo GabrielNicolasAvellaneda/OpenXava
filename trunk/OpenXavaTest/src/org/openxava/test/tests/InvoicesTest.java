@@ -58,7 +58,7 @@ public class InvoicesTest extends ModuleTestBase {
 		assertCollectionRowCount("details", 10);
 	}
 	
-	public void testCollectionElementHiddenOnChangeObject() throws Exception {
+	public void testCollectionElementHiddenOnChangeObject_generatePdfAggregateCollection() throws Exception {
 		execute("Mode.detailAndFirst");
 		execute("Sections.change", "activeSection=1");
 		
@@ -78,7 +78,11 @@ public class InvoicesTest extends ModuleTestBase {
 		
 		// Verifying that detail is closed
 		assertAction("Collection.new");
-		assertNoAction("Collection.save");		
+		assertNoAction("Collection.save");	
+		
+		// Print a collection of aggregates
+		execute("Print.generatePdf", "viewObject=xava_view_section1_details");
+		assertContentTypeForPopup("application/pdf");
 	}
 	
 	public void testSearchByPropertyWithConverterInDetailMode() throws Exception {
@@ -967,6 +971,8 @@ public class InvoicesTest extends ModuleTestBase {
 			"Invoices.editDetail", // because it is overwrite, otherwise 'Collection.edit'
 			"Collection.new",
 			"Collection.removeSelected",
+			"Print.generatePdf", // In collection
+			"Print.generateExcel", // In collection
 			"List.filter", 
 			"List.orderBy", 
 			"List.customize", 

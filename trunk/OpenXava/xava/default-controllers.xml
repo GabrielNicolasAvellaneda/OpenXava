@@ -241,7 +241,12 @@ here that you want to override.
 		<action name="removeSelected" confirm="true"
 			class="org.openxava.actions.RemoveSelectedInCollectionAction">
 			<use-object name="xava_view"/>
-		</action>											</controller>		<controller name="Sections">		<action name="change" 			class="org.openxava.actions.ChangeSectionAction"
+		</action>				
+											</controller>
+	
+	<controller name="DefaultListActionsForCollections">
+		<extends controller="Print"/>
+	</controller>		<controller name="Sections">		<action name="change" 			class="org.openxava.actions.ChangeSectionAction"
 			keystroke="Control 1..9"/>
 	</controller>		<controller name="ListOnly">
 		<action name="init"

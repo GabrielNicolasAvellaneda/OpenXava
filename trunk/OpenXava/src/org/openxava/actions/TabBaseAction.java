@@ -23,7 +23,6 @@ abstract public class TabBaseAction extends BaseAction implements IModuleContext
 	private ModuleContext context; 
 	private HttpServletRequest request;
 	private String collection;
-	
 
 	protected Tab getTab() throws XavaException {
 		if (tab == null ) {
@@ -49,6 +48,17 @@ abstract public class TabBaseAction extends BaseAction implements IModuleContext
 
 	public void setCollection(String collection) {
 		this.collection = collection;
+	}
+
+	/**
+	 * Extract from the viewObject the name of the collection. <p>
+	 * 
+	 * Useful for using Tab actions for collections. <br> 
+	 */
+	public void setViewObject(String viewObject) { 
+		if (Is.emptyString(this.collection)) {
+			this.collection = Strings.lastToken(viewObject, "_");
+		}
 	}
 
 }
