@@ -86,7 +86,7 @@ public class SellersTest extends ModuleTestBase {
 		assertNoEditable("customers.name");
 	}
 	
-	public void testOverwriteCollectionControllers() throws Exception {
+	public void testOverwriteCollectionControllers_defaultListActionsForCollections_tabActionsForCollections() throws Exception { 
 		execute("CRUD.new");
 		setValue("number", "1");
 		execute("CRUD.search");
@@ -94,6 +94,12 @@ public class SellersTest extends ModuleTestBase {
 		execute("Collection.edit", "row=0,viewObject=xava_view_customers");
 		execute("Collection.hideDetail", "viewObject=xava_view_customers");
 		assertMessage("Detail is hidden");
+		
+		execute("Print.generatePdf", "viewObject=xava_view_customers");
+		assertContentTypeForPopup("application/pdf");
+		
+		execute("Print.generateExcel", "viewObject=xava_view_customers");
+		assertContentTypeForPopup("text/x-csv");		
 	}
 
 	

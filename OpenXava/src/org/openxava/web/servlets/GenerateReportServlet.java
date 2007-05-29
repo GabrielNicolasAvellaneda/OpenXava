@@ -140,8 +140,8 @@ public class GenerateReportServlet extends HttpServlet {
 			tab.setRequest(request); 
 			String uri = request.getRequestURI();
 			if (uri.endsWith(".pdf")) {
-				Map parameters = new HashMap();								
-				parameters.put("Title", tab.getTitle());				
+				Map parameters = new HashMap();							
+				parameters.put("Title", tab.getTitle());								
 				parameters.put("Organization", getOrganization(request, tab));
 				InputStream is  = getReport(request, response, tab);															
 				JRDataSource ds = getDataSource(tab, request);		
