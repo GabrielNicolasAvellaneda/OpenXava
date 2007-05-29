@@ -25,7 +25,13 @@ In your project use the name 'editors.xml' or 'editores.xml'
   	<for-valid-values/>
   </editor>
   
-  <editor name="ValidValuesRadioButton" url="radioButtonEditor.jsp"/>  
+  <editor name="ValidValuesRadioButton" url="radioButtonEditor.jsp"/>   
+  <editor name="ValidValuesRadioButtonVertical" url="radioButtonEditor.jsp" >
+  	<property name="horizontal" value="false"/>
+  </editor>  
+  <editor name="ValidValuesRadioButtonHorizontal" url="radioButtonEditor.jsp" >
+  	<property name="horizontal" value="true"/>
+  </editor>  
   
   <editor name="Enum" url="validValuesEditor.jsp">
   	<for-type type="java.lang.Enum"/>
