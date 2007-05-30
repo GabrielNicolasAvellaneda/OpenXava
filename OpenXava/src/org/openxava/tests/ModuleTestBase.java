@@ -557,6 +557,10 @@ public class ModuleTestBase extends TestCase {
 		assertEquals(XavaResources.getString("unexpected_description", name), value, getDescriptionValue(name));		
 	}
 
+	protected boolean existsAction(String action) {		
+		return getActions().contains(action);
+	}
+	
 	protected void assertAction(String action) {		
 		assertTrue(XavaResources.getString("action_not_found_in_ui", action), getActions().contains(action));
 	}
