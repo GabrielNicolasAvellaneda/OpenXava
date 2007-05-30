@@ -346,14 +346,15 @@ public class Tab {
 
 	private String decorateColumn(MetaProperty p, String column, int i) throws XavaException {
 		if ("year_comparator".equals(this.conditionComparators[i])) {
-			return "year(" + column + ")";
+			return p.getMetaModel().getMapping().yearSQLFunction(column);
 		}
 		if ("month_comparator".equals(this.conditionComparators[i])) {
-			return "month(" + column + ")";
+			return p.getMetaModel().getMapping().monthSQLFunction(column);
 		}
-		if ("year_month_comparator".equals(this.conditionComparators[i])) { 
-			return "year(" + column + ") = ? and month("  + column + ")";
-		}				
+		if ("year_month_comparator".equals(this.conditionComparators[i])) {
+			ModelMapping mapping = p.getMetaModel().getMapping(); 
+			return mapping.yearSQLFunction(column) + " = ? and " + mapping.monthSQLFunction(column);
+		}						
 		if (java.lang.String.class.equals(p.getType())) {
 			return "upper(" + column + ")";
 		}

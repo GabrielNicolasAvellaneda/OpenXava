@@ -26,10 +26,10 @@ In your project use the name 'editors.xml' or 'editores.xml'
   </editor>
   
   <editor name="ValidValuesRadioButton" url="radioButtonEditor.jsp"/>   
-  <editor name="ValidValuesRadioButtonVertical" url="radioButtonEditor.jsp" >
+  <editor name="ValidValuesVerticalRadioButton" url="radioButtonEditor.jsp" >
   	<property name="horizontal" value="false"/>
   </editor>  
-  <editor name="ValidValuesRadioButtonHorizontal" url="radioButtonEditor.jsp" >
+  <editor name="ValidValuesHorizontalRadioButton" url="radioButtonEditor.jsp" >
   	<property name="horizontal" value="true"/>
   </editor>  
   

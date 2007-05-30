@@ -34,7 +34,7 @@
 	
 	<view>
 		<reference-view reference="customerContactPerson" view="Simple"/>
-	</view>
+	</view>	
 	
 	<tab>
 		<properties>number, description, time</properties>

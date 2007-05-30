@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Filtering by year and month in list mode works fine in all databases (including Postgres and Informix).
+- New editors ValidValuesVerticalRadioButton and ValidValuesHorizontalRadioButton.
+
 OpenXava 2.1.4 (2007-5-29)
 --------------------------
 - Controller DefaultListActionsForCollections that allows define default list actions for all collections.

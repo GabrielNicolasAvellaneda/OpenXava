@@ -24,8 +24,10 @@ abstract public class ModelMapping implements java.io.Serializable {
 	private Collection modelProperties = new ArrayList(); // of String
 	private Collection tableColumns = new ArrayList(); // of String
 	private Collection referenceMappingsWithConverter; // of ReferenceMapping
-	private boolean supportsSchemasInDataManipulationObtained = false; 
+	private boolean databaseMetadataLoaded = false; 
 	private boolean supportsSchemasInDataManipulation = true; 
+	private boolean supportsYearFunction = false;  
+	private boolean supportsMonthFunction = false; 
 	
 	abstract public String getModelName() throws XavaException;
 
@@ -167,20 +169,54 @@ abstract public class ModelMapping implements java.io.Serializable {
 	}
 	
 	private boolean supportsSchemasInDataManipulation() {
-		if (!supportsSchemasInDataManipulationObtained) {
-			String componentName = "UNKNOWN"; 
+		loadDatabaseMetadata(); 
+		return supportsSchemasInDataManipulation;		
+	}
+	
+	/**
+	 * Wraps the column name with the SQL function for extracting the year from a date.
+	 */
+	public String yearSQLFunction(String column) {
+		if (supportsYearFunction()) return "year(" + column + ")";
+		return "extract (year from " + column+ ")";
+	}
+	
+	/**
+	 * Wraps the column name with the SQL function for extracting the month from a date.
+	 */
+	public String monthSQLFunction(String column) {
+		if (supportsMonthFunction()) return "month(" + column + ")";
+		return "extract (month from " + column+ ")";
+	}
+		
+	private boolean supportsYearFunction() { 
+		loadDatabaseMetadata();
+		return supportsYearFunction; 
+	}
+	
+	private boolean supportsMonthFunction() { 
+		loadDatabaseMetadata();
+		return supportsMonthFunction; 
+	}
+	
+	private void loadDatabaseMetadata() {
+		if (!databaseMetadataLoaded) {
+			String componentName = "UNKNOWN";
 			try {
 				componentName = getMetaComponent().getName();
 				Connection con = DataSourceConnectionProvider.getByComponent(componentName).getConnection();
-				supportsSchemasInDataManipulation = con.getMetaData().supportsSchemasInDataManipulation();
-				supportsSchemasInDataManipulationObtained = true;
+				DatabaseMetaData metaData = con.getMetaData();
+				supportsSchemasInDataManipulation = metaData.supportsSchemasInDataManipulation();
+				Collection timeDateFunctions = Strings.toCollection(metaData.getTimeDateFunctions().toUpperCase());
+				supportsYearFunction = timeDateFunctions.contains("YEAR"); 
+				supportsMonthFunction = timeDateFunctions.contains("MONTH");
+				databaseMetadataLoaded = true;
 				con.close();				
 			}
 			catch (Exception ex) {				
-				log.warn(XavaResources.getString("supports_schemas_in_data_manipulation_warning", componentName, new Boolean(supportsSchemasInDataManipulation)));
-			}
-		}
-		return supportsSchemasInDataManipulation;		
+				log.warn(XavaResources.getString("load_database_metadata_warning"));
+			}		
+		}		
 	}
 	
 	
