@@ -36,6 +36,14 @@ String selected = value == i ?"checked":"";
 %> 
  
 <input type="radio" name="<%=propertyKey%>" value="<%=i%>" <%=selected%>> <%=it.next()%>
+
+<%
+String horizontal = request.getParameter("horizontal");
+Boolean isHorizontal = Boolean.valueOf(horizontal);
+%>
+
+<% if (!isHorizontal.booleanValue()) %> <br> <% ; %>
+
 <% 
 } // while 
 %> 
