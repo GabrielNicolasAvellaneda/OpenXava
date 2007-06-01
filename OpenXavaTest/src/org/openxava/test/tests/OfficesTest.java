@@ -17,7 +17,7 @@ public class OfficesTest extends ModuleTestBase {
 	private String warehouseName;
 
 	public OfficesTest(String testName) {
-		super(testName, "OpenXavaTest", "Offices");		
+		super(testName, "Offices");		
 	}
 	
 	public void testDescriptionEditorInStereotypeWithAggregateAsModel() throws Exception {
