@@ -1,8 +1,5 @@
 package org.openxava.test.tests;
 
-
-import org.openxava.hibernate.*;
-import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
 
@@ -14,7 +11,7 @@ public class Offices2Test extends ModuleTestBase {
 			
 
 	public Offices2Test(String testName) {
-		super(testName, "OpenXavaTest", "Offices2");		
+		super(testName, "Offices2");		
 	}
 	
 	public void testOverlappedKeyReference() throws Exception {
