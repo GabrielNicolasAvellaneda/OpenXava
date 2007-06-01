@@ -401,7 +401,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 		
 	private String changePropertiesByColumns(String source, boolean qualified)
 		throws XavaException {
-		StringBuffer r = new StringBuffer(source);
+		StringBuffer r = new StringBuffer(source);		
 		int i = r.toString().indexOf("${");
 		int f = 0;
 		while (i >= 0) {
@@ -476,7 +476,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 			getReferenceMapping(
 				reference).getColumnForReferencedModelProperty(
 				propertiesOfReference);
-		return getColumns().contains(column);
+		return containsColumn(getColumns(), column); 
 	}
 
 	public boolean isReferenceOverlappingWithSomeProperty(String reference)
@@ -516,7 +516,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 		Iterator it = propertyMappings.values().iterator();
 		while (it.hasNext()) {
 			PropertyMapping mapping = (PropertyMapping) it.next();
-			if (column.equals(mapping.getColumn()))
+			if (column.equalsIgnoreCase(mapping.getColumn())) 
 				return mapping.getProperty();
 		}
 		throw new XavaException("reference_property_not_overlapped", 				
@@ -532,12 +532,20 @@ abstract public class ModelMapping implements java.io.Serializable {
 		Iterator it = getReferenceMapping(reference).getDetails().iterator();
 		while (it.hasNext()) {
 			ReferenceMappingDetail d = (ReferenceMappingDetail) it.next();
-			if (getColumns().contains(d.getColumn())) {
+			if (containsColumn(getColumns(), d.getColumn())) { 
 				overlappingPropertiesOfReference.add(
 					d.getReferencedModelProperty());
 			}
 		}
 		return overlappingPropertiesOfReference;
+	}
+
+	private boolean containsColumn(Collection columns, String column) {
+		if (columns.contains(column)) return true;
+		for (Iterator it = columns.iterator(); it.hasNext(); ) {
+			if (((String)it.next()).equalsIgnoreCase(column)) return true;
+		}
+		return false;
 	}
 
 	private PropertyMapping getMappingForColumn(String column) throws XavaException {
