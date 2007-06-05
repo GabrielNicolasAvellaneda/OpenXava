@@ -85,7 +85,7 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 			if (key == null) {
 				throw new ObjectNotFoundException(XavaResources.getString(
 						"object_with_key_not_found", metaModel.getName(), keyValues));
-			}				
+			}							
 			Object result = find(metaModel.getPOJOClass(), (Serializable) key);				
 			if (result == null) {
 				throw new ObjectNotFoundException(XavaResources.getString(
@@ -165,7 +165,7 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 	}
 
 	public Object getKey(MetaModel metaModel, Map keyValues) throws XavaException {
-		return getObject(metaModel.getPOJOKeyClass(), keyValues, "key_for_pojo_error");
+		return getObject(metaModel.getPOJOKeyClass(), metaModel.extractKeyValues(keyValues), "key_for_pojo_error");
 	}
 	
 	public Object getContainer(MetaModel metaModel, Map containerKeyValues) throws XavaException {
