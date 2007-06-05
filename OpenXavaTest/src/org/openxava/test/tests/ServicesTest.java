@@ -10,7 +10,7 @@ import org.openxava.tests.*;
 public class ServicesTest extends ModuleTestBase {
 			
 	public ServicesTest(String nombreTest) {
-		super(nombreTest, "OpenXavaTest", "Services");		
+		super(nombreTest, "Services");		
 	}
 	
 	public void testFocusOnDescriptionsListInsideAggregate() throws Exception {
