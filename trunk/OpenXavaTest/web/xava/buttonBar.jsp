@@ -31,6 +31,7 @@ while (it.hasNext()) {
 </td>
 
 <td align="right" style='vertical-align: middle' class="<%=style.getMode(onBottom)%>">
+&nbsp;
 <%
 java.util.Iterator itSections = manager.getMetaActionsMode().iterator();
 boolean firstTime = true;
