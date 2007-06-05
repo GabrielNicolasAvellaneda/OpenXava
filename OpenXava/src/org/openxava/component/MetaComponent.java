@@ -53,7 +53,10 @@ public class MetaComponent implements Serializable {
 	 */
 	public static MetaComponent get(String name) throws ElementNotFoundException, XavaException {		
 		MetaComponent r = (MetaComponent) components.get(name);		
-		if (r == null) {			
+		if (r == null) {		
+			if (name.indexOf('.') >= 0) { // A component never is qualified
+				throw new ElementNotFoundException("component_not_found", name);
+			}
 			r = ComponentParser.parse(name);		
 			if (r == null) {				
 				throw new ElementNotFoundException("component_not_found", name);
@@ -233,7 +236,7 @@ public class MetaComponent implements Serializable {
 		metaAggregate.setMetaComponent(this);
 	}
 	
-	void addAggregateMapping(AggregateMapping aggregateMapping) throws XavaException {
+	public void addAggregateMapping(AggregateMapping aggregateMapping) throws XavaException { 
 		if (aggregatesMapping == null) aggregatesMapping = new HashMap();
 		aggregatesMapping.put(aggregateMapping.getModelName(), aggregateMapping);
 		aggregateMapping.setMetaComponent(this);	
