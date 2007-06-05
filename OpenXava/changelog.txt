@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- WebSphere Portal 6 style improved: Sections and frames have native aspect; and a little problem with resolutions higher than 1600x has been fixed.
+- Fix: Overlapping properties and references in mapping did not work if the case of the columns did not match.
+- Fix: ModuleTestBase.assertCollectionRowCount and assertCollectionRowCount fails on a calculated collection with only one row.
 - Filtering by year and month in list mode works fine in all databases (including Postgres and Informix).
 - New editors ValidValuesVerticalRadioButton and ValidValuesHorizontalRadioButton.
 
