@@ -115,10 +115,13 @@ public class XavaPortlet extends GenericPortlet {
 		
 	private Style getStyle(RenderRequest request) {
 		if (style == null) {
+			// Maybe moving this to a XML file (as style-portal.xml) could be
+			// a good idea
 			String portal = request.getPortalContext().getPortalInfo().toLowerCase();
-			if (portal.indexOf("jetspeed") >= 0) style = JetSpeed2Style.getInstance();
-			else if (portal.indexOf("websphere") >= 0) style = WebSpherePortalStyle.getInstance();
-			else if (portal.indexOf("liferay") >= 0) style = LiferayStyle.getInstance();
+			if (portal.indexOf("liferay") >= 0) style = LiferayStyle.getInstance();
+			else if (portal.indexOf("websphere portal/6") >= 0) style = WebSpherePortal6Style.getInstance();
+			else if (portal.indexOf("websphere portal/5") >= 0) style = WebSpherePortalStyle.getInstance();			
+			else if (portal.indexOf("jetspeed") >= 0) style = JetSpeed2Style.getInstance();
 			else style = Style.getInstance();
 		}
 		return style;

@@ -1,7 +1,9 @@
 package org.openxava.web.style;
 
-
-
+/**
+ * 
+ * @author Javier Paniza
+ */
 
 public class WebSpherePortalStyle extends Style {
 	
@@ -139,8 +141,7 @@ public class WebSpherePortalStyle extends Style {
 	
 	public String getButtonBarEnd(boolean onBottom) {
 		return onBottom?"wpsPagingTableFooterEnd":"wpsPagingTableHeaderEnd";
-	}
-	
+	}	
 	
 	public String getAscendingImage() {
 		return "ascending-white.gif";
@@ -205,6 +206,6 @@ public class WebSpherePortalStyle extends Style {
 	
 	public String getBottomButtonsStyle() {
 		return "style='padding-top: 4px'";
-	}
+	}	
 
 }

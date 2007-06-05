@@ -679,7 +679,7 @@ public class ModuleTestBase extends TestCase {
 		if (table == null) {
 			fail(message);
 		}
-		if ("nodata".equals(table.getRows()[2].getID())) { 
+		if (table.getRows().length > 2 && "nodata".equals(table.getRows()[2].getID())) { 
 			return 0;
 		}
 		

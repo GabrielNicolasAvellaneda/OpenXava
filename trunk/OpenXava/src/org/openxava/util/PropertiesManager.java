@@ -80,6 +80,7 @@ public class PropertiesManager implements java.io.Serializable {
 			throw ex;
 		}
 		catch (InvocationTargetException ex) {
+			log.error(XavaResources.getString("get_property_error", propertyName));
 			throw ex;
 		}
 		catch (Exception ex) {
@@ -186,6 +187,7 @@ public class PropertiesManager implements java.io.Serializable {
 			} 			
 		}
 		catch (InvocationTargetException ex) {
+			log.error(XavaResources.getString("set_property_error", propertyName));
 			throw ex; 
 		}
 		catch (Exception ex) {
