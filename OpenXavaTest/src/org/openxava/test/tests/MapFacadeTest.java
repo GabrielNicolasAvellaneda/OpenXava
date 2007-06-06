@@ -32,6 +32,15 @@ public class MapFacadeTest extends TestCase {
 		XPersistence.commit();
 	}
 	
+	public void testCreateReturningKey() throws Exception { 
+		Map values = new HashMap();
+		values.put("year", new Integer(2007));
+		values.put("description", "JUNIT FROM MapFacade");
+		Map key = MapFacade.createReturningKey("Course", values);
+		Number number = (Number) key.get("number");		
+		assertTrue("Number must have value", number.intValue() > 0);
+	}
+	
 	public void testModelValidatorWithNullReference() throws Exception {
 		Map values = new HashMap();
 		values.put("oid", "2004:9:5"); // It must exist		
