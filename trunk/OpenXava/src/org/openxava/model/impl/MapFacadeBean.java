@@ -577,6 +577,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		throws CreateException, XavaException, ValidationException, RemoteException {
 		MetaEntity metaEntity = (MetaEntity) MetaComponent.get(modelName).getMetaEntity();
 		Object entity = create(metaEntity, values, null, null, 0);
+		if (metaEntity.hasDefaultCalculatorOnCreate()) {
+			getPersistenceProvider().flush(); // to execute calculators
+		}
 		return getValues(metaEntity, entity, getKeyNames(metaEntity));
 	}
 	
@@ -584,7 +587,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		throws CreateException, XavaException, ValidationException, RemoteException {
 		MetaEntity metaEntity = (MetaEntity) MetaComponent.get(modelName).getMetaEntity();
 		Object entity = create(metaEntity, values, null, null, 0);
-		getPersistenceProvider().flush(); // to execute calculators
+		if (metaEntity.hasDefaultCalculatorOnCreate()) {
+			getPersistenceProvider().flush(); // to execute calculators
+		}
 		return getValues(metaEntity, entity, values);
 	}
 		

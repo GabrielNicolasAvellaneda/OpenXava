@@ -20,7 +20,7 @@ public class SaveNewAction extends UpdateReferenceBaseAction {
 	public void execute() throws Exception {		
 		try {					
 			// Create
-			Map key = MapFacade.createReturningKey(getView().getModelName(), getValuesToSave());
+			Map key = MapFacade.createReturningKey(getView().getModelName(), getValuesToSave());			
 			returnsToPreviousViewUpdatingReferenceView(key);
 		}
 		catch (ValidationException ex) {			
