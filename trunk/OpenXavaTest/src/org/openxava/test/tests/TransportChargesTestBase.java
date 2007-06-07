@@ -18,7 +18,7 @@ public class TransportChargesTestBase extends ModuleTestBase {
 	private TransportCharge charge2;
 		
 	public TransportChargesTestBase(String testName, String moduleName) {
-		super(testName, "OpenXavaTest", moduleName);		
+		super(testName, moduleName);		
 	}
 	
 	

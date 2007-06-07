@@ -11,15 +11,15 @@ import org.openxava.tests.*;
 public class ShipmentChargesTest extends ModuleTestBase {
 			
 	public ShipmentChargesTest(String testName) {
-		super(testName, "OpenXavaTest", "ShipmentCharges");		
+		super(testName, "ShipmentCharges");		
 	}
 	
 	public void testOverlappedReferencesWithConverterInANotOverlappedColumn() throws Exception {
 		deleteShipmentCharges();
 		// Creating
 		execute("CRUD.new");
-		setValue("mode", "1");
-		String shipment = getShipment().toString(); 
+		setValue("mode", isOX3()?"0":"1");
+		String shipment = DeliveriesTest.toKeyString(getShipment()); 
 		setValue("shipment.KEY", shipment);
 		setValue("amount", "150");
 		execute("CRUD.save");
@@ -29,7 +29,7 @@ public class ShipmentChargesTest extends ModuleTestBase {
 		// Searching and verifying
 		execute("Mode.list");
 		execute("Mode.detailAndFirst");		
-		assertValue("mode", "1"); 
+		assertValue("mode", isOX3()?"0":"1"); 
 		assertValue("shipment.KEY", shipment);
 		assertValue("amount", "150");
 	}
