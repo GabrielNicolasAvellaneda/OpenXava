@@ -9,7 +9,7 @@ import org.openxava.tests.*;
 public class TasksTest extends ModuleTestBase {
 			
 	public TasksTest(String testName) {
-		super(testName, "OpenXavaTest", "Tasks");		
+		super(testName, "Tasks");		
 	}
 	
 	public void testUsersAndUserFilter() throws Exception {

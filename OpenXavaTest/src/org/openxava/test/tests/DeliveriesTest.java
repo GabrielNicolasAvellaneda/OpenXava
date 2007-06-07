@@ -936,7 +936,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertTrue(type + " expected", Arrays.asList(types).contains(type));
 	}
 	
-	private String toKeyString(IShipment shipment) throws Exception {
+	static String toKeyString(IShipment shipment) throws Exception {
 		if (isOX3()) {
 			StringTokenizer st = new StringTokenizer(shipment.toString(), "[.]");
 			StringBuffer sb = new StringBuffer("[.");

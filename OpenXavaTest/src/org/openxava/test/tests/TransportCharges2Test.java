@@ -12,7 +12,7 @@ import org.openxava.util.*;
 public class TransportCharges2Test extends ModuleTestBase {
 			
 	public TransportCharges2Test(String testName) {
-		super(testName, "OpenXavaTest", "TransportCharges2");		
+		super(testName, "TransportCharges2");		
 	}
 	
 	public void testKeyNestedOverlappedReferences() throws Exception {

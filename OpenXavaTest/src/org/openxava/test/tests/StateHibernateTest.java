@@ -10,7 +10,7 @@ public class StateHibernateTest extends ModuleTestBase {
 	
 	
 	public StateHibernateTest(String testName) {
-		super(testName, "OpenXavaTest", "StatesHibernate");		
+		super(testName, "StatesHibernate");		
 	}
 
 	public void testCreateReadUpdateDeleteWithHandmadeHibernate() throws Exception {		

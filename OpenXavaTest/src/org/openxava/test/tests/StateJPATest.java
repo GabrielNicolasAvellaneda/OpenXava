@@ -10,7 +10,7 @@ public class StateJPATest extends ModuleTestBase {
 	
 	
 	public StateJPATest(String testName) {
-		super(testName, "OpenXavaTest", "StatesJPA");		
+		super(testName, "StatesJPA");		
 	}
 
 	public void testCreateReadUpdateDeleteWithHandmadeJPA() throws Exception {
