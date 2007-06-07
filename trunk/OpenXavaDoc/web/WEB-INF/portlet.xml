@@ -581,5 +581,23 @@
 		<supported-locale>es</supported-locale>		
 		<resource-bundle>NewIn214</resource-bundle>		
 	</portlet> 	
+	
+	<portlet id="MyFirstProject">
+		<description>MyFirstProject</description>    
+		<portlet-name>MyFirstProject</portlet-name>
+		<display-name>MyFirstProject</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>my-first-ox-project-guide</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<supported-locale>es</supported-locale>
+		<resource-bundle>MyFirstProject</resource-bundle>		
+	</portlet> 		
 											
 </portlet-app>
