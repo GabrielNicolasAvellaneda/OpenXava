@@ -70,7 +70,7 @@ public class XSystem {
 		}
 		catch (Exception ex) {
 			log.warn(XavaResources.getString("logging_level_not_set"));
-		}
+		}		
 	}
 	
 }
