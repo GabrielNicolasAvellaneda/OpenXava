@@ -13,6 +13,11 @@ Number (the key) can be 0
 			<default-value-calculator class="org.openxava.calculators.IdentityCalculator" on-create="true"/>
 		</property>
 		<property name="name" type="String"	size="20" required="true"/>	
+		<property name="sample" stereotype="IMAGE_LABEL">	
+			<calculator class="org.openxava.test.calculators.ColorSampleCalculator">
+				<set property="colorName" from="name"/>
+			</calculator>
+		</property>
 	</entity>
 	
 	<entity-mapping table="XAVATEST@separator@COLOR">

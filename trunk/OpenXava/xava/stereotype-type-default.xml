@@ -23,5 +23,7 @@
 	<for stereotype="GALERIA_IMAGENES" type="String"/>
 	<for stereotype="HTML_TEXT" type="java.lang.String"/>
 	<for stereotype="TEXTO_HTML" type="java.lang.String"/>
-		
+	<for stereotype="IMAGE_LABEL" type="java.lang.String"/>
+	<for stereotype="ETIQUETA_IMAGEN" type="java.lang.String"/>
+			
 </stereotype-type-default>

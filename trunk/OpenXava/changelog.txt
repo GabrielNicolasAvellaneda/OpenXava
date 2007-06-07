@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- New stereotype IMAGE_LABEL/ETIQUETA_IMAGEN.
 - Fix: MapFacade.createReturningValues did not return values calculated from default-value-calculators.
 - WebSphere Portal 6 style improved: Sections and frames have native aspect; and a little problem with resolutions higher than 1600x has been fixed.
 - Fix: Overlapping properties and references in mapping did not work if the case of the columns did not match.
