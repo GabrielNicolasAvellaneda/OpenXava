@@ -138,7 +138,7 @@ public class XHibernate {
 	
 	private static SessionFactory createSessionFactory(String hibernateCfg) throws HibernateException {
 		try {
-			Configuration configuration = new Configuration().configure(hibernateCfg);			
+			Configuration configuration = new AnnotationConfiguration().configure(hibernateCfg);
 			
 			for (Iterator it = MetaModel.getAllPojoGenerated().iterator(); it.hasNext();) {
 				MetaModel model = (MetaModel) it.next();

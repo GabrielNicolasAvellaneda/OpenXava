@@ -128,7 +128,7 @@ public class ModuleTestBase extends TestCase {
 	/**
 	 * Warning: Does not rely heavily in this method, it can change in the future.
 	 */
-	protected boolean isOX3() {
+	static protected boolean isOX3() {
 		try {
 			Class.forName("org.openxava.ox3.AnnotatedClassParser");
 			return true;

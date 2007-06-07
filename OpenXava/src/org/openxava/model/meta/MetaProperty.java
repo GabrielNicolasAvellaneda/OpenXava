@@ -872,7 +872,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	
 	private Object parseEnum(String value) throws Exception { 
 		// We parse as an int
-		if (Is.emptyString(value)) return null;
+		if (Is.emptyString(value) || "null".equals(value)) return null;
 		try {
 			Integer ordinal = new Integer(value);
 			return getValidValue(ordinal.intValue());			
