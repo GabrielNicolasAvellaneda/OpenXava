@@ -21,6 +21,7 @@ public class ColorsTest extends ModuleTestBase {
 		assertNoErrors();
 		assertValue("number", "0");
 		assertValue("name", "ROJO");
+		assertValue("sample", "RED");
 	}		
 	
 }

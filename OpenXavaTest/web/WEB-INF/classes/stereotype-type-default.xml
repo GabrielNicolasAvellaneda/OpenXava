@@ -17,5 +17,5 @@
 	<for stereotype="RECEPTIONIST" type="int"/>
 	<for stereotype="REGIONS" type="String []"/>
 	<for stereotype="DELIVERIES" type="org.openxava.test.model.Delivery"/>
-	
+		
 </stereotype-type-default>

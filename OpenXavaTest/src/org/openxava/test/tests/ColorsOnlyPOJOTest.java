@@ -29,7 +29,7 @@ public class ColorsOnlyPOJOTest extends ModuleTestBase {
 		execute("TypicalNotResetOnSave.save");
 		assertNoErrors();						
 		String next = String.valueOf(Integer.parseInt(last) + 1);
-		assertValue("number", next);		
+		assertValue("number", next);
 	}
 		
 }
