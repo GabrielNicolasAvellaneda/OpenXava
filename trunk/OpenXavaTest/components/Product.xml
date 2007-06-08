@@ -98,7 +98,7 @@ therefore it's show some features more advances of stereotypes.
 		<property-view property="warehouseKey"> 
 			<on-change class="org.openxava.test.actions.OnChangeVoidAction"/>
 		</property-view>
-		
+				
 		<members>
 			number;
 			<section name="data">
@@ -114,7 +114,7 @@ therefore it's show some features more advances of stereotypes.
 				remarks
 			</section>
 		</members>		
-		
+				
 	</view>
 	
 	
