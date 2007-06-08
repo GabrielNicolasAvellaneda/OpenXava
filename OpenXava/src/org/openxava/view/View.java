@@ -3000,8 +3000,12 @@ public class View implements java.io.Serializable {
 		while (it.hasNext()) {
 			MetaMember m = (MetaMember) it.next();			
 			if (m instanceof MetaGroup) {												
-				String name = getGroupView(m.getName()).getNextFocusPropertyName(memberName); 
-				if (name != null) return name;
+				String name = getGroupView(m.getName()).getNextFocusPropertyName(memberName);
+				if ("__FOUND__".equals(name)) {
+					found = true; 
+					continue;
+				}
+				else if (name != null) return name;
 			}
 						
 			if (m.getName().equals(memberName)) {				
@@ -3038,7 +3042,8 @@ public class View implements java.io.Serializable {
 		}
 		if (hasSections()) {
 			return getSectionView(getActiveSection()).getNextFocusPropertyName(memberName);
-		}		
+		}	
+		if (isGroup() && found) return "__FOUND__";		
 		return null;
 	}
 
