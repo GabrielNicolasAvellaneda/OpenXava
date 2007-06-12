@@ -351,6 +351,7 @@ public class CustomersWithSectionTest extends CustomersTest {
 	public void testRowStyle() throws Exception {
 		int c = getListRowCount();
 		boolean found = false;
+		
 		for (int i=0; i<c; i++) {
 			String type = getValueInList(i, "type");
 			if ("Steady".equals(type)) {				
