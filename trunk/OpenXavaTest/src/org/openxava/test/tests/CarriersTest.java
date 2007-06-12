@@ -80,9 +80,9 @@ public class CarriersTest extends ModuleTestBase {
 		
 		assertCollectionColumnCount("fellowCarriers", 4);
 		assertLabelInCollection("fellowCarriers", 0, "Number");
-		assertLabelInCollection("fellowCarriers", 1, "Name");
-		assertLabelInCollection("fellowCarriers", 2, "Calculated");
-		assertLabelInCollection("fellowCarriers", 3, "Remarks");
+		assertLabelInCollection("fellowCarriers", 1, "Name");		
+		assertLabelInCollection("fellowCarriers", 2, "Remarks");
+		assertLabelInCollection("fellowCarriers", 3, "Calculated");
 		
 		// Customize the collection
 		execute("List.customize", "collection=fellowCarriers");
@@ -92,8 +92,9 @@ public class CarriersTest extends ModuleTestBase {
 		assertCollectionColumnCount("fellowCarriers", 4);
 		assertLabelInCollection("fellowCarriers", 0, "Number");
 		assertLabelInCollection("fellowCarriers", 1, "Name");
-		assertLabelInCollection("fellowCarriers", 2, "Remarks");		
-		assertLabelInCollection("fellowCarriers", 3, "Calculated");
+		assertLabelInCollection("fellowCarriers", 2, "Calculated");
+		assertLabelInCollection("fellowCarriers", 3, "Remarks");		
+		
 		
 		// The main list not modified
 		execute("Mode.list");
@@ -107,8 +108,9 @@ public class CarriersTest extends ModuleTestBase {
 		assertCollectionColumnCount("fellowCarriers", 4);
 		assertLabelInCollection("fellowCarriers", 0, "Number");
 		assertLabelInCollection("fellowCarriers", 1, "Name");
-		assertLabelInCollection("fellowCarriers", 2, "Remarks");		
-		assertLabelInCollection("fellowCarriers", 3, "Calculated");
+		assertLabelInCollection("fellowCarriers", 2, "Calculated");
+		assertLabelInCollection("fellowCarriers", 3, "Remarks");		
+		
 		
 		// Add columns
 		execute("List.addColumns", "collection=fellowCarriers");
@@ -126,23 +128,23 @@ public class CarriersTest extends ModuleTestBase {
 		assertCollectionColumnCount("fellowCarriers", 5);
 		assertLabelInCollection("fellowCarriers", 0, "Number");
 		assertLabelInCollection("fellowCarriers", 1, "Name");
-		assertLabelInCollection("fellowCarriers", 2, "Remarks");		
-		assertLabelInCollection("fellowCarriers", 3, "Calculated");
+		assertLabelInCollection("fellowCarriers", 2, "Calculated");
+		assertLabelInCollection("fellowCarriers", 3, "Remarks");				
 		assertLabelInCollection("fellowCarriers", 4, "Name");
  		
 		// Other customizations
 		execute("List.moveColumnToLeft", "columnIndex=4,collection=fellowCarriers");
 		assertLabelInCollection("fellowCarriers", 0, "Number");
 		assertLabelInCollection("fellowCarriers", 1, "Name");
-		assertLabelInCollection("fellowCarriers", 2, "Remarks");
+		assertLabelInCollection("fellowCarriers", 2, "Calculated");
 		assertLabelInCollection("fellowCarriers", 3, "Name");
-		assertLabelInCollection("fellowCarriers", 4, "Calculated");
-		
+		assertLabelInCollection("fellowCarriers", 4, "Remarks");
+				
 		execute("List.removeColumn", "columnIndex=4,collection=fellowCarriers");
 		assertCollectionColumnCount("fellowCarriers", 4);
 		assertLabelInCollection("fellowCarriers", 0, "Number");
 		assertLabelInCollection("fellowCarriers", 1, "Name");
-		assertLabelInCollection("fellowCarriers", 2, "Remarks");
+		assertLabelInCollection("fellowCarriers", 2, "Calculated");
 		assertLabelInCollection("fellowCarriers", 3, "Name");
 		
 		// Restoring		
@@ -151,8 +153,9 @@ public class CarriersTest extends ModuleTestBase {
 		assertCollectionColumnCount("fellowCarriers", 4);
 		assertLabelInCollection("fellowCarriers", 0, "Number");
 		assertLabelInCollection("fellowCarriers", 1, "Name");
-		assertLabelInCollection("fellowCarriers", 2, "Calculated");
-		assertLabelInCollection("fellowCarriers", 3, "Remarks");
+		assertLabelInCollection("fellowCarriers", 2, "Remarks");
+		assertLabelInCollection("fellowCarriers", 3, "Calculated");
+		
 		
 		// Cancel in AddColumns returns to detail (not list mode)
 		execute("List.addColumns", "collection=fellowCarriers");

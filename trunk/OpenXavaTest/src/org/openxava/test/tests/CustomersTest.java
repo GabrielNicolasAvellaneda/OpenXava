@@ -231,17 +231,17 @@ public class CustomersTest extends ModuleTestBase {
 			{ base0?"2":"3", "Special" }	
 		};
 		
-		assertValue("type", "1");		
+		assertValue("type", base0?"0":"1");		
 		assertValidValues("type", validValues);
 	}
 	
 	public void testOnChangeAction() throws Exception {   				
 		execute("CRUD.new");		
-		assertValue("type", "1");		
+		assertValue("type", isOX3()?"0":"1");		
 		setValue("name", "PEPE");
-		assertValue("type", "1");
+		assertValue("type", isOX3()?"0":"1");
 		setValue("name", "JAVI");
-		assertValue("type", "2");		
+		assertValue("type", isOX3()?"1":"2");		
 	}	
 		
 	
@@ -251,7 +251,7 @@ public class CustomersTest extends ModuleTestBase {
 		execute("CRUD.new");
 		assertNoErrors();
 		setValue("number", "66");
-		setValue("type", "2");
+		setValue("type", isOX3()?"1":"2");
 		setValue("name", "JUNIT CUSTOMER");
 		setValue("address.street", "Junit Street");
 		setValue("address.zipCode", "66666");
@@ -267,7 +267,7 @@ public class CustomersTest extends ModuleTestBase {
 		assertNoEditable("number");
 		assertEditable("type");		
 		assertValue("number", "66");
-		assertValue("type", "2");
+		assertValue("type", isOX3()?"1":"2");
 		assertValue("name", "Junit Customer"); // Testing formatter with sets
 		assertValue("address.street", "JUNIT STREET"); // Testing overwrite default formatter for applicacion. Use UpperCaseFormatter
 		assertValue("address.zipCode", "66666");
@@ -280,7 +280,7 @@ public class CustomersTest extends ModuleTestBase {
 
 		execute("CRUD.new"); 
 		assertValue("number", "");
-		assertValue("type", "1");
+		assertValue("type", isOX3()?"0":"1");
 		assertValue("name", "");
 		assertValue("address.street", "");
 		assertValue("address.zipCode", "");
@@ -296,7 +296,7 @@ public class CustomersTest extends ModuleTestBase {
 		setValue("number", "66");
 		execute("CRUD.search");		
 		assertValue("number", "66");
-		assertValue("type", "2"); 
+		assertValue("type", isOX3()?"1":"2"); 
 		assertValue("name", "Junit Customer"); // Testing formatter with sets
 		assertValue("address.street", "JUNIT STREET"); // Testing overwrite default formatter for applicacion. Use UpperCaseFormatter
 		assertValue("address.zipCode", "66666");
@@ -314,7 +314,7 @@ public class CustomersTest extends ModuleTestBase {
 		assertNoErrors();
 		execute("CRUD.new");
 		assertValue("number", "");
-		assertValue("type", "1");
+		assertValue("type", isOX3()?"0":"1");
 		assertValue("name", "");
 		
 		// Verifying modified
@@ -322,7 +322,7 @@ public class CustomersTest extends ModuleTestBase {
 		setValue("number", "66");
 		execute("CRUD.search");		
 		assertValue("number", "66");
-		assertValue("type", "2"); 
+		assertValue("type", isOX3()?"1":"2"); 
 		assertValue("name", "Junit Customer");
 		assertValue("seller.number", "2");
 		assertValue("seller.name", "JUANVI LLAVADOR");
@@ -480,7 +480,7 @@ public class CustomersTest extends ModuleTestBase {
 		// Creating
 		execute("CRUD.new");
 		setValue("number", "66");
-		setValue("type", "1");
+		setValue("type", isOX3()?"0":"1");
 		setValue("name", "JUNIT CUSTOMER");
 		setValue("address.street", "JUNIT STREET");
 		setValue("address.zipCode", "66666");

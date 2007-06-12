@@ -9,6 +9,11 @@
 			size="5" required="true"/>
 		<property name="name" stereotype="NO_FORMATING_STRING"
 			size="40" required="true"/>			  
+		<property name="remarks" stereotype="MEMO">
+			<default-value-calculator class="org.openxava.test.calculators.CarrierRemarksCalculator">
+				<set property="drivingLicenceType" from="drivingLicence.type"/>
+			</default-value-calculator>
+		</property>			
 		<property name="calculated" type="String"
 			size="10">			  			
 			<calculator class="org.openxava.calculators.StringCalculator">
@@ -34,13 +39,7 @@
 			<reference model="Carrier"/>			
 			<calculator class="org.openxava.test.calculators.FellowCarriersCalculator"/>
 		</collection>		
-		
-		<property name="remarks" stereotype="MEMO">
-			<default-value-calculator class="org.openxava.test.calculators.CarrierRemarksCalculator">
-				<set property="drivingLicenceType" from="drivingLicence.type"/>
-			</default-value-calculator>
-		</property>
-									
+											
 		<method name="translate">		
 			<calculator class="org.openxava.test.calculators.TranslateCarrierNameCalculator"/>
 		</method>						

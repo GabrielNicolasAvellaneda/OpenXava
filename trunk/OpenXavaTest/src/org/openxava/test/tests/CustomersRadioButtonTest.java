@@ -17,7 +17,7 @@ public class CustomersRadioButtonTest extends ModuleTestBase {
 		// and about radioButton we only test that it's possible to use in junit test,
 		// because behaves equals that a combo. Hence it's needed to test visually
 		execute("CRUD.new");
-		setValue("number", "66");
+		setValue("number", "66");		
 		setValue("type", isOX3()?"1":"2"); // steady
 		setValue("name", "CUSTOMER JUNIT");
 		setValue("address.street", "DOCTOR PESSET");
