@@ -1084,7 +1084,7 @@ abstract public class MetaModel extends MetaElement {
 		int idx = propertyName.indexOf('.');
 		if (idx >= 0) {				
 			String refName = propertyName.substring(0, idx);								
-			String property = propertyName.substring(idx + 1);
+			String property = propertyName.substring(idx + 1);			
 			return getMetaReference(refName).getMetaModelReferenced().isCalculated(property);
 		}
 		

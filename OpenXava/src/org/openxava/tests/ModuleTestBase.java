@@ -647,15 +647,8 @@ public class ModuleTestBase extends TestCase {
 		WebTable table = response.getTableWithID(collection);
 		if (table == null) {
 			fail(XavaResources.getString("collection_not_displayed", collection));			
-		}
-		
-		try { 
-			row = getMetaModel().getMetaCollection(collection).hasCalculator()?row + 1:row + 2;		
-		}
-		catch (ElementNotFoundException ex) {
-			// For JSP hand made like collection, but with not match in model (as 'xavaPropertiesList' case) 
-			row = row + 1; 
-		}
+		}		
+		row = collectionHasFilterHeader(table)?row + 2:row + 1; 
 		int increment = table.getTableCell(row, 0).getLinks().length > 0?2:1; 
 		return table.getTableCell(row, column + increment);		
 	}
@@ -681,10 +674,23 @@ public class ModuleTestBase extends TestCase {
 		}
 		if (table.getRows().length > 2 && "nodata".equals(table.getRows()[2].getID())) { 
 			return 0;
-		}
-		
-		return table.getRowCount() - 2;		
+		}						
+		int increment = collectionHasFilterHeader(table)?2:1;
+		return table.getRowCount() - increment;
 	}
+	
+	private boolean collectionHasFilterHeader(WebTable table) { 				
+		return table.getRows().length > 1 && table.getTableCell(1, 0).getElementsWithName("xava.action.List.filter").length > 0;
+	}
+	
+	private boolean collectionHasFilterHeader(String collection) throws Exception { 
+		WebTable table = response.getTableWithID(collection);
+		if (table == null) {
+			fail(XavaResources.getString("collection_not_displayed", collection));
+		}
+		return collectionHasFilterHeader(table);
+	}
+	
 	
 	/**
 	 * Rows count displayed with data. <p>
@@ -716,14 +722,7 @@ public class ModuleTestBase extends TestCase {
 	 * Excludes heading and footing, and not displayed data (but cached). 
 	 */
 	protected int getCollectionRowCount(String collection) throws Exception {
-		int rc = getListRowCount(collection, XavaResources.getString("collection_not_displayed", collection));
-		try {
-			return getMetaModel().getMetaCollection(collection).hasCalculator()?rc + 1:rc;
-		}
-		catch (ElementNotFoundException ex) {
-			// For JSP hand made like collection, but with not match in model (as 'xavaPropertiesList' case) 
-			return rc; 
-		}
+		return getListRowCount(collection, XavaResources.getString("collection_not_displayed", collection)); 
 	}
 	
 	/**
@@ -801,11 +800,12 @@ public class ModuleTestBase extends TestCase {
 	}
 		
 	protected void checkRowCollection(String collection, int row) throws Exception {
-		if (getMetaModel().getMetaCollection(collection).hasCalculator()) {
-			checkRow(getPropertyPrefix() + collection + "." + "__SELECTED__", row);
+		//if (getMetaModel().getMetaCollection(collection).hasCalculator()) {
+		if (collectionHasFilterHeader(collection)) {
+			checkRow(Tab.COLLECTION_PREFIX + collection + "_selected", row);
 		}
 		else {
-			checkRow(Tab.COLLECTION_PREFIX + collection + "_selected", row);
+			checkRow(getPropertyPrefix() + collection + "." + "__SELECTED__", row);			
 		}
 	}
 		
