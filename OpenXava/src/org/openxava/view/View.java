@@ -2143,6 +2143,9 @@ public class View implements java.io.Serializable {
 		}		
 	}
 
+	/**
+	 * POJO associated to the current view. <p>
+	 */
 	private Object getPOJO() throws XavaException, ObjectNotFoundException, RemoteException, FinderException {
 		if (isKeyEditable()) {		
 			return getMetaModel().toPOJO(getParentIfSectionOrGroup().getAllValues());		

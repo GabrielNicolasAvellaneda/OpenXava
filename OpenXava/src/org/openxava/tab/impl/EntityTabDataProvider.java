@@ -88,7 +88,7 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 		this.connectionProvider = provider;
 	}
 
-	private Object[] doCalculations(String modelName, Object[] row, Collection tabCalculators, Map keyIndexes, List propertiesNames) throws XavaException {
+	private Object[] doCalculations(String modelName, Object[] row, Collection tabCalculators, Map keyIndexes, List propertiesNames) throws XavaException {		
 		Object entity = null;
 		Iterator itCalculators = tabCalculators.iterator();
 		while (itCalculators.hasNext()) {

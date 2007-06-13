@@ -277,11 +277,9 @@ public class EntityTab implements IEntityTabImpl {
 	public DataChunk nextChunk() throws RemoteException {		
 		Collection tabCalculators = null;
 		Map keyIndexes = null;
-		String modelName = null;
 		List propertiesNames = null;
 		try {		
 			if (metaTab.hasCalculatedProperties()) {
-				modelName = this.componentName;
 				tabCalculators = getTabCalculators();
 				keyIndexes = getKeyIndexes();
 				propertiesNames = getPropertiesNames();
@@ -299,7 +297,7 @@ public class EntityTab implements IEntityTabImpl {
 		}
 		catch (Exception ex) {
 			cancelDataProvider(getComponentName());
-			tv = getDataProvider(getComponentName()).nextChunk(tabProvider, modelName, propertiesNames, tabCalculators, keyIndexes, tabConverters);			
+			tv = getDataProvider(getComponentName()).nextChunk(tabProvider, modelName, propertiesNames, tabCalculators, keyIndexes, tabConverters);						getDataProvider(getComponentName()).nextChunk(tabProvider, modelName, propertiesNames, tabCalculators, keyIndexes, tabConverters);
 		}
 		tabProvider.setCurrent(tv.getIndexNext());				
 		List data = tv.getData();

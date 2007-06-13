@@ -35,5 +35,4 @@ for (Iterator it=tab.getRemainingPropertiesNames().iterator(); it.hasNext();) {
 <%
 }
 %>
-<tr></tr>
 </table>
