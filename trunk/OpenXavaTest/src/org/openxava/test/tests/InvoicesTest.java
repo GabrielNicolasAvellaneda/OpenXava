@@ -406,13 +406,13 @@ public class InvoicesTest extends ModuleTestBase {
 		assertNoErrors();
 		assertAction("NewCreation.saveNew");
 		assertAction("NewCreation.cancel");	
-		assertValue("Customer", "type", "1");
+		assertValue("Customer", "type", isOX3()?"0":"1");
 		execute("Reference.search", "keyProperty=xava.Customer.alternateSeller.number");
 		assertNoErrors();
 		execute("ReferenceSearch.cancel");
 		assertAction("NewCreation.saveNew");
 		assertAction("NewCreation.cancel");	
-		assertValue("Customer", "type", "1");		
+		assertValue("Customer", "type", isOX3()?"0":"1");		
 		execute("NewCreation.cancel");
 		assertExists("year");
 		assertExists("number");
