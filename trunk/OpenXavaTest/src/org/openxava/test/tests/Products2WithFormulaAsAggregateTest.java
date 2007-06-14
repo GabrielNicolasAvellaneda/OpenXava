@@ -71,7 +71,7 @@ public class Products2WithFormulaAsAggregateTest extends ModuleTestBase {
 	}
 
 	private void assertFormulaExist(String name) {
-		try {
+		try {			
 			Formula.findByName(name);
 		}
 		catch (ObjectNotFoundException ex) {

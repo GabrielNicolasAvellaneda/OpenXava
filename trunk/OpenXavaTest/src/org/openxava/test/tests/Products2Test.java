@@ -199,7 +199,7 @@ public class Products2Test extends ModuleTestBase {
 		Warehouse warehouseKeyZone1 = new Warehouse();
 		warehouseKeyZone1.setNumber(1);
 		warehouseKeyZone1.setZoneNumber(1); 
-		setValue("warehouse.KEY", warehouseKeyZone1.toString());
+		setValue("warehouse.KEY", warehouseKeyZone1.toString());		
 		assertExists("zoneOne");
 		
 		Warehouse warehouseKeyZone2 = new Warehouse();
