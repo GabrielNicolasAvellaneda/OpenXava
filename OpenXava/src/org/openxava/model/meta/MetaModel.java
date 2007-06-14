@@ -1427,7 +1427,7 @@ abstract public class MetaModel extends MetaElement {
 		java.lang.reflect.Field [] fields = getPOJOClass().getDeclaredFields();  
 		Arrays.sort(fields, FieldComparator.getInstance());
 		PropertiesManager pm = new PropertiesManager(pojo);
-		for (int i=0; i < fields.length; i++) {
+		for (int i=0; i < fields.length; i++) {			
 			try {
 				if (isKey(fields[i].getName())) {
 					if (isReference(fields[i].getName())) {
