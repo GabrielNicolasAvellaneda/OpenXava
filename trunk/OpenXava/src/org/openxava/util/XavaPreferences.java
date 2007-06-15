@@ -29,6 +29,7 @@ public class XavaPreferences {
 	private boolean jpaCodeInPOJOs = false;
 	private boolean jpaCodeInPOJOsLoaded = false;
 	private Level javaLoggingLevel;
+	private Level hibernateJavaLoggingLevel;
 
 		
 	
@@ -157,10 +158,25 @@ public class XavaPreferences {
 			catch (Exception ex) {
 				// Because it's a log error, we don't use log, but direct System.err
 				javaLoggingLevel = Level.parse(JAVA_LOGGING_LEVEL_DEFAULT_VALUE);
-				System.err.println("[XavaPreferences.getLogLevel] " + XavaResources.getString("incorrect_log_level", log, JAVA_LOGGING_LEVEL_DEFAULT_VALUE));				
+				System.err.println("[XavaPreferences.getJavaLoggingLevel] " + XavaResources.getString("incorrect_log_level", log, JAVA_LOGGING_LEVEL_DEFAULT_VALUE));				
 			}
 		}
 		return javaLoggingLevel;
 	}
+	
+	public Level getHibernateJavaLoggingLevel() {
+		if (hibernateJavaLoggingLevel == null) {
+			String log = getProperties().getProperty("hibernateJavaLoggingLevel", JAVA_LOGGING_LEVEL_DEFAULT_VALUE).trim();
+			try {
+				hibernateJavaLoggingLevel = Level.parse(log);
+			}
+			catch (Exception ex) {
+				// Because it's a log error, we don't use log, but direct System.err
+				hibernateJavaLoggingLevel = Level.parse(JAVA_LOGGING_LEVEL_DEFAULT_VALUE);
+				System.err.println("[XavaPreferences.getHibernateJavaLoggingLevel] " + XavaResources.getString("incorrect_log_level", log, JAVA_LOGGING_LEVEL_DEFAULT_VALUE));				
+			}
+		}
+		return hibernateJavaLoggingLevel;
+	}	
 		
 }

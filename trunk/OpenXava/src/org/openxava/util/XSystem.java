@@ -70,7 +70,8 @@ public class XSystem {
 		}
 		catch (Exception ex) {
 			log.warn(XavaResources.getString("logging_level_not_set"));
-		}		
+		}
+		Logger.getLogger("org.hibernate").setLevel(XavaPreferences.getInstance().getHibernateJavaLoggingLevel());
 	}
 	
 }
