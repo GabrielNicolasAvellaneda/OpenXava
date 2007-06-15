@@ -29,12 +29,12 @@ public class SellersWithCustomersAsAggregateTest extends ModuleTestBase {
 		assertEditable("customers.number");
 		assertEditable("customers.name");
 		assertValue("customers.number", ""); // Test if clear the fields
-		assertValue("customers.type", "1"); // Test if execute default value calculators
+		assertValue("customers.type", isOX3()?"0":"1"); // Test if execute default value calculators
 		
 		// Creating
 		setValue("customers.number", "66");
 		setValue("customers.name", "JUNIT 66");
-		setValue("customers.type", "1");
+		setValue("customers.type", isOX3()?"0":"1");
 		setValue("customers.address.street", "AV. CONSTITUCION");
 		setValue("customers.address.zipCode", "46540");
 		setValue("customers.address.city", "EL PUIG");
