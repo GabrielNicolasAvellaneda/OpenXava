@@ -95,7 +95,7 @@
 		<property-mapping
 			property="name" column="NAME"/>
 		<reference-mapping reference="drivingLicence">
-			<!-- Not in the same order that in DrivingLicence, to test that OpenXava order they -->
+			<!-- Not in the same order that in DrivingLicence, to test that OpenXava order them -->
 			<reference-mapping-detail 
 				column="DRIVINGLICENCE_LEVEL" 
 				referenced-model-property="level"/> 																

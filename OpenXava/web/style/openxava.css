@@ -40,6 +40,10 @@ TH.list {
 	background: #cccccc;
 }
 
+.websphere-list-selected {
+	font-weight: bold;
+}
+
 .highlight {
 	font-weight: bold;
 	color: #3366ff;	
@@ -164,4 +168,25 @@ TD.list-title {
 .editor, .portlet-form-input-field, .form-text {
 	color: #000000;  
 }
+
+tr[id=xava-tr-list] .portlet-header-bar {
+	background-image: none;	
+}
+
+tr[id=xava-tr-list] .wpsTableNrmRow {
+	border-left-style: solid;
+}
+
+/* Vertical line in list in WebSphere Portal, for rows */
+tr[id=xava-tr-list] .wpsTableNrmRow {
+	border-left-width: 1px;
+}
+
+/* Vertical line in list in WebSphere Portal, for header */
+tr[id=xava-tr-list] .wpsTableHead {
+	border-left-width: 1px;
+	border-left-style: solid;
+}
+
+
 

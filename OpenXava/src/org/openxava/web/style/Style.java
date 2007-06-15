@@ -72,11 +72,6 @@ public class Style {
 		return "";
 	}
 
-
-
-
-	
-	
 	public String getMode(boolean onButton) { 
 		return "mode";
 	}
@@ -97,9 +92,17 @@ public class Style {
 		return "list";
 	}
 	
+	public String getListHeaderCell() { 
+		return getListHeader();
+	}
+	
 	public String getListSubheader() {
 		return "list-subheader";
 	}	
+	
+	public String getListSubheaderCell() { 
+		return getListSubheader();
+	}
 	
 	public String getListOrderBy() {
 		return "";
@@ -109,8 +112,16 @@ public class Style {
 		return "list-pair";
 	}
 	
+	public String getListPairCell() { 
+		return getListPair();
+	}
+	
 	public String getListOdd() { 
 		return "list-odd";
+	}
+	
+	public String getListOddCell() { 
+		return getListOdd();
 	}
 	
 	public String getListPairSelected() { 
@@ -280,6 +291,18 @@ public class Style {
 	 */
 	public boolean isAlignHeaderAsData() {
 		return false;
+	}
+	
+	/**
+	 * If <code>true</code> the style for selected row (or special style) in a list
+	 * is applied to the row (tr) and to <b>also the cell</b> (td). <p>
+	 * 
+	 * If <code>false</code> the style is applied only to the row (tr).<p> 
+	 *
+     * By default is <code>true</code>.
+	 */
+	public boolean isApplySelectedStyleToCellInList() {
+		return true;
 	}
 	
 	public String getBottomButtonsStyle() {

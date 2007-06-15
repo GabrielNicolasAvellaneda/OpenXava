@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Refined look and feel of lists and collections for WebSphere Portal and Liferay in order to see clearly the seperation within cells.
+- Fix: Calculated properties using IModelCalculator or IEntityCalculator fail in collection (bug introduced in v2.1.4)
+- Support for Bulgarian language in portlet generation.
 - Fix: Focus positioning fails when there is an event associated to the last field of a group.
 - New stereotype IMAGE_LABEL/ETIQUETA_IMAGEN.
 - Fix: MapFacade.createReturningValues did not return values calculated from default-value-calculators.

@@ -47,7 +47,7 @@ else {
 }
 String propertyPrefix = Is.emptyString(propertyPrefixAccumulated)?"xava." + view.getModelName() + "." + collectionName + ".":propertyPrefixAccumulated + collectionName + ".";
 %>
-<table width="100%" class=<%=style.getList()%> <%=style.getListCellSpacing()%>>
+<table width="100%" class="<%=style.getList()%>" <%=style.getListCellSpacing()%>>
 <tr><td>
 <% try { %>
 	<% if (collectionView.isCollectionCalculated()) { %>

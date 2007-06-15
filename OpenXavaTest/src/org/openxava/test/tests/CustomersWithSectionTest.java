@@ -355,11 +355,11 @@ public class CustomersWithSectionTest extends CustomersTest {
 		for (int i=0; i<c; i++) {
 			String type = getValueInList(i, "type");
 			if ("Steady".equals(type)) {				
-				assertRowStyleInList(i, "highlight");
+				assertRowStyleInList(i, "highlight");				
 				found = true;
 			}
 			else {
-				assertNoRowStyleInList(i);
+				assertNoRowStyleInList(i);				
 			}						
 		}
 		if (!found) {

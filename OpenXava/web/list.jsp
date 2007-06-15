@@ -43,10 +43,10 @@ boolean singleSelection="true".equalsIgnoreCase(request.getParameter("singleSele
 </table>
 <% } %>
 
-<table id="<%=id%>" class=<%=style.getList()%> width="100%" <%=style.getListCellSpacing()%>>
-<tr>
-<th class=<%=style.getListHeader()%> style="text-align: center" width="60"><xava:image action="List.customize" argv="<%=collectionArgv%>"/></th>
-<th class=<%=style.getListHeader()%> width="5">
+<table id="<%=id%>" class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%>>
+<tr id="xava-tr-list" class="<%=style.getListHeader()%>">
+<th class="<%=style.getListHeaderCell()%>" style="text-align: center" width="60"><xava:image action="List.customize" argv="<%=collectionArgv%>"/></th>
+<th class="<%=style.getListHeaderCell()%>" width="5">
 <% if (tab.isCustomize()) { %><xava:image action="List.addColumns" argv="<%=collectionArgv%>"/><% } %>
 </th>
 <%
@@ -61,7 +61,7 @@ while (it.hasNext()) {
 		align =property.isNumber() && !property.hasValidValues()?"style='vertical-align: middle;text-align: right'":"style='vertical-align: middle;'";
 	}
 %>
-<th class="<%=style.getListHeader()%>" <%=align%>>
+<th class="<%=style.getListHeaderCell()%>" <%=align%>>
 <% if (tab.isCustomize()) { %><xava:image action="List.moveColumnToLeft" argv='<%="columnIndex="+columnIndex+collectionArgv%>'/><% } %>
 <%
 	if (property.isCalculated()) {		
@@ -104,11 +104,11 @@ while (it.hasNext()) {
 %>
 </tr>
 <% if (filter) { %>
-<tr class=<%=style.getListSubheader()%>>
-<th class=<%=style.getListSubheader()%> style="text-align: center" width="60">
+<tr id="xava-tr-list" class=<%=style.getListSubheader()%>>
+<th class=<%=style.getListSubheaderCell()%> style="text-align: center" width="60">
 <xava:action action="List.filter" argv="<%=collectionArgv%>"/>
 </th>
-<th class=<%=style.getListSubheader()%> width="5">
+<th class=<%=style.getListSubheaderCell()%> width="5">
 	<script>
 	function clear<%=prefix%>ConditionValues() {
 		for (i=0; i<document.<%=manager.getForm()%>.<%=prefix%>conditionValues.length; i++) {
@@ -140,7 +140,7 @@ while (it.hasNext()) {
 		iConditionValues++;
 		if (isValidValues) {
 	%>	
-<th class=<%=style.getListSubheader()%> align="left">
+<th class=<%=style.getListSubheaderCell()%> align="left">
 <jsp:include page="comparatorsValidValuesCombo.jsp">
 	<jsp:param name="validValues" value="<%=property.getValidValuesLabels(request)%>" />
 	<jsp:param name="value" value="<%=value%>" />
@@ -151,13 +151,13 @@ while (it.hasNext()) {
 		}
 		else if (isBoolean) { 
 	%>
-<th class=<%=style.getListSubheader()%> align="left">
+<th class=<%=style.getListSubheaderCell()%> align="left">
 <jsp:include page="comparatorsBooleanCombo.jsp">
 	<jsp:param name="comparator" value="<%=comparator%>" />
 	<jsp:param name="prefix" value="<%=prefix%>"/>
 </jsp:include>
 	<% } else { // Not boolean %>
-<th class=<%=style.getListSubheader()%> align="left">
+<th class=<%=style.getListSubheaderCell()%> align="left">
 <% 
 String urlComparatorsCombo = "comparatorsCombo.jsp" // in this way because websphere 6 has problems with jsp:param
 	+ "?comparator=" + comparator
@@ -173,7 +173,7 @@ String urlComparatorsCombo = "comparatorsCombo.jsp" // in this way because websp
 	}
 	else {
 %>
-<th class=<%=style.getListSubheader()%>></th>
+<th class=<%=style.getListSubheaderCell()%>></th>
 <%
 	} 
 } // while	
@@ -197,15 +197,20 @@ if (totalSize > 0) {
 for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex(); f++) {
 	String checked=tab.isSelected(f)?"checked='true'":"";
 	String cssClass=f%2==0?style.getListPair():style.getListOdd();	
+	String cssCellClass=f%2==0?style.getListPairCell():style.getListOddCell();	
 	String cssStyle = tab.getStyle(f);
+	if (cssStyle != null) {
+		cssClass = cssClass + " " + cssStyle; 
+		if (style.isApplySelectedStyleToCellInList()) cssCellClass = cssCellClass + " " + cssStyle; 
+	}
 %>
-<tr class=<%=cssClass%>>
-	<td class=<%=cssClass%> style='vertical-align: middle;text-align: center'>
+<tr id="xava-tr-list" class="<%=cssClass%>">
+	<td class="<%=cssCellClass%>" style='vertical-align: middle;text-align: center'>
 <% if (!org.openxava.util.Is.emptyString(action)) { %>
 <xava:action action='<%=action%>' argv='<%="row=" + f + actionArgv%>'/>
 <% } %>
 	</td>
-	<td class=<%=cssClass%>>
+	<td class="<%=cssCellClass%>">
 	<INPUT type="<%=singleSelection?"RADIO":"CHECKBOX"%>" name="<%=prefix + "selected"%>" value="<%=f%>" <%=checked%>/>
 	</td>	
 <%
@@ -220,11 +225,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 			fvalue = WebEditors.format(request, p, model.getValueAt(f, c), errors);
 		}
 %>
-	<td class=<%=cssClass%> <%=align%>>
-	<% if (cssStyle != null) { %> <div id="cellStyle" class=<%=cssStyle%>> <% } %>
-		<%=fvalue%>&nbsp;
-	<% if (cssStyle != null) { %> </div> <% } %>
-	</td>
+	<td class="<%=cssCellClass%>" <%=align%>><%=fvalue%>&nbsp;</td>
 <%
 	}
 %>
@@ -235,7 +236,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 }
 else {
 %>
-<tr id="nodata"><td class=<%=totalSize==0?style.getMessages():style.getErrors()%>>
+<tr id="nodata"><td class="<%=totalSize==0?style.getMessages():style.getErrors()%>">
 <% if (totalSize == 0) { %>
 <b><xava:message key="no_objects"/></b>
 <% } else { %>
@@ -256,7 +257,7 @@ if (lastRow != null) {
 %>
 </table>
 <% if (!tab.isRowsHidden()) { %>
-<table width="100%" class=<%=style.getListInfo()%>>
+<table width="100%" class="<%=style.getListInfo()%>">
 <tr class='<%=style.getListInfoDetail()%>'>
 <td class='<%=style.getListInfoDetail()%>' style='vertical-align: middle'>
 <%
