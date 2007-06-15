@@ -10,7 +10,7 @@ public class PublicJSPTest extends TestCase {
 	
 	public void testPublicJSP() throws Exception {
 		WebConversation wc = new WebConversation();
-	    WebResponse   resp = wc.getResponse("http://" + getHost() + ":" + getPort() + "/OpenXavaTest/public/myPublicJSP.jsp" ); 
+	    WebResponse   resp = wc.getResponse("http://" + getHost() + ":" + getPort() + "/" + getApplication() + "/public/myPublicJSP.jsp" ); 
 	    assertTrue(resp.getText().startsWith("The uri of this JSP is"));
 	}
 	
@@ -21,6 +21,10 @@ public class PublicJSPTest extends TestCase {
 	private static String getHost() {
 		return ModuleTestBase.getProperty("host", "localhost");
 	}	
+	
+	private static String getApplication() {
+		return ModuleTestBase.getProperty("application", "OpenXavaTest");
+	}
 
 
 }
