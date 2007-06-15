@@ -15,7 +15,7 @@ public class PortletCodeGenerator {
 		new Locale("es"), new Locale("fr"), new Locale("in"), 
 		new Locale("it"), new Locale("ja"), new Locale("ko"), 
 		new Locale("nl"), new Locale("pt"), new Locale("sv"), 
-		new Locale("zh"), new Locale("pl")
+		new Locale("zh"), new Locale("pl"), new Locale("bg")
 	};
 	
 	private Locale defaultLocale = Locale.getDefault();

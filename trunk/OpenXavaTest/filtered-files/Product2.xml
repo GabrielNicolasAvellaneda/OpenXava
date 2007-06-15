@@ -216,7 +216,7 @@
 		<reference-mapping reference="formula">
 			<reference-mapping-detail 
 				referenced-model-property="oid"
-				column="FORMULAR_OID" 
+				column="FORMULA_OID" 
 			/>
 		</reference-mapping>			
 	</entity-mapping> 

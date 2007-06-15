@@ -34,7 +34,7 @@ public class WebSpherePortalStyle extends Style {
 	}
 	
 	public String getListCellSpacing() {
-		return "border=0 cellspacing=0 cellpadding=0";
+		return "border=0 cellspacing=0 cellpadding=0 style='border-collapse: collapse'"; 
 	}
 	
 	public String getListHeader() {  
@@ -47,18 +47,18 @@ public class WebSpherePortalStyle extends Style {
 	
 	public String getListPair() { 
 		return "wpsTableNrmRow";
-	}
+	}	
 	
 	public String getListOdd() { 
 		return "wpsTableNrmRow";
 	}
 	
-	public String getListPairSelected() { 
-		return "portlet-table-selected";
+	public String getListPairSelected() {  
+		return "websphere-list-selected";
 	}
 	
 	public String getListOddSelected() { 
-		return "portlet-table-selected";
+		return "websphere-list-selected";
 	}
 				
 	public String getListInfo() {	
@@ -201,11 +201,15 @@ public class WebSpherePortalStyle extends Style {
 	}
 	
 	public boolean isAlignHeaderAsData() {
-		return true;
+		return false; 
 	}
 	
 	public String getBottomButtonsStyle() {
 		return "style='padding-top: 4px'";
-	}	
-
+	}
+	
+	public boolean isApplySelectedStyleToCellInList() {
+		return false;
+	}
+	
 }

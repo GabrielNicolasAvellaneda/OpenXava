@@ -621,12 +621,21 @@ public class ModuleTestBase extends TestCase {
 		return getTableCellInList(row, column).getText();
 	}
 	
+	
 	private TableCell getTableCellInList(int row, int column) throws Exception { 
 		WebTable table = response.getTableWithID("list");
 		if (table == null) {
 			fail(XavaResources.getString("list_not_displayed"));			
 		}
 		return table.getTableCell(row+2, column+2);
+	}
+	
+	private TableRow getTableRowInList(int row) throws Exception { 
+		WebTable table = response.getTableWithID("list");
+		if (table == null) {
+			fail(XavaResources.getString("list_not_displayed"));			
+		}
+		return table.getRows()[row+2];
 	}
 	
 	
@@ -654,17 +663,20 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected void assertRowStyleInList(int row, String expectedStyle) throws Exception {
-		TableCell cell = getTableCellInList(row, 0);		
-		HTMLElement div = cell.getElementWithID("cellStyle");
-		String style = div.getAttribute("class");		
+		TableRow tableRow = getTableRowInList(row);
+		String style = tableRow.getAttribute("class");
+		int countTokens = new StringTokenizer(style).countTokens();
+		// countTokens <= 1 because the row has at least a style in addition to the special one
+		style = countTokens <= 1?"":Strings.lastToken(style);
 		assertEquals(XavaResources.getString("row_style_not_excepted"), expectedStyle, style);		
 	}
 	
 	protected void assertNoRowStyleInList(int row) throws Exception {
-		TableCell cell = getTableCellInList(row, 0);
-		HTMLElement div = cell.getElementWithID("cellStyle");
-		if (div == null) return;
-		fail(XavaResources.getString("row_style_not_excepted"));
+		TableRow tableRow = getTableRowInList(row);
+		String style = tableRow.getAttribute("class");
+		int countTokens = new StringTokenizer(style).countTokens();
+		// countTokens <= 1 because the row has at least a style in addition to the special one 
+		assertTrue(XavaResources.getString("row_style_not_excepted"), countTokens <= 1);
 	}
 	
 	private int getListRowCount(String tableId, String message) throws Exception {

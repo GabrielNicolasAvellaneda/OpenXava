@@ -16,7 +16,7 @@ public class ValidValuesLetterConverter implements IConverter {
 	private String letters;
 	
 
-	public Object toDB(Object o) throws ConversionException {		
+	public Object toDB(Object o) throws ConversionException {	
 		if (o == null) return "";
 		if (!(o instanceof Integer)) {		
 			throw new ConversionException("conversion_db_integer_expected");
@@ -32,7 +32,7 @@ public class ValidValuesLetterConverter implements IConverter {
 		}
 	}
 	
-	public Object toJava(Object o) throws ConversionException {
+	public Object toJava(Object o) throws ConversionException {				
 		if (o == null) return new Integer(0);
 		if (!(o instanceof String)) {		
 			throw new ConversionException("conversion_java_string_expected");

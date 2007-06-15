@@ -1,10 +1,10 @@
-<table id=<%=idCollection%> class=<%=style.getList()%> width="100%" <%=style.getListCellSpacing()%>>
-<tr>
+<table id=<%=idCollection%> class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%>>
+<tr id="xava-tr-list" class="<%=style.getListHeader()%>">
 	<% if (lineAction != null) { %>	
-	<th class=<%=style.getListHeader()%>></th>
+	<th class=<%=style.getListHeaderCell()%>></th>
 	<% } %>
 	<% if (hasListActions  && !collectionView.isCollectionDetailVisible() && (collectionEditable || !subview.getActionsNamesList().isEmpty())) {  %>	
-	<th class=<%=style.getListHeader()%> width="5"></th>
+	<th class=<%=style.getListHeaderCell()%> width="5"></th>
 	<% } %>
 
 <%
@@ -13,7 +13,7 @@ Iterator it = subview.getMetaPropertiesList().iterator();
 while (it.hasNext()) {
 	MetaProperty p = (MetaProperty) it.next();
 %>
-	<th class=<%=style.getListHeader()%>><%=p.getLabel(request)%>&nbsp;</th>
+	<th class=<%=style.getListHeaderCell()%>><%=p.getLabel(request)%>&nbsp;</th>
 <%
 }
 %>
@@ -28,19 +28,22 @@ int f=0;
 while (itAggregates.hasNext()) {
 	Map row = (Map) itAggregates.next();
 	String cssClass=f%2==0?style.getListPair():style.getListOdd();
+	String cssCellClass=f%2==0?style.getListPairCell():style.getListOddCell();			
 	if (f == subview.getCollectionEditingRow()) { 
-		cssClass = cssClass=f%2==0?style.getListPairSelected():style.getListOddSelected();
-	}
+		String selectedClass = f%2==0?style.getListPairSelected():style.getListOddSelected();
+		cssClass = cssClass + " " + selectedClass;
+		if (style.isApplySelectedStyleToCellInList()) cssCellClass = cssCellClass + " " + selectedClass; // tmp
+	}	
 	
 %>
-<tr class=<%=cssClass%>>
+<tr id="xava-tr-list" class="<%=cssClass%>">
 <% if (lineAction != null) { %>
-<td class=<%=cssClass%> style='vertical-align: middle;text-align: center;padding-right: 2px'>
+<td class="<%=cssCellClass%>" style='vertical-align: middle;text-align: center;padding-right: 2px'>
 <xava:action action="<%=lineAction%>" argv='<%="row="+f + ",viewObject="+viewName%>'/>
 </td>
 <% } %>
 <% if (hasListActions  && !collectionView.isCollectionDetailVisible() && (collectionEditable || !subview.getActionsNamesList().isEmpty())) { %>
-<td class=<%=cssClass%> width="5">
+<td class="<%=cssCellClass%>" width="5">
 <input type="CHECKBOX" name="<%=propertyPrefix%>__SELECTED__" value="<%=f%>"/>
 </td>
 <% } %>
@@ -67,7 +70,7 @@ while (itAggregates.hasNext()) {
 			fvalue = WebEditors.format(request, p, value, errors);	
 		}
 %>
-	<td class=<%=cssClass%> <%=align%>><%=fvalue%>&nbsp;</td>
+	<td class="<%=cssCellClass%>" <%=align%>><%=fvalue%>&nbsp;</td>
 <%
 	}
 }

@@ -89,23 +89,45 @@ public class LiferayStyle extends Style {
 	}
 	
 	public String getListCellSpacing() {
-		return "border=0 cellspacing=0 cellpadding=0";
+		return "border=0 cellspacing=0 cellpadding=0 style='border-collapse: collapse'";
 	}
+	
 	
 	public String getListHeader() { 
-		return "portlet-section-header";
+		return "portlet-section-header";		
 	}
+	
+	
+	
+	public String getListHeaderCell() { 		
+		return getListCell();
+	}
+	
 	
 	public String getListSubheader() {
-		return "portlet-section-subheader";
+		return "portlet-section-subheader";		
 	}
 	
+	
+	public String getListSubheaderCell() { 
+		return getListCell();		
+	}
+	
+	
 	public String getListPair() { 
-		return "portlet-section-body";
+		return "portlet-section-body";		
+	}
+	
+	public String getListPairCell() {
+		return getListCell();
 	}
 	
 	public String getListOdd() { 
-		return "portlet-section-alternate";
+		return "portlet-section-alternate";		
+	}
+	
+	public String getListOddCell() { 
+		return getListCell();		
 	}
 	
 	public String getListPairSelected() { 
@@ -124,6 +146,10 @@ public class LiferayStyle extends Style {
 		
 	public String getListTitle() {
 		return "list-title";
+	}
+	
+	private String getListCell() { 
+		return "portlet-header-bar";		
 	}
 	
 		
@@ -250,6 +276,9 @@ public class LiferayStyle extends Style {
 	public String getRemoveImage() {
 		return "/html/themes/brochure/images/portlet/close.gif";
 	}
-
+	
+	public boolean isApplySelectedStyleToCellInList() {
+		return false;
+	}
 		
 }
