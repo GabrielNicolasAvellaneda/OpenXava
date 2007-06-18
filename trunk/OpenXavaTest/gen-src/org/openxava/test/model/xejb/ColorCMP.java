@@ -90,6 +90,7 @@ public abstract class ColorCMP
          {
             ColorValue.setName( getName() );
             ColorValue.setNumber( getNumber() );
+            ColorValue.setSample( getSample() );
 
          }
          catch (Exception e)
@@ -106,6 +107,7 @@ public abstract class ColorCMP
 	  try
 	  {
 		 setName( valueHolder.getName() );
+		 setSample( valueHolder.getSample() );
 
 	  }
 	  catch (Exception e)

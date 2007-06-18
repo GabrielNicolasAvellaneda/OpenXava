@@ -18,6 +18,8 @@ public class ColorValue
    private boolean nameHasBeenSet = false;
    private java.lang.Integer number;
    private boolean numberHasBeenSet = false;
+   private java.lang.String sample;
+   private boolean sampleHasBeenSet = false;
 
    public ColorValue()
    {
@@ -30,6 +32,8 @@ public class ColorValue
 	  nameHasBeenSet = true;
 	  this.number = otherValue.number;
 	  numberHasBeenSet = true;
+	  this.sample = otherValue.sample;
+	  sampleHasBeenSet = true;
    }
 
    public java.lang.String getName()
@@ -60,12 +64,26 @@ public class ColorValue
    public boolean numberHasBeenSet(){
 	  return numberHasBeenSet;
    }
+   public java.lang.String getSample()
+   {
+	  return this.sample;
+   }
+
+   public void setSample( java.lang.String sample )
+   {
+	  this.sample = sample;
+	  sampleHasBeenSet = true;
+   }
+
+   public boolean sampleHasBeenSet(){
+	  return sampleHasBeenSet;
+   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("name=" + getName() + " " + "number=" + getNumber());
+	  str.append("name=" + getName() + " " + "number=" + getNumber() + " " + "sample=" + getSample());
 	  str.append('}');
 
 	  return(str.toString());
@@ -126,6 +144,14 @@ public class ColorValue
 		 {
 			lEquals = lEquals && this.name.equals( that.name );
 		 }
+		 if( this.sample == null )
+		 {
+			lEquals = lEquals && ( that.sample == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.sample.equals( that.sample );
+		 }
 
 		 return lEquals;
 	  }
@@ -140,6 +166,8 @@ public class ColorValue
       result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);
 
       result = 37*result + ((this.number != null) ? this.number.hashCode() : 0);
+
+      result = 37*result + ((this.sample != null) ? this.sample.hashCode() : 0);
 
 	  return result;
    }
