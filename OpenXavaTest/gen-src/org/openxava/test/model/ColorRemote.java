@@ -19,6 +19,9 @@ public interface ColorRemote
    public java.lang.Integer getNumber(  )
       throws java.rmi.RemoteException;
 
+   public java.lang.String getSample(  )
+      throws java.rmi.RemoteException;
+
    public org.openxava.test.model.ColorData getData(  )
       throws java.rmi.RemoteException;
 

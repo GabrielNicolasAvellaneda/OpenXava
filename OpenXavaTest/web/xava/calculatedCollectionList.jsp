@@ -32,7 +32,7 @@ while (itAggregates.hasNext()) {
 	if (f == subview.getCollectionEditingRow()) { 
 		String selectedClass = f%2==0?style.getListPairSelected():style.getListOddSelected();
 		cssClass = cssClass + " " + selectedClass;
-		if (style.isApplySelectedStyleToCellInList()) cssCellClass = cssCellClass + " " + selectedClass; // tmp
+		if (style.isApplySelectedStyleToCellInList()) cssCellClass = cssCellClass + " " + selectedClass; 
 	}	
 	
 %>

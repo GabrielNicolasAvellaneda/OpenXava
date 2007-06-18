@@ -201,7 +201,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 	String cssStyle = tab.getStyle(f);
 	if (cssStyle != null) {
 		cssClass = cssClass + " " + cssStyle; 
-		if (style.isApplySelectedStyleToCellInList()) cssCellClass = cssCellClass + " " + cssStyle; // tmp
+		if (style.isApplySelectedStyleToCellInList()) cssCellClass = cssCellClass + " " + cssStyle; 
 	}
 %>
 <tr id="xava-tr-list" class="<%=cssClass%>">

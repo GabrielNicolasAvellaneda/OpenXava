@@ -4,6 +4,17 @@
       <dataTypeSet href="UDBV7_Primitives.xmi#SQLPrimitives_1"/>
    </RDBSchema:RDBDatabase>
 
+   <RDBSchema:RDBTable xmi:id="RDBTable_Course" name="" primaryKey="Course_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Course_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Course" constraint="Constraint_Course_"/>
+
+      <columns xmi:id="Course__Description" name="_Description">
+      </columns>
+      <columns xmi:id="Course_number" name="number">
+      </columns>
+      <columns xmi:id="Course_year" name="year">
+      </columns>
+
+   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_Formula" name="" primaryKey="Formula_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Formula_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Formula" constraint="Constraint_Formula_"/>
 

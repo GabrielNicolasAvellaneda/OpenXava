@@ -36,10 +36,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_1"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Formula"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Course"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Formula"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Course"/>
 
             <resRefBindings xmi:id="ResRefBnd_1" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_1"/>
@@ -51,10 +51,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_2"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Office2"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Formula"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Office2"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Formula"/>
 
             <resRefBindings xmi:id="ResRefBnd_2" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_2"/>
@@ -66,10 +66,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_3"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/InvoiceDetail"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Office2"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_InvoiceDetail"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Office2"/>
 
             <resRefBindings xmi:id="ResRefBnd_3" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_3"/>
@@ -81,10 +81,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_4"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Subfamily2"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/InvoiceDetail"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Subfamily2"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_InvoiceDetail"/>
 
             <resRefBindings xmi:id="ResRefBnd_4" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_4"/>
@@ -96,10 +96,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_5"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Invoice2"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Subfamily2"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Invoice2"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Subfamily2"/>
 
             <resRefBindings xmi:id="ResRefBnd_5" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_5"/>
@@ -111,10 +111,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_6"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/ShipmentCharge"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Invoice2"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_ShipmentCharge"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Invoice2"/>
 
             <resRefBindings xmi:id="ResRefBnd_6" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_6"/>
@@ -126,10 +126,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_7"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/CustomerContactPerson"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/ShipmentCharge"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_CustomerContactPerson"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_ShipmentCharge"/>
 
             <resRefBindings xmi:id="ResRefBnd_7" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_7"/>
@@ -141,10 +141,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_8"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Year"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/CustomerContactPerson"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Year"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_CustomerContactPerson"/>
 
             <resRefBindings xmi:id="ResRefBnd_8" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_8"/>
@@ -156,10 +156,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_9"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/TransportCharge2"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Year"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_TransportCharge2"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Year"/>
 
             <resRefBindings xmi:id="ResRefBnd_9" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_9"/>
@@ -171,10 +171,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_10"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Service"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/TransportCharge2"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Service"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_TransportCharge2"/>
 
             <resRefBindings xmi:id="ResRefBnd_10" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_10"/>
@@ -186,10 +186,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_11"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/CustomerState"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Service"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_CustomerState"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Service"/>
 
             <resRefBindings xmi:id="ResRefBnd_11" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_11"/>
@@ -201,10 +201,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_12"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Ingredient"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/CustomerState"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Ingredient"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_CustomerState"/>
 
             <resRefBindings xmi:id="ResRefBnd_12" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_12"/>
@@ -216,10 +216,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_13"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Delivery"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Ingredient"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Delivery"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Ingredient"/>
 
             <resRefBindings xmi:id="ResRefBnd_13" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_13"/>
@@ -231,10 +231,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_14"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/AdditionalDetail"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Delivery"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_AdditionalDetail"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Delivery"/>
 
             <resRefBindings xmi:id="ResRefBnd_14" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_14"/>
@@ -246,10 +246,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_15"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Warehouse"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/AdditionalDetail"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Warehouse"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_AdditionalDetail"/>
 
             <resRefBindings xmi:id="ResRefBnd_15" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_15"/>
@@ -261,10 +261,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_16"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/State"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Warehouse"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_State"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Warehouse"/>
 
             <resRefBindings xmi:id="ResRefBnd_16" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_16"/>
@@ -276,10 +276,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_17"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Family2"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/State"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Family2"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_State"/>
 
             <resRefBindings xmi:id="ResRefBnd_17" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_17"/>
@@ -291,10 +291,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_18"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Clerk"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Family2"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Clerk"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Family2"/>
 
             <resRefBindings xmi:id="ResRefBnd_18" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_18"/>
@@ -306,10 +306,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_19"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Shipment"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Clerk"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Shipment"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Clerk"/>
 
             <resRefBindings xmi:id="ResRefBnd_19" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_19"/>
@@ -321,10 +321,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_20"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/SellerLevel"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Shipment"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_SellerLevel"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Shipment"/>
 
             <resRefBindings xmi:id="ResRefBnd_20" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_20"/>
@@ -336,10 +336,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_21"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/TransportCharge"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/SellerLevel"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_TransportCharge"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_SellerLevel"/>
 
             <resRefBindings xmi:id="ResRefBnd_21" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_21"/>
@@ -351,10 +351,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_22"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/ServiceType"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/TransportCharge"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_ServiceType"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_TransportCharge"/>
 
             <resRefBindings xmi:id="ResRefBnd_22" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_22"/>
@@ -366,10 +366,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_23"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Seller"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/ServiceType"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Seller"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_ServiceType"/>
 
             <resRefBindings xmi:id="ResRefBnd_23" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_23"/>
@@ -381,10 +381,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_24"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Carrier"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Seller"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Carrier"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Seller"/>
 
             <resRefBindings xmi:id="ResRefBnd_24" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_24"/>
@@ -396,10 +396,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_25"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/DrivingLicence"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Carrier"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_DrivingLicence"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Carrier"/>
 
             <resRefBindings xmi:id="ResRefBnd_25" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_25"/>
@@ -411,10 +411,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_26"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Subfamily"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/DrivingLicence"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Subfamily"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_DrivingLicence"/>
 
             <resRefBindings xmi:id="ResRefBnd_26" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_26"/>
@@ -426,10 +426,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_27"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/FormulaIngredient"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Subfamily"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_FormulaIngredient"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Subfamily"/>
 
             <resRefBindings xmi:id="ResRefBnd_27" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_27"/>
@@ -441,10 +441,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_28"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Issue"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/FormulaIngredient"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Issue"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_FormulaIngredient"/>
 
             <resRefBindings xmi:id="ResRefBnd_28" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_28"/>
@@ -456,10 +456,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_29"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/DeliveryType"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Issue"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_DeliveryType"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Issue"/>
 
             <resRefBindings xmi:id="ResRefBnd_29" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_29"/>
@@ -471,10 +471,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_30"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Receptionist"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/DeliveryType"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Receptionist"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_DeliveryType"/>
 
             <resRefBindings xmi:id="ResRefBnd_30" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_30"/>
@@ -486,10 +486,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_31"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Product3"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Receptionist"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Product3"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Receptionist"/>
 
             <resRefBindings xmi:id="ResRefBnd_31" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_31"/>
@@ -501,10 +501,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_32"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/DeliveryDetail"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Product3"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_DeliveryDetail"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Product3"/>
 
             <resRefBindings xmi:id="ResRefBnd_32" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_32"/>
@@ -516,10 +516,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_33"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Color"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/DeliveryDetail"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Color"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_DeliveryDetail"/>
 
             <resRefBindings xmi:id="ResRefBnd_33" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_33"/>
@@ -531,10 +531,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_34"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/InvoiceDetail2"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Color"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_InvoiceDetail2"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Color"/>
 
             <resRefBindings xmi:id="ResRefBnd_34" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_34"/>
@@ -546,10 +546,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_35"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Product2"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/InvoiceDetail2"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Product2"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_InvoiceDetail2"/>
 
             <resRefBindings xmi:id="ResRefBnd_35" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_35"/>
@@ -561,10 +561,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_36"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/FilterBySubfamily"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Product2"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_FilterBySubfamily"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Product2"/>
 
             <resRefBindings xmi:id="ResRefBnd_36" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_36"/>
@@ -576,10 +576,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_37"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Size"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/FilterBySubfamily"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Size"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_FilterBySubfamily"/>
 
             <resRefBindings xmi:id="ResRefBnd_37" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_37"/>
@@ -591,10 +591,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_38"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Invoice"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Size"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Invoice"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Size"/>
 
             <resRefBindings xmi:id="ResRefBnd_38" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_38"/>
@@ -606,10 +606,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_39"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Task"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Invoice"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Task"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Invoice"/>
 
             <resRefBindings xmi:id="ResRefBnd_39" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_39"/>
@@ -621,10 +621,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_40"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Office"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Task"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Office"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Task"/>
 
             <resRefBindings xmi:id="ResRefBnd_40" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_40"/>
@@ -636,10 +636,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_41"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/DeliveryPlace"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Office"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_DeliveryPlace"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Office"/>
 
             <resRefBindings xmi:id="ResRefBnd_41" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_41"/>
@@ -651,10 +651,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_42"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Customer"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/DeliveryPlace"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Customer"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_DeliveryPlace"/>
 
             <resRefBindings xmi:id="ResRefBnd_42" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_42"/>
@@ -666,10 +666,10 @@
 
             xmi:id="ContainerManagedEntity_bnd_43"
 
-            jndiName="@subcontext@/ejb/org.openxava.test.model/Product"
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Customer"
         >
 
-            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Product"/>
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Customer"/>
 
             <resRefBindings xmi:id="ResRefBnd_43" jndiName="jdbc/@datasource@">
                 <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_43"/>
@@ -680,6 +680,21 @@
         <ejbBindings
 
             xmi:id="ContainerManagedEntity_bnd_44"
+
+            jndiName="@subcontext@/ejb/org.openxava.test.model/Product"
+        >
+
+            <enterpriseBean xmi:type="ejb:Entity" href="META-INF/ejb-jar.xml#ContainerManagedEntity_Product"/>
+
+            <resRefBindings xmi:id="ResRefBnd_44" jndiName="jdbc/@datasource@">
+                <bindingResourceRef href="META-INF/ejb-jar.xml#ResRef_44"/>
+            </resRefBindings>
+
+        </ejbBindings>
+
+        <ejbBindings
+
+            xmi:id="ContainerManagedEntity_bnd_45"
 
             jndiName="OpenXavaTest/ejb/openxava.test/Family"
         >

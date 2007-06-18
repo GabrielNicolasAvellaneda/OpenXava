@@ -17,6 +17,43 @@
      -->
 
       <entity>
+         <ejb-name>Course</ejb-name>
+
+         <table-name>XAVATEST.COURSE</table-name>
+
+         <cmp-field>
+            <field-name>_Description</field-name>
+            <column-name>DESCRIPTION</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>number</field-name>
+            <column-name>NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>year</field-name>
+            <column-name>YEAR</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByYearNumber</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Course o WHERE o.year = ?1 and o.number = ?2]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
          <ejb-name>Formula</ejb-name>
 
          <table-name>XAVATEST.FORMULA</table-name>
@@ -1939,7 +1976,7 @@
         </cmp-field>
          <cmp-field>
             <field-name>_Formula_oid</field-name>
-            <column-name>FORMULAR_OID</column-name>
+            <column-name>FORMULA_OID</column-name>
 
         </cmp-field>
 
