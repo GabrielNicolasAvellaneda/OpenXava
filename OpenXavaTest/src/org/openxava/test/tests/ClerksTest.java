@@ -17,6 +17,23 @@ public class ClerksTest extends ModuleTestBase {
 		super(testName, "Clerks");		
 	}
 	
+	public void testTextFieldsWithQuotationMarks() throws Exception {
+		assertListNotEmpty();
+		execute("Mode.detailAndFirst");
+		String name = getValue("name");		
+		String quotedName = name + "\"EL BUENO\"";
+		setValue("name", quotedName);				
+		execute("CRUD.save");
+		execute("Mode.list");
+		execute("Mode.detailAndFirst");
+		assertValue("name", quotedName);
+				
+		// Restoring
+		setValue("name", name);
+		execute("CRUD.save");
+		assertNoErrors();
+	}
+	
 	public void testTimeStereotypeAndSqlTimeAndStringAsByteArrayInDB() throws Exception {
 		assertListNotEmpty();
 		execute("Mode.detailAndFirst");

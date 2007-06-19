@@ -36,7 +36,7 @@ if (editable || !label) {
 	<%=align%>
 	maxlength="<%=p.getSize()%>" 
 	size="<%=size%>" 
-	value="<%=fvalue%>"
+	value="<%=Strings.change(fvalue, "\"", "&quot;")%>"
 	<%=disabled%>
 	<%=script%>
 	/>

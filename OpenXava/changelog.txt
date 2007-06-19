@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: When quotation marks in text field was used, the data inside quotation was not visible.
 - When i18n for members of collections are not defined, the i18n for the default tab is assumed.
 - Fix: Fails in i18n of members of collections.
 
