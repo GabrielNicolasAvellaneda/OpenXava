@@ -10,6 +10,7 @@ import org.openxava.filters.meta.*;
 import org.openxava.jpa.*;
 import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
+import org.openxava.tab.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
 
@@ -50,6 +51,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	private String defaultPropertiesNames;
 	private Map entityReferencesReferenceNames;
 	private String lastDefaultSchema;
+	private String id;
 	
 	public static String getTitleI18n(Locale locale, String modelName, String tabName) throws XavaException {
 		String id = null;
@@ -130,10 +132,21 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 			try {
 				MetaProperty metaProperty = getMetaModel().getMetaProperty( 
 						name).cloneMetaProperty();
-				metaProperty.setQualifiedName(name);
-				String idEtiqueta = getId() + ".properties." + name;
-				if (Labels.exists(idEtiqueta)) {
-					metaProperty.setLabelId(idEtiqueta);
+				metaProperty.setQualifiedName(name);				
+				String labelId = null;
+				if (representCollection()) {
+					labelId = getId() + "." + name;
+					// If there is no specific translation for the collection, 
+					// we take the translation from the default tab.
+					if (!Labels.existsExact(labelId)) {
+						labelId = getIdForDefaultTab() + ".properties." + name;  
+					}
+				}
+				else {
+					labelId = getId() + ".properties." + name;
+				}
+				if (Labels.exists(labelId)) {
+					metaProperty.setLabelId(labelId);
 				} else if (metaPropertiesTab != null) {
 					// By now only the label overwrited from the property of tab 
 					metaPropertyTab = (MetaProperty) metaPropertiesTab
@@ -155,6 +168,10 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 			}
 		}
 		return metaProperties;
+	}
+
+	private boolean representCollection() {
+		return getName().startsWith(Tab.COLLECTION_PREFIX);
 	}
 
 	/**
@@ -628,6 +645,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 
 	public void setName(String name) {
 		this.name = name;
+		this.id = null;
 	}
 
 	public MetaFilter getMetaFilter() {
@@ -787,9 +805,24 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	}
 
 	public String getId() {
-		if (!hasName())
-			return getMetaComponent().getName() + ".tab";
-		return getMetaComponent().getName() + ".tabs." + getName();
+		if (id == null) {
+			if (representCollection()) id = getIdForTabOfCollection();			
+			else id = getIdForTabOfEntity();
+		}
+		return id;
+	}
+	
+	private String getIdForTabOfEntity() {
+		if (!hasName()) return getIdForDefaultTab();
+		return getMetaComponent().getName() + ".tabs." + getName();		
+	}
+	
+	private String getIdForDefaultTab() {
+		return getMetaComponent().getName() + ".tab";
+	}
+	
+	private String getIdForTabOfCollection() {
+		return getName().replaceFirst(Tab.COLLECTION_PREFIX, getMetaComponent().getName() + ".");
 	}
 
 	public String getDefaultOrder() {

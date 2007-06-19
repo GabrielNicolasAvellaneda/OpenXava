@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- When i18n for members of collections are not defined, the i18n for the default tab is assumed.
+- Fix: Fails in i18n of members of collections.
+
 OpenXava 2.1.5 (2007-6-18)
 --------------------------
 - Refined look and feel of lists and collections for WebSphere Portal and Liferay in order to see clearly the seperation within cells.
