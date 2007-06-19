@@ -925,7 +925,7 @@ public class InvoicesTest extends ModuleTestBase {
 		assertValue("customerDiscount", "77");				
 	}
 		
-	public void testEditableCollectionActions() throws Exception {
+	public void testEditableCollectionActions_i18nforMemberOfCollections() throws Exception {
 		execute("CRUD.new");
 		String [] initialActions = {
 			"Navigation.previous",
@@ -1011,7 +1011,11 @@ public class InvoicesTest extends ModuleTestBase {
 		};		
 		assertActions(aggregateDetailActions);
 		
-		assertEditable("details.serviceType");						
+		assertEditable("details.serviceType");
+		
+		// i18n for member of collections
+		// In resource file we have: Invoice.details.product.description=Product
+		assertLabelInCollection("details", 1, "Product");
 	}
 	
 	public void testDetailActionInCollection_overwriteEditAction_goAndReturnToAnotherXavaView() throws Exception {

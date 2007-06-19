@@ -186,7 +186,8 @@ public class Tab {
 				if (getModelName().indexOf('.') >= 0 || // It's an aggregate
 					getTabName().startsWith(COLLECTION_PREFIX) // Used for collection 
 				) { 
-					metaTab = MetaTab.createDefault(MetaModel.get(getModelName()));					
+					metaTab = MetaTab.createDefault(MetaModel.get(getModelName()));
+					metaTab.setName(getTabName());
 				}				
 				else throw ex;
 			}

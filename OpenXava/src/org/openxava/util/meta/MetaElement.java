@@ -31,7 +31,7 @@ abstract public class MetaElement implements java.io.Serializable {
 		return getLabel(Locale.getDefault());
 	}
 	
-	public String getLabel(ServletRequest request) {
+	public String getLabel(ServletRequest request) {		
 		return getLabel(getLocale(request));
 	}
 	

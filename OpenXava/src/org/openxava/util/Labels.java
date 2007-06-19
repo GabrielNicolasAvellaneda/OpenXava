@@ -123,6 +123,10 @@ public class Labels {
 		return exists(id, Locale.getDefault());
 	}
 	
+	public static boolean existsExact(String id) throws XavaException { 
+		return existsExact(id, Locale.getDefault());
+	}
+	
 	public static boolean exists(String id, Locale locale) {
 		if (id == null) return false;
 		try {
