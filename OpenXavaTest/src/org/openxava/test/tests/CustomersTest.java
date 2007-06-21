@@ -495,7 +495,7 @@ public class CustomersTest extends ModuleTestBase {
 		execute("Collection.save", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");
 		assertNoErrors();
 		
-		assertNoEditable("number"); // Header is saved hence it si not editable
+		assertNoEditable("number"); // Header is saved hence it is not editable
 		
 		assertCollectionRowCount("deliveryPlaces", 1);
 		assertValueInCollection("deliveryPlaces", 0, 0, "DELIVERY JUNIT 1");
@@ -503,8 +503,7 @@ public class CustomersTest extends ModuleTestBase {
 		
 		assertCollectionRowCount("deliveryPlaces.receptionists", 1);
 		assertValueInCollection("deliveryPlaces.receptionists", 0, 0, "RECEPTIONISTS JUNIT 1 - 1");
-				
-		execute("Collection.new", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");
+						
 		setValue("deliveryPlaces.receptionists.name", "RECEPTIONISTS JUNIT 1 - 2");		
 		execute("Collection.save", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");
 		
@@ -514,14 +513,13 @@ public class CustomersTest extends ModuleTestBase {
 		assertValueInCollection("deliveryPlaces.receptionists", 1, 0, "RECEPTIONISTS JUNIT 1 - 2");
 		
 		execute("Collection.save", "viewObject=xava_view" + getSection() + "_deliveryPlaces");
-		
-		execute("Collection.new", "viewObject=xava_view" + getSection() + "_deliveryPlaces");
+				
 		setValue("deliveryPlaces.name", "DELIVERY JUNIT 2");
 		setValue("deliveryPlaces.address", "STREET JUNIT 2");		
 		execute("Collection.new", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");
 		setValue("deliveryPlaces.receptionists.name", "RECEPTIONISTS JUNIT 2 - 1");				
 		execute("Collection.save", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");
-		execute("Collection.new", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");
+		
 		setValue("deliveryPlaces.receptionists.name", "RECEPTIONISTS JUNIT 2 - 2");				
 		execute("Collection.save", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");
 		

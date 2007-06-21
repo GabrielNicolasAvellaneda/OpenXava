@@ -31,8 +31,7 @@ public class ServicesTest extends ModuleTestBase {
 		setValue("detail.type", "2"); // Assuming that 2 exists
 		setValue("additionalDetails.subfamily", "1");
 		setValue("additionalDetails.type.number", "2");
-		execute("Collection.save", "viewObject=xava_view_additionalDetails");
-		execute("Collection.new", "viewObject=xava_view_additionalDetails");
+		execute("Collection.save", "viewObject=xava_view_additionalDetails");		
 		setValue("additionalDetails.subfamily", "1");
 		setValue("additionalDetails.type.number", "2");
 		execute("Collection.save", "viewObject=xava_view_additionalDetails");		

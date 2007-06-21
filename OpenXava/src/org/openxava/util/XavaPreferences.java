@@ -30,6 +30,9 @@ public class XavaPreferences {
 	private boolean jpaCodeInPOJOsLoaded = false;
 	private Level javaLoggingLevel;
 	private Level hibernateJavaLoggingLevel;
+	private boolean detailOnBottomInCollections = false;
+	private boolean detailOnBottomInCollectionsLoaded = false;
+	
 
 		
 	
@@ -99,13 +102,21 @@ public class XavaPreferences {
 		return jpaPersistence;
 	}
 	
+	public boolean isDetailOnBottomInCollections() { 
+		if (!detailOnBottomInCollectionsLoaded) {			
+			detailOnBottomInCollections = "true".equalsIgnoreCase(getProperties().getProperty("detailOnBottomInCollections", "false" ).trim());
+			detailOnBottomInCollectionsLoaded = true;
+		}	
+		return detailOnBottomInCollections;		
+	}
+	
 	public boolean isJPACodeInPOJOs() {
 		if (!jpaCodeInPOJOsLoaded) {			
 			jpaCodeInPOJOs = "true".equalsIgnoreCase(getProperties().getProperty("jpaCodeInPOJOs", Boolean.toString(isJPAPersistence()) ).trim());
 			jpaCodeInPOJOsLoaded = true;
 		}	
 		return jpaCodeInPOJOs;		
-	}
+	}	
 	
 	/**
 	 * Useful when you want to force some code (as finders) to not use JPA implementation. <p>

@@ -1709,8 +1709,8 @@ public class View implements java.io.Serializable {
 	}
 		
 	public void assignValuesToWebView(String qualifier) {
-		try {												
-			focusForward = "true".equalsIgnoreCase(getRequest().getParameter("focus_forward"));
+		try {															
+			focusForward = "true".equalsIgnoreCase(getRequest().getParameter("focus_forward"));			
 			setIdFocusProperty(getRequest().getParameter("focus_property"));			
 			Iterator it = isSubview()?getMetaMembersIncludingHiddenKey().iterator():getMetaMembers().iterator();
 			if (isRepresentsCollection()) fillCollectionInfo(qualifier);
