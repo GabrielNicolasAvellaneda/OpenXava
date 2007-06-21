@@ -37,6 +37,7 @@ public abstract class UpdateReferenceBaseAction extends BaseAction implements IN
 			}
 			View previousView = (View) getPreviousViews().pop();
 			setView(previousView);
+			referenceSubview.setRequest(null); 
 		}
 		resetDescriptionsCache();
 	}

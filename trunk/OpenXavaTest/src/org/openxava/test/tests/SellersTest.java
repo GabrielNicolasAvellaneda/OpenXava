@@ -201,8 +201,7 @@ public class SellersTest extends ModuleTestBase {
 		execute("Collection.save", "viewObject=xava_view_customers");
 		assertMessage("Customer associated to Seller");
 		assertCollectionRowCount("customers", 1);
-		
-		execute("Collection.new", "viewObject=xava_view_customers");
+				
 		assertEditable("customers.number");
 		assertNoEditable("customers.name");
 		setValue("customers.number", getCustomerNumber2());		

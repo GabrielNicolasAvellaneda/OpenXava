@@ -16,7 +16,7 @@ import org.openxava.view.*;
  * @author Javier Paniza
  */
 
-public class SaveElementInCollectionAction extends CollectionElementViewBaseAction {
+public class SaveElementInCollectionAction extends CollectionElementViewBaseAction implements IChainActionWithArgv {
 	
 	
 	
@@ -140,5 +140,12 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 		}
 	}
 
+	public String getNextAction() throws Exception { 		
+		return getErrors().contains()?null:getCollectionElementView().getNewCollectionElementAction();
+	}
 
+	public String getNextActionArgv() throws Exception { 
+		return "viewObject=" + getViewObject();
+	}
+	
 }

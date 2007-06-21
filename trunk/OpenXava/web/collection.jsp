@@ -9,6 +9,7 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="org.openxava.util.Maps" %>
 <%@ page import="org.openxava.util.Is" %>
+<%@ page import="org.openxava.util.XavaPreferences" %>
 <%@ page import="org.openxava.view.View" %>
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
 <%@ page import="org.openxava.model.meta.MetaReference" %>
@@ -48,6 +49,7 @@ else {
 String propertyPrefix = Is.emptyString(propertyPrefixAccumulated)?"xava." + view.getModelName() + "." + collectionName + ".":propertyPrefixAccumulated + collectionName + ".";
 %>
 <table width="100%" class="<%=style.getList()%>" <%=style.getListCellSpacing()%>>
+<% if (XavaPreferences.getInstance().isDetailOnBottomInCollections()) { %>
 <tr><td>
 <% try { %>
 	<% if (collectionView.isCollectionCalculated()) { %>
@@ -61,6 +63,7 @@ String propertyPrefix = Is.emptyString(propertyPrefixAccumulated)?"xava." + view
 <%=ex.getLocalizedMessage()%>
 <% } %>
 </td></tr>
+<% } // of: if (XavaPreferences...  %>
 <%
 // New
 if (view.displayDetailInCollection(collectionName)) {
@@ -163,4 +166,19 @@ else {
 %>
 
 </tr>
+<% if (!XavaPreferences.getInstance().isDetailOnBottomInCollections()) { %>
+<tr><td>
+<% try { %>
+	<% if (collectionView.isCollectionCalculated()) { %>
+		<%@include file="calculatedCollectionList.jsp" %>
+	<% } else { %>
+		<%@include file="collectionList.jsp" %>
+	<% } %>
+<% } catch (Exception ex) { %>
+</td></tr>
+<tr><td class='<%=style.getErrors()%>'>
+<%=ex.getLocalizedMessage()%>
+<% } %>
+</td></tr>
+<% } // of: if (!XavaPreferences... %>
 </table>

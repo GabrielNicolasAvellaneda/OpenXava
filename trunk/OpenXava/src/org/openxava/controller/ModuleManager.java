@@ -31,7 +31,7 @@ public class ModuleManager {
 	static {		
 		MetaControllers.setContext(MetaControllers.WEB);		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
-		log.info("OpenXava 2.1.5 (2007-06-18)");
+		log.info("OpenXava 2.2 BETA (2007-06-XX)");
 	}
 	
 	private static int nextOid = 0; 
@@ -219,7 +219,7 @@ public class ModuleManager {
 				if (!Is.emptyString(xavaAction)) {						
 					String actionValue = request.getParameter("xava_action_argv");
 					if ("undefined".equals(actionValue)) actionValue = null;						
-					MetaAction a = MetaControllers.getMetaAction(xavaAction);						
+					MetaAction a = MetaControllers.getMetaAction(xavaAction);					
 					long ini = System.currentTimeMillis();
 					executeAction(a, errors, messages, actionValue, request);
 					long time = System.currentTimeMillis() - ini;
@@ -424,7 +424,11 @@ public class ModuleManager {
 					else {
 						nextMetaAction = MetaControllers.getMetaAction(nextAction);
 					}
-					executeAction(nextMetaAction, action.getErrors(), action.getMessages(), request);
+					String argv = null;
+					if (chainable instanceof IChainActionWithArgv) {
+						argv = ((IChainActionWithArgv) chainable).getNextActionArgv();
+					}					
+					executeAction(nextMetaAction, action.getErrors(), action.getMessages(), argv, request); 
 				}
 			}
 			

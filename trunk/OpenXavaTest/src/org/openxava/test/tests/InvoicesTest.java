@@ -567,7 +567,7 @@ public class InvoicesTest extends ModuleTestBase {
 		execute("Collection.save", "viewObject=xava_view_section1_details");
 		assertMessage("Invoice detail created successfully");
 		assertNoErrors();		
-		assertNotExists("details.serviceType"); // Testing hide detail on save
+		assertExists("details.serviceType"); // Testing does not hide detail on save
 		assertCollectionRowCount("details", 1);
 		assertNoEditable("year"); // Testing header is saved
 		assertNoEditable("number");
@@ -579,7 +579,6 @@ public class InvoicesTest extends ModuleTestBase {
 		execute("Sections.change", "activeSection=1");
 		// end of recalculate testing
 				
-		execute("Collection.new", "viewObject=xava_view_section1_details");
 		setValue("details.serviceType", isOX3()?"0":"1");
 		setValue("details.quantity", "200");
 		setValue("details.unitPrice", getProductUnitPrice());		
@@ -590,8 +589,7 @@ public class InvoicesTest extends ModuleTestBase {
 		setValue("details.soldBy.number", getProductNumber());
 		execute("Collection.save", "viewObject=xava_view_section1_details");
 		assertCollectionRowCount("details", 2);
-
-		execute("Collection.new", "viewObject=xava_view_section1_details");
+		
 		setValue("details.serviceType", isOX3()?"1":"2");
 		setValue("details.quantity", "2");
 		setValue("details.unitPrice", getProductUnitPrice());
@@ -685,9 +683,9 @@ public class InvoicesTest extends ModuleTestBase {
 		assertNoErrors();
 		assertMessage("Invoice detail modified successfully");
 		assertValueInCollection("details", 1, 3, "234");		
-		assertNotExists("details.product.description");
-		assertNotExists("details.quantity");
-		assertNotExists("details.deliveryDate");
+		assertExists("details.product.description"); // Because on save detail is not hide
+		assertExists("details.quantity");
+		assertExists("details.deliveryDate");
 		execute("Invoices.editDetail", "row=1,viewObject=xava_view_section1_details");
 		assertValue("details.product.description", getProductDescription());
 		assertValue("details.quantity", "234");

@@ -39,7 +39,7 @@ public class ShipmentsTest extends ModuleTestBase {
 		deleteCustomerAndContactPerson(66);
 	}
 		
-	public void testCreateReadDeleteWithConverterInKey() throws Exception {
+	public void testCreateReadDeleteWithConverterInKey() throws Exception { 
 		// Create
 		execute("CRUD.new");
 		
@@ -90,7 +90,7 @@ public class ShipmentsTest extends ModuleTestBase {
 		assertMessage("Shipment deleted successfully");		
 	}
 	
-	public void testDeleteSelectedOnesWithConverterInKey() throws Exception {
+	public void testDeleteSelectedOnesWithConverterInKey() throws Exception { 
 		// Create
 		execute("CRUD.new");
 		
@@ -139,7 +139,7 @@ public class ShipmentsTest extends ModuleTestBase {
 		assertTrue("Objet found in list", !found);				
 	}
 	
-	public void testFilterByTimestamp() throws Exception {
+	public void testFilterByTimestamp() throws Exception { 
 		assertListRowCount(3);
 		setConditionValues( new String [] { "", "", "12/25/06"} ); // 2006-12-25
 		execute("List.filter");

@@ -1,3 +1,18 @@
+<h2>Migration from OpenXava 2.1.5 to OpenXava 2.2</h2>
+<h4>Default behaviour for collection of aggregates changes</h4>
+Now, when a detail of a collection is saved, the view of the detail is
+not hidden, this may cause that your current JUnit test fails. You need
+to do a simple modification; simply change code like this in your JUnit
+test:<br>
+<pre>execute("Collection.save", "viewObject=xava_view_section1_details");</pre>
+<pre><span style="font-weight: bold; color: rgb(255, 0, 0);">execute("Collection.new", "viewObject=xava_view_section1_details"); // To remove</span></pre>
+by this one:<br>
+<pre>execute("Collection.save", "viewObject=xava_view_section1_details");</pre>
+That is, remove the "Collection.new" call, because after save the
+detail, the "new" action is automatically executed, thus the user
+interface is ready to enter a new detail.<br>
+<h2>Migration from OpenXava 2.1.4 to OpenXava 2.1.5</h2>
+No issues<br>
 <h2>Migration from OpenXava 2.1.3 to OpenXava 2.1.4</h2>
 <h4>New actions in collections (for junit tests)</h4>
 The collections have some new actions available for the users,
