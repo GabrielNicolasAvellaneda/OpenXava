@@ -1,4 +1,18 @@
 <h2>Migration from OpenXava 2.1.5 to OpenXava 2.2</h2>
+<h4>Default behaviour for collection of entities changes</h4>
+Now, when user click on 'Add' in a collection the entities, he goes to
+a list where he can choose some entities to add. This may cause that
+your current JUnit test fails. You need
+to do a simple modification; simply change code like this in your JUnit
+test:<br>
+<pre>execute("Collection.new", "viewObject=xava_view_customers");<br>setValue("customers.number", getCustomerNumber2());<br>assertValueIgnoringCase("customers.name", getCustomer2().getName());<br>assertCollectionRowCount("customers",0);<br>execute("Collection.save", "viewObject=xava_view_customers");<br>assertCollectionRowCount("customers",1);</pre>
+by this one:<br>
+<pre>assertCollectionRowCount("customers",0);<br>execute("Collection.add", "viewObject=xava_view_customers");<br>assertValueInList(5, 0, getCustomer2().getName());<br>execute("AddToCollection.add", "row=5");<br>assertMessage("1 element(s) added to Customers of Seller");<br>assertCollectionRowCount("customers",1);</pre>
+Moreover, now the user can add several entities at once, thus a code as
+this:<br>
+<pre>execute("Collection.new", "viewObject=xava_view_customers");<br>setValue("customers.number", getCustomerNumber1());<br>assertValueIgnoringCase("customers.name", getCustomer1().getName()); <br>assertCollectionRowCount("customers", 0);<br>execute("Collection.save", "viewObject=xava_view_customers");<br>assertMessage("Customer associated to Seller");<br><br>assertCollectionRowCount("customers", 1);<br>setValue("customers.number", getCustomerNumber2());<br>assertValueIgnoringCase("customers.name", getCustomer2().getName());<br>execute("Collection.save", "viewObject=xava_view_customers");<br>assertCollectionRowCount("customers",2);</pre>
+can be done in this way:<br>
+<pre>execute("Collection.add", "viewObject=xava_view_customers");<br>assertValueInList(4, 0, getCustomer1().getName());<br>assertValueInList(5, 0, getCustomer2().getName());<br>checkRow(4);<br>checkRow(5);<br>execute("AddToCollection.add");<br>assertMessage("2 element(s) added to Customers of Seller");<br>assertCollectionRowCount("customers",2);</pre>
 <h4>Default behaviour for collection of aggregates changes</h4>
 Now, when a detail of a collection is saved, the view of the detail is
 not hidden, this may cause that your current JUnit test fails. You need
