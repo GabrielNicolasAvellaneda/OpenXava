@@ -1,4 +1,21 @@
 <h2>Para migrar de OpenXava 2.1.5 a OpenXava 2.2</h2>
+<h4>El comportamiento por defecto para las colecciones de entidades
+cambia</h4>
+Ahora, cuando el usuario pulsa en 'A&ntilde;adir' en una
+colecci&oacute;n de entidades, va a una lista donde puede escoger
+varias entidades para a&ntilde;adir. Esto puede causar que nuestro
+actual
+c&oacute;digo JUnit falle. Necesitamos hacer unas simples
+modificaciones; sencillamente cambiar c&oacute;digo como este en
+nuestras pruebas JUnit:
+<pre>execute("Collection.new", "viewObject=xava_view_customers");<br>setValue("customers.number", getCustomerNumber2());<br>assertValueIgnoringCase("customers.name", getCustomer2().getName());<br>assertCollectionRowCount("customers",0);<br>execute("Collection.save", "viewObject=xava_view_customers");<br>assertCollectionRowCount("customers",1);</pre>
+por este otro:<br>
+<pre>assertCollectionRowCount("customers",0);<br>execute("Collection.add", "viewObject=xava_view_customers");<br>assertValueInList(5, 0, getCustomer2().getName());<br>execute("AddToCollection.add", "row=5");<br>assertMessage("1 element(s) added to Customers of Seller");<br>assertCollectionRowCount("customers",1);</pre>
+Adem&aacute;s, el usuario ahora puede a&ntilde;adir varias entidades a
+la vez, esto es, un c&oacute;digo como este:<br>
+<pre>execute("Collection.new", "viewObject=xava_view_customers");<br>setValue("customers.number", getCustomerNumber1());<br>assertValueIgnoringCase("customers.name", getCustomer1().getName()); <br>assertCollectionRowCount("customers", 0);<br>execute("Collection.save", "viewObject=xava_view_customers");<br>assertMessage("Customer associated to Seller");<br><br>assertCollectionRowCount("customers", 1);<br>setValue("customers.number", getCustomerNumber2());<br>assertValueIgnoringCase("customers.name", getCustomer2().getName());<br>execute("Collection.save", "viewObject=xava_view_customers");<br>assertCollectionRowCount("customers",2);</pre>
+se puede escribir as&iacute;:<br>
+<pre>execute("Collection.add", "viewObject=xava_view_customers");<br>assertValueInList(4, 0, getCustomer1().getName());<br>assertValueInList(5, 0, getCustomer2().getName());<br>checkRow(4);<br>checkRow(5);<br>execute("AddToCollection.add");<br>assertMessage("2 element(s) added to Customers of Seller");<br>assertCollectionRowCount("customers",2);</pre>
 <h4>El comportamiento por defecto para las colecciones de agregados
 cambia</h4>
 Ahora, cuando un detalle de una collecci&oacute;n se graba, la vista
