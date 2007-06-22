@@ -3174,8 +3174,9 @@ public class View implements java.io.Serializable {
 		this.hideCollectionElementAction = hideCollectionElementAction;
 	}
 
-	public String getNewCollectionElementAction() {
-		return Is.emptyString(newCollectionElementAction)?"Collection.new":newCollectionElementAction;
+	public String getNewCollectionElementAction() { 
+		if (!Is.emptyString(newCollectionElementAction)) return newCollectionElementAction;
+		return isRepresentsEntityReference()?"Collection.add":"Collection.new";
 	}
 
 	public void setNewCollectionElementAction(String newCollectionElementAction) {

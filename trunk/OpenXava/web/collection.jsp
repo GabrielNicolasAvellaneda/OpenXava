@@ -107,8 +107,8 @@ while (itDetailActions.hasNext()) {
 %>
 <tr class=<%=style.getCollectionListActions()%>><td colspan="<%=subview.getMetaPropertiesList().size()+1%>" class=<%=style.getCollectionListActions()%>>
 <% if (collectionEditable) { %>
-<xava:link action="<%=subview.getNewCollectionElementAction()%>" argv='<%="viewObject="+viewName%>'/>
-<xava:link action="<%=subview.getRemoveSelectedCollectionElementsAction()%>" argv='<%="viewObject="+viewName%>'/>
+<xava:image action="<%=subview.getNewCollectionElementAction()%>" argv='<%="viewObject="+viewName%>'/>
+<xava:image action="<%=subview.getRemoveSelectedCollectionElementsAction()%>" argv='<%="viewObject="+viewName%>'/>
 <% } %>
 <% 
 Iterator itListActions = subview.getActionsNamesList().iterator();

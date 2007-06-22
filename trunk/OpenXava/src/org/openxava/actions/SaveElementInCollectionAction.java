@@ -1,5 +1,6 @@
 package org.openxava.actions;
 
+import java.rmi.*;
 import java.util.*;
 
 import javax.ejb.*;
@@ -13,6 +14,11 @@ import org.openxava.validators.*;
 import org.openxava.view.*;
 
 /**
+ * To save a collection element. <p>
+ * 
+ * The case of collections of entities with @AsEmbedded (or with as-aggregate="true")
+ * is treated by {@link AddElementsToCollectionAction}. <p>
+ * 
  * @author Javier Paniza
  */
 
@@ -20,7 +26,7 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	
 	
 	
-	public void execute() throws Exception {		
+	public void execute() throws Exception {	
 		try {				
 			Map containerKey = saveIfNotExists(getCollectionElementView().getParent());
 			if (isEntityReferencesCollection()) saveEntity(containerKey);
@@ -67,14 +73,18 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 		}
 		else {
 			// Entity reference used in the standard way
-			validateMaximum();
-			MapFacade.addCollectionElement(
-					getCollectionElementView().getParent().getMetaModel().getName(),
-					getCollectionElementView().getParent().getKeyValues(),
-					getCollectionElementView().getMemberName(),  
-					getCollectionElementView().getKeyValues());
-			addMessage("entity_associated" , getCollectionElementView().getModelName(), getCollectionElementView().getParent().getModelName()); 
+			associateEntity(getCollectionElementView().getKeyValues());
+			addMessage("entity_associated" , getCollectionElementView().getModelName(), getCollectionElementView().getParent().getModelName());
 		}
+	}
+
+	protected void associateEntity(Map keyValues) throws ValidationException, XavaException, ObjectNotFoundException, FinderException, RemoteException {
+		validateMaximum();
+		MapFacade.addCollectionElement(
+				getCollectionElementView().getParent().getMetaModel().getName(),
+				getCollectionElementView().getParent().getKeyValues(),
+				getCollectionElementView().getMemberName(),  
+				keyValues);		
 	}
 
 	private MetaCollection getMetaCollection() throws ElementNotFoundException, XavaException {
@@ -110,7 +120,7 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	/**
 	 * @return The saved object 
 	 */
-	private Map saveIfNotExists(View view) throws Exception {					
+	protected Map saveIfNotExists(View view) throws Exception { 					
 		if (getView() == view) {
 			if (view.isKeyEditable()) {				
 				Map key = MapFacade.createReturningKey(getModelName(), view.getValues());
