@@ -10,7 +10,7 @@ import org.openxava.tab.*;
  * @author Javier Paniza
  */
 
-public class CancelReferenceSearchAction extends ViewBaseAction implements INavigationAction {
+public class CancelFromCustomListAction extends ViewBaseAction implements INavigationAction {
 	
 	private Tab tab;
 	

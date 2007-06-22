@@ -3,6 +3,7 @@ package org.openxava.test.tests;
 import java.rmi.*;
 
 import org.openxava.hibernate.*;
+import org.openxava.test.formatters.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
@@ -12,7 +13,7 @@ import org.openxava.tests.*;
  */
 
 public class SellersTest extends ModuleTestBase {
-	
+		
 	private Customer customer2;
 	private Customer customer1;
 
@@ -161,6 +162,7 @@ public class SellersTest extends ModuleTestBase {
 	}
 	
 	public void testEntityReferenceCollections() throws Exception {
+		createCustomers();
 		createSeller66();
 		createSeller67();
 		verifySeller66();
@@ -169,6 +171,8 @@ public class SellersTest extends ModuleTestBase {
 		deleteSeller("67");					
 	}
 	
+	/* Since v2.2 this does not apply. See at testEntityReferenceCollections to
+	 * see the current entity collection behaviour
 	public void testSearchElementInReferencesCollectionUsingList() throws Exception {
 		execute("CRUD.new");
 		execute("Collection.new", "viewObject=xava_view_customers");
@@ -177,7 +181,10 @@ public class SellersTest extends ModuleTestBase {
 		execute("ReferenceSearch.choose", "row=1");
 		assertValue("customers.name", name);
 	}
-	
+	*/
+
+	/* Since v2.2 this does not apply. See at testEntityReferenceCollections to
+	 * see the current entity collection behaviour
 	public void testCreateElementInReferencesCollectionUsingList() throws Exception {
 		execute("CRUD.new");
 		execute("Collection.new", "viewObject=xava_view_customers");
@@ -185,28 +192,22 @@ public class SellersTest extends ModuleTestBase {
 		assertAction("NewCreation.saveNew");
 		assertAction("NewCreation.cancel");
 	}
+	*/
 	
 	private void createSeller66() throws Exception {
 		execute("CRUD.new");
 		setValue("number", "66");
 		setValue("name", "SELLER JUNIT 66");
 		setValue("level.id", "A");
-		execute("Collection.new", "viewObject=xava_view_customers");
-		assertEditable("customers.number");
-		assertNoEditable("customers.name");
-		setValue("customers.number", getCustomerNumber1());
-		// Comparing name with ignore case because a formatter in customer name		
-		assertValueIgnoringCase("customers.name", getCustomer1().getName()); 
-		assertCollectionRowCount("customers", 0);
-		execute("Collection.save", "viewObject=xava_view_customers");
-		assertMessage("Customer associated to Seller");
-		assertCollectionRowCount("customers", 1);
-				
-		assertEditable("customers.number");
-		assertNoEditable("customers.name");
-		setValue("customers.number", getCustomerNumber2());		
-		assertValueIgnoringCase("customers.name", getCustomer2().getName());
-		execute("Collection.save", "viewObject=xava_view_customers");
+
+		execute("Collection.add", "viewObject=xava_view_customers");		
+		assertValueInList(4, 0, getCustomer1().getName());
+		assertValueInList(5, 0, getCustomer2().getName());
+		checkRow(4);
+		checkRow(5);
+		execute("AddToCollection.add");
+		assertNoErrors();
+		assertMessage("2 element(s) added to Customers of Seller");
 		assertCollectionRowCount("customers",2);
 				
 		XHibernate.getSession().refresh(getCustomer1());
@@ -230,13 +231,12 @@ public class SellersTest extends ModuleTestBase {
 		setValue("number", "67");
 		setValue("name", "SELLER JUNIT 67");
 		setValue("level.id", "B");
-		execute("Collection.new", "viewObject=xava_view_customers");
-		assertEditable("customers.number");
-		assertNoEditable("customers.name");
-		setValue("customers.number", getCustomerNumber2());
-		assertValueIgnoringCase("customers.name", getCustomer2().getName());
+
 		assertCollectionRowCount("customers",0);
-		execute("Collection.save", "viewObject=xava_view_customers");
+		execute("Collection.add", "viewObject=xava_view_customers");		
+		assertValueInList(5, 0, getCustomer2().getName());
+		execute("AddToCollection.add", "row=5");		
+		assertMessage("1 element(s) added to Customers of Seller");		
 		assertCollectionRowCount("customers",1);
 		
 		XHibernate.getSession().refresh(getCustomer2());
@@ -305,7 +305,7 @@ public class SellersTest extends ModuleTestBase {
 	private void createCustomers() throws Exception {
 		customer1 = new Customer();
 		customer1.setNumber(66);
-		customer1.setName("CUSTOMER JUNIT 66");
+		customer1.setName("Customer Junit 66");
 		customer1.setAddress(createAddress());
 		customer1.setRemarks("REMARKS JUNIT 66");
 		customer1.setRelationWithSeller("RELATION JUNIT 66");
@@ -313,7 +313,7 @@ public class SellersTest extends ModuleTestBase {
 
 		customer2 = new Customer();
 		customer2.setNumber(67);
-		customer2.setName("CUSTOMER JUNIT 67");
+		customer2.setName("Customer Junit 67");
 		customer2.setAddress(createAddress());
 		customer2.setRemarks("REMARKS JUNIT 67");
 		customer2.setRelationWithSeller("RELATION JUNIT 67");
@@ -340,5 +340,5 @@ public class SellersTest extends ModuleTestBase {
 	private String getCustomerNumber2() throws Exception {
 		return String.valueOf(getCustomer2().getNumber());
 	}
-			
+				
 }

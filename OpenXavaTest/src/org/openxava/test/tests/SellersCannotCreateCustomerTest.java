@@ -14,6 +14,8 @@ public class SellersCannotCreateCustomerTest extends ModuleTestBase {
 		super(testName, "SellersCannotCreateCustomer");		
 	}
 
+	/* Since v2.2 this does not apply. See at testEntityReferenceCollections to
+	 * see the current entity collection behaviour
 	public void testNotCreateNewReferenceFromCollection() throws Exception {
 		execute("CRUD.new");
 		execute("Collection.new", "viewObject=xava_view_section0_customers");
@@ -21,12 +23,15 @@ public class SellersCannotCreateCustomerTest extends ModuleTestBase {
 		assertNoAction("Reference.createNew");
 		assertNoAction("Reference.modify");
 	}
+	*/
 	
-	public void testMembersOfReferenceToEntityNotEditableInSection() throws Exception {
+	public void testMembersOfReferenceToEntityNotEditableInSection_notCreateNewReferenceFromCollectionOnEdit() throws Exception {
 		execute("Mode.detailAndFirst");
 		execute("Collection.edit", "row=0,viewObject=xava_view_section0_customers");
 		assertEditable("customers.number");
-		assertNoEditable("customers.name");
+		assertNoEditable("customers.name");	
+		assertNoAction("Reference.createNew");
+		assertNoAction("Reference.modify");
 	}
 			
 }

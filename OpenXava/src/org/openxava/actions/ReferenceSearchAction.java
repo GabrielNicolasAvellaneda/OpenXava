@@ -80,7 +80,7 @@ public class ReferenceSearchAction extends ReferenceBaseAction implements INavig
 	}
 
 	public String getCustomView() {		
-		return "xava/referenceSearch";
+		return "xava/referenceSearch.jsp?rowAction="+ getNextController() + ".choose";
 	}
 
 	public Tab getTab() {

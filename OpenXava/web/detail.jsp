@@ -93,13 +93,13 @@ while (it.hasNext()) {
 					String labelKey = propertyPrefix + ref.getName() + "_LABEL_";
 					String label = view.getLabelFor(ref);
 	%>				
-		<table class=<%=style.getFrame()%> style="float:left; margin-right:4px" <%=style.getFrameSpacing()%>>
-		<tr class=<%=style.getFrameTitle()%>><th align='left' class=<%=style.getFrameTitleLabel()%>>
+		<table class="<%=style.getFrame()%>" style="float:left; margin-right:4px" <%=style.getFrameSpacing()%>>
+		<tr class="<%=style.getFrameTitle()%>"><th align='left' class="<%=style.getFrameTitleLabel()%>">
 			<%=style.getFrameTitleStartDecoration()%>
 			<span id="<%=labelKey%>"><%=label%></span>
 			<%=style.getFrameTitleEndDecoration()%>
 		</th></tr>
-		<tr><td class=<%=style.getFrameContent()%>>
+		<tr><td class="<%=style.getFrameContent()%>">
 	<%				} // withFrame
 		%>	
 		<jsp:include page="detail.jsp"> 

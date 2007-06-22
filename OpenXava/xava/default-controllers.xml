@@ -16,7 +16,9 @@ here that you want to override.
 	<object name="xava_tab" class="org.openxava.tab.Tab"/>		
 	<object name="xava_mainTab" class="org.openxava.tab.Tab"/>		
 	<object name="xava_customizingTab" class="org.openxava.tab.Tab"/>	<object name="xava_row" class="java.lang.Integer" value="0"/>
-	<object name="xava_language" class="org.openxava.session.Language"/>		<object name="xava_newImageProperty" class="java.lang.String"/>	<object name="xava_currentReferenceLabel" class="java.lang.String"/>	<object name="xava_previousControllers" class="java.util.Stack"/>
+	<object name="xava_language" class="org.openxava.session.Language"/>		<object name="xava_newImageProperty" class="java.lang.String"/>	<object name="xava_currentReferenceLabel" class="java.lang.String"/>
+	<object name="xava_currentCollectionLabel" class="java.lang.String"/>
+	<object name="xava_collectionViewObject" class="java.lang.String"/>		<object name="xava_previousControllers" class="java.util.Stack"/>
 	<object name="xava_previousViews" class="java.util.Stack"/>
 	<object name="xava_previousCustomViews" class="java.util.Stack"/>
 	<object name="xava_gallery" class="org.openxava.session.Gallery"/>
@@ -232,13 +234,36 @@ here that you want to override.
 		</action>			
 	</controller>
 					<controller name="ReferenceSearch">		<action name="choose"			class="org.openxava.actions.ChooseReferenceAction">			<use-object name="xava_referenceSubview"/>
-			<use-object name="xava_view"/>			<use-object name="xava_tab"/>					</action>		<action name="cancel"			class="org.openxava.actions.CancelReferenceSearchAction">
+			<use-object name="xava_view"/>			<use-object name="xava_tab"/>					</action>		<action name="cancel"			class="org.openxava.actions.CancelFromCustomListAction">
 			<use-object name="xava_view"/>
-			<use-object name="xava_tab"/>		</action>	</controller>		<controller name="Collection">		<action name="new"			class="org.openxava.actions.CreateNewElementInCollectionAction">					</action>				
+			<use-object name="xava_tab"/>		</action>	</controller>
+	
+	<controller name="AddToCollection">
+		<action name="add" 
+			class="org.openxava.actions.AddElementsToCollectionAction">
+			<use-object name="xava_view"/>			
+			<use-object name="xava_tab"/>			
+			<use-object name="xava_collectionViewObject" action-property="viewObject"/>
+			<use-object name="xava_currentCollectionLabel"/>			
+		</action>
+		<action name="cancel" 
+			class="org.openxava.actions.CancelFromCustomListAction">
+			<use-object name="xava_view"/>
+			<use-object name="xava_tab"/>
+		</action>
+	</controller>
+			<controller name="Collection">		<action name="new" image="images/create_new.gif"			class="org.openxava.actions.CreateNewElementInCollectionAction">					</action>				
+		
+		<action name="add" image="images/create_new.gif"
+			class="org.openxava.actions.GoAddElementsToCollectionAction">			
+			<use-object name="xava_tab"/>
+			<use-object name="xava_currentCollectionLabel"/>
+			<use-object name="xava_collectionViewObject"/>
+		</action>						
 		<action name="hideDetail"			class="org.openxava.actions.HideDetailElementInCollectionAction">					</action>							
 		<action name="save"			class="org.openxava.actions.SaveElementInCollectionAction">						<use-object name="xava_view"/>		</action>					<action name="remove"			class="org.openxava.actions.RemoveElementFromCollectionAction">						<use-object name="xava_view"/>		</action>							<action name="edit" image="images/edit.gif"			class="org.openxava.actions.EditElementInCollectionAction">						<use-object name="xava_view"/>		</action>									<action name="view" image="images/view.gif"			class="org.openxava.actions.EditElementInCollectionAction">						<use-object name="xava_view"/>		</action>
 		
-		<action name="removeSelected" confirm="true"
+		<action name="removeSelected" confirm="true" image="images/delete.gif"
 			class="org.openxava.actions.RemoveSelectedInCollectionAction">
 			<use-object name="xava_view"/>
 		</action>				
