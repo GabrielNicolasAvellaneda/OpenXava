@@ -141,10 +141,11 @@ while (it.hasNext()) {
 		if (isValidValues) {
 	%>	
 <th class=<%=style.getListSubheaderCell()%> align="left">
+<%-- Boolean.toString( ) for base0 is needed in order to work in WebSphere 6 --%>
 <jsp:include page="comparatorsValidValuesCombo.jsp">
 	<jsp:param name="validValues" value="<%=property.getValidValuesLabels(request)%>" />
 	<jsp:param name="value" value="<%=value%>" />
-	<jsp:param name="base0" value="<%=!property.isNumber()%>" />
+	<jsp:param name="base0" value="<%=Boolean.toString(!property.isNumber())%>" />
 	<jsp:param name="prefix" value="<%=prefix%>"/>
 </jsp:include>		
 	<%	

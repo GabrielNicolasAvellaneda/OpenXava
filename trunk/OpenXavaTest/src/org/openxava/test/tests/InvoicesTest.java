@@ -306,9 +306,7 @@ public class InvoicesTest extends ModuleTestBase {
 	public void testGenerateExcel() throws Exception {
 		String year = getValueInList(0, 0);
 		String number = getValueInList(0, 1);		
-		DateFormat dfEs = new SimpleDateFormat("dd/MM/yyyy"); // at momment in spanish format
-		DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
-		String date = df.format(dfEs.parse(getValueInList(0, 2)));
+		String date = getValueInList(0, 2);
 		String amountsSum = formatBigDecimal(getValueInList(0, 3));
 		String vat = formatBigDecimal(getValueInList(0, 4));
 		String detailsCount = getValueInList(0, 5);

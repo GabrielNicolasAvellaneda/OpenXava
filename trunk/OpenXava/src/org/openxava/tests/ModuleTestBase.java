@@ -309,7 +309,7 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected void executeDefaultAction() throws Exception {
-		SubmitButton button = getForm().getSubmitButtons()[getFormIndex()];
+		SubmitButton button = getForm().getSubmitButtons()[0];
 		button.click();
 		response = conversation.getCurrentPage();
 		resetForm();
