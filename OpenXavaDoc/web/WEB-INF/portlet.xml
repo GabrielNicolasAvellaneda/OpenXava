@@ -394,44 +394,6 @@
 		<resource-bundle>Future</resource-bundle>		
 	</portlet> 
 	
-	<portlet id="Wiki">
-		<description>Wiki</description>    
-		<portlet-name>Wiki</portlet-name>
-		<display-name>Wiki</display-name>    
-		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
-		<init-param>
-			<name>Page</name>
-			<value>wiki</value>
-		</init-param>
-		<expiration-cache>-1</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>VIEW</portlet-mode>
-		</supports>
-		<supported-locale>en</supported-locale>
-		<supported-locale>es</supported-locale>				
-		<resource-bundle>Wiki</resource-bundle>		
-	</portlet> 
-	
-	<portlet id="References">
-		<description>References</description>    
-		<portlet-name>References</portlet-name>
-		<display-name>References</display-name>    
-		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
-		<init-param>
-			<name>Page</name>
-			<value>references</value>
-		</init-param>
-		<expiration-cache>-1</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>VIEW</portlet-mode>
-		</supports>
-		<supported-locale>en</supported-locale>
-		<supported-locale>es</supported-locale>				
-		<resource-bundle>References</resource-bundle>		
-	</portlet> 
-	
 	<portlet id="Downloads">
 		<description>Downloads</description>    
 		<portlet-name>Downloads</portlet-name>
