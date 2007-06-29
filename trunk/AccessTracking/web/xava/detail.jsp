@@ -93,13 +93,13 @@ while (it.hasNext()) {
 					String labelKey = propertyPrefix + ref.getName() + "_LABEL_";
 					String label = view.getLabelFor(ref);
 	%>				
-		<table class=<%=style.getFrame()%> style="float:left; margin-right:4px" <%=style.getFrameSpacing()%>>
-		<tr class=<%=style.getFrameTitle()%>><th align='left' class=<%=style.getFrameTitleLabel()%>>
+		<table class="<%=style.getFrame()%>" style="float:left; margin-right:4px" <%=style.getFrameSpacing()%>>
+		<tr class="<%=style.getFrameTitle()%>"><th align='left' class="<%=style.getFrameTitleLabel()%>">
 			<%=style.getFrameTitleStartDecoration()%>
 			<span id="<%=labelKey%>"><%=label%></span>
 			<%=style.getFrameTitleEndDecoration()%>
 		</th></tr>
-		<tr><td class=<%=style.getFrameContent()%>>
+		<tr><td class="<%=style.getFrameContent()%>">
 	<%				} // withFrame
 		%>	
 		<jsp:include page="detail.jsp"> 
@@ -121,13 +121,13 @@ while (it.hasNext()) {
 		<tr><td colspan="4">		
 	<%			if (withFrame) {
 		%>	
-		<table class=<%=style.getFrame()%> width='100%' <%=style.getFrameSpacing()%>>
-		<tr class=<%=style.getFrameTitle()%>><th align='left' class=<%=style.getFrameTitleLabel()%>>
+		<table class="<%=style.getFrame()%>" width='100%' <%=style.getFrameSpacing()%>>
+		<tr class="<%=style.getFrameTitle()%>"><th align='left' class=<%=style.getFrameTitleLabel()%>>
 			<%=style.getFrameTitleStartDecoration()%>
 			<%=collection.getLabel(request)%>
 			<%=style.getFrameTitleEndDecoration()%>
 		</th></tr>
-		<tr><td class=<%=style.getFrameContent()%>>		
+		<tr><td class="<%=style.getFrameContent()%>">		
 	<%			} // withFrame
 		%>	
 		<jsp:include page="<%=urlCollection%>"> 
@@ -152,7 +152,7 @@ while (it.hasNext()) {
 		<tr><td colspan="4">
 		<% }  %>
 		<table class="<%=style.getFrame()%>" style="float:left; margin-right:4px" <%=style.getFrameSpacing()%>>
-		<tr class=<%=style.getFrameTitle()%>>
+		<tr class="<%=style.getFrameTitle()%>">
 		<th align='left' class="<%=style.getFrameTitleLabel()%>">
 		<%=style.getFrameTitleStartDecoration()%>
 		<%=group.getLabel(request)%>
@@ -160,7 +160,7 @@ while (it.hasNext()) {
 		</th>
 		</tr>
 				
-		<tr><td class=<%=style.getFrameContent()%>>
+		<tr><td class="<%=style.getFrameContent()%>">
 		<jsp:include page="detail.jsp">
 			<jsp:param name="viewObject" value="<%=viewName%>" />
 		</jsp:include>
