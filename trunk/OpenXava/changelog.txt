@@ -1,13 +1,24 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 2.2 (2007-6-28)
+------------------------
+MAIN FEATURES since 2.1
+- Collection behaviour greatly improved.
+- Look & Feel integration for Liferay and WebSphere Portal 6 improved.
+- Transient components and default mapping for persistent components.
+- Moreover, more than 80 features and fixes over 2.1.
+
+Features and fixes since 2.1.5:
 - Entity collection behaviour improved: You can add several elements at once, and with less clicks.
 - New type of action IChainActionWithArgv, that allows sent values for the properties to the chained action.
-- Fix: Intermittent bug on high load (NullPointer obtaining a parameter for request) on return from creating o modifiying a reference.
 - The detail view in collections now is shown on top by default, you can put it on bottom with detailOnBottomInCollections=true in xava.properties.
 - When save a collection element the detail view is not hidden, but it continue displayed.
-- Fix: When quotation marks in text field was used, the data inside quotation was not visible.
 - When i18n for members of collections are not defined, the i18n for the default tab is assumed.
+- Bulgarian flag added to OpenXava Portal (Liferay).
+- Fix: When quotation marks in text field was used, the data inside quotation was not visible.
+- Fix: Intermittent bug on high load (NullPointer obtaining a parameter for request) on return from creating o modifiying a reference.
+- Fix: Tomcat log does not work in OpenXava Portal (Liferay) on Windows.
 - Fix: Fails in i18n of members of collections.
 
 OpenXava 2.1.5 (2007-6-18)
