@@ -165,12 +165,13 @@ TD.list-title {
 	padding: 2px;
 }
 
-.editor, .portlet-form-input-field, .form-text {
-	color: #000000;  
+.liferay-xava-cell-wrapper {
+	border: 1px solid #CCCCCC;
 }
 
-tr[id=xava-tr-list] .portlet-header-bar {
-	background-image: none;	
+
+.editor, .portlet-form-input-field, .form-text {
+	color: #000000;  
 }
 
 tr[id=xava-tr-list] .wpsTableNrmRow {

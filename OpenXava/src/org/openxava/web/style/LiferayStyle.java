@@ -149,7 +149,7 @@ public class LiferayStyle extends Style {
 	}
 	
 	private String getListCell() { 
-		return "portlet-header-bar";		
+		return "liferay-xava-cell-wrapper";		
 	}
 	
 		
