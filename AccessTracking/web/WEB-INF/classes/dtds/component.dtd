@@ -1,6 +1,6 @@
 <?xml version = "1.0" encoding = "ISO-8859-1"?>
 
-<!ELEMENT component (entity, aggregate*, view*, tab*, entity-mapping, aggregate-mapping*)>
+<!ELEMENT component (entity, aggregate*, view*, tab*, ((entity-mapping, aggregate-mapping*)|transient)?)>
 <!ATTLIST component
  name ID #REQUIRED
 >
@@ -82,6 +82,7 @@
   label CDATA #IMPLIED
   read-only (true|false) "false"
   label-format (NORMAL|SMALL|NO_LABEL) "NORMAL"
+  editor CDATA #IMPLIED
 >
 
 <!ELEMENT on-change EMPTY>
