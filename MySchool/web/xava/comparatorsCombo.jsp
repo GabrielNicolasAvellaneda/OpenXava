@@ -4,6 +4,8 @@
 
 <%
 String comparator = request.getParameter("comparator");
+String prefix = request.getParameter("prefix");
+if (prefix == null) prefix = "";
 boolean isString = "true".equals(request.getParameter("isString"));
 boolean isDate = "true".equals(request.getParameter("isDate"));
 String eq = "eq".equals(comparator)?"selected='selected'":"";
@@ -19,7 +21,7 @@ String month = "month_comparator".equals(comparator)?"selected='selected'":"";
 String yearMonth = "year_month_comparator".equals(comparator)?"selected='selected'":""; 
 %>
 
-<select name="conditionComparators" class=<%=style.getEditor()%>>
+<select name="<%=prefix%>conditionComparators" class=<%=style.getEditor()%>>
 	<%
 	if (isString) {
 	%>						

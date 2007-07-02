@@ -87,6 +87,7 @@
   etiqueta CDATA #IMPLIED
   solo-lectura (true|false) "false"
   formato-etiqueta (NORMAL|PEQUENA|SIN_ETIQUETA) "NORMAL"
+  editor CDATA #IMPLIED
 >
 
 <!ELEMENT al-cambiar EMPTY>

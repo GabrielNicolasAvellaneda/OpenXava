@@ -7,6 +7,8 @@
 <%
 String validValues = request.getParameter("validValues");
 String value = request.getParameter("value");
+String prefix = request.getParameter("prefix");
+if (prefix == null) prefix = "";
 // base is 0 when we are working with Java 5 Enum, and 1 when I working with classic OX2 valid-values
 int base = "true".equals(request.getParameter("base0"))?0:1;
 int ivalue = -1;
@@ -17,9 +19,9 @@ catch (Exception ex) {
 }
 %>
 
-<input type="hidden" name="conditionComparators" value="eq">
+<input type="hidden" name="<%=prefix%>conditionComparators" value="eq">
 
-<select name="conditionValues" class=<%=style.getEditor()%>>
+<select name="<%=prefix%>conditionValues" class=<%=style.getEditor()%>>
 	<option value=""></option>
 <%
 	StringTokenizer st = new StringTokenizer(validValues, "|");
