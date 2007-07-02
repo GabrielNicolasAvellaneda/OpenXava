@@ -20,12 +20,11 @@
 <%
 Users.setCurrent(request);
 Locales.setCurrent(request);
-org.openxava.hibernate.XHibernate.setCmt(false); 
-org.openxava.jpa.XPersistence.reset();
 boolean isPortlet = (request.getAttribute("xava.portlet.renderURL") != null);
 boolean messagesOnTop = !"false".equalsIgnoreCase(request.getParameter("messagesOnTop"));
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
 manager.setSession(session);
+manager.resetPersistence();
 
 org.openxava.tab.Tab t = (org.openxava.tab.Tab) context.get(request, "xava_tab");
 request.setAttribute("tab", t);

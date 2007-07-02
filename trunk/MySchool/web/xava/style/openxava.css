@@ -18,26 +18,30 @@ TH.list {
 	font-weight: normal; 
 }
 
-TR.list-odd {
+.list-odd {
 	font-weight: normal; 
 	background: #eeeeee;
 }
 
-TR.list-pair {
+.list-pair {
 	font-weight: normal;
 	background: #cccccc; 
 }
 
-TR.list-odd-selected {
+.list-odd-selected {
 	font-weight: bold;
 	color: #3366ff;
 	background: #eeeeee;
 }
 
-TR.list-pair-selected {
+.list-pair-selected {
 	font-weight: bold;
 	color: #3366ff;
 	background: #cccccc;
+}
+
+.websphere-list-selected {
+	font-weight: bold;
 }
 
 .highlight {
@@ -160,3 +164,30 @@ TD.list-title {
 	border-top: 0px;
 	padding: 2px;
 }
+
+.liferay-xava-cell-wrapper {
+	border: 1px solid #CCCCCC;
+}
+
+
+.editor, .portlet-form-input-field, .form-text {
+	color: #000000;  
+}
+
+tr[id=xava-tr-list] .wpsTableNrmRow {
+	border-left-style: solid;
+}
+
+/* Vertical line in list in WebSphere Portal, for rows */
+tr[id=xava-tr-list] .wpsTableNrmRow {
+	border-left-width: 1px;
+}
+
+/* Vertical line in list in WebSphere Portal, for header */
+tr[id=xava-tr-list] .wpsTableHead {
+	border-left-width: 1px;
+	border-left-style: solid;
+}
+
+
+

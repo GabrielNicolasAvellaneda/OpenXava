@@ -14,9 +14,9 @@ String postEditor=null;
 
 if (hasFrame) {
 	preLabel="<tr><td colspan=4><table class=" + style.getFrame() + " width='100%' " + style.getFrameSpacing() + "><tr class=" + style.getFrameTitle() + "><th align='left' class='" + style.getFrameTitleLabel() + "' id=" + labelKey + " >" + style.getFrameTitleStartDecoration();
-	postLabel="&nbsp;" + style.getFrameTitleEndDecoration();
+	postLabel="";
 	preIcons="";
-	postIcons="";
+	postIcons="&nbsp;" + style.getFrameTitleEndDecoration(); 
 	preEditor="</th></tr><tr><td class=" + style.getFrameContent() + ">";
 	postEditor="</td></tr></table>";
 }
