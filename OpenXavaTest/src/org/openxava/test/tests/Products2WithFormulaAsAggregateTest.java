@@ -1,8 +1,8 @@
 package org.openxava.test.tests;
 
-import javax.ejb.*;
+import javax.persistence.*;
 
-import org.openxava.hibernate.*;
+import org.openxava.jpa.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
@@ -67,25 +67,22 @@ public class Products2WithFormulaAsAggregateTest extends ModuleTestBase {
 
 
 	private void deleteFormula(String name) throws Exception {
-		XHibernate.getSession().delete(Formula.findByName(name));		
+		XPersistence.getManager().remove(Formula.findByName(name));		
 	}
 
 	private void assertFormulaExist(String name) {
-		try {			
-			Formula.findByName(name);
-		}
-		catch (ObjectNotFoundException ex) {
+		Query query = XPersistence.getManager().createQuery("from Formula as o where o.name = :name");
+		query.setParameter("name", name);
+		if (query.getResultList().isEmpty()) {
 			fail("Formula '" + name + "' does not exist, and it should");
 		}
 	}
 
-	private void assertProductNotExist(int number) {
-		try {
-			Product2.findByNumber(number);
+	private void assertProductNotExist(long number) {		
+		if (XPersistence.getManager().find(Product2.class, number) != null) {
 			fail("Product " + number + " exists, and it shouldn't");
 		}
-		catch (ObjectNotFoundException ex) {			
-		}		
+				
 	}
 		
 }

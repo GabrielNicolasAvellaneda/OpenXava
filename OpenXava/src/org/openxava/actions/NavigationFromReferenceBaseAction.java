@@ -30,14 +30,14 @@ abstract public class NavigationFromReferenceBaseAction extends ReferenceBaseAct
 	
 	public void execute() throws Exception {
 		super.execute();
-		View viewReference = new View();		
+		View viewReference = new View();			
 		viewReference.setModelName(getModel());
 		viewReference.setRequest(request);
 		viewReference.setErrors(getErrors()); 
 		viewReference.setMessages(getMessages());
 		viewReference.putObject("xava.referenceSubview", getReferenceSubview());
 		getPreviousViews().push(getView());
-		setView(viewReference);
+		setView(viewReference);		
 		
 		// Next line is for reset the cache		
 		request.getSession().removeAttribute(getKeyProperty() + ".descriptionsCalculator");				

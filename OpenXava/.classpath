@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="xava"/>
-	<classpathentry kind="src" path="properties"/>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry sourcepath="JRE_SRC" kind="var" path="JRE_LIB">
+	<classpathentry path="xava" kind="src"/>
+	<classpathentry path="properties" kind="src"/>
+	<classpathentry path="src" kind="src"/>
+	<classpathentry sourcepath="JRE_SRC" path="JRE_LIB" kind="var">
 		<attributes>
-			<attribute value="http://java.sun.com/j2se/1.4.2/docs/api" name="javadoc_location"/>
+			<attribute name="javadoc_location" value="http://java.sun.com/j2se/1.4.2/docs/api"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="i18n"/>
-	<classpathentry exported="true" kind="lib" path="lib/httpunit.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/js.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/Tidy.jar"/>
-	<classpathentry exported="true" kind="var" path="JUNIT_HOME/junit.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/j2ee.jar"/>
-	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/commons-fileupload.jar"/>
-	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/itext.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/portlet-api-1.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/commons-logging.jar"/>
-	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/dom4j.jar"/>
-	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/commons-collections.jar"/>
-	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/ehcache.jar"/>
-	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/cglib.jar"/>
-	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/asm.jar"/>
-	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/jasperreports.jar"/>
-	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/antlr.jar"/>
-	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/ejb3-persistence.jar"/>
-	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/hibernate3.jar"/>
-	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/hibernate-annotations.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/FCKeditor-2.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/hibernate-validator.jar"/>
-	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/hibernate-commons-annotations.jar"/>
-	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/hibernate-entitymanager.jar"/>
-	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/jboss-archive-browsing.jar"/>
-	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/javassist.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry path="i18n" kind="src"/>
+	<classpathentry path="lib/httpunit.jar" exported="true" kind="lib"/>
+	<classpathentry path="lib/js.jar" exported="true" kind="lib"/>
+	<classpathentry path="lib/Tidy.jar" exported="true" kind="lib"/>
+	<classpathentry path="JUNIT_HOME/junit.jar" exported="true" kind="var"/>
+	<classpathentry path="lib/j2ee.jar" exported="true" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/commons-fileupload.jar" exported="true" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/itext.jar" exported="true" kind="lib"/>
+	<classpathentry path="lib/portlet-api-1.0.jar" exported="true" kind="lib"/>
+	<classpathentry path="lib/commons-logging.jar" exported="true" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/dom4j.jar" exported="true" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/commons-collections.jar" exported="true" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/ehcache.jar" exported="true" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/cglib.jar" exported="true" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/asm.jar" exported="true" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/jasperreports.jar" exported="true" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/antlr.jar" exported="true" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/ejb3-persistence.jar" exported="true" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/hibernate3.jar" exported="true" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/hibernate-annotations.jar" exported="true" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/FCKeditor-2.3.jar" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/hibernate-validator.jar" exported="true" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/hibernate-commons-annotations.jar" exported="true" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/hibernate-entitymanager.jar" exported="true" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/jboss-archive-browsing.jar" exported="true" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/javassist.jar" exported="true" kind="lib"/>
+	<classpathentry path="ox3-src" kind="src"/>
+	<classpathentry path="bin" kind="output"/>
 </classpath>

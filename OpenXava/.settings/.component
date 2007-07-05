@@ -7,5 +7,8 @@
 <wb-resource deploy-path="/" source-path="/jpa"/>
 <wb-resource deploy-path="/" source-path="/ejb3-jpa"/>
 <wb-resource deploy-path="/" source-path="/properties"/>
+        <wb-resource deploy-path="/" source-path="/src-java5"/>
+        <wb-resource deploy-path="/" source-path="/src-ox3"/>
+        <wb-resource deploy-path="/" source-path="/ox3-src"/>
 </wb-module>
 </project-modules>

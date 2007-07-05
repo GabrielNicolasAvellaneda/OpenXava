@@ -1,9 +1,8 @@
 package org.openxava.test.tests;
 
-import java.sql.*;
-
 import org.openxava.hibernate.*;
 import org.openxava.test.model.*;
+import org.openxava.tests.*;
 import org.openxava.util.*;
 
 import junit.framework.*;
@@ -44,5 +43,19 @@ public class HibernateTest extends TestCase {
 		
 		XHibernate.getSession().delete(sf);
 	}
+	
+	public void testConverterInReference() throws Exception {		
+		Warehouse wh = new Warehouse();
+		wh.setNumber(1);
+		wh.setZoneNumber(1);
+		Carrier c1 = new Carrier();
+		c1.setWarehouse(wh);
+		// driving licence is not set to test converters in references
+		c1.setNumber(6);
+		c1.setName("SIX");
+		XHibernate.getSession().save(c1);
+		XHibernate.commit(); 		
+	}
+	
 	
 }

@@ -137,7 +137,7 @@ public class XHibernate {
 	}	
 	
 	private static SessionFactory createSessionFactory(String hibernateCfg) throws HibernateException {
-		try {
+		try {			
 			Configuration configuration = XSystem.isJava5OrBetter()?
 				new AnnotationConfiguration().configure(hibernateCfg):
 				new Configuration().configure(hibernateCfg);

@@ -1,6 +1,8 @@
 package org.openxava.test.tests;
 
-import org.openxava.hibernate.*;
+import javax.persistence.*;
+
+import org.openxava.jpa.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
@@ -19,11 +21,11 @@ public class DeliveryTypesTest extends ModuleTestBase {
 	public void testParseObjectWithMultipleKeyThatAreReferenceInStereotypes() throws Exception {
 		execute("CRUD.new");
 		Delivery delivery = findDelivery();
-		setValue("comboDeliveries", delivery.toString());
+		setValue("comboDeliveries", toKeyString(delivery));
 		execute("DeliveryTypes.assertComboDeliveries");
 		assertNoErrors();
-		assertMessage("comboDeliveries=" + delivery.toString());
-		assertValue("comboDeliveries", delivery.toString());
+		assertMessage("comboDeliveries=" + toKeyString(delivery));
+		assertValue("comboDeliveries", toKeyString(delivery));
 	}
 			
 	public void testSaveActionNotResetRefreshData() throws Exception {
@@ -96,19 +98,20 @@ public class DeliveryTypesTest extends ModuleTestBase {
 		delivery.setType(deliveryType);
 		delivery.setNumber(66);
 		delivery.setDescription("JUNIT FOR DELIVERY TYPE");
-		XHibernate.getSession().save(delivery);
-		XHibernate.commit();		
+		XPersistence.getManager().persist(delivery);		
+		XPersistence.commit();				
 				
 		execute("CRUD.delete");		
 		assertError("Delivery type 66 can not delete because it is used in deliveries");
 		assertEditable("description"); // because return to main view (and controllers)
-		
-		XHibernate.getSession().delete(delivery);
-		XHibernate.commit();
+				
+		delivery = XPersistence.getManager().merge(delivery); 
+		XPersistence.getManager().remove(delivery);		
+		XPersistence.commit();		
 		
 		execute("CRUD.delete");		
 		assertNoErrors();
-		assertMessage("Delivery type deleted successfully");				 		
+		assertMessage("Delivery type deleted successfully");		
 	}
 	
 	private Delivery findDelivery() {

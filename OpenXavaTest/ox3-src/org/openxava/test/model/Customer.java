@@ -1,0 +1,310 @@
+package org.openxava.test.model;
+
+import java.util.*;
+
+import javax.persistence.*;
+
+import org.openxava.annotations.*;
+import org.openxava.jpa.*;
+import org.openxava.test.actions.*;
+
+
+/**
+ * 
+ * @author Javier Paniza
+ */
+
+@Entity
+@Views({
+	
+	@View( members= 	
+		"number;" +
+		"type;" +
+		"name, Customers.changeNameLabel();" +
+		"photo;" +
+		"address;" +
+		"city;" +
+		"seller [" + 
+		"	seller; " +
+		"	relationWithSeller;" +
+		"]" +  
+		"alternateSeller;" +
+		"deliveryPlaces;" +
+		"remarks" 	
+	),
+	
+	@View( name="Simple", members= 	
+		"number;" +
+		"type;" +
+		"name, Customers.changeNameLabel(ALWAYS);" +
+		"photo;" +
+		"address;"
+	),
+	
+	@View( name="Simplest", members="number; name" ),
+
+	@View( name="WithSection", members=	
+		"number;" + 
+		"customer {" + 				
+		"	type;" + 
+		"	name, Customers.changeNameLabel();" +
+		"	photo;" +
+		"	address;" + 
+		"	city;" +
+		"	seller [" + 
+		"		seller;" +
+		"		relationWithSeller;" + 
+		"	]" +   
+		"	alternateSeller;" + 
+		"	deliveryPlaces;" +
+		"	remarks;" + 	
+		"}" + 
+		"states { states }"			
+	),
+	
+	@View( name="SectionGroup", members=	
+		"number;" +		
+		"data {" +
+		"	customer [" +
+		"		type;" +
+		"		name;" + 
+		"	]" +
+		"	seller [" +
+		"		seller;" +
+		"		relationWithSeller;" +
+		"	]" +
+		"}"
+	),
+	
+	@View( name="SimpleStateAsForm", members= "number; type; name; address" ),
+	
+	@View( name="SellerAsAggregate", members= "number; type; name; address; seller" ),
+	
+	@View( name="SomeMembersReadOnly", members= "number; type; name; seller; alternateSeller" ),
+	
+	@View( name="SimpleWithDeliveryPlaces", members="number; type; name; address; deliveryPlaces" ),
+	
+	@View( name="SellerAsAggregate2Levels", members="number; type; name; address; seller" ),
+	
+	@View( name="TypeWithRadioButton", members="number;	type; name;	address;" )
+	
+})
+
+@Tabs ({
+		
+	@Tab(
+		rowStyles=@RowStyle(style="highlight", property="type", value="steady"),
+		properties="name, type, seller.name, address.city, seller.level.description, address.state.name"
+	),
+	
+	@Tab( name="TwoSellers",
+		properties="name, type, address.city, seller.name, seller.level.description, alternateSeller.name"
+	),
+	
+	@Tab( name="TwoSellersNumber",
+		properties="name, type, seller.number, alternateSeller.number"
+	)
+		
+})
+
+public class Customer implements IWithName {
+	
+	@Id @Column(length=5)	
+	private int number;
+		
+	@Required @Stereotype("PERSON_NAME")  
+	@OnChange(action=OnChangeCustomerNameAction.class)
+	@ReadOnly(forViews="SomeMembersReadOnly")
+	private String name;
+	
+	@Required 
+	@DefaultValueCalculator(
+		calculator=org.openxava.calculators.IntegerCalculator.class,
+		properties={ @PropertyValue(name="value", value="0") }		
+	)
+	@Editor(forViews="TypeWithRadioButton", name="ValidValuesRadioButton")
+	private Type type;
+	public enum Type { NORMAL, STEADY, SPECIAL };
+	
+	@Stereotype("PHOTO")
+	private byte [] photo;
+		
+	@Stereotype("MEMO") @Column(length=400)
+	private String remarks;
+		
+	@Embedded 
+	@ReferenceView(forViews="SimpleStateAsForm", name="StateAsForm")
+	private Address address;	
+	
+	@ManyToOne(fetch=FetchType.LAZY) @SearchAction(name="MyReference.search") 
+	@ReadOnly(forViews="SomeMembersReadOnly")
+	@AsEmbedded(forViews="SellerAsAggregate, SellerAsAggregate2Levels")
+	@NoFrame(notForViews="SellerAsAggregate")
+	@ReferenceView(forViews="SellerAsAggregate2Levels", name="LevelNoDescriptionsList")
+	private Seller seller;
+	
+	@DefaultValueCalculator(
+		calculator=org.openxava.calculators.StringCalculator.class,
+		properties={ @PropertyValue(name="string", value="GOOD") }
+	)
+	@Column(length=40, name="RELATIONSELLER")	
+	private String relationWithSeller;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@OnChange(action=OnChangeVoidAction.class)	
+	@ReferenceView(name="DecorateName") 
+	@NoCreate(forViews="DEFAULT")
+	@ReadOnly(forViews="SomeMembersReadOnly")
+	@DescriptionsList(forViews="SomeMembersReadOnly", descriptionProperties="level.description, name")
+	private Seller alternateSeller;	
+	
+	@OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
+	private Collection<DeliveryPlace> deliveryPlaces;
+	
+	@ManyToMany	
+	@JoinTable(name="CUSTOMER_STATE",  
+		joinColumns=@JoinColumn(name="CUSTOMER"), 
+		inverseJoinColumns=@JoinColumn(name="STATE") 
+	)
+	private Collection<State> states;
+ 	
+	@Column(length=40)	
+	@Depends(properties="address.zipCode, address.city")	
+	public String getCity() {
+		return getAddress().getZipCode() + " " + getAddress().getCity(); 
+	}
+	
+ 	public static Customer findByNumber(int number) throws NoResultException { 	 			
+ 		Query query = XPersistence.getManager().createQuery("from Customer as o where o.number = :number"); 
+		query.setParameter("number", new Integer(number)); 
+		return (Customer) query.getSingleResult();
+ 	} 	
+	
+ 	public static Collection findAll()  {
+		Query query = XPersistence.getManager().createQuery("from Customer as o"); 
+		return query.getResultList();  		
+ 	} 
+ 	
+ 	public static Collection findByNameLike(String name)  { 		 			
+ 		Query query = XPersistence.getManager().createQuery("from Customer as o where o.name like :name order by o.name desc"); 
+		query.setParameter("name", name); 
+ 		return query.getResultList();  		 		
+ 	} 	 	
+ 	
+ 	public static Collection findNormalOnes()  { 		 			
+ 		Query query = XPersistence.getManager().createQuery("from Customer as o where o.type = 0"); 
+ 		return query.getResultList();  		 		
+ 	} 	
+ 	public static Collection findSteadyOnes()  { 		 			
+ 		Query query = XPersistence.getManager().createQuery("from Customer as o where o.type = 1"); 
+ 		return query.getResultList();  		 		
+ 	} 	
+ 	public static Collection findByStreet(java.lang.String street)  { 			
+ 		Query query = XPersistence.getManager().createQuery("from Customer as o where o.address.street = :street"); 
+		query.setParameter("street", street); 
+ 		return query.getResultList();  		
+ 	} 	
+ 	public static Collection findOrderedByState()  { 			
+ 		Query query = XPersistence.getManager().createQuery("from Customer as o order by o.address.state.name"); 
+ 		return query.getResultList();  		
+ 	} 	 	
+ 		
+	public boolean isLocal() {
+		return false;
+	}
+	
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Seller getSeller() {
+		return seller;
+	}
+
+	public void setSeller(Seller seller) {
+		this.seller = seller;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+	public String getRelationWithSeller() {
+		return relationWithSeller;
+	}
+
+	public void setRelationWithSeller(String relationWithSeller) {
+		this.relationWithSeller = relationWithSeller;
+	}
+
+	public Type getType() {
+		return type;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+
+	public byte[] getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
+	}
+
+	public Address getAddress() {
+		if (address != null) address.setCustomer(this);
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public Seller getAlternateSeller() {
+		return alternateSeller;
+	}
+
+	public void setAlternateSeller(Seller alternateSeller) {
+		this.alternateSeller = alternateSeller;
+	}
+
+	public Collection<DeliveryPlace> getDeliveryPlaces() {
+		return deliveryPlaces;
+	}
+
+	public void setDeliveryPlaces(Collection<DeliveryPlace> deliveryPlaces) {
+		this.deliveryPlaces = deliveryPlaces;
+	}
+
+
+
+	public Collection<State> getStates() {
+		return states;
+	}
+
+
+
+	public void setStates(Collection<State> states) {
+		this.states = states;
+	}
+	
+		
+}

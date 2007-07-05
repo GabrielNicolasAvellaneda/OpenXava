@@ -91,9 +91,9 @@ public class ProductsTest extends ModuleTestBase {
 		
 		String [][] zone1WarehouseValues = new String [][] {
 			{ "", "" },
-			{ key1.toString(), "CENTRAL VALENCIA" },
-			{ key3.toString(), "VALENCIA NORTE" },
-			{ key2.toString(), "VALENCIA SURETE" }
+			{ toKeyString(key1), "CENTRAL VALENCIA" },
+			{ toKeyString(key3), "VALENCIA NORTE" },
+			{ toKeyString(key2), "VALENCIA SURETE" }
 		};
 		
 		assertValidValues("warehouseKey", zone1WarehouseValues);

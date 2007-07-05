@@ -3,8 +3,10 @@ package org.openxava.test.tests;
 import java.text.*;
 import java.util.*;
 
-import org.hibernate.*;
-import org.openxava.hibernate.*;
+import javax.persistence.*;
+
+import org.openxava.jpa.*;
+import org.openxava.model.meta.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
@@ -127,15 +129,14 @@ public class DeliveriesTest extends ModuleTestBase {
 		DeliveryType type = new DeliveryType();
 		type.setNumber(number);
 		type.setDescription(description);		
-		XHibernate.getSession().save(type);
-		XHibernate.commit();
+		XPersistence.getManager().persist(type);
+		XPersistence.commit();
 	}
 	
 	private void deleteDeliveryType(int number) {
-		DeliveryType type = new DeliveryType();
-		type.setNumber(number);		
-		XHibernate.getSession().delete(type);
-		XHibernate.commit();
+		DeliveryType type = XPersistence.getManager().find(DeliveryType.class, number);				
+		XPersistence.getManager().remove(type);
+		XPersistence.commit();
 	}
 	
 	public void testSearchingByAnyProperty() throws Exception {
@@ -212,7 +213,7 @@ public class DeliveriesTest extends ModuleTestBase {
 	public void testReferenceAsDescriptionsListWithValidValuesInKey_validateViewPropertiesOnModify() throws Exception { 
 		execute("Mode.detailAndFirst");
 		assertValue("shipment.KEY", "");
-		IShipment shipment = (IShipment) Shipment.findAll().iterator().next();
+		Shipment shipment = (Shipment) Shipment.findAll().iterator().next();
 		setValue("shipment.KEY", toKeyString(shipment));
 		execute("CRUD.save");
 		assertError("Value for Advice in Delivery is required");
@@ -513,9 +514,9 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertNoErrors();
 		
 		// Verifying database value
-		Query query = XHibernate.getSession().createQuery("select d.distance from Delivery as d where "
-				+ "invoice.year=2002 and invoice.number=1 and type.number=1 and number=66");		
-		String distanceDB = (String) query.uniqueResult();
+		Query query = XPersistence.getManager().createNativeQuery("select d.distance from XAVATEST.Delivery as d where "
+				+ "invoice_year=2002 and invoice_number=1 and type=1 and number=66");		
+		String distanceDB = (String) query.getSingleResult();
 		assertEquals("distance in database incorrect", "N", distanceDB);
 																		
 		// Delete
@@ -554,10 +555,10 @@ public class DeliveriesTest extends ModuleTestBase {
 		execute("CRUD.deleteSelected");
 		assertNoErrors();
 		
-		// Verifying that it is deleted
-		Query query = XHibernate.getSession().createQuery("from Delivery where "
-				+ "invoice.year=2009 and invoice.number=1 and type.number=1 and number=1");		
-		if (!query.list().isEmpty()) {
+		// Verifying that it is deleted		
+		Query query = XPersistence.getManager().createQuery("from Delivery d where "
+				+ "d.invoice.year=2009 and d.invoice.number=1 and d.type.number=1 and d.number=1");		
+		if (!query.getResultList().isEmpty()) {
 			fail("Delivery would be deleted and it is not the case");
 		}
 	}
@@ -936,23 +937,4 @@ public class DeliveriesTest extends ModuleTestBase {
 		assertTrue(type + " expected", Arrays.asList(types).contains(type));
 	}
 	
-	static String toKeyString(IShipment shipment) throws Exception {
-		if (isOX3()) {
-			StringTokenizer st = new StringTokenizer(shipment.toString(), "[.]");
-			StringBuffer sb = new StringBuffer("[.");
-			String mode = (String) shipment.getMetaModel().getMetaProperty("mode").getValidValue(Integer.parseInt(st.nextToken())); 
-			sb.append(mode.toUpperCase());
-			sb.append('.');
-			sb.append(st.nextToken());
-			sb.append('.');
-			String type = (String) shipment.getMetaModel().getMetaProperty("type").getValidValue(Integer.parseInt(st.nextToken()));
-			sb.append(type.toUpperCase());
-			sb.append(".]");				
-			return sb.toString();
-		}
-		else {
-			return shipment.toString();
-		}
-	}	
-
 }

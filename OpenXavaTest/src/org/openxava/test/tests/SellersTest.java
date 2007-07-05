@@ -2,8 +2,7 @@ package org.openxava.test.tests;
 
 import java.rmi.*;
 
-import org.openxava.hibernate.*;
-import org.openxava.test.formatters.*;
+import org.openxava.jpa.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
@@ -209,9 +208,8 @@ public class SellersTest extends ModuleTestBase {
 		assertNoErrors();
 		assertMessage("2 element(s) added to Customers of Seller");
 		assertCollectionRowCount("customers",2);
-				
-		XHibernate.getSession().refresh(getCustomer1());
-		XHibernate.getSession().refresh(getCustomer2());		
+						
+		refreshCustomers();				
 		
 		assertValueInCollection("customers", 0, 0, getCustomerNumber1());
 		assertValueInCollectionIgnoringCase("customers", 0, 1, getCustomer1().getName());
@@ -226,6 +224,20 @@ public class SellersTest extends ModuleTestBase {
 		assertValueInCollection("customers", 1, 4, getCustomer2().getSeller().getLevel().getDescription());
 	}
 	
+	private void refreshCustomers() {
+		customer1 = refresh(customer1);
+		customer2 = refresh(customer2);
+	}
+	
+	private Customer refresh(Customer object) {
+		if (object == null) return null;
+		if (!XPersistence.getManager().contains(object)) {
+			object = XPersistence.getManager().merge(object);
+		}
+		XPersistence.getManager().refresh(object);
+		return object;
+	}
+
 	private void createSeller67() throws Exception {
 		execute("CRUD.new");
 		setValue("number", "67");
@@ -239,7 +251,7 @@ public class SellersTest extends ModuleTestBase {
 		assertMessage("1 element(s) added to Customers of Seller");		
 		assertCollectionRowCount("customers",1);
 		
-		XHibernate.getSession().refresh(getCustomer2());
+		XPersistence.getManager().refresh(getCustomer2());
 		
 		assertValueInCollection("customers", 0, 0, getCustomerNumber2());
 		assertValueInCollectionIgnoringCase("customers", 0, 1, getCustomer2().getName());
@@ -280,21 +292,21 @@ public class SellersTest extends ModuleTestBase {
 	}
 	
 	private void deleteCustomers() throws RemoteException, Exception {
-		XHibernate.getSession().delete(getCustomer1());
-		XHibernate.getSession().delete(getCustomer2());
-		XHibernate.commit();
+		XPersistence.getManager().remove(getCustomer1());
+		XPersistence.getManager().remove(getCustomer2());
+		XPersistence.commit();
 	}
 
 	
 	
-	private ICustomer getCustomer1() throws Exception {
+	private Customer getCustomer1() throws Exception {
 		if (customer1 == null) {
 			createCustomers();
 		}
 		return customer1;
 	}
 	
-	private ICustomer getCustomer2() throws Exception {
+	private Customer getCustomer2() throws Exception {
 		if (customer2 == null) {
 			createCustomers();
 		}
@@ -309,7 +321,7 @@ public class SellersTest extends ModuleTestBase {
 		customer1.setAddress(createAddress());
 		customer1.setRemarks("REMARKS JUNIT 66");
 		customer1.setRelationWithSeller("RELATION JUNIT 66");
-		XHibernate.getSession().save(customer1);		
+		XPersistence.getManager().persist(customer1);		
 
 		customer2 = new Customer();
 		customer2.setNumber(67);
@@ -317,9 +329,9 @@ public class SellersTest extends ModuleTestBase {
 		customer2.setAddress(createAddress());
 		customer2.setRemarks("REMARKS JUNIT 67");
 		customer2.setRelationWithSeller("RELATION JUNIT 67");
-		XHibernate.getSession().save(customer2);
+		XPersistence.getManager().persist(customer2);
 		
-		XHibernate.commit();
+		XPersistence.commit();
 	}
 	
 	private Address createAddress() { 

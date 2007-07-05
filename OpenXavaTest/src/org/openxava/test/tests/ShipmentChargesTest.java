@@ -1,6 +1,6 @@
 package org.openxava.test.tests;
 
-import org.openxava.hibernate.*;
+import org.openxava.jpa.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
@@ -19,7 +19,7 @@ public class ShipmentChargesTest extends ModuleTestBase {
 		// Creating
 		execute("CRUD.new");
 		setValue("mode", isOX3()?"0":"1");
-		String shipment = DeliveriesTest.toKeyString(getShipment()); 
+		String shipment = toKeyString(getShipment()); 
 		setValue("shipment.KEY", shipment);
 		setValue("amount", "150");
 		execute("CRUD.save");
@@ -35,11 +35,11 @@ public class ShipmentChargesTest extends ModuleTestBase {
 	}
 	
 	private void deleteShipmentCharges() {
-		XHibernate.getSession().createQuery("delete from ShipmentCharge").executeUpdate();
-		XHibernate.commit();
+		XPersistence.getManager().createQuery("delete from ShipmentCharge").executeUpdate();
+		XPersistence.commit();
 	}
 	
 	private Shipment getShipment() {
-		return (Shipment) Shipment.findByMode(1).iterator().next();
+		return (Shipment) Shipment.findByMode(isOX3()?0:1).iterator().next();
 	}
 }

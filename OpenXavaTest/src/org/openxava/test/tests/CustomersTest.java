@@ -2,6 +2,7 @@ package org.openxava.test.tests;
 
 import java.net.*;
 
+import org.openxava.model.meta.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
@@ -101,10 +102,11 @@ public class CustomersTest extends ModuleTestBase {
 		execute("CRUD.new");		
 		execute("Collection.new", "viewObject=xava_view" + getSection() + "_deliveryPlaces");		
 		assertValue("deliveryPlaces.remarks", "");
-		Warehouse warehouseKey = new Warehouse();
-		warehouseKey.setNumber(1);
-		warehouseKey.setZoneNumber(1); 
-		setValue("deliveryPlaces.preferredWarehouse.KEY", warehouseKey.toString());
+		Warehouse warehouse = new Warehouse();
+		warehouse.setNumber(1);
+		warehouse.setZoneNumber(1);
+		String warehouseKey = MetaModel.getForPOJO(warehouse).toString(warehouse);
+		setValue("deliveryPlaces.preferredWarehouse.KEY", warehouseKey);
 		assertValue("deliveryPlaces.remarks", "PREFERRED WAREHOUSE IS 1");
 	}
 		
