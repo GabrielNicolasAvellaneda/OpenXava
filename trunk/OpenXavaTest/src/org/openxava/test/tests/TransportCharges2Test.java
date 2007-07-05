@@ -1,6 +1,6 @@
 package org.openxava.test.tests;
 
-import org.openxava.hibernate.*;
+import org.openxava.jpa.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
 
@@ -70,9 +70,8 @@ public class TransportCharges2Test extends ModuleTestBase {
 	}
 	
 	private void deleteAll() throws Exception {
-		XHibernate.getSession().createQuery("delete from TransportCharge2").executeUpdate();
-		XHibernate.commit(); 
-		
+		XPersistence.getManager().createQuery("delete from TransportCharge2").executeUpdate();
+		XPersistence.commit(); 		
 	}	
 	
 }

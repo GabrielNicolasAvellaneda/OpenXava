@@ -1,7 +1,7 @@
 package org.openxava.test.tests;
 
 
-import org.openxava.hibernate.*;
+import org.openxava.jpa.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
@@ -147,21 +147,17 @@ public class OfficesTest extends ModuleTestBase {
 
 	private void deleteOffice22() {
 		try {
-			Office office = new Office();
-			office.setNumber(2);
-			XHibernate.getSession().delete(office);
-			XHibernate.commit();
+			Office office = XPersistence.getManager().find(Office.class, 2);			
+			XPersistence.getManager().remove(office);
+			XPersistence.commit();
 		}
 		catch (Exception ex) {
 		}				
 	}
 
 	private String getWarehouseName() throws Exception {
-		if (warehouseName == null) {
-			Warehouse key = new Warehouse();
-			key.setZoneNumber(2);
-			key.setNumber(1);			
-			IWarehouse warehouse = (IWarehouse) XHibernate.getSession().get(Warehouse.class, key);
+		if (warehouseName == null) {						
+			Warehouse warehouse = Warehouse.findByZoneNumberNumber(2, 1);			
 			warehouseName = warehouse.getName();
 		}
 		return warehouseName;
@@ -169,12 +165,8 @@ public class OfficesTest extends ModuleTestBase {
 	
 	private String getClerkName() throws Exception {
 		if (clerkName == null) {
-				Clerk key = new Clerk();
-				key.setZoneNumber(2);
-				key.setOfficeNumber(2);
-				key.setNumber(1);
-				IClerk clerk = (IClerk) XHibernate.getSession().get(Clerk.class, key);
-				clerkName = clerk.getName();
+			Clerk clerk = Clerk.findByZoneNumberOfficeNumberNumber(2, 2, 1);
+			clerkName = clerk.getName();
 		}
 		return clerkName;
 	}

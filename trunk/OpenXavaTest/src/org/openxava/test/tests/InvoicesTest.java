@@ -7,7 +7,7 @@ import java.util.*;
 
 import javax.rmi.*;
 
-import org.openxava.hibernate.*;
+import org.openxava.jpa.*;
 import org.openxava.test.calculators.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
@@ -20,14 +20,14 @@ import org.openxava.util.*;
 
 public class InvoicesTest extends ModuleTestBase {
 	
-	private IInvoice invoice;
+	private Invoice invoice;
 	private BigDecimal productUnitPriceDB;
 	private String productUnitPricePlus10;
 	private String productUnitPrice;
 	private String productUnitPriceInPesetas;
 	private String productDescription;
 	private String productNumber;
-	private IProduct product;
+	private Product product;
 	
 	static {
 		// To force to finder of the pojo to use hibernate, although jpa is configured
@@ -1106,11 +1106,11 @@ public class InvoicesTest extends ModuleTestBase {
 		
 	private void deleteInvoiceDeliveries() throws Exception {
 		// Also delete transport charge, because they can reference to some delivery
-		XHibernate.getSession().createQuery("delete from TransportCharge").executeUpdate();
+		XPersistence.getManager().createQuery("delete from TransportCharge").executeUpdate();
 		Iterator it = getInvoice().getDeliveries().iterator();
 		while (it.hasNext()) {
-			IDelivery delivery = (IDelivery) PortableRemoteObject.narrow(it.next(), IDelivery.class);
-			XHibernate.getSession().delete(delivery);	
+			Delivery delivery = (Delivery) PortableRemoteObject.narrow(it.next(), Delivery.class);
+			XPersistence.getManager().remove(delivery);	
 		}		
 	}
 
@@ -1125,8 +1125,8 @@ public class InvoicesTest extends ModuleTestBase {
 		delivery.setDescription("Delivery JUNIT 666");
 		delivery.setRemarks("FOUR\nLINES\nCUATRO\nLINEAS"); // It's used in DeliveriesRemarks2002Test 
 				
-		XHibernate.getSession().save(delivery);
-		XHibernate.commit();
+		XPersistence.getManager().persist(delivery);
+		XPersistence.commit();
 	}
 	
 	
@@ -1184,9 +1184,9 @@ public class InvoicesTest extends ModuleTestBase {
 	}
 	
 	
-	private IProduct getProduct() throws Exception {
+	private Product getProduct() throws Exception {
 		if (product == null) {
-			product = (IProduct) XHibernate.getSession().get(Product.class, new Long(2));
+			product = (Product) XPersistence.getManager().find(Product.class, new Long(2));
 		}
 		return product;
 	}
@@ -1209,11 +1209,11 @@ public class InvoicesTest extends ModuleTestBase {
 		return bd.setScale(0, BigDecimal.ROUND_DOWN).toString();
 	}
 
-	private IInvoice getInvoice() throws Exception {
+	private Invoice getInvoice() throws Exception {
 		if (invoice == null) {		
 			Iterator it = Invoice.findAll().iterator();
 			while (it.hasNext()) {			
-				IInvoice inv = (IInvoice) it.next();
+				Invoice inv = (Invoice) it.next();
 				if (inv.getDetailsCount() > 0) {
 					invoice = inv;
 					break;

@@ -223,7 +223,7 @@ public class View implements java.io.Serializable {
 	
 	public MetaModel getMetaModel() throws XavaException {
 		if (metaModel == null) {
-			String modelName = getModelName();
+			String modelName = getModelName();			
 			int idx = modelName.indexOf('.');
 			if (idx < 0) {
 				metaModel = MetaComponent.get(modelName).getMetaEntity();

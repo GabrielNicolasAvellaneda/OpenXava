@@ -120,7 +120,7 @@ public class XPersistence {
 	public static void commit() {
 		// If manager does not exist then we do not cast to EntityManager,
 		// in this way in order to support jdk1.3 when ejb3 is not used.
-		Object o = currentManager.get();
+		Object o = currentManager.get();		
 		if (o == null) return;
 		EntityManager m = (EntityManager) o;
 		if (m == null) return;

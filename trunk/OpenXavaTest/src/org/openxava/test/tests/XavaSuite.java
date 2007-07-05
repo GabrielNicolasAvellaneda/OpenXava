@@ -1,5 +1,6 @@
 package org.openxava.test.tests;
 
+import org.apache.commons.logging.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
 
@@ -10,6 +11,7 @@ import junit.framework.*;
  */
 public class XavaSuite extends TestSuite {
 	
+	private static Log log = LogFactory.getLog(XavaSuite.class);
 	
 	public static void main(String [] argv) {
 		String [] tests = {
@@ -60,8 +62,14 @@ public class XavaSuite extends TestSuite {
 		if (ModuleTestBase.isPortalEnabled()) {
 			suite.addTest(new TestSuite(DescriptionTest.class));
 		}
-		if (XavaPreferences.getInstance().isEJB2Persistence()) {
-			suite.addTest(new TestSuite(EJBTest.class));
+		try {
+			Class ejbTestClass = Class.forName("org.openxava.test.tests.EJBTest");
+			if (XavaPreferences.getInstance().isEJB2Persistence()) {
+				suite.addTest(new TestSuite(ejbTestClass));
+			}
+		}
+		catch (ClassNotFoundException ex) {
+			log.warn("EJBTest does not found in classpath, test will not be executed");
 		}
 		suite.addTest(new TestSuite(FamiliesListOnlyTest.class));
 		suite.addTest(new TestSuite(FamiliesTest.class));
@@ -69,8 +77,10 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(FamilyProductsReportTest.class));
 		suite.addTest(new TestSuite(FamilyRangeProductsReportTest.class));
 		suite.addTest(new TestSuite(FamilyXProductsReportTest.class));
-		suite.addTest(new TestSuite(FormulasTest.class));		
-		suite.addTest(new TestSuite(HibernateTest.class));
+		suite.addTest(new TestSuite(FormulasTest.class));	
+		if (!ModuleTestBase.isOX3()) {
+			suite.addTest(new TestSuite(HibernateTest.class));
+		}
 		suite.addTest(new TestSuite(Invoice20020001Test.class));
 		suite.addTest(new TestSuite(Invoices2002Test.class));
 		suite.addTest(new TestSuite(Invoices2004Test.class));

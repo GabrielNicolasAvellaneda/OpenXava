@@ -43,7 +43,7 @@ class ComponentParser extends ParserBase {
 		Object parser = null;
 		try {
 			// At the momment, annotated EJB is parsed only if parser is available in classpath
-			parser = Class.forName("org.openxava.ox3.AnnotatedClassParser").newInstance();						
+			parser = Class.forName("org.openxava.annotations.parse.AnnotatedClassParser").newInstance();						
 		}
 		catch (Exception ex) {
 			log.warn(XavaResources.getString("annotated_parser_not_found_warning", name));

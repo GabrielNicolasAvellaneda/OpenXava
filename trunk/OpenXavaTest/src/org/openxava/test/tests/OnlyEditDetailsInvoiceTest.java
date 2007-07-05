@@ -38,7 +38,7 @@ public class OnlyEditDetailsInvoiceTest extends ModuleTestBase {
 		};		
 		assertActions(initActions);
 		
-		IInvoice invoice = getInvoice();				
+		Invoice invoice = getInvoice();				
 		setValue("year", String.valueOf(invoice.getYear()));
 		setValue("number", String.valueOf(invoice.getNumber()));
 		execute("CRUD.search");
@@ -91,7 +91,7 @@ public class OnlyEditDetailsInvoiceTest extends ModuleTestBase {
 		assertEditable("details.serviceType");						
 	}
 
-	private IInvoice getInvoice() throws Exception {
+	private Invoice getInvoice() throws Exception {
 		Iterator it = Invoice.findAll().iterator();
 		while (it.hasNext()) {			
 			Invoice invoice = (Invoice) PortableRemoteObject.narrow(it.next(), Invoice.class);

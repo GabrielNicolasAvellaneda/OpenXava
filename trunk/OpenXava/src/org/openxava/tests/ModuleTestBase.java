@@ -128,9 +128,9 @@ public class ModuleTestBase extends TestCase {
 	/**
 	 * Warning: Does not rely heavily in this method, it can change in the future.
 	 */
-	static protected boolean isOX3() {
+	static public boolean isOX3() {
 		try {
-			Class.forName("org.openxava.ox3.AnnotatedClassParser");
+			Class.forName("org.openxava.annotations.parse.AnnotatedClassParser");
 			return true;
 		}
 		catch (ClassNotFoundException ex) {
@@ -1256,5 +1256,16 @@ public class ModuleTestBase extends TestCase {
 		this.locale = locale;
 		resetModule();
 	}		
+	
+	/**
+	 * Returns a string representations of the key of a POJO
+	 * from the POJO itself. <p>
+	 * 
+	 * Useful for obtaining the value to put into a combo (a descriptions list)
+	 * from a POJO object.<br>
+	 */
+	protected String toKeyString(Object pojo) throws Exception { 
+		return MetaModel.getForPOJO(pojo).toString(pojo);
+	}
  			
 }

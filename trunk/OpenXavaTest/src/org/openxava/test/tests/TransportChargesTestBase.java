@@ -3,7 +3,7 @@ package org.openxava.test.tests;
 import java.math.*;
 import java.util.*;
 
-import org.openxava.hibernate.*;
+import org.openxava.jpa.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
@@ -23,13 +23,13 @@ public class TransportChargesTestBase extends ModuleTestBase {
 	
 	
 	protected void deleteAll() throws Exception {
-		XHibernate.getSession().createQuery("delete from TransportCharge").executeUpdate();
-		XHibernate.commit(); 
+		XPersistence.getManager().createQuery("delete from TransportCharge").executeUpdate();
+		XPersistence.commit(); 
 		
 	}	
 	
 	protected void createSome() throws Exception {
-		Collection deliveries = XHibernate.getSession().createQuery("select d from Delivery as d").list();	
+		Collection deliveries = XPersistence.getManager().createQuery("select d from Delivery as d").getResultList();	
 		assertTrue("At least 2 deliveries is required to run this test", deliveries.size() > 1);
 		Iterator it = deliveries.iterator();
 		
@@ -38,14 +38,14 @@ public class TransportChargesTestBase extends ModuleTestBase {
 		
 		charge1.setDelivery(delivery1);
 		charge1.setAmount(new BigDecimal("100.00"));
-		XHibernate.getSession().save(charge1);
+		XPersistence.getManager().persist(charge1);
 						
 		Delivery delivery2 = (Delivery) it.next();		
 		charge2 = new TransportCharge();
 		charge2.setDelivery(delivery2);
 		charge2.setAmount(new BigDecimal("200.00"));			
-		XHibernate.getSession().save(charge2);
-		XHibernate.getSession().flush();
+		XPersistence.getManager().persist(charge2);
+		XPersistence.getManager().flush();
 	}
 	
 	protected TransportCharge getCharge1() {

@@ -2,10 +2,9 @@ package org.openxava.test.tests;
 
 import java.util.*;
 
-import javax.rmi.*;
+import javax.persistence.*;
 
-import org.hibernate.*;
-import org.openxava.hibernate.*;
+import org.openxava.jpa.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
@@ -83,12 +82,12 @@ public class InvoicesFromCustomersTest extends ModuleTestBase {
 		assertListRowCount(getInvoices().size());		
 		Iterator it = getInvoices().iterator();
 		while (it.hasNext()) {
-			IInvoice invoice = (IInvoice) PortableRemoteObject.narrow(it.next(), IInvoice.class);
+			Invoice invoice = (Invoice) it.next();
 			assertInvoiceInList(invoice);			
 		}
 	}
 
-	private void assertInvoiceInList(IInvoice invoice) throws Exception {
+	private void assertInvoiceInList(Invoice invoice) throws Exception {
 		int rowCount = getListRowCount();
 		String year = String.valueOf(invoice.getYear());
 		String number = String.valueOf(invoice.getNumber());
@@ -100,8 +99,8 @@ public class InvoicesFromCustomersTest extends ModuleTestBase {
 
 	private Collection getInvoices() throws Exception {
 		if (invoices == null) {
-			Query query = XHibernate.getSession().createQuery("select i from Invoice as i where i.customer.number=1" );	
-			invoices = query.list();    // Javi   
+			Query query = XPersistence.getManager().createQuery("select i from Invoice as i where i.customer.number=1" );	
+			invoices = query.getResultList();    // Javi   
 		} 
 		return invoices;		
 	}

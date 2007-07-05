@@ -1,6 +1,6 @@
 package org.openxava.test.tests;
 
-import org.openxava.hibernate.*;
+import org.openxava.jpa.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
@@ -160,13 +160,14 @@ public class ShipmentsTest extends ModuleTestBase {
 	}
 	
 	private void deleteCustomerAndContactPerson(int number) {
-		Customer customer = (Customer) XHibernate.getSession().get(Customer.class, new Integer(number));
+		Customer customer = (Customer) XPersistence.getManager().find(Customer.class, new Integer(number));
 		if (customer == null) return;
-		CustomerContactPerson contact = new CustomerContactPerson();
-		contact.setCustomer(customer);
-		XHibernate.getSession().delete(contact);
-		XHibernate.getSession().delete(customer);
-		XHibernate.commit();
+		CustomerContactPersonKey contactKey = new CustomerContactPersonKey();
+		contactKey.setCustomer(customer);
+		CustomerContactPerson contact = XPersistence.getManager().find(CustomerContactPerson.class, contactKey);
+		XPersistence.getManager().remove(contact);
+		XPersistence.getManager().remove(customer);
+		XPersistence.commit();
 	}
 			
 }

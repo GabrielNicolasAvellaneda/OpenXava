@@ -1,6 +1,6 @@
 package org.openxava.test.tests;
 
-import org.openxava.hibernate.*;
+import org.openxava.jpa.*;
 import org.openxava.test.model.*;
 
 /**
@@ -114,7 +114,7 @@ public class CustomersWithSectionTest extends CustomersTest {
 	}	
 	
 	private void deleteSeller(int number) throws Exception {
-		XHibernate.getSession().delete(Seller.findByNumber(number));		
+		XPersistence.getManager().remove(Seller.findByNumber(number));		
 	}
 
 	public void testPropertyAction() throws Exception { 
@@ -129,11 +129,22 @@ public class CustomersWithSectionTest extends CustomersTest {
 		execute("Mode.detailAndFirst");
 		execute("Sections.change", "activeSection=1");
 		assertCollectionRowCount("states", 0);
-		execute("Collection.new", "viewObject=xava_view_section1_states");
-		String statePrefix = "OpenXavaEJB3Test".equals(getProperty("application"))?"":"state.";
-		setValue("states." + statePrefix + "id", "CA");
-		assertValue("states." + statePrefix + "name", "CALIFORNIA");
-		execute("Collection.save", "viewObject=xava_view_section1_states");
+		
+		if (isOX3()) {
+			// In OX3 ManyToMany is supported, then we have a collection of entities
+			execute("Collection.add", "viewObject=xava_view_section1_states");
+			assertValueInList(4, 0, "CA");
+			execute("AddToCollection.add", "row=4");
+		}
+		else {
+			// In OX2 many to many is not supported, we simulate it using a collection of aggregates,
+			// therefore the User Interface it's not the same (because it's a collection of aggragates)
+			execute("Collection.new", "viewObject=xava_view_section1_states");
+			setValue("states.state.id", "CA");
+			assertValue("states.state.name", "CALIFORNIA");
+			execute("Collection.save", "viewObject=xava_view_section1_states");			
+		}
+		
 		assertCollectionRowCount("states", 1);
 		assertValueInCollection("states", 0, 0, "CA");
 		assertValueInCollection("states", 0, 1, "CALIFORNIA");

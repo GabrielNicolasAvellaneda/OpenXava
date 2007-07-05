@@ -2,7 +2,6 @@ package org.openxava.test.tests;
 
 import java.util.*;
 
-import org.openxava.hibernate.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
@@ -38,7 +37,7 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 		};		
 		assertActions(initActions);
 		
-		IInvoice invoice = getInvoice();	
+		Invoice invoice = getInvoice();	
 		setValue("year", String.valueOf(invoice.getYear()));
 		setValue("number", String.valueOf(invoice.getNumber()));
 		execute("CRUD.search");
@@ -103,10 +102,7 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 		assertTrue("It's required a invoice with seller level for run this test", row >= 0);
 		String year = getValueInList(row, "year");
 		String number = getValueInList(row, "number");
-		Invoice key = new Invoice();
-		key.setYear(Integer.parseInt(year));
-		key.setNumber(Integer.parseInt(number));
-		IInvoice invoice = (IInvoice) XHibernate.getSession().get(Invoice.class, key);		
+		Invoice invoice = (Invoice) Invoice.findByYearNumber(Integer.parseInt(year), Integer.parseInt(number));		
 		assertValueInList(row, "customer.seller.level.description", invoice.getCustomer().getSeller().getLevel().getDescription());		
 	}
 

@@ -6,7 +6,6 @@ import java.util.*;
 import org.openxava.hibernate.*;
 import org.openxava.jpa.*;
 import org.openxava.model.*;
-import org.openxava.test.model.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
 

@@ -61,8 +61,9 @@ public class InvoicesNestedSectionsTest extends ModuleTestBase {
 		execute("Reference.search", "keyProperty=xava.Invoice.details.product.number");
 		assertNoErrors();
 		execute("ReferenceSearch.cancel");
-		execute("Reference.createNew", "keyProperty=xava.Invoice.details.product.number");
+		execute("Reference.createNew", "model=Product,keyProperty=xava.Invoice.details.product.number");
 		assertNoErrors();
+		assertValue("Product", "number", "");		
 	}	
 									
 }

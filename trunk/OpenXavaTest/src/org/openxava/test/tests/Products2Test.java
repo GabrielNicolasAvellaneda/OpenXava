@@ -2,7 +2,7 @@ package org.openxava.test.tests;
 
 import java.math.*;
 
-import org.openxava.hibernate.*;
+import org.openxava.jpa.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
@@ -20,7 +20,7 @@ public class Products2Test extends ModuleTestBase {
 	public void testImagesGallery() throws Exception {
 		// We remove oid from product 1 in order to test that images gallery works well in the first attemp.
 		Product2.findByNumber(1).setPhotos("");
-		XHibernate.commit();
+		XPersistence.commit();
 		// Verifying product 1 has no images
 		assertTrue("At least 2 products are required to run this test", getListRowCount() >= 2);
 		execute("Mode.detailAndFirst");
@@ -156,9 +156,9 @@ public class Products2Test extends ModuleTestBase {
 		
 		String [][] warehouses = {
 				{ "", "" },
-				{ key1.toString(), "CENTRAL VALENCIA" },
-				{ key3.toString(), "VALENCIA NORTE" },
-				{ key2.toString(), "VALENCIA SURETE" } 
+				{ toKeyString(key1), "CENTRAL VALENCIA" },
+				{ toKeyString(key3), "VALENCIA NORTE" },
+				{ toKeyString(key2), "VALENCIA SURETE" } 
 		};		
 		assertValidValues("warehouse.KEY", warehouses);
 	}
@@ -199,13 +199,13 @@ public class Products2Test extends ModuleTestBase {
 		Warehouse warehouseKeyZone1 = new Warehouse();
 		warehouseKeyZone1.setNumber(1);
 		warehouseKeyZone1.setZoneNumber(1); 
-		setValue("warehouse.KEY", warehouseKeyZone1.toString());		
+		setValue("warehouse.KEY", toKeyString(warehouseKeyZone1));		
 		assertExists("zoneOne");
 		
 		Warehouse warehouseKeyZone2 = new Warehouse();
 		warehouseKeyZone2.setNumber(1);
 		warehouseKeyZone2.setZoneNumber(2); 		
-		setValue("warehouse.KEY", warehouseKeyZone2.toString());
+		setValue("warehouse.KEY", toKeyString(warehouseKeyZone2));
 		assertNotExists("zoneOne");
 		
 		createProduct(66, "JUNIT ZONE 1", 1);
@@ -306,7 +306,7 @@ public class Products2Test extends ModuleTestBase {
 		Warehouse warehouseKey = new Warehouse();
 		warehouseKey.setNumber(1);
 		warehouseKey.setZoneNumber(2); 
-		setValue("warehouse.KEY", warehouseKey.toString());
+		setValue("warehouse.KEY", toKeyString(warehouseKey));
 		setValue("unitPrice", "125.66");
 		assertNoErrors();
 		assertNoEditable("unitPriceInPesetas");
@@ -321,7 +321,7 @@ public class Products2Test extends ModuleTestBase {
 		assertValue("description", "JUNIT PRODUCT");
 		assertValue("family.number", "2");
 		assertValue("subfamily.number", "12");
-		assertValue("warehouse.KEY", warehouseKey.toString());
+		assertValue("warehouse.KEY", toKeyString(warehouseKey));
 		assertValue("unitPrice", "125.66");
 		
 		// Modify
@@ -395,9 +395,8 @@ public class Products2Test extends ModuleTestBase {
 		assertValue("family.number", "66"); // The just created family is automatically selected
 		
 		// Delete it
-		Family2 f = new Family2();
-		f.setNumber(66);
-		XHibernate.getSession().delete(f);		
+		Family2 f = XPersistence.getManager().find(Family2.class, 66);		
+		XPersistence.getManager().remove(f);		
 	}
 	
 	public void testDescriptionsListReferenceValidation() throws Exception {						
@@ -423,15 +422,14 @@ public class Products2Test extends ModuleTestBase {
 		w.setZoneNumber(zone);
 		p.setWarehouse(w);
 		p.setUnitPrice(new BigDecimal("1.00"));
-		XHibernate.getSession().save(p);
-		XHibernate.commit();
+		XPersistence.getManager().persist(p);
+		XPersistence.commit();
 	}
 			
-	private void deleteProduct(int number) throws Exception {
-		Product2 k = new Product2();
-		k.setNumber(number);
-		XHibernate.getSession().delete(k);
-		XHibernate.commit();
+	private void deleteProduct(long number) throws Exception {
+		Product2 k = XPersistence.getManager().find(Product2.class, number);		
+		XPersistence.getManager().remove(k);
+		XPersistence.commit();
 	}
 					
 }

@@ -1,8 +1,6 @@
 package org.openxava.test.tests;
 
-import javax.ejb.*;
-
-import org.openxava.hibernate.*;
+import org.openxava.jpa.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 
@@ -73,25 +71,19 @@ public class CustomersSellerAsAggregateTest extends ModuleTestBase {
 
 
 	private void deleteSeller(int number) throws Exception {
-		XHibernate.getSession().delete(Seller.findByNumber(number));		
+		XPersistence.getManager().remove(Seller.findByNumber(number));		
 	}
 
-	private void assertSellerExist(int number) {
-		try {
-			Seller.findByNumber(number);
-		}
-		catch (ObjectNotFoundException ex) {
+	private void assertSellerExist(int number) {		
+		if (XPersistence.getManager().find(Seller.class, new Integer(number)) == null) {					
 			fail("Seller " + number + " does not exist, and it should");
-		}
+		}		
 	}
 
 	private void assertCustomerNotExist(int number) {
-		try {
-			Customer.findByNumber(number);
+		if (XPersistence.getManager().find(Customer.class, new Integer(number)) != null) {
 			fail("Customer " + number + " exists, and it shouldn't");
 		}
-		catch (ObjectNotFoundException ex) {			
-		}		
 	}
 		
 }

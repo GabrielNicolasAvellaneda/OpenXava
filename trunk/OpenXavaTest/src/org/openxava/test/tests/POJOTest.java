@@ -6,6 +6,7 @@ import java.util.*;
 import org.openxava.hibernate.*;
 import org.openxava.jpa.*;
 import org.openxava.test.model.*;
+import org.openxava.tests.*;
 import org.openxava.util.*;
 
 import junit.framework.*;
@@ -49,16 +50,31 @@ public class POJOTest extends TestCase {
 	
 	
 	public void testFinderThrowsObjectNotFound() throws Exception {
+		if (ModuleTestBase.isOX3()) return; // This not apply to OpenXava v3
 		// Finders in POJOs has the semantics of EJB CMP2 
 		// in order to help in translation from EJB2 to POJO+Hibernate
 		try {
 			Customer.findByNumber(66); // 66 doesn't exist
 			fail("ObjectNotFoundException expected");
+			if (false) throw new javax.ejb.ObjectNotFoundException(); // In order to avoid a compilation error when JPA code is used 
 		}
 		catch (javax.ejb.ObjectNotFoundException ex) {
 			// All fine
 		}
 	}
+	
+	public void testFinderThrowsNoResult() throws Exception {
+		if (!ModuleTestBase.isOX3()) return; // This apply only to OpenXava v3
+		// Finders in POJOs has the semantics of EJB CMP2 
+		// in order to help in translation from EJB2 to POJO+Hibernate
+		try {
+			Customer.findByNumber(66); // 66 doesn't exist
+			fail("EntityNotFoundException expected"); 
+		}
+		catch (javax.persistence.NoResultException ex) {
+			// All fine
+		}
+	}	
 		
 	public void testOrderBy() throws Exception {
 		Collection customers = Customer.findByNameLike("%");		
@@ -109,6 +125,7 @@ public class POJOTest extends TestCase {
 	}
 	
 	public void testConvertersByDefault() throws Exception {
+		if (ModuleTestBase.isOX3()) return; // converters by defaults are not supported in OX3
 		Iterator it = Invoice.findAll().iterator();
 		Invoice invoice = null;
 		while (it.hasNext()) {
