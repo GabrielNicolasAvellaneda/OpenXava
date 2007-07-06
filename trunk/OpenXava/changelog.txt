@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- Beta support for EJB3 Entities as component definition language. The code is in a ox3-src folder. This is for supporting the development of OX3.
+- All data access from JUnit tests in OpenXavaTest is done using JPA instead of Hibernate.
+- Added method toKeyString(Object pojo) to ModuleTestBase in order to obtain a string representation of the key of a POJO from the POJO itself.
+
 OpenXava 2.2 (2007-6-28)
 ------------------------
 MAIN FEATURES since 2.1
