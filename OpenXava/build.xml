@@ -70,17 +70,23 @@
 		<mkdir dir="${dist.dir}"/>
 		<mkdir dir="${dist.dir}/lib"/>
 	</target>
+	
+	<target name="copyComponentDTDs" unless="ox3">
+		
+		<copy todir="../${project}/components/dtds" overwrite="true">
+			<fileset dir="../OpenXava/xava/dtds" includes="componente.dtd,component.dtd"/>
+		</copy>
+		    		
+	</target>
 		
     <target name="copyDTDs">     
     
 		<copy todir="../${project}/xava/dtds" overwrite="true">
 			<fileset dir="../OpenXava/xava/dtds" excludes="componente.dtd,component.dtd"/>
 		</copy>
+    	
+    	<antcall target="copyComponentDTDs"/>
 		
-		<copy todir="../${project}/components/dtds" overwrite="true">
-			<fileset dir="../OpenXava/xava/dtds" includes="componente.dtd,component.dtd"/>
-		</copy>
-		    
 	</target>
 	
 	<target name="filterXavaFilesWithoutConfiguration" unless="configuration">
@@ -126,7 +132,7 @@
 		</copy>						
 	</target>
 		
-	<target name="filterXavaFiles" depends="copyDTDs">
+	<target name="filterXavaFiles" depends="copyDTDs" unless="ox3">
 		<antcall target="filterXavaFilesWithConfiguration">
 			<param name="overwrite.xava.files" value="true"/>
 		</antcall>
@@ -135,7 +141,7 @@
 		</antcall>
 	</target>
 	
-	<target name="filterChangedXavaFiles" depends="copyDTDs">
+	<target name="filterChangedXavaFiles" depends="copyDTDs" unless="ox3">
 		<antcall target="filterXavaFilesWithConfiguration">
 			<param name="overwrite.xava.files" value="false"/>
 		</antcall>
@@ -181,7 +187,7 @@
 		</copy>			
 	</target>
 		
-	<target name="filterHibernateFiles" depends="copyDTDs">
+	<target name="filterHibernateFiles" depends="copyDTDs" unless="ox3">
 		<antcall target="filterHibernateFilesWithConfiguration">
 			<param name="overwrite.hibernate.files" value="true"/>
 		</antcall>
@@ -190,7 +196,7 @@
 		</antcall>
 	</target>
 	
-	<target name="filterChangedHibernateFiles" depends="copyDTDs">
+	<target name="filterChangedHibernateFiles" depends="copyDTDs" unless="ox3">
 		<antcall target="filterHibernateFilesWithConfiguration">
 			<param name="overwrite.hibernate.files" value="false"/>
 		</antcall>
@@ -542,7 +548,7 @@
 		</copy>				
 	</target>
 	
-	<target name="configureJNDI" if="jndi.conf">
+	<target name="configureJNDI" if="jndi.conf" unless="ox3">
 		<copy file="../${project.ejb}/properties/jndi-${jndi.conf}.properties" 
 			tofile="../${project.ejb}/properties/jndi.properties" overwrite="true"/>
 		<copy file="../${project.ejb}/properties/jndi-${jndi.conf}.properties" 
@@ -627,12 +633,12 @@
         <copy file="${dist.dir}/${file.ear}" todir="${deploy.dir}"/>
     </target>	
 	
-	<target name="updateDataSourceInfo">
+	<target name="updateDataSourceInfo" unless="ox3">
 		<echo file="../${project.ejb}/filtered-files/datasource.properties">${domain}/${package}=${datasource.prefix}/${datasource}</echo>
 		<echo file="../${project.ejb}/${classes.dir}/datasource.properties">${domain}/${package}=${datasource.prefix}/${datasource}</echo>
 	</target>
 	
-	<target name="filterI18n" if="configuration">
+	<target name="filterI18n" if="configuration" unless="ox3">
   		<copy todir="../${project}/filtered-files" overwrite="true">
     		<fileset dir="../${project}/i18n" excludes="portlets, portlets/*"/>
 	    	<filterset>	    	
@@ -644,13 +650,13 @@
   		</copy>					
 	</target>
 	
-	<target name="filter" depends="filterXavaFiles, filterHibernateFiles, filterI18n, updateDataSourceInfo">
+	<target name="filter" depends="filterXavaFiles, filterHibernateFiles, filterI18n, updateDataSourceInfo" unless="ox3">
 		<copy todir="../${project}/${classes.dir}">
 			<fileset dir="../${project}/filtered-files"/>
 		</copy>
 	</target>
 					
-	<target name="prepareWar" depends="createDist, updateDataSourceInfo, configureJNDI">		
+	<target name="prepareWar" depends="createDist, updateDataSourceInfo, configureJNDI">
 		<copy todir="../${project}/web/xava" overwrite="true">
     		<fileset dir="../OpenXava/web" excludes="WEB-INF/**"/>
   		</copy>		
