@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/hibernate3.jar"/>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="i18n"/>
-	<classpathentry kind="src" path="xava"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/ehcache.jar"/>
-	<classpathentry kind="src" path="properties"/>
-	<classpathentry kind="src" path="reports"/>
-	<classpathentry kind="lib" path="lib/hsqldb.jar"/>
-	<classpathentry kind="lib" path="lib/jbossall-client.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/AccessTracking"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/hibernate-annotations.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/hibernate-entitymanager.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/javassist.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/antlr.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/asm.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/cglib.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/ejb3-persistence.jar"/>
-	<classpathentry exported="true" kind="src" path="/OpenXava"/>
-	<classpathentry kind="src" path="ox3-src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/Sun JDK 1.5.0_11"/>
-	<classpathentry kind="src" path="ejb3-jpa"/>
-	<classpathentry kind="output" path="web/WEB-INF/classes"/>
+	<classpathentry path="web/WEB-INF/lib/hibernate3.jar" kind="lib"/>
+	<classpathentry path="src" kind="src"/>
+	<classpathentry path="i18n" kind="src"/>
+	<classpathentry path="xava" kind="src"/>
+	<classpathentry path="web/WEB-INF/lib/ehcache.jar" kind="lib"/>
+	<classpathentry path="properties" kind="src"/>
+	<classpathentry path="reports" kind="src"/>
+	<classpathentry path="lib/hsqldb.jar" kind="lib"/>
+	<classpathentry path="lib/jbossall-client.jar" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/hibernate-annotations.jar" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/hibernate-entitymanager.jar" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/javassist.jar" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/antlr.jar" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/asm.jar" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/cglib.jar" kind="lib"/>
+	<classpathentry path="web/WEB-INF/lib/ejb3-persistence.jar" kind="lib"/>
+	<classpathentry path="/OpenXava" exported="true" kind="src"/>
+	<classpathentry path="ox3-src" kind="src"/>
+	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/Sun JDK 1.5.0_11" kind="con"/>
+	<classpathentry path="ejb3-jpa" kind="src"/>
+	<classpathentry path="/AccessTracking" combineaccessrules="false" kind="src"/>
+	<classpathentry path="web/WEB-INF/classes" kind="output"/>
 </classpath>
