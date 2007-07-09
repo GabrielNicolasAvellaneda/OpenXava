@@ -34,6 +34,5 @@
 	<classpathentry path="web/WEB-INF/lib/hibernate-entitymanager.jar" exported="true" kind="lib"/>
 	<classpathentry path="web/WEB-INF/lib/jboss-archive-browsing.jar" exported="true" kind="lib"/>
 	<classpathentry path="web/WEB-INF/lib/javassist.jar" exported="true" kind="lib"/>
-	<classpathentry path="ox3-src" kind="src"/>
 	<classpathentry path="bin" kind="output"/>
 </classpath>
