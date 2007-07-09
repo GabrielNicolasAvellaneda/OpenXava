@@ -70,8 +70,8 @@ public class CustomersSellerAsAggregateTest extends ModuleTestBase {
 	}
 
 
-	private void deleteSeller(int number) throws Exception {
-		XPersistence.getManager().remove(Seller.findByNumber(number));		
+	private void deleteSeller(int number) throws Exception {		
+		XPersistence.getManager().remove(XPersistence.getManager().find(Seller.class, number));		
 	}
 
 	private void assertSellerExist(int number) {		

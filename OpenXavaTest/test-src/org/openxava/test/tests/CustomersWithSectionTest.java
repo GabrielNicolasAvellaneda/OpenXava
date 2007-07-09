@@ -114,7 +114,7 @@ public class CustomersWithSectionTest extends CustomersTest {
 	}	
 	
 	private void deleteSeller(int number) throws Exception {
-		XPersistence.getManager().remove(Seller.findByNumber(number));		
+		XPersistence.getManager().remove(XPersistence.getManager().find(Seller.class, number));				
 	}
 
 	public void testPropertyAction() throws Exception { 
