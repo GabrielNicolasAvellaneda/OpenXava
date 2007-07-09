@@ -1,6 +1,9 @@
 package org.openxava.hibernate;
 
+import java.net.*;
 import java.util.*;
+
+import javax.xml.parsers.*;
 
 
 
@@ -12,6 +15,7 @@ import org.openxava.hibernate.impl.*;
 import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
+import org.w3c.dom.*;
 
 /**
  * Allows to work easily with hibernate inside OpenXava applications. <p>
@@ -140,8 +144,8 @@ public class XHibernate {
 		try {			
 			Configuration configuration = XSystem.isJava5OrBetter()?
 				new AnnotationConfiguration().configure(hibernateCfg):
-				new Configuration().configure(hibernateCfg);
-			
+				new Configuration().configure(hibernateCfg);				
+						
 			for (Iterator it = MetaModel.getAllPojoGenerated().iterator(); it.hasNext();) {
 				MetaModel model = (MetaModel) it.next();
 				if (model.getMetaComponent().isTransient()) continue;

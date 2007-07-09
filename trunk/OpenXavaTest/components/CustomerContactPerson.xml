@@ -12,6 +12,9 @@ but remember this is not an example of good OO modeling.
 	<entity>
 		<reference name="customer" key="true"/>
 		<property name="name" stereotype="PERSON_NAME" required="true"/>	
+		<finder name="findByCustomer" arguments="int customerNumber">
+			<condition>${customer.number} = {0}</condition>
+		</finder>
 	</entity>
 
 	<view>
