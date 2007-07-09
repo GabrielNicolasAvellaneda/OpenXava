@@ -1,5 +1,7 @@
 package org.openxava.test.tests;
 
+import javax.persistence.*;
+
 import org.openxava.jpa.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
@@ -63,7 +65,7 @@ public class SellersWithCustomersAsAggregateTest extends ModuleTestBase {
 	}
 
 	private void removeCustomer(int number) throws Exception {
-		XPersistence.getManager().remove(Customer.findByNumber(number)); 		
+		XPersistence.getManager().remove(XPersistence.getManager().find(Customer.class, number)); 		
 	}
 
 	private void assertCustomerNotExists(int number) {

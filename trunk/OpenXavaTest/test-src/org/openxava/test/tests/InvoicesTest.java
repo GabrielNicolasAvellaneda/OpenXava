@@ -1210,8 +1210,9 @@ public class InvoicesTest extends ModuleTestBase {
 	}
 
 	private Invoice getInvoice() throws Exception {
-		if (invoice == null) {		
-			Iterator it = Invoice.findAll().iterator();
+		if (invoice == null) {	
+ 			Collection invoices = XPersistence.getManager().createQuery("from Invoice").getResultList(); 
+			Iterator it = invoices.iterator();
 			while (it.hasNext()) {			
 				Invoice inv = (Invoice) it.next();
 				if (inv.getDetailsCount() > 0) {

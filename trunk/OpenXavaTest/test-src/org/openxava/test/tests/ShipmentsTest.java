@@ -1,5 +1,7 @@
 package org.openxava.test.tests;
 
+import javax.persistence.*;
+
 import org.openxava.jpa.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
@@ -159,12 +161,12 @@ public class ShipmentsTest extends ModuleTestBase {
 		assertValueInList(0, "time", "12/25/06/11:33 AM"); 
 	}
 	
-	private void deleteCustomerAndContactPerson(int number) {
+	private void deleteCustomerAndContactPerson(int number) throws Exception {
 		Customer customer = (Customer) XPersistence.getManager().find(Customer.class, new Integer(number));
-		if (customer == null) return;
-		CustomerContactPersonKey contactKey = new CustomerContactPersonKey();
-		contactKey.setCustomer(customer);
-		CustomerContactPerson contact = XPersistence.getManager().find(CustomerContactPerson.class, contactKey);
+		if (customer == null) return;		
+		Query query = XPersistence.getManager().createQuery("from CustomerContactPerson as o where o.customer.number = :customerNumber"); 
+		query.setParameter("customerNumber", customer.getNumber());  		
+		CustomerContactPerson contact = (CustomerContactPerson) query.getSingleResult();
 		XPersistence.getManager().remove(contact);
 		XPersistence.getManager().remove(customer);
 		XPersistence.commit();
