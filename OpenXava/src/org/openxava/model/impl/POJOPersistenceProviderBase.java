@@ -247,6 +247,7 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 				}			
 				queryString.append("o.");
 				queryString.append(en.getKey());
+				en.setValue(convert(metaModel, (String) en.getKey(), en.getValue())); 
 				queryString.append(en.getValue() instanceof String?" like ":" = ");
 				queryString.append(":");
 				queryString.append(Strings.change((String)en.getKey(), ".", "_")); 
@@ -262,8 +263,8 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		for (Iterator it=values.iterator(); it.hasNext(); it.hasNext()) {
 			Map.Entry en = (Map.Entry) it.next();
 			String name = (String) en.getKey();			
-			Object value = convert(metaModel, name, en.getValue());						
-			setParameterToQuery(query, Strings.change(name, ".", "_"), value);
+			Object value = en.getValue(); 
+			setParameterToQuery(query, Strings.change(name, ".", "_"), value);			
 		}		
 		Object result = getUniqueResult(query);		
 		if (result == null) {
