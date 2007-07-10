@@ -121,7 +121,7 @@
 	
 	<target name="updateSchema">
 		<ant antfile="../OpenXava/build.xml" target="updateSchema">			
-			<property name="schema.config.file" value="hibernate/hibernate-jpa-junit.cfg.xml"/>
+			<property name="schema.config.file" value="hibernate/hibernate-junit.cfg.xml"/>
 			<property name="schema.path" value="lib/hsqldb.jar"/>
 		</ant>
 		<!-- Below some foreign keys is dropped.
@@ -148,7 +148,7 @@
 	
 	<target name="exportSchema">
 		<ant antfile="../OpenXava/build.xml" target="exportSchema">
-			<property name="schema.config.file" value="hibernate/hibernate-jpa-junit.cfg.xml"/>
+			<property name="schema.config.file" value="hibernate/hibernate-junit.cfg.xml"/>
 			<property name="schema.path" value="lib/hsqldb.jar"/>			
 		</ant>
 	</target>	
