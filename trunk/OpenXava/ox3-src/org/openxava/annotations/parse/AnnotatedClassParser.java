@@ -27,7 +27,7 @@ import org.openxava.validators.meta.*;
 import org.openxava.view.meta.*;
 
 /**
- * tmp: doc
+ * Parse EJB3 Entities (POJOs with JPA annotations) into OpenXava components. <p>
  * 
  * @author Javier Paniza
  */
@@ -134,7 +134,7 @@ public class AnnotatedClassParser {
 	
 	private void addCollection(MetaModel model, ModelMapping mapping, PropertyDescriptor pd, Field field) throws Exception { 		
 		if (!(pd.getReadMethod().getGenericReturnType() instanceof ParameterizedType)) {
-			System.err.println("WARNING! " + pd.getName() + " collection in " + model.getName() + " is not processed by OpenXava because its type is not a parametrized type (like Collection<Customer>) "); // tmp i18n
+			log.warn(XavaResources.getString("collection_must_be_parametrized", pd.getName(), model.getName()));
 			return;			
 		}
 		
@@ -309,7 +309,7 @@ public class AnnotatedClassParser {
 			}
 			else if (nextToken.equals("{")) {				
 				String nestedSection = token;				 
-				MetaView section = metaView.addSection(nestedSection, null, "", false); // tmp Falta soportar alignedByColumns
+				MetaView section = metaView.addSection(nestedSection, null, "", false); 
 				nextToken = addMembersToView(nestedSection, null, section, st);
 				if (",;".indexOf(nextToken) < 0) members.append(';');
 			}		
@@ -343,8 +343,8 @@ public class AnnotatedClassParser {
 			}	
 			token = nextToken;
 		}
-		if (groupName != null) throw new XavaException("Group " + groupName + " has a unclosed '}'"); // tmp i18n		
-		if (sectionName != null) throw new XavaException("Section " + sectionName + " has a unclosed ']'"); // tmp i18n		
+		if (groupName != null) throw new XavaException("group_unclosed", groupName); 		
+		if (sectionName != null) throw new XavaException("section_unclosed", sectionName);		
 		metaView.setMembersNamesNotResetSections(members.toString());
 		return null;
 	}
@@ -1384,8 +1384,8 @@ public class AnnotatedClassParser {
 					if (metaDescriptionsList != null) {
 						metaDescriptionsList.setLabelFormat(labelFormat.value().ordinal());
 					}
-					else {
-						System.err.println("WARNING! @LabelFormat in reference " + ref.getName() + " has no effect because it must be used with @DescriptionsList"); // tmp i18n
+					else {						
+						log.warn(XavaResources.getString("label_format_for_reference_requires_descriptons_list", ref.getName()));
 					}
 					mustAddMetaView = true;				
 				}
@@ -1399,7 +1399,7 @@ public class AnnotatedClassParser {
 							metaDescriptionsList.setLabelFormat(labelFormat.value().ordinal());
 						}
 						else {
-							System.err.println("WARNING! @LabelFormat in reference " + ref.getName() + " has no effect because it must be used with @DescriptionsList"); // tmp i18n
+							log.warn(XavaResources.getString("label_format_for_reference_requires_descriptons_list", ref.getName()));							
 						}						
 					}
 				}					
@@ -1612,7 +1612,7 @@ public class AnnotatedClassParser {
 			catch (ClassNotFoundException ex) {				
 			}
 		}
-		throw new XavaException("Seems that " + name + " is not an EJB3 Entity or transient model class"); // tmp i18n
+		throw new XavaException("not_ejb3_entity_nor_transient_model", name);
 	}
 		
 	private static Collection<String> getManagedClassPackages() {
@@ -1638,21 +1638,26 @@ public class AnnotatedClassParser {
 		return managedClassNames;
 	}
 
-	private void notApply(String memberName, Class annotation, String validMemberTypes) {
-		// tmp Esto debería configurarse para lanzar una excepción según una propiedad en xava.properties
-		System.err.println("WARNING! " + annotation.getName() + " annotation is not applicable to '" + memberName + "'. It can be applied to " + validMemberTypes); // tmp i18n		
-	}
-	private void duplicateAnnotationForView(String memberName, Class annotation, String viewName) {
-		// tmp Esto debería configurarse para lanzar una excepción según una propiedad en xava.properties
-		System.err.println("WARNING! " + annotation.getName() + " for view " + viewName + " in member " + memberName + " only can be applied once. Only the first annotation is valid"); // tmp i18n
+	private void notApply(String memberName, Class annotation, String validMemberTypes) throws XavaException {
+		if (XavaPreferences.getInstance().isFailOnAnnotationMisuse()) {			
+			throw new XavaException("annotation_not_applicable", annotation.getName(), memberName, validMemberTypes);
+		}
+		log.warn(XavaResources.getString("annotation_not_applicable", annotation.getName(), memberName, validMemberTypes));
+		
 	}
 	
-	private MetaSet toMetaSet(PropertyValue put) {
+	private void duplicateAnnotationForView(String memberName, Class annotation, String viewName) throws XavaException {
+		if (XavaPreferences.getInstance().isFailOnAnnotationMisuse()) {
+			throw new XavaException("duplicate_annotation_for_view", annotation.getName(), viewName, memberName);
+		}
+		log.warn(XavaResources.getString("duplicate_annotation_for_view", annotation.getName(), viewName, memberName));
+	}
+	
+	private MetaSet toMetaSet(PropertyValue propertyValue) {
 		MetaSet metaSet = new MetaSet();		
-		metaSet.setPropertyName(put.name());
-		// tmp: Comprobar que pasa si no se especifica ni 'from' ni 'value'
-		metaSet.setPropertyNameFrom(put.from());
-		metaSet.setValue(put.value());
+		metaSet.setPropertyName(propertyValue.name()); 
+		metaSet.setPropertyNameFrom(propertyValue.from());
+		metaSet.setValue(propertyValue.value());
 		return metaSet;
 	}
 
@@ -1666,7 +1671,7 @@ public class AnnotatedClassParser {
 	private boolean isForView(MetaView view, String forViews, String notForViews) {
 		if (Is.emptyStringAll(forViews, notForViews)) return true;
 		if (!Is.emptyString(forViews) && !Is.emptyString(notForViews)) {
-			System.err.println("WARNING! Both forViews and notForViews are specified. Only notForViews is ignored "); // tmp i18n
+			log.warn(XavaResources.getString("forViews_and_notForViews_not_compatible")); 
 		}
 		if (!Is.emptyString(forViews)) {
 			StringTokenizer st = new StringTokenizer(forViews, ",");

@@ -66,7 +66,7 @@ import org.openxava.util.*;
 			"customerDiscount, customerTypeDiscount, yearDiscount;" +
 			"amountsSum, vatPercentage, vat;" +
 		"]"			
-	)	
+	)
 })
 
 @Tabs({
