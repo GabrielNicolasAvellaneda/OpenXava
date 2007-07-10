@@ -20,7 +20,7 @@ public class Carrier {
 	@Id @Column(length=5)
 	private int number;
 	
-	@Required @Column(length=40) @Stereotype("NO_FORMATING_STRING")
+	@Required @Column(length=40) @Stereotype("NO_FORMATING_STRING")	
 	private String name;
 	
 	// We apply conversion (null into an empty String) to DRIVINGLICENCE_TYPE column

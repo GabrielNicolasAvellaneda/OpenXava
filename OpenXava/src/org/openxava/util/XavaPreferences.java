@@ -32,7 +32,8 @@ public class XavaPreferences {
 	private Level hibernateJavaLoggingLevel;
 	private boolean detailOnBottomInCollections = false;
 	private boolean detailOnBottomInCollectionsLoaded = false;
-	
+	private boolean failOnAnnotationMisuse = true;
+	private boolean failOnAnnotationMisuseLoaded = false;
 
 		
 	
@@ -146,6 +147,14 @@ public class XavaPreferences {
 			duplicateComponentWarningsLoaded = true;
 		}
 		return duplicateComponentWarnings;
+	}
+	
+	public boolean isFailOnAnnotationMisuse() {
+		if (!failOnAnnotationMisuseLoaded) { 			
+			failOnAnnotationMisuse = "true".equalsIgnoreCase(getProperties().getProperty("failOnAnnotationMisuse", "true").trim());
+			failOnAnnotationMisuseLoaded = true;
+		}		
+		return failOnAnnotationMisuse;		
 	}
 	
 	public int getMaxSizeForTextEditor() {
