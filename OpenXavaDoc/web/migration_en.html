@@ -1,3 +1,14 @@
+<h2>Migration from OpenXava 2.2 to OpenXava 2.2.1</h2>
+<h4>Action 'Mode.list" not available when the user navigate to another
+view (for junit tests)</h4>
+When the user navigates to another view (for example to create or
+modify a reference) the link for go to list mode is not present now.
+Maybe you need to change your junit test.<br>
+For example in this junit code:<br>
+<pre>execute("Reference.createNew", "model=Family2,keyProperty=xava.Product2.family.number");</pre>
+<pre>assertAction("Mode.list"); // Since 2.2.1 it fails</pre>
+The <span style="font-family: monospace;">assertAction("Mode.list")</span>
+has to be removed.<br>
 <h2>Migration from OpenXava 2.1.5 to OpenXava 2.2</h2>
 <h4>Default behaviour for collection of entities changes</h4>
 Now, when user click on 'Add' in a collection the entities, he goes to

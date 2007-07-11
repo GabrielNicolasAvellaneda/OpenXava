@@ -1,3 +1,15 @@
+<h2>Para migrar de OpenXava 2.2 a OpenXava 2.2.1</h2>
+<h4>Acci&oacute;n 'Mode.list" no est&aacute; disponible cuando el
+usuario navega a otra vista (para pruebas junit)</h4>
+Cuando el usuario navega a otra vista (por ejemplo para crear o
+modificar una referencia) el v&iacute;nculo para ir al modo lista ahora
+no est&aacute; presente. Quiz&aacute;s necesites cambiar tu prueba
+junit:<br>
+Por ejempo, en este c&oacute;digo junit:<br>
+<pre>execute("Reference.createNew", "model=Family2,keyProperty=xava.Product2.family.number");</pre>
+<pre>assertAction("Mode.list"); // Desde 2.2.1 falla</pre>
+El <span style="font-family: monospace;">assertAction("Mode.list")</span>
+se tiene que quitar<br>
 <h2>Para migrar de OpenXava 2.1.5 a OpenXava 2.2</h2>
 <h4>El comportamiento por defecto para las colecciones de entidades
 cambia</h4>

@@ -387,8 +387,7 @@ public class DeliveriesTest extends ModuleTestBase {
 		
 		String [] creatingNewActions = {
 			"NewCreation.saveNew",
-			"NewCreation.cancel",
-			"Mode.list"
+			"NewCreation.cancel"
 		};
 				
 		execute("CRUD.new");
