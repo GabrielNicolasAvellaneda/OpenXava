@@ -27,39 +27,7 @@
 	Ha de llamarse después de actualizar la versión de OpenXava.
 	-->
 	<target name="actualizarOX">
-		<copy todir="../${project}/web/xava" overwrite="true">
-    		<fileset dir="../OpenXava/web" excludes="WEB-INF/**"/>
-  		</copy>		
-  		<copy todir="../${project}/web/WEB-INF" file="../OpenXava/web/WEB-INF/openxava.tld" overwrite="true"/>
-  		<copy todir="../${project}/web/WEB-INF" overwrite="true">
-    		<fileset dir="../OpenXava/web/WEB-INF"/>
-  		</copy>		
-		<jar jarfile="../${project}/web/WEB-INF/lib/openxava.jar" basedir="../OpenXava/bin"/>
+		<ant antfile="../OpenXava/build.xml" target="updateOX"/>
 	</target>
-
-				
-	<!--
-	Se conecta a tu base de datos y actualizar el esquema para que conincida con 
-	el actual de tu aplicación.	
-	(También puedes usar directamente la tarea ant 'schemaupdate' de hibernate)
-	-->
-	<target name="actualizarEsquema">
-		<ant antfile="../OpenXava/build.xml" target="updateSchema">			
-			<property name="schema.config.file" value="hibernate/hibernate-junit.cfg.xml"/>
-			<property name="schema.path" value="../OpenXavaTest/lib/hsqldb.jar"/>
-		</ant>
-	</target>	
-
-	<!--
-	Crea un archivo sql (en data/schema-export.sql) que puedes usar para crear la
-	base de datos para tu aplicación. 
-	(También puedes usar directamente la tarea ant 'schemaupdate' de hibernate)
-	-->	
-	<target name="exportarEsquema">
-		<ant antfile="../OpenXava/build.xml" target="exportSchema">
-			<property name="schema.config.file" value="hibernate/hibernate-junit.cfg.xml"/>
-			<property name="schema.path" value="../OpenXavaTest/lib/hsqldb.jar"/>
-		</ant>
-	</target>	
 						
 </project>
