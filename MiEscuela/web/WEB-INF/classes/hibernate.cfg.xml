@@ -28,8 +28,5 @@ persistence.xml.
 		<!-- GalleryImage is needed only if you uses IMAGES_GALLERY/GALERIA_IMAGENES stereotype -->
 		<mapping resource="GalleryImage.hbm.xml"/>
 		
-		<!-- In order to use State EJB3 entity with Hibernate API  -->
-		<mapping class="org.openxava.ejb3test.model.State"/>		
-								
 	</session-factory>
 	</hibernate-configuration>
