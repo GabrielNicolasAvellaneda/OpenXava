@@ -175,15 +175,19 @@ public class Products2Test extends ModuleTestBase {
 		assertFocusOn("subfamily.number");
 	}
 	
+	/*
+	// Since 2.2.1 "Mode.list" is not available when navigating to
+	// another view than main one, then this case is impossible
 	public void testListToDetailAlwaysMainView() throws Exception {
 		execute("CRUD.new");		
 		assertExists("unitPrice");
 		execute("Reference.createNew", "model=Family2,keyProperty=xava.Product2.family.number");
 		assertNotExists("unitPrice");
-		execute("Mode.list");
+		execute("Mode.list"); // Since 2.2.1 this link is not here
 		execute("CRUD.new");		
 		assertExists("unitPrice");				
 	}
+	*/
 	
 	public void testSetEditableOnReferencesAsDescriptionsList() throws Exception {		
 		execute("CRUD.new");

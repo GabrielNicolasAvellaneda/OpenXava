@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Mode.list link is not available when creating or modifing a reference. In general change mode actions are not available after view navigation.
 - Fix: Searching by a property of type String mapped to a numeric column fails on Informix (or other DBs that do not support like in numerica columns)
 - Beta support for EJB3 Entities as component definition language. The code is in a ox3-src folder. This is for supporting the development of OX3.
 - All data access from JUnit tests in OpenXavaTest is done using JPA instead of Hibernate.

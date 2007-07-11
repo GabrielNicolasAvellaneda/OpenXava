@@ -255,7 +255,8 @@ public class CarriersTest extends ModuleTestBase {
 		assertNoErrors();
 		assertAction("NewCreation.saveNew");
 		assertAction("NewCreation.cancel");
-		assertValue("Warehouse", "name", "NEW WAREHOUSE");		
+		assertValue("Warehouse", "name", "NEW WAREHOUSE");
+		assertNoAction("Mode.list"); // When navigate to another view mode actions are disable
 	}
 	
 	

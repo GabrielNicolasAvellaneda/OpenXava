@@ -33,29 +33,32 @@ while (it.hasNext()) {
 <td align="right" style='vertical-align: middle' class="<%=style.getMode(onBottom)%>">
 &nbsp;
 <%
-java.util.Iterator itSections = manager.getMetaActionsMode().iterator();
-boolean firstTime = true;
-while (itSections.hasNext()) {
-	MetaAction action = (MetaAction) itSections.next();
-	if (action.isHidden()) continue;
-	if (firstTime) firstTime=false;
-	else {
-	%>
-	-
-	<%
-	}
-	// 'modeNameAction' only run well if the only modes
-	// are list and detail, but at momment that is the case
-	String modeNameAction = action.getName().equals("list")?"list":"detail"; 
-	if (modeNameAction.equals(manager.getModeName())) {
-	%>
-	<b><%=action.getLabel(request)%></b>
-	<%
-	}
-	else {	
-	%>
-	<xava:link action="<%=action.getQualifiedName()%>"/>
-	<%
+java.util.Stack previousViews = (java.util.Stack) context.get(request, "xava_previousViews"); // tmp
+if (previousViews.isEmpty()) {
+	java.util.Iterator itSections = manager.getMetaActionsMode().iterator();
+	boolean firstTime = true;
+	while (itSections.hasNext()) {
+		MetaAction action = (MetaAction) itSections.next();
+		if (action.isHidden()) continue;
+		if (firstTime) firstTime=false;
+		else {
+		%>
+		-
+		<%
+		}
+		// 'modeNameAction' only run well if the only modes
+		// are list and detail, but at momment that is the case
+		String modeNameAction = action.getName().equals("list")?"list":"detail"; 
+		if (modeNameAction.equals(manager.getModeName())) {
+		%>
+		<b><%=action.getLabel(request)%></b>
+		<%
+		}
+		else {	
+		%>
+		<xava:link action="<%=action.getQualifiedName()%>"/>
+		<%
+		}
 	}
 }
 	%>
