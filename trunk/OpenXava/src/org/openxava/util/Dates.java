@@ -16,7 +16,6 @@ public class Dates {
 	private static DateFormat dateFormat;
 	
 	
-	
 	/**
 	 * With hour to 0.
 	 * If day, month and year are 0 return null.
@@ -377,6 +376,19 @@ public class Dates {
 		return df;
 	}
 	
+	public static String dateFormatForJSCalendar(Locale locale) {		
+		DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, locale);
+		String date = df.format(create(1, 2, 1971)); // d, m, y
+		boolean always4InYear= "es".equals(locale.getLanguage()) || "pl".equals(locale.getLanguage());
+		String result = date.
+			replaceAll("01", "%d").
+			replaceAll("02", "%m").
+			replaceAll("1971", "%Y").
+			replaceAll("71", always4InYear?"%Y":"%y"). 			
+			replaceAll("1", "%d").
+			replaceAll("2", "%m");
+		return result;
+	}	
 
 	/** 
 	 * Returns number of days between startDate and endDate<p> 
@@ -408,6 +420,9 @@ public class Dates {
 		}
 		return days;
 	}
+	  
+	  
+	 
 	
 	public static class DateDistance {
 		public  int days;
