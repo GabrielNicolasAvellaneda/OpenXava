@@ -407,6 +407,9 @@
 	
 	<target name="regenerateHibernate">
 		<delete file="../${project}/gen-src-xava/dnas-pojo.properties"/>
+		<delete>
+			<fileset dir="../${project.ejb}/filtered-files" includes="**/*"/>
+		</delete>
 		<antcall target="generateHibernate"/>
 	</target>
 	

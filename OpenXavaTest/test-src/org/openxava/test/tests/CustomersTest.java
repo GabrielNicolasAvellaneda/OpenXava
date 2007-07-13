@@ -42,7 +42,37 @@ public class CustomersTest extends ModuleTestBase {
 		super(testName, moduleName);		
 		this.section = section?"_section0":"";		
 	}
-			
+	
+	public void testPdfReportInNestedCollection() throws Exception {
+		execute("CRUD.new");
+		setValue("number", "4");
+		execute("CRUD.search");
+		assertValue("name", "Cuatrero");
+		assertCollectionRowCount("deliveryPlaces", 1); // Cuatrero has 1 delivery place
+		execute("Collection.edit", "row=0,viewObject=xava_view" + getSection() + "_deliveryPlaces");
+		assertCollectionRowCount("deliveryPlaces.receptionists", 2); // The delivery place has 2 receptionist
+		execute("Print.generatePdf", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");
+		assertContentTypeForPopup("application/pdf");
+	}
+	
+	public void testListActionInNestedCollection() throws Exception {
+		execute("CRUD.new");
+		setValue("number", "4");
+		execute("CRUD.search");
+		assertValue("name", "Cuatrero");
+		assertCollectionRowCount("deliveryPlaces", 1); // Cuatrero has 1 delivery place
+		execute("Collection.edit", "row=0,viewObject=xava_view" + getSection() + "_deliveryPlaces");
+		assertCollectionRowCount("deliveryPlaces.receptionists", 2); // The delivery place has 2 receptionist
+		execute("Collection.new", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");
+		setValue("deliveryPlaces.receptionists.name", "JUNIT");
+		execute("Collection.save", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");
+		assertCollectionRowCount("deliveryPlaces.receptionists", 3);
+		execute("Collection.hideDetail", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");
+		checkRowCollection("deliveryPlaces.receptionists", 2);
+		execute("Collection.removeSelected", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");
+		assertCollectionRowCount("deliveryPlaces.receptionists", 2);
+	}
+				
 	public void testObtainAggregateValues() throws Exception {
 		String city = getValueInList(0, "address.city");
 		assertTrue("Value for city in first customer is required for run this test", !Is.emptyString(city));

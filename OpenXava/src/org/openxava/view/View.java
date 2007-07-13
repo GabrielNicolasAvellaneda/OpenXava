@@ -1782,11 +1782,19 @@ public class View implements java.io.Serializable {
 		}						
 	}
 	
+	private String getQualifiedCollectionName() {
+		if (!isRepresentsCollection()) return "";
+		return getParent().getQualifiedCollectionName() + getMemberName() + "_"; 
+	}
+	
 	private void fillCollectionInfo(String qualifier) throws XavaException { 
-		String tabPrefix = Tab.COLLECTION_PREFIX + getMemberName() + "_";		
+		String tabPrefix = Tab.COLLECTION_PREFIX + getQualifiedCollectionName();
 		getCollectionTab().setSelected(getRequest().getParameterValues(tabPrefix + "selected"));
-		getCollectionTab().setConditionComparators(getRequest().getParameterValues(tabPrefix + "conditionComparators"));
-		getCollectionTab().setConditionValues(getRequest().getParameterValues(tabPrefix + "conditionValues"));
+		String [] conditionComparators = getRequest().getParameterValues(tabPrefix + "conditionComparators");
+		if (conditionComparators != null) {				
+			getCollectionTab().setConditionComparators(conditionComparators);
+			getCollectionTab().setConditionValues(getRequest().getParameterValues(tabPrefix + "conditionValues"));
+		}
 		
 		// Fill selected
 		String id = "xava." + qualifier + ".__SELECTED__";

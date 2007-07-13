@@ -56,8 +56,11 @@ abstract public class TabBaseAction extends BaseAction implements IModuleContext
 	 * Useful for using Tab actions for collections. <br> 
 	 */
 	public void setViewObject(String viewObject) { 
-		if (Is.emptyString(this.collection)) {
-			this.collection = Strings.lastToken(viewObject, "_");
+		if (Is.emptyString(this.collection)) {			
+			this.collection = viewObject.substring("xava_view_".length());			
+			if (this.collection.startsWith("section")) {				
+				this.collection = this.collection.substring(this.collection.indexOf('_') + 1);				
+			}
 		}
 	}
 

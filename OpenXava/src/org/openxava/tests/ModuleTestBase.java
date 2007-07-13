@@ -814,7 +814,7 @@ public class ModuleTestBase extends TestCase {
 	protected void checkRowCollection(String collection, int row) throws Exception {
 		//if (getMetaModel().getMetaCollection(collection).hasCalculator()) {
 		if (collectionHasFilterHeader(collection)) {
-			checkRow(Tab.COLLECTION_PREFIX + collection + "_selected", row);
+			checkRow(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected", row);
 		}
 		else {
 			checkRow(getPropertyPrefix() + collection + "." + "__SELECTED__", row);			

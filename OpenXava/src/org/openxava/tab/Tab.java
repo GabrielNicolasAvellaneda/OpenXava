@@ -678,7 +678,7 @@ public class Tab {
 	}
 	
 	public void setConditionComparators(String [] comparators) throws XavaException {		
-		if (Arrays.equals(this.conditionComparators, comparators)) return;
+		if (Arrays.equals(this.conditionComparators, comparators)) return;		
 		if (getMetaPropertiesNotCalculated().size() != comparators.length) return;		
 		this.conditionComparators = comparators;
 		condition = null;						
