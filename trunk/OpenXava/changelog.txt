@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: List actions fail in nested collection. As generating PDF or deleting selected rows.
+- regenerateHibernate now delete filtered-file folder before regenerate. Now you can rename a component with no problems.
 - Fix: JavaScript calendar fails on choose dates in languages other than Spanish.
 - Mode.list link is not available when creating or modifing a reference. In general change mode actions are not available after view navigation.
 - Fix: Searching by a property of type String mapped to a numeric column fails on Informix (or other DBs that do not support like in numerica columns)
