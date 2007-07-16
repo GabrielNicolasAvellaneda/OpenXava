@@ -201,6 +201,9 @@ public class Labels {
 			ResourceBundle rb = ResourceBundle.getBundle("Labels", locale);
 			return rb.getString(id);
 		}
+		catch (MissingResourceException ex) {
+			throw ex;
+		}
 		catch (Exception ex) {
 			log.warn("Error translating " + id + ". We assume that the resource is missing", ex);
 			throw new MissingResourceException("Cannot obtain resource, cause: " + ex.getLocalizedMessage(), name, id);
