@@ -180,24 +180,31 @@ public class Labels {
 	}	
 	
 	private static String getExactResource(String id, Locale locale) throws MissingResourceException, XavaException {
-		Iterator it = MetaApplications.getApplicationsNames().iterator();
-		while (it.hasNext()) {
-			String name = (String) it.next();
-			try {
-				ResourceBundle rb = ResourceBundle.getBundle(name + "-labels", locale);
-				return rb.getString(id);
-			}
-			catch (MissingResourceException ex) {
-			}						
-			try {
-				ResourceBundle rb = ResourceBundle.getBundle("Etiquetas" + name, locale);
-				return rb.getString(id);
-			}
-			catch (MissingResourceException ex) {
-			}			
-		}		
-		ResourceBundle rb = ResourceBundle.getBundle("Labels", locale);
-		return rb.getString(id);
+		String name = "UNKNOW";
+		try {
+			Iterator it = MetaApplications.getApplicationsNames().iterator();
+			while (it.hasNext()) {
+				name = (String) it.next();
+				try {
+					ResourceBundle rb = ResourceBundle.getBundle(name + "-labels", locale);
+					return rb.getString(id);
+				}
+				catch (MissingResourceException ex) {
+				}						
+				try {
+					ResourceBundle rb = ResourceBundle.getBundle("Etiquetas" + name, locale);
+					return rb.getString(id);
+				}
+				catch (MissingResourceException ex) {
+				}			
+			}		
+			ResourceBundle rb = ResourceBundle.getBundle("Labels", locale);
+			return rb.getString(id);
+		}
+		catch (Exception ex) {
+			log.warn("Error translating " + id + ". We assume that the resource is missing", ex);
+			throw new MissingResourceException("Cannot obtain resource, cause: " + ex.getLocalizedMessage(), name, id);
+		}
 	}
 	
 	public static String removeUnderlined(String label) {				

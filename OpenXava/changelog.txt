@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Some unexpected exception in Labels produces that collections will not work.
 - A validation of scale is done for MONEY/DINERO stereotype.
 - Fix: List actions fail in nested collection. As generating PDF or deleting selected rows.
 - regenerateHibernate now delete filtered-file folder before regenerate. Now you can rename a component with no problems.
