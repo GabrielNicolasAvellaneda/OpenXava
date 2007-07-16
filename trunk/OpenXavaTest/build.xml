@@ -151,7 +151,10 @@
 			<property name="schema.config.file" value="hibernate/hibernate-junit.cfg.xml"/>
 			<property name="schema.path" value="lib/hsqldb.jar"/>			
 		</ant>
-	</target>	
-		
+	</target>
+	
+	<target name="updateOX">
+		<ant antfile="../OpenXava/build.xml" target="updateOX"/>
+	</target>		
 						
 </project>
