@@ -48,6 +48,13 @@ public class ProductsTest extends ModuleTestBase {
 		super(testName, module);		
 	}
 	
+	public void testMoneyScaleValidator() throws Exception {
+		execute("Mode.detailAndFirst");
+		setValue("unitPrice", "11.123");
+		execute("CRUD.save");
+		assertError("Unit price in Product has too much decimals. Only 2 are allowed");
+	}
+	
 	public void testCustomizeList_sortProperties() throws Exception {
 		execute("List.customize");
 		execute("List.addColumns");

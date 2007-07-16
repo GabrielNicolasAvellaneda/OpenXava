@@ -51,5 +51,11 @@
 		<for-type type= "char"/>		
 	</required-validator>
 	
+	<default-validator>
+		<validator-class class="org.openxava.validators.MoneyScaleValidator"/>
+		<for-stereotype stereotype="MONEY"/>
+		<for-stereotype stereotype="DINERO"/>
+	</default-validator>	
+	
 </validators>
   
