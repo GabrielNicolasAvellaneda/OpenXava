@@ -1,0 +1,457 @@
+Welcome to this short <span id="transl1">voyage</span>
+to start to use OpenXava.<br>
+These instructions suposses&nbsp; that you have&nbsp;the
+OpenXava
+Tomcat started (<span style="font-family: monospace;">start-tomcat.sh</span>
+o <span style="font-family: monospace;">.bat</span>
+has been executed)
+and you Eclipse is opened against the workspace included in OpenXava
+distribution.<br>
+<br>
+Here are the steps to begin xaving:<br>
+<ul>
+  <li><a href="#Ejecutar_aplicacion_ejemplo_MiEscuela">Execute
+example application MySchool.</a></li>
+  <li><a href="#Modificar_aplicacion_ejemplo_MiEscuela">Modify
+example application MySchool.</a></li>
+  <li><a href="#Ejecutar_prueba_junit_de_aplicacion">Execute
+junit
+tests of MySchool application.</a><br>
+  </li>
+  <li><a href="#deploy_in_portal">Deploy MySchool
+in the portal.</a></li>
+  <li><a href="#Ayuda">Help</a><br>
+  </li>
+</ul>
+<h4><a name="Ejecutar_aplicacion_ejemplo_MiEscuela"></a>Execute
+example application
+MySchool</h4>
+OpenXava distribution comes with an example application called <span
+ style="font-style: italic;">MySchool</span>,
+in order to execute it
+follow the next steps, using ant targets. The ant targets used are set
+in Eclipse,
+so to execute it only it is needed to click on <span id="transl1">arrow
+of External Tools button</span> <span style="color: rgb(255, 0, 0);"></span><img
+ style="width: 16px; height: 16px;" alt="external tools"
+ src="/OpenXavaDoc/images/external_tools.gif"><br>
+<ul>
+  <li>Execute target ant <span style="font-style: italic;">MySchool.deployWar</span></li>
+  <li>Go to <a
+ href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Teachers"
+ target="_blank">http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Teachers</a></li>
+  <li>And let's play...<br>
+  </li>
+</ul>
+<h4><a name="Modificar_aplicacion_ejemplo_MiEscuela"></a>Modify
+example
+application MySchool</h4>
+<h5>Add other component and its
+module</h5>
+Copy and paste&nbsp;<span style="font-family: monospace;">src/org.openxava.school.model/Teacher.java</span>
+file with the new name <span style="font-family: monospace;">Pupil.java</span>.<br>
+Change <span style="font-family: monospace;">Pupil.java</span>
+until it
+remains:<br>
+<br>
+<span style="font-family: monospace;">package
+org.openxava.school.model;<br>
+<br>
+import javax.persistence.*;<br>
+import org.openxava.annotations.*;<br>
+<br>
+@Entity<br>
+public class <span style="color: rgb(51, 102, 255); font-weight: bold;">Pupil</span>
+{<br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; @Id @Column(length=<span
+ style="color: rgb(51, 102, 255); font-weight: bold;">2</span>)
+@Required&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; private <span
+ style="color: rgb(51, 102, 255); font-weight: bold;">int</span>
+<span style="color: rgb(51, 102, 255); font-weight: bold;">number</span>;<br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; @Column(length=40) @Required<br>
+&nbsp;&nbsp;&nbsp; private String name;<br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; public <span
+ style="color: rgb(51, 102, 255); font-weight: bold;">int</span>
+get<span style="color: rgb(51, 102, 255); font-weight: bold;">Number</span>()
+{<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return <span
+ style="color: rgb(51, 102, 255); font-weight: bold;">number</span>;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; public void set<span
+ style="color: rgb(51, 102, 255); font-weight: bold;">Number</span>(<span
+ style="color: rgb(51, 102, 255); font-weight: bold;">int</span>
+<span style="color: rgb(51, 102, 255); font-weight: bold;">number</span>)
+{<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; this.<span
+ style="color: rgb(51, 102, 255); font-weight: bold;">number</span>
+= <span style="color: rgb(51, 102, 255); font-weight: bold;">number</span>;<br>
+&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; public String getName() {<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return
+name;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; public void setName(String name) {<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; this.name
+= name;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+}<br>
+</span><span style="font-family: monospace;"><br
+ style="font-family: monospace;">
+</span>Elements in <span
+ style="color: rgb(51, 102, 255); font-weight: bold;">blue</span>
+are
+the changed ones.<br>
+We have also to edit <span style="font-family: monospace;">xava/application.xml</span>,
+and add a new module:<br>
+<br>
+<span style="font-family: monospace;">&lt;?xml
+version = "1.0" encoding
+= "ISO-8859-1"?&gt;
+</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;!DOCTYPE
+application SYSTEM
+"dtds/application.dtd"&gt;
+</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;application
+name="MySchool"&gt; </span>
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;module
+name="Teachers"&gt;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;model name="Teacher"/&gt;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;controller
+name="Typical"/&gt;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;/module&gt;&nbsp;&nbsp;&nbsp; &nbsp;
+</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+</span><br style="font-family: monospace;">
+<span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;module name="Pupils"&gt;
+</span><br
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">
+<span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;model name="Pupil"/&gt;
+</span><br
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">
+<span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;controller
+name="Typical"/&gt;
+</span><br
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">
+<span
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&lt;/module&gt;&nbsp;&nbsp;&nbsp; &nbsp;
+</span><br
+ style="color: rgb(51, 102, 255); font-weight: bold; font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; </span>
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">&lt;/application&gt;</span><br
+ style="font-family: monospace;">
+<br>
+The <span style="color: rgb(51, 102, 255); font-weight: bold;">blue</span>
+things are the added ones.<br>
+Now only that is needed to&nbsp;redeploy.<br>
+The ant targets used are set in Eclipse,
+so to execute it only it is needed to click on <span id="transl1">arrow
+of External Tools button</span> <span style="color: rgb(255, 0, 0);"></span><img
+ style="width: 16px; height: 16px;" alt="external tools"
+ src="/OpenXavaDoc/images/external_tools.gif"><br>
+<ul>
+  <li><span style="font-style: italic;"></span>Execute
+target ant <span style="font-style: italic;">MySchool.deployWar</span></li>
+  <li>Go to <a
+ href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils"
+ target="_blank">http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils</a></li>
+  <li>And let's play...<br>
+  </li>
+</ul>
+<h5>That pupils know about his
+teachers</h5>
+It is easy to make a pupil to have a reference to a teacher. Modify <span
+ style="font-family: monospace;">Pupil.java</span>
+:<br>
+<br>
+<span style="font-family: monospace;">package
+org.openxava.school.model;<br>
+<br>
+import javax.persistence.*;<br>
+import org.openxava.annotations.*;<br>
+<br>
+@Entity<br>
+public class Pupil {<br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; @Id @Column(length=2)
+@Required&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; private int number;<br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; @Column(length=40) @Required<br>
+&nbsp;&nbsp;&nbsp; private String name;<br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;<span style="color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;
+@ManyToOne</span><br
+ style="color: rgb(51, 102, 255); font-weight: bold;">
+<span style="color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+private Teacher teacher;</span><br
+ style="color: rgb(51, 102, 255); font-weight: bold;">
+<span style="color: rgb(51, 102, 255); font-weight: bold;">&nbsp;</span>&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp; public int getNumber() {<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return
+number;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; public void setNumber(int number) {<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+this.number = number;<br>
+&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; public String getName() {<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return
+name;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; public void setName(String name) {<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; this.name
+= name;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp;<span
+ style="color: rgb(51, 102, 255); font-weight: bold;">
+public Teacher
+getTeacher() {</span><br
+ style="color: rgb(51, 102, 255); font-weight: bold;">
+<span style="color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; return teacher;</span><br
+ style="color: rgb(51, 102, 255); font-weight: bold;">
+<span style="color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+}</span><br style="color: rgb(51, 102, 255); font-weight: bold;">
+<br style="color: rgb(51, 102, 255); font-weight: bold;">
+<span style="color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+public void setTeacher(Teacher teacher) {</span><br
+ style="color: rgb(51, 102, 255); font-weight: bold;">
+<span style="color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; this.teacher = teacher;</span><br
+ style="color: rgb(51, 102, 255); font-weight: bold;">
+<span style="color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+}</span><br>
+<br>
+}<br>
+</span><br style="font-family: monospace;">
+And now to test it:<br>
+<ul>
+  <li><span style="font-style: italic;"></span>Execute
+ant target <span style="font-style: italic;">MySchool.deployWar</span></li>
+  <li>Go to <a
+ href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils"
+ target="_blank">http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils</a></li>
+</ul>
+As you see, plain vanilla.<br>
+If you want the reference to be displayed in combo format, you
+should change <span style="font-family: monospace;">Pupil.java</span>
+:<br>
+<br>
+<span style="font-family: monospace;">package
+org.openxava.school.model;<br>
+<br>
+import javax.persistence.*;<br>
+import org.openxava.annotations.*;<br>
+<br>
+@Entity<br>
+public class Pupil {<br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; @Id @Column(length=2)
+@Required&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; private int number;<br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; @Column(length=40) @Required<br>
+&nbsp;&nbsp;&nbsp; private String name;<br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; @ManyToOne <span
+ style="color: rgb(51, 102, 255); font-weight: bold;">@DescriptionsList</span><br>
+&nbsp;&nbsp;&nbsp; private Teacher teacher;<br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; public int getNumber() {<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return
+number;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; public void setNumber(int number) {<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+this.number = number;<br>
+&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; public String getName() {<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return
+name;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; public void setName(String name) {<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; this.name
+= name;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; public Teacher getTeacher() {<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return
+teacher;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; public void setTeacher(Teacher teacher) {<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+this.teacher = teacher;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+}<br>
+</span><span style="font-family: monospace;"><br
+ style="font-family: monospace;">
+</span>And to deploy:<br>
+<ul>
+  <li>Execute ant target<span style="font-style: italic;">
+MySchool.deployWar</span></li>
+  <li>Go to <a
+ href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils"
+ target="_blank">http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Pupils</a></li>
+</ul>
+And now let's go to put a pupils collection in teacher. Touch <span
+ style="font-family: monospace;">Teacher.java</span>
+and leave it this
+way:<br>
+<br>
+<span style="font-family: monospace;">package
+org.openxava.school.model;<br>
+<br>
+<span style="color: rgb(51, 102, 255); font-weight: bold;">import
+java.util.*;</span><br>
+import javax.persistence.*;<br>
+import org.openxava.annotations.*;<br>
+<br>
+@Entity<br>
+public class Teacher {<br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; @Id @Column(length=5)
+@Required&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; private String id;<br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; @Column(length=40) @Required<br>
+&nbsp;&nbsp;&nbsp; private String name;<br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; <span
+ style="color: rgb(51, 102, 255); font-weight: bold;">@OneToMany(mappedBy="teacher")</span><br
+ style="color: rgb(51, 102, 255); font-weight: bold;">
+<span style="color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+private Collection&lt;Pupil&gt; pupils;</span><br>
+<br>
+&nbsp;&nbsp;&nbsp; public String getId() {<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return id;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; public void setId(String id) {<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; this.id =
+id;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; public String getName() {<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return
+name;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; public void setName(String name) {<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; this.name
+= name;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; <span
+ style="color: rgb(51, 102, 255); font-weight: bold;">public
+Collection&lt;Pupil&gt; getPupils() {</span><br
+ style="color: rgb(51, 102, 255); font-weight: bold;">
+<span style="color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; return pupils;</span><br
+ style="color: rgb(51, 102, 255); font-weight: bold;">
+<span style="color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+}</span><br style="color: rgb(51, 102, 255); font-weight: bold;">
+<br style="color: rgb(51, 102, 255); font-weight: bold;">
+<span style="color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+public void setPupils(Collection&lt;Pupil&gt; pupils) {</span><br
+ style="color: rgb(51, 102, 255); font-weight: bold;">
+<span style="color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; this.pupils = pupils;</span><br
+ style="color: rgb(51, 102, 255); font-weight: bold;">
+<span style="color: rgb(51, 102, 255); font-weight: bold;">&nbsp;&nbsp;&nbsp;
+}</span><br style="color: rgb(51, 102, 255); font-weight: bold;">
+<br>
+}<br>
+</span><span style="font-family: monospace;"><br
+ style="font-family: monospace;">
+</span>And deploy again:<br>
+<ul>
+  <li>Execute ant target <span style="font-style: italic;">MySchool.deployWar</span></li>
+  <li>Go to <a
+ href="http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Teachers"
+ target="_blank">http://localhost:8080/MySchool/xava/module.jsp?application=MySchool&amp;module=Teachers</a></li>
+</ul>
+<h4><a name="Ejecutar_prueba_junit_de_aplicacion"></a>Execute
+junit
+test of MySchool application</h4>
+Go to your Eclipse and in your <span style="font-style: italic;">MySchool</span>
+project:
+<ul>
+  <li>Go to <span style="font-family: monospace;">TeachersTest</span>
+class (in <span style="font-family: monospace;">src/org.openxava.school.tests</span>)
+and with right button choose <span style="font-style: italic;">Run
+&gt; JUnit Test</span></li>
+</ul>
+The OpenXava junit test allows to test a module like a real user with
+an
+Internet navigator. So it is possible to automatize the test
+application process. Your are encouraged to examine the <span
+ style="font-family: monospace;">TeachersTest</span>
+code for make idea
+of how create a junit test for OpenXava. If you want to develop quality
+applications is <span id="transl1">essential
+t</span><span id="transl1">o
+become fond</span><span id="transl1"> to junit test.</span><br>
+<br>
+<br>
+<br>
+That's all, folks<br>
+In this example you can see that little changes imply little effort and
+the effect is seen on instantaneous form.<br>
+<h4><a name="Ayuda"></a>Help</h4>
+If you wish to have an idea of all OpenXava features, that surpass what
+you
+see
+in this naive example, you need to take a look to OpenXavaTest
+project; specially to <span style="font-family: monospace;">ox3-src/org.openxava.test.model</span>
+package.<br>
+<br>
+You can obtain help for executing this tutorial or for any other
+problem
+with OpenXava in:<br>
+<a href="http://sourceforge.net/forum/forum.php?forum_id=419690">http://sourceforge.net/forum/forum.php?forum_id=419690</a><br>
+<br>
+You can learn more things about OpenXava reading its <a
+ href="/web/guest/reference-guide">Reference
+Guide</a>.<br>
