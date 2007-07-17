@@ -1,0 +1,6 @@
+Change Log for OpenXava 3
+=========================
+
+OpenXava 3.0beta1 (2007-7-16)
+-----------------------------
+- All features of OpenXava 2 (XML) are also available in OpenXava 3 (EJB3 entities)
