@@ -2,7 +2,6 @@ package org.openxava.test.model;
 
 import javax.persistence.*;
 
-import org.hibernate.validator.*;
 import org.openxava.annotations.*;
 
 /**
@@ -16,7 +15,7 @@ public class SellerLevel {
 	@Id	@Column(length=1) @Required 
 	private String id;
 	
-	@Column(length=50) @Required
+	@Column(length=50) @Required @DisplaySize(25) 
 	private String description;
 	
 	public String getId() {

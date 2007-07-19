@@ -707,7 +707,26 @@ public class AnnotatedClassParser {
 						mustAddMetaView = true;				
 					}
 				}					
+			}
+			
+			// DisplaySize
+			if (element.isAnnotationPresent(DisplaySize.class)) {
+				DisplaySize displaySize = element.getAnnotation(DisplaySize.class);
+				if (isForView(metaView, displaySize.forViews(), displaySize.notForViews())) {
+					propertyView.setDisplaySize(displaySize.value());
+					mustAddMetaView = true;				
+				}
+			}
+			if (element.isAnnotationPresent(DisplaySizes.class)) {
+				DisplaySize [] displaySizes = element.getAnnotation(DisplaySizes.class).value();				
+				for (DisplaySize displaySize: displaySizes) {
+					if (isForView(metaView, displaySize.forViews(), displaySize.notForViews())) {
+						propertyView.setDisplaySize(displaySize.value());
+						mustAddMetaView = true;				
+					}
+				}					
 			}			
+			
 			
 						
 			if (mustAddMetaView) {				
