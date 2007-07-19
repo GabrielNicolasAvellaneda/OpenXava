@@ -1206,7 +1206,14 @@ public class AnnotatedClassParser {
 		}		
 		if (element.isAnnotationPresent(Editors.class)) {
 			notApply(collection.getName(), Editors.class, "properties");
-		}												
+		}
+		if (element.isAnnotationPresent(DisplaySize.class)) {
+			notApply(collection.getName(), DisplaySize.class, "properties");
+		}
+		if (element.isAnnotationPresent(DisplaySizes.class)) {
+			notApply(collection.getName(), DisplaySizes.class, "properties");
+		}														
+		
 	}
 	
 	private String wrapWithDollars(String orderBy) {
@@ -1512,7 +1519,14 @@ public class AnnotatedClassParser {
 		}
 		if (element.isAnnotationPresent(Editors.class)) {
 			notApply(ref.getName(), Editors.class, "properties");
-		}														
+		}
+		if (element.isAnnotationPresent(DisplaySize.class)) {
+			notApply(ref.getName(), DisplaySize.class, "properties");
+		}
+		if (element.isAnnotationPresent(DisplaySizes.class)) {
+			notApply(ref.getName(), DisplaySizes.class, "properties");
+		}
+		
 	}
 
 
