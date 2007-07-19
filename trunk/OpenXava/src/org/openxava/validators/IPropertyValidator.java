@@ -13,7 +13,7 @@ public interface IPropertyValidator extends java.io.Serializable {
 	/**
 	 * Validate. <p>
 	 *
-	 * The validation errores are added to an object of type <code>Messages</code>. <br> 
+	 * The validation errors are added to an object of type <code>Messages</code>. <br> 
 	 *
 	 * @param errors  Not null. Ids list to read in the resources file
 	 * @param value  Value to validate. It can be null

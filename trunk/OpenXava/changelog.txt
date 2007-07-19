@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- New method Messages.getIds() that returns a list with the ids of the messages.
 - New display-size attribute available in <property-view/>.
 - Fix: Some unexpected exception in Labels produces that collections will not work.
 - A validation of scale is done for MONEY/DINERO stereotype.

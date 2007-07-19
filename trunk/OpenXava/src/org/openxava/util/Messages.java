@@ -37,7 +37,10 @@ public class Messages implements java.io.Serializable {
 			this(id, null);
 		}
 		
-		
+		public String getId() {
+			return id;
+		}
+				
 		public String toString() {
 			return toString(Locale.getDefault());
 		}
@@ -208,14 +211,23 @@ public class Messages implements java.io.Serializable {
 		}
 	}
 	
+	/**
+	 * List of all message texts translated using the default locale.
+	 */
 	public Collection getStrings() {
 		return getStrings(Locale.getDefault());
 	}
-	
+
+	/**
+	 * List of all message texts translated using the locale of the request.
+	 */	
 	public Collection getStrings(ServletRequest request) {
 		return getStrings(XavaResources.getLocale(request));
 	}
-	
+
+	/**
+	 * List of all message texts translated using the indicated locale.
+	 */	
 	public Collection getStrings(Locale locale) {
 		Iterator it = messages.iterator();
 		Collection r = new ArrayList();
@@ -225,10 +237,23 @@ public class Messages implements java.io.Serializable {
 		return r;
 	}
 	
+	/**
+	 * List of all ids of the messages
+	 * @return
+	 */
+	public Collection getIds() {
+		Iterator it = messages.iterator();
+		Collection r = new ArrayList();
+		while (it.hasNext()) {
+			r.add(((Message) it.next()).getId());
+		}
+		return r;				
+	}
+	
 	public boolean memberHas(MetaMember m) {
 		if (members == null) return false;		
 		if (m.getMetaModel() != null && members.contains(m.getMetaModel().getName() + "." + m.getName())) return true;
 		return members.contains(m.getName());
 	}
-
+	
 }
