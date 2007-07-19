@@ -33,6 +33,7 @@ public class XavaSuite extends TestSuite {
 		TestSuite suite = new TestSuite();
 		suite.addTest(new TestSuite(WarehousesTest.class));	
 		suite.addTest(new TestSuite(CarriersTest.class));
+		suite.addTest(new TestSuite(CarriersWithCalculatedFellowsTest.class));
 		suite.addTest(new TestSuite(CarriersWithSpecialSearchTest.class));		
 		suite.addTest(new TestSuite(ChangeProductsPrice2Test.class));
 		suite.addTest(new TestSuite(ChangeProductsPriceTest.class));

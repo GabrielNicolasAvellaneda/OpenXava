@@ -83,6 +83,14 @@
 		<members>number, name</members>
 	</view>
 	
+	<view name="CalculatedFellows">
+		<members>
+			number, name;
+			fellowCarriersCalculated			
+		</members>
+		
+	</view>
+	
 	<tab>
 		<properties>calculated, number, name</properties>
 	</tab>
