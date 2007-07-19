@@ -86,7 +86,7 @@ import org.openxava.test.actions.*;
 	
 	@View( name="SellerAsAggregate2Levels", members="number; type; name; address; seller" ),
 	
-	@View( name="TypeWithRadioButton", members="number;	type; name;	address;" )
+	@View( name="TypeWithRadioButton", members=	"number; data [	type; name;	address; ]" )
 	
 })
 
