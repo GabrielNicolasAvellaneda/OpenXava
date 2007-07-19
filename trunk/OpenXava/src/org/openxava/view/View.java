@@ -601,6 +601,7 @@ public class View implements java.io.Serializable {
 			newView.setEditable(false);	
 		}
 		newView.setMetaView(getMetaView().getMetaView(ref));
+		newView.setMemberName(member.getName()); 
 		if (newView.isRepresentsCollection()) {					
 			MetaCollectionView metaCollectionView = getMetaView().getMetaCollectionView(member.getName());
 			if (metaCollectionView != null) {
@@ -616,13 +617,6 @@ public class View implements java.io.Serializable {
 				if (!actionsDetailNames.isEmpty()) {
 					newView.setActionsNamesDetail(new ArrayList(actionsDetailNames));
 				}
-				Collection actionsListNames = metaCollectionView.getActionsListNames();
-				if (!actionsListNames.isEmpty()) {					
-					Collection actions = new ArrayList(actionsListNames);
-					actions.addAll(getDefaultListActionsForCollections());
-					newView.setActionsNamesList(actions);
-				}
-				
 				newView.setEditCollectionElementAction(metaCollectionView.getEditActionName());
 				newView.setViewCollectionElementAction(metaCollectionView.getViewActionName());
 				newView.setNewCollectionElementAction(metaCollectionView.getNewActionName());
@@ -646,7 +640,13 @@ public class View implements java.io.Serializable {
 				newView.setCollectionMembersEditables(keyEditable || metaCollectionView.isEditOnly());								
 				newView.setEditable(editable);				
 				newView.setKeyEditable(keyEditable);				
-				newView.setViewName(metaCollectionView.getViewName());								
+				newView.setViewName(metaCollectionView.getViewName());
+				Collection actionsListNames = metaCollectionView.getActionsListNames();
+				if (!actionsListNames.isEmpty()) {					
+					Collection actions = new ArrayList(actionsListNames);
+					actions.addAll(newView.getDefaultListActionsForCollections());
+					newView.setActionsNamesList(actions);
+				}
 			}
 			else {
 				newView.setKeyEditable(isEditable()); 
@@ -667,30 +667,30 @@ public class View implements java.io.Serializable {
 				}
 			}			
 		}
-		newView.setMemberName(member.getName());
 		subviews.put(member.getName(), newView);
 	} 
 	 
 		
-	private static Collection getDefaultListActionsForCollections() { 
-		if (defaultListActionsForCollections == null) {
-			try {
-				MetaController controller = MetaControllers.getMetaController("DefaultListActionsForCollections"); // Si no existe: ¿Advertencia?
-				Collection result = new ArrayList();
-				for (Iterator it = controller.getAllMetaActions().iterator(); it.hasNext();) {
-					MetaAction action = (MetaAction) it.next();
-					if (!action.isHidden()) {
-						result.add(action.getQualifiedName());
-					}
-				}				
-				defaultListActionsForCollections = Collections.unmodifiableCollection(result); 
+	private Collection getDefaultListActionsForCollections() {
+		try {
+			if (isCollectionCalculated()) return Collections.EMPTY_LIST;
+			if (defaultListActionsForCollections == null) {			
+					MetaController controller = MetaControllers.getMetaController("DefaultListActionsForCollections"); // Si no existe: ¿Advertencia?
+					Collection result = new ArrayList();
+					for (Iterator it = controller.getAllMetaActions().iterator(); it.hasNext();) {
+						MetaAction action = (MetaAction) it.next();
+						if (!action.isHidden()) {
+							result.add(action.getQualifiedName());
+						}
+					}				
+					defaultListActionsForCollections = Collections.unmodifiableCollection(result); 
 			}
-			catch (XavaException ex) {
-				log.warn(XavaResources.getString("default_list_action_controllers_warning"), ex);
-				return Collections.EMPTY_LIST;
-			}
+			return defaultListActionsForCollections;
 		}
-		return defaultListActionsForCollections;
+		catch (XavaException ex) {
+			log.warn(XavaResources.getString("default_list_action_controllers_warning"), ex);
+			return Collections.EMPTY_LIST;
+		}
 	}
 
 	private void setPropertiesListNames(String propertiesListNames) {
