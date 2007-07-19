@@ -1,0 +1,6 @@
+<h4>Display size for a property in a view</h4>Now you can use <code>display-size</code> attribute for <code>&lt;property-view/&gt;</code>, in this way you can restrict the display size of a property for a specific view. That is, you can write:<br><br>	<pre>&lt;entity&gt;
+		<br>...<br>  &lt;property name=&quot;description&quot; type=&quot;String<br>    size=&quot;50&quot; required=&quot;true&quot;/&gt;
+	<br>&lt;/entity&gt;
+	 
+	<br>&lt;view&gt;<br>  &lt;property-view property=&quot;description&quot; <b style="color: #0000FF">display-size=&quot;25&quot;</b>/&gt;<br>&lt;/view&gt;
+</pre><br>In this case, although 'description' has a size of 50 the size of the editor for 'description' will be only 25, even though the user can enter until 50 characters.

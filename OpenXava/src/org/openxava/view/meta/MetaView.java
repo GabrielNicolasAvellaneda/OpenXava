@@ -679,6 +679,14 @@ public class MetaView extends MetaElement implements Cloneable {
 		return metaPropertyView.getLabelFormat();
 	}
 	
+	// @Trifon
+	public int getDisplaySizeForProperty(MetaProperty p) throws XavaException {
+		MetaPropertyView metaPropertyView = getMetaPropertyViewFor(p.getName());
+		if (metaPropertyView == null) 
+			return -1;
+		return metaPropertyView.getDisplaySize();
+	}
+	
 	/**
 	 * 
 	 * @return  Empty string if no editor is defined for this property

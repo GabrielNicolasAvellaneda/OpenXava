@@ -176,5 +176,6 @@ public class XmlElementsNames {
 	protected final static String [] xfor_valid_values = { "for-valid-values", "para-valores-posibles" };
 	protected final static String [] xon_each_request = { "on-each-request", "en-cada-peticion" };
 	protected final static String [] xtransient = { "transient", "transitorio" };
-		
+	protected final static String [] xdisplay_size = { "display-size", "longitud-visual" }; // @Trifon
+	
 }

@@ -2948,6 +2948,11 @@ public class View implements java.io.Serializable {
 		return getMetaView().getLabelFormatForReference(ref);
 	}
 	
+	// @Trifon
+	public int getDisplaySizeForProperty(MetaProperty p) throws XavaException {
+		return getMetaView().getDisplaySizeForProperty(p);
+	}
+	
 	
 	public boolean isFrame() throws XavaException {
 		return getMetaView().isFrame();

@@ -6,6 +6,7 @@ import org.openxava.util.*;
 
 /**
  * @author Javier Paniza
+ * @author Trifon Trifonov
  */
 public class MetaPropertyView extends MetaMemberView implements java.io.Serializable {
 	
@@ -20,7 +21,8 @@ public class MetaPropertyView extends MetaMemberView implements java.io.Serializ
 	private boolean readOnly;
 	private String onChangeActionClassName;	
 	private int labelFormat;
-	private String editor;			
+	private String editor;		
+	private int displaySize;
 	
 	
 	public String getPropertyName() {
@@ -89,6 +91,15 @@ public class MetaPropertyView extends MetaMemberView implements java.io.Serializ
 
 	public void setEditor(String editor) {
 		this.editor = editor;
+	}
+	
+	// @Trifon
+	public int getDisplaySize() {
+		return displaySize;
+	}
+	// @Trifon
+	public void setDisplaySize(int displaySize) {
+		this.displaySize = displaySize;
 	}
 	
 }

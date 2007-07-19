@@ -238,7 +238,8 @@ public class ViewParser extends XmlElementsNames {
 		if (XNORMAL[lang].equals(labelFormat)) a.setLabelFormat(MetaPropertyView.NORMAL_LABEL);
 		else if (XSMALL[lang].equals(labelFormat)) a.setLabelFormat(MetaPropertyView.SMALL_LABEL);
 		else if (XNO_LABEL[lang].equals(labelFormat)) a.setLabelFormat(MetaPropertyView.NO_LABEL);
-		else throw new XavaException("invalid_label_format", labelFormat);
+		else throw new XavaException("invalid_label_format", labelFormat);				
+		a.setDisplaySize(ParserUtil.getAttributeInt(el, xdisplay_size[lang])); // @Trifon
 		fillOnChangeAction(el, a, lang);	
 		fillActions(el, a, lang);
 		return a;
