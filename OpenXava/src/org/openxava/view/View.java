@@ -2418,6 +2418,7 @@ public class View implements java.io.Serializable {
 	}
 	
 	public String getViewName() {
+		if (isGroup() || isSection()) return getParent().getViewName();
 		return viewName;
 	}
 
