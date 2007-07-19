@@ -321,10 +321,12 @@
 	<view name="TypeWithRadioButton">
 		<property-view property="type" editor="ValidValuesRadioButton"/>
 		<members>
-			number; 
-			type; 
-			name;
-			address;
+			number;
+			<group name="data"> 
+				type; 
+				name;
+				address;
+			</group>
 		</members>
 	</view>	
 				

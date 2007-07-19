@@ -55,7 +55,7 @@ public class EditorTag extends TagSupport {
 			script = script + scriptFoco;
 
 			boolean editable = explicitEditable?this.editable:view.isEditable(property);  
-
+			
 			String editorURL = org.openxava.web.WebEditors.getUrl(metaProperty, view.getViewName());
 			char nexus = editorURL.indexOf('?') < 0?'?':'&';
 			String maxSize = "";

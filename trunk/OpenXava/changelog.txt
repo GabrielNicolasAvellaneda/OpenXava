@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: editor attribute in <property-view/> does not work is the property is inside a group.
 - New method Messages.getIds() that returns a list with the ids of the messages.
 - New display-size attribute available in <property-view/>.
 - Fix: Some unexpected exception in Labels produces that collections will not work.
