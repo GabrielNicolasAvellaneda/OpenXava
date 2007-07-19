@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Now actions in DefaultListActionsForCollections controller are not added automatically to calculated collections.
 - Fix: editor attribute in <property-view/> does not work is the property is inside a group.
 - New method Messages.getIds() that returns a list with the ids of the messages.
 - New display-size attribute available in <property-view/>.
