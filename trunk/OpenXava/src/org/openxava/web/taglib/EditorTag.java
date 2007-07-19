@@ -45,7 +45,7 @@ public class EditorTag extends TagSupport {
 			request.setAttribute(propertyKey, metaProperty);
 			Object value = view.getValue(property);
 			request.setAttribute(valueKey, value);
-						
+									
 			Messages errors = (Messages) request.getAttribute("errors"); 									
 			String formName = manager.getForm();	
 			boolean throwsChanged=explicitThrowPropertyChanged?this.throwPropertyChanged:view.throwsPropertyChanged(property); 
@@ -58,7 +58,11 @@ public class EditorTag extends TagSupport {
 
 			String editorURL = org.openxava.web.WebEditors.getUrl(metaProperty, view.getViewName());
 			char nexus = editorURL.indexOf('?') < 0?'?':'&';
-			editorURL = editorURL + nexus + "script="+script+"&editable="+editable+"&propertyKey="+propertyKey;
+			String maxSize = "";
+			if (view.getDisplaySizeForProperty(metaProperty) > -1) {
+				maxSize = "maxSize=" + view.getDisplaySizeForProperty(metaProperty) + "&";
+			}
+			editorURL = editorURL + nexus + maxSize + "script="+script+"&editable="+editable+"&propertyKey="+propertyKey;
 			
 			if (org.openxava.web.WebEditors.mustToFormat(metaProperty)) {
 				Object fvalue = org.openxava.web.WebEditors.formatToStringOrArray(request, metaProperty, value, errors);

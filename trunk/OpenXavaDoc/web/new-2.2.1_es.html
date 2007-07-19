@@ -1,0 +1,4 @@
+<h4>Longitud de visualización para una propiedad en una vista</h4>Ahora podemos usar  el atributo <code>longitud-visual</code> para <code>&lt;vista-propiedad/&gt;</code>, de esta forma podemos restringir el tamaño de visualización de una propiedad para una vista específica. Es decir, podemos escribir:<br>	<pre style="color:">&lt;entidad&gt;	<br>...<br>  &lt;propiedad nombre=&quot;descripcion&quot; tipo=&quot;String&quot;<br>    longitud=&quot;50&quot; requerido=&quot;true&quot;/&gt;
+	<br>&lt;/entidad&gt; 
+	<br>&lt;vista&gt;<br>  &lt;vista-propiedad propiedad=&quot;descripcion&quot; <b style="color: #0000FF">longitud-visual=&quot;25&quot;</b>/&gt;<br>&lt;/view&gt;
+</pre><br>En este caso, aunque 'descripcion' tiene un tamaño de 50 el tamaño del editor para 'descripcion' será de solo 25, aun así el usuario puede introducir hasta 50 caracteres.
