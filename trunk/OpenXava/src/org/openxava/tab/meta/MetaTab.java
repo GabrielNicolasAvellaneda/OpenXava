@@ -75,7 +75,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	public void setMetaModel(MetaModel metaModel) {
 		this.metaModel = metaModel;
 		this.metaComponent = metaModel.getMetaComponent();
-		this.modelName = metaModel.getName();
+		this.modelName = metaModel.getName();		
 	}
 
 	public void addMetaConsult(MetaConsult consult) {

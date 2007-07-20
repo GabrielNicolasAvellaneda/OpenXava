@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Calculated properties in aggregate collections that use IModelCalculator fails.
 - Fix: Collections fails on creating new objects in UI working agains some databases (as Informix).
 - Tab now is serializable.
 - Fix: NullPointerException in DateTimeFormatter when it try to parse a null value.

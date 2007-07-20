@@ -567,6 +567,10 @@ public class InvoicesTest extends ModuleTestBase {
 		assertNoErrors();		
 		assertExists("details.serviceType"); // Testing does not hide detail on save
 		assertCollectionRowCount("details", 1);
+
+		// Next line tests IModelCalculator in an aggregate collection (only apply to XML components)
+		assertValueInCollection("details", 0, "free", "0".equals(getProductUnitPrice())?"Yes":"No"); 
+
 		assertNoEditable("year"); // Testing header is saved
 		assertNoEditable("number");
 		
