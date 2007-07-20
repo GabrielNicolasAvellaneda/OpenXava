@@ -1015,14 +1015,14 @@ public class View implements java.io.Serializable {
 	}
 
 	/**
-	 * <code>Tab</code> used for manage the data of this callection. <p>
+	 * <code>Tab</code> used for manage the data of this collection. <p>
 	 *
 	 * This view must represents a collection in order to call this method.<br>
 	 */
 	public Tab getCollectionTab() throws XavaException {
 		assertRepresentsCollection("getCollectionTab()");
 		if (collectionTab == null) {			
-			collectionTab = new Tab();			
+			collectionTab = new Tab();				
 			collectionTab.setModelName(getModelName());
 			collectionTab.setTabName(Tab.COLLECTION_PREFIX + getMemberName());
 			if (propertiesListNames != null) {

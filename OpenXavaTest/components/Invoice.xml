@@ -140,7 +140,11 @@
 			<default-value-calculator class="org.openxava.calculators.CurrentDateCalculator"/>
 		</property>
 		<reference name="soldBy" model="Seller"/>
-		<property name="remarks" stereotype="MEMO"/>		
+		<property name="remarks" stereotype="MEMO"/>
+		
+		<property name="free" type="boolean">
+			<calculator class="org.openxava.test.calculators.InvoiceDetailIsFreeCalculator"/>
+		</property>		
 
 		<validator class="org.openxava.test.validators.InvoiceDetailValidator">
 			<set property="invoice"/>
@@ -164,7 +168,7 @@
 		<reference-view reference="customer" view="Simple"/>
 		
 		<collection-view collection="details">
-			<list-properties>serviceType, product.description, product.unitPriceInPesetas, quantity, unitPrice, amount</list-properties>
+			<list-properties>serviceType, product.description, product.unitPriceInPesetas, quantity, unitPrice, amount, free</list-properties>
 			<edit-action action="Invoices.editDetail"/>
 			<detail-action action="Invoices.viewProduct"/>
 		</collection-view>
