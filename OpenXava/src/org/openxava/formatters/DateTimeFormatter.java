@@ -43,7 +43,7 @@ public class DateTimeFormatter implements IMultipleValuesFormatter {
 	}
 
 	public Object parse(HttpServletRequest request, String [] strings) throws Exception {		
-		if( strings == null && strings.length < 2 ) return null;
+		if( strings == null || strings.length < 2 ) return null;
 		if( Is.emptyString(strings[0])) return null;
 		if( Is.emptyString(strings[1])) return null;
 	
