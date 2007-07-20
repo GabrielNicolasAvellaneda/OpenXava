@@ -26,8 +26,10 @@ import org.openxava.util.*;
  * @author Javier Paniza
  */
 
-public class Tab {
+public class Tab implements java.io.Serializable {
 	
+	private static final long serialVersionUID = 1724100598886966704L;
+
 	/**
 	 * Prefix used for naming (in session) to the tab objects used for collections.
 	 */

@@ -215,6 +215,8 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 				ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
 		*/
+		
+		if (keyHasNulls()) return EmptyResultSet.INSTANCE; // Because some databases (as Informix) have problems setting nulls
 				
 		PreparedStatement ps = con.prepareStatement(select); 
 		// Fill key values
@@ -234,6 +236,14 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 		position(rs);
 
 		return rs;
+	}
+
+	private boolean keyHasNulls() {
+		if (key == null) return true;
+		for (int i=0; i < key.length; i++) {
+			if (key[i] == null) return true;
+		}
+		return false;
 	}
 
 	// Implementa ITabProvider

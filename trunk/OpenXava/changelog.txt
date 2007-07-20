@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Collections fails on creating new objects in UI working agains some databases (as Informix).
+- Tab now is serializable.
+- Fix: NullPointerException in DateTimeFormatter when it try to parse a null value.
 - Now actions in DefaultListActionsForCollections controller are not added automatically to calculated collections.
 - Fix: editor attribute in <property-view/> does not work is the property is inside a group.
 - New method Messages.getIds() that returns a list with the ids of the messages.
