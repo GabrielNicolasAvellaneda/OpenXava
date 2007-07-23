@@ -25,6 +25,9 @@ public class LinkTag extends TagSupport implements IActionTag {
 		
 	public int doStartTag() throws JspException {		
 		try {
+			if (Is.emptyString(getAction())) {  
+				return SKIP_BODY;
+			}
 			hasBody=false;
 			ModuleContext context =
 				(ModuleContext) pageContext.getSession().getAttribute(

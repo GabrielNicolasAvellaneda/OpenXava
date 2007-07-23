@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- It's possible to put empty string for action in edit-action, view-action, new-action, save-action, hide-detail-action, remove-action, remove-selected-action of collection-view, and the action will not be shown in the User Interface.
+- The JSP tags: action, link, image and button support empty string as value for action.
 - Fix: Calculated properties in aggregate collections that use IModelCalculator fails.
 - Fix: Collections fails on creating new objects in UI working agains some databases (as Informix).
 - Tab now is serializable.

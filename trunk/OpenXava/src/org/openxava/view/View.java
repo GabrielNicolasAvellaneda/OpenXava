@@ -3076,11 +3076,11 @@ public class View implements java.io.Serializable {
     }
 
 	public String getEditCollectionElementAction() {
-		return Is.emptyString(editCollectionElementAction)?"Collection.edit":editCollectionElementAction;
+		return editCollectionElementAction == null?"Collection.edit":editCollectionElementAction;
 	}
 	
 	public String getViewCollectionElementAction() {
-		return Is.emptyString(viewCollectionElementAction)?"Collection.view":viewCollectionElementAction;
+		return viewCollectionElementAction == null?"Collection.view":viewCollectionElementAction;
 	}
 		
 	public void setEditCollectionElementAction(String editCollectionElementAction) {
@@ -3180,16 +3180,17 @@ public class View implements java.io.Serializable {
 		this.collectionEditableFixed = collectionEditableFixed;
 	}
 
-	public String getHideCollectionElementAction() {
-		return Is.emptyString(hideCollectionElementAction)?"Collection.hideDetail":hideCollectionElementAction; 
+	public String getHideCollectionElementAction() { 
+		return hideCollectionElementAction == null?"Collection.hideDetail":hideCollectionElementAction;
 	}
 
 	public void setHideCollectionElementAction(String hideCollectionElementAction) {
 		this.hideCollectionElementAction = hideCollectionElementAction;
 	}
 
-	public String getNewCollectionElementAction() { 
+	public String getNewCollectionElementAction() {  
 		if (!Is.emptyString(newCollectionElementAction)) return newCollectionElementAction;
+		if (newCollectionElementAction != null) return "";
 		return isRepresentsEntityReference()?"Collection.add":"Collection.new";
 	}
 
@@ -3198,7 +3199,7 @@ public class View implements java.io.Serializable {
 	}
 
 	public String getRemoveCollectionElementAction() {
-		return Is.emptyString(removeCollectionElementAction)?"Collection.remove":removeCollectionElementAction;
+		return removeCollectionElementAction == null?"Collection.remove":removeCollectionElementAction; 
 	}
 
 	public void setRemoveCollectionElementAction(
@@ -3207,7 +3208,7 @@ public class View implements java.io.Serializable {
 	}
 	
 	public String getRemoveSelectedCollectionElementsAction() {
-		return Is.emptyString(removeSelectedCollectionElementsAction)?"Collection.removeSelected":removeSelectedCollectionElementsAction;
+		return removeSelectedCollectionElementsAction == null?"Collection.removeSelected":removeSelectedCollectionElementsAction; 
 	}
 
 	public void setRemoveSelectedCollectionElementsAction(
@@ -3216,7 +3217,7 @@ public class View implements java.io.Serializable {
 	}
 	
 	public String getSaveCollectionElementAction() {
-		return Is.empty(saveCollectionElementAction)?"Collection.save":saveCollectionElementAction;
+		return saveCollectionElementAction == null?"Collection.save":saveCollectionElementAction;
 	}
 
 	public void setSaveCollectionElementAction(String saveCollectionElementAction) {

@@ -22,7 +22,10 @@ public class ImageTag extends TagSupport implements IActionTag {
 	private String argv;
 	
 	public int doStartTag() throws JspException {
-		try {									
+		try {	
+			if (Is.emptyString(getAction())) { 
+				return SKIP_BODY;
+			}
 			ModuleContext context = (ModuleContext) pageContext.getSession().getAttribute("context");
 			HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
 			ModuleManager manager = (ModuleManager) context.get(request, "manager");
