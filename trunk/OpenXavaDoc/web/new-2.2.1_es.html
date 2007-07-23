@@ -1,4 +1,23 @@
-<h4>Longitud de visualización para una propiedad en una vista</h4>Ahora podemos usar  el atributo <code>longitud-visual</code> para <code>&lt;vista-propiedad/&gt;</code>, de esta forma podemos restringir el tamaño de visualización de una propiedad para una vista específica. Es decir, podemos escribir:<br>	<pre style="color:">&lt;entidad&gt;	<br>...<br>  &lt;propiedad nombre=&quot;descripcion&quot; tipo=&quot;String&quot;<br>    longitud=&quot;50&quot; requerido=&quot;true&quot;/&gt;
-	<br>&lt;/entidad&gt; 
-	<br>&lt;vista&gt;<br>  &lt;vista-propiedad propiedad=&quot;descripcion&quot; <b style="color: #0000FF">longitud-visual=&quot;25&quot;</b>/&gt;<br>&lt;/view&gt;
-</pre><br>En este caso, aunque 'descripcion' tiene un tamaño de 50 el tamaño del editor para 'descripcion' será de solo 25, aun así el usuario puede introducir hasta 50 caracteres.
+<h4>Es posible especificar que cierta acci&oacute;n en una colecci&oacute;n no se muestre</h4>
+Podemos escribir:<br>
+<pre>&lt;vista&gt;</pre>
+<pre>  &lt;vista-coleccion coleccion="miColeccion"&gt;</pre>
+<pre>     &lt;<span style="font-family: monospace;">accion-quitar-seleccionados</span> <span style="font-weight: bold; color: rgb(51, 102, 255);">accion=""</span>/&gt;</pre>
+<pre>  &lt;/vista-coleccion&gt;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>  ...</pre>
+<pre>&lt;/vista&gt;</pre>
+En este caso la acci&oacute;n para borrar elementos seleccionado en
+esta colecci&oacute;n no ser&aacute; mostrada en la interfaz de
+usuario. S&oacute;lo es necesario especificar una cadena vac&iacute;a
+como valor para la acci&oacute;n.<br>
+Esto aplica a todas las acciones en <span style="font-family: monospace;">&lt;vista-coleccion/&gt;</span> es decir a <span style="font-family: monospace;">&lt;accion-editar/&gt;, &lt;accion-ver/&gt;, &lt;accion-nuevo/&gt;, &lt;accion-grabar/&gt;, &lt;accion-ocultar-detalle/&gt;, &lt;accion-quitar/&gt; y &lt;accion-quitar-seleccionados/&gt;</span>.
+<h4>Longitud de visualizaci&oacute;n para una propiedad en una vista</h4>
+Ahora podemos usar  el atributo <code>longitud-visual</code> para <code>&lt;vista-propiedad/&gt;</code>,
+de esta forma podemos restringir el tama&ntilde;o de
+visualizaci&oacute;n de una propiedad para una vista espec&iacute;fica.
+Es decir, podemos escribir:<br>
+	
+<pre style="">&lt;entidad&gt;	<br>...<br>  &lt;propiedad nombre="descripcion" tipo="String"<br>    longitud="50" requerido="true"/&gt;<br>	<br>&lt;/entidad&gt; <br>	<br>&lt;vista&gt;<br>  &lt;vista-propiedad propiedad="descripcion" <b style="color: rgb(0, 0, 255);">longitud-visual="25"</b>/&gt;<br>&lt;/view&gt;<br></pre>
+<br>
+En este caso, aunque 'descripcion' tiene un tama&ntilde;o de 50 el
+tama&ntilde;o del editor para 'descripcion' ser&aacute; de solo 25, aun
+as&iacute; el usuario puede introducir hasta 50 caracteres.

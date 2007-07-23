@@ -13,13 +13,14 @@ public class CarriersWithCalculatedFellowsTest extends ModuleTestBase {
 		super(testName, "CarriersWithCalculatedFellows");		
 	}
 	
-	public void testDefaultListActionsForCollectionsDoesNotApplyToCalculatedCollections() throws Exception {
+	public void testDefaultListActionsForCollectionsDoesNotApplyToCalculatedCollections_emptyCollectionActionIsNotShown() throws Exception {
 		execute("CRUD.new");
 		assertNoErrors();
 		assertExists("number");
 		assertExists("name");
 		assertNoAction("Print.generatePdf");
 		assertNoAction("Print.generateExcel");
+		assertNoAction("Collection.removeSelected"); 
 		
 	}
 	

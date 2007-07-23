@@ -1,6 +1,22 @@
-<h4>Display size for a property in a view</h4>Now you can use <code>display-size</code> attribute for <code>&lt;property-view/&gt;</code>, in this way you can restrict the display size of a property for a specific view. That is, you can write:<br><br>	<pre>&lt;entity&gt;
-		<br>...<br>  &lt;property name=&quot;description&quot; type=&quot;String<br>    size=&quot;50&quot; required=&quot;true&quot;/&gt;
-	<br>&lt;/entity&gt;
-	 
-	<br>&lt;view&gt;<br>  &lt;property-view property=&quot;description&quot; <b style="color: #0000FF">display-size=&quot;25&quot;</b>/&gt;<br>&lt;/view&gt;
-</pre><br>In this case, although 'description' has a size of 50 the size of the editor for 'description' will be only 25, even though the user can enter until 50 characters.
+<h4>It's possible to specify that certain action in a collection will not be shown</h4>
+You can write:<br>
+<pre>&lt;view&gt;</pre>
+<pre>  &lt;collection-view collection="myCollection"&gt;</pre>
+<pre>     &lt;remove-selected-action <span style="font-weight: bold; color: rgb(51, 102, 255);">action=""</span>/&gt;</pre>
+<pre>  &lt;/collection-view&gt;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>  ...</pre>
+<pre>&lt;/view&gt;</pre>
+In this case the action to remove selected elements in this collection
+will not be shown in the User Interface. Only it's need to specify an
+empty string as value for the action.<br>
+This apply to all actions in <span style="font-family: monospace;">&lt;collection-view/&gt;</span> that is to: <span style="font-family: monospace;">&lt;edit-action/&gt;,
+&lt;view-action/&gt;, &lt;new-action/&gt;, &lt;save-action/&gt;,
+&lt;hide-detail-action/&gt;, &lt;remove-action/&gt;</span> and <span style="font-family: monospace;">&lt;remove-selected-action/&gt;</span>.
+<h4>Display size for a property in a view</h4>
+Now you can use <code>display-size</code> attribute for <code>&lt;property-view/&gt;</code>, in this way you can restrict the display size of a property for a specific view. That is, you can write:<br>
+<br>
+	
+<pre>&lt;entity&gt;<br>		<br>...<br>  &lt;property name="description" type="String<br>    size="50" required="true"/&gt;<br>	<br>&lt;/entity&gt;<br>	 <br>	<br>&lt;view&gt;<br>  &lt;property-view property="description" <b style="color: rgb(0, 0, 255);">display-size="25"</b>/&gt;<br>&lt;/view&gt;<br></pre>
+<br>
+In this case, although 'description' has a size of 50 the size of the
+editor for 'description' will be only 25, even though the user can
+enter until 50 characters.
