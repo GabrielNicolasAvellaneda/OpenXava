@@ -262,11 +262,11 @@ here that you want to override.
 		</action>						
 		<action name="hideDetail"			class="org.openxava.actions.HideDetailElementInCollectionAction">					</action>							
 		<action name="save"			class="org.openxava.actions.SaveElementInCollectionAction">						<use-object name="xava_view"/>		</action>					<action name="remove"			class="org.openxava.actions.RemoveElementFromCollectionAction">						<use-object name="xava_view"/>		</action>							<action name="edit" image="images/edit.gif"			class="org.openxava.actions.EditElementInCollectionAction">						<use-object name="xava_view"/>		</action>									<action name="view" image="images/view.gif"			class="org.openxava.actions.EditElementInCollectionAction">						<use-object name="xava_view"/>		</action>
-		
+		 
 		<action name="removeSelected" confirm="true" image="images/delete.gif"
 			class="org.openxava.actions.RemoveSelectedInCollectionAction">
 			<use-object name="xava_view"/>
-		</action>				
+		</action>
 											</controller>
 	
 	<controller name="DefaultListActionsForCollections">

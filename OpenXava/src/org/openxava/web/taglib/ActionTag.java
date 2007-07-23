@@ -21,6 +21,10 @@ public class ActionTag extends TagSupport {
 	
 	public int doStartTag() throws JspException {
 		try {
+			if (Is.emptyString(getAction())) {  
+				return SKIP_BODY;
+			}
+
 			MetaAction metaAction = MetaControllers.getMetaAction(getAction());
 			actionTag = metaAction.hasImage()?(IActionTag)new ImageTag():(IActionTag)new LinkTag();
 			actionTag.setPageContext(pageContext);
@@ -34,12 +38,12 @@ public class ActionTag extends TagSupport {
 		}		
 	}
 
-	public int doAfterBody() throws JspException {
-		return actionTag.doAfterBody();					
+	public int doAfterBody() throws JspException { 
+		return actionTag==null?super.doAfterBody():actionTag.doAfterBody();					
 	}
 
-	public int doEndTag() throws JspException {
-		return actionTag.doEndTag();
+	public int doEndTag() throws JspException { 
+		return actionTag==null?super.doEndTag():actionTag.doEndTag();
 	}
 
 	public String getAction() {
