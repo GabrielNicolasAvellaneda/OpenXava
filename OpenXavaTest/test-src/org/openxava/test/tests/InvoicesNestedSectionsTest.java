@@ -20,9 +20,9 @@ public class InvoicesNestedSectionsTest extends ModuleTestBase {
 		execute("Sections.change", "activeSection=1");		
 		execute("Sections.change", "activeSection=1,viewObject=xava_view_section1");
 		assertValue("vatPercentage", "16"); // We rely on first invoice has this value 
-		assertValue("vat", "400"); // We rely on first invoice has this value
+		assertValue("vat", "400.00"); // We rely on first invoice has this value
 		setValue("vatPercentage", "17");
-		assertValue("vat", "425");
+		assertValue("vat", "425.00");
 	}
 		
 	public void testNestedSections() throws Exception {

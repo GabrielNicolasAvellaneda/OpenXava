@@ -31,7 +31,7 @@ public class ShipmentChargesTest extends ModuleTestBase {
 		execute("Mode.detailAndFirst");		
 		assertValue("mode", isOX3()?"0":"1"); 
 		assertValue("shipment.KEY", shipment);
-		assertValue("amount", "150");
+		assertValue("amount", "150.00");
 	}
 	
 	private void deleteShipmentCharges() {

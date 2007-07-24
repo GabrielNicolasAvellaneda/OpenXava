@@ -46,7 +46,7 @@ public class TransportCharges2Test extends ModuleTestBase {
 		assertValue("year", "2002");
 		assertValue("delivery.invoice.year", year);
 		assertValue("delivery.invoice.number", number);
-		assertValue("amount", "666");
+		assertValue("amount", "666.00");
 		
 		setValue("amount", "777");
 		execute("CRUD.save");
@@ -63,7 +63,7 @@ public class TransportCharges2Test extends ModuleTestBase {
 		assertValue("year", "2002");
 		assertValue("delivery.invoice.year", year);
 		assertValue("delivery.invoice.number", number);
-		assertValue("amount", "777");
+		assertValue("amount", "777.00");
 						
 		execute("CRUD.delete");										
 		assertMessage("TransportCharge2 deleted successfully");

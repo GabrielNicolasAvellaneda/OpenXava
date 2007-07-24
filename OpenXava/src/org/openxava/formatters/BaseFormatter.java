@@ -2,11 +2,8 @@ package org.openxava.formatters;
 
 import javax.servlet.http.*;
 
-
-
 import org.openxava.controller.*;
 import org.openxava.util.*;
-import org.openxava.util.xmlparse.XmlElementsNames;
 
 
 /**

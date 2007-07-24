@@ -245,10 +245,10 @@ public class DeliveriesTest extends ModuleTestBase {
 		boolean withoutDiscount = false;
 		boolean withDiscount = true;
 		for (int i=0; i<c; i++) {
-			String value = getValueInList(i, "invoice.sellerDiscount");
-			if ("0".equals(value)) withoutDiscount = true;
-			else if ("20".equals(value)) withDiscount = true;
-			else fail("Only 0 or 20 are valid values for invoice.sellerDiscount");
+			String value = getValueInList(i, "invoice.sellerDiscount");			
+			if ("0.00".equals(value)) withoutDiscount = true;
+			else if ("20.00".equals(value)) withDiscount = true;
+			else fail("Only 0.00 or 20.00 are valid values for invoice.sellerDiscount");
 		}
 		assertTrue("It's required deliveries with invoices with and without seller discount", withDiscount && withoutDiscount);
 	}
@@ -574,7 +574,7 @@ public class DeliveriesTest extends ModuleTestBase {
 	public void testReferencesIfKeyNotExists() throws Exception { 
 		execute("CRUD.new");		
 		setValue("invoice.year", "2004"); // We supose that not exists
-		assertValue("invoice.yearDiscount", "400"); 
+		assertValue("invoice.yearDiscount", "400.00"); 
 		setValue("invoice.number", "907"); // We supose that not exists
 				
 		assertError("Invoice with key {year=2004, number=907} not found");

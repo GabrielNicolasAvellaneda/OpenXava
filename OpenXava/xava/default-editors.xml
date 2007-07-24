@@ -53,6 +53,7 @@
 	</editor>
 
 	<editor name="Money" url="moneyEditor.jsp">
+		<formatter class="org.openxava.formatters.MoneyFormatter" />
 		<for-stereotype stereotype="DINERO" />
 		<for-stereotype stereotype="MONEY" />
 	</editor>

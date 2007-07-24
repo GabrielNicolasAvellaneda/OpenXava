@@ -785,7 +785,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			}
 			
 			if (BigDecimal.class.isAssignableFrom(type)) {
-				if (emptyString) return null; // was: new BigDecimal("0.00"); and this was changing data. You can change this behaviour with a formatter in editor.xml
+				if (emptyString) return null; // It was: new BigDecimal("0.00"); and this was changing data. You can change this behaviour with a formatter in editor.xml
 				value = Strings.change(value, " ", ""); // In order to work with Polish
 				Number n = NumberFormat.getNumberInstance(locale).parse(value);
 				return new BigDecimal(n.toString());

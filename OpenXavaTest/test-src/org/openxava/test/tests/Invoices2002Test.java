@@ -77,8 +77,8 @@ public class Invoices2002Test extends ModuleTestBase {
 		for (int i = 0; i < rowCount; i++) {
 			String number = getValueInList(i, "number");
 			if ("1".equals(number)) {
-				assertValueInList(i, "amountsSum", "2,500");
-				assertValueInList(i, "vat", "400");
+				assertValueInList(i, "amountsSum", "2,500.00");
+				assertValueInList(i, "vat", "400.00");
 				assertValueInList(i, "detailsCount", "2");
 				assertValueInList(i, "importance", "NORMAL"); // UpperCaseFormatter is used
 				return;
