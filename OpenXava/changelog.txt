@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- JavaScript calendar is aligned on top of editor, in order to work fine in IE6.
 - MoneyFormatter for MONEY and DINERO stereotypes. Now money is always displayed with two decimals.
 - New methods noLastTokenWithoutLastDelim() added to Strings utity class.
 - It's possible to put empty string for action in edit-action, view-action, new-action, save-action, hide-detail-action, remove-action, remove-selected-action of collection-view, and the action will not be shown in the User Interface.
