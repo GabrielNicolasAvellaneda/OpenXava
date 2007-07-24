@@ -13,7 +13,10 @@ import org.openxava.jpa.*;
  */
 
 @Entity
-@View(name="Simple", members="number, name")
+@Views({
+	@View(name="Simple", members="number, name"),
+	@View(name="CalculatedFellows", members="number, name; fellowCarriersCalculated")
+})
 @Tab(properties="calculated, number, name")
 public class Carrier {
 	
@@ -49,6 +52,41 @@ public class Carrier {
 	)
 	private String remarks;
 	
+	@Column(length=10) @Action(name="Carriers.translateName")
+	public String getCalculated() {
+		return "TR";
+	}
+	
+	@CollectionView(name="Simple") @EditOnly
+	@ListActions({
+			@ListAction(name="Carriers.translateName"),
+			@ListAction(name="Carriers.allToEnglish")
+	})
+	@Condition(
+		"${warehouse.zoneNumber} = ${this.warehouse.zoneNumber} AND " + 
+		"${warehouse.number} = ${this.warehouse.number} AND " +
+		"NOT (${number} = ${this.number})"
+	)
+	public Collection<Carrier> getFellowCarriers() { 
+		// At the moment you must write a code that returns the same result
+		// of the @Condition. In OX3.1 this will not be necessary
+		Query query = XPersistence.getManager().createQuery("from Carrier c where " +
+			"c.warehouse.zoneNumber = :zone AND " + 
+			"c.warehouse.number = :warehouseNumber AND " + 
+			"NOT (c.number = :number) ");
+		query.setParameter("zone", getWarehouse().getZoneNumber());
+		query.setParameter("warehouseNumber", getWarehouse().getNumber());
+		query.setParameter("number",  getNumber());
+		return query.getResultList();
+	}
+	
+	@CollectionView(name="Simple")
+	@RemoveSelectedAction(forViews="CalculatedFellows", name="")
+	public Collection<Carrier> getFellowCarriersCalculated() {
+		// This method exists for compliance with OpenXavaTest
+		return getFellowCarriers();
+	}
+		
 	public static Collection<Carrier> findAll() {
 		Query query = XPersistence.getManager().createQuery("from Carrier as o"); 
  		return query.getResultList();  				
@@ -69,11 +107,7 @@ public class Carrier {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	@Column(length=10) @Action(name="Carriers.translateName")
-	public String getCalculated() {
-		return "TR";
-	}
+	
 
 	public DrivingLicence getDrivingLicence() {
 		// In this way because the column for type of driving lincence does not admit null
@@ -106,34 +140,6 @@ public class Carrier {
 		this.warehouse = warehouse;
 	}
 
-	@CollectionView(name="Simple") @EditOnly
-	@ListActions({
-			@ListAction(name="Carriers.translateName"),
-			@ListAction(name="Carriers.allToEnglish")
-	})
-	@Condition(
-		"${warehouse.zoneNumber} = ${this.warehouse.zoneNumber} AND " + 
-		"${warehouse.number} = ${this.warehouse.number} AND " +
-		"NOT (${number} = ${this.number})"
-	)
-	public Collection<Carrier> getFellowCarriers() { 
-		// At the moment you must write a code that returns the same result
-		// of the @Condition. In OX3.1 this will not be necessary
-		Query query = XPersistence.getManager().createQuery("from Carrier c where " +
-			"c.warehouse.zoneNumber = :zone AND " + 
-			"c.warehouse.number = :warehouseNumber AND " + 
-			"NOT (c.number = :number) ");
-		query.setParameter("zone", getWarehouse().getZoneNumber());
-		query.setParameter("warehouseNumber", getWarehouse().getNumber());
-		query.setParameter("number",  getNumber());
-		return query.getResultList();
-	}
-	
-	@CollectionView(name="Simple")
-	public Collection<Carrier> getFellowCarriersCalculated() {
-		// This method exists for compliance with OpenXavaTest
-		return getFellowCarriers();
-	}
 
 	public String getRemarks() {
 		return remarks;

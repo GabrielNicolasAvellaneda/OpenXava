@@ -28,7 +28,7 @@ if (editable || !label) {
 	size="10"  
 	value="<%=fDate%>" <%=disabled%>	<%=script%>><%if (editable) {%><input type="reset" value=" ... "
 	name="<%=propertyKey%>_CALENDAR_BUTTON_"
-	onclick="return showCalendar('<%=propertyKey%>', '%d/%m/%Y');"><%} %> <input name="<%=propertyKey%>" class=<%=style.getEditor()%>
+	onclick="return showCalendar('<%=propertyKey%>', '<%=org.openxava.util.Dates.dateFormatForJSCalendar(request.getLocale())%>');"><%} %> <input name="<%=propertyKey%>" class=<%=style.getEditor()%>
 	type="text" 
 	title="<%=p.getDescription(request)%>"
 	align='<%=align%>'

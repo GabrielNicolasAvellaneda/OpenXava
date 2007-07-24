@@ -202,7 +202,7 @@ abstract public class MetaModel extends MetaElement {
 	 * aggregate. <p>
 	 */
 	public String getQualifiedName() {
-		return qualifiedName;
+		return qualifiedName==null?getName():qualifiedName;
 	}
 	/**
 	 * If entity the name of component, if aggregate the name of component + the name of

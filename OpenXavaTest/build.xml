@@ -156,5 +156,9 @@
 	<target name="updateOX">
 		<ant antfile="../OpenXava/build.xml" target="updateOX"/>
 	</target>		
+	
+	<target name="updateAccessTracking">
+		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
+	</target>
 						
 </project>

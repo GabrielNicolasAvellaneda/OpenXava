@@ -191,7 +191,7 @@ public class EntityTab implements IEntityTabImpl {
 				this.metaTab = MetaComponent.get(componentName).getMetaTab(tabName);
 			}			
 			this.metaModel = metaTab.getMetaModel();
-			this.modelName = metaModel.getQualifiedName(); 
+			this.modelName = metaModel.getQualifiedName();			
 			table.setHeading(getHeading());
 			table.setColumnsClasses(getColumnsClasses());
 			tabProvider.setFields(getFields());

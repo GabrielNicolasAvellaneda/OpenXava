@@ -3,6 +3,7 @@ package org.openxava.test.tests;
 import java.text.*;
 import java.util.*;
 
+import org.openxava.hibernate.*;
 import org.openxava.jpa.*;
 import org.openxava.model.meta.*;
 import org.openxava.tests.*;
@@ -46,8 +47,8 @@ public class WarehousesTest extends ModuleTestBase {
 	 * @throws Exception
 	 */	
 	public void testAccessTracking_createReadUpdateDelete() throws Exception {		
-		XPersistence.getManager().createQuery("delete from Access").executeUpdate();		
-		XPersistence.commit();
+		XHibernate.getSession().createQuery("delete from Access").executeUpdate();		
+		XHibernate.commit();
 		
 		assertAction("Warehouses.toLowerCase");
 		assertNoAction("Warehouses.changeZone");

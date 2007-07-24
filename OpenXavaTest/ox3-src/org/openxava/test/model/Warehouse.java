@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import org.openxava.annotations.*;
 import org.openxava.jpa.*;
+import org.openxava.tracking.*;
 
 /**
  * 
@@ -12,7 +13,7 @@ import org.openxava.jpa.*;
 
 @Entity
 @IdClass(WarehouseKey.class)
-
+@EntityListeners(AccessTrackingListener.class)
 @Tab( 
 	filter=org.openxava.test.filters.LimitZoneFilter.class,
 	baseCondition="${zoneNumber} <= ?"

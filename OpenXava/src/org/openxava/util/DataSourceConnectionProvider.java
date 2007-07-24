@@ -37,12 +37,13 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 
 	
 	public static IConnectionProvider createByComponent(String componentName) throws XavaException {
-		String packageName = MetaComponent.get(componentName).getPackageNameWithSlashWithoutModel();		
+		MetaComponent component =MetaComponent.get(componentName); 				
 		String jndi = null;		
-		if (packageName == null) {			
+		if (component.getMetaEntity().isAnnotatedEJB3()) {			
 			jndi = getJPADataSource();			
 		}
 		else {
+			String packageName = component.getPackageNameWithSlashWithoutModel();
 			jndi = getDatasourcesJNDIByPackage().getProperty(packageName);			
 		}		
 		if (Is.emptyString(jndi)) {

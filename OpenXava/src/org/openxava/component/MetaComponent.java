@@ -333,7 +333,7 @@ public class MetaComponent implements Serializable {
 	public String getPackageName() throws XavaException {
 		if (packageName==null) {
 			try {
-				packageName = getPackages().getProperty(getName());
+				packageName = getPackages().getProperty(getName());				
 			}
 			catch (Exception ex) {
 				log.error(ex.getMessage(),ex);
@@ -408,11 +408,11 @@ public class MetaComponent implements Serializable {
 	 */
 	public String getPackageNameWithSlashWithoutModel() throws XavaException {
 		if (packageNameWithSlashWithoutModel == null) {
-			String packageName = getPackageName();
+			String packageName = getPackageName();			
 			if (packageName == null) return null;
 			packageNameWithSlashWithoutModel = Strings.change(packageName, ".", "/");
 			packageNameWithSlashWithoutModel = packageNameWithSlashWithoutModel.substring(0, packageNameWithSlashWithoutModel.lastIndexOf('/'));
-		}
+		}		
 		return packageNameWithSlashWithoutModel;
 	}
 

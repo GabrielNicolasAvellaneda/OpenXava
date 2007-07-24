@@ -2,7 +2,6 @@ package org.openxava.test.model;
 
 import javax.persistence.*;
 
-import org.hibernate.validator.*;
 import org.openxava.annotations.*;
 
 /**
@@ -11,7 +10,7 @@ import org.openxava.annotations.*;
  */
 
 
-@Entity
+@Entity @Table(schema="XAVATEST")
 public class State {
 	
 	@Id @Column(length=2) @Required

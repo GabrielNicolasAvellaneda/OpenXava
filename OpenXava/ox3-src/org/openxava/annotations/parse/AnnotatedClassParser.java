@@ -43,11 +43,13 @@ public class AnnotatedClassParser {
 	public MetaComponent parse(String name) throws Exception {
 		MetaComponent component = new MetaComponent();
 		component.setName(name);
-		MetaEntity entity = new MetaEntity();		
-		entity.setPOJOClassName(getClassNameFor(name));		
+		MetaEntity entity = new MetaEntity();
+		String className = getClassNameFor(name);
+		entity.setPOJOClassName(className);		
 		entity.setName(name);
 		entity.setAnnotatedEJB3(true);
 		component.setMetaEntity(entity);
+		component.setPackageName(Strings.noLastTokenWithoutLastDelim(className, "."));		
 		
 		Class pojoClass = entity.getPOJOClass();
 		if (!pojoClass.isAnnotationPresent(Entity.class)) {
@@ -83,7 +85,8 @@ public class AnnotatedClassParser {
 	private String getTable(String modelName, Class pojoClass) {
 		Table table = (Table) pojoClass.getAnnotation(Table.class);
 		if (table != null) {
-			return Is.emptyString(table.schema())?PersistenceConfig.getDefaultSchema() + table.name():table.schema() + "." + table.name();			
+			String tableName = Is.emptyString(table.name())?modelName:table.name();
+			return Is.emptyString(table.schema())?PersistenceConfig.getDefaultSchema() + tableName:table.schema() + "." + tableName;			
 		}
 		else {
 			return PersistenceConfig.getDefaultSchema() + modelName;

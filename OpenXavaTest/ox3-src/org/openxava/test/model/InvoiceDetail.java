@@ -85,6 +85,10 @@ public class InvoiceDetail {
 	public BigDecimal getAmount() {
 		return getUnitPrice().multiply(new BigDecimal(getQuantity()));
 	}
+
+	public boolean isFree() {
+		return getAmount().compareTo(new BigDecimal("0")) <= 0;
+	}
 	
 	@PrePersist
 	private void calculateOID() {
