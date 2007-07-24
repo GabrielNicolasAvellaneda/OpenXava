@@ -169,7 +169,7 @@ public class EntityTabDataProvider implements IEntityTabDataProvider, Serializab
 			String propertyName = (String) e.getKey();
 			int index = ((Integer) e.getValue()).intValue();			
 			key.put(propertyName, row[index]);						
-		}
+		}		
 		return MapFacade.findEntity(modelName, key);
 	}
 		

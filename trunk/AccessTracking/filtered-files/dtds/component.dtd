@@ -83,6 +83,7 @@
   read-only (true|false) "false"
   label-format (NORMAL|SMALL|NO_LABEL) "NORMAL"
   editor CDATA #IMPLIED
+  display-size CDATA #IMPLIED
 >
 
 <!ELEMENT on-change EMPTY>

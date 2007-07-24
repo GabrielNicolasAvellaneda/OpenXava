@@ -503,7 +503,7 @@ public class Strings {
 	 */		
 	public static String noLastToken(String string) {
 		if (string == null) return "";
-		return noLastToken(new StringTokenizer(string, " \t\n\r\f", true)).trim();
+		return noLastToken(new StringTokenizer(string, " \t\n\r\f", true), false).trim();
 	}	
 	
 
@@ -516,13 +516,26 @@ public class Strings {
 	 */		
 	public static String noLastToken(String string, String delim) {
 		if (string == null) return "";
-		return noLastToken(new StringTokenizer(string, delim, true));
+		return noLastToken(new StringTokenizer(string, delim, true), false);
+	}
+	
+	/**
+	 * All string but without last token. <p>
+	 * 
+	 * It does not include the last delim.
+	 *  
+	 * @return If string if null or have no tokens returns empty string.
+	 */		
+	public static String noLastTokenWithoutLastDelim(String string, String delim) {
+		if (string == null) return "";
+		return noLastToken(new StringTokenizer(string, delim, true), true);
 	}	
 	
-	private static String noLastToken(StringTokenizer st) {
+	
+	private static String noLastToken(StringTokenizer st, boolean withoutDelim) {
 		StringBuffer r = new StringBuffer();
-		int nt = st.countTokens();
-		for (int i = 0; i < nt - 1; i++) {
+		int nt = withoutDelim?st.countTokens() - 2:st.countTokens() - 1;
+		for (int i = 0; i < nt; i++) {
 			r.append(st.nextToken());
 		}		
 		return r.toString();

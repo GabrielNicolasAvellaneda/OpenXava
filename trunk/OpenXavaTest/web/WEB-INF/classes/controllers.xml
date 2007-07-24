@@ -52,12 +52,11 @@
 		<action name="view" image="images/view.gif"
 			class="org.openxava.actions.EditElementInCollectionAction">			
 			<use-object name="xava_view"/>
-		</action>			
+		</action>			 
 		<action name="removeSelected" confirm="true" image="images/delete.gif"
 			class="org.openxava.actions.RemoveSelectedInCollectionAction">
 			<use-object name="xava_view"/>
 		</action>	
-											
 	</controller>
 	
 	<controller name="ChangeActiveYear">
@@ -145,7 +144,7 @@
 	</controller>
 	
 	<controller name="DeliveryDetails">
-		<action name="new"
+		<action name="new" image="images/create_new.gif"
 			class="org.openxava.test.actions.NewDeliveryDetailAction">			
 		</action>					
 		<action name="hideDetail"
@@ -159,7 +158,7 @@
 			class="org.openxava.test.actions.RemoveDeliveryDetailAction">			
 			<use-object name="xava_view"/>
 		</action>					
-		<action name="removeSelected" confirm="true"
+		<action name="removeSelected" confirm="true" image="images/delete.gif"
 			class="org.openxava.test.actions.RemoveSelectedDeliveryDetailsAction">
 			<use-object name="xava_view"/>
 		</action>				

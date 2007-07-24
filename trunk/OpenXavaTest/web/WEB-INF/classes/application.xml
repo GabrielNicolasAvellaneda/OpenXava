@@ -52,7 +52,13 @@
 		<controller name="Typical"/>
 		<controller name="Carriers"/>		
 	</module>
-		
+	
+	<module name="CarriersWithCalculatedFellows">
+		<model name="Carrier"/>
+		<view name="CalculatedFellows"/>
+		<controller name="Typical"/>		
+	</module>
+			
 	<module name="Sizes">
 		<model name="Size"/>
 		<controller name="Typical"/>

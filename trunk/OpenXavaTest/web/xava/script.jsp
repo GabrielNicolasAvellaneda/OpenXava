@@ -94,7 +94,7 @@ function showCalendar(id, format, showsTime, showsOtherMonths) {
   // the reference element that we pass to showAtElement is the button that
   // triggers the calendar.  In this example we align the calendar bottom-right
   // to the button.
-  _dynarch_popupCalendar.showAtElement(el.nextSibling, "Br");        // show the calendar
+  _dynarch_popupCalendar.showAtElement(el.nextSibling, "tr");        // show the calendar
 
   return false;
 }

@@ -4,6 +4,7 @@ import java.rmi.*;
 import java.text.*;
 import java.util.Date;
 
+import org.apache.commons.logging.*;
 import org.hibernate.*;
 import org.openxava.calculators.*;
 import org.openxava.hibernate.XHibernate;
@@ -27,9 +28,10 @@ import org.openxava.util.*;
  */
 public class AccessTrackingCalculator implements IModelCalculator {
 	
-	private static DateFormat timeFormat = new SimpleDateFormat("HH:mm");	
-		
-	private IModel model;
+	private static Log log = LogFactory.getLog(AccessTrackingCalculator.class);
+	private static DateFormat timeFormat = new SimpleDateFormat("HH:mm");
+			
+	private Object model;
 	private String accessType;	
 
 	public Object calculate() throws Exception {		
@@ -49,13 +51,13 @@ public class AccessTrackingCalculator implements IModelCalculator {
 			if (session != null) {
 				try { session.close(); } catch (Exception ex2) {}
 			}
-			System.err.println(XavaResources.getString("tracking_warning", ex.getLocalizedMessage())); // tracking is not so critial to abort the user work.
+			log.warn(XavaResources.getString("tracking_warning", ex.getLocalizedMessage())); // tracking is not so critical to abort the user work.
 		}								
 		return null;
 	}
 	
 	private Access newAccess() throws Exception {
-		MetaModel metaModel = model.getMetaModel();
+		MetaModel metaModel = getMetaModel();
 		Access access = new Access();
 		access.setApplication(getApplicationName(metaModel));
 		access.setModel(metaModel.getName());
@@ -75,6 +77,11 @@ public class AccessTrackingCalculator implements IModelCalculator {
 		return access;
 	}	
 	
+	private MetaModel getMetaModel() throws Exception {
+		if (model instanceof IModel) return ((IModel) model).getMetaModel();
+		return MetaModel.getForPOJO(model);
+	}
+
 	private String getApplicationName(MetaModel metaModel) throws Exception {
 		return Strings.lastToken(metaModel.getMetaComponent().getPackageNameWithSlashWithoutModel(), "/");		
 	}
@@ -85,7 +92,7 @@ public class AccessTrackingCalculator implements IModelCalculator {
 	}
 	
 	public void setModel(Object model) throws RemoteException {
-		this.model = (IModel) model;
+		this.model = model;
 	}	
 	
 	public String getAccessType() {
