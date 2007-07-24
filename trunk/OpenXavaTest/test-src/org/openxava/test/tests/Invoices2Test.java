@@ -22,7 +22,7 @@ public class Invoices2Test extends ModuleTestBase {
 		execute("Collection.new", "viewObject=xava_view_details");
 		setValue("details.quantity", "7");
 		setValue("details.unitPrice", "8");
-		assertValue("details.amount", "56");
+		assertValue("details.amount", "56.00");
 		setValue("details.product.number", "1");
 		assertValue("details.product.description", "MULTAS DE TRAFICO");
 		execute("Collection.save", "viewObject=xava_view_details");

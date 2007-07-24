@@ -7,6 +7,7 @@ import java.util.*;
 
 import javax.rmi.*;
 
+import org.openxava.formatters.*;
 import org.openxava.jpa.*;
 import org.openxava.test.calculators.*;
 import org.openxava.test.model.*;
@@ -27,7 +28,7 @@ public class InvoicesTest extends ModuleTestBase {
 	private String productUnitPriceInPesetas;
 	private String productDescription;
 	private String productNumber;
-	private Product product;
+	private Product product;	
 	
 	static {
 		// To force to finder of the pojo to use hibernate, although jpa is configured
@@ -863,7 +864,7 @@ public class InvoicesTest extends ModuleTestBase {
 		setValue("details.serviceType", "0");
 		setValue("details.quantity", "20");
 		setValue("details.unitPrice", getProductUnitPricePlus10());
-		assertValue("details.amount", "600");
+		assertValue("details.amount", "600.00");
 		assertValue("details.product.number", "");
 		assertValue("details.product.description", "");
 		setValue("details.deliveryDate", "18/03/2004"); 
@@ -905,7 +906,7 @@ public class InvoicesTest extends ModuleTestBase {
 		setValue("customer.number", "1");
 		assertValue("customer.number", "1");
 		assertValue("customer.name", "Javi");
-		assertValue("customerDiscount", "11.5");
+		assertValue("customerDiscount", "11.50");
 		//assertValue("customerTypeDiscount", "30"); // Still not supported: customer type 
 					// changes at same time that number, and to throw the change  
 					// of 2 properties at same time still is not supported
@@ -922,7 +923,7 @@ public class InvoicesTest extends ModuleTestBase {
 		execute("Sections.change", "activeSection=0");
 		assertValue("customerDiscount", "");
 		setValue("paid", "true");
-		assertValue("customerDiscount", "77");				
+		assertValue("customerDiscount", "77.00");				
 	}
 		
 	public void testEditableCollectionActions_i18nforMemberOfCollections() throws Exception {
@@ -1097,6 +1098,7 @@ public class InvoicesTest extends ModuleTestBase {
 		setValue("vatPercentage", newVatPercentage.toString());		
 		BigDecimal vat = amountsSum.multiply(newVatPercentage).divide(new BigDecimal("100"), 2, BigDecimal.ROUND_HALF_UP);
 		NumberFormat nf = NumberFormat.getInstance();
+		nf.setMinimumFractionDigits(2);
 		nf.setMaximumFractionDigits(2);
 		String svat = nf.format(vat);
 		assertValue("vat", svat);
@@ -1158,7 +1160,7 @@ public class InvoicesTest extends ModuleTestBase {
 	
 	private String getProductUnitPrice() throws Exception {
 		if (productUnitPrice == null) {			
-			productUnitPrice = DecimalFormat.getInstance().format(getProductUnitPriceDB());
+			productUnitPrice = getMoneyFormat().format(getProductUnitPriceDB());
 		}
 		return productUnitPrice;		
 	}
@@ -1172,19 +1174,26 @@ public class InvoicesTest extends ModuleTestBase {
 	
 	private String getProductUnitPricePlus10() throws Exception {
 		if (productUnitPricePlus10 == null) {			
-			productUnitPricePlus10 = DecimalFormat.getInstance().format(getProductUnitPriceDB().add(new BigDecimal("10")));
+			productUnitPricePlus10 = getMoneyFormat().format(getProductUnitPriceDB().add(new BigDecimal("10")));
 		}
 		return productUnitPricePlus10;		
 	}
 	
 	private String getProductUnitPriceMultiplyBy(String quantity) throws Exception {
-		return DecimalFormat.getInstance().format(getProductUnitPriceDB().multiply(new BigDecimal(quantity)));
+		return getMoneyFormat().format(getProductUnitPriceDB().multiply(new BigDecimal(quantity)));
+	}
+
+	private NumberFormat getMoneyFormat() {
+		NumberFormat f = NumberFormat.getNumberInstance();
+		f.setMinimumFractionDigits(2);
+		f.setMaximumFractionDigits(2);
+		return f;
 	}
 	
 	
 	private String getSumOf2ProductsUnitPriceMultiplyBy(String quantity1, String quantity2) throws Exception { 
 		BigDecimal sum = getProductUnitPriceDB().multiply(new BigDecimal(quantity1)).add(getProductUnitPriceDB().multiply(new BigDecimal(quantity2)));		
-		return DecimalFormat.getInstance().format(sum);
+		return getMoneyFormat().format(sum);
 	}
 	
 	
@@ -1210,7 +1219,7 @@ public class InvoicesTest extends ModuleTestBase {
 		YearInvoiceDiscountCalculator calculator = new YearInvoiceDiscountCalculator();
 		calculator.setYear(year);
 		BigDecimal bd = (BigDecimal) calculator.calculate();		
-		return bd.setScale(0, BigDecimal.ROUND_DOWN).toString();
+		return getMoneyFormat().format(bd);
 	}
 
 	private Invoice getInvoice() throws Exception {

@@ -41,7 +41,7 @@ public class TransportChargesTest extends TransportChargesTestBase {
 		assertNoErrors();
 		assertValue("delivery.invoice.year", year);
 		assertValue("delivery.invoice.number", number);
-		assertValue("amount", "666");
+		assertValue("amount", "666.00");
 		
 		setValue("amount", "777");
 		execute("CRUD.save");
@@ -56,7 +56,7 @@ public class TransportChargesTest extends TransportChargesTestBase {
 		assertNoErrors();
 		assertValue("delivery.invoice.year", year);
 		assertValue("delivery.invoice.number", number);
-		assertValue("amount", "777");
+		assertValue("amount", "777.00");
 						
 		execute("CRUD.delete");										
 		assertMessage("TransportCharge deleted successfully");
@@ -73,12 +73,12 @@ public class TransportChargesTest extends TransportChargesTestBase {
 		assertValueInList(0, 0, String.valueOf(getCharge1().getDelivery().getInvoice().getYear()));
 		assertValueInList(0, 1, String.valueOf(getCharge1().getDelivery().getInvoice().getNumber()));
 		assertValueInList(0, 2, String.valueOf(getCharge1().getDelivery().getNumber()));
-		assertValueInList(0, 3, "100");
+		assertValueInList(0, 3, "100.00");
 
 		assertValueInList(1, 0, String.valueOf(getCharge2().getDelivery().getInvoice().getYear()));
 		assertValueInList(1, 1, String.valueOf(getCharge2().getDelivery().getInvoice().getNumber()));
 		assertValueInList(1, 2, String.valueOf(getCharge2().getDelivery().getNumber()));
-		assertValueInList(1, 3, "200");
+		assertValueInList(1, 3, "200.00");
 
 		String [] condition = {
 				String.valueOf(getCharge2().getDelivery().getInvoice().getYear()),
@@ -93,7 +93,7 @@ public class TransportChargesTest extends TransportChargesTestBase {
 		assertValueInList(0, 0, String.valueOf(getCharge2().getDelivery().getInvoice().getYear()));
 		assertValueInList(0, 1, String.valueOf(getCharge2().getDelivery().getInvoice().getNumber()));
 		assertValueInList(0, 2, String.valueOf(getCharge2().getDelivery().getNumber()));
-		assertValueInList(0, 3, "200");		
+		assertValueInList(0, 3, "200.00");		
 	}
 
 }
