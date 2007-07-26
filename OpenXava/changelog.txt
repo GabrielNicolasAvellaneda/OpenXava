@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Charset of JasperReports for automatic reports depends on the JVM config (special characters was not well displayed in Liferay).
 - JavaScript calendar is aligned on top of editor, in order to work fine in IE6.
 - MoneyFormatter for MONEY and DINERO stereotypes. Now money is always displayed with two decimals.
 - New methods noLastTokenWithoutLastDelim() added to Strings utity class.
