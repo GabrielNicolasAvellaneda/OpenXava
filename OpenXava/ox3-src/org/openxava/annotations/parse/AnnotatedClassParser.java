@@ -783,10 +783,10 @@ public class AnnotatedClassParser {
 			notApply(property.getName(), NoFrame.class, "references");
 		}
 		if (element.isAnnotationPresent(NoCreate.class)) {
-			notApply(property.getName(), NoCreate.class, "references");
+			notApply(property.getName(), NoCreate.class, "references & collections");
 		}
 		if (element.isAnnotationPresent(NoModify.class)) {
-			notApply(property.getName(), NoModify.class, "references");
+			notApply(property.getName(), NoModify.class, "references & collections");
 		}
 		if (element.isAnnotationPresent(AsEmbedded.class)) {
 			notApply(property.getName(), AsEmbedded.class, "references & collections");
@@ -811,7 +811,40 @@ public class AnnotatedClassParser {
 		}						
 		if (element.isAnnotationPresent(NoSearch.class)) {
 			notApply(property.getName(), NoSearch.class, "references");
-		}						
+		}
+		if (element.isAnnotationPresent(Condition.class)) {
+			notApply(property.getName(), Condition.class, "collections");
+		}
+		if (element.isAnnotationPresent(HideDetailAction.class)) {
+			notApply(property.getName(), HideDetailAction.class, "collections");
+		}
+		if (element.isAnnotationPresent(HideDetailActions.class)) {
+			notApply(property.getName(), HideDetailActions.class, "collections");
+		}
+		if (element.isAnnotationPresent(NewAction.class)) {
+			notApply(property.getName(), NewAction.class, "collections");
+		}								
+		if (element.isAnnotationPresent(NewActions.class)) {
+			notApply(property.getName(), NewActions.class, "collections");
+		}
+		if (element.isAnnotationPresent(RemoveAction.class)) {
+			notApply(property.getName(), RemoveAction.class, "collections");
+		}								
+		if (element.isAnnotationPresent(RemoveActions.class)) {
+			notApply(property.getName(), RemoveActions.class, "collections");
+		}								
+		if (element.isAnnotationPresent(RemoveSelectedAction.class)) {
+			notApply(property.getName(), RemoveSelectedAction.class, "collections");
+		}								
+		if (element.isAnnotationPresent(RemoveSelectedActions.class)) {
+			notApply(property.getName(), RemoveSelectedActions.class, "collections");
+		}
+		if (element.isAnnotationPresent(SaveAction.class)) {
+			notApply(property.getName(), SaveAction.class, "collections");
+		}
+		if (element.isAnnotationPresent(SaveActions.class)) {
+			notApply(property.getName(), SaveActions.class, "collections");
+		}														
 		
 	}
 
@@ -1529,6 +1562,39 @@ public class AnnotatedClassParser {
 		if (element.isAnnotationPresent(DisplaySizes.class)) {
 			notApply(ref.getName(), DisplaySizes.class, "properties");
 		}
+		if (element.isAnnotationPresent(Condition.class)) {
+			notApply(ref.getName(), Condition.class, "collections");
+		}
+		if (element.isAnnotationPresent(HideDetailAction.class)) {
+			notApply(ref.getName(), HideDetailAction.class, "collections");
+		}
+		if (element.isAnnotationPresent(HideDetailActions.class)) {
+			notApply(ref.getName(), HideDetailActions.class, "collections");
+		}				
+		if (element.isAnnotationPresent(NewAction.class)) {
+			notApply(ref.getName(), NewAction.class, "collections");
+		}				
+		if (element.isAnnotationPresent(NewActions.class)) {
+			notApply(ref.getName(), NewActions.class, "collections");
+		}
+		if (element.isAnnotationPresent(RemoveAction.class)) {
+			notApply(ref.getName(), RemoveAction.class, "collections");
+		}				
+		if (element.isAnnotationPresent(RemoveActions.class)) {
+			notApply(ref.getName(), RemoveActions.class, "collections");
+		}				
+		if (element.isAnnotationPresent(RemoveSelectedAction.class)) {
+			notApply(ref.getName(), RemoveSelectedAction.class, "collections");
+		}						
+		if (element.isAnnotationPresent(RemoveSelectedActions.class)) {
+			notApply(ref.getName(), RemoveSelectedActions.class, "collections");
+		}
+		if (element.isAnnotationPresent(SaveAction.class)) {
+			notApply(ref.getName(), SaveAction.class, "collections");
+		}
+		if (element.isAnnotationPresent(SaveActions.class)) {
+			notApply(ref.getName(), SaveActions.class, "collections");
+		}										
 		
 	}
 

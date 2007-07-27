@@ -6,4 +6,20 @@ package org.openxava.annotations;
  * @author Javier Paniza
  */
 
-public enum LabelFormatType { NORMAL, SMALL, NO_LABEL	}
+public enum LabelFormatType { 
+
+	/**
+	 * The label is displayed at the left of the editor. 
+	 */
+	NORMAL, 
+	
+	/**
+	 * The label is displayed with a small size and above the editor.
+	 */
+	SMALL, 
+	
+	/**
+	 * The label is not displayed.
+	 */
+	NO_LABEL	
+}
