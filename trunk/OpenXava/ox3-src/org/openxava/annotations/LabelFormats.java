@@ -4,7 +4,20 @@ import java.lang.annotation.*;
 
 
 /**
+ * A group of @LabelFormat associated to the same member. <p>
  * 
+ * Applies to properties and references with descriptions list.<p>
+ * 
+ * It allows to define a value different for @LabelFormat in each view.<br>
+ * Example:
+ * <pre>
+ * @LabelFormats({
+ *   @LabelFormat(forViews="DEFAULT", ... ),
+ *   @LabelFormat(forViews="Simple, VerySimple", ... ),
+ *   @LabelFormat(forViews="Complete", ... )
+ * })
+ * </pre>
+ *
  * @author Javier Paniza
  */
 
