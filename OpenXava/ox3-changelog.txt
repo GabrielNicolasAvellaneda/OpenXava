@@ -1,6 +1,8 @@
 Change Log for OpenXava 3
 =========================
 
+- Complete JavaDoc API for org.openxava.annotations.
+- Fix: Collection with @ReadOnly when data in list is the same of data in detail fails.
 - AccessTracking works fine for OX3.
 
 OpenXava 3.0beta1 (2007-7-16)
