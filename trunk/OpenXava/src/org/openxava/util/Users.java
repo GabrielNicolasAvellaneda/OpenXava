@@ -39,7 +39,8 @@ public class Users {
 	 */
 	public static void setCurrent(HttpServletRequest request) {		
         Object rundata = request.getAttribute("rundata");
-        String user = request.getRemoteUser();
+        String portalUser = (String) request.getAttribute("xava.portal.user");
+        String user = portalUser == null?request.getRemoteUser():portalUser;
         if (Is.emptyString(user) && rundata != null) {
 			PropertiesManager pmRundata = new PropertiesManager(rundata);
 			try {

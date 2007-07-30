@@ -26,16 +26,8 @@ public class XavaPreferences {
 	private boolean duplicateComponentWarningsLoaded=false;
 	private boolean duplicateComponentWarnings=false;
 	private int maxSizeForTextEditor;
-	private boolean jpaCodeInPOJOs = false;
-	private boolean jpaCodeInPOJOsLoaded = false;
 	private Level javaLoggingLevel;
-	private Level hibernateJavaLoggingLevel;
-	private boolean detailOnBottomInCollections = false;
-	private boolean detailOnBottomInCollectionsLoaded = false;
-	private boolean failOnAnnotationMisuse = true;
-	private boolean failOnAnnotationMisuseLoaded = false;
-
-		
+	private Level hibernateJavaLoggingLevel;		
 	
 	public static XavaPreferences getInstance() {
 		if (instance == null) {
@@ -70,6 +62,11 @@ public class XavaPreferences {
 	public boolean isShowCountInList() {
 		return "true".equalsIgnoreCase(getProperties().getProperty("showCountInList", "true").trim());
 	}
+	
+	public boolean isEMailAsUserNameInPortal() {
+		return "true".equalsIgnoreCase(getProperties().getProperty("emailAsUserNameInPortal", "false").trim());
+	}
+	
 		
 	public String getFormLineSpacing() {
 		return getProperties().getProperty("formLineSpacing", "1");
@@ -104,19 +101,11 @@ public class XavaPreferences {
 	}
 	
 	public boolean isDetailOnBottomInCollections() { 
-		if (!detailOnBottomInCollectionsLoaded) {			
-			detailOnBottomInCollections = "true".equalsIgnoreCase(getProperties().getProperty("detailOnBottomInCollections", "false" ).trim());
-			detailOnBottomInCollectionsLoaded = true;
-		}	
-		return detailOnBottomInCollections;		
+		return "true".equalsIgnoreCase(getProperties().getProperty("detailOnBottomInCollections", "false" ).trim());
 	}
 	
-	public boolean isJPACodeInPOJOs() {
-		if (!jpaCodeInPOJOsLoaded) {			
-			jpaCodeInPOJOs = "true".equalsIgnoreCase(getProperties().getProperty("jpaCodeInPOJOs", Boolean.toString(isJPAPersistence()) ).trim());
-			jpaCodeInPOJOsLoaded = true;
-		}	
-		return jpaCodeInPOJOs;		
+	public boolean isJPACodeInPOJOs() {			
+		return "true".equalsIgnoreCase(getProperties().getProperty("jpaCodeInPOJOs", Boolean.toString(isJPAPersistence()) ).trim());
 	}	
 	
 	/**
@@ -149,13 +138,11 @@ public class XavaPreferences {
 		return duplicateComponentWarnings;
 	}
 	
+	
 	public boolean isFailOnAnnotationMisuse() {
-		if (!failOnAnnotationMisuseLoaded) { 			
-			failOnAnnotationMisuse = "true".equalsIgnoreCase(getProperties().getProperty("failOnAnnotationMisuse", "true").trim());
-			failOnAnnotationMisuseLoaded = true;
-		}		
-		return failOnAnnotationMisuse;		
+ 		return "true".equalsIgnoreCase(getProperties().getProperty("failOnAnnotationMisuse", "true").trim());
 	}
+	
 	
 	public int getMaxSizeForTextEditor() {
 		if (maxSizeForTextEditor == 0) { 
