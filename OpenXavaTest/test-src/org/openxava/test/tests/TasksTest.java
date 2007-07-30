@@ -1,6 +1,7 @@
 package org.openxava.test.tests;
 
 import org.openxava.tests.*;
+import org.openxava.util.*;
 
 /**
  * @author Javier Paniza
@@ -43,7 +44,8 @@ public class TasksTest extends ModuleTestBase {
 		return isLiferayEnabled()?"junit2@openxava.org":"junit2";
 	}	
 	private String getUserId() {
-		return isLiferayEnabled()?"liferay.com.1001":"junit";
+		if (!isLiferayEnabled()) return "junit";
+		return XavaPreferences.getInstance().isEMailAsUserNameInPortal()?"junit@openxava.org":"liferay.com.1001";
 	}
 			
 }

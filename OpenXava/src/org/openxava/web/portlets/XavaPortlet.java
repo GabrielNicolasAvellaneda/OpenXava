@@ -9,6 +9,7 @@ import org.apache.commons.fileupload.disk.*;
 import org.apache.commons.fileupload.portlet.*;
 import org.apache.commons.logging.*;
 
+import org.openxava.util.*;
 import org.openxava.web.style.*;
 
 /**
@@ -82,7 +83,18 @@ public class XavaPortlet extends GenericPortlet {
 		request.setAttribute("xava.upload.fileitems", request.getPortletSession().getAttribute("xava.upload.fileitems")); 
 		request.setAttribute("xava.upload.error", request.getPortletSession().getAttribute("xava.upload.error"));
 		request.getPortletSession().removeAttribute("xava.upload.fileitems");
-		request.getPortletSession().removeAttribute("xava.upload.error");		
+		request.getPortletSession().removeAttribute("xava.upload.error");
+		
+		request.removeAttribute("xava.portal.user");
+		if (XavaPreferences.getInstance().isEMailAsUserNameInPortal()) {
+			Map userInfo = (Map) request.getAttribute(PortletRequest.USER_INFO);			
+			if (userInfo != null) {
+				String email = (String)userInfo.get("user.home-info.online.email");
+				if (!Is.emptyString(email)) {
+					request.setAttribute("xava.portal.user", email);
+				}
+			}
+		}
 		
 		PortletContext context = getPortletContext();
 		PortletRequestDispatcher rd = context.getRequestDispatcher(moduleURL);		

@@ -10,7 +10,7 @@ import org.openxava.util.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Wed Jun 13 16:50:56 CEST 2007
+ * @version Fri Jul 27 13:06:01 CEST 2007
  */
 public class PortletXmlPG {
     Properties properties = new Properties();
@@ -100,7 +100,7 @@ public class PortletXmlPG {
     
     }
     
-    out.print("   \n\t\n</portlet-app>");
+    out.print("   \n\n\t<user-attribute>\n\t\t<description>User eMail</description>\n\t\t<name>user.home-info.online.email</name>\n\t</user-attribute>\n\t\n</portlet-app>");
     
         } catch (Exception e) {
             System.out.println("Exception: "+e.getMessage());
@@ -135,7 +135,7 @@ public class PortletXmlPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Wed Jun 13 16:50:56 CEST 2007", // date this file was generated
+        { "Fri Jul 27 13:06:02 CEST 2007", // date this file was generated
              "../OpenXava/generator/portletxml.xml", // input file
              "../OpenXava/generator/PortletXmlPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
