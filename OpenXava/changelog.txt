@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- More meaningful title for PDF reports in collections.
+- Icon for 'delete' changed.
 - New property emailAsUserNameInPortal for usin in xava.properties that allows Users.getCurrent() returns the user email instead of the user id inside a portal.
 - Fix: Charset of JasperReports for automatic reports depends on the JVM config (special characters was not well displayed in Liferay).
 - JavaScript calendar is aligned on top of editor, in order to work fine in IE6.

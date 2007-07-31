@@ -18,6 +18,7 @@ import org.openxava.model.meta.*;
 import org.openxava.tab.impl.*;
 import org.openxava.tab.meta.*;
 import org.openxava.util.*;
+import org.openxava.view.*;
 
 
 /**
@@ -77,7 +78,8 @@ public class Tab implements java.io.Serializable {
 	private boolean sortRemainingProperties;
 	private boolean rowsHidden;
 	private IFilter filter; 
-	private Map styles; 
+	private Map styles;
+	private View collectionView; 
 	
 	public List getMetaProperties() {
 		if (metaProperties == null) {
@@ -784,15 +786,65 @@ public class Tab implements java.io.Serializable {
 	}
 	
 	public String getTitle() throws XavaException {
+		if (getCollectionView() != null) return getCollectionTitle(); 
 		String modelName = getModelName();
 		String tabName = getTabName();
 		Locale locale = XavaResources.getLocale(request);		
 		String title = titleId==null?getTitleI18n(locale, modelName, tabName):Labels.get(titleId, locale);
-		if (title != null) return putTitleArguments(locale, title);
+		if (title != null) return putTitleArguments(locale, title);		
 		String modelLabel = MetaModel.get(modelName).getLabel(locale); 
 		return XavaResources.getString(request, "report_title", modelLabel);					
 	}
 	
+	private String getCollectionTitle() throws XavaException {		
+		Locale locale = XavaResources.getLocale(request);
+		View parentView = getCollectionView().getParent();
+		MetaModel metaModel = parentView.getMetaModel(); 
+		String modelLabel = metaModel.getLabel(locale);		
+		String collectionLabel = metaModel.getMetaCollection(getCollectionView().getMemberName()).getLabel(locale);
+		Map membersNames = parentView.getMembersNames();
+		StringBuffer id = new StringBuffer();		
+		if (membersNames.containsKey("id")) {
+			id.append(parentView.getValue("id"));
+		}
+		else if (membersNames.containsKey("number")) {
+			id.append(parentView.getValue("number"));
+		} 
+		else if (membersNames.containsKey("codigo")) {
+			id.append(parentView.getValue("codigo"));
+		}
+		else if (membersNames.containsKey("numero")) {
+			id.append(parentView.getValue("numero"));
+		}
+		
+		if (id.length() > 0) {
+			id.append(" - ");
+		}
+
+		if (membersNames.containsKey("name")) {
+			id.append(parentView.getValue("name"));
+		}
+		else if (membersNames.containsKey("description")) {
+			id.append(parentView.getValue("description"));
+		}		
+		else if (membersNames.containsKey("nombre")) {
+			id.append(parentView.getValue("nombre"));
+		}
+		else if (membersNames.containsKey("descripcion")) {
+			id.append(parentView.getValue("descripcion"));
+		}
+		
+		if (id.length() > 0) {
+			Map key = parentView.getKeyValuesWithValue();
+			for (Iterator it = key.values().iterator(); it.hasNext(); ) {
+				id.append(it.next());
+				if (it.hasNext()) id.append(" - ");
+			}
+		}
+		
+		return XavaResources.getString(locale, "collection_report_title", collectionLabel, modelLabel, id.toString());
+	}
+
 	private String putTitleArguments(Locale locale, String title) {
 		if (titleArguments == null || titleArguments.length == 0) return title;
 		MessageFormat formateador = new MessageFormat("");
@@ -1204,6 +1256,24 @@ public class Tab implements java.io.Serializable {
 		cloneMetaTab();
 		getMetaTab().setDefaultOrder(defaultOrder);		
 		resetAfterChangeProperties();				
+	}
+
+	/**
+	 * If this tab represents a collection the collection view of that collection. <p>
+	 * 
+	 * If this tab does not represents a collection collectionView will be null.<br>
+	 */
+	public View getCollectionView() {
+		return collectionView;
+	}
+
+	/**
+	 * If this tab represents a collection the collection view of that collection. <p>
+	 * 
+	 * If this tab does not represents a collection collectionView will be null.<br>
+	 */	
+	public void setCollectionView(View collectionView) {
+		this.collectionView = collectionView;
 	}
 			
 }

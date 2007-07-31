@@ -1025,6 +1025,7 @@ public class View implements java.io.Serializable {
 			collectionTab = new Tab();				
 			collectionTab.setModelName(getModelName());
 			collectionTab.setTabName(Tab.COLLECTION_PREFIX + getMemberName());
+			collectionTab.setCollectionView(this); 
 			if (propertiesListNames != null) {
 				collectionTab.setPropertiesNames(propertiesListNames);
 			}

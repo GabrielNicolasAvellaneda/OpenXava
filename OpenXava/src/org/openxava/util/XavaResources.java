@@ -63,9 +63,17 @@ public class XavaResources {
 		return impl.getString(locale, key);
 	}
 	
-	public static String getString(Locale locale, String key, Object argv1) {	
-		return impl.getString(locale, key, argv1);
-	}	
+	public static String getString(Locale locale, String key, Object argv0) {	
+		return impl.getString(locale, key, argv0);
+	}
+	
+	public static String getString(Locale locale, String key, Object argv0, Object argv1) {	
+		return impl.getString(locale, key, argv0, argv1);
+	}
+	
+	public static String getString(Locale locale, String key, Object argv0, Object argv1, Object argv2) {	
+		return impl.getString(locale, key, argv0, argv1, argv2);
+	}			
 
 	public static String getString(HttpServletRequest request, String key) {	
 		return impl.getString(getLocale(request), key);
@@ -74,6 +82,10 @@ public class XavaResources {
 	public static String getString(HttpServletRequest request, String key, Object argv1) {
 		return impl.getString(getLocale(request), key, argv1);
 	}
+	
+	public static String getString(HttpServletRequest request, String key, Object argv1, Object argv2) {
+		return impl.getString(getLocale(request), key, argv1, argv2);
+	}	
 	
 	public static String getString(HttpServletRequest request, String key, Object [] argv) {
 		return impl.getString(getLocale(request), key, argv);
