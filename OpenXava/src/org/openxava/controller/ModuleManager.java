@@ -31,7 +31,7 @@ public class ModuleManager {
 	static {		
 		MetaControllers.setContext(MetaControllers.WEB);		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
-		log.info("OpenXava 2.2.1 beta (2007-07-xx)");
+		log.info("OpenXava 2.2.1 beta (2007-08-xx)");
 	}
 	
 	private static int nextOid = 0; 
@@ -885,6 +885,16 @@ public class ModuleManager {
 	
 	public String getEnctype() { 		
 		return isFormUpload()?"ENCTYPE='multipart/form-data'":"";		
+	}
+	
+	public boolean isButtonBarVisible() {
+		if (!getMetaActionsMode().isEmpty()) return true;	
+		Iterator it = getMetaActions().iterator();
+		while (it.hasNext()) {
+			MetaAction action = (MetaAction) it.next();
+			if (!action.isHidden() && action.hasImage()) return true;
+		}
+		return false;
 	}
 	
 	private boolean isFormUpload() {
