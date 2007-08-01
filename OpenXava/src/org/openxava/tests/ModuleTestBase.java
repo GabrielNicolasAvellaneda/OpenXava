@@ -657,8 +657,8 @@ public class ModuleTestBase extends TestCase {
 		if (table == null) {
 			fail(XavaResources.getString("collection_not_displayed", collection));			
 		}		
-		row = collectionHasFilterHeader(table)?row + 2:row + 1; 
-		int increment = table.getTableCell(row, 0).getLinks().length > 0?2:1; 
+		row = collectionHasFilterHeader(table)?row + 2:row + 1;
+		int increment = table.getTableCell(row, 0).getLinks().length > 0 || table.getTableCell(0, 0).getLinks().length > 0?2:1;
 		return table.getTableCell(row, column + increment);		
 	}
 	

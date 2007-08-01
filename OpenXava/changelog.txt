@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: getValueInCollection and assertValueInCollection does not calculated well the row number in the case of not calculated and read only collection without view link.
+- Button bar is not shown if it is empty (no action nor mode actions).
 - More meaningful title for PDF reports in collections.
 - Icon for 'delete' changed.
 - New property emailAsUserNameInPortal for usin in xava.properties that allows Users.getCurrent() returns the user email instead of the user id inside a portal.
