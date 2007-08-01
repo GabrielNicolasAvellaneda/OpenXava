@@ -487,12 +487,14 @@ public class InvoicesTest extends ModuleTestBase {
 		
 		execute("Sections.change", "activeSection=3");
 		assertCollectionRowCount("deliveries", 1);
+		String number = getValueInCollection("deliveries", 0, 0);
 	
 		assertAction("Collection.view");
 		// The next action display in detail only properties that already are in list
 		execute("Invoices.removeViewDeliveryInInvoice");
 		
-		assertNoAction("Collection.view"); 
+		assertNoAction("Collection.view");		
+		assertValueInCollection("deliveries", 0, 0, number);
 		
 		execute("Invoices.addViewDeliveryInInvoice");
 		assertAction("Collection.view");		
