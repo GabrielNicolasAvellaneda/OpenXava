@@ -12,7 +12,7 @@ import java.lang.annotation.*;
  * Example:
  * <pre>
  * @OneToMany (mappedBy="delivery", cascade=CascadeType.REMOVE)
- * @HideDetailAction(name="DeliveryDetails.hideDetail")
+ * @HideDetailAction("DeliveryDetails.hideDetail")
  * private Collection<DeliveryDetail> details;	
  * </pre>
  * 
@@ -49,6 +49,6 @@ public @interface HideDetailAction {
 	 * You have to write the action identifier that is the controller
 	 * name and the action name. This action must be registered in controllers.xml
 	 */			
-	String name();
+	String value();
 	
 }

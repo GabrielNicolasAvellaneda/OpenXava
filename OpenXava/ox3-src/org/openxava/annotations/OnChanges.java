@@ -11,9 +11,9 @@ import java.lang.annotation.*;
  * Example:
  * <pre>
  * @OnChanges({
- *   @OnChange(forViews="DEFAULT", ... ),
- *   @OnChange(forViews="Simple, VerySimple", ... ),
- *   @OnChange(forViews="Complete", ... )
+ *   @OnChange(forViews="DEFAULT", value= ... ),
+ *   @OnChange(forViews="Simple, VerySimple", value= ... ),
+ *   @OnChange(forViews="Complete", value= ... )
  * })
  * </pre>
  *

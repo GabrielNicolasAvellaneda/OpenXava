@@ -24,7 +24,7 @@ import org.openxava.jpa.*;
 
 @Entity
 @IdClass(DeliveryKey.class)
-@EntityValidator(validator=DeliveryValidator.class,
+@EntityValidator(value=DeliveryValidator.class,
 	properties = { @PropertyValue(name="invoice") }	
 )
 @Views({
@@ -85,14 +85,14 @@ import org.openxava.jpa.*;
 public class Delivery {
 	
 	@Id @Column(length=5)
-	@Action(name="Deliveries.generateNumber", forViews="DEFAULT")
+	@Action(forViews="DEFAULT", value="Deliveries.generateNumber")
 	private int number;
 
 	
 	@Id @ManyToOne(fetch=FetchType.LAZY)
-	@OnChange(action=OnChangeInvoiceNumberInDeliveryAction.class, forViews="DEFAULT")
-	@ReferenceView(name="Simple")
-	@Action(name="Deliveries.setDefaultInvoice", forViews="DEFAULT") 
+	@OnChange(forViews="DEFAULT", value=OnChangeInvoiceNumberInDeliveryAction.class)
+	@ReferenceView("Simple")
+	@Action(forViews="DEFAULT", value="Deliveries.setDefaultInvoice") 
 	private Invoice invoice;
 
 	// JoinColumn and ManyToOne fetch are also specified in DeliveryKey because 
@@ -104,13 +104,13 @@ public class Delivery {
 		@DescriptionsList(forViews="DEFAULT", order="${number} desc"),
 		@DescriptionsList(forViews="GroupsInSections")
 	})
-	@Action(name="Deliveries.setDefaultType", forViews="DEFAULT")
+	@Action(forViews="DEFAULT", value="Deliveries.setDefaultType")
 	private DeliveryType type;
 	
 	@Type(type="org.openxava.types.Date3Type") 
 	@Columns(columns = { @Column(name="year"), @Column(name="month"), @Column(name="day") })
 	@Required
-	@DefaultValueCalculator(calculator=CurrentDateCalculator.class)
+	@DefaultValueCalculator(CurrentDateCalculator.class)
 	private Date date;
 	
 	private String description;
@@ -122,14 +122,14 @@ public class Delivery {
 			@Parameter(name="enumType", value="org.openxava.test.model.Delivery$Distance")
 		}
 	)
-	@OnChange(action=OnChangeDistanceAction.class, forViews="DEFAULT")
+	@OnChange(forViews="DEFAULT", value=OnChangeDistanceAction.class)
 	private Distance distance;
 	public enum Distance { LOCAL, NATIONAL, INTERNATIONAL };
 	
 	@Column(length=15)
 	@OnChanges({
-		@OnChange(action=OnChangeVehicleAction.class, forViews="DEFAULT"),
-		@OnChange(action=OnChangeAddMessageAction.class, forViews="GroupsInSections")
+		@OnChange(forViews="DEFAULT", value=OnChangeVehicleAction.class),
+		@OnChange(forViews="GroupsInSections", value=OnChangeAddMessageAction.class)
 	})
 	private String vehicle;
 	
@@ -139,7 +139,7 @@ public class Delivery {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="CARRIER")
 	@DescriptionsList(notForViews="GroupsInSections")
-	@OnChange(action=OnChangeCarrierInDeliveryAction.class, forViews="DEFAULT")
+	@OnChange(forViews="DEFAULT", value=OnChangeCarrierInDeliveryAction.class)
 	private Carrier carrier;
 	
 	
@@ -157,35 +157,35 @@ public class Delivery {
 	
 	@OneToMany (mappedBy="delivery", cascade=CascadeType.REMOVE)
 	@org.hibernate.validator.Size(max=3)
-	@NewAction(name="DeliveryDetails.new", forViews="DEFAULT")
-	@SaveAction(name="DeliveryDetails.save", forViews="DEFAULT")
-	@HideDetailAction(name="DeliveryDetails.hideDetail", forViews="DEFAULT")
-	@RemoveAction(name="DeliveryDetails.remove", forViews="DEFAULT")
-	@RemoveSelectedAction(name="DeliveryDetails.removeSelected", forViews="DEFAULT")
+	@NewAction(forViews="DEFAULT", value="DeliveryDetails.new")
+	@SaveAction(forViews="DEFAULT", value="DeliveryDetails.save")
+	@HideDetailAction(forViews="DEFAULT", value="DeliveryDetails.hideDetail")
+	@RemoveAction(forViews="DEFAULT", value="DeliveryDetails.remove")
+	@RemoveSelectedAction(forViews="DEFAULT", value="DeliveryDetails.removeSelected")
 	private Collection<DeliveryDetail> details;	
 	
 	@Transient
 	// A calculator that return null is like not have it, 
 	// but we set for verifying that we can have a calculator and not fail
-	@DefaultValueCalculator(calculator=EnumCalculator.class,
+	@DefaultValueCalculator(value=EnumCalculator.class,
 		properties={
 			@PropertyValue(name="enumType", value="org.openxava.test.model.Delivery$DeliveredBy")
 			// If we do not put value EnumCalculator will return null
-			//@Put(property="value", value="CARRIER")
+			//@PropertyValue(name="value", value="CARRIER")
 		}
 	)
-	@OnChange(action=OnChangeDeliveryByAction.class)
+	@OnChange(OnChangeDeliveryByAction.class)
 	private DeliveredBy deliveredBy;
 	public enum DeliveredBy { EMPLOYEE, CARRIER }
 	
 	@Transient
 	@Column(length=40) @Required
-	@DefaultValueCalculator(calculator=AdviceCalculator.class)
+	@DefaultValueCalculator(AdviceCalculator.class)
 	private String advice;
 	
 	@Transient
 	@Column(length=2)
-	@OnChange(action=OnChangeShortcutAction.class)
+	@OnChange(OnChangeShortcutAction.class)
 	private String shortcut;
 		
 	@Stereotype("LABEL")
@@ -193,7 +193,7 @@ public class Delivery {
 		return date;
 	}
 
-	@Column(length=20) @Stereotype("LABEL") @Depends(properties="vehicle")
+	@Column(length=20) @Stereotype("LABEL") @Depends("vehicle")
 	public String getTransportMode() {
 		if ("PLANE".equalsIgnoreCase(vehicle)) return "AIR";
 		if ("MOTORBIKE".equalsIgnoreCase(vehicle)) return "STREET/ROAD";		

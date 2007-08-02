@@ -13,7 +13,7 @@ import org.openxava.test.validators.*;
  */
 @Entity
 @View(members="number; description; comboDeliveries")
-@RemoveValidator(validator=DeliveryTypeRemoveValidator.class,
+@RemoveValidator(value=DeliveryTypeRemoveValidator.class,
 	properties=@PropertyValue(name="number")
 )
 public class DeliveryType {

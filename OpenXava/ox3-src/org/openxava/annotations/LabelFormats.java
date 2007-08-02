@@ -12,9 +12,9 @@ import java.lang.annotation.*;
  * Example:
  * <pre>
  * @LabelFormats({
- *   @LabelFormat(forViews="DEFAULT", ... ),
- *   @LabelFormat(forViews="Simple, VerySimple", ... ),
- *   @LabelFormat(forViews="Complete", ... )
+ *   @LabelFormat(forViews="DEFAULT", value= ... ),
+ *   @LabelFormat(forViews="Simple, VerySimple", value= ... ),
+ *   @LabelFormat(forViews="Complete", value= ... )
  * })
  * </pre>
  *

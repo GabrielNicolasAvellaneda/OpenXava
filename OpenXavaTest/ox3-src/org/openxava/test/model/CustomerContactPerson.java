@@ -28,10 +28,10 @@ import org.openxava.annotations.*;
 })
 public class CustomerContactPerson {
 		
-	@ReferenceView(name="Simple")
+	@ReferenceView(value="Simple")
 	@ReferenceViews({
-		@ReferenceView(forViews="Simple", name="Simplest"),
-		@ReferenceView(forViews="CustomerAsAggregate3Levels", name="SellerAsAggregate2Levels")		
+		@ReferenceView(forViews="Simple", value="Simplest"),
+		@ReferenceView(forViews="CustomerAsAggregate3Levels", value="SellerAsAggregate2Levels")		
 	})		
 	@AsEmbedded(forViews="CustomerAsAggregate3Levels")
 	@Id @ManyToOne(fetch=FetchType.LAZY) // Maybe a @OneToOne is better, but it throws NullPointerException	 

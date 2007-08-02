@@ -10,7 +10,7 @@ import java.lang.annotation.*;
  * 
  * Example:
  * <pre>
- * @PropertyValidator(validator=org.openxava.test.validators.UnitPriceValidator.class)
+ * @PropertyValidator(UnitPriceValidator.class)
  * private BigDecimal unitPrice;
  * </pre>
  * 
@@ -26,7 +26,7 @@ public @interface PropertyValidator {
 	 * 
 	 * Must implements {@link org.openxava.validators.IPropertyValidator}.
 	 */
-	Class validator();
+	Class value();
 	
 	/**
 	 * To set values to the validator properties before executing it.

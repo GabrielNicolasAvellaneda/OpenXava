@@ -1,6 +1,7 @@
 Change Log for OpenXava 3
 =========================
 
+- Refactoring: Increment of the use of value() in annotations.
 - PropertyAspect for declaring properties without getter and getter (still experimental, it will be full available in v3.1)
 - Complete JavaDoc API for org.openxava.annotations.
 - Fix: Collection with @ReadOnly when data in list is the same of data in detail fails.

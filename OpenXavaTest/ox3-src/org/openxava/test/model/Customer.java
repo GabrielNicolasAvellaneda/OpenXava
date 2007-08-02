@@ -113,16 +113,16 @@ public class Customer implements IWithName {
 	private int number;
 		
 	@Required @Stereotype("PERSON_NAME")  
-	@OnChange(action=OnChangeCustomerNameAction.class)
+	@OnChange(OnChangeCustomerNameAction.class)
 	@ReadOnly(forViews="SomeMembersReadOnly")
 	private String name;
 	
 	@Required 
 	@DefaultValueCalculator(
-		calculator=org.openxava.calculators.IntegerCalculator.class,
+		value=org.openxava.calculators.IntegerCalculator.class,
 		properties={ @PropertyValue(name="value", value="0") }		
 	)
-	@Editor(forViews="TypeWithRadioButton", name="ValidValuesRadioButton")
+	@Editor(forViews="TypeWithRadioButton", value="ValidValuesRadioButton")
 	private Type type;
 	public enum Type { NORMAL, STEADY, SPECIAL };
 	
@@ -133,26 +133,26 @@ public class Customer implements IWithName {
 	private String remarks;
 		
 	@Embedded 
-	@ReferenceView(forViews="SimpleStateAsForm", name="StateAsForm")
+	@ReferenceView(forViews="SimpleStateAsForm", value="StateAsForm")
 	private Address address;	
 	
-	@ManyToOne(fetch=FetchType.LAZY) @SearchAction(name="MyReference.search") 
+	@ManyToOne(fetch=FetchType.LAZY) @SearchAction("MyReference.search") 
 	@ReadOnly(forViews="SomeMembersReadOnly")
 	@AsEmbedded(forViews="SellerAsAggregate, SellerAsAggregate2Levels")
 	@NoFrame(notForViews="SellerAsAggregate")
-	@ReferenceView(forViews="SellerAsAggregate2Levels", name="LevelNoDescriptionsList")
+	@ReferenceView(forViews="SellerAsAggregate2Levels", value="LevelNoDescriptionsList")
 	private Seller seller;
 	
 	@DefaultValueCalculator(
-		calculator=org.openxava.calculators.StringCalculator.class,
+		value=org.openxava.calculators.StringCalculator.class,
 		properties={ @PropertyValue(name="string", value="GOOD") }
 	)
 	@Column(length=40, name="RELATIONSELLER")	
 	private String relationWithSeller;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@OnChange(action=OnChangeVoidAction.class)	
-	@ReferenceView(name="DecorateName") 
+	@OnChange(OnChangeVoidAction.class)	
+	@ReferenceView("DecorateName") 
 	@NoCreate(forViews="DEFAULT")
 	@ReadOnly(forViews="SomeMembersReadOnly")
 	@DescriptionsList(forViews="SomeMembersReadOnly", descriptionProperties="level.description, name")
@@ -169,7 +169,7 @@ public class Customer implements IWithName {
 	private Collection<State> states;
  	
 	@Column(length=40)	
-	@Depends(properties="address.zipCode, address.city")	
+	@Depends("address.zipCode, address.city")	
 	public String getCity() {
 		return getAddress().getZipCode() + " " + getAddress().getCity(); 
 	}

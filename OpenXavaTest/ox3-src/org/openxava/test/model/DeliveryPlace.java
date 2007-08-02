@@ -16,7 +16,7 @@ import org.openxava.util.*;
  */
 
 @Entity
-@EntityValidator(validator=DeliveryPlaceValidator.class,
+@EntityValidator(value=DeliveryPlaceValidator.class,
 		properties = { @PropertyValue(name="customer") }
 )
 public class DeliveryPlace {
@@ -36,7 +36,7 @@ public class DeliveryPlace {
 	private String address;
 	
 	@DescriptionsList
-	@OnChange(action=OnChangePreferredWarehouseAction.class)
+	@OnChange(OnChangePreferredWarehouseAction.class)
 	@ManyToOne(fetch=FetchType.LAZY) 
 	@JoinColumns ({
 		@JoinColumn(name="WAREHOUSE_ZONE"),

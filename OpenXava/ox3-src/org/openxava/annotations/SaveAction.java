@@ -11,7 +11,7 @@ import java.lang.annotation.*;
  * Example:
  * <pre>
  * @OneToMany (mappedBy="delivery", cascade=CascadeType.REMOVE)
- * @SaveAction(name="DeliveryDetails.save")
+ * @SaveAction("DeliveryDetails.save")
  * private Collection<DeliveryDetail> details;	
  * </pre>
  * 
@@ -48,6 +48,6 @@ public @interface SaveAction {
 	 * You have to write the action identifier that is the controller
 	 * name and the action name. This action must be registered in controllers.xml
 	 */				
-	String name();
+	String value();
 	
 }

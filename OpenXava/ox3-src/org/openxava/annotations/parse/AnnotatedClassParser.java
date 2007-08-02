@@ -434,7 +434,7 @@ public class AnnotatedClassParser {
 			metaCalculator.addMetaSet(metaSet);
 			if (pd.getReadMethod().isAnnotationPresent(Depends.class)) {
 				Depends depends = pd.getReadMethod().getAnnotation(Depends.class);
-				for (Object propertyFrom: Strings.toCollection(depends.properties())) {
+				for (Object propertyFrom: Strings.toCollection(depends.value())) {
 					MetaSet metaSetPropertyFrom = new MetaSet();
 					metaSetPropertyFrom.setPropertyName("valueOfDependsProperty");
 					metaSetPropertyFrom.setPropertyNameFrom((String) propertyFrom);
@@ -608,7 +608,7 @@ public class AnnotatedClassParser {
 		if (element.isAnnotationPresent(DefaultValueCalculator.class)) {
 			DefaultValueCalculator calculator = element.getAnnotation(DefaultValueCalculator.class);
 			MetaCalculator metaCalculator = new MetaCalculator();
-			metaCalculator.setClassName(calculator.calculator().getName());
+			metaCalculator.setClassName(calculator.value().getName());
 			for (PropertyValue put: calculator.properties()) {
 				metaCalculator.addMetaSet(toMetaSet(put));
 			}
@@ -653,7 +653,7 @@ public class AnnotatedClassParser {
 			if (element.isAnnotationPresent(OnChange.class)) {
 				OnChange onChange = element.getAnnotation(OnChange.class);
 				if (isForView(metaView, onChange.forViews(), onChange.notForViews())) {
-					propertyView.setOnChangeActionClassName(onChange.action().getName());
+					propertyView.setOnChangeActionClassName(onChange.value().getName());
 					mustAddMetaView = true;				
 				}
 			}
@@ -661,7 +661,7 @@ public class AnnotatedClassParser {
 				OnChange [] onChanges = element.getAnnotation(OnChanges.class).value();				
 				for (OnChange onChange: onChanges) {
 					if (isForView(metaView, onChange.forViews(), onChange.notForViews())) {
-						propertyView.setOnChangeActionClassName(onChange.action().getName());
+						propertyView.setOnChangeActionClassName(onChange.value().getName());
 						mustAddMetaView = true;				
 					}
 				}					
@@ -698,7 +698,7 @@ public class AnnotatedClassParser {
 			if (element.isAnnotationPresent(Editor.class)) {
 				Editor editor = element.getAnnotation(Editor.class);
 				if (isForView(metaView, editor.forViews(), editor.notForViews())) {
-					propertyView.setEditor(editor.name());
+					propertyView.setEditor(editor.value());
 					mustAddMetaView = true;				
 				}
 			}
@@ -706,7 +706,7 @@ public class AnnotatedClassParser {
 				Editor [] editores = element.getAnnotation(Editors.class).value();				
 				for (Editor editor: editores) {
 					if (isForView(metaView, editor.forViews(), editor.notForViews())) {
-						propertyView.setEditor(editor.name());
+						propertyView.setEditor(editor.value());
 						mustAddMetaView = true;				
 					}
 				}					
@@ -889,7 +889,7 @@ public class AnnotatedClassParser {
 			if (element.isAnnotationPresent(ListProperties.class)) {
 				ListProperties listProperties = element.getAnnotation(ListProperties.class);
 				if (isForView(metaView, listProperties.forViews(), listProperties.notForViews())) {
-					collectionView.setPropertiesList(listProperties.properties());
+					collectionView.setPropertiesList(listProperties.value());
 					mustAddMetaView = true;
 				}
 			}
@@ -897,7 +897,7 @@ public class AnnotatedClassParser {
 				ListProperties [] listsProperties = element.getAnnotation(ListsProperties.class).value();				
 				for (ListProperties listProperties: listsProperties) {
 					if (isForView(metaView, listProperties.forViews(), listProperties.notForViews())) {
-						collectionView.setPropertiesList(listProperties.properties());
+						collectionView.setPropertiesList(listProperties.value());
 						mustAddMetaView = true;
 					}					
 				}
@@ -907,7 +907,7 @@ public class AnnotatedClassParser {
 			if (element.isAnnotationPresent(CollectionView.class)) {
 				CollectionView view = element.getAnnotation(CollectionView.class);
 				if (isForView(metaView, view.forViews(), view.notForViews())) {
-					collectionView.setViewName(view.name());
+					collectionView.setViewName(view.value());
 					mustAddMetaView = true;
 				}
 			}
@@ -915,7 +915,7 @@ public class AnnotatedClassParser {
 				CollectionView [] views = element.getAnnotation(CollectionViews.class).value();				
 				for (CollectionView view: views) {
 					if (isForView(metaView, view.forViews(), view.notForViews())) {
-						collectionView.setViewName(view.name());
+						collectionView.setViewName(view.value());
 						mustAddMetaView = true;
 					}
 				}
@@ -925,7 +925,7 @@ public class AnnotatedClassParser {
 			if (element.isAnnotationPresent(ListAction.class)) {
 				ListAction action = element.getAnnotation(ListAction.class);
 				if (isForView(metaView, action.forViews(), action.notForViews())) {
-					collectionView.addActionListName(action.name());
+					collectionView.addActionListName(action.value());
 					mustAddMetaView = true;				
 				}
 			}
@@ -933,7 +933,7 @@ public class AnnotatedClassParser {
 				ListAction [] actions = element.getAnnotation(ListActions.class).value();
 				for (ListAction action: actions) {				
 					if (isForView(metaView, action.forViews(), action.notForViews())) {
-						collectionView.addActionListName(action.name());
+						collectionView.addActionListName(action.value());
 						mustAddMetaView = true;
 					}
 				}				
@@ -943,7 +943,7 @@ public class AnnotatedClassParser {
 			if (element.isAnnotationPresent(DetailAction.class)) {
 				DetailAction action = element.getAnnotation(DetailAction.class);
 				if (isForView(metaView, action.forViews(), action.notForViews())) {
-					collectionView.addActionDetailName(action.name());
+					collectionView.addActionDetailName(action.value());
 					mustAddMetaView = true;				
 				}
 			}
@@ -951,7 +951,7 @@ public class AnnotatedClassParser {
 				DetailAction [] actions = element.getAnnotation(DetailActions.class).value();
 				for (DetailAction action: actions) {				
 					if (isForView(metaView, action.forViews(), action.notForViews())) {
-						collectionView.addActionDetailName(action.name());
+						collectionView.addActionDetailName(action.value());
 						mustAddMetaView = true;
 					}
 				}				
@@ -961,7 +961,7 @@ public class AnnotatedClassParser {
 			if (element.isAnnotationPresent(NewAction.class)) {
 				NewAction action = element.getAnnotation(NewAction.class);
 				if (isForView(metaView, action.forViews(), action.notForViews())) {
-					collectionView.setNewActionName(action.name());
+					collectionView.setNewActionName(action.value());
 					mustAddMetaView = true;				
 				}
 			}
@@ -970,7 +970,7 @@ public class AnnotatedClassParser {
 				for (NewAction action: actions) {				
 					if (isForView(metaView, action.forViews(), action.notForViews())) {
 						if (Is.emptyString(collectionView.getNewActionName())) {
-							collectionView.setNewActionName(action.name());
+							collectionView.setNewActionName(action.value());
 							mustAddMetaView = true;				
 						}
 						else {
@@ -984,7 +984,7 @@ public class AnnotatedClassParser {
 			if (element.isAnnotationPresent(SaveAction.class)) {
 				SaveAction action = element.getAnnotation(SaveAction.class);
 				if (isForView(metaView, action.forViews(), action.notForViews())) {
-					collectionView.setSaveActionName(action.name());
+					collectionView.setSaveActionName(action.value());
 					mustAddMetaView = true;				
 				}
 			}
@@ -993,7 +993,7 @@ public class AnnotatedClassParser {
 				for (SaveAction action: actions) {				
 					if (isForView(metaView, action.forViews(), action.notForViews())) {
 						if (Is.emptyString(collectionView.getSaveActionName())) {
-							collectionView.setSaveActionName(action.name());
+							collectionView.setSaveActionName(action.value());
 							mustAddMetaView = true;				
 						}
 						else {
@@ -1007,7 +1007,7 @@ public class AnnotatedClassParser {
 			if (element.isAnnotationPresent(HideDetailAction.class)) {
 				HideDetailAction action = element.getAnnotation(HideDetailAction.class);
 				if (isForView(metaView, action.forViews(), action.notForViews())) {
-					collectionView.setHideActionName(action.name());
+					collectionView.setHideActionName(action.value());
 					mustAddMetaView = true;				
 				}
 			}
@@ -1016,7 +1016,7 @@ public class AnnotatedClassParser {
 				for (HideDetailAction action: actions) {				
 					if (isForView(metaView, action.forViews(), action.notForViews())) {
 						if (Is.emptyString(collectionView.getHideActionName())) {
-							collectionView.setHideActionName(action.name());
+							collectionView.setHideActionName(action.value());
 							mustAddMetaView = true;				
 						}
 						else {
@@ -1030,7 +1030,7 @@ public class AnnotatedClassParser {
 			if (element.isAnnotationPresent(RemoveAction.class)) {
 				RemoveAction action = element.getAnnotation(RemoveAction.class);
 				if (isForView(metaView, action.forViews(), action.notForViews())) {
-					collectionView.setRemoveActionName(action.name());
+					collectionView.setRemoveActionName(action.value());
 					mustAddMetaView = true;				
 				}
 			}
@@ -1039,7 +1039,7 @@ public class AnnotatedClassParser {
 				for (RemoveAction action: actions) {				
 					if (isForView(metaView, action.forViews(), action.notForViews())) {
 						if (Is.emptyString(collectionView.getRemoveActionName())) {
-							collectionView.setRemoveActionName(action.name());
+							collectionView.setRemoveActionName(action.value());
 							mustAddMetaView = true;				
 						}
 						else {
@@ -1053,7 +1053,7 @@ public class AnnotatedClassParser {
 			if (element.isAnnotationPresent(RemoveSelectedAction.class)) {
 				RemoveSelectedAction action = element.getAnnotation(RemoveSelectedAction.class);
 				if (isForView(metaView, action.forViews(), action.notForViews())) {
-					collectionView.setRemoveSelectedActionName(action.name());
+					collectionView.setRemoveSelectedActionName(action.value());
 					mustAddMetaView = true;				
 				}
 			}
@@ -1062,7 +1062,7 @@ public class AnnotatedClassParser {
 				for (RemoveSelectedAction action: actions) {				
 					if (isForView(metaView, action.forViews(), action.notForViews())) {
 						if (Is.emptyString(collectionView.getRemoveSelectedActionName())) {
-							collectionView.setRemoveSelectedActionName(action.name());
+							collectionView.setRemoveSelectedActionName(action.value());
 							mustAddMetaView = true;				
 						}
 						else {
@@ -1076,7 +1076,7 @@ public class AnnotatedClassParser {
 			if (element.isAnnotationPresent(EditAction.class)) {
 				EditAction action = element.getAnnotation(EditAction.class);
 				if (isForView(metaView, action.forViews(), action.notForViews())) {
-					collectionView.setEditActionName(action.name());
+					collectionView.setEditActionName(action.value());
 					mustAddMetaView = true;				
 				}
 			}
@@ -1085,7 +1085,7 @@ public class AnnotatedClassParser {
 				for (EditAction action: actions) {				
 					if (isForView(metaView, action.forViews(), action.notForViews())) {
 						if (Is.emptyString(collectionView.getEditActionName())) {
-							collectionView.setEditActionName(action.name());
+							collectionView.setEditActionName(action.value());
 							mustAddMetaView = true;				
 						}
 						else {
@@ -1099,7 +1099,7 @@ public class AnnotatedClassParser {
 			if (element.isAnnotationPresent(ViewAction.class)) {
 				ViewAction action = element.getAnnotation(ViewAction.class);
 				if (isForView(metaView, action.forViews(), action.notForViews())) {
-					collectionView.setViewActionName(action.name());
+					collectionView.setViewActionName(action.value());
 					mustAddMetaView = true;				
 				}
 			}
@@ -1108,7 +1108,7 @@ public class AnnotatedClassParser {
 				for (ViewAction action: actions) {				
 					if (isForView(metaView, action.forViews(), action.notForViews())) {
 						if (Is.emptyString(collectionView.getViewActionName())) {
-							collectionView.setViewActionName(action.name());
+							collectionView.setViewActionName(action.value());
 							mustAddMetaView = true;				
 						}
 						else {
@@ -1294,7 +1294,7 @@ public class AnnotatedClassParser {
 		if (element.isAnnotationPresent(DefaultValueCalculator.class)) {
 			DefaultValueCalculator calculator = element.getAnnotation(DefaultValueCalculator.class);
 			MetaCalculator metaCalculator = new MetaCalculator();
-			metaCalculator.setClassName(calculator.calculator().getName());
+			metaCalculator.setClassName(calculator.value().getName());
 			for (PropertyValue put: calculator.properties()) {
 				metaCalculator.addMetaSet(toMetaSet(put));
 			}
@@ -1307,7 +1307,7 @@ public class AnnotatedClassParser {
 			MetaPropertyView propertyView = new MetaPropertyView();
 			String lastKeyProperty = (String) XCollections.last(ref.getMetaModelReferenced().getKeyPropertiesNames());
 			propertyView.setPropertyName(ref.getName() + "." + lastKeyProperty);
-			propertyView.setOnChangeActionClassName(onChange.action().getName());
+			propertyView.setOnChangeActionClassName(onChange.value().getName());
 			for (Object oview: ref.getMetaModel().getMetaViews()) {
 				MetaView view = (MetaView) oview;
 				if (isForView(view, onChange.forViews(), onChange.notForViews())) {
@@ -1321,7 +1321,7 @@ public class AnnotatedClassParser {
 				MetaPropertyView propertyView = new MetaPropertyView();
 				String lastKeyProperty = (String) XCollections.last(ref.getMetaModelReferenced().getKeyPropertiesNames());
 				propertyView.setPropertyName(ref.getName() + "." + lastKeyProperty);
-				propertyView.setOnChangeActionClassName(onChange.action().getName());
+				propertyView.setOnChangeActionClassName(onChange.value().getName());
 				for (Object oview: ref.getMetaModel().getMetaViews()) {
 					MetaView view = (MetaView) oview;
 					if (isForView(view, onChange.forViews(), onChange.notForViews())) {
@@ -1366,7 +1366,7 @@ public class AnnotatedClassParser {
 				SearchAction action = element.getAnnotation(SearchAction.class);
 				if (isForView(metaView, action.forViews(), action.notForViews())) {
 					MetaSearchAction metaSearch = new MetaSearchAction();
-					metaSearch.setActionName(action.name());
+					metaSearch.setActionName(action.value());
 					referenceView.setMetaSearchAction(metaSearch);				
 					mustAddMetaView = true;				
 				}
@@ -1376,7 +1376,7 @@ public class AnnotatedClassParser {
 				for (SearchAction action: searchActions) {
 					if (isForView(metaView, action.forViews(), action.notForViews())) {
 						MetaSearchAction metaSearch = new MetaSearchAction();
-						metaSearch.setActionName(action.name());
+						metaSearch.setActionName(action.value());
 						referenceView.setMetaSearchAction(metaSearch);				
 						mustAddMetaView = true;				
 					}
@@ -1387,7 +1387,7 @@ public class AnnotatedClassParser {
 			if (element.isAnnotationPresent(ReferenceView.class)) {
 				ReferenceView viewName = element.getAnnotation(ReferenceView.class);
 				if (isForView(metaView, viewName.forViews(), viewName.notForViews())) {
-					referenceView.setViewName(viewName.name());
+					referenceView.setViewName(viewName.value());
 					mustAddMetaView = true;				
 				}
 			}
@@ -1395,7 +1395,7 @@ public class AnnotatedClassParser {
 				ReferenceView [] viewNames = element.getAnnotation(ReferenceViews.class).value();				
 				for (ReferenceView viewName: viewNames) {
 					if (isForView(metaView, viewName.forViews(), viewName.notForViews())) {
-						referenceView.setViewName(viewName.name());
+						referenceView.setViewName(viewName.value());
 						mustAddMetaView = true;				
 					}
 				}					
@@ -1603,9 +1603,9 @@ public class AnnotatedClassParser {
 		if (element.isAnnotationPresent(Action.class)) {
 			Action action = element.getAnnotation(Action.class);
 			if (isForView(metaView, action.forViews(), action.notForViews())) {
-				memberView.addActionName(action.name());
+				memberView.addActionName(action.value());
 				if (action.alwaysEnabled()) {
-					memberView.addAlwaysEnabledActionName(action.name());
+					memberView.addAlwaysEnabledActionName(action.value());
 				}
 				mustAddMetaView = true;				
 			}
@@ -1614,9 +1614,9 @@ public class AnnotatedClassParser {
 			Action [] actions = element.getAnnotation(Actions.class).value();				
 			for (Action action: actions) {
 				if (isForView(metaView, action.forViews(), action.notForViews())) {
-					memberView.addActionName(action.name());
+					memberView.addActionName(action.value());
 					if (action.alwaysEnabled()) {
-						memberView.addAlwaysEnabledActionName(action.name());
+						memberView.addAlwaysEnabledActionName(action.value());
 					}
 					mustAddMetaView = true;
 				}
@@ -1660,7 +1660,7 @@ public class AnnotatedClassParser {
 
 	private void addEntityValidator(MetaModel metaModel, EntityValidator validator) {
 		MetaValidator metaValidator = new MetaValidator();
-		metaValidator.setClassName(validator.validator().getName());
+		metaValidator.setClassName(validator.value().getName());
 		for (PropertyValue put: validator.properties()) {
 			metaValidator.addMetaSet(toMetaSet(put));
 		}
@@ -1670,7 +1670,7 @@ public class AnnotatedClassParser {
 	
 	private void addRemoveValidator(MetaModel metaModel, RemoveValidator validator) {
 		MetaValidator metaValidator = new MetaValidator();
-		metaValidator.setClassName(validator.validator().getName());
+		metaValidator.setClassName(validator.value().getName());
 		for (PropertyValue put: validator.properties()) {
 			metaValidator.addMetaSet(toMetaSet(put));
 		}		
@@ -1679,7 +1679,7 @@ public class AnnotatedClassParser {
 	
 	private void addPropertyValidator(MetaProperty metaProperty, PropertyValidator validator) {
 		MetaValidator metaValidator = new MetaValidator();
-		metaValidator.setClassName(validator.validator().getName());
+		metaValidator.setClassName(validator.value().getName());
 		for (PropertyValue put: validator.properties()) {
 			metaValidator.addMetaSet(toMetaSet(put));
 		}

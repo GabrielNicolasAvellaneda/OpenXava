@@ -11,7 +11,7 @@ import java.lang.annotation.*;
  * This calculator is for calculating its initial value.<br>
  * For example:
  * <pre>
- * @DefaultValueCalculator(calculator=CurrentYearCalculator.class)
+ * @DefaultValueCalculator(CurrentYearCalculator.class)
  * private int year;
  * </pre>
  * In this case when the user tries to create a new Invoice (for example) he 
@@ -29,7 +29,7 @@ public @interface DefaultValueCalculator {
 	 * Class with the logic for calculating the initial value, must
 	 * implements ICalculator.
 	 */
-	Class calculator();
+	Class value();
 	
 	/**
 	 * Inject values to the properties of the calculator before

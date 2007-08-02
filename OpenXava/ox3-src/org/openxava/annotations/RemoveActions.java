@@ -11,9 +11,9 @@ import java.lang.annotation.*;
  * Example:
  * <pre>
  * @RemoveActions({
- *   @RemoveAction(forViews="DEFAULT", ... ),
- *   @RemoveAction(forViews="Simple, VerySimple", ... ),
- *   @RemoveAction(forViews="Complete", ... )
+ *   @RemoveAction(forViews="DEFAULT", value= ... ),
+ *   @RemoveAction(forViews="Simple, VerySimple", value= ... ),
+ *   @RemoveAction(forViews="Complete", value= ... )
  * })
  * </pre>
  * 

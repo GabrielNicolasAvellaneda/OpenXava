@@ -24,7 +24,7 @@ import org.openxava.test.validators.*;
 	"deliveryDate, soldBy;" +
 	"remarks"
 )
-@EntityValidator(validator=InvoiceDetailValidator.class,
+@EntityValidator(value=InvoiceDetailValidator.class,
 	properties= { 
 		@PropertyValue(name="invoice"), 
 		@PropertyValue(name="oid"), 
@@ -71,7 +71,7 @@ public class InvoiceDetail {
 		@Column(name="MONTHDELIVERY"), 
 		@Column(name="DAYDELIVERY") 
 	})	
-	@DefaultValueCalculator(calculator=CurrentDateCalculator.class)
+	@DefaultValueCalculator(CurrentDateCalculator.class)
 	private java.util.Date deliveryDate;
 	
 	@ManyToOne(fetch=FetchType.LAZY) 	
@@ -81,7 +81,7 @@ public class InvoiceDetail {
 	@Stereotype("MEMO")
 	private String remarks;
 			
-	@Stereotype("MONEY") @Depends(properties="unitPrice, quantity")
+	@Stereotype("MONEY") @Depends("unitPrice, quantity")
 	public BigDecimal getAmount() {
 		return getUnitPrice().multiply(new BigDecimal(getQuantity()));
 	}

@@ -11,9 +11,9 @@ import java.lang.annotation.*;
  * Example:
  * <pre>
  * @ListsProperties({
- *   @ListProperties(forViews="DEFAULT", ... ),
- *   @ListProperties(forViews="Simple, VerySimple", ... ),
- *   @ListProperties(forViews="Complete", ... )
+ *   @ListProperties(forViews="DEFAULT", value= ... ),
+ *   @ListProperties(forViews="Simple, VerySimple", value= ... ),
+ *   @ListProperties(forViews="Complete", value= ... )
  * })
  * </pre>
  * 

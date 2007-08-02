@@ -11,9 +11,9 @@ import java.lang.annotation.*;
  * Example:
  * <pre>
  * @HideDetailActions({
- *   @HideDetailAction(forViews="DEFAULT", ... ),
- *   @HideDetailAction(forViews="Simple, VerySimple", ... ),
- *   @HideDetailAction(forViews="Complete", ... )
+ *   @HideDetailAction(forViews="DEFAULT", value= ... ),
+ *   @HideDetailAction(forViews="Simple, VerySimple", value= ... ),
+ *   @HideDetailAction(forViews="Complete", value= ... )
  * })
  * </pre>
  * 

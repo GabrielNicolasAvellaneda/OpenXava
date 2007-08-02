@@ -12,7 +12,7 @@ import java.lang.annotation.*;
  * Example:
  * <pre>
  * @OneToMany (mappedBy="invoice", cascade=CascadeType.REMOVE)
- * @ListProperties(properties="serviceType, product.description, product.unitPriceInPesetas, quantity, unitPrice, amount, free")
+ * @ListProperties("serviceType, product.description, product.unitPriceInPesetas, quantity, unitPrice, amount, free")
  * private Collection<InvoiceDetail> details;
  * </pre>
  * 
@@ -50,6 +50,6 @@ public @interface ListProperties {
 	 * 
 	 * It's possible to use qualified properties to show members of rerences.
 	 */
-	String properties();
+	String value();
 	
 }

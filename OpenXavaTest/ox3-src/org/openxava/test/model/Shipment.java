@@ -55,7 +55,7 @@ public class Shipment {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="CUSTOMERCONTACT")
-	@ReferenceView(name="Simple")
+	@ReferenceView("Simple")
 	private CustomerContactPerson customerContactPerson;
 	
 		

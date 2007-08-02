@@ -3,7 +3,7 @@ package org.openxava.annotations;
 import java.lang.annotation.*;
 
 /**
- * Declares that a property depends on other one. <p>
+ * Declares that a property depends on other one(s). <p>
  * 
  * Applies to properties.<p>
  * 
@@ -11,7 +11,7 @@ import java.lang.annotation.*;
  * values of a property in the user interface.<br>
  * Example:
  * <pre>
- * @Depends(properties="unitPrice")  	
+ * @Depends("unitPrice")  	
  * public BigDecimal getUnitPriceInPesetas() {
  *   if (unitPrice == null) return null;
  *   return unitPrice.multiply(new BigDecimal("166.386")).setScale(0, BigDecimal.ROUND_HALF_UP);
@@ -30,6 +30,6 @@ public @interface Depends {
 	/**
 	 * Comma separated list of the properties this property depend on.
 	 */
-	String properties();
+	String value();
 	
 }

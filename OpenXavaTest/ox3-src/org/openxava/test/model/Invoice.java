@@ -124,14 +124,14 @@ public class Invoice {
 	
 	
 	@Id @Column(length=4) @Max(9999) @Required
-	@DefaultValueCalculator(calculator=CurrentYearCalculator.class)
+	@DefaultValueCalculator(CurrentYearCalculator.class)
 	private int year;
 	
 	@Id @Column(length=6) @Required
 	private int number;
 		
 	@Required
-	@DefaultValueCalculator(calculator=CurrentDateCalculator.class)
+	@DefaultValueCalculator(CurrentDateCalculator.class)
 	private java.util.Date date;
 	
 	@Digits(integerDigits=2, fractionalDigits=1) 
@@ -145,22 +145,22 @@ public class Invoice {
 	private boolean paid;
 		
 	@ManyToOne(fetch=FetchType.LAZY, optional=false)
-	@ReferenceView(name="Simple")
+	@ReferenceView("Simple")
 	private Customer customer;
 		
 	@OneToMany (mappedBy="invoice", cascade=CascadeType.REMOVE)
 	@OrderBy("serviceType desc") @org.hibernate.validator.Size(min=1)
-	@ListProperties(forViews="DEFAULT", properties="serviceType, product.description, product.unitPriceInPesetas, quantity, unitPrice, amount, free")
-	@EditAction(forViews="DEFAULT", name="Invoices.editDetail")
-	@DetailAction(forViews="DEFAULT", name="Invoices.viewProduct")
+	@ListProperties(forViews="DEFAULT", value="serviceType, product.description, product.unitPriceInPesetas, quantity, unitPrice, amount, free")
+	@EditAction(forViews="DEFAULT", value="Invoices.editDetail")
+	@DetailAction(forViews="DEFAULT", value="Invoices.viewProduct")
 	@ReadOnly(forViews="OnlyReadDetails")
 	@EditOnly(forViews="OnlyEditDetails")
 	private Collection<InvoiceDetail> details;
 				
 	@OneToMany (mappedBy="invoice")
-	@CollectionView(forViews="DEFAULT, Deliveries", name="InInvoice")
+	@CollectionView(forViews="DEFAULT, Deliveries", value="InInvoice")
 	@ReadOnly(forViews="DEFAULT, Deliveries")
-	@ViewAction(forViews="Deliveries", name="Invoices.viewDelivery")
+	@ViewAction(forViews="Deliveries", value="Invoices.viewDelivery")
 	private Collection<Delivery> deliveries;
 	
 	@Stereotype("MONEY")
@@ -172,7 +172,7 @@ public class Invoice {
 		return seller.getNumber() == 1?DISCOUNT:BigDecimal.ZERO;
 	}
 
-	@Stereotype("MONEY") @Depends(properties="year")
+	@Stereotype("MONEY") @Depends("year")
 	public BigDecimal getYearDiscount() {		
 		if (year < 2002) return new BigDecimal("0.00");
 		if (year < 2004) return new BigDecimal("200.00");
@@ -188,7 +188,7 @@ public class Invoice {
 		return result;		
 	}
 	
-	@Stereotype("MONEY") @Depends(properties="vatPercentage, amountsSum")
+	@Stereotype("MONEY") @Depends("vatPercentage, amountsSum")
 	public BigDecimal getVat() {
 		return getAmountsSum().multiply(getVatPercentage()).divide(HUNDRED, 2, BigDecimal.ROUND_HALF_UP);
 	}
@@ -223,7 +223,7 @@ public class Invoice {
 		}				
 	}
 	
-	@Depends(properties="amountsSum")
+	@Depends("amountsSum")
 	public boolean isConsiderable() {		
 		return getAmountsSum().compareTo(new BigDecimal(10000)) >= 0;
 	}
@@ -236,7 +236,7 @@ public class Invoice {
 		return "Succulent";		
 	}
 	
-	@Stereotype("MONEY") @Depends(properties="customer.number, paid")
+	@Stereotype("MONEY") @Depends("customer.number, paid")
 	public BigDecimal getCustomerDiscount() {
 		if (paid) return new BigDecimal("77");
 		if (customer.getNumber() == 1) return new BigDecimal("11.50");

@@ -45,22 +45,22 @@ public class Carrier {
 
 	@Stereotype("MEMO")
 	@DefaultValueCalculator(
-		calculator=org.openxava.test.calculators.CarrierRemarksCalculator.class,
+		value=org.openxava.test.calculators.CarrierRemarksCalculator.class,
 		properties={
 			@PropertyValue(name="drivingLicenceType", from="drivingLicence.type") 
 		}		
 	)
 	private String remarks;
 	
-	@Column(length=10) @Action(name="Carriers.translateName")
+	@Column(length=10) @Action("Carriers.translateName")
 	public String getCalculated() {
 		return "TR";
 	}
 	
-	@CollectionView(name="Simple") @EditOnly
+	@CollectionView("Simple") @EditOnly
 	@ListActions({
-			@ListAction(name="Carriers.translateName"),
-			@ListAction(name="Carriers.allToEnglish")
+			@ListAction("Carriers.translateName"),
+			@ListAction("Carriers.allToEnglish")
 	})
 	@Condition(
 		"${warehouse.zoneNumber} = ${this.warehouse.zoneNumber} AND " + 
@@ -80,8 +80,8 @@ public class Carrier {
 		return query.getResultList();
 	}
 	
-	@CollectionView(name="Simple")
-	@RemoveSelectedAction(forViews="CalculatedFellows", name="")
+	@CollectionView("Simple")
+	@RemoveSelectedAction(forViews="CalculatedFellows", value="")
 	public Collection<Carrier> getFellowCarriersCalculated() {
 		// This method exists for compliance with OpenXavaTest
 		return getFellowCarriers();
