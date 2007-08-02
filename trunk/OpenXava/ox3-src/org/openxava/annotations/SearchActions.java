@@ -11,9 +11,9 @@ import java.lang.annotation.*;
  * Example:
  * <pre>
  * @SearchActions({
- *   @SearchAction(forViews="DEFAULT", ... ),
- *   @SearchAction(forViews="Simple, VerySimple", ... ),
- *   @SearchAction(forViews="Complete", ... )
+ *   @SearchAction(forViews="DEFAULT", value= ... ),
+ *   @SearchAction(forViews="Simple, VerySimple", value= ... ),
+ *   @SearchAction(forViews="Complete", value= ... )
  * })
  * </pre>
  * 

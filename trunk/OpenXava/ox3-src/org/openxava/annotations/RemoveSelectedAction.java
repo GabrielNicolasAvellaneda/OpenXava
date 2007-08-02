@@ -13,7 +13,7 @@ import java.lang.annotation.*;
  * Example:
  * <pre>
  * @OneToMany (mappedBy="delivery", cascade=CascadeType.REMOVE)
- * @RemoveSelectedAction(name="DeliveryDetails.removeSelected")
+ * @RemoveSelectedAction("DeliveryDetails.removeSelected")
  * private Collection<DeliveryDetail> details;	
  * </pre>
  * 
@@ -50,6 +50,6 @@ public @interface RemoveSelectedAction {
 	 * You have to write the action identifier that is the controller
 	 * name and the action name. This action must be registered in controllers.xml
 	 */		
-	String name();
+	String value();
 	
 }

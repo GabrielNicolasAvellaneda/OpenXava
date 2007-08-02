@@ -12,7 +12,7 @@ import java.lang.annotation.*;
  * <pre>
  * @OneToMany (mappedBy="invoice")
  * @ReadOnly
- * @ViewAction(name="Invoices.viewDelivery")
+ * @ViewAction("Invoices.viewDelivery")
  * private Collection<Delivery> deliveries;
  * </pre>
  * 
@@ -49,6 +49,6 @@ public @interface ViewAction {
 	 * You have to write the action identifier that is the controller
 	 * name and the action name. This action must be registered in controllers.xml
 	 */	
-	String name();
+	String value();
 	
 }

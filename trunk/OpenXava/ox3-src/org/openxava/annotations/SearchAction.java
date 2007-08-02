@@ -10,7 +10,7 @@ import java.lang.annotation.*;
  * Example:
  * <pre>
  * @ManyToOne
- * @SearchAction(name="MyReference.search") 
+ * @SearchAction("MyReference.search") 
  * private Seller seller;
  * </pre>
  * 
@@ -47,6 +47,6 @@ public @interface SearchAction {
 	 * You have to write the action identifier that is the controller
 	 * name and the action name. This action must be registered in controllers.xml
 	 */	
-	String name();
+	String value();
 	
 }

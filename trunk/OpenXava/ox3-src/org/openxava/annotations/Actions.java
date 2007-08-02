@@ -11,9 +11,9 @@ import java.lang.annotation.*;
  * Example:
  * <pre>
  * @Actions({
- *   @Action(forViews="DEFAULT", ... ),
- *   @Action(forViews="Simple, VerySimple", ... ),
- *   @Action(forViews="Complete", ... )
+ *   @Action(forViews="DEFAULT", value= ... ),
+ *   @Action(forViews="Simple, VerySimple", value= ... ),
+ *   @Action(forViews="Complete", value= ... )
  * })
  * </pre>
  *   

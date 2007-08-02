@@ -33,10 +33,10 @@ public class InvoiceDetail2 {
 	private BigDecimal unitPrice;
 	
 	@ManyToOne(fetch=FetchType.LAZY, optional=false)
-	@ReferenceView(name="Simple")
+	@ReferenceView("Simple")
 	private Product product;
 	
-	@Stereotype("MONEY") @Depends(properties="unitPrice, quantity")
+	@Stereotype("MONEY") @Depends("unitPrice, quantity")
 	public BigDecimal getAmount() {
 		return getUnitPrice().multiply(new BigDecimal(getQuantity()));
 	}

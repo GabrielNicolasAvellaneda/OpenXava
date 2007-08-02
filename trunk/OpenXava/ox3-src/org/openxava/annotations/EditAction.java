@@ -10,7 +10,7 @@ import java.lang.annotation.*;
  * This is the action showed in each row, if the collection is read only.<br>
  * Example:
  * <pre>
- * @EditAction(name="Invoices.editDetail")
+ * @EditAction("Invoices.editDetail")
  * private Collection<InvoiceDetail> details;
  * </pre>
  * 
@@ -47,6 +47,6 @@ public @interface EditAction {
 	 * You have to write the action identifier that is the controller
 	 * name and the action name. This action must be registered in controllers.xml
 	 */		
-	String name();
+	String value();
 	
 }

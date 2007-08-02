@@ -10,7 +10,7 @@ import java.lang.annotation.*;
  * 
  * Example:
  * <pre>
- * @RemoveValidator(validator=DeliveryTypeRemoveValidator.class,
+ * @RemoveValidator(value=DeliveryTypeRemoveValidator.class,
  *	 properties=@PropertyValue(name="number")
  * )
  * public class DeliveryType {
@@ -29,7 +29,7 @@ public @interface RemoveValidator {
 	 * 
  	 * Must implement IRemoveValidator.
 	 */
-	Class validator();
+	Class value();
 	
 	/**
 	 * To set the value of the validator properties before executing it.

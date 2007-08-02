@@ -11,7 +11,7 @@ import java.lang.annotation.*;
  * Example:
  * <pre>
  * @OneToMany(mappedBy="seller")
- * @ListAction(name="Sellers.promoteCustomers")
+ * @ListAction("Sellers.promoteCustomers")
  * private Collection<Customer> customers;  
  * </pre>
  * 
@@ -48,6 +48,6 @@ public @interface ListAction {
 	 * You have to write the action identifier that is the controller
 	 * name and the action name. This action must be registered in controllers.xml
 	 */	
-	String name();
+	String value();
 	
 }

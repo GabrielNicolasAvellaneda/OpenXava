@@ -11,7 +11,7 @@ import java.lang.annotation.*;
  * Example:
  * <pre>
  * @OneToMany (mappedBy="invoice")
- * @CollectionView(name="InInvoice")
+ * @CollectionView("InInvoice")
  * private Collection<Delivery> deliveries;
  * </pre>
  * 
@@ -48,6 +48,6 @@ public @interface CollectionView {
 	 * The name of the view in the referenced object which is used to
 	 * display the detail. <p>
 	 */ 
-	String name();
+	String value();
 	
 }

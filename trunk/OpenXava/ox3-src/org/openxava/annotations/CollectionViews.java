@@ -11,9 +11,9 @@ import java.lang.annotation.*;
  * Example:
  * <pre>
  * @CollectionViews({
- *   @CollectionView(forViews="DEFAULT", ... ),
- *   @CollectionView(forViews="Simple, VerySimple", ... ),
- *   @CollectionView(forViews="Complete", ... )
+ *   @CollectionView(forViews="DEFAULT", value= ... ),
+ *   @CollectionView(forViews="Simple, VerySimple", value= ... ),
+ *   @CollectionView(forViews="Complete", value= ... )
  * })
  * </pre>
 

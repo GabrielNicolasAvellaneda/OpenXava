@@ -10,13 +10,13 @@ import java.lang.annotation.*;
  * Example:
  * <pre>
  * @PropertyValidators ({
- *		@PropertyValidator(validator=org.openxava.test.validators.ExcludeStringValidator.class, properties=
+ *		@PropertyValidator(value=org.openxava.test.validators.ExcludeStringValidator.class, properties=
  *			@PropertyValue(name="string", value="MOTO")
  *		),
- *		@PropertyValidator(validator=org.openxava.test.validators.ExcludeStringValidator.class, properties=
+ *		@PropertyValidator(value=org.openxava.test.validators.ExcludeStringValidator.class, properties=
  *			@PropertyValue(name="string", value="COCHE")
  *		),		
- *		@PropertyValidator(validator=org.openxava.test.validators.ExcludeStringValidator.class, properties=			
+ *		@PropertyValidator(value=org.openxava.test.validators.ExcludeStringValidator.class, properties=			
  *			@PropertyValue(name="string", value="CUATRE"),
  *			onlyOnCreate=true
  *		)		

@@ -11,9 +11,9 @@ import java.lang.annotation.*;
  * Example:
  * <pre>
  * @ReferenceViews({
- *   @ReferenceView(forViews="DEFAULT", ... ),
- *   @ReferenceView(forViews="Simple, VerySimple", ... ),
- *   @ReferenceView(forViews="Complete", ... )
+ *   @ReferenceView(forViews="DEFAULT", value= ... ),
+ *   @ReferenceView(forViews="Simple, VerySimple", value= ... ),
+ *   @ReferenceView(forViews="Complete", value= ... )
  * })
  * </pre>
  *

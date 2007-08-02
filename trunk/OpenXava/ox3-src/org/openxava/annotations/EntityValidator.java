@@ -13,7 +13,7 @@ import java.lang.annotation.*;
  * Example:
  * <pre>
  * @Entity
- * @EntityValidator(validator=InvoiceDetailValidator.class,
+ * @EntityValidator(InvoiceDetailValidator.class,
  *   properties= { 
  *      @PropertyValue(name="invoice"), 
  *      @PropertyValue(name="oid"), 
@@ -36,7 +36,7 @@ public @interface EntityValidator {
      * Class that implements the validation logic. It
      * has to be of type {@link org.openxava.validators.IValidator}.
 	 */
-	Class validator();
+	Class value();
 	
 	/**
 	 * To set values to the validator properties before executing it.

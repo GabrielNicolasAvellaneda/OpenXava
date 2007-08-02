@@ -9,7 +9,7 @@ import java.lang.annotation.*;
  * 
  * Example:
  * <pre>
- * @Action(name="Deliveries.generateNumber")
+ * @Action("Deliveries.generateNumber")
  * private int number;
  * </pre>
  * The actions are displayed as a link or an image beside the property.<br>
@@ -49,7 +49,7 @@ public @interface Action {
 	 * You have to write the action identifier that is the controller
 	 * name and the action name. This action must be registered in controllers.xml
 	 */
-	String name();
+	String value();
 	
 	/**
      * You can put the attribute alwaysEnabled to true so that the link is always 

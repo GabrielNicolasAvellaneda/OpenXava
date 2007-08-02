@@ -11,9 +11,9 @@ import java.lang.annotation.*;
  * Example:
  * <pre>
  * @DisplaySizes({
- *   @DisplaySize(forViews="DEFAULT", ... ),
- *   @DisplaySize(forViews="Simple, VerySimple", ... ),
- *   @DisplaySize(forViews="Complete", ... )
+ *   @DisplaySize(forViews="DEFAULT", value= ... ),
+ *   @DisplaySize(forViews="Simple, VerySimple", value= ... ),
+ *   @DisplaySize(forViews="Complete", value= ... )
  * })
  * </pre>
 

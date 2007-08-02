@@ -11,8 +11,8 @@ import java.lang.annotation.*;
  * <pre>
  * @Entity
  * @RemoveValidators({
- *   @EntityValidator(validator=ProductRemoveValidator.class),
- *   @EntityValidator(validator=ProductNotUsedValidator.class)	
+ *   @EntityValidator(ProductRemoveValidator.class),
+ *   @EntityValidator(ProductNotUsedValidator.class)	
  * })
  * public class Product {
  * ...

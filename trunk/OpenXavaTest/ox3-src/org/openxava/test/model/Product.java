@@ -6,6 +6,9 @@ import javax.persistence.*;
 
 import org.hibernate.validator.*;
 import org.openxava.annotations.*;
+import org.openxava.test.actions.*;
+import org.openxava.test.calculators.*;
+import org.openxava.test.validators.*;
 
 /**
  * This example uses stereotypes for family an subfamily.
@@ -17,17 +20,17 @@ import org.openxava.annotations.*;
 
 @Entity
 @EntityValidators({
-	@EntityValidator(validator=org.openxava.test.validators.CheapProductValidator.class, properties= {
+	@EntityValidator(value=org.openxava.test.validators.CheapProductValidator.class, properties= {
 		@PropertyValue(name="limit", value="100"),
 		@PropertyValue(name="description"),
 		@PropertyValue(name="unitPrice")
 	}),
-	@EntityValidator(validator=org.openxava.test.validators.ExpensiveProductValidator.class, properties= {
+	@EntityValidator(value=org.openxava.test.validators.ExpensiveProductValidator.class, properties= {
 		@PropertyValue(name="limit", value="1000"),
 		@PropertyValue(name="description"),
 		@PropertyValue(name="unitPrice")
 	}),
-	@EntityValidator(validator=org.openxava.test.validators.ForbiddenPriceValidator.class, 
+	@EntityValidator(value=org.openxava.test.validators.ForbiddenPriceValidator.class, 
 		properties= {
 			@PropertyValue(name="forbiddenPrice", value="555"),
 			@PropertyValue(name="unitPrice")
@@ -65,13 +68,13 @@ public class Product {
 	
 	@Column(length=40) @Required
 	@PropertyValidators ({
-		@PropertyValidator(validator=org.openxava.test.validators.ExcludeStringValidator.class, properties=
+		@PropertyValidator(value=ExcludeStringValidator.class, properties=
 			@PropertyValue(name="string", value="MOTO")
 		),
-		@PropertyValidator(validator=org.openxava.test.validators.ExcludeStringValidator.class, properties=
+		@PropertyValidator(value=ExcludeStringValidator.class, properties=
 			@PropertyValue(name="string", value="COCHE")
 		),		
-		@PropertyValidator(validator=org.openxava.test.validators.ExcludeStringValidator.class, properties=			
+		@PropertyValidator(value=ExcludeStringValidator.class, properties=			
 			@PropertyValue(name="string", value="CUATRE"),
 			onlyOnCreate=true
 		)		
@@ -95,19 +98,19 @@ public class Product {
 	private Integer warehouseNumber;
 		
 	@Stereotype("MONEY") @Required
-	@DefaultValueCalculator(calculator=org.openxava.test.calculators.DefaultProductPriceCalculator.class, properties=
+	@DefaultValueCalculator(value=DefaultProductPriceCalculator.class, properties=
 		@PropertyValue(name="familyNumber")
 	)
-	@PropertyValidator(validator=org.openxava.test.validators.UnitPriceValidator.class)
-	@OnChange( forViews="DEFAULT, WithSection",
-		action=org.openxava.test.actions.OnChangeProductUnitPriceAction.class
+	@PropertyValidator(UnitPriceValidator.class)
+	@OnChange(forViews="DEFAULT, WithSection",
+		value=OnChangeProductUnitPriceAction.class
 	)
 	private BigDecimal unitPrice;
 	
 	@Stereotype("MEMO")
 	private String remarks;
 
-	@Depends(properties="unitPrice") 
+	@Depends("unitPrice") 
 	@Max(9999999999L) 	
 	public BigDecimal getUnitPriceInPesetas() {
 		if (unitPrice == null) return null;
@@ -185,7 +188,7 @@ public class Product {
 
 	@Stereotype("WAREHOUSE") @Required
 	@OnChange(forViews="WithSection",
-		action=org.openxava.test.actions.OnChangeVoidAction.class
+		value=org.openxava.test.actions.OnChangeVoidAction.class
 	)
 	public WarehouseKey getWarehouseKey() {
 		WarehouseKey key = new WarehouseKey();

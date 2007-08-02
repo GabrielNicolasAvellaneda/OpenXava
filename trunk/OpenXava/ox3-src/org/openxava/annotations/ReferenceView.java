@@ -12,7 +12,7 @@ import java.lang.annotation.*;
  * Example:
  * <pre>
  * @ManyToOne 
- * @ReferenceView(name="LevelNoDescriptionsList")
+ * @ReferenceView("LevelNoDescriptionsList")
  * private Seller seller;
  * </pre>
  * 
@@ -48,6 +48,6 @@ public @interface ReferenceView {
 	/**
 	 * Name of a view of present in the referenced object. 
 	 */
-	String name();
+	String value();
 	
 }

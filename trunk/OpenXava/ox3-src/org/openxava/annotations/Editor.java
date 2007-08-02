@@ -11,7 +11,7 @@ import java.lang.annotation.*;
  * xava/editors.xml of your project.<br>
  * Example:
  * <pre>
- * @Editor(name="ValidValuesRadioButton")
+ * @Editor("ValidValuesRadioButton")
  * private Type type;
  * public enum Type { NORMAL, STEADY, SPECIAL }; 
  * </pre>
@@ -49,6 +49,6 @@ public @interface Editor {
 	 * Name of the editor from OpenXava/xava/default-editors.xml or 
      * xava/editors.xml of your project.
 	 */
-	String name();
+	String value();
 	
 }

@@ -9,7 +9,7 @@ import java.lang.annotation.*;
  * 
  * Example:
  * <pre>
- * @OnChange(action=OnChangeCustomerNameAction.class)
+ * @OnChange(OnChangeCustomerNameAction.class)
  * private String name;
  * </pre>
  * 
@@ -48,6 +48,6 @@ public @interface OnChange {
 	 * Must to implement {@link org.openxava.actions.IOnChangePropertyAction}, or
 	 * extends {@link org.openxava.actions.OnChangePropertyBaseAction}.
 	 */
-	Class action();
+	Class value();
 	
 }

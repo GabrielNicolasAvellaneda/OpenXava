@@ -31,7 +31,7 @@ import org.openxava.util.*;
 public class Seller {
 	
 	@Id @Column(length=3)
-	@OnChange(forViews="DecorateName", action=org.openxava.test.actions.DecorateNameAction.class)
+	@OnChange(forViews="DecorateName", value=org.openxava.test.actions.DecorateNameAction.class)
 	private int number;
 	
 	@Column(length=40) @Required
@@ -39,15 +39,15 @@ public class Seller {
 		
 	@DescriptionsList(notForViews="ForCustomJSP, LevelNoDescriptionsList")
 	@ManyToOne(fetch=FetchType.LAZY) @JoinColumn(name="LEVEL")
-	@OnChange(action=org.openxava.test.actions.OnChangeVoidAction.class)
+	@OnChange(org.openxava.test.actions.OnChangeVoidAction.class)
 	private SellerLevel level;
 
 	@AsEmbedded(forViews="CustomersAsAggregate")
-	@ListProperties(properties="number, name, remarks, relationWithSeller, seller.level.description")
+	@ListProperties("number, name, remarks, relationWithSeller, seller.level.description")
 	@OneToMany(mappedBy="seller")
 	@CollectionViews ({
-		@CollectionView(name="Simple"),
-		@CollectionView(forViews="Complete", name="SimpleWithDeliveryPlaces")
+		@CollectionView("Simple"),
+		@CollectionView(forViews="Complete", value="SimpleWithDeliveryPlaces")
 	})
 	@NoCreate(forViews="CannotCreateCustomer")
 	@NoModify(forViews="CannotCreateCustomer")

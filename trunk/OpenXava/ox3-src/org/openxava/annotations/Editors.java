@@ -11,9 +11,9 @@ import java.lang.annotation.*;
  * Example:
  * <pre>
  * @Editors({
- *   @Editor(forViews="DEFAULT", ... ),
- *   @Editor(forViews="Simple, VerySimple", ... ),
- *   @Editor(forViews="Complete", ... )
+ *   @Editor(forViews="DEFAULT", value= ... ),
+ *   @Editor(forViews="Simple, VerySimple", value= ... ),
+ *   @Editor(forViews="Complete", value= ... )
  * })
  * </pre>
  *

@@ -29,7 +29,7 @@ import org.openxava.test.actions.*;
 public class Product3 {
 
 	@DefaultValueCalculator( 
-		calculator=NextIntegerCalculator.class, 
+		value=NextIntegerCalculator.class, 
 		properties = {
 			@PropertyValue(name="model", value="Product3"),
 			@PropertyValue(name="property", value="number")
@@ -39,12 +39,12 @@ public class Product3 {
 	private long number;
 
 	@Column(length=40) @Required
-	@OnChange(forViews="WithGroup", action=OnChangeProduct3DescriptionAction.class)
+	@OnChange(forViews="WithGroup", value=OnChangeProduct3DescriptionAction.class)
 	private String description;
 
 	@ManyToOne(fetch=FetchType.LAZY) @DescriptionsList(forViews="WithDescriptionsList, WithGroup") 
 	@JoinColumn(name="FAMILY")
-	@OnChange(forViews="WithGroup", action=OnChangeFamilyAction.class)
+	@OnChange(forViews="WithGroup", value=OnChangeFamilyAction.class)
 	private Family family;
 	
 	@Stereotype("MEMO")

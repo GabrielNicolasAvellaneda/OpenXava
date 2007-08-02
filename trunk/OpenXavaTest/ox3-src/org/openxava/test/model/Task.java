@@ -22,11 +22,11 @@ public class Task {
 	private String oid;
 	
 	@Stereotype("NO_FORMATING_STRING") 
-	@Required @DefaultValueCalculator(calculator=CurrentUserCalculator.class)
+	@Required @DefaultValueCalculator(CurrentUserCalculator.class)
 	@Column(length=50, name="USERNAME")
 	private String user;
 	
-	@Required @DefaultValueCalculator(calculator=CurrentDateCalculator.class)
+	@Required @DefaultValueCalculator(CurrentDateCalculator.class)
 	private java.util.Date date;
 	
 	@Required @Column(length=50)

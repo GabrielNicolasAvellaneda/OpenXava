@@ -25,14 +25,14 @@ import org.openxava.calculators.*;
 public class Invoice2 {
 	
 	@Id @Column(length=4) @Required
-	@DefaultValueCalculator(calculator=CurrentYearCalculator.class)
+	@DefaultValueCalculator(CurrentYearCalculator.class)
 	private int year;
 	
 	@Id @Column(length=6) @Required
 	private int number;
 		
 	@Required
-	@DefaultValueCalculator(calculator=CurrentDateCalculator.class)
+	@DefaultValueCalculator(CurrentDateCalculator.class)
 	private java.util.Date date;
 	
 	@Digits(integerDigits=2, fractionalDigits=1) 
@@ -40,7 +40,7 @@ public class Invoice2 {
 	private BigDecimal vatPercentage;
 	
 	@ManyToOne(fetch=FetchType.LAZY, optional=false)
-	@ReferenceView(name="Simplest")
+	@ReferenceView("Simplest")
 	private Customer customer;
 	
 	@OneToMany (mappedBy="invoice2", cascade=CascadeType.REMOVE)

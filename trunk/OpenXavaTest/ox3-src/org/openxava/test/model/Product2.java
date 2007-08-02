@@ -6,7 +6,10 @@ import javax.persistence.*;
 
 import org.hibernate.validator.*;
 import org.openxava.annotations.*;
+import org.openxava.calculators.*;
 import org.openxava.jpa.*;
+import org.openxava.test.calculators.*;
+import org.openxava.test.validators.*;
 import org.openxava.util.*;
 
 /**
@@ -21,12 +24,12 @@ import org.openxava.util.*;
 @Entity
 @Table(name="PRODUCT")
 @EntityValidators({
-	@EntityValidator(validator=org.openxava.test.validators.CheapProductValidator.class, properties= {
+	@EntityValidator(value=org.openxava.test.validators.CheapProductValidator.class, properties= {
 		@PropertyValue(name="limit", value="100"),
 		@PropertyValue(name="description"),
 		@PropertyValue(name="unitPrice")
 	}),
-	@EntityValidator(validator=org.openxava.test.validators.ExpensiveProductValidator.class, properties= {
+	@EntityValidator(value=org.openxava.test.validators.ExpensiveProductValidator.class, properties= {
 		@PropertyValue(name="limit", value="1000"),
 		@PropertyValue(name="description"),
 		@PropertyValue(name="unitPrice")
@@ -69,10 +72,10 @@ public class Product2 {
 	
 	@Column(length=40) @Required
 	@PropertyValidators ({
-		@PropertyValidator(validator=org.openxava.test.validators.ExcludeStringValidator.class, properties=
+		@PropertyValidator(value=ExcludeStringValidator.class, properties=
 			@PropertyValue(name="string", value="MOTO")
 		),
-		@PropertyValidator(validator=org.openxava.test.validators.ExcludeStringValidator.class, properties=
+		@PropertyValidator(value=ExcludeStringValidator.class, properties=
 			@PropertyValue(name="string", value="COCHE")
 		)		
 	})
@@ -82,7 +85,7 @@ public class Product2 {
 	private String photos;
 
 	@ManyToOne(optional=false, fetch=FetchType.LAZY) @JoinColumn(name="FAMILY")
-	@DefaultValueCalculator(calculator=org.openxava.calculators.IntegerCalculator.class, properties=
+	@DefaultValueCalculator(value=IntegerCalculator.class, properties=
 		@PropertyValue(name="value", value="2")
 	)
 	@DescriptionsList(orderByKey=true)
@@ -102,20 +105,20 @@ public class Product2 {
 		@JoinColumn(name="ZONE", referencedColumnName="ZONE"), 
 		@JoinColumn(name="WAREHOUSE", referencedColumnName="NUMBER") 
 	})
-	@DefaultValueCalculator(calculator=org.openxava.test.calculators.DefaultWarehouseCalculator.class)
+	@DefaultValueCalculator(DefaultWarehouseCalculator.class)
 	@DescriptionsList
-	@OnChange(action=org.openxava.test.actions.OnChangeWarehouseAction.class)
+	@OnChange(org.openxava.test.actions.OnChangeWarehouseAction.class)
 	private Warehouse warehouse;
 
 	@Stereotype("MONEY") @Required
-	@DefaultValueCalculator(calculator=org.openxava.test.calculators.DefaultProductPriceCalculator.class, properties=
+	@DefaultValueCalculator(value=DefaultProductPriceCalculator.class, properties=
 		@PropertyValue(name="familyNumber")
 	)
-	@PropertyValidator(validator=org.openxava.test.validators.UnitPriceValidator.class)
+	@PropertyValidator(UnitPriceValidator.class)
 	private BigDecimal unitPrice;
 	
 	@ManyToOne(fetch=FetchType.LAZY) @JoinColumn(name="FORMULA_OID")
-	@ReferenceView(name="Simple") 
+	@ReferenceView("Simple") 
 	@AsEmbedded(forViews="WithFormulaAsAggregate")
 	private Formula formula;
 	
@@ -123,7 +126,7 @@ public class Product2 {
 	@Transient @Stereotype("SUBFAMILY_DEPENDS_REFERENCE")
 	private int subfamilyNumber; 
 	
-	@Depends(properties="unitPrice") 
+	@Depends("unitPrice") 
 	@Max(999999999999999999L) 	
 	public BigDecimal getUnitPriceInPesetas() {
 		if (unitPrice == null) return null;
