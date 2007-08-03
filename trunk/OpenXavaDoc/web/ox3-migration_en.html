@@ -1,0 +1,312 @@
+<h2>Migration from OpenXava 3.0beta1 to OpenXava 3.0beta2</h2>
+
+
+<h4>Refactoring for annoations: incrementing the use of value()</h4>
+
+
+We increment the use of value() for annotations as stated in the thread<br>
+
+
+<a href="http://sourceforge.net/forum/forum.php?thread_id=1787129&amp;forum_id=419689">http://sourceforge.net/forum/forum.php?thread_id=1787129&amp;forum_id=419689</a><br>
+
+
+of the OpenXava forums.<br>
+
+
+Therefore you need to do the next changes in your code:<br>
+
+
+<h6>@*Action</h6>
+
+
+Change<br>
+
+
+<pre>@Action(<span style="font-weight: bold; color: rgb(255, 0, 0);">name=</span>"Carriers.translateName")</pre>
+
+
+by<br>
+
+
+<pre>@Action("Carriers.translateName")</pre>
+
+
+and<br>
+
+
+
+<pre>@Action(forViews="DEFAULT", <span style="color: rgb(255, 0, 0); font-weight: bold;">name=</span>"Deliveries.setDefaultInvoice")</pre>
+
+
+by
+<pre>@Action(forViews="DEFAULT", <span style="color: rgb(51, 102, 255); font-weight: bold;">value=</span>"Deliveries.setDefaultInvoice")</pre>
+
+
+The same for the annotations @DetailAction, @EditAction,
+@HideDetailAction, @ListAction, @NewAction,
+@RemoveAction, @RemoveSelectedAction, @SaveAction, @SearchAction,
+@ViewAction<br>
+
+
+<h6>@CollectionView</h6>
+
+
+Change<br>
+
+
+<pre>@CollectionView(<span style="color: rgb(255, 0, 0); font-weight: bold;">name=</span>"Simple")</pre>
+
+
+by<br>
+
+
+<pre>@CollectionView("Simple")</pre>
+
+
+and<br>
+
+
+<pre>@CollectionView(forViews="DEFAULT, Deliveries", <span style="font-weight: bold; color: rgb(255, 0, 0);">name=</span>"InInvoice")</pre>
+
+
+by<br>
+
+
+<pre>@CollectionView(forViews="DEFAULT, Deliveries", <span style="font-weight: bold; color: rgb(51, 102, 255);">value=</span>"InInvoice")</pre>
+
+
+<h6>@DefaultValueCalculator</h6>
+
+
+Change<br>
+
+
+<pre>@DefaultValueCalculator(<span style="font-weight: bold; color: rgb(255, 0, 0);">calculator=</span>CurrentDateCalculator.class)</pre>
+
+
+by<br>
+
+
+<pre>@DefaultValueCalculator(CurrentDateCalculator.class)</pre>
+
+
+and<br>
+
+
+<pre>@DefaultValueCalculator(<br>    <span style="font-weight: bold; color: rgb(255, 0, 0);">calculator=</span>CarrierRemarksCalculator.class,<br>    properties={<br>        @PropertyValue(name="drivingLicenceType", from="drivingLicence.type") <br>    }&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>)</pre>
+
+
+by<br>
+
+
+<pre>@DefaultValueCalculator(<br>    <span style="font-weight: bold; color: rgb(51, 102, 255);">value=</span>CarrierRemarksCalculator.class,<br>    properties={<br>        @PropertyValue(name="drivingLicenceType", from="drivingLicence.type") <br>    }&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <br>)<br></pre>
+
+
+<h6>@Depends</h6>
+
+
+Change<br>
+
+
+<pre>@Depends(<span style="font-weight: bold; color: rgb(255, 0, 0);">properties=</span>"address.zipCode, address.city")</pre>
+
+
+by<br>
+
+
+<pre>@Depends("address.zipCode, address.city")</pre>
+
+
+<h6>@Editor</h6>
+
+
+Change<br>
+
+
+<pre>@Editor(<span style="font-weight: bold; color: rgb(255, 0, 0);">name=</span>"ValidValuesRadioButton")</pre>
+
+
+by<br>
+
+
+<pre>@Editor("ValidValuesRadioButton")</pre>
+
+
+and<br>
+
+
+<pre>@Editor(forViews="TypeWithRadioButton", <span style="color: rgb(255, 0, 0); font-weight: bold;">name=</span>"ValidValuesRadioButton")</pre>
+
+
+by<br>
+
+
+<pre>@Editor(forViews="TypeWithRadioButton", <span style="font-weight: bold; color: rgb(51, 102, 255);">value=</span>"ValidValuesRadioButton")</pre>
+
+
+<h6>@EntityValidator</h6>
+
+
+Change<br>
+
+
+<pre>@EntityValidator(<span style="font-weight: bold; color: rgb(255, 0, 0);">validator=</span>DeliveryValidator.class)</pre>
+
+
+by<br>
+
+
+<pre>@EntityValidator(DeliveryValidator.class)</pre>
+
+
+and<br>
+
+
+<pre>@EntityValidator(<span style="font-weight: bold; color: rgb(255, 0, 0);">validator=</span>DeliveryValidator.class,<br>    properties = {<br>        @PropertyValue(name="invoice") <br>    }&nbsp;&nbsp;&nbsp; <br>)<br></pre>
+
+
+by<br>
+
+
+<pre>@EntityValidator(<span style="color: rgb(51, 102, 255); font-weight: bold;">value=</span>DeliveryValidator.class,<br>    properties = {<br>        @PropertyValue(name="invoice") <br>    }&nbsp;&nbsp;&nbsp; <br>)<br></pre>
+
+
+<h6>@ListProperties</h6>
+
+
+Change<br>
+
+
+<pre>@ListProperties(<span style="color: rgb(255, 0, 0); font-weight: bold;">properties=</span>"number, name, remarks, relationWithSeller,<br>seller.level.description")</pre>
+
+
+by<br>
+
+
+<pre>@ListProperties("number, name, remarks, relationWithSeller,<br>seller.level.description")</pre>
+
+
+and<br>
+
+
+<pre>@ListProperties(forViews="DEFAULT", <span style="font-weight: bold; color: rgb(255, 0, 0);">properties=</span>"serviceType,<br>product.description, product.unitPriceInPesetas, quantity, unitPrice,<br>amount, free")</pre>
+
+
+by<br>
+
+
+<pre>@ListProperties(forViews="DEFAULT", <span style="font-weight: bold; color: rgb(51, 102, 255);">value=</span>"serviceType,<br>product.description, product.unitPriceInPesetas, quantity, unitPrice,<br>amount, free")</pre>
+
+
+<h6>
+@OnChange</h6>
+
+
+Change<br>
+
+
+<pre>@OnChange(<span style="color: rgb(255, 0, 0); font-weight: bold;">action=</span>OnChangeCustomerNameAction.class)</pre>
+
+
+by<br>
+
+
+<pre>@OnChange(OnChangeCustomerNameAction.class)</pre>
+
+
+and<br>
+
+
+<pre>@OnChange(forViews="DEFAULT",<br><span style="font-weight: bold; color: rgb(255, 0, 0);">action=</span>OnChangeInvoiceNumberInDeliveryAction.class)</pre>
+
+
+by<br>
+
+
+<pre>@OnChange(forViews="DEFAULT",<br><span style="font-weight: bold; color: rgb(51, 102, 255);">value=</span>OnChangeInvoiceNumberInDeliveryAction.class)</pre>
+
+
+<h6>@PropertyValidator</h6>
+
+
+Change<br>
+
+
+<pre>@PropertyValidator(<span style="font-weight: bold; color: rgb(255, 0, 0);">validator=</span>UnitPriceValidator.class)</pre>
+
+
+by<br>
+
+
+<pre>@PropertyValidator(UnitPriceValidator.class)</pre>
+
+
+and<br>
+
+
+<pre>@PropertyValidator(<span style="font-weight: bold; color: rgb(255, 0, 0);">validator=</span>ExcludeStringValidator.class, properties=<br>    @PropertyValue(name="string", value="MOTO")<br>)</pre>
+
+
+by<br>
+
+
+<pre>@PropertyValidator(<span style="font-weight: bold; color: rgb(51, 102, 255);">value=</span>ExcludeStringValidator.class, properties=<br> @PropertyValue(name="string", value="MOTO")<br>)</pre>
+
+
+<h6>@ReferenceView</h6>
+
+
+Change<br>
+
+
+<pre>@ReferenceView(<span style="font-weight: bold; color: rgb(255, 0, 0);">name=</span>"DecorateName")</pre>
+
+
+by<br>
+
+
+<pre>@ReferenceView("DecorateName")</pre>
+
+
+and<br>
+
+
+<pre>@ReferenceView(forViews="SimpleStateAsForm", <span style="font-weight: bold; color: rgb(255, 0, 0);">name=</span>"StateAsForm")</pre>
+
+
+by<br>
+
+
+<pre>@ReferenceView(forViews="SimpleStateAsForm", <span style="color: rgb(51, 102, 255); font-weight: bold;">value=</span>"StateAsForm")</pre>
+
+
+<h6>
+@RemoveValidator</h6>
+
+
+Change<br>
+
+
+<pre>@RemoveValidator(<span style="font-weight: bold; color: rgb(255, 0, 0);">validator=</span>DeliveryTypeRemoveValidator.class)</pre>
+
+
+by<br>
+
+
+<pre>@RemoveValidator(DeliveryTypeRemoveValidator.class)</pre>
+
+
+and<br>
+
+<pre>@RemoveValidator(<span style="font-weight: bold; color: rgb(255, 0, 0);">validator=</span>DeliveryTypeRemoveValidator.class,<br>    properties=@PropertyValue(name="number")<br>)<br></pre>
+
+
+by<br>
+
+
+<pre>@RemoveValidator(<span style="font-weight: bold; color: rgb(51, 102, 255);">value=</span>DeliveryTypeRemoveValidator.class,<br>    properties=@PropertyValue(name="number")<br>)<br></pre>
+
+
+<br>
+
+
