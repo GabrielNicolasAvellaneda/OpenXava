@@ -86,8 +86,14 @@ import org.openxava.util.*;
 aspect PropertyAspect {
 	
  
-	pointcut getter() : get(public !final !static  * *.*) && !within(PropertyAspect);
-	pointcut setter() : set(public !final !static  * *.*) && !within(PropertyAspect);
+	pointcut getter() : 
+		get(public !final !static * *..model*.*.*) &&
+		!get(public !final !static * *..model*.*Key.*) &&
+		!within(PropertyAspect);
+	pointcut setter() : 
+		set(public !final !static  * *..model*.*.*) &&
+		!set(public !final !static * *..model*.*Key.*) &&
+		!within(PropertyAspect);
 	
 	Object around(Object target, Object source) : target(target) && this(source) && getter(){
 		if (target == source) {			
