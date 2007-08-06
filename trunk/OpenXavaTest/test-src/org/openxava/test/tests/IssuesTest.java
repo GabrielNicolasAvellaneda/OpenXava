@@ -22,6 +22,7 @@ public class IssuesTest extends ModuleTestBase {
 		execute("Mode.detailAndFirst");
 		assertValue("id", "A0001");
 		assertValue("description", "COMPANY A ISSUE 1");
+		assertValueInCollection("comments", 0, "comment", "Comment on A0001");
 		execute("Mode.list");
 		assertListRowCount(2);
 		assertValueInList(0, "id", "A0001");
@@ -36,6 +37,7 @@ public class IssuesTest extends ModuleTestBase {
 		execute("Mode.detailAndFirst");
 		assertValue("id", "B0001");
 		assertValue("description", "COMPANY B ISSUE 1");
+		assertValueInCollection("comments", 0, "comment", "Comment on B0001");
 		execute("Mode.list");
 		assertListRowCount(3);
 		assertValueInList(0, "id", "B0001");
@@ -50,6 +52,7 @@ public class IssuesTest extends ModuleTestBase {
 		execute("Mode.detailAndFirst");
 		assertValue("id", "A0001");
 		assertValue("description", "COMPANY A ISSUE 1");
+		assertValueInCollection("comments", 0, "comment", "Comment on A0001");
 		execute("Mode.list");
 		assertListRowCount(2);
 		assertValueInList(0, "id", "A0001");

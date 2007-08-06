@@ -29,7 +29,10 @@ public class UserFilter implements IFilter {
 		}		
 	}
 
-	private String getUser() {		
+	/**
+	 * The user name used for filtering. <p>
+	 */
+	protected String getUser() {		
 		String user = Users.getCurrent();
 		log.debug("Users.getCurrent()=" + user); //  tmp
 		return user;

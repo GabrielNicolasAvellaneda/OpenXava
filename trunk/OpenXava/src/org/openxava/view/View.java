@@ -1038,7 +1038,7 @@ public class View implements java.io.Serializable {
 				collectionTab.setFilter(filter);
 			}
 			else {
-				collectionTab.setBaseCondition(createBaseConditionForCollectionTab());			
+				collectionTab.setBaseCondition(createBaseConditionForCollectionTab());							
 				CollectionInViewFilter filter = new CollectionInViewFilter();
 				filter.setView(getParent());
 				collectionTab.setFilter(filter);

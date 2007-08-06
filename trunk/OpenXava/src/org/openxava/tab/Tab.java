@@ -239,7 +239,7 @@ public class Tab implements java.io.Serializable {
 	
 	private IXTableModel createTableModel() throws Exception {
 		IXTableModel tableModel = null;
-		IEntityTab tab = EntityTabFactory.create(getMetaTab());
+		IEntityTab tab = EntityTabFactory.create(getMetaTab());		
 		tab.search(getCondition(), getKey());
 		tableModel = tab.getTable();
 		
@@ -270,18 +270,20 @@ public class Tab implements java.io.Serializable {
 	}
 	
 	private String getCondition() {
-		if (condition == null) {
-			try {
+		try {
+			if (condition == null || getMetaTab().isDefaultSchemaChanged()) { 			
 				condition = createCondition();
-			}
-			catch (Exception ex) {
-				log.error(XavaResources.getString("tab_condition_warning"),ex);
-				condition = "";
-				conditionValues = null;				
-				conditionComparators = null;					
-			}
-		}		
-		return condition;
+			}		
+			return condition;
+		}
+		catch (Exception ex) {
+			log.error(XavaResources.getString("tab_condition_warning"),ex);
+			condition = "";
+			conditionValues = null;				
+			conditionComparators = null;
+			return condition;
+		}
+
 	}
 	
 	private String createCondition() throws Exception {

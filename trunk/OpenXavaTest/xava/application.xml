@@ -280,4 +280,5 @@
 		<model name="Issue"/>
 		<controller name="Typical"/>
 		<controller name="Issues"/>
-	</module>		</application>
+	</module>
+			</application>

@@ -94,7 +94,7 @@ public class ResourceManagerI18n {
 		}
 		catch (MissingResourceException ex) {
 			if (XavaPreferences.getInstance().isI18nWarnings()) {
-				log.warn(XavaResources.getString("element_i18n_warning", key));
+				log.warn("Impossible to translate element with id " + key);
 			}
 			return key;
 		}
@@ -129,7 +129,7 @@ public class ResourceManagerI18n {
 		}
 		catch (MissingResourceException ex) {
 			if (XavaPreferences.getInstance().isI18nWarnings()) {
-				log.warn(XavaResources.getString("char_i18n_warning", key));
+				log.warn("WARNING! Translation for character " + key + " not found. Blank is assumed");
 			}
 			return ' ';
 		}
