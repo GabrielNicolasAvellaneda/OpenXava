@@ -129,7 +129,7 @@ public class WebEditors {
 	}
 	
 	public static String getUrl(MetaProperty p, String viewName) throws XavaException { 	
-		if (!Is.emptyString(viewName) && p.getMetaModel() != null) {
+		if (p.getMetaModel() != null) {
 			try {				
 				MetaView metaView = p.getMetaModel().getMetaView(viewName);
 				String editorName = metaView.getEditorForProperty(p);
