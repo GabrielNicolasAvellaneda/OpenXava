@@ -1,12 +1,16 @@
 Este documento explica como crear aplicaciones multiesquema con
 OpenXava.<br>
+
 The momento las aplicaciones multiesquema solo funcionan con EJB3 JPA
 como mecanismo de persistencia.<br>
+
 <h4>Aplicaciones multiesquema</h4>
+
 Una aplicaci&oacute;n multiesquema permite replicar toda la estructura
 de tabla de nuestra base de datos en varios esquemas de base de datos.
 Entonces cada usuario (o en cada sesi&oacute;n) puede trabajar con un
 esquema diferente, o sea contra diferentes datos.<br>
+
 Por ejemplo, podemos tener los datos de 3 empresas diferentes en el
 mismo servidor de base de datos. Nuestra aplicaci&oacute;n OpenXava,
 que est&aacute; desplegadas solo una vez en un servidor de
@@ -14,161 +18,258 @@ aplicaciones, puede ser usada por los usuarios de estas tres empresas,
 pero cada empleado solo puede acceder a los datos de su
 compa&ntilde;ia. Una aplicaci&oacute;n multiesquema permite implementar
 esto.<br>
+
 Usar varios esquemas en la base de datos no es solo por seguridad, sino
 tambi&eacute;n para evitar tener tablas de base de datos inmensas;
 porque podemos separar la informaci&oacute;n por empresas, a&ntilde;os,
 departamentos, municipios, etc.<br>
+
 <h4>Un ejemplo</h4>
+
 Veamos un ejemplo de un m&oacute;dulo OpenXava que usa multiesquema.<br>
+
 Primero, necesitamos tener un componente OpenXava, como &eacute;ste:<br>
+
 <pre>&lt;componente nombre="Incidencia"&gt;</pre>
+
 <pre><br>&nbsp;&nbsp;&nbsp; &lt;entidad&gt;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;propiedad nombre="id" tipo="String" clave="true" </pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; longitud="5" requerido="true"/&gt;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;propiedad nombre="descripcion" tipo="String" </pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; longitud="40" requerido="true"/&gt;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &lt;/entidad&gt;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; </pre>
-<pre>&nbsp;&nbsp;&nbsp; &lt;mapeo-entidad tabla="<span
- style="font-weight: bold; color: rgb(51, 102, 255);">INCIDENCIA</span>"&gt;</pre>
+
+<pre>&nbsp;&nbsp;&nbsp; &lt;mapeo-entidad tabla="<span style="font-weight: bold; color: rgb(51, 102, 255);">INCIDENCIA</span>"&gt;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;mapeo-propiedad</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; propiedad-modelo="id" columna-tabla="ID"/&gt;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;mapeo-propiedad</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; propiedad-modelo="descripcion" columna-tabla="DESCRIPCION"/&gt;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &lt;/mapeo-propiedad&gt; </pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </pre>
+
 <pre>&lt;/componente&gt;</pre>
+
 Se puede ver como mapeamos el componente contra la tabla INCIDENCIA,
 pero no indicamos el esquema.<br>
+
 <br>
-Ahora, podemos definir el m&oacute;dulo en <span
- style="font-family: monospace;">aplicacion.xml</span>,
+
+Ahora, podemos definir el m&oacute;dulo en <span style="font-family: monospace;">aplicacion.xml</span>,
 como sigue:<br>
+
 <pre>&lt;modulo nombre="Incidencias"&gt;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &lt;modelo nombre="Incidencia"/&gt;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &lt;controlador nombre="Typical"/&gt;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &lt;controlador nombre="Incidencias"/&gt;</pre>
+
 <pre>&lt;/modulo&gt;</pre>
-Entoces, definimos nuestro propio controlador <span
- style="font-family: monospace;">Incidencias</span>, en&nbsp;<span
- style="font-family: monospace;">controladores.xml</span>, de esta
+
+Entoces, definimos nuestro propio controlador <span style="font-family: monospace;">Incidencias</span>, en&nbsp;<span style="font-family: monospace;">controladores.xml</span>, de esta
 forma:<br>
+
 <pre>&lt;controlador nombre="Incidencias"&gt;</pre>
-<pre>&nbsp;&nbsp;&nbsp; <span
- style="font-weight: bold; color: rgb(51, 102, 255);">&lt;hereda-de controlador="DefaultSchema"/&gt;</span></pre>
+
+<pre>&nbsp;&nbsp;&nbsp; <span style="font-weight: bold; color: rgb(51, 102, 255);">&lt;hereda-de controlador="DefaultSchema"/&gt;</span></pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &lt;accion nombre="cambiarAEmpresa1" al-iniciar="true"</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; clase="org.openxava.actions.SetDefaultSchemaAction"&gt;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;poner propiedad="newDefaultSchema" value="EMPRESA1"/&gt;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;usa-objeto nombre="xava_defaultSchema"/&gt;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &lt;/accion&gt;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &lt;accion nombre="cambiarAEmpresa2" </pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; clase="org.openxava.actions.SetDefaultSchemaAction"&gt;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;poner propiedad="newDefaultSchema" value="EMPRESA2"/&gt;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;usa-objeto nombre="xava_defaultSchema"/&gt;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &lt;/accion&gt;</pre>
+
 <pre></pre>
+
 <pre>&lt;/controlador&gt;</pre>
+
 Y ahora tenemos un modulo que puede trabajar contra el esquema
 'EMPRESA1' o contra el esquema 'EMPRESA2'. El usuario solo ha de pulsa
-en el bot&oacute;n correspondiente para cambiar <span
- style="font-style: italic;">en caliente</span> el origen de los datos.<br>
+en el bot&oacute;n correspondiente para cambiar <span style="font-style: italic;">en caliente</span> el origen de los datos.<br>
+
 <br>
+
 Eso es todo.<br>
+
 <h4>C&oacute;mo funciona</h4>
+
 Podemos usar estos controladores y acciones que est&aacute;n listos
 para usar, pero si adem&aacute;s sabemos como funcionan, podemos
 hacerlo nosotros mismos y as&iacute; podemos adaptarnos m&aacute;s a
 nuestras necesidades espec&iacute;ficas. La clave est&aacute; en la
-clase&nbsp;<a
- href="/OpenXavaDoc/apidocs/org/openxava/jpa/XPersistence.html">XPersistence</a>,
+clase&nbsp;<a href="/OpenXavaDoc/apidocs/org/openxava/jpa/XPersistence.html">XPersistence</a>,
 usando esta clase es posible cambiar el esquema por defecto en tiempo
 de ejecuci&oacute;n:<br>
+
 <pre>XPersistence.setDefaultSchema("EMPRESA1");</pre>
+
 Esto cambia el esquema por defecto a 'EMPRESA1', pero solo para el hilo
 de ejecuci&oacute;n actual.<br>
+
 Ahora, si usamos un objeto de sesi&oacute;n (ver la secci&oacute;n 7.2
-de la gu&iacute;a de referencia) y usamos una acci&oacute;n con <span
- style="font-family: monospace;">en-cada-peticion="true"</span> para
+de la gu&iacute;a de referencia) y usamos una acci&oacute;n con <span style="font-family: monospace;">en-cada-peticion="true"</span> para
 establecer el esquema asociado al usuario actual como el esquema por
 defecto para el hilo de la petici&oacute;n, tendremos el problema
 resuelto.<br>
+
 <br>
+
 Intentemos hacerlo.<br>
+
 Define un objeto de sesi&oacute;n para almacenar el esquema actual por
 usuario:<br>
-<pre>&lt;object name="xava_defaultSchema" class="java.lang.String"/&gt;</pre>
+
+<pre>&lt;object name="xava_defaultSchema" class="java.lang.String" scope="global"/&gt;</pre>
+
 Esto est&aacute; en <span style="font-family: monospace;">OpenXava/xava/default-controllers.xml</span>,
 por lo tanto est&aacute; disponible para t&iacute;; aunque puedes
-crearte tu propio objeto de sesi&oacute;n en tu propio <span
- style="font-family: monospace;">controladores.xml</span>
+crearte tu propio objeto de sesi&oacute;n en tu propio <span style="font-family: monospace;">controladores.xml</span>
 si as&iacute; lo prefieres.<br>
+
 <br>
+
 Define una acci&oacute;n (en tu propio controlador) que se ejecute en
 cada petici&oacute;n, en <span style="font-family: monospace;">controladores.xml</span>:<br>
+
 <pre>&lt;controlador ... &gt;</pre>
-<pre>&nbsp;&nbsp;&nbsp; &lt;accion nombre="ponerEsquemaPorDefecto" <span
- style="font-weight: bold; color: rgb(51, 102, 255);">en-cada-peticion="true"</span> oculta="true"</pre>
+
+<pre>&nbsp;&nbsp;&nbsp; &lt;accion nombre="ponerEsquemaPorDefecto" <span style="font-weight: bold; color: rgb(51, 102, 255);">en-cada-peticion="true"</span> oculta="true"</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; clase="org.openxava.actions.SetDefaultSchemaAction"&gt;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;use-objeto nombre="xava_defaultSchema"/&gt;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &lt;/accion&gt;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; ...</pre>
+
 <pre>&lt;/controlador&gt;&nbsp;&nbsp;&nbsp; </pre>
+
 (El controlador <span style="font-family: monospace;">DefaultSchema</span>
 de OpenXava tiene esta acci&oacute;n incluida)<br>
+
 En esta acci&oacute;n solo necesitas tener el objeto de sesi&oacute;n
 (en este caso <span style="font-family: monospace;">xava_defaultSchema</span>)
-y ponerlo como &nbsp;esquema por defecto usando <span
- style="font-family: monospace;">XPersistence</span>:<br>
+y ponerlo como &nbsp;esquema por defecto usando <span style="font-family: monospace;">XPersistence</span>:<br>
+
 <br>
+
 <pre>public class SetDefaultSchemaAction extends BaseAction {</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; </pre>
+
 <pre>&nbsp;&nbsp;&nbsp; private String defaultSchema;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; private String newDefaultSchema;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </pre>
+
 <pre><br>&nbsp;&nbsp;&nbsp; public void execute() throws Exception {</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (newDefaultSchema != null)&nbsp;&nbsp;&nbsp; defaultSchema = newDefaultSchema;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; XPersistence.setDefaultSchema(defaultSchema);</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; }</pre>
+
 <pre><br>&nbsp;&nbsp;&nbsp; /**</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;* The current default schema used by OpenXava and JPA.</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;*/</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; public String getDefaultSchema() {</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return defaultSchema;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; }</pre>
+
 <pre><br>&nbsp;&nbsp;&nbsp; /**</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;* The current default schema used by OpenXava and JPA.</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;*/&nbsp;&nbsp;&nbsp; </pre>
+
 <pre>&nbsp;&nbsp;&nbsp; public void setDefaultSchema(String company) {</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; this.defaultSchema = company;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; }</pre>
+
 <pre><br>&nbsp;&nbsp;&nbsp; /**</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;* The new default schema for OpenXava and JPA. &lt;P&gt;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;* </pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;* This value update the property 'defaultSchema'.</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;*/</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; public String getNewDefaultSchema() {</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return newDefaultSchema;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; }</pre>
+
 <pre><br>&nbsp;&nbsp;&nbsp; /**</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;* The new default schema for OpenXava and JPA. &lt;P&gt;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;* </pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;* This value update the property 'defaultSchema'.</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;*/&nbsp;&nbsp;&nbsp; </pre>
+
 <pre>&nbsp;&nbsp;&nbsp; public void setNewDefaultSchema(String newCompany) {</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; this.newDefaultSchema = newCompany;</pre>
+
 <pre>&nbsp;&nbsp;&nbsp; }</pre>
+
 <pre><br>}</pre>
+
 Ya que&nbsp;<span style="font-family: monospace;">defaultSchema</span>
 es inyectado usando <span style="font-family: monospace;">&lt;usa-objeto
-/&gt;</span> cuando cambiamos la propiedad <span
- style="font-family: monospace;">defaultSchema</span>
-tambi&eacute;n estamos cambiando el objeto de sesi&oacute;n <span
- style="font-family: monospace;">xava_defaultSchema</span>.<br>
-Esta acci&oacute;n forma parte del nucleo de OpenXava (en <span
- style="font-family: monospace;">org.openxava.actions</span>), puedes
+/&gt;</span> cuando cambiamos la propiedad <span style="font-family: monospace;">defaultSchema</span>
+tambi&eacute;n estamos cambiando el objeto de sesi&oacute;n <span style="font-family: monospace;">xava_defaultSchema</span>.<br>
+
+Esta acci&oacute;n forma parte del nucleo de OpenXava (en <span style="font-family: monospace;">org.openxava.actions</span>), puedes
 usarla tal cual, o crearte la tuya propia usando una t&eacute;cnica
 similar.<br>
+
 <br>
+
 Ahora puedes llamar a esta acci&oacute;n (u otra parecida) cuando
 quieras cambiar el esquema actual para el usuario.<br>
+
 <br>
+
 <br>

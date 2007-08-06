@@ -390,14 +390,14 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	}
 
 	public String getSelect() throws XavaException {
-		if (select == null || defaultSchemaChanged()) {  
+		if (select == null || isDefaultSchemaChanged()) {  
 			select = createSelect();
 			saveDefaultSchema();
 		}
 		return select;
 	}
 
-	private boolean defaultSchemaChanged() {
+	public boolean isDefaultSchemaChanged() { 
 		if (!XavaPreferences.getInstance().isJPAPersistence()) return false;
 		return !Is.equal(lastDefaultSchema, XPersistence.getDefaultSchema());
 	}
@@ -408,7 +408,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	}
 
 	public String getSelectSQL() throws XavaException {
-		if (selectSQL == null || defaultSchemaChanged()) { 				
+		if (selectSQL == null || isDefaultSchemaChanged()) {		
 			selectSQL = getMapping().changePropertiesByColumns(getSelect());			
 		}		
 		return selectSQL;
@@ -496,7 +496,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		if (hasBaseCondition()) {
 			select.append(" where ");
 			select.append(getBaseCondition());
-		}				
+		}					
 		return select.toString();
 	}
 
@@ -778,14 +778,6 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	public void setBaseCondition(String string) {
 		baseCondition = string;
 		sQLBaseCondition = null;
-	}
-
-	public String getSQLBaseCondition() throws XavaException {
-		if (sQLBaseCondition == null) {
-			sQLBaseCondition = getMapping().changePropertiesByColumns(
-					getBaseCondition());
-		}
-		return sQLBaseCondition;
 	}
 
 	public boolean hasBaseCondition() {

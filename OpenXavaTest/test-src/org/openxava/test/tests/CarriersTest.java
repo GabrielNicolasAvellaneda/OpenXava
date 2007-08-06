@@ -283,7 +283,8 @@ public class CarriersTest extends ModuleTestBase {
 
 	
 	public void testDeleteWithoutSelected() throws Exception {
-		assertCarriersCount(5);		
+		assertCarriersCount(5);
+		execute("List.orderBy", "property=number");
 		execute("List.viewDetail", "row=2");		
 		assertValue("number", "3");
 		assertValue("name", "TRES");

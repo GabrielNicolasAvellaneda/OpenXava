@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Multischema applications (using XPersistence.setDefaultSchema()) fail in collections when changing from a schema to other in some databases without reinitatite the module.
+- Fix: StackOverflowError in ResourceManagerI18n generating code from a locale other than ca, de, en, es, fr, in, pl.
+- Fix: MetaModel.getMetaView() failed when a null or empty string was used as argument and no default view was explicitly defined in component.
+- Method getSQLBaseCondition() removed from MetaTab.
 - Fix: getValueInCollection and assertValueInCollection does not calculated well the row number in the case of not calculated and read only collection without view link.
 - Button bar is not shown if it is empty (no action nor mode actions).
 - More meaningful title for PDF reports in collections.
