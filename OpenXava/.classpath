@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="xava"/>
 	<classpathentry kind="src" path="properties"/>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry excluding="org/openxava/aspects/PropertyAspect.aj" kind="src" path="src"/>
 	<classpathentry kind="var" path="JRE_LIB" sourcepath="JRE_SRC">
 		<attributes>
 			<attribute name="javadoc_location" value="http://java.sun.com/j2se/1.4.2/docs/api"/>
@@ -34,6 +34,5 @@
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/hibernate-entitymanager.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/jboss-archive-browsing.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/javassist.jar"/>
-	<classpathentry kind="con" path="org.eclipse.ajdt.core.ASPECTJRT_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
