@@ -109,6 +109,7 @@ public abstract class InvoiceDetailCMP
       try
          {
             InvoiceDetailValue.setAmount( getAmount() );
+            InvoiceDetailValue.setFree( isFree() );
             InvoiceDetailValue.setOid( getOid() );
             InvoiceDetailValue.setRemarks( getRemarks() );
             InvoiceDetailValue.setDeliveryDate( getDeliveryDate() );
@@ -135,6 +136,7 @@ public abstract class InvoiceDetailCMP
 	  try
 	  {
 		 setAmount( valueHolder.getAmount() );
+		 setFree( valueHolder.isFree() );
 		 setRemarks( valueHolder.getRemarks() );
 		 setDeliveryDate( valueHolder.getDeliveryDate() );
 		 setUnitPrice( valueHolder.getUnitPrice() );

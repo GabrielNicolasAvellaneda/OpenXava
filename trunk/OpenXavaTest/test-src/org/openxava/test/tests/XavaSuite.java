@@ -104,7 +104,8 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(OnlyEditDetailsInvoiceTest.class));
 		suite.addTest(new TestSuite(OnlyReadDetailsInvoiceTest.class));
 		suite.addTest(new TestSuite(POJOTest.class));
-		suite.addTest(new TestSuite(PersonTest.class));
+		//PersonTest >> waiting for OX3.1, now it works, but it needs AJDT or AspectJ 
+		//suite.addTest(new TestSuite(PersonTest.class));
 		suite.addTest(new TestSuite(PositiveValidatorTest.class));
 		suite.addTest(new TestSuite(Products2ReferenceAndStereotypeTest.class));
 		suite.addTest(new TestSuite(Products2Test.class));

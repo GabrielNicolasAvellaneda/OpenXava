@@ -15,7 +15,7 @@ public class InvoiceDetailIsFreeCalculator implements IModelCalculator {
 	private IInvoiceDetail detail;
 
 	public Object calculate() throws Exception {
-		return detail.getAmount().compareTo(new BigDecimal("0")) <= 0;
+		return new Boolean(detail.getAmount().compareTo(new BigDecimal("0")) <= 0);
 	}
 	
 	public void setModel(Object model) throws RemoteException {

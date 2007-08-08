@@ -4,6 +4,13 @@ import org.openxava.test.model.*;
 import junit.framework.TestCase;
 
 /**
+ * For testing PropertyAspect. <p>
+ * 
+ * You need to compile your code with AspectJ, or to have installed the
+ * AJDT plugin in your Eclipse in order to execute this test.<br>
+ * If you install AJDT, you have to 'Convert to AspectJ Project',
+ * OpenXava and OpenXavaTest projects.<br>
+ * 
  * @author Javier Paniza
  */
 

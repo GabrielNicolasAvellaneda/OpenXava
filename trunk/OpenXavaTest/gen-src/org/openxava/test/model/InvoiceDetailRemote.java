@@ -13,6 +13,9 @@ public interface InvoiceDetailRemote
    public java.math.BigDecimal getAmount(  )
       throws java.rmi.RemoteException;
 
+   public boolean isFree(  )
+      throws java.rmi.RemoteException;
+
    public java.lang.String getOid(  )
       throws java.rmi.RemoteException;
 

@@ -52,7 +52,13 @@
 		<controller name="Typical"/>
 		<controller name="Carriers"/>		
 	</module>
-		
+	
+	<module name="CarriersWithCalculatedFellows">
+		<model name="Carrier"/>
+		<view name="CalculatedFellows"/>
+		<controller name="Typical"/>		
+	</module>
+			
 	<module name="Sizes">
 		<model name="Size"/>
 		<controller name="Typical"/>
@@ -184,7 +190,7 @@
 			<module name="CustomersSomeMembersReadOnly" folder="invoicing.variations">			<model name="Customer"/>		<view name="SomeMembersReadOnly"/>		<controller name="Typical"/>			</module>
 	
 	<module name="CustomersRadioButton" folder="invoicing.variations">	
-		<model name="Customer"/>
+		<model name="Customer"/>		
 		<view name="TypeWithRadioButton"/>
 		<controller name="Typical"/>
 	</module>
@@ -274,4 +280,5 @@
 		<model name="Issue"/>
 		<controller name="Typical"/>
 		<controller name="Issues"/>
-	</module>		</application>
+	</module>
+			</application>
