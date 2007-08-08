@@ -1,6 +1,46 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 2.2.1 (2007-8-7)
+-------------------------
+- Method getSQLBaseCondition() removed from MetaTab.
+- Button bar is not shown if it is empty (no action nor mode actions).
+- More meaningful title for PDF reports in collections.
+- Icon for 'delete' changed.
+- New property emailAsUserNameInPortal for usin in xava.properties that allows Users.getCurrent() returns the user email instead of the user id inside a portal.
+- JavaScript calendar is aligned on top of editor, in order to work fine in IE6.
+- MoneyFormatter for MONEY and DINERO stereotypes. Now money is always displayed with two decimals.
+- New methods noLastTokenWithoutLastDelim() added to Strings utity class.
+- It's possible to put empty string for action in edit-action, view-action, new-action, save-action, hide-detail-action, remove-action, remove-selected-action of collection-view, and the action will not be shown in the User Interface.
+- The JSP tags: action, link, image and button support empty string as value for action.
+- Tab now is serializable.
+- Now actions in DefaultListActionsForCollections controller are not added automatically to calculated collections.
+- New method Messages.getIds() that returns a list with the ids of the messages.
+- New display-size attribute available in <property-view/>.
+- A validation of scale is done for MONEY/DINERO stereotype.
+- regenerateHibernate now delete filtered-file folder before regenerate. Now you can rename a component with no problems.
+- Mode.list link is not available when creating or modifing a reference. In general change mode actions are not available after view navigation.
+- Beta support for EJB3 Entities as component definition language. The code is in a ox3-src folder. This is for supporting the development of OX3.
+- All data access from JUnit tests in OpenXavaTest is done using JPA instead of Hibernate.
+- Added method toKeyString(Object pojo) to ModuleTestBase in order to obtain a string representation of the key of a POJO from the POJO itself.
+- Fix: Searching by a property of type String mapped to a numeric column fails on Informix (or other DBs that do not support like in numerica columns)
+- Fix: JavaScript calendar fails on choose dates in languages other than Spanish.
+- Fix: List actions fail in nested collection. As generating PDF or deleting selected rows.
+- Fix: Some unexpected exception in Labels produces that collections will not work.
+- Fix: editor attribute in <property-view/> does not work is the property is inside a group.
+- Fix: NullPointerException in DateTimeFormatter when it try to parse a null value.
+- Fix: Calculated properties in aggregate collections that use IModelCalculator fails.
+- Fix: Collections fails on creating new objects in UI working agains some databases (as Informix).
+- Fix: Charset of JasperReports for automatic reports depends on the JVM config (special characters was not well displayed in Liferay).
+- Fix: 'editor' attribute of <property-view/> did not work in default view (the view with no name).
+- Fix: Multischema applications (using XPersistence.setDefaultSchema()) fail in collections when changing from a schema to other in some databases without reinitatite the module.
+- Fix: StackOverflowError in ResourceManagerI18n generating code from a locale other than ca, de, en, es, fr, in, pl.
+- Fix: MetaModel.getMetaView() failed when a null or empty string was used as argument and no default view was explicitly defined in component.
+- Fix: getValueInCollection and assertValueInCollection does not calculated well the row number in the case of not calculated and read only collection without view link.
+
+
+
+
 OpenXava 2.2 (2007-6-28)
 ------------------------
 MAIN FEATURES since 2.1
