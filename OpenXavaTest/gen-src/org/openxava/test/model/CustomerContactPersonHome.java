@@ -24,6 +24,9 @@ public interface CustomerContactPersonHome
    public java.util.Collection findByCustomer(int number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
+   public org.openxava.test.model.CustomerContactPersonRemote findFindByCustomer(int customerNumber)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public org.openxava.test.model.CustomerContactPersonRemote findByPrimaryKey(org.openxava.test.model.CustomerContactPersonKey pk)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

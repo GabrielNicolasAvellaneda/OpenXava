@@ -19,6 +19,9 @@ public interface IssueRemote
    public void setDescription( java.lang.String newDescription )
       throws java.rmi.RemoteException;
 
+   public java.util.Collection getComments(  )
+      throws java.rmi.RemoteException;
+
    public org.openxava.test.model.IssueData getData(  )
       throws java.rmi.RemoteException;
 

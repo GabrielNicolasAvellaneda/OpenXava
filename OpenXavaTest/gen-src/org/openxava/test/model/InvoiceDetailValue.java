@@ -16,6 +16,8 @@ public class InvoiceDetailValue
 
    private java.math.BigDecimal amount;
    private boolean amountHasBeenSet = false;
+   private boolean free;
+   private boolean freeHasBeenSet = false;
    private java.lang.String oid;
    private boolean oidHasBeenSet = false;
    private java.lang.String remarks;
@@ -46,6 +48,8 @@ public class InvoiceDetailValue
    {
 	  this.amount = otherValue.amount;
 	  amountHasBeenSet = true;
+	  this.free = otherValue.free;
+	  freeHasBeenSet = true;
 	  this.oid = otherValue.oid;
 	  oidHasBeenSet = true;
 	  this.remarks = otherValue.remarks;
@@ -81,6 +85,20 @@ public class InvoiceDetailValue
 
    public boolean amountHasBeenSet(){
 	  return amountHasBeenSet;
+   }
+   public boolean isFree()
+   {
+	  return this.free;
+   }
+
+   public void setFree( boolean free )
+   {
+	  this.free = free;
+	  freeHasBeenSet = true;
+   }
+
+   public boolean freeHasBeenSet(){
+	  return freeHasBeenSet;
    }
    public java.lang.String getOid()
    {
@@ -227,7 +245,7 @@ public class InvoiceDetailValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("amount=" + getAmount() + " " + "oid=" + getOid() + " " + "remarks=" + getRemarks() + " " + "deliveryDate=" + getDeliveryDate() + " " + "unitPrice=" + getUnitPrice() + " " + "quantity=" + getQuantity() + " " + "serviceType=" + getServiceType() + " " + "product_number=" + getProduct_number() + " " + "invoice_year=" + getInvoice_year() + " " + "invoice_number=" + getInvoice_number() + " " + "soldBy_number=" + getSoldBy_number());
+	  str.append("amount=" + getAmount() + " " + "free=" + isFree() + " " + "oid=" + getOid() + " " + "remarks=" + getRemarks() + " " + "deliveryDate=" + getDeliveryDate() + " " + "unitPrice=" + getUnitPrice() + " " + "quantity=" + getQuantity() + " " + "serviceType=" + getServiceType() + " " + "product_number=" + getProduct_number() + " " + "invoice_year=" + getInvoice_year() + " " + "invoice_number=" + getInvoice_number() + " " + "soldBy_number=" + getSoldBy_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -288,6 +306,7 @@ public class InvoiceDetailValue
 		 {
 			lEquals = lEquals && this.amount.equals( that.amount );
 		 }
+		 lEquals = lEquals && this.free == that.free;
 		 if( this.remarks == null )
 		 {
 			lEquals = lEquals && ( that.remarks == null );
@@ -330,6 +349,8 @@ public class InvoiceDetailValue
    public int hashCode(){
 	  int result = 17;
       result = 37*result + ((this.amount != null) ? this.amount.hashCode() : 0);
+
+      result = 37*result + (free ? 0 : 1);
 
       result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
 
