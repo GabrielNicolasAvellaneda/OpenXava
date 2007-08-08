@@ -317,7 +317,7 @@
 		</members>
 		
 	</view>
-	
+	 
 	<view name="TypeWithRadioButton">
 		<property-view property="type" editor="ValidValuesRadioButton"/>
 		<members>
@@ -329,7 +329,7 @@
 			</group>
 		</members>
 	</view>	
-				
+					
 	<view model="Address">
 				
 		<property name="viewProperty" type="String"/>
