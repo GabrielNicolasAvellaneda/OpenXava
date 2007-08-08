@@ -268,6 +268,19 @@
       </columns>
 
    </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Comment" name="" primaryKey="Comment_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Comment_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Comment" constraint="Constraint_Comment_"/>
+
+      <columns xmi:id="Comment_id" name="id">
+      </columns>
+      <columns xmi:id="Comment__Comment" name="_Comment">
+      </columns>
+      <columns xmi:id="Comment__Date" name="_Date">
+      </columns>
+      <columns xmi:id="Comment__Issue_id" name="_Issue_id">
+      </columns>
+
+   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_Clerk" name="" primaryKey="Clerk_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Clerk_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Clerk" constraint="Constraint_Clerk_"/>
 
