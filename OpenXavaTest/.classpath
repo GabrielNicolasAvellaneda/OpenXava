@@ -22,6 +22,6 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/cglib.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/ejb3-persistence.jar"/>
 	<classpathentry exported="true" kind="src" path="/OpenXava"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/Sun JDK 1.5.0_11"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>
