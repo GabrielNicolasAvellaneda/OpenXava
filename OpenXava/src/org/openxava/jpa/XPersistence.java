@@ -8,7 +8,6 @@ import javax.persistence.*;
 import javax.xml.parsers.*;
 
 import org.apache.commons.logging.*;
-import org.openxava.annotations.parse.*;
 import org.openxava.util.*;
 import org.w3c.dom.*;
 
@@ -80,9 +79,7 @@ public class XPersistence {
 	private static ThreadLocal currentManager = new ThreadLocal();
 	private static Map entityManagerFactories = new HashMap();
 	private static ThreadLocal currentPersistenceUnitProperties = new ThreadLocal();
-	private static Map defaultPersistenceUnitProperties;
-	private static String defaultSchemaFromPersistenceXML;
-	
+	private static Map defaultPersistenceUnitProperties;		
 
 	/**
 	 * <code>EntityManager</code> associated to current thread. <p>
@@ -229,7 +226,10 @@ public class XPersistence {
 		if (defaultPersistenceUnitProperties == null) {
 			defaultPersistenceUnitProperties = new HashMap();
 			defaultPersistenceUnitProperties.put(XAVA_PERSISTENCE_UNIT_KEY, DEFAULT_PERSISTENCE_UNIT);
-			defaultPersistenceUnitProperties.put(HIBERNATE_DEFAULT_SCHEMA, getDefaultSchemaFromPersistenceXML()); // tmp
+			String defaultSchema = obtainDefaultSchemaFromPersistenceXML();
+			if (defaultSchema != null) {
+				defaultPersistenceUnitProperties.put(HIBERNATE_DEFAULT_SCHEMA, defaultSchema);
+			}
 			defaultPersistenceUnitProperties = Collections.unmodifiableMap(defaultPersistenceUnitProperties);
 		}
 		return defaultPersistenceUnitProperties;
@@ -290,37 +290,33 @@ public class XPersistence {
 	 * 
 	 * @return
 	 */
-	private static String getDefaultSchemaFromPersistenceXML() {
-		if (defaultSchemaFromPersistenceXML == null) {
-			try {
-				DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-				URL url = XPersistence.class.getClassLoader().getResource("META-INF/persistence.xml");
-				Document doc = builder.parse(url.toExternalForm());
-				NodeList units = doc.getElementsByTagName("persistence-unit");
-				int unitsCount = units.getLength();
-				for (int i=0; i<unitsCount; i++) {
-					Element unit = (Element) units.item(i);
-					if (XPersistence.getPersistenceUnit().equals(unit.getAttribute("name"))) {																
-						NodeList nodes = unit.getElementsByTagName("property");
-						int length = nodes.getLength(); 
-						for (int j=0; j<length; j++) {
-							Element el = (Element) nodes.item(j);
-							String name = el.getAttribute("name");
-							if ("hibernate.default_schema".equals(name)) {
-								defaultSchemaFromPersistenceXML = el.getAttribute("value");
-								return defaultSchemaFromPersistenceXML;
-							}
+	private static String obtainDefaultSchemaFromPersistenceXML() {
+		try {
+			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			URL url = XPersistence.class.getClassLoader().getResource("META-INF/persistence.xml");
+			Document doc = builder.parse(url.toExternalForm());
+			NodeList units = doc.getElementsByTagName("persistence-unit");
+			int unitsCount = units.getLength();
+			for (int i=0; i<unitsCount; i++) {
+				Element unit = (Element) units.item(i);
+				if (XPersistence.getPersistenceUnit().equals(unit.getAttribute("name"))) {																
+					NodeList nodes = unit.getElementsByTagName("property");
+					int length = nodes.getLength(); 
+					for (int j=0; j<length; j++) {
+						Element el = (Element) nodes.item(j);
+						String name = el.getAttribute("name");
+						if ("hibernate.default_schema".equals(name)) {
+							return el.getAttribute("value");
 						}
-					}				
-				}
-				defaultSchemaFromPersistenceXML = "";
+					}
+				}				
 			}
-			catch (Exception ex) {
-				log.warn(XavaResources.getString("default_schema_warning"));
-				return ""; 
-			}
+			return null;
 		}
-		return defaultSchemaFromPersistenceXML;
+		catch (Exception ex) {
+			log.warn(XavaResources.getString("default_schema_warning"));
+			return null; 
+		}
 	}
 
 		
