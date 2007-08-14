@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- A default module is assumed for each component of the application without declaring it in application.xml. 
+- New element default-module in application.xml for defining the controllers for default modules.
+- Method setJPAPersistence removed from XavaPreferences.
+
 OpenXava 2.2.1 (2007-8-7)
 -------------------------
 - Method getSQLBaseCondition() removed from MetaTab.

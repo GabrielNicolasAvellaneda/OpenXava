@@ -83,14 +83,12 @@ public class MetaModule extends MetaElement implements java.io.Serializable {
 		return getMetaApplication().getId() + "." + getName();		
 	}
 	
-	@Override
 	protected String getLabel(Locale locale, String id) {
 		String moduleId = id + ".module";
 		if (Labels.exists(moduleId)) return super.getLabel(locale, moduleId);
 		return super.getLabel(locale, id);
 	}
-	
-	@Override
+		
 	public String getDescription(Locale locale, String id) {
 		String moduleId = id + ".module[description]";
 		if (Labels.exists(moduleId)) return Labels.get(moduleId, locale);
@@ -140,8 +138,8 @@ public class MetaModule extends MetaElement implements java.io.Serializable {
 	public void setDocLanguages(String docLanguages) {
 		this.docLanguages = docLanguages;
 	}
-	public String getFolder() {
-		return folder;
+	public String getFolder() {		
+		return folder==null?"":folder;
 	}
 	public void setFolder(String folder) {
 		this.folder = folder;
