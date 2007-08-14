@@ -1,1 +1,18 @@
-<?xml version = "1.0" encoding = "ISO-8859-1"?><!DOCTYPE aplicacion SYSTEM "dtds/aplicacion.dtd"><aplicacion nombre="MiEscuela"> 		<modulo nombre="Profesores">		<modelo nombre="Profesor"/>		<controlador nombre="Typical"/>	</modulo>	 	</aplicacion>
+<?xml version = "1.0" encoding = "ISO-8859-1"?><!DOCTYPE aplicacion SYSTEM "dtds/aplicacion.dtd"><aplicacion nombre="MiEscuela"> 
+
+	<!--
+	Un módulo por defecto se asume para cada
+	controlador en <modulo-defecto/> 
+	-->
+	<modulo-defecto>		  
+		<controlador nombre="Typical"/>		
+	</modulo-defecto>
+	
+	<!--
+	Podemos definir módulos adicionales, por ejemplo: 	
+	<modulo nombre="ProfesorSoloLectura">
+		<modelo nombre="Profesor"/>
+		<controlador nombre="Print"/>
+	</modulo>		
+	-->	  
+		</aplicacion>
