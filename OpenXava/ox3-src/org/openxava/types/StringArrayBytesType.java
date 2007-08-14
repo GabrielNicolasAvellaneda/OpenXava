@@ -27,6 +27,7 @@ public class StringArrayBytesType implements UserType {
 	}
 
 	public boolean equals(Object obj1, Object obj2) throws HibernateException {
+		if (obj1 == null) return obj2 == null;
 		return obj1.equals(obj2);
 	}
 
@@ -67,7 +68,7 @@ public class StringArrayBytesType implements UserType {
 	}
 
 	public Object deepCopy(Object obj) throws HibernateException {		
-		return new String((String) obj);
+		return obj == null?null:new String((String) obj);
 	}
 
 	public boolean isMutable() {

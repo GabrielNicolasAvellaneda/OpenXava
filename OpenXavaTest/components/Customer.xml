@@ -190,7 +190,7 @@
 		<members>
 			number;
 			type; 
-			name, <action action="Customers.changeNameLabel"/>;
+			name, <action action="Customer.changeNameLabel"/>;
 			photo; 
 			address; 
 			city;
@@ -228,7 +228,7 @@
 			number; 
 			<section name="customer">				
 				type; 
-				name, <action action="Customers.changeNameLabel"/>;
+				name, <action action="Customer.changeNameLabel"/>;
 				photo; 
 				address; 
 				city;
@@ -253,7 +253,7 @@
 		<members>
 			number; 
 			type; 
-			name, <action action="Customers.changeNameLabel" always-enabled="true"/>;
+			name, <action action="Customer.changeNameLabel" always-enabled="true"/>;
 			address;
 		</members>
 	</view>
@@ -336,7 +336,7 @@
 		
 		 <!-- By default is NORMAL, hence 'label-format' in the next line is optional -->
 		<property-view property="street" label-format="NORMAL">
-			<action action="Customers.prefixStreet" always-enabled="true"/> 
+			<action action="Customer.prefixStreet" always-enabled="true"/> 
 		</property-view>
 				
 		<property-view property="zipCode" label-format="SMALL"/>

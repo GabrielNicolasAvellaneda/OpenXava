@@ -177,5 +177,6 @@ public class XmlElementsNames {
 	protected final static String [] xon_each_request = { "on-each-request", "en-cada-peticion" };
 	protected final static String [] xtransient = { "transient", "transitorio" };
 	protected final static String [] xdisplay_size = { "display-size", "longitud-visual" }; // @Trifon
+	protected final static String [] xdefault_module = { "default-module", "modulo-defecto" };
 	
 }

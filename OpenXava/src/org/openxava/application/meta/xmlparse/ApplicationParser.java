@@ -31,9 +31,28 @@ public class ApplicationParser extends ParserBase {
 		MetaApplication application = new MetaApplication();				
 		application.setName(getRoot().getAttribute(xname[lang]));
 		application.setLabel(getRoot().getAttribute(xlabel[lang]));
+		addDefaultModule(application);
 		addModules(application);
 		MetaApplications._addMetaApplication(application);
 	}
+	
+	private void addDefaultModule(MetaApplication application) throws XavaException {
+		NodeList l = getRoot().getElementsByTagName(xdefault_module[lang]);
+		int c = l.getLength();
+		if (c > 0) {						
+			NodeList controllersNodeList = ((Element) l.item(0)).getElementsByTagName(xcontroller[lang]); 			
+			int controllersCount = controllersNodeList.getLength();
+			for (int i = 0; i < controllersCount; i++) {
+				Element elController = (Element) controllersNodeList.item(i);
+				String s = elController.getAttribute(xname[lang]);
+				application.addControllerForDefaultModule(s);
+			}
+						 
+		}
+		else { 
+			application.addControllerForDefaultModule("Typical");
+		}		
+	}	
 	
 	private void addModules(MetaApplication application) throws XavaException {
 		NodeList l = getRoot().getElementsByTagName(xmodule[lang]);

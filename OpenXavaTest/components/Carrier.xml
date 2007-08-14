@@ -62,19 +62,19 @@
 	
 	<view>
 		<property-view property="calculated">
-			<action action="Carriers.translateName"/>		
+			<action action="Carrier.translateName"/>		
 		</property-view>		
 		<reference-view reference="drivingLicence">
 			<descriptions-list/>
 		</reference-view>
 		
 		<collection-view collection="fellowCarriers" view="Simple" edit-only="true">
-			<list-action action="Carriers.translateName"/>
-			<list-action action="Carriers.allToEnglish"/> 
+			<list-action action="Carrier.translateName"/>
+			<list-action action="Carrier.allToEnglish"/> 
 		</collection-view>		
 		
 		<collection-view collection="fellowCarriersCalculated" view="Simple">		
-			<list-action action="Carriers.translateName"/>
+			<list-action action="Carrier.translateName"/>
 		</collection-view>
 		
 	</view>

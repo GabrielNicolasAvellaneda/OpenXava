@@ -10,40 +10,40 @@ public class StateHibernateTest extends ModuleTestBase {
 	
 	
 	public StateHibernateTest(String testName) {
-		super(testName, "StatesHibernate");		
+		super(testName, "StateHibernate");		
 	}
 
 	public void testCreateReadUpdateDeleteWithHandmadeHibernate() throws Exception {		
 		assertListNotEmpty();
 		// Create				
-		execute ("StatesHibernate.new");
+		execute ("StateHibernate.new");
 		setValue("id","66");
 		setValue("name","State JUnit");
-		execute("StatesHibernate.save");
+		execute("StateHibernate.save");
 		assertNoErrors();
 		assertValue("id", "");
 		assertValue("name", "");
 		
 		// Read
 		setValue("id", "66");
-		execute("StatesHibernate.search");
+		execute("StateHibernate.search");
 		assertNoErrors();
 		assertValue("id","66");
 		assertValue("name","STATE JUNIT");
 		
 		// Modify
 		setValue("name","State JUnit Modified");
-		execute("StatesHibernate.save");
+		execute("StateHibernate.save");
 		assertNoErrors();
 		setValue("id", "66");
-		execute("StatesHibernate.search");
+		execute("StateHibernate.search");
 		assertNoErrors();
 		assertValue("id","66");
 		assertValue("name","STATE JUNIT MODIFIED");
 		
 		// Delete
 		
-		execute("StatesHibernate.delete");
+		execute("StateHibernate.delete");
 		assertNoErrors();
 	}
 }

@@ -13,7 +13,7 @@
 	<property name="dist.portlets.dir" value = "${dist.base.dir}/${project}-portlets.war.d"/>
 	<property name="file.ear" value = "${project}.ear"/>	
 	<property name="xava.lib" value="../OpenXava/bin"/>	
-	<property name="j2ee.lib" location="../OpenXava/lib/j2ee.jar"/>
+	<property name="j2ee.lib" location="../OpenXava/lib/j2ee.jar"/>	
 	<property name="tl.lib" location="../OpenXava/lib/tl.jar"/>
 	<property name="logging.lib" location="../OpenXava/lib/commons-logging.jar"/>
 	<property name="generator.dir" value="..${file.separator}OpenXava${file.separator}generator"/>
@@ -755,8 +755,17 @@
 		<!-- PortletCodeGenerator can generate portlets.xml, .psml and other jetspeed2 files -->
 		<java 
 			classname="PortletCodeGenerator" 
-			classpath="${generator.dir};${tl.lib};${xava.lib};${j2ee.lib};${logging.lib};../${project}/${classes.dir};${xava.generator.path}" 
 			fork="yes">
+			<classpath> 
+				<pathelement path="../OpenXava/bin"/>
+				<fileset dir="../OpenXava/web/WEB-INF/lib"> 
+					<include name="**/*.jar"/> 
+				</fileset> 
+				<fileset dir="web/WEB-INF/lib"> 
+					<include name="**/*.jar"/> 
+				</fileset> 
+				<pathelement path="${generator.dir};${tl.lib};${j2ee.lib};${logging.lib};../${project}/${classes.dir};${xava.generator.path}"/> 
+			</classpath> 			
 			<arg value="${project}"/>
 			<arg value="${jetspeed2.pages.dir}"/>
 			<arg value="${generate.jetspeed2.files}"/>

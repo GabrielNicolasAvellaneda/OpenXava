@@ -27,12 +27,12 @@ public class TranslateCarrierNameAction extends CollectionBaseAction {
 			else carrier.translate();
 		}		
 		if ("EN".equalsIgnoreCase(targetLanguage)) {
-			getCollectionElementView().addListAction("Carriers.todosAEspanol");
-			getCollectionElementView().removeListAction("Carriers.allToEnglish");
+			getCollectionElementView().addListAction("Carrier.todosAEspanol");
+			getCollectionElementView().removeListAction("Carrier.allToEnglish");
 		}
 		else if ("ES".equalsIgnoreCase(targetLanguage)) {
-			getCollectionElementView().addListAction("Carriers.allToEnglish");
-			getCollectionElementView().removeListAction("Carriers.todosAEspanol");
+			getCollectionElementView().addListAction("Carrier.allToEnglish");
+			getCollectionElementView().removeListAction("Carrier.todosAEspanol");
 		}
 	}
 

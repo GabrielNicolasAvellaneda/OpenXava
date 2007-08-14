@@ -52,15 +52,15 @@ public class Carrier {
 	)
 	private String remarks;
 	
-	@Column(length=10) @Action("Carriers.translateName")
+	@Column(length=10) @Action("Carrier.translateName")
 	public String getCalculated() {
 		return "TR";
 	}
 	
 	@CollectionView("Simple") @EditOnly
 	@ListActions({
-			@ListAction("Carriers.translateName"),
-			@ListAction("Carriers.allToEnglish")
+			@ListAction("Carrier.translateName"),
+			@ListAction("Carrier.allToEnglish")
 	})
 	@Condition(
 		"${warehouse.zoneNumber} = ${this.warehouse.zoneNumber} AND " + 

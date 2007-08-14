@@ -71,7 +71,7 @@ abstract public class FamilyBean
 	/**
 	 * @ejb:create-method
 	 */
-	public FamilyKey ejbCreate(Map properties)
+	public Object ejbCreate(Map properties)
 		throws
 			javax.ejb.CreateException,
 			org.openxava.validators.ValidationException,

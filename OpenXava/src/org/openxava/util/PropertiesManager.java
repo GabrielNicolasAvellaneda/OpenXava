@@ -73,7 +73,7 @@ public class PropertiesManager implements java.io.Serializable {
 			if (met == null) {
 				throw new PropertiesManagerException(
 					XavaResources.getString("write_only_property", propertyName, getTheClass()));
-			}
+			}			
 			return met.invoke(object, null);
 		}
 		catch (PropertiesManagerException ex) {

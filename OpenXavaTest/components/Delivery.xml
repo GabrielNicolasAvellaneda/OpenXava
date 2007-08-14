@@ -87,7 +87,7 @@
 		</property-view>
 		
 		<property-view property="number">
-			<action action="Deliveries.generateNumber"/>		
+			<action action="Delivery.generateNumber"/>		
 		</property-view>
 		
 		<property-view property="deliveredBy">
@@ -111,12 +111,12 @@
 		</property-view>
 		
 		<reference-view reference="invoice" view="Simple">		
-			<action action="Deliveries.setDefaultInvoice"/>
+			<action action="Delivery.setDefaultInvoice"/>
 		</reference-view>
 		
 		<reference-view reference="type">	
 			<descriptions-list order="${number} desc"/>
-			<action action="Deliveries.setDefaultType"/>
+			<action action="Delivery.setDefaultType"/>
 		</reference-view>
 		
 		<reference-view reference="carrier">
@@ -128,11 +128,11 @@
 		</reference-view>
 		
 		<collection-view collection="details">
-			<new-action action="DeliveryDetails.new"/>
-			<save-action action="DeliveryDetails.save"/>
-			<hide-detail-action action="DeliveryDetails.hideDetail"/>
-			<remove-action action="DeliveryDetails.remove"/>
-			<remove-selected-action action="DeliveryDetails.removeSelected"/> 
+			<new-action action="DeliveryDetail.new"/>
+			<save-action action="DeliveryDetail.save"/>
+			<hide-detail-action action="DeliveryDetail.hideDetail"/>
+			<remove-action action="DeliveryDetail.remove"/>
+			<remove-selected-action action="DeliveryDetail.removeSelected"/> 
 		</collection-view>
 
 		<members>

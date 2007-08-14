@@ -169,8 +169,8 @@
 		
 		<collection-view collection="details">
 			<list-properties>serviceType, product.description, product.unitPriceInPesetas, quantity, unitPrice, amount, free</list-properties>
-			<edit-action action="Invoices.editDetail"/>
-			<detail-action action="Invoices.viewProduct"/>
+			<edit-action action="Invoice.editDetail"/>
+			<detail-action action="Invoice.viewProduct"/>
 		</collection-view>
 		
 		<collection-view collection="deliveries" view="InInvoice" read-only="true"/>
@@ -245,7 +245,7 @@
 	
 	<view name="Deliveries">
 		<collection-view collection="deliveries" view="InInvoice" read-only="true">
-			<view-action action="Invoices.viewDelivery"/>
+			<view-action action="Invoice.viewDelivery"/>
 		</collection-view>
 						
 		<members>

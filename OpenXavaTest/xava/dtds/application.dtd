@@ -1,9 +1,10 @@
-<!ELEMENT application (module+)>
+<!ELEMENT application (default-module?, module*)>
 <!ATTLIST application
  name ID #REQUIRED
  label CDATA #IMPLIED
 >
 
+<!ELEMENT default-module (controller*)>
 
 <!ELEMENT module (doc | (env-var*, model?, view?, web-view?, tab?, controller*, mode-controller?))>
 <!ATTLIST module
