@@ -10,39 +10,39 @@ public class StateJPATest extends ModuleTestBase {
 	
 	
 	public StateJPATest(String testName) {
-		super(testName, "StatesJPA");		
+		super(testName, "StateJPA");		
 	}
 
 	public void testCreateReadUpdateDeleteWithHandmadeJPA() throws Exception {
 		assertListNotEmpty();
 		// Create		
-		execute ("StatesJPA.new");
+		execute ("StateJPA.new");
 		setValue("id","66");
 		setValue("name","State JUnit");
-		execute("StatesJPA.save");
+		execute("StateJPA.save");
 		assertNoErrors();
 		assertValue("id", "");
 		assertValue("name", "");
 		
 		// Read
 		setValue("id", "66");
-		execute("StatesJPA.search");
+		execute("StateJPA.search");
 		assertNoErrors();
 		assertValue("id","66");
 		assertValue("name","STATE JUNIT");
 		
 		// Modify
 		setValue("name","State JUnit Modified");
-		execute("StatesJPA.save");
+		execute("StateJPA.save");
 		assertNoErrors();
 		setValue("id", "66");
-		execute("StatesJPA.search");
+		execute("StateJPA.search");
 		assertNoErrors();
 		assertValue("id","66");
 		assertValue("name","STATE JUNIT MODIFIED");
 		
 		// Delete		
-		execute("StatesJPA.delete");
+		execute("StateJPA.delete");
 		assertNoErrors();
 	}
 }

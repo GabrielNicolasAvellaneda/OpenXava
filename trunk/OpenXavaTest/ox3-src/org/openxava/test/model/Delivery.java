@@ -85,14 +85,14 @@ import org.openxava.jpa.*;
 public class Delivery {
 	
 	@Id @Column(length=5)
-	@Action(forViews="DEFAULT", value="Deliveries.generateNumber")
+	@Action(forViews="DEFAULT", value="Delivery.generateNumber")
 	private int number;
 
 	
 	@Id @ManyToOne(fetch=FetchType.LAZY)
 	@OnChange(forViews="DEFAULT", value=OnChangeInvoiceNumberInDeliveryAction.class)
 	@ReferenceView("Simple")
-	@Action(forViews="DEFAULT", value="Deliveries.setDefaultInvoice") 
+	@Action(forViews="DEFAULT", value="Delivery.setDefaultInvoice") 
 	private Invoice invoice;
 
 	// JoinColumn and ManyToOne fetch are also specified in DeliveryKey because 
@@ -104,7 +104,7 @@ public class Delivery {
 		@DescriptionsList(forViews="DEFAULT", order="${number} desc"),
 		@DescriptionsList(forViews="GroupsInSections")
 	})
-	@Action(forViews="DEFAULT", value="Deliveries.setDefaultType")
+	@Action(forViews="DEFAULT", value="Delivery.setDefaultType")
 	private DeliveryType type;
 	
 	@Type(type="org.openxava.types.Date3Type") 
@@ -157,11 +157,11 @@ public class Delivery {
 	
 	@OneToMany (mappedBy="delivery", cascade=CascadeType.REMOVE)
 	@org.hibernate.validator.Size(max=3)
-	@NewAction(forViews="DEFAULT", value="DeliveryDetails.new")
-	@SaveAction(forViews="DEFAULT", value="DeliveryDetails.save")
-	@HideDetailAction(forViews="DEFAULT", value="DeliveryDetails.hideDetail")
-	@RemoveAction(forViews="DEFAULT", value="DeliveryDetails.remove")
-	@RemoveSelectedAction(forViews="DEFAULT", value="DeliveryDetails.removeSelected")
+	@NewAction(forViews="DEFAULT", value="DeliveryDetail.new")
+	@SaveAction(forViews="DEFAULT", value="DeliveryDetail.save")
+	@HideDetailAction(forViews="DEFAULT", value="DeliveryDetail.hideDetail")
+	@RemoveAction(forViews="DEFAULT", value="DeliveryDetail.remove")
+	@RemoveSelectedAction(forViews="DEFAULT", value="DeliveryDetail.removeSelected")
 	private Collection<DeliveryDetail> details;	
 	
 	@Transient

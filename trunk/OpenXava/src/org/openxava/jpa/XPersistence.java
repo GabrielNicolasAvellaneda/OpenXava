@@ -1,11 +1,16 @@
 package org.openxava.jpa;
 
 
+import java.net.*;
 import java.util.*;
 
 import javax.persistence.*;
+import javax.xml.parsers.*;
 
+import org.apache.commons.logging.*;
+import org.openxava.annotations.parse.*;
 import org.openxava.util.*;
+import org.w3c.dom.*;
 
 /**
  * Allows to work easily with EJB3 JPA inside OpenXava applications. <p>
@@ -66,13 +71,17 @@ import org.openxava.util.*;
  */
 
 public class XPersistence {
+	
+	private static Log log = LogFactory.getLog(XPersistence.class);
 
+	private static final String HIBERNATE_DEFAULT_SCHEMA = "hibernate.default_schema";
 	private final static String DEFAULT_PERSISTENCE_UNIT = "default";
 	private final static String XAVA_PERSISTENCE_UNIT_KEY = "xava.persistenceUnit";
 	private static ThreadLocal currentManager = new ThreadLocal();
 	private static Map entityManagerFactories = new HashMap();
 	private static ThreadLocal currentPersistenceUnitProperties = new ThreadLocal();
 	private static Map defaultPersistenceUnitProperties;
+	private static String defaultSchemaFromPersistenceXML;
 	
 
 	/**
@@ -220,6 +229,7 @@ public class XPersistence {
 		if (defaultPersistenceUnitProperties == null) {
 			defaultPersistenceUnitProperties = new HashMap();
 			defaultPersistenceUnitProperties.put(XAVA_PERSISTENCE_UNIT_KEY, DEFAULT_PERSISTENCE_UNIT);
+			defaultPersistenceUnitProperties.put(HIBERNATE_DEFAULT_SCHEMA, getDefaultSchemaFromPersistenceXML()); // tmp
 			defaultPersistenceUnitProperties = Collections.unmodifiableMap(defaultPersistenceUnitProperties);
 		}
 		return defaultPersistenceUnitProperties;
@@ -247,7 +257,7 @@ public class XPersistence {
 	 * try to execute SQL they will use 'COMPANYA.ISSUE' as table name.<br>
 	 */
 	public static String getDefaultSchema() {
-		return (String) getPersistenceUnitProperties().get("hibernate.default_schema");
+		return (String) getPersistenceUnitProperties().get(HIBERNATE_DEFAULT_SCHEMA);
 	}
 	/**
 	 * Change the default schema used by JPA persistence in the current thread. <p>
@@ -258,8 +268,8 @@ public class XPersistence {
 	 */
 	public static void setDefaultSchema(String defaultSchema) {
 		Map properties = new HashMap(getPersistenceUnitProperties());
-		if (Is.emptyString(defaultSchema)) properties.remove("hibernate.default_schema");
-		else properties.put("hibernate.default_schema", defaultSchema);
+		if (Is.emptyString(defaultSchema)) properties.remove(HIBERNATE_DEFAULT_SCHEMA);
+		else properties.put(HIBERNATE_DEFAULT_SCHEMA, defaultSchema);
 		setPersistenceUnitProperties(properties);
 	}
 	
@@ -274,5 +284,44 @@ public class XPersistence {
 	public static void reset() {
 		currentPersistenceUnitProperties.set(null);
 	}
+	
+	/**
+	 * Read the property 'hibernate.default_schema' from META-INF/persistence.xml.<p>
+	 * 
+	 * @return
+	 */
+	private static String getDefaultSchemaFromPersistenceXML() {
+		if (defaultSchemaFromPersistenceXML == null) {
+			try {
+				DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+				URL url = XPersistence.class.getClassLoader().getResource("META-INF/persistence.xml");
+				Document doc = builder.parse(url.toExternalForm());
+				NodeList units = doc.getElementsByTagName("persistence-unit");
+				int unitsCount = units.getLength();
+				for (int i=0; i<unitsCount; i++) {
+					Element unit = (Element) units.item(i);
+					if (XPersistence.getPersistenceUnit().equals(unit.getAttribute("name"))) {																
+						NodeList nodes = unit.getElementsByTagName("property");
+						int length = nodes.getLength(); 
+						for (int j=0; j<length; j++) {
+							Element el = (Element) nodes.item(j);
+							String name = el.getAttribute("name");
+							if ("hibernate.default_schema".equals(name)) {
+								defaultSchemaFromPersistenceXML = el.getAttribute("value");
+								return defaultSchemaFromPersistenceXML;
+							}
+						}
+					}				
+				}
+				defaultSchemaFromPersistenceXML = "";
+			}
+			catch (Exception ex) {
+				log.warn(XavaResources.getString("default_schema_warning"));
+				return ""; 
+			}
+		}
+		return defaultSchemaFromPersistenceXML;
+	}
+
 		
 }

@@ -18,9 +18,9 @@ public class SetDefaultSchemaAction extends BaseAction {
 	private String defaultSchema;
 	private String newDefaultSchema;		
 
-	public void execute() throws Exception {
-		if (newDefaultSchema != null)	defaultSchema = newDefaultSchema;
-		XPersistence.setDefaultSchema(defaultSchema);
+	public void execute() throws Exception {		
+		if (newDefaultSchema != null)	defaultSchema = newDefaultSchema;	
+		XPersistence.setDefaultSchema(defaultSchema);		
 	}
 
 	/**

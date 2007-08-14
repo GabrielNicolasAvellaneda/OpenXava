@@ -92,7 +92,10 @@ abstract public class MetaElement implements java.io.Serializable {
 	}
 	
 	public String getDescription(Locale locale) {
-		String id = getId();
+		return getDescription(locale, getId());
+	}
+	
+	protected String getDescription(Locale locale, String id) {		
 		if (id == null) return "";
 		String descriptionId = id + "[description]";
 		String result = "";

@@ -20,7 +20,7 @@ import org.openxava.test.actions.*;
 	@View( members= 	
 		"number;" +
 		"type;" +
-		"name, Customers.changeNameLabel();" +
+		"name, Customer.changeNameLabel();" +
 		"photo;" +
 		"address;" +
 		"city;" +
@@ -36,7 +36,7 @@ import org.openxava.test.actions.*;
 	@View( name="Simple", members= 	
 		"number;" +
 		"type;" +
-		"name, Customers.changeNameLabel(ALWAYS);" +
+		"name, Customer.changeNameLabel(ALWAYS);" +
 		"photo;" +
 		"address;"
 	),
@@ -47,7 +47,7 @@ import org.openxava.test.actions.*;
 		"number;" + 
 		"customer {" + 				
 		"	type;" + 
-		"	name, Customers.changeNameLabel();" +
+		"	name, Customer.changeNameLabel();" +
 		"	photo;" +
 		"	address;" + 
 		"	city;" +

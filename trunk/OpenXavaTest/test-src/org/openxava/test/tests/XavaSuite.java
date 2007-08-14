@@ -30,36 +30,36 @@ public class XavaSuite extends TestSuite {
 		super(name);
 	}
 	public static Test suite() {		
-		TestSuite suite = new TestSuite();
-		suite.addTest(new TestSuite(WarehousesTest.class));	
-		suite.addTest(new TestSuite(CarriersTest.class));
-		suite.addTest(new TestSuite(CarriersWithCalculatedFellowsTest.class));
-		suite.addTest(new TestSuite(CarriersWithSpecialSearchTest.class));		
+		TestSuite suite = new TestSuite();		
+		suite.addTest(new TestSuite(WarehouseTest.class));	
+		suite.addTest(new TestSuite(CarrierTest.class));
+		suite.addTest(new TestSuite(CarrierWithCalculatedFellowsTest.class));
+		suite.addTest(new TestSuite(CarrierWithSpecialSearchTest.class));		
 		suite.addTest(new TestSuite(ChangeProductsPrice2Test.class));
 		suite.addTest(new TestSuite(ChangeProductsPriceTest.class));
 		if (!XavaPreferences.getInstance().isEJB2Persistence()) {			
-			suite.addTest(new TestSuite(ColorsOnlyPOJOTest.class));
+			suite.addTest(new TestSuite(ColorOnlyPOJOTest.class));
 		}
-		suite.addTest(new TestSuite(ColorsTest.class));
-		suite.addTest(new TestSuite(ClerksTest.class));
-		suite.addTest(new TestSuite(CustomerContactPersonsAsAggregate3LevelsTest.class));
-		suite.addTest(new TestSuite(CustomerContactPersonsTest.class));
-		suite.addTest(new TestSuite(CustomersNewOnInitInheritedTest.class));
-		suite.addTest(new TestSuite(CustomersNewOnInitTest.class));
-		suite.addTest(new TestSuite(CustomersRadioButtonTest.class));
-		suite.addTest(new TestSuite(CustomersReadOnlyTest.class));
-		suite.addTest(new TestSuite(CustomersSellerAsAggregateTest.class));
-		suite.addTest(new TestSuite(CustomersSimpleTest.class));
-		suite.addTest(new TestSuite(CustomersSomeMembersReadOnlyTest.class));
-		suite.addTest(new TestSuite(CustomersTest.class));
-		suite.addTest(new TestSuite(CustomersTwoSellersInListTest.class));
-		suite.addTest(new TestSuite(CustomersTwoSellersNumberInListTest.class));
-		suite.addTest(new TestSuite(CustomersWithSectionTest.class));
-		suite.addTest(new TestSuite(DeliveriesGroupsInSectionsTest.class));
-		suite.addTest(new TestSuite(DeliveriesRemarks2002Test.class));
-		suite.addTest(new TestSuite(DeliveriesTest.class));
-		suite.addTest(new TestSuite(DeliveryTypesJSPTest.class));
-		suite.addTest(new TestSuite(DeliveryTypesTest.class));
+		suite.addTest(new TestSuite(ColorTest.class));
+		suite.addTest(new TestSuite(ClerkTest.class));
+		suite.addTest(new TestSuite(CustomerContactPersonAsAggregate3LevelsTest.class));
+		suite.addTest(new TestSuite(CustomerContactPersonTest.class));
+		suite.addTest(new TestSuite(CustomerNewOnInitInheritedTest.class));
+		suite.addTest(new TestSuite(CustomerNewOnInitTest.class));
+		suite.addTest(new TestSuite(CustomerRadioButtonTest.class));
+		suite.addTest(new TestSuite(CustomerReadOnlyTest.class));
+		suite.addTest(new TestSuite(CustomerSellerAsAggregateTest.class));
+		suite.addTest(new TestSuite(CustomerSimpleTest.class));
+		suite.addTest(new TestSuite(CustomerSomeMembersReadOnlyTest.class));
+		suite.addTest(new TestSuite(CustomerTest.class));
+		suite.addTest(new TestSuite(CustomerTwoSellersInListTest.class));
+		suite.addTest(new TestSuite(CustomerTwoSellersNumberInListTest.class));
+		suite.addTest(new TestSuite(CustomerWithSectionTest.class));
+		suite.addTest(new TestSuite(DeliveryGroupsInSectionsTest.class));
+		suite.addTest(new TestSuite(DeliveryRemarks2002Test.class));
+		suite.addTest(new TestSuite(DeliveryTest.class));
+		suite.addTest(new TestSuite(DeliveryTypeJSPTest.class));
+		suite.addTest(new TestSuite(DeliveryTypeTest.class));
 		if (ModuleTestBase.isPortalEnabled()) {
 			suite.addTest(new TestSuite(DescriptionTest.class));
 		}
@@ -72,62 +72,62 @@ public class XavaSuite extends TestSuite {
 		catch (ClassNotFoundException ex) {
 			log.warn("EJBTest does not found in classpath, test will not be executed");
 		}
-		suite.addTest(new TestSuite(FamiliesListOnlyTest.class));
-		suite.addTest(new TestSuite(FamiliesTest.class));
-		suite.addTest(new TestSuite(FamiliesWithInheritanceControllerTest.class));
+		suite.addTest(new TestSuite(FamilyListOnlyTest.class));
+		suite.addTest(new TestSuite(FamilyTest.class));
+		suite.addTest(new TestSuite(FamilyWithInheritanceControllerTest.class));
 		suite.addTest(new TestSuite(FamilyProductsReportTest.class));
 		suite.addTest(new TestSuite(FamilyRangeProductsReportTest.class));
 		suite.addTest(new TestSuite(FamilyXProductsReportTest.class));
-		suite.addTest(new TestSuite(FormulasTest.class));	
+		suite.addTest(new TestSuite(FormulaTest.class));	
 		if (!ModuleTestBase.isOX3()) {
 			suite.addTest(new TestSuite(HibernateTest.class));
 		}
 		suite.addTest(new TestSuite(Invoice20020001Test.class));
-		suite.addTest(new TestSuite(Invoices2002Test.class));
-		suite.addTest(new TestSuite(Invoices2004Test.class));
-		suite.addTest(new TestSuite(Invoices2Test.class));
-		suite.addTest(new TestSuite(InvoicesActiveYearTest.class));
-		suite.addTest(new TestSuite(InvoicesDeliveriesTest.class));
-		suite.addTest(new TestSuite(InvoicesFromCustomersTest.class));
-		suite.addTest(new TestSuite(InvoicesFromDeliveriesTest.class));
-		suite.addTest(new TestSuite(InvoicesNestedSectionsTest.class));
-		suite.addTest(new TestSuite(InvoicesNoListTest.class));
-		suite.addTest(new TestSuite(InvoicesTest.class));		
+		suite.addTest(new TestSuite(Invoice2002Test.class));
+		suite.addTest(new TestSuite(Invoice2004Test.class));
+		suite.addTest(new TestSuite(Invoice2Test.class));
+		suite.addTest(new TestSuite(InvoiceActiveYearTest.class));
+		suite.addTest(new TestSuite(InvoiceDeliveriesTest.class));
+		suite.addTest(new TestSuite(InvoiceFromCustomersTest.class));
+		suite.addTest(new TestSuite(InvoiceFromDeliveriesTest.class));
+		suite.addTest(new TestSuite(InvoiceNestedSectionsTest.class));
+		suite.addTest(new TestSuite(InvoiceNoListTest.class));
+		suite.addTest(new TestSuite(InvoiceTest.class));
 		if (XavaPreferences.getInstance().isJPAPersistence()) {
-			suite.addTest(new TestSuite(IssuesTest.class));
-			suite.addTest(new TestSuite(JPATest.class));
+			suite.addTest(new TestSuite(IssueTest.class));
+			suite.addTest(new TestSuite(JPATest.class));			
 		}
 		suite.addTest(new TestSuite(MapFacadeTest.class));
 		suite.addTest(new TestSuite(NotZeroValidatorTest.class));
-		suite.addTest(new TestSuite(Offices2Test.class));
-		suite.addTest(new TestSuite(OfficesTest.class));
+		suite.addTest(new TestSuite(Office2Test.class));
+		suite.addTest(new TestSuite(OfficeTest.class));
 		suite.addTest(new TestSuite(OnlyEditDetailsInvoiceTest.class));
 		suite.addTest(new TestSuite(OnlyReadDetailsInvoiceTest.class));
 		suite.addTest(new TestSuite(POJOTest.class));
 		//PersonTest >> waiting for OX3.1, now it works, but it needs AJDT or AspectJ 
 		//suite.addTest(new TestSuite(PersonTest.class));
 		suite.addTest(new TestSuite(PositiveValidatorTest.class));
-		suite.addTest(new TestSuite(Products2ReferenceAndStereotypeTest.class));
-		suite.addTest(new TestSuite(Products2Test.class));
-		suite.addTest(new TestSuite(Products2WithFormulaAsAggregateTest.class));
-		suite.addTest(new TestSuite(Products2WithFormulaTest.class));
-		suite.addTest(new TestSuite(Products3ChangeActionsOnSearchTest.class));
-		suite.addTest(new TestSuite(Products3Test.class));
-		suite.addTest(new TestSuite(Products3WithDescriptionsListTest.class));
-		suite.addTest(new TestSuite(Products3WithGroupTest.class));
-		suite.addTest(new TestSuite(ProductsTest.class));
-		suite.addTest(new TestSuite(ProductsWithSectionTest.class));
+		suite.addTest(new TestSuite(Product2ReferenceAndStereotypeTest.class));
+		suite.addTest(new TestSuite(Product2Test.class));
+		suite.addTest(new TestSuite(Product2WithFormulaAsAggregateTest.class));
+		suite.addTest(new TestSuite(Product2WithFormulaTest.class));
+		suite.addTest(new TestSuite(Product3ChangeActionsOnSearchTest.class));
+		suite.addTest(new TestSuite(Product3Test.class));
+		suite.addTest(new TestSuite(Product3WithDescriptionsListTest.class));
+		suite.addTest(new TestSuite(Product3WithGroupTest.class));
+		suite.addTest(new TestSuite(ProductTest.class));
+		suite.addTest(new TestSuite(ProductWithSectionTest.class));
 		suite.addTest(new TestSuite(PublicJSPTest.class));
-		suite.addTest(new TestSuite(SellersCannotCreateCustomerTest.class));
-		suite.addTest(new TestSuite(SellersJSPTest.class));
-		suite.addTest(new TestSuite(SellersTest.class));
-		suite.addTest(new TestSuite(SellersWithCustomersAsAggregateTest.class));
-		suite.addTest(new TestSuite(SellersWithDescriptionsListJSPTest.class));
-		suite.addTest(new TestSuite(ServicesTest.class));
-		suite.addTest(new TestSuite(ShipmentChargesTest.class));		
-		suite.addTest(new TestSuite(ShipmentsTest.class));
+		suite.addTest(new TestSuite(SellerCannotCreateCustomerTest.class));
+		suite.addTest(new TestSuite(SellerJSPTest.class));
+		suite.addTest(new TestSuite(SellerTest.class));
+		suite.addTest(new TestSuite(SellerWithCustomersAsAggregateTest.class));
+		suite.addTest(new TestSuite(SellerWithDescriptionsListJSPTest.class));
+		suite.addTest(new TestSuite(ServiceTest.class));
+		suite.addTest(new TestSuite(ShipmentChargeTest.class));		
+		suite.addTest(new TestSuite(ShipmentTest.class));
 		if (!XavaPreferences.getInstance().isEJB2Persistence()) {
-			suite.addTest(new TestSuite(SizesTest.class));
+			suite.addTest(new TestSuite(SizeTest.class));
 		}		
 		suite.addTest(new TestSuite(StateHibernateTest.class));
 		if (XavaPreferences.getInstance().isJPAPersistence()) {
@@ -135,16 +135,15 @@ public class XavaSuite extends TestSuite {
 			// but asking 'isJPAPersistence' we are sure that Java 5 is used in server
 			suite.addTest(new TestSuite(StateJPATest.class));
 		}
-		suite.addTest(new TestSuite(Subfamilies2Test.class));
-		suite.addTest(new TestSuite(SubfamiliesSelectTest.class));
-		suite.addTest(new TestSuite(SubfamiliesTest.class));
+		suite.addTest(new TestSuite(Subfamily2Test.class));
+		suite.addTest(new TestSuite(SubfamilySelectTest.class));
+		suite.addTest(new TestSuite(SubfamilyTest.class));
 		if (ModuleTestBase.isPortalEnabled()) {
-			suite.addTest(new TestSuite(TasksTest.class));
+			suite.addTest(new TestSuite(TaskTest.class));
 		}
-		suite.addTest(new TestSuite(TransportCharges2Test.class));		
-		suite.addTest(new TestSuite(TransportChargesTest.class));
-		suite.addTest(new TestSuite(TransportChargesWithDistanceTest.class));
-												
+		suite.addTest(new TestSuite(TransportCharge2Test.class));		
+		suite.addTest(new TestSuite(TransportChargeTest.class));
+		suite.addTest(new TestSuite(TransportChargeWithDistanceTest.class));
 		return suite;
 	}
 	

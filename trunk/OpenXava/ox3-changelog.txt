@@ -1,6 +1,8 @@
 Change Log for OpenXava 3
 =========================
 
+- A default module is assumed for each entity (without declaring it in application.xml).
+- NotNullStringType (hibernate converter) added.
 - Refactoring: Increment of the use of value() in annotations.
 - PropertyAspect for declaring properties without getter and getter (still experimental, it will be full available in v3.1)
 - Complete JavaDoc API for org.openxava.annotations.

@@ -30,7 +30,7 @@ public class Address implements IWithCity {
 	
 	// By default label format is normal, therefore in this case @LabelFormat is not needed
 	@Required @Column(length=30) @LabelFormat(LabelFormatType.NORMAL)
-	@Action(value="Customers.prefixStreet", alwaysEnabled=true)
+	@Action(value="Customer.prefixStreet", alwaysEnabled=true)
 	private String street;
 	
 	@Required @Column(length=5) @LabelFormat(LabelFormatType.SMALL)

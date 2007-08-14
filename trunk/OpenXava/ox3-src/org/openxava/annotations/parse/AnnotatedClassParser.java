@@ -86,10 +86,10 @@ public class AnnotatedClassParser {
 		Table table = (Table) pojoClass.getAnnotation(Table.class);
 		if (table != null) {
 			String tableName = Is.emptyString(table.name())?modelName:table.name();
-			return Is.emptyString(table.schema())?PersistenceConfig.getDefaultSchema() + tableName:table.schema() + "." + tableName;			
+			return Is.emptyString(table.schema())?tableName:table.schema() + "." + tableName;			
 		}
 		else {
-			return PersistenceConfig.getDefaultSchema() + modelName;
+			return modelName;
 		}
 	}
 
@@ -1728,7 +1728,7 @@ public class AnnotatedClassParser {
 	}
 
 
-	private static Collection<String> getManagedClassNames() {
+	public static Collection<String> getManagedClassNames() {
 		if (managedClassNames == null) {
 			// The next code is Hibernate dependent.
 			// This code has to be modified in order to work with Glassfish, OpenJPA, etc.

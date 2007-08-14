@@ -44,7 +44,8 @@ public class Subfamily {
 	@Column(length=40) @Required 
 	private String description;
 	
-	@Column(length=400) @Stereotype("MEMO")
+	@Column(length=400) @Stereotype("MEMO") 
+	@org.hibernate.annotations.Type(type="org.openxava.types.NotNullStringType")
 	private String remarks;
 	
 	@Column(length=40) @Hidden
