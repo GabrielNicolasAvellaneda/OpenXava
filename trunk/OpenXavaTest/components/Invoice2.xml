@@ -22,6 +22,7 @@
 		
 		<collection name="details" minimum="1">
 			<reference model="InvoiceDetail2"/>
+			<order>${product.description} desc</order>
 		</collection>
 								
 	</entity>	

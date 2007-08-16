@@ -45,6 +45,8 @@ public class Invoice2 {
 	
 	@OneToMany (mappedBy="invoice2", cascade=CascadeType.REMOVE)
 	@org.hibernate.validator.Size(min=1)
+	@ListProperties("product.description, quantity, unitPrice, amount")
+	@XOrderBy("product.description desc") 
 	private Collection<InvoiceDetail2> details;
 	
 	public int getYear() {

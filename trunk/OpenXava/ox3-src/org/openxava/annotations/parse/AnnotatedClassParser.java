@@ -844,7 +844,10 @@ public class AnnotatedClassParser {
 		}
 		if (element.isAnnotationPresent(SaveActions.class)) {
 			notApply(property.getName(), SaveActions.class, "collections");
-		}														
+		}
+		if (element.isAnnotationPresent(XOrderBy.class)) {
+			notApply(property.getName(), XOrderBy.class, "collections");
+		}																
 		
 	}
 
@@ -874,7 +877,11 @@ public class AnnotatedClassParser {
 			collection.setCondition(condition.value());
 		}
 		
-		if (element.isAnnotationPresent(OrderBy.class)) {
+		if (element.isAnnotationPresent(XOrderBy.class)) {
+			XOrderBy orderBy = element.getAnnotation(XOrderBy.class);
+			collection.setOrder(wrapWithDollars(orderBy.value()));			
+		}
+		else if (element.isAnnotationPresent(OrderBy.class)) {
 			OrderBy orderBy = element.getAnnotation(OrderBy.class);
 			collection.setOrder(wrapWithDollars(orderBy.value()));
 		}		
@@ -1594,8 +1601,11 @@ public class AnnotatedClassParser {
 		}
 		if (element.isAnnotationPresent(SaveActions.class)) {
 			notApply(ref.getName(), SaveActions.class, "collections");
+		}
+		if (element.isAnnotationPresent(XOrderBy.class)) {
+			notApply(ref.getName(), XOrderBy.class, "collections");
 		}										
-		
+				
 	}
 
 
