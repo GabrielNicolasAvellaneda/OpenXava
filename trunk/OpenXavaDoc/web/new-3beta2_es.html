@@ -1,0 +1,27 @@
+<h4>Anotaci&oacute;n @XOrderBy</h4>
+
+<span style="font-family: monospace;">@XOrderBy</span> es una versi&oacute;n eXtendida de @OrderBy para usar con colecciones.<br>
+
+<br>
+
+<span style="font-family: monospace;">El @OrderBy</span> de JPA no permite usar propiedades calificadas (propiedades de referencias).<br>
+
+OpenXava tiens su propia versi&oacute;n de <span style="font-family: monospace;">@OrderBy</span>, esta <span style="font-family: monospace;">@XOrderBy</span> s&iacute; que lo permite.<br>
+
+Ejemplo:<br>
+
+<pre>@OneToMany (mappedBy="factura", cascade=CascadeType.REMOVE)</pre>
+
+<pre>@ListProperties("producto.descripcion, cantidad, precioUnitario, cantidad")</pre>
+
+<pre>@XOrderBy("producto.descripcion desc") </pre>
+
+<pre>private Collection&lt;LineaFactura&gt; lineas;</pre>
+Podemos notar como&nbsp;<span style="font-family: monospace;">producto.descripcion</span> puede usarse para ordenar la colecci&oacute;n.<br>
+Para usar una propiedad calificada, esta tiene que estar incluida en el&nbsp;<span style="font-family: monospace;">@ListProperties</span>, como en el caso de&nbsp;<span style="font-family: monospace;">producto.descripcion</span>.<br>
+
+<br>
+El orden en&nbsp;<span style="font-family: monospace;">@XOrderBy</span>
+tiene solo efeto a nivel visual, cuando accedemos por c&oacute;digo a
+la colecci&oacute;n, la colecci&oacute;n se ordenar&aacute;
+seg&uacute;n lo indicado en el&nbsp;<span style="font-family: monospace;">@OrderBy</span> de JPA o por su order por defecto.<br>
