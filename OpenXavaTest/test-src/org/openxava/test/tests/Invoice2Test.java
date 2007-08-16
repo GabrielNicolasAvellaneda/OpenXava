@@ -32,5 +32,15 @@ public class Invoice2Test extends ModuleTestBase {
 		execute("CRUD.delete");
 		assertNoErrors();
 	}
+	
+	public void testCollectionOrderedByAPropertyOfAReference() throws Exception {
+		execute("CRUD.new");
+		setValue("year", "2002");
+		setValue("number", "1");
+		execute("CRUD.search");
+		assertCollectionRowCount("details", 2);
+		assertValueInCollection("details", 0, "product.description", "XAVA");
+		assertValueInCollection("details", 1, "product.description", "IBM ESERVER ISERIES 270");
+	}
 							
 }
