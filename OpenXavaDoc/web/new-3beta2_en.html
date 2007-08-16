@@ -1,0 +1,16 @@
+<h4>@XOrderBy annotation</h4>
+<span style="font-family: monospace;">@XOrderBy</span> is an eXtended version of <span style="font-family: monospace;">@OrderBy</span> for using with collections.<br>
+<br>
+<span style="font-family: monospace;">The @OrderBy</span> of JPA does not allow to use qualified properties (properties of references).<br>
+OpenXava has its own version of <span style="font-family: monospace;">@OrderBy</span>, this <span style="font-family: monospace;">@XOrderBy</span> to allow it.<br>
+Example:<br>
+<pre>@OneToMany (mappedBy="invoice", cascade=CascadeType.REMOVE)</pre>
+<pre>@ListProperties("product.description, quantity, unitPrice, amount")</pre>
+<pre>@XOrderBy("product.description desc") </pre>
+<pre>private Collection&lt;InvoiceDetail&gt; details;</pre>
+You can note as&nbsp;<span style="font-family: monospace;">product.description</span> can be used for ordering the collection.<br>
+In order to use a qualified property, it must be included in the <span style="font-family: monospace;">@ListProperties</span>, as in this case with&nbsp;<span style="font-family: monospace;">product.description</span>.<br>
+<br>
+The order in <span style="font-family: monospace;">@XOrderBy</span> has
+only effect at visual level, when you access programmatically to the
+collection, the collection is ordered as indicated by the JPA <span style="font-family: monospace;">@OrderBy</span> or by its default order.<br>

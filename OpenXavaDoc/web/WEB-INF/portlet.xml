@@ -502,7 +502,27 @@
 		<supported-locale>en</supported-locale>
 		<supported-locale>es</supported-locale>		
 		<resource-bundle>NewForDevelopers</resource-bundle>		
+	</portlet>
+	
+	 <portlet id="OX3NewForDevelopers">
+		<description>OX3NewForDevelopers</description>    
+		<portlet-name>OX3NewForDevelopers</portlet-name>
+		<display-name>OX3NewForDevelopers</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>ox3-new-for-developers</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>		
+		<resource-bundle>OX3NewForDevelopers</resource-bundle>		
 	</portlet> 	
+	 	
 	
 	<portlet id="NewIn213">
 		<description>NewIn213</description>    
@@ -597,7 +617,27 @@
 		<supported-locale>en</supported-locale>
 		<supported-locale>es</supported-locale>		
 		<resource-bundle>NewIn222</resource-bundle>		
+	</portlet>
+	
+	<portlet id="NewIn3beta2">
+		<description>NewIn3beta2</description>    
+		<portlet-name>NewIn3beta2</portlet-name>
+		<display-name>NewIn3beta2</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>new-3beta2</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>		
+		<resource-bundle>NewIn3beta2</resource-bundle>		
 	</portlet> 	
+	 	
 	 	
 	 			
 	<portlet id="MyFirstProject">
