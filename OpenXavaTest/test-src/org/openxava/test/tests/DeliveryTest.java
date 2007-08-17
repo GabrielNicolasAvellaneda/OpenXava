@@ -846,7 +846,8 @@ public class DeliveryTest extends ModuleTestBase {
 		assertExists("remarks");
 	}
 	
-	public void testI18nOfValidValues() throws Exception {
+	public void testI18nOfValidValues_descriptionsListWithOrderAndNoCondition() throws Exception {
+		// I18n of ValidValues
 		execute("CRUD.new");
 		String [][] distanceValues = {
 			{isOX3()?"":"0", ""},
@@ -855,6 +856,16 @@ public class DeliveryTest extends ModuleTestBase {
 			{isOX3()?"2":"3", "Internachional"}
 		};
 		assertValidValues("distance", distanceValues);
+		
+		// DescriptionsList order			
+		String [] types = getKeysValidValues("type.number");		
+		int previous = Integer.MAX_VALUE;
+		for (int i=1; i<types.length; i++) { // 0 position is empty
+			int current = Integer.parseInt(types[i]);
+			assertTrue("delivery types must be in descending order by number", current < previous);
+			previous = current;
+		}
+		
 	}
 	
 	public void testViewPropertyInSectionDefaultCalcultarAndValidators() throws Exception { 
