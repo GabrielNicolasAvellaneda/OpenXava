@@ -1,6 +1,7 @@
 Change Log for OpenXava 3
 =========================
 
+- Fix: order in @DescriptionsList has no effect when condition is not specified.
 - New annotation @XOrderBy that allows use qualified properties from references in order.
 - A default module is assumed for each entity (without declaring it in application.xml).
 - NotNullStringType (hibernate converter) added.

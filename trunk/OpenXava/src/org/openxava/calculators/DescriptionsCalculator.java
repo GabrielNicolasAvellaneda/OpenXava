@@ -213,7 +213,7 @@ public class DescriptionsCalculator implements ICalculator {
 		if (hasCondition()) {
 			condition = getConditionSQL(getMapping());
 		}
-		String order = "";
+		String order = "";		
 		if (hasOrder()) {
 			order = " ORDER BY " + getOrderSQL(getMapping());
 		}
@@ -225,7 +225,7 @@ public class DescriptionsCalculator implements ICalculator {
 				key[i] = it.next();
 				if (key[i] == null) return null;
 			}				
-		}				
+		}						
 		tab.search(condition + order, key); 
 		return tab.getTable();
 	}
@@ -368,7 +368,7 @@ public class DescriptionsCalculator implements ICalculator {
 		return order;
 	}
 
-	public void setOrder(String order) {
+	public void setOrder(String order) {		
 		this.order = order;
 	}
 
