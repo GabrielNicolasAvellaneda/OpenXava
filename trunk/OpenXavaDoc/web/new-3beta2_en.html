@@ -1,16 +1,193 @@
-<h4>@XOrderBy annotation</h4>
+These are some of the new features in OpenXava 3 beta 2:<br>
+<ul>
+  <li><a href="#RowStyle_can_be_applied_to_collections">@RowStyle can be applied to collections</a></li>
+  <li><a href="#Default_modules">Default modules</a></li>
+  <li><a href="#XOrderBy_annotation">@XOrderBy annotation</a></li>
+</ul>
+<h4><a name="RowStyle_can_be_applied_to_collections"></a>@RowStyle can be applied to collections</h4>
+That is, now you can declare a collection as following:<br>
+<pre>@OneToMany(mappedBy="seller")</pre>
+<pre>@ListProperties("number, name, remarks, relationWithSeller, seller.level.description, type") </pre>
+<pre><span style="font-weight: bold; color: rgb(51, 51, 255);">@RowStyle(style="highlight", property="type", value="steady")</span> </pre>
+<pre>private Collection&lt;Customer&gt; customers;</pre>
+or as following:<br>
+<pre>@RowStyles({</pre>
+<pre>  @RowStyle(forViews="Specials", style="highlight", property="type", value="special"),</pre>
+<pre>  @RowStyle(forViews="Complete", style="highlight", property="type", value="steady") &nbsp;&nbsp;&nbsp; </pre>
+<pre>})</pre>
+<pre>private Collection&lt;Customer&gt; customers;</pre>
+<span style="font-family: monospace;">@RowStyle</span> behaves as in the case of the <span style="font-family: monospace;">Tab</span>.
+<h4><a name="Default_modules"></a>Default modules</h4>
+
+
+<p>OpenXava assumes a default module for each component in the
+application, although the module is not explicitly defined in
+<i><span style=""><span style="background: transparent none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">applicaction.xml</span></span></i>.</p>
+
+
+
+<p>That is, if you define a component <i><span style=""><span style="background: transparent none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">Invoice.xml</span></span></i>,
+you can open your browser and go to:</p>
+
+
+
+<p><a href="http://localhost:8080/Gestion/xava/modulo.jsp?application=Management&amp;module=Warehouse">http://localhost:8080/Management/xava/module.jsp?application=Management&amp;module=Invoice</a></p>
+
+
+
+<p>Also a portlet is generated to allow you to deploy the module as a
+JSR-168 portlet in a Java portal.</p>
+
+
+
+<p>And all this without defining it in <i><span style=""><span style="background: transparent none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">application.xml</span></span></i>.</p>
+
+
+
+<p>The controller for these default modules will be <code class="c&oacute;digo-western">Typical</code>,
+but you can change this default value using the <code class="c&oacute;digo-western">default-module</code>
+element in <i><span style=""><span style="background: transparent none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">application.xml</span></span></i>,
+in this way:</p>
+
+
+<pre>&lt;application name="Management"&gt;<br>  &lt;default-module&gt;<br>    &lt;controller name="ManagementCRUD"/&gt;<br>  &lt;/default-module&gt;<br>&lt;/application&gt;</pre>
+
+
+<p>In this case all the default modules of the <code class="c&oacute;digo-western">Management</code>
+application will have the controller <code class="c&oacute;digo-western">ManagementCRUD</code>
+assigned to them.</p>
+
+
+
+<p>If you want that certain module does not use these default
+controllers, you have two options:</p>
+
+
+
+<ol>
+
+  <li>
+    
+    
+    <p>To define a controller in your <i><span style=""><span style="background: transparent none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">controllers.xml</span></span></i>
+	with the same name of the component.</p>
+
+
+
+	</li>
+
+  <li>
+    
+    
+    <p>To define explicitly the module in <i><span style=""><span style="background: transparent none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">application.xml</span></span></i>,
+	as explains section 8.1.</p>
+
+
+
+  </li>
+
+</ol>
+
+
+
+<p>To sum up, if you define a component, named <code class="c&oacute;digo-western">Customer</code>,
+for example, then you have a module named <code class="c&oacute;digo-western">Customer</code>,
+and also a portlet. This module will be defined in one of this ways:</p>
+
+
+
+<ol>
+
+  <li>
+    
+    
+    <p>If you define a module named <code class="c&oacute;digo-western">Customer</code>
+	in <i><span style=""><span style="background: transparent none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">application.xml</span></span></i>
+	then this module will be the valid one, else...</p>
+
+
+
+	</li>
+
+  <li>
+    
+    
+    <p>If you define a controller named <code class="c&oacute;digo-western">Customer</code>
+	in <i><span style=""><span style="background: transparent none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">controllers.xml</span></span></i>
+	a module will generated using the controller <code class="c&oacute;digo-western">Customer</code>
+	as controller and the component <code class="c&oacute;digo-western">Customer</code>
+	as model, else..</p>
+
+
+
+	</li>
+
+  <li>
+    
+    
+    <p>If you define a <code class="c&oacute;digo-western">default-module</code>
+	element in your <i><span style=""><span style="background: transparent none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">application.xml</span></span></i>
+	then a module will generated using the controllers in <code class="c&oacute;digo-western">default-module</code>
+	and the component <code class="c&oacute;digo-western">Customer</code>
+	as model, else ...</p>
+
+
+
+	</li>
+
+  <li>
+    
+    
+    <p>as fallback a module with <code class="c&oacute;digo-western">Typical</code>
+	as controller and <code class="c&oacute;digo-western">Customer</code>
+	as model will be assumed.</p>
+
+
+
+  </li>
+
+</ol>
+
+
+<h4><a name="XOrderBy_annotation"></a>@XOrderBy annotation</h4>
+
+
 <span style="font-family: monospace;">@XOrderBy</span> is an eXtended version of <span style="font-family: monospace;">@OrderBy</span> for using with collections.<br>
+
+
 <br>
+
+
 <span style="font-family: monospace;">The @OrderBy</span> of JPA does not allow to use qualified properties (properties of references).<br>
+
+
 OpenXava has its own version of <span style="font-family: monospace;">@OrderBy</span>, this <span style="font-family: monospace;">@XOrderBy</span> to allow it.<br>
+
+
 Example:<br>
+
+
 <pre>@OneToMany (mappedBy="invoice", cascade=CascadeType.REMOVE)</pre>
+
+
 <pre>@ListProperties("product.description, quantity, unitPrice, amount")</pre>
+
+
 <pre>@XOrderBy("product.description desc") </pre>
+
+
 <pre>private Collection&lt;InvoiceDetail&gt; details;</pre>
+
+
 You can note as&nbsp;<span style="font-family: monospace;">product.description</span> can be used for ordering the collection.<br>
+
+
 In order to use a qualified property, it must be included in the <span style="font-family: monospace;">@ListProperties</span>, as in this case with&nbsp;<span style="font-family: monospace;">product.description</span>.<br>
+
+
 <br>
+
+
 The order in <span style="font-family: monospace;">@XOrderBy</span> has
 only effect at visual level, when you access programmatically to the
 collection, the collection is ordered as indicated by the JPA <span style="font-family: monospace;">@OrderBy</span> or by its default order.<br>
