@@ -108,9 +108,7 @@ public class View implements java.io.Serializable {
 	private boolean registeringExecutedActions = false;
 	private Tab collectionTab; 	
 	private String propertiesListNames;
-	 
-	
-	
+	private Collection rowStyles; // Of type MetaRowStyle 
 		
 	public View() {
 		oid = nextOid++;		
@@ -612,7 +610,10 @@ public class View implements java.io.Serializable {
 				if (!propertiesListNames.isEmpty()) {
 					newView.setPropertiesListNames(metaCollectionView.getPropertiesListNamesAsString());
 					newView.setMetaPropertiesList(namesToMetaProperties(newView, propertiesListNames));
-				}
+				}				
+				if (metaCollectionView.hasRowStyles()) { 
+					newView.setRowStyles(metaCollectionView.getMetaRowStyles());					
+				}				
 				Collection actionsDetailNames = metaCollectionView.getActionsDetailNames();
 				if (!actionsDetailNames.isEmpty()) {
 					newView.setActionsNamesDetail(new ArrayList(actionsDetailNames));
@@ -1025,7 +1026,8 @@ public class View implements java.io.Serializable {
 			collectionTab = new Tab();				
 			collectionTab.setModelName(getModelName());
 			collectionTab.setTabName(Tab.COLLECTION_PREFIX + getMemberName());
-			collectionTab.setCollectionView(this); 
+			collectionTab.setCollectionView(this);			
+			collectionTab.setMetaRowStyles(rowStyles); 
 			if (propertiesListNames != null) {
 				collectionTab.setPropertiesNames(propertiesListNames);
 			}
@@ -3263,6 +3265,14 @@ public class View implements java.io.Serializable {
 	public void removeObject(String name) {
 		if (objects == null) return;
 		objects.remove(name);
+	}
+
+	private Collection getRowStyles() {
+		return rowStyles;
+	}
+
+	private void setRowStyles(Collection rowStyles) {
+		this.rowStyles = rowStyles;
 	}
 	
 }

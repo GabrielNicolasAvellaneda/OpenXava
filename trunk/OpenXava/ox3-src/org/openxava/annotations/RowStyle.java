@@ -3,25 +3,63 @@ package org.openxava.annotations;
 import java.lang.annotation.*;
 
 /**
- * For indicating the row style in a {@link Tab}. <p>
+ * For indicating the row style for {@link Tab}s and collections . <p>
  * 
- * Example:
+ * Example for Tab:
  * <pre>
  * @Tab(
  *		rowStyles=@RowStyle(style="highlight", property="type", value="steady")
  * )
+ * public class Customer {
+ * ...
+ * </pre>
+ * Example for Collection:
+ * <pre>
+ * @OneToMany(mappedBy="seller")
+ * @ListProperties("number, name, remarks, relationWithSeller, seller.level.description, type") 
+ * @RowStyle(style="highlight", property="type", value="steady") 
+ * private Collection<Customer> customers;
  * </pre>
  * In this case you are saying that the object which property type has the 
  * value steady will use the style highlight. The style has to be defined in the
  * CSS stylesheet. The <i>highlight</i> style are already defined in OpenXava, but 
- * you can define more.
+ * you can define more.<br>
+ * You can note as property 'type' is also listed in ListProperties, that is
+ * you must use properties displayed in User Interface.<br>
  * 
  * @author Javier Paniza
  */
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.ANNOTATION_TYPE })
+@Target({ ElementType.FIELD, ElementType.METHOD }) 
 public @interface RowStyle {
+	
+	/** 
+	 * List of comma separated view names where this annotation applies. <p>
+	 * 
+	 * <code>forViews</code> has no effect when @RowStyle is used for Tabs.
+	 * 
+	 * Exclusive with notForViews.<br>
+	 * If both forViews and notForViews are omitted then this annotation
+	 * apply to all views.<br>
+	 * You can use the string "DEFAULT" for referencing to the default
+	 * view (the view with no name).
+	 */
+	String forViews() default "";
+	
+	/**
+	 * List of comma separated view names where this annotation does not apply. <p>
+	 * 
+	 * <code>notforViews</code> has no effect when @RowStyle is used for Tabs.
+	 * 
+	 * Exclusive with forViews.<br>
+	 * If both forViews and notForViews are omitted then this annotation
+	 * apply to all views.<br>
+	 * You can use the string "DEFAULT" for referencing to the default
+	 * view (the view with no name).
+	 */ 	
+	String notForViews() default "";
+	
 	
 	/**
 	 * The name of the style to apply. <p>
@@ -34,7 +72,8 @@ public @interface RowStyle {
 	 * Property to evaluate. <p>
 	 * 
 	 * If value of this 'property' is the one indicate in 'value', 
-	 * then the 'style' apply to this row.  
+	 * then the 'style' apply to this row.<br>  
+	 * This property must be present in User Interface.
 	 */
 	String property();
 	

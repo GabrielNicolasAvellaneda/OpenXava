@@ -847,7 +847,13 @@ public class AnnotatedClassParser {
 		}
 		if (element.isAnnotationPresent(XOrderBy.class)) {
 			notApply(property.getName(), XOrderBy.class, "collections");
-		}																
+		}
+		if (element.isAnnotationPresent(RowStyle.class)) {
+			notApply(property.getName(), RowStyle.class, "collections");
+		}
+		if (element.isAnnotationPresent(RowStyles.class)) {
+			notApply(property.getName(), RowStyles.class, "collections");
+		}																				
 		
 	}
 
@@ -923,6 +929,24 @@ public class AnnotatedClassParser {
 				for (CollectionView view: views) {
 					if (isForView(metaView, view.forViews(), view.notForViews())) {
 						collectionView.setViewName(view.value());
+						mustAddMetaView = true;
+					}
+				}
+			}
+			
+			// RowStyle 
+			if (element.isAnnotationPresent(RowStyle.class)) {
+				RowStyle rowStyle = element.getAnnotation(RowStyle.class);
+				if (isForView(metaView, rowStyle.forViews(), rowStyle.notForViews())) {
+					collectionView.addMetaRowStyle(toMetaRowStyle(rowStyle));
+					mustAddMetaView = true;
+				}
+			}
+			if (element.isAnnotationPresent(RowStyles.class)) {
+				RowStyle [] rowStyles = element.getAnnotation(RowStyles.class).value();				
+				for (RowStyle rowStyle: rowStyles) {
+					if (isForView(metaView, rowStyle.forViews(), rowStyle.notForViews())) {
+						collectionView.addMetaRowStyle(toMetaRowStyle(rowStyle));
 						mustAddMetaView = true;
 					}
 				}
@@ -1257,6 +1281,15 @@ public class AnnotatedClassParser {
 			notApply(collection.getName(), DisplaySizes.class, "properties");
 		}														
 		
+	}
+
+
+	private MetaRowStyle toMetaRowStyle(RowStyle rowStyle) { 
+		MetaRowStyle metaRowStyle = new MetaRowStyle();
+		metaRowStyle.setProperty(rowStyle.property());
+		metaRowStyle.setStyle(rowStyle.style());
+		metaRowStyle.setValue(rowStyle.value());
+		return metaRowStyle;
 	}
 	
 	private String wrapWithDollars(String orderBy) {
@@ -1604,7 +1637,13 @@ public class AnnotatedClassParser {
 		}
 		if (element.isAnnotationPresent(XOrderBy.class)) {
 			notApply(ref.getName(), XOrderBy.class, "collections");
-		}										
+		}
+		if (element.isAnnotationPresent(RowStyle.class)) {
+			notApply(ref.getName(), RowStyle.class, "collections");
+		}
+		if (element.isAnnotationPresent(RowStyles.class)) {
+			notApply(ref.getName(), RowStyles.class, "collections");
+		}														
 				
 	}
 

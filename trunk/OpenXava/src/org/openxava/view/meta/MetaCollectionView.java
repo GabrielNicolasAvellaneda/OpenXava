@@ -5,6 +5,7 @@ import java.util.*;
 
 
 
+import org.openxava.tab.meta.*;
 import org.openxava.util.*;
 
 
@@ -31,7 +32,8 @@ public class MetaCollectionView implements Serializable {
 	private boolean createReference = true;
 	private boolean modifyReference = true; 
 	private boolean asAggregate = false;
-	private String propertiesListNamesAsString; 
+	private String propertiesListNamesAsString;
+	private Collection rowStyles; 
 	
 	
 	
@@ -42,8 +44,22 @@ public class MetaCollectionView implements Serializable {
 	
 	public void addActionListName(String actionName) {
 		if (actionsListNames == null) actionsListNames = new ArrayList();
-		actionsListNames.add(actionName);
+		actionsListNames.add(actionName);		
 	}
+	
+	public void addMetaRowStyle(MetaRowStyle style) {
+		if (rowStyles == null) rowStyles = new ArrayList();
+		rowStyles.add(style);
+	}
+	
+	public boolean hasRowStyles() {
+		return rowStyles != null;
+	}
+	
+	public Collection getMetaRowStyles() {
+		return rowStyles==null?Collections.EMPTY_LIST:rowStyles;
+	}
+	
 	
 	public String getMediatorClassName() {
 		return mediatorClassName;

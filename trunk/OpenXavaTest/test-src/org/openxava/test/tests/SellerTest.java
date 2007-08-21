@@ -20,6 +20,30 @@ public class SellerTest extends ModuleTestBase {
 		super(testName, "Seller");		
 	}
 	
+	public void testRowStyleInCollections() throws Exception { 
+		execute("Mode.detailAndFirst");
+		assertValue("number", "1");
+		assertValue("name", "MANUEL CHAVARRI");
+				
+		int c = getCollectionRowCount("customers");
+		boolean found = false;
+		
+		for (int i=0; i<c; i++) {
+			String type = getValueInCollection("customers", i, "type");
+			if ("Steady".equals(type)) {				
+				assertRowStyleInCollection("customers", i, "highlight");				
+				found = true;
+			}
+			else {
+				assertNoRowStyleInCollection("customers", i);				
+			}						
+		}
+		if (!found) {
+			fail("It is required at least one Customer of 'Steady' type for run this test");
+		}
+	}
+
+	
 	public void testListFeaturesInCollection() throws Exception {
 		// The correct elements
 		execute("List.viewDetail", "row=1");

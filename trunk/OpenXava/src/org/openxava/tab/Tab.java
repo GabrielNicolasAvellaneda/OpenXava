@@ -218,6 +218,11 @@ public class Tab implements java.io.Serializable {
 		return (MetaProperty) getMetaProperties().get(i);
 	}
 	
+	public void setMetaRowStyles(Collection styles) throws XavaException {
+		// WARNING! This will change the row style for all tab with this MetaTab
+		getMetaTab().setMetaRowStyles(styles);
+	}
+	
 	/**
 	 * A table model with on-demand data reading. <p>
 	 * 
@@ -1069,7 +1074,7 @@ public class Tab implements java.io.Serializable {
 		}
 		return sessionFactory;		
 	}
-		
+			
 	/**
 	 * The CSS style associated to the specified row. <p>
 	 * 
@@ -1116,9 +1121,9 @@ public class Tab implements java.io.Serializable {
 	
 	private String getStyle(MetaRowStyle rowStyle, int row) {
 		try {
-			int column = getMetaTab().getPropertiesNames().indexOf(rowStyle.getProperty());			
+			int column = getMetaTab().getPropertiesNames().indexOf(rowStyle.getProperty());
 			if (column < 0) return null;			
-			Object value = getTableModel().getValueAt(row, column);
+			Object value = getTableModel().getValueAt(row, column);			
 			if (Is.equalAsStringIgnoreCase(value, rowStyle.getValue())) {
 				return rowStyle.getStyle();
 			}

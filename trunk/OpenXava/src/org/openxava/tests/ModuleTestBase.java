@@ -630,10 +630,10 @@ public class ModuleTestBase extends TestCase {
 		return table.getTableCell(row+2, column+2);
 	}
 	
-	private TableRow getTableRowInList(int row) throws Exception { 
-		WebTable table = response.getTableWithID("list");
-		if (table == null) {
-			fail(XavaResources.getString("list_not_displayed"));			
+	private TableRow getTableRow(String tableId, int row) throws Exception {  
+		WebTable table = response.getTableWithID(tableId);
+		if (table == null) {			
+			fail(XavaResources.getString("collection_not_displayed", tableId));
 		}
 		return table.getRows()[row+2];
 	}
@@ -663,7 +663,15 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected void assertRowStyleInList(int row, String expectedStyle) throws Exception {
-		TableRow tableRow = getTableRowInList(row);
+		assertRowStyle("list", row, expectedStyle);
+	}
+	
+	protected void assertRowStyleInCollection(String collection, int row, String expectedStyle) throws Exception {
+		assertRowStyle(collection, row, expectedStyle);
+	}	
+	
+	private void assertRowStyle(String tableId, int row, String expectedStyle) throws Exception {
+		TableRow tableRow = getTableRow(tableId, row);
 		String style = tableRow.getAttribute("class");
 		int countTokens = new StringTokenizer(style).countTokens();
 		// countTokens <= 1 because the row has at least a style in addition to the special one
@@ -672,7 +680,15 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected void assertNoRowStyleInList(int row) throws Exception {
-		TableRow tableRow = getTableRowInList(row);
+		assertNoRowStyle("list", row);
+	}
+	
+	protected void assertNoRowStyleInCollection(String collection, int row) throws Exception {
+		assertNoRowStyle(collection, row);
+	}	
+	
+	private void assertNoRowStyle(String tableId, int row) throws Exception {
+		TableRow tableRow = getTableRow(tableId, row);
 		String style = tableRow.getAttribute("class");
 		int countTokens = new StringTokenizer(style).countTokens();
 		// countTokens <= 1 because the row has at least a style in addition to the special one 
