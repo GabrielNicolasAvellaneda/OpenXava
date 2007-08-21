@@ -898,6 +898,10 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		rowStyles.add(style);
 	}
 	
+	public void setMetaRowStyles(Collection styles) { 
+		rowStyles = styles;
+	}
+	
 	public boolean hasRowStyles() {
 		return rowStyles != null;
 	}

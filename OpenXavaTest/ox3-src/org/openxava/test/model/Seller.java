@@ -6,7 +6,6 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.Type;
 import org.openxava.annotations.*;
-import org.openxava.util.*;
 
 /**
  * 
@@ -43,7 +42,7 @@ public class Seller {
 	private SellerLevel level;
 
 	@AsEmbedded(forViews="CustomersAsAggregate")
-	@ListProperties("number, name, remarks, relationWithSeller, seller.level.description")
+	@ListProperties("number, name, remarks, relationWithSeller, seller.level.description, type") 
 	@OneToMany(mappedBy="seller")
 	@CollectionViews ({
 		@CollectionView("Simple"),
@@ -51,6 +50,7 @@ public class Seller {
 	})
 	@NoCreate(forViews="CannotCreateCustomer")
 	@NoModify(forViews="CannotCreateCustomer")
+	@RowStyle(style="highlight", property="type", value="steady") 
 	private Collection<Customer> customers;
 		
 	@ManyToOne(fetch=FetchType.LAZY) @JoinColumn(name="BOSS")

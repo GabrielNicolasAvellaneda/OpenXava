@@ -3,6 +3,7 @@ package org.openxava.view.meta.xmlparse;
 
 
 import org.openxava.model.meta.xmlparse.*;
+import org.openxava.tab.meta.*;
 import org.openxava.util.*;
 import org.openxava.util.xmlparse.*;
 import org.openxava.view.meta.*;
@@ -222,11 +223,35 @@ public class ViewParser extends XmlElementsNames {
 		a.setHideActionName(getAction(el, xhide_detail_action[lang], lang));
 		a.setRemoveActionName(getAction(el, xremove_action[lang], lang));
 		a.setRemoveSelectedActionName(getAction(el, xremove_selected_action[lang], lang));
+		fillRowStyles(el, a, lang);
 		fillDetailActions(el, a, lang); 		
 		fillListActions(el, a, lang);
 		return a;
 	}	
 	
+	private static void fillRowStyles(Element el, MetaCollectionView container, int lang)
+		throws XavaException {
+		NodeList l = el.getChildNodes();
+		int c = l.getLength();
+		for (int i = 0; i < c; i++) {
+			if (!(l.item(i) instanceof Element)) continue;
+			Element d = (Element) l.item(i);
+			String type = d.getTagName();
+			if (type.equals(xrow_style[lang])) {
+				container.addMetaRowStyle(createRowStyle(d, lang));
+			}
+		}
+	}
+	
+	public static MetaRowStyle createRowStyle(Node n, int lang) throws XavaException {
+		Element el = (Element) n;
+		MetaRowStyle style = new MetaRowStyle();
+		style.setStyle(el.getAttribute(xstyle[lang]));
+		style.setProperty(el.getAttribute(xproperty[lang]));
+		style.setValue(el.getAttribute(xvalue[lang]));
+		return style;
+	}	
+
 	private static MetaPropertyView createMetaPropertyView(Node n, int lang) throws XavaException {
 		Element el = (Element) n;
 		MetaPropertyView a = new MetaPropertyView();		
