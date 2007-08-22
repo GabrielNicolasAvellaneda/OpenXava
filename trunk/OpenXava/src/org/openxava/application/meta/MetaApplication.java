@@ -1,11 +1,7 @@
 package org.openxava.application.meta;
 
 
-import java.io.*;
-import java.net.*;
 import java.util.*;
-
-import javax.persistence.*;
 
 import org.apache.commons.logging.*;
 import org.openxava.component.*;
@@ -86,66 +82,32 @@ public class MetaApplication extends MetaElement implements java.io.Serializable
 		}		
 	}
 
-	private void generateDefaultModulesFromJPAEntities() throws XavaException {
-		URL url = getAnchorURL();		
-		if (url != null) {			
-			File baseClassPath=new File(Strings.noLastToken(url.getPath(), "/"));
-			generateDefaultModulesFromJPAEntities(baseClassPath, null, false);
-		}
-		else {			
-			log.warn(XavaResources.getString("default_modules_from_jpa_anchor_not_found", "xava.properties, application.xml, aplicacion.xml"));
-		}
-	}
-		
-	private void generateDefaultModulesFromJPAEntities(File dir, String base, boolean model) throws XavaException {
-		File [] files = dir.listFiles();
-		for (int i=0; i<files.length; i++ ) {
-			File file = files[i];
-			String basePackage = base == null?"":base + dir.getName() + ".";
-			if (file.isDirectory()) {
-				boolean isModelPackage = "model".equals(file.getName()) || "modelo".equals(file.getName());				 
-				generateDefaultModulesFromJPAEntities(file, basePackage, isModelPackage?true:model);
-			}
-			else if (model && file.getName().endsWith(".class")) {				
-				String modelName = file.getName().substring(0, file.getName().length() - ".class".length());
-				if (metaModules.containsKey(modelName)) continue;
-				String className = basePackage + modelName;
-				try { 
-					Class entityClass = Class.forName(className);
-					if (entityClass.isAnnotationPresent(Entity.class)) {						
-						createDefaultModule(modelName);
-					}
-					
-				}
-				catch (ClassNotFoundException ex) {					
-				}				
-			}
-		}		
-	}
-	
-	private URL getAnchorURL() {
-		URL url = getFileURL("/xava.properties");		
-		if (url == null) url = getFileURL("/application.xml");
-		if (url == null) url = getFileURL("/aplicacion.xml");
-		return url;
-	}
-	
-	private URL getFileURL(String file) {
+	private void generateDefaultModulesFromJPAEntities() throws XavaException { 
+		Object parser = null;
 		try {
-			for (Enumeration en=ClassLoader.getSystemResources("xava.properties"); en.hasMoreElements(); ) {
-				URL url = (URL) en.nextElement();
-				if (url != null) {
-					if ("file".equals(url.getProtocol())) {
-						return url;
-					}
-				}
-			}
-			return null;
+			// At the momment, annotated EJB is parsed only if parser is available in classpath
+			parser = Class.forName("org.openxava.annotations.parse.AnnotatedClassParser").newInstance();						
 		}
 		catch (Exception ex) {
-			return null;
+			return;
+		}		
+		Collection classNames = null;
+		try {
+			classNames = (Collection) Objects.execute(parser, "friendMetaApplicationGetManagedClassNames");			
 		}
+		catch (Exception ex) {
+			log.error(ex);
+			throw new XavaException("default_modules_from_jpa_error");
+		}
+		for (Iterator it=classNames.iterator(); it.hasNext(); ) {
+			String className = (String) it.next();
+			String modelName = Strings.lastToken(className, ".");
+			if (!metaModules.containsKey(modelName)) {
+				createDefaultModule(modelName);
+			}			
+		}				
 	}
+		
 
 	
 
@@ -184,7 +146,7 @@ public class MetaApplication extends MetaElement implements java.io.Serializable
 	public MetaModule getMetaModule(String name) throws ElementNotFoundException, XavaException {
 		MetaModule result = (MetaModule) metaModules.get(name);
 		if (result == null) {
-			if (MetaComponent.exists(name)) {
+			if (existsModel(name)) {
 				result = createDefaultModule(name);		
 			}
 		}
@@ -192,6 +154,15 @@ public class MetaApplication extends MetaElement implements java.io.Serializable
 			throw new ElementNotFoundException("module_not_found", name);
 		}
 		return result;
+	}
+
+	private boolean existsModel(String name) throws XavaException {
+		try {
+			return MetaComponent.exists(name);
+		}
+		catch (Exception ex) {
+			return false;
+		}
 	}
 	
 	private MetaModule createDefaultModule(String modelName) throws XavaException { 				

@@ -9,11 +9,13 @@ import org.openxava.filters.*;
  * Applies to entities. <p> 
  * 
  * Example:
- * @Tab(name="ActiveYear",
- * 		filter=ActiveYearFilter.class,		
- *		properties="year, number, customer.number, customer.name, amountsSum, vat, detailsCount, paid, importance",
- *		baseCondition="${year} = ?"
- * )
+ * <pre>
+ * &nbsp;@Tab(name="ActiveYear",
+ * &nbsp;&nbsp;&nbsp;filter=ActiveYearFilter.class,		
+ * &nbsp;&nbsp;&nbsp;properties="year, number, customer.number, customer.name, amountsSum, vat, detailsCount, paid, importance",
+ * &nbsp;&nbsp;&nbsp;baseCondition="${year} = ?"
+ * &nbsp;)
+ * </pre>
  * 
  * @author Javier Paniza
  */

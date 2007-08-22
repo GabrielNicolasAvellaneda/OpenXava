@@ -8,14 +8,14 @@ import java.lang.annotation.*;
  * 
  * Applies to properties.<p>
  *  
- * The editor display only the characters indicated by @DisplaySize but it 
+ * The editor display only the characters indicated by <code>@DisplaySize</code> but it 
  * allows to the user to entry until the total size of the property. 
- * If @DisplaySize is not specified, the value of the size of the property 
+ * If <code>@DisplaySize</code> is not specified, the value of the size of the property 
  * is assumed.<br>
  * Example:
  * <pre>
- * @Column(length=50) @Required @DisplaySize(25) 
- * private String description;
+ * &nbsp;@Column(length=50) @Required @DisplaySize(25) 
+ * &nbsp;private String description;
  * </pre>
  * In this case the user can type until 50 characters but only 25 are displayed.
  * 

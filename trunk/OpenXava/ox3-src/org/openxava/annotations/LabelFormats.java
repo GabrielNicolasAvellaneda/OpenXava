@@ -4,18 +4,18 @@ import java.lang.annotation.*;
 
 
 /**
- * A group of @LabelFormat associated to the same member. <p>
+ * A group of <code>@{@link LabelFormat}</code> associated to the same member. <p>
  * 
  * Applies to properties and references with descriptions list.<p>
  * 
- * It allows to define a value different for @LabelFormat in each view.<br>
+ * It allows to define a value different for <code>@{@link LabelFormat}</code> in each view.<br>
  * Example:
  * <pre>
- * @LabelFormats({
- *   @LabelFormat(forViews="DEFAULT", value= ... ),
- *   @LabelFormat(forViews="Simple, VerySimple", value= ... ),
- *   @LabelFormat(forViews="Complete", value= ... )
- * })
+ * &nbsp;@LabelFormats({
+ * &nbsp;&nbsp;&nbsp;@LabelFormat(forViews="DEFAULT", value= ... ),
+ * &nbsp;&nbsp;&nbsp;@LabelFormat(forViews="Simple, VerySimple", value= ... ),
+ * &nbsp;&nbsp;&nbsp;@LabelFormat(forViews="Complete", value= ... )
+ * &nbsp;})
  * </pre>
  *
  * @author Javier Paniza

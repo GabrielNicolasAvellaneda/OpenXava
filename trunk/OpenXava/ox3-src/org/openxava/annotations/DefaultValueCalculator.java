@@ -7,12 +7,13 @@ import java.lang.annotation.*;
  * 
  * Applies to properties and references.<p>
  * 
- * With @DefaultValueCalculator you can associate logic to a property or reference. 
+ * With <code>@DefaultValueCalculator</code> you can associate logic to a 
+ * property or reference. 
  * This calculator is for calculating its initial value.<br>
  * For example:
  * <pre>
- * @DefaultValueCalculator(CurrentYearCalculator.class)
- * private int year;
+ * &nbsp;@DefaultValueCalculator(CurrentYearCalculator.class)
+ * &nbsp;private int year;
  * </pre>
  * In this case when the user tries to create a new Invoice (for example) he 
  * will find that the year field already has a value, that he can change 

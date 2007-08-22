@@ -9,9 +9,9 @@ import java.lang.annotation.*;
  * 
  * Example:
  * <pre>
- * @ManyToOne 
- * @NoCreate
- * private Seller alternateSeller;	
+ * &nbsp;@ManyToOne 
+ * &nbsp;@NoCreate
+ * &nbsp;private Seller alternateSeller;	
  * </pre>
  * 
  * @author Javier Paniza

@@ -14,17 +14,17 @@ import java.lang.annotation.*;
  * project. You can see the syntax in OpenXava/xava/validators.xml.<br>
  * Example:
  * <pre>
- * @Required 
- * private int zipCode;
+ * &nbsp;@Required 
+ * &nbsp;private int zipCode;
  * </pre>
  * 
  * In the case of reference you can use the JPA syntax as alternative:
  * <pre>
- * @ManyToOne(optional=false) 	
- * private State state;
+ * &nbsp;@ManyToOne(optional=false) 	
+ * &nbsp;private State state;
  * </pre>
- * That is, for OpenXava @ManyToOne(optional=false) is synonymous of
- * @Required. 
+ * That is, for OpenXava <code>@ManyToOne(optional=false)</code> is synonymous of
+ * <code>@{@link Required}</code>. 
  *  
  * @author Javier Paniza
  */

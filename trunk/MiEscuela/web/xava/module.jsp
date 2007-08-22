@@ -237,11 +237,13 @@ document.onkeydown = processKey;
 
 <table <%=style.getModuleSpacing()%>>
   <tbody>
+    <% if (manager.isButtonBarVisible()) { %>
     <tr>
       <td class='<%=style.getButtonBar()%>'>
       	<jsp:include page="buttonBar.jsp"/>
       </td>
     </tr>
+    <% } %>
     <% if (messagesOnTop && (errors.contains() || messages.contains())) {  %>
     <tr>
       <td class=<%=style.getMessagesWrapper()%>>

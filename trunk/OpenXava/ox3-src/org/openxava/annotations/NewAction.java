@@ -11,9 +11,9 @@ import java.lang.annotation.*;
  * This is the action executed on click in 'Add' link.<br>
  * Example:
  * <pre>
- * @OneToMany (mappedBy="delivery", cascade=CascadeType.REMOVE)
- * @NewAction("DeliveryDetails.new")
- * private Collection<DeliveryDetail> details;	
+ * &nbsp;@OneToMany (mappedBy="delivery", cascade=CascadeType.REMOVE)
+ * &nbsp;@NewAction("DeliveryDetails.new")
+ * &nbsp;private Collection<DeliveryDetail> details;	
  * </pre>
  * 
  * @author Javier Paniza

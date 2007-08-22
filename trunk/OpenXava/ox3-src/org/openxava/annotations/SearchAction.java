@@ -9,9 +9,9 @@ import java.lang.annotation.*;
  * 
  * Example:
  * <pre>
- * @ManyToOne
- * @SearchAction("MyReference.search") 
- * private Seller seller;
+ * &nbsp;@ManyToOne
+ * &nbsp;@SearchAction("MyReference.search") 
+ * &nbsp;private Seller seller;
  * </pre>
  * 
  * @author Javier Paniza

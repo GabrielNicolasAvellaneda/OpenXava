@@ -1,8 +1,11 @@
 package org.openxava.annotations.parse;
 
 import java.beans.*;
+import java.io.*;
 import java.lang.reflect.*;
+import java.net.*;
 import java.util.*;
+import java.util.logging.*;
 
 import javax.persistence.*;
 
@@ -1777,16 +1780,106 @@ public class AnnotatedClassParser {
 	}
 
 
+	/**
+	 * Only for using from MetaApplication class. <p>
+	 */
+	public static Collection friendMetaApplicationGetManagedClassNames() {
+		return obtainManagedClassNamesFromFileClassPath();
+	}
+	
 	public static Collection<String> getManagedClassNames() {
-		if (managedClassNames == null) {
-			// The next code is Hibernate dependent.
-			// This code has to be modified in order to work with Glassfish, OpenJPA, etc.
-			EntityManager manager = XPersistence.createManager();
-			org.hibernate.impl.SessionImpl impl = (org.hibernate.impl.SessionImpl) manager.getDelegate();
-			managedClassNames = impl.getSessionFactory().getAllClassMetadata().keySet();
-			manager.close();						
+		if (managedClassNames == null) {			 
+			try {
+				managedClassNames = obtainManagedClassNamesUsingHibernate();
+			}
+			catch (Exception ex) {
+				// When no database connection is available, no session factory can
+				// be created, but sometimes (from junit test, or code generation, 
+				// for example) is needed to parse the entities anyways, then we'll
+				// try to obtain managed classes without hibernate
+				log.warn(XavaResources.getString("managed_classes_not_from_hibernate"));
+				managedClassNames = obtainManagedClassNamesFromFileClassPath();
+			}
 		}
 		return managedClassNames;
+	}
+	
+	private static Collection obtainManagedClassNamesFromFileClassPath() { 
+		Collection classNames = new ArrayList();
+		URL url = getAnchorURL();		
+		if (url != null) {			
+			File baseClassPath=new File(Strings.noLastToken(url.getPath(), "/"));
+			fillManagedClassNamesFromFileClassPath(classNames, baseClassPath, null, false);
+		}
+		else {			
+			log.warn(XavaResources.getString("jpa_managed_classes_anchor_not_found", "xava.properties, application.xml, aplicacion.xml"));
+		}
+		return classNames;
+	}
+		
+	private static void fillManagedClassNamesFromFileClassPath(Collection classNames, File dir, String base, boolean model) {  
+		File [] files = dir.listFiles();
+		for (int i=0; i<files.length; i++ ) {
+			File file = files[i];
+			String basePackage = base == null?"":base + dir.getName() + ".";
+			if (file.isDirectory()) {
+				boolean isModelPackage = "model".equals(file.getName()) || "modelo".equals(file.getName());				 
+				fillManagedClassNamesFromFileClassPath(classNames, file, basePackage, isModelPackage?true:model);
+			}
+			else if (model && file.getName().endsWith(".class")) {				
+				String modelName = file.getName().substring(0, file.getName().length() - ".class".length());				
+				String className = basePackage + modelName;
+				try { 
+					Class entityClass = Class.forName(className);
+					if (entityClass.isAnnotationPresent(Entity.class)) {						
+						classNames.add(className);
+					}					
+				}
+				catch (ClassNotFoundException ex) {					
+				}				
+			}
+		}		
+	}
+
+	private static URL getAnchorURL() {  
+		URL url = getFileURL("/xava.properties");		
+		if (url == null) url = getFileURL("/application.xml");
+		if (url == null) url = getFileURL("/aplicacion.xml");
+		return url;
+	}
+	
+	private static URL getFileURL(String file) {  
+		try {
+			for (Enumeration en=ClassLoader.getSystemResources("xava.properties"); en.hasMoreElements(); ) {
+				URL url = (URL) en.nextElement();
+				if (url != null) {
+					if ("file".equals(url.getProtocol())) {
+						return url;
+					}
+				}
+			}
+			return null;
+		}
+		catch (Exception ex) {
+			return null;
+		}
+	}
+
+	private static Collection obtainManagedClassNamesUsingHibernate() {
+		// The next code is Hibernate dependent.
+		// This code has to be modified in order to work with Glassfish, OpenJPA, etc.		
+		Level currentLogLevel = Logger.getLogger("org.hibernate").getLevel();
+		Logger.getLogger("org.hibernate").setLevel(Level.OFF); 
+		try {
+			EntityManager manager = XPersistence.createManager();
+			org.hibernate.impl.SessionImpl impl = (org.hibernate.impl.SessionImpl) manager.getDelegate();
+			Collection result = impl.getSessionFactory().getAllClassMetadata().keySet();
+			manager.close();
+			return result;
+		}
+		finally {
+			Logger.getLogger("org.hibernate").setLevel(currentLogLevel);
+		}
 	}
 
 	private void notApply(String memberName, Class annotation, String validMemberTypes) throws XavaException {

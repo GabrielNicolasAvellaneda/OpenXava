@@ -3,18 +3,18 @@ package org.openxava.annotations;
 import java.lang.annotation.*;
 
 /**
- * A group of @DescriptionsList associated to the same member. <p>
+ * A group of <code>@{@link DescriptionsList}</code> associated to the same member. <p>
  * 
  * Applies to references.<p>
  * 
- * It allows to define a value different for @Action in each view.<br>
+ * It allows to define a value different for <code>@{@link DescriptionsList}</code> in each view.<br>
  * Example:
  * <pre>
- * @DescriptionsLists({
- *   @DescriptionsList(forViews="DEFAULT", ... ),
- *   @DescriptionsList(forViews="Simple, VerySimple", ... ),
- *   @DescriptionsList(forViews="Complete", ... )
- * })
+ * &nbsp;@DescriptionsLists({
+ * &nbsp;&nbsp;&nbsp;@DescriptionsList(forViews="DEFAULT", ... ),
+ * &nbsp;&nbsp;&nbsp;@DescriptionsList(forViews="Simple, VerySimple", ... ),
+ * &nbsp;&nbsp;&nbsp;@DescriptionsList(forViews="Complete", ... )
+ * &nbsp;})
  * </pre>
  *  
  * @author Javier Paniza

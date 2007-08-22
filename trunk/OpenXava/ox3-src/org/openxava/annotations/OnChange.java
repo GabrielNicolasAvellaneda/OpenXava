@@ -9,8 +9,8 @@ import java.lang.annotation.*;
  * 
  * Example:
  * <pre>
- * @OnChange(OnChangeCustomerNameAction.class)
- * private String name;
+ * &nbsp;@OnChange(OnChangeCustomerNameAction.class)
+ * &nbsp;private String name;
  * </pre>
  * 
  * @author Javier Paniza

@@ -12,9 +12,9 @@ import java.lang.annotation.*;
  * user select some rows and then click in 'Remove selected' link.<br>
  * Example:
  * <pre>
- * @OneToMany (mappedBy="delivery", cascade=CascadeType.REMOVE)
- * @RemoveSelectedAction("DeliveryDetails.removeSelected")
- * private Collection<DeliveryDetail> details;	
+ * &nbsp;@OneToMany (mappedBy="delivery", cascade=CascadeType.REMOVE)
+ * &nbsp;@RemoveSelectedAction("DeliveryDetails.removeSelected")
+ * &nbsp;private Collection<DeliveryDetail> details;	
  * </pre>
  * 
  * @author Javier Paniza

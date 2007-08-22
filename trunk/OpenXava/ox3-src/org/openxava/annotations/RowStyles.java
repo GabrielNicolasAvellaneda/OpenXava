@@ -4,15 +4,15 @@ import java.lang.annotation.*;
 
 
 /**
- * A group of @RowStyle associated to the same collection. <p>
+ * A group of <code>@{@link RowStyle}</code> associated to the same collection. <p>
  * 
- * It allows to define a value different for @RowStyle in each view.<br>
+ * It allows to define a value different for <code>@{@link RowStyle}</code> in each view.<br>
  * Example:
  * <pre>
- * @RowStyles({
- *   @RowStyle(forViews="Specials", style="highlight", property="type", value="special"),
- *   @RowStyle(forViews="Complete", style="highlight", property="type", value="steady") 	
- * })
+ * &nbsp;@RowStyles({
+ * &nbsp;&nbsp;&nbsp;@RowStyle(forViews="Specials", style="highlight", property="type", value="special"),
+ * &nbsp;&nbsp;&nbsp;@RowStyle(forViews="Complete", style="highlight", property="type", value="steady") 	
+ * &nbsp;})
  * </pre>
  *
  * @author Javier Paniza

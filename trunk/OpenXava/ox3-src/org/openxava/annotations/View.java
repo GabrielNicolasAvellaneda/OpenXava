@@ -9,20 +9,20 @@ import java.lang.annotation.*;
  * 
  * Example:
  * <pre>
- * @Entity
- * @View(members=
- *		"year, number, date, paid;" +
- *		"discounts [" +
- *			"customerDiscount, customerTypeDiscount, yearDiscount;" +
- *		"];" +
- *		"comment;" +			
- *		"customer { customer }" +
- *		"details { details }" +			
- *		"amounts { amountsSum; vatPercentage; vat }" +
- *		"deliveries { deliveries }"		
- * )
- * public class Invoice {
- * ...
+ * &nbsp;@Entity
+ * &nbsp;@View(members=
+ * &nbsp;&nbsp;&nbsp;"year, number, date, paid;" +
+ * &nbsp;&nbsp;&nbsp;"discounts [" +
+ * &nbsp;&nbsp;&nbsp;"	customerDiscount, customerTypeDiscount, yearDiscount;" +
+ * &nbsp;&nbsp;&nbsp;"];" +
+ * &nbsp;&nbsp;&nbsp;"comment;" +			
+ * &nbsp;&nbsp;&nbsp;"customer { customer }" +
+ * &nbsp;&nbsp;&nbsp;"details { details }" +			
+ * &nbsp;&nbsp;&nbsp;"amounts { amountsSum; vatPercentage; vat }" +
+ * &nbsp;&nbsp;&nbsp;"deliveries { deliveries }"		
+ * &nbsp;)
+ * &nbsp;public class Invoice {
+ * &nbsp;...
  * </pre>
  * 
  * 

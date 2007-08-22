@@ -1,7 +1,7 @@
 package org.openxava.annotations;
 
 /**
- * For using in @LabelFormat as value. <p>
+ * For using in <code>@LabelFormat</code> as value. <p>
  * 
  * @author Javier Paniza
  */

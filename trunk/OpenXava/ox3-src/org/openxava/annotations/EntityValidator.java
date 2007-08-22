@@ -12,17 +12,17 @@ import java.lang.annotation.*;
  * you can use this type of validation.<br>
  * Example:
  * <pre>
- * @Entity
- * @EntityValidator(InvoiceDetailValidator.class,
- *   properties= { 
- *      @PropertyValue(name="invoice"), 
- *      @PropertyValue(name="oid"), 
- *      @PropertyValue(name="product"),
- *      @PropertyValue(name="unitPrice")
- *	 }
- * )
- * public class InvoiceDetail {
- * ...
+ * &nbsp;@Entity
+ * &nbsp;@EntityValidator(InvoiceDetailValidator.class,
+ * &nbsp;&nbsp;&nbsp;properties= { 
+ * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@PropertyValue(name="invoice"), 
+ * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@PropertyValue(name="oid"), 
+ * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@PropertyValue(name="product"),
+ * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@PropertyValue(name="unitPrice")
+ * &nbsp;&nbsp;&nbsp;}
+ * &nbsp;)
+ * &nbsp;public class InvoiceDetail {
+ * &nbsp;...
  * </pre>
  *
  * @author Javier Paniza

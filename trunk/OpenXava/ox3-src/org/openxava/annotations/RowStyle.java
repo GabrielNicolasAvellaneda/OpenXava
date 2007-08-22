@@ -7,18 +7,18 @@ import java.lang.annotation.*;
  * 
  * Example for Tab:
  * <pre>
- * @Tab(
- *		rowStyles=@RowStyle(style="highlight", property="type", value="steady")
- * )
- * public class Customer {
- * ...
+ * &nbsp;@Tab(
+ * &nbsp;&nbsp;&nbsp;rowStyles=@RowStyle(style="highlight", property="type", value="steady")
+ * &nbsp;)
+ * &nbsp;public class Customer {
+ * &nbsp;...
  * </pre>
  * Example for Collection:
  * <pre>
- * @OneToMany(mappedBy="seller")
- * @ListProperties("number, name, remarks, relationWithSeller, seller.level.description, type") 
- * @RowStyle(style="highlight", property="type", value="steady") 
- * private Collection<Customer> customers;
+ * &nbsp;@OneToMany(mappedBy="seller")
+ * &nbsp;@ListProperties("number, name, remarks, relationWithSeller, seller.level.description, type") 
+ * &nbsp;@RowStyle(style="highlight", property="type", value="steady") 
+ * &nbsp;private Collection<Customer> customers;
  * </pre>
  * In this case you are saying that the object which property type has the 
  * value steady will use the style highlight. The style has to be defined in the
@@ -37,7 +37,7 @@ public @interface RowStyle {
 	/** 
 	 * List of comma separated view names where this annotation applies. <p>
 	 * 
-	 * <code>forViews</code> has no effect when @RowStyle is used for Tabs.
+	 * <code>forViews</code> has no effect when <code>@RowStyle</code> is used for Tabs.
 	 * 
 	 * Exclusive with notForViews.<br>
 	 * If both forViews and notForViews are omitted then this annotation
@@ -50,7 +50,7 @@ public @interface RowStyle {
 	/**
 	 * List of comma separated view names where this annotation does not apply. <p>
 	 * 
-	 * <code>notforViews</code> has no effect when @RowStyle is used for Tabs.
+	 * <code>notforViews</code> has no effect when <code>@RowStyle</code> is used for Tabs.
 	 * 
 	 * Exclusive with forViews.<br>
 	 * If both forViews and notForViews are omitted then this annotation

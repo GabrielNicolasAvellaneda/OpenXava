@@ -3,18 +3,19 @@ package org.openxava.annotations;
 import java.lang.annotation.*;
 
 /**
- * A group of @NewAction associated to the same collection. <p>
+ * A group of <code>@{@link NewAction}</code> associated to the same collection. <p>
  * 
  * Applies to collections.<p>
  * 
- * It allows to define a value different for @NewAction in each view.<br>
+ * It allows to define a value different for <code>@{@link NewAction}</code> in 
+ * each view.<br>
  * Example:
  * <pre>
- * @NewActions({
- *   @NewAction(forViews="DEFAULT", value= ... ),
- *   @NewAction(forViews="Simple, VerySimple", value= ... ),
- *   @NewAction(forViews="Complete", value= ... )
- * })
+ * &nbsp;@NewActions({
+ * &nbsp;&nbsp;&nbsp;@NewAction(forViews="DEFAULT", value= ... ),
+ * &nbsp;&nbsp;&nbsp;@NewAction(forViews="Simple, VerySimple", value= ... ),
+ * &nbsp;&nbsp;&nbsp;@NewAction(forViews="Complete", value= ... )
+ * &nbsp;})
  * </pre>
  *
  * @author Javier Paniza

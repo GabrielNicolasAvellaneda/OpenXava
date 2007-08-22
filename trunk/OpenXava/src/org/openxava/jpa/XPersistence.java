@@ -177,7 +177,7 @@ public class XPersistence {
 		Map properties = getPersistenceUnitProperties();
 		EntityManagerFactory entityManagerFactory = (EntityManagerFactory) 
 			entityManagerFactories.get(properties); 
-		if (entityManagerFactory == null) {			
+		if (entityManagerFactory == null) {	
 			entityManagerFactory = Persistence.createEntityManagerFactory(getPersistenceUnit(), properties);
 			entityManagerFactories.put(new HashMap(properties), entityManagerFactory);
 		}

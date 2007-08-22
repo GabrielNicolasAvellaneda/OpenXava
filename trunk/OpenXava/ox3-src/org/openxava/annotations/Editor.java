@@ -11,9 +11,9 @@ import java.lang.annotation.*;
  * xava/editors.xml of your project.<br>
  * Example:
  * <pre>
- * @Editor("ValidValuesRadioButton")
- * private Type type;
- * public enum Type { NORMAL, STEADY, SPECIAL }; 
+ * &nbsp;@Editor("ValidValuesRadioButton")
+ * &nbsp;private Type type;
+ * &nbsp;public enum Type { NORMAL, STEADY, SPECIAL }; 
  * </pre>
  * 
  * @author Javier Paniza

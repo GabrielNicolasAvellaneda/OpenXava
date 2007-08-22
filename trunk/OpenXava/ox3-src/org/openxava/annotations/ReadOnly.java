@@ -8,11 +8,11 @@ import java.lang.annotation.*;
  * Applies to properties, references and collection.<p>
  * 
  * An alternative to this is to make the property editable or not editable
- * programmatically using <code>org.openxava.view.View</code>.<br>
+ * programmatically using {@link org.openxava.view.View}.<br>
  * Example:
  * <pre>
- * @ReadOnly
- * private String name;
+ * &nbsp;@ReadOnly
+ * &nbsp;private String name;
  * </pre>
  * 
  * @author Javier Paniza

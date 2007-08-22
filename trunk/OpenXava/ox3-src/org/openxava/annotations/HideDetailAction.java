@@ -11,9 +11,9 @@ import java.lang.annotation.*;
  * This is the action executed on click in 'Close' link.
  * Example:
  * <pre>
- * @OneToMany (mappedBy="delivery", cascade=CascadeType.REMOVE)
- * @HideDetailAction("DeliveryDetails.hideDetail")
- * private Collection<DeliveryDetail> details;	
+ * &nbsp;@OneToMany (mappedBy="delivery", cascade=CascadeType.REMOVE)
+ * &nbsp;@HideDetailAction("DeliveryDetails.hideDetail")
+ * &nbsp;private Collection<DeliveryDetail> details;	
  * </pre>
  * 
  * @author Javier Paniza

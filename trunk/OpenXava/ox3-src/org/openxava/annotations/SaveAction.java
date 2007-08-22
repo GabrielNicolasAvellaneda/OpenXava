@@ -10,9 +10,9 @@ import java.lang.annotation.*;
  * This is the action executed on click in 'Save detail' link.<br>
  * Example:
  * <pre>
- * @OneToMany (mappedBy="delivery", cascade=CascadeType.REMOVE)
- * @SaveAction("DeliveryDetails.save")
- * private Collection<DeliveryDetail> details;	
+ * &nbsp;@OneToMany (mappedBy="delivery", cascade=CascadeType.REMOVE)
+ * &nbsp;@SaveAction("DeliveryDetails.save")
+ * &nbsp;private Collection<DeliveryDetail> details;	
  * </pre>
  * 
  * @author Javier Paniza

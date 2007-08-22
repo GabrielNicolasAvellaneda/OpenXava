@@ -9,8 +9,8 @@ import java.lang.annotation.*;
  * 
  * Example:
  * <pre>
- * @LabelFormat(LabelFormatType.SMALL)
- * private int zipCode;
+ * &nbsp;@LabelFormat(LabelFormatType.SMALL)
+ * &nbsp;private int zipCode;
  * </pre> 
  *  
  * @author Javier Paniza

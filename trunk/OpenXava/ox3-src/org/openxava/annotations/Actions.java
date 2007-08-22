@@ -3,18 +3,18 @@ package org.openxava.annotations;
 import java.lang.annotation.*;
 
 /**
- * A group of @Action associated to the same member. <p>
+ * A group of <code>@{@link Action}</code> associated to the same member. <p>
  * 
  * Applies to properties and references.<p>
  * 
- * It allows to define a value different for @Action in each view.<br>
+ * It allows to define a value different for <code>@{@link Action}</code> in each view.<br>
  * Example:
  * <pre>
- * @Actions({
- *   @Action(forViews="DEFAULT", value= ... ),
- *   @Action(forViews="Simple, VerySimple", value= ... ),
- *   @Action(forViews="Complete", value= ... )
- * })
+ * &nbsp;@Actions({
+ * &nbsp;&nbsp;&nbsp;@Action(forViews="DEFAULT", value= ... ),
+ * &nbsp;&nbsp;&nbsp;@Action(forViews="Simple, VerySimple", value= ... ),
+ * &nbsp;&nbsp;&nbsp;@Action(forViews="Complete", value= ... )
+ * &nbsp;})
  * </pre>
  *   
  * @author Javier Paniza

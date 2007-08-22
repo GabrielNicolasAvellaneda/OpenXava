@@ -3,7 +3,7 @@ package org.openxava.annotations;
 import java.lang.annotation.*;
 
 /**
- * With @DescriptionsList you can instruct OpenXava to visualize references 
+ * With <code>@DescriptionsList</code> you can instruct OpenXava to visualize references 
  * as a descriptions list (actually a combo). <p>
  * 
  * Applies to references. <p>
@@ -13,9 +13,9 @@ import java.lang.annotation.*;
  *
  * Example:
  * <pre>
- * @DescriptionsList
- * @ManyToOne
- * private DrivingLicence drivingLicence;
+ * &nbsp;@DescriptionsList
+ * &nbsp;@ManyToOne
+ * &nbsp;private DrivingLicence drivingLicence;
  * </pre>	
  *
  * @author Javier Paniza

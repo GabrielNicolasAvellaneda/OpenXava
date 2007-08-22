@@ -9,9 +9,9 @@ import java.lang.annotation.*;
  * 
  * Example:
  * <pre>
- * @ManyToOne 
- * @NoSearch
- * private Subfamily subfamily;
+ * &nbsp;@ManyToOne 
+ * &nbsp;@NoSearch
+ * &nbsp;private Subfamily subfamily;
  * </pre>
  * 
  * @author Javier Paniza
