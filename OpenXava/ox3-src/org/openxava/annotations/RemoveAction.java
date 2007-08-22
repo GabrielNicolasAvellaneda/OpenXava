@@ -10,9 +10,9 @@ import java.lang.annotation.*;
  * This is the action executed on click in 'Remove detail 'link.<br>
  * Example:
  * <pre>
- * @OneToMany (mappedBy="delivery", cascade=CascadeType.REMOVE)
- * @RemoveAction("DeliveryDetails.remove")
- * private Collection<DeliveryDetail> details;	
+ * &nbsp;@OneToMany (mappedBy="delivery", cascade=CascadeType.REMOVE)
+ * &nbsp;@RemoveAction("DeliveryDetails.remove")
+ * &nbsp;private Collection<DeliveryDetail> details;	
  * </pre>
  * 
  * @author Javier Paniza

@@ -13,9 +13,9 @@ import java.lang.annotation.*;
  * the user interface.<br>
  * Example:
  * <pre>
- * @Id @Hidden
- * @GeneratedValue(strategy=GenerationType.IDENTITY)
- * private Integer oid; 
+ * &nbsp;@Id &nbsp;@Hidden
+ * &nbsp;@GeneratedValue(strategy=GenerationType.IDENTITY)
+ * &nbsp;private Integer oid; 
  * </pre>
  * 
  * @author Javier Paniza

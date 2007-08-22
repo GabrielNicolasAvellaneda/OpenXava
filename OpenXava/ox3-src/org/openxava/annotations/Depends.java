@@ -11,11 +11,11 @@ import java.lang.annotation.*;
  * values of a property in the user interface.<br>
  * Example:
  * <pre>
- * @Depends("unitPrice")  	
- * public BigDecimal getUnitPriceInPesetas() {
- *   if (unitPrice == null) return null;
- *   return unitPrice.multiply(new BigDecimal("166.386")).setScale(0, BigDecimal.ROUND_HALF_UP);
- * }
+ * &nbsp;@Depends("unitPrice")  	
+ * &nbsp;public BigDecimal getUnitPriceInPesetas() {
+ * &nbsp;&nbsp;&nbsp;if (unitPrice == null) return null;
+ * &nbsp;&nbsp;&nbsp;return unitPrice.multiply(new BigDecimal("166.386")).setScale(0, BigDecimal.ROUND_HALF_UP);
+ * &nbsp;}
  * </pre>
  * In this case if the unitPrice changes in the user interface, the value of 
  * unitPriceInPesetas is recalculated and redisplayed.

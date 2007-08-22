@@ -3,18 +3,19 @@ package org.openxava.annotations;
 import java.lang.annotation.*;
 
 /**
- * A group of @ReferenceView associated to the same reference. <p>
+ * A group of <code>@{@link ReferenceView}</code> associated to the same reference. <p>
  * 
  * Applies to references.<p>
  * 
- * It allows to define a value different for @ReferenceView in each view.<br>
+ * It allows to define a value different for <code>@{@link ReferenceView}</code> 
+ * in each view.<br>
  * Example:
  * <pre>
- * @ReferenceViews({
- *   @ReferenceView(forViews="DEFAULT", value= ... ),
- *   @ReferenceView(forViews="Simple, VerySimple", value= ... ),
- *   @ReferenceView(forViews="Complete", value= ... )
- * })
+ * &nbsp;@ReferenceViews({
+ * &nbsp;&nbsp;&nbsp;@ReferenceView(forViews="DEFAULT", value= ... ),
+ * &nbsp;&nbsp;&nbsp;@ReferenceView(forViews="Simple, VerySimple", value= ... ),
+ * &nbsp;&nbsp;&nbsp;@ReferenceView(forViews="Complete", value= ... )
+ * &nbsp;})
  * </pre>
  *
  * @author Javier Paniza

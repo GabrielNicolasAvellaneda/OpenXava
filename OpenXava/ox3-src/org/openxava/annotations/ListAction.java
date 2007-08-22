@@ -10,9 +10,9 @@ import java.lang.annotation.*;
  * 
  * Example:
  * <pre>
- * @OneToMany(mappedBy="seller")
- * @ListAction("Sellers.promoteCustomers")
- * private Collection<Customer> customers;  
+ * &nbsp;@OneToMany(mappedBy="seller")
+ * &nbsp;@ListAction("Sellers.promoteCustomers")
+ * &nbsp;private Collection<Customer> customers;  
  * </pre>
  * 
  * @author Javier Paniza

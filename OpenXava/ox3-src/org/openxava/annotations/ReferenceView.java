@@ -11,9 +11,9 @@ import java.lang.annotation.*;
  * is used. With this attribute you can indicate that it uses another view.<br>
  * Example:
  * <pre>
- * @ManyToOne 
- * @ReferenceView("LevelNoDescriptionsList")
- * private Seller seller;
+ * &nbsp;@ManyToOne 
+ * &nbsp;@ReferenceView("LevelNoDescriptionsList")
+ * &nbsp;private Seller seller;
  * </pre>
  * 
  * @author Javier Paniza

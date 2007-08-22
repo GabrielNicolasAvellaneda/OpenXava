@@ -8,12 +8,12 @@ import org.openxava.tests.*;
  * @author Javier Paniza
  */
 
-public class PruebaProfesores extends ModuleTestBase {
+public class PruebaProfesor extends ModuleTestBase {
 	
 	
 	
-	public PruebaProfesores(String testName) {
-		super(testName, "MiEscuela", "Profesores");		
+	public PruebaProfesor(String testName) {
+		super(testName, "MiEscuela", "Profesor");		
 	}
 
 	public void testCrearLeerModificarBorrar() throws Exception {

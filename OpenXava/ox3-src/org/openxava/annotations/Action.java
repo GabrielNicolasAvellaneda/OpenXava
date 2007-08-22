@@ -9,8 +9,8 @@ import java.lang.annotation.*;
  * 
  * Example:
  * <pre>
- * @Action("Deliveries.generateNumber")
- * private int number;
+ * &nbsp;@Action("Deliveries.generateNumber")
+ * &nbsp;private int number;
  * </pre>
  * The actions are displayed as a link or an image beside the property.<br>
  * By default the action link is present only when the property is editable, 

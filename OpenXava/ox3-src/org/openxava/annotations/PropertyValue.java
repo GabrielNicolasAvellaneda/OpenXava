@@ -10,13 +10,13 @@ import java.lang.annotation.*;
  * 
  * Example:
  * <pre>
- * @EntityValidator(validator=CheapProductValidator.class, properties= {
- *		@PropertyValue(name="limit", value="100"),
- *		@PropertyValue(name="description"),
- *		@PropertyValue(name="price", from="unitPrice")
- * })
- * public class Product {
- * ...
+ * &nbsp;@EntityValidator(validator=CheapProductValidator.class, properties= {
+ * &nbsp;&nbsp;&nbsp;@PropertyValue(name="limit", value="100"),
+ * &nbsp;&nbsp;&nbsp;@PropertyValue(name="description"),
+ * &nbsp;&nbsp;&nbsp;@PropertyValue(name="price", from="unitPrice")
+ * &nbsp;})
+ * &nbsp;public class Product {
+ * &nbsp;...
  * </pre>
  * For example, in this case before executing the validation of CheapProductValidator
  * OpenXava does:
@@ -53,7 +53,6 @@ public @interface PropertyValue {
 	 * Fix value to fill the property of the target calculator, validator, etc. <p>
 	 * 
 	 * 'value' is exclusive with 'from' 
-	 * @return
 	 */
 	String value() default "";
 	

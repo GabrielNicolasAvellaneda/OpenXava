@@ -3,18 +3,18 @@ package org.openxava.annotations;
 import java.lang.annotation.*;
 
 /**
- * The @RemoveValidator is a level model validator, it is executed just before
- * removing an object, and it has the possibility to deny the deletion. <p>
+ * The <code>@RemoveValidator</code> is a level model validator, it is executed 
+ * just before removing an object, and it has the possibility to deny the deletion. <p>
  * 
  * Applies to entities. <p>
  * 
  * Example:
  * <pre>
- * @RemoveValidator(value=DeliveryTypeRemoveValidator.class,
- *	 properties=@PropertyValue(name="number")
- * )
- * public class DeliveryType {
- * ...
+ * &nbsp;@RemoveValidator(value=DeliveryTypeRemoveValidator.class,
+ * &nbsp;&nbsp;&nbsp;properties=@PropertyValue(name="number")
+ * &nbsp;)
+ * &nbsp;public class DeliveryType {
+ * &nbsp;...
  * </pre>
  * 
  * @author Javier Paniza

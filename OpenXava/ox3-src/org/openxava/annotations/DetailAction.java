@@ -10,9 +10,9 @@ import java.lang.annotation.*;
  * 
  * Example:
  * <pre>
- * @OneToMany (mappedBy="invoice", cascade=CascadeType.REMOVE)
- * @DetailAction("Invoices.viewProduct")
- * private Collection<InvoiceDetail> details;
+ * &nbsp;@OneToMany (mappedBy="invoice", cascade=CascadeType.REMOVE)
+ * &nbsp;@DetailAction("Invoices.viewProduct")
+ * &nbsp;private Collection<InvoiceDetail> details;
  * </pre>
  * 
  * @author Javier Paniza

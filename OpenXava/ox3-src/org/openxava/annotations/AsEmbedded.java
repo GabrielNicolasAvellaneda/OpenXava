@@ -10,23 +10,23 @@ import java.lang.annotation.*;
  * <h4>Applied to references</h4>
  * By default in the case of a reference to an embedded object the user can create 
  * and edit its data, while in the case of a reference to an entity
- * the user can only to choose an existing entity. If you put @AsEmbedded
+ * the user can only to choose an existing entity. If you put <code>@{@link AsEmbedded}</code>
  * then the user interface for references to entities behaves as a in 
  * the embedded case, allowing to the user to create a new object and editing 
  * its data directly. It has no effect in case of a reference to embedded object.<br> 
  * <b>Warning!</b> If you remove an entity its referenced entities are not removed, 
- * even if they are displayed using @AsEmbedded.<br>
+ * even if they are displayed using <code>@{@link AsEmbedded}</code>.<br>
  * Example:
  * <pre>
- * @ManyToOne 
- * @AsEmbedded
- * private Seller seller;
+ * &nbsp;@ManyToOne 
+ * &nbsp;@AsEmbedded
+ * &nbsp;private Seller seller;
  * </pre>
  * 
  * <h4>Applied to collections</h4> 
  * By default the collections with CascadeType.REMOVE allow the users to create 
  * and to edit elements, while the other collections allows only to choose existing 
- * entities to add to (or remove from) the collection. If you put @AsEmbedded
+ * entities to add to (or remove from) the collection. If you put <code>@{@link AsEmbedded}</code>
  * then the collection behaves always as a collection with CascadeType.REMOVE, 
  * allowing to the user to add objects and editing them directly.<br>
  * <b><i>Note:</i></b> JPA 1.0 does not support collections of embedded objects, therefore we
@@ -34,9 +34,9 @@ import java.lang.annotation.*;
  * of <i>embedded objects</i>.<br>
  * Example:
  * <pre>
- * @AsEmbedded
- * @OneToMany(mappedBy="seller")
- * private Collection<Customer> customers;
+ * &nbsp;@AsEmbedded
+ * &nbsp;@OneToMany(mappedBy="seller")
+ * &nbsp;private Collection<Customer> customers;
  * </pre>
  *  
  * @author Javier Paniza

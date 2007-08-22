@@ -10,8 +10,8 @@ import java.lang.annotation.*;
  * 
  * Example:
  * <pre>
- * @PropertyValidator(UnitPriceValidator.class)
- * private BigDecimal unitPrice;
+ * &nbsp;@PropertyValidator(UnitPriceValidator.class)
+ * &nbsp;private BigDecimal unitPrice;
  * </pre>
  * 
  * @author Javier Paniza

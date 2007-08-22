@@ -15,8 +15,8 @@ import java.lang.annotation.*;
  * properties.<br>
  * Example:
  * <pre>
- * @Stereotype("PERSON_NAME")  
- * private String name;
+ * &nbsp;@Stereotype("PERSON_NAME")  
+ * &nbsp;private String name;
  * </pre>
  * 
  * @author Javier Paniza

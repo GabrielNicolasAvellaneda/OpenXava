@@ -10,10 +10,10 @@ import java.lang.annotation.*;
  * This is the action showed in each row, if the collection is read only.<br>
  * Example:
  * <pre>
- * @OneToMany (mappedBy="invoice")
- * @ReadOnly
- * @ViewAction("Invoices.viewDelivery")
- * private Collection<Delivery> deliveries;
+ * &nbsp;@OneToMany (mappedBy="invoice")
+ * &nbsp;@ReadOnly
+ * &nbsp;@ViewAction("Invoices.viewDelivery")
+ * &nbsp;private Collection<Delivery> deliveries;
  * </pre>
  * 
  * @author Javier Paniza

@@ -3,18 +3,19 @@ package org.openxava.annotations;
 import java.lang.annotation.*;
 
 /**
- * A group of @RemoveAction associated to the same collection. <p>
+ * A group of <code>@{@link RemoveAction}</code> associated to the same collection. <p>
  * 
  * Applies to collections.<p>
  * 
- * It allows to define a value different for @RemoveAction in each view.<br>
+ * It allows to define a value different for <code>@{@link RemoveAction}</code> 
+ * in each view.<br>
  * Example:
  * <pre>
- * @RemoveActions({
- *   @RemoveAction(forViews="DEFAULT", value= ... ),
- *   @RemoveAction(forViews="Simple, VerySimple", value= ... ),
- *   @RemoveAction(forViews="Complete", value= ... )
- * })
+ * &nbsp;@RemoveActions({
+ * &nbsp;&nbsp;&nbsp;@RemoveAction(forViews="DEFAULT", value= ... ),
+ * &nbsp;&nbsp;&nbsp;@RemoveAction(forViews="Simple, VerySimple", value= ... ),
+ * &nbsp;&nbsp;&nbsp;@RemoveAction(forViews="Complete", value= ... )
+ * &nbsp;})
  * </pre>
  * 
  * @author Javier Paniza

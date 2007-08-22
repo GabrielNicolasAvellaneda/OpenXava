@@ -3,18 +3,18 @@ package org.openxava.annotations;
 import java.lang.annotation.*;
 
 /**
- * A group of @Editor associated to the same property. <p>
+ * A group of <code>@{@link Editor}</code> associated to the same property. <p>
  * 
  * Applies to properties.<p>
  * 
- * It allows to define a value different for @Editor in each view.<br>
+ * It allows to define a value different for <code>@{@link Editor}</code> in each view.<br>
  * Example:
  * <pre>
- * @Editors({
- *   @Editor(forViews="DEFAULT", value= ... ),
- *   @Editor(forViews="Simple, VerySimple", value= ... ),
- *   @Editor(forViews="Complete", value= ... )
- * })
+ * &nbsp;@Editors({
+ * &nbsp;&nbsp;&nbsp;@Editor(forViews="DEFAULT", value= ... ),
+ * &nbsp;&nbsp;&nbsp;@Editor(forViews="Simple, VerySimple", value= ... ),
+ * &nbsp;&nbsp;&nbsp;@Editor(forViews="Complete", value= ... )
+ * &nbsp;})
  * </pre>
  *
  * @author Javier Paniza

@@ -11,9 +11,9 @@ import java.lang.annotation.*;
  * of the referenced object (excluding references and calculated properties).<br>
  * Example:
  * <pre>
- * @OneToMany (mappedBy="invoice", cascade=CascadeType.REMOVE)
- * @ListProperties("serviceType, product.description, product.unitPriceInPesetas, quantity, unitPrice, amount, free")
- * private Collection<InvoiceDetail> details;
+ * &nbsp;@OneToMany (mappedBy="invoice", cascade=CascadeType.REMOVE)
+ * &nbsp;@ListProperties("serviceType, product.description, product.unitPriceInPesetas, quantity, unitPrice, amount, free")
+ * &nbsp;private Collection<InvoiceDetail> details;
  * </pre>
  * 
  * @author Javier Paniza

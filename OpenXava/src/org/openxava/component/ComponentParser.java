@@ -42,7 +42,7 @@ class ComponentParser extends ParserBase {
 	private static MetaComponent parseAnnotatedClass(String name) throws XavaException {
 		Object parser = null;
 		try {
-			// At the momment, annotated EJB is parsed only if parser is available in classpath
+			// At the momment, annotated EJBs are parsed only if parser is available in classpath
 			parser = Class.forName("org.openxava.annotations.parse.AnnotatedClassParser").newInstance();						
 		}
 		catch (Exception ex) {

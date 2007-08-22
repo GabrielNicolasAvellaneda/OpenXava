@@ -1,8 +1,5 @@
 package org.openxava.school.tests;
 
-
-import org.openxava.annotations.parse.*;
-import org.openxava.component.*;
 import org.openxava.tests.*;
 
 
@@ -11,20 +8,14 @@ import org.openxava.tests.*;
  * @author Javier Paniza
  */
 
-public class TeachersTest extends ModuleTestBase {
+public class TeacherTest extends ModuleTestBase {
 	
 	
 	
-	public TeachersTest(String testName) {
-		super(testName, "MySchool", "Teachers");		
+	public TeacherTest(String testName) {
+		super(testName, "MySchool", "Teacher");		
 	}
 	
-	public void testTmp() throws Exception { // tmp
-		System.out.println("[TeachersTest.testTmp] MetaComponent.getAll()="+MetaComponent.getAll()); //  tmp
-		System.out.println("[TeachersTest.testTmp] AnnotatedClassParser.getManagedClassNames()="+AnnotatedClassParser.getManagedClassNames()); //  tmp
-		
-	}
-
 	public void testCreateReadUpdateDelete() throws Exception {
 		// Create
 		execute("CRUD.new");

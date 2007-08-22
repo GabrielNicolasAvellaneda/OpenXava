@@ -10,9 +10,9 @@ import java.lang.annotation.*;
  * By default the default view is used.<br>
  * Example:
  * <pre>
- * @OneToMany (mappedBy="invoice")
- * @CollectionView("InInvoice")
- * private Collection<Delivery> deliveries;
+ * &nbsp;@OneToMany (mappedBy="invoice")
+ * &nbsp;@CollectionView("InInvoice")
+ * &nbsp;private Collection<Delivery> deliveries;
  * </pre>
  * 
  * @author Javier Paniza

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"  ?>
+<<%="?xml version='1.0' encoding='" + (System.getProperty("file.encoding")==null?"ISO-8859-1":System.getProperty("file.encoding")) + "' ?"%>>
 
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 
@@ -85,7 +85,7 @@ int totalWidth = 0;
 int i=0;
 while (it.hasNext()) {
 	MetaProperty p = (MetaProperty) it.next();
-	String label = p.getLabel(locale);
+	String label = p.getLabel(locale);	
 	widths[i]=Math.max(p.getSize(), label.length());
 	totalWidth+=widths[i];
 	i++;
