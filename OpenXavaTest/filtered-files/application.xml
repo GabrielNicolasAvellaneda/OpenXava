@@ -16,7 +16,7 @@
 	</module>
 		
 	<module name="StatesHibernate">
-		<env-var name="XAVA_SEARCH_ACTION" value="StatesHibernate.search"/>		
+		<env-var name="XAVA_SEARCH_ACTION" value="StateHibernate.search"/>		
 		<model name="State"/>
 		<controller name="StatesHibernate"/>
 	  <controller name="Print"/>
@@ -46,19 +46,13 @@
 	</module>
 	
 	<module name="CarriersWithSpecialSearch">
-		<env-var name="XAVA_SEARCH_ACTION" value="Carriers.search"/>			
+		<env-var name="XAVA_SEARCH_ACTION" value="Carrier.search"/>			
 		<model name="Carrier"/>
 		<view name="Simple"/>
 		<controller name="Typical"/>
 		<controller name="Carriers"/>		
 	</module>
-	
-	<module name="CarriersWithCalculatedFellows">
-		<model name="Carrier"/>
-		<view name="CalculatedFellows"/>
-		<controller name="Typical"/>		
-	</module>
-			
+		
 	<module name="Sizes">
 		<model name="Size"/>
 		<controller name="Typical"/>
@@ -69,7 +63,7 @@
 		<controller name="TypicalNotResetOnSave"/> 
 	</module>
 						
-	<module name="Deliveries" folder="invoicing">		<env-var name="XAVA_SEARCH_ACTION" value="Deliveries.search"/>				<model name="Delivery"/>		<controller name="Typical"/>		<controller name="Remarks"/>		<controller name="Deliveries"/>			</module>
+	<module name="Deliveries" folder="invoicing">		<env-var name="XAVA_SEARCH_ACTION" value="Delivery.search"/>				<model name="Delivery"/>		<controller name="Typical"/>		<controller name="Remarks"/>		<controller name="Deliveries"/>			</module>
 	
 	<module name="DeliveriesGroupsInSections" folder="invoicing.variations">
 		<env-var name="XAVA_SEARCH_ACTION" value="CRUD.searchExecutingOnChange"/>		
@@ -190,7 +184,7 @@
 			<module name="CustomersSomeMembersReadOnly" folder="invoicing.variations">			<model name="Customer"/>		<view name="SomeMembersReadOnly"/>		<controller name="Typical"/>			</module>
 	
 	<module name="CustomersRadioButton" folder="invoicing.variations">	
-		<model name="Customer"/>		
+		<model name="Customer"/>
 		<view name="TypeWithRadioButton"/>
 		<controller name="Typical"/>
 	</module>
@@ -242,7 +236,7 @@
 		<model name="Invoice" />
 		<tab name="DefaultYearEnv" />
 		<controller name="Typical"/>		
-	</module>			<module name="Invoice20020001" folder="invoicing.variations">		<model name="Invoice"  />		<tab name="Invoice20020001" />		<controller name="Typical"/>			</module>			<module name="OnlyReadDetailsInvoice" folder="invoicing.variations">		<model name="Invoice"/>				<view name="OnlyReadDetails"/>		<tab name="Level4Reference"/>				<controller name="Typical"/>			</module>		<module name="OnlyEditDetailsInvoice" folder="invoicing.variations">		<model name="Invoice"/>		<view name="OnlyEditDetails"/>		<controller name="Typical"/>			</module>		<module name="InvoicesFromDeliveries" folder="invoicing.variations">		<env-var name="XAVA_SEARCH_ACTION" value="Invoices.searchFromDelivery"/>		<model name="Delivery"/>		<controller name="Typical"/>			</module>		<module name="InvoicesFromCustomers" folder="invoicing.variations">		<env-var name="XAVA_LIST_ACTION" value="Invoices.listOfCustomer"/>		<model name="Customer"/>				<controller name="Print"/>		<controller name="ListOnly"/>		<mode-controller name="Void"/>	</module>		<module name="CustomerInvoices" folder="invoicing.variations">		<model name="Invoice"/>		<tab name="Simple"/>				<controller name="CustomerInvoices"/>	</module>									<module name="Families" folder="warehousing">		<model name="Family"/>		<controller name="Typical"/>	</module>
+	</module>			<module name="Invoice20020001" folder="invoicing.variations">		<model name="Invoice"  />		<tab name="Invoice20020001" />		<controller name="Typical"/>			</module>			<module name="OnlyReadDetailsInvoice" folder="invoicing.variations">		<model name="Invoice"/>				<view name="OnlyReadDetails"/>		<tab name="Level4Reference"/>				<controller name="Typical"/>			</module>		<module name="OnlyEditDetailsInvoice" folder="invoicing.variations">		<model name="Invoice"/>		<view name="OnlyEditDetails"/>		<controller name="Typical"/>			</module>		<module name="InvoicesFromDeliveries" folder="invoicing.variations">		<env-var name="XAVA_SEARCH_ACTION" value="Invoice.searchFromDelivery"/>		<model name="Delivery"/>		<controller name="Typical"/>			</module>		<module name="InvoicesFromCustomers" folder="invoicing.variations">		<env-var name="XAVA_LIST_ACTION" value="Invoice.listOfCustomer"/>		<model name="Customer"/>				<controller name="Print"/>		<controller name="ListOnly"/>		<mode-controller name="Void"/>	</module>		<module name="CustomerInvoices" folder="invoicing.variations">		<model name="Invoice"/>		<tab name="Simple"/>				<controller name="CustomerInvoices"/>	</module>									<module name="Families" folder="warehousing">		<model name="Family"/>		<controller name="Typical"/>	</module>
 	
 	<module name="FamiliesListOnly" folder="warehousing/variations">
 		<env-var name="XAVA_LIST_ACTION" value=""/>
@@ -280,5 +274,4 @@
 		<model name="Issue"/>
 		<controller name="Typical"/>
 		<controller name="Issues"/>
-	</module>
-			</application>
+	</module>		</application>
