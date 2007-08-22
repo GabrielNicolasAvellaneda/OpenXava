@@ -694,6 +694,25 @@
 		<supported-locale>en</supported-locale>
 		<supported-locale>es</supported-locale>		
 		<resource-bundle>OX3Tutorial</resource-bundle>		
-	</portlet> 	
-													
+	</portlet>
+	
+	<portlet id="OX3Migration">
+		<description>OX3Migration</description>    
+		<portlet-name>OX3Migration</portlet-name>
+		<display-name>OX3Migration</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>ox3-migration</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>				
+		<resource-bundle>OX3Migration</resource-bundle>		
+	</portlet> 
+	 	 													
 </portlet-app>
