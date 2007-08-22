@@ -1,9 +1,10 @@
-<!ELEMENT aplicacion (modulo+)>
+<!ELEMENT aplicacion (modulo-defecto?, modulo*)>
 <!ATTLIST aplicacion
  nombre ID #REQUIRED
  etiqueta CDATA #IMPLIED
 >
 
+<!ELEMENT modulo-defecto (controlador*)>
 
 <!ELEMENT modulo (doc | (var-entorno*, modelo?, vista?, vista-swing?, vista-web?, tab?, controlador*, controlador-modo?) | listado)>
 <!ATTLIST modulo

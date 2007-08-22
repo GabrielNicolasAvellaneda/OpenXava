@@ -27,7 +27,7 @@ import org.openxava.util.*;
 	@View(members=
 		"year, number, date, paid;" +
 		"discounts [" +
-			"customerDiscount, customerTypeDiscount, yearDiscount;" +
+		"	customerDiscount, customerTypeDiscount, yearDiscount;" +
 		"];" +
 		"comment;" +			
 		"customer { customer }" +

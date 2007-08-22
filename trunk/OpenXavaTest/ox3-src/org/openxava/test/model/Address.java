@@ -21,7 +21,7 @@ import org.openxava.annotations.*;
 })
 
 public class Address implements IWithCity {
-	
+
 	@Transient
 	private Customer customer;
 		
