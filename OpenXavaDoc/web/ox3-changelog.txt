@@ -1,6 +1,19 @@
 Change Log for OpenXava 3
 =========================
 
+OpenXava 3.0beta2 (2007-8-22)
+-----------------------------
+- @RowStyle available for collections. 
+- Fix: order in @DescriptionsList has no effect when condition is not specified.
+- New annotation @XOrderBy that allows use qualified properties from references in order.
+- A default module is assumed for each entity (without declaring it in application.xml).
+- NotNullStringType (hibernate converter) added.
+- Refactoring: Increment of the use of value() in annotations.
+- PropertyAspect for declaring properties without getter and getter (still experimental, it will be full available in v3.1)
+- Complete JavaDoc API for org.openxava.annotations.
+- Fix: Collection with @ReadOnly when data in list is the same of data in detail fails.
+- AccessTracking works fine for OX3.
+
 OpenXava 3.0beta1 (2007-7-16)
 -----------------------------
 - All features of OpenXava 2 (XML) are also available in OpenXava 3 (EJB3 entities)
