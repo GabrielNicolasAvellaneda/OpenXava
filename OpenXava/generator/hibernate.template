@@ -274,7 +274,7 @@ while (itCollections.hasNext()) {
 	String inverse = isAggregate || inverseReferenceIsKey?"inverse='true'":"";	
 	ModelMapping referencedMapping = col.getMetaReference().getMetaModelReferenced().getMapping();
 	Collection columns = referencedMapping.getReferenceMapping(roleName).getColumns();
-	String order = col.getSQLOrder();
+	String order = col.orderHasQualifiedProperties()?null:col.getSQLOrder();
 	if (Is.emptyString(order)) {
 		Collection cKeys = col.getMetaReference().getMetaModelReferenced().getAllKeyPropertiesNames();
 		StringBuffer nKeys = new StringBuffer();

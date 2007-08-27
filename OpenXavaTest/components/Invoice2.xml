@@ -54,6 +54,9 @@
 	<view>
 	
 		<reference-view reference="customer" view="Simplest"/>
+		<collection-view collection="details">
+			<list-properties>product.description, quantity, unitPrice, amount</list-properties>
+		</collection-view>
 		
 		<members>
 			year, number, date, vatPercentage;

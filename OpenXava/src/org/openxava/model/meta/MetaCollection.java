@@ -183,8 +183,22 @@ public class MetaCollection extends MetaMember implements IPropertyValidator {
 		return r.toString();
 	}
 	
+	public boolean orderHasQualifiedProperties() { 
+		String order = getOrder();
+		if (Is.emptyString(order)) return false;
+		int i = order.indexOf("${");
+		int f = 0;
+		while (i >= 0) {
+			f = order.indexOf("}", i + 2);
+			if (f < 0) break;
+			String property = order.substring(i + 2, f);
+			if (property.indexOf('.') >= 0)	return true;					
+			i = order.indexOf("${", f);
+		}		
+		return false;
+	}
 	
-	public String getSQLOrder() throws XavaException {
+	public String getSQLOrder() throws XavaException {		
 		if (Is.emptyString(getOrder())) return "";
 		return getMetaReference().getMetaModelReferenced().getMapping().changePropertiesByNotQualifiedColumns(getOrder());
 	}

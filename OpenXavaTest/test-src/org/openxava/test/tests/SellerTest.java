@@ -26,10 +26,9 @@ public class SellerTest extends ModuleTestBase {
 		assertValue("name", "MANUEL CHAVARRI");
 				
 		int c = getCollectionRowCount("customers");
-		boolean found = false;
-		
+		boolean found = false;		
 		for (int i=0; i<c; i++) {
-			String type = getValueInCollection("customers", i, "type");
+			String type = getValueInCollection("customers", i, "type");			
 			if ("Steady".equals(type)) {				
 				assertRowStyleInCollection("customers", i, "highlight");				
 				found = true;
@@ -88,11 +87,11 @@ public class SellerTest extends ModuleTestBase {
 		execute("List.hideRows", "collection=customers");
 		assertCollectionRowCount("customers", 0);
 		
-		// Filter 
-		String [] condition = { "1" };
-		setConditionValues("customers", condition);
-		execute("List.filter", "collection=customers"); 
-		assertCollectionRowCount("customers", 1);
+		// Filter  
+		String [] condition = { "1" }; 
+		setConditionValues("customers", condition);		
+		execute("List.filter", "collection=customers");		
+		assertCollectionRowCount("customers", 1);		
 		assertValueInCollection("customers", 0, "number", "1");
 		assertValueInCollection("customers", 0, "name", "Javi");
 		

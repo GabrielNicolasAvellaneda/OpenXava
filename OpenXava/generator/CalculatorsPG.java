@@ -10,7 +10,7 @@ import org.openxava.util.meta.MetaSet;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Aug 06 18:23:20 CEST 2007
+ * @version Thu Aug 23 12:03:05 CEST 2007
  */
 public class CalculatorsPG {
     Properties properties = new Properties();
@@ -176,7 +176,7 @@ public void setError(String error) {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Aug 06 18:23:20 CEST 2007", // date this file was generated
+        { "Thu Aug 23 12:03:05 CEST 2007", // date this file was generated
              "../OpenXava/generator/calculators.xml", // input file
              "../OpenXava/generator/CalculatorsPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

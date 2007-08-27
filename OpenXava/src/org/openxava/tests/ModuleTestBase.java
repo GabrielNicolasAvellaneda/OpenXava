@@ -438,10 +438,57 @@ public class ModuleTestBase extends TestCase {
 		getForm().setParameter("conditionComparators", values);
 	}
 	
-	protected void setConditionValues(String collection, String [] values) throws Exception { 
-		getForm().setParameter(Tab.COLLECTION_PREFIX + collection + "_conditionValues", values);
+	protected void setConditionValues(String collection, String [] values) throws Exception {
+		String collectionId = Tab.COLLECTION_PREFIX + collection + "_conditionValues";
+		getForm().setParameter(collectionId, values);		
+		// If a valid-values (an Enum) is used, httpunit changes the order of parameter values
+		// we restore the correct order
+		// Maybe this adjust is also needed for list mode (but it's not done yet)
+		String [] currentValues = getForm().getParameterValues(collectionId);
+		if (!conditionValuesEquals(values, currentValues)) {
+			values = adjustConditionValues(collection, values);			
+			getForm().setParameter(collectionId, values);
+		}			
 	}
 	
+	private boolean conditionValuesEquals(String[] expectedValues, String[] currentValues) {
+		int i=0;
+		for (i=0; i<expectedValues.length; i++) {
+			if (i >= currentValues.length) return emptyFrom(expectedValues, i);
+			if (!Is.equal(expectedValues[i], currentValues[i])) return false;			
+		}
+		return emptyFrom(currentValues, i);
+	}
+
+	private boolean emptyFrom(String[] values, int initial) {
+		for (int i=initial; i<values.length; i++) {
+			if (!Is.emptyString(values[i])) return false;
+		}
+		return true;
+	}
+
+	private String [] adjustConditionValues(String collection, String[] values) throws Exception { 
+		// Refactorizar las siguientes 3 línea
+		List propertiesList = getPropertiesList(collection);		
+		MetaModel collectionModel = getMetaModel().getMetaCollection(collection).getMetaReference().getMetaModelReferenced();
+		
+		List originalValues = new ArrayList(Arrays.asList(values));
+		
+		int i = 0;
+		for (Iterator it=propertiesList.iterator(); it.hasNext(); i++) {			
+			if (i >= originalValues.size()) originalValues.add("");
+			MetaProperty p = collectionModel.getMetaProperty((String) it.next());
+			if (p.hasValidValues()) {
+				Object value = originalValues.get(i);
+				originalValues.remove(i);
+				originalValues.add(0, value);
+			}
+		}
+		String [] result = new String[originalValues.size()];
+		originalValues.toArray(result);		
+		return result;
+	}
+
 	protected void setConditionComparators(String collection, String [] values) throws Exception { 
 		filterConditionComparators(values);
 		getForm().setParameter(Tab.COLLECTION_PREFIX + collection + "conditionComparators", values);
@@ -637,16 +684,18 @@ public class ModuleTestBase extends TestCase {
 		}
 		return table.getRows()[row+2];
 	}
-	
-	
+		
 	protected String getValueInCollection(String collection, int row, String name) throws Exception {		
-		MetaCollectionView metaCollectionView = getMetaView().getMetaCollectionView(collection);
-		List propertiesList = metaCollectionView==null?null:metaCollectionView.getPropertiesListNames();
-		if (propertiesList == null || propertiesList.isEmpty()) propertiesList = getMetaModel().getMetaCollection(collection).getMetaReference().getMetaModelReferenced().getPropertiesNamesWithoutHiddenNorTransient();		
-		int column = propertiesList.indexOf(name);		
+		int column = getPropertiesList(collection).indexOf(name);		
 		return getValueInCollection(collection, row, column);
 	}
-	
+
+	private List getPropertiesList(String collection) throws Exception {
+		MetaCollectionView metaCollectionView = getMetaView().getMetaCollectionView(collection);
+		List propertiesList = metaCollectionView==null?null:metaCollectionView.getPropertiesListNames();
+		if (propertiesList == null || propertiesList.isEmpty()) propertiesList = getMetaModel().getMetaCollection(collection).getMetaReference().getMetaModelReferenced().getPropertiesNamesWithoutHiddenNorTransient();
+		return propertiesList;
+	}	
 	
 	protected String getValueInCollection(String collection, int row, int column) throws Exception {
 		return getTableCellInCollection(collection, row, column).getText();

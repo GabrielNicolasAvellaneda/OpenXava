@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- Support for qualified properties (properties of references) in order of collections.
+- row-style available for <collection-view/>.
+- New methods assertRowStyleInCollection and assertNoRowStyleInCollection in ModuleTestBase.
+- Fix: order in <descriptions-list/> has no effect when condition is not specified.
 - A default module is assumed for each component of the application without declaring it in application.xml. 
 - New element default-module in application.xml for defining the controllers for default modules.
 - Method setJPAPersistence removed from XavaPreferences.

@@ -10,7 +10,7 @@ import org.openxava.util.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Aug 06 18:23:35 CEST 2007
+ * @version Thu Aug 23 12:03:23 CEST 2007
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -396,7 +396,7 @@ private String getCheck(MetaProperty property) throws XavaException {
     	String inverse = isAggregate || inverseReferenceIsKey?"inverse='true'":"";	
     	ModelMapping referencedMapping = col.getMetaReference().getMetaModelReferenced().getMapping();
     	Collection columns = referencedMapping.getReferenceMapping(roleName).getColumns();
-    	String order = col.getSQLOrder();
+    	String order = col.orderHasQualifiedProperties()?null:col.getSQLOrder();
     	if (Is.emptyString(order)) {
     		Collection cKeys = col.getMetaReference().getMetaModelReferenced().getAllKeyPropertiesNames();
     		StringBuffer nKeys = new StringBuffer();
@@ -502,7 +502,7 @@ private String getCheck(MetaProperty property) throws XavaException {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Aug 06 18:23:35 CEST 2007", // date this file was generated
+        { "Thu Aug 23 12:03:24 CEST 2007", // date this file was generated
              "../OpenXava/generator/hibernate.xml", // input file
              "../OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
