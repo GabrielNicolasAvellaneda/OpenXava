@@ -216,6 +216,8 @@ public class View implements java.io.Serializable {
 		return metaView;
 	}
 	private void setMetaView(MetaView metaView) {
+		if (this.metaView == metaView) return;
+		resetMembers();
 		this.metaView = metaView;
 	}
 	
@@ -2780,7 +2782,7 @@ public class View implements java.io.Serializable {
 			View v = new View();
 			v.setSection(true);
 			v.setParent(this);			
-			v.setModelName(getModelName()); 
+			v.setModelName(getModelName());			
 			v.setMetaView((MetaView) getSections().get(index));
 			sectionsViews[index] = v;
 		}		

@@ -13,6 +13,15 @@ public class TransportChargeTest extends TransportChargeTestBase {
 		super(testName, "TransportCharge");		
 	}
 	
+	public void testViewForReferenceWithSections() throws Exception {
+		execute("CRUD.new");
+		assertExists("delivery.distance");
+		assertNotExists("delviery.advice");
+		execute("Sections.change", "activeSection=3, viewObject=xava_view_delivery");
+		assertExists("delivery.advice");
+		assertNotExists("delivery.distance");
+	}
+	
 	public void testKeyNestedReferences() throws Exception {
 		deleteAll();
 		
