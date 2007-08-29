@@ -160,6 +160,104 @@
 			</section>
 		</members>
 	</view>
+	
+	<view name="MoreSections">
+		<property name="deliveredBy">
+			<valid-values>      
+				<valid-value value="Employee"/>      
+				<valid-value value="Carrier"/>      
+			</valid-values>  	
+			<!-- 
+				A calculator that return 0 is like not have it,
+				but we set for verifying that we can have a calculator and not fail
+				-->
+			<default-value-calculator class="org.openxava.calculators.IntegerCalculator">				
+				<set property="value" value="0"/>
+			</default-value-calculator>
+
+		</property>
+	
+		<property name="advice" type="String" size="40" required="true">
+			<default-value-calculator class="org.openxava.test.calculators.AdviceCalculator"/>
+		</property>	
+		
+		<property name="shortcut" type="String" size="2"/>
+				
+		<property-view property="shortcut">
+			<on-change class="org.openxava.test.actions.OnChangeShortcutAction"/>
+		</property-view>
+		
+		<property-view property="number">
+			<action action="Delivery.generateNumber"/>		
+		</property-view>
+		
+		<property-view property="deliveredBy">
+			<on-change class="org.openxava.test.actions.OnChangeDeliveryByAction"/>
+		</property-view>
+		
+		<property-view property="distance">
+			<on-change class="org.openxava.test.actions.OnChangeDistanceAction"/>
+		</property-view>
+		
+		<property-view property="vehicle">
+			<on-change class="org.openxava.test.actions.OnChangeVehicleAction"/>
+		</property-view>
+				
+		<property-view property="invoice.number">
+			<on-change class="org.openxava.test.actions.OnChangeInvoiceNumberInDeliveryAction"/>
+		</property-view>
+		
+		<property-view property="carrier.number">
+			<on-change class="org.openxava.test.actions.OnChangeCarrierInDeliveryAction"/>
+		</property-view>
+		
+		<reference-view reference="invoice" view="Simple">		
+			<action action="Delivery.setDefaultInvoice"/>
+		</reference-view>
+		
+		<reference-view reference="type">	
+			<descriptions-list order="${number} desc"/>
+			<action action="Delivery.setDefaultType"/>
+		</reference-view>
+		
+		<reference-view reference="carrier">
+			<descriptions-list/>
+		</reference-view>
+		
+		<reference-view reference="shipment">	
+			<descriptions-list/>
+		</reference-view>
+		
+		<collection-view collection="details">
+			<new-action action="DeliveryDetail.new"/>
+			<save-action action="DeliveryDetail.save"/>
+			<hide-detail-action action="DeliveryDetail.hideDetail"/>
+			<remove-action action="DeliveryDetail.remove"/>
+			<remove-selected-action action="DeliveryDetail.removeSelected"/> 
+		</collection-view>
+
+		<members>
+			invoice;			
+			<group name="deliveryData">
+				type, number;			
+				date;
+				description;				
+			</group>
+			<section name="transportData">
+				distance; vehicle; transportMode; driverType;
+			</section>
+			<section name="deliveryByData">
+				deliveredBy;
+				carrier;
+				employee;			
+			</section>
+			<section name="incidents">incidents</section>			
+			<section name="remarks">advice, shortcut; remarks</section>			
+			<section name="details">
+				details
+			</section>			
+		</members>
+	</view>
 			
 	<view name="InInvoice">
 				

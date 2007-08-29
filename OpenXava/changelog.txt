@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Using a named view with sections for displaying a reference was failing.
 - Support for qualified properties (properties of references) in order of collections.
 - row-style available for <collection-view/>.
 - New methods assertRowStyleInCollection and assertNoRowStyleInCollection in ModuleTestBase.
