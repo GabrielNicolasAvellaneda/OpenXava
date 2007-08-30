@@ -684,7 +684,8 @@ public class MetaView extends MetaElement implements Cloneable {
 		MetaPropertyView metaPropertyView = getMetaPropertyViewFor(p.getName());
 		if (metaPropertyView == null) 
 			return -1;
-		return metaPropertyView.getDisplaySize();
+		int result = metaPropertyView.getDisplaySize();
+		return result <= 0?-1:result;
 	}
 	
 	/**

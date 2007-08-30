@@ -337,8 +337,7 @@
 		 <!-- By default is NORMAL, hence 'label-format' in the next line is optional -->
 		<property-view property="street" label-format="NORMAL">
 			<action action="Customer.prefixStreet" always-enabled="true"/> 
-		</property-view>
-				
+		</property-view> 		 		
 		<property-view property="zipCode" label-format="SMALL"/>
 		<property-view property="city" label-format="NO_LABEL"/>
 		
