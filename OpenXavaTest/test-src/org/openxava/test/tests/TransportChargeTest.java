@@ -13,6 +13,34 @@ public class TransportChargeTest extends TransportChargeTestBase {
 		super(testName, "TransportCharge");		
 	}
 	
+	public void testOrderAndFilterInCollectionOfReference() throws Exception {
+		execute("CRUD.new");
+		execute("Reference.search", "keyProperty=xava.TransportCharge.delivery.number");
+		assertValueInList(1, 0, "2004");
+		assertValueInList(1, 1, "2");
+		assertValueInList(1, 2, "1");		
+		assertValueInList(1, 4, "666");
+		execute("ReferenceSearch.choose", "row=1");
+		execute("Sections.change", "activeSection=4,viewObject=xava_view_delivery");
+		
+		assertCollectionRowCount("delivery.details", 3);
+		assertValueInCollection("delivery.details", 0, 0, "11");
+		assertValueInCollection("delivery.details", 1, 0, "12");
+		assertValueInCollection("delivery.details", 2, 0, "13");
+		
+		execute("List.orderBy", "property=number,collection=delivery.details");
+		execute("List.orderBy", "property=number,collection=delivery.details");
+		assertCollectionRowCount("delivery.details", 3);
+		assertValueInCollection("delivery.details", 0, 0, "13");
+		assertValueInCollection("delivery.details", 1, 0, "12");
+		assertValueInCollection("delivery.details", 2, 0, "11");
+
+		setConditionValues("delivery.details", new String [] { "11" } );
+		execute("List.filter", "property=number,collection=delivery.details");
+		assertCollectionRowCount("delivery.details", 1);
+		assertValueInCollection("delivery.details", 0, 0, "11");		
+	}
+	
 	public void testViewForReferenceWithSections() throws Exception {
 		execute("CRUD.new");
 		assertExists("delivery.distance");

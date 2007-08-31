@@ -675,12 +675,12 @@ public class Tab implements java.io.Serializable {
 		}
 	}
 	
-	public void setConditionValues(String [] values) throws XavaException {
-		if (Arrays.equals(this.conditionValues, values)) return;
-		if (getMetaPropertiesNotCalculated().size() != values.length) return; // to avoid problems on changing module	  
-		this.conditionValues = values;
-		goPage(1);
-		rowsHidden = false;
+	public void setConditionValues(String [] values) throws XavaException {		
+		if (Arrays.equals(this.conditionValues, values)) return;		
+		if (getMetaPropertiesNotCalculated().size() != values.length) return; // to avoid problems on changing module
+		this.conditionValues = values;		
+		goPage(1);		
+		rowsHidden = false;		
 		condition = null;
 	}
 	

@@ -48,6 +48,30 @@ public class CustomerWithSectionTest extends CustomerTest {
 		super(testName, "CustomerWithSection", true);		
 	}
 	
+	public void testOrderAndFilterInNestedCollection() throws Exception {
+		execute("CRUD.new");
+		setValue("number", "4");
+		execute("CRUD.search");		
+		assertValue("name", "Cuatrero");
+		
+		assertCollectionRowCount("deliveryPlaces", 1);
+		execute("Collection.edit", "row=0,viewObject=xava_view_section0_deliveryPlaces");
+		
+		assertCollectionRowCount("deliveryPlaces.receptionists", 2);
+		assertValueInCollection("deliveryPlaces.receptionists", 0, 0, "JUAN");
+		assertValueInCollection("deliveryPlaces.receptionists", 1, 0, "PEPE");
+		
+		execute("List.orderBy", "property=name,collection=deliveryPlaces.receptionists");
+		execute("List.orderBy", "property=name,collection=deliveryPlaces.receptionists");
+		assertValueInCollection("deliveryPlaces.receptionists", 0, 0, "PEPE");
+		assertValueInCollection("deliveryPlaces.receptionists", 1, 0, "JUAN");
+
+		setConditionValues("deliveryPlaces.receptionists", new String[] { "J"} );
+		execute("List.filter", "collection=deliveryPlaces.receptionists");
+		assertCollectionRowCount("deliveryPlaces.receptionists", 1);
+		assertValueInCollection("deliveryPlaces.receptionists", 0, 0, "JUAN");				
+	}
+	
 	public void testModifyFromReference() throws Exception {
 		execute("CRUD.new");
 		execute("Reference.modify", "model=Seller,keyProperty=xava.Customer.seller.number");

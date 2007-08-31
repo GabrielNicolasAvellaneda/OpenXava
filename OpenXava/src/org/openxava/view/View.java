@@ -1788,14 +1788,14 @@ public class View implements java.io.Serializable {
 	}
 	
 	private String getQualifiedCollectionName() {
-		if (!isRepresentsCollection()) return "";
+		if (!isRepresentsCollection() && !isRepresentsEntityReference()) return ""; 
 		return getParent().getQualifiedCollectionName() + getMemberName() + "_"; 
 	}
 	
 	private void fillCollectionInfo(String qualifier) throws XavaException { 
-		String tabPrefix = Tab.COLLECTION_PREFIX + getQualifiedCollectionName();
+		String tabPrefix = Tab.COLLECTION_PREFIX + getQualifiedCollectionName();		
 		getCollectionTab().setSelected(getRequest().getParameterValues(tabPrefix + "selected"));
-		String [] conditionComparators = getRequest().getParameterValues(tabPrefix + "conditionComparators");
+		String [] conditionComparators = getRequest().getParameterValues(tabPrefix + "conditionComparators");		
 		if (conditionComparators != null) {				
 			getCollectionTab().setConditionComparators(conditionComparators);
 			getCollectionTab().setConditionValues(getRequest().getParameterValues(tabPrefix + "conditionValues"));

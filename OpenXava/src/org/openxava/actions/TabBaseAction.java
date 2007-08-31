@@ -25,8 +25,8 @@ abstract public class TabBaseAction extends BaseAction implements IModuleContext
 	private String collection;
 
 	protected Tab getTab() throws XavaException {
-		if (tab == null ) {
-			String tabObject = Is.emptyString(collection)?"xava_tab":Tab.COLLECTION_PREFIX + collection;			
+		if (tab == null ) {			
+			String tabObject = Is.emptyString(collection)?"xava_tab":Tab.COLLECTION_PREFIX + Strings.change(collection, ".", "_");
 			tab = (Tab) context.get(request, tabObject);			
 		}
 		return tab;
