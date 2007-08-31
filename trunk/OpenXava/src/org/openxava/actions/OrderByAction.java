@@ -8,7 +8,7 @@ public class OrderByAction extends TabBaseAction  {
 	
 	private String property;
 	
-	public void execute() throws Exception {
+	public void execute() throws Exception {		
 		getTab().orderBy(property);
 	}
 

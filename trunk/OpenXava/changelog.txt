@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Ordering and filtering for nested collection or collection inside references did not work.
 - Fix: When <property-view /> is used the size of the property is ignored by editor.
 - Fix: Using a named view with sections for displaying a reference was failing.
 - Support for qualified properties (properties of references) in order of collections.

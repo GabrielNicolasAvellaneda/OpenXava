@@ -439,7 +439,7 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected void setConditionValues(String collection, String [] values) throws Exception {
-		String collectionId = Tab.COLLECTION_PREFIX + collection + "_conditionValues";
+		String collectionId = Tab.COLLECTION_PREFIX + Strings.change(collection, ".", "_") + "_conditionValues";
 		getForm().setParameter(collectionId, values);		
 		// If a valid-values (an Enum) is used, httpunit changes the order of parameter values
 		// we restore the correct order
@@ -659,8 +659,8 @@ public class ModuleTestBase extends TestCase {
 		return propertyPrefix;
 	}
 	
-	protected String getValueInList(int row, String name) throws Exception {
-		int column = getMetaTab().getPropertiesNames().indexOf(name);
+	protected String getValueInList(int row, String name) throws Exception {		
+		int column = getMetaTab().getPropertiesNames().indexOf(name);		
 		return getValueInList(row, column);
 	}
 	
