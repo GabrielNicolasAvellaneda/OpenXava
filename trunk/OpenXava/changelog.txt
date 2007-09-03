@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Checkbox in collection row is always present, even in read only calculated collection with no  list actions.
 - Fix: Ordering and filtering for nested collection or collection inside references did not work.
 - Fix: When <property-view /> is used the size of the property is ignored by editor.
 - Fix: Using a named view with sections for displaying a reference was failing.
