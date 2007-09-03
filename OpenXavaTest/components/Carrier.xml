@@ -84,17 +84,29 @@
 	</view>
 	
 	<view name="CalculatedFellows">
-	 	 	  
+ 	 	 	  
 		<collection-view collection="fellowCarriersCalculated">
 			<remove-selected-action action=""/>
-		</collection-view>		
-	 
+		</collection-view>
+					 
 		<members>
 			number, name;
 			fellowCarriersCalculated			
 		</members>
 		
 	</view>
+	
+	<view name="ReadOnlyCalculatedFellows">
+ 	 	 	  
+		<collection-view collection="fellowCarriersCalculated" 
+			read-only="true" view="Simple"/>
+					 
+		<members>
+			number, name;
+			fellowCarriersCalculated			
+		</members>
+		
+	</view>	
 	
 	<tab>
 		<properties>calculated, number, name</properties>

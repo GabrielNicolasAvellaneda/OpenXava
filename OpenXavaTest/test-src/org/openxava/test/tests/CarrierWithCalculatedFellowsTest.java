@@ -20,8 +20,7 @@ public class CarrierWithCalculatedFellowsTest extends ModuleTestBase {
 		assertExists("name");
 		assertNoAction("Print.generatePdf");
 		assertNoAction("Print.generateExcel");
-		assertNoAction("Collection.removeSelected"); 
-		
+		assertNoAction("Collection.removeSelected"); 		
 	}
 	
 }
