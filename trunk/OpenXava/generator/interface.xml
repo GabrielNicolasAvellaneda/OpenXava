@@ -60,6 +60,10 @@ while (itProperties.hasNext()) {
 	String propertyName = Strings.firstUpper(property.getName());
 	String type = property.getTypeName();	
 	String get = type.equals("boolean")?"is":"get";	
+	</java> 	
+	public static final String PROPERTY_<expr>property.getName()</expr> = "<expr>property.getName()</expr>";
+	<java>
+
 	if (property.isCalculated() || property.isKey()) {
 		// Read only
 	</java> 	
