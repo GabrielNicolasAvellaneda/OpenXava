@@ -43,6 +43,12 @@
 		<view name="CalculatedFellows"/>
 		<controller name="Typical"/>		
 	</module>
+	
+	<module name="CarrierWithReadOnlyCalculatedFellows">
+		<model name="Carrier"/>
+		<view name="ReadOnlyCalculatedFellows"/>
+		<controller name="Typical"/>		
+	</module>	
 			
 	<module name="Color">
 		<model name="Color"/>

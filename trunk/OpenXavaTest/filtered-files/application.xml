@@ -4,187 +4,170 @@
 		<doc url="doc/description" languages="en,es"/>
 	</module>
 	
-	<module name="CustomerContactPersons">
-		<model name="CustomerContactPerson"/>
+	<module name="Carrier">
+		<model name="Carrier"/>
 		<controller name="Typical"/>
-	</module>
-	
-	<module name="CustomerContactPersonsAsAggregate3Levels">
+		<controller name="Carrier"/>
+	</module>	
+		
+	<module name="CustomerContactPersonAsAggregate3Levels">
 		<model name="CustomerContactPerson"/>
 		<view name="CustomerAsAggregate3Levels"/>
 		<controller name="Typical"/>
 	</module>
 		
-	<module name="StatesHibernate">
+	<module name="StateHibernate">
 		<env-var name="XAVA_SEARCH_ACTION" value="StateHibernate.search"/>		
 		<model name="State"/>
-		<controller name="StatesHibernate"/>
-	  <controller name="Print"/>
+		<controller name="StateHibernate"/>
+		<controller name="Print"/>
 	</module>
 	
-	<module name="StatesJPA" folder="variations">
-		<env-var name="XAVA_SEARCH_ACTION" value="StatesJPA.search"/>		
+	<module name="StateJPA" folder="variations">
+		<env-var name="XAVA_SEARCH_ACTION" value="StateJPA.search"/>		
 		<model name="State"/>
-		<controller name="StatesJPA"/>
-	  <controller name="Print"/>
+		<controller name="StateJPA"/>
+	  	<controller name="Print"/>
 	</module>	
 	
-	<module name="Formulas">
-		<model name="Formula"/>
-		<controller name="Typical"/>
-	</module>	
-			
-	<module name="Ingredients">
-		<model name="Ingredient"/>
-		<controller name="Typical"/>
-	</module>	
-	
-	<module name="Carriers">
-		<model name="Carrier"/>
-		<controller name="Typical"/>
-		<controller name="Carriers"/>
-	</module>
-	
-	<module name="CarriersWithSpecialSearch">
+	<module name="CarrierWithSpecialSearch">
 		<env-var name="XAVA_SEARCH_ACTION" value="Carrier.search"/>			
 		<model name="Carrier"/>
 		<view name="Simple"/>
 		<controller name="Typical"/>
 		<controller name="Carriers"/>		
 	</module>
-		
-	<module name="Sizes">
-		<model name="Size"/>
-		<controller name="Typical"/>
+	
+	<module name="CarrierWithCalculatedFellows">
+		<model name="Carrier"/>
+		<view name="CalculatedFellows"/>
+		<controller name="Typical"/>		
 	</module>
 	
-	<module name="Colors">
+	<module name="CarrierWithReadOnlyCalculatedFellows">
+		<model name="Carrier"/>
+		<view name="ReadOnlyCalculatedFellows"/>
+		<controller name="Typical"/>		
+	</module>	
+			
+	<module name="Color">
 		<model name="Color"/>
 		<controller name="TypicalNotResetOnSave"/> 
 	</module>
 						
-	<module name="Deliveries" folder="invoicing">		<env-var name="XAVA_SEARCH_ACTION" value="Delivery.search"/>				<model name="Delivery"/>		<controller name="Typical"/>		<controller name="Remarks"/>		<controller name="Deliveries"/>			</module>
+	<module name="Delivery" folder="invoicing">		<env-var name="XAVA_SEARCH_ACTION" value="Delivery.search"/>				<model name="Delivery"/>		<controller name="Typical"/>		<controller name="Remarks"/>		<controller name="Delivery"/>			</module>
 	
-	<module name="DeliveriesGroupsInSections" folder="invoicing.variations">
+	<module name="DeliveryGroupsInSections" folder="invoicing.variations">
 		<env-var name="XAVA_SEARCH_ACTION" value="CRUD.searchExecutingOnChange"/>		
 		<model name="Delivery"/>
 		<view name="GroupsInSections"/>
 		<controller name="Typical"/>
 	</module>	
 	
-	<module name="DeliveriesRemarks2002" folder="invoicing.variations">
+	<module name="DeliveryRemarks2002" folder="invoicing.variations">
 		<model name="Delivery"/>
 		<tab name="Remarks2002"/>		
 		<controller name="Typical"/>
 	</module>	
 	
-	<module name="Warehouses" folder="warehousing">		<model name="Warehouse"/>		<controller name="Typical"/>		<controller name="Warehouses"/>	</module>	 		<module name="TransportCharges" folder="warehousing">		<model name="TransportCharge"/>		<controller name="Typical"/>	</module>	 
-	
-	<module name="ShipmentCharges" folder="warehousing">
-		<model name="ShipmentCharge"/>
-		<controller name="Typical"/>
-	</module>	
-		
-	<module name="TransportChargesWithDistance" folder="invoicing.variations">
+	<module name="TransportChargeWithDistance" folder="invoicing.variations">
 		<model name="TransportCharge"/>
 		<tab name="WithDistance"/>		
 		<controller name="Typical"/>
 	</module>	 
 	
-	<module name="TransportCharges2" folder="invoicing.variations">
-		<model name="TransportCharge2"/>	
-		<controller name="Typical"/>
-	</module>	 
-				<!--	It is possible to specify label and description	but OpenXava look first in resources files	OpenXavaTest-labels.properties or Labels.properties	-->					<module name="Products" folder="warehousing"		label="Products"		description="Products managament">		<model name="Product"/>		<controller name="Typical"/>		<controller name="Products"/>			</module>			<module name="ProductsWithSection" folder="warehousing/variations">		<model name="Product"/>		<view name="WithSection"/>		<controller name="Typical"/>			<controller name="Products"/>	</module>			<module name="Products2" folder="warehousing/variations"> 
-		<env-var name="XAVA_SEARCH_ACTION" value="CRUD.searchExecutingOnChange"/>		<model name="Product2"/>		<controller name="Typical"/>		<controller name="Products2"/>
-		<controller name="EditableOnOff"/>	</module>		<module name="Products2ReferenceAndStereotype" folder="warehousing/variations">		<model name="Product2"/>		<view name="ReferenceAndStereotype"/>		<controller name="Typical"/>	</module>
+				<!--	It is possible to specify label and description	but OpenXava look first in resources files	OpenXavaTest-labels.properties or Labels.properties	-->					<module name="Product" folder="warehousing"		label="Products"		description="Products managament">		<model name="Product"/>		<controller name="Typical"/>		<controller name="Product"/>			</module>			<module name="ProductWithSection" folder="warehousing/variations">		<model name="Product"/>		<view name="WithSection"/>		<controller name="Typical"/>			<controller name="Product"/>	</module>			<module name="Product2" folder="warehousing/variations"> 
+		<env-var name="XAVA_SEARCH_ACTION" value="CRUD.searchExecutingOnChange"/>		<model name="Product2"/>		<controller name="Typical"/>		<controller name="Product2"/>
+		<controller name="EditableOnOff"/>	</module>		<module name="Product2ReferenceAndStereotype" folder="warehousing/variations">		<model name="Product2"/>		<view name="ReferenceAndStereotype"/>		<controller name="Typical"/>	</module>
 
-	<module name="Products2WithFormula" folder="warehousing/variations"> 
+	<module name="Product2WithFormula" folder="warehousing/variations"> 
 		<model name="Product2"/>
 		<view name="WithFormula"/>
 		<controller name="Typical"/>
 	</module>
 	
-	<module name="Products2WithFormulaAsAggregate" folder="warehousing/variations"> 
+	<module name="Product2WithFormulaAsAggregate" folder="warehousing/variations"> 
 		<model name="Product2"/>
 		<view name="WithFormulaAsAggregate"/>
 		<controller name="Typical"/>
 	</module>
-				<module name="Products3" folder="warehousing/variations">		<model name="Product3"/>		<controller name="Typical"/>	</module>		<module name="Products3WithGroup" folder="warehousing/variations">		<model name="Product3"/>		<view name="WithGroup"/>		<controller name="Typical"/>		<controller name="Products3"/>		<mode-controller name="Void"/> 	</module>
 	
-	<module name="Products3WithDescriptionsList" folder="warehousing/variations">
+	<module name="Product3" folder="warehousing/variations">
+		<model name="Product3"/>
+		<controller name="Typical"/>
+	</module>	
+					<module name="Product3WithGroup" folder="warehousing/variations">		<model name="Product3"/>		<view name="WithGroup"/>		<controller name="Typical"/>		<controller name="Product3"/>		<mode-controller name="Void"/> 	</module>
+	
+	<module name="Product3WithDescriptionsList" folder="warehousing/variations">
 		<model name="Product3"/>
 		<view name="WithDescriptionsList"/>
 		<controller name="Typical"/>
 	</module>
-			<module name="Products3ChangeActionsOnSearch" folder="warehousing/variations">		<env-var name="XAVA_SEARCH_ACTION" value="CRUD.searchExecutingOnChange"/>						<model name="Product3"/>		<view name="WithGroup"/>		<controller name="Typical"/>		<controller name="Products3"/>		<mode-controller name="Void"/> 	</module>			<module name="ChangeProductsPrice" folder="warehousing">		<model name="Product"/>				<view name="Simple"/>		<controller name="ChangeProductsPrice"/>	</module>		<module name="ChangeProductsPrice2" folder="warehousing/variations">		<model name="Product"/>				<view name="EditPrice"/>		<controller name="ChangeProductsPrice2"/>	</module>					<module name="Sellers" folder="invoicing">		<model name="Seller"/>		<view name="Complete"/>		<controller name="Typical"/>			</module>
+			<module name="Product3ChangeActionsOnSearch" folder="warehousing/variations">		<env-var name="XAVA_SEARCH_ACTION" value="CRUD.searchExecutingOnChange"/>						<model name="Product3"/>		<view name="WithGroup"/>		<controller name="Typical"/>		<controller name="Product3"/>		<mode-controller name="Void"/> 	</module>			<module name="ChangeProductsPrice" folder="warehousing">		<model name="Product"/>				<view name="Simple"/>		<controller name="ChangeProductsPrice"/>	</module>		<module name="ChangeProductsPrice2" folder="warehousing/variations">		<model name="Product"/>				<view name="EditPrice"/>		<controller name="ChangeProductsPrice2"/>	</module>					<module name="Seller" folder="invoicing">		<model name="Seller"/>		<view name="Complete"/>		<controller name="Typical"/>			</module>
 	
-	<module name="SellersJSP" folder="invoicing.variations">
+	<module name="SellerJSP" folder="invoicing.variations">
 		<model name="Seller"/>
 		<view name="ForCustomJSP"/> 
 		<web-view url="custom-jsp/seller.jsp"/>
 		<controller name="Typical"/>		
 	</module>	
 	
-	<module name="SellersWithDescriptionsListJSP" folder="invoicing.variations">
+	<module name="SellerWithDescriptionsListJSP" folder="invoicing.variations">
 		<model name="Seller"/>
 		<view name="ForCustomJSP"/> 
 		<web-view url="custom-jsp/sellerWithDescriptionsList.jsp"/>
 		<controller name="Typical"/>		
 	</module>	
 		
-	<module name="SellersCannotCreateCustomer" folder="invoicing.variations">
+	<module name="SellerCannotCreateCustomer" folder="invoicing.variations">
 		<model name="Seller"/>
 		<view name="CannotCreateCustomer"/>
 		<controller name="Typical"/>		
 	</module>	
 	
-	<module name="SellersWithCustomersAsAggregate" folder="invoicing.variations">
+	<module name="SellerWithCustomersAsAggregate" folder="invoicing.variations">
 		<model name="Seller"/>
 		<view name="CustomersAsAggregate"/>
 		<controller name="Typical"/>		
 	</module>	
-			<module name="Customers" folder="invoicing">			<model name="Customer"/>
-		<controller name="Customers"/>	</module>
-	
-	<module name="CustomersSimple" folder="invoicing.variations">	
+		<module name="CustomerSimple" folder="invoicing.variations">	
 		<model name="Customer"/>
 		<view name="SimpleStateAsForm"/>
 		<controller name="Typical"/>
 	</module>
-			<module name="CustomersReadOnly" folder="invoicing.variations">	
+			<module name="CustomerReadOnly" folder="invoicing.variations">	
 		<env-var name="XAVA_SEARCH_ACTION" value="CRUD.searchReadOnly"/>		<model name="Customer"/>		<view name="WithSection"/>		<controller name="Print"/>			</module>
 	
-	<module name="CustomersWithSection" folder="invoicing.variations">	
+	<module name="CustomerWithSection" folder="invoicing.variations">	
 		<model name="Customer"/>
 		<view name="WithSection"/>
-		<controller name="Customers"/>		
+		<controller name="Customer"/>		
 	</module>
 	
 	
-	<module name="CustomersSellerAsAggregate" folder="invoicing.variations">	
+	<module name="CustomerSellerAsAggregate" folder="invoicing.variations">	
 		<model name="Customer"/>
 		<view name="SellerAsAggregate"/>
 		<controller name="Typical"/>		
-	</module>			<module name="CustomersNewOnInit" folder="invoicing.variations">			<model name="Customer"/>		<view name="SectionGroup"/>
-		<controller name="CustomersNewOnInit"/>		
+	</module>			<module name="CustomerNewOnInit" folder="invoicing.variations">			<model name="Customer"/>		<view name="SectionGroup"/>
+		<controller name="CustomerNewOnInit"/>		
 	</module>
 	
-	<module name="CustomersNewOnInitInherited" folder="invoicing.variations">	
+	<module name="CustomerNewOnInitInherited" folder="invoicing.variations">	
 		<model name="Customer"/>
-		<controller name="CustomersNewOnInitInherited"/>		
+		<controller name="CustomerNewOnInitInherited"/>		
 	</module>
-			<module name="CustomersTwoSellersInList" folder="invoicing.variations">			<model name="Customer"/>		<tab name="TwoSellers"/>		<controller name="Typical"/>			</module>
+			<module name="CustomerTwoSellersInList" folder="invoicing.variations">			<model name="Customer"/>		<tab name="TwoSellers"/>		<controller name="Typical"/>			</module>
 	
-	<module name="CustomersTwoSellersNumberInList" folder="invoicing.variations">	
+	<module name="CustomerTwoSellersNumberInList" folder="invoicing.variations">	
 		<model name="Customer"/>
 		<tab name="TwoSellersNumber"/>
 		<controller name="Typical"/>		
 	</module>
-			<module name="CustomersSomeMembersReadOnly" folder="invoicing.variations">			<model name="Customer"/>		<view name="SomeMembersReadOnly"/>		<controller name="Typical"/>			</module>
+			<module name="CustomerSomeMembersReadOnly" folder="invoicing.variations">			<model name="Customer"/>		<view name="SomeMembersReadOnly"/>		<controller name="Typical"/>			</module>
 	
-	<module name="CustomersRadioButton" folder="invoicing.variations">	
-		<model name="Customer"/>
+	<module name="CustomerRadioButton" folder="invoicing.variations">	
+		<model name="Customer"/>		
 		<view name="TypeWithRadioButton"/>
 		<controller name="Typical"/>
 	</module>
@@ -193,85 +176,67 @@
 		<model name="Year"/>
 		<controller name="ChangeActiveYear"/>	
 		<mode-controller name="Void"/>	
-	</module>					<module name="Invoices" folder="invoicing">		<model name="Invoice"/>		<controller name="Typical"/>			<controller name="Invoices"/>		</module>
-	
-	<module name="Invoices2" folder="invoicing.variations">
-		<model name="Invoice2"/>
-		<controller name="Typical"/>	
-	</module>
-		
-	<module name="InvoicesActiveYear" folder="invoicing.variations">
+	</module>						
+	<module name="InvoiceActiveYear" folder="invoicing.variations">
 		<model name="Invoice"/>
 		<tab name="ActiveYear"/>
 		<controller name="Typical"/>	
 	</module>	
 	
-	<module name="InvoicesNestedSections" folder="invoicing.variations">
+	<module name="InvoiceNestedSections" folder="invoicing.variations">
 		<model name="Invoice"/>
 		<view name="NestedSections"/>
 		<controller name="Typical"/>	
 	</module>
 	
-	<module name="InvoicesAmounts" folder="invoicing.variations">
+	<module name="InvoiceAmounts" folder="invoicing.variations">
 		<model name="Invoice"/>
 		<view name="Amounts"/>
 		<controller name="Typical"/>	
 	</module>
 			
-	<module name="InvoicesDeliveries" folder="invoicing.variations">
+	<module name="InvoiceDeliveries" folder="invoicing.variations">
 		<model name="Invoice"/>
 		<view name="Deliveries"/>
 		<controller name="Typical"/>	
-	</module>			<module name="InvoicesNoList" folder="invoicing.variations">		<model name="Invoice"/>		<controller name="Typical"/>			<mode-controller name="Void"/>	</module>			<module name="CurrentInvoices" folder="invoicing.variations">		<model name="Invoice"  />		<tab name="Current" />		<controller name="Typical"/>			</module>		<module name="CurrentInvoicesSelect" folder="invoicing.variations">		<model name="Invoice"  />		<tab name="CurrentSelect" />		<controller name="Typical"/>			</module>		<module name="Invoices2002" folder="invoicing.variations">		<model name="Invoice"  />		<tab name="DefaultYear" />		<controller name="Typical"/>				<controller name="Invoices2002"/>			</module>
+	</module>			<module name="InvoiceNoList" folder="invoicing.variations">		<model name="Invoice"/>		<controller name="Typical"/>			<mode-controller name="Void"/>	</module>			<module name="CurrentInvoices" folder="invoicing.variations">		<model name="Invoice"  />		<tab name="Current" />		<controller name="Typical"/>			</module>		<module name="CurrentInvoicesSelect" folder="invoicing.variations">		<model name="Invoice"  />		<tab name="CurrentSelect" />		<controller name="Typical"/>			</module>		<module name="Invoice2002" folder="invoicing.variations">		<model name="Invoice"  />		<tab name="DefaultYear" />		<controller name="Typical"/>				<controller name="Invoice2002"/>			</module>
 	
-	<module name="Invoices2004" folder="invoicing.variations">
+	<module name="Invoice2004" folder="invoicing.variations">
 		<env-var name="XAVATEST_DEFAULT_YEAR" value="2004"/>		
 		<model name="Invoice" />
 		<tab name="DefaultYearEnv" />
 		<controller name="Typical"/>		
 	</module>
 	
-	<module name="Invoices2002Env" folder="invoicing.variations">
+	<module name="Invoice2002Env" folder="invoicing.variations">
 		<env-var name="XAVATEST_DEFAULT_YEAR" value="2002"/>		
 		<model name="Invoice" />
 		<tab name="DefaultYearEnv" />
 		<controller name="Typical"/>		
-	</module>			<module name="Invoice20020001" folder="invoicing.variations">		<model name="Invoice"  />		<tab name="Invoice20020001" />		<controller name="Typical"/>			</module>			<module name="OnlyReadDetailsInvoice" folder="invoicing.variations">		<model name="Invoice"/>				<view name="OnlyReadDetails"/>		<tab name="Level4Reference"/>				<controller name="Typical"/>			</module>		<module name="OnlyEditDetailsInvoice" folder="invoicing.variations">		<model name="Invoice"/>		<view name="OnlyEditDetails"/>		<controller name="Typical"/>			</module>		<module name="InvoicesFromDeliveries" folder="invoicing.variations">		<env-var name="XAVA_SEARCH_ACTION" value="Invoice.searchFromDelivery"/>		<model name="Delivery"/>		<controller name="Typical"/>			</module>		<module name="InvoicesFromCustomers" folder="invoicing.variations">		<env-var name="XAVA_LIST_ACTION" value="Invoice.listOfCustomer"/>		<model name="Customer"/>				<controller name="Print"/>		<controller name="ListOnly"/>		<mode-controller name="Void"/>	</module>		<module name="CustomerInvoices" folder="invoicing.variations">		<model name="Invoice"/>		<tab name="Simple"/>				<controller name="CustomerInvoices"/>	</module>									<module name="Families" folder="warehousing">		<model name="Family"/>		<controller name="Typical"/>	</module>
+	</module>			<module name="Invoice20020001" folder="invoicing.variations">		<model name="Invoice"  />		<tab name="Invoice20020001" />		<controller name="Typical"/>			</module>			<module name="OnlyReadDetailsInvoice" folder="invoicing.variations">		<model name="Invoice"/>				<view name="OnlyReadDetails"/>		<tab name="Level4Reference"/>				<controller name="Typical"/>			</module>		<module name="OnlyEditDetailsInvoice" folder="invoicing.variations">		<model name="Invoice"/>		<view name="OnlyEditDetails"/>		<controller name="Typical"/>			</module>		<module name="InvoiceFromDeliveries" folder="invoicing.variations">		<env-var name="XAVA_SEARCH_ACTION" value="Invoice.searchFromDelivery"/>		<model name="Delivery"/>		<controller name="Typical"/>			</module>		<module name="InvoiceFromCustomers" folder="invoicing.variations">		<env-var name="XAVA_LIST_ACTION" value="Invoice.listOfCustomer"/>		<model name="Customer"/>				<controller name="Print"/>		<controller name="ListOnly"/>		<mode-controller name="Void"/>	</module>		<module name="CustomerInvoices" folder="invoicing.variations">		<model name="Invoice"/>		<tab name="Simple"/>				<controller name="CustomerInvoices"/>	</module>
 	
-	<module name="FamiliesListOnly" folder="warehousing/variations">
+	<module name="Family" folder="warehousing">
+		<model name="Family"/>
+		<controller name="Typical"/>
+	</module>
+		<module name="FamilyListOnly" folder="warehousing/variations">
 		<env-var name="XAVA_LIST_ACTION" value=""/>
 		<model name="Family"/>
 		<controller name="Typical"/>
 		<controller name="ListOnly"/>
 		<mode-controller name="Void"/>
 	</module>
-			<module name="FamiliesWithInheritanceController" folder="warehousing/variations">		<model name="Family"/>		<controller name="Families"/>
-		<controller name="HideShowCRUDActions"/>	</module>		<module name="Offices">		<model name="Office"/>		<controller name="Typical"/>	</module>
-	
-	<module name="Offices2" folder="variations">
-		<model name="Office2"/>
-		<controller name="Typical"/>
-	</module>
-			<module name="Clerks">		<model name="Clerk"/>		<controller name="Typical"/>	</module>					<module name="Subfamilies" folder="warehousing">		<model name="Subfamily"/>		<controller name="Typical"/>			</module>		<module name="Subfamilies2" folder="warehousing/variations">		<model name="Subfamily2"/>		<controller name="Typical"/>			</module>			<module name="SubfamiliesSelect" folder="warehousing/variations">		<model name="Subfamily" />				<tab name="CompleteSelect"/>		<controller name="Typical"/>			</module>
-			<module name="Shipments">		<model name="Shipment"/>		<controller name="Typical"/>	</module>			<module name="DeliveryTypes" folder="invoicing">		<model name="DeliveryType"/>		<controller name="DeliveryTypes"/>	</module>
-	
-	<module name="DeliveryTypesJSP" folder="invoicing/variations">
+			<module name="FamilyWithInheritanceController" folder="warehousing/variations">		<model name="Family"/>		<controller name="Family"/>
+		<controller name="HideShowCRUDActions"/>	</module>		
+			<module name="SubfamilySelect" folder="warehousing/variations">		<model name="Subfamily" />				<tab name="CompleteSelect"/>		<controller name="Typical"/>			</module>
+				<module name="DeliveryTypeJSP" folder="invoicing/variations">
 		<model name="DeliveryType"/>
 		<web-view url="custom-jsp/deliveryType.jsp"/>
 		<controller name="Typical"/>
-	</module>			<module name="Services" folder="invoicing">		<model name="Service"/>		<controller name="Typical"/>		</module>		<module name="ServiceTypes" folder="invoicing">		<model name="ServiceType"/>		<controller name="Typical"/>		</module>				<module name="FamilyProductsReport" folder="warehousing">		<model name="FilterBySubfamily"/>		<view name="WithSubfamilyForm"/>
+	</module>			<module name="FamilyProductsReport" folder="warehousing">		<model name="FilterBySubfamily"/>		<view name="WithSubfamilyForm"/>
 		<mode-controller name="Void"/>	</module>				<module name="FamilyRangeProductsReport" folder="warehousing">		<model name="FilterBySubfamily"/>		<view name="Range"/>		<mode-controller name="Void"/>	</module>		
 	
 	<module name="Family1ProductsReport" folder="warehousing/variations">		<model name="FilterBySubfamily"/>		<view name="Family1"/>
 		<controller name="FamilyProductsReport"/>		<mode-controller name="Void"/>	</module>			<module name="Family2ProductsReport" folder="warehousing/variations">		<model name="FilterBySubfamily"/>		<view name="Family2"/>		<mode-controller name="Void"/>	</module>	
 	
-	<module name="Tasks">
-		<model name="Task"/>
-		<controller name="Typical"/>
-	</module>
-		
-	<module name="Issues">
-		<model name="Issue"/>
-		<controller name="Typical"/>
-		<controller name="Issues"/>
-	</module>		</application>
+</application>

@@ -317,17 +317,19 @@
 		</members>
 		
 	</view>
-	
+	 
 	<view name="TypeWithRadioButton">
 		<property-view property="type" editor="ValidValuesRadioButton"/>
 		<members>
-			number; 
-			type; 
-			name;
-			address;
+			number;
+			<group name="data"> 
+				type; 
+				name;
+				address;
+			</group>
 		</members>
 	</view>	
-				
+					
 	<view model="Address">
 				
 		<property name="viewProperty" type="String"/>
@@ -335,8 +337,7 @@
 		 <!-- By default is NORMAL, hence 'label-format' in the next line is optional -->
 		<property-view property="street" label-format="NORMAL">
 			<action action="Customer.prefixStreet" always-enabled="true"/> 
-		</property-view>
-				
+		</property-view> 		 		
 		<property-view property="zipCode" label-format="SMALL"/>
 		<property-view property="city" label-format="NO_LABEL"/>
 		
