@@ -44,8 +44,13 @@ public class MetaReference extends MetaMember implements Cloneable {
 	}
 	
 	public String getOrderFromReferencedModel() throws XavaException {
-		MetaCollection metaCollection = getMetaCollectionFromReferencedModel(); 				
-		return metaCollection==null?null:metaCollection.getOrder();		
+		MetaCollection metaCollection = getMetaCollectionFromReferencedModel();
+		return metaCollection==null?null:metaCollection.getOrder();
+	}
+	
+	private boolean orderHasQualifiedProperties() throws XavaException { 
+		MetaCollection metaCollection = getMetaCollectionFromReferencedModel();
+		return metaCollection==null?false:metaCollection.orderHasQualifiedProperties();
 	}
 	
 	public String getSQLOrderFromReferencedModel() throws XavaException { 
@@ -55,7 +60,7 @@ public class MetaReference extends MetaMember implements Cloneable {
 	}
 	
 	public String getEJBQLOrderFromReferencedModel() throws XavaException { 
-		String order = getOrderFromReferencedModel();		
+		String order = orderHasQualifiedProperties()?null:getOrderFromReferencedModel(); 		
 		if (order == null) return getEJBQLOrderByPrimaryKeyFromReferencedModel();
 		return "ORDER BY " + getMetaModel().getMapping().changePropertiesByCMPAttributes(order);
 	}
