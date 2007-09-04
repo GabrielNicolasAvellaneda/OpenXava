@@ -1,6 +1,22 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 2.2.2 (2007-9-3)
+-------------------------
+- A default module is assumed for each component of the application without declaring it in application.xml. 
+- New element default-module in application.xml for defining the controllers for default modules.
+- A static final field for each property is generated for interfaces on code generation.
+- Support for qualified properties (properties of references) in order of collections.
+- row-style available for <collection-view/>.
+- Fix: Code generation Java 1.4 compatibilty restored (broken in v2.2.1).
+- Checkbox in collection row is always present, even in read only calculated collection with no  list actions.
+- New methods assertRowStyleInCollection and assertNoRowStyleInCollection in ModuleTestBase.
+- Method setJPAPersistence removed from XavaPreferences.
+- Fix: Ordering and filtering for nested collection or collection inside references did not work.
+- Fix: When <property-view /> is used the size of the property is ignored by editor.
+- Fix: Using a named view with sections for displaying a reference was failing.
+- Fix: order in <descriptions-list/> has no effect when condition is not specified.
+
 OpenXava 2.2.1 (2007-8-7)
 -------------------------
 - Method getSQLBaseCondition() removed from MetaTab.
