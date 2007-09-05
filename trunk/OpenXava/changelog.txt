@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- New calculator CurrentTimestampCalculator.
+
 OpenXava 2.2.2 (2007-9-3)
 -------------------------
 - A default module is assumed for each component of the application without declaring it in application.xml. 
