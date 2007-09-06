@@ -11,9 +11,9 @@ package org.openxava.converters;
  */
 public class LongNumberConverter implements IConverter {
 	
-	private final static Long CERO = new Long(0);
-	
+	private final static Long ZERO = new Long(0);
 	private static IConverter instance;
+	private boolean nullToZero = true;
 	
 	public static IConverter getInstance() {
 		if (instance == null) {
@@ -24,15 +24,33 @@ public class LongNumberConverter implements IConverter {
 
 
 	public Object toDB(Object o) throws ConversionException {
-		return o==null?CERO:o;
+		return o==null && isNullToZero()?ZERO:o;
 	}
 	
 	public Object toJava(Object o) throws ConversionException {
-		if (o == null) return new Long(0);
+		if (o == null) return isNullToZero()?ZERO:null;
 		if (!(o instanceof Number)) {		
 			throw new ConversionException("conversion_java_number_expected");
 		}
 		return new Long(((Number) o).longValue());
 	}
 			
+	/**
+	 * If <code>true</code> convert null to zero. <p>
+	 * 
+	 * The default value is true.
+	 */
+	public boolean isNullToZero() {
+		return nullToZero;
+	}
+
+	/**
+	 * If <code>true</code> convert null to zero. <p>
+	 * 
+	 * The default value is true.
+	 */	
+	public void setNullToZero(boolean nullToZero) {
+		this.nullToZero = nullToZero;
+	}
+	
 }

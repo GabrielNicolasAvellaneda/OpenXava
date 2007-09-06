@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- New property nullToZero in IntegerNumberConverter and LongNumberConverter to choose if null have to be converted to 0.
+- AccessTracking table schema changed in order to support MySQL.
 - New calculator CurrentTimestampCalculator.
 
 OpenXava 2.2.2 (2007-9-3)
