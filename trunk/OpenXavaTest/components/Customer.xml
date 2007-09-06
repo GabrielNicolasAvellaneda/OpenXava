@@ -401,12 +401,20 @@
 		<reference-mapping reference="seller">
 			<reference-mapping-detail
 				column="SELLER_NUMBER" 
-				referenced-model-property="number"/> 
+				referenced-model-property="number" cmp-type="java.lang.Integer">
+				<converter class="org.openxava.converters.IntegerNumberConverter">
+					<set property="nullToZero" value="false"/>
+				</converter>
+		</reference-mapping-detail> 
 		</reference-mapping>	
 		<reference-mapping reference="alternateSeller">
 			<reference-mapping-detail
 				column="ALTERNATESELLER_NUMBER" 
-				referenced-model-property="number"/> 
+				referenced-model-property="number" cmp-type="java.lang.Integer">
+				<converter class="org.openxava.converters.IntegerNumberConverter">
+					<set property="nullToZero" value="false"/>
+				</converter>
+			</reference-mapping-detail> 
 		</reference-mapping>			
 		<property-mapping
 			property="relationWithSeller" column="RELATIONSELLER"/>								
