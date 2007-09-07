@@ -15,7 +15,8 @@ import org.openxava.jpa.*;
 @Entity
 @Views({
 	@View(name="Simple", members="number, name"),
-	@View(name="CalculatedFellows", members="number, name; fellowCarriersCalculated")
+	@View(name="CalculatedFellows", members="number, name; fellowCarriersCalculated"),
+	@View(name="ReadOnlyCalculatedFellows", members="number, name; fellowCarriersCalculated")
 })
 @Tab(properties="calculated, number, name")
 public class Carrier {
@@ -56,7 +57,7 @@ public class Carrier {
 	public String getCalculated() {
 		return "TR";
 	}
-	
+
 	@CollectionView("Simple") @EditOnly
 	@ListActions({
 			@ListAction("Carrier.translateName"),
@@ -79,7 +80,8 @@ public class Carrier {
 		query.setParameter("number",  getNumber());
 		return query.getResultList();
 	}
-	
+
+	@ReadOnly(forViews="ReadOnlyCalculatedFellows")
 	@CollectionView("Simple")
 	@RemoveSelectedAction(forViews="CalculatedFellows", value="")
 	public Collection<Carrier> getFellowCarriersCalculated() {
