@@ -120,64 +120,7 @@
 		<supported-locale>es</supported-locale>				
 		<resource-bundle>FAQ</resource-bundle>		
 	</portlet> 
-	
-	<portlet id="WebSphere">
-		<description>WebSphere</description>    
-		<portlet-name>WebSphere</portlet-name>
-		<display-name>WebSphere</display-name>    
-		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
-		<init-param>
-			<name>Page</name>
-			<value>websphere</value>
-		</init-param>
-		<expiration-cache>-1</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>VIEW</portlet-mode>
-		</supports>
-		<supported-locale>en</supported-locale>
-		<supported-locale>es</supported-locale>				
-		<resource-bundle>WebSphere</resource-bundle>		
-	</portlet> 
-	
-	<portlet id="WebSphereEJB2">
-		<description>WebSphereEJB2</description>    
-		<portlet-name>WebSphereEJB2</portlet-name>
-		<display-name>WebSphereEJB2</display-name>    
-		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
-		<init-param>
-			<name>Page</name>
-			<value>websphere-ejb2</value>
-		</init-param>
-		<expiration-cache>-1</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>VIEW</portlet-mode>
-		</supports>
-		<supported-locale>en</supported-locale>
-		<supported-locale>es</supported-locale>				
-		<resource-bundle>WebSphereEJB2</resource-bundle>		
-	</portlet> 
-	
-	<portlet id="WebSpherePortalEJB2">
-		<description>WebSpherePortalEJB2</description>    
-		<portlet-name>WebSpherePortalEJB2</portlet-name>
-		<display-name>WebSpherePortalEJB2</display-name>    
-		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
-		<init-param>
-			<name>Page</name>
-			<value>websphere-portal-ejb2</value>
-		</init-param>
-		<expiration-cache>-1</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>VIEW</portlet-mode>
-		</supports>
-		<supported-locale>en</supported-locale>
-		<supported-locale>es</supported-locale>				
-		<resource-bundle>WebSpherePortalEJB2</resource-bundle>		
-	</portlet> 
-	
+		
 	<portlet id="BusinessComponent">
 		<description>BusinessComponent</description>    
 		<portlet-name>BusinessComponent</portlet-name>
@@ -240,44 +183,6 @@
 		<resource-bundle>Credits</resource-bundle>		
 	</portlet> 
 		
-	<portlet id="WTP">
-		<description>WTP</description>    
-		<portlet-name>WTP</portlet-name>
-		<display-name>WTP</display-name>    
-		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
-		<init-param>
-			<name>Page</name>
-			<value>wtp</value>
-		</init-param>
-		<expiration-cache>-1</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>VIEW</portlet-mode>
-		</supports>
-		<supported-locale>en</supported-locale>
-		<supported-locale>es</supported-locale>				
-		<resource-bundle>WTP</resource-bundle>		
-	</portlet> 
-	
-	<portlet id="EJB3">
-		<description>EJB3</description>    
-		<portlet-name>EJB3</portlet-name>
-		<display-name>EJB3</display-name>    
-		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
-		<init-param>
-			<name>Page</name>
-			<value>ejb3</value>
-		</init-param>
-		<expiration-cache>-1</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>VIEW</portlet-mode>
-		</supports>
-		<supported-locale>en</supported-locale>
-		<supported-locale>es</supported-locale>				
-		<resource-bundle>EJB3</resource-bundle>		
-	</portlet> 
-	
 	<portlet id="Documentation">
 		<description>Documentation</description>    
 		<portlet-name>Documentation</portlet-name>
@@ -430,61 +335,6 @@
 		<resource-bundle>Training</resource-bundle>		
 	</portlet> 
 	
-	<portlet id="Stringbeans">
-		<description>Stringbeans</description>    
-		<portlet-name>Stringbeans</portlet-name>
-		<display-name>Stringbeans</display-name>    
-		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
-		<init-param>
-			<name>Page</name>
-			<value>stringbeans</value>
-		</init-param>
-		<expiration-cache>-1</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>VIEW</portlet-mode>
-		</supports>
-		<supported-locale>es</supported-locale>
-		<resource-bundle>Stringbeans</resource-bundle>		
-	</portlet> 
-	
-	<portlet id="Multischema">
-		<description>Multischema</description>    
-		<portlet-name>Multischema</portlet-name>
-		<display-name>Multischema</display-name>    
-		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
-		<init-param>
-			<name>Page</name>
-			<value>multischema</value>
-		</init-param>
-		<expiration-cache>-1</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>VIEW</portlet-mode>
-		</supports>
-		<supported-locale>en</supported-locale>
-		<supported-locale>es</supported-locale>
-		<resource-bundle>Multischema</resource-bundle>		
-	</portlet> 	
-	
-	<portlet id="Postgres">
-		<description>Postgres</description>    
-		<portlet-name>Postgres</portlet-name>
-		<display-name>Postgres</display-name>    
-		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
-		<init-param>
-			<name>Page</name>
-			<value>postgres</value>
-		</init-param>
-		<expiration-cache>-1</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>VIEW</portlet-mode>
-		</supports>
-		<supported-locale>es</supported-locale>
-		<resource-bundle>Postgres</resource-bundle>		
-	</portlet> 	
-	
 	<portlet id="NewForDevelopers">
 		<description>NewForDevelopers</description>    
 		<portlet-name>NewForDevelopers</portlet-name>
@@ -636,28 +486,8 @@
 		<supported-locale>en</supported-locale>
 		<supported-locale>es</supported-locale>		
 		<resource-bundle>NewIn3beta2</resource-bundle>		
-	</portlet> 	
-	 	
-	 	
+	</portlet> 		 	
 	 			
-	<portlet id="MyFirstProject">
-		<description>MyFirstProject</description>    
-		<portlet-name>MyFirstProject</portlet-name>
-		<display-name>MyFirstProject</display-name>    
-		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
-		<init-param>
-			<name>Page</name>
-			<value>my-first-ox-project-guide</value>
-		</init-param>
-		<expiration-cache>-1</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>VIEW</portlet-mode>
-		</supports>
-		<supported-locale>es</supported-locale>
-		<resource-bundle>MyFirstProject</resource-bundle>		
-	</portlet> 		
-	
 	<portlet id="OX3">
 		<description>OX3</description>    
 		<portlet-name>OX3</portlet-name>
