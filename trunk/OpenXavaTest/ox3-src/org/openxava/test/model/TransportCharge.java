@@ -32,6 +32,7 @@ public class TransportCharge {
 		@JoinColumn(name="DELIVERY_NUMBER", referencedColumnName="NUMBER")
 	})
 	*/
+	@ReferenceView("MoreSections")
 	private Delivery delivery;
 	
 	@Stereotype("MONEY") @Required

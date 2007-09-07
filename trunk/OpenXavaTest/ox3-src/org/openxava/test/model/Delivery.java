@@ -71,6 +71,27 @@ import org.openxava.jpa.*;
 		"remarks { remarks }" +
 		"incidents { incidents }" +
 		"details { details }" 
+	),
+	@View(name="MoreSections", members=
+		"invoice;" +			
+		"deliveryData ["  +
+		"	type, number;" +			
+		"	date;" +
+		"	description;" +				
+		"]" +
+		"transportData {" +
+		"	distance; vehicle; transportMode; driverType;" +
+		"}" +
+		"deliveryByData {" +
+		"	deliveredBy;" +
+		"	carrier;" +
+		"	employee;" +			
+		"}" +
+		"incidents { incidents }" +			
+		"remarks { advice, shortcut; remarks }" +			
+		"details {" +
+		"	details" +
+		"}"					
 	)
 })
 @Tabs({
@@ -85,14 +106,14 @@ import org.openxava.jpa.*;
 public class Delivery {
 	
 	@Id @Column(length=5)
-	@Action(forViews="DEFAULT", value="Delivery.generateNumber")
+	@Action(forViews="DEFAULT, MoreSections", value="Delivery.generateNumber")
 	private int number;
 
 	
 	@Id @ManyToOne(fetch=FetchType.LAZY)
-	@OnChange(forViews="DEFAULT", value=OnChangeInvoiceNumberInDeliveryAction.class)
+	@OnChange(forViews="DEFAULT, MoreSections", value=OnChangeInvoiceNumberInDeliveryAction.class)
 	@ReferenceView("Simple")
-	@Action(forViews="DEFAULT", value="Delivery.setDefaultInvoice") 
+	@Action(forViews="DEFAULT, MoreSections", value="Delivery.setDefaultInvoice") 
 	private Invoice invoice;
 
 	// JoinColumn and ManyToOne fetch are also specified in DeliveryKey because 
@@ -101,10 +122,10 @@ public class Delivery {
 	@Id @ManyToOne(fetch=FetchType.LAZY)	
 	@JoinColumn(name="TYPE")
 	@DescriptionsLists({		
-		@DescriptionsList(forViews="DEFAULT", order="${number} desc"),
+		@DescriptionsList(forViews="DEFAULT, MoreSections", order="${number} desc"),
 		@DescriptionsList(forViews="GroupsInSections")
 	})
-	@Action(forViews="DEFAULT", value="Delivery.setDefaultType")
+	@Action(forViews="DEFAULT, MoreSections", value="Delivery.setDefaultType")
 	private DeliveryType type;
 	
 	@Type(type="org.openxava.types.Date3Type") 
@@ -122,13 +143,13 @@ public class Delivery {
 			@Parameter(name="enumType", value="org.openxava.test.model.Delivery$Distance")
 		}
 	)
-	@OnChange(forViews="DEFAULT", value=OnChangeDistanceAction.class)
+	@OnChange(forViews="DEFAULT, MoreSections", value=OnChangeDistanceAction.class)
 	private Distance distance;
 	public enum Distance { LOCAL, NATIONAL, INTERNATIONAL };
 	
 	@Column(length=15)
 	@OnChanges({
-		@OnChange(forViews="DEFAULT", value=OnChangeVehicleAction.class),
+		@OnChange(forViews="DEFAULT, MoreSections", value=OnChangeVehicleAction.class),
 		@OnChange(forViews="GroupsInSections", value=OnChangeAddMessageAction.class)
 	})
 	private String vehicle;
@@ -139,7 +160,7 @@ public class Delivery {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="CARRIER")
 	@DescriptionsList(notForViews="GroupsInSections")
-	@OnChange(forViews="DEFAULT", value=OnChangeCarrierInDeliveryAction.class)
+	@OnChange(forViews="DEFAULT, MoreSections", value=OnChangeCarrierInDeliveryAction.class)
 	private Carrier carrier;
 	
 	
@@ -157,11 +178,11 @@ public class Delivery {
 	
 	@OneToMany (mappedBy="delivery", cascade=CascadeType.REMOVE)
 	@org.hibernate.validator.Size(max=3)
-	@NewAction(forViews="DEFAULT", value="DeliveryDetail.new")
-	@SaveAction(forViews="DEFAULT", value="DeliveryDetail.save")
-	@HideDetailAction(forViews="DEFAULT", value="DeliveryDetail.hideDetail")
-	@RemoveAction(forViews="DEFAULT", value="DeliveryDetail.remove")
-	@RemoveSelectedAction(forViews="DEFAULT", value="DeliveryDetail.removeSelected")
+	@NewAction(forViews="DEFAULT, MoreSections", value="DeliveryDetail.new")
+	@SaveAction(forViews="DEFAULT, MoreSections", value="DeliveryDetail.save")
+	@HideDetailAction(forViews="DEFAULT, MoreSections", value="DeliveryDetail.hideDetail")
+	@RemoveAction(forViews="DEFAULT, MoreSections", value="DeliveryDetail.remove")
+	@RemoveSelectedAction(forViews="DEFAULT, MoreSections", value="DeliveryDetail.removeSelected")
 	private Collection<DeliveryDetail> details;	
 	
 	@Transient
