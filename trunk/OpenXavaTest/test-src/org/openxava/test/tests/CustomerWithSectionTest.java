@@ -48,6 +48,31 @@ public class CustomerWithSectionTest extends CustomerTest {
 		super(testName, "CustomerWithSection", true);		
 	}
 	
+	public void testTELEPHONE_EMAIL_WEBURLstereotypes() throws Exception {
+		execute("Mode.detailAndFirst");
+		setValue("telephone", "asf");
+		setValue("email", "pepe");
+		setValue("website", "openxava");
+		execute("Customer.save");		
+		assertError("Telephone must be a valid number");
+		assertError("eMail must be a valid email address");
+		assertError("Web site must be a valid url");
+		setValue("telephone", "123");
+		setValue("email", "pepe@mycompany");
+		setValue("website", "www.openxava.org");
+		execute("Customer.save");
+		assertError("Telephone must be at least 8 Digits long");
+		assertError("eMail must be a valid email address");
+		assertError("Web site must be a valid url");
+		assertValue("email", "pepe@mycompany"); // not converted to uppercase
+		assertValue("website", "www.openxava.org"); // not converted to uppercase
+		setValue("telephone", "961112233");
+		setValue("email", "pepe@mycompany.com");
+		setValue("website", "http://www.openxava.org");
+		execute("Customer.save");
+		assertNoErrors();
+	}
+	
 	public void testOrderAndFilterInNestedCollection() throws Exception {
 		execute("CRUD.new");
 		setValue("number", "4");

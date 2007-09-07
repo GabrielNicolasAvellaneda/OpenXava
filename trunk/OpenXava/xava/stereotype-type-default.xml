@@ -25,5 +25,9 @@
 	<for stereotype="TEXTO_HTML" type="java.lang.String"/>
 	<for stereotype="IMAGE_LABEL" type="java.lang.String"/>
 	<for stereotype="ETIQUETA_IMAGEN" type="java.lang.String"/>
+	<for stereotype="EMAIL" type="String"/>
+	<for stereotype="TELEPHONE" type="String"/>
+	<for stereotype="TELEFONO" type="String"/>
+	<for stereotype="WEBURL" type="String"/>
 			
 </stereotype-type-default>
