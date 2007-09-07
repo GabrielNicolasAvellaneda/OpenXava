@@ -22,6 +22,8 @@ import org.openxava.test.actions.*;
 		"type;" +
 		"name, Customer.changeNameLabel();" +
 		"photo;" +
+		"telephone, email;" +
+		"website;" +
 		"address;" +
 		"city;" +
 		"seller [" + 
@@ -49,6 +51,8 @@ import org.openxava.test.actions.*;
 		"	type;" + 
 		"	name, Customer.changeNameLabel();" +
 		"	photo;" +
+		"	telephone, email;" +
+		"	website;" +		
 		"	address;" + 
 		"	city;" +
 		"	seller [" + 
@@ -128,6 +132,15 @@ public class Customer implements IWithName {
 	
 	@Stereotype("PHOTO")
 	private byte [] photo;
+	
+	@Stereotype("TELEPHONE")
+	private String telephone;
+	
+	@Stereotype("EMAIL") @DisplaySize(30)
+	private String email;
+	
+	@Stereotype("WEBURL")
+	private String website;
 		
 	@Stereotype("MEMO") @Column(length=400)
 	private String remarks;
@@ -305,6 +318,29 @@ public class Customer implements IWithName {
 	public void setStates(Collection<State> states) {
 		this.states = states;
 	}
-	
-		
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getWebsite() {
+		return website;
+	}
+
+	public void setWebsite(String website) {
+		this.website = website;
+	}
+			
 }
