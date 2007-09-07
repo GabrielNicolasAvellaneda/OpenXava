@@ -17,6 +17,7 @@
 		<for-type type="long" />
 		<for-type type="java.lang.Long" />
 	</editor>
+
 	<editor name="BooleanCheckBox" url="booleanEditor.jsp">
 		<formatter class="org.openxava.formatters.BooleanFormatter" />		<for-type type="boolean" />		<for-type type="java.lang.Boolean" />	</editor>	<editor name="DateCalendar" url="dateCalendarEditor.jsp">
 		<formatter class="org.openxava.formatters.DateFormatter" />		<for-type type="java.util.Date" />	</editor>
@@ -57,7 +58,15 @@
 		<for-stereotype stereotype="DINERO" />
 		<for-stereotype stereotype="MONEY" />
 	</editor>
-
+	
+	<editor name="Email" url="textEditor.jsp">
+        <for-stereotype stereotype="EMAIL"/>
+    </editor>
+    
+    <editor name="WebURL" url="textEditor.jsp">
+        <for-stereotype stereotype="WEBURL"/>
+    </editor>
+    
 	<editor name="Image" url="imageEditor.jsp" format="false">
 		<formatter class="org.openxava.formatters.ImageFormatter" />
 		<for-stereotype stereotype="FOTO" />

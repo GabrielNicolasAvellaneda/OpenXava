@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- New stereotypes TELEPHONE, EMAIL and WEBURL.
 - New property nullToZero in IntegerNumberConverter and LongNumberConverter to choose if null have to be converted to 0.
 - AccessTracking table schema changed in order to support MySQL.
 - New calculator CurrentTimestampCalculator.

@@ -55,7 +55,24 @@
 		<validator-class class="org.openxava.validators.MoneyScaleValidator"/>
 		<for-stereotype stereotype="MONEY"/>
 		<for-stereotype stereotype="DINERO"/>
-	</default-validator>	
+	</default-validator>
 	
+	<default-validator>
+		<validator-class class="org.openxava.validators.EmailValidator"/>
+		<for-stereotype stereotype="EMAIL"/>		
+	</default-validator>
+	
+	<default-validator>
+		<validator-class class="org.openxava.validators.PhoneNumberValidator"/>
+		<for-stereotype stereotype="TELEPHONE"/>
+		<for-stereotype stereotype="TELEFONO"/>
+	</default-validator>
+	
+	<default-validator>
+		<validator-class class="org.openxava.validators.URLValidator"/>
+		<for-stereotype stereotype="WEBURL"/>
+	</default-validator>	
+		
+					
 </validators>
   
