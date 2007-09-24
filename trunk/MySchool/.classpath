@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry path="src" kind="src"/>
-	<classpathentry path="i18n" kind="src"/>
-	<classpathentry path="xava" kind="src"/>
-	<classpathentry path="properties" kind="src"/>
-	<classpathentry path="/OpenXava" exported="true" kind="src"/>
-	<classpathentry path="ejb3-jpa" kind="src"/>
-	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" kind="con"/>
-	<classpathentry path="web/WEB-INF/classes" kind="output"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="i18n"/>
+	<classpathentry kind="src" path="xava"/>
+	<classpathentry kind="src" path="properties"/>
+	<classpathentry exported="true" kind="src" path="/OpenXava"/>
+	<classpathentry kind="src" path="persistence"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>
