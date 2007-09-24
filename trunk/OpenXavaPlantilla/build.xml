@@ -1,92 +1,33 @@
 <?xml version="1.0"?>
 
-<project name="@proyecto@" default="todo" basedir=".">
+<project name="@proyecto@" basedir=".">
 
 	<property name="project" value="@proyecto@" />
-	<property name="package" value="@paquete@"/>
-	<property name="model.package" value="modelo"/>	
-	<property name="configuration" value="tomcat-hypersonic" />
-	<!-- property name="configuration" value="jboss-hypersonic" /-->		
-	<!-- property name="configuration" value="websphere-as400" /-->	
-	<property file="${configuration}.properties"/>
-	<property file="../openxava.properties"/>	
-	<property name="datasource" value="@fuentedatos@"/>
-	<property name="separator" value="_"/>
-				
-	<!-- Generación incremental -->
-	<target name="generarCodigo">
-		<ant antfile="../OpenXava/build.xml" target="generateHibernate"/>		
-	</target>	
+	<property name="ox3" value="true" />
+	<property file="../openxava.properties"/>
 	
-	<!-- Genera todo el codigo -->
-	<target name="regenerateCode">
-		<ant antfile="../OpenXava/build.xml" target="regenerateHibernate"/>		
-	</target>
-	
-	<!-- Útil si renombramos algún componente para borrar todo el código antiguo -->
-	<target name="clearGeneratedCode">
-		<ant antfile="../OpenXava/build.xml" target="clearGeneratedCode"/>		
-	</target>
-			
-	<!-- Construye y despliega la aplicación en format .war -->
+	<!-- Construye y despliega la aplicación en formato .war -->	
 	<target name="desplegarWar">
-		<!-- En formato directorio -->
+		<!-- En un directorio -->
 		<ant antfile="../OpenXava/build.xml" target="deploy"/>
-		<!-- En formato archivo (no funciona muy bien en windows + tomcat)
-		<ant antfile="../OpenXava/build.xml" target="deployWar"/>		
+		<!-- En un archivo (no funciona muy bien en windows + tomcat)
+		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
 		-->
 	</target>				
-
-	<!-- Reconstruye la aplicación, después de esto todo el contenido de 'web' esta listo para ser desplegado -->
-	<target name="reconstruir">
-		<ant antfile="../OpenXava/build.xml" target="prepareWar"/>
-	</target>
 	
 	<!--
 	Construye la aplicación en formato portlets. 
-	-->	
+	-->		
 	<target name="generarPortlets"> 
 		<ant antfile="../OpenXava/build.xml" target="generatePortlets"/>
-	</target>	
-			
-	<!-- 
-	Ejecuta todos los procesos para ver nuestra aplicación en marcha.
-	Pensada para ser usada desde línea de órdenes.
-	-->	
-	<target name="todo">
-		<ant antfile="../OpenXava/build.xml" target="generateHibernate"/>
-		<ant antfile="../OpenXava/build.xml" target="compile"/>
-		<!-- 'deploy' para desplegar en un directorio (descomprimido) -->
-		<ant antfile="../OpenXava/build.xml" target="deploy"/>
-		<!-- 'deployWar' para desplegar como un archivo .war 
-		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
-		-->
 	</target>
 	
 	<!--
-	Se conecta a tu base de datos y actualizar el esquema para que conincida con 
-	el actual de tu aplicación.	
-	Recuerda dar valor a la propiedad schema.path.
-	(También puedes usar directamente la tarea ant 'schemaupdate' de hibernate)
+	Actualiza este proyecto con la versión de OpenXava presente en el workspace.
+	Ha de llamarse después de actualizar la versión de OpenXava.
 	-->
-	<target name="actualizarEsquema">
-		<ant antfile="../OpenXava/build.xml" target="updateSchema">			
-			<property name="schema.config.file" value="hibernate/hibernate-junit.cfg.xml"/>
-			<property name="schema.path" value="[PUT HERE THE PATH OF YOUR JDBC DRIVER]"/>
-		</ant>
-	</target>	
-
-	<!--
-	Crea un archivo sql (en data/schema-export.sql) que puedes usar para crear la
-	base de datos para tu aplicación. 
-	Recuerda dar valor a la propiedad schema.path.
-	(También puedes usar directamente la tarea ant 'schemaupdate' de hibernate)
-	-->	
-	<target name="exportarEsquema">
-		<ant antfile="../OpenXava/build.xml" target="exportSchema">
-			<property name="schema.config.file" value="hibernate/hibernate-junit.cfg.xml"/>
-			<property name="schema.path" value="[PUT HERE THE PATH OF YOUR JDBC DRIVER]"/>			
-		</ant>
-	</target>	
-					
+	<target name="actualizarOX">
+		<ant antfile="../OpenXava/build.xml" target="updateOX"/>
+	</target>
+						
 </project>
