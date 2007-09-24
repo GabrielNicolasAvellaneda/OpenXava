@@ -3,8 +3,9 @@
 <!ELEMENT editores (editor*)>
 
 
-<!ELEMENT editor (propiedad*, formateador?, (para-tipo | para-estereotipo | para-propiedad-modelo)+)>
+<!ELEMENT editor (propiedad*, formateador?, (para-tipo | para-estereotipo | para-propiedad-modelo | para-valores-posibles)*)>
 <!ATTLIST editor
+ nombre CDATA #IMPLIED
  clase CDATA #IMPLIED
  url CDATA #IMPLIED
  formatear (true|false) "true" 
@@ -46,3 +47,5 @@
  modelo CDATA #REQUIRED
  propiedad CDATA #REQUIRED 
 >
+
+<!ELEMENT para-valores-posibles EMPTY>

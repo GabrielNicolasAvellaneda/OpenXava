@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!ELEMENT validators (validator*, required-validator*)>
+<!ELEMENT validators (validator*, required-validator*, default-validator*)>
 
 <!ELEMENT validator EMPTY>
 <!ATTLIST validator
@@ -9,6 +9,8 @@
 >
 
 <!ELEMENT required-validator ((validator-name | validator-class), (for-type | for-stereotype)+)>
+
+<!ELEMENT default-validator ((validator-name | validator-class), (for-type | for-stereotype)+)>
 
 <!ELEMENT validator-name EMPTY>
 <!ATTLIST validator-name
