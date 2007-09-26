@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Buttons instead of links for no image actions is possible (using buttonsForNoImageActions=true in xava.properties).
 - New stereotypes TELEPHONE, EMAIL and WEBURL.
 - New property nullToZero in IntegerNumberConverter and LongNumberConverter to choose if null have to be converted to 0.
 - AccessTracking table schema changed in order to support MySQL.

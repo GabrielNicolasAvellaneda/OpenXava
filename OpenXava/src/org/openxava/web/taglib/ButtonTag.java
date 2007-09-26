@@ -14,8 +14,10 @@ import org.openxava.web.style.*;
  * @author Javier Paniza
  */
 
-public class ButtonTag extends TagSupport {
+public class ButtonTag extends TagSupport implements IActionTag{ 
 	
+	private String argv; 
+	 
 	private static Log log = LogFactory.getLog(ButtonTag.class);
 	
 	private String action;
@@ -54,7 +56,13 @@ public class ButtonTag extends TagSupport {
 			pageContext.getOut().print(manager.getForm());
 			pageContext.getOut().print(", \"");
 			pageContext.getOut().print(getAction());
-			pageContext.getOut().println("\")'>");
+			pageContext.getOut().print('"');
+			if (!Is.emptyString(getArgv())) { 
+				pageContext.getOut().print(", \"");
+				pageContext.getOut().print(getArgv());
+				pageContext.getOut().print('"');
+			}
+			pageContext.getOut().println(")'>");
 			pageContext.getOut().print("\t");
 			pageContext.getOut().println(metaAction.getLabel(request));
 			pageContext.getOut().println("</button>");
@@ -65,7 +73,15 @@ public class ButtonTag extends TagSupport {
 		}
 		return SKIP_BODY;
 	}
-
+	
+	public String getArgv() { 
+		return argv; 
+	} 
+		 
+	public void setArgv(String string) { 
+		argv = string; 
+	} 
+		
 	public String getAction() {
 		return action;
 	}
