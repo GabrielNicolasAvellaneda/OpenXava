@@ -27,7 +27,10 @@ public class XavaPreferences {
 	private boolean duplicateComponentWarnings=false;
 	private int maxSizeForTextEditor;
 	private Level javaLoggingLevel;
-	private Level hibernateJavaLoggingLevel;		
+	private Level hibernateJavaLoggingLevel;	
+	
+	private XavaPreferences() { // tmp: en changelog		
+	}
 	
 	public static XavaPreferences getInstance() {
 		if (instance == null) {
@@ -168,5 +171,16 @@ public class XavaPreferences {
 		}
 		return hibernateJavaLoggingLevel;
 	}	
+
+	/**
+	 * If <code>true</code> when an action has no image it uses a button
+	 * for display it, else it uses a link. <p>
+	 * 
+	 * The default valus is <code>false</code>, that is, by default
+	 * links for displaying no image actions.<br>
+	 */
+	public boolean isButtonsForNoImageActions() {  
+		return "true".equalsIgnoreCase(getProperties().getProperty("buttonsForNoImageActions", "false" ).trim()); 
+	}
 		
 }

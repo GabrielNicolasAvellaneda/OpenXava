@@ -665,7 +665,7 @@ public class MetaView extends MetaElement implements Cloneable {
 		if (metaPropertyView == null) return Collections.EMPTY_LIST;
 		return editable?metaPropertyView.getActionsNames():metaPropertyView.getAlwaysEnabledActionsNames();
 	}
-			
+	
 	public Collection getActionsNamesForReference(MetaReference ref, boolean editable) {
 		MetaReferenceView metaReferenceView = getMetaReferenceViewFor(ref.getName());
 		if (metaReferenceView == null) return Collections.EMPTY_LIST;

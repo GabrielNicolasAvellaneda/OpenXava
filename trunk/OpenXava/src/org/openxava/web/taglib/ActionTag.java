@@ -26,7 +26,9 @@ public class ActionTag extends TagSupport {
 			}
 
 			MetaAction metaAction = MetaControllers.getMetaAction(getAction());
-			actionTag = metaAction.hasImage()?(IActionTag)new ImageTag():(IActionTag)new LinkTag();
+			if (metaAction.hasImage()) actionTag = new ImageTag();   
+			else if(XavaPreferences.getInstance().isButtonsForNoImageActions()) actionTag = new ButtonTag();  
+			else actionTag = new LinkTag(); 
 			actionTag.setPageContext(pageContext);
 			actionTag.setAction(action);
 			actionTag.setArgv(argv);
