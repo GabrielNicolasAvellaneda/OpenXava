@@ -5,5 +5,7 @@
 	<classpathentry kind="src" path="properties"/>
 	<classpathentry kind="src" path="/OpenXava"/>
 	<classpathentry kind="src" path="persistence"/>
+	<classpathentry kind="src" path="xava"/>
+	<classpathentry kind="src" path="i18n"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>
