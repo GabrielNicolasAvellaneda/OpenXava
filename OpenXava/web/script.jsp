@@ -94,7 +94,13 @@ function showCalendar(id, format, showsTime, showsOtherMonths) {
   // the reference element that we pass to showAtElement is the button that
   // triggers the calendar.  In this example we align the calendar bottom-right
   // to the button.
-  _dynarch_popupCalendar.showAtElement(el.nextSibling, "tr");        // show the calendar
+  <% 
+  // Date fields at end of the windows is not shown correctly in IE6,
+  // hence, we align at top in IE6, and at botton in other browsers.
+  String browser = request.getHeader("user-agent");
+  String calendarAlign = browser != null && browser.indexOf("MSIE 6") >= 0?"tr":"Br";  
+  %>
+  _dynarch_popupCalendar.showAtElement(el.nextSibling, "<%=calendarAlign%>"); // show the calendar
 
   return false;
 }
