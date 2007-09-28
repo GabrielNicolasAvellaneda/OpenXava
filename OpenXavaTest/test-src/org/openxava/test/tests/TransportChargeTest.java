@@ -44,7 +44,7 @@ public class TransportChargeTest extends TransportChargeTestBase {
 	public void testViewForReferenceWithSections() throws Exception {
 		execute("CRUD.new");
 		assertExists("delivery.distance");
-		assertNotExists("delviery.advice");
+		assertNotExists("delivery.advice");
 		execute("Sections.change", "activeSection=3, viewObject=xava_view_delivery");
 		assertExists("delivery.advice");
 		assertNotExists("delivery.distance");
@@ -54,6 +54,11 @@ public class TransportChargeTest extends TransportChargeTestBase {
 		deleteAll();
 		
 		execute("CRUD.new");
+		assertEditable("delivery.invoice.year");
+		assertNoEditable("delivery.invoice.date");
+		assertEditable("delivery.number");
+		assertNoEditable("delivery.description");
+		assertNoEditable("delivery.distance");
 		execute("Reference.search", "keyProperty=xava.TransportCharge.delivery.number");
 		String year = getValueInList(0, 0);
 		String number = getValueInList(0, 1);
