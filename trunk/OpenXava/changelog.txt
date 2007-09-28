@@ -1,7 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
-- Fix: JavaScript calendar overlap with Liferay top bar.
+- Fix: Focus when a reference or group is on top of the view is not set inside that reference or group.
+- Fix: Nested key references do not set editable correctly.
+- JavaScript calendar aligns to bottom on IE6 and to top in the other cases, for avoiding a problem of overlapping with Liferay top bar.
 - Buttons instead of links for no image actions is possible (using buttonsForNoImageActions=true in xava.properties).
 - New stereotypes TELEPHONE, EMAIL and WEBURL.
 - New property nullToZero in IntegerNumberConverter and LongNumberConverter to choose if null have to be converted to 0.

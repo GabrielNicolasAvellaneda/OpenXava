@@ -108,7 +108,7 @@ public class View implements java.io.Serializable {
 	private boolean registeringExecutedActions = false;
 	private Tab collectionTab; 	
 	private String propertiesListNames;
-	private Collection rowStyles; // Of type MetaRowStyle 
+	private Collection rowStyles; // Of type MetaRowStyle 	
 		
 	public View() {
 		oid = nextOid++;		
@@ -1510,11 +1510,11 @@ public class View implements java.io.Serializable {
 	}
 
 	public void setKeyEditable(boolean b) throws XavaException {
-		keyEditable = b;		
+		keyEditable = b;				
 		Iterator it = getMetaModel().getMetaReferencesKey().iterator();
 		while (it.hasNext()) {
 			MetaReference ref = (MetaReference) it.next();			
-			if (hasSubview(ref.getName())) {				
+			if (hasSubview(ref.getName())) {
 				getSubview(ref.getName()).setKeyEditable(b);
 				getSubview(ref.getName()).setEditable(false);
 			}
@@ -1631,9 +1631,9 @@ public class View implements java.io.Serializable {
 						continue;
 					}					
 				}
-				if (subview.isRepresentsEntityReference()) {				
-					subview.setKeyEditable(b); 
-					subview.setEditable(false); 					
+				if (subview.isRepresentsEntityReference()) {
+					subview.setEditable(false);
+					subview.setKeyEditable(b); 					
 				}
 				else {
 					subview.setEditable(b);
@@ -3003,13 +3003,25 @@ public class View implements java.io.Serializable {
 	}
 	
 	private String getFirsEditablePropertyId(String prefix) throws XavaException {
-		Iterator it = getMetaProperties().iterator();
+		Iterator it = getMetaMembers().iterator();
 		while (it.hasNext()) {
-			MetaProperty pr = (MetaProperty) it.next();
-			if (isEditable(pr)) {
-				return prefix + pr.getName();
+			MetaMember m = (MetaMember) it.next();
+			if (m instanceof MetaProperty) {
+				if (PropertiesSeparator.INSTANCE.equals(m)) continue; 
+				if (isEditable((MetaProperty) m)) {
+					return prefix + m.getName();
+				}
 			}
-		}
+			else if (m instanceof MetaGroup) {
+				String result = getGroupView(m.getName()).getFirsEditablePropertyId(prefix);
+				if (result != null) return result;
+			}
+			else if (m instanceof MetaReference) {
+				String result = getSubview(m.getName()).getFirsEditablePropertyId(prefix + m.getName() + ".");
+				if (result != null) return result;
+			}
+			
+		}		
 		if (hasSections()) {
 			return getSectionView(getActiveSection()).getFirsEditablePropertyId(prefix);
 		}
