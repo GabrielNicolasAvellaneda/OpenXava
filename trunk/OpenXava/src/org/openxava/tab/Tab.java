@@ -367,8 +367,8 @@ public class Tab implements java.io.Serializable {
 			ModelMapping mapping = p.getMetaModel().getMapping(); 
 			return mapping.yearSQLFunction(column) + " = ? and " + mapping.monthSQLFunction(column);
 		}						
-		if (java.lang.String.class.equals(p.getType())) {
-			return "upper(" + column + ")";
+		if (java.lang.String.class.equals(p.getType()) && XavaPreferences.getInstance().isToUpperForStringArgumentsInConditions()) { 
+			return "upper(" + column + ")"; 
 		}
 		return column;
 	}
@@ -406,16 +406,16 @@ public class Tab implements java.io.Serializable {
 			String value = this.conditionValues[i];
 			if (!Is.emptyString(value)) {
 								
-				if (STARTS_COMPARATOR.equals(this.conditionComparators[i])) {
-					value = value.trim().toUpperCase() + "%";
+				if (STARTS_COMPARATOR.equals(this.conditionComparators[i])) { 
+					value = convertStringArgument(value) + "%";
 					key.add(value);
 				}
 				else if (CONTAINS_COMPARATOR.equals(this.conditionComparators[i])) {
-					value = "%" + value.trim().toUpperCase() + "%";
+					value = "%" + convertStringArgument(value) + "%";
 					key.add(value);
 				} 
 				else if (YEAR_COMPARATOR.equals(this.conditionComparators[i]) || MONTH_COMPARATOR.equals(this.conditionComparators[i])) {
-					value = value.trim().toUpperCase();
+					value = convertStringArgument(value);
 					try {					
 						key.add(new Integer(value));
 					}
@@ -439,7 +439,7 @@ public class Tab implements java.io.Serializable {
 					}															
 				}
 				else {
-					value = value.trim().toUpperCase();
+					value = convertStringArgument(value);
 					MetaProperty p = (MetaProperty) getMetaPropertiesNotCalculated().get(i);
 					try {				
 						Object v = p.parse(value, getLocale());
@@ -462,6 +462,15 @@ public class Tab implements java.io.Serializable {
 		return filterKey(key.toArray());
 	}
 	
+	private String convertStringArgument(String value) {  
+		if (XavaPreferences.getInstance().isToUpperForStringArgumentsInConditions()) {
+			return value.trim().toUpperCase(); 
+		}
+		else {
+			return value.trim();
+		}
+	}
+
 	private Locale getLocale() {
 		return request==null?Locale.getDefault():request.getLocale();
 	}

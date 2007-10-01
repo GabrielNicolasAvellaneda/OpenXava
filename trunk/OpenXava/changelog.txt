@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- New property toUpperForStringArgumentsInConditions for xava.properties. It allows to choose the use of upper for searching in list and collections.
+- XavaPreferences can be only instatiate using getInstance() method.
 - Fix: Focus when a reference or group is on top of the view is not set inside that reference or group.
 - Fix: Nested key references do not set editable correctly.
 - JavaScript calendar aligns to bottom on IE6 and to top in the other cases, for avoiding a problem of overlapping with Liferay top bar.
