@@ -29,7 +29,7 @@ public class XavaPreferences {
 	private Level javaLoggingLevel;
 	private Level hibernateJavaLoggingLevel;	
 	
-	private XavaPreferences() { // tmp: en changelog		
+	private XavaPreferences() { 		
 	}
 	
 	public static XavaPreferences getInstance() {
@@ -176,11 +176,27 @@ public class XavaPreferences {
 	 * If <code>true</code> when an action has no image it uses a button
 	 * for display it, else it uses a link. <p>
 	 * 
-	 * The default valus is <code>false</code>, that is, by default
+	 * The default value is <code>false</code>, that is, by default
 	 * links for displaying no image actions.<br>
 	 */
 	public boolean isButtonsForNoImageActions() {  
 		return "true".equalsIgnoreCase(getProperties().getProperty("buttonsForNoImageActions", "false" ).trim()); 
 	}
+	
+	/** 
+	 * If <code>true</code> a upper case conversions will applied
+	 * to string arguments for conditions in list and collections. <p>
+	 * 
+	 * If <code>true</code> the searching using list or collections are
+	 * more flexible (the user can use indistinctly upper or lower case)
+	 * but can be slower in some databases (because they cannot use index).
+	 * 
+	 * The default value is <code>true</code>.<br>
+	 */
+	public boolean isToUpperForStringArgumentsInConditions() {  
+		return "true".equalsIgnoreCase(getProperties().getProperty("toUpperForStringArgumentsInConditions", "true" ).trim()); 
+	}
+
+	
 		
 }

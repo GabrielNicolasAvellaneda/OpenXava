@@ -3,6 +3,8 @@ Change Log for OpenXava 3
 
 OpenXava 3.0beta2 (2007-8-22)
 -----------------------------
+- Fix: Focus when a reference or group is on top of the view is not set inside that reference or group.
+- Fix: Nested key references do not set editable correctly.
 - @RowStyle available for collections. 
 - Fix: order in @DescriptionsList has no effect when condition is not specified.
 - New annotation @XOrderBy that allows use qualified properties from references in order.
