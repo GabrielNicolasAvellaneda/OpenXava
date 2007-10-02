@@ -314,8 +314,8 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 	public void setCurrent(int i) {
 		current = i;
 	}
-	public int getResultSize() throws RemoteException {				
-		if (this.selectSize == null) return 0;						
+	public int getResultSize() throws RemoteException {
+		if (this.selectSize == null || keyHasNulls()) return 0;						
 		Connection con = null;
 		try {
 			con = connectionProvider.getConnection();
