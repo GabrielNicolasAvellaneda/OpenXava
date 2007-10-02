@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: SQLException from Oracle on collections when key of main object is empty.
 - New property toUpperForStringArgumentsInConditions for xava.properties. It allows to choose the use of upper for searching in list and collections.
 - XavaPreferences can be only instatiate using getInstance() method.
 - Fix: Focus when a reference or group is on top of the view is not set inside that reference or group.
