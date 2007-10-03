@@ -25,7 +25,8 @@ propertyPrefix = (propertyPrefix == null || propertyPrefix.equals(""))?"xava." +
 
 <%
 Iterator it = view.getMetaMembers().iterator();
-boolean first = true;
+String sfirst = request.getParameter("first");
+boolean first = !"false".equals(sfirst); 
 boolean lastWasEditor = false;
 while (it.hasNext()) {
 	Object m = it.next();
@@ -81,9 +82,10 @@ while (it.hasNext()) {
 				String propertyInReferencePrefix = propertyPrefix + ref.getName() + ".";
 				boolean withFrame = subview.isFrame() && 
 					(!view.isSection() || view.getMetaMembers().size() > 1);
+				lastWasEditor = !withFrame; 
+				boolean firstForSubdetail = first || withFrame; 
 				if (withFrame || (view.isSection() && view.getMembersNames().size() ==1)) {
-					if (first) { 
-						first = false;
+					if (first) { 						
 	%>		
 		<tr><td colspan="4">
 	<%	
@@ -105,6 +107,7 @@ while (it.hasNext()) {
 		<jsp:include page="detail.jsp"> 
 			<jsp:param name="viewObject" value="<%=viewName%>" />
 			<jsp:param name="propertyPrefix" value="<%=propertyInReferencePrefix%>" />
+			<jsp:param name="first" value="<%=firstForSubdetail%>" /> 
 		</jsp:include>	
 	<%				if (withFrame) {
 		%>				
@@ -113,6 +116,7 @@ while (it.hasNext()) {
 		<%
 				} // withFrame
 			}
+			first = false; 
 		} else if (m instanceof MetaCollection) {
 			MetaCollection collection = (MetaCollection) m;
 			String urlCollection = "collection.jsp";
@@ -142,7 +146,7 @@ while (it.hasNext()) {
 		} else if (m instanceof MetaGroup) {
 			MetaGroup group = (MetaGroup) m;
 			String viewName = viewObject + "_" + group.getName();
-			View subview = view.getGroupView(group.getName());
+			View subview = view.getGroupView(group.getName());			
 			context.put(request, viewName, subview);
 		%>
 		<%
@@ -172,7 +176,7 @@ while (it.hasNext()) {
 }
 %>
 <% if (lastWasEditor) { %>
-			</tr></table>
+		<% if (!view.isRepresentsEntityReference() || view.isFrame()) { %> </tr></table> <% } %>
 			</td>
 <% } %>
 
