@@ -840,6 +840,10 @@
 		<copy file="${dist.dir}/${name.war}.war" todir="${deploy.portlets.dir}" overwrite="true"/>		
 	</target>
 	
+	<!-- 
+	 For Hibernate applications with .hbml.xml files, that is,
+	 when code generation from XML components is used, as usual in OpenXava 2.x
+	 -->
 	<target name="exportSchema">
 	    <taskdef name="schemaexport"
 	        classname="org.hibernate.tool.hbm2ddl.SchemaExportTask"
@@ -862,7 +866,11 @@
 	    	
 		</schemaexport>
 	</target>
-	
+
+	<!-- 
+	 For Hibernate applications with .hbml.xml files, that is,
+	 when code generation from XML components is used, as usual in OpenXava 2.x
+	 -->	
 	<target name="updateSchema">
 	    <taskdef name="schemaupdate"
 	        classname="org.hibernate.tool.hbm2ddl.SchemaUpdateTask"
@@ -898,5 +906,39 @@
   		</copy>		
 		<jar jarfile="../${project}/web/WEB-INF/lib/openxava.jar" basedir="../OpenXava/bin"/>
 	</target>
-			
+	
+	<target name="defineHibernateTool">
+		<path id="jpatoolslib">
+			<path location="../OpenXava/lib/hibernate-tools.jar" />
+			<path location="../OpenXava/lib/freemarker.jar" />					 	
+		 	<path location="../OpenXava/lib/commons-logging.jar" />
+		 	<fileset dir="../OpenXava/web/WEB-INF/lib">
+				<include name="**/*.jar"/>
+			</fileset>
+			<path location="../OpenXava/bin" />
+			<path location="${schema.path}" />
+		</path>			
+		
+		<taskdef name="hibernatetool" 
+			classname="org.hibernate.tool.ant.HibernateToolTask" 
+			classpathref="jpatoolslib" />		
+	</target>
+	
+	<!--
+	Updates schema for applications developed with POJOs + JPA (not XML),
+	that is, for applications developed using OX3 or better.
+	-->
+	<target name="updateSchemaJPA" depends="defineHibernateTool">
+		
+		<hibernatetool destdir="data">
+			<jpaconfiguration persistenceunit="${persistence.unit}"/>
+			<classpath>
+				<path location="web/WEB-INF/classes" />		  
+			</classpath>
+
+		 	<hbm2ddl update="true" />	
+		</hibernatetool>
+				
+	</target>
+				
 </project>
