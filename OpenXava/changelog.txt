@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: <xava:link /> with empty string fails. This breaks the ability to removing some action in collection-view.
+- New DaysDelayCalculator for calculating delays between dates.
+- Fix: References with no frames inside groups are not nicely shown in some cases. 
 - Fix: SQLException from Oracle on collections when key of main object is empty.
 - New property toUpperForStringArgumentsInConditions for xava.properties. It allows to choose the use of upper for searching in list and collections.
 - XavaPreferences can be only instatiate using getInstance() method.

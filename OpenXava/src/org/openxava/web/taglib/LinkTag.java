@@ -90,7 +90,7 @@ public class LinkTag extends TagSupport implements IActionTag {
 
 	public int doEndTag() throws JspException {
 		try {
-			if (!hasBody) {
+			if (!hasBody && !Is.emptyString(getAction())) {
 				pageContext.getOut().print(
 					MetaControllers.getMetaAction(getAction()).getLabel(
 						pageContext.getRequest()));								
