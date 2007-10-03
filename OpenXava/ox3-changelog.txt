@@ -1,10 +1,15 @@
 Change Log for OpenXava 3
 =========================
 
-OpenXava 3.0beta2 (2007-8-22)
------------------------------
+- Fix: References with no frames inside groups are not nicely shown in some cases.
+- Automatic update schema available for OX3 using hibernatetool.
+- OpenXavaTemplate and OpenXavaTemplate projects adapted to OX3.
+- Folder 'ejb3-jpa' is renamed to 'persistence'.
 - Fix: Focus when a reference or group is on top of the view is not set inside that reference or group.
 - Fix: Nested key references do not set editable correctly.
+
+OpenXava 3.0beta2 (2007-8-22)
+-----------------------------
 - @RowStyle available for collections. 
 - Fix: order in @DescriptionsList has no effect when condition is not specified.
 - New annotation @XOrderBy that allows use qualified properties from references in order.

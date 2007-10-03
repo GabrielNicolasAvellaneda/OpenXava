@@ -26,7 +26,7 @@ import org.openxava.test.actions.*;
 		"website;" +
 		"address;" +
 		"city;" +
-		"seller [" + 
+		"seller [" +  
 		"	seller; " +
 		"	relationWithSeller;" +
 		"]" +  
