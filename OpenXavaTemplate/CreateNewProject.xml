@@ -8,7 +8,7 @@
 <project name="CreateNewProject" default="createNewProject" basedir=".">
 
 	<!-- Change the value of the next properties -->
-	<property name="project" value="MyProject" />
+	<property name="project" value="Management" />
 	<property name="datasource" value="${project}DS" />
 	
 	<target name="createNewProject">		
