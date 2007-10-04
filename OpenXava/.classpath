@@ -3,11 +3,6 @@
 	<classpathentry kind="src" path="xava"/>
 	<classpathentry kind="src" path="properties"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="var" path="JRE_LIB" sourcepath="JRE_SRC">
-		<attributes>
-			<attribute name="javadoc_location" value="http://java.sun.com/j2se/1.4.2/docs/api"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="src" path="i18n"/>
 	<classpathentry exported="true" kind="lib" path="lib/httpunit.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/js.jar"/>
@@ -36,5 +31,6 @@
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/javassist.jar"/>
 	<classpathentry kind="src" path="ox3-src"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/commons-validator.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/Sun JDK 1.5.0_11"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

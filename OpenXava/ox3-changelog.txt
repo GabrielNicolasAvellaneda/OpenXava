@@ -1,10 +1,14 @@
 Change Log for OpenXava 3
 =========================
 
-- Fix: References with no frames inside groups are not nicely shown in some cases.
-- Automatic update schema available for OX3 using hibernatetool.
+OpenXava 3.0beta3 (2007-10-8)
+-----------------------------
+- Chapter 1 and 2 of OX3 Reference Guide (in HTML) available. 
 - OpenXavaTemplate and OpenXavaTemplate projects adapted to OX3.
+- Automatic update schema available for OX3 using hibernatetool.
 - Folder 'ejb3-jpa' is renamed to 'persistence'.
+- Fix: Remove selected for collections with ManyToMany fails (it removed the object instead of the relation). 
+- Fix: References with no frames inside groups are not nicely shown in some cases.
 - Fix: Focus when a reference or group is on top of the view is not set inside that reference or group.
 - Fix: Nested key references do not set editable correctly.
 

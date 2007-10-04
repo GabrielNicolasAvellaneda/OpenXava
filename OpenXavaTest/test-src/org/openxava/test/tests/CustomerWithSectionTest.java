@@ -182,24 +182,43 @@ public class CustomerWithSectionTest extends CustomerTest {
 		if (isOX3()) {
 			// In OX3 ManyToMany is supported, then we have a collection of entities
 			execute("Collection.add", "viewObject=xava_view_section1_states");
+			assertValueInList(0, 0, "AK");
 			assertValueInList(4, 0, "CA");
-			execute("AddToCollection.add", "row=4");
+			checkRow(0);
+			checkRow(4);
+			execute("AddToCollection.add");
 		}
 		else {
 			// In OX2 many to many is not supported, we simulate it using a collection of aggregates,
 			// therefore the User Interface it's not the same (because it's a collection of aggragates)
 			execute("Collection.new", "viewObject=xava_view_section1_states");
+			setValue("states.state.id", "AK");
+			assertValue("states.state.name", "ALASKA");
+			execute("Collection.save", "viewObject=xava_view_section1_states");						
 			setValue("states.state.id", "CA");
 			assertValue("states.state.name", "CALIFORNIA");
 			execute("Collection.save", "viewObject=xava_view_section1_states");			
 		}
 		
-		assertCollectionRowCount("states", 1);
-		assertValueInCollection("states", 0, 0, "CA");
-		assertValueInCollection("states", 0, 1, "CALIFORNIA");
+		assertCollectionRowCount("states", 2);
+		assertValueInCollection("states", 0, 0, "AK");
+		assertValueInCollection("states", 0, 1, "ALASKA");		
+		assertValueInCollection("states", 1, 0, "CA");
+		assertValueInCollection("states", 1, 1, "CALIFORNIA");
+		// Using Edit + Remove
 		execute("Collection.edit", "row=0,viewObject=xava_view_section1_states");
 		execute("Collection.remove", "viewObject=xava_view_section1_states");
+		assertCollectionRowCount("states", 1);
+		// Using Check row + Remove selected
+		checkRowCollection("states", 0);
+		execute("Collection.removeSelected", "viewObject=xava_view_section1_states");
+		assertNoErrors();
 		assertCollectionRowCount("states", 0);
+		
+		// Verifying if that other part is not removed
+		changeModule("StateHibernate");
+		assertValueInList(0, 0, "AK");
+		assertValueInList(4, 0, "CA");		
 	}
 	
 	public void testChangeReferenceLabel() throws Exception {
