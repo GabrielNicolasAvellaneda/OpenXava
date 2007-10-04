@@ -8,7 +8,7 @@
 <project name="CrearNuevoProject" default="crearNuevoProyecto" basedir=".">
 
 	<!-- Cambia el valor de las siguientes propiedades -->
-	<property name="proyecto" value="MiProyecto" />
+	<property name="proyecto" value="Gestion" />
 	<property name="fuentedatos" value="${proyecto}DS" />
 	
 	<target name="crearNuevoProyecto">		
