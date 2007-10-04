@@ -48,7 +48,7 @@ public class RemoveSelectedInCollectionAction extends CollectionBaseAction {
 	 * values. <p>
 	 */
 	protected void removeElement(Map values) throws Exception {
-		MapFacade.remove(getCollectionElementView().getModelName(), values);
+		MapFacade.removeCollectionElement(getCollectionElementView().getParent().getModelName(), getCollectionElementView().getParent().getKeyValues(), getCollectionElementView().getMemberName(), values);
 	}
 
 }

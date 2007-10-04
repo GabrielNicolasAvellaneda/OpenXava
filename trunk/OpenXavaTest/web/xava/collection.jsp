@@ -85,17 +85,17 @@ if (view.displayDetailInCollection(collectionName)) {
 </td></tr>
 <tr><td>
 <% if (collectionEditable || collectionMembersEditables) { %>
-<xava:link action="<%=subview.getSaveCollectionElementAction()%>" argv='<%="viewObject="+viewName%>'/>
+<xava:action action="<%=subview.getSaveCollectionElementAction()%>" argv='<%="viewObject="+viewName%>'/>
 <% } %>
-&nbsp;<xava:link action="<%=subview.getHideCollectionElementAction()%>" argv='<%="viewObject="+viewName%>'/>
+&nbsp;<xava:action action="<%=subview.getHideCollectionElementAction()%>" argv='<%="viewObject="+viewName%>'/>
 <% if (collectionEditable) { %>
-&nbsp;<xava:link action="<%=subview.getRemoveCollectionElementAction()%>" argv='<%="viewObject="+viewName%>'/>
+&nbsp;<xava:action action="<%=subview.getRemoveCollectionElementAction()%>" argv='<%="viewObject="+viewName%>'/>
 <% } %>
 <% 
 Iterator itDetailActions = subview.getActionsNamesDetail().iterator();
 while (itDetailActions.hasNext()) {
 %>
-&nbsp;<xava:link action="<%=itDetailActions.next().toString()%>" argv='<%="viewObject="+viewName%>'/>
+&nbsp;<xava:action action="<%=itDetailActions.next().toString()%>" argv='<%="viewObject="+viewName%>'/>
 <%	
 } // while detail actions
 %>
@@ -107,8 +107,8 @@ while (itDetailActions.hasNext()) {
 %>
 <tr class=<%=style.getCollectionListActions()%>><td colspan="<%=subview.getMetaPropertiesList().size()+1%>" class=<%=style.getCollectionListActions()%>>
 <% if (collectionEditable) { %>
-<xava:image action="<%=subview.getNewCollectionElementAction()%>" argv='<%="viewObject="+viewName%>'/>
-<xava:image action="<%=subview.getRemoveSelectedCollectionElementsAction()%>" argv='<%="viewObject="+viewName%>'/>
+<xava:action action="<%=subview.getNewCollectionElementAction()%>" argv='<%="viewObject="+viewName%>'/>
+<xava:action action="<%=subview.getRemoveSelectedCollectionElementsAction()%>" argv='<%="viewObject="+viewName%>'/>
 <% } %>
 <% 
 Iterator itListActions = subview.getActionsNamesList().iterator();
