@@ -1,7 +1,7 @@
 Change Log for OpenXava 3
 =========================
 
-OpenXava 3.0beta3 (2007-10-8)
+OpenXava 3.0beta3 (2007-10-5)
 -----------------------------
 - Chapter 1 and 2 of OX3 Reference Guide (in HTML) available. 
 - OpenXavaTemplate and OpenXavaTemplate projects adapted to OX3.

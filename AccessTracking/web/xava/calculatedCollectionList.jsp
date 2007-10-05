@@ -2,11 +2,8 @@
 <tr id="xava-tr-list" class="<%=style.getListHeader()%>">
 	<% if (lineAction != null) { %>	
 	<th class=<%=style.getListHeaderCell()%>></th>
-	<% } %>
-	<% if (hasListActions  && !collectionView.isCollectionDetailVisible() && (collectionEditable || !subview.getActionsNamesList().isEmpty())) {  %>	
+	<% } %>	
 	<th class=<%=style.getListHeaderCell()%> width="5"></th>
-	<% } %>
-
 <%
 // Heading
 Iterator it = subview.getMetaPropertiesList().iterator();
@@ -42,11 +39,9 @@ while (itAggregates.hasNext()) {
 <xava:action action="<%=lineAction%>" argv='<%="row="+f + ",viewObject="+viewName%>'/>
 </td>
 <% } %>
-<% if (hasListActions  && !collectionView.isCollectionDetailVisible() && (collectionEditable || !subview.getActionsNamesList().isEmpty())) { %>
 <td class="<%=cssCellClass%>" width="5">
 <input type="CHECKBOX" name="<%=propertyPrefix%>__SELECTED__" value="<%=f%>"/>
 </td>
-<% } %>
 <%
 	f++;
 	it = subview.getMetaPropertiesList().iterator();
