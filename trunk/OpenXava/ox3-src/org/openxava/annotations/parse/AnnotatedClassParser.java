@@ -1808,7 +1808,7 @@ public class AnnotatedClassParser {
 		Collection classNames = new ArrayList();
 		URL url = getAnchorURL();		
 		if (url != null) {			
-			File baseClassPath=new File(Strings.noLastToken(url.getPath(), "/"));
+			File baseClassPath=new File(Strings.change(Strings.noLastToken(url.getPath(), "/"), "%20", " "));
 			fillManagedClassNamesFromFileClassPath(classNames, baseClassPath, null, false);
 		}
 		else {			

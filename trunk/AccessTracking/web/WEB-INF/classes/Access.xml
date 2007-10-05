@@ -28,10 +28,10 @@
 		<property-mapping property="oid" column="OID"/>
 		<property-mapping property="application" column="APPLICATION"/>
 		<property-mapping property="model" column="MODEL"/>
-		<property-mapping property="table" column="TABLE"/>
+		<property-mapping property="table" column="TABLE_NAME"/>
 		<property-mapping property="user" column="USER"/>
-		<property-mapping property="date" column="DATE"/>
-		<property-mapping property="time" column="TIME"/>
+		<property-mapping property="date" column="ACCESS_DATE"/>
+		<property-mapping property="time" column="ACCESS_TIME"/>
 		<property-mapping property="type" column="TYPE" cmp-type="String">
 			<converter class="org.openxava.converters.ValidValuesLetterConverter">
 				<set property="letters" value="CRUD"/>
