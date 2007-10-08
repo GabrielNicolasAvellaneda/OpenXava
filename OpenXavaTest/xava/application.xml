@@ -1,4 +1,4 @@
-<!DOCTYPE application SYSTEM "dtds/application.dtd"><application name="OpenXavaTest"> 
+<?xml version = "1.0" encoding = "ISO-8859-1"?><!DOCTYPE application SYSTEM "dtds/application.dtd"><application name="OpenXavaTest"> 
 
 	<module name="Description">
 		<doc url="doc/description" languages="en,es"/>
