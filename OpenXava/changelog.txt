@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- In the page for customizing columns of list (and collections) the label of each property to add is shown.
+- Labels in list mode are qualified by default. That is customer.name is shown as "Name of Customer" (before it was only "Name").
+- New methods Labels.getQualified() and MetaProperty.getQualifiedLabel().
 - The user can hide/show the filter part in list and collections. Also showFilterByDefaultInList and 
 showFilterByDefaultInCollections are available in xava.properties.
 - Fix: <xava:link /> with empty string fails. This breaks the ability to removing some action in collection-view.

@@ -97,6 +97,18 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	public String getValidValueLabel(Locale locale, int i) throws XavaException { 
 		return obtainValidValueLabel(locale, getValidValue(i));
 	}
+	
+	public String getQualifiedLabel(Locale locale) throws XavaException { 
+		if (Labels.existsExact(getId(), locale)) {			
+			return getLabel(locale);
+		}
+		return Labels.getQualified(getQualifiedName(), locale);
+	}
+	
+	public String getQualifiedLabel(ServletRequest request) throws XavaException { 
+		return getQualifiedLabel(getLocale(request));
+	}
+	
 
 	/**
 	 * A string with the localized labels separate with '|'.

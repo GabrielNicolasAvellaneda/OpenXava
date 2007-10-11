@@ -78,12 +78,12 @@ while (it.hasNext()) {
 <%
 	if (property.isCalculated()) {		
 %>
-<%=property.getLabel(request)%>&nbsp;
+<%=property.getQualifiedLabel(request)%>&nbsp;
 <%
 	} else {
 %>
 <span class="<%=style.getListOrderBy()%>">
-<xava:link action='List.orderBy' argv='<%="property="+property.getQualifiedName() + collectionArgv%>'><%=property.getLabel(request)%></xava:link>&nbsp;
+<xava:link action='List.orderBy' argv='<%="property="+property.getQualifiedName() + collectionArgv%>'><%=property.getQualifiedLabel(request)%></xava:link>&nbsp;
 </span>
 <%
 		if (tab.isOrderAscending(property.getQualifiedName())) {

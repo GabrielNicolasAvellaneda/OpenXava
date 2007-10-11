@@ -17,12 +17,24 @@ public class Labels {
 
 	private static Log log = LogFactory.getLog(Labels.class);
 	
+
+	/**
+	 * On any error returns the sent <code>id</code> with the first letter in uppercase.
+	 */
+	public static String getQualified(String id, Locale locale) {
+		return get(id, locale, true);
+	}
+	
 	/**
 	 * On any error returns the sent <code>id</code> with the first letter in uppercase.
 	 */
 	public static String get(String id, Locale locale) {
+		return get(id, locale, false);
+	}
+	
+	private static String get(String id, Locale locale, boolean qualified) {
 		try {
-			return getImpl(id, locale);
+			return getImpl(id, locale, qualified);
 		}
 		catch (MissingResourceException ex) {
 			if (XavaPreferences.getInstance().isI18nWarnings()) {
@@ -30,8 +42,7 @@ public class Labels {
 			}			
 			return Strings.firstUpper(id);
 		}
-		catch (Exception ex) {
-			
+		catch (Exception ex) {			
 			if (XavaPreferences.getInstance().isI18nWarnings()) {
 				log.warn(XavaResources.getString("element_i18n_warning", id));
 			} 
@@ -39,12 +50,31 @@ public class Labels {
 		}		
 	}
 	
+	/** 
+	 * Qualified label. <p>
+	 * 
+	 * If you sent customer.warehouse.name it return "Name of Warehouse of Customer". <br>
+	 * 
+	 * If <code>id</code> is not found, or other error returns <code>defaultValue</code>
+	 */
+	public static String getQualified(String id, Locale locale, String defaultValue) {
+		return get(id, locale, defaultValue, true);
+	}
+	
+	
 	/**
 	 * If <code>id</code> is not found, or other error returns <code>defaultValue</code>
 	 */
 	public static String get(String id, Locale locale, String defaultValue) {
+		return get(id, locale, defaultValue, false);
+	}
+	
+	/**
+	 * If <code>id</code> is not found, or other error returns <code>defaultValue</code>
+	 */
+	private static String get(String id, Locale locale, String defaultValue, boolean qualified) {
 		try {
-			return getImpl(id, locale);
+			return getImpl(id, locale, qualified);
 		}
 		catch (MissingResourceException ex) {
 			if (XavaPreferences.getInstance().isI18nWarnings()) {
@@ -60,17 +90,25 @@ public class Labels {
 		}		
 	}		
 		
-	private static String getImpl(String id, Locale locale) throws MissingResourceException, XavaException {
+	private static String getImpl(String id, Locale locale, boolean qualified) throws MissingResourceException, XavaException {
 		if (id == null) return "";
 		try {			
 			return getResource(id, locale);
 		}
 		catch (MissingResourceException ex) {			
-			int idxPunto = id.indexOf(".");
-			if (idxPunto < 0) throw ex;
+			int idxDot = id.indexOf(".");
+			if (idxDot < 0) throw ex;
 			String idWitoutQualifier = removeViewOrTab(id);
-			if (idWitoutQualifier != null) return get(idWitoutQualifier, locale);
-			return get(id.substring(idxPunto + 1), locale);
+			if (idWitoutQualifier != null) return get(idWitoutQualifier, locale);			
+			String parent = id.substring(0, idxDot);
+			if (!qualified || idxDot > 0 && Character.isUpperCase(id.charAt(0))) {
+				return get(id.substring(idxDot + 1), locale);
+			}
+			else {
+				return get(id.substring(idxDot + 1), locale, qualified) + " " + 
+					XavaResources.getString("of", locale) + " " +
+					get(parent, locale, false);
+			}
 		}
 	} 
 	

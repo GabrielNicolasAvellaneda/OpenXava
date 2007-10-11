@@ -117,7 +117,9 @@ public class CarrierTest extends ModuleTestBase {
 		assertCollectionRowCount("xavaPropertiesList", 6);
 		execute("AddColumns.sort");				
 		assertValueInCollection("xavaPropertiesList",  0, 0, "drivingLicence.description");
+		assertValueInCollection("xavaPropertiesList",  0, 1, "Description of Driving licence");
 		assertValueInCollection("xavaPropertiesList",  1, 0, "drivingLicence.level");
+		assertValueInCollection("xavaPropertiesList",  1, 1, "Level of Driving licence");
 		assertValueInCollection("xavaPropertiesList",  2, 0, "drivingLicence.type");
 		assertValueInCollection("xavaPropertiesList",  3, 0, "warehouse.name");
 		assertValueInCollection("xavaPropertiesList",  4, 0, "warehouse.number");
@@ -130,14 +132,14 @@ public class CarrierTest extends ModuleTestBase {
 		assertLabelInCollection("fellowCarriers", 1, "Name");
 		assertLabelInCollection("fellowCarriers", 2, "Calculated");
 		assertLabelInCollection("fellowCarriers", 3, "Remarks");				
-		assertLabelInCollection("fellowCarriers", 4, "Name");
+		assertLabelInCollection("fellowCarriers", 4, "Name of Warehouse");
  		
 		// Other customizations
 		execute("List.moveColumnToLeft", "columnIndex=4,collection=fellowCarriers");
 		assertLabelInCollection("fellowCarriers", 0, "Number");
 		assertLabelInCollection("fellowCarriers", 1, "Name");
 		assertLabelInCollection("fellowCarriers", 2, "Calculated");
-		assertLabelInCollection("fellowCarriers", 3, "Name");
+		assertLabelInCollection("fellowCarriers", 3, "Name of Warehouse");
 		assertLabelInCollection("fellowCarriers", 4, "Remarks");
 				
 		execute("List.removeColumn", "columnIndex=4,collection=fellowCarriers");
@@ -145,7 +147,7 @@ public class CarrierTest extends ModuleTestBase {
 		assertLabelInCollection("fellowCarriers", 0, "Number");
 		assertLabelInCollection("fellowCarriers", 1, "Name");
 		assertLabelInCollection("fellowCarriers", 2, "Calculated");
-		assertLabelInCollection("fellowCarriers", 3, "Name");
+		assertLabelInCollection("fellowCarriers", 3, "Name of Warehouse");
 		
 		// Restoring		
 		execute("List.addColumns", "collection=fellowCarriers");
