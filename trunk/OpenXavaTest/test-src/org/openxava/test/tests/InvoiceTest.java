@@ -165,10 +165,12 @@ public class InvoiceTest extends ModuleTestBase {
 		execute("AddColumns.sort");		
 		
 		assertValueInCollection("xavaPropertiesList",  0, 0, "comment");
+		assertValueInCollection("xavaPropertiesList",  0, 1, "Comment");
 		assertValueInCollection("xavaPropertiesList",  1, 0, "considerable");
 		assertValueInCollection("xavaPropertiesList",  2, 0, "customer.address.asString");
 		assertValueInCollection("xavaPropertiesList",  3, 0, "customer.address.city");
 		assertValueInCollection("xavaPropertiesList",  4, 0, "customer.address.state.fullName");
+		assertValueInCollection("xavaPropertiesList",  4, 1, "FullName of State of Address of Customer");
 		assertValueInCollection("xavaPropertiesList",  5, 0, "customer.address.state.id");		
 		assertValueInCollection("xavaPropertiesList",  6, 0, "customer.address.state.name");		
 		assertValueInCollection("xavaPropertiesList",  7, 0, "customer.address.street");		
@@ -215,7 +217,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertLabelInList(5, "Details count");
 		assertLabelInList(6, "Paid");
 		assertLabelInList(7, "Importance");
-		assertLabelInList(8, "City");
+		assertLabelInList(8, "City of Address of Customer");
 		assertLabelInList(9, "Year discount");
 		
 		
@@ -268,7 +270,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertLabelInList(5, "Details count");
 		assertLabelInList(6, "Paid");
 		assertLabelInList(7, "Importance");
-		assertLabelInList(8, "City");
+		assertLabelInList(8, "City of Address of Customer");
 		assertLabelInList(9, "Year discount");
 				
 	}
@@ -284,7 +286,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertLabelInList(5, "Details count");
 		assertLabelInList(6, "Paid");
 		assertLabelInList(7, "Importance");
-		assertLabelInList(8, "City");
+		assertLabelInList(8, "City of Address of Customer");
 		assertLabelInList(9, "Year discount");
 				
 		
