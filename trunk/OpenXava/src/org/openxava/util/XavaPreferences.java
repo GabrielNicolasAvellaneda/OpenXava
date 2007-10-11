@@ -196,7 +196,25 @@ public class XavaPreferences {
 	public boolean isToUpperForStringArgumentsInConditions() {  
 		return "true".equalsIgnoreCase(getProperties().getProperty("toUpperForStringArgumentsInConditions", "true" ).trim()); 
 	}
-
 	
+	/** 
+	 * If <code>true</code> filter is show by default for list on init. <p>
+	 * 
+	 * The user always have the option to show or hide the filter.<br>
+	 * The default value is <code>true</code>.<br>
+	 */
+	public boolean isShowFilterByDefaultInList() {  
+		return "true".equalsIgnoreCase(getProperties().getProperty("showFilterByDefaultInList", "true" ).trim()); 
+	}
+	
+	/** 
+	 * If <code>true</code> filter is show by default for collections on init. <p>
+	 * 
+	 * The user always have the option to show or hide the filter.<br>
+	 * The default value is <code>true</code>.<br>
+	 */
+	public boolean isShowFilterByDefaultInCollections() {  
+		return "true".equalsIgnoreCase(getProperties().getProperty("showFilterByDefaultInCollections", "true" ).trim()); 
+	}	
 		
 }

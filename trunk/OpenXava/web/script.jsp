@@ -1,3 +1,27 @@
+<%@ include file="imports.jsp"%>
+
+<!-- JavaScript for collections and list -->
+
+<script type="text/javascript">
+function manageFilterRow(id)
+{
+    var img = document.getElementById("xava-filter-image-" + id);
+    var elem = document.getElementById("xava-tr-list-filter-" + id)
+    var link = document.getElementById("xava-filter-link-" + id)
+	if (elem.style.display == ''){
+		elem.style.display = 'none';
+		img.src='<%=request.getContextPath()%>/xava/images/show-filter.gif';
+		link.title='<xava:message key="show_filters"/>'; 
+	}
+	else {
+		elem.style.display = '';
+		img.src='<%=request.getContextPath()%>/xava/images/hide-filter.gif';
+		link.title='<xava:message key="hide_filters"/>';
+	}
+}
+</script>
+
+
 <!-- JavaScript for calendar in date editors -->
 
 <!-- Loading Theme file(s) -->

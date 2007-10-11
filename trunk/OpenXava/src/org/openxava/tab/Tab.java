@@ -79,7 +79,8 @@ public class Tab implements java.io.Serializable {
 	private boolean rowsHidden;
 	private IFilter filter; 
 	private Map styles;
-	private View collectionView; 
+	private View collectionView;
+	private boolean filterVisible=XavaPreferences.getInstance().isShowFilterByDefaultInList();
 	
 	public List getMetaProperties() {
 		if (metaProperties == null) {
@@ -1292,4 +1293,11 @@ public class Tab implements java.io.Serializable {
 		this.collectionView = collectionView;
 	}
 			
+	public boolean isFilterVisible() {
+		return filterVisible;
+	}
+
+	public void setFilterVisible(boolean filterVisible) {
+		this.filterVisible = filterVisible;
+	}	
 }

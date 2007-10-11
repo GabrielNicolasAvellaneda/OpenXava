@@ -1029,7 +1029,8 @@ public class View implements java.io.Serializable {
 			collectionTab.setModelName(getModelName());
 			collectionTab.setTabName(Tab.COLLECTION_PREFIX + getMemberName());
 			collectionTab.setCollectionView(this);			
-			collectionTab.setMetaRowStyles(rowStyles); 
+			collectionTab.setMetaRowStyles(rowStyles);
+			collectionTab.setFilterVisible(XavaPreferences.getInstance().isShowFilterByDefaultInCollections());
 			if (propertiesListNames != null) {
 				collectionTab.setPropertiesNames(propertiesListNames);
 			}
