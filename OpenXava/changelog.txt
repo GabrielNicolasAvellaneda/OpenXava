@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Compilable with Java 6, and still with Java 5 and Java 1.4 (dropped EmptyResultSet class).
 - In the page for customizing columns of list (and collections) the label of each property to add is shown.
 - Labels in list mode are qualified by default. That is customer.name is shown as "Name of Customer" (before it was only "Name").
 - New methods Labels.getQualified() and MetaProperty.getQualifiedLabel().
