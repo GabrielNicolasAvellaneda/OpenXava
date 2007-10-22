@@ -216,7 +216,7 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 				ResultSet.CONCUR_READ_ONLY);
 		*/
 		
-		if (keyHasNulls()) return EmptyResultSet.INSTANCE; // Because some databases (as Informix) have problems setting nulls
+		if (keyHasNulls()) return null; // Because some databases (as Informix) have problems setting nulls
 				
 		PreparedStatement ps = con.prepareStatement(select); 
 		// Fill key values
@@ -259,7 +259,7 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 			List data = new ArrayList();
 			int f = 0;
 			int nc = fields.length;
-			while (resultSet.next()) {
+			while (resultSet != null && resultSet.next()) {
 				if (++f > chunkSize) {
 					current += chunkSize;
 					return new DataChunk(data, false, current);
@@ -280,7 +280,7 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 		}
 		finally {
 			try {
-				resultSet.close();
+				if (resultSet != null) resultSet.close();
 			}
 			catch (Exception ex) {
 			}
