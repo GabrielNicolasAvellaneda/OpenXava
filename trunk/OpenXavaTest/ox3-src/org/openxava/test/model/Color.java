@@ -20,6 +20,9 @@ public class Color {
 	@Column(length=20) @Required
 	private String name;
 	
+	@Version 
+	private int version;
+	
 	@Stereotype("IMAGE_LABEL")
 	public String getSample() {
 		if ("red".equalsIgnoreCase(name) ||
@@ -45,5 +48,12 @@ public class Color {
 		this.number = number;
 	}
 
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
 
 }

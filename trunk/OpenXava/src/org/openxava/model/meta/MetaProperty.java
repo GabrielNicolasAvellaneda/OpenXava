@@ -35,6 +35,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	private int scale = 0;	
 	private boolean required;
 	private boolean hidden;
+	private boolean version; 
 	private java.lang.String stereotype;
 	private List validValues;
 	private boolean readOnly;
@@ -1028,6 +1029,12 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			return null;
 		}		
 	}
+	public boolean isVersion() {
+		return version;
+	}
+	public void setVersion(boolean version) {
+		this.version = version;
+		if (version) setHidden(true);
+	}
 
-	
 }

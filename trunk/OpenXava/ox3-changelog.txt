@@ -1,6 +1,8 @@
 Change Log for OpenXava 3
 =========================
 
+- Optimistic concurrency support by means of JPA @Version annotation. 
+
 OpenXava 3.0beta3 (2007-10-5)
 -----------------------------
 - Chapter 1 and 2 of OX3 Reference Guide (in HTML) available. 

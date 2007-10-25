@@ -5,6 +5,7 @@ import java.rmi.*;
 import java.util.*;
 
 import javax.ejb.*;
+import javax.persistence.*;
 
 
 
@@ -166,7 +167,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	
 	public void setValues(String user, String modelName, Map keyValues, Map values)
 		throws FinderException, ValidationException, XavaException, RemoteException 
-	{						
+	{					
+		System.out.println("[MapFacadeBean.setValues] values=" + values); //  tmp
 		Users.setCurrent(user);
 		keyValues = Maps.recursiveClone(keyValues); 
 		values = Maps.recursiveClone(values); 		
@@ -838,7 +840,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			if (membersNames == null) return Collections.EMPTY_MAP;			 
 			IPropertiesContainer r = getPersistenceProvider().toPropertiesContainer(metaModel, modelObject);			
 			StringBuffer names = new StringBuffer();
-			addKey(metaModel, membersNames); // always return the key althought it don't is aunque no se solicit
+			addKey(metaModel, membersNames); // always return the key althought it is not demanded						
+			addVersion(metaModel, membersNames); // always return the version property 			
 			removeViewProperties(metaModel, membersNames);			
 			Iterator it = membersNames.keySet().iterator();			
 			Map result = new HashMap();			
@@ -899,6 +902,12 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			memberNames.put(ref.getName(), referenceKeyNames);
 		}				
 	}
+	
+	private void addVersion(MetaModel metaModel, Map memberNames) throws XavaException { 		
+		if (metaModel.hasVersionProperty()) {
+			memberNames.put(metaModel.getVersionPropertyName(), null);
+		}
+	}	
 	
 	/**
 	 * If we send null as <tt>nombresPropiedades</tt> it return a empty Map. <p>
@@ -1214,6 +1223,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			validate(metaModel, values, keyValues, null, false);
 			removeViewProperties(metaModel, values);									
 			Object entity = findEntity(metaModel, keyValues);			
+			verifyVersion(metaModel, entity, values); 			
 			IPropertiesContainer r = getPersistenceProvider().toPropertiesContainer(metaModel, entity);			
 			r.executeSets(convertSubmapsInObject(metaModel, values, XavaPreferences.getInstance().isEJB2Persistence()));			
 			// Collections are not managed			
@@ -1223,13 +1233,28 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}		
 		catch (ValidationException ex) {
 			throw ex;
-		} 
+		}
+		catch (OptimisticLockException ex) { // For preserving the exception message
+			throw ex;
+		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
 			throw new XavaException("assign_values_error", metaModel.getName(), ex.getLocalizedMessage()); 
 		}
 	}
 	
+	private void verifyVersion(MetaModel metaModel, Object entity, Map values) throws Exception { 
+		if (!metaModel.hasVersionProperty()) return;
+		Object newVersion = values.get(metaModel.getVersionPropertyName()); 
+		if (newVersion == null) return;		
+		PropertiesManager pm = new PropertiesManager(entity);
+		Object oldVersion = pm.executeGet(metaModel.getVersionPropertyName());		
+		if (!Is.equal(oldVersion, newVersion)) {
+			throw new OptimisticLockException(XavaResources.getString("concurrency_error")); 
+		}
+		
+	}
+
 	private void validate(	
 		Messages errors,
 		MetaModel metaModel,

@@ -409,7 +409,8 @@ public class AnnotatedClassParser {
 		model.addMetaProperty(property);
 		
 		processAnnotations(property, pd.getReadMethod());
-		processAnnotations(property, field);
+		processAnnotations(property, field);		
+		
 		if (!property.isRequired() && property.isKey()) {
 			if (!(
 					(field != null && field.isAnnotationPresent(GeneratedValue.class)) ||							
@@ -594,6 +595,11 @@ public class AnnotatedClassParser {
 		// hidden
 		if (element.isAnnotationPresent(Hidden.class)) {  						
 			property.setHidden(true);
+		}
+		
+		// version
+		if (element.isAnnotationPresent(javax.persistence.Version.class)) {  						
+			property.setVersion(true);
 		}
 		
 		// transient

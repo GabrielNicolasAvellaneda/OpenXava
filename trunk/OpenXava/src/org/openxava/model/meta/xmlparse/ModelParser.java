@@ -215,6 +215,7 @@ public class ModelParser extends XmlElementsNames {
 		p.setSize(ParserUtil.getAttributeInt(el, xsize[lang]));
 		p.setScale(ParserUtil.getAttributeInt(el, xscale[lang]));
 		p.setHidden(ParserUtil.getAttributeBoolean(el, xhidden[lang]));
+		p.setVersion(ParserUtil.getAttributeBoolean(el, xversion[lang]));
 		boolean key = ParserUtil.getAttributeBoolean(el, xkey[lang]);
 		if (key) p.setKey(key);
 		fillValidator(el, p, lang);				

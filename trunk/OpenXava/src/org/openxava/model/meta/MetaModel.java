@@ -77,6 +77,8 @@ abstract public class MetaModel extends MetaElement {
 	private String pojoClassName;
 	private Collection metaReferencesToEntity;
 	private boolean annotatedEJB3;
+	private String versionPropertyName; // tmp
+	private boolean versionPropertyNameObtained = false; // tmp
 		
 	
 	/**
@@ -231,7 +233,7 @@ abstract public class MetaModel extends MetaElement {
 	 * 
 	 * @param newMetaProperty  not null
 	 */
-	public void addMetaProperty(MetaProperty newMetaProperty) {
+	public void addMetaProperty(MetaProperty newMetaProperty) throws XavaException {
 		getMapMetaProperties().put(newMetaProperty.getName(), newMetaProperty);
 		membersNames.add(newMetaProperty.getName());
 		newMetaProperty.setMetaModel(this);
@@ -1172,6 +1174,16 @@ abstract public class MetaModel extends MetaElement {
 		}				
 	}
 	
+	public boolean isVersion(String name) throws XavaException {
+		try { 					
+			return getMetaProperty(name).isVersion();		
+		}
+		catch (ElementNotFoundException ex) {					
+			return false; // If it does no exist or is of another type		
+		}				
+	}
+	
+	
 	private boolean isReference(String name) throws XavaException { 
 		return getMapMetaReferences().containsKey(name);
 	}
@@ -1702,6 +1714,29 @@ abstract public class MetaModel extends MetaElement {
 	public void setAnnotatedEJB3(boolean annotatedEJB3) {
 		this.annotatedEJB3 = annotatedEJB3;
 	}
+	
+	public String getVersionPropertyName() throws XavaException {
+		if (!versionPropertyNameObtained) {
+			for (Iterator it=getMetaProperties().iterator(); it.hasNext(); ) {
+				MetaProperty pr = (MetaProperty) it.next();
+				if (pr.isVersion()) {
+					if (versionPropertyName == null) {
+						versionPropertyName = pr.getName();
+					}
+					else {
+						throw new XavaException("only_one_version_property", getName());
+					}
+				}
+			}
+			versionPropertyNameObtained = true;
+		}
+		return versionPropertyName;
+	}		
+	
+	public boolean hasVersionProperty() throws XavaException { 
+		return getVersionPropertyName() != null;
+	}
+
 
 	public static boolean someModelHasDefaultCalculatorOnCreate() {		
 		return someModelHasDefaultCalculatorOnCreate;
@@ -1721,6 +1756,7 @@ abstract public class MetaModel extends MetaElement {
 	
 	public static boolean someModelHasPostLoadCalculator() {		
 		return someModelHasPostLoadCalculator;
-	}		
+	}
+
 	
 }

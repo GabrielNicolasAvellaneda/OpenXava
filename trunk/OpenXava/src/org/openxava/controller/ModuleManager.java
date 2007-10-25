@@ -452,10 +452,10 @@ public class ModuleManager {
 		catch (Exception ex) {			
 			log.error(ex.getMessage(), ex);
 			if (metaAction != null) {
-				errors.add("no_execute_action", metaAction.getId());
+				errors.add("no_execute_action", metaAction.getId(), ex.getLocalizedMessage());
 			}
 			else {
-				errors.add("no_execute_action");
+				errors.add("no_execute_action", "", ex.getLocalizedMessage());
 			}
 			doRollback();
 		}				
