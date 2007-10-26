@@ -31,6 +31,14 @@ String viewObject = request.getParameter("viewObject");
 String actionArgv = viewObject != null && !viewObject.equals("")?",viewObject=" + viewObject:"";
 String sfilter = request.getParameter("filter");
 boolean filter = !"false".equals(sfilter);
+String displayFilter=""; 
+String imageFilter="hide-filter";
+String filterMessage="hide_filters";
+if (!tab.isFilterVisible()) {
+	displayFilter="none"; 
+	imageFilter ="show-filter"; 
+	filterMessage="show_filters";
+}
 String lastRow = request.getParameter("lastRow");
 boolean singleSelection="true".equalsIgnoreCase(request.getParameter("singleSelection"));
 %>
@@ -45,7 +53,11 @@ boolean singleSelection="true".equalsIgnoreCase(request.getParameter("singleSele
 
 <table id="<%=id%>" class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%>>
 <tr id="xava-tr-list" class="<%=style.getListHeader()%>">
-<th class="<%=style.getListHeaderCell()%>" style="text-align: center" width="60"><xava:image action="List.customize" argv="<%=collectionArgv%>"/></th>
+<th class="<%=style.getListHeaderCell()%>" style="text-align: center" width="60">     
+	<a id="xava-filter-link-<%=id%>" href="javascript:manageFilterRow('<%=id%>')" title="<xava:message key='<%=filterMessage%>'/>"><img id="xava-filter-image-<%=id%>" align='middle' 
+		src='<%=request.getContextPath()%>/xava/images/<%=imageFilter%>.gif' border='0'/></a>
+	<xava:image action="List.customize" argv="<%=collectionArgv%>"/>
+</th>
 <th class="<%=style.getListHeaderCell()%>" width="5">
 <% if (tab.isCustomize()) { %><xava:image action="List.addColumns" argv="<%=collectionArgv%>"/><% } %>
 </th>
@@ -66,12 +78,12 @@ while (it.hasNext()) {
 <%
 	if (property.isCalculated()) {		
 %>
-<%=property.getLabel(request)%>&nbsp;
+<%=property.getQualifiedLabel(request)%>&nbsp;
 <%
 	} else {
 %>
 <span class="<%=style.getListOrderBy()%>">
-<xava:link action='List.orderBy' argv='<%="property="+property.getQualifiedName() + collectionArgv%>'><%=property.getLabel(request)%></xava:link>&nbsp;
+<xava:link action='List.orderBy' argv='<%="property="+property.getQualifiedName() + collectionArgv%>'><%=property.getQualifiedLabel(request)%></xava:link>&nbsp;
 </span>
 <%
 		if (tab.isOrderAscending(property.getQualifiedName())) {
@@ -104,7 +116,7 @@ while (it.hasNext()) {
 %>
 </tr>
 <% if (filter) { %>
-<tr id="xava-tr-list" class=<%=style.getListSubheader()%>>
+<tr id="xava-tr-list-filter-<%=id%>" class=<%=style.getListSubheader()%> style="display: <%=displayFilter%>"> 
 <th class=<%=style.getListSubheaderCell()%> style="text-align: center" width="60">
 <xava:action action="List.filter" argv="<%=collectionArgv%>"/>
 </th>

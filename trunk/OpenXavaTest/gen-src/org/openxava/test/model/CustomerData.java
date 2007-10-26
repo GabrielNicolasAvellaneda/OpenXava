@@ -12,18 +12,21 @@ public class CustomerData
 {
 
    private static final long serialVersionUID = 1L;
+   private java.lang.String _Website;
+   private java.lang.String _Email;
    private java.lang.String _Name;
    private java.lang.String _Remarks;
    private int number;
    private java.lang.Integer _Type;
+   private java.lang.String _Telephone;
    private byte[] _Photo;
    private java.lang.String _RelationWithSeller;
    private java.lang.String _Address_zipCode;
    private java.lang.String _Address_street;
    private java.lang.String _Address_city;
    private java.lang.String _Address_state_id;
-   private int _AlternateSeller_number;
-   private int _Seller_number;
+   private java.lang.Integer _AlternateSeller_number;
+   private java.lang.Integer _Seller_number;
 
    public CustomerData()
    {
@@ -31,10 +34,13 @@ public class CustomerData
 
    public CustomerData( CustomerData otherData )
    {
+      set_Website(otherData.get_Website());
+      set_Email(otherData.get_Email());
       set_Name(otherData.get_Name());
       set_Remarks(otherData.get_Remarks());
       setNumber(otherData.getNumber());
       set_Type(otherData.get_Type());
+      set_Telephone(otherData.get_Telephone());
       set_Photo(otherData.get_Photo());
       set_RelationWithSeller(otherData.get_RelationWithSeller());
       set_Address_zipCode(otherData.get_Address_zipCode());
@@ -49,6 +55,24 @@ public class CustomerData
    public org.openxava.test.model.CustomerKey getPrimaryKey() {
      org.openxava.test.model.CustomerKey pk = new org.openxava.test.model.CustomerKey(this.getNumber());
      return pk;
+   }
+
+   public java.lang.String get_Website()
+   {
+      return this._Website;
+   }
+   public void set_Website( java.lang.String _Website )
+   {
+      this._Website = _Website;
+   }
+
+   public java.lang.String get_Email()
+   {
+      return this._Email;
+   }
+   public void set_Email( java.lang.String _Email )
+   {
+      this._Email = _Email;
    }
 
    public java.lang.String get_Name()
@@ -85,6 +109,15 @@ public class CustomerData
    public void set_Type( java.lang.Integer _Type )
    {
       this._Type = _Type;
+   }
+
+   public java.lang.String get_Telephone()
+   {
+      return this._Telephone;
+   }
+   public void set_Telephone( java.lang.String _Telephone )
+   {
+      this._Telephone = _Telephone;
    }
 
    public byte[] get_Photo()
@@ -141,20 +174,20 @@ public class CustomerData
       this._Address_state_id = _Address_state_id;
    }
 
-   public int get_AlternateSeller_number()
+   public java.lang.Integer get_AlternateSeller_number()
    {
       return this._AlternateSeller_number;
    }
-   public void set_AlternateSeller_number( int _AlternateSeller_number )
+   public void set_AlternateSeller_number( java.lang.Integer _AlternateSeller_number )
    {
       this._AlternateSeller_number = _AlternateSeller_number;
    }
 
-   public int get_Seller_number()
+   public java.lang.Integer get_Seller_number()
    {
       return this._Seller_number;
    }
-   public void set_Seller_number( int _Seller_number )
+   public void set_Seller_number( java.lang.Integer _Seller_number )
    {
       this._Seller_number = _Seller_number;
    }
@@ -163,7 +196,7 @@ public class CustomerData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Name=" + get_Name() + " " + "_Remarks=" + get_Remarks() + " " + "number=" + getNumber() + " " + "_Type=" + get_Type() + " " + "_Photo=" + get_Photo() + " " + "_RelationWithSeller=" + get_RelationWithSeller() + " " + "_Address_zipCode=" + get_Address_zipCode() + " " + "_Address_street=" + get_Address_street() + " " + "_Address_city=" + get_Address_city() + " " + "_Address_state_id=" + get_Address_state_id() + " " + "_AlternateSeller_number=" + get_AlternateSeller_number() + " " + "_Seller_number=" + get_Seller_number());
+      str.append("_Website=" + get_Website() + " " + "_Email=" + get_Email() + " " + "_Name=" + get_Name() + " " + "_Remarks=" + get_Remarks() + " " + "number=" + getNumber() + " " + "_Type=" + get_Type() + " " + "_Telephone=" + get_Telephone() + " " + "_Photo=" + get_Photo() + " " + "_RelationWithSeller=" + get_RelationWithSeller() + " " + "_Address_zipCode=" + get_Address_zipCode() + " " + "_Address_street=" + get_Address_street() + " " + "_Address_city=" + get_Address_city() + " " + "_Address_state_id=" + get_Address_state_id() + " " + "_AlternateSeller_number=" + get_AlternateSeller_number() + " " + "_Seller_number=" + get_Seller_number());
       str.append('}');
 
       return(str.toString());
@@ -176,6 +209,22 @@ public class CustomerData
          CustomerData lTest = (CustomerData) pOther;
          boolean lEquals = true;
 
+         if( this._Website == null )
+         {
+            lEquals = lEquals && ( lTest._Website == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Website.equals( lTest._Website );
+         }
+         if( this._Email == null )
+         {
+            lEquals = lEquals && ( lTest._Email == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Email.equals( lTest._Email );
+         }
          if( this._Name == null )
          {
             lEquals = lEquals && ( lTest._Name == null );
@@ -200,6 +249,14 @@ public class CustomerData
          else
          {
             lEquals = lEquals && this._Type.equals( lTest._Type );
+         }
+         if( this._Telephone == null )
+         {
+            lEquals = lEquals && ( lTest._Telephone == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Telephone.equals( lTest._Telephone );
          }
          lEquals = lEquals && this._Photo == lTest._Photo;
          if( this._RelationWithSeller == null )
@@ -242,8 +299,22 @@ public class CustomerData
          {
             lEquals = lEquals && this._Address_state_id.equals( lTest._Address_state_id );
          }
-         lEquals = lEquals && this._AlternateSeller_number == lTest._AlternateSeller_number;
-         lEquals = lEquals && this._Seller_number == lTest._Seller_number;
+         if( this._AlternateSeller_number == null )
+         {
+            lEquals = lEquals && ( lTest._AlternateSeller_number == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._AlternateSeller_number.equals( lTest._AlternateSeller_number );
+         }
+         if( this._Seller_number == null )
+         {
+            lEquals = lEquals && ( lTest._Seller_number == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Seller_number.equals( lTest._Seller_number );
+         }
 
          return lEquals;
       }
@@ -257,6 +328,10 @@ public class CustomerData
    {
       int result = 17;
 
+      result = 37*result + ((this._Website != null) ? this._Website.hashCode() : 0);
+
+      result = 37*result + ((this._Email != null) ? this._Email.hashCode() : 0);
+
       result = 37*result + ((this._Name != null) ? this._Name.hashCode() : 0);
 
       result = 37*result + ((this._Remarks != null) ? this._Remarks.hashCode() : 0);
@@ -264,6 +339,8 @@ public class CustomerData
       result = 37*result + (int) number;
 
       result = 37*result + ((this._Type != null) ? this._Type.hashCode() : 0);
+
+      result = 37*result + ((this._Telephone != null) ? this._Telephone.hashCode() : 0);
 
       if (_Photo != null) {
         for (int i=0; i<_Photo.length; i++)
@@ -283,9 +360,9 @@ public class CustomerData
 
       result = 37*result + ((this._Address_state_id != null) ? this._Address_state_id.hashCode() : 0);
 
-      result = 37*result + (int) _AlternateSeller_number;
+      result = 37*result + ((this._AlternateSeller_number != null) ? this._AlternateSeller_number.hashCode() : 0);
 
-      result = 37*result + (int) _Seller_number;
+      result = 37*result + ((this._Seller_number != null) ? this._Seller_number.hashCode() : 0);
 
       return result;
    }

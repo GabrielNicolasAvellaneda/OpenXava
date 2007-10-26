@@ -18,10 +18,13 @@ public abstract class CustomerCMP
       {
          dataHolder = new org.openxava.test.model.CustomerData();
 
+         dataHolder.set_Website( get_Website() );
+         dataHolder.set_Email( get_Email() );
          dataHolder.set_Name( get_Name() );
          dataHolder.set_Remarks( get_Remarks() );
          dataHolder.setNumber( getNumber() );
          dataHolder.set_Type( get_Type() );
+         dataHolder.set_Telephone( get_Telephone() );
          dataHolder.set_Photo( get_Photo() );
          dataHolder.set_RelationWithSeller( get_RelationWithSeller() );
          dataHolder.set_Address_zipCode( get_Address_zipCode() );
@@ -44,9 +47,12 @@ public abstract class CustomerCMP
    {
       try
       {
+         set_Website( dataHolder.get_Website() );
+         set_Email( dataHolder.get_Email() );
          set_Name( dataHolder.get_Name() );
          set_Remarks( dataHolder.get_Remarks() );
          set_Type( dataHolder.get_Type() );
+         set_Telephone( dataHolder.get_Telephone() );
          set_Photo( dataHolder.get_Photo() );
          set_RelationWithSeller( dataHolder.get_RelationWithSeller() );
          set_Address_zipCode( dataHolder.get_Address_zipCode() );
@@ -108,11 +114,14 @@ public abstract class CustomerCMP
       CustomerValue = new org.openxava.test.model.CustomerValue();
       try
          {
+            CustomerValue.setWebsite( getWebsite() );
+            CustomerValue.setEmail( getEmail() );
             CustomerValue.setName( getName() );
             CustomerValue.setRemarks( getRemarks() );
             CustomerValue.setNumber( getNumber() );
             CustomerValue.setLocal( isLocal() );
             CustomerValue.setType( getType() );
+            CustomerValue.setTelephone( getTelephone() );
             CustomerValue.setPhoto( getPhoto() );
             CustomerValue.setRelationWithSeller( getRelationWithSeller() );
             CustomerValue.setCity( getCity() );
@@ -135,10 +144,13 @@ public abstract class CustomerCMP
 
 	  try
 	  {
+		 setWebsite( valueHolder.getWebsite() );
+		 setEmail( valueHolder.getEmail() );
 		 setName( valueHolder.getName() );
 		 setRemarks( valueHolder.getRemarks() );
 		 setLocal( valueHolder.isLocal() );
 		 setType( valueHolder.getType() );
+		 setTelephone( valueHolder.getTelephone() );
 		 setPhoto( valueHolder.getPhoto() );
 		 setRelationWithSeller( valueHolder.getRelationWithSeller() );
 		 setCity( valueHolder.getCity() );
@@ -156,6 +168,14 @@ public abstract class CustomerCMP
 
 /* Value Objects END */
 
+   public abstract java.lang.String get_Website() ;
+
+   public abstract void set_Website( java.lang.String _Website ) ;
+
+   public abstract java.lang.String get_Email() ;
+
+   public abstract void set_Email( java.lang.String _Email ) ;
+
    public abstract java.lang.String get_Name() ;
 
    public abstract void set_Name( java.lang.String _Name ) ;
@@ -171,6 +191,10 @@ public abstract class CustomerCMP
    public abstract java.lang.Integer get_Type() ;
 
    public abstract void set_Type( java.lang.Integer _Type ) ;
+
+   public abstract java.lang.String get_Telephone() ;
+
+   public abstract void set_Telephone( java.lang.String _Telephone ) ;
 
    public abstract byte[] get_Photo() ;
 
@@ -196,12 +220,12 @@ public abstract class CustomerCMP
 
    public abstract void set_Address_state_id( java.lang.String _Address_state_id ) ;
 
-   public abstract int get_AlternateSeller_number() ;
+   public abstract java.lang.Integer get_AlternateSeller_number() ;
 
-   public abstract void set_AlternateSeller_number( int _AlternateSeller_number ) ;
+   public abstract void set_AlternateSeller_number( java.lang.Integer _AlternateSeller_number ) ;
 
-   public abstract int get_Seller_number() ;
+   public abstract java.lang.Integer get_Seller_number() ;
 
-   public abstract void set_Seller_number( int _Seller_number ) ;
+   public abstract void set_Seller_number( java.lang.Integer _Seller_number ) ;
 
 }

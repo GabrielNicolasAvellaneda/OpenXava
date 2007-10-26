@@ -20,6 +20,7 @@ public abstract class ColorCMP
 
          dataHolder.set_Name( get_Name() );
          dataHolder.setNumber( getNumber() );
+         dataHolder.set_Version( get_Version() );
 
       }
       catch (RuntimeException e)
@@ -35,6 +36,7 @@ public abstract class ColorCMP
       try
       {
          set_Name( dataHolder.get_Name() );
+         set_Version( dataHolder.get_Version() );
 
       }
       catch (Exception e)
@@ -91,6 +93,7 @@ public abstract class ColorCMP
             ColorValue.setName( getName() );
             ColorValue.setNumber( getNumber() );
             ColorValue.setSample( getSample() );
+            ColorValue.setVersion( getVersion() );
 
          }
          catch (Exception e)
@@ -108,6 +111,7 @@ public abstract class ColorCMP
 	  {
 		 setName( valueHolder.getName() );
 		 setSample( valueHolder.getSample() );
+		 setVersion( valueHolder.getVersion() );
 
 	  }
 	  catch (Exception e)
@@ -125,5 +129,9 @@ public abstract class ColorCMP
    public abstract java.lang.Integer getNumber() ;
 
    public abstract void setNumber( java.lang.Integer number ) ;
+
+   public abstract java.lang.Integer get_Version() ;
+
+   public abstract void set_Version( java.lang.Integer _Version ) ;
 
 }

@@ -21,7 +21,10 @@
 			</default-value-calculator>     
 		</property>
 
-		<property name="photo" required="false" stereotype="PHOTO"/>        
+		<property name="photo" required="false" stereotype="PHOTO"/>
+		<property name="telephone" stereotype="TELEPHONE"/>        		
+		<property name="email" stereotype="EMAIL"/>
+		<property name="website" stereotype="WEBURL"/>
 		<property name="remarks"
 				stereotype="MEMO"
 				size="400"/>
@@ -177,6 +180,8 @@
 			<on-change class="org.openxava.test.actions.OnChangeCustomerNameAction"/>
 		</property-view>		
 		
+		<property-view property="email" display-size="30"/>
+		
 		<property-view property="alternateSeller.number">
 			<on-change class="org.openxava.test.actions.OnChangeVoidAction"/>
 		</property-view>
@@ -192,6 +197,8 @@
 			type; 
 			name, <action action="Customer.changeNameLabel"/>;
 			photo; 
+			telephone, email;
+			website;
 			address; 
 			city;
 			<group name="seller">
@@ -208,7 +215,9 @@
 	<view name="WithSection">		
 		<property-view property="name">
 			<on-change class="org.openxava.test.actions.OnChangeCustomerNameAction"/>
-		</property-view>		
+		</property-view>	
+		
+		<property-view property="email" display-size="30"/>	
 		
 		<property-view property="alternateSeller.number">
 			<on-change class="org.openxava.test.actions.OnChangeVoidAction"/>
@@ -229,7 +238,9 @@
 			<section name="customer">				
 				type; 
 				name, <action action="Customer.changeNameLabel"/>;
-				photo; 
+				photo;
+				telephone, email;
+				website; 
 				address; 
 				city;
 				<group name="seller">
@@ -393,7 +404,13 @@
 		<property-mapping
 			property="type" column="TYPE" cmp-type="java.lang.Integer">
 			<converter class="org.openxava.converters.ValidValuesBase0Converter"/>
-		</property-mapping>
+		</property-mapping>		
+		<property-mapping
+			property="telephone" column="TELEPHONE"/>
+		<property-mapping
+			property="email" column="EMAIL"/>
+		<property-mapping
+			property="website" column="WEBSITE"/>							
 		<property-mapping
 			property="remarks" column="REMARKS"/>			
 		<property-mapping
@@ -401,12 +418,20 @@
 		<reference-mapping reference="seller">
 			<reference-mapping-detail
 				column="SELLER_NUMBER" 
-				referenced-model-property="number"/> 
+				referenced-model-property="number" cmp-type="java.lang.Integer">
+				<converter class="org.openxava.converters.IntegerNumberConverter">
+					<set property="nullToZero" value="false"/>
+				</converter>
+		</reference-mapping-detail> 
 		</reference-mapping>	
 		<reference-mapping reference="alternateSeller">
 			<reference-mapping-detail
 				column="ALTERNATESELLER_NUMBER" 
-				referenced-model-property="number"/> 
+				referenced-model-property="number" cmp-type="java.lang.Integer">
+				<converter class="org.openxava.converters.IntegerNumberConverter">
+					<set property="nullToZero" value="false"/>
+				</converter>
+			</reference-mapping-detail> 
 		</reference-mapping>			
 		<property-mapping
 			property="relationWithSeller" column="RELATIONSELLER"/>								

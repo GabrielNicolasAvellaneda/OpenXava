@@ -10,6 +10,18 @@ public interface CustomerRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.ICustomer
 {
 
+   public java.lang.String getWebsite(  )
+      throws java.rmi.RemoteException;
+
+   public void setWebsite( java.lang.String newWebsite )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getEmail(  )
+      throws java.rmi.RemoteException;
+
+   public void setEmail( java.lang.String newEmail )
+      throws java.rmi.RemoteException;
+
    public java.lang.String getName(  )
       throws java.rmi.RemoteException;
 
@@ -32,6 +44,12 @@ public interface CustomerRemote
       throws java.rmi.RemoteException;
 
    public void setType( int newType )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getTelephone(  )
+      throws java.rmi.RemoteException;
+
+   public void setTelephone( java.lang.String newTelephone )
       throws java.rmi.RemoteException;
 
    public byte[] getPhoto(  )

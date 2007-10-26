@@ -1902,6 +1902,11 @@
             <column-name>NUMBER</column-name>
 
         </cmp-field>
+         <cmp-field>
+            <field-name>_Version</field-name>
+            <column-name>VERSION</column-name>
+
+        </cmp-field>
 
          <query>
             <query-method>
@@ -2479,6 +2484,16 @@
          <table-name>XAVATEST.CUSTOMER</table-name>
 
          <cmp-field>
+            <field-name>_Website</field-name>
+            <column-name>WEBSITE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Email</field-name>
+            <column-name>EMAIL</column-name>
+
+        </cmp-field>
+         <cmp-field>
             <field-name>_Name</field-name>
             <column-name>NAME</column-name>
 
@@ -2496,6 +2511,11 @@
          <cmp-field>
             <field-name>_Type</field-name>
             <column-name>TYPE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Telephone</field-name>
+            <column-name>TELEPHONE</column-name>
 
         </cmp-field>
          <cmp-field>
