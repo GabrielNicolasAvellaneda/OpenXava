@@ -12,7 +12,8 @@ Number (the key) can be 0
 		<property name="number" type="Integer" key="true" size="5" required="false">
 			<default-value-calculator class="org.openxava.calculators.IdentityCalculator" on-create="true"/>
 		</property>
-		<property name="name" type="String"	size="20" required="true"/>	
+		<property name="name" type="String"	size="20" required="true"/>
+		<property name="version" type="int" version="true"/>	
 		<property name="sample" stereotype="IMAGE_LABEL">	
 			<calculator class="org.openxava.test.calculators.ColorSampleCalculator">
 				<set property="colorName" from="name"/>
@@ -25,6 +26,8 @@ Number (the key) can be 0
 			property="number" column="NUMBER"/>
 		<property-mapping
 			property="name" column="NAME"/>
+		<property-mapping
+			property="version" column="VERSION"/>					
 	</entity-mapping> 
 				
 </component>

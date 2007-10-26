@@ -2469,6 +2469,10 @@
             <description><![CDATA[]]></description>
             <field-name>number</field-name>
          </cmp-field>
+         <cmp-field id="CmpAttribute_Color__Version">
+            <description><![CDATA[]]></description>
+            <field-name>_Version</field-name>
+         </cmp-field>
 
          <env-entry>
             <env-entry-name>DATA_SOURCE</env-entry-name>
@@ -3180,6 +3184,14 @@
          <reentrant>false</reentrant>
          <cmp-version>2.x</cmp-version>
          <abstract-schema-name>Customer</abstract-schema-name>
+         <cmp-field id="CmpAttribute_Customer__Website">
+            <description><![CDATA[]]></description>
+            <field-name>_Website</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_Customer__Email">
+            <description><![CDATA[]]></description>
+            <field-name>_Email</field-name>
+         </cmp-field>
          <cmp-field id="CmpAttribute_Customer__Name">
             <description><![CDATA[]]></description>
             <field-name>_Name</field-name>
@@ -3195,6 +3207,10 @@
          <cmp-field id="CmpAttribute_Customer__Type">
             <description><![CDATA[]]></description>
             <field-name>_Type</field-name>
+         </cmp-field>
+         <cmp-field id="CmpAttribute_Customer__Telephone">
+            <description><![CDATA[]]></description>
+            <field-name>_Telephone</field-name>
          </cmp-field>
          <cmp-field id="CmpAttribute_Customer__Photo">
             <description><![CDATA[]]></description>

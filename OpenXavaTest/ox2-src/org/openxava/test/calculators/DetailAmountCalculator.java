@@ -14,7 +14,7 @@ public class DetailAmountCalculator implements ICalculator {
 	private int quantity;
 
 	public Object calculate() throws Exception {
-		return getUnitPrice().multiply(new BigDecimal(getQuantity()));		
+		return getUnitPrice().multiply(new BigDecimal(Integer.toString(getQuantity())));		
 	}
 
 	public int getQuantity() {

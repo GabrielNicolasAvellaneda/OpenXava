@@ -193,6 +193,7 @@
  requerido (true|false) "false" 
  clave (true|false) "false"
  oculta (true|false) "false"
+ version (true|false) "false"
 >
 
 <!ELEMENT referencia (calculador-valor-defecto?)>

@@ -77,8 +77,8 @@ abstract public class MetaModel extends MetaElement {
 	private String pojoClassName;
 	private Collection metaReferencesToEntity;
 	private boolean annotatedEJB3;
-	private String versionPropertyName; // tmp
-	private boolean versionPropertyNameObtained = false; // tmp
+	private String versionPropertyName; 
+	private boolean versionPropertyNameObtained = false; 
 		
 	
 	/**

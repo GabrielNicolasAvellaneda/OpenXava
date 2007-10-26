@@ -12,7 +12,7 @@ public class DefaultProductPriceCalculator implements ICalculator {
 	private int familyNumber;
 
 	public Object calculate() throws Exception {
-		return new BigDecimal(familyNumber*10);
+		return new BigDecimal(Integer.toString(familyNumber*10));
 	}
 
 	public int getFamilyNumber() {

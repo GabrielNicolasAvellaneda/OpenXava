@@ -177,7 +177,7 @@ public class Labels {
 			return exists(id.substring(idx + 1));
 		}
 		catch (Exception ex) {
-			log.warn(ex.getMessage(), ex);
+			log.warn(ex.getMessage());
 			return false;
 		}				
 	}
@@ -243,7 +243,7 @@ public class Labels {
 			throw ex;
 		}
 		catch (Exception ex) {
-			log.warn("Error translating " + id + ". We assume that the resource is missing", ex);
+			log.warn("Error translating " + id + ". We assume that the resource is missing");
 			throw new MissingResourceException("Cannot obtain resource, cause: " + ex.getLocalizedMessage(), name, id);
 		}
 	}

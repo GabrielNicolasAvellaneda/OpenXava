@@ -10,7 +10,7 @@ import org.openxava.util.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Sep 03 10:58:07 CEST 2007
+ * @version Thu Oct 25 17:13:08 CEST 2007
  */
 public class HibernatePG {
     Properties properties = new Properties();
@@ -191,12 +191,27 @@ private String getCheck(MetaProperty property) throws XavaException {
     out.print("  \t\n\t\t</composite-id>");
     		
     }
+    
+    if (metaModel.hasVersionProperty()) { 	
+    	MetaProperty versionProperty = metaModel.getMetaProperty(metaModel.getVersionPropertyName());
+    
+    out.print(" \n\t\t<version name=\"");
+    out.print(versionProperty.getName());
+    out.print("\" access=\"field\" type='");
+    out.print(versionProperty.getTypeName());
+    out.print("' column=\"");
+    out.print(versionProperty.getMapping().getColumn());
+    out.print("\"/>");
+    
+    }  	 
+    
+    
     	Collection properties = metaModel.getMetaPropertiesPersistents();
     	for (Iterator it = properties.iterator(); it.hasNext();) {
     		MetaProperty prop = (MetaProperty) it.next();
     		PropertyMapping pMapping = prop.getMapping();
     		String propertyName = prop.getName();			
-    		if (!prop.isKey()) {
+    		if (!prop.isKey() && !prop.isVersion()) {
     			if (pMapping.hasMultipleConverter()) {
     				for (Iterator itCmpFields = pMapping.getCmpFields().iterator(); itCmpFields.hasNext();) {					
     					CmpField field = (CmpField) itCmpFields.next();
@@ -502,7 +517,7 @@ private String getCheck(MetaProperty property) throws XavaException {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Sep 03 10:58:08 CEST 2007", // date this file was generated
+        { "Thu Oct 25 17:13:09 CEST 2007", // date this file was generated
              "../OpenXava/generator/hibernate.xml", // input file
              "../OpenXava/generator/HibernatePG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 

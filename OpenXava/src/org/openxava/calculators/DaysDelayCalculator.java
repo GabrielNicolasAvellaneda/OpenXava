@@ -16,10 +16,10 @@ public class DaysDelayCalculator implements ICalculator {
 
 	public Object calculate() throws Exception {
 		if (startDate == null || endDate == null)
-			return 0;
+			return new Integer(0);
 		delay = (int) (endDate.getTime() - startDate.getTime())
 				/ (1000 * 60 * 60 * 24);
-		return delay;
+		return new Integer(delay);
 	}
 
 	public Date getStartDate() {

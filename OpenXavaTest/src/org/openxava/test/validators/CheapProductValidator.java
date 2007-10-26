@@ -48,7 +48,7 @@ public class CheapProductValidator implements IValidator {
 	}
 	
 	private BigDecimal getLimiteBd() {
-		return new BigDecimal(limit);
+		return new BigDecimal(Integer.toString(limit));
 	}
 
 }

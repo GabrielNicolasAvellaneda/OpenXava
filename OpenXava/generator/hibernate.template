@@ -143,12 +143,21 @@ else {
 		</composite-id>
 # 		
 }
+
+if (metaModel.hasVersionProperty()) { 	
+	MetaProperty versionProperty = metaModel.getMetaProperty(metaModel.getVersionPropertyName());
+# 
+		<version name="#(versionProperty.getName())#" access="field" type='#(versionProperty.getTypeName())#' column="#(versionProperty.getMapping().getColumn())#"/>
+# 
+}  	 
+
+
 	Collection properties = metaModel.getMetaPropertiesPersistents();
 	for (Iterator it = properties.iterator(); it.hasNext();) {
 		MetaProperty prop = (MetaProperty) it.next();
 		PropertyMapping pMapping = prop.getMapping();
 		String propertyName = prop.getName();			
-		if (!prop.isKey()) {
+		if (!prop.isKey() && !prop.isVersion()) {
 			if (pMapping.hasMultipleConverter()) {
 				for (Iterator itCmpFields = pMapping.getCmpFields().iterator(); itCmpFields.hasNext();) {					
 					CmpField field = (CmpField) itCmpFields.next();

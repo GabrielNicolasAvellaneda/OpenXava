@@ -503,6 +503,8 @@
       </columns>
       <columns xmi:id="Color_number" name="number">
       </columns>
+      <columns xmi:id="Color__Version" name="_Version">
+      </columns>
 
    </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_InvoiceDetail2" name="" primaryKey="InvoiceDetail2_PRIMARYKEY" database="RDBDatabase_1">
@@ -638,6 +640,10 @@
    <RDBSchema:RDBTable xmi:id="RDBTable_Customer" name="" primaryKey="Customer_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Customer_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Customer" constraint="Constraint_Customer_"/>
 
+      <columns xmi:id="Customer__Website" name="_Website">
+      </columns>
+      <columns xmi:id="Customer__Email" name="_Email">
+      </columns>
       <columns xmi:id="Customer__Name" name="_Name">
       </columns>
       <columns xmi:id="Customer__Remarks" name="_Remarks">
@@ -645,6 +651,8 @@
       <columns xmi:id="Customer_number" name="number">
       </columns>
       <columns xmi:id="Customer__Type" name="_Type">
+      </columns>
+      <columns xmi:id="Customer__Telephone" name="_Telephone">
       </columns>
       <columns xmi:id="Customer__Photo" name="_Photo">
       </columns>

@@ -14,6 +14,10 @@ public class CustomerValue
 
    private static final long serialVersionUID = 1L;
 
+   private java.lang.String website;
+   private boolean websiteHasBeenSet = false;
+   private java.lang.String email;
+   private boolean emailHasBeenSet = false;
    private java.lang.String name;
    private boolean nameHasBeenSet = false;
    private java.lang.String remarks;
@@ -24,6 +28,8 @@ public class CustomerValue
    private boolean localHasBeenSet = false;
    private int type;
    private boolean typeHasBeenSet = false;
+   private java.lang.String telephone;
+   private boolean telephoneHasBeenSet = false;
    private byte[] photo;
    private boolean photoHasBeenSet = false;
    private java.lang.String relationWithSeller;
@@ -46,6 +52,10 @@ public class CustomerValue
    //TODO Cloneable is better than this !
    public CustomerValue( CustomerValue otherValue )
    {
+	  this.website = otherValue.website;
+	  websiteHasBeenSet = true;
+	  this.email = otherValue.email;
+	  emailHasBeenSet = true;
 	  this.name = otherValue.name;
 	  nameHasBeenSet = true;
 	  this.remarks = otherValue.remarks;
@@ -56,6 +66,8 @@ public class CustomerValue
 	  localHasBeenSet = true;
 	  this.type = otherValue.type;
 	  typeHasBeenSet = true;
+	  this.telephone = otherValue.telephone;
+	  telephoneHasBeenSet = true;
 	  this.photo = otherValue.photo;
 	  photoHasBeenSet = true;
 	  this.relationWithSeller = otherValue.relationWithSeller;
@@ -72,6 +84,34 @@ public class CustomerValue
 	  seller_numberHasBeenSet = true;
    }
 
+   public java.lang.String getWebsite()
+   {
+	  return this.website;
+   }
+
+   public void setWebsite( java.lang.String website )
+   {
+	  this.website = website;
+	  websiteHasBeenSet = true;
+   }
+
+   public boolean websiteHasBeenSet(){
+	  return websiteHasBeenSet;
+   }
+   public java.lang.String getEmail()
+   {
+	  return this.email;
+   }
+
+   public void setEmail( java.lang.String email )
+   {
+	  this.email = email;
+	  emailHasBeenSet = true;
+   }
+
+   public boolean emailHasBeenSet(){
+	  return emailHasBeenSet;
+   }
    public java.lang.String getName()
    {
 	  return this.name;
@@ -141,6 +181,20 @@ public class CustomerValue
 
    public boolean typeHasBeenSet(){
 	  return typeHasBeenSet;
+   }
+   public java.lang.String getTelephone()
+   {
+	  return this.telephone;
+   }
+
+   public void setTelephone( java.lang.String telephone )
+   {
+	  this.telephone = telephone;
+	  telephoneHasBeenSet = true;
+   }
+
+   public boolean telephoneHasBeenSet(){
+	  return telephoneHasBeenSet;
    }
    public byte[] getPhoto()
    {
@@ -245,7 +299,7 @@ public class CustomerValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("name=" + getName() + " " + "remarks=" + getRemarks() + " " + "number=" + getNumber() + " " + "local=" + isLocal() + " " + "type=" + getType() + " " + "photo=" + getPhoto() + " " + "relationWithSeller=" + getRelationWithSeller() + " " + "city=" + getCity() + " " + "address=" + getAddress() + " " + "address_state_id=" + getAddress_state_id() + " " + "alternateSeller_number=" + getAlternateSeller_number() + " " + "seller_number=" + getSeller_number());
+	  str.append("website=" + getWebsite() + " " + "email=" + getEmail() + " " + "name=" + getName() + " " + "remarks=" + getRemarks() + " " + "number=" + getNumber() + " " + "local=" + isLocal() + " " + "type=" + getType() + " " + "telephone=" + getTelephone() + " " + "photo=" + getPhoto() + " " + "relationWithSeller=" + getRelationWithSeller() + " " + "city=" + getCity() + " " + "address=" + getAddress() + " " + "address_state_id=" + getAddress_state_id() + " " + "alternateSeller_number=" + getAlternateSeller_number() + " " + "seller_number=" + getSeller_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -291,6 +345,22 @@ public class CustomerValue
 	  {
 		 CustomerValue that = (CustomerValue) other;
 		 boolean lEquals = true;
+		 if( this.website == null )
+		 {
+			lEquals = lEquals && ( that.website == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.website.equals( that.website );
+		 }
+		 if( this.email == null )
+		 {
+			lEquals = lEquals && ( that.email == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.email.equals( that.email );
+		 }
 		 if( this.name == null )
 		 {
 			lEquals = lEquals && ( that.name == null );
@@ -309,6 +379,14 @@ public class CustomerValue
 		 }
 		 lEquals = lEquals && this.local == that.local;
 		 lEquals = lEquals && this.type == that.type;
+		 if( this.telephone == null )
+		 {
+			lEquals = lEquals && ( that.telephone == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.telephone.equals( that.telephone );
+		 }
 		 lEquals = lEquals && this.photo == that.photo;
 		 if( this.relationWithSeller == null )
 		 {
@@ -355,6 +433,10 @@ public class CustomerValue
 
    public int hashCode(){
 	  int result = 17;
+      result = 37*result + ((this.website != null) ? this.website.hashCode() : 0);
+
+      result = 37*result + ((this.email != null) ? this.email.hashCode() : 0);
+
       result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);
 
       result = 37*result + ((this.remarks != null) ? this.remarks.hashCode() : 0);
@@ -364,6 +446,8 @@ public class CustomerValue
       result = 37*result + (local ? 0 : 1);
 
       result = 37*result + (int) type;
+
+      result = 37*result + ((this.telephone != null) ? this.telephone.hashCode() : 0);
 
       if (photo != null) {
         for (int i=0; i<photo.length; i++)

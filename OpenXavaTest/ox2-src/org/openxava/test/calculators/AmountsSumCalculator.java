@@ -19,7 +19,7 @@ public class AmountsSumCalculator implements IModelCalculator {
 
 	public Object calculate() throws Exception {
 		Iterator itDetails = invoice.getDetails().iterator();
-		BigDecimal result = new BigDecimal(0);
+		BigDecimal result = new BigDecimal("0");
 		while (itDetails.hasNext()) {
 			IInvoiceDetail detail = (IInvoiceDetail) PortableRemoteObject.narrow(itDetails.next(), IInvoiceDetail.class);
 			result = result.add(detail.getAmount());

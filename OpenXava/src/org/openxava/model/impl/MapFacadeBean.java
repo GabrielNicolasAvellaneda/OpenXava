@@ -5,9 +5,6 @@ import java.rmi.*;
 import java.util.*;
 
 import javax.ejb.*;
-import javax.persistence.*;
-
-
 
 import org.apache.commons.logging.*;
 import org.openxava.calculators.*;
@@ -167,8 +164,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 	
 	public void setValues(String user, String modelName, Map keyValues, Map values)
 		throws FinderException, ValidationException, XavaException, RemoteException 
-	{					
-		System.out.println("[MapFacadeBean.setValues] values=" + values); //  tmp
+	{							
 		Users.setCurrent(user);
 		keyValues = Maps.recursiveClone(keyValues); 
 		values = Maps.recursiveClone(values); 		
@@ -1234,7 +1230,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		catch (ValidationException ex) {
 			throw ex;
 		}
-		catch (OptimisticLockException ex) { // For preserving the exception message
+		catch (SystemException ex) { 
+			// For preserving the exception message
 			throw ex;
 		}
 		catch (Exception ex) {
@@ -1250,7 +1247,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		PropertiesManager pm = new PropertiesManager(entity);
 		Object oldVersion = pm.executeGet(metaModel.getVersionPropertyName());		
 		if (!Is.equal(oldVersion, newVersion)) {
-			throw new OptimisticLockException(XavaResources.getString("concurrency_error")); 
+			throw new SystemException(XavaResources.getString("concurrency_error")); 
 		}
 		
 	}

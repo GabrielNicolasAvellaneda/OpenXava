@@ -20,6 +20,8 @@ public class ColorValue
    private boolean numberHasBeenSet = false;
    private java.lang.String sample;
    private boolean sampleHasBeenSet = false;
+   private int version;
+   private boolean versionHasBeenSet = false;
 
    public ColorValue()
    {
@@ -34,6 +36,8 @@ public class ColorValue
 	  numberHasBeenSet = true;
 	  this.sample = otherValue.sample;
 	  sampleHasBeenSet = true;
+	  this.version = otherValue.version;
+	  versionHasBeenSet = true;
    }
 
    public java.lang.String getName()
@@ -78,12 +82,26 @@ public class ColorValue
    public boolean sampleHasBeenSet(){
 	  return sampleHasBeenSet;
    }
+   public int getVersion()
+   {
+	  return this.version;
+   }
+
+   public void setVersion( int version )
+   {
+	  this.version = version;
+	  versionHasBeenSet = true;
+   }
+
+   public boolean versionHasBeenSet(){
+	  return versionHasBeenSet;
+   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("name=" + getName() + " " + "number=" + getNumber() + " " + "sample=" + getSample());
+	  str.append("name=" + getName() + " " + "number=" + getNumber() + " " + "sample=" + getSample() + " " + "version=" + getVersion());
 	  str.append('}');
 
 	  return(str.toString());
@@ -152,6 +170,7 @@ public class ColorValue
 		 {
 			lEquals = lEquals && this.sample.equals( that.sample );
 		 }
+		 lEquals = lEquals && this.version == that.version;
 
 		 return lEquals;
 	  }
@@ -168,6 +187,8 @@ public class ColorValue
       result = 37*result + ((this.number != null) ? this.number.hashCode() : 0);
 
       result = 37*result + ((this.sample != null) ? this.sample.hashCode() : 0);
+
+      result = 37*result + (int) version;
 
 	  return result;
    }
