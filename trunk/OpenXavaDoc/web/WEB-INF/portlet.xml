@@ -543,6 +543,25 @@
 		<supported-locale>en</supported-locale>
 		<supported-locale>es</supported-locale>				
 		<resource-bundle>OX3Migration</resource-bundle>		
-	</portlet> 
-	 	 													
+	</portlet>
+	
+	 <portlet id="NewIn223">
+		<description>NewIn223</description>    
+		<portlet-name>NewIn223</portlet-name>
+		<display-name>NewIn223</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>new-2.2.3</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>		
+		<resource-bundle>NewIn223</resource-bundle>		
+	</portlet>
+	 	 	 													
 </portlet-app>
