@@ -1,6 +1,32 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 2.2.3 (2007-10-29)
+---------------------------
+- New stereotypes TELEPHONE, EMAIL and WEBURL.
+- Optimistic concurrency support using version property.
+- The generic messager error "Impossible to execute x action" now has also the message from the original exception.
+- In the page for customizing columns of list (and collections) the label of each property to add is shown.
+- The user can hide/show the filter part in list and collections. Also showFilterByDefaultInList and 
+showFilterByDefaultInCollections are available in xava.properties.
+- Labels in list mode are qualified by default. That is customer.name is shown as "Name of Customer" (before it was only "Name").
+- Compilable with Java 6, and still with Java 5 and Java 1.4 (dropped EmptyResultSet class).
+- New methods Labels.getQualified() and MetaProperty.getQualifiedLabel().
+- New DaysDelayCalculator for calculating delays between dates.
+- New property toUpperForStringArgumentsInConditions for xava.properties. It allows to choose the use of upper for searching in list and collections.
+- XavaPreferences can be only instatiate using getInstance() method.
+- JavaScript calendar aligns to bottom on IE6 and to top in the other cases, for avoiding a problem of overlapping with Liferay top bar.
+- Buttons instead of links for no image actions is possible (using buttonsForNoImageActions=true in xava.properties).
+- New property nullToZero in IntegerNumberConverter and LongNumberConverter to choose if null have to be converted to 0.
+- AccessTracking table schema changed in order to support MySQL.
+- New calculator CurrentTimestampCalculator.
+- Labels class does not print any stack trace on fail, it only log warning messages.
+- Fix: Focus when a reference or group is on top of the view is not set inside that reference or group.
+- Fix: Nested key references do not set editable correctly.
+- Fix: References with no frames inside groups are not nicely shown in some cases. 
+- Fix: SQLException from Oracle on collections when key of main object is empty.
+- Fix: <xava:link /> with empty string fails. This breaks the ability to removing some action in collection-view.
+
 OpenXava 2.2.2 (2007-9-3)
 -------------------------
 - A default module is assumed for each component of the application without declaring it in application.xml. 

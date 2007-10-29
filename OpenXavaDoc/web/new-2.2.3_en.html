@@ -1,5 +1,66 @@
-<h4>Actions with no image can be displayed using buttons instead of links</h4>
+These are some of the new features in OpenXava 2.2.3:<br>
+<ul>
+  <li><a href="#Optimistic_concurrency_support">Optimistic concurrency support</a></li>
+  <li><a href="#Actions_with_no_image_can_be_displayed">Actions with no image can be displayed using buttons instead of links</a></li>
+</ul>
+<h4><a name="Optimistic_concurrency_support"></a>Optimistic concurrency support</h4>
+
+
+
+	
+<meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
+<title></title>
+<meta name="GENERATOR" content="OpenOffice.org 2.0  (Linux)">
+<meta name="CREATED" content="20050307;16505900">
+<meta name="CHANGED" content="20071025;19474700">
+
+	
+	
+	
+	
+	
+<style type="text/css">
+	<!--
+		@page { size: 21cm 29.7cm; margin: 2cm }
+		P { margin-bottom: 0.21cm; text-align: justify }
+		P.c�digo-western { background: #e6e6e6; border: 1px solid #000000; padding: 0.25cm; font-family: "Courier", monospace; font-size: 9pt; font-weight: medium }
+		P.c�digo-cjk { background: #e6e6e6; border: 1px solid #000000; padding: 0.25cm; font-weight: medium }
+		P.c�digo-ctl { background: #e6e6e6; border: 1px solid #000000; padding: 0.25cm }
+		CODE { font-family: "Nimbus Mono L", monospace }
+		CODE.c�digo-western { font-family: "Nimbus Mono L", monospace; font-size: 10pt; font-weight: medium; background: transparent }
+		CODE.c�digo-cjk { background: transparent; font-family: "Nimbus Mono L", monospace; font-weight: medium }
+		CODE.c�digo-ctl { background: transparent; font-family: "Nimbus Mono L", monospace; font-weight: medium }
+	-->
+	</style>
+
+<p align="left">Concurrency is the ability of the application to allow
+several users to save data at same time without losing data. OpenXava
+uses an optimistic concurrency schema. Using optimistic concurrency
+the records are not locked allowing high concurrency without losing
+data integrety.</p>
+
+<p align="left">For example, if a user A read a record and then a user
+B read the same record, modify it and save the changes, when the user
+A try to save the record he receives an error, then he need to
+refresh the data and retry his modification.</p>
+
+<p align="left">For activating concurrency support for an OpenXava
+component you only need to declare a property using <code class="c&oacute;digo-western">version=&rdquo;true&rdquo;</code>,
+in this way:</p>
+<pre>&lt;property name='version' type='int' version='true'/&gt;</pre>
+<p align="left">This property is for use of persistence engine
+(Hibernate or JPA), your application or your user must not use this
+property directly.</p>
+<p align="left">Only a single version property should be used per
+	component. The following types are supported for version properties:
+	<code class="c&oacute;digo-western">int, Integer, short, Short,
+	long, Long, Timestamp</code>. The version properties are considered
+	hidden.</p>
+
+<h4><a name="Actions_with_no_image_can_be_displayed"></a>Actions with no image can be displayed using buttons instead of links</h4>
+
 OpenXava displays actions with no image associated to them using links,
 but now it's possible to configure your application in order that OX
 uses buttons instead. You only need to modify <span style="font-family: monospace;">xava.properties</span> and add:<br>
+
 <pre>buttonsForNoImageActions=true</pre>

@@ -1,6 +1,98 @@
-<h4>Acciones sin imagens puede ser visualizadas con botones en vez de v&iacute;nculos</h4>
+Estas son alguna de la nuevas caracter&iacute;stica en OpenXava 2.2.3:<br>
+<ul>
+  <li><a href="#Soporte_de_concurrencia_optimista">Soporte de concurrencia optimista</a></li>
+  <li><a href="#Acciones_sin_imagenes_pueden_ser">Acciones sin imagenes pueden ser visualizadas con botones en vez de v&iacute;nculos</a></li>
+</ul>
+<h4><a name="Soporte_de_concurrencia_optimista"></a>Soporte de concurrencia optimista</h4>
+
+
+
+	
+<meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
+<title></title>
+<meta name="GENERATOR" content="OpenOffice.org 2.0  (Linux)">
+<meta name="CREATED" content="20050307;16505900">
+<meta name="CHANGED" content="20071025;19484200">
+
+	
+	
+	
+	
+	
+<style type="text/css">
+	<!--
+		@page { size: 21cm 29.7cm; margin: 2cm }
+		P { margin-bottom: 0.21cm; text-align: justify }
+		P.c�digo-western { background: #e6e6e6; border: 1px solid #000000; padding: 0.25cm; font-family: "Courier", monospace; font-size: 9pt; font-weight: medium }
+		P.c�digo-cjk { background: #e6e6e6; border: 1px solid #000000; padding: 0.25cm; font-weight: medium }
+		P.c�digo-ctl { background: #e6e6e6; border: 1px solid #000000; padding: 0.25cm }
+		CODE { font-family: "Nimbus Mono L", monospace }
+		CODE.c�digo-western { font-family: "Nimbus Mono L", monospace; font-size: 10pt; font-weight: medium; background: transparent }
+		CODE.c�digo-cjk { background: transparent; font-family: "Nimbus Mono L", monospace; font-weight: medium }
+		CODE.c�digo-ctl { background: transparent; font-family: "Nimbus Mono L", monospace; font-weight: medium }
+	-->
+	</style>
+
+<p align="left">Concurrencia es la habilidad de una aplicaci&oacute;n
+para permitir que varios usuarios graben datos al mismo tiempo sin
+perder informaci&oacute;n. OpenXava usa un esquema de concurrencia
+optimista. Usando concurrencia optimista los registros no se bloquean
+permitiendo un alto nivel de concurrencia sin perder la integridad de
+la informaci&oacute;n.</p>
+
+<p align="left">Por ejemplo, si un usuario A lee un registro y entonces
+un usuario B lee el mismo registro, lo modifica y graba los cambios,
+cuando el usuario A intente grabar el registro recibir&aacute; un
+error y tendr&aacute; que refrescar los datos y reintentar su
+modificaci&oacute;n.</p>
+
+<p align="left">Para activar el soporte de concurrencia para un
+componente OpenXava solo necesitamos declarar una propiedad usando
+<code class="c&oacute;digo-western">version=&rdquo;true&rdquo;</code>, de
+esta manera:</p>
+<pre>&lt;propiedad nombre='version' tipo='int' version='true'/&gt;</pre>
+<p align="left">Esta propiedad es para uso del mecanismo de
+persistencia (Hibernate o JPA), ni nuestra aplicaci&oacute;n ni
+usarios deber&iacute;an acceder directamente a ella.</p>
+<p align="left">
+
+
+	
+<meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
+<title></title>
+<meta name="GENERATOR" content="OpenOffice.org 2.0  (Linux)">
+<meta name="CREATED" content="20050307;16505900">
+<meta name="CHANGED" content="20071025;19484200">
+
+	
+	
+	
+	
+	
+<style type="text/css">
+	<!--
+		@page { size: 21cm 29.7cm; margin: 2cm }
+		P { margin-bottom: 0.21cm; text-align: justify }
+		CODE { font-family: "Nimbus Mono L", monospace }
+		CODE.c�digo-western { font-family: "Nimbus Mono L", monospace; font-size: 10pt; font-weight: medium; background: transparent }
+		CODE.c�digo-cjk { background: transparent; font-family: "Nimbus Mono L", monospace; font-weight: medium }
+		CODE.c�digo-ctl { background: transparent; font-family: "Nimbus Mono L", monospace; font-weight: medium }
+	-->
+	</style>
+
+<p>Solo podemos especificar una propiedad de versi&oacute;n por
+componente. Los siguientes tipos son soportados para propiedades
+versi&oacute;n: <code class="c&oacute;digo-western">int, Integer,
+short, Short, long, Long, Timestamp</code>. Las propiedades de
+versi&oacute;n tambi&eacute;n se consideran ocultas.</p>
+
+</p>
+
+<h4><a name="Acciones_sin_imagenes_pueden_ser"></a>Acciones sin imagenes pueden ser visualizadas con botones en vez de v&iacute;nculos</h4>
+
 OpenXava visualiza las acciones sin imagen como v&iacute;nculos, pero
 ahora es posible configurar nuestra aplicaci&oacute;n OX para usar
 botones en vez de v&iacute;nculos. Solamente necesitamos modificar&nbsp;<span style="font-family: monospace;">xava.properties</span> y a&ntilde;adir:<br>
+
 
 <pre>buttonsForNoImageActions=true</pre>
