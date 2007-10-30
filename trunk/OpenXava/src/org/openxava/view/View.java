@@ -800,6 +800,7 @@ public class View implements java.io.Serializable {
 				}
 				else { 										
 					if (values == null) values = new HashMap();					
+					value = Strings.removeXSS(value); 
 					values.put(name, value);					
 				}				 							 								
 			} 

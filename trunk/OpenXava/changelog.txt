@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- XSS (Cross-site scripting) protection added.
+
 OpenXava 2.2.3 (2007-10-29)
 ---------------------------
 - New stereotypes TELEPHONE, EMAIL and WEBURL.

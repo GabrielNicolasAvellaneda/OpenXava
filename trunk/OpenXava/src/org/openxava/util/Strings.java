@@ -1,7 +1,9 @@
 package org.openxava.util;
+
 import java.io.*;
 import java.math.*;
 import java.util.*;
+import java.util.regex.*;
 
 import org.apache.commons.logging.*;
 
@@ -14,6 +16,8 @@ import org.apache.commons.logging.*;
 public class Strings {
 	
 	private static Log log = LogFactory.getLog(Strings.class);
+	private final static String XSS_REGEXP_PATTERN = "(?i)<[\\s]*/?script.*?>|<[\\s]*/?embed.*?>|<[\\s]*/?object.*?>|<[\\s]*a[\\s]*href[^>]*javascript[\\s]*:[^(^)^>]*[(][^)]*[)][^>]*>[^<]*(<[\\s]*/[\\s]*a[^>]*>)*";
+	private final static Pattern XSS_PATTERN = Pattern.compile(XSS_REGEXP_PATTERN);
 	
 	/**
 	 * Translate to the charset specified. <p>
@@ -540,8 +544,7 @@ public class Strings {
 		}		
 		return r.toString();
 	}	
-	
-	
+		
 	/**
 	 * 
 	 * @return If string if null or have no tokens returns empty string.
@@ -552,5 +555,34 @@ public class Strings {
 		if (st.hasMoreTokens()) return st.nextToken().trim();
 		return "";
 	}
+	
+	/** 
+	* A key function of any application filtering process will be  
+	* the removal of possible dangerous special characters.   
+	*  
+	* @author Sami AlSayyed 
+	* @return new safe string 
+	*/ 
+	public static String removeXSS(String notSafeValue) {
+		if (Is.emptyString(notSafeValue)) { 
+			return ""; 
+		} 
+			 		 
+		CharSequence sequence = notSafeValue.subSequence(0, notSafeValue.length()); 
+		Matcher matcher = XSS_PATTERN.matcher(sequence); 
+			 
+		return matcher.replaceAll(""); 
+	} 	
+	
+	/** 
+	* @param notSafeValue 
+	* @return Safe Object 
+	*/ 
+	public static Object removeXSS(Object notSafeValue) { 
+		if (notSafeValue != null && notSafeValue instanceof String) { 
+			return removeXSS(notSafeValue.toString()); 
+		} 
+		return notSafeValue; 
+	}	
 	
 }
