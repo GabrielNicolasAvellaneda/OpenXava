@@ -26,6 +26,21 @@ public class Task {
 	@Column(length=50, name="USERNAME")
 	private String user;
 	
+	@Stereotype("NO_FORMATING_STRING") 
+	@Required @DefaultValueCalculator(CurrentUserGivenNameCalculator.class)
+	@Column(length=30)
+	private String userGivenName;
+	
+	@Stereotype("NO_FORMATING_STRING") 
+	@Required @DefaultValueCalculator(CurrentUserFamilyNameCalculator.class)
+	@Column(length=30)
+	private String userFamilyName;
+	
+	@Stereotype("EMAIL") 
+	@Required @DefaultValueCalculator(CurrentUserEmailCalculator.class)
+	@Column(length=50)
+	private String userEMail;
+		
 	@Required @DefaultValueCalculator(CurrentDateCalculator.class)
 	private java.util.Date date;
 	
@@ -73,6 +88,30 @@ public class Task {
 
 	public void setComments(String comments) {
 		this.comments = comments;
+	}
+
+	public String getUserGivenName() {
+		return userGivenName;
+	}
+
+	public void setUserGivenName(String userGivenName) {
+		this.userGivenName = userGivenName;
+	}
+
+	public String getUserFamilyName() {
+		return userFamilyName;
+	}
+
+	public void setUserFamilyName(String userFamilyName) {
+		this.userFamilyName = userFamilyName;
+	}
+
+	public String getUserEMail() {
+		return userEMail;
+	}
+
+	public void setUserEMail(String userEMail) {
+		this.userEMail = userEMail;
 	}
 		
 }
