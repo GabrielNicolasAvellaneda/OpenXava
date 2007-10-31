@@ -86,16 +86,26 @@ public class XavaPortlet extends GenericPortlet {
 		request.getPortletSession().removeAttribute("xava.upload.error");
 		
 		request.removeAttribute("xava.portal.user");
-		if (XavaPreferences.getInstance().isEMailAsUserNameInPortal()) {
-			Map userInfo = (Map) request.getAttribute(PortletRequest.USER_INFO);			
-			if (userInfo != null) {
-				String email = (String)userInfo.get("user.home-info.online.email");
+		request.removeAttribute("xava.portal.userinfo");
+		Map userInfo = (Map) request.getAttribute(PortletRequest.USER_INFO);			
+		if (userInfo != null) {
+			UserInfo user = new UserInfo();
+			String email = (String) userInfo.get("user.home-info.online.email");			
+			if (XavaPreferences.getInstance().isEMailAsUserNameInPortal()) {							
 				if (!Is.emptyString(email)) {
 					request.setAttribute("xava.portal.user", email);
-				}
-			}
+					user.setId(email);
+				}			
+			}			
+			else {
+				user.setId(request.getRemoteUser());
+			}			
+			user.setGivenName((String) userInfo.get("user.name.given"));
+			user.setFamilyName((String) userInfo.get("user.name.family"));
+			user.setEmail(email);
+			request.setAttribute("xava.portal.userinfo", user);
 		}
-		
+				
 		PortletContext context = getPortletContext();
 		PortletRequestDispatcher rd = context.getRequestDispatcher(moduleURL);		
 		rd.include(request, response);		

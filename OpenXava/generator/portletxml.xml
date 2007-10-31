@@ -79,6 +79,14 @@ for (Iterator it=application.getMetaModules().iterator(); it.hasNext(); ) {
 		&lt;description&gt;User eMail&lt;/description&gt;
 		&lt;name&gt;user.home-info.online.email&lt;/name&gt;
 	&lt;/user-attribute&gt;
-	
+	&lt;user-attribute&gt;
+		&lt;description&gt;User Given Name&lt;/description&gt;
+		&lt;name&gt;user.name.given&lt;/name&gt;
+	&lt;/user-attribute&gt;
+	&lt;user-attribute&gt;
+		&lt;description&gt;User Family Name&lt;/description&gt;
+		&lt;name&gt;user.name.family&lt;/name&gt;
+	&lt;/user-attribute&gt;
+		
 &lt;/portlet-app&gt;
 </tl>

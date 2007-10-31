@@ -14,6 +14,7 @@ public class Users {
 	
 	private static Log log = LogFactory.getLog(Users.class);
 	private static ThreadLocal current = new ThreadLocal();
+	private static ThreadLocal currentUserInfo = new ThreadLocal();
 		
 	/**
 	 * The user name associated to the current thread. <p>
@@ -25,10 +26,25 @@ public class Users {
 	}
 	
 	/**
+	 * Info about the current logged user. <p>
+	 * 
+	 * It only returns meaningful info if we are inside a portal.<br>
+	 * 
+	 * @return Not null. If not info available it returns a UserInfo object with no info.
+	 */
+	public static UserInfo getCurrentUserInfo() {
+		UserInfo userInfo = (UserInfo) currentUserInfo.get();
+		if (userInfo == null) userInfo = new UserInfo();
+		userInfo.setId(getCurrent());
+		return userInfo;
+	}	
+	
+	/**
 	 * Associated an user to the current thread. <p>
 	 */	
 	public static void setCurrent(String userName) {
 		current.set(userName);
+		currentUserInfo.set(null); 
 	}
 	
 	/**
@@ -44,7 +60,7 @@ public class Users {
         if (Is.emptyString(user) && rundata != null) {
 			PropertiesManager pmRundata = new PropertiesManager(rundata);
 			try {
-				// Using introspection for no link OpenXava to turbine and jetspeed1.x
+				// Using introspection for not link OpenXava to turbine and jetspeed1.x
 				// This is temporal. In future JSR-168 compatible, and remove this code 
 				Object jetspeedUser = pmRundata.executeGet("user");
 				PropertiesManager pmUser = new PropertiesManager(jetspeedUser);
@@ -54,10 +70,11 @@ public class Users {
 				log.warn(XavaResources.getString("warning_get_user"),ex);
 				user = null;
 			}			
-		}
-		
+		}		
 		current.set(user);
 		request.getSession().setAttribute("xava.user", user);
+				
+		currentUserInfo.set(request.getAttribute("xava.portal.userinfo")); 
 	}
 
 } 

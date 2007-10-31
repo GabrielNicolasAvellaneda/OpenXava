@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- New class UserInfo and method Users.getCurrentUserInfo() for accessing to info the portal user.
+- New calculators CurrentUserGivenNameCalculator, CurrentUserFamilyNameCalculator and CurrentUserEmailCalculator.
 - XSS (Cross-site scripting) protection added.
 
 OpenXava 2.2.3 (2007-10-29)
