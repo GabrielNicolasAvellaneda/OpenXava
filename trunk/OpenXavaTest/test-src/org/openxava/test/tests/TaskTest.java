@@ -15,11 +15,14 @@ public class TaskTest extends ModuleTestBase {
 	
 	public void testUsersAndUserFilter() throws Exception {
 		// In order to run this test you need an user 'junit' in your portal
-		login(getUserLoginName(), "junit");		
+		login(getUserLoginName(), "junit");				
 		assertValueInList(0, "user", getUserId());
 		assertValueInList(0, "summary", "FOR USING IN JUNIT TEST");		
 		execute("CRUD.new");
 		assertValue("user", getUserId());
+		assertValue("userGivenName", "JUnit Given Name");
+		assertValue("userFamilyName", "JUnit Family Name");
+		assertValue("userEMail", "junit@openxava.org");
 		logout();
 	}
 	
@@ -36,6 +39,7 @@ public class TaskTest extends ModuleTestBase {
 		assertNoAction("Mode.list");
 		logout();
 	}
+	
 	
 	private String getUserLoginName() {
 		return isLiferayEnabled()?"junit@openxava.org":"junit";

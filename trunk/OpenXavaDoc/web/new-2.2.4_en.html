@@ -1,0 +1,7 @@
+<h4>Accessing to the info of the portal user</h4>
+There is a simple API for accessing to the info of the current user from an OpenXava application:<br>
+UserInfo userInfo = Users.getCurrentUserInfo();<br>
+<pre>userInfo.getGivenName();</pre>
+<pre>userInfo.getEmail();</pre>
+<pre>userInfo.getFamilyName();</pre>
+If the module is not running inside the portal the <span style="font-family: monospace;">userInfo</span> object will be empty, but not null.

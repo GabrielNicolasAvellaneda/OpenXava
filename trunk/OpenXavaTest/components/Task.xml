@@ -12,6 +12,15 @@
 		<property name="user" stereotype="NO_FORMATING_STRING" size="50" required="true">			  
 			<default-value-calculator class="org.openxava.calculators.CurrentUserCalculator"/>				
 		</property>
+		<property name="userGivenName" stereotype="NO_FORMATING_STRING" size="30" required="true">			  
+			<default-value-calculator class="org.openxava.calculators.CurrentUserGivenNameCalculator"/>				
+		</property>
+		<property name="userFamilyName" stereotype="NO_FORMATING_STRING" size="30" required="true">			  
+			<default-value-calculator class="org.openxava.calculators.CurrentUserFamilyNameCalculator"/>				
+		</property>
+		<property name="userEMail" stereotype="EMAIL" required="true">			  
+			<default-value-calculator class="org.openxava.calculators.CurrentUserEmailCalculator"/>				
+		</property>		
 		<property name="date" type="java.util.Date" required="true">
 			<default-value-calculator class="org.openxava.calculators.CurrentDateCalculator"/>				
 		</property>
@@ -21,6 +30,9 @@
 	
 	<view>
 		<property-view property="user" read-only="true"/>
+		<property-view property="userGivenName" read-only="true"/>
+		<property-view property="userFamilyName" read-only="true"/>
+		<property-view property="userEMail" read-only="true"/>
 	</view>
 	
 	<tab>
@@ -31,6 +43,9 @@
 	<entity-mapping table="XAVATEST@separator@TASK">
 		<property-mapping property="oid" column="ID"/>
 		<property-mapping property="user" column="USERNAME"/>
+		<property-mapping property="userGivenName" column="USERGIVENNAME"/>
+		<property-mapping property="userFamilyName" column="USERFAMILYNAME"/>
+		<property-mapping property="userEMail" column="USEREMAIL"/>
 		<property-mapping property="date" column="DATE"/>
 		<property-mapping property="summary" column="SUMMARY"/>
 		<property-mapping property="comments" column="COMMENTS"/>
