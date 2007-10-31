@@ -10,7 +10,7 @@ import org.openxava.util.*;
 
 /**
  * Program Generator created by TL2Java
- * @version Mon Sep 03 10:59:14 CEST 2007
+ * @version Wed Oct 31 13:01:55 CET 2007
  */
 public class PortletXmlPG {
     Properties properties = new Properties();
@@ -100,7 +100,7 @@ public class PortletXmlPG {
     
     }
     
-    out.print("   \n\n\t<user-attribute>\n\t\t<description>User eMail</description>\n\t\t<name>user.home-info.online.email</name>\n\t</user-attribute>\n\t\n</portlet-app>");
+    out.print("   \n\n\t<user-attribute>\n\t\t<description>User eMail</description>\n\t\t<name>user.home-info.online.email</name>\n\t</user-attribute>\n\t<user-attribute>\n\t\t<description>User Given Name</description>\n\t\t<name>user.name.given</name>\n\t</user-attribute>\n\t<user-attribute>\n\t\t<description>User Family Name</description>\n\t\t<name>user.name.family</name>\n\t</user-attribute>\n\t\t\n</portlet-app>");
     
         } catch (Exception e) {
             System.out.println("Exception: "+e.getMessage());
@@ -135,7 +135,7 @@ public class PortletXmlPG {
      * This array provides program generator development history
      */
     public String[][] history = {
-        { "Mon Sep 03 10:59:14 CEST 2007", // date this file was generated
+        { "Wed Oct 31 13:01:55 CET 2007", // date this file was generated
              "../OpenXava/generator/portletxml.xml", // input file
              "../OpenXava/generator/PortletXmlPG.java" }, // output file
         {"Mon Apr 09 16:45:30 EDT 2001", "TL2Java.xml", "TL2Java.java", }, 
