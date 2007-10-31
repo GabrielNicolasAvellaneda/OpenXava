@@ -1,0 +1,7 @@
+<h4>Acceder a la informaci&oacute;n del usuario del portal</h4>
+Hay una API simple para acceder a la informaci&oacute;n del usuario actual desde una aplicaci&oacute;n OpenXava:<br>
+UserInfo userInfo = Users.getCurrentUserInfo();<br>
+<pre>userInfo.getGivenName();</pre>
+<pre>userInfo.getEmail();</pre>
+<pre>userInfo.getFamilyName();</pre>
+Si el m&oacute;dulo no se est&aacute; ejecutando dentro del portal el objeto <span style="font-family: monospace;">userInfo</span> estar&aacute; vac&iacute;o, pero no ser&aacute; nulo.

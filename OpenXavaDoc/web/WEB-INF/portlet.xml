@@ -563,5 +563,25 @@
 		<supported-locale>es</supported-locale>		
 		<resource-bundle>NewIn223</resource-bundle>		
 	</portlet>
+	
+	 <portlet id="NewIn224">
+		<description>NewIn224</description>    
+		<portlet-name>NewIn224</portlet-name>
+		<display-name>NewIn224</display-name>    
+		<portlet-class>org.openxava.doc.HtmlPortlet</portlet-class>
+		<init-param>
+			<name>Page</name>
+			<value>new-2.2.4</value>
+		</init-param>
+		<expiration-cache>-1</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>VIEW</portlet-mode>
+		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>es</supported-locale>		
+		<resource-bundle>NewIn224</resource-bundle>		
+	</portlet>
+	
 	 	 	 													
 </portlet-app>
