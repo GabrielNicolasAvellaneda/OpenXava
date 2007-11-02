@@ -26,7 +26,7 @@ import org.openxava.util.*;
  * 
  * @author Javier Paniza
  */
-public class EntityTab implements IEntityTabImpl {
+public class EntityTab implements IEntityTabImpl, java.io.Serializable {
 	
 	private static Log log = LogFactory.getLog(EntityTab.class);
 	private static final int DEFAULT_CHUNK_SIZE = 50;
