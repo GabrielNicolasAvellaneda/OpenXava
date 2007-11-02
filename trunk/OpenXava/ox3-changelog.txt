@@ -1,6 +1,9 @@
 Change Log for OpenXava 3
 =========================
 
+- Fix: java.io.NotSerializableException: org.openxava.tab.impl.EntityTab removed
+- New class UserInfo and method Users.getCurrentUserInfo() for accessing to info the portal user.
+- New calculators CurrentUserGivenNameCalculator, CurrentUserFamilyNameCalculator and CurrentUserEmailCalculator.
 - Optimistic concurrency support by means of JPA @Version annotation. 
 
 OpenXava 3.0beta3 (2007-10-5)

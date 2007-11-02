@@ -63,7 +63,7 @@ public class Tab implements java.io.Serializable {
 	private int page = 1;
 	private boolean notResetNextTime = false;
 	private int initialIndex;	 			
-	private IXTableModel tableModel;	
+	private transient IXTableModel tableModel;	
 	private int [] selected;
 	private String modelName;
 	private String tabName;
