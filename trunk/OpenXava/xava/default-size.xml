@@ -24,5 +24,5 @@
 	<for-type class="boolean"  size="1"/>
 	<for-type class="int"  size="9"/>
 	<for-type class="long"  size="15"/>
-	<for-type class="java.math.BigDecimal" size="15" scale="2"/>
+	<for-type class="java.math.BigDecimal" size="15" scale="2"/>	
 </default-size>

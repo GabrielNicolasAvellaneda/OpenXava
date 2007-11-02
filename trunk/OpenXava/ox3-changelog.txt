@@ -1,6 +1,7 @@
 Change Log for OpenXava 3
 =========================
 
+- Fix: Incorrect default length for enum properties. Visible when the editor is read only.
 - Fix: java.io.NotSerializableException: org.openxava.tab.impl.EntityTab removed
 - New class UserInfo and method Users.getCurrentUserInfo() for accessing to info the portal user.
 - New calculators CurrentUserGivenNameCalculator, CurrentUserFamilyNameCalculator and CurrentUserEmailCalculator.

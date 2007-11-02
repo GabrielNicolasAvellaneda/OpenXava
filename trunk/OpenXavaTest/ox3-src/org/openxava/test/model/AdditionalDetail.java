@@ -15,7 +15,7 @@ import org.openxava.annotations.*;
 @IdClass(AdditionalDetailKey.class)
 public class AdditionalDetail {
 
-	// JoinColumn is also specified in DeliveryKey because 
+	// JoinColumn is also specified in AditionalDetailKey because 
 	// a bug in Hibernate, see http://opensource.atlassian.com/projects/hibernate/browse/ANN-361	
 	@Id @ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="SERVICE")
@@ -28,7 +28,7 @@ public class AdditionalDetail {
 	@Required @Stereotype("SUBFAMILY")
 	private int subfamily;
 	
-	@ManyToOne(fetch=FetchType.LAZY) @JoinColumn(name="TYPE") // tmp LAZY
+	@ManyToOne(fetch=FetchType.LAZY) @JoinColumn(name="TYPE") 
 	@DescriptionsList(
 		depends="family, additionalDetails.subfamily", 
 		condition="${family} = ? and ${subfamily} = ?"
