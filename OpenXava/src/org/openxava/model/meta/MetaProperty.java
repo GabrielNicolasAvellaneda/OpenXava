@@ -14,6 +14,7 @@ import org.apache.commons.logging.*;
 import org.openxava.calculators.*;
 import org.openxava.mapping.*;
 import org.openxava.model.*;
+import org.openxava.tab.impl.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
 import org.openxava.validators.*;
@@ -215,7 +216,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	 * 
 	 * @return Can return -1 if the datatype does not have length concept
 	 */
-	public int getSize() throws XavaException {		
+	public int getSize() throws XavaException {
 		if (size == 0) {
 			if (!Is.emptyString(getStereotype())) {				
 				try {					
@@ -227,10 +228,10 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				}
 			}
 						
-			if (hasValidValues()) {
-				size = createLengthFromValidValues();
+			if (hasValidValues()) {				
+				size = createLengthFromValidValues();				
 			}
-			else {
+			else {				
 				try {
 					size = DefaultSize.forType(getType());
 				}
@@ -238,7 +239,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 					size = -1; // Without length. In some datatypes this is fine
 				}
 			}
-		}
+		}		
 		return size;
 	}
 	

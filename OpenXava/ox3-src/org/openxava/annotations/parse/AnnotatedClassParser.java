@@ -561,8 +561,15 @@ public class AnnotatedClassParser {
 			property.setSize(size.max());
 		}
 		else if (element.isAnnotationPresent(Column.class)) {
-			Column column = element.getAnnotation(Column.class);			
-			property.setSize(column.length());
+			Column column = element.getAnnotation(Column.class);
+			if (column.length() == 255 && property.hasValidValues()) {
+				// For not assigning 255 (the default value of length) to
+				// enum types. If 0 the type for enums will be automatically calculated
+				property.setSize(0);
+			}
+			else {
+				property.setSize(column.length());
+			}			
 		}
 		else if (element.isAnnotationPresent(Digits.class)) {
 			Digits digits = element.getAnnotation(Digits.class);
