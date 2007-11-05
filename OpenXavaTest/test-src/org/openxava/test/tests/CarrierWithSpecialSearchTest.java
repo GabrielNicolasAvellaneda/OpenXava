@@ -5,8 +5,8 @@ import org.openxava.jpa.*;
 import org.openxava.test.model.*;
 
 /**
+ * @author Javier Paniza
  */
-
 
 public class CarrierWithSpecialSearchTest extends ModuleTestBase {
 	

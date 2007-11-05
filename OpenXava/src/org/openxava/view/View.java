@@ -1889,6 +1889,15 @@ public class View implements java.io.Serializable {
 				return true;
 			}
 		}
+
+		if (hasGroups()) {
+			Iterator it = getGroupsViews().values().iterator();
+			while (it.hasNext()) {
+				View v = (View) it.next();
+				if (v.hasKeyProperties()) return true;				
+			}			
+		}
+
 		return false;
 	}
 		
