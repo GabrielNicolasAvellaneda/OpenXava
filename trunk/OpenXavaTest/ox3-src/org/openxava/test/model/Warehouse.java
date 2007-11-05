@@ -18,7 +18,7 @@ import org.openxava.tracking.*;
 	filter=org.openxava.test.filters.LimitZoneFilter.class,
 	baseCondition="${zoneNumber} <= ?"
 )
-
+@View (name="KeyInGroup", members="key [zoneNumber, number]; name") 
 public class Warehouse {
 	
 	@Id 

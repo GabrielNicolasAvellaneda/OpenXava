@@ -41,7 +41,8 @@ public class Carrier {
 	private Integer drivingLicence_level; 
 	private String drivingLicence_type; 
 	
-	@ManyToOne(optional=false)
+	@ManyToOne(optional=false) 
+	@ReferenceView("KeyInGroup") 
 	private Warehouse warehouse;
 
 	@Stereotype("MEMO")

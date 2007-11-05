@@ -211,11 +211,15 @@ public class CarrierTest extends ModuleTestBase {
 		assertRowUnchecked(3);
 	}
 	
-	public void testActionOfCalculatedPropertyAlwaysPresent() throws Exception {
+	public void testActionOfCalculatedPropertyAlwaysPresent_referenceKeyEditableWhenInGroup() throws Exception {
 		execute("CRUD.new");
 		assertAction("Carrier.translateName");
 		assertExists("calculated");
 		assertNoEditable("calculated");
+
+		assertEditable("warehouse.zoneNumber");
+		assertEditable("warehouse.number");
+		assertNoEditable("warehouse.name");
 	}
 	
 	public void testFilterIgnoringCase() throws Exception {

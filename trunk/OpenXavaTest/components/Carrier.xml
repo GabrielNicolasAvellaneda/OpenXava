@@ -68,6 +68,8 @@
 			<descriptions-list/>
 		</reference-view>
 		
+		<reference-view reference="warehouse" view="KeyInGroup"/>
+		
 		<collection-view collection="fellowCarriers" view="Simple" edit-only="true">
 			<list-action action="Carrier.translateName"/>
 			<list-action action="Carrier.allToEnglish"/> 
