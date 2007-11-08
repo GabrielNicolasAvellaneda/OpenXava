@@ -61,10 +61,10 @@ public class XavaPortlet extends GenericPortlet {
 	
 	public void init(PortletConfig config) throws PortletException {
 		super.init(config);		
-		// Calling directly to module.jsp does not work well in Liferay (see portlet.jsp doc)
-		this.moduleURL = "/WEB-INF/jsp/xava/portlet.jsp?xava.portlet.application=" +
+		// Calling directly to module.jsp does not work well in Liferay (see portlet.jsp doc)		
+		this.moduleURL = "/WEB-INF/jsp/xava/portlet.jsp?xava.portlet.application=" +		
 			config.getInitParameter(PARAM_APPLICATION) + "&xava.portlet.module=" +			
-			config.getInitParameter(PARAM_MODULE);;		
+			config.getInitParameter(PARAM_MODULE);
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class XavaPortlet extends GenericPortlet {
 	 * @throws PortletException
 	 * @throws IOException
 	 */
-	public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
+	public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {		
 		Object style = getStyle(request);		
 		request.setAttribute("style", style);
 		
@@ -112,6 +112,8 @@ public class XavaPortlet extends GenericPortlet {
 	}
 	
 	public void processAction(ActionRequest request, ActionResponse response) throws PortletException {		
+		propagateParameters(request, response);
+		
 		PortletMode mode = request.getPortletMode();
 		if (mode.equals(PortletMode.EDIT)) {
 			response.setPortletMode(PortletMode.VIEW);
@@ -132,9 +134,21 @@ public class XavaPortlet extends GenericPortlet {
 				request.getPortletSession().removeAttribute("xava.upload.fileitems");
 				request.getPortletSession().setAttribute("xava.upload.error", "upload_error");				
 			}				
-		}
+		}				
 	} 	
 		
+	private void propagateParameters(ActionRequest request, ActionResponse response) {
+		// This is need as indicated in section 11.1.1 of JSR-168
+		 for (Enumeration en = request.getParameterNames(); en.hasMoreElements();) {
+			 String name = (String) en.nextElement();
+			 String [] values = request.getParameterValues(name);			 
+			 for (int i=0; i<values.length; i++) {
+				 if ("".equals(values[i])) values[i] = " "; // Jetspeed 2.1.2 does not like empty string
+			 }
+			 response.setRenderParameter(name, values);
+		 }
+	}
+
 	private Style getStyle(RenderRequest request) {
 		if (style == null) {
 			// Maybe moving this to a XML file (as style-portal.xml) could be

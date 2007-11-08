@@ -135,7 +135,7 @@ public class GenerateReportServlet extends HttpServlet {
 				Users.setCurrent((String)request.getSession().getAttribute("xava.user"));
 			}						
 			request.getParameter("application"); // for a bug in websphere 5.1 
-			request.getParameter("module"); // for a bug in websphere 5.1		
+			request.getParameter("module"); // for a bug in websphere 5.1
 			Tab tab = (Tab) request.getSession().getAttribute("xava_reportTab");
 			tab.setRequest(request); 
 			String uri = request.getRequestURI();

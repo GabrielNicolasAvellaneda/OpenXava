@@ -31,6 +31,7 @@ public class XavaSuite extends TestSuite {
 	}
 	public static Test suite() {		
 		TestSuite suite = new TestSuite();		
+
 		suite.addTest(new TestSuite(WarehouseTest.class));	
 		suite.addTest(new TestSuite(CarrierTest.class));
 		suite.addTest(new TestSuite(CarrierWithCalculatedFellowsTest.class));
@@ -58,7 +59,7 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(CustomerWithSectionTest.class));
 		suite.addTest(new TestSuite(DeliveryGroupsInSectionsTest.class));
 		suite.addTest(new TestSuite(DeliveryRemarks2002Test.class));
-		suite.addTest(new TestSuite(DeliveryTest.class));
+		suite.addTest(new TestSuite(DeliveryTest.class));		
 		suite.addTest(new TestSuite(DeliveryTypeJSPTest.class));
 		suite.addTest(new TestSuite(DeliveryTypeTest.class));
 		if (ModuleTestBase.isPortalEnabled()) {
@@ -86,14 +87,14 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(Invoice20020001Test.class));
 		suite.addTest(new TestSuite(Invoice2002Test.class));
 		suite.addTest(new TestSuite(Invoice2004Test.class));
-		suite.addTest(new TestSuite(Invoice2Test.class));
+		suite.addTest(new TestSuite(Invoice2Test.class));		
 		suite.addTest(new TestSuite(InvoiceActiveYearTest.class));
 		suite.addTest(new TestSuite(InvoiceDeliveriesTest.class));
 		suite.addTest(new TestSuite(InvoiceFromCustomersTest.class));
 		suite.addTest(new TestSuite(InvoiceFromDeliveriesTest.class));
 		suite.addTest(new TestSuite(InvoiceNestedSectionsTest.class));
 		suite.addTest(new TestSuite(InvoiceNoListTest.class));
-		suite.addTest(new TestSuite(InvoiceTest.class));
+		suite.addTest(new TestSuite(InvoiceTest.class));				
 		if (XavaPreferences.getInstance().isJPAPersistence()) {
 			suite.addTest(new TestSuite(IssueTest.class));
 			suite.addTest(new TestSuite(JPATest.class));			
@@ -111,7 +112,7 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(Product2ReferenceAndStereotypeTest.class));
 		suite.addTest(new TestSuite(Product2Test.class));
 		suite.addTest(new TestSuite(Product2WithFormulaAsAggregateTest.class));
-		suite.addTest(new TestSuite(Product2WithFormulaTest.class));
+		suite.addTest(new TestSuite(Product2WithFormulaTest.class));			
 		suite.addTest(new TestSuite(Product3ChangeActionsOnSearchTest.class));
 		suite.addTest(new TestSuite(Product3Test.class));
 		suite.addTest(new TestSuite(Product3WithDescriptionsListTest.class));
@@ -123,7 +124,7 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(SellerJSPTest.class));
 		suite.addTest(new TestSuite(SellerTest.class));
 		suite.addTest(new TestSuite(SellerWithCustomersAsAggregateTest.class));
-		suite.addTest(new TestSuite(SellerWithDescriptionsListJSPTest.class));
+		suite.addTest(new TestSuite(SellerWithDescriptionsListJSPTest.class));				
 		suite.addTest(new TestSuite(ServiceTest.class));
 		suite.addTest(new TestSuite(ShipmentChargeTest.class));		
 		suite.addTest(new TestSuite(ShipmentTest.class));
@@ -137,7 +138,7 @@ public class XavaSuite extends TestSuite {
 			suite.addTest(new TestSuite(StateJPATest.class));
 		}
 		suite.addTest(new TestSuite(Subfamily2Test.class));
-		suite.addTest(new TestSuite(SubfamilySelectTest.class));
+		suite.addTest(new TestSuite(SubfamilySelectTest.class));		
 		suite.addTest(new TestSuite(SubfamilyTest.class));
 		if (ModuleTestBase.isPortalEnabled()) {
 			suite.addTest(new TestSuite(TaskTest.class));
@@ -145,6 +146,7 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(TransportCharge2Test.class));		
 		suite.addTest(new TestSuite(TransportChargeTest.class));
 		suite.addTest(new TestSuite(TransportChargeWithDistanceTest.class));
+		
 		return suite;
 	}
 	

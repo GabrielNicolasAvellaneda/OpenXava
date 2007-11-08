@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- Portlets use action url as form action, and propagate parameters from processAction method. Needed for Jetspeed 2.1.2.
+- Fix: If key inside a group in a reference the first editor outside the group was editable.
+- Refined default size of text fields for filtering in list mode. Now is 80%, before it was 50%.
+- Fix: java.io.NotSerializableException: org.openxava.tab.impl.EntityTab removed.
 - New class UserInfo and method Users.getCurrentUserInfo() for accessing to info the portal user.
 - New calculators CurrentUserGivenNameCalculator, CurrentUserFamilyNameCalculator and CurrentUserEmailCalculator.
 - XSS (Cross-site scripting) protection added.
