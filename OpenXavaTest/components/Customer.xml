@@ -20,7 +20,7 @@
 				<set property="value" value="1"/>
 			</default-value-calculator>     
 		</property>
-
+		
 		<property name="photo" required="false" stereotype="PHOTO"/>
 		<property name="telephone" stereotype="TELEPHONE"/>        		
 		<property name="email" stereotype="EMAIL"/>
@@ -191,7 +191,7 @@
 		</reference-view>			
 		
 		<reference-view reference="alternateSeller" view="DecorateName" create="false"/>
-		 
+				  
 		<members>
 			number;
 			type; 
@@ -209,7 +209,7 @@
 			deliveryPlaces; 
 			remarks
 		</members>
-		
+				
 	</view>
 		
 	<view name="WithSection">		

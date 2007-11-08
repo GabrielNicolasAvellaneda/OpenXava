@@ -83,15 +83,9 @@ public class ModuleManager {
 	 * HTML action bind to the current form.
 	 * @return
 	 */
-	public String getFormAction(ServletRequest request) { 
-		Object portletRenderURL = request.getAttribute("xava.portlet.renderURL");
-		Object portletActionURL = request.getAttribute("xava.portlet.actionURL");
-		if (isFormUpload()) {
-			return portletActionURL == null?"":"action='" + portletActionURL + "'";
-		}
-		else {
-			return portletRenderURL == null?"":"action='" + portletRenderURL + "'";
-		}
+	public String getFormAction(ServletRequest request) {		
+		Object portletActionURL = request.getAttribute("xava.portlet.actionURL");		
+		return portletActionURL == null?"":"action='" + portletActionURL + "'";
 	}
 
 	public Collection getMetaActions() {
@@ -190,7 +184,7 @@ public class ModuleManager {
 	}
 	
 	public boolean hasProcessRequest(HttpServletRequest request) {
-		if (duplicateRequest(request)) return false; 
+		if (duplicateRequest(request)) return false;
 		return isFormUpload() || // May be that in this way upload forms does not work well in multimodule 			 
 			actionOfThisModule(request);				
 	}
@@ -209,8 +203,8 @@ public class ModuleManager {
 		return false;
 	}	
 	
-	public void execute(HttpServletRequest request, Messages errors, Messages messages) {
-		try {								
+	public void execute(HttpServletRequest request, Messages errors, Messages messages) {		
+		try {						
 			if (errors.isEmpty()) { // Only it's executed the action if there aren't errors
 				if (isFormUpload()) {
 					parseMultipartRequest(request);
@@ -899,7 +893,7 @@ public class ModuleManager {
 	
 	private boolean isFormUpload() {
 		return formUpload;
-	}
+	}	
 
 	private void setFormUpload(boolean b) {		
 		formUpload = b;

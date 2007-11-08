@@ -780,7 +780,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	 */
 	public Object parse(String value, Locale locale) throws ParseException, XavaException {		
 		if (value == null) return null;		
-		boolean emptyString = value.equals("");
+		boolean emptyString = Is.emptyString(value);
 		Class type = getType();
 		if (String.class.isAssignableFrom(type)) return value;
 		value = value.trim();
