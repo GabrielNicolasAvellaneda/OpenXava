@@ -1,7 +1,26 @@
+<h4>Claves de b&uacute;squeda</h4>
+Ahora es posible marcar una propiedad como clave b&uacute;squeda.
+Las propiedades de b&uacute;squeda se usar&aacute;n por el usuario para buscar en la interfaz de usuario por referencias.<br>
+Es decir, podemos escribir un c&oacute;digo como esto para una <span style="font-family: monospace;">Factura</span> por ejemplo:<br>
+<pre>	&lt;propiedad nombre="oid" tipo="String" clave="true" oculta="true"&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;calculador-valor-defecto clase="org.openxava.calculators.UUIDCalculator" on-create="true"/&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;/propiedad&gt;</pre>
+<pre><br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;propiedad nombre="a&ntilde;o" tipo="int" clave-busqueda="true" longitud="4"&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;calculador-valor-defecto clase="org.openxava.calculators.CurrentYearCalculator"/&gt;&nbsp;&nbsp;&nbsp; </pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;/propiedad&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;propiedad nombre="numero" tipo="int" clave-busqueda="true" longitud="6"/&gt;</pre>
+Y cuando el usuario busque una&nbsp;<span style="font-family: monospace;">Factura</span> desde otra entidad, el usuario podr&aacute; teclear el a&ntilde;o y el n&uacute;mero para poder buscarla.
 <h4>Acceder a la informaci&oacute;n del usuario del portal</h4>
+
 Hay una API simple para acceder a la informaci&oacute;n del usuario actual desde una aplicaci&oacute;n OpenXava:<br>
+
 UserInfo userInfo = Users.getCurrentUserInfo();<br>
+
 <pre>userInfo.getGivenName();</pre>
+
 <pre>userInfo.getEmail();</pre>
+
 <pre>userInfo.getFamilyName();</pre>
+
 Si el m&oacute;dulo no se est&aacute; ejecutando dentro del portal el objeto <span style="font-family: monospace;">userInfo</span> estar&aacute; vac&iacute;o, pero no ser&aacute; nulo.

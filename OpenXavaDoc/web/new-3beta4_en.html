@@ -1,0 +1,16 @@
+<h4>@SearchKey</h4>
+Now it's possible to mark a property as search key. The searching
+properties will be used by the user for searching in the user interface
+of the references. <br>
+That is, you now can write a code like this one for an<span style="font-family: monospace;"> Invoice</span> for example:<br>
+<pre>&nbsp;&nbsp;&nbsp; @Id @GeneratedValue(generator="system-uuid") @Hidden </pre>
+<pre>&nbsp;&nbsp;&nbsp; @GenericGenerator(name="system-uuid", strategy = "uuid")</pre>
+<pre>&nbsp;&nbsp;&nbsp; private String oid;</pre>
+<pre><br>&nbsp;&nbsp;&nbsp; @SearchKey</pre>
+<pre>&nbsp;&nbsp;&nbsp; @Column(length=4) @DefaultValueCalculator(CurrentYearCalculator.class)</pre>
+<pre>&nbsp;&nbsp;&nbsp; private int year;</pre>
+<pre>&nbsp;&nbsp;&nbsp; </pre>
+<pre>&nbsp;&nbsp;&nbsp; @SearchKey</pre>
+<pre>&nbsp;&nbsp;&nbsp; @Column(length=6)</pre>
+<pre>&nbsp;&nbsp;&nbsp; private int number;</pre>
+And when the user will be search <span style="font-family: monospace;">Invoice</span> from another entity, the user will can type year and number in order to search it.

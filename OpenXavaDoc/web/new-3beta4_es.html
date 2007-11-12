@@ -1,0 +1,15 @@
+<h4>@SearchKey</h4>
+Ahora es posible marcar una propiedad como clave b&uacute;squeda.
+Las propiedades de b&uacute;squeda se usar&aacute;n por el usuario para buscar en la interfaz de usuario por referencias.<br>
+Es decir, podemos escribir un c&oacute;digo como esto para una <span style="font-family: monospace;">Factura</span> por ejemplo:<br>
+<pre>&nbsp;&nbsp;&nbsp; @Id @GeneratedValue(generator="system-uuid") @Hidden </pre>
+<pre>&nbsp;&nbsp;&nbsp; @GenericGenerator(name="system-uuid", strategy = "uuid")</pre>
+<pre>&nbsp;&nbsp;&nbsp; private String oid;</pre>
+<pre><br>&nbsp;&nbsp;&nbsp; @SearchKey</pre>
+<pre>&nbsp;&nbsp;&nbsp; @Column(length=4) @DefaultValueCalculator(CurrentYearCalculator.class)</pre>
+<pre>&nbsp;&nbsp;&nbsp; private int a&ntilde;o;</pre>
+<pre>&nbsp;&nbsp;&nbsp; </pre>
+<pre>&nbsp;&nbsp;&nbsp; @SearchKey</pre>
+<pre>&nbsp;&nbsp;&nbsp; @Column(length=6)</pre>
+<pre>&nbsp;&nbsp;&nbsp; private int numero;</pre>
+Y cuando el usuario busque una&nbsp;<span style="font-family: monospace;">Factura</span> desde otra entidad, el usuario podr&aacute; teclear el a&ntilde;o y el n&uacute;mero para poder buscarla.

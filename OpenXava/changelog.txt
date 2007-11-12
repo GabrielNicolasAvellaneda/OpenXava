@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- It's possible to mark a property as search key to be used for indicating which properties will be used for searching.
 - Portlets use action url as form action, and propagate parameters from processAction method. Needed for Jetspeed 2.1.2.
 - Fix: If key inside a group in a reference the first editor outside the group was editable.
 - Refined default size of text fields for filtering in list mode. Now is 80%, before it was 50%.
