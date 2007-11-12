@@ -1,7 +1,27 @@
+<h4>Search keys</h4>
+Now it's possible to mark a property as search key. The searching
+properties will be used by the user for searching in the user interface
+of the references. <br>
+That is, you now can write a code like this one for an<span style="font-family: monospace;"> Invoice</span> for example:<br>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;property name="oid" type="String" key="true" hidden="true"&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;default-value-calculator class="org.openxava.calculators.UUIDCalculator" on-create="true"/&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;/property&gt;</pre>
+<pre><br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;property name="year" type="int" search-key="true" size="4"&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;default-value-calculator class="org.openxava.calculators.CurrentYearCalculator"/&gt;&nbsp;&nbsp;&nbsp; </pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;/property&gt;</pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </pre>
+<pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;property name="number" type="int" search-key="true" size="6"/&gt;</pre>
+And when the user will be search <span style="font-family: monospace;">Invoice</span> from another entity, the user will can type year and number in order to search it.
 <h4>Accessing to the info of the portal user</h4>
+
 There is a simple API for accessing to the info of the current user from an OpenXava application:<br>
+
 UserInfo userInfo = Users.getCurrentUserInfo();<br>
+
 <pre>userInfo.getGivenName();</pre>
+
 <pre>userInfo.getEmail();</pre>
+
 <pre>userInfo.getFamilyName();</pre>
+
 If the module is not running inside the portal the <span style="font-family: monospace;">userInfo</span> object will be empty, but not null.
