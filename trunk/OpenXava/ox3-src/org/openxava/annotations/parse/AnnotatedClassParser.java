@@ -547,6 +547,9 @@ public class AnnotatedClassParser {
 		if (element.isAnnotationPresent(Id.class)) {
 			property.setKey(true);
 		}
+		if (element.isAnnotationPresent(SearchKey.class)) { 
+			property.setSearchKey(true);
+		}
 		// size
 		if (element.isAnnotationPresent(Max.class)) {
 			Max max = element.getAnnotation(Max.class);			
@@ -1295,7 +1298,11 @@ public class AnnotatedClassParser {
 		}
 		if (element.isAnnotationPresent(DisplaySizes.class)) {
 			notApply(collection.getName(), DisplaySizes.class, "properties");
+		}
+		if (element.isAnnotationPresent(SearchKey.class)) {
+			notApply(collection.getName(), SearchKey.class, "properties");
 		}														
+		
 		
 	}
 
@@ -1659,7 +1666,10 @@ public class AnnotatedClassParser {
 		}
 		if (element.isAnnotationPresent(RowStyles.class)) {
 			notApply(ref.getName(), RowStyles.class, "collections");
-		}														
+		}						
+		if (element.isAnnotationPresent(SearchKey.class)) {
+			notApply(ref.getName(), SearchKey.class, "properties");
+		}
 				
 	}
 

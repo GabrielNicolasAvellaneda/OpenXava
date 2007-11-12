@@ -14,6 +14,7 @@
 		<property name="description" type="String" size="30" required="true"/>		
 		<property name="family" stereotype="FAMILY" required="true"/>
 		<reference name="detail"/>
+		<reference name="invoice" model="ServiceInvoice"/>
 		<collection name="additionalDetails">
 			<reference model="AdditionalDetail"/>
 		</collection>
@@ -33,7 +34,22 @@
 		</property>
 		<property name="subfamily" stereotype="SUBFAMILY" required="true"/>
 		<reference name="type" model="ServiceType"/>					
-	</aggregate>	
+	</aggregate>
+	
+	<view>
+		<members>
+			number;
+			description;
+			<section name="detail">
+				family;
+				detail;
+				additionalDetails			
+			</section>
+			<section name="invoice">
+				invoice
+			</section>
+		</members>
+	</view>	
 	
 	<view model="Detail" members="subfamily; type; free"/>	
 	
@@ -44,9 +60,7 @@
 				condition="${family} = ? and ${subfamily} = ?"/>
 		</reference-view>			
 	</view>
-	
-
-	
+		
 	<entity-mapping table="XAVATEST@separator@SERVICE">
 		<property-mapping property="number" column="NUMBER"/>
 		<property-mapping property="description" column="DESCRIPTION"/>
@@ -57,6 +71,10 @@
 			<reference-mapping-detail referenced-model-property="number" column="TYPE"/>
 		</reference-mapping>		
 		<property-mapping property="detail_free" column="FREE"/>
+		<reference-mapping reference="invoice">
+			<reference-mapping-detail 
+				referenced-model-property="oid" column="INVOICE_OID"/>
+		</reference-mapping>		
 	</entity-mapping>
 	
 	<aggregate-mapping aggregate="AdditionalDetail" table="XAVATEST@separator@SERVICEDETAIL">
@@ -70,5 +88,4 @@
 		</reference-mapping>		
 	</aggregate-mapping>
 	
-
 </component>

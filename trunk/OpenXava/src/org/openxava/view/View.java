@@ -60,6 +60,7 @@ public class View implements java.io.Serializable {
 	private boolean knowIfDisplayDetailInCollection;
 	private boolean displayDetailInCollection;
 	private String lastPropertyKeyName;
+	private String lastPropertySearchKeyName;
 	private Map subviews;
 	private Set hiddenMembers;		
 	private int oid;
@@ -1869,9 +1870,13 @@ public class View implements java.io.Serializable {
 		return throwsPropertyChanged(getMetaView().getMetaProperty(propertyName));
 	}	
 	
-	public boolean isLastKeyProperty(MetaProperty p) throws XavaException {		
+	private boolean isLastKeyProperty(MetaProperty p) throws XavaException {		
 		return p.isKey() && p.getName().equals(getLastPropertyKeyName());
 	}
+	
+	private boolean isLastSearchKeyProperty(MetaProperty p) throws XavaException {		
+		return p.isSearchKey() && p.getName().equals(getLastPropertySearchKeyName());
+	}	
 	
 	public boolean isFirstPropertyAndViewHasNoKeys(MetaProperty pr) throws XavaException {		
 		if (pr == null) return false; 
@@ -1914,6 +1919,25 @@ public class View implements java.io.Serializable {
 		}
 		return lastPropertyKeyName;		
 	}
+	
+	private String getLastPropertySearchKeyName() throws XavaException {
+		if (lastPropertySearchKeyName == null) { 
+			Iterator it = getMetaProperties().iterator();
+			lastPropertySearchKeyName = "";
+			while (it.hasNext()) {
+				MetaProperty p = (MetaProperty) it.next();		
+				if (p.isSearchKey()) {
+					lastPropertySearchKeyName = p.getName();
+				}
+			}
+		}		
+		return lastPropertySearchKeyName;		
+	}
+	
+	private boolean hasSearchPropertyKeys() throws XavaException { 
+		return !Is.emptyString(getLastPropertySearchKeyName());
+	}
+	
 
 	private void propertyChanged(String propertyId) {		
 		try {														
@@ -2009,9 +2033,10 @@ public class View implements java.io.Serializable {
 			
 			if (hasToSearchOnChangeIfSubview && isSubview() && !isGroup() &&  
 					( 	
-					(getLastPropertyKeyName().equals(changedProperty.getName()) && metaPropertiesContains(changedProperty)) || // visible keys
+					(getLastPropertyKeyName().equals(changedProperty.getName()) && metaPropertiesContains(changedProperty)) || // Visible keys
 					(!hasKeyProperties() && changedProperty.isKey() && changedProperty.isHidden() && changedProperty.getMetaModel() == getMetaModel()) || // hidden keys
-					(isRepresentsEntityReference() && isFirstPropertyAndViewHasNoKeys(changedProperty) && isKeyEditable()) // A searching value that is not key 
+					(isRepresentsEntityReference() && isFirstPropertyAndViewHasNoKeys(changedProperty) && isKeyEditable()) || // A searching value that is not key
+					(isRepresentsEntityReference() && hasSearchPropertyKeys() && isLastSearchKeyProperty(changedProperty)) // Explicit search key 
 					)
 				) {				
 				if (!searchingObject) { // To avoid recursive infinites loops				
@@ -2095,6 +2120,17 @@ public class View implements java.io.Serializable {
 				alternateKey.put(changedProperty.getName(), getValue(changedProperty.getName()));
 				if (Maps.isEmptyOrZero(alternateKey)) clear();
 				else setValues(MapFacade.getValuesByAnyProperty(getModelName(), alternateKey, getMembersNamesWithHidden()));
+			}
+			else if (isRepresentsEntityReference() && hasSearchPropertyKeys()) { 
+				Map alternateKey = new HashMap();
+				for (Iterator it = getMetaProperties().iterator(); it.hasNext();) {
+					MetaProperty p = (MetaProperty) it.next();
+					if (p.isSearchKey()) {
+						alternateKey.put(p.getName(), getValue(p.getName()));
+					}
+				}
+				if (Maps.isEmptyOrZero(alternateKey)) clear();
+				else setValues(MapFacade.getValuesByAnyProperty(getModelName(), alternateKey, getMembersNamesWithHidden()));				
 			}
 			else {			
 				// Searching by key, the normal case				
@@ -2700,6 +2736,14 @@ public class View implements java.io.Serializable {
 		}
 	}
 	
+	public boolean isLastSearchKey(MetaProperty p) throws XavaException { 
+		if (!isRepresentsEntityReference()) return false;
+		if (hasSearchPropertyKeys()) return isLastSearchKeyProperty(p); // explicit search key
+		return 
+			(isEditable(p) && isLastKeyProperty(p)) || // with key visible
+			(isFirstPropertyAndViewHasNoKeys(p) && isKeyEditable()); // with key hidden 		
+	}
+		
 	public boolean isHidden(String name) {				
 		return hiddenMembers != null && hiddenMembers.contains(name);
 	}

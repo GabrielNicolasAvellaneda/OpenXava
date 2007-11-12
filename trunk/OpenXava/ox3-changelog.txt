@@ -1,6 +1,7 @@
 Change Log for OpenXava 3
 =========================
 
+- @SearchKey annotation: to be used for indicating which properties will be used for searching.
 - Fix: If key inside a group in a reference the first editor outside the group was editable.
 - Fix: Incorrect default length for enum properties. Visible when the editor is read only.
 - Fix: java.io.NotSerializableException: org.openxava.tab.impl.EntityTab removed

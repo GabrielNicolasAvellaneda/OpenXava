@@ -179,5 +179,6 @@ public class XmlElementsNames {
 	protected final static String [] xdisplay_size = { "display-size", "longitud-visual" }; // @Trifon
 	protected final static String [] xdefault_module = { "default-module", "modulo-defecto" };
 	protected final static String [] xversion = { "version", "version" };
+	protected final static String [] xsearch_key = { "search-key", "clave-busqueda" };
 	
 }
