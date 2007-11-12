@@ -13,6 +13,28 @@ public class ServiceTest extends ModuleTestBase {
 		super(nombreTest, "Service");		
 	}
 	
+	public void testSearchKey() throws Exception { 		
+		execute("CRUD.new");
+		execute("Sections.change", "activeSection=1");
+		
+		assertEditable("invoice.year");
+		assertEditable("invoice.number");
+		assertNoEditable("invoice.amount");
+		assertNoEditable("invoice.description");
+		assertValue("invoice.year", "");
+		assertValue("invoice.number", "");
+		assertValue("invoice.amount", "");
+		assertValue("invoice.description", "");
+		
+		setValue("invoice.year", "2007");
+		assertValue("invoice.amount", "");
+		assertValue("invoice.description", "");
+		
+		setValue("invoice.number", "2");
+		assertValue("invoice.amount", "1,730.00");
+		assertValue("invoice.description", "Second service");		
+	}
+	
 	public void testFocusOnDescriptionsListInsideAggregate() throws Exception {
 		execute("CRUD.new");
 		setValue("family", "1");
@@ -23,7 +45,7 @@ public class ServiceTest extends ModuleTestBase {
 	
 	public void testRemoveAggregateFromCollectionWithReferenceToParentAsKey() throws Exception {
 		execute("CRUD.new");
-		execute("Collection.new", "viewObject=xava_view_additionalDetails");
+		execute("Collection.new", "viewObject=xava_view_section0_additionalDetails");
 		setValue("number", "66");
 		setValue("description", "JUNIT SERVICE");
 		setValue("family", "1");
@@ -31,15 +53,15 @@ public class ServiceTest extends ModuleTestBase {
 		setValue("detail.type", "2"); // Assuming that 2 exists
 		setValue("additionalDetails.subfamily", "1");
 		setValue("additionalDetails.type.number", "2");
-		execute("Collection.save", "viewObject=xava_view_additionalDetails");		
+		execute("Collection.save", "viewObject=xava_view_section0_additionalDetails");		
 		setValue("additionalDetails.subfamily", "1");
 		setValue("additionalDetails.type.number", "2");
-		execute("Collection.save", "viewObject=xava_view_additionalDetails");		
+		execute("Collection.save", "viewObject=xava_view_section0_additionalDetails");		
 		assertNoErrors();
 		
 		assertCollectionRowCount("additionalDetails", 2);
-		execute("Collection.edit", "row=0,viewObject=xava_view_additionalDetails");
-		execute("Collection.remove", "viewObject=xava_view_additionalDetails");		
+		execute("Collection.edit", "row=0,viewObject=xava_view_section0_additionalDetails");
+		execute("Collection.remove", "viewObject=xava_view_section0_additionalDetails");		
 		assertNoErrors();
 		assertCollectionRowCount("additionalDetails", 1);
 		
@@ -91,7 +113,7 @@ public class ServiceTest extends ModuleTestBase {
 		};
 		
 		execute("CRUD.new");
-		execute("Collection.new", "viewObject=xava_view_additionalDetails");
+		execute("Collection.new", "viewObject=xava_view_section0_additionalDetails");
 		
 		String [][] familyValues = {
 			{ "", "" },

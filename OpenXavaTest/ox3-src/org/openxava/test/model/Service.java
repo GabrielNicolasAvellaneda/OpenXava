@@ -14,6 +14,18 @@ import org.openxava.annotations.*;
  */
 
 @Entity
+@View( members= 
+	"number;" +
+	"description;" +
+	"detail {" +
+	"	family;" +
+	"	detail;" +
+	"	additionalDetails" +
+	"}" +
+	"invoice {" +
+	"	invoice" +
+	"}"
+)
 public class Service {
 
 	@Id @Column(length=3)
@@ -27,6 +39,9 @@ public class Service {
 	
 	@Embedded
 	private ServiceDetail detail;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	private ServiceInvoice invoice; 
 	
 	@OneToMany (mappedBy="service", cascade=CascadeType.REMOVE)
 	private Collection<AdditionalDetail> additionalDetails;
@@ -69,5 +84,13 @@ public class Service {
 
 	public void setAdditionalDetails(Collection<AdditionalDetail> additionalDetails) {
 		this.additionalDetails = additionalDetails;
+	}
+
+	public ServiceInvoice getInvoice() {
+		return invoice;
+	}
+
+	public void setInvoice(ServiceInvoice invoice) {
+		this.invoice = invoice;
 	}
 }

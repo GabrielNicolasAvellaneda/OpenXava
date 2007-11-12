@@ -10,7 +10,7 @@ import org.openxava.validators.*;
 public class DeliveryTypeRemoveValidator implements IRemoveValidator {
 	
 	private DeliveryType deliveryType;
-	private int number; // We us this (instado of obtain it from deliveryType) for testing <set /> for simple properties
+	private int number; // We use this (instead of obtaining it from deliveryType) for testing @PropertyValue for simple properties
 
 	public void setEntity(Object entity) throws Exception {
 		this.deliveryType = (DeliveryType) entity; 		

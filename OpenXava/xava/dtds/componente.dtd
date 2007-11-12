@@ -194,6 +194,7 @@
  clave (true|false) "false"
  oculta (true|false) "false"
  version (true|false) "false"
+ clave-busqueda (true|false) "false"
 >
 
 <!ELEMENT referencia (calculador-valor-defecto?)>

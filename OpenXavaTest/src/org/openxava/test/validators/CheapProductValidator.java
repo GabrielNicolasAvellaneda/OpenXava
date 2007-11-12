@@ -17,8 +17,8 @@ public class CheapProductValidator implements IValidator {
 
 	public void validate(Messages errors) {
 		if (getDescription().indexOf("CHEAP") >= 0 || getDescription().indexOf("BARATO") >= 0 || getDescription().indexOf("BARATA") >= 0) {
-			if (getLimiteBd().compareTo(getUnitPrice()) < 0) {
-				errors.add("cheap_product", getLimiteBd());
+			if (getLimitBd().compareTo(getUnitPrice()) < 0) {
+				errors.add("cheap_product", getLimitBd());
 			}
 		}		
 	}
@@ -47,7 +47,7 @@ public class CheapProductValidator implements IValidator {
 		limit = i;
 	}
 	
-	private BigDecimal getLimiteBd() {
+	private BigDecimal getLimitBd() {
 		return new BigDecimal(Integer.toString(limit));
 	}
 

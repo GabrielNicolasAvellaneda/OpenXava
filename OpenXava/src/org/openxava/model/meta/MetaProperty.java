@@ -46,6 +46,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	private Collection dependentPropertiesNames;
 	private String typeName;
 	private boolean key;
+	private boolean searchKey; 
 	private boolean isKeySet;
 	private boolean mappingSet;
 	private PropertyMapping mapping;
@@ -1036,6 +1037,12 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	public void setVersion(boolean version) {
 		this.version = version;
 		if (version) setHidden(true);
+	}
+	public boolean isSearchKey() {
+		return searchKey;
+	}
+	public void setSearchKey(boolean searchKey) {
+		this.searchKey = searchKey;
 	}
 
 }
