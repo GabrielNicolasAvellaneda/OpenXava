@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- XHibernate supports multischema and different configuration by thread.
+- Fix: Code generator works with Java 1.4 (broken in 2.2.3).
 - It's possible to mark a property as search key to be used for indicating which properties will be used for searching.
 - Portlets use action url as form action, and propagate parameters from processAction method. Needed for Jetspeed 2.1.2.
 - Fix: If key inside a group in a reference the first editor outside the group was editable.

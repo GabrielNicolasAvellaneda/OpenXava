@@ -35,7 +35,7 @@ import org.w3c.dom.*;
  * </pre> 
  * 
  * <b>Per thread configuration</b><br>
- * XPersistence allow you to change the configuration in runtime affecting only
+ * XPersistence allows you to change the configuration in runtime affecting only
  * to the current thread of execution.<br>
  * For example, if you want to have two configuration: 'config1' and 'config2' in
  * your persistence.xml, and you want to change from one to other, it's easy:
@@ -73,7 +73,7 @@ public class XPersistence {
 	
 	private static Log log = LogFactory.getLog(XPersistence.class);
 
-	private static final String HIBERNATE_DEFAULT_SCHEMA = "hibernate.default_schema";
+	private final static String HIBERNATE_DEFAULT_SCHEMA = "hibernate.default_schema";
 	private final static String DEFAULT_PERSISTENCE_UNIT = "default";
 	private final static String XAVA_PERSISTENCE_UNIT_KEY = "xava.persistenceUnit";
 	private static ThreadLocal currentManager = new ThreadLocal();

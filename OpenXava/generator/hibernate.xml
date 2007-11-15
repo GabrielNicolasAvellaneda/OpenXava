@@ -65,7 +65,8 @@ ModelMapping mapping = metaModel.getMapping();
 
   &lt;class 
   	name="<expr>name</expr>"
-  	table="<expr>mapping.getTable()</expr>"&gt;
+  	<java>if (mapping.getSchema() != null) {  </java> schema="<expr>mapping.getSchema()</expr>" <java>} </java> 
+  	table="<expr>mapping.getUnqualifiedTable()</expr>"&gt;
   	
 <java>
 Collection keyMembers = metaModel.getMetaMembersKey();

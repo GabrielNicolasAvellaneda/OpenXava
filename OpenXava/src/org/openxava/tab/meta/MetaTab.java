@@ -7,6 +7,7 @@ import java.util.*;
 import org.openxava.component.*;
 import org.openxava.filters.*;
 import org.openxava.filters.meta.*;
+import org.openxava.hibernate.*;
 import org.openxava.jpa.*;
 import org.openxava.mapping.*;
 import org.openxava.model.meta.*;
@@ -397,9 +398,20 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		return select;
 	}
 
-	public boolean isDefaultSchemaChanged() { 
+	public boolean isDefaultSchemaChanged() {
+		/* tmp original
 		if (!XavaPreferences.getInstance().isJPAPersistence()) return false;
 		return !Is.equal(lastDefaultSchema, XPersistence.getDefaultSchema());
+		*/
+		// tmp ini
+		if (XavaPreferences.getInstance().isJPAPersistence()) {
+			return !Is.equal(lastDefaultSchema, XPersistence.getDefaultSchema());
+		}
+		else if (XavaPreferences.getInstance().isHibernatePersistence()) {
+			return !Is.equal(lastDefaultSchema, XHibernate.getDefaultSchema());
+		}
+		return false;
+		// tmp fin
 	}
 
 	private void saveDefaultSchema() {
