@@ -31,7 +31,7 @@
     <property name="server.properties.dir" value="../OpenXava/build/server-properties"/>
     <property name="server.properties.tmp.dir" value="${user.home}/tmpServerProperties"/>        
 	<property name="model.package" value="model"/>
-	<property name="build.compiler" value="javac1.3"/>
+	<property name="javac.version" value="1.4"/>
 	<property name="portlet.encoding" value="UTF-8"/>
 	<property name="deploy.portlets.dir" value="${deploy.dir}/openxava${war.dir.suffix}/WEB-INF/deploy"/>
 	<property name="generate.jetspeed2.files" value="true"/>
@@ -245,6 +245,7 @@
 		<javac srcdir="${generator.dir}"
 			destdir="${generator.dir}"
 			classpath="${tl.lib};${xava.lib};${j2ee.lib}"
+			target="${javac.version}" source="${javac.version}"
 		/>
 		
 		<antcall target="generateWebsphereMapping"/>
@@ -380,11 +381,12 @@
 			<arg value="${generator.dir}${file.separator}hibernate.xml"/> 
 			<arg value="${generator.dir}${file.separator}HibernatePG.java"/>         
 		</java>       
-		
+				
        <echo>Compiling classes generators</echo>
 	   <javac srcdir="${generator.dir}"
 	         destdir="${generator.dir}"
 	         classpath="${tl.lib};${xava.lib};${j2ee.lib}"
+	   		 target="${javac.version}" source="${javac.version}"
     	/>	 	    		
 		
 		<delete file="../${project}/gen-src-xava/dnas.properties"/>
@@ -743,6 +745,7 @@
 		<javac srcdir="${generator.dir}"
 			destdir="${generator.dir}"
 			classpath="${tl.lib};${xava.lib};${j2ee.lib}"
+			target="${javac.version}" source="${javac.version}"
 		/>
 		
 	</target>

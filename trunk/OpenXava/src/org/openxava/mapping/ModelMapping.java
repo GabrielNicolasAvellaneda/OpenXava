@@ -6,6 +6,7 @@ import java.util.*;
 import org.apache.commons.logging.*;
 import org.openxava.component.*;
 import org.openxava.converters.*;
+import org.openxava.hibernate.*;
 import org.openxava.jpa.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -17,6 +18,8 @@ abstract public class ModelMapping implements java.io.Serializable {
 
 	private static Log log = LogFactory.getLog(ModelMapping.class);
 	
+	private static boolean codeGenerationTime; 
+	private static boolean codeGenerationTimeObtained = false; 
 	private MetaComponent metaComponent;
 	private String table;
 	private Map propertyMappings = new HashMap();
@@ -27,7 +30,8 @@ abstract public class ModelMapping implements java.io.Serializable {
 	private boolean databaseMetadataLoaded = false; 
 	private boolean supportsSchemasInDataManipulation = true; 
 	private boolean supportsYearFunction = false;  
-	private boolean supportsMonthFunction = false; 
+	private boolean supportsMonthFunction = false;
+	
 	
 	abstract public String getModelName() throws XavaException;
 
@@ -61,13 +65,33 @@ abstract public class ModelMapping implements java.io.Serializable {
 		}
 	}
 
-	public String getTable() {
+	public String getTable() { 
+		// Change this if by polymorphism ?		
+		if (isCodeGenerationTime()) return table;
 		if (XavaPreferences.getInstance().isJPAPersistence() && 
 			getSchema() == null && !Is.emptyString(XPersistence.getDefaultSchema())) {
 			return  XPersistence.getDefaultSchema() + "." + table; 
 		}
+		else if (XavaPreferences.getInstance().isHibernatePersistence() && 
+			getSchema() == null && !Is.emptyString(XHibernate.getDefaultSchema())) {
+			return  XHibernate.getDefaultSchema() + "." + table; 
+		}		
 		return table;
 	}
+	private static boolean isCodeGenerationTime() {
+		if (!codeGenerationTimeObtained) {
+			codeGenerationTimeObtained = true;
+			try {
+				Class.forName("CodeGenerator");
+				codeGenerationTime = true;
+			}
+			catch (Exception ex) {
+				codeGenerationTime = false;
+			}
+		}
+		return codeGenerationTime;
+	}
+
 	public void setTable(String tabla) {
 		this.table = tabla;
 	}

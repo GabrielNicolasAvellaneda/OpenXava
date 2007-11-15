@@ -22,7 +22,9 @@ public class XavaPreferences {
 	private boolean ejb2PersistenceLoaded=false;
 	private boolean ejb2Persistence=false;
 	private boolean jpaPersistenceLoaded=false;
-	private boolean jpaPersistence=false;	
+	private boolean jpaPersistence=false;
+	private boolean hibernatePersistenceLoaded=false;
+	private boolean hibernatePersistence=false;		
 	private boolean duplicateComponentWarningsLoaded=false;
 	private boolean duplicateComponentWarnings=false;
 	private int maxSizeForTextEditor;
@@ -102,6 +104,14 @@ public class XavaPreferences {
 		}			
 		return jpaPersistence;
 	}
+	
+	public boolean isHibernatePersistence() { 		
+		if (!hibernatePersistenceLoaded) {
+			hibernatePersistenceLoaded = true;
+			hibernatePersistence = getPersistenceProviderClass().toUpperCase().indexOf("HIBERNATE") >= 0;			
+		}			
+		return hibernatePersistence;
+	}	
 	
 	public boolean isDetailOnBottomInCollections() { 
 		return "true".equalsIgnoreCase(getProperties().getProperty("detailOnBottomInCollections", "false" ).trim());

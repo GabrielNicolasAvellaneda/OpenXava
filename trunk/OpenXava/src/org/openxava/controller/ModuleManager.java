@@ -485,7 +485,8 @@ public class ModuleManager {
 	 */
 	public void resetPersistence() {
 		org.openxava.hibernate.XHibernate.setCmt(false); 
-		if (XSystem.isJava5OrBetter()) org.openxava.jpa.XPersistence.reset();		
+		if (XSystem.isJava5OrBetter()) org.openxava.jpa.XPersistence.reset();
+		org.openxava.hibernate.XHibernate.reset(); 
 	}
 	
 	/**

@@ -1,5 +1,6 @@
 package org.openxava.actions;
 
+import org.openxava.hibernate.*;
 import org.openxava.jpa.*;
 
 /**
@@ -7,8 +8,8 @@ import org.openxava.jpa.*;
  * updates the session object 'defaultSchema'. <p> 
  * 
  * Useful for setting the default schema to be used by
- * JPA, the change only apply to the current thread, and
- * all the changes are reset just before each request.<br>
+ * JPA and Hibernate, the change only apply to the current thread, 
+ * and all the changes are reset just before each request.<br>
  * 
  * @author Javier Paniza
  */
@@ -21,6 +22,7 @@ public class SetDefaultSchemaAction extends BaseAction {
 	public void execute() throws Exception {		
 		if (newDefaultSchema != null)	defaultSchema = newDefaultSchema;	
 		XPersistence.setDefaultSchema(defaultSchema);		
+		XHibernate.setDefaultSchema(defaultSchema);
 	}
 
 	/**
