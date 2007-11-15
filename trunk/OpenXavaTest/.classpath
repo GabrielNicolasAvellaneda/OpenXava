@@ -1,27 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/hibernate3.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test-src"/>
-	<classpathentry kind="src" path="ox2-src"/>
-	<classpathentry kind="src" path="filtered-files"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/ehcache.jar"/>
+	<classpathentry kind="src" path="i18n"/>
+	<classpathentry kind="src" path="xava"/>
 	<classpathentry kind="src" path="properties"/>
 	<classpathentry kind="src" path="reports"/>
-	<classpathentry kind="src" path="gen-src"/>
-	<classpathentry kind="src" path="gen-src-xava"/>
 	<classpathentry kind="lib" path="lib/hsqldb.jar"/>
 	<classpathentry kind="lib" path="lib/jbossall-client.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v5.5"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/AccessTracking"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/hibernate-annotations.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/hibernate-entitymanager.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/javassist.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/antlr.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/asm.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/cglib.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/ejb3-persistence.jar"/>
 	<classpathentry exported="true" kind="src" path="/OpenXava"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/Sun JDK 1.5.0_11"/>
+	<classpathentry kind="src" path="ox3-src"/>
+	<classpathentry kind="src" path="persistence"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/AccessTracking"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>
