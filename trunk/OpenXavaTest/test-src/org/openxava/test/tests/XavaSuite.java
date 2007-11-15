@@ -94,9 +94,11 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(InvoiceFromDeliveriesTest.class));
 		suite.addTest(new TestSuite(InvoiceNestedSectionsTest.class));
 		suite.addTest(new TestSuite(InvoiceNoListTest.class));
-		suite.addTest(new TestSuite(InvoiceTest.class));				
-		if (XavaPreferences.getInstance().isJPAPersistence()) {
+		suite.addTest(new TestSuite(InvoiceTest.class));
+		if (!XavaPreferences.getInstance().isEJB2Persistence()) {
 			suite.addTest(new TestSuite(IssueTest.class));
+		}
+		if (XavaPreferences.getInstance().isJPAPersistence()) {			
 			suite.addTest(new TestSuite(JPATest.class));			
 		}
 		suite.addTest(new TestSuite(MapFacadeTest.class));
@@ -124,7 +126,8 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(SellerJSPTest.class));
 		suite.addTest(new TestSuite(SellerTest.class));
 		suite.addTest(new TestSuite(SellerWithCustomersAsAggregateTest.class));
-		suite.addTest(new TestSuite(SellerWithDescriptionsListJSPTest.class));				
+		suite.addTest(new TestSuite(SellerWithDescriptionsListJSPTest.class));
+		suite.addTest(new TestSuite(ServiceInvoiceTest.class));
 		suite.addTest(new TestSuite(ServiceTest.class));
 		suite.addTest(new TestSuite(ShipmentChargeTest.class));		
 		suite.addTest(new TestSuite(ShipmentTest.class));

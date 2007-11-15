@@ -8,17 +8,12 @@
 		<property name="oid" type="String" key="true" hidden="true">
 			<default-value-calculator class="org.openxava.calculators.UUIDCalculator" on-create="true"/>
 		</property>
-
 		<property name="year" type="int" search-key="true" size="4">
 			<default-value-calculator class="org.openxava.calculators.CurrentYearCalculator"/>	
-		</property>
-		
-		<property name="number" type="int" search-key="true" size="6"/>
-		
-		<property name="description" stereotype="MEMO"/>
-		
+		</property>		
+		<property name="number" type="int" search-key="true" size="6"/>		
+		<property name="description" stereotype="MEMO"/>		
 		<property name="amount" stereotype="MONEY"/>
-
 	</entity>
 	
 	
