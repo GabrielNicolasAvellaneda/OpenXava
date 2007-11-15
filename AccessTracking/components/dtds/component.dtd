@@ -187,6 +187,8 @@
  required (true|false) "false" 
  key (true|false) "false"
  hidden (true|false) "false"
+ version (true|false) "false"
+ search-key (true|false) "false"
 >
 
 <!ELEMENT reference (default-value-calculator?)>

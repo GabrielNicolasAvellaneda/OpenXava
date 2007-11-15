@@ -170,11 +170,15 @@ public class XHibernate {
 		}
 	}	
 	
+	private static Configuration createConfiguration(String hibernateCfg) {
+		return XSystem.isJava5OrBetter()?
+			new AnnotationConfiguration().configure(hibernateCfg):
+			new Configuration().configure(hibernateCfg);							
+	}
+	
 	private static SessionFactory createSessionFactory(String hibernateCfg, Properties properties) throws HibernateException {
 		try {			
-			Configuration configuration = XSystem.isJava5OrBetter()?
-				new AnnotationConfiguration().configure(hibernateCfg).addProperties(properties):
-				new Configuration().configure(hibernateCfg).addProperties(properties);					
+			Configuration configuration = createConfiguration(hibernateCfg).addProperties(properties);					
 				
 			for (Iterator it = MetaModel.getAllPojoGenerated().iterator(); it.hasNext();) {
 				MetaModel model = (MetaModel) it.next();
@@ -331,7 +335,7 @@ public class XHibernate {
 	}
 
 	private static String obtainDefaultSchema() {		
-		return new Configuration().configure(DEFAULT_CFG_FILE).getProperty(HIBERNATE_DEFAULT_SCHEMA);
+		return createConfiguration(DEFAULT_CFG_FILE).getProperty(HIBERNATE_DEFAULT_SCHEMA);
 	}
 
 	/**

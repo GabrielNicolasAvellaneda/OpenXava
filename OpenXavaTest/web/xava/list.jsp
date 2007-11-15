@@ -146,7 +146,7 @@ while (it.hasNext()) {
 		boolean isBoolean = "boolean".equals(property.getType().getName()) || "java.lang.Boolean".equals(property.getType().getName());
 		boolean isDate = java.util.Date.class.isAssignableFrom(property.getType()) && !property.getType().equals(java.sql.Time.class);
 		int maxLength = property.getSize();
-		int length = Math.min(isString?property.getSize()/2:property.getSize(), 20);
+		int length = Math.min(isString?property.getSize()*4/5:property.getSize(), 20);
 		String value= conditionValues==null?"":conditionValues[iConditionValues];
 		String comparator = conditionComparators==null?"":Strings.change(conditionComparators[iConditionValues], "=", "eq");
 		iConditionValues++;
