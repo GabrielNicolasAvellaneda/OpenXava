@@ -1,30 +1,56 @@
+<h2>Para migrar de OpenXava 2.2.3 a OpenXava 2.2.4</h2>
+<h4>El esquema para table de imagenes del estereotipo GALERIA_IMAGENES</h4>
+Ahora el esquema para la table de imagenes se especifica separadamente, es decir, <br>
+Now the
+schema for image table is specified specified separately, that is, ante
+escribiamos esto en nuestro archivo de propiedades de
+configuraci&oacute;n:<br>
+<pre>images.table=XAVATEST.IMAGES</pre>
+Ahora hemos de escribir:<br>
+<pre>images.schema=XAVATEST</pre>
+<pre>images.table=IMAGES</pre>
 <h2>Para migrar de OpenXava 2.2.2 a OpenXava 2.2.3</h2>
 
+
 <h4>Las etiquetas del modo lista y colecciones son calificadas&nbsp;(para las pruebas junit)</h4>
+
 Las etiquetas pare el modo lista y las colecciones ahora son calificadas, es decir si tenemos una propiedad <span style="font-family: monospace;">cliente.nombre</span>, antes la etiqueta era <span style="font-style: italic;">Nombre</span>, y ahora es <span style="font-style: italic;">Nombre de Cliente</span>. Esto puede afectar nuestras pruebas junit, es decir, si tenemos:<br>
+
 <pre>assertLabelInList(2, "Nombre"); // de cliente.nombre</pre>
+
 ahora tenemos que escribir:<br>
+
 <pre>assertLabelInList(2, "Nombre de Cliente"); de cliente.nombre</pre>
+
 <h4>Esquema de tabla de AccessTracking cambiado</h4>
+
 
 En el proyecto AccessTracking el esquema de la tabla para registrar los accesos ha cambiado:<br>
 
+
 <ul>
+
 
   <li>TABLE ahora es TABLE_NAME</li>
 
+
   <li>DATE ahora es ACCESS_DATE</li>
+
 
   <li>TIME ahora es ACCESS_TIME</li>
 
+
 </ul>
 
+
 Es necesario cambiar nuestras tabla actual si queremos actualizar a AccessTracking 2.2.3<br>
+
 
 Este cambio se ha hecho para que AccessTracking pueda funcionar en
 bases de datos que no soporten TABLE, DATE y TIME como nombre de
 columna.
 <h2>Para migrar de OpenXava 2.2.1 a OpenXava 2.2.2</h2>
+
 
 
 Sin consideraciones
@@ -33,7 +59,9 @@ Sin consideraciones
 
 
 
+
 <h4>MoneyFormatter (para pruebas junit)</h4>
+
 
 
 Un formateador de dinero es aplicado por defecto para formatear o
@@ -43,13 +71,17 @@ cifras decimales. Por tanto, hemos de adaptar nuestras pruebas junit,
 cambiando l&iacute;neas como esta:<br>
 
 
+
 <pre>assertValue("importe", "20");</pre>
+
 
 
 por algo as&iacute;:<br>
 
 
+
 <pre>assertValue("importe", "20.00");</pre>
+
 
 
 O, si as&iacute; lo preferimos podemos usar la vieja forma de
@@ -60,6 +92,7 @@ usuario navega a otra vista (para pruebas junit)</h4>
 
 
 
+
 Cuando el usuario navega a otra vista (por ejemplo para crear o
 modificar una referencia) el v&iacute;nculo para ir al modo lista ahora
 no est&aacute; presente. Quiz&aacute;s necesites cambiar tu prueba
@@ -67,7 +100,9 @@ junit:<br>
 
 
 
+
 Por ejempo, en este c&oacute;digo junit:<br>
+
 
 
 
@@ -75,7 +110,9 @@ Por ejempo, en este c&oacute;digo junit:<br>
 
 
 
+
 <pre>assertAction("Mode.list"); // Desde 2.2.1 falla</pre>
+
 
 
 
@@ -84,12 +121,15 @@ se tiene que quitar<br>
 
 
 
+
 <h2>Para migrar de OpenXava 2.1.5 a OpenXava 2.2</h2>
+
 
 
 
 <h4>El comportamiento por defecto para las colecciones de entidades
 cambia</h4>
+
 
 
 
@@ -104,11 +144,14 @@ nuestras pruebas JUnit:
 
 
 
+
 por este otro:<br>
 
 
 
+
 <pre>assertCollectionRowCount("customers",0);<br>execute("Collection.add", "viewObject=xava_view_customers");<br>assertValueInList(5, 0, getCustomer2().getName());<br>execute("AddToCollection.add", "row=5");<br>assertMessage("1 element(s) added to Customers of Seller");<br>assertCollectionRowCount("customers",1);</pre>
+
 
 
 
@@ -117,7 +160,9 @@ la vez, esto es, un c&oacute;digo como este:<br>
 
 
 
+
 <pre>execute("Collection.new", "viewObject=xava_view_customers");<br>setValue("customers.number", getCustomerNumber1());<br>assertValueIgnoringCase("customers.name", getCustomer1().getName()); <br>assertCollectionRowCount("customers", 0);<br>execute("Collection.save", "viewObject=xava_view_customers");<br>assertMessage("Customer associated to Seller");<br><br>assertCollectionRowCount("customers", 1);<br>setValue("customers.number", getCustomerNumber2());<br>assertValueIgnoringCase("customers.name", getCustomer2().getName());<br>execute("Collection.save", "viewObject=xava_view_customers");<br>assertCollectionRowCount("customers",2);</pre>
+
 
 
 
@@ -125,12 +170,15 @@ se puede escribir as&iacute;:<br>
 
 
 
+
 <pre>execute("Collection.add", "viewObject=xava_view_customers");<br>assertValueInList(4, 0, getCustomer1().getName());<br>assertValueInList(5, 0, getCustomer2().getName());<br>checkRow(4);<br>checkRow(5);<br>execute("AddToCollection.add");<br>assertMessage("2 element(s) added to Customers of Seller");<br>assertCollectionRowCount("customers",2);</pre>
+
 
 
 
 <h4>El comportamiento por defecto para las colecciones de agregados
 cambia</h4>
+
 
 
 
@@ -142,7 +190,9 @@ nuestras pruebas JUnit:<br>
 
 
 
+
 <pre>execute("Collection.save", "viewObject=xava_view_section1_details");</pre>
+
 
 
 
@@ -150,11 +200,14 @@ nuestras pruebas JUnit:<br>
 
 
 
+
 por este otro:<br>
 
 
 
+
 <pre>execute("Collection.save", "viewObject=xava_view_section1_details");</pre>
+
 
 
 
@@ -165,11 +218,14 @@ lista para introducir un nuevo detalle.<br>
 
 
 
+
 <h2></h2>
 
 
 
+
 <h2>Para migrar de OpenXava 2.1.4 a OpenXava 2.1.5</h2>
+
 
 
 
@@ -178,7 +234,9 @@ No hay consideraciones
 
 
 
+
 <h4>Nuevas acciones en colecciones (para pruebas junit)</h4>
+
 
 
 
@@ -189,8 +247,10 @@ cuenta las nuevas acciones.<br>
 
 
 
+
 Es decir, si tenemos algo como esto en nuestro c&oacute;digo de prueba
 junit:<br>
+
 
 
 
@@ -198,7 +258,9 @@ junit:<br>
 
 
 
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Navigation.previous",</pre>
+
 
 
 
@@ -206,7 +268,9 @@ junit:<br>
 
 
 
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Navigation.next",</pre>
+
 
 
 
@@ -214,7 +278,9 @@ junit:<br>
 
 
 
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "CRUD.save",</pre>
+
 
 
 
@@ -222,11 +288,14 @@ junit:<br>
 
 
 
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "CRUD.search",</pre>
 
 
 
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Collection.new",</pre>
+
 
 
 
@@ -234,11 +303,14 @@ junit:<br>
 
 
 
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; };&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </pre>
 
 
 
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; assertActions(acciones);</pre>
+
 
 
 
@@ -246,7 +318,9 @@ hemos de cambiarlo por:<br>
 
 
 
+
 <pre>	String [] acciones = {</pre>
+
 
 
 
@@ -254,7 +328,9 @@ hemos de cambiarlo por:<br>
 
 
 
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Navigation.first",</pre>
+
 
 
 
@@ -262,7 +338,9 @@ hemos de cambiarlo por:<br>
 
 
 
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "CRUD.new",</pre>
+
 
 
 
@@ -270,7 +348,9 @@ hemos de cambiarlo por:<br>
 
 
 
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "CRUD.delete",</pre>
+
 
 
 
@@ -278,7 +358,9 @@ hemos de cambiarlo por:<br>
 
 
 
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Collection.new",</pre>
+
 
 
 
@@ -286,7 +368,9 @@ hemos de cambiarlo por:<br>
 
 
 
+
 <pre style="font-weight: bold; color: rgb(51, 102, 255);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "List.filter", </pre>
+
 
 
 
@@ -294,7 +378,9 @@ hemos de cambiarlo por:<br>
 
 
 
+
 <pre style="font-weight: bold; color: rgb(51, 102, 255);">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "List.customize", </pre>
+
 
 
 
@@ -302,7 +388,9 @@ hemos de cambiarlo por:<br>
 
 
 
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; };&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </pre>
+
 
 
 
@@ -310,7 +398,9 @@ hemos de cambiarlo por:<br>
 
 
 
+
 <h4>Tarea Ant generarPortlets eliminada</h4>
+
 
 
 
@@ -321,7 +411,9 @@ Por lo tanto, si en tu build.xml tienes algo como esto:<br>
 
 
 
+
 <pre>&lt;target name="generarPortlets"&gt; </pre>
+
 
 
 
@@ -329,7 +421,9 @@ Por lo tanto, si en tu build.xml tienes algo como esto:<br>
 
 
 
+
 <pre>&lt;/target&gt;</pre>
+
 
 
 
@@ -337,7 +431,9 @@ Tienes que cambiarlo por:<br>
 
 
 
+
 <pre>&lt;target name="generarPortlets"&gt; </pre>
+
 
 
 
@@ -345,7 +441,9 @@ Tienes que cambiarlo por:<br>
 
 
 
+
 <pre>&lt;/target&gt;</pre>
+
 
 
 
@@ -353,11 +451,14 @@ Tienes que cambiarlo por:<br>
 
 
 
+
 <h2>Para migrar de OpenXava 2.1 a OpenXava 2.1.3</h2>
 
 
 
+
 <h4>Pruebas JUnit y claves sin valor interpretadas como&nbsp;cero</h4>
+
 
 
 
@@ -369,6 +470,7 @@ ejemplo <br>
 
 
 
+
 Since 2.1.3 if a property key of type int, long or short has no value
 in view when it is parsed is parsed with null (without value), and not
 as zero. This has no effect in final user, but possibly you need to
@@ -376,7 +478,9 @@ modify some junit test. Por ejemplo si tenemos una prueba as&iacute;:<br>
 
 
 
+
 <br>
+
 
 
 
@@ -384,7 +488,9 @@ modify some junit test. Por ejemplo si tenemos una prueba as&iacute;:<br>
 
 
 
+
 Ahora hemos de escribirlo as&iacute;:<br>
+
 
 
 
@@ -392,11 +498,14 @@ Ahora hemos de escribirlo as&iacute;:<br>
 
 
 
+
 <h2>Para migrar de OpenXava 2.0.4 a OpenXava 2.1</h2>
 
 
 
+
 <h4>Proyectos WebSphere</h4>
+
 
 
 
@@ -405,8 +514,10 @@ peque&ntilde;os ajustes:<br>
 
 
 
+
 Primero, en el archivo hibernate/hibernate.cfg.xml de tu proyecto
 a&ntilde;ade el siguiente c&oacute;digo marcado en azul:<br>
+
 
 
 
@@ -414,7 +525,9 @@ a&ntilde;ade el siguiente c&oacute;digo marcado en azul:<br>
 
 
 
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;property name="hibernate.connection.datasource"&gt;@datasource.prefix@/@datasource@&lt;/property&gt;</pre>
+
 
 
 
@@ -422,7 +535,9 @@ a&ntilde;ade el siguiente c&oacute;digo marcado en azul:<br>
 
 
 
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;property name="hibernate.jdbc.use_get_generated_keys"&gt;false&lt;/property&gt;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </pre>
+
 
 
 
@@ -430,7 +545,9 @@ a&ntilde;ade el siguiente c&oacute;digo marcado en azul:<br>
 
 
 
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </pre>
+
 
 
 
@@ -438,7 +555,9 @@ a&ntilde;ade el siguiente c&oacute;digo marcado en azul:<br>
 
 
 
+
 <pre>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </pre>
+
 
 
 
@@ -446,7 +565,9 @@ a&ntilde;ade el siguiente c&oacute;digo marcado en azul:<br>
 
 
 
+
 <pre>&lt;/session-factory&gt;</pre>
+
 
 
 
@@ -455,7 +576,9 @@ ejemplo websphere-as400.properties) has de a&ntilde;adir:<br>
 
 
 
+
 <pre>hibernate.properties=&lt;property name="hibernate.transaction.manager_lookup_class"&gt;\n\</pre>
+
 
 
 
@@ -463,7 +586,9 @@ ejemplo websphere-as400.properties) has de a&ntilde;adir:<br>
 
 
 
+
 <pre>\t\t&lt;/property&gt;\n\</pre>
+
 
 
 
@@ -471,7 +596,9 @@ ejemplo websphere-as400.properties) has de a&ntilde;adir:<br>
 
 
 
+
 <pre>\t\t\torg.hibernate.transaction.JTATransactionFactory\n\</pre>
+
 
 
 
@@ -479,11 +606,14 @@ ejemplo websphere-as400.properties) has de a&ntilde;adir:<br>
 
 
 
+
 <h4>Otros cambios que requieren migraci&oacute;n</h4>
 
 
 
+
 <ul>
+
 
 
 
@@ -496,7 +626,9 @@ bajo demanda
 
 
 
+
 </ul>
+
 
 
 
@@ -504,7 +636,9 @@ bajo demanda
 
 
 
+
 <h4>Parse de valores num&eacute;ricos</h4>
+
 
 
 
@@ -524,9 +658,11 @@ asuntos de incompatibilidad pueden ser:
 
 
 
+
   <li> La interfaz gr&aacute;fica de la aplicaci&oacute;n visualizar
 campos vac&iacute;os
 en vez de 0, cuando el formulario se reinicie.</li>
+
 
 
 
@@ -535,11 +671,14 @@ recib&iacute;as un 0</li>
 
 
 
+
   <li> Si usas View.getValue() para un Number puede valer null</li>
 
 
 
+
 </ul>
+
 
 
 
@@ -547,7 +686,9 @@ recib&iacute;as un 0</li>
 
 
 
+
 <ul>
+
 
 
 
@@ -555,7 +696,9 @@ recib&iacute;as un 0</li>
 
 
 
+
 </ul>
+
 
 
 
@@ -563,7 +706,9 @@ recib&iacute;as un 0</li>
 
 
 
+
 <h4>No se lanzan eventos al-cambiar cuando se busca</h4>
+
 
 
 
@@ -582,6 +727,7 @@ m&uacute;ltiple en las pruebas JUnit</h4>
 
 
 
+
 Establece valor para referenc&iacute;as (en combos) con clave
 m&uacute;ltiple en las pruebas JUnit
 tiene que hacerse usando POJOs, el uso de claves primarias EJB2 no
@@ -589,9 +735,11 @@ est&aacute; soportado.<br>
 
 
 
+
 Ver documentaci&oacute;n en <i>Para migrar de OpenXava 1.2.1 a
 OpenXava 2.0</i> below.
 <h2>Para migrar de OpenXava 2.0.1 a OpenXava 2.0.2</h2>
+
 
 
 
@@ -603,13 +751,16 @@ renombrar la acci&oacute;n dentro de nuestras pruebas junit.
 
 
 
+
 No hay consideraciones
 <h2>Para migrar de OpenXava 1.2.1 a OpenXava 2.0</h2>
 
 
 
+
 <h4>Establece valor para referenc&iacute;as (en combos) con clave
 m&uacute;ltiple en las pruebas JUnit</h4>
+
 
 
 
@@ -621,14 +772,17 @@ varias columnas, escribiamos:
 
 
 
+
 Pero, si usamos solo POJOs, sin clases 'Key', hemos de escribir:
 <pre>PermisoConduccion clave = new PermisoConduccion();<br>clave.setType("C ");<br>clave.setLevel(1);<br>setValue("drivingLicence.KEY", clave.toString());		<br></pre>
+
 
 
 
 Es mejor usar la &uacute;ltima forma, porque funciona con POJOs y EJBs.
 <h4>Hibernate: Referencias con columnas no nula como clave
 for&aacute;nea</h4>
+
 
 
 
@@ -641,9 +795,11 @@ referencia.<br>
 
 
 
+
 En la versi&oacute;n Hibernate si asignamos nulo a una referencia, se
 graban valores
 nulos en la base de datos.<br>
+
 
 
 
@@ -656,13 +812,16 @@ la gu&iacute;a de referencia).<br>
 
 
 
+
 Es decir, quiz&aacute;s necesitemos a&ntilde;adir algunos conversores a
 nuestra referencias para
 migrar nuestras aplicaciones de EJB2 a Hibernate.<br>
 
 
 
+
 <h4>Cambiar la secci&oacute;n activa</h4>
+
 
 
 
@@ -672,6 +831,7 @@ Ahora si queremos cambiar la secci&oacute;n activa tenemos que llamar
 al m&eacute;todo
 <code>setActiveSection</code> de la vista deseada (<code>org.openxava.view.View</code>).
 <h4>IAggragetOidCalculator</h4>
+
 
 
 
@@ -685,7 +845,9 @@ y POJO (si clases para clave).
 
 
 
+
 <h4>Generaci&oacute;n Hibernate</h4>
+
 
 
 
@@ -696,6 +858,7 @@ todav&iacute;a no se soporta al 100%).<br>
 
 
 
+
 Aunque uses solo la versi&oacute;n EJB necesitas hacer una
 peque&ntilde;a adaptaci&oacute;n
 en tu proyecto:
@@ -703,7 +866,9 @@ en tu proyecto:
 
 
 
+
   <li> Crea la carpeta <code>hibernate</code> en tu proyecto. </li>
+
 
 
 
@@ -712,12 +877,15 @@ carpeta <code>hibernate</code>. </li>
 
 
 
+
 </ul>
+
 
 
 
 El <code>hibernate.cfg.xml</code> ha de ser:
 <pre>&lt;!DOCTYPE hibernate-configuration PUBLIC<br>   "-//Hibernate/Hibernate Configuration DTD//EN"<br>   "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd"&gt;<br>  &lt;hibernate-configuration&gt;<br>   &lt;session-factory&gt;<br>       &lt;property name="hibernate.connection.datasource"&gt;@datasource.prefix@/@datasource@&lt;/property&gt;<br>       &lt;property name="hibernate.dialect"&gt;@hibernate.dialect@&lt;/property&gt;<br>       &lt;property name="hibernate.show_sql"&gt;false&lt;/property&gt;<br>   &lt;/session-factory&gt;<br>&lt;/hibernate-configuration&gt;<br></pre>
+
 
 
 
@@ -728,11 +896,14 @@ archivos de configuraci&oacute;n:
 
 
 
+
 <h4>Sintaxis XML de OpenXava</h4>
 
 
 
+
 <ul>
+
 
 
 
@@ -742,7 +913,9 @@ ISO-8859-1 y UTF-8. </li>
 
 
 
+
 </ul>
+
 
 
 
@@ -750,7 +923,9 @@ ISO-8859-1 y UTF-8. </li>
 
 
 
+
 <h4>C&oacute;digo generado</h4>
+
 
 
 
@@ -761,9 +936,11 @@ no contiene todos los m&eacute;todos de la interface remota.<br>
 
 
 
+
 Esto es para permitir que la futura versi&oacute;n 2 de OpenXava pueda
 trabajar
 con EJB e Hibernate en el mismo projecto y a la vez.<br>
+
 
 
 
@@ -772,7 +949,9 @@ Para adaptar el c&oacute;digo hay que:
 
 
 
+
   <li>Borrar todo el c&oacute;digo generado </li>
+
 
 
 
@@ -780,7 +959,9 @@ Para adaptar el c&oacute;digo hay que:
 
 
 
+
   <li>Compilar </li>
+
 
 
 
@@ -788,7 +969,9 @@ Para adaptar el c&oacute;digo hay que:
 
 
 
+
 </ul>
+
 
 
 
@@ -798,8 +981,10 @@ Para corregir los errores de sintaxis se tiene que hacer cambios como
 
 
 
+
 Cambiarlo por:
 <pre><b>ICliente</b> cliente = ClienteUtil.getHome().findByNombre("PEPE");<br>String nombre = cliente.getNombre();<br></pre>
+
 
 
 
@@ -809,8 +994,10 @@ la interfaz remota:
 
 
 
+
 Cambiarlo por:
 <pre><b>ClienteRemote</b> cliente = ClienteUtil.getHome().findByNombre("PEPE");<br>ClienteKey key = cliente.getPrimaryKey();<br></pre>
+
 
 
 
@@ -821,11 +1008,14 @@ de no serlo cambiarlo por <code>CustomeRemote</code>.
 
 
 
+
 <h4>Pruebas JUnit</h4>
 
 
 
+
 <ul>
+
 
 
 
@@ -838,7 +1028,9 @@ confirmaci&oacute;n. </li>
 
 
 
+
 </ul>
+
 
 
 
@@ -846,7 +1038,9 @@ confirmaci&oacute;n. </li>
 
 
 
+
 <ul>
+
 
 
 
@@ -856,7 +1050,9 @@ regenera c&oacute;digo). </li>
 
 
 
+
 </ul>
+
 
 
 
@@ -864,11 +1060,14 @@ regenera c&oacute;digo). </li>
 
 
 
+
 <h4>APIs</h4>
 
 
 
+
 <ul>
+
 
 
 
@@ -877,8 +1076,10 @@ MetaView.getMetaCollectionView </li>
 
 
 
+
   <li>MetaView.getMetaViewReference pasa a llamarse
 MetaView.getMetaReferenceView </li>
+
 
 
 
@@ -886,7 +1087,9 @@ MetaView.getMetaReferenceView </li>
 
 
 
+
 <h4>Pruebas junit</h4>
+
 
 
 
@@ -894,9 +1097,11 @@ MetaView.getMetaReferenceView </li>
 
 
 
+
   <li> Se cambia el mensaje 'Objeto borrado satisfactoriamente' por
 '{0} borrado satisfactoriamente'. As&iacute; es necesario cambiar los
 asserts de este mensaje. </li>
+
 
 
 
