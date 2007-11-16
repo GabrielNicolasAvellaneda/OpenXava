@@ -762,7 +762,8 @@
 					<include name="**/*.jar"/> 
 				</fileset> 
 				<fileset dir="web/WEB-INF/lib"> 
-					<include name="**/*.jar"/> 
+					<include name="**/*.jar"/>
+					<exclude name="openxava.jar"/>
 				</fileset> 
 				<pathelement path="${generator.dir};${tl.lib};${j2ee.lib};${logging.lib};../${project}/${classes.dir};${xava.generator.path}"/> 
 			</classpath> 			
