@@ -162,7 +162,7 @@
 		</members>
 		
 	</view>	
-	
+	      
 	<view>
 	
 		<reference-view reference="customer" view="Simple"/>
@@ -187,8 +187,8 @@
 			<section name="deliveries">deliveries</section>
 		</members>			
 		
-	</view>
-	
+	</view>		
+		
 	<view name="NestedSections">
 		<reference-view reference="customer" view="Simple"/>
 		
@@ -253,7 +253,7 @@
 			deliveries
 		</members>						
 	</view>
-	
+	 
 	<view name="Amounts">
 		<members>
 			year, number;
@@ -263,7 +263,7 @@
 			</group>			
 		</members>
 	</view>
-		
+	
 	<tab>
 		<properties>year, number, date, amountsSum, vat, detailsCount, paid, importance</properties>
 	</tab>

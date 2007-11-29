@@ -60,19 +60,19 @@ public class JetSpeed2Style extends Style {
 		return "PTitleContent";
 	}	
 	
-	public String getFrame() {
+	public String getFrame() { // tmp hacer proctected
 		return "frame";
 	}
 	
-	public String getFrameTitle() {
+	public String getFrameTitle() { // tmp hacer proctected
 		return "PTitle";
 	}
 	
-	public String getFrameTitleLabel() {
+	public String getFrameTitleLabel() { // tmp hacer proctected
 		return "PTitleContent";
 	}
 	
-	public String getFrameContent() {
+	public String getFrameContent() { // tmp hacer proctected
 		return "PContent";
 	}
 		

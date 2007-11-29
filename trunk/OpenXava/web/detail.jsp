@@ -26,13 +26,13 @@ propertyPrefix = (propertyPrefix == null || propertyPrefix.equals(""))?"xava." +
 <%
 Iterator it = view.getMetaMembers().iterator();
 String sfirst = request.getParameter("first");
-boolean first = !"false".equals(sfirst); 
+boolean first = !"false".equals(sfirst);
 boolean lastWasEditor = false;
 while (it.hasNext()) {
 	Object m = it.next();
 	if (m instanceof MetaProperty) {		
 		MetaProperty p = (MetaProperty) m;		
-		if (!PropertiesSeparator.INSTANCE.equals(m)) {	
+		if (!PropertiesSeparator.INSTANCE.equals(m)) {			
 			boolean hasFrame = WebEditors.hasFrame(p);		
 			lastWasEditor = !hasFrame;
 			String propertyKey= propertyPrefix + p.getName();
@@ -46,7 +46,8 @@ while (it.hasNext()) {
 <%
 			first = false;
 		}
-		else { 
+		else {
+			if (!it.hasNext()) break; 					
 			first = true;						
 			if (lastWasEditor && !view.isAlignedByColumns()) { 	
 			%>
@@ -62,7 +63,7 @@ while (it.hasNext()) {
 	else {
 		lastWasEditor = false;
 	  	if (m instanceof MetaReference) {
-			MetaReference ref = (MetaReference) m;
+			MetaReference ref = (MetaReference) m;			
 			if (view.displayAsDescriptionsList(ref)) {
 				lastWasEditor = true;
 				String referenceKey = propertyPrefix +  ref.getName();
@@ -75,7 +76,7 @@ while (it.hasNext()) {
 	<%
 				first = false;		
 			}
-			else {
+			else {				
 				String viewName = viewObject + "_" + ref.getName();
 				View subview = view.getSubview(ref.getName());
 				context.put(request, viewName, subview);
@@ -94,44 +95,31 @@ while (it.hasNext()) {
 				if (withFrame) { 
 					String labelKey = propertyPrefix + ref.getName() + "_LABEL_";
 					String label = view.getLabelFor(ref);
-	%>				
-		<table class="<%=style.getFrame()%>" style="float:left; margin-right:4px" <%=style.getFrameSpacing()%>>
-		<tr class="<%=style.getFrameTitle()%>"><th align='left' class="<%=style.getFrameTitleLabel()%>">
-			<%=style.getFrameTitleStartDecoration()%>
-			<span id="<%=labelKey%>"><%=label%></span>
-			<%=style.getFrameTitleEndDecoration()%>
-		</th></tr>
-		<tr><td class="<%=style.getFrameContent()%>">
-	<%				} // withFrame
+	%>						 
+		<%=style.getFrameStartDecoration(label, labelKey) %>		
+	<%			} // withFrame
 		%>	
 		<jsp:include page="detail.jsp"> 
 			<jsp:param name="viewObject" value="<%=viewName%>" />
 			<jsp:param name="propertyPrefix" value="<%=propertyInReferencePrefix%>" />
 			<jsp:param name="first" value="<%=firstForSubdetail%>" /> 
-		</jsp:include>	
-	<%				if (withFrame) {
-		%>				
-		</td></tr>
-		</table>		
+		</jsp:include>			
+	<%			if (withFrame) {
+		%>			
+		<%=style.getFrameEndDecoration() %>
 		<%
 				} // withFrame
 			}
 			first = false; 
 		} else if (m instanceof MetaCollection) {
-			MetaCollection collection = (MetaCollection) m;
+			MetaCollection collection = (MetaCollection) m;			
 			String urlCollection = "collection.jsp";
 			boolean withFrame = !view.isSection() || view.getMetaMembers().size() > 1;
 		%>
 		<tr><td colspan="4">		
 	<%			if (withFrame) {
 		%>	
-		<table class="<%=style.getFrame()%>" width='100%' <%=style.getFrameSpacing()%>>
-		<tr class="<%=style.getFrameTitle()%>"><th align='left' class=<%=style.getFrameTitleLabel()%>>
-			<%=style.getFrameTitleStartDecoration()%>
-			<%=collection.getLabel(request)%>
-			<%=style.getFrameTitleEndDecoration()%>
-		</th></tr>
-		<tr><td class="<%=style.getFrameContent()%>">		
+		<%=style.getFrameStartDecoration(collection.getLabel(request))%>
 	<%			} // withFrame
 		%>	
 		<jsp:include page="<%=urlCollection%>"> 
@@ -139,12 +127,11 @@ while (it.hasNext()) {
 			<jsp:param name="viewObject" value="<%=viewObject%>"/>			
 		</jsp:include>
 	<%			if (withFrame) {
-		%>			
-		</td></tr>
-		</table>		
+		%>
+		<%=style.getFrameEndDecoration()%>			
 	<%			} // withFrame
 		} else if (m instanceof MetaGroup) {
-			MetaGroup group = (MetaGroup) m;
+			MetaGroup group = (MetaGroup) m;			
 			String viewName = viewObject + "_" + group.getName();
 			View subview = view.getGroupView(group.getName());			
 			context.put(request, viewName, subview);
@@ -155,21 +142,13 @@ while (it.hasNext()) {
 		%>
 		<tr><td colspan="4">
 		<% }  %>
-		<table class="<%=style.getFrame()%>" style="float:left; margin-right:4px" <%=style.getFrameSpacing()%>>
-		<tr class="<%=style.getFrameTitle()%>">
-		<th align='left' class="<%=style.getFrameTitleLabel()%>">
-		<%=style.getFrameTitleStartDecoration()%>
-		<%=group.getLabel(request)%>
-		<%=style.getFrameTitleEndDecoration()%>
-		</th>
-		</tr>
-				
-		<tr><td class="<%=style.getFrameContent()%>">
+		
+		<%=style.getFrameStartDecoration(group.getLabel(request)) %>
 		<jsp:include page="detail.jsp">
 			<jsp:param name="viewObject" value="<%=viewName%>" />
 		</jsp:include>
-		</td></tr>
-		</table>		
+		<%=style.getFrameEndDecoration() %>
+		
 	<%
 		}
 	} // if is not MetaProperty
@@ -177,10 +156,12 @@ while (it.hasNext()) {
 %>
 <% if (lastWasEditor) { %>
 		<% if (!view.isRepresentsEntityReference() || view.isFrame()) { %> </tr></table> <% } %>
-			</td>
+			</td>			
 <% } %>
 
-<% if (view.isFrame()) { %>
+<% 
+	if (view.isFrame() && !(view.isSection() && view.getMembersNames().size() == 1) ) {
+%>
 </tr>
 </table>
 <% } %>

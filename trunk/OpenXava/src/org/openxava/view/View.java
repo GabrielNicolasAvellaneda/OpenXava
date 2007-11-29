@@ -3013,7 +3013,7 @@ public class View implements java.io.Serializable {
 	
 	
 	public boolean isFrame() throws XavaException {		
-		return getMetaView().isFrame(); 
+		return getMetaView().isFrame();
 	}
 		
 	public String getFocusPropertyId() {		

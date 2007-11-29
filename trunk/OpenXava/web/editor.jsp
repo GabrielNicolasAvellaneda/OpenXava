@@ -30,8 +30,10 @@ String labelKey = propertyKey + "_LABEL_";
 int labelFormat = view.getLabelFormatForProperty(p);
 String label = view.getLabelFor(p);
 %>
-
 <%@ include file="htmlTagsEditor.jsp"%>
+<%  
+if (first && !view.isAlignedByColumns()) label = org.openxava.util.Strings.change(label, " ", "&nbsp;");
+%>
 
 <%=preLabel%>
 <% if (labelFormat == MetaPropertyView.NORMAL_LABEL) { %>

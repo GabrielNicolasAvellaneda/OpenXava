@@ -77,24 +77,23 @@ public class WebSpherePortalStyle extends Style {
 		return "wpsTable";
 	}	
 	
-	public String getFrame() {
+	public String getFrame() { // tmp hacer proctected
 		return "";
 	}
 	
-	public String getFrameTitle() {
+	public String getFrameTitle() { // tmp hacer proctected
 		return "wpsPortletTitle";
 	}
 	
-
-	public String getFrameTitleLabel() {
+	public String getFrameTitleLabel() { // tmp hacer proctected
 		return "websphere-frame-title-label";
 	}
 	
-	public String getFrameContent() {
+	public String getFrameContent() { // tmp hacer proctected
 		return "wpsPortletBorder";
 	}
 	
-	public String getFrameSpacing() {
+	public String getFrameSpacing() { // tmp hacer proctected
 		return "border=0 cellspacing=0 cellpadding=2";
 	}
 	
