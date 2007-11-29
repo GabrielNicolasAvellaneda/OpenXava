@@ -147,39 +147,75 @@ public class Style {
 	public String getListTitleWrapper() {
 		return "";
 	}
+	
+	public String getFrameStartDecoration(String label) { // tmp
+		return getFrameStartDecoration(label, null);
+	}
+	
+	public String getFrameStartDecoration(String label, String labelKey) { // tmp
+		StringBuffer r = new StringBuffer(); 
+		r.append("<table class='"); 
+		r.append(getFrame());
+		r.append("' style='float:left; margin-right:4px'"); 
+		r.append(getFrameSpacing());
+		r.append(">");
+		r.append("<tr class='");
+		r.append(getFrameTitle()); 
+		r.append("'>");
+		r.append("<th align='left' class='");
+		r.append(getFrameTitleLabel());
+		r.append("'>\n");
+		r.append(getFrameTitleStartDecoration());
+		if (label != null) {
+			r.append("<span id='");
+			r.append(labelKey);
+			r.append("'>");
+		}
+		r.append(label);
+		if (label != null) r.append("</span>");
+		r.append(getFrameTitleEndDecoration());
+		r.append("</th></tr><tr><td class='");
+		r.append(getFrameContent());
+		r.append("'>\n");
+		return r.toString();
+	}
+	
+	public String getFrameEndDecoration() { // tmp
+		return "\n</td></tr></table>";		
+	}		
 		
-	public String getFrame() {
+	public String getFrame() { // tmp hacer protected
 		return "frame";
 	}
 	
-	public String getFrameTitle() { 
+	public String getFrameTitle() { // tmp hacer protected 
 		return getFrame();
 	}
 	
-	public String getFrameTitleLabel() {
+	public String getFrameTitleLabel() { // tmp hacer protected
 		return getFrameTitle();
 	}
 	
-	public String getFrameTitleStartDecoration(Align align) {
+	public String getFrameTitleStartDecoration(Align align) { // tmp hacer protected
 		return ""; 
 	}
 	
 	/**
 	 * Aligned to the left by default.
 	 */
-	public String getFrameTitleStartDecoration() {
+	public String getFrameTitleStartDecoration() { // tmp hacer protected
 		return getFrameTitleStartDecoration(Align.LEFT);
 	}
 	
-	public String getFrameTitleEndDecoration() {
+	public String getFrameTitleEndDecoration() { // tmp hacer protected
 		return "";
 	}
 		
-	public String getFrameContent() {
+	public String getFrameContent() { // tmp hacer protected
 		return getFrame();
 	}
 	
-	public String getFrameSpacing() {
+	public String getFrameSpacing() { // tmp hacer protected
 		return "";
 	}
 		

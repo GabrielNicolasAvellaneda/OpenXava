@@ -8,17 +8,8 @@ String collectionLabel = (String) context.get(request, "xava_currentCollectionLa
 String rowAction = request.getParameter("rowAction");
 %>
 
-<table class="<%=style.getFrame()%>" style="float:left; margin-right:4px" <%=style.getFrameSpacing()%>>
-<tr class="<%=style.getFrameTitle()%>"><th align='left' class="<%=style.getFrameTitleLabel()%>">
-	<%=style.getFrameTitleStartDecoration()%>
-	<xava:message key="add_to_collection_prompt" param="<%=collectionLabel%>"/>
-	<%=style.getFrameTitleEndDecoration()%>
-</th></tr>
-<tr><td class="<%=style.getFrameContent()%>">
-
+<%=style.getFrameStartDecoration(org.openxava.util.XavaResources.getString(request, "add_to_collection_prompt", collectionLabel)) %>
 <jsp:include page="list.jsp">
 	<jsp:param name="rowAction" value="<%=rowAction%>"/>
 </jsp:include>
-
-</td></tr>
-</table>
+<%=style.getFrameEndDecoration()%>

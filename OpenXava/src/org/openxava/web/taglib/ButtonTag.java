@@ -37,16 +37,16 @@ public class ButtonTag extends TagSupport implements IActionTag{
 			pageContext.getOut().print("xava.action.");
 			pageContext.getOut().print(getAction());
 			pageContext.getOut().println("' type='hidden'/>");			
-			pageContext.getOut().print("<button id='");
+			pageContext.getOut().print("<input type='button' id='"); 
 			pageContext.getOut().print(getAction());
 			pageContext.getOut().println("'");
 			pageContext.getOut().print(" title='");
 			pageContext.getOut().print(metaAction.getKeystroke() + " - " + metaAction.getDescription(request));
 			pageContext.getOut().print("'");
-			pageContext.getOut().print(" class=");
+			pageContext.getOut().print(" class='");
 			Style style = (Style) request.getAttribute("style");
 			pageContext.getOut().print(style.getButton());
-			pageContext.getOut().print("\tonclick='executeXavaAction(");
+			pageContext.getOut().print("'\tonclick='executeXavaAction(");
 			pageContext.getOut().print('"');				
 			pageContext.getOut().print(metaAction.getConfirmMessage(request));
 			pageContext.getOut().print('"');
@@ -62,10 +62,9 @@ public class ButtonTag extends TagSupport implements IActionTag{
 				pageContext.getOut().print(getArgv());
 				pageContext.getOut().print('"');
 			}
-			pageContext.getOut().println(")'>");
-			pageContext.getOut().print("\t");
+			pageContext.getOut().println(")' value='");
 			pageContext.getOut().println(metaAction.getLabel(request));
-			pageContext.getOut().println("</button>");
+			pageContext.getOut().println("'/>");
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);

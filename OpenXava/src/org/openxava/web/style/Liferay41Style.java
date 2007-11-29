@@ -2,46 +2,33 @@ package org.openxava.web.style;
 
 import org.openxava.util.*;
 
-/*
- * 					Classic		Brochure	Negria		Standalone	Lf41	Lf42	WPS6	
- * Formulario		x			x			x			x
- * Grupos			x			x			x			x
- * Secciones		x			x			x			x
- * Referencias		x			x			x			x
- * Colecciones
- * Galería Imag.
- * Ed. enmarcables
- * Botones			x			x			x			x
- * Botonera
- * Vínculos			x			x			x			x
- * Lista
- * 
- */
+
 
 
 /**
  * 
- * @author Javier Paniza
+ * @author José Luis Santiago
  */ 
 
-public class LiferayStyle extends Style {
+public class Liferay41Style extends Style {
 	
-	private static LiferayStyle instance = null;
+	private static Liferay41Style instance = null;
 
 	
 	
-	protected LiferayStyle() {
+	protected Liferay41Style() {
 	}
 	
 	public static Style getInstance() {
 		if (instance == null) {
-			instance = new LiferayStyle();
+			instance = new Liferay41Style();
 		}
 		return instance;
 	}
 		
 	public String getModule() {
-		return ""; // done		
+		//return "portlet-font"; No, because usually link style is ugly, and not coherent with the portal
+		return ""; // The portal default style is used
 	}
 	
 	public String getModuleSpacing() {
@@ -94,7 +81,7 @@ public class LiferayStyle extends Style {
 	}
 	
 	public String getDetail() {
-		return "liferay-table"; // done		
+		return "";
 	}
 			
 	public String getList() { 
@@ -164,54 +151,33 @@ public class LiferayStyle extends Style {
 	private String getListCell() { 
 		return "liferay-xava-cell-wrapper";		
 	}
+	
 		
-	public String getFrameStartDecoration(String label, String labelKey) { // tmp
-		StringBuffer r = new StringBuffer();
-		r.append("<table style='float:left; clear:none'><tr><td>\n");
-		r.append("<div class='portlet'><div class='portlet-topper'><span class='portlet-title'>");
-		if (labelKey != null) {
-			r.append("<span id='");
-			r.append(labelKey);
-			r.append("'>");
-		}
-		r.append(label);
-		if (labelKey != null) r.append("</span>");
-		r.append("</span></div><div class='portlet-content'><div class='portlet-content-container'>\n");
-		return r.toString();		
-	}
-	public String getFrameEndDecoration() { // tmp
-		return "\n</div></div></div></td></tr></table>";
-
-	}		
-		
-	public String getFrame() {
-		return "portlet"; // tmp 
+	public String getFrame() { // tmp hacer proctected
+		return ""; 
 	}
 	
-	public String getFrameTitle() {
-		return "portlet-topper"; // tmp
-	}
-	
-	public String getFrameTitleLabel() {
-		// tmp return "liferay-xava-frame-header";
+	public String getFrameTitle() { // tmp hacer proctected
 		return "";
 	}
 	
-	public String getFrameTitleStartDecoration(Align align) {
-		return "<span class='portlet-title'>"; // tmp
-		//return "";
+	public String getFrameTitleLabel() { // tmp hacer proctected
+		return "liferay-xava-frame-header";
 	}
 	
-	public String getFrameTitleEndDecoration() {
-		return "</span>"; // tmp
-		//return "";
+	public String getFrameTitleStartDecoration(Align align) { // tmp hacer proctected
+		return "<table class='portlet-header-bar' style='position: static' cellpadding=0 cellspacing=0 width=100%><tr><td class='portlet-header-left' style='position: static' width=1>&nbsp;</td><td align='" + align.getDescription() + "'>";
+	}
+	
+	public String getFrameTitleEndDecoration() { // tmp hacer proctected
+		return "</td><td class='portlet-header-right' style='position: static' width=1>&nbsp;</td></tr></table>";
 	}
 
-	public String getFrameContent() {
+	public String getFrameContent() { // tmp hacer proctected
 		return "liferay-xava-frame-core"; 
 	}
 	
-	public String getFrameSpacing() {
+	public String getFrameSpacing() { // tmp hacer proctected
 		return "cellpadding='0' cellspacing='0'";
 	}
 		
@@ -245,7 +211,7 @@ public class LiferayStyle extends Style {
 	}
 			
 	public String getButton() {
-		return ""; // done
+		return "portlet-form-button";
 	}
 	
 	public String getAscendingImage() {
@@ -273,18 +239,18 @@ public class LiferayStyle extends Style {
 	}
 	
 	public String getSectionBarStartDecoration() {
-		return "<td style='padding-top: 4px;'><ul class='tabs'>"; // tmp
+		return "<td><ul class='gamma-tab'>";
 	}
 	public String getSectionBarEndDecoration() {	
 		return "</ul></td>";
 	}
 		
 	public String getActiveSectionTabStartDecoration() {
-		return "<li class='current'><a href='javascript:void(0)'>"; // tmp
+		return "<li class='current'>";
 	}
 	
 	public String getActiveSectionTabEndDecoration() {
-		return "</a></li>";	 // tmp 	
+		return "</li>";		
 	}
 	
 	public String getSectionTabStartDecoration() {

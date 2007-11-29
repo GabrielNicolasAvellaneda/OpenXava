@@ -24,8 +24,8 @@ else if (first && !view.isAlignedByColumns()) {
 	preLabel="<td style='vertical-align: middle;text-align: left' class='" + style.getLabel() + "' id=" + labelKey + " >";
 	postLabel="</td>";
 	preIcons="<td style='vertical-align: middle'>";
-	postIcons="</td>";
-	preEditor="<td style='vertical-align: middle'><table border='0' cellpadding='" + org.openxava.util.XavaPreferences.getInstance().getFormLineSpacing() + "' cellspacing='0'><tr><td style='vertical-align: middle'>";		
+	postIcons="</td>";	
+	preEditor="<td style='vertical-align: middle; width: 99%'><table border='0' cellpadding='" + org.openxava.util.XavaPreferences.getInstance().getFormLineSpacing() + "' cellspacing='0'><tr><td style='vertical-align: middle'>";		
 	postEditor="</td>";
 } 
 else {

@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+
+- Fix: Removed warning 'Trying to load controller .. twice' on generating portlets.
 - XHibernate supports multischema and different configuration by thread.
 - Fix: Code generator works with Java 1.4 (broken in 2.2.3).
 - It's possible to mark a property as search key to be used for indicating which properties will be used for searching.

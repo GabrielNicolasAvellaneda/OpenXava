@@ -169,6 +169,7 @@
 		<reference name="state" key="true"/>
 	</aggregate>
 	
+	
 	<view>
 		<!-- 
 		For overwrite the label better resource files.
@@ -259,7 +260,7 @@
 	</view>		
 	
 	<view name="Simplest" members="number; name"/>
-		
+  	 	
 	<view name="Simple">
 		<members>
 			number; 
@@ -268,7 +269,7 @@
 			address;
 		</members>
 	</view>
-	
+					
 	<view name="SimpleWithDeliveryPlaces" members="number; type; name; address; deliveryPlaces"/>
 	
 	<view name="SimpleStateAsForm" members="number; type; name; address">
@@ -340,7 +341,7 @@
 			</group>
 		</members>
 	</view>	
-					
+					 				
 	<view model="Address">
 				
 		<property name="viewProperty" type="String"/>
