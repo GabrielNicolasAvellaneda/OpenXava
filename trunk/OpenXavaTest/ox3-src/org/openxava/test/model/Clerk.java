@@ -5,7 +5,6 @@ import javax.persistence.*;
 import org.hibernate.annotations.Type;
 import org.openxava.annotations.*;
 import org.openxava.jpa.*;
-import org.openxava.util.*;
 
 /**
  * @author Javier Paniza

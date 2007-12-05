@@ -1,6 +1,8 @@
 package org.openxava.web.style;
 
-
+/**
+ * @author Javier Paniza
+ */
 
 
 public class JetSpeed2Style extends Style {
@@ -60,19 +62,19 @@ public class JetSpeed2Style extends Style {
 		return "PTitleContent";
 	}	
 	
-	public String getFrame() { // tmp hacer proctected
+	protected String getFrame() {
 		return "frame";
 	}
 	
-	public String getFrameTitle() { // tmp hacer proctected
+	protected String getFrameTitle() { 
 		return "PTitle";
 	}
 	
-	public String getFrameTitleLabel() { // tmp hacer proctected
+	protected String getFrameTitleLabel() { 
 		return "PTitleContent";
 	}
 	
-	public String getFrameContent() { // tmp hacer proctected
+	protected String getFrameContent() { 
 		return "PContent";
 	}
 		

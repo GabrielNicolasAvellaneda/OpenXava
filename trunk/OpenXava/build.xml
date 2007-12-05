@@ -652,6 +652,12 @@
   		</copy>					
 	</target>
 	
+	<target name="copyI18nPortletsToClasses" if="ox3">
+  		<copy todir="../${project}/${classes.dir}/portlets" failonerror="false">
+    		<fileset dir="../${project}/i18n/portlets"/>
+  		</copy>					
+	</target>	
+	
 	<target name="filter" depends="filterXavaFiles, filterHibernateFiles, filterI18n, updateDataSourceInfo" unless="ox3">
 		<copy todir="../${project}/${classes.dir}">
 			<fileset dir="../${project}/filtered-files"/>
@@ -777,6 +783,7 @@
 		
 	<target name="createPortletsWar" depends="initPortlets, generatePortletXml">		
 		<antcall target="prepareWar"/>
+		<antcall target="copyI18nPortletsToClasses"/>
 		<mkdir dir="${dist.portlets.dir}"/>		
 		<copy todir="${dist.portlets.dir}/WEB-INF">
 			<fileset dir="web/WEB-INF"/>

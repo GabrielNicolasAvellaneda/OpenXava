@@ -8,8 +8,13 @@ String collectionLabel = (String) context.get(request, "xava_currentCollectionLa
 String rowAction = request.getParameter("rowAction");
 %>
 
-<%=style.getFrameStartDecoration(org.openxava.util.XavaResources.getString(request, "add_to_collection_prompt", collectionLabel)) %>
+<%=style.getFrameHeaderStartDecoration()%>
+<%=style.getFrameTitleStartDecoration()%>
+<xava:message key="add_to_collection_prompt" param="<%=collectionLabel%>"/>
+<%=style.getFrameTitleEndDecoration()%>
+<%=style.getFrameHeaderEndDecoration()%>
+<%=style.getFrameContentStartDecoration()%>
 <jsp:include page="list.jsp">
 	<jsp:param name="rowAction" value="<%=rowAction%>"/>
 </jsp:include>
-<%=style.getFrameEndDecoration()%>
+<%=style.getFrameContentEndDecoration()%>

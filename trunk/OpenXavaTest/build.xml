@@ -111,7 +111,21 @@
 		<ant antfile="../OpenXava/build.xml" target="generatePortlets">
 			<property name="ox3" value="true"/>
 		</ant>
-	</target>		
+	</target>
+	
+	<target name="redeployOX3Portlets"> 
+		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
+		<ant antfile="../OpenXava/build.xml" target="redeployPortlets">
+			<property name="ox3" value="true"/>
+		</ant>
+	</target>	
+	
+	<target name="deployOX3Portlets"> 
+		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
+		<ant antfile="../OpenXava/build.xml" target="deployPortlets">
+			<property name="ox3" value="true"/>
+		</ant>
+	</target>
 		
 	<target name="all">
 		<ant antfile="../OpenXava/build.xml" target="generateHibernate"/>

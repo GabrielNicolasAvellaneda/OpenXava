@@ -13,12 +13,12 @@ String postEditor=null;
 
 
 if (hasFrame) {
-	preLabel="<tr><td colspan=4><table class=" + style.getFrame() + " width='100%' " + style.getFrameSpacing() + "><tr class=" + style.getFrameTitle() + "><th align='left' class='" + style.getFrameTitleLabel() + "' id=" + labelKey + " >" + style.getFrameTitleStartDecoration();
+	preLabel="<tr><td colspan=4>" + style.getFrameHeaderStartDecoration() + style.getFrameTitleStartDecoration();
 	postLabel="";
 	preIcons="";
-	postIcons="&nbsp;" + style.getFrameTitleEndDecoration(); 
-	preEditor="</th></tr><tr><td class=" + style.getFrameContent() + ">";
-	postEditor="</td></tr></table>";
+	postIcons="&nbsp;" + style.getFrameTitleEndDecoration() + style.getFrameHeaderEndDecoration(); 
+	preEditor=style.getFrameContentStartDecoration();
+	postEditor=style.getFrameContentEndDecoration() + "</td>";	
 }
 else if (first && !view.isAlignedByColumns()) { 
 	preLabel="<td style='vertical-align: middle;text-align: left' class='" + style.getLabel() + "' id=" + labelKey + " >";

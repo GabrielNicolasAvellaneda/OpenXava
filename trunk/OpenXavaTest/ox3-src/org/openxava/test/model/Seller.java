@@ -23,7 +23,7 @@ import org.openxava.annotations.*;
 		"customers { customers }"
 	),
 	@View(name="CustomersAsAggregate", members="number; name; level; customers"),
-	@View(name="LevelNoDescriptionsList", members="number; name; level")
+	@View(name="LevelNoDescriptionsList", members="number; name; level")		
 })
 @Tab(filter=org.openxava.test.filters.NumbersToLettersFilter.class)
 

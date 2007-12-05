@@ -106,7 +106,7 @@ import org.openxava.jpa.*;
 public class Delivery {
 	
 	@Id @Column(length=5)
-	@Action(forViews="DEFAULT, MoreSections", value="Delivery.generateNumber")
+	@Action(forViews="DEFAULT, MoreSections", value="Delivery.generateNumber")	
 	private int number;
 
 	

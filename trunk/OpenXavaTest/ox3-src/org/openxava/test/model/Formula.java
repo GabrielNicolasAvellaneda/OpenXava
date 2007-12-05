@@ -5,7 +5,6 @@ import java.util.*;
 import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.*;
 import org.openxava.annotations.*;
 
 /**

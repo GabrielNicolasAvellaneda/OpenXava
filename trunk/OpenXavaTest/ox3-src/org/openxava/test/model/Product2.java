@@ -89,8 +89,7 @@ public class Product2 {
 		@PropertyValue(name="value", value="2")
 	)
 	@DescriptionsList(orderByKey=true)
-	private Family2 family;
-	
+	private Family2 family;	
 	
 	@ManyToOne(optional=false, fetch=FetchType.LAZY) @JoinColumn(name="SUBFAMILY") @NoCreate
 	@DescriptionsList(

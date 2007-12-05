@@ -1,6 +1,8 @@
 Change Log for OpenXava 3
 =========================
 
+- Fix: Resource bundle on portlet generation is not in the resulting war at first time.
+
 OpenXava 3.0beta4 (2007-11-15)
 -----------------------------
 - Chapter 3 (Model) of Reference Guide available in HTML and PDF.

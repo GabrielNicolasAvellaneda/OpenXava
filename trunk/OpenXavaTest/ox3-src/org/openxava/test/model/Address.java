@@ -12,10 +12,10 @@ import org.openxava.annotations.*;
 @Views ({
 	@View( members =
 		"viewProperty;" +
-		"street, zipCode;" +
+		"street, zipCode;" +		
 		"city [" +
 		"	city, state;" +
-		"]"
+		"]"		
 	),
 	@View( name="StateAsForm" )
 })
