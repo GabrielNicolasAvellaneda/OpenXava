@@ -42,7 +42,7 @@ import org.openxava.test.actions.*;
 		"photo;" +
 		"address;"
 	),
-	
+		
 	@View( name="Simplest", members="number; name" ),
 
 	@View( name="WithSection", members=	
@@ -88,7 +88,7 @@ import org.openxava.test.actions.*;
 	
 	@View( name="SimpleWithDeliveryPlaces", members="number; type; name; address; deliveryPlaces" ),
 	
-	@View( name="SellerAsAggregate2Levels", members="number; type; name; address; seller" ),
+	@View( name="SellerAsAggregate2Levels", members="number; type; name; address; seller" ),	
 	
 	@View( name="TypeWithRadioButton", members=	"number; data [	type; name;	address; ]" )
 	

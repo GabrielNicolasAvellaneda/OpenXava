@@ -145,7 +145,7 @@ public class Invoice {
 	private boolean paid;
 		
 	@ManyToOne(fetch=FetchType.LAZY, optional=false)
-	@ReferenceView("Simple")
+	@ReferenceView("Simple")	
 	private Customer customer;
 		
 	@OneToMany (mappedBy="invoice", cascade=CascadeType.REMOVE)

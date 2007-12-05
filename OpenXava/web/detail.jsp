@@ -27,6 +27,8 @@ propertyPrefix = (propertyPrefix == null || propertyPrefix.equals(""))?"xava." +
 Iterator it = view.getMetaMembers().iterator();
 String sfirst = request.getParameter("first");
 boolean first = !"false".equals(sfirst);
+String slast = request.getParameter("last");
+boolean last = !"false".equals(slast);
 boolean lastWasEditor = false;
 while (it.hasNext()) {
 	Object m = it.next();
@@ -96,17 +98,24 @@ while (it.hasNext()) {
 					String labelKey = propertyPrefix + ref.getName() + "_LABEL_";
 					String label = view.getLabelFor(ref);
 	%>						 
-		<%=style.getFrameStartDecoration(label, labelKey) %>		
+		<%=style.getFrameHeaderStartDecoration() %>
+		<%=style.getFrameTitleStartDecoration() %>
+		<span id="<%=labelKey%>"><%=label%></span>
+		<%=style.getFrameTitleEndDecoration() %>
+		<%=style.getFrameHeaderEndDecoration() %>
+		<%=style.getFrameContentStartDecoration() %>						
 	<%			} // withFrame
 		%>	
+		<%-- last parm --%>
 		<jsp:include page="detail.jsp"> 
 			<jsp:param name="viewObject" value="<%=viewName%>" />
 			<jsp:param name="propertyPrefix" value="<%=propertyInReferencePrefix%>" />
 			<jsp:param name="first" value="<%=firstForSubdetail%>" /> 
+			<jsp:param name="last" value="<%=!it.hasNext()%>" />
 		</jsp:include>			
 	<%			if (withFrame) {
 		%>			
-		<%=style.getFrameEndDecoration() %>
+		<%=style.getFrameContentEndDecoration() %>
 		<%
 				} // withFrame
 			}
@@ -119,7 +128,12 @@ while (it.hasNext()) {
 		<tr><td colspan="4">		
 	<%			if (withFrame) {
 		%>	
-		<%=style.getFrameStartDecoration(collection.getLabel(request))%>
+		<%=style.getFrameHeaderStartDecoration()%>
+		<%=style.getFrameTitleStartDecoration()%>
+		<%=collection.getLabel(request) %>
+		<%=style.getFrameTitleEndDecoration()%>
+		<%=style.getFrameHeaderEndDecoration()%>
+		<%=style.getFrameContentStartDecoration()%>
 	<%			} // withFrame
 		%>	
 		<jsp:include page="<%=urlCollection%>"> 
@@ -128,7 +142,7 @@ while (it.hasNext()) {
 		</jsp:include>
 	<%			if (withFrame) {
 		%>
-		<%=style.getFrameEndDecoration()%>			
+		<%=style.getFrameContentEndDecoration()%>			
 	<%			} // withFrame
 		} else if (m instanceof MetaGroup) {
 			MetaGroup group = (MetaGroup) m;			
@@ -142,12 +156,16 @@ while (it.hasNext()) {
 		%>
 		<tr><td colspan="4">
 		<% }  %>
-		
-		<%=style.getFrameStartDecoration(group.getLabel(request)) %>
+		<%=style.getFrameHeaderStartDecoration()%>
+		<%=style.getFrameTitleStartDecoration()%>
+		<%=group.getLabel(request)%>
+		<%=style.getFrameTitleEndDecoration()%>
+		<%=style.getFrameHeaderEndDecoration()%>
+		<%=style.getFrameContentStartDecoration() %>
 		<jsp:include page="detail.jsp">
 			<jsp:param name="viewObject" value="<%=viewName%>" />
 		</jsp:include>
-		<%=style.getFrameEndDecoration() %>
+		<%=style.getFrameContentEndDecoration() %>
 		
 	<%
 		}
@@ -155,12 +173,15 @@ while (it.hasNext()) {
 }
 %>
 <% if (lastWasEditor) { %>
-		<% if (!view.isRepresentsEntityReference() || view.isFrame()) { %> </tr></table> <% } %>
+		<% if (!(view.isRepresentsEntityReference() || view.isRepresentsAggregate()) || view.isFrame()) {
+		%> </tr></table> <% } %>
 			</td>			
 <% } %>
 
-<% 
-	if (view.isFrame() && !(view.isSection() && view.getMembersNames().size() == 1) ) {
+<% 	
+	if (view.isFrame() && 
+		!(last && view.getParent() != null && !view.getParent().isFrame()) && 
+		!(view.isSection() && view.getMembersNames().size() == 1)) {	
 %>
 </tr>
 </table>

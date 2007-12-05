@@ -59,31 +59,31 @@ public class WebSpherePortal6Style extends WebSpherePortalStyle {
 		return "</li>";		
 	}
 
-	public String getFrame() { // tmp hacer proctected
+	protected String getFrame() { 
 		return "wpsPortlet";
 	}
 	
-	public String getFrameTitle() { // tmp hacer proctected
+	protected String getFrameTitle() { 
 		return "wpsPortletTitleBar";
 	}
 		
-	public String getFrameTitleLabel() { // tmp hacer proctected
+	protected String getFrameTitleLabel() { 
 		return "websphere-frame-title-label";
 	}
 	
-	public String getFrameTitleStartDecoration() { // tmp hacer proctected
+	public String getFrameTitleStartDecoration() { 
 		return "<div style='width:100%;'>";
 	}
 	
-	public String getFrameTitleEndDecoration() { // tmp hacer proctected
+	public String getFrameTitleEndDecoration() { 
 		return "<img alt='' style='border:0; text-align: right;' width='1' height='22' src='/wps/skins/html/IBM/title_minheight.gif'></div>";
 	}
 	
-	public String getFrameContent() { // tmp hacer proctected
+	protected String getFrameContent() { 
 		return "wpsPortletBody";
 	}
 	
-	public String getFrameSpacing() { // tmp hacer proctected
+	protected String getFrameSpacing() { 
 		return "border=0 cellspacing=0 cellpadding=2"; 		
 	}
 				

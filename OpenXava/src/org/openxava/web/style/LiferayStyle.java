@@ -1,21 +1,22 @@
 package org.openxava.web.style;
 
-import org.openxava.util.*;
-
 /*
  * 					Classic		Brochure	Negria		Standalone	Lf41	Lf42	WPS6	
  * Formulario		x			x			x			x
- * Grupos			x			x			x			x
  * Secciones		x			x			x			x
- * Referencias		x			x			x			x
- * Colecciones
- * Galería Imag.
- * Ed. enmarcables
+ * Grupos			x			x			x			x											
+ * Referencias		x			x			x			x			
+ * Detall. colec.	x			x			x			x
+ * Galería Imag.	x			x			x			x
+ * Ed. enmarcables	x			x			x			x
  * Botones			x			x			x			x
+ * Colecciones
  * Botonera
  * Vínculos			x			x			x			x
  * Lista
  * 
+ * Buscar tmps and dones
+ * Probar CustomerContactPersonAsAggregate3Levels
  */
 
 
@@ -164,57 +165,35 @@ public class LiferayStyle extends Style {
 	private String getListCell() { 
 		return "liferay-xava-cell-wrapper";		
 	}
-		
-	public String getFrameStartDecoration(String label, String labelKey) { // tmp
-		StringBuffer r = new StringBuffer();
-		r.append("<table style='float:left; clear:none'><tr><td>\n");
-		r.append("<div class='portlet'><div class='portlet-topper'><span class='portlet-title'>");
-		if (labelKey != null) {
-			r.append("<span id='");
-			r.append(labelKey);
-			r.append("'>");
-		}
-		r.append(label);
-		if (labelKey != null) r.append("</span>");
-		r.append("</span></div><div class='portlet-content'><div class='portlet-content-container'>\n");
-		return r.toString();		
-	}
-	public String getFrameEndDecoration() { // tmp
-		return "\n</div></div></div></td></tr></table>";
 
+	public String getFrameHeaderStartDecoration() { // done
+		
+		return "<table style='float:left; clear:none'><tr><td>\n" +
+			"<div class='portlet'><div class='portlet-topper'>";		
+	}	
+	public String getFrameHeaderEndDecoration() { // done
+		return "</div>"; 
+	}
+	public String getFrameTitleStartDecoration() { // done
+		return "<span class='portlet-title'>";
+	}	
+	public String getFrameTitleEndDecoration() { // done
+		return "</span>";
+	}
+	public String getFrameActionsStartDecoration() { // done
+		return "<div class='portlet-icons'>";
+	}	
+	public String getFrameActionsEndDecoration() { // done
+		return "</div>";
 	}		
 		
-	public String getFrame() {
-		return "portlet"; // tmp 
+	public String getFrameContentStartDecoration() { // done		
+		return "<div class='portlet-content'><div class='portlet-content-container'>\n";
 	}
-	
-	public String getFrameTitle() {
-		return "portlet-topper"; // tmp
+	public String getFrameContentEndDecoration() { // done		
+		return "\n</div></div></div></td></tr></table>";
 	}
-	
-	public String getFrameTitleLabel() {
-		// tmp return "liferay-xava-frame-header";
-		return "";
-	}
-	
-	public String getFrameTitleStartDecoration(Align align) {
-		return "<span class='portlet-title'>"; // tmp
-		//return "";
-	}
-	
-	public String getFrameTitleEndDecoration() {
-		return "</span>"; // tmp
-		//return "";
-	}
-
-	public String getFrameContent() {
-		return "liferay-xava-frame-core"; 
-	}
-	
-	public String getFrameSpacing() {
-		return "cellpadding='0' cellspacing='0'";
-	}
-		
+			
 	public String getEditor() { 
 		return "form-text";
 	}
@@ -273,18 +252,18 @@ public class LiferayStyle extends Style {
 	}
 	
 	public String getSectionBarStartDecoration() {
-		return "<td style='padding-top: 4px;'><ul class='tabs'>"; // tmp
+		return "<td style='padding-top: 4px;'><ul class='tabs'>"; 
 	}
 	public String getSectionBarEndDecoration() {	
 		return "</ul></td>";
 	}
 		
 	public String getActiveSectionTabStartDecoration() {
-		return "<li class='current'><a href='javascript:void(0)'>"; // tmp
+		return "<li class='current'><a href='javascript:void(0)'>"; 
 	}
 	
 	public String getActiveSectionTabEndDecoration() {
-		return "</a></li>";	 // tmp 	
+		return "</a></li>";	  	
 	}
 	
 	public String getSectionTabStartDecoration() {
@@ -300,15 +279,15 @@ public class LiferayStyle extends Style {
 	}
 	
 	public String getRestoreImage() {
-		return "/html/themes/brochure/images/portlet/minimize.gif";
+		return "/html/themes/classic/images/portlet/minimize.png";
 	}
 	
 	public String getMaximizeImage() {
-		return "/html/themes/brochure/images/portlet/maximize.gif";
+		return "/html/themes/classic/images/portlet/maximize.png";
 	}
 	
 	public String getRemoveImage() {
-		return "/html/themes/brochure/images/portlet/close.gif";
+		return "/html/themes/classic/images/portlet/close.png";
 	}
 	
 	public boolean isApplySelectedStyleToCellInList() {

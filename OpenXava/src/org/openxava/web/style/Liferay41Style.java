@@ -1,10 +1,5 @@
 package org.openxava.web.style;
 
-import org.openxava.util.*;
-
-
-
-
 /**
  * 
  * @author José Luis Santiago
@@ -153,31 +148,31 @@ public class Liferay41Style extends Style {
 	}
 	
 		
-	public String getFrame() { // tmp hacer proctected
+	protected String getFrame() { 
 		return ""; 
 	}
 	
-	public String getFrameTitle() { // tmp hacer proctected
+	protected String getFrameTitle() { 
 		return "";
 	}
 	
-	public String getFrameTitleLabel() { // tmp hacer proctected
+	protected String getFrameTitleLabel() { 
 		return "liferay-xava-frame-header";
 	}
 	
-	public String getFrameTitleStartDecoration(Align align) { // tmp hacer proctected
-		return "<table class='portlet-header-bar' style='position: static' cellpadding=0 cellspacing=0 width=100%><tr><td class='portlet-header-left' style='position: static' width=1>&nbsp;</td><td align='" + align.getDescription() + "'>";
+	public String getFrameTitleStartDecoration() { 
+		return "<table class='portlet-header-bar' style='position: static' cellpadding=0 cellspacing=0 width=100%><tr><td class='portlet-header-left' style='position: static' width=1>&nbsp;</td><td align='left'>";
 	}
 	
-	public String getFrameTitleEndDecoration() { // tmp hacer proctected
+	public String getFrameTitleEndDecoration() { 
 		return "</td><td class='portlet-header-right' style='position: static' width=1>&nbsp;</td></tr></table>";
 	}
 
-	public String getFrameContent() { // tmp hacer proctected
+	protected String getFrameContent() { 
 		return "liferay-xava-frame-core"; 
 	}
 	
-	public String getFrameSpacing() { // tmp hacer proctected
+	protected String getFrameSpacing() { 
 		return "cellpadding='0' cellspacing='0'";
 	}
 		
