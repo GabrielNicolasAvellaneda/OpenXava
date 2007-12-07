@@ -10,13 +10,13 @@ package org.openxava.web.style;
  * Galería Imag.	x			x			x			x
  * Ed. enmarcables	x			x			x			x
  * Botones			x			x			x			x
- * Colecciones
- * Botonera
+ * Colecciones		x			x			x			x
+ * Botonera			x			x			x			x
  * Vínculos			x			x			x			x
- * Lista
+ * Lista			x			x			x			x
+ * Calendario		x			x			x			x
  * 
- * Buscar tmps and dones
- * Probar CustomerContactPersonAsAggregate3Levels
+ * Buscar tmps and dones 
  */
 
 
@@ -50,19 +50,19 @@ public class LiferayStyle extends Style {
 	}
 		
 	public String getButtonBar() {
-		return "liferay-xava-frame-header"; 
+		return ""; // done
 	}
 	
 	public String getButtonBar2() {
-		return "portlet-header-bar";
+		return "portlet-section-header"; // done
 	}
 	
 	public String getButtonBarSpacing() {
-		return "cellpadding=0 cellspacing=0";
+		return "cellpadding=0 cellspacing=0";		
 	}	
 	
 	public String getButtonBarStart(boolean onBottom) {
-		return "portlet-header-left";
+		return ""; // done
 	}
 	
 	public String getButtonBarMiddle(boolean onBottom) {
@@ -70,11 +70,11 @@ public class LiferayStyle extends Style {
 	}
 		
 	public String getButtonBarEnd(boolean onBottom) {
-		return "portlet-header-right";
+		return ""; // done
 	}
 	
 	public String getButtonBarStyle() {
-		return "style='position: static'";
+		return "style='position: static; margin-bottom: 4px'"; // done		
 	}
 	
 	public String getButtonBarStartStyle() {
@@ -103,8 +103,12 @@ public class LiferayStyle extends Style {
 	}
 	
 	public String getListCellSpacing() {
-		return "border=0 cellspacing=0 cellpadding=0 style='border-collapse: collapse'";
+		return "border=0 cellspacing=0 cellpadding=0"; // done
 	}
+	
+	public String getListStyle() {
+		return "style='border-collapse: collapse; border-bottom: 2px solid #CCCCCC;'"; // done
+	}	
 	
 	
 	public String getListHeader() { 
@@ -132,6 +136,10 @@ public class LiferayStyle extends Style {
 		return "portlet-section-body";		
 	}
 	
+	public String getListPairEvents() { // tmp
+		return "onmouseover=\"this.className = 'portlet-section-body-hover';\" onmouseout=\"this.className = 'portlet-section-body';\"";
+	}
+	
 	public String getListPairCell() {
 		return getListCell();
 	}
@@ -139,6 +147,12 @@ public class LiferayStyle extends Style {
 	public String getListOdd() { 
 		return "portlet-section-alternate";		
 	}
+	
+	public String getListOddEvents() { // tmp
+		return "onmouseover=\"this.className = 'portlet-section-alternate-hover';\" onmouseout=\"this.className = 'portlet-section-alternate';\"";
+	}
+		
+	
 	
 	public String getListOddCell() { 
 		return getListCell();		

@@ -84,8 +84,13 @@ public class Liferay41Style extends Style {
 	}
 	
 	public String getListCellSpacing() {
-		return "border=0 cellspacing=0 cellpadding=0 style='border-collapse: collapse'";
+		return "border=0 cellspacing=0 cellpadding=0";
 	}
+	
+	public String getListStyle() { 
+		return "style='border-collapse: collapse'"; 
+	}	
+
 	
 	
 	public String getListHeader() { 
@@ -273,6 +278,10 @@ public class Liferay41Style extends Style {
 	}
 	
 	public boolean isApplySelectedStyleToCellInList() {
+		return false;
+	}
+	
+	public boolean isNeededToIncludeCalendar() {
 		return false;
 	}
 		

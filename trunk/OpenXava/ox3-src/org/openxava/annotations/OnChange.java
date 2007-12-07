@@ -3,7 +3,7 @@ package org.openxava.annotations;
 import java.lang.annotation.*;
 
 /**
- * Action to execute when the value of this property/reference changes.
+ * Action to execute when the value of this property/reference changes. <p>
  * 
  * Applies to properties and references. <p>
  * 
