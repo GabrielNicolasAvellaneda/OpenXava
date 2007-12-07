@@ -81,10 +81,15 @@ public class Style {
 	public String getList() {  
 		return "list";
 	}
-	
+		
 	public String getListCellSpacing() {
 		return ""; 
 	}
+	
+	public String getListStyle() { 
+		return ""; 
+	}	
+	
 	
 	public String getListHeader() { 
 		return "list";
@@ -110,6 +115,11 @@ public class Style {
 		return "list-pair";
 	}
 	
+	public String getListPairEvents() { // tmp
+		return "";
+	}
+	
+	
 	public String getListPairCell() { 
 		return getListPair();
 	}
@@ -117,6 +127,10 @@ public class Style {
 	public String getListOdd() { 
 		return "list-odd";
 	}
+	
+	public String getListOddEvents() { // tmp
+		return "";
+	}	
 	
 	public String getListOddCell() { 
 		return getListOdd();
@@ -333,6 +347,10 @@ public class Style {
 	
 	public String getBottomButtonsStyle() {
 		return "";
+	}
+	
+	public boolean isNeededToIncludeCalendar() {
+		return true;
 	}
 	
 }

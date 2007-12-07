@@ -34,8 +34,12 @@ public class WebSpherePortalStyle extends Style {
 	}
 	
 	public String getListCellSpacing() {
-		return "border=0 cellspacing=0 cellpadding=0 style='border-collapse: collapse'"; 
+		return "border=0 cellspacing=0 cellpadding=0"; 
 	}
+	
+	public String getListStyle() { 
+		return "style='border-collapse: collapse'"; 
+	}		 
 	
 	public String getListHeader() {  
 		return "wpsTableHead";

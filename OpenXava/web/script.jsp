@@ -27,7 +27,7 @@ function manageFilterRow(id)
 <!-- Loading Theme file(s) -->
 <link rel="stylesheet" type="text/css" media="all" href="<%=request.getContextPath()%>/xava/editors/calendar/skins/aqua/theme.css" title="Aqua" />
 
-<% if (!(style instanceof org.openxava.web.style.LiferayStyle)) { // Because Liferay has its own calenar.js %>
+<% if (style.isNeededToIncludeCalendar()) { %>
 <!-- import the calendar script -->
 <script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/calendar.js"></script>
 
