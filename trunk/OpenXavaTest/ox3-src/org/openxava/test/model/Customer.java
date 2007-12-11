@@ -42,7 +42,7 @@ import org.openxava.test.actions.*;
 		"photo;" +
 		"address;"
 	),
-		
+
 	@View( name="Simplest", members="number; name" ),
 
 	@View( name="WithSection", members=	

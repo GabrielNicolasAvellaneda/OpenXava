@@ -10,7 +10,7 @@ import java.lang.annotation.*;
  * This is the action showed in each row, if the collection is read only.<br>
  * Example:
  * <pre>
- * &nbsp;@EditAction("Invoices.editDetail")
+ * &nbsp;@EditAction("Invoice.editDetail")
  * &nbsp;private Collection<InvoiceDetail> details;
  * </pre>
  * 

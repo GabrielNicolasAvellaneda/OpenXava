@@ -26,13 +26,13 @@ while (itAggregates.hasNext()) {
 	Map row = (Map) itAggregates.next();
 	String cssClass=f%2==0?style.getListPair():style.getListOdd();
 	String cssCellClass=f%2==0?style.getListPairCell():style.getListOddCell();
-	String events=f%2==0?style.getListPairEvents():style.getListOddEvents(); 
+	String selectedClass = "";
 	if (f == subview.getCollectionEditingRow()) { 
-		String selectedClass = f%2==0?style.getListPairSelected():style.getListOddSelected();
+		selectedClass = f%2==0?style.getListPairSelected():style.getListOddSelected();
 		cssClass = cssClass + " " + selectedClass;		
 		if (style.isApplySelectedStyleToCellInList()) cssCellClass = cssCellClass + " " + selectedClass; 
-	}	
-	
+	}		
+	String events=f%2==0?style.getListPairEvents(selectedClass):style.getListOddEvents(selectedClass);
 %>
 <tr id="xava-tr-list" class="<%=cssClass%>" <%=events%>>
 <% if (lineAction != null) { %>

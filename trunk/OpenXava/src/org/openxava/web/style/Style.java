@@ -1,7 +1,19 @@
 package org.openxava.web.style;
 
 /**
- * tmp: Rename, and explain?
+ * This class and its subclasses is used from JSP code to give
+ * style to the web applications. <p>
+ * 
+ * The nomenclature is:
+ * <ul>
+ * <li>By default: CSS class name.
+ * <li>..Style: A CSS inline style.
+ * <li>..Image: URI of image
+ * <li>..Events: code for javascript events
+ * <li>..StartDecoration/EndDecoration: HTML code to put before and after.
+ * <li>..Spacing: Table spacing
+ * </ul>
+ * 
  * @author Javier Paniza
  */ 
 
@@ -115,7 +127,7 @@ public class Style {
 		return "list-pair";
 	}
 	
-	public String getListPairEvents() { // tmp
+	public String getListPairEvents(String additionalClass) {  
 		return "";
 	}
 	
@@ -128,7 +140,7 @@ public class Style {
 		return "list-odd";
 	}
 	
-	public String getListOddEvents() { // tmp
+	public String getListOddEvents(String additionalClass) {  
 		return "";
 	}	
 	

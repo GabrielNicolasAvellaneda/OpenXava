@@ -44,6 +44,11 @@ TH.list {
 	font-weight: bold;
 }
 
+.liferay-list-selected {
+	font-weight: bold;
+}
+
+
 .highlight {
 	font-weight: bold;
 	color: #3366ff;	

@@ -210,14 +210,13 @@ if (totalSize > 0) {
 for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex(); f++) {
 	String checked=tab.isSelected(f)?"checked='true'":"";
 	String cssClass=f%2==0?style.getListPair():style.getListOdd();	
-	String cssCellClass=f%2==0?style.getListPairCell():style.getListOddCell();
-	String events=f%2==0?style.getListPairEvents():style.getListOddEvents(); 
+	String cssCellClass=f%2==0?style.getListPairCell():style.getListOddCell(); 
 	String cssStyle = tab.getStyle(f);
 	if (cssStyle != null) {
 		cssClass = cssClass + " " + cssStyle; 
 		if (style.isApplySelectedStyleToCellInList()) cssCellClass = cssCellClass + " " + cssStyle; 
 	}
-	
+	String events=f%2==0?style.getListPairEvents(cssStyle):style.getListOddEvents(cssStyle);	
 %>
 <tr id="xava-tr-list" class="<%=cssClass%>" <%=events%> style="border-bottom: 1px solid;">
 	<td class="<%=cssCellClass%>" style='vertical-align: middle;text-align: center'>

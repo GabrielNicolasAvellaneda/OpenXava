@@ -1,6 +1,8 @@
 package org.openxava.web.style;
 
 /**
+ * For Liferay 4.1 and 4.2. <p>
+ * 
  * 
  * @author José Luis Santiago
  */ 
@@ -165,14 +167,16 @@ public class Liferay41Style extends Style {
 		return "liferay-xava-frame-header";
 	}
 	
-	public String getFrameTitleStartDecoration() { 
-		return "<table class='portlet-header-bar' style='position: static' cellpadding=0 cellspacing=0 width=100%><tr><td class='portlet-header-left' style='position: static' width=1>&nbsp;</td><td align='left'>";
+	public String getFrameHeaderStartDecoration() {		
+		return super.getFrameHeaderStartDecoration() + 
+			"<table class='portlet-header-bar' style='position: static' cellpadding=0 cellspacing=0 width=100%><tr><td class='portlet-header-left' style='position: static' width=1>&nbsp;</td><td align='left'>";
 	}
 	
-	public String getFrameTitleEndDecoration() { 
-		return "</td><td class='portlet-header-right' style='position: static' width=1>&nbsp;</td></tr></table>";
+	public String getFrameHeaderEndDecoration() { 
+		return 	"</td><td class='portlet-header-right' style='position: static' width=1>&nbsp;</td></tr></table>"
+			+ super.getFrameHeaderEndDecoration();
 	}
-
+		
 	protected String getFrameContent() { 
 		return "liferay-xava-frame-core"; 
 	}

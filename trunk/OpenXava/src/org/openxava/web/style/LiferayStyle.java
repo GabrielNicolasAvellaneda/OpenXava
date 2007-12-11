@@ -1,26 +1,25 @@
 package org.openxava.web.style;
 
 /*
- * 					Classic		Brochure	Negria		Standalone	Lf41	Lf42	WPS6	
- * Formulario		x			x			x			x
- * Secciones		x			x			x			x
- * Grupos			x			x			x			x											
- * Referencias		x			x			x			x			
- * Detall. colec.	x			x			x			x
- * Galería Imag.	x			x			x			x
- * Ed. enmarcables	x			x			x			x
- * Botones			x			x			x			x
- * Colecciones		x			x			x			x
- * Botonera			x			x			x			x
- * Vínculos			x			x			x			x
- * Lista			x			x			x			x
- * Calendario		x			x			x			x
- * 
- * Buscar tmps and dones 
+ * 					Classic		Brochure	Negria		Standalone	Lf41	WPS6	
+ * Formulario		x			x			x			x			x		
+ * Secciones		x			x			x			x			x
+ * Grupos			x			x			x			x			x										
+ * Referencias		x			x			x			x			x		
+ * Detall. colec.	x			x			x			x			x
+ * Galería Imag.	x			x			x			x			x
+ * Ed. enmarcables	x			x			x			x			x
+ * Botones			x			x			x			x			x		
+ * Colecciones		x			x			x			x			x
+ * Botonera			x			x			x			x			x
+ * Vínculos			x			x			x			x			x
+ * Lista			x			x			x			x			x
+ * Calendario		x			x			x			x			x
  */
 
 
 /**
+ * For Liferay 4.3. <p>
  * 
  * @author Javier Paniza
  */ 
@@ -42,7 +41,7 @@ public class LiferayStyle extends Style {
 	}
 		
 	public String getModule() {
-		return ""; // done		
+		return ""; 		
 	}
 	
 	public String getModuleSpacing() {
@@ -50,11 +49,11 @@ public class LiferayStyle extends Style {
 	}
 		
 	public String getButtonBar() {
-		return ""; // done
+		return ""; 
 	}
 	
 	public String getButtonBar2() {
-		return "portlet-section-header"; // done
+		return "portlet-section-header"; 
 	}
 	
 	public String getButtonBarSpacing() {
@@ -62,7 +61,7 @@ public class LiferayStyle extends Style {
 	}	
 	
 	public String getButtonBarStart(boolean onBottom) {
-		return ""; // done
+		return ""; 
 	}
 	
 	public String getButtonBarMiddle(boolean onBottom) {
@@ -70,11 +69,11 @@ public class LiferayStyle extends Style {
 	}
 		
 	public String getButtonBarEnd(boolean onBottom) {
-		return ""; // done
+		return ""; 
 	}
 	
 	public String getButtonBarStyle() {
-		return "style='position: static; margin-bottom: 4px'"; // done		
+		return "style='position: static; margin-bottom: 4px'"; 		
 	}
 	
 	public String getButtonBarStartStyle() {
@@ -95,7 +94,7 @@ public class LiferayStyle extends Style {
 	}
 	
 	public String getDetail() {
-		return "liferay-table"; // done		
+		return "liferay-table"; 		
 	}
 			
 	public String getList() { 
@@ -103,11 +102,11 @@ public class LiferayStyle extends Style {
 	}
 	
 	public String getListCellSpacing() {
-		return "border=0 cellspacing=0 cellpadding=0"; // done
+		return "border=0 cellspacing=0 cellpadding=0"; 
 	}
 	
 	public String getListStyle() {
-		return "style='border-collapse: collapse; border-bottom: 2px solid #CCCCCC;'"; // done
+		return "style='border-collapse: collapse; border-bottom: 2px solid #CCCCCC;'"; 
 	}	
 	
 	
@@ -130,14 +129,13 @@ public class LiferayStyle extends Style {
 	public String getListSubheaderCell() { 
 		return getListCell();		
 	}
-	
-	
+		
 	public String getListPair() { 
 		return "portlet-section-body";		
 	}
 	
-	public String getListPairEvents() { // tmp
-		return "onmouseover=\"this.className = 'portlet-section-body-hover';\" onmouseout=\"this.className = 'portlet-section-body';\"";
+	public String getListPairEvents(String additionalClass) { 		
+		return "onmouseover=\"this.className = 'portlet-section-body-hover " + additionalClass + "';\" onmouseout=\"this.className = 'portlet-section-body " + additionalClass + "';\"";
 	}
 	
 	public String getListPairCell() {
@@ -148,22 +146,20 @@ public class LiferayStyle extends Style {
 		return "portlet-section-alternate";		
 	}
 	
-	public String getListOddEvents() { // tmp
-		return "onmouseover=\"this.className = 'portlet-section-alternate-hover';\" onmouseout=\"this.className = 'portlet-section-alternate';\"";
+	public String getListOddEvents(String additionalClass) { 
+		return "onmouseover=\"this.className = 'portlet-section-alternate-hover " + additionalClass + "';\" onmouseout=\"this.className = 'portlet-section-alternate " + additionalClass + "';\"";		
 	}
-		
-	
-	
+				
 	public String getListOddCell() { 
 		return getListCell();		
 	}
 	
 	public String getListPairSelected() { 
-		return "portlet-section-selected";
+		return "portlet-section-selected liferay-list-selected"; 
 	}
 	
 	public String getListOddSelected() { 
-		return "portlet-section-selected";
+		return "portlet-section-selected liferay-list-selected"; 
 	}
 	
 		
@@ -180,31 +176,30 @@ public class LiferayStyle extends Style {
 		return "liferay-xava-cell-wrapper";		
 	}
 
-	public String getFrameHeaderStartDecoration() { // done
-		
+	public String getFrameHeaderStartDecoration() { 		
 		return "<table style='float:left; clear:none'><tr><td>\n" +
 			"<div class='portlet'><div class='portlet-topper'>";		
 	}	
-	public String getFrameHeaderEndDecoration() { // done
+	public String getFrameHeaderEndDecoration() { 
 		return "</div>"; 
 	}
-	public String getFrameTitleStartDecoration() { // done
+	public String getFrameTitleStartDecoration() { 
 		return "<span class='portlet-title'>";
 	}	
-	public String getFrameTitleEndDecoration() { // done
+	public String getFrameTitleEndDecoration() { 
 		return "</span>";
 	}
-	public String getFrameActionsStartDecoration() { // done
+	public String getFrameActionsStartDecoration() { 
 		return "<div class='portlet-icons'>";
 	}	
-	public String getFrameActionsEndDecoration() { // done
+	public String getFrameActionsEndDecoration() { 
 		return "</div>";
 	}		
 		
-	public String getFrameContentStartDecoration() { // done		
+	public String getFrameContentStartDecoration() { 		
 		return "<div class='portlet-content'><div class='portlet-content-container'>\n";
 	}
-	public String getFrameContentEndDecoration() { // done		
+	public String getFrameContentEndDecoration() { 		
 		return "\n</div></div></div></td></tr></table>";
 	}
 			
@@ -238,7 +233,7 @@ public class LiferayStyle extends Style {
 	}
 			
 	public String getButton() {
-		return ""; // done
+		return ""; 
 	}
 	
 	public String getAscendingImage() {
