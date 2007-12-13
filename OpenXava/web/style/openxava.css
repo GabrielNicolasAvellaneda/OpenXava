@@ -179,20 +179,11 @@ TD.list-title {
 	color: #000000;  
 }
 
-tr[id=xava-tr-list] .wpsTableNrmRow {
-	border-left-style: solid;
-}
-
-/* Vertical line in list in WebSphere Portal, for rows */
-tr[id=xava-tr-list] .wpsTableNrmRow {
-	border-left-width: 1px;
-}
-
-/* Vertical line in list in WebSphere Portal, for header */
-tr[id=xava-tr-list] .wpsTableHead {
+tr[id|=xava-tr-list] .wpsTableNrmRow {
 	border-left-width: 1px;
 	border-left-style: solid;
 }
-
-
-
+tr[id|=xava-tr-list] .wpsTableHead {
+	border-left-width: 1px;
+	border-left-style: solid;
+}
