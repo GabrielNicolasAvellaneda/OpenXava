@@ -70,13 +70,15 @@ public class WebSpherePortal6Style extends WebSpherePortalStyle {
 	protected String getFrameTitleLabel() { 
 		return "websphere-frame-title-label";
 	}
-	
-	public String getFrameTitleStartDecoration() { 
-		return "<div style='width:100%;'>";
+
+	public String getFrameHeaderStartDecoration() {		
+		return super.getFrameHeaderStartDecoration() + 
+			"<div style='width:100%; text-align: left'>";
 	}
 	
-	public String getFrameTitleEndDecoration() { 
-		return "<img alt='' style='border:0; text-align: right;' width='1' height='22' src='/wps/skins/html/IBM/title_minheight.gif'></div>";
+	public String getFrameHeaderEndDecoration() { 
+		return 	"<img alt='' style='border:0; text-align: right;' width='1' height='22' src='/wps/skins/html/IBM/title_minheight.gif'></div>"
+			+ super.getFrameHeaderEndDecoration();
 	}
 	
 	protected String getFrameContent() { 
@@ -85,6 +87,14 @@ public class WebSpherePortal6Style extends WebSpherePortalStyle {
 	
 	protected String getFrameSpacing() { 
 		return "border=0 cellspacing=0 cellpadding=2"; 		
+	}
+	
+	public String getRestoreImage() { 
+		return "xava/images/restore.gif";
+	}
+	
+	public String getMaximizeImage() { 
+		return "xava/images/maximize.gif";
 	}
 				
 }

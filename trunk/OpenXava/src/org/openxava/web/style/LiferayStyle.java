@@ -1,20 +1,20 @@
 package org.openxava.web.style;
 
 /*
- * 					Classic		Brochure	Negria		Standalone	Lf41	WPS6	
- * Formulario		x			x			x			x			x		
- * Secciones		x			x			x			x			x
- * Grupos			x			x			x			x			x										
- * Referencias		x			x			x			x			x		
- * Detall. colec.	x			x			x			x			x
- * Galería Imag.	x			x			x			x			x
- * Ed. enmarcables	x			x			x			x			x
- * Botones			x			x			x			x			x		
- * Colecciones		x			x			x			x			x
- * Botonera			x			x			x			x			x
- * Vínculos			x			x			x			x			x
- * Lista			x			x			x			x			x
- * Calendario		x			x			x			x			x
+ * 					Lf435		
+ * Formulario			
+ * Secciones			
+ * Grupos												
+ * Referencias			
+ * Detall. colec.		
+ * Galería Imag.		
+ * Ed. enmarcables		
+ * Botones						
+ * Colecciones			
+ * Botonera				
+ * Vínculos				
+ * Lista				
+ * Calendario			
  */
 
 

@@ -21,15 +21,17 @@ long dif=System.currentTimeMillis(); // to avoid browser caching
 <%=gallery.getTitle()%>
 <%=style.getFrameTitleEndDecoration()%>
 <%=style.getFrameActionsStartDecoration()%>
-<% if (gallery.isMaximized()) { %>
-<xava:link action='Gallery.minimizeImage'><img src='<%=style.getRestoreImage()%>' border='0' align="absmiddle"/></xava:link>
+<% if (gallery.isMaximized()) { 
+	String restoreImage=style.getRestoreImage().startsWith("xava/")?request.getContextPath() + "/" + style.getRestoreImage():style.getRestoreImage(); 
+%>
+<xava:link action='Gallery.minimizeImage'><img src='<%=restoreImage%>' border='0' align="absmiddle"/></xava:link>
 <% } %>
 <%=style.getFrameActionsEndDecoration()%>
 <%=style.getFrameHeaderEndDecoration()%>
 <%=style.getFrameContentStartDecoration()%>	
 	
 <%
-if (gallery.isMaximized()) {
+if (gallery.isMaximized()) {		
 %>
 <xava:link action='Gallery.minimizeImage'>
 <img src='<%=request.getContextPath()%>/xava/gallery?application=<%=applicationName%>&module=<%=module%>&oid=<%=gallery.getMaximizedOid()%>&dif=<%=dif%>' border="0"/>	
@@ -45,6 +47,8 @@ else {
 	int c = 0;
 	for (Iterator it = gallery.getImages().iterator(); it.hasNext(); ) {
 		GalleryImage image = (GalleryImage) it.next();
+		String maximizeImage=style.getMaximizeImage().startsWith("xava/")?request.getContextPath() + "/" + style.getMaximizeImage():style.getMaximizeImage();
+		String removeImage=style.getRemoveImage().startsWith("xava/")?request.getContextPath() + "/" + style.getRemoveImage():style.getRemoveImage();
 		if (c++ % IMAGES_BY_ROW == 0) {
 %>
 </tr><tr>
@@ -57,9 +61,9 @@ else {
 	&nbsp;
 	<%=style.getFrameTitleEndDecoration()%>
 	<%=style.getFrameActionsStartDecoration()%>
-	<xava:link action='Gallery.maximizeImage' argv='<%="oid=" + image.getOid()%>'><img src='<%=style.getMaximizeImage()%>' border='0' align="absmiddle"/></xava:link>	
+	<xava:link action='Gallery.maximizeImage' argv='<%="oid=" + image.getOid()%>'><img src='<%=maximizeImage%>' border='0' align="absmiddle"/></xava:link>	
 	<% if (!gallery.isReadOnly()) { %>
-	<xava:link action='Gallery.removeImage' argv='<%="oid=" + image.getOid()%>'><img src='<%=style.getRemoveImage()%>' border='0' align="absmiddle"/></xava:link>
+	<xava:link action='Gallery.removeImage' argv='<%="oid=" + image.getOid()%>'><img src='<%=removeImage%>' border='0' align="absmiddle"/></xava:link>
 	<% } %>	
 	<%=style.getFrameActionsEndDecoration()%>
 	<%=style.getFrameHeaderEndDecoration()%>

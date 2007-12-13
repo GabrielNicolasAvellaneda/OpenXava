@@ -324,14 +324,24 @@ public class Style {
 		return "";
 	}
 	
+	/**
+	 * If it starts with 'xava/' the context path is inserted before.
+	 */
 	public String getRestoreImage() {
 		return "images/restore.gif";
 	}
+
+	/**
+	 * If it starts with 'xava/' the context path is inserted before.
+	 */
 	
 	public String getMaximizeImage() {
 		return "images/maximize.gif";
 	}
-	
+
+	/**
+	 * If it starts with 'xava/' the context path is inserted before.
+	 */	
 	public String getRemoveImage() {
 		return "images/remove.gif";
 	}
