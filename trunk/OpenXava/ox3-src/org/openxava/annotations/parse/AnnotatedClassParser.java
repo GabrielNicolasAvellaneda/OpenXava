@@ -237,7 +237,7 @@ public class AnnotatedClassParser {
 					column = getColumnFor(field.getAnnotation(JoinColumns.class), metaModelReferenced, referencedModelPropertyName); 
 				}
 				else if (pd.getReadMethod().isAnnotationPresent(JoinColumn.class)) {
-					JoinColumn joinColumn = field.getAnnotation(JoinColumn.class);
+					JoinColumn joinColumn = pd.getReadMethod().getAnnotation(JoinColumn.class);
 					column = joinColumn.name();
 				}
 				else if (pd.getReadMethod().isAnnotationPresent(JoinColumns.class)) {

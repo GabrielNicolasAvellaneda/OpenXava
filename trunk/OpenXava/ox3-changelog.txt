@@ -1,6 +1,7 @@
 Change Log for OpenXava 3
 =========================
 
+- Fix: @JoinColumn in getter fails, but not in private field.
 - Fix: Resource bundle on portlet generation is not in the resulting war at first time.
 
 OpenXava 3.0beta4 (2007-11-15)
