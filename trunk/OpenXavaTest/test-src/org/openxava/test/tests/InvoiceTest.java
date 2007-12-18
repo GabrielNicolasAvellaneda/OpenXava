@@ -356,14 +356,14 @@ public class InvoiceTest extends ModuleTestBase {
 		String [] conditionMonth1 = { " ", " ", "1", "true" }; 
 		setConditionValues(conditionMonth1);
 		execute("List.filter");
-		assertListRowCount(3); // We supussed that there are 3 invoices of month 1
+		assertListRowCount(3); // We suppose that there are 3 invoices of month 1
 		
 		String [] yearMonthComparators = { "=", "=", "year_month_comparator", ""};
 		setConditionComparators(yearMonthComparators);		
 		String [] conditionYear2004Month1 = { " ", " ", "2004/1", "true" }; 
 		setConditionValues(conditionYear2004Month1);
 		execute("List.filter");
-		assertListRowCount(2); // We supussed that there are 2 invoices of month 1 of year 2004				
+		assertListRowCount(2); // We suppose that there are 2 invoices of month 1 of year 2004				
 	}
 	
 	public void testFilterByBoolean() throws Exception {
@@ -426,7 +426,9 @@ public class InvoiceTest extends ModuleTestBase {
 		assertListColumnCount(3);
 	}	
 	
-	public void testDateFormatter() throws Exception { 
+	public void testDateFormatter() throws Exception {
+		// In order to this test works inside Liferay you have to put
+		// locale.default.request=true in portal-ext.properties
 		setLocale("es");
 		execute("CRUD.new");
 		setValue("year", String.valueOf(getInvoice().getYear()));

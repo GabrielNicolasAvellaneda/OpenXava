@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Reference to entity used as key and displayed as-aggregate fails on delete.
 - Full support for Liferay 4.3, including visual style integration.
 - Fix: JavaScript calendar in Liferay 4.3 did not work.
 - Fix: Layout problem when multiple nested frames with references with no frame.

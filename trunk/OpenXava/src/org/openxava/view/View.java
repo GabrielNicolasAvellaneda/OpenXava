@@ -260,51 +260,55 @@ public class View implements java.io.Serializable {
 	public Map getAllValues() throws XavaException {		
 		return new HashMap(getValues(true));
 	}
-		
-	private Map getValues(boolean all) throws XavaException {		
-		Map hiddenKeyAndVersion = null; 		
-		if (values == null) { 
-			values = new HashMap(); 			
-		}
-		else {
-			hiddenKeyAndVersion = getHiddenKeyAndVersion(values);
-		}		
-		if (hasSubviews()) {
-			Iterator it = getSubviews().entrySet().iterator();
-			while (it.hasNext()) {
-				Map.Entry en = (Map.Entry) it.next();
-				View v = (View) en.getValue();				
-				if (v.isRepresentsCollection()) continue;
-				if (all || v.isRepresentsAggregate()) {
-					values.put(en.getKey(), v.getValues(all));					
-				}
-				else {					
-					values.put(en.getKey(), v.getKeyValues());					
-				}				
-			}
-		}
-		
-		if (hasGroups()) {
-			Iterator it = getGroupsViews().values().iterator();
-			while (it.hasNext()) {
-				View v = (View) it.next();
-				values.putAll(v.getValues(all));
-			}			
-		}
-		
-		if (hasSections()) {
-			int count = getSections().size();
-			for (int i=0; i<count; i++) {												
-				values.putAll(getSectionView(i).getValues(all));				
-			}
-		}									
-		
-		if (hiddenKeyAndVersion != null) {
-			values.putAll(hiddenKeyAndVersion);			
-		}
-		
-		return values;
-	}
+
+	private Map getValues(boolean all) throws XavaException {  
+		return getValues(all, false); 
+	} 
+		 
+	private Map getValues(boolean all, boolean onlyKeyFromSubviews) throws XavaException { 
+		Map hiddenKeyAndVersion = null;  
+		if (values == null) {  
+			values = new HashMap();  
+		} 
+		else { 
+			hiddenKeyAndVersion = getHiddenKeyAndVersion(values); 
+		}  
+		if (hasSubviews()) { 
+			Iterator it = getSubviews().entrySet().iterator(); 
+			while (it.hasNext()) { 
+				Map.Entry en = (Map.Entry) it.next(); 
+				View v = (View) en.getValue();  
+				if (v.isRepresentsCollection()) continue; 
+				if (!onlyKeyFromSubviews && (all || v.isRepresentsAggregate())) { 
+					values.put(en.getKey(), v.getValues(all, onlyKeyFromSubviews));  
+				} 
+				else {  
+					values.put(en.getKey(), v.getKeyValues());  
+				}  
+			} 
+		} 
+		 
+		if (hasGroups()) { 
+			Iterator it = getGroupsViews().values().iterator(); 
+			while (it.hasNext()) { 
+				View v = (View) it.next(); 
+				values.putAll(v.getValues(all, onlyKeyFromSubviews)); 
+			}  
+		} 
+		 
+		if (hasSections()) { 
+			int count = getSections().size(); 
+			for (int i=0; i<count; i++) {  
+				values.putAll(getSectionView(i).getValues(all, onlyKeyFromSubviews));  
+			} 
+		}  
+		 
+		if (hiddenKeyAndVersion != null) { 
+			values.putAll(hiddenKeyAndVersion);  
+		} 
+		 
+		return values; 
+	} 	
 	
 	private Map getHiddenKeyAndVersion(Map keyValues) throws XavaException { 
 		Map result = null;
@@ -877,7 +881,7 @@ public class View implements java.io.Serializable {
 	 * Excludes those values that are null, zero or empty string.
 	 */
 	public Map getKeyValuesWithValue() throws XavaException {		
-		Map values = getValues(false);
+		Map values = getValues(false, true); 
 		Iterator it = values.keySet().iterator();
 		Map result = new HashMap();
 		while (it.hasNext()) {
@@ -899,7 +903,7 @@ public class View implements java.io.Serializable {
 	}
 	
 	public Map getKeyValues() throws XavaException {		
-		Map values = getValues(false);				
+		Map values = getValues(false, true); 		
 		Iterator it = values.keySet().iterator();
 		Map result = new HashMap();
 		while (it.hasNext()) {
