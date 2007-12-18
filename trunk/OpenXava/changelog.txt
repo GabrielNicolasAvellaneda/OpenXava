@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Full support for Liferay 4.3, including visual style integration.
 - Fix: JavaScript calendar in Liferay 4.3 did not work.
 - Fix: Layout problem when multiple nested frames with references with no frame.
 - Fix: Removed warning 'Trying to load controller .. twice' on generating portlets.

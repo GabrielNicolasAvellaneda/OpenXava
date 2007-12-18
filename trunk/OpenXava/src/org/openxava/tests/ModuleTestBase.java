@@ -15,6 +15,7 @@ import org.openxava.tab.*;
 import org.openxava.tab.meta.*;
 import org.openxava.util.*;
 import org.openxava.view.meta.*;
+import org.xml.sax.*;
 
 import junit.framework.*;
 
@@ -54,7 +55,7 @@ public class ModuleTestBase extends TestCase {
 	private WebResponse response; 
 	private WebForm form;
 	private String allowDuplicateSubmit;
-	private int formIndex;		
+	private int formIndex = -1; 		
 	
 	static {		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
@@ -72,7 +73,6 @@ public class ModuleTestBase extends TestCase {
 		MetaControllers.setContext(MetaControllers.WEB);
 		this.application = application;
 		this.module = module;
-		this.formIndex = isLiferayEnabled()?1:0;
 	}
 
 	/**
@@ -108,9 +108,11 @@ public class ModuleTestBase extends TestCase {
 			getForm().setParameter("login", user);		
 			getForm().setParameter(getPasswordFieldInLiferay(), password);					
 			response = getForm().submit();
-			WebForm form = response.getFormWithName("fm"); 
-			response =  form.submit();
-			formIndex = 2;
+			WebForm form = response.getFormWithName("fm"); // For liferay 4.1
+			if (form != null) {
+				response =  form.submit(); 
+			}
+			formIndex = -1; 
 			resetForm();
 		}
 		else {
@@ -140,7 +142,7 @@ public class ModuleTestBase extends TestCase {
 
 	private String getPasswordFieldInLiferay() {
 		String [] parameterNames = getForm().getParameterNames();
-		String passwordTextField = "";
+		String passwordTextField = "password";
 		for (int i=0; i<parameterNames.length; i++) {
 			if (parameterNames[i].endsWith("_password")) {
 				passwordTextField = parameterNames[i]; 
@@ -160,7 +162,7 @@ public class ModuleTestBase extends TestCase {
 		if (isLiferayEnabled()) {
 			// Liferay 
 			response = conversation.getResponse("http://" + getHost() + ":" + getPort() + "/c/portal/logout?referer=/c");
-			formIndex = 1;
+			formIndex = -1; 
 		}
 		else { 
 			// Jetspeed 2
@@ -1276,7 +1278,10 @@ public class ModuleTestBase extends TestCase {
 		return form;	
 	}	
 	
-	private int getFormIndex() throws Exception {		
+	private int getFormIndex() throws Exception {
+		if (formIndex == -1) {
+			formIndex = getFormIndexForParameter("xava_page_id");			
+		}
 		return formIndex;
 	}
 	
@@ -1284,22 +1289,25 @@ public class ModuleTestBase extends TestCase {
 		if (loginFormIndex == -1) {
 			if (isLiferayEnabled()) {
 				// Liferay
-				loginFormIndex = 1;
+				loginFormIndex = getFormIndexForParameter("login");
 			}
 			else {
 				// JetSpeed 2
-				WebForm [] forms = response.getForms(); 
-				for (int i = 0; i < forms.length; i++) {
-					if (forms[i].hasParameterNamed("org.apache.jetspeed.login.username")) {					
-						loginFormIndex = i;
-						return loginFormIndex;
-					}
-				}
-				loginFormIndex = 0;
+				loginFormIndex = getFormIndexForParameter("org.apache.jetspeed.login.username");
 			}
 		}
 		return loginFormIndex;
-	}	
+	}
+
+	private int getFormIndexForParameter(String parameterName) throws SAXException {
+		WebForm [] forms = response.getForms(); 
+		for (int i = 0; i < forms.length; i++) {
+			if (forms[i].hasParameterNamed(parameterName)) {					
+				return i;				
+			}
+		}
+		return 0;
+	}
 	
 	/**
 	 * This allows you testing using HTTPUnit APIs directly. <p>

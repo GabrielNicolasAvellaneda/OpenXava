@@ -1,23 +1,5 @@
 package org.openxava.web.style;
 
-/*
- * 					Lf435		
- * Formulario			
- * Secciones			
- * Grupos												
- * Referencias			
- * Detall. colec.		
- * Galería Imag.		
- * Ed. enmarcables		
- * Botones						
- * Colecciones			
- * Botonera				
- * Vínculos				
- * Lista				
- * Calendario			
- */
-
-
 /**
  * For Liferay 4.3. <p>
  * 
