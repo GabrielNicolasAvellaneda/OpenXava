@@ -24,5 +24,5 @@ public class CustomerContactPersonTest extends ModuleTestBase {
 		assertValue("customer.number", "1");
 		assertValue("customer.name", "Javi");
 	}
-		
+			
 }
