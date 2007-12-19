@@ -66,7 +66,11 @@ import org.openxava.util.*;
 			"customerDiscount, customerTypeDiscount, yearDiscount;" +
 			"amountsSum, vatPercentage, vat;" +
 		"]"			
-	)
+	),
+	@View(name="CustomerAsAggregateWithDeliveryPlaces", members=
+		"year, number, date, paid;" +
+		"customer"
+	)	
 })
 
 @Tabs({
@@ -145,8 +149,18 @@ public class Invoice {
 	private boolean paid;
 		
 	@ManyToOne(fetch=FetchType.LAZY, optional=false)
-	@ReferenceView("Simple")	
+	@ReferenceView("Simple")
+	@ReferenceViews(
+		@ReferenceView(forViews="CustomerAsAggregateWithDeliveryPlaces", value="SimpleWithDeliveryPlaces")	
+	)
 	private Customer customer;
+	
+	<reference-view reference="customer" 
+		view= 
+		as-aggregate="true"/>
+	<members>
+	
+
 		
 	@OneToMany (mappedBy="invoice", cascade=CascadeType.REMOVE)
 	@OrderBy("serviceType desc") @org.hibernate.validator.Size(min=1)

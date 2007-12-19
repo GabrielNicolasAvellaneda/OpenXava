@@ -229,6 +229,16 @@
 		</members>
 
 	</view>
+	
+	<view name="CustomerAsAggregateWithDeliveryPlaces">
+		<reference-view reference="customer" 
+			view="SimpleWithDeliveryPlaces" 
+			as-aggregate="true"/>
+		<members>
+			year, number, date, paid;
+			customer
+		</members>	
+	</view>	
 		
 	<view model="InvoiceDetail">
 		<reference-view reference="soldBy">

@@ -369,3 +369,5 @@
  referenced-model-property CDATA #REQUIRED 
  cmp-type CDATA #IMPLIED 
 >
+
+<!ELEMENT transient EMPTY>

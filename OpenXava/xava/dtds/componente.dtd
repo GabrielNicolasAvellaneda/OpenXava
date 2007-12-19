@@ -394,3 +394,5 @@
  propiedad-modelo-referenciado CDATA #REQUIRED 
  tipo-cmp CDATA #IMPLIED  
 >
+
+<!ELEMENT transitorio EMPTY>
