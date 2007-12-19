@@ -29,5 +29,11 @@
 	<for stereotype="TELEPHONE" type="String"/>
 	<for stereotype="TELEFONO" type="String"/>
 	<for stereotype="WEBURL" type="String"/>
-			
+	<for stereotype="IP" type="String"/>
+	<for stereotype="ISBN" type="String"/>
+	<for stereotype="CREDIT_CARD" type="String"/>
+	<for stereotype="TARJETA_CREDITO" type="String"/>
+	<for stereotype="EMAIL_LIST" type="String"/>
+	<for stereotype="LISTA_EMAIL" type="String"/>
+				
 </stereotype-type-default>

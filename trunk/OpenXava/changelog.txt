@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- New stereotypes IP, ISBN, CREDIT_CARD and EMAIL_LIST.
+- Fix: Search using list from an overlapped reference with string keys fails.
 - Fix: 'Remove selected' from a collection inside a reference displayed as-aggregate does not work.
 - Fix: Minor errors in component.dtd/componente.dtd.
 - Fix: Reference to entity used as key and displayed as-aggregate fails on delete.
