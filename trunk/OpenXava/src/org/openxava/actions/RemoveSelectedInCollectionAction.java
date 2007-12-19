@@ -20,7 +20,7 @@ public class RemoveSelectedInCollectionAction extends CollectionBaseAction {
 	
 	public void execute() throws Exception {
 		try{			
-			Collection selectedOnes = getMapsSelectedValues();				
+			Collection selectedOnes = getMapsSelectedValues();			
 			if (!selectedOnes.isEmpty()){
 				Iterator it = selectedOnes.iterator();
 				while(it.hasNext()){

@@ -88,7 +88,8 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(Invoice2002Test.class));		
 		suite.addTest(new TestSuite(Invoice2004Test.class));
 		suite.addTest(new TestSuite(Invoice2Test.class));		
-		suite.addTest(new TestSuite(InvoiceActiveYearTest.class));		
+		suite.addTest(new TestSuite(InvoiceActiveYearTest.class));	
+		suite.addTest(new TestSuite(InvoiceCustomerAsAggregateTest.class));
 		suite.addTest(new TestSuite(InvoiceDeliveriesTest.class));
 		suite.addTest(new TestSuite(InvoiceFromCustomersTest.class));
 		suite.addTest(new TestSuite(InvoiceFromDeliveriesTest.class));		
