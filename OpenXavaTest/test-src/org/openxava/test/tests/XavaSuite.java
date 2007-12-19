@@ -65,6 +65,7 @@ public class XavaSuite extends TestSuite {
 		if (ModuleTestBase.isPortalEnabled()) {
 			suite.addTest(new TestSuite(DescriptionTest.class));
 		}
+		suite.addTest(new TestSuite(DriverTest.class));		
 		try {
 			Class ejbTestClass = Class.forName("org.openxava.test.tests.EJBTest");
 			if (XavaPreferences.getInstance().isEJB2Persistence()) {
