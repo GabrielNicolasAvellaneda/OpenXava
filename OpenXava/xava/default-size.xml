@@ -17,6 +17,12 @@
 	<for-stereotype name="TELEPHONE" size="15"/>
 	<for-stereotype name="TELEFONE" size="15"/>
 	<for-stereotype name="WEBURL" size="50"/>
+	<for-stereotype name="IP" size="15"/>
+	<for-stereotype name="ISBN" size="13"/>
+	<for-stereotype name="CREDIT_CARD" size="19"/>
+	<for-stereotype name="TARJETA_CREDITO" size="19"/>
+	<for-stereotype name="EMAIL_LIST" size="200"/>
+	<for-stereotype name="LISTA_EMAIL" size="200"/>
 	<for-type class="java.sql.Time" size="5"/>
 	<for-type class="java.util.Date" size="10"/>
 	<for-type class="java.sql.Timestamp" size="10"/>
