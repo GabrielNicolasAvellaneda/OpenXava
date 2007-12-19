@@ -51,8 +51,11 @@ public class ReferenceSearchAction extends ReferenceBaseAction implements INavig
 				String overlaped = rootMapping.getOverlappingPropertyForReference(ref.getName(), referenceProperty);
 				condition.append("${");
 				condition.append(referenceProperty);
-				condition.append("} = ");				
-				condition.append(getView().getValue(overlaped));				
+				condition.append("} = ");
+				boolean numeric = ref.getMetaModelReferenced().getMetaProperty(referenceProperty).isNumber(); 
+				if (!numeric) condition.append("'"); 
+				condition.append(getView().getValue(overlaped));
+				if (!numeric) condition.append("'"); 
 				if (itOverlappingProperties.hasNext()) {
 					condition.append(" AND "); 
 				}
