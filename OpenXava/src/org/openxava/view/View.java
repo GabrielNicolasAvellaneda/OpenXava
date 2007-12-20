@@ -2118,14 +2118,14 @@ public class View implements java.io.Serializable {
 	private void findObject(MetaProperty changedProperty) throws Exception {		
 		Map key = getKeyValues();		
 		try {			
-			if (isRepresentsEntityReference() && isFirstPropertyAndViewHasNoKeys(changedProperty) && isKeyEditable()) {			
+			if (isRepresentsEntityReference() && isFirstPropertyAndViewHasNoKeys(changedProperty) && isKeyEditable()) {				
 				// Searching by the first visible property: Useful for searching from a reference with hidden key		
 				Map alternateKey = new HashMap();
 				alternateKey.put(changedProperty.getName(), getValue(changedProperty.getName()));
 				if (Maps.isEmptyOrZero(alternateKey)) clear();
 				else setValues(MapFacade.getValuesByAnyProperty(getModelName(), alternateKey, getMembersNamesWithHidden()));
 			}
-			else if (isRepresentsEntityReference() && hasSearchPropertyKeys()) { 
+			else if (isRepresentsEntityReference() && hasSearchPropertyKeys()) {				
 				Map alternateKey = new HashMap();
 				for (Iterator it = getMetaProperties().iterator(); it.hasNext();) {
 					MetaProperty p = (MetaProperty) it.next();
@@ -2134,7 +2134,9 @@ public class View implements java.io.Serializable {
 					}
 				}
 				if (Maps.isEmptyOrZero(alternateKey)) clear();
-				else setValues(MapFacade.getValuesByAnyProperty(getModelName(), alternateKey, getMembersNamesWithHidden()));				
+				else {
+					setValues(MapFacade.getValuesByAnyProperty(getModelName(), alternateKey, getMembersNamesWithHidden()));				
+				}
 			}
 			else {			
 				// Searching by key, the normal case				
