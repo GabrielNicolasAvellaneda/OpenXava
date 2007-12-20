@@ -1409,8 +1409,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		return getPersistenceProvider().find(metaModel, keyValues);
 	}
 	
-	private Object findEntityByAnyProperty(MetaModel metaModel, Map keyValues) throws FinderException, XavaException, RemoteException { 
-		return getPersistenceProvider().findByAnyProperty(metaModel, keyValues);
+	private Object findEntityByAnyProperty(MetaModel metaModel, Map keyValues) throws FinderException, XavaException, RemoteException {
+		return getPersistenceProvider().findByAnyProperty(metaModel, keyValues); 
 	}
 	
 	

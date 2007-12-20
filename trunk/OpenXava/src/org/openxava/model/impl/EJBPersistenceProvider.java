@@ -29,27 +29,27 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 		return find(metaModel, key);
 	}
 
-	public Object find(MetaModel metaModel, Object key) throws FinderException {
+	public Object find(MetaModel metaModel, Object key) throws FinderException {		
 		Class claseHome = null;
 		Class clasePK = null;
 		try {
-			clasePK = metaModel.getMetaEJB().getPrimaryKeyClass();
+			clasePK = metaModel.getMetaEJB().getPrimaryKeyClass();			
 			Class[] classArg = {
 				clasePK
 			};
-			claseHome = metaModel.getMetaEJB().getHomeClass();
+			claseHome = metaModel.getMetaEJB().getHomeClass();			
 			Method m = claseHome.getMethod("findByPrimaryKey", classArg);
 			Object home = metaModel.getMetaEJB().obtainHome();
 			Object[] arg = {
 				key
-			};
+			};			
 			return m.invoke(home, arg);
 		}
-		catch (NoSuchMethodException ex) {
+		catch (NoSuchMethodException ex) {			
 			throw new EJBException(XavaResources.getString(
 					"findByPrimaryKey_expected", claseHome.getName(), clasePK.getName()));
 		}
-		catch (InvocationTargetException ex) {
+		catch (InvocationTargetException ex) {			
 			Throwable th = ex.getTargetException();
 			if (th instanceof FinderException) {
 				throw (FinderException) th;
@@ -60,7 +60,7 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 						metaModel.getName()));
 			}
 		}
-		catch (Exception ex) {
+		catch (Exception ex) {			
 			log.error(ex.getMessage(), ex);
 			throw new EJBException(XavaResources.getString("find_error", metaModel
 					.getName()));
@@ -265,11 +265,11 @@ public class EJBPersistenceProvider implements IPersistenceProvider {
 	public Object findByAnyProperty(MetaModel metaModel, Map searchingValues) throws ObjectNotFoundException, FinderException, XavaException {
 		// Hibernate is used to implement the searching, although an EJB2 entity is returned
 		// This is because EJB2 does not support dynamic queries, and hibernate and POJOs are always presents.
-		HibernatePersistenceProvider hib = new HibernatePersistenceProvider();
+		HibernatePersistenceProvider hib = new HibernatePersistenceProvider();		
 		Object pojo = hib.findByAnyProperty(metaModel, searchingValues);		
 		IPropertiesContainer pc = hib.toPropertiesContainer(metaModel, pojo);
 		try {
-			Map key = pc.executeGets(Strings.toString(metaModel.getAllKeyPropertiesNames(), ":"));				
+			Map key = pc.executeGets(Strings.toString(metaModel.getAllKeyPropertiesNames(), ":"));			
 			return find(metaModel, key);
 		}
 		catch (RemoteException ex) { 

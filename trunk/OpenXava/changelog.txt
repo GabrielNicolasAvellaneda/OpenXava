@@ -1,26 +1,28 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 2.2.4 (2007-12-19)
+---------------------------
+- Full support for Liferay 4.3, including visual style integration.
 - New stereotypes IP, ISBN, CREDIT_CARD and EMAIL_LIST.
+- It's possible to mark a property as search key to be used for indicating which properties will be used for searching.
+- New class UserInfo and method Users.getCurrentUserInfo() for accessing to info the portal user.
+- New calculators CurrentUserGivenNameCalculator, CurrentUserFamilyNameCalculator and CurrentUserEmailCalculator.
+- XSS (Cross-site scripting) protection added.
+- XHibernate supports multischema and different configuration by thread.
+- Refined default size of text fields for filtering in list mode. Now is 80%, before it was 50%.
+- Portlets use action url as form action, and propagate parameters from processAction method. Needed for Jetspeed 2.1.2.
 - Fix: Search using list from an overlapped reference with string keys fails.
 - Fix: 'Remove selected' from a collection inside a reference displayed as-aggregate does not work.
 - Fix: Minor errors in component.dtd/componente.dtd.
 - Fix: Reference to entity used as key and displayed as-aggregate fails on delete.
-- Full support for Liferay 4.3, including visual style integration.
 - Fix: JavaScript calendar in Liferay 4.3 did not work.
 - Fix: Ugly layout when one (or few) fields before a wide group.
 - Fix: Layout problem when multiple nested frames with references with no frame.
 - Fix: Removed warning 'Trying to load controller .. twice' on generating portlets.
-- XHibernate supports multischema and different configuration by thread.
 - Fix: Code generator works with Java 1.4 (broken in 2.2.3).
-- It's possible to mark a property as search key to be used for indicating which properties will be used for searching.
-- Portlets use action url as form action, and propagate parameters from processAction method. Needed for Jetspeed 2.1.2.
 - Fix: If key inside a group in a reference the first editor outside the group was editable.
-- Refined default size of text fields for filtering in list mode. Now is 80%, before it was 50%.
 - Fix: java.io.NotSerializableException: org.openxava.tab.impl.EntityTab removed.
-- New class UserInfo and method Users.getCurrentUserInfo() for accessing to info the portal user.
-- New calculators CurrentUserGivenNameCalculator, CurrentUserFamilyNameCalculator and CurrentUserEmailCalculator.
-- XSS (Cross-site scripting) protection added.
 
 OpenXava 2.2.3 (2007-10-29)
 ---------------------------
