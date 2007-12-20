@@ -12,29 +12,7 @@ public class ServiceTest extends ModuleTestBase {
 	public ServiceTest(String nombreTest) {
 		super(nombreTest, "Service");		
 	}
-	
-	public void testSearchKey() throws Exception { 		
-		execute("CRUD.new");
-		execute("Sections.change", "activeSection=1");
 		
-		assertEditable("invoice.year");
-		assertEditable("invoice.number");
-		assertNoEditable("invoice.amount");
-		assertNoEditable("invoice.description");
-		assertValue("invoice.year", "");
-		assertValue("invoice.number", "");
-		assertValue("invoice.amount", "");
-		assertValue("invoice.description", "");
-		
-		setValue("invoice.year", "2007");
-		assertValue("invoice.amount", "");
-		assertValue("invoice.description", "");
-		
-		setValue("invoice.number", "2");
-		assertValue("invoice.amount", "1,730.00");
-		assertValue("invoice.description", "Second service");		
-	}
-	
 	public void testFocusOnDescriptionsListInsideAggregate() throws Exception {
 		execute("CRUD.new");
 		setValue("family", "1");

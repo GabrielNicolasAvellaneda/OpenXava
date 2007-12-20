@@ -128,8 +128,11 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(SellerJSPTest.class));
 		suite.addTest(new TestSuite(SellerTest.class));
 		suite.addTest(new TestSuite(SellerWithCustomersAsAggregateTest.class));
-		suite.addTest(new TestSuite(SellerWithDescriptionsListJSPTest.class));		
-		suite.addTest(new TestSuite(ServiceInvoiceTest.class));
+		suite.addTest(new TestSuite(SellerWithDescriptionsListJSPTest.class));
+		if (!XavaPreferences.getInstance().isEJB2Persistence()) {
+			suite.addTest(new TestSuite(ServiceInvoiceTest.class));
+			suite.addTest(new TestSuite(ServiceOnlyPOJOTest.class));
+		}
 		suite.addTest(new TestSuite(ServiceTest.class));
 		suite.addTest(new TestSuite(ShipmentChargeTest.class));		
 		suite.addTest(new TestSuite(ShipmentTest.class));				
