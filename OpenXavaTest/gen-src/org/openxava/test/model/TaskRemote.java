@@ -16,7 +16,25 @@ public interface TaskRemote
    public void setSummary( java.lang.String newSummary )
       throws java.rmi.RemoteException;
 
+   public java.lang.String getUserFamilyName(  )
+      throws java.rmi.RemoteException;
+
+   public void setUserFamilyName( java.lang.String newUserFamilyName )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getUserGivenName(  )
+      throws java.rmi.RemoteException;
+
+   public void setUserGivenName( java.lang.String newUserGivenName )
+      throws java.rmi.RemoteException;
+
    public java.lang.String getOid(  )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getUserEMail(  )
+      throws java.rmi.RemoteException;
+
+   public void setUserEMail( java.lang.String newUserEMail )
       throws java.rmi.RemoteException;
 
    public java.util.Date getDate(  )

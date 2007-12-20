@@ -16,8 +16,14 @@ public class TaskValue
 
    private java.lang.String summary;
    private boolean summaryHasBeenSet = false;
+   private java.lang.String userFamilyName;
+   private boolean userFamilyNameHasBeenSet = false;
+   private java.lang.String userGivenName;
+   private boolean userGivenNameHasBeenSet = false;
    private java.lang.String oid;
    private boolean oidHasBeenSet = false;
+   private java.lang.String userEMail;
+   private boolean userEMailHasBeenSet = false;
    private java.util.Date date;
    private boolean dateHasBeenSet = false;
    private java.lang.String user;
@@ -34,8 +40,14 @@ public class TaskValue
    {
 	  this.summary = otherValue.summary;
 	  summaryHasBeenSet = true;
+	  this.userFamilyName = otherValue.userFamilyName;
+	  userFamilyNameHasBeenSet = true;
+	  this.userGivenName = otherValue.userGivenName;
+	  userGivenNameHasBeenSet = true;
 	  this.oid = otherValue.oid;
 	  oidHasBeenSet = true;
+	  this.userEMail = otherValue.userEMail;
+	  userEMailHasBeenSet = true;
 	  this.date = otherValue.date;
 	  dateHasBeenSet = true;
 	  this.user = otherValue.user;
@@ -58,6 +70,34 @@ public class TaskValue
    public boolean summaryHasBeenSet(){
 	  return summaryHasBeenSet;
    }
+   public java.lang.String getUserFamilyName()
+   {
+	  return this.userFamilyName;
+   }
+
+   public void setUserFamilyName( java.lang.String userFamilyName )
+   {
+	  this.userFamilyName = userFamilyName;
+	  userFamilyNameHasBeenSet = true;
+   }
+
+   public boolean userFamilyNameHasBeenSet(){
+	  return userFamilyNameHasBeenSet;
+   }
+   public java.lang.String getUserGivenName()
+   {
+	  return this.userGivenName;
+   }
+
+   public void setUserGivenName( java.lang.String userGivenName )
+   {
+	  this.userGivenName = userGivenName;
+	  userGivenNameHasBeenSet = true;
+   }
+
+   public boolean userGivenNameHasBeenSet(){
+	  return userGivenNameHasBeenSet;
+   }
    public java.lang.String getOid()
    {
 	  return this.oid;
@@ -71,6 +111,20 @@ public class TaskValue
 
    public boolean oidHasBeenSet(){
 	  return oidHasBeenSet;
+   }
+   public java.lang.String getUserEMail()
+   {
+	  return this.userEMail;
+   }
+
+   public void setUserEMail( java.lang.String userEMail )
+   {
+	  this.userEMail = userEMail;
+	  userEMailHasBeenSet = true;
+   }
+
+   public boolean userEMailHasBeenSet(){
+	  return userEMailHasBeenSet;
    }
    public java.util.Date getDate()
    {
@@ -119,7 +173,7 @@ public class TaskValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("summary=" + getSummary() + " " + "oid=" + getOid() + " " + "date=" + getDate() + " " + "user=" + getUser() + " " + "comments=" + getComments());
+	  str.append("summary=" + getSummary() + " " + "userFamilyName=" + getUserFamilyName() + " " + "userGivenName=" + getUserGivenName() + " " + "oid=" + getOid() + " " + "userEMail=" + getUserEMail() + " " + "date=" + getDate() + " " + "user=" + getUser() + " " + "comments=" + getComments());
 	  str.append('}');
 
 	  return(str.toString());
@@ -180,6 +234,30 @@ public class TaskValue
 		 {
 			lEquals = lEquals && this.summary.equals( that.summary );
 		 }
+		 if( this.userFamilyName == null )
+		 {
+			lEquals = lEquals && ( that.userFamilyName == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.userFamilyName.equals( that.userFamilyName );
+		 }
+		 if( this.userGivenName == null )
+		 {
+			lEquals = lEquals && ( that.userGivenName == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.userGivenName.equals( that.userGivenName );
+		 }
+		 if( this.userEMail == null )
+		 {
+			lEquals = lEquals && ( that.userEMail == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.userEMail.equals( that.userEMail );
+		 }
 		 if( this.date == null )
 		 {
 			lEquals = lEquals && ( that.date == null );
@@ -217,7 +295,13 @@ public class TaskValue
 	  int result = 17;
       result = 37*result + ((this.summary != null) ? this.summary.hashCode() : 0);
 
+      result = 37*result + ((this.userFamilyName != null) ? this.userFamilyName.hashCode() : 0);
+
+      result = 37*result + ((this.userGivenName != null) ? this.userGivenName.hashCode() : 0);
+
       result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
+
+      result = 37*result + ((this.userEMail != null) ? this.userEMail.hashCode() : 0);
 
       result = 37*result + ((this.date != null) ? this.date.hashCode() : 0);
 
