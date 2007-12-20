@@ -1,4 +1,4 @@
-<table id=<%=idCollection%> class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%>>
+<table id=<%=idCollection%> class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%> <%=style.getListStyle()%>>
 <tr id="xava-tr-list" class="<%=style.getListHeader()%>">
 	<% if (lineAction != null) { %>	
 	<th class=<%=style.getListHeaderCell()%>></th>
@@ -25,15 +25,16 @@ int f=0;
 while (itAggregates.hasNext()) {
 	Map row = (Map) itAggregates.next();
 	String cssClass=f%2==0?style.getListPair():style.getListOdd();
-	String cssCellClass=f%2==0?style.getListPairCell():style.getListOddCell();			
+	String cssCellClass=f%2==0?style.getListPairCell():style.getListOddCell();
+	String selectedClass = "";
 	if (f == subview.getCollectionEditingRow()) { 
-		String selectedClass = f%2==0?style.getListPairSelected():style.getListOddSelected();
-		cssClass = cssClass + " " + selectedClass;
+		selectedClass = f%2==0?style.getListPairSelected():style.getListOddSelected();
+		cssClass = cssClass + " " + selectedClass;		
 		if (style.isApplySelectedStyleToCellInList()) cssCellClass = cssCellClass + " " + selectedClass; 
-	}	
-	
+	}		
+	String events=f%2==0?style.getListPairEvents(selectedClass):style.getListOddEvents(selectedClass);
 %>
-<tr id="xava-tr-list" class="<%=cssClass%>">
+<tr id="xava-tr-list" class="<%=cssClass%>" <%=events%>>
 <% if (lineAction != null) { %>
 <td class="<%=cssCellClass%>" style='vertical-align: middle;text-align: center;padding-right: 2px'>
 <xava:action action="<%=lineAction%>" argv='<%="row="+f + ",viewObject="+viewName%>'/>
