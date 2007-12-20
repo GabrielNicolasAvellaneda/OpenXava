@@ -51,7 +51,7 @@ boolean singleSelection="true".equalsIgnoreCase(request.getParameter("singleSele
 </table>
 <% } %>
 
-<table id="<%=id%>" class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%>>
+<table id="<%=id%>" class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%> <%=style.getListStyle()%>>
 <tr id="xava-tr-list" class="<%=style.getListHeader()%>">
 <th class="<%=style.getListHeaderCell()%>" style="text-align: center" width="60">     
 	<a id="xava-filter-link-<%=id%>" href="javascript:manageFilterRow('<%=id%>')" title="<xava:message key='<%=filterMessage%>'/>"><img id="xava-filter-image-<%=id%>" align='middle' 
@@ -210,14 +210,15 @@ if (totalSize > 0) {
 for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex(); f++) {
 	String checked=tab.isSelected(f)?"checked='true'":"";
 	String cssClass=f%2==0?style.getListPair():style.getListOdd();	
-	String cssCellClass=f%2==0?style.getListPairCell():style.getListOddCell();	
+	String cssCellClass=f%2==0?style.getListPairCell():style.getListOddCell(); 
 	String cssStyle = tab.getStyle(f);
 	if (cssStyle != null) {
 		cssClass = cssClass + " " + cssStyle; 
 		if (style.isApplySelectedStyleToCellInList()) cssCellClass = cssCellClass + " " + cssStyle; 
 	}
+	String events=f%2==0?style.getListPairEvents(cssStyle):style.getListOddEvents(cssStyle);	
 %>
-<tr id="xava-tr-list" class="<%=cssClass%>">
+<tr id="xava-tr-list" class="<%=cssClass%>" <%=events%> style="border-bottom: 1px solid;">
 	<td class="<%=cssCellClass%>" style='vertical-align: middle;text-align: center'>
 <% if (!org.openxava.util.Is.emptyString(action)) { %>
 <xava:action action='<%=action%>' argv='<%="row=" + f + actionArgv%>'/>

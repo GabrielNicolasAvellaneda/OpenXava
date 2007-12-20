@@ -70,20 +70,17 @@ if (view.displayDetailInCollection(collectionName)) {
 	context.put(request, viewName, collectionView);
 	if (collectionView.isCollectionDetailVisible()) {
 %>	
-<tr><td colspan="<%=subview.getMetaPropertiesList().size()+1%>">		
-<table class=<%=style.getFrame()%> width='100%' <%=style.getFrameSpacing()%>>
-<tr class=<%=style.getFrameTitle()%>><th align='left' class=<%=style.getFrameTitleLabel()%>>
-	<%=style.getFrameTitleStartDecoration()%>
-	<%=ref.getLabel(request)%>
-	<%=style.getFrameTitleEndDecoration()%>
-</th></tr>
-<tr><td class=<%=style.getFrameContent()%>>
-<jsp:include page="detail.jsp"> 
-	<jsp:param name="viewObject" value="<%=viewName%>" />
-	<jsp:param name="propertyPrefix" value="<%=propertyPrefix%>" />
-</jsp:include>		
-</td></tr>
-<tr><td>
+<tr><td colspan="<%=subview.getMetaPropertiesList().size()+1%>">
+		<%=style.getFrameHeaderStartDecoration()%>		
+		<%=style.getFrameTitleStartDecoration()%>
+		<%=ref.getLabel(request)%>
+		<%=style.getFrameTitleEndDecoration()%>
+		<%=style.getFrameHeaderEndDecoration()%>
+		<%=style.getFrameContentStartDecoration()%>
+		<jsp:include page="detail.jsp"> 
+			<jsp:param name="viewObject" value="<%=viewName%>" />
+			<jsp:param name="propertyPrefix" value="<%=propertyPrefix%>" />
+		</jsp:include>		
 <% if (collectionEditable || collectionMembersEditables) { %>
 <xava:action action="<%=subview.getSaveCollectionElementAction()%>" argv='<%="viewObject="+viewName%>'/>
 <% } %>
@@ -99,8 +96,9 @@ while (itDetailActions.hasNext()) {
 <%	
 } // while detail actions
 %>
-</td></tr>
-</table>
+
+		<%=style.getFrameContentEndDecoration()%>
+
 <%
 	}
 	else {// no mostrar
