@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+
+- Fix: ValidValuesVerticalRadioButton was horizontal.
+
 OpenXava 2.2.4 (2007-12-19)
 ---------------------------
 - Full support for Liferay 4.3, including visual style integration.
