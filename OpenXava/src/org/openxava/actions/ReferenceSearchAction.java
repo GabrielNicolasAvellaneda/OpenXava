@@ -55,10 +55,10 @@ public class ReferenceSearchAction extends ReferenceBaseAction implements INavig
 				boolean numeric = ref.getMetaModelReferenced().getMetaProperty(referenceProperty).isNumber(); 
 				if (!numeric) condition.append("'"); 
 				condition.append(getView().getValue(overlaped));
-				if (!numeric) condition.append("'"); 
+				if (!numeric) condition.append("'");				
 				if (itOverlappingProperties.hasNext()) {
 					condition.append(" AND "); 
-				}
+				}	
 			}					
 			getTab().setBaseCondition(condition.toString());
 		}

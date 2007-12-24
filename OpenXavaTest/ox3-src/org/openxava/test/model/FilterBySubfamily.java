@@ -5,7 +5,7 @@ import javax.persistence.*;
 import org.openxava.annotations.*;
 
 /**
- * Example of an transient OpenXava component (not persistent). <p>
+ * Example of an transient OpenXava model class (not persistent). <p>
  *
  * This can be used, for example, to display a dialog,
  * or any other graphical interface.<p>

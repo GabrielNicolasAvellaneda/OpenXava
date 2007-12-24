@@ -153,15 +153,9 @@ public class Invoice {
 	@ReferenceViews(
 		@ReferenceView(forViews="CustomerAsAggregateWithDeliveryPlaces", value="SimpleWithDeliveryPlaces")	
 	)
+	@AsEmbedded(forViews="CustomerAsAggregateWithDeliveryPlaces")
 	private Customer customer;
 	
-	<reference-view reference="customer" 
-		view= 
-		as-aggregate="true"/>
-	<members>
-	
-
-		
 	@OneToMany (mappedBy="invoice", cascade=CascadeType.REMOVE)
 	@OrderBy("serviceType desc") @org.hibernate.validator.Size(min=1)
 	@ListProperties(forViews="DEFAULT", value="serviceType, product.description, product.unitPriceInPesetas, quantity, unitPrice, amount, free")
