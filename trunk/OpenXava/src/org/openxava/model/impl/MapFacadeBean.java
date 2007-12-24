@@ -36,7 +36,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		values = Maps.recursiveClone(values); 		
 		try {
 			MetaModel metaModel = getMetaModel(modelName);	
-			getPersistenceProvider().begin(); 
+			getPersistenceProvider().begin(); 			
 			Object result = create(metaModel, values, null, null, 0);
 			getPersistenceProvider().commit();
 			return result;

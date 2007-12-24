@@ -508,8 +508,12 @@ abstract public class ModelMapping implements java.io.Serializable {
 		Iterator it = getReferenceMapping(reference).getDetails().iterator();
 		while (it.hasNext()) {
 			ReferenceMappingDetail d = (ReferenceMappingDetail) it.next();
-			if (getColumns().contains(d.getColumn()))
-				return true;
+			if (containsColumn(getColumns(), d.getColumn())) { 
+				String property = getMappingForColumn(d.getColumn()).getProperty();
+				if (!property.startsWith(reference + "_")) { 
+					return true;
+				}
+			}
 		}
 		return false;
 	}
@@ -555,20 +559,23 @@ abstract public class ModelMapping implements java.io.Serializable {
 		Collection overlappingPropertiesOfReference = new ArrayList();
 		Iterator it = getReferenceMapping(reference).getDetails().iterator();
 		while (it.hasNext()) {
-			ReferenceMappingDetail d = (ReferenceMappingDetail) it.next();
-			if (containsColumn(getColumns(), d.getColumn())) { 
-				overlappingPropertiesOfReference.add(
-					d.getReferencedModelProperty());
+			ReferenceMappingDetail d = (ReferenceMappingDetail) it.next();			
+			if (containsColumn(getColumns(), d.getColumn())) {
+				String property = getMappingForColumn(d.getColumn()).getProperty();
+				if (!property.startsWith(reference + "_")) { 
+					overlappingPropertiesOfReference.add(
+							d.getReferencedModelProperty());
+				}
 			}
 		}
 		return overlappingPropertiesOfReference;
 	}
 
 	private boolean containsColumn(Collection columns, String column) {
-		if (columns.contains(column)) return true;
+		if (columns.contains(column)) return true;		
 		for (Iterator it = columns.iterator(); it.hasNext(); ) {
 			if (((String)it.next()).equalsIgnoreCase(column)) return true;
-		}
+		}				
 		return false;
 	}
 
@@ -579,7 +586,7 @@ abstract public class ModelMapping implements java.io.Serializable {
 		Iterator it = propertyMappings.values().iterator();
 		while (it.hasNext()) {
 			PropertyMapping propertyMapping = (PropertyMapping) it.next();
-			if (propertyMapping.getColumn().equals(column)) {
+			if (propertyMapping.getColumn().equalsIgnoreCase(column)) { 
 				return propertyMapping; 
 			}
 		}		 

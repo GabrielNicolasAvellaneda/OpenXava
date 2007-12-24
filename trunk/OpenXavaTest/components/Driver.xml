@@ -28,7 +28,6 @@
 			<reference-mapping-detail 
 				column="TYPE" 
 				referenced-model-property="type">
-				<converter class="org.openxava.converters.NotNullStringConverter"/>
 			</reference-mapping-detail>						
 			<reference-mapping-detail 
 				column="DRIVINGLICENCE_LEVEL" 

@@ -5,6 +5,7 @@ import java.rmi.*;
 import java.util.*;
 
 import javax.ejb.*;
+import javax.portlet.*;
 import javax.servlet.http.*;
 
 import org.apache.commons.logging.*;
@@ -265,7 +266,7 @@ public class View implements java.io.Serializable {
 		return getValues(all, false); 
 	} 
 		 
-	private Map getValues(boolean all, boolean onlyKeyFromSubviews) throws XavaException { 
+	private Map getValues(boolean all, boolean onlyKeyFromSubviews) throws XavaException {		
 		Map hiddenKeyAndVersion = null;  
 		if (values == null) {  
 			values = new HashMap();  
@@ -280,14 +281,14 @@ public class View implements java.io.Serializable {
 				View v = (View) en.getValue();  
 				if (v.isRepresentsCollection()) continue; 
 				if (!onlyKeyFromSubviews && (all || v.isRepresentsAggregate())) { 
-					values.put(en.getKey(), v.getValues(all, onlyKeyFromSubviews));  
+					values.put(en.getKey(), v.getValues(all, onlyKeyFromSubviews));					
 				} 
 				else {  
-					values.put(en.getKey(), v.getKeyValues());  
+					values.put(en.getKey(), v.getKeyValues());					
 				}  
 			} 
 		} 
-		 
+		
 		if (hasGroups()) { 
 			Iterator it = getGroupsViews().values().iterator(); 
 			while (it.hasNext()) { 
@@ -302,11 +303,11 @@ public class View implements java.io.Serializable {
 				values.putAll(getSectionView(i).getValues(all, onlyKeyFromSubviews));  
 			} 
 		}  
-		 
+		
 		if (hiddenKeyAndVersion != null) { 
 			values.putAll(hiddenKeyAndVersion);  
 		} 
-		 
+
 		return values; 
 	} 	
 	
@@ -921,7 +922,7 @@ public class View implements java.io.Serializable {
 					Iterator itProperties = mapping.getOverlappingPropertiesOfReference(getMemberName()).iterator();					
 					while (itProperties.hasNext()) {
 						String property = (String) itProperties.next();						
-						String overlappedProperty = mapping.getOverlappingPropertyForReference(getMemberName(), property);						
+						String overlappedProperty = mapping.getOverlappingPropertyForReference(getMemberName(), property);
 						Maps.putValueFromQualifiedName(result, property, getParent().getValue(overlappedProperty, false));
 					}
 					
