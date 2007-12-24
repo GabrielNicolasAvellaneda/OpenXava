@@ -159,16 +159,28 @@ public class View implements java.io.Serializable {
 			}
 			metaMembers = filtered;
 		}		
-		if (!hiddenIncluded && hiddenMembers != null) removeHidden(metaMembers);
+		if (!hiddenIncluded && hiddenMembers != null) {
+			removeHidden(metaMembers);
+			removeFirstAndLastSeparator(metaMembers);
+		}
 		removeOverlapedProperties(metaMembers);
 		return metaMembers;	
 	}
 	
+	private void removeFirstAndLastSeparator(Collection metaMembers) {
+		Iterator it = metaMembers.iterator();
+		Object member = null;
+		if (it.hasNext()) member = it.next();
+		if (PropertiesSeparator.INSTANCE.equals(member)) it.remove();
+		while (it.hasNext()) member = it.next();
+		if (PropertiesSeparator.INSTANCE.equals(member)) it.remove();
+	}
+
 	private void removeHidden(Collection metaMembers) {
 		Iterator it = metaMembers.iterator();		
-		while (it.hasNext()) {
-			MetaMember m = (MetaMember) it.next();
-			if (hiddenMembers.contains(m.getName())) it.remove();			
+		while (it.hasNext()) {			
+			MetaMember member = (MetaMember) it.next();
+			if (hiddenMembers.contains(member.getName())) it.remove();			
 		}
 	}
 	
@@ -2755,7 +2767,7 @@ public class View implements java.io.Serializable {
 		return hiddenMembers != null && hiddenMembers.contains(name);
 	}
 
-	public void setHidden(String name, boolean hidden) throws XavaException {
+	public void setHidden(String name, boolean hidden) throws XavaException {		
 		if (hiddenMembers == null) {
 			if (!hidden) return;		
 			hiddenMembers = new HashSet();
