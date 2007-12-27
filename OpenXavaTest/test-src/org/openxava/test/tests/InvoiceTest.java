@@ -982,8 +982,7 @@ public class InvoiceTest extends ModuleTestBase {
 			"Print.generateExcel", // In collection
 			"List.filter", 
 			"List.orderBy", 
-			"List.customize", 
-			"List.hideRows"
+			"List.customize"			
 		};		
 		assertActions(aggregateListActions);
 		
@@ -1012,8 +1011,7 @@ public class InvoiceTest extends ModuleTestBase {
 			"Collection.hideDetail",
 			"List.filter", 
 			"List.orderBy", 
-			"List.customize", 
-			"List.hideRows",			
+			"List.customize", 				
 			"Invoice.viewProduct"
 		};		
 		assertActions(aggregateDetailActions);

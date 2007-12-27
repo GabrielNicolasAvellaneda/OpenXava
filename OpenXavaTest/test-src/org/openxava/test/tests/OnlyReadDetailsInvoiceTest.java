@@ -30,8 +30,7 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 			"Mode.list",				
 			"List.filter", 
 			"List.orderBy", 
-			"List.customize", 
-			"List.hideRows",
+			"List.customize", 			
 			"Print.generatePdf", // the DefaultListActionsForCollections (as ListActions) 
 			"Print.generateExcel" // are alwasy present						
 		};		
@@ -55,8 +54,7 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 			"Collection.view",
 			"List.filter", 
 			"List.orderBy", 
-			"List.customize", 
-			"List.hideRows",
+			"List.customize",			
 			"Print.generatePdf", // the DefaultListActionsForCollections (as ListActions) 
 			"Print.generateExcel" // are alwasy present						
 		};		
@@ -78,8 +76,7 @@ public class OnlyReadDetailsInvoiceTest extends ModuleTestBase {
 			"Collection.hideDetail",
 			"List.filter", 
 			"List.orderBy", 
-			"List.customize", 
-			"List.hideRows"			
+			"List.customize"
 		};		
 		assertActions(aggregateDetailActions);
 		

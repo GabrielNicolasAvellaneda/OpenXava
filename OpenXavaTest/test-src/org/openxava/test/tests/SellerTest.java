@@ -82,10 +82,12 @@ public class SellerTest extends ModuleTestBase {
 		assertValueInCollection("customers", 0, "number", "2");
 		assertValueInCollection("customers", 1, "number", "1");
 		
-		// Hide rows
+		// Hide rows is not available for collection since 2.2.5
+		/*
 		assertCollectionRowCount("customers", 2);
 		execute("List.hideRows", "collection=customers");
 		assertCollectionRowCount("customers", 0);
+		*/
 		
 		// Filter  
 		String [] condition = { "1" }; 
@@ -95,11 +97,13 @@ public class SellerTest extends ModuleTestBase {
 		assertValueInCollection("customers", 0, "number", "1");
 		assertValueInCollection("customers", 0, "name", "Javi");
 		
-		// Hide/Show rows
+		// Hide/Show rows are not available for collection since 2.2.5
+		/*
 		execute("List.hideRows", "collection=customers");
 		assertCollectionRowCount("customers", 0);
 		execute("List.showRows", "collection=customers");
 		assertCollectionRowCount("customers", 1);
+		*/
 	}
 	
 	public void testMembersOfReferenceToEntityNotEditable() throws Exception {
