@@ -1,7 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
-
+- New StringTimeConverter.
+- Fix: When a member in a section was hidden programmatically and the result was only one reference or collection the frame was not hidden.
+- Fix: Overlapped columns were not recognized when the letters case does not match.
+- AnnotatedClassParser shows source exception on obtaining class names from hibernate session.
 - Fix: ValidValuesVerticalRadioButton was horizontal.
 
 OpenXava 2.2.4 (2007-12-19)
