@@ -1,6 +1,8 @@
 Change Log for OpenXava 3
 =========================
 
+- TabUserPreference uses "native" as key generation to allow to save tab preferences in Oracle.
+- Fix: Search reference does not work when key is multiple, visible and inside a group.
 - Hide rows action is no longer shown on collections.
 - Fix: When a member in a section was hidden programmatically and the result was only one reference or collection the frame was not hidden
 - Fix: @JoinColumn in getter fails, but not in private field.

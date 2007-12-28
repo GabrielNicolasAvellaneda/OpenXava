@@ -23,6 +23,7 @@ public class TransportCharge2Test extends ModuleTestBase {
 		execute("Reference.search", "keyProperty=xava.TransportCharge2.delivery.number");
 		String year = getValueInList(0, 0);
 		String number = getValueInList(0, 1);
+		String description = getValueInList(0, 6);
 		assertTrue("It is required that year in invoice has value", !Is.emptyString(year));
 		assertTrue("It is required that number in invoice has value", !Is.emptyString(number));
 		
@@ -30,6 +31,7 @@ public class TransportCharge2Test extends ModuleTestBase {
 		assertNoErrors();
 		assertValue("delivery.invoice.year", year);
 		assertValue("delivery.invoice.number", number);
+		assertValue("delivery.description", description); // To test if data from reference is loaded
 		
 		setValue("amount", "666");
 		execute("CRUD.save");
