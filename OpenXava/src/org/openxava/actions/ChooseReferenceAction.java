@@ -32,7 +32,7 @@ public class ChooseReferenceAction extends ViewBaseAction implements INavigation
 			chosen = false;
 			return;
 		}
-		getReferenceSubview().setValuesNotifying(key); 
+		getReferenceSubview().setValuesNotifying(key);
 		getTab().setModelName(getView().getModelName());
 	}
 

@@ -24,6 +24,8 @@ import org.openxava.util.meta.*;
 import org.openxava.view.meta.*;
 import org.openxava.web.*;
 
+import com.lowagie.text.pdf.*;
+
 /**
  * Session object to manage a view based in maps,
  * hence suitable for OpenXava
@@ -1925,7 +1927,7 @@ public class View implements java.io.Serializable {
 		
 	private String getLastPropertyKeyName() throws XavaException {
 		if (lastPropertyKeyName == null) {
-			Iterator it = getMetaProperties().iterator();
+			Iterator it = getMetaPropertiesIncludingGroups().iterator(); 
 			lastPropertyKeyName = "";
 			while (it.hasNext()) {
 				MetaProperty p = (MetaProperty) it.next();
@@ -1937,9 +1939,9 @@ public class View implements java.io.Serializable {
 		return lastPropertyKeyName;		
 	}
 	
-	private String getLastPropertySearchKeyName() throws XavaException {
+	private String getLastPropertySearchKeyName() throws XavaException { 
 		if (lastPropertySearchKeyName == null) { 
-			Iterator it = getMetaProperties().iterator();
+			Iterator it = getMetaPropertiesIncludingGroups().iterator(); 
 			lastPropertySearchKeyName = "";
 			while (it.hasNext()) {
 				MetaProperty p = (MetaProperty) it.next();		
@@ -2048,9 +2050,9 @@ public class View implements java.io.Serializable {
 				}
 			}				
 			
-			if (hasToSearchOnChangeIfSubview && isSubview() && !isGroup() &&  
+			if (hasToSearchOnChangeIfSubview && isSubview() && !isGroup() &&   
 					( 	
-					(getLastPropertyKeyName().equals(changedProperty.getName()) && metaPropertiesContains(changedProperty)) || // Visible keys
+					(getLastPropertyKeyName().equals(changedProperty.getName()) && getMetaPropertiesIncludingGroups().contains(changedProperty)) || // Visible keys
 					(!hasKeyProperties() && changedProperty.isKey() && changedProperty.isHidden() && changedProperty.getMetaModel() == getMetaModel()) || // hidden keys
 					(isRepresentsEntityReference() && isFirstPropertyAndViewHasNoKeys(changedProperty) && isKeyEditable()) || // A searching value that is not key
 					(isRepresentsEntityReference() && hasSearchPropertyKeys() && isLastSearchKeyProperty(changedProperty)) // Explicit search key 
@@ -2107,15 +2109,6 @@ public class View implements java.io.Serializable {
 		if (pr.getPropertyNamesThatIDepend().contains(changedPropertyQualifiedName) ) {
 			return true;
 		}		 					
-		return false;
-	}
-
-	private boolean metaPropertiesContains(MetaProperty changedProperty) throws XavaException {
-		Iterator it = getMetaProperties().iterator();
-		while (it.hasNext()) {
-			MetaProperty p = (MetaProperty) it.next();
-			if (p.equals(changedProperty)) return true;
-		}
 		return false;
 	}
 
