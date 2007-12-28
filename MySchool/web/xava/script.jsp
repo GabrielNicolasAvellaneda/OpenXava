@@ -1,9 +1,33 @@
+<%@ include file="imports.jsp"%>
+
+<!-- JavaScript for collections and list -->
+
+<script type="text/javascript">
+function manageFilterRow(id)
+{
+    var img = document.getElementById("xava-filter-image-" + id);
+    var elem = document.getElementById("xava-tr-list-filter-" + id)
+    var link = document.getElementById("xava-filter-link-" + id)
+	if (elem.style.display == ''){
+		elem.style.display = 'none';
+		img.src='<%=request.getContextPath()%>/xava/images/show-filter.gif';
+		link.title='<xava:message key="show_filters"/>'; 
+	}
+	else {
+		elem.style.display = '';
+		img.src='<%=request.getContextPath()%>/xava/images/hide-filter.gif';
+		link.title='<xava:message key="hide_filters"/>';
+	}
+}
+</script>
+
+
 <!-- JavaScript for calendar in date editors -->
 
 <!-- Loading Theme file(s) -->
 <link rel="stylesheet" type="text/css" media="all" href="<%=request.getContextPath()%>/xava/editors/calendar/skins/aqua/theme.css" title="Aqua" />
 
-<% if (!(style instanceof org.openxava.web.style.LiferayStyle)) { // Because Liferay has its own calenar.js %>
+<% if (style.isNeededToIncludeCalendar()) { %>
 <!-- import the calendar script -->
 <script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/calendar.js"></script>
 
@@ -94,7 +118,13 @@ function showCalendar(id, format, showsTime, showsOtherMonths) {
   // the reference element that we pass to showAtElement is the button that
   // triggers the calendar.  In this example we align the calendar bottom-right
   // to the button.
-  _dynarch_popupCalendar.showAtElement(el.nextSibling, "tr");        // show the calendar
+  <% 
+  // Date fields at end of the windows is not shown correctly in IE6,
+  // hence, we align at top in IE6, and at botton in other browsers.
+  String browser = request.getHeader("user-agent");
+  String calendarAlign = browser != null && browser.indexOf("MSIE 6") >= 0?"tr":"Br";  
+  %>
+  _dynarch_popupCalendar.showAtElement(el.nextSibling, "<%=calendarAlign%>"); // show the calendar
 
   return false;
 }

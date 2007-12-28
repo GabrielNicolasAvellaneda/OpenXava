@@ -31,6 +31,14 @@ String viewObject = request.getParameter("viewObject");
 String actionArgv = viewObject != null && !viewObject.equals("")?",viewObject=" + viewObject:"";
 String sfilter = request.getParameter("filter");
 boolean filter = !"false".equals(sfilter);
+String displayFilter=""; 
+String imageFilter="hide-filter";
+String filterMessage="hide_filters";
+if (!tab.isFilterVisible()) {
+	displayFilter="none"; 
+	imageFilter ="show-filter"; 
+	filterMessage="show_filters";
+}
 String lastRow = request.getParameter("lastRow");
 boolean singleSelection="true".equalsIgnoreCase(request.getParameter("singleSelection"));
 %>
@@ -43,9 +51,13 @@ boolean singleSelection="true".equalsIgnoreCase(request.getParameter("singleSele
 </table>
 <% } %>
 
-<table id="<%=id%>" class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%>>
+<table id="<%=id%>" class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%> <%=style.getListStyle()%>>
 <tr id="xava-tr-list" class="<%=style.getListHeader()%>">
-<th class="<%=style.getListHeaderCell()%>" style="text-align: center" width="60"><xava:image action="List.customize" argv="<%=collectionArgv%>"/></th>
+<th class="<%=style.getListHeaderCell()%>" style="text-align: center" width="60">     
+	<a id="xava-filter-link-<%=id%>" href="javascript:manageFilterRow('<%=id%>')" title="<xava:message key='<%=filterMessage%>'/>"><img id="xava-filter-image-<%=id%>" align='middle' 
+		src='<%=request.getContextPath()%>/xava/images/<%=imageFilter%>.gif' border='0'/></a>
+	<xava:image action="List.customize" argv="<%=collectionArgv%>"/>
+</th>
 <th class="<%=style.getListHeaderCell()%>" width="5">
 <% if (tab.isCustomize()) { %><xava:image action="List.addColumns" argv="<%=collectionArgv%>"/><% } %>
 </th>
@@ -66,12 +78,12 @@ while (it.hasNext()) {
 <%
 	if (property.isCalculated()) {		
 %>
-<%=property.getLabel(request)%>&nbsp;
+<%=property.getQualifiedLabel(request)%>&nbsp;
 <%
 	} else {
 %>
 <span class="<%=style.getListOrderBy()%>">
-<xava:link action='List.orderBy' argv='<%="property="+property.getQualifiedName() + collectionArgv%>'><%=property.getLabel(request)%></xava:link>&nbsp;
+<xava:link action='List.orderBy' argv='<%="property="+property.getQualifiedName() + collectionArgv%>'><%=property.getQualifiedLabel(request)%></xava:link>&nbsp;
 </span>
 <%
 		if (tab.isOrderAscending(property.getQualifiedName())) {
@@ -104,7 +116,7 @@ while (it.hasNext()) {
 %>
 </tr>
 <% if (filter) { %>
-<tr id="xava-tr-list" class=<%=style.getListSubheader()%>>
+<tr id="xava-tr-list-filter-<%=id%>" class=<%=style.getListSubheader()%> style="display: <%=displayFilter%>"> 
 <th class=<%=style.getListSubheaderCell()%> style="text-align: center" width="60">
 <xava:action action="List.filter" argv="<%=collectionArgv%>"/>
 </th>
@@ -134,7 +146,7 @@ while (it.hasNext()) {
 		boolean isBoolean = "boolean".equals(property.getType().getName()) || "java.lang.Boolean".equals(property.getType().getName());
 		boolean isDate = java.util.Date.class.isAssignableFrom(property.getType()) && !property.getType().equals(java.sql.Time.class);
 		int maxLength = property.getSize();
-		int length = Math.min(isString?property.getSize()/2:property.getSize(), 20);
+		int length = Math.min(isString?property.getSize()*4/5:property.getSize(), 20);
 		String value= conditionValues==null?"":conditionValues[iConditionValues];
 		String comparator = conditionComparators==null?"":Strings.change(conditionComparators[iConditionValues], "=", "eq");
 		iConditionValues++;
@@ -198,14 +210,15 @@ if (totalSize > 0) {
 for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex(); f++) {
 	String checked=tab.isSelected(f)?"checked='true'":"";
 	String cssClass=f%2==0?style.getListPair():style.getListOdd();	
-	String cssCellClass=f%2==0?style.getListPairCell():style.getListOddCell();	
+	String cssCellClass=f%2==0?style.getListPairCell():style.getListOddCell(); 
 	String cssStyle = tab.getStyle(f);
 	if (cssStyle != null) {
 		cssClass = cssClass + " " + cssStyle; 
 		if (style.isApplySelectedStyleToCellInList()) cssCellClass = cssCellClass + " " + cssStyle; 
 	}
+	String events=f%2==0?style.getListPairEvents(cssStyle):style.getListOddEvents(cssStyle);	
 %>
-<tr id="xava-tr-list" class="<%=cssClass%>">
+<tr id="xava-tr-list" class="<%=cssClass%>" <%=events%> style="border-bottom: 1px solid;">
 	<td class="<%=cssCellClass%>" style='vertical-align: middle;text-align: center'>
 <% if (!org.openxava.util.Is.emptyString(action)) { %>
 <xava:action action='<%=action%>' argv='<%="row=" + f + actionArgv%>'/>
