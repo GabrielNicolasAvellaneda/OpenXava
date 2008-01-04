@@ -59,4 +59,23 @@ public class IssueTest extends ModuleTestBase {
 		assertValueInList(1, "id", "A0002");
 	}	
 	
+	public void testSearchReferenceWithDynamicChangeOfDefaultSchema() throws Exception {
+		execute("CRUD.new");
+		// Searching with list
+		execute("Reference.search", "keyProperty=xava.Issue.worker.nickName");
+		assertListRowCount(1);
+		assertValueInList(0, 0, "JAVI");
+		execute("ReferenceSearch.choose", "row=0");
+		assertNoErrors();
+		assertValue("worker.nickName", "JAVI");
+		assertValue("worker.fullName", "FRANCISCO JAVIER PANIZA LUCAS");
+		
+		// Searching on change key
+		setValue("worker.nickName", "");
+		assertValue("worker.fullName", "");
+		setValue("worker.nickName", "JAVI");
+		assertValue("worker.nickName", "JAVI");
+		assertValue("worker.fullName", "FRANCISCO JAVIER PANIZA LUCAS");		
+	}
+		
 }

@@ -41,6 +41,7 @@ public class ModuleManager {
 	private String user; 
 	private Collection metaActionsOnInit;
 	private Collection metaActionsOnEachRequest;
+	private Collection metaActionsBeforeEachRequest; 
 	private boolean moduleInitiated;
 	private String form;	
 	private int oid;	
@@ -840,8 +841,15 @@ public class ModuleManager {
 			modeName = getMetaActionsMode().isEmpty()?IChangeModeAction.DETAIL:null;
 			moduleInitiated = true;
 			executeInitAction(request, errors, messages);
-		}
-		executeOnEachRequestAction(request, errors, messages);		
+		}				
+	}
+	
+	public void executeBeforeEachRequestActions(HttpServletRequest request, Messages errors, Messages messages) {
+		Iterator it = getMetaActionsBeforeEachRequest().iterator();
+		while (it.hasNext()) {
+			MetaAction a = (MetaAction) it.next();			
+			executeAction(a, errors, messages, request); 
+		}			
 	}
 	
 	private void executeInitAction(HttpServletRequest request, Messages errors, Messages messages) {
@@ -852,7 +860,7 @@ public class ModuleManager {
 		}		
 	}
 	
-	private void executeOnEachRequestAction(HttpServletRequest request, Messages errors, Messages messages) {
+	public void executeOnEachRequestActions(HttpServletRequest request, Messages errors, Messages messages) {
 		Iterator it = getMetaActionsOnEachRequest().iterator();
 		while (it.hasNext()) {
 			MetaAction a = (MetaAction) it.next();			
@@ -860,7 +868,7 @@ public class ModuleManager {
 		}	
 	}
 	
-	public Collection getMetaActionsOnEachRequest() {
+	private Collection getMetaActionsOnEachRequest() {
 		if (metaActionsOnEachRequest == null) {
 			try {			
 				Iterator it = getMetaControllers().iterator();
@@ -877,6 +885,24 @@ public class ModuleManager {
 		}
 		return metaActionsOnEachRequest;		
 	}
+	
+	private Collection getMetaActionsBeforeEachRequest() {
+		if (metaActionsBeforeEachRequest == null) {
+			try {			
+				Iterator it = getMetaControllers().iterator();
+				metaActionsBeforeEachRequest = new ArrayList();
+				while (it.hasNext()) {
+					MetaController contr = (MetaController) it.next();						
+					metaActionsBeforeEachRequest.addAll(contr.getMetaActionsBeforeEachRequest());
+				} 										
+			}
+			catch (Exception ex) {
+				log.error(XavaResources.getString("controller_before_each_request_action_error"), ex); 
+				return Collections.EMPTY_LIST; 
+			}	
+		}
+		return metaActionsBeforeEachRequest;		
+	}	
 	
 	public String getEnctype() { 		
 		return isFormUpload()?"ENCTYPE='multipart/form-data'":"";		

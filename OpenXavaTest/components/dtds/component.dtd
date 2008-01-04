@@ -53,7 +53,7 @@
   aligned-by-columns (true|false) "false"
 >
 
-<!ELEMENT reference-view ((search-action?|descriptions-list?), action*)>
+<!ELEMENT reference-view (((on-change-search?,search-action?)|descriptions-list?), action*)>
 <!ATTLIST reference-view
   reference CDATA #REQUIRED
   view CDATA #IMPLIED
@@ -91,6 +91,10 @@
   class CDATA #REQUIRED
 >
 
+<!ELEMENT on-change-search EMPTY>
+<!ATTLIST on-change-search
+  class CDATA #REQUIRED
+>
 
 <!ELEMENT collection-view  (list-properties?, row-style*, edit-action?, view-action?, new-action?, save-action?, hide-detail-action?, remove-action?, remove-selected-action?, list-action*, detail-action*)>
 <!ATTLIST collection-view

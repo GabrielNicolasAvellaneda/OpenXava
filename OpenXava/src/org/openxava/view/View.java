@@ -1516,13 +1516,13 @@ public class View implements java.io.Serializable {
 	private void registerExecutedAction(String name, Object action) {		
 		if (!getRoot().registeringExecutedActions) return;		
 		if (getRoot().executedActions == null) getRoot().executedActions = new HashSet();
-		getRoot().executedActions.add(name + "::" + action.getClass());		
+		getRoot().executedActions.add(getModelName() + "::" + name + "::" + action.getClass()); 		
 	}
 	
 	private boolean actionRegisteredAsExecuted(String name, Object action) {
 		if (!getRoot().registeringExecutedActions) return false;				
 		if (getRoot().executedActions == null) return false;		
-		return getRoot().executedActions.contains(name + "::" + action.getClass());
+		return getRoot().executedActions.contains(getModelName() + "::" + name + "::" + action.getClass()); 
 	}
 
 	public boolean isKeyEditable() {		
@@ -1988,15 +1988,10 @@ public class View implements java.io.Serializable {
 				View subview = getSubview(subviewName);				
 				subview.propertyChanged(propertyName);
 				try {
-					MetaProperty changedProperty = subview.getMetaView().getMetaProperty(propertyName);
+					MetaProperty changedProperty = subview.getMetaView().getMetaProperty(propertyName); 
 					propertyChanged(changedProperty, name);
 				}
 				catch (ElementNotFoundException ex) {
-					// try if is hidden
-					MetaProperty changedProperty = subview.getMetaModel().getMetaProperty(propertyName);					
-					if (changedProperty.isHidden()) {						
-						propertyChanged(changedProperty, name);
-					}
 				}
 			}
 			else {	
@@ -2060,8 +2055,9 @@ public class View implements java.io.Serializable {
 				) {				
 				if (!searchingObject) { // To avoid recursive infinites loops				
 					try {
-						searchingObject = true;					
-						findObject(changedProperty); 						
+						searchingObject = true;								
+						IOnChangePropertyAction action = getParent().getMetaView().createOnChangeSearchAction(getMemberName());
+						executeOnChangeAction(changedPropertyQualifiedName, action);						
 					}
 					finally {
 						searchingObject = false;				 
@@ -2071,15 +2067,7 @@ public class View implements java.io.Serializable {
 		} // of if (!isOnlyThrowsOnChange())		
 		if (!isSection() && getMetaView().hasOnChangeAction(changedPropertyQualifiedName)) {
 			IOnChangePropertyAction action = getMetaView().createOnChangeAction(changedPropertyQualifiedName);
-			if (!actionRegisteredAsExecuted(changedPropertyQualifiedName, action)) {
-				View viewOfAction = this;
-				while (viewOfAction.isGroup()) viewOfAction = viewOfAction.getParent();
-				action.setView(viewOfAction);
-				action.setChangedProperty(changedPropertyQualifiedName); 
-				action.setNewValue(getValue(changedPropertyQualifiedName));				
-				getModuleManager(getRequest()).executeAction(action, getErrors(), getMessages(), getRequest());				
-				registerExecutedAction(changedPropertyQualifiedName, action);
-			}
+			executeOnChangeAction(changedPropertyQualifiedName, action);
 		} 		
 		if (hasGroups()) {
 			Iterator itGroups = getGroupsViews().values().iterator();
@@ -2101,6 +2089,19 @@ public class View implements java.io.Serializable {
 				getSectionView(i).propertyChanged(changedProperty, changedPropertyQualifiedName);				
 			}			
 		}		
+	}
+
+	private void executeOnChangeAction(String changedPropertyQualifiedName,
+			IOnChangePropertyAction action) throws XavaException {
+		if (!actionRegisteredAsExecuted(changedPropertyQualifiedName, action)) {
+			View viewOfAction = this;
+			while (viewOfAction.isGroup()) viewOfAction = viewOfAction.getParent();
+			action.setView(viewOfAction);
+			action.setChangedProperty(changedPropertyQualifiedName); 
+			action.setNewValue(getValue(changedPropertyQualifiedName));							
+			getModuleManager(getRequest()).executeAction(action, getErrors(), getMessages(), getRequest());				
+			registerExecutedAction(changedPropertyQualifiedName, action);
+		}
 	}	
 	
 	
@@ -2117,11 +2118,21 @@ public class View implements java.io.Serializable {
 		return (ModuleManager) context.get(request, "manager");		
 	}
 
+	/**
+	 * Using the key values loaded in the view search the rest of the data
+	 * from persistent storage and fill the view. 
+	 */
 	public void findObject() throws Exception {		
 		findObject(null);
 	}
-	
-	private void findObject(MetaProperty changedProperty) throws Exception {		
+
+	/**
+	 * Using the key values loaded in the view search the rest of the data
+	 * from persistent storage and fill the view.
+	 * 
+	 * @param changedProperty  Property which change produces the search. 
+	 */	
+	public void findObject(MetaProperty changedProperty) throws Exception { 		
 		Map key = getKeyValues();		
 		try {			
 			if (isRepresentsEntityReference() && isFirstPropertyAndViewHasNoKeys(changedProperty) && isKeyEditable()) {				
@@ -2384,8 +2395,18 @@ public class View implements java.io.Serializable {
 				// Maybe a custom JSP view wants access to a property not showed in default view
 				return getMetaModel().getMetaReference(reference).getMetaModelReferenced().getMetaProperty(member); 
 			}
-		}				
-		return getMetaView().getMetaProperty(name);
+		}
+		try {
+			return getMetaView().getMetaProperty(name);			
+		}
+		catch (ElementNotFoundException ex) { 
+			// try if is hidden			
+			MetaProperty changedProperty = getMetaModel().getMetaProperty(name);					
+			if (changedProperty.isHidden()) {						
+				return changedProperty;
+			}
+			else throw ex;
+		}
 	}
 	
 	public MetaReference getMetaReference(String name) throws XavaException { 			

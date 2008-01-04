@@ -3,6 +3,7 @@ package org.openxava.test.model;
 import javax.persistence.*;
 
 import org.openxava.annotations.*;
+import org.openxava.test.actions.*;
 
 /**
  * Example of an transient OpenXava model class (not persistent). <p>
@@ -35,7 +36,8 @@ public class FilterBySubfamily {
 		@DescriptionsList(forViews="Family2", 
 			condition="${family.number} = 2"
 		)
-	})
+	})	
+	@OnChangeSearch(OnChangeSubfamilySearchAction.class) 	
 	private Subfamily2 subfamily;
 	
 	@ManyToOne(fetch=FetchType.LAZY) 

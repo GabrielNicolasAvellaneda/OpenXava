@@ -180,6 +180,25 @@ public class MetaController extends MetaElement {
 		return result;
 	}
 	
+	public Collection getMetaActionsBeforeEachRequest() throws XavaException { 
+		Collection result = new ArrayList();
+
+		Iterator itParents = getParents().iterator();
+		while (itParents.hasNext()) {
+			MetaController parent = (MetaController) itParents.next();
+			result.addAll(parent.getMetaActionsBeforeEachRequest());
+		}
+
+		Iterator it = metaActions.iterator();		
+		while (it.hasNext()) {
+			MetaAction metaAction = (MetaAction) it.next();			
+			if (metaAction.isBeforeEachRequest()) {
+				result.add(metaAction);
+			}
+		}
+		return result;
+	}	
+	
 }
 
 

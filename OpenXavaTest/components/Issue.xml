@@ -15,6 +15,7 @@ default schema behaviour
 			size="5" required="true"/>
 		<property name="description" type="String" 
 			size="40" required="true"/>		
+		<reference name="worker"/>	
 		<collection name="comments">
 			<reference model="Comment"/>
 		</collection>		  						
@@ -33,6 +34,9 @@ default schema behaviour
 			property="id" column="ID"/>
 		<property-mapping
 			property="description" column="DESCRIPTION"/>
+		<reference-mapping reference="worker">
+			<reference-mapping-detail referenced-model-property="id" column="WORKER_ID"/>
+		</reference-mapping>
 	</entity-mapping>
 	
 	<aggregate-mapping aggregate="Comment" table="COMMENT">

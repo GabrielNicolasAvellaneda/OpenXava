@@ -195,6 +195,7 @@ public class ViewParser extends XmlElementsNames {
 		if (!Is.emptyString(el.getAttribute(xsearch[lang]))) {
 			a.setSearch(ParserUtil.getAttributeBoolean(el, xsearch[lang]) );
 		}		
+		fillOnChangeSearchAction(el, a, lang);
 		fillMetaSearchAction(el, a, lang);
 		fillMetaDescriptionsList(el, a, lang);
 		fillActions(el, a, lang);
@@ -281,7 +282,19 @@ public class ViewParser extends XmlElementsNames {
 		Element elAction = (Element) l.item(0);
 		container.setOnChangeActionClassName(elAction.getAttribute(xclass[lang]));
 	}
-			
+	
+	private static void fillOnChangeSearchAction(Element el, MetaReferenceView container, int lang)
+		throws XavaException {
+		NodeList l = el.getElementsByTagName(xon_change_search[lang]);
+		int c = l.getLength();
+		if (c==0) return;
+		if (c>1) {			
+			throw new XavaException("no_more_1_on_change_search_in_reference_view");
+		}
+		Element elAction = (Element) l.item(0);
+		container.setOnChangeSearchActionClassName(elAction.getAttribute(xclass[lang]));
+	}
+				
 	private static void fillMetaSearchAction(Element el, MetaReferenceView container, int lang)
 		throws XavaException {
 		NodeList l = el.getElementsByTagName(xsearch_action[lang]);
