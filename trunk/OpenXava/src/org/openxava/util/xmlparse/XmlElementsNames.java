@@ -5,7 +5,7 @@ package org.openxava.util.xmlparse;
  */
 public class XmlElementsNames {
 
-	// the x(xml element) is for no colisioning 
+	// the x(xml element) is for no colliding 
 	protected final static String [] xname = { "name", "nombre" };
 	protected final static String [] xlabel = { "label", "etiqueta" };	
 	protected final static String [] xdescription = { "description", "descripcion" };
@@ -180,5 +180,7 @@ public class XmlElementsNames {
 	protected final static String [] xdefault_module = { "default-module", "modulo-defecto" };
 	protected final static String [] xversion = { "version", "version" };
 	protected final static String [] xsearch_key = { "search-key", "clave-busqueda" };
+	protected final static String [] xbefore_each_request = { "before-each-request", "antes-de-cada-peticion" };
+	protected final static String [] xon_change_search = { "on-change-search", "busqueda-al-cambiar" };
 	
 }

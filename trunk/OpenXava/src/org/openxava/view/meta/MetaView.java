@@ -362,14 +362,23 @@ public class MetaView extends MetaElement implements Cloneable {
 			throw new XavaException("on_change_action_not_found", qualifiedPropertyName);
 		}
 		return metaPropertyView.createOnChangeAction();
+	}
+	
+	public IOnChangePropertyAction createOnChangeSearchAction(String refName) throws XavaException { 
+		MetaReferenceView metaReferenceView = getMetaReferenceViewFor(refName);		
+		if (metaReferenceView != null && 
+			!Is.emptyString(metaReferenceView.getOnChangeSearchActionClassName())) {
+			return metaReferenceView.createOnChangeSearchAction();
+		}
+		return new OnChangeSearchAction();
 	}	
-		
+			
 	public boolean hasMetaSearchAction() {
 		return this.metaSearchAction != null;
 	}
 	
 	/**
-	 * To search the objects of type thas is represents by this view.
+	 * To search the objects of type that is represents by this view.
 	 * <b>Not for the references</b>
 	 */
 	public MetaSearchAction getMetaSearchAction() {
@@ -488,7 +497,7 @@ public class MetaView extends MetaElement implements Cloneable {
 		return (MetaPropertyView) metaViewsProperties.get(qualifiedPropertyName);
 	}
 	
-	public MetaReferenceView getMetaReferenceViewFor(String ref) {
+	public MetaReferenceView getMetaReferenceViewFor(String ref) {		
 		if (metaViewsReferences == null) {
 			return null;
 		}

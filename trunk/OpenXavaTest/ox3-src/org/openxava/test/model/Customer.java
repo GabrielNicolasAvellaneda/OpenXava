@@ -168,9 +168,9 @@ public class Customer implements IWithName {
 	@ReferenceView("DecorateName") 
 	@NoCreate(forViews="DEFAULT")
 	@ReadOnly(forViews="SomeMembersReadOnly")
-	@DescriptionsList(forViews="SomeMembersReadOnly", descriptionProperties="level.description, name")
-	private Seller alternateSeller;	
-	
+	@DescriptionsList(forViews="SomeMembersReadOnly", descriptionProperties="level.description, name")	
+	private Seller alternateSeller;
+		
 	@OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
 	private Collection<DeliveryPlace> deliveryPlaces;
 	

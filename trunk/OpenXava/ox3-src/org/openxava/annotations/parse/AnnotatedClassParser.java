@@ -872,7 +872,13 @@ public class AnnotatedClassParser {
 		}
 		if (element.isAnnotationPresent(RowStyles.class)) {
 			notApply(property.getName(), RowStyles.class, "collections");
-		}																				
+		}
+		if (element.isAnnotationPresent(OnChangeSearch.class)) {
+			notApply(property.getName(), OnChangeSearch.class, "references");
+		}																						
+		if (element.isAnnotationPresent(OnChangeSearchs.class)) {
+			notApply(property.getName(), OnChangeSearchs.class, "references");
+		}																						
 		
 	}
 
@@ -1302,7 +1308,12 @@ public class AnnotatedClassParser {
 		if (element.isAnnotationPresent(SearchKey.class)) {
 			notApply(collection.getName(), SearchKey.class, "properties");
 		}														
-		
+		if (element.isAnnotationPresent(OnChangeSearch.class)) {
+			notApply(collection.getName(), OnChangeSearch.class, "references");
+		}
+		if (element.isAnnotationPresent(OnChangeSearchs.class)) {
+			notApply(collection.getName(), OnChangeSearchs.class, "references");
+		}																		
 		
 	}
 
@@ -1392,9 +1403,8 @@ public class AnnotatedClassParser {
 					}
 				}				
 			}			
-		}
-		
-		
+		}		
+				
 		// for View	
 		for (Object oMetaView: ref.getMetaModel().getMetaViews()) {
 			MetaView metaView = (MetaView) oMetaView;			
@@ -1546,6 +1556,24 @@ public class AnnotatedClassParser {
 					referenceView.setReadOnly(true);
 					mustAddMetaView = true;				
 				}
+			}	
+			 
+			// OnChangeSearch
+			if (element.isAnnotationPresent(OnChangeSearch.class)) {
+				OnChangeSearch onChangeSearch = element.getAnnotation(OnChangeSearch.class);
+				if (isForView(metaView, onChangeSearch.forViews(), onChangeSearch.notForViews())) {
+					referenceView.setOnChangeSearchActionClassName(onChangeSearch.value().getName());
+					mustAddMetaView = true;				
+				}
+			}
+			if (element.isAnnotationPresent(OnChangeSearchs.class)) {
+				OnChangeSearch [] onChangeSearchs = element.getAnnotation(OnChangeSearchs.class).value();				
+				for (OnChangeSearch onChangeSearch: onChangeSearchs) {
+					if (isForView(metaView, onChangeSearch.forViews(), onChangeSearch.notForViews())) {
+						referenceView.setOnChangeSearchActionClassName(onChangeSearch.value().getName());
+						mustAddMetaView = true;				
+					}
+				}					
 			}			
 												
 			if (mustAddMetaView) {				
@@ -1782,7 +1810,7 @@ public class AnnotatedClassParser {
 		String className = null;
 		for (String packageName: getManagedClassPackages()) {
 			className = packageName + name;			
-			try {
+			try {				
 				Class.forName(className);
 				return className;
 			}

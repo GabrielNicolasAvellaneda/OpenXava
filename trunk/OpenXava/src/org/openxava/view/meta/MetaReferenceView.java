@@ -1,5 +1,9 @@
 package org.openxava.view.meta;
 
+import org.apache.commons.logging.*;
+import org.openxava.actions.*;
+import org.openxava.util.*;
+
 
 
 
@@ -7,6 +11,8 @@ package org.openxava.view.meta;
  * @author Javier Paniza
  */
 public class MetaReferenceView extends MetaMemberView implements java.io.Serializable {
+	
+	private static Log log = LogFactory.getLog(MetaReferenceView.class);
 	
 	private String referenceName;
 	private String viewName;
@@ -17,10 +23,27 @@ public class MetaReferenceView extends MetaMemberView implements java.io.Seriali
 	private boolean modify = true; 
 	private boolean search = true;
 	private boolean readOnly = false;
-	private boolean asAggregate = false; 
-	
-	
-	
+	private boolean asAggregate = false;
+	private String onChangeSearchActionClassName; 
+
+	public IOnChangePropertyAction createOnChangeSearchAction() throws XavaException { 
+		try {			
+			Object o = Class.forName(getOnChangeSearchActionClassName()).newInstance();
+			if (!(o instanceof IOnChangePropertyAction)) {
+				throw new XavaException("on_change_action_implements_error", IOnChangePropertyAction.class.getName(), getOnChangeSearchActionClassName());
+			}
+			IOnChangePropertyAction action = (IOnChangePropertyAction) o;
+			return action;
+		}
+		catch (XavaException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			log.error(ex.getMessage(), ex);
+			throw new XavaException("create_error", getOnChangeSearchActionClassName());
+		}		
+	}
+		
 	public String getReferenceName() {
 		return referenceName==null?"":referenceName.trim();
 	}
@@ -94,6 +117,14 @@ public class MetaReferenceView extends MetaMemberView implements java.io.Seriali
 
 	public void setModify(boolean modify) {
 		this.modify = modify;
+	}
+	
+	public String getOnChangeSearchActionClassName() {
+		return onChangeSearchActionClassName;
+	}
+
+	public void setOnChangeSearchActionClassName(String searchOnChangeActionClassName) {
+		this.onChangeSearchActionClassName = searchOnChangeActionClassName;
 	}
 	
 }

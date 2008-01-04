@@ -2,6 +2,8 @@ package org.openxava.actions;
 
 
 
+import org.openxava.model.meta.*;
+import org.openxava.util.*;
 import org.openxava.view.*;
 
 /**
@@ -25,7 +27,11 @@ abstract public class OnChangePropertyBaseAction
 	public String getChangedProperty() {
 		return changedProperty;
 	}
-
+	
+	protected MetaProperty getChangedMetaProperty() throws XavaException { 
+		return getView().getMetaProperty(changedProperty);
+	}
+	
 	/**
 	 * The view where the on-change is declared. <p>
 	 * 

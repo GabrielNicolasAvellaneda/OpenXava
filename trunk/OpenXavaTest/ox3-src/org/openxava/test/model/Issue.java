@@ -21,6 +21,9 @@ public class Issue {
 	@Column(length=40) @Required
 	private String description;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	private Worker worker;
+	
 	@OneToMany(mappedBy="issue", cascade=CascadeType.REMOVE)
 	private Collection<Comment> comments;
 
@@ -46,6 +49,14 @@ public class Issue {
 
 	public void setComments(Collection<Comment> comments) {
 		this.comments = comments;
+	}
+
+	public Worker getWorker() {
+		return worker;
+	}
+
+	public void setWorker(Worker worker) {
+		this.worker = worker;
 	}
 
 }

@@ -69,7 +69,7 @@ public class MetaPropertyView extends MetaMemberView implements java.io.Serializ
 			log.error(ex.getMessage(), ex);
 			throw new XavaException("create_error", getOnChangeActionClassName());
 		}		
-	}
+	}	
 
 	public String getOnChangeActionClassName() {
 		return onChangeActionClassName;

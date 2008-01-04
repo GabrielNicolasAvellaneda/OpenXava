@@ -79,16 +79,21 @@
 		    		
 	</target>
 		
-    <target name="copyDTDs">     
+    <target name="copyXavaDTDs">     
     
 		<copy todir="../${project}/xava/dtds" overwrite="true">
 			<fileset dir="../OpenXava/xava/dtds" excludes="componente.dtd,component.dtd"/>
 		</copy>
-    	
+    			
+	</target>
+	
+    <target name="copyDTDs">     
+    
+    	<antcall target="copyXavaDTDs"/>    	
     	<antcall target="copyComponentDTDs"/>
 		
 	</target>
-	
+		
 	<target name="filterXavaFilesWithoutConfiguration" unless="configuration">
 		<!-- to replace within xava files -->
 		<copy todir="../${project.ejb}/filtered-files" overwrite="${overwrite.xava.files}">
@@ -905,6 +910,7 @@
 	To be use with OX3 or better.
 	-->
 	<target name="updateOX">
+		<antcall target="copyXavaDTDs"/>
 		<copy todir="../${project}/web/xava" overwrite="true">
     		<fileset dir="../OpenXava/web" excludes="WEB-INF/**"/>
   		</copy>		

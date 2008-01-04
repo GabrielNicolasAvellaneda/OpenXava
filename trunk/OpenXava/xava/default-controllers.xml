@@ -285,7 +285,7 @@ here that you want to override.
 	or you controller has to extend from this one.
 	-->
 	<controller name="DefaultSchema">
-		<action name="setSchemaDefaultSchema" on-each-request="true" hidden="true"
+		<action name="setSchemaDefaultSchema" before-each-request="true" hidden="true"
 			class="org.openxava.actions.SetDefaultSchemaAction">
 			<use-object name="xava_defaultSchema"/>			
 		</action>

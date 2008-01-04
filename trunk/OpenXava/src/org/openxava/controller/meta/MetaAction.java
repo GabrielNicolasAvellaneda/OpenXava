@@ -36,8 +36,7 @@ public class MetaAction extends MetaElement {
 	private boolean takesLong;
 	private boolean confirm;
 	private boolean onEachRequest;
-	
-	
+	private boolean beforeEachRequest;
 	
 	public MetaAction() {
 	}
@@ -271,6 +270,14 @@ public class MetaAction extends MetaElement {
 	}
 	public void setOnEachRequest(boolean b) {
 		onEachRequest = b;
+	}
+
+	public boolean isBeforeEachRequest() {
+		return beforeEachRequest;
+	}
+
+	public void setBeforeEachRequest(boolean beforeEachRequest) {
+		this.beforeEachRequest = beforeEachRequest;
 	}
 		
 }
