@@ -5,8 +5,6 @@ import java.util.*;
 
 import javax.ejb.*;
 
-
-
 import org.openxava.model.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -26,19 +24,15 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	
 	
 	
-	public void execute() throws Exception {	
-		try {				
-			Map containerKey = saveIfNotExists(getCollectionElementView().getParent());
-			if (isEntityReferencesCollection()) saveEntity(containerKey);
-			else saveAggregate(containerKey); 			
-			getCollectionElementView().setCollectionEditingRow(-1);
-			getCollectionElementView().clear();
-			resetDescriptionsCache();
-			getView().recalculateProperties(); 			
-		}
-		catch (ValidationException ex) {			
-			addErrors(ex.getErrors());
-		}		
+	public void execute() throws Exception {
+		Map containerKey = saveIfNotExists(getCollectionElementView().getParent());
+		if (isEntityReferencesCollection()) saveEntity(containerKey);
+		else saveAggregate(containerKey);
+		getView().setKeyEditable(false); 
+		getCollectionElementView().setCollectionEditingRow(-1);
+		getCollectionElementView().clear();
+		resetDescriptionsCache();
+		getView().recalculateProperties();
 	}
 	
 	private void validateMaximum() throws ValidationException, XavaException {
@@ -116,6 +110,10 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 			getCollectionElementView().getValues() );
 		addMessage("aggregate_created", getCollectionElementView().getModelName());		
 	}
+	
+	private boolean isAutoCommit() {
+		return XavaPreferences.getInstance().isMapFacadeAutoCommit() || XavaPreferences.getInstance().isMapFacadeAsEJB();
+	}
 
 	/**
 	 * @return The saved object 
@@ -125,8 +123,7 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 			if (view.isKeyEditable()) {				
 				Map key = MapFacade.createReturningKey(getModelName(), view.getValues());
 				addMessage("entity_created", getModelName());
-				view.addValues(key);
-				view.setKeyEditable(false);								
+				view.addValues(key);						
 				return key;								
 			}			
 			else {				

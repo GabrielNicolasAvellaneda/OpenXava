@@ -79,8 +79,7 @@ public class JPAPersistenceProvider extends POJOPersistenceProviderBase {
 				log.info("Message=" + invalidValues[i].getMessage()); //  tmp
 				log.info("Value=" + invalidValues[i].getValue()); //  tmp
 			}
-		}
-		
+		}		
 	}
 
 	protected Object createQuery(String query) { 		

@@ -88,6 +88,10 @@ public class XavaPreferences {
 	public boolean isMapFacadeAsEJB() {
 		return "true".equalsIgnoreCase(getProperties().getProperty("mapFacadeAsEJB", "false").trim());
 	}
+	
+	public boolean isMapFacadeAutoCommit() {
+		return "true".equalsIgnoreCase(getProperties().getProperty("mapFacadeAutoCommit", "false").trim());
+	}	
 
 	public boolean isEJB2Persistence() {
 		if (!ejb2PersistenceLoaded) {

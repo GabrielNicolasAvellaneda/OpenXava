@@ -67,4 +67,7 @@ public interface IMapFacadeImpl {
 	Object getKey(MetaModel metaModel, Map keyValues) throws XavaException, RemoteException;
 	
 	void reassociate(Object entity) throws RemoteException;
+	
+	void commit(String user) throws RemoteException; 
+	
 }

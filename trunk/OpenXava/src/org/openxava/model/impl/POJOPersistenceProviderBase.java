@@ -270,6 +270,7 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		if (result == null) {
 			throw new ObjectNotFoundException(XavaResources.getString("object_by_any_property_not_found", values));
 		}				
+		refreshIfManaged(result); 
 		return result;
 	}
 		

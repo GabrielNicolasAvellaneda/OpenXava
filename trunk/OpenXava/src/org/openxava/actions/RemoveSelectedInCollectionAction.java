@@ -4,8 +4,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
-
-
 import org.openxava.model.MapFacade;
 import org.openxava.validators.ValidationException;
 

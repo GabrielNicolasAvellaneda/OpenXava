@@ -5,7 +5,6 @@ import java.rmi.*;
 import java.util.*;
 
 import javax.ejb.*;
-import javax.portlet.*;
 import javax.servlet.http.*;
 
 import org.apache.commons.logging.*;
@@ -23,8 +22,6 @@ import org.openxava.util.*;
 import org.openxava.util.meta.*;
 import org.openxava.view.meta.*;
 import org.openxava.web.*;
-
-import com.lowagie.text.pdf.*;
 
 /**
  * Session object to manage a view based in maps,
@@ -3196,7 +3193,7 @@ public class View implements java.io.Serializable {
 	public void recalculateProperties() {		
 		try {												
 			Map names = getCalculatedPropertiesNames();
-			if (!names.isEmpty()) {
+			if (!names.isEmpty()) {				
 				addValues(MapFacade.getValues(getModelName(), getKeyValues(), names));
 			}
 		}

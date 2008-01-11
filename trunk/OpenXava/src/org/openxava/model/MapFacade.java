@@ -84,6 +84,27 @@ public class MapFacade {
 	}
 	
 	/**
+	 * Commit in database the changes done using MapFacade. <p>
+	 * 
+	 * It's used rarely because OpenXava module controller commits automatically
+	 * after each action execution. ModuleTestBase also commits automatically.
+	 * 
+	 * It's cannot be used if MapFacade auto commit mode is on or it's used as EJB.
+	 * 
+	 * @throws IllegalStateException  If mapFacadeAutoCommit=true or mapFacadeAsEJB=true in xava.properties  
+	 * @throws RemoteException
+	 */
+	public static void commit() throws RemoteException {						
+		if (usesEJB()) {
+			throw new IllegalStateException(XavaResources.getString("not_commit_when_facade_as_ejb"));
+		}
+		if (XavaPreferences.getInstance().isMapFacadeAutoCommit()) {
+			throw new IllegalStateException(XavaResources.getString("not_commit_when_facade_autocommit"));
+		}
+		getLocalImpl().commit(Users.getCurrent());								
+	}	
+	
+	/**
 	 * Creates a new aggregate from a map with its initial values. <p>	 
 	 * 
 	 * @param modelName  OpenXava model name. Not null
