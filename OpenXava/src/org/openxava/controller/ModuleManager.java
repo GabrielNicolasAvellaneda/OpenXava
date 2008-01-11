@@ -442,7 +442,8 @@ public class ModuleManager {
 		}
 		catch (ValidationException ex) {
 			errors.add(ex.getErrors());
-			doRollback();
+			messages.removeAll();
+			doRollback();			
 		}
 		catch (Exception ex) {			
 			log.error(ex.getMessage(), ex);
@@ -452,7 +453,8 @@ public class ModuleManager {
 			else {
 				errors.add("no_execute_action", "", ex.getLocalizedMessage());
 			}
-			doRollback();
+			messages.removeAll();
+			doRollback();			
 		}				
 		
 	}
@@ -506,7 +508,7 @@ public class ModuleManager {
 	}
 	
 	private void doCommit() {
-		if (XSystem.isJava5OrBetter()) XPersistence.commit(); 
+		if (XSystem.isJava5OrBetter()) XPersistence.commit();
 		XHibernate.commit();		
 	}
 	
