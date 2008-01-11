@@ -16,23 +16,23 @@ String module = request.getParameter("module");
 long dif=System.currentTimeMillis(); // to avoid browser caching
 %>
 
-<table class=<%=style.getFrame()%> width='100%' style="float:left; margin-right:4px" <%=style.getFrameSpacing()%>>
-<tr class=<%=style.getFrameTitle()%>>
-<th align='left' class=<%=style.getFrameTitleLabel()%>>
+<%=style.getFrameHeaderStartDecoration()%>
 <%=style.getFrameTitleStartDecoration()%>
 <%=gallery.getTitle()%>
-<% if (gallery.isMaximized()) { %>
-<xava:link action='Gallery.minimizeImage'><img src='<%=style.getRestoreImage()%>' border='0' align="absmiddle"/></xava:link>
-<% } %>
 <%=style.getFrameTitleEndDecoration()%>
-</th>
-</tr>
-<tr>
-
-<%
-if (gallery.isMaximized()) {
+<%=style.getFrameActionsStartDecoration()%>
+<% if (gallery.isMaximized()) { 
+	String restoreImage=style.getRestoreImage().startsWith("xava/")?request.getContextPath() + "/" + style.getRestoreImage():style.getRestoreImage(); 
 %>
-<td class=<%=style.getFrameContent()%> colspan="2">
+<xava:link action='Gallery.minimizeImage'><img src='<%=restoreImage%>' border='0' align="absmiddle"/></xava:link>
+<% } %>
+<%=style.getFrameActionsEndDecoration()%>
+<%=style.getFrameHeaderEndDecoration()%>
+<%=style.getFrameContentStartDecoration()%>	
+	
+<%
+if (gallery.isMaximized()) {		
+%>
 <xava:link action='Gallery.minimizeImage'>
 <img src='<%=request.getContextPath()%>/xava/gallery?application=<%=applicationName%>&module=<%=module%>&oid=<%=gallery.getMaximizedOid()%>&dif=<%=dif%>' border="0"/>	
 </xava:link>
@@ -40,40 +40,40 @@ if (gallery.isMaximized()) {
 }
 else {
 %>
-<td class=<%=style.getFrameContent()%>>
 <table>
 <tr>
+
 <%
 	int c = 0;
 	for (Iterator it = gallery.getImages().iterator(); it.hasNext(); ) {
 		GalleryImage image = (GalleryImage) it.next();
+		String maximizeImage=style.getMaximizeImage().startsWith("xava/")?request.getContextPath() + "/" + style.getMaximizeImage():style.getMaximizeImage();
+		String removeImage=style.getRemoveImage().startsWith("xava/")?request.getContextPath() + "/" + style.getRemoveImage():style.getRemoveImage();
 		if (c++ % IMAGES_BY_ROW == 0) {
 %>
 </tr><tr>
 <%
 		}
 %>
-<td>
-
-<table class=<%=style.getFrame()%> width='100%' <%=style.getFrameSpacing()%>>
-<tr class=<%=style.getFrameTitle()%>><th align='right' class=<%=style.getFrameTitleLabel()%>>
-	<%=style.getFrameTitleStartDecoration(org.openxava.util.Align.RIGHT)%>
-	<xava:link action='Gallery.maximizeImage' argv='<%="oid=" + image.getOid()%>'><img src='<%=style.getMaximizeImage()%>' border='0' align="absmiddle"/></xava:link>	
-	<% if (!gallery.isReadOnly()) { %>
-	<xava:link action='Gallery.removeImage' argv='<%="oid=" + image.getOid()%>'><img src='<%=style.getRemoveImage()%>' border='0' align="absmiddle"/></xava:link>
-	<% } %>	
+<td>	
+	<%=style.getFrameHeaderStartDecoration()%>			
+	<%=style.getFrameTitleStartDecoration()%>
+	&nbsp;
 	<%=style.getFrameTitleEndDecoration()%>
-</th></tr>
-<tr><td class=<%=style.getFrameContent()%> colspan="<%=gallery.isReadOnly()?2:3%>">
-
+	<%=style.getFrameActionsStartDecoration()%>
+	<xava:link action='Gallery.maximizeImage' argv='<%="oid=" + image.getOid()%>'><img src='<%=maximizeImage%>' border='0' align="absmiddle"/></xava:link>	
+	<% if (!gallery.isReadOnly()) { %>
+	<xava:link action='Gallery.removeImage' argv='<%="oid=" + image.getOid()%>'><img src='<%=removeImage%>' border='0' align="absmiddle"/></xava:link>
+	<% } %>	
+	<%=style.getFrameActionsEndDecoration()%>
+	<%=style.getFrameHeaderEndDecoration()%>
+	<%=style.getFrameContentStartDecoration()%>
 	<input type="hidden" name="xava.GALLERY.images" value="<%=image.getOid()%>">
 	<xava:link action='Gallery.maximizeImage' argv='<%="oid=" + image.getOid()%>'>
 	<img src='<%=request.getContextPath()%>/xava/gallery?application=<%=applicationName%>&module=<%=module%>&oid=<%=image.getOid()%>&dif=<%=dif%>'
 		width="<%=MINIMIZED_SIZE%>" height="<%=MINIMIZED_SIZE%>" border="0"/>
 	</xava:link>		
-</td></tr>
-</table>		
-
+	<%=style.getFrameContentEndDecoration()%>
 </td>
 <%
 	} // for
@@ -83,7 +83,8 @@ else {
 <%
 } // if maximized
 %>
-<%-- The next row is for giving enough width for showing the heading in one line --%>
-</td></tr>
-<tr><td><%=Strings.repeat(gallery.getTitle().length()*2+10, "&nbsp;")%></td></tr>
-</table>		
+<%-- The next line is for giving enough width for showing the heading in one line --%>
+<% if (!gallery.isMaximized()) { %>
+	<%=Strings.repeat(gallery.getTitle().length()*2+10, "&nbsp;")%>
+<% } %>
+<%=style.getFrameContentEndDecoration()%>
