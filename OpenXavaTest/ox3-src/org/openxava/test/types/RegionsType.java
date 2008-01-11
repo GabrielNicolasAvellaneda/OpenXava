@@ -14,8 +14,6 @@ import org.openxava.util.*;
  */
 
 public class RegionsType implements UserType {
-	
-	private static Log log = LogFactory.getLog(RegionsType.class);
 
 	public int[] sqlTypes() {		
 		return new int[] { Types.VARCHAR };

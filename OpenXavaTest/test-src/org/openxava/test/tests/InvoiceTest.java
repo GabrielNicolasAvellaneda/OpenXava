@@ -33,6 +33,27 @@ public class InvoiceTest extends ModuleTestBase {
 		super(testName, "Invoice");		
 	}
 	
+	public void testFailOnSaveFirstCollectionElementNotSaveMainEntity() throws Exception {
+		execute("CRUD.new");
+		setValue("year", "2008");
+		setValue("number", "66");
+		setValue("comment", "JUNIT INVOICE");
+		setValue("customer.number", "1");
+		execute("Sections.change", "activeSection=2");
+		setValue("vatPercentage", "16");
+		execute("Sections.change", "activeSection=1");
+		execute("Collection.new", "viewObject=xava_view_section1_details");
+		execute("Collection.save", "viewObject=xava_view_section1_details");
+		assertNoMessage("Invoice created successfully");
+		execute("CRUD.new");
+		assertValue("comment", "");
+		setValue("year", "2008");
+		setValue("number", "66");
+		execute("CRUD.search");
+		assertError("Object of type Invoice does not exists with that key");
+		assertValue("comment", "");
+	}
+	
 	public void testPaginationInCollections() throws Exception {
 		// The invoice 2007/14 has 14 detail lines
 		execute("CRUD.new");
@@ -569,8 +590,9 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValue("details.product.description", getProductDescription());
 		setValue("details.deliveryDate", "18/03/2004"); // Testing multiple-mapping in aggregate
 		setValue("details.soldBy.number", getProductNumber());
-		execute("Collection.save", "viewObject=xava_view_section1_details");
+		execute("Collection.save", "viewObject=xava_view_section1_details");		
 		assertMessage("Invoice detail created successfully");
+		assertMessage("Invoice created successfully"); 
 		assertNoErrors();		
 		assertExists("details.serviceType"); // Testing does not hide detail on save
 		assertCollectionRowCount("details", 1);
@@ -834,9 +856,6 @@ public class InvoiceTest extends ModuleTestBase {
 		execute("Collection.save", "viewObject=xava_view_section1_details");
 		assertError("It is not possible to add details, the invoice is paid");		
 		
-		// Delete invoice
-		execute("CRUD.delete");		
-		assertMessage("Invoice deleted successfully");
 	}
 	
 	
