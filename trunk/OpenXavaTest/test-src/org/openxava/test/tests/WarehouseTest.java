@@ -115,7 +115,7 @@ public class WarehouseTest extends ModuleTestBase {
 				
 		// Verifying the entries in access tracking		
 		changeModule("AccessTracking", "Accesses");
-		assertListRowCount(8);
+		assertListRowCount(6);
 		
 		String firstRecordId = getValueInList(0, "recordId");
 		String expectedRecordId= firstRecordId.startsWith("{zoneNumber")?
@@ -140,16 +140,16 @@ public class WarehouseTest extends ModuleTestBase {
 		assertValueInList(1, "type", "Read");
 		assertValueInList(1, "authorized", "Yes");
 		assertValueInList(1, "recordId", expectedRecordId);		
-		
+				
 		assertValueInList(2, "application", "test");
 		assertValueInList(2, "model", "Warehouse");
 		assertValueInList(2, "table", table);
 		assertTrue("User must to have value", !Is.emptyString(getValueInList(2, "user"))); // Usually 'nobody' or 'UNAUTHENTICATED'
 		assertValueInList(2, "date", date);
 		assertValueInList(2, "time", time);
-		assertValueInList(2, "type", "Read");
+		assertValueInList(2, "type", "Update");
 		assertValueInList(2, "authorized", "Yes");
-		assertValueInList(2, "recordId", expectedRecordId);				
+		assertValueInList(2, "recordId", expectedRecordId);		
 		
 		assertValueInList(3, "application", "test");
 		assertValueInList(3, "model", "Warehouse");
@@ -157,7 +157,7 @@ public class WarehouseTest extends ModuleTestBase {
 		assertTrue("User must to have value", !Is.emptyString(getValueInList(3, "user"))); // Usually 'nobody' or 'UNAUTHENTICATED'
 		assertValueInList(3, "date", date);
 		assertValueInList(3, "time", time);
-		assertValueInList(3, "type", "Update");
+		assertValueInList(3, "type", "Read");
 		assertValueInList(3, "authorized", "Yes");
 		assertValueInList(3, "recordId", expectedRecordId);		
 		
@@ -167,10 +167,10 @@ public class WarehouseTest extends ModuleTestBase {
 		assertTrue("User must to have value", !Is.emptyString(getValueInList(4, "user"))); // Usually 'nobody' or 'UNAUTHENTICATED'
 		assertValueInList(4, "date", date);
 		assertValueInList(4, "time", time);
-		assertValueInList(4, "type", "Read");
+		assertValueInList(4, "type", "Delete");
 		assertValueInList(4, "authorized", "Yes");
 		assertValueInList(4, "recordId", expectedRecordId);		
-
+		
 		assertValueInList(5, "application", "test");
 		assertValueInList(5, "model", "Warehouse");
 		assertValueInList(5, "table", table);
@@ -179,29 +179,9 @@ public class WarehouseTest extends ModuleTestBase {
 		assertValueInList(5, "time", time);
 		assertValueInList(5, "type", "Read");
 		assertValueInList(5, "authorized", "Yes");
-		assertValueInList(5, "recordId", expectedRecordId);		
 		
-		assertValueInList(6, "application", "test");
-		assertValueInList(6, "model", "Warehouse");
-		assertValueInList(6, "table", table);
-		assertTrue("User must to have value", !Is.emptyString(getValueInList(6, "user"))); // Usually 'nobody' or 'UNAUTHENTICATED'
-		assertValueInList(6, "date", date);
-		assertValueInList(6, "time", time);
-		assertValueInList(6, "type", "Delete");
-		assertValueInList(6, "authorized", "Yes");
-		assertValueInList(6, "recordId", expectedRecordId);		
-		
-		assertValueInList(7, "application", "test");
-		assertValueInList(7, "model", "Warehouse");
-		assertValueInList(7, "table", table);
-		assertTrue("User must to have value", !Is.emptyString(getValueInList(7, "user"))); // Usually 'nobody' or 'UNAUTHENTICATED'
-		assertValueInList(7, "date", date);
-		assertValueInList(7, "time", time);
-		assertValueInList(7, "type", "Read");
-		assertValueInList(7, "authorized", "Yes");
-		
-		assertTrue("The key of displayed data must be not empty", !Is.emptyString(getValueInList(7, "recordId")));
-		assertTrue("The key of displayed data must be different", !getValueInList(7, "recordId").equals("{zoneNumber=66, number=666}"));
+		assertTrue("The key of displayed data must be not empty", !Is.emptyString(getValueInList(5, "recordId")));
+		assertTrue("The key of displayed data must be different", !getValueInList(5, "recordId").equals("{zoneNumber=66, number=666}"));
 	}
 		
 	public void testNavigateInListWithALotOfObjects() throws Exception { 

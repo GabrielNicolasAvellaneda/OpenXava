@@ -28,8 +28,8 @@ public class Carrier {
 	private String name;
 	
 	// We apply conversion (null into an empty String) to DRIVINGLICENCE_TYPE column
-	// In order to do it, we create the drivingLicence_level, drivingLicence_type
-	// we do JoinColumns not insertable nor updatable, and modify the setDrivingLincence method
+	// In order to do it, we create drivingLicence_level and drivingLicence_type
+	// We make JoinColumns not insertable nor updatable, we modify the get/setDrivingLincence methods
 	// and we create a drivingLicenceConversion() method.
 	@DescriptionsList
 	@ManyToOne(fetch=FetchType.LAZY)
