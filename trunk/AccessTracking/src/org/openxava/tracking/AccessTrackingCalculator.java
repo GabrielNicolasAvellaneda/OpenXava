@@ -30,6 +30,7 @@ public class AccessTrackingCalculator implements IModelCalculator {
 	
 	private static Log log = LogFactory.getLog(AccessTrackingCalculator.class);
 	private static DateFormat timeFormat = new SimpleDateFormat("HH:mm");
+	private static Access lastAccess = null; 
 			
 	private Object model;
 	private String accessType;	
@@ -37,14 +38,16 @@ public class AccessTrackingCalculator implements IModelCalculator {
 	public Object calculate() throws Exception {		
 		Session session = null;
 		try {
-			Access access = newAccess();
+			Access access = newAccess();			
+			if (areEqual(access, lastAccess)) return null; 			
 			session = XHibernate.createSession();
 			Transaction tx = null;
 			if (!XHibernate.isCmt()) tx = session.beginTransaction(); 
 			session.save(access);
-			session.flush();			
+			session.flush();				
 			if (tx != null) tx.commit();
-			session.close();
+			session.close();			
+			lastAccess = access; 
 		}							
 		catch (Exception ex) {
 			ex.printStackTrace();
@@ -84,6 +87,33 @@ public class AccessTrackingCalculator implements IModelCalculator {
 
 	private String getApplicationName(MetaModel metaModel) throws Exception {
 		return Strings.lastToken(metaModel.getMetaComponent().getPackageNameWithSlashWithoutModel(), "/");		
+	}
+	
+	private boolean areEqual(Access a1, Access a2) {
+		return toString(a1).equals(toString(a2));
+	}
+	
+	private String toString(Access access) { 
+		if (access == null) return "";
+		StringBuffer r = new StringBuffer();
+		r.append(access.getApplication());
+		r.append("::");
+		r.append(access.getModel());
+		r.append("::");
+		r.append(access.getUser());
+		r.append("::");
+		r.append(access.getTable());
+		r.append("::");
+		r.append(DateFormat.getDateInstance(DateFormat.SHORT).format(access.getDate()));
+		r.append("::");
+		r.append(access.getTime());
+		r.append("::");
+		r.append(access.getType());
+		r.append("::");
+		r.append(access.isAuthorized());
+		r.append("::");
+		r.append(access.getRecordId());
+		return r.toString();
 	}
 
 	private String getUser() {
