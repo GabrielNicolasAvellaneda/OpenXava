@@ -26,9 +26,12 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	
 	public void execute() throws Exception {
 		Map containerKey = saveIfNotExists(getCollectionElementView().getParent());
+		if (XavaPreferences.getInstance().isMapFacadeAutoCommit()) {
+			getView().setKeyEditable(false); // To mark as saved
+		}
 		if (isEntityReferencesCollection()) saveEntity(containerKey);
 		else saveAggregate(containerKey);
-		getView().setKeyEditable(false); 
+		getView().setKeyEditable(false); // To mark as saved
 		getCollectionElementView().setCollectionEditingRow(-1);
 		getCollectionElementView().clear();
 		resetDescriptionsCache();

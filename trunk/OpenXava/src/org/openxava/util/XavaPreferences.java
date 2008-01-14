@@ -89,7 +89,13 @@ public class XavaPreferences {
 		return "true".equalsIgnoreCase(getProperties().getProperty("mapFacadeAsEJB", "false").trim());
 	}
 	
+	/**
+	 *  
+	 * @return true if <code>isMapFacadeAsEJB() == true</code>, otherwise the value 
+	 * 		of <code>mapFacadeAutoCommit</code> property. 
+	 */
 	public boolean isMapFacadeAutoCommit() {
+		if (isMapFacadeAsEJB()) return true; 
 		return "true".equalsIgnoreCase(getProperties().getProperty("mapFacadeAutoCommit", "false").trim());
 	}	
 

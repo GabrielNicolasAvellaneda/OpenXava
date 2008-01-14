@@ -1,6 +1,18 @@
 Change Log for OpenXava project
 ===============================
 
+- Hibernate updated to 3.2.5.
+- When an action throws an exception all messages (not errors) added by the action are not shown.
+- MapFacade is not autocommit by default from now on. It's needed to put mapFacadeAutoCommit=true in xava.properties for autocommit.
+- New method MapFacade.commit to force a commit when MapFacade is working without auto commit.
+- Fix: Save first detail in a collection saved the container entity although the detail was not saved because of a validation error 
+- AccessTracking does not record duplicate continuous entries.
+- New <on-change-search /> element for <reference-view/> to overwrite the default action for searching when the user type the key.
+- Fix: Fails on search references typing its key when working with multischema.
+- New before-each-request attribute for <action/> in controllers.xml.
+- TabUserPreference uses "native" as key generation to allow to save tab preferences in Oracle.
+- Fix: Search reference does not work when key is multiple, visible and inside a group.
+- Hide rows action is no longer shown on collections.
 - New StringTimeConverter.
 - Fix: When a member in a section was hidden programmatically and the result was only one reference or collection the frame was not hidden.
 - Fix: Overlapped columns were not recognized when the letters case does not match.
