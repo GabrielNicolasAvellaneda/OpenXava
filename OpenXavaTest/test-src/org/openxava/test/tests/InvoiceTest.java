@@ -33,7 +33,9 @@ public class InvoiceTest extends ModuleTestBase {
 		super(testName, "Invoice");		
 	}
 	
+	// Only behaves thus when mapFacadeAutocommit=false (the default)
 	public void testFailOnSaveFirstCollectionElementNotSaveMainEntity() throws Exception {
+		if (XavaPreferences.getInstance().isMapFacadeAutoCommit()) return; 
 		execute("CRUD.new");
 		setValue("year", "2008");
 		setValue("number", "66");
@@ -542,7 +544,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertNoEditable("customer.address.street");
 	}
 	
-	public void testSearchReferenceWithListInsideSection() throws Exception {
+	public void testSearchReferenceWithListInsideSection() throws Exception {		
 		execute("CRUD.new");
 		execute("Sections.change", "activeSection=0");
 				
@@ -553,8 +555,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValue("customer.name", customerName);				
 	}
 	
-	public void testSections_aggregateCollection_orderedCollectionsInModel_posdeleteCollectionElement() throws Exception {  
-		
+	public void testSections_aggregateCollection_orderedCollectionsInModel_posdeleteCollectionElement() throws Exception {  		
 		// Create
 		execute("CRUD.new");
 		execute("Sections.change", "activeSection=0");				
@@ -828,8 +829,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertMessage("Invoice deleted successfully");
 	}
 	
-	public void testAggregateValidatorUsingReferencesToContainer() throws Exception { 
-		
+	public void testAggregateValidatorUsingReferencesToContainer() throws Exception { 		
 		// Create
 		execute("CRUD.new");
 		execute("Sections.change", "activeSection=0");				
@@ -854,13 +854,17 @@ public class InvoiceTest extends ModuleTestBase {
 		setValue("details.deliveryDate", "18/03/2004");
 		setValue("details.soldBy.number", getProductNumber());
 		execute("Collection.save", "viewObject=xava_view_section1_details");
-		assertError("It is not possible to add details, the invoice is paid");		
+		assertError("It is not possible to add details, the invoice is paid");
+		
+		if (XavaPreferences.getInstance().isMapFacadeAutoCommit()) {
+			execute("CRUD.delete");
+			assertMessage("Invoice deleted successfully");
+		}
 		
 	}
 	
 	
-	public void testValidationOnSaveAggregateAndModelValidatorReceivesReference() throws Exception {
-		
+	public void testValidationOnSaveAggregateAndModelValidatorReceivesReference() throws Exception {		
 		// Create
 		execute("CRUD.new");
 		execute("Sections.change", "activeSection=0");				
@@ -895,7 +899,7 @@ public class InvoiceTest extends ModuleTestBase {
 		setValue("details.deliveryDate", "18/03/2004"); 
 		setValue("details.soldBy.number", getProductNumber());
 		execute("Collection.save", "viewObject=xava_view_section1_details");
-		assertError("It si needed specify a product for a valid invoice detail");
+		assertError("It is needed specify a product for a valid invoice detail");
 		
 		setValue("details.product.number", getProductNumber()); 
 		assertValue("details.product.description", getProductDescription());
