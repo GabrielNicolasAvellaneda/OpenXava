@@ -65,10 +65,12 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		getPersistenceProvider().commit(); 
 	}
 
-	private void commitTransaction() {			
-		getPersistenceProvider().flush(); 
+	private void commitTransaction() {					 
 		if (XavaPreferences.getInstance().isMapFacadeAutoCommit()) {
 			getPersistenceProvider().commit(); 
+		}
+		else {
+			getPersistenceProvider().flush();
 		}
 	}
 

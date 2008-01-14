@@ -23,7 +23,7 @@ import org.openxava.validators.*;
  * It's used in generic OpenXava action to make CRUD operations,
  * but if it's convenient for you, you can use directly.<p>
  * 
- * A principle a good dessign is use maps for generic or automatic
+ * A principle a good design is use maps for generic or automatic
  * things, but in all other cases the use of the model objects directly
  * is better, because the compiler do a good work for us, we can use
  * method calls, etc.<p>
@@ -42,7 +42,43 @@ import org.openxava.validators.*;
  * 
  * The first parameter of each method is <code>modelName</code>, this is a
  * name of a OpenXava component (Customer, Invoice, etc) or a qualified aggregate 
- * (Invoice.InvoiceDetail for example).<p>   
+ * (Invoice.InvoiceDetail for example).<p>  
+ * 
+ * <h4>Transactional behaviour</h4>
+ * <code>MapFacade</code> has transactional behaviour inside your action or test (since 2.2.5). 
+ * That is, you can write the next code inside an action or test:
+ * <pre>
+ * public void execute() throws Exception {
+ * 		...
+ * 		MapFacade.create("Customer", customerValue);
+ * 		MapFacade.create("Invoice", invoiceValue);
+ * 		... 
+ * }
+ * </pre>
+ * If <code>Invoice</code> creation fails, the Customer will not be saved; moreover 
+ * if any other exception is thrown by other sentence of the action. Both Customer
+ * and Invoice data will not be saved.<br>
+ * The data is flushed in each MapFacade call, but not committed.<br>
+ * This behavior can be modified for your application with the next property
+ * in xava.properties file:
+ * <pre>
+ * mapFacadeAutoCommit=true
+ * </pre>  
+ * If you mapFacadeAutoCommit=true or mapFacadeAsEJB=true and you execute the above
+ * code, if the creation of <code>Invoice</code> fails, the <code>Customer</code>
+ * is already saved and committed and it will not be removed.
+ * <p>
+ * When autocommit is not used (the default) you can do a commit programatically, using
+ * the @{link #commit()} method. In this way: 
+ *<pre>
+ * public void execute() throws Exception {
+ * 		...
+ * 		MapFacade.create("Customer", customerValue);
+ * 		MapFacade.commit();
+ * 		MapFacade.create("Invoice", invoiceValue);
+ * 		... 
+ * }
+ * </pre>
  * 
  * @author Javier Paniza
  */
