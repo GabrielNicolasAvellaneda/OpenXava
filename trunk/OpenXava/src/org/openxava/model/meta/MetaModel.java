@@ -57,7 +57,8 @@ abstract public class MetaModel extends MetaElement {
 	private MetaView metaViewByDefault;
 	private boolean ejbGenerated;
 	private boolean pojoGenerated;
-	
+	private Collection keyReferencesNames; // tmp
+	private Collection keyPropertiesNames; // tmp
 	
 	private Collection metaPropertiesWithDefaultValueCalculator;
 	private List propertiesNames;
@@ -614,31 +615,44 @@ abstract public class MetaModel extends MetaElement {
 	
 	
 	/**
+	 * Key properties names ordered in declaration order.
+	 * 
 	 * @return Collection of <tt>String</tt>, not null and read only 
 	 */
 	public Collection getKeyPropertiesNames() throws XavaException {
-		Iterator it = getMetaProperties().iterator();
-		ArrayList result = new ArrayList();
-		while (it.hasNext()) {
-			MetaProperty p = (MetaProperty) it.next();
-			if (p.isKey()) {
-				result.add(p.getName());
+		if (keyPropertiesNames == null) {
+			Iterator it = getMembersNames().iterator(); // memberNames to keep order		
+			ArrayList result = new ArrayList();
+			while (it.hasNext()) {
+				String name = (String) it.next();
+				if (containsMetaProperty(name)) { 			
+					MetaProperty p = (MetaProperty) getMetaProperty(name);
+					if (p.isKey()) {
+						result.add(name);
+					}
+				}
 			}
+			keyPropertiesNames = Collections.unmodifiableCollection(result);
 		}
-		return Collections.unmodifiableCollection(result);
+		return keyPropertiesNames;
 	}
-	
+		
 	/**
+	 * Key reference names in undetermined order.
+	 * 
 	 * @return Collection of <tt>String</tt>, not null and read only 
 	 */
 	public Collection getKeyReferencesNames() throws XavaException {
-		Iterator it = getMetaReferencesKey().iterator();
-		ArrayList result = new ArrayList();
-		while (it.hasNext()) {
-			MetaReference ref = (MetaReference) it.next();
-			result.add(ref.getName());
+		if (keyReferencesNames == null) {
+			Iterator it = getMetaReferencesKey().iterator();
+			ArrayList result = new ArrayList();
+			while (it.hasNext()) {
+				MetaReference ref = (MetaReference) it.next();
+				result.add(ref.getName());
+			}
+			keyReferencesNames = Collections.unmodifiableCollection(result);
 		}
-		return Collections.unmodifiableCollection(result);
+		return keyReferencesNames;
 	}
 	
 	
@@ -1442,7 +1456,7 @@ abstract public class MetaModel extends MetaElement {
 		PropertiesManager pm = new PropertiesManager(pojo);
 		for (int i=0; i < fields.length; i++) {			
 			try {
-				if (isKey(fields[i].getName())) {
+				if (isKey(fields[i].getName())) {					
 					if (isReference(fields[i].getName())) {
 						MetaModel refModel = getMetaReference(fields[i].getName()).getMetaModelReferenced();
 						toStringValue.append(refModel.toString(pm.executeGet(fields[i].getName())));

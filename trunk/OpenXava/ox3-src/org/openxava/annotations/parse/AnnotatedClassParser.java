@@ -1378,8 +1378,8 @@ public class AnnotatedClassParser {
 		// OnChange 
 		if (element.isAnnotationPresent(OnChange.class)) {
 			OnChange onChange = element.getAnnotation(OnChange.class);
-			MetaPropertyView propertyView = new MetaPropertyView();
-			String lastKeyProperty = (String) XCollections.last(ref.getMetaModelReferenced().getKeyPropertiesNames());
+			MetaPropertyView propertyView = new MetaPropertyView();			
+			String lastKeyProperty = (String) XCollections.last(ref.getMetaModelReferenced().getKeyPropertiesNames());			
 			propertyView.setPropertyName(ref.getName() + "." + lastKeyProperty);
 			propertyView.setOnChangeActionClassName(onChange.value().getName());
 			for (Object oview: ref.getMetaModel().getMetaViews()) {
