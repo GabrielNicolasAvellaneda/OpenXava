@@ -2063,7 +2063,7 @@ public class View implements java.io.Serializable {
 			}
 		} // of if (!isOnlyThrowsOnChange())		
 		if (!isSection() && getMetaView().hasOnChangeAction(changedPropertyQualifiedName)) {
-			IOnChangePropertyAction action = getMetaView().createOnChangeAction(changedPropertyQualifiedName);
+			IOnChangePropertyAction action = getMetaView().createOnChangeAction(changedPropertyQualifiedName);			
 			executeOnChangeAction(changedPropertyQualifiedName, action);
 		} 		
 		if (hasGroups()) {
@@ -2088,8 +2088,9 @@ public class View implements java.io.Serializable {
 		}		
 	}
 
-	private void executeOnChangeAction(String changedPropertyQualifiedName,
-			IOnChangePropertyAction action) throws XavaException {
+	private void executeOnChangeAction(String changedPropertyQualifiedName,	IOnChangePropertyAction action) 
+		throws XavaException 
+	{
 		if (!actionRegisteredAsExecuted(changedPropertyQualifiedName, action)) {
 			View viewOfAction = this;
 			while (viewOfAction.isGroup()) viewOfAction = viewOfAction.getParent();

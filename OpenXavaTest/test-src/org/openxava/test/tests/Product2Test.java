@@ -208,7 +208,7 @@ public class Product2Test extends ModuleTestBase {
 		
 		Warehouse warehouseKeyZone2 = new Warehouse();
 		warehouseKeyZone2.setNumber(1);
-		warehouseKeyZone2.setZoneNumber(2); 		
+		warehouseKeyZone2.setZoneNumber(2); 				
 		setValue("warehouse.KEY", toKeyString(warehouseKeyZone2));
 		assertNotExists("zoneOne");
 		
