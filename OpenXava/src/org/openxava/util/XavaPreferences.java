@@ -72,7 +72,22 @@ public class XavaPreferences {
 		return "true".equalsIgnoreCase(getProperties().getProperty("emailAsUserNameInPortal", "false").trim());
 	}
 	
-		
+	public String getSMTPHost() {
+        return getProperties().getProperty("smtpHost");
+    }
+
+    public int getSMTPPort() {
+        return Integer.parseInt(getProperties().getProperty("smtpPort"));
+    }
+
+    public String getSMTPUserID() {        
+        return getProperties().getProperty("smtpUserId");        
+    }
+
+    public String getSMTPUserPassword() {        
+        return getProperties().getProperty("smtpUserPassword");        
+    }
+
 	public String getFormLineSpacing() {
 		return getProperties().getProperty("formLineSpacing", "1");
 	}

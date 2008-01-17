@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- New utility class Emails to facilite the use of JavaMail.
+- Fix: On Java 6 the on change event in keys with composite keys was not always the last one.
 - Hibernate updated to 3.2.5.
 - When an action throws an exception all messages (not errors) added by the action are not shown.
 - MapFacade is not autocommit by default from now on. It's needed to put mapFacadeAutoCommit=true in xava.properties for autocommit.
