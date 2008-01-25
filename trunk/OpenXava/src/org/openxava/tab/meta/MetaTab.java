@@ -399,11 +399,6 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	}
 
 	public boolean isDefaultSchemaChanged() {
-		/* tmp original
-		if (!XavaPreferences.getInstance().isJPAPersistence()) return false;
-		return !Is.equal(lastDefaultSchema, XPersistence.getDefaultSchema());
-		*/
-		// tmp ini
 		if (XavaPreferences.getInstance().isJPAPersistence()) {
 			return !Is.equal(lastDefaultSchema, XPersistence.getDefaultSchema());
 		}
@@ -411,7 +406,6 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 			return !Is.equal(lastDefaultSchema, XHibernate.getDefaultSchema());
 		}
 		return false;
-		// tmp fin
 	}
 
 	private void saveDefaultSchema() {

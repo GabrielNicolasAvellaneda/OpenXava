@@ -2731,6 +2731,7 @@ public class View implements java.io.Serializable {
 	}
 		
 	public boolean isCreateNew() throws XavaException {		
+		if (isGroup()) return getParent().isCreateNew();
 		try {			
 			MetaReference ref = getParent().getMetaModel().getMetaReference(getMemberName());			
 			return getParent().isCreateNewForReference(ref);
@@ -2743,7 +2744,8 @@ public class View implements java.io.Serializable {
 		}
 	}
 	
-	public boolean isModify() throws XavaException { 		
+	public boolean isModify() throws XavaException {
+		if (isGroup()) return getParent().isModify();
 		try {			
 			MetaReference ref = getParent().getMetaModel().getMetaReference(getMemberName());			
 			return getParent().isModifyForReference(ref);

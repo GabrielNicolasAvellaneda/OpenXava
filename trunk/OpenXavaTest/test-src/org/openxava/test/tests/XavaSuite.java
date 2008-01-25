@@ -85,6 +85,9 @@ public class XavaSuite extends TestSuite {
 		if (!ModuleTestBase.isOX3()) {
 			suite.addTest(new TestSuite(HibernateTest.class));
 		}
+		if (ModuleTestBase.isOX3()) {
+			suite.addTest(new TestSuite(HumanTest.class));
+		}
 		suite.addTest(new TestSuite(Invoice20020001Test.class));
 		suite.addTest(new TestSuite(Invoice2002Test.class));		
 		suite.addTest(new TestSuite(Invoice2004Test.class));
@@ -99,6 +102,9 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(InvoiceTest.class));		
 		if (!XavaPreferences.getInstance().isEJB2Persistence()) {
 			suite.addTest(new TestSuite(IssueTest.class));
+		}				
+		if (ModuleTestBase.isOX3()) {
+			suite.addTest(new TestSuite(JavaProgrammerTest.class));
 		}		
 		if (XavaPreferences.getInstance().isJPAPersistence()) {			
 			suite.addTest(new TestSuite(JPATest.class));			
@@ -122,7 +128,10 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(Product3WithDescriptionsListTest.class));		
 		suite.addTest(new TestSuite(Product3WithGroupTest.class));
 		suite.addTest(new TestSuite(ProductTest.class));
-		suite.addTest(new TestSuite(ProductWithSectionTest.class));
+		suite.addTest(new TestSuite(ProductWithSectionTest.class));		
+		if (ModuleTestBase.isOX3()) {
+			suite.addTest(new TestSuite(ProgrammerTest.class));
+		}				
 		suite.addTest(new TestSuite(PublicJSPTest.class));
 		suite.addTest(new TestSuite(SellerCannotCreateCustomerTest.class));
 		suite.addTest(new TestSuite(SellerJSPTest.class));

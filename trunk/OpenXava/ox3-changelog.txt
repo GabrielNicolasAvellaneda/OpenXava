@@ -1,6 +1,9 @@
 Change Log for OpenXava 3
 =========================
 
+- JPA inheritance support.
+- Fix: 'Create' and 'Modify' link for references which key is inside a group was not shown.
+- @Enumerated(EnumType.STRING) supported.
 - Fix: On Java 6 the on change event in keys with composite keys was not always the last one.
 - When an action throws an exception all messages (not errors) added by the action are not shown.
 - MapFacade does not use auto commit by default. It's needed to put mapFacadeAutoCommit=true on xava.properties for autocommit.
