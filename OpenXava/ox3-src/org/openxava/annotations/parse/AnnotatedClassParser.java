@@ -39,10 +39,10 @@ public class AnnotatedClassParser {
 	
 	private static Log log = LogFactory.getLog(AnnotatedClassParser.class);
 	
-	private static Collection<String> managedClassNames;
+	private static Collection<String> managedClassNames; 
 	private static Collection<String> managedClassPackages;
-	
-	
+	private static Map<Class, Collection<Class>> entityFirstLevelSubclasses;  
+		
 	public MetaComponent parse(String name) throws Exception {
 		MetaComponent component = new MetaComponent();
 		component.setName(name);
@@ -86,6 +86,10 @@ public class AnnotatedClassParser {
 
 
 	private String getTable(String modelName, Class pojoClass) {
+		Class superClass = pojoClass.getSuperclass(); 
+		if (superClass.isAnnotationPresent(Entity.class)) {
+			return getTable(superClass.getSimpleName(), superClass);
+		}
 		Table table = (Table) pojoClass.getAnnotation(Table.class);
 		if (table != null) {
 			String tableName = Is.emptyString(table.name())?modelName:table.name();
@@ -98,6 +102,12 @@ public class AnnotatedClassParser {
 
 	
 	private void parseMembers(MetaModel model, Class pojoClass, ModelMapping mapping, String embedded) throws Exception {
+		Class superClass = pojoClass.getSuperclass(); 
+		if (superClass.isAnnotationPresent(Entity.class) || 
+			superClass.isAnnotationPresent(MappedSuperclass.class)) 
+		{
+			parseMembers(model, superClass, mapping, embedded);
+		}
 		// Using declared fields in order to preserve the order in source code
 		Map<String, PropertyDescriptor> propertyDescriptors = getPropertyDescriptors(pojoClass);
 		for (Field f: pojoClass.getDeclaredFields()) {
@@ -107,8 +117,9 @@ public class AnnotatedClassParser {
 			propertyDescriptors.remove(f.getName());
 		}
 		
-		// Loop over methods in order to preserve the order in source code
-		for (Method m: pojoClass.getMethods()) {			
+		// Loop over methods in order to preserve the order in source code			
+		for (Method m: pojoClass.getDeclaredMethods()) {
+			if (!Modifier.isPublic(m.getModifiers())) continue; 
 			String propertyName = null;
 			if (m.getName().startsWith("get")) {
 				propertyName = Strings.firstLower(m.getName().substring(3));
@@ -121,8 +132,34 @@ public class AnnotatedClassParser {
 			if (pd == null) continue;
 			addMember(model, mapping, pd, null, embedded);
 		}
+		
+		parseAttributeOverrides(pojoClass, mapping);
 	}
 	
+	private void parseAttributeOverrides(Class pojoClass, ModelMapping mapping) throws XavaException { 
+		if (pojoClass.isAnnotationPresent(AttributeOverride.class)) {
+			AttributeOverride override = (AttributeOverride) pojoClass.getAnnotation(AttributeOverride.class);
+			parseAttributeOverride(override, mapping);
+		}
+		if (pojoClass.isAnnotationPresent(AttributeOverrides.class)) {
+			AttributeOverrides overrides = (AttributeOverrides) pojoClass.getAnnotation(AttributeOverrides.class);
+			for (AttributeOverride override: overrides.value()) {
+				parseAttributeOverride(override, mapping);
+			}
+		}
+	}
+
+	private void parseAttributeOverride(AttributeOverride override, ModelMapping mapping) throws XavaException {
+		try {			
+			PropertyMapping pMapping = mapping.getPropertyMapping(override.name());
+			pMapping.setColumn(override.column().name());
+			
+		}
+		catch (ElementNotFoundException ex) {
+			throw new ElementNotFoundException("attribute_override_not_found", override.name(), mapping.getModelName());
+		}
+	}
+
 	private void addMember(MetaModel model, ModelMapping mapping, PropertyDescriptor pd, Field f, String embedded) throws Exception {
 		if (pd.getName().equals("class") || pd.getPropertyType() == null) return;
 		if (isReference(pd, f)) addReference(model, mapping, pd, f, embedded);
@@ -355,46 +392,137 @@ public class AnnotatedClassParser {
 		return null;
 	}
 
-	private void parseTabs(MetaComponent component, Class pojoClass) throws XavaException {
+	private void parseTabs(MetaComponent component, Class pojoClass) throws Exception {
+		boolean hasDefaultTab = false; 
 		if (pojoClass.isAnnotationPresent(Tab.class)) {
-			Tab listMode = (Tab) pojoClass.getAnnotation(Tab.class);
-			addTab(component, listMode);		
+			Tab tab = (Tab) pojoClass.getAnnotation(Tab.class);
+			addTab(component, tab);
+			hasDefaultTab = true;
 		}
 		if (pojoClass.isAnnotationPresent(Tabs.class)) {
-			Tabs listModes = (Tabs) pojoClass.getAnnotation(Tabs.class);
-			for (Tab listMode: listModes.value()) {
-				addTab(component, listMode);
+			Tabs tabs = (Tabs) pojoClass.getAnnotation(Tabs.class);
+			for (Tab tab: tabs.value()) {
+				addTab(component, tab);
+				if (Is.emptyString(tab.name())) hasDefaultTab = true;
 			}
-		}		
+		}
+		if (!hasDefaultTab) {
+			component.getMetaTab().setBaseCondition(createBaseCondition(component.getMetaEntity().getPOJOClass(), null)); 
+		}
 	}
 
-	private void addTab(MetaComponent component, Tab listMode) throws XavaException {
-		MetaTab tab = new MetaTab();
-		tab.setName(listMode.name());
-		if (Is.emptyString(listMode.properties())) {
-			tab.setDefaultPropertiesNames("*");
+	private void addTab(MetaComponent component, Tab tab) throws Exception {
+		MetaTab metaTab = new MetaTab();
+		metaTab.setName(tab.name());
+		if (Is.emptyString(tab.properties())) {
+			metaTab.setDefaultPropertiesNames("*");
 		}
 		else {
-			tab.setDefaultPropertiesNames(listMode.properties());
+			metaTab.setDefaultPropertiesNames(tab.properties());
 		}
-		tab.setBaseCondition(listMode.baseCondition());
-		tab.setDefaultOrder(listMode.defaultOrder());
-		if (!listMode.filter().equals(VoidFilter.class)) {
+		String baseCondition = createBaseCondition(component.getMetaEntity().getPOJOClass(), tab); 		
+		metaTab.setBaseCondition(baseCondition); 
+		metaTab.setDefaultOrder(tab.defaultOrder());
+		if (!tab.filter().equals(VoidFilter.class)) {
 			MetaFilter metaFilter = new MetaFilter();
-			metaFilter.setClassName(listMode.filter().getName());
-			tab.setMetaFilter(metaFilter);
+			metaFilter.setClassName(tab.filter().getName());
+			metaTab.setMetaFilter(metaFilter);
 		}
 		
-		for (RowStyle rowStyle: listMode.rowStyles()) {
+		for (RowStyle rowStyle: tab.rowStyles()) {
 			MetaRowStyle metaRowStyle = new MetaRowStyle();
 			metaRowStyle.setStyle(rowStyle.style());
 			metaRowStyle.setProperty(rowStyle.property());
 			metaRowStyle.setValue(rowStyle.value());			
-			tab.addMetaRowStyle(metaRowStyle);
+			metaTab.addMetaRowStyle(metaRowStyle);
 		}
 		
-		component.addMetaTab(tab);
+		component.addMetaTab(metaTab);
 	}
+
+	private String createBaseCondition(Class pojoClass, Tab tab) throws Exception { 
+		StringBuffer condition = new StringBuffer();
+		createBaseCondition(condition, pojoClass, tab);
+		return condition.toString();
+	}
+	
+	private void createBaseCondition(StringBuffer condition, Class pojoClass, Tab tab) throws Exception { 
+		if (tab != null && !Is.emptyString(tab.baseCondition())) {
+			condition.append(tab.baseCondition());
+		}
+		Class superClass = pojoClass.getSuperclass();
+		if (!superClass.isAnnotationPresent(Entity.class)) {			
+			return;
+		}				
+		if (tab != null && !Is.emptyString(tab.baseCondition())) {
+			condition.append(" AND ");
+		}
+		
+		boolean discriminatorNumeric = isDiscriminatorNumeric(pojoClass);		
+		condition.append(getDiscriminatorColumn(pojoClass));
+		condition.append("=");
+		if (!discriminatorNumeric) condition.append("'");
+		condition.append(getDiscriminatorValue(pojoClass));
+		if (!discriminatorNumeric) condition.append("'");
+		 
+		for (Class subclass: getFirstLevelEntitySubclasses(pojoClass)) {
+			condition.append(" OR ");
+			createBaseCondition(condition, subclass, null);
+		}
+		
+	}
+	
+	private Collection<Class> getFirstLevelEntitySubclasses(Class pojoClass) throws Exception { 
+		if (entityFirstLevelSubclasses == null) {
+			entityFirstLevelSubclasses = new HashMap<Class, Collection<Class>>();
+			for (String entityClassName: getManagedClassNames()) {
+				Class entityClass = Class.forName(entityClassName);
+				Class superClass = entityClass.getSuperclass();
+				if (superClass.isAnnotationPresent(Entity.class)) {
+					Collection<Class> subclasses = entityFirstLevelSubclasses.get(superClass);
+					if (subclasses == null) {
+						subclasses = new ArrayList<Class>();
+						entityFirstLevelSubclasses.put(superClass, subclasses);
+					}
+					subclasses.add(entityClass);
+				}				
+			}
+		}
+		Collection<Class> result = entityFirstLevelSubclasses.get(pojoClass);
+		return result == null?Collections.EMPTY_LIST:result;
+	}
+
+
+	private String getDiscriminatorColumn(Class pojoClass) { 
+		if (pojoClass == null) return "DTYPE";
+		if (!pojoClass.isAnnotationPresent(DiscriminatorColumn.class)) {
+			return getDiscriminatorColumn(pojoClass.getSuperclass());
+		}
+		DiscriminatorColumn discriminatorColumn = (DiscriminatorColumn) 
+			pojoClass.getAnnotation(DiscriminatorColumn.class);
+		
+		return discriminatorColumn.name();		
+	}
+
+	private boolean isDiscriminatorNumeric(Class pojoClass) { 
+		if (pojoClass == null) return false;
+		if (!pojoClass.isAnnotationPresent(DiscriminatorColumn.class)) {
+			return isDiscriminatorNumeric(pojoClass.getSuperclass());
+		}
+		DiscriminatorColumn discriminatorColumn = (DiscriminatorColumn) 
+			pojoClass.getAnnotation(DiscriminatorColumn.class);
+		
+		return discriminatorColumn.discriminatorType().equals(DiscriminatorType.INTEGER);
+	}
+
+	private String getDiscriminatorValue(Class pojoClass) { 
+		if (!pojoClass.isAnnotationPresent(DiscriminatorValue.class)) {
+			return pojoClass.getSimpleName();
+		}
+		DiscriminatorValue discriminatorValue = (DiscriminatorValue) pojoClass.getAnnotation(DiscriminatorValue.class);
+		return discriminatorValue.value();
+	}
+
 
 	private void addProperty(MetaModel model, ModelMapping mapping, PropertyDescriptor pd, Field field, String embedded) throws Exception {		
 		MetaProperty property = new MetaProperty();
@@ -477,7 +605,7 @@ public class AnnotatedClassParser {
 			}
 			else if (property.hasValidValues()) { 
 				// To convert the parameters sent for filtering in the tabs
-				pMapping.setConverterClassName(EnumIntConverter.class.getName()); 
+				setEnumConverter(pd, field, pMapping);
 			}
 			else {
 				pMapping.setDefaultConverter();
@@ -485,6 +613,37 @@ public class AnnotatedClassParser {
 			
 			mapping.addPropertyMapping(pMapping);
 		}		
+	}
+
+
+	private void setEnumConverter(PropertyDescriptor pd, Field field,
+			PropertyMapping pMapping) {
+		Enumerated enumerated = null;
+		Class enumType = null;
+		if (field != null && field.isAnnotationPresent(Enumerated.class)) {				
+			enumerated = field.getAnnotation(Enumerated.class);					
+			enumType = field.getType();
+		}
+		else if (pd.getReadMethod().isAnnotationPresent(Enumerated.class)) {
+			enumerated = pd.getReadMethod().getAnnotation(Enumerated.class);
+			enumType = pd.getReadMethod().getReturnType();
+		}
+		if (enumerated == null || enumerated.value() == EnumType.ORDINAL) {
+			pMapping.setConverterClassName(OrdinalEnumIntConverter.class.getName());
+		}
+		else {
+			pMapping.setConverterClassName(StringEnumIntConverter.class.getName());
+			MetaSet metaSet = new MetaSet();
+			metaSet.setPropertyName("enumConstants");
+			StringBuffer enumConstants = new StringBuffer(); 
+			for (Object enumConstant: enumType.getEnumConstants()) {
+				if (enumConstants.length() > 0) enumConstants.append(';');
+				enumConstants.append(enumConstant);
+				
+			}
+			metaSet.setValue(enumConstants.toString());
+			pMapping.addMetaSet(metaSet);
+		}
 	}
 	
 	

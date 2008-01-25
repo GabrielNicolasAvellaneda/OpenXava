@@ -30,7 +30,7 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 	
 
 	public void execute() throws Exception {				
-		try {						
+		try {									
 			Map keys = getKeyValuesFromView();
 			Map values = null;
 			if (Maps.isEmptyOrZero(keys)) { 
@@ -45,6 +45,20 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 			else {				
 				values = MapFacade.getValues(getModelName(), keys, getMemberNames());
 			}
+			
+			try {
+				// For inheritance support
+				// A new find is not so slow, possibly because of persistence engine cache
+				Object entity = MapFacade.findEntity(getModelName(), values); 
+				String modelName = entity.getClass().getSimpleName();
+				if (!modelName.equals(getModelName())) {
+					getView().setModelName(modelName);				
+					values = MapFacade.getValues(modelName, entity, getMemberNames());								
+				}
+			}
+			catch (ObjectNotFoundException ex) { // For some special case, as null reference keys				
+			}
+						
 			getView().setEditable(true);	
 			getView().setKeyEditable(false);			
 			setValuesToView(values); 		

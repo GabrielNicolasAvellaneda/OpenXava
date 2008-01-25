@@ -8,7 +8,7 @@ import org.openxava.converters.*;
  * @author Javier Paniza
  */
 
-public class EnumIntConverter implements IConverter {
+public class OrdinalEnumIntConverter implements IConverter {
 
 	public Object toJava(Object o) throws ConversionException {
 		// No conversion, because it's used only for converting filtering data

@@ -95,20 +95,16 @@ import org.openxava.test.actions.*;
 })
 
 @Tabs ({
-		
 	@Tab(
 		rowStyles=@RowStyle(style="highlight", property="type", value="steady"),
 		properties="name, type, seller.name, address.city, seller.level.description, address.state.name"
-	),
-	
+	),	
 	@Tab( name="TwoSellers",
 		properties="name, type, address.city, seller.name, seller.level.description, alternateSeller.name"
-	),
-	
+	),	
 	@Tab( name="TwoSellersNumber",
 		properties="name, type, seller.number, alternateSeller.number"
-	)
-		
+	)		
 })
 
 public class Customer implements IWithName {
