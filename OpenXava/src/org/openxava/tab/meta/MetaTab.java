@@ -356,7 +356,19 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	}
 
 	private List createAllPropertiesNames() throws XavaException {
-		return new ArrayList(getMetaModel().getPropertiesNamesWithoutHiddenNorTransient()); 
+		List result = new ArrayList();
+		// First the properties from a possible @EmbeddedId
+		for (Iterator itRef = getMetaModel().getMetaReferencesKey().iterator(); itRef.hasNext(); ) {
+			MetaReference ref = (MetaReference) itRef.next();
+			if (ref.isAggregate()) {
+				for (Iterator itKey = ref.getMetaModelReferenced().getPropertiesNamesWithoutHiddenNorTransient().iterator(); itKey.hasNext(); ) {
+					result.add(ref.getName() + "." + itKey.next());
+				}
+			}
+		}
+		// Now the plain properties
+		result.addAll(getMetaModel().getPropertiesNamesWithoutHiddenNorTransient());
+		return result;
 	}
 	
 	public void setDefaultPropertiesNames(String properties) {

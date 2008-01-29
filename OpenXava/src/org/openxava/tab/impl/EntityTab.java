@@ -472,7 +472,7 @@ public class EntityTab implements IEntityTabImpl, java.io.Serializable {
 			int i = 0;
 			while (it.hasNext()) {
 				String propertyName = (String) it.next();
-				if (getMetaModel().isKey(propertyName)) {
+				if (getMetaModel().isKey(propertyName)) {					
 					keyIndexes.put(propertyName, new Integer(i));
 				}
 				i++;

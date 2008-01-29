@@ -1513,6 +1513,17 @@ public class AnnotatedClassParser {
 		if (element.isAnnotationPresent(Id.class)) {
 			ref.setKey(true);
 		}
+		else if (element.isAnnotationPresent(EmbeddedId.class)) { 
+			ref.setKey(true);
+			MetaModel embeddedIdMetaModel = ref.getMetaModelReferenced();
+			ref.getMetaModel().setPOJOKeyClass(embeddedIdMetaModel.getPOJOClass());			
+			for (Object metaProperty: embeddedIdMetaModel.getMetaProperties()) {
+				((MetaProperty) metaProperty).setKey(true);
+			}
+			for (Object metaReference: embeddedIdMetaModel.getMetaReferences()) {
+				((MetaReference) metaReference).setKey(true);
+			}			
+		}
 		
 		// Required
 		if (element.isAnnotationPresent(Required.class)) {						

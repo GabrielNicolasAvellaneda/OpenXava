@@ -57,8 +57,8 @@ abstract public class MetaModel extends MetaElement {
 	private MetaView metaViewByDefault;
 	private boolean ejbGenerated;
 	private boolean pojoGenerated;
-	private Collection keyReferencesNames; // tmp
-	private Collection keyPropertiesNames; // tmp
+	private Collection keyReferencesNames; 
+	private Collection keyPropertiesNames; 
 	
 	private Collection metaPropertiesWithDefaultValueCalculator;
 	private List propertiesNames;
@@ -746,7 +746,7 @@ abstract public class MetaModel extends MetaElement {
 			}
 			else if (containsMetaReference(name)) {
 				MetaReference r = (MetaReference) getMetaReference(name);
-				if (r.isKey()){
+				if (r.isKey()) {				
 					result.add(r);
 				}
 			}
@@ -1152,7 +1152,12 @@ abstract public class MetaModel extends MetaElement {
 		while (it.hasNext()) {
 			String name = (String) it.next();
 			if (isKey(name)) {
-				result.put(name, values.get(name));
+				if (isReference(name) && getMetaReference(name).isAggregate()) { // @EmbeddedId case  
+					return (Map) values.get(name);
+				}
+				else {
+					result.put(name, values.get(name));
+				}
 			}
 		}
 		return result;
@@ -1704,7 +1709,7 @@ abstract public class MetaModel extends MetaElement {
 			
 	}
 	
-	public Class getPOJOKeyClass() throws XavaException {  
+	public Class getPOJOKeyClass() throws XavaException {
 		if (pojoKeyClass==null) return getPOJOClass(); // POJO is used as key too
 		return pojoKeyClass;			
 	}
