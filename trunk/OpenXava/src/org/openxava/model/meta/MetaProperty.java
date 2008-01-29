@@ -447,7 +447,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		return validValues;
 	}
 	
-	public boolean isKey() {		
+	public boolean isKey() {
 		if (!isKeySet) {			
 			try {
 				if (!(getMetaModel() instanceof MetaEntity)) {								
