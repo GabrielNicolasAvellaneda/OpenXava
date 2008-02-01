@@ -117,19 +117,6 @@
       </columns>
 
    </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_Driver" name="" primaryKey="Driver_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Driver_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Driver" constraint="Constraint_Driver_"/>
-
-      <columns xmi:id="Driver__Name" name="_Name">
-      </columns>
-      <columns xmi:id="Driver__Number" name="_Number">
-      </columns>
-      <columns xmi:id="Driver__Type" name="_Type">
-      </columns>
-      <columns xmi:id="Driver__DrivingLicence_level" name="_DrivingLicence_level">
-      </columns>
-
-   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_CustomerContactPerson" name="" primaryKey="CustomerContactPerson_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="CustomerContactPerson_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_CustomerContactPerson" constraint="Constraint_CustomerContactPerson_"/>
 
@@ -175,8 +162,6 @@
       <columns xmi:id="Service__Detail_subfamily" name="_Detail_subfamily">
       </columns>
       <columns xmi:id="Service__Detail_type" name="_Detail_type">
-      </columns>
-      <columns xmi:id="Service__Invoice_oid" name="_Invoice_oid">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -429,15 +414,6 @@
       </columns>
 
    </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_Issue" name="" primaryKey="Issue_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Issue_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Issue" constraint="Constraint_Issue_"/>
-
-      <columns xmi:id="Issue_id" name="id">
-      </columns>
-      <columns xmi:id="Issue__Description" name="_Description">
-      </columns>
-
-   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_FormulaIngredient" name="" primaryKey="FormulaIngredient_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="FormulaIngredient_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_FormulaIngredient" constraint="Constraint_FormulaIngredient_"/>
 
@@ -453,18 +429,12 @@
       </columns>
 
    </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_ServiceInvoice" name="" primaryKey="ServiceInvoice_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="ServiceInvoice_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_ServiceInvoice" constraint="Constraint_ServiceInvoice_"/>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Issue" name="" primaryKey="Issue_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Issue_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Issue" constraint="Constraint_Issue_"/>
 
-      <columns xmi:id="ServiceInvoice__Amount" name="_Amount">
+      <columns xmi:id="Issue_id" name="id">
       </columns>
-      <columns xmi:id="ServiceInvoice__Description" name="_Description">
-      </columns>
-      <columns xmi:id="ServiceInvoice_oid" name="oid">
-      </columns>
-      <columns xmi:id="ServiceInvoice__Number" name="_Number">
-      </columns>
-      <columns xmi:id="ServiceInvoice__Year" name="_Year">
+      <columns xmi:id="Issue__Description" name="_Description">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -619,13 +589,7 @@
 
       <columns xmi:id="Task__Summary" name="_Summary">
       </columns>
-      <columns xmi:id="Task__UserFamilyName" name="_UserFamilyName">
-      </columns>
-      <columns xmi:id="Task__UserGivenName" name="_UserGivenName">
-      </columns>
       <columns xmi:id="Task_oid" name="oid">
-      </columns>
-      <columns xmi:id="Task__UserEMail" name="_UserEMail">
       </columns>
       <columns xmi:id="Task__Date" name="_Date">
       </columns>

@@ -24,8 +24,6 @@ public class ServiceValue
    private boolean detailHasBeenSet = false;
    private int detail_typeRef_number;
    private boolean detail_typeRef_numberHasBeenSet = false;
-   private java.lang.String invoice_oid;
-   private boolean invoice_oidHasBeenSet = false;
 
    public ServiceValue()
    {
@@ -44,8 +42,6 @@ public class ServiceValue
 	  detailHasBeenSet = true;
 	  this.detail_typeRef_number = otherValue.detail_typeRef_number;
 	  detail_typeRef_numberHasBeenSet = true;
-	  this.invoice_oid = otherValue.invoice_oid;
-	  invoice_oidHasBeenSet = true;
    }
 
    public int getFamily()
@@ -118,26 +114,12 @@ public class ServiceValue
    public boolean detail_typeRef_numberHasBeenSet(){
 	  return detail_typeRef_numberHasBeenSet;
    }
-   public java.lang.String getInvoice_oid()
-   {
-	  return this.invoice_oid;
-   }
-
-   public void setInvoice_oid( java.lang.String invoice_oid )
-   {
-	  this.invoice_oid = invoice_oid;
-	  invoice_oidHasBeenSet = true;
-   }
-
-   public boolean invoice_oidHasBeenSet(){
-	  return invoice_oidHasBeenSet;
-   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("family=" + getFamily() + " " + "description=" + getDescription() + " " + "number=" + getNumber() + " " + "detail=" + getDetail() + " " + "detail_typeRef_number=" + getDetail_typeRef_number() + " " + "invoice_oid=" + getInvoice_oid());
+	  str.append("family=" + getFamily() + " " + "description=" + getDescription() + " " + "number=" + getNumber() + " " + "detail=" + getDetail() + " " + "detail_typeRef_number=" + getDetail_typeRef_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -201,14 +183,6 @@ public class ServiceValue
 			lEquals = lEquals && this.detail.equals( that.detail );
 		 }
 		 lEquals = lEquals && this.detail_typeRef_number == that.detail_typeRef_number;
-		 if( this.invoice_oid == null )
-		 {
-			lEquals = lEquals && ( that.invoice_oid == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.invoice_oid.equals( that.invoice_oid );
-		 }
 
 		 return lEquals;
 	  }
@@ -229,8 +203,6 @@ public class ServiceValue
       result = 37*result + ((this.detail != null) ? this.detail.hashCode() : 0);
 
       result = 37*result + (int) detail_typeRef_number;
-
-      result = 37*result + ((this.invoice_oid != null) ? this.invoice_oid.hashCode() : 0);
 
 	  return result;
    }

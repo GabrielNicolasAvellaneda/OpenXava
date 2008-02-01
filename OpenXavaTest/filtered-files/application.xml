@@ -15,7 +15,7 @@
 		<view name="CustomerAsAggregate3Levels"/>
 		<controller name="Typical"/>
 	</module>
-			
+		
 	<module name="StateHibernate">
 		<env-var name="XAVA_SEARCH_ACTION" value="StateHibernate.search"/>		
 		<model name="State"/>
@@ -205,14 +205,7 @@
 		<model name="Invoice"/>
 		<view name="Deliveries"/>
 		<controller name="Typical"/>	
-	</module>			<module name="InvoiceNoList" folder="invoicing.variations">		<model name="Invoice"/>		<controller name="Typical"/>			<mode-controller name="Void"/>	</module>
-			
-	<module name="InvoiceCustomerAsAggregate">
-		<model name="Invoice"/>
-		<view name="CustomerAsAggregateWithDeliveryPlaces"/>
-		<controller name="Typical"/>			
-	</module>
-				<module name="CurrentInvoices" folder="invoicing.variations">		<model name="Invoice"  />		<tab name="Current" />		<controller name="Typical"/>			</module>		<module name="CurrentInvoicesSelect" folder="invoicing.variations">		<model name="Invoice"  />		<tab name="CurrentSelect" />		<controller name="Typical"/>			</module>		<module name="Invoice2002" folder="invoicing.variations">		<model name="Invoice"  />		<tab name="DefaultYear" />		<controller name="Typical"/>				<controller name="Invoice2002"/>			</module>
+	</module>			<module name="InvoiceNoList" folder="invoicing.variations">		<model name="Invoice"/>		<controller name="Typical"/>			<mode-controller name="Void"/>	</module>			<module name="CurrentInvoices" folder="invoicing.variations">		<model name="Invoice"  />		<tab name="Current" />		<controller name="Typical"/>			</module>		<module name="CurrentInvoicesSelect" folder="invoicing.variations">		<model name="Invoice"  />		<tab name="CurrentSelect" />		<controller name="Typical"/>			</module>		<module name="Invoice2002" folder="invoicing.variations">		<model name="Invoice"  />		<tab name="DefaultYear" />		<controller name="Typical"/>				<controller name="Invoice2002"/>			</module>
 	
 	<module name="Invoice2004" folder="invoicing.variations">
 		<env-var name="XAVATEST_DEFAULT_YEAR" value="2004"/>		

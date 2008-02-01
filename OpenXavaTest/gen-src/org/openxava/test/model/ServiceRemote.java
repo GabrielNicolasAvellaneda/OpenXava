@@ -52,24 +52,6 @@ public interface ServiceRemote
    public int getDetail_typeRef_number(  )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.model.IServiceInvoice getInvoice(  )
-      throws java.rmi.RemoteException;
-
-   public org.openxava.test.model.ServiceInvoiceRemote getInvoiceRemote(  )
-      throws java.rmi.RemoteException;
-
-   public void setInvoice( org.openxava.test.model.IServiceInvoice newInvoice )
-      throws java.rmi.RemoteException;
-
-   public org.openxava.test.model.ServiceInvoiceKey getInvoiceKey(  )
-      throws java.rmi.RemoteException;
-
-   public void setInvoiceKey( org.openxava.test.model.ServiceInvoiceKey key )
-      throws java.rmi.RemoteException;
-
-   public java.lang.String getInvoice_oid(  )
-      throws java.rmi.RemoteException;
-
    public org.openxava.test.model.ServiceData getData(  )
       throws java.rmi.RemoteException;
 

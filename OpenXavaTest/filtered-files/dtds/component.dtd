@@ -188,7 +188,6 @@
  key (true|false) "false"
  hidden (true|false) "false"
  version (true|false) "false"
- search-key (true|false) "false"
 >
 
 <!ELEMENT reference (default-value-calculator?)>
@@ -369,5 +368,3 @@
  referenced-model-property CDATA #REQUIRED 
  cmp-type CDATA #IMPLIED 
 >
-
-<!ELEMENT transient EMPTY>
