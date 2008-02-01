@@ -12,6 +12,7 @@ import javax.xml.parsers.*;
 import org.apache.commons.logging.*;
 import org.openxava.component.*;
 import org.openxava.hibernate.*;
+import org.openxava.jpa.*;
 import org.w3c.dom.*;
 
 /**
@@ -21,73 +22,95 @@ import org.w3c.dom.*;
  */
 public class DataSourceConnectionProvider implements IConnectionProvider, Serializable {
 	
+	private final static String DEFAULT_JPA_PERSISTENCE_UNIT="__DEFAULT__"; 
 	private static Log log = LogFactory.getLog(DataSourceConnectionProvider.class);
-	
+		
 	private static Properties datasourcesJNDIByPackage;
 	private static Map providers;
-	private static boolean useHibernateConnection = false; 
-
-	
+	private static boolean useHibernateConnection = false;
+	private static Map jpaDataSources; 
+		
 	private DataSource dataSource;
 	private String dataSourceJNDI;	
 	private String user;
 	private String password;
-	
-	
-
-	
+		
 	public static IConnectionProvider createByComponent(String componentName) throws XavaException {
 		MetaComponent component =MetaComponent.get(componentName); 				
 		String jndi = null;		
 		if (component.getMetaEntity().isAnnotatedEJB3()) {			
 			jndi = getJPADataSource();			
+			if (Is.emptyString(jndi) && !isUseHibernateConnection()) {  
+				throw new XavaException("no_jpa_data_source_for_entity", componentName);  
+			}
 		}
 		else {
 			String packageName = component.getPackageNameWithSlashWithoutModel();
-			jndi = getDatasourcesJNDIByPackage().getProperty(packageName);			
-		}		
-		if (Is.emptyString(jndi)) {
-			throw new XavaException("no_data_source_for_component", componentName);
+			jndi = getDatasourcesJNDIByPackage().getProperty(packageName);
+			if (Is.emptyString(jndi)) {
+				throw new XavaException("no_data_source_for_component", componentName); 
+			}
 		}
 		DataSourceConnectionProvider provider = new DataSourceConnectionProvider();		
 		provider.setDataSourceJNDI(jndi);
 		return provider;
 	}
-	
+		
 	/**
 	 * Extract the JNDI of data source from JPA persistence.xml file.
+	 * 
+	 * It can be a empty string because it's possible to have a jpa unit without datasource
+	 * for example with direct access to data with JDBC, or so.
 	 */
 	private static String getJPADataSource() { 
+		if (jpaDataSources == null) {
+			loadJPADataSources();
+		}
+		String result = (String) jpaDataSources.get(XPersistence.getPersistenceUnit());
+		if (result != null) return result;
+		return (String) jpaDataSources.get(DEFAULT_JPA_PERSISTENCE_UNIT);
+	}
+	
+	private static String getDataSourceFromElement(Element element) { 
+		String dataSource = getNodeValue(element, "non-jta-data-source");
+		if (!Is.emptyString(dataSource)) return dataSource;
+		return getNodeValue(element, "jta-data-source");
+	}
+
+	private static String getNodeValue(Element element, String tagName) {
+		NodeList nodes = element.getElementsByTagName(tagName);
+		int length = nodes.getLength();
+		for (int i=0; i < length; i++) {
+			String datasource = nodes.item(i).getFirstChild().getNodeValue();
+			if (datasource != null) { 
+				return datasource;
+			}
+		}
+		return "";
+	}	
+
+	private static void loadJPADataSources() {
+		jpaDataSources = new HashMap();
 		try {
-			URL url = DataSourceConnectionProvider.class.getClassLoader().getResource("META-INF/persistence.xml");			
-			if (url == null) { 
-				log.warn(XavaResources.getString("persistence_xml_not_found"));
-				return null;
-			}
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			URL url = XPersistence.class.getClassLoader().getResource("META-INF/persistence.xml");
 			Document doc = builder.parse(url.toExternalForm());
-			NodeList nodes = doc.getElementsByTagName("non-jta-data-source");
-			int length = nodes.getLength();
-			for (int i=0; i < length; i++) {
-				String datasource = nodes.item(i).getFirstChild().getNodeValue();
-				if (!Is.emptyString(datasource)) {
-					return datasource;
+			NodeList units = doc.getElementsByTagName("persistence-unit");
+			int unitsCount = units.getLength();
+			for (int iUnits=0; iUnits<unitsCount; iUnits++) {
+				Element unit = (Element) units.item(iUnits);
+				String unitName = unit.getAttribute("name");
+				String dataSource = getDataSourceFromElement(unit);
+				if (jpaDataSources.isEmpty()) { // first time
+					jpaDataSources.put(DEFAULT_JPA_PERSISTENCE_UNIT, dataSource); // The first is the default one
 				}
-			}
-			nodes = doc.getElementsByTagName("jta-data-source");
-			length = nodes.getLength();
-			for (int i=0; i < length; i++) {
-				String datasource = nodes.item(i).getFirstChild().getNodeValue();
-				if (!Is.emptyString(datasource)) {
-					return datasource;
-				}
+				jpaDataSources.put(unitName, dataSource);
 			}			
-			return null;
 		}
 		catch (Exception ex) {
-			log.error(ex.getMessage(), ex);
-			return null;
-		}
+			jpaDataSources = null;
+			log.error(ex.getMessage(), ex); 
+		}		
 	}
 
 	public static IConnectionProvider getByComponent(String componentName) throws XavaException {
