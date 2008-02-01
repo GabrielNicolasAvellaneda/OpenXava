@@ -18,7 +18,6 @@ public class ServiceData
    private java.lang.Integer _Detail_free;
    private java.lang.Integer _Detail_subfamily;
    private java.lang.Integer _Detail_type;
-   private java.lang.String _Invoice_oid;
 
    public ServiceData()
    {
@@ -32,7 +31,6 @@ public class ServiceData
       set_Detail_free(otherData.get_Detail_free());
       set_Detail_subfamily(otherData.get_Detail_subfamily());
       set_Detail_type(otherData.get_Detail_type());
-      set_Invoice_oid(otherData.get_Invoice_oid());
 
    }
 
@@ -95,20 +93,11 @@ public class ServiceData
       this._Detail_type = _Detail_type;
    }
 
-   public java.lang.String get_Invoice_oid()
-   {
-      return this._Invoice_oid;
-   }
-   public void set_Invoice_oid( java.lang.String _Invoice_oid )
-   {
-      this._Invoice_oid = _Invoice_oid;
-   }
-
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Family=" + get_Family() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "_Detail_free=" + get_Detail_free() + " " + "_Detail_subfamily=" + get_Detail_subfamily() + " " + "_Detail_type=" + get_Detail_type() + " " + "_Invoice_oid=" + get_Invoice_oid());
+      str.append("_Family=" + get_Family() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "_Detail_free=" + get_Detail_free() + " " + "_Detail_subfamily=" + get_Detail_subfamily() + " " + "_Detail_type=" + get_Detail_type());
       str.append('}');
 
       return(str.toString());
@@ -162,14 +151,6 @@ public class ServiceData
          {
             lEquals = lEquals && this._Detail_type.equals( lTest._Detail_type );
          }
-         if( this._Invoice_oid == null )
-         {
-            lEquals = lEquals && ( lTest._Invoice_oid == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._Invoice_oid.equals( lTest._Invoice_oid );
-         }
 
          return lEquals;
       }
@@ -194,8 +175,6 @@ public class ServiceData
       result = 37*result + ((this._Detail_subfamily != null) ? this._Detail_subfamily.hashCode() : 0);
 
       result = 37*result + ((this._Detail_type != null) ? this._Detail_type.hashCode() : 0);
-
-      result = 37*result + ((this._Invoice_oid != null) ? this._Invoice_oid.hashCode() : 0);
 
       return result;
    }

@@ -3,7 +3,6 @@
 	<session-factory>		<property name="hibernate.connection.datasource">java:comp/env/jdbc/OpenXavaTestDS</property>		<property name="hibernate.dialect">org.hibernate.dialect.HSQLDialect</property>
 		<property name="hibernate.jdbc.use_get_generated_keys">false</property>		
 		<property name="hibernate.show_sql">false</property>
-		<property name="hibernate.default_schema">XAVATEST</property>
 		
 		
 		

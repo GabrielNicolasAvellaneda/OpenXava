@@ -13,10 +13,7 @@ public class TaskData
 
    private static final long serialVersionUID = 1L;
    private java.lang.String _Summary;
-   private java.lang.String _UserFamilyName;
-   private java.lang.String _UserGivenName;
    private java.lang.String oid;
-   private java.lang.String _UserEMail;
    private java.sql.Date _Date;
    private java.lang.String _User;
    private java.lang.String _Comments;
@@ -28,10 +25,7 @@ public class TaskData
    public TaskData( TaskData otherData )
    {
       set_Summary(otherData.get_Summary());
-      set_UserFamilyName(otherData.get_UserFamilyName());
-      set_UserGivenName(otherData.get_UserGivenName());
       setOid(otherData.getOid());
-      set_UserEMail(otherData.get_UserEMail());
       set_Date(otherData.get_Date());
       set_User(otherData.get_User());
       set_Comments(otherData.get_Comments());
@@ -52,24 +46,6 @@ public class TaskData
       this._Summary = _Summary;
    }
 
-   public java.lang.String get_UserFamilyName()
-   {
-      return this._UserFamilyName;
-   }
-   public void set_UserFamilyName( java.lang.String _UserFamilyName )
-   {
-      this._UserFamilyName = _UserFamilyName;
-   }
-
-   public java.lang.String get_UserGivenName()
-   {
-      return this._UserGivenName;
-   }
-   public void set_UserGivenName( java.lang.String _UserGivenName )
-   {
-      this._UserGivenName = _UserGivenName;
-   }
-
    public java.lang.String getOid()
    {
       return this.oid;
@@ -77,15 +53,6 @@ public class TaskData
    public void setOid( java.lang.String oid )
    {
       this.oid = oid;
-   }
-
-   public java.lang.String get_UserEMail()
-   {
-      return this._UserEMail;
-   }
-   public void set_UserEMail( java.lang.String _UserEMail )
-   {
-      this._UserEMail = _UserEMail;
    }
 
    public java.sql.Date get_Date()
@@ -119,7 +86,7 @@ public class TaskData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Summary=" + get_Summary() + " " + "_UserFamilyName=" + get_UserFamilyName() + " " + "_UserGivenName=" + get_UserGivenName() + " " + "oid=" + getOid() + " " + "_UserEMail=" + get_UserEMail() + " " + "_Date=" + get_Date() + " " + "_User=" + get_User() + " " + "_Comments=" + get_Comments());
+      str.append("_Summary=" + get_Summary() + " " + "oid=" + getOid() + " " + "_Date=" + get_Date() + " " + "_User=" + get_User() + " " + "_Comments=" + get_Comments());
       str.append('}');
 
       return(str.toString());
@@ -140,22 +107,6 @@ public class TaskData
          {
             lEquals = lEquals && this._Summary.equals( lTest._Summary );
          }
-         if( this._UserFamilyName == null )
-         {
-            lEquals = lEquals && ( lTest._UserFamilyName == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._UserFamilyName.equals( lTest._UserFamilyName );
-         }
-         if( this._UserGivenName == null )
-         {
-            lEquals = lEquals && ( lTest._UserGivenName == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._UserGivenName.equals( lTest._UserGivenName );
-         }
          if( this.oid == null )
          {
             lEquals = lEquals && ( lTest.oid == null );
@@ -163,14 +114,6 @@ public class TaskData
          else
          {
             lEquals = lEquals && this.oid.equals( lTest.oid );
-         }
-         if( this._UserEMail == null )
-         {
-            lEquals = lEquals && ( lTest._UserEMail == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._UserEMail.equals( lTest._UserEMail );
          }
          if( this._Date == null )
          {
@@ -211,13 +154,7 @@ public class TaskData
 
       result = 37*result + ((this._Summary != null) ? this._Summary.hashCode() : 0);
 
-      result = 37*result + ((this._UserFamilyName != null) ? this._UserFamilyName.hashCode() : 0);
-
-      result = 37*result + ((this._UserGivenName != null) ? this._UserGivenName.hashCode() : 0);
-
       result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
-
-      result = 37*result + ((this._UserEMail != null) ? this._UserEMail.hashCode() : 0);
 
       result = 37*result + ((this._Date != null) ? this._Date.hashCode() : 0);
 
