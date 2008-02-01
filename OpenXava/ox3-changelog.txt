@@ -1,6 +1,7 @@
 Change Log for OpenXava 3
 =========================
 
+- DataSourceConnectionProvider.getJPADataSource() returns the datasource linked to the current persistenceUnit (set in XPersistence).
 - JPA @EmbeddedId annotation supported.
 - JPA inheritance support.
 - Fix: 'Create' and 'Modify' link for references which key is inside a group was not shown.
