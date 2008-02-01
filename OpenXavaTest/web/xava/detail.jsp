@@ -106,7 +106,6 @@ while (it.hasNext()) {
 		<%=style.getFrameContentStartDecoration() %>						
 	<%			} // withFrame
 		%>	
-		<%-- last parm --%>
 		<jsp:include page="detail.jsp"> 
 			<jsp:param name="viewObject" value="<%=viewName%>" />
 			<jsp:param name="propertyPrefix" value="<%=propertyInReferencePrefix%>" />
