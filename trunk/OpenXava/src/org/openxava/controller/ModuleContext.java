@@ -30,7 +30,7 @@ public class ModuleContext {
 	
 
 	/**
-	 * Return a object asociate to the specified module
+	 * Return a object associated to the specified module
 	 * in 'application' and 'module' of request.
 	 */
 	public Object get(HttpServletRequest request, String objectName) throws XavaException {  
