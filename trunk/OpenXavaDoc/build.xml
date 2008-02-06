@@ -4,7 +4,7 @@
 
 	<property name="xava.version" value="2.2.4"/>
 	<property name="xava.workspace" value=".."/>
-	<property name="xava3.version" value="3.0beta4"/>
+	<property name="xava3.version" value="3.0beta5"/>
 	<property name="xava3.workspace" value="../../workspace2"/>
 	<property name="openxava.dist.dir" value="/home/javi/openxava"/>
 	<property file="../openxava.properties"/>	
@@ -57,18 +57,54 @@
 				<filter token="xava.version" value="${xava3.version}"/>
 	    		<filter token="doc.dir" value="${doc.dir}"/>
 			</filterset> 			         
-		</copy>						
+		</copy>		
+		
+		<antcall target="removeMenuFromReference">
+			<param name="lang" value="en"/>
+			<param name="chapter.1.title" value="Overview"/>			
+		</antcall>
+		
+		<antcall target="removeMenuFromReference">
+			<param name="lang" value="es"/>
+			<param name="chapter.1.title" value="Visi"/>			
+		</antcall>
 		
 		<antcall target="generatePdfGuideForLang">
 			<param name="name" value="reference-guide"/>
 			<param name="lang" value="en"/>
-		</antcall>
+		</antcall>		
 		
 		<antcall target="generatePdfGuideForLang">
 			<param name="name" value="guia-referencia"/>
 			<param name="lang" value="es"/>
 		</antcall>		
 		
+	</target>
+	
+	<target name="removeMenuFromReference">
+		<replace dir="${doc.dir}">
+			<include name="overview_${lang}.html"/>	
+			<include name="my-first-ox-project_${lang}.html"/>
+			<include name="model_${lang}.html"/>			
+			<include name="view_${lang}.html"/>
+			<include name="tab_${lang}.html"/>			
+			<include name="mapping_${lang}.html"/>
+			<include name="controllers_${lang}.html"/>
+			<include name="application_${lang}.html"/>
+			<include name="customizing_${lang}.html"/>
+		  	<replacefilter 
+		    	token='&lt;a class="wiki_link" href="overview_${lang}.html"&gt;1.' 
+		    	value='&lt;div class="reference_menu"&gt;&lt;a class="wiki_link" href="overview_${lang}.html"&gt;1.'>				
+			</replacefilter>
+			<replacefilter 
+			   	token='&lt;strong&gt;1. ${chapter.1.title}' 
+			   	value='&lt;div class="reference_menu"&gt;&lt;strong&gt;1. ${chapter.1.title}'>				
+			</replacefilter>
+			<replacefilter 
+			   	token='&lt;h1 id="toc' 
+			   	value='&lt;/div&gt;&lt;h1 id="toc'>				
+			</replacefilter>						
+		</replace>
 	</target>
 
 	<target name="generatePdfGuideForLang">
@@ -82,6 +118,18 @@
 			<arg value="${doc.dir}/my-first-ox-project_${lang}.html"/> 
 			<arg value="${pdf.style.dir}/blank.html" />
 			<arg value="${doc.dir}/model_${lang}.html"/> 
+			<arg value="${pdf.style.dir}/blank.html" />
+			<arg value="${doc.dir}/view_${lang}.html"/>
+			<arg value="${pdf.style.dir}/blank.html" />
+			<arg value="${doc.dir}/tab_${lang}.html"/>
+			<arg value="${pdf.style.dir}/blank.html" />
+			<arg value="${doc.dir}/mapping_${lang}.html"/>
+			<arg value="${pdf.style.dir}/blank.html" />
+			<arg value="${doc.dir}/controllers_${lang}.html"/>
+			<arg value="${pdf.style.dir}/blank.html" />
+			<arg value="${doc.dir}/application_${lang}.html"/>
+			<arg value="${pdf.style.dir}/blank.html" />
+			<arg value="${doc.dir}/customizing_${lang}.html"/>			
 			<arg value="-o ${pdf.dir}/openxava-${xava3.version}-${name}.pdf"/>
 		</exec>
 	</target>

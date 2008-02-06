@@ -7,6 +7,10 @@
   display: none;
 }
 
+.reference_menu {
+  display: none;
+}
+
 html { 
   margin: 0;
   font: 10pt/1.26 sans-serif;
@@ -187,7 +191,7 @@ div.chapter h1 { string-set: header "Chapter " counter(chapter) ": " content(); 
 
   @bottom-left {
     font: 9pt sans-serif;
-    content: "OpenXava 3.0beta4";
+    content: "OpenXava 3.0beta5";
     text-align: left;
     vertical-align: top;
     padding-top: 2em;
