@@ -44,6 +44,10 @@ public class Align implements java.io.Serializable {
 		return code == ((Align) object).code;	
 	}
 	
+	public int hashCode() {
+		return code;
+	}
+	
 	/**
 	 * Obtain align associated to indicated code. <p>
 	 * 

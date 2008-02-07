@@ -45,10 +45,13 @@ public class Date3Type implements CompositeUserType {
 		switch (property) {
 			case 0:
 				Dates.setYear(date, intValue);
+				break;
 			case 1:	
 				Dates.setMonth(date, intValue);
+				break;
 			case 2:
-				Dates.setYear(date, intValue);				
+				Dates.setYear(date, intValue);
+				break;
 		}
 		throw new HibernateException(XavaResources.getString("date3_type_only_3_properties"));	
 	}

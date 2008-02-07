@@ -14,7 +14,7 @@ public class TimeBaseFormatter implements IFormatter {
 		return time==null?"":time.toString();
 	}
 	
-	public class TimeData {
+	static public class TimeData {
 		private int hours = 0;
 		private int minutes = 0;
 		private int seconds = 0;

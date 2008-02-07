@@ -11,15 +11,15 @@ public class StringBlobConverter implements IConverter {
 	
 	private static Log log = LogFactory.getLog(StringBlobConverter.class);
 	
-	public class StringValue implements java.io.Serializable {
+	static public class StringValue implements java.io.Serializable {
     	
-   	public String data;
+		public String data;
     	
-   	StringValue(String data) {
-   		this.data = data;
-   	}
+		StringValue(String data) {
+			this.data = data;
+		}
     	
-  }
+	}
 	
 	public Object toJava(Object o) throws ConversionException {	    
 		try{

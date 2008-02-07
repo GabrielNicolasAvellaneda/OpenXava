@@ -24,6 +24,8 @@ import org.openxava.util.*;
  */
 public class DescriptionsCalculator implements ICalculator {
 	
+	private static final long serialVersionUID = 3638931156760463239L;
+	
 	private String keyProperty;
 	private String keyProperties;
 	private String descriptionProperty;

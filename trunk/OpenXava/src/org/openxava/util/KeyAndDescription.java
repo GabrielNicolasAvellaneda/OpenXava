@@ -45,6 +45,10 @@ public class KeyAndDescription implements Serializable {
 		KeyAndDescription o = (KeyAndDescription) other;	
 		return Is.equal(this.key, o.key);	
 	}
+		
+	public int hashCode() {
+		return key.hashCode();
+	}
 
 	public String toString() {
 		if (showCode)

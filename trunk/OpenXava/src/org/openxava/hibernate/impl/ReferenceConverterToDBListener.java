@@ -38,7 +38,7 @@ public class ReferenceConverterToDBListener implements PreInsertEventListener, P
 		try {			
 			MetaModel metaModel = model.getMetaModel();
 			ModelMapping mapping = metaModel.getMapping();
-			if (!mapping.hasReferenceConverters());
+			if (!mapping.hasReferenceConverters()) return;
 			Collection referenceMappings =  mapping.getReferenceMappingsWithConverter();
 			Iterator it = referenceMappings.iterator();
 			while (it.hasNext()) {

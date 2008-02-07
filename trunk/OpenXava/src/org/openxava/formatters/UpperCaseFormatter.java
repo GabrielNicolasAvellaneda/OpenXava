@@ -18,7 +18,7 @@ public class UpperCaseFormatter implements IFormatter {
 	}
 	
 	public Object parse(HttpServletRequest request, String string) {
-		return string==null?"":string.toString().toUpperCase();		
+		return string==null?"":string.toUpperCase();		
 	}
 	
 }

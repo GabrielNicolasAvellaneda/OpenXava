@@ -37,7 +37,7 @@ public class ObjectPreparedStatementAdapter implements PreparedStatement {
 	}
 
 	public void setBoolean(int parameterIndex, boolean x) throws SQLException {
-		object = new Boolean(x);
+		object = Boolean.valueOf(x);
 	}
 
 	public void setByte(int parameterIndex, byte x) throws SQLException {

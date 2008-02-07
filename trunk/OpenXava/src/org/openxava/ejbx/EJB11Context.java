@@ -29,6 +29,8 @@ import org.openxava.util.*;
 
 public class EJB11Context implements IEJBContextInit, Serializable {
 
+	private static final long serialVersionUID = -3914100041651579657L;
+
 	private static Log log = LogFactory.getLog(EJB11Context.class);
 	
 	// If changed, change heading doc, getConnection() doc and IEJBContext doc 

@@ -255,6 +255,10 @@ public class MetaFinder implements Serializable {
 		if (!(other instanceof MetaFinder)) return false;
 		return toString().equals(other.toString());
 	}
+		
+	public int hashCode() {	
+		return toString().hashCode();
+	}
 	
 	public String toString() {
 		return "Finder: " + getMetaModel().getName() + "." + getName();

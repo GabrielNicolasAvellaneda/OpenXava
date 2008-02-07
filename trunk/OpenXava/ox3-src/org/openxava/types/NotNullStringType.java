@@ -45,7 +45,7 @@ public class NotNullStringType implements UserType {
 	}
 
 	public Object deepCopy(Object obj) throws HibernateException {		
-		return obj == null?null:new String((String) obj);
+		return obj;
 	}
 
 	public boolean isMutable() {

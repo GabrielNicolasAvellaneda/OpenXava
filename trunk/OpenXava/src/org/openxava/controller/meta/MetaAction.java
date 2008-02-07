@@ -109,6 +109,10 @@ public class MetaAction extends MetaElement {
 		return getName().equals(((MetaAction) action).getName());
 	}
 	
+	public int hashCode() {	
+		return getName().hashCode();
+	}
+	
 	public String getClassName() {
 		return className;
 	}

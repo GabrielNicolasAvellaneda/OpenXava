@@ -234,7 +234,7 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		queryString.append(" o");
 		boolean hasCondition = false;	
 		Collection values = new ArrayList();
-		for (Iterator it=keyValues.entrySet().iterator(); it.hasNext(); it.hasNext()) {
+		for (Iterator it=keyValues.entrySet().iterator(); it.hasNext();) {
 			Map.Entry en = (Map.Entry) it.next();
 			if (includeEmptyValues || !Is.empty(en.getValue())) {
 				if (!hasToIncludePropertyInCondition(metaModel, (String) en.getKey())) continue;
@@ -260,7 +260,7 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		}
 										
 		Object query = createQuery(queryString.toString());	
-		for (Iterator it=values.iterator(); it.hasNext(); it.hasNext()) {
+		for (Iterator it=values.iterator(); it.hasNext();) {
 			Map.Entry en = (Map.Entry) it.next();
 			String name = (String) en.getKey();			
 			Object value = en.getValue();			

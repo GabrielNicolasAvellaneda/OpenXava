@@ -13,9 +13,6 @@ import java.util.*;
  */
 public class Dates {
 	
-	private static DateFormat dateFormat;
-	
-	
 	/**
 	 * With hour to 0.
 	 * If day, month and year are 0 return null.
@@ -169,23 +166,17 @@ public class Dates {
 	}
 	
 	/**
-	 * String with date in short format according current <i>locale</i>.
+	 * String with date in short format according current <i>locale</i>. <p>
+	 * 
+	 * Current locale is from {@link Locales#getCurrent}. <br>
 	 * 
 	 * @param date  If null returns empty string
 	 * @return Not null
 	 */
 	public static String toString(java.util.Date date) {
-		if (date == null) return "";
-		return getDateFormat().format(date);			
+		return DateFormat.getDateInstance(DateFormat.SHORT, Locales.getCurrent()).format(date);			
 	}
 	
-	private static DateFormat getDateFormat() {
-		if (dateFormat == null) {
-			dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
-		}
-		return dateFormat;
-	}
-
 	/**
 	 * Creates a date with day, month and year of original,
 	 * but with current time. <p>

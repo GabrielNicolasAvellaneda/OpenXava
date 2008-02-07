@@ -236,7 +236,7 @@ public class MetaEJB implements Serializable {
 						}
 						else if (value instanceof String) {
 							if (!assignFromValidValues(key, name, f, (String) value)) {
-								String valueType = value == null?"null":value.getClass().getName();
+								String valueType = value.getClass().getName();
 								throw new IllegalArgumentException(XavaResources.getString("assign_type_mismatch", f.getName(), key.getClass(), f.getType(), valueType));																
 							}
 						}
