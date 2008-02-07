@@ -205,7 +205,7 @@ public class MetaConsult extends MetaElement {
 		i = r.indexOf("${");
 		int f = 0;		
 		while (i >= 0) {			
-			f = r.toString().indexOf("}", i+2);
+			f = r.indexOf("}", i+2);
 			if (f < 0) break;
 			String property = r.substring(i+2, f);
 			result.add(property);

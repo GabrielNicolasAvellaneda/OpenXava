@@ -111,7 +111,7 @@ public class CalculatorsListener implements PreInsertEventListener, PreUpdateEve
 	}
 	
 	public static void setOffForCurrentThread() {
-		setOffForCurrentThread.set(new Boolean(true));
+		setOffForCurrentThread.set(Boolean.TRUE);
 	}
 	
 	public static void setOnForCurrentThread() {

@@ -142,8 +142,7 @@ public class Labels {
 					if (".tabs.".equals(plural)) {
 						if (id.indexOf("properties") >= 0) plus="properties".length();
 						if (id.indexOf("title") >= 0) plus= "title".length();					
-					}				
-					int c = idx + plural.length() + viewName.length() + plus;
+					}								
 					return id.substring(0, idx) + id.substring(idx + plural.length() + viewName.length() + plus);
 				}
 			}

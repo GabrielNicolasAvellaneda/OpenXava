@@ -22,6 +22,8 @@ import org.w3c.dom.*;
  */
 public class DataSourceConnectionProvider implements IConnectionProvider, Serializable {
 	
+	private static final long serialVersionUID = 5262771696899604060L;
+	
 	private final static String DEFAULT_JPA_PERSISTENCE_UNIT="__DEFAULT__"; 
 	private static Log log = LogFactory.getLog(DataSourceConnectionProvider.class);
 		
@@ -30,7 +32,7 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 	private static boolean useHibernateConnection = false;
 	private static Map jpaDataSources; 
 		
-	private DataSource dataSource;
+	private transient DataSource dataSource;
 	private String dataSourceJNDI;	
 	private String user;
 	private String password;
@@ -135,13 +137,6 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 		return dataSource;
 	}
 		
-	/**
-	 * DataSource to wrap
-	 */
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
-	
 	/**
 	 * JNDI of DataSource to wrap. <p>
 	 * Only works if datasource == null 

@@ -30,6 +30,8 @@ import org.openxava.util.*;
 
 public class EJBBase implements Serializable {
 	
+  private static final long serialVersionUID = 3388107305521009306L;
+
   private static Log log = LogFactory.getLog(EJBBase.class);
   
   static {
@@ -158,10 +160,10 @@ public class EJBBase implements Serializable {
 				throw new EJBException(XavaResources.getString("var_in_ejb_required", variable, bean));
 			}
 			if (value.trim().equalsIgnoreCase("true")) {
-				result = new Boolean(true);
+				result = Boolean.TRUE;
 			}
 			else if (value.trim().equalsIgnoreCase("false")) {
-				result = new Boolean(false);
+				result = Boolean.FALSE;
 			}
 			else {
 				throw new EJBException(XavaResources.getString("var_in_ejb_invalid_boolean_value", value, variable, bean));			

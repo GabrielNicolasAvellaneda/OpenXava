@@ -26,7 +26,7 @@ public class BooleanSNConverter implements IConverter {
 		if (!(o instanceof String)) {		
 			throw new ConversionException("conversion_java_string_expected");
 		}
-		return new Boolean(stringToBoolean((String) o));
+		return Boolean.valueOf(stringToBoolean((String) o));
 	}
 	
 	

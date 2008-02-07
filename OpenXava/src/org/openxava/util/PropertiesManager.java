@@ -17,6 +17,8 @@ import org.apache.commons.logging.*;
 
 public class PropertiesManager implements java.io.Serializable {
 	
+	private static final long serialVersionUID = 4776763540049892098L;
+
 	private static Log log = LogFactory.getLog(PropertiesManager.class);
 
 	private transient Map propertyDescriptors;
@@ -293,7 +295,7 @@ public class PropertiesManager implements java.io.Serializable {
 			return new Short((short) 0);
 		}
 		else if (type.equals(java.lang.Boolean.TYPE)) {
-			return new Boolean(false);
+			return Boolean.FALSE;
 		}
 		else if (type.equals(java.lang.Double.TYPE)) {
 			return new Double(0);

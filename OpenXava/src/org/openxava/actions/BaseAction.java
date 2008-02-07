@@ -13,7 +13,7 @@ import org.openxava.util.*;
  * @author Javier Paniza
  */
 
-abstract public class BaseAction implements IAction, IRequestAction, java.io.Serializable {
+abstract public class BaseAction implements IAction, IRequestAction {
 	
 	private Messages errors;
 	private Messages messages;

@@ -24,7 +24,7 @@ public class Messages implements java.io.Serializable {
 	
 	private static Log log = LogFactory.getLog(Messages.class);
 	
-	class Message implements java.io.Serializable {
+	static class Message implements java.io.Serializable {
 		private String id;
 		private Object [] argv;
 		
@@ -46,8 +46,13 @@ public class Messages implements java.io.Serializable {
 		}
 		
 		public boolean equals(Object other) {
+			if (!(other instanceof Message)) return false;
 			Message m = (Message) other;
 			return id.equals(m.id);
+		}
+				
+		public int hashCode() {			
+			return id.hashCode();
 		}
 		
 		public String toString(Locale locale) {

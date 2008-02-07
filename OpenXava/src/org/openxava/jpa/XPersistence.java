@@ -129,7 +129,6 @@ public class XPersistence {
 		Object o = currentManager.get();		
 		if (o == null) return;
 		EntityManager m = (EntityManager) o;
-		if (m == null) return;
 		if (m.isOpen()) {			
 			EntityTransaction t = (EntityTransaction) m.getTransaction();
 			try {

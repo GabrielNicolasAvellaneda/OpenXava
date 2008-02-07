@@ -11,11 +11,13 @@ import org.openxava.validators.*;
  */
 public class MetaValidator extends MetaSetsContainer {
 	
+	private static final long serialVersionUID = 5227442365317413802L;
+
 	private static Log log = LogFactory.getLog(MetaValidator.class);
 	
-	private IRemoveValidator removeValidator;
-	private IPropertyValidator propertyValidator;
-	private IValidator validator;
+	private transient IRemoveValidator removeValidator;
+	private transient IPropertyValidator propertyValidator;
+	private transient IValidator validator;
 	private java.lang.String name;
 	private boolean onlyOnCreate;	
 	private java.lang.String className;

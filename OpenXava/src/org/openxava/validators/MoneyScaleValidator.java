@@ -11,7 +11,7 @@ import org.openxava.util.*;
 
 public class MoneyScaleValidator implements IPropertyValidator {
 	
-	final private int MAX_SCALE = 2;
+	static final private int MAX_SCALE = 2;
 
 	public void validate(Messages errors, Object value, String propertyName, String modelName) throws Exception {
 		if (value == null) return; // The validity of a null as number is not the business of this validator

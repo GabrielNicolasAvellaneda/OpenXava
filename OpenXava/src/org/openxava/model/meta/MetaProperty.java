@@ -983,7 +983,6 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			}			
 			Class enumClass = getEnumClass(); 
 			if (enumClass != null && enumClass.isAssignableFrom(type)) {
-				if (value == null) return null;
 				return value.toString();
 			}
 			if (IModel.class.isAssignableFrom(type)) { 
@@ -1013,6 +1012,10 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		if (!(o instanceof MetaProperty)) return false;
 		MetaProperty other = (MetaProperty) o;
 		return getQualifiedName().equals(other.getQualifiedName());
+	}
+		
+	public int hashCode() {		
+		return getQualifiedName().hashCode();
 	}
 	
 	public boolean isTransient() {

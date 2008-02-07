@@ -401,8 +401,8 @@ public class Strings {
 	  	}
 	  	
 	  	if (type.equals(Boolean.TYPE) || type.equals(Boolean.class)) {	  			  		
-		  	if (Is.emptyString(string)) return new Boolean(false);
-		  	return new Boolean(string.trim());	  				  				  		
+		  	if (Is.emptyString(string)) return Boolean.FALSE;
+		  	return Boolean.valueOf(string.trim());	  				  				  		
 	  	}
         
         if (type.equals(Object.class)) {

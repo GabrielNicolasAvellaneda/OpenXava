@@ -28,6 +28,8 @@ import org.openxava.util.*;
  */
 public class EntityTab implements IEntityTabImpl, java.io.Serializable {
 	
+	private static final long serialVersionUID = -3967727741162794493L;
+	
 	private static Log log = LogFactory.getLog(EntityTab.class);
 	private static final int DEFAULT_CHUNK_SIZE = 50;
 	

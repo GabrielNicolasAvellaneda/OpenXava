@@ -9,7 +9,7 @@ import org.openxava.view.*;
 
 public class ReferenceBaseAction extends ViewBaseAction {
 	
-	protected class ViewInfo {
+	static protected class ViewInfo {
 		
 		private View view;		
 		private String memberName;

@@ -406,7 +406,7 @@ abstract public class MetaModel extends MetaElement {
 	 */	
 	public MetaReference getMetaReference(String name) throws ElementNotFoundException, XavaException {
 		if (name == null) {
-			throw new ElementNotFoundException("reference_not_found", name, getName());
+			throw new ElementNotFoundException("reference_not_found", "null", getName());
 		}
 		MetaReference r = (MetaReference) getMapMetaReferences().get(name);
 		if (r == null) {

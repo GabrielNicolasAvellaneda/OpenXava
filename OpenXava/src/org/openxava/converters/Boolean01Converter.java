@@ -27,7 +27,7 @@ public class Boolean01Converter implements IConverter {
 		if (!(o instanceof Number)) {		
 			throw new ConversionException("conversion_java_number_expected");
 		}
-		return new Boolean(intToBoolean(((Number) o).intValue()));
+		return Boolean.valueOf(intToBoolean(((Number) o).intValue()));
 	}
 	
 	
