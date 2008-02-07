@@ -251,5 +251,5 @@ public class XavaPreferences {
 	public boolean isShowFilterByDefaultInCollections() {  
 		return "true".equalsIgnoreCase(getProperties().getProperty("showFilterByDefaultInCollections", "true" ).trim()); 
 	}	
-		
+
 }

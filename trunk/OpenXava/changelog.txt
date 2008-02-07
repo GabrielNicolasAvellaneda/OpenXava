@@ -1,7 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
-- New utility class Emails to facilite the use of JavaMail.
+- Fix: Fails on create hibernate session on JDK1.4 of AS/400.
+- CRUD.new action now restore by default the model of the view to the current module model.
+- Fix: 'Create' and 'Modify' link for references which key is inside a group was not shown.
+- New utility class Emails to facilitate the use of JavaMail.
 - Fix: On Java 6 the on change event in keys with composite keys was not always the last one.
 - Hibernate updated to 3.2.5.
 - When an action throws an exception all messages (not errors) added by the action are not shown.
