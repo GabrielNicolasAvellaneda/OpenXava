@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Code tuning after FindBugs revision.
+- Dates.toString() methods uses the current locale from Locales.getCurrent.
+- Unused classes ChangeLenguageAction and GoFirstAction removed.
 - Fix: Fails on create hibernate session on JDK1.4 of AS/400.
 - CRUD.new action now restore by default the model of the view to the current module model.
 - Fix: 'Create' and 'Modify' link for references which key is inside a group was not shown.
