@@ -144,9 +144,19 @@ public class PropertyMapping extends MetaSetsContainer {
 		
 	public String getCmpTypeName() throws XavaException {
 		if (Is.emptyString(cmpTypeName)) cmpTypeName = getMetaProperty().getTypeName();
+		
 		if ("String".equals(cmpTypeName)) return "java.lang.String";
 		if ("Integer".equals(cmpTypeName)) return "java.lang.Integer";
-		if ("Long".equals(cmpTypeName)) return "java.lang.Long";		
+		if ("Long".equals(cmpTypeName)) return "java.lang.Long";
+		if ("BigDecimal".equals(cmpTypeName)) return "java.math.BigDecimal";
+		if ("Boolean".equals(cmpTypeName)) return "java.lang.Boolean";
+		if ("Byte".equals(cmpTypeName)) return "java.lang.Byte";
+		if ("Short".equals(cmpTypeName)) return "java.lang.Short";
+		if ("Character".equals(cmpTypeName)) return "java.lang.Character";
+		if ("Double".equals(cmpTypeName)) return "java.lang.Double";
+		if ("Float".equals(cmpTypeName)) return "java.lang.Float";
+		if ("BigInteger".equals(cmpTypeName)) return "java.math.BigInteger";
+
 		return cmpTypeName;
 	}
 	
