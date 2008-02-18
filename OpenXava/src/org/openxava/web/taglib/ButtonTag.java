@@ -62,8 +62,8 @@ public class ButtonTag extends TagSupport implements IActionTag{
 				pageContext.getOut().print(getArgv());
 				pageContext.getOut().print('"');
 			}
-			pageContext.getOut().println(")' value='");
-			pageContext.getOut().println(metaAction.getLabel(request));
+			pageContext.getOut().print(")' value='");
+			pageContext.getOut().print(metaAction.getLabel(request));
 			pageContext.getOut().println("'/>");
 		}
 		catch (Exception ex) {

@@ -85,7 +85,8 @@ public class ModuleManager {
 	 * @return
 	 */
 	public String getFormAction(ServletRequest request) {		
-		Object portletActionURL = request.getAttribute("xava.portlet.actionURL");		
+		Object portletActionURL = request.getAttribute(
+			isFormUpload()?"xava.portlet.uploadActionURL":"xava.portlet.actionURL"); 		
 		return portletActionURL == null?"":"action='" + portletActionURL + "'";
 	}
 
