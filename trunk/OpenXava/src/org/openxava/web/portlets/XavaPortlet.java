@@ -79,7 +79,8 @@ public class XavaPortlet extends GenericPortlet {
 		request.setAttribute("style", style);
 		
 		request.setAttribute("xava.portlet.renderURL", response.createRenderURL());
-		request.setAttribute("xava.portlet.actionURL", response.createActionURL());
+		request.setAttribute("xava.portlet.actionURL", createActionURL(request, response)); 
+		request.setAttribute("xava.portlet.uploadActionURL", response.createActionURL()); 
 		request.setAttribute("xava.upload.fileitems", request.getPortletSession().getAttribute("xava.upload.fileitems")); 
 		request.setAttribute("xava.upload.error", request.getPortletSession().getAttribute("xava.upload.error"));
 		request.getPortletSession().removeAttribute("xava.upload.fileitems");
@@ -108,17 +109,36 @@ public class XavaPortlet extends GenericPortlet {
 				
 		PortletContext context = getPortletContext();
 		PortletRequestDispatcher rd = context.getRequestDispatcher(moduleURL);		
-		rd.include(request, response);		
+		rd.include(request, response);				
 	}
 	
+	private Object createActionURL(RenderRequest request, RenderResponse response) {
+		// WebSphere Portal and Liferay work fine with actionURL
+		// JetSpeed/2.0 works with actionURL but it fails on navigate at some point
+		// 		using Internet Explorer, because state is holded in url, and IE does
+		// 		not admit long URLs. Therefore we use renderURL instead.
+		// Jetspeed/2.1.2 fails with IE as Jetspeed/2.0, but it does not support renderURL.
+		//		That is in Jetspeed/2.1.2 you need to use Firefox. (Or improve OX)
+		return isJetspeed20(request)?response.createRenderURL():response.createActionURL();				
+	}
+
+	private boolean isJetspeed20(PortletRequest request) {
+		return request.getPortalContext().getPortalInfo().indexOf("Jetspeed/2.0") >= 0;
+	}
+
 	public void processAction(ActionRequest request, ActionResponse response) throws PortletException {		
 		propagateParameters(request, response);
 		
 		PortletMode mode = request.getPortletMode();
 		if (mode.equals(PortletMode.EDIT)) {
 			response.setPortletMode(PortletMode.VIEW);
-		}
+		}		
 		
+		processMultipartForm(request);
+		
+	}
+
+	private void processMultipartForm(ActionRequest request) {
 		String contentType = request.getContentType();		
 		if (contentType != null && contentType.indexOf("multipart/form-data") >= 0) {				
 			try {
@@ -134,18 +154,18 @@ public class XavaPortlet extends GenericPortlet {
 				request.getPortletSession().removeAttribute("xava.upload.fileitems");
 				request.getPortletSession().setAttribute("xava.upload.error", "upload_error");				
 			}				
-		}				
+		}
 	} 	
 		
 	private void propagateParameters(ActionRequest request, ActionResponse response) {
-		// This is need as indicated in section 11.1.1 of JSR-168
+		// This is needed as indicated in section 11.1.1 of JSR-168
 		 for (Enumeration en = request.getParameterNames(); en.hasMoreElements();) {
 			 String name = (String) en.nextElement();
 			 String [] values = request.getParameterValues(name);			 
 			 for (int i=0; i<values.length; i++) {
 				 if ("".equals(values[i])) values[i] = " "; // Jetspeed 2.1.2 does not like empty string
-			 }
-			 response.setRenderParameter(name, values);
+			 }			 
+			 response.setRenderParameter(name, values);			 
 		 }
 	}
 
