@@ -779,7 +779,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	 * 
 	 * @return Can be null 
 	 */
-	public Object parse(String value, Locale locale) throws ParseException, XavaException {		
+	public Object parse(String value, Locale locale) throws ParseException, XavaException { 		
 		if (value == null) return null;		
 		boolean emptyString = Is.emptyString(value);
 		Class type = getType();
@@ -945,7 +945,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	 * 
 	 * @return Can be null. 	 	 
 	 */
-	public String format(Object value, Locale locale) throws XavaException {
+	public String format(Object value, Locale locale) throws XavaException { 
 		if (value == null) return "";				
 		Class type = getType();
 		if (String.class.isAssignableFrom(type)) return (String) value;
@@ -955,7 +955,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 			}
 			if (BigDecimal.class.isAssignableFrom(type)) {
 				NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
-				numberFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
+				numberFormat.setMaximumFractionDigits(Integer.MAX_VALUE);				
 				return numberFormat.format(value);				
 			}
 			if (java.sql.Time.class.isAssignableFrom(type)) { 
