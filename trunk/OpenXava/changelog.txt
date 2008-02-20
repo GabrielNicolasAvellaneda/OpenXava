@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Text field editor for numeric data uses JavaScript to prevent the user from entering non-numeric characters.
+- Text field editor for numeric data take into decimal point, thousands separator and sign for calculate size.
 - Fix: Navigation is broken sometimes on Jetspeed 2.0 with Internet Explorer.
 - Fix: Buttons too big in IE.
 - Fix: Focus is not set after a request with IE7 and Liferay 4.1.

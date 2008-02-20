@@ -33,5 +33,4 @@ public class MoneyFormatter implements IFormatter {
 		return f;
 	}
 
-
 }
