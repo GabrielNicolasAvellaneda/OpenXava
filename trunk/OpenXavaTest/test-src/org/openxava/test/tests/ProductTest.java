@@ -217,7 +217,7 @@ public class ProductTest extends ModuleTestBase {
 		
 		// Change value
 		setValue("unitPrice", "100");
-		assertValue("unitPriceInPesetas", "16,639");
+		assertValue("unitPriceInPesetas", "16,639");		
 	}
 	
 	public void testCalculatedDefaultValueDependent() throws Exception {
