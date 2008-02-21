@@ -260,7 +260,7 @@
 	</view>		
 	
 	<view name="Simplest" members="number; name"/>
-  	 	
+  	 	  	
 	<view name="Simple">
 		<members>
 			number; 
@@ -269,7 +269,7 @@
 			address;
 		</members>
 	</view>
-					
+	
 	<view name="SimpleWithDeliveryPlaces" members="number; type; name; address; deliveryPlaces"/>
 	
 	<view name="SimpleStateAsForm" members="number; type; name; address">

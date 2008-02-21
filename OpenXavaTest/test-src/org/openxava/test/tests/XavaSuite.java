@@ -7,6 +7,21 @@ import org.openxava.util.*;
 import junit.framework.*;
 
 /**
+ * This suite test for bugs and features of OpenXava.
+ * 
+ * This suite does not include pretty layout. Therefore,
+ * when you touch layout logic you have to test visually
+ * at least the next cases:
+ * - DeliveryFullInvoice:
+ * 		With <reference-view reference="invoice" frame="true"/>
+ * 		and  <reference-view reference="invoice" frame="false"/>
+ * 		in FullInvoice view of Delivery   
+ * 		The problem may be in layout of bottom element (outside invoice reference)
+ * - Customer: seller with relationWithSeller group
+ * - Invoice: Inside Liferay, buttons inside portlets
+ * - A section with only a property (enmarcable and not enmarcable) inside Liferay
+ * 		with more portlets below. The frame of the OX porltet mustn't wrap all other portlets.
+ * 
  * @author Javier Paniza
  */
 public class XavaSuite extends TestSuite {
