@@ -8,7 +8,7 @@ import javax.ejb.ObjectNotFoundException;
 
 import org.apache.commons.logging.*;
 import org.openxava.model.MapFacade;
-import org.openxava.util.Maps;
+import org.openxava.util.*;
 
 /**
  * Search using as key the data displayed in the view. <p>
@@ -46,17 +46,19 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 				values = MapFacade.getValues(getModelName(), keys, getMemberNames());
 			}
 			
-			try {
-				// For inheritance support
-				// A new find is not so slow, possibly because of persistence engine cache
-				Object entity = MapFacade.findEntity(getModelName(), values); 
-				String modelName = entity.getClass().getSimpleName();
-				if (!modelName.equals(getModelName())) {
-					getView().setModelName(modelName);				
-					values = MapFacade.getValues(modelName, entity, getMemberNames());								
+			if (XSystem.isJava5OrBetter()) {
+				try {
+					// For inheritance support
+					// A new find is not so slow, possibly because of persistence engine cache
+					Object entity = MapFacade.findEntity(getModelName(), values); 
+					String modelName = getSimpleName(entity.getClass());
+					if (!modelName.equals(getModelName())) {
+						getView().setModelName(modelName);				
+						values = MapFacade.getValues(modelName, entity, getMemberNames());								
+					}
 				}
-			}
-			catch (ObjectNotFoundException ex) { // For some special case, as null reference keys				
+				catch (ObjectNotFoundException ex) { // For some special case, as null reference keys				
+				}
 			}
 						
 			getView().setEditable(true);	
@@ -73,6 +75,11 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 		}						
 	}
 	
+	private String getSimpleName(Class theClass) throws Exception {
+		// In this way in order to be compiled with Java 1.4
+		return (String) Objects.execute((Object) theClass, "getSimpleName");		
+	}
+
 	/**
 	 * Executed after searching is done, in order to assign the searched
 	 * values to the view. <p>

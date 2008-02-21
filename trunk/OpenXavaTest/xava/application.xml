@@ -74,6 +74,12 @@
 		<model name="Delivery"/>
 		<tab name="Remarks2002"/>		
 		<controller name="Typical"/>
+	</module>
+	
+	<module name="DeliveryFullInvoice" folder="invoicing.variations">
+		<model name="Delivery"/>
+		<view name="FullInvoice"/>		
+		<controller name="Typical"/>
 	</module>	
 	
 	<module name="TransportChargeWithDistance" folder="invoicing.variations">
