@@ -21,7 +21,17 @@ if (!org.openxava.util.Is.emptyString(smaxSize)) {
 else {
 	maxSize = org.openxava.util.XavaPreferences.getInstance().getMaxSizeForTextEditor();
 }
-int size = p.getSize() > maxSize?maxSize:p.getSize(); 
+int size = p.getSize() > maxSize?maxSize:p.getSize();
+int maxLength = p.getSize();
+if (p.isNumber()) {
+	if (p.getScale() > 0) {
+		int sizeIncrement = (size - 1) / 3 + 2; // The points/commas for thousands + point/comma for decimal + minus sign
+		size += sizeIncrement;
+		maxLength += sizeIncrement;
+	}
+	String integer = p.getScale() == 0?"true":"false";
+	script = script + " onkeypress='return validateNumeric(event, " + p.getSize() + ", " + integer + ")' "; 
+}	
 
 boolean fillWithZeros = "true".equals(request.getParameter("fillWithZeros"));
 if (fillWithZeros && fvalue.length() > 0) {	
@@ -34,7 +44,7 @@ if (editable || !label) {
 	type="text" 
 	title="<%=p.getDescription(request)%>"
 	<%=align%>
-	maxlength="<%=p.getSize()%>" 
+	maxlength="<%=maxLength%>" 
 	size="<%=size%>" 
 	value="<%=Strings.change(fvalue, "\"", "&quot;")%>"
 	<%=disabled%>
