@@ -9,21 +9,21 @@
 			size="5" required="true"/>
 		<property name="name" stereotype="NO_FORMATING_STRING"
 			size="40" required="true"/>			  
+		<reference name="drivingLicence"/>
+		<reference name="warehouse"
+			model="Warehouse" required="true"/>
 		<property name="remarks" stereotype="MEMO">
 			<default-value-calculator class="org.openxava.test.calculators.CarrierRemarksCalculator">
 				<set property="drivingLicenceType" from="drivingLicence.type"/>
 			</default-value-calculator>
-		</property>			
+		</property>
 		<property name="calculated" type="String"
 			size="10">			  			
 			<calculator class="org.openxava.calculators.StringCalculator">
 				<set property="string" value="TR"/>
 			</calculator>
 		</property>
-		<reference name="drivingLicence"/>
-		<reference name="warehouse"
-			model="Warehouse" required="true"/>
-			
+														
 		<!-- Others carriers of same warehouse -->	
 		<collection name="fellowCarriers"> 			
 			<reference model="Carrier" />			
@@ -67,6 +67,8 @@
 		<reference-view reference="drivingLicence">
 			<descriptions-list/>
 		</reference-view>
+		
+		<reference-view reference="warehouse" view="KeyInGroup"/>
 		
 		<collection-view collection="fellowCarriers" view="Simple" edit-only="true">
 			<list-action action="Carrier.translateName"/>
