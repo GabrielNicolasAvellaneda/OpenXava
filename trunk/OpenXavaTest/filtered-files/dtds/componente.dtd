@@ -58,7 +58,7 @@
   alineado-por-columnas (true|false) "false"
 >
 
-<!ELEMENT vista-referencia ((accion-buscar?|lista-descripciones?), accion*)>
+<!ELEMENT vista-referencia (((busqueda-al-cambiar?,accion-buscar?)|lista-descripciones?), accion*)>
 <!ATTLIST vista-referencia
   referencia CDATA #REQUIRED
   vista CDATA #IMPLIED
@@ -96,6 +96,10 @@
   clase CDATA #REQUIRED
 >
 
+<!ELEMENT busqueda-al-cambiar EMPTY>
+<!ATTLIST busqueda-al-cambiar
+  clase CDATA #REQUIRED
+>
 
 <!ELEMENT vista-coleccion (mediador?, propiedades-lista?, estilo-fila*, accion-editar?, accion-ver?, accion-nuevo?, accion-grabar?, accion-ocultar-detalle?, accion-quitar?, accion-quitar-seleccionados?, accion-lista*, accion-detalle*)>
 <!ATTLIST vista-coleccion
@@ -108,13 +112,13 @@
   como-agregado (true|false) "true"    
 >
 
-<!ELEMENT propiedades-lista (#PCDATA)>
-
 <!ELEMENT accion-buscar (poner*)>
 <!ATTLIST accion-buscar
   clase CDATA #IMPLIED
   accion CDATA #IMPLIED
 >
+
+<!ELEMENT propiedades-lista (#PCDATA)>
 
 <!ELEMENT accion-editar EMPTY>
 <!ATTLIST accion-editar
@@ -194,6 +198,7 @@
  clave (true|false) "false"
  oculta (true|false) "false"
  version (true|false) "false"
+ clave-busqueda (true|false) "false"
 >
 
 <!ELEMENT referencia (calculador-valor-defecto?)>
@@ -393,3 +398,5 @@
  propiedad-modelo-referenciado CDATA #REQUIRED 
  tipo-cmp CDATA #IMPLIED  
 >
+
+<!ELEMENT transitorio EMPTY>

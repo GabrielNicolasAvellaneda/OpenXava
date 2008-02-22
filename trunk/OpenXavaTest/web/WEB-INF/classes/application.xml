@@ -61,7 +61,7 @@
 	</module>
 	
 						
-	<module name="Delivery" folder="invoicing">		<env-var name="XAVA_SEARCH_ACTION" value="Delivery.search"/>				<model name="Delivery"/>		<controller name="Typical"/>		<controller name="Remarks"/>		<controller name="Delivery"/>			</module>
+	<module name="Delivery" folder="invoicing">		<env-var name="XAVA_SEARCH_ACTION" value="Delivery.search"/>				<model name="Delivery"/>		<controller name="Typical"/>				<controller name="Remarks"/>		<controller name="Delivery"/>			</module>
 	
 	<module name="DeliveryGroupsInSections" folder="invoicing.variations">
 		<env-var name="XAVA_SEARCH_ACTION" value="CRUD.searchExecutingOnChange"/>		
@@ -73,6 +73,12 @@
 	<module name="DeliveryRemarks2002" folder="invoicing.variations">
 		<model name="Delivery"/>
 		<tab name="Remarks2002"/>		
+		<controller name="Typical"/>
+	</module>
+	
+	<module name="DeliveryFullInvoice" folder="invoicing.variations">
+		<model name="Delivery"/>
+		<view name="FullInvoice"/>		
 		<controller name="Typical"/>
 	</module>	
 	

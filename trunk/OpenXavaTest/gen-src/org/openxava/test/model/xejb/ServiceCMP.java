@@ -24,6 +24,7 @@ public abstract class ServiceCMP
          dataHolder.set_Detail_free( get_Detail_free() );
          dataHolder.set_Detail_subfamily( get_Detail_subfamily() );
          dataHolder.set_Detail_type( get_Detail_type() );
+         dataHolder.set_Invoice_oid( get_Invoice_oid() );
 
       }
       catch (RuntimeException e)
@@ -43,6 +44,7 @@ public abstract class ServiceCMP
          set_Detail_free( dataHolder.get_Detail_free() );
          set_Detail_subfamily( dataHolder.get_Detail_subfamily() );
          set_Detail_type( dataHolder.get_Detail_type() );
+         set_Invoice_oid( dataHolder.get_Invoice_oid() );
 
       }
       catch (Exception e)
@@ -101,6 +103,7 @@ public abstract class ServiceCMP
             ServiceValue.setNumber( getNumber() );
             ServiceValue.setDetail( getDetail() );
             ServiceValue.setDetail_typeRef_number( getDetail_typeRef_number() );
+            ServiceValue.setInvoice_oid( getInvoice_oid() );
 
          }
          catch (Exception e)
@@ -120,6 +123,7 @@ public abstract class ServiceCMP
 		 setDescription( valueHolder.getDescription() );
 		 setDetail( valueHolder.getDetail() );
 		 setDetail_typeRef_number( valueHolder.getDetail_typeRef_number() );
+		 setInvoice_oid( valueHolder.getInvoice_oid() );
 
 	  }
 	  catch (Exception e)
@@ -153,5 +157,9 @@ public abstract class ServiceCMP
    public abstract java.lang.Integer get_Detail_type() ;
 
    public abstract void set_Detail_type( java.lang.Integer _Detail_type ) ;
+
+   public abstract java.lang.String get_Invoice_oid() ;
+
+   public abstract void set_Invoice_oid( java.lang.String _Invoice_oid ) ;
 
 }
