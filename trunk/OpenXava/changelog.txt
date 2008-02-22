@@ -1,8 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
-OpenXava 2.2.5 (2007-12-19)
----------------------------
+OpenXava 2.2.5 (2008-2-21)
+--------------------------
 - New <on-change-search /> element for <reference-view/> to overwrite the default action for searching when the user type the key.
 - New before-each-request attribute for <action/> in controllers.xml.
 - Text field editor for numeric data uses JavaScript to prevent the user from entering non-numeric characters.
