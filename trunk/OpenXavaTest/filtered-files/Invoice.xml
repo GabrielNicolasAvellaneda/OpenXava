@@ -162,7 +162,7 @@
 		</members>
 		
 	</view>	
-	      
+	
 	<view>
 	
 		<reference-view reference="customer" view="Simple"/>
@@ -174,7 +174,7 @@
 		</collection-view>
 		
 		<collection-view collection="deliveries" view="InInvoice" read-only="true"/>
- 
+
 		<members>
 			year, number, date, paid;
 			<group name="discounts">
@@ -186,9 +186,9 @@
 			<section name="amounts">amountsSum; vatPercentage; vat</section>
 			<section name="deliveries">deliveries</section>
 		</members>			
-				
-	</view>		
 		
+	</view>
+	
 	<view name="NestedSections">
 		<reference-view reference="customer" view="Simple"/>
 		
@@ -229,16 +229,6 @@
 		</members>
 
 	</view>
-	
-	<view name="CustomerAsAggregateWithDeliveryPlaces">
-		<reference-view reference="customer" 
-			view="SimpleWithDeliveryPlaces" 
-			as-aggregate="true"/>
-		<members>
-			year, number, date, paid;
-			customer
-		</members>	
-	</view>	
 		
 	<view model="InvoiceDetail">
 		<reference-view reference="soldBy">
@@ -263,7 +253,7 @@
 			deliveries
 		</members>						
 	</view>
-	 
+	
 	<view name="Amounts">
 		<members>
 			year, number;
@@ -273,7 +263,7 @@
 			</group>			
 		</members>
 	</view>
-	
+		
 	<tab>
 		<properties>year, number, date, amountsSum, vat, detailsCount, paid, importance</properties>
 	</tab>

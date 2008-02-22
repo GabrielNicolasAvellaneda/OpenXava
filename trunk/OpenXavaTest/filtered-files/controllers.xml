@@ -280,7 +280,6 @@
 			class="org.openxava.actions.NewAction"
 			image="images/new.gif" on-init="true"
 			keystroke="F2">
-			<set property="restoreModel" value="true"/>
 			<use-object name="xava_view"/>			
 		</action>			
 		<action name="getName" mode="detail"
@@ -425,7 +424,7 @@
 	<controller name="Family">
 		<extends controller="Typical"/>		
 		<action name="new" image="images/new.gif"
-			class="org.openxava.test.actions.CreateNewFamilyAction">						
+			class="org.openxava.test.actions.CreateNewFamilyAction">					
 			<use-object name="xava_view"/>			
 		</action>			
 	</controller>
@@ -454,7 +453,6 @@
 			class="org.openxava.actions.NewAction"
 			image="images/new.gif"
 			keystroke="F2">
-			<set property="restoreModel" value="true"/>
 			<use-object name="xava_view"/>			
 		</action>
 			
@@ -492,7 +490,6 @@
 			class="org.openxava.actions.NewAction"
 			image="images/new.gif"
 			keystroke="F2">
-			<set property="restoreModel" value="true"/>
 			<use-object name="xava_view"/>			
 		</action>
 			
@@ -522,7 +519,6 @@
 			class="org.openxava.actions.NewAction"
 			image="images/new.gif"
 			keystroke="F2">
-			<set property="restoreModel" value="true"/>
 			<use-object name="xava_view"/>			
 		</action>
 			

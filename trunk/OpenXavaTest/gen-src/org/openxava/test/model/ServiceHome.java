@@ -21,9 +21,6 @@ public interface ServiceHome
    public org.openxava.test.model.ServiceRemote create(org.openxava.test.model.ServiceValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
-   public java.util.Collection findByInvoice(java.lang.String oid)
-      throws javax.ejb.FinderException,java.rmi.RemoteException;
-
    public org.openxava.test.model.ServiceRemote findByNumber(int number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

@@ -17,6 +17,89 @@
      -->
 
       <entity>
+         <ejb-name>Course</ejb-name>
+
+         <table-name>XAVATEST.COURSE</table-name>
+
+         <cmp-field>
+            <field-name>_Description</field-name>
+            <column-name>DESCRIPTION</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>number</field-name>
+            <column-name>NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>year</field-name>
+            <column-name>YEAR</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByYearNumber</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Course o WHERE o.year = ?1 and o.number = ?2]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Formula</ejb-name>
+
+         <table-name>XAVATEST.FORMULA</table-name>
+
+         <cmp-field>
+            <field-name>_Recipe</field-name>
+            <column-name>RECIPE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>oid</field-name>
+            <column-name>ID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Name</field-name>
+            <column-name>NAME</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByName</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Formula o WHERE o._Name = ?1]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByOid</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Formula o WHERE o.oid = ?1]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
          <ejb-name>Office2</ejb-name>
 
          <table-name>XAVATEST.OFFICE2</table-name>
@@ -198,6 +281,57 @@
       </entity>
 
       <entity>
+         <ejb-name>Subfamily2</ejb-name>
+
+         <table-name>XAVATEST.SUBFAMILY2</table-name>
+
+         <cmp-field>
+            <field-name>_Description</field-name>
+            <column-name>DESCRIPTION</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Remarks</field-name>
+            <column-name>REMARKS</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>number</field-name>
+            <column-name>NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Family_number</field-name>
+            <column-name>FAMILY</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByFamily</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Subfamily2 o WHERE o._Family_number = ?1 ORDER BY o.number]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByNumber</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Subfamily2 o WHERE o.number = ?1]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
          <ejb-name>Invoice2</ejb-name>
 
          <table-name>XAVATEST.INVOICE</table-name>
@@ -247,57 +381,6 @@
                </method-params>
             </query-method>
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Invoice2 o WHERE o.year = ?1 and o.number = ?2]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>Subfamily2</ejb-name>
-
-         <table-name>XAVATEST.SUBFAMILY2</table-name>
-
-         <cmp-field>
-            <field-name>_Description</field-name>
-            <column-name>DESCRIPTION</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Remarks</field-name>
-            <column-name>REMARKS</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>number</field-name>
-            <column-name>NUMBER</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Family_number</field-name>
-            <column-name>FAMILY</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByFamily</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Subfamily2 o WHERE o._Family_number = ?1 ORDER BY o.number]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findByNumber</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Subfamily2 o WHERE o.number = ?1]]></jboss-ql>
 
 	     </query>
 
@@ -430,1339 +513,6 @@
       </entity>
 
       <entity>
-         <ejb-name>Ingredient</ejb-name>
-
-         <table-name>XAVATEST.INGREDIENT</table-name>
-
-         <cmp-field>
-            <field-name>oid</field-name>
-            <column-name>ID</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Name</field-name>
-            <column-name>NAME</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_PartOf_oid</field-name>
-            <column-name>PARTOF</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByPartOf</method-name>
-               <method-params>
-                  <method-param>java.lang.String</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Ingredient o WHERE o._PartOf_oid = ?1 ORDER BY o.oid]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findByOid</method-name>
-               <method-params>
-                  <method-param>java.lang.String</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Ingredient o WHERE o.oid = ?1]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>CustomerState</ejb-name>
-
-         <table-name>XAVATEST.CUSTOMER_STATE</table-name>
-
-         <cmp-field>
-            <field-name>_State_id</field-name>
-            <column-name>STATE</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Customer_number</field-name>
-            <column-name>CUSTOMER</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByState</method-name>
-               <method-params>
-                  <method-param>java.lang.String</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM CustomerState o WHERE o._State_id = ?1 ]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findByCustomer</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM CustomerState o WHERE o._Customer_number = ?1 ]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>AdditionalDetail</ejb-name>
-
-         <table-name>XAVATEST.SERVICEDETAIL</table-name>
-
-         <cmp-field>
-            <field-name>counter</field-name>
-            <column-name>COUNTER</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Subfamily</field-name>
-            <column-name>SUBFAMILY</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Service_number</field-name>
-            <column-name>SERVICE</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Type_number</field-name>
-            <column-name>TYPE</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByService</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM AdditionalDetail o WHERE o._Service_number = ?1 ORDER BY o.counter]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findByType</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM AdditionalDetail o WHERE o._Type_number = ?1 ORDER BY o.counter]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>State</ejb-name>
-
-         <table-name>XAVATEST.STATE</table-name>
-
-         <cmp-field>
-            <field-name>id</field-name>
-            <column-name>ID</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Name</field-name>
-            <column-name>NAME</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findById</method-name>
-               <method-params>
-                  <method-param>java.lang.String</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM State o WHERE o.id = ?1]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>Warehouse</ejb-name>
-
-         <table-name>XAVATEST.WAREHOUSE</table-name>
-
-         <cmp-field>
-            <field-name>_Name</field-name>
-            <column-name>NAME</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Number</field-name>
-            <column-name>NUMBER</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>zoneNumber</field-name>
-            <column-name>ZONE</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByZoneNumberNumber</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-                  <method-param>java.lang.Integer</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Warehouse o WHERE o.zoneNumber = ?1 and o._Number = ?2]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>Family2</ejb-name>
-
-         <table-name>XAVATEST.FAMILY2</table-name>
-
-         <cmp-field>
-            <field-name>_Description</field-name>
-            <column-name>DESCRIPTION</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>number</field-name>
-            <column-name>NUMBER</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByNumber</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Family2 o WHERE o.number = ?1]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>SellerLevel</ejb-name>
-
-         <table-name>XAVATEST.SELLERLEVEL</table-name>
-
-         <cmp-field>
-            <field-name>id</field-name>
-            <column-name>ID</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Description</field-name>
-            <column-name>DESCRIPTION</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findById</method-name>
-               <method-params>
-                  <method-param>java.lang.String</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM SellerLevel o WHERE o.id = ?1]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>Seller</ejb-name>
-
-         <table-name>XAVATEST.SELLER</table-name>
-
-         <cmp-field>
-            <field-name>_Name</field-name>
-            <column-name>NAME</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>number</field-name>
-            <column-name>NUMBER</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Regions</field-name>
-            <column-name>REGIONS</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Level_id</field-name>
-            <column-name>LEVEL</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Boss_number</field-name>
-            <column-name>BOSS</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByLevel</method-name>
-               <method-params>
-                  <method-param>java.lang.String</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE o._Level_id = ?1 ORDER BY o.number]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findByBoss</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE o._Boss_number = ?1 ORDER BY o.number]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findAll</method-name>
-               <method-params>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE 1 = 1]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findByNumber</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE o.number = ?1]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>TransportCharge</ejb-name>
-
-         <table-name>XAVATEST.TRANSPORTCHARGE</table-name>
-
-         <cmp-field>
-            <field-name>_Amount</field-name>
-            <column-name>AMOUNT</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Delivery_number</field-name>
-            <column-name>DELIVERY_NUMBER</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Delivery_invoice_year</field-name>
-            <column-name>DELIVERY_INVOICE_YEAR</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Delivery_invoice_number</field-name>
-            <column-name>DELIVERY_INVOICE_NUMBER</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Delivery_type_number</field-name>
-            <column-name>DELIVERY_TYPE</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByDelivery</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-                  <method-param>int</method-param>
-                  <method-param>int</method-param>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM TransportCharge o WHERE o._Delivery_invoice_year = ?1 AND o._Delivery_invoice_number = ?2 AND o._Delivery_type_number = ?3 AND o._Delivery_number = ?4 ]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findAll</method-name>
-               <method-params>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM TransportCharge o]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>DrivingLicence</ejb-name>
-
-         <table-name>XAVATEST.DRIVINGLICENCE</table-name>
-
-         <cmp-field>
-            <field-name>level</field-name>
-            <column-name>LEVEL</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Description</field-name>
-            <column-name>DESCRIPTION</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>type</field-name>
-            <column-name>TYPE</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByTypeLevel</method-name>
-               <method-params>
-                  <method-param>java.lang.String</method-param>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM DrivingLicence o WHERE o.type = ?1 and o.level = ?2]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>Issue</ejb-name>
-
-         <table-name>ISSUE</table-name>
-
-         <cmp-field>
-            <field-name>id</field-name>
-            <column-name>ID</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Description</field-name>
-            <column-name>DESCRIPTION</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Worker_id</field-name>
-            <column-name>WORKER_ID</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByWorker</method-name>
-               <method-params>
-                  <method-param>java.lang.Integer</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Issue o WHERE o._Worker_id = ?1 ORDER BY o.id]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findById</method-name>
-               <method-params>
-                  <method-param>java.lang.String</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Issue o WHERE o.id = ?1]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>Subfamily</ejb-name>
-
-         <table-name>XAVATEST.SUBFAMILY</table-name>
-
-         <cmp-field>
-            <field-name>_Description</field-name>
-            <column-name>DESCRIPTION</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>oid</field-name>
-            <column-name>OID</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Remarks</field-name>
-            <column-name>REMARKS</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Number</field-name>
-            <column-name>NUMBER</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_FamilyNumber</field-name>
-            <column-name>FAMILY</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByOid</method-name>
-               <method-params>
-                  <method-param>java.lang.String</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Subfamily o WHERE o.oid = ?1]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>DeliveryType</ejb-name>
-
-         <table-name>XAVATEST.DeliveryType</table-name>
-
-         <cmp-field>
-            <field-name>_Description</field-name>
-            <column-name>DESCRIPTION</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>number</field-name>
-            <column-name>number</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByNumber</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryType o WHERE o.number = ?1]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>Receptionist</ejb-name>
-
-         <table-name>XAVATEST.RECEPTIONIST</table-name>
-
-         <cmp-field>
-            <field-name>oid</field-name>
-            <column-name>OID</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Name</field-name>
-            <column-name>NAME</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_DeliveryPlace_oid</field-name>
-            <column-name>DELIVERYPLACE</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByDeliveryPlace</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Receptionist o WHERE o._DeliveryPlace_oid = ?1 ORDER BY o.oid]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findAll</method-name>
-               <method-params>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Receptionist o]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>Product3</ejb-name>
-
-         <table-name>XAVATEST.PRODUCT3</table-name>
-
-         <cmp-field>
-            <field-name>_Description</field-name>
-            <column-name>DESCRIPTION</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>number</field-name>
-            <column-name>NUMBER</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Comments</field-name>
-            <column-name>COMMENTS</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Family_oid</field-name>
-            <column-name>FAMILY</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Subfamily1_family_number</field-name>
-            <column-name>FAMILY1</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Subfamily1_subfamily_number</field-name>
-            <column-name>SUBFAMILY1</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Subfamily2_family_number</field-name>
-            <column-name>FAMILY2</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Subfamily2_subfamily_number</field-name>
-            <column-name>SUBFAMILY2</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByFamily</method-name>
-               <method-params>
-                  <method-param>java.lang.String</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product3 o WHERE o._Family_oid = ?1 ]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findByNumber</method-name>
-               <method-params>
-                  <method-param>long</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product3 o WHERE o.number = ?1]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>Color</ejb-name>
-
-         <table-name>XAVATEST.COLOR</table-name>
-
-         <cmp-field>
-            <field-name>_Name</field-name>
-            <column-name>NAME</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>number</field-name>
-            <column-name>NUMBER</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Version</field-name>
-            <column-name>VERSION</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByNumber</method-name>
-               <method-params>
-                  <method-param>java.lang.Integer</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Color o WHERE o.number = ?1]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>FilterBySubfamily</ejb-name>
-
-         <table-name>FilterBySubfamily</table-name>
-
-         <cmp-field>
-            <field-name>_SubfamilyTo_number</field-name>
-            <column-name>subfamilyTo_number</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Subfamily_number</field-name>
-            <column-name>subfamily_number</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findBySubfamilyTo</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o._SubfamilyTo_number = ?1 ]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findBySubfamily</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o._Subfamily_number = ?1 ]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findBy</method-name>
-               <method-params>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>Invoice</ejb-name>
-
-         <table-name>XAVATEST.INVOICE</table-name>
-
-         <cmp-field>
-            <field-name>_VatPercentage</field-name>
-            <column-name>VATPERCENTAGE</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>number</field-name>
-            <column-name>NUMBER</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Date</field-name>
-            <column-name>DATE</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Paid</field-name>
-            <column-name>PAID</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>year</field-name>
-            <column-name>YEAR</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Comment</field-name>
-            <column-name>COMMENT</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Customer_number</field-name>
-            <column-name>CUSTOMER_NUMBER</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByCustomer</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Invoice o WHERE o._Customer_number = ?1 ORDER BY o.year, o.number]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findAll</method-name>
-               <method-params>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Invoice o WHERE 1 = 1]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findPaidOnes</method-name>
-               <method-params>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Invoice o WHERE o._Paid = 'S']]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findNotPaidOnes</method-name>
-               <method-params>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Invoice o WHERE o._Paid <> 'S']]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findByYearNumber</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Invoice o WHERE o.year = ?1 and o.number = ?2]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>Size</ejb-name>
-
-         <table-name>XAVATEST.SIZE</table-name>
-
-         <cmp-field>
-            <field-name>id</field-name>
-            <column-name>ID</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Name</field-name>
-            <column-name>NAME</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findById</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Size o WHERE o.id = ?1]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>Customer</ejb-name>
-
-         <table-name>XAVATEST.CUSTOMER</table-name>
-
-         <cmp-field>
-            <field-name>_Website</field-name>
-            <column-name>WEBSITE</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Email</field-name>
-            <column-name>EMAIL</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Name</field-name>
-            <column-name>NAME</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Remarks</field-name>
-            <column-name>REMARKS</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>number</field-name>
-            <column-name>NUMBER</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Type</field-name>
-            <column-name>TYPE</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Telephone</field-name>
-            <column-name>TELEPHONE</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Photo</field-name>
-            <column-name>PHOTO</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_RelationWithSeller</field-name>
-            <column-name>RELATIONSELLER</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Address_zipCode</field-name>
-            <column-name>ZIPCODE</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Address_street</field-name>
-            <column-name>STREET</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Address_city</field-name>
-            <column-name>CITY</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Address_state_id</field-name>
-            <column-name>STATE</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_AlternateSeller_number</field-name>
-            <column-name>ALTERNATESELLER_NUMBER</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Seller_number</field-name>
-            <column-name>SELLER_NUMBER</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByAlternateSeller</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._AlternateSeller_number = ?1 ORDER BY o.number]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findBySeller</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Seller_number = ?1 ORDER BY o.number]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findByNumber</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o.number = ?1]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findByNameLike</method-name>
-               <method-params>
-                  <method-param>java.lang.String</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Name like ?1 ORDER BY o._Name desc]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findByNameLikeAndrelationWithSeller</method-name>
-               <method-params>
-                  <method-param>java.lang.String</method-param>
-                  <method-param>java.lang.String</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Name like ?1 and o._RelationWithSeller = ?2 ORDER BY o._Name desc]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findNormalOnes</method-name>
-               <method-params>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Type = 0]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findSteadyOnes</method-name>
-               <method-params>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Type = 1]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findByStreet</method-name>
-               <method-params>
-                  <method-param>java.lang.String</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Address_street = ?1]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findAll</method-name>
-               <method-params>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>Family</ejb-name>
-
-         <table-name>XAVATEST@separator@FAMILY</table-name>
-
-         <cmp-field>
-            <field-name>oid</field-name>
-            <column-name>OID</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>number</field-name>
-            <column-name>NUMBER</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>description</field-name>
-            <column-name>DESCRIPTION</column-name>
-
-        </cmp-field>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>Product</ejb-name>
-
-         <table-name>XAVATEST.PRODUCT</table-name>
-
-         <cmp-field>
-            <field-name>_Photos</field-name>
-            <column-name>PHOTOS</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_SubfamilyNumber</field-name>
-            <column-name>SUBFAMILY</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>warehouseZoneNumber</field-name>
-            <column-name>ZONE</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>warehouseNumber</field-name>
-            <column-name>WAREHOUSE</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Description</field-name>
-            <column-name>DESCRIPTION</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_UnitPrice</field-name>
-            <column-name>UNITPRICE</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Remarks</field-name>
-            <column-name>REMARKS</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>number</field-name>
-            <column-name>NUMBER</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_FamilyNumber</field-name>
-            <column-name>FAMILY</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findAll</method-name>
-               <method-params>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product o WHERE 1 = 1]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findByNumber</method-name>
-               <method-params>
-                  <method-param>long</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product o WHERE o.number = ?1]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>Formula</ejb-name>
-
-         <table-name>XAVATEST.FORMULA</table-name>
-
-         <cmp-field>
-            <field-name>_Recipe</field-name>
-            <column-name>RECIPE</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>oid</field-name>
-            <column-name>ID</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Name</field-name>
-            <column-name>NAME</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByName</method-name>
-               <method-params>
-                  <method-param>java.lang.String</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Formula o WHERE o._Name = ?1]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findByOid</method-name>
-               <method-params>
-                  <method-param>java.lang.String</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Formula o WHERE o.oid = ?1]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>Course</ejb-name>
-
-         <table-name>XAVATEST.COURSE</table-name>
-
-         <cmp-field>
-            <field-name>_Description</field-name>
-            <column-name>DESCRIPTION</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>number</field-name>
-            <column-name>NUMBER</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>year</field-name>
-            <column-name>YEAR</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByYearNumber</method-name>
-               <method-params>
-                  <method-param>int</method-param>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Course o WHERE o.year = ?1 and o.number = ?2]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>Driver</ejb-name>
-
-         <table-name>XAVATEST.DRIVER</table-name>
-
-         <cmp-field>
-            <field-name>_Name</field-name>
-            <column-name>NAME</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Number</field-name>
-            <column-name>NUMBER</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Type</field-name>
-            <column-name>TYPE</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_DrivingLicence_level</field-name>
-            <column-name>DRIVINGLICENCE_LEVEL</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByDrivingLicence</method-name>
-               <method-params>
-                  <method-param>java.lang.String</method-param>
-                  <method-param>int</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Driver o WHERE o._Type = ?1 AND o._DrivingLicence_level = ?2 ORDER BY o._Number]]></jboss-ql>
-
-	     </query>
-         <query>
-            <query-method>
-               <method-name>findByNumber</method-name>
-               <method-params>
-                  <method-param>java.lang.Integer</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Driver o WHERE o._Number = ?1]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>Worker</ejb-name>
-
-         <table-name>WORKER</table-name>
-
-         <cmp-field>
-            <field-name>id</field-name>
-            <column-name>ID</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_NickName</field-name>
-            <column-name>NICKNAME</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_FullName</field-name>
-            <column-name>FULLNAME</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findById</method-name>
-               <method-params>
-                  <method-param>java.lang.Integer</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Worker o WHERE o.id = ?1]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
          <ejb-name>TransportCharge2</ejb-name>
 
          <table-name>XAVATEST.TRANSPORTCHARGE2</table-name>
@@ -1855,22 +605,7 @@
             <column-name>TYPE</column-name>
 
         </cmp-field>
-         <cmp-field>
-            <field-name>_Invoice_oid</field-name>
-            <column-name>INVOICE_OID</column-name>
 
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByInvoice</method-name>
-               <method-params>
-                  <method-param>java.lang.String</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Service o WHERE o._Invoice_oid = ?1 ORDER BY o.number]]></jboss-ql>
-
-	     </query>
          <query>
             <query-method>
                <method-name>findByNumber</method-name>
@@ -1879,6 +614,93 @@
                </method-params>
             </query-method>
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Service o WHERE o.number = ?1]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>CustomerState</ejb-name>
+
+         <table-name>XAVATEST.CUSTOMER_STATE</table-name>
+
+         <cmp-field>
+            <field-name>_State_id</field-name>
+            <column-name>STATE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Customer_number</field-name>
+            <column-name>CUSTOMER</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByState</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM CustomerState o WHERE o._State_id = ?1 ]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByCustomer</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM CustomerState o WHERE o._Customer_number = ?1 ]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Ingredient</ejb-name>
+
+         <table-name>XAVATEST.INGREDIENT</table-name>
+
+         <cmp-field>
+            <field-name>oid</field-name>
+            <column-name>ID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Name</field-name>
+            <column-name>NAME</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_PartOf_oid</field-name>
+            <column-name>PARTOF</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByPartOf</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Ingredient o WHERE o._PartOf_oid = ?1 ORDER BY o.oid]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByOid</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Ingredient o WHERE o.oid = ?1]]></jboss-ql>
 
 	     </query>
 
@@ -2040,6 +862,197 @@
       </entity>
 
       <entity>
+         <ejb-name>AdditionalDetail</ejb-name>
+
+         <table-name>XAVATEST.SERVICEDETAIL</table-name>
+
+         <cmp-field>
+            <field-name>counter</field-name>
+            <column-name>COUNTER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Subfamily</field-name>
+            <column-name>SUBFAMILY</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Service_number</field-name>
+            <column-name>SERVICE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Type_number</field-name>
+            <column-name>TYPE</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByService</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM AdditionalDetail o WHERE o._Service_number = ?1 ORDER BY o.counter]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByType</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM AdditionalDetail o WHERE o._Type_number = ?1 ORDER BY o.counter]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Warehouse</ejb-name>
+
+         <table-name>XAVATEST.WAREHOUSE</table-name>
+
+         <cmp-field>
+            <field-name>_Name</field-name>
+            <column-name>NAME</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Number</field-name>
+            <column-name>NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>zoneNumber</field-name>
+            <column-name>ZONE</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByZoneNumberNumber</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>java.lang.Integer</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Warehouse o WHERE o.zoneNumber = ?1 and o._Number = ?2]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>State</ejb-name>
+
+         <table-name>XAVATEST.STATE</table-name>
+
+         <cmp-field>
+            <field-name>id</field-name>
+            <column-name>ID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Name</field-name>
+            <column-name>NAME</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findById</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM State o WHERE o.id = ?1]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Family2</ejb-name>
+
+         <table-name>XAVATEST.FAMILY2</table-name>
+
+         <cmp-field>
+            <field-name>_Description</field-name>
+            <column-name>DESCRIPTION</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>number</field-name>
+            <column-name>NUMBER</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByNumber</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Family2 o WHERE o.number = ?1]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Comment</ejb-name>
+
+         <table-name>COMMENT</table-name>
+
+         <cmp-field>
+            <field-name>id</field-name>
+            <column-name>ID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Comment</field-name>
+            <column-name>COMMENT</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Date</field-name>
+            <column-name>DATE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Issue_id</field-name>
+            <column-name>ISSUE_ID</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByIssue</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Comment o WHERE o._Issue_id = ?1 ORDER BY o.id]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
          <ejb-name>Clerk</ejb-name>
 
          <table-name>XAVATEST.CLERK</table-name>
@@ -2090,47 +1103,6 @@
                </method-params>
             </query-method>
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Clerk o WHERE o.zoneNumber = ?1 and o.officeNumber = ?2 and o.number = ?3]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
-         <ejb-name>Comment</ejb-name>
-
-         <table-name>COMMENT</table-name>
-
-         <cmp-field>
-            <field-name>id</field-name>
-            <column-name>ID</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Comment</field-name>
-            <column-name>COMMENT</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Date</field-name>
-            <column-name>DATE</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Issue_id</field-name>
-            <column-name>ISSUE_ID</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findByIssue</method-name>
-               <method-params>
-                  <method-param>java.lang.String</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Comment o WHERE o._Issue_id = ?1 ORDER BY o.id]]></jboss-ql>
 
 	     </query>
 
@@ -2213,6 +1185,211 @@
                </method-params>
             </query-method>
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Shipment o WHERE o._Type = ?1 and o.mode = ?2 and o.number = ?3]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>SellerLevel</ejb-name>
+
+         <table-name>XAVATEST.SELLERLEVEL</table-name>
+
+         <cmp-field>
+            <field-name>id</field-name>
+            <column-name>ID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Description</field-name>
+            <column-name>DESCRIPTION</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findById</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM SellerLevel o WHERE o.id = ?1]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>TransportCharge</ejb-name>
+
+         <table-name>XAVATEST.TRANSPORTCHARGE</table-name>
+
+         <cmp-field>
+            <field-name>_Amount</field-name>
+            <column-name>AMOUNT</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Delivery_number</field-name>
+            <column-name>DELIVERY_NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Delivery_invoice_year</field-name>
+            <column-name>DELIVERY_INVOICE_YEAR</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Delivery_invoice_number</field-name>
+            <column-name>DELIVERY_INVOICE_NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Delivery_type_number</field-name>
+            <column-name>DELIVERY_TYPE</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByDelivery</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM TransportCharge o WHERE o._Delivery_invoice_year = ?1 AND o._Delivery_invoice_number = ?2 AND o._Delivery_type_number = ?3 AND o._Delivery_number = ?4 ]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findAll</method-name>
+               <method-params>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM TransportCharge o]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>ServiceType</ejb-name>
+
+         <table-name>XAVATEST.SERVICETYPE</table-name>
+
+         <cmp-field>
+            <field-name>_Family</field-name>
+            <column-name>FAMILY</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Description</field-name>
+            <column-name>DESCRIPTION</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Subfamily</field-name>
+            <column-name>SUBFAMILY</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>number</field-name>
+            <column-name>NUMBER</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByNumber</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM ServiceType o WHERE o.number = ?1]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Seller</ejb-name>
+
+         <table-name>XAVATEST.SELLER</table-name>
+
+         <cmp-field>
+            <field-name>_Name</field-name>
+            <column-name>NAME</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>number</field-name>
+            <column-name>NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Regions</field-name>
+            <column-name>REGIONS</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Level_id</field-name>
+            <column-name>LEVEL</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Boss_number</field-name>
+            <column-name>BOSS</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByLevel</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE o._Level_id = ?1 ORDER BY o.number]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByBoss</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE o._Boss_number = ?1 ORDER BY o.number]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findAll</method-name>
+               <method-params>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE 1 = 1]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByNumber</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Seller o WHERE o.number = ?1]]></jboss-ql>
 
 	     </query>
 
@@ -2320,13 +1497,13 @@
       </entity>
 
       <entity>
-         <ejb-name>ServiceType</ejb-name>
+         <ejb-name>DrivingLicence</ejb-name>
 
-         <table-name>XAVATEST.SERVICETYPE</table-name>
+         <table-name>XAVATEST.DRIVINGLICENCE</table-name>
 
          <cmp-field>
-            <field-name>_Family</field-name>
-            <column-name>FAMILY</column-name>
+            <field-name>level</field-name>
+            <column-name>LEVEL</column-name>
 
         </cmp-field>
          <cmp-field>
@@ -2335,24 +1512,66 @@
 
         </cmp-field>
          <cmp-field>
-            <field-name>_Subfamily</field-name>
-            <column-name>SUBFAMILY</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>number</field-name>
-            <column-name>NUMBER</column-name>
+            <field-name>type</field-name>
+            <column-name>TYPE</column-name>
 
         </cmp-field>
 
          <query>
             <query-method>
-               <method-name>findByNumber</method-name>
+               <method-name>findByTypeLevel</method-name>
                <method-params>
+                  <method-param>java.lang.String</method-param>
                   <method-param>int</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM ServiceType o WHERE o.number = ?1]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM DrivingLicence o WHERE o.type = ?1 and o.level = ?2]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Subfamily</ejb-name>
+
+         <table-name>XAVATEST.SUBFAMILY</table-name>
+
+         <cmp-field>
+            <field-name>_Description</field-name>
+            <column-name>DESCRIPTION</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>oid</field-name>
+            <column-name>OID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Remarks</field-name>
+            <column-name>REMARKS</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Number</field-name>
+            <column-name>NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_FamilyNumber</field-name>
+            <column-name>FAMILY</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByOid</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Subfamily o WHERE o.oid = ?1]]></jboss-ql>
 
 	     </query>
 
@@ -2437,44 +1656,176 @@
       </entity>
 
       <entity>
-         <ejb-name>ServiceInvoice</ejb-name>
+         <ejb-name>Issue</ejb-name>
 
-         <table-name>ServiceInvoice</table-name>
+         <table-name>ISSUE</table-name>
 
          <cmp-field>
-            <field-name>_Amount</field-name>
-            <column-name>amount</column-name>
+            <field-name>id</field-name>
+            <column-name>ID</column-name>
 
         </cmp-field>
          <cmp-field>
             <field-name>_Description</field-name>
-            <column-name>description</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>oid</field-name>
-            <column-name>oid</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Number</field-name>
-            <column-name>number</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Year</field-name>
-            <column-name>year</column-name>
+            <column-name>DESCRIPTION</column-name>
 
         </cmp-field>
 
          <query>
             <query-method>
-               <method-name>findByOid</method-name>
+               <method-name>findById</method-name>
                <method-params>
                   <method-param>java.lang.String</method-param>
                </method-params>
             </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM ServiceInvoice o WHERE o.oid = ?1]]></jboss-ql>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Issue o WHERE o.id = ?1]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>DeliveryType</ejb-name>
+
+         <table-name>XAVATEST.DeliveryType</table-name>
+
+         <cmp-field>
+            <field-name>_Description</field-name>
+            <column-name>DESCRIPTION</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>number</field-name>
+            <column-name>number</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByNumber</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryType o WHERE o.number = ?1]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Receptionist</ejb-name>
+
+         <table-name>XAVATEST.RECEPTIONIST</table-name>
+
+         <cmp-field>
+            <field-name>oid</field-name>
+            <column-name>OID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Name</field-name>
+            <column-name>NAME</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_DeliveryPlace_oid</field-name>
+            <column-name>DELIVERYPLACE</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByDeliveryPlace</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Receptionist o WHERE o._DeliveryPlace_oid = ?1 ORDER BY o.oid]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findAll</method-name>
+               <method-params>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Receptionist o]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Product3</ejb-name>
+
+         <table-name>XAVATEST.PRODUCT3</table-name>
+
+         <cmp-field>
+            <field-name>_Description</field-name>
+            <column-name>DESCRIPTION</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>number</field-name>
+            <column-name>NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Comments</field-name>
+            <column-name>COMMENTS</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Family_oid</field-name>
+            <column-name>FAMILY</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Subfamily1_family_number</field-name>
+            <column-name>FAMILY1</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Subfamily1_subfamily_number</field-name>
+            <column-name>SUBFAMILY1</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Subfamily2_family_number</field-name>
+            <column-name>FAMILY2</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Subfamily2_subfamily_number</field-name>
+            <column-name>SUBFAMILY2</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByFamily</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product3 o WHERE o._Family_oid = ?1 ]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByNumber</method-name>
+               <method-params>
+                  <method-param>long</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product3 o WHERE o.number = ?1]]></jboss-ql>
 
 	     </query>
 
@@ -2529,6 +1880,42 @@
                </method-params>
             </query-method>
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryDetail o WHERE o._Delivery_invoice_year = ?1 AND o._Delivery_invoice_number = ?2 AND o._Delivery_type_number = ?3 AND o._Delivery_number = ?4 ORDER BY o.number]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Color</ejb-name>
+
+         <table-name>XAVATEST.COLOR</table-name>
+
+         <cmp-field>
+            <field-name>_Name</field-name>
+            <column-name>NAME</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>number</field-name>
+            <column-name>NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Version</field-name>
+            <column-name>VERSION</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByNumber</method-name>
+               <method-params>
+                  <method-param>java.lang.Integer</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Color o WHERE o.number = ?1]]></jboss-ql>
 
 	     </query>
 
@@ -2715,6 +2102,181 @@
       </entity>
 
       <entity>
+         <ejb-name>FilterBySubfamily</ejb-name>
+
+         <table-name>FilterBySubfamily</table-name>
+
+         <cmp-field>
+            <field-name>_SubfamilyTo_number</field-name>
+            <column-name>subfamilyTo_number</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Subfamily_number</field-name>
+            <column-name>subfamily_number</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findBySubfamilyTo</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o._SubfamilyTo_number = ?1 ]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findBySubfamily</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o WHERE o._Subfamily_number = ?1 ]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findBy</method-name>
+               <method-params>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM FilterBySubfamily o]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Size</ejb-name>
+
+         <table-name>XAVATEST.SIZE</table-name>
+
+         <cmp-field>
+            <field-name>id</field-name>
+            <column-name>ID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Name</field-name>
+            <column-name>NAME</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findById</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Size o WHERE o.id = ?1]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Invoice</ejb-name>
+
+         <table-name>XAVATEST.INVOICE</table-name>
+
+         <cmp-field>
+            <field-name>_VatPercentage</field-name>
+            <column-name>VATPERCENTAGE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>number</field-name>
+            <column-name>NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Date</field-name>
+            <column-name>DATE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Paid</field-name>
+            <column-name>PAID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>year</field-name>
+            <column-name>YEAR</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Comment</field-name>
+            <column-name>COMMENT</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Customer_number</field-name>
+            <column-name>CUSTOMER_NUMBER</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByCustomer</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Invoice o WHERE o._Customer_number = ?1 ORDER BY o.year, o.number]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findAll</method-name>
+               <method-params>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Invoice o WHERE 1 = 1]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findPaidOnes</method-name>
+               <method-params>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Invoice o WHERE o._Paid = 'S']]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findNotPaidOnes</method-name>
+               <method-params>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Invoice o WHERE o._Paid <> 'S']]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByYearNumber</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Invoice o WHERE o.year = ?1 and o.number = ?2]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
          <ejb-name>Task</ejb-name>
 
          <table-name>XAVATEST.TASK</table-name>
@@ -2725,23 +2287,8 @@
 
         </cmp-field>
          <cmp-field>
-            <field-name>_UserFamilyName</field-name>
-            <column-name>USERFAMILYNAME</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_UserGivenName</field-name>
-            <column-name>USERGIVENNAME</column-name>
-
-        </cmp-field>
-         <cmp-field>
             <field-name>oid</field-name>
             <column-name>ID</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_UserEMail</field-name>
-            <column-name>USEREMAIL</column-name>
 
         </cmp-field>
          <cmp-field>
@@ -2926,6 +2473,280 @@
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM DeliveryPlace o WHERE o._PreferredWarehouse_zoneNumber = ?1 AND o._PreferredWarehouse_number = ?2 ORDER BY o.oid]]></jboss-ql>
 
 	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Customer</ejb-name>
+
+         <table-name>XAVATEST.CUSTOMER</table-name>
+
+         <cmp-field>
+            <field-name>_Website</field-name>
+            <column-name>WEBSITE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Email</field-name>
+            <column-name>EMAIL</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Name</field-name>
+            <column-name>NAME</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Remarks</field-name>
+            <column-name>REMARKS</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>number</field-name>
+            <column-name>NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Type</field-name>
+            <column-name>TYPE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Telephone</field-name>
+            <column-name>TELEPHONE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Photo</field-name>
+            <column-name>PHOTO</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_RelationWithSeller</field-name>
+            <column-name>RELATIONSELLER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Address_zipCode</field-name>
+            <column-name>ZIPCODE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Address_street</field-name>
+            <column-name>STREET</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Address_city</field-name>
+            <column-name>CITY</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Address_state_id</field-name>
+            <column-name>STATE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_AlternateSeller_number</field-name>
+            <column-name>ALTERNATESELLER_NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Seller_number</field-name>
+            <column-name>SELLER_NUMBER</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByAlternateSeller</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._AlternateSeller_number = ?1 ORDER BY o.number]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findBySeller</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Seller_number = ?1 ORDER BY o.number]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByNumber</method-name>
+               <method-params>
+                  <method-param>int</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o.number = ?1]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByNameLike</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Name like ?1 ORDER BY o._Name desc]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByNameLikeAndrelationWithSeller</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Name like ?1 and o._RelationWithSeller = ?2 ORDER BY o._Name desc]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findNormalOnes</method-name>
+               <method-params>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Type = 0]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findSteadyOnes</method-name>
+               <method-params>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Type = 1]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByStreet</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o WHERE o._Address_street = ?1]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findAll</method-name>
+               <method-params>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Customer o]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Product</ejb-name>
+
+         <table-name>XAVATEST.PRODUCT</table-name>
+
+         <cmp-field>
+            <field-name>_Photos</field-name>
+            <column-name>PHOTOS</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_SubfamilyNumber</field-name>
+            <column-name>SUBFAMILY</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>warehouseZoneNumber</field-name>
+            <column-name>ZONE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>warehouseNumber</field-name>
+            <column-name>WAREHOUSE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Description</field-name>
+            <column-name>DESCRIPTION</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_UnitPrice</field-name>
+            <column-name>UNITPRICE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Remarks</field-name>
+            <column-name>REMARKS</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>number</field-name>
+            <column-name>NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_FamilyNumber</field-name>
+            <column-name>FAMILY</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findAll</method-name>
+               <method-params>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product o WHERE 1 = 1]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByNumber</method-name>
+               <method-params>
+                  <method-param>long</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product o WHERE o.number = ?1]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Family</ejb-name>
+
+         <table-name>XAVATEST@separator@FAMILY</table-name>
+
+         <cmp-field>
+            <field-name>oid</field-name>
+            <column-name>OID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>number</field-name>
+            <column-name>NUMBER</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>description</field-name>
+            <column-name>DESCRIPTION</column-name>
+
+        </cmp-field>
 
 <!-- jboss 3.2 features -->
 <!-- optimistic locking does not express the exclusions needed -->

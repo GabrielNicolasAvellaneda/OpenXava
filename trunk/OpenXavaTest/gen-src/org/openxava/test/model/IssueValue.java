@@ -18,8 +18,6 @@ public class IssueValue
    private boolean idHasBeenSet = false;
    private java.lang.String description;
    private boolean descriptionHasBeenSet = false;
-   private java.lang.Integer worker_id;
-   private boolean worker_idHasBeenSet = false;
 
    public IssueValue()
    {
@@ -32,8 +30,6 @@ public class IssueValue
 	  idHasBeenSet = true;
 	  this.description = otherValue.description;
 	  descriptionHasBeenSet = true;
-	  this.worker_id = otherValue.worker_id;
-	  worker_idHasBeenSet = true;
    }
 
    public java.lang.String getId()
@@ -64,26 +60,12 @@ public class IssueValue
    public boolean descriptionHasBeenSet(){
 	  return descriptionHasBeenSet;
    }
-   public java.lang.Integer getWorker_id()
-   {
-	  return this.worker_id;
-   }
-
-   public void setWorker_id( java.lang.Integer worker_id )
-   {
-	  this.worker_id = worker_id;
-	  worker_idHasBeenSet = true;
-   }
-
-   public boolean worker_idHasBeenSet(){
-	  return worker_idHasBeenSet;
-   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("id=" + getId() + " " + "description=" + getDescription() + " " + "worker_id=" + getWorker_id());
+	  str.append("id=" + getId() + " " + "description=" + getDescription());
 	  str.append('}');
 
 	  return(str.toString());
@@ -144,14 +126,6 @@ public class IssueValue
 		 {
 			lEquals = lEquals && this.description.equals( that.description );
 		 }
-		 if( this.worker_id == null )
-		 {
-			lEquals = lEquals && ( that.worker_id == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.worker_id.equals( that.worker_id );
-		 }
 
 		 return lEquals;
 	  }
@@ -166,8 +140,6 @@ public class IssueValue
       result = 37*result + ((this.id != null) ? this.id.hashCode() : 0);
 
       result = 37*result + ((this.description != null) ? this.description.hashCode() : 0);
-
-      result = 37*result + ((this.worker_id != null) ? this.worker_id.hashCode() : 0);
 
 	  return result;
    }

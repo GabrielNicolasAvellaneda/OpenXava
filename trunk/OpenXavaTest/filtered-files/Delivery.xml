@@ -134,7 +134,7 @@
 			<remove-action action="DeliveryDetail.remove"/>
 			<remove-selected-action action="DeliveryDetail.removeSelected"/> 
 		</collection-view>
-   
+
 		<members>
 			invoice;			
 			<group name="deliveryData">
@@ -159,7 +159,7 @@
 				</group>
 			</section>
 		</members>
-		
+
 	</view>
 	
 	<view name="MoreSections">
@@ -302,17 +302,6 @@
 			<section name="incidents">incidents</section>
 			<section name="details">details</section>
 		</members>
-	</view>
-	
-	<view name="FullInvoice">
-		
-		<reference-view reference="invoice" frame="false"/>
-		<members>
-			invoice;			
-			number;
-			description
-		</members>			
-				
 	</view>
 				
 	<tab>
