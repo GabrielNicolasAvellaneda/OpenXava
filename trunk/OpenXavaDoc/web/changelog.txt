@@ -1,6 +1,43 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 2.2.5 (2008-2-21)
+--------------------------
+- New <on-change-search /> element for <reference-view/> to overwrite the default action for searching when the user type the key.
+- New before-each-request attribute for <action/> in controllers.xml.
+- Text field editor for numeric data uses JavaScript to prevent the user from entering non-numeric characters.
+- Text field editor for numeric data take into decimal point, thousands separator and sign for calculate size.
+- New utility class Emails to facilitate the use of JavaMail.
+- The cmp-type attribute of property-mapping supports to use all Java wrappers of java.lang and java.math without package.
+- MapFacade is not autocommit by default from now on. It's needed to put mapFacadeAutoCommit=true in xava.properties for autocommit.
+- New method MapFacade.commit to force a commit when MapFacade is working without auto commit.
+- Dates.toString() methods uses the current locale from Locales.getCurrent.
+- Unused classes ChangeLenguageAction and GoFirstAction removed.
+- CRUD.new action now restore by default the model of the view to the current module model.
+- Hibernate updated to 3.2.5.
+- When an action throws an exception all messages (not errors) added by the action are not shown.
+- AccessTracking does not record duplicate continuous entries.
+- TabUserPreference uses "native" as key generation to allow to save tab preferences in Oracle.
+- Hide rows action is no longer shown on collections.
+- New StringTimeConverter.
+- AnnotatedClassParser shows source exception on obtaining class names from hibernate session.
+- Code tuning after FindBugs revision.
+- Fix: Layout problem in Liferay when a section with only a property with frame.
+- Fix: Layout problem when a reference with frame="false" which contains sections.
+- Fix: Navigation is broken sometimes on Jetspeed 2.0 with Internet Explorer.
+- Fix: Buttons too big in IE.
+- Fix: Focus is not set after a request with IE7 and Liferay 4.1.
+- Fix: Javascript warning, when the focus go to a not selectable control, removed.
+- Fix: Fails on create hibernate session on JDK1.4 of AS/400.
+- Fix: 'Create' and 'Modify' link for references which key is inside a group was not shown.
+- Fix: On Java 6 the on change event in keys with composite keys was not always the last one.
+- Fix: Save first detail in a collection saved the container entity although the detail was not saved because of a validation error 
+- Fix: Fails on search references typing its key when working with multischema.
+- Fix: Search reference does not work when key is multiple, visible and inside a group.
+- Fix: When a member in a section was hidden programmatically and the result was only one reference or collection the frame was not hidden.
+- Fix: Overlapped columns were not recognized when the letters case does not match.
+- Fix: ValidValuesVerticalRadioButton was horizontal.
+
 OpenXava 2.2.4 (2007-12-19)
 ---------------------------
 - Full support for Liferay 4.3, including visual style integration.
