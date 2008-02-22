@@ -297,7 +297,9 @@ if (!tab.isLastPage()) {
 <% if (XavaPreferences.getInstance().isShowCountInList()) { %>
 <xava:message key="list_count" intParam="<%=totalSize%>"/>
 <% } %>
+<% if (collection == null) { %>
 (<xava:link action="List.hideRows" argv="<%=collectionArgv%>"/>)
+<% } %>
 </td>
 </tr>
 </table>

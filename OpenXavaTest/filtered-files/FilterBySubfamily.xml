@@ -36,9 +36,6 @@
 	</view>
 	
 	<view name="Range">
-		<reference-view reference="subfamily">
-			<on-change-search class="org.openxava.test.actions.OnChangeSubfamilySearchAction"/>
-		</reference-view> 
 		<members>subfamily; subfamilyTo</members>
 	</view>
 

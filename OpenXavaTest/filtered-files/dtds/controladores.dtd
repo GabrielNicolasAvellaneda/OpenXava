@@ -25,7 +25,6 @@
  oculta (true|false) "false"
  al-iniciar (true|false) "false"
  en-cada-peticion (true|false) "false"
- antes-de-cada-peticion (true|false) "false"
  por-defecto (nunca|si-posible|casi-siempre|siempre) "nunca"
  cuesta (true|false) "false" 
  confirmar (true|false) "false"

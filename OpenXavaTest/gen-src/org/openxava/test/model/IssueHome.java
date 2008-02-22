@@ -21,9 +21,6 @@ public interface IssueHome
    public org.openxava.test.model.IssueRemote create(org.openxava.test.model.IssueValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
-   public java.util.Collection findByWorker(java.lang.Integer id)
-      throws javax.ejb.FinderException,java.rmi.RemoteException;
-
    public org.openxava.test.model.IssueRemote findById(java.lang.String id)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 

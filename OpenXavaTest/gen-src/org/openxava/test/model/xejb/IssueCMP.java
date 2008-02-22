@@ -20,7 +20,6 @@ public abstract class IssueCMP
 
          dataHolder.setId( getId() );
          dataHolder.set_Description( get_Description() );
-         dataHolder.set_Worker_id( get_Worker_id() );
 
       }
       catch (RuntimeException e)
@@ -36,7 +35,6 @@ public abstract class IssueCMP
       try
       {
          set_Description( dataHolder.get_Description() );
-         set_Worker_id( dataHolder.get_Worker_id() );
 
       }
       catch (Exception e)
@@ -92,7 +90,6 @@ public abstract class IssueCMP
          {
             IssueValue.setId( getId() );
             IssueValue.setDescription( getDescription() );
-            IssueValue.setWorker_id( getWorker_id() );
 
          }
          catch (Exception e)
@@ -109,7 +106,6 @@ public abstract class IssueCMP
 	  try
 	  {
 		 setDescription( valueHolder.getDescription() );
-		 setWorker_id( valueHolder.getWorker_id() );
 
 	  }
 	  catch (Exception e)
@@ -127,9 +123,5 @@ public abstract class IssueCMP
    public abstract java.lang.String get_Description() ;
 
    public abstract void set_Description( java.lang.String _Description ) ;
-
-   public abstract java.lang.Integer get_Worker_id() ;
-
-   public abstract void set_Worker_id( java.lang.Integer _Worker_id ) ;
 
 }

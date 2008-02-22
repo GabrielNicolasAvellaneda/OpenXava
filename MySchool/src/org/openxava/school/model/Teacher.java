@@ -33,5 +33,4 @@ public class Teacher {
 		this.name = name;
 	}
 
-
 }

@@ -12,13 +12,12 @@
 		<property name="number" key="true"
 			size="3" required="true" type="int"/>   												
 		<property name="name" type="String"
-			size="40" required="true"/>			
-		<!-- We test the two: java.sql.Time and TIME stereotype --> 	
+			size="40" required="true"/>
+		<!--  We test the two: java.sql.Time and TIME stereotype -->	
 		<property name="arrivalTime" type="java.sql.Time"/> 
 		<property name="endingTime" stereotype="TIME"/> 
-		
-		<!-- For testing a String stored in a binary field in database --> 
-		<property name="comments" stereotype="MEMO"/>
+		<!-- For testing a String stored in a binary field in database -->
+		<property name="comments" stereotype="MEMO"/>		
 				
 	</entity>
 	
@@ -30,7 +29,7 @@
 		<property-mapping
 			property="number" column="NUMBER"/>
 		<property-mapping
-			property="name" column="NAME"/>		
+			property="name" column="NAME"/>
 		<property-mapping
 			property="arrivalTime" column="ARRIVALTIME"/>
 		<property-mapping
