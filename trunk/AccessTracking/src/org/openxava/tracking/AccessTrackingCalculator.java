@@ -35,7 +35,7 @@ public class AccessTrackingCalculator implements IModelCalculator {
 	private Object model;
 	private String accessType;	
 
-	public Object calculate() throws Exception {		
+	public Object calculate() throws Exception {
 		Session session = null;
 		try {
 			Access access = newAccess();			
@@ -56,7 +56,7 @@ public class AccessTrackingCalculator implements IModelCalculator {
 			}
 			log.warn(XavaResources.getString("tracking_warning", ex.getLocalizedMessage())); // tracking is not so critical to abort the user work.
 		}								
-		return null;
+		return null;		
 	}
 	
 	private Access newAccess() throws Exception {
@@ -78,7 +78,7 @@ public class AccessTrackingCalculator implements IModelCalculator {
 		String key = MapFacade.getKeyValues(metaModel.getName(), model).toString();
 		access.setRecordId(key);
 		return access;
-	}	
+	}		
 	
 	private MetaModel getMetaModel() throws Exception {
 		if (model instanceof IModel) return ((IModel) model).getMetaModel();
@@ -115,11 +115,11 @@ public class AccessTrackingCalculator implements IModelCalculator {
 		r.append(access.getRecordId());
 		return r.toString();
 	}
-
+	
 	private String getUser() {
 		String user = Users.getCurrent();
 		return user==null?"nobody":user;
-	}
+	}	
 	
 	public void setModel(Object model) throws RemoteException {
 		this.model = model;
