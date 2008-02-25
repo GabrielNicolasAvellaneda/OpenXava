@@ -1,8 +1,7 @@
 package org.openxava.model;
 
-import java.rmi.*;
 import java.util.*;
-
+import java.rmi.*;
 import javax.ejb.*;
 import javax.rmi.*;
 
@@ -17,7 +16,7 @@ import org.openxava.util.*;
 import org.openxava.validators.*;
 
 
-/**
+/** 
  * Allows manage model objects in <code>Map</code> format. <p>
  * 
  * It's used in generic OpenXava action to make CRUD operations,
@@ -33,12 +32,9 @@ import org.openxava.validators.*;
  * does not use EJB.<br>
  * We use RemoteException to indicate a system error. Although the implementation
  * is local.<br>
- * 
- * EJB exceptions and RemoteException for any system errors are used for years
- * by enterprise java programmer, because this we think a good idea keep this
- * exceptions and its semantics while we can change the implementation of MapFacade (for
- * example for use POJOs instead EJB, or local process instead of remote objects,
- * or hibernate/jdo instead of entitybeans).<p>
+ *
+ * Since version 3.0 MapFacade uses runtime exception for system errors,
+ * before (in v2.x) it used RemoteException.<br>
  * 
  * The first parameter of each method is <code>modelName</code>, this is a
  * name of a OpenXava component (Customer, Invoice, etc) or a qualified aggregate 
@@ -101,13 +97,13 @@ public class MapFacade {
 	 *          (EntityBean, POJO object o the form used in the underlying model). Not null.
 	 * @exception CreateException  Logic problem on creation.
 	 * @exception ValidationException  Data validation problems.
-	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
-	 * @exception RemoteException  System problem. Rollback transaction.
+	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction. 
+	 * @exception SystemException  System problem. Rollback transaction. 
 	 */
 	public static Object create(String modelName, Map values) 
 		throws
-			CreateException,ValidationException, 
-			XavaException, RemoteException 
+			CreateException,ValidationException,
+			XavaException, SystemException
 	{
 		Assert.arg(modelName, values);					
 		try {									
@@ -115,7 +111,12 @@ public class MapFacade {
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			return getImpl(modelName).create(Users.getCurrent(), modelName, values);
+			try {
+				return getImpl(modelName).create(Users.getCurrent(), modelName, values);
+			}
+			catch (RemoteException rex) { 
+				throw new SystemException(rex);
+			}
 		}							
 	}
 	
@@ -128,16 +129,21 @@ public class MapFacade {
 	 * It's cannot be used if MapFacade auto commit mode is on or it's used as EJB.
 	 * 
 	 * @throws IllegalStateException  If mapFacadeAutoCommit=true or mapFacadeAsEJB=true in xava.properties  
-	 * @throws RemoteException
+	 * @exception SystemException  System problem. Rollback transaction.
 	 */
-	public static void commit() throws RemoteException {						
+	public static void commit() throws SystemException {						
 		if (usesEJB()) {
 			throw new IllegalStateException(XavaResources.getString("not_commit_when_facade_as_ejb"));
 		}
 		if (XavaPreferences.getInstance().isMapFacadeAutoCommit()) {
 			throw new IllegalStateException(XavaResources.getString("not_commit_when_facade_autocommit"));
 		}
-		getLocalImpl().commit(Users.getCurrent());								
+		try {
+			getLocalImpl().commit(Users.getCurrent());
+		}
+		catch (RemoteException rex) {
+			throw new SystemException(rex);
+		}
 	}	
 	
 	/**
@@ -152,13 +158,13 @@ public class MapFacade {
 	 *          (EntityBean, POJO object o the form used in the underlying model). Not null.
 	 * @exception CreateException  Logic problem on creation.
 	 * @exception ValidationException  Data validation problems.
-	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
-	 * @exception RemoteException  System problem. Rollback transaction.
+	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction. 
+	 * @exception SystemException  System problem. Rollback transaction. 
 	 */
 	public static Object createAggregate(String modelName, Map containerKey, int counter, Map values) 
 		throws
-			CreateException,ValidationException, 
-			XavaException, RemoteException 
+			CreateException,ValidationException,
+			XavaException, SystemException
 	{
 		Assert.arg(modelName, containerKey, values);					
 		try {		
@@ -166,7 +172,12 @@ public class MapFacade {
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			return getImpl(modelName).createAggregate(Users.getCurrent(), modelName, containerKey, counter, values);
+			try {
+				return getImpl(modelName).createAggregate(Users.getCurrent(), modelName, containerKey, counter, values);
+			}
+			catch (RemoteException rex) {
+				throw new SystemException(ex);
+			}
 		}							
 	}
 	
@@ -183,13 +194,13 @@ public class MapFacade {
 	 *          (EntityBean, POJO object o the form used in the underlying model). Not null.
 	 * @exception CreateException  Logic problem on creation.
 	 * @exception ValidationException  Data validation problems.
-	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
-	 * @exception RemoteException  System problem. Rollback transaction.
+	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction. 
+	 * @exception SystemException  System problem. Rollback transaction. 
 	 */
 	public static Object createAggregate(String modelName, Object container, int counter, Map values) 
 		throws
-			CreateException,ValidationException, 
-			XavaException, RemoteException 
+			CreateException,ValidationException,
+			XavaException, SystemException
 	{
 		Assert.arg(modelName, container, values);					
 		try {									
@@ -197,7 +208,12 @@ public class MapFacade {
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			return getImpl(modelName).createAggregate(Users.getCurrent(), modelName, container, counter, values);
+			try {
+				return getImpl(modelName).createAggregate(Users.getCurrent(), modelName, container, counter, values);
+			}
+			catch (RemoteException rex) {
+				throw new SystemException(rex);
+			}
 		}							
 	}
 	
@@ -212,12 +228,12 @@ public class MapFacade {
 	 * @exception CreateException  Logic problem on creation.
 	 * @exception ValidationException  Data validation problems.
 	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
-	 * @exception RemoteException  System problem. Rollback transaction.
+	 * @exception SystemException  System problem. Rollback transaction.
 	 */
 	public static Map createReturningValues(String modelName, Map values)
 		throws
 			CreateException,ValidationException,
-			XavaException, RemoteException
+			XavaException, SystemException
 	{
 		Assert.arg(modelName, values);		
 		try {
@@ -225,7 +241,12 @@ public class MapFacade {
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			return getImpl(modelName).createReturningValues(Users.getCurrent(), modelName, values);
+			try {
+				return getImpl(modelName).createReturningValues(Users.getCurrent(), modelName, values);
+			}
+			catch (RemoteException rex) {
+				throw new SystemException(rex);
+			}	
 		}
 		
 	}
@@ -241,12 +262,12 @@ public class MapFacade {
 	 * @exception CreateException  Logic problem on creation.
 	 * @exception ValidationException  Data validation problems.
 	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
-	 * @exception RemoteException  System problem. Rollback transaction.
+	 * @exception SystemException  System problem. Rollback transaction.
 	 */
 	public static Map createReturningKey(String modelName, Map values)
 		throws
 			CreateException,ValidationException,
-			XavaException, RemoteException
+			XavaException, SystemException
 	{
 		Assert.arg(modelName, values);		
 		try {
@@ -254,7 +275,12 @@ public class MapFacade {
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			return getImpl(modelName).createReturningKey(Users.getCurrent(), modelName, values);
+			try {
+				return getImpl(modelName).createReturningKey(Users.getCurrent(), modelName, values);
+			}
+			catch (RemoteException rex) {
+				throw new SystemException(rex);
+			}
 		}		
 	}
 				
@@ -271,12 +297,12 @@ public class MapFacade {
 	 * @exception CreateException  Logic problem on creation.
 	 * @exception ValidationException  Data validation problems.
 	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
-	 * @exception RemoteException  System problem. Rollback transaction.
+	 * @exception SystemException  System problem. Rollback transaction.
 	 */
 	public static Map createAggregateReturningKey(String modelName, Map containerKey, int counter, Map values) 
 		throws
 			CreateException,ValidationException, 
-			XavaException, RemoteException 
+			XavaException, SystemException 
 	{
 		Assert.arg(modelName, containerKey, values);					
 		try {		
@@ -284,7 +310,12 @@ public class MapFacade {
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			return getImpl(modelName).createAggregateReturningKey(Users.getCurrent(), modelName, containerKey, counter, values);
+			try {
+				return getImpl(modelName).createAggregateReturningKey(Users.getCurrent(), modelName, containerKey, counter, values);
+			}
+			catch (RemoteException rex) {
+				throw new SystemException(rex);
+			}
 		}							
 	}
 	
@@ -312,13 +343,13 @@ public class MapFacade {
 	 * @exception ObjectNotFoundException  If object with this key does not exist 
 	 * @exception FinderException  Logic problem on find.	
 	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
-	 * @exception RemoteException  System problem. Rollback transaction.
+	 * @exception SystemException  System problem. Rollback transaction.
 	 */	
 	public static Map getValues(
 		String modelName,
 		Map keyValues,
 		Map memberNames)
-		throws FinderException, XavaException, RemoteException 
+		throws FinderException, XavaException, SystemException 
 	{							
 		Assert.arg(modelName, keyValues, memberNames);		
 		if (keyValues.isEmpty()) {
@@ -329,7 +360,12 @@ public class MapFacade {
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			return getImpl(modelName).getValues(Users.getCurrent(), modelName, keyValues, memberNames);
+			try {
+				return getImpl(modelName).getValues(Users.getCurrent(), modelName, keyValues, memberNames);
+			}
+			catch (RemoteException rex) {
+				throw new SystemException(rex);
+			}	
 		}		
 	}
 
@@ -377,13 +413,13 @@ public class MapFacade {
 	 * @exception ObjectNotFoundException  If object with this key does not exist 
 	 * @exception FinderException  Logic problem on find.	
 	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
-	 * @exception RemoteException  System problem. Rollback transaction.
+	 * @exception SystemException  System problem. Rollback transaction.
 	 */		
 	public static Map getValuesByAnyProperty(  
 		String modelName,
 		Map searchingValues,
 		Map memberNames)
-		throws FinderException, XavaException, RemoteException 
+		throws FinderException, XavaException, SystemException 
 	{						
 		Assert.arg(modelName, searchingValues, memberNames);		
 		if (searchingValues.isEmpty()) {
@@ -394,7 +430,12 @@ public class MapFacade {
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			return getImpl(modelName).getValuesByAnyProperty(Users.getCurrent(), modelName, searchingValues, memberNames);
+			try {
+				return getImpl(modelName).getValuesByAnyProperty(Users.getCurrent(), modelName, searchingValues, memberNames);
+			}
+			catch (RemoteException rex) {
+				throw new SystemException(rex);
+			}	
 		}					
 	}
 			
@@ -418,10 +459,10 @@ public class MapFacade {
 	 * @param memberNames Member names to obtain its values. Not null. <i>By value</i> semantics.  
 	 * @return Map with entity values. Not null.
 	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
-	 * @exception RemoteException  System problem. Rollback transaction.
+	 * @exception SystemException  System problem. Rollback transaction.
 	 */	
 	public static Map getValues(String modelName, Object entity, Map memberNames)
-		throws XavaException, RemoteException 
+		throws XavaException, SystemException 
 	{		
 		Assert.arg(modelName, entity, memberNames);
 		try {
@@ -429,9 +470,13 @@ public class MapFacade {
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			return getImpl(modelName).getValues(Users.getCurrent(), modelName, entity, memberNames);
-		}
-			
+			try {
+				return getImpl(modelName).getValues(Users.getCurrent(), modelName, entity, memberNames);
+			}
+			catch (RemoteException rex) {
+				throw new SystemException(rex);
+			}	
+		}			
 	}
 	
 	/** 
@@ -441,13 +486,18 @@ public class MapFacade {
 	 * @param entity  Object to obtain key values from it. Not null.  
 	 * @return Map with key values. Not null.
 	 * @exception XavaException  Any problem related to OpenXava.
-	 * @exception RemoteException  System problem.
+	 * @exception SystemException  System problem.
 	 */	
 	public static Map getKeyValues(String modelName, Object entity) 
-		throws XavaException, RemoteException 
+		throws XavaException, SystemException 
 	{		
-		Assert.arg(modelName, entity);		
-		return getLocalImpl().getKeyValues(Users.getCurrent(), modelName, entity);				
+		Assert.arg(modelName, entity);
+		try {
+			return getLocalImpl().getKeyValues(Users.getCurrent(), modelName, entity);
+		}
+		catch (RemoteException rex) {
+			throw new SystemException(rex);
+		}		
 	}
 	
 	
@@ -459,10 +509,10 @@ public class MapFacade {
  	 * @return The entity or aggregate. Not null
 	 * @exception ObjectNotFoundException  If object with this key does not exist 
 	 * @exception FinderException  Logic problem on find.	
-	 * @exception RemoteException  System problem. Rollback transaction.
+	 * @exception SystemException  System problem. Rollback transaction.
 	 */ 
 	public static Object findEntity(String modelName, Map keyValues)
-		throws ObjectNotFoundException, FinderException, RemoteException 
+		throws ObjectNotFoundException, FinderException, SystemException 
 	{	
 		if (keyValues==null) return null;
 		Assert.arg(modelName, keyValues);
@@ -472,7 +522,12 @@ public class MapFacade {
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			entity = getImpl(modelName).findEntity(Users.getCurrent(), modelName, keyValues);
+			try {
+				entity = getImpl(modelName).findEntity(Users.getCurrent(), modelName, keyValues);
+			}
+			catch (RemoteException rex) {
+				throw new SystemException(rex);
+			}	
 		}					
 		reassociate(entity);		
 		return entity;
@@ -483,9 +538,14 @@ public class MapFacade {
 	 * 
 	 * It's called when an object is receive from the an EJB server.
 	 */
-	private static void reassociate(Object entity) throws RemoteException {
-		if (XavaPreferences.getInstance().isMapFacadeAsEJB()) {			
-			getLocalImpl().reassociate(entity);
+	private static void reassociate(Object entity) throws SystemException {
+		if (XavaPreferences.getInstance().isMapFacadeAsEJB()) {	
+			try {
+				getLocalImpl().reassociate(entity);
+			}
+			catch (RemoteException rex) {
+				throw new SystemException(rex);
+			}	
 		}
 	}
 
@@ -497,19 +557,23 @@ public class MapFacade {
 	 * @exception RemoveException  Logic problem on remove.
 	 * @exception ValidationException  Data validation problems.
 	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
-	 * @exception RemoteException  System problem. Rollback transaction.
+	 * @exception SystemException  System problem. Rollback transaction.
 	 */
 	public static void remove(String modelName, Map keyValues)
-		throws RemoveException, RemoteException, XavaException, ValidationException {		
+		throws RemoveException, SystemException, XavaException, ValidationException {		
 		Assert.arg(modelName, keyValues);
 		try {
 			getImpl(modelName).delete(Users.getCurrent(), modelName, keyValues);
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			getImpl(modelName).delete(Users.getCurrent(), modelName, keyValues);
-		}
-		
+			try {
+				getImpl(modelName).delete(Users.getCurrent(), modelName, keyValues);
+			}
+			catch (RemoteException rex) {
+				throw new SystemException(rex);
+			}	
+		}		
 	}
 
 	/**
@@ -522,11 +586,11 @@ public class MapFacade {
 	 * @exception FinderException  Logic problem on find.	
 	 * @exception ValidationException  Data validation problems.	 * 
 	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
-	 * @exception RemoteException  System problem. Rollback transaction.
+	 * @exception SystemException  System problem. Rollback transaction.
 	 */	
 	public static void setValues(String modelName, Map keyValues, Map values)
 		throws ObjectNotFoundException, FinderException, ValidationException,
-				XavaException,  RemoteException 
+				XavaException, SystemException 
 	{		
 		Assert.arg(modelName, keyValues, values);				
 		try {
@@ -534,7 +598,12 @@ public class MapFacade {
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			getImpl(modelName).setValues(Users.getCurrent(), modelName, keyValues, values);			
+			try {
+				getImpl(modelName).setValues(Users.getCurrent(), modelName, keyValues, values);
+			}
+			catch (RemoteException rex) {
+				throw new SystemException(rex);
+			}			
 		}						
 	}
 	
@@ -548,10 +617,10 @@ public class MapFacade {
 	 * @param values  Values to validate. Not null. <i>By value</i> semantics.
 	 * @return Message list with validation errors. Not null.
 	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
-	 * @exception RemoteException  System problem. Rollback transaction.
+	 * @exception SystemException  System problem. Rollback transaction.
 	 */	
 	public static Messages validate(String modelName, Map values)
-		throws XavaException,  RemoteException 
+		throws XavaException, SystemException 
 	{
 		Assert.arg(modelName, values);			
 		try {
@@ -559,14 +628,19 @@ public class MapFacade {
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			return getImpl(modelName).validate(Users.getCurrent(), modelName, values);			
+			try {
+				return getImpl(modelName).validate(Users.getCurrent(), modelName, values);
+			}
+			catch (RemoteException rex) {
+				throw new SystemException(rex);
+			}	
 		}
 				
 	}
 	
 									
 	
-	private static IMapFacadeImpl getImpl(String modelName) throws RemoteException {
+	private static IMapFacadeImpl getImpl(String modelName) throws SystemException {
 		if (!usesEJB()) return getLocalImpl();
 		try {			
 			int idx = modelName.indexOf('.'); 
@@ -585,7 +659,7 @@ public class MapFacade {
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
-			throw new RemoteException(XavaResources.getString("facade_remote", modelName));
+			throw new SystemException(XavaResources.getString("facade_remote", modelName));
 		}		
 	}
 			
@@ -648,11 +722,11 @@ public class MapFacade {
 	 * @exception ValidationException  Data validation problems.
 	 * @exception RemoveException  Logic problem on remove. 
 	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
-	 * @exception RemoteException  System problem. Rollback transaction.
+	 * @exception SystemException  System problem. Rollback transaction.
 	 */	
 	public static void removeCollectionElement(String modelName, Map keyValues, String collectionName, Map collectionElementKeyValues) 
-		throws ObjectNotFoundException, FinderException,	ValidationException, RemoveException,
-			XavaException,  RemoteException 
+		throws ObjectNotFoundException, FinderException, ValidationException, RemoveException,
+			XavaException, SystemException 
 	{
 		Assert.arg(modelName, keyValues, collectionName, collectionElementKeyValues);
 		try {
@@ -660,7 +734,12 @@ public class MapFacade {
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			getImpl(modelName).removeCollectionElement(Users.getCurrent(), modelName, keyValues, collectionName, collectionElementKeyValues);
+			try {
+				getImpl(modelName).removeCollectionElement(Users.getCurrent(), modelName, keyValues, collectionName, collectionElementKeyValues);
+			}
+			catch (RemoteException rex) {
+				throw new SystemException(rex);
+			}
 		}
 	}
 	
@@ -679,10 +758,10 @@ public class MapFacade {
 	 * @exception FinderException  Logic problem on find.	
 	 * @exception ValidationException  Data validation problems. 
 	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
-	 * @exception RemoteException  System problem. Rollback transaction.
+	 * @exception SystemException  System problem. Rollback transaction. 
 	 */	
 	public static void addCollectionElement(String modelName, Map keyValues, String collectionName, Map collectionElementKeyValues) 
-		throws ObjectNotFoundException, FinderException, ValidationException, XavaException,  RemoteException 
+		throws ObjectNotFoundException, FinderException, ValidationException, XavaException, SystemException 
 	{
 		Assert.arg(modelName, keyValues, collectionName, collectionElementKeyValues);
 		try {
@@ -690,7 +769,12 @@ public class MapFacade {
 		}
 		catch (RemoteException ex) {
 			annulImpl(modelName);
-			getImpl(modelName).addCollectionElement(Users.getCurrent(), modelName, keyValues, collectionName, collectionElementKeyValues);
+			try {
+				getImpl(modelName).addCollectionElement(Users.getCurrent(), modelName, keyValues, collectionName, collectionElementKeyValues);
+			}
+			catch (RemoteException rex) {
+				throw new SystemException(rex);
+			}
 		}		
 	}	
 	

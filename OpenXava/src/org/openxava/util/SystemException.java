@@ -1,5 +1,7 @@
 package org.openxava.util;
 
+import java.rmi.*;
+
 /**
  * RuntimeException to be thrown by a business method
  * when a system level problem is produced. <p>
@@ -32,5 +34,9 @@ public class SystemException extends RuntimeException {
 	public SystemException(Throwable cause) {
 		super(cause);
 	}
+	
+	public SystemException(RemoteException cause) { 
+		super(cause.getLocalizedMessage());
+	}	
 	
 }
