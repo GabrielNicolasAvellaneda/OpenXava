@@ -20,7 +20,7 @@
 				<set property="value" value="1"/>
 			</default-value-calculator>     
 		</property>
-
+		
 		<property name="photo" required="false" stereotype="PHOTO"/>
 		<property name="telephone" stereotype="TELEPHONE"/>        		
 		<property name="email" stereotype="EMAIL"/>
@@ -169,6 +169,7 @@
 		<reference name="state" key="true"/>
 	</aggregate>
 	
+	
 	<view>
 		<!-- 
 		For overwrite the label better resource files.
@@ -191,7 +192,7 @@
 		</reference-view>			
 		
 		<reference-view reference="alternateSeller" view="DecorateName" create="false"/>
-		 
+				  
 		<members>
 			number;
 			type; 
@@ -209,7 +210,7 @@
 			deliveryPlaces; 
 			remarks
 		</members>
-		
+				
 	</view>
 		
 	<view name="WithSection">		
@@ -259,7 +260,7 @@
 	</view>		
 	
 	<view name="Simplest" members="number; name"/>
-		
+  	 	  	
 	<view name="Simple">
 		<members>
 			number; 
@@ -340,7 +341,7 @@
 			</group>
 		</members>
 	</view>	
-					
+					 				
 	<view model="Address">
 				
 		<property name="viewProperty" type="String"/>

@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- XavaException now is a RuntimeException.
+- MapFacade methods do not longer throws RemoteException, instead it now throws SystemException (runtime).
+
 OpenXava 2.2.5 (2008-2-21)
 --------------------------
 - New <on-change-search /> element for <reference-view/> to overwrite the default action for searching when the user type the key.

@@ -8,8 +8,8 @@
   	name="TabUserPreferences"
   	table="OPENXAVA_TABUSERPREFERENCES">
   
-    <id name="oid" column="OID" access="field" unsaved-value="-1">
-			<generator class="identity"/>
+    	<id name="oid" column="OID" access="field" unsaved-value="-1">
+			<generator class="native"/>
 		</id>
 		
 		<property name="user" column="USERNAME"/>

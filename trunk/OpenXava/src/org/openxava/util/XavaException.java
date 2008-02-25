@@ -2,9 +2,13 @@ package org.openxava.util;
 
 
 /**
+ * <p>
+ * 
+ * RuntimeException since v3.0.
+ * 
  * @author Javier Paniza
  */
-public class XavaException extends Exception {
+public class XavaException extends RuntimeException { 
 	
 	private Object argv0;
 	private Object argv1;
