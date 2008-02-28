@@ -16,11 +16,12 @@ public class TransportChargeTest extends TransportChargeTestBase {
 	public void testOrderAndFilterInCollectionOfReference() throws Exception {
 		execute("CRUD.new");
 		execute("Reference.search", "keyProperty=xava.TransportCharge.delivery.number");
-		assertValueInList(1, 0, "2004");
-		assertValueInList(1, 1, "2");
-		assertValueInList(1, 2, "1");		
-		assertValueInList(1, 4, "666");
-		execute("ReferenceSearch.choose", "row=1");
+		int row = getRowOf("2004", "2", "1", "666");
+		assertValueInList(row, 0, "2004");
+		assertValueInList(row, 1, "2");
+		assertValueInList(row, 2, "1");		
+		assertValueInList(row, 4, "666");
+		execute("ReferenceSearch.choose", "row=" + row);
 		execute("Sections.change", "activeSection=4,viewObject=xava_view_delivery");
 		
 		assertCollectionRowCount("delivery.details", 3);
@@ -137,5 +138,22 @@ public class TransportChargeTest extends TransportChargeTestBase {
 		assertValueInList(0, 2, String.valueOf(getCharge2().getDelivery().getNumber()));
 		assertValueInList(0, 3, "200.00");		
 	}
+	
+	private int getRowOf(String v0, String v1, String v2, String v4) throws Exception {
+		int rowCount = getListRowCount();
+		for (int i=0; i<rowCount; i++) {
+			if (
+				getValueInList(i, 0).equals(v0) &&
+				getValueInList(i, 1).equals(v1) &&
+				getValueInList(i, 2).equals(v2) &&
+				getValueInList(i, 4).equals(v4)
+			) {
+				return i;
+			}
+		}
+		fail("Row with values " + v0 + ", " + v1 + ", " + v2 + ", " + v4 + " does not found in list");
+		return -1; // never
+	}
+	
 
 }

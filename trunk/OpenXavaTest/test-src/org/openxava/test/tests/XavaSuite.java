@@ -46,8 +46,8 @@ public class XavaSuite extends TestSuite {
 	}
 	public static Test suite() {		
 		TestSuite suite = new TestSuite();		
-		
-		suite.addTest(new TestSuite(WarehouseTest.class));	
+				
+		suite.addTest(new TestSuite(WarehouseTest.class));			
 		suite.addTest(new TestSuite(CarrierTest.class));
 		suite.addTest(new TestSuite(CarrierWithCalculatedFellowsTest.class));
 		suite.addTest(new TestSuite(CarrierWithReadOnlyCalculatedFellowsTest.class));
@@ -71,7 +71,7 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(CustomerTest.class));
 		suite.addTest(new TestSuite(CustomerTwoSellersInListTest.class));		
 		suite.addTest(new TestSuite(CustomerTwoSellersNumberInListTest.class));		
-		suite.addTest(new TestSuite(CustomerWithSectionTest.class));		
+		suite.addTest(new TestSuite(CustomerWithSectionTest.class));				
 		suite.addTest(new TestSuite(DeliveryGroupsInSectionsTest.class));
 		suite.addTest(new TestSuite(DeliveryRemarks2002Test.class));		
 		suite.addTest(new TestSuite(DeliveryTest.class));		
@@ -79,7 +79,7 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(DeliveryTypeTest.class));
 		if (ModuleTestBase.isPortalEnabled()) {
 			suite.addTest(new TestSuite(DescriptionTest.class));
-		}
+		}		
 		suite.addTest(new TestSuite(DriverTest.class));		
 		try {
 			Class ejbTestClass = Class.forName("org.openxava.test.tests.EJBTest");
@@ -96,19 +96,19 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(FamilyProductsReportTest.class));
 		suite.addTest(new TestSuite(FamilyRangeProductsReportTest.class));
 		suite.addTest(new TestSuite(FamilyXProductsReportTest.class));		
-		suite.addTest(new TestSuite(FormulaTest.class));		
+		suite.addTest(new TestSuite(FormulaTest.class));				
 		if (!ModuleTestBase.isOX3()) {
 			suite.addTest(new TestSuite(HibernateTest.class));
 		}
 		if (ModuleTestBase.isOX3()) {
 			suite.addTest(new TestSuite(HumanTest.class));
-		}
+		}				
 		suite.addTest(new TestSuite(Invoice20020001Test.class));
 		suite.addTest(new TestSuite(Invoice2002Test.class));		
 		suite.addTest(new TestSuite(Invoice2004Test.class));
 		suite.addTest(new TestSuite(Invoice2Test.class));		
-		suite.addTest(new TestSuite(InvoiceActiveYearTest.class));	
-		suite.addTest(new TestSuite(InvoiceCustomerAsAggregateTest.class));
+		suite.addTest(new TestSuite(InvoiceActiveYearTest.class));		
+		suite.addTest(new TestSuite(InvoiceCustomerAsAggregateTest.class));		
 		suite.addTest(new TestSuite(InvoiceDeliveriesTest.class));
 		suite.addTest(new TestSuite(InvoiceFromCustomersTest.class));
 		suite.addTest(new TestSuite(InvoiceFromDeliveriesTest.class));		
@@ -117,10 +117,10 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(InvoiceTest.class));		
 		if (!XavaPreferences.getInstance().isEJB2Persistence()) {
 			suite.addTest(new TestSuite(IssueTest.class));
-		}				
+		}								
 		if (ModuleTestBase.isOX3()) {
 			suite.addTest(new TestSuite(JavaProgrammerTest.class));
-		}		
+		}						
 		if (XavaPreferences.getInstance().isJPAPersistence()) {			
 			suite.addTest(new TestSuite(JPATest.class));			
 		}
@@ -137,16 +137,16 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(Product2ReferenceAndStereotypeTest.class));		
 		suite.addTest(new TestSuite(Product2Test.class));
 		suite.addTest(new TestSuite(Product2WithFormulaAsAggregateTest.class));
-		suite.addTest(new TestSuite(Product2WithFormulaTest.class));			
+		suite.addTest(new TestSuite(Product2WithFormulaTest.class));		
 		suite.addTest(new TestSuite(Product3ChangeActionsOnSearchTest.class));
 		suite.addTest(new TestSuite(Product3Test.class));				
 		suite.addTest(new TestSuite(Product3WithDescriptionsListTest.class));		
-		suite.addTest(new TestSuite(Product3WithGroupTest.class));
+		suite.addTest(new TestSuite(Product3WithGroupTest.class));		
 		suite.addTest(new TestSuite(ProductTest.class));
 		suite.addTest(new TestSuite(ProductWithSectionTest.class));		
 		if (ModuleTestBase.isOX3()) {
 			suite.addTest(new TestSuite(ProgrammerTest.class));
-		}				
+		}							
 		suite.addTest(new TestSuite(PublicJSPTest.class));
 		suite.addTest(new TestSuite(SellerCannotCreateCustomerTest.class));
 		suite.addTest(new TestSuite(SellerJSPTest.class));
@@ -177,10 +177,10 @@ public class XavaSuite extends TestSuite {
 		}		
 		suite.addTest(new TestSuite(TransportCharge2Test.class));		
 		suite.addTest(new TestSuite(TransportChargeTest.class));
-		suite.addTest(new TestSuite(TransportChargeWithDistanceTest.class));
+		suite.addTest(new TestSuite(TransportChargeWithDistanceTest.class));		
 		if (ModuleTestBase.isOX3()) {
 			suite.addTest(new TestSuite(Warehouse2Test.class));
-		}
+		}		
 		return suite;
 	}
 	

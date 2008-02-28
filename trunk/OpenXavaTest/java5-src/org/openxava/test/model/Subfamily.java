@@ -24,10 +24,17 @@ import org.openxava.annotations.*;
 )
 @Tab(name="CompleteSelect",
 	properties="number, description, family",
+	// For Hypersonic
 	baseCondition = 
 		"select ${number}, ${description}, FAMILY.DESCRIPTION " +
 		"from   XAVATEST.SUBFAMILY, XAVATEST.FAMILY " +
-		"where  SUBFAMILY.FAMILY = FAMILY.NUMBER"		
+		"where  SUBFAMILY.FAMILY = FAMILY.NUMBER"
+	/* For AS/400 	
+	baseCondition = 
+		"select ${number}, ${description}, XAVATEST.FAMILY.DESCRIPTION " +
+		"from   XAVATEST.SUBFAMILY, XAVATEST.FAMILY " +
+		"where  XAVATEST.SUBFAMILY.FAMILY = XAVATEST.FAMILY.NUMBER"
+	*/			
 )
 public class Subfamily {
 	
