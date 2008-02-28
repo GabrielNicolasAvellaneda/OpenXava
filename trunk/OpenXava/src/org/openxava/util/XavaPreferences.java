@@ -97,7 +97,7 @@ public class XavaPreferences {
 	}	
 	
 	public String getPersistenceProviderClass() {
-		return getProperties().getProperty("persistenceProviderClass", "org.openxava.model.impl.HibernatePersistenceProvider").trim();
+		return getProperties().getProperty("persistenceProviderClass", "org.openxava.model.impl.JPAPersistenceProvider").trim();
 	}
 	
 	public boolean isMapFacadeAsEJB() {

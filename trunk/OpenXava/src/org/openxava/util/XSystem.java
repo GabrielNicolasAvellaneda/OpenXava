@@ -74,4 +74,15 @@ public class XSystem {
 		Logger.getLogger("org.hibernate").setLevel(XavaPreferences.getInstance().getHibernateJavaLoggingLevel());
 	}
 	
+	/**
+	 * Suitable to use inside a XML as encoding. <p>
+	 */
+	public static String getEncoding() {
+		String encoding = System.getProperty("file.encoding");
+		if (encoding ==null) return "ISO-8859-1";
+		if ("Cp1252".equalsIgnoreCase(encoding)) return "ISO-8859-1"; 
+		if ("utf8".equalsIgnoreCase(encoding)) return "UTF-8";
+		return encoding;	
+	}
+	
 }

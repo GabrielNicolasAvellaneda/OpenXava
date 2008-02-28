@@ -258,6 +258,7 @@ public class XPersistence {
 	public static String getDefaultSchema() {
 		return (String) getPersistenceUnitProperties().get(HIBERNATE_DEFAULT_SCHEMA);
 	}
+	
 	/**
 	 * Change the default schema used by JPA persistence in the current thread. <p>
 	 * 
