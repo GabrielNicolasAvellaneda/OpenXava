@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: JasperReport generation: Invalid encoding name "Cp1252" on some windows, and malformed URL on WebSphere 6.0.
+- Fix: Fails on WebSphere 6.0 (at some level patch). Broken since 2.2.3.
 - XavaException now is a RuntimeException.
 - MapFacade methods do not longer throws RemoteException, instead it now throws SystemException (runtime).
 

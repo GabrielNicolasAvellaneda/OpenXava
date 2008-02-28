@@ -109,11 +109,12 @@ while (it.hasNext()) {
 		<%=style.getFrameContentStartDecoration() %>						
 	<%			} // withFrame
 		%>	
+		<%-- Boolean.toString() for params is for working on WebSphere 6.0 --%>
 		<jsp:include page="detail.jsp"> 
 			<jsp:param name="viewObject" value="<%=viewName%>" />
 			<jsp:param name="propertyPrefix" value="<%=propertyInReferencePrefix%>" />
-			<jsp:param name="first" value="<%=firstForSubdetail%>" /> 
-			<jsp:param name="last" value="<%=!it.hasNext()%>" />
+			<jsp:param name="first" value="<%=Boolean.toString(firstForSubdetail)%>" /> 
+			<jsp:param name="last" value="<%=Boolean.toString(!it.hasNext())%>" />
 		</jsp:include>			
 	<%			if (withFrame) {
 		%>			

@@ -4,7 +4,7 @@
 <wb-resource deploy-path="/" source-path="/web"/>
 <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/ox3-folder"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/ox3-src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/java5-src"/>
 <property name="context-root" value="AccessTracking"/>
 <property name="java-output-path" value="/build/classes/"/>
 </wb-module>
