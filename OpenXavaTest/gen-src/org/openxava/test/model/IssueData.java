@@ -14,6 +14,7 @@ public class IssueData
    private static final long serialVersionUID = 1L;
    private java.lang.String id;
    private java.lang.String _Description;
+   private java.lang.Integer _Worker_id;
 
    public IssueData()
    {
@@ -23,6 +24,7 @@ public class IssueData
    {
       setId(otherData.getId());
       set_Description(otherData.get_Description());
+      set_Worker_id(otherData.get_Worker_id());
 
    }
 
@@ -49,11 +51,20 @@ public class IssueData
       this._Description = _Description;
    }
 
+   public java.lang.Integer get_Worker_id()
+   {
+      return this._Worker_id;
+   }
+   public void set_Worker_id( java.lang.Integer _Worker_id )
+   {
+      this._Worker_id = _Worker_id;
+   }
+
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("id=" + getId() + " " + "_Description=" + get_Description());
+      str.append("id=" + getId() + " " + "_Description=" + get_Description() + " " + "_Worker_id=" + get_Worker_id());
       str.append('}');
 
       return(str.toString());
@@ -82,6 +93,14 @@ public class IssueData
          {
             lEquals = lEquals && this._Description.equals( lTest._Description );
          }
+         if( this._Worker_id == null )
+         {
+            lEquals = lEquals && ( lTest._Worker_id == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Worker_id.equals( lTest._Worker_id );
+         }
 
          return lEquals;
       }
@@ -98,6 +117,8 @@ public class IssueData
       result = 37*result + ((this.id != null) ? this.id.hashCode() : 0);
 
       result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
+
+      result = 37*result + ((this._Worker_id != null) ? this._Worker_id.hashCode() : 0);
 
       return result;
    }

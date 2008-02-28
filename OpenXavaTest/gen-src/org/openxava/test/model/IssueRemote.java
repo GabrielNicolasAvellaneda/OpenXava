@@ -22,6 +22,24 @@ public interface IssueRemote
    public java.util.Collection getComments(  )
       throws java.rmi.RemoteException;
 
+   public org.openxava.test.model.IWorker getWorker(  )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.WorkerRemote getWorkerRemote(  )
+      throws java.rmi.RemoteException;
+
+   public void setWorker( org.openxava.test.model.IWorker newWorker )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.WorkerKey getWorkerKey(  )
+      throws java.rmi.RemoteException;
+
+   public void setWorkerKey( org.openxava.test.model.WorkerKey key )
+      throws java.rmi.RemoteException;
+
+   public java.lang.Integer getWorker_id(  )
+      throws java.rmi.RemoteException;
+
    public org.openxava.test.model.IssueData getData(  )
       throws java.rmi.RemoteException;
 
