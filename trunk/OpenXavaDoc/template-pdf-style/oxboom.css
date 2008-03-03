@@ -2,6 +2,13 @@
 /* written  by Hakon Wium Lie and Bert Bos, November 2005          */
 /* You may reuse this style sheet for any purpose without any fees */
 
+#openxava_logo {
+	border: 0px solid ; width: 500px; height: 53px;
+}
+
+.doc_title {
+	text-align: center;
+}
 
 .wiki #toc {
   display: none;
@@ -9,6 +16,15 @@
 
 .reference_menu {
   display: none;
+}
+
+.wiki pre { 
+	background-color: #EEE; 
+	border: 1px solid #CCC; 
+	padding: 10px; 
+	font-family: monospace;
+	font-size: xx-small;
+	margin: 0em 0em; 	
 }
 
 html { 
@@ -60,11 +76,6 @@ p.author {
   margin-top: 2em;
   text-indent: 0;
   text-align: right;
-}
-
-pre {  
-  margin: 0em 0em; 
-  font-size: 8pt;
 }
 
 a { text-decoration: none; color: black }

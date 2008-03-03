@@ -1,4 +1,6 @@
 org.openxava.actions
+org.openxava.annotations
+org.openxava.annotations.parse
 org.openxava.application.meta
 org.openxava.application.meta.xmlparse
 org.openxava.calculators
@@ -7,6 +9,7 @@ org.openxava.controller
 org.openxava.controller.meta
 org.openxava.controller.meta.xmlparse
 org.openxava.converters
+org.openxava.converters.typeadapters
 org.openxava.ejbx
 org.openxava.filters
 org.openxava.filters.meta
@@ -29,6 +32,7 @@ org.openxava.tab.impl
 org.openxava.tab.meta
 org.openxava.tab.meta.xmlparse
 org.openxava.tests
+org.openxava.types
 org.openxava.util
 org.openxava.util.impl
 org.openxava.util.meta
