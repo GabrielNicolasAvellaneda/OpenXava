@@ -1,6 +1,14 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 3.0 (2008-3-4)
+-----------------------
+- POJOs + Java 5 annotations for defining business components.
+- XavaException now is a RuntimeException.
+- MapFacade methods do not longer throws RemoteException, instead it now throws SystemException (runtime).
+- Fix: JasperReport generation: Invalid encoding name "Cp1252" on some windows, and malformed URL on WebSphere 6.0.
+- Fix: Fails on WebSphere 6.0 (at some level patch). Broken since 2.2.3.
+
 OpenXava 2.2.5 (2008-2-21)
 --------------------------
 - New <on-change-search /> element for <reference-view/> to overwrite the default action for searching when the user type the key.
