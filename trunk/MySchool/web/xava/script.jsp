@@ -1,5 +1,35 @@
 <%@ include file="imports.jsp"%>
 
+<!-- JavaScript for numeric editors -->
+<script type="text/javascript">
+function validateNumeric(ev, max, integer) {		
+	if (ev.which == 0) return true;
+	var charCode = (ev.which) ? ev.which : ev.keyCode;		
+	if (charCode == 0 || charCode == 8) return true;		
+	if (ev.ctrlKey) return true;		
+	var target = window.event ? window.event.srcElement : ev.target;	
+	var text = target.value + String.fromCharCode(charCode);	
+	var numerics = 0;			
+	var textLength = text.length;
+	for (var i=0; i < textLength; i++) {		
+		var theChar = text.charAt(i);		
+		if (theChar >= '0' && theChar <= '9') {
+			numerics++;
+			if (numerics > max) {
+				return false;
+			}
+		}	
+		else if (!integer && !(theChar == ',' || theChar == '.' || theChar == '-')) {
+			return false;
+		}
+		else if (integer && theChar != '-') {
+			return false;
+		}
+	}	
+	return true;
+}
+</script>
+
 <!-- JavaScript for collections and list -->
 
 <script type="text/javascript">

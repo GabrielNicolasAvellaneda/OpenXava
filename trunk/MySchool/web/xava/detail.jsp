@@ -30,13 +30,16 @@ boolean first = !"false".equals(sfirst);
 String slast = request.getParameter("last");
 boolean last = !"false".equals(slast);
 boolean lastWasEditor = false;
+boolean lastWasProperty = false; 
 while (it.hasNext()) {
 	Object m = it.next();
+	lastWasProperty = false; 
 	if (m instanceof MetaProperty) {		
 		MetaProperty p = (MetaProperty) m;		
 		if (!PropertiesSeparator.INSTANCE.equals(m)) {			
 			boolean hasFrame = WebEditors.hasFrame(p);		
 			lastWasEditor = !hasFrame;
+			lastWasProperty = true;
 			String propertyKey= propertyPrefix + p.getName();
 			request.setAttribute(propertyKey, p);
 			String urlEditor = "editor.jsp" // in this way because websphere 6 has problems with jsp:param
@@ -106,11 +109,12 @@ while (it.hasNext()) {
 		<%=style.getFrameContentStartDecoration() %>						
 	<%			} // withFrame
 		%>	
+		<%-- Boolean.toString() for params is for working on WebSphere 6.0 --%>
 		<jsp:include page="detail.jsp"> 
 			<jsp:param name="viewObject" value="<%=viewName%>" />
 			<jsp:param name="propertyPrefix" value="<%=propertyInReferencePrefix%>" />
-			<jsp:param name="first" value="<%=firstForSubdetail%>" /> 
-			<jsp:param name="last" value="<%=!it.hasNext()%>" />
+			<jsp:param name="first" value="<%=Boolean.toString(firstForSubdetail)%>" /> 
+			<jsp:param name="last" value="<%=Boolean.toString(!it.hasNext())%>" />
 		</jsp:include>			
 	<%			if (withFrame) {
 		%>			
@@ -179,8 +183,9 @@ while (it.hasNext()) {
 
 <% 	
 	if (view.isFrame() && 
-		!(last && view.getParent() != null && !view.getParent().isFrame()) && 
-		!(view.isSection() && view.getMembersNames().size() == 1)) {	
+			!(last && view.getParent() != null && !view.getParent().isFrame()) && 
+			!(!lastWasProperty && view.isSection() && view.getMembersNames().size() == 1 
+					&& view.getParent() != null && view.getParent().isFrame())) {		
 %>
 </tr>
 </table>
@@ -189,7 +194,24 @@ while (it.hasNext()) {
 <%
 if (view.hasSections()) { 
 %>
-	<jsp:include page="sections.jsp"/>	
+	<% if (view.isSubview() && !view.isFrame()) { %> 
+	          </tr>                
+              </table>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="4">
+              <table>                
+                  <tr>
+                    <td>
+	<% } %>
+	
+	<jsp:include page="sections.jsp"/>
+	
+	<% if (view.isSubview() && !view.isFrame()) { %>
+		 			</td>
+	<% } %>
+		
 <%
 }
 %>
