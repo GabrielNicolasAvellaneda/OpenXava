@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: JasperReport generation: Invalid encoding name on some windows with WebSphere 6.0.
+- Fix: On Liferay 4.3 with Internet Explorer 7 frames and tabs are not shown when the user is log on.
+
 OpenXava 3.0 (2008-3-4)
 -----------------------
 - POJOs + Java 5 annotations for defining business components.

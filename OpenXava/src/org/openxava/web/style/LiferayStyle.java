@@ -160,7 +160,7 @@ public class LiferayStyle extends Style {
 
 	public String getFrameHeaderStartDecoration() { 		
 		return "<table style='float:left; clear:none'><tr><td>\n" +
-			"<div class='portlet'><div class='portlet-topper'>";		
+			"<div class='portlet'><div class='portlet-topper' style='position: static;'>"; // position: static needed for ie7 + liferay 4.3		
 	}	
 	public String getFrameHeaderEndDecoration() { 
 		return "</div>"; 
@@ -250,7 +250,7 @@ public class LiferayStyle extends Style {
 	}
 		
 	public String getActiveSectionTabStartDecoration() {
-		return "<li class='current'><a href='javascript:void(0)'>"; 
+		return "<li class='current' style='position: static;'><a href='javascript:void(0)'>"; // position: static needed for ie7 + liferay 4.3 
 	}
 	
 	public String getActiveSectionTabEndDecoration() {
@@ -258,7 +258,7 @@ public class LiferayStyle extends Style {
 	}
 	
 	public String getSectionTabStartDecoration() {
-		return "<li>";
+		return "<li style='position: static;'>"; // position: static needed for ie7 + liferay 4.3
 	}
 	
 	public String getSectionTabEndDecoration() {
