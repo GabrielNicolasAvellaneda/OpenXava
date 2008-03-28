@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Max size of textAreaEditor uses Javascript for control max size (even with Ctrl-V).
+- Fix: Select for row count of list fails when last showed database column ends with 'FROM'.
 - Fix: JasperReport generation: Invalid encoding name on some windows with WebSphere 6.0.
 - Fix: On Liferay 4.3 with Internet Explorer 7 frames and tabs are not shown when the user is log on.
 
