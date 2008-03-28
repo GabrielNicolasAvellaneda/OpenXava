@@ -10,7 +10,6 @@ import org.openxava.calculators.*;
 import org.openxava.jpa.*;
 import org.openxava.test.calculators.*;
 import org.openxava.test.validators.*;
-import org.openxava.util.*;
 
 /**
  * Example of reference with descriptions-list.
