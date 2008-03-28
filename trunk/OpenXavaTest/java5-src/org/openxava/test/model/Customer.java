@@ -138,7 +138,7 @@ public class Customer implements IWithName {
 	@Stereotype("WEBURL")
 	private String website;
 		
-	@Stereotype("MEMO") @Column(length=400)
+	@Stereotype("MEMO") @Column(length=400)	
 	private String remarks;
 		
 	@Embedded 

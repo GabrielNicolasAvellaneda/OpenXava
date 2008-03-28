@@ -1,7 +1,16 @@
 <%@ include file="imports.jsp"%>
 
-<!-- JavaScript for numeric editors -->
+
 <script type="text/javascript">
+<%-- JavaScript for text area maxsize --%>
+function limitLength(ev, max) { 
+	var target = window.event ? window.event.srcElement : ev.target;			
+	if ( target.value.length > max ) {
+		target.value = target.value.substring(0, max);		
+	}	
+}
+
+<%-- JavaScript for numeric editors --%>
 function validateNumeric(ev, max, integer) {		
 	if (ev.which == 0) return true;
 	var charCode = (ev.which) ? ev.which : ev.keyCode;		
@@ -28,11 +37,8 @@ function validateNumeric(ev, max, integer) {
 	}	
 	return true;
 }
-</script>
 
-<!-- JavaScript for collections and list -->
-
-<script type="text/javascript">
+<%-- JavaScript for collections and list --%>
 function manageFilterRow(id)
 {
     var img = document.getElementById("xava-filter-image-" + id);
