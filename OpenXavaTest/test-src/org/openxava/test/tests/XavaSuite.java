@@ -141,7 +141,10 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(Product3ChangeActionsOnSearchTest.class));
 		suite.addTest(new TestSuite(Product3Test.class));				
 		suite.addTest(new TestSuite(Product3WithDescriptionsListTest.class));		
-		suite.addTest(new TestSuite(Product3WithGroupTest.class));		
+		suite.addTest(new TestSuite(Product3WithGroupTest.class));
+		if (ModuleTestBase.isOX3()) {
+			suite.addTest(new TestSuite(Product4Test.class));
+		}
 		suite.addTest(new TestSuite(ProductTest.class));
 		suite.addTest(new TestSuite(ProductWithSectionTest.class));		
 		if (ModuleTestBase.isOX3()) {
