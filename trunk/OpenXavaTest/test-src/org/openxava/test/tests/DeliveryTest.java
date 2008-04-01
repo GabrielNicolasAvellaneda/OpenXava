@@ -947,4 +947,15 @@ public class DeliveryTest extends ModuleTestBase {
 		assertTrue(type + " expected", Arrays.asList(types).contains(type));
 	}
 	
+	public void testNewGoFirstSection() throws Exception {
+		execute("CRUD.new");
+		assertExists("advice");
+		assertNotExists("incidents");
+		execute("Sections.change", "activeSection=1");
+		assertExists("incidents");
+		assertNotExists("advice");
+		execute("CRUD.new");
+		assertExists("advice");
+		assertNotExists("incidents");
+	}
 }
