@@ -7,10 +7,9 @@
 
 <project name="CrearNuevoProject" default="crearNuevoProyecto" basedir=".">
 
-	<!-- Cambia el valor de las siguientes propiedades -->
-	<property name="proyecto" value="PON AQUI EL NOMBRE DEL PROYECTO" />
-	<property name="fuentedatos" value="${proyecto}DS" />
-	
+	<input addproperty="proyecto" message="¿Cuál es el nombre de tu proyecto?"/>
+	<input addproperty="fuentedatos" message="¿Cuál es tu fuente de datos?" defaultValue="${proyecto}DS"/>	
+		
 	<target name="crearNuevoProyecto">		
 		<mkdir dir="../${proyecto}"/>
 		<copy todir="../${proyecto}" overwrite="true">
