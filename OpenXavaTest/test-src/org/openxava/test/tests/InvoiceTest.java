@@ -785,6 +785,7 @@ public class InvoiceTest extends ModuleTestBase {
 		
 		//ejecutar("CRUD.save"); // It is not necessary delete for record the deleted of a row 		
 		execute("CRUD.new");
+		execute("Sections.change", "activeSection=1");
 		assertNoErrors();
 		assertCollectionRowCount("details", 0);
 		
