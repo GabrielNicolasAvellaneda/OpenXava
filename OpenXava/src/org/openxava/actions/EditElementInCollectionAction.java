@@ -22,10 +22,8 @@ public class EditElementInCollectionAction extends CollectionElementViewBaseActi
 		Collection elements = getCollectionElementView().getCollectionValues(); 
 		if (elements == null) return;
 		if (elements instanceof List) {
-			Map values = (Map) ((List) elements).get(getRow());			
-			if (!values.keySet().equals(getCollectionElementView().getValues().keySet())) {
-				values = MapFacade.getValues(getCollectionElementView().getModelName(), values, getCollectionElementView().getMembersNames());
-			}								
+			Map keys = (Map) ((List) elements).get(getRow());			
+			Map	values = MapFacade.getValues(getCollectionElementView().getModelName(), keys, getCollectionElementView().getMembersNames());
 			getCollectionElementView().setValues(values);			
 			getCollectionElementView().setCollectionEditingRow(getRow());
 		}

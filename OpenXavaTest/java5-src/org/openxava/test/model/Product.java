@@ -56,7 +56,7 @@ import org.openxava.test.validators.*;
 		"}"		
 	),
 	@View( name="Simple", members = "number, description, unitPrice" ),
-	@View( name="EditPrice", members = "number, description, unitPrice")
+	@View( name="EditPrice", members = "number, description, unitPrice")	
 })
 
 @Tab(properties = "number, description, unitPrice, unitPriceInPesetas")

@@ -33,8 +33,8 @@ public class InvoiceDetail2 {
 	private BigDecimal unitPrice;
 	
 	@ManyToOne(fetch=FetchType.LAZY, optional=false)
-	@ReferenceView("Simple")
-	private Product product;
+	@ReferenceView("SimpleWithFamily") 
+	private Product2 product;
 	
 	@Stereotype("MONEY") @Depends("unitPrice, quantity")
 	public BigDecimal getAmount() {
@@ -94,13 +94,13 @@ public class InvoiceDetail2 {
 
 
 
-	public Product getProduct() {
+	public Product2 getProduct() {
 		return product;
 	}
 
 
 
-	public void setProduct(Product product) {
+	public void setProduct(Product2 product) {
 		this.product = product;
 	}
 
