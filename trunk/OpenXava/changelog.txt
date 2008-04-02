@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: On edit detail of collections data of nested references is not loaded correctly.
+- Ant creation wizard on template projects asks for the project name. Now it's not needed edit the ant build files.
 - Action 'new' of CRUD put the view to the initial section.
 - Max size of textAreaEditor uses Javascript for control max size (even with Ctrl-V).
 - Fix: Select for row count of list fails when last showed database column ends with 'FROM'.

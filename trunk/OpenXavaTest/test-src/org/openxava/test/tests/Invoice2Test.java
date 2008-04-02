@@ -33,7 +33,7 @@ public class Invoice2Test extends ModuleTestBase {
 		assertNoErrors();
 	}
 	
-	public void testCollectionOrderedByAPropertyOfAReference() throws Exception {
+	public void testCollectionOrderedByAPropertyOfAReference_valueOfNestedRerenceInsideAnEmbeddedCollection() throws Exception {
 		execute("CRUD.new");
 		setValue("year", "2002");
 		setValue("number", "1");
@@ -41,6 +41,14 @@ public class Invoice2Test extends ModuleTestBase {
 		assertCollectionRowCount("details", 2);
 		assertValueInCollection("details", 0, "product.description", "XAVA");
 		assertValueInCollection("details", 1, "product.description", "IBM ESERVER ISERIES 270");
+		
+		execute("Collection.edit", "row=0,viewObject=xava_view_details");
+		assertValue("details.product.description", "XAVA");
+		assertValue("details.product.family.description", "SOFTWARE");
+		
+		execute("Collection.edit", "row=1,viewObject=xava_view_details");
+		assertValue("details.product.description", "IBM ESERVER ISERIES 270");
+		assertValue("details.product.family.description", "HARDWARE");		
 	}
 							
 }

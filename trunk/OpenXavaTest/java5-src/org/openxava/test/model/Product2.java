@@ -60,7 +60,8 @@ import org.openxava.test.validators.*;
 		"subfamily;" +
 		"formula;" +
 		"unitPrice, unitPriceInPesetas;"
-	)
+	),
+	@View( name="SimpleWithFamily", members = "number, description, unitPrice; family")
 })
 @Tab(properties="number, description, family.description, subfamily.description")
 
@@ -86,8 +87,8 @@ public class Product2 {
 	@ManyToOne(optional=false, fetch=FetchType.LAZY) @JoinColumn(name="FAMILY")
 	@DefaultValueCalculator(value=IntegerCalculator.class, properties=
 		@PropertyValue(name="value", value="2")
-	)
-	@DescriptionsList(orderByKey=true)
+	)	
+	@DescriptionsList(orderByKey=true, notForViews="SimpleWithFamily") 
 	private Family2 family;	
 	
 	@ManyToOne(optional=false, fetch=FetchType.LAZY) @JoinColumn(name="SUBFAMILY") @NoCreate

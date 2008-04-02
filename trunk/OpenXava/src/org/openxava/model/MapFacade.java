@@ -355,7 +355,7 @@ public class MapFacade {
 		if (keyValues.isEmpty()) {
 			throw new ObjectNotFoundException(XavaResources.getString("empty_key_object_not_found", modelName));						
 		}
-		try {
+		try {			
 			return getImpl(modelName).getValues(Users.getCurrent(), modelName, keyValues, memberNames);
 		}
 		catch (RemoteException ex) {
@@ -584,7 +584,7 @@ public class MapFacade {
 	 * @param values  New values to set. Not null. <i>By value</i> semantics.
 	 * @exception ObjectNotFoundException  If object with this key does not exist 
 	 * @exception FinderException  Logic problem on find.	
-	 * @exception ValidationException  Data validation problems.	 * 
+	 * @exception ValidationException  Data validation problems.	  
 	 * @exception XavaException  Any problem related to OpenXava. Rollback transaction.
 	 * @exception SystemException  System problem. Rollback transaction.
 	 */	

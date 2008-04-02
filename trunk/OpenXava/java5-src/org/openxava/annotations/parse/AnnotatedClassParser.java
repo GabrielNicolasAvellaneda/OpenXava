@@ -2074,7 +2074,7 @@ public class AnnotatedClassParser {
 	
 	private static URL getFileURL(String file) {  
 		try {
-			for (Enumeration en=ClassLoader.getSystemResources("xava.properties"); en.hasMoreElements(); ) {
+			for (Enumeration en=ClassLoader.getSystemResources(file); en.hasMoreElements(); ) {
 				URL url = (URL) en.nextElement();
 				if (url != null) {
 					if ("file".equals(url.getProtocol())) {
