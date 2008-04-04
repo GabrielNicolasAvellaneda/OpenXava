@@ -11,7 +11,7 @@ import org.openxava.test.calculators.*;
 import org.openxava.test.validators.*;
 
 /**
- * This example uses stereotypes for family an subfamily.
+ * This example uses stereotypes for family and subfamily.
  * It is better to use reference (like in Product2), but
  * therefore it's show some features more advances of stereotypes.
  * 

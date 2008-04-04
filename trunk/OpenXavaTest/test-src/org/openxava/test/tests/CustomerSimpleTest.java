@@ -18,5 +18,11 @@ public class CustomerSimpleTest extends ModuleTestBase {
 		execute("Reference.search", "keyProperty=xava.Customer.address.state.id");
 		assertNoErrors();
 	}
+	
+	public void testFormatterUsedWhenEditorOnProperty() throws Exception {
+		assertValueInList(0, 0, "Xavi");
+		execute("Mode.detailAndFirst");
+		assertValue("name", "Xavi"); 
+	}
 		
 }

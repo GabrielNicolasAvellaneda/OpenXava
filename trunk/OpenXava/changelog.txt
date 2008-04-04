@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Formatter is not applied when an editor is assigned via @Editor annotation.
 - Fix: On edit detail of collections data of nested references is not loaded correctly.
 - Ant creation wizard on template projects asks for the project name. Now it's not needed edit the ant build files.
 - Action 'new' of CRUD put the view to the initial section.

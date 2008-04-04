@@ -2,8 +2,6 @@ package org.openxava.web;
 
 import javax.servlet.http.*;
 
-
-
 import org.apache.commons.logging.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -19,28 +17,28 @@ public class WebEditors {
 	private static Log log = LogFactory.getLog(WebEditors.class);
 	final private static String PREFIX = "editors/";
 	
-	public static boolean mustToFormat(MetaProperty p) throws XavaException {
+	public static boolean mustToFormat(MetaProperty p, String viewName) throws XavaException { 
 		try {
-			return MetaWebEditors.getMetaEditorFor(p).isFormat();
+			return getMetaEditorFor(p, viewName).isFormat(); 
 		}
 		catch (ElementNotFoundException ex) {
 			return true; 
 		}
 	}
 	
-	public static boolean hasFrame(MetaProperty p) throws XavaException {
+	public static boolean hasFrame(MetaProperty p, String viewName) throws XavaException { 
 		try {
-			return MetaWebEditors.getMetaEditorFor(p).isFrame();
+			return getMetaEditorFor(p, viewName).isFrame(); 
 		}
 		catch (ElementNotFoundException ex) {
 			return false; 
 		}
 	}	
 	
-	public static Object parse(HttpServletRequest request, MetaProperty p, String [] strings, Messages errors) throws XavaException { 
+	public static Object parse(HttpServletRequest request, MetaProperty p, String [] strings, Messages errors, String viewName) throws XavaException { 
 		try {
 			String string = strings == null?null:strings[0];			
-			MetaEditor ed = MetaWebEditors.getMetaEditorFor(p);			
+			MetaEditor ed = getMetaEditorFor(p, viewName); 			
 			if (ed.hasFormatter()) { 								
 				return ed.getFormatter().parse(request, string);
 			}
@@ -66,14 +64,14 @@ public class WebEditors {
 		}		
 	}
 		
-	public static Object parse(HttpServletRequest request, MetaProperty p, String string, Messages errors) throws XavaException {
+	public static Object parse(HttpServletRequest request, MetaProperty p, String string, Messages errors, String viewName) throws XavaException { 
 		String [] strings = string == null?null:new String [] { string };
-		return parse(request, p, strings, errors);
+		return parse(request, p, strings, errors, viewName); 
 	}
 		
-	public static String format(HttpServletRequest request, MetaProperty p, Object object, Messages errors) throws XavaException {
-		Object result = formatToStringOrArray(request, p, object, errors);
-		if (result instanceof String []) return arrayToString((String []) result);
+	public static String format(HttpServletRequest request, MetaProperty p, Object object, Messages errors, String viewName) throws XavaException {
+		Object result = formatToStringOrArray(request, p, object, errors, viewName);
+		if (result instanceof String []) return arrayToString((String []) result);		
 		return (String) result;
 	}
 	
@@ -90,9 +88,9 @@ public class WebEditors {
 	/** 
 	 * @return If has a multiple converter return a array of string else return a string
 	 */
-	public static Object formatToStringOrArray(HttpServletRequest request, MetaProperty p, Object object, Messages errors) throws XavaException {
+	public static Object formatToStringOrArray(HttpServletRequest request, MetaProperty p, Object object, Messages errors, String viewName) throws XavaException { 
 		try {
-			MetaEditor ed = MetaWebEditors.getMetaEditorFor(p);
+			MetaEditor ed = getMetaEditorFor(p, viewName); 			
 			if (ed.hasFormatter()) {				
 				return ed.getFormatter().format(request, object);
 			}
@@ -117,26 +115,25 @@ public class WebEditors {
 		}
 	}
 	
-	
-	public static String getUrl(MetaProperty p) {
+	public static String getUrl(MetaProperty p, String viewName) throws XavaException {
 		try {						
-			return PREFIX + MetaWebEditors.getMetaEditorFor(p).getUrl();
+			return PREFIX + getMetaEditorFor(p, viewName).getUrl();
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
 			return PREFIX + "notAvailableEditor.jsp";
-		}
-	}
-	
-	public static String getUrl(MetaProperty p, String viewName) throws XavaException { 	
+		}		
+	}	
+		
+	public static MetaEditor getMetaEditorFor(MetaProperty p, String viewName) throws ElementNotFoundException, XavaException {
 		if (p.getMetaModel() != null) {
 			try {				
-				MetaView metaView = p.getMetaModel().getMetaView(viewName);
-				String editorName = metaView.getEditorForProperty(p);
+				MetaView metaView = p.getMetaModel().getMetaView(viewName);				
+				String editorName = metaView.getEditorForProperty(p);				
 				if (!Is.emptyString(editorName)) {
 					MetaEditor metaEditor = MetaWebEditors.getMetaEditorByName(editorName);
 					if (metaEditor != null) {
-						return PREFIX + metaEditor.getUrl();
+						return metaEditor;
 					}
 					else {
 						log.warn(XavaResources.getString("editor_by_name_for_property_not_found", editorName, p.getName()));
@@ -147,16 +144,16 @@ public class WebEditors {
 				log.warn(XavaResources.getString("editor_for_property_problem", p.getName()));				
 			}
 		}
-		return getUrl(p);		
-	}	
+		return MetaWebEditors.getMetaEditorFor(p);
+	}
 		
 	/** 
 	 * If a depends on b
 	 */
-	public static boolean depends(MetaProperty a, MetaProperty b) {		
+	public static boolean depends(MetaProperty a, MetaProperty b, String viewName) {		
 		try {			
 			if (a.depends(b)) return true;
-			return MetaWebEditors.getMetaEditorFor(a).depends(b);
+			return getMetaEditorFor(a, viewName).depends(b);
 		}
 		catch (ElementNotFoundException ex) {
 			return false;

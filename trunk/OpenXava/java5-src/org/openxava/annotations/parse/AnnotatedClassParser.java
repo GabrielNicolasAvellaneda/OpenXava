@@ -2066,9 +2066,9 @@ public class AnnotatedClassParser {
 	}
 
 	private static URL getAnchorURL() {  
-		URL url = getFileURL("/xava.properties");		
-		if (url == null) url = getFileURL("/application.xml");
-		if (url == null) url = getFileURL("/aplicacion.xml");
+		URL url = getFileURL("xava.properties");		
+		if (url == null) url = getFileURL("application.xml");
+		if (url == null) url = getFileURL("aplicacion.xml");
 		return url;
 	}
 	
