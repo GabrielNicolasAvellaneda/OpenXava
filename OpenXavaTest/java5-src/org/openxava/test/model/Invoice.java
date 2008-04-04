@@ -158,7 +158,7 @@ public class Invoice {
 	
 	@OneToMany (mappedBy="invoice", cascade=CascadeType.REMOVE)
 	@OrderBy("serviceType desc") @org.hibernate.validator.Size(min=1)
-	@ListProperties(forViews="DEFAULT", value="serviceType, product.description, product.unitPriceInPesetas, quantity, unitPrice, amount, free")
+	@ListProperties(forViews="DEFAULT", value="serviceType, product.description, product.unitPriceInPesetas, quantity, unitPrice, amount, free")	
 	@EditAction(forViews="DEFAULT", value="Invoice.editDetail")
 	@DetailAction(forViews="DEFAULT", value="Invoice.viewProduct")
 	@ReadOnly(forViews="OnlyReadDetails")

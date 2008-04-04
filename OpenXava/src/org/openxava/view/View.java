@@ -1744,9 +1744,9 @@ public class View implements java.io.Serializable {
 					String propertyKey= "xava." + qualifier + "." + p.getName();					
 					String valueKey = propertyKey + ".value";
 					String [] results = getRequest().getParameterValues(propertyKey);
-					Object value = WebEditors.parse(getRequest(), p, results, getErrors());
+					Object value = WebEditors.parse(getRequest(), p, results, getErrors(), getViewName());
 					boolean isHiddenKeyWithoutValue = p.isHidden() && (results == null); // for not reset hidden values					
-					if (!isHiddenKeyWithoutValue && WebEditors.mustToFormat(p)) { 
+					if (!isHiddenKeyWithoutValue && WebEditors.mustToFormat(p, getViewName())) { 
 						getRequest().setAttribute(valueKey, value);																				
 						trySetValue(p.getName(), getRequest().getAttribute(valueKey));
 					}											
@@ -1845,10 +1845,10 @@ public class View implements java.io.Serializable {
 			Object propertyValue = null;
 			if (st.hasMoreTokens()) { // if not then null is assumed. This is a case of empty value
 				String stringPropertyValue = st.nextToken();
-				propertyValue = WebEditors.parse(getRequest(), p, stringPropertyValue, getErrors());									
+				propertyValue = WebEditors.parse(getRequest(), p, stringPropertyValue, getErrors(), getViewName());									
 			}			
 			String valueKey = qualifier + "." + ref.getName() + "." + propertyName + ".value";			 
-			if (WebEditors.mustToFormat(p)) {				
+			if (WebEditors.mustToFormat(p, getViewName())) {				
 				getRequest().setAttribute(valueKey, propertyValue);
 				trySetValue(ref.getName() + "." + p.getName(), propertyValue);
 			}									
@@ -2242,7 +2242,7 @@ public class View implements java.io.Serializable {
 				Object element = (Object) it.next();				
 				if (isMetaProperty(element)) {
 					MetaProperty pro = (MetaProperty) element;					
-					if (WebEditors.depends(pro, p)) {				
+					if (WebEditors.depends(pro, p, getViewName())) {				
 						return true;
 					}
 				}
@@ -2261,7 +2261,7 @@ public class View implements java.io.Serializable {
 					if (pro.getPropertyNamesThatIDepend().contains(p.getName())) {
 						return true;
 					}										
-					if (WebEditors.depends(pro, p)) {				
+					if (WebEditors.depends(pro, p, getViewName())) {				
 						return true;
 					}
 				}

@@ -115,6 +115,7 @@ public class Customer implements IWithName {
 	@Required @Stereotype("PERSON_NAME")  
 	@OnChange(OnChangeCustomerNameAction.class)
 	@ReadOnly(forViews="SomeMembersReadOnly")
+	@Editor(forViews="SimpleStateAsForm", value="JbyXName")
 	private String name;
 	
 	@Required 

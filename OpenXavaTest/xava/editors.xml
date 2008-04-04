@@ -23,13 +23,22 @@
 		<for-stereotype stereotype="NO_FORMATING_STRING" />
 	</editor>
 
-	<editor url="textEditor.jsp">
+	<editor name="PersonName" url="textEditor.jsp">
 		<formatter
 			class="org.openxava.test.formatters.PersonNameFormatter">
 			<set property="firstLetterInUpperCase" value="true" />
 		</formatter>
 		<for-stereotype stereotype="PERSON_NAME" />
 	</editor>
+	
+	
+	<editor name="JbyXName" url="textEditor.jsp">
+		<formatter
+			class="org.openxava.test.formatters.JbyXNameFormatter">
+			<set property="firstLetterInUpperCase" value="true" />
+		</formatter>		
+	</editor>
+	
 
 	<editor url="textEditor.jsp">
 		<for-model-property model="Product" property="unitPrice" />

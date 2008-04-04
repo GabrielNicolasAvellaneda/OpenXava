@@ -146,13 +146,13 @@ else {
 			script = "onblur='executeXavaAction('', false, " + formName + ", \"" + subview.getSaveCollectionElementAction() + "\", \"" + argv + "\")'";
 		}
 		Object value = request.getAttribute(propertyKey + ".value");
-		if (WebEditors.mustToFormat(p)) {
-			String fvalue = WebEditors.format(request, p, value, errors);
+		if (WebEditors.mustToFormat(p, view.getViewName())) {
+			String fvalue = WebEditors.format(request, p, value, errors, view.getViewName());
 			request.setAttribute(propertyKey + ".fvalue", fvalue);
 		}		
 	%>
 	<td>
-		<jsp:include page="<%=WebEditors.getUrl(p)%>">
+		<jsp:include page="<%=WebEditors.getUrl(p, view.getViewName())%>">
 			<jsp:param name="propertyKey" value="<%=propertyKey%>"/>
 			<jsp:param name="script" value="<%=script%>"/>
 			<jsp:param name="editable" value="true"/>

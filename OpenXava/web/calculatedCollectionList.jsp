@@ -63,7 +63,7 @@ while (itAggregates.hasNext()) {
 			}
 		}
 		else {
-			fvalue = WebEditors.format(request, p, value, errors);	
+			fvalue = WebEditors.format(request, p, value, errors, view.getViewName());	
 		}
 %>
 	<td class="<%=cssCellClass%>" <%=align%>><%=fvalue%>&nbsp;</td>

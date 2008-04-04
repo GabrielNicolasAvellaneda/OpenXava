@@ -64,8 +64,8 @@ public class EditorTag extends TagSupport {
 			}
 			editorURL = editorURL + nexus + maxSize + "script="+script+"&editable="+editable+"&propertyKey="+propertyKey;
 			
-			if (org.openxava.web.WebEditors.mustToFormat(metaProperty)) {
-				Object fvalue = org.openxava.web.WebEditors.formatToStringOrArray(request, metaProperty, value, errors);
+			if (org.openxava.web.WebEditors.mustToFormat(metaProperty, view.getViewName())) {
+				Object fvalue = org.openxava.web.WebEditors.formatToStringOrArray(request, metaProperty, value, errors, view.getViewName());
 				request.setAttribute(propertyKey + ".fvalue", fvalue);
 			}
 			
