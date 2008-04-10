@@ -2,6 +2,7 @@ package org.openxava.test.model;
 
 import javax.persistence.*;
 
+import org.hibernate.validator.*;
 import org.openxava.annotations.*;
 
 /**
@@ -16,7 +17,7 @@ public class DrivingLicence {
 	@Id @Column(length=2) @Stereotype("NO_FORMATING_STRING")
 	private String type;
 	
-	@Id 
+	@Id @Max(2)  
 	private int level;
 	
 	@Column(length=40) @Required

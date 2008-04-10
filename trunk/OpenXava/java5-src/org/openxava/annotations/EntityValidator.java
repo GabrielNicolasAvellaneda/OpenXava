@@ -2,6 +2,9 @@ package org.openxava.annotations;
 
 import java.lang.annotation.*;
 
+import org.hibernate.validator.*;
+import org.openxava.validators.hibernate.*;
+
 /**
  * This validator allows to define a validation at entity level. <p>
  * 
@@ -25,11 +28,18 @@ import java.lang.annotation.*;
  * &nbsp;...
  * </pre>
  *
+ * <code>EntityValidator</code> is also implemented as a Hibernate validation, 
+ * therefore it's executed when you save using JPA or Hibernate API, with the 
+ * exception of onlyOnCreate=true, in this last case the validation is only applied when
+ * you save with OpenXava (using {@link org.openxava.model.MapFacade} or standard
+ * OX actions).<br>
+ *
  * @author Javier Paniza
  */
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE })
+@ValidatorClass(EntityValidatorValidator.class) 
 public @interface EntityValidator {
 	
 	/**
@@ -49,4 +59,5 @@ public @interface EntityValidator {
 	 */
 	boolean onlyOnCreate() default false;
 	
+	String message() default "openxava.entityValidator";
 }

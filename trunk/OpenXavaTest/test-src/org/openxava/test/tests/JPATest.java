@@ -1,9 +1,5 @@
 package org.openxava.test.tests;
 
-import java.util.*;
-
-import javax.persistence.*;
-
 import org.openxava.jpa.*;
 import org.openxava.test.model.*;
 import org.openxava.util.*;
@@ -34,6 +30,7 @@ public class JPATest extends TestCase {
 		Subfamily sf = new Subfamily();
 		sf.setNumber(77);
 		sf.setDescription("PROVA JUNIT 77");
+		sf.setFamilyNumber(1);
 		XPersistence.getManager().persist(sf);
 		XPersistence.getManager().flush();
 		
