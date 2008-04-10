@@ -1,5 +1,8 @@
 package org.openxava.test.tests;
 
+import javax.persistence.*;
+
+import org.hibernate.validator.*;
 import org.openxava.jpa.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
@@ -96,8 +99,10 @@ public class DeliveryTypeTest extends ModuleTestBase {
 		delivery.setType(deliveryType);
 		delivery.setNumber(66);
 		delivery.setDescription("JUNIT FOR DELIVERY TYPE");
+		delivery.setDate(new java.util.Date());
+		delivery.setAdvice("JUNIT ADVICE");
 		XPersistence.getManager().persist(delivery);		
-		XPersistence.commit();				
+		XPersistence.commit();
 				
 		execute("CRUD.delete");		
 		assertError("Delivery type 66 can not delete because it is used in deliveries");

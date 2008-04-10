@@ -2,6 +2,9 @@ package org.openxava.annotations;
 
 import java.lang.annotation.*;
 
+import org.hibernate.validator.*;
+import org.openxava.validators.hibernate.*;
+
 /**
  * Indicates if this property or reference is required. <p>
  * 
@@ -24,13 +27,19 @@ import java.lang.annotation.*;
  * &nbsp;private State state;
  * </pre>
  * That is, for OpenXava <code>@ManyToOne(optional=false)</code> is synonymous of
- * <code>@{@link Required}</code>. 
+ * <code>@{@link Required}</code>.
+ * 
+ * <code>Required</code> is also implemented as a Hibernate validation, 
+ * therefore it's executed when you save using JPA or Hibernate API.<br>
  *  
  * @author Javier Paniza
  */
 
+@ValidatorClass(RequiredValidator.class) 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD, ElementType.METHOD })
 public @interface Required {
+	
+	String message() default "required"; 
 	
 }

@@ -47,7 +47,12 @@ public class XavaSuite extends TestSuite {
 	public static Test suite() {		
 		TestSuite suite = new TestSuite();		
 				
-		suite.addTest(new TestSuite(WarehouseTest.class));			
+		suite.addTest(new TestSuite(WarehouseTest.class));
+		
+		if (ModuleTestBase.isOX3()) {
+			suite.addTest(new TestSuite(AnnotatedPOJOTest.class));
+		}
+		
 		suite.addTest(new TestSuite(CarrierTest.class));
 		suite.addTest(new TestSuite(CarrierWithCalculatedFellowsTest.class));
 		suite.addTest(new TestSuite(CarrierWithReadOnlyCalculatedFellowsTest.class));
@@ -81,6 +86,9 @@ public class XavaSuite extends TestSuite {
 			suite.addTest(new TestSuite(DescriptionTest.class));
 		}		
 		suite.addTest(new TestSuite(DriverTest.class));		
+		if (ModuleTestBase.isOX3()) {
+			suite.addTest(new TestSuite(DrivingLicenceTest.class));
+		}		
 		try {
 			Class ejbTestClass = Class.forName("org.openxava.test.tests.EJBTest");
 			if (XavaPreferences.getInstance().isEJB2Persistence()) {
@@ -89,7 +97,7 @@ public class XavaSuite extends TestSuite {
 		}
 		catch (ClassNotFoundException ex) {
 			log.warn("EJBTest does not found in classpath, test will not be executed");
-		}
+		}		
 		suite.addTest(new TestSuite(FamilyListOnlyTest.class));		
 		suite.addTest(new TestSuite(FamilyTest.class));		
 		suite.addTest(new TestSuite(FamilyWithInheritanceControllerTest.class));

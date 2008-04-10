@@ -5,8 +5,10 @@ import java.rmi.*;
 import java.text.*;
 import java.util.*;
 
+import javax.persistence.*;
 import javax.rmi.*;
 
+import org.hibernate.validator.*;
 import org.openxava.jpa.*;
 import org.openxava.test.calculators.*;
 import org.openxava.test.model.*;
@@ -1157,10 +1159,12 @@ public class InvoiceTest extends ModuleTestBase {
 		delivery.setNumber(666);
 		delivery.setDate(Dates.create(22,2,2004));
 		delivery.setDescription("Delivery JUNIT 666");
-		delivery.setRemarks("FOUR\nLINES\nCUATRO\nLINEAS"); // It's used in DeliveriesRemarks2002Test 
+		delivery.setRemarks("FOUR\nLINES\nCUATRO\nLINEAS"); // It's used in DeliveriesRemarks2002Test
+		delivery.setAdvice("JUNIT ADVICE");
 				
 		XPersistence.getManager().persist(delivery);
 		XPersistence.commit();
+		
 	}
 	
 	

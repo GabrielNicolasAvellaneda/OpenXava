@@ -7,7 +7,6 @@ import javax.ejb.*;
 import javax.persistence.*;
 
 import org.apache.commons.logging.*;
-import org.hibernate.validator.*;
 import org.openxava.jpa.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -66,20 +65,8 @@ public class JPAPersistenceProvider extends POJOPersistenceProviderBase {
 	}
 
 	
-	public void flush() {
-		try {
-			XPersistence.getManager().flush();
-		}
-		catch (InvalidStateException ex) {
-			log.info("Validation message=" + ex.getLocalizedMessage());
-			InvalidValue [] invalidValues = ex.getInvalidValues();
-			for (int i=0; i < invalidValues.length; i++) {
-				log.info("BeanClass=" + invalidValues[i].getBeanClass()); //  tmp
-				log.info("PropertyName=" + invalidValues[i].getPropertyName() ); //  tmp
-				log.info("Message=" + invalidValues[i].getMessage()); //  tmp
-				log.info("Value=" + invalidValues[i].getValue()); //  tmp
-			}
-		}		
+	public void flush() {		
+		XPersistence.getManager().flush();				
 	}
 
 	protected Object createQuery(String query) { 		
@@ -97,9 +84,18 @@ public class JPAPersistenceProvider extends POJOPersistenceProviderBase {
 	}
 
 	public void refreshIfManaged(Object object) {
-		if (XPersistence.getManager().contains(object)) {
+		if (isManaged(object)) {
 			XPersistence.getManager().refresh(object);		
 		}
+	}
+	
+	private boolean isManaged(Object object) { 
+		try {
+			return XPersistence.getManager().contains(object);
+		}
+		catch (IllegalArgumentException ex) {
+			return false; // Surely it's not annotated with @Entity
+		}		
 	}
 
 }

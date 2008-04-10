@@ -2,6 +2,7 @@ package org.openxava.controller;
 
 import java.util.*;
 
+import javax.persistence.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
@@ -9,6 +10,7 @@ import org.apache.commons.fileupload.*;
 import org.apache.commons.fileupload.disk.*;
 import org.apache.commons.fileupload.servlet.*;
 import org.apache.commons.logging.*;
+import org.hibernate.validator.*;
 
 
 import org.openxava.actions.*;
@@ -446,18 +448,54 @@ public class ModuleManager {
 			messages.removeAll();
 			doRollback();			
 		}
-		catch (Exception ex) {			
-			log.error(ex.getMessage(), ex);
-			if (metaAction != null) {
-				errors.add("no_execute_action", metaAction.getId(), ex.getLocalizedMessage());
+		catch (RollbackException ex) {
+			if (ex.getCause() instanceof InvalidStateException) {
+				processInvalidStateException(metaAction, errors, messages, (InvalidStateException) ex.getCause());				
 			}
 			else {
-				errors.add("no_execute_action", "", ex.getLocalizedMessage());
+				processException(metaAction, errors, messages, ex);
 			}
-			messages.removeAll();
+			doRollback();
+		}
+		catch (InvalidStateException ex) {			
+			processInvalidStateException(metaAction, errors, messages, ex);				
+			doRollback();
+		}				
+		catch (Exception ex) {			
+			processException(metaAction, errors, messages, ex);
 			doRollback();			
 		}				
 		
+	}
+
+	private void processInvalidStateException(MetaAction metaAction, Messages errors, Messages messages, InvalidStateException ex) {
+		InvalidValue [] invalidValues = ex.getInvalidValues();
+		for (int i=0; i<invalidValues.length; i++) {
+			errors.add("invalid_state", 
+					invalidValues[i].getPropertyName(), 
+					getSimpleClassName(invalidValues[i].getBeanClass()), 
+					invalidValues[i].getMessage(), 
+					invalidValues[i].getValue());			
+		}
+		messages.removeAll();		
+	}
+
+	// We use this method, instead of getClass().getSimpleName()
+	// to be compiled with 1.4
+	private String getSimpleClassName(Class beanClass) { 
+		return Strings.lastToken(beanClass.getName(), ".");		
+	}
+
+	private void processException(MetaAction metaAction, Messages errors,
+			Messages messages, Exception ex) {
+		log.error(ex.getMessage(), ex);
+		if (metaAction != null) {
+			errors.add("no_execute_action", metaAction.getId(), ex.getLocalizedMessage());
+		}
+		else {
+			errors.add("no_execute_action", "", ex.getLocalizedMessage());
+		}
+		messages.removeAll();
 	}
 	
 	private void memorizePreviousMode() {

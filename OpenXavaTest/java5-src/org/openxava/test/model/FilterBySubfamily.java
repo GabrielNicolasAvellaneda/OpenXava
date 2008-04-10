@@ -20,7 +20,7 @@ import org.openxava.test.actions.*;
 	@View(name="Family1", members="subfamily"),
 	@View(name="Family2", members="subfamily"),
 	@View(name="WithSubfamilyForm", members="subfamily"),
-	@View(name="Range", members="subfamily; subfamilyTo")
+	@View(name="Range", members="subfamily; subfamilyTo; rangeDescription") 
 })
 
 public class FilterBySubfamily {
@@ -42,6 +42,11 @@ public class FilterBySubfamily {
 	
 	@ManyToOne(fetch=FetchType.LAZY) 
 	private Subfamily2 subfamilyTo;
+	
+	@Depends("subfamily.number, subfamilyTo.number")
+	public String getRangeDescription() { 		
+		return "FROM SUBFAMILY " + getSubfamily().getNumber() + " TO SUBFAMILY " + getSubfamilyTo().getNumber(); 
+	}
 
 	public Subfamily2 getSubfamily() {
 		return subfamily;

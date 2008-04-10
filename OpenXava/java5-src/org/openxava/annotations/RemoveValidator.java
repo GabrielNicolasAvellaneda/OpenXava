@@ -17,6 +17,11 @@ import java.lang.annotation.*;
  * &nbsp;...
  * </pre>
  * 
+ * RemoveValidator has no effect if you remove the entity directly using
+ * JPA or Hibernate. It only works when you use {@link org.openxava.model.MapFacade}
+ * or delete from a standar OX action). If you can write a contraint for removing
+ * that works with JPA and Hibernate use a <code>@PreRemove</code> JPA method.
+ * 
  * @author Javier Paniza
  */
 

@@ -19,6 +19,7 @@ import org.openxava.validators.meta.*;
 /**
  * Implement the logic of MapFacade. <p>
  * 
+ * 
  * @author Javier Paniza
  */
 
@@ -49,7 +50,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			rollback();
 			throw ex;
 		}
-		catch (XavaException ex) {
+		catch (RuntimeException ex) {
 			rollback();
 			throw ex;
 		}
@@ -104,7 +105,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			rollback();
 			throw ex;
 		}
-		catch (XavaException ex) {
+		catch (RuntimeException ex) { 
 			log.error(ex.getMessage(), ex);
 			rollback();
 			throw ex;
@@ -140,7 +141,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			rollback();
 			throw ex;
 		}
-		catch (XavaException ex) {
+		catch (RuntimeException ex) { 
 			log.error(ex.getMessage(), ex);
 			rollback();
 			throw ex;
@@ -172,7 +173,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			rollback();
 			throw ex;
 		}
-		catch (XavaException ex) {
+		catch (RuntimeException ex) { 
 			rollback();
 			throw ex;
 		}
@@ -202,7 +203,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			rollback();
 			throw ex;
 		}
-		catch (XavaException ex) {
+		catch (RuntimeException ex) { 
 			rollback();
 			throw ex;
 		}
@@ -238,7 +239,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			rollback();
 			throw ex;
 		}
-		catch (XavaException ex) {
+		catch (RuntimeException ex) { 
 			rollback();
 			throw ex;
 		}
@@ -267,7 +268,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			rollback();
 			throw ex;
 		}
-		catch (XavaException ex) {
+		catch (RuntimeException ex) { 
 			rollback();
 			throw ex;
 		}
@@ -298,7 +299,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			rollback();
 			throw ex;
 		}
-		catch (XavaException ex) {
+		catch (RuntimeException ex) { 
 			rollback();
 			throw ex;
 		}
@@ -328,7 +329,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			rollback();
 			throw ex;
 		}
-		catch (XavaException ex) {
+		catch (RuntimeException ex) { 
 			rollback();
 			throw ex;
 		}
@@ -359,7 +360,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			rollback();
 			throw ex;
 		}
-		catch (XavaException ex) {
+		catch (RuntimeException ex) { 
 			rollback();
 			throw ex;
 		}
@@ -384,7 +385,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			commitTransaction();
 			return result;
 		}	
-		catch (XavaException ex) {
+		catch (RuntimeException ex) { 
 			rollback();
 			throw ex;
 		}
@@ -405,7 +406,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			commitTransaction();
 			return result;
 		}	
-		catch (XavaException ex) {
+		catch (RuntimeException ex) { 
 			rollback();
 			throw ex;
 		}
@@ -439,7 +440,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			rollback();
 			throw ex;
 		}
-		catch (XavaException ex) {
+		catch (RuntimeException ex) { 
 			rollback();
 			throw ex;
 		}
@@ -499,7 +500,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			rollback();
 			throw ex;
 		}
-		catch (XavaException ex) {
+		catch (RuntimeException ex) { 
 			rollback();
 			throw ex;
 		}
@@ -1098,12 +1099,12 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		Map values)
 		throws ValidationException, XavaException, RemoteException {		
 		MetaReference r = null;
-		try {
-			if (Maps.isEmpty(values)) return null;			
+		try {		
 			r = metaModel.getMetaReference(memberName);
 			if (r.isAggregate()) {
 				return instanceAggregate((MetaAggregateForReference) r.getMetaModelReferenced(), values);
 			} else {
+				if (Maps.isEmpty(values)) return null;
 				return findAssociatedEntity((MetaEntity) r.getMetaModelReferenced(), values);
 			}
 		}

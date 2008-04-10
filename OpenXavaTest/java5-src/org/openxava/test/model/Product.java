@@ -191,6 +191,7 @@ public class Product {
 		value=org.openxava.test.actions.OnChangeVoidAction.class
 	)
 	public WarehouseKey getWarehouseKey() {
+		if (this.warehouseNumber == null) return null;
 		WarehouseKey key = new WarehouseKey();
 		key.setNumber(this.warehouseNumber);
 		key.setZoneNumber(this.warehouseZoneNumber);

@@ -1932,13 +1932,22 @@ public class AnnotatedClassParser {
 	}
 
 	private void addEntityValidator(MetaModel metaModel, EntityValidator validator) {
+		MetaValidator metaValidator = createEntityValidator(validator);
+		metaModel.addMetaValidator(metaValidator);
+	}
+
+
+	/**
+	 * Creates a MetaValidator for entity validation from a EntityValidator annotation. <p>
+	 */	
+	public static MetaValidator createEntityValidator(EntityValidator validator) { 
 		MetaValidator metaValidator = new MetaValidator();
 		metaValidator.setClassName(validator.value().getName());
 		for (PropertyValue put: validator.properties()) {
 			metaValidator.addMetaSet(toMetaSet(put));
 		}
 		metaValidator.setOnlyOnCreate(validator.onlyOnCreate());
-		metaModel.addMetaValidator(metaValidator);
+		return metaValidator;
 	}
 	
 	private void addRemoveValidator(MetaModel metaModel, RemoveValidator validator) {
@@ -1951,13 +1960,22 @@ public class AnnotatedClassParser {
 	}	
 	
 	private void addPropertyValidator(MetaProperty metaProperty, PropertyValidator validator) {
+		MetaValidator metaValidator = createPropertyValidator(validator);
+		metaProperty.addMetaValidator(metaValidator);
+	}
+
+
+	/**
+	 * Creates a MetaValidator for property validation from a PropertyValidator annotation. <p>
+	 */
+	public static MetaValidator createPropertyValidator(PropertyValidator validator) { 
 		MetaValidator metaValidator = new MetaValidator();
 		metaValidator.setClassName(validator.value().getName());
 		for (PropertyValue put: validator.properties()) {
 			metaValidator.addMetaSet(toMetaSet(put));
 		}
 		metaValidator.setOnlyOnCreate(validator.onlyOnCreate());
-		metaProperty.addMetaValidator(metaValidator);
+		return metaValidator;
 	}
 	
 	
@@ -2121,7 +2139,7 @@ public class AnnotatedClassParser {
 		log.warn(XavaResources.getString("duplicate_annotation_for_view", annotation.getName(), viewName, memberName));
 	}
 	
-	private MetaSet toMetaSet(PropertyValue propertyValue) {
+	private static MetaSet toMetaSet(PropertyValue propertyValue) {
 		MetaSet metaSet = new MetaSet();		
 		metaSet.setPropertyName(propertyValue.name()); 
 		metaSet.setPropertyNameFrom(propertyValue.from());

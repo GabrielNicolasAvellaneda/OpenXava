@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Calculated properties with @Depends fails on transient classes.
+- Hibernate Validator full support. Messages thrown by Hibernate Validator are shown to the user as validation messages.
+- @Required, @PropertyValidator and @EntityValidator redefined as Hibernate Validator constraints.
 - Fix: Formatter is not applied when an editor is assigned via @Editor annotation.
 - Fix: On edit detail of collections data of nested references is not loaded correctly.
 - Ant creation wizard on template projects asks for the project name. Now it's not needed edit the ant build files.
