@@ -8,9 +8,9 @@ package org.openxava.calculators;
  * 
  *  An example of use:
  *  <pre>
- *  <property name="id" key="true" type="int" hidden="true">
- *		<default-value-calculator class="org.openxava.calculators.IdentityCalculator" on-create="true"/>
- *	</property>
+ *  &lt;property name="id" key="true" type="int" hidden="true"&gt;
+ *		&lt;default-value-calculator class="org.openxava.calculators.IdentityCalculator" on-create="true"/&gt;
+ *	&lt;/property&gt;
  *  </pre>
  *  
  * It does not work with EJB2. It works with Hibernate and EJB3 JPA.
