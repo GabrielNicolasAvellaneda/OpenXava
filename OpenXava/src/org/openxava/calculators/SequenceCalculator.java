@@ -8,11 +8,11 @@ package org.openxava.calculators;
  * 
  *  An example of use:
  *  <pre>
- *  <property name="id" key="true" type="int" hidden="true">
- *		<default-value-calculator class="org.openxava.calculators.SequenceCalculator" on-create="true">
- *			<set property="sequence" value="XAVATEST_SIZE_ID_SEQ"/>
- *		</default-value-calculator>            
- *	</property>
+ *  &lt;property name="id" key="true" type="int" hidden="true"&gt;
+ *		&lt;default-value-calculator class="org.openxava.calculators.SequenceCalculator" on-create="true"&gt;
+ *			&lt;set property="sequence" value="XAVATEST_SIZE_ID_SEQ"/&gt;
+ *		&lt;/default-value-calculator&gt;
+ *	&lt;/property&gt;
  *  </pre>
  *  
  * It does not work with EJB2. It works with Hibernate and EJB3 JPA.
