@@ -1,8 +1,5 @@
 package org.openxava.test.tests;
 
-import javax.persistence.*;
-
-import org.hibernate.validator.*;
 import org.openxava.jpa.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
@@ -100,7 +97,7 @@ public class DeliveryTypeTest extends ModuleTestBase {
 		delivery.setNumber(66);
 		delivery.setDescription("JUNIT FOR DELIVERY TYPE");
 		delivery.setDate(new java.util.Date());
-		delivery.setAdvice("JUNIT ADVICE");
+		setDeliveryAdvice(delivery, "JUNIT ADVICE");
 		XPersistence.getManager().persist(delivery);		
 		XPersistence.commit();
 				
@@ -117,6 +114,17 @@ public class DeliveryTypeTest extends ModuleTestBase {
 		assertMessage("Delivery type deleted successfully");		
 	}
 	
+	static void setDeliveryAdvice(Delivery delivery, String advice) throws Exception  {
+		if (isOX3()) {
+			// In OX3 we use a @Transient and @Required for advice property
+			// we need to put value to advice in order to pass
+			// Hiberntate Validator constraint
+			PropertiesManager pm = new PropertiesManager(delivery);
+			pm.executeSet("advice", advice);
+		}		
+		// In OX2, advice is a view property then it does not exist in delivery 
+	}
+
 	private Delivery findDelivery() {
 		return (Delivery) Delivery.findAll().iterator().next();
 	}

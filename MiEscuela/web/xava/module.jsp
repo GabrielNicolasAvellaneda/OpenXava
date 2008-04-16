@@ -46,6 +46,7 @@ if (manager.isListMode()) {
 <%
 manager.setApplicationName(request.getParameter("application"));
 boolean isNew = manager.setModuleName(request.getParameter("module"));
+manager.executeBeforeEachRequestActions(request, errors, messages); 
 org.openxava.view.View view = (org.openxava.view.View) context.get(request, "xava_view");
 if (isNew) {
 	view.setModelName(manager.getModelName());	
@@ -69,6 +70,7 @@ if (manager.isXavaView()) { // here and after action execution
 	}
 }
 manager.initModule(request, errors, messages);
+manager.executeOnEachRequestActions(request, errors, messages); 
 if (hasProcessRequest) {
 	manager.execute(request, errors, messages);	
 	if (manager.isListMode()) { // here and before execute the action
@@ -150,7 +152,9 @@ function setFocus() {
 	element = document.<%=manager.getForm()%>.elements['<%=focusPropertyId%>'];
 	if (element != null && typeof element.disabled != "undefined" && !element.disabled) {
 		element.focus();
-		element.select();		
+		if (typeof element.select != "undefined") { 
+			element.select();
+		}
 	}
 }
 
@@ -195,6 +199,7 @@ document.onkeydown = processKey;
 
 <% if (!isPortlet) { %>
 <!DOCTYPE HTML PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<%@page import="org.openxava.web.style.Liferay41Style"%>
 <html>
 <head>
 <title>OpenXava - <%=manager.getModuleDescription() %></title>
@@ -295,4 +300,16 @@ document.onkeydown = processKey;
 manager.commit(); // If hibernate, ejb3, etc is used to render some value here is commit
 %>
 
-<script>setTimeout ('setFocus()', 10);</script>
+<% 
+// Liferay 4.1 + IE7 requires at least 1 second of delay for focus
+String browser = request.getHeader("user-agent");
+boolean ie7 = browser != null && browser.indexOf("MSIE 7") >= 0;
+int focusDelay = ie7 && style == Liferay41Style.getInstance()?1000:10;
+%>
+<script>
+document.onload=setFocusOnLoad();
+function setFocusOnLoad() {
+	setTimeout ('setFocus()', <%=focusDelay%>);
+}
+</script>
+

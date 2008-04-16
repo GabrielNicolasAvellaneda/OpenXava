@@ -9,7 +9,7 @@ import org.apache.commons.logging.*;
 
 /**
  * Utilities to work with <code>String</code>. <p>
- *
+ * 
  * @author  Javier Paniza
  */
 
@@ -18,7 +18,27 @@ public class Strings {
 	private static Log log = LogFactory.getLog(Strings.class);
 	private final static String XSS_REGEXP_PATTERN = "(?i)<[\\s]*/?script.*?>|<[\\s]*/?embed.*?>|<[\\s]*/?object.*?>|<[\\s]*a[\\s]*href[^>]*javascript[\\s]*:[^(^)^>]*[(][^)]*[)][^>]*>[^<]*(<[\\s]*/[\\s]*a[^>]*>)*";
 	private final static Pattern XSS_PATTERN = Pattern.compile(XSS_REGEXP_PATTERN);
+	private static Map separatorsBySpaces;
 	
+	/**
+	 * Changes \n, \r and \t by space. <p>
+	 * 
+	 * @param string Not null
+	 */
+	public static String changeSeparatorsBySpaces(String string) {
+		return change(string, getSeparatorsBySpaces());
+	}
+	
+	private static Map getSeparatorsBySpaces() {
+		if (separatorsBySpaces == null) {
+			separatorsBySpaces = new HashMap();
+			separatorsBySpaces.put("\n", " ");
+			separatorsBySpaces.put("\t", " ");
+			separatorsBySpaces.put("\r", " ");
+		}
+		return separatorsBySpaces;
+	}
+
 	/**
 	 * Translate to the charset specified. <p>
 	 * 

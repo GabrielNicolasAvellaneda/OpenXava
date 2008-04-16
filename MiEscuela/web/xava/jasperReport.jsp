@@ -1,4 +1,4 @@
-<<%="?xml version='1.0' encoding='" + (System.getProperty("file.encoding")==null?"ISO-8859-1":System.getProperty("file.encoding")) + "' ?"%>>
+<%="<?xml version='1.0' encoding='" + org.openxava.util.XSystem.getEncoding() + "' ?>"%>
 
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 

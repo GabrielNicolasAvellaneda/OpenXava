@@ -16,12 +16,13 @@ String propertyKey = request.getParameter("propertyKey");
 MetaProperty p = (MetaProperty) request.getAttribute(propertyKey);
 
 boolean editable = view.isEditable(p);
-boolean searchingKey = (editable && view.isRepresentsEntityReference() && view.isLastKeyProperty(p)) || // with key visible
-	(view.isRepresentsEntityReference() && view.isFirstPropertyAndViewHasNoKeys(p) && view.isKeyEditable()); // with key hidden
-boolean throwPropertyChanged = view.throwsPropertyChanged(p); 
-if (searchingKey) {
-	editable = true;
+boolean lastSearchKey = view.isLastSearchKey(p); 
+boolean throwPropertyChanged = view.throwsPropertyChanged(p);
+if (lastSearchKey) {
 	throwPropertyChanged = true; 
+}
+if (lastSearchKey || p.isSearchKey()) {
+	editable = true;
 }
 	
 String labelKey = propertyKey + "_LABEL_";
@@ -29,8 +30,10 @@ String labelKey = propertyKey + "_LABEL_";
 int labelFormat = view.getLabelFormatForProperty(p);
 String label = view.getLabelFor(p);
 %>
-
 <%@ include file="htmlTagsEditor.jsp"%>
+<%  
+if (first && !view.isAlignedByColumns()) label = org.openxava.util.Strings.change(label, " ", "&nbsp;");
+%>
 
 <%=preLabel%>
 <% if (labelFormat == MetaPropertyView.NORMAL_LABEL) { %>
@@ -58,7 +61,8 @@ String label = view.getLabelFor(p);
 <% } %>
 <xava:editor property="<%=p.getName()%>" editable="<%=editable%>" throwPropertyChanged="<%=throwPropertyChanged%>"/>
 <% 
-if (searchingKey) {
+ if (lastSearchKey) {
+	
 	String referencedModel = p.getMetaModel().getName();
 %>
 	<% if (view.isSearch()) {%>
@@ -72,7 +76,7 @@ if (searchingKey) {
 	<% } %>
 <% } %>
 <%
-for (java.util.Iterator itActions = view.getActionsNamesForReference(searchingKey).iterator(); itActions.hasNext();) {
+for (java.util.Iterator itActions = view.getActionsNamesForReference(lastSearchKey).iterator(); itActions.hasNext();) {
 	String action = (String) itActions.next();
 %>
 <xava:action action="<%=action%>"/> 

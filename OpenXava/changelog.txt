@@ -1,17 +1,21 @@
 Change Log for OpenXava project
 ===============================
 
-- Fix: Calculated properties with @Depends fails on transient classes.
+OpenXava 3.0.1 (2008-4-16)
+--------------------------
 - Hibernate Validator full support. Messages thrown by Hibernate Validator are shown to the user as validation messages.
 - @Required, @PropertyValidator and @EntityValidator redefined as Hibernate Validator constraints.
+- Max size of textAreaEditor uses Javascript for control max size (even with Ctrl-V).
+- Action 'new' of CRUD put the view to the initial section.
+- Ant creation wizard on template projects asks for the project name. Now it's not needed edit the ant build files.
+- Fix: On Liferay 4.3 with Internet Explorer 7 frames and tabs are not shown when the user is
+ log on.
+- Fix: Getters of references or collections annotated with @Transient fail.
+- Fix: Calculated properties with @Depends fails on transient classes.
 - Fix: Formatter is not applied when an editor is assigned via @Editor annotation.
 - Fix: On edit detail of collections data of nested references is not loaded correctly.
-- Ant creation wizard on template projects asks for the project name. Now it's not needed edit the ant build files.
-- Action 'new' of CRUD put the view to the initial section.
-- Max size of textAreaEditor uses Javascript for control max size (even with Ctrl-V).
 - Fix: Select for row count of list fails when last showed database column ends with 'FROM'.
 - Fix: JasperReport generation: Invalid encoding name on some windows with WebSphere 6.0.
-- Fix: On Liferay 4.3 with Internet Explorer 7 frames and tabs are not shown when the user is log on.
 
 OpenXava 3.0 (2008-3-4)
 -----------------------

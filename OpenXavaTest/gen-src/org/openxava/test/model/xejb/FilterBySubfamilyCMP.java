@@ -89,6 +89,7 @@ public abstract class FilterBySubfamilyCMP
       FilterBySubfamilyValue = new org.openxava.test.model.FilterBySubfamilyValue();
       try
          {
+            FilterBySubfamilyValue.setRangeDescription( getRangeDescription() );
             FilterBySubfamilyValue.setSubfamilyTo_number( getSubfamilyTo_number() );
             FilterBySubfamilyValue.setSubfamily_number( getSubfamily_number() );
 
@@ -106,6 +107,7 @@ public abstract class FilterBySubfamilyCMP
 
 	  try
 	  {
+		 setRangeDescription( valueHolder.getRangeDescription() );
 		 setSubfamilyTo_number( valueHolder.getSubfamilyTo_number() );
 		 setSubfamily_number( valueHolder.getSubfamily_number() );
 

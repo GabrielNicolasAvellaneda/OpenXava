@@ -13,7 +13,13 @@
 
 	<entity>  
 		<reference name="subfamily" model="Subfamily2" required="true"/>
-		<reference name="subfamilyTo" model="Subfamily2"/> 		
+		<reference name="subfamilyTo" model="Subfamily2"/>
+		<property name="rangeDescription" type="String">
+			<calculator class="org.openxava.test.calculators.RangeDescriptionCalculator">
+				<set property="subfamilyNumberFrom" from="subfamily.number"/>			
+				<set property="subfamilyNumberTo" from="subfamilyTo.number"/>
+			</calculator>
+		</property> 		
 	</entity>		
 	
 	<view name="Family1">
@@ -39,7 +45,7 @@
 		<reference-view reference="subfamily">
 			<on-change-search class="org.openxava.test.actions.OnChangeSubfamilySearchAction"/>
 		</reference-view> 
-		<members>subfamily; subfamilyTo</members>
+		<members>subfamily; subfamilyTo; rangeDescription</members>
 	</view>
 
 	<transient/>

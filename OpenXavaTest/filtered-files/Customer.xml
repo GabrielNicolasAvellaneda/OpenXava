@@ -273,7 +273,8 @@
 	<view name="SimpleWithDeliveryPlaces" members="number; type; name; address; deliveryPlaces"/>
 	
 	<view name="SimpleStateAsForm" members="number; type; name; address">
-		<reference-view reference="address" view="StateAsForm"/>
+		<property-view property="name" editor="JbyXName"/>
+		<reference-view reference="address" view="StateAsForm"/>		
 	</view>	
 	
 	<view name="SomeMembersReadOnly" members="number; type; name; seller; alternateSeller">

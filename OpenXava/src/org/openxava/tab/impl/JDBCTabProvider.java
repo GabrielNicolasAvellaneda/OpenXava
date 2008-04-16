@@ -346,7 +346,7 @@ public class JDBCTabProvider implements ITabProvider, java.io.Serializable {
 	
 	private String createSizeSelect(String select) {
 		if (select == null) return null;		
-		String selectUpperCase = select.toUpperCase();
+		String selectUpperCase = Strings.changeSeparatorsBySpaces(select.toUpperCase());
 		int iniFrom = selectUpperCase.indexOf(" FROM ");
 		int end = selectUpperCase.indexOf("ORDER BY ");
 		StringBuffer sb = new StringBuffer("SELECT COUNT(*) ");

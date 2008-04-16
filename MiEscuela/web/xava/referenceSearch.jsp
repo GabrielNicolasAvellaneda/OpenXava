@@ -8,18 +8,14 @@ String referenceLabel = (String) context.get(request, "xava_currentReferenceLabe
 String rowAction = request.getParameter("rowAction");
 %>
 
-<table class="<%=style.getFrame()%>" style="float:left; margin-right:4px" <%=style.getFrameSpacing()%>>
-<tr class="<%=style.getFrameTitle()%>"><th align='left' class="<%=style.getFrameTitleLabel()%>">
-	<%=style.getFrameTitleStartDecoration()%>
-	<xava:message key="choose_reference_prompt" param="<%=referenceLabel%>"/>
-	<%=style.getFrameTitleEndDecoration()%>
-</th></tr>
-<tr><td class="<%=style.getFrameContent()%>">
-
+<%=style.getFrameHeaderStartDecoration()%>
+<%=style.getFrameTitleStartDecoration()%>
+<xava:message key="choose_reference_prompt" param="<%=referenceLabel%>"/>
+<%=style.getFrameTitleEndDecoration()%>
+<%=style.getFrameHeaderEndDecoration()%>
+<%=style.getFrameContentStartDecoration()%>
 <jsp:include page="list.jsp">
 	<jsp:param name="rowAction" value="<%=rowAction%>"/>
 	<jsp:param name="singleSelection" value="true"/>
 </jsp:include>
-
-</td></tr>
-</table>
+<%=style.getFrameContentEndDecoration()%>

@@ -28,19 +28,19 @@ public interface InvoiceDetail2Remote
    public void setQuantity( int newQuantity )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.model.IProduct getProduct(  )
+   public org.openxava.test.model.IProduct2 getProduct(  )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.model.ProductRemote getProductRemote(  )
+   public org.openxava.test.model.Product2Remote getProductRemote(  )
       throws java.rmi.RemoteException;
 
-   public void setProduct( org.openxava.test.model.IProduct newProduct )
+   public void setProduct( org.openxava.test.model.IProduct2 newProduct )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.model.ProductKey getProductKey(  )
+   public org.openxava.test.model.Product2Key getProductKey(  )
       throws java.rmi.RemoteException;
 
-   public void setProductKey( org.openxava.test.model.ProductKey key )
+   public void setProductKey( org.openxava.test.model.Product2Key key )
       throws java.rmi.RemoteException;
 
    public long getProduct_number(  )
