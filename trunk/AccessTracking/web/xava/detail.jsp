@@ -37,7 +37,7 @@ while (it.hasNext()) {
 	if (m instanceof MetaProperty) {		
 		MetaProperty p = (MetaProperty) m;		
 		if (!PropertiesSeparator.INSTANCE.equals(m)) {			
-			boolean hasFrame = WebEditors.hasFrame(p);		
+			boolean hasFrame = WebEditors.hasFrame(p, view.getViewName());		
 			lastWasEditor = !hasFrame;
 			lastWasProperty = true;
 			String propertyKey= propertyPrefix + p.getName();

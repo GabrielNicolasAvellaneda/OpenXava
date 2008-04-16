@@ -1160,7 +1160,7 @@ public class InvoiceTest extends ModuleTestBase {
 		delivery.setDate(Dates.create(22,2,2004));
 		delivery.setDescription("Delivery JUNIT 666");
 		delivery.setRemarks("FOUR\nLINES\nCUATRO\nLINEAS"); // It's used in DeliveriesRemarks2002Test
-		delivery.setAdvice("JUNIT ADVICE");
+		DeliveryTypeTest.setDeliveryAdvice(delivery, "JUNIT ADVICE");
 				
 		XPersistence.getManager().persist(delivery);
 		XPersistence.commit();

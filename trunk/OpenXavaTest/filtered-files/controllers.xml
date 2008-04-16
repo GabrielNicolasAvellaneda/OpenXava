@@ -212,7 +212,7 @@
 		</action>				
 					
 	</controller>
-		
+			 	
 	<controller name="Customer">
 		<extends controller="Typical"/>
 		<extends controller="EditableOnOff"/>
@@ -274,6 +274,7 @@
 		</action>
 		
 	</controller>
+	
 			
 	<controller name="CustomerNewOnInit">
 		<action name="new" 
@@ -292,7 +293,7 @@
 	<controller name="CustomerNewOnInitInherited">
 		<extends controller="CustomerNewOnInit"/>
 	</controller>
-				
+							
 	<controller name="Invoice">
 		<extends controller="Typical"/>
 		<action name="print" mode="detail"
@@ -322,6 +323,7 @@
 			<use-object name="xava_view"/>
 			<use-object name="xavatest_invoiceValues"/>
 		</action>	
+		 
 		<action name="removeViewDeliveryInInvoice"
 			class="org.openxava.test.actions.RemoveViewDeliveryInInvoiceAction">	
 			<use-object name="xava_view"/>
@@ -330,6 +332,7 @@
 			class="org.openxava.test.actions.AddViewDeliveryInInvoiceAction">	
 			<use-object name="xava_view"/>
 		</action>
+		
 		<action name="changeTab" mode="list"
 			class="org.openxava.test.actions.ChangeInvoiceTabAction">	
 			<use-object name="xava_tab"/>

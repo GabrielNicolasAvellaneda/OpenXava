@@ -180,6 +180,15 @@
 		</members>		
 				
 	</view>
+	
+	<view name ="SimpleWithFamily">
+			
+		<members>
+			number, description, unitPrice; 
+			family	
+		</members>
+		
+	</view>
 				
 	<tab>			
 

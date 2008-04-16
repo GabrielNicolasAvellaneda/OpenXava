@@ -12,6 +12,7 @@ boolean editable="true".equals(request.getParameter("editable"));
 String disabled=editable?"":"disabled";
 String script = request.getParameter("script");
 int rows = p.getSize() / 80 + 1;
+script = script + " onkeyup='return limitLength(event, " + p.getSize() + ")' ";
 %>
 
 

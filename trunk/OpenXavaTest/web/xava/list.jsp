@@ -29,8 +29,8 @@ String action=request.getParameter("rowAction");
 action=action==null?manager.getEnvironment().getValue("XAVA_LIST_ACTION"):action;
 String viewObject = request.getParameter("viewObject");
 String actionArgv = viewObject != null && !viewObject.equals("")?",viewObject=" + viewObject:"";
-viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObject; // tmp
-org.openxava.view.View view = (org.openxava.view.View) context.get(request, viewObject); // tmp
+viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObject; 
+org.openxava.view.View view = (org.openxava.view.View) context.get(request, viewObject); 
 String sfilter = request.getParameter("filter");
 boolean filter = !"false".equals(sfilter);
 String displayFilter=""; 

@@ -47,7 +47,7 @@
 				<set property="quantity"/>
 			</calculator>			
 		</property>
-		<reference model="Product" required="true"/>
+		<reference name="product" model="Product2" required="true"/>
 		
 	</aggregate>	
 	
@@ -67,7 +67,7 @@
 	</view>
 	
 	<view model="InvoiceDetail2">
-		<reference-view reference="product" view="Simple"/>
+		<reference-view reference="product" view="SimpleWithFamily"/>
 	</view>
 	
 	<entity-mapping table="XAVATEST@separator@INVOICE">

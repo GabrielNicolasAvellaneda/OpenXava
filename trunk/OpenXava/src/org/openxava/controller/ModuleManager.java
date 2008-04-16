@@ -2,7 +2,6 @@ package org.openxava.controller;
 
 import java.util.*;
 
-import javax.persistence.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
@@ -10,8 +9,6 @@ import org.apache.commons.fileupload.*;
 import org.apache.commons.fileupload.disk.*;
 import org.apache.commons.fileupload.servlet.*;
 import org.apache.commons.logging.*;
-import org.hibernate.validator.*;
-
 
 import org.openxava.actions.*;
 import org.openxava.application.meta.*;
@@ -33,7 +30,7 @@ public class ModuleManager {
 	static {		
 		MetaControllers.setContext(MetaControllers.WEB);		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
-		log.info("OpenXava 3.0.1 beta (2008-4-x)");
+		log.info("OpenXava 3.0.1 (2008-4-16)");
 	}
 	
 	private static int nextOid = 0; 
@@ -443,51 +440,29 @@ public class ModuleManager {
 			}						
 			doCommit(); // after executing action
 		}
-		catch (ValidationException ex) {
-			errors.add(ex.getErrors());
+		catch (Exception ex) {
+			// Maybe a factory for creating a ExceptionManager would be finer,
+			// but this is only for compatibility with 1.4. At some time OX
+			// will loss Java 1.4 compatibility, and will remove this code.
+			if (XSystem.isJava5OrBetter()) ModuleManagerJava5.manageExceptionJava5(this, metaAction, errors, messages, ex);
+			else manageExceptionJava14(metaAction, errors, messages, ex);
+		}
+				
+	}
+	
+	private void manageExceptionJava14(MetaAction metaAction, Messages errors, Messages messages, Exception ex) {
+		if (ex instanceof ValidationException) {		
+			errors.add(((ValidationException)ex).getErrors());
 			messages.removeAll();
 			doRollback();			
 		}
-		catch (RollbackException ex) {
-			if (ex.getCause() instanceof InvalidStateException) {
-				processInvalidStateException(metaAction, errors, messages, (InvalidStateException) ex.getCause());				
-			}
-			else {
-				processException(metaAction, errors, messages, ex);
-			}
-			doRollback();
-		}
-		catch (InvalidStateException ex) {			
-			processInvalidStateException(metaAction, errors, messages, ex);				
-			doRollback();
-		}				
-		catch (Exception ex) {			
-			processException(metaAction, errors, messages, ex);
+		else {			
+			manageException(metaAction, errors, messages, ex);
 			doRollback();			
-		}				
-		
-	}
+		}						
+	}	
 
-	private void processInvalidStateException(MetaAction metaAction, Messages errors, Messages messages, InvalidStateException ex) {
-		InvalidValue [] invalidValues = ex.getInvalidValues();
-		for (int i=0; i<invalidValues.length; i++) {
-			errors.add("invalid_state", 
-					invalidValues[i].getPropertyName(), 
-					getSimpleClassName(invalidValues[i].getBeanClass()), 
-					invalidValues[i].getMessage(), 
-					invalidValues[i].getValue());			
-		}
-		messages.removeAll();		
-	}
-
-	// We use this method, instead of getClass().getSimpleName()
-	// to be compiled with 1.4
-	private String getSimpleClassName(Class beanClass) { 
-		return Strings.lastToken(beanClass.getName(), ".");		
-	}
-
-	private void processException(MetaAction metaAction, Messages errors,
-			Messages messages, Exception ex) {
+	void manageException(MetaAction metaAction, Messages errors, Messages messages, Exception ex) {
 		log.error(ex.getMessage(), ex);
 		if (metaAction != null) {
 			errors.add("no_execute_action", metaAction.getId(), ex.getLocalizedMessage());
@@ -551,7 +526,7 @@ public class ModuleManager {
 		XHibernate.commit();		
 	}
 	
-	private void doRollback() {
+	void doRollback() {
 		if (XSystem.isJava5OrBetter()) XPersistence.rollback(); 
 		XHibernate.rollback();		
 	}		

@@ -1446,9 +1446,6 @@ public class AnnotatedClassParser {
 		if (element.isAnnotationPresent(PropertyValidators.class)) {
 			notApply(collection.getName(), PropertyValidators.class, "properties");
 		}
-		if (element.isAnnotationPresent(Transient.class)) {
-			notApply(collection.getName(), Transient.class, "properties");
-		}
 		if (element.isAnnotationPresent(NoSearch.class)) {
 			notApply(collection.getName(), NoSearch.class, "references");
 		}		
@@ -1790,9 +1787,6 @@ public class AnnotatedClassParser {
 		if (element.isAnnotationPresent(PropertyValidators.class)) {
 			notApply(ref.getName(), PropertyValidators.class, "properties");
 		}														
-		if (element.isAnnotationPresent(Transient.class)) {
-			notApply(ref.getName(), Transient.class, "properties");
-		}				
 		if (element.isAnnotationPresent(EditAction.class)) {
 			notApply(ref.getName(), EditAction.class, "collections");
 		}				

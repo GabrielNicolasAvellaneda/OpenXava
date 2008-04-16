@@ -1,4 +1,6 @@
-package org.openxava.calculators;
+package org.openxava.test.calculators;
+
+import org.openxava.calculators.*;
 
 /**
  * 
