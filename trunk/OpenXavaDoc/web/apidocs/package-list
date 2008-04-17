@@ -38,6 +38,7 @@ org.openxava.util.impl
 org.openxava.util.meta
 org.openxava.util.xmlparse
 org.openxava.validators
+org.openxava.validators.hibernate
 org.openxava.validators.meta
 org.openxava.validators.meta.xmlparse
 org.openxava.view
