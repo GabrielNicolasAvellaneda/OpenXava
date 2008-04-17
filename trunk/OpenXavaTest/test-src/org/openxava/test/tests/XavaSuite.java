@@ -191,7 +191,8 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(TransportChargeWithDistanceTest.class));		
 		if (ModuleTestBase.isOX3()) {
 			suite.addTest(new TestSuite(Warehouse2Test.class));
-		}		
+		}
+		suite.addTest(new TestSuite(CarrierWithSectionsTest.class));
 		return suite;
 	}
 	

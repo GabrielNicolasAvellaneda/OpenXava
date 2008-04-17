@@ -110,6 +110,23 @@
 		
 	</view>	
 	
+	<view name="WithSections">
+		 <property name="fellowCarriersSelected" type="String" />
+		 
+		 <members>
+		 	number, name;
+		 	fellowCarriersSelected;
+		 	<section name="data">
+		 		drivingLicence;
+		 		warehouse
+		 	</section>
+		 	<section name="fellowCarriers">
+		 		fellowCarriersCalculated
+		 	</section>
+		 </members>
+		
+	</view>
+	
 	<tab>
 		<properties>calculated, number, name</properties>
 	</tab>

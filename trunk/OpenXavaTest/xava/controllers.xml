@@ -1,6 +1,8 @@
 <?xml version = "1.0" encoding = "ISO-8859-1"?>
 
-<!DOCTYPE controllers SYSTEM "dtds/controllers.dtd"><!-- OpenXavaTest -->
+<!DOCTYPE controllers SYSTEM "dtds/controllers.dtd">
+
+<!-- OpenXavaTest -->
 
 <controllers> 
 	
@@ -631,5 +633,11 @@
 			<use-object name="xava_defaultSchema"/>
 		</action>
 	</controller>
-				
+	
+	<controller name="CarrierWithSections">
+		<action name="fellowCarriersSelected" mode="detail"
+			class="org.openxava.test.actions.ViewNameFellowCarriersSelectedAction">
+			<use-object name="xava_view"/>
+		</action>
+	</controller>				
 </controllers>
