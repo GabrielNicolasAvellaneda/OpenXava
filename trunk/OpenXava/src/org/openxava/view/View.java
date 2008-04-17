@@ -31,7 +31,7 @@ import org.openxava.web.*;
  */
 
 public class View implements java.io.Serializable {
-		
+	
 	private static Log log = LogFactory.getLog(View.class);
 	private static final long serialVersionUID = -7582669617830655121L;
 	private static Collection defaultListActionsForCollections;
@@ -112,7 +112,7 @@ public class View implements java.io.Serializable {
 	private Collection rowStyles; // Of type MetaRowStyle 	
 		
 	public View() {
-		oid = nextOid++;		
+		oid = nextOid++;
 	}
 	
 	public Collection getMetaMembers() throws XavaException {		
@@ -361,15 +361,15 @@ public class View implements java.io.Serializable {
 		if (values == null) values = new HashMap();
 		else values.clear();
 		closeChildCollectionDetails();
-		addValues(map);	
+		addValues(map);
 	}
 	
 
-	private void closeChildCollectionDetails() throws XavaException {		
+	private void closeChildCollectionDetails() throws XavaException {
 		if (hasSubviews()) { 
 			Iterator it = getSubviews().values().iterator();
-			
-			while (it.hasNext()) {				
+
+			while (it.hasNext()) {
 				View subview = (View) it.next();
 				subview.setCollectionDetailVisible(false);
 				subview.setCollectionEditingRow(-1);
@@ -377,9 +377,9 @@ public class View implements java.io.Serializable {
 			}
 		}
 				
-		if (hasGroups()) { 
+		if (hasGroups()) {
 			Iterator it = getGroupsViews().values().iterator();
-			while (it.hasNext()) {				
+			while (it.hasNext()) {
 				View subview = (View) it.next();
 				subview.setCollectionDetailVisible(false);
 				subview.setCollectionEditingRow(-1);				
@@ -395,7 +395,8 @@ public class View implements java.io.Serializable {
 				subview.setCollectionEditingRow(-1);
 				subview.closeChildCollectionDetails();
 			}	
-		}						
+		}	
+		listSelected = null;
 	}
 
 	/**
@@ -517,7 +518,7 @@ public class View implements java.io.Serializable {
 		return v == null?"":v.toString();						
 	}
 	
-	public View getSubview(String name) throws XavaException {				
+	public View getSubview(String name) throws XavaException {
 		View subview = (View) getSubviews().get(name);		
 		if (subview == null) {			
 			subview = findSubviewInSection(name);			
@@ -527,7 +528,7 @@ public class View implements java.io.Serializable {
 					throw new ElementNotFoundException("subview_not_found", name, getModelName());
 				}							
 			}	
-		}						
+		}
 		return subview;
 	}
 	
@@ -1142,8 +1143,8 @@ public class View implements java.io.Serializable {
 	 * The values only include the displayed data in the row.<br>
 	 * @return  Of type <tt>Map</tt>. Never null.
 	 */
-	public List getCollectionSelectedValues() throws XavaException {  		
-		assertRepresentsCollection("getCollectionSelectedValues()");				
+	public List getCollectionSelectedValues() throws XavaException {
+		assertRepresentsCollection("getCollectionSelectedValues()");
 		if (isCollectionCalculated()) {
 			// If calculated we obtain the data directly from the model object
 			if (listSelected == null) return Collections.EMPTY_LIST;
@@ -1726,14 +1727,14 @@ public class View implements java.io.Serializable {
 		groupsViews = null; 
 	}
 	
-	public void assignValuesToWebView() {				
-		assignValuesToWebView(getModelName());						
+	public void assignValuesToWebView() {
+		assignValuesToWebView(getModelName());
 	}
 		
-	public void assignValuesToWebView(String qualifier) {		
+	public void assignValuesToWebView(String qualifier) {
 		try {															
 			focusForward = "true".equalsIgnoreCase(getRequest().getParameter("focus_forward"));			
-			setIdFocusProperty(getRequest().getParameter("focus_property"));			
+			setIdFocusProperty(getRequest().getParameter("focus_property"));
 			Iterator it = isSubview()?getMetaMembersIncludingHiddenKey().iterator():getMetaMembers().iterator();
 			if (isRepresentsCollection()) fillCollectionInfo(qualifier);
 			
@@ -1796,7 +1797,7 @@ public class View implements java.io.Serializable {
 						}						
 					}						
 				}			
-			}						
+			}	
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
@@ -1809,7 +1810,7 @@ public class View implements java.io.Serializable {
 		return getParent().getQualifiedCollectionName() + getMemberName() + "_"; 
 	}
 	
-	private void fillCollectionInfo(String qualifier) throws XavaException { 
+	private void fillCollectionInfo(String qualifier) throws XavaException {
 		String tabPrefix = Tab.COLLECTION_PREFIX + getQualifiedCollectionName();
 		getCollectionTab().setSelected(getRequest().getParameterValues(tabPrefix + "selected"));
 		String [] conditionComparators = getRequest().getParameterValues(tabPrefix + "conditionComparators");		
@@ -1828,7 +1829,7 @@ public class View implements java.io.Serializable {
 		listSelected = new int[sel.length];
 		for (int i=0; i<sel.length; i++) {
 			listSelected[i] = Integer.parseInt(sel[i]);
-		}				
+		}		
 	}
 	
 	private void assignReferenceValue(String qualifier, MetaReference ref, String value) throws XavaException {		
@@ -3373,5 +3374,5 @@ public class View implements java.io.Serializable {
 	private void setRowStyles(Collection rowStyles) {
 		this.rowStyles = rowStyles;
 	}
-
+	
 }
