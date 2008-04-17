@@ -16,7 +16,13 @@ import org.openxava.jpa.*;
 @Views({
 	@View(name="Simple", members="number, name"),
 	@View(name="CalculatedFellows", members="number, name; fellowCarriersCalculated"),
-	@View(name="ReadOnlyCalculatedFellows", members="number, name; fellowCarriersCalculated")
+	@View(name="ReadOnlyCalculatedFellows", members="number, name; fellowCarriersCalculated"),
+	@View(
+		name="WithSections", 
+		members=
+			"number, name; fellowCarriersSelected; " +
+			"data {drivingLicence; warehouse} " +
+			"fellowCarriers {fellowCarriersCalculated} " )
 })
 @Tab(properties="calculated, number, name")
 public class Carrier {
@@ -206,5 +212,16 @@ public class Carrier {
 		}
 		return false;
 	}	
+	
+	@Transient
+	private String fellowCarriersSelected;
+
+	public String getFellowCarriersSelected() {
+		return fellowCarriersSelected;
+	}
+
+	public void setFellowCarriersSelected(String fellowCarriersSelected) {
+		this.fellowCarriersSelected = fellowCarriersSelected;
+	}
 	
 }
