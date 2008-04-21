@@ -544,6 +544,21 @@ public class Strings {
 	}
 	
 	/**
+	 * All string but without first token. <p>
+	 * 
+	 * Includes the delim.
+	 *  
+	 * @return If string if null or have no tokens returns empty string.
+	 */		
+	public static String noFirstToken(String string, String delim) {
+		if (string == null) return "";
+		int idx = string.indexOf(delim);
+		if (idx < 0) return "";
+		return string.substring(idx);
+	}
+
+	
+	/**
 	 * All string but without last token. <p>
 	 * 
 	 * It does not include the last delim.

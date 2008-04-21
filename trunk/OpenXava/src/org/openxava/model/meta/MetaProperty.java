@@ -101,11 +101,24 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		return obtainValidValueLabel(locale, getValidValue(i));
 	}
 	
-	public String getQualifiedLabel(Locale locale) throws XavaException { 
-		if (Labels.existsExact(getId(), locale)) {			
+	public String getQualifiedLabel(Locale locale) throws XavaException {
+		String labelId = getId();
+		if (Labels.existsExact(labelId, locale)) {			
 			return getLabel(locale);
 		}
+		if (isTabLabel(labelId)) {
+			String genericIdForTab = "*" + Strings.noFirstToken(labelId, ".");
+			if (Labels.existsExact(genericIdForTab, locale)) {
+				return getLabel(locale, genericIdForTab);
+			}
+		}
 		return Labels.getQualified(getQualifiedName(), locale);
+	}
+	
+	private boolean isTabLabel(String labelId) {  
+		String [] tokens = labelId.split("\\.");		
+		if (tokens.length < 1) return false;
+		return "tab".equals(tokens[1]) || "tabs".equals(tokens[1]);
 	}
 	
 	public String getQualifiedLabel(ServletRequest request) throws XavaException { 

@@ -13,7 +13,10 @@ public class Product4Test extends ModuleTestBase {
 		super(testName, "Product4");		
 	}
 	
-	public void testCalculatedPropertyWhenAnnotatedGetters() throws Exception {
+	public void testCalculatedPropertyWhenAnnotatedGetters_genericI18nForTabs() throws Exception {
+		assertLabelInList(2, "Family");
+		assertLabelInList(3, "Subfamily");
+		
 		execute("CRUD.new");
 		assertEditable("unitPrice");
 		assertNoEditable("unitPriceInPesetas");

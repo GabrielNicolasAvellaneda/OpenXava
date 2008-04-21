@@ -360,12 +360,12 @@ public class View implements java.io.Serializable {
 	public void setValues(Map map) throws XavaException {
 		if (values == null) values = new HashMap();
 		else values.clear();
-		closeChildCollectionDetails();
+		closeChildCollectionDetailsAndClearSelected();
 		addValues(map);
 	}
 	
 
-	private void closeChildCollectionDetails() throws XavaException {
+	private void closeChildCollectionDetailsAndClearSelected() throws XavaException {
 		if (hasSubviews()) { 
 			Iterator it = getSubviews().values().iterator();
 
@@ -373,7 +373,7 @@ public class View implements java.io.Serializable {
 				View subview = (View) it.next();
 				subview.setCollectionDetailVisible(false);
 				subview.setCollectionEditingRow(-1);
-				subview.closeChildCollectionDetails();										
+				subview.closeChildCollectionDetailsAndClearSelected();										
 			}
 		}
 				
@@ -383,7 +383,7 @@ public class View implements java.io.Serializable {
 				View subview = (View) it.next();
 				subview.setCollectionDetailVisible(false);
 				subview.setCollectionEditingRow(-1);				
-				subview.closeChildCollectionDetails();
+				subview.closeChildCollectionDetailsAndClearSelected();
 			}
 		}
 				
@@ -393,7 +393,7 @@ public class View implements java.io.Serializable {
 				View subview = getSectionView(i); 
 				subview.setCollectionDetailVisible(false);
 				subview.setCollectionEditingRow(-1);
-				subview.closeChildCollectionDetails();
+				subview.closeChildCollectionDetailsAndClearSelected();
 			}	
 		}	
 		listSelected = null;

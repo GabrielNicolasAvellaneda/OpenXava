@@ -260,4 +260,10 @@
 	<module name="Family1ProductsReport" folder="warehousing/variations">		<model name="FilterBySubfamily"/>		<view name="Family1"/>
 		<controller name="FamilyProductsReport"/>		<mode-controller name="Void"/>	</module>			<module name="Family2ProductsReport" folder="warehousing/variations">		<model name="FilterBySubfamily"/>		<view name="Family2"/>		<mode-controller name="Void"/>	</module>	
 	
+	<module name="CarrierWithSections" >
+		<model name="Carrier"/>
+		<view name="WithSections"/>
+		<controller name="CarrierWithSections"/>
+	</module>
+	
 </application>
