@@ -56,6 +56,7 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(CarrierTest.class));
 		suite.addTest(new TestSuite(CarrierWithCalculatedFellowsTest.class));
 		suite.addTest(new TestSuite(CarrierWithReadOnlyCalculatedFellowsTest.class));
+		suite.addTest(new TestSuite(CarrierWithSectionsTest.class));
 		suite.addTest(new TestSuite(CarrierWithSpecialSearchTest.class));		
 		suite.addTest(new TestSuite(ChangeProductsPrice2Test.class));
 		suite.addTest(new TestSuite(ChangeProductsPriceTest.class));
@@ -192,7 +193,7 @@ public class XavaSuite extends TestSuite {
 		if (ModuleTestBase.isOX3()) {
 			suite.addTest(new TestSuite(Warehouse2Test.class));
 		}
-		suite.addTest(new TestSuite(CarrierWithSectionsTest.class));
+		
 		return suite;
 	}
 	

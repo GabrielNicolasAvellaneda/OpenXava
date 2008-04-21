@@ -1,7 +1,6 @@
 package org.openxava.test.actions;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -12,6 +11,7 @@ import org.openxava.view.View;
 
 /**
  * Create on 07/04/2008 (11:10:52)
+ * 
  * @autor Ana Andrés
  */
 public class ViewNameFellowCarriersSelectedAction extends ViewBaseAction{
@@ -19,10 +19,11 @@ public class ViewNameFellowCarriersSelectedAction extends ViewBaseAction{
 
 	public void execute() throws Exception {
 		View carriers = getView().getSubview("fellowCarriersCalculated");
-		List<Map<Object, Object>> carriersSelected = carriers.getCollectionSelectedValues();
+		List carriersSelected = carriers.getCollectionSelectedValues();
 		if (carriersSelected.isEmpty()) return;
 		StringBuffer sb = new StringBuffer("");
-		for (Map<Object, Object> carrierKey : carriersSelected){
+		for (Iterator it = carriersSelected.iterator(); it.hasNext(); ) {
+			Map carrierKey = (Map) it.next();
 			Carrier carrier = (Carrier) MapFacade.findEntity(getView().getModelName(), carrierKey);
 			sb.append(carrier.getName() + " ");
 		}

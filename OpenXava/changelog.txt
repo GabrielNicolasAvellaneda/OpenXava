@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- I18n entries for tab properties can be applied to all entities at once using wildcards.
+- Fix: Selected elements of a collection inside of a not showed section are not correctly cleared.
+
 OpenXava 3.0.1 (2008-4-16)
 --------------------------
 - Hibernate Validator full support. Messages thrown by Hibernate Validator are shown to the user as validation messages.

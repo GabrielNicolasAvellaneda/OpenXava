@@ -9,7 +9,7 @@ import org.openxava.util.*;
 /**
  * Base class for creating actions to be used as list actions.<p>
  * 
- * That is in <list-action/> of <collection-view/> or
+ * That is in &lt;list-action/&gt; of &lt;collection-view/&gt; or
  * in @ListAction annotation.<br>
  * 
  * @author Javier Paniza

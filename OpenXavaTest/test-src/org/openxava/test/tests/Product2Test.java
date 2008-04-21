@@ -163,7 +163,10 @@ public class Product2Test extends ModuleTestBase {
 		assertValidValues("warehouse.KEY", warehouses);
 	}
 	
-	public void testDefaultValueCalculatorForReferences() throws Exception {
+	public void testDefaultValueCalculatorForReferences_genericI18nForTabs() throws Exception {
+		assertLabelInList(2, "Family");
+		assertLabelInList(3, "Subfamily");
+		
 		execute("CRUD.new");
 		assertValue("family.number", "2");		
 		assertValue("warehouse.KEY", "[.4.4.]");

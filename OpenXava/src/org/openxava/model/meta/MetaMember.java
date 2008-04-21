@@ -28,7 +28,7 @@ abstract public class MetaMember extends MetaElement {
 		if (qualifiedName == null) {
 			if (getMetaModel() == null) qualifiedName = getName();
 			else qualifiedName = getMetaModel().getName() + "." + getName();
-		}
+		}		
 		return qualifiedName;
 	}
 	
