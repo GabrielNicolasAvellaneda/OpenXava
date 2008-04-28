@@ -51,7 +51,7 @@ public class SellerTest extends ModuleTestBase {
 		execute("List.viewDetail", "row=1");
 		assertValue("number", "2");
 		assertValue("name", "JUANVI LLAVADOR");
-		assertCollectionRowCount("customers", 0);		
+		assertCollectionRowCount("customers", 1);		
 		execute("Navigation.previous");
 		assertValue("number", "1");
 		assertValue("name", "MANUEL CHAVARRI");
@@ -230,10 +230,10 @@ public class SellerTest extends ModuleTestBase {
 		setValue("level.id", "A");
 
 		execute("Collection.add", "viewObject=xava_view_customers");		
-		assertValueInList(4, 0, getCustomer1().getName());
-		assertValueInList(5, 0, getCustomer2().getName());
-		checkRow(4);
+		assertValueInList(5, 0, getCustomer1().getName());
+		assertValueInList(6, 0, getCustomer2().getName());
 		checkRow(5);
+		checkRow(6);
 		execute("AddToCollection.add");
 		assertNoErrors();
 		assertMessage("2 element(s) added to Customers of Seller");
@@ -276,8 +276,8 @@ public class SellerTest extends ModuleTestBase {
 
 		assertCollectionRowCount("customers",0);
 		execute("Collection.add", "viewObject=xava_view_customers");		
-		assertValueInList(5, 0, getCustomer2().getName());
-		execute("AddToCollection.add", "row=5");		
+		assertValueInList(6, 0, getCustomer2().getName());
+		execute("AddToCollection.add", "row=6");		
 		assertMessage("1 element(s) added to Customers of Seller");		
 		assertCollectionRowCount("customers",1);
 		

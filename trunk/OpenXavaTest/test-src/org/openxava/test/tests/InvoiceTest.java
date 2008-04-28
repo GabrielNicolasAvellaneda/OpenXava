@@ -1,19 +1,30 @@
 package org.openxava.test.tests;
 
-import java.math.*;
-import java.rmi.*;
-import java.text.*;
-import java.util.*;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Locale;
+import java.util.StringTokenizer;
 
-import javax.persistence.*;
-import javax.rmi.*;
+import javax.rmi.PortableRemoteObject;
 
-import org.hibernate.validator.*;
-import org.openxava.jpa.*;
-import org.openxava.test.calculators.*;
-import org.openxava.test.model.*;
-import org.openxava.tests.*;
-import org.openxava.util.*;
+import org.openxava.jpa.XPersistence;
+import org.openxava.test.calculators.YearInvoiceDiscountCalculator;
+import org.openxava.test.model.Delivery;
+import org.openxava.test.model.DeliveryType;
+import org.openxava.test.model.Invoice;
+import org.openxava.test.model.Product;
+import org.openxava.tests.ModuleTestBase;
+import org.openxava.util.Dates;
+import org.openxava.util.Is;
+import org.openxava.util.Strings;
+import org.openxava.util.XavaPreferences;
 
 
 /**
@@ -54,7 +65,7 @@ public class InvoiceTest extends ModuleTestBase {
 		setValue("year", "2008");
 		setValue("number", "66");
 		execute("CRUD.search");
-		assertError("Object of type Invoice does not exists with that key");
+		assertError("Object of type Invoice does not exists with key Year:2008, Number:66");
 		assertValue("comment", "");
 	}
 	
@@ -1314,5 +1325,22 @@ public class InvoiceTest extends ModuleTestBase {
 		assertNoErrors();
 		assertMessage("Invoice detail created successfully");
 	}
-									
+
+	public void testInvoiceNotFound() throws Exception {
+		execute("CRUD.new");
+		// with key
+		String year = getValue("year");
+		execute("CRUD.search");
+		assertError("Object of type Invoice does not exists with key Year:" + year);
+		// without key
+		assertTrue(Is.empty(getValue("year")));
+		setValue("date", "1/2/2004");
+		execute("CRUD.search");
+		assertError("Object of type Invoice does not exists with key Paid:No, Date:1/2/04");
+		// with reference
+		setValue("customer.number", "43");
+		assertValue("customer.name", "Gonzalo Gonzalez");
+		execute("CRUD.search");
+		assertError("Object of type Invoice does not exists with key Number:43, Paid:No");
+	}
 }
