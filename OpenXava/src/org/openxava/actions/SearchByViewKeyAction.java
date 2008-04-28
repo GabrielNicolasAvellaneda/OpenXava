@@ -1,14 +1,22 @@
 package org.openxava.actions;
 
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.ejb.ObjectNotFoundException;
+import javax.servlet.http.HttpServletRequest;
 
-
-
-import org.apache.commons.logging.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openxava.component.MetaComponent;
 import org.openxava.model.MapFacade;
-import org.openxava.util.*;
+import org.openxava.model.meta.MetaEntity;
+import org.openxava.model.meta.MetaProperty;
+import org.openxava.util.Is;
+import org.openxava.util.Maps;
+import org.openxava.util.Objects;
+import org.openxava.util.XSystem;
+import org.openxava.web.WebEditors;
 
 /**
  * Search using as key the data displayed in the view. <p>
@@ -27,7 +35,7 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 	
 	private static final long serialVersionUID = 1L;
 	private static Log log = LogFactory.getLog(SearchByViewKeyAction.class);
-	
+	private HttpServletRequest request;
 
 	public void execute() throws Exception {				
 		try {									
@@ -54,7 +62,7 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 					String modelName = getSimpleName(entity.getClass());
 					if (!modelName.equals(getModelName())) {
 						getView().setModelName(modelName);				
-						values = MapFacade.getValues(modelName, entity, getMemberNames());								
+						values = MapFacade.getValues(modelName, entity, getMemberNames());
 					}
 				}
 				catch (ObjectNotFoundException ex) { // For some special case, as null reference keys				
@@ -66,8 +74,9 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 			setValuesToView(values); 		
 		}
 		catch (ObjectNotFoundException ex) {
+			String searchPropertiesAndValues = getSearchPropertiesAndValues();
 			getView().clear();
-			addError("object_not_found", getModelName());			
+			addError("object_not_found", getModelName(), searchPropertiesAndValues);			
 		}						
 		catch (Exception ex) {
 			log.error(ex.getMessage(),ex);
@@ -118,4 +127,32 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 		return getView().getKeyValues();
 	}
 
+	private String getSearchPropertiesAndValues() throws Exception{
+		StringBuffer sb = new StringBuffer("");
+		Map mapToSearch = Maps.treeToPlain(
+				Maps.isEmptyOrZero(getKeyValuesFromView()) ? getValuesFromView() : getKeyValuesFromView());
+
+		MetaEntity metaEntity = MetaComponent.get(getModelName()).getMetaEntity();
+		String separator = "";
+		Iterator it = mapToSearch.entrySet().iterator();
+		int x = 0;
+		while (it.hasNext()){
+			Map.Entry entry = (Map.Entry) it.next();
+			Object property = entry.getKey();
+			if (!Is.empty(entry.getValue())) {
+				MetaProperty mp = metaEntity.getMetaProperty(property.toString());
+				String propertyName = mp.getQualifiedLabel(request);
+				String value = WebEditors.format(request, mp, entry.getValue(), getErrors(), getView().getViewName());
+				separator = sb.length() == 0 ? "" : ", ";
+				sb.append(separator + propertyName + ":" + value);
+			}
+		}
+		return sb.toString().trim();
+	}
+	
+	public void setRequest(HttpServletRequest request) {	
+		super.setRequest(request);
+		this.request = request;
+	}
+		
 }
