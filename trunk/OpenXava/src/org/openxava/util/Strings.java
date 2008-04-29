@@ -508,6 +508,7 @@ public class Strings {
 	 */		
 	public static String lastToken(String string, String delim) {
 		if (string == null) return "";
+		if (delim.length() == 1 && string.indexOf(delim) < 0) return string; // Only one token
 		return lastToken(new StringTokenizer(string, delim));
 	}
 		
@@ -586,6 +587,7 @@ public class Strings {
 	 */
 	public static String firstToken(String string, String delim) {
 		if (string == null) return "";
+		if (delim.length() == 1 && string.indexOf(delim) < 0) return string; // Only one token  
 		StringTokenizer st = new StringTokenizer(string, delim);		
 		if (st.hasMoreTokens()) return st.nextToken().trim();
 		return "";

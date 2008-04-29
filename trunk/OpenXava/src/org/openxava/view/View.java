@@ -60,7 +60,7 @@ public class View implements java.io.Serializable {
 	private boolean knowIfDisplayDetailInCollection;
 	private boolean displayDetailInCollection;
 	private String lastPropertyKeyName;
-	private String lastPropertySearchKeyName;
+	private String nameOflastPropertyMarkedAsSearchKey;
 	private Map subviews;
 	private Set hiddenMembers;		
 	private int oid;
@@ -103,6 +103,7 @@ public class View implements java.io.Serializable {
 	private boolean onlyThrowsOnChange; 
 	private Collection metaPropertiesIncludingSections;
 	private Collection metaPropertiesIncludingGroups;
+	private Collection metaMembersIncludingGroups; 
 	private Collection metaMembersIncludingHiddenKey;
 	private Map labels;
 	private Collection executedActions;	
@@ -601,21 +602,17 @@ public class View implements java.io.Serializable {
 			MetaView metaView = ((MetaGroup) member).getMetaView();
 			newView.setMetaView(metaView);
 			newView.setMemberName(getMemberName()); 
-			newView.setGroup(true);
-			newView.setEditable(isEditable()); 
+			newView.setGroup(true); 
 			getGroupsViews().put(member.getName(), newView);			
 			return;			
 		}		
 		if (ref.isAggregate()) {		
 			newView.setModelName(getModelName() + "." + ref.getReferencedModelName());
-			newView.setRepresentsAggregate(true);
-			newView.setEditable(isEditable()); 
+			newView.setRepresentsAggregate(true); 
 		}
 		else {
 			newView.setModelName(ref.getReferencedModelName());
 			newView.setRepresentsEntityReference(true);
-			newView.setKeyEditable(isEditable());
-			newView.setEditable(false);	
 		}
 		newView.setMetaView(getMetaView().getMetaView(ref));
 		newView.setMemberName(member.getName()); 
@@ -658,8 +655,6 @@ public class View implements java.io.Serializable {
 					newView.setCollectionEditable(isEditable());
 				}
 				newView.setCollectionMembersEditables(keyEditable || metaCollectionView.isEditOnly());								
-				newView.setEditable(editable);				
-				newView.setKeyEditable(keyEditable);				
 				newView.setViewName(metaCollectionView.getViewName());
 				Collection actionsListNames = metaCollectionView.getActionsListNames();
 				if (!actionsListNames.isEmpty()) {					
@@ -669,8 +664,6 @@ public class View implements java.io.Serializable {
 				}
 			}
 			else {
-				newView.setKeyEditable(isEditable()); 
-				newView.setEditable(newView.isRepresentsAggregate()?isEditable():false);
 				newView.setCollectionEditable(isEditable()); 				
 				newView.setCollectionMembersEditables(true);
 			}
@@ -680,10 +673,7 @@ public class View implements java.io.Serializable {
 			if (metaReferenceView != null) {
 				newView.setReadOnly(metaReferenceView.isReadOnly());
 				if (newView.isRepresentsEntityReference()) {
-					newView.setRepresentsAggregate(metaReferenceView.isAsAggregate());					
-					if (newView.isRepresentsAggregate()) {
-						newView.setEditable(isEditable());
-					}
+					newView.setRepresentsAggregate(metaReferenceView.isAsAggregate());
 				}
 			}			
 		}
@@ -755,9 +745,10 @@ public class View implements java.io.Serializable {
 			subviews = new HashMap();					
 			Iterator it = getMetaMembers().iterator();
 			while (it.hasNext()) {
-				MetaMember member = (MetaMember) it.next();								
+				MetaMember member = (MetaMember) it.next();
 				createAndAddSubview(member);
-			}								
+			}			
+			setEditable(editable); 
 		}
 		return subviews;
 	}
@@ -1529,7 +1520,7 @@ public class View implements java.io.Serializable {
 
 	public void setKeyEditable(boolean b) throws XavaException {		
 		keyEditable = b;				
-		Iterator it = getMetaModel().getMetaReferencesKey().iterator();
+		Iterator it = getMetaModel().getMetaReferencesKeyAndSearchKey().iterator(); 
 		while (it.hasNext()) {
 			MetaReference ref = (MetaReference) it.next();			
 			if (hasSubview(ref.getName())) {
@@ -1560,9 +1551,9 @@ public class View implements java.io.Serializable {
 	 * If at this moment is editable.
 	 */
 	public boolean isEditable(MetaProperty metaProperty) {		
-		try {							
+		try {				
 			if (metaProperty.isReadOnly()) return false;
-			if (metaProperty.isKey()) return isKeyEditable();
+			if (metaProperty.isKey() || metaProperty.isSearchKey()) return isKeyEditable(); 
 			if (!isEditable()) return false;			
 			return isMarkedAsEditable(metaProperty.getName());
 		}
@@ -1579,8 +1570,8 @@ public class View implements java.io.Serializable {
 		try {
 			MetaReferenceView metaReferenceView = getMetaView().getMetaReferenceView(metaReference);
 			if (metaReferenceView != null && metaReferenceView.isReadOnly()) return false;
-			if (metaReference.isKey()) return isKeyEditable();
-			if (!isEditable()) return false;			
+			if (metaReference.isKey() || metaReference.isSearchKey()) return isKeyEditable(); 									
+			if (!isEditable()) return false;				
 			return isMarkedAsEditable(metaReference.getName());
 		}
 		catch (Exception ex) {
@@ -1636,51 +1627,45 @@ public class View implements java.io.Serializable {
 
 	public void setEditable(boolean b) throws XavaException {		
 		editable = b;
-		if (hasSubviews()) { 
-			Iterator it = getSubviews().values().iterator();
+ 			
 			
-			while (it.hasNext()) {				
-				View subview = (View) it.next();
-				if (subview.isRepresentsCollection()) {
-					subview.setCollectionEditable(b);
-					if (!subview.isCollectionMembersEditables()) {
-						subview.setKeyEditable(false); 
-						subview.setEditable(false); 
-						continue;
-					}					
-				}
-				if (subview.isRepresentsEntityReference()) {
-					subview.setEditable(false);
-					subview.setKeyEditable(b); 					
-				}
-				else {
-					subview.setEditable(b);
-				}						
+		for (Iterator it = getSubviews().values().iterator(); it.hasNext();) {				
+			View subview = (View) it.next();				
+			if (subview.isRepresentsCollection()) {
+				subview.setCollectionEditable(b);
+				if (!subview.isCollectionMembersEditables()) {
+					subview.setKeyEditable(false); 
+					subview.setEditable(false); 
+					continue;
+				}					
 			}
-		}
-				
-		if (hasGroups()) { 
-			Iterator it = getGroupsViews().values().iterator();
-			while (it.hasNext()) {				
-				View subview = (View) it.next();
-				if (subview.isRepresentsCollection()) {
-					subview.setCollectionEditable(b);
-					if (!subview.isCollectionMembersEditables()) {
-						subview.setKeyEditable(false); 
-						subview.setEditable(false); 
-						continue;
-					}					
-				}
-				if (subview.isRepresentsEntityReference()) {				
-					subview.setKeyEditable(b); 
-					subview.setEditable(false); 					
-				}
-				else {
-					subview.setEditable(b);
-				}			
+			if (subview.isRepresentsEntityReference()) {
+				subview.setEditable(false);
+				subview.setKeyEditable(b); 					
 			}
-		}
-		
+			else {
+				subview.setEditable(b);
+			}						
+		}			
+			
+		for (Iterator it = getGroupsViews().values().iterator(); it.hasNext();) {				
+			View subview = (View) it.next();
+			if (subview.isRepresentsCollection()) {
+				subview.setCollectionEditable(b);
+				if (!subview.isCollectionMembersEditables()) {
+					subview.setKeyEditable(false); 
+					subview.setEditable(false); 
+					continue;
+				}					
+			}
+			if (subview.isRepresentsEntityReference()) {				
+				subview.setKeyEditable(b); 
+				subview.setEditable(false); 					
+			}
+			else {
+				subview.setEditable(b);
+			}			
+		}		
 		
 		if (hasSections()) {
 			int count = getSections().size();
@@ -1891,8 +1876,12 @@ public class View implements java.io.Serializable {
 		return p.isKey() && p.getName().equals(getLastPropertyKeyName());
 	}
 	
-	private boolean isLastSearchKeyProperty(MetaProperty p) throws XavaException {		
-		return p.isSearchKey() && p.getName().equals(getLastPropertySearchKeyName());
+	private boolean isLastPropertyMarkedAsSearchKey(MetaProperty p) throws XavaException {
+		return p.isSearchKey() && p.getName().equals(getNameOfLastPropertyMarkedAsSearchKey());		
+	}
+	
+	private boolean isLastPropertyMarkedAsSearch(String qualifiedProperty) throws XavaException {
+		return qualifiedProperty.equals(getNameOfLastPropertyMarkedAsSearchKey());
 	}	
 	
 	public boolean isFirstPropertyAndViewHasNoKeys(MetaProperty pr) throws XavaException {		
@@ -1937,22 +1926,31 @@ public class View implements java.io.Serializable {
 		return lastPropertyKeyName;		
 	}
 	
-	private String getLastPropertySearchKeyName() throws XavaException { 
-		if (lastPropertySearchKeyName == null) { 
-			Iterator it = getMetaPropertiesIncludingGroups().iterator(); 
-			lastPropertySearchKeyName = "";
+	private String getNameOfLastPropertyMarkedAsSearchKey() throws XavaException { 
+		if (nameOflastPropertyMarkedAsSearchKey == null) {
+			Iterator it = getMetaMembersIncludingGroups().iterator();  
+			nameOflastPropertyMarkedAsSearchKey = "";
 			while (it.hasNext()) {
-				MetaProperty p = (MetaProperty) it.next();		
-				if (p.isSearchKey()) {
-					lastPropertySearchKeyName = p.getName();
+				MetaMember member = (MetaMember) it.next();
+				if (member instanceof MetaProperty) {
+					if (((MetaProperty) member).isSearchKey()) {
+						nameOflastPropertyMarkedAsSearchKey = member.getName();
+					}
+				}
+				else if (member instanceof MetaReference) {
+					if (((MetaReference) member).isSearchKey()) {
+						nameOflastPropertyMarkedAsSearchKey = member.getName() + "." +
+							getSubview(member.getName()).getLastSearchKeyName();
+						
+					}
 				}
 			}
 		}		
-		return lastPropertySearchKeyName;		
+		return nameOflastPropertyMarkedAsSearchKey;		
 	}
 	
-	private boolean hasSearchPropertyKeys() throws XavaException { 
-		return !Is.emptyString(getLastPropertySearchKeyName());
+	private boolean hasSearchMemberKeys() throws XavaException { 
+		return !Is.emptyString(getNameOfLastPropertyMarkedAsSearchKey());
 	}
 	
 
@@ -2047,8 +2045,8 @@ public class View implements java.io.Serializable {
 					( 	
 					(getLastPropertyKeyName().equals(changedProperty.getName()) && getMetaPropertiesIncludingGroups().contains(changedProperty)) || // Visible keys
 					(!hasKeyProperties() && changedProperty.isKey() && changedProperty.isHidden() && changedProperty.getMetaModel() == getMetaModel()) || // hidden keys
-					(isRepresentsEntityReference() && isFirstPropertyAndViewHasNoKeys(changedProperty) && isKeyEditable()) || // A searching value that is not key
-					(isRepresentsEntityReference() && hasSearchPropertyKeys() && isLastSearchKeyProperty(changedProperty)) // Explicit search key 
+					(isRepresentsEntityReference() && isFirstPropertyAndViewHasNoKeys(changedProperty) && isKeyEditable()) || // A searching value that is not key 
+					(isRepresentsEntityReference() && hasSearchMemberKeys() && isLastPropertyMarkedAsSearch(changedPropertyQualifiedName)) // Explicit search key 
 					)
 				) {				
 				if (!searchingObject) { // To avoid recursive infinites loops				
@@ -2064,7 +2062,7 @@ public class View implements java.io.Serializable {
 			}
 		} // of if (!isOnlyThrowsOnChange())		
 		if (!isSection() && getMetaView().hasOnChangeAction(changedPropertyQualifiedName)) {
-			IOnChangePropertyAction action = getMetaView().createOnChangeAction(changedPropertyQualifiedName);			
+			IOnChangePropertyAction action = getMetaView().createOnChangeAction(changedPropertyQualifiedName);
 			executeOnChangeAction(changedPropertyQualifiedName, action);
 		} 		
 		if (hasGroups()) {
@@ -2134,26 +2132,20 @@ public class View implements java.io.Serializable {
 	public void findObject(MetaProperty changedProperty) throws Exception { 		
 		Map key = getKeyValues();		
 		try {			
-			if (isRepresentsEntityReference() && isFirstPropertyAndViewHasNoKeys(changedProperty) && isKeyEditable()) {				
+			if (isRepresentsEntityReference() && isFirstPropertyAndViewHasNoKeys(changedProperty) && isKeyEditable()) {
 				// Searching by the first visible property: Useful for searching from a reference with hidden key		
 				Map alternateKey = new HashMap();
 				alternateKey.put(changedProperty.getName(), getValue(changedProperty.getName()));
 				if (Maps.isEmptyOrZero(alternateKey)) clear();
 				else setValues(MapFacade.getValuesByAnyProperty(getModelName(), alternateKey, getMembersNamesWithHidden()));
 			}
-			else if (isRepresentsEntityReference() && hasSearchPropertyKeys()) {				
-				Map alternateKey = new HashMap();
-				for (Iterator it = getMetaProperties().iterator(); it.hasNext();) {
-					MetaProperty p = (MetaProperty) it.next();
-					if (p.isSearchKey()) {
-						alternateKey.put(p.getName(), getValue(p.getName()));
-					}
-				}
+			else if (isRepresentsEntityReference() && hasSearchMemberKeys()) {
+				Map alternateKey = getSearchKeyValues();				
 				if (Maps.isEmptyOrZero(alternateKey)) clear();
 				else {
 					setValues(MapFacade.getValuesByAnyProperty(getModelName(), alternateKey, getMembersNamesWithHidden()));				
-				}
-			}
+				}				
+			}			
 			else {			
 				// Searching by key, the normal case				
 				if (Maps.isEmptyOrZero(key)) clear();				
@@ -2166,6 +2158,24 @@ public class View implements java.io.Serializable {
 		}					
 	}		
 	
+	private Map getSearchKeyValues() { 
+		Map values = new HashMap();
+		for (Iterator it = getMetaMembers().iterator(); it.hasNext();) {
+			MetaMember member = (MetaMember) it.next();
+			if (member instanceof MetaProperty && isSearchKey((MetaProperty) member)) {
+				values.put(member.getName(), getValue(member.getName()));
+			}
+			else if (member instanceof MetaReference && ((MetaReference) member).isSearchKey()) {
+				values.put(member.getName(), getSubview(member.getName()).getSearchKeyValues());				
+			}
+		}
+		return values;
+	}
+
+	private boolean isSearchKey(MetaProperty property) {		
+		return property.isKey() || property.isSearchKey() || isLastSearchKey(property);
+	}
+
 	private String removeNamePrefix(String name) {
 		if (Is.emptyString(name)) return "";		
 		StringTokenizer st = new StringTokenizer(name, ".");
@@ -2436,12 +2446,24 @@ public class View implements java.io.Serializable {
 			metaPropertiesIncludingGroups = new ArrayList(getMetaProperties());	
 			for (Iterator it = getGroupsViews().values().iterator(); it.hasNext();) {
 				View group = (View) it.next();
-				metaPropertiesIncludingGroups.addAll(group.getMetaProperties());
+				metaPropertiesIncludingGroups.addAll(group.getMetaPropertiesIncludingGroups()); 
 			}			
 		}
 		return metaPropertiesIncludingGroups;
 	}
-		
+	
+	private Collection getMetaMembersIncludingGroups() throws XavaException { 
+		if (!hasGroups()) return getMetaMembers();
+		if (metaMembersIncludingGroups == null) {
+			metaMembersIncludingGroups = new ArrayList(getMetaMembers());	
+			for (Iterator it = getGroupsViews().values().iterator(); it.hasNext();) {
+				View group = (View) it.next();
+				metaMembersIncludingGroups.addAll(group.getMetaMembersIncludingGroups());
+			}			
+		}
+		return metaMembersIncludingGroups;
+	}
+			
 	public Collection getMetaPropertiesList() throws XavaException {		
 		if (metaPropertiesList == null) {
 			metaPropertiesList = new ArrayList();
@@ -2770,12 +2792,20 @@ public class View implements java.io.Serializable {
 		}
 	}
 	
-	public boolean isLastSearchKey(MetaProperty p) throws XavaException { 
+	public boolean isLastSearchKey(MetaProperty p) throws XavaException {		
 		if (!isRepresentsEntityReference()) return false;
-		if (hasSearchPropertyKeys()) return isLastSearchKeyProperty(p); // explicit search key
+		if (hasSearchMemberKeys()) return isLastPropertyMarkedAsSearchKey(p); // explicit search key
 		return 
 			(isEditable(p) && isLastKeyProperty(p)) || // with key visible
 			(isFirstPropertyAndViewHasNoKeys(p) && isKeyEditable()); // with key hidden 		
+	}
+	
+	private String getLastSearchKeyName() {
+		for (Iterator it = getMetaPropertiesIncludingGroups().iterator(); it.hasNext();) {
+			MetaProperty p = (MetaProperty) it.next();
+			if (isLastSearchKey(p)) return p.getName();
+		}
+		return "";
 	}
 		
 	public boolean isHidden(String name) {				
@@ -2787,7 +2817,7 @@ public class View implements java.io.Serializable {
 			if (!hidden) return;		
 			hiddenMembers = new HashSet();
 		}
-		// getSubview() is for starting the process that create subviews and groups
+		// getSubview() is for starting the process that creates subviews and groups
 		// before to hide any member
 		getSubviews(); 
 		if (hidden) hiddenMembers.add(name);
@@ -3065,18 +3095,18 @@ public class View implements java.io.Serializable {
 		String prefix = Is.emptyString(getMemberName())?
 			"xava." + getModelName() + ".":
 			"xava." + getModelName() + "." + getMemberName() + ".";
-			
-		if (Is.emptyString(focusPropertyId)) {
+						
+		if (Is.emptyString(focusPropertyId)) {			
 			return getFirsEditablePropertyId(prefix);
 		}
-		else {			
+		else {						
 			String focusPropertyName = focusPropertyId.substring(prefix.length());			
 			int idx = focusPropertyName.indexOf('.'); 
-			if (idx < 0) {			
+			if (idx < 0) {							
 				String name = getNextFocusPropertyName(focusPropertyName);				
 				return name==null?getFirsEditablePropertyId(prefix):prefix + name;
 			}
-			else {
+			else {				
 				String subviewName = focusPropertyName.substring(0, idx);
 				String member = focusPropertyName.substring(idx + 1);
 				View subview = getSubview(subviewName);				
@@ -3091,10 +3121,10 @@ public class View implements java.io.Serializable {
 	private String getFirsEditablePropertyId(String prefix) throws XavaException {
 		Iterator it = getMetaMembers().iterator();
 		while (it.hasNext()) {
-			MetaMember m = (MetaMember) it.next();
-			if (m instanceof MetaProperty) {
+			MetaMember m = (MetaMember) it.next();			
+			if (m instanceof MetaProperty) {			
 				if (PropertiesSeparator.INSTANCE.equals(m)) continue; 
-				if (isEditable((MetaProperty) m)) {
+				if (isEditable((MetaProperty) m) || isLastSearchKey((MetaProperty) m)) { 
 					return prefix + m.getName();
 				}
 			}
@@ -3102,7 +3132,7 @@ public class View implements java.io.Serializable {
 				String result = getGroupView(m.getName()).getFirsEditablePropertyId(prefix);
 				if (result != null) return result;
 			}
-			else if (m instanceof MetaReference) {
+			else if (m instanceof MetaReference) {				
 				String result = getSubview(m.getName()).getFirsEditablePropertyId(prefix + m.getName() + ".");
 				if (result != null) return result;
 			}
@@ -3113,13 +3143,14 @@ public class View implements java.io.Serializable {
 		}
 		return null;
 	}
-
-	private String getNextFocusPropertyName(String memberName) throws XavaException {		
+	
+	private String getNextFocusPropertyName(String memberName) throws XavaException {
+		memberName = Strings.firstToken(memberName, "."); 
 		Iterator it = getMetaMembers().iterator();
 		boolean found = false;		
 		while (it.hasNext()) {
-			MetaMember m = (MetaMember) it.next();			
-			if (m instanceof MetaGroup) {												
+			MetaMember m = (MetaMember) it.next();						
+			if (m instanceof MetaGroup) {				
 				String name = getGroupView(m.getName()).getNextFocusPropertyName(memberName);
 				if ("__FOUND__".equals(name)) {
 					found = true; 
@@ -3128,20 +3159,20 @@ public class View implements java.io.Serializable {
 				else if (name != null) return name;
 			}
 						
-			if (m.getName().equals(memberName)) {				
+			if (m.getName().equals(memberName)) {								
 				found = true;
 				continue;
 			}
 			if (!found) continue;
-			if (m instanceof MetaGroup) {								
+			if (m instanceof MetaGroup) {												
 				String name = getGroupView(m.getName()).getFirsEditablePropertyId("");				
 				if (name != null) return name;
 			}			
 			if (m instanceof MetaProperty &&
 				!(m instanceof PropertiesSeparator) && 
-				isEditable((MetaProperty) m)) {	
+				isEditable((MetaProperty) m)) {					
 				return m.getName();
-			}
+			}			
 			if (m instanceof MetaReference &&				 
 				isEditable((MetaReference) m)) {
 				if (displayAsDescriptionsList((MetaReference) m)) {

@@ -24,6 +24,7 @@ public class MetaReference extends MetaMember implements Cloneable {
 	private String role;
 	private boolean required;
 	private boolean key;
+	private boolean searchKey; // tmp
 	private MetaCalculator metaCalculatorDefaultValue;
 	private ICalculator defaultValueCalculator;
 	
@@ -201,6 +202,14 @@ public class MetaReference extends MetaMember implements Cloneable {
 	
 	public String toString() {		
 		return "MetaReference:" + getId();
+	}
+
+	public boolean isSearchKey() {
+		return searchKey;
+	}
+
+	public void setSearchKey(boolean searchKey) {
+		this.searchKey = searchKey;
 	}
 		
 }

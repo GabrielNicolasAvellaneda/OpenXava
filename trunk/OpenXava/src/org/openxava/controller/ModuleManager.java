@@ -30,7 +30,7 @@ public class ModuleManager {
 	static {		
 		MetaControllers.setContext(MetaControllers.WEB);		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
-		log.info("OpenXava 3.0.1 (2008-4-16)");
+		log.info("OpenXava 3.0.2 beta (2008-5-xx)");
 	}
 	
 	private static int nextOid = 0; 
@@ -204,14 +204,14 @@ public class ModuleManager {
 		return false;
 	}	
 	
-	public void execute(HttpServletRequest request, Messages errors, Messages messages) {		
+	public void execute(HttpServletRequest request, Messages errors, Messages messages) {
 		try {						
 			if (errors.isEmpty()) { // Only it's executed the action if there aren't errors
 				if (isFormUpload()) {
 					parseMultipartRequest(request);
 				}
-				String xavaAction = getParameter(request, "xava_action");								
-				if (!Is.emptyString(xavaAction)) {						
+				String xavaAction = getParameter(request, "xava_action");				
+				if (!Is.emptyString(xavaAction)) {											
 					String actionValue = request.getParameter("xava_action_argv");
 					if ("undefined".equals(actionValue)) actionValue = null;						
 					MetaAction a = MetaControllers.getMetaAction(xavaAction);					
