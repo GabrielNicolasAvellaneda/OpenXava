@@ -3,12 +3,12 @@ package org.openxava.annotations;
 import java.lang.annotation.*;
 
 /**
- * A search key property is used by the user to search. <p>
+ * A search key property or reference is used by the user to search. <p>
  * 
- * Applies to properties.<p>
+ * Applies to properties and references.<p>
  * 
  * If the @{@link Id} property is @{@link Hidden} you can use 
- * @<code>SearchKey</code> to indicate what property will be used
+ * @<code>SearchKey</code> to indicate what property or reference will be used
  * for searching.<br>
  * By default, OpenXava allows to the user to search objects (in references
  * for example) by the @Id property, if the @Id property is hidden then
