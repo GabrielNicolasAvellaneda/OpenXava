@@ -1522,6 +1522,11 @@ public class AnnotatedClassParser {
 			}			
 		}
 		
+		// SearchKey
+		if (element.isAnnotationPresent(SearchKey.class)) { 						
+			ref.setSearchKey(true);
+		} 
+		
 		// Required
 		if (element.isAnnotationPresent(Required.class)) {						
 			ref.setRequired(true);
@@ -1859,9 +1864,6 @@ public class AnnotatedClassParser {
 		if (element.isAnnotationPresent(RowStyles.class)) {
 			notApply(ref.getName(), RowStyles.class, "collections");
 		}						
-		if (element.isAnnotationPresent(SearchKey.class)) {
-			notApply(ref.getName(), SearchKey.class, "properties");
-		}
 				
 	}
 
