@@ -79,7 +79,9 @@ abstract public class MetaModel extends MetaElement {
 	private Collection metaReferencesToEntity;
 	private boolean annotatedEJB3;
 	private String versionPropertyName; 
-	private boolean versionPropertyNameObtained = false; 
+	private boolean versionPropertyNameObtained = false;
+	private Collection metaReferencesKey;
+	private Collection metaReferencesKeyAndSearchKey; 
 		
 	
 	/**
@@ -1025,16 +1027,35 @@ abstract public class MetaModel extends MetaElement {
 	/**
 	 * @return Collection of <tt>MetaReference</tt>, not null and read only
 	 */
-	public Collection getMetaReferencesKey() throws XavaException {
-		Collection result = new ArrayList();
-		Iterator it = getMapMetaReferences().values().iterator();
-		while (it.hasNext()) {
-			MetaReference metaReference = (MetaReference) it.next();
-			if (metaReference.isKey()) {
-				result.add(metaReference);
-			}
+	public Collection getMetaReferencesKey() throws XavaException { 
+		if (metaReferencesKey == null) {
+			metaReferencesKey = new ArrayList();
+			Iterator it = getMapMetaReferences().values().iterator();
+			while (it.hasNext()) {
+				MetaReference metaReference = (MetaReference) it.next();
+				if (metaReference.isKey()) {
+					metaReferencesKey.add(metaReference);
+				}
+			}					
 		}
-		return result;
+		return metaReferencesKey;
+	}
+	
+	/**
+	 * @return Collection of <tt>MetaReference</tt>, not null and read only
+	 */
+	public Collection getMetaReferencesKeyAndSearchKey() throws XavaException { 
+		if (metaReferencesKeyAndSearchKey == null) {
+			metaReferencesKeyAndSearchKey = new ArrayList();
+			Iterator it = getMapMetaReferences().values().iterator();
+			while (it.hasNext()) {
+				MetaReference metaReference = (MetaReference) it.next();
+				if (metaReference.isKey() || metaReference.isSearchKey()) {
+					metaReferencesKeyAndSearchKey.add(metaReference);
+				}
+			}		
+		}
+		return metaReferencesKeyAndSearchKey;
 	}
 	
 	

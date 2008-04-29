@@ -337,6 +337,7 @@ public class ModelParser extends XmlElementsNames {
 		r.setLabel(el.getAttribute(xlabel[lang]));		
 		r.setRequired(ParserUtil.getAttributeBoolean(el, xrequired[lang]));
 		r.setKey(ParserUtil.getAttributeBoolean(el, xkey[lang]));
+		r.setSearchKey(ParserUtil.getAttributeBoolean(el, xsearch_key[lang])); 
 		r.setRole(el.getAttribute(xrole[lang]));
 		r.setMetaCalculatorDefaultValue(createDefaultValueCalculator(el, lang));
 		
