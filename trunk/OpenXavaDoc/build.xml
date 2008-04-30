@@ -2,7 +2,7 @@
 
 <project name="OpenXavaDoc" default="deploy" basedir=".">
 
-	<property name="xava.version" value="3.0.1"/>
+	<property name="xava.version" value="3.0.2"/>
 	<property name="xava.workspace" value=".."/>	
 	<property name="openxava.dist.dir" value="/home/javi/openxava"/>
 	<property file="../openxava.properties"/>
@@ -54,15 +54,35 @@
 			<param name="chapter.1.title" value="Visi"/>			
 		</antcall>
 		
-		<antcall target="generatePdfGuideForLang">
+		<antcall target="removeMenuFromXmlComponents">
+			<param name="lang" value="en"/>
+			<param name="chapter.1.title" value="Introduction"/>			
+		</antcall>
+			
+		<antcall target="removeMenuFromXmlComponents">
+			<param name="lang" value="es"/>
+			<param name="chapter.1.title" value="Introducci"/>			
+		</antcall>
+				
+		<antcall target="generatePdfReferenceForLang">
 			<param name="name" value="reference-guide"/>
 			<param name="lang" value="en"/>
 		</antcall>		
 		
-		<antcall target="generatePdfGuideForLang">
+		<antcall target="generatePdfReferenceForLang">
 			<param name="name" value="guia-referencia"/>
 			<param name="lang" value="es"/>
+		</antcall>
+		
+		<antcall target="generatePdfXmlComponentsForLang">
+			<param name="name" value="classic-xml-components"/>
+			<param name="lang" value="en"/>
 		</antcall>		
+		
+		<antcall target="generatePdfXmlComponentsForLang">
+			<param name="name" value="componentes-xml-clasicos"/>
+			<param name="lang" value="es"/>
+		</antcall>				
 		
 	</target>
 	
@@ -91,11 +111,34 @@
 			</replacefilter>						
 		</replace>
 	</target>
-
-	<target name="generatePdfGuideForLang">
+	
+	<target name="removeMenuFromXmlComponents">
+		<replace dir="${doc.dir}">
+			<include name="introduction-xml_${lang}.html"/>	
+			<include name="model-xml_${lang}.html"/>			
+			<include name="view-xml_${lang}.html"/>
+			<include name="tab-xml_${lang}.html"/>			
+			<include name="mapping-xml_${lang}.html"/>
+			<include name="aspects-xml_${lang}.html"/>
+		  	<replacefilter 
+		    	token='&lt;a class="wiki_link" href="introduction-xml_${lang}.html"&gt;1.' 
+		    	value='&lt;div class="reference_menu"&gt;&lt;a class="wiki_link" href="introduction-xml_${lang}.html"&gt;1.'>				
+			</replacefilter>
+			<replacefilter 
+			   	token='&lt;strong&gt;1.${chapter.1.title}' 
+			   	value='&lt;div class="reference_menu"&gt;&lt;strong&gt;1.${chapter.1.title}'>				
+			</replacefilter>
+			<replacefilter 
+			   	token='&lt;h1 id="toc' 
+			   	value='&lt;/div&gt;&lt;h1 id="toc'>				
+			</replacefilter>						
+		</replace>
+	</target>
+	
+	<target name="generatePdfReferenceForLang">
 		<exec executable="/opt/princes/bin/prince" >			
 			<arg value="--style=${pdf.style.dir}/oxboom.css"/>
-			<arg value="--no-author-style"/> <!-- tmp -->
+			<arg value="--no-author-style"/>
 			<arg value="${pdf.style.dir}/cover_${lang}.html"/>
 			<arg value="${pdf.style.dir}/table-of-contents_${lang}.html"/> 
 			<arg value="${pdf.style.dir}/blank.html"/>
@@ -119,6 +162,29 @@
 			<arg value="-o ${pdf.dir}/openxava-${xava.version}-${name}.pdf"/>
 		</exec>
 	</target>
+	
+	<target name="generatePdfXmlComponentsForLang">
+		<exec executable="/opt/princes/bin/prince" >			
+			<arg value="--style=${pdf.style.dir}/oxboom.css"/>
+			<arg value="--no-author-style"/>
+			<arg value="${pdf.style.dir}/cover-xml_${lang}.html"/>
+			<arg value="${pdf.style.dir}/table-of-contents-xml_${lang}.html"/> 
+			<arg value="${pdf.style.dir}/blank.html"/>
+			<arg value="${doc.dir}/introduction-xml_${lang}.html"/>
+			<arg value="${pdf.style.dir}/blank.html"/>
+			<arg value="${doc.dir}/model-xml_${lang}.html"/> 
+			<arg value="${pdf.style.dir}/blank.html" />
+			<arg value="${doc.dir}/view-xml_${lang}.html"/>
+			<arg value="${pdf.style.dir}/blank.html" />
+			<arg value="${doc.dir}/tab-xml_${lang}.html"/>
+			<arg value="${pdf.style.dir}/blank.html" />
+			<arg value="${doc.dir}/mapping-xml_${lang}.html"/>
+			<arg value="${pdf.style.dir}/blank.html" />
+			<arg value="${doc.dir}/aspects-xml_${lang}.html"/>
+			<arg value="-o ${pdf.dir}/openxava-${xava.version}-${name}.pdf"/>
+		</exec>
+	</target>
+	
 	
 	<target name="adjustCSS">
 		<echo file="${doc.dir}/static/style.css" append="true">
