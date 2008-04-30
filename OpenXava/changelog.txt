@@ -1,6 +1,11 @@
 Change Log for OpenXava project
 ===============================
 
+- Classic XML Components guide moved to wiki.
+- The message for "object not found" contains the used key values.
+- @SearhKey can be applied to references.
+- Fix: Incorrect focus position when two search references inside a reference.
+- Fix: updateOX ant task was not coping xml components dtds for classic projects.
 - I18n entries for tab properties can be applied to all entities at once using wildcards.
 - Fix: Selected elements of a collection inside of a not showed section are not correctly cleared.
 

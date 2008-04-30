@@ -40,6 +40,9 @@ public class FormulaIngredient {
 	@DescriptionsList
 	private Formula anotherFormula;
 	
+	@Stereotype("IMAGE")
+	private byte [] image; // tmp
+	
 	public String getOid() {
 		return oid;
 	}
@@ -78,6 +81,14 @@ public class FormulaIngredient {
 
 	public void setFormula(Formula formula) {
 		this.formula = formula;
+	}
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 	
 

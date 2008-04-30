@@ -29,6 +29,7 @@ import org.openxava.web.WebEditors;
  * its protected methods.<p>
  * 
  * @author Javier Paniza
+ * @author Ana Andrés
  */
 
 public class SearchByViewKeyAction extends ViewBaseAction {

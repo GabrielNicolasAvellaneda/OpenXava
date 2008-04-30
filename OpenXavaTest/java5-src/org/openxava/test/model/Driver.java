@@ -10,9 +10,10 @@ import org.openxava.annotations.*;
  */
 
 @Entity
+@View(name="Simple", members="number, name") 
 public class Driver {
 	
-	@Id @Column(length=5) @Required
+	@Id @Column(length=5) @Required 	
 	private int number;
 	
 	@Stereotype("NO_FORMATING_STRING") 

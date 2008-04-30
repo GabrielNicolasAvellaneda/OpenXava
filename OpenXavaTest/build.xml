@@ -134,10 +134,12 @@
 	</target>
 	
 	<target name="updateSchema">
-		<ant antfile="../OpenXava/build.xml" target="updateSchema">			
-			<property name="schema.config.file" value="hibernate/hibernate-junit.cfg.xml"/>
-			<property name="schema.path" value="lib/hsqldb.jar"/>
+		
+		<ant antfile="../OpenXava/build.xml" target="updateSchemaJPA">			
+			<property name="persistence.unit" value="junit"/>
+			<property name="schema.path" value="../OpenXavaTest/lib/hsqldb.jar"/>
 		</ant>
+
 		<!-- Below some foreign keys is dropped.
 			This is for testing cases when 0 is use for "no-value" without FK, or so on.
 			As in many legate databases designed by COBOL/RPG programmers -->
@@ -158,14 +160,7 @@
 			alter table XAVATEST.CUSTOMER drop constraint FK44A5B2E6A34119E3;
 			alter table XAVATEST.SHIPMENT drop constraint FK1BDA4A230AAEB1E;
 		</sql>
-	</target>	
-	
-	<target name="exportSchema">
-		<ant antfile="../OpenXava/build.xml" target="exportSchema">
-			<property name="schema.config.file" value="hibernate/hibernate-junit.cfg.xml"/>
-			<property name="schema.path" value="lib/hsqldb.jar"/>			
-		</ant>
-	</target>
+	</target>			
 	
 	<target name="updateOX">
 		<ant antfile="../OpenXava/build.xml" target="updateOX"/>
