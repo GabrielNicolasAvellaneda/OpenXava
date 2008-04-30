@@ -102,7 +102,7 @@ public class CustomerTest extends ModuleTestBase {
 		setConditionValues(totalCondition);		
 		execute("List.filter");
 		assertNoErrors(); 
-		assertListRowCount(3); // We rely in that there are two customer of Valencia
+		assertListRowCount(3); // We rely in that there are 3 customer of Valencia
 		
 		// To sure that it works after customizing list
 		execute("List.customize");
@@ -111,7 +111,7 @@ public class CustomerTest extends ModuleTestBase {
 		setConditionValues(totalCondition);		
 		execute("List.filter");
 		assertNoErrors(); 
-		assertListRowCount(3); // We rely in that there are two customer of Valencia
+		assertListRowCount(3); // We rely in that there are 3 customer of Valencia
 
 		// Restoring the list
 		execute("List.addColumns");

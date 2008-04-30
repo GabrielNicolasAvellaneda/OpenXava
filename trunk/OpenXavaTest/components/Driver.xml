@@ -13,6 +13,10 @@
 			size="2" required="true"/>				  
 		<reference name="drivingLicence"/>
 	</entity>
+	
+	<view name="Simple">
+		<members>number, name</members>
+	</view>
 						
 	<entity-mapping table="XAVATEST@separator@DRIVER">
 		<property-mapping

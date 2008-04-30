@@ -130,6 +130,7 @@ public class XavaSuite extends TestSuite {
 		if (ModuleTestBase.isOX3()) {
 			suite.addTest(new TestSuite(JavaProgrammerTest.class));
 		}						
+		suite.addTest(new TestSuite(JourneyTest.class));
 		if (XavaPreferences.getInstance().isJPAPersistence()) {			
 			suite.addTest(new TestSuite(JPATest.class));			
 		}

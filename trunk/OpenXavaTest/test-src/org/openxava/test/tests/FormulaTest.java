@@ -1,6 +1,11 @@
 package org.openxava.test.tests;
 
+import java.net.*;
+
 import org.openxava.tests.*;
+import org.openxava.util.*;
+
+import com.meterware.httpunit.*;
 
 
 
@@ -12,6 +17,35 @@ public class FormulaTest extends ModuleTestBase {
 	
 	public FormulaTest(String testName) {
 		super(testName, "Formula");		
+	}
+	
+	public void testImageInsideCollection() throws Exception {
+		execute("CRUD.new");		
+		execute("Collection.new", "viewObject=xava_view_section0_ingredients");
+		execute("ImageEditor.changeImage", "newImageProperty=image");
+		assertNoErrors();
+		assertAction("LoadImage.loadImage");		
+		String imageUrl = System.getProperty("user.dir") + "/test-images/cake.gif";
+		setFileValue("newImage", imageUrl);
+		execute("LoadImage.loadImage");
+		assertNoErrors();
+		
+		WebResponse response = getConversation().getCurrentPage();
+		URL url = response.getURL();
+		String urlPrefix = url.getProtocol() + "://" + url.getHost() + ":" + url.getPort();
+		
+		WebImage image = response.getImageWithName("xava.Formula.ingredients.image");
+		String imageURL = null;
+		if (image.getSource().startsWith("/")) {
+			imageURL = urlPrefix + image.getSource();
+		}
+		else {
+			String urlBase = Strings.noLastToken(url.getPath(), "/");
+			imageURL = urlPrefix + urlBase + image.getSource();
+		}		
+		response = getConversation().getResponse(imageURL);
+		assertTrue("Image not obtained", response.getContentLength() != 0);
+		assertEquals("Result is not an image", "image", response.getContentType());		
 	}
 	
 	public void testDependentReferencesAsDescriptionsListWithHiddenKeyInCollection_aggregateCanHasReferenceToModelOfContainerType() throws Exception {		

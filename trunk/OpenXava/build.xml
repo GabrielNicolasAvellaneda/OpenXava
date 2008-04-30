@@ -71,12 +71,10 @@
 		<mkdir dir="${dist.dir}/lib"/>
 	</target>
 	
-	<target name="copyComponentDTDs" unless="ox3">
-		
+	<target name="copyComponentDTDs" if="xml.components">
 		<copy todir="../${project}/components/dtds" overwrite="true">
 			<fileset dir="../OpenXava/xava/dtds" includes="componente.dtd,component.dtd"/>
-		</copy>
-		    		
+		</copy>		    		
 	</target>
 		
     <target name="copyXavaDTDs">     
@@ -89,7 +87,9 @@
 	
     <target name="copyDTDs">     
     
-    	<antcall target="copyXavaDTDs"/>    	
+    	<antcall target="copyXavaDTDs"/>
+		<available file="../${project}/components" type="dir"
+		           property="xml.components"/>
     	<antcall target="copyComponentDTDs"/>
 		
 	</target>
@@ -910,7 +910,7 @@
 	To be use with OX3 or better.
 	-->
 	<target name="updateOX">
-		<antcall target="copyXavaDTDs"/>
+		<antcall target="copyDTDs"/>						
 		<copy todir="../${project}/web/xava" overwrite="true">
     		<fileset dir="../OpenXava/web" excludes="WEB-INF/**"/>
   		</copy>		
@@ -926,9 +926,15 @@
 			<path location="../OpenXava/lib/hibernate-tools.jar" />
 			<path location="../OpenXava/lib/freemarker.jar" />					 	
 		 	<path location="../OpenXava/lib/commons-logging.jar" />
+			<!-- Library from OpenXava in order to work the first time
+				before WEB-INF/lib of new project is populated -->
 		 	<fileset dir="../OpenXava/web/WEB-INF/lib">
 				<include name="**/*.jar"/>
 			</fileset>
+			<!-- Library of project to include custom libraries -->
+			<fileset dir="../${project}/web/WEB-INF/lib">
+				<include name="**/*.jar"/>
+			</fileset>			
 			<path location="../OpenXava/bin" />
 			<path location="${schema.path}" />
 		</path>			
@@ -953,6 +959,6 @@
 		 	<hbm2ddl update="true" />	
 		</hibernatetool>
 				
-	</target>
+	</target>		
 				
 </project>
