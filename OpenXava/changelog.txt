@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Stereotype PHOTO/IMAGE fails in collections.
 - Classic XML Components guide moved to wiki.
 - The message for "object not found" contains the used key values.
 - @SearhKey can be applied to references.

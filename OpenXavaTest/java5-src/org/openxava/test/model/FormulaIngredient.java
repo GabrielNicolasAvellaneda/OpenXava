@@ -41,7 +41,7 @@ public class FormulaIngredient {
 	private Formula anotherFormula;
 	
 	@Stereotype("IMAGE")
-	private byte [] image; // tmp
+	private byte [] image; 
 	
 	public String getOid() {
 		return oid;

@@ -22,7 +22,7 @@ public class FormulaTest extends ModuleTestBase {
 	public void testImageInsideCollection() throws Exception {
 		execute("CRUD.new");		
 		execute("Collection.new", "viewObject=xava_view_section0_ingredients");
-		execute("ImageEditor.changeImage", "newImageProperty=image");
+		execute("ImageEditor.changeImage", "newImageProperty=xava.Formula.ingredients.image");
 		assertNoErrors();
 		assertAction("LoadImage.loadImage");		
 		String imageUrl = System.getProperty("user.dir") + "/test-images/cake.gif";

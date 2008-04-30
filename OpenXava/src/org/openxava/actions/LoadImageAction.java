@@ -13,23 +13,34 @@ import org.openxava.view.*;
  */
 
 public class LoadImageAction extends BaseAction implements INavigationAction, IProcessLoadedFileAction {
-
+	
 	private List fileItems;
 	private View view;
 	private String newImageProperty;
 	
 
-	public void execute() throws Exception {		
+	public void execute() throws Exception {
 		Iterator i = getFileItems().iterator();
 		while (i.hasNext()) {
 			FileItem fi = (FileItem)i.next();
 			String fileName = fi.getName();			
 			if (!Is.emptyString(fileName)) {
-				getView().setValue(getNewImageProperty(), fi.get());
+				String propertyName = Strings.lastToken(getNewImageProperty(), ".");
+				findView().setValue(propertyName, fi.get());
 			}			
 		}		
 	}
-
+	
+	private View findView() { 
+		String property = getNewImageProperty(); 
+		String []m = property.split( "\\." );  
+		View result = view; 
+		for( int i = 2; i < m.length-1; i++ ) { 
+			result = result.getSubview(m[i]); 
+		} 		
+		return result; 
+	} 
+		
 	public String[] getNextControllers() {		
 		return DEFAULT_CONTROLLERS;
 	}
