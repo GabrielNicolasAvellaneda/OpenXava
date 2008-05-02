@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Labels translated to Italian.
 - Fix: Searching a reference with @SearchKey using the list fails.
 - Fix: Stereotype PHOTO/IMAGE fails in collections.
 - Classic XML Components guide moved to wiki.
