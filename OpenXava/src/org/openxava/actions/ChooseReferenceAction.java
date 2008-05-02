@@ -31,7 +31,7 @@ public class ChooseReferenceAction extends ViewBaseAction implements INavigation
 		if (key == null) {
 			chosen = false;
 			return;
-		}
+		}		
 		getReferenceSubview().setValuesNotifying(key);
 		getTab().setModelName(getView().getModelName());
 	}

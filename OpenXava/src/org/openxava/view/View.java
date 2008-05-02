@@ -2040,7 +2040,7 @@ public class View implements java.io.Serializable {
 					}					
 				}
 			}				
-			
+
 			if (hasToSearchOnChangeIfSubview && isSubview() && !isGroup() &&   
 					( 	
 					(getLastPropertyKeyName().equals(changedProperty.getName()) && getMetaPropertiesIncludingGroups().contains(changedProperty)) || // Visible keys
@@ -2051,7 +2051,7 @@ public class View implements java.io.Serializable {
 				) {				
 				if (!searchingObject) { // To avoid recursive infinites loops				
 					try {
-						searchingObject = true;								
+						searchingObject = true;
 						IOnChangePropertyAction action = getParent().getMetaView().createOnChangeSearchAction(getMemberName());
 						executeOnChangeAction(changedPropertyQualifiedName, action);						
 					}
@@ -2129,24 +2129,29 @@ public class View implements java.io.Serializable {
 	 * 
 	 * @param changedProperty  Property which change produces the search. 
 	 */	
-	public void findObject(MetaProperty changedProperty) throws Exception { 		
+	public void findObject(MetaProperty changedProperty) throws Exception {
 		Map key = getKeyValues();		
 		try {			
-			if (isRepresentsEntityReference() && isFirstPropertyAndViewHasNoKeys(changedProperty) && isKeyEditable()) {
+			if (isRepresentsEntityReference() && isFirstPropertyAndViewHasNoKeys(changedProperty) && isKeyEditable()) {				
 				// Searching by the first visible property: Useful for searching from a reference with hidden key		
 				Map alternateKey = new HashMap();
 				alternateKey.put(changedProperty.getName(), getValue(changedProperty.getName()));
 				if (Maps.isEmptyOrZero(alternateKey)) clear();
-				else setValues(MapFacade.getValuesByAnyProperty(getModelName(), alternateKey, getMembersNamesWithHidden()));
+				else setValues(MapFacade.getValuesByAnyProperty(getModelName(), alternateKey, getMembersNamesWithHidden()));			
 			}
-			else if (isRepresentsEntityReference() && hasSearchMemberKeys()) {
+			else if (isRepresentsEntityReference() && changedProperty != null && changedProperty.isHidden() && changedProperty.isKey()) { 
+				// If changed property is hidden key, although there are search member we search by key
+				if (Maps.isEmptyOrZero(key)) clear();				
+				else setValues(MapFacade.getValues(getModelName(), key, getMembersNamesWithHidden()));												
+			}
+			else if (isRepresentsEntityReference() && hasSearchMemberKeys()) {				
 				Map alternateKey = getSearchKeyValues();				
 				if (Maps.isEmptyOrZero(alternateKey)) clear();
 				else {
 					setValues(MapFacade.getValuesByAnyProperty(getModelName(), alternateKey, getMembersNamesWithHidden()));				
 				}				
-			}			
-			else {			
+			}						
+			else {							
 				// Searching by key, the normal case				
 				if (Maps.isEmptyOrZero(key)) clear();				
 				else setValues(MapFacade.getValues(getModelName(), key, getMembersNamesWithHidden()));				
