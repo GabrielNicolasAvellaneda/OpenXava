@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Searching a reference with @SearchKey using the list fails.
 - Fix: Stereotype PHOTO/IMAGE fails in collections.
 - Classic XML Components guide moved to wiki.
 - The message for "object not found" contains the used key values.
