@@ -721,7 +721,11 @@
 		<java classname="Simple2XML" classpath="${tl.lib}">
 			<arg value="${generator.dir}${file.separator}portletxml.template"/> 
 			<arg value="${generator.dir}${file.separator}portletxml.xml"/>         
-		</java>				
+		</java>
+		<java classname="Simple2XML" classpath="${tl.lib}">
+			<arg value="${generator.dir}${file.separator}liferayDisplayxml.template"/> 
+			<arg value="${generator.dir}${file.separator}liferayDisplayxml.xml"/>         
+		</java>						
 		<java classname="Simple2XML" classpath="${tl.lib}">
 			<arg value="${generator.dir}${file.separator}jetspeed2psml.template"/> 
 			<arg value="${generator.dir}${file.separator}jetspeed2psml.xml"/>         
@@ -740,6 +744,10 @@
 			<arg value="${generator.dir}${file.separator}portletxml.xml"/>
 			<arg value="${generator.dir}${file.separator}PortletXmlPG.java"/>
 		</java>
+		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
+			<arg value="${generator.dir}${file.separator}liferayDisplayxml.xml"/>
+			<arg value="${generator.dir}${file.separator}LiferayDisplayXmlPG.java"/>
+		</java>		
 		<java classname="TL2Java" classpath="${tl.lib}" fork="yes">
 			<arg value="${generator.dir}${file.separator}jetspeed2psml.xml"/>
 			<arg value="${generator.dir}${file.separator}Jetspeed2PsmlPG.java"/>

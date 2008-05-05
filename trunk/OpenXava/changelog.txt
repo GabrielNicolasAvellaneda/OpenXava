@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- liferay-display.xml file is generated: OX applications inside Liferay is not on 'Undefined' category but on a category for each application.
 - Labels and messages translated to Italian.
 - Fix: Searching a reference with @SearchKey using the list fails.
 - Fix: Stereotype PHOTO/IMAGE fails in collections.
