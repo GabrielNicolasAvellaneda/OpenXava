@@ -77,6 +77,15 @@ public class PortletCodeGenerator {
 			};
 			PortletXmlPG.main(argvPortlet);
 			
+			// liferay-display.xml
+			String [] argvLiferayDisplay = {
+				"../OpenXava/xava/default-size.xml", // some valid xml is required by TL, not used
+				"../" + project + "/web/WEB-INF/liferay-display.xml",
+				project, 
+				encoding
+			};
+			LiferayDisplayXmlPG.main(argvLiferayDisplay);
+						
 			if (isGenerateJetspeed2Files()) {
 				
 				// Remove all
@@ -166,6 +175,7 @@ public class PortletCodeGenerator {
 	private void createI18nFiles(MetaApplication app, MetaModule module) throws Exception {		
 		for (int i = 0; i < locales.length; i++) {
 			Properties i18n = new Properties();			
+			i18n.put("category." + app.getId(), app.getLabel(locales[i]));
 			i18n.put("javax.portlet.title", app.getLabel(locales[i]) + " - " +  module.getDescription(locales[i]));
 			i18n.put("javax.portlet.short-title", module.getLabel(locales[i]));
 			i18n.store(new FileOutputStream("../" + project + "/i18n/portlets/" + module.getName() + "_" + locales[i].getLanguage() + ".properties"), null);
