@@ -18,6 +18,7 @@
 <% } %>
 
 <%
+String browser = request.getHeader("user-agent"); 
 Users.setCurrent(request);
 Locales.setCurrent(request);
 boolean isPortlet = (request.getAttribute("xava.portlet.renderURL") != null);
@@ -130,7 +131,7 @@ else { // All else
 function executeXavaAction(confirmMessage, takesLong, formu, action) {
 	executeXavaAction(confirmMessage, takesLong, formu, action, null);
 }
-function executeXavaAction(confirmMessage, takesLong, formu, action, argv) {	
+function executeXavaAction(confirmMessage, takesLong, formu, action, argv) {		
 	if (confirmMessage != "" && !confirm(confirmMessage)) return;
 	if (takesLong) {
 		document.getElementById('processingLayer').style.display='block';
@@ -144,9 +145,18 @@ function executeXavaAction(confirmMessage, takesLong, formu, action, argv) {
 function throwPropertyChanged(formu, property) {	
 	formu.focus_forward.value = "true";
 	formu.focus_property.value=property;	
-	formu.changed_property.value=property;	
-	formu.submit();	
+	formu.changed_property.value=property;
+	<% if (browser.indexOf("httpunit") >= 0) { %>
+	formu.submit();
+	<% } else { %>	
+	setTimeout ('submitXavaForm()', 100);
+	<% } %> 	
 }
+
+function submitXavaForm() {
+	document.<%=manager.getForm()%>.submit();
+}
+
 <% String focusPropertyId = view.getFocusPropertyId(); %>
 function setFocus() {
 	element = document.<%=manager.getForm()%>.elements['<%=focusPropertyId%>'];
@@ -302,7 +312,6 @@ manager.commit(); // If hibernate, ejb3, etc is used to render some value here i
 
 <% 
 // Liferay 4.1 + IE7 requires at least 1 second of delay for focus
-String browser = request.getHeader("user-agent");
 boolean ie7 = browser != null && browser.indexOf("MSIE 7") >= 0;
 int focusDelay = ie7 && style == Liferay41Style.getInstance()?1000:10;
 %>
@@ -312,4 +321,5 @@ function setFocusOnLoad() {
 	setTimeout ('setFocus()', <%=focusDelay%>);
 }
 </script>
+
 
