@@ -141,7 +141,6 @@ public class WebEditors {
 				}
 			}
 			catch (ElementNotFoundException ex) {
-				log.warn(XavaResources.getString("editor_for_property_problem", p.getName()));				
 			}
 		}
 		return MetaWebEditors.getMetaEditorFor(p);

@@ -47,7 +47,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 	public CustomerWithSectionTest(String testName) {
 		super(testName, "CustomerWithSection", true);		
 	}
-	
+		
 	public void testTELEPHONE_EMAIL_WEBURLstereotypes() throws Exception {
 		execute("Mode.detailAndFirst");
 		setValue("telephone", "asf");

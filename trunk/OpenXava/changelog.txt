@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: When the user changes the key of a reference and then click the link for searching the reference using a list it does not go to the list.
+- Fix: Excessive log warning about editors.
 - liferay-display.xml file is generated: OX applications inside Liferay is not on 'Undefined' category but on a category for each application.
 - Labels and messages translated to Italian.
 - Fix: Searching a reference with @SearchKey using the list fails.

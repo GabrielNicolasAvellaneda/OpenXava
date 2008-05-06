@@ -533,7 +533,7 @@ public class ModuleTestBase extends TestCase {
 		if (!Is.emptyString(onchange)) {
 			if (checkbox) { // in checkbox case is needed throw onchange event
 				response.getScriptableObject().setLocation("javascript:" + onchange);
-			}
+			}			
 			response = conversation.getCurrentPage();
 			resetForm();
 		}
