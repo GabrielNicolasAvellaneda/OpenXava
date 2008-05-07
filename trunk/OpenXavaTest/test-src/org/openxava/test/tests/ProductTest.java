@@ -47,7 +47,7 @@ public class ProductTest extends ModuleTestBase {
 	public ProductTest(String testName, String module) {
 		super(testName, module);		
 	}
-	
+		
 	public void testMoneyScaleValidator() throws Exception {
 		execute("Mode.detailAndFirst");
 		setValue("unitPrice", "11.123");
