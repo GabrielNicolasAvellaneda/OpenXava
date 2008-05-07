@@ -863,8 +863,10 @@ public class ModuleManager {
 	public void executeBeforeEachRequestActions(HttpServletRequest request, Messages errors, Messages messages) {
 		Iterator it = getMetaActionsBeforeEachRequest().iterator();
 		while (it.hasNext()) {
-			MetaAction a = (MetaAction) it.next();			
-			executeAction(a, errors, messages, request); 
+			MetaAction a = (MetaAction) it.next();
+			if (Is.emptyString(a.getMode()) || a.getMode().equals(getModeName())) { 
+				executeAction(a, errors, messages, request); 
+			}
 		}			
 	}
 	
@@ -876,21 +878,23 @@ public class ModuleManager {
 		}		
 	}
 	
-	public void executeOnEachRequestActions(HttpServletRequest request, Messages errors, Messages messages) {
+	public void executeOnEachRequestActions(HttpServletRequest request, Messages errors, Messages messages) {		
 		Iterator it = getMetaActionsOnEachRequest().iterator();
 		while (it.hasNext()) {
 			MetaAction a = (MetaAction) it.next();			
-			executeAction(a, errors, messages, request); 
+			if (Is.emptyString(a.getMode()) || a.getMode().equals(getModeName())) { 
+				executeAction(a, errors, messages, request);
+			}
 		}	
 	}
 	
-	private Collection getMetaActionsOnEachRequest() {
+	private Collection getMetaActionsOnEachRequest() {		
 		if (metaActionsOnEachRequest == null) {
 			try {			
 				Iterator it = getMetaControllers().iterator();
 				metaActionsOnEachRequest = new ArrayList();
 				while (it.hasNext()) {
-					MetaController contr = (MetaController) it.next();						
+					MetaController contr = (MetaController) it.next();		
 					metaActionsOnEachRequest.addAll(contr.getMetaActionsOnEachRequest());
 				} 										
 			}

@@ -13,6 +13,25 @@ public class ProductWithSectionTest extends ProductTest {
 		super(testName, "ProductWithSection");		
 	}
 	
+	public void testOnEachRequestActions() throws Exception {	
+		assertMessagesCount(2);
+		assertMessage("Action on-each-request on list");
+		assertNoMessage("Action on-each-request on detail");
+		assertMessage("Action on-each-request");
+		execute("List.orderBy", "property=number");
+		assertMessage("Action on-each-request on list");
+		assertNoMessage("Action on-each-request on detail");
+		assertMessage("Action on-each-request");
+		execute("CRUD.new");
+		assertMessage("Action on-each-request on list");
+		assertNoMessage("Action on-each-request on detail");
+		assertMessage("Action on-each-request");
+		execute("CRUD.new");
+		assertNoMessage("Action on-each-request on list");
+		assertMessage("Action on-each-request on detail");
+		assertMessage("Action on-each-request");		
+	}
+		
 	public void testNextFocusToAndFromGroup() throws Exception {
 		execute("CRUD.new");
 		setValue("warehouseKey", "[.1.1.]");
