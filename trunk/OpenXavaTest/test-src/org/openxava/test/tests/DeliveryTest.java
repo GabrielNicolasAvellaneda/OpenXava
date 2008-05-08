@@ -363,6 +363,8 @@ public class DeliveryTest extends ModuleTestBase {
 			"Delivery.activateDeactivateSection",
 			"Delivery.hideActions",
 			"Delivery.viewCurrentYearInvoices",
+			"Delivery.hideAdvice",
+			"Delivery.hideShortcut",
 			"EditableOnOff.setOn",
 			"EditableOnOff.setOff",
 			"Remarks.hideRemarks",
@@ -845,6 +847,26 @@ public class DeliveryTest extends ModuleTestBase {
 		assertNotExists("remarks");
 		execute("Remarks.showRemarks");
 		assertExists("remarks");
+		
+		execute("Remarks.hideRemarks");
+		assertNoErrors();
+		assertNotExists("remarks");
+		assertExists("advice");
+		assertExists("shortcut");
+		
+		execute("Delivery.hideAdvice");
+		assertNoErrors();
+		assertNotExists("remarks");
+		assertNotExists("advice");
+		assertExists("shortcut");		
+		
+		execute("Delivery.hideShortcut");
+		assertNoErrors();
+		assertNotExists("remarks");
+		assertNotExists("advice");
+		assertNotExists("shortcut");
+		assertAction("Delivery.hideShortcut"); // Because when it failed there are no errors
+						// but the sections and bottom actions are not displayed		
 	}
 	
 	public void testI18nOfValidValues_descriptionsListWithOrderAndNoCondition() throws Exception {
