@@ -171,7 +171,10 @@ public class View implements java.io.Serializable {
 		Iterator it = metaMembers.iterator();
 		Object member = null;
 		if (it.hasNext()) member = it.next();
-		if (PropertiesSeparator.INSTANCE.equals(member)) it.remove();
+		if (PropertiesSeparator.INSTANCE.equals(member)) {
+			it.remove();
+			member = null;
+		}
 		while (it.hasNext()) member = it.next();
 		if (PropertiesSeparator.INSTANCE.equals(member)) it.remove();
 	}

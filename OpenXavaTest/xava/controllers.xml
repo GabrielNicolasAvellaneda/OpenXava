@@ -143,6 +143,18 @@
 			class="org.openxava.test.actions.ViewCurrentYearInvoicesAction">	
 			<use-object name="xava_tab"/>
 		</action>
+		<action name="hideAdvice" mode="detail"
+			class="org.openxava.test.actions.HideShowPropertyAction">					
+			<set property="property" value="advice" />
+			<set property="hide" value="true" />
+			<use-object name="xava_view"/>			
+		</action>
+		<action name="hideShortcut" mode="detail" 
+			class="org.openxava.test.actions.HideShowPropertyAction">					
+			<set property="property" value="shortcut" />
+			<set property="hide" value="true" />
+			<use-object name="xava_view"/>			
+		</action>								
 	</controller>
 	
 	<controller name="DeliveryDetail">
