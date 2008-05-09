@@ -81,30 +81,51 @@ abstract public class BaseAction implements IAction, IRequestAction {
 		messages.add(messajeId);
 	}
 	
+	/**
+	 * If the id is a String between quotes (') will be displayed literally, untranslated 
+	 */
 	protected void addMessage(String messageId, Object [] ids) {
 		messages.add(messageId, ids);
 	}
 	
+	/**
+	 * If the id is a String between quotes (') will be displayed literally, untranslated 
+	 */
 	protected void addMessage(String messageId, Object id0) {
 		messages.add(messageId, new Object [] {id0});
 	}
 	
+	/**
+	 * If the id is a String between quotes (') will be displayed literally, untranslated 
+	 */
 	protected void addMessage(String messageId, Object id0, Object id1) {
 		messages.add(messageId, new Object [] {id0, id1});
 	}
 	
+	/**
+	 * If the id is a String between quotes (') will be displayed literally, untranslated 
+	 */
 	protected void addMessage(String messageId, Object id0, Object id1, Object id2) {
 		messages.add(messageId, new Object [] {id0, id1, id2});
 	}
 	
+	/**
+	 * If the id is a String between quotes (') will be displayed literally, untranslated 
+	 */
 	protected void addMessage(String messageId, Object id0, Object id1, Object id2, Object id3) {
 		messages.add(messageId, new Object [] {id0, id1, id2, id3});
 	}
 	
+	/**
+	 * If the id is a String between quotes (') will be displayed literally, untranslated 
+	 */
 	protected void addMessage(String messageId, Object id0, Object id1, Object id2, Object id3, Object id4) {
 		messages.add(messageId, new Object [] {id0, id1, id2, id3, id4});
 	}
 	
+	/**
+	 * If the id is a String between quotes (') will be displayed literally, untranslated 
+	 */
 	protected void addMessage(String messageId, Object id0, Object id1, Object id2, Object id3, Object id4, Object id5) {
 		messages.add(messageId, new Object [] {id0, id1, id2, id3, id4, id5});
 	}
