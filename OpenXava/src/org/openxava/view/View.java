@@ -2055,15 +2055,23 @@ public class View implements java.io.Serializable {
 				if (!searchingObject) { // To avoid recursive infinites loops				
 					try {
 						searchingObject = true;
-						IOnChangePropertyAction action = getParent().getMetaView().createOnChangeSearchAction(getMemberName());
-						executeOnChangeAction(changedPropertyQualifiedName, action);						
+						IOnChangePropertyAction action = getParent().getMetaView().createOnChangeSearchAction(getMemberName());						
+						executeOnChangeAction(changedPropertyQualifiedName, action);
+						// If the changed property is not the key, for example, if we have a hidden
+						//   key and we are using a search key (or simply the first displayed property),
+						// then we throw the change of the id, because the id changed too. And maybe
+						//   there are events attached to it.
+						if (!getMetaModel().isKey(changedPropertyQualifiedName)) {
+							String id = (String) getMetaModel().getKeyPropertiesNames().iterator().next();
+							propertyChanged(id);
+						}						
 					}
 					finally {
 						searchingObject = false;				 
 					}				
 				}			
 			}
-		} // of if (!isOnlyThrowsOnChange())		
+		} // of if (!isOnlyThrowsOnChange())	
 		if (!isSection() && getMetaView().hasOnChangeAction(changedPropertyQualifiedName)) {
 			IOnChangePropertyAction action = getMetaView().createOnChangeAction(changedPropertyQualifiedName);
 			executeOnChangeAction(changedPropertyQualifiedName, action);

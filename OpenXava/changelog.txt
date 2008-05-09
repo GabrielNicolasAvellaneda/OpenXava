@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Searching a reference typing the key does not throw on change actions if the key displayed is not the internal id of the object.
 - Fix: Hiding programmatically all the elements of a section fails.
 - Actions on-each-request and before-each-request are executed only in the specified mode of the action (list or detail).
 - DateUtilSQLConverter (the default converter used for dates) admits any object compatible with java.util.Date from DB.
