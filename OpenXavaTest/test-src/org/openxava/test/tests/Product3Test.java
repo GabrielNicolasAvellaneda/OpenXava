@@ -31,10 +31,17 @@ public class Product3Test extends ModuleTestBase {
 		execute("CRUD.new");
 		assertEditable("family.number");
 		assertValue("family.description", "");
+		assertValue("comments", "");
 		setValue("family.number", "1");
 		assertValue("family.description", "SOFTWARE");
+		assertValue("comments", "Family changed"); 
 		setValue("family.number", "2");
 		assertValue("family.description", "HARDWARE");
+		execute("CRUD.new");
+		assertValue("comments", "");
+		execute("Reference.search", "keyProperty=xava.Product3.family.number");
+		execute("ReferenceSearch.choose", "row=0");
+		assertValue("comments", "Family changed");		
 	}
 	
 	public void testReferenceWithHiddenKey_defaultValueCalculatorWithJDBC() throws Exception {

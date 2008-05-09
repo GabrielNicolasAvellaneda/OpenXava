@@ -44,7 +44,7 @@ public class Product3 {
 
 	@ManyToOne(fetch=FetchType.LAZY) @DescriptionsList(forViews="WithDescriptionsList, WithGroup") 
 	@JoinColumn(name="FAMILY")
-	@OnChange(forViews="WithGroup", value=OnChangeFamilyAction.class)
+	@OnChange(forViews="WithGroup, DEFAULT", value=OnChangeFamilyAction.class)
 	private Family family;
 	
 	@Stereotype("MEMO")
