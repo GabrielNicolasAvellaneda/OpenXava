@@ -69,21 +69,26 @@ public class Messages implements java.io.Serializable {
 			}
 		}
 				
-		private Object[] translate(Object[] argv, Locale locale) {			
+		private Object[] translate(Object[] argv, Locale locale) {
 			Object [] result = new Object[argv.length];
 			for (int i = 0; i < argv.length; i++) {
 				Object v = argv[i];
 				if (v instanceof String) {
-					try {
-						try {							
-							result[i] = Labels.removeUnderlined(Labels.get((String)v, locale));
-						}
-						catch (MissingResourceException ex) {						
-							result[i] = getMessage((String) v, locale); 
-						}
+					if (v.toString().startsWith("'") && v.toString().endsWith("'")) {
+						result[i] = v.toString().substring(1, v.toString().length() - 1);
 					}
-					catch (Exception ex) {
-						result[i] = v;
+					else{
+						try {
+							try {		
+								result[i] = Labels.removeUnderlined(Labels.get((String)v, locale));
+							}
+							catch (MissingResourceException ex) {
+								result[i] = getMessage((String) v, locale); 
+							}
+						}
+						catch (Exception ex) {
+							result[i] = v;
+						}	
 					}
 				}
 				else {
@@ -142,7 +147,9 @@ public class Messages implements java.io.Serializable {
 	public void add(String idMessage, Object [] ids) {
 		if (closed) return;
 		if (ids != null) {
-			if (ids.length == 1) addMember(ids[0]);
+			if (ids.length == 1) {
+				addMember(ids[0]);
+			}
 			else if (ids.length > 1) {
 				addMember(ids[0], ids[1]);
 			} 
@@ -155,14 +162,14 @@ public class Messages implements java.io.Serializable {
 		addMember(member, null);
 	}
 
-	private void addMember(Object member, Object model) {		
+	private void addMember(Object member, Object model) {
 		if (member instanceof String) {
 			Object id = null;
-			if (model instanceof String) id = member; 
+			if (model instanceof String) id = member;
 			else id = model + "." + member;
 			if (members == null) members = new ArrayList();		
-			members.add(id); 
-		}				
+			members.add(id);
+		}
 	}
 
 	public void add(String idMessage, Object id0) {		
