@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: When there are rows selected in list mode and the user choose directly a not selected row it fails.
 - It's possible to scape message for avoiding translation putting them between simple quotes.
 - Fix: Searching a reference typing the key does not throw on change actions if the key displayed is not the internal id of the object.
 - Fix: Hiding programmatically all the elements of a section fails.

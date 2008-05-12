@@ -19,6 +19,15 @@ public class WarehouseTest extends ModuleTestBase {
 		super(testName, "Warehouse");		
 	}
 	
+	public void testChooseUnselectedRow() throws Exception { 
+		checkRow(0);
+		String warehouseName=getValueInList(1, "name");	
+		assertTrue("Warehouse of row 1 must have name", !Is.empty(warehouseName));
+		execute("List.viewDetail", "row=1");		
+		assertNoErrors();
+		assertValue("name", warehouseName);
+	}
+	
 	public void testPage7InList() throws Exception {
 		execute("List.goPage", "page=6");
 		execute("List.goPage", "page=7");
