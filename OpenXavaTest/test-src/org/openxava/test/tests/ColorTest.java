@@ -24,10 +24,10 @@ public class ColorTest extends ModuleTestBase {
 		assertValue("sample", "RED");
 	}		
 	
-	public void testToSeeMessage() throws Exception{
+	public void testMessageScapedWithQuotes() throws Exception{
 		assertListNotEmpty();
 		execute("List.viewDetail", "row=0");
-		execute("Color.toSeeMessage");
+		execute("Color.seeMessage");
 		assertMessage("Message: A.B.C");
 	}
 	

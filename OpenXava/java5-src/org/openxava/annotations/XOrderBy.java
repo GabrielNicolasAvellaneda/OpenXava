@@ -16,7 +16,7 @@ import java.lang.annotation.*;
  * &nbsp;@OneToMany (mappedBy="invoice", cascade=CascadeType.REMOVE)
  * &nbsp;@ListProperties("product.description, quantity, unitPrice, amount")
  * &nbsp;@XOrderBy("product.description desc") 
- * &nbsp;private Collection<InvoiceDetail> details;
+ * &nbsp;private Collection&lt;InvoiceDetail&gt; details;
  * </pre>
  * You can note as <code>product.description</code> can be used for ordering the collection.<br>
  * In order to use a qualified property, it must be included in the <code>@{@link ListProperties}</code>,

@@ -7,7 +7,7 @@ import org.openxava.actions.ViewBaseAction;
  * @autor Ana Andrés
  */
 
-public class ToSeeMessage extends ViewBaseAction{
+public class SeeMessageAction extends ViewBaseAction{
 
 	public void execute() throws Exception {
 		addMessage("a_message", "'A.B.C'");
