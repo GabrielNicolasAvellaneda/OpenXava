@@ -52,7 +52,8 @@
 			
 	<module name="Color">
 		<model name="Color"/>
-		<controller name="TypicalNotResetOnSave"/> 
+		<controller name="TypicalNotResetOnSave"/>
+		<controller name="Color"/> 
 	</module>
 	
 	<module name="Color2">
