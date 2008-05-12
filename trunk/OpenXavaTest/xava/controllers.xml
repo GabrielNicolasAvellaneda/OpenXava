@@ -669,7 +669,7 @@
 	</controller>
 	
 	<controller name="Color">
-		<action name="toSeeMessage" class="org.openxava.test.actions.ToSeeMessage" mode="detail">
+		<action name="seeMessage" class="org.openxava.test.actions.SeeMessageAction" mode="detail">
 			<use-object name="xava_view"/>
 		</action>
 	</controller>	
