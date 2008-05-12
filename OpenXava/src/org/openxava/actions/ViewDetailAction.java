@@ -10,7 +10,8 @@ import org.openxava.view.*;
 
 public class ViewDetailAction extends TabBaseAction implements IChainAction, IModelAction {
 	
-	private int row;
+	private int row = -1; 
+	private boolean explicitRow = false;
 	private int increment;
 	private Map key;	
 	private boolean goFirst = false;
@@ -32,8 +33,8 @@ public class ViewDetailAction extends TabBaseAction implements IChainAction, IMo
 		int previous = row;
 		row = goFirst?0:row + increment;		
 		int [] selectedOnes = getTab().getSelected();
-		boolean lastSelectedPassed = false;		
-		if (selectedOnes != null && selectedOnes.length > 0) {
+		boolean lastSelectedPassed = false;
+		if (!explicitRow && selectedOnes != null && selectedOnes.length > 0) {
 			if (increment >= 0) {				
 				int last = selectedOnes[selectedOnes.length - 1];				
 				if (row > last) lastSelectedPassed = true;
@@ -51,9 +52,9 @@ public class ViewDetailAction extends TabBaseAction implements IChainAction, IMo
 						row--;
 					} 		
 				}					
-			}
+			}			
 		}		
-		if (lastSelectedPassed) {
+		if (lastSelectedPassed) {		
 			key = null;
 		}
 		else {
@@ -74,6 +75,9 @@ public class ViewDetailAction extends TabBaseAction implements IChainAction, IMo
 	}
 
 	public void setRow(int i) {
+		// If row is injected twice, the second time is an explict row assignament
+		//   that is, not from xava_row session object but using row=7 in action call
+		if (row >= 0) explicitRow = true;  
 		row = i;		
 	}
 	
