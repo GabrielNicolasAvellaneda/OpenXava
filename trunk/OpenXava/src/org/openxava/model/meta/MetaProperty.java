@@ -8,13 +8,10 @@ import java.util.*;
 
 import javax.servlet.*;
 
-
-
 import org.apache.commons.logging.*;
 import org.openxava.calculators.*;
 import org.openxava.mapping.*;
 import org.openxava.model.*;
-import org.openxava.tab.impl.*;
 import org.openxava.util.*;
 import org.openxava.util.meta.*;
 import org.openxava.validators.*;
@@ -117,7 +114,7 @@ public class MetaProperty extends MetaMember implements Cloneable {
 	
 	private boolean isTabLabel(String labelId) {  
 		String [] tokens = labelId.split("\\.");		
-		if (tokens.length < 1) return false;
+		if (tokens.length < 2) return false;
 		return "tab".equals(tokens[1]) || "tabs".equals(tokens[1]);
 	}
 	
