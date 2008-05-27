@@ -1,8 +1,11 @@
 package org.openxava.util;
 
+import java.util.prefs.*;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.*;
+import org.openxava.util.impl.*;
 
 /**
  * Utilities to work with users. <p>
@@ -13,8 +16,8 @@ import org.apache.commons.logging.*;
 public class Users {
 	
 	private static Log log = LogFactory.getLog(Users.class);
-	private static ThreadLocal current = new ThreadLocal();
-	private static ThreadLocal currentUserInfo = new ThreadLocal();
+	final private static ThreadLocal current = new ThreadLocal(); 
+	final private static ThreadLocal currentUserInfo = new ThreadLocal();
 		
 	/**
 	 * The user name associated to the current thread. <p>
@@ -23,6 +26,32 @@ public class Users {
 	 */
 	public static String getCurrent() {
 		return (String) current.get();
+	}
+	
+	/**
+	 * Preferences of the user associated to the current thread. <p>
+	 * 
+	 * You can use this preference for read and update user preferences,
+	 * in this way:
+	 * <code>
+	 * // Obtain preferences for the current user and node (an arbitrary category of your choice).
+	 * Preferences preferences = Users.getCurrentPreferences().node("mynode");
+	 * 
+	 * // Read a property value
+	 * boolean rowsHidden = preferences.getBoolean(ROWS_HIDDEN, false);
+	 *  
+	 * // Modify and save a property  
+	 * preferences.putBoolean(ROWS_HIDDEN, rowsHidden);
+	 * preferences.flush();
+	 * </code>
+	 * Remember, you must call flush() always in order to make persistent the changes in 
+	 * preferences.<br>
+	 * 
+	 * @return  The preferences object associated to the current user.
+	 * @throws BackingStoreException  Some problem on load preferences.
+	 */
+	public static Preferences getCurrentPreferences() throws BackingStoreException {
+		return UserPreferences.getForUser(getCurrent());
 	}
 	
 	/**

@@ -15,7 +15,7 @@ public class CalculatorsListener implements PreInsertEventListener, PreUpdateEve
 	
 	private static Log log = LogFactory.getLog(CalculatorsListener.class);
 	private static CalculatorsListener instance = new CalculatorsListener();
-	private static ThreadLocal setOffForCurrentThread = new ThreadLocal();
+	final private static ThreadLocal setOffForCurrentThread = new ThreadLocal();
 		
 	public static CalculatorsListener getInstance() {
 		return instance;

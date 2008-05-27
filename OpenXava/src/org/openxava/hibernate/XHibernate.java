@@ -75,10 +75,10 @@ public class XHibernate {
 	private final static String DEFAULT_CFG_FILE = "/hibernate.cfg.xml";
 	private final static String XAVA_CFG_FILE_KEY = "xava.configurationFile";
 	private static Log log = LogFactory.getLog(XHibernate.class);
-	private static ThreadLocal currentSession = new ThreadLocal();	
-	private static ThreadLocal currentTransaction = new ThreadLocal();
-	private static ThreadLocal currentCmt = new ThreadLocal();	
-	private static ThreadLocal currentSessionFactoryProperties = new ThreadLocal();
+	final private static ThreadLocal currentSession = new ThreadLocal();	
+	final private static ThreadLocal currentTransaction = new ThreadLocal();
+	final private static ThreadLocal currentCmt = new ThreadLocal();	
+	final private static ThreadLocal currentSessionFactoryProperties = new ThreadLocal();
 	private static Map sessionFactories = new HashMap();
 	private static Properties defaultSessionFactoryProperties;
 	

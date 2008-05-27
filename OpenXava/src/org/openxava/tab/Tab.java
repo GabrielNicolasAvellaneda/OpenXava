@@ -3,12 +3,11 @@ package org.openxava.tab;
 import java.sql.*;
 import java.text.*;
 import java.util.*;
+import java.util.prefs.*;
 
 import javax.servlet.http.*;
 
 import org.apache.commons.logging.*;
-import org.hibernate.*;
-import org.hibernate.cfg.*;
 
 import org.openxava.component.*;
 import org.openxava.converters.*;
@@ -35,6 +34,10 @@ public class Tab implements java.io.Serializable {
 	 * Prefix used for naming (in session) to the tab objects used for collections.
 	 */
 	public final static String COLLECTION_PREFIX = "xava_collectionTab_";
+	private final static String PROPERTIES_NAMES = "propertiesNames";
+	private final static String ROWS_HIDDEN = "rowsHidden";
+	private final static String FILTER_VISIBLE = "filterVisible";
+	
 	
 	private static Log log = LogFactory.getLog(Tab.class);
 	
@@ -45,8 +48,7 @@ public class Tab implements java.io.Serializable {
 	private final static String MONTH_COMPARATOR = "month_comparator";
 	private final static String YEAR_MONTH_COMPARATOR = "year_month_comparator"; 
 	
-	private int pageRowCount = DEFAULT_PAGE_ROW_COUNT;
-	private TabUserPreferences userPreferences;
+	private int pageRowCount = DEFAULT_PAGE_ROW_COUNT;	
 	private Object [] titleArguments;
 	private List metaPropertiesNotCalculated;
 	private ReferenceMapping referencesCollectionMapping;
@@ -72,8 +74,7 @@ public class Tab implements java.io.Serializable {
 	private boolean titleVisible = false;
 	private List metaPropertiesKey;
 	private boolean customize;
-	private String titleId = null;
-	private static SessionFactory sessionFactory;
+	private String titleId = null;	
 	private boolean notResetPageNextTime;
 	private boolean sortRemainingProperties;
 	private boolean rowsHidden;
@@ -771,9 +772,26 @@ public class Tab implements java.io.Serializable {
 	}
 
 	public void setRequest(HttpServletRequest request) {
-		this.request = request;		
+		this.request = request;
+		updateFilterVisible();
 	}
 	
+
+	private void updateFilterVisible() {
+		String filterVisibleId = "xava_list" + getTabName() + "_filter_visible";
+		String filterVisibleValue = request.getParameter(filterVisibleId);
+		if (!Is.emptyString(filterVisibleValue)) {
+			boolean newFilterVisible = Boolean.valueOf(filterVisibleValue).booleanValue();
+			if (newFilterVisible != filterVisible) {
+				filterVisible = newFilterVisible;
+				saveUserPreferences();
+			}
+		}
+	}
+
+	private Preferences getPreferences() throws BackingStoreException {		
+		return Users.getCurrentPreferences().node("tab." + getMetaTab().getMetaModel().getName() + "." + getTabName() + ".");
+	}
 	public HttpServletRequest getRequest() {
 		return request;
 	}
@@ -974,117 +992,47 @@ public class Tab implements java.io.Serializable {
 		this.titleId = titleId;
 	}
 	
-	private void loadUserPreferences() {
-		Session session = null;				
-		Transaction tx = null;		
-		try {			
-			session = getSessionFactory().openSession();				
-			tx = session.beginTransaction();
-			
-			Query query = session.createQuery("from TabUserPreferences p where p.user = :user and p.tab = :tab");
-			query.setString("user", getUserName());						
-			query.setString("tab", getMetaTab().getMetaModel().getName() + "." + getTabName()); 			
-			
-			Iterator it = query.list().iterator();
-			// It takes the first one
-			userPreferences = it.hasNext()?(TabUserPreferences) it.next():null;
-			// The rest are deleted, although theorically there is only one TabUserPreferences
-			// by user and tab. But sometimes may occurs, for example, several users logged with
-			// the same user name in the same module.  
-			while (it.hasNext()) {
-				session.delete(it.next());
+	private void loadUserPreferences() { 
+		try { 
+			Preferences preferences = getPreferences();			
+
+			String propertiesNames = preferences.get(PROPERTIES_NAMES, null);
+			if (propertiesNames != null) {
+				setPropertiesNames(propertiesNames);
 			}
-							
-			if (userPreferences != null) {										
-				setPropertiesNames(userPreferences.getPropertiesNames());
-				rowsHidden = userPreferences.isRowsHidden(); 
-			}
-			
+			rowsHidden = preferences.getBoolean(ROWS_HIDDEN, rowsHidden);
+			filterVisible = preferences.getBoolean(FILTER_VISIBLE, filterVisible);			
 		}
 		catch (Exception ex) {
 			log.warn(XavaResources.getString("warning_load_preferences_tab"),ex);
 		}
-		finally {
-			try {
-				if (tx != null) tx.commit();
-				if (session != null) session.close();
-			}
-			catch (Exception ex) {
-				// We have the preference loaded. Fail here is not a big problem
-			}
-		}		
-	}
-	
-	private String getUserName() { 
-		String user = Users.getCurrent();
-		if (user != null) return user;
-		return "openxava";
 	}
 
+	private void saveUserPreferences() { 		
+		try { 
+			Preferences preferences = getPreferences();			
 
-	private void saveUserPreferences() {		
-		Session session = null;				
-		Transaction tx = null;		
-		try {
-			session = getSessionFactory().openSession();				
-			tx = session.beginTransaction();
-			
-			if (userPreferences == null) {				
-				userPreferences = new TabUserPreferences();
-				userPreferences.setUser(getUserName());				
-				userPreferences.setTab(getMetaTab().getMetaModel().getName() + "." + getTabName());
-			}
-			
-			userPreferences.setPropertiesNames(getPropertiesNamesAsString());
-			userPreferences.setRowsHidden(rowsHidden); 
-			session.saveOrUpdate(userPreferences);						
+			preferences.put(PROPERTIES_NAMES, getPropertiesNamesAsString());
+			preferences.putBoolean(ROWS_HIDDEN, rowsHidden);
+			preferences.putBoolean(FILTER_VISIBLE, filterVisible);
+			preferences.flush();
 		}
 		catch (Exception ex) {
 			log.warn(XavaResources.getString("warning_save_preferences_tab"),ex);
 		}	
-		finally {
-			try {
-				if (tx != null) tx.commit();
-				if (session != null) session.close();
-			}
-			catch (Exception ex) {
-				log.warn(XavaResources.getString("warning_save_preferences_tab"),ex);
-			}
-		}		
 	}
 	
-	private void removeUserPreferences() {		
-		if (userPreferences == null) return;		
-		Session session = null;				
-		Transaction tx = null;		
-		try {
-			session = getSessionFactory().openSession();				
-			tx = session.beginTransaction();			
-			session.delete(userPreferences);
-			userPreferences = null; 						
+	private void removeUserPreferences() { 		
+		try { 
+			Preferences preferences = getPreferences();			
+			preferences.clear();
+			preferences.flush();
 		}
 		catch (Exception ex) {
 			log.warn(XavaResources.getString("warning_save_preferences_tab"),ex);
 		}		
-		finally {
-			try {
-				if (tx != null) tx.commit();
-				if (session != null) session.close();
-			}
-			catch (Exception ex) {
-				log.warn(XavaResources.getString("warning_save_preferences_tab"),ex);
-			}
-		}						
 	}
-	
-	
-	private static SessionFactory getSessionFactory() throws HibernateException {
-		if (sessionFactory == null) {
-			sessionFactory = new Configuration().configure("/openxava-hibernate.cfg.xml").buildSessionFactory();
-		}
-		return sessionFactory;		
-	}
-			
+				
 	/**
 	 * The CSS style associated to the specified row. <p>
 	 * 
@@ -1291,13 +1239,11 @@ public class Tab implements java.io.Serializable {
 	 */	
 	public void setCollectionView(View collectionView) {
 		this.collectionView = collectionView;
+		this.filterVisible = XavaPreferences.getInstance().isShowFilterByDefaultInCollections();
 	}
 			
 	public boolean isFilterVisible() {
 		return filterVisible;
 	}
 
-	public void setFilterVisible(boolean filterVisible) {
-		this.filterVisible = filterVisible;
-	}	
 }

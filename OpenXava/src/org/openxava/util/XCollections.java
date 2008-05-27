@@ -70,12 +70,25 @@ public class XCollections {
 	 * @return  Not null.
 	 * @param e  If null then returns a empty collection
 	 */
-	public Collection toCollection(Enumeration e) {
+	public static Collection toCollection(Enumeration e) {
 		Collection result = new ArrayList();
 		if (e == null) return result;
 		while (e.hasMoreElements()) {
 			result.add(e.nextElement());
 		}	
+		return result;
+	}
+	
+	/**
+	 * Returns a String [] from a collection of Strings. <p>
+	 * 
+	 * @return  Not null.
+	 * @param c  Elements must be of type String. If null then returns a empty array.
+	 */
+	public static String [] toStringArray(Collection c) {
+		if (c == null) return new String[0];
+		String [] result = new String[c.size()];
+		c.toArray(result);
 		return result;
 	}
 	

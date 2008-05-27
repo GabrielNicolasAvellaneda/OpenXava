@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- New method getCurrentPreferences() added to Users class.
+- Java Preferences used for storing user preferences. OpenXavaDS and openxava-db are no longer needed.
+- Fix: Incorrect charset on PDF report generation with WebSphere Portal 6.0 inside AS/400.
+- New method toStringArray() added to XCollections utility class.
 - PropertyAspect removed from OpenXava.
 - Fix: When there are rows selected in list mode and the user choose directly a not selected row it fails.
 - It's possible to scape message for avoiding translation putting them between simple quotes.
