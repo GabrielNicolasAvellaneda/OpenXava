@@ -30,7 +30,7 @@ public class DefaultValueIdentifierGenerator implements IdentifierGenerator, Con
 		public Object containerKey;
 	}
 	
-	private static ThreadLocal currentAggregateOidInfo = new ThreadLocal();
+	final private static ThreadLocal currentAggregateOidInfo = new ThreadLocal();
 	
 	private String property;
 

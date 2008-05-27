@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class Locales {
 	
-	private static ThreadLocal current = new ThreadLocal();
+	final private static ThreadLocal current = new ThreadLocal();
 	
 	
 	

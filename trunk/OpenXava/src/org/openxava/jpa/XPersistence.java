@@ -76,9 +76,9 @@ public class XPersistence {
 	private final static String HIBERNATE_DEFAULT_SCHEMA = "hibernate.default_schema";
 	private final static String DEFAULT_PERSISTENCE_UNIT = "default";
 	private final static String XAVA_PERSISTENCE_UNIT_KEY = "xava.persistenceUnit";
-	private static ThreadLocal currentManager = new ThreadLocal();
+	final private static ThreadLocal currentManager = new ThreadLocal();
 	private static Map entityManagerFactories = new HashMap();
-	private static ThreadLocal currentPersistenceUnitProperties = new ThreadLocal();
+	final private static ThreadLocal currentPersistenceUnitProperties = new ThreadLocal();
 	private static Map defaultPersistenceUnitProperties;		
 
 	/**

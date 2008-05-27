@@ -1037,11 +1037,10 @@ public class View implements java.io.Serializable {
 		assertRepresentsCollection("getCollectionTab()");
 		if (collectionTab == null) {			
 			collectionTab = new Tab();				
+			collectionTab.setCollectionView(this); 
 			collectionTab.setModelName(getModelName());
-			collectionTab.setTabName(Tab.COLLECTION_PREFIX + getMemberName());
-			collectionTab.setCollectionView(this);			
+			collectionTab.setTabName(Tab.COLLECTION_PREFIX + getMemberName());			
 			collectionTab.setMetaRowStyles(rowStyles);
-			collectionTab.setFilterVisible(XavaPreferences.getInstance().isShowFilterByDefaultInCollections());
 			if (propertiesListNames != null) {
 				collectionTab.setPropertiesNames(propertiesListNames);
 			}

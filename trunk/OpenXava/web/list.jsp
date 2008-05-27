@@ -25,6 +25,7 @@ if (collection != null && !collection.equals("")) {
 }
 
 org.openxava.tab.Tab tab = (org.openxava.tab.Tab) context.get(request, tabObject);
+tab.setRequest(request); 
 String action=request.getParameter("rowAction");
 action=action==null?manager.getEnvironment().getValue("XAVA_LIST_ACTION"):action;
 String viewObject = request.getParameter("viewObject");
@@ -45,6 +46,8 @@ String lastRow = request.getParameter("lastRow");
 boolean singleSelection="true".equalsIgnoreCase(request.getParameter("singleSelection"));
 %>
 
+<input type="hidden" name="xava_list<%=tab.getTabName()%>_filter_visible"/>
+
 <% if (tab.isTitleVisible()) { %>
 <table width="100%" id="list-title" class=<%=style.getListTitleWrapper()%>>
 <tr><td class=<%=style.getListTitle()%>>
@@ -56,7 +59,7 @@ boolean singleSelection="true".equalsIgnoreCase(request.getParameter("singleSele
 <table id="<%=id%>" class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%> <%=style.getListStyle()%>>
 <tr id="xava-tr-list" class="<%=style.getListHeader()%>">
 <th class="<%=style.getListHeaderCell()%>" style="text-align: center" width="60">     
-	<a id="xava-filter-link-<%=id%>" href="javascript:manageFilterRow('<%=id%>')" title="<xava:message key='<%=filterMessage%>'/>"><img id="xava-filter-image-<%=id%>" align='middle' 
+	<a id="xava-filter-link-<%=id%>" href="javascript:manageFilterRow('<%=id%>', 'xava_list<%=tab.getTabName()%>_filter_visible')" title="<xava:message key='<%=filterMessage%>'/>"><img id="xava-filter-image-<%=id%>" align='middle' 
 		src='<%=request.getContextPath()%>/xava/images/<%=imageFilter%>.gif' border='0'/></a>
 	<xava:image action="List.customize" argv="<%=collectionArgv%>"/>
 </th>

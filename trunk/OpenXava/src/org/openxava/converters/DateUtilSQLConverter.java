@@ -2,10 +2,6 @@ package org.openxava.converters;
 
 import java.util.*;
 
-
-
-
-
 /**
  * In java a <tt>java.util.Date</tt> and in database a
  * <tt>java.sql.Date</tt>. <p>
