@@ -1,6 +1,8 @@
 <?xml version = "1.0" encoding = "ISO-8859-1"?>
 
-<!DOCTYPE controllers SYSTEM "dtds/controllers.dtd"><!-- OpenXavaTest -->
+<!DOCTYPE controllers SYSTEM "dtds/controllers.dtd">
+
+<!-- OpenXavaTest -->
 
 <controllers> 
 	
@@ -141,6 +143,18 @@
 			class="org.openxava.test.actions.ViewCurrentYearInvoicesAction">	
 			<use-object name="xava_tab"/>
 		</action>
+		<action name="hideAdvice" mode="detail"
+			class="org.openxava.test.actions.HideShowPropertyAction">					
+			<set property="property" value="advice" />
+			<set property="hide" value="true" />
+			<use-object name="xava_view"/>			
+		</action>
+		<action name="hideShortcut" mode="detail" 
+			class="org.openxava.test.actions.HideShowPropertyAction">					
+			<set property="property" value="shortcut" />
+			<set property="hide" value="true" />
+			<use-object name="xava_view"/>			
+		</action>								
 	</controller>
 	
 	<controller name="DeliveryDetail">
@@ -631,5 +645,32 @@
 			<use-object name="xava_defaultSchema"/>
 		</action>
 	</controller>
-				
+	
+	<controller name="CarrierWithSections">
+		<action name="fellowCarriersSelected" mode="detail"
+			class="org.openxava.test.actions.ViewNameFellowCarriersSelectedAction">
+			<use-object name="xava_view"/>
+		</action>
+	</controller>				
+		
+	<controller name="MessagesOnEachRequest">
+		<action name="messageOnList" class="org.openxava.test.actions.ShowMessageAction"
+			hidden="true" mode="list" on-each-request="true">
+			<set property="message" value="action_on_each_request_on_list"/>		
+		</action>
+		<action name="messageOnDetail" class="org.openxava.test.actions.ShowMessageAction"
+			hidden="true" mode="detail" on-each-request="true">
+			<set property="message" value="action_on_each_request_on_detail"/>		
+		</action>
+		<action name="messageOnBothModes" class="org.openxava.test.actions.ShowMessageAction"
+			hidden="true" on-each-request="true">
+			<set property="message" value="action_on_each_request"/>		
+		</action>		
+	</controller>
+	
+	<controller name="Color">
+		<action name="seeMessage" class="org.openxava.test.actions.SeeMessageAction" mode="detail">
+			<use-object name="xava_view"/>
+		</action>
+	</controller>	
 </controllers>
