@@ -6,7 +6,7 @@
 
 	<class 
   		name="GalleryImage"
-  		schema="XAVATEST"
+  		
   		table="IMAGES">
   
 		<id name="oid" column="ID" access="field">

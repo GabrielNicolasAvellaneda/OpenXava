@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Gallery images table can work on a database without schema.
+- To hide/show the filter for a list or collection is remember by each user.
 - New method getCurrentPreferences() added to Users class.
 - Java Preferences used for storing user preferences. OpenXavaDS and openxava-db are no longer needed.
 - Fix: Incorrect charset on PDF report generation with WebSphere Portal 6.0 inside AS/400.

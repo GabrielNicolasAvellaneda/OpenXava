@@ -175,7 +175,8 @@
 			<fileset dir="../${project.ejb}/hibernate"/>
 			<fileset dir="../${project.ejb}/build/hibernate"/>
 	    	<filterset>	    	
-				<filtersfile file="${configuration}.properties"/>				
+				<filtersfile file="${configuration}.properties"/>
+	    		<filter token="images.schema.definition" value='schema="@images.schema@"'/>
 				<filter token="separator" value="${separator}"/>
 				<filter token="collection" value="${collection}"/>
 	    		<filter token="datasource" value="${datasource}"/>

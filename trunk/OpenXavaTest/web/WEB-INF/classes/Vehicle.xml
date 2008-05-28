@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE component SYSTEM "dtds/component.dtd">
+
+<component name="Vehicle">
+
+	<entity>
+	
+		<property name="oid" key="true" hidden="true" type="String">
+			<default-value-calculator class="org.openxava.calculators.UUIDCalculator"/>
+		</property>
+		
+		<property name="code" type="String" size="5"/>		
+		<property name="model" type="String" size="40"/>		
+		<property name="make" type="String" size="20"/>
+	
+	</entity>
+	
+	<view name="Simple">
+		<members>code, model, make</members>
+	</view>
+										
+</component>
