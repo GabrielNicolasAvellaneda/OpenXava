@@ -1,15 +1,9 @@
 package org.openxava.converters.typeadapters;
 
-import java.io.*;
-import java.math.*;
-import java.net.*;
-import java.sql.*;
-import java.util.*;
 
 import org.apache.commons.logging.*;
 import org.hibernate.usertype.*;
 import org.openxava.converters.*;
-import org.openxava.converters.typeadapters.*;
 import org.openxava.util.*;
 
 /**

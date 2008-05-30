@@ -244,7 +244,7 @@ public class Maps {
 	 * @return A map with the data in plain format.
 	 */
 	public static Map treeToPlain(Map treeMap) {		
-		Map result = new HashMap();
+		Map result = new TreeMap(); 
 		fillPlain(result, treeMap, "");
 		return result;
 	}

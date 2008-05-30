@@ -134,9 +134,8 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 				Maps.isEmptyOrZero(getKeyValuesFromView()) ? getValuesFromView() : getKeyValuesFromView());
 
 		MetaEntity metaEntity = MetaComponent.get(getModelName()).getMetaEntity();
-		String separator = "";
-		Iterator it = mapToSearch.entrySet().iterator();
-		int x = 0;
+		String separator = "";		
+		Iterator it = mapToSearch.entrySet().iterator();		
 		while (it.hasNext()){
 			Map.Entry entry = (Map.Entry) it.next();
 			Object property = entry.getKey();

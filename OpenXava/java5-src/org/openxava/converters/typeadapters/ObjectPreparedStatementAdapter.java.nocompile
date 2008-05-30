@@ -9,6 +9,8 @@ import java.util.*;
 
 /**
  * To extract the object assigned to a PreparedStatementin. <p>
+ *
+ * The .class is included in ox-jdbc-adapters.jar. <br> 
  *   
  * @author Javier Paniza
  */

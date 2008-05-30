@@ -33,5 +33,6 @@
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/commons-validator.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/mailapi.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/ox-jdbc-adapters.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -13,6 +13,8 @@ import java.util.*;
  * and the full array represents a row.<br>
  * 
  * At the moment only works in a read-only way. <br>
+ *
+ * The .class is included in ox-jdbc-adapters.jar. <br>
  *  
  * @author Javier Paniza
  */

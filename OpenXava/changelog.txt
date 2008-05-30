@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Compilation errors with Java 6.
 - Fix: Groups in one row aren't displayed correctly everytime with Firefox.
 - Gallery images table can work on a database without schema.
 - To hide/show the filter for a list or collection is remember by each user.
