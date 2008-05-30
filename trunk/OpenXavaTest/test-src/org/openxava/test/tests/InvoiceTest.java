@@ -65,7 +65,7 @@ public class InvoiceTest extends ModuleTestBase {
 		setValue("year", "2008");
 		setValue("number", "66");
 		execute("CRUD.search");
-		assertError("Object of type Invoice does not exists with key Year:2008, Number:66");
+		assertError("Object of type Invoice does not exists with key Number:66, Year:2008");
 		assertValue("comment", "");
 	}
 	
@@ -1336,7 +1336,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertTrue(Is.empty(getValue("year")));
 		setValue("date", "1/2/2004");
 		execute("CRUD.search");
-		assertError("Object of type Invoice does not exists with key Paid:No, Date:1/2/04");
+		assertError("Object of type Invoice does not exists with key Date:1/2/04, Paid:No");
 		// with reference
 		setValue("customer.number", "43");
 		assertValue("customer.name", "Gonzalo Gonzalez");
