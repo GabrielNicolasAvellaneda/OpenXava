@@ -582,6 +582,10 @@
 		</javac>  
 		<copy todir="../${project}/web/WEB-INF/classes">
 			<fileset dir="../${project}/gen-src-xava" excludes="**/*.java"/>
+			<fileset dir="../${project}/xava"/>
+			<fileset dir="../${project}/persistence"/>
+			<fileset dir="../${project}/i18n"/>
+			<fileset dir="../${project}/properties"/>			
 		</copy>		
 	</target> 
 		
