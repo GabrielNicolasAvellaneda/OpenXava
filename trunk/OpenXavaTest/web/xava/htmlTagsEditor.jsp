@@ -29,7 +29,7 @@ else if (first && !view.isAlignedByColumns()) {
 	// width: 99%  is for label and data not very separated when only one row, 
 	//				but it produces no good layout of frames in Firefox.
 	String width = firefox?"":"width: 99%";
-	preEditor="<td style='vertical-align: middle; "  + width + "'><table border='0' cellpadding='" + org.openxava.util.XavaPreferences.getInstance().getFormLineSpacing() + "' cellspacing='0'><tr><td style='vertical-align: middle'>"; // tmp
+	preEditor="<td style='vertical-align: middle; "  + width + "'><table border='0' cellpadding='" + org.openxava.util.XavaPreferences.getInstance().getFormLineSpacing() + "' cellspacing='0'><tr><td style='vertical-align: middle'>";
 	postEditor="</td>";
 } 
 else {
