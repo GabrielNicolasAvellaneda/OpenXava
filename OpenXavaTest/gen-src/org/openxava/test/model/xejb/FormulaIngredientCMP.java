@@ -19,6 +19,7 @@ public abstract class FormulaIngredientCMP
          dataHolder = new org.openxava.test.model.FormulaIngredientData();
 
          dataHolder.setOid( getOid() );
+         dataHolder.set_Image( get_Image() );
          dataHolder.set_Accentuate_oid( get_Accentuate_oid() );
          dataHolder.set_Ingredient_oid( get_Ingredient_oid() );
          dataHolder.set_Formula_oid( get_Formula_oid() );
@@ -37,6 +38,7 @@ public abstract class FormulaIngredientCMP
    {
       try
       {
+         set_Image( dataHolder.get_Image() );
          set_Accentuate_oid( dataHolder.get_Accentuate_oid() );
          set_Ingredient_oid( dataHolder.get_Ingredient_oid() );
          set_Formula_oid( dataHolder.get_Formula_oid() );
@@ -95,6 +97,7 @@ public abstract class FormulaIngredientCMP
       try
          {
             FormulaIngredientValue.setOid( getOid() );
+            FormulaIngredientValue.setImage( getImage() );
             FormulaIngredientValue.setAccentuate_oid( getAccentuate_oid() );
             FormulaIngredientValue.setIngredient_oid( getIngredient_oid() );
             FormulaIngredientValue.setFormula_oid( getFormula_oid() );
@@ -114,6 +117,7 @@ public abstract class FormulaIngredientCMP
 
 	  try
 	  {
+		 setImage( valueHolder.getImage() );
 		 setAccentuate_oid( valueHolder.getAccentuate_oid() );
 		 setIngredient_oid( valueHolder.getIngredient_oid() );
 		 setFormula_oid( valueHolder.getFormula_oid() );
@@ -131,6 +135,10 @@ public abstract class FormulaIngredientCMP
    public abstract java.lang.String getOid() ;
 
    public abstract void setOid( java.lang.String oid ) ;
+
+   public abstract byte[] get_Image() ;
+
+   public abstract void set_Image( byte[] _Image ) ;
 
    public abstract java.lang.String get_Accentuate_oid() ;
 

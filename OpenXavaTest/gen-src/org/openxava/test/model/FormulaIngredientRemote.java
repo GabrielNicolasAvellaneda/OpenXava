@@ -13,6 +13,12 @@ public interface FormulaIngredientRemote
    public java.lang.String getOid(  )
       throws java.rmi.RemoteException;
 
+   public byte[] getImage(  )
+      throws java.rmi.RemoteException;
+
+   public void setImage( byte[] newImage )
+      throws java.rmi.RemoteException;
+
    public org.openxava.test.model.IIngredient getAccentuate(  )
       throws java.rmi.RemoteException;
 

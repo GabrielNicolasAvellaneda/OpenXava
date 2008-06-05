@@ -96,6 +96,47 @@
       </entity>
 
       <entity>
+         <ejb-name>Vehicle</ejb-name>
+
+         <table-name>XAVATEST.VEHICLE</table-name>
+
+         <cmp-field>
+            <field-name>_Model</field-name>
+            <column-name>MODEL</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>oid</field-name>
+            <column-name>OID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Code</field-name>
+            <column-name>CODE</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Make</field-name>
+            <column-name>MAKE</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByOid</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Vehicle o WHERE o.oid = ?1]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
          <ejb-name>InvoiceDetail</ejb-name>
 
          <table-name>XAVATEST.INVOICEDETAIL</table-name>
@@ -568,37 +609,6 @@
       </entity>
 
       <entity>
-         <ejb-name>State</ejb-name>
-
-         <table-name>XAVATEST.STATE</table-name>
-
-         <cmp-field>
-            <field-name>id</field-name>
-            <column-name>ID</column-name>
-
-        </cmp-field>
-         <cmp-field>
-            <field-name>_Name</field-name>
-            <column-name>NAME</column-name>
-
-        </cmp-field>
-
-         <query>
-            <query-method>
-               <method-name>findById</method-name>
-               <method-params>
-                  <method-param>java.lang.String</method-param>
-               </method-params>
-            </query-method>
-			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM State o WHERE o.id = ?1]]></jboss-ql>
-
-	     </query>
-
-<!-- jboss 3.2 features -->
-<!-- optimistic locking does not express the exclusions needed -->
-      </entity>
-
-      <entity>
          <ejb-name>Warehouse</ejb-name>
 
          <table-name>XAVATEST.WAREHOUSE</table-name>
@@ -628,6 +638,37 @@
                </method-params>
             </query-method>
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Warehouse o WHERE o.zoneNumber = ?1 and o._Number = ?2]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>State</ejb-name>
+
+         <table-name>XAVATEST.STATE</table-name>
+
+         <cmp-field>
+            <field-name>id</field-name>
+            <column-name>ID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Name</field-name>
+            <column-name>NAME</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findById</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM State o WHERE o.id = ?1]]></jboss-ql>
 
 	     </query>
 
@@ -952,6 +993,57 @@
                </method-params>
             </query-method>
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Subfamily o WHERE o.oid = ?1]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>Journey</ejb-name>
+
+         <table-name>XAVATEST.JOURNEY</table-name>
+
+         <cmp-field>
+            <field-name>_Description</field-name>
+            <column-name>DESCRIPTION</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>oid</field-name>
+            <column-name>OID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Name</field-name>
+            <column-name>NAME</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_AverageSpeed_oid</field-name>
+            <column-name>AVERAGESPEED_OID</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByAverageSpeed</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Journey o WHERE o._AverageSpeed_oid = ?1 ORDER BY o.oid]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByOid</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Journey o WHERE o.oid = ?1]]></jboss-ql>
 
 	     </query>
 
@@ -2371,6 +2463,11 @@
 
         </cmp-field>
          <cmp-field>
+            <field-name>_Image</field-name>
+            <column-name>IMAGE</column-name>
+
+        </cmp-field>
+         <cmp-field>
             <field-name>_Accentuate_oid</field-name>
             <column-name>ACCENTUATE</column-name>
 
@@ -2707,6 +2804,67 @@
                </method-params>
             </query-method>
 			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Product2 o WHERE o.number = ?1]]></jboss-ql>
+
+	     </query>
+
+<!-- jboss 3.2 features -->
+<!-- optimistic locking does not express the exclusions needed -->
+      </entity>
+
+      <entity>
+         <ejb-name>AverageSpeed</ejb-name>
+
+         <table-name>XAVATEST.AVERAGESPEED</table-name>
+
+         <cmp-field>
+            <field-name>_Speed</field-name>
+            <column-name>SPEED</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>oid</field-name>
+            <column-name>OID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Vehicle_oid</field-name>
+            <column-name>VEHICLE_OID</column-name>
+
+        </cmp-field>
+         <cmp-field>
+            <field-name>_Driver_number</field-name>
+            <column-name>DRIVER_NUMBER</column-name>
+
+        </cmp-field>
+
+         <query>
+            <query-method>
+               <method-name>findByVehicle</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM AverageSpeed o WHERE o._Vehicle_oid = ?1 ORDER BY o.oid]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByDriver</method-name>
+               <method-params>
+                  <method-param>java.lang.Integer</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM AverageSpeed o WHERE o._Driver_number = ?1 ORDER BY o.oid]]></jboss-ql>
+
+	     </query>
+         <query>
+            <query-method>
+               <method-name>findByOid</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM AverageSpeed o WHERE o.oid = ?1]]></jboss-ql>
 
 	     </query>
 

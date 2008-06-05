@@ -11,10 +11,10 @@ String module = request.getParameter("module");
 long dif=System.currentTimeMillis(); // to avoid browser caching
 %>
 
-<img name='<%=propertyKey%>' src='<%=request.getContextPath()%>/xava/ximage?application=<%=applicationName%>&module=<%=module%>&property=<%=p.getName()%>&dif=<%=dif%>' title="<%=p.getDescription(request)%>" alt=""/>
+<img name='<%=propertyKey%>' src='<%=request.getContextPath()%>/xava/ximage?application=<%=applicationName%>&module=<%=module%>&property=<%=propertyKey%>&dif=<%=dif%>' title="<%=p.getDescription(request)%>" alt=""/>
 	
 <% if (editable) { %>	
 <span valign='middle'>
-	<xava:link action='ImageEditor.changeImage' argv='<%="newImageProperty="+p.getName()%>'/>
+	<xava:link action='ImageEditor.changeImage' argv='<%="newImageProperty="+propertyKey%>'/>
 </span>
 <% } %>	

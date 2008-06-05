@@ -23,6 +23,19 @@
       </columns>
 
    </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Vehicle" name="" primaryKey="Vehicle_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Vehicle_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Vehicle" constraint="Constraint_Vehicle_"/>
+
+      <columns xmi:id="Vehicle__Model" name="_Model">
+      </columns>
+      <columns xmi:id="Vehicle_oid" name="oid">
+      </columns>
+      <columns xmi:id="Vehicle__Code" name="_Code">
+      </columns>
+      <columns xmi:id="Vehicle__Make" name="_Make">
+      </columns>
+
+   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_InvoiceDetail" name="" primaryKey="InvoiceDetail_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="InvoiceDetail_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_InvoiceDetail" constraint="Constraint_InvoiceDetail_"/>
 
@@ -144,15 +157,6 @@
       </columns>
 
    </RDBSchema:RDBTable>
-   <RDBSchema:RDBTable xmi:id="RDBTable_State" name="" primaryKey="State_PRIMARYKEY" database="RDBDatabase_1">
-      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="State_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_State" constraint="Constraint_State_"/>
-
-      <columns xmi:id="State_id" name="id">
-      </columns>
-      <columns xmi:id="State__Name" name="_Name">
-      </columns>
-
-   </RDBSchema:RDBTable>
    <RDBSchema:RDBTable xmi:id="RDBTable_Warehouse" name="" primaryKey="Warehouse_PRIMARYKEY" database="RDBDatabase_1">
       <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Warehouse_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Warehouse" constraint="Constraint_Warehouse_"/>
 
@@ -161,6 +165,15 @@
       <columns xmi:id="Warehouse__Number" name="_Number">
       </columns>
       <columns xmi:id="Warehouse_zoneNumber" name="zoneNumber">
+      </columns>
+
+   </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_State" name="" primaryKey="State_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="State_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_State" constraint="Constraint_State_"/>
+
+      <columns xmi:id="State_id" name="id">
+      </columns>
+      <columns xmi:id="State__Name" name="_Name">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -246,6 +259,19 @@
       <columns xmi:id="Subfamily__Number" name="_Number">
       </columns>
       <columns xmi:id="Subfamily__FamilyNumber" name="_FamilyNumber">
+      </columns>
+
+   </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_Journey" name="" primaryKey="Journey_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="Journey_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_Journey" constraint="Constraint_Journey_"/>
+
+      <columns xmi:id="Journey__Description" name="_Description">
+      </columns>
+      <columns xmi:id="Journey_oid" name="oid">
+      </columns>
+      <columns xmi:id="Journey__Name" name="_Name">
+      </columns>
+      <columns xmi:id="Journey__AverageSpeed_oid" name="_AverageSpeed_oid">
       </columns>
 
    </RDBSchema:RDBTable>
@@ -614,6 +640,8 @@
 
       <columns xmi:id="FormulaIngredient_oid" name="oid">
       </columns>
+      <columns xmi:id="FormulaIngredient__Image" name="_Image">
+      </columns>
       <columns xmi:id="FormulaIngredient__Accentuate_oid" name="_Accentuate_oid">
       </columns>
       <columns xmi:id="FormulaIngredient__Ingredient_oid" name="_Ingredient_oid">
@@ -693,6 +721,19 @@
       <columns xmi:id="Product2__Warehouse_number" name="_Warehouse_number">
       </columns>
       <columns xmi:id="Product2__Formula_oid" name="_Formula_oid">
+      </columns>
+
+   </RDBSchema:RDBTable>
+   <RDBSchema:RDBTable xmi:id="RDBTable_AverageSpeed" name="" primaryKey="AverageSpeed_PRIMARYKEY" database="RDBDatabase_1">
+      <namedGroup xmi:type="RDBSchema:SQLReference" xmi:id="AverageSpeed_PRIMARYKEY" members="------RDBColumn_1" table="RDBTable_AverageSpeed" constraint="Constraint_AverageSpeed_"/>
+
+      <columns xmi:id="AverageSpeed__Speed" name="_Speed">
+      </columns>
+      <columns xmi:id="AverageSpeed_oid" name="oid">
+      </columns>
+      <columns xmi:id="AverageSpeed__Vehicle_oid" name="_Vehicle_oid">
+      </columns>
+      <columns xmi:id="AverageSpeed__Driver_number" name="_Driver_number">
       </columns>
 
    </RDBSchema:RDBTable>

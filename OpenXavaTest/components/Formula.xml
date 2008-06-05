@@ -27,6 +27,7 @@
 		<reference name="ingredient" model="Ingredient"/>
 		<reference name="accentuate" model="Ingredient"/>
 		<reference name="anotherFormula" model="Formula"/>
+		<property name="image" stereotype="IMAGE"/>		
 	</aggregate>
 	
 	<view>
@@ -85,6 +86,8 @@
 		<reference-mapping reference="anotherFormula">
 			<reference-mapping-detail column="ANOTHERFORMULA" referenced-model-property="oid"/>
 		</reference-mapping>			
+		<property-mapping
+			property="image" column="IMAGE"/>
 	</aggregate-mapping> 
 					
 </component>

@@ -13,6 +13,7 @@ public class FormulaIngredientData
 
    private static final long serialVersionUID = 1L;
    private java.lang.String oid;
+   private byte[] _Image;
    private java.lang.String _Accentuate_oid;
    private java.lang.String _Ingredient_oid;
    private java.lang.String _Formula_oid;
@@ -25,6 +26,7 @@ public class FormulaIngredientData
    public FormulaIngredientData( FormulaIngredientData otherData )
    {
       setOid(otherData.getOid());
+      set_Image(otherData.get_Image());
       set_Accentuate_oid(otherData.get_Accentuate_oid());
       set_Ingredient_oid(otherData.get_Ingredient_oid());
       set_Formula_oid(otherData.get_Formula_oid());
@@ -44,6 +46,15 @@ public class FormulaIngredientData
    public void setOid( java.lang.String oid )
    {
       this.oid = oid;
+   }
+
+   public byte[] get_Image()
+   {
+      return this._Image;
+   }
+   public void set_Image( byte[] _Image )
+   {
+      this._Image = _Image;
    }
 
    public java.lang.String get_Accentuate_oid()
@@ -86,7 +97,7 @@ public class FormulaIngredientData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("oid=" + getOid() + " " + "_Accentuate_oid=" + get_Accentuate_oid() + " " + "_Ingredient_oid=" + get_Ingredient_oid() + " " + "_Formula_oid=" + get_Formula_oid() + " " + "_AnotherFormula_oid=" + get_AnotherFormula_oid());
+      str.append("oid=" + getOid() + " " + "_Image=" + get_Image() + " " + "_Accentuate_oid=" + get_Accentuate_oid() + " " + "_Ingredient_oid=" + get_Ingredient_oid() + " " + "_Formula_oid=" + get_Formula_oid() + " " + "_AnotherFormula_oid=" + get_AnotherFormula_oid());
       str.append('}');
 
       return(str.toString());
@@ -107,6 +118,7 @@ public class FormulaIngredientData
          {
             lEquals = lEquals && this.oid.equals( lTest.oid );
          }
+         lEquals = lEquals && this._Image == lTest._Image;
          if( this._Accentuate_oid == null )
          {
             lEquals = lEquals && ( lTest._Accentuate_oid == null );
@@ -153,6 +165,14 @@ public class FormulaIngredientData
       int result = 17;
 
       result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
+
+      if (_Image != null) {
+        for (int i=0; i<_Image.length; i++)
+        {
+          long l = _Image[i];
+          result = 37*result + (int)(l^(l>>>32));
+        }
+      }
 
       result = 37*result + ((this._Accentuate_oid != null) ? this._Accentuate_oid.hashCode() : 0);
 

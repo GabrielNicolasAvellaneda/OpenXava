@@ -149,16 +149,16 @@
 		    userid="sa"
 		    password=""
 		>
-			alter table XAVATEST.DELIVERYPLACE drop constraint FK92978F6BCAFD6A75;
-			alter table XAVATEST.SERVICE drop constraint FK98588E8D2B3FD94E;
-			alter table XAVATEST.OFFICE2 drop constraint FKC5C560EE1E087E6D;
-			alter table XAVATEST.OFFICE drop constraint FK37ED97C41E087E6D;
-			alter table XAVATEST.OFFICE drop constraint FK37ED97C488875DAA;
-			alter table XAVATEST.OFFICE drop constraint FK37ED97C4CB7CAA79;
-			alter table XAVATEST.PRODUCT3 drop constraint FKE4B0044CDFA9523;
-			alter table XAVATEST.CUSTOMER drop constraint FK44A5B2E68427EFA9;
-			alter table XAVATEST.CUSTOMER drop constraint FK44A5B2E6A34119E3;
-			alter table XAVATEST.SHIPMENT drop constraint FK1BDA4A230AAEB1E;
+			alter table XAVATEST.DELIVERYPLACE drop constraint FK1B7B5553CAFD6A75;			
+			alter table XAVATEST.SERVICE drop constraint FKD97C5E952B3FD94E;
+			alter table XAVATEST.OFFICE2 drop constraint FK6E930D61E087E6D;
+			alter table XAVATEST.OFFICE drop constraint FK8C9C2ADC1E087E6D;
+			alter table XAVATEST.OFFICE drop constraint FK8C9C2ADCCB7CAA79;			
+			alter table XAVATEST.OFFICE drop constraint FK8C9C2ADC88875DAA;			
+			alter table XAVATEST.PRODUCT3 drop constraint FKC8063544DFA9523;			
+			alter table XAVATEST.CUSTOMER drop constraint FK27FBE3FE8427EFA9;
+			alter table XAVATEST.CUSTOMER drop constraint FK27FBE3FEA34119E3;
+			alter table XAVATEST.SHIPMENT drop constraint FKE513D5BA30AAEB1E;
 		</sql>
 	</target>			
 	
