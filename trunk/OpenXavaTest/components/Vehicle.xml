@@ -19,5 +19,12 @@
 	<view name="Simple">
 		<members>code, model, make</members>
 	</view>
+	
+	<entity-mapping table="XAVATEST@separator@VEHICLE">
+		<property-mapping property="oid" column="OID"/>
+		<property-mapping property="code" column="CODE"/>
+		<property-mapping property="model" column="MODEL"/>
+		<property-mapping property="make" column="MAKE"/>
+	</entity-mapping>
 										
 </component>

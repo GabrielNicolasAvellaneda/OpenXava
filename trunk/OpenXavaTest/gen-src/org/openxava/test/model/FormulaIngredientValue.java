@@ -16,6 +16,8 @@ public class FormulaIngredientValue
 
    private java.lang.String oid;
    private boolean oidHasBeenSet = false;
+   private byte[] image;
+   private boolean imageHasBeenSet = false;
    private java.lang.String accentuate_oid;
    private boolean accentuate_oidHasBeenSet = false;
    private java.lang.String ingredient_oid;
@@ -34,6 +36,8 @@ public class FormulaIngredientValue
    {
 	  this.oid = otherValue.oid;
 	  oidHasBeenSet = true;
+	  this.image = otherValue.image;
+	  imageHasBeenSet = true;
 	  this.accentuate_oid = otherValue.accentuate_oid;
 	  accentuate_oidHasBeenSet = true;
 	  this.ingredient_oid = otherValue.ingredient_oid;
@@ -57,6 +61,20 @@ public class FormulaIngredientValue
 
    public boolean oidHasBeenSet(){
 	  return oidHasBeenSet;
+   }
+   public byte[] getImage()
+   {
+	  return this.image;
+   }
+
+   public void setImage( byte[] image )
+   {
+	  this.image = image;
+	  imageHasBeenSet = true;
+   }
+
+   public boolean imageHasBeenSet(){
+	  return imageHasBeenSet;
    }
    public java.lang.String getAccentuate_oid()
    {
@@ -119,7 +137,7 @@ public class FormulaIngredientValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("oid=" + getOid() + " " + "accentuate_oid=" + getAccentuate_oid() + " " + "ingredient_oid=" + getIngredient_oid() + " " + "formula_oid=" + getFormula_oid() + " " + "anotherFormula_oid=" + getAnotherFormula_oid());
+	  str.append("oid=" + getOid() + " " + "image=" + getImage() + " " + "accentuate_oid=" + getAccentuate_oid() + " " + "ingredient_oid=" + getIngredient_oid() + " " + "formula_oid=" + getFormula_oid() + " " + "anotherFormula_oid=" + getAnotherFormula_oid());
 	  str.append('}');
 
 	  return(str.toString());
@@ -172,6 +190,7 @@ public class FormulaIngredientValue
 	  {
 		 FormulaIngredientValue that = (FormulaIngredientValue) other;
 		 boolean lEquals = true;
+		 lEquals = lEquals && this.image == that.image;
 		 if( this.accentuate_oid == null )
 		 {
 			lEquals = lEquals && ( that.accentuate_oid == null );
@@ -216,6 +235,14 @@ public class FormulaIngredientValue
    public int hashCode(){
 	  int result = 17;
       result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
+
+      if (image != null) {
+        for (int i=0; i<image.length; i++)
+        {
+          long l = image[i];
+          result = 37*result + (int)(l^(l>>>32));
+        }
+      }
 
       result = 37*result + ((this.accentuate_oid != null) ? this.accentuate_oid.hashCode() : 0);
 

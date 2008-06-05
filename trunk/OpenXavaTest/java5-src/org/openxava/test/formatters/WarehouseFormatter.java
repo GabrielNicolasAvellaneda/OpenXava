@@ -22,7 +22,7 @@ public class WarehouseFormatter implements IFormatter {
 
 	public String format(HttpServletRequest request, Object object) {
 		if (object == null) return "";
-		WarehouseKey key = (WarehouseKey) object;
+		Warehouse key = (Warehouse) object;
 		return "[." + key.getZoneNumber() + "." + key.getNumber() + ".]"; 
 	}
 	
@@ -40,7 +40,7 @@ public class WarehouseFormatter implements IFormatter {
 		}
 		String snumber = st.nextToken().trim();
 		
-		WarehouseKey warehouseKey = new WarehouseKey();
+		Warehouse warehouseKey = new Warehouse();
 		try {
 			warehouseKey.setZoneNumber("null".equals(szoneNumber)?0:Integer.parseInt(szoneNumber)); 
 			warehouseKey.setNumber("null".equals(snumber)?0:Integer.parseInt(snumber)); 

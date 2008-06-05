@@ -59,7 +59,7 @@ public class AnnotatedPOJOTest extends TestCase {
 		p.setDescription("JUNIT");
 		p.setFamilyNumber(1);
 		p.setSubfamilyNumber(1);
-		p.setWarehouseKey(new WarehouseKey());
+		p.setWarehouseKey(new Warehouse());  
 		p.setUnitPrice(new BigDecimal("1200")); // An UnitPriceValidator does not permit this
 		
 		XPersistence.getManager().persist(p);
@@ -84,7 +84,7 @@ public class AnnotatedPOJOTest extends TestCase {
 		p.setDescription("MOTO"); 
 		p.setFamilyNumber(1);
 		p.setSubfamilyNumber(1);
-		p.setWarehouseKey(new WarehouseKey());
+		p.setWarehouseKey(new Warehouse());
 		p.setUnitPrice(new BigDecimal("900")); 
 		
 		XPersistence.getManager().persist(p);
@@ -106,11 +106,11 @@ public class AnnotatedPOJOTest extends TestCase {
 	public void testEntityValidatorsAsHibernateAnnotation() throws Exception {
 		Product p = new Product();
 		p.setNumber(66);
-		p.setDescription("BUENO, BONITO, BARATO"); // Es 'BARATO' así que...
+		p.setDescription("BUENO, BONITO, BARATO"); // It's cheap ('BARATO') thus...
 		p.setFamilyNumber(1);
 		p.setSubfamilyNumber(1);
-		p.setWarehouseKey(new WarehouseKey());
-		p.setUnitPrice(new BigDecimal("900")); // ...no nos puede costar 900 (máximo 100) 
+		p.setWarehouseKey(new Warehouse());
+		p.setUnitPrice(new BigDecimal("900")); // ... it cannot cost 900 (max 100) 
 		
 		XPersistence.getManager().persist(p);
 		try {

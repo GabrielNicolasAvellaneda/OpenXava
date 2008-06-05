@@ -43,6 +43,18 @@
 
       </entity>
       <entity>
+         <ejb-name>Vehicle</ejb-name>
+         <jndi-name>@subcontext@/ejb/org.openxava.test.model/Vehicle</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
          <ejb-name>InvoiceDetail</ejb-name>
          <jndi-name>@subcontext@/ejb/org.openxava.test.model/InvoiceDetail</jndi-name>
          <resource-ref>
@@ -151,8 +163,8 @@
 
       </entity>
       <entity>
-         <ejb-name>State</ejb-name>
-         <jndi-name>@subcontext@/ejb/org.openxava.test.model/State</jndi-name>
+         <ejb-name>Warehouse</ejb-name>
+         <jndi-name>@subcontext@/ejb/org.openxava.test.model/Warehouse</jndi-name>
          <resource-ref>
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <resource-name>jdbc/DataSource</resource-name>
@@ -163,8 +175,8 @@
 
       </entity>
       <entity>
-         <ejb-name>Warehouse</ejb-name>
-         <jndi-name>@subcontext@/ejb/org.openxava.test.model/Warehouse</jndi-name>
+         <ejb-name>State</ejb-name>
+         <jndi-name>@subcontext@/ejb/org.openxava.test.model/State</jndi-name>
          <resource-ref>
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <resource-name>jdbc/DataSource</resource-name>
@@ -249,6 +261,18 @@
       <entity>
          <ejb-name>Subfamily</ejb-name>
          <jndi-name>@subcontext@/ejb/org.openxava.test.model/Subfamily</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>Journey</ejb-name>
+         <jndi-name>@subcontext@/ejb/org.openxava.test.model/Journey</jndi-name>
          <resource-ref>
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <resource-name>jdbc/DataSource</resource-name>
@@ -569,6 +593,18 @@
       <entity>
          <ejb-name>Product2</ejb-name>
          <jndi-name>@subcontext@/ejb/org.openxava.test.model/Product2</jndi-name>
+         <resource-ref>
+            <res-ref-name>jdbc/DataSource</res-ref-name>
+            <resource-name>jdbc/DataSource</resource-name>
+         </resource-ref>
+
+        <method-attributes>
+        </method-attributes>
+
+      </entity>
+      <entity>
+         <ejb-name>AverageSpeed</ejb-name>
+         <jndi-name>@subcontext@/ejb/org.openxava.test.model/AverageSpeed</jndi-name>
          <resource-ref>
             <res-ref-name>jdbc/DataSource</res-ref-name>
             <resource-name>jdbc/DataSource</resource-name>

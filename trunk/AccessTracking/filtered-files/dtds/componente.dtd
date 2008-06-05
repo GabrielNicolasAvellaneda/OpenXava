@@ -209,6 +209,7 @@
  requerido (true|false) "false"  
  clave (true|false) "false"
  cometido-destino CDATA #IMPLIED
+ clave-busqueda (true|false) "false" 
 >
 
 <!ELEMENT coleccion (referencia, ((condicion?, orden?) | calculador), calculador-posborrar*)>

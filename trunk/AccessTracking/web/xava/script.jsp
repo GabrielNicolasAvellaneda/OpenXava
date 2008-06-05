@@ -1,5 +1,9 @@
 <%@ include file="imports.jsp"%>
 
+<%
+org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
+%>
+
 
 <script type="text/javascript">
 <%-- JavaScript for text area maxsize --%>
@@ -39,7 +43,7 @@ function validateNumeric(ev, max, integer) {
 }
 
 <%-- JavaScript for collections and list --%>
-function manageFilterRow(id)
+function manageFilterRow(id, visible)
 {
     var img = document.getElementById("xava-filter-image-" + id);
     var elem = document.getElementById("xava-tr-list-filter-" + id)
@@ -47,12 +51,14 @@ function manageFilterRow(id)
 	if (elem.style.display == ''){
 		elem.style.display = 'none';
 		img.src='<%=request.getContextPath()%>/xava/images/show-filter.gif';
-		link.title='<xava:message key="show_filters"/>'; 
+		link.title='<xava:message key="show_filters"/>';
+		document.<%=manager.getForm()%>[visible].value="false";
 	}
 	else {
 		elem.style.display = '';
 		img.src='<%=request.getContextPath()%>/xava/images/hide-filter.gif';
 		link.title='<xava:message key="hide_filters"/>';
+		document.<%=manager.getForm()%>[visible].value="true";
 	}
 }
 </script>

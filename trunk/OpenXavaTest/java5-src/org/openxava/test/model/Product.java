@@ -190,15 +190,15 @@ public class Product {
 	@OnChange(forViews="WithSection",
 		value=org.openxava.test.actions.OnChangeVoidAction.class
 	)
-	public WarehouseKey getWarehouseKey() {
+	public Warehouse getWarehouseKey() {
 		if (this.warehouseNumber == null) return null;
-		WarehouseKey key = new WarehouseKey();
+		Warehouse key = new Warehouse();
 		key.setNumber(this.warehouseNumber);
 		key.setZoneNumber(this.warehouseZoneNumber);
 		return key;
 	}
 
-	public void setWarehouseKey(WarehouseKey warehouseKey) {	
+	public void setWarehouseKey(Warehouse warehouseKey) {	
 		if (warehouseKey == null) {
 			this.warehouseZoneNumber = null;
 			this.warehouseNumber = null;						

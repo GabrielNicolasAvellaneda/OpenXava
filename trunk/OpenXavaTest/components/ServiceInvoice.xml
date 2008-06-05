@@ -18,5 +18,10 @@
 	
 	
 	<view members="year, number, amount; description"/>
+	
+	<!-- 
+	Do not put here a mapping, 
+	because this entity is for testing default mapping  
+	-->
 													
 </component>
