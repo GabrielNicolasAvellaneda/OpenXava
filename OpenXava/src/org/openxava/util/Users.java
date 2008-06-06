@@ -33,7 +33,7 @@ public class Users {
 	 * 
 	 * You can use this preference for read and update user preferences,
 	 * in this way:
-	 * <code>
+	 * <pre>
 	 * // Obtain preferences for the current user and node (an arbitrary category of your choice).
 	 * Preferences preferences = Users.getCurrentPreferences().node("mynode");
 	 * 
@@ -43,7 +43,7 @@ public class Users {
 	 * // Modify and save a property  
 	 * preferences.putBoolean(ROWS_HIDDEN, rowsHidden);
 	 * preferences.flush();
-	 * </code>
+	 * </pre>
 	 * Remember, you must call flush() always in order to make persistent the changes in 
 	 * preferences.<br>
 	 * 
