@@ -133,6 +133,7 @@
 		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
 	</target>
 	
+	<!-- Update schema against current database -->
 	<target name="updateSchema">
 		
 		<ant antfile="../OpenXava/build.xml" target="updateSchemaJPA">			
@@ -160,7 +161,16 @@
 			alter table XAVATEST.CUSTOMER drop constraint FK27FBE3FEA34119E3;
 			alter table XAVATEST.SHIPMENT drop constraint FKE513D5BA30AAEB1E;
 		</sql>
-	</target>			
+	</target>
+	
+	<!-- Generate the schema from scratch. Show it in log, but does not execute it -->
+	<target name="generateSchema">
+		
+		<ant antfile="../OpenXava/build.xml" target="generateSchemaJPA">
+			<property name="persistence.unit" value="junit"/>
+		</ant>
+				
+	</target>	
 	
 	<target name="updateOX">
 		<ant antfile="../OpenXava/build.xml" target="updateOX"/>

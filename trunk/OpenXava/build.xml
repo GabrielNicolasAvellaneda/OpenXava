@@ -966,6 +966,26 @@
 		 	<hbm2ddl update="true" />	
 		</hibernatetool>
 				
+	</target>
+	
+	<!-- 
+	Generates schema for applications developed with POJOs + JPA (not XML),
+	that is, for applications developed using OX3 or better.
+	Generates the scheme and show it in the log, 
+	but does not execute it against database.
+	-->
+	<target name="generateSchemaJPA" depends="defineHibernateTool">
+		
+		<hibernatetool destdir="data">
+			<jpaconfiguration persistenceunit="${persistence.unit}"/>
+			<classpath>
+				<path location="web/WEB-INF/classes" />		  
+			</classpath>
+
+		 	<hbm2ddl export="false" create="true" />	
+		</hibernatetool>
+				
 	</target>		
+	
 				
 </project>
