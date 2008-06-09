@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Label editors show the description instead of id when the type is enum or valid-values.
+
 OpenXava 3.0.2 (2008-6-4)
 -------------------------
 - Labels and messages translated to Italian.
