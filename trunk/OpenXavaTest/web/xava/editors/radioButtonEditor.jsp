@@ -26,7 +26,7 @@ Boolean isHorizontal = Boolean.valueOf(horizontal);
  
 <%  
 } else {  
-Object description = p.getValidValueLabel(request, value);  
+description = p.getValidValueLabel(request, value);  
 if (label) { 
 %> 
 <%=description%> 

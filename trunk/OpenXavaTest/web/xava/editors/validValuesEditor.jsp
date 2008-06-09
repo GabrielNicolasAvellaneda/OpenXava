@@ -1,7 +1,6 @@
-<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
-
 <%@ include file="validValueEditorCommon.jsp"%>
 
+<jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 <%
 if (editable) { 
 %>
@@ -11,7 +10,6 @@ if (editable) {
 	java.util.Iterator it = p.validValuesLabels(request);
 	for (int i = baseIndex; it.hasNext(); i++) {
 		String selected = value == i ?"selected":"";
-		
 %>
 	<option value="<%=i%>" <%=selected%>><%=it.next()%></option>
 <%
@@ -20,7 +18,6 @@ if (editable) {
 </select>	
 <% 
 } else { 
-	Object description = value == -1?"":p.getValidValueLabel(request, value);	
 	if (label) {
 %>
 	<%=description%>

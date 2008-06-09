@@ -181,7 +181,14 @@ if (editable) {
 	}	
 	if (label) {
 %>
+
+<%
+Object b = (Object) request.getParameter("bold");
+boolean bold = b == null ? false : new Boolean(b.toString()).booleanValue();
+if (bold) { %> <b> <%}%> 
+
 	<%=description%>&nbsp;
+<% if (bold) { %> </b> <%} %>
 <%
 	}
 	else {	
