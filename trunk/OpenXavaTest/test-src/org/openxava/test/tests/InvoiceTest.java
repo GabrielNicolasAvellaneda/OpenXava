@@ -550,16 +550,14 @@ public class InvoiceTest extends ModuleTestBase {
 	}
 	
 	public void testNotEditableCustomerData() throws Exception { 
-		execute("CRUD.new");
-		execute("Sections.change", "activeSection=0");
+		execute("CRUD.new");		
 		assertEditable("customer.number");
 		assertNoEditable("customer.name");
 		assertNoEditable("customer.address.street");
 	}
 	
 	public void testSearchReferenceWithListInsideSection() throws Exception {		
-		execute("CRUD.new");
-		execute("Sections.change", "activeSection=0");
+		execute("CRUD.new");		
 				
 		execute("Reference.search", "keyProperty=xava.Invoice.customer.number");
 		String customerName = getValueInList(0, 0);		
@@ -570,8 +568,7 @@ public class InvoiceTest extends ModuleTestBase {
 	
 	public void testSections_aggregateCollection_orderedCollectionsInModel_posdeleteCollectionElement() throws Exception {  		
 		// Create
-		execute("CRUD.new");
-		execute("Sections.change", "activeSection=0");				
+		execute("CRUD.new");					
 		assertExists("customer.number");
 		assertNotExists("vatPercentage");
 		
@@ -742,8 +739,7 @@ public class InvoiceTest extends ModuleTestBase {
 		setValue("year", year);
 		setValue("number", "66");
 		execute("CRUD.search");
-		assertNoErrors();
-		execute("Sections.change", "activeSection=1");
+		assertNoErrors();		
 		assertValueInCollection("details", 1, 0, "Special");
 		assertValueInCollection("details", 1, 1, getProductDescription());
 		assertValueInCollection("details", 1, 2, getProductUnitPriceInPesetas());
@@ -806,8 +802,7 @@ public class InvoiceTest extends ModuleTestBase {
 		setValue("year", year);
 		setValue("number", "66");
 		execute("CRUD.search");
-		assertNoErrors();
-		execute("Sections.change", "activeSection=1");
+		assertNoErrors();		
 
 		assertCollectionRowCount("details", 2);
 		assertValueInCollection("details", 0, 0, "Urgent");
@@ -845,8 +840,7 @@ public class InvoiceTest extends ModuleTestBase {
 	
 	public void testAggregateValidatorUsingReferencesToContainer() throws Exception { 		
 		// Create
-		execute("CRUD.new");
-		execute("Sections.change", "activeSection=0");				
+		execute("CRUD.new");				
 						
 		setValue("number", "66");
 		setValue("paid", "true");
@@ -880,8 +874,7 @@ public class InvoiceTest extends ModuleTestBase {
 	
 	public void testValidationOnSaveAggregateAndModelValidatorReceivesReference() throws Exception {		
 		// Create
-		execute("CRUD.new");
-		execute("Sections.change", "activeSection=0");				
+		execute("CRUD.new");						
 		assertExists("customer.number");
 		assertNotExists("vatPercentage");
 				
@@ -940,8 +933,7 @@ public class InvoiceTest extends ModuleTestBase {
 	}
 	
 	public void testCalculatedValuesFromSubviewToUpperView() throws Exception {
-		execute("CRUD.new");
-		execute("Sections.change", "activeSection=0");
+		execute("CRUD.new");		
 		assertValue("customerDiscount", "");
 		assertValue("customerTypeDiscount", "");
 		assertValue("customer.number", "");
@@ -962,8 +954,7 @@ public class InvoiceTest extends ModuleTestBase {
 	}
 	
 	public void testCalculatedValueOnChangeBoolean() throws Exception {
-		execute("CRUD.new");
-		execute("Sections.change", "activeSection=0");
+		execute("CRUD.new");		
 		assertValue("customerDiscount", "");
 		setValue("paid", "true");
 		assertValue("customerDiscount", "77.00");				

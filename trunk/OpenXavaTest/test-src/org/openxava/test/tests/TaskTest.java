@@ -15,7 +15,7 @@ public class TaskTest extends ModuleTestBase {
 	
 	public void testUsersAndUserFilter() throws Exception {
 		// In order to run this test you need an user 'junit' in your portal
-		login(getUserLoginName(), "junit");				
+		login(getUserLoginName(), "junit");		
 		assertValueInList(0, "user", getUserId());
 		assertValueInList(0, "summary", "FOR USING IN JUNIT TEST");		
 		execute("CRUD.new");
@@ -49,7 +49,7 @@ public class TaskTest extends ModuleTestBase {
 	}	
 	private String getUserId() {
 		if (!isLiferayEnabled()) return "junit";
-		return XavaPreferences.getInstance().isEMailAsUserNameInPortal()?"junit@openxava.org":"11964"; // For Liferay 4.1: liferay.com.1001
+		return XavaPreferences.getInstance().isEMailAsUserNameInPortal()?"junit@openxava.org":"11964"; // For Liferay 4.1: liferay.com.1001				
 	}
 			
 }

@@ -37,7 +37,7 @@ public class TransportChargeTest extends TransportChargeTestBase {
 		assertValueInCollection("delivery.details", 2, 0, "11");
 
 		setConditionValues("delivery.details", new String [] { "11" } );
-		execute("List.filter", "property=number,collection=delivery.details");
+		execute("List.filter", "collection=delivery.details");
 		assertCollectionRowCount("delivery.details", 1);
 		assertValueInCollection("delivery.details", 0, 0, "11");		
 	}
@@ -46,7 +46,7 @@ public class TransportChargeTest extends TransportChargeTestBase {
 		execute("CRUD.new");
 		assertExists("delivery.distance");
 		assertNotExists("delivery.advice");
-		execute("Sections.change", "activeSection=3, viewObject=xava_view_delivery");
+		execute("Sections.change", "activeSection=3,viewObject=xava_view_delivery");
 		assertExists("delivery.advice");
 		assertNotExists("delivery.distance");
 	}

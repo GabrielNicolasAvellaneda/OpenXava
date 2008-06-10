@@ -791,8 +791,7 @@ public class DeliveryTest extends ModuleTestBase {
 	}
 	
 	public void testOnChangeWithQualifiedProperty() throws Exception { 
-		execute("CRUD.new");
-		execute("Sections.change", "activeSection=0");
+		execute("CRUD.new");		
 		// Left from field
 		assertValue("remarks", "No remarks");
 		setValue("remarks", "");
@@ -826,8 +825,7 @@ public class DeliveryTest extends ModuleTestBase {
 	}
 	
 	public void testOnChangeDescriptionsListKey_messagesInChangeAction() throws Exception { 
-		execute("CRUD.new");
-		execute("Sections.change", "activeSection=0");
+		execute("CRUD.new");		
 		assertValue("remarks", "No remarks");
 		setValue("deliveredBy", isOX3()?"1":"2");
 		assertNoMessages();
@@ -840,8 +838,7 @@ public class DeliveryTest extends ModuleTestBase {
 	}
 	
 	public void testHideInSection() throws Exception { 
-		execute("CRUD.new");
-		execute("Sections.change", "activeSection=0");
+		execute("CRUD.new");		
 		assertExists("remarks");
 		execute("Remarks.hideRemarks");
 		assertNotExists("remarks");
@@ -892,8 +889,7 @@ public class DeliveryTest extends ModuleTestBase {
 	}
 	
 	public void testViewPropertyInSectionDefaultCalcultarAndValidators() throws Exception { 
-		execute("CRUD.new");
-		execute("Sections.change", "activeSection=0");
+		execute("CRUD.new");		
 		assertExists("advice");
 		assertValue("advice", "IF YOU DRINK DO NOT DRIVE");
 		setValue("advice", "");
@@ -951,7 +947,7 @@ public class DeliveryTest extends ModuleTestBase {
 	}
 		
 	private void searchInvoiceWithList(String year, String number) throws Exception {
-		execute("Reference.search", "keyProperty=xava.Delivery.invoice.year");
+		execute("Reference.search", "keyProperty=xava.Delivery.invoice.number");
 		setConditionValues(
 			new String [] { year, number, "", "true" }
 		);

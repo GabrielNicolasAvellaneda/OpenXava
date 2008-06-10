@@ -22,7 +22,7 @@ public class DeliveryRemarks2002Test extends ModuleTestBase {
 		
 		execute("Print.generateExcel");
 		assertContentTypeForPopup("text/x-csv");
-		
+				
 		StringTokenizer excel = new StringTokenizer(getPopupText(), "\n\r");
 		String header = excel.nextToken();
 		assertEquals("header", "Year;Number;Remarks", header);		

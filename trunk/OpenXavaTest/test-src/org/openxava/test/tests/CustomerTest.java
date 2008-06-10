@@ -6,8 +6,8 @@ import org.openxava.model.meta.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
-
-import com.meterware.httpunit.*;
+import com.gargoylesoftware.htmlunit.*;
+import com.gargoylesoftware.htmlunit.html.*;
 
 /**
  * @author Javier Paniza
@@ -98,10 +98,10 @@ public class CustomerTest extends ModuleTestBase {
 		
 	public void testFilterByMemberOfAggregate() throws Exception {
 		assertListRowCount(5);
-		String [] totalCondition = { " ", "", "", "V" };		
+		String [] totalCondition = { "", "", "", "V" };		
 		setConditionValues(totalCondition);		
 		execute("List.filter");
-		assertNoErrors(); 
+		assertNoErrors();		
 		assertListRowCount(3); // We rely in that there are 3 customer of Valencia
 		
 		// To sure that it works after customizing list
@@ -198,7 +198,7 @@ public class CustomerTest extends ModuleTestBase {
 		
 	public void testImageEditor() throws Exception { 		
 		execute("CRUD.new");
-		execute("ImageEditor.changeImage", "newImageProperty=photo");
+		execute("ImageEditor.changeImage", "newImageProperty=xava.Customer.photo");
 		assertNoErrors();
 		assertAction("LoadImage.loadImage");		
 		String imageUrl = System.getProperty("user.dir") + "/test-images/foto_javi.jpg";
@@ -206,21 +206,22 @@ public class CustomerTest extends ModuleTestBase {
 		execute("LoadImage.loadImage");
 		assertNoErrors();
 		
-		WebResponse response = getConversation().getCurrentPage();
-		URL url = response.getURL();
+		HtmlPage page = (HtmlPage) getWebClient().getCurrentWindow().getEnclosedPage();		
+		URL url = page.getWebResponse().getUrl();
 		String urlPrefix = url.getProtocol() + "://" + url.getHost() + ":" + url.getPort();
 		
-		WebImage image = response.getImageWithName("xava.Customer.photo");
+		
+		HtmlImage image = (HtmlImage) page.getHtmlElementsByName("xava.Customer.photo").get(0);
 		String imageURL = null;
-		if (image.getSource().startsWith("/")) {
-			imageURL = urlPrefix + image.getSource();
+		if (image.getSrcAttribute().startsWith("/")) {
+			imageURL = urlPrefix + image.getSrcAttribute();
 		}
 		else {
 			String urlBase = Strings.noLastToken(url.getPath(), "/");
-			imageURL = urlPrefix + urlBase + image.getSource();
+			imageURL = urlPrefix + urlBase + image.getSrcAttribute();
 		}		
-		response = getConversation().getResponse(imageURL);
-		assertTrue("Image not obtained", response.getContentLength() != 0);
+		WebResponse response = getWebClient().getPage(imageURL).getWebResponse();		
+		assertTrue("Image not obtained", response.getContentAsString().length() > 0);
 		assertEquals("Result is not an image", "image", response.getContentType());
 	}
 			
@@ -487,11 +488,11 @@ public class CustomerTest extends ModuleTestBase {
 			System.err.println("WARNING! testIfKeyNotExistsInReferenceNotExecuteAction() is not executed: click + no duplicate submit not testable inside portal");
 			return;
 		}
-		allowDuplicateSubmit(); // In order to can use 'click()'
 		execute("CRUD.new");		
 		setValue("relationWithSeller", "HOLA");		
-		setValueNotNotify("seller.number", "53"); // We suposse that not exists		
-		click("CRUD.new");		
+		setValueNotNotify("seller.number", "53"); // We suposse that not exists
+		assertNoError("Seller with key {number=53} not found"); 
+		execute("CRUD.new");
 		assertError("Seller with key {number=53} not found");
 		assertValue("relationWithSeller", "HOLA"); // That implies that 'new' not was executed		
 	}

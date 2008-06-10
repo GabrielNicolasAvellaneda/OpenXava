@@ -2,16 +2,17 @@ package org.openxava.test.tests;
 
 import org.openxava.tests.*;
 
-import com.meterware.httpunit.*;
+import com.gargoylesoftware.htmlunit.*;
+import com.gargoylesoftware.htmlunit.html.*;
 
 import junit.framework.*;
 
 public class PublicJSPTest extends TestCase {
 	
 	public void testPublicJSP() throws Exception {
-		WebConversation wc = new WebConversation();
-	    WebResponse   resp = wc.getResponse("http://" + getHost() + ":" + getPort() + "/" + getApplication() + "/public/myPublicJSP.jsp" ); 
-	    assertTrue(resp.getText().startsWith("The uri of this JSP is"));
+		WebClient client = new WebClient();
+	    HtmlPage page = (HtmlPage) client.getPage("http://" + getHost() + ":" + getPort() + "/" + getApplication() + "/public/myPublicJSP.jsp" ); 
+	    assertTrue(page.asText().startsWith("The uri of this JSP is"));
 	}
 	
 	private static String getPort() {		
