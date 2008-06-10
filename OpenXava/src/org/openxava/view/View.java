@@ -3094,8 +3094,8 @@ public class View implements java.io.Serializable {
 	public boolean isFrame() throws XavaException {		
 		return getMetaView().isFrame();
 	}
-		
-	public String getFocusPropertyId() {		
+	
+	public String getFocusPropertyId() { 		
 		try {
 			if (!Is.emptyString(focusPropertyId) && !focusForward) return focusPropertyId;
 			return calculateFocusPropertyId();
