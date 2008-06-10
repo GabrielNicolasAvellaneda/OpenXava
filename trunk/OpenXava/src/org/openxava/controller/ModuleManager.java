@@ -210,7 +210,7 @@ public class ModuleManager {
 				if (isFormUpload()) {
 					parseMultipartRequest(request);
 				}
-				String xavaAction = getParameter(request, "xava_action");				
+				String xavaAction = getParameter(request, "xava_action");
 				if (!Is.emptyString(xavaAction)) {											
 					String actionValue = request.getParameter("xava_action_argv");
 					if ("undefined".equals(actionValue)) actionValue = null;						

@@ -40,7 +40,7 @@ public class DataSourceConnectionProvider implements IConnectionProvider, Serial
 	public static IConnectionProvider createByComponent(String componentName) throws XavaException {
 		MetaComponent component =MetaComponent.get(componentName); 				
 		String jndi = null;		
-		if (component.getMetaEntity().isAnnotatedEJB3()) {			
+		if (component.getMetaEntity().isAnnotatedEJB3()) {
 			jndi = getJPADataSource();			
 			if (Is.emptyString(jndi) && !isUseHibernateConnection()) {  
 				throw new XavaException("no_jpa_data_source_for_entity", componentName);  
