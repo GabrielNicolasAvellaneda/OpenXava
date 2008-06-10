@@ -18,7 +18,7 @@ public class CustomerRadioButtonTest extends ModuleTestBase {
 		// because behaves equals that a combo. Hence it's needed to test visually
 		execute("CRUD.new");
 		setValue("number", "66");		
-		setValue("type", isOX3()?"1":"2"); // steady
+		setValue("type", isOX3()?"1":"2"); // steady		
 		setValue("name", "CUSTOMER JUNIT");
 		setValue("address.street", "DOCTOR PESSET");
 		setValue("address.zipCode", "46540");

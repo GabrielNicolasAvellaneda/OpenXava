@@ -31,7 +31,7 @@ public class Product2Test extends ModuleTestBase {
 		assertNoAction("Gallery.maximizeImage");
 		assertNoAction("Gallery.minimizeImage");
 		assertNoAction("Gallery.removeImage");
-		assertEquals("Images count does not match", 0, getForm().getParameterValues("xava.GALLERY.images").length);
+		assertEquals("Images count does not match", 0, getForm().getInputsByName("xava.GALLERY.images").size());
 		
 		// Canceling the adding of and image
 		execute("Gallery.addImage");
@@ -43,7 +43,7 @@ public class Product2Test extends ModuleTestBase {
 		assertNoAction("Gallery.maximizeImage");
 		assertNoAction("Gallery.minimizeImage");
 		assertNoAction("Gallery.removeImage");
-		assertEquals("Images count does not match", 0, getForm().getParameterValues("xava.GALLERY.images").length);
+		assertEquals("Images count does not match", 0, getForm().getInputsByName("xava.GALLERY.images").size());
 		
 		// Adding one image		
 		execute("Gallery.addImage");
@@ -56,7 +56,7 @@ public class Product2Test extends ModuleTestBase {
 		assertAction("Gallery.maximizeImage");
 		assertNoAction("Gallery.minimizeImage");
 		assertAction("Gallery.removeImage");
-		assertEquals("Images count does not match", 1, getForm().getParameterValues("xava.GALLERY.images").length);		
+		assertEquals("Images count does not match", 1, getForm().getInputsByName("xava.GALLERY.images").size());		
 		
 		// Returning to the main entity
 		execute("Gallery.return");
@@ -72,7 +72,7 @@ public class Product2Test extends ModuleTestBase {
 		assertNoAction("Gallery.maximizeImage");
 		assertNoAction("Gallery.minimizeImage");
 		assertNoAction("Gallery.removeImage");
-		assertEquals("Images count does not match", 0, getForm().getParameterValues("xava.GALLERY.images").length);		
+		assertEquals("Images count does not match", 0, getForm().getInputsByName("xava.GALLERY.images").size());		
 		execute("Gallery.return");
 		
 		// Verifying that product 1 has the added image
@@ -86,8 +86,8 @@ public class Product2Test extends ModuleTestBase {
 		assertAction("Gallery.maximizeImage");
 		assertNoAction("Gallery.minimizeImage");
 		assertAction("Gallery.removeImage");
-		assertEquals("Images count does not match", 1, getForm().getParameterValues("xava.GALLERY.images").length);
-		String imageOid = getForm().getParameterValues("xava.GALLERY.images")[0];
+		assertEquals("Images count does not match", 1, getForm().getInputsByName("xava.GALLERY.images").size());
+		String imageOid = getForm().getInputByName("xava.GALLERY.images").getValueAttribute();
 		
 		// Maximizing the image
 		execute("Gallery.maximizeImage", "oid="+imageOid);
@@ -102,7 +102,7 @@ public class Product2Test extends ModuleTestBase {
 		assertAction("Gallery.maximizeImage");
 		assertNoAction("Gallery.minimizeImage");
 		assertAction("Gallery.removeImage");
-		assertEquals("Images count does not match", 1, getForm().getParameterValues("xava.GALLERY.images").length);
+		assertEquals("Images count does not match", 1, getForm().getInputsByName("xava.GALLERY.images").size());
 		
 		// Verifying read-only
 		execute("Gallery.return");
@@ -114,19 +114,19 @@ public class Product2Test extends ModuleTestBase {
 		assertAction("Gallery.maximizeImage");
 		assertNoAction("Gallery.minimizeImage");
 		assertNoAction("Gallery.removeImage");
-		assertEquals("Images count does not match", 1, getForm().getParameterValues("xava.GALLERY.images").length);
+		assertEquals("Images count does not match", 1, getForm().getInputsByName("xava.GALLERY.images").size());
 		execute("Return.return");
 		execute("EditableOnOff.setOn");
 		
 		// Removing the image
 		execute("Gallery.edit", "galleryProperty=photos");
-		assertEquals("Images count does not match", 1, getForm().getParameterValues("xava.GALLERY.images").length);
+		assertEquals("Images count does not match", 1, getForm().getInputsByName("xava.GALLERY.images").size());
 		execute("Gallery.removeImage", "oid="+imageOid);
 		assertNoErrors();
 		assertNoAction("Gallery.maximizeImage");
 		assertNoAction("Gallery.minimizeImage");
 		assertNoAction("Gallery.removeImage");
-		assertEquals("Images count does not match", 0, getForm().getParameterValues("xava.GALLERY.images").length);
+		assertEquals("Images count does not match", 0, getForm().getInputsByName("xava.GALLERY.images").size());
 		
 		// Verifying that product 1 has no images
 		execute("Gallery.return");
@@ -137,7 +137,7 @@ public class Product2Test extends ModuleTestBase {
 		execute("Gallery.edit", "galleryProperty=photos");
 		assertNoErrors();
 		assertMessage("No images");
-		assertEquals("Images count does not match", 0, getForm().getParameterValues("xava.GALLERY.images").length);
+		assertEquals("Images count does not match", 0, getForm().getInputsByName("xava.GALLERY.images").size());
 	}
 	
 	public void testReferencesAsDescriptionListUsesFilterOfDefaultTab() throws Exception {

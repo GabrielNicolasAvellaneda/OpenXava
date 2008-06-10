@@ -91,6 +91,7 @@ public class Carrier {
 	@ReadOnly(forViews="ReadOnlyCalculatedFellows")
 	@CollectionView("Simple")
 	@RemoveSelectedAction(forViews="CalculatedFellows", value="")
+	@ListAction("Carrier.translateName")
 	public Collection<Carrier> getFellowCarriersCalculated() {
 		// This method exists for compliance with OpenXavaTest
 		return getFellowCarriers();

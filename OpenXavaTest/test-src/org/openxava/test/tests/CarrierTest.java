@@ -77,7 +77,7 @@ public class CarrierTest extends ModuleTestBase {
 		assertLabelInList(1, "Number");
 		assertLabelInList(2, "Name");
 		execute("Mode.detailAndFirst");
-		
+				
 		assertCollectionColumnCount("fellowCarriers", 4);
 		assertLabelInCollection("fellowCarriers", 0, "Number");
 		assertLabelInCollection("fellowCarriers", 1, "Name");		
@@ -211,7 +211,7 @@ public class CarrierTest extends ModuleTestBase {
 		assertRowUnchecked(3);
 	}
 	
-	public void testActionOfCalculatedPropertyAlwaysPresent_referenceKeyEditableWhenInGroup() throws Exception {
+	public void testActionOfCalculatedPropertyAlwaysPresent_referenceKeyEditableWhenInGroup() throws Exception {		
 		execute("CRUD.new");
 		assertAction("Carrier.translateName");
 		assertExists("calculated");
@@ -269,7 +269,7 @@ public class CarrierTest extends ModuleTestBase {
 	public void testDeleteUsingBeforeReferenceSearch() throws Exception {
 		assertListNotEmpty();
 		execute("Mode.detailAndFirst");
-		execute("Reference.search", "keyProperty=xava.Carrier.warehouse.zoneNumber");
+		execute("Reference.search", "keyProperty=xava.Carrier.warehouse.number");
 		execute("ReferenceSearch.cancel");
 		execute("CRUD.delete");		
 		assertNoErrors();
