@@ -195,8 +195,7 @@ public class ModuleManager {
 			Is.equal(request.getParameter("xava_action_application"),getApplicationName());
 	}
 	
-	private boolean duplicateRequest(HttpServletRequest request) {
-		if (request.getParameter("xava_allow_duplicate_submit") != null) return false; 		
+	private boolean duplicateRequest(HttpServletRequest request) { 		
 		String pageId = request.getParameter("xava_page_id");
 		if (pageId == null) return false;
 		if (pageId.equals(lastPageId)) return true;		

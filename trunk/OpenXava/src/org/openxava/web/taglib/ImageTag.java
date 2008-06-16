@@ -36,9 +36,12 @@ public class ImageTag extends TagSupport implements IActionTag {
 			pageContext.getOut().print(getAction());
 			pageContext.getOut().println("' type='hidden'/>");
 			
-			pageContext.getOut().print("<a id='");
-			pageContext.getOut().print(getAction());
-			pageContext.getOut().println("'");			
+			pageContext.getOut().print("<a ");
+			if (Is.emptyString(getArgv())) { 
+				pageContext.getOut().print("id='");
+				pageContext.getOut().print(getAction());
+				pageContext.getOut().println("'");
+			}
 			pageContext.getOut().print(" title='");
 			pageContext.getOut().print(metaAction.getKeystroke() + " - " +  metaAction.getDescription(request));
 			pageContext.getOut().print("'");			

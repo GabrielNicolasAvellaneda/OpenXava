@@ -223,7 +223,8 @@ public class ModuleTestBase extends TestCase {
 			newPage = (HtmlPage) client.getCurrentWindow().getEnclosedPage();
 			Thread.sleep(100);
 			if (newPage != page) {
-				page = newPage;
+				page = newPage;				
+				while (page.isBeingParsed()) Thread.sleep(10); 
 				resetForm();				
 				return;
 			}
@@ -464,9 +465,15 @@ public class ModuleTestBase extends TestCase {
 		for (int i=0; element == null && i<20; i++) {
 			Thread.sleep(80);
 			element = page.getFocusedElement();			
-		}
+		}		
 		String focusProperty = element==null?null:element.getAttributeValue("name");
-		assertEquals(XavaResources.getString("focus_in_unexpected_place"), getPropertyPrefix() + name, focusProperty);		
+		String expectedFocusProperty = getPropertyPrefix() + name;
+		for (int i=0; !expectedFocusProperty.equals(focusProperty) && i<20; i++) {
+			Thread.sleep(80);
+			element = page.getFocusedElement();
+			focusProperty = element==null?null:element.getAttributeValue("name");
+		}						
+		assertEquals(XavaResources.getString("focus_in_unexpected_place"), expectedFocusProperty, focusProperty);		
 	}
 	
 	protected void execute(String action, String arguments) throws Exception {

@@ -419,7 +419,7 @@ public class DeliveryTest extends ModuleTestBase {
 		assertValue("type.number", "");
 		assertValue("invoice.year", "");
 		assertValue("invoice.number", "");
-		execute("Delivery.generateNumber");
+		execute("Delivery.generateNumber", "xava.keyProperty=xava.Delivery.number");
 		assertValue("number", "77");
 		execute("Delivery.setDefaultType");
 		assertValue("type.number", "1");
