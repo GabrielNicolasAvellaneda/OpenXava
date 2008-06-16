@@ -170,7 +170,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		execute("CRUD.new");
 		setValue("address.street", "DOCTOR PESSET");
 		assertValue("address.street", "DOCTOR PESSET");
-		execute("Customer.prefixStreet", "xava.keyProperty=xava.Customer.address.street");
+		execute("Customer.prefixStreet", "xava.keyProperty=xava.Customer.address.street");		
 		assertValue("address.street", "C/ DOCTOR PESSET");
 	}
 	

@@ -37,10 +37,13 @@ public class ButtonTag extends TagSupport implements IActionTag{
 			pageContext.getOut().print("xava.action.");
 			pageContext.getOut().print(getAction());
 			pageContext.getOut().println("' type='hidden'/>");			
-			pageContext.getOut().print("<input type='button' id='"); 
-			pageContext.getOut().print(getAction());
-			pageContext.getOut().println("'");
-			pageContext.getOut().print(" title='");
+			pageContext.getOut().print("<input type='button' "); 
+			if (Is.emptyString(getArgv())) { 
+				pageContext.getOut().print("id='"); 
+				pageContext.getOut().print(getAction());
+				pageContext.getOut().print("'");
+			}				
+			pageContext.getOut().print(" title='"); 
 			pageContext.getOut().print(metaAction.getKeystroke() + " - " + metaAction.getDescription(request));
 			pageContext.getOut().print("'");
 			pageContext.getOut().print(" class='");

@@ -13,10 +13,6 @@
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
-<% if (request.getParameter("parent") == null) { %>
-<%@ include file="script.jsp" %>
-<% } %>
-
 <%
 String browser = request.getHeader("user-agent"); 
 Users.setCurrent(request);
@@ -126,6 +122,18 @@ else if (!org.openxava.util.Is.emptyString(manager.getNextModule())) {
 else { // All else
 %>
 
+<% if (!isPortlet) { %>
+<!DOCTYPE HTML PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<%@page import="org.openxava.web.style.Liferay41Style"%>
+<html>
+<head>
+<title>OpenXava - <%=manager.getModuleDescription() %></title>
+<link href="<%=request.getContextPath()%>/xava/style/default.css" rel="stylesheet" type="text/css">
+<% } %>
+
+<% if (request.getParameter("parent") == null) { %>
+<%@ include file="script.jsp" %>
+<% } %>
 
 <script>
 function executeXavaAction(confirmMessage, takesLong, formu, action) {
@@ -208,12 +216,6 @@ document.onkeydown = processKey;
 
 
 <% if (!isPortlet) { %>
-<!DOCTYPE HTML PUBLIC "-//w3c//dtd html 4.0 transitional//en">
-<%@page import="org.openxava.web.style.Liferay41Style"%>
-<html>
-<head>
-<title>OpenXava - <%=manager.getModuleDescription() %></title>
-<link href="<%=request.getContextPath()%>/xava/style/default.css" rel="stylesheet" type="text/css">
 </head>
 
 <body bgcolor="#ffffff">
@@ -246,7 +248,9 @@ document.onkeydown = processKey;
 <INPUT type="hidden" name="changed_property"/>
 <INPUT type="hidden" name="focus_property"/>
 <INPUT type="hidden" name="focus_forward"/>
+<%-- tmp 
 <INPUT type="hidden" name="focus_property_id" value="<%=focusPropertyId%>"/>
+--%>
 
 <jsp:include page="languages.jsp"/>
 
@@ -298,18 +302,6 @@ document.onkeydown = processKey;
 </form>
 </div>
 
-<% if (!isPortlet) { %>
-</body></html>
-<% } %>
-
-<%
-}
-%>
-
-<%
-manager.commit(); // If hibernate, ejb3, etc is used to render some value here is commit
-%>
-
 <% 
 // Liferay 4.1 + IE7 requires at least 1 second of delay for focus
 boolean ie7 = browser != null && browser.indexOf("MSIE 7") >= 0;
@@ -322,4 +314,14 @@ function setFocusOnLoad() {
 }
 </script>
 
+<% if (!isPortlet) { %>
+</body></html>
+<% } %>
 
+<%
+}
+%>
+
+<%
+manager.commit(); // If hibernate, ejb3, etc is used to render some value here is commit
+%>

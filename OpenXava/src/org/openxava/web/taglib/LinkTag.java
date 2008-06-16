@@ -44,9 +44,12 @@ public class LinkTag extends TagSupport implements IActionTag {
 			pageContext.getOut().print(getAction());
 			pageContext.getOut().println("' type='hidden'/>\n");
 			
-			pageContext.getOut().print("<a id='");
-			pageContext.getOut().print(getAction());
-			pageContext.getOut().println("'");	
+			pageContext.getOut().print("<a ");
+			if (Is.emptyString(getArgv())) { 
+				pageContext.getOut().print("id='");
+				pageContext.getOut().print(getAction());
+				pageContext.getOut().println("'");
+			}
 			if (!Is.emptyString(getCssClass())) {
 				pageContext.getOut().print(" class='");
 				pageContext.getOut().print(getCssClass());
