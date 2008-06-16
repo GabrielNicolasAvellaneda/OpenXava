@@ -21,7 +21,8 @@ public class ActionTag extends TagSupport {
 	
 	public int doStartTag() throws JspException {
 		try {
-			if (Is.emptyString(getAction())) {  
+			if (Is.emptyString(getAction())) {
+				actionTag = null; 
 				return SKIP_BODY;
 			}
 
@@ -53,7 +54,7 @@ public class ActionTag extends TagSupport {
 	}
 
 	public void setAction(String string) {
-		action = string;
+		action = string;		
 	}
 
 	public String getArgv() {
