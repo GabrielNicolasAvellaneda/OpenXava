@@ -248,9 +248,6 @@ document.onkeydown = processKey;
 <INPUT type="hidden" name="changed_property"/>
 <INPUT type="hidden" name="focus_property"/>
 <INPUT type="hidden" name="focus_forward"/>
-<%-- tmp 
-<INPUT type="hidden" name="focus_property_id" value="<%=focusPropertyId%>"/>
---%>
 
 <jsp:include page="languages.jsp"/>
 

@@ -40,15 +40,24 @@ public class InvoiceFromCustomersTest extends ModuleTestBase {
 		// Verifying in initial module
 		assertAction("Invoice.listOfCustomer");
 		assertNoAction("CustomerInvoices.return");
-		assertValueInList(0, 0, "Javi");		
+		assertValueInList(0, 0, "Javi");
+		assertMessage("Action on-each-request on list");
+		assertMessage("Action on-each-request");
 				
 		// Go to another module
 		execute("Invoice.listOfCustomer", "row=0");
 		assertNoAction("Invoice.listOfCustomer");
 		assertAction("CustomerInvoices.return");				
 		assertInvoices();
+		// The next two lines because the last action was from the initial module
+		assertMessage("Action on-each-request on list");  
+		assertMessage("Action on-each-request");	
 		execute("Mode.detailAndFirst");
+		assertNoMessages();
 		assertNoErrors();
+		setModel("Invoice");
+		assertExists("year");
+		setModelToModuleSetting();
 		execute("Mode.list");
 		assertInvoices();
 				

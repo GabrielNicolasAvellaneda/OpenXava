@@ -260,7 +260,7 @@ public class ModuleManager {
 		executeAction(action, null, errors, messages, null, request);
 	}
 
-	private void executeAction(IAction action, MetaAction metaAction, Messages errors, Messages messages, String propertyValues, HttpServletRequest request) {
+	private void executeAction(IAction action, MetaAction metaAction, Messages errors, Messages messages, String propertyValues, HttpServletRequest request) {		
 		try {						
 			action.setErrors(errors);
 			action.setMessages(messages);
@@ -860,6 +860,7 @@ public class ModuleManager {
 	}
 	
 	public void executeBeforeEachRequestActions(HttpServletRequest request, Messages errors, Messages messages) {
+		if (!Is.emptyString(getNextModule())) return; // Another module is executing now 
 		Iterator it = getMetaActionsBeforeEachRequest().iterator();
 		while (it.hasNext()) {
 			MetaAction a = (MetaAction) it.next();
@@ -870,6 +871,7 @@ public class ModuleManager {
 	}
 	
 	private void executeInitAction(HttpServletRequest request, Messages errors, Messages messages) {
+		if (!Is.emptyString(getNextModule())) return; // Another module is executing now
 		Iterator it = getMetaActionsOnInit().iterator();
 		while (it.hasNext()) {
 			MetaAction a = (MetaAction) it.next();			
@@ -877,7 +879,8 @@ public class ModuleManager {
 		}		
 	}
 	
-	public void executeOnEachRequestActions(HttpServletRequest request, Messages errors, Messages messages) {		
+	public void executeOnEachRequestActions(HttpServletRequest request, Messages errors, Messages messages) {
+		if (!Is.emptyString(getNextModule())) return; // Another module is executing now
 		Iterator it = getMetaActionsOnEachRequest().iterator();
 		while (it.hasNext()) {
 			MetaAction a = (MetaAction) it.next();			
