@@ -1,6 +1,12 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: On module navigation with IChangeModuleAction on-each-request and before-each-request actions of initial module were executed in target module too.
+- Some HTML cleanup: All scripts inside HTML, no duplicate ids, focus_property_id hidden input removed.
+- Fix: Hiding a predefined collection action for detail (as DeleteAction) duplicate the previous action in UI.
+- Chinese translation of the reference guide and other documentation.
+- French translation of the reference guide and other documentation.
+- HttpUnit replaced by HtmlUnit for implementing ModuleTestBase.
 - Label editors show the description instead of id when the type is enum or valid-values.
 
 OpenXava 3.0.2 (2008-6-4)
