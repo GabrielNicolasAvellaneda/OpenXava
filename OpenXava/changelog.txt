@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- French translation of labels and messages by a native French speaker.
 - Fix: On module navigation with IChangeModuleAction on-each-request and before-each-request actions of initial module were executed in target module too.
 - Some HTML cleanup: All scripts inside HTML, no duplicate ids, focus_property_id hidden input removed.
 - Fix: Hiding a predefined collection action for detail (as DeleteAction) duplicate the previous action in UI.
