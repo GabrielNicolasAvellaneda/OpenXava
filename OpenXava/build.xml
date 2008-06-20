@@ -705,7 +705,7 @@
 	</target>
 
 	<target name="deploy" depends="prepareWar">	
-		<!-- Commented in roder to run Tutorial fine
+		<!-- Commented in order to run Tutorial fine
 		<delete file="${deploy.dir}/${name.war}.war" failonerror="false"/>
 		-->
 		<mkdir dir="${deploy.dir}/${name.war}${war.dir.suffix}"/>

@@ -724,9 +724,10 @@ public class AnnotatedClassParser {
 		}
 		else if (element.isAnnotationPresent(Column.class)) {
 			Column column = element.getAnnotation(Column.class);
-			if (column.length() == 255 && property.hasValidValues()) {
-				// For not assigning 255 (the default value of length) to
-				// enum types. If 0 the type for enums will be automatically calculated
+			if (column.length() == 255) {
+				// 255 is the default value of length, this means that the length
+				// is omitted, then we put 0 in order to OX calculate its default size.
+				// This is can be a problem when the developer put 255 explicitly. 
 				property.setSize(0);
 			}
 			else {

@@ -27,7 +27,7 @@ public class Office2 {
 	@Id 
 	// Column is also specified in WarehouseKey because a bug in Hibernate, see
 	// http://opensource.atlassian.com/projects/hibernate/browse/ANN-361		
-	@Column(length=3, name="ZONE")
+	@Column(length=3, name="ZONE")	
 	private int zoneNumber;
 	
 	@Required @Column(length=40)
