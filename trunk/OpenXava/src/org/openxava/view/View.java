@@ -140,24 +140,8 @@ public class View implements java.io.Serializable {
 			
 	private Collection createMetaMembers(boolean hiddenIncluded) throws XavaException {
 		Collection metaMembers = new ArrayList(getMetaView().getMetaMembers());
-		if (isRepresentsAggregate()) {
-			// This is for eluding recursive references				
-			String parentName = Strings.firstLower(getMetaModel().getMetaModelContainer().getName());
-			Collection filtered = new ArrayList();
-			Iterator it = metaMembers.iterator();
-			while (it.hasNext()) {
-				MetaMember m = (MetaMember) it.next();
-				if (m instanceof MetaReference) {						
-					MetaReference ref = (MetaReference) m;				
-					if (!parentName.equals(ref.getName())) {
-						filtered.add(m);						
-					}
-				}
-				else {
-					filtered.add(m);
-				}
-			}
-			metaMembers = filtered;
+		if (isRepresentsAggregate()) { 			
+			metaMembers = extractRecursiveReference(metaMembers);					
 		}		
 		if (!hiddenIncluded && hiddenMembers != null) {
 			removeHidden(metaMembers);
@@ -165,6 +149,31 @@ public class View implements java.io.Serializable {
 		}
 		removeOverlapedProperties(metaMembers);
 		return metaMembers;	
+	}
+
+	private Collection extractRecursiveReference(Collection metaMembers) {		
+		Set parentNames = new HashSet();
+		Class pojoClass = getMetaModel().getMetaModelContainer().getPOJOClass();
+		while (!java.lang.Object.class.equals(pojoClass)) {
+			parentNames.add(Strings.firstLower(Classes.getSimpleName(pojoClass)));
+			pojoClass = pojoClass.getSuperclass();
+		}		
+		Collection filtered = new ArrayList();
+		Iterator it = metaMembers.iterator();
+		while (it.hasNext()) {
+			MetaMember m = (MetaMember) it.next();
+			if (m instanceof MetaReference) {						
+				MetaReference ref = (MetaReference) m;				
+				if (!parentNames.contains(ref.getName())) {
+					filtered.add(m);						
+				}
+			}
+			else {
+				filtered.add(m);
+			}
+		}
+		metaMembers = filtered;
+		return metaMembers;
 	}
 	
 	private void removeFirstAndLastSeparator(Collection metaMembers) {

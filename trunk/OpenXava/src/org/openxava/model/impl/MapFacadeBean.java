@@ -286,7 +286,7 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		containerKeyValues = Maps.recursiveClone(containerKeyValues); 
 		values = Maps.recursiveClone(values); 		
 		try {		
-			beginTransaction(); 
+			beginTransaction();
 			Object result = createAggregate(modelName, containerKeyValues, counter, values);
 			commitTransaction();
 			return result;
@@ -715,8 +715,8 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			removeViewProperties(metaModel, values); 
 			if (validationErrors.contains()) {
 				throw new ValidationException(validationErrors);			
-			}
-			updateReferencedEntities(metaModel, values); 
+			}			
+			updateReferencedEntities(metaModel, values); 			
 			Map convertedValues = convertSubmapsInObject(metaModel, values, XavaPreferences.getInstance().isEJB2Persistence());
 			Object newObject = null;
 			if (metaModelContainer == null) {

@@ -12,7 +12,7 @@ import org.openxava.annotations.*;
 @Entity
 @DiscriminatorValue("JPR")
 @Tab(baseCondition="${mainLanguage} = 'JAVA'")
-@View(members="name, sex; mainLanguage, favouriteFramework")
+@View(members="name, sex; mainLanguage, favouriteFramework; experiences")
 public class JavaProgrammer extends Programmer {
 
 	@Column(length=20)

@@ -42,5 +42,25 @@ public class ProgrammerTest extends ModuleTestBase {
 		assertValueInList(1, 0, "JUANJO"); 				
 		assertValueInList(2, 0, "DANI");
 	}
+	
+	public void testInheritedEntityWithCollection() throws Exception { 
+		execute("Mode.detailAndFirst");
+		setModel("JavaProgrammer");  
+		assertValue("name", "JAVI");
+		assertCollectionRowCount("experiences", 0);
+		execute("Collection.new", "viewObject=xava_view_experiences");
+		assertExists("experiences.name");
+		assertExists("experiences.description");
+		assertNotExists("experiences.programmer.name"); 
+		setValue("experiences.name", "OpenXava");
+		setValue("experiences.description", "The model-driven framework");
+		execute("Collection.save", "viewObject=xava_view_experiences");
+		assertNoErrors();
+		assertCollectionRowCount("experiences", 1);
+		execute("Collection.edit", "row=0,viewObject=xava_view_experiences");
+		execute("Collection.remove", "viewObject=xava_view_experiences");
+		assertNoErrors();
+		assertCollectionRowCount("experiences", 0);
+	}
 		
 }

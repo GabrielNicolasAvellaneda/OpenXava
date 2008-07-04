@@ -337,10 +337,11 @@ public class MetaView extends MetaElement implements Cloneable {
 			Iterator it = metaModel.getMembersNames().iterator();			
 			while (it.hasNext()) {
 				String memberName = (String) it.next();
-				if (!metaModel.getMetaMember(memberName).isHidden()) {
+				MetaMember member = metaModel.getMetaMember(memberName);
+				if (!member.isHidden()) {
 					addMemberName(memberName);	
-					addMemberName(NAME_SEPARATOR);			
-				}
+					addMemberName(NAME_SEPARATOR);								
+				}				
 			}
 		}
 		membersNamesByDefaultCreated = true;

@@ -12,10 +12,7 @@ import org.openxava.component.MetaComponent;
 import org.openxava.model.MapFacade;
 import org.openxava.model.meta.MetaEntity;
 import org.openxava.model.meta.MetaProperty;
-import org.openxava.util.Is;
-import org.openxava.util.Maps;
-import org.openxava.util.Objects;
-import org.openxava.util.XSystem;
+import org.openxava.util.*;
 import org.openxava.web.WebEditors;
 
 /**
@@ -60,7 +57,7 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 					// For inheritance support
 					// A new find is not so slow, possibly because of persistence engine cache
 					Object entity = MapFacade.findEntity(getModelName(), values); 
-					String modelName = getSimpleName(entity.getClass());
+					String modelName = Classes.getSimpleName(entity.getClass());
 					if (!modelName.equals(getModelName())) {
 						getView().setModelName(modelName);				
 						values = MapFacade.getValues(modelName, entity, getMemberNames());
@@ -85,11 +82,6 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 		}						
 	}
 	
-	private String getSimpleName(Class theClass) throws Exception {
-		// In this way in order to be compiled with Java 1.4
-		return (String) Objects.execute((Object) theClass, "getSimpleName");		
-	}
-
 	/**
 	 * Executed after searching is done, in order to assign the searched
 	 * values to the view. <p>
@@ -97,7 +89,7 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 	 * @param values The values to assign to the view
 	 * @throws Exception If some is wrong.
 	 */
-	protected void setValuesToView(Map values) throws Exception {
+	protected void setValuesToView(Map values) throws Exception { // tmp move to utility class
 		getView().setValues(values);
 	}
 

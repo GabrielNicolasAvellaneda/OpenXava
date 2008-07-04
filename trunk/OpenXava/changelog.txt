@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Added elements to an inherited collection fails.
+- New utility class Classes for helping in class introspection.
+- Labels and messages translated to Chinese.
+- Fix: updateSchema ant target of MiEscuela demo project fails.
 - Fix: Incorrect default size for editors when using @Column without length.
 - French translation of labels and messages by a native French speaker.
 - Fix: On module navigation with IChangeModuleAction on-each-request and before-each-request actions of initial module were executed in target module too.
