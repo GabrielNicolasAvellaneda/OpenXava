@@ -529,12 +529,12 @@ public class ModuleTestBase extends TestCase {
 	
 	protected void assertExists(String name) throws Exception {		
 		String id = getPropertyPrefix() + name; 
-		assertTrue(XavaResources.getString("must_to_exists", name), hasElement(id));
+		assertTrue(XavaResources.getString("must_exist", name), hasElement(id));
 	}
 
 	protected void assertNotExists(String name) throws Exception {		
 		String id = getPropertyPrefix() + name; 		
-		assertTrue(XavaResources.getString("must_not_to_exists", name), !hasElement(id));
+		assertTrue(XavaResources.getString("must_not_exist", name), !hasElement(id));
 	}
 	
 	/**
@@ -1035,7 +1035,7 @@ public class ModuleTestBase extends TestCase {
 	
 	protected void checkRow(String id, String value) throws Exception {
 		HtmlInput input = getForm().getInputByValue(value);
-		assertTrue(XavaResources.getString("must_to_exists", id), 
+		assertTrue(XavaResources.getString("must_exist", id), 
 			input.getNameAttribute().equals(id)); 
 		input.setChecked(true);
 	}

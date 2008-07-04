@@ -45,17 +45,11 @@ class ModuleManagerJava5 {
 		for (int i=0; i<invalidValues.length; i++) {
 			errors.add("invalid_state", 
 					invalidValues[i].getPropertyName(), 
-					getSimpleClassName(invalidValues[i].getBeanClass()), 
+					Classes.getSimpleName(invalidValues[i].getBeanClass()), 
 					invalidValues[i].getMessage(), 
 					invalidValues[i].getValue());			
 		}
 		messages.removeAll();		
-	}
-
-	// We use this method, instead of getClass().getSimpleName()
-	// to be compiled with 1.4
-	static private String getSimpleClassName(Class beanClass) { 
-		return Strings.lastToken(beanClass.getName(), ".");		
 	}
 
 }

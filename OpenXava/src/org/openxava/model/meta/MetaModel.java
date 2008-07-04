@@ -81,7 +81,7 @@ abstract public class MetaModel extends MetaElement {
 	private String versionPropertyName; 
 	private boolean versionPropertyNameObtained = false;
 	private Collection metaReferencesKey;
-	private Collection metaReferencesKeyAndSearchKey; 
+	private Collection metaReferencesKeyAndSearchKey;
 		
 	
 	/**
@@ -468,7 +468,7 @@ abstract public class MetaModel extends MetaElement {
 	public MetaView getMetaView(String name) throws ElementNotFoundException, XavaException {
 		MetaView r = (MetaView) getMapMetaViews().get(name == null?"":name);		
 		if (r == null) {			
-			if (Is.emptyString(name)) return getMetaViewByDefault(); 
+			if (Is.emptyString(name)) return getMetaViewByDefault();						
 			throw new ElementNotFoundException("view_not_found_in_model", name, getName());
 		}
 		return r;		

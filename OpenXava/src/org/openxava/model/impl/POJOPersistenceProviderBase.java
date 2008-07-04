@@ -203,8 +203,8 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		}
 	}
 
-	public Object createAggregate(MetaModel metaModel, Map values, MetaModel metaModelContainer, Object containerModel, int number) throws CreateException, ValidationException, RemoteException, XavaException {		
-		String container = Strings.firstLower(metaModelContainer.getName());
+	public Object createAggregate(MetaModel metaModel, Map values, MetaModel metaModelContainer, Object containerModel, int number) throws CreateException, ValidationException, RemoteException, XavaException {
+		String container = getContainerReference(metaModel, metaModelContainer); 
 		values.put(container, containerModel);
 		// The next two lines use Hibernate. At the momment for Hibernate and EJB3 
 		// In order to support a EJB3 no hibernate implementations we will need to change them
@@ -213,6 +213,19 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 		return create(metaModel, values);
 	}
 	
+	private String getContainerReference(MetaModel metaModel, MetaModel metaModelContainer) {		
+		Class containerClass = metaModelContainer.getPOJOClass();
+		String containerName = "";
+		while (!java.lang.Object.class.equals(containerClass)) {
+			containerName = Classes.getSimpleName(containerClass);
+			if (Classes.hasMethod(metaModel.getPOJOClass(), "get" + containerName)) {
+				return Strings.firstLower(containerName);
+			}			
+			containerClass = containerClass.getSuperclass(); 
+		}
+		throw new XavaException("property_not_found", Strings.firstLower(containerName), metaModel.getPOJOClassName()); 
+	}		
+
 	public Object findByAnyProperty(MetaModel metaModel, Map keyValues) throws ObjectNotFoundException, FinderException, XavaException {		
 		return findUsingQuery(metaModel, Maps.treeToPlain(keyValues), false);
 	}
