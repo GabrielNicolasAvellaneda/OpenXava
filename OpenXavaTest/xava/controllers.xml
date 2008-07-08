@@ -478,12 +478,18 @@
 	</controller>
 	
 	<controller name="FamilyProductsReport">
-		<action name="generate" 
+		<action name="generatePdf" 
 			class="org.openxava.test.actions.FamilyProductsReportAction"
 			takes-long="true">
 			<use-object name="xava_view"/>			
-		</action>			
-	</controller>	
+		</action>
+		<action name="generateExcel" 
+			class="org.openxava.test.actions.FamilyProductsReportAction"
+			takes-long="true">
+			<set property="format" value="excel"/>
+			<use-object name="xava_view"/>			
+		</action>								
+	</controller>		
 
 	<controller name="StateHibernate"> 
 		<action name="search" image="images/search.gif" mode="detail" 
