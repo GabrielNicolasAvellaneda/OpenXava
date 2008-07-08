@@ -9,14 +9,17 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.export.*;
 
 import org.apache.commons.logging.*;
+import org.openxava.actions.*;
 import org.openxava.util.*;
 
 /**
  * To generate custom Jasper Reports from that extends <code>JasperReportBaseAction</code>.
  * 
  * @author Javier Paniza
+ * @author Daniel García Salas
  */
 
 public class GenerateCustomReportServlet extends HttpServlet { 	
@@ -25,6 +28,7 @@ public class GenerateCustomReportServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String design = (String) request.getSession().getAttribute("xava.report.design");
+		String format = (String) request.getSession().getAttribute("xava.report.format");
 		try {
 			ServletContext application = request.getSession().getServletContext();
 			System.setProperty("jasper.reports.compile.class.path",					 
@@ -54,13 +58,29 @@ public class GenerateCustomReportServlet extends HttpServlet {
 			else {
 				jprint = JasperFillManager.fillReport(report, parameters, ds);
 			}
-			response.setContentType("application/pdf");				
-			JasperExportManager.exportReportToPdfStream(jprint, response.getOutputStream());
+
+			if (format == null) {
+				format = JasperReportBaseAction.PDF;
+			}
+				
+			if (format.equals(JasperReportBaseAction.EXCEL)) {
+				response.setContentType("application/vnd.ms-excel");
+				JRXlsExporter exporter = new JRXlsExporter();
+				exporter.setParameter(JRExporterParameter.JASPER_PRINT, jprint);
+				exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, response.getOutputStream());
+				exporter.exportReport();
+			} 
+			else {
+				response.setContentType("application/pdf");
+				JasperExportManager.exportReportToPdfStream(jprint, response.getOutputStream());
+			}			
+			
 			request.getSession().removeAttribute("xava.report.parameters");
 			request.getSession().removeAttribute("xava.report.design");
 			request.getSession().removeAttribute("xava.report.datasource");
 			request.getSession().removeAttribute("xava.report.modelName");
-		}
+			request.getSession().removeAttribute("xava.report.format");
+		} 
 		catch (MalformedURLException ex) {
 			if ("design_not_found".equals(ex.getMessage())) {
 				throw new ServletException(XavaResources.getString("jasper_report_design_not_found", design));
@@ -75,5 +95,5 @@ public class GenerateCustomReportServlet extends HttpServlet {
 			throw new ServletException(XavaResources.getString("report_error"));
 		}		
 	}
-					
+			
 }
