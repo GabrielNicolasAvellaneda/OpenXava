@@ -426,6 +426,17 @@
 		</action>
 	</controller>
 	
+	<controller name="WarehouseSpecialNew">
+		<extends controller="Typical"/>
+		<action  name="new" 
+			class="org.openxava.test.actions.NewWarehouseAction"
+			image="images/new.gif"
+			keystroke="Control N">
+			<set property="restoreModel" value="true"/>
+			<use-object name="xava_view"/>			
+		</action>			
+	</controller>
+	
 	<controller name="MyReference">
 	
 		<action name="search" hidden="true"

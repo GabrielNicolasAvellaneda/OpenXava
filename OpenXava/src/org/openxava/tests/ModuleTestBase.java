@@ -468,7 +468,7 @@ public class ModuleTestBase extends TestCase {
 		}		
 		String focusProperty = element==null?null:element.getAttributeValue("name");
 		String expectedFocusProperty = getPropertyPrefix() + name;
-		for (int i=0; !expectedFocusProperty.equals(focusProperty) && i<20; i++) {
+		for (int i=0; !expectedFocusProperty.equals(focusProperty) && i<40; i++) {
 			Thread.sleep(80);
 			element = page.getFocusedElement();
 			focusProperty = element==null?null:element.getAttributeValue("name");

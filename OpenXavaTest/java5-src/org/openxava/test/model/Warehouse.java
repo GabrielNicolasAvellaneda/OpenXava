@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import org.openxava.annotations.*;
 import org.openxava.jpa.*;
+import org.openxava.test.actions.*;
 import org.openxava.tracking.*;
 
 /**
@@ -18,13 +19,17 @@ import org.openxava.tracking.*;
 	filter=org.openxava.test.filters.LimitZoneFilter.class,
 	baseCondition="${zoneNumber} <= ?"
 )
-@View (name="KeyInGroup", members="key [zoneNumber, number]; name") 
+@Views({
+	@View (name="KeyInGroup", members="key [zoneNumber, number]; name"),
+	@View (name="WithOnChangeZone")
+})
 public class Warehouse {
 	
 	@Id 
 	// Column is also specified in WarehouseKey because a bug in Hibernate, see
 	// http://opensource.atlassian.com/projects/hibernate/browse/ANN-361	
-	@Column(length=3, name="ZONE")	
+	@Column(length=3, name="ZONE") 
+	@OnChange(forViews="WithOnChangeZone", value=OnChangeVoidAction.class)	
 	private int zoneNumber;	
 	
 	@Id @Column(length=3)

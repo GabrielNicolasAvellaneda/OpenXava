@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: A on-change action triggered from the execution of a normal action closes the transaction.
 - New property 'format' for JasperReportBaseAction. It can be 'pdf' or 'excel'.
 - Fix: Added elements to an inherited collection fails.
 - New utility class Classes for helping in class introspection.
