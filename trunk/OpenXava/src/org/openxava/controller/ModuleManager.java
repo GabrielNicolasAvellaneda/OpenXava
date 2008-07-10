@@ -30,7 +30,7 @@ public class ModuleManager {
 	static {		
 		MetaControllers.setContext(MetaControllers.WEB);		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
-		log.info("OpenXava 3.0.3 beta (2008-6-x)");
+		log.info("OpenXava 3.0.3 beta (2008-7-x)");
 	}
 	
 	private static int nextOid = 0; 
@@ -58,11 +58,11 @@ public class ModuleManager {
 	private String viewName = null;
 	private String modeName;	
 	private String nextModule;
-	private String defaultView = null; 
-	
+	private String defaultView = null; 	
 	private boolean formUpload = false;
 	private String lastPageId;
 	private String previousMode;
+	private boolean executingAction = false; 
 	 
 
 	public ModuleManager() {
@@ -245,7 +245,8 @@ public class ModuleManager {
 		executeAction(metaAction, errors, message, null, request);
 	}
 	
-	private void executeAction(MetaAction metaAction, Messages errors, Messages message, String propertyValues, HttpServletRequest request) {		
+	private void executeAction(MetaAction metaAction, Messages errors, Messages message, String propertyValues, HttpServletRequest request) {
+		executingAction = true; 
 		try {
 			IAction action = metaAction.createAction();
 			executeAction(action, metaAction, errors, message, propertyValues, request);
@@ -253,15 +254,18 @@ public class ModuleManager {
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
 			errors.add("no_execute_action", metaAction.getId());			
-		}							
+		}						
+		finally {
+			executingAction = false; 
+		}
 	}
 	
 	public void executeAction(IAction action, Messages errors, Messages messages, HttpServletRequest request) {
 		executeAction(action, null, errors, messages, null, request);
 	}
 
-	private void executeAction(IAction action, MetaAction metaAction, Messages errors, Messages messages, String propertyValues, HttpServletRequest request) {		
-		try {						
+	private void executeAction(IAction action, MetaAction metaAction, Messages errors, Messages messages, String propertyValues, HttpServletRequest request) {
+		try {			
 			action.setErrors(errors);
 			action.setMessages(messages);
 			action.setEnvironment(getEnvironment());
@@ -436,8 +440,10 @@ public class ModuleManager {
 					}
 					request.setAttribute("xava.sendParametersToTab", "false");
 				}
-			}						
-			doCommit(); // after executing action
+			}					
+			if (!(metaAction == null && executingAction)) { // For avoiding commint on OnChange actions triggered from a regular action execution
+				doCommit(); // after executing action
+			}
 		}
 		catch (Exception ex) {
 			// Maybe a factory for creating a ExceptionManager would be finer,
@@ -446,7 +452,6 @@ public class ModuleManager {
 			if (XSystem.isJava5OrBetter()) ModuleManagerJava5.manageExceptionJava5(this, metaAction, errors, messages, ex);
 			else manageExceptionJava14(metaAction, errors, messages, ex);
 		}
-				
 	}
 	
 	private void manageExceptionJava14(MetaAction metaAction, Messages errors, Messages messages, Exception ex) {
