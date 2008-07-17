@@ -61,7 +61,8 @@ import org.openxava.test.validators.*;
 		"formula;" +
 		"unitPrice, unitPriceInPesetas;"
 	),
-	@View( name="SimpleWithFamily", members = "number, description, unitPrice; family")
+	@View(name="SimpleWithFamily", members="number, description, unitPrice; family"),
+	@View(name="OnlySoftware")
 })
 @Tab(properties="number, description, family.description, subfamily.description")
 
@@ -92,11 +93,17 @@ public class Product2 {
 	private Family2 family;	
 	
 	@ManyToOne(optional=false, fetch=FetchType.LAZY) @JoinColumn(name="SUBFAMILY") @NoCreate
-	@DescriptionsList(
-		descriptionProperties="description", // In this case descriptionProperties can be omited
-		depends="family",
-		condition="${family.number} = ?"
-	)
+
+	@DescriptionsLists({
+		@DescriptionsList(
+			descriptionProperties="description", // In this case descriptionProperties can be omited
+			depends="family",
+			condition="${family.number} = ?"
+		),
+		@DescriptionsList( forViews="OnlySoftware", 		
+			condition="${family.description} = 'SOFTWARE'"
+		)
+	})
 	private Subfamily2 subfamily;
 
 	@ManyToOne(fetch=FetchType.LAZY) 
