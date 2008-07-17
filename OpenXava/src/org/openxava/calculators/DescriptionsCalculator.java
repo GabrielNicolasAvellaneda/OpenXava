@@ -43,6 +43,7 @@ public class DescriptionsCalculator implements ICalculator {
 	private boolean useConvertersInKeys = false;
 	private Collection keyPropertiesCollection;
 	private MetaTab metaTab;
+	private int hiddenPropertiesCount; 
 	
 	
 	
@@ -107,7 +108,8 @@ public class DescriptionsCalculator implements ICalculator {
 				el.setKey(table.getValueAt(i, iKey++));
 			}
 			StringBuffer value = new StringBuffer();
-			for (int j=iKey; j<table.getColumnCount(); j++) {
+			int columnCount = table.getColumnCount() - hiddenPropertiesCount; 
+			for (int j=iKey; j<columnCount; j++) {
 				value.append(table.getValueAt(i, j));
 				if (j < table.getColumnCount() - 1) value.append(' ');
 			}
@@ -204,11 +206,42 @@ public class DescriptionsCalculator implements ICalculator {
 		if (metaTab == null) {
 			metaTab = new MetaTab();
 			metaTab.setMetaModel(getMetaModel());
-			metaTab.setPropertiesNames(getKeyProperties() + ", " +  getDescriptionProperties());				
+			StringBuffer extraProperties = new StringBuffer();
+			hiddenPropertiesCount = 0;
+			for (Iterator it = createConditionAndOrderProperties().iterator(); it.hasNext(); ) {
+				extraProperties.append(", ");
+				extraProperties.append(it.next());
+				hiddenPropertiesCount++;
+			}
+			metaTab.setPropertiesNames(getKeyProperties() + ", " +  getDescriptionProperties() + extraProperties); 
 		}
 		return metaTab;
 	}
 	
+	private Collection createConditionAndOrderProperties() { 
+		Set result = new HashSet();
+		if (hasCondition()) {
+			extractPropertiesFromSentences(result, getCondition());
+		}
+		if (hasOrder()) {
+			extractPropertiesFromSentences(result, getOrder());
+		}		
+		return result;
+	}
+	
+	private void extractPropertiesFromSentences(Set result, String sentence) { 		
+		int i = sentence.indexOf("${");
+		int f = 0;
+		while (i >= 0) {
+			f = sentence.indexOf("}", i + 2);
+			if (f < 0) break;
+			String property = sentence.substring(i + 2, f);
+			result.add(property);
+			i = sentence.indexOf("${", f);
+		}
+	}
+	
+
 	private TableModel executeQuery() throws Exception {
 		IEntityTab tab = EntityTabFactory.createAllData(getMetaTab());		
 		String condition = "";
