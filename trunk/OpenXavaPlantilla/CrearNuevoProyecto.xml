@@ -29,6 +29,9 @@
 			tofile="../${proyecto}/i18n/Mensajes${proyecto}_es.properties" />
 		<delete file="../${proyecto}/src/src.txt"/>
 		<delete dir="../${proyecto}/bin" failonerror="false"/>
+		<ant antfile="../OpenXava/build.xml" target="updateOX">
+			<property name="project" value="${proyecto}"/>
+		</ant>	
 	</target>
 					
 </project>
