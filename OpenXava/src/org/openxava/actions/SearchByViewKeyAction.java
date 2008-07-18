@@ -44,11 +44,11 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 					values = MapFacade.getValuesByAnyProperty(getModelName(), getValuesFromView(), getMemberNames());					
 				}
 				catch (ObjectNotFoundException ex) {
-					// This is for the case of key with 0 as valid value					
+					// This is for the case of key with 0 as valid value
 					values = MapFacade.getValues(getModelName(), keys, getMemberNames());
 				}
 			}
-			else {				
+			else {
 				values = MapFacade.getValues(getModelName(), keys, getMemberNames());
 			}
 			
@@ -89,7 +89,7 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 	 * @param values The values to assign to the view
 	 * @throws Exception If some is wrong.
 	 */
-	protected void setValuesToView(Map values) throws Exception { // tmp move to utility class
+	protected void setValuesToView(Map values) throws Exception { 
 		getView().setValues(values);
 	}
 
