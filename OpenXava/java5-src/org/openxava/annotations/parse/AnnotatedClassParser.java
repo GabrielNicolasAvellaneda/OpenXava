@@ -41,47 +41,78 @@ public class AnnotatedClassParser {
 	
 	private static Collection<String> managedClassNames; 
 	private static Collection<String> managedClassPackages;
-	private static Map<Class, Collection<Class>> entityFirstLevelSubclasses;  
+	private static Map<Class, Collection<Class>> entityFirstLevelSubclasses;
+	private static Map<String, MetaComponent> parsingComponents; 
 		
 	public MetaComponent parse(String name) throws Exception {
 		MetaComponent component = new MetaComponent();
 		component.setName(name);
-		MetaEntity entity = new MetaEntity();
-		String className = getClassNameFor(name);
-		entity.setPOJOClassName(className);		
-		entity.setName(name);
-		entity.setAnnotatedEJB3(true);
-		component.setMetaEntity(entity);
-		component.setPackageName(Strings.noLastTokenWithoutLastDelim(className, "."));		
-		
-		Class pojoClass = entity.getPOJOClass();
-		if (!pojoClass.isAnnotationPresent(Entity.class)) {
-			component.setTransient(true);
+		putParsingComponent(component);
+		try {			
+			MetaEntity entity = new MetaEntity();
+			String className = getClassNameFor(name);
+			entity.setPOJOClassName(className);		
+			entity.setName(name);
+			entity.setAnnotatedEJB3(true);
+			component.setMetaEntity(entity);
+			component.setPackageName(Strings.noLastTokenWithoutLastDelim(className, "."));		
+			
+			Class pojoClass = entity.getPOJOClass();
+			if (!pojoClass.isAnnotationPresent(Entity.class)) {
+				component.setTransient(true);
+			}
+			
+			if (pojoClass.isAnnotationPresent(IdClass.class)) {
+				IdClass idClass = (IdClass) pojoClass.getAnnotation(IdClass.class);
+				entity.setPOJOKeyClass(idClass.value());
+			}
+			
+			
+			EntityMapping mapping = new EntityMapping();
+			mapping.setTable(getTable(name, pojoClass));
+			component.setEntityMapping(mapping);
+			
+			// View
+			parseViews(component, pojoClass);
+	
+			// Members				
+			parseMembers(entity, pojoClass, mapping, null);
+													
+			// Tab
+			parseTabs(component, pojoClass);
+			
+			// Other model level annotations
+			processAnnotations(entity, pojoClass);
+			
+			return component;
 		}
-		
-		if (pojoClass.isAnnotationPresent(IdClass.class)) {
-			IdClass idClass = (IdClass) pojoClass.getAnnotation(IdClass.class);
-			entity.setPOJOKeyClass(idClass.value());
+		finally {
+			removeParsingComponent(component);
 		}
-		
-		
-		EntityMapping mapping = new EntityMapping();
-		mapping.setTable(getTable(name, pojoClass));
-		component.setEntityMapping(mapping);
-		
-		// View
-		parseViews(component, pojoClass);
+	}
 
-		// Members				
-		parseMembers(entity, pojoClass, mapping, null);
-												
-		// Tab
-		parseTabs(component, pojoClass);
-		
-		// Other model level annotations
-		processAnnotations(entity, pojoClass);
-		
-		return component;
+
+	private void removeParsingComponent(MetaComponent component) { 
+		if (parsingComponents == null) return; // Difficult
+		parsingComponents.remove(component.getName());
+		if (parsingComponents.isEmpty()) parsingComponents = null; 		
+	}
+
+
+	private void putParsingComponent(MetaComponent component) { 
+		if (parsingComponents == null) parsingComponents = new HashMap<String, MetaComponent>();
+		parsingComponents.put(component.getName(), component);
+	}
+
+
+	// precondition: isParsingComponent(name)
+	private MetaComponent getParsingComponent(String name) {
+		return parsingComponents.get(name);
+	}
+
+
+	private boolean isParsingComponent(String name) { 		
+		return parsingComponents != null && parsingComponents.containsKey(name);
 	}
 
 
@@ -254,9 +285,12 @@ public class AnnotatedClassParser {
 		// Self reference
 		if (ref.getReferencedModelName().equals(model.getName())) 
 			metaModelReferenced = model; 
-		// Cyclical reference
+		// Cyclical references
 		else if (ref.getReferencedModelName().equals(ref.getMetaModel().getContainerModelName())) 
 			metaModelReferenced = ref.getMetaModel().getMetaModelContainer();
+		else if (isParsingComponent(ref.getReferencedModelName())) { 
+			metaModelReferenced = getParsingComponent(ref.getReferencedModelName()).getMetaEntity();
+		}
 		// Other cases
 		else metaModelReferenced = ref.getMetaModelReferenced();
 		if (mapping != null && !(metaModelReferenced instanceof MetaAggregateForReference)) { 

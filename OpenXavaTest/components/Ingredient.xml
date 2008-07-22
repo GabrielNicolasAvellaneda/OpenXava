@@ -11,6 +11,7 @@
 		<property name="name" type="String"
 			size="40" required="true"/>			  			
 		<reference name="partOf" model="Ingredient"/>
+		<reference name="favouriteFormula" model="Formula"/>		
 	</entity>
 	
 	<view>
@@ -26,7 +27,10 @@
 			property="name" column="NAME"/>
 		<reference-mapping reference="partOf">
 			<reference-mapping-detail column="PARTOF" referenced-model-property="oid"/>
-		</reference-mapping>	
+		</reference-mapping>
+		<reference-mapping reference="favouriteFormula">
+			<reference-mapping-detail column="FAVOURITEFORMULA" referenced-model-property="oid"/>
+		</reference-mapping>				
 	</entity-mapping> 
 						
 </component>
