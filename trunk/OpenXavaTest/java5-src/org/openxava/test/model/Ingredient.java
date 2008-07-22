@@ -28,6 +28,17 @@ public class Ingredient {
 	@JoinColumn(name="PARTOF")
 	@DescriptionsList
 	private Ingredient partOf;
+	
+	@ManyToOne(fetch=FetchType.LAZY) @DescriptionsList
+	private Formula favouriteFormula; // For testing cyclic references
+
+	public Formula getFavouriteFormula() {
+		return favouriteFormula;
+	}
+
+	public void setFavouriteFormula(Formula favouriteFormula) {
+		this.favouriteFormula = favouriteFormula;
+	}
 
 	public String getOid() {
 		return oid;

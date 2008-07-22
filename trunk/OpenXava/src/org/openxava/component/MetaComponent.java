@@ -31,7 +31,7 @@ public class MetaComponent implements Serializable {
 	private static Map components = new HashMap();
 	private static Properties packages;
 	private static boolean allComponentsLoaded = false;
-	private static Set allPackageNames;
+	private static Set allPackageNames;	
 	
 	private String packageNameWithSlashWithoutModel;
 	private String name;
@@ -51,7 +51,7 @@ public class MetaComponent implements Serializable {
 	 * @exception ElementNotFoundException  If component does not exist.
 	 * @exception XavaException  Any other problem. 
 	 */
-	public static MetaComponent get(String name) throws ElementNotFoundException, XavaException {		
+	public static MetaComponent get(String name) throws ElementNotFoundException, XavaException {
 		MetaComponent r = (MetaComponent) components.get(name);		
 		if (r == null) {		
 			if (name.indexOf('.') >= 0) { // A component never is qualified
@@ -62,7 +62,7 @@ public class MetaComponent implements Serializable {
 				throw new ElementNotFoundException("component_not_found", name);
 			}
 			r.validate();						
-			Object previous = components.put(name, r);			
+			Object previous = components.put(name, r);
 			if (previous != null) {
 				throw new XavaException("duplicate_component", name);
 			}
