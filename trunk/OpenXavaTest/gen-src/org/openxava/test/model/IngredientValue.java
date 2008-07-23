@@ -18,6 +18,8 @@ public class IngredientValue
    private boolean oidHasBeenSet = false;
    private java.lang.String name;
    private boolean nameHasBeenSet = false;
+   private java.lang.String favouriteFormula_oid;
+   private boolean favouriteFormula_oidHasBeenSet = false;
    private java.lang.String partOf_oid;
    private boolean partOf_oidHasBeenSet = false;
 
@@ -32,6 +34,8 @@ public class IngredientValue
 	  oidHasBeenSet = true;
 	  this.name = otherValue.name;
 	  nameHasBeenSet = true;
+	  this.favouriteFormula_oid = otherValue.favouriteFormula_oid;
+	  favouriteFormula_oidHasBeenSet = true;
 	  this.partOf_oid = otherValue.partOf_oid;
 	  partOf_oidHasBeenSet = true;
    }
@@ -64,6 +68,20 @@ public class IngredientValue
    public boolean nameHasBeenSet(){
 	  return nameHasBeenSet;
    }
+   public java.lang.String getFavouriteFormula_oid()
+   {
+	  return this.favouriteFormula_oid;
+   }
+
+   public void setFavouriteFormula_oid( java.lang.String favouriteFormula_oid )
+   {
+	  this.favouriteFormula_oid = favouriteFormula_oid;
+	  favouriteFormula_oidHasBeenSet = true;
+   }
+
+   public boolean favouriteFormula_oidHasBeenSet(){
+	  return favouriteFormula_oidHasBeenSet;
+   }
    public java.lang.String getPartOf_oid()
    {
 	  return this.partOf_oid;
@@ -83,7 +101,7 @@ public class IngredientValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("oid=" + getOid() + " " + "name=" + getName() + " " + "partOf_oid=" + getPartOf_oid());
+	  str.append("oid=" + getOid() + " " + "name=" + getName() + " " + "favouriteFormula_oid=" + getFavouriteFormula_oid() + " " + "partOf_oid=" + getPartOf_oid());
 	  str.append('}');
 
 	  return(str.toString());
@@ -144,6 +162,14 @@ public class IngredientValue
 		 {
 			lEquals = lEquals && this.name.equals( that.name );
 		 }
+		 if( this.favouriteFormula_oid == null )
+		 {
+			lEquals = lEquals && ( that.favouriteFormula_oid == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.favouriteFormula_oid.equals( that.favouriteFormula_oid );
+		 }
 		 if( this.partOf_oid == null )
 		 {
 			lEquals = lEquals && ( that.partOf_oid == null );
@@ -166,6 +192,8 @@ public class IngredientValue
       result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
 
       result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);
+
+      result = 37*result + ((this.favouriteFormula_oid != null) ? this.favouriteFormula_oid.hashCode() : 0);
 
       result = 37*result + ((this.partOf_oid != null) ? this.partOf_oid.hashCode() : 0);
 

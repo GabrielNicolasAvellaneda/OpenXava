@@ -19,6 +19,24 @@ public interface IngredientRemote
    public void setName( java.lang.String newName )
       throws java.rmi.RemoteException;
 
+   public org.openxava.test.model.IFormula getFavouriteFormula(  )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.FormulaRemote getFavouriteFormulaRemote(  )
+      throws java.rmi.RemoteException;
+
+   public void setFavouriteFormula( org.openxava.test.model.IFormula newFavouriteFormula )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.FormulaKey getFavouriteFormulaKey(  )
+      throws java.rmi.RemoteException;
+
+   public void setFavouriteFormulaKey( org.openxava.test.model.FormulaKey key )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getFavouriteFormula_oid(  )
+      throws java.rmi.RemoteException;
+
    public org.openxava.test.model.IIngredient getPartOf(  )
       throws java.rmi.RemoteException;
 

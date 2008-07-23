@@ -20,6 +20,7 @@ public abstract class IngredientCMP
 
          dataHolder.setOid( getOid() );
          dataHolder.set_Name( get_Name() );
+         dataHolder.set_FavouriteFormula_oid( get_FavouriteFormula_oid() );
          dataHolder.set_PartOf_oid( get_PartOf_oid() );
 
       }
@@ -36,6 +37,7 @@ public abstract class IngredientCMP
       try
       {
          set_Name( dataHolder.get_Name() );
+         set_FavouriteFormula_oid( dataHolder.get_FavouriteFormula_oid() );
          set_PartOf_oid( dataHolder.get_PartOf_oid() );
 
       }
@@ -92,6 +94,7 @@ public abstract class IngredientCMP
          {
             IngredientValue.setOid( getOid() );
             IngredientValue.setName( getName() );
+            IngredientValue.setFavouriteFormula_oid( getFavouriteFormula_oid() );
             IngredientValue.setPartOf_oid( getPartOf_oid() );
 
          }
@@ -109,6 +112,7 @@ public abstract class IngredientCMP
 	  try
 	  {
 		 setName( valueHolder.getName() );
+		 setFavouriteFormula_oid( valueHolder.getFavouriteFormula_oid() );
 		 setPartOf_oid( valueHolder.getPartOf_oid() );
 
 	  }
@@ -127,6 +131,10 @@ public abstract class IngredientCMP
    public abstract java.lang.String get_Name() ;
 
    public abstract void set_Name( java.lang.String _Name ) ;
+
+   public abstract java.lang.String get_FavouriteFormula_oid() ;
+
+   public abstract void set_FavouriteFormula_oid( java.lang.String _FavouriteFormula_oid ) ;
 
    public abstract java.lang.String get_PartOf_oid() ;
 

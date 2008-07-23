@@ -181,12 +181,20 @@
 				
 	</view>
 	
-	<view name ="SimpleWithFamily">
+	<view name="SimpleWithFamily">
 			
 		<members>
 			number, description, unitPrice; 
 			family	
 		</members>
+		
+	</view>
+	
+	<view name="OnlySoftware">
+	
+		<reference-view reference="subfamily">
+			<descriptions-list condition="${family.description} = 'SOFTWARE'"/>
+		</reference-view>
 		
 	</view>
 				

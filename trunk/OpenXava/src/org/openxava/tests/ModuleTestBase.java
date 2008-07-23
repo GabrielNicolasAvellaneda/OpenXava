@@ -461,14 +461,14 @@ public class ModuleTestBase extends TestCase {
 	}
 										 	
 	protected void assertFocusOn(String name) throws Exception {
-		HtmlElement element = null;		
-		for (int i=0; element == null && i<20; i++) {
+		HtmlElement element = null;
+		for (int i=0; element == null && i<40; i++) {
 			Thread.sleep(80);
 			element = page.getFocusedElement();			
 		}		
 		String focusProperty = element==null?null:element.getAttributeValue("name");
 		String expectedFocusProperty = getPropertyPrefix() + name;
-		for (int i=0; !expectedFocusProperty.equals(focusProperty) && i<40; i++) {
+		for (int i=0; !expectedFocusProperty.equals(focusProperty) && i<60; i++) {
 			Thread.sleep(80);
 			element = page.getFocusedElement();
 			focusProperty = element==null?null:element.getAttributeValue("name");
@@ -1403,11 +1403,11 @@ public class ModuleTestBase extends TestCase {
 	
 	private void resetForm() throws Exception {	
 		if (getFormIndex() >= page.getForms().size()) return; 
-		setForm(page.getForms().get(getFormIndex()));
+		setForm((HtmlForm) page.getForms().get(getFormIndex()));
 	}
 	
 	private void resetLoginForm() throws Exception {
-		setForm(page.getForms().get(getLoginFormIndex()));		
+		setForm((HtmlForm) page.getForms().get(getLoginFormIndex()));		
 	}
 		
 	private void setForm(HtmlForm form) {

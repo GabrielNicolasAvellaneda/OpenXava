@@ -21,6 +21,9 @@ public interface IngredientHome
    public org.openxava.test.model.IngredientRemote create(org.openxava.test.model.IngredientValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
+   public java.util.Collection findByFavouriteFormula(java.lang.String oid)
+      throws javax.ejb.FinderException,java.rmi.RemoteException;
+
    public java.util.Collection findByPartOf(java.lang.String oid)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
