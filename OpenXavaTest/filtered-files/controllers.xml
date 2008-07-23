@@ -307,7 +307,7 @@
 	<controller name="CustomerNewOnInitInherited">
 		<extends controller="CustomerNewOnInit"/>
 	</controller>
-							
+	
 	<controller name="Invoice">
 		<extends controller="Typical"/>
 		<action name="print" mode="detail"
@@ -318,11 +318,11 @@
 		<action name="searchFromDelivery" hidden="true"
 			class="org.openxava.test.actions.SearchInvoiceFromDeliveryAction">									
 			<use-object name="xava_view"/>
-		</action>		
+		</action>		 
 		<action name="listOfCustomer" hidden="true"
 			class="org.openxava.test.actions.ListCustomerInvoicesAction">
 			<use-object name="xava_tab"/>
-		</action>				
+		</action>		
 		<action name="editDetail" hidden="true" 
 			image="images/edit.gif"
 			class="org.openxava.test.actions.EditInvoiceDetailAction">	
@@ -426,6 +426,17 @@
 		</action>
 	</controller>
 	
+	<controller name="WarehouseSpecialNew">
+		<extends controller="Typical"/>
+		<action  name="new" 
+			class="org.openxava.test.actions.NewWarehouseAction"
+			image="images/new.gif"
+			keystroke="Control N">
+			<set property="restoreModel" value="true"/>
+			<use-object name="xava_view"/>			
+		</action>			
+	</controller>
+	
 	<controller name="MyReference">
 	
 		<action name="search" hidden="true"
@@ -478,12 +489,18 @@
 	</controller>
 	
 	<controller name="FamilyProductsReport">
-		<action name="generate" 
+		<action name="generatePdf" 
 			class="org.openxava.test.actions.FamilyProductsReportAction"
 			takes-long="true">
 			<use-object name="xava_view"/>			
-		</action>			
-	</controller>	
+		</action>
+		<action name="generateExcel" 
+			class="org.openxava.test.actions.FamilyProductsReportAction"
+			takes-long="true">
+			<set property="format" value="excel"/>
+			<use-object name="xava_view"/>			
+		</action>								
+	</controller>		
 
 	<controller name="StateHibernate"> 
 		<action name="search" image="images/search.gif" mode="detail" 

@@ -14,6 +14,7 @@ public class IngredientData
    private static final long serialVersionUID = 1L;
    private java.lang.String oid;
    private java.lang.String _Name;
+   private java.lang.String _FavouriteFormula_oid;
    private java.lang.String _PartOf_oid;
 
    public IngredientData()
@@ -24,6 +25,7 @@ public class IngredientData
    {
       setOid(otherData.getOid());
       set_Name(otherData.get_Name());
+      set_FavouriteFormula_oid(otherData.get_FavouriteFormula_oid());
       set_PartOf_oid(otherData.get_PartOf_oid());
 
    }
@@ -51,6 +53,15 @@ public class IngredientData
       this._Name = _Name;
    }
 
+   public java.lang.String get_FavouriteFormula_oid()
+   {
+      return this._FavouriteFormula_oid;
+   }
+   public void set_FavouriteFormula_oid( java.lang.String _FavouriteFormula_oid )
+   {
+      this._FavouriteFormula_oid = _FavouriteFormula_oid;
+   }
+
    public java.lang.String get_PartOf_oid()
    {
       return this._PartOf_oid;
@@ -64,7 +75,7 @@ public class IngredientData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("oid=" + getOid() + " " + "_Name=" + get_Name() + " " + "_PartOf_oid=" + get_PartOf_oid());
+      str.append("oid=" + getOid() + " " + "_Name=" + get_Name() + " " + "_FavouriteFormula_oid=" + get_FavouriteFormula_oid() + " " + "_PartOf_oid=" + get_PartOf_oid());
       str.append('}');
 
       return(str.toString());
@@ -93,6 +104,14 @@ public class IngredientData
          {
             lEquals = lEquals && this._Name.equals( lTest._Name );
          }
+         if( this._FavouriteFormula_oid == null )
+         {
+            lEquals = lEquals && ( lTest._FavouriteFormula_oid == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._FavouriteFormula_oid.equals( lTest._FavouriteFormula_oid );
+         }
          if( this._PartOf_oid == null )
          {
             lEquals = lEquals && ( lTest._PartOf_oid == null );
@@ -117,6 +136,8 @@ public class IngredientData
       result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
 
       result = 37*result + ((this._Name != null) ? this._Name.hashCode() : 0);
+
+      result = 37*result + ((this._FavouriteFormula_oid != null) ? this._FavouriteFormula_oid.hashCode() : 0);
 
       result = 37*result + ((this._PartOf_oid != null) ? this._PartOf_oid.hashCode() : 0);
 

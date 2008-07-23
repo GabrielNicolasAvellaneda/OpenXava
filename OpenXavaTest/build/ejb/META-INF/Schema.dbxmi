@@ -131,6 +131,8 @@
       </columns>
       <columns xmi:id="Ingredient__Name" name="_Name">
       </columns>
+      <columns xmi:id="Ingredient__FavouriteFormula_oid" name="_FavouriteFormula_oid">
+      </columns>
       <columns xmi:id="Ingredient__PartOf_oid" name="_PartOf_oid">
       </columns>
 

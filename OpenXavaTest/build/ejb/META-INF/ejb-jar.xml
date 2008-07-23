@@ -653,6 +653,10 @@
             <description><![CDATA[]]></description>
             <field-name>_Name</field-name>
          </cmp-field>
+         <cmp-field id="CmpAttribute_Ingredient__FavouriteFormula_oid">
+            <description><![CDATA[]]></description>
+            <field-name>_FavouriteFormula_oid</field-name>
+         </cmp-field>
          <cmp-field id="CmpAttribute_Ingredient__PartOf_oid">
             <description><![CDATA[]]></description>
             <field-name>_PartOf_oid</field-name>
@@ -670,6 +674,16 @@
             <res-auth>Container</res-auth>
          </resource-ref>
 
+         <query>
+            <query-method>
+               <method-name>findByFavouriteFormula</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+            <result-type-mapping>Remote</result-type-mapping>
+            <ejb-ql><![CDATA[SELECT OBJECT(o) FROM Ingredient o WHERE o._FavouriteFormula_oid = ?1 ORDER BY o.oid]]></ejb-ql>
+         </query>
          <query>
             <query-method>
                <method-name>findByPartOf</method-name>

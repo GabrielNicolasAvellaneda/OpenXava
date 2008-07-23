@@ -8,7 +8,7 @@ import org.openxava.hibernate.*;
  * 
  * @author Javier Paniza
  */
-public class NewWarehouseHibAction extends NewAction {
+public class NewWarehouseAction extends NewAction {
 
 	public void execute() throws Exception {
 		Query query = XHibernate.getSession().createQuery("select count(*) from Warehouse");

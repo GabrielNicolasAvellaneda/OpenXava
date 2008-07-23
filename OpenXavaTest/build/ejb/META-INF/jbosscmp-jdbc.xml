@@ -486,11 +486,26 @@
 
         </cmp-field>
          <cmp-field>
+            <field-name>_FavouriteFormula_oid</field-name>
+            <column-name>FAVOURITEFORMULA</column-name>
+
+        </cmp-field>
+         <cmp-field>
             <field-name>_PartOf_oid</field-name>
             <column-name>PARTOF</column-name>
 
         </cmp-field>
 
+         <query>
+            <query-method>
+               <method-name>findByFavouriteFormula</method-name>
+               <method-params>
+                  <method-param>java.lang.String</method-param>
+               </method-params>
+            </query-method>
+			<jboss-ql><![CDATA[SELECT OBJECT(o) FROM Ingredient o WHERE o._FavouriteFormula_oid = ?1 ORDER BY o.oid]]></jboss-ql>
+
+	     </query>
          <query>
             <query-method>
                <method-name>findByPartOf</method-name>
