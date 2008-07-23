@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Checkboxes remain checked after deletion in collections.
+- New methods assertRowCollectionChecked and assertRowCollectionUnchecked in ModuleTestBase.
 - Fix: StackOverflowError parsing entities with cyclic references.
 - Fix: Calling updateSchema just before create a new project fails.
 - Qualified properties are allowed for 'condition' and 'orderBy' of @DescriptionsList even it they are not in 'descriptionProperties'.

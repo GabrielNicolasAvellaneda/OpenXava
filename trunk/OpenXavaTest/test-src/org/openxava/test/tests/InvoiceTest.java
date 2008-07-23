@@ -821,16 +821,18 @@ public class InvoiceTest extends ModuleTestBase {
 		
 		assertValue("comment", "DETAIL DELETED"); // verifying postdelete-calculator in collection
 		
-		
 		// Testing if recalculate dependent properties on remove using chechbox in collection
 		execute("Sections.change", "activeSection=2");		
 		assertValue("amountsSum", getSumOf2ProductsUnitPriceMultiplyBy("2", "20"));		
 		execute("Sections.change", "activeSection=1");
-		checkRowCollection("details", 1);
+		assertCollectionRowCount("details", 2);
+		checkRowCollection("details", 0);
 		execute("Collection.removeSelected", "viewObject=xava_view_section1_details");
 		assertNoErrors();
+		assertCollectionRowCount("details", 1);
+		assertRowCollectionUnchecked("details", 0); 
 		execute("Sections.change", "activeSection=2");		 		
-		assertValue("amountsSum", getProductUnitPriceMultiplyBy("2"));
+		assertValue("amountsSum", getProductUnitPriceMultiplyBy("20"));
 		// end of recalculate testing		
 								
 		// Delete		
@@ -916,8 +918,8 @@ public class InvoiceTest extends ModuleTestBase {
 		setValue("details.unitPrice", getProductUnitPrice());
 		execute("Collection.save", "viewObject=xava_view_section1_details");
 		assertNoErrors();
-								
-		// Delete		
+		
+		// Delete
 		execute("CRUD.delete");		
 		assertMessage("Invoice deleted successfully");
 	}
