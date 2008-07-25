@@ -509,6 +509,28 @@ public class InvoiceTest extends ModuleTestBase {
 		assertNoErrors();
 		assertValue("date", "04/01/2004");
 		
+		setValue("date", "4/1/28");
+		execute("CRUD.save");
+		assertNoErrors();
+		setValue("year", String.valueOf(getInvoice().getYear()));
+		setValue("number", String.valueOf(getInvoice().getNumber()));
+		execute("CRUD.search");
+		assertNoErrors();
+		assertValue("date", "04/01/2028");
+		
+		setValue("date", "040129");
+		execute("CRUD.save");
+		assertNoErrors();
+		setValue("year", String.valueOf(getInvoice().getYear()));
+		setValue("number", String.valueOf(getInvoice().getNumber()));
+		execute("CRUD.search");
+		assertNoErrors();
+		assertValue("date", "04/01/1929");
+		
+		setValue("date", "30/2/2008");
+		execute("CRUD.save");
+		assertError("Fecha en Factura no es un dato del tipo esperado"); 		
+		
 		// Restore original date
 		setValue("date", originalDate);
 		execute("CRUD.save");
@@ -599,7 +621,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValue("details.amount", getProductUnitPriceMultiplyBy("20"));
 		setValue("details.product.number", getProductNumber());
 		assertValue("details.product.description", getProductDescription());
-		setValue("details.deliveryDate", "18/03/2004"); // Testing multiple-mapping in aggregate
+		setValue("details.deliveryDate", "03/18/04"); // Testing multiple-mapping in aggregate
 		setValue("details.soldBy.number", getProductNumber());
 		execute("Collection.save", "viewObject=xava_view_section1_details");		
 		assertMessage("Invoice detail created successfully");
@@ -861,7 +883,7 @@ public class InvoiceTest extends ModuleTestBase {
 		assertValue("details.amount", getProductUnitPriceMultiplyBy("20"));
 		setValue("details.product.number", getProductNumber());
 		assertValue("details.product.description", getProductDescription());
-		setValue("details.deliveryDate", "18/03/2004");
+		setValue("details.deliveryDate", "03/18/04");
 		setValue("details.soldBy.number", getProductNumber());
 		execute("Collection.save", "viewObject=xava_view_section1_details");
 		assertError("It is not possible to add details, the invoice is paid");
@@ -904,8 +926,8 @@ public class InvoiceTest extends ModuleTestBase {
 		setValue("details.unitPrice", getProductUnitPricePlus10());
 		assertValue("details.amount", "600.00");
 		assertValue("details.product.number", "");
-		assertValue("details.product.description", "");
-		setValue("details.deliveryDate", "18/03/2004"); 
+		assertValue("details.product.description", ""); 
+		setValue("details.deliveryDate", "03/18/04");
 		setValue("details.soldBy.number", getProductNumber());
 		execute("Collection.save", "viewObject=xava_view_section1_details");
 		assertError("It is needed specify a product for a valid invoice detail");

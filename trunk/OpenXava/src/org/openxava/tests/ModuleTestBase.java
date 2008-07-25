@@ -461,18 +461,19 @@ public class ModuleTestBase extends TestCase {
 	}
 										 	
 	protected void assertFocusOn(String name) throws Exception {
+		refreshPage(); 
 		HtmlElement element = null;
-		for (int i=0; element == null && i<40; i++) {
+		for (int i=0; element == null && i<30; i++) {
 			Thread.sleep(80);
 			element = page.getFocusedElement();			
 		}		
 		String focusProperty = element==null?null:element.getAttributeValue("name");
-		String expectedFocusProperty = getPropertyPrefix() + name;
-		for (int i=0; !expectedFocusProperty.equals(focusProperty) && i<60; i++) {
+		String expectedFocusProperty = getPropertyPrefix() + name;		
+		for (int i=0; !expectedFocusProperty.equals(focusProperty) && i<100; i++) {
 			Thread.sleep(80);
 			element = page.getFocusedElement();
 			focusProperty = element==null?null:element.getAttributeValue("name");
-		}						
+		}
 		assertEquals(XavaResources.getString("focus_in_unexpected_place"), expectedFocusProperty, focusProperty);		
 	}
 	
