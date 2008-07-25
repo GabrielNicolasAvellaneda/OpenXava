@@ -88,6 +88,7 @@
 		
 		<property-view property="number">
 			<action action="Delivery.generateNumber"/>		
+			<action action="Delivery.generateNumber88"/>
 		</property-view>
 		
 		<property-view property="deliveredBy">

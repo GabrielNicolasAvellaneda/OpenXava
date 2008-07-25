@@ -487,9 +487,10 @@ public class ModuleManager {
 		if (previousMode != null) setModeName(previousMode);				
 	}
 
-	private View getSubview(View view, String memberName) throws XavaException { 
+	private View getSubview(View view, String memberName) throws XavaException {		
 		if (memberName.startsWith("xava.")) {
-			String prefix = "xava." + view.getModelName() + ".";		
+			String prefix = "xava." + view.getModelName() + ".";	
+			if (prefix.length() > memberName.length()) return view;
 			memberName = memberName.substring(prefix.length());				
 		}
 		if (memberName.indexOf('.') < 0) {
