@@ -122,11 +122,15 @@
 			class="org.openxava.test.actions.ActivateDeactivateSectionAction">					
 			<set property="section" value="remarks" />
 			<use-object name="xava_view"/>			
-		</action>	
+		</action> 	
 		<action name="generateNumber" hidden="true"
 			class="org.openxava.test.actions.GenerateDeliveryNumberAction">					
 			<use-object name="xava_view"/>			
 		</action>		
+		<action name="generateNumber88" hidden="true"
+			class="org.openxava.test.actions.GenerateDeliveryNumberPropertyAction">
+			<!-- This is an IPropertyAction hence xava_view is not injected -->								
+		</action>				
 		<action name="setDefaultType" hidden="true"
 			class="org.openxava.test.actions.SetPropertyValueAction">					
 			<set property="property" value="type.number"/>

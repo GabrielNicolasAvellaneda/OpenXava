@@ -360,6 +360,7 @@ public class DeliveryTest extends ModuleTestBase {
 			"Delivery.setDefaultInvoice",
 			"Delivery.setDefaultType",
 			"Delivery.generateNumber",
+			"Delivery.generateNumber88",
 			"Delivery.activateDeactivateSection",
 			"Delivery.hideActions",
 			"Delivery.viewCurrentYearInvoices",
@@ -384,7 +385,8 @@ public class DeliveryTest extends ModuleTestBase {
 			"Sections.change",
 			"Delivery.setDefaultInvoice",
 			"Delivery.setDefaultType",			
-			"Delivery.generateNumber"
+			"Delivery.generateNumber",
+			"Delivery.generateNumber88",
 		};
 		
 		String [] creatingNewActions = {
@@ -419,6 +421,9 @@ public class DeliveryTest extends ModuleTestBase {
 		assertValue("type.number", "");
 		assertValue("invoice.year", "");
 		assertValue("invoice.number", "");
+		execute("Delivery.generateNumber88", "xava.keyProperty=xava.Delivery.number");
+		assertNoErrors();
+		assertValue("number", "88");
 		execute("Delivery.generateNumber", "xava.keyProperty=xava.Delivery.number");
 		assertValue("number", "77");
 		execute("Delivery.setDefaultType");

@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: IPropertyAction fails when applied to a not qualified property.
 - Date formatter for Spanish and Polish admit 2 or 4 digits for years, and it throws parse error on incorrect dates.
 - Fix: Checkboxes remain checked after deletion in collections.
 - New methods assertRowCollectionChecked and assertRowCollectionUnchecked in ModuleTestBase.
