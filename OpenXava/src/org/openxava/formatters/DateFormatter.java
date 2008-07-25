@@ -20,10 +20,10 @@ public class DateFormatter implements IFormatter {
 	private static DateFormat spanishDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	
 	private static DateFormat [] spanishDateFormats = {
-		spanishDateFormat,
-		new SimpleDateFormat("ddMMyyyy"),
-		new SimpleDateFormat("dd.MM.yyyy"),		
-	};	
+		new SimpleDateFormat("dd/MM/yy"), 
+		new SimpleDateFormat("ddMMyy"),
+		new SimpleDateFormat("dd.MM.yy")				
+	};
 	
 	public String format(HttpServletRequest request, Object date) {
 		if (date == null) return "";
@@ -39,6 +39,7 @@ public class DateFormatter implements IFormatter {
 		DateFormat [] dateFormats = getDateFormats(request); 
 		for (int i=0; i<dateFormats.length; i++) {
 			try {
+				dateFormats[i].setLenient(false);
 				return dateFormats[i].parseObject(string);
 			}
 			catch (ParseException ex) {
