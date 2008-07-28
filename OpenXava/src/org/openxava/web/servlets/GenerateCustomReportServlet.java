@@ -39,7 +39,7 @@ public class GenerateCustomReportServlet extends HttpServlet {
 			
 			Map parameters = (Map) request.getSession().getAttribute("xava.report.parameters");
 			InputStream xmlDesign = null;
-			if (design.startsWith("/")) {
+			if (isAbsolutePath(design)) {
 				xmlDesign = new FileInputStream(design);
 			}
 			else {
@@ -94,6 +94,15 @@ public class GenerateCustomReportServlet extends HttpServlet {
 			log.error(ex.getMessage(), ex);
 			throw new ServletException(XavaResources.getString("report_error"));
 		}		
+	}
+
+	private boolean isAbsolutePath(String design) {
+		return design.startsWith("/") || 
+			(
+				design.length() > 2 &&
+				design.charAt(1) == ':' && 
+				Character.isLetter(design.charAt(0))
+			);
 	}
 			
 }

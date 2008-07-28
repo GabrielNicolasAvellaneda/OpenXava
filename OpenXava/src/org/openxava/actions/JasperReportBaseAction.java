@@ -35,10 +35,15 @@ abstract public class JasperReportBaseAction extends BaseAction implements IForw
 	 * this is for the case of a SQL inside JasperReport design.
 	 */
 	abstract protected JRDataSource getDataSource() throws Exception;
+	
 	/**
 	 * The name of the XML with the JasperReports design. <p>
 	 * 
-	 * It has to be in classpath.
+	 * If it is a relative path (as <code>reports/myreport.jrxml</code> has 
+	 * to be in classpath. If it is a absolute path (as 
+	 * <code>/home/java/reports/myreport.xml</code> or 
+	 * <code>C:\\JAVA\\REPORTS\MYREPORT.JRXML</code> then it look at the 
+	 * file system.
 	 */
 	abstract protected String getJRXML() throws Exception;
 	
