@@ -25,7 +25,8 @@ else if (first && !view.isAlignedByColumns()) {
 	postLabel="</td>";
 	preIcons="<td style='vertical-align: middle'>";
 	postIcons="</td>";	
-	boolean firefox = request.getHeader("user-agent").indexOf("Firefox") >= 0;
+	String browser = (String) request.getAttribute("xava.portlet.user-agent");
+	boolean firefox = browser.indexOf("Firefox") >= 0;
 	// width: 99%  is for label and data not very separated when only one row, 
 	//				but it produces no good layout of frames in Firefox.
 	String width = firefox?"":"width: 99%";
