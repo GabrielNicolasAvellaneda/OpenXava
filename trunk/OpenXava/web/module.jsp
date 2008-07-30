@@ -14,7 +14,11 @@
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%
-String browser = request.getHeader("user-agent"); 
+String browser = (String) request.getAttribute("xava.portlet.user-agent");
+if (browser == null) { 
+	browser = request.getHeader("user-agent");
+	request.setAttribute("xava.portlet.user-agent", browser);
+}
 Users.setCurrent(request);
 Locales.setCurrent(request);
 boolean isPortlet = (request.getAttribute("xava.portlet.renderURL") != null);

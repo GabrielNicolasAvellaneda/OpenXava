@@ -1,9 +1,11 @@
 package org.openxava.web.portlets;
 
 import java.io.*;
+import java.lang.reflect.*;
 import java.util.*;
 
 import javax.portlet.*;
+import javax.servlet.http.*;
 
 import org.apache.commons.fileupload.disk.*;
 import org.apache.commons.fileupload.portlet.*;
@@ -37,9 +39,12 @@ import org.openxava.web.style.*;
  * </pre>
  *
  * @author  Javier Paniza
+ * @author  Guy de Pourtalès
  */
 
 public class XavaPortlet extends GenericPortlet {
+	
+	
 	
 	private static Log log = LogFactory.getLog(XavaPortlet.class);
 
@@ -77,7 +82,7 @@ public class XavaPortlet extends GenericPortlet {
 	public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {		
 		Object style = getStyle(request);		
 		request.setAttribute("style", style);
-		
+				
 		request.setAttribute("xava.portlet.renderURL", response.createRenderURL());
 		request.setAttribute("xava.portlet.actionURL", createActionURL(request, response)); 
 		request.setAttribute("xava.portlet.uploadActionURL", response.createActionURL()); 
@@ -107,10 +112,42 @@ public class XavaPortlet extends GenericPortlet {
 			request.setAttribute("xava.portal.userinfo", user);
 		}
 				
+		
+		
+		/*
+		 * In Liferay 5.0.1, the MimeHeaders are not correctly dispatched in the JSP request,
+		 * so we put the required headers in request attributes
+		 */		
+		if (request.getClass().getCanonicalName().equals("com.liferay.portlet.RenderRequestImpl")) {
+			try {
+				// Implementation tries to resolve the servlet request without a formal dependency to Liferay's libraries
+				HttpServletRequest servletRequest = (HttpServletRequest) request.getClass().getMethod("getHttpServletRequest", null).invoke(request, null);
+				if (servletRequest != null) {
+					String userAgent = servletRequest.getHeader("user-agent");
+					if (userAgent != null) {
+						request.setAttribute("xava.portlet.user-agent", userAgent);
+					}
+				}
+			} catch (IllegalArgumentException e) {
+				// Do nothing and assume that the headers will be resolved normally
+			} catch (SecurityException e) {
+//				 Do nothing and assume that the headers will be resolved normally
+			} catch (IllegalAccessException e) {
+//				 Do nothing and assume that the headers will be resolved normally
+			} catch (InvocationTargetException e) {
+//				 Do nothing and assume that the headers will be resolved normally
+			} catch (NoSuchMethodException e) {
+//				 Do nothing and assume that the headers will be resolved normally
+			}
+		}
+		
+		
 		PortletContext context = getPortletContext();
 		PortletRequestDispatcher rd = context.getRequestDispatcher(moduleURL);		
-		rd.include(request, response);				
+		rd.include(request, response);		
 	}
+	
+	
 	
 	private Object createActionURL(RenderRequest request, RenderResponse response) {
 		// WebSphere Portal and Liferay work fine with actionURL
@@ -136,6 +173,7 @@ public class XavaPortlet extends GenericPortlet {
 		
 		processMultipartForm(request);
 		
+		
 	}
 
 	private void processMultipartForm(ActionRequest request) {
@@ -159,7 +197,8 @@ public class XavaPortlet extends GenericPortlet {
 		
 	private void propagateParameters(ActionRequest request, ActionResponse response) {
 		// This is needed as indicated in section 11.1.1 of JSR-168
-		 for (Enumeration en = request.getParameterNames(); en.hasMoreElements();) {
+		
+		for (Enumeration en = request.getParameterNames(); en.hasMoreElements();) {
 			 String name = (String) en.nextElement();
 			 String [] values = request.getParameterValues(name);			 
 			 for (int i=0; i<values.length; i++) {
@@ -170,6 +209,7 @@ public class XavaPortlet extends GenericPortlet {
 	}
 
 	private Style getStyle(RenderRequest request) {
+		
 		if (style == null) {
 			// Maybe moving this to a XML file (as style-portal.xml) could be
 			// a good idea
