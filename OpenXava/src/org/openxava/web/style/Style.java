@@ -172,7 +172,7 @@ public class Style {
 		return "";
 	}
 
-	public String getFrameHeaderStartDecoration() { // done
+	public String getFrameHeaderStartDecoration() { 
 		StringBuffer r = new StringBuffer();
 		r.append("<table class='");
 		r.append(getFrame());
@@ -187,51 +187,51 @@ public class Style {
 		r.append("'>\n");		
 		return r.toString();
 	}	
-	public String getFrameHeaderEndDecoration() { // done		
+	public String getFrameHeaderEndDecoration() { 		
 		return "</th></tr>";			
 	}
 	
-	public String getFrameTitleStartDecoration() { // done		
+	public String getFrameTitleStartDecoration() { 		
 		return "<span style='float: left'>"; 		
 	}	
-	public String getFrameTitleEndDecoration() { // done
+	public String getFrameTitleEndDecoration() { 
 		return "</span>";
 	}
-	public String getFrameActionsStartDecoration() { // done
+	public String getFrameActionsStartDecoration() { 
 		return "<span style='float: right'>";
 	}	
-	public String getFrameActionsEndDecoration() { // done
+	public String getFrameActionsEndDecoration() { 
 		return "</span>";
 	}		
 	
-	public String getFrameContentStartDecoration() { // done
+	public String getFrameContentStartDecoration() { 
 		StringBuffer r = new StringBuffer();
 		r.append("<tr><td class='");
 		r.append(getFrameContent());		
 		r.append("'>\n");
 		return r.toString();
 	}
-	public String getFrameContentEndDecoration() { // done
+	public String getFrameContentEndDecoration() { 
 		return "\n</td></tr></table>";
 	}
 	
-	protected String getFrame() { // done
+	protected String getFrame() { 
 		return "frame";
 	}
 	
-	protected String getFrameTitle() { // done 
+	protected String getFrameTitle() {  
 		return getFrame();
 	}
 	
-	protected String getFrameTitleLabel() { // done
+	protected String getFrameTitleLabel() { 
 		return getFrameTitle();
 	}
 				
-	protected String getFrameContent() { // done
+	protected String getFrameContent() { 
 		return getFrame();
 	}
 	
-	protected String getFrameSpacing() { // done
+	protected String getFrameSpacing() { 
 		return "";
 	}
 		
@@ -296,6 +296,10 @@ public class Style {
 		return null;
 	}
 	
+	public String getSectionLinkStyle() {
+		return null;
+	}
+		
 	public String getSectionBarStartDecoration() {
 		return "";
 	}

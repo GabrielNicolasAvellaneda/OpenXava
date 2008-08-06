@@ -38,7 +38,7 @@ int activeSection = view.getActiveSection();
 				<%
 				String viewObjectArgv = "xava_view".equals(viewObject)?"":",viewObject=" + viewObject;
 				%>
-				<xava:link action='Sections.change' argv='<%="activeSection=" + i + viewObjectArgv%>' cssClass='<%=style.getSectionLink()%>'>
+				<xava:link action='Sections.change' argv='<%="activeSection=" + i + viewObjectArgv%>' cssClass='<%=style.getSectionLink()%>' cssStyle='<%=style.getSectionLinkStyle()%>'>
 				<%=section.getLabel(request)%>
 				</xava:link>      
 			<%=style.getSectionTabEndDecoration()%>	

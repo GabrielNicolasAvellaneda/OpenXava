@@ -1,23 +1,23 @@
 package org.openxava.web.style;
 
 /**
- * For Liferay 4.3. <p>
+ * For Liferay 4.3, 4.4 and 5.0. <p>
  * 
  * @author Javier Paniza
  */ 
 
-public class LiferayStyle extends Style {
+public class Liferay43Style extends Style {
 	
-	private static LiferayStyle instance = null;
+	private static Liferay43Style instance = null;
 
 	
 	
-	protected LiferayStyle() {
+	protected Liferay43Style() {
 	}
 	
 	public static Style getInstance() {
 		if (instance == null) {
-			instance = new LiferayStyle();
+			instance = new Liferay43Style();
 		}
 		return instance;
 	}
@@ -135,16 +135,7 @@ public class LiferayStyle extends Style {
 	public String getListOddCell() { 
 		return getListCell();		
 	}
-	
-	public String getListPairSelected() { 
-		return "portlet-section-selected liferay-list-selected"; 
-	}
-	
-	public String getListOddSelected() { 
-		return "portlet-section-selected liferay-list-selected"; 
-	}
-	
-		
+			
 	public String getListInfo() {
 		return "list-info";
 	}
@@ -158,32 +149,40 @@ public class LiferayStyle extends Style {
 		return "liferay-xava-cell-wrapper";		
 	}
 
-	public String getFrameHeaderStartDecoration() { 		
-		return "<table style='float:left; clear:none'><tr><td>\n" +
-			"<div class='portlet'><div class='portlet-topper' style='position: static;'>"; // position: static needed for ie7 + liferay 4.3		
-	}	
-	public String getFrameHeaderEndDecoration() { 
-		return "</div>"; 
-	}
-	public String getFrameTitleStartDecoration() { 
-		return "<span class='portlet-title'>";
-	}	
-	public String getFrameTitleEndDecoration() { 
-		return "</span>";
-	}
-	public String getFrameActionsStartDecoration() { 
-		return "<div class='portlet-icons'>";
-	}	
-	public String getFrameActionsEndDecoration() { 
-		return "</div>";
-	}		
-		
 	public String getFrameContentStartDecoration() { 		
 		return "<div class='portlet-content'><div class='portlet-content-container'>\n";
 	}
 	public String getFrameContentEndDecoration() { 		
 		return "\n</div></div></div></td></tr></table>";
 	}
+	
+	public String getListPairSelected() { 
+		return "liferay-list-selected"; 
+	}
+	
+	public String getListOddSelected() { 
+		return "liferay-list-selected"; 
+	}	
+
+	public String getFrameHeaderStartDecoration() { 		
+		return "<table style='float:left; clear:none'><tr><td>\n" +
+			"<div class='portlet'><div class='portlet-topper' style='position: static; padding-right: 8px;'><table width='100%'><tr>"; // position: static needed for ie7 + liferay 4.3			
+	}	
+	public String getFrameHeaderEndDecoration() { 
+		return "</tr></table></div>"; 
+	}
+	public String getFrameTitleStartDecoration() { 
+		return "<td><span class='portlet-title'>";
+	}	
+	public String getFrameTitleEndDecoration() { 
+		return "</span></td>";
+	}
+	public String getFrameActionsStartDecoration() { 
+		return "<td align='right'>";
+	}	
+	public String getFrameActionsEndDecoration() { 
+		return "</td>";
+	}	
 			
 	public String getEditor() { 
 		return "form-text";
@@ -245,6 +244,7 @@ public class LiferayStyle extends Style {
 	public String getSectionBarStartDecoration() {
 		return "<td style='padding-top: 4px;'><ul class='tabs'>"; 
 	}
+	
 	public String getSectionBarEndDecoration() {	
 		return "</ul></td>";
 	}
@@ -284,5 +284,9 @@ public class LiferayStyle extends Style {
 	public boolean isApplySelectedStyleToCellInList() {
 		return false;
 	}
-		
+	
+	public String getSectionLinkStyle() { 
+		return "position: static;";
+	}
+	
 }

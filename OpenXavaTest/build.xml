@@ -70,6 +70,13 @@
 		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
 		<ant antfile="../OpenXava/build.xml" target="deployWar"/>
 	</target>
+	
+	<target name="deployOX3War" depends="touchHistory">		
+		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>
+		<ant antfile="../OpenXava/build.xml" target="deployWar">
+			<property name="ox3" value="true"/>
+		</ant>
+	</target>	
 		
 	<target name="deploy" depends="touchHistory">
 		<ant antfile="../AccessTracking/build.xml" target="createTracker"/>

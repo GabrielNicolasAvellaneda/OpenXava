@@ -225,6 +225,7 @@ public class ModuleTestBase extends TestCase {
 			if (newPage != page) {
 				page = newPage;				
 				while (page.isBeingParsed()) Thread.sleep(10); 
+				Thread.sleep(50);
 				resetForm();				
 				return;
 			}
