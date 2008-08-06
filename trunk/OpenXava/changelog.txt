@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- JSP link tag has a new attribute 'cssStyle'.
+- Visual style integration for Liferay 5.1.
+- Fix: MetaElement class does not compile in some charsets.
 - Fix: Portlets do not work on Liferay 5.0.x.
 - Fix: getJRXML() of JasperReportBase does not recognize windows style path as absolute paths.
 - Fix: IPropertyAction fails when applied to a not qualified property.
