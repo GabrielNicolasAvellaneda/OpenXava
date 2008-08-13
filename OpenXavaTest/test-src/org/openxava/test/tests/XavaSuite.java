@@ -46,13 +46,11 @@ public class XavaSuite extends TestSuite {
 	}
 	public static Test suite() {		
 		TestSuite suite = new TestSuite();		
-				
-		suite.addTest(new TestSuite(WarehouseTest.class));
-		
+
+		suite.addTest(new TestSuite(WarehouseTest.class));		
 		if (ModuleTestBase.isOX3()) {
 			suite.addTest(new TestSuite(AnnotatedPOJOTest.class));
-		}
-		
+		}		
 		suite.addTest(new TestSuite(CarrierTest.class));
 		suite.addTest(new TestSuite(CarrierWithCalculatedFellowsTest.class));
 		suite.addTest(new TestSuite(CarrierWithReadOnlyCalculatedFellowsTest.class));
@@ -194,6 +192,7 @@ public class XavaSuite extends TestSuite {
 			suite.addTest(new TestSuite(Warehouse2Test.class));
 		}
 		suite.addTest(new TestSuite(WarehouseSpecialNewTest.class));
+
 		return suite;
 	}
 	

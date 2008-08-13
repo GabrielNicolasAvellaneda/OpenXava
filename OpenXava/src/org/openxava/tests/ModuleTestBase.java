@@ -107,6 +107,9 @@ public class ModuleTestBase extends TestCase {
 		}
 		XHibernate.commit();
 		XPersistence.commit();
+		client = null;
+		page = null;
+		form = null;
 	}
 
 	protected void login(String user, String password) throws Exception {
@@ -149,7 +152,7 @@ public class ModuleTestBase extends TestCase {
 		setFormValue(name, value, true);
 	}
 
-	private void setFormValue(String name, String value, boolean refreshIfNeeded) throws Exception {				
+	private void setFormValue(String name, String value, boolean refreshIfNeeded) throws Exception {
 		boolean refreshNeeded = false;
 		try {
 			HtmlInput input = getForm().getInputByName(name);
@@ -173,7 +176,7 @@ public class ModuleTestBase extends TestCase {
 			else {
 				input.setValueAttribute(value);
 			}
-			if (!Is.emptyString(input.getOnChangeAttribute())) refreshNeeded = true;
+			if (!Is.emptyString(input.getOnChangeAttribute())) refreshNeeded = true;			
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
 			try {				
@@ -217,9 +220,9 @@ public class ModuleTestBase extends TestCase {
 		return "";
 	}
 	
-	private void refreshPage() throws Exception {
+	private void refreshPage() throws Exception {		
 		HtmlPage newPage = null;
-		for (int i=0; i<30; i++) {
+		for (int i=0; i<300; i++) {
 			newPage = (HtmlPage) client.getCurrentWindow().getEnclosedPage();
 			Thread.sleep(100);
 			if (newPage != page) {
@@ -229,7 +232,7 @@ public class ModuleTestBase extends TestCase {
 				resetForm();				
 				return;
 			}
-		}
+		}		
 	}
 
 	private String getFormValue(String name) {		
@@ -1089,7 +1092,7 @@ public class ModuleTestBase extends TestCase {
 	}	
 	
 	private void assertRowUnchecked(String id, int row) { 
-		assertTrue(XavaResources.getString("selected_row_unexpected", row), 
+		assertTrue(XavaResources.getString("selected_row_unexpected", new Integer(row)), 
 				!getCheckable(id, row).isChecked());
 	}
 	
