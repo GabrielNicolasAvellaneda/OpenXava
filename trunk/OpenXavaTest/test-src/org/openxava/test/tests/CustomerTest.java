@@ -136,7 +136,7 @@ public class CustomerTest extends ModuleTestBase {
 		warehouse.setNumber(1);
 		warehouse.setZoneNumber(1);
 		String warehouseKey = MetaModel.getForPOJO(warehouse).toString(warehouse);
-		setValue("deliveryPlaces.preferredWarehouse.KEY", warehouseKey);
+		setValue("deliveryPlaces.preferredWarehouse.KEY", warehouseKey);		
 		assertValue("deliveryPlaces.remarks", "PREFERRED WAREHOUSE IS 1");
 	}
 		

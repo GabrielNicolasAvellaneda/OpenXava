@@ -15,7 +15,8 @@
 	<property name="xava.lib" value="../OpenXava/bin"/>	
 	<property name="j2ee.lib" location="../OpenXava/lib/j2ee.jar"/>	
 	<property name="tl.lib" location="../OpenXava/lib/tl.jar"/>
-	<property name="logging.lib" location="../OpenXava/lib/commons-logging.jar"/>
+	<!-- tmp commons-logging -->
+	<property name="logging.lib" location="../OpenXava/web/WEB-INF/lib/commons-logging.jar"/>
 	<property name="generator.dir" value="..${file.separator}OpenXava${file.separator}generator"/>
 	<property name="tracking.classes" value="../AccessTracking/web/WEB-INF/classes;../OpenXava/web/WEB-INF/lib/hibernate3.jar"/>
 	<property name="subcontext" value="${project}"/>				
@@ -645,13 +646,13 @@
 	</target>
 	
 	<target name="filterI18n" if="configuration" unless="ox3">
-  		<copy todir="../${project}/filtered-files" overwrite="true">
+  		<copy todir="../${project}/filtered-files" overwrite="true"	encoding="ISO-8859-1">
     		<fileset dir="../${project}/i18n" excludes="portlets, portlets/*"/>
 	    	<filterset>	    	
 				<filtersfile file="${configuration}.properties"/>				
 			</filterset> 			             		
   		</copy>			
-  		<copy todir="../${project}/${classes.dir}/portlets" failonerror="false">
+  		<copy todir="../${project}/${classes.dir}/portlets" failonerror="false" encoding="ISO-8859-1">
     		<fileset dir="../${project}/i18n/portlets"/>
   		</copy>					
 	</target>

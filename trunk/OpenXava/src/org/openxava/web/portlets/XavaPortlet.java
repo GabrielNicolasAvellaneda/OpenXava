@@ -118,7 +118,7 @@ public class XavaPortlet extends GenericPortlet {
 		 * In Liferay 5.0.1, the MimeHeaders are not correctly dispatched in the JSP request,
 		 * so we put the required headers in request attributes
 		 */		
-		if (request.getClass().getCanonicalName().equals("com.liferay.portlet.RenderRequestImpl")) {
+		if (request.getClass().getName().equals("com.liferay.portlet.RenderRequestImpl")) {
 			try {
 				// Implementation tries to resolve the servlet request without a formal dependency to Liferay's libraries
 				HttpServletRequest servletRequest = (HttpServletRequest) request.getClass().getMethod("getHttpServletRequest", null).invoke(request, null);

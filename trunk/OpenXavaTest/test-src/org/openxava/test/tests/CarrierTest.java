@@ -75,12 +75,8 @@ public class CarrierTest extends ModuleTestBase {
 		assertListColumnCount(3);
 		assertLabelInList(0, "Calculated");
 		assertLabelInList(1, "Number");
-		assertLabelInList(2, "Name");
-		long ini = System.currentTimeMillis(); // tmp
+		assertLabelInList(2, "Name");		
 		execute("Mode.detailAndFirst");
-		long cuesta = System.currentTimeMillis() - ini; // tmp		
-		System.out.println("[CarrierTest.testCustomizeCollection] cuesta=" + cuesta); //  tmp
-		if (true) return; // tmp
 				
 		assertCollectionColumnCount("fellowCarriers", 4);
 		assertLabelInCollection("fellowCarriers", 0, "Number");
