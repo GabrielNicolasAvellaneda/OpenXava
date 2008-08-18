@@ -2,7 +2,7 @@
 
 <project name="OpenXavaDoc" default="deploy" basedir=".">
 
-	<property name="xava.version" value="3.0.2"/>
+	<property name="xava.version" value="3.0.3"/>
 	<property name="xava.workspace" value=".."/>	
 	<property name="openxava.dist.dir" value="/home/javi/openxava"/>
 	<property file="../openxava.properties"/>
@@ -36,13 +36,7 @@
 		<antcall target="adjustCSS"/>
 		<mkdir dir="${pdf.dir}"/>
 		
-		<copy todir="${pdf.style.dir}" overwrite="true">
-			<fileset dir="${template.pdf.style.dir}"/>
-	    	<filterset>	    	
-				<filter token="xava.version" value="${xava.version}"/>
-	    		<filter token="doc.dir" value="${doc.dir}"/>
-			</filterset> 			         
-		</copy>		
+		<antcall target="filterPdfTemplates"/>
 		
 		<antcall target="removeMenuFromReference">
 			<param name="lang" value="en"/>
@@ -85,6 +79,61 @@
 		</antcall>				
 		
 	</target>
+	
+
+	<!-- You must call before to 'generatePdfGuides' -->
+	<target name="generatePdfFrenchGuide">		
+		<property name="pdf.dir" value="${doc.dir}/pdf"/>
+		<property name="pdf.style.dir" value="pdf-style"/>
+		<property name="template.pdf.style.dir" value="template-pdf-style"/>
+
+		<antcall target="filterPdfTemplates"/>
+		
+		<antcall target="removeMenuFromReference">
+			<param name="lang" value="fr"/>
+			<param name="chapter.1.title" value=" Introduction"/>			
+		</antcall>
+						
+		<antcall target="generatePdfReferenceForLang">
+			<param name="name" value="guide-reference"/>
+			<param name="lang" value="fr"/>
+		</antcall>		
+						
+	</target>
+	
+	<!-- You must call before to 'generatePdfGuides' 
+	Chinese does not work, maybe a font issue
+	-->
+	<target name="generatePdfChineseGuide">		
+		<property name="pdf.dir" value="${doc.dir}/pdf"/>
+		<property name="pdf.style.dir" value="pdf-style"/>
+		<property name="template.pdf.style.dir" value="template-pdf-style"/>
+
+		<antcall target="filterPdfTemplates"/>
+		
+		<antcall target="removeMenuFromReference">
+			<param name="lang" value="zh_cn"/>
+			<param name="chapter.1.title" value="概述"/>			
+		</antcall>
+						
+		<antcall target="generatePdfReferenceForLang">
+			<param name="name" value="reference-guide_cn"/>
+			<param name="lang" value="zh_cn"/>
+		</antcall>		
+						
+	</target>
+		
+	<target name="filterPdfTemplates">
+		<copy todir="${pdf.style.dir}" overwrite="true">
+			<fileset dir="${template.pdf.style.dir}" excludes="openxava.jpg"/>
+	    	<filterset>	    		
+				<filter token="xava.version" value="${xava.version}"/>
+	    		<filter token="doc.dir" value="${doc.dir}"/>
+			</filterset> 			         
+		</copy>
+		<copy file="${template.pdf.style.dir}/openxava.jpg" todir="${pdf.style.dir}" overwrite="true"/>		
+	</target>
+	
 	
 	<target name="removeMenuFromReference">
 		<replace dir="${doc.dir}">

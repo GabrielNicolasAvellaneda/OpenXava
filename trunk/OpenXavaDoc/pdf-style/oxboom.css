@@ -29,12 +29,14 @@
 
 html { 
   margin: 0;
-  font: 10pt/1.26 sans-serif;
+  font: 10pt/1.26;
+  font-family: sans-serif, arial,helvetica,sans-serif;
 }
 
 body { 
   margin: 0 0 0 0;
   text-align: justify;
+  font-family: arial,helvetica,sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 { 
@@ -202,7 +204,7 @@ div.chapter h1 { string-set: header "Chapter " counter(chapter) ": " content(); 
 
   @bottom-left {
     font: 9pt sans-serif;
-    content: "OpenXava 3.0.2";
+    content: "OpenXava 3.0.3";
     text-align: left;
     vertical-align: top;
     padding-top: 2em;
