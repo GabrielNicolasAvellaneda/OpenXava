@@ -1,10 +1,5 @@
 <%@ include file="imports.jsp"%>
 
-<%
-org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
-%>
-
-
 <script type="text/javascript">
 <%-- JavaScript for text area maxsize --%>
 function limitLength(ev, max) { 
@@ -163,7 +158,6 @@ function showCalendar(id, format, showsTime, showsOtherMonths) {
   <% 
   // Date fields at end of the windows is not shown correctly in IE6,
   // hence, we align at top in IE6, and at botton in other browsers.
-  String browser = request.getHeader("user-agent");
   String calendarAlign = browser != null && browser.indexOf("MSIE 6") >= 0?"tr":"Br";  
   %>
   _dynarch_popupCalendar.showAtElement(el.nextSibling, "<%=calendarAlign%>"); // show the calendar

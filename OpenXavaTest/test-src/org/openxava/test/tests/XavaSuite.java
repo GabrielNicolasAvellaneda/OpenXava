@@ -192,7 +192,7 @@ public class XavaSuite extends TestSuite {
 			suite.addTest(new TestSuite(Warehouse2Test.class));
 		}
 		suite.addTest(new TestSuite(WarehouseSpecialNewTest.class));
-
+		
 		return suite;
 	}
 	

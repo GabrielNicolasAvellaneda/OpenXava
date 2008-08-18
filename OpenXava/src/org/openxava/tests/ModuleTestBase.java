@@ -279,8 +279,11 @@ public class ModuleTestBase extends TestCase {
 		return ((HtmlSelect) element).isMultipleSelectEnabled();
 	}
 
-	private void setFormValues(String name, String [] values) throws Exception {		
-		List elements = new ArrayList(page.getHtmlElementsByName(name));
+	private void setFormValues(String name, String [] values) throws Exception {
+		// Unfortunally page.getHtmlElementsByName(name) with Liferay 4.3 does not
+		// returns the elements in order of appearance. This problem can cause
+		// some problems testing against Liferay. The issue is solved for OX3.1
+		List elements = new ArrayList(page.getHtmlElementsByName(name));				
 		boolean refreshPage = false;
 		if (isOneMultipleSelect(elements)) {
 			HtmlSelect select = (HtmlSelect) elements.get(0);
@@ -297,14 +300,14 @@ public class ModuleTestBase extends TestCase {
 			for (Iterator it = elements.iterator(); it.hasNext() && i < values.length; i++) {
 				Object element = it.next();						
 				if (element instanceof HtmlInput) {
-					HtmlInput input = (HtmlInput) element;
+					HtmlInput input = (HtmlInput) element;					
 					input.setValueAttribute(values[i]);
 					if (!Is.emptyString(input.getOnChangeAttribute())) {
 						refreshPage = true;
 					}
 				}
 				else if (element instanceof HtmlSelect) {				
-					HtmlSelect select = (HtmlSelect) element;		
+					HtmlSelect select = (HtmlSelect) element;				
 					select.setSelectedAttribute(values[i], true);			
 					if (!Is.emptyString(select.getOnChangeAttribute())) {
 						refreshPage = true;
