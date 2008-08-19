@@ -254,6 +254,13 @@ public class MetaComponent implements Serializable {
 		return metaTab;
 	}
 
+	public Collection getMetaTabs(){
+		Collection metaTabs = new ArrayList();
+		metaTabs.add(getMetaTab());
+		metaTabs.addAll(this.metaTabs.values());
+		return metaTabs;
+	}
+	
 	/**
 	 * <tt>MetaTab</tt> from name.
 	 * 
