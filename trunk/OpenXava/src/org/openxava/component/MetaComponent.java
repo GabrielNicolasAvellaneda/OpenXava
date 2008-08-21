@@ -257,7 +257,7 @@ public class MetaComponent implements Serializable {
 	public Collection getMetaTabs(){
 		Collection metaTabs = new ArrayList();
 		metaTabs.add(getMetaTab());
-		metaTabs.addAll(this.metaTabs.values());
+		if (this.metaTabs != null) metaTabs.addAll(this.metaTabs.values());
 		return metaTabs;
 	}
 	
