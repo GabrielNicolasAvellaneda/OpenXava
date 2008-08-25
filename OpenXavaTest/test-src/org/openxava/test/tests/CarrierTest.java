@@ -70,12 +70,12 @@ public class CarrierTest extends ModuleTestBase {
 		XPersistence.commit();
 	}
 	
-	public void testCustomizeCollection() throws Exception { 
-		// Original status
+	public void testCustomizeCollection() throws Exception {
+		// Original status		
 		assertListColumnCount(3);
 		assertLabelInList(0, "Calculated");
 		assertLabelInList(1, "Number");
-		assertLabelInList(2, "Name");		
+		assertLabelInList(2, "Name");
 		execute("Mode.detailAndFirst");
 				
 		assertCollectionColumnCount("fellowCarriers", 4);
@@ -95,7 +95,6 @@ public class CarrierTest extends ModuleTestBase {
 		assertLabelInCollection("fellowCarriers", 2, "Calculated");
 		assertLabelInCollection("fellowCarriers", 3, "Remarks");		
 		
-		
 		// The main list not modified
 		execute("Mode.list");
 		assertListColumnCount(3);
@@ -111,7 +110,6 @@ public class CarrierTest extends ModuleTestBase {
 		assertLabelInCollection("fellowCarriers", 2, "Calculated");
 		assertLabelInCollection("fellowCarriers", 3, "Remarks");		
 		
-		
 		// Add columns
 		execute("List.addColumns", "collection=fellowCarriers");
 		assertCollectionRowCount("xavaPropertiesList", 6);
@@ -124,7 +122,7 @@ public class CarrierTest extends ModuleTestBase {
 		assertValueInCollection("xavaPropertiesList",  3, 0, "warehouse.name");
 		assertValueInCollection("xavaPropertiesList",  4, 0, "warehouse.number");
 		assertValueInCollection("xavaPropertiesList",  5, 0, "warehouse.zoneNumber");
-		checkRow("selectedProperties", "warehouse.name");
+		checkRow("selectedProperties", "warehouse.name");		
  		execute("AddColumns.addColumns");
 
 		assertCollectionColumnCount("fellowCarriers", 5);
@@ -158,11 +156,10 @@ public class CarrierTest extends ModuleTestBase {
 		assertLabelInCollection("fellowCarriers", 2, "Remarks");
 		assertLabelInCollection("fellowCarriers", 3, "Calculated");
 		
-		
 		// Cancel in AddColumns returns to detail (not list mode)
 		execute("List.addColumns", "collection=fellowCarriers");
 		execute("AddColumns.cancel");
-		assertValue("name", "UNO"); // In detail mode
+		assertValue("name", "UNO"); // In detail mode		
 	}
 		
 	public void testHideShowRows() throws Exception {		
@@ -225,7 +222,7 @@ public class CarrierTest extends ModuleTestBase {
 	public void testFilterIgnoringCase() throws Exception {
 		assertListRowCount(5);
 		String [] condition = { "", "cinco" };
-		setConditionValues(condition);
+		setConditionValues(condition);		
 		execute("List.filter");		
 		assertListRowCount(1);
 		assertValueInList(0, "number", "5");

@@ -54,7 +54,7 @@ public class WarehouseTest extends ModuleTestBase {
 	 * </ul>
 	 * @throws Exception
 	 */	
-	public void testAccessTracking_createReadUpdateDelete() throws Exception {		
+	public void testAccessTracking_createReadUpdateDelete() throws Exception {
 		XHibernate.getSession().createQuery("delete from Access").executeUpdate();		
 		XHibernate.commit();
 		

@@ -91,7 +91,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		assertValueInCollection("deliveryPlaces.receptionists", 0, 0, "PEPE");
 		assertValueInCollection("deliveryPlaces.receptionists", 1, 0, "JUAN");
 
-		setConditionValues("deliveryPlaces.receptionists", new String[] { "J"} );
+		setConditionValues("deliveryPlaces.receptionists", new String[] { "J"} );		
 		execute("List.filter", "collection=deliveryPlaces.receptionists");
 		assertCollectionRowCount("deliveryPlaces.receptionists", 1);
 		assertValueInCollection("deliveryPlaces.receptionists", 0, 0, "JUAN");				
