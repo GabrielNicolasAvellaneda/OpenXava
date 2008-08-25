@@ -99,7 +99,7 @@ org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleM
 String formName = manager.getForm();	
 boolean throwChanged=view.throwsReferenceChanged(ref);
 String script = throwChanged?
-	"onchange='throwPropertyChanged(" + formName + ", \"" + propertyKey + "\")'":"";
+	"onchange='openxava.throwPropertyChanged(\"" + propertyKey + "\")'":"";
 
 String parameterValuesProperties=view.getParameterValuesPropertiesInDescriptionsList(ref);
 String condition = view.getConditionInDescriptionsList(ref);

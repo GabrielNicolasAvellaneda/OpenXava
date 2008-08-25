@@ -37,7 +37,7 @@ for (Iterator it=tab.getRemainingPropertiesNames().iterator(); it.hasNext();)
 %>
 <tr class=<%=cssClass%>>
 	<td class=<%=cssClass%> width="5">
-		<INPUT type="CHECKBOX" name="selectedProperties" value="<%=property%>"/>	
+		<INPUT type="CHECKBOX" name="xava_selected" value="selectedProperties:<%=property%>"/>
 	</td>
 	<td class=<%=cssClass%>>
 		<%=property%>

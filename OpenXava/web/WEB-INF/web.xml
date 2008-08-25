@@ -28,6 +28,18 @@
 		<servlet-name>generateCustomReport</servlet-name>
 		<servlet-class>org.openxava.web.servlets.GenerateCustomReportServlet</servlet-class>
 	</servlet>			
+	<servlet>
+		<servlet-name>dwrInvoker</servlet-name>
+		<display-name>DWR Servlet</display-name>
+		<description>Direct Web Remoter Servlet</description>
+		<servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>    
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<load-on-startup>12</load-on-startup>
+	</servlet>
+	
 	<servlet-mapping>
 		<servlet-name>images</servlet-name>
 		<url-pattern>/xava/ximage</url-pattern>
@@ -56,6 +68,10 @@
 		<servlet-name>generateCustomReport</servlet-name>
 		<url-pattern>/xava/report.pdf</url-pattern>
 	</servlet-mapping>		
+	<servlet-mapping>
+		<servlet-name>dwrInvoker</servlet-name>
+		<url-pattern>/dwr/*</url-pattern>
+	</servlet-mapping>	
 	
   <mime-mapping>
         <extension>

@@ -174,15 +174,16 @@ TD.list-title {
 	border: 1px solid #CCCCCC;
 }
 
+
 .editor, .portlet-form-input-field, .form-text {
 	color: #000000;  
 }
 
-tr[id|=xava-tr-list] .wpsTableNrmRow {
+tr[id|=xava_tr_list] .wpsTableNrmRow {
 	border-left-width: 1px;
 	border-left-style: solid;
 }
-tr[id|=xava-tr-list] .wpsTableHead {
+tr[id|=xava_tr_list] .wpsTableHead {
 	border-left-width: 1px;
 	border-left-style: solid;
 }

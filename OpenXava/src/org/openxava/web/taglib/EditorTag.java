@@ -30,7 +30,6 @@ public class EditorTag extends TagSupport {
 		try {
 			HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
 			ModuleContext context = (ModuleContext) request.getSession().getAttribute("context");
-			org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
 									
 			String viewObject = request.getParameter("viewObject");
 			viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObject;
@@ -46,12 +45,11 @@ public class EditorTag extends TagSupport {
 			Object value = view.getValue(property);
 			request.setAttribute(valueKey, value);
 									
-			Messages errors = (Messages) request.getAttribute("errors"); 									
-			String formName = manager.getForm();	
+			Messages errors = (Messages) request.getAttribute("errors"); 													
 			boolean throwsChanged=explicitThrowPropertyChanged?this.throwPropertyChanged:view.throwsPropertyChanged(property); 
-			String scriptFoco = "onfocus=focus_property.value='" + propertyKey + "'";
+			String scriptFoco = "onfocus=xava_focus_property.value='" + propertyKey + "'";
 			String script = throwsChanged?
-				"onchange='throwPropertyChanged(document." + formName + ", \"" + propertyKey + "\")' ":"";
+				"onchange='openxava.throwPropertyChanged(\"" + propertyKey + "\")' ":"";
 			script = script + scriptFoco;
 
 			boolean editable = explicitEditable?this.editable:view.isEditable(property);  
@@ -75,6 +73,11 @@ public class EditorTag extends TagSupport {
 			pageContext.getOut().print("' value='");
 			pageContext.getOut().print(editable);
 			pageContext.getOut().println("'>");
+			if (org.openxava.web.WebEditors.hasMultipleValuesFormatter(metaProperty, view.getViewName())) {
+				pageContext.getOut().print("<input type='hidden' name='xava_multiple' value='"); 
+				pageContext.getOut().print(propertyKey);
+				pageContext.getOut().println("'>");				
+			}
 			try {
 				// If the JSP that uses this tag is in a subfolder
 				pageContext.include("../xava/" + editorURL);				

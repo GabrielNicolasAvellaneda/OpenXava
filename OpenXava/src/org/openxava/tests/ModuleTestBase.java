@@ -3,6 +3,7 @@ package org.openxava.tests;
 import java.io.*;
 import java.net.*;
 import java.util.*;
+import java.util.logging.*;
 
 import org.apache.commons.logging.*;
 import org.openxava.application.meta.*;
@@ -66,10 +67,14 @@ public class ModuleTestBase extends TestCase {
 	private WebClient client; 
 	private HtmlPage page; 
 	private HtmlForm form;
-	private int formIndex = -1; 		
+	private int formIndex = -1;
+	private String lastNotNotifiedPropertyName; 
+	private String lastNotNotifiedPropertyValue;
+	private BrowserVersion browserVersion;  		
 	
 	static {		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
+		Logger.getLogger("com.gargoylesoftware").setLevel(Level.SEVERE);
 		XHibernate.setConfigurationFile("/hibernate-junit.cfg.xml");
 		XPersistence.setPersistenceUnit("junit");
 		DataSourceConnectionProvider.setUseHibernateConnection(true);
@@ -107,9 +112,9 @@ public class ModuleTestBase extends TestCase {
 		}
 		XHibernate.commit();
 		XPersistence.commit();
-		client = null;
-		page = null;
-		form = null;
+		client = null;  
+		page = null; 
+		form = null; 
 	}
 
 	protected void login(String user, String password) throws Exception {
@@ -157,18 +162,15 @@ public class ModuleTestBase extends TestCase {
 		try {
 			HtmlInput input = getForm().getInputByName(name);
 			focus(input);
-			if (input instanceof HtmlCheckBoxInput) {				
-				if (!Is.emptyString(input.getOnClickAttribute())) {
-					if ("true".equalsIgnoreCase(value) && !input.isChecked() ||
-						"false".equalsIgnoreCase(value) && input.isChecked()) 
-					{
-						input.click();
-						refreshNeeded = true;
+			if (input instanceof HtmlCheckBoxInput) {
+				if ("true".equalsIgnoreCase(value) && !input.isChecked() ||
+					"false".equalsIgnoreCase(value) && input.isChecked()) 
+				{
+					input.click();
+					if (!Is.emptyString(input.getOnClickAttribute())) {
+						refreshNeeded = true;				
 					}
-				}
-				else {
-					input.setChecked("true".equalsIgnoreCase(value));
-				}
+				}				
 			}
 			else if (input instanceof HtmlRadioButtonInput) {				
 				setRadioButtonsValue(name, value);
@@ -176,10 +178,10 @@ public class ModuleTestBase extends TestCase {
 			else {
 				input.setValueAttribute(value);
 			}
-			if (!Is.emptyString(input.getOnChangeAttribute())) refreshNeeded = true;			
+			if (!Is.emptyString(input.getOnChangeAttribute())) refreshNeeded = true;
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
-			try {				
+			try {							
 				HtmlSelect select = getForm().getSelectByName(name);
 				focus(select);
 				select.setSelectedAttribute(value, true);
@@ -220,19 +222,9 @@ public class ModuleTestBase extends TestCase {
 		return "";
 	}
 	
-	private void refreshPage() throws Exception {		
-		HtmlPage newPage = null;
-		for (int i=0; i<300; i++) {
-			newPage = (HtmlPage) client.getCurrentWindow().getEnclosedPage();
-			Thread.sleep(100);
-			if (newPage != page) {
-				page = newPage;				
-				while (page.isBeingParsed()) Thread.sleep(10); 
-				Thread.sleep(50);
-				resetForm();				
-				return;
-			}
-		}		
+	private void refreshPage() throws Exception {
+		Thread.sleep(120);
+		resetForm();
 	}
 
 	private String getFormValue(String name) {		
@@ -250,7 +242,7 @@ public class ModuleTestBase extends TestCase {
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
 			try {
-				HtmlSelect select = getForm().getSelectByName(name);			
+				HtmlSelect select = getForm().getSelectByName(name);				
 				return ((HtmlOption )select.getSelectedOptions().get(0)).getValueAttribute();
 			}
 			catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex2) {
@@ -279,13 +271,10 @@ public class ModuleTestBase extends TestCase {
 		return ((HtmlSelect) element).isMultipleSelectEnabled();
 	}
 
-	private void setFormValues(String name, String [] values) throws Exception {
-		// Unfortunally page.getHtmlElementsByName(name) with Liferay 4.3 does not
-		// returns the elements in order of appearance. This problem can cause
-		// some problems testing against Liferay. The issue is solved for OX3.1
-		List elements = new ArrayList(page.getHtmlElementsByName(name));				
+	private void setFormValues(String name, String [] values) throws Exception {		
+		List elements = new ArrayList(page.getHtmlElementsByName(name));		
 		boolean refreshPage = false;
-		if (isOneMultipleSelect(elements)) {
+		if (isOneMultipleSelect(elements)) { 
 			HtmlSelect select = (HtmlSelect) elements.get(0);
 			unselectOptions(select);
 			for (int i = 0; i < values.length; i++) {
@@ -300,14 +289,14 @@ public class ModuleTestBase extends TestCase {
 			for (Iterator it = elements.iterator(); it.hasNext() && i < values.length; i++) {
 				Object element = it.next();						
 				if (element instanceof HtmlInput) {
-					HtmlInput input = (HtmlInput) element;					
+					HtmlInput input = (HtmlInput) element;
 					input.setValueAttribute(values[i]);
 					if (!Is.emptyString(input.getOnChangeAttribute())) {
 						refreshPage = true;
 					}
 				}
 				else if (element instanceof HtmlSelect) {				
-					HtmlSelect select = (HtmlSelect) element;				
+					HtmlSelect select = (HtmlSelect) element;		
 					select.setSelectedAttribute(values[i], true);			
 					if (!Is.emptyString(select.getOnChangeAttribute())) {
 						refreshPage = true;
@@ -374,8 +363,8 @@ public class ModuleTestBase extends TestCase {
 	/**
 	 * Like close navigator, open again, and reexecute the module.
 	 */
-	protected void resetModule() throws Exception {
-		client = new WebClient();
+	protected void resetModule() throws Exception {				
+		client = new WebClient(getBrowserVersion()); 		
 		client.setThrowExceptionOnFailingStatusCode(false); // Because some .js are missing in Liferay 4.1
 		client.setThrowExceptionOnScriptError(false); // Because some erroneous JavaScript in Liferay 4.3
 		if (getLocale() != null) {
@@ -392,6 +381,20 @@ public class ModuleTestBase extends TestCase {
 		propertyPrefix = null;		
 	}
 	
+	private BrowserVersion getBrowserVersion() {
+		if (browserVersion == null) {
+			String browser = getProperty("browser", "firefox2");
+			if ("firefox2".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.FIREFOX_2;
+			else if ("iexplorer7".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.INTERNET_EXPLORER_7_0;
+			else if ("iexplorer6".equalsIgnoreCase(browser)) browserVersion = BrowserVersion.INTERNET_EXPLORER_6_0;
+			else {
+				log.warn(XavaResources.getString("unknown_browser_using_default", "Firefox 2"));
+				browserVersion = BrowserVersion.FIREFOX_2;
+			}
+		}
+		return browserVersion;
+	}
+
 	protected void changeModule(String module) throws Exception {
 		changeModule(this.application, module);
 	}
@@ -408,7 +411,7 @@ public class ModuleTestBase extends TestCase {
 		resetForm();		
 	}
 		
-	private String getModuleURL() throws XavaException {		
+	private String getModuleURL() throws XavaException {
 		if (isLiferayEnabled()) {
 			return "http://" + getHost() + ":" + getPort() + "/" + getLiferayURL() + "/" + application + "/" + module;
 		}
@@ -444,18 +447,19 @@ public class ModuleTestBase extends TestCase {
 
 	
 	/**
-	 * Execute the action using javascript, is the preferred way.
+	 * Execute the action clicking in the link or button.
 	 */
 	protected void execute(String action) throws Exception {
+		throwChangeOfLastNotNotifiedProperty(); 
 		if (page.getHtmlElementsByName("xava.action." + action).size() > 1) { // Action of list/collection
 			execute(action, null);
 			return;
-		}
+		}		
 		Element element  = page.getElementById(action);		
 		if (element instanceof ClickableElement) {
 			Page newPage = ((ClickableElement) element).click();
 			if (newPage instanceof HtmlPage) {
-				page = (HtmlPage) newPage;
+				page = (HtmlPage) newPage;				
 				resetForm();
 			}
 			else {
@@ -464,27 +468,45 @@ public class ModuleTestBase extends TestCase {
 		}
 		else {
 			fail(XavaResources.getString("clickable_not_found", action));  
-		}		
+		}
+	}
+
+	private void throwChangeOfLastNotNotifiedProperty() throws Exception { 		
+		if (lastNotNotifiedPropertyName != null) {
+			setFormValueNoRefresh(lastNotNotifiedPropertyName, lastNotNotifiedPropertyValue);
+			lastNotNotifiedPropertyName = null;
+			lastNotNotifiedPropertyValue = null;
+		}	
 	}
 										 	
+	private void waitUntilPageIsLoaded() { 
+		HtmlInput loading = (HtmlInput) page.getHtmlElementById("xava_loading");		
+		if (!"true".equals(loading.getValueAttribute())) { 
+			try { Thread.sleep(100); } catch (Exception ex) { }
+		}				
+		while ("true".equals(loading.getValueAttribute())) {
+			try { Thread.sleep(20); } catch (Exception ex) { }
+		}		
+	}
+
 	protected void assertFocusOn(String name) throws Exception {
-		refreshPage(); 
-		HtmlElement element = null;
+		HtmlElement element = null;		
 		for (int i=0; element == null && i<30; i++) {
 			Thread.sleep(80);
 			element = page.getFocusedElement();			
 		}		
 		String focusProperty = element==null?null:element.getAttributeValue("name");
-		String expectedFocusProperty = getPropertyPrefix() + name;		
-		for (int i=0; !expectedFocusProperty.equals(focusProperty) && i<100; i++) {
+		String expectedFocusProperty = getPropertyPrefix() + name;
+		for (int i=0; !expectedFocusProperty.equals(focusProperty) && i<60; i++) {
 			Thread.sleep(80);
 			element = page.getFocusedElement();
 			focusProperty = element==null?null:element.getAttributeValue("name");
-		}
+		}						
 		assertEquals(XavaResources.getString("focus_in_unexpected_place"), expectedFocusProperty, focusProperty);		
 	}
 	
 	protected void execute(String action, String arguments) throws Exception {
+		throwChangeOfLastNotNotifiedProperty();
 		ClickableElement element = null;
 		for (Iterator it = page.getAnchors().iterator(); it.hasNext(); ) {			
 			HtmlAnchor anchor = (HtmlAnchor) it.next();			
@@ -516,8 +538,8 @@ public class ModuleTestBase extends TestCase {
 		if (element != null) {
 			Page newPage = element.click();
 			if (newPage instanceof HtmlPage) {
-				page = (HtmlPage) newPage;
-				resetForm();
+				page = (HtmlPage) newPage;				
+				resetForm();				
 			}
 			else {
 				page = null; 
@@ -537,12 +559,12 @@ public class ModuleTestBase extends TestCase {
 	
 	protected void assertExists(String name) throws Exception {		
 		String id = getPropertyPrefix() + name; 
-		assertTrue(XavaResources.getString("must_exist", name), hasElement(id));
+		assertTrue(XavaResources.getString("must_to_exists", name), hasElement(id));
 	}
 
 	protected void assertNotExists(String name) throws Exception {		
 		String id = getPropertyPrefix() + name; 		
-		assertTrue(XavaResources.getString("must_not_exist", name), !hasElement(id));
+		assertTrue(XavaResources.getString("must_not_to_exists", name), !hasElement(id));
 	}
 	
 	/**
@@ -584,7 +606,7 @@ public class ModuleTestBase extends TestCase {
 	 * Only for debug.
 	 */
 	protected void printHtml() throws Exception {		
-		log.debug(getHtml());
+		log.debug(getHtml());		
 	}
 	
 	/**
@@ -602,6 +624,9 @@ public class ModuleTestBase extends TestCase {
 	 * @param type text/html, application/pdf, etc.
 	 */
 	protected void assertContentTypeForPopup(String type) {
+		for (int i=0; !type.equals(getPopupResponse().getContentType()) && i<10; i++) {
+			try { Thread.sleep(500); } catch (Exception ex) { }
+		}
 		assertEquals(XavaResources.getString("content_type_not_match"), type, getPopupResponse().getContentType());
 	}	
 	
@@ -639,7 +664,11 @@ public class ModuleTestBase extends TestCase {
 	 * to HTML and it will be difficult migrate to another presentation technology.
 	 */
 	protected String getHtml() throws IOException {
-		return page.getWebResponse().getContentAsString();
+		return page.asXml()	
+			.replaceAll("&apos;", "'") 
+			.replaceAll("&lt;", "<")
+			.replaceAll("&gt;", ">")	
+			.replaceAll("&quot;", "\"");
 	}
 	
 	/**
@@ -657,17 +686,28 @@ public class ModuleTestBase extends TestCase {
 	}
 
 	protected void setConditionValues(String [] values) throws Exception {
-		setFormValues("conditionValues", values);
+		setCollectionCondition("conditionValue", values);
+	}
+
+	private void setCollectionCondition(String id, String[] values) throws Exception { 
+		for (int i=0; i<values.length; i++) {
+			try {
+				setFormValue(id + "." + i, values[i]);
+			}
+			catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {				
+				break;
+			}
+		}
 	}
 	
 	protected void setConditionComparators(String [] values) throws Exception {
 		filterConditionComparators(values);
-		setFormValues("conditionComparators", values);
+		setCollectionCondition("conditionComparator", values); 
 	}
 	
 	protected void setConditionValues(String collection, String [] values) throws Exception {
-		String collectionId = Tab.COLLECTION_PREFIX + Strings.change(collection, ".", "_") + "_conditionValues";
-		setFormValues(collectionId, values);					
+		String collectionId = Tab.COLLECTION_PREFIX + Strings.change(collection, ".", "_") + "_conditionValue";
+		setCollectionCondition(collectionId, values);
 	}
 	
 	private boolean conditionValuesEquals(String[] expectedValues, String[] currentValues) {
@@ -688,7 +728,7 @@ public class ModuleTestBase extends TestCase {
 
 	protected void setConditionComparators(String collection, String [] values) throws Exception { 
 		filterConditionComparators(values);
-		setFormValues(Tab.COLLECTION_PREFIX + collection + "conditionComparators", values);
+		setCollectionCondition(Tab.COLLECTION_PREFIX + collection + "conditionComparators", values);
 	}	
 	
 	private void filterConditionComparators(String[] values) {
@@ -703,16 +743,18 @@ public class ModuleTestBase extends TestCase {
 	}
 
 	protected void setValueNotNotify(String name, String value) throws Exception {
-		// Not sure if the event is not thrown, but at least we continue
-		// working with the page before the event is thrown
-		setFormValueNoRefresh(getPropertyPrefix() + name, value);
+		String qualifiedName = getPropertyPrefix() + name;
+		HtmlInput input = getForm().getInputByName(qualifiedName);
+		input.setAttributeValue("value", value); // In this way onchange is not thrown 
+		lastNotNotifiedPropertyName = qualifiedName; 
+		lastNotNotifiedPropertyValue = value; 
 	}
 	
-	private void setValueWithPrefix(String propertyPrefix, String name, String value) throws Exception {
+	private void setValueWithPrefix(String propertyPrefix, String name, String value) throws Exception {		
 		setFormValue(propertyPrefix + name, value);
 	}
 	
-	protected void setValue(String name, String value) throws Exception {
+	protected void setValue(String name, String value) throws Exception {		
 		setValueWithPrefix(getPropertyPrefix(), name, value);
 	}
 	
@@ -1024,7 +1066,7 @@ public class ModuleTestBase extends TestCase {
 		uncheckRow("selected", row);
 	}
 		
-	protected void checkRowCollection(String collection, int row) throws Exception {
+	protected void checkRowCollection(String collection, int row) throws Exception {		
 		if (collectionHasFilterHeader(collection)) {
 			checkRow(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected", row);
 		}
@@ -1034,7 +1076,7 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	private HtmlInput getCheckable(String id, int row) {
-		return  (HtmlInput) getForm().getInputsByName(id).get(row % 10);
+		return (HtmlInput) getForm().getInputByValue(id + ":" + row); 
 	}
 		
 	private void checkRow(String id, int row) throws Exception {
@@ -1042,13 +1084,15 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected void checkRow(String id, String value) throws Exception {
-		HtmlInput input = getForm().getInputByValue(value);
-		assertTrue(XavaResources.getString("must_exist", id), 
-			input.getNameAttribute().equals(id)); 
-		input.setChecked(true);
+		try {
+			HtmlInput input = getForm().getInputByValue(id + ":" + value); 
+			input.click();
+		}
+		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
+			fail(XavaResources.getString("must_to_exists", id));
+		}
 	}
-	
-	
+		
 	private void uncheckRow(String id, int row) throws Exception {		
 		getCheckable(id, row).setChecked(false);
 	}
@@ -1433,13 +1477,14 @@ public class ModuleTestBase extends TestCase {
 		return xavaJunitProperties;
 	}
 	
-	private void resetForm() throws Exception {	
+	private void resetForm() throws Exception {		
+		waitUntilPageIsLoaded(); 		
 		if (getFormIndex() >= page.getForms().size()) return; 
-		setForm((HtmlForm) page.getForms().get(getFormIndex()));
+		setForm(page.getForms().get(getFormIndex()));
 	}
 	
 	private void resetLoginForm() throws Exception {
-		setForm((HtmlForm) page.getForms().get(getLoginFormIndex()));		
+		setForm(page.getForms().get(getLoginFormIndex()));		
 	}
 		
 	private void setForm(HtmlForm form) {

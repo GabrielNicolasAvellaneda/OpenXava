@@ -5,7 +5,6 @@ import javax.servlet.jsp.*;
 import javax.servlet.jsp.tagext.*;
 
 import org.apache.commons.logging.*;
-import org.openxava.controller.*;
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
 
@@ -26,9 +25,7 @@ public class ImageTag extends TagSupport implements IActionTag {
 			if (Is.emptyString(getAction())) { 
 				return SKIP_BODY;
 			}
-			ModuleContext context = (ModuleContext) pageContext.getSession().getAttribute("context");
 			HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
-			ModuleManager manager = (ModuleManager) context.get(request, "manager");
 			MetaAction metaAction = MetaControllers.getMetaAction(getAction());
 			
 			pageContext.getOut().print("<input name='");
@@ -45,14 +42,12 @@ public class ImageTag extends TagSupport implements IActionTag {
 			pageContext.getOut().print(" title='");
 			pageContext.getOut().print(metaAction.getKeystroke() + " - " +  metaAction.getDescription(request));
 			pageContext.getOut().print("'");			
-			pageContext.getOut().print(" href=\"javascript:executeXavaAction(");
+			pageContext.getOut().print(" href=\"javascript:openxava.executeAction(");
 			pageContext.getOut().print("'");
 			pageContext.getOut().print(metaAction.getConfirmMessage(request));
 			pageContext.getOut().print("'");
 			pageContext.getOut().print(", ");			
 			pageContext.getOut().print(metaAction.isTakesLong());
-			pageContext.getOut().print(", document.");
-			pageContext.getOut().print(manager.getForm());
 			pageContext.getOut().print(", '");
 			pageContext.getOut().print(getAction());
 			if (!Is.emptyString(getArgv())) {
