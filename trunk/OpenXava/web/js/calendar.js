@@ -1,84 +1,3 @@
-<%@ include file="imports.jsp"%>
-
-<script type="text/javascript">
-<%-- JavaScript for text area maxsize --%>
-function limitLength(ev, max) { 
-	var target = window.event ? window.event.srcElement : ev.target;			
-	if ( target.value.length > max ) {
-		target.value = target.value.substring(0, max);		
-	}	
-}
-
-<%-- JavaScript for numeric editors --%>
-function validateNumeric(ev, max, integer) {		
-	if (ev.which == 0) return true;
-	var charCode = (ev.which) ? ev.which : ev.keyCode;		
-	if (charCode == 0 || charCode == 8) return true;		
-	if (ev.ctrlKey) return true;		
-	var target = window.event ? window.event.srcElement : ev.target;	
-	var text = target.value + String.fromCharCode(charCode);	
-	var numerics = 0;			
-	var textLength = text.length;
-	for (var i=0; i < textLength; i++) {		
-		var theChar = text.charAt(i);		
-		if (theChar >= '0' && theChar <= '9') {
-			numerics++;
-			if (numerics > max) {
-				return false;
-			}
-		}	
-		else if (!integer && !(theChar == ',' || theChar == '.' || theChar == '-')) {
-			return false;
-		}
-		else if (integer && theChar != '-') {
-			return false;
-		}
-	}	
-	return true;
-}
-
-<%-- JavaScript for collections and list --%>
-function manageFilterRow(id, visible)
-{
-    var img = document.getElementById("xava-filter-image-" + id);
-    var elem = document.getElementById("xava-tr-list-filter-" + id)
-    var link = document.getElementById("xava-filter-link-" + id)
-	if (elem.style.display == ''){
-		elem.style.display = 'none';
-		img.src='<%=request.getContextPath()%>/xava/images/show-filter.gif';
-		link.title='<xava:message key="show_filters"/>';
-		document.<%=manager.getForm()%>[visible].value="false";
-	}
-	else {
-		elem.style.display = '';
-		img.src='<%=request.getContextPath()%>/xava/images/hide-filter.gif';
-		link.title='<xava:message key="hide_filters"/>';
-		document.<%=manager.getForm()%>[visible].value="true";
-	}
-}
-</script>
-
-
-<!-- JavaScript for calendar in date editors -->
-
-<!-- Loading Theme file(s) -->
-<link rel="stylesheet" type="text/css" media="all" href="<%=request.getContextPath()%>/xava/editors/calendar/skins/aqua/theme.css" title="Aqua" />
-
-<% if (style.isNeededToIncludeCalendar()) { %>
-<!-- import the calendar script -->
-<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/calendar.js"></script>
-
-<!-- import the language module -->
-<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/lang/calendar-<%=request.getLocale().getLanguage()%>.js"></script>
-
-<% } %>
-
-<!-- other languages might be available in the lang directory; please check
-your distribution archive. -->
-
-<!-- helper script that uses the calendar -->
-<script type="text/javascript">
-
 var oldLink = null;
 // code to change the active stylesheet
 function setActiveStyleSheet(link, title) {
@@ -155,12 +74,7 @@ function showCalendar(id, format, showsTime, showsOtherMonths) {
   // the reference element that we pass to showAtElement is the button that
   // triggers the calendar.  In this example we align the calendar bottom-right
   // to the button.
-  <% 
-  // Date fields at end of the windows is not shown correctly in IE6,
-  // hence, we align at top in IE6, and at botton in other browsers.
-  String calendarAlign = browser != null && browser.indexOf("MSIE 6") >= 0?"tr":"Br";  
-  %>
-  _dynarch_popupCalendar.showAtElement(el.nextSibling, "<%=calendarAlign%>"); // show the calendar
+  _dynarch_popupCalendar.showAtElement(el.nextSibling, openxava.calendarAlign); // show the calendar
 
   return false;
 }
@@ -211,4 +125,3 @@ function showFlatCalendar() {
   // ... we can show it here.
   cal.show();
 }
-</script>

@@ -20,7 +20,7 @@ public class GenerateReportAction extends TabBaseAction implements IForwardActio
 	}
 	
 	public boolean inNewWindow() {
-		return true;
+		return true;		
 	}
 
 	public HttpServletRequest getRequest() {

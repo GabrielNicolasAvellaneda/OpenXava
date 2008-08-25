@@ -30,7 +30,7 @@ public class ModuleManager {
 	static {		
 		MetaControllers.setContext(MetaControllers.WEB);		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
-		log.info("OpenXava 3.0.3 (2008-8-14)");
+		log.info("OpenXava 3.1 beta1 (2008-9-x)");		
 	}
 	
 	private static int nextOid = 0; 
@@ -58,7 +58,8 @@ public class ModuleManager {
 	private String viewName = null;
 	private String modeName;	
 	private String nextModule;
-	private String defaultView = null; 	
+	private String defaultView = null; 
+	
 	private boolean formUpload = false;
 	private String lastPageId;
 	private String previousMode;
@@ -74,9 +75,9 @@ public class ModuleManager {
 	 */
 	public String getForm() {
 		if (form == null) {
-			form = "form" + oid;
+			form = "xava_form" + oid;
 		}
-		return form;
+		return form;		
 	}
 	
 	/**
@@ -86,7 +87,7 @@ public class ModuleManager {
 	public String getFormAction(ServletRequest request) {		
 		Object portletActionURL = request.getAttribute(
 			isFormUpload()?"xava.portlet.uploadActionURL":"xava.portlet.actionURL"); 		
-		return portletActionURL == null?"":"action='" + portletActionURL + "'";
+		return portletActionURL == null?"":"action='" + portletActionURL + "'";				
 	}
 
 	public Collection getMetaActions() {
@@ -114,7 +115,7 @@ public class ModuleManager {
 				Iterator it = getMetaControllers().iterator();
 				metaActionsOnInit = new ArrayList();
 				while (it.hasNext()) {
-					MetaController contr = (MetaController) it.next();										
+					MetaController contr = (MetaController) it.next();
 					metaActionsOnInit.addAll(contr.getMetaActionsOnInit());									
 				} 										
 			}
@@ -169,7 +170,7 @@ public class ModuleManager {
 	}
 
 	private void setupModuleControllers() throws XavaException {					
-		Collection controllers = getMetaModule().getControllersNames();		
+		Collection controllers = getMetaModule().getControllersNames();
 		String [] names = new String[controllers.size()];
 		controllers.toArray(names);		
 		setControllersNames(names);			
@@ -195,12 +196,16 @@ public class ModuleManager {
 			Is.equal(request.getParameter("xava_action_application"),getApplicationName());
 	}
 	
-	private boolean duplicateRequest(HttpServletRequest request) { 		
+	private boolean duplicateRequest(HttpServletRequest request) {
+		return false; // Maybe it's not needed with AJAX
+		/*
+		if (request.getSession().getAttribute("xava_forward") != null) return false;
 		String pageId = request.getParameter("xava_page_id");
 		if (pageId == null) return false;
 		if (pageId.equals(lastPageId)) return true;		
 		lastPageId = pageId;
 		return false;
+		*/
 	}	
 	
 	public void execute(HttpServletRequest request, Messages errors, Messages messages) {		
@@ -209,9 +214,9 @@ public class ModuleManager {
 				if (isFormUpload()) {
 					parseMultipartRequest(request);
 				}
-				String xavaAction = getParameter(request, "xava_action");
+				String xavaAction = getParameter(request, "xava_action");				
 				if (!Is.emptyString(xavaAction)) {											
-					String actionValue = request.getParameter("xava_action_argv");
+					String actionValue = request.getParameter("xava_action_argv");					
 					if ("undefined".equals(actionValue)) actionValue = null;						
 					MetaAction a = MetaControllers.getMetaAction(xavaAction);					
 					long ini = System.currentTimeMillis();
@@ -233,7 +238,7 @@ public class ModuleManager {
 			for (Iterator it = items.iterator(); it.hasNext(); ) {
 				FileItem item = (FileItem) it.next();
 				if (parameter.equals(item.getFieldName())) return item.getString();								
-			}						
+			}	
 			return null;    
 		}
 		else {
@@ -265,7 +270,7 @@ public class ModuleManager {
 	}
 
 	private void executeAction(IAction action, MetaAction metaAction, Messages errors, Messages messages, String propertyValues, HttpServletRequest request) {
-		try {			
+		try {						
 			action.setErrors(errors);
 			action.setMessages(messages);
 			action.setEnvironment(getEnvironment());
@@ -452,6 +457,7 @@ public class ModuleManager {
 			if (XSystem.isJava5OrBetter()) ModuleManagerJava5.manageExceptionJava5(this, metaAction, errors, messages, ex);
 			else manageExceptionJava14(metaAction, errors, messages, ex);
 		}
+				
 	}
 	
 	private void manageExceptionJava14(MetaAction metaAction, Messages errors, Messages messages, Exception ex) {
@@ -487,7 +493,7 @@ public class ModuleManager {
 		if (previousMode != null) setModeName(previousMode);				
 	}
 
-	private View getSubview(View view, String memberName) throws XavaException {		
+	private View getSubview(View view, String memberName) throws XavaException { 
 		if (memberName.startsWith("xava.")) {
 			String prefix = "xava." + view.getModelName() + ".";	
 			if (prefix.length() > memberName.length()) return view;
@@ -536,13 +542,13 @@ public class ModuleManager {
 		XHibernate.rollback();		
 	}		
 
-	private void parseMultipartRequest(HttpServletRequest request) throws FileUploadException { 
+	public void parseMultipartRequest(HttpServletRequest request) throws FileUploadException { 
 		List fileItems = (List) request.getAttribute("xava.upload.fileitems");		
 		if (fileItems != null) return;		
-		DiskFileItemFactory factory = new DiskFileItemFactory();
-		factory.setSizeThreshold(1000000);		
-		ServletFileUpload upload = new ServletFileUpload(factory);
-		request.setAttribute("xava.upload.fileitems", upload.parseRequest(request)); 
+		DiskFileItemFactory factory = new DiskFileItemFactory();		
+		factory.setSizeThreshold(1000000);				
+		ServletFileUpload upload = new ServletFileUpload(factory);		
+		request.setAttribute("xava.upload.fileitems", upload.parseRequest(request));		
 	}
 
 	public Environment getEnvironment() throws XavaException {		
@@ -651,7 +657,7 @@ public class ModuleManager {
 	private void setObjectsInAction(IAction action, MetaAction metaAction) throws XavaException {
 		if (!metaAction.usesObjects()) return;
 		PropertiesManager mp = new PropertiesManager(action);
-		Iterator it = metaAction.getMetaUseObjects().iterator();		
+		Iterator it = metaAction.getMetaUseObjects().iterator();
 		while (it.hasNext()) {
 			MetaUseObject metaUseObject = (MetaUseObject) it.next();
 			String objectName = metaUseObject.getName();			 
@@ -862,7 +868,7 @@ public class ModuleManager {
 			modeName = getMetaActionsMode().isEmpty()?IChangeModeAction.DETAIL:null;
 			moduleInitiated = true;
 			executeInitAction(request, errors, messages);
-		}				
+		}			
 	}
 	
 	public void executeBeforeEachRequestActions(HttpServletRequest request, Messages errors, Messages messages) {
@@ -946,15 +952,15 @@ public class ModuleManager {
 		return false;
 	}
 	
-	private boolean isFormUpload() {
+	public boolean isFormUpload() {  
 		return formUpload;
 	}	
 
-	private void setFormUpload(boolean b) {		
+	private void setFormUpload(boolean b) { 		
 		formUpload = b;
 	}
 
-	public String getNextModule() {
+	public String getNextModule() {		
 		return nextModule;
 	}
 	public void setNextModule(String nextModule) {

@@ -1729,8 +1729,8 @@ public class View implements java.io.Serializable {
 		
 	public void assignValuesToWebView(String qualifier) {
 		try {															
-			focusForward = "true".equalsIgnoreCase(getRequest().getParameter("focus_forward"));			
-			setIdFocusProperty(getRequest().getParameter("focus_property"));
+			focusForward = "true".equalsIgnoreCase(getRequest().getParameter("xava_focus_forward"));			
+			setIdFocusProperty(getRequest().getParameter("xava_focus_property"));
 			Iterator it = isSubview()?getMetaMembersIncludingHiddenKey().iterator():getMetaMembers().iterator();
 			if (isRepresentsCollection()) fillCollectionInfo(qualifier);
 			
@@ -1740,7 +1740,7 @@ public class View implements java.io.Serializable {
 					MetaProperty p = (MetaProperty) m;
 					String propertyKey= "xava." + qualifier + "." + p.getName();					
 					String valueKey = propertyKey + ".value";
-					String [] results = getRequest().getParameterValues(propertyKey);
+					String [] results = getRequest().getParameterValues(propertyKey);					
 					Object value = WebEditors.parse(getRequest(), p, results, getErrors(), getViewName());
 					boolean isHiddenKeyWithoutValue = p.isHidden() && (results == null); // for not reset hidden values					
 					if (!isHiddenKeyWithoutValue && WebEditors.mustToFormat(p, getViewName())) { 
@@ -1778,7 +1778,7 @@ public class View implements java.io.Serializable {
 			}			
 						
 			if (!isSubview() && !isSection()) {			
-				String changedProperty = getRequest().getParameter("changed_property");			  
+				String changedProperty = getRequest().getParameter("xava_changed_property");			  
 				if (!Is.emptyString(changedProperty)) {
 					if (getParent() == null) {
 						getRoot().registeringExecutedActions = true;
@@ -1809,12 +1809,6 @@ public class View implements java.io.Serializable {
 	private void fillCollectionInfo(String qualifier) throws XavaException {
 		String tabPrefix = Tab.COLLECTION_PREFIX + getQualifiedCollectionName();
 		getCollectionTab().setSelected(getRequest().getParameterValues(tabPrefix + "selected"));
-		String [] conditionComparators = getRequest().getParameterValues(tabPrefix + "conditionComparators");		
-		if (conditionComparators != null) {				
-			getCollectionTab().setConditionComparators(conditionComparators);
-			getCollectionTab().setConditionValues(getRequest().getParameterValues(tabPrefix + "conditionValues"));
-		}
-		
 		// Fill selected
 		String id = "xava." + qualifier + ".__SELECTED__";
 		String [] sel = getRequest().getParameterValues(id);

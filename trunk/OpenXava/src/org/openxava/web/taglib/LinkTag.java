@@ -30,13 +30,6 @@ public class LinkTag extends TagSupport implements IActionTag {
 				return SKIP_BODY;
 			}
 			hasBody=false;
-			ModuleContext context =
-				(ModuleContext) pageContext.getSession().getAttribute(
-					"context");
-			ModuleManager manager =
-				(ModuleManager) context.get(
-					(HttpServletRequest) pageContext.getRequest(),
-					"manager");
 			HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
 			MetaAction metaAction = MetaControllers.getMetaAction(getAction());
 						 		
@@ -65,15 +58,12 @@ public class LinkTag extends TagSupport implements IActionTag {
 			pageContext.getOut().print(metaAction.getKeystroke() + " - " +  metaAction.getDescription(request));
 			pageContext.getOut().print("'");
 			
-			pageContext.getOut().print(" href=\"javascript:executeXavaAction(");
+			pageContext.getOut().print(" href=\"javascript:openxava.executeAction(");
 			pageContext.getOut().print("'");
 			pageContext.getOut().print(metaAction.getConfirmMessage(request));
 			pageContext.getOut().print("'");
 			pageContext.getOut().print(", ");			
 			pageContext.getOut().print(metaAction.isTakesLong());
-			pageContext.getOut().print(", document.");
-			
-			pageContext.getOut().print(manager.getForm());
 			pageContext.getOut().print(", '");
 			pageContext.getOut().print(getAction());
 			pageContext.getOut().print("'");

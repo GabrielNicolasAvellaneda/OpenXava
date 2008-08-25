@@ -132,7 +132,26 @@ public class ModuleContext {
 		Map context = getContext(application, module, objectName); 
 		context.put(objectName, value);
 	}
+
+	public void remove(HttpServletRequest request, String objectName) throws XavaException {
+		String application = request.getParameter("application");
+		if (Is.emptyString(application)) {
+			throw new XavaException("application_and_module_required_in_request");
+		}
+		String module = request.getParameter("module");
+		if (Is.emptyString(module)) {
+			throw new XavaException("application_and_module_required_in_request");
+		}				
+		Map context = getContext(application, module, objectName); 
+		context.remove(objectName);
+	}
+		
+	public void remove(String application, String module, String objectName) throws XavaException {
+		Map context = getContext(application, module, objectName); 
+		context.remove(objectName);
+	}
 	
+		
 	private Object createObject(String objectName) throws XavaException{			
 		return MetaControllers.getMetaObject(objectName).createObject();
 	}

@@ -26,6 +26,15 @@ public class WebEditors {
 		}
 	}
 	
+	public static boolean hasMultipleValuesFormatter(MetaProperty p, String viewName) throws XavaException { 
+		try {
+			return getMetaEditorFor(p, viewName).hasMultipleValuesFormatter(); 
+		}
+		catch (ElementNotFoundException ex) {
+			return false; 
+		}
+	}	
+	
 	public static boolean hasFrame(MetaProperty p, String viewName) throws XavaException { 
 		try {
 			return getMetaEditorFor(p, viewName).isFrame(); 

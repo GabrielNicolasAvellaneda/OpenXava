@@ -83,6 +83,9 @@ public class Tab implements java.io.Serializable {
 	private View collectionView;
 	private boolean filterVisible=XavaPreferences.getInstance().isShowFilterByDefaultInList();
 	
+	private static int nextOid = 0; 
+	public int oid = nextOid++; 
+	
 	public List getMetaProperties() {
 		if (metaProperties == null) {
 			if (Is.emptyString(getModelName())) return Collections.EMPTY_LIST;
@@ -354,7 +357,7 @@ public class Tab implements java.io.Serializable {
 			if (sb.length() == 0) sb.append(" 1=1 ");
 			sb.append(" order by ");						
 			sb.append(getMetaTab().getSQLDefaultOrder());									
-		}								
+		}			
 		return sb.toString();
 	}
 
@@ -578,11 +581,11 @@ public class Tab implements java.io.Serializable {
 	}
 
 	/**
-	 * Change the selelected ones only within the current page range. <p>
+	 * Change the selected ones only within the current page range. <p>
 	 * 
 	 * Postcondition <tt>this.selected == values</tt> <b>is not fulfilled</b> 	 
 	 */
-	public void setSelected(int [] values) {				
+	public void setSelected(int [] values) { 				
 		List r = new ArrayList();
 		if (selected != null) {	
 			for (int i=0; i<selected.length; i++) {
@@ -605,7 +608,7 @@ public class Tab implements java.io.Serializable {
 	/**
 	 * Same that {@link #setSelectec(int [] values)} but from String []. <p>
 	 */
-	public void setSelected(String [] values) {
+	public void setSelected(String [] values) { 
 		if (values == null) return;
 		int [] intValues = new int[values.length];
 		for (int i=0; i<values.length; i++) {
@@ -686,26 +689,25 @@ public class Tab implements java.io.Serializable {
 		}
 	}
 	
-	public void setConditionValues(String [] values) throws XavaException {		
+	private void setConditionValuesImpl(String [] values) throws XavaException {	
 		if (Arrays.equals(this.conditionValues, values)) return;		
 		if (getMetaPropertiesNotCalculated().size() != values.length) return; // to avoid problems on changing module
-		this.conditionValues = values;		
-		goPage(1);		
+		this.conditionValues = values;				
 		rowsHidden = false;		
 		condition = null;
 	}
-	
+		
 	public String [] getConditionValues() {
 		return conditionValues; 
 	}
 	
-	public void setConditionComparators(String [] comparators) throws XavaException {
+	private void setConditionComparatorsImpl(String [] comparators) throws XavaException {  
 		if (Arrays.equals(this.conditionComparators, comparators)) return;		
 		if (getMetaPropertiesNotCalculated().size() != comparators.length) return;		
 		this.conditionComparators = comparators;
 		condition = null;						
 	}
-	
+		
 	public String [] getConditionComparators() {
 		return conditionComparators;
 	}
@@ -734,11 +736,11 @@ public class Tab implements java.io.Serializable {
 	}
 	
 	
-	public String getModelName() {
+	public String getModelName() {		
 		return modelName;
 	}
 
-	public void setModelName(String newModelName) {
+	public void setModelName(String newModelName) {		
 		if (Is.equal(modelName, newModelName)) return;
 		modelName = newModelName;		
 		reinitState();
@@ -771,24 +773,43 @@ public class Tab implements java.io.Serializable {
 		loadUserPreferences();
 	}
 
-	public void setRequest(HttpServletRequest request) {
+	public void setRequest(HttpServletRequest request) {		
 		this.request = request;
-		updateFilterVisible();
+		String collectionPrefix = getCollectionPrefix();
+		setConditionComparators(collectionPrefix);
+		setConditionValues(collectionPrefix);
+	}
+
+	private String getCollectionPrefix() {
+		String tabObject = request.getParameter("tabObject");
+		return tabObject == null?"":tabObject + "_";
+	}
+
+	private void setConditionComparators(String collectionPrefix) { 		
+		setConditionComparatorsImpl(
+			getConditionFilterParameters(collectionPrefix + "conditionComparator.")
+		);
 	}
 	
-
-	private void updateFilterVisible() {
-		String filterVisibleId = "xava_list" + getTabName() + "_filter_visible";
-		String filterVisibleValue = request.getParameter(filterVisibleId);
-		if (!Is.emptyString(filterVisibleValue)) {
-			boolean newFilterVisible = Boolean.valueOf(filterVisibleValue).booleanValue();
-			if (newFilterVisible != filterVisible) {
-				filterVisible = newFilterVisible;
-				saveUserPreferences();
-			}
-		}
+	private void setConditionValues(String collectionPrefix) { 		
+		setConditionValuesImpl(
+			getConditionFilterParameters(collectionPrefix + "conditionValue.")
+		);
 	}
-
+	
+	private String[] getConditionFilterParameters(String prefix) {
+		String conditionComparator = request.getParameter(prefix + "0");		
+		Collection conditionComparators = new ArrayList();
+		for (int i=1; conditionComparator != null; i++) {
+			conditionComparators.add(conditionComparator);			
+			conditionComparator = request.getParameter(prefix + i);			
+		}
+		String [] result = new String[conditionComparators.size()];
+		conditionComparators.toArray(result);
+		return result;
+	}
+	
+	
 	private Preferences getPreferences() throws BackingStoreException {		
 		return Users.getCurrentPreferences().node("tab." + getMetaTab().getMetaModel().getName() + "." + getTabName() + ".");
 	}
@@ -1245,5 +1266,15 @@ public class Tab implements java.io.Serializable {
 	public boolean isFilterVisible() {
 		return filterVisible;
 	}
+	public void setFilterVisible(boolean filterVisible) { 
+		this.filterVisible = filterVisible;
+		saveUserPreferences();
+	}
+	
+	
+	public String toString() {
+		return "Tab:" + oid;
+	}
+	
 
 }

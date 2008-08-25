@@ -27,10 +27,8 @@ public class ButtonTag extends TagSupport implements IActionTag{
 			if (Is.emptyString(getAction())) {  
 				return SKIP_BODY;
 			}
-
-			ModuleContext context = (ModuleContext) pageContext.getSession().getAttribute("context");
-			HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
-			ModuleManager manager = (ModuleManager) context.get(request, "manager");
+			
+			HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();			
 			MetaAction metaAction = MetaControllers.getMetaAction(getAction());
 						
 			pageContext.getOut().print("<input name='");
@@ -49,14 +47,12 @@ public class ButtonTag extends TagSupport implements IActionTag{
 			pageContext.getOut().print(" class='");
 			Style style = (Style) request.getAttribute("style");
 			pageContext.getOut().print(style.getButton());
-			pageContext.getOut().print("'\tonclick='executeXavaAction(");
+			pageContext.getOut().print("'\tonclick='openxava.executeAction(");
 			pageContext.getOut().print('"');				
 			pageContext.getOut().print(metaAction.getConfirmMessage(request));
 			pageContext.getOut().print('"');
 			pageContext.getOut().print(", ");
 			pageContext.getOut().print(metaAction.isTakesLong());
-			pageContext.getOut().print(", document.");
-			pageContext.getOut().print(manager.getForm());
 			pageContext.getOut().print(", \"");
 			pageContext.getOut().print(getAction());
 			pageContext.getOut().print('"');
