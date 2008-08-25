@@ -86,7 +86,7 @@ public class FormulaTest extends ModuleTestBase {
 	public void testHtmlTextStereotype() throws Exception {		
 		execute("Mode.detailAndFirst");
 		assertValue("name", "HTML TEST");
-		execute("Sections.change", "activeSection=1");		
+		execute("Sections.change", "activeSection=1");
 		assertTrue("Expected HTML token not found", getHtml().indexOf("Y largo</strong>,<span style=\"background-color: rgb(153, 204, 0);\"> verde </span>") >= 0);
 	}
 		

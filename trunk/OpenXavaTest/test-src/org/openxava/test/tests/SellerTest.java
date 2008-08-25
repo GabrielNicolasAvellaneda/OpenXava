@@ -128,8 +128,8 @@ public class SellerTest extends ModuleTestBase {
 		execute("Print.generatePdf", "viewObject=xava_view_customers");
 		assertContentTypeForPopup("application/pdf");
 		
-		execute("Print.generateExcel", "viewObject=xava_view_customers");
-		assertContentTypeForPopup("text/x-csv");		
+		execute("Print.generateExcel", "viewObject=xava_view_customers");				
+		assertContentTypeForPopup("text/x-csv");				
 	}
 
 	

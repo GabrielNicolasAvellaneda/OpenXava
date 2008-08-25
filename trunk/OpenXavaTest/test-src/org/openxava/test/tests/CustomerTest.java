@@ -136,7 +136,7 @@ public class CustomerTest extends ModuleTestBase {
 		warehouse.setNumber(1);
 		warehouse.setZoneNumber(1);
 		String warehouseKey = MetaModel.getForPOJO(warehouse).toString(warehouse);
-		setValue("deliveryPlaces.preferredWarehouse.KEY", warehouseKey);		
+		setValue("deliveryPlaces.preferredWarehouse.KEY", warehouseKey);
 		assertValue("deliveryPlaces.remarks", "PREFERRED WAREHOUSE IS 1");
 	}
 		
@@ -419,7 +419,7 @@ public class CustomerTest extends ModuleTestBase {
 	
 	public void testCustomSearchReferenceAction() throws Exception {
 		execute("CRUD.new");
-		String html = getHtml();
+		String html = getHtml();		
 		assertTrue("Search of 'seller' should be 'MyReference.search'", html.indexOf("'MyReference.search', 'keyProperty=xava.Customer.seller.number'") > 0);
 		assertTrue("Search 'alternateSeller' should be 'Reference.search'", html.indexOf("'Reference.search', 'keyProperty=xava.Customer.alternateSeller.number'") > 0);
 		execute("MyReference.search", "keyProperty=xava.Customer.seller.number");
@@ -434,7 +434,7 @@ public class CustomerTest extends ModuleTestBase {
 		assertValue("seller.name", "");
 		setValue("seller.number", "1");
 		assertValue("seller.name", "MANUEL CHAVARRI");
-		setValue("seller.number", "907"); // We suposse that it not exists 
+		setValue("seller.number", "907"); // We suppose that it not exists 
 		assertValue("seller.name", "");									
 	}
 	
@@ -484,15 +484,15 @@ public class CustomerTest extends ModuleTestBase {
 	}
 	
 	public void testIfKeyNotExistsInReferenceNotExecuteAction() throws Exception {
-		if (isPortalEnabled()) {
+		if (isPortalEnabled()) { 
 			System.err.println("WARNING! testIfKeyNotExistsInReferenceNotExecuteAction() is not executed: click + no duplicate submit not testable inside portal");
 			return;
 		}
-		execute("CRUD.new");		
+		execute("CRUD.new");				
 		setValue("relationWithSeller", "HOLA");		
-		setValueNotNotify("seller.number", "53"); // We suposse that not exists
-		assertNoError("Seller with key {number=53} not found"); 
-		execute("CRUD.new");
+		setValueNotNotify("seller.number", "53"); // We suppose that not exists		
+		assertNoError("Seller with key {number=53} not found"); 		
+		execute("CRUD.new");		
 		assertError("Seller with key {number=53} not found");
 		assertValue("relationWithSeller", "HOLA"); // That implies that 'new' not was executed		
 	}

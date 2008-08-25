@@ -23,7 +23,6 @@ if (collection != null && !collection.equals("")) {
 	collectionArgv=",collection="+collection;
 	prefix = tabObject + "_";
 }
-
 org.openxava.tab.Tab tab = (org.openxava.tab.Tab) context.get(request, tabObject);
 tab.setRequest(request); 
 String action=request.getParameter("rowAction");
@@ -57,9 +56,9 @@ boolean singleSelection="true".equalsIgnoreCase(request.getParameter("singleSele
 <% } %>
 
 <table id="<%=id%>" class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%> <%=style.getListStyle()%>>
-<tr id="xava-tr-list" class="<%=style.getListHeader()%>">
+<tr id="xava_tr_list" class="<%=style.getListHeader()%>">
 <th class="<%=style.getListHeaderCell()%>" style="text-align: center" width="60">     
-	<a id="xava-filter-link-<%=id%>" href="javascript:manageFilterRow('<%=id%>', 'xava_list<%=tab.getTabName()%>_filter_visible')" title="<xava:message key='<%=filterMessage%>'/>"><img id="xava-filter-image-<%=id%>" align='middle' 
+	<a id="xava_filter_link_<%=id%>" href="javascript:openxava.manageFilterRow('<%=id%>', '<%=tabObject%>')" title="<xava:message key='<%=filterMessage%>'/>"><img id="xava_filter_image_<%=id%>" align='middle' 
 		src='<%=request.getContextPath()%>/xava/images/<%=imageFilter%>.gif' border='0'/></a>
 	<xava:image action="List.customize" argv="<%=collectionArgv%>"/>
 </th>
@@ -121,31 +120,25 @@ while (it.hasNext()) {
 %>
 </tr>
 <% if (filter) { %>
-<tr id="xava-tr-list-filter-<%=id%>" class=<%=style.getListSubheader()%> style="display: <%=displayFilter%>"> 
+<tr id="xava_tr_list_filter_<%=id%>" class=<%=style.getListSubheader()%> style="display: <%=displayFilter%>"> 
 <th class=<%=style.getListSubheaderCell()%> style="text-align: center" width="60">
 <xava:action action="List.filter" argv="<%=collectionArgv%>"/>
 </th>
 <th class=<%=style.getListSubheaderCell()%> width="5">
-	<script>
-	function clear<%=prefix%>ConditionValues() {
-		for (i=0; i<document.<%=manager.getForm()%>.<%=prefix%>conditionValues.length; i++) {
-			document.<%=manager.getForm()%>.<%=prefix%>conditionValues[i].value = '';
-	  	}
-	}
-	</script>
 	<a title='<xava:message key="clear_condition_values"/>' href="javascript:void(0)">
 		<img src='<%=request.getContextPath()%>/xava/images/clear-right.gif'
-			border='0' align='middle' onclick="clear<%=prefix%>ConditionValues()"/>
+			border='0' align='middle' onclick="openxava.clearConditionValues('<%=prefix%>')"/>
 	</a>
 </th>
 <%
 it = properties.iterator();
 String [] conditionValues = tab.getConditionValues();
 String [] conditionComparators = tab.getConditionComparators();
-int iConditionValues = 0;
+int iConditionValues = -1; 
 while (it.hasNext()) {
 	MetaProperty property = (MetaProperty) it.next();
 	if (!property.isCalculated()) {
+		iConditionValues++; 
 		boolean isValidValues = property.hasValidValues();
 		boolean isString = "java.lang.String".equals(property.getType().getName());
 		boolean isBoolean = "boolean".equals(property.getType().getName()) || "java.lang.Boolean".equals(property.getType().getName());
@@ -153,8 +146,7 @@ while (it.hasNext()) {
 		int maxLength = property.getSize();
 		int length = Math.min(isString?property.getSize()*4/5:property.getSize(), 20);
 		String value= conditionValues==null?"":conditionValues[iConditionValues];
-		String comparator = conditionComparators==null?"":Strings.change(conditionComparators[iConditionValues], "=", "eq");
-		iConditionValues++;
+		String comparator = conditionComparators==null?"":Strings.change(conditionComparators[iConditionValues], "=", "eq");		
 		if (isValidValues) {
 	%>	
 <th class=<%=style.getListSubheaderCell()%> align="left">
@@ -164,15 +156,17 @@ while (it.hasNext()) {
 	<jsp:param name="value" value="<%=value%>" />
 	<jsp:param name="base0" value="<%=Boolean.toString(!property.isNumber())%>" />
 	<jsp:param name="prefix" value="<%=prefix%>"/>
+	<jsp:param name="index" value="<%=iConditionValues%>"/>
 </jsp:include>		
 	<%	
 		}
 		else if (isBoolean) { 
 	%>
-<th class=<%=style.getListSubheaderCell()%> align="left">
+<th class="<%=style.getListSubheaderCell()%>" align="left">
 <jsp:include page="comparatorsBooleanCombo.jsp">
 	<jsp:param name="comparator" value="<%=comparator%>" />
 	<jsp:param name="prefix" value="<%=prefix%>"/>
+	<jsp:param name="index" value="<%=iConditionValues%>"/> 
 </jsp:include>
 	<% } else { // Not boolean %>
 <th class=<%=style.getListSubheaderCell()%> align="left">
@@ -181,10 +175,11 @@ String urlComparatorsCombo = "comparatorsCombo.jsp" // in this way because websp
 	+ "?comparator=" + comparator
 	+ "&isString=" + isString
 	+ "&isDate=" + isDate
-	+ "&prefix=" + prefix;
+	+ "&prefix=" + prefix  
+	+ "&index=" + iConditionValues; 
 %>
 <jsp:include page="<%=urlComparatorsCombo%>" />
-<input name="<%=prefix%>conditionValues" class=<%=style.getEditor()%> type="text" maxlength="<%=maxLength%>" size="<%=length%>" value="<%=value%>"/>
+<input name="<%=prefix%>conditionValue.<%=iConditionValues%>" class=<%=style.getEditor()%> type="text" maxlength="<%=maxLength%>" size="<%=length%>" value="<%=value%>"/>
 	<% } %>
 </th>
 <% 
@@ -223,14 +218,14 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 	}
 	String events=f%2==0?style.getListPairEvents(cssStyle):style.getListOddEvents(cssStyle);	
 %>
-<tr id="xava-tr-list" class="<%=cssClass%>" <%=events%> style="border-bottom: 1px solid;">
+<tr id="xava_tr_list" class="<%=cssClass%>" <%=events%> style="border-bottom: 1px solid;">
 	<td class="<%=cssCellClass%>" style='vertical-align: middle;text-align: center'>
 <% if (!org.openxava.util.Is.emptyString(action)) { %>
 <xava:action action='<%=action%>' argv='<%="row=" + f + actionArgv%>'/>
 <% } %>
 	</td>
 	<td class="<%=cssCellClass%>">
-	<INPUT type="<%=singleSelection?"RADIO":"CHECKBOX"%>" name="<%=prefix + "selected"%>" value="<%=f%>" <%=checked%>/>
+	<INPUT type="<%=singleSelection?"RADIO":"CHECKBOX"%>" name="xava_selected" value="<%=prefix + "selected"%>:<%=f%>" <%=checked%>/>
 	</td>	
 <%
 	for (int c=0; c<model.getColumnCount(); c++) {
