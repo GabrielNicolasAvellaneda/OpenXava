@@ -15,7 +15,6 @@
 	<property name="xava.lib" value="../OpenXava/bin"/>	
 	<property name="j2ee.lib" location="../OpenXava/lib/j2ee.jar"/>	
 	<property name="tl.lib" location="../OpenXava/lib/tl.jar"/>
-	<!-- tmp commons-logging -->
 	<property name="logging.lib" location="../OpenXava/web/WEB-INF/lib/commons-logging.jar"/>
 	<property name="generator.dir" value="..${file.separator}OpenXava${file.separator}generator"/>
 	<property name="tracking.classes" value="../AccessTracking/web/WEB-INF/classes;../OpenXava/web/WEB-INF/lib/hibernate3.jar"/>
@@ -806,7 +805,10 @@
 		</copy>		
 		<copy todir="${dist.portlets.dir}/xava/style">
 			<fileset dir="web/xava/style"/>
-		</copy>				
+		</copy>
+		<copy todir="${dist.portlets.dir}/xava/js">
+			<fileset dir="web/xava/js"/>
+		</copy>						
 		<copy todir="${dist.portlets.dir}/xava/editors/calendar">
 			<fileset dir="web/xava/editors/calendar"/>
 		</copy>						

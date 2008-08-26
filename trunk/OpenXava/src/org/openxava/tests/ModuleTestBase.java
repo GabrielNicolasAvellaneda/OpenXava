@@ -624,7 +624,7 @@ public class ModuleTestBase extends TestCase {
 	 * @param type text/html, application/pdf, etc.
 	 */
 	protected void assertContentTypeForPopup(String type) {
-		for (int i=0; !type.equals(getPopupResponse().getContentType()) && i<10; i++) {
+		for (int i=0; !type.equals(getPopupResponse().getContentType()) && i<20; i++) {
 			try { Thread.sleep(500); } catch (Exception ex) { }
 		}
 		assertEquals(XavaResources.getString("content_type_not_match"), type, getPopupResponse().getContentType());
