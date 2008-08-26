@@ -8,6 +8,7 @@ import javax.servlet.http.*;
 import org.openxava.controller.*;
 import org.openxava.util.*;
 import org.openxava.web.servlets.*;
+import org.openxava.web.style.*;
 
 /**
  * For accessing to module execution from DWR. <p> 
@@ -20,9 +21,13 @@ public class Module extends DWRBase {
 	final private static String MESSAGES_LAST_REQUEST ="xava_messagesLastRequest";
 	final private static String ERRORS_LAST_REQUEST ="xava_errorsLastRequest";
 	
+	private static boolean portlet;
+	private static Style style;
+	
 	public static String request(HttpServletRequest request, HttpServletResponse response, String application, String module, Map values, Map multipleValues, String [] selected) throws Exception {
 		checkSecurity(request, application, module);
 		restoreLastMessages(request, application, module);
+		request.setAttribute("style", getStyle());
 		InputStream is = Servlets.getURIAsStream(request, response, getQueryString(application, module, values, multipleValues, selected));
 		String forwardURI = (String) request.getSession().getAttribute("xava_forward");		
 		if (!Is.emptyString(forwardURI)) {
@@ -38,10 +43,6 @@ public class Module extends DWRBase {
 		return InputStreams.toString(is);
 	}	
 	
-	private static ModuleManager getManager(HttpServletRequest request, String application, String module) {
-		return (ModuleManager) getContext(request).get(application, module, "manager");
-	}
-
 	public static void requestMultipart(HttpServletRequest request, HttpServletResponse response, String application, String module) throws Exception { 
 		checkSecurity(request, application, module);
 		Servlets.getURIAsStream(request, response, getQueryString(application, module, null, null, null));
@@ -69,12 +70,16 @@ public class Module extends DWRBase {
 	}
 		
 	private static String getQueryString(String application, String module, Map values, Map multipleValues, String[] selected) {
-		StringBuffer result = new StringBuffer("/xava/core.jsp?application=");
+		StringBuffer result = new StringBuffer(getCoreURI() + "?application=");
 		result.append(application);
 		result.append("&module=");
 		result.append(module);
 		addValuesQueryString(result, values, multipleValues, selected);		
 		return result.toString();
+	}
+
+	private static String getCoreURI() {		
+		return isPortlet()?"/WEB-INF/jsp/xava/core.jsp":"/xava/core.jsp";
 	}
 
 	private static void addValuesQueryString(StringBuffer sb, Map values, Map multipleValues, String [] selected) {
@@ -123,6 +128,22 @@ public class Module extends DWRBase {
 			.replaceAll("=", "%3d");
 		if (s.startsWith("[reference:")) return "true";
 		return s;
+	}
+	
+	private static boolean isPortlet() {
+		return portlet;
+	}
+
+	public static void setPortlet(boolean portlet) {
+		Module.portlet = portlet;
+	}
+
+	private static Style getStyle() {
+		return style;
+	}
+
+	public static void setStyle(Style style) {
+		Module.style = style;
 	}
 
 }

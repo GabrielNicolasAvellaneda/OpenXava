@@ -1,11 +1,20 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 3.1beta1 (2008-8-26)
+-----------------------------
+- Full AJAX support.
+- New method 'remove' in ModuleContext for removing a session object.
+- New property 'browser' for xava-junit.properti to indicate the browser type to be used for testing.
+- New InputStreams utility class.
+- HtmlUnit updated to 2.2.
+
 OpenXava 3.0.3 (2008-8-14)
 --------------------------
 - Full support for Liferay 5.0 and 5.1.
 - Visual style integration for Liferay 5.1.
 - Labels and messages translated to Chinese.
+- French translation of labels and messages by a native French speaker.
 - French translation of the reference guide and other documentation.
 - Chinese translation of the reference guide and other documentation.
 - HttpUnit replaced by HtmlUnit for implementing ModuleTestBase.
@@ -30,7 +39,6 @@ OpenXava 3.0.3 (2008-8-14)
 - Fix: Added elements to an inherited collection fails.
 - Fix: updateSchema ant target of MiEscuela demo project fails.
 - Fix: Incorrect default size for editors when using @Column without length.
-- French translation of labels and messages by a native French speaker.
 - Fix: On module navigation with IChangeModuleAction on-each-request and before-each-request actions of initial module were executed in target module too.
 - Fix: Hiding a predefined collection action for detail (as DeleteAction) duplicate the previous action in UI.
 
