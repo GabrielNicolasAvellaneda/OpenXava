@@ -1,5 +1,6 @@
 <%@ include file="imports.jsp"%>
 
+
 <script type="text/javascript">
 <%-- JavaScript for text area maxsize --%>
 function limitLength(ev, max) { 
@@ -38,7 +39,7 @@ function validateNumeric(ev, max, integer) {
 }
 
 <%-- JavaScript for collections and list --%>
-function manageFilterRow(id, visible)
+function manageFilterRow(id)
 {
     var img = document.getElementById("xava-filter-image-" + id);
     var elem = document.getElementById("xava-tr-list-filter-" + id)
@@ -46,14 +47,12 @@ function manageFilterRow(id, visible)
 	if (elem.style.display == ''){
 		elem.style.display = 'none';
 		img.src='<%=request.getContextPath()%>/xava/images/show-filter.gif';
-		link.title='<xava:message key="show_filters"/>';
-		document.<%=manager.getForm()%>[visible].value="false";
+		link.title='<xava:message key="show_filters"/>'; 
 	}
 	else {
 		elem.style.display = '';
 		img.src='<%=request.getContextPath()%>/xava/images/hide-filter.gif';
 		link.title='<xava:message key="hide_filters"/>';
-		document.<%=manager.getForm()%>[visible].value="true";
 	}
 }
 </script>
@@ -158,6 +157,7 @@ function showCalendar(id, format, showsTime, showsOtherMonths) {
   <% 
   // Date fields at end of the windows is not shown correctly in IE6,
   // hence, we align at top in IE6, and at botton in other browsers.
+  String browser = request.getHeader("user-agent");
   String calendarAlign = browser != null && browser.indexOf("MSIE 6") >= 0?"tr":"Br";  
   %>
   _dynarch_popupCalendar.showAtElement(el.nextSibling, "<%=calendarAlign%>"); // show the calendar

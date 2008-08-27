@@ -8,10 +8,11 @@ String equal = "eq".equals(comparator)?"selected='selected'":"";
 String different = "ne".equals(comparator)?"selected='selected'":"";
 String prefix = request.getParameter("prefix");
 if (prefix == null) prefix = "";
+int index = Integer.parseInt(request.getParameter("index"));
 %>
 
-<input type="hidden" name="<%=prefix%>conditionValues" value="true">
-<select name="<%=prefix%>conditionComparators" class=<%=style.getEditor()%>>
+<input type="hidden" name="<%=prefix%>conditionValue.<%=index%>" value="true">
+<select name="<%=prefix%>conditionComparator.<%=index%>" class=<%=style.getEditor()%>>
 	<option value=""></option>
 	<option value="eq" <%=equal%>><xava:message key="yes"/></option>
 	<option value="ne" <%=different%>><xava:message key="no"/></option>

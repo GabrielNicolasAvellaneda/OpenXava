@@ -17,7 +17,7 @@ if (null != agent && agent.indexOf("MSIE")>=0) {
 }
 %>
 
-<INPUT type="CHECKBOX" name="<%=propertyKey%>" class=<%=style.getEditor()%>
+<INPUT type="checkbox" name="<%=propertyKey%>" class=<%=style.getEditor()%>
 	value="true" 
 	title="<%=p.getDescription(request)%>"	
 	<%=checked%>
