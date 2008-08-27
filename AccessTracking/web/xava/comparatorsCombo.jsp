@@ -18,10 +18,10 @@ String startsWith = "starts_comparator".equals(comparator)?"selected='selected'"
 String contains = "contains_comparator".equals(comparator)?"selected='selected'":"";
 String year = "year_comparator".equals(comparator)?"selected='selected'":"";
 String month = "month_comparator".equals(comparator)?"selected='selected'":"";
-String yearMonth = "year_month_comparator".equals(comparator)?"selected='selected'":""; 
+String yearMonth = "year_month_comparator".equals(comparator)?"selected='selected'":"";
+int index = Integer.parseInt(request.getParameter("index"));
 %>
-
-<select name="<%=prefix%>conditionComparators" class=<%=style.getEditor()%>>
+<select name="<%=prefix%>conditionComparator.<%=index%>" class=<%=style.getEditor()%>>
 	<%
 	if (isString) {
 	%>						

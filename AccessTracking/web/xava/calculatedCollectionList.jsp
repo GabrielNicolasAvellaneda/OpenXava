@@ -1,5 +1,5 @@
 <table id=<%=idCollection%> class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%> <%=style.getListStyle()%>>
-<tr id="xava-tr-list" class="<%=style.getListHeader()%>">
+<tr id="xava_tr_list" class="<%=style.getListHeader()%>">
 	<% if (lineAction != null) { %>	
 	<th class=<%=style.getListHeaderCell()%>></th>
 	<% } %>	
@@ -41,7 +41,7 @@ while (itAggregates.hasNext()) {
 </td>
 <% } %>
 <td class="<%=cssCellClass%>" width="5">
-<input type="CHECKBOX" name="<%=propertyPrefix%>__SELECTED__" value="<%=f%>"/>
+<input type="CHECKBOX" name="xava_selected" value="<%=propertyPrefix%>__SELECTED__:<%=f%>"/>
 </td>
 <%
 	f++;
