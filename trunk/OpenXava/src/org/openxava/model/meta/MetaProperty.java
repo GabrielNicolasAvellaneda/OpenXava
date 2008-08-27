@@ -445,6 +445,10 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		return validators;
 	}
 	
+	public Collection getMetaValidators(){
+		return metaValidators;
+	}
+	
 	private Collection getOnlyOnCreateValidators() throws XavaException {
 		return onlyOnCreateValidators;
 	}
