@@ -46,6 +46,16 @@ public class InvoiceTest extends ModuleTestBase {
 		super(testName, "Invoice");		
 	}
 	
+	public void testGenerateCustomPdfExcelRtf() throws Exception {
+		execute("Mode.detailAndFirst");
+		execute("Invoice.printPdf");
+		assertContentTypeForPopup("application/pdf");
+		execute("Invoice.printExcel");
+		assertContentTypeForPopup("text/x-csv");
+		execute("Invoice.printRtf");
+		assertContentTypeForPopup("application/rtf");
+	}
+	
 	// Only behaves thus when mapFacadeAutocommit=false (the default)
 	public void testFailOnSaveFirstCollectionElementNotSaveMainEntity() throws Exception {
 		if (XavaPreferences.getInstance().isMapFacadeAutoCommit()) return; 
