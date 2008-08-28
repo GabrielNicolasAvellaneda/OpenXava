@@ -70,6 +70,14 @@ public class GenerateCustomReportServlet extends HttpServlet {
 				exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, response.getOutputStream());
 				exporter.exportReport();
 			} 
+			else if (format.equalsIgnoreCase(JasperReportBaseAction.RTF)) { 				
+				response.setContentType("application/rtf"); 
+				response.setHeader("Content-Disposition", "inline; filename=\"report.rtf\""); 
+				JRRtfExporter exporter = new JRRtfExporter(); 
+				exporter.setParameter(JRExporterParameter.JASPER_PRINT, jprint); 
+				exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, response.getOutputStream()); 
+				exporter.exportReport();  
+			} 
 			else {
 				response.setContentType("application/pdf");
 				JasperExportManager.exportReportToPdfStream(jprint, response.getOutputStream());

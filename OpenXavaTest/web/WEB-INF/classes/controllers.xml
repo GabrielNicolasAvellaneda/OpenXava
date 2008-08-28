@@ -314,11 +314,24 @@
 	
 	<controller name="Invoice">
 		<extends controller="Typical"/>
-		<action name="print" mode="detail"
+		<action name="printPdf" mode="detail"
 			class="org.openxava.test.actions.InvoiceReportAction"
-			image="images/pdf.gif">									
+			image="images/pdf.gif">
+			<set property="format" value="pdf"/>									
 			<use-object name="xava_view"/>			
 		</action>
+		<action name="printExcel" mode="detail"
+			class="org.openxava.test.actions.InvoiceReportAction"
+			image="images/excel.gif">
+			<set property="format" value="excel"/>									
+			<use-object name="xava_view"/>			
+		</action>		
+		<action name="printRtf" mode="detail"
+			class="org.openxava.test.actions.InvoiceReportAction"
+			image="images/rtf.gif">
+			<set property="format" value="rtf"/>									
+			<use-object name="xava_view"/>			
+		</action>		
 		<action name="searchFromDelivery" hidden="true"
 			class="org.openxava.test.actions.SearchInvoiceFromDeliveryAction">									
 			<use-object name="xava_view"/>
