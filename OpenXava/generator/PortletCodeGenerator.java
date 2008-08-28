@@ -1,22 +1,16 @@
 
 import org.openxava.application.meta.*;
+import org.openxava.converters.StringBlobConverter.*;
 
 import java.io.*;
 import java.util.*;
+
 import org.openxava.util.*;
 
 /**
- * @author Javier Paniza
+ * @author Javier Paniza, Alexandr Vladimirov
  */
 public class PortletCodeGenerator {
-	
-	private final static Locale [] locales = {
-		new Locale("ca"), new Locale("de"), new Locale("en"), 
-		new Locale("es"), new Locale("fr"), new Locale("in"), 
-		new Locale("it"), new Locale("ja"), new Locale("ko"), 
-		new Locale("nl"), new Locale("pt"), new Locale("sv"), 
-		new Locale("zh"), new Locale("pl"), new Locale("bg")
-	};
 	
 	private Locale defaultLocale = Locale.getDefault();
 		
@@ -24,7 +18,6 @@ public class PortletCodeGenerator {
 	private String pagesDir;
 	private boolean generateJetspeed2Files;
 	private String encoding;
-		
 	
 	public String getProject() {
 		return project;
@@ -158,7 +151,7 @@ public class PortletCodeGenerator {
 			
 			// i18n resource files
 			File f = new File("../" + project + "/i18n/portlets/");
-			f.mkdir();						
+			f.mkdir();				
 			MetaApplication app = MetaApplications.getMetaApplication(project);
 			for (Iterator it=app.getMetaModules().iterator(); it.hasNext();) {
 				MetaModule module = (MetaModule) it.next();
@@ -172,7 +165,23 @@ public class PortletCodeGenerator {
 		}
 	}	
 	
-	private void createI18nFiles(MetaApplication app, MetaModule module) throws Exception {		
+	private Locale[] getLocales() {
+		String stringValue = XavaPreferences.getInstance().getPortletLocales();
+		if (!(stringValue == null)){
+			StringTokenizer parser = new StringTokenizer(stringValue," \t\n\r,;");
+			Locale [] result = new Locale [parser.countTokens()];
+			int i=0;
+			while (parser.hasMoreTokens()){
+				result[i] = new Locale(parser.nextToken());
+				i++;
+			}
+			return result;
+		}
+		return new Locale[] {new Locale("en"), new Locale("es")};
+	}
+	
+	private void createI18nFiles(MetaApplication app, MetaModule module) throws Exception {
+		Locale[] locales = getLocales();
 		for (int i = 0; i < locales.length; i++) {
 			Properties i18n = new Properties();			
 			i18n.put("category." + app.getId(), app.getLabel(locales[i]));

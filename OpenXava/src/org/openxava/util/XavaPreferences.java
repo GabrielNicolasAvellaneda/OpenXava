@@ -251,5 +251,11 @@ public class XavaPreferences {
 	public boolean isShowFilterByDefaultInCollections() {  
 		return "true".equalsIgnoreCase(getProperties().getProperty("showFilterByDefaultInCollections", "true" ).trim()); 
 	}	
+	
+	public String getPortletLocales(){
+		return getProperties().getProperty("portletLocales", 
+				"bg, ca, de, en, es, fr, in, it, ja, ko, nl, pl, pt, ru, sv, zh");
+	}
+
 
 }

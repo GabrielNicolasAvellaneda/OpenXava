@@ -1480,11 +1480,11 @@ public class ModuleTestBase extends TestCase {
 	private void resetForm() throws Exception {		
 		waitUntilPageIsLoaded(); 		
 		if (getFormIndex() >= page.getForms().size()) return; 
-		setForm(page.getForms().get(getFormIndex()));
+		setForm((HtmlForm)page.getForms().get(getFormIndex()));
 	}
 	
 	private void resetLoginForm() throws Exception {
-		setForm(page.getForms().get(getLoginFormIndex()));		
+		setForm((HtmlForm)page.getForms().get(getLoginFormIndex()));		
 	}
 		
 	private void setForm(HtmlForm form) {
