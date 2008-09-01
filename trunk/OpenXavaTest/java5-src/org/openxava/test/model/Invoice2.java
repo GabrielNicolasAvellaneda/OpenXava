@@ -18,11 +18,15 @@ import org.openxava.calculators.*;
 @Table(name="INVOICE")
 @IdClass(InvoiceKey.class) // We reuse the key class for Invoice
 @View( members =
-	"year, number, date, vatPercentage;" +
+	"year, number, date;" + 
+	"vatPercentage, amountsSum;" +
 	"customer;" +
 	"details;"
 )
 public class Invoice2 {
+	
+	@Transient
+	private boolean removing = false;
 	
 	@Id @Column(length=4) @Required
 	@DefaultValueCalculator(CurrentYearCalculator.class)
@@ -39,6 +43,9 @@ public class Invoice2 {
 	@Required
 	private BigDecimal vatPercentage;
 	
+	@Stereotype("MONEY") @ReadOnly
+	private BigDecimal amountsSum; 
+	
 	@ManyToOne(fetch=FetchType.LAZY, optional=false)
 	@ReferenceView("Simplest")
 	private Customer customer;
@@ -48,6 +55,28 @@ public class Invoice2 {
 	@ListProperties("product.description, quantity, unitPrice, amount")
 	@XOrderBy("product.description desc") 
 	private Collection<InvoiceDetail2> details;
+	
+	boolean isRemoving() {
+		return removing;
+	}
+	
+	@PreRemove
+	private void markRemoving() {
+		this.removing = true;
+	}
+	
+	@PostRemove
+	private void unmarkRemoving() {
+		this.removing = false;
+	}
+	
+	public void recalculateAmountsSum() { 
+		BigDecimal result = new BigDecimal("0.00");
+		for (InvoiceDetail2 detail: getDetails()) {
+			result = result.add(detail.getAmount());
+		}
+		setAmountsSum(result);
+	}
 	
 	public int getYear() {
 		return year;
@@ -80,6 +109,14 @@ public class Invoice2 {
 	public void setVatPercentage(BigDecimal vatPercentage) {
 		this.vatPercentage = vatPercentage;
 	}
+	
+	public BigDecimal getAmountsSum() {
+		return amountsSum;
+	}
+
+	public void setAmountsSum(BigDecimal amountsSum) {
+		this.amountsSum = amountsSum;
+	}	
 
 	public Customer getCustomer() {
 		return customer;
@@ -90,6 +127,7 @@ public class Invoice2 {
 	}
 
 	public Collection<InvoiceDetail2> getDetails() {
+		if (details == null) details = new ArrayList(); // tmp
 		return details;
 	}
 

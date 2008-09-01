@@ -50,8 +50,20 @@ public class InvoiceDetail2 {
 		// But, because OX3 does not have default-value-calculator on-create="true"
 		// the implementation of InvoiceDetail and InvoiceDetail2 is the same.
 		oid = invoice2.getYear() + ":" + invoice2.getNumber() + ":" + System.currentTimeMillis();
+		recalculateInvoiceAmountsSum();
 	}
-
+	
+	@PreRemove
+	private void onRemove() {
+		if (getInvoice2().isRemoving()) return;		
+		getInvoice2().getDetails().remove(this);
+		recalculateInvoiceAmountsSum();		
+	}
+	
+	@PreUpdate
+	private void recalculateInvoiceAmountsSum() {
+		getInvoice2().recalculateAmountsSum();
+	}
 
 	public String getOid() {
 		return oid;
@@ -70,6 +82,7 @@ public class InvoiceDetail2 {
 
 	public void setInvoice2(Invoice2 invoice2) {
 		this.invoice2 = invoice2;
+		this.invoice2.getDetails().add(this); 
 	}
 
 

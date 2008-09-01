@@ -169,7 +169,13 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 	}
 	
 	public Object getContainer(MetaModel metaModel, Map containerKeyValues) throws XavaException {
-		return getObject(metaModel.getMetaModelContainer().getPOJOClass(), containerKeyValues, "container_for_pojo_error"); 
+		try {
+			return find(metaModel.getMetaModelContainer(), containerKeyValues);
+		} 
+		catch (FinderException ex) {
+			log.warn(ex.getMessage(), ex);
+			throw new XavaException("container_for_pojo_error");
+		}
 	}
 	
 	private Object getObject(Class modelClass, Map values, String errorId) throws XavaException {
