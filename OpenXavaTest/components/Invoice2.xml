@@ -16,15 +16,16 @@
 			<default-value-calculator class="org.openxava.calculators.CurrentDateCalculator"/>
 		</property>	
 		<property name="vatPercentage" type="java.math.BigDecimal"
-			size="2" scale="1" required="true"/>								
-						
+			size="2" scale="1" required="true"/>
+		<property name="amountsSum" type="java.math.BigDecimal" stereotype="MONEY"/>			
+											
 		<reference model="Customer" required="true"/>
 		
 		<collection name="details" minimum="1">
 			<reference model="InvoiceDetail2"/>
 			<order>${product.description} desc</order>
 		</collection>
-								
+												
 	</entity>	
 		
 	<aggregate name="InvoiceDetail2">
@@ -48,18 +49,21 @@
 			</calculator>			
 		</property>
 		<reference name="product" model="Product2" required="true"/>
-		
+		<postcreate-calculator class="org.openxava.test.calculators.RecalculateAmountsSumCalculator"/>
+		<postmodify-calculator class="org.openxava.test.calculators.RecalculateAmountsSumCalculator"/>
+		<preremove-calculator class="org.openxava.test.calculators.RecalculateAmountsSumCalculator"/>
 	</aggregate>	
 	
 	<view>
-	
+		<property-view property="amountsSum" read-only="true"/>	
 		<reference-view reference="customer" view="Simplest"/>
 		<collection-view collection="details">
 			<list-properties>product.description, quantity, unitPrice, amount</list-properties>
 		</collection-view>
 		
 		<members>
-			year, number, date, vatPercentage;
+			year, number, date;
+			vatPercentage, amountsSum;
 			customer;
 			details;
 		</members>			

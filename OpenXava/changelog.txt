@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Modifying the container object from a callback method of a collection element fails.
+- New property 'portletLocales' in xava.properties that indicates the locales to use for generating i18n files for portlets.
+- New format 'rtf' available for JasperReportBaseAction.
+
 OpenXava 3.1beta1 (2008-8-26)
 -----------------------------
 - Full AJAX support.
