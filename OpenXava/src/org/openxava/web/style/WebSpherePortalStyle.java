@@ -22,7 +22,7 @@ public class WebSpherePortalStyle extends Style {
 	}
 	
 	public String getModuleSpacing() {
-		return "cellpadding=0 cellspacing=0 border=0 width='100%'";
+		return ""; 
 	}	
 	
 	public String getDetail() {

@@ -2,7 +2,8 @@
 
 <%@ page import="org.openxava.view.meta.MetaView" %>
 
-<jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
+
+<%@page import="org.openxava.view.View"%><jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%
@@ -13,6 +14,7 @@ java.util.Collection sections = view.getSections();
 int activeSection = view.getActiveSection(); 
 %>
 
+<div id="xava_sections_<%=viewObject%>">
 <table width='100%' cellspacing="0" border="0" cellpadding="0">
 	<tr><td>
 
@@ -57,7 +59,7 @@ int activeSection = view.getActiveSection();
 	<tr><td class="<%=style.getSectionActive()%>">
 		<%
 			String viewName = viewObject + "_section" + activeSection;
-			context.put(request, viewName, view.getSectionView(activeSection));			
+			context.put(request, viewName, view.getSectionView(activeSection));
 		%>			
 		<table width='100%' cellspacing="0" border="0" cellpadding="2"><tr><td>
 		<jsp:include page="detail.jsp"> 
@@ -67,3 +69,4 @@ int activeSection = view.getActiveSection();
 	</td></tr>	
 </table>
 <br>
+</div>

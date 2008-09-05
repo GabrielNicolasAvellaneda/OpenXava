@@ -13,8 +13,10 @@
 String viewObject = request.getParameter("viewObject");
 viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObject;
 org.openxava.view.View view = (org.openxava.view.View) context.get(request, viewObject);
+view.setViewObject(viewObject); 
 String propertyPrefix = request.getParameter("propertyPrefix");
 propertyPrefix = (propertyPrefix == null || propertyPrefix.equals(""))?"xava." + view.getModelName() + ".":propertyPrefix;
+view.setPropertyPrefix(propertyPrefix); 
 %>
 
 <% if (view.isFrame()) { %>

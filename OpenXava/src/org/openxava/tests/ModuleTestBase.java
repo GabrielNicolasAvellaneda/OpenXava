@@ -1146,7 +1146,7 @@ public class ModuleTestBase extends TestCase {
 	protected void assertError(String message) throws Exception {
 		HtmlTable table = null;
 		try {
-			table = (HtmlTable) page.getHtmlElementById("errors");
+			table = (HtmlTable) page.getHtmlElementById("xava_errors_table");
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
 			fail(XavaResources.getString("error_not_found", message));
@@ -1167,7 +1167,7 @@ public class ModuleTestBase extends TestCase {
 	protected void assertErrorsCount(int expectedCount) throws Exception {
 		HtmlTable table = null;
 		try {
-			table = (HtmlTable) page.getHtmlElementById("errors");
+			table = (HtmlTable) page.getHtmlElementById("xava_errors_table");
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
 			if (expectedCount > 0) {
@@ -1181,7 +1181,7 @@ public class ModuleTestBase extends TestCase {
 	protected void assertMessagesCount(int expectedCount) throws Exception {
 		HtmlTable table = null;
 		try {
-			table = (HtmlTable) page.getHtmlElementById("messages");
+			table = (HtmlTable) page.getHtmlElementById("xava_messages_table");
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
 			if (expectedCount > 0) {
@@ -1193,11 +1193,11 @@ public class ModuleTestBase extends TestCase {
 	}
 			
 	protected void assertNoError(String message) throws Exception {
-		assertNoMessage(message, "errors", "error_found");
+		assertNoMessage(message, "xava_errors_table", "error_found");
 	}
 	
 	protected void assertNoMessage(String message) throws Exception {
-		assertNoMessage(message, "messages", "message_found"); 
+		assertNoMessage(message, "xava_messages_table", "message_found"); 
 	}
 		
 	private void assertNoMessage(String message, String id, String notFoundErrorId) throws Exception {
@@ -1221,7 +1221,7 @@ public class ModuleTestBase extends TestCase {
 	protected String getMessage() throws Exception {
 		HtmlTable table = null;
 		try {
-			table = (HtmlTable) page.getHtmlElementById("messages");
+			table = (HtmlTable) page.getHtmlElementById("xava_messages_table");
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
 			return "";
@@ -1233,7 +1233,7 @@ public class ModuleTestBase extends TestCase {
 	protected void assertMessage(String message) throws Exception {
 		HtmlTable table = null;
 		try {
-			table = (HtmlTable) page.getHtmlElementById("messages");
+			table = (HtmlTable) page.getHtmlElementById("xava_messages_table");
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
 			fail(XavaResources.getString("message_not_found", message));
@@ -1253,10 +1253,10 @@ public class ModuleTestBase extends TestCase {
 	
 	
 	protected void assertNoErrors() throws Exception {
-		assertNoMessages("errors", "Error");		
+		assertNoMessages("xava_errors_table", "Error");		
 	}
 	protected void assertNoMessages() throws Exception {
-		assertNoMessages("messages", "Mensaje");		
+		assertNoMessages("xava_messages_table", "Mensaje");		
 	}
 	
 	private void assertNoMessages(String id, String label) throws Exception {

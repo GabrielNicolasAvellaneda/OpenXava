@@ -10,7 +10,7 @@ String module = request.getParameter("module");
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager)context.get(request, "manager", "org.openxava.controller.ModuleManager");
 if (manager.isFormUpload()) {
 	manager.parseMultipartRequest(request);	
-	Module.requestMultipart(request, response, app, module);
+	new Module().requestMultipart(request, response, app, module);
 }
 String form = manager.getForm();
 String browser = request.getHeader("user-agent");
@@ -54,7 +54,7 @@ Module.setStyle(style);
 </head>
 <body bgcolor="#ffffff">
 <% } %>
-
+	<div id="info"></div> <%-- tmp --%>
 	<input id="xava_loading" name="xava_loading" type="hidden" value="true"/>
 
 	<%-- Layer for progress bar --%>

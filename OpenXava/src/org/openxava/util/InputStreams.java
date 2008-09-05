@@ -20,12 +20,10 @@ public class InputStreams {
 	 */
 	public static String toString(InputStream in) throws IOException {		
 	    StringBuffer out = new StringBuffer();
-	    byte[] b = new byte[8192];
-	    int veces = 0; 
+	    byte[] b = new byte[4096];	    
 	    for (int n; (n = in.read(b)) != -1;) {
-	        out.append(new String(b, 0, n));	    	
-	        veces++;
-	    }	    
+	        out.append(new String(b, 0, n));	    		        
+	    }	    	    
 	    return out.toString();
 	}
 

@@ -133,6 +133,7 @@ String urlDescriptionEditor = "editors/descriptionsEditor.jsp" // in this way be
 	+ "&order=" + order
 	+ filterArg;
 %>
+<span id="xava_descriptions_list_<%=referenceKey%>">
 <input type="hidden" name="<%=editableKey%>" value="<%=editable%>"/>
 <jsp:include page="<%=urlDescriptionEditor%>" />
 
@@ -161,6 +162,7 @@ while (itActions.hasNext()) {
 <%
 }
 %>
+</span>
 <%=postEditor%>
 <% if (!onlyEditor && labelFormat == MetaPropertyView.SMALL_LABEL) { %>
 </td></tr>

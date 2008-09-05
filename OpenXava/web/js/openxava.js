@@ -5,7 +5,8 @@ openxava.init = function() {
 	this.ajaxRequest();
 }
 
-openxava.ajaxRequest = function() { 
+openxava.ajaxRequest = function() {
+	this.iniTime = new Date().getTime(); // tmp
 	document.throwPropertyChange = false;
 	document.getElementById("xava_loading").value=true; 
 	Module.request(
@@ -16,22 +17,31 @@ openxava.ajaxRequest = function() {
 			this.refreshPage); 			
 }
 
-openxava.refreshPage = function(result) {	
-	if (result.substr(0, 12) == "xava_forward") {
-		if (result.substr(0, 26) == "xava_forward_in_new_window") { 		
-			window.open(result.substr(27));
+openxava.refreshPage = function(result) {
+	var changed = ""; // tmp
+	if (result.xava_forward_url != null) {
+		if (result.xava_forward_inNewWindow == "true") { 		
+			window.open(result.xava_forward_url);
 		}
 		else {
-			location.href=result.substr(13);			
+			location.href=result.xava_forward_url;			
 		}
 	}
-	else { // The full html
-		document.getElementById("xava_core").innerHTML = result;	 
+	else { 				
+		for (var id in result) {	
+			changed = changed + id + ", "; // tmp 
+			document.getElementById(id).innerHTML = result[id];
+		}				
 		openxava.formName = "xava_form";
 		openxava.form = document.getElementById(openxava.formName);
-		openxava.setFocus();
-	}	
+		// tmp openxava.setFocus();		
+	}
+	openxava.form.xava_action.value="";	// tmp
+	openxava.form.xava_action_argv.value=""; // tmp
+	
 	document.getElementById("xava_loading").value=false;
+	var cuesta = new Date().getTime() - openxava.iniTime; // tmp
+	document.getElementById("info").innerHTML="Cuesta=" + cuesta + " Cambiado=" + changed; 
 }
 
 openxava.getSelectedValues = function() { 	  		

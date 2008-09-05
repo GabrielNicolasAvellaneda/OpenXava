@@ -27,7 +27,10 @@ abstract public class TabBaseAction extends BaseAction implements IModuleContext
 	protected Tab getTab() throws XavaException {
 		if (tab == null ) {			
 			String tabObject = Is.emptyString(collection)?"xava_tab":Tab.COLLECTION_PREFIX + Strings.change(collection, ".", "_");
-			tab = (Tab) context.get(request, tabObject);			
+			tab = (Tab) context.get(request, tabObject);
+			if (tab.getCollectionView() != null) {				
+				tab.getCollectionView().refreshCollection(); 				
+			}
 		}
 		return tab;
 	}
@@ -47,7 +50,7 @@ abstract public class TabBaseAction extends BaseAction implements IModuleContext
 	}
 
 	public void setCollection(String collection) {
-		this.collection = collection;
+		this.collection = collection;		
 	}
 
 	/**
@@ -56,7 +59,7 @@ abstract public class TabBaseAction extends BaseAction implements IModuleContext
 	 * Useful for using Tab actions for collections. <br> 
 	 */
 	public void setViewObject(String viewObject) { 
-		if (Is.emptyString(this.collection)) {			
+		if (Is.emptyString(this.collection)) {					
 			this.collection = viewObject.substring("xava_view_".length());			
 			if (this.collection.startsWith("section")) {				
 				this.collection = this.collection.substring(this.collection.indexOf('_') + 1);				
