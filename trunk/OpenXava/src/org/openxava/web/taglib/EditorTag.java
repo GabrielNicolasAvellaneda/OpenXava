@@ -29,9 +29,10 @@ public class EditorTag extends TagSupport {
 	public int doStartTag() throws JspException {
 		try {
 			HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
+
 			ModuleContext context = (ModuleContext) request.getSession().getAttribute("context");
 									
-			String viewObject = request.getParameter("viewObject");
+			String viewObject = request.getParameter("viewObject");			
 			viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObject;
 			View view = (View) context.get(request, viewObject);
 

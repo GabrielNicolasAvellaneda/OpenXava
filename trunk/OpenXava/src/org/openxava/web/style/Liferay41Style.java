@@ -29,7 +29,7 @@ public class Liferay41Style extends Style {
 	}
 	
 	public String getModuleSpacing() {
-		return "border=0 cellpadding=0 cellspacing=2 width='100%'";
+		return "style='padding: 2px;'";
 	}
 		
 	public String getButtonBar() {

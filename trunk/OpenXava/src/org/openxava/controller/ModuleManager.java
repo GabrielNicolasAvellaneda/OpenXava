@@ -30,7 +30,7 @@ public class ModuleManager {
 	static {		
 		MetaControllers.setContext(MetaControllers.WEB);		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
-		log.info("OpenXava 3.1beta1 (2008-8-26)");		
+		log.info("OpenXava 3.1beta2 (2008-9-xx)");		
 	}
 	
 	private static int nextOid = 0; 
@@ -61,9 +61,12 @@ public class ModuleManager {
 	private String defaultView = null; 
 	
 	private boolean formUpload = false;
-	private String lastPageId;
+	private String lastPageId; // tmp: Remove? 
 	private String previousMode;
-	private boolean executingAction = false; 
+	private boolean executingAction = false;
+	private boolean reloadAllUINeeded;  
+	private boolean reloadViewNeeded; 
+	private boolean actionsChanged; 
 	 
 
 	public ModuleManager() {
@@ -197,7 +200,7 @@ public class ModuleManager {
 	}
 	
 	private boolean duplicateRequest(HttpServletRequest request) {
-		return false; // Maybe it's not needed with AJAX
+		return false; // tmp: Maybe it's not needed with AJAX
 		/*
 		if (request.getSession().getAttribute("xava_forward") != null) return false;
 		String pageId = request.getParameter("xava_page_id");
@@ -340,6 +343,7 @@ public class ModuleManager {
 					memorizePreviousMode(); 
 					setModeName(nextMode);					
 				}				
+				reloadAllUINeeded = true;
 			}
 			setFormUpload(false);						
 			if (action instanceof ICustomViewAction) {
@@ -352,6 +356,7 @@ public class ModuleManager {
 					memorizeCustomView(); 
 					setViewName(newView);					
 				}
+				reloadViewNeeded = true;
 			}
 			if (action instanceof IChangeControllersAction) {
 				IChangeControllersAction changeControllersAction = (IChangeControllersAction) action;
@@ -369,12 +374,14 @@ public class ModuleManager {
 						executeInitAction(request, errors, messages);
 					}
 				}
+				actionsChanged = true;
 			}			
 			if (action instanceof IHideActionAction) {
 				String actionToHide = ((IHideActionAction) action).getActionToHide();
 				if (actionToHide != null) {
 					addToHiddenActions(actionToHide);
 				}
+				actionsChanged = true;
 			}
 			if (action instanceof IHideActionsAction) {
 				String [] actionsToHide = ((IHideActionsAction) action).getActionsToHide();
@@ -385,12 +392,14 @@ public class ModuleManager {
 						}
 					}					
 				}
+				actionsChanged = true;
 			}
 			if (action instanceof IShowActionAction) {
 				String actionToShow = ((IShowActionAction) action).getActionToShow();
 				if (actionToShow != null) {
 					removeFromHiddenActions(actionToShow);
 				}
+				actionsChanged = true;
 			}
 			if (action instanceof IShowActionsAction) {
 				String [] actionsToShow = ((IShowActionsAction) action).getActionsToShow();
@@ -401,6 +410,7 @@ public class ModuleManager {
 						}
 					}					
 				}
+				actionsChanged = true;
 			}						
 			if (action instanceof ILoadFileAction) {					
 				setFormUpload(((ILoadFileAction) action).isLoadFile());
@@ -414,7 +424,7 @@ public class ModuleManager {
 				if (!Is.emptyString(uri)) {
 					request.getSession().setAttribute("xava_forward", uri);
 					request.getSession().setAttribute("xava_forward_inNewWindow", String.valueOf(forward.inNewWindow()));
-				}
+				}				
 			}
 			if (action instanceof IChainAction) {
 				IChainAction chainable = (IChainAction) action;				
@@ -446,7 +456,7 @@ public class ModuleManager {
 					request.setAttribute("xava.sendParametersToTab", "false");
 				}
 			}					
-			if (!(metaAction == null && executingAction)) { // For avoiding commint on OnChange actions triggered from a regular action execution
+			if (!(metaAction == null && executingAction)) { // For avoiding commit on OnChange actions triggered from a regular action execution
 				doCommit(); // after executing action
 			}
 		}
@@ -868,7 +878,13 @@ public class ModuleManager {
 			modeName = getMetaActionsMode().isEmpty()?IChangeModeAction.DETAIL:null;
 			moduleInitiated = true;
 			executeInitAction(request, errors, messages);
-		}			
+			reloadAllUINeeded = true;
+		}	
+		else {
+			reloadAllUINeeded = false;
+		}
+		actionsChanged = false;
+		reloadViewNeeded = false;
 	}
 	
 	public void executeBeforeEachRequestActions(HttpServletRequest request, Messages errors, Messages messages) {
@@ -987,6 +1003,21 @@ public class ModuleManager {
 				it.remove();
 			}
 		}
+	}
+
+	public boolean isReloadAllUINeeded() {
+		return reloadAllUINeeded;
+	}
+
+	/**
+	 * Is actions list change since the last action execution ?. <p>
+	 */
+	public boolean isActionsChanged() {
+		return actionsChanged;
+	}
+
+	public boolean isReloadViewNeeded() {
+		return isListMode() || reloadViewNeeded;
 	}
 	
 }

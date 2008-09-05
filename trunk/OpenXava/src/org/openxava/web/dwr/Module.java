@@ -7,11 +7,12 @@ import javax.servlet.http.*;
 
 import org.openxava.controller.*;
 import org.openxava.util.*;
+import org.openxava.view.*;
 import org.openxava.web.servlets.*;
 import org.openxava.web.style.*;
 
 /**
- * For accessing to module execution from DWR. <p> 
+ * For accessing to module execution from DWR. <p>
  * 
  * @author Javier Paniza
  */
@@ -24,38 +25,156 @@ public class Module extends DWRBase {
 	private static boolean portlet;
 	private static Style style;
 	
-	public static String request(HttpServletRequest request, HttpServletResponse response, String application, String module, Map values, Map multipleValues, String [] selected) throws Exception {
-		checkSecurity(request, application, module);
-		restoreLastMessages(request, application, module);
-		request.setAttribute("style", getStyle());
-		InputStream is = Servlets.getURIAsStream(request, response, getQueryString(application, module, values, multipleValues, selected));
-		String forwardURI = (String) request.getSession().getAttribute("xava_forward");		
-		if (!Is.emptyString(forwardURI)) {
-			String forwardInNewWindow = (String) request.getSession().getAttribute("xava_forward_inNewWindow");
-			String name = ("true".equals(forwardInNewWindow))?"xava_forward_in_new_window":"xava_forward";
-			request.getSession().removeAttribute("xava_forward");
-			request.getSession().removeAttribute("xava_forward_inNewWindow");
-			String result =  name + "=" + request.getScheme() + "://" + 
-				request.getServerName() + ":" + request.getServerPort() + 
-				request.getContextPath() + forwardURI;			
-			return result;
-		}		
-		return InputStreams.toString(is);
-	}	
+	private HttpServletRequest request;
+	private HttpServletResponse response;
+	private String application;
+	private String module;
+	private ModuleManager manager;
 	
-	public static void requestMultipart(HttpServletRequest request, HttpServletResponse response, String application, String module) throws Exception { 
-		checkSecurity(request, application, module);
-		Servlets.getURIAsStream(request, response, getQueryString(application, module, null, null, null));
-		memorizeLastMessages(request, application, module);		
+	public Map request(HttpServletRequest request, HttpServletResponse response, String application, String module, Map values, Map multipleValues, String [] selected) throws Exception {		
+		try {
+			checkSecurity(request, application, module);
+			this.request = request;
+			this.response = response;
+			this.application = application;
+			this.module = module;		
+			this.manager = (ModuleManager) getContext(request).get(application, module, "manager");						
+			restoreLastMessages();
+			request.setAttribute("style", getStyle());
+			getURIAsStream("init.jsp", values, multipleValues, selected);
+			Map result = new HashMap();
+			String forwardURI = (String) request.getSession().getAttribute("xava_forward");		
+			if (!Is.emptyString(forwardURI)) {
+				result.put("xava_forward_url",  request.getScheme() + "://" + 
+					request.getServerName() + ":" + request.getServerPort() + 
+					request.getContextPath() + forwardURI);
+				result.put("xava_forward_inNewWindow", request.getSession().getAttribute("xava_forward_inNewWindow"));
+				request.getSession().removeAttribute("xava_forward");
+				request.getSession().removeAttribute("xava_forward_inNewWindow");				
+			}
+			else {
+				fillResult(result, values, multipleValues, selected);
+			}			
+			return result;
+		}
+		finally {			
+			if (manager != null) manager.commit(); // If hibernate, jpa, etc is used to render some value here is commit
+		}
+	}	
+
+	private InputStream getURIAsStream(String jspFile, Map values, Map multipleValues, String[] selected) throws Exception {
+		return Servlets.getURIAsStream(request, response, getURI(jspFile, values, multipleValues, selected));
 	}
 	
-	private static void memorizeLastMessages(HttpServletRequest request, String application, String module) {
+	private String getURIAsString(String jspFile, Map values, Map multipleValues, String[] selected) throws Exception {
+		if (jspFile == null) return "";
+		return InputStreams.toString(getURIAsStream(jspFile, values, multipleValues, selected));
+	}
+	
+
+	private void fillResult(Map result, Map values, Map multipleValues, String[] selected) throws Exception {
+		for (Iterator it = getChangedParts(values).entrySet().iterator(); it.hasNext(); ) {
+			Map.Entry changedPart = (Map.Entry) it.next();			
+			result.put(changedPart.getKey(),
+				getURIAsString((String) changedPart.getValue(), values, multipleValues, selected)	
+			);
+			
+		}		
+	}
+
+
+	private Map getChangedParts(Map values) { 
+		Map result = new HashMap(); 
+		if (values == null || manager.isReloadAllUINeeded()) {		
+			result.put("xava_core", "core.jsp");
+		}
+		else {
+			if (manager.isActionsChanged()) {
+				result.put("xava_button_bar", "buttonBar.jsp");
+				result.put("xava_bottom_buttons", "bottomButtons.jsp");
+			}			
+			Messages errors = (Messages) request.getAttribute("errors");
+			result.put("xava_errors", errors.contains()?"errors.jsp":null);
+			Messages messages = (Messages) request.getAttribute("messages");
+			result.put("xava_messages", messages.contains()?"messages.jsp":null);
+			if (manager.isReloadViewNeeded()) {
+				result.put("xava_view", manager.getViewURL());
+			}
+			else {
+				fillChangedPropertiesAndDescriptionsListReferences(result);
+				fillChangedCollections(result);
+				fillChangedSections(result);
+			}
+		}
+		return result;
+	}
+
+	private void fillChangedPropertiesAndDescriptionsListReferences(Map result) {
+		View view = getView();		
+		Collection changedMembers = view.getChangedPropertiesAndDescriptionsListReferences().entrySet();		
+		for (Iterator it = changedMembers.iterator(); it.hasNext(); ) {
+			Map.Entry en = (Map.Entry) it.next();
+			String qualifiedName = (String) en.getKey();
+			String name = qualifiedName.substring(qualifiedName.lastIndexOf('.') + 1);
+			View containerView = (View) en.getValue();
+			if (containerView.getMetaModel().containsMetaReference(name)) {				
+				request.setAttribute(qualifiedName, containerView.getMetaReference(name));
+				result.put("xava_descriptions_list_" + qualifiedName, 
+					"descriptionsList.jsp?referenceKey=" + qualifiedName + 
+					"&onlyEditor=true&viewObject=" + containerView.getViewObject());					
+			}
+			else {
+				result.put("xava_editor_" + qualifiedName, 
+					"editorWrapper.jsp?propertyName=" + name + 
+					"&editable=" + containerView.isEditable(name) +
+					"&throwPropertyChanged=" + containerView.throwsPropertyChanged(name) +
+					"&viewObject=" + containerView.getViewObject() + 
+					"&propertyPrefix=" + containerView.getPropertyPrefix());
+			}
+		}
+	}
+	
+	private void fillChangedCollections(Map result) {				
+		View view = getView();			
+		Collection changedCollections = view.getChangedCollections().entrySet(); 		
+		for (Iterator it = changedCollections.iterator(); it.hasNext(); ) {
+			Map.Entry en = (Map.Entry) it.next();
+			String qualifiedName = (String) en.getKey();
+			String name = qualifiedName.substring(qualifiedName.lastIndexOf('.') + 1);
+			View containerView = (View) en.getValue();
+			result.put("xava_collection_" + qualifiedName + ".", 
+				"collection.jsp?collectionName=" + name + 
+				"&viewObject=" + containerView.getViewObject() + 
+				"&propertyPrefix=" + containerView.getPropertyPrefix());
+		}
+	}
+	
+	private void fillChangedSections(Map result) {
+		View view = getView();			
+		String changedSections = view.getChangedSectionsViewObject();
+		if (changedSections != null) {
+			result.put("xava_sections_" + changedSections, 
+				"sections.jsp?viewObject=" + changedSections);
+		}
+	}			
+		
+	private View getView() {
+		return (View) getContext(request).get(application, module, "xava_view");
+	}
+
+	public void requestMultipart(HttpServletRequest request, HttpServletResponse response, String application, String module) throws Exception { 
+		checkSecurity(request, application, module);
+		Servlets.getURIAsStream(request, response, getURI(getURIPrefix(), null, null, null));
+		memorizeLastMessages();		
+	}
+	
+	private void memorizeLastMessages() {
 		ModuleContext context = getContext(request);
 		context.put(application, module, MESSAGES_LAST_REQUEST, request.getAttribute("messages"));
 		context.put(application, module, ERRORS_LAST_REQUEST, request.getAttribute("errors"));
 	}
 	
-	private static void restoreLastMessages(HttpServletRequest request, String application, String module) { 
+	private void restoreLastMessages() { 
 		ModuleContext context = getContext(request);		
 		if (context.exists(application, module, MESSAGES_LAST_REQUEST)) {
 			Messages messages = (Messages) context.get(application, module, MESSAGES_LAST_REQUEST);
@@ -68,9 +187,13 @@ public class Module extends DWRBase {
 			context.remove(application, module, ERRORS_LAST_REQUEST);			
 		}		
 	}
-		
-	private static String getQueryString(String application, String module, Map values, Map multipleValues, String[] selected) {
-		StringBuffer result = new StringBuffer(getCoreURI() + "?application=");
+	
+	private String getURI(String jspFile, Map values, Map multipleValues, String[] selected) {
+		StringBuffer result = new StringBuffer(getURIPrefix());
+		result.append(jspFile);
+		if (jspFile.endsWith(".jsp")) result.append('?');
+		else result.append('&');
+		result.append("application=");
 		result.append(application);
 		result.append("&module=");
 		result.append(module);
@@ -78,8 +201,8 @@ public class Module extends DWRBase {
 		return result.toString();
 	}
 
-	private static String getCoreURI() {		
-		return isPortlet()?"/WEB-INF/jsp/xava/core.jsp":"/xava/core.jsp";
+	private static String getURIPrefix() {		
+		return isPortlet()?"/WEB-INF/jsp/xava/":"/xava/";
 	}
 
 	private static void addValuesQueryString(StringBuffer sb, Map values, Map multipleValues, String [] selected) {
@@ -145,5 +268,5 @@ public class Module extends DWRBase {
 	public static void setStyle(Style style) {
 		Module.style = style;
 	}
-
+	
 }

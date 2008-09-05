@@ -36,6 +36,8 @@ public class View implements java.io.Serializable {
 	private static final long serialVersionUID = -7582669617830655121L;
 	private static Collection defaultListActionsForCollections;
 	
+	private String viewObject;  
+	private String propertyPrefix; 
 	private Map objects = null; 	
 	private String editCollectionElementAction;
 	private String viewCollectionElementAction;
@@ -110,7 +112,11 @@ public class View implements java.io.Serializable {
 	private boolean registeringExecutedActions = false;
 	private Tab collectionTab; 	
 	private String propertiesListNames;
-	private Collection rowStyles; // Of type MetaRowStyle 	
+	private Collection rowStyles; // Of type MetaRowStyle
+	private Map oldValues; 
+	private boolean mustRefreshCollection; 
+	private Map changedPropertiesAndDescriptionsListReferences; 
+	private boolean sectionChanged; 
 		
 	public View() {
 		oid = nextOid++;
@@ -822,7 +828,7 @@ public class View implements java.io.Serializable {
 				else { 										
 					if (values == null) values = new HashMap();					
 					value = Strings.removeXSS(value); 
-					values.put(name, value);					
+					values.put(name, value);
 				}				 							 								
 			} 
 		} 
@@ -1728,7 +1734,11 @@ public class View implements java.io.Serializable {
 	}
 		
 	public void assignValuesToWebView(String qualifier) {
-		try {															
+		try {					
+			oldValues = values==null?null:new HashMap(values); 
+			mustRefreshCollection = false; 
+			changedPropertiesAndDescriptionsListReferences = null; 
+			sectionChanged = false; 
 			focusForward = "true".equalsIgnoreCase(getRequest().getParameter("xava_focus_forward"));			
 			setIdFocusProperty(getRequest().getParameter("xava_focus_property"));
 			Iterator it = isSubview()?getMetaMembersIncludingHiddenKey().iterator():getMetaMembers().iterator();
@@ -2938,8 +2948,9 @@ public class View implements java.io.Serializable {
 		return activeSection;
 	}
 
-	public void setActiveSection(int i) {		
-		activeSection = i;
+	public void setActiveSection(int i) {
+		if (activeSection != i) sectionChanged = true; 
+		activeSection = i;		
 	}
 
 	public int getCollectionEditingRow() {		
@@ -2953,7 +2964,7 @@ public class View implements java.io.Serializable {
 	public String getMemberName() {		
 		return memberName;
 	}
-
+	
 	public void setMemberName(String string) throws XavaException {		
 		memberName = string;		
 		setLabelsIdForMetaPropertiesList();
@@ -3423,5 +3434,189 @@ public class View implements java.io.Serializable {
 	private void setRowStyles(Collection rowStyles) {
 		this.rowStyles = rowStyles;
 	}
+	
+	/**
+	 * Qualified ids of the properties and references as descriptions lists
+	 * changed in this request. <p>
+	 * 
+	 * This does not have a valid valid until the end of the request, and it's intended
+	 * to be used from the AJAX code in order to determine what to refresh.
+	 * 
+	 * @return In each entry the key is the qualified id and value the container view 
+	 */
+	public Map getChangedPropertiesAndDescriptionsListReferences() { 		
+		if (changedPropertiesAndDescriptionsListReferences == null) {
+			changedPropertiesAndDescriptionsListReferences = new HashMap();
+			fillChangedPropertiesAndDescriptionsListReferences(changedPropertiesAndDescriptionsListReferences);
+		}
+		return changedPropertiesAndDescriptionsListReferences;
+	}
+	
+	private void fillChangedPropertiesAndDescriptionsListReferences(Map result) { 		
+		if (oldValues == null) oldValues = Collections.EMPTY_MAP;		
+		for (Iterator it=values.entrySet().iterator(); it.hasNext(); ) { 
+			Map.Entry en = (Map.Entry) it.next();
+			if (!oldValues.containsKey(en.getKey()) ||
+				!Is.equal(en.getValue(), oldValues.get(en.getKey()))) 
+			{				
+				if (displayAsDescriptionsList()) {
+					result.put(getPropertyPrefix(), getParent());
+				}
+				else if (getMetaModel().containsMetaProperty((String) en.getKey()) &&
+						getMemberNamesWithoutSeccions().contains(en.getKey())) 
+				{
+					result.put(getPropertyPrefix() + en.getKey(), this);
+				}
+				if (getMetaModel().isKey((String) en.getKey())) {
+					refreshCollections();
+				}
+			}
+		}
+		if (hasSubviews()) {
+			Iterator itSubviews = getSubviews().values().iterator();
+			while (itSubviews.hasNext()) {
+				View subview = (View) itSubviews.next();
+				if (!subview.isRepresentsCollection()) {
+					if (subview.displayAsDescriptionsList()) {
+						subview.setPropertyPrefix(getPropertyPrefix() + subview.getMemberName());
+					}
+					subview.fillChangedPropertiesAndDescriptionsListReferences(result);
+				}
+			}
+		}
+		if (hasGroups()) {
+			Iterator itSubviews = getGroupsViews().values().iterator();
+			while (itSubviews.hasNext()) {
+				View subview = (View) itSubviews.next();
+				subview.fillChangedPropertiesAndDescriptionsListReferences(result);
+			}
+		}						
+		if (!sectionChanged && hasSections()) {
+			// Only the displayed data matters here
+			getSectionView(getActiveSection()).fillChangedPropertiesAndDescriptionsListReferences(result);	
+		}						
+	}
+	
+	private void refreshCollections() { 
+		if (isRepresentsCollection()) refreshCollection();
+		if (hasSubviews()) {
+			Iterator itSubviews = getSubviews().values().iterator();
+			while (itSubviews.hasNext()) {
+				View subview = (View) itSubviews.next();
+				subview.refreshCollections();
+			}
+		}
+		if (hasGroups()) {
+			Iterator itSubviews = getGroupsViews().values().iterator();
+			while (itSubviews.hasNext()) {
+				View subview = (View) itSubviews.next();
+				subview.refreshCollections();
+			}
+		}						
+		if (!sectionChanged && hasSections()) {
+			// Only the displayed data matters here
+			getSectionView(getActiveSection()).refreshCollections();	
+		}						
+	}
+
+	/**
+	 * Qualified ids of the collections changed in this request. <p>
+	 * 
+	 * This does not have a valid valid until the end of the request, and it's intended
+	 * to be used from the AJAX code in order to determine what to refresh.
+	 * 
+	 * @return In each entry the key is the qualified id and value the container view 
+	 */	
+	public Map getChangedCollections() { 		
+		Map result = new HashMap();
+		fillChangedCollections(result);
+		return result;
+	}
+	
+	private void fillChangedCollections(Map result) { 
+		if (hasSubviews()) {
+			Iterator itSubviews = getSubviews().values().iterator();
+			while (itSubviews.hasNext()) {
+				View subview = (View) itSubviews.next();				
+				if (subview.isRepresentsCollection() && subview.mustRefreshCollection()) {
+					result.put(getPropertyPrefix() + subview.getMemberName(), this);
+				}				
+				subview.fillChangedCollections(result);				
+			}
+		}
+		if (hasGroups()) {
+			Iterator itSubviews = getGroupsViews().values().iterator();
+			while (itSubviews.hasNext()) {
+				View subview = (View) itSubviews.next();				
+				subview.fillChangedCollections(result);
+			}
+		}						
+		if (!sectionChanged && hasSections()) {
+			// Only the displayed data matters here
+			getSectionView(getActiveSection()).fillChangedCollections(result);	
+		}						
+	}	
+	
+
+	private boolean mustRefreshCollection() { 
+		if (mustRefreshCollection) return true;
+		if (getMetaCollection().hasCondition() && 
+			getMetaCollection().getCondition().indexOf("${this.") >= 0) 
+		{
+			Collection conditionArgumentsPropertyNames = getMetaCollection().getConditionArgumentsPropertyNames();
+			for (Iterator it=getRoot().getChangedPropertiesAndDescriptionsListReferences().keySet().iterator(); it.hasNext(); ) {
+				String changedProperty = removeNamePrefix((String) it.next());				
+				if (conditionArgumentsPropertyNames.contains(changedProperty)) return true;
+			}			
+		}
+		return false;
+	}
+
+	/**
+	 * The name of this view as session object. <p>
+	 */
+	public void setViewObject(String viewObject) {
+		this.viewObject = viewObject;
+	}
+
+	/**
+	 * The name of this view as session object. <p>
+	 */
+	public String getViewObject() {
+		return viewObject;
+	}
+
+	/**
+	 * Prefix used in HTML code for the properties of this view. <p>
+	 */
+	public void setPropertyPrefix(String propertyPrefix) {
+		this.propertyPrefix = propertyPrefix;
+	}
+
+	/**
+	 * Prefix used in HTML code for the properties of this view. <p>
+	 */
+	public String getPropertyPrefix() {
+		return propertyPrefix;
+	}
+
+	/**
+	 * Refresh the displayed data of the collection from database. <p> 
+	 * 
+	 * This view must represents a collection in order to call this method.<br>
+	 */
+	public void refreshCollection() { 
+		assertRepresentsCollection("refreshCollection()");
+		this.mustRefreshCollection = true;		
+	}
+
+	public String getChangedSectionsViewObject() {
+		if (sectionChanged) return viewObject;		
+		if (hasSections()) { 
+			return getSectionView(getActiveSection()).getChangedSectionsViewObject();						 
+		}  		
+		return null;
+	}
+	
 	
 }

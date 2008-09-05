@@ -59,7 +59,9 @@ if (first && !view.isAlignedByColumns()) label = org.openxava.util.Strings.chang
 </td></tr>
 <tr><td style='vertical-align: middle'>
 <% } %>
+<span id="xava_editor_<%=view.getPropertyPrefix()%><%=p.getName()%>"> 
 <xava:editor property="<%=p.getName()%>" editable="<%=editable%>" throwPropertyChanged="<%=throwPropertyChanged%>"/>
+</span>
 <% 
  if (lastSearchKey) {
 	
