@@ -50,7 +50,8 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(WarehouseTest.class));		
 		if (ModuleTestBase.isOX3()) {
 			suite.addTest(new TestSuite(AnnotatedPOJOTest.class));
-		}		
+		}
+		suite.addTest(new TestSuite(AverageSpeedTest.class));
 		suite.addTest(new TestSuite(CarrierTest.class));
 		suite.addTest(new TestSuite(CarrierWithCalculatedFellowsTest.class));
 		suite.addTest(new TestSuite(CarrierWithReadOnlyCalculatedFellowsTest.class));

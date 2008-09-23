@@ -1,9 +1,11 @@
 Change Log for OpenXava project
 ===============================
 
+- Added default sizes (in default-size.xml) for java.lang.Integer, java.lang.Long, float, java.lang.Float, double and java.lang.Double.
 - Fix: Modifying the container object from a callback method of a collection element fails.
 - New property 'portletLocales' in xava.properties that indicates the locales to use for generating i18n files for portlets.
 - New format 'rtf' available for JasperReportBaseAction.
+- Fix: Searching in a reference uses 'like' as condition when id is hidden and another property is used for searching, so sometimes the search is not exact.
 
 OpenXava 3.1beta1 (2008-8-26)
 -----------------------------
