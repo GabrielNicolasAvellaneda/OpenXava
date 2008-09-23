@@ -266,8 +266,8 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 				}			
 				queryString.append("o.");
 				queryString.append(en.getKey());
-				en.setValue(convert(metaModel, (String) en.getKey(), en.getValue())); 
-				queryString.append(en.getValue() instanceof String?" like ":" = ");
+				en.setValue(convert(metaModel, (String) en.getKey(), en.getValue())); 				
+				queryString.append(en.getValue() instanceof String && ((String) en.getValue()).endsWith("%")?" like ":" = ");
 				queryString.append(":");
 				queryString.append(Strings.change((String)en.getKey(), ".", "_")); 
 				values.add(en);
@@ -324,10 +324,6 @@ abstract public class POJOPersistenceProviderBase implements IPersistenceProvide
 			}
 			catch (ClassNotFoundException ex) {				
 			}
-		}
-		
-		if (result instanceof String && String.class.isAssignableFrom(property.getType())) {
-			result = result + "%";
 		}
 		
 		return result;

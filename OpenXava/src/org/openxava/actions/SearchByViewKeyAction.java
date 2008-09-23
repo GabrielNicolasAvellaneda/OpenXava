@@ -41,7 +41,7 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 			Map values = null;
 			if (Maps.isEmptyOrZero(keys)) { 
 				try {					
-					values = MapFacade.getValuesByAnyProperty(getModelName(), getValuesFromView(), getMemberNames());					
+					values = MapFacade.getValuesByAnyProperty(getModelName(), getValuesForSearchByAnyProperty(), getMemberNames());					
 				}
 				catch (ObjectNotFoundException ex) {
 					// This is for the case of key with 0 as valid value
@@ -109,6 +109,23 @@ public class SearchByViewKeyAction extends ViewBaseAction {
 	 */
 	protected Map getValuesFromView() throws Exception {
 		return getView().getValues();
+	}
+	
+	private Map getValuesForSearchByAnyProperty() throws Exception {
+		return filter(getValuesFromView());
+	}
+
+	private Map filter(Map values) { 				
+		for (Iterator it = values.entrySet().iterator(); it.hasNext(); ) {
+			Map.Entry en = (Map.Entry) it.next();
+			if (en.getValue() instanceof String) {
+				values.put(en.getKey(), en.getValue() + "%");
+			}
+			else if (en.getValue() instanceof Map){
+				filter((Map) en.getValue());
+			}
+		}
+		return values;
 	}
 
 	/**
