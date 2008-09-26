@@ -97,7 +97,7 @@ public class Module extends DWRBase {
 			result.put("xava_errors", errors.contains()?"errors.jsp":null);
 			Messages messages = (Messages) request.getAttribute("messages");
 			result.put("xava_messages", messages.contains()?"messages.jsp":null);
-			if (manager.isReloadViewNeeded()) {
+			if (manager.isReloadViewNeeded() || getView().isReloadNeeded()) { 
 				result.put("xava_view", manager.getViewURL());
 			}
 			else {
@@ -111,7 +111,7 @@ public class Module extends DWRBase {
 
 	private void fillChangedPropertiesAndDescriptionsListReferences(Map result) {
 		View view = getView();		
-		Collection changedMembers = view.getChangedPropertiesAndDescriptionsListReferences().entrySet();		
+		Collection changedMembers = view.getChangedPropertiesAndDescriptionsListReferences().entrySet();
 		for (Iterator it = changedMembers.iterator(); it.hasNext(); ) {
 			Map.Entry en = (Map.Entry) it.next();
 			String qualifiedName = (String) en.getKey();
@@ -145,7 +145,7 @@ public class Module extends DWRBase {
 			result.put("xava_collection_" + qualifiedName + ".", 
 				"collection.jsp?collectionName=" + name + 
 				"&viewObject=" + containerView.getViewObject() + 
-				"&propertyPrefix=" + containerView.getPropertyPrefix());
+				"&propertyPrefix=" + containerView.getPropertyPrefix());			
 		}
 	}
 	

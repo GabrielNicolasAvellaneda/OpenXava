@@ -29,6 +29,13 @@
 	<for-type class="java.lang.String"  size="50"/>
 	<for-type class="boolean"  size="1"/>
 	<for-type class="int"  size="9"/>
+	<for-type class="java.lang.Integer" size="9"/>
 	<for-type class="long"  size="15"/>
-	<for-type class="java.math.BigDecimal" size="15" scale="2"/>	
+	<for-type class="java.lang.Long"  size="15"/>
+	<for-type class="java.math.BigDecimal" size="15" scale="2"/>
+	<for-type class="float" size="6" scale="2"/>
+	<for-type class="java.lang.Float" size="6" scale="2"/>	
+	<for-type class="double" size="10" scale="2"/>
+	<for-type class="java.lang.Double" size="10" scale="2"/>
+			
 </default-size>

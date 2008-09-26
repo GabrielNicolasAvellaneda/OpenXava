@@ -29,7 +29,7 @@ abstract public class TabBaseAction extends BaseAction implements IModuleContext
 			String tabObject = Is.emptyString(collection)?"xava_tab":Tab.COLLECTION_PREFIX + Strings.change(collection, ".", "_");
 			tab = (Tab) context.get(request, tabObject);
 			if (tab.getCollectionView() != null) {				
-				tab.getCollectionView().refreshCollection(); 				
+				tab.getCollectionView().refreshCollections(); 				
 			}
 		}
 		return tab;

@@ -17,7 +17,7 @@ public class OnChangeWarehouseAction extends OnChangePropertyBaseAction {
 		// because getNewValue() only returns a value (the last key property declared), 
 		// and the key of warehouse is multiple.
 		Map warehouse = (Map) getView().getValue("warehouse");
-		Integer zone = (Integer) warehouse.get("zoneNumber");
+		Integer zone = (Integer) warehouse.get("zoneNumber");		
 		getView().setHidden("zoneOne", !ONE.equals(zone));		
 	}
 
