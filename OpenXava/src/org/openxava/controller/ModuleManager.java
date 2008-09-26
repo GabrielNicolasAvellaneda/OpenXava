@@ -342,8 +342,7 @@ public class ModuleManager {
 				else if (!Is.emptyString(nextMode)) {
 					memorizePreviousMode(); 
 					setModeName(nextMode);					
-				}				
-				reloadAllUINeeded = true;
+				}								
 			}
 			setFormUpload(false);						
 			if (action instanceof ICustomViewAction) {
@@ -828,6 +827,7 @@ public class ModuleManager {
 
 	private void setModeName(String newModelName) {		
 		if (Is.equal(modeName, newModelName)) return;
+		reloadAllUINeeded = true;
 		modeName = newModelName;
 		metaActions = null;
 		defaultActionQualifiedName = null;

@@ -134,10 +134,32 @@ public class Is {
 	public final static boolean equal(Object a, Object b) {
 		if (a == null) return b == null;
 		if (b == null) return false;
+		if (XSystem.isJava5OrBetter()) {
+			if (getEnumClass().isInstance(a) ) a = enumToInteger(a); 
+			if (getEnumClass().isInstance(b) ) b = enumToInteger(b);
+		}
 		if (a instanceof Comparable) {
 			return ((Comparable) a).compareTo(b) == 0;
 		}
 		return a.equals(b);
+	}
+
+	private static Integer enumToInteger(Object theEnum) {
+		try {
+			return (Integer) Objects.execute(theEnum, "ordinal");
+		}
+		catch (Exception ex) {
+			throw new XavaException("enum_to_integer_error");
+		}		
+	}
+
+	private static Class getEnumClass() {
+		try {
+			return Class.forName("java.lang.Enum");
+		}
+		catch (Exception ex) {			
+			throw new XavaException("create_class_error", "java.lang.Enum");
+		}
 	}
 
 	/**

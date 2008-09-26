@@ -48,6 +48,7 @@ public class XavaSuite extends TestSuite {
 		TestSuite suite = new TestSuite();		
 
 		suite.addTest(new TestSuite(WarehouseTest.class));		
+		suite.addTest(new TestSuite(AJAXTest.class));
 		if (ModuleTestBase.isOX3()) {
 			suite.addTest(new TestSuite(AnnotatedPOJOTest.class));
 		}

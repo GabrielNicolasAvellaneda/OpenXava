@@ -619,6 +619,11 @@
 			<set property="all" value="true"/>
 		</action>		
 		
+		<action name="translateAll" 
+			class="org.openxava.test.actions.TranslateAllCarrierNameAction">
+			<use-object name="xava_view"/>
+		</action>
+		
 		<action name="deleteAll" class="org.openxava.test.actions.DeleteAllAction">
 			<set property="model" value="Carrier" />
 		</action>
@@ -626,8 +631,7 @@
 		<action name="search" image="images/search.gif" mode="detail" 
 			class="org.openxava.test.actions.CarriersSearchAction">
 			<use-object name="xava_view"/>			
-		</action>	
-		
+		</action>			
     	
 	</controller>	
 	

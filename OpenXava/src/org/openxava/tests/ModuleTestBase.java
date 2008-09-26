@@ -81,7 +81,10 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	/**
-	 * To test the specified module of the specified application 
+	 * To test the specified module of the specified application. <p>
+	 * 
+	 * You can send <code>null</code> for <code>null</code> in such a case you
+	 * must use {@link #changeModule} at the very first of your test methods.<br> 
 	 */
 	public ModuleTestBase(String nameTest, String application, String module) {
 		super(nameTest);
@@ -94,7 +97,9 @@ public class ModuleTestBase extends TestCase {
 	 * To test the specified module of the default application. <p>
 	 * 
 	 * In this case the application is obtained from the <code>application</code>
-	 * property in <code>xava-junit.properties</code> file.
+	 * property in <code>xava-junit.properties</code> file.<br>
+	 * You can send <code>null</code> for <code>null</code> in such a case you
+	 * must use {@link #changeModule} at the very first of your test methods.<br> 
 	 */	
 	public ModuleTestBase(String nameTest, String module) {
 		this(nameTest, getXavaJunitProperties().getProperty("application"), module);
@@ -374,9 +379,11 @@ public class ModuleTestBase extends TestCase {
 		if (isJetspeed2Enabled() && isJetspeed2UserPresent()) {		
 			login(getJetspeed2UserName(), getJetspeed2Password());
 		}		
-		else {						
-			page = (HtmlPage) client.getPage(getModuleURL()); 
-			resetForm();
+		else {	
+			if (this.module != null) {
+				page = (HtmlPage) client.getPage(getModuleURL());
+				resetForm();
+			}			
 		}		
 		propertyPrefix = null;		
 	}

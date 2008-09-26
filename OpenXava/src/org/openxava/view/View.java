@@ -116,7 +116,8 @@ public class View implements java.io.Serializable {
 	private Map oldValues; 
 	private boolean mustRefreshCollection; 
 	private Map changedPropertiesAndDescriptionsListReferences; 
-	private boolean sectionChanged; 
+	private boolean sectionChanged;
+	private boolean reloadNeeded;  
 		
 	public View() {
 		oid = nextOid++;
@@ -380,7 +381,7 @@ public class View implements java.io.Serializable {
 		if (values == null) values = new HashMap();
 		else values.clear();
 		closeChildCollectionDetailsAndClearSelected();
-		addValues(map);
+		addValues(map);		
 	}
 	
 
@@ -1735,8 +1736,9 @@ public class View implements java.io.Serializable {
 		
 	public void assignValuesToWebView(String qualifier) {
 		try {					
-			oldValues = values==null?null:new HashMap(values); 
-			mustRefreshCollection = false; 
+			oldValues = values==null?null:new HashMap(values);			
+			mustRefreshCollection = false;
+			reloadNeeded = false; 
 			changedPropertiesAndDescriptionsListReferences = null; 
 			sectionChanged = false; 
 			focusForward = "true".equalsIgnoreCase(getRequest().getParameter("xava_focus_forward"));			
@@ -1832,7 +1834,9 @@ public class View implements java.io.Serializable {
 		}		
 	}
 	
-	private void assignReferenceValue(String qualifier, MetaReference ref, String value) throws XavaException {		
+	private void assignReferenceValue(String qualifier, MetaReference ref, String value) throws XavaException {
+		View subview = getSubview(ref.getName()); 
+		subview.oldValues = subview.values==null?null:new HashMap(subview.values);
 		MetaModel metaModel = ref.getMetaModelReferenced(); 
 		Class keyClass = metaModel.getPOJOClass(); 
 		Field [] fields = keyClass.getDeclaredFields();
@@ -2178,13 +2182,29 @@ public class View implements java.io.Serializable {
 				// Searching by key, the normal case				
 				if (Maps.isEmptyOrZero(key)) clear();				
 				else setValues(MapFacade.getValues(getModelName(), key, getMembersNamesWithHidden()));				
-			}
+			}			
 		}
 		catch (ObjectNotFoundException ex) {						
 			getErrors().add("object_with_key_not_found", getModelName(), key);
 			clear(); 								
 		}					
 	}		
+	
+	/**
+	 * Refresh the displayed data from database. <p> 
+	 */
+	public void refresh() {
+		Map key = getKeyValues();
+		try {			
+			if (Maps.isEmptyOrZero(key)) clear();				
+			else setValues(MapFacade.getValues(getModelName(), key, getMembersNamesWithHidden()));				
+			refreshCollections(); 
+		}
+		catch (FinderException ex) {						
+			getErrors().add("object_with_key_not_found", getModelName(), key);
+			clear(); 								
+		}
+	}
 	
 	private Map getSearchKeyValues() { 
 		Map values = new HashMap();
@@ -2653,7 +2673,7 @@ public class View implements java.io.Serializable {
 	}
 
 	public void setRequest(HttpServletRequest request) throws XavaException {			
-		this.request = request;								
+		this.request = request;		
 	}
 	
 	public boolean displayAsDescriptionsList(MetaReference ref) throws XavaException {		
@@ -2848,14 +2868,18 @@ public class View implements java.io.Serializable {
 		// getSubview() is for starting the process that creates subviews and groups
 		// before to hide any member
 		getSubviews(); 
-		if (hidden) hiddenMembers.add(name);
-		else hiddenMembers.remove(name); 		
-		metaMembers = null;
-		metaMembersIncludingHiddenKey = null;
-		membersNames = null;		
-		memberNamesWithoutSeccions = null;
-		membersNamesWithHidden = null;
-		membersNamesInGroup = null;
+		boolean modified = false;
+		if (hidden) modified = hiddenMembers.add(name);
+		else modified = hiddenMembers.remove(name);
+		if (modified) { 
+			metaMembers = null;
+			metaMembersIncludingHiddenKey = null;
+			membersNames = null;		
+			memberNamesWithoutSeccions = null;
+			membersNamesWithHidden = null;
+			membersNamesInGroup = null;
+			reloadNeeded = true;
+		}
 		
 		// The hidden ones are sent to all sections and groups,
 		// thus if a property is shown in heading and in some
@@ -3439,7 +3463,7 @@ public class View implements java.io.Serializable {
 	 * Qualified ids of the properties and references as descriptions lists
 	 * changed in this request. <p>
 	 * 
-	 * This does not have a valid valid until the end of the request, and it's intended
+	 * This does not have a valid value until the end of the request, and it's intended
 	 * to be used from the AJAX code in order to determine what to refresh.
 	 * 
 	 * @return In each entry the key is the qualified id and value the container view 
@@ -3452,20 +3476,29 @@ public class View implements java.io.Serializable {
 		return changedPropertiesAndDescriptionsListReferences;
 	}
 	
-	private void fillChangedPropertiesAndDescriptionsListReferences(Map result) { 		
-		if (oldValues == null) oldValues = Collections.EMPTY_MAP;		
+	private void fillChangedPropertiesAndDescriptionsListReferences(Map result) {  				
+		if (displayAsDescriptionsList() && 
+			!Is.emptyString(getMetaDescriptionsList().getDepends()) &&
+			!getParent().isHidden(getMemberName())) 
+		{
+			result.put(getPropertyPrefix(), getParent());
+			return;
+		}
+		if (oldValues == null) oldValues = Collections.EMPTY_MAP;			
 		for (Iterator it=values.entrySet().iterator(); it.hasNext(); ) { 
 			Map.Entry en = (Map.Entry) it.next();
 			if (!oldValues.containsKey(en.getKey()) ||
 				!Is.equal(en.getValue(), oldValues.get(en.getKey()))) 
-			{				
-				if (displayAsDescriptionsList()) {
-					result.put(getPropertyPrefix(), getParent());
-				}
-				else if (getMetaModel().containsMetaProperty((String) en.getKey()) &&
-						getMemberNamesWithoutSeccions().contains(en.getKey())) 
-				{
-					result.put(getPropertyPrefix() + en.getKey(), this);
+			{					
+				if (!isHidden((String) en.getKey())) { 
+					if (displayAsDescriptionsList()) {
+						result.put(getPropertyPrefix(), getParent());
+					}
+					else if (getMetaModel().containsMetaProperty((String) en.getKey()) &&
+							getMemberNamesWithoutSeccions().contains(en.getKey())) 
+					{
+						result.put(getPropertyPrefix() + en.getKey(), this);
+					}					
 				}
 				if (getMetaModel().isKey((String) en.getKey())) {
 					refreshCollections();
@@ -3476,11 +3509,11 @@ public class View implements java.io.Serializable {
 			Iterator itSubviews = getSubviews().values().iterator();
 			while (itSubviews.hasNext()) {
 				View subview = (View) itSubviews.next();
-				if (!subview.isRepresentsCollection()) {
+				if (!subview.isRepresentsCollection()) {				
 					if (subview.displayAsDescriptionsList()) {
 						subview.setPropertyPrefix(getPropertyPrefix() + subview.getMemberName());
 					}
-					subview.fillChangedPropertiesAndDescriptionsListReferences(result);
+					subview.fillChangedPropertiesAndDescriptionsListReferences(result);					
 				}
 			}
 		}
@@ -3496,9 +3529,22 @@ public class View implements java.io.Serializable {
 			getSectionView(getActiveSection()).fillChangedPropertiesAndDescriptionsListReferences(result);	
 		}						
 	}
+
+	private MetaDescriptionsList getMetaDescriptionsList() { 
+		MetaReference ref = getParent().getMetaModel().getMetaReference(getMemberName());
+		MetaDescriptionsList descriptionsList = getParent().getMetaView().getMetaDescriptionList(ref);
+		return descriptionsList;
+	}
 	
-	private void refreshCollections() { 
-		if (isRepresentsCollection()) refreshCollection();
+	/**
+	 * Refreshs the displayed data of all the collections of this
+	 * view from database. <p>
+	 */
+	public void refreshCollections() {  
+		if (isRepresentsCollection()) {
+			refreshCollection();
+			return;
+		}
 		if (hasSubviews()) {
 			Iterator itSubviews = getSubviews().values().iterator();
 			while (itSubviews.hasNext()) {
@@ -3522,7 +3568,7 @@ public class View implements java.io.Serializable {
 	/**
 	 * Qualified ids of the collections changed in this request. <p>
 	 * 
-	 * This does not have a valid valid until the end of the request, and it's intended
+	 * This does not have a valid value until the end of the request, and it's intended
 	 * to be used from the AJAX code in order to determine what to refresh.
 	 * 
 	 * @return In each entry the key is the qualified id and value the container view 
@@ -3538,8 +3584,11 @@ public class View implements java.io.Serializable {
 			Iterator itSubviews = getSubviews().values().iterator();
 			while (itSubviews.hasNext()) {
 				View subview = (View) itSubviews.next();				
-				if (subview.isRepresentsCollection() && subview.mustRefreshCollection()) {
-					result.put(getPropertyPrefix() + subview.getMemberName(), this);
+				if (subview.isRepresentsCollection() && 
+					subview.mustRefreshCollection() && isShown() &&
+					!isHidden(subview.getMemberName()))  
+				{
+						result.put(getPropertyPrefix() + subview.getMemberName(), this);
 				}				
 				subview.fillChangedCollections(result);				
 			}
@@ -3557,6 +3606,16 @@ public class View implements java.io.Serializable {
 		}						
 	}	
 	
+
+	private boolean isShown() { 
+		if (viewObject == null) return false;
+		View v = this;		
+		while (v != null) {
+			if (v.isRepresentsCollection() && !v.isCollectionDetailVisible()) return false;
+			v = v.parent;
+		}
+		return true;
+	}
 
 	private boolean mustRefreshCollection() { 
 		if (mustRefreshCollection) return true;
@@ -3605,8 +3664,7 @@ public class View implements java.io.Serializable {
 	 * 
 	 * This view must represents a collection in order to call this method.<br>
 	 */
-	public void refreshCollection() { 
-		assertRepresentsCollection("refreshCollection()");
+	private void refreshCollection() { 		
 		this.mustRefreshCollection = true;		
 	}
 
@@ -3616,6 +3674,10 @@ public class View implements java.io.Serializable {
 			return getSectionView(getActiveSection()).getChangedSectionsViewObject();						 
 		}  		
 		return null;
+	}
+
+	public boolean isReloadNeeded() {
+		return reloadNeeded;		
 	}
 	
 	

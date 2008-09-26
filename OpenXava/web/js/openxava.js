@@ -29,17 +29,19 @@ openxava.refreshPage = function(result) {
 	}
 	else { 				
 		for (var id in result) {	
-			changed = changed + id + ", "; // tmp 
+			changed = changed + id + ", ";  
+			document.getElementById("info").innerHTML="Cuesta=" + cuesta + " Cambiado=" + changed; //  tmp
 			document.getElementById(id).innerHTML = result[id];
 		}				
 		openxava.formName = "xava_form";
 		openxava.form = document.getElementById(openxava.formName);
 		// tmp openxava.setFocus();		
 	}
-	openxava.form.xava_action.value="";	// tmp
-	openxava.form.xava_action_argv.value=""; // tmp
+	openxava.form.xava_action.value="";	
+	openxava.form.xava_action_argv.value=""; 
 	
 	document.getElementById("xava_loading").value=false;
+	document.getElementById("xava_loaded_parts").value=changed;
 	var cuesta = new Date().getTime() - openxava.iniTime; // tmp
 	document.getElementById("info").innerHTML="Cuesta=" + cuesta + " Cambiado=" + changed; 
 }

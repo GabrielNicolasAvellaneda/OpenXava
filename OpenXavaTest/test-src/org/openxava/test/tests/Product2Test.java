@@ -199,7 +199,7 @@ public class Product2Test extends ModuleTestBase {
 		assertNoEditable("family");		
 	}
 	
-	public void testOnChangeDescriptionsListReferenceMultipleKey() throws Exception {
+	public void testOnChangeDescriptionsListReferenceMultipleKey() throws Exception {		
 		execute("CRUD.new");
 		assertNotExists("zoneOne");
 		
@@ -224,10 +224,10 @@ public class Product2Test extends ModuleTestBase {
 		assertValue("description", "JUNIT ZONE 1");
 		assertExists("zoneOne");
 		
-		execute("CRUD.new");
-		setValue("number", "67");
-		execute("CRUD.search");
-		assertNoErrors();
+		execute("CRUD.new");		
+		setValue("number", "67");		
+		execute("CRUD.search");		
+		assertNoErrors();		
 		assertValue("description", "JUNIT ZONE 2");
 		assertNotExists("zoneOne");
 		
