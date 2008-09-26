@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- New methods refresh() and refreshCollections() in View.
+- Is.equal can compare integers with enums, using the enum ordinal.
 - Added default sizes (in default-size.xml) for java.lang.Integer, java.lang.Long, float, java.lang.Float, double and java.lang.Double.
 - Fix: Modifying the container object from a callback method of a collection element fails.
 - New property 'portletLocales' in xava.properties that indicates the locales to use for generating i18n files for portlets.
@@ -10,7 +12,7 @@ Change Log for OpenXava project
 OpenXava 3.1beta1 (2008-8-26)
 -----------------------------
 - Full AJAX support.
-- New method 'remove' in ModuleContext for removing a session object.
+- New method remove() in ModuleContext for removing a session object.
 - New property 'browser' for xava-junit.properti to indicate the browser type to be used for testing.
 - New InputStreams utility class.
 - HtmlUnit updated to 2.2.
@@ -28,7 +30,7 @@ OpenXava 3.0.3 (2008-8-14)
 - New property 'format' for JasperReportBaseAction. It can be 'pdf' or 'excel'.
 - JSP link tag has a new attribute 'cssStyle'.
 - Date formatter for Spanish and Polish admit 2 or 4 digits for years, and it throws parse error on incorrect dates.
-- New methods assertRowCollectionChecked and assertRowCollectionUnchecked in ModuleTestBase.
+- New methods assertRowCollectionChecked() and assertRowCollectionUnchecked() in ModuleTestBase.
 - New utility class Classes for helping in class introspection.
 - Label editors show the description instead of id when the type is enum or valid-values.
 - Some HTML cleanup: All scripts inside HTML, no duplicate ids, focus_property_id hidden input removed.
