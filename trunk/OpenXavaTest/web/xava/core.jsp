@@ -8,11 +8,10 @@ org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleM
 org.openxava.view.View view = (org.openxava.view.View) context.get(request, "xava_view");
 boolean messagesOnTop = !"false".equalsIgnoreCase(request.getParameter("messagesOnTop"));
 %>
-
 <div class="<%=style.getModule()%>">
 <form id="xava_form" name='<%=manager.getForm()%>' 
 	method='POST' <%=manager.getEnctype()%> 
-	<%=manager.getFormAction(request)%>>
+	<%=manager.getFormAction(request)%> style="display: inline;">
 
 <INPUT type="hidden" name="xava_page_id" value="<%=manager.getPageId()%>"/>
 <INPUT type="hidden" name="xava_action" value=""/>
@@ -26,25 +25,25 @@ boolean messagesOnTop = !"false".equalsIgnoreCase(request.getParameter("messages
 
 <div <%=style.getModuleSpacing()%>>
     <% if (manager.isButtonBarVisible()) { %>
-    <div id='xava_button_bar' class='<%=style.getButtonBar()%>'>
+    <div id='xava_button_bar' class='<%=style.getButtonBar()%>'>		
 		<jsp:include page="buttonBar.jsp"/>
 	</div>
     <% } %>
 	
     <% if (messagesOnTop) {  %>    
-    <div id='xava_errors'>
+    <div id='xava_errors' style="display: inline;">
 		<jsp:include page="errors.jsp"/>
     </div>
         
-	<div id='xava_messages'>
+	<div id='xava_messages' style="display: inline;">
 		<jsp:include page="messages.jsp"/>
 	</div>            
     <% } %>
-          		
-	<div id='xava_view' <%=manager.isListMode()?"":("class='" + style.getDetail() + "'")%>>
+          		 
+	<div id='xava_view' <%=manager.isListMode()?"":("class='" + style.getDetail() + "'")%> style='padding-top: 2px;'>
 		<jsp:include page='<%=manager.getViewURL()%>'/>		
-	</div>    
-    
+	</div>    	
+    <div style="clear: both; padding-top: 2px;"></div>
 	<div id='xava_bottom_buttons' <%=style.getBottomButtonsStyle()%>>	
 		<jsp:include page="bottomButtons.jsp"/>
 	</div>

@@ -38,7 +38,7 @@ public class Style {
 	}
 	
 	public String getModuleSpacing() {
-		return "style='padding: 4px;'";
+		return "style='padding: 4px;'";		
 	}
 		
 	public String getButtonBar() {

@@ -67,7 +67,7 @@ public class EditorTag extends TagSupport {
 				Object fvalue = org.openxava.web.WebEditors.formatToStringOrArray(request, metaProperty, value, errors, view.getViewName());
 				request.setAttribute(propertyKey + ".fvalue", fvalue);
 			}
-			
+						
 			String editableKey = propertyKey + "_EDITABLE_";
 			pageContext.getOut().print("<input type='hidden' name='");
 			pageContext.getOut().print(editableKey);

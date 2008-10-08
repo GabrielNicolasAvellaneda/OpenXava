@@ -165,8 +165,8 @@ public class Messages implements java.io.Serializable {
 	private void addMember(Object member, Object model) {
 		if (member instanceof String) {
 			Object id = null;
-			if (model instanceof String) id = member;
-			else id = model + "." + member;
+			if (model instanceof String) id = model + "." + member; 
+			else id = member;			
 			if (members == null) members = new ArrayList();		
 			members.add(id);
 		}
@@ -266,6 +266,13 @@ public class Messages implements java.io.Serializable {
 		if (members == null) return false;		
 		if (m.getMetaModel() != null && members.contains(m.getMetaModel().getName() + "." + m.getName())) return true;
 		return members.contains(m.getName());
+	}
+	
+	/**
+	 * Qualified names of the members affected for this errors. <p>  
+	 */
+	public Collection getMembers() {
+		return members==null?Collections.EMPTY_LIST:members;
 	}
 	
 }

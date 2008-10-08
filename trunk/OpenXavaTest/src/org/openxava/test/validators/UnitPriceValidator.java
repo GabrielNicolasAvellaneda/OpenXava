@@ -15,9 +15,10 @@ public class UnitPriceValidator implements IPropertyValidator {
 		Messages errors,
 		Object object,
 		String objectName,
-		String propertyName)	{				
+		String propertyName)	{	
+		if (object == null) return;
 		if (!(object instanceof BigDecimal)) {			
-			errors.add("expected_type", "bigdecimal");			
+			errors.add("expected_type", propertyName, objectName, "bigdecimal");			
 			return;
 		}
 		BigDecimal n = (BigDecimal) object;
