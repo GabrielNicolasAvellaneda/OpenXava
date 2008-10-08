@@ -38,7 +38,7 @@ public class Module extends DWRBase {
 			this.response = response;
 			this.application = application;
 			this.module = module;		
-			this.manager = (ModuleManager) getContext(request).get(application, module, "manager");						
+			this.manager = (ModuleManager) getContext(request).get(application, module, "manager");
 			restoreLastMessages();
 			request.setAttribute("style", getStyle());
 			getURIAsStream("init.jsp", values, multipleValues, selected);
@@ -54,12 +54,17 @@ public class Module extends DWRBase {
 			}
 			else {
 				fillResult(result, values, multipleValues, selected);
-			}			
+			}								
 			return result;
 		}
 		finally {			
 			if (manager != null) manager.commit(); // If hibernate, jpa, etc is used to render some value here is commit
 		}
+	}	
+	
+	public void requestMultipart(HttpServletRequest request, HttpServletResponse response, String application, String module) throws Exception { 
+		request(request, response, application, module, null, null, null);
+		memorizeLastMessages();		
 	}	
 
 	private InputStream getURIAsStream(String jspFile, Map values, Map multipleValues, String[] selected) throws Exception {
@@ -68,6 +73,7 @@ public class Module extends DWRBase {
 	
 	private String getURIAsString(String jspFile, Map values, Map multipleValues, String[] selected) throws Exception {
 		if (jspFile == null) return "";
+		if (jspFile.startsWith("html:")) return jspFile.substring(5); // Using html: prefix the content is returned as is
 		return InputStreams.toString(getURIAsStream(jspFile, values, multipleValues, selected));
 	}
 	
@@ -85,7 +91,7 @@ public class Module extends DWRBase {
 
 	private Map getChangedParts(Map values) { 
 		Map result = new HashMap(); 
-		if (values == null || manager.isReloadAllUINeeded()) {		
+		if (values == null || manager.isReloadAllUINeeded() || manager.isFormUpload()) {  		
 			result.put("xava_core", "core.jsp");
 		}
 		else {
@@ -104,9 +110,19 @@ public class Module extends DWRBase {
 				fillChangedPropertiesAndDescriptionsListReferences(result);
 				fillChangedCollections(result);
 				fillChangedSections(result);
+				fillChangedErrorImages(result);
 			}
 		}
 		return result;
+	}
+
+	private void fillChangedErrorImages(Map result) { 
+		Messages errors = (Messages) request.getAttribute("errors");
+		String imageHTML = "html:<img src='" + request.getContextPath() +"/xava/images/error.gif'/>";
+		for (Iterator it=errors.getMembers().iterator(); it.hasNext(); ) {
+			Object member = it.next();
+			result.put("xava_error_image_" + member, imageHTML);							
+		}				
 	}
 
 	private void fillChangedPropertiesAndDescriptionsListReferences(Map result) {
@@ -131,6 +147,7 @@ public class Module extends DWRBase {
 					"&viewObject=" + containerView.getViewObject() + 
 					"&propertyPrefix=" + containerView.getPropertyPrefix());
 			}
+			result.put("xava_error_image_" + containerView.getMetaModel().getName() + "." + name, null);	
 		}
 	}
 	
@@ -161,17 +178,17 @@ public class Module extends DWRBase {
 	private View getView() {
 		return (View) getContext(request).get(application, module, "xava_view");
 	}
-
-	public void requestMultipart(HttpServletRequest request, HttpServletResponse response, String application, String module) throws Exception { 
-		checkSecurity(request, application, module);
-		Servlets.getURIAsStream(request, response, getURI(getURIPrefix(), null, null, null));
-		memorizeLastMessages();		
-	}
 	
-	private void memorizeLastMessages() {
-		ModuleContext context = getContext(request);
-		context.put(application, module, MESSAGES_LAST_REQUEST, request.getAttribute("messages"));
-		context.put(application, module, ERRORS_LAST_REQUEST, request.getAttribute("errors"));
+	private void memorizeLastMessages() { 
+		ModuleContext context = getContext(request);		
+		Object messages = request.getAttribute("messages");
+		if (messages != null) { 
+			context.put(application, module, MESSAGES_LAST_REQUEST, messages);
+		}
+		Object errors = request.getAttribute("errors");
+		if (errors != null) {
+			context.put(application, module, ERRORS_LAST_REQUEST, errors);
+		}			
 	}
 	
 	private void restoreLastMessages() { 

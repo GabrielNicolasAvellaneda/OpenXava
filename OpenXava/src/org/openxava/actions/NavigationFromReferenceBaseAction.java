@@ -15,7 +15,7 @@ import org.openxava.view.*;
  * @author Javier Paniza
  */
 
-abstract public class NavigationFromReferenceBaseAction extends ReferenceBaseAction implements INavigationAction, IRequestAction, IChainAction {
+abstract public class NavigationFromReferenceBaseAction extends ReferenceBaseAction implements IChangeControllersAction, IRequestAction, IChainAction {
 		
 	private String model;	
 	private String controller;
@@ -45,10 +45,6 @@ abstract public class NavigationFromReferenceBaseAction extends ReferenceBaseAct
 
 	public String[] getNextControllers() throws Exception {		
 		return new String[] { getController() };
-	}
-
-	public String getCustomView() {		
-		return SAME_VIEW;
 	}
 	
 	public String getModel() {

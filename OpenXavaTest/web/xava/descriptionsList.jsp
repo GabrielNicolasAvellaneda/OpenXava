@@ -38,9 +38,12 @@ String label = ref.getLabel(request);
 <img src="<%=request.getContextPath()%>/xava/images/key.gif"/>
 <% } else if (ref.isRequired()) {  %>	
 <img src="<%=request.getContextPath()%>/xava/images/required.gif"/>
-<% } if ( errors.memberHas(ref)) {%>
+<% } %> 
+<span id="xava_error_image_<%=ref.getQualifiedName()%>">
+<% if ( errors.memberHas(ref)) {%>
 <img src="<%=request.getContextPath()%>/xava/images/error.gif"/>
 <% } %>
+</span>
 <%=postIcons%>
 <%=preEditor%>
 <% if (labelFormat == MetaPropertyView.SMALL_LABEL) { 

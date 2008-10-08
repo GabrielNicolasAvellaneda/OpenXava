@@ -30,7 +30,7 @@ public class ModuleManager {
 	static {		
 		MetaControllers.setContext(MetaControllers.WEB);		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
-		log.info("OpenXava 3.1beta2 (2008-9-xx)");		
+		log.info("OpenXava 3.1beta2 (2008-10-xx)");		
 	}
 	
 	private static int nextOid = 0; 
@@ -216,8 +216,8 @@ public class ModuleManager {
 			if (errors.isEmpty()) { // Only it's executed the action if there aren't errors
 				if (isFormUpload()) {
 					parseMultipartRequest(request);
-				}
-				String xavaAction = getParameter(request, "xava_action");				
+				}				
+				String xavaAction = getParameter(request, "xava_action");					
 				if (!Is.emptyString(xavaAction)) {											
 					String actionValue = request.getParameter("xava_action_argv");					
 					if ("undefined".equals(actionValue)) actionValue = null;						
@@ -235,7 +235,7 @@ public class ModuleManager {
 		}
 	}
 	
-	private String getParameter(HttpServletRequest request, String parameter) throws FileUploadException {
+	private String getParameter(HttpServletRequest request, String parameter) throws FileUploadException {		
 		if (isFormUpload()) {
 			List items = (List) request.getAttribute("xava.upload.fileitems");
 			for (Iterator it = items.iterator(); it.hasNext(); ) {
@@ -244,7 +244,7 @@ public class ModuleManager {
 			}	
 			return null;    
 		}
-		else {
+		else { 
 			return request.getParameter(parameter);
 		}
 	}
@@ -273,7 +273,8 @@ public class ModuleManager {
 	}
 
 	private void executeAction(IAction action, MetaAction metaAction, Messages errors, Messages messages, String propertyValues, HttpServletRequest request) {
-		try {						
+		try {					
+			Object previousView = getContext().get(applicationName, moduleName, "xava_view");  
 			action.setErrors(errors);
 			action.setMessages(messages);
 			action.setEnvironment(getEnvironment());
@@ -349,13 +350,14 @@ public class ModuleManager {
 				ICustomViewAction customViewAction = (ICustomViewAction) action;
 				String newView = customViewAction.getCustomView();
 				if (ICustomViewAction.PREVIOUS_VIEW.equals(newView)) { 
-					restorePreviousCustomView();															
+					restorePreviousCustomView();
+					reloadViewNeeded = true; 
 				}													
 				else if (!Is.emptyString(newView)) {
 					memorizeCustomView(); 
-					setViewName(newView);					
-				}
-				reloadViewNeeded = true;
+					setViewName(newView);		
+					reloadViewNeeded = true; 
+				} 
 			}
 			if (action instanceof IChangeControllersAction) {
 				IChangeControllersAction changeControllersAction = (IChangeControllersAction) action;
@@ -372,8 +374,8 @@ public class ModuleManager {
 						setControllersNames(nextControllers);
 						executeInitAction(request, errors, messages);
 					}
+					actionsChanged = true; 
 				}
-				actionsChanged = true;
 			}			
 			if (action instanceof IHideActionAction) {
 				String actionToHide = ((IHideActionAction) action).getActionToHide();
@@ -454,7 +456,12 @@ public class ModuleManager {
 					}
 					request.setAttribute("xava.sendParametersToTab", "false");
 				}
-			}					
+			}			
+			if (!isXavaView()) reloadViewNeeded = true; 			
+			if (!reloadViewNeeded) {
+				Object currentView = getContext().get(applicationName, moduleName, "xava_view"); 
+				reloadViewNeeded = currentView != previousView;
+			}
 			if (!(metaAction == null && executingAction)) { // For avoiding commit on OnChange actions triggered from a regular action execution
 				doCommit(); // after executing action
 			}

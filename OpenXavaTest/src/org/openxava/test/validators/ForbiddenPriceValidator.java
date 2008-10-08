@@ -10,7 +10,8 @@ public class ForbiddenPriceValidator implements IValidator {
 	private BigDecimal forbiddenPrice;
 	private BigDecimal unitPrice;
 	
-	public void validate(Messages errors) throws Exception {
+	public void validate(Messages errors) throws Exception {		
+		if (unitPrice == null && forbiddenPrice != null) return; 
 		if (forbiddenPrice.compareTo(unitPrice) == 0) {
 			errors.add("forbidden_price", forbiddenPrice);
 		}

@@ -17,17 +17,15 @@ import org.openxava.view.*;
  * @author Javier Paniza
  */
 
-public abstract class UpdateReferenceBaseAction extends BaseAction implements INavigationAction {
+public abstract class UpdateReferenceBaseAction extends BaseAction implements IChangeControllersAction {
 	
 	private View view;	
 	private String [] nextControllers = null;
-	private String nextView = SAME_VIEW;
 	private Stack previousViews;
 	
 	
 	protected void returnsToPreviousViewUpdatingReferenceView(Map key) throws Exception {
-		nextControllers = PREVIOUS_CONTROLLERS;
-		nextView = DEFAULT_VIEW;				
+		nextControllers = PREVIOUS_CONTROLLERS;				
 		if (!getPreviousViews().empty()) {				
 			View referenceSubview = (View) getView().getObject("xava.referenceSubview");
 			referenceSubview.setRequest(getView().getRequest()); 
@@ -56,10 +54,6 @@ public abstract class UpdateReferenceBaseAction extends BaseAction implements IN
 
 	public String[] getNextControllers() {		
 		return nextControllers;
-	}
-
-	public String getCustomView() {				
-		return nextView;
 	}
 
 	public Stack getPreviousViews() {

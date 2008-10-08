@@ -9,7 +9,6 @@ String app = request.getParameter("application");
 String module = request.getParameter("module");
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager)context.get(request, "manager", "org.openxava.controller.ModuleManager");
 if (manager.isFormUpload()) {
-	manager.parseMultipartRequest(request);	
 	new Module().requestMultipart(request, response, app, module);
 }
 String form = manager.getForm();
@@ -54,10 +53,9 @@ Module.setStyle(style);
 </head>
 <body bgcolor="#ffffff">
 <% } %>
-	<div id="info"></div> <%-- tmp --%>
+	<div id="info"></div> <%-- tmp --%>	
 	<input id="xava_loading" type="hidden" value="true"/>
-	<input id="xava_loaded_parts" type="hidden" value=""/>
-
+	<input id="xava_loaded_parts" type="hidden" value=""/>	
 	<%-- Layer for progress bar --%>
 	<div id='xava_processingLayer' style='position:absolute;top:100px;left:150px;display:none'>
 	<table cellspacing='0'>
@@ -68,8 +66,7 @@ Module.setStyle(style);
 	       </td>
 	   </tr>
 	</table>
-	</div>
-
+	</div>	
 	<div id="xava_core"></div>
 
 <% if (!isPortlet) { %>

@@ -45,9 +45,12 @@ if (first && !view.isAlignedByColumns()) label = org.openxava.util.Strings.chang
 <img src="<%=request.getContextPath()%>/xava/images/key.gif"/>
 <% } else if (p.isRequired()) { %>	
 <img src="<%=request.getContextPath()%>/xava/images/required.gif"/>
-<% } if (errors.memberHas(p)) { %>
+<% } %> 
+<span id="xava_error_image_<%=p.getQualifiedName()%>"> 
+<% if (errors.memberHas(p)) { %>
 <img src="<%=request.getContextPath()%>/xava/images/error.gif"/>
 <% } %>
+</span>
 <%=postIcons%>
 <%=preEditor%>
 <% if (labelFormat == MetaPropertyView.SMALL_LABEL) { 

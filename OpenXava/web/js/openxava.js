@@ -145,8 +145,8 @@ openxava.executeAction = function(confirmMessage, takesLong, action, argv) {
 	}				
 }
 
-openxava.isSubmitNeeded = function() {
-	return this.form.enctype=="multipart/form-data"
+openxava.isSubmitNeeded = function() {		
+	return this.form.enctype=="multipart/form-data";
 }
 
 openxava.throwPropertyChanged = function(property) {	

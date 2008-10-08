@@ -3509,7 +3509,17 @@ public class View implements java.io.Serializable {
 			Iterator itSubviews = getSubviews().values().iterator();
 			while (itSubviews.hasNext()) {
 				View subview = (View) itSubviews.next();
-				if (!subview.isRepresentsCollection()) {				
+				if (subview.isRepresentsCollection()) {
+					if (subview.isCollectionDetailVisible()) {
+						if (subview.getViewObject() == null) { // First time
+							subview.refreshCollection();
+						}
+						else if (!subview.mustRefreshCollection) { 
+							subview.fillChangedPropertiesAndDescriptionsListReferences(result);
+						}
+					}
+				}
+				else { 				
 					if (subview.displayAsDescriptionsList()) {
 						subview.setPropertyPrefix(getPropertyPrefix() + subview.getMemberName());
 					}
