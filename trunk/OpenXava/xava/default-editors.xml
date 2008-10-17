@@ -17,9 +17,10 @@
 		<for-type type="long" />
 		<for-type type="java.lang.Long" />
 	</editor>
-
+ 
 	<editor name="BooleanCheckBox" url="booleanEditor.jsp">
-		<formatter class="org.openxava.formatters.BooleanFormatter" />		<for-type type="boolean" />		<for-type type="java.lang.Boolean" />	</editor>	<editor name="DateCalendar" url="dateCalendarEditor.jsp">
+		<formatter class="org.openxava.formatters.BooleanFormatter" />		<for-type type="boolean" />		<for-type type="java.lang.Boolean" />	</editor>
+	<editor name="DateCalendar" url="dateCalendarEditor.jsp">
 		<formatter class="org.openxava.formatters.DateFormatter" />		<for-type type="java.util.Date" />	</editor>
 
 	<editor name="ValidValuesCombo" url="validValuesEditor.jsp">

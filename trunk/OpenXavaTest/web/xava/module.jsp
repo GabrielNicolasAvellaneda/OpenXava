@@ -57,7 +57,7 @@ Module.setStyle(style);
 	<input id="xava_loading" type="hidden" value="true"/>
 	<input id="xava_loaded_parts" type="hidden" value=""/>	
 	<%-- Layer for progress bar --%>
-	<div id='xava_processingLayer' style='position:absolute;top:100px;left:150px;display:none'>
+	<div id='xava_processing_layer' style='position:absolute;top:100px;left:150px;display:none'>
 	<table cellspacing='0'>
 	   <tr class='<%=style.getProcessing()%>'>
 	       <td align='center' valign='middle' style='line-height:1.4;padding:25px 80px;border:2px solid #000'>

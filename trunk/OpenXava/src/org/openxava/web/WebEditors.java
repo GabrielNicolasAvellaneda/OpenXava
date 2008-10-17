@@ -66,7 +66,7 @@ public class WebEditors {
 			return p.parse(string, Locales.getCurrent());
 		}
 		catch (Exception ex) {
-			log.error(ex.getMessage(), ex);
+			log.warn(ex.getMessage(), ex);
 			String messageId = p.isNumber()?"numeric":"no_expected_type";
 			errors.add(messageId, p.getName(), p.getMetaModel().getName());
 			return null;
@@ -118,7 +118,7 @@ public class WebEditors {
 			return p.format(object, Locales.getCurrent());									
 		}
 		catch (Exception ex) {
-			log.error(ex.getMessage(), ex);			
+			log.warn(ex.getMessage(), ex);			
 			errors.add("no_convert_to_string", p.getName(), p.getMetaModel().getName());
 			return "";
 		}
@@ -129,7 +129,7 @@ public class WebEditors {
 			return PREFIX + getMetaEditorFor(p, viewName).getUrl();
 		}
 		catch (Exception ex) {
-			log.error(ex.getMessage(), ex);
+			log.warn(ex.getMessage(), ex);
 			return PREFIX + "notAvailableEditor.jsp";
 		}		
 	}	
@@ -167,7 +167,23 @@ public class WebEditors {
 			return false;
 		}
 		catch (Exception ex) {
-			log.error(XavaResources.getString("a_depends_b_warning", a, b), ex);
+			log.warn(XavaResources.getString("a_depends_b_warning", a, b), ex); 
+			return false;
+		}
+	}
+
+	/**
+	 * If the property depends of some other property displayed in the view. <p>
+	 */
+	public static boolean dependsOnSomeOther(MetaProperty metaProperty, String viewName) {
+		try {			
+			return getMetaEditorFor(metaProperty, viewName).dependsOnSomeOther();
+		}
+		catch (ElementNotFoundException ex) {
+			return false;
+		}
+		catch (Exception ex) {
+			log.warn(XavaResources.getString("a_depends_b_warning", metaProperty.getName(), "some other"), ex);
 			return false;
 		}
 	}

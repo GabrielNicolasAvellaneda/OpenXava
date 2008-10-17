@@ -24,7 +24,8 @@ if (null != agent && agent.indexOf("MSIE")>=0) {
 	<%=disabled%>
 	<%=script%>
 />
-
+ 
 <% if (!editable) { %>
 	<input type="hidden" name="<%=propertyKey%>" value="<%=fvalue%>">
-<% } %>			
+<% } %>	
+		

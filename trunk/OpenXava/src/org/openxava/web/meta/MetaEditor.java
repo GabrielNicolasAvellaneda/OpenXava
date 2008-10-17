@@ -189,5 +189,14 @@ public class MetaEditor {
 		this.name = name;
 	}
 
+	/**
+	 * If this editor depends of some other property or stereotype. <p>
+	 */
+	public boolean dependsOnSomeOther() { 
+		if (propertiesIDepend != null && !propertiesIDepend.isEmpty()) return true;
+		if (stereotypesIDepend != null && !stereotypesIDepend.isEmpty()) return true;
+		return false;
+	}
+
 	
 }

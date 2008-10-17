@@ -228,8 +228,8 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	private void refreshPage() throws Exception {
-		Thread.sleep(120);
-		resetForm();
+		Thread.sleep(120);		
+		resetForm();		
 	}
 
 	private String getFormValue(String name) {		
@@ -486,14 +486,17 @@ public class ModuleTestBase extends TestCase {
 		}	
 	}
 										 	
-	private void waitUntilPageIsLoaded() { 
-		HtmlInput loading = (HtmlInput) page.getHtmlElementById("xava_loading");		
+	private void waitUntilPageIsLoaded() { 		
+		HtmlInput loading = (HtmlInput) page.getHtmlElementById("xava_loading");
 		if (!"true".equals(loading.getValueAttribute())) { 
 			try { Thread.sleep(100); } catch (Exception ex) { }
 		}				
 		while ("true".equals(loading.getValueAttribute())) {
 			try { Thread.sleep(20); } catch (Exception ex) { }
-		}		
+		}
+		if (getLoadedParts().endsWith("ERROR")) {
+			fail(XavaResources.getString("ajax_loading_parts_error"));
+		}
 	}
 
 	protected void assertFocusOn(String name) throws Exception {
@@ -595,7 +598,7 @@ public class ModuleTestBase extends TestCase {
 	}	
 	
 	protected String getLabel(String name) throws Exception {
-		HtmlElement element = page.getHtmlElementById(getPropertyPrefix() + name + "_LABEL_");
+		HtmlElement element = page.getHtmlElementById("xava_label_" + getPropertyPrefix() + name);
 		if (element == null) {
 			fail(XavaResources.getString("label_not_found_in_ui", name));
 		}
@@ -641,7 +644,7 @@ public class ModuleTestBase extends TestCase {
 	 * Response for a second window
 	 * @return
 	 */
-	private WebResponse getPopupResponse() {		
+	private WebResponse getPopupResponse() {
 		return getPopupPage().getWebResponse();		
 	}
 	
@@ -650,11 +653,16 @@ public class ModuleTestBase extends TestCase {
 	 * @return
 	 */
 	private Page getPopupPage() {
-		List windows = client.getWebWindows();
+		List windows = client.getWebWindows();		
 		if (windows.size() < 2) {
 			fail(XavaResources.getString("popup_window_not_found"));
+		}		
+		for (int i=windows.size() - 1; i > 0; i--) {
+			Page page = ((WebWindow) windows.get(i)).getEnclosedPage();
+			if (page != null) return page;
 		}
-		return ((WebWindow) windows.get(windows.size() - 1)).getEnclosedPage();		
+		fail(XavaResources.getString("popup_window_not_found"));
+		return null;
 	}	
 	
 	
@@ -1280,7 +1288,7 @@ public class ModuleTestBase extends TestCase {
 				String message = table.getCellAt(i, 0).asText().trim();
 				log.error(XavaResources.getString("unexpected_message", label, message));							
 			}			
-			fail(XavaResources.getString("unexpected_messages", id));
+			fail(XavaResources.getString("unexpected_messages", label.toLowerCase() + "s"));
 		}
 	}
 	
@@ -1485,7 +1493,7 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	private void resetForm() throws Exception {		
-		waitUntilPageIsLoaded(); 		
+		waitUntilPageIsLoaded(); 				
 		if (getFormIndex() >= page.getForms().size()) return; 
 		setForm((HtmlForm)page.getForms().get(getFormIndex()));
 	}
@@ -1588,5 +1596,13 @@ public class ModuleTestBase extends TestCase {
 	protected String toKeyString(Object pojo) throws Exception { 
 		return MetaModel.getForPOJO(pojo).toString(pojo);
 	}
+	
+	private String getLoadedParts() { 
+		Page page = getWebClient().getCurrentWindow().getEnclosedPage();
+		if (!(page instanceof HtmlPage)) return "";
+		HtmlInput input = (HtmlInput) ((HtmlPage) page).getHtmlElementById("xava_loaded_parts");
+		return input.getValueAttribute();
+	}
+
  			
 }

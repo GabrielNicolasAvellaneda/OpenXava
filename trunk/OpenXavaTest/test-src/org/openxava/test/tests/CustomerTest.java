@@ -604,18 +604,21 @@ public class CustomerTest extends ModuleTestBase {
 		assertEditable("seller.number");
 		assertNoEditable("seller.name");
 		assertAction("Reference.search");
+		assertAction("Reference.createNew");
 		
 		execute("EditableOnOff.setOff");
 		assertNoEditable("address.street");
 		assertNoEditable("seller.number");
 		assertNoEditable("seller.name");
 		assertNoAction("Reference.search");
+		assertNoAction("Reference.createNew");
 		
 		execute("EditableOnOff.setOn");
 		assertEditable("address.street");
 		assertEditable("seller.number");
 		assertNoEditable("seller.name");
 		assertAction("Reference.search");					
+		assertAction("Reference.createNew");
 	}
 	
 	public void testFocus() throws Exception {

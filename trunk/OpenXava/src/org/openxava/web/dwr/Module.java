@@ -5,7 +5,10 @@ import java.util.*;
 
 import javax.servlet.http.*;
 
+import org.apache.commons.logging.*;
+import org.openxava.actions.*;
 import org.openxava.controller.*;
+import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.view.*;
 import org.openxava.web.servlets.*;
@@ -19,8 +22,10 @@ import org.openxava.web.style.*;
 
 public class Module extends DWRBase {
 
+	private static Log log = LogFactory.getLog(DWRBase.class); 
 	final private static String MESSAGES_LAST_REQUEST ="xava_messagesLastRequest";
 	final private static String ERRORS_LAST_REQUEST ="xava_errorsLastRequest";
+	final private static String MEMBERS_WITH_ERRORS_IN_LAST_REQUEST ="xava_membersWithErrorsInLastRequest";
 	
 	private static boolean portlet;
 	private static Style style;
@@ -31,7 +36,8 @@ public class Module extends DWRBase {
 	private String module;
 	private ModuleManager manager;
 	
-	public Map request(HttpServletRequest request, HttpServletResponse response, String application, String module, Map values, Map multipleValues, String [] selected) throws Exception {		
+	public Map request(HttpServletRequest request, HttpServletResponse response, String application, String module, Map values, Map multipleValues, String [] selected) throws Exception {
+		Map result = new HashMap();
 		try {
 			checkSecurity(request, application, module);
 			this.request = request;
@@ -42,7 +48,6 @@ public class Module extends DWRBase {
 			restoreLastMessages();
 			request.setAttribute("style", getStyle());
 			getURIAsStream("init.jsp", values, multipleValues, selected);
-			Map result = new HashMap();
 			String forwardURI = (String) request.getSession().getAttribute("xava_forward");		
 			if (!Is.emptyString(forwardURI)) {
 				result.put("xava_forward_url",  request.getScheme() + "://" + 
@@ -52,14 +57,41 @@ public class Module extends DWRBase {
 				request.getSession().removeAttribute("xava_forward");
 				request.getSession().removeAttribute("xava_forward_inNewWindow");				
 			}
+			else if (manager.getNextModule() != null) { 
+				changeModule(result);
+			}
 			else {
 				fillResult(result, values, multipleValues, selected);
-			}								
+			}											
 			return result;
 		}
+		catch (Exception ex) {
+			Messages errors = (Messages) request.getAttribute("errors");
+			if (errors == null) throw ex;
+			log.error(ex.getMessage(), ex); 			
+			errors.add("system_error"); 
+			result.put("xava_errors", getURIAsString("errors.jsp", null, null, null));
+			return result;
+		}		
 		finally {			
 			if (manager != null) manager.commit(); // If hibernate, jpa, etc is used to render some value here is commit
 		}
+	}
+
+	private void changeModule(Map result) {
+		String nextModule = manager.getNextModule();		
+		if (IChangeModuleAction.PREVIOUS_MODULE.equals(nextModule)) {
+			nextModule = manager.getPreviousModule();
+			manager.setPreviousModule(null);
+		}
+		ModuleManager nextManager = (ModuleManager) getContext(request).get(application, nextModule, "manager", "org.openxava.controller.ModuleManager");				
+		if (!IChangeModuleAction.PREVIOUS_MODULE.equals(nextModule)) {
+			nextManager.setPreviousModule(module);					
+		}	
+		manager.setNextModule(null);
+		memorizeLastMessages(nextModule); 
+		result.put("xava_module", nextModule);
+		result.put("xava_form", nextManager.getForm());
 	}	
 	
 	public void requestMultipart(HttpServletRequest request, HttpServletResponse response, String application, String module) throws Exception { 
@@ -94,7 +126,7 @@ public class Module extends DWRBase {
 		if (values == null || manager.isReloadAllUINeeded() || manager.isFormUpload()) {  		
 			result.put("xava_core", "core.jsp");
 		}
-		else {
+		else {			
 			if (manager.isActionsChanged()) {
 				result.put("xava_button_bar", "buttonBar.jsp");
 				result.put("xava_bottom_buttons", "bottomButtons.jsp");
@@ -103,6 +135,7 @@ public class Module extends DWRBase {
 			result.put("xava_errors", errors.contains()?"errors.jsp":null);
 			Messages messages = (Messages) request.getAttribute("messages");
 			result.put("xava_messages", messages.contains()?"messages.jsp":null);
+			result.put("xava_input_focus_property_id", getInputFocusHtml());
 			if (manager.isReloadViewNeeded() || getView().isReloadNeeded()) { 
 				result.put("xava_view", manager.getViewURL());
 			}
@@ -111,18 +144,52 @@ public class Module extends DWRBase {
 				fillChangedCollections(result);
 				fillChangedSections(result);
 				fillChangedErrorImages(result);
+				fillChangedLabels(result); 
 			}
 		}
 		return result;
 	}
 
+	private Object getInputFocusHtml() { 
+		return "html:<INPUT type='hidden' name='xava_focus_property_id' value='" +
+			getView().getFocusPropertyId() + "'/>;";
+	}
+
+	private void fillChangedLabels(Map result) {
+		for (Iterator it=getView().getChangedLabels().entrySet().iterator(); it.hasNext(); ) {
+			Map.Entry en = (Map.Entry) it.next();
+			result.put("xava_label_" + en.getKey(),	"html:" + en.getValue());
+		}
+	}
+
 	private void fillChangedErrorImages(Map result) { 
+		if (getContext(request).exists(application, module, MEMBERS_WITH_ERRORS_IN_LAST_REQUEST)) {
+			Collection lastErrors = (Collection) getContext(request).get(application, module, MEMBERS_WITH_ERRORS_IN_LAST_REQUEST);
+			for (Iterator it=lastErrors.iterator(); it.hasNext(); ) {				
+				result.put("xava_error_image_" + it.next(), null);
+			}
+			getContext(request).remove(application, module, MEMBERS_WITH_ERRORS_IN_LAST_REQUEST);
+		}
+			
 		Messages errors = (Messages) request.getAttribute("errors");
+		
 		String imageHTML = "html:<img src='" + request.getContextPath() +"/xava/images/error.gif'/>";
-		for (Iterator it=errors.getMembers().iterator(); it.hasNext(); ) {
-			Object member = it.next();
-			result.put("xava_error_image_" + member, imageHTML);							
-		}				
+		if (!errors.isEmpty()) {
+			View view = getView();
+			Collection members = new HashSet();
+			for (Iterator it=errors.getMembers().iterator(); it.hasNext(); ) {
+				String member = (String) it.next();
+				String qualifiedMember = view.getQualifiedNameForPropertyOrDescriptionsListReference(member); 				
+				if (qualifiedMember != null) { 
+					String id = "xava_error_image_" + qualifiedMember;				
+					result.put(id, imageHTML);
+					members.add(qualifiedMember);	
+				}
+				if (!members.isEmpty()) {
+					getContext(request).put(application, module, MEMBERS_WITH_ERRORS_IN_LAST_REQUEST, members);
+				}
+			}				
+		}
 	}
 
 	private void fillChangedPropertiesAndDescriptionsListReferences(Map result) {
@@ -133,21 +200,32 @@ public class Module extends DWRBase {
 			String qualifiedName = (String) en.getKey();
 			String name = qualifiedName.substring(qualifiedName.lastIndexOf('.') + 1);
 			View containerView = (View) en.getValue();
-			if (containerView.getMetaModel().containsMetaReference(name)) {				
+			MetaModel metaModel = containerView.getMetaModel(); 
+			if (metaModel.containsMetaReference(name)) {				
 				request.setAttribute(qualifiedName, containerView.getMetaReference(name));
 				result.put("xava_descriptions_list_" + qualifiedName, 
 					"descriptionsList.jsp?referenceKey=" + qualifiedName + 
 					"&onlyEditor=true&viewObject=" + containerView.getViewObject());					
 			}
-			else {
+			else {				
 				result.put("xava_editor_" + qualifiedName, 
 					"editorWrapper.jsp?propertyName=" + name + 
 					"&editable=" + containerView.isEditable(name) +
 					"&throwPropertyChanged=" + containerView.throwsPropertyChanged(name) +
 					"&viewObject=" + containerView.getViewObject() + 
 					"&propertyPrefix=" + containerView.getPropertyPrefix());
+				if ((containerView.hasEditableChanged() || 
+					(containerView.hasKeyEditableChanged() && metaModel.isKey(name))) &&
+					containerView.propertyHasActions(name))					
+				{
+					result.put("xava_property_actions_" + qualifiedName, 
+						"propertyActions.jsp?propertyKey=" + qualifiedName +
+						"&propertyName=" + name +
+						"&editable=" + containerView.isEditable(name) +					
+						"&viewObject=" + containerView.getViewObject() +
+						"&lastSearchKey=" + containerView.isLastSearchKey(name));
+				}
 			}
-			result.put("xava_error_image_" + containerView.getMetaModel().getName() + "." + name, null);	
 		}
 	}
 	
@@ -180,6 +258,10 @@ public class Module extends DWRBase {
 	}
 	
 	private void memorizeLastMessages() { 
+		memorizeLastMessages(module);
+	}
+	
+	private void memorizeLastMessages(String module) {  
 		ModuleContext context = getContext(request);		
 		Object messages = request.getAttribute("messages");
 		if (messages != null) { 
@@ -190,6 +272,7 @@ public class Module extends DWRBase {
 			context.put(application, module, ERRORS_LAST_REQUEST, errors);
 		}			
 	}
+
 	
 	private void restoreLastMessages() { 
 		ModuleContext context = getContext(request);		
@@ -240,13 +323,15 @@ public class Module extends DWRBase {
 				sb.append(filterValue(en.getValue()));
 			}
 		}
-		for (int i=0; i<selected.length; i++) {
-			String [] s = selected[i].split(":");
-			sb.append('&');
-			sb.append(s[0]);
-			sb.append('=');
-			sb.append(s[1]);
-		}							
+		if (selected != null) { 
+			for (int i=0; i<selected.length; i++) {
+				String [] s = selected[i].split(":");
+				sb.append('&');
+				sb.append(s[0]);
+				sb.append('=');
+				sb.append(s[1]);
+			}					
+		}
 	}
 	
 	private static void addMultipleValuesQueryString(StringBuffer sb, Object key, Object value) {
@@ -285,5 +370,5 @@ public class Module extends DWRBase {
 	public static void setStyle(Style style) {
 		Module.style = style;
 	}
-	
+		
 }
