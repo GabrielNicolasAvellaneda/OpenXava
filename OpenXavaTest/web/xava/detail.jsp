@@ -100,7 +100,8 @@ while (it.hasNext()) {
 					} 
 				}
 				if (withFrame) { 
-					String labelKey = propertyPrefix + ref.getName() + "_LABEL_";
+					// tmp String labelKey = propertyPrefix + ref.getName() + "_LABEL_";
+					String labelKey = "xava_label_" + propertyPrefix + ref.getName(); // tmp 					
 					String label = view.getLabelFor(ref);
 	%>						 
 		<%=style.getFrameHeaderStartDecoration() %>

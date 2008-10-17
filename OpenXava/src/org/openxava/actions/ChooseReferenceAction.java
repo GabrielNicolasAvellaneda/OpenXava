@@ -71,7 +71,7 @@ public class ChooseReferenceAction extends ViewBaseAction implements INavigation
 	}
 	
 	/**
-	 * Previous call to execute method required
+	 * Previous call to execute() method required
 	 * @return chosenKeyMap
 	 */
 	protected Map getChosenKeyMap() {

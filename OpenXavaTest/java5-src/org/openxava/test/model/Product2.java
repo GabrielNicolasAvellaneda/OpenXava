@@ -141,7 +141,7 @@ public class Product2 {
 	
 	@Stereotype("LABEL")
 	public String getZoneOne() {
-		return "In ZONE 1";
+		return "IN ZONE 1";
 	}
 	
  	public static Product2 findByNumber(long number) throws NoResultException { 	 			

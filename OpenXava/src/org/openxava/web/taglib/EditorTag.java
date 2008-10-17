@@ -73,11 +73,11 @@ public class EditorTag extends TagSupport {
 			pageContext.getOut().print(editableKey);
 			pageContext.getOut().print("' value='");
 			pageContext.getOut().print(editable);
-			pageContext.getOut().println("'>");
+			pageContext.getOut().println("'/>");
 			if (org.openxava.web.WebEditors.hasMultipleValuesFormatter(metaProperty, view.getViewName())) {
 				pageContext.getOut().print("<input type='hidden' name='xava_multiple' value='"); 
 				pageContext.getOut().print(propertyKey);
-				pageContext.getOut().println("'>");				
+				pageContext.getOut().println("'/>");				
 			}
 			try {
 				// If the JSP that uses this tag is in a subfolder

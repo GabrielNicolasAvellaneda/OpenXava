@@ -251,46 +251,45 @@ public class WarehouseTest extends ModuleTestBase {
 		assertRowUnchecked(1);		
 	}
 	
-	public void testSaveExisting() throws Exception {  
+	public void testSaveExisting() throws Exception {
 		assertAction("Warehouse.toLowerCase");
 		assertNoAction("Warehouse.changeZone");
-
 		
 		// Create
-		execute("CRUD.new");
+		execute("CRUD.new");		
 		assertNoAction("Warehouse.toLowerCase");
 		assertAction("Warehouse.changeZone");
 		setValue("zoneNumber", "66");
 		setValue("number", "666");
-		setValue("name", "WAREHOUSE JUNIT");
-		execute("CRUD.save");
+		setValue("name", "WAREHOUSE JUNIT");		
+		execute("CRUD.save");		
 		// Verifying form is clean
 		assertValue("zoneNumber", "");
 		assertValue("number", "");		
 		assertValue("name", "");
 		// Try to re-create
-		execute("CRUD.new");
+		execute("CRUD.new");		
 		setValue("zoneNumber", "66");
 		setValue("number", "666");
 		setValue("name", "WAREHOUSE JUNIT");
-		execute("CRUD.save");
+		execute("CRUD.save");		
 		
 		assertError("Impossible to create: an object with that key already exists");
 		
 		// Delete
 		setValue("zoneNumber", "66");
 		setValue("number", "666");
-		execute("CRUD.search");				
-		execute("CRUD.delete");
+		execute("CRUD.search");		
+		execute("CRUD.delete");		
 		assertNoAction("Warehouse.toLowerCase");
 		assertAction("Warehouse.changeZone");
 
 		// Verifying is deleted
-		execute("CRUD.new");
+		execute("CRUD.new");		
 		setValue("zoneNumber", "66");
 		setValue("number", "666");				
-		execute("CRUD.search");		
-		assertError("Object of type Warehouse does not exists with key Warehouse number:666, Zone:66");							
+		execute("CRUD.search");				
+		assertError("Object of type Warehouse does not exists with key Warehouse number:666, Zone:66");		
 	}
 				
 	public void testClickOneInListMode() throws Exception {

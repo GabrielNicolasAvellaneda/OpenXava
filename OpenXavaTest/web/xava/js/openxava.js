@@ -27,18 +27,35 @@ openxava.refreshPage = function(result) {
 			location.href=result.xava_forward_url;			
 		}
 	}
+	else if (result.xava_module != null) { // tmp
+		// tmp ini
+		openxava.module = result.xava_module;
+		openxava.formName = result.xava_form;
+		openxava.ajaxRequest();
+		return;
+		// tmp fin
+	}
 	else { 				
 		for (var id in result) {	
 			changed = changed + id + ", ";  
 			document.getElementById("info").innerHTML="Cuesta=" + cuesta + " Cambiado=" + changed; //  tmp
-			document.getElementById(id).innerHTML = result[id];
+			try { 
+				document.getElementById(id).innerHTML = result[id];
+			}
+			catch (ex) {
+				changed = changed + " ERROR";
+				alert("Error refreshing part: " + id);				
+				break;
+			}			
 		}				
 		openxava.formName = "xava_form";
-		openxava.form = document.getElementById(openxava.formName);
-		// tmp openxava.setFocus();		
+		openxava.form = document.getElementById(openxava.formName);		
+		openxava.setFocus();		
 	}
+	document.getElementById('xava_processing_layer').style.display='none'; 
 	openxava.form.xava_action.value="";	
-	openxava.form.xava_action_argv.value=""; 
+	openxava.form.xava_action_argv.value="";
+	openxava.form.xava_changed_property.value=""; // tmp
 	
 	document.getElementById("xava_loading").value=false;
 	document.getElementById("xava_loaded_parts").value=changed;
@@ -131,7 +148,7 @@ openxava.executeAction = function(confirmMessage, takesLong, action) {
 openxava.executeAction = function(confirmMessage, takesLong, action, argv) {		
 	if (confirmMessage != "" && !confirm(confirmMessage)) return;
 	if (takesLong) {
-		document.getElementById('xava_processingLayer').style.display='block';
+		document.getElementById('xava_processing_layer').style.display='block';
 		setTimeout('document.images["xava_processingImage"].src = "images/processing.gif"', 1);
 	}
 	this.form.xava_focus_forward.value = "false";
@@ -163,7 +180,7 @@ openxava.requestOnChange = function() {
 	}			
 }
 
-openxava.setFocus = function() {	
+openxava.setFocus = function() {
 	var elementName = this.form.elements['xava_focus_property_id'].value;	
 	var element = this.form.elements[elementName];	
 	if (element != null && typeof element.disabled != "undefined" && !element.disabled) {
@@ -171,7 +188,7 @@ openxava.setFocus = function() {
 		if (typeof element.select != "undefined") { 
 			element.select();
 		}
-	}
+	}	
 }
 
 openxava.clearConditionValues = function(prefix) {

@@ -162,7 +162,7 @@ public class MetaWebEditors {
 				return r;
 			}
 		}		
-		MetaEditor r = (MetaEditor) getMetaEditorForTypeOfProperty(p);
+		MetaEditor r = (MetaEditor) getMetaEditorForTypeOfProperty(p);		
 		if (r == null) {
 			throw new ElementNotFoundException("editor_not_found", p.getId());
 		}		

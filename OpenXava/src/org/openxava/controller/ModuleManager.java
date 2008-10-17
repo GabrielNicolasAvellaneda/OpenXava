@@ -58,6 +58,15 @@ public class ModuleManager {
 	private String viewName = null;
 	private String modeName;	
 	private String nextModule;
+	private String previousModule; 
+	public String getPreviousModule() {
+		return previousModule;
+	}
+
+	public void setPreviousModule(String previousModule) {
+		this.previousModule = previousModule;
+	}
+
 	private String defaultView = null; 
 	
 	private boolean formUpload = false;
@@ -272,7 +281,7 @@ public class ModuleManager {
 		executeAction(action, null, errors, messages, null, request);
 	}
 
-	private void executeAction(IAction action, MetaAction metaAction, Messages errors, Messages messages, String propertyValues, HttpServletRequest request) {
+	private void executeAction(IAction action, MetaAction metaAction, Messages errors, Messages messages, String propertyValues, HttpServletRequest request) {		
 		try {					
 			Object previousView = getContext().get(applicationName, moduleName, "xava_view");  
 			action.setErrors(errors);
@@ -457,7 +466,6 @@ public class ModuleManager {
 					request.setAttribute("xava.sendParametersToTab", "false");
 				}
 			}			
-			if (!isXavaView()) reloadViewNeeded = true; 			
 			if (!reloadViewNeeded) {
 				Object currentView = getContext().get(applicationName, moduleName, "xava_view"); 
 				reloadViewNeeded = currentView != previousView;
@@ -891,7 +899,7 @@ public class ModuleManager {
 			reloadAllUINeeded = false;
 		}
 		actionsChanged = false;
-		reloadViewNeeded = false;
+		reloadViewNeeded = false;		
 	}
 	
 	public void executeBeforeEachRequestActions(HttpServletRequest request, Messages errors, Messages messages) {
@@ -1024,7 +1032,7 @@ public class ModuleManager {
 	}
 
 	public boolean isReloadViewNeeded() {
-		return isListMode() || reloadViewNeeded;
+		return reloadViewNeeded || isListMode() || !"xava/detail".equals(getViewName());
 	}
 	
 }

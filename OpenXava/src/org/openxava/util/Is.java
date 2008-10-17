@@ -126,7 +126,8 @@ public class Is {
 	/**
 	 * If <code>a</code> is equals to <code>b</code>. <p>
 	 *
-	 * Takes in account the nulls.<br>
+	 * Takes in account the nulls. Use compareTo when appropriate and
+	 * compare Java 5 enums with numbers by the ordinal value.<br>
 	 * 
 	 * @param a Can be null.
 	 * @param b Can be null.
@@ -139,11 +140,19 @@ public class Is {
 			if (getEnumClass().isInstance(b) ) b = enumToInteger(b);
 		}
 		if (a instanceof Comparable) {
-			return ((Comparable) a).compareTo(b) == 0;
+			try {
+				return ((Comparable) a).compareTo(b) == 0;
+			}
+			catch (ClassCastException ex) {
+				if (b instanceof Comparable) {
+					return ((Comparable) b).compareTo(a) == 0;
+				}
+				else return false;
+			}
 		}
 		return a.equals(b);
 	}
-
+		
 	private static Integer enumToInteger(Object theEnum) {
 		try {
 			return (Integer) Objects.execute(theEnum, "ordinal");
