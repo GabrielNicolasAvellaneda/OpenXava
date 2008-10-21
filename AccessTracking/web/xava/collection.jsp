@@ -48,6 +48,7 @@ else {
 }
 String propertyPrefix = Is.emptyString(propertyPrefixAccumulated)?"xava." + view.getModelName() + "." + collectionName + ".":propertyPrefixAccumulated + collectionName + ".";
 %>
+<div id="xava_collection_<%=propertyPrefix%>">
 <table width="100%" class="<%=style.getList()%>" <%=style.getListCellSpacing()%>>
 <% if (XavaPreferences.getInstance().isDetailOnBottomInCollections()) { %>
 <tr><td>
@@ -180,3 +181,4 @@ else {
 </td></tr>
 <% } // of: if (!XavaPreferences... %>
 </table>
+</div>

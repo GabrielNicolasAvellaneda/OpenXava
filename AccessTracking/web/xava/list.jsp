@@ -92,14 +92,14 @@ while (it.hasNext()) {
 <%
 		if (tab.isOrderAscending(property.getQualifiedName())) {
 %>
-<img src="<%=request.getContextPath()%>/xava/images/<%=style.getAscendingImage()%>" alt="Ordenado ascendentemente" border="0" align="middle"/>
+<img src="<%=request.getContextPath()%>/xava/images/<%=style.getAscendingImage()%>" border="0" align="middle"/>
 <%
 		}
 %>
 <%
 		if (tab.isOrderDescending(property.getQualifiedName())) {
 %>
-<img src="<%=request.getContextPath()%>/xava/images/<%=style.getDescendingImage()%>" alt="Ordenado descendente" border="0" align="middle"/>
+<img src="<%=request.getContextPath()%>/xava/images/<%=style.getDescendingImage()%>" border="0" align="middle"/>
 <%
 		}
 %>

@@ -1,4 +1,5 @@
 <%@ page language="java" import="com.fredck.FCKeditor.*" %>
+<%@ include file="../imports.jsp"%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
@@ -34,10 +35,14 @@ oFCKeditor = new FCKeditor( request, "Editor" ) ;
 oFCKeditor.setBasePath( "FCKeditor/" ) ;
 oFCKeditor.setValue(vproperty);
 oFCKeditor.setHeight("500");
+FCKeditorConfigurations cfg = new FCKeditorConfigurations();
+cfg.put("AutoDetectLanguage", "false");
+cfg.put("DefaultLanguage", request.getLocale().getLanguage());
+oFCKeditor.setConfig(cfg);
 out.println( oFCKeditor.create() ) ;
 %>
-			<br>
-			<INPUT TYPE="submit" VALUE="Enviar">
+			<br>			
+			<INPUT TYPE="submit" VALUE="<xava:message key='send'/>"
 			<INPUT name="flag" TYPE="hidden" VALUE="1">
 		</form>
 	<SCRIPT type="text/javascript">	

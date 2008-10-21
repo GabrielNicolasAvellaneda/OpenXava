@@ -21,7 +21,7 @@ if (hasFrame) {
 	postEditor=style.getFrameContentEndDecoration() + "</td>";	
 }
 else if (first && !view.isAlignedByColumns()) { 
-	preLabel="<td style='vertical-align: middle;text-align: left' class='" + style.getLabel() + "' id=" + labelKey + " >";
+	preLabel="<td style='vertical-align: middle;text-align: left' class='" + style.getLabel() + "'>";
 	postLabel="</td>";
 	preIcons="<td style='vertical-align: middle'>";
 	postIcons="</td>";	
@@ -34,7 +34,7 @@ else if (first && !view.isAlignedByColumns()) {
 	postEditor="</td>";
 } 
 else {
-	preLabel="<td style='vertical-align: middle;text-align: left' class='" + style.getLabel() + "' id=" + labelKey + " >&nbsp;&nbsp;";
+	preLabel="<td style='vertical-align: middle;text-align: left' class='" + style.getLabel() + "'>&nbsp;&nbsp;";
 	postLabel="</td>";
 	preIcons="<td style='vertical-align: middle'>";
 	postIcons="</td>";

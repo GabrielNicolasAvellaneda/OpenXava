@@ -4,7 +4,8 @@
 <% 
 if (messages.contains()) {
 %>
-<table id="messages">
+<div class='<%=style.getMessagesWrapper()%>'>
+<table id="xava_messages_table">
 <%
 	java.util.Iterator it = messages.getStrings(request).iterator();	
 	while (it.hasNext()) {		
@@ -14,4 +15,5 @@ if (messages.contains()) {
 </td></tr>
 <% } %>
 </table>
+</div>
 <% } %>

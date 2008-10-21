@@ -9,8 +9,7 @@ String app = request.getParameter("application");
 String module = request.getParameter("module");
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager)context.get(request, "manager", "org.openxava.controller.ModuleManager");
 if (manager.isFormUpload()) {
-	manager.parseMultipartRequest(request);	
-	Module.requestMultipart(request, response, app, module);
+	new Module().requestMultipart(request, response, app, module);
 }
 String form = manager.getForm();
 String browser = request.getHeader("user-agent");
@@ -53,12 +52,11 @@ Module.setStyle(style);
 <% if (!isPortlet) { %>
 </head>
 <body bgcolor="#ffffff">
-<% } %>
-
-	<input id="xava_loading" name="xava_loading" type="hidden" value="true"/>
-
+<% } %>	
+	<input id="xava_loading" type="hidden" value="true"/>
+	<input id="xava_loaded_parts" type="hidden" value=""/>	
 	<%-- Layer for progress bar --%>
-	<div id='xava_processingLayer' style='position:absolute;top:100px;left:150px;display:none'>
+	<div id='xava_processing_layer' style='position:absolute;top:100px;left:150px;display:none'>
 	<table cellspacing='0'>
 	   <tr class='<%=style.getProcessing()%>'>
 	       <td align='center' valign='middle' style='line-height:1.4;padding:25px 80px;border:2px solid #000'>
@@ -67,8 +65,7 @@ Module.setStyle(style);
 	       </td>
 	   </tr>
 	</table>
-	</div>
-
+	</div>	
 	<div id="xava_core"></div>
 
 <% if (!isPortlet) { %>

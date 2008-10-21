@@ -18,15 +18,7 @@ MetaProperty p = (MetaProperty) request.getAttribute(propertyKey);
 boolean editable = view.isEditable(p);
 boolean lastSearchKey = view.isLastSearchKey(p); 
 boolean throwPropertyChanged = view.throwsPropertyChanged(p);
-if (lastSearchKey) {
-	throwPropertyChanged = true; 
-}
-if (lastSearchKey || p.isSearchKey()) {
-	editable = true;
-}
 	
-String labelKey = propertyKey + "_LABEL_";
-
 int labelFormat = view.getLabelFormatForProperty(p);
 String label = view.getLabelFor(p);
 %>
@@ -37,7 +29,9 @@ if (first && !view.isAlignedByColumns()) label = org.openxava.util.Strings.chang
 
 <%=preLabel%>
 <% if (labelFormat == MetaPropertyView.NORMAL_LABEL) { %>
+<span id="xava_label_<%=view.getPropertyPrefix()%><%=p.getName()%>">
 <%=label%>
+</span>
 <% } %>
 <%=postLabel%>
 <%=preIcons%>
@@ -45,54 +39,34 @@ if (first && !view.isAlignedByColumns()) label = org.openxava.util.Strings.chang
 <img src="<%=request.getContextPath()%>/xava/images/key.gif"/>
 <% } else if (p.isRequired()) { %>	
 <img src="<%=request.getContextPath()%>/xava/images/required.gif"/>
-<% } if (errors.memberHas(p)) { %>
+<% } %> 
+<span id="xava_error_image_<%=p.getQualifiedName()%>"> 
+<% if (errors.memberHas(p)) { %>
 <img src="<%=request.getContextPath()%>/xava/images/error.gif"/>
 <% } %>
+</span>
 <%=postIcons%>
 <%=preEditor%>
-<% if (labelFormat == MetaPropertyView.SMALL_LABEL) { 
-	label = labelFormat == MetaPropertyView.SMALL_LABEL?label:"&nbsp;";
+<% if (labelFormat == MetaPropertyView.SMALL_LABEL) { 	
 %>
-<table border='0' cellpadding='0', cellspacing='0'><tr><td align='bottom' id='<%=labelKey%>'>
-<span class=<%=style.getSmallLabel()%>><%=label%></span>
+<table border='0' cellpadding='0', cellspacing='0'><tr><td align='bottom'>
+<span id="xava_label_<%=view.getPropertyPrefix()%><%=p.getName()%>" class="<%=style.getSmallLabel()%>"><%=label%></span>
 
 </td></tr>
 <tr><td style='vertical-align: middle'>
 <% } %>
+<span id="xava_editor_<%=view.getPropertyPrefix()%><%=p.getName()%>"> 
 <xava:editor property="<%=p.getName()%>" editable="<%=editable%>" throwPropertyChanged="<%=throwPropertyChanged%>"/>
-<% 
- if (lastSearchKey) {
-	
-	String referencedModel = p.getMetaModel().getName();
-%>
-	<% if (view.isSearch()) {%>
-<xava:action action='<%=view.getSearchAction()%>' argv='<%="keyProperty="+propertyKey%>'/>
-	<% } %>
-	<% if (view.isCreateNew()) {%>
-<xava:action action='Reference.createNew' argv='<%="model="+referencedModel + ",keyProperty=" + propertyKey%>'/>
-	<% } %>
-	<% if (view.isModify()) {%>
-<xava:action action='Reference.modify' argv='<%="model="+referencedModel + ",keyProperty=" + propertyKey%>'/>	
-	<% } %>
+</span>
+<% if (view.propertyHasActions(p)) { %>
+<span id="xava_property_actions_<%=view.getPropertyPrefix()%><%=p.getName()%>">
+<jsp:include page="propertyActions.jsp">
+	<jsp:param name="propertyName" value="<%=p.getName()%>"/>
+	<jsp:param name="lastSearchKey" value="<%=lastSearchKey%>"/>
+	<jsp:param name="editable" value="<%=editable%>"/>
+</jsp:include>
+</span>
 <% } %>
-<%
-for (java.util.Iterator itActions = view.getActionsNamesForReference(lastSearchKey).iterator(); itActions.hasNext();) {
-	String action = (String) itActions.next();
-%>
-<xava:action action="<%=action%>"/> 
-<%
-}
-%>	
-
-<%
-for (java.util.Iterator itActions = view.getActionsNamesForProperty(p, editable || p.isReadOnly()).iterator(); itActions.hasNext();) {
-	String action = (String) itActions.next();
-%>
-<xava:action action="<%=action%>" argv='<%="xava.keyProperty="+propertyKey%>'/>
-<%
-}
-
-%>
 
 <%=postEditor%>
 <% if (labelFormat == MetaPropertyView.SMALL_LABEL) { %>
