@@ -100,8 +100,7 @@ while (it.hasNext()) {
 					} 
 				}
 				if (withFrame) { 
-					// tmp String labelKey = propertyPrefix + ref.getName() + "_LABEL_";
-					String labelKey = "xava_label_" + propertyPrefix + ref.getName(); // tmp 					
+					String labelKey = "xava_label_" + propertyPrefix + ref.getName(); 					
 					String label = view.getLabelFor(ref);
 	%>						 
 		<%=style.getFrameHeaderStartDecoration() %>
@@ -208,8 +207,9 @@ if (view.hasSections()) {
                   <tr>
                     <td>
 	<% } %>
-	
+	<div id="xava_sections_<%=viewObject%>"> 
 	<jsp:include page="sections.jsp"/>
+	</div>
 	
 	<% if (view.isSubview() && !view.isFrame()) { %>
 		 			</td>

@@ -46,12 +46,20 @@ public class InvoiceTest extends ModuleTestBase {
 		super(testName, "Invoice");		
 	}
 	
-	public void testGenerateCustomPdfExcelRtf() throws Exception {
+	public void testGenerateCustomPdf() throws Exception { 
 		execute("Mode.detailAndFirst");
 		execute("Invoice.printPdf");
 		assertContentTypeForPopup("application/pdf");
+	}
+	
+	public void testGenerateCustomExcel() throws Exception { 
+		execute("Mode.detailAndFirst");
 		execute("Invoice.printExcel");
-		assertContentTypeForPopup("text/x-csv");
+		assertContentTypeForPopup("application/vnd.ms-excel");		
+	}
+	
+	public void testGenerateCustomRtf() throws Exception { 
+		execute("Mode.detailAndFirst");
 		execute("Invoice.printRtf");
 		assertContentTypeForPopup("application/rtf");
 	}

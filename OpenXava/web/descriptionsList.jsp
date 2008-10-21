@@ -16,7 +16,7 @@ viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObjec
 org.openxava.view.View view = (org.openxava.view.View) context.get(request, viewObject);
 String referenceKey = request.getParameter("referenceKey");
 MetaReference ref = (MetaReference) request.getAttribute(referenceKey); 
-String labelKey = referenceKey + "_LABEL_";
+String labelKey = "xava_label_" + referenceKey;
 %>
 
 <%@ include file="htmlTagsEditor.jsp"%>
@@ -30,7 +30,7 @@ String label = ref.getLabel(request);
 <% if (!onlyEditor) { %>
 <%=preLabel%>
 <% if (labelFormat == MetaPropertyView.NORMAL_LABEL) { %>
-<%=label%>
+<span id='xava_label_<%=referenceKey%>'><%=label%></span>
 <% } %>
 <%=postLabel%>
 <%=preIcons%>
@@ -46,11 +46,9 @@ String label = ref.getLabel(request);
 </span>
 <%=postIcons%>
 <%=preEditor%>
-<% if (labelFormat == MetaPropertyView.SMALL_LABEL) { 
-	label = labelFormat == MetaPropertyView.SMALL_LABEL?label:"&nbsp;";
-%>
-<table border='0' cellpadding='0', cellspacing='0'><tr><td align='bottom' id='<%=labelKey%>'>
-<span class=<%=style.getSmallLabel()%>><%=label%></span>
+<% if (labelFormat == MetaPropertyView.SMALL_LABEL) { %>
+<table border='0' cellpadding='0', cellspacing='0'><tr><td align='bottom'>
+<span id='xava_label_<%=referenceKey%>' class=<%=style.getSmallLabel()%>><%=label%></span>
 
 </td></tr>
 <tr><td style='vertical-align: middle'>

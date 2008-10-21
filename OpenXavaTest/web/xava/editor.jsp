@@ -18,16 +18,6 @@ MetaProperty p = (MetaProperty) request.getAttribute(propertyKey);
 boolean editable = view.isEditable(p);
 boolean lastSearchKey = view.isLastSearchKey(p); 
 boolean throwPropertyChanged = view.throwsPropertyChanged(p);
-/* tmp Movemos a throwsPropertyChange()
-if (lastSearchKey) {
-	throwPropertyChanged = true; 
-}
-*/
-/* tmp Movemos a View.isEditable()
-if (lastSearchKey || p.isSearchKey()) {
-	editable = true;
-}
-*/
 	
 int labelFormat = view.getLabelFormatForProperty(p);
 String label = view.getLabelFor(p);

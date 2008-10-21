@@ -187,10 +187,12 @@
 		<action name="setLimitZoneTo1" class="org.openxava.test.actions.ChangeLimitZoneAction" mode="detail">			
 			<set property="newLimitZone" value="1"/>
 			<use-object name="xavatest_limitZone"/>
+			<use-object name="xava_view"/>
 		</action>		
 		<action name="setLimitZoneTo0" class="org.openxava.test.actions.ChangeLimitZoneAction" mode="detail">			
 			<set property="newLimitZone" value="0"/>
 			<use-object name="xavatest_limitZone"/>
+			<use-object name="xava_view"/>
 		</action>				
 		<action name="changeProductPrice" class="org.openxava.test.actions.ChangeProductPriceAction" mode="detail">					
 			<use-object name="xava_view"/> 
@@ -205,6 +207,7 @@
 		<action name="changeLimitZone" class="org.openxava.test.actions.ChangeLimitZoneAction" mode="detail">			
 			<set property="newLimitZone" value="1"/>
 			<use-object name="xavatest_limitZone"/>
+			<use-object name="xava_view"/>
 		</action>		
 	</controller>
 	

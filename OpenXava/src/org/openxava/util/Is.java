@@ -127,7 +127,8 @@ public class Is {
 	 * If <code>a</code> is equals to <code>b</code>. <p>
 	 *
 	 * Takes in account the nulls. Use compareTo when appropriate and
-	 * compare Java 5 enums with numbers by the ordinal value.<br>
+	 * compares Java 5 enums with numbers by the ordinal value. Compares
+	 * Integer, Long, Short among themselves.<br>
 	 * 
 	 * @param a Can be null.
 	 * @param b Can be null.
@@ -139,6 +140,8 @@ public class Is {
 			if (getEnumClass().isInstance(a) ) a = enumToInteger(a); 
 			if (getEnumClass().isInstance(b) ) b = enumToInteger(b);
 		}
+		if (isInteger(a)) a = toLong(a);
+		if (isInteger(b)) b = toLong(b);
 		if (a instanceof Comparable) {
 			try {
 				return ((Comparable) a).compareTo(b) == 0;
@@ -153,6 +156,14 @@ public class Is {
 		return a.equals(b);
 	}
 		
+	private static Long toLong(Object integer) {
+		return new Long(((Number) integer).longValue());
+	}
+
+	private static boolean isInteger(Object o) {		
+		return o instanceof Integer || o instanceof Long || o instanceof Short;
+	}
+
 	private static Integer enumToInteger(Object theEnum) {
 		try {
 			return (Integer) Objects.execute(theEnum, "ordinal");

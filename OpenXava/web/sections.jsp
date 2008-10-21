@@ -14,7 +14,6 @@ java.util.Collection sections = view.getSections();
 int activeSection = view.getActiveSection(); 
 %>
 
-<div id="xava_sections_<%=viewObject%>">
 <table width='100%' cellspacing="0" border="0" cellpadding="0">
 	<tr><td>
 
@@ -69,4 +68,3 @@ int activeSection = view.getActiveSection();
 	</td></tr>	
 </table>
 <br>
-</div>

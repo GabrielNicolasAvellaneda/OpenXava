@@ -36,7 +36,7 @@ public class InvoiceReportAction extends JasperReportBaseAction {
 	}
 
 	protected JRDataSource getDataSource() throws Exception {
-		return new JRBeanCollectionDataSource(getInvoice().getDetails());		
+		return new JRBeanCollectionDataSource(getInvoice().getDetails());
 	}
 	
 	protected String getJRXML() {
