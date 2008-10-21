@@ -152,7 +152,7 @@ public class Module extends DWRBase {
 
 	private Object getInputFocusHtml() { 
 		return "html:<INPUT type='hidden' name='xava_focus_property_id' value='" +
-			getView().getFocusPropertyId() + "'/>;";
+			getView().getFocusPropertyId() + "'/>";
 	}
 
 	private void fillChangedLabels(Map result) {
@@ -162,11 +162,15 @@ public class Module extends DWRBase {
 		}
 	}
 
-	private void fillChangedErrorImages(Map result) { 
+	private void fillChangedErrorImages(Map result) {
 		if (getContext(request).exists(application, module, MEMBERS_WITH_ERRORS_IN_LAST_REQUEST)) {
+			View view = getView();
 			Collection lastErrors = (Collection) getContext(request).get(application, module, MEMBERS_WITH_ERRORS_IN_LAST_REQUEST);
-			for (Iterator it=lastErrors.iterator(); it.hasNext(); ) {				
-				result.put("xava_error_image_" + it.next(), null);
+			for (Iterator it=lastErrors.iterator(); it.hasNext(); ) {
+				String member = (String) it.next();
+				if  (view.getQualifiedNameForDisplayedPropertyOrDescriptionsListReference(member) != null) { 
+					result.put("xava_error_image_" + member, null);
+				}				
 			}
 			getContext(request).remove(application, module, MEMBERS_WITH_ERRORS_IN_LAST_REQUEST);
 		}
@@ -179,7 +183,7 @@ public class Module extends DWRBase {
 			Collection members = new HashSet();
 			for (Iterator it=errors.getMembers().iterator(); it.hasNext(); ) {
 				String member = (String) it.next();
-				String qualifiedMember = view.getQualifiedNameForPropertyOrDescriptionsListReference(member); 				
+				String qualifiedMember = view.getQualifiedNameForDisplayedPropertyOrDescriptionsListReference(member);
 				if (qualifiedMember != null) { 
 					String id = "xava_error_image_" + qualifiedMember;				
 					result.put(id, imageHTML);
@@ -246,10 +250,11 @@ public class Module extends DWRBase {
 	
 	private void fillChangedSections(Map result) {
 		View view = getView();			
-		String changedSections = view.getChangedSectionsViewObject();
-		if (changedSections != null) {
-			result.put("xava_sections_" + changedSections, 
-				"sections.jsp?viewObject=" + changedSections);
+		View changedSections = view.getChangedSectionsView();		
+		if (changedSections != null) {			
+			result.put("xava_sections_" + changedSections.getViewObject(), 
+				"sections.jsp?viewObject=" + changedSections.getViewObject() + 
+				"&propertyPrefix=" + changedSections.getPropertyPrefix());
 		}
 	}			
 		

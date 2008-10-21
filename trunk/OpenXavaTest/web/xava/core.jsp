@@ -21,7 +21,7 @@ boolean messagesOnTop = !"false".equalsIgnoreCase(request.getParameter("messages
 <INPUT type="hidden" name="xava_changed_property"/> 
 <INPUT type="hidden" name="xava_focus_property"/> 
 <INPUT type="hidden" name="xava_focus_forward"/>
-<span id="xava_input_focus_property_id"> <%-- tmp --%> 
+<span id="xava_input_focus_property_id">  
 <INPUT type="hidden" name="xava_focus_property_id" value="<%=view.getFocusPropertyId()%>"/>
 </span>
 

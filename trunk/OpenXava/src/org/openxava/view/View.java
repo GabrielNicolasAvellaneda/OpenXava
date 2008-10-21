@@ -22,6 +22,7 @@ import org.openxava.util.*;
 import org.openxava.util.meta.*;
 import org.openxava.view.meta.*;
 import org.openxava.web.*;
+import org.openxava.web.meta.*;
 
 /**
  * Session object to manage a view based in maps,
@@ -122,7 +123,9 @@ public class View implements java.io.Serializable {
 	private boolean oldEditable; 
 	private boolean oldKeyEditable;
 	private String changedProperty;
-	private Collection formattedProperties; 
+	private Collection formattedProperties;
+	private boolean refreshDescriptionsLists;
+	private Collection oldNotEditableMembersNames; 
 		
 	public View() {
 		oid = nextOid++;
@@ -1769,8 +1772,7 @@ public class View implements java.io.Serializable {
 					boolean isHiddenKeyWithoutValue = p.isHidden() && (results == null); // for not reset hidden values					
 					if (!isHiddenKeyWithoutValue && WebEditors.mustToFormat(p, getViewName())) { 
 						getRequest().setAttribute(valueKey, value);																				
-						// tmp trySetValue(p.getName(), getRequest().getAttribute(valueKey));
-						trySetValue(p.getName(), value); // tmp Por ver si esto va, dejar tmp hasta el final
+						trySetValue(p.getName(), value);
 						if (isNeededToVerifyHasBeenFormatted(p)) {
 							String formattedValue = WebEditors.format(getRequest(), p, value, getErrors(), getViewName());
 							if (results != null && !equals(formattedValue, results[0])) {
@@ -1811,7 +1813,9 @@ public class View implements java.io.Serializable {
 			sectionChanged = false; 
 			oldKeyEditable = keyEditable; 
 			oldEditable = editable;
-			changedLabels = null;			
+			changedLabels = null;
+			refreshDescriptionsLists = false;
+			oldNotEditableMembersNames = notEditableMembersNames;  
 						
 			if (hasSections()) { 								
 				View section = getSectionView(getActiveSection());
@@ -1871,10 +1875,6 @@ public class View implements java.io.Serializable {
 	}
 	
 	private void assignReferenceValue(String qualifier, MetaReference ref, String value) throws XavaException {
-		View subview = getSubview(ref.getName()); 
-		subview.oldValues = subview.values==null?null:new HashMap(subview.values);
-		subview.oldKeyEditable = subview.keyEditable; 
-		subview.oldEditable = subview.editable; 
 		MetaModel metaModel = ref.getMetaModelReferenced(); 
 		Class keyClass = metaModel.getPOJOClass(); 
 		Field [] fields = keyClass.getDeclaredFields();
@@ -1895,7 +1895,13 @@ public class View implements java.io.Serializable {
 				getRequest().setAttribute(valueKey, propertyValue);
 				trySetValue(ref.getName() + "." + p.getName(), propertyValue);
 			}									
-		}						
+		}
+		
+		View subview = getSubview(ref.getName()); 
+		subview.oldValues = subview.values==null?null:new HashMap(subview.values);
+		subview.oldKeyEditable = subview.keyEditable; 
+		subview.oldEditable = subview.editable;
+		subview.refreshDescriptionsLists = false;
 	}
 		
 	public boolean throwsPropertyChanged(MetaProperty p) {			
@@ -2930,6 +2936,7 @@ public class View implements java.io.Serializable {
 			membersNamesWithHidden = null;
 			membersNamesInGroup = null;
 			reloadNeeded = true;
+			refreshCollection();
 		}
 		
 		// The hidden ones are sent to all sections and groups,
@@ -3534,13 +3541,19 @@ public class View implements java.io.Serializable {
 	
 	private void fillChangedPropertiesAndDescriptionsListReferences(Map result) {  				
 		if (displayAsDescriptionsList() && 
-			!Is.emptyString(getMetaDescriptionsList().getDepends()) &&
-			!getParent().isHidden(getMemberName())) 
-		{
+				(
+					refreshDescriptionsLists ||	
+					getParent().hasEditableMemberChanged(getMemberName()) || 
+					(
+					!Is.emptyString(getMetaDescriptionsList().getDepends()) &&
+					!getParent().isHidden(getMemberName())
+					)
+				)
+			)
+		{			
 			result.put(getPropertyPrefix(), getParent());
 			return;
-		}
-		// tmp: setHidden(" ", true); Puede que no funcione. Si ningún test falla por eso, hacer uno
+		}		
 		if (oldValues == null) oldValues = Collections.EMPTY_MAP;
 		for (Iterator it=values.entrySet().iterator(); it.hasNext(); ) { 
 			Map.Entry en = (Map.Entry) it.next();
@@ -3549,9 +3562,10 @@ public class View implements java.io.Serializable {
 				!equals(en.getValue(), oldValues.get(en.getKey())) || 	
 				isKey && hasKeyEditableChanged() || 
 				hasEditableChanged() ||
+				hasEditableMemberChanged((String) en.getKey()) || 
 				formattedProperties != null && formattedProperties.contains(en.getKey()) ||
-				editorDependsOnSomeOther((String) en.getKey())) 
-			{									
+				editorMustBeReloaded((String) en.getKey())) 
+			{						
 				addChangedPropertyOrDescriptionsListReference(result, (String) en.getKey());
 			}
 			oldValues.remove(en.getKey());			
@@ -3587,10 +3601,14 @@ public class View implements java.io.Serializable {
 			}
 		}
 		if (hasGroups()) {
-			Iterator itSubviews = getGroupsViews().values().iterator();
+			Iterator itSubviews = getGroupsViews().entrySet().iterator();
 			while (itSubviews.hasNext()) {
-				View subview = (View) itSubviews.next();
-				subview.fillChangedPropertiesAndDescriptionsListReferences(result);
+				Map.Entry en = (Map.Entry) itSubviews.next(); 
+				String name = (String) en.getKey();
+				View subview = (View) en.getValue();
+				if (!isHidden(name)) { 
+					subview.fillChangedPropertiesAndDescriptionsListReferences(result);
+				}
 			}
 		}						
 		if (!sectionChanged && hasSections()) {
@@ -3600,9 +3618,25 @@ public class View implements java.io.Serializable {
 		
 	}
 
-	private boolean editorDependsOnSomeOther(String memberName) {
+	private boolean hasEditableMemberChanged(String member) { 
+		if (oldNotEditableMembersNames == notEditableMembersNames) return false;
+		if (Is.equal(oldNotEditableMembersNames, notEditableMembersNames)) return false;
+		boolean existsOld = oldNotEditableMembersNames == null?false:oldNotEditableMembersNames.contains(member);
+		boolean existsCurrent = notEditableMembersNames == null?false:notEditableMembersNames.contains(member);
+		return existsOld != existsCurrent;
+	}
+
+	private boolean editorMustBeReloaded(String memberName) { 
 		if (!getMetaModel().containsMetaProperty(memberName)) return false;
-		return WebEditors.dependsOnSomeOther(getMetaProperty(memberName),	getViewName());
+		MetaProperty p = getMetaProperty(memberName);
+		if (WebEditors.dependsOnSomeOther(p, getViewName())) return true;
+		MetaEditor editor = WebEditors.getMetaEditorFor(p, getViewName());
+		// A very ad hoc solution, it would better to have a alwaysReload (or so) attribute
+		// in editor definition in editors.xml 
+		if (editor.getUrl().startsWith("descriptionsEditor.jsp") && editor.hasProperty("filter")) {
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -3646,6 +3680,32 @@ public class View implements java.io.Serializable {
 		MetaReference ref = getParent().getMetaModel().getMetaReference(getMemberName());
 		MetaDescriptionsList descriptionsList = getParent().getMetaView().getMetaDescriptionList(ref);
 		return descriptionsList;
+	}
+
+	/**
+	 * Refreshs the displayed data of all the references as descriptions list of this
+	 * view from database. <p>
+	 */	
+	public void refreshDescriptionsLists() { 
+		refreshDescriptionsLists = true;
+		if (hasSubviews()) {
+			Iterator itSubviews = getSubviews().values().iterator();
+			while (itSubviews.hasNext()) {
+				View subview = (View) itSubviews.next();
+				subview.refreshDescriptionsLists();
+			}
+		}
+		if (hasGroups()) {
+			Iterator itSubviews = getGroupsViews().values().iterator();
+			while (itSubviews.hasNext()) {
+				View subview = (View) itSubviews.next();
+				subview.refreshDescriptionsLists();
+			}
+		}						
+		if (!sectionChanged && hasSections()) {
+			// Only the displayed data matters here
+			getSectionView(getActiveSection()).refreshDescriptionsLists();	
+		}						
 	}
 	
 	/**
@@ -3793,11 +3853,29 @@ public class View implements java.io.Serializable {
 		this.mustRefreshCollection = true;		
 	}
 
-	public String getChangedSectionsViewObject() {
-		if (sectionChanged) return viewObject;		
+	public View getChangedSectionsView() { 
+		if (sectionChanged) return this; 
+		
 		if (hasSections()) { 
-			return getSectionView(getActiveSection()).getChangedSectionsViewObject();						 
-		}  		
+			View result = getSectionView(getActiveSection()).getChangedSectionsView();
+			if (result != null) return result;
+		}
+		if (hasSubviews()) {
+			Iterator itSubviews = getSubviews().values().iterator();
+			while (itSubviews.hasNext()) {
+				View subview = (View) itSubviews.next();
+				View result = subview.getChangedSectionsView();
+				if (result != null) return result;
+			}
+		}
+		if (hasGroups()) {
+			Iterator itSubviews = getGroupsViews().values().iterator();
+			while (itSubviews.hasNext()) {
+				View subview = (View) itSubviews.next();
+				View result = subview.getChangedSectionsView();
+				if (result != null) return result;
+			}
+		}						
 		return null;
 	}
 
@@ -3806,30 +3884,36 @@ public class View implements java.io.Serializable {
 	}
 	
 	/**
-	 * If the property exists or the reference exists and it's displayed as 
-	 * descriptions list then the qualified name (in ModelName.memberName format) 
-	 * is returned. <p>
+	 * If the property or the reference as descriptions list is displayed in this moment
+	 * then the qualified name (in ModelName.memberName format) is returned. <p>
 	 * 
 	 * @param name Can be the simple or the qualified name of the member
 	 * @return The qualified name in form ModelName.memberName or null if is not a property
 	 * 		or a reference as descriptions list.
 	 */
-	public String getQualifiedNameForPropertyOrDescriptionsListReference(String name) {  
+	public String getQualifiedNameForDisplayedPropertyOrDescriptionsListReference(String name) {
+		if (isRepresentsCollection() && !isCollectionDetailVisible()) return null; 
 		for (Iterator it=getMetaMembers().iterator(); it.hasNext(); ) {
 			MetaMember member = (MetaMember) it.next();
 			if (member instanceof MetaProperty ||
 				member instanceof MetaReference && 
 					displayAsDescriptionsList((MetaReference) member))		
 			{
-				if (member.getQualifiedName().equals(name)) return name;
-				if (member.getName().equals(name)) return member.getQualifiedName();
+				if (member.getQualifiedName().equals(name)) {
+					if (isHidden(name)) return null; 
+					return name;
+				}
+				if (member.getName().equals(name)) {
+					if (isHidden(name)) return null; 
+					return member.getQualifiedName();
+				}
 			}
 		}
 		if (hasSubviews()) {
 			Iterator itSubviews = getSubviews().values().iterator();
 			while (itSubviews.hasNext()) {
 				View subview = (View) itSubviews.next();
-				String qualifiedName = subview.getQualifiedNameForPropertyOrDescriptionsListReference(name); 
+				String qualifiedName = subview.getQualifiedNameForDisplayedPropertyOrDescriptionsListReference(name); 
 				if (qualifiedName != null) return qualifiedName;
 			}
 		}
@@ -3837,13 +3921,13 @@ public class View implements java.io.Serializable {
 			Iterator itSubviews = getGroupsViews().values().iterator();
 			while (itSubviews.hasNext()) {
 				View subview = (View) itSubviews.next();
-				String qualifiedName = subview.getQualifiedNameForPropertyOrDescriptionsListReference(name);
+				String qualifiedName = subview.getQualifiedNameForDisplayedPropertyOrDescriptionsListReference(name);
 				if (qualifiedName != null) return qualifiedName;
 			}
 		}						
 		if (hasSections()) {
 			// Only the displayed data matters here
-			String qualifiedName = getSectionView(getActiveSection()).getQualifiedNameForPropertyOrDescriptionsListReference(name);
+			String qualifiedName = getSectionView(getActiveSection()).getQualifiedNameForDisplayedPropertyOrDescriptionsListReference(name);			
 			if (qualifiedName != null) return qualifiedName;	
 		}								
 		return null;

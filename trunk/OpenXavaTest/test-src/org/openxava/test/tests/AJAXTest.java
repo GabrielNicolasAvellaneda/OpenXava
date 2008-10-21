@@ -200,8 +200,9 @@ public class AJAXTest extends ModuleTestBase {
 		assertLoadedPart("xava_descriptions_list_xava.Customer.address.state");				
 	}
 			
-	public void testDependentDescriptionsList() throws Exception { 
+	public void testDependentDescriptionsList_resetDescriptionsCache_setEditable() throws Exception { 
 		changeModule("Product2"); 
+		// Dependent descriptions list
 		assertLoadedParts("xava_core, ");
 		execute("CRUD.new");
 		assertLoadedParts("xava_core, ");
@@ -211,7 +212,20 @@ public class AJAXTest extends ModuleTestBase {
 				"xava_messages, xava_input_focus_property_id");		
 		setValue("family.number", "1");
 		assertLoadedParts("xava_errors, xava_descriptions_list_xava.Product2.subfamily, " +
-				"xava_messages, xava_input_focus_property_id");		
+				"xava_messages, xava_input_focus_property_id");
+		
+		// Reset descriptions cache
+		execute("Product2.changeLimitZone");
+		assertLoadedParts("xava_descriptions_list_xava.Product2.family, xava_errors, " +
+				"xava_descriptions_list_xava.Product2.subfamily, " +
+				"xava_descriptions_list_xava.Product2.warehouse, " +
+				"xava_input_focus_property_id, xava_messages,");
+		
+		// setEditable
+		execute("Product2.deactivateType");
+		assertLoadedParts("xava_descriptions_list_xava.Product2.family, xava_errors, " +
+				"xava_descriptions_list_xava.Product2.subfamily, " +
+				"xava_input_focus_property_id, xava_messages,");
 	}
 		
 	public void	testShowingHiddingPartsReloadsFullView() throws Exception {
@@ -293,6 +307,14 @@ public class AJAXTest extends ModuleTestBase {
 		execute("Sections.change", "activeSection=1,viewObject=xava_view_section1_section1");
 		assertLoadedParts("xava_errors, xava_sections_xava_view_section1_section1, " +
 				"xava_messages, xava_input_focus_property_id");		
+	}
+	
+	public void testSectionsInsideSubview() throws Exception {
+		changeModule("TransportCharge");
+		execute("CRUD.new");
+		execute("Sections.change", "activeSection=4,viewObject=xava_view_delivery");
+		assertLoadedParts("xava_errors, xava_sections_xava_view_delivery, " +
+				"xava_input_focus_property_id, xava_messages, ");
 	}
 	
 	public void testDetailCollection() throws Exception {
@@ -425,6 +447,7 @@ public class AJAXTest extends ModuleTestBase {
 		assertLoadedParts("xava_errors, xava_view, " + // ...so we reload the full view
 				"xava_input_focus_property_id, xava_messages,");		
 	}
+	
 
 	private void assertLoadedParts(String expected) throws Exception {
 		assertEquals("Loaded parts are not the expected ones", order(expected), order(getLoadedParts()));

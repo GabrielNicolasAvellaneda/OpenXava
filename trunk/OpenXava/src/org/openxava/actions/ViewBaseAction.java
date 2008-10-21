@@ -2,6 +2,8 @@ package org.openxava.actions;
 
 
 
+import java.util.*;
+
 import org.openxava.view.*;
 
 /**
@@ -26,5 +28,13 @@ abstract public class ViewBaseAction extends BaseAction  {
 		return view.getModelName();
 	}
 	
+	/**
+	 * Reset the cache of all descriptions-list and 
+	 * others uses of descriptionsEditors.	 
+	 */
+	protected void resetDescriptionsCache() {
+		super.resetDescriptionsCache();
+		getView().refreshDescriptionsLists();
+	}
 
 }

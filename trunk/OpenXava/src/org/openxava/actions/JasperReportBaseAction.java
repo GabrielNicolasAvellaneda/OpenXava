@@ -1,6 +1,11 @@
 package org.openxava.actions;
 
+import java.io.*;
+import java.net.*;
+import java.sql.*;
 import java.util.*;
+
+import javax.servlet.*;
 import javax.servlet.http.*;
 
 
@@ -72,13 +77,48 @@ abstract public class JasperReportBaseAction extends BaseAction implements IForw
 		this.format = format;		
 	}
 
-	public void execute() throws Exception {		
-		request.getSession().setAttribute("xava.report.design", getJRXML());
-		request.getSession().setAttribute("xava.report.parameters", getParameters());
-		request.getSession().setAttribute("xava.report.datasource", getDataSource());
-		request.getSession().setAttribute("xava.report.modelName", modelName);
+	public void execute() throws Exception {
+		ServletContext application = request.getSession().getServletContext();
+		System.setProperty("jasper.reports.compile.class.path",					 
+			application.getRealPath("/WEB-INF/lib/jasperreports.jar") +
+			System.getProperty("path.separator") + 
+			application.getRealPath("/WEB-INF/classes/")
+		);
+				
+		InputStream xmlDesign = null;		
+		String jrxml = getJRXML();
+		if (isAbsolutePath(jrxml)) {
+			xmlDesign = new FileInputStream(jrxml);
+		}
+		else {
+			xmlDesign = JasperReportBaseAction.class.getResourceAsStream("/" + jrxml);
+		} 
+		if (xmlDesign == null) throw new XavaException("design_not_found"); 
+		JasperReport report = JasperCompileManager.compileReport(xmlDesign);
+		Map parameters = getParameters(); // getParameters() before getDatasource()
+		JRDataSource ds = getDataSource();
+		JasperPrint jprint = null;
+		if (ds == null) {
+			Connection con = DataSourceConnectionProvider.getByComponent(modelName).getConnection();
+			jprint = JasperFillManager.fillReport(report, parameters, con);
+			con.close();
+		}
+		else {
+			jprint = JasperFillManager.fillReport(report, parameters, ds);
+		}		
+		request.getSession().setAttribute("xava.report.jprint", jprint);
 		request.getSession().setAttribute("xava.report.format", getFormat());
 	}
+	
+	private boolean isAbsolutePath(String design) { 
+		return design.startsWith("/") || 
+			(
+				design.length() > 2 &&
+				design.charAt(1) == ':' && 
+				Character.isLetter(design.charAt(0))
+			);
+	}
+
 
 	public String getForwardURI() {		
 		return "/xava/report.pdf?time="+System.currentTimeMillis();

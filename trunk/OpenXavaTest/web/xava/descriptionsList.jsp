@@ -16,7 +16,6 @@ viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObjec
 org.openxava.view.View view = (org.openxava.view.View) context.get(request, viewObject);
 String referenceKey = request.getParameter("referenceKey");
 MetaReference ref = (MetaReference) request.getAttribute(referenceKey); 
-// tmp String labelKey = referenceKey + "_LABEL_";
 String labelKey = "xava_label_" + referenceKey;
 %>
 

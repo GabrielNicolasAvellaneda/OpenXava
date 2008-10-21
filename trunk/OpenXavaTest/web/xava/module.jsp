@@ -52,8 +52,7 @@ Module.setStyle(style);
 <% if (!isPortlet) { %>
 </head>
 <body bgcolor="#ffffff">
-<% } %>
-	<div id="info"></div> <%-- tmp --%>	
+<% } %>	
 	<input id="xava_loading" type="hidden" value="true"/>
 	<input id="xava_loaded_parts" type="hidden" value=""/>	
 	<%-- Layer for progress bar --%>

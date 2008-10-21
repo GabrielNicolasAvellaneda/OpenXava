@@ -143,8 +143,9 @@ abstract public class BaseAction implements IAction, IRequestAction {
 	public Environment getEnvironment() {
 		return environment;
 	}
+	
 	/**
-	 * Reset de cache of all descriptions-list and 
+	 * Reset the cache of all descriptions-list and 
 	 * others uses of descriptionsEditors.	 
 	 */
 	protected void resetDescriptionsCache() {
