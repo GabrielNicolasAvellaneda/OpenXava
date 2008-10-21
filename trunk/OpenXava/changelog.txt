@@ -1,19 +1,27 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 3.1beta2 (2008-10-21)
+------------------------------
+- Only the changed parts of the UI are reloaded using AJAX (in 3.1beta1 all UI was reloaded in each action).
+- Custom reports, those derived from JasperReportBaseAction, now are filled inside JPA/Hibernate transaction, for avoiding lazy initialization problems.
+- New method getChosenKeyMap() in ChooseReferenceAction.
+- New method getMembers() in Messages.
 - New methods refresh() and refreshCollections() in View.
-- Is.equal can compare integers with enums, using the enum ordinal.
-- Added default sizes (in default-size.xml) for java.lang.Integer, java.lang.Long, float, java.lang.Float, double and java.lang.Double.
-- Fix: Modifying the container object from a callback method of a collection element fails.
 - New property 'portletLocales' in xava.properties that indicates the locales to use for generating i18n files for portlets.
+- Is.equal can compare integers with enums, using the enum ordinal; and Shorts, Integers and Long among themselves.
+- Added default sizes (in default-size.xml) for java.lang.Integer, java.lang.Long, float, java.lang.Float, double and java.lang.Double.
 - New format 'rtf' available for JasperReportBaseAction.
+- Fix: Progress dialog won't go away in 3.1beta1.
+- Fix: Error image for properties is not only shown for the failing property, but for all with the same name in view.
+- Fix: Modifying the container object from a callback method of a collection element fails.
 - Fix: Searching in a reference uses 'like' as condition when id is hidden and another property is used for searching, so sometimes the search is not exact.
 
 OpenXava 3.1beta1 (2008-8-26)
 -----------------------------
 - Full AJAX support.
 - New method remove() in ModuleContext for removing a session object.
-- New property 'browser' for xava-junit.properti to indicate the browser type to be used for testing.
+- New property 'browser' for xava-junit.properties to indicate the browser type to be used for testing.
 - New InputStreams utility class.
 - HtmlUnit updated to 2.2.
 
