@@ -13,8 +13,10 @@
 String viewObject = request.getParameter("viewObject");
 viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObject;
 org.openxava.view.View view = (org.openxava.view.View) context.get(request, viewObject);
+view.setViewObject(viewObject); 
 String propertyPrefix = request.getParameter("propertyPrefix");
 propertyPrefix = (propertyPrefix == null || propertyPrefix.equals(""))?"xava." + view.getModelName() + ".":propertyPrefix;
+view.setPropertyPrefix(propertyPrefix); 
 %>
 
 <% if (view.isFrame()) { %>
@@ -98,7 +100,7 @@ while (it.hasNext()) {
 					} 
 				}
 				if (withFrame) { 
-					String labelKey = propertyPrefix + ref.getName() + "_LABEL_";
+					String labelKey = "xava_label_" + propertyPrefix + ref.getName(); 					
 					String label = view.getLabelFor(ref);
 	%>						 
 		<%=style.getFrameHeaderStartDecoration() %>
@@ -205,8 +207,9 @@ if (view.hasSections()) {
                   <tr>
                     <td>
 	<% } %>
-	
+	<div id="xava_sections_<%=viewObject%>"> 
 	<jsp:include page="sections.jsp"/>
+	</div>
 	
 	<% if (view.isSubview() && !view.isFrame()) { %>
 		 			</td>

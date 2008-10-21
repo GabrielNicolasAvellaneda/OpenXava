@@ -48,6 +48,7 @@ else {
 }
 String propertyPrefix = Is.emptyString(propertyPrefixAccumulated)?"xava." + view.getModelName() + "." + collectionName + ".":propertyPrefixAccumulated + collectionName + ".";
 %>
+<div id="xava_collection_<%=propertyPrefix%>">
 <table width="100%" class="<%=style.getList()%>" <%=style.getListCellSpacing()%>>
 <% if (XavaPreferences.getInstance().isDetailOnBottomInCollections()) { %>
 <tr><td>
@@ -139,11 +140,11 @@ else {
 		String script = "";
 		if (it.hasNext()) {
 			if (subview.throwsPropertyChanged(p)) {
-				script = "onchange='throwPropertyChanged(" + formName + ", \"" + propertyKey + "\")'";
+				script = "onchange='openxava.throwPropertyChanged(\"" + propertyKey + "\")'";
 			}
 		}
 		else {
-			script = "onblur='executeXavaAction('', false, " + formName + ", \"" + subview.getSaveCollectionElementAction() + "\", \"" + argv + "\")'";
+			script = "onblur='openxava.executeAction('', false, \"" + subview.getSaveCollectionElementAction() + "\", \"" + argv + "\")'";
 		}
 		Object value = request.getAttribute(propertyKey + ".value");
 		if (WebEditors.mustToFormat(p, view.getViewName())) {
@@ -180,3 +181,4 @@ else {
 </td></tr>
 <% } // of: if (!XavaPreferences... %>
 </table>
+</div>

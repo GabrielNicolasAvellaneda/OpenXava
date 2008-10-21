@@ -17,11 +17,12 @@ try {
 }
 catch (Exception ex) {
 }
+int index = Integer.parseInt(request.getParameter("index"));
 %>
 
-<input type="hidden" name="<%=prefix%>conditionComparators" value="eq">
+<input type="hidden" name="<%=prefix%>conditionComparator.<%=index%>" value="eq">
 
-<select name="<%=prefix%>conditionValues" class=<%=style.getEditor()%>>
+<select name="<%=prefix%>conditionValue.<%=index%>" class=<%=style.getEditor()%>>
 	<option value=""></option>
 <%
 	StringTokenizer st = new StringTokenizer(validValues, "|");

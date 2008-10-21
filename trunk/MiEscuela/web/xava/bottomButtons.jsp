@@ -10,7 +10,7 @@ manager.setSession(session);
 %>
 
 <button name="xava.DEFAULT_ACTION" 
-	onclick="executeXavaAction('', false, <%=manager.getForm()%>, '<%=manager.getDefaultActionQualifiedName()%>')"
+	onclick="openxava.executeAction('', false, '<%=manager.getDefaultActionQualifiedName()%>')"
 	style="padding: 0; border: none; background-color:transparent; size: 0"></button>
 
 <%

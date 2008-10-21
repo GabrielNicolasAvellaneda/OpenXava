@@ -60,7 +60,7 @@ else {
 	<%=style.getFrameTitleStartDecoration()%>
 	&nbsp;
 	<%=style.getFrameTitleEndDecoration()%>
-	<%=style.getFrameActionsStartDecoration()%>
+	<%=style.getFrameActionsStartDecoration()%>	
 	<xava:link action='Gallery.maximizeImage' argv='<%="oid=" + image.getOid()%>'><img src='<%=maximizeImage%>' border='0' align="absmiddle"/></xava:link>	
 	<% if (!gallery.isReadOnly()) { %>
 	<xava:link action='Gallery.removeImage' argv='<%="oid=" + image.getOid()%>'><img src='<%=removeImage%>' border='0' align="absmiddle"/></xava:link>

@@ -2,7 +2,8 @@
 
 <%@ page import="org.openxava.view.meta.MetaView" %>
 
-<jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
+
+<%@page import="org.openxava.view.View"%><jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
 <%
@@ -38,7 +39,7 @@ int activeSection = view.getActiveSection();
 				<%
 				String viewObjectArgv = "xava_view".equals(viewObject)?"":",viewObject=" + viewObject;
 				%>
-				<xava:link action='Sections.change' argv='<%="activeSection=" + i + viewObjectArgv%>' cssClass='<%=style.getSectionLink()%>'>
+				<xava:link action='Sections.change' argv='<%="activeSection=" + i + viewObjectArgv%>' cssClass='<%=style.getSectionLink()%>' cssStyle='<%=style.getSectionLinkStyle()%>'>
 				<%=section.getLabel(request)%>
 				</xava:link>      
 			<%=style.getSectionTabEndDecoration()%>	
@@ -57,7 +58,7 @@ int activeSection = view.getActiveSection();
 	<tr><td class="<%=style.getSectionActive()%>">
 		<%
 			String viewName = viewObject + "_section" + activeSection;
-			context.put(request, viewName, view.getSectionView(activeSection));			
+			context.put(request, viewName, view.getSectionView(activeSection));
 		%>			
 		<table width='100%' cellspacing="0" border="0" cellpadding="2"><tr><td>
 		<jsp:include page="detail.jsp"> 

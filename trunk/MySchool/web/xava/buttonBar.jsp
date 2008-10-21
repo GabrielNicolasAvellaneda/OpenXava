@@ -10,8 +10,8 @@ org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleM
 manager.setSession(session);
 boolean onBottom = false;
 %>
-
-<table width="100%" <%=style.getButtonBarSpacing()%> class="<%=style.getButtonBar2()%>" <%=style.getButtonBarStyle()%>> 
+ 
+<table width="100%" <%=style.getButtonBarSpacing()%> class="<%=style.getButtonBar2()%>" <%=style.getButtonBarStyle()%>>
 <tr>
 <td class=<%=style.getButtonBarStart(onBottom)%> <%=style.getButtonBarStartStyle()%> width=1>&nbsp;</td>
 <td style='vertical-align: middle' class="<%=style.getButtonBarMiddle(onBottom)%>" <%=style.getButtonBarMiddleStyle()%>>
@@ -33,7 +33,7 @@ while (it.hasNext()) {
 <td align="right" style='vertical-align: middle' class="<%=style.getMode(onBottom)%>">
 &nbsp;
 <%
-java.util.Stack previousViews = (java.util.Stack) context.get(request, "xava_previousViews"); // tmp
+java.util.Stack previousViews = (java.util.Stack) context.get(request, "xava_previousViews"); 
 if (previousViews.isEmpty()) {
 	java.util.Iterator itSections = manager.getMetaActionsMode().iterator();
 	boolean firstTime = true;
