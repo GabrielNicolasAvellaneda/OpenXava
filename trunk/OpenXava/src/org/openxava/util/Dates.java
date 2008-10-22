@@ -10,6 +10,7 @@ import java.util.*;
  * Utilities to working with dates (<tt>java.util.Date</tt>). <p>  
  * 
  * @author Javier Paniza
+ * @author Peter Smith
  */
 public class Dates {
 	
@@ -18,12 +19,20 @@ public class Dates {
 	 * If day, month and year are 0 return null.
 	 */	
 	public static Date create(int day, int month, int year) {
+		return create(day, month, year, 0, 0, 0);
+	}
+	
+	/**
+	 * If day, month and year are 0 return null.
+	 */	
+	public static Date create(int day, int month, int year, int hourofday, int minute, int second) {
 		if (day == 0 && month == 0 && year == 0) return null;
 		Calendar cal = Calendar.getInstance();
-		cal.set(year, month - 1, day, 0, 0, 0);
+		cal.set(year, month - 1, day, hourofday, minute, second);
 		cal.set(Calendar.MILLISECOND, 0);
 		return cal.getTime();			
 	}
+
 		
 	/**
 	 * Current date without time. 
@@ -380,6 +389,33 @@ public class Dates {
 			replaceAll("2", "%m");
 		return result;
 	}	
+	
+	public static String dateTimeFormatForJSCalendar(Locale locale) {		
+		DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, locale);
+		String datetime = df.format(create(1, 2, 1971, 15, 59, 0)); // d, m, y, hr, min, sec 
+		boolean always4InYear= "es".equals(locale.getLanguage()) || "pl".equals(locale.getLanguage());
+		String result = datetime.
+		
+			// time part
+			replaceAll("15", "%H").	// 24hr format 
+			replaceAll("03", "%I").	// 12hr format - double digit 
+			replaceAll("3", "%l").	// 12hr format - single digit
+			replaceAll("59","%M").	// minute
+			replaceAll("PM", "%p").	// AM/PM - uppercase
+			replaceAll("pm", "%P").	// am/pm - lowercase
+
+			// date part
+			replaceAll("01", "%d").	// day - double digit
+			replaceAll("02", "%m").	// month - double digit
+			replaceAll("1971", "%Y").	// year - 4 digit
+			replaceAll("71", always4InYear?"%Y":"%y"). 	// year - 2 digit 		
+			replaceAll("1", "%e"). 	// day - single digit
+			replaceAll("2", "%m")	// month - ??? seems only double digit is supported by calendar
+			;
+					
+		return result;
+	}	
+	
 
 	/** 
 	 * Returns number of days between startDate and endDate<p> 

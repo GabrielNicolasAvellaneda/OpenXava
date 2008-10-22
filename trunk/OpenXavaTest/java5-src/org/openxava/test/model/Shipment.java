@@ -6,7 +6,6 @@ import java.util.*;
 import javax.persistence.*;
 
 import org.hibernate.annotations.Parameter;
-import org.hibernate.validator.*;
 import org.openxava.annotations.*;
 import org.openxava.jpa.*;
 
