@@ -88,13 +88,21 @@
 		<for-stereotype stereotype="LABEL" />
 	</editor>
 
-	<editor name="DateTimeCalendar" url="dateTimeCalendarEditor.jsp">
-		<formatter class="org.openxava.formatters.DateTimeFormatter" />
+	<editor name="DateTimeCalendar" url="dateTimeCombinedCalendarEditor.jsp">
+		<formatter class="org.openxava.formatters.DateTimeCombinedFormatter" />
 		<for-type type="java.sql.Timestamp" />
 		<for-stereotype stereotype="DATETIME" />
 		<for-stereotype stereotype="FECHAHORA" />
 	</editor>
-
+	
+	<editor name="DateTimeSeparatedCalendar" url="dateTimeSeparatedCalendarEditor.jsp">
+		<formatter class="org.openxava.formatters.DateTimeFormatter" />
+	</editor>	
+	
+	<editor name="DateTimeCombinedCalendar" url="dateTimeCombinedCalendarEditor.jsp">
+		<formatter class="org.openxava.formatters.DateTimeCombinedFormatter" />
+	</editor>
+	
 	<editor name="BoldLabel" url="boldLabelEditor.jsp">
 		<for-stereotype stereotype="ETIQUETA_NEGRITA" />
 		<for-stereotype stereotype="BOLD_LABEL" />

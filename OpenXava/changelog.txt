@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Button for popup calendar has a new image.
+- New editor for Timestamp and DATETIME with only one field for date and time. The old one still is available using @Editor("DateTimeSeparatedCalendar") or changing editors.xml.
+
 OpenXava 3.1beta2 (2008-10-21)
 ------------------------------
 - Only the changed parts of the UI are reloaded using AJAX (in 3.1beta1 all UI was reloaded in each action).
@@ -16,6 +19,7 @@ OpenXava 3.1beta2 (2008-10-21)
 - Fix: Error image for properties is not only shown for the failing property, but for all with the same name in view.
 - Fix: Modifying the container object from a callback method of a collection element fails.
 - Fix: Searching in a reference uses 'like' as condition when id is hidden and another property is used for searching, so sometimes the search is not exact.
+- Fix: On generating reports (and other cases) the latest action is reexecuted.
 
 OpenXava 3.1beta1 (2008-8-26)
 -----------------------------

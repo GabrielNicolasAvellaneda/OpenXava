@@ -49,6 +49,7 @@ public class ShipmentTest extends ModuleTestBase {
 		setValue("mode", isOX3()?"1":"2");
 		setValue("number", "66");
 		setValue("description", "JUNIT SHIPMENT");
+		setValue("time", "10/22/08 6:01 PM"); // tmp
 		execute("CRUD.save"); 		
 		assertNoErrors();
 		
@@ -56,6 +57,7 @@ public class ShipmentTest extends ModuleTestBase {
 		assertValue("type", isOX3()?"":"0");
 		assertValue("mode", isOX3()?"":"0");
 		assertValue("description", "");
+		assertValue("time", "");
 		
 		// Search just created
 		setValue("type", isOX3()?"0":"1");
@@ -66,6 +68,7 @@ public class ShipmentTest extends ModuleTestBase {
 		assertValue("mode", isOX3()?"1":"2");
 		assertValue("number", "66");
 		assertValue("description", "JUNIT SHIPMENT");
+		assertValue("time", "10/22/08 6:01 PM"); // tmp
 				
 		// Modify
 		setValue("description", "JUNIT SHIPMENT MODIFIED");
