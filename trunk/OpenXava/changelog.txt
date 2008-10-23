@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Money editor shows the currency symbol depending on the server locale.
 - New file custom-editors.js can be used on web/xava/js for defining the javascript for custom editors.
 - Fix: HTML_TEXT stereotype does not work in 3.1beta.
 - Fix: FCKEditor not modifying text for FF3.
