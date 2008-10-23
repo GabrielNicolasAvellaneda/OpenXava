@@ -36,8 +36,10 @@ Module.setStyle(style);
 	<% if (style.isNeededToIncludeCalendar()) { %>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/calendar.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/lang/calendar-<%=request.getLocale().getLanguage()%>.js"></script>	
-	<% } %>
+	<% } %>	
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/calendar.js'></script>
+	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/editors.js'></script> 	
+	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/custom-editors.js'></script> 
 	<script>
 	window.onload= function() {
 		openxava.application = '<%=app%>';
