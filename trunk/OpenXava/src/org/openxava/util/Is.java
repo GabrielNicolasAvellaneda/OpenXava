@@ -129,6 +129,8 @@ public class Is {
 	 * Takes in account the nulls. Use compareTo when appropriate and
 	 * compares Java 5 enums with numbers by the ordinal value. Compares
 	 * Integer, Long, Short among themselves.<br>
+	 * Also admits to compare objects of not compatible types, just it returns 
+	 * false in this case.
 	 * 
 	 * @param a Can be null.
 	 * @param b Can be null.
@@ -142,18 +144,23 @@ public class Is {
 		}
 		if (isInteger(a)) a = toLong(a);
 		if (isInteger(b)) b = toLong(b);
-		if (a instanceof Comparable) {
-			try {
-				return ((Comparable) a).compareTo(b) == 0;
-			}
-			catch (ClassCastException ex) {
-				if (b instanceof Comparable) {
-					return ((Comparable) b).compareTo(a) == 0;
+		try {
+			if (a instanceof Comparable) {
+				try {
+					return ((Comparable) a).compareTo(b) == 0;
 				}
-				else return false;
+				catch (ClassCastException ex) {
+					if (b instanceof Comparable) {					
+						return ((Comparable) b).compareTo(a) == 0;
+					}
+					else return false;
+				}
 			}
+			return a.equals(b);
 		}
-		return a.equals(b);
+		catch (ClassCastException ex) {
+			return false;
+		}
 	}
 		
 	private static Long toLong(Object integer) {

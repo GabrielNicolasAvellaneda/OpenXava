@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- New file custom-editors.js can be used on web/xava/js for defining the javascript for custom editors.
+- Fix: HTML_TEXT stereotype does not work in 3.1beta.
+- Fix: FCKEditor not modifying text for FF3.
+- Is.equal admits to compare objects of not compatible types, just it returns false in this case.
 - Button for popup calendar has a new image.
 - New editor for Timestamp and DATETIME with only one field for date and time. The old one still is available using @Editor("DateTimeSeparatedCalendar") or changing editors.xml.
 
