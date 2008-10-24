@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Users.getCurrent() and Users.getCurrentUserInfo() returns always null in 3.1beta.
 - Library aspectrt.jar removed from WEB-INF/lib.
 - Money editor shows the currency symbol depending on the server locale.
 - New file custom-editors.js can be used on web/xava/js for defining the javascript for custom editors.

@@ -815,7 +815,7 @@
 		<copy todir="${dist.portlets.dir}/xava/editors/FCKeditor">
 			<fileset dir="web/xava/editors/FCKeditor"/>
 		</copy>								
-		<copy todir="${dist.portlets.dir}/xava/editors" file="web/xava/editors/FCKEditor.jsp"/>
+		<copy todir="${dist.portlets.dir}/xava/editors" file="web/xava/editors/fckEditor.jsp"/>
 		<copy todir="${dist.portlets.dir}/WEB-INF/jsp" >
 			<fileset dir="web" excludes="WEB-INF/**, xava/images/**, xava/style/**, xava/editors/calendar/**, xava/editors/FCKeditor/**, xava/editors/FCKEditor.jsp, xava/jasperReport.jsp public/**"/>
 		</copy>

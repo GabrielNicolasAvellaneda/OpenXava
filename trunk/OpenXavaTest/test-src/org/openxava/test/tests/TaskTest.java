@@ -27,9 +27,6 @@ public class TaskTest extends ModuleTestBase {
 	}
 	
 	public void testLogoutResetPortletState() throws Exception {
-		// This test does not work well in Liferay 5.0/5.1, because
-		// when the user is logged he see the guest page, instead
-		// of his private pages. Maybe an issue of Liferay setup
 		login(getUserLoginName(), "junit");
 		assertAction("Mode.detailAndFirst");
 		assertNoAction("Mode.list");

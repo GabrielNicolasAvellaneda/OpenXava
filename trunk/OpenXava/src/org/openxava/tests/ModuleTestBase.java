@@ -139,7 +139,11 @@ public class ModuleTestBase extends TestCase {
 			catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {				
 			}
 			
-			formIndex = -1; 
+			formIndex = -1;
+			// The next line is because Liferay 5.0/5.1 does not go to private page on login,
+			// and returns to the main guest page on logout; so going explicitly to the
+			// module page after login is a secure way to go
+			page = (HtmlPage) client.getPage(getModuleURL()); 
 			resetForm();
 		}
 		else {
