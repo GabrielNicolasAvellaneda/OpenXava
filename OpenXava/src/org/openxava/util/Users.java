@@ -84,8 +84,9 @@ public class Users {
 	 */
 	public static void setCurrent(HttpServletRequest request) {		
         Object rundata = request.getAttribute("rundata");
-        String portalUser = (String) request.getAttribute("xava.portal.user");
-        String user = portalUser == null?request.getRemoteUser():portalUser;
+        String portalUser = (String) request.getSession().getAttribute("xava.portal.user"); 
+        String webUser = (String) request.getSession().getAttribute("xava.user"); 
+        String user = portalUser == null?webUser:portalUser;
         if (Is.emptyString(user) && rundata != null) {
 			PropertiesManager pmRundata = new PropertiesManager(rundata);
 			try {
@@ -101,9 +102,9 @@ public class Users {
 			}			
 		}		
 		current.set(user);
-		request.getSession().setAttribute("xava.user", user);
+		request.getSession().setAttribute("xava.user", user); 
 				
-		currentUserInfo.set(request.getAttribute("xava.portal.userinfo")); 
+		currentUserInfo.set(request.getSession().getAttribute("xava.portal.userinfo")); 
 	}
 
 } 

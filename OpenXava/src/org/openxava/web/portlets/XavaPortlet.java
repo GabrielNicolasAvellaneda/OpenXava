@@ -86,10 +86,10 @@ public class XavaPortlet extends GenericPortlet {
 		request.setAttribute("xava.portlet.renderURL", response.createRenderURL());
 		request.setAttribute("xava.portlet.actionURL", createActionURL(request, response)); 
 		request.setAttribute("xava.portlet.uploadActionURL", response.createActionURL()); 
-		request.setAttribute("xava.upload.fileitems", request.getPortletSession().getAttribute("xava.upload.fileitems")); 
-		request.setAttribute("xava.upload.error", request.getPortletSession().getAttribute("xava.upload.error"));
-		request.getPortletSession().removeAttribute("xava.upload.fileitems");
-		request.getPortletSession().removeAttribute("xava.upload.error");
+		request.setAttribute("xava.upload.fileitems", request.getPortletSession().getAttribute("xava.upload.fileitems", PortletSession.APPLICATION_SCOPE)); 
+		request.setAttribute("xava.upload.error", request.getPortletSession().getAttribute("xava.upload.error", PortletSession.APPLICATION_SCOPE));
+		request.getPortletSession().removeAttribute("xava.upload.fileitems", PortletSession.APPLICATION_SCOPE);
+		request.getPortletSession().removeAttribute("xava.upload.error", PortletSession.APPLICATION_SCOPE);
 		
 		request.removeAttribute("xava.portal.user");
 		request.removeAttribute("xava.portal.userinfo");
@@ -99,7 +99,7 @@ public class XavaPortlet extends GenericPortlet {
 			String email = (String) userInfo.get("user.home-info.online.email");			
 			if (XavaPreferences.getInstance().isEMailAsUserNameInPortal()) {							
 				if (!Is.emptyString(email)) {
-					request.setAttribute("xava.portal.user", email);
+					request.getPortletSession().setAttribute("xava.portal.user", email, PortletSession.APPLICATION_SCOPE);
 					user.setId(email);
 				}			
 			}			
@@ -109,7 +109,7 @@ public class XavaPortlet extends GenericPortlet {
 			user.setGivenName((String) userInfo.get("user.name.given"));
 			user.setFamilyName((String) userInfo.get("user.name.family"));
 			user.setEmail(email);
-			request.setAttribute("xava.portal.userinfo", user);
+			request.getPortletSession().setAttribute("xava.portal.userinfo", user, PortletSession.APPLICATION_SCOPE);
 		}
 				
 		
@@ -184,13 +184,13 @@ public class XavaPortlet extends GenericPortlet {
 				factory.setSizeThreshold(1000000);		
 				PortletFileUpload upload = new PortletFileUpload(factory);
 				List fileItems = upload.parseRequest(request);					
-				request.getPortletSession().setAttribute("xava.upload.fileitems", fileItems); 
-				request.getPortletSession().removeAttribute("xava.upload.error"); 
+				request.getPortletSession().setAttribute("xava.upload.fileitems", fileItems, PortletSession.APPLICATION_SCOPE); 
+				request.getPortletSession().removeAttribute("xava.upload.error", PortletSession.APPLICATION_SCOPE); 
 			}
 			catch (Exception ex) {
 				log.error(ex.getMessage(), ex);
-				request.getPortletSession().removeAttribute("xava.upload.fileitems");
-				request.getPortletSession().setAttribute("xava.upload.error", "upload_error");				
+				request.getPortletSession().removeAttribute("xava.upload.fileitems", PortletSession.APPLICATION_SCOPE);
+				request.getPortletSession().setAttribute("xava.upload.error", "upload_error", PortletSession.APPLICATION_SCOPE);				
 			}				
 		}
 	} 	
