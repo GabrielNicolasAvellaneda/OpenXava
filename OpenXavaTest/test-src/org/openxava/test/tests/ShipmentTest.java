@@ -49,7 +49,7 @@ public class ShipmentTest extends ModuleTestBase {
 		setValue("mode", isOX3()?"1":"2");
 		setValue("number", "66");
 		setValue("description", "JUNIT SHIPMENT");
-		setValue("time", "10/22/08 6:01 PM"); // tmp
+		setValue("time", "10/22/08 6:01 PM"); 
 		execute("CRUD.save"); 		
 		assertNoErrors();
 		
@@ -68,7 +68,7 @@ public class ShipmentTest extends ModuleTestBase {
 		assertValue("mode", isOX3()?"1":"2");
 		assertValue("number", "66");
 		assertValue("description", "JUNIT SHIPMENT");
-		assertValue("time", "10/22/08 6:01 PM"); // tmp
+		assertValue("time", "10/22/08 6:01 PM"); 
 				
 		// Modify
 		setValue("description", "JUNIT SHIPMENT MODIFIED");
@@ -161,7 +161,7 @@ public class ShipmentTest extends ModuleTestBase {
 		execute("List.filter");
 		assertListRowCount(1);
 		assertValueInList(0, "description", "CINC");	
-		assertValueInList(0, "time", "12/25/06/11:33 AM"); 
+		assertValueInList(0, "time", "12/25/06 11:33 AM"); 
 	}
 	
 	private void deleteCustomerAndContactPerson(int number) throws Exception {

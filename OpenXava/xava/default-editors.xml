@@ -96,7 +96,7 @@
 	</editor>
 	
 	<editor name="DateTimeSeparatedCalendar" url="dateTimeSeparatedCalendarEditor.jsp">
-		<formatter class="org.openxava.formatters.DateTimeFormatter" />
+		<formatter class="org.openxava.formatters.DateTimeSeparatedFormatter" />
 	</editor>	
 	
 	<editor name="DateTimeCombinedCalendar" url="dateTimeCombinedCalendarEditor.jsp">
