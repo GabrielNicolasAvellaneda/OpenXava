@@ -16,7 +16,7 @@ import org.openxava.util.*;
  * @author Javier Paniza
  */
 
-public class DateTimeFormatter implements IMultipleValuesFormatter {
+public class DateTimeSeparatedFormatter implements IMultipleValuesFormatter {
 	
 	private static DateFormat spanishDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	
