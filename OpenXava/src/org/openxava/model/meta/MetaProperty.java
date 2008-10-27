@@ -82,16 +82,34 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		return getValidValues().indexOf(value) + 1;
 	}
 	
+	public String getValidValueLabel(int i) throws XavaException { 	
+		return getValidValueLabel(Locales.getCurrent(), i);
+	}	
+
+	/**
+	 * Deprecated since 3.1.
+	 * 
+	 * @deprecated Use getValidValueLabel(int i) instead  
+	 */	
 	public String getValidValueLabel(ServletRequest request, int i) throws XavaException { 	
-		return getValidValueLabel(XavaResources.getLocale(request), i);
+		return getValidValueLabel(i);
 	}
 
 	public String getValidValueLabel(Locale locale, Object value) { 	
 		return obtainValidValueLabel(locale, value);
 	}
 	
+	public String getValidValueLabel(Object value) { 	
+		return obtainValidValueLabel(Locales.getCurrent(), value);
+	}
+	
+	/**
+	 * Deprecated since 3.1.
+	 * 
+	 * @deprecated Use getValidValue(Object value) instead  
+	 */
 	public String getValidValueLabel(ServletRequest request, Object value) { 	
-		return obtainValidValueLabel(XavaResources.getLocale(request), value);
+		return getValidValueLabel(value);
 	}
 		
 	public String getValidValueLabel(Locale locale, int i) throws XavaException { 
@@ -559,8 +577,17 @@ public class MetaProperty extends MetaMember implements Cloneable {
 		return getValidValues().iterator();	
 	}
 	
-	public Iterator validValuesLabels(ServletRequest request) {
-		return validValuesLabels(XavaResources.getLocale(request));
+	public Iterator validValuesLabels() {
+		return validValuesLabels(Locales.getCurrent());
+	}	
+	
+	/**
+	 * Deprecated since 3.1.
+	 * 
+	 * @deprecated Use validValuesLabels() instead
+	 */ 
+	public Iterator validValuesLabels(ServletRequest request) { 
+		return validValuesLabels();
 	}
 	
 	public Iterator validValuesLabels(Locale locale) {

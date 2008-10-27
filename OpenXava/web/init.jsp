@@ -76,5 +76,3 @@ if (hasProcessRequest) {
 	}
 }
 %>
-
-<jsp:include page="languages.jsp"/>

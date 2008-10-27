@@ -43,11 +43,11 @@ String form=request.getParameter("form");
 				oFCKeditor.BasePath = "FCKeditor/";
 				oFCKeditor.Height = '500';
 				oFCKeditor.Config["AutoDetectLanguage"] = false;
-				oFCKeditor.Config["DefaultLanguage"] = "<%=request.getLocale().getLanguage()%>";				
+				oFCKeditor.Config["DefaultLanguage"] = "<%=org.openxava.util.Locales.getCurrent().getLanguage()%>";				
 				oFCKeditor.Create();
 			</script>
 			<br>
-			<INPUT TYPE="submit" VALUE="<%=org.openxava.util.XavaResources.getString(request.getLocale(), "ok")%>">
+			<INPUT TYPE="submit" VALUE="<%=org.openxava.util.XavaResources.getString("ok")%>">
 		</form>
 	</body>
 </html>

@@ -17,17 +17,17 @@ public class MoneyFormatter implements IFormatter {
 
 	public String format(HttpServletRequest request, Object object)	throws Exception {
 		if (object == null) return "";
-		return getFormat(request).format(object);
+		return getFormat().format(object);
 	}
 
 	public Object parse(HttpServletRequest request, String string) throws Exception {
 		if (Is.emptyString(string)) return null; 
 		string = Strings.change(string, " ", ""); // In order to work with Polish		
-		return new BigDecimal(getFormat(request).parse(string).toString()).setScale(2);
+		return new BigDecimal(getFormat().parse(string).toString()).setScale(2);
 	}
 	
-	private NumberFormat getFormat(HttpServletRequest request) {
-		NumberFormat f = DecimalFormat.getNumberInstance(request.getLocale());
+	private NumberFormat getFormat() {
+		NumberFormat f = DecimalFormat.getNumberInstance(Locales.getCurrent());
 		f.setMinimumFractionDigits(2);
 		f.setMaximumFractionDigits(2);
 		return f;

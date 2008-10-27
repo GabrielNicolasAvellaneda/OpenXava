@@ -477,7 +477,7 @@ public class Tab implements java.io.Serializable {
 	}
 
 	private Locale getLocale() {
-		return request==null?Locale.getDefault():request.getLocale();
+		return XavaResources.getLocale(request);
 	}
 
 	private Object[] filterKey(Object[] key) throws XavaException {

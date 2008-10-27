@@ -24,7 +24,7 @@ if (editable || !label) {
 	name="<%=propertyKey%>_CALENDAR_BUTTON_"
 	src="<%=request.getContextPath() %>/xava/images/calendar.gif" alt="..."
 	style='vertical-align: middle;'
-	onclick="return showCalendar('<%=propertyKey%>', '<%=org.openxava.util.Dates.dateFormatForJSCalendar(request.getLocale())%>');"><%} %> <input name="<%=propertyKey%>" class=<%=style.getEditor()%>
+	onclick="return showCalendar('<%=propertyKey%>', '<%=org.openxava.util.Dates.dateFormatForJSCalendar(org.openxava.util.Locales.getCurrent())%>');"><%} %> <input name="<%=propertyKey%>" class=<%=style.getEditor()%>
 	type="text" 
 	title="<%=p.getDescription(request)%>"
 	align='<%=align%>'
