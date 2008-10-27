@@ -91,6 +91,8 @@ public class XavaPortlet extends GenericPortlet {
 		request.getPortletSession().removeAttribute("xava.upload.fileitems", PortletSession.APPLICATION_SCOPE);
 		request.getPortletSession().removeAttribute("xava.upload.error", PortletSession.APPLICATION_SCOPE);
 		
+		request.getPortletSession().setAttribute("xava.portal.locale", request.getLocale(), PortletSession.APPLICATION_SCOPE);
+		
 		request.removeAttribute("xava.portal.user");
 		request.removeAttribute("xava.portal.userinfo");
 		Map userInfo = (Map) request.getAttribute(PortletRequest.USER_INFO);			

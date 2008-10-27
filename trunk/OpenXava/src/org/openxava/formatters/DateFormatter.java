@@ -28,7 +28,7 @@ public class DateFormatter implements IFormatter {
 	public String format(HttpServletRequest request, Object date) {
 		if (date == null) return "";
 		if (Dates.getYear((java.util.Date)date) < 2) return "";
-		return getDateFormat(request).format(date);
+		return getDateFormat().format(date);
 	}
 		
 	public Object parse(HttpServletRequest request, String string) throws ParseException {
@@ -36,7 +36,7 @@ public class DateFormatter implements IFormatter {
 		if (string.indexOf('-') >= 0) { // SimpleDateFormat does not work well with -
 			string = Strings.change(string, "-", "/");
 		}		
-		DateFormat [] dateFormats = getDateFormats(request); 
+		DateFormat [] dateFormats = getDateFormats(); 
 		for (int i=0; i<dateFormats.length; i++) {
 			try {
 				dateFormats[i].setLenient(false);
@@ -48,16 +48,16 @@ public class DateFormatter implements IFormatter {
 		throw new ParseException(XavaResources.getString("bad_date_format",string),-1);
 	}
 	
-	private DateFormat getDateFormat(HttpServletRequest request) {
-		if ("es".equals(request.getLocale().getLanguage()) ||
-				"pl".equals(request.getLocale().getLanguage())) return spanishDateFormat;
-		return DateFormat.getDateInstance(DateFormat.SHORT, request.getLocale());		
+	private DateFormat getDateFormat() {
+		if ("es".equals(Locales.getCurrent().getLanguage()) ||
+				"pl".equals(Locales.getCurrent().getLanguage())) return spanishDateFormat;
+		return DateFormat.getDateInstance(DateFormat.SHORT, Locales.getCurrent());		
 	}
 	
-	private DateFormat[] getDateFormats(HttpServletRequest request) {
-		if ("es".equals(request.getLocale().getLanguage()) ||
-				"pl".equals(request.getLocale().getLanguage())) return spanishDateFormats;
-		return new DateFormat [] { getDateFormat(request) };
+	private DateFormat[] getDateFormats() {
+		if ("es".equals(Locales.getCurrent().getLanguage()) ||
+				"pl".equals(Locales.getCurrent().getLanguage())) return spanishDateFormats;
+		return new DateFormat [] { getDateFormat() };
 	}
 		
 }

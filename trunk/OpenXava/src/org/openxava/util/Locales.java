@@ -40,8 +40,10 @@ public class Locales {
 	/**
 	 * Associated the Locale of the request to the current thread. <p> 
 	 */
-	public static void setCurrent(HttpServletRequest request) {		
-		current.set(request.getLocale());
+	public static void setCurrent(HttpServletRequest request) {
+		Locale locale = (Locale) request.getSession().getAttribute("xava.portal.locale");
+		if (locale == null) current.set(request.getLocale());
+		else current.set(locale);
 	}
 
 } 

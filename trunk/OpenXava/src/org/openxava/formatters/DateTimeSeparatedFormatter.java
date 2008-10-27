@@ -37,8 +37,8 @@ public class DateTimeSeparatedFormatter implements IMultipleValuesFormatter {
         result[0] = "";
         result[1] = "";
 		if (date == null) return result;		
-		result[0] = getDateFormat(request).format(date);		
-		result[1] = DateFormat.getTimeInstance(DateFormat.SHORT, request.getLocale()).format(date);
+		result[0] = getDateFormat().format(date);		
+		result[1] = DateFormat.getTimeInstance(DateFormat.SHORT, Locales.getCurrent()).format(date);
 		return result;
 	}
 
@@ -56,7 +56,7 @@ public class DateTimeSeparatedFormatter implements IMultipleValuesFormatter {
 			dateTime = Strings.change(dateTime, "-", "/");
 		}
 		
-		DateFormat [] dateFormats = getDateTimeFormats(request);
+		DateFormat [] dateFormats = getDateTimeFormats();
 		for (int i=0; i < dateFormats.length; i++) {
 			try {
 				java.util.Date result =  (java.util.Date) dateFormats[i].parseObject(dateTime);				
@@ -68,16 +68,16 @@ public class DateTimeSeparatedFormatter implements IMultipleValuesFormatter {
 		throw new ParseException(XavaResources.getString("bad_date_format",dateTime),-1);
 	}
 	
-	private DateFormat getDateFormat(HttpServletRequest request) {
-		if ("es".equals(request.getLocale().getLanguage()) || 
-				"pl".equals(request.getLocale().getLanguage())) return spanishDateFormat;
-		return DateFormat.getDateInstance(DateFormat.SHORT, request.getLocale());		
+	private DateFormat getDateFormat() {
+		if ("es".equals(Locales.getCurrent().getLanguage()) || 
+				"pl".equals(Locales.getCurrent().getLanguage())) return spanishDateFormat;
+		return DateFormat.getDateInstance(DateFormat.SHORT, Locales.getCurrent());		
 	}
 	
-	private DateFormat[] getDateTimeFormats(HttpServletRequest request) {
-		if ("es".equals(request.getLocale().getLanguage()) || 
-				"pl".equals(request.getLocale().getLanguage())) return spanishDateTimeFormats;
-		return new DateFormat [] { DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, request.getLocale() ) };
+	private DateFormat[] getDateTimeFormats() {
+		if ("es".equals(Locales.getCurrent().getLanguage()) || 
+				"pl".equals(Locales.getCurrent().getLanguage())) return spanishDateTimeFormats;
+		return new DateFormat [] { DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locales.getCurrent() ) };
 	}
 	
 }

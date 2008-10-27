@@ -5,6 +5,7 @@
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 <%
+Locales.setCurrent(request);
 request.getSession().setAttribute("xava.user", request.getRemoteUser()); 
 String app = request.getParameter("application");
 String module = request.getParameter("module");
@@ -22,7 +23,8 @@ Module.setStyle(style);
 <% if (!isPortlet) { %>
 <!DOCTYPE HTML PUBLIC "-//w3c//dtd html 4.0 transitional//en">
 
-<%@page import="org.openxava.util.XavaResources"%><html>
+<%@page import="org.openxava.util.XavaResources"%>
+<%@page import="org.openxava.util.Locales"%><html>
 <head>
 	<title>OpenXava - <%=manager.getModuleDescription() %></title>
 	<link href="<%=request.getContextPath()%>/xava/style/default.css" rel="stylesheet" type="text/css">
@@ -36,7 +38,7 @@ Module.setStyle(style);
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/openxava.js'></script>
 	<% if (style.isNeededToIncludeCalendar()) { %>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/calendar.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/lang/calendar-<%=request.getLocale().getLanguage()%>.js"></script>	
+	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/lang/calendar-<%=Locales.getCurrent().getLanguage()%>.js"></script>	
 	<% } %>	
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/calendar.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/editors.js'></script> 	

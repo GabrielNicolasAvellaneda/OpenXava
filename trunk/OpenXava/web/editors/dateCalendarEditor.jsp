@@ -22,7 +22,7 @@ if (editable || !label) {
 	name="<%=propertyKey%>_CALENDAR_BUTTON_"
 	src="<%=request.getContextPath() %>/xava/images/calendar.gif" alt="..."
 	style='vertical-align: middle;'
-	onclick="return showCalendar('<%=propertyKey%>', '<%=org.openxava.util.Dates.dateFormatForJSCalendar(request.getLocale())%>');"><%} %>
+	onclick="return showCalendar('<%=propertyKey%>', '<%=org.openxava.util.Dates.dateFormatForJSCalendar(org.openxava.util.Locales.getCurrent())%>');"><%} %>
 	
 <%
 

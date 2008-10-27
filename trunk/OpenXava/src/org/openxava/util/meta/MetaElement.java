@@ -35,8 +35,9 @@ abstract public class MetaElement implements java.io.Serializable {
 		return getLabel(getLocale(request));
 	}
 	
+	
 	protected Locale getLocale(ServletRequest request) {
-		return XavaResources.getLocale(request);
+		return Locales.getCurrent();
 	}
 	
 	

@@ -40,7 +40,7 @@ public class Module extends DWRBase {
 		Map result = new HashMap();
 		try {
 			checkSecurity(request, application, module);
-			Users.setCurrent(request);
+			Users.setCurrent(request);			
 			this.request = request;
 			this.response = response;
 			this.application = application;

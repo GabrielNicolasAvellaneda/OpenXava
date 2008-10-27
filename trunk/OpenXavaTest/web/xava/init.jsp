@@ -18,7 +18,6 @@ if (browser == null) {
 	browser = request.getHeader("user-agent");
 	request.setAttribute("xava.portlet.user-agent", browser);
 }
-// tmp Users.setCurrent(request);
 Locales.setCurrent(request);
 
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
@@ -77,5 +76,3 @@ if (hasProcessRequest) {
 	}
 }
 %>
-
-<jsp:include page="languages.jsp"/>

@@ -17,6 +17,13 @@ public class Labels {
 
 	private static Log log = LogFactory.getLog(Labels.class);
 	
+	/**
+	 * On any error returns the sent <code>id</code> with the first letter in uppercase.
+	 */
+	public static String getQualified(String id) {
+		return get(id, Locales.getCurrent());
+	}	
+	
 
 	/**
 	 * On any error returns the sent <code>id</code> with the first letter in uppercase.
@@ -24,6 +31,11 @@ public class Labels {
 	public static String getQualified(String id, Locale locale) {
 		return get(id, locale, true);
 	}
+	
+	public static String get(String id) {
+		return get(id, Locales.getCurrent());
+	}
+
 	
 	/**
 	 * On any error returns the sent <code>id</code> with the first letter in uppercase.

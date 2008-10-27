@@ -99,20 +99,10 @@ public class XavaResources {
 	/**
 	 * Locale used to obtain resource in web application. <p>
 	 */
-	public static Locale getLocale(ServletRequest request) {
-		Object o = request.getAttribute("xava.locale");		
-		if (o == null) {
-			return Locales.getCurrent();	
-		}
-		else {
-			if (o instanceof Locale) {
-				return (Locale) o;
-			}
-			else {
-				log.warn(XavaResources.getString("xava_locale_warning"));
-				return Locales.getCurrent();
-			}
-		}		
+	public static Locale getLocale(ServletRequest request) { 
+		Locale result = Locales.getCurrent();
+		if (result == null) return request==null?Locale.getDefault():request.getLocale();
+		return result;
 	}
 	
 }
