@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Overlapped reference that explicity does not show the overlaped key fails on AJAX refresh.
 - Fix: Changing language has no effect inside Liferay in OX3.1beta.
 - Removed old and unused stuff for language: xava_language session object, Languages controller, Language class and languages.jsp.
 - New methods for obtaing labels for MetaProperty and Labels that do not required request or locale object as argument.

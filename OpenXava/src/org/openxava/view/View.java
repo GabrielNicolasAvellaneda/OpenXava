@@ -3626,9 +3626,15 @@ public class View implements java.io.Serializable {
 		return existsOld != existsCurrent;
 	}
 
-	private boolean editorMustBeReloaded(String memberName) { 
+	private boolean editorMustBeReloaded(String memberName) {		
 		if (!getMetaModel().containsMetaProperty(memberName)) return false;
-		MetaProperty p = getMetaProperty(memberName);
+		MetaProperty p = null;
+		try {
+			p = getMetaProperty(memberName);
+		}
+		catch (ElementNotFoundException ex) {
+			return false;
+		}
 		if (WebEditors.dependsOnSomeOther(p, getViewName())) return true;
 		MetaEditor editor = WebEditors.getMetaEditorFor(p, getViewName());
 		// A very ad hoc solution, it would better to have a alwaysReload (or so) attribute

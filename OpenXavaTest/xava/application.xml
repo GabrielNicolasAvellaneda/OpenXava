@@ -274,5 +274,5 @@
 		<model name="Carrier"/>
 		<view name="WithSections"/>
 		<controller name="CarrierWithSections"/>
-	</module>		<module name="WarehouseSpecialNew" >		<model name="Warehouse"/>		<view name="WithOnChangeZone"/>		<controller name="WarehouseSpecialNew"/>	</module>			
+	</module>		<module name="WarehouseSpecialNew" >		<model name="Warehouse"/>		<view name="WithOnChangeZone"/>		<controller name="WarehouseSpecialNew"/>	</module>		<module name="OfficeOnlyWarehouse">		<model name="Office"/>		<view name="OnlyWarehouse"/>		<controller name="Typical"/>			</module>			
 </application>
