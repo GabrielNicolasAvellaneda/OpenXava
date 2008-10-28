@@ -21,7 +21,8 @@ import org.openxava.tracking.*;
 )
 @Views({
 	@View (name="KeyInGroup", members="key [zoneNumber, number]; name"),
-	@View (name="WithOnChangeZone")
+	@View (name="WithOnChangeZone"),
+	@View (name="WithoutZone", members="number, name")
 })
 public class Warehouse {
 	

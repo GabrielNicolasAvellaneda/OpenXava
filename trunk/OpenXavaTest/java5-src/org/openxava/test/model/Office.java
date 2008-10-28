@@ -17,17 +17,20 @@ import org.openxava.annotations.*;
  */
 
 @Entity
-@View(members=
-	"number;" +
-	"data {" +
-	"	zoneNumber;" +
-	"	name;" +
-	"	mainWarehouse;" +
-	"	officeManager;" +
-	"	defaultCarrier;" +
-	"	receptionist;" +
-	"}"
-)
+@Views({
+	@View(members=
+		"number;" +
+		"data {" +
+		"	zoneNumber;" +
+		"	name;" +
+		"	mainWarehouse;" +
+		"	officeManager;" +
+		"	defaultCarrier;" +
+		"	receptionist;" +
+		"}"
+	),
+	@View(name="OnlyWarehouse", members="number; zoneNumber; mainWarehouse") 
+})
 @Tab(properties="zoneNumber, number, name, mainWarehouse.name, officeManager.name, defaultCarrier.name")
 public class Office {
 
@@ -45,6 +48,7 @@ public class Office {
 		@JoinColumn(name="ZONE", referencedColumnName="ZONE", insertable=false, updatable=false),  
 		@JoinColumn(name="WAREHOUSE_NUMBER", referencedColumnName="NUMBER", insertable=false, updatable=false) 
 	})
+	@ReferenceView(forViews="OnlyWarehouse", value="WithoutZone") 
 	private Warehouse mainWarehouse;
 	@Column(name="WAREHOUSE_NUMBER")
 	private Integer mainWarehouse_number; 
