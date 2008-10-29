@@ -178,7 +178,7 @@ openxava.setFocus = function() {
 	var elementName = this.form.elements['xava_focus_property_id'].value;	
 	var element = this.form.elements[elementName];	
 	if (element != null && typeof element.disabled != "undefined" && !element.disabled) {
-		element.focus();
+		if (element.type != "hidden") element.focus();
 		if (typeof element.select != "undefined") { 
 			element.select();
 		}

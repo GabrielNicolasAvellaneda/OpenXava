@@ -372,10 +372,10 @@ public class ModuleTestBase extends TestCase {
 	/**
 	 * Like close navigator, open again, and reexecute the module.
 	 */
-	protected void resetModule() throws Exception {				
+	protected void resetModule() throws Exception {		
 		client = new WebClient(getBrowserVersion()); 		
 		client.setThrowExceptionOnFailingStatusCode(false); // Because some .js are missing in Liferay 4.1
-		client.setThrowExceptionOnScriptError(false); // Because some erroneous JavaScript in Liferay 4.3
+		client.setThrowExceptionOnScriptError(false); // Because some erroneous JavaScript in Liferay 4.3		
 		if (getLocale() != null) {
 			client.addRequestHeader("Accept-Language", getLocale());			
 			Locale.setDefault(new Locale(getLocale(), ""));
