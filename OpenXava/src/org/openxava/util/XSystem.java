@@ -19,6 +19,7 @@ public class XSystem {
 	private static boolean onServer = false;
 	private static boolean java5OrBetter;
 	private static boolean java5calculated = false;	
+	private static String encoding = null; 
 	
 	/**
 	 * Does that {@link #onServer} returns <tt>true</tt>.
@@ -75,17 +76,21 @@ public class XSystem {
 	}
 
 	/**
-	 * Suitable to use inside a XML as encoding. <p>
+	 * To use for XML encoding and for web requests and responses encoding. <p>
 	 */
-	public static String getEncoding() {
-		if ("OS/400".equalsIgnoreCase(System.getProperty("os.name")) && 
-			System.getProperties().containsKey("was.install.root")) return "ISO-8859-1";
-		String encoding = System.getProperty("ibm.system.encoding");
-		if (encoding == null) encoding = System.getProperty("file.encoding");
-		if (encoding == null) return "ISO-8859-1";
-		if ("Cp1252".equalsIgnoreCase(encoding)) return "ISO-8859-1";
-		if ("utf8".equalsIgnoreCase(encoding)) return "UTF-8";
-		return encoding; 
+	public static String getEncoding() { 
+		if (encoding == null) {		
+			if ("OS/400".equalsIgnoreCase(System.getProperty("os.name")) && 
+				System.getProperties().containsKey("was.install.root")) encoding = "ISO-8859-1";
+			else {
+				encoding = System.getProperty("ibm.system.encoding");
+				if (encoding == null) encoding = System.getProperty("file.encoding");
+				if (encoding == null) encoding = "ISO-8859-1";
+				else if ("Cp1252".equalsIgnoreCase(encoding)) encoding = "ISO-8859-1";
+				else if ("utf8".equalsIgnoreCase(encoding)) encoding = "UTF-8";
+			}
+		}		
+		return encoding;		
 	}
 	
 }

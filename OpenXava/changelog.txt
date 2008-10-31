@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Support for UTF-8 for web request and response. Now the encoding for request/response is gotten from file.encoding system property.
 - Fix: JavaScript error in IE6 and IE7 trying to put the focus in a hidden input.
 - Fix: Overlapped reference that explicity does not show the overlaped key fails on AJAX refresh.
 - Fix: Changing language has no effect inside Liferay in OX3.1beta.

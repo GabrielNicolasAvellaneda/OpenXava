@@ -50,8 +50,8 @@ public class JasperReportServlet extends HttpServlet {
 		suri.append("&tab=");
 		suri.append(tab);
 		suri.append("&properties=");
-		suri.append(properties);		
-		return Servlets.getURIAsStream(request, response, suri.toString());				
+		suri.append(properties);
+		return Servlets.getURIAsStream(request, response, suri.toString(), XSystem.getEncoding());
 	}
-	
+		
 }

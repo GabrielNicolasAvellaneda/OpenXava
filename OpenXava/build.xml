@@ -13,7 +13,7 @@
 	<property name="dist.portlets.dir" value = "${dist.base.dir}/${project}-portlets.war.d"/>
 	<property name="file.ear" value = "${project}.ear"/>	
 	<property name="xava.lib" value="../OpenXava/bin"/>	
-	<property name="j2ee.lib" location="../OpenXava/lib/j2ee.jar"/>	
+	<property name="j2ee.lib" value="../OpenXava/lib/servlet-api.jar;../OpenXava/lib/jta.jar;../OpenXava/lib/ejb.jar;../OpenXava/lib/jsp-api.jar"/>	
 	<property name="tl.lib" location="../OpenXava/lib/tl.jar"/>
 	<property name="logging.lib" location="../OpenXava/web/WEB-INF/lib/commons-logging.jar"/>
 	<property name="generator.dir" value="..${file.separator}OpenXava${file.separator}generator"/>
@@ -577,7 +577,7 @@
 				<fileset dir="web/WEB-INF/lib"> 
 					<include name="**/*.jar"/> 
 				</fileset> 
-				<pathelement path="../OpenXava/lib/j2ee.jar;${xava.compiler.path}"/> 
+				<pathelement path="${j2ee.lib};${xava.compiler.path}"/> 
 			</classpath> 
 		</javac>  
 		<copy todir="../${project}/web/WEB-INF/classes">
@@ -870,7 +870,7 @@
 	<target name="exportSchema">
 	    <taskdef name="schemaexport"
 	        classname="org.hibernate.tool.hbm2ddl.SchemaExportTask"
-	    	classpath="../${project}/web/WEB-INF/classes;../OpenXava/web/WEB-INF/lib/hibernate3.jar;../OpenXava/web/WEB-INF/lib/cglib.jar;../OpenXava/web/WEB-INF/lib/dom4j.jar;../OpenXava/lib/commons-logging.jar;../OpenXava/web/WEB-INF/lib/commons-collections.jar;../OpenXava/bin;../OpenXava/lib/j2ee.jar;${schema.path}"/>
+	    	classpath="../${project}/web/WEB-INF/classes;../OpenXava/web/WEB-INF/lib/hibernate3.jar;../OpenXava/web/WEB-INF/lib/cglib.jar;../OpenXava/web/WEB-INF/lib/dom4j.jar;../OpenXava/lib/commons-logging.jar;../OpenXava/web/WEB-INF/lib/commons-collections.jar;../OpenXava/bin;${j2ee.lib};${schema.path}"/>
 
 	    <schemaexport
 	    	config="${schema.config.file}"
@@ -897,7 +897,7 @@
 	<target name="updateSchema">
 	    <taskdef name="schemaupdate"
 	        classname="org.hibernate.tool.hbm2ddl.SchemaUpdateTask"
-	    	classpath="../${project}/web/WEB-INF/classes;../OpenXava/web/WEB-INF/lib/hibernate3.jar;../OpenXava/web/WEB-INF/lib/cglib.jar;../OpenXava/web/WEB-INF/lib/dom4j.jar;../OpenXava/lib/commons-logging.jar;../OpenXava/web/WEB-INF/lib/commons-collections.jar;../OpenXava/bin;../OpenXava/lib/j2ee.jar;${schema.path}"/>
+	    	classpath="../${project}/web/WEB-INF/classes;../OpenXava/web/WEB-INF/lib/hibernate3.jar;../OpenXava/web/WEB-INF/lib/cglib.jar;../OpenXava/web/WEB-INF/lib/dom4j.jar;../OpenXava/lib/commons-logging.jar;../OpenXava/web/WEB-INF/lib/commons-collections.jar;../OpenXava/bin;${j2ee.lib};${schema.path}"/>
 	    
 	    <schemaupdate
 	    	config="${schema.config.file}"

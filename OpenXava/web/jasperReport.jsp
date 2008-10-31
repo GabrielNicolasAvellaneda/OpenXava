@@ -138,7 +138,9 @@ else {
 }
 
 %>
-<jasperReport
+
+<%@page import="org.openxava.util.XSystem"%>
+<%@page import="org.openxava.util.XavaPreferences"%><jasperReport
 		 name="<%=reportName%>"
 		 columnCount="1"
 		 printOrder="Vertical"

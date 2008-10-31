@@ -6,7 +6,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="i18n"/>
 	<classpathentry exported="true" kind="var" path="JUNIT_HOME/junit.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/j2ee.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/commons-fileupload.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/itext.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/portlet-api-1.0.jar"/>
@@ -41,5 +40,10 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/ox-jdbc-adapters.jar"/>
 	<classpathentry kind="lib" path="lib/htmlunit-core-js.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/commons-logging.jar"/>
+	<classpathentry kind="lib" path="/AccessTracking/web/WEB-INF/lib/dwr.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/ejb.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jsp-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jta.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/servlet-api.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
