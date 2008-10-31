@@ -14,6 +14,7 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.*;
 
 import org.apache.commons.logging.*;
+import org.directwebremoting.*;
 import org.openxava.model.meta.*;
 import org.openxava.tab.*;
 import org.openxava.util.*;
@@ -130,7 +131,8 @@ public class GenerateReportServlet extends HttpServlet {
 	
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {			
+		try {	
+			Locales.setCurrent(request); 
 			if (Users.getCurrent() == null) { // for a bug in websphere portal 5.1 with Domino LDAP
 				Users.setCurrent((String)request.getSession().getAttribute("xava.user"));
 			}						
@@ -183,8 +185,9 @@ public class GenerateReportServlet extends HttpServlet {
 		suri.append("&tab=");
 		suri.append(tab.getTabName());
 		suri.append("&properties=");
-		suri.append(tab.getPropertiesNamesAsString());
-		return Servlets.getURIAsStream(request, response, suri.toString());		
+		suri.append(tab.getPropertiesNamesAsString());		
+		response.setCharacterEncoding(XSystem.getEncoding()); 		
+		return Servlets.getURIAsStream(request, response, suri.toString());
 	}
 	
 	private JRDataSource getDataSource(Tab tab, ServletRequest request) throws Exception {

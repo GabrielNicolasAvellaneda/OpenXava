@@ -3,7 +3,7 @@ package org.openxava.util;
 import java.io.*;
 
 /**
- * Utilities to working with <tt>java.io.InputStream</tt>). <p>  
+ * Utilities to working with <tt>java.io.InputStream</tt>). <p>
  * 
  * @author Javier Paniza
  */

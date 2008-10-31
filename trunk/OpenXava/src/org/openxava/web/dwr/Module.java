@@ -6,6 +6,7 @@ import java.util.*;
 import javax.servlet.http.*;
 
 import org.apache.commons.logging.*;
+import org.directwebremoting.*;
 import org.openxava.actions.*;
 import org.openxava.controller.*;
 import org.openxava.model.meta.*;
@@ -39,6 +40,8 @@ public class Module extends DWRBase {
 	public Map request(HttpServletRequest request, HttpServletResponse response, String application, String module, Map values, Map multipleValues, String [] selected) throws Exception {
 		Map result = new HashMap();
 		try {
+			request.setCharacterEncoding(XSystem.getEncoding());
+			response.setCharacterEncoding(XSystem.getEncoding());
 			checkSecurity(request, application, module);
 			Users.setCurrent(request);			
 			this.request = request;
@@ -48,7 +51,7 @@ public class Module extends DWRBase {
 			this.manager = (ModuleManager) getContext(request).get(application, module, "manager");
 			restoreLastMessages();
 			request.setAttribute("style", getStyle());
-			getURIAsStream("init.jsp", values, multipleValues, selected);
+			getURIAsStream("init.jsp", values, multipleValues, selected); 
 			String forwardURI = (String) request.getSession().getAttribute("xava_forward");		
 			if (!Is.emptyString(forwardURI)) {
 				result.put("xava_forward_url",  request.getScheme() + "://" + 
@@ -107,7 +110,7 @@ public class Module extends DWRBase {
 	private String getURIAsString(String jspFile, Map values, Map multipleValues, String[] selected) throws Exception {
 		if (jspFile == null) return "";
 		if (jspFile.startsWith("html:")) return jspFile.substring(5); // Using html: prefix the content is returned as is
-		return InputStreams.toString(getURIAsStream(jspFile, values, multipleValues, selected));
+		return WebContextFactory.get().forwardToString(getURI(jspFile, values, multipleValues, selected));
 	}
 	
 

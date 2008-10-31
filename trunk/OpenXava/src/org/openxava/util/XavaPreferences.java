@@ -55,7 +55,7 @@ public class XavaPreferences {
 		}		
 		return properties;
 	}
-
+	
 	public boolean isReadOnlyAsLabel() {
 		return "true".equalsIgnoreCase(getProperties().getProperty("readOnlyAsLabel", "false").trim());
 	}
