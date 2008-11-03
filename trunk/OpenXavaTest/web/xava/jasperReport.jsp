@@ -77,7 +77,6 @@ if (!Is.emptyString(propertiesNames)) {
 String language = request.getParameter("language");
 if (language == null) language = org.openxava.util.Locales.getCurrent().getDisplayLanguage();
 language = language == null?request.getLocale().getDisplayLanguage():language;
-System.out.println("[jasperReport.jsp] language=" + language); // tmp
 java.util.Locale locale = new java.util.Locale(language, "");
 
 int columnsSeparation = 4;

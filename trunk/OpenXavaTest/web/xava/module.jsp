@@ -5,8 +5,8 @@
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 <%
-request.setCharacterEncoding(XSystem.getEncoding()); // TMP
-response.setCharacterEncoding(XSystem.getEncoding()); // TMP
+request.setCharacterEncoding(XSystem.getEncoding()); 
+response.setCharacterEncoding(XSystem.getEncoding());
 Locales.setCurrent(request);
 request.getSession().setAttribute("xava.user", request.getRemoteUser()); 
 String app = request.getParameter("application");
@@ -21,7 +21,6 @@ boolean isPortlet = (request.getAttribute("xava.portlet.renderURL") != null);
 Module.setPortlet(isPortlet);
 Module.setStyle(style);
 %>
-List: <%=org.openxava.util.Labels.get("list")%><br><%-- tmp --%>
 <% if (!isPortlet) { %>
 <!DOCTYPE HTML PUBLIC "-//w3c//dtd html 4.0 transitional//en">
 
