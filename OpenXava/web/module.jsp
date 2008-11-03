@@ -74,7 +74,7 @@ Module.setStyle(style);
 	   </tr>
 	</table>
 	</div>	
-	<div id="xava_core"></div>
+	<div id="xava_core" style="display: inline;"></div>
 
 <% if (!isPortlet) { %>
 </body>

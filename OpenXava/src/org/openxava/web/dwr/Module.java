@@ -134,12 +134,14 @@ public class Module extends DWRBase {
 			if (manager.isActionsChanged()) {
 				result.put("xava_button_bar", "buttonBar.jsp");
 				result.put("xava_bottom_buttons", "bottomButtons.jsp");
-			}			
+			}		
+			
 			Messages errors = (Messages) request.getAttribute("errors");
 			result.put("xava_errors", errors.contains()?"errors.jsp":null);
 			Messages messages = (Messages) request.getAttribute("messages");
 			result.put("xava_messages", messages.contains()?"messages.jsp":null);
-			result.put("xava_input_focus_property_id", getInputFocusHtml());
+			
+			result.put("xava_focus_property_id", "html:" + getView().getFocusPropertyId());
 			if (manager.isReloadViewNeeded() || getView().isReloadNeeded()) { 
 				result.put("xava_view", manager.getViewURL());
 			}
@@ -152,11 +154,6 @@ public class Module extends DWRBase {
 			}
 		}
 		return result;
-	}
-
-	private Object getInputFocusHtml() { 
-		return "html:<INPUT type='hidden' name='xava_focus_property_id' value='" +
-			getView().getFocusPropertyId() + "'/>";
 	}
 
 	private void fillChangedLabels(Map result) {

@@ -36,7 +36,12 @@ openxava.refreshPage = function(result) {
 		for (var id in result) {	
 			changed = changed + id + ", ";  			
 			try { 
-				document.getElementById(id).innerHTML = result[id];
+				if (id == "xava_focus_property_id") { 					
+					document.getElementById(id).value = result[id];
+				}
+				else {
+					document.getElementById(id).innerHTML = result[id];
+				}
 			}
 			catch (ex) {
 				changed = changed + " ERROR";
