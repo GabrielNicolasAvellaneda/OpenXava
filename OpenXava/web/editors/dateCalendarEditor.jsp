@@ -16,8 +16,7 @@ if (editable || !label) {
 <input type="text" name="<%=propertyKey%>" id="<%=propertyKey%>" class=<%=style.getEditor()%> title="<%=p.getDescription(request)%>"
 	align='<%=align%>'
 	maxlength="<%=p.getSize()%>" 
-	size="<%=p.getSize()%>" 
-	readonly="true" 
+	size="<%=p.getSize()%>" 	 
 	value="<%=fvalue%>" <%=disabled%>	<%=script%>><%if (editable) {%><input type="image"
 	name="<%=propertyKey%>_CALENDAR_BUTTON_"
 	src="<%=request.getContextPath() %>/xava/images/calendar.gif" alt="..."
