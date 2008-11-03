@@ -167,10 +167,11 @@ public class ModuleTestBase extends TestCase {
 	}
 
 	private void setFormValue(String name, String value, boolean refreshIfNeeded) throws Exception {
-		boolean refreshNeeded = false;
+		boolean refreshNeeded = false;		
 		try {
-			HtmlInput input = getForm().getInputByName(name);
+			HtmlInput input = getForm().getInputByName(name);			
 			focus(input);
+			assertNotDisable(name, input);
 			if (input instanceof HtmlCheckBoxInput) {
 				if ("true".equalsIgnoreCase(value) && !input.isChecked() ||
 					"false".equalsIgnoreCase(value) && input.isChecked()) 
@@ -193,12 +194,14 @@ public class ModuleTestBase extends TestCase {
 			try {							
 				HtmlSelect select = getForm().getSelectByName(name);
 				focus(select);
+				assertNotDisable(name, select);
 				select.setSelectedAttribute(value, true);
 				refreshNeeded = !Is.emptyString(select.getOnChangeAttribute());
 			}
 			catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex2) {
 				HtmlTextArea textArea = getForm().getTextAreaByName(name);
 				focus(textArea);
+				assertNotDisable(name, textArea);
 				textArea.setText(value);
 				refreshNeeded = !Is.emptyString(textArea.getOnChangeAttribute());
 			}
@@ -206,6 +209,18 @@ public class ModuleTestBase extends TestCase {
 		if (refreshIfNeeded && refreshNeeded) refreshPage();
 	}
 	
+	private void assertNotDisable(String name, HtmlElement element) { 		
+		assertTrue(XavaResources.getString("element_cannot_be_disabled", name), !is("disabled", element)); 
+		assertTrue(XavaResources.getString("element_cannot_be_readonly", name), !is("readonly", element)); 
+	}
+
+	private boolean is(String attribute, HtmlElement element) {
+		String value = element.getAttribute(attribute);		
+		if (HtmlElement.ATTRIBUTE_NOT_DEFINED.equals(value)) return false;
+		if (HtmlElement.ATTRIBUTE_VALUE_EMPTY.equals(value)) return true;
+		return !"false".equalsIgnoreCase(value);		
+	}
+
 	private void focus(HtmlElement element) throws Exception {
 		element.focus();
 		Thread.sleep(20);
@@ -1352,11 +1367,11 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected void assertEditable(String name) throws Exception {
-		assertEditable(name, "true", XavaResources.getString("must_to_be_editable"));
+		assertEditable(name, "true", XavaResources.getString("must_be_editable"));
 	}
 	
 	protected void assertNoEditable(String name) throws Exception {
-		assertEditable(name, "false", XavaResources.getString("must_not_to_be_editable"));
+		assertEditable(name, "false", XavaResources.getString("must_not_be_editable"));
 	}
 		
 	private void assertEditable(String name, String value, String  message) throws Exception {

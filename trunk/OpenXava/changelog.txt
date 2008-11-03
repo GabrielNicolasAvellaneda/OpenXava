@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- ModuleTestBase does not allow to modify a disabled or readonly html element.
 - Fix: In IE6 and IE6 a space on top of the module is show, also this space is incremented on click actions. For 3.1beta.
 - Support for UTF-8 for web request and response. Now the encoding for request/response is gotten from file.encoding system property.
 - Fix: JavaScript error in IE6 and IE7 trying to put the focus in a hidden input.
