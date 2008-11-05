@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: From time to time when reference objects are created or modified a NullPointerException is thrown returning to the main view.
 - XML components view properties are not refreshed using OX3.1beta.
 - ModuleTestBase does not allow to modify a disabled or readonly html element.
 - Fix: In IE6 and IE6 a space on top of the module is show, also this space is incremented on click actions. For 3.1beta.
