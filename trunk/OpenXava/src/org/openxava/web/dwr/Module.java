@@ -145,7 +145,7 @@ public class Module extends DWRBase {
 				result.put("xava_view", manager.getViewURL());
 			}
 			else {
-				fillChangedPropertiesAndDescriptionsListReferences(result);
+				fillChangedPropertiesActionsAndDescriptionsListReferences(result);
 				fillChangedCollections(result);
 				fillChangedSections(result);
 				fillChangedErrorImages(result);
@@ -196,9 +196,9 @@ public class Module extends DWRBase {
 		}
 	}
 
-	private void fillChangedPropertiesAndDescriptionsListReferences(Map result) {
+	private void fillChangedPropertiesActionsAndDescriptionsListReferences(Map result) {
 		View view = getView();		
-		Collection changedMembers = view.getChangedPropertiesAndDescriptionsListReferences().entrySet();
+		Collection changedMembers = view.getChangedPropertiesActionsAndDescriptionsListReferences().entrySet();
 		for (Iterator it = changedMembers.iterator(); it.hasNext(); ) {
 			Map.Entry en = (Map.Entry) it.next();
 			String qualifiedName = (String) en.getKey();

@@ -132,8 +132,11 @@ public class AJAXTest extends ModuleTestBase {
 		assertLoadedParts("xava_errors, xava_view, xava_messages, xava_focus_property_id");
 		
 		// Actions of properties are hidden when editable state changes
+		assertAction("Customer.changeNameLabel"); 		
 		execute("EditableOnOff.setOff");
+		assertNoAction("Customer.changeNameLabel"); 
 		assertLoadedParts("xava_editor_xava.Customer.type, " +
+				"xava_editor_xava.Customer.__ACTION__Customer_changeNameLabel, " +
 				"xava_editor_xava.Customer.number, xava_errors, " +
 				"xava_editor_xava.Customer.alternateSeller.number, " +
 				"xava_property_actions_xava.Customer.address.street, " +
@@ -158,7 +161,9 @@ public class AJAXTest extends ModuleTestBase {
 				"xava_focus_property_id");		
 		
 		execute("EditableOnOff.setOn");
+		assertAction("Customer.changeNameLabel"); 
 		assertLoadedParts("xava_editor_xava.Customer.type, " +
+				"xava_editor_xava.Customer.__ACTION__Customer_changeNameLabel, " +
 				"xava_editor_xava.Customer.number, xava_errors, " +
 				"xava_editor_xava.Customer.alternateSeller.number, " +
 				"xava_property_actions_xava.Customer.address.street, " +
