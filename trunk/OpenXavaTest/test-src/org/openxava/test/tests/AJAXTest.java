@@ -22,11 +22,23 @@ public class AJAXTest extends ModuleTestBase {
 		super(nameTest, null);
 	}
 	
+	public void testRefreshViewProperties() throws Exception { 
+		changeModule("Customer");
+		execute("CRUD.new");
+		assertValue("address.viewProperty", "");
+		execute("Address.fillViewProperty", "xava.keyProperty=xava.Customer.address.viewProperty");
+		assertValue("address.viewProperty", "THIS IS AN ADDRESS");
+		assertLoadedParts("xava_errors, " +
+				"xava_editor_xava.Customer.address.viewProperty," +
+				"xava_editor_xava.Customer.address.zipCode," + // Because it's formatted
+				"xava_messages, xava_focus_property_id");		
+	}
+	
 	public void testOnlyLoadModifiedParts() throws Exception {
 		changeModule("Customer");
 		assertLoadedParts("xava_core, ");
 		execute("List.filter");
-		assertLoadedParts("xava_errors, xava_view, xava_messages, xava_input_focus_property_id");
+		assertLoadedParts("xava_errors, xava_view, xava_messages, xava_focus_property_id");
 		execute("Mode.detailAndFirst");
 		assertLoadedParts("xava_core, ");
 		execute("Navigation.next");
@@ -46,16 +58,16 @@ public class AJAXTest extends ModuleTestBase {
 				"xava_editor_xava.Customer.telephone, " +
 				"xava_collection_xava.Customer.deliveryPlaces., " +
 				"xava_editor_xava.Customer.photo, xava_messages, " +
-				"xava_input_focus_property_id");
+				"xava_focus_property_id");
 		setValue("seller.number", "2");
 		assertLoadedParts("xava_errors, xava_editor_xava.Customer.seller.name, " +
-				"xava_input_focus_property_id, xava_messages,");
+				"xava_focus_property_id, xava_messages,");
 		setValue("seller.number", "1");
 		assertLoadedParts("xava_errors, xava_editor_xava.Customer.seller.name, " +
-			"xava_input_focus_property_id, xava_messages,");
+			"xava_focus_property_id, xava_messages,");
 		execute("Customer.changeNameLabel");
 		assertLoadedParts("xava_label_xava.Customer.name, xava_errors, xava_messages, " +
-				"xava_input_focus_property_id");
+				"xava_focus_property_id");
 		execute("CRUD.new");
 		assertLoadedParts("xava_errors, xava_editor_xava.Customer.seller.name, " +
 				"xava_editor_xava.Customer.number, " +
@@ -63,7 +75,7 @@ public class AJAXTest extends ModuleTestBase {
 				"xava_editor_xava.Customer.address.city, " +
 				"xava_editor_xava.Customer.address.zipCode, " +
 				"xava_editor_xava.Customer.alternateSeller.name, " +
-				"xava_input_focus_property_id, " +
+				"xava_focus_property_id, " +
 				"xava_editor_xava.Customer.name, " +
 				"xava_editor_xava.Customer.address.street, " +
 				"xava_editor_xava.Customer.city, " +
@@ -83,41 +95,41 @@ public class AJAXTest extends ModuleTestBase {
 				"xava_descriptions_list_xava.Customer.address.state, " +
 				"xava_collection_xava.Customer.deliveryPlaces., " +
 				"xava_editor_xava.Customer.photo, xava_messages, " +
-				"xava_input_focus_property_id");		
+				"xava_focus_property_id");		
 		// Collections
 		execute("List.orderBy", "property=name,collection=deliveryPlaces");
 		assertLoadedParts("xava_errors, xava_collection_xava.Customer.deliveryPlaces., " +
-				"xava_messages, xava_input_focus_property_id");		
+				"xava_messages, xava_focus_property_id");		
 		execute("List.orderBy", "property=name,collection=deliveryPlaces");
 		assertLoadedParts("xava_errors, xava_collection_xava.Customer.deliveryPlaces., " +
-				"xava_messages, xava_input_focus_property_id");
+				"xava_messages, xava_focus_property_id");
 		execute("List.filter", "collection=deliveryPlaces");
 		assertLoadedParts("xava_errors, xava_collection_xava.Customer.deliveryPlaces., " +
-				"xava_messages, xava_input_focus_property_id");
+				"xava_messages, xava_focus_property_id");
 		execute("Collection.new", "viewObject=xava_view_deliveryPlaces");
 		assertLoadedParts("xava_errors, xava_collection_xava.Customer.deliveryPlaces., " +
-				"xava_messages, xava_input_focus_property_id");
+				"xava_messages, xava_focus_property_id");
 		execute("Collection.edit", "row=0,viewObject=xava_view_deliveryPlaces");		
 		assertLoadedParts("xava_errors, xava_collection_xava.Customer.deliveryPlaces., " +
-				"xava_messages, xava_input_focus_property_id");
+				"xava_messages, xava_focus_property_id");
 		execute("List.orderBy", "property=name,collection=deliveryPlaces.receptionists");
 		assertLoadedParts("xava_errors, xava_collection_xava.Customer.deliveryPlaces.receptionists., " +
-				"xava_messages, xava_input_focus_property_id");
+				"xava_messages, xava_focus_property_id");
 		execute("List.filter", "collection=deliveryPlaces.receptionists");
 		assertLoadedParts("xava_errors, xava_collection_xava.Customer.deliveryPlaces.receptionists., " +
-				"xava_messages, xava_input_focus_property_id");
+				"xava_messages, xava_focus_property_id");
 		execute("Collection.new", "viewObject=xava_view_deliveryPlaces_receptionists");
 		assertLoadedParts("xava_errors, xava_collection_xava.Customer.deliveryPlaces.receptionists., " +
-				"xava_messages, xava_input_focus_property_id");
+				"xava_messages, xava_focus_property_id");
 		execute("Collection.edit", "row=0,viewObject=xava_view_deliveryPlaces_receptionists");
 		assertLoadedParts("xava_errors, xava_collection_xava.Customer.deliveryPlaces.receptionists., " +
-				"xava_messages, xava_input_focus_property_id");
+				"xava_messages, xava_focus_property_id");
 		
 		// Hide/show members
 		execute("Customer.hideSeller");
-		assertLoadedParts("xava_errors, xava_view, xava_messages, xava_input_focus_property_id");
+		assertLoadedParts("xava_errors, xava_view, xava_messages, xava_focus_property_id");
 		execute("Customer.showSeller");
-		assertLoadedParts("xava_errors, xava_view, xava_messages, xava_input_focus_property_id");
+		assertLoadedParts("xava_errors, xava_view, xava_messages, xava_focus_property_id");
 		
 		// Actions of properties are hidden when editable state changes
 		execute("EditableOnOff.setOff");
@@ -133,6 +145,7 @@ public class AJAXTest extends ModuleTestBase {
 				"xava_editor_xava.Customer.address.viewProperty, " +
 				"xava_editor_xava.Customer.city, " +
 				"xava_editor_xava.Customer.website, " +
+				"xava_property_actions_xava.Customer.address.viewProperty, " +
 				"xava_property_actions_xava.Customer.alternateSeller.number, " +
 				"xava_editor_xava.Customer.remarks, " +
 				"xava_editor_xava.Customer.relationWithSeller, " +
@@ -142,7 +155,7 @@ public class AJAXTest extends ModuleTestBase {
 				"xava_editor_xava.Customer.telephone, " +
 				"xava_collection_xava.Customer.deliveryPlaces., " +
 				"xava_editor_xava.Customer.photo, xava_messages, " +
-				"xava_input_focus_property_id");		
+				"xava_focus_property_id");		
 		
 		execute("EditableOnOff.setOn");
 		assertLoadedParts("xava_editor_xava.Customer.type, " +
@@ -157,6 +170,7 @@ public class AJAXTest extends ModuleTestBase {
 				"xava_editor_xava.Customer.address.viewProperty, " +
 				"xava_editor_xava.Customer.city, " +
 				"xava_editor_xava.Customer.website, " +
+				"xava_property_actions_xava.Customer.address.viewProperty, " +
 				"xava_property_actions_xava.Customer.alternateSeller.number, " +
 				"xava_editor_xava.Customer.remarks, " +
 				"xava_editor_xava.Customer.relationWithSeller, " +
@@ -166,11 +180,11 @@ public class AJAXTest extends ModuleTestBase {
 				"xava_editor_xava.Customer.telephone, " +
 				"xava_collection_xava.Customer.deliveryPlaces., " +
 				"xava_editor_xava.Customer.photo, xava_messages, " +
-				"xava_input_focus_property_id");
+				"xava_focus_property_id");
 		
 		// Change view programatically
 		execute("Customer.changeToSimpleView");
-		assertLoadedParts("xava_errors, xava_view, xava_messages, xava_input_focus_property_id");
+		assertLoadedParts("xava_errors, xava_view, xava_messages, xava_focus_property_id");
 	}
 	
 	public void testDescriptionsList() throws Exception {
@@ -209,23 +223,23 @@ public class AJAXTest extends ModuleTestBase {
 		setValue("family.number", "1");
 		setValue("family.number", "2");
 		assertLoadedParts("xava_errors, xava_descriptions_list_xava.Product2.subfamily, " +
-				"xava_messages, xava_input_focus_property_id");		
+				"xava_messages, xava_focus_property_id");		
 		setValue("family.number", "1");
 		assertLoadedParts("xava_errors, xava_descriptions_list_xava.Product2.subfamily, " +
-				"xava_messages, xava_input_focus_property_id");
+				"xava_messages, xava_focus_property_id");
 		
 		// Reset descriptions cache
 		execute("Product2.changeLimitZone");
 		assertLoadedParts("xava_descriptions_list_xava.Product2.family, xava_errors, " +
 				"xava_descriptions_list_xava.Product2.subfamily, " +
 				"xava_descriptions_list_xava.Product2.warehouse, " +
-				"xava_input_focus_property_id, xava_messages,");
+				"xava_focus_property_id, xava_messages,");
 		
 		// setEditable
 		execute("Product2.deactivateType");
 		assertLoadedParts("xava_descriptions_list_xava.Product2.family, xava_errors, " +
 				"xava_descriptions_list_xava.Product2.subfamily, " +
-				"xava_input_focus_property_id, xava_messages,");
+				"xava_focus_property_id, xava_messages,");
 	}
 		
 	public void	testShowingHiddingPartsReloadsFullView() throws Exception {
@@ -235,7 +249,7 @@ public class AJAXTest extends ModuleTestBase {
 		assertLoadedParts("xava_core, ");
 		execute("Navigation.next");
 		assertExists("zoneOne");
-		assertLoadedParts("xava_errors, xava_view, xava_messages, xava_input_focus_property_id");
+		assertLoadedParts("xava_errors, xava_view, xava_messages, xava_focus_property_id");
 		execute("Navigation.next");
 		assertExists("zoneOne");
 		assertLoadedParts("xava_descriptions_list_xava.Product2.family, xava_errors, " +
@@ -246,10 +260,10 @@ public class AJAXTest extends ModuleTestBase {
 				"xava_editor_xava.Product2.description, " +
 				"xava_editor_xava.Product2.number, " +
 				"xava_messages, xava_editor_xava.Product2.unitPrice, " +
-				"xava_input_focus_property_id");
+				"xava_focus_property_id");
 		execute("Navigation.next");
 		assertNotExists("zoneOne");
-		assertLoadedParts("xava_errors, xava_view, xava_messages, xava_input_focus_property_id");
+		assertLoadedParts("xava_errors, xava_view, xava_messages, xava_focus_property_id");
 	}
 	
 	public void testFirstDetailActionExecutingLoadAllButOnlyFirstTime() throws Exception {
@@ -257,12 +271,12 @@ public class AJAXTest extends ModuleTestBase {
 		execute("CRUD.new");
 		assertLoadedParts("xava_core, ");
 		execute("CRUD.new");
-		assertLoadedParts("xava_errors, xava_messages, xava_input_focus_property_id");
+		assertLoadedParts("xava_errors, xava_messages, xava_focus_property_id");
 		execute("Mode.list");
 		execute("CRUD.new");
 		assertLoadedParts("xava_core, ");
 		execute("CRUD.new");
-		assertLoadedParts("xava_errors, xava_messages, xava_input_focus_property_id"); // Perfect: From now on only the needed parts are reloaded
+		assertLoadedParts("xava_errors, xava_messages, xava_focus_property_id"); // Perfect: From now on only the needed parts are reloaded
 	}
 		
 	public void testCollections() throws Exception {
@@ -275,23 +289,23 @@ public class AJAXTest extends ModuleTestBase {
 		assertCollectionRowCount("fellowCarriers", 3);
 		assertLoadedParts("xava_errors, xava_collection_xava.Carrier.fellowCarriers., " +
 				"xava_messages, xava_editor_xava.Carrier.warehouse.name, " +
-				"xava_input_focus_property_id");		
+				"xava_focus_property_id");		
 		execute("Collection.edit", "row=0,viewObject=xava_view_fellowCarriersCalculated");
 		assertLoadedParts("xava_errors, xava_collection_xava.Carrier.fellowCarriersCalculated., " +
-				"xava_messages, xava_input_focus_property_id");		
+				"xava_messages, xava_focus_property_id");		
 		
 		execute("Navigation.next");
 		assertLoadedParts("xava_errors, xava_editor_xava.Carrier.number, " +
 				"xava_collection_xava.Carrier.fellowCarriers., " +
 				"xava_collection_xava.Carrier.fellowCarriersCalculated., " +
 				"xava_editor_xava.Carrier.name, xava_messages, " +
-				"xava_input_focus_property_id");		
+				"xava_focus_property_id");		
 		
 		execute("Carrier.translateAll"); // The first time more changes because null in some db columns
 		execute("Carrier.translateAll");
 		assertLoadedParts("xava_errors, xava_collection_xava.Carrier.fellowCarriers., " +
 				"xava_collection_xava.Carrier.fellowCarriersCalculated., " +
-				"xava_messages, xava_input_focus_property_id");
+				"xava_messages, xava_focus_property_id");
 	}
 	
 	public void testSections() throws Exception {
@@ -300,13 +314,13 @@ public class AJAXTest extends ModuleTestBase {
 		execute("Sections.change", "activeSection=2");
 		execute("Sections.change", "activeSection=1");
 		assertLoadedParts("xava_errors, xava_sections_xava_view, " +
-				"xava_messages, xava_input_focus_property_id");
+				"xava_messages, xava_focus_property_id");
 		execute("Sections.change", "activeSection=1,viewObject=xava_view_section1");
 		assertLoadedParts("xava_errors, xava_sections_xava_view_section1, " +
-				"xava_messages, xava_input_focus_property_id");
+				"xava_messages, xava_focus_property_id");
 		execute("Sections.change", "activeSection=1,viewObject=xava_view_section1_section1");
 		assertLoadedParts("xava_errors, xava_sections_xava_view_section1_section1, " +
-				"xava_messages, xava_input_focus_property_id");		
+				"xava_messages, xava_focus_property_id");		
 	}
 	
 	public void testSectionsInsideSubview() throws Exception {
@@ -314,7 +328,7 @@ public class AJAXTest extends ModuleTestBase {
 		execute("CRUD.new");
 		execute("Sections.change", "activeSection=4,viewObject=xava_view_delivery");
 		assertLoadedParts("xava_errors, xava_sections_xava_view_delivery, " +
-				"xava_input_focus_property_id, xava_messages, ");
+				"xava_focus_property_id, xava_messages, ");
 	}
 	
 	public void testDetailCollection() throws Exception {
@@ -324,7 +338,7 @@ public class AJAXTest extends ModuleTestBase {
 		execute("Collection.new", "viewObject=xava_view_section1_details");
 		// First time that the detail is used all collection is reloaded
 		assertLoadedParts("xava_errors, xava_collection_xava.Invoice.details., " +
-				"xava_messages, xava_input_focus_property_id");
+				"xava_messages, xava_focus_property_id");
 
 		setValue("details.product.number", "1");
 		assertLoadedParts("xava_errors, " +
@@ -336,7 +350,7 @@ public class AJAXTest extends ModuleTestBase {
 				"xava_editor_xava.Invoice.details.product.unitPriceInPesetas, " +
 				"xava_editor_xava.Invoice.details.product.description, " +
 				"xava_editor_xava.Invoice.details.quantity, " +
-				"xava_messages, xava_input_focus_property_id");		
+				"xava_messages, xava_focus_property_id");		
 		setValue("details.product.number", "2");
 		assertLoadedParts("xava_errors, " +
 				"xava_editor_xava.Invoice.details.product.warehouseKey, " +
@@ -346,7 +360,7 @@ public class AJAXTest extends ModuleTestBase {
 				"xava_editor_xava.Invoice.details.product.unitPrice, " +
 				"xava_editor_xava.Invoice.details.product.unitPriceInPesetas, " +
 				"xava_editor_xava.Invoice.details.product.description, " +
-				"xava_messages, xava_input_focus_property_id");		
+				"xava_messages, xava_focus_property_id");		
 	}	
 	
 	public void testErrorImagesForPropertiesAndDescriptionsLists() throws Exception {
@@ -359,7 +373,7 @@ public class AJAXTest extends ModuleTestBase {
 				"xava_error_image_Product2.subfamily, " +
 				"xava_error_image_Product2.unitPrice, " +
 				"xava_error_image_Product2.number, " +
-				"xava_messages, xava_input_focus_property_id");
+				"xava_messages, xava_focus_property_id");
 		HtmlPage page = (HtmlPage) getWebClient().getCurrentWindow().getEnclosedPage();
 		HtmlSpan description = (HtmlSpan) page.getElementById("xava_error_image_Product2.description");
 		assertTrue("description has no image error", description.asXml().indexOf("/xava/images/error.gif") >= 0);
@@ -373,7 +387,7 @@ public class AJAXTest extends ModuleTestBase {
 				"xava_error_image_Product2.unitPrice, " +
 				"xava_error_image_Product2.number, " +
 				"xava_editor_xava.Product2.description, " + // Needed to refresh it because a converter transforms it to uppercase
-				"xava_messages, xava_input_focus_property_id");		
+				"xava_messages, xava_focus_property_id");		
 		assertTrue("description has image error", description.asXml().indexOf("/xava/images/error.gif") < 0);
 		
 		HtmlSpan number = (HtmlSpan) page.getElementById("xava_error_image_Product2.number");
@@ -392,11 +406,11 @@ public class AJAXTest extends ModuleTestBase {
 		execute("CRUD.new");
 		execute("Reference.createNew", "model=Warehouse,keyProperty=xava.Carrier.warehouse.number");
 		assertLoadedParts("xava_errors, xava_view, xava_bottom_buttons, " +
-				"xava_button_bar, xava_messages, xava_input_focus_property_id");
+				"xava_button_bar, xava_messages, xava_focus_property_id");
 		execute("NewCreation.saveNew");
 		assertLoadedParts("xava_errors, xava_error_image_Warehouse.zoneNumber, " +
 				"xava_messages, xava_error_image_Warehouse.number, " +
-				"xava_input_focus_property_id");		
+				"xava_focus_property_id");		
 	}
 	
 	public void testCustomView_uploadFile() throws Exception {
@@ -404,7 +418,7 @@ public class AJAXTest extends ModuleTestBase {
 		execute("Mode.detailAndFirst");
 		execute("Gallery.edit", "galleryProperty=photos");
 		assertLoadedParts("xava_errors, xava_view, xava_bottom_buttons, " +
-				"xava_button_bar, xava_messages, xava_input_focus_property_id");
+				"xava_button_bar, xava_messages, xava_focus_property_id");
 		execute("Gallery.addImage");
 		assertLoadedParts("xava_core, ");
 		String imageUrl = System.getProperty("user.dir") + "/test-images/foto_javi.jpg";
@@ -416,10 +430,10 @@ public class AJAXTest extends ModuleTestBase {
 		
 		String imageOid = getForm().getInputByName("xava.GALLERY.images").getValueAttribute();
 		execute("Gallery.removeImage", "oid="+imageOid);
-		assertLoadedParts("xava_errors, xava_view, xava_messages, xava_input_focus_property_id");
+		assertLoadedParts("xava_errors, xava_view, xava_messages, xava_focus_property_id");
 		execute("Gallery.return");
 		assertLoadedParts("xava_errors, xava_view, xava_bottom_buttons, " +
-				"xava_button_bar, xava_messages, xava_input_focus_property_id");
+				"xava_button_bar, xava_messages, xava_focus_property_id");
 	}
 	
 	public void testHandmadeWebView() throws Exception {
@@ -427,9 +441,9 @@ public class AJAXTest extends ModuleTestBase {
 		execute("Mode.detailAndFirst");
 		assertLoadedParts("xava_core, ");
 		setValue("level.id", "B");
-		assertLoadedParts("xava_errors, xava_view, xava_messages, xava_input_focus_property_id");
+		assertLoadedParts("xava_errors, xava_view, xava_messages, xava_focus_property_id");
 		execute("Navigation.next");
-		assertLoadedParts("xava_errors, xava_view, xava_messages, xava_input_focus_property_id");
+		assertLoadedParts("xava_errors, xava_view, xava_messages, xava_focus_property_id");
 	}
 	
 	public void testChangingModelOfView() throws Exception {
@@ -440,12 +454,12 @@ public class AJAXTest extends ModuleTestBase {
 		execute("Navigation.next");		
 		assertLoadedParts("xava_editor_xava.Human.sex, xava_errors, " +
 				"xava_editor_xava.Human.name, " +
-				"xava_input_focus_property_id, xava_messages,");
+				"xava_focus_property_id, xava_messages,");
 		
 		// Now the model changes...
 		execute("Navigation.next"); 
 		assertLoadedParts("xava_errors, xava_view, " + // ...so we reload the full view
-				"xava_input_focus_property_id, xava_messages,");		
+				"xava_focus_property_id, xava_messages,");		
 	}
 	
 

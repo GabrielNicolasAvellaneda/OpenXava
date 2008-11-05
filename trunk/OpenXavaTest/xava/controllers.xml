@@ -713,5 +713,17 @@
 		<action name="seeMessage" class="org.openxava.test.actions.SeeMessageAction" mode="detail">
 			<use-object name="xava_view"/>
 		</action>
-	</controller>	
+	</controller>
+	
+	<controller name="Address">	
+	
+		<action name="fillViewProperty" hidden="true"
+			class="org.openxava.test.actions.SetPropertyValueAction">					
+			<set property="property" value="address.viewProperty"/>
+			<set property="value" value="THIS IS AN ADDRESS"/>
+			<use-object name="xava_view"/>			
+		</action>
+		
+	</controller>
+	
 </controllers>

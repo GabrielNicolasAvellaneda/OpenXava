@@ -12,8 +12,6 @@ import org.openxava.util.*;
  */
 public class DetailsCountCalculator implements IJDBCCalculator {
 	
-	private static Log log = LogFactory.getLog(DetailsCountCalculator.class); // tmp
-	
 	private IConnectionProvider provider;
 	private int year;
 	private int number;

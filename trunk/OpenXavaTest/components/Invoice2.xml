@@ -83,6 +83,8 @@
 			property="date" column="DATE"/>			
 		<property-mapping
 			property="vatPercentage" column="VATPERCENTAGE"/>
+		<property-mapping	
+			property="amountsSum" column="AMOUNTSSUM"/>			
 		<reference-mapping reference="customer">
 			<reference-mapping-detail 
 				column="CUSTOMER_NUMBER" 				

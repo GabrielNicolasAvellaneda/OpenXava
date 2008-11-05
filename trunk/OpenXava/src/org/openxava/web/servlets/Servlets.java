@@ -56,7 +56,38 @@ public class Servlets {
 	 * @throws IOException 
 	 * @throws ServletException 
 	 */
-	public static InputStream getURIAsStream(HttpServletRequest request, HttpServletResponse response, String uri, String encoding) throws ServletException, IOException { 		
+	public static InputStream getURIAsStream(HttpServletRequest request, HttpServletResponse response, String uri, String encoding) throws ServletException, IOException {
+		String s =  getURIAsString(request, response, uri, encoding);
+        return new ByteArrayInputStream(s.getBytes(encoding));
+	}
+	
+	/**
+	 * From a uri return the resource (dynamic or static) in String format. <p>
+	 * 
+	 * @param request  request of the current servlet
+	 * @param response response of the current servlet. This method does not write to it  
+	 * @param uri And uri, for example /mypage.jsp
+	 * @return The string with the content of the resource in uri
+	 * @throws IOException 
+	 * @throws ServletException 
+	 */
+	public static String getURIAsString(HttpServletRequest request, HttpServletResponse response, String uri) throws ServletException, IOException { 		
+        return getURIAsString(request, response, uri, response.getCharacterEncoding());                 
+	}
+	
+	
+	/**
+	 * From a uri return the resource (dynamic or static) in String format. <p>
+	 * 
+	 * @param request  request of the current servlet
+	 * @param response response of the current servlet. This method does not write to it  
+	 * @param uri And uri, for example /mypage.jsp
+	 * @param encoding  Character encoding for the response
+	 * @return The string with the content of the resource in uri
+	 * @throws IOException 
+	 * @throws ServletException 
+	 */
+	private static String getURIAsString(HttpServletRequest request, HttpServletResponse response, String uri, String encoding) throws ServletException, IOException { 		
 		// Copied with some slight modifications from WebContext.forwardToString of DWR
         StringWriter sout = new StringWriter();
         StringBuffer buffer = sout.getBuffer();
@@ -64,8 +95,9 @@ public class Servlets {
         HttpServletResponse fakeResponse = new SwallowingHttpServletResponse(response, sout, encoding);         
         request.getSession().getServletContext().getRequestDispatcher(uri).forward(request, fakeResponse);
         
-        return new ByteArrayInputStream(buffer.toString().getBytes(encoding));                
+        return buffer.toString();                
 	}
+	
 	
 	
 	static private class ServletResponse extends HttpServletResponseWrapper {

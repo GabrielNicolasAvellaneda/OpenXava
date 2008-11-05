@@ -737,4 +737,10 @@ public class MetaView extends MetaElement implements Cloneable {
 	public void setAlignedByColumns(boolean alignedByColumns) {
 		this.alignedByColumns = alignedByColumns;
 	}
+
+	public boolean containsMetaPropertyView(String name) { 
+		if (metaViewsProperties == null) return false;
+		return metaViewsProperties.containsKey(name);
+	}
+	
 }

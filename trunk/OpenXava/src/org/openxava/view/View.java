@@ -2889,8 +2889,14 @@ public class View implements java.io.Serializable {
 		}
 	}
 	
-	public boolean isLastSearchKey(String propertyName) throws XavaException { 
-		return isLastSearchKey(getMetaModel().getMetaProperty(propertyName)); 
+	public boolean isLastSearchKey(String propertyName) throws XavaException {
+		try {
+			return isLastSearchKey(getMetaModel().getMetaProperty(propertyName));
+		}
+		catch (ElementNotFoundException ex) {
+			// Maybe a view property
+			return false;
+		}
 	}
 
 	public boolean isLastSearchKey(MetaProperty p) throws XavaException {				
@@ -3670,9 +3676,12 @@ public class View implements java.io.Serializable {
 			if (displayAsDescriptionsList()) {
 				result.put(getPropertyPrefix(), getParent());
 			}
-			else if (getMetaModel().containsMetaProperty(name) &&
-					getMembersNamesWithoutSections().contains(name) && 
-					!getMembersNamesInGroup().contains(name)) 
+			else if ((
+					getMetaModel().containsMetaProperty(name) || 
+					getMetaView().containsMetaPropertyView(name)
+				) &&				
+				getMembersNamesWithoutSections().contains(name) && 
+				!getMembersNamesInGroup().contains(name)) 
 			{
 				result.put(getPropertyPrefix() + name, this);
 			}					

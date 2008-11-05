@@ -1,8 +1,11 @@
 package org.openxava.test.calculators;
 
+import java.math.*;
 import java.rmi.*;
+import java.util.*;
 
 import org.openxava.calculators.*;
+import org.openxava.test.model.*;
 
 /**
  * 
@@ -26,6 +29,7 @@ public class RecalculateAmountsSumCalculator implements IModelCalculator {
 			result = result.add(detail.getAmount());
 		}
 		invoice.setAmountsSum(result);
+		return null;
 	}
 
 }

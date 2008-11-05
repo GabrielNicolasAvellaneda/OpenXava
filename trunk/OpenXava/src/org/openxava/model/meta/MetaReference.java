@@ -24,7 +24,7 @@ public class MetaReference extends MetaMember implements Cloneable {
 	private String role;
 	private boolean required;
 	private boolean key;
-	private boolean searchKey; // tmp
+	private boolean searchKey;
 	private MetaCalculator metaCalculatorDefaultValue;
 	private ICalculator defaultValueCalculator;
 	

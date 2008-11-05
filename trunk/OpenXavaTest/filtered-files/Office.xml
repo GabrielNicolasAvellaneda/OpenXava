@@ -38,6 +38,13 @@
 		</members>
 	</view>
 	
+	<view name="OnlyWarehouse">
+		<reference-view reference="mainWarehouse" view="WithoutZone"/>
+		<members>
+			number; zoneNumber; mainWarehouse
+		</members>
+	</view>
+	
 	<tab>
 		<properties>zoneNumber, number, name, mainWarehouse.name, officeManager.name, defaultCarrier.name</properties>
 	</tab>
