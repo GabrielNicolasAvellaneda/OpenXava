@@ -2722,7 +2722,7 @@ public class View implements java.io.Serializable {
 	}
 
 	public void setRequest(HttpServletRequest request) throws XavaException {			
-		this.request = request;		
+		getRoot().request = request; 
 	}
 	
 	public boolean displayAsDescriptionsList(MetaReference ref) throws XavaException {		
