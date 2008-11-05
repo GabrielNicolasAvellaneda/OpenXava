@@ -35,7 +35,6 @@ public class ModuleManager {
 	
 	private static int nextOid = 0; 
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;
-	private static int nextPageId = 0; 
 		
 	private String user; 
 	private Collection metaActionsOnInit;
@@ -70,7 +69,6 @@ public class ModuleManager {
 	private String defaultView = null; 
 	
 	private boolean formUpload = false;
-	private String lastPageId; // tmp: Remove? 
 	private String previousMode;
 	private boolean executingAction = false;
 	private boolean reloadAllUINeeded;  
@@ -198,7 +196,6 @@ public class ModuleManager {
 	}
 	
 	public boolean hasProcessRequest(HttpServletRequest request) {
-		if (duplicateRequest(request)) return false;
 		return isFormUpload() || // May be that in this way upload forms does not work well in multimodule 			 
 			actionOfThisModule(request);				
 	}
@@ -207,19 +204,7 @@ public class ModuleManager {
 		return Is.equal(request.getParameter("xava_action_module"),getModuleName()) &&
 			Is.equal(request.getParameter("xava_action_application"),getApplicationName());
 	}
-	
-	private boolean duplicateRequest(HttpServletRequest request) {
-		return false; // tmp: Maybe it's not needed with AJAX
-		/*
-		if (request.getSession().getAttribute("xava_forward") != null) return false;
-		String pageId = request.getParameter("xava_page_id");
-		if (pageId == null) return false;
-		if (pageId.equals(lastPageId)) return true;		
-		lastPageId = pageId;
-		return false;
-		*/
-	}	
-	
+		
 	public void execute(HttpServletRequest request, Messages errors, Messages messages) {		
 		try {						
 			if (errors.isEmpty()) { // Only it's executed the action if there aren't errors
@@ -874,11 +859,6 @@ public class ModuleManager {
 	public String getXavaViewName() throws XavaException {
 		return getMetaModule().getViewName();		
 	}
-	
-	public String getPageId() {
-		return String.valueOf(nextPageId++);
-	}
-		
 	
 	public String toString() {		
 		return "ModuleManager:" + oid;

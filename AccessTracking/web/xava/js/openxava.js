@@ -36,7 +36,12 @@ openxava.refreshPage = function(result) {
 		for (var id in result) {	
 			changed = changed + id + ", ";  			
 			try { 
-				document.getElementById(id).innerHTML = result[id];
+				if (id == "xava_focus_property_id") { 					
+					document.getElementById(id).value = result[id];
+				}
+				else {
+					document.getElementById(id).innerHTML = result[id];
+				}
 			}
 			catch (ex) {
 				changed = changed + " ERROR";
@@ -178,7 +183,7 @@ openxava.setFocus = function() {
 	var elementName = this.form.elements['xava_focus_property_id'].value;	
 	var element = this.form.elements[elementName];	
 	if (element != null && typeof element.disabled != "undefined" && !element.disabled) {
-		element.focus();
+		if (element.type != "hidden") element.focus();
 		if (typeof element.select != "undefined") { 
 			element.select();
 		}

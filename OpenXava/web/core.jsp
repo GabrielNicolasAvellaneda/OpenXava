@@ -13,7 +13,6 @@ boolean messagesOnTop = !"false".equalsIgnoreCase(request.getParameter("messages
 	method='POST' <%=manager.getEnctype()%> 
 	<%=manager.getFormAction(request)%> style="display: inline;">
 
-<INPUT type="hidden" name="xava_page_id" value="<%=manager.getPageId()%>"/>
 <INPUT type="hidden" name="xava_action" value=""/>
 <INPUT type="hidden" name="xava_action_argv" value=""/>
 <INPUT type="hidden" name="xava_action_application" value="<%=request.getParameter("application")%>"/>

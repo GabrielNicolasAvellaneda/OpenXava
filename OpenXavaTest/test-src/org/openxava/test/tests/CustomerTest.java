@@ -484,10 +484,6 @@ public class CustomerTest extends ModuleTestBase {
 	}
 	
 	public void testIfKeyNotExistsInReferenceNotExecuteAction() throws Exception {
-		if (isPortalEnabled()) { 
-			System.err.println("WARNING! testIfKeyNotExistsInReferenceNotExecuteAction() is not executed: click + no duplicate submit not testable inside portal");
-			return;
-		}
 		execute("CRUD.new");				
 		setValue("relationWithSeller", "HOLA");		
 		setValueNotNotify("seller.number", "53"); // We suppose that not exists		
