@@ -120,7 +120,7 @@
 	</editor>
 
 	<!-- 
-		This steroetype is not for be assigned directly to a property, 
+		This stereotype is not for be assigned directly to a property, 
 		but it's used internally by OpenXava to render actions inside views.
 	-->
 	<editor url="actionEditor.jsp">

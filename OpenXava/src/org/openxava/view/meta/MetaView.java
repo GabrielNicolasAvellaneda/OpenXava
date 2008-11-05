@@ -3,6 +3,8 @@ package org.openxava.view.meta;
 
 import java.util.*;
 
+import javax.portlet.*;
+
 
 
 import org.openxava.actions.*;
@@ -45,7 +47,7 @@ public class MetaView extends MetaElement implements Cloneable {
 	private boolean alignedByColumns = false; 
 		
 	private String mediatorClassName;
-	
+	private Collection notAlwaysEnabledViewActionsNames;
 	
 	
 	private void addMemberName(String memberName) {
@@ -104,7 +106,7 @@ public class MetaView extends MetaElement implements Cloneable {
 				Iterator it = getAllMetaMembers().iterator(); 
 				while (it.hasNext()) {
 					Object m = it.next();
-					if (m instanceof MetaProperty) {
+					if (m instanceof MetaProperty) {			
 						metaProperties.put(((MetaProperty) m).getName(), m);
 					}
 				}
@@ -657,6 +659,7 @@ public class MetaView extends MetaElement implements Cloneable {
 	protected Object clone() throws CloneNotSupportedException { 
 		MetaView clon =  (MetaView) super.clone();
 				
+		clon.notAlwaysEnabledViewActionsNames = null;
 		if (propertiesNamesThrowOnChange != null) clon.propertiesNamesThrowOnChange = new ArrayList(propertiesNamesThrowOnChange);
 		if (sections != null) clon.sections = new ArrayList(sections);
 		if (metaGroups != null) clon.metaGroups = new HashMap(metaGroups);
@@ -741,6 +744,25 @@ public class MetaView extends MetaElement implements Cloneable {
 	public boolean containsMetaPropertyView(String name) { 
 		if (metaViewsProperties == null) return false;
 		return metaViewsProperties.containsKey(name);
+	}
+	
+	public Collection getNotAlwaysEnabledViewActionsNames() { 
+		if (notAlwaysEnabledViewActionsNames == null) {
+			for (Iterator it = getMetaMembers().iterator(); it.hasNext(); ) {
+				Object member = it.next();
+				if (member instanceof MetaViewAction) {
+					MetaViewAction action = (MetaViewAction) member;
+					if (!action.isAlwaysEnabled()) {
+						if (notAlwaysEnabledViewActionsNames == null) notAlwaysEnabledViewActionsNames = new ArrayList();
+						notAlwaysEnabledViewActionsNames.add(action.getName()); 
+					}
+				}
+			}
+			if (notAlwaysEnabledViewActionsNames == null) {
+				notAlwaysEnabledViewActionsNames = Collections.EMPTY_LIST; 
+			}			
+		}
+		return notAlwaysEnabledViewActionsNames;
 	}
 	
 }
