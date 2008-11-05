@@ -1538,8 +1538,8 @@ public class ModuleTestBase extends TestCase {
 	}	
 	
 	private int getFormIndex() throws Exception {
-		if (formIndex == -1) {
-			formIndex = getFormIndexForInputElement("xava_page_id");			
+		if (formIndex == -1) {			
+			formIndex = getFormIndexForInputElement("xava_action");
 		}
 		return formIndex;
 	}

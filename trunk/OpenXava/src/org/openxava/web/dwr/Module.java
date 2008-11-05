@@ -50,7 +50,7 @@ public class Module extends DWRBase {
 			this.manager = (ModuleManager) getContext(request).get(application, module, "manager");
 			restoreLastMessages();
 			request.setAttribute("style", getStyle());
-			getURIAsStream("init.jsp", values, multipleValues, selected);			
+			getURIAsStream("execute.jsp", values, multipleValues, selected);			
 			String forwardURI = (String) request.getSession().getAttribute("xava_forward");		
 			if (!Is.emptyString(forwardURI)) {
 				result.put("xava_forward_url",  request.getScheme() + "://" + 

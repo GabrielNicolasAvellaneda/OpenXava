@@ -13,30 +13,27 @@ boolean messagesOnTop = !"false".equalsIgnoreCase(request.getParameter("messages
 	method='POST' <%=manager.getEnctype()%> 
 	<%=manager.getFormAction(request)%> style="display: inline;">
 
-<INPUT type="hidden" name="xava_page_id" value="<%=manager.getPageId()%>"/>
 <INPUT type="hidden" name="xava_action" value=""/>
 <INPUT type="hidden" name="xava_action_argv" value=""/>
 <INPUT type="hidden" name="xava_action_application" value="<%=request.getParameter("application")%>"/>
 <INPUT type="hidden" name="xava_action_module" value="<%=request.getParameter("module")%>"/>
 <INPUT type="hidden" name="xava_changed_property"/> 
 <INPUT type="hidden" name="xava_focus_property"/> 
-<INPUT type="hidden" name="xava_focus_forward"/>
-<span id="xava_input_focus_property_id">  
-<INPUT type="hidden" name="xava_focus_property_id" value="<%=view.getFocusPropertyId()%>"/>
-</span>
+<INPUT type="hidden" name="xava_focus_forward"/> 
+<INPUT type="hidden" id="xava_focus_property_id" name="xava_focus_property_id" value="<%=view.getFocusPropertyId()%>"/>
 
-<div <%=style.getModuleSpacing()%>>
-    <% if (manager.isButtonBarVisible()) { %>
+<div <%=style.getModuleSpacing()%> >
+    <% if (manager.isButtonBarVisible()) { %>	
     <div id='xava_button_bar' class='<%=style.getButtonBar()%>'>		
 		<jsp:include page="buttonBar.jsp"/>
 	</div>
     <% } %>
 	
-    <% if (messagesOnTop) {  %>    
+    <% if (messagesOnTop) { %>    
     <div id='xava_errors' style="display: inline;">
-		<jsp:include page="errors.jsp"/>
-    </div>
-        
+    	<jsp:include page="errors.jsp"/>
+	</div>
+    
 	<div id='xava_messages' style="display: inline;">
 		<jsp:include page="messages.jsp"/>
 	</div>            
