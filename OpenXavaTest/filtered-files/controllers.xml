@@ -187,10 +187,12 @@
 		<action name="setLimitZoneTo1" class="org.openxava.test.actions.ChangeLimitZoneAction" mode="detail">			
 			<set property="newLimitZone" value="1"/>
 			<use-object name="xavatest_limitZone"/>
+			<use-object name="xava_view"/>
 		</action>		
 		<action name="setLimitZoneTo0" class="org.openxava.test.actions.ChangeLimitZoneAction" mode="detail">			
 			<set property="newLimitZone" value="0"/>
 			<use-object name="xavatest_limitZone"/>
+			<use-object name="xava_view"/>
 		</action>				
 		<action name="changeProductPrice" class="org.openxava.test.actions.ChangeProductPriceAction" mode="detail">					
 			<use-object name="xava_view"/> 
@@ -205,6 +207,7 @@
 		<action name="changeLimitZone" class="org.openxava.test.actions.ChangeLimitZoneAction" mode="detail">			
 			<set property="newLimitZone" value="1"/>
 			<use-object name="xavatest_limitZone"/>
+			<use-object name="xava_view"/>
 		</action>		
 	</controller>
 	
@@ -314,11 +317,24 @@
 	
 	<controller name="Invoice">
 		<extends controller="Typical"/>
-		<action name="print" mode="detail"
+		<action name="printPdf" mode="detail"
 			class="org.openxava.test.actions.InvoiceReportAction"
-			image="images/pdf.gif">									
+			image="images/pdf.gif">
+			<set property="format" value="pdf"/>									
 			<use-object name="xava_view"/>			
 		</action>
+		<action name="printExcel" mode="detail"
+			class="org.openxava.test.actions.InvoiceReportAction"
+			image="images/excel.gif">
+			<set property="format" value="excel"/>									
+			<use-object name="xava_view"/>			
+		</action>		
+		<action name="printRtf" mode="detail"
+			class="org.openxava.test.actions.InvoiceReportAction"
+			image="images/rtf.gif">
+			<set property="format" value="rtf"/>									
+			<use-object name="xava_view"/>			
+		</action>		
 		<action name="searchFromDelivery" hidden="true"
 			class="org.openxava.test.actions.SearchInvoiceFromDeliveryAction">									
 			<use-object name="xava_view"/>
@@ -606,6 +622,11 @@
 			<set property="all" value="true"/>
 		</action>		
 		
+		<action name="translateAll" 
+			class="org.openxava.test.actions.TranslateAllCarrierNameAction">
+			<use-object name="xava_view"/>
+		</action>
+		
 		<action name="deleteAll" class="org.openxava.test.actions.DeleteAllAction">
 			<set property="model" value="Carrier" />
 		</action>
@@ -613,8 +634,7 @@
 		<action name="search" image="images/search.gif" mode="detail" 
 			class="org.openxava.test.actions.CarriersSearchAction">
 			<use-object name="xava_view"/>			
-		</action>	
-		
+		</action>			
     	
 	</controller>	
 	
@@ -693,5 +713,17 @@
 		<action name="seeMessage" class="org.openxava.test.actions.SeeMessageAction" mode="detail">
 			<use-object name="xava_view"/>
 		</action>
-	</controller>	
+	</controller>
+	
+	<controller name="Address">	
+	
+		<action name="fillViewProperty" hidden="true"
+			class="org.openxava.test.actions.SetPropertyValueAction">					
+			<set property="property" value="address.viewProperty"/>
+			<set property="value" value="THIS IS AN ADDRESS"/>
+			<use-object name="xava_view"/>			
+		</action>
+		
+	</controller>
+	
 </controllers>

@@ -6,7 +6,6 @@ import java.util.*;
 import javax.servlet.http.*;
 
 import org.apache.commons.logging.*;
-import org.directwebremoting.*;
 import org.openxava.actions.*;
 import org.openxava.controller.*;
 import org.openxava.model.meta.*;
@@ -110,7 +109,7 @@ public class Module extends DWRBase {
 	private String getURIAsString(String jspFile, Map values, Map multipleValues, String[] selected) throws Exception {
 		if (jspFile == null) return "";
 		if (jspFile.startsWith("html:")) return jspFile.substring(5); // Using html: prefix the content is returned as is
-		return WebContextFactory.get().forwardToString(getURI(jspFile, values, multipleValues, selected));
+		return Servlets.getURIAsString(request, response, getURI(jspFile, values, multipleValues, selected));
 	}
 	
 

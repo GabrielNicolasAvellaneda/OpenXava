@@ -25,7 +25,7 @@ import org.openxava.util.*;
 @IdClass(InvoiceKey.class)
 @Views({	
 	@View(members=
-		"year, number, date, paid;" +
+		"year, number, date, paid;" +		
 		"discounts [" +
 		"	customerDiscount, customerTypeDiscount, yearDiscount;" +
 		"];" +
@@ -124,8 +124,6 @@ public class Invoice {
 	
 	final private static BigDecimal DISCOUNT = new BigDecimal("20.00");
 	final private static BigDecimal HUNDRED = new BigDecimal("100");
-	
-	
 	
 	@Id @Column(length=4) @Max(9999) @Required
 	@DefaultValueCalculator(CurrentYearCalculator.class)

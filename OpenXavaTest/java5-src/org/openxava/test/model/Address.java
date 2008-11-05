@@ -25,7 +25,7 @@ public class Address implements IWithCity {
 	@Transient
 	private Customer customer;
 		
-	@Transient
+	@Transient @Action("Address.fillViewProperty")
 	private String viewProperty;	
 	
 	// By default label format is normal, therefore in this case @LabelFormat is not needed
