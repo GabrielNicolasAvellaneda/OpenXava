@@ -1,13 +1,14 @@
 if (openxava == null) var openxava = {};
 
 openxava.init = function() {
-	dwr.util.useLoadingMessage();
+	dwr.util.useLoadingMessage(this.loadingMessage);
 	this.ajaxRequest();
 }
 
 openxava.ajaxRequest = function() {
 	document.throwPropertyChange = false;
 	document.getElementById("xava_loading").value=true; 
+	document.body.style.cursor='wait'; 
 	Module.request(
 			this.application, this.module, 			 
 			dwr.util.getValues(this.formName), 
@@ -60,6 +61,7 @@ openxava.refreshPage = function(result) {
 	
 	document.getElementById("xava_loading").value=false;
 	document.getElementById("xava_loaded_parts").value=changed;
+	document.body.style.cursor='auto'; 
 }
 
 openxava.getSelectedValues = function() { 	  		
