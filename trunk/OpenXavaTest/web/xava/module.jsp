@@ -53,6 +53,7 @@ Module.setStyle(style);
 		openxava.formName = '<%=form%>'; 			
 		openxava.showFiltersMessage = '<xava:message key="show_filters"/>';
 		openxava.hideFiltersMessage = '<xava:message key="hide_filters"/>';
+		openxava.loadingMessage = '<xava:message key="loading"/>';
 		openxava.calendarAlign = '<%=browser != null && browser.indexOf("MSIE 6") >= 0?"tr":"Br"%>';
 		openxava.init();		
 	}
@@ -74,7 +75,9 @@ Module.setStyle(style);
 	   </tr>
 	</table>
 	</div>	
-	<div id="xava_core" style="display: inline;"></div>
+	<div id="xava_core" style="display: inline;">
+		<img src='<%=request.getContextPath()%>/xava/<%=style.getLoadingModuleImage()%>' style="padding: 20px;"/>
+	</div>
 
 <% if (!isPortlet) { %>
 </body>

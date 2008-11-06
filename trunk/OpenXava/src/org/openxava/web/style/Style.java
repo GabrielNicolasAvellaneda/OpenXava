@@ -31,7 +31,7 @@ public class Style {
 			instance = new Style();
 		}
 		return instance;
-	}	
+	}		
 	
 	public String getModule() {
 		return "portlet-font";
@@ -348,6 +348,10 @@ public class Style {
 	 */	
 	public String getRemoveImage() {
 		return "images/remove.gif";
+	}
+	
+	public String getLoadingModuleImage() {
+		return "images/loading-module.gif";
 	}
 	
 	/**
