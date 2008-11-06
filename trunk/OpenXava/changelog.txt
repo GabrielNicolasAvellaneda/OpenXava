@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: On change the reference typing the key its displayed collection are not reloaded (for 3.1beta).
+- Upgrade to Servlets 2.4 API; so now requires a Servlet 2.4 container for run (Tomcat 5.x, WebSphere 6.x, etc).
 - Fix: Actions inside views are not refreshed correctly with AJAX.
 - Fix: From time to time when reference objects are created or modified a NullPointerException is thrown returning to the main view.
 - XML components view properties are not refreshed using OX3.1beta.

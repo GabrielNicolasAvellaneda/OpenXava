@@ -22,6 +22,29 @@ public class AJAXTest extends ModuleTestBase {
 		super(nameTest, null);
 	}
 	
+	public void testCollectionsInsidReferences() throws Exception {
+		changeModule("Office");
+		execute("CRUD.new");
+		assertCollectionRowCount("defaultCarrier.fellowCarriers", 0);
+		assertCollectionRowCount("defaultCarrier.fellowCarriersCalculated", 0);
+		setValue("defaultCarrier.number", "1");
+		assertCollectionRowCount("defaultCarrier.fellowCarriers", 3);
+		assertCollectionRowCount("defaultCarrier.fellowCarriersCalculated", 3);		
+		assertLoadedParts("xava_collection_xava.Office.defaultCarrier.fellowCarriers.," +
+				"xava_collection_xava.Office.defaultCarrier.fellowCarriersCalculated.," +
+				"xava_descriptions_list_xava.Office.defaultCarrier.drivingLicence," +
+				"xava_editor_xava.Office.defaultCarrier.calculated," +
+				"xava_editor_xava.Office.defaultCarrier.name," +
+				"xava_editor_xava.Office.defaultCarrier.warehouse.name," +
+				"xava_editor_xava.Office.defaultCarrier.warehouse.number," +
+				"xava_editor_xava.Office.defaultCarrier.warehouse.zoneNumber," +
+				"xava_editor_xava.Office.officeManager.arrivalTime," + // it's formatted
+				"xava_editor_xava.Office.officeManager.endingTime," + // it's formatted
+				"xava_editor_xava.Office.receptionist," + // it's formatted
+				"xava_editor_xava.Office.zoneNumber," + // it's formatted
+				"xava_errors, xava_focus_property_id, xava_messages,");		
+	}
+	
 	public void testRefreshViewProperties() throws Exception { 
 		changeModule("Customer");
 		execute("CRUD.new");
