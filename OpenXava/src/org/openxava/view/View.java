@@ -5,6 +5,7 @@ import java.rmi.*;
 import java.util.*;
 
 import javax.ejb.*;
+import javax.portlet.*;
 import javax.servlet.http.*;
 
 import org.apache.commons.logging.*;
@@ -2125,7 +2126,8 @@ public class View implements java.io.Serializable {
 						if (!getMetaModel().isKey(changedPropertyQualifiedName)) {
 							String id = (String) getMetaModel().getKeyPropertiesNames().iterator().next();
 							propertyChanged(id);
-						}						
+						}	
+						refreshCollections(); 
 					}
 					finally {
 						searchingObject = false;				 
@@ -2716,7 +2718,7 @@ public class View implements java.io.Serializable {
 		return notEditableMembersNames;
 	}
 	
-	public HttpServletRequest getRequest() {		
+	public HttpServletRequest getRequest() {	
 		if (request == null) return parent.getRequest();
 		return request;
 	}
@@ -3678,7 +3680,7 @@ public class View implements java.io.Serializable {
 		return oldKeyEditable != keyEditable;
 	}
 
-	private void addChangedPropertyOrDescriptionsListReference(Map result, String name) {
+	private void addChangedPropertyOrDescriptionsListReference(Map result, String name) {		
 		if (!isHidden(name)) {
 			if (displayAsDescriptionsList()) {
 				result.put(getPropertyPrefix(), getParent());
@@ -3705,7 +3707,7 @@ public class View implements java.io.Serializable {
 	}
 
 	/**
-	 * Refreshs the displayed data of all the references as descriptions list of this
+	 * Refresh the displayed data of all the references as descriptions list of this
 	 * view from database. <p>
 	 */	
 	public void refreshDescriptionsLists() { 
