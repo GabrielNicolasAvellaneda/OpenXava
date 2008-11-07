@@ -14,6 +14,7 @@ public class ChangeProductsPriceTest extends ModuleTestBase {
 		"Navigation.next",		
 		"Mode.list",									
 		"ChangeProductsPrice.save",
+		"ChangeProductsPrice.editDescription"
 	};
 	
 	private String [] listActions = {

@@ -410,6 +410,13 @@
 			keystroke="F3">			
 			<use-object name="xava_view"/>
 		</action>
+		
+		<action name="editDescription" mode="detail"
+			class="org.openxava.test.actions.SetMemberEditableOnAction"
+			keystroke="F3">			
+			<set property="member" value="description"/>
+			<use-object name="xava_view"/>
+		</action>		
 						
 	</controller>
 	

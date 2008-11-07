@@ -22,7 +22,17 @@ public class AJAXTest extends ModuleTestBase {
 		super(nameTest, null);
 	}
 	
-	public void testCollectionsInsidReferences() throws Exception {
+	public void testSetMemberEditable() throws Exception {
+		changeModule("ChangeProductsPrice");
+		execute("Mode.detailAndFirst");
+		assertNoEditable("description");
+		execute("ChangeProductsPrice.editDescription");
+		assertEditable("description");
+		assertLoadedParts("xava_editor_xava.Product.description, " +
+				"xava_errors, xava_focus_property_id, xava_messages,");
+	}
+	
+	public void testCollectionsInsideReferences() throws Exception {
 		changeModule("Office");
 		execute("CRUD.new");
 		assertCollectionRowCount("defaultCarrier.fellowCarriers", 0);
