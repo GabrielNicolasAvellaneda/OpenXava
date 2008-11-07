@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: View.setEditable for a member is not refreshed in UI by AJAX.
 - Animated image while module is loading.
 - Cursor changes to wait status while the AJAX request is processed.
 - Fix: On change the reference typing the key its displayed collection are not reloaded (for 3.1beta).

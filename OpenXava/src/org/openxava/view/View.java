@@ -1816,7 +1816,7 @@ public class View implements java.io.Serializable {
 			oldEditable = editable;
 			changedLabels = null;
 			refreshDescriptionsLists = false;
-			oldNotEditableMembersNames = notEditableMembersNames;  
+			oldNotEditableMembersNames = notEditableMembersNames==null?null:new HashSet(notEditableMembersNames);  
 						
 			if (hasSections()) { 								
 				View section = getSectionView(getActiveSection());
