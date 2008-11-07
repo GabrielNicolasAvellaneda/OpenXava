@@ -630,7 +630,7 @@ public class CustomerTest extends ModuleTestBase {
 		execute("Customer.showSeller");
 		assertFocusOn("number");
 		
-		// Propety changed that produce submit do advance the focus
+		// Property changed that produce submit do advance the focus
 		setValue("seller.number", "1");
 		assertFocusOn("relationWithSeller");
 	}
