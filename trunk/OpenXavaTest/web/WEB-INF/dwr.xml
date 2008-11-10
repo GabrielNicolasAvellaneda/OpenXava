@@ -12,7 +12,10 @@
     
     <create creator="new" javascript="Tab">
       <param name="class" value="org.openxava.web.dwr.Tab"/>
-    </create>    
+    </create>
+    
+    <convert converter="bean" match="org.openxava.web.dwr.Result"/>    
+    <convert converter="bean" match="org.openxava.web.dwr.StrokeAction"/>
         
   </allow>
   

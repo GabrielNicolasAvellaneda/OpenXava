@@ -1,13 +1,16 @@
 package org.openxava.web.dwr;
 
+import java.awt.event.*;
 import java.io.*;
 import java.util.*;
 
 import javax.servlet.http.*;
+import javax.swing.*;
 
 import org.apache.commons.logging.*;
 import org.openxava.actions.*;
 import org.openxava.controller.*;
+import org.openxava.controller.meta.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.view.*;
@@ -36,8 +39,8 @@ public class Module extends DWRBase {
 	private String module;
 	private ModuleManager manager;
 	
-	public Map request(HttpServletRequest request, HttpServletResponse response, String application, String module, Map values, Map multipleValues, String [] selected) throws Exception {
-		Map result = new HashMap();
+	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, Map values, Map multipleValues, String [] selected) throws Exception {
+		
 		try {
 			request.setCharacterEncoding(XSystem.getEncoding());
 			response.setCharacterEncoding(XSystem.getEncoding());
@@ -50,13 +53,15 @@ public class Module extends DWRBase {
 			this.manager = (ModuleManager) getContext(request).get(application, module, "manager");
 			restoreLastMessages();
 			request.setAttribute("style", getStyle());
-			getURIAsStream("execute.jsp", values, multipleValues, selected);			
+			getURIAsStream("execute.jsp", values, multipleValues, selected);	
+			Map changedParts = new HashMap();
+			Result result = new Result(changedParts);
 			String forwardURI = (String) request.getSession().getAttribute("xava_forward");		
 			if (!Is.emptyString(forwardURI)) {
-				result.put("xava_forward_url",  request.getScheme() + "://" + 
+				result.setForwardURL(request.getScheme() + "://" + 
 					request.getServerName() + ":" + request.getServerPort() + 
 					request.getContextPath() + forwardURI);
-				result.put("xava_forward_inNewWindow", request.getSession().getAttribute("xava_forward_inNewWindow"));
+				result.setForwardInNewWindow("true".equals(request.getSession().getAttribute("xava_forward_inNewWindow")));
 				request.getSession().removeAttribute("xava_forward");
 				request.getSession().removeAttribute("xava_forward_inNewWindow");				
 			}
@@ -65,15 +70,14 @@ public class Module extends DWRBase {
 			}
 			else {
 				fillResult(result, values, multipleValues, selected);
-			}											
+			}			
+			result.setStrokeActions(getStrokeActions());
 			return result;
 		}
 		catch (Exception ex) {
-			Messages errors = (Messages) request.getAttribute("errors");
-			if (errors == null) throw ex;
-			log.error(ex.getMessage(), ex); 			
-			errors.add("system_error"); 
-			result.put("xava_errors", getURIAsString("errors.jsp", null, null, null));
+			log.error(ex.getMessage(), ex);
+			Result result = new Result();
+			result.setError(ex.getMessage());
 			return result;
 		}		
 		finally {			
@@ -81,20 +85,41 @@ public class Module extends DWRBase {
 		}
 	}
 
-	private void changeModule(Map result) {
+	private Map getStrokeActions() { 
+		java.util.Iterator it = manager.getAllMetaActionsIterator();
+		Map result = new HashMap();
+		while (it.hasNext()) {
+			MetaAction action = (MetaAction) it.next();
+			if (!action.hasKeystroke()) continue;	
+
+			KeyStroke key = KeyStroke.getKeyStroke(action.getKeystroke());
+			if (key == null) {
+				continue;
+			}	
+			int keyCode = key.getKeyCode();
+			boolean ctrl = (key.getModifiers() & InputEvent.CTRL_DOWN_MASK) > 0; 
+			boolean alt = (key.getModifiers() & InputEvent.ALT_DOWN_MASK) > 0; 	
+			boolean shift = (key.getModifiers() & InputEvent.SHIFT_DOWN_MASK) > 0;
+			String id = keyCode + "," + ctrl + "," + alt + "," + shift;
+			result.put(id, new StrokeAction(action.getQualifiedName(), action.isTakesLong()));
+		}
+		return result;
+	}
+
+	private void changeModule(Result result) {		
 		String nextModule = manager.getNextModule();		
 		if (IChangeModuleAction.PREVIOUS_MODULE.equals(nextModule)) {
 			nextModule = manager.getPreviousModule();
 			manager.setPreviousModule(null);
-		}
-		ModuleManager nextManager = (ModuleManager) getContext(request).get(application, nextModule, "manager", "org.openxava.controller.ModuleManager");				
+		}		
+		ModuleManager nextManager = (ModuleManager) getContext(request).get(application, nextModule, "manager", "org.openxava.controller.ModuleManager");		
 		if (!IChangeModuleAction.PREVIOUS_MODULE.equals(nextModule)) {
 			nextManager.setPreviousModule(module);					
 		}	
 		manager.setNextModule(null);
 		memorizeLastMessages(nextModule); 
-		result.put("xava_module", nextModule);
-		result.put("xava_form", nextManager.getForm());
+		result.setModule(nextModule);
+		result.setForm(nextManager.getForm());
 	}	
 	
 	public void requestMultipart(HttpServletRequest request, HttpServletResponse response, String application, String module) throws Exception { 
@@ -113,14 +138,15 @@ public class Module extends DWRBase {
 	}
 	
 
-	private void fillResult(Map result, Map values, Map multipleValues, String[] selected) throws Exception {
+	private void fillResult(Result result, Map values, Map multipleValues, String[] selected) throws Exception {
+		Map changedParts = result.getChangedParts();
 		for (Iterator it = getChangedParts(values).entrySet().iterator(); it.hasNext(); ) {
 			Map.Entry changedPart = (Map.Entry) it.next();			
-			result.put(changedPart.getKey(),
+			changedParts.put(changedPart.getKey(),
 				getURIAsString((String) changedPart.getValue(), values, multipleValues, selected)	
-			);
-			
+			);			
 		}		
+		result.setFocusPropertyId(getView().getFocusPropertyId());
 	}
 
 
@@ -139,8 +165,7 @@ public class Module extends DWRBase {
 			result.put("xava_errors", errors.contains()?"errors.jsp":null);
 			Messages messages = (Messages) request.getAttribute("messages");
 			result.put("xava_messages", messages.contains()?"messages.jsp":null);
-			
-			result.put("xava_focus_property_id", "html:" + getView().getFocusPropertyId());
+						
 			if (manager.isReloadViewNeeded() || getView().isReloadNeeded()) { 
 				result.put("xava_view", manager.getViewURL());
 			}
