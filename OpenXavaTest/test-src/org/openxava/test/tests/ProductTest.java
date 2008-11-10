@@ -350,6 +350,7 @@ public class ProductTest extends ModuleTestBase {
 		String [] changeProductPriceActions = {
 			"Mode.list",
 			"ChangeProductsPrice.save",
+			"ChangeProductsPrice.editDescription",
 			"Gallery.edit"
 		};
 		

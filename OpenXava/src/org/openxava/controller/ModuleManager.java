@@ -418,7 +418,7 @@ public class ModuleManager {
 				String uri = forward.getForwardURI();
 				if (!Is.emptyString(uri)) {
 					request.getSession().setAttribute("xava_forward", uri);
-					request.getSession().setAttribute("xava_forward_inNewWindow", String.valueOf(forward.inNewWindow()));
+					request.getSession().setAttribute("xava_forward_inNewWindow", String.valueOf(forward.inNewWindow()));					
 				}				
 			}
 			if (action instanceof IChainAction) {

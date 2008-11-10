@@ -518,7 +518,8 @@
 	<controller name="FamilyProductsReport">
 		<action name="generatePdf" 
 			class="org.openxava.test.actions.FamilyProductsReportAction"
-			takes-long="true">
+			takes-long="true"
+			keystroke="Control Alt P">
 			<use-object name="xava_view"/>			
 		</action>
 		<action name="generateExcel" 

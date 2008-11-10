@@ -1613,6 +1613,5 @@ public class ModuleTestBase extends TestCase {
 		HtmlInput input = (HtmlInput) ((HtmlPage) page).getHtmlElementById("xava_loaded_parts");
 		return input.getValueAttribute();
 	}
-
- 			
+		
 }
