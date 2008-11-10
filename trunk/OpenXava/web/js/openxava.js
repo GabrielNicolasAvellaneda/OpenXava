@@ -55,9 +55,11 @@ openxava.refreshPage = function(result) {
 			}			
 		}						
 		openxava.formName = "xava_form";
-		openxava.form = document.getElementById(openxava.formName);		
-		document.getElementById("xava_focus_property_id").value = result.focusPropertyId;
-		openxava.setFocus();		
+		openxava.form = document.getElementById(openxava.formName);
+		if (result.focusPropertyId != null) { 
+			document.getElementById("xava_focus_property_id").value = result.focusPropertyId;
+			openxava.setFocus();		
+		}
 	}
 	document.getElementById('xava_processing_layer').style.display='none'; 
 	openxava.form.xava_action.value="";	
