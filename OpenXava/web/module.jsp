@@ -12,6 +12,8 @@ request.getSession().setAttribute("xava.user", request.getRemoteUser());
 String app = request.getParameter("application");
 String module = request.getParameter("module");
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager)context.get(request, "manager", "org.openxava.controller.ModuleManager");
+manager.setApplicationName(request.getParameter("application"));
+manager.setModuleName(request.getParameter("module"));
 if (manager.isFormUpload()) {
 	new Module().requestMultipart(request, response, app, module);
 }

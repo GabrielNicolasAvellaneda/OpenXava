@@ -20,7 +20,7 @@ boolean messagesOnTop = !"false".equalsIgnoreCase(request.getParameter("messages
 <INPUT type="hidden" name="xava_changed_property"/> 
 <INPUT type="hidden" name="xava_focus_property"/> 
 <INPUT type="hidden" name="xava_focus_forward"/> 
-<INPUT type="hidden" id="xava_focus_property_id" name="xava_focus_property_id" value="<%=view.getFocusPropertyId()%>"/>
+<INPUT type="hidden" id="xava_focus_property_id" name="xava_focus_property_id"/>
 
 <div <%=style.getModuleSpacing()%> >
     <% if (manager.isButtonBarVisible()) { %>	

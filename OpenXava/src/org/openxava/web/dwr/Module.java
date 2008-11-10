@@ -145,8 +145,10 @@ public class Module extends DWRBase {
 			changedParts.put(changedPart.getKey(),
 				getURIAsString((String) changedPart.getValue(), values, multipleValues, selected)	
 			);			
-		}		
-		result.setFocusPropertyId(getView().getFocusPropertyId());
+		}	
+		if (!manager.isListMode()) {
+			result.setFocusPropertyId(getView().getFocusPropertyId());
+		}
 	}
 
 
