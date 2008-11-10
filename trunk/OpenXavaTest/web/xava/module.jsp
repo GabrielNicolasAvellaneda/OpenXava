@@ -47,19 +47,7 @@ Module.setStyle(style);
 	<% } %>	
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/calendar.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/editors.js'></script> 	
-	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/custom-editors.js'></script> 
-	<script>
-	window.onload= function() {
-		openxava.application = '<%=app%>';
-		openxava.module = '<%=module%>';
-		openxava.formName = '<%=form%>'; 			
-		openxava.showFiltersMessage = '<xava:message key="show_filters"/>';
-		openxava.hideFiltersMessage = '<xava:message key="hide_filters"/>';
-		openxava.loadingMessage = '<xava:message key="loading"/>';
-		openxava.calendarAlign = '<%=browser != null && browser.indexOf("MSIE 6") >= 0?"tr":"Br"%>';
-		openxava.init();		
-	}
-	</script>	
+	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/custom-editors.js'></script>
 <% if (!isPortlet) { %>
 </head>
 <body bgcolor="#ffffff">
@@ -85,3 +73,16 @@ Module.setStyle(style);
 </body>
 </html>
 <% } %>
+
+<script>
+openxava.application = '<%=app%>';
+openxava.module = '<%=module%>';
+openxava.formName = '<%=form%>'; 			
+openxava.showFiltersMessage = '<xava:message key="show_filters"/>';
+openxava.hideFiltersMessage = '<xava:message key="hide_filters"/>';
+openxava.loadingMessage = '<xava:message key="loading"/>';
+openxava.calendarAlign = '<%=browser != null && browser.indexOf("MSIE 6") >= 0?"tr":"Br"%>';
+openxava.init();			
+</script>
+
+
