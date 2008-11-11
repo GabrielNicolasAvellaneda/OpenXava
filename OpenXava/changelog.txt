@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: In ModuleTestBase tests after a popup windows with a non-html page is shown (as a pdf) a NullPointerException is thrown.
+- Fix: On generating a report (or any other new window action) main page is not refreshed (for 3.1beta).
 - Fix: When a portlet is added to a page it is not shown until the page is refreshed (for 3.1beta).
 - Fix: The module name in browser window is always 'unknow module' (for 3.1beta).
 - Keystrokes supported in AJAX.

@@ -488,9 +488,6 @@ public class ModuleTestBase extends TestCase {
 				page = (HtmlPage) newPage;				
 				resetForm();
 			}
-			else {
-				page = null; 
-			}
 		}
 		else {
 			fail(XavaResources.getString("clickable_not_found", action));  
@@ -1610,8 +1607,13 @@ public class ModuleTestBase extends TestCase {
 	private String getLoadedParts() { 
 		Page page = getWebClient().getCurrentWindow().getEnclosedPage();
 		if (!(page instanceof HtmlPage)) return "";
-		HtmlInput input = (HtmlInput) ((HtmlPage) page).getHtmlElementById("xava_loaded_parts");
-		return input.getValueAttribute();
+		try {
+			HtmlInput input = (HtmlInput) ((HtmlPage) page).getHtmlElementById("xava_loaded_parts");
+			return input.getValueAttribute();
+		}
+		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
+			return "";
+		}
 	}
 		
 }

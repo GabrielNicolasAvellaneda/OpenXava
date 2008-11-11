@@ -764,8 +764,8 @@ public class ModuleManager {
 	/**
 	 * @return <tt>true</tt> if is new. 
 	 */
-	public boolean setModuleName(String newModule) throws XavaException {		
-		if (Is.equal(moduleName, newModule)) return false; 
+	public void setModuleName(String newModule) throws XavaException {		
+		if (Is.equal(moduleName, newModule)) return; 
 		moduleInitiated = false;
 		moduleName = newModule;
 		metaControllers = null;
@@ -782,7 +782,9 @@ public class ModuleManager {
 			defaultView = getMetaModule().getWebViewURL();
 			setViewName(defaultView);			
 		}		
-		return true; 		
+		View view = (View) getContext().get(applicationName, moduleName, "xava_view");
+		view.setModelName(getModelName());	
+		view.setViewName(getXavaViewName());
 	}
 	
 	private String [] getControllersNames() {		

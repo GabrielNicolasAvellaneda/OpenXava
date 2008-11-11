@@ -39,8 +39,7 @@ public class Module extends DWRBase {
 	private String module;
 	private ModuleManager manager;
 	
-	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, Map values, Map multipleValues, String [] selected) throws Exception {
-		
+	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, Map values, Map multipleValues, String [] selected) throws Exception {		
 		try {
 			request.setCharacterEncoding(XSystem.getEncoding());
 			response.setCharacterEncoding(XSystem.getEncoding());
@@ -154,7 +153,7 @@ public class Module extends DWRBase {
 
 	private Map getChangedParts(Map values) { 
 		Map result = new HashMap(); 
-		if (values == null || manager.isReloadAllUINeeded() || manager.isFormUpload()) {  		
+		if (values == null || manager.isReloadAllUINeeded() || manager.isFormUpload()) {   		
 			result.put("xava_core", "core.jsp");
 		}
 		else {			
@@ -191,7 +190,7 @@ public class Module extends DWRBase {
 
 	private void fillChangedErrorImages(Map result) {
 		if (getContext(request).exists(application, module, MEMBERS_WITH_ERRORS_IN_LAST_REQUEST)) {
-			View view = getView();
+			View view = getView();			
 			Collection lastErrors = (Collection) getContext(request).get(application, module, MEMBERS_WITH_ERRORS_IN_LAST_REQUEST);
 			for (Iterator it=lastErrors.iterator(); it.hasNext(); ) {
 				String member = (String) it.next();

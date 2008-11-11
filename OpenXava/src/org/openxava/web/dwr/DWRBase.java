@@ -18,10 +18,10 @@ class DWRBase {
 	protected static void checkSecurity(HttpServletRequest request, String application, String module) { 
 		ModuleContext context = getContext(request);
 		if (context == null) { // This user have not executed any module yet
-			throw new SecurityException(); 
+			throw new SecurityException("Error 6859"); 
 		}
 		if (!context.exists(application, module, "manager")) { // This user have not execute this module yet 
-			throw new SecurityException();  
+			throw new SecurityException("Error 9876");  
 		}
 	}
 
