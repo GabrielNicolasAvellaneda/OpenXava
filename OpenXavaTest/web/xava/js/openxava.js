@@ -25,6 +25,10 @@ openxava.refreshPage = function(result) {
 		changed = " ERROR";
 		return;
 	}
+	if (result.reload) {
+		window.location.reload();
+		return;
+	}
 	if (result.forwardURL != null) {
 		if (result.forwardInNewWindow) { 		
 			window.open(result.forwardURL); 

@@ -25,14 +25,18 @@ openxava.refreshPage = function(result) {
 		changed = " ERROR";
 		return;
 	}
+	if (result.reload) {
+		window.location.reload();
+		return;
+	}
 	if (result.forwardURL != null) {
 		if (result.forwardInNewWindow) { 		
 			window.open(result.forwardURL); 
 			openxava.form.xava_action.value="";	
 			openxava.form.xava_action_argv.value="";
 			openxava.form.xava_changed_property.value="";
-			openxava.ajaxRequest();
-			return; 
+			openxava.ajaxRequest();			
+			return; 			
 		}
 		else {
 			location.href=result.forwardURL;			

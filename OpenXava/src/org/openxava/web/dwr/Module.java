@@ -73,6 +73,11 @@ public class Module extends DWRBase {
 			result.setStrokeActions(getStrokeActions());
 			return result;
 		}
+		catch (SecurityException ex) {
+			Result result = new Result();
+			result.setReload(true);
+			return result;			
+		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
 			Result result = new Result();

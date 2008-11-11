@@ -17,6 +17,7 @@ public class Result {
 	private String form;
 	private String focusPropertyId;
 	private String error;
+	private boolean reload; 
 	
 	public Result() {
 	}
@@ -87,6 +88,14 @@ public class Result {
 
 	public void setError(String error) {
 		this.error = error;
+	}
+
+	public boolean isReload() {
+		return reload;
+	}
+
+	public void setReload(boolean reload) {
+		this.reload = reload;
 	}
 
 }
