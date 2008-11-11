@@ -51,8 +51,8 @@ public class CustomerTest extends ModuleTestBase {
 		assertCollectionRowCount("deliveryPlaces", 1); // Cuatrero has 1 delivery place
 		execute("Collection.edit", "row=0,viewObject=xava_view" + getSection() + "_deliveryPlaces");
 		assertCollectionRowCount("deliveryPlaces.receptionists", 2); // The delivery place has 2 receptionist
-		execute("Print.generatePdf", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");
-		assertContentTypeForPopup("application/pdf");
+		execute("Print.generatePdf", "viewObject=xava_view" + getSection() + "_deliveryPlaces_receptionists");		
+		assertContentTypeForPopup("application/pdf");		
 	}
 	
 	public void testListActionInNestedCollection() throws Exception {

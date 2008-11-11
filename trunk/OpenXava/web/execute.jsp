@@ -40,13 +40,9 @@ if (manager.isListMode()) {
 
 <%
 manager.setApplicationName(request.getParameter("application"));
-boolean isNew = manager.setModuleName(request.getParameter("module"));
+manager.setModuleName(request.getParameter("module"));
 manager.executeBeforeEachRequestActions(request, errors, messages); 
 org.openxava.view.View view = (org.openxava.view.View) context.get(request, "xava_view");
-if (isNew) {
-	view.setModelName(manager.getModelName());	
-	view.setViewName(manager.getXavaViewName());
-}
 view.setRequest(request);
 view.setErrors(errors);
 view.setMessages(messages);

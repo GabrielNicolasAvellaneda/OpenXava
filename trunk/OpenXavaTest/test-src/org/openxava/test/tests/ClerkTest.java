@@ -55,8 +55,8 @@ public class ClerkTest extends ModuleTestBase {
 		assertValueInList(0, "endingTime", time);
 		
 		// Asserting that java.sql.Time works in JasperReport
-		execute("Print.generatePdf"); 
-		assertContentTypeForPopup("application/pdf");				
+		execute("Print.generatePdf"); 		
+		assertContentTypeForPopup("application/pdf");		
 	}
 
 	private String getCurrentTime() {
