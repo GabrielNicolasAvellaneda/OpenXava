@@ -485,9 +485,9 @@ public class ModuleTestBase extends TestCase {
 		if (element instanceof ClickableElement) {
 			Page newPage = ((ClickableElement) element).click();
 			if (newPage instanceof HtmlPage) {
-				page = (HtmlPage) newPage;				
-				resetForm();
+				page = (HtmlPage) newPage;								
 			}
+			resetForm(); 
 		}
 		else {
 			fail(XavaResources.getString("clickable_not_found", action));  
