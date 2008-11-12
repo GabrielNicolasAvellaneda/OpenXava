@@ -29,6 +29,7 @@ public class Module extends DWRBase {
 	final private static String MESSAGES_LAST_REQUEST ="xava_messagesLastRequest";
 	final private static String ERRORS_LAST_REQUEST ="xava_errorsLastRequest";
 	final private static String MEMBERS_WITH_ERRORS_IN_LAST_REQUEST ="xava_membersWithErrorsInLastRequest";
+	final private static String PAGE_RELOADED_LAST_TIME = "xava_pageReloadedLastTime"; 
 	
 	private static boolean portlet;
 	private static Style style;
@@ -43,12 +44,13 @@ public class Module extends DWRBase {
 		try {
 			request.setCharacterEncoding(XSystem.getEncoding());
 			response.setCharacterEncoding(XSystem.getEncoding());
-			checkSecurity(request, application, module);
-			Users.setCurrent(request);			
 			this.request = request;
 			this.response = response;
 			this.application = application;
 			this.module = module;		
+			checkSecurity(request, application, module);
+			setPageReloadedLastTime(false);
+			Users.setCurrent(request);
 			this.manager = (ModuleManager) getContext(request).get(application, module, "manager");
 			restoreLastMessages();
 			request.setAttribute("style", getStyle());
@@ -75,7 +77,15 @@ public class Module extends DWRBase {
 		}
 		catch (SecurityException ex) {
 			Result result = new Result();
-			result.setReload(true);
+			if (wasPageReloadedLastTime()) {
+				setPageReloadedLastTime(false);
+				result.setError(ex.getMessage());
+			}
+			else {
+				setPageReloadedLastTime(true);			
+				result.setReload(true);
+				request.getSession().invalidate();
+			}
 			return result;			
 		}
 		catch (Exception ex) {
@@ -87,6 +97,17 @@ public class Module extends DWRBase {
 		finally {			
 			if (manager != null) manager.commit(); // If hibernate, jpa, etc is used to render some value here is commit
 		}
+	}
+
+	private void setPageReloadedLastTime(boolean b) { 
+		// Http session is used instead of ox context because context may not exists at this moment
+		if (b) request.getSession().setAttribute(PAGE_RELOADED_LAST_TIME, Boolean.TRUE);
+		else request.getSession().removeAttribute(PAGE_RELOADED_LAST_TIME);
+	}
+	
+	private boolean wasPageReloadedLastTime() { 
+		// Http session is used instead of ox context because context may not exists at this moment
+		return request.getSession().getAttribute(PAGE_RELOADED_LAST_TIME) != null;
 	}
 
 	private Map getStrokeActions() { 
