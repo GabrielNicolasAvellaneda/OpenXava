@@ -15,13 +15,13 @@ class DWRBase {
 		return (ModuleContext) request.getSession().getAttribute("context");
 	}
 
-	protected static void checkSecurity(HttpServletRequest request, String application, String module) { 
+	protected static void checkSecurity(HttpServletRequest request, String application, String module) {		
 		ModuleContext context = getContext(request);
-		if (context == null) { // This user have not executed any module yet
-			throw new SecurityException("Error 6859"); 
+		if (context == null) { // This user has not executed any module yet
+			throw new SecurityException("6859"); 
 		}
-		if (!context.exists(application, module, "manager")) { // This user have not execute this module yet 
-			throw new SecurityException("Error 9876");  
+		if (!context.exists(application, module, "manager")) { // This user has not execute this module yet 
+			throw new SecurityException("9876");  
 		}
 	}
 

@@ -1,37 +1,39 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 3.1beta3 (2008-11-12)
+------------------------------
+- Animated image while module is loading.
+- Cursor changes to wait status while the AJAX request is processed.
+- Keystrokes supported in AJAX.
 - When a session timeout is produced the page is reloaded (instead of an excepction) (for 3.1beta).
+- Upgrade to Servlets 2.4 API; so now requires a Servlet 2.4 container for run (Tomcat 5.x, WebSphere 6.x, etc).
+- ModuleTestBase does not allow to modify a disabled or readonly html element.
+- Support for UTF-8 for web request and response. Now the encoding for request/response is gotten from file.encoding system property.
+- New editor for Timestamp and DATETIME with only one field for date and time. The old one still is available using @Editor("DateTimeSeparatedCalendar") or changing editors.xml.
+- Removed old and unused stuff for language: xava_language session object, Languages controller, Language class and languages.jsp.
+- New methods for obtaing labels for MetaProperty and Labels that do not required request or locale object as argument.
+- Library aspectrt.jar removed from WEB-INF/lib.
+- Money editor shows the currency symbol depending on the server locale.
+- New file custom-editors.js can be used on web/xava/js for defining the javascript for custom editors.
+- Button for popup calendar has a new image.
+- Is.equal admits to compare objects of not compatible types, just it returns false in this case.
 - Fix: In ModuleTestBase tests after a popup windows with a non-html page is shown (as a pdf) the test does not behaves well.
 - Fix: On generating a report (or any other new window action) main page is not refreshed (for 3.1beta).
 - Fix: When a portlet is added to a page it is not shown until the page is refreshed (for 3.1beta).
 - Fix: The module name in browser window is always 'unknow module' (for 3.1beta).
-- Keystrokes supported in AJAX.
 - Fix: View.setEditable for a member is not refreshed in UI by AJAX.
-- Animated image while module is loading.
-- Cursor changes to wait status while the AJAX request is processed.
 - Fix: On change the reference typing the key its displayed collection are not reloaded (for 3.1beta).
-- Upgrade to Servlets 2.4 API; so now requires a Servlet 2.4 container for run (Tomcat 5.x, WebSphere 6.x, etc).
 - Fix: Actions inside views are not refreshed correctly with AJAX.
 - Fix: From time to time when reference objects are created or modified a NullPointerException is thrown returning to the main view.
-- XML components view properties are not refreshed using OX3.1beta.
-- ModuleTestBase does not allow to modify a disabled or readonly html element.
+- Fix: XML components view properties are not refreshed using OX3.1beta.
 - Fix: In IE6 and IE6 a space on top of the module is show, also this space is incremented on click actions. For 3.1beta.
-- Support for UTF-8 for web request and response. Now the encoding for request/response is gotten from file.encoding system property.
 - Fix: JavaScript error in IE6 and IE7 trying to put the focus in a hidden input.
 - Fix: Overlapped reference that explicity does not show the overlaped key fails on AJAX refresh.
 - Fix: Changing language has no effect inside Liferay in OX3.1beta.
-- Removed old and unused stuff for language: xava_language session object, Languages controller, Language class and languages.jsp.
-- New methods for obtaing labels for MetaProperty and Labels that do not required request or locale object as argument.
 - Fix: Users.getCurrent() and Users.getCurrentUserInfo() returns always null in 3.1beta.
-- Library aspectrt.jar removed from WEB-INF/lib.
-- Money editor shows the currency symbol depending on the server locale.
-- New file custom-editors.js can be used on web/xava/js for defining the javascript for custom editors.
 - Fix: HTML_TEXT stereotype does not work in 3.1beta.
 - Fix: FCKEditor not modifying text for FF3.
-- Is.equal admits to compare objects of not compatible types, just it returns false in this case.
-- Button for popup calendar has a new image.
-- New editor for Timestamp and DATETIME with only one field for date and time. The old one still is available using @Editor("DateTimeSeparatedCalendar") or changing editors.xml.
 
 OpenXava 3.1beta2 (2008-10-21)
 ------------------------------
