@@ -5,9 +5,16 @@
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 <%
+request.setCharacterEncoding(XSystem.getEncoding()); 
+response.setCharacterEncoding(XSystem.getEncoding());
+Locales.setCurrent(request);
+request.getSession().setAttribute("xava.user", request.getRemoteUser()); 
 String app = request.getParameter("application");
 String module = request.getParameter("module");
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager)context.get(request, "manager", "org.openxava.controller.ModuleManager");
+manager.setSession(session);
+manager.setApplicationName(request.getParameter("application"));
+manager.setModuleName(request.getParameter("module")); // In order to show the correct description in head
 if (manager.isFormUpload()) {
 	new Module().requestMultipart(request, response, app, module);
 }
@@ -17,11 +24,13 @@ boolean isPortlet = (request.getAttribute("xava.portlet.renderURL") != null);
 Module.setPortlet(isPortlet);
 Module.setStyle(style);
 %>
-
 <% if (!isPortlet) { %>
 <!DOCTYPE HTML PUBLIC "-//w3c//dtd html 4.0 transitional//en">
 
-<%@page import="org.openxava.util.XavaResources"%><html>
+<%@page import="org.openxava.util.XavaResources"%>
+<%@page import="org.openxava.util.Locales"%>
+<%@page import="org.openxava.util.XavaPreferences"%>
+<%@page import="org.openxava.util.XSystem"%><html>
 <head>
 	<title>OpenXava - <%=manager.getModuleDescription() %></title>
 	<link href="<%=request.getContextPath()%>/xava/style/default.css" rel="stylesheet" type="text/css">
@@ -35,20 +44,11 @@ Module.setStyle(style);
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/openxava.js'></script>
 	<% if (style.isNeededToIncludeCalendar()) { %>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/calendar.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/lang/calendar-<%=request.getLocale().getLanguage()%>.js"></script>	
-	<% } %>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/lang/calendar-<%=Locales.getCurrent().getLanguage()%>.js"></script>	
+	<% } %>	
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/calendar.js'></script>
-	<script>
-	window.onload= function() {
-		openxava.application = '<%=app%>';
-		openxava.module = '<%=module%>';
-		openxava.formName = '<%=form%>'; 			
-		openxava.showFiltersMessage = '<xava:message key="show_filters"/>';
-		openxava.hideFiltersMessage = '<xava:message key="hide_filters"/>';
-		openxava.calendarAlign = '<%=browser != null && browser.indexOf("MSIE 6") >= 0?"tr":"Br"%>';
-		openxava.init();		
-	}
-	</script>	
+	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/editors.js'></script> 	
+	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/custom-editors.js'></script>
 <% if (!isPortlet) { %>
 </head>
 <body bgcolor="#ffffff">
@@ -66,9 +66,24 @@ Module.setStyle(style);
 	   </tr>
 	</table>
 	</div>	
-	<div id="xava_core"></div>
+	<div id="xava_core" style="display: inline;">
+		<img src='<%=request.getContextPath()%>/xava/<%=style.getLoadingModuleImage()%>' style="padding: 20px;"/>
+	</div>
 
 <% if (!isPortlet) { %>
 </body>
 </html>
 <% } %>
+
+<script>
+openxava.application = '<%=app%>';
+openxava.module = '<%=module%>';
+openxava.formName = '<%=form%>'; 			
+openxava.showFiltersMessage = '<xava:message key="show_filters"/>';
+openxava.hideFiltersMessage = '<xava:message key="hide_filters"/>';
+openxava.loadingMessage = '<xava:message key="loading"/>';
+openxava.calendarAlign = '<%=browser != null && browser.indexOf("MSIE 6") >= 0?"tr":"Br"%>';
+openxava.init();			
+</script>
+
+
