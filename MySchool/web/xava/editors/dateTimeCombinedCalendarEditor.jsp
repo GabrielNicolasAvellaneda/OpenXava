@@ -2,7 +2,7 @@
 
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
   
-<%
+ <%
 String propertyKey = request.getParameter("propertyKey");
 MetaProperty p = (MetaProperty) request.getAttribute(propertyKey);
 String fvalue = (String) request.getAttribute(propertyKey + ".fvalue");
@@ -15,14 +15,15 @@ if (editable || !label) {
 %>
 <input type="text" name="<%=propertyKey%>" id="<%=propertyKey%>" class=<%=style.getEditor()%> title="<%=p.getDescription(request)%>"
 	align='<%=align%>'
-	maxlength="<%=p.getSize()%>" 
-	size="<%=p.getSize()%>" 	 
-	value="<%=fvalue%>" <%=disabled%>	<%=script%>><%if (editable) {%><input type="image"
+	maxlength="19" 
+	size="19"  	
+	value="<%=fvalue%>"
+	<%=disabled%>
+	<%=script%>><%if (editable) {%><input type="image" 
 	name="<%=propertyKey%>_CALENDAR_BUTTON_"
 	src="<%=request.getContextPath() %>/xava/images/calendar.gif" alt="..."
 	style='vertical-align: middle;'
-	onclick="return showCalendar('<%=propertyKey%>', '<%=org.openxava.util.Dates.dateFormatForJSCalendar(org.openxava.util.Locales.getCurrent())%>');"><%} %>
-	
+	onclick="return showCalendar('<%=propertyKey%>', '<%=org.openxava.util.Dates.dateTimeFormatForJSCalendar(org.openxava.util.Locales.getCurrent())%>', '12');"><%} %>	
 <%
 
 } else {

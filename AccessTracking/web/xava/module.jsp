@@ -12,6 +12,9 @@ request.getSession().setAttribute("xava.user", request.getRemoteUser());
 String app = request.getParameter("application");
 String module = request.getParameter("module");
 org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager)context.get(request, "manager", "org.openxava.controller.ModuleManager");
+manager.setSession(session);
+manager.setApplicationName(request.getParameter("application"));
+manager.setModuleName(request.getParameter("module")); // In order to show the correct description in head
 if (manager.isFormUpload()) {
 	new Module().requestMultipart(request, response, app, module);
 }
@@ -45,18 +48,7 @@ Module.setStyle(style);
 	<% } %>	
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/calendar.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/editors.js'></script> 	
-	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/custom-editors.js'></script> 
-	<script>
-	window.onload= function() {
-		openxava.application = '<%=app%>';
-		openxava.module = '<%=module%>';
-		openxava.formName = '<%=form%>'; 			
-		openxava.showFiltersMessage = '<xava:message key="show_filters"/>';
-		openxava.hideFiltersMessage = '<xava:message key="hide_filters"/>';
-		openxava.calendarAlign = '<%=browser != null && browser.indexOf("MSIE 6") >= 0?"tr":"Br"%>';
-		openxava.init();		
-	}
-	</script>	
+	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/custom-editors.js'></script>
 <% if (!isPortlet) { %>
 </head>
 <body bgcolor="#ffffff">
@@ -74,9 +66,24 @@ Module.setStyle(style);
 	   </tr>
 	</table>
 	</div>	
-	<div id="xava_core" style="display: inline;"></div>
+	<div id="xava_core" style="display: inline;">
+		<img src='<%=request.getContextPath()%>/xava/<%=style.getLoadingModuleImage()%>' style="padding: 20px;"/>
+	</div>
 
 <% if (!isPortlet) { %>
 </body>
 </html>
 <% } %>
+
+<script>
+openxava.application = '<%=app%>';
+openxava.module = '<%=module%>';
+openxava.formName = '<%=form%>'; 			
+openxava.showFiltersMessage = '<xava:message key="show_filters"/>';
+openxava.hideFiltersMessage = '<xava:message key="hide_filters"/>';
+openxava.loadingMessage = '<xava:message key="loading"/>';
+openxava.calendarAlign = '<%=browser != null && browser.indexOf("MSIE 6") >= 0?"tr":"Br"%>';
+openxava.init();			
+</script>
+
+
