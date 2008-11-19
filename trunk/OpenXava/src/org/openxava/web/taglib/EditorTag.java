@@ -9,6 +9,7 @@ import org.openxava.controller.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.view.*;
+import org.openxava.web.style.*;
 
 
 /**
@@ -48,7 +49,15 @@ public class EditorTag extends TagSupport {
 									
 			Messages errors = (Messages) request.getAttribute("errors"); 													
 			boolean throwsChanged=explicitThrowPropertyChanged?this.throwPropertyChanged:view.throwsPropertyChanged(property); 
-			String scriptFoco = "onfocus=xava_focus_property.value='" + propertyKey + "'";
+			Style style = (Style) request.getAttribute("style");			
+			String scriptFoco = "onfocus=\"xava_focus_property.value='" + propertyKey + "'";
+			if (style.getFocusedEditor() != null) {
+				scriptFoco += "; this.className='" + style.getFocusedEditor() 
+					+ "'\" onblur=\"this.className='" + style.getEditor() + "'\"";
+			}
+			else {
+				scriptFoco += "\"";
+			}
 			String script = throwsChanged?
 				"onchange='openxava.throwPropertyChanged(\"" + propertyKey + "\")' ":"";
 			script = script + scriptFoco;

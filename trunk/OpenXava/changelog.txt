@@ -1,6 +1,13 @@
 Change Log for OpenXava project
 ===============================
 
+- Style for standalone module (outside portal) is configurable: Liferay 5.1 (now the default), Liferay4.3 and the OX Classic are available (change it using styleClass and styleCSS in properties/xava.properties). 
+- The xava.properties of template projects contains all available properties.
+- Property formLineSpacing removed from xava.properties. It's better to change CSS files for this.
+- Fix: Yellow background in Liferay does not work (for 3.1beta).
+- The produced pages are XHTML 1.0 instead of HTML 4.0 (only outside portal).
+- Fix over 3.0.3: @RowStyle does not work on Liferay 5.1.
+
 OpenXava 3.1beta3 (2008-11-12)
 ------------------------------
 - Animated image while module is loading.
