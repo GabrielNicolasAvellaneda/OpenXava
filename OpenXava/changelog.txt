@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix over 3.1beta3: Liferay + MS Internet Explorer does not work.
 - Style for standalone module (outside portal) is configurable: Liferay 5.1 (now the default), Liferay4.3 and the OX Classic are available (change it using styleClass and styleCSS in properties/xava.properties). 
 - The xava.properties of template projects contains all available properties.
 - Property formLineSpacing removed from xava.properties. It's better to change CSS files for this.
