@@ -10,8 +10,7 @@ public class Liferay51Style extends Liferay43Style {
 	
 	private static Liferay51Style instance = null;
 
-	
-	
+
 	protected Liferay51Style() {
 	}
 	
@@ -21,11 +20,15 @@ public class Liferay51Style extends Liferay43Style {
 		}
 		return instance;
 	}
+			
+	public String getModuleSpacing() { 
+		return "";		
+	}
 	
 	public String getDetail() {
 		return ""; 		
 	}
-		
+	
 	public String getListHeader() { 
 		return "portlet-section-header results-header";		
 	}

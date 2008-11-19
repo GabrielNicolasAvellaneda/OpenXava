@@ -21,15 +21,33 @@ public class Liferay43Style extends Style {
 		}
 		return instance;
 	}
-		
+	
+	
+	public String getNoPortalModuleStartDecoration(String title) {   
+		return "<div class='portlet' style='margin: 4px'><div class='portlet-topper'><span class='portlet-title'>"
+			+ title + "</span></div><div class='portlet-content'>";
+	}
+	
+	public String getNoPortalModuleEndDecoration() { 
+		return "</div></div>";
+	}				
+			
 	public String getModule() {
 		return ""; 		
 	}
 	
 	public String getModuleSpacing() {
-		return "style='padding: 2px;'";
+		return "style='padding: 2px;'";		
 	}
-		
+	
+	public String getLabel() { 	
+		return super.getLabel() + " liferay-xava-label";
+	} 
+	
+	public String getEditorWrapper() { 
+		return "liferay-xava-editor-wrapper";
+	}
+			
 	public String getButtonBar() {
 		return ""; 
 	}
@@ -185,7 +203,11 @@ public class Liferay43Style extends Style {
 	}	
 			
 	public String getEditor() { 
-		return "form-text";
+		return "form-text";		
+	}
+	
+	public String getFocusedEditor() { 
+		return "form-text focus";
 	}
 	
 	public String getSmallLabel() {

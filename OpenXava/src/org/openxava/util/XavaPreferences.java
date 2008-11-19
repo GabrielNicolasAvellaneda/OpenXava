@@ -88,10 +88,6 @@ public class XavaPreferences {
         return getProperties().getProperty("smtpUserPassword");        
     }
 
-	public String getFormLineSpacing() {
-		return getProperties().getProperty("formLineSpacing", "1");
-	}
-	
 	public String getCSVSeparator() {
 		return getProperties().getProperty("csvSeparator", ";");
 	}	
@@ -100,6 +96,14 @@ public class XavaPreferences {
 		return getProperties().getProperty("persistenceProviderClass", "org.openxava.model.impl.JPAPersistenceProvider").trim();
 	}
 	
+	public String getStyleClass() {
+		return getProperties().getProperty("styleClass", "org.openxava.web.style.Liferay51Style").trim();
+	}
+	
+	public String getStyleCSS() {
+		return getProperties().getProperty("styleCSS", "liferay51/css/everything_unpacked.css").trim();
+	}
+		
 	public boolean isMapFacadeAsEJB() {
 		return "true".equalsIgnoreCase(getProperties().getProperty("mapFacadeAsEJB", "false").trim());
 	}

@@ -804,7 +804,8 @@ public class ModuleManager {
 	
 	public String getModuleDescription() {
 		try {
-			return getMetaModule().getDescription();
+			return getMetaModule().getMetaApplication().getLabel() + " - " +  
+				getMetaModule().getDescription();
 		}
 		catch (Exception ex) {
 			return XavaResources.getString("unknow_module");

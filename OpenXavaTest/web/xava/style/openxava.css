@@ -174,9 +174,17 @@ TD.list-title {
 	border: 1px solid #CCCCCC;
 }
 
+.liferay-xava-editor-wrapper {
+	padding-right: 4px;
+	padding-bottom: 4px;
+}
+	
+.liferay-xava-label {
+	padding-right: 4px;
+}
 
-.editor, .portlet-form-input-field, .form-text {
-	color: #000000;  
+.editor, .portlet-form-input-field {
+	color: #000000;	   	
 }
 
 tr[id|=xava_tr_list] .wpsTableNrmRow {

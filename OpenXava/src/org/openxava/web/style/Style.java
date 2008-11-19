@@ -1,5 +1,8 @@
 package org.openxava.web.style;
 
+import org.apache.commons.logging.*;
+import org.openxava.util.*;
+
 /**
  * This class and its subclasses is used from JSP code to give
  * style to the web applications. <p>
@@ -19,19 +22,43 @@ package org.openxava.web.style;
 
 public class Style {
 	
+	private static Log log = LogFactory.getLog(Style.class);
 	private static Style instance = null;
+	private String cssFile; 
 	
-	
-
-	public Style() {		
+	public Style() { 		
 	}
 	
 	public static Style getInstance() {
 		if (instance == null) {
-			instance = new Style();
+			try {
+				instance = (Style) Class.forName(XavaPreferences.getInstance().getStyleClass()).newInstance();
+				instance.cssFile = XavaPreferences.getInstance().getStyleCSS();
+			}
+			catch (Exception ex) {
+				log.warn(XavaResources.getString("default_style_warning"), ex); 					
+				instance = new Style();
+				instance.cssFile = "default.css";
+			}			
 		}
 		return instance;
 	}		
+	
+	public String getNoPortalModuleStartDecoration(String title) {
+		return "";
+	}
+	
+	public String getNoPortalModuleEndDecoration() {
+		return "";
+	}
+	
+	public String getCssFile() {
+		return cssFile;
+	}
+
+	public String getEditorWrapper() { 
+		return "";
+	}
 	
 	public String getModule() {
 		return "portlet-font";
@@ -237,6 +264,10 @@ public class Style {
 		
 	public String getEditor() { 
 		return "editor";
+	}
+	
+	public String getFocusedEditor() {
+		return null;
 	}
 	
 	public String getLabel() { 

@@ -210,8 +210,7 @@ public class XavaPortlet extends GenericPortlet {
 		 }
 	}
 
-	private Style getStyle(RenderRequest request) {
-		
+	private Style getStyle(RenderRequest request) {		
 		if (style == null) {
 			// Maybe moving this to a XML file (as style-portal.xml) could be
 			// a good idea
