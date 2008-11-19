@@ -86,14 +86,20 @@ Module.setStyle(style);
 <% } %>
 
 <script>
-openxava.application = '<%=app%>';
-openxava.module = '<%=module%>';
-openxava.formName = '<%=form%>'; 			
-openxava.showFiltersMessage = '<xava:message key="show_filters"/>';
-openxava.hideFiltersMessage = '<xava:message key="hide_filters"/>';
-openxava.loadingMessage = '<xava:message key="loading"/>';
-openxava.calendarAlign = '<%=browser != null && browser.indexOf("MSIE 6") >= 0?"tr":"Br"%>';
-openxava.init();			
+openxavaOnLoad = function() { // tmp
+	if (openxava != null && openxava.application == null) {
+		openxava.application = '<%=app%>';
+		openxava.module = '<%=module%>';
+		openxava.formName = '<%=form%>'; 			
+		openxava.showFiltersMessage = '<xava:message key="show_filters"/>';
+		openxava.hideFiltersMessage = '<xava:message key="hide_filters"/>';
+		openxava.loadingMessage = '<xava:message key="loading"/>';
+		openxava.calendarAlign = '<%=browser != null && browser.indexOf("MSIE 6") >= 0?"tr":"Br"%>';
+		openxava.init();		
+	}	
+}
+window.onload = openxavaOnLoad;
+setTimeout('openxavaOnLoad()', 1000);
 </script>
 
 
