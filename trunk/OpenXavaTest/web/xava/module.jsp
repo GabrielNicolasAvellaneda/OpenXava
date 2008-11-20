@@ -86,7 +86,7 @@ Module.setStyle(style);
 <% } %>
 
 <script>
-openxavaOnLoad = function() { // tmp
+openxavaOnLoad = function() { 
 	if (openxava != null && openxava.application == null) {
 		openxava.application = '<%=app%>';
 		openxava.module = '<%=module%>';

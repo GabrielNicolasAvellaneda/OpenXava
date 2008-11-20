@@ -7,8 +7,8 @@
              version="1.0">
              
     <!-- Tomcat + Hypersonic -->  
-    <persistence-unit name="default">
-    	<non-jta-data-source>java:comp/env/jdbc/OpenXavaTestDS</non-jta-data-source>
+    <persistence-unit name="default">    	
+    	<non-jta-data-source>java:comp/env/jdbc/OpenXavaTestDS</non-jta-data-source>    	
     	<class>org.openxava.session.GalleryImage</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>

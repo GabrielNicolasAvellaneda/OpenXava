@@ -437,7 +437,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 				assertRowStyleInList(i, "highlight");				
 				found = true;
 			}
-			else {
+			else { 
 				assertNoRowStyleInList(i);				
 			}						
 		}
