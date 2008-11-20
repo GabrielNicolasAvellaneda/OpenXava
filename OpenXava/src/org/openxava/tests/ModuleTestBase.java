@@ -16,6 +16,7 @@ import org.openxava.tab.*;
 import org.openxava.tab.meta.*;
 import org.openxava.util.*;
 import org.openxava.view.meta.*;
+import org.openxava.web.style.*;
 import org.w3c.dom.*;
 import org.xml.sax.*;
 
@@ -476,6 +477,12 @@ public class ModuleTestBase extends TestCase {
 	 * Execute the action clicking in the link or button.
 	 */
 	protected void execute(String action) throws Exception {
+		// Before click in the buttom, we blur from the current element
+		HtmlElement focusedElement = page.getFocusedElement();
+		if (focusedElement != null) {
+			focusedElement.blur();
+		}
+		
 		throwChangeOfLastNotNotifiedProperty(); 
 		if (page.getHtmlElementsByName("xava.action." + action).size() > 1) { // Action of list/collection
 			execute(action, null);
@@ -518,7 +525,7 @@ public class ModuleTestBase extends TestCase {
 	protected void assertFocusOn(String name) throws Exception {		
 		String expectedFocusProperty = getPropertyPrefix() + name;
 		HtmlElement element = page.getFocusedElement(); 
-		String focusProperty = element==null?null:element.getAttributeValue("name");				
+		String focusProperty = element==null?null:element.getAttributeValue("name");
 		assertEquals(XavaResources.getString("focus_in_unexpected_place"), expectedFocusProperty, focusProperty);		
 	}
 	
@@ -949,8 +956,8 @@ public class ModuleTestBase extends TestCase {
 		HtmlTableRow tableRow = getTableRow(tableId, row);
 		String style = tableRow.getAttribute("class");
 		int countTokens = new StringTokenizer(style).countTokens();
-		// countTokens <= 1 because the row has at least a style in addition to the special one
-		style = countTokens <= 1?"":Strings.lastToken(style);
+		int defaultStyleCountTokens = new StringTokenizer(getDefaultRowStyle(row)).countTokens(); 
+		style = countTokens <= defaultStyleCountTokens?"":Strings.lastToken(style); 
 		assertEquals(XavaResources.getString("row_style_not_excepted"), expectedStyle, style);		
 	}
 	
@@ -965,9 +972,13 @@ public class ModuleTestBase extends TestCase {
 	private void assertNoRowStyle(String tableId, int row) throws Exception {
 		HtmlTableRow tableRow = getTableRow(tableId, row);
 		String style = tableRow.getAttribute("class");
-		int countTokens = new StringTokenizer(style).countTokens();
-		// countTokens <= 1 because the row has at least a style in addition to the special one 
-		assertTrue(XavaResources.getString("row_style_not_excepted"), countTokens <= 1);
+		assertEquals(XavaResources.getString("row_style_not_excepted"), 
+			new StringTokenizer(getDefaultRowStyle(row)).countTokens(),
+			new StringTokenizer(style).countTokens());
+	}
+
+	private String getDefaultRowStyle(int row) {
+		return (row % 2 == 0)?Style.getInstance().getListPair():Style.getInstance().getListOdd();
 	}
 	
 	private int getListRowCount(String tableId, String message) throws Exception {

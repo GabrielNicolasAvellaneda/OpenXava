@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Now template projects do not ask by datasource name on create a new project.
+- Upgrade to Hibernate 3.3.1, Hibernate Annotations 3.4.0, Hibernate EntityManager 3.4.0 and Hibernate Validator 3.1.0.
 - Fix: Focus is not the correct place after an event (for 3.1beta).
 - Fix over 3.1beta3: Liferay + MS Internet Explorer does not work.
 - Style for standalone module (outside portal) is configurable: Liferay 5.1 (now the default), Liferay4.3 and the OX Classic are available (change it using styleClass and styleCSS in properties/xava.properties). 

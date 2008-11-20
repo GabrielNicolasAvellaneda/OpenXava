@@ -45,5 +45,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/jta.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/servlet-api.jar"/>
 	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/dwr.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/slf4j-api.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/slf4j-jdk14.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
