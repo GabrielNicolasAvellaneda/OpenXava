@@ -8,7 +8,7 @@
 <project name="CreateNewProject" default="createNewProject" basedir=".">
 
 	<input addproperty="project" message="What is your project name?"/>
-	<input addproperty="datasource" message="What is the datasource?" defaultValue="${project}DS"/>
+	<property name="datasource" value="${project}DS"/>
 	
 	<target name="createNewProject">		
 		<mkdir dir="../${project}"/>

@@ -8,7 +8,7 @@
 <project name="CrearNuevoProject" default="crearNuevoProyecto" basedir=".">
 
 	<input addproperty="proyecto" message="¿Cuál es el nombre de tu proyecto?"/>
-	<input addproperty="fuentedatos" message="¿Cuál es tu fuente de datos?" defaultValue="${proyecto}DS"/>	
+	<property name="fuentedatos" value="${proyecto}DS"/>	
 		
 	<target name="crearNuevoProyecto">		
 		<mkdir dir="../${proyecto}"/>
