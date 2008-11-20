@@ -223,7 +223,7 @@ public class ModuleTestBase extends TestCase {
 
 	private void focus(HtmlElement element) throws Exception {
 		element.focus();
-		Thread.sleep(20);
+		Thread.sleep(20);		
 	}
 
 	private void setRadioButtonsValue(String name, String value) {
@@ -515,10 +515,10 @@ public class ModuleTestBase extends TestCase {
 		}
 	}
 
-	protected void assertFocusOn(String name) throws Exception {
+	protected void assertFocusOn(String name) throws Exception {		
 		String expectedFocusProperty = getPropertyPrefix() + name;
-		HtmlElement element = page.getFocusedElement();
-		String focusProperty = element==null?null:element.getAttributeValue("name");
+		HtmlElement element = page.getFocusedElement(); 
+		String focusProperty = element==null?null:element.getAttributeValue("name");				
 		assertEquals(XavaResources.getString("focus_in_unexpected_place"), expectedFocusProperty, focusProperty);		
 	}
 	
