@@ -49,7 +49,8 @@ public class EditorTag extends TagSupport {
 									
 			Messages errors = (Messages) request.getAttribute("errors"); 													
 			boolean throwsChanged=explicitThrowPropertyChanged?this.throwPropertyChanged:view.throwsPropertyChanged(property); 
-			Style style = (Style) request.getAttribute("style");			
+			Style style = (Style) request.getAttribute("style");
+			/* tmp
 			String scriptFoco = "onfocus=\"xava_focus_property.value='" + propertyKey + "'";
 			if (style.getFocusedEditor() != null) {
 				scriptFoco += "; this.className='" + style.getFocusedEditor() 
@@ -58,6 +59,17 @@ public class EditorTag extends TagSupport {
 			else {
 				scriptFoco += "\"";
 			}
+			*/
+			// tmp ini
+			String scriptFoco = "onblur=\"xava_focus_property.value='" + propertyKey + "'";
+			if (style.getFocusedEditor() != null) {
+				scriptFoco += "; this.className='" + style.getEditor() 
+					+ "'\" onfocus=\"this.className='" + style.getFocusedEditor() + "'\"";
+			}
+			else {
+				scriptFoco += "\"";
+			}			
+			// tmp fin
 			String script = throwsChanged?
 				"onchange='openxava.throwPropertyChanged(\"" + propertyKey + "\")' ":"";
 			script = script + scriptFoco;

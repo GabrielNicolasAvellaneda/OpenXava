@@ -5,7 +5,6 @@ import java.rmi.*;
 import java.util.*;
 
 import javax.ejb.*;
-import javax.portlet.*;
 import javax.servlet.http.*;
 
 import org.apache.commons.logging.*;

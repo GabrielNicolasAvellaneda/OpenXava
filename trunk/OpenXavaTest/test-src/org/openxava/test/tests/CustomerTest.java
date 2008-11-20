@@ -84,7 +84,7 @@ public class CustomerTest extends ModuleTestBase {
 		execute("CRUD.new");
 		assertValue("city", "");
 		setValue("address.zipCode", "46540");
-		assertValue("city", "46540 ");
+		assertValue("city", "46540 ");		
 		setValue("address.city", "EL PUIG");
 		assertValue("city", "46540 EL PUIG");
 	}
