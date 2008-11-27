@@ -19,7 +19,26 @@ import org.openxava.util.*;
  */
 
 public class Servlets {
-	
+
+
+	/**
+	 * tmp
+	 */
+	public static void setCharacterEncoding(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			request.setCharacterEncoding(XSystem.getEncoding());
+		}
+		catch (Exception ex) {
+			ex.printStackTrace(); // tmp log
+		}
+		try {
+			response.setCharacterEncoding(XSystem.getEncoding());
+		}
+		catch (Exception ex) {
+			ex.printStackTrace(); // tmp log
+		}
+	}
+
 	
 	
 	/**

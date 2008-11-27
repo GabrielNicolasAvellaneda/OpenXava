@@ -6,7 +6,7 @@
 
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
 	margin: 0;
-	padding: 0; 
+	padding: 0;
 }
 
 table {
@@ -45,9 +45,13 @@ body {
 }
 
 html {
+	height: 100%;
 }
 
 body {
+	background: #fff;
+	/* font-size: 11px; Original Liferay */
+	font-size: 12px;
 }
 
 body.portal-popup {
@@ -182,9 +186,12 @@ body.staging {
 /* ---------- Main content body ---------- */
 
 #wrapper {
+	background: transparent url(../images/common/body_bg.png) repeat-x 0 0;
 }
 
 #content-wrapper {
+	margin: 0 auto;
+	width: 90%;
 }
 
 .portal-iframe #content-wrapper {
@@ -194,9 +201,26 @@ body.staging {
 /* ---------- Banner ---------- */
 
 #banner {
+	background: transparent url(../images/common/banner_bg.jpg) no-repeat 20% 0;
+	height: 100px;
+	top: -1px;
 }
 
-#banner .logo {
+#banner h1.logo {
+	display: block;
+	font-size: 2em;
+	left: 5%;
+	margin: 25px 0 0;
+	padding: 0;
+	position: absolute;
+}
+
+#banner .logo a {
+	text-decoration: none;
+}
+
+.ie6 #banner .logo {
+	zoom: 1;
 }
 
 /* ---------- Alerts and popups ---------- */
@@ -324,11 +348,11 @@ hr, .separator {
 
 /* ---------- Dragging/sorting indicators ---------- */
 
-.lfr-grid.dragging {
+#content-wrapper #layout-grid.dragging {
 	border-collapse: separate;
 }
 
-.lfr-grid.dragging .lfr-column {
+#content-wrapper #layout-grid.dragging .lfr-column {
 	border: 3px double #828F95;
 }
 
@@ -1038,51 +1062,189 @@ img.ui-datepicker-trigger {
 
 /* ---------- Tags ---------- */
 
-.ui-tags {
+.ui-tags-container {
+	width: 100%;
+}
+
+.ui-tags-content td {
+	vertical-align: top;
+}
+
+.ui-tags-content li.ui-tags-vocabulary, li.ui-tags-item {
+	border-bottom: 1px #D3D7DB solid;
+	font-size: 13px;
+	font-weight: bold;
+	height: 35px;
+	line-height: 35px;
+	list-style: none;
+}
+
+.ui-tags-content ul {
+	margin: 0;
+	padding: 0;
+}
+
+.ui-tags-vocabulary-list a {
+	color: #369;
 	display: block;
-	padding: 5px 0 2px;
+	padding-left: 20px;
+	text-decoration: none;
+	zoom: 1;
 }
 
-.ui-tags:after {
-	clear: both;
-	content: ".";
-	display: block;
-	height: 0;
-	visibility: hidden;
-}
-
-.ie .ui-tags {
-	height: 1%;
-}
-
-.ui-tags.empty {
+.ui-tags-vocabulary-edit {
+	background: #F0F2F4;
 	display: none;
 }
 
-.ui-tags .ui-tag {
-	background: #DFF4FF;
-	border: 1px solid #A7CEDF;
+.ui-tags-vocabulary-entries li.ui-tags-item {
+	background: #fff;
+	cursor: pointer;
+}
+
+.ui-tags-item a {
+	color: #369;
+	font-size: 11px;
+	padding: 0;
+	text-decoration: underline;
+}
+
+.ui-tags-item span {
+	padding-left: 20px;
+}
+
+.ui-tags-vocabulary-list a:hover, .ui-tags-vocabulary-list .selected, .ui-tags-item.selected {
+	background: #6F7D83 !important;
+	color: #fff;
+}
+
+.ui-tags-vocabulary-entries .ui-tags-item.odd {
+	background: #F0F2F4;
+}
+
+.ui-tags-vocabulary-list .selected a, .ui-tags-item.selected a {
+	color: #fff;
+}
+
+.ui-tags-category-item.selected > span {
+	font-weight: bold;
+}
+
+.ui-tags-vocabulary-entries .active-area {
+	background: #FFC !important;
+}
+
+.ui-tags-vocabulary-entries {
+	border-right: 1px #D3D7DB solid;
+	height: 300px;
+	min-width: 200px;
+	overflow: auto;
+}
+
+.ui-tags-vocabulary-list {
+	border-left: 1px #D3D7DB solid;
+	border-right: 1px #D3D7DB solid;
+	height: 300px;
+	overflow: auto;
+	overflow-x: hidden;
+}
+
+.ui-tags-properties {
+	width: 300px;
+}
+
+.ui-tags .nowrap {
+	empty-cells: show;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.ui-tags-search-bar {
+	background: #F0F2F4;
+	border: 1px #D3D7DB solid;
+	border-left: 0;
+	border-right: 0;
+	padding: 10px 20px 10px 20px;
+}
+
+.ui-tags-toolbar {
+	background: #F6F8FB;
+	border-bottom: 1px #848B95 solid;
+}
+
+.ui-tags-buttons {
 	float: left;
-	margin-bottom: 3px;
-	margin-right: 3px;
-	padding: 3px 20px 3px 6px;
-	padding-right: 20px;
-	position: relative;
+	padding: 5px 0px 5px 20px;
 }
 
-.ui-tags .ui-tag:hover {
-	border-color: #AEB8BC;
+.ui-tags-actions {
+	padding: 5px;
+	text-align: right;
 }
 
-.ui-tags .ui-tag-delete {
+.ui-tags-actions input,   .ui-tags-actions div,   .ui-tags-actions select {
+	margin-left: 5px;
+}
+
+.ui-tags-buttons .button {
+	background: transparent url(../images/common/page.png) no-repeat scroll 0pt 50%;
+	color: #9EA8AD;
+	cursor: pointer;
 	display: block;
-	padding: 6px;
-	position: absolute;
-	right: 0;
-	top: 3px;
+	float: left;
+	margin-right: 5px;
+	min-width: 70px;
+	padding: 3px 3px 3px 20px;
 }
 
-.ui-tags .ui-tag-delete span {
+.ui-tags-buttons .selected {
+	background: #CFD5D7 url(../images/common/page.png) no-repeat scroll 0pt 50%;
+	color: #0F0F0F;
+	font-weight: bold;
+}
+
+.ui-tags-vocabulary-edit {
+	padding: 5px 5px 20px 20px;
+}
+
+.ui-tags-vocabulary-edit .ui-tags-close {
+	text-align: right;
+}
+
+.ui-tags-vocabulary-edit .ui-tags-close span {
+	cursor: pointer;
+}
+
+.ui-tags-property-line {
+	display: none;
+}
+
+.ui-tags-footer {
+	border-top: 1px #848B95 solid;
+	margin-top: 5px;
+	padding: 10px 0 0 20px;
+}
+
+.ui-tags-vocabulary-name {
+	display: none;
+}
+
+#ui-tags-entry-messages {
+	margin: 10px;
+}
+
+.ui-tags-treeview-container {
+	padding: 5px;
+}
+
+.ui-tags-treeview-container ul, .ui-tags-treeview-container li {
+	list-style: none;
+}
+
+.ui-tags-edit-vocabulary input {
+}
+
+span.ui-tags-delete {
 	background: url(../images/application/close_small.png) no-repeat 0 0;
 	cursor: pointer;
 	display: block;
@@ -1092,23 +1254,11 @@ img.ui-datepicker-trigger {
 	width: 7px;
 }
 
-.ui-tags .ui-tag-delete:hover span {
-	background-position: 0 100%;
-}
-
-.ui-tags-input {
-	width: 200px;
-}
-
-.tags-vocabulary-name span {
-	font-weight: bold;
-	padding-bottom: 3px;
-}
-
 /* ---------- Treeview ---------- */
 
 .treeview {
 	cursor: pointer;
+	font-size: 13px;
 }
 
 .treeview, .treeview ul {
@@ -1118,39 +1268,35 @@ img.ui-datepicker-trigger {
 }
 
 .treeview ul {
-	background-color: #FFF;
+	background-color: white;
 	margin-top: 4px;
 }
 
-.treeview li {
-	list-style-type: none;
-}
-
 .treeview .hitarea {
-	background: url(../images/trees/treeview_bg.png) -64px -25px no-repeat;
 	cursor: pointer;
 	float: left;
-	height: 16px;
+	height: 1px;
 	margin-left: -16px;
-	margin-top: 3px;
 	width: 16px;
 }
 
-.ie6 .hitarea {
+/* fix for IE6 */
+
+* html .hitarea {
 	display: inline;
+	float: none;
 }
 
 .treeview li {
-	background: url(../images/trees/treeview_line.png) 0 0 no-repeat;
 	margin: 0;
-	padding: 0 0 3px 16px;
+	padding: 4px 0 5px 16px;
 }
 
 .treeview a.selected {
 	background-color: #eee;
 }
 
-.treeview-control {
+#treecontrol {
 	display: none;
 	margin: 1em 0;
 }
@@ -1172,7 +1318,6 @@ img.ui-datepicker-trigger {
 }
 
 .treeview li.lastCollapsable, .treeview li.lastExpandable {
-	background-image: url(../images/trees/treeview_bg.png);
 }
 
 .treeview li.lastCollapsable {
@@ -1188,18 +1333,14 @@ img.ui-datepicker-trigger {
 }
 
 .treeview .placeholder {
-	background: url(../images/application/loading_indicator.gif) 0 0 no-repeat;
+	background: url(../images/trees/ajax_loader.gif) 0 0 no-repeat;
 	display: block;
 	height: 16px;
 	width: 16px;
 }
 
-.treeview span {
-	padding-left: 3px;
-}
-
 .filetree li {
-	padding: 3px 0 2px 16px;
+	padding: 4px 0 5px 16px;
 }
 
 .filetree span.folder, .filetree span.file {
@@ -1208,33 +1349,49 @@ img.ui-datepicker-trigger {
 }
 
 .filetree span.folder {
-	background: url(../images/trees/minus.png) 0 0 no-repeat;
+	background: url(../images/trees/folder.png) 0 0 no-repeat;
 }
 
 .filetree li.expandable span.folder {
-	background: url(../images/trees/plus.png) 0 0 no-repeat;
+	background: url(../images/trees/folder_closed.png) 0 0 no-repeat;
 }
 
 .filetree span.file {
-	background: url(../images/trees/page.png) 0 0 no-repeat;
+	background: url(../images/trees/file.gif) 0 0 no-repeat;
+}
+
+.treeview .hover-up {
+	border-bottom: 2px solid black;
+}
+
+.treeview .hover-down {
+	border-top: 2px solid black;
+}
+
+.treeview .hover-folder {
+	background: #FFC url(../images/trees/folder.png) no-repeat scroll 0 0 !important;
 }
 
 /* This CSS controls the column layout. It is not recommended that you change this file. */
 
 /* ---------- Wrapper ---------- */
 
-.lfr-grid {
+#content-wrapper #layout-grid {
 	border-collapse: collapse;
 	width: 100%;
 }
 
-.lfr-grid .lfr-column {
+#layout-grid .lfr-column {
 	padding: 5px;
+}
+
+.lfr-grid {
+	width: 100%;
 }
 
 /* ---------- Column widths ---------- */
 
-.lfr-grid.dragging .lfr-column {
+#layout-grid.dragging .lfr-column {
 	height: 100px;
 	min-height: 100px;
 }
@@ -1348,10 +1505,17 @@ img.ui-datepicker-trigger {
 /* ---------- Main navigation ---------- */
 
 #navigation {
+	background: #020509;
+	border-top: 1px solid #304049;
+	margin: 0 auto 20px;
+	min-height: 2.2em;
+	width: 100%;
 }
 
 #navigation ul {
 	margin: 0 auto;
+	min-height: 2em;
+	width: 90%;
 }
 
 #navigation ul:after {
@@ -1372,9 +1536,35 @@ img.ui-datepicker-trigger {
 }
 
 #navigation li {
+	border: 1px solid #304049;
+	display: inline;
 	float: left;
-	list-style-type: none;
+	margin: -1px 0 0 -1px;
 	position: relative;
+}
+
+#navigation a {
+	color: #D3DADD;
+}
+
+#navigation li a {
+	display: block;
+	padding: 5px 20px;
+	text-decoration: none;
+}
+
+#navigation li a span {
+	text-decoration: none;
+}
+
+#navigation li.selected a, #navigation li a:hover {
+	background-color: #1E2529;
+	color: #fff;
+}
+
+#navigation li.selected a span {
+	background: url(../images/navigation/bullet_selected.png) no-repeat 0 50%;
+	padding-left: 10px;
 }
 
 #navigation .child-menu {
@@ -1639,6 +1829,73 @@ img.ui-datepicker-trigger {
 
 /* ---------- Add/remove page ---------- */
 
+.js #navigation .enter-page {
+	background-color: #1E2529;
+	padding: 2px;
+}
+
+.js #navigation .enter-page a {
+	background: none;
+	display: inline;
+	font-weight: bold;
+	padding: 0;
+}
+
+.js #navigation .enter-page .save-page {
+	background: url(../images/dock/my_place_current.png) no-repeat 0 50%;
+	margin: 0 10px;
+	padding-left: 20px;
+}
+
+.ie.js #navigation .enter-page .save-page {
+	display: inline-block;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	vertical-align: top;
+}
+
+.js #navigation .enter-page .cancel-page {
+	display: none;
+}
+
+.ie.js #navigation .enter-page {
+	padding: 0;
+}
+
+.ie.js #navigation .enter-page input.text {
+	margin: 2px;
+	padding: 3px 1px;
+}
+
+.js #navigation {
+	position: relative;
+}
+
+.js #add-page {
+	background: #020509;
+	border: 1px solid #304049;
+	border-bottom: none;
+	bottom: 100%;
+	font-weight: bold;
+	position: absolute;
+	right: 5%;
+}
+
+.js #add-page a {
+	display: block;
+	text-decoration: none;
+}
+
+.js #add-page a span {
+	background: url(../images/common/add.png) no-repeat 0 50%;
+	display: block;
+	margin-left: 15px;
+	padding: 5px 20px 2px;
+}
+
+.js #add-page a:hover span {
+}
+
 .js .delete-tab {
 	background: url(../images/common/remove.png) no-repeat 42%;
 	cursor: pointer;
@@ -1667,11 +1924,21 @@ img.ui-datepicker-trigger {
 	padding-left: 10px;
 }
 
+.nav-menu-style-1 {
+}
+
+.nav-menu-style-2 {
+}
+
 /* This CSS sets the default styles for portlets. */
 
 /* ---------- Portlet wrapper and icons ---------- */
 
 .portlet {
+	background: #fff;
+	border: 2px solid #828F95;
+	margin: 0 0 10px;
+	padding: 3px;
 	text-align: left;
 }
 
@@ -1684,6 +1951,9 @@ body.portlet {
 }
 
 .portlet-topper {
+	background: #D3DADD;
+	border-bottom: 1px solid #AEB8BC;
+	padding-right: 40px;
 	position: relative;
 }
 
@@ -1691,6 +1961,11 @@ body.portlet {
 	display: block;
 	font-weight: bold;
 	min-width: 50%;
+	padding: 5px;
+}
+
+.ie .portlet-title {
+	padding-bottom: 5px;
 }
 
 .portlet-title img {
@@ -1961,26 +2236,159 @@ body.portlet {
 .portlet-menu-caption {
 }
 
+/* ---------- Calendar portlet ---------- */
+
+.portlet-calendar .calendar-container {
+	background-position: 0 99%;
+	background-repeat: repeat-x;
+	border: 1px solid #D7D7D7;
+	overflow: hidden;
+}
+
+.ie .portlet-calendar .calendar-container {
+	background-position: 0 98%;
+}
+
+.portlet-calendar .calendar-day {
+	width: 209px;
+}
+
+.portlet-calendar .calendar-day .day-text {
+	background: #727C81;
+	color: #fff;
+	font-size: 1.6em;
+}
+
+.portlet-calendar .calendar-day .day-number {
+	border: 1px solid #fff;
+	border-bottom: none;
+	font-size: 110px;
+	font-weight: normal;
+	padding-bottom: 12px;
+}
+
+.portlet-calendar .calendar-container .taglib-calendar {
+	background: #fff;
+	border-left: 1px solid #D7D7D7;
+	margin-left: -1px;
+	padding-left: 0;
+}
+
+.taglib-calendar tr.portlet-section-header th, .taglib-calendar tr td {
+	border: none;
+}
+
+.taglib-calendar tr td a {
+	background-color: #F0F5F7;
+	border: 1px solid #fff;
+	border-bottom: none;
+	border-left: none;
+	display: block;
+	height: 15px;
+	padding: 5px 0pt;
+}
+
+.taglib-calendar table td {
+	border-width: 0;
+}
+
+.taglib-calendar tr td a:hover {
+	background-color: #727C81;
+	color: #fff;
+}
+
+.taglib-calendar .calendar-current-day, .taglib-calendar .calendar-current-day a {
+	background-color: #fff;
+}
+
+.taglib-calendar .calendar-current-day a {
+	border: 1px solid #727C81;
+	color: #369;
+	text-decoration: underline;
+}
+
+.portlet-calendar .taglib-calendar tr td.calendar-current-day a:hover, .portlet-calendar .taglib-calendar tr td.calendar-current-day a:focus {
+	background-color: #DFF4FF;
+	border-color: #AEB8BC;
+	color: #06c;
+}
+
+.portlet-calendar .taglib-calendar td.calendar-current-day a span {
+	border: none;
+}
+
+.taglib-calendar tr td.calendar-inactive {
+	background-color: #fff;
+	color: #B5BFC4;
+}
+
+.taglib-calendar tr th {
+	border-bottom-color: #D7D7D7;
+}
+
+.taglib-calendar tr.portlet-section-header th, .taglib-calendar tr td {
+	border-left: none;
+	border-right: none;
+}
+
+.ie .taglib-calendar tr td.first a {
+	border-right: none;
+}
+
 /* ---------- Miscellaneous portlet styles ---------- */
+
+.journal-template-error .scroll-pane {
+	border: 1px solid #BFBFBF;
+	max-height: 200px;
+	min-height: 50px;
+	overflow: auto;
+	width: 100%;
+}
+
+.journal-template-error .scroll-pane .inner-scroll-pane {
+	min-width: 104%;
+}
+
+.journal-template-error .scroll-pane .error-line {
+	background: #fdd;
+}
+
+.journal-template-error .scroll-pane pre {
+	margin: 0px;
+	white-space: pre;
+}
+
+.journal-template-error .scroll-pane pre span {
+	background: #B5BFC4;
+	border-right: 1px solid #BFBFBF;
+	display: block;
+	float: left;
+	margin-right: 4px;
+	padding-right: 4px;
+	text-align: right;
+	width: 40px;
+}
+
+.message-board-code {
+	background: #fff;
+	font-family: "Courier New",Courier,Monaco,monospace;
+	white-space: pre;
+}
+
+.message-board-code-lines {
+	margin-right: 12px;
+}
 
 .restricted, .restricted td {
 	background: #fdd;
 	border: none;
 }
 
-.restricted.alt td {
-	background-color: #FFC0C0;
-}
-
-.restricted.hover td {
-	background-color: #D3BDC0;
-}
-
 .restricted * {
 	color: #727C81;
 }
 
-.restricted td.col-1, .restricted.alt td.col-1 {
+.restricted .col-1 {
 	background-image: url(../images/messages/error.png);
 	background-position: 5px 50%;
 	background-repeat: no-repeat;
@@ -2044,88 +2452,6 @@ body.portlet {
 
 .lfr-actions .lfr-trigger li.last {
 	border-bottom: none;
-}
-
-.lfr-actions.portlet-options {
-	background: none;
-	border: none;
-	float: left;
-}
-
-.lfr-actions.portlet-options .lfr-trigger {
-	padding: 0;
-}
-
-.lfr-actions.portlet-options .lfr-trigger strong {
-	min-width: 0;
-	padding: 1px 3px;
-}
-
-.lfr-actions.portlet-options .lfr-trigger strong span {
-	background-image: url(../images/portlet/options.png);
-	background-position: 0 0;
-	display: block;
-	height: 16px;
-	padding: 0;
-	text-indent: -9999em;
-	width: 16px;
-}
-
-.portlet-options.visible .lfr-trigger strong span {
-	background-image: url(../images/portlet/options_selected.png);
-}
-
-/* ---------- Calendar taglib ---------- */
-
-.taglib-calendar tr.portlet-section-header th, .taglib-calendar tr td {
-	border: none;
-}
-
-.taglib-calendar tr td a {
-	background-color: #F0F5F7;
-	border: 1px solid #fff;
-	border-bottom: none;
-	border-left: none;
-	display: block;
-	height: 15px;
-	padding: 5px 0pt;
-}
-
-.taglib-calendar table td {
-	border-width: 0;
-}
-
-.taglib-calendar tr td a:hover {
-	background-color: #727C81;
-	color: #fff;
-}
-
-.taglib-calendar .calendar-current-day, .taglib-calendar .calendar-current-day a {
-	background-color: #fff;
-}
-
-.taglib-calendar .calendar-current-day a {
-	border: 1px solid #727C81;
-	color: #369;
-	text-decoration: underline;
-}
-
-.taglib-calendar tr td.calendar-inactive {
-	background-color: #fff;
-	color: #B5BFC4;
-}
-
-.taglib-calendar tr th {
-	border-bottom-color: #D7D7D7;
-}
-
-.taglib-calendar tr.portlet-section-header th, .taglib-calendar tr td {
-	border-left: none;
-	border-right: none;
-}
-
-.ie .taglib-calendar tr td.first a {
-	border-right: none;
 }
 
 /* This CSS sets the default styles for forms. */
@@ -2887,201 +3213,7 @@ input.focus, textarea.focus, .ie6 input.focus, .ie6 textarea.focus {
 	color: #4d4033;
 }
 
-/* ---------- Base styles ---------- */
-
-html {
-	height: 100%;
-}
-
-body {
-	background: #fff;
-	/* font-size: 11px; Original Liferay */
-	font-size: 12px;
-}
-
-/* ---------- Main content body ---------- */
-
-#wrapper {
-	background: transparent url(../images/common/body_bg.png) repeat-x 0 0;
-}
-
-#content-wrapper {
-	margin: 0 auto;
-	width: 90%;
-}
-
-/* ---------- Banner ---------- */
-
-#banner {
-	background: transparent url(../images/common/banner_bg.jpg) no-repeat 20% 0;
-	height: 100px;
-	top: -1px;
-}
-
-#banner h1.logo {
-	display: block;
-	font-size: 2em;
-	left: 5%;
-	margin: 25px 0 0;
-	padding: 0;
-	position: absolute;
-}
-
-#banner .logo a {
-	text-decoration: none;
-}
-
-.ie6 #banner .logo {
-	zoom: 1;
-}
-
-
-/* ---------- Main navigation ---------- */
-
-#navigation {
-	background: #020509;
-	border-top: 1px solid #304049;
-	margin: 0 auto 20px;
-	min-height: 2.2em;
-	width: 100%;
-}
-
-#navigation ul {
-	min-height: 2em;
-	width: 90%;
-}
-
-#navigation li {
-	border: 1px solid #304049;
-	display: inline;
-	margin: -1px 0 0 -1px;
-	padding: 0;
-}
-
-#navigation a {
-	color: #D3DADD;
-	padding: 5px 20px;
-}
-
-#navigation li a {
-	display: block;
-	text-decoration: none;
-}
-
-#navigation li a span {
-	text-decoration: none;
-}
-
-#navigation li.selected a, #navigation li a:hover {
-	background-color: #1E2529;
-	color: #fff;
-}
-
-#navigation li.selected a span {
-	background: url(../images/navigation/bullet_selected.png) no-repeat 0 50%;
-	padding-left: 10px;
-}
-
-
-/* ---------- Add/remove page ---------- */
-
-.js #navigation .enter-page {
-	background-color: #1E2529;
-	padding: 2px;
-}
-
-.js #navigation .enter-page a {
-	background: none;
-	display: inline;
-	font-weight: bold;
-	padding: 0;
-}
-
-.js #navigation .enter-page .save-page {
-	background: url(../images/dock/my_place_current.png) no-repeat 0 50%;
-	margin: 0 10px;
-	padding-left: 20px;
-}
-
-.ie.js #navigation .enter-page .save-page {
-	display: inline-block;
-	padding-bottom: 5px;
-	padding-top: 5px;
-	vertical-align: top;
-}
-
-.js #navigation .enter-page .cancel-page {
-	display: none;
-}
-
-.ie.js #navigation .enter-page {
-	padding: 0;
-}
-
-.ie.js #navigation .enter-page input.text {
-	margin: 2px;
-	padding: 3px 1px;
-}
-
-.js #navigation {
-	position: relative;
-}
-
-.js #add-page {
-	background: #020509;
-	border: 1px solid #304049;
-	border-bottom: none;
-	bottom: 100%;
-	font-weight: bold;
-	position: absolute;
-	right: 5%;
-}
-
-.js #add-page a {
-	display: block;
-	text-decoration: none;
-}
-
-.js #add-page a span {
-	background: url(../images/common/add.png) no-repeat 0 50%;
-	display: block;
-	margin-left: 15px;
-	padding: 5px 20px 2px;
-}
-
-.js #add-page a:hover span {
-}
-
-/*------ Navigation portlet ------*/
-
-.nav-menu-style-1 {
-}
-
-.nav-menu-style-2 {
-}
-
-/* ---------- Portlet wrapper and icons ---------- */
-
-.portlet {
-	background: #fff;
-	border: 2px solid #828F95;
-	margin: 0 0 10px;
-	padding: 3px;
-}
-
-.portlet-topper {
-	background: #D3DADD;
-	border-bottom: 1px solid #AEB8BC;
-	padding-right: 40px;
-}
-
-.portlet-title {
-	padding: 5px;
-}
-
-.ie .portlet-title {
-	padding-bottom: 5px;
-}
+/* ---------- Special styling for just the Classic theme ---------- */
 
 body.lfr-has-sidebar {
 	padding-left: 0;
