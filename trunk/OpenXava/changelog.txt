@@ -1,6 +1,11 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix over 3.1beta3: moneyEditor fails when Locale.getDefault does not contain the country.
+- Fix: 3.1beta does not work on WebSphere 6.0 and WebSphere Portal 6.0
+- Fix: 3.1beta does not work with JDK 1.4.
+- Fix: JavaScript calendar in catalan inside Liferay does not show special character. calendar-ca.js has been adapted to UTF-8.
+- Fix: fckEditor.jsp indide portal throws JSP file "/xava/editors/../imports.jsp" not found.
 - Now template projects do not ask by datasource name on create a new project.
 - Upgrade to Hibernate 3.3.1, Hibernate Annotations 3.4.0, Hibernate EntityManager 3.4.0 and Hibernate Validator 3.1.0.
 - Fix: Focus is not the correct place after an event (for 3.1beta).

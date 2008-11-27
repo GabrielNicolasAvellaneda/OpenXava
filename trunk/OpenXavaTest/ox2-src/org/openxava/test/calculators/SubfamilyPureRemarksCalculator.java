@@ -3,6 +3,7 @@ package org.openxava.test.calculators;
 import java.rmi.*;
 
 import org.openxava.calculators.*;
+import org.openxava.test.model.xejb.*;
 
 /**
  * @author Javier Paniza

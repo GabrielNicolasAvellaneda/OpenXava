@@ -50,14 +50,7 @@ public class EditorTag extends TagSupport {
 			Messages errors = (Messages) request.getAttribute("errors"); 													
 			boolean throwsChanged=explicitThrowPropertyChanged?this.throwPropertyChanged:view.throwsPropertyChanged(property); 
 			Style style = (Style) request.getAttribute("style");
-			String scriptFoco = "onblur=\"xava_focus_property.value='" + propertyKey + "'";
-			if (style.getFocusedEditor() != null) {
-				scriptFoco += "; this.className='" + style.getEditor() 
-					+ "'\" onfocus=\"this.className='" + style.getFocusedEditor() + "'\"";
-			}
-			else {
-				scriptFoco += "\"";
-			}			
+			String scriptFoco = "onblur=\"xava_focus_property.value='" + propertyKey + "'\"";
 			String script = throwsChanged?
 				"onchange='openxava.throwPropertyChanged(\"" + propertyKey + "\")' ":"";
 			script = script + scriptFoco;

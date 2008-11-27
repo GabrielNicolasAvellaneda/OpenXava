@@ -25,6 +25,7 @@ public class Style {
 	private static Log log = LogFactory.getLog(Style.class);
 	private static Style instance = null;
 	private String cssFile; 
+	private boolean insidePortal; 
 	
 	public Style() { 		
 	}
@@ -42,7 +43,15 @@ public class Style {
 			}			
 		}
 		return instance;
-	}		
+	}
+	
+	public String [] getNoPortalModuleJsFiles() { 
+		return null;
+	}
+	
+	public String getInitThemeScript() { 
+		return null;
+	}
 	
 	public String getNoPortalModuleStartDecoration(String title) {
 		return "";
@@ -266,10 +275,6 @@ public class Style {
 		return "editor";
 	}
 	
-	public String getFocusedEditor() {
-		return null;
-	}
-	
 	public String getLabel() { 
 		return "portlet-form-field-label";
 	}
@@ -413,5 +418,15 @@ public class Style {
 	public boolean isNeededToIncludeCalendar() {
 		return true;
 	}
+	
+	public boolean isInsidePortal() {
+		return insidePortal;
+	}
+
+	public void setInsidePortal(boolean insidePortal) {
+		this.insidePortal = insidePortal;
+	}
+
+	
 	
 }

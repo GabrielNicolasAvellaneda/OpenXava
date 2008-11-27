@@ -7,11 +7,11 @@
 for (int i=0; i<10; i++) {
 %>
 <tr>
-	<th align='left' class="<%=style.getLabel()%>">
+	<td align='left' class="<%=style.getLabel()%>">
 		<xava:message key="enter_new_image"/>
-	</th>
+	</td>
 	<td>
-		<input name = "newImage" class=<%=style.getEditor()%> type="file" size='60'/>
+		<input name = "newImage" class="<%=style.getEditor()%>" type="file" size='60'/>
 	</td>
 </tr>
 <%

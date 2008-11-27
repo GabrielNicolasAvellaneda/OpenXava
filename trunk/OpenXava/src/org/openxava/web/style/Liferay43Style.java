@@ -22,16 +22,24 @@ public class Liferay43Style extends Style {
 		return instance;
 	}
 	
+	public String [] getNoPortalModuleJsFiles() {  // tmp
+		return Liferay51Style.getInstance().getNoPortalModuleJsFiles(); // tmp
+	}
+	
+	public String getInitThemeScript() {
+		return Liferay51Style.getInstance().getInitThemeScript(); // tmp
+	}
+
 	
 	public String getNoPortalModuleStartDecoration(String title) {   
 		return "<div class='portlet' style='margin: 4px'><div class='portlet-topper'><span class='portlet-title'>"
-			+ title + "</span></div><div class='portlet-content'>";
+			+ title + "</span></div><div class='portlet-content'>"; 
 	}
 	
 	public String getNoPortalModuleEndDecoration() { 
 		return "</div></div>";
-	}				
-			
+	}					
+	
 	public String getModule() {
 		return ""; 		
 	}
@@ -206,10 +214,6 @@ public class Liferay43Style extends Style {
 		return "form-text";		
 	}
 	
-	public String getFocusedEditor() { 
-		return "form-text focus";
-	}
-	
 	public String getSmallLabel() {
 		return "''";
 	}
@@ -292,15 +296,19 @@ public class Liferay43Style extends Style {
 	}
 	
 	public String getRestoreImage() {
-		return "/html/themes/classic/images/portlet/minimize.png";
+		return getImagesFolder() + "portlet/minimize.png"; 
 	}
 	
 	public String getMaximizeImage() {
-		return "/html/themes/classic/images/portlet/maximize.png";
+		return getImagesFolder() + "portlet/maximize.png"; 
 	}
 	
 	public String getRemoveImage() {
-		return "/html/themes/classic/images/portlet/close.png";
+		return getImagesFolder() + "portlet/close.png";
+	}
+	
+	public String getLoadingModuleImage() { 
+		return getImagesFolder() + "progress_bar/loading_animation.gif";
 	}
 	
 	public boolean isApplySelectedStyleToCellInList() {
@@ -309,6 +317,10 @@ public class Liferay43Style extends Style {
 	
 	public String getSectionLinkStyle() { 
 		return "position: static;";
+	}
+	
+	protected String getImagesFolder() { 
+		return isInsidePortal()?"/html/themes/classic/images/":"style/liferay43/images/"; 
 	}
 	
 }

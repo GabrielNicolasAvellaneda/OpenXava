@@ -65,6 +65,7 @@ openxava.refreshPage = function(result) {
 		}						
 		openxava.formName = "xava_form";
 		openxava.form = document.getElementById(openxava.formName);
+		if (openxava.initTheme != null) openxava.initTheme();		
 		if (result.focusPropertyId != null) { 
 			document.getElementById("xava_focus_property_id").value = result.focusPropertyId;
 			openxava.setFocus();		

@@ -179,11 +179,7 @@ String urlComparatorsCombo = "comparatorsCombo.jsp" // in this way because websp
 	+ "&index=" + iConditionValues; 
 %>
 <jsp:include page="<%=urlComparatorsCombo%>" />
-<%
-String styleScript = style.getFocusedEditor() == null?"":"onfocus=\"this.className='" + 
-		style.getFocusedEditor() + "'\" onblur=\"this.className='" + style.getEditor() + "'\"";
-%>
-<input name="<%=prefix%>conditionValue.<%=iConditionValues%>" class=<%=style.getEditor()%> type="text" maxlength="<%=maxLength%>" size="<%=length%>" value="<%=value%>" <%=styleScript%>/>
+<input name="<%=prefix%>conditionValue.<%=iConditionValues%>" class=<%=style.getEditor()%> type="text" maxlength="<%=maxLength%>" size="<%=length%>" value="<%=value%>"/>
 	<% } %>
 </th>
 <% 
