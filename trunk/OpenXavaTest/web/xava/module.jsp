@@ -15,11 +15,7 @@ if (request.getAttribute("style") == null) {
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 <%
-/* tmp
-request.setCharacterEncoding(XSystem.getEncoding()); 
-response.setCharacterEncoding(XSystem.getEncoding());
-*/
-Servlets.setCharacterEncoding(request, response); // tmp
+Servlets.setCharacterEncoding(request, response);
 Locales.setCurrent(request);
 request.getSession().setAttribute("xava.user", request.getRemoteUser()); 
 String app = request.getParameter("application");
@@ -93,10 +89,8 @@ Module.setStyle(style);
 	</div>	
 	<div id="xava_core" style="display: inline;">
 		<%
-		// tmp ini
 		String loadingImage=style.getLoadingModuleImage();
 		if (!loadingImage.startsWith("/")) loadingImage = request.getContextPath() + "/xava/" + style.getLoadingModuleImage();
-		// tmp ini
 		%>
 		<img src='<%=loadingImage%>' style="padding: 20px;"/>
 	</div>

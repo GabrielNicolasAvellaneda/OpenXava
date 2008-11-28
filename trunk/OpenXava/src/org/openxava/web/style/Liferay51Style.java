@@ -27,13 +27,7 @@ public class Liferay51Style extends Liferay43Style {
 	
 	public String [] getNoPortalModuleJsFiles() { 
 		return noPortalModuleJsFiles;
-	}
-	
-	public String getInitThemeScript() { 
-		return "jQuery( function() { Liferay.Util.addInputType(); Liferay.Util.addInputFocus(); } );";
-	}
-	
-
+	}	
 			
 	public String getModuleSpacing() { 
 		return "";		
@@ -92,7 +86,7 @@ public class Liferay51Style extends Liferay43Style {
 		return "<li style='position: static;'>"; // position: static needed for ie7 
 	}
 	
-	protected String getImagesFolder() { // tmp
+	protected String getImagesFolder() {
 		return isInsidePortal()?"/html/themes/classic/images/":"style/liferay51/images/"; 
 	}
 	

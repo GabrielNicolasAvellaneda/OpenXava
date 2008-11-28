@@ -22,14 +22,14 @@ public class Liferay43Style extends Style {
 		return instance;
 	}
 	
-	public String [] getNoPortalModuleJsFiles() {  // tmp
-		return Liferay51Style.getInstance().getNoPortalModuleJsFiles(); // tmp
+	public String [] getNoPortalModuleJsFiles() {  
+		// The JS for Liferay 5.1 works fine for Liferay 4.3
+		return Liferay51Style.getInstance().getNoPortalModuleJsFiles(); 
 	}
 	
-	public String getInitThemeScript() {
-		return Liferay51Style.getInstance().getInitThemeScript(); // tmp
+	public String getInitThemeScript() { 
+		return "jQuery( function() { Liferay.Util.addInputType(); Liferay.Util.addInputFocus(); } );";
 	}
-
 	
 	public String getNoPortalModuleStartDecoration(String title) {   
 		return "<div class='portlet' style='margin: 4px'><div class='portlet-topper'><span class='portlet-title'>"
