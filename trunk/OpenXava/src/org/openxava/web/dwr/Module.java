@@ -40,7 +40,7 @@ public class Module extends DWRBase {
 	private String module;
 	private ModuleManager manager;
 	
-	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, Map values, Map multipleValues, String [] selected) throws Exception {		
+	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, Map values, Map multipleValues, String [] selected) throws Exception {
 		try {
 			request.setCharacterEncoding(XSystem.getEncoding());
 			response.setCharacterEncoding(XSystem.getEncoding());
@@ -147,7 +147,7 @@ public class Module extends DWRBase {
 		result.setForm(nextManager.getForm());
 	}	
 	
-	public void requestMultipart(HttpServletRequest request, HttpServletResponse response, String application, String module) throws Exception { 
+	public void requestMultipart(HttpServletRequest request, HttpServletResponse response, String application, String module) throws Exception {
 		request(request, response, application, module, null, null, null);
 		memorizeLastMessages();		
 	}	
