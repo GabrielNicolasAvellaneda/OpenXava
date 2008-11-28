@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Visual style tested and refined for IE6, IE7, FF2 and FF3 in Liferay 5.1, 4.3, 4.1, JetSpeed2 and WPS6.
 - Fix over 3.1beta3: moneyEditor fails when Locale.getDefault does not contain the country.
 - Fix: 3.1beta does not work on WebSphere 6.0 and WebSphere Portal 6.0
 - Fix: 3.1beta does not work with JDK 1.4.

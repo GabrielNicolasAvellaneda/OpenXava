@@ -6,6 +6,7 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import org.apache.commons.logging.*;
 import org.directwebremoting.util.*;
 import org.openxava.util.*;
 
@@ -19,23 +20,27 @@ import org.openxava.util.*;
  */
 
 public class Servlets {
-
+	
+	private static Log log = LogFactory.getLog(Servlets.class);
 
 	/**
-	 * tmp
+	 * Try to set the system encoding as encoding for the request and response. <p>
+	 * 
+	 * The system encoding is obtained from {@link org.openxava.util.XSystem#getEncoding()}.<br>
+	 * If fails a log messages is produced, but no exception is thrown.<br>
 	 */
 	public static void setCharacterEncoding(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			request.setCharacterEncoding(XSystem.getEncoding());
 		}
 		catch (Exception ex) {
-			ex.printStackTrace(); // tmp log
+			log.warn(XavaResources.getString("set_character_encoding_error", "request"));
 		}
 		try {
 			response.setCharacterEncoding(XSystem.getEncoding());
 		}
 		catch (Exception ex) {
-			ex.printStackTrace(); // tmp log
+			log.warn(XavaResources.getString("set_character_encoding_error", "response"));
 		}
 	}
 

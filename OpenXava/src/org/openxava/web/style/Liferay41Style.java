@@ -289,7 +289,7 @@ public class Liferay41Style extends Style {
 		return false;
 	}
 		
-	public String getLoadingModuleImage() { // tmp 
+	public String getLoadingModuleImage() {  
 		return "/html/themes/classic/images/progress_bar/loading_animation.gif";
 	}
 	
