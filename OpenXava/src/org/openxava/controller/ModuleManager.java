@@ -94,10 +94,11 @@ public class ModuleManager {
 	 * HTML action bind to the current form.
 	 * @return
 	 */
-	public String getFormAction(ServletRequest request) {		
-		Object portletActionURL = request.getAttribute(
-			isFormUpload()?"xava.portlet.uploadActionURL":"xava.portlet.actionURL"); 		
-		return portletActionURL == null?"":"action='" + portletActionURL + "'";				
+	public String getFormAction(HttpServletRequest request) {		
+		if (!isFormUpload()) return "";
+		Object portletActionURL = request.getSession().getAttribute("xava.portlet.uploadActionURL");
+		if (portletActionURL == null) return "";
+		return "action='" +  portletActionURL + "'";
 	}
 
 	public Collection getMetaActions() {

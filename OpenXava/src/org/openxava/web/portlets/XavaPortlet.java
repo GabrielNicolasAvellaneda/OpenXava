@@ -80,12 +80,9 @@ public class XavaPortlet extends GenericPortlet {
 	 * @throws IOException
 	 */
 	public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {		
-		Object style = getStyle(request);		
+		Object style = getStyle(request);			
 		request.setAttribute("style", style);
-				
-		request.setAttribute("xava.portlet.renderURL", response.createRenderURL());
-		request.setAttribute("xava.portlet.actionURL", createActionURL(request, response)); 
-		request.setAttribute("xava.portlet.uploadActionURL", response.createActionURL()); 
+		request.getPortletSession().setAttribute("xava.portlet.uploadActionURL", response.createActionURL(), PortletSession.APPLICATION_SCOPE);
 		request.setAttribute("xava.upload.fileitems", request.getPortletSession().getAttribute("xava.upload.fileitems", PortletSession.APPLICATION_SCOPE)); 
 		request.setAttribute("xava.upload.error", request.getPortletSession().getAttribute("xava.upload.error", PortletSession.APPLICATION_SCOPE));
 		request.getPortletSession().removeAttribute("xava.upload.fileitems", PortletSession.APPLICATION_SCOPE);
@@ -148,19 +145,7 @@ public class XavaPortlet extends GenericPortlet {
 		PortletRequestDispatcher rd = context.getRequestDispatcher(moduleURL);		
 		rd.include(request, response);		
 	}
-	
-	
-	
-	private Object createActionURL(RenderRequest request, RenderResponse response) {
-		// WebSphere Portal and Liferay work fine with actionURL
-		// JetSpeed/2.0 works with actionURL but it fails on navigate at some point
-		// 		using Internet Explorer, because state is holded in url, and IE does
-		// 		not admit long URLs. Therefore we use renderURL instead.
-		// Jetspeed/2.1.2 fails with IE as Jetspeed/2.0, but it does not support renderURL.
-		//		That is in Jetspeed/2.1.2 you need to use Firefox. (Or improve OX)
-		return isJetspeed20(request)?response.createRenderURL():response.createActionURL();				
-	}
-
+		
 	private boolean isJetspeed20(PortletRequest request) {
 		return request.getPortalContext().getPortalInfo().indexOf("Jetspeed/2.0") >= 0;
 	}
@@ -180,7 +165,7 @@ public class XavaPortlet extends GenericPortlet {
 
 	private void processMultipartForm(ActionRequest request) {
 		String contentType = request.getContentType();		
-		if (contentType != null && contentType.indexOf("multipart/form-data") >= 0) {				
+		if (contentType != null && contentType.indexOf("multipart/form-data") >= 0) {
 			try {
 				DiskFileItemFactory factory = new DiskFileItemFactory();
 				factory.setSizeThreshold(1000000);		

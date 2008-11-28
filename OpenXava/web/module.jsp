@@ -29,7 +29,8 @@ if (manager.isFormUpload()) {
 }
 String form = manager.getForm();
 String browser = request.getHeader("user-agent");
-boolean isPortlet = (request.getAttribute("xava.portlet.renderURL") != null);
+boolean isPortlet = (session.getAttribute("xava.portlet.uploadActionURL") != null);
+
 Module.setPortlet(isPortlet);
 Module.setStyle(style);
 %>
