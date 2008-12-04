@@ -14,30 +14,30 @@ public class InvoiceDetailValue
 
    private static final long serialVersionUID = 1L;
 
-   private java.math.BigDecimal amount;
-   private boolean amountHasBeenSet = false;
    private boolean free;
    private boolean freeHasBeenSet = false;
+   private java.math.BigDecimal amount;
+   private boolean amountHasBeenSet = false;
+   private java.math.BigDecimal unitPrice;
+   private boolean unitPriceHasBeenSet = false;
    private java.lang.String oid;
    private boolean oidHasBeenSet = false;
    private java.lang.String remarks;
    private boolean remarksHasBeenSet = false;
    private java.util.Date deliveryDate;
    private boolean deliveryDateHasBeenSet = false;
-   private java.math.BigDecimal unitPrice;
-   private boolean unitPriceHasBeenSet = false;
    private int quantity;
    private boolean quantityHasBeenSet = false;
    private int serviceType;
    private boolean serviceTypeHasBeenSet = false;
    private long product_number;
    private boolean product_numberHasBeenSet = false;
+   private int soldBy_number;
+   private boolean soldBy_numberHasBeenSet = false;
    private int invoice_year;
    private boolean invoice_yearHasBeenSet = false;
    private int invoice_number;
    private boolean invoice_numberHasBeenSet = false;
-   private int soldBy_number;
-   private boolean soldBy_numberHasBeenSet = false;
 
    public InvoiceDetailValue()
    {
@@ -46,32 +46,46 @@ public class InvoiceDetailValue
    //TODO Cloneable is better than this !
    public InvoiceDetailValue( InvoiceDetailValue otherValue )
    {
-	  this.amount = otherValue.amount;
-	  amountHasBeenSet = true;
 	  this.free = otherValue.free;
 	  freeHasBeenSet = true;
+	  this.amount = otherValue.amount;
+	  amountHasBeenSet = true;
+	  this.unitPrice = otherValue.unitPrice;
+	  unitPriceHasBeenSet = true;
 	  this.oid = otherValue.oid;
 	  oidHasBeenSet = true;
 	  this.remarks = otherValue.remarks;
 	  remarksHasBeenSet = true;
 	  this.deliveryDate = otherValue.deliveryDate;
 	  deliveryDateHasBeenSet = true;
-	  this.unitPrice = otherValue.unitPrice;
-	  unitPriceHasBeenSet = true;
 	  this.quantity = otherValue.quantity;
 	  quantityHasBeenSet = true;
 	  this.serviceType = otherValue.serviceType;
 	  serviceTypeHasBeenSet = true;
 	  this.product_number = otherValue.product_number;
 	  product_numberHasBeenSet = true;
+	  this.soldBy_number = otherValue.soldBy_number;
+	  soldBy_numberHasBeenSet = true;
 	  this.invoice_year = otherValue.invoice_year;
 	  invoice_yearHasBeenSet = true;
 	  this.invoice_number = otherValue.invoice_number;
 	  invoice_numberHasBeenSet = true;
-	  this.soldBy_number = otherValue.soldBy_number;
-	  soldBy_numberHasBeenSet = true;
    }
 
+   public boolean isFree()
+   {
+	  return this.free;
+   }
+
+   public void setFree( boolean free )
+   {
+	  this.free = free;
+	  freeHasBeenSet = true;
+   }
+
+   public boolean freeHasBeenSet(){
+	  return freeHasBeenSet;
+   }
    public java.math.BigDecimal getAmount()
    {
 	  return this.amount;
@@ -86,19 +100,19 @@ public class InvoiceDetailValue
    public boolean amountHasBeenSet(){
 	  return amountHasBeenSet;
    }
-   public boolean isFree()
+   public java.math.BigDecimal getUnitPrice()
    {
-	  return this.free;
+	  return this.unitPrice;
    }
 
-   public void setFree( boolean free )
+   public void setUnitPrice( java.math.BigDecimal unitPrice )
    {
-	  this.free = free;
-	  freeHasBeenSet = true;
+	  this.unitPrice = unitPrice;
+	  unitPriceHasBeenSet = true;
    }
 
-   public boolean freeHasBeenSet(){
-	  return freeHasBeenSet;
+   public boolean unitPriceHasBeenSet(){
+	  return unitPriceHasBeenSet;
    }
    public java.lang.String getOid()
    {
@@ -142,20 +156,6 @@ public class InvoiceDetailValue
    public boolean deliveryDateHasBeenSet(){
 	  return deliveryDateHasBeenSet;
    }
-   public java.math.BigDecimal getUnitPrice()
-   {
-	  return this.unitPrice;
-   }
-
-   public void setUnitPrice( java.math.BigDecimal unitPrice )
-   {
-	  this.unitPrice = unitPrice;
-	  unitPriceHasBeenSet = true;
-   }
-
-   public boolean unitPriceHasBeenSet(){
-	  return unitPriceHasBeenSet;
-   }
    public int getQuantity()
    {
 	  return this.quantity;
@@ -198,6 +198,20 @@ public class InvoiceDetailValue
    public boolean product_numberHasBeenSet(){
 	  return product_numberHasBeenSet;
    }
+   public int getSoldBy_number()
+   {
+	  return this.soldBy_number;
+   }
+
+   public void setSoldBy_number( int soldBy_number )
+   {
+	  this.soldBy_number = soldBy_number;
+	  soldBy_numberHasBeenSet = true;
+   }
+
+   public boolean soldBy_numberHasBeenSet(){
+	  return soldBy_numberHasBeenSet;
+   }
    public int getInvoice_year()
    {
 	  return this.invoice_year;
@@ -226,26 +240,12 @@ public class InvoiceDetailValue
    public boolean invoice_numberHasBeenSet(){
 	  return invoice_numberHasBeenSet;
    }
-   public int getSoldBy_number()
-   {
-	  return this.soldBy_number;
-   }
-
-   public void setSoldBy_number( int soldBy_number )
-   {
-	  this.soldBy_number = soldBy_number;
-	  soldBy_numberHasBeenSet = true;
-   }
-
-   public boolean soldBy_numberHasBeenSet(){
-	  return soldBy_numberHasBeenSet;
-   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("amount=" + getAmount() + " " + "free=" + isFree() + " " + "oid=" + getOid() + " " + "remarks=" + getRemarks() + " " + "deliveryDate=" + getDeliveryDate() + " " + "unitPrice=" + getUnitPrice() + " " + "quantity=" + getQuantity() + " " + "serviceType=" + getServiceType() + " " + "product_number=" + getProduct_number() + " " + "invoice_year=" + getInvoice_year() + " " + "invoice_number=" + getInvoice_number() + " " + "soldBy_number=" + getSoldBy_number());
+	  str.append("free=" + isFree() + " " + "amount=" + getAmount() + " " + "unitPrice=" + getUnitPrice() + " " + "oid=" + getOid() + " " + "remarks=" + getRemarks() + " " + "deliveryDate=" + getDeliveryDate() + " " + "quantity=" + getQuantity() + " " + "serviceType=" + getServiceType() + " " + "product_number=" + getProduct_number() + " " + "soldBy_number=" + getSoldBy_number() + " " + "invoice_year=" + getInvoice_year() + " " + "invoice_number=" + getInvoice_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -298,6 +298,7 @@ public class InvoiceDetailValue
 	  {
 		 InvoiceDetailValue that = (InvoiceDetailValue) other;
 		 boolean lEquals = true;
+		 lEquals = lEquals && this.free == that.free;
 		 if( this.amount == null )
 		 {
 			lEquals = lEquals && ( that.amount == null );
@@ -306,7 +307,14 @@ public class InvoiceDetailValue
 		 {
 			lEquals = lEquals && this.amount.equals( that.amount );
 		 }
-		 lEquals = lEquals && this.free == that.free;
+		 if( this.unitPrice == null )
+		 {
+			lEquals = lEquals && ( that.unitPrice == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.unitPrice.equals( that.unitPrice );
+		 }
 		 if( this.remarks == null )
 		 {
 			lEquals = lEquals && ( that.remarks == null );
@@ -323,20 +331,12 @@ public class InvoiceDetailValue
 		 {
 			lEquals = lEquals && this.deliveryDate.equals( that.deliveryDate );
 		 }
-		 if( this.unitPrice == null )
-		 {
-			lEquals = lEquals && ( that.unitPrice == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.unitPrice.equals( that.unitPrice );
-		 }
 		 lEquals = lEquals && this.quantity == that.quantity;
 		 lEquals = lEquals && this.serviceType == that.serviceType;
 		 lEquals = lEquals && this.product_number == that.product_number;
+		 lEquals = lEquals && this.soldBy_number == that.soldBy_number;
 		 lEquals = lEquals && this.invoice_year == that.invoice_year;
 		 lEquals = lEquals && this.invoice_number == that.invoice_number;
-		 lEquals = lEquals && this.soldBy_number == that.soldBy_number;
 
 		 return lEquals;
 	  }
@@ -348,9 +348,11 @@ public class InvoiceDetailValue
 
    public int hashCode(){
 	  int result = 17;
+      result = 37*result + (free ? 0 : 1);
+
       result = 37*result + ((this.amount != null) ? this.amount.hashCode() : 0);
 
-      result = 37*result + (free ? 0 : 1);
+      result = 37*result + ((this.unitPrice != null) ? this.unitPrice.hashCode() : 0);
 
       result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
 
@@ -358,19 +360,17 @@ public class InvoiceDetailValue
 
       result = 37*result + ((this.deliveryDate != null) ? this.deliveryDate.hashCode() : 0);
 
-      result = 37*result + ((this.unitPrice != null) ? this.unitPrice.hashCode() : 0);
-
       result = 37*result + (int) quantity;
 
       result = 37*result + (int) serviceType;
 
       result = 37*result + (int)(product_number^(product_number>>>32));
 
+      result = 37*result + (int) soldBy_number;
+
       result = 37*result + (int) invoice_year;
 
       result = 37*result + (int) invoice_number;
-
-      result = 37*result + (int) soldBy_number;
 
 	  return result;
    }

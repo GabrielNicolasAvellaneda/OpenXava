@@ -12,8 +12,8 @@ public class IssueData
 {
 
    private static final long serialVersionUID = 1L;
-   private java.lang.String id;
    private java.lang.String _Description;
+   private java.lang.String id;
    private java.lang.Integer _Worker_id;
 
    public IssueData()
@@ -22,8 +22,8 @@ public class IssueData
 
    public IssueData( IssueData otherData )
    {
-      setId(otherData.getId());
       set_Description(otherData.get_Description());
+      setId(otherData.getId());
       set_Worker_id(otherData.get_Worker_id());
 
    }
@@ -33,15 +33,6 @@ public class IssueData
      return pk;
    }
 
-   public java.lang.String getId()
-   {
-      return this.id;
-   }
-   public void setId( java.lang.String id )
-   {
-      this.id = id;
-   }
-
    public java.lang.String get_Description()
    {
       return this._Description;
@@ -49,6 +40,15 @@ public class IssueData
    public void set_Description( java.lang.String _Description )
    {
       this._Description = _Description;
+   }
+
+   public java.lang.String getId()
+   {
+      return this.id;
+   }
+   public void setId( java.lang.String id )
+   {
+      this.id = id;
    }
 
    public java.lang.Integer get_Worker_id()
@@ -64,7 +64,7 @@ public class IssueData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("id=" + getId() + " " + "_Description=" + get_Description() + " " + "_Worker_id=" + get_Worker_id());
+      str.append("_Description=" + get_Description() + " " + "id=" + getId() + " " + "_Worker_id=" + get_Worker_id());
       str.append('}');
 
       return(str.toString());
@@ -77,14 +77,6 @@ public class IssueData
          IssueData lTest = (IssueData) pOther;
          boolean lEquals = true;
 
-         if( this.id == null )
-         {
-            lEquals = lEquals && ( lTest.id == null );
-         }
-         else
-         {
-            lEquals = lEquals && this.id.equals( lTest.id );
-         }
          if( this._Description == null )
          {
             lEquals = lEquals && ( lTest._Description == null );
@@ -92,6 +84,14 @@ public class IssueData
          else
          {
             lEquals = lEquals && this._Description.equals( lTest._Description );
+         }
+         if( this.id == null )
+         {
+            lEquals = lEquals && ( lTest.id == null );
+         }
+         else
+         {
+            lEquals = lEquals && this.id.equals( lTest.id );
          }
          if( this._Worker_id == null )
          {
@@ -114,9 +114,9 @@ public class IssueData
    {
       int result = 17;
 
-      result = 37*result + ((this.id != null) ? this.id.hashCode() : 0);
-
       result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
+
+      result = 37*result + ((this.id != null) ? this.id.hashCode() : 0);
 
       result = 37*result + ((this._Worker_id != null) ? this._Worker_id.hashCode() : 0);
 

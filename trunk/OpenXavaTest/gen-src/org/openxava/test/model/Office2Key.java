@@ -17,41 +17,41 @@ public class Office2Key
 
    private static final long serialVersionUID = 1L;
 
-   public int number;
    public int zoneNumber;
+   public int number;
    public java.lang.Integer _MainWarehouse_number;
 
    public Office2Key()
    {
    }
 
-   public Office2Key( int number,int zoneNumber,java.lang.Integer _MainWarehouse_number )
+   public Office2Key( int zoneNumber,int number,java.lang.Integer _MainWarehouse_number )
    {
-      this.number = number;
       this.zoneNumber = zoneNumber;
+      this.number = number;
       this._MainWarehouse_number = _MainWarehouse_number;
    }
 
-   public int getNumber()
-   {
-      return number;
-   }
    public int getZoneNumber()
    {
       return zoneNumber;
+   }
+   public int getNumber()
+   {
+      return number;
    }
    public java.lang.Integer get_MainWarehouse_number()
    {
       return _MainWarehouse_number;
    }
 
-   public void setNumber(int number)
-   {
-      this.number = number;
-   }
    public void setZoneNumber(int zoneNumber)
    {
       this.zoneNumber = zoneNumber;
+   }
+   public void setNumber(int number)
+   {
+      this.number = number;
    }
    public void set_MainWarehouse_number(java.lang.Integer _MainWarehouse_number)
    {
@@ -61,8 +61,8 @@ public class Office2Key
    public int hashCode()
    {
       int _hashCode = 0;
-         _hashCode += (int)this.number;
          _hashCode += (int)this.zoneNumber;
+         _hashCode += (int)this.number;
          if (this._MainWarehouse_number != null) _hashCode += this._MainWarehouse_number.hashCode();
 
       return _hashCode;
@@ -82,8 +82,8 @@ public class Office2Key
       }
       else
       {
-         eq = eq && this.number == pk.number;
          eq = eq && this.zoneNumber == pk.zoneNumber;
+         eq = eq && this.number == pk.number;
          if( this._MainWarehouse_number != null )
          {
             eq = eq && this._MainWarehouse_number.equals( pk.get_MainWarehouse_number() );

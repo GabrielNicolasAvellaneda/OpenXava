@@ -18,8 +18,8 @@ public abstract class JourneyCMP
       {
          dataHolder = new org.openxava.test.model.JourneyData();
 
-         dataHolder.set_Description( get_Description() );
          dataHolder.setOid( getOid() );
+         dataHolder.set_Description( get_Description() );
          dataHolder.set_Name( get_Name() );
          dataHolder.set_AverageSpeed_oid( get_AverageSpeed_oid() );
 
@@ -92,8 +92,8 @@ public abstract class JourneyCMP
       JourneyValue = new org.openxava.test.model.JourneyValue();
       try
          {
-            JourneyValue.setDescription( getDescription() );
             JourneyValue.setOid( getOid() );
+            JourneyValue.setDescription( getDescription() );
             JourneyValue.setName( getName() );
             JourneyValue.setAverageSpeed_oid( getAverageSpeed_oid() );
 
@@ -124,13 +124,13 @@ public abstract class JourneyCMP
 
 /* Value Objects END */
 
-   public abstract java.lang.String get_Description() ;
-
-   public abstract void set_Description( java.lang.String _Description ) ;
-
    public abstract java.lang.String getOid() ;
 
    public abstract void setOid( java.lang.String oid ) ;
+
+   public abstract java.lang.String get_Description() ;
+
+   public abstract void set_Description( java.lang.String _Description ) ;
 
    public abstract java.lang.String get_Name() ;
 

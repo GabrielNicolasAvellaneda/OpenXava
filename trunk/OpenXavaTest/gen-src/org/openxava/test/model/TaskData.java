@@ -12,14 +12,14 @@ public class TaskData
 {
 
    private static final long serialVersionUID = 1L;
-   private java.lang.String _Summary;
-   private java.lang.String _UserFamilyName;
-   private java.lang.String _UserGivenName;
-   private java.lang.String oid;
-   private java.lang.String _UserEMail;
-   private java.sql.Date _Date;
-   private java.lang.String _User;
    private java.lang.String _Comments;
+   private java.lang.String _Summary;
+   private java.lang.String _User;
+   private java.lang.String _UserFamilyName;
+   private java.lang.String oid;
+   private java.lang.String _UserGivenName;
+   private java.sql.Date _Date;
+   private java.lang.String _UserEMail;
 
    public TaskData()
    {
@@ -27,83 +27,20 @@ public class TaskData
 
    public TaskData( TaskData otherData )
    {
-      set_Summary(otherData.get_Summary());
-      set_UserFamilyName(otherData.get_UserFamilyName());
-      set_UserGivenName(otherData.get_UserGivenName());
-      setOid(otherData.getOid());
-      set_UserEMail(otherData.get_UserEMail());
-      set_Date(otherData.get_Date());
-      set_User(otherData.get_User());
       set_Comments(otherData.get_Comments());
+      set_Summary(otherData.get_Summary());
+      set_User(otherData.get_User());
+      set_UserFamilyName(otherData.get_UserFamilyName());
+      setOid(otherData.getOid());
+      set_UserGivenName(otherData.get_UserGivenName());
+      set_Date(otherData.get_Date());
+      set_UserEMail(otherData.get_UserEMail());
 
    }
 
    public org.openxava.test.model.TaskKey getPrimaryKey() {
      org.openxava.test.model.TaskKey pk = new org.openxava.test.model.TaskKey(this.getOid());
      return pk;
-   }
-
-   public java.lang.String get_Summary()
-   {
-      return this._Summary;
-   }
-   public void set_Summary( java.lang.String _Summary )
-   {
-      this._Summary = _Summary;
-   }
-
-   public java.lang.String get_UserFamilyName()
-   {
-      return this._UserFamilyName;
-   }
-   public void set_UserFamilyName( java.lang.String _UserFamilyName )
-   {
-      this._UserFamilyName = _UserFamilyName;
-   }
-
-   public java.lang.String get_UserGivenName()
-   {
-      return this._UserGivenName;
-   }
-   public void set_UserGivenName( java.lang.String _UserGivenName )
-   {
-      this._UserGivenName = _UserGivenName;
-   }
-
-   public java.lang.String getOid()
-   {
-      return this.oid;
-   }
-   public void setOid( java.lang.String oid )
-   {
-      this.oid = oid;
-   }
-
-   public java.lang.String get_UserEMail()
-   {
-      return this._UserEMail;
-   }
-   public void set_UserEMail( java.lang.String _UserEMail )
-   {
-      this._UserEMail = _UserEMail;
-   }
-
-   public java.sql.Date get_Date()
-   {
-      return this._Date;
-   }
-   public void set_Date( java.sql.Date _Date )
-   {
-      this._Date = _Date;
-   }
-
-   public java.lang.String get_User()
-   {
-      return this._User;
-   }
-   public void set_User( java.lang.String _User )
-   {
-      this._User = _User;
    }
 
    public java.lang.String get_Comments()
@@ -115,11 +52,74 @@ public class TaskData
       this._Comments = _Comments;
    }
 
+   public java.lang.String get_Summary()
+   {
+      return this._Summary;
+   }
+   public void set_Summary( java.lang.String _Summary )
+   {
+      this._Summary = _Summary;
+   }
+
+   public java.lang.String get_User()
+   {
+      return this._User;
+   }
+   public void set_User( java.lang.String _User )
+   {
+      this._User = _User;
+   }
+
+   public java.lang.String get_UserFamilyName()
+   {
+      return this._UserFamilyName;
+   }
+   public void set_UserFamilyName( java.lang.String _UserFamilyName )
+   {
+      this._UserFamilyName = _UserFamilyName;
+   }
+
+   public java.lang.String getOid()
+   {
+      return this.oid;
+   }
+   public void setOid( java.lang.String oid )
+   {
+      this.oid = oid;
+   }
+
+   public java.lang.String get_UserGivenName()
+   {
+      return this._UserGivenName;
+   }
+   public void set_UserGivenName( java.lang.String _UserGivenName )
+   {
+      this._UserGivenName = _UserGivenName;
+   }
+
+   public java.sql.Date get_Date()
+   {
+      return this._Date;
+   }
+   public void set_Date( java.sql.Date _Date )
+   {
+      this._Date = _Date;
+   }
+
+   public java.lang.String get_UserEMail()
+   {
+      return this._UserEMail;
+   }
+   public void set_UserEMail( java.lang.String _UserEMail )
+   {
+      this._UserEMail = _UserEMail;
+   }
+
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Summary=" + get_Summary() + " " + "_UserFamilyName=" + get_UserFamilyName() + " " + "_UserGivenName=" + get_UserGivenName() + " " + "oid=" + getOid() + " " + "_UserEMail=" + get_UserEMail() + " " + "_Date=" + get_Date() + " " + "_User=" + get_User() + " " + "_Comments=" + get_Comments());
+      str.append("_Comments=" + get_Comments() + " " + "_Summary=" + get_Summary() + " " + "_User=" + get_User() + " " + "_UserFamilyName=" + get_UserFamilyName() + " " + "oid=" + getOid() + " " + "_UserGivenName=" + get_UserGivenName() + " " + "_Date=" + get_Date() + " " + "_UserEMail=" + get_UserEMail());
       str.append('}');
 
       return(str.toString());
@@ -132,6 +132,14 @@ public class TaskData
          TaskData lTest = (TaskData) pOther;
          boolean lEquals = true;
 
+         if( this._Comments == null )
+         {
+            lEquals = lEquals && ( lTest._Comments == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Comments.equals( lTest._Comments );
+         }
          if( this._Summary == null )
          {
             lEquals = lEquals && ( lTest._Summary == null );
@@ -139,46 +147,6 @@ public class TaskData
          else
          {
             lEquals = lEquals && this._Summary.equals( lTest._Summary );
-         }
-         if( this._UserFamilyName == null )
-         {
-            lEquals = lEquals && ( lTest._UserFamilyName == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._UserFamilyName.equals( lTest._UserFamilyName );
-         }
-         if( this._UserGivenName == null )
-         {
-            lEquals = lEquals && ( lTest._UserGivenName == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._UserGivenName.equals( lTest._UserGivenName );
-         }
-         if( this.oid == null )
-         {
-            lEquals = lEquals && ( lTest.oid == null );
-         }
-         else
-         {
-            lEquals = lEquals && this.oid.equals( lTest.oid );
-         }
-         if( this._UserEMail == null )
-         {
-            lEquals = lEquals && ( lTest._UserEMail == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._UserEMail.equals( lTest._UserEMail );
-         }
-         if( this._Date == null )
-         {
-            lEquals = lEquals && ( lTest._Date == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._Date.equals( lTest._Date );
          }
          if( this._User == null )
          {
@@ -188,13 +156,45 @@ public class TaskData
          {
             lEquals = lEquals && this._User.equals( lTest._User );
          }
-         if( this._Comments == null )
+         if( this._UserFamilyName == null )
          {
-            lEquals = lEquals && ( lTest._Comments == null );
+            lEquals = lEquals && ( lTest._UserFamilyName == null );
          }
          else
          {
-            lEquals = lEquals && this._Comments.equals( lTest._Comments );
+            lEquals = lEquals && this._UserFamilyName.equals( lTest._UserFamilyName );
+         }
+         if( this.oid == null )
+         {
+            lEquals = lEquals && ( lTest.oid == null );
+         }
+         else
+         {
+            lEquals = lEquals && this.oid.equals( lTest.oid );
+         }
+         if( this._UserGivenName == null )
+         {
+            lEquals = lEquals && ( lTest._UserGivenName == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._UserGivenName.equals( lTest._UserGivenName );
+         }
+         if( this._Date == null )
+         {
+            lEquals = lEquals && ( lTest._Date == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Date.equals( lTest._Date );
+         }
+         if( this._UserEMail == null )
+         {
+            lEquals = lEquals && ( lTest._UserEMail == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._UserEMail.equals( lTest._UserEMail );
          }
 
          return lEquals;
@@ -209,21 +209,21 @@ public class TaskData
    {
       int result = 17;
 
+      result = 37*result + ((this._Comments != null) ? this._Comments.hashCode() : 0);
+
       result = 37*result + ((this._Summary != null) ? this._Summary.hashCode() : 0);
-
-      result = 37*result + ((this._UserFamilyName != null) ? this._UserFamilyName.hashCode() : 0);
-
-      result = 37*result + ((this._UserGivenName != null) ? this._UserGivenName.hashCode() : 0);
-
-      result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
-
-      result = 37*result + ((this._UserEMail != null) ? this._UserEMail.hashCode() : 0);
-
-      result = 37*result + ((this._Date != null) ? this._Date.hashCode() : 0);
 
       result = 37*result + ((this._User != null) ? this._User.hashCode() : 0);
 
-      result = 37*result + ((this._Comments != null) ? this._Comments.hashCode() : 0);
+      result = 37*result + ((this._UserFamilyName != null) ? this._UserFamilyName.hashCode() : 0);
+
+      result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
+
+      result = 37*result + ((this._UserGivenName != null) ? this._UserGivenName.hashCode() : 0);
+
+      result = 37*result + ((this._Date != null) ? this._Date.hashCode() : 0);
+
+      result = 37*result + ((this._UserEMail != null) ? this._UserEMail.hashCode() : 0);
 
       return result;
    }

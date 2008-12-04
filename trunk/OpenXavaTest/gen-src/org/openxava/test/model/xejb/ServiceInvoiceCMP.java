@@ -19,10 +19,10 @@ public abstract class ServiceInvoiceCMP
          dataHolder = new org.openxava.test.model.ServiceInvoiceData();
 
          dataHolder.set_Amount( get_Amount() );
-         dataHolder.set_Description( get_Description() );
-         dataHolder.setOid( getOid() );
-         dataHolder.set_Number( get_Number() );
          dataHolder.set_Year( get_Year() );
+         dataHolder.setOid( getOid() );
+         dataHolder.set_Description( get_Description() );
+         dataHolder.set_Number( get_Number() );
 
       }
       catch (RuntimeException e)
@@ -38,9 +38,9 @@ public abstract class ServiceInvoiceCMP
       try
       {
          set_Amount( dataHolder.get_Amount() );
+         set_Year( dataHolder.get_Year() );
          set_Description( dataHolder.get_Description() );
          set_Number( dataHolder.get_Number() );
-         set_Year( dataHolder.get_Year() );
 
       }
       catch (Exception e)
@@ -95,10 +95,10 @@ public abstract class ServiceInvoiceCMP
       try
          {
             ServiceInvoiceValue.setAmount( getAmount() );
-            ServiceInvoiceValue.setDescription( getDescription() );
-            ServiceInvoiceValue.setOid( getOid() );
-            ServiceInvoiceValue.setNumber( getNumber() );
             ServiceInvoiceValue.setYear( getYear() );
+            ServiceInvoiceValue.setOid( getOid() );
+            ServiceInvoiceValue.setDescription( getDescription() );
+            ServiceInvoiceValue.setNumber( getNumber() );
 
          }
          catch (Exception e)
@@ -115,9 +115,9 @@ public abstract class ServiceInvoiceCMP
 	  try
 	  {
 		 setAmount( valueHolder.getAmount() );
+		 setYear( valueHolder.getYear() );
 		 setDescription( valueHolder.getDescription() );
 		 setNumber( valueHolder.getNumber() );
-		 setYear( valueHolder.getYear() );
 
 	  }
 	  catch (Exception e)
@@ -132,20 +132,20 @@ public abstract class ServiceInvoiceCMP
 
    public abstract void set_Amount( java.math.BigDecimal _Amount ) ;
 
-   public abstract java.lang.String get_Description() ;
+   public abstract java.lang.Integer get_Year() ;
 
-   public abstract void set_Description( java.lang.String _Description ) ;
+   public abstract void set_Year( java.lang.Integer _Year ) ;
 
    public abstract java.lang.String getOid() ;
 
    public abstract void setOid( java.lang.String oid ) ;
 
+   public abstract java.lang.String get_Description() ;
+
+   public abstract void set_Description( java.lang.String _Description ) ;
+
    public abstract java.lang.Integer get_Number() ;
 
    public abstract void set_Number( java.lang.Integer _Number ) ;
-
-   public abstract java.lang.Integer get_Year() ;
-
-   public abstract void set_Year( java.lang.Integer _Year ) ;
 
 }

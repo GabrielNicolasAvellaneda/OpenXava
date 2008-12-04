@@ -18,8 +18,8 @@ public abstract class SellerLevelCMP
       {
          dataHolder = new org.openxava.test.model.SellerLevelData();
 
-         dataHolder.setId( getId() );
          dataHolder.set_Description( get_Description() );
+         dataHolder.setId( getId() );
 
       }
       catch (RuntimeException e)
@@ -88,8 +88,8 @@ public abstract class SellerLevelCMP
       SellerLevelValue = new org.openxava.test.model.SellerLevelValue();
       try
          {
-            SellerLevelValue.setId( getId() );
             SellerLevelValue.setDescription( getDescription() );
+            SellerLevelValue.setId( getId() );
 
          }
          catch (Exception e)
@@ -116,12 +116,12 @@ public abstract class SellerLevelCMP
 
 /* Value Objects END */
 
-   public abstract java.lang.String getId() ;
-
-   public abstract void setId( java.lang.String id ) ;
-
    public abstract java.lang.String get_Description() ;
 
    public abstract void set_Description( java.lang.String _Description ) ;
+
+   public abstract java.lang.String getId() ;
+
+   public abstract void setId( java.lang.String id ) ;
 
 }

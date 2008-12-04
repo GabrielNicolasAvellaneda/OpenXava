@@ -18,9 +18,9 @@ public abstract class CommentCMP
       {
          dataHolder = new org.openxava.test.model.CommentData();
 
-         dataHolder.setId( getId() );
          dataHolder.set_Comment( get_Comment() );
          dataHolder.set_Date( get_Date() );
+         dataHolder.setId( getId() );
          dataHolder.set_Issue_id( get_Issue_id() );
 
       }
@@ -92,9 +92,9 @@ public abstract class CommentCMP
       CommentValue = new org.openxava.test.model.CommentValue();
       try
          {
-            CommentValue.setId( getId() );
             CommentValue.setComment( getComment() );
             CommentValue.setDate( getDate() );
+            CommentValue.setId( getId() );
             CommentValue.setIssue_id( getIssue_id() );
 
          }
@@ -124,10 +124,6 @@ public abstract class CommentCMP
 
 /* Value Objects END */
 
-   public abstract java.lang.Integer getId() ;
-
-   public abstract void setId( java.lang.Integer id ) ;
-
    public abstract java.lang.String get_Comment() ;
 
    public abstract void set_Comment( java.lang.String _Comment ) ;
@@ -135,6 +131,10 @@ public abstract class CommentCMP
    public abstract java.sql.Date get_Date() ;
 
    public abstract void set_Date( java.sql.Date _Date ) ;
+
+   public abstract java.lang.Integer getId() ;
+
+   public abstract void setId( java.lang.Integer id ) ;
 
    public abstract java.lang.String get_Issue_id() ;
 

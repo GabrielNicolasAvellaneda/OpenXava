@@ -18,9 +18,9 @@ public abstract class DriverCMP
       {
          dataHolder = new org.openxava.test.model.DriverData();
 
+         dataHolder.set_Type( get_Type() );
          dataHolder.set_Name( get_Name() );
          dataHolder.set_Number( get_Number() );
-         dataHolder.set_Type( get_Type() );
          dataHolder.set_DrivingLicence_level( get_DrivingLicence_level() );
 
       }
@@ -36,8 +36,8 @@ public abstract class DriverCMP
    {
       try
       {
-         set_Name( dataHolder.get_Name() );
          set_Type( dataHolder.get_Type() );
+         set_Name( dataHolder.get_Name() );
          set_DrivingLicence_level( dataHolder.get_DrivingLicence_level() );
 
       }
@@ -92,9 +92,9 @@ public abstract class DriverCMP
       DriverValue = new org.openxava.test.model.DriverValue();
       try
          {
+            DriverValue.setType( getType() );
             DriverValue.setName( getName() );
             DriverValue.setNumber( getNumber() );
-            DriverValue.setType( getType() );
             DriverValue.setDrivingLicence_type( getDrivingLicence_type() );
             DriverValue.setDrivingLicence_level( getDrivingLicence_level() );
 
@@ -112,9 +112,9 @@ public abstract class DriverCMP
 
 	  try
 	  {
+		 setType( valueHolder.getType() );
 		 setName( valueHolder.getName() );
 		 setNumber( valueHolder.getNumber() );
-		 setType( valueHolder.getType() );
 		 setDrivingLicence_type( valueHolder.getDrivingLicence_type() );
 		 setDrivingLicence_level( valueHolder.getDrivingLicence_level() );
 
@@ -127,6 +127,10 @@ public abstract class DriverCMP
 
 /* Value Objects END */
 
+   public abstract java.lang.String get_Type() ;
+
+   public abstract void set_Type( java.lang.String _Type ) ;
+
    public abstract java.lang.String get_Name() ;
 
    public abstract void set_Name( java.lang.String _Name ) ;
@@ -134,10 +138,6 @@ public abstract class DriverCMP
    public abstract java.lang.Integer get_Number() ;
 
    public abstract void set_Number( java.lang.Integer _Number ) ;
-
-   public abstract java.lang.String get_Type() ;
-
-   public abstract void set_Type( java.lang.String _Type ) ;
 
    public abstract int get_DrivingLicence_level() ;
 

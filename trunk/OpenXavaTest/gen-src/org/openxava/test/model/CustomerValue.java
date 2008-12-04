@@ -14,36 +14,36 @@ public class CustomerValue
 
    private static final long serialVersionUID = 1L;
 
-   private java.lang.String website;
-   private boolean websiteHasBeenSet = false;
-   private java.lang.String email;
-   private boolean emailHasBeenSet = false;
-   private java.lang.String name;
-   private boolean nameHasBeenSet = false;
-   private java.lang.String remarks;
-   private boolean remarksHasBeenSet = false;
-   private int number;
-   private boolean numberHasBeenSet = false;
    private boolean local;
    private boolean localHasBeenSet = false;
    private int type;
    private boolean typeHasBeenSet = false;
+   private java.lang.String remarks;
+   private boolean remarksHasBeenSet = false;
    private java.lang.String telephone;
    private boolean telephoneHasBeenSet = false;
-   private byte[] photo;
-   private boolean photoHasBeenSet = false;
+   private java.lang.String email;
+   private boolean emailHasBeenSet = false;
    private java.lang.String relationWithSeller;
    private boolean relationWithSellerHasBeenSet = false;
+   private byte[] photo;
+   private boolean photoHasBeenSet = false;
+   private java.lang.String name;
+   private boolean nameHasBeenSet = false;
    private java.lang.String city;
    private boolean cityHasBeenSet = false;
+   private java.lang.String website;
+   private boolean websiteHasBeenSet = false;
+   private int number;
+   private boolean numberHasBeenSet = false;
+   private int seller_number;
+   private boolean seller_numberHasBeenSet = false;
+   private int alternateSeller_number;
+   private boolean alternateSeller_numberHasBeenSet = false;
    private org.openxava.test.model.Address address;
    private boolean addressHasBeenSet = false;
    private java.lang.String address_state_id;
    private boolean address_state_idHasBeenSet = false;
-   private int alternateSeller_number;
-   private boolean alternateSeller_numberHasBeenSet = false;
-   private int seller_number;
-   private boolean seller_numberHasBeenSet = false;
 
    public CustomerValue()
    {
@@ -52,108 +52,38 @@ public class CustomerValue
    //TODO Cloneable is better than this !
    public CustomerValue( CustomerValue otherValue )
    {
-	  this.website = otherValue.website;
-	  websiteHasBeenSet = true;
-	  this.email = otherValue.email;
-	  emailHasBeenSet = true;
-	  this.name = otherValue.name;
-	  nameHasBeenSet = true;
-	  this.remarks = otherValue.remarks;
-	  remarksHasBeenSet = true;
-	  this.number = otherValue.number;
-	  numberHasBeenSet = true;
 	  this.local = otherValue.local;
 	  localHasBeenSet = true;
 	  this.type = otherValue.type;
 	  typeHasBeenSet = true;
+	  this.remarks = otherValue.remarks;
+	  remarksHasBeenSet = true;
 	  this.telephone = otherValue.telephone;
 	  telephoneHasBeenSet = true;
-	  this.photo = otherValue.photo;
-	  photoHasBeenSet = true;
+	  this.email = otherValue.email;
+	  emailHasBeenSet = true;
 	  this.relationWithSeller = otherValue.relationWithSeller;
 	  relationWithSellerHasBeenSet = true;
+	  this.photo = otherValue.photo;
+	  photoHasBeenSet = true;
+	  this.name = otherValue.name;
+	  nameHasBeenSet = true;
 	  this.city = otherValue.city;
 	  cityHasBeenSet = true;
+	  this.website = otherValue.website;
+	  websiteHasBeenSet = true;
+	  this.number = otherValue.number;
+	  numberHasBeenSet = true;
+	  this.seller_number = otherValue.seller_number;
+	  seller_numberHasBeenSet = true;
+	  this.alternateSeller_number = otherValue.alternateSeller_number;
+	  alternateSeller_numberHasBeenSet = true;
 	  this.address = otherValue.address;
 	  addressHasBeenSet = true;
 	  this.address_state_id = otherValue.address_state_id;
 	  address_state_idHasBeenSet = true;
-	  this.alternateSeller_number = otherValue.alternateSeller_number;
-	  alternateSeller_numberHasBeenSet = true;
-	  this.seller_number = otherValue.seller_number;
-	  seller_numberHasBeenSet = true;
    }
 
-   public java.lang.String getWebsite()
-   {
-	  return this.website;
-   }
-
-   public void setWebsite( java.lang.String website )
-   {
-	  this.website = website;
-	  websiteHasBeenSet = true;
-   }
-
-   public boolean websiteHasBeenSet(){
-	  return websiteHasBeenSet;
-   }
-   public java.lang.String getEmail()
-   {
-	  return this.email;
-   }
-
-   public void setEmail( java.lang.String email )
-   {
-	  this.email = email;
-	  emailHasBeenSet = true;
-   }
-
-   public boolean emailHasBeenSet(){
-	  return emailHasBeenSet;
-   }
-   public java.lang.String getName()
-   {
-	  return this.name;
-   }
-
-   public void setName( java.lang.String name )
-   {
-	  this.name = name;
-	  nameHasBeenSet = true;
-   }
-
-   public boolean nameHasBeenSet(){
-	  return nameHasBeenSet;
-   }
-   public java.lang.String getRemarks()
-   {
-	  return this.remarks;
-   }
-
-   public void setRemarks( java.lang.String remarks )
-   {
-	  this.remarks = remarks;
-	  remarksHasBeenSet = true;
-   }
-
-   public boolean remarksHasBeenSet(){
-	  return remarksHasBeenSet;
-   }
-   public int getNumber()
-   {
-	  return this.number;
-   }
-
-   public void setNumber( int number )
-   {
-	  this.number = number;
-	  numberHasBeenSet = true;
-   }
-
-   public boolean numberHasBeenSet(){
-	  return numberHasBeenSet;
-   }
    public boolean isLocal()
    {
 	  return this.local;
@@ -182,6 +112,20 @@ public class CustomerValue
    public boolean typeHasBeenSet(){
 	  return typeHasBeenSet;
    }
+   public java.lang.String getRemarks()
+   {
+	  return this.remarks;
+   }
+
+   public void setRemarks( java.lang.String remarks )
+   {
+	  this.remarks = remarks;
+	  remarksHasBeenSet = true;
+   }
+
+   public boolean remarksHasBeenSet(){
+	  return remarksHasBeenSet;
+   }
    public java.lang.String getTelephone()
    {
 	  return this.telephone;
@@ -196,19 +140,19 @@ public class CustomerValue
    public boolean telephoneHasBeenSet(){
 	  return telephoneHasBeenSet;
    }
-   public byte[] getPhoto()
+   public java.lang.String getEmail()
    {
-	  return this.photo;
+	  return this.email;
    }
 
-   public void setPhoto( byte[] photo )
+   public void setEmail( java.lang.String email )
    {
-	  this.photo = photo;
-	  photoHasBeenSet = true;
+	  this.email = email;
+	  emailHasBeenSet = true;
    }
 
-   public boolean photoHasBeenSet(){
-	  return photoHasBeenSet;
+   public boolean emailHasBeenSet(){
+	  return emailHasBeenSet;
    }
    public java.lang.String getRelationWithSeller()
    {
@@ -224,6 +168,34 @@ public class CustomerValue
    public boolean relationWithSellerHasBeenSet(){
 	  return relationWithSellerHasBeenSet;
    }
+   public byte[] getPhoto()
+   {
+	  return this.photo;
+   }
+
+   public void setPhoto( byte[] photo )
+   {
+	  this.photo = photo;
+	  photoHasBeenSet = true;
+   }
+
+   public boolean photoHasBeenSet(){
+	  return photoHasBeenSet;
+   }
+   public java.lang.String getName()
+   {
+	  return this.name;
+   }
+
+   public void setName( java.lang.String name )
+   {
+	  this.name = name;
+	  nameHasBeenSet = true;
+   }
+
+   public boolean nameHasBeenSet(){
+	  return nameHasBeenSet;
+   }
    public java.lang.String getCity()
    {
 	  return this.city;
@@ -237,6 +209,62 @@ public class CustomerValue
 
    public boolean cityHasBeenSet(){
 	  return cityHasBeenSet;
+   }
+   public java.lang.String getWebsite()
+   {
+	  return this.website;
+   }
+
+   public void setWebsite( java.lang.String website )
+   {
+	  this.website = website;
+	  websiteHasBeenSet = true;
+   }
+
+   public boolean websiteHasBeenSet(){
+	  return websiteHasBeenSet;
+   }
+   public int getNumber()
+   {
+	  return this.number;
+   }
+
+   public void setNumber( int number )
+   {
+	  this.number = number;
+	  numberHasBeenSet = true;
+   }
+
+   public boolean numberHasBeenSet(){
+	  return numberHasBeenSet;
+   }
+   public int getSeller_number()
+   {
+	  return this.seller_number;
+   }
+
+   public void setSeller_number( int seller_number )
+   {
+	  this.seller_number = seller_number;
+	  seller_numberHasBeenSet = true;
+   }
+
+   public boolean seller_numberHasBeenSet(){
+	  return seller_numberHasBeenSet;
+   }
+   public int getAlternateSeller_number()
+   {
+	  return this.alternateSeller_number;
+   }
+
+   public void setAlternateSeller_number( int alternateSeller_number )
+   {
+	  this.alternateSeller_number = alternateSeller_number;
+	  alternateSeller_numberHasBeenSet = true;
+   }
+
+   public boolean alternateSeller_numberHasBeenSet(){
+	  return alternateSeller_numberHasBeenSet;
    }
    public org.openxava.test.model.Address getAddress()
    {
@@ -266,40 +294,12 @@ public class CustomerValue
    public boolean address_state_idHasBeenSet(){
 	  return address_state_idHasBeenSet;
    }
-   public int getAlternateSeller_number()
-   {
-	  return this.alternateSeller_number;
-   }
-
-   public void setAlternateSeller_number( int alternateSeller_number )
-   {
-	  this.alternateSeller_number = alternateSeller_number;
-	  alternateSeller_numberHasBeenSet = true;
-   }
-
-   public boolean alternateSeller_numberHasBeenSet(){
-	  return alternateSeller_numberHasBeenSet;
-   }
-   public int getSeller_number()
-   {
-	  return this.seller_number;
-   }
-
-   public void setSeller_number( int seller_number )
-   {
-	  this.seller_number = seller_number;
-	  seller_numberHasBeenSet = true;
-   }
-
-   public boolean seller_numberHasBeenSet(){
-	  return seller_numberHasBeenSet;
-   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("website=" + getWebsite() + " " + "email=" + getEmail() + " " + "name=" + getName() + " " + "remarks=" + getRemarks() + " " + "number=" + getNumber() + " " + "local=" + isLocal() + " " + "type=" + getType() + " " + "telephone=" + getTelephone() + " " + "photo=" + getPhoto() + " " + "relationWithSeller=" + getRelationWithSeller() + " " + "city=" + getCity() + " " + "address=" + getAddress() + " " + "address_state_id=" + getAddress_state_id() + " " + "alternateSeller_number=" + getAlternateSeller_number() + " " + "seller_number=" + getSeller_number());
+	  str.append("local=" + isLocal() + " " + "type=" + getType() + " " + "remarks=" + getRemarks() + " " + "telephone=" + getTelephone() + " " + "email=" + getEmail() + " " + "relationWithSeller=" + getRelationWithSeller() + " " + "photo=" + getPhoto() + " " + "name=" + getName() + " " + "city=" + getCity() + " " + "website=" + getWebsite() + " " + "number=" + getNumber() + " " + "seller_number=" + getSeller_number() + " " + "alternateSeller_number=" + getAlternateSeller_number() + " " + "address=" + getAddress() + " " + "address_state_id=" + getAddress_state_id());
 	  str.append('}');
 
 	  return(str.toString());
@@ -345,13 +345,23 @@ public class CustomerValue
 	  {
 		 CustomerValue that = (CustomerValue) other;
 		 boolean lEquals = true;
-		 if( this.website == null )
+		 lEquals = lEquals && this.local == that.local;
+		 lEquals = lEquals && this.type == that.type;
+		 if( this.remarks == null )
 		 {
-			lEquals = lEquals && ( that.website == null );
+			lEquals = lEquals && ( that.remarks == null );
 		 }
 		 else
 		 {
-			lEquals = lEquals && this.website.equals( that.website );
+			lEquals = lEquals && this.remarks.equals( that.remarks );
+		 }
+		 if( this.telephone == null )
+		 {
+			lEquals = lEquals && ( that.telephone == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.telephone.equals( that.telephone );
 		 }
 		 if( this.email == null )
 		 {
@@ -361,33 +371,6 @@ public class CustomerValue
 		 {
 			lEquals = lEquals && this.email.equals( that.email );
 		 }
-		 if( this.name == null )
-		 {
-			lEquals = lEquals && ( that.name == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.name.equals( that.name );
-		 }
-		 if( this.remarks == null )
-		 {
-			lEquals = lEquals && ( that.remarks == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.remarks.equals( that.remarks );
-		 }
-		 lEquals = lEquals && this.local == that.local;
-		 lEquals = lEquals && this.type == that.type;
-		 if( this.telephone == null )
-		 {
-			lEquals = lEquals && ( that.telephone == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.telephone.equals( that.telephone );
-		 }
-		 lEquals = lEquals && this.photo == that.photo;
 		 if( this.relationWithSeller == null )
 		 {
 			lEquals = lEquals && ( that.relationWithSeller == null );
@@ -395,6 +378,15 @@ public class CustomerValue
 		 else
 		 {
 			lEquals = lEquals && this.relationWithSeller.equals( that.relationWithSeller );
+		 }
+		 lEquals = lEquals && this.photo == that.photo;
+		 if( this.name == null )
+		 {
+			lEquals = lEquals && ( that.name == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.name.equals( that.name );
 		 }
 		 if( this.city == null )
 		 {
@@ -404,6 +396,16 @@ public class CustomerValue
 		 {
 			lEquals = lEquals && this.city.equals( that.city );
 		 }
+		 if( this.website == null )
+		 {
+			lEquals = lEquals && ( that.website == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.website.equals( that.website );
+		 }
+		 lEquals = lEquals && this.seller_number == that.seller_number;
+		 lEquals = lEquals && this.alternateSeller_number == that.alternateSeller_number;
 		 if( this.address == null )
 		 {
 			lEquals = lEquals && ( that.address == null );
@@ -420,8 +422,6 @@ public class CustomerValue
 		 {
 			lEquals = lEquals && this.address_state_id.equals( that.address_state_id );
 		 }
-		 lEquals = lEquals && this.alternateSeller_number == that.alternateSeller_number;
-		 lEquals = lEquals && this.seller_number == that.seller_number;
 
 		 return lEquals;
 	  }
@@ -433,21 +433,17 @@ public class CustomerValue
 
    public int hashCode(){
 	  int result = 17;
-      result = 37*result + ((this.website != null) ? this.website.hashCode() : 0);
-
-      result = 37*result + ((this.email != null) ? this.email.hashCode() : 0);
-
-      result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);
-
-      result = 37*result + ((this.remarks != null) ? this.remarks.hashCode() : 0);
-
-      result = 37*result + (int) number;
-
       result = 37*result + (local ? 0 : 1);
 
       result = 37*result + (int) type;
 
+      result = 37*result + ((this.remarks != null) ? this.remarks.hashCode() : 0);
+
       result = 37*result + ((this.telephone != null) ? this.telephone.hashCode() : 0);
+
+      result = 37*result + ((this.email != null) ? this.email.hashCode() : 0);
+
+      result = 37*result + ((this.relationWithSeller != null) ? this.relationWithSeller.hashCode() : 0);
 
       if (photo != null) {
         for (int i=0; i<photo.length; i++)
@@ -457,17 +453,21 @@ public class CustomerValue
         }
       }
 
-      result = 37*result + ((this.relationWithSeller != null) ? this.relationWithSeller.hashCode() : 0);
+      result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);
 
       result = 37*result + ((this.city != null) ? this.city.hashCode() : 0);
+
+      result = 37*result + ((this.website != null) ? this.website.hashCode() : 0);
+
+      result = 37*result + (int) number;
+
+      result = 37*result + (int) seller_number;
+
+      result = 37*result + (int) alternateSeller_number;
 
       result = 37*result + ((this.address != null) ? this.address.hashCode() : 0);
 
       result = 37*result + ((this.address_state_id != null) ? this.address_state_id.hashCode() : 0);
-
-      result = 37*result + (int) alternateSeller_number;
-
-      result = 37*result + (int) seller_number;
 
 	  return result;
    }

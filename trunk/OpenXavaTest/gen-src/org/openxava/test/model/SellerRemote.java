@@ -16,13 +16,13 @@ public interface SellerRemote
    public void setName( java.lang.String newName )
       throws java.rmi.RemoteException;
 
-   public int getNumber(  )
-      throws java.rmi.RemoteException;
-
    public java.lang.String[] getRegions(  )
       throws java.rmi.RemoteException;
 
    public void setRegions( java.lang.String[] newRegions )
+      throws java.rmi.RemoteException;
+
+   public int getNumber(  )
       throws java.rmi.RemoteException;
 
    public void addToCustomers( org.openxava.test.model.ICustomer newElement )

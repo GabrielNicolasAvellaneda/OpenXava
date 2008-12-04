@@ -19,24 +19,6 @@ public interface FormulaIngredientRemote
    public void setImage( byte[] newImage )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.model.IIngredient getAccentuate(  )
-      throws java.rmi.RemoteException;
-
-   public org.openxava.test.model.IngredientRemote getAccentuateRemote(  )
-      throws java.rmi.RemoteException;
-
-   public void setAccentuate( org.openxava.test.model.IIngredient newAccentuate )
-      throws java.rmi.RemoteException;
-
-   public org.openxava.test.model.IngredientKey getAccentuateKey(  )
-      throws java.rmi.RemoteException;
-
-   public void setAccentuateKey( org.openxava.test.model.IngredientKey key )
-      throws java.rmi.RemoteException;
-
-   public java.lang.String getAccentuate_oid(  )
-      throws java.rmi.RemoteException;
-
    public org.openxava.test.model.IIngredient getIngredient(  )
       throws java.rmi.RemoteException;
 
@@ -55,22 +37,22 @@ public interface FormulaIngredientRemote
    public java.lang.String getIngredient_oid(  )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.model.IFormula getFormula(  )
+   public org.openxava.test.model.IIngredient getAccentuate(  )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.model.FormulaRemote getFormulaRemote(  )
+   public org.openxava.test.model.IngredientRemote getAccentuateRemote(  )
       throws java.rmi.RemoteException;
 
-   public void setFormula( org.openxava.test.model.IFormula newFormula )
+   public void setAccentuate( org.openxava.test.model.IIngredient newAccentuate )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.model.FormulaKey getFormulaKey(  )
+   public org.openxava.test.model.IngredientKey getAccentuateKey(  )
       throws java.rmi.RemoteException;
 
-   public void setFormulaKey( org.openxava.test.model.FormulaKey key )
+   public void setAccentuateKey( org.openxava.test.model.IngredientKey key )
       throws java.rmi.RemoteException;
 
-   public java.lang.String getFormula_oid(  )
+   public java.lang.String getAccentuate_oid(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.IFormula getAnotherFormula(  )
@@ -89,6 +71,24 @@ public interface FormulaIngredientRemote
       throws java.rmi.RemoteException;
 
    public java.lang.String getAnotherFormula_oid(  )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.IFormula getFormula(  )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.FormulaRemote getFormulaRemote(  )
+      throws java.rmi.RemoteException;
+
+   public void setFormula( org.openxava.test.model.IFormula newFormula )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.FormulaKey getFormulaKey(  )
+      throws java.rmi.RemoteException;
+
+   public void setFormulaKey( org.openxava.test.model.FormulaKey key )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getFormula_oid(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.FormulaIngredientData getData(  )

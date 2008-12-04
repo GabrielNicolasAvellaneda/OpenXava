@@ -19,8 +19,8 @@ public abstract class ColorCMP
          dataHolder = new org.openxava.test.model.ColorData();
 
          dataHolder.set_Name( get_Name() );
-         dataHolder.setNumber( getNumber() );
          dataHolder.set_Version( get_Version() );
+         dataHolder.setNumber( getNumber() );
 
       }
       catch (RuntimeException e)
@@ -90,10 +90,10 @@ public abstract class ColorCMP
       ColorValue = new org.openxava.test.model.ColorValue();
       try
          {
-            ColorValue.setName( getName() );
-            ColorValue.setNumber( getNumber() );
             ColorValue.setSample( getSample() );
+            ColorValue.setName( getName() );
             ColorValue.setVersion( getVersion() );
+            ColorValue.setNumber( getNumber() );
 
          }
          catch (Exception e)
@@ -109,8 +109,8 @@ public abstract class ColorCMP
 
 	  try
 	  {
-		 setName( valueHolder.getName() );
 		 setSample( valueHolder.getSample() );
+		 setName( valueHolder.getName() );
 		 setVersion( valueHolder.getVersion() );
 
 	  }
@@ -126,12 +126,12 @@ public abstract class ColorCMP
 
    public abstract void set_Name( java.lang.String _Name ) ;
 
-   public abstract java.lang.Integer getNumber() ;
-
-   public abstract void setNumber( java.lang.Integer number ) ;
-
    public abstract java.lang.Integer get_Version() ;
 
    public abstract void set_Version( java.lang.Integer _Version ) ;
+
+   public abstract java.lang.Integer getNumber() ;
+
+   public abstract void setNumber( java.lang.Integer number ) ;
 
 }

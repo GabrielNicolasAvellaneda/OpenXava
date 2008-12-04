@@ -10,25 +10,25 @@ public interface VehicleRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.IVehicle
 {
 
-   public java.lang.String getModel(  )
-      throws java.rmi.RemoteException;
-
-   public void setModel( java.lang.String newModel )
-      throws java.rmi.RemoteException;
-
-   public java.lang.String getOid(  )
-      throws java.rmi.RemoteException;
-
    public java.lang.String getCode(  )
       throws java.rmi.RemoteException;
 
    public void setCode( java.lang.String newCode )
       throws java.rmi.RemoteException;
 
+   public java.lang.String getOid(  )
+      throws java.rmi.RemoteException;
+
    public java.lang.String getMake(  )
       throws java.rmi.RemoteException;
 
    public void setMake( java.lang.String newMake )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getModel(  )
+      throws java.rmi.RemoteException;
+
+   public void setModel( java.lang.String newModel )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.VehicleData getData(  )

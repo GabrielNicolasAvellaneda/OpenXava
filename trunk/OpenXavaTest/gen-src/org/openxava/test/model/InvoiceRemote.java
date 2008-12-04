@@ -10,28 +10,10 @@ public interface InvoiceRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.IInvoice
 {
 
-   public java.math.BigDecimal getTotal(  )
+   public java.lang.String getComment(  )
       throws java.rmi.RemoteException;
 
-   public java.math.BigDecimal getVatPercentage(  )
-      throws java.rmi.RemoteException;
-
-   public void setVatPercentage( java.math.BigDecimal newVatPercentage )
-      throws java.rmi.RemoteException;
-
-   public boolean isConsiderable(  )
-      throws java.rmi.RemoteException;
-
-   public java.math.BigDecimal getYearDiscount(  )
-      throws java.rmi.RemoteException;
-
-   public int getDetailsCount(  )
-      throws java.rmi.RemoteException;
-
-   public java.math.BigDecimal getVat(  )
-      throws java.rmi.RemoteException;
-
-   public int getNumber(  )
+   public void setComment( java.lang.String newComment )
       throws java.rmi.RemoteException;
 
    public java.util.Date getDate(  )
@@ -40,34 +22,52 @@ public interface InvoiceRemote
    public void setDate( java.util.Date newDate )
       throws java.rmi.RemoteException;
 
-   public java.math.BigDecimal getAmountsSum(  )
-      throws java.rmi.RemoteException;
-
-   public java.math.BigDecimal getCustomerDiscount(  )
-      throws java.rmi.RemoteException;
-
    public boolean isPaid(  )
       throws java.rmi.RemoteException;
 
    public void setPaid( boolean newPaid )
       throws java.rmi.RemoteException;
 
+   public java.math.BigDecimal getYearDiscount(  )
+      throws java.rmi.RemoteException;
+
+   public int getDetailsCount(  )
+      throws java.rmi.RemoteException;
+
+   public boolean isConsiderable(  )
+      throws java.rmi.RemoteException;
+
+   public java.math.BigDecimal getSellerDiscount(  )
+      throws java.rmi.RemoteException;
+
+   public java.math.BigDecimal getAmountsSum(  )
+      throws java.rmi.RemoteException;
+
    public java.lang.String getImportance(  )
+      throws java.rmi.RemoteException;
+
+   public java.math.BigDecimal getTotal(  )
       throws java.rmi.RemoteException;
 
    public int getYear(  )
       throws java.rmi.RemoteException;
 
+   public java.math.BigDecimal getCustomerDiscount(  )
+      throws java.rmi.RemoteException;
+
+   public java.math.BigDecimal getVatPercentage(  )
+      throws java.rmi.RemoteException;
+
+   public void setVatPercentage( java.math.BigDecimal newVatPercentage )
+      throws java.rmi.RemoteException;
+
    public java.math.BigDecimal getCustomerTypeDiscount(  )
       throws java.rmi.RemoteException;
 
-   public java.lang.String getComment(  )
+   public java.math.BigDecimal getVat(  )
       throws java.rmi.RemoteException;
 
-   public void setComment( java.lang.String newComment )
-      throws java.rmi.RemoteException;
-
-   public java.math.BigDecimal getSellerDiscount(  )
+   public int getNumber(  )
       throws java.rmi.RemoteException;
 
    public java.util.Collection getDetails(  )

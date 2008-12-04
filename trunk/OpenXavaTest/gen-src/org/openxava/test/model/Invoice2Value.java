@@ -14,14 +14,16 @@ public class Invoice2Value
 
    private static final long serialVersionUID = 1L;
 
-   private java.math.BigDecimal vatPercentage;
-   private boolean vatPercentageHasBeenSet = false;
-   private int number;
-   private boolean numberHasBeenSet = false;
+   private java.math.BigDecimal amountsSum;
+   private boolean amountsSumHasBeenSet = false;
    private int year;
    private boolean yearHasBeenSet = false;
+   private java.math.BigDecimal vatPercentage;
+   private boolean vatPercentageHasBeenSet = false;
    private java.util.Date date;
    private boolean dateHasBeenSet = false;
+   private int number;
+   private boolean numberHasBeenSet = false;
    private int customer_number;
    private boolean customer_numberHasBeenSet = false;
 
@@ -32,45 +34,33 @@ public class Invoice2Value
    //TODO Cloneable is better than this !
    public Invoice2Value( Invoice2Value otherValue )
    {
-	  this.vatPercentage = otherValue.vatPercentage;
-	  vatPercentageHasBeenSet = true;
-	  this.number = otherValue.number;
-	  numberHasBeenSet = true;
+	  this.amountsSum = otherValue.amountsSum;
+	  amountsSumHasBeenSet = true;
 	  this.year = otherValue.year;
 	  yearHasBeenSet = true;
+	  this.vatPercentage = otherValue.vatPercentage;
+	  vatPercentageHasBeenSet = true;
 	  this.date = otherValue.date;
 	  dateHasBeenSet = true;
+	  this.number = otherValue.number;
+	  numberHasBeenSet = true;
 	  this.customer_number = otherValue.customer_number;
 	  customer_numberHasBeenSet = true;
    }
 
-   public java.math.BigDecimal getVatPercentage()
+   public java.math.BigDecimal getAmountsSum()
    {
-	  return this.vatPercentage;
+	  return this.amountsSum;
    }
 
-   public void setVatPercentage( java.math.BigDecimal vatPercentage )
+   public void setAmountsSum( java.math.BigDecimal amountsSum )
    {
-	  this.vatPercentage = vatPercentage;
-	  vatPercentageHasBeenSet = true;
+	  this.amountsSum = amountsSum;
+	  amountsSumHasBeenSet = true;
    }
 
-   public boolean vatPercentageHasBeenSet(){
-	  return vatPercentageHasBeenSet;
-   }
-   public int getNumber()
-   {
-	  return this.number;
-   }
-
-   public void setNumber( int number )
-   {
-	  this.number = number;
-	  numberHasBeenSet = true;
-   }
-
-   public boolean numberHasBeenSet(){
-	  return numberHasBeenSet;
+   public boolean amountsSumHasBeenSet(){
+	  return amountsSumHasBeenSet;
    }
    public int getYear()
    {
@@ -86,6 +76,20 @@ public class Invoice2Value
    public boolean yearHasBeenSet(){
 	  return yearHasBeenSet;
    }
+   public java.math.BigDecimal getVatPercentage()
+   {
+	  return this.vatPercentage;
+   }
+
+   public void setVatPercentage( java.math.BigDecimal vatPercentage )
+   {
+	  this.vatPercentage = vatPercentage;
+	  vatPercentageHasBeenSet = true;
+   }
+
+   public boolean vatPercentageHasBeenSet(){
+	  return vatPercentageHasBeenSet;
+   }
    public java.util.Date getDate()
    {
 	  return this.date;
@@ -99,6 +103,20 @@ public class Invoice2Value
 
    public boolean dateHasBeenSet(){
 	  return dateHasBeenSet;
+   }
+   public int getNumber()
+   {
+	  return this.number;
+   }
+
+   public void setNumber( int number )
+   {
+	  this.number = number;
+	  numberHasBeenSet = true;
+   }
+
+   public boolean numberHasBeenSet(){
+	  return numberHasBeenSet;
    }
    public int getCustomer_number()
    {
@@ -119,7 +137,7 @@ public class Invoice2Value
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("vatPercentage=" + getVatPercentage() + " " + "number=" + getNumber() + " " + "year=" + getYear() + " " + "date=" + getDate() + " " + "customer_number=" + getCustomer_number());
+	  str.append("amountsSum=" + getAmountsSum() + " " + "year=" + getYear() + " " + "vatPercentage=" + getVatPercentage() + " " + "date=" + getDate() + " " + "number=" + getNumber() + " " + "customer_number=" + getCustomer_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -133,8 +151,8 @@ public class Invoice2Value
    protected boolean hasIdentity()
    {
 	  boolean ret = true;
-	  ret = ret && numberHasBeenSet;
 	  ret = ret && yearHasBeenSet;
+	  ret = ret && numberHasBeenSet;
 	  return ret;
    }
 
@@ -148,8 +166,8 @@ public class Invoice2Value
 		 Invoice2Value that = (Invoice2Value) other;
 		 if ( ! that.hasIdentity() ) return false;
 		 boolean lEquals = true;
-		 lEquals = lEquals && this.number == that.number;
 		 lEquals = lEquals && this.year == that.year;
+		 lEquals = lEquals && this.number == that.number;
 
 		 lEquals = lEquals && isIdentical(that);
 
@@ -167,6 +185,14 @@ public class Invoice2Value
 	  {
 		 Invoice2Value that = (Invoice2Value) other;
 		 boolean lEquals = true;
+		 if( this.amountsSum == null )
+		 {
+			lEquals = lEquals && ( that.amountsSum == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.amountsSum.equals( that.amountsSum );
+		 }
 		 if( this.vatPercentage == null )
 		 {
 			lEquals = lEquals && ( that.vatPercentage == null );
@@ -195,13 +221,15 @@ public class Invoice2Value
 
    public int hashCode(){
 	  int result = 17;
-      result = 37*result + ((this.vatPercentage != null) ? this.vatPercentage.hashCode() : 0);
-
-      result = 37*result + (int) number;
+      result = 37*result + ((this.amountsSum != null) ? this.amountsSum.hashCode() : 0);
 
       result = 37*result + (int) year;
 
+      result = 37*result + ((this.vatPercentage != null) ? this.vatPercentage.hashCode() : 0);
+
       result = 37*result + ((this.date != null) ? this.date.hashCode() : 0);
+
+      result = 37*result + (int) number;
 
       result = 37*result + (int) customer_number;
 

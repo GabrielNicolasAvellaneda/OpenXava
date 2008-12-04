@@ -12,12 +12,12 @@ public class InvoiceData
 {
 
    private static final long serialVersionUID = 1L;
-   private java.math.BigDecimal _VatPercentage;
-   private int number;
+   private java.lang.String _Comment;
    private java.sql.Date _Date;
    private java.lang.String _Paid;
    private int year;
-   private java.lang.String _Comment;
+   private java.math.BigDecimal _VatPercentage;
+   private int number;
    private int _Customer_number;
 
    public InvoiceData()
@@ -26,37 +26,28 @@ public class InvoiceData
 
    public InvoiceData( InvoiceData otherData )
    {
-      set_VatPercentage(otherData.get_VatPercentage());
-      setNumber(otherData.getNumber());
+      set_Comment(otherData.get_Comment());
       set_Date(otherData.get_Date());
       set_Paid(otherData.get_Paid());
       setYear(otherData.getYear());
-      set_Comment(otherData.get_Comment());
+      set_VatPercentage(otherData.get_VatPercentage());
+      setNumber(otherData.getNumber());
       set_Customer_number(otherData.get_Customer_number());
 
    }
 
    public org.openxava.test.model.InvoiceKey getPrimaryKey() {
-     org.openxava.test.model.InvoiceKey pk = new org.openxava.test.model.InvoiceKey(this.getNumber(),this.getYear());
+     org.openxava.test.model.InvoiceKey pk = new org.openxava.test.model.InvoiceKey(this.getYear(),this.getNumber());
      return pk;
    }
 
-   public java.math.BigDecimal get_VatPercentage()
+   public java.lang.String get_Comment()
    {
-      return this._VatPercentage;
+      return this._Comment;
    }
-   public void set_VatPercentage( java.math.BigDecimal _VatPercentage )
+   public void set_Comment( java.lang.String _Comment )
    {
-      this._VatPercentage = _VatPercentage;
-   }
-
-   public int getNumber()
-   {
-      return this.number;
-   }
-   public void setNumber( int number )
-   {
-      this.number = number;
+      this._Comment = _Comment;
    }
 
    public java.sql.Date get_Date()
@@ -86,13 +77,22 @@ public class InvoiceData
       this.year = year;
    }
 
-   public java.lang.String get_Comment()
+   public java.math.BigDecimal get_VatPercentage()
    {
-      return this._Comment;
+      return this._VatPercentage;
    }
-   public void set_Comment( java.lang.String _Comment )
+   public void set_VatPercentage( java.math.BigDecimal _VatPercentage )
    {
-      this._Comment = _Comment;
+      this._VatPercentage = _VatPercentage;
+   }
+
+   public int getNumber()
+   {
+      return this.number;
+   }
+   public void setNumber( int number )
+   {
+      this.number = number;
    }
 
    public int get_Customer_number()
@@ -108,7 +108,7 @@ public class InvoiceData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_VatPercentage=" + get_VatPercentage() + " " + "number=" + getNumber() + " " + "_Date=" + get_Date() + " " + "_Paid=" + get_Paid() + " " + "year=" + getYear() + " " + "_Comment=" + get_Comment() + " " + "_Customer_number=" + get_Customer_number());
+      str.append("_Comment=" + get_Comment() + " " + "_Date=" + get_Date() + " " + "_Paid=" + get_Paid() + " " + "year=" + getYear() + " " + "_VatPercentage=" + get_VatPercentage() + " " + "number=" + getNumber() + " " + "_Customer_number=" + get_Customer_number());
       str.append('}');
 
       return(str.toString());
@@ -121,15 +121,14 @@ public class InvoiceData
          InvoiceData lTest = (InvoiceData) pOther;
          boolean lEquals = true;
 
-         if( this._VatPercentage == null )
+         if( this._Comment == null )
          {
-            lEquals = lEquals && ( lTest._VatPercentage == null );
+            lEquals = lEquals && ( lTest._Comment == null );
          }
          else
          {
-            lEquals = lEquals && this._VatPercentage.equals( lTest._VatPercentage );
+            lEquals = lEquals && this._Comment.equals( lTest._Comment );
          }
-         lEquals = lEquals && this.number == lTest.number;
          if( this._Date == null )
          {
             lEquals = lEquals && ( lTest._Date == null );
@@ -147,14 +146,15 @@ public class InvoiceData
             lEquals = lEquals && this._Paid.equals( lTest._Paid );
          }
          lEquals = lEquals && this.year == lTest.year;
-         if( this._Comment == null )
+         if( this._VatPercentage == null )
          {
-            lEquals = lEquals && ( lTest._Comment == null );
+            lEquals = lEquals && ( lTest._VatPercentage == null );
          }
          else
          {
-            lEquals = lEquals && this._Comment.equals( lTest._Comment );
+            lEquals = lEquals && this._VatPercentage.equals( lTest._VatPercentage );
          }
+         lEquals = lEquals && this.number == lTest.number;
          lEquals = lEquals && this._Customer_number == lTest._Customer_number;
 
          return lEquals;
@@ -169,9 +169,7 @@ public class InvoiceData
    {
       int result = 17;
 
-      result = 37*result + ((this._VatPercentage != null) ? this._VatPercentage.hashCode() : 0);
-
-      result = 37*result + (int) number;
+      result = 37*result + ((this._Comment != null) ? this._Comment.hashCode() : 0);
 
       result = 37*result + ((this._Date != null) ? this._Date.hashCode() : 0);
 
@@ -179,7 +177,9 @@ public class InvoiceData
 
       result = 37*result + (int) year;
 
-      result = 37*result + ((this._Comment != null) ? this._Comment.hashCode() : 0);
+      result = 37*result + ((this._VatPercentage != null) ? this._VatPercentage.hashCode() : 0);
+
+      result = 37*result + (int) number;
 
       result = 37*result + (int) _Customer_number;
 

@@ -10,6 +10,9 @@ public interface CourseRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.ICourse
 {
 
+   public int getYear(  )
+      throws java.rmi.RemoteException;
+
    public java.lang.String getDescription(  )
       throws java.rmi.RemoteException;
 
@@ -17,9 +20,6 @@ public interface CourseRemote
       throws java.rmi.RemoteException;
 
    public int getNumber(  )
-      throws java.rmi.RemoteException;
-
-   public int getYear(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.CourseData getData(  )

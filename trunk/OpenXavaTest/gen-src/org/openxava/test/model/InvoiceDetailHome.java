@@ -30,10 +30,10 @@ public interface InvoiceDetailHome
    public java.util.Collection findByProduct(long number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
-   public java.util.Collection findByInvoice(int year, int number)
+   public java.util.Collection findBySoldBy(int number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
-   public java.util.Collection findBySoldBy(int number)
+   public java.util.Collection findByInvoice(int year, int number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
    public org.openxava.test.model.InvoiceDetailRemote findByPrimaryKey(org.openxava.test.model.InvoiceDetailKey pk)

@@ -49,9 +49,6 @@
 			</calculator>			
 		</property>
 		<reference name="product" model="Product2" required="true"/>
-		<postcreate-calculator class="org.openxava.test.calculators.RecalculateAmountsSumCalculator"/>
-		<postmodify-calculator class="org.openxava.test.calculators.RecalculateAmountsSumCalculator"/>
-		<preremove-calculator class="org.openxava.test.calculators.RecalculateAmountsSumCalculator"/>
 	</aggregate>	
 	
 	<view>

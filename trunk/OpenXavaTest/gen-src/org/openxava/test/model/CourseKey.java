@@ -17,42 +17,42 @@ public class CourseKey
 
    private static final long serialVersionUID = 1L;
 
-   public int number;
    public int year;
+   public int number;
 
    public CourseKey()
    {
    }
 
-   public CourseKey( int number,int year )
+   public CourseKey( int year,int number )
    {
-      this.number = number;
       this.year = year;
+      this.number = number;
    }
 
-   public int getNumber()
-   {
-      return number;
-   }
    public int getYear()
    {
       return year;
    }
-
-   public void setNumber(int number)
+   public int getNumber()
    {
-      this.number = number;
+      return number;
    }
+
    public void setYear(int year)
    {
       this.year = year;
+   }
+   public void setNumber(int number)
+   {
+      this.number = number;
    }
 
    public int hashCode()
    {
       int _hashCode = 0;
-         _hashCode += (int)this.number;
          _hashCode += (int)this.year;
+         _hashCode += (int)this.number;
 
       return _hashCode;
    }
@@ -71,8 +71,8 @@ public class CourseKey
       }
       else
       {
-         eq = eq && this.number == pk.number;
          eq = eq && this.year == pk.year;
+         eq = eq && this.number == pk.number;
       }
 
       return eq;

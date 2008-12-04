@@ -10,6 +10,12 @@ public interface DriverRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.IDriver
 {
 
+   public java.lang.String getType(  )
+      throws java.rmi.RemoteException;
+
+   public void setType( java.lang.String newType )
+      throws java.rmi.RemoteException;
+
    public java.lang.String getName(  )
       throws java.rmi.RemoteException;
 
@@ -17,12 +23,6 @@ public interface DriverRemote
       throws java.rmi.RemoteException;
 
    public int getNumber(  )
-      throws java.rmi.RemoteException;
-
-   public java.lang.String getType(  )
-      throws java.rmi.RemoteException;
-
-   public void setType( java.lang.String newType )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.IDrivingLicence getDrivingLicence(  )

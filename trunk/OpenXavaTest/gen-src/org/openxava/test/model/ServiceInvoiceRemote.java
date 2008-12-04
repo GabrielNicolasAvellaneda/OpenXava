@@ -16,25 +16,25 @@ public interface ServiceInvoiceRemote
    public void setAmount( java.math.BigDecimal newAmount )
       throws java.rmi.RemoteException;
 
+   public int getYear(  )
+      throws java.rmi.RemoteException;
+
+   public void setYear( int newYear )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getOid(  )
+      throws java.rmi.RemoteException;
+
    public java.lang.String getDescription(  )
       throws java.rmi.RemoteException;
 
    public void setDescription( java.lang.String newDescription )
       throws java.rmi.RemoteException;
 
-   public java.lang.String getOid(  )
-      throws java.rmi.RemoteException;
-
    public int getNumber(  )
       throws java.rmi.RemoteException;
 
    public void setNumber( int newNumber )
-      throws java.rmi.RemoteException;
-
-   public int getYear(  )
-      throws java.rmi.RemoteException;
-
-   public void setYear( int newYear )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.ServiceInvoiceData getData(  )

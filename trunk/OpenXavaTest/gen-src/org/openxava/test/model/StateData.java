@@ -12,8 +12,8 @@ public class StateData
 {
 
    private static final long serialVersionUID = 1L;
-   private java.lang.String id;
    private java.lang.String _Name;
+   private java.lang.String id;
 
    public StateData()
    {
@@ -21,23 +21,14 @@ public class StateData
 
    public StateData( StateData otherData )
    {
-      setId(otherData.getId());
       set_Name(otherData.get_Name());
+      setId(otherData.getId());
 
    }
 
    public org.openxava.test.model.StateKey getPrimaryKey() {
      org.openxava.test.model.StateKey pk = new org.openxava.test.model.StateKey(this.getId());
      return pk;
-   }
-
-   public java.lang.String getId()
-   {
-      return this.id;
-   }
-   public void setId( java.lang.String id )
-   {
-      this.id = id;
    }
 
    public java.lang.String get_Name()
@@ -49,11 +40,20 @@ public class StateData
       this._Name = _Name;
    }
 
+   public java.lang.String getId()
+   {
+      return this.id;
+   }
+   public void setId( java.lang.String id )
+   {
+      this.id = id;
+   }
+
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("id=" + getId() + " " + "_Name=" + get_Name());
+      str.append("_Name=" + get_Name() + " " + "id=" + getId());
       str.append('}');
 
       return(str.toString());
@@ -66,14 +66,6 @@ public class StateData
          StateData lTest = (StateData) pOther;
          boolean lEquals = true;
 
-         if( this.id == null )
-         {
-            lEquals = lEquals && ( lTest.id == null );
-         }
-         else
-         {
-            lEquals = lEquals && this.id.equals( lTest.id );
-         }
          if( this._Name == null )
          {
             lEquals = lEquals && ( lTest._Name == null );
@@ -81,6 +73,14 @@ public class StateData
          else
          {
             lEquals = lEquals && this._Name.equals( lTest._Name );
+         }
+         if( this.id == null )
+         {
+            lEquals = lEquals && ( lTest.id == null );
+         }
+         else
+         {
+            lEquals = lEquals && this.id.equals( lTest.id );
          }
 
          return lEquals;
@@ -95,9 +95,9 @@ public class StateData
    {
       int result = 17;
 
-      result = 37*result + ((this.id != null) ? this.id.hashCode() : 0);
-
       result = 37*result + ((this._Name != null) ? this._Name.hashCode() : 0);
+
+      result = 37*result + ((this.id != null) ? this.id.hashCode() : 0);
 
       return result;
    }

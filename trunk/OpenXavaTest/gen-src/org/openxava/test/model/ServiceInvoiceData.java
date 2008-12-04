@@ -13,10 +13,10 @@ public class ServiceInvoiceData
 
    private static final long serialVersionUID = 1L;
    private java.math.BigDecimal _Amount;
-   private java.lang.String _Description;
-   private java.lang.String oid;
-   private java.lang.Integer _Number;
    private java.lang.Integer _Year;
+   private java.lang.String oid;
+   private java.lang.String _Description;
+   private java.lang.Integer _Number;
 
    public ServiceInvoiceData()
    {
@@ -25,10 +25,10 @@ public class ServiceInvoiceData
    public ServiceInvoiceData( ServiceInvoiceData otherData )
    {
       set_Amount(otherData.get_Amount());
-      set_Description(otherData.get_Description());
-      setOid(otherData.getOid());
-      set_Number(otherData.get_Number());
       set_Year(otherData.get_Year());
+      setOid(otherData.getOid());
+      set_Description(otherData.get_Description());
+      set_Number(otherData.get_Number());
 
    }
 
@@ -46,13 +46,13 @@ public class ServiceInvoiceData
       this._Amount = _Amount;
    }
 
-   public java.lang.String get_Description()
+   public java.lang.Integer get_Year()
    {
-      return this._Description;
+      return this._Year;
    }
-   public void set_Description( java.lang.String _Description )
+   public void set_Year( java.lang.Integer _Year )
    {
-      this._Description = _Description;
+      this._Year = _Year;
    }
 
    public java.lang.String getOid()
@@ -64,6 +64,15 @@ public class ServiceInvoiceData
       this.oid = oid;
    }
 
+   public java.lang.String get_Description()
+   {
+      return this._Description;
+   }
+   public void set_Description( java.lang.String _Description )
+   {
+      this._Description = _Description;
+   }
+
    public java.lang.Integer get_Number()
    {
       return this._Number;
@@ -73,20 +82,11 @@ public class ServiceInvoiceData
       this._Number = _Number;
    }
 
-   public java.lang.Integer get_Year()
-   {
-      return this._Year;
-   }
-   public void set_Year( java.lang.Integer _Year )
-   {
-      this._Year = _Year;
-   }
-
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Amount=" + get_Amount() + " " + "_Description=" + get_Description() + " " + "oid=" + getOid() + " " + "_Number=" + get_Number() + " " + "_Year=" + get_Year());
+      str.append("_Amount=" + get_Amount() + " " + "_Year=" + get_Year() + " " + "oid=" + getOid() + " " + "_Description=" + get_Description() + " " + "_Number=" + get_Number());
       str.append('}');
 
       return(str.toString());
@@ -107,13 +107,13 @@ public class ServiceInvoiceData
          {
             lEquals = lEquals && this._Amount.equals( lTest._Amount );
          }
-         if( this._Description == null )
+         if( this._Year == null )
          {
-            lEquals = lEquals && ( lTest._Description == null );
+            lEquals = lEquals && ( lTest._Year == null );
          }
          else
          {
-            lEquals = lEquals && this._Description.equals( lTest._Description );
+            lEquals = lEquals && this._Year.equals( lTest._Year );
          }
          if( this.oid == null )
          {
@@ -123,6 +123,14 @@ public class ServiceInvoiceData
          {
             lEquals = lEquals && this.oid.equals( lTest.oid );
          }
+         if( this._Description == null )
+         {
+            lEquals = lEquals && ( lTest._Description == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Description.equals( lTest._Description );
+         }
          if( this._Number == null )
          {
             lEquals = lEquals && ( lTest._Number == null );
@@ -130,14 +138,6 @@ public class ServiceInvoiceData
          else
          {
             lEquals = lEquals && this._Number.equals( lTest._Number );
-         }
-         if( this._Year == null )
-         {
-            lEquals = lEquals && ( lTest._Year == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._Year.equals( lTest._Year );
          }
 
          return lEquals;
@@ -154,13 +154,13 @@ public class ServiceInvoiceData
 
       result = 37*result + ((this._Amount != null) ? this._Amount.hashCode() : 0);
 
-      result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
+      result = 37*result + ((this._Year != null) ? this._Year.hashCode() : 0);
 
       result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
 
-      result = 37*result + ((this._Number != null) ? this._Number.hashCode() : 0);
+      result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
 
-      result = 37*result + ((this._Year != null) ? this._Year.hashCode() : 0);
+      result = 37*result + ((this._Number != null) ? this._Number.hashCode() : 0);
 
       return result;
    }

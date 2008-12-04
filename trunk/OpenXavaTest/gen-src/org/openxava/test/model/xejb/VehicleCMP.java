@@ -18,10 +18,10 @@ public abstract class VehicleCMP
       {
          dataHolder = new org.openxava.test.model.VehicleData();
 
-         dataHolder.set_Model( get_Model() );
-         dataHolder.setOid( getOid() );
          dataHolder.set_Code( get_Code() );
+         dataHolder.setOid( getOid() );
          dataHolder.set_Make( get_Make() );
+         dataHolder.set_Model( get_Model() );
 
       }
       catch (RuntimeException e)
@@ -36,9 +36,9 @@ public abstract class VehicleCMP
    {
       try
       {
-         set_Model( dataHolder.get_Model() );
          set_Code( dataHolder.get_Code() );
          set_Make( dataHolder.get_Make() );
+         set_Model( dataHolder.get_Model() );
 
       }
       catch (Exception e)
@@ -92,10 +92,10 @@ public abstract class VehicleCMP
       VehicleValue = new org.openxava.test.model.VehicleValue();
       try
          {
-            VehicleValue.setModel( getModel() );
-            VehicleValue.setOid( getOid() );
             VehicleValue.setCode( getCode() );
+            VehicleValue.setOid( getOid() );
             VehicleValue.setMake( getMake() );
+            VehicleValue.setModel( getModel() );
 
          }
          catch (Exception e)
@@ -111,9 +111,9 @@ public abstract class VehicleCMP
 
 	  try
 	  {
-		 setModel( valueHolder.getModel() );
 		 setCode( valueHolder.getCode() );
 		 setMake( valueHolder.getMake() );
+		 setModel( valueHolder.getModel() );
 
 	  }
 	  catch (Exception e)
@@ -124,20 +124,20 @@ public abstract class VehicleCMP
 
 /* Value Objects END */
 
-   public abstract java.lang.String get_Model() ;
+   public abstract java.lang.String get_Code() ;
 
-   public abstract void set_Model( java.lang.String _Model ) ;
+   public abstract void set_Code( java.lang.String _Code ) ;
 
    public abstract java.lang.String getOid() ;
 
    public abstract void setOid( java.lang.String oid ) ;
 
-   public abstract java.lang.String get_Code() ;
-
-   public abstract void set_Code( java.lang.String _Code ) ;
-
    public abstract java.lang.String get_Make() ;
 
    public abstract void set_Make( java.lang.String _Make ) ;
+
+   public abstract java.lang.String get_Model() ;
+
+   public abstract void set_Model( java.lang.String _Model ) ;
 
 }

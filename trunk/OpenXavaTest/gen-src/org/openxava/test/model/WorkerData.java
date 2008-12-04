@@ -12,9 +12,9 @@ public class WorkerData
 {
 
    private static final long serialVersionUID = 1L;
-   private java.lang.Integer id;
-   private java.lang.String _NickName;
    private java.lang.String _FullName;
+   private java.lang.String _NickName;
+   private java.lang.Integer id;
 
    public WorkerData()
    {
@@ -22,33 +22,15 @@ public class WorkerData
 
    public WorkerData( WorkerData otherData )
    {
-      setId(otherData.getId());
-      set_NickName(otherData.get_NickName());
       set_FullName(otherData.get_FullName());
+      set_NickName(otherData.get_NickName());
+      setId(otherData.getId());
 
    }
 
    public org.openxava.test.model.WorkerKey getPrimaryKey() {
      org.openxava.test.model.WorkerKey pk = new org.openxava.test.model.WorkerKey(this.getId());
      return pk;
-   }
-
-   public java.lang.Integer getId()
-   {
-      return this.id;
-   }
-   public void setId( java.lang.Integer id )
-   {
-      this.id = id;
-   }
-
-   public java.lang.String get_NickName()
-   {
-      return this._NickName;
-   }
-   public void set_NickName( java.lang.String _NickName )
-   {
-      this._NickName = _NickName;
    }
 
    public java.lang.String get_FullName()
@@ -60,11 +42,29 @@ public class WorkerData
       this._FullName = _FullName;
    }
 
+   public java.lang.String get_NickName()
+   {
+      return this._NickName;
+   }
+   public void set_NickName( java.lang.String _NickName )
+   {
+      this._NickName = _NickName;
+   }
+
+   public java.lang.Integer getId()
+   {
+      return this.id;
+   }
+   public void setId( java.lang.Integer id )
+   {
+      this.id = id;
+   }
+
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("id=" + getId() + " " + "_NickName=" + get_NickName() + " " + "_FullName=" + get_FullName());
+      str.append("_FullName=" + get_FullName() + " " + "_NickName=" + get_NickName() + " " + "id=" + getId());
       str.append('}');
 
       return(str.toString());
@@ -77,13 +77,13 @@ public class WorkerData
          WorkerData lTest = (WorkerData) pOther;
          boolean lEquals = true;
 
-         if( this.id == null )
+         if( this._FullName == null )
          {
-            lEquals = lEquals && ( lTest.id == null );
+            lEquals = lEquals && ( lTest._FullName == null );
          }
          else
          {
-            lEquals = lEquals && this.id.equals( lTest.id );
+            lEquals = lEquals && this._FullName.equals( lTest._FullName );
          }
          if( this._NickName == null )
          {
@@ -93,13 +93,13 @@ public class WorkerData
          {
             lEquals = lEquals && this._NickName.equals( lTest._NickName );
          }
-         if( this._FullName == null )
+         if( this.id == null )
          {
-            lEquals = lEquals && ( lTest._FullName == null );
+            lEquals = lEquals && ( lTest.id == null );
          }
          else
          {
-            lEquals = lEquals && this._FullName.equals( lTest._FullName );
+            lEquals = lEquals && this.id.equals( lTest.id );
          }
 
          return lEquals;
@@ -114,11 +114,11 @@ public class WorkerData
    {
       int result = 17;
 
-      result = 37*result + ((this.id != null) ? this.id.hashCode() : 0);
+      result = 37*result + ((this._FullName != null) ? this._FullName.hashCode() : 0);
 
       result = 37*result + ((this._NickName != null) ? this._NickName.hashCode() : 0);
 
-      result = 37*result + ((this._FullName != null) ? this._FullName.hashCode() : 0);
+      result = 37*result + ((this.id != null) ? this.id.hashCode() : 0);
 
       return result;
    }

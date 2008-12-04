@@ -20,10 +20,10 @@ public abstract class FormulaIngredientCMP
 
          dataHolder.setOid( getOid() );
          dataHolder.set_Image( get_Image() );
-         dataHolder.set_Accentuate_oid( get_Accentuate_oid() );
          dataHolder.set_Ingredient_oid( get_Ingredient_oid() );
-         dataHolder.set_Formula_oid( get_Formula_oid() );
+         dataHolder.set_Accentuate_oid( get_Accentuate_oid() );
          dataHolder.set_AnotherFormula_oid( get_AnotherFormula_oid() );
+         dataHolder.set_Formula_oid( get_Formula_oid() );
 
       }
       catch (RuntimeException e)
@@ -39,10 +39,10 @@ public abstract class FormulaIngredientCMP
       try
       {
          set_Image( dataHolder.get_Image() );
-         set_Accentuate_oid( dataHolder.get_Accentuate_oid() );
          set_Ingredient_oid( dataHolder.get_Ingredient_oid() );
-         set_Formula_oid( dataHolder.get_Formula_oid() );
+         set_Accentuate_oid( dataHolder.get_Accentuate_oid() );
          set_AnotherFormula_oid( dataHolder.get_AnotherFormula_oid() );
+         set_Formula_oid( dataHolder.get_Formula_oid() );
 
       }
       catch (Exception e)
@@ -98,10 +98,10 @@ public abstract class FormulaIngredientCMP
          {
             FormulaIngredientValue.setOid( getOid() );
             FormulaIngredientValue.setImage( getImage() );
-            FormulaIngredientValue.setAccentuate_oid( getAccentuate_oid() );
             FormulaIngredientValue.setIngredient_oid( getIngredient_oid() );
-            FormulaIngredientValue.setFormula_oid( getFormula_oid() );
+            FormulaIngredientValue.setAccentuate_oid( getAccentuate_oid() );
             FormulaIngredientValue.setAnotherFormula_oid( getAnotherFormula_oid() );
+            FormulaIngredientValue.setFormula_oid( getFormula_oid() );
 
          }
          catch (Exception e)
@@ -118,10 +118,10 @@ public abstract class FormulaIngredientCMP
 	  try
 	  {
 		 setImage( valueHolder.getImage() );
-		 setAccentuate_oid( valueHolder.getAccentuate_oid() );
 		 setIngredient_oid( valueHolder.getIngredient_oid() );
-		 setFormula_oid( valueHolder.getFormula_oid() );
+		 setAccentuate_oid( valueHolder.getAccentuate_oid() );
 		 setAnotherFormula_oid( valueHolder.getAnotherFormula_oid() );
+		 setFormula_oid( valueHolder.getFormula_oid() );
 
 	  }
 	  catch (Exception e)
@@ -140,20 +140,20 @@ public abstract class FormulaIngredientCMP
 
    public abstract void set_Image( byte[] _Image ) ;
 
-   public abstract java.lang.String get_Accentuate_oid() ;
-
-   public abstract void set_Accentuate_oid( java.lang.String _Accentuate_oid ) ;
-
    public abstract java.lang.String get_Ingredient_oid() ;
 
    public abstract void set_Ingredient_oid( java.lang.String _Ingredient_oid ) ;
 
-   public abstract java.lang.String get_Formula_oid() ;
+   public abstract java.lang.String get_Accentuate_oid() ;
 
-   public abstract void set_Formula_oid( java.lang.String _Formula_oid ) ;
+   public abstract void set_Accentuate_oid( java.lang.String _Accentuate_oid ) ;
 
    public abstract java.lang.String get_AnotherFormula_oid() ;
 
    public abstract void set_AnotherFormula_oid( java.lang.String _AnotherFormula_oid ) ;
+
+   public abstract java.lang.String get_Formula_oid() ;
+
+   public abstract void set_Formula_oid( java.lang.String _Formula_oid ) ;
 
 }

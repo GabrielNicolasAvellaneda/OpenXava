@@ -21,8 +21,8 @@ public abstract class TransportCharge2CMP
          dataHolder.set_Amount( get_Amount() );
          dataHolder.setYear( getYear() );
          dataHolder.set_Delivery_number( get_Delivery_number() );
-         dataHolder.set_Delivery_invoice_number( get_Delivery_invoice_number() );
          dataHolder.set_Delivery_type_number( get_Delivery_type_number() );
+         dataHolder.set_Delivery_invoice_number( get_Delivery_invoice_number() );
 
       }
       catch (RuntimeException e)
@@ -94,9 +94,9 @@ public abstract class TransportCharge2CMP
             TransportCharge2Value.setAmount( getAmount() );
             TransportCharge2Value.setYear( getYear() );
             TransportCharge2Value.setDelivery_number( getDelivery_number() );
+            TransportCharge2Value.setDelivery_type_number( getDelivery_type_number() );
             TransportCharge2Value.setDelivery_invoice_year( getDelivery_invoice_year() );
             TransportCharge2Value.setDelivery_invoice_number( getDelivery_invoice_number() );
-            TransportCharge2Value.setDelivery_type_number( getDelivery_type_number() );
 
          }
          catch (Exception e)
@@ -114,9 +114,9 @@ public abstract class TransportCharge2CMP
 	  {
 		 setAmount( valueHolder.getAmount() );
 		 setDelivery_number( valueHolder.getDelivery_number() );
+		 setDelivery_type_number( valueHolder.getDelivery_type_number() );
 		 setDelivery_invoice_year( valueHolder.getDelivery_invoice_year() );
 		 setDelivery_invoice_number( valueHolder.getDelivery_invoice_number() );
-		 setDelivery_type_number( valueHolder.getDelivery_type_number() );
 
 	  }
 	  catch (Exception e)
@@ -139,12 +139,12 @@ public abstract class TransportCharge2CMP
 
    public abstract void set_Delivery_number( int _Delivery_number ) ;
 
-   public abstract int get_Delivery_invoice_number() ;
-
-   public abstract void set_Delivery_invoice_number( int _Delivery_invoice_number ) ;
-
    public abstract int get_Delivery_type_number() ;
 
    public abstract void set_Delivery_type_number( int _Delivery_type_number ) ;
+
+   public abstract int get_Delivery_invoice_number() ;
+
+   public abstract void set_Delivery_invoice_number( int _Delivery_invoice_number ) ;
 
 }

@@ -19,14 +19,14 @@ public abstract class ProductCMP
          dataHolder = new org.openxava.test.model.ProductData();
 
          dataHolder.set_Photos( get_Photos() );
-         dataHolder.set_SubfamilyNumber( get_SubfamilyNumber() );
+         dataHolder.set_FamilyNumber( get_FamilyNumber() );
+         dataHolder.set_UnitPrice( get_UnitPrice() );
          dataHolder.setWarehouseZoneNumber( getWarehouseZoneNumber() );
          dataHolder.setWarehouseNumber( getWarehouseNumber() );
-         dataHolder.set_Description( get_Description() );
-         dataHolder.set_UnitPrice( get_UnitPrice() );
+         dataHolder.set_SubfamilyNumber( get_SubfamilyNumber() );
          dataHolder.set_Remarks( get_Remarks() );
+         dataHolder.set_Description( get_Description() );
          dataHolder.setNumber( getNumber() );
-         dataHolder.set_FamilyNumber( get_FamilyNumber() );
 
       }
       catch (RuntimeException e)
@@ -42,13 +42,13 @@ public abstract class ProductCMP
       try
       {
          set_Photos( dataHolder.get_Photos() );
-         set_SubfamilyNumber( dataHolder.get_SubfamilyNumber() );
+         set_FamilyNumber( dataHolder.get_FamilyNumber() );
+         set_UnitPrice( dataHolder.get_UnitPrice() );
          setWarehouseZoneNumber( dataHolder.getWarehouseZoneNumber() );
          setWarehouseNumber( dataHolder.getWarehouseNumber() );
-         set_Description( dataHolder.get_Description() );
-         set_UnitPrice( dataHolder.get_UnitPrice() );
+         set_SubfamilyNumber( dataHolder.get_SubfamilyNumber() );
          set_Remarks( dataHolder.get_Remarks() );
-         set_FamilyNumber( dataHolder.get_FamilyNumber() );
+         set_Description( dataHolder.get_Description() );
 
       }
       catch (Exception e)
@@ -103,13 +103,13 @@ public abstract class ProductCMP
       try
          {
             ProductValue.setPhotos( getPhotos() );
+            ProductValue.setFamilyNumber( getFamilyNumber() );
+            ProductValue.setUnitPrice( getUnitPrice() );
             ProductValue.setSubfamilyNumber( getSubfamilyNumber() );
+            ProductValue.setRemarks( getRemarks() );
             ProductValue.setDescription( getDescription() );
             ProductValue.setUnitPriceInPesetas( getUnitPriceInPesetas() );
-            ProductValue.setUnitPrice( getUnitPrice() );
-            ProductValue.setRemarks( getRemarks() );
             ProductValue.setNumber( getNumber() );
-            ProductValue.setFamilyNumber( getFamilyNumber() );
 
          }
          catch (Exception e)
@@ -126,12 +126,12 @@ public abstract class ProductCMP
 	  try
 	  {
 		 setPhotos( valueHolder.getPhotos() );
+		 setFamilyNumber( valueHolder.getFamilyNumber() );
+		 setUnitPrice( valueHolder.getUnitPrice() );
 		 setSubfamilyNumber( valueHolder.getSubfamilyNumber() );
+		 setRemarks( valueHolder.getRemarks() );
 		 setDescription( valueHolder.getDescription() );
 		 setUnitPriceInPesetas( valueHolder.getUnitPriceInPesetas() );
-		 setUnitPrice( valueHolder.getUnitPrice() );
-		 setRemarks( valueHolder.getRemarks() );
-		 setFamilyNumber( valueHolder.getFamilyNumber() );
 
 	  }
 	  catch (Exception e)
@@ -146,9 +146,13 @@ public abstract class ProductCMP
 
    public abstract void set_Photos( java.lang.String _Photos ) ;
 
-   public abstract java.lang.Integer get_SubfamilyNumber() ;
+   public abstract java.lang.Integer get_FamilyNumber() ;
 
-   public abstract void set_SubfamilyNumber( java.lang.Integer _SubfamilyNumber ) ;
+   public abstract void set_FamilyNumber( java.lang.Integer _FamilyNumber ) ;
+
+   public abstract java.math.BigDecimal get_UnitPrice() ;
+
+   public abstract void set_UnitPrice( java.math.BigDecimal _UnitPrice ) ;
 
    public abstract int getWarehouseZoneNumber() ;
 
@@ -158,24 +162,20 @@ public abstract class ProductCMP
 
    public abstract void setWarehouseNumber( java.lang.Integer warehouseNumber ) ;
 
-   public abstract java.lang.String get_Description() ;
+   public abstract java.lang.Integer get_SubfamilyNumber() ;
 
-   public abstract void set_Description( java.lang.String _Description ) ;
-
-   public abstract java.math.BigDecimal get_UnitPrice() ;
-
-   public abstract void set_UnitPrice( java.math.BigDecimal _UnitPrice ) ;
+   public abstract void set_SubfamilyNumber( java.lang.Integer _SubfamilyNumber ) ;
 
    public abstract java.lang.String get_Remarks() ;
 
    public abstract void set_Remarks( java.lang.String _Remarks ) ;
 
+   public abstract java.lang.String get_Description() ;
+
+   public abstract void set_Description( java.lang.String _Description ) ;
+
    public abstract long getNumber() ;
 
    public abstract void setNumber( long number ) ;
-
-   public abstract java.lang.Integer get_FamilyNumber() ;
-
-   public abstract void set_FamilyNumber( java.lang.Integer _FamilyNumber ) ;
 
 }

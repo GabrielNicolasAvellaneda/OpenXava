@@ -14,14 +14,14 @@ public class ColorValue
 
    private static final long serialVersionUID = 1L;
 
-   private java.lang.String name;
-   private boolean nameHasBeenSet = false;
-   private java.lang.Integer number;
-   private boolean numberHasBeenSet = false;
    private java.lang.String sample;
    private boolean sampleHasBeenSet = false;
+   private java.lang.String name;
+   private boolean nameHasBeenSet = false;
    private int version;
    private boolean versionHasBeenSet = false;
+   private java.lang.Integer number;
+   private boolean numberHasBeenSet = false;
 
    public ColorValue()
    {
@@ -30,44 +30,16 @@ public class ColorValue
    //TODO Cloneable is better than this !
    public ColorValue( ColorValue otherValue )
    {
-	  this.name = otherValue.name;
-	  nameHasBeenSet = true;
-	  this.number = otherValue.number;
-	  numberHasBeenSet = true;
 	  this.sample = otherValue.sample;
 	  sampleHasBeenSet = true;
+	  this.name = otherValue.name;
+	  nameHasBeenSet = true;
 	  this.version = otherValue.version;
 	  versionHasBeenSet = true;
-   }
-
-   public java.lang.String getName()
-   {
-	  return this.name;
-   }
-
-   public void setName( java.lang.String name )
-   {
-	  this.name = name;
-	  nameHasBeenSet = true;
-   }
-
-   public boolean nameHasBeenSet(){
-	  return nameHasBeenSet;
-   }
-   public java.lang.Integer getNumber()
-   {
-	  return this.number;
-   }
-
-   public void setNumber( java.lang.Integer number )
-   {
-	  this.number = number;
+	  this.number = otherValue.number;
 	  numberHasBeenSet = true;
    }
 
-   public boolean numberHasBeenSet(){
-	  return numberHasBeenSet;
-   }
    public java.lang.String getSample()
    {
 	  return this.sample;
@@ -81,6 +53,20 @@ public class ColorValue
 
    public boolean sampleHasBeenSet(){
 	  return sampleHasBeenSet;
+   }
+   public java.lang.String getName()
+   {
+	  return this.name;
+   }
+
+   public void setName( java.lang.String name )
+   {
+	  this.name = name;
+	  nameHasBeenSet = true;
+   }
+
+   public boolean nameHasBeenSet(){
+	  return nameHasBeenSet;
    }
    public int getVersion()
    {
@@ -96,12 +82,26 @@ public class ColorValue
    public boolean versionHasBeenSet(){
 	  return versionHasBeenSet;
    }
+   public java.lang.Integer getNumber()
+   {
+	  return this.number;
+   }
+
+   public void setNumber( java.lang.Integer number )
+   {
+	  this.number = number;
+	  numberHasBeenSet = true;
+   }
+
+   public boolean numberHasBeenSet(){
+	  return numberHasBeenSet;
+   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("name=" + getName() + " " + "number=" + getNumber() + " " + "sample=" + getSample() + " " + "version=" + getVersion());
+	  str.append("sample=" + getSample() + " " + "name=" + getName() + " " + "version=" + getVersion() + " " + "number=" + getNumber());
 	  str.append('}');
 
 	  return(str.toString());
@@ -154,14 +154,6 @@ public class ColorValue
 	  {
 		 ColorValue that = (ColorValue) other;
 		 boolean lEquals = true;
-		 if( this.name == null )
-		 {
-			lEquals = lEquals && ( that.name == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.name.equals( that.name );
-		 }
 		 if( this.sample == null )
 		 {
 			lEquals = lEquals && ( that.sample == null );
@@ -169,6 +161,14 @@ public class ColorValue
 		 else
 		 {
 			lEquals = lEquals && this.sample.equals( that.sample );
+		 }
+		 if( this.name == null )
+		 {
+			lEquals = lEquals && ( that.name == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.name.equals( that.name );
 		 }
 		 lEquals = lEquals && this.version == that.version;
 
@@ -182,13 +182,13 @@ public class ColorValue
 
    public int hashCode(){
 	  int result = 17;
-      result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);
-
-      result = 37*result + ((this.number != null) ? this.number.hashCode() : 0);
-
       result = 37*result + ((this.sample != null) ? this.sample.hashCode() : 0);
 
+      result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);
+
       result = 37*result + (int) version;
+
+      result = 37*result + ((this.number != null) ? this.number.hashCode() : 0);
 
 	  return result;
    }

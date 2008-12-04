@@ -10,22 +10,22 @@ public interface ColorRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.IColor
 {
 
+   public java.lang.String getSample(  )
+      throws java.rmi.RemoteException;
+
    public java.lang.String getName(  )
       throws java.rmi.RemoteException;
 
    public void setName( java.lang.String newName )
       throws java.rmi.RemoteException;
 
-   public java.lang.Integer getNumber(  )
-      throws java.rmi.RemoteException;
-
-   public java.lang.String getSample(  )
-      throws java.rmi.RemoteException;
-
    public int getVersion(  )
       throws java.rmi.RemoteException;
 
    public void setVersion( int newVersion )
+      throws java.rmi.RemoteException;
+
+   public java.lang.Integer getNumber(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.ColorData getData(  )

@@ -14,12 +14,12 @@ public class DriverValue
 
    private static final long serialVersionUID = 1L;
 
+   private java.lang.String type;
+   private boolean typeHasBeenSet = false;
    private java.lang.String name;
    private boolean nameHasBeenSet = false;
    private int number;
    private boolean numberHasBeenSet = false;
-   private java.lang.String type;
-   private boolean typeHasBeenSet = false;
    private java.lang.String drivingLicence_type;
    private boolean drivingLicence_typeHasBeenSet = false;
    private int drivingLicence_level;
@@ -32,18 +32,32 @@ public class DriverValue
    //TODO Cloneable is better than this !
    public DriverValue( DriverValue otherValue )
    {
+	  this.type = otherValue.type;
+	  typeHasBeenSet = true;
 	  this.name = otherValue.name;
 	  nameHasBeenSet = true;
 	  this.number = otherValue.number;
 	  numberHasBeenSet = true;
-	  this.type = otherValue.type;
-	  typeHasBeenSet = true;
 	  this.drivingLicence_type = otherValue.drivingLicence_type;
 	  drivingLicence_typeHasBeenSet = true;
 	  this.drivingLicence_level = otherValue.drivingLicence_level;
 	  drivingLicence_levelHasBeenSet = true;
    }
 
+   public java.lang.String getType()
+   {
+	  return this.type;
+   }
+
+   public void setType( java.lang.String type )
+   {
+	  this.type = type;
+	  typeHasBeenSet = true;
+   }
+
+   public boolean typeHasBeenSet(){
+	  return typeHasBeenSet;
+   }
    public java.lang.String getName()
    {
 	  return this.name;
@@ -71,20 +85,6 @@ public class DriverValue
 
    public boolean numberHasBeenSet(){
 	  return numberHasBeenSet;
-   }
-   public java.lang.String getType()
-   {
-	  return this.type;
-   }
-
-   public void setType( java.lang.String type )
-   {
-	  this.type = type;
-	  typeHasBeenSet = true;
-   }
-
-   public boolean typeHasBeenSet(){
-	  return typeHasBeenSet;
    }
    public java.lang.String getDrivingLicence_type()
    {
@@ -119,7 +119,7 @@ public class DriverValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("name=" + getName() + " " + "number=" + getNumber() + " " + "type=" + getType() + " " + "drivingLicence_type=" + getDrivingLicence_type() + " " + "drivingLicence_level=" + getDrivingLicence_level());
+	  str.append("type=" + getType() + " " + "name=" + getName() + " " + "number=" + getNumber() + " " + "drivingLicence_type=" + getDrivingLicence_type() + " " + "drivingLicence_level=" + getDrivingLicence_level());
 	  str.append('}');
 
 	  return(str.toString());
@@ -163,6 +163,14 @@ public class DriverValue
 	  {
 		 DriverValue that = (DriverValue) other;
 		 boolean lEquals = true;
+		 if( this.type == null )
+		 {
+			lEquals = lEquals && ( that.type == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.type.equals( that.type );
+		 }
 		 if( this.name == null )
 		 {
 			lEquals = lEquals && ( that.name == null );
@@ -172,14 +180,6 @@ public class DriverValue
 			lEquals = lEquals && this.name.equals( that.name );
 		 }
 		 lEquals = lEquals && this.number == that.number;
-		 if( this.type == null )
-		 {
-			lEquals = lEquals && ( that.type == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.type.equals( that.type );
-		 }
 		 if( this.drivingLicence_type == null )
 		 {
 			lEquals = lEquals && ( that.drivingLicence_type == null );
@@ -200,11 +200,11 @@ public class DriverValue
 
    public int hashCode(){
 	  int result = 17;
+      result = 37*result + ((this.type != null) ? this.type.hashCode() : 0);
+
       result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);
 
       result = 37*result + (int) number;
-
-      result = 37*result + ((this.type != null) ? this.type.hashCode() : 0);
 
       result = 37*result + ((this.drivingLicence_type != null) ? this.drivingLicence_type.hashCode() : 0);
 

@@ -10,16 +10,22 @@ public interface ClerkRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.IClerk
 {
 
-   public java.sql.Time getArrivalTime(  )
+   public java.lang.String getComments(  )
       throws java.rmi.RemoteException;
 
-   public void setArrivalTime( java.sql.Time newArrivalTime )
+   public void setComments( java.lang.String newComments )
       throws java.rmi.RemoteException;
 
    public java.lang.String getEndingTime(  )
       throws java.rmi.RemoteException;
 
    public void setEndingTime( java.lang.String newEndingTime )
+      throws java.rmi.RemoteException;
+
+   public java.sql.Time getArrivalTime(  )
+      throws java.rmi.RemoteException;
+
+   public void setArrivalTime( java.sql.Time newArrivalTime )
       throws java.rmi.RemoteException;
 
    public java.lang.String getName(  )
@@ -35,12 +41,6 @@ public interface ClerkRemote
       throws java.rmi.RemoteException;
 
    public int getZoneNumber(  )
-      throws java.rmi.RemoteException;
-
-   public java.lang.String getComments(  )
-      throws java.rmi.RemoteException;
-
-   public void setComments( java.lang.String newComments )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.ClerkData getData(  )

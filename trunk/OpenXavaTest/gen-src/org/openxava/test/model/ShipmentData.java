@@ -12,11 +12,11 @@ public class ShipmentData
 {
 
    private static final long serialVersionUID = 1L;
+   private java.lang.String _Type;
    private java.sql.Timestamp _Time;
    private java.lang.String _Description;
-   private int number;
-   private java.lang.String _Type;
    private int mode;
+   private int number;
    private int _CustomerContactPerson_customer_number;
 
    public ShipmentData()
@@ -25,18 +25,27 @@ public class ShipmentData
 
    public ShipmentData( ShipmentData otherData )
    {
+      set_Type(otherData.get_Type());
       set_Time(otherData.get_Time());
       set_Description(otherData.get_Description());
-      setNumber(otherData.getNumber());
-      set_Type(otherData.get_Type());
       setMode(otherData.getMode());
+      setNumber(otherData.getNumber());
       set_CustomerContactPerson_customer_number(otherData.get_CustomerContactPerson_customer_number());
 
    }
 
    public org.openxava.test.model.ShipmentKey getPrimaryKey() {
-     org.openxava.test.model.ShipmentKey pk = new org.openxava.test.model.ShipmentKey(this.getNumber(),this.get_Type(),this.getMode());
+     org.openxava.test.model.ShipmentKey pk = new org.openxava.test.model.ShipmentKey(this.get_Type(),this.getMode(),this.getNumber());
      return pk;
+   }
+
+   public java.lang.String get_Type()
+   {
+      return this._Type;
+   }
+   public void set_Type( java.lang.String _Type )
+   {
+      this._Type = _Type;
    }
 
    public java.sql.Timestamp get_Time()
@@ -57,24 +66,6 @@ public class ShipmentData
       this._Description = _Description;
    }
 
-   public int getNumber()
-   {
-      return this.number;
-   }
-   public void setNumber( int number )
-   {
-      this.number = number;
-   }
-
-   public java.lang.String get_Type()
-   {
-      return this._Type;
-   }
-   public void set_Type( java.lang.String _Type )
-   {
-      this._Type = _Type;
-   }
-
    public int getMode()
    {
       return this.mode;
@@ -82,6 +73,15 @@ public class ShipmentData
    public void setMode( int mode )
    {
       this.mode = mode;
+   }
+
+   public int getNumber()
+   {
+      return this.number;
+   }
+   public void setNumber( int number )
+   {
+      this.number = number;
    }
 
    public int get_CustomerContactPerson_customer_number()
@@ -97,7 +97,7 @@ public class ShipmentData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Time=" + get_Time() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "_Type=" + get_Type() + " " + "mode=" + getMode() + " " + "_CustomerContactPerson_customer_number=" + get_CustomerContactPerson_customer_number());
+      str.append("_Type=" + get_Type() + " " + "_Time=" + get_Time() + " " + "_Description=" + get_Description() + " " + "mode=" + getMode() + " " + "number=" + getNumber() + " " + "_CustomerContactPerson_customer_number=" + get_CustomerContactPerson_customer_number());
       str.append('}');
 
       return(str.toString());
@@ -110,6 +110,14 @@ public class ShipmentData
          ShipmentData lTest = (ShipmentData) pOther;
          boolean lEquals = true;
 
+         if( this._Type == null )
+         {
+            lEquals = lEquals && ( lTest._Type == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Type.equals( lTest._Type );
+         }
          if( this._Time == null )
          {
             lEquals = lEquals && ( lTest._Time == null );
@@ -126,16 +134,8 @@ public class ShipmentData
          {
             lEquals = lEquals && this._Description.equals( lTest._Description );
          }
-         lEquals = lEquals && this.number == lTest.number;
-         if( this._Type == null )
-         {
-            lEquals = lEquals && ( lTest._Type == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._Type.equals( lTest._Type );
-         }
          lEquals = lEquals && this.mode == lTest.mode;
+         lEquals = lEquals && this.number == lTest.number;
          lEquals = lEquals && this._CustomerContactPerson_customer_number == lTest._CustomerContactPerson_customer_number;
 
          return lEquals;
@@ -150,15 +150,15 @@ public class ShipmentData
    {
       int result = 17;
 
+      result = 37*result + ((this._Type != null) ? this._Type.hashCode() : 0);
+
       result = 37*result + ((this._Time != null) ? this._Time.hashCode() : 0);
 
       result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
 
-      result = 37*result + (int) number;
-
-      result = 37*result + ((this._Type != null) ? this._Type.hashCode() : 0);
-
       result = 37*result + (int) mode;
+
+      result = 37*result + (int) number;
 
       result = 37*result + (int) _CustomerContactPerson_customer_number;
 

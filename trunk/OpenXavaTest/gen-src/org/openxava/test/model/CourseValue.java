@@ -14,12 +14,12 @@ public class CourseValue
 
    private static final long serialVersionUID = 1L;
 
+   private int year;
+   private boolean yearHasBeenSet = false;
    private java.lang.String description;
    private boolean descriptionHasBeenSet = false;
    private int number;
    private boolean numberHasBeenSet = false;
-   private int year;
-   private boolean yearHasBeenSet = false;
 
    public CourseValue()
    {
@@ -28,14 +28,28 @@ public class CourseValue
    //TODO Cloneable is better than this !
    public CourseValue( CourseValue otherValue )
    {
+	  this.year = otherValue.year;
+	  yearHasBeenSet = true;
 	  this.description = otherValue.description;
 	  descriptionHasBeenSet = true;
 	  this.number = otherValue.number;
 	  numberHasBeenSet = true;
-	  this.year = otherValue.year;
+   }
+
+   public int getYear()
+   {
+	  return this.year;
+   }
+
+   public void setYear( int year )
+   {
+	  this.year = year;
 	  yearHasBeenSet = true;
    }
 
+   public boolean yearHasBeenSet(){
+	  return yearHasBeenSet;
+   }
    public java.lang.String getDescription()
    {
 	  return this.description;
@@ -64,26 +78,12 @@ public class CourseValue
    public boolean numberHasBeenSet(){
 	  return numberHasBeenSet;
    }
-   public int getYear()
-   {
-	  return this.year;
-   }
-
-   public void setYear( int year )
-   {
-	  this.year = year;
-	  yearHasBeenSet = true;
-   }
-
-   public boolean yearHasBeenSet(){
-	  return yearHasBeenSet;
-   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("description=" + getDescription() + " " + "number=" + getNumber() + " " + "year=" + getYear());
+	  str.append("year=" + getYear() + " " + "description=" + getDescription() + " " + "number=" + getNumber());
 	  str.append('}');
 
 	  return(str.toString());
@@ -97,8 +97,8 @@ public class CourseValue
    protected boolean hasIdentity()
    {
 	  boolean ret = true;
-	  ret = ret && numberHasBeenSet;
 	  ret = ret && yearHasBeenSet;
+	  ret = ret && numberHasBeenSet;
 	  return ret;
    }
 
@@ -112,8 +112,8 @@ public class CourseValue
 		 CourseValue that = (CourseValue) other;
 		 if ( ! that.hasIdentity() ) return false;
 		 boolean lEquals = true;
-		 lEquals = lEquals && this.number == that.number;
 		 lEquals = lEquals && this.year == that.year;
+		 lEquals = lEquals && this.number == that.number;
 
 		 lEquals = lEquals && isIdentical(that);
 
@@ -150,11 +150,11 @@ public class CourseValue
 
    public int hashCode(){
 	  int result = 17;
+      result = 37*result + (int) year;
+
       result = 37*result + ((this.description != null) ? this.description.hashCode() : 0);
 
       result = 37*result + (int) number;
-
-      result = 37*result + (int) year;
 
 	  return result;
    }

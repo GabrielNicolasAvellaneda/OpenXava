@@ -10,10 +10,16 @@ public interface InvoiceDetailRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.IInvoiceDetail
 {
 
+   public boolean isFree(  )
+      throws java.rmi.RemoteException;
+
    public java.math.BigDecimal getAmount(  )
       throws java.rmi.RemoteException;
 
-   public boolean isFree(  )
+   public java.math.BigDecimal getUnitPrice(  )
+      throws java.rmi.RemoteException;
+
+   public void setUnitPrice( java.math.BigDecimal newUnitPrice )
       throws java.rmi.RemoteException;
 
    public java.lang.String getOid(  )
@@ -29,12 +35,6 @@ public interface InvoiceDetailRemote
       throws java.rmi.RemoteException;
 
    public void setDeliveryDate( java.util.Date newDeliveryDate )
-      throws java.rmi.RemoteException;
-
-   public java.math.BigDecimal getUnitPrice(  )
-      throws java.rmi.RemoteException;
-
-   public void setUnitPrice( java.math.BigDecimal newUnitPrice )
       throws java.rmi.RemoteException;
 
    public int getQuantity(  )
@@ -67,6 +67,24 @@ public interface InvoiceDetailRemote
    public long getProduct_number(  )
       throws java.rmi.RemoteException;
 
+   public org.openxava.test.model.ISeller getSoldBy(  )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.SellerRemote getSoldByRemote(  )
+      throws java.rmi.RemoteException;
+
+   public void setSoldBy( org.openxava.test.model.ISeller newSoldBy )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.SellerKey getSoldByKey(  )
+      throws java.rmi.RemoteException;
+
+   public void setSoldByKey( org.openxava.test.model.SellerKey key )
+      throws java.rmi.RemoteException;
+
+   public int getSoldBy_number(  )
+      throws java.rmi.RemoteException;
+
    public org.openxava.test.model.IInvoice getInvoice(  )
       throws java.rmi.RemoteException;
 
@@ -86,24 +104,6 @@ public interface InvoiceDetailRemote
       throws java.rmi.RemoteException;
 
    public int getInvoice_number(  )
-      throws java.rmi.RemoteException;
-
-   public org.openxava.test.model.ISeller getSoldBy(  )
-      throws java.rmi.RemoteException;
-
-   public org.openxava.test.model.SellerRemote getSoldByRemote(  )
-      throws java.rmi.RemoteException;
-
-   public void setSoldBy( org.openxava.test.model.ISeller newSoldBy )
-      throws java.rmi.RemoteException;
-
-   public org.openxava.test.model.SellerKey getSoldByKey(  )
-      throws java.rmi.RemoteException;
-
-   public void setSoldByKey( org.openxava.test.model.SellerKey key )
-      throws java.rmi.RemoteException;
-
-   public int getSoldBy_number(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.InvoiceDetailData getData(  )

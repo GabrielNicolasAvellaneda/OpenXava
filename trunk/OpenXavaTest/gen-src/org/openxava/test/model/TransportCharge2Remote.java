@@ -31,13 +31,13 @@ public interface TransportCharge2Remote
    public int getDelivery_number(  )
       throws java.rmi.RemoteException;
 
+   public int getDelivery_type_number(  )
+      throws java.rmi.RemoteException;
+
    public int getDelivery_invoice_year(  )
       throws java.rmi.RemoteException;
 
    public int getDelivery_invoice_number(  )
-      throws java.rmi.RemoteException;
-
-   public int getDelivery_type_number(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.TransportCharge2Data getData(  )

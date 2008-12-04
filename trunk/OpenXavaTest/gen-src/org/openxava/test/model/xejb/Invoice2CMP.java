@@ -18,10 +18,11 @@ public abstract class Invoice2CMP
       {
          dataHolder = new org.openxava.test.model.Invoice2Data();
 
-         dataHolder.set_VatPercentage( get_VatPercentage() );
-         dataHolder.setNumber( getNumber() );
+         dataHolder.set_AmountsSum( get_AmountsSum() );
          dataHolder.setYear( getYear() );
+         dataHolder.set_VatPercentage( get_VatPercentage() );
          dataHolder.set_Date( get_Date() );
+         dataHolder.setNumber( getNumber() );
          dataHolder.set_Customer_number( get_Customer_number() );
 
       }
@@ -37,6 +38,7 @@ public abstract class Invoice2CMP
    {
       try
       {
+         set_AmountsSum( dataHolder.get_AmountsSum() );
          set_VatPercentage( dataHolder.get_VatPercentage() );
          set_Date( dataHolder.get_Date() );
          set_Customer_number( dataHolder.get_Customer_number() );
@@ -93,10 +95,11 @@ public abstract class Invoice2CMP
       Invoice2Value = new org.openxava.test.model.Invoice2Value();
       try
          {
-            Invoice2Value.setVatPercentage( getVatPercentage() );
-            Invoice2Value.setNumber( getNumber() );
+            Invoice2Value.setAmountsSum( getAmountsSum() );
             Invoice2Value.setYear( getYear() );
+            Invoice2Value.setVatPercentage( getVatPercentage() );
             Invoice2Value.setDate( getDate() );
+            Invoice2Value.setNumber( getNumber() );
             Invoice2Value.setCustomer_number( getCustomer_number() );
 
          }
@@ -113,6 +116,7 @@ public abstract class Invoice2CMP
 
 	  try
 	  {
+		 setAmountsSum( valueHolder.getAmountsSum() );
 		 setVatPercentage( valueHolder.getVatPercentage() );
 		 setDate( valueHolder.getDate() );
 		 setCustomer_number( valueHolder.getCustomer_number() );
@@ -126,21 +130,25 @@ public abstract class Invoice2CMP
 
 /* Value Objects END */
 
-   public abstract java.math.BigDecimal get_VatPercentage() ;
+   public abstract java.math.BigDecimal get_AmountsSum() ;
 
-   public abstract void set_VatPercentage( java.math.BigDecimal _VatPercentage ) ;
-
-   public abstract int getNumber() ;
-
-   public abstract void setNumber( int number ) ;
+   public abstract void set_AmountsSum( java.math.BigDecimal _AmountsSum ) ;
 
    public abstract int getYear() ;
 
    public abstract void setYear( int year ) ;
 
+   public abstract java.math.BigDecimal get_VatPercentage() ;
+
+   public abstract void set_VatPercentage( java.math.BigDecimal _VatPercentage ) ;
+
    public abstract java.sql.Date get_Date() ;
 
    public abstract void set_Date( java.sql.Date _Date ) ;
+
+   public abstract int getNumber() ;
+
+   public abstract void setNumber( int number ) ;
 
    public abstract int get_Customer_number() ;
 

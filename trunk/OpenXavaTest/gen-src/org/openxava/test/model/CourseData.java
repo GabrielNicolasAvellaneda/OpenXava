@@ -12,9 +12,9 @@ public class CourseData
 {
 
    private static final long serialVersionUID = 1L;
+   private int year;
    private java.lang.String _Description;
    private int number;
-   private int year;
 
    public CourseData()
    {
@@ -22,15 +22,24 @@ public class CourseData
 
    public CourseData( CourseData otherData )
    {
+      setYear(otherData.getYear());
       set_Description(otherData.get_Description());
       setNumber(otherData.getNumber());
-      setYear(otherData.getYear());
 
    }
 
    public org.openxava.test.model.CourseKey getPrimaryKey() {
-     org.openxava.test.model.CourseKey pk = new org.openxava.test.model.CourseKey(this.getNumber(),this.getYear());
+     org.openxava.test.model.CourseKey pk = new org.openxava.test.model.CourseKey(this.getYear(),this.getNumber());
      return pk;
+   }
+
+   public int getYear()
+   {
+      return this.year;
+   }
+   public void setYear( int year )
+   {
+      this.year = year;
    }
 
    public java.lang.String get_Description()
@@ -51,20 +60,11 @@ public class CourseData
       this.number = number;
    }
 
-   public int getYear()
-   {
-      return this.year;
-   }
-   public void setYear( int year )
-   {
-      this.year = year;
-   }
-
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "year=" + getYear());
+      str.append("year=" + getYear() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber());
       str.append('}');
 
       return(str.toString());
@@ -77,6 +77,7 @@ public class CourseData
          CourseData lTest = (CourseData) pOther;
          boolean lEquals = true;
 
+         lEquals = lEquals && this.year == lTest.year;
          if( this._Description == null )
          {
             lEquals = lEquals && ( lTest._Description == null );
@@ -86,7 +87,6 @@ public class CourseData
             lEquals = lEquals && this._Description.equals( lTest._Description );
          }
          lEquals = lEquals && this.number == lTest.number;
-         lEquals = lEquals && this.year == lTest.year;
 
          return lEquals;
       }
@@ -100,11 +100,11 @@ public class CourseData
    {
       int result = 17;
 
+      result = 37*result + (int) year;
+
       result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
 
       result = 37*result + (int) number;
-
-      result = 37*result + (int) year;
 
       return result;
    }

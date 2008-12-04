@@ -10,25 +10,25 @@ public interface DeliveryPlaceRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.IDeliveryPlace
 {
 
-   public java.lang.String getAddress(  )
-      throws java.rmi.RemoteException;
-
-   public void setAddress( java.lang.String newAddress )
-      throws java.rmi.RemoteException;
-
    public int getOid(  )
-      throws java.rmi.RemoteException;
-
-   public java.lang.String getName(  )
-      throws java.rmi.RemoteException;
-
-   public void setName( java.lang.String newName )
       throws java.rmi.RemoteException;
 
    public java.lang.String getRemarks(  )
       throws java.rmi.RemoteException;
 
    public void setRemarks( java.lang.String newRemarks )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getAddress(  )
+      throws java.rmi.RemoteException;
+
+   public void setAddress( java.lang.String newAddress )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getName(  )
+      throws java.rmi.RemoteException;
+
+   public void setName( java.lang.String newName )
       throws java.rmi.RemoteException;
 
    public java.util.Collection getReceptionists(  )

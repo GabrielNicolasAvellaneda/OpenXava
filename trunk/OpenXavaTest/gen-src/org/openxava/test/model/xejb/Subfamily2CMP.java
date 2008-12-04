@@ -18,8 +18,8 @@ public abstract class Subfamily2CMP
       {
          dataHolder = new org.openxava.test.model.Subfamily2Data();
 
-         dataHolder.set_Description( get_Description() );
          dataHolder.set_Remarks( get_Remarks() );
+         dataHolder.set_Description( get_Description() );
          dataHolder.setNumber( getNumber() );
          dataHolder.set_Family_number( get_Family_number() );
 
@@ -36,8 +36,8 @@ public abstract class Subfamily2CMP
    {
       try
       {
-         set_Description( dataHolder.get_Description() );
          set_Remarks( dataHolder.get_Remarks() );
+         set_Description( dataHolder.get_Description() );
          set_Family_number( dataHolder.get_Family_number() );
 
       }
@@ -92,8 +92,8 @@ public abstract class Subfamily2CMP
       Subfamily2Value = new org.openxava.test.model.Subfamily2Value();
       try
          {
-            Subfamily2Value.setDescription( getDescription() );
             Subfamily2Value.setRemarks( getRemarks() );
+            Subfamily2Value.setDescription( getDescription() );
             Subfamily2Value.setNumber( getNumber() );
             Subfamily2Value.setFamily_number( getFamily_number() );
 
@@ -111,8 +111,8 @@ public abstract class Subfamily2CMP
 
 	  try
 	  {
-		 setDescription( valueHolder.getDescription() );
 		 setRemarks( valueHolder.getRemarks() );
+		 setDescription( valueHolder.getDescription() );
 		 setFamily_number( valueHolder.getFamily_number() );
 
 	  }
@@ -124,13 +124,13 @@ public abstract class Subfamily2CMP
 
 /* Value Objects END */
 
-   public abstract java.lang.String get_Description() ;
-
-   public abstract void set_Description( java.lang.String _Description ) ;
-
    public abstract java.lang.String get_Remarks() ;
 
    public abstract void set_Remarks( java.lang.String _Remarks ) ;
+
+   public abstract java.lang.String get_Description() ;
+
+   public abstract void set_Description( java.lang.String _Description ) ;
 
    public abstract int getNumber() ;
 
