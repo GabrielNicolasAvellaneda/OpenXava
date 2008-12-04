@@ -47,8 +47,8 @@ abstract public class CodeGenerator {
 		}		
 	}
 	
-	private void generate(String componentsPath, String file) throws Exception {		
-		String componentName = file.substring(0, file.length() - 4);			
+	private void generate(String componentsPath, String file) throws Exception {
+		String componentName = file.substring(0, file.length() - 4);		
 		MetaComponent component = MetaComponent.get(componentName);		
 		int currentDNA = getCurrentDNA(component);  		
 		if (currentDNA != 0 && currentDNA == getOldDNA(component)) return;		
@@ -113,12 +113,13 @@ abstract public class CodeGenerator {
 	protected void run() throws Exception {		 
 		try {	
 			XavaPreferences.getInstance().setDuplicateComponentWarnings(false);
+			Locale.setDefault(new Locale("en")); 
 			String componentsPath = "../" + getProject() + "/components";			
 			File dirComponents = new File(componentsPath);			
-			String [] components = dirComponents.list();
+			String [] components = dirComponents.list();			
 			// First load all components
 			for (int i = 0; i < components.length; i++) {
-				String file = components[i];								
+				String file = components[i];				
 				if (file.endsWith(".xml") || file.endsWith(".XML") || file.endsWith("Xml")) {					
 					load(file);
 				}								

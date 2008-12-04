@@ -42,8 +42,7 @@ public class Module extends DWRBase {
 	
 	public Result request(HttpServletRequest request, HttpServletResponse response, String application, String module, Map values, Map multipleValues, String [] selected) throws Exception {
 		try {
-			request.setCharacterEncoding(XSystem.getEncoding());
-			response.setCharacterEncoding(XSystem.getEncoding());
+			Servlets.setCharacterEncoding(request, response);
 			this.request = request;
 			this.response = response;
 			this.application = application;
@@ -203,7 +202,7 @@ public class Module extends DWRBase {
 				fillChangedErrorImages(result);
 				fillChangedLabels(result); 
 			}
-		}
+		}		
 		return result;
 	}
 
@@ -248,7 +247,7 @@ public class Module extends DWRBase {
 		}
 	}
 
-	private void fillChangedPropertiesActionsAndDescriptionsListReferences(Map result) {
+	private void fillChangedPropertiesActionsAndDescriptionsListReferences(Map result) {		
 		View view = getView();		
 		Collection changedMembers = view.getChangedPropertiesActionsAndDescriptionsListReferences().entrySet();
 		for (Iterator it = changedMembers.iterator(); it.hasNext(); ) {

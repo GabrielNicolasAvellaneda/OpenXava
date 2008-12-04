@@ -153,8 +153,9 @@ public class ModuleTestBase extends TestCase {
 			resetLoginForm();			
 			setFormValue("org.apache.jetspeed.login.username", user);
 			setFormValue("org.apache.jetspeed.login.password", password);
-			HtmlSubmitInput button = (HtmlSubmitInput) getForm().getHtmlElementsByAttribute("input", "type", "submit");
+			HtmlSubmitInput button = (HtmlSubmitInput) getForm().getHtmlElementsByAttribute("input", "type", "submit").get(0); 
 			page = (HtmlPage) button.click();			
+			page = (HtmlPage) client.getPage(getModuleURL()); 
 			resetForm();
 		}
 	}
@@ -400,9 +401,11 @@ public class ModuleTestBase extends TestCase {
 			login(getJetspeed2UserName(), getJetspeed2Password());
 		}		
 		else {	
-			if (this.module != null) {
+			if (this.module != null) {				
 				page = (HtmlPage) client.getPage(getModuleURL());
-				resetForm();
+				if (!getMetaModule().isDoc()) {
+					resetForm();
+				}
 			}			
 		}		
 		propertyPrefix = null;		
@@ -509,11 +512,11 @@ public class ModuleTestBase extends TestCase {
 		}	
 	}
 										 	
-	private void waitUntilPageIsLoaded() { 		
+	private void waitUntilPageIsLoaded() {		 
 		HtmlInput loading = (HtmlInput) page.getHtmlElementById("xava_loading");
-		if (!"true".equals(loading.getValueAttribute())) { 
+		for (int i=0; !"true".equals(loading.getValueAttribute()) && i<20; i++) {
 			try { Thread.sleep(100); } catch (Exception ex) { }
-		}				
+		}		
 		while ("true".equals(loading.getValueAttribute())) {
 			try { Thread.sleep(20); } catch (Exception ex) { }
 		}
@@ -953,6 +956,8 @@ public class ModuleTestBase extends TestCase {
 	}	
 	
 	private void assertRowStyle(String tableId, int row, String expectedStyle) throws Exception {
+		// When testing again a portal styleClass in xava.properties must match with
+		// the tested portal in order that this method works fine
 		HtmlTableRow tableRow = getTableRow(tableId, row);
 		String style = tableRow.getAttribute("class");
 		int countTokens = new StringTokenizer(style).countTokens();

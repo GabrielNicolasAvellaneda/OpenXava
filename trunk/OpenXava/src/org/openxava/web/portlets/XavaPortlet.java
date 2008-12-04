@@ -82,7 +82,7 @@ public class XavaPortlet extends GenericPortlet {
 	public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {		
 		Object style = getStyle(request);			
 		request.setAttribute("style", style);
-		request.getPortletSession().setAttribute("xava.portlet.uploadActionURL", response.createActionURL(), PortletSession.APPLICATION_SCOPE);
+		request.getPortletSession().setAttribute("xava.portlet.uploadActionURL", response.createActionURL().toString(), PortletSession.APPLICATION_SCOPE);
 		request.setAttribute("xava.upload.fileitems", request.getPortletSession().getAttribute("xava.upload.fileitems", PortletSession.APPLICATION_SCOPE)); 
 		request.setAttribute("xava.upload.error", request.getPortletSession().getAttribute("xava.upload.error", PortletSession.APPLICATION_SCOPE));
 		request.getPortletSession().removeAttribute("xava.upload.fileitems", PortletSession.APPLICATION_SCOPE);
