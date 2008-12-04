@@ -2,7 +2,6 @@ package org.openxava.controller;
 
 import java.util.*;
 
-import javax.servlet.*;
 import javax.servlet.http.*;
 
 import org.apache.commons.fileupload.*;
@@ -30,7 +29,7 @@ public class ModuleManager {
 	static {		
 		MetaControllers.setContext(MetaControllers.WEB);		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
-		log.info("OpenXava 3.1rc1 (2008-11-xx)");		
+		log.info("OpenXava 3.1rc1 (2008-12-4)");		
 	}
 	
 	private static int nextOid = 0; 
