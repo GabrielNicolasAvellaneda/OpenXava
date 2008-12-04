@@ -3562,6 +3562,7 @@ public class View implements java.io.Serializable {
 			return;
 		}		
 		if (oldValues == null) oldValues = Collections.EMPTY_MAP;
+		if (values == null) values = new HashMap(); 
 		for (Iterator it=values.entrySet().iterator(); it.hasNext(); ) { 
 			Map.Entry en = (Map.Entry) it.next();
 			boolean isKey = getMetaModel().isKey((String) en.getKey()); 
@@ -3679,14 +3680,14 @@ public class View implements java.io.Serializable {
 		return oldKeyEditable != keyEditable;
 	}
 
-	private void addChangedPropertyOrDescriptionsListReference(Map result, String name) {		
+	private void addChangedPropertyOrDescriptionsListReference(Map result, String name) {
 		if (!isHidden(name)) {
 			if (displayAsDescriptionsList()) {
 				result.put(getPropertyPrefix(), getParent());
 			}
 			else if ((
 					getMetaModel().containsMetaProperty(name) || 
-					getMetaView().containsMetaPropertyView(name)
+					getMetaView().containsViewProperty(name)
 				) &&				
 				getMembersNamesWithoutSections().contains(name) && 
 				!getMembersNamesInGroup().contains(name)) 

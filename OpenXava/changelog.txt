@@ -1,6 +1,12 @@
 Change Log for OpenXava project
 ===============================
 
+- Full tested with Tomcat, JBoss, WAS6, Liferay 4.1, 4.3, 5.1, Jetspeed2, JPA, Hiberante, EJB2, JDK1.4, Hypersonic and AS/400.
+- Fix over 3.0.3: ModuleTestBase.login does not work on jetspeed2.
+- Chinese documentation advanced.
+- Fix: View properties are not refreshed correctly in AJAX.
+- Fix: Code generation with some version of Sun JDK fails with when Spanish language is used.
+- Fix: Upload file does not work inside portals on 3.1beta.
 - Visual style tested and refined for IE6, IE7, FF2 and FF3 in Liferay 5.1, 4.3, 4.1, JetSpeed2 and WPS6.
 - Fix over 3.1beta3: moneyEditor fails when Locale.getDefault does not contain the country.
 - Fix: 3.1beta does not work on WebSphere 6.0 and WebSphere Portal 6.0

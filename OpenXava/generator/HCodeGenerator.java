@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * To generate hibernate code. <P>
  * 
- * @author Mª Carmen Gimeno
+ * @author MCarmen Gimeno
  */
 public class HCodeGenerator extends CodeGenerator {
 	
@@ -18,7 +18,7 @@ public class HCodeGenerator extends CodeGenerator {
 			System.err.println(XavaResources.getString("generator_argv_required"));
 			System.exit(1);			
 		}
-		try {									
+		try {					
 			HCodeGenerator g = new HCodeGenerator();			
 			g.setProject(argv[0]);			
 			g.setDomain(argv[1]);			
@@ -38,8 +38,7 @@ public class HCodeGenerator extends CodeGenerator {
 		// Creataing directories
 		File fModelPath = new File(modelPath);
 		fModelPath.mkdirs();
-		
-		if (component.getMetaEntity().isPojoGenerated()) { 
+		if (component.getMetaEntity().isPojoGenerated()) {
 			// Main entity			
 			System.out.println(XavaResources.getString("generating_pojo_code", component.getName()));			
 			String [] argv = {				
@@ -87,7 +86,6 @@ public class HCodeGenerator extends CodeGenerator {
 				HibernatePG.main(argvMap);
 			}
 		}
-		
 		//	Agreggates as persistent objects		
 		Iterator itPersistentAggregates = component.getMetaAggregatesForCollectionPojoGenerated().iterator();
 		while (itPersistentAggregates.hasNext()) {
@@ -128,7 +126,7 @@ public class HCodeGenerator extends CodeGenerator {
 				};
 				HibernatePG.main(argvMap);
 			}
-		}						
+		}
 	}
 	
 	protected String getDNAFile() {
