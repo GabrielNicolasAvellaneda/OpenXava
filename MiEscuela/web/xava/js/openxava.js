@@ -65,6 +65,7 @@ openxava.refreshPage = function(result) {
 		}						
 		openxava.formName = "xava_form";
 		openxava.form = document.getElementById(openxava.formName);
+		if (openxava.initTheme != null) openxava.initTheme();		
 		if (result.focusPropertyId != null) { 
 			document.getElementById("xava_focus_property_id").value = result.focusPropertyId;
 			openxava.setFocus();		
@@ -74,9 +75,9 @@ openxava.refreshPage = function(result) {
 	openxava.form.xava_action.value="";	
 	openxava.form.xava_action_argv.value="";
 	openxava.form.xava_changed_property.value=""; 
-	
-	document.getElementById("xava_loading").value=false;
+		
 	document.getElementById("xava_loaded_parts").value=changed;
+	document.getElementById("xava_loading").value=false;
 	document.body.style.cursor='auto'; 
 }
 
