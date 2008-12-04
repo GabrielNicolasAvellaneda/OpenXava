@@ -18,8 +18,8 @@ public abstract class InvoiceDetail2CMP
       {
          dataHolder = new org.openxava.test.model.InvoiceDetail2Data();
 
-         dataHolder.setOid( getOid() );
          dataHolder.set_UnitPrice( get_UnitPrice() );
+         dataHolder.setOid( getOid() );
          dataHolder.set_Quantity( get_Quantity() );
          dataHolder.set_Product_number( get_Product_number() );
          dataHolder.set_Invoice2_year( get_Invoice2_year() );
@@ -97,8 +97,8 @@ public abstract class InvoiceDetail2CMP
       try
          {
             InvoiceDetail2Value.setAmount( getAmount() );
-            InvoiceDetail2Value.setOid( getOid() );
             InvoiceDetail2Value.setUnitPrice( getUnitPrice() );
+            InvoiceDetail2Value.setOid( getOid() );
             InvoiceDetail2Value.setQuantity( getQuantity() );
             InvoiceDetail2Value.setProduct_number( getProduct_number() );
             InvoiceDetail2Value.setInvoice2_year( getInvoice2_year() );
@@ -134,13 +134,13 @@ public abstract class InvoiceDetail2CMP
 
 /* Value Objects END */
 
-   public abstract java.lang.String getOid() ;
-
-   public abstract void setOid( java.lang.String oid ) ;
-
    public abstract java.math.BigDecimal get_UnitPrice() ;
 
    public abstract void set_UnitPrice( java.math.BigDecimal _UnitPrice ) ;
+
+   public abstract java.lang.String getOid() ;
+
+   public abstract void setOid( java.lang.String oid ) ;
 
    public abstract java.lang.Integer get_Quantity() ;
 

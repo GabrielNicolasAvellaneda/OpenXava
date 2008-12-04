@@ -14,10 +14,10 @@ public class SellerLevelValue
 
    private static final long serialVersionUID = 1L;
 
-   private java.lang.String id;
-   private boolean idHasBeenSet = false;
    private java.lang.String description;
    private boolean descriptionHasBeenSet = false;
+   private java.lang.String id;
+   private boolean idHasBeenSet = false;
 
    public SellerLevelValue()
    {
@@ -26,26 +26,12 @@ public class SellerLevelValue
    //TODO Cloneable is better than this !
    public SellerLevelValue( SellerLevelValue otherValue )
    {
-	  this.id = otherValue.id;
-	  idHasBeenSet = true;
 	  this.description = otherValue.description;
 	  descriptionHasBeenSet = true;
-   }
-
-   public java.lang.String getId()
-   {
-	  return this.id;
-   }
-
-   public void setId( java.lang.String id )
-   {
-	  this.id = id;
+	  this.id = otherValue.id;
 	  idHasBeenSet = true;
    }
 
-   public boolean idHasBeenSet(){
-	  return idHasBeenSet;
-   }
    public java.lang.String getDescription()
    {
 	  return this.description;
@@ -60,12 +46,26 @@ public class SellerLevelValue
    public boolean descriptionHasBeenSet(){
 	  return descriptionHasBeenSet;
    }
+   public java.lang.String getId()
+   {
+	  return this.id;
+   }
+
+   public void setId( java.lang.String id )
+   {
+	  this.id = id;
+	  idHasBeenSet = true;
+   }
+
+   public boolean idHasBeenSet(){
+	  return idHasBeenSet;
+   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("id=" + getId() + " " + "description=" + getDescription());
+	  str.append("description=" + getDescription() + " " + "id=" + getId());
 	  str.append('}');
 
 	  return(str.toString());
@@ -137,9 +137,9 @@ public class SellerLevelValue
 
    public int hashCode(){
 	  int result = 17;
-      result = 37*result + ((this.id != null) ? this.id.hashCode() : 0);
-
       result = 37*result + ((this.description != null) ? this.description.hashCode() : 0);
+
+      result = 37*result + ((this.id != null) ? this.id.hashCode() : 0);
 
 	  return result;
    }

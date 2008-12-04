@@ -14,10 +14,10 @@ public class IssueValue
 
    private static final long serialVersionUID = 1L;
 
-   private java.lang.String id;
-   private boolean idHasBeenSet = false;
    private java.lang.String description;
    private boolean descriptionHasBeenSet = false;
+   private java.lang.String id;
+   private boolean idHasBeenSet = false;
    private java.lang.Integer worker_id;
    private boolean worker_idHasBeenSet = false;
 
@@ -28,28 +28,14 @@ public class IssueValue
    //TODO Cloneable is better than this !
    public IssueValue( IssueValue otherValue )
    {
-	  this.id = otherValue.id;
-	  idHasBeenSet = true;
 	  this.description = otherValue.description;
 	  descriptionHasBeenSet = true;
+	  this.id = otherValue.id;
+	  idHasBeenSet = true;
 	  this.worker_id = otherValue.worker_id;
 	  worker_idHasBeenSet = true;
    }
 
-   public java.lang.String getId()
-   {
-	  return this.id;
-   }
-
-   public void setId( java.lang.String id )
-   {
-	  this.id = id;
-	  idHasBeenSet = true;
-   }
-
-   public boolean idHasBeenSet(){
-	  return idHasBeenSet;
-   }
    public java.lang.String getDescription()
    {
 	  return this.description;
@@ -63,6 +49,20 @@ public class IssueValue
 
    public boolean descriptionHasBeenSet(){
 	  return descriptionHasBeenSet;
+   }
+   public java.lang.String getId()
+   {
+	  return this.id;
+   }
+
+   public void setId( java.lang.String id )
+   {
+	  this.id = id;
+	  idHasBeenSet = true;
+   }
+
+   public boolean idHasBeenSet(){
+	  return idHasBeenSet;
    }
    public java.lang.Integer getWorker_id()
    {
@@ -83,7 +83,7 @@ public class IssueValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("id=" + getId() + " " + "description=" + getDescription() + " " + "worker_id=" + getWorker_id());
+	  str.append("description=" + getDescription() + " " + "id=" + getId() + " " + "worker_id=" + getWorker_id());
 	  str.append('}');
 
 	  return(str.toString());
@@ -163,9 +163,9 @@ public class IssueValue
 
    public int hashCode(){
 	  int result = 17;
-      result = 37*result + ((this.id != null) ? this.id.hashCode() : 0);
-
       result = 37*result + ((this.description != null) ? this.description.hashCode() : 0);
+
+      result = 37*result + ((this.id != null) ? this.id.hashCode() : 0);
 
       result = 37*result + ((this.worker_id != null) ? this.worker_id.hashCode() : 0);
 

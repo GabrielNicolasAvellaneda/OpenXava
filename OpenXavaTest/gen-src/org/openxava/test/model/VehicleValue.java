@@ -14,14 +14,14 @@ public class VehicleValue
 
    private static final long serialVersionUID = 1L;
 
-   private java.lang.String model;
-   private boolean modelHasBeenSet = false;
-   private java.lang.String oid;
-   private boolean oidHasBeenSet = false;
    private java.lang.String code;
    private boolean codeHasBeenSet = false;
+   private java.lang.String oid;
+   private boolean oidHasBeenSet = false;
    private java.lang.String make;
    private boolean makeHasBeenSet = false;
+   private java.lang.String model;
+   private boolean modelHasBeenSet = false;
 
    public VehicleValue()
    {
@@ -30,29 +30,29 @@ public class VehicleValue
    //TODO Cloneable is better than this !
    public VehicleValue( VehicleValue otherValue )
    {
-	  this.model = otherValue.model;
-	  modelHasBeenSet = true;
-	  this.oid = otherValue.oid;
-	  oidHasBeenSet = true;
 	  this.code = otherValue.code;
 	  codeHasBeenSet = true;
+	  this.oid = otherValue.oid;
+	  oidHasBeenSet = true;
 	  this.make = otherValue.make;
 	  makeHasBeenSet = true;
-   }
-
-   public java.lang.String getModel()
-   {
-	  return this.model;
-   }
-
-   public void setModel( java.lang.String model )
-   {
-	  this.model = model;
+	  this.model = otherValue.model;
 	  modelHasBeenSet = true;
    }
 
-   public boolean modelHasBeenSet(){
-	  return modelHasBeenSet;
+   public java.lang.String getCode()
+   {
+	  return this.code;
+   }
+
+   public void setCode( java.lang.String code )
+   {
+	  this.code = code;
+	  codeHasBeenSet = true;
+   }
+
+   public boolean codeHasBeenSet(){
+	  return codeHasBeenSet;
    }
    public java.lang.String getOid()
    {
@@ -68,20 +68,6 @@ public class VehicleValue
    public boolean oidHasBeenSet(){
 	  return oidHasBeenSet;
    }
-   public java.lang.String getCode()
-   {
-	  return this.code;
-   }
-
-   public void setCode( java.lang.String code )
-   {
-	  this.code = code;
-	  codeHasBeenSet = true;
-   }
-
-   public boolean codeHasBeenSet(){
-	  return codeHasBeenSet;
-   }
    public java.lang.String getMake()
    {
 	  return this.make;
@@ -96,12 +82,26 @@ public class VehicleValue
    public boolean makeHasBeenSet(){
 	  return makeHasBeenSet;
    }
+   public java.lang.String getModel()
+   {
+	  return this.model;
+   }
+
+   public void setModel( java.lang.String model )
+   {
+	  this.model = model;
+	  modelHasBeenSet = true;
+   }
+
+   public boolean modelHasBeenSet(){
+	  return modelHasBeenSet;
+   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("model=" + getModel() + " " + "oid=" + getOid() + " " + "code=" + getCode() + " " + "make=" + getMake());
+	  str.append("code=" + getCode() + " " + "oid=" + getOid() + " " + "make=" + getMake() + " " + "model=" + getModel());
 	  str.append('}');
 
 	  return(str.toString());
@@ -154,14 +154,6 @@ public class VehicleValue
 	  {
 		 VehicleValue that = (VehicleValue) other;
 		 boolean lEquals = true;
-		 if( this.model == null )
-		 {
-			lEquals = lEquals && ( that.model == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.model.equals( that.model );
-		 }
 		 if( this.code == null )
 		 {
 			lEquals = lEquals && ( that.code == null );
@@ -178,6 +170,14 @@ public class VehicleValue
 		 {
 			lEquals = lEquals && this.make.equals( that.make );
 		 }
+		 if( this.model == null )
+		 {
+			lEquals = lEquals && ( that.model == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.model.equals( that.model );
+		 }
 
 		 return lEquals;
 	  }
@@ -189,13 +189,13 @@ public class VehicleValue
 
    public int hashCode(){
 	  int result = 17;
-      result = 37*result + ((this.model != null) ? this.model.hashCode() : 0);
+      result = 37*result + ((this.code != null) ? this.code.hashCode() : 0);
 
       result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
 
-      result = 37*result + ((this.code != null) ? this.code.hashCode() : 0);
-
       result = 37*result + ((this.make != null) ? this.make.hashCode() : 0);
+
+      result = 37*result + ((this.model != null) ? this.model.hashCode() : 0);
 
 	  return result;
    }

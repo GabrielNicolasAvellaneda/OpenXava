@@ -10,22 +10,28 @@ public interface Invoice2Remote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.IInvoice2
 {
 
+   public java.math.BigDecimal getAmountsSum(  )
+      throws java.rmi.RemoteException;
+
+   public void setAmountsSum( java.math.BigDecimal newAmountsSum )
+      throws java.rmi.RemoteException;
+
+   public int getYear(  )
+      throws java.rmi.RemoteException;
+
    public java.math.BigDecimal getVatPercentage(  )
       throws java.rmi.RemoteException;
 
    public void setVatPercentage( java.math.BigDecimal newVatPercentage )
       throws java.rmi.RemoteException;
 
-   public int getNumber(  )
-      throws java.rmi.RemoteException;
-
-   public int getYear(  )
-      throws java.rmi.RemoteException;
-
    public java.util.Date getDate(  )
       throws java.rmi.RemoteException;
 
    public void setDate( java.util.Date newDate )
+      throws java.rmi.RemoteException;
+
+   public int getNumber(  )
       throws java.rmi.RemoteException;
 
    public java.util.Collection getDetails(  )

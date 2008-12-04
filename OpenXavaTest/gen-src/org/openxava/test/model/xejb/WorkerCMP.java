@@ -18,9 +18,9 @@ public abstract class WorkerCMP
       {
          dataHolder = new org.openxava.test.model.WorkerData();
 
-         dataHolder.setId( getId() );
-         dataHolder.set_NickName( get_NickName() );
          dataHolder.set_FullName( get_FullName() );
+         dataHolder.set_NickName( get_NickName() );
+         dataHolder.setId( getId() );
 
       }
       catch (RuntimeException e)
@@ -35,8 +35,8 @@ public abstract class WorkerCMP
    {
       try
       {
-         set_NickName( dataHolder.get_NickName() );
          set_FullName( dataHolder.get_FullName() );
+         set_NickName( dataHolder.get_NickName() );
 
       }
       catch (Exception e)
@@ -90,9 +90,9 @@ public abstract class WorkerCMP
       WorkerValue = new org.openxava.test.model.WorkerValue();
       try
          {
-            WorkerValue.setId( getId() );
-            WorkerValue.setNickName( getNickName() );
             WorkerValue.setFullName( getFullName() );
+            WorkerValue.setNickName( getNickName() );
+            WorkerValue.setId( getId() );
 
          }
          catch (Exception e)
@@ -108,8 +108,8 @@ public abstract class WorkerCMP
 
 	  try
 	  {
-		 setNickName( valueHolder.getNickName() );
 		 setFullName( valueHolder.getFullName() );
+		 setNickName( valueHolder.getNickName() );
 
 	  }
 	  catch (Exception e)
@@ -120,16 +120,16 @@ public abstract class WorkerCMP
 
 /* Value Objects END */
 
-   public abstract java.lang.Integer getId() ;
+   public abstract java.lang.String get_FullName() ;
 
-   public abstract void setId( java.lang.Integer id ) ;
+   public abstract void set_FullName( java.lang.String _FullName ) ;
 
    public abstract java.lang.String get_NickName() ;
 
    public abstract void set_NickName( java.lang.String _NickName ) ;
 
-   public abstract java.lang.String get_FullName() ;
+   public abstract java.lang.Integer getId() ;
 
-   public abstract void set_FullName( java.lang.String _FullName ) ;
+   public abstract void setId( java.lang.Integer id ) ;
 
 }

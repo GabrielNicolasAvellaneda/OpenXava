@@ -13,8 +13,8 @@ public class ColorData
 
    private static final long serialVersionUID = 1L;
    private java.lang.String _Name;
-   private java.lang.Integer number;
    private java.lang.Integer _Version;
+   private java.lang.Integer number;
 
    public ColorData()
    {
@@ -23,8 +23,8 @@ public class ColorData
    public ColorData( ColorData otherData )
    {
       set_Name(otherData.get_Name());
-      setNumber(otherData.getNumber());
       set_Version(otherData.get_Version());
+      setNumber(otherData.getNumber());
 
    }
 
@@ -42,15 +42,6 @@ public class ColorData
       this._Name = _Name;
    }
 
-   public java.lang.Integer getNumber()
-   {
-      return this.number;
-   }
-   public void setNumber( java.lang.Integer number )
-   {
-      this.number = number;
-   }
-
    public java.lang.Integer get_Version()
    {
       return this._Version;
@@ -60,11 +51,20 @@ public class ColorData
       this._Version = _Version;
    }
 
+   public java.lang.Integer getNumber()
+   {
+      return this.number;
+   }
+   public void setNumber( java.lang.Integer number )
+   {
+      this.number = number;
+   }
+
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Name=" + get_Name() + " " + "number=" + getNumber() + " " + "_Version=" + get_Version());
+      str.append("_Name=" + get_Name() + " " + "_Version=" + get_Version() + " " + "number=" + getNumber());
       str.append('}');
 
       return(str.toString());
@@ -85,14 +85,6 @@ public class ColorData
          {
             lEquals = lEquals && this._Name.equals( lTest._Name );
          }
-         if( this.number == null )
-         {
-            lEquals = lEquals && ( lTest.number == null );
-         }
-         else
-         {
-            lEquals = lEquals && this.number.equals( lTest.number );
-         }
          if( this._Version == null )
          {
             lEquals = lEquals && ( lTest._Version == null );
@@ -100,6 +92,14 @@ public class ColorData
          else
          {
             lEquals = lEquals && this._Version.equals( lTest._Version );
+         }
+         if( this.number == null )
+         {
+            lEquals = lEquals && ( lTest.number == null );
+         }
+         else
+         {
+            lEquals = lEquals && this.number.equals( lTest.number );
          }
 
          return lEquals;
@@ -116,9 +116,9 @@ public class ColorData
 
       result = 37*result + ((this._Name != null) ? this._Name.hashCode() : 0);
 
-      result = 37*result + ((this.number != null) ? this.number.hashCode() : 0);
-
       result = 37*result + ((this._Version != null) ? this._Version.hashCode() : 0);
+
+      result = 37*result + ((this.number != null) ? this.number.hashCode() : 0);
 
       return result;
    }

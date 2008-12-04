@@ -21,10 +21,10 @@ public interface CustomerHome
    public org.openxava.test.model.CustomerRemote create(org.openxava.test.model.CustomerValue value)
       throws javax.ejb.CreateException,org.openxava.validators.ValidationException,java.rmi.RemoteException;
 
-   public java.util.Collection findByAlternateSeller(int number)
+   public java.util.Collection findBySeller(int number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
-   public java.util.Collection findBySeller(int number)
+   public java.util.Collection findByAlternateSeller(int number)
       throws javax.ejb.FinderException,java.rmi.RemoteException;
 
    public org.openxava.test.model.CustomerRemote findByNumber(int number)

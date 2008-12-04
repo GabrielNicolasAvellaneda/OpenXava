@@ -20,12 +20,12 @@ public class TransportCharge2Value
    private boolean yearHasBeenSet = false;
    private int delivery_number;
    private boolean delivery_numberHasBeenSet = false;
+   private int delivery_type_number;
+   private boolean delivery_type_numberHasBeenSet = false;
    private int delivery_invoice_year;
    private boolean delivery_invoice_yearHasBeenSet = false;
    private int delivery_invoice_number;
    private boolean delivery_invoice_numberHasBeenSet = false;
-   private int delivery_type_number;
-   private boolean delivery_type_numberHasBeenSet = false;
 
    public TransportCharge2Value()
    {
@@ -40,12 +40,12 @@ public class TransportCharge2Value
 	  yearHasBeenSet = true;
 	  this.delivery_number = otherValue.delivery_number;
 	  delivery_numberHasBeenSet = true;
+	  this.delivery_type_number = otherValue.delivery_type_number;
+	  delivery_type_numberHasBeenSet = true;
 	  this.delivery_invoice_year = otherValue.delivery_invoice_year;
 	  delivery_invoice_yearHasBeenSet = true;
 	  this.delivery_invoice_number = otherValue.delivery_invoice_number;
 	  delivery_invoice_numberHasBeenSet = true;
-	  this.delivery_type_number = otherValue.delivery_type_number;
-	  delivery_type_numberHasBeenSet = true;
    }
 
    public java.math.BigDecimal getAmount()
@@ -90,6 +90,20 @@ public class TransportCharge2Value
    public boolean delivery_numberHasBeenSet(){
 	  return delivery_numberHasBeenSet;
    }
+   public int getDelivery_type_number()
+   {
+	  return this.delivery_type_number;
+   }
+
+   public void setDelivery_type_number( int delivery_type_number )
+   {
+	  this.delivery_type_number = delivery_type_number;
+	  delivery_type_numberHasBeenSet = true;
+   }
+
+   public boolean delivery_type_numberHasBeenSet(){
+	  return delivery_type_numberHasBeenSet;
+   }
    public int getDelivery_invoice_year()
    {
 	  return this.delivery_invoice_year;
@@ -118,26 +132,12 @@ public class TransportCharge2Value
    public boolean delivery_invoice_numberHasBeenSet(){
 	  return delivery_invoice_numberHasBeenSet;
    }
-   public int getDelivery_type_number()
-   {
-	  return this.delivery_type_number;
-   }
-
-   public void setDelivery_type_number( int delivery_type_number )
-   {
-	  this.delivery_type_number = delivery_type_number;
-	  delivery_type_numberHasBeenSet = true;
-   }
-
-   public boolean delivery_type_numberHasBeenSet(){
-	  return delivery_type_numberHasBeenSet;
-   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("amount=" + getAmount() + " " + "year=" + getYear() + " " + "delivery_number=" + getDelivery_number() + " " + "delivery_invoice_year=" + getDelivery_invoice_year() + " " + "delivery_invoice_number=" + getDelivery_invoice_number() + " " + "delivery_type_number=" + getDelivery_type_number());
+	  str.append("amount=" + getAmount() + " " + "year=" + getYear() + " " + "delivery_number=" + getDelivery_number() + " " + "delivery_type_number=" + getDelivery_type_number() + " " + "delivery_invoice_year=" + getDelivery_invoice_year() + " " + "delivery_invoice_number=" + getDelivery_invoice_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -192,9 +192,9 @@ public class TransportCharge2Value
 			lEquals = lEquals && this.amount.equals( that.amount );
 		 }
 		 lEquals = lEquals && this.delivery_number == that.delivery_number;
+		 lEquals = lEquals && this.delivery_type_number == that.delivery_type_number;
 		 lEquals = lEquals && this.delivery_invoice_year == that.delivery_invoice_year;
 		 lEquals = lEquals && this.delivery_invoice_number == that.delivery_invoice_number;
-		 lEquals = lEquals && this.delivery_type_number == that.delivery_type_number;
 
 		 return lEquals;
 	  }
@@ -212,11 +212,11 @@ public class TransportCharge2Value
 
       result = 37*result + (int) delivery_number;
 
+      result = 37*result + (int) delivery_type_number;
+
       result = 37*result + (int) delivery_invoice_year;
 
       result = 37*result + (int) delivery_invoice_number;
-
-      result = 37*result + (int) delivery_type_number;
 
 	  return result;
    }

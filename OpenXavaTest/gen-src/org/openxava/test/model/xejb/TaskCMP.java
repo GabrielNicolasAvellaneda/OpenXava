@@ -18,14 +18,14 @@ public abstract class TaskCMP
       {
          dataHolder = new org.openxava.test.model.TaskData();
 
-         dataHolder.set_Summary( get_Summary() );
-         dataHolder.set_UserFamilyName( get_UserFamilyName() );
-         dataHolder.set_UserGivenName( get_UserGivenName() );
-         dataHolder.setOid( getOid() );
-         dataHolder.set_UserEMail( get_UserEMail() );
-         dataHolder.set_Date( get_Date() );
-         dataHolder.set_User( get_User() );
          dataHolder.set_Comments( get_Comments() );
+         dataHolder.set_Summary( get_Summary() );
+         dataHolder.set_User( get_User() );
+         dataHolder.set_UserFamilyName( get_UserFamilyName() );
+         dataHolder.setOid( getOid() );
+         dataHolder.set_UserGivenName( get_UserGivenName() );
+         dataHolder.set_Date( get_Date() );
+         dataHolder.set_UserEMail( get_UserEMail() );
 
       }
       catch (RuntimeException e)
@@ -40,13 +40,13 @@ public abstract class TaskCMP
    {
       try
       {
+         set_Comments( dataHolder.get_Comments() );
          set_Summary( dataHolder.get_Summary() );
+         set_User( dataHolder.get_User() );
          set_UserFamilyName( dataHolder.get_UserFamilyName() );
          set_UserGivenName( dataHolder.get_UserGivenName() );
-         set_UserEMail( dataHolder.get_UserEMail() );
          set_Date( dataHolder.get_Date() );
-         set_User( dataHolder.get_User() );
-         set_Comments( dataHolder.get_Comments() );
+         set_UserEMail( dataHolder.get_UserEMail() );
 
       }
       catch (Exception e)
@@ -100,14 +100,14 @@ public abstract class TaskCMP
       TaskValue = new org.openxava.test.model.TaskValue();
       try
          {
-            TaskValue.setSummary( getSummary() );
-            TaskValue.setUserFamilyName( getUserFamilyName() );
-            TaskValue.setUserGivenName( getUserGivenName() );
-            TaskValue.setOid( getOid() );
-            TaskValue.setUserEMail( getUserEMail() );
-            TaskValue.setDate( getDate() );
-            TaskValue.setUser( getUser() );
             TaskValue.setComments( getComments() );
+            TaskValue.setSummary( getSummary() );
+            TaskValue.setUser( getUser() );
+            TaskValue.setUserFamilyName( getUserFamilyName() );
+            TaskValue.setOid( getOid() );
+            TaskValue.setUserGivenName( getUserGivenName() );
+            TaskValue.setDate( getDate() );
+            TaskValue.setUserEMail( getUserEMail() );
 
          }
          catch (Exception e)
@@ -123,13 +123,13 @@ public abstract class TaskCMP
 
 	  try
 	  {
+		 setComments( valueHolder.getComments() );
 		 setSummary( valueHolder.getSummary() );
+		 setUser( valueHolder.getUser() );
 		 setUserFamilyName( valueHolder.getUserFamilyName() );
 		 setUserGivenName( valueHolder.getUserGivenName() );
-		 setUserEMail( valueHolder.getUserEMail() );
 		 setDate( valueHolder.getDate() );
-		 setUser( valueHolder.getUser() );
-		 setComments( valueHolder.getComments() );
+		 setUserEMail( valueHolder.getUserEMail() );
 
 	  }
 	  catch (Exception e)
@@ -140,36 +140,36 @@ public abstract class TaskCMP
 
 /* Value Objects END */
 
+   public abstract java.lang.String get_Comments() ;
+
+   public abstract void set_Comments( java.lang.String _Comments ) ;
+
    public abstract java.lang.String get_Summary() ;
 
    public abstract void set_Summary( java.lang.String _Summary ) ;
-
-   public abstract java.lang.String get_UserFamilyName() ;
-
-   public abstract void set_UserFamilyName( java.lang.String _UserFamilyName ) ;
-
-   public abstract java.lang.String get_UserGivenName() ;
-
-   public abstract void set_UserGivenName( java.lang.String _UserGivenName ) ;
-
-   public abstract java.lang.String getOid() ;
-
-   public abstract void setOid( java.lang.String oid ) ;
-
-   public abstract java.lang.String get_UserEMail() ;
-
-   public abstract void set_UserEMail( java.lang.String _UserEMail ) ;
-
-   public abstract java.sql.Date get_Date() ;
-
-   public abstract void set_Date( java.sql.Date _Date ) ;
 
    public abstract java.lang.String get_User() ;
 
    public abstract void set_User( java.lang.String _User ) ;
 
-   public abstract java.lang.String get_Comments() ;
+   public abstract java.lang.String get_UserFamilyName() ;
 
-   public abstract void set_Comments( java.lang.String _Comments ) ;
+   public abstract void set_UserFamilyName( java.lang.String _UserFamilyName ) ;
+
+   public abstract java.lang.String getOid() ;
+
+   public abstract void setOid( java.lang.String oid ) ;
+
+   public abstract java.lang.String get_UserGivenName() ;
+
+   public abstract void set_UserGivenName( java.lang.String _UserGivenName ) ;
+
+   public abstract java.sql.Date get_Date() ;
+
+   public abstract void set_Date( java.sql.Date _Date ) ;
+
+   public abstract java.lang.String get_UserEMail() ;
+
+   public abstract void set_UserEMail( java.lang.String _UserEMail ) ;
 
 }

@@ -22,10 +22,10 @@ public interface Office2Remote
    public void setName( java.lang.String newName )
       throws java.rmi.RemoteException;
 
-   public int getNumber(  )
+   public int getZoneNumber(  )
       throws java.rmi.RemoteException;
 
-   public int getZoneNumber(  )
+   public int getNumber(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.IClerk getOfficeManager(  )

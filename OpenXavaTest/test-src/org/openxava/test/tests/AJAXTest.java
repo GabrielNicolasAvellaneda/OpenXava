@@ -90,14 +90,14 @@ public class AJAXTest extends ModuleTestBase {
 				"xava_editor_xava.Customer.email, " +
 				"xava_editor_xava.Customer.telephone, " +
 				"xava_collection_xava.Customer.deliveryPlaces., " +
-				"xava_editor_xava.Customer.photo, xava_messages, ");
-		setValue("seller.number", "2");
+				"xava_editor_xava.Customer.photo, xava_messages, ");		
+		setValue("seller.number", "2");				
 		assertLoadedParts("xava_errors, xava_editor_xava.Customer.seller.name, " +
-				"xava_messages,");
-		setValue("seller.number", "1");
+				"xava_messages,");		
+		setValue("seller.number", "1");		
 		assertLoadedParts("xava_errors, xava_editor_xava.Customer.seller.name, " +
 			"xava_messages,");
-		execute("Customer.changeNameLabel");
+		execute("Customer.changeNameLabel");		
 		assertLoadedParts("xava_label_xava.Customer.name, xava_errors, xava_messages, ");
 		execute("CRUD.new");
 		assertLoadedParts("xava_errors, xava_editor_xava.Customer.seller.name, " +
@@ -475,6 +475,7 @@ public class AJAXTest extends ModuleTestBase {
 	}
 	
 	public void testChangingModelOfView() throws Exception {
+		if (!isOX3()) return;
 		changeModule("Human");
 		execute("Mode.detailAndFirst");		
 		assertLoadedParts("xava_core,");

@@ -12,9 +12,9 @@ public class DriverData
 {
 
    private static final long serialVersionUID = 1L;
+   private java.lang.String _Type;
    private java.lang.String _Name;
    private java.lang.Integer _Number;
-   private java.lang.String _Type;
    private int _DrivingLicence_level;
 
    public DriverData()
@@ -23,9 +23,9 @@ public class DriverData
 
    public DriverData( DriverData otherData )
    {
+      set_Type(otherData.get_Type());
       set_Name(otherData.get_Name());
       set_Number(otherData.get_Number());
-      set_Type(otherData.get_Type());
       set_DrivingLicence_level(otherData.get_DrivingLicence_level());
 
    }
@@ -33,6 +33,15 @@ public class DriverData
    public org.openxava.test.model.DriverKey getPrimaryKey() {
      org.openxava.test.model.DriverKey pk = new org.openxava.test.model.DriverKey(this.get_Number());
      return pk;
+   }
+
+   public java.lang.String get_Type()
+   {
+      return this._Type;
+   }
+   public void set_Type( java.lang.String _Type )
+   {
+      this._Type = _Type;
    }
 
    public java.lang.String get_Name()
@@ -53,15 +62,6 @@ public class DriverData
       this._Number = _Number;
    }
 
-   public java.lang.String get_Type()
-   {
-      return this._Type;
-   }
-   public void set_Type( java.lang.String _Type )
-   {
-      this._Type = _Type;
-   }
-
    public int get_DrivingLicence_level()
    {
       return this._DrivingLicence_level;
@@ -75,7 +75,7 @@ public class DriverData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Name=" + get_Name() + " " + "_Number=" + get_Number() + " " + "_Type=" + get_Type() + " " + "_DrivingLicence_level=" + get_DrivingLicence_level());
+      str.append("_Type=" + get_Type() + " " + "_Name=" + get_Name() + " " + "_Number=" + get_Number() + " " + "_DrivingLicence_level=" + get_DrivingLicence_level());
       str.append('}');
 
       return(str.toString());
@@ -88,6 +88,14 @@ public class DriverData
          DriverData lTest = (DriverData) pOther;
          boolean lEquals = true;
 
+         if( this._Type == null )
+         {
+            lEquals = lEquals && ( lTest._Type == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Type.equals( lTest._Type );
+         }
          if( this._Name == null )
          {
             lEquals = lEquals && ( lTest._Name == null );
@@ -104,14 +112,6 @@ public class DriverData
          {
             lEquals = lEquals && this._Number.equals( lTest._Number );
          }
-         if( this._Type == null )
-         {
-            lEquals = lEquals && ( lTest._Type == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._Type.equals( lTest._Type );
-         }
          lEquals = lEquals && this._DrivingLicence_level == lTest._DrivingLicence_level;
 
          return lEquals;
@@ -126,11 +126,11 @@ public class DriverData
    {
       int result = 17;
 
+      result = 37*result + ((this._Type != null) ? this._Type.hashCode() : 0);
+
       result = 37*result + ((this._Name != null) ? this._Name.hashCode() : 0);
 
       result = 37*result + ((this._Number != null) ? this._Number.hashCode() : 0);
-
-      result = 37*result + ((this._Type != null) ? this._Type.hashCode() : 0);
 
       result = 37*result + (int) _DrivingLicence_level;
 

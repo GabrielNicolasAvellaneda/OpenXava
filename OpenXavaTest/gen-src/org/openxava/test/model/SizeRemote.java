@@ -10,13 +10,13 @@ public interface SizeRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.ISize
 {
 
-   public int getId(  )
-      throws java.rmi.RemoteException;
-
    public java.lang.String getName(  )
       throws java.rmi.RemoteException;
 
    public void setName( java.lang.String newName )
+      throws java.rmi.RemoteException;
+
+   public int getId(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.SizeData getData(  )

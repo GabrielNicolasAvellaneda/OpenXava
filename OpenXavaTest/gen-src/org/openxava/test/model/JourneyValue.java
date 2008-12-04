@@ -14,10 +14,10 @@ public class JourneyValue
 
    private static final long serialVersionUID = 1L;
 
-   private java.lang.String description;
-   private boolean descriptionHasBeenSet = false;
    private java.lang.String oid;
    private boolean oidHasBeenSet = false;
+   private java.lang.String description;
+   private boolean descriptionHasBeenSet = false;
    private java.lang.String name;
    private boolean nameHasBeenSet = false;
    private java.lang.String averageSpeed_oid;
@@ -30,30 +30,16 @@ public class JourneyValue
    //TODO Cloneable is better than this !
    public JourneyValue( JourneyValue otherValue )
    {
-	  this.description = otherValue.description;
-	  descriptionHasBeenSet = true;
 	  this.oid = otherValue.oid;
 	  oidHasBeenSet = true;
+	  this.description = otherValue.description;
+	  descriptionHasBeenSet = true;
 	  this.name = otherValue.name;
 	  nameHasBeenSet = true;
 	  this.averageSpeed_oid = otherValue.averageSpeed_oid;
 	  averageSpeed_oidHasBeenSet = true;
    }
 
-   public java.lang.String getDescription()
-   {
-	  return this.description;
-   }
-
-   public void setDescription( java.lang.String description )
-   {
-	  this.description = description;
-	  descriptionHasBeenSet = true;
-   }
-
-   public boolean descriptionHasBeenSet(){
-	  return descriptionHasBeenSet;
-   }
    public java.lang.String getOid()
    {
 	  return this.oid;
@@ -67,6 +53,20 @@ public class JourneyValue
 
    public boolean oidHasBeenSet(){
 	  return oidHasBeenSet;
+   }
+   public java.lang.String getDescription()
+   {
+	  return this.description;
+   }
+
+   public void setDescription( java.lang.String description )
+   {
+	  this.description = description;
+	  descriptionHasBeenSet = true;
+   }
+
+   public boolean descriptionHasBeenSet(){
+	  return descriptionHasBeenSet;
    }
    public java.lang.String getName()
    {
@@ -101,7 +101,7 @@ public class JourneyValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("description=" + getDescription() + " " + "oid=" + getOid() + " " + "name=" + getName() + " " + "averageSpeed_oid=" + getAverageSpeed_oid());
+	  str.append("oid=" + getOid() + " " + "description=" + getDescription() + " " + "name=" + getName() + " " + "averageSpeed_oid=" + getAverageSpeed_oid());
 	  str.append('}');
 
 	  return(str.toString());
@@ -189,9 +189,9 @@ public class JourneyValue
 
    public int hashCode(){
 	  int result = 17;
-      result = 37*result + ((this.description != null) ? this.description.hashCode() : 0);
-
       result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
+
+      result = 37*result + ((this.description != null) ? this.description.hashCode() : 0);
 
       result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);
 

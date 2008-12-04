@@ -16,10 +16,10 @@ public class InvoiceDetail2Value
 
    private java.math.BigDecimal amount;
    private boolean amountHasBeenSet = false;
-   private java.lang.String oid;
-   private boolean oidHasBeenSet = false;
    private java.math.BigDecimal unitPrice;
    private boolean unitPriceHasBeenSet = false;
+   private java.lang.String oid;
+   private boolean oidHasBeenSet = false;
    private int quantity;
    private boolean quantityHasBeenSet = false;
    private long product_number;
@@ -38,10 +38,10 @@ public class InvoiceDetail2Value
    {
 	  this.amount = otherValue.amount;
 	  amountHasBeenSet = true;
-	  this.oid = otherValue.oid;
-	  oidHasBeenSet = true;
 	  this.unitPrice = otherValue.unitPrice;
 	  unitPriceHasBeenSet = true;
+	  this.oid = otherValue.oid;
+	  oidHasBeenSet = true;
 	  this.quantity = otherValue.quantity;
 	  quantityHasBeenSet = true;
 	  this.product_number = otherValue.product_number;
@@ -66,20 +66,6 @@ public class InvoiceDetail2Value
    public boolean amountHasBeenSet(){
 	  return amountHasBeenSet;
    }
-   public java.lang.String getOid()
-   {
-	  return this.oid;
-   }
-
-   public void setOid( java.lang.String oid )
-   {
-	  this.oid = oid;
-	  oidHasBeenSet = true;
-   }
-
-   public boolean oidHasBeenSet(){
-	  return oidHasBeenSet;
-   }
    public java.math.BigDecimal getUnitPrice()
    {
 	  return this.unitPrice;
@@ -93,6 +79,20 @@ public class InvoiceDetail2Value
 
    public boolean unitPriceHasBeenSet(){
 	  return unitPriceHasBeenSet;
+   }
+   public java.lang.String getOid()
+   {
+	  return this.oid;
+   }
+
+   public void setOid( java.lang.String oid )
+   {
+	  this.oid = oid;
+	  oidHasBeenSet = true;
+   }
+
+   public boolean oidHasBeenSet(){
+	  return oidHasBeenSet;
    }
    public int getQuantity()
    {
@@ -155,7 +155,7 @@ public class InvoiceDetail2Value
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("amount=" + getAmount() + " " + "oid=" + getOid() + " " + "unitPrice=" + getUnitPrice() + " " + "quantity=" + getQuantity() + " " + "product_number=" + getProduct_number() + " " + "invoice2_year=" + getInvoice2_year() + " " + "invoice2_number=" + getInvoice2_number());
+	  str.append("amount=" + getAmount() + " " + "unitPrice=" + getUnitPrice() + " " + "oid=" + getOid() + " " + "quantity=" + getQuantity() + " " + "product_number=" + getProduct_number() + " " + "invoice2_year=" + getInvoice2_year() + " " + "invoice2_number=" + getInvoice2_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -241,9 +241,9 @@ public class InvoiceDetail2Value
 	  int result = 17;
       result = 37*result + ((this.amount != null) ? this.amount.hashCode() : 0);
 
-      result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
-
       result = 37*result + ((this.unitPrice != null) ? this.unitPrice.hashCode() : 0);
+
+      result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
 
       result = 37*result + (int) quantity;
 

@@ -10,33 +10,6 @@ public interface CustomerRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.ICustomer
 {
 
-   public java.lang.String getWebsite(  )
-      throws java.rmi.RemoteException;
-
-   public void setWebsite( java.lang.String newWebsite )
-      throws java.rmi.RemoteException;
-
-   public java.lang.String getEmail(  )
-      throws java.rmi.RemoteException;
-
-   public void setEmail( java.lang.String newEmail )
-      throws java.rmi.RemoteException;
-
-   public java.lang.String getName(  )
-      throws java.rmi.RemoteException;
-
-   public void setName( java.lang.String newName )
-      throws java.rmi.RemoteException;
-
-   public java.lang.String getRemarks(  )
-      throws java.rmi.RemoteException;
-
-   public void setRemarks( java.lang.String newRemarks )
-      throws java.rmi.RemoteException;
-
-   public int getNumber(  )
-      throws java.rmi.RemoteException;
-
    public boolean isLocal(  )
       throws java.rmi.RemoteException;
 
@@ -46,16 +19,22 @@ public interface CustomerRemote
    public void setType( int newType )
       throws java.rmi.RemoteException;
 
+   public java.lang.String getRemarks(  )
+      throws java.rmi.RemoteException;
+
+   public void setRemarks( java.lang.String newRemarks )
+      throws java.rmi.RemoteException;
+
    public java.lang.String getTelephone(  )
       throws java.rmi.RemoteException;
 
    public void setTelephone( java.lang.String newTelephone )
       throws java.rmi.RemoteException;
 
-   public byte[] getPhoto(  )
+   public java.lang.String getEmail(  )
       throws java.rmi.RemoteException;
 
-   public void setPhoto( byte[] newPhoto )
+   public void setEmail( java.lang.String newEmail )
       throws java.rmi.RemoteException;
 
    public java.lang.String getRelationWithSeller(  )
@@ -64,13 +43,70 @@ public interface CustomerRemote
    public void setRelationWithSeller( java.lang.String newRelationWithSeller )
       throws java.rmi.RemoteException;
 
+   public byte[] getPhoto(  )
+      throws java.rmi.RemoteException;
+
+   public void setPhoto( byte[] newPhoto )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getName(  )
+      throws java.rmi.RemoteException;
+
+   public void setName( java.lang.String newName )
+      throws java.rmi.RemoteException;
+
    public java.lang.String getCity(  )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getWebsite(  )
+      throws java.rmi.RemoteException;
+
+   public void setWebsite( java.lang.String newWebsite )
+      throws java.rmi.RemoteException;
+
+   public int getNumber(  )
+      throws java.rmi.RemoteException;
+
+   public java.util.Collection getStates(  )
       throws java.rmi.RemoteException;
 
    public java.util.Collection getDeliveryPlaces(  )
       throws java.rmi.RemoteException;
 
-   public java.util.Collection getStates(  )
+   public org.openxava.test.model.ISeller getSeller(  )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.SellerRemote getSellerRemote(  )
+      throws java.rmi.RemoteException;
+
+   public void setSeller( org.openxava.test.model.ISeller newSeller )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.SellerKey getSellerKey(  )
+      throws java.rmi.RemoteException;
+
+   public void setSellerKey( org.openxava.test.model.SellerKey key )
+      throws java.rmi.RemoteException;
+
+   public int getSeller_number(  )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.ISeller getAlternateSeller(  )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.SellerRemote getAlternateSellerRemote(  )
+      throws java.rmi.RemoteException;
+
+   public void setAlternateSeller( org.openxava.test.model.ISeller newAlternateSeller )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.SellerKey getAlternateSellerKey(  )
+      throws java.rmi.RemoteException;
+
+   public void setAlternateSellerKey( org.openxava.test.model.SellerKey key )
+      throws java.rmi.RemoteException;
+
+   public int getAlternateSeller_number(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.Address getAddress(  )
@@ -95,42 +131,6 @@ public interface CustomerRemote
       throws java.rmi.RemoteException;
 
    public java.lang.String getAddress_state_id(  )
-      throws java.rmi.RemoteException;
-
-   public org.openxava.test.model.ISeller getAlternateSeller(  )
-      throws java.rmi.RemoteException;
-
-   public org.openxava.test.model.SellerRemote getAlternateSellerRemote(  )
-      throws java.rmi.RemoteException;
-
-   public void setAlternateSeller( org.openxava.test.model.ISeller newAlternateSeller )
-      throws java.rmi.RemoteException;
-
-   public org.openxava.test.model.SellerKey getAlternateSellerKey(  )
-      throws java.rmi.RemoteException;
-
-   public void setAlternateSellerKey( org.openxava.test.model.SellerKey key )
-      throws java.rmi.RemoteException;
-
-   public int getAlternateSeller_number(  )
-      throws java.rmi.RemoteException;
-
-   public org.openxava.test.model.ISeller getSeller(  )
-      throws java.rmi.RemoteException;
-
-   public org.openxava.test.model.SellerRemote getSellerRemote(  )
-      throws java.rmi.RemoteException;
-
-   public void setSeller( org.openxava.test.model.ISeller newSeller )
-      throws java.rmi.RemoteException;
-
-   public org.openxava.test.model.SellerKey getSellerKey(  )
-      throws java.rmi.RemoteException;
-
-   public void setSellerKey( org.openxava.test.model.SellerKey key )
-      throws java.rmi.RemoteException;
-
-   public int getSeller_number(  )
       throws java.rmi.RemoteException;
 
    public void calculateShippingAndHandling(  )

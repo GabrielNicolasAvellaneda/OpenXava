@@ -12,13 +12,13 @@ public class ClerkData
 {
 
    private static final long serialVersionUID = 1L;
-   private java.sql.Time _ArrivalTime;
+   private byte[] _Comments;
    private java.lang.String _EndingTime;
+   private java.sql.Time _ArrivalTime;
    private java.lang.String _Name;
    private int officeNumber;
    private int number;
    private int zoneNumber;
-   private byte[] _Comments;
 
    public ClerkData()
    {
@@ -26,13 +26,13 @@ public class ClerkData
 
    public ClerkData( ClerkData otherData )
    {
-      set_ArrivalTime(otherData.get_ArrivalTime());
+      set_Comments(otherData.get_Comments());
       set_EndingTime(otherData.get_EndingTime());
+      set_ArrivalTime(otherData.get_ArrivalTime());
       set_Name(otherData.get_Name());
       setOfficeNumber(otherData.getOfficeNumber());
       setNumber(otherData.getNumber());
       setZoneNumber(otherData.getZoneNumber());
-      set_Comments(otherData.get_Comments());
 
    }
 
@@ -41,13 +41,13 @@ public class ClerkData
      return pk;
    }
 
-   public java.sql.Time get_ArrivalTime()
+   public byte[] get_Comments()
    {
-      return this._ArrivalTime;
+      return this._Comments;
    }
-   public void set_ArrivalTime( java.sql.Time _ArrivalTime )
+   public void set_Comments( byte[] _Comments )
    {
-      this._ArrivalTime = _ArrivalTime;
+      this._Comments = _Comments;
    }
 
    public java.lang.String get_EndingTime()
@@ -57,6 +57,15 @@ public class ClerkData
    public void set_EndingTime( java.lang.String _EndingTime )
    {
       this._EndingTime = _EndingTime;
+   }
+
+   public java.sql.Time get_ArrivalTime()
+   {
+      return this._ArrivalTime;
+   }
+   public void set_ArrivalTime( java.sql.Time _ArrivalTime )
+   {
+      this._ArrivalTime = _ArrivalTime;
    }
 
    public java.lang.String get_Name()
@@ -95,20 +104,11 @@ public class ClerkData
       this.zoneNumber = zoneNumber;
    }
 
-   public byte[] get_Comments()
-   {
-      return this._Comments;
-   }
-   public void set_Comments( byte[] _Comments )
-   {
-      this._Comments = _Comments;
-   }
-
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_ArrivalTime=" + get_ArrivalTime() + " " + "_EndingTime=" + get_EndingTime() + " " + "_Name=" + get_Name() + " " + "officeNumber=" + getOfficeNumber() + " " + "number=" + getNumber() + " " + "zoneNumber=" + getZoneNumber() + " " + "_Comments=" + get_Comments());
+      str.append("_Comments=" + get_Comments() + " " + "_EndingTime=" + get_EndingTime() + " " + "_ArrivalTime=" + get_ArrivalTime() + " " + "_Name=" + get_Name() + " " + "officeNumber=" + getOfficeNumber() + " " + "number=" + getNumber() + " " + "zoneNumber=" + getZoneNumber());
       str.append('}');
 
       return(str.toString());
@@ -121,14 +121,7 @@ public class ClerkData
          ClerkData lTest = (ClerkData) pOther;
          boolean lEquals = true;
 
-         if( this._ArrivalTime == null )
-         {
-            lEquals = lEquals && ( lTest._ArrivalTime == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._ArrivalTime.equals( lTest._ArrivalTime );
-         }
+         lEquals = lEquals && this._Comments == lTest._Comments;
          if( this._EndingTime == null )
          {
             lEquals = lEquals && ( lTest._EndingTime == null );
@@ -136,6 +129,14 @@ public class ClerkData
          else
          {
             lEquals = lEquals && this._EndingTime.equals( lTest._EndingTime );
+         }
+         if( this._ArrivalTime == null )
+         {
+            lEquals = lEquals && ( lTest._ArrivalTime == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._ArrivalTime.equals( lTest._ArrivalTime );
          }
          if( this._Name == null )
          {
@@ -148,7 +149,6 @@ public class ClerkData
          lEquals = lEquals && this.officeNumber == lTest.officeNumber;
          lEquals = lEquals && this.number == lTest.number;
          lEquals = lEquals && this.zoneNumber == lTest.zoneNumber;
-         lEquals = lEquals && this._Comments == lTest._Comments;
 
          return lEquals;
       }
@@ -162,9 +162,17 @@ public class ClerkData
    {
       int result = 17;
 
-      result = 37*result + ((this._ArrivalTime != null) ? this._ArrivalTime.hashCode() : 0);
+      if (_Comments != null) {
+        for (int i=0; i<_Comments.length; i++)
+        {
+          long l = _Comments[i];
+          result = 37*result + (int)(l^(l>>>32));
+        }
+      }
 
       result = 37*result + ((this._EndingTime != null) ? this._EndingTime.hashCode() : 0);
+
+      result = 37*result + ((this._ArrivalTime != null) ? this._ArrivalTime.hashCode() : 0);
 
       result = 37*result + ((this._Name != null) ? this._Name.hashCode() : 0);
 
@@ -173,14 +181,6 @@ public class ClerkData
       result = 37*result + (int) number;
 
       result = 37*result + (int) zoneNumber;
-
-      if (_Comments != null) {
-        for (int i=0; i<_Comments.length; i++)
-        {
-          long l = _Comments[i];
-          result = 37*result + (int)(l^(l>>>32));
-        }
-      }
 
       return result;
    }

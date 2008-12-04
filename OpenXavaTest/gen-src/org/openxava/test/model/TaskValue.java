@@ -14,22 +14,22 @@ public class TaskValue
 
    private static final long serialVersionUID = 1L;
 
-   private java.lang.String summary;
-   private boolean summaryHasBeenSet = false;
-   private java.lang.String userFamilyName;
-   private boolean userFamilyNameHasBeenSet = false;
-   private java.lang.String userGivenName;
-   private boolean userGivenNameHasBeenSet = false;
-   private java.lang.String oid;
-   private boolean oidHasBeenSet = false;
-   private java.lang.String userEMail;
-   private boolean userEMailHasBeenSet = false;
-   private java.util.Date date;
-   private boolean dateHasBeenSet = false;
-   private java.lang.String user;
-   private boolean userHasBeenSet = false;
    private java.lang.String comments;
    private boolean commentsHasBeenSet = false;
+   private java.lang.String summary;
+   private boolean summaryHasBeenSet = false;
+   private java.lang.String user;
+   private boolean userHasBeenSet = false;
+   private java.lang.String userFamilyName;
+   private boolean userFamilyNameHasBeenSet = false;
+   private java.lang.String oid;
+   private boolean oidHasBeenSet = false;
+   private java.lang.String userGivenName;
+   private boolean userGivenNameHasBeenSet = false;
+   private java.util.Date date;
+   private boolean dateHasBeenSet = false;
+   private java.lang.String userEMail;
+   private boolean userEMailHasBeenSet = false;
 
    public TaskValue()
    {
@@ -38,24 +38,38 @@ public class TaskValue
    //TODO Cloneable is better than this !
    public TaskValue( TaskValue otherValue )
    {
+	  this.comments = otherValue.comments;
+	  commentsHasBeenSet = true;
 	  this.summary = otherValue.summary;
 	  summaryHasBeenSet = true;
-	  this.userFamilyName = otherValue.userFamilyName;
-	  userFamilyNameHasBeenSet = true;
-	  this.userGivenName = otherValue.userGivenName;
-	  userGivenNameHasBeenSet = true;
-	  this.oid = otherValue.oid;
-	  oidHasBeenSet = true;
-	  this.userEMail = otherValue.userEMail;
-	  userEMailHasBeenSet = true;
-	  this.date = otherValue.date;
-	  dateHasBeenSet = true;
 	  this.user = otherValue.user;
 	  userHasBeenSet = true;
-	  this.comments = otherValue.comments;
+	  this.userFamilyName = otherValue.userFamilyName;
+	  userFamilyNameHasBeenSet = true;
+	  this.oid = otherValue.oid;
+	  oidHasBeenSet = true;
+	  this.userGivenName = otherValue.userGivenName;
+	  userGivenNameHasBeenSet = true;
+	  this.date = otherValue.date;
+	  dateHasBeenSet = true;
+	  this.userEMail = otherValue.userEMail;
+	  userEMailHasBeenSet = true;
+   }
+
+   public java.lang.String getComments()
+   {
+	  return this.comments;
+   }
+
+   public void setComments( java.lang.String comments )
+   {
+	  this.comments = comments;
 	  commentsHasBeenSet = true;
    }
 
+   public boolean commentsHasBeenSet(){
+	  return commentsHasBeenSet;
+   }
    public java.lang.String getSummary()
    {
 	  return this.summary;
@@ -69,76 +83,6 @@ public class TaskValue
 
    public boolean summaryHasBeenSet(){
 	  return summaryHasBeenSet;
-   }
-   public java.lang.String getUserFamilyName()
-   {
-	  return this.userFamilyName;
-   }
-
-   public void setUserFamilyName( java.lang.String userFamilyName )
-   {
-	  this.userFamilyName = userFamilyName;
-	  userFamilyNameHasBeenSet = true;
-   }
-
-   public boolean userFamilyNameHasBeenSet(){
-	  return userFamilyNameHasBeenSet;
-   }
-   public java.lang.String getUserGivenName()
-   {
-	  return this.userGivenName;
-   }
-
-   public void setUserGivenName( java.lang.String userGivenName )
-   {
-	  this.userGivenName = userGivenName;
-	  userGivenNameHasBeenSet = true;
-   }
-
-   public boolean userGivenNameHasBeenSet(){
-	  return userGivenNameHasBeenSet;
-   }
-   public java.lang.String getOid()
-   {
-	  return this.oid;
-   }
-
-   public void setOid( java.lang.String oid )
-   {
-	  this.oid = oid;
-	  oidHasBeenSet = true;
-   }
-
-   public boolean oidHasBeenSet(){
-	  return oidHasBeenSet;
-   }
-   public java.lang.String getUserEMail()
-   {
-	  return this.userEMail;
-   }
-
-   public void setUserEMail( java.lang.String userEMail )
-   {
-	  this.userEMail = userEMail;
-	  userEMailHasBeenSet = true;
-   }
-
-   public boolean userEMailHasBeenSet(){
-	  return userEMailHasBeenSet;
-   }
-   public java.util.Date getDate()
-   {
-	  return this.date;
-   }
-
-   public void setDate( java.util.Date date )
-   {
-	  this.date = date;
-	  dateHasBeenSet = true;
-   }
-
-   public boolean dateHasBeenSet(){
-	  return dateHasBeenSet;
    }
    public java.lang.String getUser()
    {
@@ -154,26 +98,82 @@ public class TaskValue
    public boolean userHasBeenSet(){
 	  return userHasBeenSet;
    }
-   public java.lang.String getComments()
+   public java.lang.String getUserFamilyName()
    {
-	  return this.comments;
+	  return this.userFamilyName;
    }
 
-   public void setComments( java.lang.String comments )
+   public void setUserFamilyName( java.lang.String userFamilyName )
    {
-	  this.comments = comments;
-	  commentsHasBeenSet = true;
+	  this.userFamilyName = userFamilyName;
+	  userFamilyNameHasBeenSet = true;
    }
 
-   public boolean commentsHasBeenSet(){
-	  return commentsHasBeenSet;
+   public boolean userFamilyNameHasBeenSet(){
+	  return userFamilyNameHasBeenSet;
+   }
+   public java.lang.String getOid()
+   {
+	  return this.oid;
+   }
+
+   public void setOid( java.lang.String oid )
+   {
+	  this.oid = oid;
+	  oidHasBeenSet = true;
+   }
+
+   public boolean oidHasBeenSet(){
+	  return oidHasBeenSet;
+   }
+   public java.lang.String getUserGivenName()
+   {
+	  return this.userGivenName;
+   }
+
+   public void setUserGivenName( java.lang.String userGivenName )
+   {
+	  this.userGivenName = userGivenName;
+	  userGivenNameHasBeenSet = true;
+   }
+
+   public boolean userGivenNameHasBeenSet(){
+	  return userGivenNameHasBeenSet;
+   }
+   public java.util.Date getDate()
+   {
+	  return this.date;
+   }
+
+   public void setDate( java.util.Date date )
+   {
+	  this.date = date;
+	  dateHasBeenSet = true;
+   }
+
+   public boolean dateHasBeenSet(){
+	  return dateHasBeenSet;
+   }
+   public java.lang.String getUserEMail()
+   {
+	  return this.userEMail;
+   }
+
+   public void setUserEMail( java.lang.String userEMail )
+   {
+	  this.userEMail = userEMail;
+	  userEMailHasBeenSet = true;
+   }
+
+   public boolean userEMailHasBeenSet(){
+	  return userEMailHasBeenSet;
    }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("summary=" + getSummary() + " " + "userFamilyName=" + getUserFamilyName() + " " + "userGivenName=" + getUserGivenName() + " " + "oid=" + getOid() + " " + "userEMail=" + getUserEMail() + " " + "date=" + getDate() + " " + "user=" + getUser() + " " + "comments=" + getComments());
+	  str.append("comments=" + getComments() + " " + "summary=" + getSummary() + " " + "user=" + getUser() + " " + "userFamilyName=" + getUserFamilyName() + " " + "oid=" + getOid() + " " + "userGivenName=" + getUserGivenName() + " " + "date=" + getDate() + " " + "userEMail=" + getUserEMail());
 	  str.append('}');
 
 	  return(str.toString());
@@ -226,6 +226,14 @@ public class TaskValue
 	  {
 		 TaskValue that = (TaskValue) other;
 		 boolean lEquals = true;
+		 if( this.comments == null )
+		 {
+			lEquals = lEquals && ( that.comments == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.comments.equals( that.comments );
+		 }
 		 if( this.summary == null )
 		 {
 			lEquals = lEquals && ( that.summary == null );
@@ -233,6 +241,14 @@ public class TaskValue
 		 else
 		 {
 			lEquals = lEquals && this.summary.equals( that.summary );
+		 }
+		 if( this.user == null )
+		 {
+			lEquals = lEquals && ( that.user == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.user.equals( that.user );
 		 }
 		 if( this.userFamilyName == null )
 		 {
@@ -250,14 +266,6 @@ public class TaskValue
 		 {
 			lEquals = lEquals && this.userGivenName.equals( that.userGivenName );
 		 }
-		 if( this.userEMail == null )
-		 {
-			lEquals = lEquals && ( that.userEMail == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.userEMail.equals( that.userEMail );
-		 }
 		 if( this.date == null )
 		 {
 			lEquals = lEquals && ( that.date == null );
@@ -266,21 +274,13 @@ public class TaskValue
 		 {
 			lEquals = lEquals && this.date.equals( that.date );
 		 }
-		 if( this.user == null )
+		 if( this.userEMail == null )
 		 {
-			lEquals = lEquals && ( that.user == null );
+			lEquals = lEquals && ( that.userEMail == null );
 		 }
 		 else
 		 {
-			lEquals = lEquals && this.user.equals( that.user );
-		 }
-		 if( this.comments == null )
-		 {
-			lEquals = lEquals && ( that.comments == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.comments.equals( that.comments );
+			lEquals = lEquals && this.userEMail.equals( that.userEMail );
 		 }
 
 		 return lEquals;
@@ -293,21 +293,21 @@ public class TaskValue
 
    public int hashCode(){
 	  int result = 17;
+      result = 37*result + ((this.comments != null) ? this.comments.hashCode() : 0);
+
       result = 37*result + ((this.summary != null) ? this.summary.hashCode() : 0);
-
-      result = 37*result + ((this.userFamilyName != null) ? this.userFamilyName.hashCode() : 0);
-
-      result = 37*result + ((this.userGivenName != null) ? this.userGivenName.hashCode() : 0);
-
-      result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
-
-      result = 37*result + ((this.userEMail != null) ? this.userEMail.hashCode() : 0);
-
-      result = 37*result + ((this.date != null) ? this.date.hashCode() : 0);
 
       result = 37*result + ((this.user != null) ? this.user.hashCode() : 0);
 
-      result = 37*result + ((this.comments != null) ? this.comments.hashCode() : 0);
+      result = 37*result + ((this.userFamilyName != null) ? this.userFamilyName.hashCode() : 0);
+
+      result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
+
+      result = 37*result + ((this.userGivenName != null) ? this.userGivenName.hashCode() : 0);
+
+      result = 37*result + ((this.date != null) ? this.date.hashCode() : 0);
+
+      result = 37*result + ((this.userEMail != null) ? this.userEMail.hashCode() : 0);
 
 	  return result;
    }

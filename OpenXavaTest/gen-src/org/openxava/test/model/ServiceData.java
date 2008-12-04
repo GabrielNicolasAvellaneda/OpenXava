@@ -16,8 +16,8 @@ public class ServiceData
    private java.lang.String _Description;
    private int number;
    private java.lang.Integer _Detail_free;
-   private java.lang.Integer _Detail_subfamily;
    private java.lang.Integer _Detail_type;
+   private java.lang.Integer _Detail_subfamily;
    private java.lang.String _Invoice_oid;
 
    public ServiceData()
@@ -30,8 +30,8 @@ public class ServiceData
       set_Description(otherData.get_Description());
       setNumber(otherData.getNumber());
       set_Detail_free(otherData.get_Detail_free());
-      set_Detail_subfamily(otherData.get_Detail_subfamily());
       set_Detail_type(otherData.get_Detail_type());
+      set_Detail_subfamily(otherData.get_Detail_subfamily());
       set_Invoice_oid(otherData.get_Invoice_oid());
 
    }
@@ -77,15 +77,6 @@ public class ServiceData
       this._Detail_free = _Detail_free;
    }
 
-   public java.lang.Integer get_Detail_subfamily()
-   {
-      return this._Detail_subfamily;
-   }
-   public void set_Detail_subfamily( java.lang.Integer _Detail_subfamily )
-   {
-      this._Detail_subfamily = _Detail_subfamily;
-   }
-
    public java.lang.Integer get_Detail_type()
    {
       return this._Detail_type;
@@ -93,6 +84,15 @@ public class ServiceData
    public void set_Detail_type( java.lang.Integer _Detail_type )
    {
       this._Detail_type = _Detail_type;
+   }
+
+   public java.lang.Integer get_Detail_subfamily()
+   {
+      return this._Detail_subfamily;
+   }
+   public void set_Detail_subfamily( java.lang.Integer _Detail_subfamily )
+   {
+      this._Detail_subfamily = _Detail_subfamily;
    }
 
    public java.lang.String get_Invoice_oid()
@@ -108,7 +108,7 @@ public class ServiceData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Family=" + get_Family() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "_Detail_free=" + get_Detail_free() + " " + "_Detail_subfamily=" + get_Detail_subfamily() + " " + "_Detail_type=" + get_Detail_type() + " " + "_Invoice_oid=" + get_Invoice_oid());
+      str.append("_Family=" + get_Family() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "_Detail_free=" + get_Detail_free() + " " + "_Detail_type=" + get_Detail_type() + " " + "_Detail_subfamily=" + get_Detail_subfamily() + " " + "_Invoice_oid=" + get_Invoice_oid());
       str.append('}');
 
       return(str.toString());
@@ -146,14 +146,6 @@ public class ServiceData
          {
             lEquals = lEquals && this._Detail_free.equals( lTest._Detail_free );
          }
-         if( this._Detail_subfamily == null )
-         {
-            lEquals = lEquals && ( lTest._Detail_subfamily == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._Detail_subfamily.equals( lTest._Detail_subfamily );
-         }
          if( this._Detail_type == null )
          {
             lEquals = lEquals && ( lTest._Detail_type == null );
@@ -161,6 +153,14 @@ public class ServiceData
          else
          {
             lEquals = lEquals && this._Detail_type.equals( lTest._Detail_type );
+         }
+         if( this._Detail_subfamily == null )
+         {
+            lEquals = lEquals && ( lTest._Detail_subfamily == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Detail_subfamily.equals( lTest._Detail_subfamily );
          }
          if( this._Invoice_oid == null )
          {
@@ -191,9 +191,9 @@ public class ServiceData
 
       result = 37*result + ((this._Detail_free != null) ? this._Detail_free.hashCode() : 0);
 
-      result = 37*result + ((this._Detail_subfamily != null) ? this._Detail_subfamily.hashCode() : 0);
-
       result = 37*result + ((this._Detail_type != null) ? this._Detail_type.hashCode() : 0);
+
+      result = 37*result + ((this._Detail_subfamily != null) ? this._Detail_subfamily.hashCode() : 0);
 
       result = 37*result + ((this._Invoice_oid != null) ? this._Invoice_oid.hashCode() : 0);
 

@@ -10,13 +10,13 @@ public interface JourneyRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.IJourney
 {
 
+   public java.lang.String getOid(  )
+      throws java.rmi.RemoteException;
+
    public java.lang.String getDescription(  )
       throws java.rmi.RemoteException;
 
    public void setDescription( java.lang.String newDescription )
-      throws java.rmi.RemoteException;
-
-   public java.lang.String getOid(  )
       throws java.rmi.RemoteException;
 
    public java.lang.String getName(  )

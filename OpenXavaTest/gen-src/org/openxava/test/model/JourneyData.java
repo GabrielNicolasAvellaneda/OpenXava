@@ -12,8 +12,8 @@ public class JourneyData
 {
 
    private static final long serialVersionUID = 1L;
-   private java.lang.String _Description;
    private java.lang.String oid;
+   private java.lang.String _Description;
    private java.lang.String _Name;
    private java.lang.String _AverageSpeed_oid;
 
@@ -23,8 +23,8 @@ public class JourneyData
 
    public JourneyData( JourneyData otherData )
    {
-      set_Description(otherData.get_Description());
       setOid(otherData.getOid());
+      set_Description(otherData.get_Description());
       set_Name(otherData.get_Name());
       set_AverageSpeed_oid(otherData.get_AverageSpeed_oid());
 
@@ -35,15 +35,6 @@ public class JourneyData
      return pk;
    }
 
-   public java.lang.String get_Description()
-   {
-      return this._Description;
-   }
-   public void set_Description( java.lang.String _Description )
-   {
-      this._Description = _Description;
-   }
-
    public java.lang.String getOid()
    {
       return this.oid;
@@ -51,6 +42,15 @@ public class JourneyData
    public void setOid( java.lang.String oid )
    {
       this.oid = oid;
+   }
+
+   public java.lang.String get_Description()
+   {
+      return this._Description;
+   }
+   public void set_Description( java.lang.String _Description )
+   {
+      this._Description = _Description;
    }
 
    public java.lang.String get_Name()
@@ -75,7 +75,7 @@ public class JourneyData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Description=" + get_Description() + " " + "oid=" + getOid() + " " + "_Name=" + get_Name() + " " + "_AverageSpeed_oid=" + get_AverageSpeed_oid());
+      str.append("oid=" + getOid() + " " + "_Description=" + get_Description() + " " + "_Name=" + get_Name() + " " + "_AverageSpeed_oid=" + get_AverageSpeed_oid());
       str.append('}');
 
       return(str.toString());
@@ -88,14 +88,6 @@ public class JourneyData
          JourneyData lTest = (JourneyData) pOther;
          boolean lEquals = true;
 
-         if( this._Description == null )
-         {
-            lEquals = lEquals && ( lTest._Description == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._Description.equals( lTest._Description );
-         }
          if( this.oid == null )
          {
             lEquals = lEquals && ( lTest.oid == null );
@@ -103,6 +95,14 @@ public class JourneyData
          else
          {
             lEquals = lEquals && this.oid.equals( lTest.oid );
+         }
+         if( this._Description == null )
+         {
+            lEquals = lEquals && ( lTest._Description == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Description.equals( lTest._Description );
          }
          if( this._Name == null )
          {
@@ -133,9 +133,9 @@ public class JourneyData
    {
       int result = 17;
 
-      result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
-
       result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
+
+      result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
 
       result = 37*result + ((this._Name != null) ? this._Name.hashCode() : 0);
 

@@ -18,11 +18,11 @@ public abstract class ShipmentCMP
       {
          dataHolder = new org.openxava.test.model.ShipmentData();
 
+         dataHolder.set_Type( get_Type() );
          dataHolder.set_Time( get_Time() );
          dataHolder.set_Description( get_Description() );
-         dataHolder.setNumber( getNumber() );
-         dataHolder.set_Type( get_Type() );
          dataHolder.setMode( getMode() );
+         dataHolder.setNumber( getNumber() );
          dataHolder.set_CustomerContactPerson_customer_number( get_CustomerContactPerson_customer_number() );
 
       }
@@ -94,11 +94,11 @@ public abstract class ShipmentCMP
       ShipmentValue = new org.openxava.test.model.ShipmentValue();
       try
          {
+            ShipmentValue.setType( getType() );
             ShipmentValue.setTime( getTime() );
             ShipmentValue.setDescription( getDescription() );
-            ShipmentValue.setNumber( getNumber() );
-            ShipmentValue.setType( getType() );
             ShipmentValue.setMode( getMode() );
+            ShipmentValue.setNumber( getNumber() );
             ShipmentValue.setCustomerContactPerson_customer_number( getCustomerContactPerson_customer_number() );
 
          }
@@ -115,9 +115,9 @@ public abstract class ShipmentCMP
 
 	  try
 	  {
+		 setType( valueHolder.getType() );
 		 setTime( valueHolder.getTime() );
 		 setDescription( valueHolder.getDescription() );
-		 setType( valueHolder.getType() );
 		 setCustomerContactPerson_customer_number( valueHolder.getCustomerContactPerson_customer_number() );
 
 	  }
@@ -129,6 +129,10 @@ public abstract class ShipmentCMP
 
 /* Value Objects END */
 
+   public abstract java.lang.String get_Type() ;
+
+   public abstract void set_Type( java.lang.String _Type ) ;
+
    public abstract java.sql.Timestamp get_Time() ;
 
    public abstract void set_Time( java.sql.Timestamp _Time ) ;
@@ -137,17 +141,13 @@ public abstract class ShipmentCMP
 
    public abstract void set_Description( java.lang.String _Description ) ;
 
-   public abstract int getNumber() ;
-
-   public abstract void setNumber( int number ) ;
-
-   public abstract java.lang.String get_Type() ;
-
-   public abstract void set_Type( java.lang.String _Type ) ;
-
    public abstract int getMode() ;
 
    public abstract void setMode( int mode ) ;
+
+   public abstract int getNumber() ;
+
+   public abstract void setNumber( int number ) ;
 
    public abstract int get_CustomerContactPerson_customer_number() ;
 

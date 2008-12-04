@@ -18,10 +18,10 @@ public class Office2Value
    private boolean receptionistHasBeenSet = false;
    private java.lang.String name;
    private boolean nameHasBeenSet = false;
-   private int number;
-   private boolean numberHasBeenSet = false;
    private int zoneNumber;
    private boolean zoneNumberHasBeenSet = false;
+   private int number;
+   private boolean numberHasBeenSet = false;
    private int officeManager_zoneNumber;
    private boolean officeManager_zoneNumberHasBeenSet = false;
    private int officeManager_officeNumber;
@@ -46,10 +46,10 @@ public class Office2Value
 	  receptionistHasBeenSet = true;
 	  this.name = otherValue.name;
 	  nameHasBeenSet = true;
-	  this.number = otherValue.number;
-	  numberHasBeenSet = true;
 	  this.zoneNumber = otherValue.zoneNumber;
 	  zoneNumberHasBeenSet = true;
+	  this.number = otherValue.number;
+	  numberHasBeenSet = true;
 	  this.officeManager_zoneNumber = otherValue.officeManager_zoneNumber;
 	  officeManager_zoneNumberHasBeenSet = true;
 	  this.officeManager_officeNumber = otherValue.officeManager_officeNumber;
@@ -92,20 +92,6 @@ public class Office2Value
    public boolean nameHasBeenSet(){
 	  return nameHasBeenSet;
    }
-   public int getNumber()
-   {
-	  return this.number;
-   }
-
-   public void setNumber( int number )
-   {
-	  this.number = number;
-	  numberHasBeenSet = true;
-   }
-
-   public boolean numberHasBeenSet(){
-	  return numberHasBeenSet;
-   }
    public int getZoneNumber()
    {
 	  return this.zoneNumber;
@@ -119,6 +105,20 @@ public class Office2Value
 
    public boolean zoneNumberHasBeenSet(){
 	  return zoneNumberHasBeenSet;
+   }
+   public int getNumber()
+   {
+	  return this.number;
+   }
+
+   public void setNumber( int number )
+   {
+	  this.number = number;
+	  numberHasBeenSet = true;
+   }
+
+   public boolean numberHasBeenSet(){
+	  return numberHasBeenSet;
    }
    public int getOfficeManager_zoneNumber()
    {
@@ -209,7 +209,7 @@ public class Office2Value
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("receptionist=" + getReceptionist() + " " + "name=" + getName() + " " + "number=" + getNumber() + " " + "zoneNumber=" + getZoneNumber() + " " + "officeManager_zoneNumber=" + getOfficeManager_zoneNumber() + " " + "officeManager_officeNumber=" + getOfficeManager_officeNumber() + " " + "officeManager_number=" + getOfficeManager_number() + " " + "defaultCarrier_number=" + getDefaultCarrier_number() + " " + "mainWarehouse_zoneNumber=" + getMainWarehouse_zoneNumber() + " " + "mainWarehouse_number=" + getMainWarehouse_number());
+	  str.append("receptionist=" + getReceptionist() + " " + "name=" + getName() + " " + "zoneNumber=" + getZoneNumber() + " " + "number=" + getNumber() + " " + "officeManager_zoneNumber=" + getOfficeManager_zoneNumber() + " " + "officeManager_officeNumber=" + getOfficeManager_officeNumber() + " " + "officeManager_number=" + getOfficeManager_number() + " " + "defaultCarrier_number=" + getDefaultCarrier_number() + " " + "mainWarehouse_zoneNumber=" + getMainWarehouse_zoneNumber() + " " + "mainWarehouse_number=" + getMainWarehouse_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -223,8 +223,8 @@ public class Office2Value
    protected boolean hasIdentity()
    {
 	  boolean ret = true;
-	  ret = ret && numberHasBeenSet;
 	  ret = ret && zoneNumberHasBeenSet;
+	  ret = ret && numberHasBeenSet;
 	  return ret;
    }
 
@@ -238,8 +238,8 @@ public class Office2Value
 		 Office2Value that = (Office2Value) other;
 		 if ( ! that.hasIdentity() ) return false;
 		 boolean lEquals = true;
-		 lEquals = lEquals && this.number == that.number;
 		 lEquals = lEquals && this.zoneNumber == that.zoneNumber;
+		 lEquals = lEquals && this.number == that.number;
 
 		 lEquals = lEquals && isIdentical(that);
 
@@ -301,9 +301,9 @@ public class Office2Value
 
       result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);
 
-      result = 37*result + (int) number;
-
       result = 37*result + (int) zoneNumber;
+
+      result = 37*result + (int) number;
 
       result = 37*result + (int) officeManager_zoneNumber;
 

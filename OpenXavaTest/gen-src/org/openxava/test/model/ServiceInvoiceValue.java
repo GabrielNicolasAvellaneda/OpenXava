@@ -16,14 +16,14 @@ public class ServiceInvoiceValue
 
    private java.math.BigDecimal amount;
    private boolean amountHasBeenSet = false;
-   private java.lang.String description;
-   private boolean descriptionHasBeenSet = false;
-   private java.lang.String oid;
-   private boolean oidHasBeenSet = false;
-   private int number;
-   private boolean numberHasBeenSet = false;
    private int year;
    private boolean yearHasBeenSet = false;
+   private java.lang.String oid;
+   private boolean oidHasBeenSet = false;
+   private java.lang.String description;
+   private boolean descriptionHasBeenSet = false;
+   private int number;
+   private boolean numberHasBeenSet = false;
 
    public ServiceInvoiceValue()
    {
@@ -34,14 +34,14 @@ public class ServiceInvoiceValue
    {
 	  this.amount = otherValue.amount;
 	  amountHasBeenSet = true;
-	  this.description = otherValue.description;
-	  descriptionHasBeenSet = true;
-	  this.oid = otherValue.oid;
-	  oidHasBeenSet = true;
-	  this.number = otherValue.number;
-	  numberHasBeenSet = true;
 	  this.year = otherValue.year;
 	  yearHasBeenSet = true;
+	  this.oid = otherValue.oid;
+	  oidHasBeenSet = true;
+	  this.description = otherValue.description;
+	  descriptionHasBeenSet = true;
+	  this.number = otherValue.number;
+	  numberHasBeenSet = true;
    }
 
    public java.math.BigDecimal getAmount()
@@ -58,19 +58,19 @@ public class ServiceInvoiceValue
    public boolean amountHasBeenSet(){
 	  return amountHasBeenSet;
    }
-   public java.lang.String getDescription()
+   public int getYear()
    {
-	  return this.description;
+	  return this.year;
    }
 
-   public void setDescription( java.lang.String description )
+   public void setYear( int year )
    {
-	  this.description = description;
-	  descriptionHasBeenSet = true;
+	  this.year = year;
+	  yearHasBeenSet = true;
    }
 
-   public boolean descriptionHasBeenSet(){
-	  return descriptionHasBeenSet;
+   public boolean yearHasBeenSet(){
+	  return yearHasBeenSet;
    }
    public java.lang.String getOid()
    {
@@ -86,6 +86,20 @@ public class ServiceInvoiceValue
    public boolean oidHasBeenSet(){
 	  return oidHasBeenSet;
    }
+   public java.lang.String getDescription()
+   {
+	  return this.description;
+   }
+
+   public void setDescription( java.lang.String description )
+   {
+	  this.description = description;
+	  descriptionHasBeenSet = true;
+   }
+
+   public boolean descriptionHasBeenSet(){
+	  return descriptionHasBeenSet;
+   }
    public int getNumber()
    {
 	  return this.number;
@@ -100,26 +114,12 @@ public class ServiceInvoiceValue
    public boolean numberHasBeenSet(){
 	  return numberHasBeenSet;
    }
-   public int getYear()
-   {
-	  return this.year;
-   }
-
-   public void setYear( int year )
-   {
-	  this.year = year;
-	  yearHasBeenSet = true;
-   }
-
-   public boolean yearHasBeenSet(){
-	  return yearHasBeenSet;
-   }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("amount=" + getAmount() + " " + "description=" + getDescription() + " " + "oid=" + getOid() + " " + "number=" + getNumber() + " " + "year=" + getYear());
+	  str.append("amount=" + getAmount() + " " + "year=" + getYear() + " " + "oid=" + getOid() + " " + "description=" + getDescription() + " " + "number=" + getNumber());
 	  str.append('}');
 
 	  return(str.toString());
@@ -180,6 +180,7 @@ public class ServiceInvoiceValue
 		 {
 			lEquals = lEquals && this.amount.equals( that.amount );
 		 }
+		 lEquals = lEquals && this.year == that.year;
 		 if( this.description == null )
 		 {
 			lEquals = lEquals && ( that.description == null );
@@ -189,7 +190,6 @@ public class ServiceInvoiceValue
 			lEquals = lEquals && this.description.equals( that.description );
 		 }
 		 lEquals = lEquals && this.number == that.number;
-		 lEquals = lEquals && this.year == that.year;
 
 		 return lEquals;
 	  }
@@ -203,13 +203,13 @@ public class ServiceInvoiceValue
 	  int result = 17;
       result = 37*result + ((this.amount != null) ? this.amount.hashCode() : 0);
 
-      result = 37*result + ((this.description != null) ? this.description.hashCode() : 0);
+      result = 37*result + (int) year;
 
       result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
 
-      result = 37*result + (int) number;
+      result = 37*result + ((this.description != null) ? this.description.hashCode() : 0);
 
-      result = 37*result + (int) year;
+      result = 37*result + (int) number;
 
 	  return result;
    }

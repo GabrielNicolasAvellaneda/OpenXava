@@ -13,8 +13,8 @@ public class DrivingLicenceData
 
    private static final long serialVersionUID = 1L;
    private int level;
-   private java.lang.String _Description;
    private java.lang.String type;
+   private java.lang.String _Description;
 
    public DrivingLicenceData()
    {
@@ -23,8 +23,8 @@ public class DrivingLicenceData
    public DrivingLicenceData( DrivingLicenceData otherData )
    {
       setLevel(otherData.getLevel());
-      set_Description(otherData.get_Description());
       setType(otherData.getType());
+      set_Description(otherData.get_Description());
 
    }
 
@@ -42,15 +42,6 @@ public class DrivingLicenceData
       this.level = level;
    }
 
-   public java.lang.String get_Description()
-   {
-      return this._Description;
-   }
-   public void set_Description( java.lang.String _Description )
-   {
-      this._Description = _Description;
-   }
-
    public java.lang.String getType()
    {
       return this.type;
@@ -60,11 +51,20 @@ public class DrivingLicenceData
       this.type = type;
    }
 
+   public java.lang.String get_Description()
+   {
+      return this._Description;
+   }
+   public void set_Description( java.lang.String _Description )
+   {
+      this._Description = _Description;
+   }
+
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("level=" + getLevel() + " " + "_Description=" + get_Description() + " " + "type=" + getType());
+      str.append("level=" + getLevel() + " " + "type=" + getType() + " " + "_Description=" + get_Description());
       str.append('}');
 
       return(str.toString());
@@ -78,14 +78,6 @@ public class DrivingLicenceData
          boolean lEquals = true;
 
          lEquals = lEquals && this.level == lTest.level;
-         if( this._Description == null )
-         {
-            lEquals = lEquals && ( lTest._Description == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._Description.equals( lTest._Description );
-         }
          if( this.type == null )
          {
             lEquals = lEquals && ( lTest.type == null );
@@ -93,6 +85,14 @@ public class DrivingLicenceData
          else
          {
             lEquals = lEquals && this.type.equals( lTest.type );
+         }
+         if( this._Description == null )
+         {
+            lEquals = lEquals && ( lTest._Description == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Description.equals( lTest._Description );
          }
 
          return lEquals;
@@ -109,9 +109,9 @@ public class DrivingLicenceData
 
       result = 37*result + (int) level;
 
-      result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
-
       result = 37*result + ((this.type != null) ? this.type.hashCode() : 0);
+
+      result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
 
       return result;
    }

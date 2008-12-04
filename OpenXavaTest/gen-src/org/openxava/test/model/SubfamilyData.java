@@ -12,11 +12,11 @@ public class SubfamilyData
 {
 
    private static final long serialVersionUID = 1L;
-   private java.lang.String _Description;
+   private java.lang.Integer _FamilyNumber;
    private java.lang.String oid;
    private java.lang.String _Remarks;
+   private java.lang.String _Description;
    private java.lang.Integer _Number;
-   private java.lang.Integer _FamilyNumber;
 
    public SubfamilyData()
    {
@@ -24,11 +24,11 @@ public class SubfamilyData
 
    public SubfamilyData( SubfamilyData otherData )
    {
-      set_Description(otherData.get_Description());
+      set_FamilyNumber(otherData.get_FamilyNumber());
       setOid(otherData.getOid());
       set_Remarks(otherData.get_Remarks());
+      set_Description(otherData.get_Description());
       set_Number(otherData.get_Number());
-      set_FamilyNumber(otherData.get_FamilyNumber());
 
    }
 
@@ -37,13 +37,13 @@ public class SubfamilyData
      return pk;
    }
 
-   public java.lang.String get_Description()
+   public java.lang.Integer get_FamilyNumber()
    {
-      return this._Description;
+      return this._FamilyNumber;
    }
-   public void set_Description( java.lang.String _Description )
+   public void set_FamilyNumber( java.lang.Integer _FamilyNumber )
    {
-      this._Description = _Description;
+      this._FamilyNumber = _FamilyNumber;
    }
 
    public java.lang.String getOid()
@@ -64,6 +64,15 @@ public class SubfamilyData
       this._Remarks = _Remarks;
    }
 
+   public java.lang.String get_Description()
+   {
+      return this._Description;
+   }
+   public void set_Description( java.lang.String _Description )
+   {
+      this._Description = _Description;
+   }
+
    public java.lang.Integer get_Number()
    {
       return this._Number;
@@ -73,20 +82,11 @@ public class SubfamilyData
       this._Number = _Number;
    }
 
-   public java.lang.Integer get_FamilyNumber()
-   {
-      return this._FamilyNumber;
-   }
-   public void set_FamilyNumber( java.lang.Integer _FamilyNumber )
-   {
-      this._FamilyNumber = _FamilyNumber;
-   }
-
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Description=" + get_Description() + " " + "oid=" + getOid() + " " + "_Remarks=" + get_Remarks() + " " + "_Number=" + get_Number() + " " + "_FamilyNumber=" + get_FamilyNumber());
+      str.append("_FamilyNumber=" + get_FamilyNumber() + " " + "oid=" + getOid() + " " + "_Remarks=" + get_Remarks() + " " + "_Description=" + get_Description() + " " + "_Number=" + get_Number());
       str.append('}');
 
       return(str.toString());
@@ -99,13 +99,13 @@ public class SubfamilyData
          SubfamilyData lTest = (SubfamilyData) pOther;
          boolean lEquals = true;
 
-         if( this._Description == null )
+         if( this._FamilyNumber == null )
          {
-            lEquals = lEquals && ( lTest._Description == null );
+            lEquals = lEquals && ( lTest._FamilyNumber == null );
          }
          else
          {
-            lEquals = lEquals && this._Description.equals( lTest._Description );
+            lEquals = lEquals && this._FamilyNumber.equals( lTest._FamilyNumber );
          }
          if( this.oid == null )
          {
@@ -123,6 +123,14 @@ public class SubfamilyData
          {
             lEquals = lEquals && this._Remarks.equals( lTest._Remarks );
          }
+         if( this._Description == null )
+         {
+            lEquals = lEquals && ( lTest._Description == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Description.equals( lTest._Description );
+         }
          if( this._Number == null )
          {
             lEquals = lEquals && ( lTest._Number == null );
@@ -130,14 +138,6 @@ public class SubfamilyData
          else
          {
             lEquals = lEquals && this._Number.equals( lTest._Number );
-         }
-         if( this._FamilyNumber == null )
-         {
-            lEquals = lEquals && ( lTest._FamilyNumber == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._FamilyNumber.equals( lTest._FamilyNumber );
          }
 
          return lEquals;
@@ -152,15 +152,15 @@ public class SubfamilyData
    {
       int result = 17;
 
-      result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
+      result = 37*result + ((this._FamilyNumber != null) ? this._FamilyNumber.hashCode() : 0);
 
       result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
 
       result = 37*result + ((this._Remarks != null) ? this._Remarks.hashCode() : 0);
 
-      result = 37*result + ((this._Number != null) ? this._Number.hashCode() : 0);
+      result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
 
-      result = 37*result + ((this._FamilyNumber != null) ? this._FamilyNumber.hashCode() : 0);
+      result = 37*result + ((this._Number != null) ? this._Number.hashCode() : 0);
 
       return result;
    }

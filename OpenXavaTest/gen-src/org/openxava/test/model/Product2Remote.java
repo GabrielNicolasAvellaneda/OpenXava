@@ -16,6 +16,12 @@ public interface Product2Remote
    public void setPhotos( java.lang.String newPhotos )
       throws java.rmi.RemoteException;
 
+   public java.math.BigDecimal getUnitPrice(  )
+      throws java.rmi.RemoteException;
+
+   public void setUnitPrice( java.math.BigDecimal newUnitPrice )
+      throws java.rmi.RemoteException;
+
    public java.lang.String getDescription(  )
       throws java.rmi.RemoteException;
 
@@ -25,13 +31,28 @@ public interface Product2Remote
    public java.math.BigDecimal getUnitPriceInPesetas(  )
       throws java.rmi.RemoteException;
 
-   public java.math.BigDecimal getUnitPrice(  )
-      throws java.rmi.RemoteException;
-
-   public void setUnitPrice( java.math.BigDecimal newUnitPrice )
-      throws java.rmi.RemoteException;
-
    public long getNumber(  )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.IWarehouse getWarehouse(  )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.WarehouseRemote getWarehouseRemote(  )
+      throws java.rmi.RemoteException;
+
+   public void setWarehouse( org.openxava.test.model.IWarehouse newWarehouse )
+      throws java.rmi.RemoteException;
+
+   public org.openxava.test.model.WarehouseKey getWarehouseKey(  )
+      throws java.rmi.RemoteException;
+
+   public void setWarehouseKey( org.openxava.test.model.WarehouseKey key )
+      throws java.rmi.RemoteException;
+
+   public int getWarehouse_zoneNumber(  )
+      throws java.rmi.RemoteException;
+
+   public java.lang.Integer getWarehouse_number(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.IFamily2 getFamily(  )
@@ -68,27 +89,6 @@ public interface Product2Remote
       throws java.rmi.RemoteException;
 
    public int getSubfamily_number(  )
-      throws java.rmi.RemoteException;
-
-   public org.openxava.test.model.IWarehouse getWarehouse(  )
-      throws java.rmi.RemoteException;
-
-   public org.openxava.test.model.WarehouseRemote getWarehouseRemote(  )
-      throws java.rmi.RemoteException;
-
-   public void setWarehouse( org.openxava.test.model.IWarehouse newWarehouse )
-      throws java.rmi.RemoteException;
-
-   public org.openxava.test.model.WarehouseKey getWarehouseKey(  )
-      throws java.rmi.RemoteException;
-
-   public void setWarehouseKey( org.openxava.test.model.WarehouseKey key )
-      throws java.rmi.RemoteException;
-
-   public int getWarehouse_zoneNumber(  )
-      throws java.rmi.RemoteException;
-
-   public java.lang.Integer getWarehouse_number(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.IFormula getFormula(  )

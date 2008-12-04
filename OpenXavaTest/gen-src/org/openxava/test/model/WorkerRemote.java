@@ -10,7 +10,10 @@ public interface WorkerRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.IWorker
 {
 
-   public java.lang.Integer getId(  )
+   public java.lang.String getFullName(  )
+      throws java.rmi.RemoteException;
+
+   public void setFullName( java.lang.String newFullName )
       throws java.rmi.RemoteException;
 
    public java.lang.String getNickName(  )
@@ -19,10 +22,7 @@ public interface WorkerRemote
    public void setNickName( java.lang.String newNickName )
       throws java.rmi.RemoteException;
 
-   public java.lang.String getFullName(  )
-      throws java.rmi.RemoteException;
-
-   public void setFullName( java.lang.String newFullName )
+   public java.lang.Integer getId(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.WorkerData getData(  )

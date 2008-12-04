@@ -10,13 +10,13 @@ public interface FormulaRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.IFormula
 {
 
+   public java.lang.String getOid(  )
+      throws java.rmi.RemoteException;
+
    public java.lang.String getRecipe(  )
       throws java.rmi.RemoteException;
 
    public void setRecipe( java.lang.String newRecipe )
-      throws java.rmi.RemoteException;
-
-   public java.lang.String getOid(  )
       throws java.rmi.RemoteException;
 
    public java.lang.String getName(  )

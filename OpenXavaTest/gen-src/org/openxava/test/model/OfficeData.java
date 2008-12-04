@@ -14,8 +14,8 @@ public class OfficeData
    private static final long serialVersionUID = 1L;
    private java.lang.Integer _Receptionist;
    private java.lang.String _Name;
-   private int number;
    private java.lang.Integer _ZoneNumber;
+   private int number;
    private int _OfficeManager_number;
    private java.lang.Integer _DefaultCarrier_number;
    private java.lang.Integer _MainWarehouse_number;
@@ -28,8 +28,8 @@ public class OfficeData
    {
       set_Receptionist(otherData.get_Receptionist());
       set_Name(otherData.get_Name());
-      setNumber(otherData.getNumber());
       set_ZoneNumber(otherData.get_ZoneNumber());
+      setNumber(otherData.getNumber());
       set_OfficeManager_number(otherData.get_OfficeManager_number());
       set_DefaultCarrier_number(otherData.get_DefaultCarrier_number());
       set_MainWarehouse_number(otherData.get_MainWarehouse_number());
@@ -59,15 +59,6 @@ public class OfficeData
       this._Name = _Name;
    }
 
-   public int getNumber()
-   {
-      return this.number;
-   }
-   public void setNumber( int number )
-   {
-      this.number = number;
-   }
-
    public java.lang.Integer get_ZoneNumber()
    {
       return this._ZoneNumber;
@@ -75,6 +66,15 @@ public class OfficeData
    public void set_ZoneNumber( java.lang.Integer _ZoneNumber )
    {
       this._ZoneNumber = _ZoneNumber;
+   }
+
+   public int getNumber()
+   {
+      return this.number;
+   }
+   public void setNumber( int number )
+   {
+      this.number = number;
    }
 
    public int get_OfficeManager_number()
@@ -108,7 +108,7 @@ public class OfficeData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Receptionist=" + get_Receptionist() + " " + "_Name=" + get_Name() + " " + "number=" + getNumber() + " " + "_ZoneNumber=" + get_ZoneNumber() + " " + "_OfficeManager_number=" + get_OfficeManager_number() + " " + "_DefaultCarrier_number=" + get_DefaultCarrier_number() + " " + "_MainWarehouse_number=" + get_MainWarehouse_number());
+      str.append("_Receptionist=" + get_Receptionist() + " " + "_Name=" + get_Name() + " " + "_ZoneNumber=" + get_ZoneNumber() + " " + "number=" + getNumber() + " " + "_OfficeManager_number=" + get_OfficeManager_number() + " " + "_DefaultCarrier_number=" + get_DefaultCarrier_number() + " " + "_MainWarehouse_number=" + get_MainWarehouse_number());
       str.append('}');
 
       return(str.toString());
@@ -137,7 +137,6 @@ public class OfficeData
          {
             lEquals = lEquals && this._Name.equals( lTest._Name );
          }
-         lEquals = lEquals && this.number == lTest.number;
          if( this._ZoneNumber == null )
          {
             lEquals = lEquals && ( lTest._ZoneNumber == null );
@@ -146,6 +145,7 @@ public class OfficeData
          {
             lEquals = lEquals && this._ZoneNumber.equals( lTest._ZoneNumber );
          }
+         lEquals = lEquals && this.number == lTest.number;
          lEquals = lEquals && this._OfficeManager_number == lTest._OfficeManager_number;
          if( this._DefaultCarrier_number == null )
          {
@@ -180,9 +180,9 @@ public class OfficeData
 
       result = 37*result + ((this._Name != null) ? this._Name.hashCode() : 0);
 
-      result = 37*result + (int) number;
-
       result = 37*result + ((this._ZoneNumber != null) ? this._ZoneNumber.hashCode() : 0);
+
+      result = 37*result + (int) number;
 
       result = 37*result + (int) _OfficeManager_number;
 

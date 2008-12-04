@@ -10,13 +10,13 @@ public interface SubfamilyRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.ISubfamily
 {
 
-   public java.lang.String getDescription(  )
-      throws java.rmi.RemoteException;
-
-   public void setDescription( java.lang.String newDescription )
-      throws java.rmi.RemoteException;
-
    public java.lang.String getFamily(  )
+      throws java.rmi.RemoteException;
+
+   public int getFamilyNumber(  )
+      throws java.rmi.RemoteException;
+
+   public void setFamilyNumber( int newFamilyNumber )
       throws java.rmi.RemoteException;
 
    public java.lang.String getOid(  )
@@ -28,19 +28,19 @@ public interface SubfamilyRemote
    public void setRemarks( java.lang.String newRemarks )
       throws java.rmi.RemoteException;
 
-   public int getNumber(  )
+   public java.lang.String getDescription(  )
       throws java.rmi.RemoteException;
 
-   public void setNumber( int newNumber )
+   public void setDescription( java.lang.String newDescription )
       throws java.rmi.RemoteException;
 
    public java.lang.String getRemarksDB(  )
       throws java.rmi.RemoteException;
 
-   public int getFamilyNumber(  )
+   public int getNumber(  )
       throws java.rmi.RemoteException;
 
-   public void setFamilyNumber( int newFamilyNumber )
+   public void setNumber( int newNumber )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.SubfamilyData getData(  )

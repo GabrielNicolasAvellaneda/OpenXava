@@ -17,25 +17,21 @@ public class ShipmentKey
 
    private static final long serialVersionUID = 1L;
 
-   public int number;
    public java.lang.String _Type;
    public int mode;
+   public int number;
 
    public ShipmentKey()
    {
    }
 
-   public ShipmentKey( int number,java.lang.String _Type,int mode )
+   public ShipmentKey( java.lang.String _Type,int mode,int number )
    {
-      this.number = number;
       this._Type = _Type;
       this.mode = mode;
+      this.number = number;
    }
 
-   public int getNumber()
-   {
-      return number;
-   }
    public java.lang.String get_Type()
    {
       return _Type;
@@ -44,11 +40,11 @@ public class ShipmentKey
    {
       return mode;
    }
-
-   public void setNumber(int number)
+   public int getNumber()
    {
-      this.number = number;
+      return number;
    }
+
    public void set_Type(java.lang.String _Type)
    {
       this._Type = _Type;
@@ -57,13 +53,17 @@ public class ShipmentKey
    {
       this.mode = mode;
    }
+   public void setNumber(int number)
+   {
+      this.number = number;
+   }
 
    public int hashCode()
    {
       int _hashCode = 0;
-         _hashCode += (int)this.number;
          if (this._Type != null) _hashCode += this._Type.hashCode();
          _hashCode += (int)this.mode;
+         _hashCode += (int)this.number;
 
       return _hashCode;
    }
@@ -82,7 +82,6 @@ public class ShipmentKey
       }
       else
       {
-         eq = eq && this.number == pk.number;
          if( this._Type != null )
          {
             eq = eq && this._Type.equals( pk.get_Type() );
@@ -92,6 +91,7 @@ public class ShipmentKey
             eq = eq && ( pk.get_Type() == null );
          }
          eq = eq && this.mode == pk.mode;
+         eq = eq && this.number == pk.number;
       }
 
       return eq;

@@ -13,13 +13,13 @@ public interface DrivingLicenceRemote
    public int getLevel(  )
       throws java.rmi.RemoteException;
 
+   public java.lang.String getType(  )
+      throws java.rmi.RemoteException;
+
    public java.lang.String getDescription(  )
       throws java.rmi.RemoteException;
 
    public void setDescription( java.lang.String newDescription )
-      throws java.rmi.RemoteException;
-
-   public java.lang.String getType(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.DrivingLicenceData getData(  )

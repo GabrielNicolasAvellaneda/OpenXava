@@ -12,9 +12,9 @@ public class CommentData
 {
 
    private static final long serialVersionUID = 1L;
-   private java.lang.Integer id;
    private java.lang.String _Comment;
    private java.sql.Date _Date;
+   private java.lang.Integer id;
    private java.lang.String _Issue_id;
 
    public CommentData()
@@ -23,9 +23,9 @@ public class CommentData
 
    public CommentData( CommentData otherData )
    {
-      setId(otherData.getId());
       set_Comment(otherData.get_Comment());
       set_Date(otherData.get_Date());
+      setId(otherData.getId());
       set_Issue_id(otherData.get_Issue_id());
 
    }
@@ -33,15 +33,6 @@ public class CommentData
    public org.openxava.test.model.CommentKey getPrimaryKey() {
      org.openxava.test.model.CommentKey pk = new org.openxava.test.model.CommentKey(this.getId());
      return pk;
-   }
-
-   public java.lang.Integer getId()
-   {
-      return this.id;
-   }
-   public void setId( java.lang.Integer id )
-   {
-      this.id = id;
    }
 
    public java.lang.String get_Comment()
@@ -62,6 +53,15 @@ public class CommentData
       this._Date = _Date;
    }
 
+   public java.lang.Integer getId()
+   {
+      return this.id;
+   }
+   public void setId( java.lang.Integer id )
+   {
+      this.id = id;
+   }
+
    public java.lang.String get_Issue_id()
    {
       return this._Issue_id;
@@ -75,7 +75,7 @@ public class CommentData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("id=" + getId() + " " + "_Comment=" + get_Comment() + " " + "_Date=" + get_Date() + " " + "_Issue_id=" + get_Issue_id());
+      str.append("_Comment=" + get_Comment() + " " + "_Date=" + get_Date() + " " + "id=" + getId() + " " + "_Issue_id=" + get_Issue_id());
       str.append('}');
 
       return(str.toString());
@@ -88,14 +88,6 @@ public class CommentData
          CommentData lTest = (CommentData) pOther;
          boolean lEquals = true;
 
-         if( this.id == null )
-         {
-            lEquals = lEquals && ( lTest.id == null );
-         }
-         else
-         {
-            lEquals = lEquals && this.id.equals( lTest.id );
-         }
          if( this._Comment == null )
          {
             lEquals = lEquals && ( lTest._Comment == null );
@@ -111,6 +103,14 @@ public class CommentData
          else
          {
             lEquals = lEquals && this._Date.equals( lTest._Date );
+         }
+         if( this.id == null )
+         {
+            lEquals = lEquals && ( lTest.id == null );
+         }
+         else
+         {
+            lEquals = lEquals && this.id.equals( lTest.id );
          }
          if( this._Issue_id == null )
          {
@@ -133,11 +133,11 @@ public class CommentData
    {
       int result = 17;
 
-      result = 37*result + ((this.id != null) ? this.id.hashCode() : 0);
-
       result = 37*result + ((this._Comment != null) ? this._Comment.hashCode() : 0);
 
       result = 37*result + ((this._Date != null) ? this._Date.hashCode() : 0);
+
+      result = 37*result + ((this.id != null) ? this.id.hashCode() : 0);
 
       result = 37*result + ((this._Issue_id != null) ? this._Issue_id.hashCode() : 0);
 

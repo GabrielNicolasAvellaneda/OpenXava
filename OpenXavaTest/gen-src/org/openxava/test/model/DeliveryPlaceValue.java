@@ -14,14 +14,14 @@ public class DeliveryPlaceValue
 
    private static final long serialVersionUID = 1L;
 
-   private java.lang.String address;
-   private boolean addressHasBeenSet = false;
    private int oid;
    private boolean oidHasBeenSet = false;
-   private java.lang.String name;
-   private boolean nameHasBeenSet = false;
    private java.lang.String remarks;
    private boolean remarksHasBeenSet = false;
+   private java.lang.String address;
+   private boolean addressHasBeenSet = false;
+   private java.lang.String name;
+   private boolean nameHasBeenSet = false;
    private int customer_number;
    private boolean customer_numberHasBeenSet = false;
    private int preferredWarehouse_zoneNumber;
@@ -36,14 +36,14 @@ public class DeliveryPlaceValue
    //TODO Cloneable is better than this !
    public DeliveryPlaceValue( DeliveryPlaceValue otherValue )
    {
-	  this.address = otherValue.address;
-	  addressHasBeenSet = true;
 	  this.oid = otherValue.oid;
 	  oidHasBeenSet = true;
-	  this.name = otherValue.name;
-	  nameHasBeenSet = true;
 	  this.remarks = otherValue.remarks;
 	  remarksHasBeenSet = true;
+	  this.address = otherValue.address;
+	  addressHasBeenSet = true;
+	  this.name = otherValue.name;
+	  nameHasBeenSet = true;
 	  this.customer_number = otherValue.customer_number;
 	  customer_numberHasBeenSet = true;
 	  this.preferredWarehouse_zoneNumber = otherValue.preferredWarehouse_zoneNumber;
@@ -52,20 +52,6 @@ public class DeliveryPlaceValue
 	  preferredWarehouse_numberHasBeenSet = true;
    }
 
-   public java.lang.String getAddress()
-   {
-	  return this.address;
-   }
-
-   public void setAddress( java.lang.String address )
-   {
-	  this.address = address;
-	  addressHasBeenSet = true;
-   }
-
-   public boolean addressHasBeenSet(){
-	  return addressHasBeenSet;
-   }
    public int getOid()
    {
 	  return this.oid;
@@ -80,20 +66,6 @@ public class DeliveryPlaceValue
    public boolean oidHasBeenSet(){
 	  return oidHasBeenSet;
    }
-   public java.lang.String getName()
-   {
-	  return this.name;
-   }
-
-   public void setName( java.lang.String name )
-   {
-	  this.name = name;
-	  nameHasBeenSet = true;
-   }
-
-   public boolean nameHasBeenSet(){
-	  return nameHasBeenSet;
-   }
    public java.lang.String getRemarks()
    {
 	  return this.remarks;
@@ -107,6 +79,34 @@ public class DeliveryPlaceValue
 
    public boolean remarksHasBeenSet(){
 	  return remarksHasBeenSet;
+   }
+   public java.lang.String getAddress()
+   {
+	  return this.address;
+   }
+
+   public void setAddress( java.lang.String address )
+   {
+	  this.address = address;
+	  addressHasBeenSet = true;
+   }
+
+   public boolean addressHasBeenSet(){
+	  return addressHasBeenSet;
+   }
+   public java.lang.String getName()
+   {
+	  return this.name;
+   }
+
+   public void setName( java.lang.String name )
+   {
+	  this.name = name;
+	  nameHasBeenSet = true;
+   }
+
+   public boolean nameHasBeenSet(){
+	  return nameHasBeenSet;
    }
    public int getCustomer_number()
    {
@@ -155,7 +155,7 @@ public class DeliveryPlaceValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("address=" + getAddress() + " " + "oid=" + getOid() + " " + "name=" + getName() + " " + "remarks=" + getRemarks() + " " + "customer_number=" + getCustomer_number() + " " + "preferredWarehouse_zoneNumber=" + getPreferredWarehouse_zoneNumber() + " " + "preferredWarehouse_number=" + getPreferredWarehouse_number());
+	  str.append("oid=" + getOid() + " " + "remarks=" + getRemarks() + " " + "address=" + getAddress() + " " + "name=" + getName() + " " + "customer_number=" + getCustomer_number() + " " + "preferredWarehouse_zoneNumber=" + getPreferredWarehouse_zoneNumber() + " " + "preferredWarehouse_number=" + getPreferredWarehouse_number());
 	  str.append('}');
 
 	  return(str.toString());
@@ -201,6 +201,14 @@ public class DeliveryPlaceValue
 	  {
 		 DeliveryPlaceValue that = (DeliveryPlaceValue) other;
 		 boolean lEquals = true;
+		 if( this.remarks == null )
+		 {
+			lEquals = lEquals && ( that.remarks == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.remarks.equals( that.remarks );
+		 }
 		 if( this.address == null )
 		 {
 			lEquals = lEquals && ( that.address == null );
@@ -216,14 +224,6 @@ public class DeliveryPlaceValue
 		 else
 		 {
 			lEquals = lEquals && this.name.equals( that.name );
-		 }
-		 if( this.remarks == null )
-		 {
-			lEquals = lEquals && ( that.remarks == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.remarks.equals( that.remarks );
 		 }
 		 lEquals = lEquals && this.customer_number == that.customer_number;
 		 lEquals = lEquals && this.preferredWarehouse_zoneNumber == that.preferredWarehouse_zoneNumber;
@@ -246,13 +246,13 @@ public class DeliveryPlaceValue
 
    public int hashCode(){
 	  int result = 17;
-      result = 37*result + ((this.address != null) ? this.address.hashCode() : 0);
-
       result = 37*result + (int) oid;
 
-      result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);
-
       result = 37*result + ((this.remarks != null) ? this.remarks.hashCode() : 0);
+
+      result = 37*result + ((this.address != null) ? this.address.hashCode() : 0);
+
+      result = 37*result + ((this.name != null) ? this.name.hashCode() : 0);
 
       result = 37*result + (int) customer_number;
 

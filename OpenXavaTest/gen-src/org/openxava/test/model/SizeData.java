@@ -12,8 +12,8 @@ public class SizeData
 {
 
    private static final long serialVersionUID = 1L;
-   private int id;
    private java.lang.String _Name;
+   private int id;
 
    public SizeData()
    {
@@ -21,23 +21,14 @@ public class SizeData
 
    public SizeData( SizeData otherData )
    {
-      setId(otherData.getId());
       set_Name(otherData.get_Name());
+      setId(otherData.getId());
 
    }
 
    public org.openxava.test.model.SizeKey getPrimaryKey() {
      org.openxava.test.model.SizeKey pk = new org.openxava.test.model.SizeKey(this.getId());
      return pk;
-   }
-
-   public int getId()
-   {
-      return this.id;
-   }
-   public void setId( int id )
-   {
-      this.id = id;
    }
 
    public java.lang.String get_Name()
@@ -49,11 +40,20 @@ public class SizeData
       this._Name = _Name;
    }
 
+   public int getId()
+   {
+      return this.id;
+   }
+   public void setId( int id )
+   {
+      this.id = id;
+   }
+
    public String toString()
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("id=" + getId() + " " + "_Name=" + get_Name());
+      str.append("_Name=" + get_Name() + " " + "id=" + getId());
       str.append('}');
 
       return(str.toString());
@@ -66,7 +66,6 @@ public class SizeData
          SizeData lTest = (SizeData) pOther;
          boolean lEquals = true;
 
-         lEquals = lEquals && this.id == lTest.id;
          if( this._Name == null )
          {
             lEquals = lEquals && ( lTest._Name == null );
@@ -75,6 +74,7 @@ public class SizeData
          {
             lEquals = lEquals && this._Name.equals( lTest._Name );
          }
+         lEquals = lEquals && this.id == lTest.id;
 
          return lEquals;
       }
@@ -88,9 +88,9 @@ public class SizeData
    {
       int result = 17;
 
-      result = 37*result + (int) id;
-
       result = 37*result + ((this._Name != null) ? this._Name.hashCode() : 0);
+
+      result = 37*result + (int) id;
 
       return result;
    }

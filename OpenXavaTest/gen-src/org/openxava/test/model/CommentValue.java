@@ -14,12 +14,12 @@ public class CommentValue
 
    private static final long serialVersionUID = 1L;
 
-   private java.lang.Integer id;
-   private boolean idHasBeenSet = false;
    private java.lang.String comment;
    private boolean commentHasBeenSet = false;
    private java.util.Date date;
    private boolean dateHasBeenSet = false;
+   private java.lang.Integer id;
+   private boolean idHasBeenSet = false;
    private java.lang.String issue_id;
    private boolean issue_idHasBeenSet = false;
 
@@ -30,30 +30,16 @@ public class CommentValue
    //TODO Cloneable is better than this !
    public CommentValue( CommentValue otherValue )
    {
-	  this.id = otherValue.id;
-	  idHasBeenSet = true;
 	  this.comment = otherValue.comment;
 	  commentHasBeenSet = true;
 	  this.date = otherValue.date;
 	  dateHasBeenSet = true;
+	  this.id = otherValue.id;
+	  idHasBeenSet = true;
 	  this.issue_id = otherValue.issue_id;
 	  issue_idHasBeenSet = true;
    }
 
-   public java.lang.Integer getId()
-   {
-	  return this.id;
-   }
-
-   public void setId( java.lang.Integer id )
-   {
-	  this.id = id;
-	  idHasBeenSet = true;
-   }
-
-   public boolean idHasBeenSet(){
-	  return idHasBeenSet;
-   }
    public java.lang.String getComment()
    {
 	  return this.comment;
@@ -82,6 +68,20 @@ public class CommentValue
    public boolean dateHasBeenSet(){
 	  return dateHasBeenSet;
    }
+   public java.lang.Integer getId()
+   {
+	  return this.id;
+   }
+
+   public void setId( java.lang.Integer id )
+   {
+	  this.id = id;
+	  idHasBeenSet = true;
+   }
+
+   public boolean idHasBeenSet(){
+	  return idHasBeenSet;
+   }
    public java.lang.String getIssue_id()
    {
 	  return this.issue_id;
@@ -101,7 +101,7 @@ public class CommentValue
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("id=" + getId() + " " + "comment=" + getComment() + " " + "date=" + getDate() + " " + "issue_id=" + getIssue_id());
+	  str.append("comment=" + getComment() + " " + "date=" + getDate() + " " + "id=" + getId() + " " + "issue_id=" + getIssue_id());
 	  str.append('}');
 
 	  return(str.toString());
@@ -189,11 +189,11 @@ public class CommentValue
 
    public int hashCode(){
 	  int result = 17;
-      result = 37*result + ((this.id != null) ? this.id.hashCode() : 0);
-
       result = 37*result + ((this.comment != null) ? this.comment.hashCode() : 0);
 
       result = 37*result + ((this.date != null) ? this.date.hashCode() : 0);
+
+      result = 37*result + ((this.id != null) ? this.id.hashCode() : 0);
 
       result = 37*result + ((this.issue_id != null) ? this.issue_id.hashCode() : 0);
 

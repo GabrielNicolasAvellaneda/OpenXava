@@ -13,7 +13,8 @@ public class Invoice2Test extends ModuleTestBase {
 		super(testName, "Invoice2");		
 	}
 	
-	public void testTouchContainerFromCallback() throws Exception { 
+	public void testTouchContainerFromCallback() throws Exception {
+		if (!isOX3()) return; // This case is only implemented in JPA
 		execute("CRUD.new");
 		setValue("number", "66");
 		setValue("vatPercentage", "16");

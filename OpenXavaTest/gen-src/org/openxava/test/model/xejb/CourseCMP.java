@@ -18,9 +18,9 @@ public abstract class CourseCMP
       {
          dataHolder = new org.openxava.test.model.CourseData();
 
+         dataHolder.setYear( getYear() );
          dataHolder.set_Description( get_Description() );
          dataHolder.setNumber( getNumber() );
-         dataHolder.setYear( getYear() );
 
       }
       catch (RuntimeException e)
@@ -89,9 +89,9 @@ public abstract class CourseCMP
       CourseValue = new org.openxava.test.model.CourseValue();
       try
          {
+            CourseValue.setYear( getYear() );
             CourseValue.setDescription( getDescription() );
             CourseValue.setNumber( getNumber() );
-            CourseValue.setYear( getYear() );
 
          }
          catch (Exception e)
@@ -118,6 +118,10 @@ public abstract class CourseCMP
 
 /* Value Objects END */
 
+   public abstract int getYear() ;
+
+   public abstract void setYear( int year ) ;
+
    public abstract java.lang.String get_Description() ;
 
    public abstract void set_Description( java.lang.String _Description ) ;
@@ -125,9 +129,5 @@ public abstract class CourseCMP
    public abstract int getNumber() ;
 
    public abstract void setNumber( int number ) ;
-
-   public abstract int getYear() ;
-
-   public abstract void setYear( int year ) ;
 
 }

@@ -18,13 +18,13 @@ public abstract class CarrierCMP
       {
          dataHolder = new org.openxava.test.model.CarrierData();
 
-         dataHolder.set_Name( get_Name() );
          dataHolder.set_Remarks( get_Remarks() );
+         dataHolder.set_Name( get_Name() );
          dataHolder.set_Number( get_Number() );
-         dataHolder.set_DrivingLicence_type( get_DrivingLicence_type() );
-         dataHolder.set_DrivingLicence_level( get_DrivingLicence_level() );
          dataHolder.set_Warehouse_zoneNumber( get_Warehouse_zoneNumber() );
          dataHolder.set_Warehouse_number( get_Warehouse_number() );
+         dataHolder.set_DrivingLicence_type( get_DrivingLicence_type() );
+         dataHolder.set_DrivingLicence_level( get_DrivingLicence_level() );
 
       }
       catch (RuntimeException e)
@@ -39,12 +39,12 @@ public abstract class CarrierCMP
    {
       try
       {
-         set_Name( dataHolder.get_Name() );
          set_Remarks( dataHolder.get_Remarks() );
-         set_DrivingLicence_type( dataHolder.get_DrivingLicence_type() );
-         set_DrivingLicence_level( dataHolder.get_DrivingLicence_level() );
+         set_Name( dataHolder.get_Name() );
          set_Warehouse_zoneNumber( dataHolder.get_Warehouse_zoneNumber() );
          set_Warehouse_number( dataHolder.get_Warehouse_number() );
+         set_DrivingLicence_type( dataHolder.get_DrivingLicence_type() );
+         set_DrivingLicence_level( dataHolder.get_DrivingLicence_level() );
 
       }
       catch (Exception e)
@@ -98,14 +98,14 @@ public abstract class CarrierCMP
       CarrierValue = new org.openxava.test.model.CarrierValue();
       try
          {
-            CarrierValue.setName( getName() );
             CarrierValue.setRemarks( getRemarks() );
-            CarrierValue.setNumber( getNumber() );
             CarrierValue.setCalculated( getCalculated() );
-            CarrierValue.setDrivingLicence_type( getDrivingLicence_type() );
-            CarrierValue.setDrivingLicence_level( getDrivingLicence_level() );
+            CarrierValue.setName( getName() );
+            CarrierValue.setNumber( getNumber() );
             CarrierValue.setWarehouse_zoneNumber( getWarehouse_zoneNumber() );
             CarrierValue.setWarehouse_number( getWarehouse_number() );
+            CarrierValue.setDrivingLicence_type( getDrivingLicence_type() );
+            CarrierValue.setDrivingLicence_level( getDrivingLicence_level() );
 
          }
          catch (Exception e)
@@ -121,14 +121,14 @@ public abstract class CarrierCMP
 
 	  try
 	  {
-		 setName( valueHolder.getName() );
 		 setRemarks( valueHolder.getRemarks() );
-		 setNumber( valueHolder.getNumber() );
 		 setCalculated( valueHolder.getCalculated() );
-		 setDrivingLicence_type( valueHolder.getDrivingLicence_type() );
-		 setDrivingLicence_level( valueHolder.getDrivingLicence_level() );
+		 setName( valueHolder.getName() );
+		 setNumber( valueHolder.getNumber() );
 		 setWarehouse_zoneNumber( valueHolder.getWarehouse_zoneNumber() );
 		 setWarehouse_number( valueHolder.getWarehouse_number() );
+		 setDrivingLicence_type( valueHolder.getDrivingLicence_type() );
+		 setDrivingLicence_level( valueHolder.getDrivingLicence_level() );
 
 	  }
 	  catch (Exception e)
@@ -139,25 +139,17 @@ public abstract class CarrierCMP
 
 /* Value Objects END */
 
-   public abstract java.lang.String get_Name() ;
-
-   public abstract void set_Name( java.lang.String _Name ) ;
-
    public abstract java.lang.String get_Remarks() ;
 
    public abstract void set_Remarks( java.lang.String _Remarks ) ;
 
+   public abstract java.lang.String get_Name() ;
+
+   public abstract void set_Name( java.lang.String _Name ) ;
+
    public abstract java.lang.Integer get_Number() ;
 
    public abstract void set_Number( java.lang.Integer _Number ) ;
-
-   public abstract java.lang.String get_DrivingLicence_type() ;
-
-   public abstract void set_DrivingLicence_type( java.lang.String _DrivingLicence_type ) ;
-
-   public abstract int get_DrivingLicence_level() ;
-
-   public abstract void set_DrivingLicence_level( int _DrivingLicence_level ) ;
 
    public abstract int get_Warehouse_zoneNumber() ;
 
@@ -166,5 +158,13 @@ public abstract class CarrierCMP
    public abstract java.lang.Integer get_Warehouse_number() ;
 
    public abstract void set_Warehouse_number( java.lang.Integer _Warehouse_number ) ;
+
+   public abstract java.lang.String get_DrivingLicence_type() ;
+
+   public abstract void set_DrivingLicence_type( java.lang.String _DrivingLicence_type ) ;
+
+   public abstract int get_DrivingLicence_level() ;
+
+   public abstract void set_DrivingLicence_level( int _DrivingLicence_level ) ;
 
 }

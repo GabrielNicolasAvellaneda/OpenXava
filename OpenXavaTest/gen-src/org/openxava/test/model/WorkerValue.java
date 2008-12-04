@@ -14,12 +14,12 @@ public class WorkerValue
 
    private static final long serialVersionUID = 1L;
 
-   private java.lang.Integer id;
-   private boolean idHasBeenSet = false;
-   private java.lang.String nickName;
-   private boolean nickNameHasBeenSet = false;
    private java.lang.String fullName;
    private boolean fullNameHasBeenSet = false;
+   private java.lang.String nickName;
+   private boolean nickNameHasBeenSet = false;
+   private java.lang.Integer id;
+   private boolean idHasBeenSet = false;
 
    public WorkerValue()
    {
@@ -28,27 +28,27 @@ public class WorkerValue
    //TODO Cloneable is better than this !
    public WorkerValue( WorkerValue otherValue )
    {
-	  this.id = otherValue.id;
-	  idHasBeenSet = true;
+	  this.fullName = otherValue.fullName;
+	  fullNameHasBeenSet = true;
 	  this.nickName = otherValue.nickName;
 	  nickNameHasBeenSet = true;
-	  this.fullName = otherValue.fullName;
+	  this.id = otherValue.id;
+	  idHasBeenSet = true;
+   }
+
+   public java.lang.String getFullName()
+   {
+	  return this.fullName;
+   }
+
+   public void setFullName( java.lang.String fullName )
+   {
+	  this.fullName = fullName;
 	  fullNameHasBeenSet = true;
    }
 
-   public java.lang.Integer getId()
-   {
-	  return this.id;
-   }
-
-   public void setId( java.lang.Integer id )
-   {
-	  this.id = id;
-	  idHasBeenSet = true;
-   }
-
-   public boolean idHasBeenSet(){
-	  return idHasBeenSet;
+   public boolean fullNameHasBeenSet(){
+	  return fullNameHasBeenSet;
    }
    public java.lang.String getNickName()
    {
@@ -64,26 +64,26 @@ public class WorkerValue
    public boolean nickNameHasBeenSet(){
 	  return nickNameHasBeenSet;
    }
-   public java.lang.String getFullName()
+   public java.lang.Integer getId()
    {
-	  return this.fullName;
+	  return this.id;
    }
 
-   public void setFullName( java.lang.String fullName )
+   public void setId( java.lang.Integer id )
    {
-	  this.fullName = fullName;
-	  fullNameHasBeenSet = true;
+	  this.id = id;
+	  idHasBeenSet = true;
    }
 
-   public boolean fullNameHasBeenSet(){
-	  return fullNameHasBeenSet;
+   public boolean idHasBeenSet(){
+	  return idHasBeenSet;
    }
 
    public String toString()
    {
 	  StringBuffer str = new StringBuffer("{");
 
-	  str.append("id=" + getId() + " " + "nickName=" + getNickName() + " " + "fullName=" + getFullName());
+	  str.append("fullName=" + getFullName() + " " + "nickName=" + getNickName() + " " + "id=" + getId());
 	  str.append('}');
 
 	  return(str.toString());
@@ -136,14 +136,6 @@ public class WorkerValue
 	  {
 		 WorkerValue that = (WorkerValue) other;
 		 boolean lEquals = true;
-		 if( this.nickName == null )
-		 {
-			lEquals = lEquals && ( that.nickName == null );
-		 }
-		 else
-		 {
-			lEquals = lEquals && this.nickName.equals( that.nickName );
-		 }
 		 if( this.fullName == null )
 		 {
 			lEquals = lEquals && ( that.fullName == null );
@@ -151,6 +143,14 @@ public class WorkerValue
 		 else
 		 {
 			lEquals = lEquals && this.fullName.equals( that.fullName );
+		 }
+		 if( this.nickName == null )
+		 {
+			lEquals = lEquals && ( that.nickName == null );
+		 }
+		 else
+		 {
+			lEquals = lEquals && this.nickName.equals( that.nickName );
 		 }
 
 		 return lEquals;
@@ -163,11 +163,11 @@ public class WorkerValue
 
    public int hashCode(){
 	  int result = 17;
-      result = 37*result + ((this.id != null) ? this.id.hashCode() : 0);
+      result = 37*result + ((this.fullName != null) ? this.fullName.hashCode() : 0);
 
       result = 37*result + ((this.nickName != null) ? this.nickName.hashCode() : 0);
 
-      result = 37*result + ((this.fullName != null) ? this.fullName.hashCode() : 0);
+      result = 37*result + ((this.id != null) ? this.id.hashCode() : 0);
 
 	  return result;
    }

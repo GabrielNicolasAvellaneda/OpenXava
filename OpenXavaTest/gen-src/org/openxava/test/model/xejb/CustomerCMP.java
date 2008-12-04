@@ -18,21 +18,21 @@ public abstract class CustomerCMP
       {
          dataHolder = new org.openxava.test.model.CustomerData();
 
-         dataHolder.set_Website( get_Website() );
-         dataHolder.set_Email( get_Email() );
-         dataHolder.set_Name( get_Name() );
-         dataHolder.set_Remarks( get_Remarks() );
-         dataHolder.setNumber( getNumber() );
          dataHolder.set_Type( get_Type() );
+         dataHolder.set_Remarks( get_Remarks() );
          dataHolder.set_Telephone( get_Telephone() );
-         dataHolder.set_Photo( get_Photo() );
+         dataHolder.set_Email( get_Email() );
          dataHolder.set_RelationWithSeller( get_RelationWithSeller() );
+         dataHolder.set_Photo( get_Photo() );
+         dataHolder.set_Name( get_Name() );
+         dataHolder.set_Website( get_Website() );
+         dataHolder.setNumber( getNumber() );
+         dataHolder.set_Seller_number( get_Seller_number() );
+         dataHolder.set_AlternateSeller_number( get_AlternateSeller_number() );
          dataHolder.set_Address_zipCode( get_Address_zipCode() );
          dataHolder.set_Address_street( get_Address_street() );
          dataHolder.set_Address_city( get_Address_city() );
          dataHolder.set_Address_state_id( get_Address_state_id() );
-         dataHolder.set_AlternateSeller_number( get_AlternateSeller_number() );
-         dataHolder.set_Seller_number( get_Seller_number() );
 
       }
       catch (RuntimeException e)
@@ -47,20 +47,20 @@ public abstract class CustomerCMP
    {
       try
       {
-         set_Website( dataHolder.get_Website() );
-         set_Email( dataHolder.get_Email() );
-         set_Name( dataHolder.get_Name() );
-         set_Remarks( dataHolder.get_Remarks() );
          set_Type( dataHolder.get_Type() );
+         set_Remarks( dataHolder.get_Remarks() );
          set_Telephone( dataHolder.get_Telephone() );
-         set_Photo( dataHolder.get_Photo() );
+         set_Email( dataHolder.get_Email() );
          set_RelationWithSeller( dataHolder.get_RelationWithSeller() );
+         set_Photo( dataHolder.get_Photo() );
+         set_Name( dataHolder.get_Name() );
+         set_Website( dataHolder.get_Website() );
+         set_Seller_number( dataHolder.get_Seller_number() );
+         set_AlternateSeller_number( dataHolder.get_AlternateSeller_number() );
          set_Address_zipCode( dataHolder.get_Address_zipCode() );
          set_Address_street( dataHolder.get_Address_street() );
          set_Address_city( dataHolder.get_Address_city() );
          set_Address_state_id( dataHolder.get_Address_state_id() );
-         set_AlternateSeller_number( dataHolder.get_AlternateSeller_number() );
-         set_Seller_number( dataHolder.get_Seller_number() );
 
       }
       catch (Exception e)
@@ -114,21 +114,21 @@ public abstract class CustomerCMP
       CustomerValue = new org.openxava.test.model.CustomerValue();
       try
          {
-            CustomerValue.setWebsite( getWebsite() );
-            CustomerValue.setEmail( getEmail() );
-            CustomerValue.setName( getName() );
-            CustomerValue.setRemarks( getRemarks() );
-            CustomerValue.setNumber( getNumber() );
             CustomerValue.setLocal( isLocal() );
             CustomerValue.setType( getType() );
+            CustomerValue.setRemarks( getRemarks() );
             CustomerValue.setTelephone( getTelephone() );
-            CustomerValue.setPhoto( getPhoto() );
+            CustomerValue.setEmail( getEmail() );
             CustomerValue.setRelationWithSeller( getRelationWithSeller() );
+            CustomerValue.setPhoto( getPhoto() );
+            CustomerValue.setName( getName() );
             CustomerValue.setCity( getCity() );
+            CustomerValue.setWebsite( getWebsite() );
+            CustomerValue.setNumber( getNumber() );
+            CustomerValue.setSeller_number( getSeller_number() );
+            CustomerValue.setAlternateSeller_number( getAlternateSeller_number() );
             CustomerValue.setAddress( getAddress() );
             CustomerValue.setAddress_state_id( getAddress_state_id() );
-            CustomerValue.setAlternateSeller_number( getAlternateSeller_number() );
-            CustomerValue.setSeller_number( getSeller_number() );
 
          }
          catch (Exception e)
@@ -144,20 +144,20 @@ public abstract class CustomerCMP
 
 	  try
 	  {
-		 setWebsite( valueHolder.getWebsite() );
-		 setEmail( valueHolder.getEmail() );
-		 setName( valueHolder.getName() );
-		 setRemarks( valueHolder.getRemarks() );
 		 setLocal( valueHolder.isLocal() );
 		 setType( valueHolder.getType() );
+		 setRemarks( valueHolder.getRemarks() );
 		 setTelephone( valueHolder.getTelephone() );
-		 setPhoto( valueHolder.getPhoto() );
+		 setEmail( valueHolder.getEmail() );
 		 setRelationWithSeller( valueHolder.getRelationWithSeller() );
+		 setPhoto( valueHolder.getPhoto() );
+		 setName( valueHolder.getName() );
 		 setCity( valueHolder.getCity() );
+		 setWebsite( valueHolder.getWebsite() );
+		 setSeller_number( valueHolder.getSeller_number() );
+		 setAlternateSeller_number( valueHolder.getAlternateSeller_number() );
 		 setAddress( valueHolder.getAddress() );
 		 setAddress_state_id( valueHolder.getAddress_state_id() );
-		 setAlternateSeller_number( valueHolder.getAlternateSeller_number() );
-		 setSeller_number( valueHolder.getSeller_number() );
 
 	  }
 	  catch (Exception e)
@@ -168,41 +168,49 @@ public abstract class CustomerCMP
 
 /* Value Objects END */
 
-   public abstract java.lang.String get_Website() ;
+   public abstract java.lang.Integer get_Type() ;
 
-   public abstract void set_Website( java.lang.String _Website ) ;
-
-   public abstract java.lang.String get_Email() ;
-
-   public abstract void set_Email( java.lang.String _Email ) ;
-
-   public abstract java.lang.String get_Name() ;
-
-   public abstract void set_Name( java.lang.String _Name ) ;
+   public abstract void set_Type( java.lang.Integer _Type ) ;
 
    public abstract java.lang.String get_Remarks() ;
 
    public abstract void set_Remarks( java.lang.String _Remarks ) ;
 
-   public abstract int getNumber() ;
-
-   public abstract void setNumber( int number ) ;
-
-   public abstract java.lang.Integer get_Type() ;
-
-   public abstract void set_Type( java.lang.Integer _Type ) ;
-
    public abstract java.lang.String get_Telephone() ;
 
    public abstract void set_Telephone( java.lang.String _Telephone ) ;
+
+   public abstract java.lang.String get_Email() ;
+
+   public abstract void set_Email( java.lang.String _Email ) ;
+
+   public abstract java.lang.String get_RelationWithSeller() ;
+
+   public abstract void set_RelationWithSeller( java.lang.String _RelationWithSeller ) ;
 
    public abstract byte[] get_Photo() ;
 
    public abstract void set_Photo( byte[] _Photo ) ;
 
-   public abstract java.lang.String get_RelationWithSeller() ;
+   public abstract java.lang.String get_Name() ;
 
-   public abstract void set_RelationWithSeller( java.lang.String _RelationWithSeller ) ;
+   public abstract void set_Name( java.lang.String _Name ) ;
+
+   public abstract java.lang.String get_Website() ;
+
+   public abstract void set_Website( java.lang.String _Website ) ;
+
+   public abstract int getNumber() ;
+
+   public abstract void setNumber( int number ) ;
+
+   public abstract java.lang.Integer get_Seller_number() ;
+
+   public abstract void set_Seller_number( java.lang.Integer _Seller_number ) ;
+
+   public abstract java.lang.Integer get_AlternateSeller_number() ;
+
+   public abstract void set_AlternateSeller_number( java.lang.Integer _AlternateSeller_number ) ;
 
    public abstract java.lang.String get_Address_zipCode() ;
 
@@ -219,13 +227,5 @@ public abstract class CustomerCMP
    public abstract java.lang.String get_Address_state_id() ;
 
    public abstract void set_Address_state_id( java.lang.String _Address_state_id ) ;
-
-   public abstract java.lang.Integer get_AlternateSeller_number() ;
-
-   public abstract void set_AlternateSeller_number( java.lang.Integer _AlternateSeller_number ) ;
-
-   public abstract java.lang.Integer get_Seller_number() ;
-
-   public abstract void set_Seller_number( java.lang.Integer _Seller_number ) ;
 
 }

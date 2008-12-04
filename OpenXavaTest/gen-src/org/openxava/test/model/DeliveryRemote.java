@@ -10,6 +10,15 @@ public interface DeliveryRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.IDelivery
 {
 
+   public java.util.Date getDateAsLabel(  )
+      throws java.rmi.RemoteException;
+
+   public int getDistance(  )
+      throws java.rmi.RemoteException;
+
+   public void setDistance( int newDistance )
+      throws java.rmi.RemoteException;
+
    public java.lang.String getIncidents(  )
       throws java.rmi.RemoteException;
 
@@ -22,37 +31,10 @@ public interface DeliveryRemote
    public void setDriverType( java.lang.String newDriverType )
       throws java.rmi.RemoteException;
 
-   public int getDistance(  )
-      throws java.rmi.RemoteException;
-
-   public void setDistance( int newDistance )
-      throws java.rmi.RemoteException;
-
-   public java.lang.String getDescription(  )
-      throws java.rmi.RemoteException;
-
-   public void setDescription( java.lang.String newDescription )
-      throws java.rmi.RemoteException;
-
-   public java.util.Date getDateAsLabel(  )
-      throws java.rmi.RemoteException;
-
-   public java.lang.String getVehicle(  )
-      throws java.rmi.RemoteException;
-
-   public void setVehicle( java.lang.String newVehicle )
-      throws java.rmi.RemoteException;
-
    public java.lang.String getRemarks(  )
       throws java.rmi.RemoteException;
 
    public void setRemarks( java.lang.String newRemarks )
-      throws java.rmi.RemoteException;
-
-   public int getNumber(  )
-      throws java.rmi.RemoteException;
-
-   public java.lang.String getTransportMode(  )
       throws java.rmi.RemoteException;
 
    public java.lang.String getEmployee(  )
@@ -61,28 +43,43 @@ public interface DeliveryRemote
    public void setEmployee( java.lang.String newEmployee )
       throws java.rmi.RemoteException;
 
+   public java.lang.String getDescription(  )
+      throws java.rmi.RemoteException;
+
+   public void setDescription( java.lang.String newDescription )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getVehicle(  )
+      throws java.rmi.RemoteException;
+
+   public void setVehicle( java.lang.String newVehicle )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getTransportMode(  )
+      throws java.rmi.RemoteException;
+
    public java.util.Date getDate(  )
       throws java.rmi.RemoteException;
 
    public void setDate( java.util.Date newDate )
       throws java.rmi.RemoteException;
 
+   public int getNumber(  )
+      throws java.rmi.RemoteException;
+
    public java.util.Collection getDetails(  )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.model.IInvoice getInvoice(  )
+   public org.openxava.test.model.IDeliveryType getType(  )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.model.InvoiceRemote getInvoiceRemote(  )
+   public org.openxava.test.model.DeliveryTypeRemote getTypeRemote(  )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.model.InvoiceKey getInvoiceKey(  )
+   public org.openxava.test.model.DeliveryTypeKey getTypeKey(  )
       throws java.rmi.RemoteException;
 
-   public int getInvoice_year(  )
-      throws java.rmi.RemoteException;
-
-   public int getInvoice_number(  )
+   public int getType_number(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.IShipment getShipment(  )
@@ -127,16 +124,19 @@ public interface DeliveryRemote
    public java.lang.Integer getCarrier_number(  )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.model.IDeliveryType getType(  )
+   public org.openxava.test.model.IInvoice getInvoice(  )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.model.DeliveryTypeRemote getTypeRemote(  )
+   public org.openxava.test.model.InvoiceRemote getInvoiceRemote(  )
       throws java.rmi.RemoteException;
 
-   public org.openxava.test.model.DeliveryTypeKey getTypeKey(  )
+   public org.openxava.test.model.InvoiceKey getInvoiceKey(  )
       throws java.rmi.RemoteException;
 
-   public int getType_number(  )
+   public int getInvoice_year(  )
+      throws java.rmi.RemoteException;
+
+   public int getInvoice_number(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.DeliveryData getData(  )

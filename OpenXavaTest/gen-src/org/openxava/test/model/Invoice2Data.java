@@ -12,10 +12,11 @@ public class Invoice2Data
 {
 
    private static final long serialVersionUID = 1L;
-   private java.math.BigDecimal _VatPercentage;
-   private int number;
+   private java.math.BigDecimal _AmountsSum;
    private int year;
+   private java.math.BigDecimal _VatPercentage;
    private java.sql.Date _Date;
+   private int number;
    private int _Customer_number;
 
    public Invoice2Data()
@@ -24,35 +25,27 @@ public class Invoice2Data
 
    public Invoice2Data( Invoice2Data otherData )
    {
-      set_VatPercentage(otherData.get_VatPercentage());
-      setNumber(otherData.getNumber());
+      set_AmountsSum(otherData.get_AmountsSum());
       setYear(otherData.getYear());
+      set_VatPercentage(otherData.get_VatPercentage());
       set_Date(otherData.get_Date());
+      setNumber(otherData.getNumber());
       set_Customer_number(otherData.get_Customer_number());
 
    }
 
    public org.openxava.test.model.Invoice2Key getPrimaryKey() {
-     org.openxava.test.model.Invoice2Key pk = new org.openxava.test.model.Invoice2Key(this.getNumber(),this.getYear());
+     org.openxava.test.model.Invoice2Key pk = new org.openxava.test.model.Invoice2Key(this.getYear(),this.getNumber());
      return pk;
    }
 
-   public java.math.BigDecimal get_VatPercentage()
+   public java.math.BigDecimal get_AmountsSum()
    {
-      return this._VatPercentage;
+      return this._AmountsSum;
    }
-   public void set_VatPercentage( java.math.BigDecimal _VatPercentage )
+   public void set_AmountsSum( java.math.BigDecimal _AmountsSum )
    {
-      this._VatPercentage = _VatPercentage;
-   }
-
-   public int getNumber()
-   {
-      return this.number;
-   }
-   public void setNumber( int number )
-   {
-      this.number = number;
+      this._AmountsSum = _AmountsSum;
    }
 
    public int getYear()
@@ -64,6 +57,15 @@ public class Invoice2Data
       this.year = year;
    }
 
+   public java.math.BigDecimal get_VatPercentage()
+   {
+      return this._VatPercentage;
+   }
+   public void set_VatPercentage( java.math.BigDecimal _VatPercentage )
+   {
+      this._VatPercentage = _VatPercentage;
+   }
+
    public java.sql.Date get_Date()
    {
       return this._Date;
@@ -71,6 +73,15 @@ public class Invoice2Data
    public void set_Date( java.sql.Date _Date )
    {
       this._Date = _Date;
+   }
+
+   public int getNumber()
+   {
+      return this.number;
+   }
+   public void setNumber( int number )
+   {
+      this.number = number;
    }
 
    public int get_Customer_number()
@@ -86,7 +97,7 @@ public class Invoice2Data
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_VatPercentage=" + get_VatPercentage() + " " + "number=" + getNumber() + " " + "year=" + getYear() + " " + "_Date=" + get_Date() + " " + "_Customer_number=" + get_Customer_number());
+      str.append("_AmountsSum=" + get_AmountsSum() + " " + "year=" + getYear() + " " + "_VatPercentage=" + get_VatPercentage() + " " + "_Date=" + get_Date() + " " + "number=" + getNumber() + " " + "_Customer_number=" + get_Customer_number());
       str.append('}');
 
       return(str.toString());
@@ -99,6 +110,15 @@ public class Invoice2Data
          Invoice2Data lTest = (Invoice2Data) pOther;
          boolean lEquals = true;
 
+         if( this._AmountsSum == null )
+         {
+            lEquals = lEquals && ( lTest._AmountsSum == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._AmountsSum.equals( lTest._AmountsSum );
+         }
+         lEquals = lEquals && this.year == lTest.year;
          if( this._VatPercentage == null )
          {
             lEquals = lEquals && ( lTest._VatPercentage == null );
@@ -107,8 +127,6 @@ public class Invoice2Data
          {
             lEquals = lEquals && this._VatPercentage.equals( lTest._VatPercentage );
          }
-         lEquals = lEquals && this.number == lTest.number;
-         lEquals = lEquals && this.year == lTest.year;
          if( this._Date == null )
          {
             lEquals = lEquals && ( lTest._Date == null );
@@ -117,6 +135,7 @@ public class Invoice2Data
          {
             lEquals = lEquals && this._Date.equals( lTest._Date );
          }
+         lEquals = lEquals && this.number == lTest.number;
          lEquals = lEquals && this._Customer_number == lTest._Customer_number;
 
          return lEquals;
@@ -131,13 +150,15 @@ public class Invoice2Data
    {
       int result = 17;
 
-      result = 37*result + ((this._VatPercentage != null) ? this._VatPercentage.hashCode() : 0);
-
-      result = 37*result + (int) number;
+      result = 37*result + ((this._AmountsSum != null) ? this._AmountsSum.hashCode() : 0);
 
       result = 37*result + (int) year;
 
+      result = 37*result + ((this._VatPercentage != null) ? this._VatPercentage.hashCode() : 0);
+
       result = 37*result + ((this._Date != null) ? this._Date.hashCode() : 0);
+
+      result = 37*result + (int) number;
 
       result = 37*result + (int) _Customer_number;
 

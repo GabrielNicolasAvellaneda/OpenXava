@@ -10,9 +10,6 @@ public interface CommentRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.IComment
 {
 
-   public java.lang.Integer getId(  )
-      throws java.rmi.RemoteException;
-
    public java.lang.String getComment(  )
       throws java.rmi.RemoteException;
 
@@ -23,6 +20,9 @@ public interface CommentRemote
       throws java.rmi.RemoteException;
 
    public void setDate( java.util.Date newDate )
+      throws java.rmi.RemoteException;
+
+   public java.lang.Integer getId(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.IIssue getIssue(  )

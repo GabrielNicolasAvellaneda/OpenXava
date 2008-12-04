@@ -10,37 +10,16 @@ public interface TaskRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.ITask
 {
 
+   public java.lang.String getComments(  )
+      throws java.rmi.RemoteException;
+
+   public void setComments( java.lang.String newComments )
+      throws java.rmi.RemoteException;
+
    public java.lang.String getSummary(  )
       throws java.rmi.RemoteException;
 
    public void setSummary( java.lang.String newSummary )
-      throws java.rmi.RemoteException;
-
-   public java.lang.String getUserFamilyName(  )
-      throws java.rmi.RemoteException;
-
-   public void setUserFamilyName( java.lang.String newUserFamilyName )
-      throws java.rmi.RemoteException;
-
-   public java.lang.String getUserGivenName(  )
-      throws java.rmi.RemoteException;
-
-   public void setUserGivenName( java.lang.String newUserGivenName )
-      throws java.rmi.RemoteException;
-
-   public java.lang.String getOid(  )
-      throws java.rmi.RemoteException;
-
-   public java.lang.String getUserEMail(  )
-      throws java.rmi.RemoteException;
-
-   public void setUserEMail( java.lang.String newUserEMail )
-      throws java.rmi.RemoteException;
-
-   public java.util.Date getDate(  )
-      throws java.rmi.RemoteException;
-
-   public void setDate( java.util.Date newDate )
       throws java.rmi.RemoteException;
 
    public java.lang.String getUser(  )
@@ -49,10 +28,31 @@ public interface TaskRemote
    public void setUser( java.lang.String newUser )
       throws java.rmi.RemoteException;
 
-   public java.lang.String getComments(  )
+   public java.lang.String getUserFamilyName(  )
       throws java.rmi.RemoteException;
 
-   public void setComments( java.lang.String newComments )
+   public void setUserFamilyName( java.lang.String newUserFamilyName )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getOid(  )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getUserGivenName(  )
+      throws java.rmi.RemoteException;
+
+   public void setUserGivenName( java.lang.String newUserGivenName )
+      throws java.rmi.RemoteException;
+
+   public java.util.Date getDate(  )
+      throws java.rmi.RemoteException;
+
+   public void setDate( java.util.Date newDate )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getUserEMail(  )
+      throws java.rmi.RemoteException;
+
+   public void setUserEMail( java.lang.String newUserEMail )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.TaskData getData(  )

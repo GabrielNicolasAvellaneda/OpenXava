@@ -12,8 +12,8 @@ public class FormulaData
 {
 
    private static final long serialVersionUID = 1L;
-   private java.lang.String _Recipe;
    private java.lang.String oid;
+   private java.lang.String _Recipe;
    private java.lang.String _Name;
 
    public FormulaData()
@@ -22,8 +22,8 @@ public class FormulaData
 
    public FormulaData( FormulaData otherData )
    {
-      set_Recipe(otherData.get_Recipe());
       setOid(otherData.getOid());
+      set_Recipe(otherData.get_Recipe());
       set_Name(otherData.get_Name());
 
    }
@@ -33,15 +33,6 @@ public class FormulaData
      return pk;
    }
 
-   public java.lang.String get_Recipe()
-   {
-      return this._Recipe;
-   }
-   public void set_Recipe( java.lang.String _Recipe )
-   {
-      this._Recipe = _Recipe;
-   }
-
    public java.lang.String getOid()
    {
       return this.oid;
@@ -49,6 +40,15 @@ public class FormulaData
    public void setOid( java.lang.String oid )
    {
       this.oid = oid;
+   }
+
+   public java.lang.String get_Recipe()
+   {
+      return this._Recipe;
+   }
+   public void set_Recipe( java.lang.String _Recipe )
+   {
+      this._Recipe = _Recipe;
    }
 
    public java.lang.String get_Name()
@@ -64,7 +64,7 @@ public class FormulaData
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Recipe=" + get_Recipe() + " " + "oid=" + getOid() + " " + "_Name=" + get_Name());
+      str.append("oid=" + getOid() + " " + "_Recipe=" + get_Recipe() + " " + "_Name=" + get_Name());
       str.append('}');
 
       return(str.toString());
@@ -77,14 +77,6 @@ public class FormulaData
          FormulaData lTest = (FormulaData) pOther;
          boolean lEquals = true;
 
-         if( this._Recipe == null )
-         {
-            lEquals = lEquals && ( lTest._Recipe == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._Recipe.equals( lTest._Recipe );
-         }
          if( this.oid == null )
          {
             lEquals = lEquals && ( lTest.oid == null );
@@ -92,6 +84,14 @@ public class FormulaData
          else
          {
             lEquals = lEquals && this.oid.equals( lTest.oid );
+         }
+         if( this._Recipe == null )
+         {
+            lEquals = lEquals && ( lTest._Recipe == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Recipe.equals( lTest._Recipe );
          }
          if( this._Name == null )
          {
@@ -114,9 +114,9 @@ public class FormulaData
    {
       int result = 17;
 
-      result = 37*result + ((this._Recipe != null) ? this._Recipe.hashCode() : 0);
-
       result = 37*result + ((this.oid != null) ? this.oid.hashCode() : 0);
+
+      result = 37*result + ((this._Recipe != null) ? this._Recipe.hashCode() : 0);
 
       result = 37*result + ((this._Name != null) ? this._Name.hashCode() : 0);
 

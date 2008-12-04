@@ -10,7 +10,7 @@ public interface StateRemote
    extends org.openxava.ejbx.EJBReplicable, org.openxava.test.model.IState
 {
 
-   public java.lang.String getId(  )
+   public java.lang.String getFullName(  )
       throws java.rmi.RemoteException;
 
    public java.lang.String getName(  )
@@ -19,7 +19,7 @@ public interface StateRemote
    public void setName( java.lang.String newName )
       throws java.rmi.RemoteException;
 
-   public java.lang.String getFullName(  )
+   public java.lang.String getId(  )
       throws java.rmi.RemoteException;
 
    public org.openxava.test.model.StateData getData(  )

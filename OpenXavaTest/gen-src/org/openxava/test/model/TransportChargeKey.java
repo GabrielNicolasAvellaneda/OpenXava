@@ -18,25 +18,29 @@ public class TransportChargeKey
    private static final long serialVersionUID = 1L;
 
    public int _Delivery_number;
+   public int _Delivery_type_number;
    public int _Delivery_invoice_year;
    public int _Delivery_invoice_number;
-   public int _Delivery_type_number;
 
    public TransportChargeKey()
    {
    }
 
-   public TransportChargeKey( int _Delivery_number,int _Delivery_invoice_year,int _Delivery_invoice_number,int _Delivery_type_number )
+   public TransportChargeKey( int _Delivery_number,int _Delivery_type_number,int _Delivery_invoice_year,int _Delivery_invoice_number )
    {
       this._Delivery_number = _Delivery_number;
+      this._Delivery_type_number = _Delivery_type_number;
       this._Delivery_invoice_year = _Delivery_invoice_year;
       this._Delivery_invoice_number = _Delivery_invoice_number;
-      this._Delivery_type_number = _Delivery_type_number;
    }
 
    public int get_Delivery_number()
    {
       return _Delivery_number;
+   }
+   public int get_Delivery_type_number()
+   {
+      return _Delivery_type_number;
    }
    public int get_Delivery_invoice_year()
    {
@@ -46,14 +50,14 @@ public class TransportChargeKey
    {
       return _Delivery_invoice_number;
    }
-   public int get_Delivery_type_number()
-   {
-      return _Delivery_type_number;
-   }
 
    public void set_Delivery_number(int _Delivery_number)
    {
       this._Delivery_number = _Delivery_number;
+   }
+   public void set_Delivery_type_number(int _Delivery_type_number)
+   {
+      this._Delivery_type_number = _Delivery_type_number;
    }
    public void set_Delivery_invoice_year(int _Delivery_invoice_year)
    {
@@ -63,18 +67,14 @@ public class TransportChargeKey
    {
       this._Delivery_invoice_number = _Delivery_invoice_number;
    }
-   public void set_Delivery_type_number(int _Delivery_type_number)
-   {
-      this._Delivery_type_number = _Delivery_type_number;
-   }
 
    public int hashCode()
    {
       int _hashCode = 0;
          _hashCode += (int)this._Delivery_number;
+         _hashCode += (int)this._Delivery_type_number;
          _hashCode += (int)this._Delivery_invoice_year;
          _hashCode += (int)this._Delivery_invoice_number;
-         _hashCode += (int)this._Delivery_type_number;
 
       return _hashCode;
    }
@@ -94,9 +94,9 @@ public class TransportChargeKey
       else
       {
          eq = eq && this._Delivery_number == pk._Delivery_number;
+         eq = eq && this._Delivery_type_number == pk._Delivery_type_number;
          eq = eq && this._Delivery_invoice_year == pk._Delivery_invoice_year;
          eq = eq && this._Delivery_invoice_number == pk._Delivery_invoice_number;
-         eq = eq && this._Delivery_type_number == pk._Delivery_type_number;
       }
 
       return eq;

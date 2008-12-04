@@ -12,12 +12,12 @@ public class Product3Data
 {
 
    private static final long serialVersionUID = 1L;
+   private java.lang.String _Comments;
    private java.lang.String _Description;
    private long number;
-   private java.lang.String _Comments;
-   private java.lang.String _Family_oid;
    private int _Subfamily1_family_number;
    private int _Subfamily1_subfamily_number;
+   private java.lang.String _Family_oid;
    private int _Subfamily2_family_number;
    private int _Subfamily2_subfamily_number;
 
@@ -27,12 +27,12 @@ public class Product3Data
 
    public Product3Data( Product3Data otherData )
    {
+      set_Comments(otherData.get_Comments());
       set_Description(otherData.get_Description());
       setNumber(otherData.getNumber());
-      set_Comments(otherData.get_Comments());
-      set_Family_oid(otherData.get_Family_oid());
       set_Subfamily1_family_number(otherData.get_Subfamily1_family_number());
       set_Subfamily1_subfamily_number(otherData.get_Subfamily1_subfamily_number());
+      set_Family_oid(otherData.get_Family_oid());
       set_Subfamily2_family_number(otherData.get_Subfamily2_family_number());
       set_Subfamily2_subfamily_number(otherData.get_Subfamily2_subfamily_number());
 
@@ -41,6 +41,15 @@ public class Product3Data
    public org.openxava.test.model.Product3Key getPrimaryKey() {
      org.openxava.test.model.Product3Key pk = new org.openxava.test.model.Product3Key(this.getNumber());
      return pk;
+   }
+
+   public java.lang.String get_Comments()
+   {
+      return this._Comments;
+   }
+   public void set_Comments( java.lang.String _Comments )
+   {
+      this._Comments = _Comments;
    }
 
    public java.lang.String get_Description()
@@ -61,24 +70,6 @@ public class Product3Data
       this.number = number;
    }
 
-   public java.lang.String get_Comments()
-   {
-      return this._Comments;
-   }
-   public void set_Comments( java.lang.String _Comments )
-   {
-      this._Comments = _Comments;
-   }
-
-   public java.lang.String get_Family_oid()
-   {
-      return this._Family_oid;
-   }
-   public void set_Family_oid( java.lang.String _Family_oid )
-   {
-      this._Family_oid = _Family_oid;
-   }
-
    public int get_Subfamily1_family_number()
    {
       return this._Subfamily1_family_number;
@@ -95,6 +86,15 @@ public class Product3Data
    public void set_Subfamily1_subfamily_number( int _Subfamily1_subfamily_number )
    {
       this._Subfamily1_subfamily_number = _Subfamily1_subfamily_number;
+   }
+
+   public java.lang.String get_Family_oid()
+   {
+      return this._Family_oid;
+   }
+   public void set_Family_oid( java.lang.String _Family_oid )
+   {
+      this._Family_oid = _Family_oid;
    }
 
    public int get_Subfamily2_family_number()
@@ -119,7 +119,7 @@ public class Product3Data
    {
       StringBuffer str = new StringBuffer("{");
 
-      str.append("_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "_Comments=" + get_Comments() + " " + "_Family_oid=" + get_Family_oid() + " " + "_Subfamily1_family_number=" + get_Subfamily1_family_number() + " " + "_Subfamily1_subfamily_number=" + get_Subfamily1_subfamily_number() + " " + "_Subfamily2_family_number=" + get_Subfamily2_family_number() + " " + "_Subfamily2_subfamily_number=" + get_Subfamily2_subfamily_number());
+      str.append("_Comments=" + get_Comments() + " " + "_Description=" + get_Description() + " " + "number=" + getNumber() + " " + "_Subfamily1_family_number=" + get_Subfamily1_family_number() + " " + "_Subfamily1_subfamily_number=" + get_Subfamily1_subfamily_number() + " " + "_Family_oid=" + get_Family_oid() + " " + "_Subfamily2_family_number=" + get_Subfamily2_family_number() + " " + "_Subfamily2_subfamily_number=" + get_Subfamily2_subfamily_number());
       str.append('}');
 
       return(str.toString());
@@ -132,6 +132,14 @@ public class Product3Data
          Product3Data lTest = (Product3Data) pOther;
          boolean lEquals = true;
 
+         if( this._Comments == null )
+         {
+            lEquals = lEquals && ( lTest._Comments == null );
+         }
+         else
+         {
+            lEquals = lEquals && this._Comments.equals( lTest._Comments );
+         }
          if( this._Description == null )
          {
             lEquals = lEquals && ( lTest._Description == null );
@@ -141,14 +149,8 @@ public class Product3Data
             lEquals = lEquals && this._Description.equals( lTest._Description );
          }
          lEquals = lEquals && this.number == lTest.number;
-         if( this._Comments == null )
-         {
-            lEquals = lEquals && ( lTest._Comments == null );
-         }
-         else
-         {
-            lEquals = lEquals && this._Comments.equals( lTest._Comments );
-         }
+         lEquals = lEquals && this._Subfamily1_family_number == lTest._Subfamily1_family_number;
+         lEquals = lEquals && this._Subfamily1_subfamily_number == lTest._Subfamily1_subfamily_number;
          if( this._Family_oid == null )
          {
             lEquals = lEquals && ( lTest._Family_oid == null );
@@ -157,8 +159,6 @@ public class Product3Data
          {
             lEquals = lEquals && this._Family_oid.equals( lTest._Family_oid );
          }
-         lEquals = lEquals && this._Subfamily1_family_number == lTest._Subfamily1_family_number;
-         lEquals = lEquals && this._Subfamily1_subfamily_number == lTest._Subfamily1_subfamily_number;
          lEquals = lEquals && this._Subfamily2_family_number == lTest._Subfamily2_family_number;
          lEquals = lEquals && this._Subfamily2_subfamily_number == lTest._Subfamily2_subfamily_number;
 
@@ -174,17 +174,17 @@ public class Product3Data
    {
       int result = 17;
 
+      result = 37*result + ((this._Comments != null) ? this._Comments.hashCode() : 0);
+
       result = 37*result + ((this._Description != null) ? this._Description.hashCode() : 0);
 
       result = 37*result + (int)(number^(number>>>32));
 
-      result = 37*result + ((this._Comments != null) ? this._Comments.hashCode() : 0);
-
-      result = 37*result + ((this._Family_oid != null) ? this._Family_oid.hashCode() : 0);
-
       result = 37*result + (int) _Subfamily1_family_number;
 
       result = 37*result + (int) _Subfamily1_subfamily_number;
+
+      result = 37*result + ((this._Family_oid != null) ? this._Family_oid.hashCode() : 0);
 
       result = 37*result + (int) _Subfamily2_family_number;
 

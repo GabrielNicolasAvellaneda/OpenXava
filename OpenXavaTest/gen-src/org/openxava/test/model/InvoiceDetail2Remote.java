@@ -13,13 +13,13 @@ public interface InvoiceDetail2Remote
    public java.math.BigDecimal getAmount(  )
       throws java.rmi.RemoteException;
 
-   public java.lang.String getOid(  )
-      throws java.rmi.RemoteException;
-
    public java.math.BigDecimal getUnitPrice(  )
       throws java.rmi.RemoteException;
 
    public void setUnitPrice( java.math.BigDecimal newUnitPrice )
+      throws java.rmi.RemoteException;
+
+   public java.lang.String getOid(  )
       throws java.rmi.RemoteException;
 
    public int getQuantity(  )
