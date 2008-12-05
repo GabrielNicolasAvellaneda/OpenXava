@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="MiEscuela" basedir=".">
+<project name="MiEscuela" basedir="." default="desplegarWar">
 
 	<property name="project" value="MiEscuela" />
 	<property name="ox3" value="true" />

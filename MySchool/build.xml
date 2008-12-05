@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="MySchool" basedir=".">
+<project name="MySchool" basedir="." default="deployWar">
 
 	<property name="project" value="MySchool" />
 	<property name="ox3" value="true" />

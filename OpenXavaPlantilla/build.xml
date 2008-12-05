@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="@proyecto@" basedir=".">
+<project name="@proyecto@" basedir="." default="desplegarWar">
 
 	<property name="project" value="@proyecto@" />
 	<property name="ox3" value="true" />
