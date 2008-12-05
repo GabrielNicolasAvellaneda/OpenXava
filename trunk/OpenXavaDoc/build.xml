@@ -2,7 +2,7 @@
 
 <project name="OpenXavaDoc" default="deploy" basedir=".">
 
-	<property name="xava.version" value="3.1beta3"/>
+	<property name="xava.version" value="3.1rc1"/>
 	<property name="xava.workspace" value=".."/>	
 	<property name="openxava.dist.dir" value="/home/javi/openxava"/>
 	<property file="../openxava.properties"/>
@@ -59,22 +59,22 @@
 		</antcall>
 				
 		<antcall target="generatePdfReferenceForLang">
-			<param name="name" value="reference-guide"/>
+			<param name="name" value="reference-guide_en"/>
 			<param name="lang" value="en"/>
 		</antcall>		
 		
 		<antcall target="generatePdfReferenceForLang">
-			<param name="name" value="guia-referencia"/>
+			<param name="name" value="reference-guide_es"/>
 			<param name="lang" value="es"/>
 		</antcall>
 		
 		<antcall target="generatePdfXmlComponentsForLang">
-			<param name="name" value="classic-xml-components"/>
+			<param name="name" value="xml-classic-components_en"/>
 			<param name="lang" value="en"/>
 		</antcall>		
 		
 		<antcall target="generatePdfXmlComponentsForLang">
-			<param name="name" value="componentes-xml-clasicos"/>
+			<param name="name" value="xml-classic-components_es"/>
 			<param name="lang" value="es"/>
 		</antcall>				
 		
@@ -95,7 +95,7 @@
 		</antcall>
 						
 		<antcall target="generatePdfReferenceForLang">
-			<param name="name" value="guide-reference"/>
+			<param name="name" value="reference-guide_fr"/>
 			<param name="lang" value="fr"/>
 		</antcall>		
 						

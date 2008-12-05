@@ -202,7 +202,7 @@ div.chapter h1 { string-set: header "Chapter " counter(chapter) ": " content(); 
 
   @bottom-left {
     font: 9pt sans-serif;
-    content: "OpenXava 3.1beta3";
+    content: "OpenXava 3.1rc1";
     text-align: left;
     vertical-align: top;
     padding-top: 2em;
