@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="@project@" basedir=".">
+<project name="@project@" basedir="." default="deployWar">
 
 	<property name="project" value="@project@" />
 	<property name="ox3" value="true" />
