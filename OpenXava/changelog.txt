@@ -1,10 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
-OpenXava 3.1rc1 (2008-12-4)
----------------------------
-- Full tested with Tomcat, JBoss, WAS6, Liferay 4.1, 4.3, 5.1, Jetspeed2, JPA, Hiberante, EJB2, JDK1.4, Hypersonic and AS/400.
-- Visual style tested and refined for IE6, IE7, FF2 and FF3 in Liferay 5.1, 4.3, 4.1, JetSpeed2 and WPS6.
+OpenXava 3.1 (2008-12-16)
+-------------------------
+- Full AJAX support.
 - Style for standalone module (outside portal) is configurable: Liferay 5.1 (now the default), Liferay4.3 and the OX Classic are available (change it using styleClass and styleCSS in properties/xava.properties). 
 - Chinese documentation advanced.
 - Now template projects do not ask by datasource name on create a new project.
@@ -12,57 +11,17 @@ OpenXava 3.1rc1 (2008-12-4)
 - The xava.properties of template projects contains all available properties.
 - Property formLineSpacing removed from xava.properties. It's better to change CSS files for this.
 - The produced pages are XHTML 1.0 instead of HTML 4.0 (only outside portal).
-- Fix over 3.0.3: ModuleTestBase.login does not work on jetspeed2.
-- Fix: View properties are not refreshed correctly in AJAX.
-- Fix: Code generation with some version of Sun JDK fails with when Spanish language is used.
-- Fix: Upload file does not work inside portals on 3.1beta.
-- Fix over 3.1beta3: moneyEditor fails when Locale.getDefault does not contain the country.
-- Fix: 3.1beta does not work on WebSphere 6.0 and WebSphere Portal 6.0
-- Fix: 3.1beta does not work with JDK 1.4.
-- Fix: JavaScript calendar in catalan inside Liferay does not show special character. calendar-ca.js has been adapted to UTF-8.
-- Fix: fckEditor.jsp indide portal throws JSP file "/xava/editors/../imports.jsp" not found.
-- Fix: Focus is not the correct place after an event (for 3.1beta).
-- Fix over 3.1beta3: Liferay + MS Internet Explorer does not work.
-- Fix: Yellow background in Liferay does not work (for 3.1beta).
-- Fix over 3.0.3: @RowStyle does not work on Liferay 5.1.
-
-OpenXava 3.1beta3 (2008-11-12)
-------------------------------
-- Animated image while module is loading.
-- Cursor changes to wait status while the AJAX request is processed.
-- Keystrokes supported in AJAX.
-- When a session timeout is produced the page is reloaded (instead of an excepction) (for 3.1beta).
 - Upgrade to Servlets 2.4 API; so now requires a Servlet 2.4 container for run (Tomcat 5.x, WebSphere 6.x, etc).
 - ModuleTestBase does not allow to modify a disabled or readonly html element.
 - Support for UTF-8 for web request and response. Now the encoding for request/response is gotten from file.encoding system property.
+- New file custom-editors.js can be used on web/xava/js for defining the javascript for custom editors.
 - New editor for Timestamp and DATETIME with only one field for date and time. The old one still is available using @Editor("DateTimeSeparatedCalendar") or changing editors.xml.
 - Removed old and unused stuff for language: xava_language session object, Languages controller, Language class and languages.jsp.
 - New methods for obtaing labels for MetaProperty and Labels that do not required request or locale object as argument.
 - Library aspectrt.jar removed from WEB-INF/lib.
 - Money editor shows the currency symbol depending on the server locale.
-- New file custom-editors.js can be used on web/xava/js for defining the javascript for custom editors.
 - Button for popup calendar has a new image.
 - Is.equal admits to compare objects of not compatible types, just it returns false in this case.
-- Fix: In ModuleTestBase tests after a popup windows with a non-html page is shown (as a pdf) the test does not behaves well.
-- Fix: On generating a report (or any other new window action) main page is not refreshed (for 3.1beta).
-- Fix: When a portlet is added to a page it is not shown until the page is refreshed (for 3.1beta).
-- Fix: The module name in browser window is always 'unknow module' (for 3.1beta).
-- Fix: View.setEditable for a member is not refreshed in UI by AJAX.
-- Fix: On change the reference typing the key its displayed collection are not reloaded (for 3.1beta).
-- Fix: Actions inside views are not refreshed correctly with AJAX.
-- Fix: From time to time when reference objects are created or modified a NullPointerException is thrown returning to the main view.
-- Fix: XML components view properties are not refreshed using OX3.1beta.
-- Fix: In IE6 and IE6 a space on top of the module is show, also this space is incremented on click actions. For 3.1beta.
-- Fix: JavaScript error in IE6 and IE7 trying to put the focus in a hidden input.
-- Fix: Overlapped reference that explicity does not show the overlaped key fails on AJAX refresh.
-- Fix: Changing language has no effect inside Liferay in OX3.1beta.
-- Fix: Users.getCurrent() and Users.getCurrentUserInfo() returns always null in 3.1beta.
-- Fix: HTML_TEXT stereotype does not work in 3.1beta.
-- Fix: FCKEditor not modifying text for FF3.
-
-OpenXava 3.1beta2 (2008-10-21)
-------------------------------
-- Only the changed parts of the UI are reloaded using AJAX (in 3.1beta1 all UI was reloaded in each action).
 - Custom reports, those derived from JasperReportBaseAction, now are filled inside JPA/Hibernate transaction, for avoiding lazy initialization problems.
 - New method getChosenKeyMap() in ChooseReferenceAction.
 - New method getMembers() in Messages.
@@ -71,19 +30,23 @@ OpenXava 3.1beta2 (2008-10-21)
 - Is.equal can compare integers with enums, using the enum ordinal; and Shorts, Integers and Long among themselves.
 - Added default sizes (in default-size.xml) for java.lang.Integer, java.lang.Long, float, java.lang.Float, double and java.lang.Double.
 - New format 'rtf' available for JasperReportBaseAction.
-- Fix: Progress dialog won't go away in 3.1beta1.
-- Fix: Error image for properties is not only shown for the failing property, but for all with the same name in view.
-- Fix: Modifying the container object from a callback method of a collection element fails.
-- Fix: Searching in a reference uses 'like' as condition when id is hidden and another property is used for searching, so sometimes the search is not exact.
-- Fix: On generating reports (and other cases) the latest action is reexecuted.
-
-OpenXava 3.1beta1 (2008-8-26)
------------------------------
-- Full AJAX support.
 - New method remove() in ModuleContext for removing a session object.
 - New property 'browser' for xava-junit.properties to indicate the browser type to be used for testing.
 - New InputStreams utility class.
 - HtmlUnit updated to 2.2.
+- Fix: Validation error in some build.xml because default attribute was missing.
+- Fix: Code generation with some version of Sun JDK fails with when Spanish language is used.
+- Fix: JavaScript calendar in catalan inside Liferay does not show special character. calendar-ca.js has been adapted to UTF-8.
+- Fix: fckEditor.jsp indide portal throws JSP file "/xava/editors/../imports.jsp" not found.
+- Fix over 3.0.3: @RowStyle does not work on Liferay 5.1.
+- Fix: In ModuleTestBase tests after a popup windows with a non-html page is shown (as a pdf) the test does not behaves well.
+- Fix: From time to time when reference objects are created or modified a NullPointerException is thrown returning to the main view.
+- Fix: JavaScript error in IE6 and IE7 trying to put the focus in a hidden input.
+- Fix: FCKEditor not modifying text for FF3.
+- Fix: Error image for properties is not only shown for the failing property, but for all with the same name in view.
+- Fix: Modifying the container object from a callback method of a collection element fails.
+- Fix: Searching in a reference uses 'like' as condition when id is hidden and another property is used for searching, so sometimes the search is not exact.
+- Fix: On generating reports (and other cases) the latest action is reexecuted.
 
 OpenXava 3.0.3 (2008-8-14)
 --------------------------

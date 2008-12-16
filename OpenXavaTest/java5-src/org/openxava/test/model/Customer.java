@@ -90,7 +90,9 @@ import org.openxava.test.actions.*;
 	
 	@View( name="SellerAsAggregate2Levels", members="number; type; name; address; seller" ),	
 	
-	@View( name="TypeWithRadioButton", members=	"number; data [	type; name;	address; ]" )
+	@View( name="TypeWithRadioButton", members=	"number; data [	type; name;	address; ]" ),
+	
+	@View( name="Demo", members="number; type; name; photo; address; seller") 
 	
 })
 
@@ -104,7 +106,10 @@ import org.openxava.test.actions.*;
 	),	
 	@Tab( name="TwoSellersNumber",
 		properties="name, type, seller.number, alternateSeller.number"
-	)		
+	),
+	@Tab( name="Demo", 
+		properties="name, type, seller.name"
+	)
 })
 
 public class Customer implements IWithName {
@@ -142,14 +147,17 @@ public class Customer implements IWithName {
 	@Stereotype("MEMO") @Column(length=400)	
 	private String remarks;
 		
-	@Embedded 
-	@ReferenceView(forViews="SimpleStateAsForm", value="StateAsForm")
+	@Embedded
+	@ReferenceViews({
+		@ReferenceView(forViews="SimpleStateAsForm", value="StateAsForm"),
+		@ReferenceView(forViews="Demo", value="Demo") 
+	})
 	private Address address;	
 	
 	@ManyToOne(fetch=FetchType.LAZY) @SearchAction("MyReference.search") 
 	@ReadOnly(forViews="SomeMembersReadOnly")
 	@AsEmbedded(forViews="SellerAsAggregate, SellerAsAggregate2Levels")
-	@NoFrame(notForViews="SellerAsAggregate")
+	@NoFrame(notForViews="SellerAsAggregate, Demo") 
 	@ReferenceView(forViews="SellerAsAggregate2Levels", value="LevelNoDescriptionsList")
 	private Seller seller;
 	
