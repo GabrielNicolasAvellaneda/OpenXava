@@ -17,7 +17,11 @@ import org.openxava.annotations.*;
 		"	city, state;" +
 		"]"		
 	),
-	@View( name="StateAsForm" )
+	@View( name="StateAsForm" ),
+	@View( name="Demo", members = 
+		"street, zipCode;" +		
+		"city, state;"
+	)
 })
 
 public class Address implements IWithCity {
@@ -30,13 +34,20 @@ public class Address implements IWithCity {
 	
 	// By default label format is normal, therefore in this case @LabelFormat is not needed
 	@Required @Column(length=30) @LabelFormat(LabelFormatType.NORMAL)
+	@LabelFormats({ 
+		@LabelFormat(forViews="Demo", value=LabelFormatType.SMALL)
+	})
 	@Action(value="Customer.prefixStreet", alwaysEnabled=true)
 	private String street;
 	
 	@Required @Column(length=5) @LabelFormat(LabelFormatType.SMALL)
 	private int zipCode;
 	
-	@Required @Column(length=20) @LabelFormat(LabelFormatType.NO_LABEL)
+	@Required @Column(length=20) 
+	@LabelFormat(LabelFormatType.NO_LABEL)
+	@LabelFormats({ 
+		@LabelFormat(forViews="Demo", value=LabelFormatType.SMALL)
+	})
 	private String city;
 	
 	// ManyToOne inside an Embeddable is not supported by JPA 1.0 (see at 9.1.34),
