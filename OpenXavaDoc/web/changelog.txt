@@ -1,11 +1,59 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 3.1 (2008-12-16)
+-------------------------
+- Full AJAX support.
+- Style for standalone module (outside portal) is configurable: Liferay 5.1 (now the default), Liferay4.3 and the OX Classic are available (change it using styleClass and styleCSS in properties/xava.properties). 
+- Chinese documentation advanced.
+- Now template projects do not ask by datasource name on create a new project.
+- Upgrade to Hibernate 3.3.1, Hibernate Annotations 3.4.0, Hibernate EntityManager 3.4.0 and Hibernate Validator 3.1.0.
+- The xava.properties of template projects contains all available properties.
+- Property formLineSpacing removed from xava.properties. It's better to change CSS files for this.
+- The produced pages are XHTML 1.0 instead of HTML 4.0 (only outside portal).
+- Upgrade to Servlets 2.4 API; so now requires a Servlet 2.4 container for run (Tomcat 5.x, WebSphere 6.x, etc).
+- ModuleTestBase does not allow to modify a disabled or readonly html element.
+- Support for UTF-8 for web request and response. Now the encoding for request/response is gotten from file.encoding system property.
+- New file custom-editors.js can be used on web/xava/js for defining the javascript for custom editors.
+- New editor for Timestamp and DATETIME with only one field for date and time. The old one still is available using @Editor("DateTimeSeparatedCalendar") or changing editors.xml.
+- Removed old and unused stuff for language: xava_language session object, Languages controller, Language class and languages.jsp.
+- New methods for obtaing labels for MetaProperty and Labels that do not required request or locale object as argument.
+- Library aspectrt.jar removed from WEB-INF/lib.
+- Money editor shows the currency symbol depending on the server locale.
+- Button for popup calendar has a new image.
+- Is.equal admits to compare objects of not compatible types, just it returns false in this case.
+- Custom reports, those derived from JasperReportBaseAction, now are filled inside JPA/Hibernate transaction, for avoiding lazy initialization problems.
+- New method getChosenKeyMap() in ChooseReferenceAction.
+- New method getMembers() in Messages.
+- New methods refresh() and refreshCollections() in View.
+- New property 'portletLocales' in xava.properties that indicates the locales to use for generating i18n files for portlets.
+- Is.equal can compare integers with enums, using the enum ordinal; and Shorts, Integers and Long among themselves.
+- Added default sizes (in default-size.xml) for java.lang.Integer, java.lang.Long, float, java.lang.Float, double and java.lang.Double.
+- New format 'rtf' available for JasperReportBaseAction.
+- New method remove() in ModuleContext for removing a session object.
+- New property 'browser' for xava-junit.properties to indicate the browser type to be used for testing.
+- New InputStreams utility class.
+- HtmlUnit updated to 2.2.
+- Fix: Validation error in some build.xml because default attribute was missing.
+- Fix: Code generation with some version of Sun JDK fails with when Spanish language is used.
+- Fix: JavaScript calendar in catalan inside Liferay does not show special character. calendar-ca.js has been adapted to UTF-8.
+- Fix: fckEditor.jsp indide portal throws JSP file "/xava/editors/../imports.jsp" not found.
+- Fix over 3.0.3: @RowStyle does not work on Liferay 5.1.
+- Fix: In ModuleTestBase tests after a popup windows with a non-html page is shown (as a pdf) the test does not behaves well.
+- Fix: From time to time when reference objects are created or modified a NullPointerException is thrown returning to the main view.
+- Fix: JavaScript error in IE6 and IE7 trying to put the focus in a hidden input.
+- Fix: FCKEditor not modifying text for FF3.
+- Fix: Error image for properties is not only shown for the failing property, but for all with the same name in view.
+- Fix: Modifying the container object from a callback method of a collection element fails.
+- Fix: Searching in a reference uses 'like' as condition when id is hidden and another property is used for searching, so sometimes the search is not exact.
+- Fix: On generating reports (and other cases) the latest action is reexecuted.
+
 OpenXava 3.0.3 (2008-8-14)
 --------------------------
 - Full support for Liferay 5.0 and 5.1.
 - Visual style integration for Liferay 5.1.
 - Labels and messages translated to Chinese.
+- French translation of labels and messages by a native French speaker.
 - French translation of the reference guide and other documentation.
 - Chinese translation of the reference guide and other documentation.
 - HttpUnit replaced by HtmlUnit for implementing ModuleTestBase.
@@ -13,7 +61,7 @@ OpenXava 3.0.3 (2008-8-14)
 - New property 'format' for JasperReportBaseAction. It can be 'pdf' or 'excel'.
 - JSP link tag has a new attribute 'cssStyle'.
 - Date formatter for Spanish and Polish admit 2 or 4 digits for years, and it throws parse error on incorrect dates.
-- New methods assertRowCollectionChecked and assertRowCollectionUnchecked in ModuleTestBase.
+- New methods assertRowCollectionChecked() and assertRowCollectionUnchecked() in ModuleTestBase.
 - New utility class Classes for helping in class introspection.
 - Label editors show the description instead of id when the type is enum or valid-values.
 - Some HTML cleanup: All scripts inside HTML, no duplicate ids, focus_property_id hidden input removed.
@@ -30,7 +78,6 @@ OpenXava 3.0.3 (2008-8-14)
 - Fix: Added elements to an inherited collection fails.
 - Fix: updateSchema ant target of MiEscuela demo project fails.
 - Fix: Incorrect default size for editors when using @Column without length.
-- French translation of labels and messages by a native French speaker.
 - Fix: On module navigation with IChangeModuleAction on-each-request and before-each-request actions of initial module were executed in target module too.
 - Fix: Hiding a predefined collection action for detail (as DeleteAction) duplicate the previous action in UI.
 
