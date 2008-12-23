@@ -60,11 +60,14 @@ public class XavaSuite extends TestSuite {
 		suite.addTest(new TestSuite(CarrierWithSpecialSearchTest.class));		
 		suite.addTest(new TestSuite(ChangeProductsPrice2Test.class));
 		suite.addTest(new TestSuite(ChangeProductsPriceTest.class));
+		suite.addTest(new TestSuite(ClerkTest.class));
 		if (!XavaPreferences.getInstance().isEJB2Persistence()) {			
 			suite.addTest(new TestSuite(ColorOnlyPOJOTest.class));
 		}
 		suite.addTest(new TestSuite(ColorTest.class));
-		suite.addTest(new TestSuite(ClerkTest.class));
+		if (ModuleTestBase.isOX3()) {
+			suite.addTest(new TestSuite(CompositeTest.class));
+		}
 		suite.addTest(new TestSuite(CustomerContactPersonAsAggregate3LevelsTest.class));
 		suite.addTest(new TestSuite(CustomerContactPersonTest.class));
 		suite.addTest(new TestSuite(CustomerNewOnInitInheritedTest.class));
