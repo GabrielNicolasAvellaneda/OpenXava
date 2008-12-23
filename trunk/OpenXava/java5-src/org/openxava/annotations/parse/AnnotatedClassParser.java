@@ -1077,13 +1077,19 @@ public class AnnotatedClassParser {
 	}
 
 	private void processAnnotations(MetaCollection collection, AnnotatedElement element) throws Exception {
-		if (element == null) return;		
+		if (element == null) return;	
+		boolean cascadeAndSelfRerence = false;
 		if (element.isAnnotationPresent(OneToMany.class)) {
 			collection.setMetaCalculator(null);			
 			OneToMany oneToMany = element.getAnnotation(OneToMany.class);
 			collection.getMetaReference().setRole(oneToMany.mappedBy());
-			if (isCascade(oneToMany.cascade())) {				
-				addAggregateForCollection(collection.getMetaModel(), getClassNameFor(collection.getMetaReference().getReferencedModelName()));
+			if (isCascade(oneToMany.cascade())) {							
+				if (!collection.getMetaModel().getName().equals(collection.getMetaReference().getReferencedModelName())) { 
+					addAggregateForCollection(collection.getMetaModel(), getClassNameFor(collection.getMetaReference().getReferencedModelName()));					
+				}
+				else {
+					cascadeAndSelfRerence = true;					
+				}				
 			}
 		}
 		else if (element.isAnnotationPresent(Condition.class)){			
@@ -1116,6 +1122,11 @@ public class AnnotatedClassParser {
 			MetaCollectionView collectionView = new MetaCollectionView();
 			collectionView.setCollectionName(collection.getName());
 			boolean mustAddMetaView = false;
+			
+			if (cascadeAndSelfRerence) {
+				collectionView.setAsAggregate(true);
+				mustAddMetaView = true;
+			}			
 			
 			// ListProperties
 			if (element.isAnnotationPresent(ListProperties.class)) {
@@ -1378,7 +1389,7 @@ public class AnnotatedClassParser {
 				}
 			}
 
-			// AsAggregate
+			// AsEmbedded
 			if (element.isAnnotationPresent(AsEmbedded.class)) {
 				AsEmbedded asAggregate = element.getAnnotation(AsEmbedded.class);
 				if (isForView(metaView, asAggregate.forViews(), asAggregate.notForViews())) {					
