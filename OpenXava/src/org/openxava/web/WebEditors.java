@@ -46,22 +46,24 @@ public class WebEditors {
 	
 	public static Object parse(HttpServletRequest request, MetaProperty p, String [] strings, Messages errors, String viewName) throws XavaException { 
 		try {
-			String string = strings == null?null:strings[0];			
-			MetaEditor ed = getMetaEditorFor(p, viewName); 			
-			if (ed.hasFormatter()) { 								
-				return ed.getFormatter().parse(request, string);
-			}
-			else if (ed.hasMultipleValuesFormatter()) {								
-				return ed.getMultipleValuesFormatter().parse(request, strings);
-			}
-			else if (ed.isFormatterFromType()){				
-				MetaEditor edType = MetaWebEditors.getMetaEditorForTypeOfProperty(p); 
-				if (edType != null && edType.hasFormatter()) {				
-					return edType.getFormatter().parse(request, string);
+			String string = strings == null?null:strings[0];						
+			if (!(p.isKey() && p.isHidden())) { 
+				MetaEditor ed = getMetaEditorFor(p, viewName);
+				if (ed.hasFormatter()) { 								
+					return ed.getFormatter().parse(request, string);
 				}
-				else if (edType != null && edType.hasMultipleValuesFormatter()) {				
-					return edType.getMultipleValuesFormatter().parse(request, strings);
-				} 
+				else if (ed.hasMultipleValuesFormatter()) {								
+					return ed.getMultipleValuesFormatter().parse(request, strings);
+				}
+				else if (ed.isFormatterFromType()){				
+					MetaEditor edType = MetaWebEditors.getMetaEditorForTypeOfProperty(p); 
+					if (edType != null && edType.hasFormatter()) {				
+						return edType.getFormatter().parse(request, string);
+					}
+					else if (edType != null && edType.hasMultipleValuesFormatter()) {				
+						return edType.getMultipleValuesFormatter().parse(request, strings);
+					} 
+				}
 			}
 			return p.parse(string, Locales.getCurrent());
 		}

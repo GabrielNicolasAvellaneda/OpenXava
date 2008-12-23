@@ -1768,7 +1768,7 @@ public class View implements java.io.Serializable {
 					String propertyKey= "xava." + qualifier + "." + p.getName();					
 					String valueKey = propertyKey + ".value";
 					String [] results = getRequest().getParameterValues(propertyKey);					
-					Object value = WebEditors.parse(getRequest(), p, results, getErrors(), getViewName());
+					Object value = WebEditors.parse(getRequest(), p, results, getErrors(), getViewName());					
 					boolean isHiddenKeyWithoutValue = p.isHidden() && (results == null); // for not reset hidden values					
 					if (!isHiddenKeyWithoutValue && WebEditors.mustToFormat(p, getViewName())) { 
 						getRequest().setAttribute(valueKey, value);																				
