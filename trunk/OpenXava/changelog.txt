@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Modify a reference to an entity that uses UUID as hidden key fails when UpperCaseFormatter is used for strings.
+- Fix: Selfreference collection with CascadeType.ALL or REMOVE fails.
+
 OpenXava 3.1 (2008-12-16)
 -------------------------
 - Full AJAX support.

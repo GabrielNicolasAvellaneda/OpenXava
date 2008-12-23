@@ -927,8 +927,8 @@
   		<copy todir="../${project}/web/WEB-INF" file="../OpenXava/web/WEB-INF/openxava.tld" overwrite="true"/>
   		<copy todir="../${project}/web/WEB-INF" overwrite="true">
     		<fileset dir="../OpenXava/web/WEB-INF"/>
-  		</copy>		
-		<jar jarfile="../${project}/web/WEB-INF/lib/openxava.jar" basedir="../OpenXava/bin"/>
+  		</copy>				
+		<jar jarfile="../${project}/web/WEB-INF/lib/openxava.jar" basedir="../OpenXava/bin"/>		
 	</target>
 	
 	<target name="defineHibernateTool">
