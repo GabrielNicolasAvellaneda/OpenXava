@@ -43,11 +43,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			return result;
 		} 
 		catch (CreateException ex) {
-			rollback();
 			throw ex;
 		}
 		catch (ValidationException ex) {
-			rollback();
 			throw ex;
 		}
 		catch (RuntimeException ex) {
@@ -102,7 +100,6 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 		catch (FinderException ex) {
 			log.error(ex.getMessage(), ex);
-			rollback();
 			throw ex;
 		}
 		catch (RuntimeException ex) { 
@@ -138,7 +135,6 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		}
 		catch (FinderException ex) {
 			log.error(ex.getMessage(), ex);
-			rollback();
 			throw ex;
 		}
 		catch (RuntimeException ex) { 
@@ -166,11 +162,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			commitTransaction();
 		}
 		catch (RemoveException ex) {
-			rollback();
 			throw ex;
 		}
 		catch (ValidationException ex) {
-			rollback();
 			throw ex;
 		}
 		catch (RuntimeException ex) { 
@@ -196,11 +190,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			commitTransaction();
 		}
 		catch (FinderException ex) {
-			rollback();
 			throw ex;
 		}
 		catch (ValidationException ex) {
-			rollback();
 			throw ex;
 		}
 		catch (RuntimeException ex) { 
@@ -232,11 +224,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			return result;
 		}	
 		catch (CreateException ex) {
-			rollback();
 			throw ex;
 		}
 		catch (ValidationException ex) {
-			rollback();
 			throw ex;
 		}
 		catch (RuntimeException ex) { 
@@ -261,11 +251,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			return result;
 		}	
 		catch (CreateException ex) {
-			rollback();
 			throw ex;
 		}
 		catch (ValidationException ex) {
-			rollback();
 			throw ex;
 		}
 		catch (RuntimeException ex) { 
@@ -292,11 +280,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			return result;
 		}	
 		catch (CreateException ex) {
-			rollback();
 			throw ex;
 		}
 		catch (ValidationException ex) {
-			rollback();
 			throw ex;
 		}
 		catch (RuntimeException ex) { 
@@ -322,11 +308,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			return result;
 		}	
 		catch (CreateException ex) {
-			rollback();
 			throw ex;
 		}
-		catch (ValidationException ex) {
-			rollback();
+		catch (ValidationException ex) { 
 			throw ex;
 		}
 		catch (RuntimeException ex) { 
@@ -353,11 +337,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			return result;
 		}	
 		catch (CreateException ex) {
-			rollback();
 			throw ex;
 		}
-		catch (ValidationException ex) {
-			rollback();
+		catch (ValidationException ex) {		
 			throw ex;
 		}
 		catch (RuntimeException ex) { 
@@ -429,15 +411,12 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			commitTransaction();
 		} 
 		catch (FinderException ex) {
-			rollback();
 			throw ex;
 		}
 		catch (ValidationException ex) {
-			rollback();
 			throw ex;
 		}
 		catch (RemoveException ex) {
-			rollback();
 			throw ex;
 		}
 		catch (RuntimeException ex) { 
@@ -493,11 +472,9 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 			commitTransaction();
 		} 
 		catch (FinderException ex) {
-			rollback();
 			throw ex;
 		}
 		catch (ValidationException ex) {
-			rollback();
 			throw ex;
 		}
 		catch (RuntimeException ex) { 

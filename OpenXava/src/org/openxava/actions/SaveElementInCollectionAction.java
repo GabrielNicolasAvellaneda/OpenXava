@@ -5,6 +5,7 @@ import java.util.*;
 
 import javax.ejb.*;
 
+import org.openxava.jpa.*;
 import org.openxava.model.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -89,7 +90,7 @@ public class SaveElementInCollectionAction extends CollectionElementViewBaseActi
 	}
 
 	private void saveAggregate(Map containerKey) throws Exception{
-		if (getCollectionElementView().getKeyValuesWithValue().isEmpty()) {
+		if (getCollectionElementView().getKeyValuesWithValue().isEmpty()) { 
 			createAggregate(containerKey);			
 		}
 		else {				

@@ -210,6 +210,29 @@ public class DeliveryTest extends ModuleTestBase {
 		assertNoErrors();
 	}
 	
+	public void testEntityWithCollectionOfAggregatesWithNotHiddenKey() throws Exception { 
+		execute("CRUD.new");
+		
+		setValue("invoice.year", "2002");
+		setValue("invoice.number", "1");
+		assertValue("invoice.date", "1/1/02");						
+		setValue("type.number", "1");
+		setValue("number", "66");
+		setValue("description", "JUNIT");
+		
+		execute("Sections.change", "activeSection=2");
+		assertCollectionRowCount("details", 0);
+		execute("DeliveryDetail.new", "viewObject=xava_view_section2_details_details");		
+		setValue("details.number", "66");
+		setValue("details.description", "JUNIT DELIVERY DETAIL");
+		execute("DeliveryDetail.save", "viewObject=xava_view_section2_details_details");		
+		assertNoErrors();				
+		assertCollectionRowCount("details", 1);
+		
+		execute("CRUD.delete");
+		assertNoErrors();
+	}
+	
 	public void testReferenceAsDescriptionsListWithValidValuesInKey_validateViewPropertiesOnModify() throws Exception { 
 		execute("Mode.detailAndFirst");
 		assertValue("shipment.KEY", "");
