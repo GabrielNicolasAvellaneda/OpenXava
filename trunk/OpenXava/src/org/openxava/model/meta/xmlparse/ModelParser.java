@@ -166,7 +166,11 @@ public class ModelParser extends XmlElementsNames {
 			Element d = (Element) l.item(i);
 			String type = d.getTagName();
 			if (type.equals(xvalidator[lang])) {
-				container.addMetaValidator(createValidator(d, lang));
+				MetaValidator metaValidator = createValidator(d, lang);
+				if (metaValidator.containsMetaSetsWithoutValue()) {
+					throw new XavaException("property_value_for_property_validator_incorrect", container.getName(), "");
+				}
+				container.addMetaValidator(metaValidator);
 			}
 		}
 	}

@@ -446,11 +446,11 @@ public class MetaProperty extends MetaMember implements Cloneable {
 				while (it.hasNext()) {
 					MetaValidator metaValidator = (MetaValidator) it.next();
 					if (metaValidator.isOnlyOnCreate()) {						
-						if (onlyOnCreateValidators == null) onlyOnCreateValidators = new ArrayList();
-						onlyOnCreateValidators.add(metaValidator.createPropertyValidator());
+						if (onlyOnCreateValidators == null) onlyOnCreateValidators = new ArrayList();						
+						onlyOnCreateValidators.add(metaValidator.createPropertyValidator());						
 					}
 					else {
-						validators.add(metaValidator.createPropertyValidator());
+						validators.add(metaValidator.createPropertyValidator());						
 					}
 				}
 			}
