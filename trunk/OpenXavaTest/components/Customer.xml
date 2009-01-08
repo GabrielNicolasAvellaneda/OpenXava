@@ -205,7 +205,7 @@
 			<group name="seller">
 				seller;
 				relationWithSeller; 
-			</group>;
+			</group>
 			alternateSeller; 
 			deliveryPlaces; 
 			remarks

@@ -12,7 +12,9 @@ if (errors.contains()) {
 	while (it.hasNext()) {		
 %>
 <tr><td class='<%=style.getErrors()%>'>
+<%=style.getErrorStartDecoration()%>
 <%=it.next()%>
+<%=style.getErrorEndDecoration()%>
 </td></tr>
 <% } %>
 </table>

@@ -11,7 +11,9 @@ if (messages.contains()) {
 	while (it.hasNext()) {		
 %>
 <tr><td class=<%=style.getMessages()%>>
+<%=style.getMessageStartDecoration()%>
 <%=it.next()%>
+<%=style.getMessageEndDecoration()%>
 </td></tr>
 <% } %>
 </table>

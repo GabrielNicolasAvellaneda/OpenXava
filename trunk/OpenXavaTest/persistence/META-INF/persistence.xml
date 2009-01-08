@@ -6,7 +6,7 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
              version="1.0">
              
-    <!-- Tomcat + Hypersonic -->    
+    <!-- Tomcat + Hypersonic -->      
     <persistence-unit name="default">    	
     	<non-jta-data-source>java:comp/env/jdbc/OpenXavaTestDS</non-jta-data-source>    	
     	<class>org.openxava.session.GalleryImage</class>
@@ -15,10 +15,10 @@
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.default_schema" value="XAVATEST"/>
         </properties>
-    </persistence-unit>    
-    
-    
-    <!-- WebSphere + AS/400   
+    </persistence-unit>      
+      
+        
+    <!-- WebSphere + AS/400     
     <persistence-unit name="default">
     	<non-jta-data-source>jdbc/OpenXavaTestDS</non-jta-data-source>
     	<class>org.openxava.session.GalleryImage</class>
@@ -30,7 +30,7 @@
     </persistence-unit>
     -->
     
-    
+            
     <!-- Tomcat + AS/400    
     <persistence-unit name="default">
     	<non-jta-data-source>java:comp/env/jdbc/DataSource</non-jta-data-source>
@@ -45,7 +45,7 @@
     
     
     
-    <!-- JUnit Hypersonic -->   
+    <!-- JUnit Hypersonic -->           
     <persistence-unit name="junit">
         <properties>
 			<property name="hibernate.connection.driver_class" value="org.hsqldb.jdbcDriver"/>
@@ -53,10 +53,11 @@
 			<property name="hibernate.connection.url" value="jdbc:hsqldb:hsql://localhost:1666"/>
 			<property name="hibernate.default_schema" value="XAVATEST"/>
         </properties>
-    </persistence-unit>       
+    </persistence-unit>
+    
      
     
-	<!-- JUnit AS/400    
+	<!-- JUnit AS/400 -->    
     <persistence-unit name="junit">
         <properties>
 			<property name="hibernate.connection.driver_class" value="com.ibm.as400.access.AS400JDBCDriver"/>
@@ -67,6 +68,6 @@
 			<property name="hibernate.connection.password" value=""/>
         </properties>
     </persistence-unit>
-    -->    
+        
         
 </persistence>

@@ -34,7 +34,7 @@ boolean messagesOnTop = !"false".equalsIgnoreCase(request.getParameter("messages
 		<jsp:include page='<%=manager.getViewURL()%>'/>		
 	</div>    	
     <div style="clear: both; padding-top: 2px;"></div>
-	<div id='xava_bottom_buttons' <%=style.getBottomButtonsStyle()%>>	
+	<div id='xava_bottom_buttons' style="<%=style.getBottomButtonsStyle()%>">	
 		<jsp:include page="bottomButtons.jsp"/>
 	</div>
     

@@ -524,23 +524,23 @@ public class InvoiceTest extends ModuleTestBase {
 		assertNoErrors();
 		assertValue("date", "04/01/2004");
 		
-		setValue("date", "4/1/28");
+		setValue("date", "4/1/29"); // If current year is 2009
 		execute("CRUD.save");
 		assertNoErrors();
 		setValue("year", String.valueOf(getInvoice().getYear()));
 		setValue("number", String.valueOf(getInvoice().getNumber()));
 		execute("CRUD.search");
 		assertNoErrors();
-		assertValue("date", "04/01/2028");
+		assertValue("date", "04/01/2029");
 		
-		setValue("date", "040129");
+		setValue("date", "040130"); // If current year is 2009
 		execute("CRUD.save");
 		assertNoErrors();
 		setValue("year", String.valueOf(getInvoice().getYear()));
 		setValue("number", String.valueOf(getInvoice().getNumber()));
 		execute("CRUD.search");
 		assertNoErrors();
-		assertValue("date", "04/01/1929");
+		assertValue("date", "04/01/1930");
 		
 		setValue("date", "30/2/2008");
 		execute("CRUD.save");

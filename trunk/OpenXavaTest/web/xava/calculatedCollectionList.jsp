@@ -1,5 +1,5 @@
-<table id=<%=idCollection%> class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%> <%=style.getListStyle()%>>
-<tr id="xava_tr_list" class="<%=style.getListHeader()%>">
+<table id=<%=idCollection%> class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
+<tr class="<%=style.getListHeader()%>">
 	<% if (lineAction != null) { %>	
 	<th class=<%=style.getListHeaderCell()%>></th>
 	<% } %>	
@@ -34,13 +34,13 @@ while (itAggregates.hasNext()) {
 	}		
 	String events=f%2==0?style.getListPairEvents(selectedClass):style.getListOddEvents(selectedClass);
 %>
-<tr id="xava-tr-list" class="<%=cssClass%>" <%=events%>>
+<tr class="<%=cssClass%>" <%=events%> style="border-bottom: 1px solid;">
 <% if (lineAction != null) { %>
-<td class="<%=cssCellClass%>" style='vertical-align: middle;text-align: center;padding-right: 2px'>
+<td class="<%=cssCellClass%>" style="vertical-align: middle;text-align: center;padding-right: 2px; <%=style.getListCellStyle()%>">
 <xava:action action="<%=lineAction%>" argv='<%="row="+f + ",viewObject="+viewName%>'/>
 </td>
 <% } %>
-<td class="<%=cssCellClass%>" width="5">
+<td class="<%=cssCellClass%>" width="5" style="<%=style.getListCellStyle()%>">
 <input type="CHECKBOX" name="xava_selected" value="<%=propertyPrefix%>__SELECTED__:<%=f%>"/>
 </td>
 <%
@@ -48,7 +48,8 @@ while (itAggregates.hasNext()) {
 	it = subview.getMetaPropertiesList().iterator();
 	while (it.hasNext()) {
 		MetaProperty p = (MetaProperty) it.next();
-		String align = p.isNumber() && !p.hasValidValues()?"style='vertical-align: middle;text-align: right'":"style='vertical-align: middle;'";
+		String align =p.isNumber() && !p.hasValidValues()?"vertical-align: middle;text-align: right; ":"vertical-align: middle; ";
+		String cellStyle = align + style.getListCellStyle();
 		String fvalue = null;
 		Object value = null;
 		String propertyName = p.getName();
@@ -66,7 +67,7 @@ while (itAggregates.hasNext()) {
 			fvalue = WebEditors.format(request, p, value, errors, view.getViewName());	
 		}
 %>
-	<td class="<%=cssCellClass%>" <%=align%>><%=fvalue%>&nbsp;</td>
+	<td class="<%=cssCellClass%>" style="<%=cellStyle%>"><%=fvalue%>&nbsp;</td>
 <%
 	}
 }

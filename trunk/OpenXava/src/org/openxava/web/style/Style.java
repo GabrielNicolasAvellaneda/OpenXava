@@ -138,6 +138,10 @@ public class Style {
 		return ""; 
 	}	
 	
+	public String getListCellStyle() {
+		return ""; 
+	}
+	
 	
 	public String getListHeader() { 
 		return "list";
@@ -282,10 +286,19 @@ public class Style {
 	public String getSmallLabel() {
 		return "small-label";
 	}
-	
+		
 	public String getErrors() { 
 		return "errors";
 	}
+	
+	public String getErrorStartDecoration () { 
+		return "";
+	}
+	
+	public String getErrorEndDecoration () { 
+		return "";
+	}
+	
 		
 
 	public String getMessages() { 
@@ -299,6 +312,13 @@ public class Style {
 		return "";
 	}
 	
+	public String getMessageStartDecoration () { 
+		return "";
+	}
+	
+	public String getMessageEndDecoration () { 
+		return "";
+	}	
 	
 	public String getProcessing() { 
 		return "processing";

@@ -37,8 +37,8 @@ public class WebSpherePortalStyle extends Style {
 		return "border=0 cellspacing=0 cellpadding=0"; 
 	}
 	
-	public String getListStyle() { 
-		return "style='border-collapse: collapse'"; 
+	public String getListStyle() {  
+		return "border-collapse: collapse;";
 	}		 
 	
 	public String getListHeader() {  
@@ -208,7 +208,7 @@ public class WebSpherePortalStyle extends Style {
 	}
 	
 	public String getBottomButtonsStyle() {
-		return "style='padding-top: 4px'";
+		return "padding-top: 4px;";
 	}
 	
 	public boolean isApplySelectedStyleToCellInList() {
