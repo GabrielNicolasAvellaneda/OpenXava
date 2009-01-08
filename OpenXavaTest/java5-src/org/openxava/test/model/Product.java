@@ -77,7 +77,7 @@ public class Product {
 		@PropertyValidator(value=ExcludeStringValidator.class, properties=			
 			@PropertyValue(name="string", value="CUATRE"),
 			onlyOnCreate=true
-		)		
+		)
 	})
 	@ReadOnly(forViews="EditPrice")
 	private String description;

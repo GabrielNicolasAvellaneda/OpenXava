@@ -2002,18 +2002,30 @@ public class AnnotatedClassParser {
 	}	
 	
 	private void addPropertyValidator(MetaProperty metaProperty, PropertyValidator validator) {
-		MetaValidator metaValidator = createPropertyValidator(validator);
+		MetaValidator metaValidator = createPropertyValidator(validator, metaProperty.getName(), metaProperty.getMetaModel().getName());
 		metaProperty.addMetaValidator(metaValidator);
 	}
-
 
 	/**
 	 * Creates a MetaValidator for property validation from a PropertyValidator annotation. <p>
 	 */
 	public static MetaValidator createPropertyValidator(PropertyValidator validator) { 
+		return createPropertyValidator(validator, null, null);
+	}
+
+	/**
+	 * Creates a MetaValidator for property validation from a PropertyValidator annotation. <p>
+	 */
+	private static MetaValidator createPropertyValidator(PropertyValidator validator, String property, String model) { 
 		MetaValidator metaValidator = new MetaValidator();
 		metaValidator.setClassName(validator.value().getName());
 		for (PropertyValue put: validator.properties()) {
+			if (property != null && (Is.emptyString(put.value()) || !Is.emptyString(put.from()))) {				
+				if (XavaPreferences.getInstance().isFailOnAnnotationMisuse()) {			
+					throw new XavaException("property_value_for_property_validator_incorrect", property, model);
+				}
+				log.warn(XavaResources.getString("property_value_for_property_validator_incorrect", property, model));
+			}
 			metaValidator.addMetaSet(toMetaSet(put));
 		}
 		metaValidator.setOnlyOnCreate(validator.onlyOnCreate());

@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- @PropertyValue in @PropertyValidator with not 'value' throws error (because it's not supported).
 - WebSphere Portal 6.1 style support.
 - Refine style for WebSphere Portal 6.0.
 - Full tested with WebSphere 6.1.
