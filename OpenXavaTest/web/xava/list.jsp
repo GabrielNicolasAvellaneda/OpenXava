@@ -55,8 +55,8 @@ boolean singleSelection="true".equalsIgnoreCase(request.getParameter("singleSele
 </table>
 <% } %>
 
-<table id="<%=id%>" class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%> <%=style.getListStyle()%>>
-<tr id="xava_tr_list" class="<%=style.getListHeader()%>">
+<table id="<%=id%>" class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
+<tr class="<%=style.getListHeader()%>">
 <th class="<%=style.getListHeaderCell()%>" style="text-align: center" width="60">     
 	<a id="xava_filter_link_<%=id%>" href="javascript:openxava.manageFilterRow('<%=id%>', '<%=tabObject%>')" title="<xava:message key='<%=filterMessage%>'/>"><img id="xava_filter_image_<%=id%>" align='middle' 
 		src='<%=request.getContextPath()%>/xava/images/<%=imageFilter%>.gif' border='0'/></a>
@@ -218,19 +218,20 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 	}
 	String events=f%2==0?style.getListPairEvents(cssStyle):style.getListOddEvents(cssStyle);	
 %>
-<tr id="xava_tr_list" class="<%=cssClass%>" <%=events%> style="border-bottom: 1px solid;">
-	<td class="<%=cssCellClass%>" style='vertical-align: middle;text-align: center'>
+<tr class="<%=cssClass%>" <%=events%> style="border-bottom: 1px solid;">
+	<td class="<%=cssCellClass%>" style="vertical-align: middle;text-align: center; <%=style.getListCellStyle()%>">
 <% if (!org.openxava.util.Is.emptyString(action)) { %>
 <xava:action action='<%=action%>' argv='<%="row=" + f + actionArgv%>'/>
 <% } %>
 	</td>
-	<td class="<%=cssCellClass%>">
+	<td class="<%=cssCellClass%>" style="<%=style.getListCellStyle()%>">
 	<INPUT type="<%=singleSelection?"RADIO":"CHECKBOX"%>" name="xava_selected" value="<%=prefix + "selected"%>:<%=f%>" <%=checked%>/>
 	</td>	
 <%
 	for (int c=0; c<model.getColumnCount(); c++) {
 		MetaProperty p = tab.getMetaProperty(c);
-		String align =p.isNumber() && !p.hasValidValues()?"style='vertical-align: middle;text-align: right'":"style='vertical-align: middle;'";
+		String align =p.isNumber() && !p.hasValidValues()?"vertical-align: middle;text-align: right; ":"vertical-align: middle; ";
+		String cellStyle = align + style.getListCellStyle();
 		String fvalue = null;
 		if (p.hasValidValues()) {
 			fvalue = p.getValidValueLabel(request, model.getValueAt(f, c));
@@ -239,7 +240,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 			fvalue = WebEditors.format(request, p, model.getValueAt(f, c), errors, view.getViewName());
 		}
 %>
-	<td class="<%=cssCellClass%>" <%=align%>><%=fvalue%>&nbsp;</td>
+	<td class="<%=cssCellClass%>" style="<%=cellStyle%>"><%=fvalue%>&nbsp;</td>
 <%
 	}
 %>

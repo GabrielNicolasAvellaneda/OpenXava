@@ -57,19 +57,23 @@ public class Liferay41Style extends Style {
 	}
 	
 	public String getButtonBarStyle() {
-		return "style='position: static'";
+		// tmp return "style='position: static'";
+		return "position: static;"; // tmp
 	}
 	
 	public String getButtonBarStartStyle() {
-		return "style='position: static'";
+		// tmp return "style='position: static'";
+		return "position: static;"; // tmp
 	}
 	
 	public String getButtonBarMiddleStyle() {
-		return "style='position: static'";
+		// tmp return "style='position: static'";
+		return "position: static;"; // tmp
 	}
 	
 	public String getButtonBarEndStyle() {
-		return "style='position: static'";
+		// tmp return "style='position: static'";
+		return "position: static;"; // tmp
 	}
 
 		
@@ -90,7 +94,8 @@ public class Liferay41Style extends Style {
 	}
 	
 	public String getListStyle() { 
-		return "style='border-collapse: collapse'"; 
+		// tmp return "style='border-collapse: collapse'"; 
+		return "border-collapse: collapse;"; // tmp
 	}	
 
 	

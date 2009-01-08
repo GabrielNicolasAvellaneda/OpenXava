@@ -101,5 +101,28 @@ public class WebSpherePortal6Style extends WebSpherePortalStyle {
 		return "javascriptEventController.enableAll();";
 	}
 
+	public String getMessageStartDecoration () {
+		return "<div class='wpsStatusMsg'>&nbsp;<img src='" + getImageMessageBaseURI() + "info.gif' title='' alt='' />&nbsp;<span class='wpsFieldInfoText'>";
+	}
+	
+	public String getMessageEndDecoration () {
+		return "</span><div>";
+	}	
+	
+	public String getErrorStartDecoration () {
+		return "<div class='wpsStatusMsg'>&nbsp;<img src='" + getImageMessageBaseURI() + "error.gif' title='Error' alt='Error' />&nbsp;<span class='wpsFieldInfoText'>";
+	}
+	
+	protected String getImageMessageBaseURI() {
+		return "/wps/themes/html/IBM/"; 		
+	}
+	
+	public String getErrorEndDecoration () {
+		return "</span><div>";
+	}	
+	
+	public String getListCellStyle() {
+		return "border-left-width: 1px;";
+	}
 				
 }
