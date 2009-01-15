@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Default editors and default size for short and java.lang.Short.
 - @PropertyValue in @PropertyValidator with not 'value' throws error (because it's not supported).
 - WebSphere Portal 6.1 style support.
 - Refine style for WebSphere Portal 6.0.

@@ -16,6 +16,8 @@
 		<for-type type="java.lang.Integer" />
 		<for-type type="long" />
 		<for-type type="java.lang.Long" />
+		<for-type type="short" /> 
+		<for-type type="java.lang.Short" />
 	</editor>
  
 	<editor name="BooleanCheckBox" url="booleanEditor.jsp">
