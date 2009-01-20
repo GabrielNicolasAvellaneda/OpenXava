@@ -18,6 +18,10 @@
 		<for-type type="java.lang.Long" />
 		<for-type type="short" /> 
 		<for-type type="java.lang.Short" />
+		<for-type type="double" /> 
+		<for-type type="java.lang.Double" />
+		<for-type type="float" /> 
+		<for-type type="java.lang.Float" />						
 	</editor>
  
 	<editor name="BooleanCheckBox" url="booleanEditor.jsp">
