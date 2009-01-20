@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Creating from a reference an entity with collection fails.
 - Default editors and default size for short, java.lang.Short, double, java.lang.Double, float and java.lang.Float.
 - @PropertyValue in @PropertyValidator with not 'value' throws error (because it's not supported).
 - WebSphere Portal 6.1 style support.
