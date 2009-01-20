@@ -34,6 +34,48 @@ public class DeliveryTest extends ModuleTestBase {
 		super(testName, "Delivery");		
 	}
 	
+	public void testCreateEntityWithCollectionFromReference() throws Exception {
+		execute("CRUD.new");
+		execute("Reference.createNew", "model=Invoice,keyProperty=xava.Delivery.invoice.number");
+		setModel("Invoice");
+		setValue("year", "2002");
+		setValue("number", "1");
+		setValue("customer.number", "1");
+		execute("Sections.change", "activeSection=2");
+		setValue("vatPercentage", "16");
+		execute("NewCreation.saveNew");
+		assertError("Impossible to create: an object with that key already exists");
+		
+		setValue("year", "2009");
+		setValue("number", "66");
+		execute("Sections.change", "activeSection=1");
+		assertCollectionRowCount("details", 0);		
+		execute("Collection.new", "viewObject=xava_view_section1_details");		
+		setValue("details.quantity", "20");
+		setValue("details.unitPrice", "1");
+		setValue("details.product.number", "1");
+		execute("Collection.save", "viewObject=xava_view_section1_details");	
+		assertNoErrors();
+		assertMessage("Invoice detail created successfully");
+		assertMessage("Invoice created successfully"); 
+		assertNoErrors();		
+		assertCollectionRowCount("details", 1);
+		execute("Sections.change", "activeSection=2");
+		setValue("vatPercentage", "17");
+		execute("NewCreation.saveNew");
+		assertNoErrors();
+		
+		changeModule("Invoice");
+		execute("CRUD.new");
+		setValue("year", "2009");
+		setValue("number", "66");
+		execute("CRUD.search");
+		execute("Sections.change", "activeSection=2");
+		assertValue("vatPercentage", "17");
+		execute("CRUD.delete");
+		assertMessage("Invoice deleted successfully");
+	}
+	
 	public void testMinimunInCollection_overrideCollectionActions() throws Exception {
 		// minimunCollection
 		execute("CRUD.new");
