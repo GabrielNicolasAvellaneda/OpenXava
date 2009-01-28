@@ -164,6 +164,7 @@ public class XavaSuite extends TestSuite {
 			suite.addTest(new TestSuite(ProgrammerTest.class));
 		}							
 		suite.addTest(new TestSuite(PublicJSPTest.class));
+		suite.addTest(new TestSuite(ReturnPreviousModuleTest.class));
 		suite.addTest(new TestSuite(SellerCannotCreateCustomerTest.class));
 		suite.addTest(new TestSuite(SellerJSPTest.class));
 		suite.addTest(new TestSuite(SellerTest.class));

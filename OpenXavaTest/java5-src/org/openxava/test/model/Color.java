@@ -11,6 +11,12 @@ import org.openxava.annotations.*;
  */
 
 @Entity
+@Views({
+	@View( name="View1", members="property1"), 
+	@View( name="View2", members="property2"), 
+	@View( name="View2Sub1", members="property2Sub1"), 
+	@View( name="View2Sub2", members="property2Sub2") 
+})
 public class Color {
 
 	@Id @Column(length=5)
@@ -31,6 +37,18 @@ public class Color {
 			"negro".equalsIgnoreCase(name)) return "BLACK";
 		return "nocolor";		
 	}
+	
+	@Transient
+	private String property1;
+	
+	@Transient
+	private String property2;
+	
+	@Transient
+	private String property2Sub1;
+	
+	@Transient
+	private String property2Sub2;
 	
 	public String getName() {
 		return name;
@@ -54,6 +72,38 @@ public class Color {
 
 	public void setVersion(int version) {
 		this.version = version;
+	}
+
+	public String getProperty1() {
+		return property1;
+	}
+
+	public void setProperty1(String property1) {
+		this.property1 = property1;
+	}
+
+	public String getProperty2() {
+		return property2;
+	}
+
+	public void setProperty2(String property2) {
+		this.property2 = property2;
+	}
+
+	public String getProperty2Sub1() {
+		return property2Sub1;
+	}
+
+	public void setProperty2Sub1(String property2Sub1) {
+		this.property2Sub1 = property2Sub1;
+	}
+
+	public String getProperty2Sub2() {
+		return property2Sub2;
+	}
+
+	public void setProperty2Sub2(String property2Sub2) {
+		this.property2Sub2 = property2Sub2;
 	}
 
 }

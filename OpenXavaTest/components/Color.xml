@@ -20,6 +20,26 @@ Number (the key) can be 0
 			</calculator>
 		</property>
 	</entity>
+		
+	<view name="View1">
+		<property name="property1" type="String"/>
+		<members>property1</members>
+	</view>
+	
+	<view name="View2">
+		<property name="property2" type="String"/>
+		<members>property2</members>
+	</view>
+	
+	<view name="View2Sub1">
+		<property name="property2Sub1" type="String"/>
+		<members>property2Sub1</members>
+	</view>
+	
+	<view name="View2Sub2">
+		<property name="property2Sub2" type="String"/>
+		<members>property2Sub2</members>
+	</view>
 	
 	<entity-mapping table="XAVATEST@separator@COLOR">
 		<property-mapping
