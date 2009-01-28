@@ -131,15 +131,16 @@ public class Module extends DWRBase {
 	}
 
 	private void changeModule(Result result) {		
-		String nextModule = manager.getNextModule();		
+		String nextModule = manager.getNextModule();
 		if (IChangeModuleAction.PREVIOUS_MODULE.equals(nextModule)) {
-			nextModule = manager.getPreviousModule();
-			manager.setPreviousModule(null);
-		}		
-		ModuleManager nextManager = (ModuleManager) getContext(request).get(application, nextModule, "manager", "org.openxava.controller.ModuleManager");		
-		if (!IChangeModuleAction.PREVIOUS_MODULE.equals(nextModule)) {
-			nextManager.setPreviousModule(module);					
-		}	
+			nextModule = manager.getPreviousModule().peek().toString();
+			manager.getPreviousModule().pop();
+		}
+		else manager.getPreviousModule().push(module);
+		
+		ModuleManager nextManager = (ModuleManager) getContext(request).get(application, nextModule, "manager", "org.openxava.controller.ModuleManager");
+		nextManager.setPreviousModule(manager.getPreviousModule());
+		
 		manager.setNextModule(null);
 		memorizeLastMessages(nextModule); 
 		result.setModule(nextModule);

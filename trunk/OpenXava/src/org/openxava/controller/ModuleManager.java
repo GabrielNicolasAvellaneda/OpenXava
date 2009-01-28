@@ -56,12 +56,14 @@ public class ModuleManager {
 	private String viewName = null;
 	private String modeName;	
 	private String nextModule;
-	private String previousModule; 
-	public String getPreviousModule() {
-		return previousModule;
+	private Stack previousModule;
+	
+	public Stack getPreviousModule() {
+		Stack previousModule = (Stack) getObjectFromContext("xava_previousModule");
+		return Is.empty(previousModule) ? new Stack() : previousModule;
 	}
 
-	public void setPreviousModule(String previousModule) {
+	public void setPreviousModule(Stack previousModule) {
 		this.previousModule = previousModule;
 	}
 
