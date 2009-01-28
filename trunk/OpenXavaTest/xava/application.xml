@@ -60,6 +60,30 @@
 		<controller name="TypicalNotResetOnSave"/> 
 	</module>
 	
+	<module name="ColorM1">
+		<model name="Color"/>
+		<view name="View1"/>
+		<controller name="ColorM1"/>
+		<mode-controller name="Void"/>
+	</module>
+	<module name="ColorM2">
+		<model name="Color"/>
+		<view name="View2"/>
+		<controller name="ColorM2"/>
+		<mode-controller name="Void"/>
+	</module>
+	<module name="ColorM2Sub1">
+		<model name="Color"/>
+		<view name="View2Sub1"/>
+		<controller name="ReturnPreviousModule"/>
+		<mode-controller name="Void"/>
+	</module>
+	<module name="ColorM2Sub2">
+		<model name="Color"/>
+		<view name="View2Sub2"/>
+		<controller name="ReturnPreviousModule"/>
+		<mode-controller name="Void"/>
+	</module>
 						
 	<module name="Delivery" folder="invoicing">		<env-var name="XAVA_SEARCH_ACTION" value="Delivery.search"/>				<model name="Delivery"/>		<controller name="Typical"/>				<controller name="Remarks"/>		<controller name="Delivery"/>			</module>
 	
@@ -146,7 +170,8 @@
 		<model name="Customer"/>
 		<view name="SimpleStateAsForm"/>
 		<controller name="Typical"/>
-	</module>		<module name="CustomerDemo" folder="invoicing.variations">			<model name="Customer"/>		<view name="Demo"/>		<controller name="Typical"/>		<tab name="Demo"/>	</module>	
+	</module>		<module name="CustomerDemo" folder="invoicing.variations">			<model name="Customer"/>		<view name="Demo"/>
+		<tab name="Demo"/>		<controller name="Typical"/>	</module>	
 			<module name="CustomerReadOnly" folder="invoicing.variations">	
 		<env-var name="XAVA_SEARCH_ACTION" value="CRUD.searchReadOnly"/>		<model name="Customer"/>		<view name="WithSection"/>		<controller name="Print"/>			</module>
 	
