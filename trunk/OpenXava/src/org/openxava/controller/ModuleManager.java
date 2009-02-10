@@ -56,19 +56,18 @@ public class ModuleManager {
 	private String viewName = null;
 	private String modeName;	
 	private String nextModule;
-	private Stack previousModule;
+	private Stack previousModules;
 	
-	public Stack getPreviousModule() {
-		Stack previousModule = (Stack) getObjectFromContext("xava_previousModule");
-		return Is.empty(previousModule) ? new Stack() : previousModule;
+	public Stack getPreviousModules() {
+		if (previousModules == null) previousModules = new Stack();
+		return previousModules;
 	}
 
-	public void setPreviousModule(Stack previousModule) {
-		this.previousModule = previousModule;
+	public void setPreviousModules(Stack previousModules) {
+		this.previousModules = previousModules;
 	}
 
-	private String defaultView = null; 
-	
+	private String defaultView = null;
 	private boolean formUpload = false;
 	private String previousMode;
 	private boolean executingAction = false;
