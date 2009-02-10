@@ -1,14 +1,26 @@
 package org.openxava.test.tests;
 
-import org.openxava.jpa.*;
-import org.openxava.test.model.*;
+import java.net.URL;
+
+import junit.framework.TestSuite;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openxava.jpa.XPersistence;
+import org.openxava.test.model.Seller;
+import org.openxava.util.Strings;
+
+import com.gargoylesoftware.htmlunit.WebResponse;
+import com.gargoylesoftware.htmlunit.html.HtmlImage;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 /**
  * @author Javier Paniza
  */
 
 public class CustomerWithSectionTest extends CustomerTest {
-
+	private static Log log = LogFactory.getLog(CustomerWithSectionTest.class);
+	
 	private String [] listActions = {
 		"Print.generatePdf",
 		"Print.generateExcel",
@@ -448,6 +460,13 @@ public class CustomerWithSectionTest extends CustomerTest {
 		}
 	}
 	
-	
-	
+	public void testImageEditorFromAnotherModule() throws Exception { 	
+		// started from a different module because there was a bug in imageEditor when run from a module
+		//	that was not the initial
+		changeModule("BeforeGoingToCustomer");
+		execute("GoToCustomer.goCustomer");
+		
+		// 
+		testImageEditor();
+	}
 }

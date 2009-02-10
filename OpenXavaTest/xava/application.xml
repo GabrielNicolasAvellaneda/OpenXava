@@ -208,7 +208,14 @@
 		<view name="TypeWithRadioButton"/>
 		<controller name="Typical"/>
 	</module>
-		
+	
+	<module name="BeforeGoingToCustomer">
+		<model name="Customer"/>
+		<view name="Intermediate"/>
+		<controller name="GoToCustomer"/>
+		<mode-controller name="Void"/>
+	</module>
+	
 	<module name="ChangeActiveYear">
 		<model name="Year"/>
 		<controller name="ChangeActiveYear"/>	

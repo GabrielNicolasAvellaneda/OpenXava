@@ -22,8 +22,7 @@ here that you want to override.
 	<object name="xava_previousCustomViews" class="java.util.Stack"/>
 	<object name="xava_gallery" class="org.openxava.session.Gallery"/>
 	<object name="xava_defaultSchema" class="java.lang.String" scope="global"/>
-	<object name="xava_previousModule" class="java.util.Stack" scope="global"/>
-						<controller name="Typical">		<extends controller="Print"/>				<extends controller="CRUD"/>	</controller>				<controller name="Void"/>	
+	<object name="xava_currentModule" class="java.lang.String" />					<controller name="Typical">		<extends controller="Print"/>				<extends controller="CRUD"/>	</controller>				<controller name="Void"/>	
 		<controller name="CRUD">							<action  name="new" 			class="org.openxava.actions.NewAction"			image="images/new.gif"			keystroke="Control N">
 			<set property="restoreModel" value="true"/>			<use-object name="xava_view"/>					</action>									<action name="save" mode="detail"			class="org.openxava.actions.SaveAction"			image="images/save.gif"			keystroke="Control S">						<use-object name="xava_view"/>		</action>				<action name="delete" mode="detail" confirm="true"			class="org.openxava.actions.DeleteAction"			image="images/delete.gif"			keystroke="Control D">			<use-object name="xava_view"/>
 			<use-object name="xava_row"/>								</action>				<action name="search" mode="detail"			by-default="if-possible"						class="org.openxava.actions.SearchAction"			image="images/find.gif"			keystroke="control B">											</action>				<action name="searchByViewKey" hidden="true"			by-default="if-possible"						class="org.openxava.actions.SearchByViewKeyAction">			<use-object name="xava_view"/>		</action>		
@@ -139,7 +138,12 @@ here that you want to override.
 		<action name="cancel"
 			class="org.openxava.actions.CancelInListAction">
 		</action>		
-	</controller>			<controller name="Navigation">						<action name="previous" mode="detail"			image="images/previous.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt LEFT">			<set property="increment" value="-1"/>			<use-object name="xava_row"/>			<use-object name="xava_view"/>		</action>									<action name="first" mode="detail"			image="images/home.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt HOME">			<set property="goFirst" value="true"/>			<use-object name="xava_row"/>			<use-object name="xava_view"/>					</action>								<action name="next" mode="detail"			image="images/next.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt RIGHT">			<set property="increment" value="1"/>						<use-object name="xava_row"/>			<use-object name="xava_view"/>		</action>										</controller>						<controller name="ImageEditor">		<action name="changeImage"			class="org.openxava.actions.ChangeImageAction">						<use-object name="xava_newImageProperty"/>					</action>	</controller>
+	</controller>			<controller name="Navigation">						<action name="previous" mode="detail"			image="images/previous.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt LEFT">			<set property="increment" value="-1"/>			<use-object name="xava_row"/>			<use-object name="xava_view"/>		</action>									<action name="first" mode="detail"			image="images/home.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt HOME">			<set property="goFirst" value="true"/>			<use-object name="xava_row"/>			<use-object name="xava_view"/>					</action>								<action name="next" mode="detail"			image="images/next.gif"			class="org.openxava.actions.ViewDetailAction"			keystroke="control alt RIGHT">			<set property="increment" value="1"/>						<use-object name="xava_row"/>			<use-object name="xava_view"/>		</action>										</controller>						<controller name="ImageEditor">
+		<action name="changeImage"
+			class="org.openxava.actions.ChangeImageAction">			
+			<use-object name="xava_newImageProperty"/>			
+		</action>
+	</controller>
 	
 	<controller name="Return">
 		<action name="return" image="images/back.gif"

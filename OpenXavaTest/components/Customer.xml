@@ -386,6 +386,12 @@
 		<reference-view reference="state" frame="false"/>
 	</view>
 	
+	<view model="Intermediate">
+		<members>
+			number
+		</members>
+	</view>
+	
 	<tab>
 		<row-style style="highlight" property="type" value="steady"/>
 		<properties>name, type, seller.name, address.city, seller.level.description, address.state.name</properties>	

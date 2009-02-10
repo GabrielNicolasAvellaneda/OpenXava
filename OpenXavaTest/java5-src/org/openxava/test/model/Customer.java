@@ -92,7 +92,9 @@ import org.openxava.test.actions.*;
 	
 	@View( name="TypeWithRadioButton", members=	"number; data [	type; name;	address; ]" ),
 	
-	@View( name="Demo", members="number; type; name; photo; address; seller") 
+	@View( name="Demo", members="number; type; name; photo; address; seller"),
+	
+	@View( name="Intermediate", members="number")
 	
 })
 

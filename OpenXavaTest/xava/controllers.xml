@@ -315,6 +315,12 @@
 		<extends controller="CustomerNewOnInit"/>
 	</controller>
 	
+	<controller name="GoToCustomer">
+		<action name="goCustomer" class="org.openxava.actions.ChangeModuleAction">
+			<set property="nextModule" value="CustomerWithSection"/>
+		</action>
+	</controller>
+	
 	<controller name="Invoice">
 		<extends controller="Typical"/>
 		<action name="printPdf" mode="detail"
