@@ -30,6 +30,7 @@ public class ModifyFromReferenceAction extends NavigationFromReferenceBaseAction
 		}
 		getView().setKeyEditable(false);
 		getView().setValues(key);
+
 	}
 		
 	public String getCustomController() {	

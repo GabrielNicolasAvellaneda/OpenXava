@@ -55,10 +55,10 @@ boolean singleSelection="true".equalsIgnoreCase(request.getParameter("singleSele
 </table>
 <% } %>
 
-<table id="<%=id%>" class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
+<table id="<xava:id name='<%=id%>'/>" class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
 <tr class="<%=style.getListHeader()%>">
 <th class="<%=style.getListHeaderCell()%>" style="text-align: center" width="60">     
-	<a id="xava_filter_link_<%=id%>" href="javascript:openxava.manageFilterRow('<%=id%>', '<%=tabObject%>')" title="<xava:message key='<%=filterMessage%>'/>"><img id="xava_filter_image_<%=id%>" align='middle' 
+	<a id="<xava:id name='<%="filter_link_" + id%>'/>" href="javascript:openxava.manageFilterRow('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', '<%=id%>', '<%=tabObject%>')" title="<xava:message key='<%=filterMessage%>'/>"><img id="<xava:id name='<%="filter_image_" + id%>'/>" align='middle' 
 		src='<%=request.getContextPath()%>/xava/images/<%=imageFilter%>.gif' border='0'/></a>
 	<xava:image action="List.customize" argv="<%=collectionArgv%>"/>
 </th>
@@ -120,14 +120,14 @@ while (it.hasNext()) {
 %>
 </tr>
 <% if (filter) { %>
-<tr id="xava_tr_list_filter_<%=id%>" class=<%=style.getListSubheader()%> style="display: <%=displayFilter%>"> 
+<tr id="<xava:id name='<%="tr_list_filter_" + id%>'/>" class=<%=style.getListSubheader()%> style="display: <%=displayFilter%>"> 
 <th class=<%=style.getListSubheaderCell()%> style="text-align: center" width="60">
 <xava:action action="List.filter" argv="<%=collectionArgv%>"/>
 </th>
 <th class=<%=style.getListSubheaderCell()%> width="5">
 	<a title='<xava:message key="clear_condition_values"/>' href="javascript:void(0)">
 		<img src='<%=request.getContextPath()%>/xava/images/clear-right.gif'
-			border='0' align='middle' onclick="openxava.clearConditionValues('<%=prefix%>')"/>
+			border='0' align='middle' onclick="openxava.clearConditionValues('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', '<%=prefix%>')"/>
 	</a>
 </th>
 <%
@@ -179,7 +179,7 @@ String urlComparatorsCombo = "comparatorsCombo.jsp" // in this way because websp
 	+ "&index=" + iConditionValues; 
 %>
 <jsp:include page="<%=urlComparatorsCombo%>" />
-<input name="<%=prefix%>conditionValue.<%=iConditionValues%>" class=<%=style.getEditor()%> type="text" maxlength="<%=maxLength%>" size="<%=length%>" value="<%=value%>"/>
+<input name="<xava:id name='<%=prefix + "conditionValue." + iConditionValues%>'/>" class=<%=style.getEditor()%> type="text" maxlength="<%=maxLength%>" size="<%=length%>" value="<%=value%>"/>
 	<% } %>
 </th>
 <% 
@@ -225,7 +225,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 <% } %>
 	</td>
 	<td class="<%=cssCellClass%>" style="<%=style.getListCellStyle()%>">
-	<INPUT type="<%=singleSelection?"RADIO":"CHECKBOX"%>" name="xava_selected" value="<%=prefix + "selected"%>:<%=f%>" <%=checked%>/>
+	<INPUT type="<%=singleSelection?"RADIO":"CHECKBOX"%>" name="<xava:id name='xava_selected'/>" value="<%=prefix + "selected"%>:<%=f%>" <%=checked%>/>
 	</td>	
 <%
 	for (int c=0; c<model.getColumnCount(); c++) {

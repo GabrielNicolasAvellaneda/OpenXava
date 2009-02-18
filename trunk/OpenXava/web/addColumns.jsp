@@ -19,11 +19,11 @@ org.openxava.tab.Tab tab = (org.openxava.tab.Tab) context.get(request,
 <xava:message key="choose_property_add_list_prompt"/>
 </div>
 
-<table id="xavaPropertiesList" class='<%=style.getList()%>' width="100%">
-<tr>
-	<th class=<%=style.getList()%> width="5"></th>
-	<th class=<%=style.getList()%>><xava:message key="property"/></th>
-	<th class=<%=style.getList()%>><xava:message key="label"/></th>
+<table id="<xava:id name='xavaPropertiesList'/>" class='<%=style.getList()%>' width="100%" <%=style.getListCellSpacing()%> style="margin-bottom: 5px; <%=style.getListStyle()%>">
+<tr class="<%=style.getListHeader()%>">
+	<th class="<%=style.getListHeaderCell()%>" style="text-align: center" width="5"></th>
+	<th class="<%=style.getListHeaderCell()%>" style="text-align: center"><xava:message key="property"/></th>
+	<th class="<%=style.getListHeaderCell()%>" style="text-align: center"><xava:message key="label"/></th>
 </tr>
 <%
 int f=0;
@@ -31,18 +31,20 @@ Locale currentLocale = Locales.getCurrent(); //Trifon
 for (Iterator it=tab.getRemainingPropertiesNames().iterator(); it.hasNext();)
 {
 	String property = (String) it.next();
-	String cssClass=f%2==0?style.getListPair():style.getListOdd();
+	String cssClass=f%2==0?style.getListPair():style.getListOdd();	
+	String cssCellClass=f%2==0?style.getListPairCell():style.getListOddCell(); 
+	String events=f%2==0?style.getListPairEvents(cssCellClass):style.getListOddEvents(cssCellClass);		
 	f++;
 	String propertyI18n = Labels.getQualified(property, currentLocale); // Trifon
 %>
-<tr class=<%=cssClass%>>
-	<td class=<%=cssClass%> width="5">
-		<INPUT type="CHECKBOX" name="xava_selected" value="selectedProperties:<%=property%>"/>
+<tr class="<%=cssClass%>" <%=events%> style="border-bottom: 1px solid;">
+	<td class="<%=cssCellClass%>" style="<%=style.getListCellStyle()%>" width="5">
+		<INPUT type="CHECKBOX" name="<xava:id name='xava_selected'/>" value="selectedProperties:<%=property%>"/>
 	</td>
-	<td class=<%=cssClass%>>
+	<td class="<%=cssCellClass%>" style="<%=style.getListCellStyle()%>">
 		<%=property%>
 	</td>
-	<td class=<%=cssClass%>>
+	<td class="<%=cssCellClass%>" style="<%=style.getListCellStyle()%>">
 		<%=propertyI18n%>
 	</td>
 </tr>

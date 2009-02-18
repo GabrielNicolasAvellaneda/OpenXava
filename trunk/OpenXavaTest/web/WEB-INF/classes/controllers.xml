@@ -315,6 +315,12 @@
 		<extends controller="CustomerNewOnInit"/>
 	</controller>
 	
+	<controller name="GoToCustomer">
+		<action name="goCustomer" class="org.openxava.actions.ChangeModuleAction">
+			<set property="nextModule" value="CustomerWithSection"/>
+		</action>
+	</controller>
+	
 	<controller name="Invoice">
 		<extends controller="Typical"/>
 		<action name="printPdf" mode="detail"
@@ -732,6 +738,30 @@
 			<use-object name="xava_view"/>			
 		</action>
 		
+	</controller>
+	
+	<controller name="ReturnPreviousModule">
+		<action name="return" class="org.openxava.actions.ReturnPreviousModuleAction"/>
+	</controller>
+	
+	<controller name="ColorM1">
+		<action name="changeModule2" 
+			class="org.openxava.actions.ChangeModuleAction">
+			<set property="nextModule" value="ColorM2"/>
+		</action>
+	</controller>
+	
+	<controller name="ColorM2">
+		<extends controller="ReturnPreviousModule"/>
+		
+		<action name="changeModule2Sub1" 
+			class="org.openxava.actions.ChangeModuleAction">
+			<set property="nextModule" value="ColorM2Sub1"/>
+		</action>
+		<action name="changeModule2Sub2" 
+			class="org.openxava.actions.ChangeModuleAction">
+			<set property="nextModule" value="ColorM2Sub2"/>
+		</action>
 	</controller>
 	
 </controllers>

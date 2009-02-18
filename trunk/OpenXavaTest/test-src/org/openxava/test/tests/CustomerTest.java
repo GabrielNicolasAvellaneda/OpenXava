@@ -6,6 +6,8 @@ import org.openxava.model.meta.*;
 import org.openxava.test.model.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
+import org.openxava.web.*;
+
 import com.gargoylesoftware.htmlunit.*;
 import com.gargoylesoftware.htmlunit.html.*;
 
@@ -198,7 +200,7 @@ public class CustomerTest extends ModuleTestBase {
 		
 	public void testImageEditor() throws Exception { 		
 		execute("CRUD.new");
-		execute("ImageEditor.changeImage", "newImageProperty=xava.Customer.photo");
+		execute("ImageEditor.changeImage", "newImageProperty=photo"); 
 		assertNoErrors();
 		assertAction("LoadImage.loadImage");		
 		String imageUrl = System.getProperty("user.dir") + "/test-images/foto_javi.jpg";
@@ -211,7 +213,7 @@ public class CustomerTest extends ModuleTestBase {
 		String urlPrefix = url.getProtocol() + "://" + url.getHost() + ":" + url.getPort();
 		
 		
-		HtmlImage image = (HtmlImage) page.getHtmlElementsByName("xava.Customer.photo").get(0);
+		HtmlImage image = (HtmlImage) page.getHtmlElementsByName(decorateId("photo")).get(0); 
 		String imageURL = null;
 		if (image.getSrcAttribute().startsWith("/")) {
 			imageURL = urlPrefix + image.getSrcAttribute();
@@ -245,8 +247,8 @@ public class CustomerTest extends ModuleTestBase {
 
 	public void testSearchReferenceWithAListInAGroup() throws Exception {
 		execute("CRUD.new");		
-		assertValue("seller.name", "");
-		execute("MyReference.search", "keyProperty=xava.Customer.seller.number");		
+		assertValue("seller.name", "");		
+		execute("MyReference.search", "keyProperty=seller.number"); 
 		String sellerName = getValueInList(0, 1);
 		execute("ReferenceSearch.choose", "row=0");
 		assertTrue("The name of first seller can't be empty string", sellerName.trim().length() > 0);		
@@ -420,9 +422,9 @@ public class CustomerTest extends ModuleTestBase {
 	public void testCustomSearchReferenceAction() throws Exception {
 		execute("CRUD.new");
 		String html = getHtml();		
-		assertTrue("Search of 'seller' should be 'MyReference.search'", html.indexOf("'MyReference.search', 'keyProperty=xava.Customer.seller.number'") > 0);
-		assertTrue("Search 'alternateSeller' should be 'Reference.search'", html.indexOf("'Reference.search', 'keyProperty=xava.Customer.alternateSeller.number'") > 0);
-		execute("MyReference.search", "keyProperty=xava.Customer.seller.number");
+		assertTrue("Search of 'seller' should be 'MyReference.search'", html.indexOf("'MyReference.search', 'keyProperty=seller.number'") > 0);
+		assertTrue("Search 'alternateSeller' should be 'Reference.search'", html.indexOf("'Reference.search', 'keyProperty=alternateSeller.number'") > 0);
+		execute("MyReference.search", "keyProperty=seller.number");
 		assertListRowCount(2); // Because custome searh action filter
 	}
 	

@@ -1,26 +1,14 @@
 package org.openxava.test.tests;
 
-import java.net.URL;
-
-import junit.framework.TestSuite;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.openxava.jpa.XPersistence;
-import org.openxava.test.model.Seller;
-import org.openxava.util.Strings;
-
-import com.gargoylesoftware.htmlunit.WebResponse;
-import com.gargoylesoftware.htmlunit.html.HtmlImage;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import org.openxava.jpa.*;
+import org.openxava.test.model.*;
 
 /**
  * @author Javier Paniza
  */
 
 public class CustomerWithSectionTest extends CustomerTest {
-	private static Log log = LogFactory.getLog(CustomerWithSectionTest.class);
-	
+
 	private String [] listActions = {
 		"Print.generatePdf",
 		"Print.generateExcel",
@@ -181,8 +169,8 @@ public class CustomerWithSectionTest extends CustomerTest {
 	public void testPropertyAction() throws Exception { 
 		execute("CRUD.new");
 		setValue("address.street", "DOCTOR PESSET");
-		assertValue("address.street", "DOCTOR PESSET");
-		execute("Customer.prefixStreet", "xava.keyProperty=xava.Customer.address.street");		
+		assertValue("address.street", "DOCTOR PESSET");		
+		execute("Customer.prefixStreet", "xava.keyProperty=address.street"); 
 		assertValue("address.street", "C/ DOCTOR PESSET");
 	}
 	

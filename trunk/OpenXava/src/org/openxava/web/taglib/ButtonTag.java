@@ -8,6 +8,7 @@ import org.apache.commons.logging.*;
 import org.openxava.controller.*;
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
+import org.openxava.web.*;
 import org.openxava.web.style.*;
 
 /**
@@ -30,15 +31,15 @@ public class ButtonTag extends TagSupport implements IActionTag{
 			
 			HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();			
 			MetaAction metaAction = MetaControllers.getMetaAction(getAction());
-						
+			String application = request.getParameter("application");
+			String module = request.getParameter("module");
 			pageContext.getOut().print("<input name='");
-			pageContext.getOut().print("xava.action.");
-			pageContext.getOut().print(getAction());
+			pageContext.getOut().print(Ids.decorate(application, module, "action." + getAction())); 
 			pageContext.getOut().println("' type='hidden'/>");			
 			pageContext.getOut().print("<input type='button' "); 
 			if (Is.emptyString(getArgv())) { 
 				pageContext.getOut().print("id='"); 
-				pageContext.getOut().print(getAction());
+				pageContext.getOut().print(Ids.decorate(application, module, getAction()));
 				pageContext.getOut().print("'");
 			}				
 			pageContext.getOut().print(" title='"); 
@@ -48,6 +49,14 @@ public class ButtonTag extends TagSupport implements IActionTag{
 			Style style = (Style) request.getAttribute("style");
 			pageContext.getOut().print(style.getButton());
 			pageContext.getOut().print("'\tonclick='openxava.executeAction(");
+			pageContext.getOut().print('"');				
+			pageContext.getOut().print(application);
+			pageContext.getOut().print('"');
+			pageContext.getOut().print(", ");
+			pageContext.getOut().print('"');				
+			pageContext.getOut().print(module);
+			pageContext.getOut().print('"');
+			pageContext.getOut().print(", ");			
 			pageContext.getOut().print('"');				
 			pageContext.getOut().print(metaAction.getConfirmMessage(request));
 			pageContext.getOut().print('"');

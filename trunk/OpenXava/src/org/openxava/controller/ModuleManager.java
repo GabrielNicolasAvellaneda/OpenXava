@@ -17,6 +17,7 @@ import org.openxava.jpa.*;
 import org.openxava.util.*;
 import org.openxava.validators.*;
 import org.openxava.view.*;
+import org.openxava.web.*;
 
 /**
  * @author Javier Paniza
@@ -29,10 +30,9 @@ public class ModuleManager {
 	static {		
 		MetaControllers.setContext(MetaControllers.WEB);		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
-		log.info("OpenXava 3.1.1beta (2009-1-xx)");		
+		log.info("OpenXava 3.1.1beta (2009-2-xx)");		
 	}
 	
-	private static int nextOid = 0; 
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;
 		
 	private String user; 
@@ -40,8 +40,7 @@ public class ModuleManager {
 	private Collection metaActionsOnEachRequest;
 	private Collection metaActionsBeforeEachRequest; 
 	private boolean moduleInitiated;
-	private String form;	
-	private int oid;	
+	private int id;	
 	private String defaultActionQualifiedName;
 	private MetaModule metaModule;
 	private String[] controllersNames;
@@ -66,7 +65,7 @@ public class ModuleManager {
 	public void setPreviousModules(Stack previousModules) {
 		this.previousModules = previousModules;
 	}
-
+	
 	private String defaultView = null;
 	private boolean formUpload = false;
 	private String previousMode;
@@ -74,22 +73,7 @@ public class ModuleManager {
 	private boolean reloadAllUINeeded;  
 	private boolean reloadViewNeeded; 
 	private boolean actionsChanged; 
-	 
-
-	public ModuleManager() {
-		oid = nextOid++;
-	}
-	
-	/**
-	 * Html form name associated to this controller. 
-	 */
-	public String getForm() {
-		if (form == null) {
-			form = "xava_form" + oid;
-		}
-		return form;		
-	}
-	
+		
 	/**
 	 * HTML action bind to the current form.
 	 * @return
@@ -206,13 +190,13 @@ public class ModuleManager {
 			Is.equal(request.getParameter("xava_action_application"),getApplicationName());
 	}
 		
-	public void execute(HttpServletRequest request, Messages errors, Messages messages) {		
+	public void execute(HttpServletRequest request, Messages errors, Messages messages) {
 		try {						
 			if (errors.isEmpty()) { // Only it's executed the action if there aren't errors
 				if (isFormUpload()) {
 					parseMultipartRequest(request);
 				}				
-				String xavaAction = getParameter(request, "xava_action");					
+				String xavaAction = getParameter(request, "xava_action");
 				if (!Is.emptyString(xavaAction)) {											
 					String actionValue = request.getParameter("xava_action_argv");					
 					if ("undefined".equals(actionValue)) actionValue = null;						
@@ -234,8 +218,8 @@ public class ModuleManager {
 		if (isFormUpload()) {
 			List items = (List) request.getAttribute("xava.upload.fileitems");
 			for (Iterator it = items.iterator(); it.hasNext(); ) {
-				FileItem item = (FileItem) it.next();
-				if (parameter.equals(item.getFieldName())) return item.getString();								
+				FileItem item = (FileItem) it.next();								
+				if (parameter.equals(Ids.undecorate(item.getFieldName()))) return item.getString();
 			}	
 			return null;    
 		}
@@ -267,7 +251,7 @@ public class ModuleManager {
 		executeAction(action, null, errors, messages, null, request);
 	}
 
-	private void executeAction(IAction action, MetaAction metaAction, Messages errors, Messages messages, String propertyValues, HttpServletRequest request) {		
+	private void executeAction(IAction action, MetaAction metaAction, Messages errors, Messages messages, String propertyValues, HttpServletRequest request) {
 		try {					
 			Object previousView = getContext().get(applicationName, moduleName, "xava_view");  
 			action.setErrors(errors);
@@ -292,16 +276,22 @@ public class ModuleManager {
 			}		
 			
 			if (action instanceof IPropertyAction) {
-				String keyProperty = (String) xavaValues.get("xava.keyProperty");
+				String keyProperty = Ids.undecorate((String) xavaValues.get("xava.keyProperty")); 
 				if (Is.emptyString(keyProperty)) {
 					throw new XavaException("property_action_error", action.getClass()); 
 				}								
 				int idx = keyProperty.lastIndexOf('.');
-				String subviewName =  keyProperty.substring(0, idx);
-				String propertyName = keyProperty.substring(idx + 1);
-				((IPropertyAction) action).setProperty(propertyName); 
 				View view = (View) getContext().get(request, "xava_view");
-				((IPropertyAction) action).setView(getSubview(view, subviewName)); 				
+				if (idx < 0) { 
+					((IPropertyAction) action).setProperty(keyProperty);
+					((IPropertyAction) action).setView(view);
+				}
+				else {
+					String subviewName =  keyProperty.substring(0, idx);
+					String propertyName = keyProperty.substring(idx + 1);
+					((IPropertyAction) action).setProperty(propertyName); 					
+					((IPropertyAction) action).setView(getSubview(view, subviewName));
+				}
 			}			
 			
 			if (action instanceof IProcessLoadedFileAction) {
@@ -503,12 +493,8 @@ public class ModuleManager {
 		if (previousMode != null) setModeName(previousMode);				
 	}
 
-	private View getSubview(View view, String memberName) throws XavaException { 
-		if (memberName.startsWith("xava.")) {
-			String prefix = "xava." + view.getModelName() + ".";	
-			if (prefix.length() > memberName.length()) return view;
-			memberName = memberName.substring(prefix.length());				
-		}
+	private View getSubview(View view, String memberName) throws XavaException {
+		memberName = Ids.undecorate(memberName); 
 		if (memberName.indexOf('.') < 0) {
 			return view.getSubview(memberName); 
 		}
@@ -865,7 +851,7 @@ public class ModuleManager {
 	}
 	
 	public String toString() {		
-		return "ModuleManager:" + oid;
+		return "ModuleManager:" + id;
 	}
 	
 	public void initModule(HttpServletRequest request, Messages errors, Messages messages) {		

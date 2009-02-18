@@ -1,4 +1,4 @@
-<table id=<%=idCollection%> class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
+<table id="<xava:id name='<%=idCollection%>'/>" class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
 <tr class="<%=style.getListHeader()%>">
 	<% if (lineAction != null) { %>	
 	<th class=<%=style.getListHeaderCell()%>></th>
@@ -41,7 +41,7 @@ while (itAggregates.hasNext()) {
 </td>
 <% } %>
 <td class="<%=cssCellClass%>" width="5" style="<%=style.getListCellStyle()%>">
-<input type="CHECKBOX" name="xava_selected" value="<%=propertyPrefix%>__SELECTED__:<%=f%>"/>
+<input type="CHECKBOX" name="<xava:id name='xava_selected'/>" value="<%=propertyPrefix%>__SELECTED__:<%=f%>"/>
 </td>
 <%
 	f++;

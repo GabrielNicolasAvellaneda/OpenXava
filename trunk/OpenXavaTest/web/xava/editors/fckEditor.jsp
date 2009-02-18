@@ -12,12 +12,12 @@ String form=request.getParameter("form");
 		<SCRIPT type="text/javascript">
 	
 			// User-defined callback called when form is submitted
-			function doSave() {
+			function doSave() {				
 				var content = FCKeditorAPI.GetInstance('FCKeditor1').GetHTML();
 				// Tell parent what the new content is
 			    opener.document.<%=form%>.elements["<%=nproperty%>"].value = content;
-			    opener.openxava.editors.html.showValue(content);
-			    self.close();
+			    opener.openxava.editors.html.showValue('<%=nproperty%>_html_editor_show_value', content);
+			    self.close();			    
 				return false;
 			} 
 	

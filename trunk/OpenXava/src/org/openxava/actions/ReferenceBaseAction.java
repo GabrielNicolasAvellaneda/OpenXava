@@ -38,9 +38,9 @@ public class ReferenceBaseAction extends ViewBaseAction {
 	private String keyProperty;
 	private View referenceSubview;		
 	
-	public void execute() throws Exception {		
-		this.viewInfo = createSubview(getView(), createMemberName());
-		setReferenceSubview(viewInfo.getView());				 
+	public void execute() throws Exception {	
+		this.viewInfo = createSubview(getView(), createMemberName());		
+		setReferenceSubview(viewInfo.getView());		
 	}
 	
 	protected ViewInfo getViewInfo() {
@@ -57,11 +57,10 @@ public class ReferenceBaseAction extends ViewBaseAction {
 		return createSubview(view.getSubview(subviewName), nextMember);
 	}
 	
-	private String createMemberName() {		
-		String prefix = "xava." + getModelName() + ".";		
-		String propertyName = keyProperty.substring(prefix.length());				
+	private String createMemberName() {
+		String propertyName = getKeyProperty(); 
 		int idx = propertyName.lastIndexOf(".");		
-		if (idx >= 0) return propertyName.substring(0, idx); 	
+		if (idx >= 0) return propertyName.substring(0, idx);		
 		return propertyName;
 	}
 

@@ -9,7 +9,7 @@ import org.openxava.controller.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.view.*;
-import org.openxava.web.style.*;
+import org.openxava.web.*;
 
 
 /**
@@ -40,8 +40,10 @@ public class EditorTag extends TagSupport {
 			MetaProperty metaProperty = view.getMetaProperty(property); 
 
 			String propertyPrefix = request.getParameter("propertyPrefix");
-			propertyPrefix = (propertyPrefix == null || propertyPrefix.equals(""))?"xava." + view.getModelName() + ".":propertyPrefix;
-			String propertyKey= propertyPrefix + property; 
+			propertyPrefix = propertyPrefix == null?"":propertyPrefix; 
+			String application = request.getParameter("application");
+			String module = request.getParameter("module");
+			String propertyKey = Ids.decorate(application, module, propertyPrefix + property); 
 			String valueKey = propertyKey + ".value";
 			request.setAttribute(propertyKey, metaProperty);
 			Object value = view.getValue(property);
@@ -49,10 +51,11 @@ public class EditorTag extends TagSupport {
 									
 			Messages errors = (Messages) request.getAttribute("errors"); 													
 			boolean throwsChanged=explicitThrowPropertyChanged?this.throwPropertyChanged:view.throwsPropertyChanged(property); 
-			Style style = (Style) request.getAttribute("style");
-			String scriptFoco = "onblur=\"xava_focus_property.value='" + propertyKey + "'\"";
-			String script = throwsChanged?
-				"onchange='openxava.throwPropertyChanged(\"" + propertyKey + "\")' ":"";
+			String xavaFocusProperty = Ids.decorate(application, module, "xava_focus_property");
+			String scriptFoco = "onblur=\"" + xavaFocusProperty + ".value='" + propertyKey + "'\"";
+			String script = throwsChanged? 
+				"onchange='openxava.throwPropertyChanged(\"" + application +
+				"\", \"" + module + "\", \"" + propertyKey + "\")' ":"";
 			script = script + scriptFoco;
 
 			boolean editable = explicitEditable?this.editable:view.isEditable(property);  
@@ -67,26 +70,28 @@ public class EditorTag extends TagSupport {
 			
 			if (org.openxava.web.WebEditors.mustToFormat(metaProperty, view.getViewName())) {
 				Object fvalue = org.openxava.web.WebEditors.formatToStringOrArray(request, metaProperty, value, errors, view.getViewName());
-				request.setAttribute(propertyKey + ".fvalue", fvalue);
+				request.setAttribute(propertyKey + ".fvalue", fvalue); 
 			}
 						
-			String editableKey = propertyKey + "_EDITABLE_";
+			String editableKey = propertyKey + "_EDITABLE_";  
 			pageContext.getOut().print("<input type='hidden' name='");
 			pageContext.getOut().print(editableKey);
 			pageContext.getOut().print("' value='");
 			pageContext.getOut().print(editable);
 			pageContext.getOut().println("'/>");
 			if (org.openxava.web.WebEditors.hasMultipleValuesFormatter(metaProperty, view.getViewName())) {
-				pageContext.getOut().print("<input type='hidden' name='xava_multiple' value='"); 
+				pageContext.getOut().print("<input type='hidden' name='");
+				pageContext.getOut().print(Ids.decorate(application, module, "xava_multiple"));
+				pageContext.getOut().print("' value='");
 				pageContext.getOut().print(propertyKey);
 				pageContext.getOut().println("'/>");				
-			}
+			}			
 			try {
 				// If the JSP that uses this tag is in a subfolder
 				pageContext.include("../xava/" + editorURL);				
 			}
 			catch (Exception ex) {
-				// If the JSP that uses this tag is in root folder
+				// If the JSP that uses this tag is in root folder				
 				pageContext.include("xava/" + editorURL);
 			}			
 		}
