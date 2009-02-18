@@ -35,7 +35,7 @@ public class LoadImageAction extends BaseAction implements INavigationAction, IP
 		String property = getNewImageProperty(); 
 		String []m = property.split( "\\." );  
 		View result = view; 
-		for( int i = 2; i < m.length-1; i++ ) { 
+		for( int i = 0; i < m.length-1; i++ ) { 
 			result = result.getSubview(m[i]); 
 		} 		
 		return result; 

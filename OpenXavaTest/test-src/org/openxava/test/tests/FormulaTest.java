@@ -23,7 +23,7 @@ public class FormulaTest extends ModuleTestBase {
 	public void testImageInsideCollection() throws Exception {
 		execute("CRUD.new");		
 		execute("Collection.new", "viewObject=xava_view_section0_ingredients");
-		execute("ImageEditor.changeImage", "newImageProperty=xava.Formula.ingredients.image");
+		execute("ImageEditor.changeImage", "newImageProperty=ingredients.image");
 		assertNoErrors();
 		assertAction("LoadImage.loadImage");		
 		String imageUrl = System.getProperty("user.dir") + "/test-images/cake.gif";
@@ -35,8 +35,8 @@ public class FormulaTest extends ModuleTestBase {
 		URL url = page.getWebResponse().getUrl();
 		
 		String urlPrefix = url.getProtocol() + "://" + url.getHost() + ":" + url.getPort();
-
-		HtmlImage image = (HtmlImage) page.getHtmlElementsByName("xava.Formula.ingredients.image").get(0);		
+		
+		HtmlImage image = (HtmlImage) page.getHtmlElementsByName(decorateId("ingredients.image")).get(0);
 		String imageURL = null;
 		if (image.getSrcAttribute().startsWith("/")) {
 			imageURL = urlPrefix + image.getSrcAttribute();
@@ -44,7 +44,7 @@ public class FormulaTest extends ModuleTestBase {
 		else {
 			String urlBase = Strings.noLastToken(url.getPath(), "/");
 			imageURL = urlPrefix + urlBase + image.getSrcAttribute();
-		}		
+		}				
 		WebResponse response = getWebClient().getPage(imageURL).getWebResponse();		
 		assertTrue("Image not obtained", response.getContentAsString().length() > 0);
 		assertEquals("Result is not an image", "image", response.getContentType());		

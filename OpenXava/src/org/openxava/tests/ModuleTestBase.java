@@ -16,6 +16,7 @@ import org.openxava.tab.*;
 import org.openxava.tab.meta.*;
 import org.openxava.util.*;
 import org.openxava.view.meta.*;
+import org.openxava.web.*;
 import org.openxava.web.style.*;
 import org.w3c.dom.*;
 import org.xml.sax.*;
@@ -43,7 +44,7 @@ import junit.framework.*;
 public class ModuleTestBase extends TestCase {
 	
 	private final static String EDITABLE_SUFIX = "_EDITABLE_";
-	private final static String ACTION_PREFIX = "xava.action";
+	private final static String ACTION_PREFIX = "action"; 
 	
 	private static Log log = LogFactory.getLog(ModuleTestBase.class);
 	
@@ -53,25 +54,23 @@ public class ModuleTestBase extends TestCase {
 	private static String jetspeed2URL;
 	private static String jetspeed2UserName;
 	private static String jetspeed2Password;
-	private static String liferayURL;
-	private static int loginFormIndex = -1;
+	private static String liferayURL;	
 	private static String host;
 	private static String port;
+	private static int loginFormIndex = -1;
 	private String locale;
 	private MetaModule metaModule;
 	private MetaModel metaModel;
 	private MetaView metaView;
-	private MetaTab metaTab;
-	private String propertyPrefix;
+	private MetaTab metaTab;	
 	private String application;
 	private String module;
 	private WebClient client; 
 	private HtmlPage page; 
 	private HtmlForm form;
-	private int formIndex = -1;
 	private String lastNotNotifiedPropertyName; 
 	private String lastNotNotifiedPropertyValue;
-	private BrowserVersion browserVersion;  		
+	private BrowserVersion browserVersion;	
 	
 	static {		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
@@ -139,8 +138,7 @@ public class ModuleTestBase extends TestCase {
 			}
 			catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {				
 			}
-			
-			formIndex = -1;
+						
 			// The next line is because Liferay 5.0/5.1 does not go to private page on login,
 			// and returns to the main guest page on logout; so going explicitly to the
 			// module page after login is a secure way to go
@@ -167,11 +165,16 @@ public class ModuleTestBase extends TestCase {
 	private void setFormValue(String name, String value) throws Exception {
 		setFormValue(name, value, true);
 	}
-
+	
 	private void setFormValue(String name, String value, boolean refreshIfNeeded) throws Exception {
+		setFormValue(name, value, refreshIfNeeded, true);
+	}
+
+	private void setFormValue(String name, String value, boolean refreshIfNeeded, boolean decorateName) throws Exception {
 		boolean refreshNeeded = false;		
+		String id = decorateName?decorateId(name):name; 
 		try {
-			HtmlInput input = getForm().getInputByName(name);			
+			HtmlInput input = getForm().getInputByName(id);	
 			focus(input);
 			assertNotDisable(name, input);
 			if (input instanceof HtmlCheckBoxInput) {
@@ -184,8 +187,8 @@ public class ModuleTestBase extends TestCase {
 					}
 				}				
 			}
-			else if (input instanceof HtmlRadioButtonInput) {				
-				setRadioButtonsValue(name, value);
+			else if (input instanceof HtmlRadioButtonInput) {
+				setRadioButtonsValue(id, value);
 			}
 			else {
 				input.setValueAttribute(value);
@@ -194,14 +197,14 @@ public class ModuleTestBase extends TestCase {
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
 			try {							
-				HtmlSelect select = getForm().getSelectByName(name);
+				HtmlSelect select = getForm().getSelectByName(id);
 				focus(select);
 				assertNotDisable(name, select);
 				select.setSelectedAttribute(value, true);
 				refreshNeeded = !Is.emptyString(select.getOnChangeAttribute());
 			}
 			catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex2) {
-				HtmlTextArea textArea = getForm().getTextAreaByName(name);
+				HtmlTextArea textArea = getForm().getTextAreaByName(id);
 				focus(textArea);
 				assertNotDisable(name, textArea);
 				textArea.setText(value);
@@ -249,15 +252,16 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	private void refreshPage() throws Exception {
-		Thread.sleep(120);		
+		Thread.sleep(120);								
 		resetForm();		
 	}
 
-	private String getFormValue(String name) {		
-		try {
-			HtmlInput input = getForm().getInputByName(name);
+	private String getFormValue(String name) {
+		String id = decorateId(name); 
+		try {			
+			HtmlInput input = getForm().getInputByName(id);
 			if (input instanceof HtmlRadioButtonInput) {
-				return getRadioButtonsValue(name);
+				return getRadioButtonsValue(id);
 			}
 			else if (input instanceof HtmlCheckBoxInput) {
 				return Boolean.toString(input.isChecked());
@@ -268,11 +272,11 @@ public class ModuleTestBase extends TestCase {
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
 			try {
-				HtmlSelect select = getForm().getSelectByName(name);				
+				HtmlSelect select = getForm().getSelectByName(id);				
 				return ((HtmlOption )select.getSelectedOptions().get(0)).getValueAttribute();
 			}
 			catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex2) {
-				return getForm().getTextAreaByName(name).getText();
+				return getForm().getTextAreaByName(id).getText();
 			}
 		}
 	}
@@ -377,8 +381,7 @@ public class ModuleTestBase extends TestCase {
 	protected void logout() throws Exception {
 		if (isLiferayEnabled()) {
 			// Liferay 
-			page = (HtmlPage) client.getPage("http://" + getHost() + ":" + getPort() + "/c/portal/logout?referer=/c");
-			formIndex = -1; 
+			page = (HtmlPage) client.getPage("http://" + getHost() + ":" + getPort() + "/c/portal/logout?referer=/c");			
 		}
 		else { 
 			// Jetspeed 2
@@ -407,8 +410,7 @@ public class ModuleTestBase extends TestCase {
 					resetForm();
 				}
 			}			
-		}		
-		propertyPrefix = null;		
+		}				
 	}
 	
 	private BrowserVersion getBrowserVersion() {
@@ -424,24 +426,32 @@ public class ModuleTestBase extends TestCase {
 		}
 		return browserVersion;
 	}
+	
+	protected void selectModuleInPage(String module) throws Exception { 
+		changeModule(application, module, false);
+	}
 
 	protected void changeModule(String module) throws Exception {
 		changeModule(this.application, module);
 	}
 	
 	protected void changeModule(String application, String module) throws Exception {
+		changeModule(application, module, true);
+	}
+	
+	private void changeModule(String application, String module, boolean reloadPage) throws Exception { 
 		this.application = application;
 		this.module = module;
-		propertyPrefix = null;
 		metaModule = null;
 		metaModel = null;
 		metaView = null;
 		metaTab = null;				
-		page = (HtmlPage) client.getPage(getModuleURL());
+		if (reloadPage) page = (HtmlPage) client.getPage(getModuleURL()); 
 		resetForm();		
 	}
+	
 		
-	private String getModuleURL() throws XavaException {
+	protected String getModuleURL() throws XavaException { 
 		if (isLiferayEnabled()) {
 			return "http://" + getHost() + ":" + getPort() + "/" + getLiferayURL() + "/" + application + "/" + module;
 		}
@@ -459,9 +469,10 @@ public class ModuleTestBase extends TestCase {
 	 * 
 	 * By default is the model of module.
 	 * The effect of the this setting is only for the life of one test.
+	 * 
+	 * @deprecated Now the model is deduced automatically 
 	 */
-	protected void setModel(String defaultModel) {
-		propertyPrefix = "xava." + defaultModel + ".";
+	protected void setModel(String defaultModel) { 
 	}
 	
 	/**
@@ -469,9 +480,10 @@ public class ModuleTestBase extends TestCase {
 	 * 
 	 * This is the default setting, hence this method is called
 	 * to restore the original setting.	 
+	 * 
+	 * @deprecated Now this is done automatically
 	 */
-	protected void setModelToModuleSetting() {
-		propertyPrefix = null;
+	protected void setModelToModuleSetting() { 		
 	}
 	
 
@@ -487,11 +499,12 @@ public class ModuleTestBase extends TestCase {
 		}
 		
 		throwChangeOfLastNotNotifiedProperty(); 
-		if (page.getHtmlElementsByName("xava.action." + action).size() > 1) { // Action of list/collection
+		if (page.getHtmlElementsByName(Ids.decorate(application, module, ACTION_PREFIX + "." + action)).size() > 1) { // Action of list/collection
 			execute(action, null);
 			return;
 		}		
-		Element element  = page.getElementById(action);		
+				
+		Element element  = getElementById(action);  
 		if (element instanceof ClickableElement) {
 			Page newPage = ((ClickableElement) element).click();
 			if (newPage instanceof HtmlPage) {
@@ -500,7 +513,7 @@ public class ModuleTestBase extends TestCase {
 			resetForm(); 
 		}
 		else {
-			fail(XavaResources.getString("clickable_not_found", action));  
+			fail(XavaResources.getString("clickable_not_found", decorateId(action)));   
 		}
 	}
 
@@ -512,21 +525,33 @@ public class ModuleTestBase extends TestCase {
 		}	
 	}
 										 	
-	private void waitUntilPageIsLoaded() {		 
-		HtmlInput loading = (HtmlInput) page.getHtmlElementById("xava_loading");
+	private void waitUntilPageIsLoaded() { 
+		HtmlInput loading = (HtmlInput) getElementById("loading");
 		for (int i=0; !"true".equals(loading.getValueAttribute()) && i<20; i++) {
-			try { Thread.sleep(100); } catch (Exception ex) { }
-		}		
+			try { Thread.sleep(100); } catch (Exception ex) { }			
+		}				
 		while ("true".equals(loading.getValueAttribute())) {
-			try { Thread.sleep(20); } catch (Exception ex) { }
-		}
+			try { Thread.sleep(20); } catch (Exception ex) { }			
+		}	
 		if (getLoadedParts().endsWith("ERROR")) {
 			fail(XavaResources.getString("ajax_loading_parts_error"));
 		}
 	}
 
+	private HtmlElement getElementById(String id) { 
+		return page.getHtmlElementById(decorateId(id));
+	}
+	
+	/**
+	 * Decorate the name to produced an unique identifier as the used by
+	 * OX for HTML elements.
+	 */
+	protected String decorateId(String name) {  
+		return Ids.decorate(application, module, name);
+	}
+
 	protected void assertFocusOn(String name) throws Exception {		
-		String expectedFocusProperty = getPropertyPrefix() + name;
+		String expectedFocusProperty = decorateId(name); 
 		HtmlElement element = page.getFocusedElement(); 
 		String focusProperty = element==null?null:element.getAttributeValue("name");
 		assertEquals(XavaResources.getString("focus_in_unexpected_place"), expectedFocusProperty, focusProperty);		
@@ -535,11 +560,16 @@ public class ModuleTestBase extends TestCase {
 	protected void execute(String action, String arguments) throws Exception {
 		throwChangeOfLastNotNotifiedProperty();
 		ClickableElement element = null;
+		String moduleMarkForAnchor = "executeAction('" + application + "', '" + module + "'";		
 		for (Iterator it = page.getAnchors().iterator(); it.hasNext(); ) {			
 			HtmlAnchor anchor = (HtmlAnchor) it.next();			
-			if (arguments != null) { // 'List.viewDetail', 'row=0'
-				if (anchor.getHrefAttribute().endsWith("'" + action + "', '" + arguments + "')") ||
-					anchor.getHrefAttribute().endsWith("'" + action + "', '," + arguments + "')")) 			
+			if (arguments != null) { // 'List.viewDetail', 'row=0'				
+				if (
+					(
+						anchor.getHrefAttribute().endsWith("'" + action + "', '" + arguments + "')") ||
+						anchor.getHrefAttribute().endsWith("'" + action + "', '," + arguments + "')")
+					)
+					&& anchor.getHrefAttribute().indexOf(moduleMarkForAnchor) >= 0)  			
 				{				
 					element = anchor;				
 				}
@@ -551,12 +581,14 @@ public class ModuleTestBase extends TestCase {
 			}
 		}
 		if (arguments == null && element == null) { // We try if it is a button
-			for (Iterator it = getForm().getHtmlElementsByAttribute("input", "id", action).iterator(); it.hasNext(); ) {
+			String moduleMarkForButton = "executeAction(\"" + application + "\", \"" + module + "\"";
+			for (Iterator it = getForm().getHtmlElementsByAttribute("input", "id", decorateId(action)).iterator(); it.hasNext(); ) { 
 				Object inputElement = it.next();
 				if (!(inputElement instanceof HtmlInput)) continue;
 				HtmlInput input = (HtmlInput) inputElement;
 				if ("button".equals(input.getTypeAttribute()) &&
-					input.getOnClickAttribute().endsWith("\"" + action + "\")")) 
+					input.getOnClickAttribute().endsWith("\"" + action + "\")") &&
+					input.getOnClickAttribute().indexOf(moduleMarkForButton) >= 0)
 				{				
 					element = input;				
 				}				
@@ -573,24 +605,39 @@ public class ModuleTestBase extends TestCase {
 			}
 		}
 		else {
+			if (isReferenceActionWithObsoleteStyle(action, arguments)) {		
+				log.warn(XavaResources.getString("keyProperty_obsolete_style"));
+				execute(action, refineArgumentsForReferenceActionWithObsoleteStyle(arguments));
+				return;
+			}
 			fail(XavaResources.getString("clickable_not_found", action));  
 		}		
 		
 	}
 	
-	protected void executeDefaultAction() throws Exception {		
+	private String refineArgumentsForReferenceActionWithObsoleteStyle(String arguments) {
+		int idx1 = arguments.indexOf("keyProperty=xava.");
+		int idx2 = arguments.indexOf(".", idx1 + 17);		
+		return arguments.substring(0, idx1 + 12) + arguments.substring(idx2 + 1);
+	}
+
+	private boolean isReferenceActionWithObsoleteStyle(String action, String arguments) { 
+		return action.startsWith("Reference.") && arguments.indexOf("keyProperty=xava.") >= 0;
+	}
+
+	protected void executeDefaultAction() throws Exception {
 		HtmlButton button = getForm().getButtonByName("xava.DEFAULT_ACTION");
 		page = (HtmlPage) button.click();
 		resetForm();
 	}
 	
-	protected void assertExists(String name) throws Exception {		
-		String id = getPropertyPrefix() + name; 
+	protected void assertExists(String name) throws Exception {		 
+		String id = decorateId(name);
 		assertTrue(XavaResources.getString("must_to_exists", name), hasElement(id));
 	}
 
-	protected void assertNotExists(String name) throws Exception {		
-		String id = getPropertyPrefix() + name; 		
+	protected void assertNotExists(String name) throws Exception {		 		
+		String id = decorateId(name);
 		assertTrue(XavaResources.getString("must_not_to_exists", name), !hasElement(id));
 	}
 	
@@ -600,22 +647,22 @@ public class ModuleTestBase extends TestCase {
 	 * @return
 	 */
 	protected String getDescriptionValue(String name) throws Exception {		
-		return getFormValue(getPropertyPrefix() + name + "__DESCRIPTION__");
+		return getFormValue(decorateId(name) + "__DESCRIPTION__"); 
 	}
 		
 	protected String getValue(String name) throws Exception {		
-		return getFormValue(getPropertyPrefix() + name);
+		return getFormValue(decorateId(name)); 
 	}
 	
 	/**
 	 * For properties with multiple values
 	 */
 	protected String [] getValues(String name) throws Exception {		
-		return getFormValues(getPropertyPrefix() + name);
+		return getFormValues(decorateId(name));
 	}	
 	
 	protected String getLabel(String name) throws Exception {
-		HtmlElement element = page.getHtmlElementById("xava_label_" + getPropertyPrefix() + name);
+		HtmlElement element = page.getHtmlElementById(decorateId("label_" + name)); 
 		if (element == null) {
 			fail(XavaResources.getString("label_not_found_in_ui", name));
 		}
@@ -624,9 +671,11 @@ public class ModuleTestBase extends TestCase {
 		
 	/**
 	 * In case we does not work with main view.
+	 * 
+	 * @deprecated  The model is automatically deduced, so you can use just getValue(String name)
 	 */
 	protected String getValue(String model, String name) throws Exception {		
-		return getFormValue("xava." + model +"." + name);
+		return getFormValue(name);  
 	}
 		
 	/**
@@ -723,8 +772,8 @@ public class ModuleTestBase extends TestCase {
 
 	private void setCollectionCondition(String id, String[] values) throws Exception { 
 		for (int i=0; i<values.length; i++) {
-			try {
-				setFormValue(id + "." + i, values[i]);
+			try {				
+				setFormValue(id + "." + i, values[i]);	
 			}
 			catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {				
 				break;
@@ -775,39 +824,36 @@ public class ModuleTestBase extends TestCase {
 	}
 
 	protected void setValueNotNotify(String name, String value) throws Exception {
-		String qualifiedName = getPropertyPrefix() + name;
+		String qualifiedName = decorateId(name); 
 		HtmlInput input = getForm().getInputByName(qualifiedName);
 		input.setAttributeValue("value", value); // In this way onchange is not thrown 
 		lastNotNotifiedPropertyName = qualifiedName; 
 		lastNotNotifiedPropertyValue = value; 
 	}
 	
-	private void setValueWithPrefix(String propertyPrefix, String name, String value) throws Exception {		
-		setFormValue(propertyPrefix + name, value);
-	}
-	
 	protected void setValue(String name, String value) throws Exception {		
-		setValueWithPrefix(getPropertyPrefix(), name, value);
-	}
-	
+		setFormValue(decorateId(name), value); 
+	}	
 	
 	/**
 	 * For multiple values properties
 	 */
-	protected void setValues(String name, String [] values) throws Exception {
-		setFormValues(getPropertyPrefix() + name, values);					
+	protected void setValues(String name, String [] values) throws Exception {					
+		setFormValues(decorateId(name), values); 
 	}
 	
 	
 	protected void setFileValue(String name, String filePath) throws Exception {
-		setFormValue(name, filePath);			
+		setFormValue(name, filePath, true, false); 			
 	}
 	
 	/**
 	 * In case we do not work with main view. <p>
+	 * 
+	 * @deprecated  Now model is deduced automatically, so you can use setValue(String model, String value)
 	 */
-	protected void setValue(String model, String name, String value) throws Exception { 
-		setValueWithPrefix("xava." + model + ".", name, value); 
+	protected void setValue(String model, String name, String value) throws Exception {  
+		setValue(name, value); 
 	}
 	
 	protected void assertLabel(String name, String expectedLabel) throws Exception {		
@@ -854,7 +900,7 @@ public class ModuleTestBase extends TestCase {
 		Set actions = new HashSet();		
 		for (Iterator it = hiddens.iterator(); it.hasNext(); ) {
 			HtmlInput input = (HtmlInput) it.next();
-			if (!input.getNameAttribute().startsWith(ACTION_PREFIX)) continue;
+			if (!input.getNameAttribute().startsWith(Ids.decorate(application, module, ACTION_PREFIX))) continue;
 			actions.add(removeActionPrefix(input.getNameAttribute()));			
 		}								
 		return actions;		
@@ -881,30 +927,23 @@ public class ModuleTestBase extends TestCase {
 		}
 	} 
 		
-	private String removeActionPrefix(String action) {		
-		return action.substring(ACTION_PREFIX.length() + 1);
+	private String removeActionPrefix(String action) {
+		String bareAction = Ids.undecorate(action);
+		return bareAction.substring(ACTION_PREFIX.length() + 1);
 	}
 
-	private String getPropertyPrefix() throws Exception {
-		if (propertyPrefix == null) {
-			String modelName = MetaApplications.getMetaApplication(application).getMetaModule(module).getModelName();
-			propertyPrefix = "xava." + modelName + "."; 
-		}
-		return propertyPrefix;
-	}
-	
 	protected String getValueInList(int row, String name) throws Exception {		
 		int column = getMetaTab().getPropertiesNames().indexOf(name);		
 		return getValueInList(row, column);
 	}
 	
 	protected String getValueInList(int row, int column) throws Exception {
-		return getTableCellInList(row, column).asText();
+		return getTableCellInList(row, column).asText().trim();
 	}
 	
-	private HtmlTable getTable(String id, String errorId) {
+	private HtmlTable getTable(String id, String errorId) { 
 		try {
-			return (HtmlTable) page.getHtmlElementById(id);
+			return (HtmlTable) getElementById(id);
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
 			fail(XavaResources.getString(errorId, id));
@@ -933,7 +972,7 @@ public class ModuleTestBase extends TestCase {
 	}	
 	
 	protected String getValueInCollection(String collection, int row, int column) throws Exception {
-		return getTableCellInCollection(collection, row, column).asText();
+		return getTableCellInCollection(collection, row, column).asText().trim();
 	}
 	
 	private HtmlTableCell getTableCellInCollection(String collection, int row, int column) throws Exception {		
@@ -998,7 +1037,9 @@ public class ModuleTestBase extends TestCase {
 	private boolean collectionHasFilterHeader(HtmlTable table) { 				
 		return table.getRowCount() > 1 && 
 			!table.getCellAt(1, 0).
-				getHtmlElementsByAttribute("input", "name", "xava.action.List.filter").isEmpty();
+				getHtmlElementsByAttribute("input", "name", 
+					Ids.decorate(application, module,
+						ACTION_PREFIX + ".List.filter")).isEmpty();
 	}
 	
 	private boolean collectionHasFilterHeader(String collection) throws Exception { 
@@ -1108,8 +1149,8 @@ public class ModuleTestBase extends TestCase {
 		if (collectionHasFilterHeader(collection)) {
 			checkRow(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected", row);
 		}
-		else {
-			checkRow(getPropertyPrefix() + collection + "." + "__SELECTED__", row);			
+		else {			
+			checkRow(collection + ".__SELECTED__", row);
 		}
 	}
 	
@@ -1143,8 +1184,8 @@ public class ModuleTestBase extends TestCase {
 		if (collectionHasFilterHeader(collection)) {
 			assertRowChecked(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected", row);
 		}
-		else {
-			assertRowChecked(getPropertyPrefix() + collection + "." + "__SELECTED__", row);			
+		else {			
+			assertRowChecked(decorateId(collection + "." + "__SELECTED__"), row);
 		}
 	}	
 	
@@ -1171,8 +1212,8 @@ public class ModuleTestBase extends TestCase {
 		if (collectionHasFilterHeader(collection)) {
 			assertRowUnchecked(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected", row);
 		}
-		else {
-			assertRowUnchecked(getPropertyPrefix() + collection + "." + "__SELECTED__", row);			
+		else {			
+			assertRowUnchecked(decorateId(collection + "." + "__SELECTED__"), row);
 		}
 	}	
 	
@@ -1184,7 +1225,7 @@ public class ModuleTestBase extends TestCase {
 	protected void assertError(String message) throws Exception {
 		HtmlTable table = null;
 		try {
-			table = (HtmlTable) page.getHtmlElementById("xava_errors_table");
+			table = (HtmlTable) getElementById("errors_table"); 
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
 			fail(XavaResources.getString("error_not_found", message));
@@ -1205,7 +1246,7 @@ public class ModuleTestBase extends TestCase {
 	protected void assertErrorsCount(int expectedCount) throws Exception {
 		HtmlTable table = null;
 		try {
-			table = (HtmlTable) page.getHtmlElementById("xava_errors_table");
+			table = (HtmlTable) getElementById("errors_table"); 
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
 			if (expectedCount > 0) {
@@ -1219,7 +1260,7 @@ public class ModuleTestBase extends TestCase {
 	protected void assertMessagesCount(int expectedCount) throws Exception {
 		HtmlTable table = null;
 		try {
-			table = (HtmlTable) page.getHtmlElementById("xava_messages_table");
+			table = (HtmlTable) getElementById("messages_table");
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
 			if (expectedCount > 0) {
@@ -1231,17 +1272,17 @@ public class ModuleTestBase extends TestCase {
 	}
 			
 	protected void assertNoError(String message) throws Exception {
-		assertNoMessage(message, "xava_errors_table", "error_found");
+		assertNoMessage(message, "errors_table", "error_found");
 	}
 	
 	protected void assertNoMessage(String message) throws Exception {
-		assertNoMessage(message, "xava_messages_table", "message_found"); 
+		assertNoMessage(message, "messages_table", "message_found"); 
 	}
 		
 	private void assertNoMessage(String message, String id, String notFoundErrorId) throws Exception {
 		HtmlTable table = null;
 		try {
-			table = (HtmlTable) page.getHtmlElementById(id);
+			table = (HtmlTable) getElementById(id); 
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
 			return;
@@ -1259,7 +1300,7 @@ public class ModuleTestBase extends TestCase {
 	protected String getMessage() throws Exception {
 		HtmlTable table = null;
 		try {
-			table = (HtmlTable) page.getHtmlElementById("xava_messages_table");
+			table = (HtmlTable) getElementById("messages_table"); 
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
 			return "";
@@ -1271,7 +1312,7 @@ public class ModuleTestBase extends TestCase {
 	protected void assertMessage(String message) throws Exception {
 		HtmlTable table = null;
 		try {
-			table = (HtmlTable) page.getHtmlElementById("xava_messages_table");
+			table = (HtmlTable) getElementById("messages_table"); 
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
 			fail(XavaResources.getString("message_not_found", message));
@@ -1291,16 +1332,16 @@ public class ModuleTestBase extends TestCase {
 	
 	
 	protected void assertNoErrors() throws Exception {
-		assertNoMessages("xava_errors_table", "Error");		
+		assertNoMessages("errors_table", "Error");		
 	}
 	protected void assertNoMessages() throws Exception {
-		assertNoMessages("xava_messages_table", "Mensaje");		
+		assertNoMessages("messages_table", "Mensaje");		
 	}
 	
 	private void assertNoMessages(String id, String label) throws Exception {
 		HtmlTable table = null;
 		try {
-			table = (HtmlTable) page.getHtmlElementById(id);
+			table = (HtmlTable) getElementById(id); 
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
 			return;
@@ -1344,7 +1385,7 @@ public class ModuleTestBase extends TestCase {
 	}
 
 	protected void assertValidValues(String name, String [][] values) throws Exception {
-		Collection options = getForm().getSelectByName(getPropertyPrefix() + name).getOptions();
+		Collection options = getForm().getSelectByName(decorateId(name)).getOptions(); 
 		assertEquals(XavaResources.getString("unexpected_valid_values", name), values.length, options.size());
 		int i=0;
 		for (Iterator it = options.iterator(); it.hasNext(); i++) {
@@ -1355,13 +1396,13 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected void assertValidValuesCount(String name, int count) throws Exception {
-		HtmlSelect select = getForm().getSelectByName(getPropertyPrefix() + name);
+		HtmlSelect select = getForm().getSelectByName(decorateId(name)); 
 		assertEquals(XavaResources.getString("unexpected_valid_values", name), count, select.getOptionSize());
 	}
 	
 	
 	protected String [] getKeysValidValues(String name) throws Exception {
-		Collection options = getForm().getSelectByName(getPropertyPrefix() + name).getOptions();
+		Collection options = getForm().getSelectByName(decorateId(name)).getOptions(); 
 		String [] result = new String[options.size()];
 		int i=0;
 		for (Iterator it = options.iterator(); it.hasNext(); i++) {
@@ -1408,14 +1449,14 @@ public class ModuleTestBase extends TestCase {
 		assertTrue(XavaResources.getString("minimum_1_elements_in_list"), getListRowCount() > 0);
 	}
 		
-	private static String getPort() {
+	protected static String getPort() { 
 		if (port == null) {
 			port = getXavaJunitProperties().getProperty("port", "8080");
 		}
 		return port;		
 	}
 	
-	private static String getHost() {
+	protected static String getHost() { 
 		if (host == null) {
 			host = getXavaJunitProperties().getProperty("host", "localhost");
 		}
@@ -1463,7 +1504,7 @@ public class ModuleTestBase extends TestCase {
 		return jetspeed2URL;				
 	}
 	
-	private static String getLiferayURL() {
+	protected static String getLiferayURL() { 
 		if (liferayURL == null) {
 			liferayURL = getXavaJunitProperties().getProperty("liferay.url");
 		}
@@ -1515,20 +1556,24 @@ public class ModuleTestBase extends TestCase {
 		return xavaJunitProperties;
 	}
 	
-	private void resetForm() throws Exception {		
-		waitUntilPageIsLoaded(); 				
-		if (getFormIndex() >= page.getForms().size()) return; 
-		setForm((HtmlForm)page.getForms().get(getFormIndex()));
+	private void resetForm() throws Exception { 		
+		waitUntilPageIsLoaded();
+		setNewModuleIfChanged(); 
+		form = null; 		
 	}
 	
-	private void resetLoginForm() throws Exception {
-		setForm((HtmlForm)page.getForms().get(getLoginFormIndex()));		
+	private void setNewModuleIfChanged() throws Exception {		
+		String lastModuleChange = ((HtmlInput) page.getElementById("xava_last_module_change")).getValueAttribute();
+		if (Is.emptyString(lastModuleChange)) return;
+		String [] modules = lastModuleChange.split("::");
+		if (!module.equals(modules[0])) return;
+		module = modules[1];
 	}
-		
-	private void setForm(HtmlForm form) {
-		this.form = form;		
-	}	
-	
+
+	private void resetLoginForm() throws Exception { 
+		form = ((HtmlForm)page.getForms().get(getLoginFormIndex()));		
+	}
+			
 	/**
 	 * Current HtmlForm (of HtmlUnit). <p>
 	 * 
@@ -1537,16 +1582,12 @@ public class ModuleTestBase extends TestCase {
 	 * to HTML and HtmlUnit so it will be difficult migrate to another 
 	 * presentation technology.
 	 */	
-	protected HtmlForm getForm() {  
+	protected HtmlForm getForm() { 
+		if (form == null) {
+			form = page.getFormByName(decorateId("form"));
+		}
 		return form;	
 	}	
-	
-	private int getFormIndex() throws Exception {
-		if (formIndex == -1) {			
-			formIndex = getFormIndexForInputElement("xava_action");
-		}
-		return formIndex;
-	}
 	
 	private int getLoginFormIndex() throws Exception {
 		if (loginFormIndex == -1) {
@@ -1562,6 +1603,7 @@ public class ModuleTestBase extends TestCase {
 		return loginFormIndex;
 	}
 	
+	
 	private int getFormIndexForInputElement(String inputElementName) throws SAXException {
 		Collection forms = page.getForms(); 
 		int i = 0;
@@ -1572,11 +1614,11 @@ public class ModuleTestBase extends TestCase {
 			}
 		}
 		return 0;
-	}
+	}	
 	
 	private boolean hasElement(String elementName) {
-		return !page.getHtmlElementsByName(elementName).isEmpty();
-	}
+		return !page.getHtmlElementsByName(decorateId(elementName)).isEmpty();
+	}	
 		
 	private boolean hasInput(HtmlForm form, String inputName) {
 		try {
@@ -1624,12 +1666,12 @@ public class ModuleTestBase extends TestCase {
 		Page page = getWebClient().getCurrentWindow().getEnclosedPage();
 		if (!(page instanceof HtmlPage)) return "";
 		try {
-			HtmlInput input = (HtmlInput) ((HtmlPage) page).getHtmlElementById("xava_loaded_parts");
+			HtmlInput input = (HtmlInput) ((HtmlPage) page).getHtmlElementById(Ids.decorate(application, module, "loaded_parts"));
 			return input.getValueAttribute();
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
 			return "";
 		}
 	}
-		
+	
 }

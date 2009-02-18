@@ -12,9 +12,11 @@ public class Result {
 	private Map changedParts;
 	private Map strokeActions;
 	private String forwardURL;
-	private boolean forwardInNewWindow; 
+	private boolean forwardInNewWindow;
+	private String application;  
 	private String module;
-	private String form;
+	private String nextModule; 
+	
 	private String focusPropertyId;
 	private String error;
 	private boolean reload; 
@@ -49,7 +51,15 @@ public class Result {
 	public void setForwardURL(String forwardURL) {
 		this.forwardURL = forwardURL;
 	}
+	
+	public String getApplication() {
+		return application;
+	}
 
+	public void setApplication(String application) {
+		this.application = application;
+	}	
+	
 	public String getModule() {
 		return module;
 	}
@@ -58,14 +68,14 @@ public class Result {
 		this.module = module;
 	}
 	
-	public String getForm() {
-		return form;
+	public String getNextModule() {
+		return nextModule;
 	}
 
-	public void setForm(String form) {
-		this.form = form;
+	public void setNextModule(String nextModule) {
+		this.nextModule = nextModule;
 	}
-	
+		
 	public boolean isForwardInNewWindow() {
 		return forwardInNewWindow;
 	}

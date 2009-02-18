@@ -3,8 +3,8 @@ if (openxava.editors == null) openxava.editors = {};
 
 // htmlEditor
 if (openxava.editors.html == null) openxava.editors.html = {};
-openxava.editors.html.showValue = function(v){
-  	document.getElementById('xava_html_editor_show_value').innerHTML=v; 
+openxava.editors.html.showValue = function(place, content){
+  	document.getElementById(place).innerHTML=content; 
   	return true;
 }
 openxava.editors.html.openWindow = function(url){

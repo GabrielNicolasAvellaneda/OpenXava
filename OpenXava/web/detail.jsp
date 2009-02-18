@@ -1,3 +1,5 @@
+<%@ include file="imports.jsp"%>
+
 <%@ page import="java.util.Iterator" %>
 <%@ page import="org.openxava.view.View" %>
 <%@ page import="org.openxava.view.meta.MetaGroup" %>
@@ -7,7 +9,9 @@
 <%@ page import="org.openxava.model.meta.MetaCollection" %>
 <%@ page import="org.openxava.web.WebEditors" %>
 
-<jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
+
+<%@page import="org.openxava.web.taglib.IdTag"%>
+<%@page import="org.openxava.web.Ids"%><jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 <%
 String viewObject = request.getParameter("viewObject");
@@ -15,7 +19,7 @@ viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObjec
 org.openxava.view.View view = (org.openxava.view.View) context.get(request, viewObject);
 view.setViewObject(viewObject); 
 String propertyPrefix = request.getParameter("propertyPrefix");
-propertyPrefix = (propertyPrefix == null || propertyPrefix.equals(""))?"xava." + view.getModelName() + ".":propertyPrefix;
+propertyPrefix = (propertyPrefix == null)?"":propertyPrefix; 
 view.setPropertyPrefix(propertyPrefix); 
 %>
 
@@ -42,12 +46,15 @@ while (it.hasNext()) {
 			boolean hasFrame = WebEditors.hasFrame(p, view.getViewName());		
 			lastWasEditor = !hasFrame;
 			lastWasProperty = true;
-			String propertyKey= propertyPrefix + p.getName();
+			String propertyKey= Ids.decorate(
+					request.getParameter("application"),
+					request.getParameter("module"),
+					propertyPrefix + p.getName());
 			request.setAttribute(propertyKey, p);
 			String urlEditor = "editor.jsp" // in this way because websphere 6 has problems with jsp:param
 				+ "?propertyKey=" + propertyKey
 				+ "&first=" + first
-				+ "&hasFrame=" + hasFrame;
+				+ "&hasFrame=" + hasFrame;			
 %>
 	<jsp:include page="<%=urlEditor%>" />
 <%
@@ -73,7 +80,10 @@ while (it.hasNext()) {
 			MetaReference ref = (MetaReference) m;			
 			if (view.displayAsDescriptionsList(ref)) {
 				lastWasEditor = true;
-				String referenceKey = propertyPrefix +  ref.getName();
+				String referenceKey = Ids.decorate(
+						request.getParameter("application"),
+						request.getParameter("module"),
+						propertyPrefix +  ref.getName()); 
 				request.setAttribute(referenceKey, ref);			
 				String urlDescriptionsList = "descriptionsList.jsp" // in this way because websphere 6 has problems with jsp:param
 					+ "?referenceKey=" + referenceKey
@@ -99,8 +109,11 @@ while (it.hasNext()) {
 	<%	
 					} 
 				}
-				if (withFrame) { 
-					String labelKey = "xava_label_" + propertyPrefix + ref.getName(); 					
+				if (withFrame) { 					 					
+					String labelKey = Ids.decorate(
+						request.getParameter("application"),
+						request.getParameter("module"),
+						"label_" + propertyPrefix + ref.getName()); 
 					String label = view.getLabelFor(ref);
 	%>						 
 		<%=style.getFrameHeaderStartDecoration() %>
@@ -207,7 +220,7 @@ if (view.hasSections()) {
                   <tr>
                     <td>
 	<% } %>
-	<div id="xava_sections_<%=viewObject%>"> 
+	<div id="<xava:id name='<%="sections_" + viewObject%>'/>"> 
 	<jsp:include page="sections.jsp"/>
 	</div>
 	

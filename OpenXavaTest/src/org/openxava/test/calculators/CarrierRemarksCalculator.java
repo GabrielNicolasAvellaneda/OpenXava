@@ -9,7 +9,7 @@ public class CarrierRemarksCalculator implements ICalculator {
 
 	private String drivingLicenceType;
 
-	public Object calculate() throws Exception {
+	public Object calculate() throws Exception {		
 		if (drivingLicenceType == null) return "";
 		if (drivingLicenceType.toUpperCase().startsWith("C")) {
 			return "He can drive trucks";

@@ -7,6 +7,7 @@ import javax.servlet.jsp.tagext.*;
 import org.apache.commons.logging.*;
 import org.openxava.controller.meta.*;
 import org.openxava.util.*;
+import org.openxava.web.*;
 
 
 /**
@@ -27,22 +28,26 @@ public class ImageTag extends TagSupport implements IActionTag {
 			}
 			HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
 			MetaAction metaAction = MetaControllers.getMetaAction(getAction());
-			
+			String application = request.getParameter("application");
+			String module = request.getParameter("module");			
 			pageContext.getOut().print("<input name='");
-			pageContext.getOut().print("xava.action.");
-			pageContext.getOut().print(getAction());
-			pageContext.getOut().println("' type='hidden'/>");
-			
+			pageContext.getOut().print(Ids.decorate(application, module, "action." + getAction())); 
+			pageContext.getOut().println("' type='hidden'/>");			
 			pageContext.getOut().print("<a ");
 			if (Is.emptyString(getArgv())) { 
 				pageContext.getOut().print("id='");
-				pageContext.getOut().print(getAction());
+				pageContext.getOut().print(Ids.decorate(application, module, getAction())); 
 				pageContext.getOut().println("'");
 			}
 			pageContext.getOut().print(" title='");
 			pageContext.getOut().print(metaAction.getKeystroke() + " - " +  metaAction.getDescription(request));
 			pageContext.getOut().print("'");			
 			pageContext.getOut().print(" href=\"javascript:openxava.executeAction(");
+			pageContext.getOut().print("'");				
+			pageContext.getOut().print(application);
+			pageContext.getOut().print("', '");
+			pageContext.getOut().print(module);
+			pageContext.getOut().print("', ");									
 			pageContext.getOut().print("'");
 			pageContext.getOut().print(metaAction.getConfirmMessage(request));
 			pageContext.getOut().print("'");

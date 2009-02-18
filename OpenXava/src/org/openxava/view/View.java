@@ -5,6 +5,7 @@ import java.rmi.*;
 import java.util.*;
 
 import javax.ejb.*;
+import javax.portlet.*;
 import javax.servlet.http.*;
 
 import org.apache.commons.logging.*;
@@ -813,7 +814,8 @@ public class View implements java.io.Serializable {
 	 * @param name Can be qualified
 	 * @return <code>true</code> if member exists and it's updated, <code>false</code> otherwise.	 
 	 */
-	public boolean trySetValue(String name, Object value) throws XavaException {		
+	public boolean trySetValue(String name, Object value) throws XavaException {
+		name = Ids.undecorate(name); 
 		int idx = name.indexOf('.');		
 		if (idx < 0) {
 			if (getMembersNamesInGroup().contains(name)) {
@@ -1749,8 +1751,8 @@ public class View implements java.io.Serializable {
 		groupsViews = null; 
 	}
 	
-	public void assignValuesToWebView() {
-		assignValuesToWebView(getModelName());
+	public void assignValuesToWebView() {		
+		assignValuesToWebView(""); 		
 	}
 		
 	public void assignValuesToWebView(String qualifier) {
@@ -1764,14 +1766,14 @@ public class View implements java.io.Serializable {
 			while (it.hasNext()) {
 				Object m = it.next();							
 				if (isMetaProperty(m)) {
-					MetaProperty p = (MetaProperty) m;
-					String propertyKey= "xava." + qualifier + "." + p.getName();					
+					MetaProperty p = (MetaProperty) m;					
+					String propertyKey= qualifier + p.getName();
 					String valueKey = propertyKey + ".value";
 					String [] results = getRequest().getParameterValues(propertyKey);					
 					Object value = WebEditors.parse(getRequest(), p, results, getErrors(), getViewName());					
 					boolean isHiddenKeyWithoutValue = p.isHidden() && (results == null); // for not reset hidden values					
 					if (!isHiddenKeyWithoutValue && WebEditors.mustToFormat(p, getViewName())) { 
-						getRequest().setAttribute(valueKey, value);																				
+						getRequest().setAttribute(valueKey, value);
 						trySetValue(p.getName(), value);
 						if (isNeededToVerifyHasBeenFormatted(p)) {
 							String formattedValue = WebEditors.format(getRequest(), p, value, getErrors(), getViewName());
@@ -1783,12 +1785,12 @@ public class View implements java.io.Serializable {
 					}											
 				}
 				else if (m instanceof MetaReference) {					
-					MetaReference ref = (MetaReference) m;					
-					String key = "xava." + qualifier + "." + ref.getName() + ".KEY";					
-					String value = getRequest().getParameter(key);					
+					MetaReference ref = (MetaReference) m;										
+					String key = qualifier + ref.getName() + ".KEY"; 
+					String value = getRequest().getParameter(key);
 					if (value == null) {						
-						View subview = getSubview(ref.getName());
-						subview.assignValuesToWebView(qualifier + "." + ref.getName());					 																				
+						View subview = getSubview(ref.getName()); 					 																				
+						subview.assignValuesToWebView(qualifier + ref.getName() + "."); 
 					}
 					else { // References as combo (descriptions-list) and composite key						
 						assignReferenceValue(qualifier, ref, value);
@@ -1796,8 +1798,8 @@ public class View implements java.io.Serializable {
 				}
 				else if (m instanceof MetaCollection) {
 					MetaCollection collec = (MetaCollection) m;						
-					View subview = getSubview(collec.getName());					
-					subview.assignValuesToWebView(qualifier + "." + collec.getName());					
+					View subview = getSubview(collec.getName());					 					
+					subview.assignValuesToWebView(qualifier + collec.getName() + ".");
 				}
 				else if (m instanceof MetaGroup) {					
 					MetaGroup grupo = (MetaGroup) m;					
@@ -1823,12 +1825,12 @@ public class View implements java.io.Serializable {
 			}			
 						
 			if (!isSubview() && !isSection()) {						  
-				changedProperty = getRequest().getParameter("xava_changed_property");
+				changedProperty = Ids.undecorate(getRequest().getParameter("xava_changed_property")); 
 				if (!Is.emptyString(changedProperty)) {
 					if (getParent() == null) {
 						getRoot().registeringExecutedActions = true;
 					}
-					try {						
+					try {												
 						propertyChanged(changedProperty);
 					}
 					finally {
@@ -1862,7 +1864,7 @@ public class View implements java.io.Serializable {
 		String tabPrefix = Tab.COLLECTION_PREFIX + getQualifiedCollectionName();
 		getCollectionTab().setSelected(getRequest().getParameterValues(tabPrefix + "selected"));
 		// Fill selected
-		String id = "xava." + qualifier + ".__SELECTED__";
+		String id = qualifier + "__SELECTED__"; 		
 		String [] sel = getRequest().getParameterValues(id);
 		if (sel == null || sel.length == 0) {
 			listSelected = null;
@@ -2020,7 +2022,7 @@ public class View implements java.io.Serializable {
 
 	private void propertyChanged(String propertyId) {		
 		try {														
-			String name = removeNamePrefix(propertyId);
+			String name = Ids.undecorate(propertyId);			
 			if (name.endsWith(".KEY")) {
 				String refName = name.substring(0, name.length() - 4);
 				MetaModel referencedModel = null;
@@ -2028,7 +2030,7 @@ public class View implements java.io.Serializable {
 					referencedModel = getMetaModel().getMetaReference(refName).getMetaModelReferenced();
 				}
 				catch (ElementNotFoundException ex) {
-					// try if is a collection
+					// try if is a collection					
 					int idx = refName.indexOf('.');
 					String collectionName = refName.substring(0, idx);
 					String refName2 = refName.substring(idx+1);
@@ -2270,17 +2272,6 @@ public class View implements java.io.Serializable {
 		return property.isKey() || property.isSearchKey() || isLastSearchKey(property);
 	}
 
-	private String removeNamePrefix(String name) {
-		if (Is.emptyString(name)) return "";		
-		StringTokenizer st = new StringTokenizer(name, ".");
-		if (!st.hasMoreTokens()) return name;
-		String xava = st.nextToken();
-		if (!"xava".equals(xava)) return name;
-		if (!st.hasMoreTokens()) return name;
-		String compo = st.nextToken();		
-		return name.substring(compo.length() + "xava".length() + 2);
-	}
-	
 	private View getParentIfSectionOrGroup() { 
 		if (isSection() || isGroup()) return getParent().getParentIfSectionOrGroup();
 		return this;
@@ -2289,11 +2280,11 @@ public class View implements java.io.Serializable {
 	private void calculateValue(MetaProperty metaProperty, MetaCalculator metaCalculator, ICalculator calculator, Messages errors, Messages messages) {		
 		try {					
 			PropertiesManager mp = new PropertiesManager(calculator);
-			Iterator it = metaCalculator.getMetaSets().iterator();
+			Iterator it = metaCalculator.getMetaSets().iterator();			
 			while (it.hasNext()) {
-				MetaSet set = (MetaSet) it.next();				
-				if (!set.hasValue()) {
-					Object value = getParentIfSectionOrGroup().getValue(set.getPropertyNameFrom());					
+				MetaSet set = (MetaSet) it.next();								
+				if (!set.hasValue()) {					
+					Object value = getParentIfSectionOrGroup().getValue(set.getPropertyNameFrom());
 					mp.executeSet(set.getPropertyName(), value); 
 				}											
 			}		
@@ -3210,15 +3201,12 @@ public class View implements java.io.Serializable {
 	}
 	
 	private String calculateFocusPropertyId() throws XavaException { 
-		String prefix = Is.emptyString(getMemberName())?
-			"xava." + getModelName() + ".":
-			"xava." + getModelName() + "." + getMemberName() + ".";
-						
+		String prefix = Is.emptyString(getMemberName())?"":getMemberName() + ".";							
 		if (Is.emptyString(focusPropertyId)) {			
 			return getFirsEditablePropertyId(prefix);
 		}
 		else {						
-			String focusPropertyName = focusPropertyId.substring(prefix.length());			
+			String focusPropertyName = focusPropertyId.substring(prefix.length());
 			int idx = focusPropertyName.indexOf('.'); 
 			if (idx < 0) {							
 				String name = getNextFocusPropertyName(focusPropertyName);				
@@ -3317,14 +3305,14 @@ public class View implements java.io.Serializable {
 	}
 
 	private void setIdFocusProperty(String string) {
-		focusPropertyId = string;
+		focusPropertyId = Ids.undecorate(string); 
 	}
 
     /**
      * Sets the focus in the provided property
      */
     public void setFocus(String newFocusProperty) {    	
-        focusPropertyId = "xava." + getModelName() + "." + newFocusProperty;
+        focusPropertyId = newFocusProperty; 
     }
 
 	public String getEditCollectionElementAction() {		
@@ -3830,10 +3818,10 @@ public class View implements java.io.Serializable {
 		if (getMetaCollection().hasCondition() && 
 			getMetaCollection().getCondition().indexOf("${this.") >= 0) 
 		{
-			Collection conditionArgumentsPropertyNames = getMetaCollection().getConditionArgumentsPropertyNames();
-			if (conditionArgumentsPropertyNames.contains(removeNamePrefix(getRoot().changedProperty))) return true; 			
-			for (Iterator it=getRoot().getChangedPropertiesActionsAndDescriptionsListReferences().keySet().iterator(); it.hasNext(); ) {
-				String changedProperty = removeNamePrefix((String) it.next());				
+			Collection conditionArgumentsPropertyNames = getMetaCollection().getConditionArgumentsPropertyNames(); 			
+			if (conditionArgumentsPropertyNames.contains(Ids.undecorate(getRoot().changedProperty))) return true; 			
+			for (Iterator it=getRoot().getChangedPropertiesActionsAndDescriptionsListReferences().keySet().iterator(); it.hasNext(); ) {				
+				String changedProperty = Ids.undecorate((String) it.next()); 
 				if (conditionArgumentsPropertyNames.contains(changedProperty)) return true;
 			}			
 		}

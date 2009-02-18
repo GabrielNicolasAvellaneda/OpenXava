@@ -5,6 +5,7 @@
 <%@page import="org.openxava.util.XavaResources"%>
 <%@page import="org.openxava.util.Locales"%>
 <%@page import="org.openxava.util.XSystem"%>
+<%@page import="org.openxava.web.servlets.Servlets"%>
 
 <%
 if (request.getAttribute("style") == null) {	
@@ -29,7 +30,7 @@ if (manager.isFormUpload()) {
 }
 String form = manager.getForm();
 String browser = request.getHeader("user-agent");
-boolean isPortlet = (session.getAttribute("xava.portlet.uploadActionURL") != null);
+boolean isPortlet = (session.getAttribute("xava.portlet.uploadActionURL") != null); 
 
 Module.setPortlet(isPortlet);
 Module.setStyle(style);
@@ -38,7 +39,7 @@ Module.setStyle(style);
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<%@page import="org.openxava.web.servlets.Servlets"%><html xmlns="http://www.w3.org/1999/xhtml" >
+<html xmlns="http://www.w3.org/1999/xhtml" >
 
 
 <head>
@@ -74,9 +75,10 @@ Module.setStyle(style);
 </head>
 <body bgcolor="#ffffff">
 <%=style.getNoPortalModuleStartDecoration(manager.getModuleDescription())%>
-<% } %>	
-	<input id="xava_loading" type="hidden" value="true"/>
-	<input id="xava_loaded_parts" type="hidden" value=""/>	
+<% } %>	  
+	<input id="xava_last_module_change" type="hidden" value=""/>
+	<input id="<xava:id name='loading'/>" type="hidden" value="true"/>
+	<input id="<xava:id name='loaded_parts'/>" type="hidden" value=""/>	
 	<%-- Layer for progress bar --%>
 	<div id='xava_processing_layer' style='position:absolute;top:100px;left:150px;display:none'>
 	<table cellspacing='0'>
@@ -88,7 +90,7 @@ Module.setStyle(style);
 	   </tr>
 	</table>
 	</div>	
-	<div id="xava_core" style="display: inline;">
+	<div id="<xava:id name='core'/>" style="display: inline;">
 		<%
 		String loadingImage=style.getLoadingModuleImage();
 		if (!loadingImage.startsWith("/")) loadingImage = request.getContextPath() + "/xava/" + style.getLoadingModuleImage();
@@ -103,11 +105,10 @@ Module.setStyle(style);
 <% } %>
 
 <script>
-openxavaOnLoad = function() { 
-	if (openxava != null && openxava.application == null) {
-		openxava.application = '<%=app%>';
-		openxava.module = '<%=module%>';
-		openxava.formName = '<%=form%>'; 			
+<% String onLoadFunction=manager.getApplicationName() + "_" + manager.getModuleName() + "_openxavaOnLoad"; %>
+<% String initiated=manager.getApplicationName() + "_" + manager.getModuleName() + "_initiated"; %>
+<%=onLoadFunction%> = function() { 
+	if (openxava != null && openxava.<%=initiated%> == null) {
 		openxava.showFiltersMessage = '<xava:message key="show_filters"/>';
 		openxava.hideFiltersMessage = '<xava:message key="hide_filters"/>';
 		openxava.loadingMessage = '<xava:message key="loading"/>';
@@ -120,11 +121,10 @@ openxavaOnLoad = function() {
 		<%
 		}
 		%>
-		openxava.init();		
+		openxava.init("<%=manager.getApplicationName()%>", "<%=manager.getModuleName()%>");
+		openxava.<%=initiated%> = true;		
 	}	
 }
-window.onload = openxavaOnLoad;
-setTimeout('openxavaOnLoad()', 1000);
+window.onload = <%=onLoadFunction%>;
+setTimeout('<%=onLoadFunction%>()', 1000);
 </script>
-
-

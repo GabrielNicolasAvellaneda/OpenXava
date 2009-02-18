@@ -9,9 +9,11 @@ import org.openxava.controller.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
 import org.openxava.view.*;
+import org.openxava.web.*;
 
 
 /**
+ * 
  * @author Javier Paniza
  */
 
@@ -21,7 +23,7 @@ public class DescriptionsListTag extends TagSupport {
 	private String reference;
 	
 	public int doStartTag() throws JspException {
-		try {
+		try {			
 			HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
 			ModuleContext context = (ModuleContext) request.getSession().getAttribute("context");			
 									
@@ -31,8 +33,10 @@ public class DescriptionsListTag extends TagSupport {
 
 			MetaReference metaReference = view.getMetaReference(reference);
 			String prefix = request.getParameter("propertyPrefix");
-			prefix = (prefix == null || prefix.equals(""))?"xava." + view.getModelName() + ".":prefix;
-			String referenceKey= prefix + reference; 			
+			prefix = prefix == null?"":prefix;
+			String application = request.getParameter("application");
+			String module = request.getParameter("module");
+			String referenceKey = Ids.decorate(application, module, prefix + reference); 
 			request.setAttribute(referenceKey, metaReference);
 			String editorURL = "descriptionsList.jsp?referenceKey=" + referenceKey + "&onlyEditor=true"; 
 			try {
@@ -42,7 +46,7 @@ public class DescriptionsListTag extends TagSupport {
 			catch (Exception ex) {
 				// If the JSP that uses this tag is in root folder
 				pageContext.include("xava/" + editorURL);
-			}			
+			}						
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);

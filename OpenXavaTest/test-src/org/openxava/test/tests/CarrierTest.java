@@ -209,7 +209,7 @@ public class CarrierTest extends ModuleTestBase {
 	}
 	
 	public void testActionOfCalculatedPropertyAlwaysPresent_referenceKeyEditableWhenInGroup() throws Exception {		
-		execute("CRUD.new");
+		execute("CRUD.new");		
 		assertAction("Carrier.translateName");
 		assertExists("calculated");
 		assertNoEditable("calculated");
@@ -229,8 +229,9 @@ public class CarrierTest extends ModuleTestBase {
 		assertValueInList(0, "name", "Cinco");
 	}
 	
-	public void testPropertyDependsDescriptionsListReference_multipleKeyWithSpaces() throws Exception {
+	public void testPropertyDependsDescriptionsListReference_multipleKeyWithSpaces_descriptionsListLabels() throws Exception {
 		execute("CRUD.new");
+		assertLabel("drivingLicence", "Driving licence"); 
 		assertValue("remarks","");
 		DrivingLicence licence = new DrivingLicence();
 		licence.setType("C ");
@@ -245,8 +246,8 @@ public class CarrierTest extends ModuleTestBase {
 	
 	public void testOwnControllerForCreatingAndModifyingFromReference() throws Exception {
 		execute("Mode.detailAndFirst");		
-		// Modifying
-		execute("Reference.modify", "model=Warehouse,keyProperty=xava.Carrier.warehouse.number");		
+		// Modifying				
+		execute("Reference.modify", "model=Warehouse,keyProperty=warehouse.number");
 		assertNoErrors();
 		assertAction("Modification.update");
 		assertAction("Modification.cancel");
@@ -254,7 +255,7 @@ public class CarrierTest extends ModuleTestBase {
 		execute("Modification.cancel");
 		
 		// Creating
-		execute("Reference.createNew", "model=Warehouse,keyProperty=xava.Carrier.warehouse.number");		
+		execute("Reference.createNew", "model=Warehouse,keyProperty=warehouse.number");		
 		assertNoErrors();
 		assertAction("NewCreation.saveNew");
 		assertAction("NewCreation.cancel");
@@ -421,11 +422,11 @@ public class CarrierTest extends ModuleTestBase {
 	}
 	
 	
-	public void testListActionInCollection() throws Exception {
-		execute("CRUD.new");
-		setValue("number", "1");
+	public void testListActionInCollection() throws Exception {		
+		execute("CRUD.new");		
+		setValue("number", "1");		
 		execute("CRUD.search");
-		assertNoErrors();
+		assertNoErrors();		
 
 		assertValueInCollection("fellowCarriers", 0, "name", "DOS");
 		assertValueInCollection("fellowCarriers", 1, "name", "TRES");
@@ -459,7 +460,7 @@ public class CarrierTest extends ModuleTestBase {
 		assertValueInCollection("fellowCarriers", 0, "name", "FOUR");
 		checkRowCollection("fellowCarriers", 0);
 		execute("Carrier.translateName", "viewObject=xava_view_fellowCarriers");
-		assertValueInCollection("fellowCarriers", 0, "name", "CUATRO");
+		assertValueInCollection("fellowCarriers", 0, "name", "CUATRO");		
 	}
 	
 	private void assertCarriersCount(int c) throws Exception {

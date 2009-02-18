@@ -7,9 +7,9 @@ import org.openxava.actions.*;
  */
 public class OnChangePreferredWarehouseAction extends OnChangePropertyBaseAction {
 
-	public void execute() throws Exception {			
+	public void execute() throws Exception {	
 		if (getNewValue() == null) getView().setValue("remarks", "");
-		else getView().setValue("remarks", "PREFERRED WAREHOUSE IS " + getNewValue());
+		else getView().setValue("remarks", "PREFERRED WAREHOUSE IS " + getNewValue());		
 	}
 
 }

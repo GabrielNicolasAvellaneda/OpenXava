@@ -46,9 +46,9 @@ else {
 		lineAction = subview.getViewCollectionElementAction();
 	}
 }
-String propertyPrefix = Is.emptyString(propertyPrefixAccumulated)?"xava." + view.getModelName() + "." + collectionName + ".":propertyPrefixAccumulated + collectionName + ".";
+String propertyPrefix = propertyPrefixAccumulated == null?collectionName + ".":propertyPrefixAccumulated + collectionName + "."; 
 %>
-<div id="xava_collection_<%=propertyPrefix%>">
+<div id="<xava:id name='<%="collection_" + propertyPrefix%>'/>">
 <table width="100%" class="<%=style.getList()%>" <%=style.getListCellSpacing()%>>
 <% if (XavaPreferences.getInstance().isDetailOnBottomInCollections()) { %>
 <tr><td>
@@ -131,6 +131,8 @@ else {
 	String formName = manager.getForm();	
 	String argv = "collectionName=" + collectionName;
 	Iterator it = subview.getMetaPropertiesList().iterator();
+	String app = request.getParameter("application");
+	String module = request.getParameter("module");
 	while (it.hasNext()) {
 		MetaProperty p = (MetaProperty) it.next(); 
 		String propertyKey= propertyPrefix + p.getName();
@@ -139,12 +141,15 @@ else {
 		request.setAttribute(valueKey, subview.getValue(p.getName()));		
 		String script = "";
 		if (it.hasNext()) {
-			if (subview.throwsPropertyChanged(p)) {
-				script = "onchange='openxava.throwPropertyChanged(\"" + propertyKey + "\")'";
+			if (subview.throwsPropertyChanged(p)) {			
+				script = "onchange='openxava.throwPropertyChanged(\"" + 
+						app + "\", \"" + 
+						module + "\", \"" +
+						propertyKey + "\")'";
 			}
 		}
 		else {
-			script = "onblur='openxava.executeAction('', false, \"" + subview.getSaveCollectionElementAction() + "\", \"" + argv + "\")'";
+			script = "onblur='openxava.executeAction(\"" + app + "\", \"" + module + "\", \"\", false, \"" + subview.getSaveCollectionElementAction() + "\", \"" + argv + "\")'";
 		}
 		Object value = request.getAttribute(propertyKey + ".value");
 		if (WebEditors.mustToFormat(p, view.getViewName())) {

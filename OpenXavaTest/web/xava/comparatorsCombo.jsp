@@ -21,7 +21,7 @@ String month = "month_comparator".equals(comparator)?"selected='selected'":"";
 String yearMonth = "year_month_comparator".equals(comparator)?"selected='selected'":"";
 int index = Integer.parseInt(request.getParameter("index"));
 %>
-<select name="<%=prefix%>conditionComparator.<%=index%>" class=<%=style.getEditor()%>>
+<select name="<xava:id name='<%=prefix + "conditionComparator." + index%>'/>" class=<%=style.getEditor()%>>
 	<%
 	if (isString) {
 	%>						
