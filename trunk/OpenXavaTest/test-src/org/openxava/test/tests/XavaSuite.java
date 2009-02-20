@@ -65,6 +65,7 @@ public class XavaSuite extends TestSuite {
 			suite.addTest(new TestSuite(ColorOnlyPOJOTest.class));
 		}
 		suite.addTest(new TestSuite(ColorTest.class));
+		suite.addTest(new TestSuite(ColorM1Test.class));
 		if (ModuleTestBase.isOX3()) {
 			suite.addTest(new TestSuite(CompositeTest.class));
 		}
@@ -163,8 +164,7 @@ public class XavaSuite extends TestSuite {
 		if (ModuleTestBase.isOX3()) {
 			suite.addTest(new TestSuite(ProgrammerTest.class));
 		}							
-		suite.addTest(new TestSuite(PublicJSPTest.class));
-		suite.addTest(new TestSuite(ReturnPreviousModuleTest.class));
+		suite.addTest(new TestSuite(PublicJSPTest.class));		
 		suite.addTest(new TestSuite(SellerCannotCreateCustomerTest.class));
 		suite.addTest(new TestSuite(SellerJSPTest.class));
 		suite.addTest(new TestSuite(SellerTest.class));

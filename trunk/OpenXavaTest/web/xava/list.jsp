@@ -57,9 +57,11 @@ boolean singleSelection="true".equalsIgnoreCase(request.getParameter("singleSele
 
 <table id="<xava:id name='<%=id%>'/>" class="<%=style.getList()%>" width="100%" <%=style.getListCellSpacing()%> style="<%=style.getListStyle()%>">
 <tr class="<%=style.getListHeader()%>">
-<th class="<%=style.getListHeaderCell()%>" style="text-align: center" width="60">     
+<th class="<%=style.getListHeaderCell()%>" style="text-align: center" width="60">
+	<%String imageFilterPrefix = request.getContextPath() + "/xava/images/"; %>
+	<input name="xava_image_filter_prefix" type="hidden" value="<%=imageFilterPrefix%>"/>     
 	<a id="<xava:id name='<%="filter_link_" + id%>'/>" href="javascript:openxava.manageFilterRow('<%=request.getParameter("application")%>', '<%=request.getParameter("module")%>', '<%=id%>', '<%=tabObject%>')" title="<xava:message key='<%=filterMessage%>'/>"><img id="<xava:id name='<%="filter_image_" + id%>'/>" align='middle' 
-		src='<%=request.getContextPath()%>/xava/images/<%=imageFilter%>.gif' border='0'/></a>
+		src='<%=imageFilterPrefix%><%=imageFilter%>.gif' border='0'/></a>
 	<xava:image action="List.customize" argv="<%=collectionArgv%>"/>
 </th>
 <th class="<%=style.getListHeaderCell()%>" width="5">

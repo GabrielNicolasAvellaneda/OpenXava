@@ -386,7 +386,7 @@
 		<reference-view reference="state" frame="false"/>
 	</view>
 	
-	<view model="Intermediate">
+	<view name="Intermediate">
 		<members>
 			number
 		</members>

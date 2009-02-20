@@ -18,6 +18,8 @@ import org.openxava.web.*;
 import org.openxava.web.servlets.*;
 import org.openxava.web.style.*;
 
+import com.sun.java_cup.internal.*;
+
 /**
  * For accessing to module execution from DWR. <p>
  * 
@@ -69,13 +71,13 @@ public class Module extends DWRBase {
 				request.getSession().removeAttribute("xava_forward");
 				request.getSession().removeAttribute("xava_forward_inNewWindow");				
 			}
-			else if (manager.getNextModule() != null) { 
+			else if (manager.getNextModule() != null) { 				
 				changeModule(result);
 			}
 			else {
 				fillResult(result, values, multipleValues, selected);
 			}			
-			result.setStrokeActions(getStrokeActions());
+			result.setStrokeActions(getStrokeActions());			
 			return result;
 		}
 		catch (SecurityException ex) {
@@ -137,13 +139,18 @@ public class Module extends DWRBase {
 		if (IChangeModuleAction.PREVIOUS_MODULE.equals(nextModule)) {
 			nextModule = manager.getPreviousModules().peek().toString();
 			manager.getPreviousModules().pop();
+			getContext(request).remove(application, module, "xava_currentModule"); 
+			getContext(request).remove(application, nextModule, "xava_currentModule");
 		}
-		else manager.getPreviousModules().push(module);
-		//
-		if (manager.getPreviousModules().isEmpty()) 
-			getContext(request).remove(application, module, "xava_currentModule");
-		getContext(request).put(application, module, "xava_currentModule", nextModule);
-		//
+		else {			
+			manager.getPreviousModules().push(module);
+		}
+		
+
+		if (!manager.getPreviousModules().isEmpty()) {			
+			getContext(request).put(application, module, "xava_currentModule", nextModule);
+		}
+
 		ModuleManager nextManager = (ModuleManager) getContext(request).get(application, nextModule, "manager", "org.openxava.controller.ModuleManager");
 		
 		nextManager.setPreviousModules(manager.getPreviousModules());

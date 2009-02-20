@@ -34,8 +34,8 @@ manager.setModuleName(module); // In order to show the correct description in he
 if (manager.isFormUpload()) {
 	new Module().requestMultipart(request, response, app, module);
 }
-String browser = request.getHeader("user-agent");
-boolean isPortlet = (session.getAttribute("xava.portlet.uploadActionURL") != null); 
+String browser = request.getHeader("user-agent"); 
+boolean isPortlet = (session.getAttribute(Ids.decorate(request, "xava.portlet.uploadActionURL")) != null);
 
 Module.setPortlet(isPortlet);
 Module.setStyle(style);
@@ -44,7 +44,8 @@ Module.setStyle(style);
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml" >
+
+<%@page import="org.openxava.web.Ids"%><html xmlns="http://www.w3.org/1999/xhtml" >
 <%@page import="org.openxava.web.servlets.Servlets"%><%@page import="org.openxava.util.Is"%>
 <html xmlns="http://www.w3.org/1999/xhtml" >
 
