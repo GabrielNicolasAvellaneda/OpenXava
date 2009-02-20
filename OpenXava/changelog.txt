@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Several modules in the same portal page are supported.
+- Fix: Warning NotSerializableException with Tab removed.
 - Removed method ModuleManager.getForm().
 - Fix: List for adding columns to list or collections did not use list look & feel.
 - Fix: Creating from a reference an entity with collection fails.

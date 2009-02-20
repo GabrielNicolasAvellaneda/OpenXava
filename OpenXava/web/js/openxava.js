@@ -209,15 +209,16 @@ openxava.manageFilterRow = function(application, module, id, tabObject) {
     	openxava.decorateId(application, module, "tr_list_filter_" + id));
     var link = document.getElementById(
     	openxava.decorateId(application, module, "filter_link_" + id));
+    var prefix = openxava.getForm(application, module)["xava_image_filter_prefix"].value;
 	if (elem.style.display == ''){
 		elem.style.display = 'none';
-		img.src='images/show-filter.gif';
+		img.src=prefix + 'show-filter.gif';
 		link.title=openxava.showFiltersMessage;		
 		Tab.setFilterVisible(application, module, false, tabObject);
 	}
 	else {
 		elem.style.display = '';
-		img.src='images/hide-filter.gif';
+		img.src=prefix + 'hide-filter.gif';
 		link.title=this.hideFiltersMessage;
 		Tab.setFilterVisible(application, module, true, tabObject);
 	}    

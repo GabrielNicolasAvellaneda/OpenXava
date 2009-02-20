@@ -69,7 +69,7 @@ public class Tab implements java.io.Serializable {
 	private int [] selected;
 	private String modelName;
 	private String tabName;
-	private HttpServletRequest request;
+	private transient HttpServletRequest request; 
 	private boolean metaTabCloned = false;
 	private boolean titleVisible = false;
 	private List metaPropertiesKey;

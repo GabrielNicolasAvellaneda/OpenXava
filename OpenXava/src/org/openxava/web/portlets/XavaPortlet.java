@@ -12,6 +12,7 @@ import org.apache.commons.fileupload.portlet.*;
 import org.apache.commons.logging.*;
 
 import org.openxava.util.*;
+import org.openxava.web.*;
 import org.openxava.web.style.*;
 
 /**
@@ -44,8 +45,6 @@ import org.openxava.web.style.*;
 
 public class XavaPortlet extends GenericPortlet {
 	
-	
-	
 	private static Log log = LogFactory.getLog(XavaPortlet.class);
 
 	/**
@@ -61,15 +60,18 @@ public class XavaPortlet extends GenericPortlet {
 	
 	private static Style style;
 	private String moduleURL;
+	private String application; 
+	private String module; 
 	
 	
 	
 	public void init(PortletConfig config) throws PortletException {
 		super.init(config);		
+		this.application = config.getInitParameter(PARAM_APPLICATION);
+		this.module = config.getInitParameter(PARAM_MODULE);		
 		// Calling directly to module.jsp does not work well in Liferay (see portlet.jsp doc)		
 		this.moduleURL = "/WEB-INF/jsp/xava/portlet.jsp?xava.portlet.application=" +		
-			config.getInitParameter(PARAM_APPLICATION) + "&xava.portlet.module=" +			
-			config.getInitParameter(PARAM_MODULE);
+			application + "&xava.portlet.module=" + module;
 	}
 
 	/**
@@ -79,14 +81,14 @@ public class XavaPortlet extends GenericPortlet {
 	 * @throws PortletException
 	 * @throws IOException
 	 */
-	public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {		
+	public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
 		Object style = getStyle(request);			
 		request.setAttribute("style", style);
-		request.getPortletSession().setAttribute("xava.portlet.uploadActionURL", response.createActionURL().toString(), PortletSession.APPLICATION_SCOPE);
-		request.setAttribute("xava.upload.fileitems", request.getPortletSession().getAttribute("xava.upload.fileitems", PortletSession.APPLICATION_SCOPE)); 
-		request.setAttribute("xava.upload.error", request.getPortletSession().getAttribute("xava.upload.error", PortletSession.APPLICATION_SCOPE));
-		request.getPortletSession().removeAttribute("xava.upload.fileitems", PortletSession.APPLICATION_SCOPE);
-		request.getPortletSession().removeAttribute("xava.upload.error", PortletSession.APPLICATION_SCOPE);
+		request.getPortletSession().setAttribute(Ids.decorate(application, module, "xava.portlet.uploadActionURL"), response.createActionURL().toString(), PortletSession.APPLICATION_SCOPE); 
+		request.setAttribute("xava.upload.fileitems", request.getPortletSession().getAttribute("xava.upload.fileitems", PortletSession.PORTLET_SCOPE));  
+		request.setAttribute("xava.upload.error", request.getPortletSession().getAttribute("xava.upload.error", PortletSession.PORTLET_SCOPE)); 
+		request.getPortletSession().removeAttribute("xava.upload.fileitems", PortletSession.PORTLET_SCOPE); 
+		request.getPortletSession().removeAttribute("xava.upload.error", PortletSession.PORTLET_SCOPE); 
 		
 		request.getPortletSession().setAttribute("xava.portal.locale", request.getLocale(), PortletSession.APPLICATION_SCOPE);
 		
@@ -150,7 +152,7 @@ public class XavaPortlet extends GenericPortlet {
 		return request.getPortalContext().getPortalInfo().indexOf("Jetspeed/2.0") >= 0;
 	}
 
-	public void processAction(ActionRequest request, ActionResponse response) throws PortletException {		
+	public void processAction(ActionRequest request, ActionResponse response) throws PortletException {
 		propagateParameters(request, response);
 		
 		PortletMode mode = request.getPortletMode();
@@ -171,13 +173,13 @@ public class XavaPortlet extends GenericPortlet {
 				factory.setSizeThreshold(1000000);		
 				PortletFileUpload upload = new PortletFileUpload(factory);
 				List fileItems = upload.parseRequest(request);					
-				request.getPortletSession().setAttribute("xava.upload.fileitems", fileItems, PortletSession.APPLICATION_SCOPE); 
-				request.getPortletSession().removeAttribute("xava.upload.error", PortletSession.APPLICATION_SCOPE); 
+				request.getPortletSession().setAttribute("xava.upload.fileitems", fileItems, PortletSession.PORTLET_SCOPE);  
+				request.getPortletSession().removeAttribute("xava.upload.error", PortletSession.PORTLET_SCOPE);  
 			}
 			catch (Exception ex) {
 				log.error(ex.getMessage(), ex);
-				request.getPortletSession().removeAttribute("xava.upload.fileitems", PortletSession.APPLICATION_SCOPE);
-				request.getPortletSession().setAttribute("xava.upload.error", "upload_error", PortletSession.APPLICATION_SCOPE);				
+				request.getPortletSession().removeAttribute("xava.upload.fileitems", PortletSession.PORTLET_SCOPE); 
+				request.getPortletSession().setAttribute("xava.upload.error", "upload_error", PortletSession.PORTLET_SCOPE); 				
 			}				
 		}
 	} 	

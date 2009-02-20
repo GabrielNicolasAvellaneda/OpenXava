@@ -127,8 +127,6 @@ else {
 %>
 <td></td>
 <%
-	org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
-	String formName = manager.getForm();	
 	String argv = "collectionName=" + collectionName;
 	Iterator it = subview.getMetaPropertiesList().iterator();
 	String app = request.getParameter("application");

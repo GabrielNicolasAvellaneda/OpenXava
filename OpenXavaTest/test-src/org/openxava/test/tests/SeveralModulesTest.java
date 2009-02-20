@@ -10,36 +10,7 @@ import org.openxava.web.*;
 import com.gargoylesoftware.htmlunit.*;
 import com.gargoylesoftware.htmlunit.html.*;
 
-/**
- * 
- * JUnit:
- * * Acciones
- * * Evento al-cambiar  
- * * Secciones (Formula)
- * * Seleccionar en una lista y colección (Carrier)
- * * Foco
- * * Upload file (Customer)
- * * Dos portlets del mismo modelo
- * 
- * A mano:
- * * HTMLEditor (Formula)
- * * Imagen de proceso por lotes
- * * Mostra/ocultar filtros en lista/colección
- * * Clear condition values
- * * Atajos de teclado
- * - Dentro del portal: 
- * 		- WPS6.1 (y revisar estética)
- * 		- Liferay 5.1 con suite completa 
- * - Probar en todos los navegadores
- * 
- * Otros:
- * - En migration:
- * 		// tmp execute("Delivery.generateNumber", "xava.keyProperty=xava.Delivery.number"); 
- *		execute("Delivery.generateNumber", "xava.keyProperty=number"); // tmp
- *
- * 		// tmp HtmlImage image = (HtmlImage) page.getHtmlElementsByName("xava.Formula.ingredients.image").get(0);		
-		HtmlImage image = (HtmlImage) page.getHtmlElementsByName(decorateId("ingredients.image")).get(0); // tmp
-
+/** 
  * 
  * @author Javier Paniza
  */

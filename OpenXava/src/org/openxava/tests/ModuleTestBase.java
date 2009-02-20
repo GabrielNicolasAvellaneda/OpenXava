@@ -127,8 +127,8 @@ public class ModuleTestBase extends TestCase {
 			// Liferay
 			page = (HtmlPage) client.getPage("http://" + getHost() + ":" + getPort() + "/c/portal/login");
 			resetLoginForm();			
-			setFormValue("login", user);					
-			setFormValue(getPasswordFieldInLiferay(), password);
+			setFormValue("login", user, true, false);					
+			setFormValue(getPasswordFieldInLiferay(), password, true, false);
 			HtmlSubmitInput button = (HtmlSubmitInput) getForm().getHtmlElementsByAttribute("input", "type", "submit").get(0);
 			page = (HtmlPage) button.click();
 			
@@ -1556,7 +1556,7 @@ public class ModuleTestBase extends TestCase {
 		return xavaJunitProperties;
 	}
 	
-	private void resetForm() throws Exception { 		
+	private void resetForm() throws Exception {		
 		waitUntilPageIsLoaded();
 		setNewModuleIfChanged(); 
 		form = null; 		
