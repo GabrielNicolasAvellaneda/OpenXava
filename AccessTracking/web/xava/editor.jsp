@@ -29,7 +29,7 @@ if (first && !view.isAlignedByColumns()) label = org.openxava.util.Strings.chang
 
 <%=preLabel%>
 <% if (labelFormat == MetaPropertyView.NORMAL_LABEL) { %>
-<span id="xava_label_<%=view.getPropertyPrefix()%><%=p.getName()%>">
+<span id="<xava:id name='<%="label_" + view.getPropertyPrefix() + p.getName()%>'/>">
 <%=label%>
 </span>
 <% } %>
@@ -40,7 +40,7 @@ if (first && !view.isAlignedByColumns()) label = org.openxava.util.Strings.chang
 <% } else if (p.isRequired()) { %>	
 <img src="<%=request.getContextPath()%>/xava/images/required.gif"/>
 <% } %> 
-<span id="xava_error_image_<%=p.getQualifiedName()%>"> 
+<span id="<xava:id name='<%="error_image_" + p.getQualifiedName()%>'/>"> 
 <% if (errors.memberHas(p)) { %>
 <img src="<%=request.getContextPath()%>/xava/images/error.gif"/>
 <% } %>
@@ -50,16 +50,16 @@ if (first && !view.isAlignedByColumns()) label = org.openxava.util.Strings.chang
 <% if (labelFormat == MetaPropertyView.SMALL_LABEL) { 	
 %>
 <table border='0' cellpadding='0', cellspacing='0'><tr><td align='bottom'>
-<span id="xava_label_<%=view.getPropertyPrefix()%><%=p.getName()%>" class="<%=style.getSmallLabel()%>"><%=label%></span>
+<span id="<xava:id name='<%="label_" + view.getPropertyPrefix() + p.getName()%>'/>" class="<%=style.getSmallLabel()%>"><%=label%></span>
 
 </td></tr>
 <tr><td style='vertical-align: middle'>
 <% } %>
-<span id="xava_editor_<%=view.getPropertyPrefix()%><%=p.getName()%>"> 
+<span id="<xava:id name='<%="editor_" + view.getPropertyPrefix() + p.getName()%>'/>"> 
 <xava:editor property="<%=p.getName()%>" editable="<%=editable%>" throwPropertyChanged="<%=throwPropertyChanged%>"/>
 </span>
 <% if (view.propertyHasActions(p)) { %>
-<span id="xava_property_actions_<%=view.getPropertyPrefix()%><%=p.getName()%>">
+<span id="<xava:id name='<%="property_actions_" + view.getPropertyPrefix() + p.getName()%>'/>">
 <jsp:include page="propertyActions.jsp">
 	<jsp:param name="propertyName" value="<%=p.getName()%>"/>
 	<jsp:param name="lastSearchKey" value="<%=lastSearchKey%>"/>

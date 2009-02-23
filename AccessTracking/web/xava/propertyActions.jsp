@@ -2,7 +2,8 @@
 
 <%@page import="org.openxava.model.meta.MetaProperty"%>
 
-<jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
+
+<%@page import="org.openxava.web.Ids"%><jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 
 <% 
 boolean lastSearchKey = "true".equals(request.getParameter("lastSearchKey"));
@@ -10,7 +11,7 @@ boolean editable = "true".equals(request.getParameter("editable"));
 String viewObject = request.getParameter("viewObject");
 viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObject;
 org.openxava.view.View view = (org.openxava.view.View) context.get(request, viewObject);
-String propertyKey = request.getParameter("propertyKey");
+String propertyKey = Ids.undecorate(request.getParameter("propertyKey")); 
 String propertyName = request.getParameter("propertyName");
 MetaProperty p = view.getMetaProperty(propertyName);
 if (lastSearchKey) {	

@@ -5,7 +5,8 @@
 <%@ page import="org.openxava.model.meta.MetaReference" %>
 <%@ page import="org.openxava.view.meta.MetaPropertyView" %>
 
-<jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
+
+<%@page import="org.openxava.web.Ids"%><jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
@@ -30,7 +31,7 @@ String label = ref.getLabel(request);
 <% if (!onlyEditor) { %>
 <%=preLabel%>
 <% if (labelFormat == MetaPropertyView.NORMAL_LABEL) { %>
-<span id='xava_label_<%=referenceKey%>'><%=label%></span>
+<span id="<xava:id name='<%="label_" + view.getPropertyPrefix() + ref.getName()%>'/>"><%=label%></span>
 <% } %>
 <%=postLabel%>
 <%=preIcons%>
@@ -39,7 +40,7 @@ String label = ref.getLabel(request);
 <% } else if (ref.isRequired()) {  %>	
 <img src="<%=request.getContextPath()%>/xava/images/required.gif"/>
 <% } %> 
-<span id="xava_error_image_<%=ref.getQualifiedName()%>">
+<span id="<xava:id name='<%="error_image_" + ref.getQualifiedName()%>'/>">
 <% if ( errors.memberHas(ref)) {%>
 <img src="<%=request.getContextPath()%>/xava/images/error.gif"/>
 <% } %>
@@ -48,7 +49,8 @@ String label = ref.getLabel(request);
 <%=preEditor%>
 <% if (labelFormat == MetaPropertyView.SMALL_LABEL) { %>
 <table border='0' cellpadding='0', cellspacing='0'><tr><td align='bottom'>
-<span id='xava_label_<%=referenceKey%>' class=<%=style.getSmallLabel()%>><%=label%></span>
+<span id='<xava:id name='<%="label_" + view.getPropertyPrefix() + ref.getName()%>'/>' class=<%=style.getSmallLabel()%>><%=label%></span>
+
 
 </td></tr>
 <tr><td style='vertical-align: middle'>
@@ -62,7 +64,7 @@ String keyProperties = "";
 String propertyKey = null;
 if (keys.size() == 1) {		
 	keyProperty = keys.iterator().next().toString();
-	propertyKey = referenceKey + "." + keyProperty;	
+	propertyKey = referenceKey + "." + keyProperty;
 	Map values = (Map) view.getValue(ref.getName());	
 	values = values == null?java.util.Collections.EMPTY_MAP:values;
 	Object value = values.get(keyProperty);
@@ -96,11 +98,12 @@ else {
 String descriptionProperty = view.getDescriptionPropertyInDescriptionsList(ref);
 String descriptionProperties = view.getDescriptionPropertiesInDescriptionsList(ref);
 
-org.openxava.controller.ModuleManager manager = (org.openxava.controller.ModuleManager) context.get(request, "manager", "org.openxava.controller.ModuleManager");
-String formName = manager.getForm();	
 boolean throwChanged=view.throwsReferenceChanged(ref);
 String script = throwChanged?
-	"onchange='openxava.throwPropertyChanged(\"" + propertyKey + "\")'":"";
+	"onchange='openxava.throwPropertyChanged(\"" + 
+			request.getParameter("application") + "\", \"" + 
+			request.getParameter("module") + "\", \"" +			
+			propertyKey + "\")'":"";
 
 String parameterValuesProperties=view.getParameterValuesPropertiesInDescriptionsList(ref);
 String condition = view.getConditionInDescriptionsList(ref);
@@ -121,7 +124,7 @@ if (metaTab.hasBaseCondition()) {
 }
 String urlDescriptionEditor = "editors/descriptionsEditor.jsp" // in this way because websphere 6 has problems with jsp:param
 	+ "?script=" + script
-	+ "&propertyKey=" + propertyKey
+	+ "&propertyKey=" + propertyKey	
 	+ "&editable=" + editable
 	+ "&model=" + ref.getReferencedModelName()
 	+ "&keyProperty=" + keyProperty
@@ -132,23 +135,25 @@ String urlDescriptionEditor = "editors/descriptionsEditor.jsp" // in this way be
 	+ "&condition=" + condition
 	+ "&orderByKey=" + orderByKey
 	+ "&order=" + order
-	+ filterArg;
+	+ filterArg; 
 %>
-<span id="xava_descriptions_list_<%=referenceKey%>">
+<span id="<xava:id name='<%="descriptions_list_" + view.getPropertyPrefix() + ref.getName()%>'/>">
 <input type="hidden" name="<%=editableKey%>" value="<%=editable%>"/>
 <jsp:include page="<%=urlDescriptionEditor%>" />
 
 <%
+String keyPropertyForAction = Ids.undecorate(propertyKey); 
+
 if (editable && view.isCreateNewForReference(ref)) {
 %>
-<xava:action action='Reference.createNew' argv='<%="model="+ref.getReferencedModelName() + ",keyProperty=" + propertyKey%>'/>
+<xava:action action='Reference.createNew' argv='<%="model="+ref.getReferencedModelName() + ",keyProperty=" + keyPropertyForAction%>'/>
 <%
 }
 %>
 <%
 if (editable && view.isModifyForReference(ref)) {
 %>
-<xava:action action='Reference.modify' argv='<%="model="+ref.getReferencedModelName() + ",keyProperty=" + propertyKey%>'/>
+<xava:action action='Reference.modify' argv='<%="model="+ref.getReferencedModelName() + ",keyProperty=" + keyPropertyForAction%>'/>
 <%
 }
 %>

@@ -41,8 +41,7 @@ public class AccessTrackingCalculator implements IModelCalculator {
 			Access access = newAccess();			
 			if (areEqual(access, lastAccess)) return null; 			
 			session = XHibernate.createSession();
-			Transaction tx = null;
-			if (!XHibernate.isCmt()) tx = session.beginTransaction(); 
+			Transaction tx = beginTransaction(session); 
 			session.save(access);
 			session.flush();				
 			if (tx != null) tx.commit();
@@ -59,6 +58,17 @@ public class AccessTrackingCalculator implements IModelCalculator {
 		return null;		
 	}
 	
+	private Transaction beginTransaction(Session session) {		
+		if (XHibernate.isCmt()) return null;
+		try {
+			return session.beginTransaction();
+		}
+		catch (Exception ex) {  
+			// Maybe we are unexpectly in a CMT environment  
+			return null;
+		}		
+	}
+
 	private Access newAccess() throws Exception {
 		MetaModel metaModel = getMetaModel();
 		Access access = new Access();
