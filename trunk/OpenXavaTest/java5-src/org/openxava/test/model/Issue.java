@@ -1,10 +1,17 @@
 package org.openxava.test.model;
 
-import java.util.*;
+import java.util.Collection;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
-import org.openxava.annotations.*;
+import org.openxava.annotations.Required;
+import org.openxava.annotations.Tab;
 
 /**
  * For testing the default schema behaviour. <p>
@@ -13,6 +20,7 @@ import org.openxava.annotations.*;
  */
 
 @Entity
+@Tab(defaultOrder="${description} asc")	// failed to change default schema in as400
 public class Issue {
 	
 	@Id @Column(length=5) @Required

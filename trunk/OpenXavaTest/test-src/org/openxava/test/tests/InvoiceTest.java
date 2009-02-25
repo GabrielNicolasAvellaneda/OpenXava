@@ -50,14 +50,17 @@ public class InvoiceTest extends ModuleTestBase {
 		execute("Mode.detailAndFirst");
 		execute("Invoice.printPdf");
 		assertNoErrors(); 
+		assertMessage("The print was successful");
 		assertContentTypeForPopup("application/pdf");
 		
 		execute("Invoice.printExcel");
 		assertNoErrors(); 
+		assertMessage("The print was successful");
 		assertContentTypeForPopup("application/vnd.ms-excel");		
 		
 		execute("Invoice.printRtf");
 		assertNoErrors(); 
+		assertMessage("The print was successful");
 		assertContentTypeForPopup("application/rtf");		
 	}
 		
