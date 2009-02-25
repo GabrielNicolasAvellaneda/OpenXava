@@ -845,11 +845,7 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 	}
 
 	public String getSQLDefaultOrder() throws XavaException {
-		if (sQLDefaultOrder == null) {
-			sQLDefaultOrder = getMapping().changePropertiesByColumns(
-					getDefaultOrder());
-		}
-		return sQLDefaultOrder;
+		return sQLDefaultOrder = getMapping().changePropertiesByColumns(getDefaultOrder());
 	}
 
 	public boolean hasDefaultOrder() {
