@@ -64,6 +64,7 @@ public class Module extends DWRBase {
 			result.setChangedParts(changedParts);
 			String forwardURI = (String) request.getSession().getAttribute("xava_forward");		
 			if (!Is.emptyString(forwardURI)) {
+				memorizeLastMessages();
 				result.setForwardURL(request.getScheme() + "://" + 
 					request.getServerName() + ":" + request.getServerPort() + 
 					request.getContextPath() + forwardURI);
