@@ -21,6 +21,12 @@ public class InvoiceReportAction extends JasperReportBaseAction {
 	
 	private Invoice invoice;
 
+	@Override
+	public void execute() throws Exception {
+		super.execute();
+		addMessage("InvoiceReportAction.printOK");
+	}
+	
 	public Map getParameters() throws Exception  {
 		Messages errors = MapFacade.validate("Invoice", getView().getValues());
 		if (errors.contains()) throw new ValidationException(errors);
