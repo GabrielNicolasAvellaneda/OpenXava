@@ -901,8 +901,8 @@ public class MetaTab implements java.io.Serializable, Cloneable {
 		}
 	}
 
-	public Collection getRemainingPropertiesNames() throws XavaException {
-		Collection result = new ArrayList(getMetaModel().getRecursiveQualifiedPropertiesNames());
+	public List getRemainingPropertiesNames() throws XavaException { 
+		List result = new ArrayList(getMetaModel().getRecursiveQualifiedPropertiesNames());
 		result.removeAll(getPropertiesNames());
 		return result;
 	}

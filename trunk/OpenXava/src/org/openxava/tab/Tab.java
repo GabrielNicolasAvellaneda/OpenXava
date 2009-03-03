@@ -41,14 +41,14 @@ public class Tab implements java.io.Serializable {
 	
 	private static Log log = LogFactory.getLog(Tab.class);
 	
-	private final static int DEFAULT_PAGE_ROW_COUNT = 10;	
 	private final static String STARTS_COMPARATOR = "starts_comparator";
 	private final static String CONTAINS_COMPARATOR = "contains_comparator";
 	private final static String YEAR_COMPARATOR = "year_comparator";
 	private final static String MONTH_COMPARATOR = "month_comparator";
 	private final static String YEAR_MONTH_COMPARATOR = "year_month_comparator"; 
 	
-	private int pageRowCount = DEFAULT_PAGE_ROW_COUNT;	
+	private int pageRowCount = XavaPreferences.getInstance().getPageRowCount();
+	private int addColumnsPageRowCount = XavaPreferences.getInstance().getAddColumnsPageRowCount();
 	private Object [] titleArguments;
 	private List metaPropertiesNotCalculated;
 	private ReferenceMapping referencesCollectionMapping;
@@ -63,6 +63,8 @@ public class Tab implements java.io.Serializable {
 	private String[] conditionValues;
 	private List metaProperties;
 	private int page = 1;
+	private int addColumnsPage = 1; 
+	private int addColumnsLastPage; 
 	private boolean notResetNextTime = false;
 	private int initialIndex;	 			
 	private transient IXTableModel tableModel;	
@@ -99,7 +101,7 @@ public class Tab implements java.io.Serializable {
 		return metaProperties;
 	}
 	
-	public Collection getRemainingPropertiesNames() throws XavaException {
+	private List getRemainingPropertiesNames() throws XavaException {
 		if (isSortRemainingProperties()) {
 			List result = new ArrayList(getMetaTab().getRemainingPropertiesNames());
 			Collections.sort(result);
@@ -108,6 +110,15 @@ public class Tab implements java.io.Serializable {
 		else {
 			return getMetaTab().getRemainingPropertiesNames();
 		}
+	}
+	
+	public Collection getColumnsToAdd() throws XavaException { 
+		List remainingPropertiesNames = getRemainingPropertiesNames();
+		int begin = (getAddColumnsPage() - 1) * getAddColumnsPageRowCount();
+		addColumnsLastPage = (remainingPropertiesNames.size() - 1) / getAddColumnsPageRowCount() + 1;
+		int end = begin + getAddColumnsPageRowCount();
+		if (end > remainingPropertiesNames.size()) end = remainingPropertiesNames.size();
+		return remainingPropertiesNames.subList(begin, end);
 	}
 	
 	public List getMetaPropertiesNotCalculated() throws XavaException {
@@ -653,7 +664,21 @@ public class Tab implements java.io.Serializable {
 	public int getLastPage() {		
 		return (tableModel.getRowCount() - 1) / getPageRowCount() + 1;
 	}
-
+	
+	public int getAddColumnsLastPage() {
+		return addColumnsLastPage; 		
+	}
+	
+	public int getAddColumnsPage() { 
+		return addColumnsPage;
+	}
+	
+	public void goAddColumnsPage(int page) {
+		if (page < 1) addColumnsPage = 1;
+		else if (page > getAddColumnsLastPage()) addColumnsPage = getAddColumnsLastPage();
+		else addColumnsPage = page;
+	}
+	
 	public void pageBack() {
 		if (page < 1) page = 1;		
 		goPage(page-1);		
@@ -1274,6 +1299,14 @@ public class Tab implements java.io.Serializable {
 	
 	public String toString() {
 		return "Tab:" + oid;
+	}
+
+	public int getAddColumnsPageRowCount() {
+		return addColumnsPageRowCount;
+	}
+
+	public void setAddColumnsPageRowCount(int addColumnsPageRowCount) {
+		this.addColumnsPageRowCount = addColumnsPageRowCount;
 	}
 	
 

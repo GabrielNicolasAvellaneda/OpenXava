@@ -29,7 +29,9 @@ public class XavaPreferences {
 	private boolean duplicateComponentWarnings=false;
 	private int maxSizeForTextEditor;
 	private Level javaLoggingLevel;
-	private Level hibernateJavaLoggingLevel;	
+	private Level hibernateJavaLoggingLevel;
+	private int addColumnsPageRowCount;
+	private int pageRowCount;	
 	
 	private XavaPreferences() { 		
 	}
@@ -174,8 +176,22 @@ public class XavaPreferences {
 			maxSizeForTextEditor = Integer.parseInt(getProperties().getProperty("maxSizeForTextEditor", "100"));
 		}
 		return maxSizeForTextEditor;
+	}
+	
+	public int getPageRowCount() {
+		if (pageRowCount == 0) { 
+			pageRowCount = Integer.parseInt(getProperties().getProperty("pageRowCount", "10"));
+		}
+		return pageRowCount;
 	}	
 	
+	public int getAddColumnsPageRowCount() {
+		if (addColumnsPageRowCount == 0) { 
+			addColumnsPageRowCount = Integer.parseInt(getProperties().getProperty("addColumnsPageRowCount", "100"));
+		}
+		return addColumnsPageRowCount;
+	}	
+		
 	public void setDuplicateComponentWarnings(boolean duplicateComponentWarnings) {
 		this.duplicateComponentWarnings = duplicateComponentWarnings;
 		duplicateComponentWarningsLoaded = true;

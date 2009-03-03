@@ -28,8 +28,7 @@ org.openxava.tab.Tab tab = (org.openxava.tab.Tab) context.get(request,
 <%
 int f=0;
 Locale currentLocale = Locales.getCurrent(); //Trifon
-for (Iterator it=tab.getRemainingPropertiesNames().iterator(); it.hasNext();)
-{
+for (Iterator it=tab.getColumnsToAdd().iterator(); it.hasNext();) {
 	String property = (String) it.next();
 	String cssClass=f%2==0?style.getListPair():style.getListOdd();	
 	String cssCellClass=f%2==0?style.getListPairCell():style.getListOddCell(); 
@@ -51,4 +50,30 @@ for (Iterator it=tab.getRemainingPropertiesNames().iterator(); it.hasNext();)
 <%
 }
 %>
+</table>
+
+<table width="100%" class="<%=style.getListInfo()%>">
+<tr class='<%=style.getListInfoDetail()%>'>
+<td class='<%=style.getListInfoDetail()%>' style='vertical-align: middle'>
+<%
+int last=tab.getAddColumnsLastPage();
+int current=tab.getAddColumnsPage();
+if (current > 1) {
+%>
+<xava:image action='List.goAddColumnsPreviousPage'/>
+<% } 
+for (int i=1; i<=last; i++) {
+if (i == current) {
+%>	 
+ <b><%=i%></b>
+<% } else { %>
+ <xava:link action='List.goAddColumnsPage' argv='<%="page=" + i%>'><%=i%></xava:link>
+<% }
+} 
+if (current < last) {
+%>
+ <xava:image action='List.goAddColumnsNextPage'/> 
+<% } %>	 
+</td>
+</tr>
 </table>
