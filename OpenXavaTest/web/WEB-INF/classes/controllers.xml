@@ -376,7 +376,13 @@
 		<action name="changeTab" mode="list"
 			class="org.openxava.test.actions.ChangeInvoiceTabAction">	
 			<use-object name="xava_tab"/>
-		</action>					
+		</action>		
+		
+		<action name="setAddColumnsPageRowCountTo10" mode="list"
+			class="org.openxava.test.actions.SetAddColumnsPageRowCountTo10Action">	
+			<use-object name="xava_tab"/>
+		</action>
+					
 	</controller>
 	
 	<controller name="CustomerInvoices">

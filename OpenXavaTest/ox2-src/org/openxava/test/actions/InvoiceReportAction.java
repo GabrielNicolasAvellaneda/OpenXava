@@ -20,6 +20,11 @@ import org.openxava.validators.*;
 public class InvoiceReportAction extends JasperReportBaseAction {
 	
 	private IInvoice invoice;
+	
+	public void execute() throws Exception {
+		super.execute();
+		addMessage("InvoiceReportAction.printOK");
+	}
 
 	public Map getParameters() throws Exception  {
 		Messages errors = MapFacade.validate("Invoice", getView().getValues());

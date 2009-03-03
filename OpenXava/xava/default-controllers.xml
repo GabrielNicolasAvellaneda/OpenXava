@@ -59,7 +59,35 @@ here that you want to override.
 				<action name="goPage"			class="org.openxava.actions.GoPageAction"			keystroke="Control I"			hidden="true"
 			mode="list">			</action>	
 				<action name="goNextPage"			class="org.openxava.actions.GoNextPageAction"			keystroke="Control S"			hidden="true"
-			mode="list"			image="images/next_page.gif">			</action>											
+			mode="list"			image="images/next_page.gif">			</action>
+		
+		<action name="goAddColumnsPreviousPage"
+			class="org.openxava.actions.GoAddColumnsPageAction"
+			keystroke="Control A"
+			hidden="true"
+			mode="list"
+			image="images/previous_page.gif">
+			<set property="increment" value="-1"/>
+			<use-object name="xava_customizingTab" action-property="tab"/>					
+		</action>
+		
+		<action name="goAddColumnsPage"
+			class="org.openxava.actions.GoAddColumnsPageAction"
+			keystroke="Control I"
+			hidden="true"
+			mode="list">				
+			<use-object name="xava_customizingTab" action-property="tab"/>
+		</action>	
+		
+		<action name="goAddColumnsNextPage"
+			class="org.openxava.actions.GoAddColumnsPageAction"
+			keystroke="Control S"
+			hidden="true"
+			mode="list"
+			image="images/next_page.gif">	
+			<set property="increment" value="1"/>
+			<use-object name="xava_customizingTab" action-property="tab"/>
+		</action>																								
 		
 		<action name="orderBy"
 			class="org.openxava.actions.OrderByAction"

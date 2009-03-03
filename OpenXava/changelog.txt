@@ -1,6 +1,12 @@
 Change Log for OpenXava project
 ===============================
 
+- The UI for adding columns to list or collections now uses paging.
+- New properties pageRowCount and addColumnsPageRowCount to customize rows per page for list and "add columns".
+- Fix: Messages are not showed after executing an IForwardAction.
+- Fix: Order columns fails in some databases when changing schema with XPersistence or XHibernate.
+- ¿Russian translation of the reference guide and other documentation? (Poner a Aleksandr Sokolov en créditos)
+
 OpenXava 3.1.1 (2009-2-23)
 --------------------------
 - Several modules in the same portal page are supported.
@@ -10,6 +16,8 @@ OpenXava 3.1.1 (2009-2-23)
 - @PropertyValue in @PropertyValidator with not 'value' throws error (because it's not supported).
 - Default editors and default size for short, java.lang.Short, double, java.lang.Double, float and java.lang.Float.
 - Removed method ModuleManager.getForm().
+- Fix: Upload files in a module called from an IChangeModuleAction does not work.
+- Fix: Module navigation (IChangeModuleAction) with more than 2 deep levels does not returns well.
 - Fix: Warning NotSerializableException with Tab removed.
 - Fix: List for adding columns to list or collections did not use list look & feel.
 - Fix: Creating from a reference an entity with collection fails.
