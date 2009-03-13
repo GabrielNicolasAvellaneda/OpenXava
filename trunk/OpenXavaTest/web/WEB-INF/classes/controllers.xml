@@ -656,6 +656,36 @@
 			<use-object name="xava_view"/>			
 		</action>			
     	
+	</controller>
+	
+	<controller name="JavaProgrammer">
+	
+		<extends controller="Typical"/>
+	
+		<action name="changeToWithSectionsView" mode="detail" 
+			class="org.openxava.test.actions.ChangeViewAction">
+			<set property="newView" value="WithSections"/>
+			<use-object name="xava_view"/>			
+		</action>
+		
+		<action name="changeToVerySimpleView" mode="detail" 
+			class="org.openxava.test.actions.ChangeViewAction">
+			<set property="newView" value="VerySimple"/>
+			<use-object name="xava_view"/>			
+		</action>
+		
+		<action name="changeToSimpleView" mode="detail" 
+			class="org.openxava.test.actions.ChangeViewAction">
+			<set property="newView" value="Simple"/>
+			<use-object name="xava_view"/>			
+		</action>
+		
+		<action name="changeToCompleteView" mode="detail" 
+			class="org.openxava.test.actions.ChangeViewAction">
+			<set property="newView" value="Complete"/>
+			<use-object name="xava_view"/>			
+		</action>
+								
 	</controller>	
 	
 	<!--

@@ -4,6 +4,8 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import org.openxava.annotations.*;
+
 /**
  * 
  * @author Javier Paniza
@@ -11,6 +13,12 @@ import javax.persistence.*;
 
 @Entity
 @DiscriminatorValue("PRO")
+@View(name="WithSections",
+	members = 
+		"name, sex;" +
+		"mainLanguage;" +
+		"experiences { experiences }"
+)
 public class Programmer extends Human {
 
 	@Column(length=20)

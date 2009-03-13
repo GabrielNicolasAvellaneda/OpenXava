@@ -45,6 +45,39 @@ public @interface View {
 	 */
 	String name() default "";
 	
+	
+	/**
+	 * Name of a view to be extended by this one. <p>
+	 * 
+	 * All the members (including sections) of the <i>extendsView</i> are included
+	 * by default. Moreover, all the members defined in this view 
+	 * (using <code>members</code>) are added to their.<br>
+	 * That is, if you have:
+	 * <pre>
+	 * @Views({
+	 * &nbsp;&nbsp;@View(name="Simple", members="number, name"), 	
+	 * &nbsp;&nbsp;@View(name="CalculatedFellows", extendsView="Simple", members="; fellowCarriersCalculated")
+     * })
+     * </pre>
+     * The view <code>CalculatedFellows</code> will show number, name and fellowCarriersCalculated.<br>
+     * 
+     * Use super as prefix to indicate that the view belongs to the superclass:<br>
+     * <pre>
+	 * @View(name="WithSections", extendsView="super.WithSections", 
+	 * &nbsp;&nbsp;members = 
+	 * &nbsp;&nbsp;&nbsp;&nbsp;"favouriteFramework;" +
+	 * &nbsp;&nbsp;&nbsp;&nbsp;"frameworks { frameworks }"
+	 * ) 
+     * </pre>
+     * Use DEFAULT for referencing to the default view (the view with no name):<br>
+     * <pre>
+     * @View(name="Complete", extendsView="DEFAULT", 
+	 * &nbsp;&nbsp;members = "frameworks"
+	 * )
+     * </pre>
+	 */
+	String extendsView() default ""; 
+	
 	/**
 	 * Indicates the members to display and its layout in the user interface. <p>
 	 *

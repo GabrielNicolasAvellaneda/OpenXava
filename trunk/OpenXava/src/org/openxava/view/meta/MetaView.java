@@ -3,10 +3,6 @@ package org.openxava.view.meta;
 
 import java.util.*;
 
-import javax.portlet.*;
-
-
-
 import org.openxava.actions.*;
 import org.openxava.model.meta.*;
 import org.openxava.util.*;
@@ -48,6 +44,8 @@ public class MetaView extends MetaElement implements Cloneable {
 		
 	private String mediatorClassName;
 	private Collection notAlwaysEnabledViewActionsNames;
+	private String extendsView; 
+	private boolean extendedFromExtendsView = false;
 	
 	
 	private void addMemberName(String memberName) {
@@ -279,9 +277,55 @@ public class MetaView extends MetaElement implements Cloneable {
 	 */
 	public Collection getMembersNames() throws XavaException {
 		if (isAllMembers() && !membersNamesByDefaultCreated && _membersNames.isEmpty()) {						
-			crearMembersNamesByDefault();			
+			createMembersNamesByDefault();			
 		}
+		copyMembersFromExtendedView();  
 		return Collections.unmodifiableCollection(_membersNames);				
+	}
+	
+	private void copyMembersFromExtendedView() {
+		if (extendedFromExtendsView || Is.emptyString(getExtendsView())) return;
+		MetaView extendsView = getMetaExtendsView();
+		
+		sections = sum(extendsView.sections, sections);
+		metaGroups = sum(extendsView.metaGroups, metaGroups);
+		_membersNames = sum(extendsView._membersNames, _membersNames);		
+		
+		extendedFromExtendsView = true;
+	}
+	
+	private MetaView getMetaExtendsView() { 
+		String view = getExtendsView();
+		if ("DEFAULT".equals(view)) return getMetaModel().getMetaViewByDefault();
+		if (view.startsWith("super.")) {
+			MetaModel parent = getParentMetaModel();
+			if ("super.DEFAULT".equals(view)) return parent.getMetaViewByDefault();
+			return parent.getMetaView(view.substring(6));
+		}		
+		return 	getMetaModel().getMetaView(view);	
+	}
+
+	private MetaModel getParentMetaModel() { 
+		Class superClass = getMetaModel().getPOJOClass().getSuperclass();
+		return MetaModel.getForPOJOClass(superClass);		
+	}
+
+	private List sum(List c1, List c2) { 
+		return (List) sum((Collection) c1, (Collection) c2);
+	}
+
+	private Collection sum(Collection c1, Collection c2) {  
+		if (c1 == null) return c2;
+		List result = new ArrayList(c1);
+		if (c2 != null) result.addAll(c2);
+		return result;
+	}
+	
+	private Map sum(Map m1, Map m2) {  
+		if (m1 == null) return m2;
+		Map result = new HashMap(m1);
+		if (m2 != null) result.putAll(m2);
+		return result;
 	}
 	
 	/**
@@ -307,6 +351,7 @@ public class MetaView extends MetaElement implements Cloneable {
 			setAllMembers(true);
 		} else {
 			setAllMembers(false);
+			if (membersNames.trim().startsWith(";")) addMemberName(NAME_SEPARATOR); 
 			StringTokenizer lines = new StringTokenizer(membersNames, ";");
 			while (lines.hasMoreTokens()) {
 				String line = lines.nextToken();
@@ -333,7 +378,7 @@ public class MetaView extends MetaElement implements Cloneable {
 		metaMembers = null;		
 	}
 
-	private void crearMembersNamesByDefault() throws XavaException {
+	private void createMembersNamesByDefault() throws XavaException {
 		MetaModel metaModel = getMetaModel();
 		if (metaModel != null) {
 			Iterator it = metaModel.getMembersNames().iterator();			
@@ -766,5 +811,14 @@ public class MetaView extends MetaElement implements Cloneable {
 		}
 		return notAlwaysEnabledViewActionsNames;
 	}
+	
+	public String getExtendsView() { 
+		return extendsView;
+	}
+
+	public void setExtendsView(String extendsView) {
+		this.extendsView = extendsView;
+	}
+	
 	
 }
