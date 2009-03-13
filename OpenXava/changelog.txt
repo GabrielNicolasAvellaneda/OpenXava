@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- View inheritance: A view can extends from another. Available for JPA POJOs and XML components.
+- Fix: Some gramatical corrections in error messages.
+- ModuleTestBase.assertExists() works with collections too. 
 - The UI for adding columns to list or collections now uses paging.
 - New properties pageRowCount and addColumnsPageRowCount to customize rows per page for list and "add columns".
 - Fix: Messages are not showed after executing an IForwardAction.

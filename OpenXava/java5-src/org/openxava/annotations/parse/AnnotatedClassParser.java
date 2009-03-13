@@ -363,6 +363,7 @@ public class AnnotatedClassParser {
 	private void addView(MetaComponent component, View view, String modelName) throws XavaException {
 		MetaView metaView = new MetaView();
 		metaView.setName(view.name());
+		metaView.setExtendsView(view.extendsView()); 
 		if (modelName != null) {
 			metaView.setModelName(modelName);
 		}		

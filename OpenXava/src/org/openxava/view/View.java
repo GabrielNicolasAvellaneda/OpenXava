@@ -1850,7 +1850,7 @@ public class View implements java.io.Serializable {
 	
 	private boolean isNeededToVerifyHasBeenFormatted(MetaProperty p) { 
 		// This code can be improved using a property in editors.xml for mark
-		// if it's neede to verify the formatted		
+		// if it's needed to verify the formatted		
 		return !p.hasValidValues() && !boolean.class.equals(p.getType()) &&
 			!Boolean.class.equals(p.getType());
 	}

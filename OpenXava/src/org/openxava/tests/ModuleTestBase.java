@@ -632,13 +632,19 @@ public class ModuleTestBase extends TestCase {
 	}
 	
 	protected void assertExists(String name) throws Exception {		 
-		String id = decorateId(name);
-		assertTrue(XavaResources.getString("must_to_exists", name), hasElement(id));
+		if (!hasElementByName(name) && !existsCollection(name)) {
+			fail(XavaResources.getString("must_exist", name)); 
+		}
 	}
 
-	protected void assertNotExists(String name) throws Exception {		 		
-		String id = decorateId(name);
-		assertTrue(XavaResources.getString("must_not_to_exists", name), !hasElement(id));
+	protected void assertNotExists(String name) throws Exception { 		 		
+		if (hasElementByName(name) || existsCollection(name)) {
+			fail(XavaResources.getString("must_not_exist", name)); 
+		} 
+	}
+	
+	private boolean existsCollection(String collection) {
+		return hasElementById("collection_" + collection + ".");
 	}
 	
 	/**
@@ -1168,7 +1174,7 @@ public class ModuleTestBase extends TestCase {
 			input.click();
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
-			fail(XavaResources.getString("must_to_exists", id));
+			fail(XavaResources.getString("must_exist", id));
 		}
 	}
 		
@@ -1616,9 +1622,19 @@ public class ModuleTestBase extends TestCase {
 		return 0;
 	}	
 	
-	private boolean hasElement(String elementName) {
+	private boolean hasElementByName(String elementName) {
 		return !page.getHtmlElementsByName(decorateId(elementName)).isEmpty();
-	}	
+	}
+	
+	private boolean hasElementById(String elementId) { 
+		try {
+			getElementById(elementId);
+			return true;
+		}
+		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {			
+			return false;
+		}		
+	}		
 		
 	private boolean hasInput(HtmlForm form, String inputName) {
 		try {

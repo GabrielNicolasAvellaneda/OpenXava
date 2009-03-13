@@ -14,8 +14,8 @@ import org.openxava.jpa.*;
 
 @Entity
 @Views({
-	@View(name="Simple", members="number, name"),
-	@View(name="CalculatedFellows", members="number, name; fellowCarriersCalculated"),
+	@View(name="Simple", members="number, name"), 	
+	@View(name="CalculatedFellows", extendsView="Simple", members="; fellowCarriersCalculated"),
 	@View(name="ReadOnlyCalculatedFellows", members="number, name; fellowCarriersCalculated"),
 	@View(
 		name="WithSections", 

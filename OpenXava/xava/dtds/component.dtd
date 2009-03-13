@@ -35,6 +35,7 @@
   label CDATA #IMPLIED
   model CDATA #IMPLIED
   members CDATA "*"
+  extends CDATA #IMPLIED
 >
 
 <!ELEMENT members (#PCDATA|group|section|action)*>

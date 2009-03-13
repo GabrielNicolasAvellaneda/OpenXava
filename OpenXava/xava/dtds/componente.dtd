@@ -35,6 +35,7 @@
   etiqueta CDATA #IMPLIED
   modelo CDATA #IMPLIED
   miembros CDATA "*"
+  hereda-de CDATA #IMPLIED
 >
 
 <!ELEMENT mediador EMPTY>

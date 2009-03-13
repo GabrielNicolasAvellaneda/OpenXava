@@ -23,6 +23,7 @@ public class ViewParser extends XmlElementsNames {
 		v.setName(el.getAttribute(xname[lang]));
 		v.setLabel(el.getAttribute(xlabel[lang]));
 		v.setModelName(el.getAttribute(xmodel[lang]));
+		v.setExtendsView(el.getAttribute(xextends[lang])); 
 		String attributeMembers = el.getAttribute(xmembers[lang]);
 		String elementMembers = getMemberElementMembers(el, lang);						
 		if (!attributeMembers.equals("*") && !Is.emptyString(elementMembers)) {
