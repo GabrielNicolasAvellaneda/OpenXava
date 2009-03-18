@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: StackOverflowError on circular references.
 - View inheritance: A view can extends from another. Available for JPA POJOs and XML components.
 - Fix: Some gramatical corrections in error messages.
 - ModuleTestBase.assertExists() works with collections too. 

@@ -1,10 +1,7 @@
 package org.openxava.test.model;
 
 import java.util.*;
-
 import javax.persistence.*;
-
-import org.openxava.annotations.*;
 
 /**
  *  
@@ -12,18 +9,13 @@ import org.openxava.annotations.*;
  */
 
 @Entity
-@Views({
-	@View(members="name; children"), 
-	@View(name="Simple", members="name") 
-})
 public class Composite extends Nameable {
 
 	@ManyToOne @JoinColumn(name="PARENT_OID") 
 	private Composite composite;
 
 	
-	@OneToMany(mappedBy="composite", cascade=CascadeType.REMOVE)
-	@CollectionView("Simple") 
+	@OneToMany(mappedBy="composite", cascade=CascadeType.REMOVE) 
 	private Collection<Composite> children;
 	
 	

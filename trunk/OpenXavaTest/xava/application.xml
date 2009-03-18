@@ -2,8 +2,7 @@
 
 	<module name="Description">
 		<doc url="doc/description" languages="en,es"/>
-	</module>
-	<module name="Carrier">
+	</module>		<module name="Carrier">
 		<model name="Carrier"/>
 		<controller name="Typical"/>
 		<controller name="Carrier"/>

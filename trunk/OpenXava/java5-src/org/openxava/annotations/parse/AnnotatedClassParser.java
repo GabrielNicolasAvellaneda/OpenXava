@@ -2086,7 +2086,7 @@ public class AnnotatedClassParser {
 			try {
 				managedClassNames = obtainManagedClassNamesUsingHibernate();
 			}
-			catch (Exception ex) {
+			catch (Exception ex) {				
 				// When no database connection is available, no session factory can
 				// be created, but sometimes (maybe from junit test, or code generation)  
 				// it's needed to parse the entities anyways, then we'll
