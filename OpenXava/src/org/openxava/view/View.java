@@ -157,8 +157,9 @@ public class View implements java.io.Serializable {
 	private Collection createMetaMembers(boolean hiddenIncluded) throws XavaException {
 		Collection metaMembers = new ArrayList(getMetaView().getMetaMembers());
 		if (isRepresentsAggregate()) { 			
-			metaMembers = extractRecursiveReference(metaMembers);					
+			metaMembers = extractAggregateRecursiveReference(metaMembers);					
 		}		
+		extractRecursiveReference(metaMembers); 
 		if (!hiddenIncluded && hiddenMembers != null) {
 			removeHidden(metaMembers);
 			removeFirstAndLastSeparator(metaMembers);
@@ -166,8 +167,35 @@ public class View implements java.io.Serializable {
 		removeOverlapedProperties(metaMembers);
 		return metaMembers;	
 	}
+	
+	private void extractRecursiveReference(Collection metaMembers) {		
+		for (Iterator it=metaMembers.iterator(); it.hasNext(); ) {
+			Object member = it.next();
+			MetaReference ref = null;
+			if (member instanceof MetaReference) ref = (MetaReference) member;
+			else if (member instanceof MetaCollection) ref = ((MetaCollection) member).getMetaReference();
+			else continue;
+			String model = ref.getMetaModel().getName();
+			String view = getMetaView().getMetaView(ref).getName();			
+			if (isViewInParents(model, view)) {
+				it.remove();
+			}
+		}				
+	}
 
-	private Collection extractRecursiveReference(Collection metaMembers) {		
+	private boolean isViewInParents(String modelName, String viewName) { 
+		View parent = getParent();		
+		if (parent == null)	return false;
+		if (isSection() || isGroup()) return parent.isViewInParents(modelName, viewName);;  
+		String parentView = parent.getViewName();
+		if (parentView ==null) parentView = "";		 
+		if (Is.equal(parent.getModelName(), modelName) && 
+			Is.equal(parentView, viewName)) return true;
+			
+		return parent.isViewInParents(modelName, viewName);
+	}
+
+	private Collection extractAggregateRecursiveReference(Collection metaMembers) {  		
 		Set parentNames = new HashSet();
 		Class pojoClass = getMetaModel().getMetaModelContainer().getPOJOClass();
 		while (!java.lang.Object.class.equals(pojoClass)) {

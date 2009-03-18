@@ -16,6 +16,8 @@ public class CompositeTest extends ModuleTestBase {
 		execute("CRUD.new");
 		assertNoErrors();
 		assertCollectionRowCount("children", 0);
+		execute("Collection.new", "viewObject=xava_view_children");
+		assertNoErrors();
 	}		
 		
 }
