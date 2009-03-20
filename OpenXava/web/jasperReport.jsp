@@ -1,8 +1,9 @@
 <%="<?xml version='1.0' encoding='" + org.openxava.util.XSystem.getEncoding() + "' ?>"%>
 
-<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD Report Design//EN" 
+"http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 
-<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.Map" %>
@@ -15,8 +16,12 @@
 <%@ page import="org.openxava.component.MetaComponent" %>
 <%@ page import="org.openxava.model.meta.MetaModel" %>
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
+<%@ page import="org.openxava.util.XSystem"%>
+<%@ page import="org.openxava.util.XavaPreferences"%>
+
 
 <%!
+
 private void tightenWidths(int [] widths) {	
 	int max = 190;
 	int littleOnesTotal = 0;
@@ -138,9 +143,7 @@ else {
 }
 
 %>
-
-<%@page import="org.openxava.util.XSystem"%>
-<%@page import="org.openxava.util.XavaPreferences"%><jasperReport
+<jasperReport
 		 name="<%=reportName%>"
 		 columnCount="1"
 		 printOrder="Vertical"
@@ -156,13 +159,16 @@ else {
 		 whenNoDataType="NoPages"
 		 isTitleNewPage="false"
 		 isSummaryNewPage="false">		 
-		 
-	<reportFont name="Arial_Normal" isDefault="true" fontName="Arial" size="8" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
-	<reportFont name="Arial_Bold" isDefault="false" fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
-	<reportFont name="Arial_Italic" isDefault="false" fontName="Arial" size="8" isItalic="true" pdfFontName="Helvetica-Oblique" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
-	<reportFont name="Comic_Normal" isDefault="false" fontName="Comic Sans MS" pdfFontName="COMIC.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-	<reportFont name="Comic_Bold" isDefault="false" fontName="Comic Sans MS" isBold="true" pdfFontName="COMICBD.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-	
+	<%
+	String fontPath=request.getSession().getServletContext().getRealPath("/WEB-INF/fonts/").concat(System.getProperty("file.separator"));
+	String fontName="DejaVu Sans";
+	String fontNameExt="DejaVuSans.ttf";
+	String pdfEncoding="Identity-H";
+	%>	
+	<reportFont name="Arial_Normal" isDefault="true" fontName="<%=fontName%>" size="8" pdfFontName="<%=fontPath.concat(fontNameExt)%>" pdfEncoding="<%=pdfEncoding%>" isPdfEmbedded="true"/>
+	<reportFont name="Arial_Bold" isDefault="false" fontName="<%=fontName%>" size="8" isBold="true" pdfFontName="<%=fontPath.concat(fontNameExt)%>" pdfEncoding="<%=pdfEncoding%>" isPdfEmbedded="true"/>
+	<reportFont name="Arial_Italic" isDefault="false" fontName="<%=fontName%>" size="8" isItalic="true" pdfFontName="<%=fontPath.concat(fontNameExt)%>" pdfEncoding="<%=pdfEncoding%>" isPdfEmbedded="true"/>
+
 	<parameter name="Title" class="java.lang.String"/>	
 	<parameter name="Organization" class="java.lang.String"/>	
 

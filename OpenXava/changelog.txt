@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: PDF generation does not work with Russian language.
+- Upgrade to JasperReport 3.1.4.
+- Fix: Some rare NullPointerException on generating PDF the first time with filters (@Tab(filter=)).
 - Fix: StackOverflowError on circular references.
 - View inheritance: A view can extends from another. Available for JPA POJOs and XML components.
 - Fix: Some gramatical corrections in error messages.
