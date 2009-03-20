@@ -18,7 +18,7 @@ public class WarehouseTest extends ModuleTestBase {
 	public WarehouseTest(String testName) {
 		super(testName, "Warehouse");		
 	}
-	
+
 	public void testChooseUnselectedRow() throws Exception { 
 		checkRow(0);
 		String warehouseName=getValueInList(1, "name");	
