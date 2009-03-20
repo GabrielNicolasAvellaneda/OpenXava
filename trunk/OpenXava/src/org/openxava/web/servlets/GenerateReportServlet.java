@@ -130,7 +130,7 @@ public class GenerateReportServlet extends HttpServlet {
 	}
 	
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		try {	
 			Locales.setCurrent(request); 
 			if (Users.getCurrent() == null) { // for a bug in websphere portal 5.1 with Domino LDAP
@@ -138,26 +138,34 @@ public class GenerateReportServlet extends HttpServlet {
 			}						
 			request.getParameter("application"); // for a bug in websphere 5.1 
 			request.getParameter("module"); // for a bug in websphere 5.1
-			Tab tab = (Tab) request.getSession().getAttribute("xava_reportTab");
-			tab.setRequest(request); 
-			String uri = request.getRequestURI();
+			Tab tab = (Tab) request.getSession().getAttribute("xava_reportTab");											
+			String uri = request.getRequestURI();				
 			if (uri.endsWith(".pdf")) {
-				Map parameters = new HashMap();							
-				parameters.put("Title", tab.getTitle());								
-				parameters.put("Organization", getOrganization(request, tab));
-				InputStream is  = getReport(request, response, tab);															
-				JRDataSource ds = getDataSource(tab, request);		
+				InputStream is;
+				JRDataSource ds;
+				Map parameters = new HashMap();
+				synchronized (tab) {					
+					tab.setRequest(request); 															
+					parameters.put("Title", tab.getTitle());									
+					parameters.put("Organization", getOrganization(request, tab));										
+					is  = getReport(request, response, tab);
+					ds = getDataSource(tab, request);
+				}
 				JasperPrint jprint = JasperFillManager.fillReport(is, parameters, ds);					
 				response.setContentType("application/pdf");				
-				JasperExportManager.exportReportToPdfStream(jprint, response.getOutputStream());													 	
+				JasperExportManager.exportReportToPdfStream(jprint, response.getOutputStream());
+				
 			}
 			else if (uri.endsWith(".csv")) {				
 				response.setContentType("text/x-csv");
-				response.getWriter().print(TableModels.toCSV(getTableModel(tab, request, true)));
+				synchronized (tab) {
+					tab.setRequest(request);
+					response.getWriter().print(TableModels.toCSV(getTableModel(tab, request, true)));
+				}
 			}
 			else {
 				throw new ServletException(XavaResources.getString("report_type_not_supported", "", ".pdf .csv"));
-			}
+			}			
 		}
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
@@ -175,7 +183,7 @@ public class GenerateReportServlet extends HttpServlet {
 		}
 	}
 			
-	private InputStream getReport(HttpServletRequest request, HttpServletResponse response, Tab tab) throws ServletException, IOException { 
+	private InputStream getReport(HttpServletRequest request, HttpServletResponse response, Tab tab) throws ServletException, IOException {		
 		StringBuffer suri = new StringBuffer();
 		suri.append("/xava/jasperReport");
 		suri.append("?model=");
@@ -186,7 +194,7 @@ public class GenerateReportServlet extends HttpServlet {
 		suri.append(tab.getTabName());
 		suri.append("&properties=");
 		suri.append(tab.getPropertiesNamesAsString());		
-		response.setCharacterEncoding(XSystem.getEncoding()); 		
+		response.setCharacterEncoding(XSystem.getEncoding()); 				
 		return Servlets.getURIAsStream(request, response, suri.toString());
 	}
 	

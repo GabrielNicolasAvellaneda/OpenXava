@@ -511,7 +511,7 @@ public class Tab implements java.io.Serializable {
 
 		IFilter filter = getFilter();
 		if (filter != null) {			
-			if (filter instanceof IRequestFilter) {
+			if (filter instanceof IRequestFilter) {				
 				((IRequestFilter) filter).setRequest(request);
 			}
 			int original = key == null?0:key.length;			
@@ -798,7 +798,7 @@ public class Tab implements java.io.Serializable {
 		loadUserPreferences();
 	}
 
-	public void setRequest(HttpServletRequest request) {		
+	public synchronized void setRequest(HttpServletRequest request) {		
 		this.request = request;
 		String collectionPrefix = getCollectionPrefix();
 		setConditionComparators(collectionPrefix);
