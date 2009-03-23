@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- New defaultPersistenceUnit property in xava.properties to choose the JPA persistence unit to use by default.
 - Fix: PDF generation does not work with Russian language.
 - Upgrade to JasperReport 3.1.4.
 - Fix: Some rare NullPointerException on generating PDF the first time with filters (@Tab(filter=)).

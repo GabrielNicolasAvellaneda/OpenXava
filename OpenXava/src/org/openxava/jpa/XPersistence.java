@@ -74,7 +74,6 @@ public class XPersistence {
 	private static Log log = LogFactory.getLog(XPersistence.class);
 
 	private final static String HIBERNATE_DEFAULT_SCHEMA = "hibernate.default_schema";
-	private final static String DEFAULT_PERSISTENCE_UNIT = "default";
 	private final static String XAVA_PERSISTENCE_UNIT_KEY = "xava.persistenceUnit";
 	final private static ThreadLocal currentManager = new ThreadLocal();
 	private static Map entityManagerFactories = new HashMap();
@@ -201,7 +200,7 @@ public class XPersistence {
 	 * If you sent a <code>null</null> then <code>default</code> is assumed. 
 	 */	
 	public static void setPersistenceUnit(String persistenceUnitName) {
-		if (Is.emptyString(persistenceUnitName)) persistenceUnitName = DEFAULT_PERSISTENCE_UNIT; 
+		if (Is.emptyString(persistenceUnitName)) persistenceUnitName = XavaPreferences.getInstance().getDefaultPersistenceUnit(); 
 		Map properties = new HashMap(getPersistenceUnitProperties());
 		properties.put(XAVA_PERSISTENCE_UNIT_KEY, persistenceUnitName);		
 		currentPersistenceUnitProperties.set(properties);
@@ -224,7 +223,7 @@ public class XPersistence {
 	private static Map getDefaultPersistenceUnitProperties() {
 		if (defaultPersistenceUnitProperties == null) {
 			defaultPersistenceUnitProperties = new HashMap();
-			defaultPersistenceUnitProperties.put(XAVA_PERSISTENCE_UNIT_KEY, DEFAULT_PERSISTENCE_UNIT);
+			defaultPersistenceUnitProperties.put(XAVA_PERSISTENCE_UNIT_KEY, XavaPreferences.getInstance().getDefaultPersistenceUnit());
 			String defaultSchema = obtainDefaultSchemaFromPersistenceXML();
 			if (defaultSchema != null) {
 				defaultPersistenceUnitProperties.put(HIBERNATE_DEFAULT_SCHEMA, defaultSchema);

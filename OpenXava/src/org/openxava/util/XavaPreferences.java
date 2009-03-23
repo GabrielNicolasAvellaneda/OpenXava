@@ -276,6 +276,9 @@ public class XavaPreferences {
 		return getProperties().getProperty("portletLocales", 
 				"bg, ca, de, en, es, fr, in, it, ja, ko, nl, pl, pt, ru, sv, zh");
 	}
-
+	
+	public String getDefaultPersistenceUnit() {
+		return getProperties().getProperty("defaultPersistenceUnit", "default");
+	}
 
 }
