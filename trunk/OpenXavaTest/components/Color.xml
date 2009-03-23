@@ -41,6 +41,27 @@ Number (the key) can be 0
 		<members>property2Sub2</members>
 	</view>
 	
+	<view name="Groups">
+		<property name="group">
+			<valid-values>
+				<valid-value value="GROUP1"/>
+				<valid-value value="GROUP2"/>
+			</valid-values>
+		</property>
+		<property-view property="group">
+			<on-change class="org.openxava.test.actions.OnChangeGroupInColor"/>
+		</property-view>
+		
+		<members>
+			group; 
+			group1[property1], group2[property2]
+		</members>
+	</view>
+
+	<view name="Ordinary">
+		<members>number; name; sample</members>
+	</view>
+	
 	<entity-mapping table="XAVATEST@separator@COLOR">
 		<property-mapping
 			property="number" column="NUMBER"/>
