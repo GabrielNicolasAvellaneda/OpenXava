@@ -16,12 +16,10 @@ boolean messagesOnTop = !"false".equalsIgnoreCase(request.getParameter("messages
 	<%=manager.getFormAction(request)%> style="display: inline;">
 
 <div <%=style.getModuleSpacing()%> >
-    <% if (manager.isButtonBarVisible()) { %>		
     <div id='<xava:id name="button_bar"/>' class='<%=style.getButtonBar()%>'>		
 		<jsp:include page="buttonBar.jsp"/>
 	</div>
-    <% } %>
-	
+    
     <% if (messagesOnTop) { %>    
     <div id='<xava:id name="errors"/>' style="display: inline;">
     	<jsp:include page="errors.jsp"/>

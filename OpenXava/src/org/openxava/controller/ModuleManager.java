@@ -70,7 +70,8 @@ public class ModuleManager {
 	 */
 	public String getFormAction(HttpServletRequest request) {		
 		if (!isFormUpload()) return "";
-		Object portletActionURL = request.getSession().getAttribute(Ids.decorate(request, "xava.portlet.uploadActionURL"));
+		String module = !getPreviousModules().isEmpty() ? (String) previousModules.elementAt(0) : getModuleName();
+		Object portletActionURL = request.getSession().getAttribute(Ids.decorate(getApplicationName(), module, "xava.portlet.uploadActionURL"));
 		if (portletActionURL == null) return "";
 		return "action='" +  portletActionURL + "'";
 	}
@@ -844,6 +845,13 @@ public class ModuleManager {
 		return "ModuleManager:" + id;
 	}
 	
+	/*
+	 * to execute.jsp, init 'actionsChanged' after execute 'assignValuesToWebView' and 'initModule'
+	 */
+	public void preInitModule() {
+		actionsChanged = false;
+	}
+	
 	public void initModule(HttpServletRequest request, Messages errors, Messages messages) {		
 		if (!Is.equal(Users.getCurrent(), user)) {
 			user = Users.getCurrent();
@@ -858,7 +866,6 @@ public class ModuleManager {
 		else {
 			reloadAllUINeeded = false;
 		}
-		actionsChanged = false;
 		reloadViewNeeded = false;		
 	}
 	
