@@ -1,8 +1,19 @@
 package org.openxava.test.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Transient;
+import javax.persistence.Version;
 
-import org.openxava.annotations.*;
+import org.openxava.annotations.OnChange;
+import org.openxava.annotations.Required;
+import org.openxava.annotations.Stereotype;
+import org.openxava.annotations.View;
+import org.openxava.annotations.Views;
+import org.openxava.test.actions.OnChangeGroupInColor;
 
 /**
  * Number (the key) can be 0
@@ -12,10 +23,12 @@ import org.openxava.annotations.*;
 
 @Entity
 @Views({
+	@View( name="Ordinary", members="number; name; sample"),
 	@View( name="View1", members="property1"), 
 	@View( name="View2", members="property2"), 
 	@View( name="View2Sub1", members="property2Sub1"), 
-	@View( name="View2Sub2", members="property2Sub2") 
+	@View( name="View2Sub2", members="property2Sub2"),
+	@View( name="Groups", members="group; group1[property1], group2[property2]")
 })
 public class Color {
 
@@ -49,6 +62,11 @@ public class Color {
 	
 	@Transient
 	private String property2Sub2;
+	
+	@Transient
+	@OnChange(OnChangeGroupInColor.class)
+	private Group group;
+	public enum Group { GROUP1, GROUP2 }
 	
 	public String getName() {
 		return name;
@@ -104,6 +122,14 @@ public class Color {
 
 	public void setProperty2Sub2(String property2Sub2) {
 		this.property2Sub2 = property2Sub2;
+	}
+
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
 	}
 
 }
