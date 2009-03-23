@@ -800,4 +800,20 @@
 		</action>
 	</controller>
 	
+	<controller name="StartColor">
+		<action name="new" on-init="true" hidden="true"
+			class="org.openxava.actions.NewAction">
+			<use-object name="xava_view"/>
+		</action>
+	</controller>
+	
+	<controller name="ActionWhitImage">
+		<extends controller="ReturnPreviousModule"/>
+		
+		<action name="new" image="images/new.gif"
+			class="org.openxava.actions.NewAction">
+			<use-object name="xava_view"/>
+		</action>
+	</controller>
+	
 </controllers>

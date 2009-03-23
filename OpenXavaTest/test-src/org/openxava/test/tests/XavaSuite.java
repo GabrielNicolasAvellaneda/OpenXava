@@ -66,6 +66,7 @@ public class XavaSuite extends TestSuite {
 		}
 		suite.addTest(new TestSuite(ColorTest.class));
 		suite.addTest(new TestSuite(ColorM1Test.class));
+		suite.addTest(new TestSuite(ColorWithGroupsAndChangeControllersTest.class));
 		if (ModuleTestBase.isOX3()) {
 			suite.addTest(new TestSuite(CompositeTest.class));
 		}
