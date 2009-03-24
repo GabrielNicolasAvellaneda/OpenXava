@@ -22,6 +22,7 @@ import org.w3c.dom.*;
 import org.xml.sax.*;
 
 import com.gargoylesoftware.htmlunit.*;
+import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.gargoylesoftware.htmlunit.html.*;
 
 import junit.framework.*;
@@ -865,7 +866,16 @@ public class ModuleTestBase extends TestCase {
 	protected void assertLabel(String name, String expectedLabel) throws Exception {		
 		assertEquals(XavaResources.getString("unexpected_label", name), expectedLabel, getLabel(name));		
 	}
-		
+	
+	protected void assertNoLabel(String name) throws Exception{
+		try{
+			getLabel(name);
+			fail(XavaResources.getString("label_found_in_ui", name));
+		}
+		catch(ElementNotFoundException ex){
+		}
+	}
+	
 	protected void assertValue(String name, String value) throws Exception {		
 		assertEquals(XavaResources.getString("unexpected_value", name), value, getValue(name));		
 	}
