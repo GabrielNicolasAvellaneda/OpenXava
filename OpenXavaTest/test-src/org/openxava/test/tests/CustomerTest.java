@@ -79,6 +79,7 @@ public class CustomerTest extends ModuleTestBase {
 		assertTrue("Value for city in first customer is required for run this test", !Is.emptyString(city));
 		execute("Mode.detailAndFirst");
 		assertValue("address.city", city);
+		assertNoLabel("addres.city");
 	}
 	
 	public void testCalculatedPropertyDependsOnPropertyOfAggregate() throws Exception {
