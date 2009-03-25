@@ -13,7 +13,7 @@ import org.openxava.annotations.Required;
 import org.openxava.annotations.Stereotype;
 import org.openxava.annotations.View;
 import org.openxava.annotations.Views;
-import org.openxava.test.actions.OnChangeGroupInColor;
+import org.openxava.test.actions.OnChangeGroupInColorAction;
 
 /**
  * Number (the key) can be 0
@@ -64,7 +64,7 @@ public class Color {
 	private String property2Sub2;
 	
 	@Transient
-	@OnChange(OnChangeGroupInColor.class)
+	@OnChange(OnChangeGroupInColorAction.class)
 	private Group group;
 	public enum Group { GROUP1, GROUP2 }
 	

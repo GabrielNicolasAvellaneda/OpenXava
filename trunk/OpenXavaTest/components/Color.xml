@@ -49,7 +49,7 @@ Number (the key) can be 0
 			</valid-values>
 		</property>
 		<property-view property="group">
-			<on-change class="org.openxava.test.actions.OnChangeGroupInColor"/>
+			<on-change class="org.openxava.test.actions.OnChangeGroupInColorAction"/>
 		</property-view>
 		
 		<members>

@@ -23,6 +23,18 @@ public class AJAXTest extends ModuleTestBase {
 		super(nameTest, null);
 	}
 	
+	public void testAlwaysReloadEditor() throws Exception { 
+		changeModule("Warehouse");
+		execute("CRUD.new");
+		HtmlElement el = getForm().getHtmlElementById("ox_OpenXavaTest_Warehouse__editor_time");		
+		String time = el.asText().trim();		
+		execute("CRUD.new");
+		String otherTime = el.asText().trim();		
+		assertNotEquals("Time must be changed", time, otherTime);
+		assertLoadedParts("editor_time, errors, messages");
+	}
+	
+	
 	public void testSetMemberEditable() throws Exception {
 		changeModule("ChangeProductsPrice");
 		execute("Mode.detailAndFirst");
@@ -49,6 +61,7 @@ public class AJAXTest extends ModuleTestBase {
 				"editor_defaultCarrier.warehouse.name," +
 				"editor_defaultCarrier.warehouse.number," +
 				"editor_defaultCarrier.warehouse.zoneNumber," +
+				"editor_mainWarehouse.time," + // it's always-reload
 				"editor_officeManager.arrivalTime," + // it's formatted
 				"editor_officeManager.endingTime," + // it's formatted
 				"editor_receptionist," + // it's formatted
@@ -438,7 +451,7 @@ public class AJAXTest extends ModuleTestBase {
 				"button_bar, messages");
 		execute("NewCreation.saveNew");
 		assertLoadedParts("errors, error_image_Warehouse.zoneNumber, " +
-				"messages, error_image_Warehouse.number, ");		
+				"messages, error_image_Warehouse.number, editor_time,");		
 	}
 	
 	public void testCustomView_uploadFile() throws Exception {

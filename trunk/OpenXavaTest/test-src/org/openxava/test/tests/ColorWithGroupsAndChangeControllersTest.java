@@ -28,7 +28,7 @@ public class ColorWithGroupsAndChangeControllersTest extends ModuleTestBase {
 		setValue("group", String.valueOf(Color.Group.GROUP2.ordinal()));
 		assertNotExists("property1");
 		assertExists("property2");
-		assertActions(new String[] { "ReturnPreviousModule.return", "ActionWhitImage.new" });
+		assertActions(new String[] { "ReturnPreviousModule.return", "ActionWithImage.new" });
 		setValue("group", "");
 		assertNotExists("property1");
 		assertNotExists("property2");

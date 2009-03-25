@@ -31,6 +31,7 @@ public class MetaEditor {
 	private Collection formatterMetaSets;
 	private boolean format = true;
 	private boolean frame = false;
+	private boolean alwaysReload = false; 
 	
 	public void _addFormatterMetaSet(MetaSet metaSet) {
 		if (formatterMetaSets == null) formatterMetaSets = new ArrayList();
@@ -200,6 +201,14 @@ public class MetaEditor {
 		if (propertiesIDepend != null && !propertiesIDepend.isEmpty()) return true;
 		if (stereotypesIDepend != null && !stereotypesIDepend.isEmpty()) return true;
 		return false;
+	}
+
+	public void setAlwaysReload(boolean alwaysReload) {
+		this.alwaysReload = alwaysReload;
+	}
+
+	public boolean isAlwaysReload() {
+		return alwaysReload;
 	}
 
 	

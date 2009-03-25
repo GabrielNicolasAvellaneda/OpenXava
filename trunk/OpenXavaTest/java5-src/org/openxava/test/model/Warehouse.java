@@ -39,7 +39,11 @@ public class Warehouse {
 	@Column(length=40) @Required
 	private String name;
 	
- 	public static Warehouse findByZoneNumberNumber(int zoneNumber, int number) throws NoResultException { 	 			
+	// The value is produces by the editor, this property always is 0. For testing purpose 
+	@Transient @Stereotype("CURRENT_TIME_MILLIS")
+	private long time; 
+
+	public static Warehouse findByZoneNumberNumber(int zoneNumber, int number) throws NoResultException { 	 			
  		Query query = XPersistence.getManager().createQuery("from Warehouse as o where o.zoneNumber = :zoneNumber and number = :number"); 
 		query.setParameter("zoneNumber", zoneNumber); 
 		query.setParameter("number", number); 
@@ -70,5 +74,14 @@ public class Warehouse {
 	public void setZoneNumber(int zoneNumber) {
 		this.zoneNumber = zoneNumber;
 	}
-		
+
+	public long getTime() {
+		return time;
+	}
+
+
+	public void setTime(long time) {
+		this.time = time;
+	}
+			
 }

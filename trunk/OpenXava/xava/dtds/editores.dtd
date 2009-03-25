@@ -11,7 +11,8 @@
  formatear (true|false) "true" 
  depende-de-estereotipos CDATA #IMPLIED
  depende-de-propiedades CDATA #IMPLIED
- enmarcable (true|false) "false" 
+ enmarcable (true|false) "false"
+ recargar-siempre (true|false) "false" 
 >
 
 <!ELEMENT propiedad EMPTY>
@@ -23,7 +24,7 @@
 <!ELEMENT formateador (poner*)>
 <!ATTLIST formateador
   clase CDATA #REQUIRED
-	del-tipo (true|false) "false"
+  del-tipo (true|false) "false"
 >
 
 <!ELEMENT poner EMPTY>
