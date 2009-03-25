@@ -5,7 +5,6 @@ import java.rmi.*;
 import java.util.*;
 
 import javax.ejb.*;
-import javax.portlet.*;
 import javax.servlet.http.*;
 
 import org.apache.commons.logging.*;
@@ -3581,7 +3580,7 @@ public class View implements java.io.Serializable {
 		if (values == null) values = new HashMap(); 
 		for (Iterator it=values.entrySet().iterator(); it.hasNext(); ) { 
 			Map.Entry en = (Map.Entry) it.next();
-			boolean isKey = getMetaModel().isKey((String) en.getKey()); 
+			boolean isKey = getMetaModel().isKey((String) en.getKey());
 			if (!oldValues.containsKey(en.getKey()) && en.getValue() != null || 
 				!equals(en.getValue(), oldValues.get(en.getKey())) || 	
 				isKey && hasKeyEditableChanged() || 
@@ -3656,7 +3655,7 @@ public class View implements java.io.Serializable {
 		boolean existsCurrent = notEditableMembersNames == null?false:notEditableMembersNames.contains(member);
 		return existsOld != existsCurrent;
 	}
-
+	
 	private boolean editorMustBeReloaded(String memberName) {		
 		if (!getMetaModel().containsMetaProperty(memberName)) return false;
 		MetaProperty p = null;
@@ -3667,12 +3666,13 @@ public class View implements java.io.Serializable {
 			return false;
 		}
 		if (WebEditors.dependsOnSomeOther(p, getViewName())) return true;
-		MetaEditor editor = WebEditors.getMetaEditorFor(p, getViewName());
-		// A very ad hoc solution, it would better to have a alwaysReload (or so) attribute
-		// in editor definition in editors.xml 
+		MetaEditor editor = WebEditors.getMetaEditorFor(p, getViewName());		
+		if (editor.isAlwaysReload()) return true;		
+		// The next is a little 'ad hoc'. It's to avoid to put always-reload="true" in a lot
+		// of already existing editors in existing applications.  
 		if (editor.getUrl().startsWith("descriptionsEditor.jsp") && editor.hasProperty("filter")) {
 			return true;
-		}
+		}		
 		return false;
 	}
 

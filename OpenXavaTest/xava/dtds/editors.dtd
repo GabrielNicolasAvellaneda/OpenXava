@@ -10,7 +10,8 @@
  format (true|false) "true" 
  depends-stereotypes CDATA #IMPLIED
  depends-properties CDATA #IMPLIED
- frame (true|false) "false" 
+ frame (true|false) "false"
+ always-reload (true|false) "false" 
 >
 
 <!ELEMENT property EMPTY>

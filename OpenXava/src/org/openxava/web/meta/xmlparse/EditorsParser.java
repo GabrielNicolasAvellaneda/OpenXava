@@ -36,7 +36,8 @@ public class EditorsParser extends ParserBase {
 		editor.setUrl(url);
 		editor.setName(el.getAttribute(xname[lang])); 
 		editor.setFormat(getAttributeBoolean(el, xformat[lang]));
-		editor.setFrame(getAttributeBoolean(el, xwithframe[lang]));		
+		editor.setFrame(getAttributeBoolean(el, xwithframe[lang]));	
+		editor.setAlwaysReload(getAttributeBoolean(el, xalways_reload[lang])); 
 		String dependsStereotypes = el.getAttribute(xdepends_stereotypes[lang]);
 		String dependsProperties = el.getAttribute(xdepends_properties[lang]);
 		if (

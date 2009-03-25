@@ -8,6 +8,8 @@ import org.openxava.model.meta.*;
 import org.openxava.tests.*;
 import org.openxava.util.*;
 
+import com.gargoylesoftware.htmlunit.html.*;
+
 /**
  * @author Javier Paniza
  */
@@ -18,7 +20,7 @@ public class WarehouseTest extends ModuleTestBase {
 	public WarehouseTest(String testName) {
 		super(testName, "Warehouse");		
 	}
-
+	
 	public void testChooseUnselectedRow() throws Exception { 
 		checkRow(0);
 		String warehouseName=getValueInList(1, "name");	

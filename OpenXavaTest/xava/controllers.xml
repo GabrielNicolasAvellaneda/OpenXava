@@ -807,7 +807,7 @@
 		</action>
 	</controller>
 	
-	<controller name="ActionWhitImage">
+	<controller name="ActionWithImage">
 		<extends controller="ReturnPreviousModule"/>
 		
 		<action name="new" image="images/new.gif"

@@ -1700,4 +1700,9 @@ public class ModuleTestBase extends TestCase {
 		}
 	}
 	
+	protected void assertNotEquals(String msg, String value1, String value2) { 
+		assertTrue(msg + ": " + value1, !Is.equal(value1, value2));		
+	}
+	
+	
 }
