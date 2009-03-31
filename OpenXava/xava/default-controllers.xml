@@ -171,6 +171,11 @@ here that you want to override.
 			class="org.openxava.actions.ChangeImageAction">			
 			<use-object name="xava_newImageProperty"/>			
 		</action>
+		<action name="deleteImage" confirm="true"
+			class="org.openxava.actions.DeleteImageAction">			
+			<use-object name="xava_newImageProperty"/>
+			<use-object name="xava_view"/>			
+		</action>
 	</controller>
 	
 	<controller name="Return">
