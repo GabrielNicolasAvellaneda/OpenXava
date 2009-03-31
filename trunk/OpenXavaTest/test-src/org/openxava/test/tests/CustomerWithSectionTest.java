@@ -455,6 +455,6 @@ public class CustomerWithSectionTest extends CustomerTest {
 		execute("GoToCustomer.goCustomer");
 		
 		// 
-		testImageEditor();
+		testChangeImage();
 	}
 }

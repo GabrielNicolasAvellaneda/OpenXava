@@ -1,20 +1,27 @@
 package org.openxava.test.tests;
 
-import java.net.*;
+import java.net.URL;
 
-import org.openxava.model.meta.*;
-import org.openxava.test.model.*;
-import org.openxava.tests.*;
-import org.openxava.util.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openxava.model.meta.MetaModel;
+import org.openxava.test.model.Customer;
+import org.openxava.test.model.Warehouse;
+import org.openxava.tests.ModuleTestBase;
+import org.openxava.util.Is;
+import org.openxava.util.Strings;
 
-import com.gargoylesoftware.htmlunit.*;
-import com.gargoylesoftware.htmlunit.html.*;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.WebResponse;
+import com.gargoylesoftware.htmlunit.html.HtmlImage;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 /**
  * @author Javier Paniza
  */
 
 public class CustomerTest extends ModuleTestBase {
+	private static Log log = LogFactory.getLog(CustomerTest.class);
 	
 	private String section;		
 
@@ -197,8 +204,7 @@ public class CustomerTest extends ModuleTestBase {
 		assertListRowCount(total);		
 	}
 	
-		
-	public void testImageEditor() throws Exception { 		
+	private void addImage() throws Exception{
 		execute("CRUD.new");
 		execute("ImageEditor.changeImage", "newImageProperty=photo"); 
 		assertNoErrors();
@@ -207,11 +213,14 @@ public class CustomerTest extends ModuleTestBase {
 		setFileValue("newImage", imageUrl);
 		execute("LoadImage.loadImage");
 		assertNoErrors();
+	}
+		
+	public void testChangeImage() throws Exception { 		
+		addImage();
 		
 		HtmlPage page = (HtmlPage) getWebClient().getCurrentWindow().getEnclosedPage();		
 		URL url = page.getWebResponse().getUrl();
 		String urlPrefix = url.getProtocol() + "://" + url.getHost() + ":" + url.getPort();
-		
 		
 		HtmlImage image = (HtmlImage) page.getHtmlElementsByName(decorateId("photo")).get(0); 
 		String imageURL = null;
@@ -227,6 +236,28 @@ public class CustomerTest extends ModuleTestBase {
 		assertEquals("Result is not an image", "image", response.getContentType());
 	}
 			
+	public void testDeleteImage() throws Exception {
+		addImage();
+		
+		execute("ImageEditor.deleteImage", "newImageProperty=photo");
+		assertNoErrors();
+		HtmlPage page = (HtmlPage) getWebClient().getCurrentWindow().getEnclosedPage();		
+		URL url = page.getWebResponse().getUrl();
+		String urlPrefix = url.getProtocol() + "://" + url.getHost() + ":" + url.getPort();
+		
+		HtmlImage image = (HtmlImage) page.getHtmlElementsByName(decorateId("photo")).get(0); 
+		String imageURL = null;
+		if (image.getSrcAttribute().startsWith("/")) {
+			imageURL = urlPrefix + image.getSrcAttribute();
+		}
+		else {
+			String urlBase = Strings.noLastToken(url.getPath(), "/");
+			imageURL = urlPrefix + urlBase + image.getSrcAttribute();
+		}	
+		WebResponse response = getWebClient().getPage(imageURL).getWebResponse();
+		assertTrue("Image obtained", response.getContentAsString().length() == 0);
+	}
+	
 	public void testHideShowGroup() throws Exception {		
 		execute("CRUD.new");
 		assertExists("seller.number");
