@@ -13,9 +13,6 @@ public class DeleteImageAction extends ViewBaseAction{
 	private String newImageProperty;
 	
 	public void execute() throws Exception {
-		log.info("[DeleteImageAction.execute] propiedad:" + getNewImageProperty().replace("xava." + getModelName() + ".", "")); // tmp
-		log.info("[DeleteImageAction.execute] despues del cambio"); // tmp
-//		getView().setValue(getNewImageProperty().replace("xava." + getModelName() + ".", ""), null);
 		getView().setValue(getNewImageProperty(), null);
 	}
 
