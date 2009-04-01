@@ -20,8 +20,11 @@ org.openxava.view.View view = (org.openxava.view.View) context.get(request, view
 view.setViewObject(viewObject); 
 String propertyPrefix = request.getParameter("propertyPrefix");
 propertyPrefix = (propertyPrefix == null)?"":propertyPrefix; 
-view.setPropertyPrefix(propertyPrefix); 
+view.setPropertyPrefix(propertyPrefix);
+boolean onlySections = view.hasSections() && view.getMetaMembers().isEmpty(); // tmp
 %>
+
+<% if (!onlySections) { %>
 
 <% if (view.isFrame()) { %>
 <table>
@@ -206,10 +209,12 @@ while (it.hasNext()) {
 </table>
 <% } %>
 
+<% } // if (!onlySections) %>
+
 <%
 if (view.hasSections()) { 
 %>
-	<% if (view.isSubview() && !view.isFrame()) { %> 
+	<% if (!onlySections && view.isSubview() && !view.isFrame()) { // tmp !onlySections %> 
 	          </tr>                
               </table>
               </td>
@@ -224,7 +229,7 @@ if (view.hasSections()) {
 	<jsp:include page="sections.jsp"/>
 	</div>
 	
-	<% if (view.isSubview() && !view.isFrame()) { %>
+	<% if (!onlySections && view.isSubview() && !view.isFrame()) { // tmp !onlySections %>
 		 			</td>
 	<% } %>
 		
