@@ -3212,7 +3212,7 @@ public class View implements java.io.Serializable {
 	}
 	
 	
-	public boolean isFrame() throws XavaException {		
+	public boolean isFrame() throws XavaException {
 		return getMetaView().isFrame();
 	}
 	

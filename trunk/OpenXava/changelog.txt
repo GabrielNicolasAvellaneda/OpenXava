@@ -1,6 +1,10 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: Nested sections with only sections are duplicated on change section in some very rare cases.
+- Fix: When changing controllers from an @OnChange action the button bar is not refreshed.
+- New method assertNoLabel() in ModuleTestBase.
+- New attribute always-reload for editor in editors.xml.
 - openxava.tld moved to openxava.jar (as taglib.tld).
 - New defaultPersistenceUnit property in xava.properties to choose the JPA persistence unit to use by default.
 - Fix: PDF generation does not work with Russian language.

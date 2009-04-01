@@ -18,8 +18,6 @@ import org.openxava.web.*;
 import org.openxava.web.servlets.*;
 import org.openxava.web.style.*;
 
-import com.sun.java_cup.internal.*;
-
 /**
  * For accessing to module execution from DWR. <p>
  * 
