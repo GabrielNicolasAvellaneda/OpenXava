@@ -92,7 +92,8 @@ import org.openxava.jpa.*;
 		"details {" +
 		"	details" +
 		"}"					
-	)
+	),
+	@View(name="FullInvoice", members= "invoice; number; description") 
 })
 @Tabs({
 	@Tab(properties="invoice.year, invoice.number, type.number, type.description, number, date, description, distance, dateAsLabel, invoice.sellerDiscount"),
@@ -115,7 +116,8 @@ public class Delivery {
 	
 	@Id @ManyToOne(fetch=FetchType.LAZY)
 	@OnChange(forViews="DEFAULT, MoreSections", value=OnChangeInvoiceNumberInDeliveryAction.class)
-	@ReferenceView("Simple")
+	@ReferenceView(notForViews="FullInvoice", value="Simple") 
+	@NoFrame(forViews="FullInvoice") 
 	@Action(forViews="DEFAULT, MoreSections", value="Delivery.setDefaultInvoice") 
 	private Invoice invoice;
 
