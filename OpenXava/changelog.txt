@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- New 'remove' link in Image editor, so also in PHOTO and IMAGE stereotypes.
 - Fix: Nested sections with only sections are duplicated on change section in some very rare cases.
 - Fix: When changing controllers from an @OnChange action the button bar is not refreshed.
 - New method assertNoLabel() in ModuleTestBase.
