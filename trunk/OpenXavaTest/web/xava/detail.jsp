@@ -21,7 +21,7 @@ view.setViewObject(viewObject);
 String propertyPrefix = request.getParameter("propertyPrefix");
 propertyPrefix = (propertyPrefix == null)?"":propertyPrefix; 
 view.setPropertyPrefix(propertyPrefix);
-boolean onlySections = view.hasSections() && view.getMetaMembers().isEmpty(); // tmp
+boolean onlySections = view.hasSections() && view.getMetaMembers().isEmpty(); 
 %>
 
 <% if (!onlySections) { %>
@@ -214,7 +214,7 @@ while (it.hasNext()) {
 <%
 if (view.hasSections()) { 
 %>
-	<% if (!onlySections && view.isSubview() && !view.isFrame()) { // tmp !onlySections %> 
+	<% if (!onlySections && view.isSubview() && !view.isFrame()) { %> 
 	          </tr>                
               </table>
               </td>
@@ -229,7 +229,7 @@ if (view.hasSections()) {
 	<jsp:include page="sections.jsp"/>
 	</div>
 	
-	<% if (!onlySections && view.isSubview() && !view.isFrame()) { // tmp !onlySections %>
+	<% if (!onlySections && view.isSubview() && !view.isFrame()) { %>
 		 			</td>
 	<% } %>
 		
