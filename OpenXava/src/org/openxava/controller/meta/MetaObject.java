@@ -65,7 +65,7 @@ public class MetaObject {
 				String [] values = { value };
 				return constructor.newInstance(values);  
 			}
-		}
+		}		
 		catch (NoSuchMethodException ex) {
 			throw new XavaException("session_object_value_invalid", name, value, this.className, this.className);
 		}
@@ -73,6 +73,12 @@ public class MetaObject {
 			log.error(ex.getMessage(),ex);
 			throw new XavaException("create_error", name);
 		}
+		catch (NoClassDefFoundError ex) {						
+			if (ex.getMessage().indexOf("javax/ejb") >= 0) {
+				throw new NoClassDefFoundError(ex.getMessage() + ": " + XavaResources.getString("make_sure_ejb_jar_in_lib"));
+			}
+			throw ex;
+		}		
 	}
 
 	public boolean isGlobal() {

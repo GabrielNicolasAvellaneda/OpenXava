@@ -644,18 +644,34 @@
 		<echo file="../${project.ejb}/${classes.dir}/datasource.properties">${domain}/${package}=${datasource.prefix}/${datasource}</echo>
 	</target>
 	
-	<target name="filterI18n" if="configuration" unless="ox3">
+	<target name="filterI18n" unless="ox3">
+		<antcall target="filterI18nWithConfiguration"/>
+		<antcall target="filterI18nWithoutConfiguration"/>
+	</target>	
+	
+	<target name="filterI18nWithConfiguration" if="configuration">
   		<copy todir="../${project}/filtered-files" overwrite="true"	encoding="ISO-8859-1">
     		<fileset dir="../${project}/i18n" excludes="portlets, portlets/*"/>
 	    	<filterset>	    	
 				<filtersfile file="${configuration}.properties"/>				
 			</filterset> 			             		
   		</copy>			
-  		<copy todir="../${project}/${classes.dir}/portlets" failonerror="false" encoding="ISO-8859-1">
-    		<fileset dir="../${project}/i18n/portlets"/>
-  		</copy>					
+		<antcall target="copyI18nPortlets"/>					
 	</target>
 	
+	<target name="filterI18nWithoutConfiguration" unless="configuration">
+  		<copy todir="../${project}/filtered-files" overwrite="true"	encoding="ISO-8859-1">
+    		<fileset dir="../${project}/i18n" excludes="portlets, portlets/*"/>
+  		</copy>			
+  		<antcall target="copyI18nPortlets"/>						
+	</target>
+	
+	<target name="copyI18nPortlets">
+		<copy todir="../${project}/${classes.dir}/portlets" failonerror="false" encoding="ISO-8859-1">
+		    <fileset dir="../${project}/i18n/portlets"/>
+		</copy>
+	</target>	
+		
 	<target name="copyI18nPortletsToClasses" if="ox3">
   		<copy todir="../${project}/${classes.dir}/portlets" failonerror="false">
     		<fileset dir="../${project}/i18n/portlets"/>
