@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: To generate portlets when 'configuration' property is not in build.xml fails with XML style applications.
+- Clear message if you have not the ejb.jar in lib or common/lib of Tomcat.
 - New 'remove' link in Image editor, so also in PHOTO and IMAGE stereotypes.
 - Fix: Nested sections with only sections are duplicated on change section in some very rare cases.
 - Fix: When changing controllers from an @OnChange action the button bar is not refreshed.
