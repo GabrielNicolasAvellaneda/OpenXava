@@ -1,5 +1,7 @@
 package org.openxava.test.tests;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.tests.ModuleTestBase;
 
 /**
@@ -7,6 +9,7 @@ import org.openxava.tests.ModuleTestBase;
  * @autor Ana Andrés
  */
 public class ColorM1Test extends ModuleTestBase {
+	private static Log log = LogFactory.getLog(ColorM1Test.class);
 	
 	public ColorM1Test(String testName) {
 		super(testName, "ColorM1");		
@@ -30,8 +33,12 @@ public class ColorM1Test extends ModuleTestBase {
 		assertExists("property2Sub1");		
 		execute("ReturnPreviousModule.return");		
 		assertExists("property2");		
+		execute("ColorM2.changeModule2Sub1");	// the second time fails
+		assertExists("property2Sub1");
 		execute("ReturnPreviousModule.return");		
-		assertExists("property1");		
+		assertExists("property2");	
+		execute("ReturnPreviousModule.return");		
+		assertExists("property1");
 	}
 	
 }

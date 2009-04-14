@@ -135,7 +135,8 @@ public class Module extends DWRBase {
 	
 	private void changeModule(Result result) {
 		String nextModule = manager.getNextModule();
-		if (IChangeModuleAction.PREVIOUS_MODULE.equals(nextModule)) {
+		boolean previousModule = IChangeModuleAction.PREVIOUS_MODULE.equals(nextModule);
+		if (previousModule) {
 			nextModule = manager.getPreviousModules().peek().toString();
 			manager.getPreviousModules().pop();
 			getContext(request).remove(application, module, "xava_currentModule"); 
@@ -146,7 +147,7 @@ public class Module extends DWRBase {
 		}
 		
 
-		if (!manager.getPreviousModules().isEmpty()) {			
+		if (!manager.getPreviousModules().isEmpty() && !previousModule) {			
 			getContext(request).put(application, module, "xava_currentModule", nextModule);
 		}
 
