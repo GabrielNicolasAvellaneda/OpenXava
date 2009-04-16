@@ -34,8 +34,7 @@ public class MetaCollectionView implements Serializable {
 	private boolean asAggregate = false;
 	private String propertiesListNamesAsString;
 	private Collection rowStyles; 
-	
-	
+	private String onSelectedElementActionName;
 	
 	public void addActionDetailName(String actionName) {
 		if (actionsDetailNames == null) actionsDetailNames = new ArrayList();
@@ -211,4 +210,13 @@ public class MetaCollectionView implements Serializable {
 	public void setRemoveSelectedActionName(String removeSelectedActionName) {
 		this.removeSelectedActionName = removeSelectedActionName;
 	}
+
+	public String getOnSelectedElementActionName() {
+		return onSelectedElementActionName;
+	}
+
+	public void setOnSelectedElementActionName(String onSelectedElementActionName) {
+		this.onSelectedElementActionName = onSelectedElementActionName;
+	}
+	
 }

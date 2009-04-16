@@ -1074,7 +1074,9 @@ public class AnnotatedClassParser {
 		if (element.isAnnotationPresent(OnChangeSearchs.class)) {
 			notApply(property.getName(), OnChangeSearchs.class, "references");
 		}																						
-		
+		if (element.isAnnotationPresent(OnSelectedElementAction.class)) {
+			notApply(property.getName(), OnSelectedElementAction.class, "collections");
+		}
 	}
 
 	private void processAnnotations(MetaCollection collection, AnnotatedElement element) throws Exception {
@@ -1286,6 +1288,15 @@ public class AnnotatedClassParser {
 						}
 					}
 				}				
+			}
+			
+			// OnSelectedElementAction
+			if (element.isAnnotationPresent(OnSelectedElementAction.class)) {
+				OnSelectedElementAction action = element.getAnnotation(OnSelectedElementAction.class);
+				if (isForView(metaView, action.forViews(), action.notForViews())) {
+					collectionView.setOnSelectedElementActionName(action.value());
+					mustAddMetaView = true;				
+				}
 			}
 			
 			// RemoveAction
@@ -1911,7 +1922,9 @@ public class AnnotatedClassParser {
 		if (element.isAnnotationPresent(RowStyles.class)) {
 			notApply(ref.getName(), RowStyles.class, "collections");
 		}						
-				
+		if (element.isAnnotationPresent(OnSelectedElementAction.class)) {
+			notApply(ref.getName(), OnSelectedElementAction.class, "collections");
+		}		
 	}
 
 

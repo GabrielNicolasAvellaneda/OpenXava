@@ -1165,8 +1165,17 @@ public class ModuleTestBase extends TestCase {
 		if (collectionHasFilterHeader(collection)) {
 			checkRow(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected", row);
 		}
-		else {			
+		else {		
 			checkRow(collection + ".__SELECTED__", row);
+		}
+	}
+	
+	protected void uncheckRowCollection(String collection, int row) throws Exception {		
+		if (collectionHasFilterHeader(collection)) {
+			uncheckRow(Tab.COLLECTION_PREFIX + collection.replace('.', '_') + "_selected", row);
+		}
+		else {		
+			uncheckRow(collection + ".__SELECTED__", row);
 		}
 	}
 	
@@ -1175,7 +1184,14 @@ public class ModuleTestBase extends TestCase {
 	}
 		
 	private void checkRow(String id, int row) throws Exception {
-		getCheckable(id, row).setChecked(true);
+		HtmlInput input = getCheckable(id, row);
+		if (input.isChecked()){
+			log.warn(XavaResources.getString("xavajunit_row_selected"));
+		}
+		else{
+			input.click();
+			waitUntilPageIsLoaded();	
+		}
 	}
 	
 	protected void checkRow(String id, String value) throws Exception {
@@ -1188,8 +1204,15 @@ public class ModuleTestBase extends TestCase {
 		}
 	}
 		
-	private void uncheckRow(String id, int row) throws Exception {		
-		getCheckable(id, row).setChecked(false);
+	private void uncheckRow(String id, int row) throws Exception {
+		HtmlInput input = getCheckable(id, row);
+		if (input.isChecked()){
+			input.click();
+			waitUntilPageIsLoaded();
+		}
+		else{
+			log.warn(XavaResources.getString("xavajunit_row_unselected"));
+		}
 	}
 			
 	protected void assertRowChecked(int row) { 
