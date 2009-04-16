@@ -16,6 +16,7 @@ import org.openxava.annotations.*;
 @Views({
 	@View(members=
 		"name;" +
+		"selectedIngredientSize;" +
 		"ingredients { ingredients }" +		
 		"recipe { recipe }"
 	),
@@ -27,11 +28,13 @@ public class Formula {
 	@GeneratedValue(generator="system-uuid") 
 	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	@Column(name="ID")
+	
 	private String oid;
 	
 	@Column(length=40) @Required
 	private String name;
 	
+	@OnSelectedElementAction(value="Formula.selectedIngredient")
 	@OneToMany(mappedBy="formula", cascade=CascadeType.REMOVE)
 	private Collection<FormulaIngredient> ingredients;	
 	
@@ -44,8 +47,10 @@ public class Formula {
 		return (Formula) query.getSingleResult();		  		
 	}
 
-
-
+	public int getSelectedIngredientSize(){
+		return 0;
+	}
+	
 	public String getOid() {
 		return oid;
 	}
