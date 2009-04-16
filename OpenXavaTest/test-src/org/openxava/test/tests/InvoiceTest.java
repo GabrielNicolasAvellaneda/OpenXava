@@ -46,7 +46,7 @@ public class InvoiceTest extends ModuleTestBase {
 		super(testName, "Invoice");		
 	}
 	
-	public void testGenerateCustomPdfExcelRtf() throws Exception { 
+	public void testGenerateCustomPdfExcelRtfOdt() throws Exception { 
 		execute("Mode.detailAndFirst");
 		execute("Invoice.printPdf");
 		assertNoErrors(); 
@@ -61,7 +61,12 @@ public class InvoiceTest extends ModuleTestBase {
 		execute("Invoice.printRtf");
 		assertNoErrors(); 
 		assertMessage("The print was successful");
-		assertContentTypeForPopup("application/rtf");		
+		assertContentTypeForPopup("application/rtf");
+		
+		execute("Invoice.printOdt");
+		assertNoErrors(); 
+		assertMessage("The print was successful");
+		assertContentTypeForPopup("application/vnd.oasis.opendocument.text");				
 	}
 		
 	// Only behaves thus when mapFacadeAutocommit=false (the default)

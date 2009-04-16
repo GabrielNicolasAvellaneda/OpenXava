@@ -7,6 +7,7 @@ import javax.servlet.http.*;
 
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.export.*;
+import net.sf.jasperreports.engine.export.oasis.JROdtExporter;
 
 import org.apache.commons.logging.*;
 import org.openxava.actions.*;
@@ -33,25 +34,29 @@ public class GenerateCustomReportServlet extends HttpServlet {
 				format = JasperReportBaseAction.PDF;
 			}
 				
+			JRExporter exporter;
 			if (format.equals(JasperReportBaseAction.EXCEL)) {
 				response.setContentType("application/vnd.ms-excel");
-				JRXlsExporter exporter = new JRXlsExporter();
-				exporter.setParameter(JRExporterParameter.JASPER_PRINT, jprint);
-				exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, response.getOutputStream());
-				exporter.exportReport();
+				exporter = new JRXlsExporter();
 			} 
 			else if (format.equalsIgnoreCase(JasperReportBaseAction.RTF)) { 				
 				response.setContentType("application/rtf"); 
 				response.setHeader("Content-Disposition", "inline; filename=\"report.rtf\""); 
-				JRRtfExporter exporter = new JRRtfExporter(); 
-				exporter.setParameter(JRExporterParameter.JASPER_PRINT, jprint); 
-				exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, response.getOutputStream()); 
-				exporter.exportReport();  
-			} 
+				exporter = new JRRtfExporter() ;//
+			} 			
+			else if (format.equalsIgnoreCase(JasperReportBaseAction.ODT)) {  				
+				response.setContentType("application/vnd.oasis.opendocument.text");
+				response.setHeader("Content-Disposition", "inline; filename=\"report.odt\""); 
+				exporter = new JROdtExporter();
+			}
 			else {
 				response.setContentType("application/pdf");
-				JasperExportManager.exportReportToPdfStream(jprint, response.getOutputStream());
-			}			
+				exporter = new JRPdfExporter();				
+			}
+			
+			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jprint);
+			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, response.getOutputStream());
+			exporter.exportReport();
 		} 
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);

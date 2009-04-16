@@ -1,8 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
-- Fix: fails to enter a second time for a change of third-level module
-
+- New format 'odt' (Open Document) available for JasperReportBaseAction.
+- Added activation.jar in order to facilitate the use of JavaMail.
+- Fix: fails to enter twice in a third-level module.
 - Descriptive icons for properties are show next to the label when LabelFormat is SMALL.
 - Fix: To generate portlets when 'configuration' property is not in build.xml fails with XML style applications.
 - Clear message if you have not the ejb.jar in lib or common/lib of Tomcat.

@@ -26,7 +26,8 @@ abstract public class JasperReportBaseAction extends BaseAction implements IForw
 	
 	public static String PDF = "pdf";
 	public static String EXCEL = "excel"; 
-	public static String RTF = "rtf"; 
+	public static String RTF = "rtf";
+	public static String ODT = "odt"; 
 	
 	private HttpServletRequest request;
 	private View view;
@@ -70,8 +71,9 @@ abstract public class JasperReportBaseAction extends BaseAction implements IForw
 	public void setFormat(String format) throws Exception {
 		if (!EXCEL.equalsIgnoreCase(format) && 
 			!PDF.equalsIgnoreCase(format) &&
-			!RTF.equalsIgnoreCase(format)) {
-			throw new XavaException("invalid_report_format", "'excel', 'pdf', 'rtf'");
+			!RTF.equalsIgnoreCase(format) &&
+			!ODT.equalsIgnoreCase(format)) { 
+			throw new XavaException("invalid_report_format", "'excel', 'pdf', 'rtf','odt'");
 		} 
 		this.format = format;		
 	}
