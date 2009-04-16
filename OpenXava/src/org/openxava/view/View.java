@@ -1,28 +1,75 @@
 package org.openxava.view;
 
-import java.lang.reflect.*;
-import java.rmi.*;
-import java.util.*;
+import java.lang.reflect.Field;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.StringTokenizer;
 
-import javax.ejb.*;
-import javax.servlet.http.*;
+import javax.ejb.FinderException;
+import javax.ejb.ObjectNotFoundException;
+import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.*;
-import org.openxava.actions.*;
-import org.openxava.calculators.*;
-import org.openxava.component.*;
-import org.openxava.controller.*;
-import org.openxava.controller.meta.*;
-import org.openxava.filters.*;
-import org.openxava.mapping.*;
-import org.openxava.model.*;
-import org.openxava.model.meta.*;
-import org.openxava.tab.*;
-import org.openxava.util.*;
-import org.openxava.util.meta.*;
-import org.openxava.view.meta.*;
-import org.openxava.web.*;
-import org.openxava.web.meta.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openxava.actions.IOnChangePropertyAction;
+import org.openxava.calculators.ICalculator;
+import org.openxava.calculators.IEntityCalculator;
+import org.openxava.calculators.IJDBCCalculator;
+import org.openxava.calculators.IModelCalculator;
+import org.openxava.calculators.IOptionalCalculator;
+import org.openxava.component.MetaComponent;
+import org.openxava.controller.ModuleContext;
+import org.openxava.controller.ModuleManager;
+import org.openxava.controller.meta.MetaAction;
+import org.openxava.controller.meta.MetaController;
+import org.openxava.controller.meta.MetaControllers;
+import org.openxava.filters.CollectionInViewFilter;
+import org.openxava.filters.CollectionWithConditionInViewFilter;
+import org.openxava.mapping.ModelMapping;
+import org.openxava.model.MapFacade;
+import org.openxava.model.PersistenceFacade;
+import org.openxava.model.meta.MetaAggregate;
+import org.openxava.model.meta.MetaCalculator;
+import org.openxava.model.meta.MetaCollection;
+import org.openxava.model.meta.MetaEntity;
+import org.openxava.model.meta.MetaMember;
+import org.openxava.model.meta.MetaModel;
+import org.openxava.model.meta.MetaProperty;
+import org.openxava.model.meta.MetaReference;
+import org.openxava.tab.Tab;
+import org.openxava.util.Classes;
+import org.openxava.util.DataSourceConnectionProvider;
+import org.openxava.util.ElementNotFoundException;
+import org.openxava.util.FieldComparator;
+import org.openxava.util.Is;
+import org.openxava.util.Labels;
+import org.openxava.util.Locales;
+import org.openxava.util.Maps;
+import org.openxava.util.Messages;
+import org.openxava.util.PropertiesManager;
+import org.openxava.util.Strings;
+import org.openxava.util.XavaException;
+import org.openxava.util.XavaResources;
+import org.openxava.util.meta.MetaSet;
+import org.openxava.view.meta.MetaCollectionView;
+import org.openxava.view.meta.MetaDescriptionsList;
+import org.openxava.view.meta.MetaGroup;
+import org.openxava.view.meta.MetaReferenceView;
+import org.openxava.view.meta.MetaView;
+import org.openxava.view.meta.MetaViewAction;
+import org.openxava.view.meta.PropertiesSeparator;
+import org.openxava.web.Ids;
+import org.openxava.web.WebEditors;
+import org.openxava.web.meta.MetaEditor;
 
 /**
  * Session object to manage a view based in maps,
@@ -47,6 +94,7 @@ public class View implements java.io.Serializable {
 	private String hideCollectionElementAction;
 	private String removeCollectionElementAction;
 	private String removeSelectedCollectionElementsAction;
+	private String onSelectedCollectionElementAction;
 	
 	private boolean focusForward;
 	private String focusPropertyId;
@@ -696,6 +744,7 @@ public class View implements java.io.Serializable {
 				newView.setHideCollectionElementAction(metaCollectionView.getHideActionName());
 				newView.setRemoveCollectionElementAction(metaCollectionView.getRemoveActionName());
 				newView.setRemoveSelectedCollectionElementsAction(metaCollectionView.getRemoveSelectedActionName());
+				newView.setOnSelectedCollectionElementAction(metaCollectionView.getOnSelectedElementActionName());
 				boolean editable = false;
 				boolean keyEditable = false;
 				if (!metaCollectionView.isReadOnly()) {
@@ -4005,6 +4054,14 @@ public class View implements java.io.Serializable {
 		if (a instanceof Map && ((Map) a).isEmpty()) a = null;
 		if (b instanceof Map && ((Map) b).isEmpty()) b = null;
 		return Is.equal(a, b);
+	}
+	
+	public String getOnSelectedCollectionElementAction() {
+		return onSelectedCollectionElementAction;
+	}
+
+	public void setOnSelectedCollectionElementAction(String onSelectedCollectionElementAction) {
+		this.onSelectedCollectionElementAction = onSelectedCollectionElementAction;
 	}
 	
 }
