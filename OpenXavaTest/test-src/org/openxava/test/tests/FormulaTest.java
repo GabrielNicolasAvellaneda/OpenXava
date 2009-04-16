@@ -1,12 +1,15 @@
 package org.openxava.test.tests;
 
-import java.net.*;
+import java.net.URL;
 
-import org.openxava.tests.*;
-import org.openxava.util.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openxava.tests.ModuleTestBase;
+import org.openxava.util.Strings;
 
-import com.gargoylesoftware.htmlunit.*;
-import com.gargoylesoftware.htmlunit.html.*;
+import com.gargoylesoftware.htmlunit.WebResponse;
+import com.gargoylesoftware.htmlunit.html.HtmlImage;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 
 
@@ -15,9 +18,25 @@ import com.gargoylesoftware.htmlunit.html.*;
  */
 
 public class FormulaTest extends ModuleTestBase {
+	private static Log log = LogFactory.getLog(FormulaTest.class);
 	
 	public FormulaTest(String testName) {
 		super(testName, "Formula");		
+	}
+	
+	public void testOnSelectedIngredient() throws Exception {
+		execute("Mode.detailAndFirst");
+		assertValue("name", "HTML TEST");
+		assertCollectionRowCount("ingredients", 2);
+		assertValue("selectedIngredientSize", "0");
+		// selected
+		checkRowCollection("ingredients", 0);
+		assertValue("selectedIngredientSize", "1");
+		checkRowCollection("ingredients", 1);
+		assertValue("selectedIngredientSize", "2");
+		// deselected
+		uncheckRowCollection("ingredients", 0);	
+		assertValue("selectedIngredientSize", "1");
 	}
 	
 	public void testImageInsideCollection() throws Exception {
