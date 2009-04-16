@@ -340,7 +340,13 @@
 			image="images/rtf.gif">
 			<set property="format" value="rtf"/>									
 			<use-object name="xava_view"/>			
-		</action>		
+		</action>
+		<action name="printOdt" mode="detail"
+			class="org.openxava.test.actions.InvoiceReportAction"
+			image="images/odt.gif">
+			<set property="format" value="odt"/>									
+			<use-object name="xava_view"/>			
+		</action>						
 		<action name="searchFromDelivery" hidden="true"
 			class="org.openxava.test.actions.SearchInvoiceFromDeliveryAction">									
 			<use-object name="xava_view"/>
