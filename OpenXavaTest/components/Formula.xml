@@ -31,10 +31,11 @@
 	</aggregate>
 	
 	<view>
+			
 		<property name="selectedIngredientSize" type="int" />
 		
 		<collection-view collection="ingredients">
-			<on-selected-element-action action="Formula.selectedIngredient"/>
+			<on-select-element-action action="Formula.onSelectIngredient"/>
 		</collection-view>
 		
 		<members>

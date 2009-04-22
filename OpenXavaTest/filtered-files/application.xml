@@ -2,8 +2,7 @@
 
 	<module name="Description">
 		<doc url="doc/description" languages="en,es"/>
-	</module>
-	<module name="Carrier">
+	</module>		<module name="Carrier">
 		<model name="Carrier"/>
 		<controller name="Typical"/>
 		<controller name="Carrier"/>
@@ -51,6 +50,7 @@
 			
 	<module name="Color">
 		<model name="Color"/>
+		<view name="Ordinary"/>
 		<controller name="TypicalNotResetOnSave"/>
 		<controller name="Color"/> 
 	</module>
@@ -82,6 +82,12 @@
 		<model name="Color"/>
 		<view name="View2Sub2"/>
 		<controller name="ReturnPreviousModule"/>
+		<mode-controller name="Void"/>
+	</module>
+	<module name="ColorWithGroupsAndChangeControllers">
+		<model name="Color"/>
+		<view name="Groups"/>
+		<controller name="StartColor"/>
 		<mode-controller name="Void"/>
 	</module>
 						

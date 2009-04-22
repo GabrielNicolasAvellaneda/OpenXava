@@ -22,6 +22,10 @@
 	<editor url="textEditor.jsp">
 		<for-stereotype stereotype="NO_FORMATING_STRING" />
 	</editor>
+		
+	<editor url="currentTimeMillisEditor.jsp" always-reload="true">
+		<for-stereotype stereotype="CURRENT_TIME_MILLIS"/>
+	</editor>
 
 	<editor name="PersonName" url="textEditor.jsp">
 		<formatter

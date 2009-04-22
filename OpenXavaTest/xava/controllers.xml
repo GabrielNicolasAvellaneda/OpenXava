@@ -824,8 +824,8 @@
 	
 	<controller name="Formula">
 		<extends controller="Typical"/>
-		<action name="selectedIngredient" hidden="true" 
-			class="org.openxava.test.actions.OnSelectedIngredientAction">
+		<action name="onSelectIngredient" hidden="true" 
+			class="org.openxava.test.actions.OnSelectIngredientAction">
 			<use-object name="xava_view"/>
 		</action>
 	</controller>

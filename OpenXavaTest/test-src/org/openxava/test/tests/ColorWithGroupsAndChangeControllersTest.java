@@ -17,19 +17,21 @@ public class ColorWithGroupsAndChangeControllersTest extends ModuleTestBase {
 	}
 
 	public void testViewGroupAndControllerOnChangeGroup() throws Exception {
-		assertValue("group", "");
+		assertValue("group", isOX3()?"":"0");
 		assertNotExists("property1");
 		assertNotExists("property2");
 		assertActions(new String[] {});
-		setValue("group", String.valueOf(Color.Group.GROUP1.ordinal()));
+		setValue("group", String.valueOf(Color.Group.GROUP1.ordinal())); // For OX3
+		//setValue("group", "1"); // For OX2
 		assertExists("property1");
 		assertNotExists("property2");
 		assertActions(new String[] { "ReturnPreviousModule.return" });
-		setValue("group", String.valueOf(Color.Group.GROUP2.ordinal()));
+		setValue("group", String.valueOf(Color.Group.GROUP2.ordinal())); // For OX3
+		//setValue("group", "2"); // For OX2
 		assertNotExists("property1");
 		assertExists("property2");
 		assertActions(new String[] { "ReturnPreviousModule.return", "ActionWithImage.new" });
-		setValue("group", "");
+		setValue("group", isOX3()?"":"0");
 		assertNotExists("property1");
 		assertNotExists("property2");
 		assertActions(new String[] {});

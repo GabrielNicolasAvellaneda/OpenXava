@@ -18,7 +18,7 @@ import com.gargoylesoftware.htmlunit.html.*;
 public class SeveralModulesTest extends ModuleTestBase {
 	
 	public SeveralModulesTest(String testName) {
-		super(testName, "Carrier");		
+		super(testName, "Carrier"); // getModuleURL() is override, so we do not go to Carrier module		
 	}
 	
 	public void testSeveralModulesInSamePage() throws Exception { 

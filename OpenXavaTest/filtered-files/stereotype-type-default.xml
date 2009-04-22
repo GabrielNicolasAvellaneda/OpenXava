@@ -17,5 +17,6 @@
 	<for stereotype="RECEPTIONIST" type="int"/>
 	<for stereotype="REGIONS" type="String []"/>
 	<for stereotype="DELIVERIES" type="org.openxava.test.model.Delivery"/>
+	<for stereotype="CURRENT_TIME_MILLIS" type="long"/>
 		
 </stereotype-type-default>

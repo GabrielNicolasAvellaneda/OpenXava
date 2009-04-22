@@ -5,6 +5,7 @@
 <%@ page import="org.openxava.util.XavaPreferences" %>
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
 <%@ page import="org.openxava.web.WebEditors" %>
+<%@ page import="org.openxava.util.Is" %>
 
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
@@ -224,10 +225,18 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 	<td class="<%=cssCellClass%>" style="vertical-align: middle;text-align: center; <%=style.getListCellStyle()%>">
 <% if (!org.openxava.util.Is.emptyString(action)) { %>
 <xava:action action='<%=action%>' argv='<%="row=" + f + actionArgv%>'/>
-<% } %>
+<% } 
+	String actionOnClick = "";
+	if (!Is.empty(view.getOnSelectCollectionElementAction())){
+		actionOnClick = 
+			"onClick=openxava.onSelectElement('" + request.getParameter("application") + 
+			"','" + request.getParameter("module") + "','" + view.getOnSelectCollectionElementAction() + 
+			"','row=" + f + "',this.checked)";
+	}
+%>
 	</td>
 	<td class="<%=cssCellClass%>" style="<%=style.getListCellStyle()%>">
-	<INPUT type="<%=singleSelection?"RADIO":"CHECKBOX"%>" name="<xava:id name='xava_selected'/>" value="<%=prefix + "selected"%>:<%=f%>" <%=checked%>/>
+	<INPUT type="<%=singleSelection?"RADIO":"CHECKBOX"%>" name="<xava:id name='xava_selected'/>" value="<%=prefix + "selected"%>:<%=f%>" <%=checked%> <%=actionOnClick%> />
 	</td>	
 <%
 	for (int c=0; c<model.getColumnCount(); c++) {
