@@ -1,33 +1,35 @@
 Change Log for OpenXava project
 ===============================
 
-- Clear warning message when using @ReferenceView erroneously.
-- Added @OnSelectElementAction annotation.
+OpenXava 3.1.2 (2009-4-22)
+--------------------------
+- View inheritance: A view can extends from another. Available for JPA POJOs and XML components.
+- New @OnSelectElementAction annotation to define an action to be executed when an element of the collection is selected or unselected.
+- Russian translation of the reference guide and other documentation.
 - New format 'odt' (Open Document) available for JasperReportBaseAction.
-- Added activation.jar in order to facilitate the use of JavaMail.
-- Fix: fails to enter a second time for a change of third-level module
+- The UI for adding columns to list or collections now uses paging.
 - Descriptive icons for properties are show next to the label when LabelFormat is SMALL.
-- Fix: To generate portlets when 'configuration' property is not in build.xml fails with XML style applications.
-- Clear message if you have not the ejb.jar in lib or common/lib of Tomcat.
 - New 'remove' link in Image editor, so also in PHOTO and IMAGE stereotypes.
+- New attribute always-reload for editor in editors.xml.
+- New method assertNoLabel() in ModuleTestBase.
+- ModuleTestBase.assertExists() works with collections too. 
+- New defaultPersistenceUnit property in xava.properties to choose the JPA persistence unit to use by default.
+- New properties pageRowCount and addColumnsPageRowCount to customize rows per page for list and "add columns".
+- Clear message if you have not the ejb.jar in lib or common/lib of Tomcat.
+- Clear warning message when using @ReferenceView erroneously.
+- openxava.tld moved to openxava.jar (as taglib.tld).
+- Added activation.jar in order to facilitate the use of JavaMail.
+- Upgrade to JasperReport 3.1.4.
 - Fix: Nested sections with only sections are duplicated on change section in some very rare cases.
 - Fix: When changing controllers from an @OnChange action the button bar is not refreshed.
-- New method assertNoLabel() in ModuleTestBase.
-- New attribute always-reload for editor in editors.xml.
-- openxava.tld moved to openxava.jar (as taglib.tld).
-- New defaultPersistenceUnit property in xava.properties to choose the JPA persistence unit to use by default.
+- Fix: fails to enter a second time for a change of third-level module
+- Fix: To generate portlets when 'configuration' property is not in build.xml fails with XML style applications.
 - Fix: PDF generation does not work with Russian language.
-- Upgrade to JasperReport 3.1.4.
 - Fix: Some rare NullPointerException on generating PDF the first time with filters (@Tab(filter=)).
 - Fix: StackOverflowError on circular references.
-- View inheritance: A view can extends from another. Available for JPA POJOs and XML components.
 - Fix: Some gramatical corrections in error messages.
-- ModuleTestBase.assertExists() works with collections too. 
-- The UI for adding columns to list or collections now uses paging.
-- New properties pageRowCount and addColumnsPageRowCount to customize rows per page for list and "add columns".
 - Fix: Messages are not showed after executing an IForwardAction.
 - Fix: Order columns fails in some databases when changing schema with XPersistence or XHibernate.
-- ¿Russian translation of the reference guide and other documentation? (Poner a Aleksandr Sokolov en créditos)
 
 OpenXava 3.1.1 (2009-2-23)
 --------------------------

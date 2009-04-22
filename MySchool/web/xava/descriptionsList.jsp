@@ -35,22 +35,15 @@ String label = ref.getLabel(request);
 <% } %>
 <%=postLabel%>
 <%=preIcons%>
-<% if (ref.isKey()) { %>
-<img src="<%=request.getContextPath()%>/xava/images/key.gif"/>
-<% } else if (ref.isRequired()) {  %>	
-<img src="<%=request.getContextPath()%>/xava/images/required.gif"/>
-<% } %> 
-<span id="<xava:id name='<%="error_image_" + ref.getQualifiedName()%>'/>">
-<% if ( errors.memberHas(ref)) {%>
-<img src="<%=request.getContextPath()%>/xava/images/error.gif"/>
+<% if (labelFormat != MetaPropertyView.SMALL_LABEL) { %>
+<%@ include file="descriptionsListIcons.jsp"%>
 <% } %>
-</span>
 <%=postIcons%>
 <%=preEditor%>
 <% if (labelFormat == MetaPropertyView.SMALL_LABEL) { %>
 <table border='0' cellpadding='0', cellspacing='0'><tr><td align='bottom'>
 <span id='<xava:id name='<%="label_" + view.getPropertyPrefix() + ref.getName()%>'/>' class=<%=style.getSmallLabel()%>><%=label%></span>
-
+<%@ include file="descriptionsListIcons.jsp"%>
 
 </td></tr>
 <tr><td style='vertical-align: middle'>
