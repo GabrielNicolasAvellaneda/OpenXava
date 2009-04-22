@@ -31,15 +31,22 @@
 	</aggregate>
 	
 	<view>
+			
+		<property name="selectedIngredientSize" type="int" />
+		
+		<collection-view collection="ingredients">
+			<on-select-element-action action="Formula.onSelectIngredient"/>
+		</collection-view>
+		
 		<members>
 			name;
+			selectedIngredientSize;
 			<section name="ingredients">
 				ingredients
 			</section>
 			<section name="recipe">
 				recipe
 			</section>
-			
 		</members>		
 	</view>
 	

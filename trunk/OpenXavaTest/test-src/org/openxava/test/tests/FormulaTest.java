@@ -2,8 +2,6 @@ package org.openxava.test.tests;
 
 import java.net.URL;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.openxava.tests.ModuleTestBase;
 import org.openxava.util.Strings;
 
@@ -18,17 +16,16 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
  */
 
 public class FormulaTest extends ModuleTestBase {
-	private static Log log = LogFactory.getLog(FormulaTest.class);
 	
 	public FormulaTest(String testName) {
 		super(testName, "Formula");		
 	}
 	
-	public void testOnSelectedIngredient() throws Exception {
+	public void testOnSelectElementAction() throws Exception { 
 		execute("Mode.detailAndFirst");
 		assertValue("name", "HTML TEST");
 		assertCollectionRowCount("ingredients", 2);
-		assertValue("selectedIngredientSize", "0");
+		assertValue("selectedIngredientSize", "");
 		// selected
 		checkRowCollection("ingredients", 0);
 		assertValue("selectedIngredientSize", "1");

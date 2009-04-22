@@ -14,7 +14,7 @@
 	</entity>
 	
 	<view>
-		<property name="time" steroetype="CURRENT_TIME_MILLIS"/>
+		<property name="time" stereotype="CURRENT_TIME_MILLIS"/>
 		<members>zoneNumber; number; name; time</members>
 	</view>
 	

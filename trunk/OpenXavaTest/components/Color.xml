@@ -42,6 +42,8 @@ Number (the key) can be 0
 	</view>
 	
 	<view name="Groups">
+		<property name="property1" type="String"/>
+		<property name="property2" type="String"/>
 		<property name="group">
 			<valid-values>
 				<valid-value value="GROUP1"/>
@@ -54,7 +56,8 @@ Number (the key) can be 0
 		
 		<members>
 			group; 
-			group1[property1], group2[property2]
+			<group name="group1">property1</group>,
+			<group name="group2">property2</group> 
 		</members>
 	</view>
 

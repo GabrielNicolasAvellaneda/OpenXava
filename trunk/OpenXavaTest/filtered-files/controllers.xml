@@ -340,7 +340,13 @@
 			image="images/rtf.gif">
 			<set property="format" value="rtf"/>									
 			<use-object name="xava_view"/>			
-		</action>		
+		</action>
+		<action name="printOdt" mode="detail"
+			class="org.openxava.test.actions.InvoiceReportAction"
+			image="images/odt.gif">
+			<set property="format" value="odt"/>									
+			<use-object name="xava_view"/>			
+		</action>						
 		<action name="searchFromDelivery" hidden="true"
 			class="org.openxava.test.actions.SearchInvoiceFromDeliveryAction">									
 			<use-object name="xava_view"/>
@@ -376,7 +382,13 @@
 		<action name="changeTab" mode="list"
 			class="org.openxava.test.actions.ChangeInvoiceTabAction">	
 			<use-object name="xava_tab"/>
-		</action>					
+		</action>		
+		
+		<action name="setAddColumnsPageRowCountTo10" mode="list"
+			class="org.openxava.test.actions.SetAddColumnsPageRowCountTo10Action">	
+			<use-object name="xava_tab"/>
+		</action>
+					
 	</controller>
 	
 	<controller name="CustomerInvoices">
@@ -650,6 +662,36 @@
 			<use-object name="xava_view"/>			
 		</action>			
     	
+	</controller>
+	
+	<controller name="JavaProgrammer">
+	
+		<extends controller="Typical"/>
+	
+		<action name="changeToWithSectionsView" mode="detail" 
+			class="org.openxava.test.actions.ChangeViewAction">
+			<set property="newView" value="WithSections"/>
+			<use-object name="xava_view"/>			
+		</action>
+		
+		<action name="changeToVerySimpleView" mode="detail" 
+			class="org.openxava.test.actions.ChangeViewAction">
+			<set property="newView" value="VerySimple"/>
+			<use-object name="xava_view"/>			
+		</action>
+		
+		<action name="changeToSimpleView" mode="detail" 
+			class="org.openxava.test.actions.ChangeViewAction">
+			<set property="newView" value="Simple"/>
+			<use-object name="xava_view"/>			
+		</action>
+		
+		<action name="changeToCompleteView" mode="detail" 
+			class="org.openxava.test.actions.ChangeViewAction">
+			<set property="newView" value="Complete"/>
+			<use-object name="xava_view"/>			
+		</action>
+								
 	</controller>	
 	
 	<!--
@@ -761,6 +803,30 @@
 		<action name="changeModule2Sub2" 
 			class="org.openxava.actions.ChangeModuleAction">
 			<set property="nextModule" value="ColorM2Sub2"/>
+		</action>
+	</controller>
+	
+	<controller name="StartColor">
+		<action name="new" on-init="true" hidden="true"
+			class="org.openxava.actions.NewAction">
+			<use-object name="xava_view"/>
+		</action>
+	</controller>
+	
+	<controller name="ActionWithImage">
+		<extends controller="ReturnPreviousModule"/>
+		
+		<action name="new" image="images/new.gif"
+			class="org.openxava.actions.NewAction">
+			<use-object name="xava_view"/>
+		</action>
+	</controller>
+	
+	<controller name="Formula">
+		<extends controller="Typical"/>
+		<action name="onSelectIngredient" hidden="true" 
+			class="org.openxava.test.actions.OnSelectIngredientAction">
+			<use-object name="xava_view"/>
 		</action>
 	</controller>
 	

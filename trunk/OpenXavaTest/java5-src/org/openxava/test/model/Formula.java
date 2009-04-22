@@ -27,14 +27,16 @@ public class Formula {
 	@Id @Hidden
 	@GeneratedValue(generator="system-uuid") 
 	@GenericGenerator(name="system-uuid", strategy = "uuid")
-	@Column(name="ID")
-	
+	@Column(name="ID")	
 	private String oid;
 	
 	@Column(length=40) @Required
 	private String name;
 	
-	@OnSelectedElementAction(value="Formula.selectedIngredient")
+	@Transient @ReadOnly 
+	private Integer selectedIngredientSize; 
+	
+	@OnSelectElementAction("Formula.onSelectIngredient") 
 	@OneToMany(mappedBy="formula", cascade=CascadeType.REMOVE)
 	private Collection<FormulaIngredient> ingredients;	
 	
@@ -45,10 +47,6 @@ public class Formula {
 		javax.persistence.Query query = org.openxava.jpa.XPersistence.getManager().createQuery("from Formula as o where o.name = :name"); 
 		query.setParameter("name", name); 			
 		return (Formula) query.getSingleResult();		  		
-	}
-
-	public int getSelectedIngredientSize(){
-		return 0;
 	}
 	
 	public String getOid() {
@@ -82,5 +80,13 @@ public class Formula {
 	public void setRecipe(String recipe) {
 		this.recipe = recipe;
 	}
+	
+	public Integer getSelectedIngredientSize() {
+		return selectedIngredientSize;
+	}
+
+	public void setSelectedIngredientSize(Integer selectedIngredientSize) {
+		this.selectedIngredientSize = selectedIngredientSize;
+	}	
 
 }

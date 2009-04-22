@@ -85,16 +85,15 @@
 		<members>number, name</members>
 	</view>
 	
-	<view name="CalculatedFellows">
+	<view name="CalculatedFellows" extends="Simple">
  	 	 	  
 		<collection-view collection="fellowCarriersCalculated">
 			<remove-selected-action action=""/>
 		</collection-view>
 					 
-		<members>
-			number, name;
-			fellowCarriersCalculated			
-		</members>
+		<members>			
+			; fellowCarriersCalculated			
+		</members>		
 		
 	</view>
 	
