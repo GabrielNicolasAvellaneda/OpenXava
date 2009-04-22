@@ -35,6 +35,7 @@
   etiqueta CDATA #IMPLIED
   modelo CDATA #IMPLIED
   miembros CDATA "*"
+  hereda-de CDATA #IMPLIED
 >
 
 <!ELEMENT mediador EMPTY>
@@ -101,7 +102,7 @@
   clase CDATA #REQUIRED
 >
 
-<!ELEMENT vista-coleccion (mediador?, propiedades-lista?, estilo-fila*, accion-editar?, accion-ver?, accion-nuevo?, accion-grabar?, accion-ocultar-detalle?, accion-quitar?, accion-quitar-seleccionados?, accion-lista*, accion-detalle*)>
+<!ELEMENT vista-coleccion (mediador?, propiedades-lista?, estilo-fila*, accion-editar?, accion-ver?, accion-nuevo?, accion-grabar?, accion-ocultar-detalle?, accion-quitar?, accion-quitar-seleccionados?, accion-lista*, accion-detalle*, accion-al-seleccionar-elemento?)>
 <!ATTLIST vista-coleccion
   coleccion CDATA #REQUIRED
   vista CDATA #IMPLIED
@@ -157,6 +158,11 @@
 
 <!ELEMENT accion-detalle EMPTY>
 <!ATTLIST accion-detalle
+  accion CDATA #IMPLIED
+>
+
+<!ELEMENT accion-al-seleccionar-elemento EMPTY>
+<!ATTLIST accion-al-seleccionar-elemento
   accion CDATA #IMPLIED
 >
 

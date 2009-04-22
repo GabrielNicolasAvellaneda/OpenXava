@@ -1,7 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
-- Add annotation @OnSelectedElementAction 
+- Clear warning message when using @ReferenceView erroneously.
+- Added @OnSelectElementAction annotation.
 - New format 'odt' (Open Document) available for JasperReportBaseAction.
 - Added activation.jar in order to facilitate the use of JavaMail.
 - Fix: fails to enter a second time for a change of third-level module

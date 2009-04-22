@@ -94,7 +94,7 @@ public class View implements java.io.Serializable {
 	private String hideCollectionElementAction;
 	private String removeCollectionElementAction;
 	private String removeSelectedCollectionElementsAction;
-	private String onSelectedCollectionElementAction;
+	private String onSelectCollectionElementAction; 
 	
 	private boolean focusForward;
 	private String focusPropertyId;
@@ -744,7 +744,7 @@ public class View implements java.io.Serializable {
 				newView.setHideCollectionElementAction(metaCollectionView.getHideActionName());
 				newView.setRemoveCollectionElementAction(metaCollectionView.getRemoveActionName());
 				newView.setRemoveSelectedCollectionElementsAction(metaCollectionView.getRemoveSelectedActionName());
-				newView.setOnSelectedCollectionElementAction(metaCollectionView.getOnSelectedElementActionName());
+				newView.setOnSelectCollectionElementAction(metaCollectionView.getOnSelectElementActionName());
 				boolean editable = false;
 				boolean keyEditable = false;
 				if (!metaCollectionView.isReadOnly()) {
@@ -3706,7 +3706,6 @@ public class View implements java.io.Serializable {
 	}
 	
 	private boolean editorMustBeReloaded(String memberName) {		
-		if (!getMetaModel().containsMetaProperty(memberName)) return false;
 		MetaProperty p = null;
 		try {
 			p = getMetaProperty(memberName);
@@ -4056,12 +4055,12 @@ public class View implements java.io.Serializable {
 		return Is.equal(a, b);
 	}
 	
-	public String getOnSelectedCollectionElementAction() {
-		return onSelectedCollectionElementAction;
+	public String getOnSelectCollectionElementAction() { 
+		return onSelectCollectionElementAction;
 	}
 
-	public void setOnSelectedCollectionElementAction(String onSelectedCollectionElementAction) {
-		this.onSelectedCollectionElementAction = onSelectedCollectionElementAction;
+	public void setOnSelectCollectionElementAction(String onSelectCollectionElementAction) {
+		this.onSelectCollectionElementAction = onSelectCollectionElementAction;
 	}
 	
 }

@@ -227,10 +227,10 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 <xava:action action='<%=action%>' argv='<%="row=" + f + actionArgv%>'/>
 <% } 
 	String actionOnClick = "";
-	if (!Is.empty(view.getOnSelectedCollectionElementAction())){
+	if (!Is.empty(view.getOnSelectCollectionElementAction())){
 		actionOnClick = 
-			"onClick=openxava.onSelectedElement('" + request.getParameter("application") + 
-			"','" + request.getParameter("module") + "','" + view.getOnSelectedCollectionElementAction() + 
+			"onClick=openxava.onSelectElement('" + request.getParameter("application") + 
+			"','" + request.getParameter("module") + "','" + view.getOnSelectCollectionElementAction() + 
 			"','row=" + f + "',this.checked)";
 	}
 %>

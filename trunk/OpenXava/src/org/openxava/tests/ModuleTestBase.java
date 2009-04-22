@@ -1186,7 +1186,7 @@ public class ModuleTestBase extends TestCase {
 	private void checkRow(String id, int row) throws Exception {
 		HtmlInput input = getCheckable(id, row);
 		if (input.isChecked()){
-			log.warn(XavaResources.getString("xavajunit_row_selected"));
+			log.warn(XavaResources.getString("xavajunit_row_already_selected"));
 		}
 		else{
 			input.click();
@@ -1198,6 +1198,7 @@ public class ModuleTestBase extends TestCase {
 		try {
 			HtmlInput input = getForm().getInputByValue(id + ":" + value); 
 			input.click();
+			waitUntilPageIsLoaded();
 		}
 		catch (com.gargoylesoftware.htmlunit.ElementNotFoundException ex) {
 			fail(XavaResources.getString("must_exist", id));
@@ -1211,7 +1212,7 @@ public class ModuleTestBase extends TestCase {
 			waitUntilPageIsLoaded();
 		}
 		else{
-			log.warn(XavaResources.getString("xavajunit_row_unselected"));
+			log.warn(XavaResources.getString("xavajunit_row_already_unselected"));
 		}
 	}
 			
