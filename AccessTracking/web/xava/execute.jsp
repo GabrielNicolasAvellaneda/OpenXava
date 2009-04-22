@@ -55,6 +55,7 @@ if (manager.isListMode()) {
 	}
 }
 boolean hasProcessRequest = manager.hasProcessRequest(request);
+manager.preInitModule();
 if (manager.isXavaView()) { // here and after action execution
 	if (hasProcessRequest) {	
 		view.assignValuesToWebView();

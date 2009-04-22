@@ -1074,9 +1074,12 @@ public class AnnotatedClassParser {
 		if (element.isAnnotationPresent(OnChangeSearchs.class)) {
 			notApply(property.getName(), OnChangeSearchs.class, "references");
 		}																						
-		if (element.isAnnotationPresent(OnSelectedElementAction.class)) {
-			notApply(property.getName(), OnSelectedElementAction.class, "collections");
+		if (element.isAnnotationPresent(OnSelectElementAction.class)) {
+			notApply(property.getName(), OnSelectElementAction.class, "collections");
 		}
+		if (element.isAnnotationPresent(OnSelectElementActions.class)) {
+			notApply(property.getName(), OnSelectElementActions.class, "collections");
+		}		
 	}
 
 	private void processAnnotations(MetaCollection collection, AnnotatedElement element) throws Exception {
@@ -1291,13 +1294,28 @@ public class AnnotatedClassParser {
 			}
 			
 			// OnSelectedElementAction
-			if (element.isAnnotationPresent(OnSelectedElementAction.class)) {
-				OnSelectedElementAction action = element.getAnnotation(OnSelectedElementAction.class);
+			if (element.isAnnotationPresent(OnSelectElementAction.class)) {
+				OnSelectElementAction action = element.getAnnotation(OnSelectElementAction.class);
 				if (isForView(metaView, action.forViews(), action.notForViews())) {
-					collectionView.setOnSelectedElementActionName(action.value());
+					collectionView.setOnSelectElementActionName(action.value());
 					mustAddMetaView = true;				
 				}
 			}
+			if (element.isAnnotationPresent(OnSelectElementActions.class)) {
+				OnSelectElementAction [] actions = element.getAnnotation(OnSelectElementActions.class).value();
+				for (OnSelectElementAction action: actions) {				
+					if (isForView(metaView, action.forViews(), action.notForViews())) {
+						if (Is.emptyString(collectionView.getOnSelectElementActionName())) {
+							collectionView.setOnSelectElementActionName(action.value());
+							mustAddMetaView = true;				
+						}
+						else {
+							duplicateAnnotationForView(collection.getName(), OnSelectElementAction.class, metaView.getName());
+						}
+					}
+				}				
+			}
+			
 			
 			// RemoveAction
 			if (element.isAnnotationPresent(RemoveAction.class)) {
@@ -1481,9 +1499,11 @@ public class AnnotatedClassParser {
 			notApply(collection.getName(), SearchActions.class, "references");
 		}		
 		if (element.isAnnotationPresent(ReferenceView.class)) {
+			log.warn(XavaResources.getString("for_collection_CollectionView_instead_of_ReferenceView"));
 			notApply(collection.getName(), ReferenceView.class, "references");
 		}
 		if (element.isAnnotationPresent(ReferenceViews.class)) {
+			log.warn(XavaResources.getString("for_collection_CollectionViews_instead_of_ReferenceViews"));
 			notApply(collection.getName(), ReferenceViews.class, "references");
 		}				
 		if (element.isAnnotationPresent(NoFrame.class)) {
@@ -1922,9 +1942,13 @@ public class AnnotatedClassParser {
 		if (element.isAnnotationPresent(RowStyles.class)) {
 			notApply(ref.getName(), RowStyles.class, "collections");
 		}						
-		if (element.isAnnotationPresent(OnSelectedElementAction.class)) {
-			notApply(ref.getName(), OnSelectedElementAction.class, "collections");
+		if (element.isAnnotationPresent(OnSelectElementAction.class)) {
+			notApply(ref.getName(), OnSelectElementAction.class, "collections");
+		}
+		if (element.isAnnotationPresent(OnSelectElementActions.class)) {
+			notApply(ref.getName(), OnSelectElementActions.class, "collections");
 		}		
+		
 	}
 
 

@@ -290,7 +290,7 @@ openxava.clearConditionValues = function(application, module, prefix) {
 	}
 }
 
-openxava.onSelectedElement = function(application, module, action, argv, checkValue) {
+openxava.onSelectElement = function(application, module, action, argv, checkValue) {
 	argv = argv + ",selected=" + checkValue;
 	openxava.executeAction(application, module, '', false, action, argv);
 }

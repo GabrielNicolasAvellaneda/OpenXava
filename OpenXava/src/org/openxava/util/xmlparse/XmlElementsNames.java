@@ -183,5 +183,5 @@ public class XmlElementsNames {
 	protected final static String [] xbefore_each_request = { "before-each-request", "antes-de-cada-peticion" };
 	protected final static String [] xon_change_search = { "on-change-search", "busqueda-al-cambiar" };
 	protected final static String [] xalways_reload = { "always-reload", "recargar-siempre" };
-	protected final static String [] xon_selected_element_action = { "on-selected-element-action", "accion-al-seleccionar-elemento" };
+	protected final static String [] xon_select_element_action = { "on-select-element-action", "accion-al-seleccionar-elemento" };
 }
