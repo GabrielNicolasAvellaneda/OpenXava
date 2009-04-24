@@ -2,7 +2,7 @@
 
 <project name="OpenXavaDoc" default="deploy" basedir=".">
 
-	<property name="xava.version" value="3.1.1"/>
+	<property name="xava.version" value="3.1.2"/>
 	<property name="xava.workspace" value=".."/>	
 	<property name="openxava.dist.dir" value="/home/javi/openxava"/>
 	<property file="../openxava.properties"/>
@@ -34,6 +34,7 @@
 		<property name="pdf.dir" value="${doc.dir}/pdf"/>
 		<property name="pdf.style.dir" value="pdf-style"/>
 		<property name="template.pdf.style.dir" value="template-pdf-style"/>
+		<antcall target="fixHtml"/>
 		<antcall target="adjustCSS"/>
 		<mkdir dir="${pdf.dir}"/>
 		
@@ -134,6 +135,16 @@
 		</copy>
 		<copy file="${template.pdf.style.dir}/openxava.jpg" todir="${pdf.style.dir}" overwrite="true"/>		
 	</target>
+	
+	<target name="fixHtml">
+		<replace dir="${doc.dir}">
+		  	<replacefilter 
+		    	token='/space/showimage' 
+		    	value='files'>				
+			</replacefilter>
+		</replace>
+	</target>
+	
 	
 	
 	<target name="removeMenuFromReference">

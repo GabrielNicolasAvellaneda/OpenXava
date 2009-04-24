@@ -1,6 +1,36 @@
 Change Log for OpenXava project
 ===============================
 
+OpenXava 3.1.2 (2009-4-22)
+--------------------------
+- View inheritance: A view can extends from another. Available for JPA POJOs and XML components.
+- New @OnSelectElementAction annotation to define an action to be executed when an element of the collection is selected or unselected.
+- Russian translation of the reference guide and other documentation.
+- New format 'odt' (Open Document) available for JasperReportBaseAction.
+- The UI for adding columns to list or collections now uses paging.
+- Descriptive icons for properties are show next to the label when LabelFormat is SMALL.
+- New 'remove' link in Image editor, so also in PHOTO and IMAGE stereotypes.
+- New attribute always-reload for editor in editors.xml.
+- New method assertNoLabel() in ModuleTestBase.
+- ModuleTestBase.assertExists() works with collections too. 
+- New defaultPersistenceUnit property in xava.properties to choose the JPA persistence unit to use by default.
+- New properties pageRowCount and addColumnsPageRowCount to customize rows per page for list and "add columns".
+- Clear message if you have not the ejb.jar in lib or common/lib of Tomcat.
+- Clear warning message when using @ReferenceView erroneously.
+- openxava.tld moved to openxava.jar (as taglib.tld).
+- Added activation.jar in order to facilitate the use of JavaMail.
+- Upgrade to JasperReport 3.1.4.
+- Fix: Nested sections with only sections are duplicated on change section in some very rare cases.
+- Fix: When changing controllers from an @OnChange action the button bar is not refreshed.
+- Fix: fails to enter a second time for a change of third-level module
+- Fix: To generate portlets when 'configuration' property is not in build.xml fails with XML style applications.
+- Fix: PDF generation does not work with Russian language.
+- Fix: Some rare NullPointerException on generating PDF the first time with filters (@Tab(filter=)).
+- Fix: StackOverflowError on circular references.
+- Fix: Some gramatical corrections in error messages.
+- Fix: Messages are not showed after executing an IForwardAction.
+- Fix: Order columns fails in some databases when changing schema with XPersistence or XHibernate.
+
 OpenXava 3.1.1 (2009-2-23)
 --------------------------
 - Several modules in the same portal page are supported.
@@ -10,6 +40,8 @@ OpenXava 3.1.1 (2009-2-23)
 - @PropertyValue in @PropertyValidator with not 'value' throws error (because it's not supported).
 - Default editors and default size for short, java.lang.Short, double, java.lang.Double, float and java.lang.Float.
 - Removed method ModuleManager.getForm().
+- Fix: Upload files in a module called from an IChangeModuleAction does not work.
+- Fix: Module navigation (IChangeModuleAction) with more than 2 deep levels does not returns well.
 - Fix: Warning NotSerializableException with Tab removed.
 - Fix: List for adding columns to list or collections did not use list look & feel.
 - Fix: Creating from a reference an entity with collection fails.
