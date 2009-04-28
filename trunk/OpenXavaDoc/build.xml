@@ -33,8 +33,7 @@
 	<target name="generatePdfGuides">		
 		<property name="pdf.dir" value="${doc.dir}/pdf"/>
 		<property name="pdf.style.dir" value="pdf-style"/>
-		<property name="template.pdf.style.dir" value="template-pdf-style"/>
-		<antcall target="fixHtml"/>
+		<property name="template.pdf.style.dir" value="template-pdf-style"/>		
 		<antcall target="adjustCSS"/>
 		<mkdir dir="${pdf.dir}"/>
 		
@@ -135,17 +134,6 @@
 		</copy>
 		<copy file="${template.pdf.style.dir}/openxava.jpg" todir="${pdf.style.dir}" overwrite="true"/>		
 	</target>
-	
-	<target name="fixHtml">
-		<replace dir="${doc.dir}">
-		  	<replacefilter 
-		    	token='/space/showimage' 
-		    	value='files'>				
-			</replacefilter>
-		</replace>
-	</target>
-	
-	
 	
 	<target name="removeMenuFromReference">
 		<replace dir="${doc.dir}">
