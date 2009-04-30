@@ -447,6 +447,12 @@ public class Style {
 		this.insidePortal = insidePortal;
 	}
 
+	public String getSelectedRow(){
+		return "selected-row";
+	}
 	
+	public String getSelectedRowStyle(){
+		return "";
+	}
 	
 }

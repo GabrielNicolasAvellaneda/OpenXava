@@ -328,4 +328,11 @@ public class Liferay43Style extends Style {
 		return isInsidePortal()?"/html/themes/classic/images/":"style/liferay43/images/"; 
 	}
 	
+	public String getSelectedRow(){
+		return "liferay4-selected-row";
+	}
+	
+	public String getSelectedRowStyle(){
+		return "";
+	}	
 }

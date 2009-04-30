@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Highlight the row selected
+
 OpenXava 3.1.2 (2009-4-22)
 --------------------------
 - View inheritance: A view can extends from another. Available for JPA POJOs and XML components.

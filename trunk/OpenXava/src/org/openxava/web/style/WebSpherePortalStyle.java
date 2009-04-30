@@ -214,5 +214,12 @@ public class WebSpherePortalStyle extends Style {
 	public boolean isApplySelectedStyleToCellInList() {
 		return false;
 	}
-	
+
+	public String getSelectedRow(){
+		return "";
+	}
+
+	public String getSelectedRowStyle(){
+		return "font-weight: bold;";
+	}	
 }

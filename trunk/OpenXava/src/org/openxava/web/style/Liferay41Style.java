@@ -298,4 +298,11 @@ public class Liferay41Style extends Style {
 		return "/html/themes/classic/images/progress_bar/loading_animation.gif";
 	}
 	
+	public String getSelectedRow(){
+		return "liferay4-selected-row";
+	}
+	
+	public String getSelectedRowStyle(){
+		return "";
+	}					
 }
