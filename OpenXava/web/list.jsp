@@ -6,6 +6,7 @@
 <%@ page import="org.openxava.model.meta.MetaProperty" %>
 <%@ page import="org.openxava.web.WebEditors" %>
 <%@ page import="org.openxava.util.Is" %>
+<%@ page import="org.openxava.web.Ids" %>
 
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
@@ -219,20 +220,30 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		cssClass = cssClass + " " + cssStyle; 
 		if (style.isApplySelectedStyleToCellInList()) cssCellClass = cssCellClass + " " + cssStyle; 
 	}
-	String events=f%2==0?style.getListPairEvents(cssStyle):style.getListOddEvents(cssStyle);	
+	String events=f%2==0?style.getListPairEvents(cssStyle):style.getListOddEvents(cssStyle);
+	String idRow = Ids.decorate(request, id + "_" + f);
+	String cssSelectedRow = style.getSelectedRow();
+	String selectedRowStyle = style.getSelectedRowStyle();
+	String rowStyle = "border-bottom: 1px solid;";
 %>
-<tr class="<%=cssClass%>" <%=events%> style="border-bottom: 1px solid;">
+<tr id="<%=idRow%>" class="<%=cssClass%>" <%=events%> style="<%=rowStyle%>">
 	<td class="<%=cssCellClass%>" style="vertical-align: middle;text-align: center; <%=style.getListCellStyle()%>">
 <% if (!org.openxava.util.Is.emptyString(action)) { %>
 <xava:action action='<%=action%>' argv='<%="row=" + f + actionArgv%>'/>
 <% } 
-	String actionOnClick = "";
-	if (!Is.empty(view.getOnSelectCollectionElementAction())){
-		actionOnClick = 
-			"onClick=openxava.onSelectElement('" + request.getParameter("application") + 
-			"','" + request.getParameter("module") + "','" + view.getOnSelectCollectionElementAction() + 
-			"','row=" + f + "',this.checked)";
-	}
+	String actionOnClick = "onClick=\"openxava.onSelectElement(" +
+		"'" + request.getParameter("application") + "'," + 
+		"'" + request.getParameter("module") + "'," + 
+		"'" + view.getOnSelectCollectionElementAction() + "'," + 
+		"'row=" + f + "'," + 
+		"this.checked," + 
+		"'" + idRow + "'," + 
+		!Is.empty(view.getOnSelectCollectionElementAction()) + "," +
+		"'" + cssSelectedRow + "'," + 
+		"'" + cssClass + "'," +
+		"'" + selectedRowStyle + "'," +
+		"'" + rowStyle + "'" + 
+		")\"";
 %>
 	</td>
 	<td class="<%=cssCellClass%>" style="<%=style.getListCellStyle()%>">

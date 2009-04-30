@@ -90,5 +90,11 @@ public class Liferay51Style extends Liferay43Style {
 		return isInsidePortal()?"/html/themes/classic/images/":"style/liferay51/images/"; 
 	}
 	
+	public String getSelectedRow(){
+		return "selected-row";
+	}
 	
+	public String getSelectedRowStyle(){
+		return "";
+	}
 }

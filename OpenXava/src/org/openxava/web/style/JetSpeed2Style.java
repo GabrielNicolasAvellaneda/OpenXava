@@ -141,5 +141,12 @@ public class JetSpeed2Style extends Style {
 	public String getRemoveImage() {
 		return "decorations/layout/images/close.gif";
 	}
-			
+	
+	public String getSelectedRow(){
+		return "";
+	}
+	
+	public String getSelectedRowStyle(){
+		return "font-weight: bold;";
+	}			
 }
