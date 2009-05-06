@@ -21,11 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openxava.actions.IOnChangePropertyAction;
-import org.openxava.calculators.ICalculator;
-import org.openxava.calculators.IEntityCalculator;
-import org.openxava.calculators.IJDBCCalculator;
-import org.openxava.calculators.IModelCalculator;
-import org.openxava.calculators.IOptionalCalculator;
+import org.openxava.calculators.*;
 import org.openxava.component.MetaComponent;
 import org.openxava.controller.ModuleContext;
 import org.openxava.controller.ModuleManager;
@@ -164,7 +160,7 @@ public class View implements java.io.Serializable {
 	private Collection rowStyles; // Of type MetaRowStyle
 	private Map oldValues; 
 	private boolean mustRefreshCollection; 
-	private Map changedPropertiesActionsAndDescriptionsListReferences;
+	private Map changedPropertiesActionsAndReferencesWithSingleEditor;
 	private Map changedLabels; 
 	private boolean sectionChanged;
 	private boolean reloadNeeded;
@@ -717,7 +713,12 @@ public class View implements java.io.Serializable {
 			newView.setModelName(ref.getReferencedModelName());
 			newView.setRepresentsEntityReference(true);
 		}
-		newView.setMetaView(getMetaView().getMetaView(ref));
+		if (displayReferenceWithNoFrameCustomEditor(ref)) {
+			newView.setMetaView(getMetaView().getMetaViewOnlyKeys(ref));
+		}
+		else {
+			newView.setMetaView(getMetaView().getMetaView(ref));
+		}
 		newView.setMemberName(member.getName()); 
 		if (newView.isRepresentsCollection()) {					
 			MetaCollectionView metaCollectionView = getMetaView().getMetaCollectionView(member.getName());
@@ -1798,7 +1799,7 @@ public class View implements java.io.Serializable {
 		modelName = newModel;
 		keyEditable = true;
 		editable = true;	
-		reloadNeeded = true;
+		reloadNeeded = true;		
 		resetMembers();		
 	}
 	
@@ -1886,8 +1887,8 @@ public class View implements java.io.Serializable {
 			
 			oldValues = values==null?null:new HashMap(values);
 			mustRefreshCollection = false;
-			reloadNeeded = false; 
-			changedPropertiesActionsAndDescriptionsListReferences = null; 
+			reloadNeeded = false;			
+			changedPropertiesActionsAndReferencesWithSingleEditor = null; 
 			sectionChanged = false; 
 			oldKeyEditable = keyEditable; 
 			oldEditable = editable;
@@ -2690,7 +2691,7 @@ public class View implements java.io.Serializable {
 		if (Is.equal(viewName, newView)) return;
 		resetMembers();
 		viewName = newView;
-		reloadNeeded = true; 
+		reloadNeeded = true;		
 	}
 	
 	public String toString() {
@@ -2792,7 +2793,7 @@ public class View implements java.io.Serializable {
 	public void setRequest(HttpServletRequest request) throws XavaException {			
 		getRoot().request = request; 
 	}
-	
+
 	public boolean displayAsDescriptionsList(MetaReference ref) throws XavaException {		
 		return getMetaView().getMetaDescriptionList(ref) != null;				
 	}
@@ -3009,7 +3010,7 @@ public class View implements java.io.Serializable {
 			membersNamesWithoutSections = null;
 			membersNamesWithHidden = null;
 			membersNamesInGroup = null;
-			reloadNeeded = true;
+			reloadNeeded = true;			
 			refreshCollection();
 		}
 		
@@ -3068,6 +3069,35 @@ public class View implements java.io.Serializable {
 			// log.warn(XavaResources.getString("display_as_description_warning", getMemberName()));  
 			return false;
 		}				
+	}
+	
+	public boolean displayReferenceWithSingleEditor(MetaReference ref) { 
+		return displayAsDescriptionsList(ref) || displayReferenceWithNoFrameCustomEditor(ref); 
+	}
+	
+	private boolean displayReferenceWithSingleEditor() { 
+		return displayAsDescriptionsList() || displayReferenceWithNoFrameCustomEditor(); 
+	}	
+	
+	private boolean displayReferenceWithNoFrameCustomEditor() { 
+		if (getMemberName() == null) return false;
+		if (!isRepresentsEntityReference()) return false;
+		try {
+			MetaReference ref = getParent().getMetaModel().getMetaReference(getMemberName());
+			return getParent().displayReferenceWithNoFrameCustomEditor(ref);
+		}
+		catch (XavaException ex) {  
+			return false;
+		}				
+	}	
+
+	private boolean displayReferenceWithNoFrameCustomEditor(MetaReference ref) { 
+		try {
+			return !WebEditors.getMetaEditorFor(ref, getViewName()).isFrame(); 
+		}
+		catch (ElementNotFoundException ex) {
+			return false;  
+		}
 	}
 
 	public List getSections() throws XavaException {		
@@ -3594,23 +3624,23 @@ public class View implements java.io.Serializable {
 	}
 	
 	/**
-	 * Qualified ids of the properties and references as descriptions lists
-	 * changed in this request. <p>
+	 * Qualified ids of the properties and references with single editor (that includes
+	 * descriptions lists) changed in this request. <p>
 	 * 
 	 * This does not have a valid value until the end of the request, and it's intended
 	 * to be used from the AJAX code in order to determine what to refresh.
 	 * 
 	 * @return In each entry the key is the qualified id and value the container view 
 	 */
-	public Map getChangedPropertiesActionsAndDescriptionsListReferences() { 		
-		if (changedPropertiesActionsAndDescriptionsListReferences == null) {
-			changedPropertiesActionsAndDescriptionsListReferences = new HashMap();
-			fillChangedPropertiesActionsAndDescriptionsListReferences(changedPropertiesActionsAndDescriptionsListReferences);
-		}		
-		return changedPropertiesActionsAndDescriptionsListReferences;
+	public Map getChangedPropertiesActionsAndReferencesWithSingleEditor() {  		
+		if (changedPropertiesActionsAndReferencesWithSingleEditor == null) {
+			changedPropertiesActionsAndReferencesWithSingleEditor = new HashMap();
+			fillChangedPropertiesActionsAndReferencesWithSingleEditor(changedPropertiesActionsAndReferencesWithSingleEditor);
+		}				
+		return changedPropertiesActionsAndReferencesWithSingleEditor;
 	}
 	
-	private void fillChangedPropertiesActionsAndDescriptionsListReferences(Map result) {  				
+	private void fillChangedPropertiesActionsAndReferencesWithSingleEditor(Map result) {  				
 		if (displayAsDescriptionsList() && 
 				(
 					refreshDescriptionsLists ||	
@@ -3624,9 +3654,15 @@ public class View implements java.io.Serializable {
 		{			
 			result.put(getPropertyPrefix(), getParent());
 			return;
-		}		
+		}		 		
+		if (displayReferenceWithNoFrameCustomEditor() && 
+			getParent().hasEditableMemberChanged(getMemberName()))
+		{			
+			result.put(getPropertyPrefix(), getParent());
+			return;
+		}				
 		if (oldValues == null) oldValues = Collections.EMPTY_MAP;
-		if (values == null) values = new HashMap(); 
+		if (values == null) values = new HashMap(); 		
 		for (Iterator it=values.entrySet().iterator(); it.hasNext(); ) { 
 			Map.Entry en = (Map.Entry) it.next();
 			boolean isKey = getMetaModel().isKey((String) en.getKey());
@@ -3637,15 +3673,15 @@ public class View implements java.io.Serializable {
 				hasEditableMemberChanged((String) en.getKey()) || 
 				formattedProperties != null && formattedProperties.contains(en.getKey()) ||
 				editorMustBeReloaded((String) en.getKey())) 
-			{						
-				addChangedPropertyOrDescriptionsListReference(result, (String) en.getKey());
+			{									
+				addChangedPropertyOrReferenceWithSingleEditor(result, (String) en.getKey());
 			}
 			oldValues.remove(en.getKey());			
 		}
 		for (Iterator it=oldValues.entrySet().iterator(); it.hasNext(); ) {
 			Map.Entry en = (Map.Entry) it.next();
 			if (!equals(en.getValue(), values.get(en.getKey()))) {
-				addChangedPropertyOrDescriptionsListReference(result, (String) en.getKey());
+				addChangedPropertyOrReferenceWithSingleEditor(result, (String) en.getKey());
 			}
 		}	
 		
@@ -3667,15 +3703,15 @@ public class View implements java.io.Serializable {
 							subview.refreshCollection();
 						}
 						else if (!subview.mustRefreshCollection) { 
-							subview.fillChangedPropertiesActionsAndDescriptionsListReferences(result);
+							subview.fillChangedPropertiesActionsAndReferencesWithSingleEditor(result);
 						}
 					}
 				}
 				else { 				
-					if (subview.displayAsDescriptionsList()) {
+					if (subview.displayReferenceWithSingleEditor()) { 
 						subview.setPropertyPrefix(getPropertyPrefix() + subview.getMemberName());
 					}
-					subview.fillChangedPropertiesActionsAndDescriptionsListReferences(result);					
+					subview.fillChangedPropertiesActionsAndReferencesWithSingleEditor(result);					
 				}
 			}
 		}
@@ -3686,13 +3722,13 @@ public class View implements java.io.Serializable {
 				String name = (String) en.getKey();
 				View subview = (View) en.getValue();
 				if (!isHidden(name)) { 
-					subview.fillChangedPropertiesActionsAndDescriptionsListReferences(result);
+					subview.fillChangedPropertiesActionsAndReferencesWithSingleEditor(result);
 				}
 			}
 		}						
 		if (!sectionChanged && hasSections()) {
 			// Only the displayed data matters here
-			getSectionView(getActiveSection()).fillChangedPropertiesActionsAndDescriptionsListReferences(result);	
+			getSectionView(getActiveSection()).fillChangedPropertiesActionsAndReferencesWithSingleEditor(result);	
 		}
 		
 	}
@@ -3744,10 +3780,10 @@ public class View implements java.io.Serializable {
 		return oldKeyEditable != keyEditable;
 	}
 
-	private void addChangedPropertyOrDescriptionsListReference(Map result, String name) {
+	private void addChangedPropertyOrReferenceWithSingleEditor(Map result, String name) { 
 		if (!isHidden(name)) {
-			if (displayAsDescriptionsList()) {
-				result.put(getPropertyPrefix(), getParent());
+			if (displayReferenceWithSingleEditor()) { 
+				result.put(getPropertyPrefix(), getParent());				
 			}
 			else if ((
 					getMetaModel().containsMetaProperty(name) || 
@@ -3755,8 +3791,8 @@ public class View implements java.io.Serializable {
 				) &&				
 				getMembersNamesWithoutSections().contains(name) && 
 				!getMembersNamesInGroup().contains(name)) 
-			{
-				result.put(getPropertyPrefix() + name, this);
+			{				
+				result.put(getPropertyPrefix() + name, this);				
 			}					
 		}
 		if (getMetaModel().isKey(name)) {		
@@ -3896,7 +3932,7 @@ public class View implements java.io.Serializable {
 		{
 			Collection conditionArgumentsPropertyNames = getMetaCollection().getConditionArgumentsPropertyNames(); 			
 			if (conditionArgumentsPropertyNames.contains(Ids.undecorate(getRoot().changedProperty))) return true; 			
-			for (Iterator it=getRoot().getChangedPropertiesActionsAndDescriptionsListReferences().keySet().iterator(); it.hasNext(); ) {				
+			for (Iterator it=getRoot().getChangedPropertiesActionsAndReferencesWithSingleEditor().keySet().iterator(); it.hasNext(); ) {				
 				String changedProperty = Ids.undecorate((String) it.next()); 
 				if (conditionArgumentsPropertyNames.contains(changedProperty)) return true;
 			}			
@@ -3984,8 +4020,8 @@ public class View implements java.io.Serializable {
 		for (Iterator it=getMetaMembers().iterator(); it.hasNext(); ) {
 			MetaMember member = (MetaMember) it.next();
 			if (member instanceof MetaProperty ||
-				member instanceof MetaReference && 
-					displayAsDescriptionsList((MetaReference) member))		
+				member instanceof MetaReference &&
+				displayReferenceWithSingleEditor((MetaReference) member)) 
 			{
 				if (member.getQualifiedName().equals(name)) {
 					if (isHidden(name)) return null; 

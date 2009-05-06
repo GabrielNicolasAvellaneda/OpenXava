@@ -6,7 +6,8 @@
 <%@ page import="org.openxava.view.meta.MetaPropertyView" %>
 
 
-<%@page import="org.openxava.web.Ids"%><jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
+<%@page import="org.openxava.web.Ids"%>
+<%@page import="org.openxava.web.WebEditors"%><jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 
@@ -18,6 +19,7 @@ org.openxava.view.View view = (org.openxava.view.View) context.get(request, view
 String referenceKey = request.getParameter("referenceKey");
 MetaReference ref = (MetaReference) request.getAttribute(referenceKey); 
 String labelKey = "xava_label_" + referenceKey;
+boolean descriptionsList = view.displayAsDescriptionsList(ref);
 %>
 
 <%@ include file="htmlTagsEditor.jsp"%>
@@ -36,14 +38,14 @@ String label = ref.getLabel(request);
 <%=postLabel%>
 <%=preIcons%>
 <% if (labelFormat != MetaPropertyView.SMALL_LABEL) { %>
-<%@ include file="descriptionsListIcons.jsp"%>
+<%@ include file="referenceEditorIcons.jsp"%>
 <% } %>
 <%=postIcons%>
 <%=preEditor%>
 <% if (labelFormat == MetaPropertyView.SMALL_LABEL) { %>
 <table border='0' cellpadding='0', cellspacing='0'><tr><td align='bottom'>
 <span id='<xava:id name='<%="label_" + view.getPropertyPrefix() + ref.getName()%>'/>' class=<%=style.getSmallLabel()%>><%=label%></span>
-<%@ include file="descriptionsListIcons.jsp"%>
+<%@ include file="referenceEditorIcons.jsp"%>
 
 </td></tr>
 <tr><td style='vertical-align: middle'>
@@ -51,6 +53,7 @@ String label = ref.getLabel(request);
 
 <% } // !onlyEditor %>
 <%
+
 Collection keys = ref.getMetaModelReferenced().getKeyPropertiesNames();
 String keyProperty = "";
 String keyProperties = "";
@@ -62,7 +65,7 @@ if (keys.size() == 1) {
 	values = values == null?java.util.Collections.EMPTY_MAP:values;
 	Object value = values.get(keyProperty);
 	String valueKey = propertyKey + ".value";
-	request.setAttribute(valueKey, value);	
+	request.setAttribute(valueKey, value);		
 	String fvalue = value==null?"":value.toString();
 	request.setAttribute(propertyKey + ".fvalue", fvalue);
 }
@@ -88,9 +91,6 @@ else {
 	keyProperties = sb.toString();
 }
 
-String descriptionProperty = view.getDescriptionPropertyInDescriptionsList(ref);
-String descriptionProperties = view.getDescriptionPropertiesInDescriptionsList(ref);
-
 boolean throwChanged=view.throwsReferenceChanged(ref);
 String script = throwChanged?
 	"onchange='openxava.throwPropertyChanged(\"" + 
@@ -98,41 +98,52 @@ String script = throwChanged?
 			request.getParameter("module") + "\", \"" +			
 			propertyKey + "\")'":"";
 
-String parameterValuesProperties=view.getParameterValuesPropertiesInDescriptionsList(ref);
-String condition = view.getConditionInDescriptionsList(ref);
-boolean orderByKey = view.isOrderByKeyInDescriptionsList(ref);
-String order = view.getOrderInDescriptionsList(ref); 
-org.openxava.tab.meta.MetaTab metaTab = ref.getMetaModelReferenced().getMetaComponent().getMetaTab();
-String filterArg = "";
-if (metaTab.hasFilter()) {
-	filterArg = "&filter=" + metaTab.getMetaFilter().getClassName();
-}
-if (metaTab.hasBaseCondition()) {
-	if (org.openxava.util.Is.emptyString(condition)) {
-		condition = metaTab.getBaseCondition();
+String editorURL;
+if (descriptionsList) {
+	String descriptionProperty = view.getDescriptionPropertyInDescriptionsList(ref);
+	String descriptionProperties = view.getDescriptionPropertiesInDescriptionsList(ref);
+	String parameterValuesProperties=view.getParameterValuesPropertiesInDescriptionsList(ref);
+	String condition = view.getConditionInDescriptionsList(ref);
+	boolean orderByKey = view.isOrderByKeyInDescriptionsList(ref);
+	String order = view.getOrderInDescriptionsList(ref); 
+	org.openxava.tab.meta.MetaTab metaTab = ref.getMetaModelReferenced().getMetaComponent().getMetaTab();
+	String filterArg = "";
+	if (metaTab.hasFilter()) {
+		filterArg = "&filter=" + metaTab.getMetaFilter().getClassName();
 	}
-	else {
-		condition = metaTab.getBaseCondition() + " AND " + condition;
+	if (metaTab.hasBaseCondition()) {
+		if (org.openxava.util.Is.emptyString(condition)) {
+			condition = metaTab.getBaseCondition();
+		}
+		else {
+			condition = metaTab.getBaseCondition() + " AND " + condition;
+		}
 	}
+	editorURL = "editors/descriptionsEditor.jsp" // in this way because websphere 6 has problems with jsp:param
+		+ "?script=" + script
+		+ "&propertyKey=" + propertyKey	
+		+ "&editable=" + editable
+		+ "&model=" + ref.getReferencedModelName()
+		+ "&keyProperty=" + keyProperty
+		+ "&keyProperties=" + keyProperties
+		+ "&descriptionProperty=" + descriptionProperty
+		+ "&descriptionProperties=" + descriptionProperties
+		+ "&parameterValuesProperties=" + parameterValuesProperties
+		+ "&condition=" + condition
+		+ "&orderByKey=" + orderByKey
+		+ "&order=" + order
+		+ filterArg;
 }
-String urlDescriptionEditor = "editors/descriptionsEditor.jsp" // in this way because websphere 6 has problems with jsp:param
-	+ "?script=" + script
-	+ "&propertyKey=" + propertyKey	
-	+ "&editable=" + editable
-	+ "&model=" + ref.getReferencedModelName()
-	+ "&keyProperty=" + keyProperty
-	+ "&keyProperties=" + keyProperties
-	+ "&descriptionProperty=" + descriptionProperty
-	+ "&descriptionProperties=" + descriptionProperties
-	+ "&parameterValuesProperties=" + parameterValuesProperties
-	+ "&condition=" + condition
-	+ "&orderByKey=" + orderByKey
-	+ "&order=" + order
-	+ filterArg; 
+else {
+	editorURL = "editors/" + WebEditors.getMetaEditorFor(ref, view.getViewName()).getUrl()
+		+ "?script=" + script
+		+ "&propertyKey=" + propertyKey	
+		+ "&editable=" + editable;
+}
 %>
-<span id="<xava:id name='<%="descriptions_list_" + view.getPropertyPrefix() + ref.getName()%>'/>">
+<span id="<xava:id name='<%="reference_editor_" + view.getPropertyPrefix() + ref.getName()%>'/>">
 <input type="hidden" name="<%=editableKey%>" value="<%=editable%>"/>
-<jsp:include page="<%=urlDescriptionEditor%>" />
+<jsp:include page="<%=editorURL%>" />
 
 <%
 String keyPropertyForAction = Ids.undecorate(propertyKey); 

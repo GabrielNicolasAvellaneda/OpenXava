@@ -17,6 +17,31 @@ public class Product2Test extends ModuleTestBase {
 		super(testName, "Product2");		
 	}
 	
+	public void testEditorForReference() throws Exception {
+		execute("Mode.detailAndFirst");
+		setValue("color.number", "1");
+		execute("CRUD.save");
+		assertNoErrors();
+		assertValue("description", "");
+		execute("Mode.list");
+		execute("Mode.detailAndFirst");
+		assertValue("color.number", "1");
+		
+		setValue("color.number", "28");
+		execute("CRUD.save");
+		assertNoErrors();
+		assertValue("description", "");		
+		execute("Mode.list");
+		execute("Mode.detailAndFirst");
+		assertValue("color.number", "28");
+				
+		assertTrue(
+				getHtml().indexOf(
+					"<input name=\"ox_OpenXavaTest_Product2__color.number\" value=\"0\" type=\"radio\"") 
+					>= 0
+		);
+	}
+	
 	public void testImagesGallery() throws Exception {
 		// We remove oid from product 1 in order to test that images gallery works well in the first attemp.
 		Product2.findByNumber(1).setPhotos("");

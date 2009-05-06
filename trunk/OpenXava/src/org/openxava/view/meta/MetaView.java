@@ -486,6 +486,16 @@ public class MetaView extends MetaElement implements Cloneable {
 		return metaDescriptionsLists;  
 	}
 	
+	public MetaView getMetaViewOnlyKeys(MetaReference r) throws XavaException { 
+		MetaView result = getMetaView(r);
+		result.removeMembers();
+		Iterator itKeys = r.getMetaModelReferenced().getKeyPropertiesNames().iterator();
+		while (itKeys.hasNext()) {
+			result.addMemberName((String)itKeys.next());
+		}
+		return result;
+	}
+	
 	public MetaView getMetaView(MetaReference r) throws XavaException {
 		MetaView result = null;		
 		if (hasMetaReferenceViewFor(r)) {			
@@ -750,8 +760,8 @@ public class MetaView extends MetaElement implements Cloneable {
 	 * 
 	 * @return  Empty string if no editor is defined for this property
 	 */
-	public String getEditorForProperty(MetaProperty p) { 
-		MetaPropertyView metaPropertyView = getMetaPropertyViewFor(p.getName());
+	public String getEditorFor(MetaMember m) { 
+		MetaPropertyView metaPropertyView = getMetaPropertyViewFor(m.getName());
 		if (metaPropertyView == null) return "";
 		return metaPropertyView.getEditor();
 	}	

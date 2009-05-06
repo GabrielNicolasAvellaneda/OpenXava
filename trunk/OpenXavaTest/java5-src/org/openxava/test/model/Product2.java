@@ -39,6 +39,7 @@ import org.openxava.test.validators.*;
 		"number;" +
 		"description;" +
 		"photos;" +
+		"color;" + 
 		"family;" +
 		"subfamily;" +
 		"warehouse, zoneOne;" +
@@ -84,6 +85,9 @@ public class Product2 {
 	
 	@Stereotype("IMAGES_GALLERY")
 	private String photos;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	private Color color; 
 
 	@ManyToOne(optional=false, fetch=FetchType.LAZY) @JoinColumn(name="FAMILY")
 	@DefaultValueCalculator(value=IntegerCalculator.class, properties=
@@ -230,5 +234,14 @@ public class Product2 {
 	public void setFormula(Formula formula) {
 		this.formula = formula;
 	}
+	
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+	
 
 }

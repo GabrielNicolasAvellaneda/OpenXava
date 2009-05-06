@@ -55,7 +55,7 @@ public class AJAXTest extends ModuleTestBase {
 		assertCollectionRowCount("defaultCarrier.fellowCarriersCalculated", 3);		
 		assertLoadedParts("collection_defaultCarrier.fellowCarriers.," +
 				"collection_defaultCarrier.fellowCarriersCalculated.," +
-				"descriptions_list_defaultCarrier.drivingLicence," +
+				"reference_editor_defaultCarrier.drivingLicence," +
 				"editor_defaultCarrier.calculated," +
 				"editor_defaultCarrier.name," +
 				"editor_defaultCarrier.warehouse.name," +
@@ -100,7 +100,7 @@ public class AJAXTest extends ModuleTestBase {
 				"editor_city, " +
 				"editor_website, " +
 				"editor_relationWithSeller, " +
-				"descriptions_list_address.state, " +
+				"reference_editor_address.state, " +
 				"editor_email, " +
 				"editor_telephone, " +
 				"collection_deliveryPlaces., " +
@@ -124,7 +124,7 @@ public class AJAXTest extends ModuleTestBase {
 				"editor_address.street, " +
 				"editor_city, " +
 				"editor_relationWithSeller, " +
-				"descriptions_list_address.state, " +
+				"reference_editor_address.state, " +
 				"editor_seller.number, " +
 				"collection_deliveryPlaces., messages,");
 		setValue("number", "4");
@@ -136,7 +136,7 @@ public class AJAXTest extends ModuleTestBase {
 				"editor_address.street, " +
 				"editor_city, " +
 				"editor_relationWithSeller, " +				
-				"descriptions_list_address.state, " +
+				"reference_editor_address.state, " +
 				"collection_deliveryPlaces., " +
 				"editor_photo, messages, ");		
 		// Collections
@@ -196,7 +196,7 @@ public class AJAXTest extends ModuleTestBase {
 				"editor_remarks, " +
 				"editor_relationWithSeller, " +
 				"editor_email, " +
-				"descriptions_list_address.state, " +
+				"reference_editor_address.state, " +
 				"editor_seller.number, " +
 				"editor_telephone, " +
 				"collection_deliveryPlaces., " +
@@ -222,7 +222,7 @@ public class AJAXTest extends ModuleTestBase {
 				"editor_remarks, " +
 				"editor_relationWithSeller, " +
 				"editor_email, " +
-				"descriptions_list_address.state, " +
+				"reference_editor_address.state, " +
 				"editor_seller.number, " +
 				"editor_telephone, " +
 				"collection_deliveryPlaces., " +
@@ -231,6 +231,31 @@ public class AJAXTest extends ModuleTestBase {
 		// Change view programatically
 		execute("Customer.changeToSimpleView");
 		assertLoadedParts("errors, view, messages");
+	}
+	
+	public void testEditorForReference() throws Exception { 
+		changeModule("Product2");
+		execute("List.viewDetail", "row=4");
+		assertValue("number", "5");
+		assertValue("color.number", "1");
+		assertLoadedPart("core");
+		assertNotLoadedPart("reference_editor_color");
+		
+		execute("Navigation.next");
+		assertValue("number", "6");
+		assertValue("color.number", "1");
+		assertNotLoadedPart("view");
+		assertNotLoadedPart("core");
+		assertLoadedPart("editor_number");
+		assertNotLoadedPart("reference_editor_color");
+
+		execute("Navigation.next");
+		assertValue("number", "7");
+		assertValue("color.number", "28");
+		assertNotLoadedPart("view");
+		assertNotLoadedPart("core");
+		assertLoadedPart("editor_number");
+		assertLoadedPart("reference_editor_color");		
 	}
 	
 	public void testDescriptionsList() throws Exception {
@@ -242,22 +267,22 @@ public class AJAXTest extends ModuleTestBase {
 		execute("Navigation.next");
 		assertValue("number", "2");
 		assertDescriptionValue("address.state.id", "Colorado");
-		assertLoadedPart("descriptions_list_address.state");
+		assertLoadedPart("reference_editor_address.state");
 		
 		execute("Navigation.next");
 		assertValue("number", "3");
 		assertDescriptionValue("address.state.id", "New York");
-		assertLoadedPart("descriptions_list_address.state");
+		assertLoadedPart("reference_editor_address.state");
 		
 		execute("Navigation.next");
 		assertValue("number", "4");
 		assertDescriptionValue("address.state.id", "New York");
-		assertNotLoadedPart("descriptions_list_address.state");
+		assertNotLoadedPart("reference_editor_address.state");
 		
 		execute("Navigation.next");
 		assertValue("number", "43");
 		assertDescriptionValue("address.state.id", "Kansas");
-		assertLoadedPart("descriptions_list_address.state");				
+		assertLoadedPart("reference_editor_address.state");				
 	}
 			
 	public void testDependentDescriptionsList_resetDescriptionsCache_setEditable() throws Exception { 
@@ -268,23 +293,23 @@ public class AJAXTest extends ModuleTestBase {
 		assertLoadedParts("core, ");
 		setValue("family.number", "1");
 		setValue("family.number", "2");
-		assertLoadedParts("errors, descriptions_list_subfamily, " +
+		assertLoadedParts("errors, reference_editor_subfamily, " +
 				"messages");		
 		setValue("family.number", "1");
-		assertLoadedParts("errors, descriptions_list_subfamily, " +
+		assertLoadedParts("errors, reference_editor_subfamily, " +
 				"messages");
 		
 		// Reset descriptions cache
 		execute("Product2.changeLimitZone");
-		assertLoadedParts("descriptions_list_family, errors, " +
-				"descriptions_list_subfamily, " +
-				"descriptions_list_warehouse, " +
+		assertLoadedParts("reference_editor_family, errors, " +
+				"reference_editor_subfamily, " +
+				"reference_editor_warehouse, " +
 				"messages,");
 		
 		// setEditable
 		execute("Product2.deactivateType");
-		assertLoadedParts("descriptions_list_family, errors, " +
-				"descriptions_list_subfamily, " +
+		assertLoadedParts("reference_editor_family, errors, " +
+				"reference_editor_subfamily, " +
 				"messages,");
 	}
 		
@@ -298,11 +323,12 @@ public class AJAXTest extends ModuleTestBase {
 		assertLoadedParts("errors, view, messages");
 		execute("Navigation.next");
 		assertExists("zoneOne");
-		assertLoadedParts("descriptions_list_family, errors, " +
-				"descriptions_list_subfamily, " +
+		assertLoadedParts("reference_editor_family, errors, " +
+				"reference_editor_color, " +
+				"reference_editor_subfamily, " +
 				"editor_photos, " +
 				"editor_unitPriceInPesetas, " +
-				"descriptions_list_warehouse, " +
+				"reference_editor_warehouse, " +
 				"editor_description, " +
 				"editor_number, " +
 				"messages, editor_unitPrice, ");
@@ -410,7 +436,7 @@ public class AJAXTest extends ModuleTestBase {
 		execute("CRUD.new");
 		execute("CRUD.save");
 		assertErrorsCount(4);
-		assertLoadedParts("errors, descriptions_list_subfamily, " +
+		assertLoadedParts("errors, reference_editor_subfamily, " +
 				"error_image_Product2.description, " +
 				"error_image_Product2.subfamily, " +
 				"error_image_Product2.unitPrice, " +
@@ -423,7 +449,7 @@ public class AJAXTest extends ModuleTestBase {
 		setValue("description", "z");
 		execute("CRUD.save");
 		assertErrorsCount(3);		
-		assertLoadedParts("errors, descriptions_list_subfamily, " +
+		assertLoadedParts("errors, reference_editor_subfamily, " +
 				"error_image_Product2.description, " +				
 				"error_image_Product2.subfamily, " +
 				"error_image_Product2.unitPrice, " +

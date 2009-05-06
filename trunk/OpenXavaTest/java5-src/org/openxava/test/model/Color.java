@@ -1,18 +1,15 @@
 package org.openxava.test.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Transient;
-import javax.persistence.Version;
+import java.util.*;
+
+import javax.persistence.*;
 
 import org.openxava.annotations.OnChange;
 import org.openxava.annotations.Required;
 import org.openxava.annotations.Stereotype;
 import org.openxava.annotations.View;
 import org.openxava.annotations.Views;
+import org.openxava.jpa.*;
 import org.openxava.test.actions.OnChangeGroupInColorAction;
 
 /**
@@ -23,7 +20,7 @@ import org.openxava.test.actions.OnChangeGroupInColorAction;
 
 @Entity
 @Views({
-	@View( name="Ordinary", members="number; name; sample"),
+	@View( name="Ordinary", members="number; name; sample; hexValue"),	
 	@View( name="View1", members="property1"), 
 	@View( name="View2", members="property2"), 
 	@View( name="View2Sub1", members="property2Sub1"), 
@@ -41,6 +38,9 @@ public class Color {
 	
 	@Version 
 	private int version;
+	
+	@Column(length=6)
+	private String hexValue; 
 	
 	@Stereotype("IMAGE_LABEL")
 	public String getSample() {
@@ -64,9 +64,15 @@ public class Color {
 	private String property2Sub2;
 	
 	@Transient
-	@OnChange(OnChangeGroupInColorAction.class)
+	@OnChange(forViews="groups", value=OnChangeGroupInColorAction.class) 
 	private Group group;
 	public enum Group { GROUP1, GROUP2 }
+	
+	
+	public static Collection<Color> findAll() {
+		Query query = XPersistence.getManager().createQuery("from Color");
+		return query.getResultList();
+	}
 	
 	public String getName() {
 		return name;
@@ -130,6 +136,14 @@ public class Color {
 
 	public void setGroup(Group group) {
 		this.group = group;
+	}
+
+	public String getHexValue() {
+		return hexValue;
+	}
+
+	public void setHexValue(String hexValue) {
+		this.hexValue = hexValue;
 	}
 
 }

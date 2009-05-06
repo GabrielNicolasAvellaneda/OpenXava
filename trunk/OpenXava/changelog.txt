@@ -1,7 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
-- Highlight the row selected
+- It's possible to assign custom editors for references (for-reference in editors.xml).
+- The selected row in list and collection is highlight.
+- Removed unused TTFs (fonts for PDF generation).
 
 OpenXava 3.1.2 (2009-4-22)
 --------------------------
