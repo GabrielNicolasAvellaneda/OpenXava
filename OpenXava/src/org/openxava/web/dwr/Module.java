@@ -4,6 +4,7 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.*;
 
+import javax.portlet.*;
 import javax.servlet.http.*;
 import javax.swing.*;
 
@@ -76,7 +77,7 @@ public class Module extends DWRBase {
 			else {
 				fillResult(result, values, multipleValues, selected);
 			}			
-			result.setStrokeActions(getStrokeActions());			
+			result.setStrokeActions(getStrokeActions());
 			return result;
 		}
 		catch (SecurityException ex) {
@@ -206,11 +207,11 @@ public class Module extends DWRBase {
 			Messages messages = (Messages) request.getAttribute("messages");
 			put(result, "messages", messages.contains()?"messages.jsp":null);
 						
-			if (manager.isReloadViewNeeded() || getView().isReloadNeeded()) { 
+			if (manager.isReloadViewNeeded() || getView().isReloadNeeded()) {
 				put(result, "view", manager.getViewURL());
 			}
 			else {
-				fillChangedPropertiesActionsAndDescriptionsListReferences(result);
+				fillChangedPropertiesActionsAndReferencesWithSingleEditor(result);
 				fillChangedCollections(result);
 				fillChangedSections(result);
 				fillChangedErrorImages(result);
@@ -261,21 +262,21 @@ public class Module extends DWRBase {
 		}
 	}
 
-	private void fillChangedPropertiesActionsAndDescriptionsListReferences(Map result) {		
+	private void fillChangedPropertiesActionsAndReferencesWithSingleEditor(Map result) { 		
 		View view = getView();			
-		Collection changedMembers = view.getChangedPropertiesActionsAndDescriptionsListReferences().entrySet();
+		Collection changedMembers = view.getChangedPropertiesActionsAndReferencesWithSingleEditor().entrySet();
 		for (Iterator it = changedMembers.iterator(); it.hasNext(); ) {
 			Map.Entry en = (Map.Entry) it.next();
 			String qualifiedName = (String) en.getKey();
 			String name = qualifiedName.substring(qualifiedName.lastIndexOf('.') + 1);
 			View containerView = (View) en.getValue();
-			MetaModel metaModel = containerView.getMetaModel(); 
+			MetaModel metaModel = containerView.getMetaModel();
 			if (metaModel.containsMetaReference(name)) {		
 				String referenceKey = decorateId(qualifiedName); 
 				request.setAttribute(referenceKey, containerView.getMetaReference(name));
-				put(result, "descriptions_list_" + qualifiedName, 
-					"descriptionsList.jsp?referenceKey=" + referenceKey + 
-					"&onlyEditor=true&viewObject=" + containerView.getViewObject());					
+				put(result, "reference_editor_" + qualifiedName,   
+					"referenceEditor.jsp?referenceKey=" + referenceKey + 
+					"&onlyEditor=true&viewObject=" + containerView.getViewObject());
 			}
 			else {				
 				put(result, "editor_" + qualifiedName, 

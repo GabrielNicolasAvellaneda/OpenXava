@@ -42,8 +42,8 @@ public class WebEditors {
 		catch (ElementNotFoundException ex) {
 			return false; 
 		}
-	}	
-	
+	}
+
 	public static Object parse(HttpServletRequest request, MetaProperty p, String [] strings, Messages errors, String viewName) throws XavaException { 
 		try {
 			String string = strings == null?null:strings[0];						
@@ -135,28 +135,28 @@ public class WebEditors {
 			return PREFIX + "notAvailableEditor.jsp";
 		}		
 	}	
-		
-	public static MetaEditor getMetaEditorFor(MetaProperty p, String viewName) throws ElementNotFoundException, XavaException {
-		if (p.getMetaModel() != null) {
+	
+	public static MetaEditor getMetaEditorFor(MetaMember m, String viewName) throws ElementNotFoundException, XavaException {
+		if (m.getMetaModel() != null) {
 			try {				
-				MetaView metaView = p.getMetaModel().getMetaView(viewName);				
-				String editorName = metaView.getEditorForProperty(p);				
+				MetaView metaView = m.getMetaModel().getMetaView(viewName);				
+				String editorName = metaView.getEditorFor(m);				
 				if (!Is.emptyString(editorName)) {
 					MetaEditor metaEditor = MetaWebEditors.getMetaEditorByName(editorName);
 					if (metaEditor != null) {
 						return metaEditor;
 					}
 					else {
-						log.warn(XavaResources.getString("editor_by_name_for_property_not_found", editorName, p.getName()));
+						log.warn(XavaResources.getString("editor_by_name_for_property_not_found", editorName, m.getName()));
 					}
 				}
 			}
 			catch (ElementNotFoundException ex) {
 			}
 		}
-		return MetaWebEditors.getMetaEditorFor(p);
+		return MetaWebEditors.getMetaEditorFor(m);		
 	}
-		
+				
 	/** 
 	 * If a depends on b
 	 */

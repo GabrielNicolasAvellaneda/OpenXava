@@ -59,6 +59,7 @@ public class EditorsParser extends ParserBase {
 		addEditorsForStereotype(editor, el);
 		addEditorsForModelProperty(editor, el);
 		addEditorsForValidValues(editor, el);
+		addEditorsForReferenceModel(editor, el); 
 	}	
 
 	private void fillSets(Element el, MetaEditor container)	throws XavaException {
@@ -118,6 +119,16 @@ public class EditorsParser extends ParserBase {
 			MetaWebEditors.addMetaEditorForType(el.getAttribute(xtype[lang]), editor);
 		}		
 	}
+	
+
+	private void addEditorsForReferenceModel(MetaEditor editor, Element n) throws XavaException {		
+		NodeList l = n.getElementsByTagName(xfor_reference[lang]);
+		int c = l.getLength();
+		for (int i = 0; i < c; i++) {
+			Element el = (Element) l.item(i);		
+			MetaWebEditors.addMetaEditorForReferenceModel(el.getAttribute(xmodel[lang]), editor);
+		}		
+	}	
 	
 	private void addEditorsForValidValues(MetaEditor editor, Element n) throws XavaException {		
 		NodeList l = n.getElementsByTagName(xfor_valid_values[lang]);

@@ -184,4 +184,6 @@ public class XmlElementsNames {
 	protected final static String [] xon_change_search = { "on-change-search", "busqueda-al-cambiar" };
 	protected final static String [] xalways_reload = { "always-reload", "recargar-siempre" };
 	protected final static String [] xon_select_element_action = { "on-select-element-action", "accion-al-seleccionar-elemento" };
+	protected final static String [] xfor_reference= { "for-reference", "para-referencia" }; 
+	
 }

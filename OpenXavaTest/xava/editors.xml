@@ -34,8 +34,11 @@
 		</formatter>
 		<for-stereotype stereotype="PERSON_NAME" />
 	</editor>
-	
-	
+		
+	<editor url="colorEditor.jsp">
+		<for-reference model="Color"/>
+	</editor>
+		
 	<editor name="JbyXName" url="textEditor.jsp">
 		<formatter
 			class="org.openxava.test.formatters.JbyXNameFormatter">

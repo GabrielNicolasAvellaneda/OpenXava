@@ -30,7 +30,7 @@ import org.openxava.util.*;
 		"	customerDiscount, customerTypeDiscount, yearDiscount;" +
 		"];" +
 		"comment;" +			
-		"customer { customer }" +
+		"customer { customer }" +		
 		"details { details }" +			
 		"amounts { amountsSum; vatPercentage; vat }" +
 		"deliveries { deliveries }"		

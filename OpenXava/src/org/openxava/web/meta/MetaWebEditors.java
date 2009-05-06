@@ -12,12 +12,29 @@ import org.openxava.web.meta.xmlparse.*;
  * 
  * @author Javier Paniza
  */
+
+/*
+ * tmp: Editores para colecciones y referencias
+ * - Referencias enmarcables
+ * - Con tag @Editor
+ * - Para todas las referencias
+ * 		> Necesario en default-editor.xml >> Autodocumentado
+ * - Colecciones: enmarcable y no enmarcable. 
+ * - Cuando se llame desde un taglib
+ * 
+ * - ¿Para anotaciones? No
+ * 		- Anotaciones como alternativa a stereotype.
+ * 			Para más adelante. Demasiado trabajo de una vez.
+ * 			Bajo demanda
+ * 
+ */
 public class MetaWebEditors {
 		
 	private static Map editorsByName; 
 	private static Map editorsByType;
 	private static Map editorsByStereotype;
 	private static Map editorsByModelProperty;
+	private static Map editorsByReferenceModel; 
 	
 	
 
@@ -27,7 +44,14 @@ public class MetaWebEditors {
 		}
 		editorsByType.put(type, editor);		
 	}
-	
+
+	public static void addMetaEditorForReferenceModel(String model, MetaEditor editor) throws XavaException {
+		if (editorsByReferenceModel == null) {
+			throw new XavaException("only_from_parse", "MetaWebEditors.addMetaEditorForReferenceModel");
+		}
+		editorsByReferenceModel.put(model, editor);		
+	}
+		
 	public static void addMetaEditorForStereotype(String stereotype, MetaEditor editor) throws XavaException {		
 		if (editorsByStereotype == null) {
 			throw new XavaException("only_from_parse", "MetaWebEditors.addMetaEditorForStereotype");
@@ -64,6 +88,15 @@ public class MetaWebEditors {
 	}
 	
 	/**
+	 * @return Null if no editor registered for the model used in references
+	 */
+	public static MetaEditor getMetaEditorForReferenceModel(String model)	throws XavaException {
+		return (MetaEditor) getEditorsByReferenceModel().get(model);
+	}
+	
+	
+	
+	/**
 	 * It's like getMetaEditorForType but extract the type of property. <p>
 	 * 
 	 * Also it considers valid-values and Enums. 
@@ -82,7 +115,6 @@ public class MetaWebEditors {
 		return r;
 	}
 	
-
 	/**
 	 * @return Null if no editor registered for the specified stereotype
 	 */
@@ -113,6 +145,15 @@ public class MetaWebEditors {
 		return editorsByType;
 	}
 	
+	private static Map getEditorsByReferenceModel() throws XavaException { 
+		if (editorsByReferenceModel == null) {
+			initMaps();
+			EditorsParser.setupEditors();
+		}
+		return editorsByReferenceModel;
+	}
+	
+	
 	private static Map getEditorsByStereotype() throws XavaException {
 		if (editorsByStereotype == null) {
 			initMaps();
@@ -141,7 +182,8 @@ public class MetaWebEditors {
 		editorsByType = new HashMap();
 		editorsByStereotype = new HashMap();
 		editorsByModelProperty = new HashMap();
-		editorsByName = new HashMap(); 
+		editorsByName = new HashMap();
+		editorsByReferenceModel = new HashMap(); 
 	}
 
 	
@@ -168,5 +210,20 @@ public class MetaWebEditors {
 		}		
 		return r;
 	}
+	
+	public static MetaEditor getMetaEditorFor(MetaReference ref) throws ElementNotFoundException, XavaException {							
+		MetaEditor r = (MetaEditor) getMetaEditorForReferenceModel(ref.getReferencedModelName());		
+		if (r == null) {
+			throw new ElementNotFoundException("editor_not_found", ref.getId());
+		}		
+		return r;
+	}
+	
+	public static MetaEditor getMetaEditorFor(MetaMember member) throws ElementNotFoundException, XavaException { 
+		if (member instanceof MetaProperty) return getMetaEditorFor((MetaProperty) member);
+		if (member instanceof MetaReference) return getMetaEditorFor((MetaReference) member);
+		throw new ElementNotFoundException("editor_not_found", member.getId());
+	}
+	
 
 }

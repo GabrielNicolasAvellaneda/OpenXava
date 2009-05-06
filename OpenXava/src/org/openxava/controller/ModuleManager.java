@@ -30,17 +30,16 @@ public class ModuleManager {
 	static {		
 		MetaControllers.setContext(MetaControllers.WEB);		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
-		log.info("OpenXava 3.1.2 (2009-4-22)");		
+		log.info("OpenXava 3.1.3 beta (2009-5-xx)");		
 	}
 	
-	private static String DEFAULT_MODE = IChangeModeAction.LIST;
+	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
 		
 	private String user; 
 	private Collection metaActionsOnInit;
 	private Collection metaActionsOnEachRequest;
 	private Collection metaActionsBeforeEachRequest; 
-	private boolean moduleInitiated;
-	private int id;	
+	private boolean moduleInitiated;	
 	private String defaultActionQualifiedName;
 	private MetaModule metaModule;
 	private String[] controllersNames;
@@ -90,8 +89,8 @@ public class ModuleManager {
 			catch (Exception ex) {
 				log.error(XavaResources.getString("controller_actions_error"),ex);
 				return new ArrayList();
-			}	
-		}
+			}			
+		}		
 		return metaActions;		
 	}
 	
@@ -147,7 +146,7 @@ public class ModuleManager {
 	private Collection getMetaControllers() throws XavaException {
 		if (metaControllers == null) {
 			metaControllers = new ArrayList();
-			String [] names = getControllersNames();
+			String [] names = getControllersNames();		
 			for (int i = 0; i < names.length; i++) {
 				metaControllers.add(MetaControllers.getMetaController(names[i]));				
 			}						
@@ -243,7 +242,7 @@ public class ModuleManager {
 	}
 
 	private void executeAction(IAction action, MetaAction metaAction, Messages errors, Messages messages, String propertyValues, HttpServletRequest request) {
-		try {					
+		try {			
 			Object previousView = getContext().get(applicationName, moduleName, "xava_view");  
 			action.setErrors(errors);
 			action.setMessages(messages);
@@ -542,7 +541,7 @@ public class ModuleManager {
 		return getMetaModule().getEnvironment();
 	}
 
-	private void setControllersNames(String [] names) {				
+	private void setControllersNames(String [] names) {		
 		metaControllers = null;
 		metaActions = null;
 		metaActionsOnInit = null;
@@ -809,7 +808,7 @@ public class ModuleManager {
 	private void setModeName(String newModelName) {		
 		if (Is.equal(modeName, newModelName)) return;
 		reloadAllUINeeded = true;
-		modeName = newModelName;
+		modeName = newModelName;		
 		metaActions = null;
 		defaultActionQualifiedName = null;
 	}
@@ -839,10 +838,6 @@ public class ModuleManager {
 
 	public String getXavaViewName() throws XavaException {
 		return getMetaModule().getViewName();		
-	}
-	
-	public String toString() {		
-		return "ModuleManager:" + id;
 	}
 	
 	/*
@@ -967,13 +962,13 @@ public class ModuleManager {
 	
 	private void addToHiddenActions(String action) {
 		if (hiddenActions == null) hiddenActions = new HashSet();
-		hiddenActions.add(action);
+		hiddenActions.add(action);		
 		metaActions = null;
 	}
 	
 	private void removeFromHiddenActions(String action) {
 		if (hiddenActions == null) return;
-		hiddenActions.remove(action);
+		hiddenActions.remove(action);	
 		metaActions = null;		
 	}
 	

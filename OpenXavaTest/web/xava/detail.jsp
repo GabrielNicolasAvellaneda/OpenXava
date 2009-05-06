@@ -81,14 +81,14 @@ while (it.hasNext()) {
 		lastWasEditor = false;
 	  	if (m instanceof MetaReference) {
 			MetaReference ref = (MetaReference) m;			
-			if (view.displayAsDescriptionsList(ref)) {
+			if (view.displayReferenceWithSingleEditor(ref)) {	
 				lastWasEditor = true;
 				String referenceKey = Ids.decorate(
 						request.getParameter("application"),
 						request.getParameter("module"),
 						propertyPrefix +  ref.getName()); 
 				request.setAttribute(referenceKey, ref);			
-				String urlDescriptionsList = "descriptionsList.jsp" // in this way because websphere 6 has problems with jsp:param
+				String urlDescriptionsList = "referenceEditor.jsp" // in this way because websphere 6 has problems with jsp:param
 					+ "?referenceKey=" + referenceKey
 					+ "&first=" + first;
 	%>
