@@ -38,7 +38,7 @@ openxava.refreshPage = function(result) {
 				form[openxava.decorateId(result.application, result.module, "xava_action_argv")].value="";
 				form[openxava.decorateId(result.application, result.module, "xava_changed_property")].value="";
 			}
-			openxava.ajaxRequest(result.application, result.module);	
+			window.location.reload();	
 			return; 			
 		}
 		else {
