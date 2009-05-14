@@ -1,25 +1,31 @@
 package org.openxava.test.actions;
 
-import java.text.*;
-import java.util.*;
+import java.text.DateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
-import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.data.*;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
-import org.openxava.actions.*;
-import org.openxava.model.*;
-import org.openxava.test.model.*;
-import org.openxava.util.*;
-import org.openxava.validators.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openxava.actions.IChainAction;
+import org.openxava.actions.JasperReportBaseAction;
+import org.openxava.model.MapFacade;
+import org.openxava.test.model.Invoice;
+import org.openxava.util.Messages;
+import org.openxava.validators.ValidationException;
 
 /**
  * For print an Invoice using a JasperReport custom design. <p>
  * 
  * @author Javier Paniza
  */
-public class InvoiceReportAction extends JasperReportBaseAction {
+public class InvoiceReportAction extends JasperReportBaseAction implements IChainAction {
+	private static Log log = LogFactory.getLog(InvoiceReportAction.class);
 	
 	private Invoice invoice;
+	private boolean newAfter = false;
 
 	@Override
 	public void execute() throws Exception {
@@ -57,6 +63,18 @@ public class InvoiceReportAction extends JasperReportBaseAction {
 			invoice = Invoice.findByYearNumber(year, number);
 		}
 		return invoice;
+	}
+
+	public String getNextAction() throws Exception {
+		return newAfter ? "CRUD.new" : null;
+	}
+
+	public boolean isNewAfter() {
+		return newAfter;
+	}
+
+	public void setNewAfter(boolean newAfter) {
+		this.newAfter = newAfter;
 	}
 
 }
