@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: IForwardAction at the same time that IChainAction (not refreshed the screen).
+
 - It's possible to assign custom editors for references (for-reference in editors.xml).
 - The selected row in list and collection is highlight.
 - Removed unused TTFs (fonts for PDF generation).

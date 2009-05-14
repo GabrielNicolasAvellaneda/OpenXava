@@ -499,25 +499,36 @@ public class ModuleTestBase extends TestCase {
 			focusedElement.blur();
 		}
 		
-		throwChangeOfLastNotNotifiedProperty(); 
+		throwChangeOfLastNotNotifiedProperty();
 		if (page.getHtmlElementsByName(Ids.decorate(application, module, ACTION_PREFIX + "." + action)).size() > 1) { // Action of list/collection
 			execute(action, null);
 			return;
-		}		
-				
+		}	
+			
 		Element element  = getElementById(action);  
 		if (element instanceof ClickableElement) {
 			Page newPage = ((ClickableElement) element).click();
 			if (newPage instanceof HtmlPage) {
-				page = (HtmlPage) newPage;								
+				page = (HtmlPage) newPage;			
 			}
 			resetForm(); 
 		}
 		else {
 			fail(XavaResources.getString("clickable_not_found", decorateId(action)));   
 		}
+		
+		restorePage();
+		
 	}
 
+	private void restorePage() throws Exception {
+		List windows = client.getWebWindows();		
+		if (windows.size() > 1) {
+			page = (HtmlPage) ((WebWindow) windows.get(0)).getEnclosedPage();
+			refreshPage();
+		}
+	}
+	
 	private void throwChangeOfLastNotNotifiedProperty() throws Exception { 		
 		if (lastNotNotifiedPropertyName != null) {
 			setFormValueNoRefresh(lastNotNotifiedPropertyName, lastNotNotifiedPropertyValue);
@@ -526,20 +537,20 @@ public class ModuleTestBase extends TestCase {
 		}	
 	}
 										 	
-	private void waitUntilPageIsLoaded() { 
+	private void waitUntilPageIsLoaded() throws Exception {
 		HtmlInput loading = (HtmlInput) getElementById("loading");
 		for (int i=0; !"true".equals(loading.getValueAttribute()) && i<20; i++) {
 			try { Thread.sleep(100); } catch (Exception ex) { }			
-		}				
+		}			
 		while ("true".equals(loading.getValueAttribute())) {
-			try { Thread.sleep(20); } catch (Exception ex) { }			
+			try { Thread.sleep(20); } catch (Exception ex) { }		
 		}	
 		if (getLoadedParts().endsWith("ERROR")) {
 			fail(XavaResources.getString("ajax_loading_parts_error"));
 		}
 	}
 
-	private HtmlElement getElementById(String id) { 
+	private HtmlElement getElementById(String id) {
 		return page.getHtmlElementById(decorateId(id));
 	}
 	
@@ -612,7 +623,9 @@ public class ModuleTestBase extends TestCase {
 				return;
 			}
 			fail(XavaResources.getString("clickable_not_found", action));  
-		}		
+		}	
+		
+		restorePage();
 		
 	}
 	
@@ -734,6 +747,7 @@ public class ModuleTestBase extends TestCase {
 			Page page = ((WebWindow) windows.get(i)).getEnclosedPage();
 			if (page != null) return page;
 		}
+		
 		fail(XavaResources.getString("popup_window_not_found"));
 		return null;
 	}	
@@ -1596,7 +1610,7 @@ public class ModuleTestBase extends TestCase {
 		return xavaJunitProperties;
 	}
 	
-	private void resetForm() throws Exception {		
+	private void resetForm() throws Exception {
 		waitUntilPageIsLoaded();
 		setNewModuleIfChanged(); 
 		form = null; 		
