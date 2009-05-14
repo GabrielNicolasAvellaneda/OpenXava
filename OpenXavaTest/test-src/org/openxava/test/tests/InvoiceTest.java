@@ -14,6 +14,8 @@ import java.util.StringTokenizer;
 
 import javax.rmi.PortableRemoteObject;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openxava.jpa.XPersistence;
 import org.openxava.test.calculators.YearInvoiceDiscountCalculator;
 import org.openxava.test.model.Delivery;
@@ -32,6 +34,7 @@ import org.openxava.util.XavaPreferences;
  */
 
 public class InvoiceTest extends ModuleTestBase {
+	private static Log log = LogFactory.getLog(InvoiceTest.class);
 	
 	private Invoice invoice;
 	private BigDecimal productUnitPriceDB;
@@ -44,6 +47,15 @@ public class InvoiceTest extends ModuleTestBase {
 	
 	public InvoiceTest(String testName) {
 		super(testName, "Invoice");		
+	}
+	
+	public void testGenerateCustomPdfAndPrepareNewAfter() throws Exception {
+		execute("Mode.detailAndFirst");
+		execute("Invoice.printPdfNewAfter");
+		assertNoErrors(); 
+		assertMessage("The print was successful");
+		assertContentTypeForPopup("application/pdf");
+		assertEditable("year");
 	}
 	
 	public void testGenerateCustomPdfExcelRtfOdt() throws Exception { 
@@ -1119,7 +1131,8 @@ public class InvoiceTest extends ModuleTestBase {
 			"Reference.search",
 			"Reference.createNew",			
 			"Reference.modify",
-			"Mode.list"						
+			"Mode.list",
+			"Invoice.printPdfNewAfter"
 		};		
 		assertActions(initialActions);
 				
@@ -1153,7 +1166,8 @@ public class InvoiceTest extends ModuleTestBase {
 			"Print.generateExcel", // In collection
 			"List.filter", 
 			"List.orderBy", 
-			"List.customize"			
+			"List.customize",
+			"Invoice.printPdfNewAfter"			
 		};		
 		assertActions(aggregateListActions);
 		
@@ -1186,7 +1200,8 @@ public class InvoiceTest extends ModuleTestBase {
 			"List.filter", 
 			"List.orderBy", 
 			"List.customize", 				
-			"Invoice.viewProduct"
+			"Invoice.viewProduct",
+			"Invoice.printPdfNewAfter"
 		};		
 		assertActions(aggregateDetailActions);
 		

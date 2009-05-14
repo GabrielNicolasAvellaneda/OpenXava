@@ -388,7 +388,14 @@
 			class="org.openxava.test.actions.SetAddColumnsPageRowCountTo10Action">	
 			<use-object name="xava_tab"/>
 		</action>
-					
+
+		<action name="printPdfNewAfter" mode="detail"
+			class="org.openxava.test.actions.InvoiceReportAction" >
+			<set property="format" value="pdf"/>
+			<set property="newAfter" value="true"/>									
+			<use-object name="xava_view"/>			
+		</action>
+		
 	</controller>
 	
 	<controller name="CustomerInvoices">
