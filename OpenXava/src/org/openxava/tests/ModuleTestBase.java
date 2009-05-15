@@ -504,7 +504,7 @@ public class ModuleTestBase extends TestCase {
 			execute(action, null);
 			return;
 		}	
-			
+
 		Element element  = getElementById(action);  
 		if (element instanceof ClickableElement) {
 			Page newPage = ((ClickableElement) element).click();
@@ -520,14 +520,6 @@ public class ModuleTestBase extends TestCase {
 		restorePage();
 		
 	}
-
-	private void restorePage() throws Exception {
-		List windows = client.getWebWindows();		
-		if (windows.size() > 1) {
-			page = (HtmlPage) ((WebWindow) windows.get(0)).getEnclosedPage();
-			refreshPage();
-		}
-	}
 	
 	private void throwChangeOfLastNotNotifiedProperty() throws Exception { 		
 		if (lastNotNotifiedPropertyName != null) {
@@ -537,14 +529,20 @@ public class ModuleTestBase extends TestCase {
 		}	
 	}
 										 	
-	private void waitUntilPageIsLoaded() throws Exception {
+	private void waitUntilPageIsLoaded() { 
 		HtmlInput loading = (HtmlInput) getElementById("loading");
 		for (int i=0; !"true".equals(loading.getValueAttribute()) && i<20; i++) {
 			try { Thread.sleep(100); } catch (Exception ex) { }			
-		}			
+		}
+		int x = 0;
 		while ("true".equals(loading.getValueAttribute())) {
+			x++;
+			if (x % 200 == 0){
+				page = (HtmlPage) ((WebWindow) client.getWebWindows().get(0)).getEnclosedPage();	// tmp
+				loading = (HtmlInput) getElementById("loading");
+			}
 			try { Thread.sleep(20); } catch (Exception ex) { }		
-		}	
+		}		
 		if (getLoadedParts().endsWith("ERROR")) {
 			fail(XavaResources.getString("ajax_loading_parts_error"));
 		}
@@ -626,7 +624,14 @@ public class ModuleTestBase extends TestCase {
 		}	
 		
 		restorePage();
-		
+	}
+	
+	private void restorePage() throws Exception {
+		List windows = client.getWebWindows();		
+		if (windows.size() > 1) {
+			page = (HtmlPage) ((WebWindow) windows.get(0)).getEnclosedPage();
+			refreshPage();
+		}
 	}
 	
 	private String refineArgumentsForReferenceActionWithObsoleteStyle(String arguments) {
