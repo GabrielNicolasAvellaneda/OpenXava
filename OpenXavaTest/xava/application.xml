@@ -218,10 +218,10 @@
 	<module name="BeforeGoingToCustomer">
 		<model name="Customer"/>
 		<view name="Intermediate"/>
-		<controller name="GoToCustomer"/>
+		<controller name="ChangeModule"/>
 		<mode-controller name="Void"/>
 	</module>
-	
+		<module name="BeforeGoingToFormula">		<model name="Formula"/>		<view name="Simple"/>		<controller name="ChangeModule"/>		<mode-controller name="Void"/>	</module>	
 	<module name="ChangeActiveYear">
 		<model name="Year"/>
 		<controller name="ChangeActiveYear"/>	

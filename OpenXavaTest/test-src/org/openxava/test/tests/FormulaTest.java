@@ -21,6 +21,14 @@ public class FormulaTest extends ModuleTestBase {
 		super(testName, "Formula");		
 	}
 	
+	public void testOnSelectElementActionFromAnotherModule() throws Exception {
+		changeModule("BeforeGoingToFormula");
+		execute("ChangeModule.goFormula");
+		
+		//
+		testOnSelectElementAction();
+	}
+	
 	public void testOnSelectElementAction() throws Exception { 
 		execute("Mode.detailAndFirst");
 		assertValue("name", "HTML TEST");
