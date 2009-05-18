@@ -7,6 +7,8 @@
 <%@ page import="org.openxava.web.WebEditors" %>
 <%@ page import="org.openxava.util.Is" %>
 <%@ page import="org.openxava.web.Ids" %>
+<%@ page import="org.openxava.controller.meta.MetaAction"%>
+<%@ page import="org.openxava.controller.meta.MetaControllers"%>
 
 <jsp:useBean id="errors" class="org.openxava.util.Messages" scope="request"/>
 <jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
@@ -225,6 +227,8 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 	String cssSelectedRow = style.getSelectedRow();
 	String selectedRowStyle = style.getSelectedRowStyle();
 	String rowStyle = "border-bottom: 1px solid;";
+	String onSelectCollectionElementAction = view.getOnSelectCollectionElementAction();
+	MetaAction onSelectCollectionElementMetaAction = Is.empty(onSelectCollectionElementAction) ? null : MetaControllers.getMetaAction(onSelectCollectionElementAction);
 %>
 <tr id="<%=idRow%>" class="<%=cssClass%>" <%=events%> style="<%=rowStyle%>">
 	<td class="<%=cssCellClass%>" style="vertical-align: middle;text-align: center; <%=style.getListCellStyle()%>">
@@ -234,7 +238,7 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 	String actionOnClick = "onClick=\"openxava.onSelectElement(" +
 		"'" + request.getParameter("application") + "'," + 
 		"'" + request.getParameter("module") + "'," + 
-		"'" + view.getOnSelectCollectionElementAction() + "'," + 
+		"'" + onSelectCollectionElementAction + "'," + 
 		"'row=" + f + "'," + 
 		"this.checked," + 
 		"'" + idRow + "'," + 
@@ -242,7 +246,9 @@ for (int f=tab.getInitialIndex(); f<model.getRowCount() && f < tab.getFinalIndex
 		"'" + cssSelectedRow + "'," + 
 		"'" + cssClass + "'," +
 		"'" + selectedRowStyle + "'," +
-		"'" + rowStyle + "'" + 
+		"'" + rowStyle + "'," +
+		"'" + (Is.empty(onSelectCollectionElementMetaAction)?"":onSelectCollectionElementMetaAction.getConfirmMessage()) + "'," + 
+		(Is.empty(onSelectCollectionElementMetaAction)?false:onSelectCollectionElementMetaAction.isTakesLong()) + 
 		")\"";
 %>
 	</td>

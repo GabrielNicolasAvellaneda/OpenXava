@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Add OnSelectElementAction use for takesLong and confirmMessage
 - Fix: IForwardAction at the same time that IChainAction (not refreshed the screen).
 
 - It's possible to assign custom editors for references (for-reference in editors.xml).

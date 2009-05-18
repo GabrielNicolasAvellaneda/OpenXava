@@ -290,7 +290,7 @@ openxava.clearConditionValues = function(application, module, prefix) {
 	}
 }
 
-openxava.onSelectElement = function(application, module, action, argv, checkValue, idRow, hasOnSelectAction, cssSelectedRow, cssRow, selectedRowStyle, rowStyle) {
+openxava.onSelectElement = function(application, module, action, argv, checkValue, idRow, hasOnSelectAction, cssSelectedRow, cssRow, selectedRowStyle, rowStyle, confirmMessage, takesLong) {
 	if (checkValue) {
 		var cssClass = cssSelectedRow + " " + cssRow;
 		document.getElementById(idRow).className=cssClass;
@@ -309,6 +309,6 @@ openxava.onSelectElement = function(application, module, action, argv, checkValu
 	
 	if (hasOnSelectAction){
 		argv = argv + ",selected=" + checkValue;
-		openxava.executeAction(application, module, '', false, action, argv);	
+		openxava.executeAction(application, module, confirmMessage, takesLong, action, argv);	
 	}
 }

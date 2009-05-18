@@ -538,7 +538,7 @@ public class ModuleTestBase extends TestCase {
 		while ("true".equals(loading.getValueAttribute())) {
 			x++;
 			if (x % 200 == 0){
-				page = (HtmlPage) ((WebWindow) client.getWebWindows().get(0)).getEnclosedPage();	// tmp
+				page = (HtmlPage) ((WebWindow) client.getWebWindows().get(0)).getEnclosedPage();
 				loading = (HtmlInput) getElementById("loading");
 			}
 			try { Thread.sleep(20); } catch (Exception ex) { }		
