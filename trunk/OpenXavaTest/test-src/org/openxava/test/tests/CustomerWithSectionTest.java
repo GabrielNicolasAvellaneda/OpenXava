@@ -452,7 +452,7 @@ public class CustomerWithSectionTest extends CustomerTest {
 		// started from a different module because there was a bug in imageEditor when run from a module
 		//	that was not the initial
 		changeModule("BeforeGoingToCustomer");
-		execute("GoToCustomer.goCustomer");
+		execute("ChangeModule.goCustomer");
 		
 		// 
 		testChangeImage();
