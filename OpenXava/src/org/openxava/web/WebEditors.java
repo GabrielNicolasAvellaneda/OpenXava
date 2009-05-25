@@ -154,7 +154,7 @@ public class WebEditors {
 			catch (ElementNotFoundException ex) {
 			}
 		}
-		return MetaWebEditors.getMetaEditorFor(m);		
+		return MetaWebEditors.getMetaEditorFor(m);
 	}
 				
 	/** 

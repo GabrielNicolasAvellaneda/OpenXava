@@ -49,7 +49,7 @@ public class Shipment {
 	
 	@Column(length=50) @Required
 	private String description;
-	
+		
 	private Timestamp time;
 	
 	@ManyToOne(fetch=FetchType.LAZY)

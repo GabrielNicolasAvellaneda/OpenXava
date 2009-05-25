@@ -4,9 +4,15 @@
 
 <!--
 	In your project use the name 'editors.xml' or 'editores.xml'
+	tmp Más doc aquí
 -->
 
 <editors>
+
+	<!-- tmp doc en guide -->
+	<editor name="Reference" url="referenceEditor.jsp" frame="true" composite="true">
+		<for-references/>
+	</editor>
 
 	<editor name="TextField" url="textEditor.jsp">
 		<for-type type="java.lang.String" />

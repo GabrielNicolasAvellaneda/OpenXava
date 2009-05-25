@@ -3,7 +3,7 @@
 <!ELEMENT editors (editor*)>
 
 
-<!ELEMENT editor (property*, formatter?, (for-type | for-stereotype | for-model-property | for-valid-values | for-reference)*)>
+<!ELEMENT editor (property*, formatter?, (for-type | for-stereotype | for-model-property | for-valid-values | for-references | for-reference)*)>
 <!ATTLIST editor
  name CDATA #IMPLIED
  url CDATA #REQUIRED
@@ -49,6 +49,8 @@
 >
 
 <!ELEMENT for-valid-values EMPTY>
+
+<!ELEMENT for-references EMPTY>
 
 <!ELEMENT for-reference EMPTY>
 <!ATTLIST for-reference

@@ -15,7 +15,8 @@ import java.util.*;
 public class MetaMemberView {
 	
 	private Collection actionsNames;
-	private Collection alwaysEnabledActionsNames; 
+	private Collection alwaysEnabledActionsNames;
+	private String editor; 
 	
 	
 	
@@ -33,6 +34,12 @@ public class MetaMemberView {
 	}
 	public Collection getAlwaysEnabledActionsNames() {		
 		return alwaysEnabledActionsNames==null?Collections.EMPTY_LIST:alwaysEnabledActionsNames;
+	}
+	public String getEditor() {
+		return editor;
+	}
+	public void setEditor(String editor) {
+		this.editor = editor;
 	}		
 	
 }

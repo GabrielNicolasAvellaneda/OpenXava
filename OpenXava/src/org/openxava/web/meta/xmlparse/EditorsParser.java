@@ -38,6 +38,7 @@ public class EditorsParser extends ParserBase {
 		editor.setFormat(getAttributeBoolean(el, xformat[lang]));
 		editor.setFrame(getAttributeBoolean(el, xwithframe[lang]));	
 		editor.setAlwaysReload(getAttributeBoolean(el, xalways_reload[lang])); 
+		editor.setComposite(getAttributeBoolean(el, xcomposite[lang])); 
 		String dependsStereotypes = el.getAttribute(xdepends_stereotypes[lang]);
 		String dependsProperties = el.getAttribute(xdepends_properties[lang]);
 		if (
@@ -59,6 +60,7 @@ public class EditorsParser extends ParserBase {
 		addEditorsForStereotype(editor, el);
 		addEditorsForModelProperty(editor, el);
 		addEditorsForValidValues(editor, el);
+		addEditorsForReferences(editor, el);
 		addEditorsForReferenceModel(editor, el); 
 	}	
 
@@ -138,6 +140,13 @@ public class EditorsParser extends ParserBase {
 		}		
 	}
 	
+	private void addEditorsForReferences(MetaEditor editor, Element n) throws XavaException { 		
+		NodeList l = n.getElementsByTagName(xfor_references[lang]);
+		if (l.getLength() > 0) {
+			// we save using a special internal type 
+			MetaWebEditors.addMetaEditorForReferences(editor);
+		}		
+	}		
 	
 	private void addEditorsForStereotype(MetaEditor editor, Element n) throws XavaException {		
 		NodeList l = n.getElementsByTagName(xfor_stereotype[lang]);

@@ -17,7 +17,7 @@ public class Product2Test extends ModuleTestBase {
 		super(testName, "Product2");		
 	}
 	
-	public void testEditorForReference() throws Exception {
+	public void testEditorForReferenceInEditorsXML() throws Exception {
 		execute("Mode.detailAndFirst");
 		setValue("color.number", "1");
 		execute("CRUD.save");
@@ -40,6 +40,8 @@ public class Product2Test extends ModuleTestBase {
 					"<input name=\"ox_OpenXavaTest_Product2__color.number\" value=\"0\" type=\"radio\"") 
 					>= 0
 		);
+		
+		assertTrue(getHtml().indexOf("Color Frame Editor:") < 0);
 	}
 	
 	public void testImagesGallery() throws Exception {

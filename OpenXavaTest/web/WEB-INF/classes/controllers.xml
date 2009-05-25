@@ -315,9 +315,12 @@
 		<extends controller="CustomerNewOnInit"/>
 	</controller>
 	
-	<controller name="GoToCustomer">
+	<controller name="ChangeModule">
 		<action name="goCustomer" class="org.openxava.actions.ChangeModuleAction">
 			<set property="nextModule" value="CustomerWithSection"/>
+		</action>
+		<action name="goFormula" class="org.openxava.actions.ChangeModuleAction">
+			<set property="nextModule" value="Formula"/>
 		</action>
 	</controller>
 	
@@ -388,7 +391,14 @@
 			class="org.openxava.test.actions.SetAddColumnsPageRowCountTo10Action">	
 			<use-object name="xava_tab"/>
 		</action>
-					
+
+		<action name="printPdfNewAfter" mode="detail"
+			class="org.openxava.test.actions.InvoiceReportAction" >
+			<set property="format" value="pdf"/>
+			<set property="newAfter" value="true"/>									
+			<use-object name="xava_view"/>			
+		</action>
+		
 	</controller>
 	
 	<controller name="CustomerInvoices">
@@ -824,7 +834,7 @@
 	
 	<controller name="Formula">
 		<extends controller="Typical"/>
-		<action name="onSelectIngredient" hidden="true" 
+		<action name="onSelectIngredient" hidden="true"   
 			class="org.openxava.test.actions.OnSelectIngredientAction">
 			<use-object name="xava_view"/>
 		</action>

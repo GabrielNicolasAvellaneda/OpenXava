@@ -13,13 +13,16 @@
 
 <%
 boolean onlyEditor = "true".equalsIgnoreCase(request.getParameter("onlyEditor"));
+boolean frame = "true".equalsIgnoreCase(request.getParameter("frame")); 
+boolean composite = "true".equalsIgnoreCase(request.getParameter("composite"));
+boolean descriptionsList = "true".equalsIgnoreCase(request.getParameter("descriptionsList")); 
 String viewObject = request.getParameter("viewObject");
 viewObject = (viewObject == null || viewObject.equals(""))?"xava_view":viewObject;
 org.openxava.view.View view = (org.openxava.view.View) context.get(request, viewObject);
 String referenceKey = request.getParameter("referenceKey");
 MetaReference ref = (MetaReference) request.getAttribute(referenceKey); 
 String labelKey = "xava_label_" + referenceKey;
-boolean descriptionsList = view.displayAsDescriptionsList(ref);
+if (!descriptionsList) descriptionsList = view.displayAsDescriptionsList(ref); 
 %>
 
 <%@ include file="htmlTagsEditor.jsp"%>
@@ -43,8 +46,9 @@ String label = ref.getLabel(request);
 <%=postIcons%>
 <%=preEditor%>
 <% if (labelFormat == MetaPropertyView.SMALL_LABEL) { %>
-<table border='0' cellpadding='0', cellspacing='0'><tr><td align='bottom'>
+<table border='0' cellpadding='0', cellspacing='0'><tr><td align='bottom'> 
 <span id='<xava:id name='<%="label_" + view.getPropertyPrefix() + ref.getName()%>'/>' class=<%=style.getSmallLabel()%>><%=label%></span>
+ 
 <%@ include file="referenceEditorIcons.jsp"%>
 
 </td></tr>
@@ -141,21 +145,24 @@ else {
 		+ "&editable=" + editable;
 }
 %>
+<% if (!composite) { %>
 <span id="<xava:id name='<%="reference_editor_" + view.getPropertyPrefix() + ref.getName()%>'/>">
+<% } %> 
 <input type="hidden" name="<%=editableKey%>" value="<%=editable%>"/>
+
 <jsp:include page="<%=editorURL%>" />
 
 <%
 String keyPropertyForAction = Ids.undecorate(propertyKey); 
 
-if (editable && view.isCreateNewForReference(ref)) {
+if (!frame && editable && view.isCreateNewForReference(ref)) { 
 %>
 <xava:action action='Reference.createNew' argv='<%="model="+ref.getReferencedModelName() + ",keyProperty=" + keyPropertyForAction%>'/>
 <%
 }
 %>
 <%
-if (editable && view.isModifyForReference(ref)) {
+if (!frame && editable && view.isModifyForReference(ref)) { 
 %>
 <xava:action action='Reference.modify' argv='<%="model="+ref.getReferencedModelName() + ",keyProperty=" + keyPropertyForAction%>'/>
 <%
@@ -165,14 +172,16 @@ if (editable && view.isModifyForReference(ref)) {
 
 <%
 java.util.Iterator itActions = view.getActionsNamesForReference(ref, editable).iterator();
-while (itActions.hasNext()) {
+if (!frame) while (itActions.hasNext()) {
 	String action = (String) itActions.next();
 %>
 <xava:action action="<%=action%>"/>
 <%
 }
 %>
+<% if (!composite) { %>
 </span>
+<% } %>
 <%=postEditor%>
 <% if (!onlyEditor && labelFormat == MetaPropertyView.SMALL_LABEL) { %>
 </td></tr>
