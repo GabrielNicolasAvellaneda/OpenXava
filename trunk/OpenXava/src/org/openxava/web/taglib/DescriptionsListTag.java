@@ -38,7 +38,7 @@ public class DescriptionsListTag extends TagSupport {
 			String module = request.getParameter("module");
 			String referenceKey = Ids.decorate(application, module, prefix + reference); 
 			request.setAttribute(referenceKey, metaReference);
-			String editorURL = "descriptionsList.jsp?referenceKey=" + referenceKey + "&onlyEditor=true"; 
+			String editorURL = "reference.jsp?referenceKey=" + referenceKey + "&onlyEditor=true&frame=false&composite=false&descriptionsList=true"; 
 			try {
 				// If the JSP that uses this tag is in a subfolder
 				pageContext.include("../xava/" + editorURL);

@@ -3,7 +3,7 @@
 <!ELEMENT editores (editor*)>
 
 
-<!ELEMENT editor (propiedad*, formateador?, (para-tipo | para-estereotipo | para-propiedad-modelo | para-valores-posibles | para-referencia)*)>
+<!ELEMENT editor (propiedad*, formateador?, (para-tipo | para-estereotipo | para-propiedad-modelo | para-valores-posibles | para-referencias | para-referencia)*)>
 <!ATTLIST editor
  nombre CDATA #IMPLIED
  clase CDATA #IMPLIED
@@ -12,7 +12,8 @@
  depende-de-estereotipos CDATA #IMPLIED
  depende-de-propiedades CDATA #IMPLIED
  enmarcable (true|false) "false"
- recargar-siempre (true|false) "false" 
+ recargar-siempre (true|false) "false"
+ compuesto (true|false) "false" 
 >
 
 <!ELEMENT propiedad EMPTY>
@@ -50,6 +51,8 @@
 >
 
 <!ELEMENT para-valores-posibles EMPTY>
+
+<!ELEMENT para-referencias EMPTY>
 
 <!ELEMENT para-referencia EMPTY>
 <!ATTLIST para-referencia

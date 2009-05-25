@@ -45,6 +45,16 @@ import org.openxava.test.validators.*;
 		"warehouse, zoneOne;" +
 		"unitPrice, unitPriceInPesetas;"		
 	),
+	@View( name="ColorWithFrame", members= 
+		"number;" +
+		"description;" +
+		"photos;" +
+		"color;" + 
+		"family;" +
+		"subfamily;" +
+		"warehouse, zoneOne;" +
+		"unitPrice, unitPriceInPesetas;"		
+	),
 	@View(name="ReferenceAndStereotype", members="number; family; subfamilyNumber;"),
 	@View(name="WithFormula", members=
 		"number;" +
@@ -87,6 +97,7 @@ public class Product2 {
 	private String photos;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
+	@Editor(forViews="ColorWithFrame", value="ColorFrame") 
 	private Color color; 
 
 	@ManyToOne(optional=false, fetch=FetchType.LAZY) @JoinColumn(name="FAMILY")
@@ -97,7 +108,6 @@ public class Product2 {
 	private Family2 family;	
 	
 	@ManyToOne(optional=false, fetch=FetchType.LAZY) @JoinColumn(name="SUBFAMILY") @NoCreate
-
 	@DescriptionsLists({
 		@DescriptionsList(
 			descriptionProperties="description", // In this case descriptionProperties can be omited

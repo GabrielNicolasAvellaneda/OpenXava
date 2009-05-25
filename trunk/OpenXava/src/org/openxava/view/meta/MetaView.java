@@ -550,12 +550,18 @@ public class MetaView extends MetaElement implements Cloneable {
 		return getMetaReferenceViewFor(r.getName());
 	}
 	
+	private MetaMemberView getMetaMemberViewFor(String qualifiedMemberName) { 
+		MetaMemberView result = getMetaPropertyViewFor(qualifiedMemberName);
+		if (result == null) result = getMetaReferenceViewFor(qualifiedMemberName);
+		return result;
+	}
+	
 	private MetaPropertyView getMetaPropertyViewFor(String qualifiedPropertyName) { 		
 		if (metaViewsProperties == null) return null;
 		return (MetaPropertyView) metaViewsProperties.get(qualifiedPropertyName);
 	}
 	
-	public MetaReferenceView getMetaReferenceViewFor(String ref) {		
+	public MetaReferenceView getMetaReferenceViewFor(String ref) {
 		if (metaViewsReferences == null) {
 			return null;
 		}
@@ -729,7 +735,7 @@ public class MetaView extends MetaElement implements Cloneable {
 	}
 
 	public Collection getActionsNamesForProperty(MetaProperty p, boolean editable) {
-		MetaPropertyView metaPropertyView = getMetaPropertyViewFor(p.getName());
+		MetaMemberView metaPropertyView = getMetaPropertyViewFor(p.getName());
 		if (metaPropertyView == null) return Collections.EMPTY_LIST;
 		return editable?metaPropertyView.getActionsNames():metaPropertyView.getAlwaysEnabledActionsNames();
 	}
@@ -760,10 +766,10 @@ public class MetaView extends MetaElement implements Cloneable {
 	 * 
 	 * @return  Empty string if no editor is defined for this property
 	 */
-	public String getEditorFor(MetaMember m) { 
-		MetaPropertyView metaPropertyView = getMetaPropertyViewFor(m.getName());
-		if (metaPropertyView == null) return "";
-		return metaPropertyView.getEditor();
+	public String getEditorFor(MetaMember m) {		
+		MetaMemberView metaMemberView = getMetaMemberViewFor(m.getName()); 
+		if (metaMemberView == null) return "";
+		return metaMemberView.getEditor();
 	}	
 	
 	public int getLabelFormatForReference(MetaReference ref) {

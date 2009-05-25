@@ -233,8 +233,14 @@ public class AJAXTest extends ModuleTestBase {
 		assertLoadedParts("errors, view, messages");
 	}
 	
-	public void testEditorForReference() throws Exception { 
+	public void testEditorForReference() throws Exception {		
 		changeModule("Product2");
+		assertEditorForReference();		
+		changeModule("Product2ColorWithFrame");
+		assertEditorForReference();				
+	}
+	
+	public void assertEditorForReference() throws Exception {
 		execute("List.viewDetail", "row=4");
 		assertValue("number", "5");
 		assertValue("color.number", "1");
@@ -257,6 +263,7 @@ public class AJAXTest extends ModuleTestBase {
 		assertLoadedPart("editor_number");
 		assertLoadedPart("reference_editor_color");		
 	}
+ 
 	
 	public void testDescriptionsList() throws Exception {
 		changeModule("Customer");

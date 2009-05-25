@@ -4,7 +4,6 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.*;
 
-import javax.portlet.*;
 import javax.servlet.http.*;
 import javax.swing.*;
 
@@ -211,7 +210,7 @@ public class Module extends DWRBase {
 				put(result, "view", manager.getViewURL());
 			}
 			else {
-				fillChangedPropertiesActionsAndReferencesWithSingleEditor(result);
+				fillChangedPropertiesActionsAndReferencesWithNotCompositeEditor(result);
 				fillChangedCollections(result);
 				fillChangedSections(result);
 				fillChangedErrorImages(result);
@@ -234,7 +233,7 @@ public class Module extends DWRBase {
 			Collection lastErrors = (Collection) getContext(request).get(application, module, MEMBERS_WITH_ERRORS_IN_LAST_REQUEST);
 			for (Iterator it=lastErrors.iterator(); it.hasNext(); ) {
 				String member = (String) it.next();
-				if  (view.getQualifiedNameForDisplayedPropertyOrDescriptionsListReference(member) != null) { 
+				if  (view.getQualifiedNameForDisplayedPropertyOrReferenceWithNotCompositeEditor(member) != null) { 
 					put(result, "error_image_" + member, null);
 				}				
 			}
@@ -249,7 +248,7 @@ public class Module extends DWRBase {
 			Collection members = new HashSet();
 			for (Iterator it=errors.getMembers().iterator(); it.hasNext(); ) {
 				String member = (String) it.next();
-				String qualifiedMember = view.getQualifiedNameForDisplayedPropertyOrDescriptionsListReference(member);
+				String qualifiedMember = view.getQualifiedNameForDisplayedPropertyOrReferenceWithNotCompositeEditor(member);
 				if (qualifiedMember != null) { 
 					String id = "error_image_" + qualifiedMember;				
 					put(result, id, imageHTML);
@@ -262,9 +261,9 @@ public class Module extends DWRBase {
 		}
 	}
 
-	private void fillChangedPropertiesActionsAndReferencesWithSingleEditor(Map result) { 		
+	private void fillChangedPropertiesActionsAndReferencesWithNotCompositeEditor(Map result) { 		
 		View view = getView();			
-		Collection changedMembers = view.getChangedPropertiesActionsAndReferencesWithSingleEditor().entrySet();
+		Collection changedMembers = view.getChangedPropertiesActionsAndReferencesWithNotCompositeEditor().entrySet();
 		for (Iterator it = changedMembers.iterator(); it.hasNext(); ) {
 			Map.Entry en = (Map.Entry) it.next();
 			String qualifiedName = (String) en.getKey();
@@ -275,7 +274,7 @@ public class Module extends DWRBase {
 				String referenceKey = decorateId(qualifiedName); 
 				request.setAttribute(referenceKey, containerView.getMetaReference(name));
 				put(result, "reference_editor_" + qualifiedName,   
-					"referenceEditor.jsp?referenceKey=" + referenceKey + 
+					"reference.jsp?referenceKey=" + referenceKey + 
 					"&onlyEditor=true&viewObject=" + containerView.getViewObject());
 			}
 			else {				

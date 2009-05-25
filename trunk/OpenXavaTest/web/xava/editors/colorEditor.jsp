@@ -1,8 +1,7 @@
-
 <%@page import="java.util.Iterator"%>
 <%@page import="org.openxava.test.model.Color"%><%
+
 String propertyKey = request.getParameter("propertyKey");
-String referenceKey = request.getParameter("referenceKey");
 Object value = request.getAttribute(propertyKey + ".value");
 if (value == null) value = 0;
 %>

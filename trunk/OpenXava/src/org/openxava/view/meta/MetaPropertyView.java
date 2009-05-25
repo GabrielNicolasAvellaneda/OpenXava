@@ -21,7 +21,6 @@ public class MetaPropertyView extends MetaMemberView implements java.io.Serializ
 	private boolean readOnly;
 	private String onChangeActionClassName;	
 	private int labelFormat;
-	private String editor;		
 	private int displaySize;
 	
 	
@@ -85,14 +84,6 @@ public class MetaPropertyView extends MetaMemberView implements java.io.Serializ
 		this.labelFormat = labelFormat;
 	}
 
-	public String getEditor() {
-		return editor;
-	}
-
-	public void setEditor(String editor) {
-		this.editor = editor;
-	}
-	
 	// @Trifon
 	public int getDisplaySize() {
 		return displaySize;

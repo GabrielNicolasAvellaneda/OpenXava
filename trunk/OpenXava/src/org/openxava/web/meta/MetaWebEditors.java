@@ -14,19 +14,20 @@ import org.openxava.web.meta.xmlparse.*;
  */
 
 /*
- * tmp: Editores para colecciones y referencias
- * - Referencias enmarcables
- * - Con tag @Editor
- * - Para todas las referencias
- * 		> Necesario en default-editor.xml >> Autodocumentado
- * - Colecciones: enmarcable y no enmarcable. 
- * - Cuando se llame desde un taglib
+ * tmp: Editores para colecciones y referencias 
+ * - Documentación
+ * 		* En view
+ * 		* En view-xml
+ * 		- En customizing
+ *      - ¿Falta algo? 
+ * --- VERSION ---
+ * - Colecciones: enmarcable y no enmarcable.  
+ * - Comprobar toda la estética en todas las plataformas
+ * - Documentación (también XML)
  * 
- * - ¿Para anotaciones? No
- * 		- Anotaciones como alternativa a stereotype.
- * 			Para más adelante. Demasiado trabajo de una vez.
- * 			Bajo demanda
- * 
+ * --- VERSION ---
+ *   - PROBAR XML
+ *   - Suite en Liferay  
  */
 public class MetaWebEditors {
 		
@@ -34,7 +35,8 @@ public class MetaWebEditors {
 	private static Map editorsByType;
 	private static Map editorsByStereotype;
 	private static Map editorsByModelProperty;
-	private static Map editorsByReferenceModel; 
+	private static Map editorsByReferenceModel;
+	private static MetaEditor editorForReferences;
 	
 	
 
@@ -214,7 +216,10 @@ public class MetaWebEditors {
 	public static MetaEditor getMetaEditorFor(MetaReference ref) throws ElementNotFoundException, XavaException {							
 		MetaEditor r = (MetaEditor) getMetaEditorForReferenceModel(ref.getReferencedModelName());		
 		if (r == null) {
-			throw new ElementNotFoundException("editor_not_found", ref.getId());
+			if (editorForReferences == null) {
+				throw new ElementNotFoundException("editor_for_references_required");
+			}
+			return editorForReferences; 
 		}		
 		return r;
 	}
@@ -224,6 +229,9 @@ public class MetaWebEditors {
 		if (member instanceof MetaReference) return getMetaEditorFor((MetaReference) member);
 		throw new ElementNotFoundException("editor_not_found", member.getId());
 	}
-	
 
+	public static void addMetaEditorForReferences(MetaEditor editor) { 
+		editorForReferences = editor; 		
+	}
+	
 }

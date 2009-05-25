@@ -3,9 +3,9 @@ package org.openxava.annotations;
 import java.lang.annotation.*;
 
 /**
- * Name of the editor to use for displaying the property in this view. <p>
+ * Name of the editor to use for displaying the member in this view. <p>
  * 
- * Applies to properties. <p> 
+ * Applies to properties, references and collections. <p> 
  *
  * The editor must be declared in OpenXava/xava/default-editors.xml or 
  * xava/editors.xml of your project.<br>

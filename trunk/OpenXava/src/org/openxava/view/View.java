@@ -160,7 +160,7 @@ public class View implements java.io.Serializable {
 	private Collection rowStyles; // Of type MetaRowStyle
 	private Map oldValues; 
 	private boolean mustRefreshCollection; 
-	private Map changedPropertiesActionsAndReferencesWithSingleEditor;
+	private Map changedPropertiesActionsAndReferencesWithNotCompositeEditor;
 	private Map changedLabels; 
 	private boolean sectionChanged;
 	private boolean reloadNeeded;
@@ -713,13 +713,13 @@ public class View implements java.io.Serializable {
 			newView.setModelName(ref.getReferencedModelName());
 			newView.setRepresentsEntityReference(true);
 		}
-		if (displayReferenceWithNoFrameCustomEditor(ref)) {
-			newView.setMetaView(getMetaView().getMetaViewOnlyKeys(ref));
+		if (displayReferenceWithNotCompositeEditor(ref)) { 
+			newView.setMetaView(getMetaView().getMetaViewOnlyKeys(ref));			
 		}
 		else {
-			newView.setMetaView(getMetaView().getMetaView(ref));
+			newView.setMetaView(getMetaView().getMetaView(ref));			
 		}
-		newView.setMemberName(member.getName()); 
+		newView.setMemberName(member.getName());		
 		if (newView.isRepresentsCollection()) {					
 			MetaCollectionView metaCollectionView = getMetaView().getMetaCollectionView(member.getName());
 			if (metaCollectionView != null) {
@@ -1888,7 +1888,7 @@ public class View implements java.io.Serializable {
 			oldValues = values==null?null:new HashMap(values);
 			mustRefreshCollection = false;
 			reloadNeeded = false;			
-			changedPropertiesActionsAndReferencesWithSingleEditor = null; 
+			changedPropertiesActionsAndReferencesWithNotCompositeEditor = null; 
 			sectionChanged = false; 
 			oldKeyEditable = keyEditable; 
 			oldEditable = editable;
@@ -3071,34 +3071,40 @@ public class View implements java.io.Serializable {
 		}				
 	}
 	
-	public boolean displayReferenceWithSingleEditor(MetaReference ref) { 
-		return displayAsDescriptionsList(ref) || displayReferenceWithNoFrameCustomEditor(ref); 
-	}
-	
-	private boolean displayReferenceWithSingleEditor() { 
-		return displayAsDescriptionsList() || displayReferenceWithNoFrameCustomEditor(); 
-	}	
-	
-	private boolean displayReferenceWithNoFrameCustomEditor() { 
-		if (getMemberName() == null) return false;
-		if (!isRepresentsEntityReference()) return false;
-		try {
-			MetaReference ref = getParent().getMetaModel().getMetaReference(getMemberName());
-			return getParent().displayReferenceWithNoFrameCustomEditor(ref);
-		}
-		catch (XavaException ex) {  
-			return false;
-		}				
-	}	
-
-	private boolean displayReferenceWithNoFrameCustomEditor(MetaReference ref) { 
+	public boolean displayReferenceWithNoFrameEditor(MetaReference ref) { 
+		if (displayAsDescriptionsList(ref)) return true;
 		try {
 			return !WebEditors.getMetaEditorFor(ref, getViewName()).isFrame(); 
 		}
 		catch (ElementNotFoundException ex) {
 			return false;  
 		}
+		
 	}
+	
+	private boolean displayReferenceWithNotCompositeEditor() {  
+		if (getMemberName() == null) return false;
+		if (!(isRepresentsEntityReference() || isRepresentsAggregate())) return false;
+		try {
+			MetaReference ref = getParent().getMetaModel().getMetaReference(getMemberName());
+			return getParent().displayReferenceWithNotCompositeEditor(ref);
+		}
+		catch (XavaException ex) {  
+			return false;
+		}				
+	}	
+
+	
+	public boolean displayReferenceWithNotCompositeEditor(MetaReference ref) { 
+		if (displayAsDescriptionsList(ref)) return true;
+		try {
+			return !WebEditors.getMetaEditorFor(ref, getViewName()).isComposite(); 
+		}
+		catch (ElementNotFoundException ex) {
+			return false;  
+		}		
+	}
+
 
 	public List getSections() throws XavaException {		
 		return getMetaView().getSections();
@@ -3624,7 +3630,7 @@ public class View implements java.io.Serializable {
 	}
 	
 	/**
-	 * Qualified ids of the properties and references with single editor (that includes
+	 * Qualified ids of the properties and references with not composite editor (that includes
 	 * descriptions lists) changed in this request. <p>
 	 * 
 	 * This does not have a valid value until the end of the request, and it's intended
@@ -3632,15 +3638,15 @@ public class View implements java.io.Serializable {
 	 * 
 	 * @return In each entry the key is the qualified id and value the container view 
 	 */
-	public Map getChangedPropertiesActionsAndReferencesWithSingleEditor() {  		
-		if (changedPropertiesActionsAndReferencesWithSingleEditor == null) {
-			changedPropertiesActionsAndReferencesWithSingleEditor = new HashMap();
-			fillChangedPropertiesActionsAndReferencesWithSingleEditor(changedPropertiesActionsAndReferencesWithSingleEditor);
-		}				
-		return changedPropertiesActionsAndReferencesWithSingleEditor;
+	public Map getChangedPropertiesActionsAndReferencesWithNotCompositeEditor() {  		
+		if (changedPropertiesActionsAndReferencesWithNotCompositeEditor == null) {
+			changedPropertiesActionsAndReferencesWithNotCompositeEditor = new HashMap();
+			fillChangedPropertiesActionsAndReferencesWithNotCompositeEditor(changedPropertiesActionsAndReferencesWithNotCompositeEditor);
+		}		
+		return changedPropertiesActionsAndReferencesWithNotCompositeEditor;
 	}
 	
-	private void fillChangedPropertiesActionsAndReferencesWithSingleEditor(Map result) {  				
+	private void fillChangedPropertiesActionsAndReferencesWithNotCompositeEditor(Map result) {  				
 		if (displayAsDescriptionsList() && 
 				(
 					refreshDescriptionsLists ||	
@@ -3655,7 +3661,8 @@ public class View implements java.io.Serializable {
 			result.put(getPropertyPrefix(), getParent());
 			return;
 		}		 		
-		if (displayReferenceWithNoFrameCustomEditor() && 
+ 
+		if (displayReferenceWithNotCompositeEditor() && 
 			getParent().hasEditableMemberChanged(getMemberName()))
 		{			
 			result.put(getPropertyPrefix(), getParent());
@@ -3680,7 +3687,7 @@ public class View implements java.io.Serializable {
 		}
 		for (Iterator it=oldValues.entrySet().iterator(); it.hasNext(); ) {
 			Map.Entry en = (Map.Entry) it.next();
-			if (!equals(en.getValue(), values.get(en.getKey()))) {
+			if (!equals(en.getValue(), values.get(en.getKey()))) {				
 				addChangedPropertyOrReferenceWithSingleEditor(result, (String) en.getKey());
 			}
 		}	
@@ -3703,15 +3710,15 @@ public class View implements java.io.Serializable {
 							subview.refreshCollection();
 						}
 						else if (!subview.mustRefreshCollection) { 
-							subview.fillChangedPropertiesActionsAndReferencesWithSingleEditor(result);
+							subview.fillChangedPropertiesActionsAndReferencesWithNotCompositeEditor(result);
 						}
 					}
 				}
-				else { 				
-					if (subview.displayReferenceWithSingleEditor()) { 
-						subview.setPropertyPrefix(getPropertyPrefix() + subview.getMemberName());
+				else { 				 					
+					if (subview.displayReferenceWithNotCompositeEditor()) {
+						subview.setPropertyPrefix(getPropertyPrefix() + subview.getMemberName());						
 					}
-					subview.fillChangedPropertiesActionsAndReferencesWithSingleEditor(result);					
+					subview.fillChangedPropertiesActionsAndReferencesWithNotCompositeEditor(result);					
 				}
 			}
 		}
@@ -3722,13 +3729,13 @@ public class View implements java.io.Serializable {
 				String name = (String) en.getKey();
 				View subview = (View) en.getValue();
 				if (!isHidden(name)) { 
-					subview.fillChangedPropertiesActionsAndReferencesWithSingleEditor(result);
+					subview.fillChangedPropertiesActionsAndReferencesWithNotCompositeEditor(result);
 				}
 			}
 		}						
 		if (!sectionChanged && hasSections()) {
 			// Only the displayed data matters here
-			getSectionView(getActiveSection()).fillChangedPropertiesActionsAndReferencesWithSingleEditor(result);	
+			getSectionView(getActiveSection()).fillChangedPropertiesActionsAndReferencesWithNotCompositeEditor(result);	
 		}
 		
 	}
@@ -3782,7 +3789,7 @@ public class View implements java.io.Serializable {
 
 	private void addChangedPropertyOrReferenceWithSingleEditor(Map result, String name) { 
 		if (!isHidden(name)) {
-			if (displayReferenceWithSingleEditor()) { 
+			if (displayReferenceWithNotCompositeEditor()) { 				
 				result.put(getPropertyPrefix(), getParent());				
 			}
 			else if ((
@@ -3791,7 +3798,8 @@ public class View implements java.io.Serializable {
 				) &&				
 				getMembersNamesWithoutSections().contains(name) && 
 				!getMembersNamesInGroup().contains(name)) 
-			{				
+			{
+			
 				result.put(getPropertyPrefix() + name, this);				
 			}					
 		}
@@ -3932,7 +3940,7 @@ public class View implements java.io.Serializable {
 		{
 			Collection conditionArgumentsPropertyNames = getMetaCollection().getConditionArgumentsPropertyNames(); 			
 			if (conditionArgumentsPropertyNames.contains(Ids.undecorate(getRoot().changedProperty))) return true; 			
-			for (Iterator it=getRoot().getChangedPropertiesActionsAndReferencesWithSingleEditor().keySet().iterator(); it.hasNext(); ) {				
+			for (Iterator it=getRoot().getChangedPropertiesActionsAndReferencesWithNotCompositeEditor().keySet().iterator(); it.hasNext(); ) {				
 				String changedProperty = Ids.undecorate((String) it.next()); 
 				if (conditionArgumentsPropertyNames.contains(changedProperty)) return true;
 			}			
@@ -4008,20 +4016,20 @@ public class View implements java.io.Serializable {
 	}
 	
 	/**
-	 * If the property or the reference as descriptions list is displayed in this moment
-	 * then the qualified name (in ModelName.memberName format) is returned. <p>
+	 * If the property or the reference with not composite (single) editor is displayed 
+	 * in this moment then the qualified name (in ModelName.memberName format) is returned. <p>
 	 * 
 	 * @param name Can be the simple or the qualified name of the member
 	 * @return The qualified name in form ModelName.memberName or null if is not a property
-	 * 		or a reference as descriptions list.
+	 * 		or a reference with not composite editor.
 	 */
-	public String getQualifiedNameForDisplayedPropertyOrDescriptionsListReference(String name) {
+	public String getQualifiedNameForDisplayedPropertyOrReferenceWithNotCompositeEditor(String name) { 
 		if (isRepresentsCollection() && !isCollectionDetailVisible()) return null; 
 		for (Iterator it=getMetaMembers().iterator(); it.hasNext(); ) {
 			MetaMember member = (MetaMember) it.next();
 			if (member instanceof MetaProperty ||
 				member instanceof MetaReference &&
-				displayReferenceWithSingleEditor((MetaReference) member)) 
+				displayReferenceWithNotCompositeEditor((MetaReference) member)) 
 			{
 				if (member.getQualifiedName().equals(name)) {
 					if (isHidden(name)) return null; 
@@ -4037,7 +4045,7 @@ public class View implements java.io.Serializable {
 			Iterator itSubviews = getSubviews().values().iterator();
 			while (itSubviews.hasNext()) {
 				View subview = (View) itSubviews.next();
-				String qualifiedName = subview.getQualifiedNameForDisplayedPropertyOrDescriptionsListReference(name); 
+				String qualifiedName = subview.getQualifiedNameForDisplayedPropertyOrReferenceWithNotCompositeEditor(name); 
 				if (qualifiedName != null) return qualifiedName;
 			}
 		}
@@ -4045,13 +4053,13 @@ public class View implements java.io.Serializable {
 			Iterator itSubviews = getGroupsViews().values().iterator();
 			while (itSubviews.hasNext()) {
 				View subview = (View) itSubviews.next();
-				String qualifiedName = subview.getQualifiedNameForDisplayedPropertyOrDescriptionsListReference(name);
+				String qualifiedName = subview.getQualifiedNameForDisplayedPropertyOrReferenceWithNotCompositeEditor(name);
 				if (qualifiedName != null) return qualifiedName;
 			}
 		}						
 		if (hasSections()) {
 			// Only the displayed data matters here
-			String qualifiedName = getSectionView(getActiveSection()).getQualifiedNameForDisplayedPropertyOrDescriptionsListReference(name);			
+			String qualifiedName = getSectionView(getActiveSection()).getQualifiedNameForDisplayedPropertyOrReferenceWithNotCompositeEditor(name);			
 			if (qualifiedName != null) return qualifiedName;	
 		}								
 		return null;

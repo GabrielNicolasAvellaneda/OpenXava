@@ -909,21 +909,8 @@ public class AnnotatedClassParser {
 			}					
 			
 			// Editor
-			if (element.isAnnotationPresent(Editor.class)) {
-				Editor editor = element.getAnnotation(Editor.class);
-				if (isForView(metaView, editor.forViews(), editor.notForViews())) {
-					propertyView.setEditor(editor.value());
-					mustAddMetaView = true;				
-				}
-			}
-			if (element.isAnnotationPresent(Editors.class)) {
-				Editor [] editores = element.getAnnotation(Editors.class).value();				
-				for (Editor editor: editores) {
-					if (isForView(metaView, editor.forViews(), editor.notForViews())) {
-						propertyView.setEditor(editor.value());
-						mustAddMetaView = true;				
-					}
-				}					
+			if (processEditorAnnotation(element, metaView, propertyView)) {
+				mustAddMetaView = true;
 			}
 			
 			// DisplaySize
@@ -1790,6 +1777,10 @@ public class AnnotatedClassParser {
 				}					
 			}
 			
+			if (processEditorAnnotation(element, metaView, referenceView)) {
+				mustAddMetaView = true;
+			}
+			
 			// AsAggregate
 			if (element.isAnnotationPresent(AsEmbedded.class)) {
 				AsEmbedded asAggregate = element.getAnnotation(AsEmbedded.class);
@@ -1888,12 +1879,6 @@ public class AnnotatedClassParser {
 		if (element.isAnnotationPresent(ViewActions.class)) {
 			notApply(ref.getName(), ViewActions.class, "collections");
 		}										
-		if (element.isAnnotationPresent(Editor.class)) {
-			notApply(ref.getName(), Editor.class, "properties");
-		}
-		if (element.isAnnotationPresent(Editors.class)) {
-			notApply(ref.getName(), Editors.class, "properties");
-		}
 		if (element.isAnnotationPresent(DisplaySize.class)) {
 			notApply(ref.getName(), DisplaySize.class, "properties");
 		}
@@ -1949,6 +1934,29 @@ public class AnnotatedClassParser {
 			notApply(ref.getName(), OnSelectElementActions.class, "collections");
 		}		
 		
+	}
+
+
+	private boolean processEditorAnnotation(AnnotatedElement element,
+			MetaView metaView, MetaMemberView memberView) {
+		boolean mustAddMetaView = false;
+		if (element.isAnnotationPresent(Editor.class)) {
+			Editor editor = element.getAnnotation(Editor.class);
+			if (isForView(metaView, editor.forViews(), editor.notForViews())) {
+				memberView.setEditor(editor.value());
+				mustAddMetaView = true;				
+			}
+		}
+		if (element.isAnnotationPresent(Editors.class)) {
+			Editor [] editors = element.getAnnotation(Editors.class).value();				
+			for (Editor editor: editors) {
+				if (isForView(metaView, editor.forViews(), editor.notForViews())) {
+					memberView.setEditor(editor.value());
+					mustAddMetaView = true;				
+				}
+			}					
+		}
+		return mustAddMetaView;
 	}
 
 

@@ -20,7 +20,7 @@ import org.openxava.test.actions.*;
 	@View( members= 	
 		"number;" +
 		"type;" +
-		"name, Customer.changeNameLabel();" +
+		"name, Customer.changeNameLabel();" +		
 		"photo;" +
 		"telephone, email;" +
 		"website;" +
@@ -38,7 +38,7 @@ import org.openxava.test.actions.*;
 	@View( name="Simple", members= 	
 		"number;" +
 		"type;" +
-		"name, Customer.changeNameLabel(ALWAYS);" +
+		"name, Customer.changeNameLabel(ALWAYS);" +		
 		"photo;" +
 		"address;"
 	),
@@ -148,7 +148,7 @@ public class Customer implements IWithName {
 		
 	@Stereotype("MEMO") @Column(length=400)	
 	private String remarks;
-		
+	
 	@Embedded
 	@ReferenceViews({
 		@ReferenceView(forViews="SimpleStateAsForm", value="StateAsForm"),

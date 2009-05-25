@@ -38,7 +38,7 @@ openxava.refreshPage = function(result) {
 				form[openxava.decorateId(result.application, result.module, "xava_action_argv")].value="";
 				form[openxava.decorateId(result.application, result.module, "xava_changed_property")].value="";
 			}
-			openxava.ajaxRequest(result.application, result.module);	
+			window.location.reload();	
 			return; 			
 		}
 		else {
@@ -290,7 +290,25 @@ openxava.clearConditionValues = function(application, module, prefix) {
 	}
 }
 
-openxava.onSelectElement = function(application, module, action, argv, checkValue) {
-	argv = argv + ",selected=" + checkValue;
-	openxava.executeAction(application, module, '', false, action, argv);
+openxava.onSelectElement = function(application, module, action, argv, checkValue, idRow, hasOnSelectAction, cssSelectedRow, cssRow, selectedRowStyle, rowStyle, confirmMessage, takesLong) {
+	if (checkValue) {
+		var cssClass = cssSelectedRow + " " + cssRow;
+		document.getElementById(idRow).className=cssClass;
+		document.getElementById(idRow).onmouseout = function() {
+            this.className = cssClass;
+        }
+		document.getElementById(idRow).style.cssText = rowStyle + selectedRowStyle;
+	}
+	else {
+		document.getElementById(idRow).className=cssRow;
+		document.getElementById(idRow).onmouseout = function() {
+            this.className = cssRow;
+        }
+		document.getElementById(idRow).style.cssText = rowStyle;
+	}
+	
+	if (hasOnSelectAction){
+		argv = argv + ",selected=" + checkValue;
+		openxava.executeAction(application, module, confirmMessage, takesLong, action, argv);	
+	}
 }

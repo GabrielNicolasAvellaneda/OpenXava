@@ -31,7 +31,9 @@ public class MetaEditor {
 	private Collection formatterMetaSets;
 	private boolean format = true;
 	private boolean frame = false;
-	private boolean alwaysReload = false; 
+	private boolean alwaysReload = false;
+	private boolean composite = false; 
+
 	
 	public void _addFormatterMetaSet(MetaSet metaSet) {
 		if (formatterMetaSets == null) formatterMetaSets = new ArrayList();
@@ -210,6 +212,13 @@ public class MetaEditor {
 	public boolean isAlwaysReload() {
 		return alwaysReload;
 	}
-
 	
+	public boolean isComposite() {
+		return composite;
+	}
+
+	public void setComposite(boolean composite) {
+		this.composite = composite;
+	}
+		
 }

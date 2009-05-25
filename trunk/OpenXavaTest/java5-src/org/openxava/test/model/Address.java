@@ -40,14 +40,15 @@ public class Address implements IWithCity {
 	@Action(value="Customer.prefixStreet", alwaysEnabled=true)
 	private String street;
 	
-	@Required @Column(length=5) @LabelFormat(LabelFormatType.SMALL)
+	@Required @Column(length=5) @LabelFormat(LabelFormatType.SMALL)	
 	private int zipCode;
+	
 	
 	@Required @Column(length=20) 
 	@LabelFormat(LabelFormatType.NO_LABEL)
 	@LabelFormats({ 
 		@LabelFormat(forViews="Demo", value=LabelFormatType.SMALL)
-	})
+	})	
 	private String city;
 	
 	// ManyToOne inside an Embeddable is not supported by JPA 1.0 (see at 9.1.34),

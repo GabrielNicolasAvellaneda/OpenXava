@@ -64,7 +64,7 @@ public class Color {
 	private String property2Sub2;
 	
 	@Transient
-	@OnChange(forViews="groups", value=OnChangeGroupInColorAction.class) 
+	@OnChange(forViews="Groups", value=OnChangeGroupInColorAction.class) 
 	private Group group;
 	public enum Group { GROUP1, GROUP2 }
 	
