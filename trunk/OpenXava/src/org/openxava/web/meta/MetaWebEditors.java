@@ -15,12 +15,6 @@ import org.openxava.web.meta.xmlparse.*;
 
 /*
  * tmp: Editores para colecciones y referencias 
- * - Documentación
- * 		* En view
- * 		* En view-xml
- * 		- En customizing
- *      - ¿Falta algo? 
- * --- VERSION ---
  * - Colecciones: enmarcable y no enmarcable.  
  * - Comprobar toda la estética en todas las plataformas
  * - Documentación (también XML)

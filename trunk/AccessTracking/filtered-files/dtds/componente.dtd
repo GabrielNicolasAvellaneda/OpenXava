@@ -68,7 +68,8 @@
   crear (true|false) "true"
   modificar (true|false) "true"  
   buscar (true|false) "true"
-  como-agregado (true|false) "false"    
+  como-agregado (true|false) "false"
+  editor CDATA #IMPLIED    
 >
 
 <!ELEMENT lista-descripciones EMPTY>

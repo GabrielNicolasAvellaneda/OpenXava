@@ -4,12 +4,14 @@
 
 <!--
 	In your project use the name 'editors.xml' or 'editores.xml'
-	tmp Más doc aquí
+	
+	Instead of modifying this file it's better to create your own editors.xml 
+	(or editores.xml) in your project to override this default value
+	for your application.	
 -->
 
 <editors>
 
-	<!-- tmp doc en guide -->
 	<editor name="Reference" url="referenceEditor.jsp" frame="true" composite="true">
 		<for-references/>
 	</editor>
