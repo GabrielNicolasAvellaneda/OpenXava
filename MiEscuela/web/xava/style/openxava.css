@@ -4,6 +4,14 @@ The styles in this file are only for the aspects not included in
 JSR-168 and WSRP and needed by OpenXava.
 */
 
+.liferay4-selected-row td {
+	background: #BFC2E4;
+}
+
+.selected-row td {
+	background: #ffc !important;
+}
+
 .button-bar {
 	background: #dddddd;
 	padding: 0 0 0 0;

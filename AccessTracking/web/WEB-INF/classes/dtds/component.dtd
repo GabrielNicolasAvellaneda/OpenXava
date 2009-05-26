@@ -34,7 +34,7 @@
   name CDATA #IMPLIED
   label CDATA #IMPLIED
   model CDATA #IMPLIED
-  members CDATA "*"
+  members CDATA "*"  
   extends CDATA #IMPLIED
 >
 
@@ -64,6 +64,7 @@
   modify (true|false) "true"
   search (true|false) "true"
   as-aggregate (true|false) "false"
+  editor CDATA #IMPLIED
 >
 
 <!ELEMENT descriptions-list EMPTY>
