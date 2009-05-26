@@ -35,27 +35,12 @@
 		<for-stereotype stereotype="PERSON_NAME" />
 	</editor>
 		
-	<!-- 
-	tmp: frame = true
-	tmp: doc en reference
-	--> 	
 	<editor url="colorEditor.jsp">
 		<for-reference model="Color"/>
 	</editor>
 	
-			
-	<!-- tmp -->
-	<editor name="ColorFrame" url="colorFrameEditor.jsp" frame="true">
-	</editor>
+	<editor name="ColorFrame" url="colorFrameEditor.jsp" frame="true"/>
 	
-	<!-- tmp  
-	<editor name="Reference" url="provaReferenceEditor.jsp" frame="true" composite="true">
-		<for-references/>
-	</editor>
-	-->
-	
-		
-		
 	<editor name="JbyXName" url="textEditor.jsp">
 		<formatter
 			class="org.openxava.test.formatters.JbyXNameFormatter">
