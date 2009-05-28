@@ -155,12 +155,24 @@ openxava.getSelectedValues = function(application, module) {
 }
 
 openxava.getMultipleValues = function(application, module) { 
-	var result = new Object();	  		
+	var result = new Object();
 	var multiple = document.getElementsByName(openxava.decorateId(application, module, "xava_multiple"));  
-	var j=0;
 	for (var i=0; i<multiple.length; i++) {
   		var propertyName = multiple[i].value; 
-  		result[propertyName] = dwr.util.toDescriptiveString(dwr.util.getValue(propertyName), 2);		  		
+  		var elements = document.getElementsByName(propertyName);
+  		if (elements.length == 1) {
+  			result[propertyName] = dwr.util.toDescriptiveString(dwr.util.getValue(propertyName), 2);
+  		}
+  		else {  	  			
+  			for (var j=0; j<elements.length; j++) {
+  				var indexedName = elements[j].name + "::" + j;
+  				var originalName = elements[j].name;
+  				var element = elements[j]; 
+  				element.name = indexedName;
+  				result[indexedName] = dwr.util.getValue(indexedName);
+  				element.name = originalName;  				  				
+  			}
+  		}
 	}	  		
 	return result;
 }

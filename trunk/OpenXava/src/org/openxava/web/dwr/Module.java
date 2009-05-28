@@ -387,9 +387,11 @@ public class Module extends DWRBase {
 	private void addValuesQueryString(StringBuffer sb, Map values, Map multipleValues, String [] selected) {
 		if (values == null) return;
 		if (multipleValues != null) {
-			for (Iterator it=multipleValues.entrySet().iterator(); it.hasNext(); ) {
+			SortedMap sortedMultipleValues = new TreeMap(multipleValues);  			
+			for (Iterator it=sortedMultipleValues.entrySet().iterator(); it.hasNext(); ) { 
 				Map.Entry en = (Map.Entry) it.next();			
-				addMultipleValuesQueryString(sb, en.getKey(), en.getValue());
+				String addedKey = addMultipleValuesQueryString(sb, en.getKey(), en.getValue());
+				values.remove(decorateId(addedKey)); 				
 			}
 			values.remove(decorateId("xava_multiple"));
 		}
@@ -413,19 +415,32 @@ public class Module extends DWRBase {
 		}
 	}
 	
-	private Object filterKey(Object key) { 
-		return Ids.undecorate((String) key);
+	private String filterKey(Object key) {
+		String skey = (String) key;
+		int idx = skey.indexOf("::");
+		if (idx < 0) return Ids.undecorate(skey);
+		return Ids.undecorate(skey.substring(0, idx));
 	}
 
-	private void addMultipleValuesQueryString(StringBuffer sb, Object key, Object value) {		
-		if (value == null) return;		
-		String [] tokens = value.toString().split("\n");
-		for (int i=1; i< tokens.length - 1; i++) {
+	private String addMultipleValuesQueryString(StringBuffer sb, Object key, Object value) {		
+		if (value == null) return null;
+		String filteredKey = filterKey((String) key); 
+		if (key.toString().indexOf("::") >= 0) {
 			sb.append('&');
-			sb.append(filterKey((String) key)); 
+			sb.append(filteredKey); 
 			sb.append('=');			
-			sb.append(tokens[i].substring(tokens[i].indexOf('"') + 1, tokens[i].lastIndexOf('"')));
+			sb.append(value);
 		}
+		else {
+			String [] tokens = value.toString().split("\n");
+			for (int i=1; i< tokens.length - 1; i++) {
+				sb.append('&'); 
+				sb.append(filteredKey);
+				sb.append('=');			
+				sb.append(tokens[i].substring(tokens[i].indexOf('"') + 1, tokens[i].lastIndexOf('"')));
+			}
+		}
+		return filteredKey; 
 	}
 
 	private Object filterValue(Object value) {

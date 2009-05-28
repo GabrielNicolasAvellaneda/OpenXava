@@ -18,6 +18,7 @@ import org.openxava.jpa.*;
 @Entity
 @IdClass(ShipmentKey.class)
 @Tab(properties="number, description, time")
+@View(name="SeparatedTime") 
 public class Shipment {
 	
 	@Id @Required
@@ -49,7 +50,8 @@ public class Shipment {
 	
 	@Column(length=50) @Required
 	private String description;
-		
+	
+	@Editor(forViews="SeparatedTime", value="DateTimeSeparatedCalendar") 
 	private Timestamp time;
 	
 	@ManyToOne(fetch=FetchType.LAZY)

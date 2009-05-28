@@ -12,7 +12,8 @@
  depende-de-estereotipos CDATA #IMPLIED
  depende-de-propiedades CDATA #IMPLIED
  enmarcable (true|false) "false"
- recargar-siempre (true|false) "false" 
+ recargar-siempre (true|false) "false"
+ compuesto (true|false) "false" 
 >
 
 <!ELEMENT propiedad EMPTY>
