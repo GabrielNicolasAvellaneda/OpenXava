@@ -58,11 +58,11 @@ public class DateTimeSeparatedFormatter implements IMultipleValuesFormatter {
 		
 		DateFormat [] dateFormats = getDateTimeFormats();
 		for (int i=0; i < dateFormats.length; i++) {
-			try {
+			try {				
 				java.util.Date result =  (java.util.Date) dateFormats[i].parseObject(dateTime);				
 				return new java.sql.Timestamp( result.getTime() );
 			}
-			catch (ParseException ex) {
+			catch (ParseException ex) {				
 			}						
 		}
 		throw new ParseException(XavaResources.getString("bad_date_format",dateTime),-1);
@@ -76,7 +76,7 @@ public class DateTimeSeparatedFormatter implements IMultipleValuesFormatter {
 	
 	private DateFormat[] getDateTimeFormats() {
 		if ("es".equals(Locales.getCurrent().getLanguage()) || 
-				"pl".equals(Locales.getCurrent().getLanguage())) return spanishDateTimeFormats;
+				"pl".equals(Locales.getCurrent().getLanguage())) return spanishDateTimeFormats;				
 		return new DateFormat [] { DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locales.getCurrent() ) };
 	}
 	

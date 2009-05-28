@@ -178,7 +178,8 @@ public class XavaSuite extends TestSuite {
 		}
 		suite.addTest(new TestSuite(ServiceTest.class));
 		suite.addTest(new TestSuite(SeveralModulesTest.class));
-		suite.addTest(new TestSuite(ShipmentChargeTest.class));		
+		suite.addTest(new TestSuite(ShipmentChargeTest.class));
+		suite.addTest(new TestSuite(ShipmentSeparatedTimeTest.class));
 		suite.addTest(new TestSuite(ShipmentTest.class));				
 		if (!XavaPreferences.getInstance().isEJB2Persistence()) {
 			suite.addTest(new TestSuite(SizeTest.class));
