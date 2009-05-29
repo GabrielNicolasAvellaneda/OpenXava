@@ -20,6 +20,7 @@ public class ColorOnlyPOJOTest extends ModuleTestBase {
 		execute("List.orderBy", "property=number");
 		String last = getValueInList(0, "number");	
 		execute("CRUD.new");
+		assertNoErrors(); 
 		setValue("number", "-1"); // needed in this case because 0 is an existing key
 		setValue("name", "JUNIT COLOR " + (int) (Math.random() * 200));
 		execute("TypicalNotResetOnSave.save");

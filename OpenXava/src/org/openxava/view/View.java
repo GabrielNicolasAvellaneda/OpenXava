@@ -239,12 +239,17 @@ public class View implements java.io.Serializable {
 	}
 
 	private Collection extractAggregateRecursiveReference(Collection metaMembers) {  		
-		Set parentNames = new HashSet();
-		Class pojoClass = getMetaModel().getMetaModelContainer().getPOJOClass();
-		while (!java.lang.Object.class.equals(pojoClass)) {
-			parentNames.add(Strings.firstLower(Classes.getSimpleName(pojoClass)));
-			pojoClass = pojoClass.getSuperclass();
-		}		
+		Set parentNames = new HashSet();		
+		if (!Is.empty(getMetaModel().getContainerReference())) {
+			parentNames.add(getMetaModel().getContainerReference());
+		}
+		else {
+			Class pojoClass = getMetaModel().getMetaModelContainer().getPOJOClass();
+			while (!java.lang.Object.class.equals(pojoClass)) {
+				parentNames.add(Strings.firstLower(Classes.getSimpleName(pojoClass)));
+				pojoClass = pojoClass.getSuperclass();
+			}		
+		}
 		Collection filtered = new ArrayList();
 		Iterator it = metaMembers.iterator();
 		while (it.hasNext()) {
@@ -1472,7 +1477,7 @@ public class View implements java.io.Serializable {
 					MetaProperty p = (MetaProperty) it.next();
 					if (membersNames.containsKey(p.getName())) {				
 						try {
-							if (!p.getMetaCalculatorDefaultValue().containsMetaSetsWithoutValue()) { // This way to avoid calculate the dependend ones
+							if (!p.getMetaCalculatorDefaultValue().containsMetaSetsWithoutValue()) { // This way to avoid calculate the dependent ones
 								ICalculator calculator = p.createDefaultValueCalculator();
 								if (calculator instanceof IJDBCCalculator) {
 									((IJDBCCalculator) calculator).setConnectionProvider(DataSourceConnectionProvider.getByComponent(getModelName()));

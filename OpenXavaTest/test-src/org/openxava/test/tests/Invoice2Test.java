@@ -23,6 +23,7 @@ public class Invoice2Test extends ModuleTestBase {
 		
 		// Creating a new detail
 		execute("Collection.new", "viewObject=xava_view_details");
+		assertNotExists("details.invoice.year"); 
 		setValue("details.quantity", "7");
 		setValue("details.unitPrice", "8");
 		assertValue("details.amount", "56.00");

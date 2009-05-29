@@ -50,7 +50,7 @@ public class Invoice2 {
 	@ReferenceView("Simplest")
 	private Customer customer;
 	
-	@OneToMany (mappedBy="invoice2", cascade=CascadeType.REMOVE)
+	@OneToMany (mappedBy="invoice", cascade=CascadeType.REMOVE)
 	@org.hibernate.validator.Size(min=1)
 	@ListProperties("product.description, quantity, unitPrice, amount")
 	@XOrderBy("product.description desc") 

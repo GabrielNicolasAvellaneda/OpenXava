@@ -20,7 +20,9 @@ public class InvoiceDetail2 {
 		@JoinColumn(name="INVOICE_YEAR", referencedColumnName="YEAR"),
 		@JoinColumn(name="INVOICE_NUMBER", referencedColumnName="NUMBER")
 	})
-	private Invoice2 invoice2;
+	private Invoice2 invoice; // It's named invoice, instead of invoice2 in order
+						// to test mappedBy in the @OneToMany. Though, in the XML version
+						// this reference is invoice2 because it's automatically generated
 	
 	// It's calculAted in the method calculateOID
 	@Id @Hidden 
@@ -49,20 +51,20 @@ public class InvoiceDetail2 {
 		// in a calculator for the oid of an aggregate from the container entity.
 		// But, because OX3 does not have default-value-calculator on-create="true"
 		// the implementation of InvoiceDetail and InvoiceDetail2 is the same.
-		oid = invoice2.getYear() + ":" + invoice2.getNumber() + ":" + System.currentTimeMillis();
+		oid = invoice.getYear() + ":" + invoice.getNumber() + ":" + System.currentTimeMillis();
 		recalculateInvoiceAmountsSum();
 	}
 	
 	@PreRemove
 	private void onRemove() {
-		if (getInvoice2().isRemoving()) return;		
-		getInvoice2().getDetails().remove(this);
+		if (getInvoice().isRemoving()) return;		
+		getInvoice().getDetails().remove(this);
 		recalculateInvoiceAmountsSum();		
 	}
 	
 	@PreUpdate
 	private void recalculateInvoiceAmountsSum() {
-		getInvoice2().recalculateAmountsSum();
+		getInvoice().recalculateAmountsSum();
 	}
 
 	public String getOid() {
@@ -75,14 +77,14 @@ public class InvoiceDetail2 {
 	}
 
 
-	public Invoice2 getInvoice2() {
-		return invoice2;
+	public Invoice2 getInvoice() {
+		return invoice;
 	}
 
 
-	public void setInvoice2(Invoice2 invoice2) {
-		this.invoice2 = invoice2;
-		this.invoice2.getDetails().add(this); 
+	public void setInvoice(Invoice2 invoice) {
+		this.invoice = invoice;
+		this.invoice.getDetails().add(this); 
 	}
 
 

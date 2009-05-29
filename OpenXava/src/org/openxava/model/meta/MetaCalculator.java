@@ -24,7 +24,7 @@ public class MetaCalculator extends MetaSetsContainer implements Serializable {
 	 * congured with values assigned in xml. <p> 
 	 */
 	public ICalculator createCalculator() throws XavaException {		
-		try {
+		try {			
 			Object o = Class.forName(getClassName()).newInstance();
 			if (!(o instanceof ICalculator)) {
 				throw new XavaException("calculator_implements_icalculator", getClassName());

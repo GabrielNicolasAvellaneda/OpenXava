@@ -14,9 +14,8 @@ import org.openxava.util.*;
 
 public class MetaAggregateForCollection extends MetaAggregate {
 	
-	private MetaEJB metaEJB = null;
-	
-	
+	private MetaEJB metaEJB = null;	
+		
 	public ModelMapping getMapping() throws XavaException {
 		return getMetaComponent().getAggregateMapping(getName());
 	}
