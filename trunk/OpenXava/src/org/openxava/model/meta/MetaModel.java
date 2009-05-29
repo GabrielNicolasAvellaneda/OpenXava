@@ -39,6 +39,7 @@ abstract public class MetaModel extends MetaElement {
 	private List metaCalculatorsPostModify;
 	private List metaCalculatorsPreRemove;
 	private List propertiesNamesWithoutHiddenNorHidden;
+	private String containerReference; 
 	private String containerModelName;
 	private MetaModel metaModelContainer;
 	private Map mapMetaPropertiesView;
@@ -1796,6 +1797,14 @@ abstract public class MetaModel extends MetaElement {
 	
 	public static boolean someModelHasPostLoadCalculator() {		
 		return someModelHasPostLoadCalculator;
+	}
+
+	public String getContainerReference() {
+		return containerReference;
+	}
+
+	public void setContainerReference(String containerReference) {
+		this.containerReference = containerReference;
 	}
 
 	

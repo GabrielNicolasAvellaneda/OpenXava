@@ -16,6 +16,7 @@ import org.hibernate.annotations.Parameter;
 import org.hibernate.usertype.CompositeUserType;
 import org.hibernate.validator.*;
 import org.openxava.annotations.*;
+import org.openxava.calculators.*;
 import org.openxava.component.*;
 import org.openxava.converters.typeadapters.*;
 import org.openxava.filters.*;
@@ -241,12 +242,13 @@ public class AnnotatedClassParser {
 		addReference(model, mapping, pd, field, pd.getName());
 	}
 	
-	private void addAggregateForCollection(MetaModel model, String typeName) throws Exception {
+	private void addAggregateForCollection(MetaModel model, String typeName, String containerReference) throws Exception {
 		Class type = Class.forName(typeName);
 		String modelName = type.getSimpleName();
 		if (!model.getMetaComponent().hasMetaAggregate(modelName)) {
 			MetaAggregateForCollection metaAggregate = new MetaAggregateForCollection();
 			metaAggregate.setContainerModelName(model.getName());
+			metaAggregate.setContainerReference(containerReference); 
 			metaAggregate.setName(modelName);
 			metaAggregate.setPOJOClassName(type.getName());
 			Class pojoClass = metaAggregate.getPOJOClass();
@@ -835,6 +837,7 @@ public class AnnotatedClassParser {
 			// calculator on-create
 			MetaCalculator metaCalculator = new MetaCalculator();
 			metaCalculator.setOnCreate(true);
+			metaCalculator.setClassName(NullCalculator.class.getName()); 
 			property.setMetaCalculatorDefaultValue(metaCalculator);
 			if (element.isAnnotationPresent(DefaultValueCalculator.class)) {
 				log.warn("default_value_calculator_generated_value_incompatible");
@@ -1078,7 +1081,7 @@ public class AnnotatedClassParser {
 			collection.getMetaReference().setRole(oneToMany.mappedBy());
 			if (isCascade(oneToMany.cascade())) {							
 				if (!collection.getMetaModel().getName().equals(collection.getMetaReference().getReferencedModelName())) { 
-					addAggregateForCollection(collection.getMetaModel(), getClassNameFor(collection.getMetaReference().getReferencedModelName()));					
+					addAggregateForCollection(collection.getMetaModel(), getClassNameFor(collection.getMetaReference().getReferencedModelName()), oneToMany.mappedBy());					
 				}
 				else {
 					cascadeAndSelfRerence = true;					
