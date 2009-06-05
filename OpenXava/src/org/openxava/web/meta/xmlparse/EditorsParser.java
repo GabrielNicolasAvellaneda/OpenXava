@@ -61,7 +61,9 @@ public class EditorsParser extends ParserBase {
 		addEditorsForModelProperty(editor, el);
 		addEditorsForValidValues(editor, el);
 		addEditorsForReferences(editor, el);
-		addEditorsForReferenceModel(editor, el); 
+		addEditorsForReferenceModel(editor, el);
+		addEditorsForCollections(editor, el); 
+		addEditorsForCollectionModel(editor, el); 
 	}	
 
 	private void fillSets(Element el, MetaEditor container)	throws XavaException {
@@ -130,7 +132,16 @@ public class EditorsParser extends ParserBase {
 			Element el = (Element) l.item(i);		
 			MetaWebEditors.addMetaEditorForReferenceModel(el.getAttribute(xmodel[lang]), editor);
 		}		
-	}	
+	}
+	
+	private void addEditorsForCollectionModel(MetaEditor editor, Element n) throws XavaException { 		
+		NodeList l = n.getElementsByTagName(xfor_collection[lang]);
+		int c = l.getLength();
+		for (int i = 0; i < c; i++) {
+			Element el = (Element) l.item(i);		
+			MetaWebEditors.addMetaEditorForCollectionModel(el.getAttribute(xmodel[lang]), editor);
+		}		
+	}		
 	
 	private void addEditorsForValidValues(MetaEditor editor, Element n) throws XavaException {		
 		NodeList l = n.getElementsByTagName(xfor_valid_values[lang]);
@@ -142,11 +153,18 @@ public class EditorsParser extends ParserBase {
 	
 	private void addEditorsForReferences(MetaEditor editor, Element n) throws XavaException { 		
 		NodeList l = n.getElementsByTagName(xfor_references[lang]);
-		if (l.getLength() > 0) {
-			// we save using a special internal type 
+		if (l.getLength() > 0) { 
 			MetaWebEditors.addMetaEditorForReferences(editor);
 		}		
+	}
+	
+	private void addEditorsForCollections(MetaEditor editor, Element n) throws XavaException {  		
+		NodeList l = n.getElementsByTagName(xfor_collections[lang]);
+		if (l.getLength() > 0) { 
+			MetaWebEditors.addMetaEditorForCollections(editor);
+		}		
 	}		
+
 	
 	private void addEditorsForStereotype(MetaEditor editor, Element n) throws XavaException {		
 		NodeList l = n.getElementsByTagName(xfor_stereotype[lang]);

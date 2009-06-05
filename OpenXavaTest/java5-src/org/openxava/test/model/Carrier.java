@@ -17,6 +17,7 @@ import org.openxava.jpa.*;
 	@View(name="Simple", members="number, name"), 	
 	@View(name="CalculatedFellows", extendsView="Simple", members="; fellowCarriersCalculated"),
 	@View(name="ReadOnlyCalculatedFellows", members="number, name; fellowCarriersCalculated"),
+	@View(name="FellowsNames", members="number, name; fellowCarriers"), 
 	@View(
 		name="WithSections", 
 		members=
@@ -75,6 +76,7 @@ public class Carrier {
 		"${warehouse.number} = ${this.warehouse.number} AND " +
 		"NOT (${number} = ${this.number})"
 	)
+	@Editor(forViews="FellowsNames", value="CarriersNames") 
 	public Collection<Carrier> getFellowCarriers() { 
 		// At the moment you must write a code that returns the same result
 		// of the @Condition. 

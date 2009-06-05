@@ -13,7 +13,7 @@ context.put(request, tabObject, tab);
 
 // The list
 %>
-<jsp:include page="list.jsp">
+<jsp:include page="/xava/list.jsp">
 	<jsp:param name="collection" value="<%=idCollection%>"/>
 	<jsp:param name="rowAction" value="<%=lineAction%>"/>
 	<jsp:param name="tabObject" value="<%=tabObject%>"/>

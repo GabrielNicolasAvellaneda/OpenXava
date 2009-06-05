@@ -1,7 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
-
+- Fix: Collections with cascade REMOVE whose getter returns null fails in some cases.
 - Fix: mappedBy in @ManyToOne only allowed a reference named equal as the container entity.
 - Fix: @GeneratedValue in a not @Hidden key throws a NullPointerException.
 - Fix: Editors with multiple html elements with the same name fail (broken in v3.1).

@@ -343,7 +343,7 @@ public class Invoice {
 	}
 
 	public Collection<InvoiceDetail> getDetails() {
-		return details==null?Collections.EMPTY_LIST:details;
+		return details; 
 	}
 
 	public void setDetails(Collection<InvoiceDetail> details) {

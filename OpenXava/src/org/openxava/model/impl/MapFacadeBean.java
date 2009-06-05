@@ -1013,8 +1013,11 @@ public class MapFacadeBean implements IMapFacadeImpl, SessionBean {
 		else if (elements instanceof Collection) {
 			enumeration = Collections.enumeration((Collection) elements);
 		}
-		else {
-			String collectionType = elements == null?"null":elements.getClass().getName();
+		else if (elements == null) {
+			enumeration = Collections.enumeration(Collections.EMPTY_LIST);
+		}
+		else {	
+			String collectionType = elements.getClass().getName();
 			throw new XavaException("collection_type_not_supported", collectionType);
 		}		
 		while (enumeration.hasMoreElements()) {
