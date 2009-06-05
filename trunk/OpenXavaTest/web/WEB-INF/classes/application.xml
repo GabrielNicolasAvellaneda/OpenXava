@@ -6,14 +6,13 @@
 		<model name="Carrier"/>
 		<controller name="Typical"/>
 		<controller name="Carrier"/>
-	</module>	
+	</module>		<module name="CarrierFellowsNames">		<model name="Carrier"/>		<view name="FellowsNames"/>		<controller name="Typical"/>	</module>		
 		
 	<module name="CustomerContactPersonAsAggregate3Levels">
 		<model name="CustomerContactPerson"/>
 		<view name="CustomerAsAggregate3Levels"/>
 		<controller name="Typical"/>
-	</module>
-			
+	</module>					
 	<module name="StateHibernate">
 		<env-var name="XAVA_SEARCH_ACTION" value="StateHibernate.search"/>		
 		<model name="State"/>

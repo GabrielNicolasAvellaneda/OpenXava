@@ -14,14 +14,42 @@ import org.openxava.web.meta.xmlparse.*;
  */
 
 /*
- * tmp: Editores para colecciones y referencias 
- * - Colecciones: enmarcable y no enmarcable.  
- * - Comprobar toda la estética en todas las plataformas
+ * Editores para colecciones tmp
+
+ *   
+ * - Comprobar la estética en todas las plataformas
+ * - Suite en Liferay
+ * 		> Warehouse
+ * 		> AJAX
+ * 		> CarrierFellowsNames
+ * 		> Carrier
+ * 		> Composite
+ * 		> Customer
+ * 		> CustomerWithSection
+ * 		> Delivery
+ * 		> Formula
+ * 		> Invoice2
+ * 		> InvoiceCustomerAsAggregate
+ * 		> InvoiceDeliveries
+ * 		> Invoice
+ * 		> Issue
+ * 		> OnlyEditDetailsInvoice
+ * 		> OnlyReadDetailsInvoice
+ * 		> Product2ColorWithFrame
+ * 		> Programmer
+ * 		> SellerCannotCreateCustomer
+ * 		> Seller
+ * 		> SellerWithCustomerAsAggregate
+ * 		> Service
+ * 		> SeveralModules
+ * 		> ShipmentSeparatedTime
+ * 		> Shipment
+ * 		> TransportCharge
+ * - XML y suite de pruebas.			
  * - Documentación (también XML)
- * 
  * --- VERSION ---
- *   - PROBAR XML
- *   - Suite en Liferay  
+ *   
+ *     
  */
 public class MetaWebEditors {
 		
@@ -30,7 +58,9 @@ public class MetaWebEditors {
 	private static Map editorsByStereotype;
 	private static Map editorsByModelProperty;
 	private static Map editorsByReferenceModel;
+	private static Map editorsByCollectionModel; 
 	private static MetaEditor editorForReferences;
+	private static MetaEditor editorForCollections; 
 	
 	
 
@@ -47,6 +77,14 @@ public class MetaWebEditors {
 		}
 		editorsByReferenceModel.put(model, editor);		
 	}
+	
+	public static void addMetaEditorForCollectionModel(String model, MetaEditor editor) throws XavaException { 
+		if (editorsByCollectionModel == null) {
+			throw new XavaException("only_from_parse", "MetaWebEditors.addMetaEditorForCollectionModel");
+		}
+		editorsByCollectionModel.put(model, editor);		
+	}
+	
 		
 	public static void addMetaEditorForStereotype(String stereotype, MetaEditor editor) throws XavaException {		
 		if (editorsByStereotype == null) {
@@ -89,6 +127,11 @@ public class MetaWebEditors {
 	public static MetaEditor getMetaEditorForReferenceModel(String model)	throws XavaException {
 		return (MetaEditor) getEditorsByReferenceModel().get(model);
 	}
+	
+	private static MetaEditor getMetaEditorForCollectionModel(String model)	throws XavaException { 
+		return (MetaEditor) getEditorsByCollectionModel().get(model);
+	}
+
 	
 	
 	
@@ -149,6 +192,13 @@ public class MetaWebEditors {
 		return editorsByReferenceModel;
 	}
 	
+	private static Map getEditorsByCollectionModel() throws XavaException {  
+		if (editorsByCollectionModel == null) {
+			initMaps();
+			EditorsParser.setupEditors();
+		}
+		return editorsByCollectionModel;
+	}	
 	
 	private static Map getEditorsByStereotype() throws XavaException {
 		if (editorsByStereotype == null) {
@@ -180,6 +230,7 @@ public class MetaWebEditors {
 		editorsByModelProperty = new HashMap();
 		editorsByName = new HashMap();
 		editorsByReferenceModel = new HashMap(); 
+		editorsByCollectionModel = new HashMap(); 
 	}
 
 	
@@ -218,14 +269,31 @@ public class MetaWebEditors {
 		return r;
 	}
 	
+	public static MetaEditor getMetaEditorFor(MetaCollection col) throws ElementNotFoundException, XavaException { 							
+		MetaEditor r = (MetaEditor) getMetaEditorForCollectionModel(col.getMetaReference().getReferencedModelName());		
+		if (r == null) {	
+			if (editorForCollections == null) {
+				throw new ElementNotFoundException("editor_for_collections_required"); 
+			}
+			return editorForCollections; 
+		}		
+		return r;
+	}
+		
 	public static MetaEditor getMetaEditorFor(MetaMember member) throws ElementNotFoundException, XavaException { 
 		if (member instanceof MetaProperty) return getMetaEditorFor((MetaProperty) member);
 		if (member instanceof MetaReference) return getMetaEditorFor((MetaReference) member);
+		if (member instanceof MetaCollection) return getMetaEditorFor((MetaCollection) member); 
 		throw new ElementNotFoundException("editor_not_found", member.getId());
 	}
 
 	public static void addMetaEditorForReferences(MetaEditor editor) { 
 		editorForReferences = editor; 		
 	}
+	
+	public static void addMetaEditorForCollections(MetaEditor editor) {  
+		editorForCollections = editor; 		
+	}
+	
 	
 }

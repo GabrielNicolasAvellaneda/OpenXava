@@ -12,7 +12,7 @@ import org.openxava.util.*;
 /**
  * @author Javier Paniza
  */
-public class MetaCollectionView implements Serializable {
+public class MetaCollectionView extends MetaMemberView implements Serializable {
 	
 	private String editActionName;
 	private String viewActionName; 

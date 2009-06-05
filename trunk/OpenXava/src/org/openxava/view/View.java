@@ -169,7 +169,8 @@ public class View implements java.io.Serializable {
 	private String changedProperty;
 	private Collection formattedProperties;
 	private boolean refreshDescriptionsLists;
-	private Collection oldNotEditableMembersNames; 
+	private Collection oldNotEditableMembersNames;
+	private boolean defaultListActionsForCollectionsIncluded = true; 
 		
 	public View() {
 		oid = nextOid++;
@@ -793,7 +794,7 @@ public class View implements java.io.Serializable {
 		
 	private Collection getDefaultListActionsForCollections() {
 		try {
-			if (isCollectionCalculated()) return Collections.EMPTY_LIST;
+			if (isCollectionCalculated() || !isDefaultListActionsForCollectionsIncluded()) return Collections.EMPTY_LIST; 
 			if (defaultListActionsForCollections == null) {			
 					MetaController controller = MetaControllers.getMetaController("DefaultListActionsForCollections"); // Si no existe: ¿Advertencia?
 					Collection result = new ArrayList();
@@ -1211,11 +1212,11 @@ public class View implements java.io.Serializable {
 	 */	
 	public List getCollectionValues() throws XavaException {		
 		assertRepresentsCollection("getCollectionValues()");				
-		if (isCollectionCalculated()) {
+		if (isCollectionCalculated() || !isDefaultListActionsForCollectionsIncluded()) { 		
 			// If calculated we obtain the data directly from the model object
 			Map membersNames = new HashMap();
 			membersNames.put(getMemberName(), new HashMap(getCollectionMemberNames()));		
-			try {							
+			try {		
 				Map values = MapFacade.getValues(getParent().getModelName(), getParent().getKeyValues(), membersNames);				
 				return (List) values.get(getMemberName());				
 			}
@@ -4111,5 +4112,14 @@ public class View implements java.io.Serializable {
 	public void setOnSelectCollectionElementAction(String onSelectCollectionElementAction) {
 		this.onSelectCollectionElementAction = onSelectCollectionElementAction;
 	}
+	
+	public boolean isDefaultListActionsForCollectionsIncluded() {
+		return defaultListActionsForCollectionsIncluded;
+	}
+
+	public void setDefaultListActionsForCollectionsIncluded(boolean defaultListActionsForCollectionsIncluded) {		
+		this.defaultListActionsForCollectionsIncluded = defaultListActionsForCollectionsIncluded;
+	}
+
 	
 }

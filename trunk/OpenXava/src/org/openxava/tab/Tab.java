@@ -1174,8 +1174,8 @@ public class Tab implements java.io.Serializable {
 	 * @return Never null
 	 */	
 	public Map [] getAllKeys() { 
-		Collection allKeys = new ArrayList();		
-		for (int i = 0; i < tableModel.getRowCount(); i++) {
+		Collection allKeys = new ArrayList();
+		for (int i = 0; i < tableModel.getRowCount(); i++) {			
 			try {
 				allKeys.add(tableModel.getObjectAt(i));
 			}
@@ -1188,8 +1188,7 @@ public class Tab implements java.io.Serializable {
 		allKeys.toArray(keys);
 		return keys;		
 	}
-
-
+	
 	public void hideRows() {		
 		this.rowsHidden = true;
 		saveUserPreferences();

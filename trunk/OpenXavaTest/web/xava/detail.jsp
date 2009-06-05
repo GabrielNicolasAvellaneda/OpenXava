@@ -155,7 +155,6 @@ while (it.hasNext()) {
 			first = false; 
 		} else if (m instanceof MetaCollection) {
 			MetaCollection collection = (MetaCollection) m;			
-			String urlCollection = "collection.jsp";
 			boolean withFrame = !view.isSection() || view.getMetaMembers().size() > 1;
 		%>
 		<tr><td colspan="4">		
@@ -169,7 +168,7 @@ while (it.hasNext()) {
 		<%=style.getFrameContentStartDecoration()%>
 	<%			} // withFrame
 		%>	
-		<jsp:include page="<%=urlCollection%>"> 
+		<jsp:include page="collection.jsp"> 
 			<jsp:param name="collectionName" value="<%=collection.getName()%>"/>
 			<jsp:param name="viewObject" value="<%=viewObject%>"/>			
 		</jsp:include>

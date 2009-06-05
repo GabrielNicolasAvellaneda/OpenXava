@@ -553,6 +553,7 @@ public class MetaView extends MetaElement implements Cloneable {
 	private MetaMemberView getMetaMemberViewFor(String qualifiedMemberName) { 
 		MetaMemberView result = getMetaPropertyViewFor(qualifiedMemberName);
 		if (result == null) result = getMetaReferenceViewFor(qualifiedMemberName);
+		if (result == null) result = getMetaCollectionView(qualifiedMemberName); 
 		return result;
 	}
 	
@@ -566,10 +567,7 @@ public class MetaView extends MetaElement implements Cloneable {
 			return null;
 		}
 		return (MetaReferenceView) metaViewsReferences.get(ref);
-	}
-	
-	
-	
+	}		
 	
 	public List getSections() throws XavaException {
 		return sections == null?Collections.EMPTY_LIST:sections;		

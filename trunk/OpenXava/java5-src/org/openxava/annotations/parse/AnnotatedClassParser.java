@@ -1427,6 +1427,11 @@ public class AnnotatedClassParser {
 				}
 			}
 			
+			// Editor
+			if (processEditorAnnotation(element, metaView, collectionView)) {
+				mustAddMetaView = true;
+			}
+			
 			// NoCreate
 			if (element.isAnnotationPresent(NoCreate.class)) {
 				NoCreate noCreate = element.getAnnotation(NoCreate.class);
@@ -1517,12 +1522,6 @@ public class AnnotatedClassParser {
 		if (element.isAnnotationPresent(NoSearch.class)) {
 			notApply(collection.getName(), NoSearch.class, "references");
 		}		
-		if (element.isAnnotationPresent(Editor.class)) {
-			notApply(collection.getName(), Editor.class, "properties");
-		}		
-		if (element.isAnnotationPresent(Editors.class)) {
-			notApply(collection.getName(), Editors.class, "properties");
-		}
 		if (element.isAnnotationPresent(DisplaySize.class)) {
 			notApply(collection.getName(), DisplaySize.class, "properties");
 		}

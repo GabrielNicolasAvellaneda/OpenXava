@@ -240,7 +240,7 @@ public class AJAXTest extends ModuleTestBase {
 		assertEditorForReference();				
 	}
 	
-	public void assertEditorForReference() throws Exception {
+	private void assertEditorForReference() throws Exception {
 		execute("List.viewDetail", "row=4");
 		assertValue("number", "5");
 		assertValue("color.number", "1");
@@ -262,6 +262,16 @@ public class AJAXTest extends ModuleTestBase {
 		assertNotLoadedPart("core");
 		assertLoadedPart("editor_number");
 		assertLoadedPart("reference_editor_color");		
+	}
+	
+	public void testEditorForCollection() throws Exception { 
+		changeModule("Blog");
+		execute("Mode.detailAndFirst");
+		execute("Collection.new", "viewObject=xava_view_comments");
+		assertLoadedParts("collection_comments., errors, messages,");
+		setValue("comments.body", "Me too");
+		execute("Collection.save", "viewObject=xava_view_comments");
+		assertLoadedParts("collection_comments., errors, messages,");		
 	}
  
 	

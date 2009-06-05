@@ -7,7 +7,8 @@ import java.util.*;
 
 /**
  * A little minimum common denominator for 
- * <code>MetaPropertyView</code> and <code>MetaReferenceView</code>. <p>
+ * <code>MetaPropertyView</code>, <code>MetaReferenceView</code> and 
+ * <code>MetaCollectionView</code>. <p>
  * 
  * @author Javier Paniza
  */
