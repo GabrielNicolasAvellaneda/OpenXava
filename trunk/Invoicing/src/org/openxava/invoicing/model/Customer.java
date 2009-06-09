@@ -13,6 +13,11 @@ public class Customer {
 	@Column(length=50)
 	@Required
 	private String name;
+			
+	@Embedded @NoFrame
+	private Address address;
+	
+	// Getters and setters
 	
 	public int getNumber() {
 		return number;
@@ -29,5 +34,13 @@ public class Customer {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public Address getAddress() {
+		return address;
+	}
 
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	
 }
