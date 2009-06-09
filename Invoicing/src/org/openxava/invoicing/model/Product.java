@@ -1,5 +1,7 @@
 package org.openxava.invoicing.model;
 
+import java.math.*;
+
 import javax.persistence.*;
 
 import org.openxava.annotations.*;
@@ -19,7 +21,31 @@ public class Product {
 	@DescriptionsList
 	private Category category;
 	
+	@Stereotype("MONEY")
+	private BigDecimal price;
+	
+	
+	@Stereotype("PHOTO") 
+	private byte [] photo;
+	
+	
+	@Stereotype("IMAGES_GALLERY") 
+	@Column(length=32)
+	private String morePhotos;
+	
+	
+	@Stereotype("MEMO")
+	private String remarks;
+	
 	// Getters and setters
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
 
 	public Category getCategory() {
 		return category;
@@ -45,4 +71,28 @@ public class Product {
 		this.description = description;
 	}
 	
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+	public byte[] getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
+	}
+
+	public String getMorePhotos() {
+		return morePhotos;
+	}
+
+	public void setMorePhotos(String morePhotos) {
+		this.morePhotos = morePhotos;
+	}
+		
 }
