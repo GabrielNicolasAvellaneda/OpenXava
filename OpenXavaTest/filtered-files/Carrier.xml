@@ -126,6 +126,10 @@
 		
 	</view>
 	
+	<view name="FellowsNames" members="number, name; fellowCarriers">
+		 <collection-view collection="fellowCarriers" editor="CarriersNames"/>		 
+	</view>	
+	
 	<tab>
 		<properties>calculated, number, name</properties>
 	</tab>

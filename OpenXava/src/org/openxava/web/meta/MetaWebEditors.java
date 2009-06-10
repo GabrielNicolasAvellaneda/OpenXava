@@ -13,44 +13,6 @@ import org.openxava.web.meta.xmlparse.*;
  * @author Javier Paniza
  */
 
-/*
- * Editores para colecciones tmp
-
- *   
- * - Comprobar la estética en todas las plataformas
- * - Suite en Liferay
- * 		> Warehouse
- * 		> AJAX
- * 		> CarrierFellowsNames
- * 		> Carrier
- * 		> Composite
- * 		> Customer
- * 		> CustomerWithSection
- * 		> Delivery
- * 		> Formula
- * 		> Invoice2
- * 		> InvoiceCustomerAsAggregate
- * 		> InvoiceDeliveries
- * 		> Invoice
- * 		> Issue
- * 		> OnlyEditDetailsInvoice
- * 		> OnlyReadDetailsInvoice
- * 		> Product2ColorWithFrame
- * 		> Programmer
- * 		> SellerCannotCreateCustomer
- * 		> Seller
- * 		> SellerWithCustomerAsAggregate
- * 		> Service
- * 		> SeveralModules
- * 		> ShipmentSeparatedTime
- * 		> Shipment
- * 		> TransportCharge
- * - XML y suite de pruebas.			
- * - Documentación (también XML)
- * --- VERSION ---
- *   
- *     
- */
 public class MetaWebEditors {
 		
 	private static Map editorsByName; 

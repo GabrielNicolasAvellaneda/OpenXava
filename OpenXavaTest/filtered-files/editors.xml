@@ -34,7 +34,18 @@
 		</formatter>
 		<for-stereotype stereotype="PERSON_NAME" />
 	</editor>
+		
+	<editor url="colorEditor.jsp">
+		<for-reference model="Color"/>
+	</editor>
 	
+	<editor name="CarriersNames" url="carriersNamesEditor.jsp"/>
+	
+	<editor url="blogCommentsEditor.jsp">
+		<for-collection model="BlogComment"/>
+	</editor>
+	
+	<editor name="ColorFrame" url="colorFrameEditor.jsp" frame="true"/>
 	
 	<editor name="JbyXName" url="textEditor.jsp">
 		<formatter

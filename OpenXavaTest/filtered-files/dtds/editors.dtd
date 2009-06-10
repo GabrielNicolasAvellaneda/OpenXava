@@ -3,7 +3,7 @@
 <!ELEMENT editors (editor*)>
 
 
-<!ELEMENT editor (property*, formatter?, (for-type | for-stereotype | for-model-property | for-valid-values)*)>
+<!ELEMENT editor (property*, formatter?, (for-type | for-stereotype | for-model-property | for-valid-values | for-references | for-reference | for-collections | for-collection)*)>
 <!ATTLIST editor
  name CDATA #IMPLIED
  url CDATA #REQUIRED
@@ -11,7 +11,8 @@
  depends-stereotypes CDATA #IMPLIED
  depends-properties CDATA #IMPLIED
  frame (true|false) "false"
- always-reload (true|false) "false" 
+ always-reload (true|false) "false"
+ composite (true|false) "false" 
 >
 
 <!ELEMENT property EMPTY>
@@ -49,3 +50,18 @@
 >
 
 <!ELEMENT for-valid-values EMPTY>
+
+<!ELEMENT for-references EMPTY>
+
+<!ELEMENT for-reference EMPTY>
+<!ATTLIST for-reference
+ model CDATA #REQUIRED
+>
+
+<!ELEMENT for-collections EMPTY>
+
+<!ELEMENT for-collection EMPTY>
+<!ATTLIST for-collection
+ model CDATA #REQUIRED
+>
+

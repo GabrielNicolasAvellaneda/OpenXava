@@ -17,9 +17,10 @@ import org.openxava.validators.*;
  * 
  * @author Javier Paniza
  */
-public class InvoiceReportAction extends JasperReportBaseAction {
+public class InvoiceReportAction extends JasperReportBaseAction implements IChainAction {
 	
 	private IInvoice invoice;
+	private boolean newAfter = false;
 	
 	public void execute() throws Exception {
 		super.execute();
@@ -57,5 +58,18 @@ public class InvoiceReportAction extends JasperReportBaseAction {
 		}
 		return invoice;
 	}
+	
+	public String getNextAction() throws Exception {
+		return newAfter ? "CRUD.new" : null;
+	}
+
+	public boolean isNewAfter() {
+		return newAfter;
+	}
+
+	public void setNewAfter(boolean newAfter) {
+		this.newAfter = newAfter;
+	}
+	
 
 }

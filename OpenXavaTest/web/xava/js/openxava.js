@@ -113,7 +113,7 @@ openxava.decorateId = function(application, module, simpleName) {
 
 openxava.systemError = function(result) { 
 	document.body.style.cursor='auto';	
-	document.getElementById(openxava.decorateId(result.application, result.module, "core")).innerHTML="<big><big style='padding: 5px;font-weight: bold; color: rgb(255, 0, 0);'>ERROR: " + result.error + "</big></big>";
+	document.getElementById(openxava.decorateId(result.application, result.module, "core")).innerHTML="<big id='xava_system_error'><big style='padding: 5px;font-weight: bold; color: rgb(255, 0, 0);'>ERROR: " + result.error + "</big></big>";
 }
 
 openxava.processKey = function(event) {	

@@ -24,6 +24,7 @@
 			</validator>								
 		</property>
 		<property name="photos" stereotype="IMAGES_GALLERY"/>
+		<reference name="color"/>  
 		<reference name="family" model="Family2" required="true">
 			<default-value-calculator class="org.openxava.calculators.IntegerCalculator">
 				<set property="value" value="2"/>
@@ -81,7 +82,7 @@
 				-->
 			<descriptions-list order-by-key="true"/>									
 			
-		</reference-view>
+		</reference-view>		
 		
 		<reference-view reference="subfamily" create="false">
 
@@ -105,6 +106,7 @@
 			number;
 			description;
 			photos;
+			color;
 			family;
 			subfamily;
 			warehouse, zoneOne;
@@ -112,6 +114,58 @@
 		</members>		
 				
 	</view>
+	
+	<view name="ColorWithFrame">
+
+		<property name="zoneOne" stereotype="LABEL">
+			<calculator class="org.openxava.calculators.StringCalculator">
+				<set property="string" value="In ZONE 1"/>
+			</calculator>
+		</property>
+		
+		<reference-view reference="color" editor="ColorFrame"/>
+		
+		<reference-view reference="family">
+
+			<!-- By default:
+					 description-property = 'description','descripcion','name' or 'nombre' 
+					 create = true 
+				-->
+			<descriptions-list order-by-key="true"/>									
+			
+		</reference-view>		
+		
+		<reference-view reference="subfamily" create="false">
+
+			<!-- In this case description-property can be omited -->
+			<descriptions-list  
+				description-property="description" 
+				depends="family"
+				condition="${family.number} = ?"/>			  													
+				
+		</reference-view>
+		
+		<reference-view reference="warehouse">
+			<descriptions-list/>												
+		</reference-view>
+		
+		<property-view property="warehouse.zoneNumber">
+			<on-change class="org.openxava.test.actions.OnChangeWarehouseAction"/>
+		</property-view>		
+		
+		<members>
+			number;
+			description;
+			photos;
+			color;
+			family;
+			subfamily;
+			warehouse, zoneOne;
+			unitPrice, unitPriceInPesetas;
+		</members>		
+				
+	</view>
+	
 	
 	<view name="ReferenceAndStereotype">
 		
@@ -211,7 +265,10 @@
 		<property-mapping 
 			property="description" column="DESCRIPTION"/>
 		<property-mapping 
-			property="photos" column="PHOTOS"/>			
+			property="photos" column="PHOTOS"/>
+		<reference-mapping reference="color">
+			<reference-mapping-detail column="COLOR_NUMBER" referenced-model-property="number"/>
+		</reference-mapping>							
 		<reference-mapping reference="family">
 			<reference-mapping-detail column="FAMILY" referenced-model-property="number"/>
 		</reference-mapping>	

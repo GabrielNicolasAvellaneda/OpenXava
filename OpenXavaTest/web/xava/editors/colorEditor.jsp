@@ -3,7 +3,7 @@
 
 String propertyKey = request.getParameter("propertyKey");
 Object value = request.getAttribute(propertyKey + ".value");
-if (value == null) value = 0;
+if (value == null) value = new Integer(0);
 %>
 
 

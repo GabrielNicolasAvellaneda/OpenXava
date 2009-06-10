@@ -30,7 +30,7 @@ public class ModuleManager {
 	static {		
 		MetaControllers.setContext(MetaControllers.WEB);		
 		XSystem._setLogLevelFromJavaLoggingLevelOfXavaPreferences();
-		log.info("OpenXava 3.1.3 beta (2009-5-xx)");		
+		log.info("OpenXava 3.1.3 beta (2009-6-xx)");		
 	}
 	
 	private static String DEFAULT_MODE = IChangeModeAction.LIST;	
