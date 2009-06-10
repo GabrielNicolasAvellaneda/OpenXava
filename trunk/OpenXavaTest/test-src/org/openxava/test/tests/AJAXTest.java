@@ -264,7 +264,8 @@ public class AJAXTest extends ModuleTestBase {
 		assertLoadedPart("reference_editor_color");		
 	}
 	
-	public void testEditorForCollection() throws Exception { 
+	public void testEditorForCollection() throws Exception {
+		if (!isOX3()) return;
 		changeModule("Blog");
 		execute("Mode.detailAndFirst");
 		execute("Collection.new", "viewObject=xava_view_comments");

@@ -6,14 +6,13 @@
 		<model name="Carrier"/>
 		<controller name="Typical"/>
 		<controller name="Carrier"/>
-	</module>	
+	</module>		<module name="CarrierFellowsNames">		<model name="Carrier"/>		<view name="FellowsNames"/>		<controller name="Typical"/>	</module>		
 		
 	<module name="CustomerContactPersonAsAggregate3Levels">
 		<model name="CustomerContactPerson"/>
 		<view name="CustomerAsAggregate3Levels"/>
 		<controller name="Typical"/>
-	</module>
-			
+	</module>					
 	<module name="StateHibernate">
 		<env-var name="XAVA_SEARCH_ACTION" value="StateHibernate.search"/>		
 		<model name="State"/>
@@ -122,7 +121,7 @@
 	</module>			<module name="ProductWithSection" folder="warehousing/variations">		<model name="Product"/>		<view name="WithSection"/>		<controller name="Typical"/>			<controller name="Product"/>		
 		<controller name="MessagesOnEachRequest"/>				</module>			<module name="Product2" folder="warehousing/variations"> 
 		<env-var name="XAVA_SEARCH_ACTION" value="CRUD.searchExecutingOnChange"/>		<model name="Product2"/>		<controller name="Typical"/>		<controller name="Product2"/>
-		<controller name="EditableOnOff"/>	</module>		<module name="Product2ReferenceAndStereotype" folder="warehousing/variations">		<model name="Product2"/>		<view name="ReferenceAndStereotype"/>		<controller name="Typical"/>	</module>
+		<controller name="EditableOnOff"/>	</module>			<module name="Product2ColorWithFrame" folder="warehousing/variations"> 		<model name="Product2"/>		<view name="ColorWithFrame"/>		<controller name="Typical"/>		<controller name="Product2"/>	</module>			<module name="Product2ReferenceAndStereotype" folder="warehousing/variations">		<model name="Product2"/>		<view name="ReferenceAndStereotype"/>		<controller name="Typical"/>	</module>
 
 	<module name="Product2WithFormula" folder="warehousing/variations"> 
 		<model name="Product2"/>
@@ -218,8 +217,10 @@
 	<module name="BeforeGoingToCustomer">
 		<model name="Customer"/>
 		<view name="Intermediate"/>
-		<controller name="GoToCustomer"/>
+		<controller name="ChangeModule"/>
 		<mode-controller name="Void"/>
+	</module>
+		<module name="BeforeGoingToFormula">		<model name="Formula"/>		<view name="Simple"/>		<controller name="ChangeModule"/>		<mode-controller name="Void"/>
 	</module>
 	
 	<module name="ChangeActiveYear">
@@ -310,5 +311,5 @@
 		<model name="Carrier"/>
 		<view name="WithSections"/>
 		<controller name="CarrierWithSections"/>
-	</module>		<module name="WarehouseSpecialNew" >		<model name="Warehouse"/>		<view name="WithOnChangeZone"/>		<controller name="WarehouseSpecialNew"/>	</module>		<module name="OfficeOnlyWarehouse">		<model name="Office"/>		<view name="OnlyWarehouse"/>		<controller name="Typical"/>			</module>			
+	</module>		<module name="WarehouseSpecialNew" >		<model name="Warehouse"/>		<view name="WithOnChangeZone"/>		<controller name="WarehouseSpecialNew"/>	</module>		<module name="OfficeOnlyWarehouse">		<model name="Office"/>		<view name="OnlyWarehouse"/>		<controller name="Typical"/>			</module>		<module name="ShipmentSeparatedTime">		<model name="Shipment"/>		<view name="SeparatedTime"/>		<controller name="Typical"/>			</module>				
 </application>

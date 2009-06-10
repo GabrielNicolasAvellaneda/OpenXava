@@ -518,7 +518,6 @@ public class ModuleTestBase extends TestCase {
 		}
 		
 		restorePage();
-		
 	}
 	
 	private void throwChangeOfLastNotNotifiedProperty() throws Exception { 		
@@ -529,22 +528,30 @@ public class ModuleTestBase extends TestCase {
 		}	
 	}
 										 	
-	private void waitUntilPageIsLoaded() { 
+	private void waitUntilPageIsLoaded() throws Exception { 
 		HtmlInput loading = (HtmlInput) getElementById("loading");
 		for (int i=0; !"true".equals(loading.getValueAttribute()) && i<20; i++) {
 			try { Thread.sleep(100); } catch (Exception ex) { }			
 		}
 		int x = 0;
 		while ("true".equals(loading.getValueAttribute())) {
-			x++;
+			x++;			
 			if (x % 200 == 0){
 				page = (HtmlPage) ((WebWindow) client.getWebWindows().get(0)).getEnclosedPage();
+				assertSystemError(); 
 				loading = (HtmlInput) getElementById("loading");
 			}
 			try { Thread.sleep(20); } catch (Exception ex) { }		
 		}		
 		if (getLoadedParts().endsWith("ERROR")) {
 			fail(XavaResources.getString("ajax_loading_parts_error"));
+		}		
+	}
+
+	private void assertSystemError() { 
+		Object systemError = page.getElementById("xava_system_error"); 
+		if (systemError != null) {
+			fail(((HtmlElement) systemError).asText());
 		}
 	}
 

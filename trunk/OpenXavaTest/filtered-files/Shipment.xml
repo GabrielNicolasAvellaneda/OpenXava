@@ -34,7 +34,13 @@
 	
 	<view>
 		<reference-view reference="customerContactPerson" view="Simple"/>
+	</view>
+	
+	<view name="SeparatedTime">
+		<property-view property="time" editor="DateTimeSeparatedCalendar"/>
+		<reference-view reference="customerContactPerson" view="Simple"/>
 	</view>	
+		
 	
 	<tab>
 		<properties>number, description, time</properties>

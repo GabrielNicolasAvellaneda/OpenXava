@@ -184,6 +184,7 @@ public class ViewParser extends XmlElementsNames {
 		a.setViewName(el.getAttribute(xview[lang]));
 		a.setReadOnly(ParserUtil.getAttributeBoolean(el, xread_only[lang]));
 		a.setAsAggregate(ParserUtil.getAttributeBoolean(el, xas_aggregate[lang]));
+		a.setEditor(el.getAttribute(xeditor[lang]));
 		if (!Is.emptyString(el.getAttribute(xframe[lang]))) {
 			a.setFrame(ParserUtil.getAttributeBoolean(el, xframe[lang]));
 		}
@@ -210,6 +211,7 @@ public class ViewParser extends XmlElementsNames {
 		a.setViewName(el.getAttribute(xview[lang]));
 		a.setReadOnly(ParserUtil.getAttributeBoolean(el, xread_only[lang]));		
 		a.setEditOnly(ParserUtil.getAttributeBoolean(el, xedit_only[lang]));
+		a.setEditor(el.getAttribute(xeditor[lang]));
 		if (a.isEditOnly() && a.isReadOnly()) {
 			throw new XavaException("collection_onlyread_onlyedit_incompatible");
 		}

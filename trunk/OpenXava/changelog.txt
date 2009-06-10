@@ -1,12 +1,14 @@
 Change Log for OpenXava project
 ===============================
 
+- In editors.xml it's possible to associate an editor by default for all collections or for collections to certain models.
+- @Editor can be applied to collections. Also available for XML version with <collection-view editor=/>.
 - Fix: Collections with cascade REMOVE whose getter returns null fails in some cases.
 - Fix: mappedBy in @ManyToOne only allowed a reference named equal as the container entity.
 - Fix: @GeneratedValue in a not @Hidden key throws a NullPointerException.
 - Fix: Editors with multiple html elements with the same name fail (broken in v3.1).
 - @Editor can be applied to references. Also available for XML version with <reference-view editor=/>.
-- In editors.xml it's possible to associate an editor by default for all reference or for references to certain models.
+- In editors.xml it's possible to associate an editor by default for all references or for references to certain models.
 - Add OnSelectElementAction use for takesLong and confirmMessage
 - Fix: IForwardAction at the same time that IChainAction (not refreshed the screen).
 - It's possible to assign custom editors for references (for-reference in editors.xml).

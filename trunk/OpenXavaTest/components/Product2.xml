@@ -265,7 +265,10 @@
 		<property-mapping 
 			property="description" column="DESCRIPTION"/>
 		<property-mapping 
-			property="photos" column="PHOTOS"/>			
+			property="photos" column="PHOTOS"/>
+		<reference-mapping reference="color">
+			<reference-mapping-detail column="COLOR_NUMBER" referenced-model-property="number"/>
+		</reference-mapping>							
 		<reference-mapping reference="family">
 			<reference-mapping-detail column="FAMILY" referenced-model-property="number"/>
 		</reference-mapping>	
