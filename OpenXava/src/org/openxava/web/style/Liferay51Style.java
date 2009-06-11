@@ -94,7 +94,4 @@ public class Liferay51Style extends Liferay43Style {
 		return "selected-row";
 	}
 	
-	public String getSelectedRowStyle(){
-		return "";
-	}
 }

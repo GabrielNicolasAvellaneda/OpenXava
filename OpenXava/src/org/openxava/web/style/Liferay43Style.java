@@ -151,6 +151,10 @@ public class Liferay43Style extends Style {
 		return "onmouseover=\"this.className = 'portlet-section-body-hover " + additionalClass + "';\" onmouseout=\"this.className = 'portlet-section-body " + additionalClass + "';\"";
 	}
 	
+	public String getListPairEvents(String additionalClass, String selectedClass) { 		
+		return "onmouseover=\"this.className = 'portlet-section-body-hover results-row hover " + additionalClass + "';\" onmouseout=\"this.className = 'portlet-section-body results-row " + additionalClass + " " + selectedClass + "';\"";
+	}
+	
 	public String getListPairCell() {
 		return getListCell();
 	}
@@ -162,7 +166,11 @@ public class Liferay43Style extends Style {
 	public String getListOddEvents(String additionalClass) { 
 		return "onmouseover=\"this.className = 'portlet-section-alternate-hover " + additionalClass + "';\" onmouseout=\"this.className = 'portlet-section-alternate " + additionalClass + "';\"";		
 	}
-				
+
+	public String getListOddEvents(String additionalClass, String selectedClass) { 
+		return "onmouseover=\"this.className = 'portlet-section-alternate-hover results-row alt hover " + additionalClass + "';\" onmouseout=\"this.className = 'portlet-section-alternate results-row alt " + additionalClass + " " + selectedClass + "';\"";		
+	}
+	
 	public String getListOddCell() { 
 		return getListCell();		
 	}

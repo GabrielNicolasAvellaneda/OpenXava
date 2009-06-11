@@ -620,7 +620,10 @@ public class Tab implements java.io.Serializable {
 	 * Same that {@link #setSelectec(int [] values)} but from String []. <p>
 	 */
 	public void setSelected(String [] values) { 
-		if (values == null) return;
+		if (values == null) {
+			selected = null;
+			return;
+		}
 		int [] intValues = new int[values.length];
 		for (int i=0; i<values.length; i++) {
 			intValues[i] = Integer.parseInt(values[i]);
