@@ -171,6 +171,9 @@ public class Style {
 		return "";
 	}
 	
+	public String getListPairEvents(String additionalClass, String selectedClass) { 		
+		return "";
+	}
 	
 	public String getListPairCell() { 
 		return getListPair();
@@ -183,6 +186,10 @@ public class Style {
 	public String getListOddEvents(String additionalClass) {  
 		return "";
 	}	
+	
+	public String getListOddEvents(String additionalClass, String selectedClass) {  
+		return "";
+	}
 	
 	public String getListOddCell() { 
 		return getListOdd();

@@ -4112,6 +4112,69 @@ public class View implements java.io.Serializable {
 	public void setOnSelectCollectionElementAction(String onSelectCollectionElementAction) {
 		this.onSelectCollectionElementAction = onSelectCollectionElementAction;
 	}
+
+	public boolean isVariousCollectionsInSameLine(MetaMember metaMember){
+		Collection<MetaMember> metaMembersLine = getMetaMembersInLine(metaMember.getName());
+		if (metaMembersLine.size() <= 1) return false;
+		
+		Iterator<MetaMember> it = metaMembersLine.iterator();
+		boolean allCollection = true;
+		while(it.hasNext() && allCollection){
+			MetaMember mm = it.next();
+			if (!(mm instanceof MetaCollection)) allCollection = false;
+		}
+		
+		return allCollection;
+	}
+	
+	/**
+	 * MetaMembers in same line
+	 */
+	private Collection<MetaMember> getMetaMembersInLine(String property){
+		Collection<MetaMember> members = getMetaMembers();
+		Iterator<MetaMember> it = members.iterator();
+		boolean found = false;
+		Collection<MetaMember> line = new ArrayList<MetaMember>();
+		while (it.hasNext() && !found){
+			MetaMember metaMember = (MetaMember) it.next();
+			if (property.equals(metaMember.getName())) found = true;
+			if (found){
+				line.add(metaMember);
+				boolean finLinea = false;
+				while (it.hasNext() && !finLinea){
+					MetaMember metaMember2 = (MetaMember) it.next();
+					if (PropertiesSeparator.INSTANCE.equals(metaMember2)) finLinea = true;
+					else line.add(metaMember2);
+				}
+			}
+			else {
+				if (PropertiesSeparator.INSTANCE.equals(metaMember)) line = new ArrayList<MetaMember>();
+				else line.add(metaMember);
+			}
+		}
+		return line;
+	}
+
+	public boolean isLastInLine(MetaMember metaMember){
+		Collection<MetaMember> members = getMetaMembersInLine(metaMember.getName());
+		MetaMember last = null;
+		for(MetaMember  member : members) last = member;
+		return metaMember.getName().equals(last.getName());
+	}
+	
+	public boolean isFirstInLine(MetaMember metaMember){
+		String property = metaMember.getName(); 
+		return property.equals(getMetaMembersInLine(property).iterator().next().getName());
+	}
+	
+	public boolean isDefaultListActionsForCollectionsIncluded() {
+		return defaultListActionsForCollectionsIncluded;
+	}
+
+	public void setDefaultListActionsForCollectionsIncluded(boolean defaultListActionsForCollectionsIncluded) {		
+		this.defaultListActionsForCollectionsIncluded = defaultListActionsForCollectionsIncluded;
+	}
+
 	
 	public boolean isDefaultListActionsForCollectionsIncluded() {
 		return defaultListActionsForCollectionsIncluded;

@@ -1,19 +1,20 @@
 package org.openxava.actions;
 
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
 
-
-
-import org.openxava.controller.*;
-import org.openxava.model.meta.*;
-import org.openxava.util.*;
-import org.openxava.view.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openxava.controller.ModuleContext;
+import org.openxava.model.meta.MetaEntity;
+import org.openxava.util.XavaException;
+import org.openxava.view.View;
 
 /**
  * @author Javier Paniza
  */
 
 abstract public class CollectionElementViewBaseAction extends ViewBaseAction implements IModuleContextAction, IRequestAction {
+	private static Log log = LogFactory.getLog(CollectionElementViewBaseAction.class);
 	
 	private View collectionElementView;		
 	private String viewObject;

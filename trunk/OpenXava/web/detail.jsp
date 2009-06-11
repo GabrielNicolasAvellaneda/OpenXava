@@ -11,7 +11,10 @@
 
 
 <%@page import="org.openxava.web.taglib.IdTag"%>
-<%@page import="org.openxava.web.Ids"%><jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
+<%@page import="org.openxava.web.Ids"%>
+<%@page import="org.openxava.model.meta.MetaMember"%>
+
+<jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 <jsp:useBean id="style" class="org.openxava.web.style.Style" scope="request"/>
 <%
 String viewObject = request.getParameter("viewObject");
@@ -40,6 +43,10 @@ String slast = request.getParameter("last");
 boolean last = !"false".equals(slast);
 boolean lastWasEditor = false;
 boolean lastWasProperty = false; 
+
+boolean variousCollectionInLine = false;
+boolean lastCollectionInLine = false;
+boolean firstCollectionInLine = false;
 while (it.hasNext()) {
 	Object m = it.next();
 	lastWasProperty = false; 
@@ -106,7 +113,10 @@ while (it.hasNext()) {
 					(!view.isSection() || view.getMetaMembers().size() > 1);
 				lastWasEditor = !withFrame; 
 				boolean firstForSubdetail = first || withFrame; 
-				if (withFrame || (view.isSection() && view.getMembersNames().size() ==1)) {
+				boolean firstForCollectionTogether = view.isVariousCollectionsInSameLine((MetaMember) m) ? 
+					view.isFirstInLine((MetaMember) m) : true;
+				if (withFrame || (view.isSection() && view.getMembersNames().size() ==1) || firstForCollectionTogether) {
+				
 					if (first) { 						
 	%>		
 		<tr><td colspan="4">
@@ -156,8 +166,19 @@ while (it.hasNext()) {
 		} else if (m instanceof MetaCollection) {
 			MetaCollection collection = (MetaCollection) m;			
 			boolean withFrame = !view.isSection() || view.getMetaMembers().size() > 1;
+			variousCollectionInLine = view.isVariousCollectionsInSameLine((MetaMember) m);
+			firstCollectionInLine = view.isFirstInLine((MetaMember) m);
+			lastCollectionInLine = view.isLastInLine((MetaMember) m);
+			String styleCollectionTogether = 
+				!variousCollectionInLine ? "" : 
+				(firstCollectionInLine ? "float: left; " : "float: right; ") + 
+				"overflow: auto; display: block ; border: 1px solid black; width: 49%; ";
+			if (!variousCollectionInLine || (variousCollectionInLine && firstCollectionInLine)){
+		
 		%>
 		<tr><td colspan="4">		
+<%} %>
+		<div style="<%=styleCollectionTogether %>">
 	<%			if (withFrame) {
 		%>	
 		<%=style.getFrameHeaderStartDecoration()%>
@@ -175,8 +196,9 @@ while (it.hasNext()) {
 	<%			if (withFrame) {
 		%>
 		<%=style.getFrameContentEndDecoration()%>			
-	<%			} // withFrame
-		} else if (m instanceof MetaGroup) {
+	<%			} // withFrame%>
+		</div>
+	<%	} else if (m instanceof MetaGroup) {
 			MetaGroup group = (MetaGroup) m;			
 			String viewName = viewObject + "_" + group.getName();
 			View subview = view.getGroupView(group.getName());			

@@ -1,6 +1,9 @@
 Change Log for OpenXava project
 ===============================
 
+- View 2 collections on the same line
+- Add OnSelectElementAction and highligh select element at calculated collection
+- Fix: highlight select element whit OnSelectElementAction 
 - In editors.xml it's possible to associate an editor by default for all collections or for collections to certain models.
 - @Editor can be applied to collections. Also available for XML version with <collection-view editor=/>.
 - Fix: Collections with cascade REMOVE whose getter returns null fails in some cases.
