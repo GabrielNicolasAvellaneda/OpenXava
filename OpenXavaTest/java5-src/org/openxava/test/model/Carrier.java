@@ -9,13 +9,13 @@ import org.openxava.jpa.*;
 
 /**
  * 
- * @author Javier Paniza
+ * @author Javier Paniza 
  */
 
 @Entity
 @Views({
 	@View(name="Simple", members="number, name"), 	
-	@View(name="CalculatedFellows", extendsView="Simple", members="; fellowCarriersCalculated"),
+	@View(name="CalculatedFellows", extendsView="Simple", members="; fellowCarriersCalculatedSize; fellowCarriersCalculated"),
 	@View(name="ReadOnlyCalculatedFellows", members="number, name; fellowCarriersCalculated"),
 	@View(name="FellowsNames", members="number, name; fellowCarriers"), 
 	@View(
@@ -23,7 +23,11 @@ import org.openxava.jpa.*;
 		members=
 			"number, name; fellowCarriersSelected; " +
 			"data {drivingLicence; warehouse} " +
-			"fellowCarriers {fellowCarriersCalculated} " )
+			"fellowCarriers {fellowCarriersCalculated} " ),
+	@View(
+		name="CollectionsTogether",
+		members="warehouse; fellowCarriers, fellowCarriersCalculated")
+	
 })
 @Tab(properties="calculated, number, name")
 public class Carrier {
@@ -49,7 +53,8 @@ public class Carrier {
 	private String drivingLicence_type; 
 	
 	@ManyToOne(optional=false) 
-	@ReferenceView("KeyInGroup") 
+	@ReferenceView("KeyInGroup")
+	@DescriptionsList(forViews="CollectionsTogether", descriptionProperties="name")
 	private Warehouse warehouse;
 
 	@Stereotype("MEMO")
@@ -94,11 +99,15 @@ public class Carrier {
 	@CollectionView("Simple")
 	@RemoveSelectedAction(forViews="CalculatedFellows", value="")
 	@ListAction("Carrier.translateName")
+	@OnSelectElementAction(forViews="CalculatedFellows", value="Carrier.onSelectFellowCarriersCalulated")
 	public Collection<Carrier> getFellowCarriersCalculated() {
 		// This method exists for compliance with OpenXavaTest
 		return getFellowCarriers();
 	}
 		
+	@Transient @ReadOnly
+	private int fellowCarriersCalculatedSize;
+	
 	public static Collection<Carrier> findAll() {
 		Query query = XPersistence.getManager().createQuery("from Carrier as o"); 
  		return query.getResultList();  				
@@ -225,6 +234,14 @@ public class Carrier {
 
 	public void setFellowCarriersSelected(String fellowCarriersSelected) {
 		this.fellowCarriersSelected = fellowCarriersSelected;
+	}
+
+	public int getFellowCarriersCalculatedSize() {
+		return fellowCarriersCalculatedSize;
+	}
+
+	public void setFellowCarriersCalculatedSize(int fellowCarriersCalculatedSize) {
+		this.fellowCarriersCalculatedSize = fellowCarriersCalculatedSize;
 	}
 	
 }

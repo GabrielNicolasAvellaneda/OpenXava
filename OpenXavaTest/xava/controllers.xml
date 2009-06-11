@@ -671,6 +671,11 @@
 			class="org.openxava.test.actions.CarriersSearchAction">
 			<use-object name="xava_view"/>			
 		</action>			
+    	    	
+		<action name="onSelectFellowCarriersCalulated" hidden="true" 
+			class="org.openxava.test.actions.OnSelectFellowCarriersCalculatedAction">
+			<use-object name="xava_view"/>			
+		</action>			
     	
 	</controller>
 	

@@ -23,4 +23,14 @@ public class CarrierWithCalculatedFellowsTest extends ModuleTestBase {
 		assertNoAction("Collection.removeSelected"); 		
 	}
 	
+	public void testOnSelectElementActionInCalculatedCollections() throws Exception {
+		assertListNotEmpty();
+		execute("List.viewDetail", "row=0");
+		assertValue("fellowCarriersCalculatedSize", "0");
+		checkRowCollection("fellowCarriersCalculated", 0);
+		assertValue("fellowCarriersCalculatedSize", "1");
+		uncheckRowCollection("fellowCarriersCalculated", 0);
+		assertValue("fellowCarriersCalculatedSize", "0");
+	}
+	
 }

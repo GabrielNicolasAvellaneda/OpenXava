@@ -57,6 +57,7 @@ public class AJAXTest extends ModuleTestBase {
 				"collection_defaultCarrier.fellowCarriersCalculated.," +
 				"reference_editor_defaultCarrier.drivingLicence," +
 				"editor_defaultCarrier.calculated," +
+				"editor_defaultCarrier.fellowCarriersCalculatedSize," +	 
 				"editor_defaultCarrier.name," +
 				"editor_defaultCarrier.warehouse.name," +
 				"editor_defaultCarrier.warehouse.number," +
