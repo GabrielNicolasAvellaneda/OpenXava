@@ -1,6 +1,7 @@
 Change Log for OpenXava project
 ===============================
 
+- Fix: viewObject property is missing for OnSelectElementBaseAction
 - View 2 collections on the same line
 - Add OnSelectElementAction and highligh select element at calculated collection
 - Fix: highlight select element whit OnSelectElementAction 
