@@ -16,7 +16,7 @@ import org.openxava.annotations.*;
 @Views({
 	@View(members=
 		"name;" +
-		"selectedIngredientSize;" +
+		"selectedIngredientSize, selectedIngredientNames;" +
 		"ingredients { ingredients }" +		
 		"recipe { recipe }"
 	),
@@ -33,8 +33,11 @@ public class Formula {
 	@Column(length=40) @Required
 	private String name;
 	
-	@Transient @ReadOnly 
-	private Integer selectedIngredientSize; 
+	@Transient @ReadOnly @LabelFormat(LabelFormatType.SMALL)
+	private Integer selectedIngredientSize;
+
+	@Transient @ReadOnly @LabelFormat(LabelFormatType.SMALL)
+	private String selectedIngredientNames;
 	
 	@OnSelectElementAction("Formula.onSelectIngredient") 
 	@OneToMany(mappedBy="formula", cascade=CascadeType.REMOVE)
@@ -87,6 +90,14 @@ public class Formula {
 
 	public void setSelectedIngredientSize(Integer selectedIngredientSize) {
 		this.selectedIngredientSize = selectedIngredientSize;
+	}
+
+	public String getSelectedIngredientNames() {
+		return selectedIngredientNames;
+	}
+
+	public void setSelectedIngredientNames(String selectedIngredientNames) {
+		this.selectedIngredientNames = selectedIngredientNames;
 	}	
 
 }

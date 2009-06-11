@@ -31,8 +31,11 @@
 	</aggregate>
 	
 	<view>
-			
 		<property name="selectedIngredientSize" type="int" />
+		<property name="selectedIngredientNames" type="String" />
+		
+		<property-view property="selectedIngredientSize" label-format="SMALL" read-only="true" />
+		<property-view property="selectedIngredientNames" label-format="SMALL" read-only="true" />
 		
 		<collection-view collection="ingredients">
 			<on-select-element-action action="Formula.onSelectIngredient"/>
@@ -40,7 +43,7 @@
 		
 		<members>
 			name;
-			selectedIngredientSize;
+			selectedIngredientSize, selectedIngredientNames;
 			<section name="ingredients">
 				ingredients
 			</section>

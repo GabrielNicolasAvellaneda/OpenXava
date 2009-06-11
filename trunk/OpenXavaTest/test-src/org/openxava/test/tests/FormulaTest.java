@@ -36,12 +36,22 @@ public class FormulaTest extends ModuleTestBase {
 		assertValue("selectedIngredientSize", "");
 		// selected
 		checkRowCollection("ingredients", 0);
+		assertNoErrors();
 		assertValue("selectedIngredientSize", "1");
+		assertValue("selectedIngredientNames", "CAFE");
 		checkRowCollection("ingredients", 1);
 		assertValue("selectedIngredientSize", "2");
+		assertValue("selectedIngredientNames", "CAFE,AZUCAR");
 		// deselected
 		uncheckRowCollection("ingredients", 0);	
 		assertValue("selectedIngredientSize", "1");
+		assertValue("selectedIngredientNames", "AZUCAR");
+		uncheckRowCollection("ingredients", 1);	
+		assertValue("selectedIngredientSize", "0");
+		assertValue("selectedIngredientNames", "");
+		// fails to deselect the last selected
+		assertRowCollectionUnchecked("ingredients", 0);
+		assertRowCollectionUnchecked("ingredients", 1);
 	}
 	
 	public void testImageInsideCollection() throws Exception {
