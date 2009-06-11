@@ -14,7 +14,7 @@ public class Customer {
 	@Required
 	private String name;
 			
-	@Embedded @NoFrame
+	@Embedded 
 	private Address address;
 	
 	// Getters and setters
