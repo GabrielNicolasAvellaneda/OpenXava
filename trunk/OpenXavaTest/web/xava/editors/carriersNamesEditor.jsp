@@ -1,6 +1,4 @@
 <%@page import="org.openxava.view.View"%>
-
-
 <%@page import="org.openxava.model.MapFacade"%>
 <%@page import="org.openxava.test.model.Carrier"%>
 <%@page import="java.util.Iterator"%>

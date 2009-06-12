@@ -1,8 +1,6 @@
 <%@ include file="../imports.jsp"%>
 
 <%@page import="org.openxava.view.View"%>
-
-
 <%@page import="org.openxava.model.MapFacade"%>
 <%@page import="org.openxava.test.model.Blog"%>
 <%@page import="org.openxava.test.model.BlogComment"%>
@@ -10,9 +8,9 @@
 <%@page import="java.util.Map"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="org.openxava.util.Locales"%>
+<%@page import="org.openxava.util.Is"%>
 
-
-<%@page import="org.openxava.util.Is"%><jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
+<jsp:useBean id="context" class="org.openxava.controller.ModuleContext" scope="session"/>
 
 <% 
 String viewObject = request.getParameter("viewObject");
