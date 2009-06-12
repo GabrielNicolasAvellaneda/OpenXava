@@ -4114,13 +4114,13 @@ public class View implements java.io.Serializable {
 	}
 
 	public boolean isVariousCollectionsInSameLine(MetaMember metaMember){
-		Collection<MetaMember> metaMembersLine = getMetaMembersInLine(metaMember.getName());
+		Collection metaMembersLine = getMetaMembersInLine(metaMember.getName());
 		if (metaMembersLine.size() <= 1) return false;
 		
-		Iterator<MetaMember> it = metaMembersLine.iterator();
+		Iterator it = metaMembersLine.iterator();
 		boolean allCollection = true;
 		while(it.hasNext() && allCollection){
-			MetaMember mm = it.next();
+			MetaMember mm = (MetaMember) it.next();
 			if (!(mm instanceof MetaCollection)) allCollection = false;
 		}
 		
@@ -4174,15 +4174,5 @@ public class View implements java.io.Serializable {
 	public void setDefaultListActionsForCollectionsIncluded(boolean defaultListActionsForCollectionsIncluded) {		
 		this.defaultListActionsForCollectionsIncluded = defaultListActionsForCollectionsIncluded;
 	}
-
-	
-	public boolean isDefaultListActionsForCollectionsIncluded() {
-		return defaultListActionsForCollectionsIncluded;
-	}
-
-	public void setDefaultListActionsForCollectionsIncluded(boolean defaultListActionsForCollectionsIncluded) {		
-		this.defaultListActionsForCollectionsIncluded = defaultListActionsForCollectionsIncluded;
-	}
-
 	
 }

@@ -13,6 +13,8 @@ import org.openxava.view.*;
 abstract public class ViewBaseAction extends BaseAction  {
 	
 	private View view;
+	
+	
 		
 	public View getView() {
 		return view;
