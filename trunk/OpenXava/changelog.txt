@@ -1,6 +1,8 @@
 Change Log for OpenXava project
 ===============================
 
+- The default parse for int, short and long (MetaProperty.parse) returns null for null or empty string (before it returned 0).
+- Fix: XCollections.last fail when collection is empty or null.
 - Fix: viewObject property is missing for OnSelectElementBaseAction
 - View 2 collections on the same line
 - Add OnSelectElementAction and highligh select element at calculated collection

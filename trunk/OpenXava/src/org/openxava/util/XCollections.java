@@ -18,10 +18,14 @@ public class XCollections {
 	
 	/**
 	 * Returns the last element of sent collection. <p>
-	 * @param collection  Cannot be null
+	 * 
+	 * @param collection  Can be null
+	 * @return Last element, or null if collection is null or empty.
 	 */
 	public static Object last(Collection collection) {
-		List list = collection instanceof List?(List) collection:new ArrayList(collection);
+		if (collection == null) return null;
+		if (collection.isEmpty()) return null;
+		List list = collection instanceof List?(List) collection:new ArrayList(collection);		
 		return list.get(list.size() - 1);
 	}
 
