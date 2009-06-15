@@ -13,6 +13,12 @@
 		class="org.openxava.validators.PositiveValidator"/>
 	<validator name="POSITIVE"
 		class="org.openxava.validators.PositiveValidator"/>
+		
+	<!-- tmp -->	
+	<validator name="NO_NEGATIVO"
+		class="org.openxava.validators.NotNegativeValidator"/>
+	<validator name="NOT_NEGATIVE"
+		class="org.openxava.validators.NotNegativeValidator"/>		
 				
 	<validator name="NO_NULO"
 		class="org.openxava.validators.NotNullValidator"/>  

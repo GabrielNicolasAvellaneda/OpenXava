@@ -43,10 +43,6 @@ String slast = request.getParameter("last");
 boolean last = !"false".equals(slast);
 boolean lastWasEditor = false;
 boolean lastWasProperty = false; 
-
-boolean variousCollectionInLine = false;
-boolean lastCollectionInLine = false;
-boolean firstCollectionInLine = false;
 while (it.hasNext()) {
 	Object m = it.next();
 	lastWasProperty = false; 
@@ -112,10 +108,8 @@ while (it.hasNext()) {
 				boolean withFrame = subview.isFrame() && 
 					(!view.isSection() || view.getMetaMembers().size() > 1);
 				lastWasEditor = !withFrame; 
-				boolean firstForSubdetail = first || withFrame; 
-				boolean firstForCollectionTogether = view.isVariousCollectionsInSameLine((MetaMember) m) ? 
-					view.isFirstInLine((MetaMember) m) : true;
-				if (withFrame || (view.isSection() && view.getMembersNames().size() ==1) || firstForCollectionTogether) {
+				boolean firstForSubdetail = first || withFrame;
+				if (withFrame || (view.isSection() && view.getMembersNames().size() ==1)) {
 				
 					if (first) { 						
 	%>		
@@ -166,9 +160,8 @@ while (it.hasNext()) {
 		} else if (m instanceof MetaCollection) {
 			MetaCollection collection = (MetaCollection) m;			
 			boolean withFrame = !view.isSection() || view.getMetaMembers().size() > 1;
-			variousCollectionInLine = view.isVariousCollectionsInSameLine((MetaMember) m);
-			firstCollectionInLine = view.isFirstInLine((MetaMember) m);
-			lastCollectionInLine = view.isLastInLine((MetaMember) m);
+			boolean variousCollectionInLine = view.isVariousCollectionsInSameLine((MetaMember) m);
+			boolean firstCollectionInLine = view.isFirstInLine((MetaMember) m);
 			String styleCollectionTogether = 
 				!variousCollectionInLine ? "" : 
 				(firstCollectionInLine ? "float: left; " : "float: right; ") + 
@@ -177,7 +170,7 @@ while (it.hasNext()) {
 		
 		%>
 		<tr><td colspan="4">		
-<%} %>
+		<%	} %>
 		<div style="<%=styleCollectionTogether %>">
 	<%			if (withFrame) {
 		%>	

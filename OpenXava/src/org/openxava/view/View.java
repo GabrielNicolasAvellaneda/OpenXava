@@ -42,19 +42,7 @@ import org.openxava.model.meta.MetaModel;
 import org.openxava.model.meta.MetaProperty;
 import org.openxava.model.meta.MetaReference;
 import org.openxava.tab.Tab;
-import org.openxava.util.Classes;
-import org.openxava.util.DataSourceConnectionProvider;
-import org.openxava.util.ElementNotFoundException;
-import org.openxava.util.FieldComparator;
-import org.openxava.util.Is;
-import org.openxava.util.Labels;
-import org.openxava.util.Locales;
-import org.openxava.util.Maps;
-import org.openxava.util.Messages;
-import org.openxava.util.PropertiesManager;
-import org.openxava.util.Strings;
-import org.openxava.util.XavaException;
-import org.openxava.util.XavaResources;
+import org.openxava.util.*;
 import org.openxava.util.meta.MetaSet;
 import org.openxava.view.meta.MetaCollectionView;
 import org.openxava.view.meta.MetaDescriptionsList;
@@ -1853,7 +1841,7 @@ public class View implements java.io.Serializable {
 					String propertyKey= qualifier + p.getName();
 					String valueKey = propertyKey + ".value";
 					String [] results = getRequest().getParameterValues(propertyKey);					
-					Object value = WebEditors.parse(getRequest(), p, results, getErrors(), getViewName());					
+					Object value = WebEditors.parse(getRequest(), p, results, getErrors(), getViewName());
 					boolean isHiddenKeyWithoutValue = p.isHidden() && (results == null); // for not reset hidden values					
 					if (!isHiddenKeyWithoutValue && WebEditors.mustToFormat(p, getViewName())) { 
 						getRequest().setAttribute(valueKey, value);
@@ -1928,7 +1916,7 @@ public class View implements java.io.Serializable {
 		catch (Exception ex) {
 			log.error(ex.getMessage(), ex);
 			getErrors().add("system_error");
-		}						
+		}
 	}
 	
 	private boolean isNeededToVerifyHasBeenFormatted(MetaProperty p) { 
@@ -3675,7 +3663,7 @@ public class View implements java.io.Serializable {
 			return;
 		}				
 		if (oldValues == null) oldValues = Collections.EMPTY_MAP;
-		if (values == null) values = new HashMap(); 		
+		if (values == null) values = new HashMap();
 		for (Iterator it=values.entrySet().iterator(); it.hasNext(); ) { 
 			Map.Entry en = (Map.Entry) it.next();
 			boolean isKey = getMetaModel().isKey((String) en.getKey());
@@ -4130,11 +4118,11 @@ public class View implements java.io.Serializable {
 	/**
 	 * MetaMembers in same line
 	 */
-	private Collection<MetaMember> getMetaMembersInLine(String property){
-		Collection<MetaMember> members = getMetaMembers();
-		Iterator<MetaMember> it = members.iterator();
+	private Collection getMetaMembersInLine(String property){
+		Collection members = getMetaMembers();
+		Iterator it = members.iterator();
 		boolean found = false;
-		Collection<MetaMember> line = new ArrayList<MetaMember>();
+		Collection line = new ArrayList();
 		while (it.hasNext() && !found){
 			MetaMember metaMember = (MetaMember) it.next();
 			if (property.equals(metaMember.getName())) found = true;
@@ -4148,23 +4136,16 @@ public class View implements java.io.Serializable {
 				}
 			}
 			else {
-				if (PropertiesSeparator.INSTANCE.equals(metaMember)) line = new ArrayList<MetaMember>();
+				if (PropertiesSeparator.INSTANCE.equals(metaMember)) line = new ArrayList();
 				else line.add(metaMember);
 			}
 		}
 		return line;
 	}
 
-	public boolean isLastInLine(MetaMember metaMember){
-		Collection<MetaMember> members = getMetaMembersInLine(metaMember.getName());
-		MetaMember last = null;
-		for(MetaMember  member : members) last = member;
-		return metaMember.getName().equals(last.getName());
-	}
-	
 	public boolean isFirstInLine(MetaMember metaMember){
 		String property = metaMember.getName(); 
-		return property.equals(getMetaMembersInLine(property).iterator().next().getName());
+		return property.equals(((MetaMember) getMetaMembersInLine(property).iterator().next()).getName());
 	}
 	
 	public boolean isDefaultListActionsForCollectionsIncluded() {
